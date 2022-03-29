@@ -3,6 +3,9 @@
 
 #include <QtCore/QGlobalStatic>
 #include <QtCore/QString>
+#include <QtCore/QCryptographicHash>
+#include <QtCore/QDir>
+#include <QtCore/QByteArray>
 
 /**
  * @short Project title settings
@@ -16,6 +19,14 @@
 /**
  * @short sqlConnectionName
  */
-static QLatin1String sqlConnectionName = QLatin1String("@PROJECTNAME@_SQL_CL");
+static QLatin1String sqlConnectionName = QLatin1String("ANTIQUA_SQL_CLIENT");
+
+static const QString lockFilePath()
+{
+  QString sid(".lock");
+  sid.prepend(ANTIQUACRM_NAME);
+  sid.prepend("qtsingleapplication-");
+  return QDir::temp().absoluteFilePath(sid);
+}
 
 #endif

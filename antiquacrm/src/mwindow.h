@@ -6,6 +6,8 @@
 /* QtCore */
 #include <QtCore/QObject>
 #include <QtCore/QEvent>
+/* QtGui */
+#include <QtGui/QCloseEvent>
 /* QtWidgets */
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -14,6 +16,7 @@
 #include <QtWidgets/QStatusBar>
 /* Project */
 #include "searchtoolbar.h"
+#include "applsettings.h"
 
 class MWindow : public QMainWindow
 {
@@ -30,6 +33,7 @@ private:
     QStatusBar *m_statusBar;
     QWidget *m_mainWidget;
     QDockWidget *m_customSearchWidget;
+    ApplSettings *m_Settings;
 
 private Q_SLOTS:
     void initMenuBar();
@@ -37,6 +41,7 @@ private Q_SLOTS:
     void initSearchDockWidget();
     void action_connect(bool);
     void toggleWindowFullScreen();
+    void closeEvent(QCloseEvent *);
     void action_closeandquit(bool);
 
 Q_SIGNALS:

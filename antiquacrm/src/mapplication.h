@@ -6,6 +6,7 @@
 /* QtCore */
 #include <QtCore/QObject>
 #include <QtCore/QEvent>
+#include <QtCore/QLockFile>
 /* QtWidgets */
 #include <QtWidgets/QApplication>
 /* QtSQL */
@@ -21,8 +22,8 @@ class MApplication : public QApplication
 
 private:
     MWindow *m_mainWindow;
-    void initSettings();
     bool initDatabase();
+    QLockFile sessionLock;
 
 private Q_SLOTS:
     void connectdb();

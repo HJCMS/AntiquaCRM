@@ -7,21 +7,18 @@
 
 MApplication::MApplication(int &argc, char **argv)
     : QApplication(argc, argv)
+    , sessionLock(lockFilePath())
 {
     setObjectName("MApplicationApplication");
     setQuitOnLastWindowClosed(true);
+    setApplicationName ( ANTIQUACRM_NAME );
+    setApplicationVersion ( ANTIQUACRM_VERSION_STRING );
+    setApplicationDisplayName( ANTIQUACRM_NAME );
+    setDesktopFileName( ANTIQUACRM_NAME);
+    setOrganizationDomain ( HJCMSFQDN );
     // TODO setWindowIcon(const QIcon &icon);
     m_mainWindow = new MWindow();
     connect( m_mainWindow, SIGNAL ( psqlconnect() ), this, SLOT ( connectdb() ) );
-}
-
-/**
- * @brief MApplication::initSettings
- * @todo  Read Default Setting
- */
-void MApplication::initSettings()
-{
-
 }
 
 /**
@@ -81,9 +78,20 @@ void MApplication::connectdb()
  */
 int MApplication::exec()
 {
+    if(sessionLock.isLocked())
+    {
+        qInfo("The application is already running.");
+        return 0;
+    }
+    if(!m_mainWindow)
+        return 0;
+
     if(initDatabase())
     {
         m_mainWindow->show();
+        m_mainWindow->setFocus ( Qt::ActiveWindowFocusReason );
+        m_mainWindow->activateWindow();
+        sessionLock.lock();
         return QApplication::exec();
     } else {
        qDebug("%s", qPrintable("No SQL Connection"));
@@ -93,6 +101,7 @@ int MApplication::exec()
 
 MApplication::~MApplication()
 {
+    sessionLock.unlock();
     if(m_db->contains(sqlConnectionName))
     {
         qDebug("SQL '%s' Disonnected", qPrintable(sqlConnectionName));

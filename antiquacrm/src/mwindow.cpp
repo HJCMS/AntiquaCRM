@@ -2,13 +2,19 @@
 #include "version.h"
 #include "mwindow.h"
 
+#include <QtCore/QDebug>
+#include <QtWidgets/QAction>
+
 MWindow::MWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     setObjectName("MainWindow");
-    setWindowTitle(DISPLAYNAME);
+    setWindowTitle(ANTIQUACRM_DISPLAYNAME);
     setMinimumSize( QSize(500,350) );
+    // Settings
+    m_Settings = new ApplSettings();
 
+    // Main Widget
     m_mainWidget = new QWidget(this);
     m_mainWidget->setObjectName("CentralWidget");
     setCentralWidget(m_mainWidget);
@@ -21,12 +27,14 @@ MWindow::MWindow(QWidget *parent)
     initStatusBar();
     initSearchDockWidget();
 
-    /*
-    connect( ui->actionConnect, SIGNAL ( triggered(bool) ),
-             this, SLOT ( action_connect(bool) ) );
-    connect( ui->actionClose, SIGNAL ( triggered(bool) ),
-             this, SLOT ( action_closeandquit(bool) ) );
-    */
+    if (m_Settings)
+    {
+        if(m_Settings->contains("window/geometry"))
+            restoreGeometry(m_Settings->value("window/geometry").toByteArray());
+
+        if(m_Settings->contains("window/windowState"))
+            restoreState(m_Settings->value("window/windowState").toByteArray());
+    }
 }
 
 /**
@@ -38,6 +46,14 @@ void MWindow::initMenuBar()
 
     m_applicationMenu = m_menuBar->addMenu ( tr( "Application" ) );
     m_applicationMenu->setObjectName ( QLatin1String ( "ApplicationMenu" ) );
+
+    QAction *a_dbc = m_applicationMenu->addAction(tr("DB Connect"));
+    connect( a_dbc, SIGNAL ( triggered(bool) ), this, SLOT ( action_connect(bool) ) );
+
+    m_applicationMenu->addSeparator();
+
+    QAction *a_quit = m_applicationMenu->addAction(tr("Quit"));
+    connect( a_quit, SIGNAL ( triggered(bool) ), this, SLOT ( action_closeandquit(bool) ) );
 
     m_viewsMenu = m_menuBar->addMenu ( tr( "Views" ) );
     m_viewsMenu->setObjectName ( QLatin1String ( "ViewsMenu" ) );
@@ -74,7 +90,6 @@ void MWindow::action_connect(bool b)
     emit psqlconnect();
 }
 
-
 /**
 * Zwischen Vollansicht und Normaler Ansicht wechseln.
 */
@@ -84,6 +99,17 @@ void MWindow::toggleWindowFullScreen()
     setWindowState ( windowState() & ~Qt::WindowFullScreen );
   else
     setWindowState ( windowState() ^ Qt::WindowFullScreen );
+}
+
+void MWindow::closeEvent(QCloseEvent *event)
+{
+    if ( isFullScreen() ) // Keine Vollansicht Speichern!
+      setWindowState ( windowState() & ~Qt::WindowFullScreen );
+
+    m_Settings->setValue("window/geometry", saveGeometry());
+    m_Settings->setValue("window/windowState", saveState());
+
+    QMainWindow::closeEvent(event);
 }
 
 /**
