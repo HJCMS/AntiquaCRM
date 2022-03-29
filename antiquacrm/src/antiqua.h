@@ -9,7 +9,7 @@
 /* QtSQL */
 #include <QtSql/QSqlDatabase>
 /* Project */
-#include "antiquamainwindow.h"
+#include "amainwindow.h"
 
 class Antiqua : public QApplication
 {
@@ -18,7 +18,7 @@ class Antiqua : public QApplication
     Q_CLASSINFO ( "URL", "http://www.hjcms.de" )
 
 private:
-    AntiquaMainWindow *m_mainWindow;
+    AMainWindow *m_mainWindow;
     void initSettings();
     bool initDatabase();
 

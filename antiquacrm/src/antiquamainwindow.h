@@ -6,10 +6,12 @@
 #include <QtCore/QEvent>
 /* QtWidgets */
 #include <QtWidgets/QMainWindow>
-
-QT_BEGIN_NAMESPACE
-namespace Ui { class AntiquaMainWindow; }
-QT_END_NAMESPACE
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QToolBar>
+#include <QtWidgets/QDockWidget>
+#include <QtWidgets/QStatusBar>
+/* Project */
+#include "searchtoolbar.h"
 
 class AntiquaMainWindow : public QMainWindow
 {
@@ -18,10 +20,21 @@ class AntiquaMainWindow : public QMainWindow
     Q_CLASSINFO ( "URL", "http://www.hjcms.de" )
 
 private:
-    Ui::AntiquaMainWindow *ui;
+    QMenu* m_applicationMenu;
+    QMenu* m_viewsMenu;
+    QMenu* m_settingsMenu;
+    QMenuBar *m_menuBar;
+    SearchToolBar *m_searchWidget;
+    QStatusBar *m_statusBar;
+    QWidget *m_mainWidget;
+    QDockWidget *m_customSearchWidget;
 
 private Q_SLOTS:
+    void initMenuBar();
+    void initStatusBar();
+    void initSearchDockWidget();
     void action_connect(bool);
+    void toggleWindowFullScreen();
     void action_closeandquit(bool);
 
 Q_SIGNALS:

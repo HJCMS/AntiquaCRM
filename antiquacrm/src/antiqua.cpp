@@ -10,14 +10,11 @@ static QLatin1String sqlConnectionName = QLatin1String("AntiquaSqlClient");
 Antiqua::Antiqua(int &argc, char **argv)
     : QApplication(argc, argv)
 {
-    setApplicationDisplayName( "Antiqua CRM" );
-    setDesktopFileName("Antiqua CRM");
-    setOrganizationDomain ( "hjcms.de" );
+    setObjectName("AntiquaApplication");
     setQuitOnLastWindowClosed(true);
     // TODO setWindowIcon(const QIcon &icon);
     m_mainWindow = new AntiquaMainWindow();
     connect( m_mainWindow, SIGNAL ( psqlconnect() ), this, SLOT ( connectdb() ) );
-
 }
 
 /**
