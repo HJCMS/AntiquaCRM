@@ -1,5 +1,7 @@
-#ifndef ANTIQUA_H
-#define ANTIQUA_H
+/** @COPYRIGHT_HOLDER@ */
+
+#ifndef ANTIQUACRM_MAPPLICATION_H
+#define ANTIQUACRM_MAPPLICATION_H
 
 /* QtCore */
 #include <QtCore/QObject>
@@ -9,16 +11,16 @@
 /* QtSQL */
 #include <QtSql/QSqlDatabase>
 /* Project */
-#include "amainwindow.h"
+#include "mwindow.h"
 
-class Antiqua : public QApplication
+class MApplication : public QApplication
 {
     Q_OBJECT
     Q_CLASSINFO ( "Author", "Jürgen Heinemann" )
     Q_CLASSINFO ( "URL", "http://www.hjcms.de" )
 
 private:
-    AMainWindow *m_mainWindow;
+    MWindow *m_mainWindow;
     void initSettings();
     bool initDatabase();
 
@@ -30,9 +32,9 @@ Q_SIGNALS:
 
 public:
     QSqlDatabase *m_db;
-    explicit Antiqua(int &argc, char **argv);
+    explicit MApplication(int &argc, char **argv);
     int exec();
-    ~Antiqua();
+    ~MApplication();
 };
 
-#endif // ANTIQUA_H
+#endif // ANTIQUACRM_H

@@ -1,8 +1,15 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 ## Project and Executable Name
 SET (PROJECTNAME "antiquacrm")
+SET (DISPLAYNAME "AntiquaCRM")
+SET (ANTIQUACRM_VERSION_MAJOR 0)
+SET (ANTIQUACRM_VERSION_MINOR 0)
+SET (ANTIQUACRM_VERSION_RELEASE 1)
 
-PROJECT(${PROJECTNAME} VERSION 0.0.1 LANGUAGES CXX)
+PROJECT(${PROJECTNAME} 
+  VERSION ${ANTIQUACRM_VERSION_MAJOR}.${ANTIQUACRM_VERSION_MINOR}.${ANTIQUACRM_VERSION_RELEASE}
+  LANGUAGES CXX
+)
 
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 SET(CMAKE_AUTOUIC ON)
@@ -28,6 +35,14 @@ FIND_PACKAGE(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS
   Sql
   Network
   LinguistTools
+)
+
+##############################################################
+## Configure Source Files
+##############################################################
+
+CONFIGURE_FILE (src/version.h.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/src/version.h
 )
 
 ##############################################################

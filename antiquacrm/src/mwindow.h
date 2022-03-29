@@ -1,5 +1,7 @@
-#ifndef ANTIQUAMAINWINDOW_H
-#define ANTIQUAMAINWINDOW_H
+/** @COPYRIGHT_HOLDER@ */
+
+#ifndef ANTIQUACRM_MWINDOW_H
+#define ANTIQUACRM_MWINDOW_H
 
 /* QtCore */
 #include <QtCore/QObject>
@@ -13,7 +15,7 @@
 /* Project */
 #include "searchtoolbar.h"
 
-class AntiquaMainWindow : public QMainWindow
+class MWindow : public QMainWindow
 {
     Q_OBJECT
     Q_CLASSINFO ( "Author", "Jürgen Heinemann" )
@@ -41,8 +43,8 @@ Q_SIGNALS:
     void psqlconnect();
 
 public:
-    AntiquaMainWindow(QWidget *parent = nullptr);
-    ~AntiquaMainWindow();
+    MWindow(QWidget *parent = nullptr);
+    ~MWindow();
 
 };
-#endif // ANTIQUAMAINWINDOW_H
+#endif // ANTIQUACRM_MWINDOW_H

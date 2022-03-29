@@ -1,39 +1,37 @@
-#include "antiqua.h"
+/** @COPYRIGHT_HOLDER@ */
+
+#include "version.h"
+#include "mapplication.h"
+
 #include <QDebug>
 
-/**
- * @brief sqlConnectionName
- * @note Muss statisch sein, wird Später in config.h.in Definiert!
- */
-static QLatin1String sqlConnectionName = QLatin1String("AntiquaSqlClient");
-
-Antiqua::Antiqua(int &argc, char **argv)
+MApplication::MApplication(int &argc, char **argv)
     : QApplication(argc, argv)
 {
-    setObjectName("AntiquaApplication");
+    setObjectName("MApplicationApplication");
     setQuitOnLastWindowClosed(true);
     // TODO setWindowIcon(const QIcon &icon);
-    m_mainWindow = new AntiquaMainWindow();
+    m_mainWindow = new MWindow();
     connect( m_mainWindow, SIGNAL ( psqlconnect() ), this, SLOT ( connectdb() ) );
 }
 
 /**
- * @brief Antiqua::initSettings
+ * @brief MApplication::initSettings
  * @todo  Read Default Setting
  */
-void Antiqua::initSettings()
+void MApplication::initSettings()
 {
 
 }
 
 /**
- * @brief Antiqua::initDatabase
+ * @brief MApplication::initDatabase
  * @todo Options PostgreSQL Database:
  *      (connect_timeout,options,tty,requiressl,service)
  *      https://www.postgresql.org/docs/current/functions.html
  * @test SELECT schemaname,relname FROM pg_stat_user_tables WHERE relname IS NOT NULL;
  */
-bool Antiqua::initDatabase()
+bool MApplication::initDatabase()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL",sqlConnectionName);
     if(db.isValid())
@@ -62,9 +60,9 @@ bool Antiqua::initDatabase()
 }
 
 /**
- * @brief Antiqua::connectdb
+ * @brief MApplication::connectdb
  */
-void Antiqua::connectdb()
+void MApplication::connectdb()
 {
     if(m_db)
     {
@@ -78,10 +76,10 @@ void Antiqua::connectdb()
 }
 
 /**
- * @brief Antiqua::exec
+ * @brief MApplication::exec
  * @return int
  */
-int Antiqua::exec()
+int MApplication::exec()
 {
     if(initDatabase())
     {
@@ -93,7 +91,7 @@ int Antiqua::exec()
     return 0;
 }
 
-Antiqua::~Antiqua()
+MApplication::~MApplication()
 {
     if(m_db->contains(sqlConnectionName))
     {

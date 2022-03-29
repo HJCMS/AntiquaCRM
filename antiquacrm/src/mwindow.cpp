@@ -1,10 +1,12 @@
-#include "antiquamainwindow.h"
+/** @COPYRIGHT_HOLDER@ */
+#include "version.h"
+#include "mwindow.h"
 
-AntiquaMainWindow::AntiquaMainWindow(QWidget *parent)
+MWindow::MWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    setObjectName("AntiquaMainWindow");
-    setWindowTitle(tr("Main Window"));
+    setObjectName("MainWindow");
+    setWindowTitle(DISPLAYNAME);
     setMinimumSize( QSize(500,350) );
 
     m_mainWidget = new QWidget(this);
@@ -28,9 +30,9 @@ AntiquaMainWindow::AntiquaMainWindow(QWidget *parent)
 }
 
 /**
- * @brief AntiquaMainWindow::initMenuBar
+ * @brief MWindow::initMenuBar
  */
-void AntiquaMainWindow::initMenuBar()
+void MWindow::initMenuBar()
 {
     m_menuBar = menuBar();
 
@@ -44,14 +46,14 @@ void AntiquaMainWindow::initMenuBar()
     m_settingsMenu->setObjectName ( QLatin1String ( "SettingsMenu" ) );
 }
 
-void AntiquaMainWindow::initStatusBar()
+void MWindow::initStatusBar()
 {
     m_statusBar = statusBar();
     m_statusBar->setObjectName("StatusBar");
     setStatusBar(m_statusBar);
 }
 
-void AntiquaMainWindow::initSearchDockWidget()
+void MWindow::initSearchDockWidget()
 {
     m_customSearchWidget = new QDockWidget(m_mainWidget);
     m_customSearchWidget->setObjectName("CustomSearchWidget");
@@ -62,11 +64,11 @@ void AntiquaMainWindow::initSearchDockWidget()
 }
 
 /**
- * @brief AntiquaMainWindow::action_connect
+ * @brief MWindow::action_connect
  * @param b
  * @short Wird von UI:QAction weitergeleited.
  */
-void AntiquaMainWindow::action_connect(bool b)
+void MWindow::action_connect(bool b)
 {
     Q_UNUSED(b);
     emit psqlconnect();
@@ -76,7 +78,7 @@ void AntiquaMainWindow::action_connect(bool b)
 /**
 * Zwischen Vollansicht und Normaler Ansicht wechseln.
 */
-void AntiquaMainWindow::toggleWindowFullScreen()
+void MWindow::toggleWindowFullScreen()
 {
   if ( isFullScreen() )
     setWindowState ( windowState() & ~Qt::WindowFullScreen );
@@ -85,16 +87,16 @@ void AntiquaMainWindow::toggleWindowFullScreen()
 }
 
 /**
- * @brief AntiquaMainWindow::action_closeandquit
+ * @brief MWindow::action_closeandquit
  * @param b
  * @short Wird von UI:QAction weitergeleited.
  */
-void AntiquaMainWindow::action_closeandquit(bool b)
+void MWindow::action_closeandquit(bool b)
 {
     Q_UNUSED(b);
     qDebug("TODO Save Quit Application");
 }
 
-AntiquaMainWindow::~AntiquaMainWindow()
+MWindow::~MWindow()
 {
 }

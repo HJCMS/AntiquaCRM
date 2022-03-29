@@ -1,4 +1,5 @@
 *~
 *.log
 *.bak
-build*RelWithDebInfo
+build-*
+
