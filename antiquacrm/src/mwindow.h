@@ -40,7 +40,8 @@ private Q_SLOTS:
     void initStatusBar();
     void initSearchDockWidget();
     void action_connect(bool);
-    void toggleWindowFullScreen();
+    void openConfiguration(bool);
+    void toggleFullScreen(bool);
     void closeEvent(QCloseEvent *);
     void action_closeandquit(bool);
 

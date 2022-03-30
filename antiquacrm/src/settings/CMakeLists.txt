@@ -1,11 +1,25 @@
 SET(_subproject "Settings")
 
+SET (subproject_FILES
+  settings.cpp.tpl
+  settings.h.tpl
+  README
+)
+
 SET (subproject_SOURCES
   applsettings.cpp
+  configdialog.cpp
+  settingswidget.cpp
+  generalsettingswidget.cpp
+  postgresqlsettings.cpp
 )
 
 SET (subproject_HEADERS
   applsettings.h
+  configdialog.h
+  settingswidget.h
+  generalsettingswidget.h
+  postgresqlsettings.h
 )
 
 INCLUDE_DIRECTORIES (
@@ -19,6 +33,7 @@ INCLUDE_DIRECTORIES (
 ADD_LIBRARY (${_subproject} STATIC
   ${subproject_HEADERS}
   ${subproject_SOURCES}
+  ${subproject_FILES}
 )
 
 SET_TARGET_PROPERTIES (${_subproject} PROPERTIES
@@ -28,4 +43,5 @@ SET_TARGET_PROPERTIES (${_subproject} PROPERTIES
 
 TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
     Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::Widgets
 )

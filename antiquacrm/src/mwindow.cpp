@@ -1,8 +1,12 @@
 /** @COPYRIGHT_HOLDER@ */
+
 #include "version.h"
 #include "mwindow.h"
+/* Sub Modules */
+#include "configdialog.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QCoreApplication>
 #include <QtWidgets/QAction>
 
 MWindow::MWindow(QWidget *parent)
@@ -58,8 +62,19 @@ void MWindow::initMenuBar()
     m_viewsMenu = m_menuBar->addMenu ( tr( "Views" ) );
     m_viewsMenu->setObjectName ( QLatin1String ( "ViewsMenu" ) );
 
+    /* TODO */
+    m_viewsMenu->addAction(tr("Books"));
+    m_viewsMenu->addAction(tr("Prints"));
+    m_viewsMenu->addAction(tr("Custom"));
+    m_viewsMenu->addSeparator();
+    QAction *a_fs = m_viewsMenu->addAction(tr("Fullscreen"));
+    connect( a_fs, SIGNAL ( triggered(bool) ), this, SLOT ( toggleFullScreen(bool) ) );
+
     m_settingsMenu = m_menuBar->addMenu ( tr( "Settings" ) );
     m_settingsMenu->setObjectName ( QLatin1String ( "SettingsMenu" ) );
+
+    QAction *a_cfg = m_settingsMenu->addAction(tr("Configuration"));
+    connect( a_cfg, SIGNAL ( triggered(bool) ), this, SLOT ( openConfiguration(bool) ) );
 }
 
 void MWindow::initStatusBar()
@@ -91,10 +106,21 @@ void MWindow::action_connect(bool b)
 }
 
 /**
+ * @brief MWindow::openConfiguration
+ */
+void MWindow::openConfiguration(bool b)
+{
+    Q_UNUSED(b);
+    ConfigDialog *m_dialog = new ConfigDialog(this);
+    m_dialog->exec();
+}
+
+/**
 * Zwischen Vollansicht und Normaler Ansicht wechseln.
 */
-void MWindow::toggleWindowFullScreen()
+void MWindow::toggleFullScreen(bool b)
 {
+  Q_UNUSED(b);
   if ( isFullScreen() )
     setWindowState ( windowState() & ~Qt::WindowFullScreen );
   else
@@ -103,6 +129,7 @@ void MWindow::toggleWindowFullScreen()
 
 void MWindow::closeEvent(QCloseEvent *event)
 {
+    qDebug() << __FUNCTION__ ;
     if ( isFullScreen() ) // Keine Vollansicht Speichern!
       setWindowState ( windowState() & ~Qt::WindowFullScreen );
 
@@ -121,6 +148,7 @@ void MWindow::action_closeandquit(bool b)
 {
     Q_UNUSED(b);
     qDebug("TODO Save Quit Application");
+    QCoreApplication::quit();
 }
 
 MWindow::~MWindow()

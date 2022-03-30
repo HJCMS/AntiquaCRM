@@ -44,7 +44,7 @@ bool MApplication::initDatabase()
         {
             qInfo("'%s' Connected to PostgerSQL Database",
                   qPrintable(m_db->connectionName()));
-            qDebug() << "Tables: " << m_db->tables(QSql::Tables);
+            // qDebug() << "Tables: " << m_db->tables(QSql::Tables);
             return true;
         } else {
            qWarning("Connect to PostgerSQL Database failed.");
