@@ -1,6 +1,6 @@
 /** @COPYRIGHT_HOLDER@ */
 
-#include "../version.h"
+#include "version.h"
 #include "applsettings.h"
 
 #include <QtCore/QDebug>

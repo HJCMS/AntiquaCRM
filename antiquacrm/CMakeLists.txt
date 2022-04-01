@@ -1,55 +1,70 @@
+# -*- coding: utf-8 -*-
+# vim: set fileencoding=utf-8
+
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
-## Project and Executable Name
+
+###
+##  \Section project main info
+###
 SET (PROJECTNAME "antiquacrm")
-SET (DISPLAYNAME "AntiquaCRM")
+SET (DISPLAYNAME "Antiqua CRM")
+SET (DESCRIPTION "A Qt5/C++ based CRM with PSQL bindings for antiques dealers.")
+SET (HOMEPAGEURL "https://www.hjcms.de")
 SET (ANTIQUACRM_VERSION_MAJOR 0)
 SET (ANTIQUACRM_VERSION_MINOR 0)
 SET (ANTIQUACRM_VERSION_RELEASE 1)
 
 PROJECT(${PROJECTNAME} 
   VERSION ${ANTIQUACRM_VERSION_MAJOR}.${ANTIQUACRM_VERSION_MINOR}.${ANTIQUACRM_VERSION_RELEASE}
+  DESCRIPTION ${DESCRIPTION}
+  HOMEPAGE_URL ${HOMEPAGEURL}
   LANGUAGES CXX
 )
 
-SET(CMAKE_INCLUDE_CURRENT_DIR ON)
-SET(CMAKE_AUTOUIC ON)
+###
+## \Section CPack
+###
+SET (CPACK_RESOURCE_FILE_LICENSE LICENSE)
+SET (CPACK_RESOURCE_FILE_README README)
+
+###
+## \Section Build System
+###
+SET(CMAKE_AUTOUIC OFF)
 SET(CMAKE_AUTOMOC ON)
 SET(CMAKE_AUTORCC ON)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
+SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-FIND_PACKAGE(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS
-    Core
-    Widgets
-    Sql
-    LinguistTools
+SET(PROJECT_BINDINGS
+ Core
+ Widgets
+ Sql
+ Network
+ LinguistTools
 )
 
-#if(QT_VERSION_MAJOR EQUAL 6)
-# TODO PRINT WARNING
-#endif()
+FIND_PACKAGE(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS ${PROJECT_BINDINGS})
+FIND_PACKAGE(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS ${PROJECT_BINDINGS})
 
-FIND_PACKAGE(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS
-  Core
-  Widgets
-  Sql
-  Network
-  LinguistTools
-)
-
-##############################################################
-## Configure Source Files
-##############################################################
-
+###
+## \Section Headers
+###
 CONFIGURE_FILE (src/version.h.cmake
   ${CMAKE_CURRENT_BINARY_DIR}/src/version.h
 )
 
-##############################################################
-## SET My Targets
-##############################################################
+SET (PROJECT_INCLUDE_DIRS
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_BINARY_DIR}/src
+  ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
 
-ADD_SUBDIRECTORY (icons)
+###
+## \Section Targets
+###
 ADD_SUBDIRECTORY (locales)
 ADD_SUBDIRECTORY (src)
 

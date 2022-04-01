@@ -6,6 +6,7 @@
 #include <QtCore/QCryptographicHash>
 #include <QtCore/QDir>
 #include <QtCore/QByteArray>
+#include <QtGui/QIcon>
 
 /**
  * @short Project title settings
@@ -27,6 +28,18 @@ static const QString lockFilePath()
   sid.prepend(ANTIQUACRM_NAME);
   sid.prepend("qtsingleapplication-");
   return QDir::temp().absoluteFilePath(sid);
+}
+
+/**
+ * @brief myIcon
+ * @param name - Name without Extension and Path
+ */
+static const QIcon myIcon(const QString &name)
+{
+  QString resourceFile(":icons/");
+  resourceFile.append(name);
+  resourceFile.append(".png");
+  return QIcon(resourceFile);
 }
 
 #endif

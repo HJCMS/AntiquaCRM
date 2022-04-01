@@ -17,16 +17,23 @@ class SearchToolBar : public QToolBar
     Q_CLASSINFO ( "URL", "http://www.hjcms.de" )
 
 private:
+    int minlength;
     QLineEdit *m_lineEdit;
     QCheckBox *m_searchExact;
 
 private Q_SLOTS:
-    void startQuerySearch();
-
-// Q_SIGNALS:
+    void inputSearchChanged(const QString &);
+    void startSearchClicked();
+    const QString stripString(const QString &);
+    void startExtendetSearch();
+    void startSimpleSearch();
 
 public:
     explicit SearchToolBar(QWidget * main);
+
+Q_SIGNALS:
+    void signalSearchQuery(const QString &);
+
 };
 
 #endif // SEARCHTOOLBAR_H

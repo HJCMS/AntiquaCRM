@@ -4,9 +4,9 @@
 #define ANTIQUACRM_MAPPLICATION_H
 
 /* QtCore */
-#include <QtCore/QObject>
 #include <QtCore/QEvent>
 #include <QtCore/QLockFile>
+#include <QtCore/QObject>
 /* QtWidgets */
 #include <QtWidgets/QApplication>
 /* QtSQL */
@@ -14,28 +14,28 @@
 /* Project */
 #include "mwindow.h"
 
-class MApplication : public QApplication
-{
-    Q_OBJECT
-    Q_CLASSINFO ( "Author", "Jürgen Heinemann" )
-    Q_CLASSINFO ( "URL", "http://www.hjcms.de" )
+namespace HJCMS {
+ class SqlCore;
+}
+
+class MApplication : public QApplication {
+  Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "http://www.hjcms.de")
 
 private:
-    MWindow *m_mainWindow;
-    bool initDatabase();
-    QLockFile sessionLock;
-
-private Q_SLOTS:
-    void connectdb();
+  MWindow *m_mainWindow;
+  HJCMS::SqlCore *m_db;
+  bool initDatabase();
+  QLockFile sessionLock;
 
 Q_SIGNALS:
-    void sqlconnect();
+  void postMessage(const QString &);
 
 public:
-    QSqlDatabase *m_db;
-    explicit MApplication(int &argc, char **argv);
-    int exec();
-    ~MApplication();
+  explicit MApplication(int &argc, char **argv);
+  int exec();
+  ~MApplication();
 };
 
 #endif // ANTIQUACRM_H

@@ -1,4 +1,6 @@
-/** @COPYRIGHT_HOLDER@ */
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+// @COPYRIGHT_HOLDER@
 
 #include "version.h"
 #include "mapplication.h"

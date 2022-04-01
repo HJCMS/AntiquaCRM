@@ -1,4 +1,6 @@
-/** @COPYRIGHT_HOLDER@ */
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+// @COPYRIGHT_HOLDER@
 
 #ifndef ANTIQUACRM_MWINDOW_H
 #define ANTIQUACRM_MWINDOW_H
@@ -9,14 +11,16 @@
 /* QtGui */
 #include <QtGui/QCloseEvent>
 /* QtWidgets */
+#include <QtWidgets/QAction>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QDockWidget>
-#include <QtWidgets/QStatusBar>
-/* Project */
-#include "searchtoolbar.h"
-#include "applsettings.h"
+
+class StatusBar;
+class Workspace;
+class ApplSettings;
+class ADockWidget;
 
 class MWindow : public QMainWindow
 {
@@ -29,27 +33,27 @@ private:
     QMenu* m_viewsMenu;
     QMenu* m_settingsMenu;
     QMenuBar *m_menuBar;
-    SearchToolBar *m_searchWidget;
-    QStatusBar *m_statusBar;
+    QAction *m_quitAction;
+    StatusBar *m_statusBar;
     QWidget *m_mainWidget;
-    QDockWidget *m_customSearchWidget;
+    Workspace *m_workSpace;
+    ADockWidget *m_adockWidget;
     ApplSettings *m_Settings;
+    void createMenuBars();
 
 private Q_SLOTS:
-    void initMenuBar();
-    void initStatusBar();
-    void initSearchDockWidget();
-    void action_connect(bool);
     void openConfiguration(bool);
     void toggleFullScreen(bool);
-    void closeEvent(QCloseEvent *);
-    void action_closeandquit(bool);
+
+protected Q_SLOTS:
+    virtual void closeEvent(QCloseEvent *);
 
 Q_SIGNALS:
-    void psqlconnect();
+    void sqlconnect(bool);
+    void setStatusMessage(const QString &);
 
 public:
-    MWindow(QWidget *parent = nullptr);
+    explicit MWindow(QWidget *parent = nullptr);
     ~MWindow();
 
 };

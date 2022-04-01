@@ -1,3 +1,5 @@
+
+#include "version.h"
 #include "@CLASSNAME@.h"
 
 #include <QtCore/QDebug>
