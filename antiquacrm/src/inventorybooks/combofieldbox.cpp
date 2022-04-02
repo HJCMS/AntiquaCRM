@@ -7,6 +7,11 @@
 
 ComboFieldBox::ComboFieldBox(QWidget *parent) : QComboBox{parent} {
   setObjectName("ComboFieldBox");
+  /**
+   \note Wenn hier etwas geändert wird!
+    Dann muss SearchLineEdit::updatePlaceHolder(int)
+    auch geändert werden!
+  */
   insertItem(0, tr("Book Title"), "title");
   insertItem(1, tr("Article ID"), "id");
   insertItem(2, tr("ISBN"), "isbn");

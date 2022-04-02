@@ -54,7 +54,7 @@ while read _sql ; do
   _file="./import/${_sql}.sql"
   if test -s ${_file} ; then
     echo "-- Import ${_file} --"
-    echo "PGSERVICE=$USER psql < ${_file} 1>> psql-migration.log"
+    PGSERVICE=$USER psql < ${_file} 1>> psql-migration.log
   fi
 done < ./psql-migration-order.txt
 

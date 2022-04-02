@@ -41,6 +41,11 @@ sub trim {
 =begin
   Schreibe die Tabelle in Datei für Script psql-migration.sh
 =cut
+sub clear_migration_order {
+  open(FH, '>:encoding(UTF-8)', "./psql-migration-order.txt") or die $!;
+  close(FH);
+};
+
 sub add_migration_order {
   my $_t = shift;
   if(length($_t)>4) {
@@ -414,7 +419,8 @@ sub create_inventory_books {
   xgr.stueck AS ib_count,
   xgr.format AS ib_pagecount,
   IFNULL(xgr.vk_preis,0.00) AS ib_price,
-  IFNULL(xgr.gewicht,0) AS ib_weight
+  IFNULL(xgr.gewicht,0) AS ib_weight,
+  xgr.zeitstempel AS ib_changed
 FROM xgr
 WHERE xgr.art LIKE 'bu' AND xgr.artnr>0 AND length(xgr.titel)>1
 ORDER BY xgr.artnr ASC;
@@ -507,9 +513,17 @@ ORDER BY xgr.artnr ASC;
       $values .= "$price,";
       ## Gewicht für Versand
       my $weight = sprintf("%d",$r->{'ib_weight'});
-      $insert .= "ib_weight";
-      $values .= "$weight";
-
+      $insert .= "ib_weight,";
+      $values .= "$weight,";
+      ## Datum
+      if($r->{'ib_changed'}) {
+        my $timestamp = $r->{'ib_changed'};
+        $insert .= "ib_changed";
+        $values .= "'$timestamp'";
+      } else {
+        $insert .= "ib_changed";
+        $values .= "now()";
+      }
       ## Schreiben
       print FH "INSERT INTO $table ($insert) VALUES ($values);\n";
       $created++;
@@ -882,6 +896,9 @@ ORDER BY artnr ASC;"
 =begin MAIN
   Beginne mit der Script verarbeitung.
 =cut
+
+## NOTE Erst Logfile leeren!
+clear_migration_order();
 
 ## Alle Artikel in public.inventory schreiben!
 create_article_inserts();

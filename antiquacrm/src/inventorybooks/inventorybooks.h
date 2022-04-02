@@ -6,12 +6,13 @@
 #define INVENTORYBOOKS_H
 
 #include <QtCore/QObject>
+#include <QtCore/QList>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QWidget>
 
 class SearchBookBar;
 class BooksTableView;
-struct SearchStatement;
+class StatsBookBar;
 
 class InventoryBooks : public QWidget {
   Q_OBJECT
@@ -19,6 +20,10 @@ class InventoryBooks : public QWidget {
 private:
   SearchBookBar *m_toolBar;
   BooksTableView *m_tableView;
+  StatsBookBar *m_statsBookBar;
+
+private Q_SLOTS:
+  void selectArticleId(const QHash<QString,QString>&);
 
 public:
   explicit InventoryBooks(QWidget *parent = nullptr);

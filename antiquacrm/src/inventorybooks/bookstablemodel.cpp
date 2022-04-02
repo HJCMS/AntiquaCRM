@@ -83,14 +83,9 @@ QVariant BooksTableModel::data(const QModelIndex &index, int role) const {
 
   case 8: // ib_isbn
   {
-    bool b = true;
-    uint num = item.toUInt(&b);
-    if (b && num != 0) {
-      return num;
-    } else {
-      return QString();
-    }
-  } break;
+    QString buf = item.toString();
+    return (buf.length()<10) ? QString() : buf;
+  }
 
   default: // nicht registrierter Datentype !!!
     return item;

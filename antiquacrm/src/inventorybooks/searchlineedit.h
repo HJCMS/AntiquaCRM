@@ -6,6 +6,7 @@
 #define SEARCHLINEEDIT_H
 
 #include <QtCore/QObject>
+#include <QtGui/QDoubleValidator>
 #include <QtGui/QRegExpValidator>
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QLineEdit>
@@ -15,7 +16,8 @@ class SearchLineEdit : public QLineEdit {
   Q_OBJECT
 
 private:
-  QRegExpValidator *m_validator;
+  QRegExpValidator *m_textValidator;
+  QDoubleValidator *m_idValidator;
   QCompleter *m_completer;
 
 private Q_SLOTS:
@@ -23,6 +25,9 @@ private Q_SLOTS:
 
 Q_SIGNALS:
   void inputChanged(const QString &);
+
+public Q_SLOTS:
+  void updatePlaceHolder(int);
 
 public:
   explicit SearchLineEdit(QWidget *parent = nullptr);

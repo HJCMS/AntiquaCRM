@@ -16,6 +16,7 @@ SET (subproject_SOURCES
   bookstablemodel.cpp
   combofieldbox.cpp
   searchlineedit.cpp
+  statsbookbar.cpp
 )
 
 SET (subproject_HEADERS
@@ -25,6 +26,7 @@ SET (subproject_HEADERS
   bookstablemodel.h
   combofieldbox.h
   searchlineedit.h
+  statsbookbar.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

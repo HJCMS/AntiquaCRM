@@ -7,6 +7,7 @@
 
 #include <QtCore/QObject>
 #include <QtGui/QRegExpValidator>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QLineEdit>
@@ -24,6 +25,7 @@ class SearchBookBar : public QToolBar {
 
 private:
   int minlength;
+  QLineEdit *m_articleID;
   SearchLineEdit *m_input;
   ComboFieldBox *m_comboBox;
 

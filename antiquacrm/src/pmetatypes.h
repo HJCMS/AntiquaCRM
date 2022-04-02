@@ -5,8 +5,8 @@
 #ifndef SQLMETATYPES_H
 #define SQLMETATYPES_H
 
-#include <QtCore/QObject>
 #include <QtCore/QMetaType>
+#include <QtCore/QObject>
 #include <QtCore/QString>
 
 struct SearchStatement {
@@ -15,4 +15,4 @@ struct SearchStatement {
 };
 Q_DECLARE_METATYPE(SearchStatement)
 
-#endif // SQLMETATYPES_H 
+#endif // SQLMETATYPES_H

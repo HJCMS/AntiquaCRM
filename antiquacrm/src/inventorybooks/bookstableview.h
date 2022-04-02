@@ -13,7 +13,7 @@
 #include <QtWidgets/QTableView>
 
 class BooksTableModel;
-struct SearchStatement;
+class SearchStatement;
 
 class BooksTableView : public QTableView
 {
@@ -27,9 +27,10 @@ private Q_SLOTS:
   void clickedGetArticleID(const QModelIndex &);
 
 Q_SIGNALS:
-  void articleSelected(const QHash<int,QString>&);
+  void articleIdSelected(const QHash<QString,QString>&);
 
 public Q_SLOTS:
+  void queryHistory(const QString &);
   void queryStatement(const SearchStatement &);
 
 public:

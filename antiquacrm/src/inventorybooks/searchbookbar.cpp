@@ -20,7 +20,7 @@ SearchBookBar::SearchBookBar(QWidget *parent)
     : QToolBar(parent), minlength(10) {
   setObjectName("SearchBookBar");
   setOrientation(Qt::Horizontal);
-  setAllowedAreas((Qt::TopToolBarArea | Qt::BottomToolBarArea));
+  setFloatable(false);
 
   QToolButton *m_tb = new QToolButton(this);
   m_tb->setEnabled(false);
@@ -28,33 +28,39 @@ SearchBookBar::SearchBookBar(QWidget *parent)
   addWidget(m_tb);
   addSeparator();
 
+  m_comboBox = new ComboFieldBox(this);
+  addWidget(m_comboBox);
+  addSeparator();
+
   m_input = new SearchLineEdit(this);
   addWidget(m_input);
   addSeparator();
 
-  QPushButton *clearBtn = new QPushButton(this);
-  clearBtn->setIcon(myIcon("clear_left"));
-  clearBtn->setToolTip(tr("Clear searchinput"));
-  addWidget(clearBtn);
+  QAction *m_clear = addAction(tr("Clear"));
+  m_clear->setIcon(myIcon("clear_left"));
+  m_clear->setToolTip(tr("Clear searchinput"));
+
   addSeparator();
 
-  QPushButton *searchBtn = new QPushButton(tr("Search"), this);
+  QPushButton *searchBtn = new QPushButton(tr("Start search"), this);
   searchBtn->setObjectName("SearchButton");
   searchBtn->setToolTip(tr("Start search"));
+  searchBtn->setIcon(myIcon("search"));
   searchBtn->setContentsMargins(5, 0, 15, 0);
   addWidget(searchBtn);
-  addSeparator();
-
-  m_comboBox = new ComboFieldBox(this);
-  addWidget(m_comboBox);
   addSeparator();
 
   // SIGNALS
   connect(m_input, SIGNAL (inputChanged(const QString &)),
           this, SLOT (lineEditChanged(const QString &)));
 
-  connect(clearBtn, SIGNAL (pressed()), m_input, SLOT(clear()));
+  connect(m_input, SIGNAL(returnPressed()), this, SLOT (startSearchClicked()));
+
+  connect(m_clear, SIGNAL (triggered()), m_input, SLOT(clear()));
   connect(searchBtn, SIGNAL (released()), this, SLOT(startSearchClicked()));
+
+  connect(m_comboBox, SIGNAL(currentIndexChanged(int)),
+          m_input,SLOT(updatePlaceHolder(int)));
 }
 
 void SearchBookBar::lineEditChanged(const QString &str) {

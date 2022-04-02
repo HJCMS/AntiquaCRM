@@ -9,18 +9,15 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QComboBox>
 
-class ComboFieldBox : public QComboBox
-{
+class ComboFieldBox : public QComboBox {
   Q_OBJECT
 
 public Q_SLOTS:
-    void setIndex(int);
-    void setIndex(const QString &);
+  void setIndex(int);
+  void setIndex(const QString &);
 
 public:
   explicit ComboFieldBox(QWidget *parent = nullptr);
-
 };
 
 #endif // COMBOFIELDBOX_H
-
