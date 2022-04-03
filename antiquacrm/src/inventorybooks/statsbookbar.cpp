@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "statsbookbar.h"
-#include "pmetatypes.h"
 #include "version.h"
 
 #include <QtCore/QObject>

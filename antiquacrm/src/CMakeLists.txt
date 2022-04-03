@@ -10,7 +10,6 @@ INCLUDE(CMakeSubTargets.cmake)
 qt5_add_resources (QRC_FILES icons.qrc)
 
 SET (PROJECT_HEADERS
-  pmetatypes.h
   mapplication.h
   mwindow.h
   searchtoolbar.h
@@ -29,8 +28,6 @@ SET (PROJECT_SOURCES
   workspace.cpp
   ${QRC_FILES}
 )
-
-qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
 ADD_EXECUTABLE(${PROJECTNAME}
   ${PROJECT_HEADERS}

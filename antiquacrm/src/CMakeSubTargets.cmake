@@ -9,12 +9,16 @@ SET (TARGET_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/settings
  ${CMAKE_CURRENT_BINARY_DIR}/plugins
  ${CMAKE_CURRENT_SOURCE_DIR}/plugins
+ ${CMAKE_CURRENT_BINARY_DIR}/inventorycustomers
+ ${CMAKE_CURRENT_SOURCE_DIR}/inventorycustomers
  ${CMAKE_CURRENT_BINARY_DIR}/sqlcore
  ${CMAKE_CURRENT_SOURCE_DIR}/sqlcore
  ${CMAKE_CURRENT_BINARY_DIR}/inventoryprints
  ${CMAKE_CURRENT_SOURCE_DIR}/inventoryprints
  ${CMAKE_CURRENT_BINARY_DIR}/inventorybooks
  ${CMAKE_CURRENT_SOURCE_DIR}/inventorybooks
+ ${CMAKE_CURRENT_BINARY_DIR}/inventory
+ ${CMAKE_CURRENT_SOURCE_DIR}/inventory
  ${CMAKE_CURRENT_BINARY_DIR}/icons
  ${CMAKE_CURRENT_SOURCE_DIR}/icons
  ${CMAKE_CURRENT_BINARY_DIR}/src
@@ -25,14 +29,18 @@ INCLUDE_DIRECTORIES (${TARGET_INCLUDE_DIRS})
 
 ADD_SUBDIRECTORY (settings)
 ADD_SUBDIRECTORY (plugins)
+ADD_SUBDIRECTORY (inventorycustomers)
 ADD_SUBDIRECTORY (sqlcore)
 ADD_SUBDIRECTORY (inventoryprints)
 ADD_SUBDIRECTORY (inventorybooks)
+ADD_SUBDIRECTORY (inventory)
 ADD_SUBDIRECTORY (icons)
 
 SET(_link_sub_libs
 Settings
+InventoryCustomers
 sqlcore
 InventoryPrints
 InventoryBooks
+Inventory
 )

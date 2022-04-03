@@ -2,24 +2,59 @@
 // vim: set fileencoding=utf-8
 
 #include "inventorybooks.h"
+#include "applsettings.h"
 #include "bookstableview.h"
-#include "pmetatypes.h"
-#include "searchbookbar.h"
 #include "statsbookbar.h"
 #include "version.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QHash>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLayout>
 #include <QtWidgets/QVBoxLayout>
 
-InventoryBooks::InventoryBooks(QWidget *parent) : QWidget{parent} {
+InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
+    : Inventory{index, parent} {
   setObjectName("InventoryBooks");
+  setWindowTitle("TabBooks");
+
+  ApplSettings cfg;
+  minLength = cfg.value("search/minlength", 5).toInt();
 
   QVBoxLayout *layout = new QVBoxLayout(this);
+  layout->setObjectName("InventoryBooksLayout");
 
-  m_toolBar = new SearchBookBar(this);
-  layout->addWidget(m_toolBar);
+  // begin SearchBar
+  m_searchBar = new SearchBar(this);
+  m_searchBar->setValidation(SearchBar::Pattern);
+
+  /**
+   \note Wenn hier etwas geändert wird!
+    Dann muss SearchLineEdit::updatePlaceHolder(int)
+    auch geändert werden!
+  */
+  SearchFilter a;
+  QList<SearchFilter> filter;
+  a.index = 0;
+  a.title = tr("Book Title");
+  a.filter = QString("title");
+  filter.append(a);
+  a.index = 1;
+  a.title = tr("Article ID");
+  a.filter = QString("id");
+  filter.append(a);
+  a.index = 2;
+  a.title = tr("ISBN");
+  a.filter = QString("isbn");
+  filter.append(a);
+  a.index = 3;
+  a.title = tr("Author");
+  a.filter = QString("author");
+  filter.append(a);
+  m_searchBar->addSearchFilters(filter);
+
+  layout->addWidget(m_searchBar);
+  // end SearchBar
 
   m_tableView = new BooksTableView(this);
   layout->addWidget(m_tableView);
@@ -30,21 +65,59 @@ InventoryBooks::InventoryBooks(QWidget *parent) : QWidget{parent} {
   setLayout(layout);
 
   // Such anfragen
-  connect(m_toolBar, SIGNAL(s_sqlQueryChanged(const SearchStatement &)),
-          m_tableView, SLOT(queryStatement(const SearchStatement &)));
+  connect(m_searchBar, SIGNAL(searchTextChanged(const QString &)), this,
+          SLOT(parseLineInput(const QString &)));
+
+  connect(m_searchBar, SIGNAL(searchClicked()), this, SLOT(searchConvert()));
+
+  connect(m_searchBar, SIGNAL(currentFilterChanged(int)), this,
+          SLOT(updatePlaceHolder(int)));
+
   // Verlaufs abfragen
-  connect(m_statsBookBar, SIGNAL(s_queryHistory(const QString &)),
-          m_tableView, SLOT(queryHistory(const QString &)));
+  connect(m_statsBookBar, SIGNAL(s_queryHistory(const QString &)), m_tableView,
+          SLOT(queryHistory(const QString &)));
   // ID in Tabelle ausgewählt
-  connect(m_tableView, SIGNAL(articleIdSelected(const QHash<QString, QString> &)),
-          this, SLOT(selectArticleId(const QHash<QString, QString> &)));
+  connect(m_tableView,
+          SIGNAL(articleIdSelected(const QHash<QString, QString> &)), this,
+          SLOT(selectArticleId(const QHash<QString, QString> &)));
 }
 
-void InventoryBooks::selectArticleId(const QHash<QString,QString> &c) {
+void InventoryBooks::parseLineInput(const QString &str) {
+  if (str.length() <= minLength)
+    return;
+
+  searchConvert();
+}
+
+void InventoryBooks::searchConvert() {
+  if (m_searchBar->currentSearchText().length() < 2)
+    return;
+
+  QString buf = m_searchBar->currentSearchText();
+  QRegExp reg("[\\'\\\"]+");
+  buf.replace(reg, "");
+
+  reg.setPattern("(\\s|\\t)+");
+  buf.replace(reg, " ");
+
+  buf = buf.trimmed();
+
+  if (buf.length() >= 2) {
+    SearchStatement s;
+    s.SearchField =
+        m_searchBar->getSearchFilter(m_searchBar->currentFilterIndex());
+    s.SearchString = buf;
+    qDebug("QueryStatement:'%s':'%s'", qPrintable(s.SearchField),
+           qPrintable(s.SearchString));
+    m_tableView->queryStatement(s);
+  }
+}
+
+void InventoryBooks::selectArticleId(const QHash<QString, QString> &c) {
   if (c.isEmpty())
     return;
 
-  QHashIterator<QString,QString> i(c);
+  QHashIterator<QString, QString> i(c);
   while (i.hasNext()) {
     i.next();
     QString s("ib_id=");
@@ -55,4 +128,28 @@ void InventoryBooks::selectArticleId(const QHash<QString,QString> &c) {
     qDebug() << s;
     break;
   }
+}
+
+void InventoryBooks::updatePlaceHolder(int id) {
+  switch (id) {
+  case 0:
+    m_searchBar->setValidation(SearchBar::Pattern);
+    break;
+
+  case 1:
+    m_searchBar->setValidation(SearchBar::Number);
+    break;
+
+  case 2:
+    m_searchBar->setValidation(SearchBar::Number);
+    break;
+
+  case 3:
+    m_searchBar->setValidation(SearchBar::Pattern);
+    break;
+
+  default:
+    m_searchBar->setValidation(SearchBar::Pattern);
+    break;
+  };
 }

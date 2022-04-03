@@ -4,6 +4,7 @@ SET (subproject_FILES
   settings.cpp.tpl
   settings.h.tpl
   README
+  TODO
 )
 
 SET (subproject_SOURCES

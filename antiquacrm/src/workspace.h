@@ -12,6 +12,7 @@
 class ApplSettings;
 class InventoryBooks;
 class InventoryPrints;
+class InventoryCustomers;
 
 class Workspace : public QTabWidget {
   Q_OBJECT
@@ -19,9 +20,12 @@ class Workspace : public QTabWidget {
   Q_CLASSINFO("URL", "http://www.hjcms.de")
 
 private:
+  int tabIndex;
   ApplSettings *m_cfg;
   InventoryBooks *m_inventoryBooks;
   InventoryPrints *m_inventoryPrints;
+  InventoryCustomers *m_inventoryCustomers;
+  void addCustomersTab();
 
 private Q_SLOTS:
   void closeTabClicked(int);

@@ -3,17 +3,18 @@
 
 #include "bookstableview.h"
 #include "bookstablemodel.h"
-#include "pmetatypes.h"
+#include "searchbar.h"
 #include "version.h"
 
 #include <QtCore/QDebug>
 #include <QtCore/QRegExp>
 #include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
 #include <QtWidgets/QHeaderView>
 
 /**
     @brief queryFields
-    Die Feldabfragen sind immer gleich!
+    Die Feldabfragen für die Suche sind immer gleich!
     Wenn sich etwas ändern sollte, dann muss in Klasse
     \ref BooksTableModel die Feld Definition geändert werden!
     b.ib_id,b.ib_count,b.ib_title,b.ib_author,b.ib_publisher,b.ib_year,b.ib_price,s.sl_storage,b.ib_isbn
@@ -55,10 +56,14 @@ BooksTableView::BooksTableView(QWidget *parent) : QTableView{parent} {
  */
 void BooksTableView::clickedGetArticleID(const QModelIndex &index) {
   // ib_id
-  if (m_queryModel->data(index.sibling(index.row(), 0), Qt::EditRole).toInt() >= 1) {
+  if (m_queryModel->data(index.sibling(index.row(), 0), Qt::EditRole).toInt() >=
+      1) {
     // ib_title
-    QString id = m_queryModel->data(index.sibling(index.row(), 0), Qt::EditRole).toString();
-    QString str = m_queryModel->data(index.sibling(index.row(), 2), Qt::EditRole).toString();
+    QString id = m_queryModel->data(index.sibling(index.row(), 0), Qt::EditRole)
+                     .toString();
+    QString str =
+        m_queryModel->data(index.sibling(index.row(), 2), Qt::EditRole)
+            .toString();
     QHash<QString, QString> data;
     data.insert(id, str);
     emit articleIdSelected(data);
@@ -76,7 +81,7 @@ void BooksTableView::queryHistory(const QString &str) {
   } else if (str.contains("#yesterday")) {
     q.append("DATE(b.ib_changed)=(DATE(now() - INTERVAL '1 day'))");
   } else if (str.contains("#last7days")) {
-    q.append("DATE(b.ib_changed)=(DATE(now() - INTERVAL '7 days'))");
+    q.append("DATE(b.ib_changed)>=(DATE(now() - INTERVAL '7 days'))");
   } else if (str.contains("#thismonth")) {
     q.append("EXTRACT(MONTH FROM b.ib_changed)=(EXTRACT(MONTH FROM now()))");
   } else if (str.contains("#thisyear")) {
@@ -134,8 +139,14 @@ void BooksTableView::queryStatement(const SearchStatement &cl) {
   q.append(") ORDER BY b.ib_count DESC LIMIT 1000;");
   p_db = QSqlDatabase::database(sqlConnectionName);
   if (p_db.open()) {
-    // qDebug() << "{SQL Title Search} " << q;
     m_queryModel->setQuery(q, p_db);
+    if (m_queryModel->lastError().isValid())
+    {
+         qDebug() << "BooksTableView::queryStatement"
+                  << "{SQL Query} " << q << Qt::endl
+                  << "{SQL Error} " << m_queryModel->lastError() << Qt::endl;
+         return;
+    }
     resizeRowsToContents();
     resizeColumnsToContents();
   }

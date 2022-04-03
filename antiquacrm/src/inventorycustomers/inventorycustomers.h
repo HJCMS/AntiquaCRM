@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef INVENTORYPRINTS_H
-#define INVENTORYPRINTS_H
+#ifndef INVENTORYCUSTOMERS_H
+#define INVENTORYCUSTOMERS_H
 
 #include "inventory.h"
 
@@ -12,7 +12,7 @@
 
 class SearchBar;
 
-class InventoryPrints : public Inventory
+class InventoryCustomers : public Inventory
 {
   Q_OBJECT
 
@@ -20,9 +20,9 @@ private:
   SearchBar *m_searchBar;
 
 public:
-  explicit InventoryPrints(int index,QTabWidget *parent = nullptr);
+  explicit InventoryCustomers(int index,QTabWidget *parent = nullptr);
 
 };
 
-#endif // INVENTORYPRINTS_H
+#endif // INVENTORYCUSTOMERS_H
 

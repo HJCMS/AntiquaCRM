@@ -1,24 +1,24 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "inventoryprints.h"
+#include "inventorycustomers.h"
 #include "searchbar.h"
 #include "version.h"
 
 #include <QtCore/QDebug>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QLayout>
 #include <QtWidgets/QVBoxLayout>
 
-InventoryPrints::InventoryPrints(int index,QTabWidget *parent) : Inventory{index,parent} {
-  setObjectName("InventoryPrints");
-  setWindowTitle("TabPrints");
+InventoryCustomers::InventoryCustomers(int index, QTabWidget *parent)
+    : Inventory{index, parent} {
+  setObjectName("InventoryCustomers");
+  setWindowTitle("TabCustomers");
 
   QVBoxLayout *layout = new QVBoxLayout(this);
-  layout->setObjectName("InventoryPrintsLayout");
+  layout->setObjectName("InventoryCustomersLayout");
 
   m_searchBar = new SearchBar(this);
-  m_searchBar->setObjectName("InventoryPrintsSearchBar");
+  m_searchBar->setObjectName("InventoryCustomersSearchBar");
   layout->addWidget(m_searchBar);
 
   QWidget *w = new QWidget(this);
