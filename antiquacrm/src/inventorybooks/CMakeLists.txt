@@ -14,6 +14,8 @@ SET (subproject_SOURCES
   bookstableview.cpp
   bookstablemodel.cpp
   statsbookbar.cpp
+  bookeditor.cpp
+  netjsonrequest.cpp
 )
 
 SET (subproject_HEADERS
@@ -21,6 +23,8 @@ SET (subproject_HEADERS
   bookstableview.h
   bookstablemodel.h
   statsbookbar.h
+  bookeditor.h
+  netjsonrequest.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC
@@ -37,5 +41,6 @@ TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
   Qt${QT_VERSION_MAJOR}::Sql
+  Qt${QT_VERSION_MAJOR}::Network
 )
 

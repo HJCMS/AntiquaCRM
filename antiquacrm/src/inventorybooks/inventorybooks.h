@@ -16,6 +16,7 @@
 class SearchBar;
 class BooksTableView;
 class StatsBookBar;
+class BookEditor;
 
 class InventoryBooks : public Inventory {
   Q_OBJECT
@@ -27,6 +28,8 @@ private:
   SearchBar *m_searchBar;
   BooksTableView *m_tableView;
   StatsBookBar *m_statsBookBar;
+  BookEditor *m_bookEditor;
+  void openEditor(const QString &);
 
 private Q_SLOTS:
   void parseLineInput(const QString &);

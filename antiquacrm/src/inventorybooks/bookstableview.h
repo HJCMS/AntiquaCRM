@@ -5,19 +5,20 @@
 #ifndef BOOKSTABLEVIEW_H
 #define BOOKSTABLEVIEW_H
 
-#include <QtCore/QObject>
 #include <QtCore/QHash>
-#include <QtCore/QString>
 #include <QtCore/QItemSelectionModel>
+#include <QtCore/QObject>
+#include <QtCore/QString>
 #include <QtSql/QSqlTableModel>
 #include <QtWidgets/QTableView>
 
 class BooksTableModel;
 class SearchStatement;
 
-class BooksTableView : public QTableView
-{
+class BooksTableView : public QTableView {
   Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "http://www.hjcms.de")
 
 private:
   QSqlDatabase p_db;
@@ -27,7 +28,7 @@ private Q_SLOTS:
   void clickedGetArticleID(const QModelIndex &);
 
 Q_SIGNALS:
-  void articleIdSelected(const QHash<QString,QString>&);
+  void articleIdSelected(const QHash<QString, QString> &);
 
 public Q_SLOTS:
   void queryHistory(const QString &);
@@ -35,8 +36,6 @@ public Q_SLOTS:
 
 public:
   explicit BooksTableView(QWidget *parent = nullptr);
-
 };
 
 #endif // BOOKSTABLEVIEW_H
-

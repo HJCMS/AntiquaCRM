@@ -14,10 +14,6 @@
 /* Project */
 #include "mwindow.h"
 
-namespace HJCMS {
- class SqlCore;
-}
-
 class MApplication : public QApplication {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -25,12 +21,7 @@ class MApplication : public QApplication {
 
 private:
   MWindow *m_mainWindow;
-  HJCMS::SqlCore *m_db;
-  bool initDatabase();
   QLockFile sessionLock;
-
-Q_SIGNALS:
-  void postMessage(const QString &);
 
 public:
   explicit MApplication(int &argc, char **argv);

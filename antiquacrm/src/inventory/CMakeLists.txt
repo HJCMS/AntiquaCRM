@@ -10,13 +10,27 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (subproject_SOURCES
+  editionedit.cpp
+  editordialog.cpp
   inventory.cpp
+  isbnedit.cpp
+  priceedit.cpp
   searchbar.cpp
+  storageedit.cpp
+  strlineedit.cpp
+  yearedit.cpp
 )
 
 SET (subproject_HEADERS
+  editionedit.h
+  editordialog.h
   inventory.h
+  isbnedit.h
+  priceedit.h
   searchbar.h
+  storageedit.h
+  strlineedit.h
+  yearedit.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC
@@ -31,6 +45,8 @@ SET_TARGET_PROPERTIES (${_subproject} PROPERTIES
 
 TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
+  Qt${QT_VERSION_MAJOR}::Gui
   Qt${QT_VERSION_MAJOR}::Widgets
+  Qt${QT_VERSION_MAJOR}::Sql
 )
 

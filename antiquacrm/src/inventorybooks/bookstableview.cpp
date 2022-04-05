@@ -8,8 +8,8 @@
 
 #include <QtCore/QDebug>
 #include <QtCore/QRegExp>
-#include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
+#include <QtSql/QSqlQuery>
 #include <QtWidgets/QHeaderView>
 
 /**
@@ -94,8 +94,13 @@ void BooksTableView::queryHistory(const QString &str) {
 
   p_db = QSqlDatabase::database(sqlConnectionName);
   if (p_db.open()) {
-    qDebug() << "BooksTableView::queryHistory" << q;
     m_queryModel->setQuery(q, p_db);
+    if (m_queryModel->lastError().isValid()) {
+      qDebug() << "BooksTableView::queryHistory"
+               << "{SQL Query} " << q << Qt::endl
+               << "{SQL Error} " << m_queryModel->lastError() << Qt::endl;
+      return;
+    }
     resizeRowsToContents();
     resizeColumnsToContents();
   }
@@ -140,12 +145,11 @@ void BooksTableView::queryStatement(const SearchStatement &cl) {
   p_db = QSqlDatabase::database(sqlConnectionName);
   if (p_db.open()) {
     m_queryModel->setQuery(q, p_db);
-    if (m_queryModel->lastError().isValid())
-    {
-         qDebug() << "BooksTableView::queryStatement"
-                  << "{SQL Query} " << q << Qt::endl
-                  << "{SQL Error} " << m_queryModel->lastError() << Qt::endl;
-         return;
+    if (m_queryModel->lastError().isValid()) {
+      qDebug() << "BooksTableView::queryStatement"
+               << "{SQL Query} " << q << Qt::endl
+               << "{SQL Error} " << m_queryModel->lastError() << Qt::endl;
+      return;
     }
     resizeRowsToContents();
     resizeColumnsToContents();

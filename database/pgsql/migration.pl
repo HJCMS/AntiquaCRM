@@ -290,6 +290,10 @@ sub prepare_check_isbn {
     return 0;
   }
 
+  if (length($_isbn) > 13) {
+    return 0;
+  }
+
   ## ISBN13 Check
   my $prefix = substr($_isbn,0,3);
   if (($prefix != 978) or !($prefix != 979))

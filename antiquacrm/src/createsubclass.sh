@@ -38,6 +38,8 @@ cat > ./${_subdir}/${_filename}.h <<EOF
 class ${_class} : public QWidget
 {
   Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "http://www.hjcms.de")
 
 public:
   explicit ${_class}(QWidget *parent = nullptr);

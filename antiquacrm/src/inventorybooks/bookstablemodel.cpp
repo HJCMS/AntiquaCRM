@@ -103,10 +103,10 @@ QVariant BooksTableModel::headerData(int section, Qt::Orientation orientation,
       return setHeaderTitel(tr("Article"));
 
     case 1: // ib_count
-      return setHeaderTitel(tr(" Count "));
+      return setHeaderTitel(tr("Count"));
 
     case 2: // ib_title
-      return setHeaderTitel(tr("Titel"));
+      return setHeaderTitel(tr("Title"));
 
     case 3: // ib_author
       return setHeaderTitel(tr("Author"));
@@ -123,7 +123,7 @@ QVariant BooksTableModel::headerData(int section, Qt::Orientation orientation,
     case 7: // ib_storage
       return setHeaderTitel(tr("Storage Location"));
 
-    case 8:
+    case 8: // ib_isbn
       return setHeaderTitel(tr("ISBN"));
 
     default:

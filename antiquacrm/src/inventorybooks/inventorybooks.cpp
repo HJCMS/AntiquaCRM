@@ -3,7 +3,9 @@
 
 #include "inventorybooks.h"
 #include "applsettings.h"
+#include "bookeditor.h"
 #include "bookstableview.h"
+#include "editordialog.h"
 #include "statsbookbar.h"
 #include "version.h"
 
@@ -113,6 +115,21 @@ void InventoryBooks::searchConvert() {
   }
 }
 
+void InventoryBooks::openEditor(const QString &sql) {
+  qDebug() << "InventoryBooks::selectArticleId" << sql;
+  EditorDialog *dialog = new EditorDialog(this);
+  dialog->setWindowTitle(tr("Edit Book"));
+
+  m_bookEditor = new BookEditor(dialog);
+  m_bookEditor->editDataBaseEntry(sql);
+
+  dialog->setMainWidget(m_bookEditor);
+  connect(dialog, SIGNAL(s_restoreDataset()), m_bookEditor,
+          SLOT(restoreDataset()));
+
+  dialog->show();
+}
+
 void InventoryBooks::selectArticleId(const QHash<QString, QString> &c) {
   if (c.isEmpty())
     return;
@@ -125,7 +142,7 @@ void InventoryBooks::selectArticleId(const QHash<QString, QString> &c) {
     s.append(" AND ib_title ILIKE '");
     s.append(i.value());
     s.append("'");
-    qDebug() << s;
+    openEditor(s);
     break;
   }
 }

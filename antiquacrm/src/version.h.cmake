@@ -6,6 +6,7 @@
 #include <QtCore/QCryptographicHash>
 #include <QtCore/QDir>
 #include <QtCore/QByteArray>
+#include <QtCore/QMap>
 #include <QtGui/QIcon>
 
 /**
@@ -40,6 +41,15 @@ static const QIcon myIcon(const QString &name)
   resourceFile.append(name);
   resourceFile.append(".png");
   return QIcon(resourceFile);
+}
+
+static const QMap<int, QString> editionTypes() {
+  QMap<int, QString> m;
+  m.insert(0, QObject::tr("Unknown"));
+  m.insert(1, QObject::tr("First edition"));
+  m.insert(2, QObject::tr("Second edition"));
+  m.insert(3, QObject::tr("Further edition"));
+  return m;
 }
 
 #endif
