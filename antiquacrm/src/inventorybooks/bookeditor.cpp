@@ -365,12 +365,80 @@ void BookEditor::sendQueryDatabase(const QString &sqlStatement) {
   qDebug() << "BookEditor::sendToDatabase" << sqlStatement;
 }
 
+const QString BookEditor::stripValue(const QVariant &v) {
+  QString s = v.toString().trimmed();
+  if (s.isEmpty())
+    return QString();
+
+  QRegExp reg("[\\'\\\"]+");
+  s = s.replace(reg, "");
+  reg.setPattern("[\\s\\t]+");
+  return s.replace(reg, " ");
+}
+
 /**
    SQL UPDATE Statement erstellen!
+   \d inventory_books
  */
 void BookEditor::updateDataSet() {
-  QString sql("UPDATE inventory_books");
-  //
+  QString set;
+  QString sql("UPDATE inventory_books SET ");
+  QRegularExpression reg("^ib_[a-z]+\\b");
+  QList<StrLineEdit *> l1 =
+      findChildren<StrLineEdit *>(reg, Qt::FindDirectChildrenOnly);
+  for (int i = 0; i < l1.size(); ++i) {
+    if (l1.at(i) != nullptr) {
+      QString str = stripValue(l1.at(i)->value());
+      if (str.isEmpty())
+        continue;
+
+      set.append(l1.at(i)->objectName());
+      set.append("='");
+      set.append(str);
+      set.append("',");
+    }
+  }
+  // Spinboxen
+  QList<QSpinBox *> l2 =
+      findChildren<QSpinBox *>(reg, Qt::FindDirectChildrenOnly);
+  for (int i = 0; i < l2.size(); ++i) {
+    if (l2.at(i) != nullptr) {
+      if (l2.at(i)->value() >= 0) {
+        QString str = QString::number(l2.at(i)->value());
+        if (str.isEmpty())
+          continue;
+
+        set.append(l2.at(i)->objectName());
+        set.append("=");
+        set.append(str);
+        set.append(",");
+      }
+    }
+  }
+  // ib_edition
+  set.append("ib_edition='");
+  set.append(ib_edition->value().toString());
+  set.append("',");
+  // ib_language
+  set.append("ib_language='");
+  set.append(ib_language->value().toString());
+  set.append("',");
+  // ib_storage
+  set.append("ib_storage=");
+  set.append(ib_storage->value().toString());
+  set.append(",");
+  // ib_year
+  // ib_price
+  // ib_isbn
+  // Checkboxen
+  set.append((ib_signed->isChecked() ? "ib_signed=true," : "ib_signed=false,"));
+  set.append(
+      (ib_restricted->isChecked() ? "ib_restricted=true," : "ib_restricted=false,"));
+  // close update
+  sql.append(set);
+  sql.append("ib_changed=now() WHERE ib_id=");
+  sql.append(ib_id->value().toString());
+  sql.append(";");
   sendQueryDatabase(sql);
 }
 
@@ -378,7 +446,7 @@ void BookEditor::updateDataSet() {
    SQL INSERT Statement erstellen!
  */
 void BookEditor::insertDataSet() {
-  QString sql("INSERT INTO inventory_books");
+  QString sql("INSERT INTO inventory_books (");
   //
   sendQueryDatabase(sql);
 }
@@ -469,7 +537,6 @@ void BookEditor::addDataFromQuery(const QString &key, const QVariant &value) {
   // "ib_keyword" QVariant(QString)
   // "ib_condition" QVariant(QString)
   // "ib_designation" QVariant(QString)
-  // "ib_edition" QVariant(QString)
   if (value.type() == QVariant::String) {
     StrLineEdit *v = findChild<StrLineEdit *>(key, Qt::FindDirectChildrenOnly);
     if (v != nullptr)

@@ -9,17 +9,37 @@
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 
+/**
+   @brief Wird mehrfach verwendet
+   @return QRegExp
+ */
+static const QRegExp pcre() {
+  return QRegExp("([\\w\\d\\s\\-\\+,\\.\\?\\!\\/`´:;&#]+)");
+}
+
 StrLineEdit::StrLineEdit(QWidget *parent) : QLineEdit{parent} {
   setObjectName("StrLineEdit");
 
-  QRegExp pattern("([\\w\\d\\s\\-\\+,\\.\\?\\!`´:;&#]+)");
-  m_validator = new QRegExpValidator(pattern, this);
+  m_validator = new QRegExpValidator(pcre(), this);
   setValidator(m_validator);
+
   connect(this, SIGNAL(textChanged(const QString &)), this,
           SLOT(inputChanged(const QString &)));
 }
 
-void StrLineEdit::setValue(const QVariant &str) { setText(str.toString()); }
+void StrLineEdit::setValue(const QVariant &str) {
+  if (str.toString().isEmpty())
+    return;
+
+  QRegExp reg(pcre());
+  QString data = str.toString();
+  if (data.contains(reg)) {
+    setText(data);
+    return;
+  }
+  qDebug() << "StrLineEdit::setValue"
+           << " INVALID ENTRY" << str;
+}
 
 const QVariant StrLineEdit::value() { return QVariant(text()); }
 

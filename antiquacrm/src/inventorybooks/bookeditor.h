@@ -72,6 +72,12 @@ private:
   void sendQueryDatabase(const QString &sqlStatement);
 
   /**
+     @brief Alles was Gift ist muss raus ...
+     @return String
+   */
+  const QString stripValue(const QVariant &);
+
+  /**
      @brief SQL UPDATE Statement erstellen!
      @note In @ref saveData() erfolgt eine @i ib_id Abfrage!
    */
