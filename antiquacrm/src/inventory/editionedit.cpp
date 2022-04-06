@@ -21,13 +21,17 @@ EditionEdit::EditionEdit(QWidget *parent) : QComboBox{parent} {
   }
 }
 
-void EditionEdit::setText(const QString &txt) {
-  if (txt.isEmpty()) {
+void EditionEdit::setValue(const QVariant &val) {
+  if (val.toString().isEmpty()) {
     setCurrentIndex(0);
     return;
   }
-  int index = findText(txt, Qt::MatchExactly);
+  int index = findText(val.toString(), Qt::MatchExactly);
   setCurrentIndex(index);
 }
 
-const QString EditionEdit::text() { return QString::number(currentIndex()); }
+const QVariant EditionEdit::value() {
+  QVariant val;
+  val.setValue(QString::number(currentIndex()));
+  return val;
+}

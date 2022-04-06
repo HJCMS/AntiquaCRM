@@ -2,26 +2,25 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef PRICEEDIT_H
-#define PRICEEDIT_H
+#ifndef ARTICLEID_H
+#define ARTICLEID_H
 
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
-#include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QWidget>
 
-class PriceEdit : public QWidget {
+class ArticleID : public QLineEdit
+{
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "http://www.hjcms.de")
 
-private:
-  QDoubleSpinBox *m_box;
-
 public:
-  explicit PriceEdit(QWidget *parent = nullptr);
+  explicit ArticleID(QWidget *parent = nullptr);
   void setValue(const QVariant &);
   const QVariant value();
 };
 
-#endif // PRICEEDIT_H
+#endif // ARTICLEID_H
+

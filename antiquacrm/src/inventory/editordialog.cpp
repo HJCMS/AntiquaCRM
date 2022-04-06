@@ -10,7 +10,7 @@
 EditorDialog::EditorDialog(QWidget *parent) : QDialog{parent} {
   setObjectName("EditorDialog");
   setSizeGripEnabled(true);
-  setMinimumSize(150, 150);
+  setMinimumSize(800,600);
 
   m_layout = new QVBoxLayout(this);
   m_layout->setObjectName("EditorDialogLayout");
@@ -27,9 +27,7 @@ EditorDialog::EditorDialog(QWidget *parent) : QDialog{parent} {
           SLOT(buttonClicked(QAbstractButton *)));
 }
 
-void EditorDialog::saveClicked() {
-    qDebug() << "TODO SAVE DATA";
-}
+void EditorDialog::saveClicked() { emit s_commitDataset(); }
 
 void EditorDialog::buttonClicked(QAbstractButton *r) {
   if (m_buttonBox->buttonRole(r) == QDialogButtonBox::ResetRole) {

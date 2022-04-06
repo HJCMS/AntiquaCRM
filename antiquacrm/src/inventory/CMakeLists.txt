@@ -10,23 +10,27 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (subproject_SOURCES
+  articleid.cpp
   editionedit.cpp
   editordialog.cpp
   inventory.cpp
   isbnedit.cpp
   priceedit.cpp
   searchbar.cpp
+  setlanguage.cpp
   storageedit.cpp
   strlineedit.cpp
   yearedit.cpp
 )
 
 SET (subproject_HEADERS
+  articleid.h
   editionedit.h
   editordialog.h
   inventory.h
   isbnedit.h
   priceedit.h
+  setlanguage.h
   searchbar.h
   storageedit.h
   strlineedit.h

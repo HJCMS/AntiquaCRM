@@ -2,15 +2,17 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef NETJSONREQUEST_H
-#define NETJSONREQUEST_H
+#ifndef NETWORK_H
+#define NETWORK_H
 
 #include <QtCore/QObject>
+#include <QtCore/QUrl>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkRequest>
 
-class NetJsonRequest : public QNetworkAccessManager {
+class Network : public QNetworkAccessManager
+{
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "http://www.hjcms.de")
@@ -24,8 +26,10 @@ private:
   void readReply();
 
 public:
-  explicit NetJsonRequest(QObject *parent = nullptr);
-  void queryJsonUrl(const QString &);
+  explicit Network(QObject *parent = nullptr);
+  void startRequest(const QUrl &);
+
 };
 
-#endif // NETJSONREQUEST_H
+#endif // NETWORK_H
+

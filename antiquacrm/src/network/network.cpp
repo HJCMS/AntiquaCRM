@@ -1,21 +1,18 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "netjsonrequest.h"
 #include "version.h"
+#include "network.h"
 
 #include <QtCore/QDebug>
 
-NetJsonRequest::NetJsonRequest(QObject *parent)
-    : QNetworkAccessManager{parent} {
-  setObjectName("NetJsonRequest");
-
-  connect(this, SIGNAL(finished()), this, SLOT(urlReplyFinished()));
+Network::Network(QObject *parent) : QNetworkAccessManager{parent} {
+  setObjectName("Network");
 }
 
-void NetJsonRequest::replyFinished() { qDebug() << "TODO::replyFinished"; }
+void Network::replyFinished() { qDebug() << "TODO::replyFinished"; }
 
-void NetJsonRequest::readReply() {
+void Network::readReply() {
   qDebug() << "TODO::readReply";
   if (m_networkReply) {
     QString mimeType =
@@ -29,7 +26,8 @@ void NetJsonRequest::readReply() {
   }
 }
 
-void NetJsonRequest::queryJsonUrl(const QString &q) {
-  m_networkReply = get(QNetworkRequest(QUrl(q)));
+void Network::startRequest(const QUrl &url)
+{
+  m_networkReply = get(QNetworkRequest(url));
   connect(m_networkReply, SIGNAL(readyRead()), this, SLOT(readReply()));
 }

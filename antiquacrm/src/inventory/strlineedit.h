@@ -6,6 +6,7 @@
 #define STRLINEEDIT_H
 
 #include <QtCore/QObject>
+#include <QtCore/QVariant>
 #include <QtCore/QStringList>
 #include <QtGui/QRegExpValidator>
 #include <QtWidgets/QCompleter>
@@ -32,6 +33,12 @@ private Q_SLOTS:
 
 public:
   explicit StrLineEdit(QWidget *parent = nullptr);
+
+  /**
+     @brief Die SQL Daten sind vom Type QVariant
+   */
+  void setValue(const QVariant &);
+  const QVariant value();
 
   /**
      @brief Referenztabelle  aus der gelesen wird.

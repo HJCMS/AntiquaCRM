@@ -2,26 +2,28 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef PRICEEDIT_H
-#define PRICEEDIT_H
+#ifndef SETLANGUAGE_H
+#define SETLANGUAGE_H
 
+#include <QtCore/QList>
+#include <QtCore/QHash>
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
-#include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QWidget>
 
-class PriceEdit : public QWidget {
+/**
+   @brief ISO639-1 Language Code
+ */
+class SetLanguage : public QComboBox {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "http://www.hjcms.de")
 
-private:
-  QDoubleSpinBox *m_box;
-
 public:
-  explicit PriceEdit(QWidget *parent = nullptr);
+  explicit SetLanguage(QWidget *parent = nullptr);
   void setValue(const QVariant &);
   const QVariant value();
 };
 
-#endif // PRICEEDIT_H
+#endif // SETLANGUAGE_H

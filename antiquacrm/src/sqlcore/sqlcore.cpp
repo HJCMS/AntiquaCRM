@@ -13,6 +13,8 @@
 
 namespace HJCMS {
 
+int timerInterval = 15000; /**< Timer Interval 15s (15 * 1000) */
+
 SqlCore::SqlCore(QObject *parent) : QObject{parent} {
   setObjectName("PostgreSqlCoreDriver");
   statusTimerID = 0;
@@ -121,7 +123,7 @@ bool SqlCore::initDatabase() {
     }
 
     if (database->isValid()) {
-      statusTimerID = startTimer(10000);
+      statusTimerID = startTimer(timerInterval);
       return true;
     }
   }

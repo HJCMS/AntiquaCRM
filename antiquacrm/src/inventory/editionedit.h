@@ -6,6 +6,7 @@
 #define EDITIONEDIT_H
 
 #include <QtCore/QObject>
+#include <QtCore/QVariant>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QWidget>
 
@@ -15,14 +16,11 @@ class EditionEdit : public QComboBox {
   Q_CLASSINFO("URL", "http://www.hjcms.de")
 
 public Q_SLOTS:
- /**
-     @note edition_t ist vom type char
-  */
-  void setText(const QString &);
+  void setValue(const QVariant &);
 
 public:
   explicit EditionEdit(QWidget *parent = nullptr);
-  const QString text();
+  const QVariant value();
 };
 
 #endif // EDITIONEDIT_H

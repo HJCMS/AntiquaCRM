@@ -40,6 +40,8 @@ void StorageEdit::setStorageData() {
   }
 }
 
-void StorageEdit::setStorageLocation(int i) { setCurrentIndex(i); }
+void StorageEdit::setValue(const QVariant &val) {
+  setCurrentIndex(val.toInt());
+}
 
-int StorageEdit::currentStorageLocation() { return currentIndex(); }
+const QVariant StorageEdit::value() { return QVariant(currentIndex()); }

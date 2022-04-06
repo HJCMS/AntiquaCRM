@@ -119,6 +119,7 @@ void InventoryBooks::openEditor(const QString &sql) {
   qDebug() << "InventoryBooks::selectArticleId" << sql;
   EditorDialog *dialog = new EditorDialog(this);
   dialog->setWindowTitle(tr("Edit Book"));
+  dialog->setMinimumSize(850,620);
 
   m_bookEditor = new BookEditor(dialog);
   m_bookEditor->editDataBaseEntry(sql);
@@ -126,6 +127,8 @@ void InventoryBooks::openEditor(const QString &sql) {
   dialog->setMainWidget(m_bookEditor);
   connect(dialog, SIGNAL(s_restoreDataset()), m_bookEditor,
           SLOT(restoreDataset()));
+  connect(dialog, SIGNAL(s_commitDataset()), m_bookEditor,
+          SLOT(saveData()));
 
   dialog->show();
 }

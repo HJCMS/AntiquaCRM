@@ -7,7 +7,7 @@
 
 #include <QtCore/QModelIndex>
 #include <QtCore/QObject>
-#include <QtCore/QString>
+#include <QtCore/QVariant>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QWidget>
 
@@ -23,11 +23,7 @@ private:
   void setStorageData();
 
 public Q_SLOTS:
-  /**
-     @brief Identisch mit setCurrentIndex(int)
-     @return sl_id
-   */
-  void setStorageLocation(int);
+  void setValue(const QVariant &);
 
 public:
   explicit StorageEdit(QWidget *parent = nullptr);
@@ -36,7 +32,7 @@ public:
      @brief Identisch mit currentIndex()
      @return sl_id
    */
-  int currentStorageLocation();
+  const QVariant value();
 };
 
 #endif // STORAGEEDIT_H

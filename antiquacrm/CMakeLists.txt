@@ -62,10 +62,6 @@ SET (PROJECT_INCLUDE_DIRS
   ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-###
-## \Section Targets
-###
-ADD_SUBDIRECTORY (locales)
 ADD_SUBDIRECTORY (src)
 
 ##EOF

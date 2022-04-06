@@ -26,6 +26,7 @@ protected Q_SLOTS:
   void buttonClicked(QAbstractButton *);
 
 Q_SIGNALS:
+  void s_commitDataset();
   void s_restoreDataset();
 
 public:

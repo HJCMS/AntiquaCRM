@@ -19,6 +19,10 @@ StrLineEdit::StrLineEdit(QWidget *parent) : QLineEdit{parent} {
           SLOT(inputChanged(const QString &)));
 }
 
+void StrLineEdit::setValue(const QVariant &str) { setText(str.toString()); }
+
+const QVariant StrLineEdit::value() { return QVariant(text()); }
+
 void StrLineEdit::setLineEditCompliter(const QStringList &list) {
   if (list.size() < 1)
     return;
@@ -29,7 +33,7 @@ void StrLineEdit::setLineEditCompliter(const QStringList &list) {
 }
 
 void StrLineEdit::inputChanged(const QString &s) {
-  if (s.length() >= (maxLength()-1)) {
+  if (s.length() >= (maxLength() - 1)) {
     setStyleSheet("color: red;");
   } else {
     setStyleSheet("");
@@ -62,14 +66,13 @@ void StrLineEdit::setKeyword(const QString &key) {
   setLineEditCompliter(list);
 }
 
-void StrLineEdit::setMaxAllowedLength(int l)
-{
-    // Standard Wert ist 32767.
-    if(l > 4 && l < 32767)
-        setMaxLength(l);
+void StrLineEdit::setMaxAllowedLength(int l) {
+  // Standard Wert ist 32767.
+  if (l > 4 && l < 32767)
+    setMaxLength(l);
 
-    QString txt(tr("Max allowed length"));
-    txt.append(" ");
-    txt.append(QString::number(l));
-    setPlaceholderText(txt);
+  QString txt(tr("Max allowed length"));
+  txt.append(" ");
+  txt.append(QString::number(l));
+  setPlaceholderText(txt);
 }

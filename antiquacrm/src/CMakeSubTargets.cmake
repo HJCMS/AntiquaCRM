@@ -17,6 +17,12 @@ SET (TARGET_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/inventoryprints
  ${CMAKE_CURRENT_BINARY_DIR}/inventorybooks
  ${CMAKE_CURRENT_SOURCE_DIR}/inventorybooks
+ ${CMAKE_CURRENT_BINARY_DIR}/network
+ ${CMAKE_CURRENT_SOURCE_DIR}/network
+ ${CMAKE_CURRENT_BINARY_DIR}/imaging
+ ${CMAKE_CURRENT_SOURCE_DIR}/imaging
+ ${CMAKE_CURRENT_BINARY_DIR}/i18n
+ ${CMAKE_CURRENT_SOURCE_DIR}/i18n
  ${CMAKE_CURRENT_BINARY_DIR}/inventory
  ${CMAKE_CURRENT_SOURCE_DIR}/inventory
  ${CMAKE_CURRENT_BINARY_DIR}/icons
@@ -33,6 +39,9 @@ ADD_SUBDIRECTORY (inventorycustomers)
 ADD_SUBDIRECTORY (sqlcore)
 ADD_SUBDIRECTORY (inventoryprints)
 ADD_SUBDIRECTORY (inventorybooks)
+ADD_SUBDIRECTORY (network)
+ADD_SUBDIRECTORY (imaging)
+ADD_SUBDIRECTORY (i18n)
 ADD_SUBDIRECTORY (inventory)
 ADD_SUBDIRECTORY (icons)
 
@@ -42,5 +51,8 @@ InventoryCustomers
 sqlcore
 InventoryPrints
 InventoryBooks
+Network
+Imaging
 Inventory
+${QM_FILES}
 )
