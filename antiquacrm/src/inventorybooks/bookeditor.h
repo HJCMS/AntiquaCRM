@@ -1,11 +1,13 @@
 #ifndef BOOKEDITOR_H
 #define BOOKEDITOR_H
 
+#include <QtCore/QList>
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
@@ -18,6 +20,12 @@ class StorageEdit;
 class EditionEdit;
 class StrLineEdit;
 class IsbnEdit;
+
+struct BookDataField {
+  QString field; /**< @brief Fieldname */
+  int vtype;     /**< @brief QVariant::Type */
+  QVariant data; /**< @brief Datset */
+};
 
 /**
    @brief Buch Editor Klasse
@@ -49,6 +57,7 @@ private:
   StrLineEdit *ib_title;
   StrLineEdit *ib_title_extended;
   QTextEdit *ib_description;
+  QPushButton *btn_imaging; /**< @brief IMage Import/Edit Dialog */
 
   /**
      @brief image_preview
@@ -63,7 +72,7 @@ private:
    eingesetz wird. Darf das nicht innerhalb der SQLQuery
    schleife erfolgen!
   */
-  QHash<QString, QVariant> dbDataSet;
+  QList<BookDataField> dbDataSet;
 
   /**
      @brief sendToDatabase
@@ -121,6 +130,11 @@ private:
 
 private Q_SLOTS:
   /**
+     @brief Button open Imaging clicked()
+   */
+  void triggerImageEdit();
+
+  /**
      @brief Signal accept() abfangen.
    */
   void saveData();
@@ -143,6 +157,9 @@ public Q_SLOTS:
    */
   void restoreDataset();
 
+Q_SIGNALS:
+  void s_openImageEditor(double);
+
 public:
   BookEditor(QDialog *parent = nullptr);
 
@@ -157,5 +174,7 @@ public:
    */
   void createDataBaseEntry();
 };
+
+Q_DECLARE_METATYPE(BookDataField);
 
 #endif // BOOKEDITOR_H

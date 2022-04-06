@@ -13,7 +13,7 @@ ArticleID::ArticleID(QWidget *parent) : QLineEdit{parent} {
 }
 
 void ArticleID::setValue(const QVariant &id) {
-  qDebug() << id;
+  // qDebug() << id;
   setText(id.toString());
 }
 

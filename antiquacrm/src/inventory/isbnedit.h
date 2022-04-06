@@ -39,9 +39,9 @@ public:
    */
   const QString openLibraryUrl();
 
-  void setIsbn(qulonglong);
+  void setValue(const QVariant &);
 
-  qulonglong getIsbn();
+  const QVariant value();
 };
 
 #endif // ISBNEDIT_H

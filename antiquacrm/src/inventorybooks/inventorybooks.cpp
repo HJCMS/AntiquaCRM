@@ -116,7 +116,7 @@ void InventoryBooks::searchConvert() {
 }
 
 void InventoryBooks::openEditor(const QString &sql) {
-  qDebug() << "InventoryBooks::selectArticleId" << sql;
+  // qDebug() << "InventoryBooks::openEditor" << sql;
   EditorDialog *dialog = new EditorDialog(this);
   dialog->setWindowTitle(tr("Edit Book"));
   dialog->setMinimumSize(850,620);

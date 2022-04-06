@@ -21,6 +21,7 @@ SET (subproject_SOURCES
   storageedit.cpp
   strlineedit.cpp
   yearedit.cpp
+  messagebox.cpp
 )
 
 SET (subproject_HEADERS
@@ -35,6 +36,7 @@ SET (subproject_HEADERS
   storageedit.h
   strlineedit.h
   yearedit.h
+  messagebox.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

@@ -16,11 +16,11 @@ class YearEdit : public QDateEdit
   Q_CLASSINFO("URL", "http://www.hjcms.de")
 
 public Q_SLOTS:
-  void setValue(double);
+  void setValue(const QVariant  &);
 
 public:
   explicit YearEdit(QWidget *parent = nullptr);
-  double getValue();
+  const QVariant value();
 
 };
 

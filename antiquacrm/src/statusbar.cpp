@@ -31,7 +31,7 @@ void StatusBar::createConnectionWidget() {
 }
 
 void StatusBar::sqlStatusMessage(const QString &str) {
-  qDebug() << "StatusBar::sqlStatusMessage: " << str;
+  // qDebug() << "StatusBar::sqlStatusMessage: " << str;
   showMessage(str);
 }
 

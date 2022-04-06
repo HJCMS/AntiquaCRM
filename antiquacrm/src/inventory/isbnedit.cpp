@@ -90,14 +90,15 @@ const QString IsbnEdit::openLibraryUrl() {
   return req;
 }
 
-void IsbnEdit::setIsbn(qulonglong i) {
+void IsbnEdit::setValue(const QVariant &val) {
+  qulonglong i = val.toLongLong();
   if (i == 0)
     return;
 
   setText(QString::number(i));
 }
 
-qulonglong IsbnEdit::getIsbn() {
+const QVariant IsbnEdit::value() {
   QString txt = text().trimmed();
   int l = txt.length();
   if (l > 13 && l != 10)

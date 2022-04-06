@@ -1,11 +1,11 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "version.h"
 #include "yearedit.h"
+#include "version.h"
 
-#include <QtCore/QDebug>
 #include <QtCore/QDate>
+#include <QtCore/QDebug>
 
 YearEdit::YearEdit(QWidget *parent) : QDateEdit{parent} {
   setObjectName("YearEdit");
@@ -13,13 +13,10 @@ YearEdit::YearEdit(QWidget *parent) : QDateEdit{parent} {
   setMaximumDate(QDate());
 }
 
-void YearEdit::setValue(double y)
-{
-    QDate d(y,1,1);
-    setDate(d);
+void YearEdit::setValue(const QVariant &v) {
+  double y = v.toDouble();
+  QDate d(y, 1, 1);
+  setDate(d);
 }
 
-double YearEdit::getValue()
-{
-    return date().year();
-}
+const QVariant YearEdit::value() { return date().year(); }
