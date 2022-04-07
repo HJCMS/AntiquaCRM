@@ -2,6 +2,7 @@
 #define ANTIQUACRM_VERSION_H
 
 #include <QtCore/QGlobalStatic>
+#include <QtCore/QUrl>
 #include <QtCore/QString>
 #include <QtCore/QCryptographicHash>
 #include <QtCore/QDir>
@@ -15,8 +16,11 @@
 #define ANTIQUACRM_NAME "@PROJECTNAME@"
 #define ANTIQUACRM_DISPLAYNAME "@DISPLAYNAME@"
 #define ANTIQUACRM_VERSION "@ANTIQUACRM_VERSION_MAJOR@.@ANTIQUACRM_VERSION_MINOR@.@ANTIQUACRM_VERSION_RELEASE@"
-#define ANTIQUACRM_VERSION_STRING "@ANTIQUACRM_VERSION@"
-#define HJCMSFQDN "hjcms.de"
+#define ANTIQUACRM_VERSION_STRING "@ANTIQUACRM_VERSION_STRING@"
+#define ANTIQUACRM_CONFIG_DOMAIN "hjcms.de"
+
+
+static const QUrl AntiquaHomepage = QUrl("@HOMEPAGEURL@");
 
 /**
  * @short sqlConnectionName
@@ -41,15 +45,6 @@ static const QIcon myIcon(const QString &name)
   resourceFile.append(name);
   resourceFile.append(".png");
   return QIcon(resourceFile);
-}
-
-static const QMap<int, QString> editionTypes() {
-  QMap<int, QString> m;
-  m.insert(0, QObject::tr("Unknown"));
-  m.insert(1, QObject::tr("First edition"));
-  m.insert(2, QObject::tr("Second edition"));
-  m.insert(3, QObject::tr("Further edition"));
-  return m;
 }
 
 #endif

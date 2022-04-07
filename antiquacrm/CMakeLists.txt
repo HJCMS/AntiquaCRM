@@ -9,10 +9,11 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 SET (PROJECTNAME "antiquacrm")
 SET (DISPLAYNAME "Antiqua CRM")
 SET (DESCRIPTION "A Qt5/C++ based CRM with PSQL bindings for antiques dealers.")
-SET (HOMEPAGEURL "https://www.hjcms.de")
+SET (HOMEPAGEURL "https://antiquacrm.hjcms.de")
 SET (ANTIQUACRM_VERSION_MAJOR 0)
 SET (ANTIQUACRM_VERSION_MINOR 0)
-SET (ANTIQUACRM_VERSION_RELEASE 1)
+SET (ANTIQUACRM_VERSION_RELEASE 2)
+SET (ANTIQUACRM_VERSION_STRING "0.0.2.git")
 
 PROJECT(${PROJECTNAME} 
   VERSION ${ANTIQUACRM_VERSION_MAJOR}.${ANTIQUACRM_VERSION_MINOR}.${ANTIQUACRM_VERSION_RELEASE}
@@ -63,5 +64,18 @@ SET (PROJECT_INCLUDE_DIRS
 )
 
 ADD_SUBDIRECTORY (src)
+
+##############################################################
+## LGPL/GPL3 Exceptions
+##############################################################
+
+INSTALL (FILES
+  README
+  AUTHORS
+  ChangeLog
+  LICENCE
+  DESTINATION share/${CMAKE_PROJECT_NAME}
+  COMPONENT data
+)
 
 ##EOF

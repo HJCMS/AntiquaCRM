@@ -10,12 +10,10 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (subproject_SOURCES
-  network.cpp
   isbnrequest.cpp
 )
 
 SET (subproject_HEADERS
-  network.h
   isbnrequest.h
 )
 
@@ -31,7 +29,6 @@ SET_TARGET_PROPERTIES (${_subproject} PROPERTIES
 
 TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
-  Qt${QT_VERSION_MAJOR}::Gui
   Qt${QT_VERSION_MAJOR}::Network
 )
 

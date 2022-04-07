@@ -8,6 +8,15 @@
 #include <QtCore/QMapIterator>
 #include <QtCore/QObject>
 
+static const QMap<int, QString> editionTypes() {
+  QMap<int, QString> m;
+  m.insert(0, QObject::tr("Unknown"));
+  m.insert(1, QObject::tr("First edition"));
+  m.insert(2, QObject::tr("Second edition"));
+  m.insert(3, QObject::tr("Further edition"));
+  return m;
+}
+
 /**
 SELECT cell FROM information_schema.columns WHERE table_name = 'edition_t';
 */

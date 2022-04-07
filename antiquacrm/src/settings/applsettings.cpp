@@ -6,7 +6,7 @@
 #include <QtCore/QDebug>
 
 ApplSettings::ApplSettings()
-    : QSettings(HJCMSFQDN,ANTIQUACRM_NAME)
+    : QSettings(ANTIQUACRM_CONFIG_DOMAIN,ANTIQUACRM_NAME)
 {}
 
 const QHash<QString,QVariant> & ApplSettings::readGroupConfig(const QString &group)

@@ -9,6 +9,8 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpinBox>
+#include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
@@ -20,6 +22,7 @@ class StorageEdit;
 class EditionEdit;
 class StrLineEdit;
 class IsbnEdit;
+class IsbnRequest;
 
 struct BookDataField {
   QString field; /**< @brief Fieldname */
@@ -57,7 +60,10 @@ private:
   StrLineEdit *ib_title;
   StrLineEdit *ib_title_extended;
   QTextEdit *ib_description;
-  QPushButton *btn_imaging; /**< @brief IMage Import/Edit Dialog */
+  QPushButton *btn_imaging;   /**< @brief IMage Import/Edit Dialog */
+  IsbnRequest *m_isbnRequest; /**< @brief ISBN Abfrage Klasse */
+  QTabWidget *m_tabWidget;    /**< @brief BeschreibungsText und ISBN Info  */
+  QTextBrowser *m_textBrowser;   /**< @brief ISBN Vorschau */
 
   /**
      @brief image_preview
@@ -140,10 +146,16 @@ private Q_SLOTS:
   void saveData();
 
   /**
-     @brief openISBNQuery
-     @todo Im moment noch NICHT Implimetiert!
+     @brief Öffne den ISBN Dialog
+     @see triggerIsbnQuery()
    */
-  void openISBNQuery();
+  void setIsbnInfo(bool);
+
+  /**
+     @brief triggerISBNQuery
+     @todo ISBN Anfragen Versenden
+   */
+  void triggerIsbnQuery();
 
 public Q_SLOTS:
   /**

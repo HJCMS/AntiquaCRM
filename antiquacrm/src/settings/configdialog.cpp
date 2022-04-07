@@ -18,6 +18,7 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent)
     setObjectName("ConfigDialog");
     setWindowTitle(tr("Configuration"));
     setSizeGripEnabled(true);
+    setMinimumSize(800, 600);
 
     m_settings = new ApplSettings();
 

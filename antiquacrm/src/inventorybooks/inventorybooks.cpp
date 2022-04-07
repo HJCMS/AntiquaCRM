@@ -78,6 +78,7 @@ InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
   // Verlaufs abfragen
   connect(m_statsBookBar, SIGNAL(s_queryHistory(const QString &)), m_tableView,
           SLOT(queryHistory(const QString &)));
+
   // ID in Tabelle ausgewählt
   connect(m_tableView,
           SIGNAL(articleIdSelected(const QHash<QString, QString> &)), this,
@@ -119,7 +120,7 @@ void InventoryBooks::openEditor(const QString &sql) {
   // qDebug() << "InventoryBooks::openEditor" << sql;
   EditorDialog *dialog = new EditorDialog(this);
   dialog->setWindowTitle(tr("Edit Book"));
-  dialog->setMinimumSize(850,620);
+  dialog->setMinimumSize(850, 620);
 
   m_bookEditor = new BookEditor(dialog);
   m_bookEditor->editDataBaseEntry(sql);
@@ -127,8 +128,7 @@ void InventoryBooks::openEditor(const QString &sql) {
   dialog->setMainWidget(m_bookEditor);
   connect(dialog, SIGNAL(s_restoreDataset()), m_bookEditor,
           SLOT(restoreDataset()));
-  connect(dialog, SIGNAL(s_commitDataset()), m_bookEditor,
-          SLOT(saveData()));
+  connect(dialog, SIGNAL(s_commitDataset()), m_bookEditor, SLOT(saveData()));
 
   dialog->show();
 }

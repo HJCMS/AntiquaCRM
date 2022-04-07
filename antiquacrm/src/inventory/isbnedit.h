@@ -32,13 +32,6 @@ Q_SIGNALS:
 public:
   explicit IsbnEdit(QWidget *parent = nullptr);
 
-  /**
-     @brief https://openlibrary.org/developers/api
-     @param jsonFormat
-     @return QString::url
-   */
-  const QString openLibraryUrl();
-
   void setValue(const QVariant &);
 
   const QVariant value();

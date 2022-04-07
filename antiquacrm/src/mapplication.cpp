@@ -3,7 +3,11 @@
 #include "mapplication.h"
 #include "applsettings.h"
 #include "version.h"
+
 #include <QtCore/QDebug>
+#include <QtCore/QLibraryInfo>
+#include <QtCore/QTranslator>
+#include <QtCore/QLocale>
 
 MApplication::MApplication(int &argc, char **argv)
     : QApplication(argc, argv), sessionLock(lockFilePath()) {
@@ -13,7 +17,15 @@ MApplication::MApplication(int &argc, char **argv)
   setApplicationVersion(ANTIQUACRM_VERSION_STRING);
   setApplicationDisplayName(ANTIQUACRM_NAME);
   setDesktopFileName(ANTIQUACRM_NAME);
-  setOrganizationDomain(HJCMSFQDN);
+  setOrganizationDomain(ANTIQUACRM_CONFIG_DOMAIN);
+
+  QString d(applicationDirPath());
+  QTranslator *transl = new QTranslator(this);
+  if (transl->load(QString("%1/i18n/antiquacrm_%2").arg(d, QLocale().bcp47Name())))
+  {
+    qDebug("Translation loaded.");
+    installTranslator(transl);
+  }
 }
 
 /**

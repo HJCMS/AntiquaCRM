@@ -133,12 +133,12 @@ bool SqlCore::initDatabase() {
 void SqlCore::timerEvent(QTimerEvent *ev) {
   if (ev->timerId() > 0) {
     bool tcp = socketConnectionTest();
-    // TODO
+    /*
     qDebug() << "Timer Start ID:" << statusTimerID
              << "Timer Event ID:" << ev->timerId()
              << "sql query connections exists:" << database->isOpen()
              << "Socket:" << tcp;
-
+    */
     emit s_connectionStatus(tcp);
   }
 }

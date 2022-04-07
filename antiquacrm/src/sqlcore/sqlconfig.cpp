@@ -16,7 +16,7 @@ static const QString section(const QString &f) {
   return p;
 }
 
-SqlConfig::SqlConfig() : QSettings(HJCMSFQDN, ANTIQUACRM_NAME) {}
+SqlConfig::SqlConfig() : QSettings(ANTIQUACRM_CONFIG_DOMAIN, ANTIQUACRM_NAME) {}
 
 const QString SqlConfig::getConnectioName() {
   return QString(sqlConnectionName);

@@ -31,17 +31,25 @@ void StrLineEdit::setValue(const QVariant &str) {
   if (str.toString().isEmpty())
     return;
 
-  QRegExp reg(pcre());
-  QString data = str.toString();
-  if (data.contains(reg)) {
+  QRegExp reg("[\\n\\r]+");
+  QString data = str.toString().trimmed();
+  data = data.replace(reg, "");
+  QRegExp reg2(pcre());
+  if (data.contains(reg2)) {
     setText(data);
     return;
   }
-  qDebug() << "StrLineEdit::setValue"
+  qDebug() << "TODO"
+           << "StrLineEdit::setValue"
            << " INVALID ENTRY" << str;
 }
 
-const QVariant StrLineEdit::value() { return QVariant(text()); }
+const QVariant StrLineEdit::value() {
+  QRegExp reg("[\\n\\r]+");
+  QString buffer(text().trimmed());
+  buffer = buffer.replace(reg, "");
+  return QVariant(buffer);
+}
 
 void StrLineEdit::setLineEditCompliter(const QStringList &list) {
   if (list.size() < 1)

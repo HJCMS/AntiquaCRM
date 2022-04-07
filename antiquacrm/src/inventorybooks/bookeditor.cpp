@@ -2,6 +2,7 @@
 #include "articleid.h"
 #include "editionedit.h"
 #include "isbnedit.h"
+#include "isbnrequest.h"
 #include "messagebox.h"
 #include "priceedit.h"
 #include "setlanguage.h"
@@ -11,6 +12,8 @@
 #include "yearedit.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonObject>
 #include <QtCore/QList>
 #include <QtCore/QUrl>
 #include <QtSql/QSqlDatabase>
@@ -289,6 +292,7 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
   QPushButton *m_btnQueryISBN = new QPushButton(this);
   m_btnQueryISBN->setText(tr("ISBN"));
   m_btnQueryISBN->setEnabled(false);
+  m_btnQueryISBN->setIcon(myIcon("autostart"));
   lay4->addWidget(m_btnQueryISBN, 8, 0, 1, 1);
 
   ib_isbn = new IsbnEdit(this);
@@ -317,15 +321,7 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
 
   QHBoxLayout *lay5 = new QHBoxLayout();
 
-  // Textfield
-  QLabel *ibDescriptionLabel = new QLabel(this);
-  ibDescriptionLabel->setObjectName("ib_descriptionLabel");
-  ibDescriptionLabel->setText(tr("Additional Description"));
-
-  lay5->addWidget(ibDescriptionLabel);
-
   lay5->addItem(m_horizontalSpacer);
-
   // TODO PushButton
   btn_imaging = new QPushButton(myIcon("image"), tr("Picture"), this);
   btn_imaging->setObjectName("OpenImagingButton");
@@ -336,10 +332,24 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
 
   mainLayout->addLayout(lay5);
 
+  // TabWidget
+  m_tabWidget = new QTabWidget(this);
+  m_tabWidget->setObjectName("TabWidget");
+
   ib_description = new QTextEdit(this);
   ib_description->setObjectName("textEdit");
+  ib_description->setTextInteractionFlags(Qt::TextEditorInteraction);
+  ib_description->setAcceptRichText(false); // Qt::PlainText
+  m_tabWidget->insertTab(0, ib_description, tr("Additional Description"));
+  m_tabWidget->setTabIcon(0, myIcon("edit"));
 
-  mainLayout->addWidget(ib_description);
+  m_textBrowser = new QTextBrowser(this);
+  m_textBrowser->setObjectName("ISBNInfoRichText");
+  m_textBrowser->setOpenExternalLinks(true);
+  m_tabWidget->insertTab(1, m_textBrowser, "Open Library");
+  m_tabWidget->setTabIcon(1, myIcon("folder_txt"));
+
+  mainLayout->addWidget(m_tabWidget);
 
   // TabOrder
   setTabOrder(ib_id, ib_count);
@@ -359,9 +369,8 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
   setTabOrder(ib_designation, ib_edition);
   setTabOrder(ib_edition, ib_isbn);
   setTabOrder(ib_isbn, ib_language);
-  setTabOrder(ib_language, ib_description);
 
-  connect(m_btnQueryISBN, SIGNAL(clicked()), this, SLOT(openISBNQuery()));
+  connect(m_btnQueryISBN, SIGNAL(clicked()), this, SLOT(triggerIsbnQuery()));
   connect(btn_imaging, SIGNAL(clicked()), this, SLOT(triggerImageEdit()));
 }
 
@@ -434,7 +443,14 @@ void BookEditor::updateDataSet() {
       if (sp != nullptr) {
         set.append(f.field);
         set.append("='");
-        set.append((sp->value().toString()));
+        set.append(sp->value().toString());
+        set.append("',");
+      } else if (f.field.contains("ib_description")) {
+        set.append(f.field);
+        set.append("='");
+        QString plainText = ib_description->toPlainText();
+        QRegExp reg("[\\']+");
+        set.append(plainText.replace(reg, ""));
         set.append("',");
       }
     } else if (f.vtype == QVariant::Double) {
@@ -477,8 +493,9 @@ void BookEditor::updateDataSet() {
 */
 void BookEditor::insertDataSet() {
   QString sql("INSERT INTO inventory_books (");
-  //
-  sendQueryDatabase(sql);
+  qDebug() << "BookEditor::insertDataSet"
+           << "TODO " << sql;
+  // sendQueryDatabase(sql);
 }
 
 void BookEditor::createDataSet() {
@@ -537,6 +554,10 @@ void BookEditor::addDataFromQuery(const QString &key, const QVariant &value) {
   if (key.contains("ib_language")) {
     ib_language->setValue(value);
   }
+  // ib_description
+  if (key.contains("ib_description")) {
+    ib_description->setPlainText(value.toString());
+  }
   // "ib_signed" QVariant(bool)
   // "ib_restricted" QVariant(bool)
   if (value.type() == QVariant::Bool) {
@@ -570,8 +591,12 @@ void BookEditor::addDataFromQuery(const QString &key, const QVariant &value) {
   // "ib_designation" QVariant(QString)
   if (value.type() == QVariant::String) {
     StrLineEdit *v = findChild<StrLineEdit *>(key, Qt::FindDirectChildrenOnly);
-    if (v != nullptr)
-      v->setValue(value);
+    if (v != nullptr) {
+      if (!value.toString().contains("NOT_SET")) {
+        // TODO FIXME SET RED COLOR
+        v->setValue(value);
+      }
+    }
   }
 }
 
@@ -594,9 +619,11 @@ void BookEditor::editDataBaseEntry(const QString &sql) {
         widgetList << list.at(i)->objectName();
     }
   }
+  // TextEdit Feld
+  widgetList << "ib_description";
 
   QSqlDatabase db(QSqlDatabase::database(sqlConnectionName));
-  // qDebug() << select << db.isValid();
+  // qDebug() "SELECT ->" << select << db.isValid();
   if (db.isValid()) {
     QSqlQuery q = db.exec(select);
     QSqlRecord r = db.record("inventory_books");
@@ -604,6 +631,7 @@ void BookEditor::editDataBaseEntry(const QString &sql) {
     while (q.next()) {
       foreach (QString key, widgetList) {
         QVariant val = q.value(r.indexOf(key));
+        // qDebug() << "KEY -->" << key;
         BookDataField d;
         d.field = key;
         d.vtype = val.type();
@@ -625,14 +653,79 @@ void BookEditor::saveData() {
   }
 }
 
-void BookEditor::openISBNQuery() {
-  QString q = ib_isbn->openLibraryUrl();
-  if (q.isEmpty())
+void BookEditor::setIsbnInfo(bool b) {
+  if (!b) {
+    m_textBrowser->setHtml(tr("<h2>No Response or Book entry exits.</h2>"));
+    m_tabWidget->setCurrentIndex(1);
+    return;
+  }
+
+  if (m_isbnRequest == nullptr)
     return;
 
-  q.prepend("curl '");
-  q.append("'");
-  qDebug() << q;
+  const QMap<QString, QVariant> isbnData = m_isbnRequest->getResponse();
+
+  QString html("<ul>");
+
+  QString txt_title = QString("<li>%1: %2</li>")
+                          .arg(tr("Title"), isbnData.value("title").toString());
+  html.append(txt_title);
+
+  if (!isbnData.value("authors").isNull()) {
+    QString txt_author =
+        QString("<li>%1: %2</li>")
+            .arg(tr("Author"), isbnData.value("authors").toString());
+    html.append(txt_author);
+  }
+
+  if (!isbnData.value("publish_date").isNull()) {
+    QString txt_year =
+        QString("<li>%1: %2</li>")
+            .arg(tr("Year"), isbnData.value("publish_date").toString());
+    html.append(txt_year);
+  }
+
+  QString ib_publisher_txt = isbnData.value("publishers").toString();
+  if (!isbnData.value("publish_places").isNull()) {
+    ib_publisher_txt.append("/");
+    ib_publisher_txt.append(isbnData.value("publish_places").toString());
+  }
+  html.append(
+      QString("<li>%1: %2</li>").arg(tr("Publisher"), ib_publisher_txt));
+
+  QString txt_url_link =
+      QString("<li><a href=\"%1\">%2</a></li>")
+          .arg(isbnData.value("url").toString(), tr("Website"));
+  html.append(txt_url_link);
+
+  if (!isbnData.value("medium_image").isNull()) {
+    QString img_link_medium = isbnData.value("medium_image").toString();
+    html.append(QString("<li><a href=\"%1\">%2</a></li>")
+                    .arg(img_link_medium, tr("Medium Image")));
+  }
+
+  if (!isbnData.value("large_image").isNull()) {
+    QString img_link_larg = isbnData.value("large_image").toString();
+    html.append(QString("<li><a href=\"%1\">%2</a></li>")
+                    .arg(img_link_larg, tr("Large Image")));
+  }
+  html.append("</ul>");
+
+  m_textBrowser->setHtml(html);
+
+  m_tabWidget->setCurrentIndex(1);
+}
+
+void BookEditor::triggerIsbnQuery() {
+  QString isbn = ib_isbn->text().trimmed();
+  int l = isbn.length();
+  if (l > 13 && l != 10) {
+    return;
+  }
+  m_isbnRequest = new IsbnRequest(isbn, this);
+  connect(m_isbnRequest, SIGNAL(requestFinished(bool)), this,
+          SLOT(setIsbnInfo(bool)));
+  m_isbnRequest->triggerRequest();
 }
 
 void BookEditor::createDataBaseEntry() { qDebug() << __FUNCTION__ << "TODO"; }

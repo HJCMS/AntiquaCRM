@@ -3,11 +3,7 @@
 
 INCLUDE(CMakeSubTargets.cmake)
 
-##
-# \Section 
-##
-
-qt5_add_resources (QRC_FILES icons.qrc)
+QT5_ADD_RESOURCES (QRC_FILES icons.qrc)
 
 SET (PROJECT_HEADERS
   mapplication.h
@@ -32,14 +28,13 @@ SET (PROJECT_SOURCES
 ADD_EXECUTABLE(${PROJECTNAME}
   ${PROJECT_HEADERS}
   ${PROJECT_SOURCES}
-  ${QRC_FILES}
 )
 
 TARGET_LINK_LIBRARIES(${PROJECTNAME} PRIVATE
     Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::Network
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Sql
-    Qt${QT_VERSION_MAJOR}::Network
     ${_link_sub_libs}
 )
 

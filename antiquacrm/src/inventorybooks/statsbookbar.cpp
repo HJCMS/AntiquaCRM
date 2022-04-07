@@ -4,9 +4,10 @@
 #include "statsbookbar.h"
 #include "version.h"
 
-#include <QtCore/QObject>
 #include <QtCore/QDebug>
 #include <QtCore/QList>
+#include <QtCore/QObject>
+#include <QtSql/QSqlDatabase>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QSpacerItem>
 
@@ -16,6 +17,7 @@ StatsBookBar::StatsBookBar(QWidget *parent) : QToolBar{parent} {
   setObjectName("StatsBookBar");
   setOrientation(Qt::Horizontal);
   setFloatable(false);
+  timerID = -1;
 
   // BEGIN "Messanger Area"
   QWidget *m_info = new QWidget(this);
@@ -44,6 +46,8 @@ StatsBookBar::StatsBookBar(QWidget *parent) : QToolBar{parent} {
 
   connect(m_showHistory, SIGNAL(currentIndexChanged(int)), this,
           SLOT(historyChanged(int)));
+
+  timerID = startTimer(1000);
 }
 
 /**
@@ -54,11 +58,18 @@ EXTRACT(ISOYEAR FROM ib_changed)=(EXTRACT(YEAR FROM now()))
 void StatsBookBar::addComboBoxData() {
   int i = 0;
   m_showHistory->insertItem(i++, comboBoxIcon(), tr("Book data history"), "");
-  m_showHistory->insertItem(i++, tr("Today"),"#today");
+  m_showHistory->insertItem(i++, tr("Today"), "#today");
   m_showHistory->insertItem(i++, tr("Yesterday"), "#yesterday");
   m_showHistory->insertItem(i++, tr("Last 7 Days"), "#last7days");
   m_showHistory->insertItem(i++, tr("This Month"), "#thismonth");
   m_showHistory->insertItem(i++, tr("This Year"), "#thisyear");
+}
+
+void StatsBookBar::timerEvent(QTimerEvent *t) {
+  if (QSqlDatabase::database(sqlConnectionName).isValid()) {
+    setThisDayHistory();
+    killTimer(timerID);
+  }
 }
 
 /**
@@ -72,8 +83,7 @@ void StatsBookBar::addComboBoxData() {
 @param i  Index von m_showHistory
 */
 void StatsBookBar::historyChanged(int i) {
-  if (i > 0 && !m_showHistory->itemData(i, Qt::UserRole).toString().isEmpty())
-  {
+  if (i > 0 && !m_showHistory->itemData(i, Qt::UserRole).toString().isEmpty()) {
     emit s_queryHistory(m_showHistory->itemData(i, Qt::UserRole).toString());
 
     blockSignals(true);
@@ -84,4 +94,10 @@ void StatsBookBar::historyChanged(int i) {
 
 void StatsBookBar::showMessage(const QString &str) {
   m_infoLabel->setText(str);
+}
+
+void StatsBookBar::setThisDayHistory() {
+  int i = m_showHistory->findData("#today", Qt::UserRole);
+  if (i >= 1)
+    m_showHistory->setCurrentIndex(i);
 }

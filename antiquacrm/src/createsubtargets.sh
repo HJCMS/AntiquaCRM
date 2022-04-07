@@ -66,6 +66,6 @@ for _s in ${_buffer[@]} ; do
 done
 
 cat >> CMakeSubTargets.cmake <<EOF
-\${QM_FILES}
 )
+
 EOF

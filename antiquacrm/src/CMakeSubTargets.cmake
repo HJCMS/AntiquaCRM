@@ -54,5 +54,5 @@ InventoryBooks
 Network
 Imaging
 Inventory
-${QM_FILES}
 )
+

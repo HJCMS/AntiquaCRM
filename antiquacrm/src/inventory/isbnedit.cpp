@@ -69,27 +69,6 @@ void IsbnEdit::isbnChanged(const QString &s) {
   }
 }
 
-/**
- https://openlibrary.org/developers/api
- https://openlibrary.org/dev/docs/api/books
-*/
-const QString IsbnEdit::openLibraryUrl() {
-  QString txt = text().trimmed();
-  int l = txt.length();
-  if (l > 13 && l != 10)
-    return QString();
-  else if (l != 13)
-    return QString();
-
-  QString req;
-  req.append("http://openlibrary.org/api/books?bibkeys=ISBN:");
-  req.append(txt);
-  // jscmd=data =+ Autorendaten und Infos
-  req.append("&jscmd=data&format=json");
-
-  return req;
-}
-
 void IsbnEdit::setValue(const QVariant &val) {
   qulonglong i = val.toLongLong();
   if (i == 0)
