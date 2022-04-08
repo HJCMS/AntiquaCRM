@@ -109,9 +109,20 @@ void BooksTableView::queryHistory(const QString &str) {
 }
 
 void BooksTableView::queryStatement(const SearchStatement &cl) {
+  /**
+     @brief exact_match
+      false = irgendwo im feld
+      true = genau ab Anfang
+  */
+  bool exact_match = false;
+
   QRegExp reg("^(\\s+)");
-  // NOTE ist in combofieldbox.cpp Definiert!
   QString field = cl.SearchField;
+  if (field.contains("title_first")) {
+    field = QString("title");
+    exact_match = true;
+  }
+
   QString str = cl.SearchString;
   if (reg.exactMatch(str)) {
     qDebug() << "Rejected:" << str;
@@ -137,7 +148,11 @@ void BooksTableView::queryStatement(const SearchStatement &cl) {
     q.append("%'");
   } else {
     // String Search
-    q.append(" WHERE (b.ib_title ILIKE '%");
+    if (exact_match) {
+      q.append(" WHERE (b.ib_title ILIKE '");
+    } else {
+      q.append(" WHERE (b.ib_title ILIKE '%");
+    }
     q.append(str);
     q.append("%') OR (b.ib_title_extended ILIKE '");
     q.append(str);

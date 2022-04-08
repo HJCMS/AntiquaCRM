@@ -395,7 +395,7 @@ void BookEditor::sendQueryDatabase(const QString &sqlStatement) {
       qDebug() << q.lastError();
     } else {
       MessageBox msgBox(this);
-      msgBox.querySuccess(tr("Bookdata saved successfully!"),2);
+      msgBox.querySuccess(tr("Bookdata saved successfully!"), 2);
     }
     db.close();
   }
@@ -573,14 +573,17 @@ void BookEditor::addDataFromQuery(const QString &key, const QVariant &value) {
   // "ib_edition"
   if (key.contains("ib_edition")) {
     ib_edition->setValue(value);
+    return;
   }
   // "ib_language" QVariant(QString, "de_DE")
   if (key.contains("ib_language")) {
     ib_language->setValue(value);
+    return;
   }
   // ib_description
   if (key.contains("ib_description")) {
     ib_description->setPlainText(value.toString());
+    return;
   }
   // "ib_signed" QVariant(bool)
   // "ib_restricted" QVariant(bool)
@@ -588,6 +591,8 @@ void BookEditor::addDataFromQuery(const QString &key, const QVariant &value) {
     QCheckBox *v = findChild<QCheckBox *>(key, Qt::FindDirectChildrenOnly);
     if (v != nullptr)
       v->setChecked(value.toBool());
+
+    return;
   }
   // "ib_volume" QVariant(int)
   // "ib_count" QVariant(int)
@@ -597,6 +602,7 @@ void BookEditor::addDataFromQuery(const QString &key, const QVariant &value) {
     QSpinBox *v = findChild<QSpinBox *>(key, Qt::FindDirectChildrenOnly);
     if (v != nullptr)
       v->setValue(value.toInt());
+
     return;
   }
   // QVariant(double)
@@ -605,9 +611,11 @@ void BookEditor::addDataFromQuery(const QString &key, const QVariant &value) {
         findChild<QDoubleSpinBox *>(key, Qt::FindDirectChildrenOnly);
     if (v != nullptr)
       v->setValue(value.toDouble());
+
     return;
   }
   // "ib_title" QVariant(QString)
+  // "ib_title_extended" QVariant(QString)
   // "ib_author" QVariant(QString)
   // "ib_publisher" QVariant(QString)
   // "ib_keyword" QVariant(QString)
@@ -620,8 +628,10 @@ void BookEditor::addDataFromQuery(const QString &key, const QVariant &value) {
         // TODO FIXME SET RED COLOR
         v->setValue(value);
       }
+      return;
     }
   }
+  // qDebug() << "Missing" << key << value << value.type();
 }
 
 void BookEditor::readDataBaseEntry(const QString &sql) {
@@ -643,8 +653,11 @@ void BookEditor::readDataBaseEntry(const QString &sql) {
         widgetList << list.at(i)->objectName();
     }
   }
-  // TextEdit Feld
-  widgetList << "ib_description";
+  // Fixme -- Missing Fields
+  if (!widgetList.contains("ib_description"))
+    widgetList << "ib_description";
+  if (!widgetList.contains("ib_title_extended"))
+    widgetList << "ib_title_extended";
 
   QSqlDatabase db(QSqlDatabase::database(sqlConnectionName));
   // qDebug() "SELECT ->" << select << db.isValid();
@@ -699,6 +712,14 @@ void BookEditor::setIsbnInfo(bool b) {
   const QMap<QString, QVariant> isbnData = m_isbnRequest->getResponse();
   if (isbnData.size() < 1)
     return;
+
+  /*
+    QMapIterator<QString, QVariant> i(isbnData);
+    while (i.hasNext()) {
+       i.next();
+       qDebug() << i.key() << i.value() << Qt::endl;
+    }
+  */
 
   // ib_title
   QListWidgetItem *title = new QListWidgetItem(m_listWidget);
@@ -777,6 +798,16 @@ void BookEditor::setIsbnInfo(bool b) {
     graphs->setFlags(flags ^ Qt::ItemIsEnabled);
     m_listWidget->addItem(graphs);
   }
+
+  QListWidgetItem *donate = new QListWidgetItem(m_listWidget);
+  donate->setData(Qt::DisplayRole,
+                  tr("OpenLibrary is free to use, but we need your Help!"));
+  donate->setData(Qt::UserRole, "ib_website:https://archive.org/donate/");
+  donate->setIcon(myIcon("html"));
+  donate->setToolTip(tr("Donation"));
+  donate->setFlags(flags);
+  m_listWidget->addItem(donate);
+
   // Tab anzeigen
   m_tabWidget->setCurrentIndex(1);
 }
@@ -786,7 +817,18 @@ void BookEditor::infoISBNDoubleClicked(QListWidgetItem *item) {
   QString data = item->data(Qt::UserRole).toString();
   if (data.contains("ib_title:")) {
     regexp.setPattern("^ib_title:\\b");
-    ib_title->setValue(data.replace(regexp, ""));
+    data = data.replace(regexp, "");
+    /**
+     Überlange Einträge von externen
+     Quelle unterbinden! Wenn der
+     Vorschlag zu lang ist dann in
+     "ib_title_extended" einfügen!
+    */
+    if (data.length() > 79) {
+      ib_title_extended->setValue(data);
+    } else {
+      ib_title->setValue(data);
+    }
   } else if (data.contains("ib_author:")) {
     regexp.setPattern("^ib_author:\\b");
     ib_author->setValue(data.replace(regexp, ""));
@@ -816,5 +858,3 @@ void BookEditor::triggerIsbnQuery() {
           SLOT(setIsbnInfo(bool)));
   m_isbnRequest->triggerRequest();
 }
-
-void BookEditor::createDataBaseEntry() { qDebug() << __FUNCTION__ << "TODO"; }

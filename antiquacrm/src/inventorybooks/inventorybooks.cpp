@@ -39,17 +39,21 @@ InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
   QList<SearchFilter> filter;
   a.index = 0;
   a.title = tr("Book Title");
-  a.filter = QString("title");
+  a.filter = QString("");
   filter.append(a);
   a.index = 1;
+  a.title = tr("Book Title (starts with)");
+  a.filter = QString("title_first");
+  filter.append(a);
+  a.index = 2;
   a.title = tr("Article ID");
   a.filter = QString("id");
   filter.append(a);
-  a.index = 2;
+  a.index = 3;
   a.title = tr("ISBN");
   a.filter = QString("isbn");
   filter.append(a);
-  a.index = 3;
+  a.index = 4;
   a.title = tr("Author");
   a.filter = QString("author");
   filter.append(a);
@@ -78,6 +82,9 @@ InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
   // Verlaufs abfragen
   connect(m_statsBookBar, SIGNAL(s_queryHistory(const QString &)), m_tableView,
           SLOT(queryHistory(const QString &)));
+
+  connect(m_statsBookBar, SIGNAL(s_createEntryClicked()), this,
+          SLOT(createBookArticle()));
 
   // ID in Tabelle ausgewählt
   connect(m_tableView,
@@ -123,8 +130,9 @@ void InventoryBooks::openEditor(const QString &sql) {
   dialog->setMinimumSize(850, 620);
 
   m_bookEditor = new BookEditor(dialog);
-  m_bookEditor->readDataBaseEntry(sql);
-
+  if (!sql.isEmpty()) {
+    m_bookEditor->readDataBaseEntry(sql);
+  }
   dialog->setMainWidget(m_bookEditor);
   connect(dialog, SIGNAL(s_restoreDataset()), m_bookEditor,
           SLOT(restoreDataset()));
@@ -155,20 +163,12 @@ void InventoryBooks::selectArticleId(const QHash<QString, QString> &c) {
 
 void InventoryBooks::updatePlaceHolder(int id) {
   switch (id) {
-  case 0:
-    m_searchBar->setValidation(SearchBar::Pattern);
-    break;
-
-  case 1:
-    m_searchBar->setValidation(SearchBar::Number);
-    break;
-
   case 2:
     m_searchBar->setValidation(SearchBar::Number);
     break;
 
   case 3:
-    m_searchBar->setValidation(SearchBar::Pattern);
+    m_searchBar->setValidation(SearchBar::Number);
     break;
 
   default:

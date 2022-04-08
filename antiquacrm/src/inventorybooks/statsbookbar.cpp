@@ -39,20 +39,21 @@ StatsBookBar::StatsBookBar(QWidget *parent) : QToolBar{parent} {
 
   addSeparator();
 
-  m_showHistory = new QComboBox(this);
-  m_showHistory->setObjectName("SelectHistoryComboBox");
-  m_showHistory->setToolTip(tr("Books data history from ..."));
-  addComboBoxData();
-  addWidget(m_showHistory);
-  addSeparator();
-
   m_createEntryBtn = new QPushButton(this);
   m_createEntryBtn->setObjectName("CreateNew EntryButton");
   m_createEntryBtn->setText(tr("New Bookentry"));
   m_createEntryBtn->setToolTip(tr("Opens the create new bookentry dialog."));
   m_createEntryBtn->setIcon(myIcon("edit_add"));
   addWidget(m_createEntryBtn);
-// Öffnet den Dialog Neuen Bucheintrag erstellen.
+  addSeparator();
+
+  m_showHistory = new QComboBox(this);
+  m_showHistory->setObjectName("SelectHistoryComboBox");
+  m_showHistory->setToolTip(tr("Books data history from ..."));
+  addComboBoxData();
+  addWidget(m_showHistory);
+
+  // Öffnet den Dialog Neuen Bucheintrag erstellen.
   connect(m_createEntryBtn, SIGNAL(clicked()), this,
           SIGNAL(s_createEntryClicked()));
 

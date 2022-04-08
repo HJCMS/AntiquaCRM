@@ -127,59 +127,69 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="688"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="701"/>
         <source>No datasets were found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="709"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="722"/>
         <source>Booktitle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="716"/>
-        <location filename="../inventorybooks/bookeditor.cpp" line="719"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="729"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="732"/>
         <source>Authors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="753"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="766"/>
         <source>Open Webpage in Browser for full Description.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="757"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="770"/>
         <source>External Book Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="773"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="786"/>
         <source>An image exists on OpenLibrary.org</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="776"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="789"/>
         <source>Images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="706"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="796"/>
+        <source>OpenLibrary is free to use, but we need your Help!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../inventorybooks/bookeditor.cpp" line="799"/>
+        <source>Donation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../inventorybooks/bookeditor.cpp" line="719"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="727"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="740"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="730"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="743"/>
         <source>Publisher Year</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="742"/>
-        <location filename="../inventorybooks/bookeditor.cpp" line="745"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="755"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="758"/>
         <source>Publisher</source>
         <translation type="unfinished"></translation>
     </message>
@@ -343,21 +353,26 @@
     </message>
     <message>
         <location filename="../inventorybooks/inventorybooks.cpp" line="45"/>
-        <source>Article ID</source>
+        <source>Book Title (starts with)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../inventorybooks/inventorybooks.cpp" line="49"/>
-        <source>ISBN</source>
+        <source>Article ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../inventorybooks/inventorybooks.cpp" line="53"/>
+        <source>ISBN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../inventorybooks/inventorybooks.cpp" line="57"/>
         <source>Author</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/inventorybooks.cpp" line="122"/>
+        <location filename="../inventorybooks/inventorybooks.cpp" line="129"/>
         <source>Edit Book</source>
         <translation type="unfinished"></translation>
     </message>
@@ -679,47 +694,47 @@
 <context>
     <name>StatsBookBar</name>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="44"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="52"/>
         <source>Books data history from ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="51"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="44"/>
         <source>New Bookentry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="52"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="45"/>
         <source>Opens the create new bookentry dialog.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="74"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="76"/>
         <source>Book data history</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="75"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="77"/>
         <source>Today</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="76"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="78"/>
         <source>Yesterday</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="77"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="79"/>
         <source>Last 7 Days</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="78"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="80"/>
         <source>This Month</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="79"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="81"/>
         <source>This Year</source>
         <translation type="unfinished"></translation>
     </message>

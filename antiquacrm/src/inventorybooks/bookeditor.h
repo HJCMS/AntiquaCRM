@@ -212,11 +212,6 @@ public:
     @param sql Abfragekorpus @i ohne WHERE
   */
   void readDataBaseEntry(const QString &sql);
-
-  /**
-     @brief Wird aufgerufen wenn keine Daten vorhanden sind!
-   */
-  void createDataBaseEntry();
 };
 
 Q_DECLARE_METATYPE(BookDataField);
