@@ -7,10 +7,11 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QListWidget>
+#include <QtWidgets/QListWidgetItem>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QTabWidget>
-#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
@@ -24,14 +25,36 @@ class StrLineEdit;
 class IsbnEdit;
 class IsbnRequest;
 
+/**
+   @brief BookDataField
+   Lese die Datenfelder mit @ref BookEditor::readDataBaseEntry
+   und schreibe sie für die Zurücksetzen funktion hier rein.
+
+   @note Die Objektnamen die Typangabe in @b field (Feldnamen)
+    stimmen mit den SQL Tabellenspalten Bezeichnungen überein!
+
+   @li Die Typangabe @b field ist für das Identifizieren
+    der Eingabefelder in der Klasse zuständig.
+
+   @li Mit @b vtype wird die Entscheidung getroffen welches
+    Datensatzformat verwendet werden soll. Die Entscheidung
+    liegt zu 100% beim Rückgabe ergebnis von QSqlQuery.
+
+   @li Der Wert @b data ist vom Type Variant, was die Erstellung
+    der SQL INSERT/UPDATE Statements vereinfachen soll.
+
+   @warning Wenn sich bei der Datenbank Tabelle ein Spalten Typ
+    ändert. Muss das hier Kontrolliert und Überarbeitet werden!
+ */
 struct BookDataField {
   QString field; /**< @brief Fieldname */
   int vtype;     /**< @brief QVariant::Type */
-  QVariant data; /**< @brief Datset */
+  QVariant data; /**< @brief Values */
 };
 
 /**
-   @brief Buch Editor Klasse
+   @brief BookEditor
+   Primäre Klasse zum erstellen/bearbeiten von Bucheinträgen.
  */
 class BookEditor : public QWidget {
   Q_OBJECT
@@ -39,31 +62,31 @@ class BookEditor : public QWidget {
   Q_CLASSINFO("URL", "http://www.hjcms.de")
 
 private:
-  QCheckBox *ib_signed;     /**< @brief Signiert? */
-  QCheckBox *ib_restricted; /**< @brief Zensiert? */
-  EditionEdit *ib_edition;
-  SetLanguage *ib_language;
-  StorageEdit *ib_storage;
-  YearEdit *ib_year;
-  PriceEdit *ib_price;
-  QSpinBox *ib_count;
-  QSpinBox *ib_pagecount;
-  QSpinBox *ib_weight;
-  QSpinBox *ib_volume;
-  ArticleID *ib_id; /**< @brief ReadOnly:ArticleID */
-  IsbnEdit *ib_isbn;
-  StrLineEdit *ib_author;
-  StrLineEdit *ib_condition;
-  StrLineEdit *ib_designation;
-  StrLineEdit *ib_keyword;
-  StrLineEdit *ib_publisher;
-  StrLineEdit *ib_title;
-  StrLineEdit *ib_title_extended;
-  QTextEdit *ib_description;
-  QPushButton *btn_imaging;   /**< @brief IMage Import/Edit Dialog */
-  IsbnRequest *m_isbnRequest; /**< @brief ISBN Abfrage Klasse */
-  QTabWidget *m_tabWidget;    /**< @brief BeschreibungsText und ISBN Info  */
-  QTextBrowser *m_textBrowser;   /**< @brief ISBN Vorschau */
+  QCheckBox *ib_signed;           /**< @brief Signiert? */
+  QCheckBox *ib_restricted;       /**< @brief Zensiert? */
+  EditionEdit *ib_edition;        /**< @brief Ausgabe */
+  SetLanguage *ib_language;       /**< @brief Sprache */
+  StorageEdit *ib_storage;        /**< @brief Lager bestimmung */
+  YearEdit *ib_year;              /**< @brief Jahr */
+  PriceEdit *ib_price;            /**< @brief Preis */
+  QSpinBox *ib_count;             /**< @brief Bestandsangabe */
+  QSpinBox *ib_pagecount;         /**< @brief Seitenanzahl */
+  QSpinBox *ib_weight;            /**< @brief Gewicht */
+  QSpinBox *ib_volume;            /**< @brief Band ? */
+  ArticleID *ib_id;               /**< @brief ReadOnly:ArticleID */
+  IsbnEdit *ib_isbn;              /**< @brief ISBN */
+  StrLineEdit *ib_author;         /**< @brief Buchautor */
+  StrLineEdit *ib_condition;      /**< @brief Zustands beschreibung */
+  StrLineEdit *ib_designation;    /**< @brief Umschreibung */
+  StrLineEdit *ib_keyword;        /**< @brief Schlüsselwort */
+  StrLineEdit *ib_publisher;      /**< @brief Herausgeber/Verlag */
+  StrLineEdit *ib_title;          /**< @brief Buch Titel */
+  StrLineEdit *ib_title_extended; /**< @brief Ereiterte Titel  */
+  QTextEdit *ib_description;      /**< @brief Textfeld Beschreibung */
+  QPushButton *btn_imaging;       /**< @brief IMage Import/Edit Dialog */
+  IsbnRequest *m_isbnRequest;     /**< @brief ISBN Abfrage Klasse */
+  QTabWidget *m_tabWidget;   /**< @brief BeschreibungsText und ISBN Info  */
+  QListWidget *m_listWidget; /**< @brief ISBN Abfrage-Vorschau */
 
   /**
      @brief image_preview
@@ -157,6 +180,11 @@ private Q_SLOTS:
    */
   void triggerIsbnQuery();
 
+  /**
+     @brief Öffne Url
+  */
+  void infoISBNDoubleClicked(QListWidgetItem *);
+
 public Q_SLOTS:
   /**
      @brief Durchläuft @ref dbDataSet und ruft @ref addDataFromQuery auf.
@@ -170,6 +198,10 @@ public Q_SLOTS:
   void restoreDataset();
 
 Q_SIGNALS:
+  /**
+     @brief Bildbearbeitung öffnen
+     @todo
+  */
   void s_openImageEditor(double);
 
 public:
@@ -179,7 +211,7 @@ public:
     @brief Wenn Bearbeiten darf der Eintrag nicht 0 sein!
     @param sql Abfragekorpus @i ohne WHERE
   */
-  void editDataBaseEntry(const QString &sql);
+  void readDataBaseEntry(const QString &sql);
 
   /**
      @brief Wird aufgerufen wenn keine Daten vorhanden sind!

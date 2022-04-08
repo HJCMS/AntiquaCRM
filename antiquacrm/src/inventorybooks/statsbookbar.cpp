@@ -18,6 +18,7 @@ StatsBookBar::StatsBookBar(QWidget *parent) : QToolBar{parent} {
   setOrientation(Qt::Horizontal);
   setFloatable(false);
   timerID = -1;
+  countIDs = 0;
 
   // BEGIN "Messanger Area"
   QWidget *m_info = new QWidget(this);
@@ -43,9 +44,22 @@ StatsBookBar::StatsBookBar(QWidget *parent) : QToolBar{parent} {
   m_showHistory->setToolTip(tr("Books data history from ..."));
   addComboBoxData();
   addWidget(m_showHistory);
+  addSeparator();
+
+  m_createEntryBtn = new QPushButton(this);
+  m_createEntryBtn->setObjectName("CreateNew EntryButton");
+  m_createEntryBtn->setText(tr("New Bookentry"));
+  m_createEntryBtn->setToolTip(tr("Opens the create new bookentry dialog."));
+  m_createEntryBtn->setIcon(myIcon("edit_add"));
+  addWidget(m_createEntryBtn);
+// Öffnet den Dialog Neuen Bucheintrag erstellen.
+  connect(m_createEntryBtn, SIGNAL(clicked()), this,
+          SIGNAL(s_createEntryClicked()));
 
   connect(m_showHistory, SIGNAL(currentIndexChanged(int)), this,
           SLOT(historyChanged(int)));
+
+  // s_createEntryClicked()
 
   timerID = startTimer(1000);
 }
@@ -57,19 +71,23 @@ EXTRACT(ISOYEAR FROM ib_changed)=(EXTRACT(YEAR FROM now()))
 */
 void StatsBookBar::addComboBoxData() {
   int i = 0;
+  QIcon sIcon = myIcon("edit");
   m_showHistory->insertItem(i++, comboBoxIcon(), tr("Book data history"), "");
-  m_showHistory->insertItem(i++, tr("Today"), "#today");
-  m_showHistory->insertItem(i++, tr("Yesterday"), "#yesterday");
-  m_showHistory->insertItem(i++, tr("Last 7 Days"), "#last7days");
-  m_showHistory->insertItem(i++, tr("This Month"), "#thismonth");
-  m_showHistory->insertItem(i++, tr("This Year"), "#thisyear");
+  m_showHistory->insertItem(i++, sIcon, tr("Today"), "#today");
+  m_showHistory->insertItem(i++, sIcon, tr("Yesterday"), "#yesterday");
+  m_showHistory->insertItem(i++, sIcon, tr("Last 7 Days"), "#last7days");
+  m_showHistory->insertItem(i++, sIcon, tr("This Month"), "#thismonth");
+  m_showHistory->insertItem(i++, sIcon, tr("This Year"), "#thisyear");
 }
 
 void StatsBookBar::timerEvent(QTimerEvent *t) {
+  ++countIDs;
   if (QSqlDatabase::database(sqlConnectionName).isValid()) {
     setThisDayHistory();
     killTimer(timerID);
   }
+  if (countIDs > 30)
+    killTimer(timerID);
 }
 
 /**

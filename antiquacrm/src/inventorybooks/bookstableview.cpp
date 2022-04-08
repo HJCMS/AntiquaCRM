@@ -84,16 +84,18 @@ void BooksTableView::queryHistory(const QString &str) {
     q.append("DATE(b.ib_changed)>=(DATE(now() - INTERVAL '7 days'))");
   } else if (str.contains("#thismonth")) {
     q.append("EXTRACT(MONTH FROM b.ib_changed)=(EXTRACT(MONTH FROM now()))");
+    q.append(" AND b.ib_count>0");
   } else if (str.contains("#thisyear")) {
     q.append("EXTRACT(ISOYEAR FROM b.ib_changed)=(EXTRACT(YEAR FROM now()))");
+    q.append(" AND b.ib_count>0");
   } else {
     return;
   }
-  q.append(" AND b.ib_count>0");
   q.append(" ORDER BY b.ib_count DESC LIMIT 3500;");
 
   p_db = QSqlDatabase::database(sqlConnectionName);
   if (p_db.open()) {
+    // qDebug() << "BooksTableView::queryHistory" << q << Qt::endl;
     m_queryModel->setQuery(q, p_db);
     if (m_queryModel->lastError().isValid()) {
       qDebug() << "BooksTableView::queryHistory"

@@ -37,6 +37,9 @@ private Q_SLOTS:
   void selectArticleId(const QHash<QString, QString> &);
   void updatePlaceHolder(int);
 
+public Q_SLOTS:
+  void createBookArticle();
+
 public:
   explicit InventoryBooks(int index, QTabWidget *parent = nullptr);
 };

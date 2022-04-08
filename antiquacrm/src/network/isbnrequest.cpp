@@ -4,6 +4,7 @@
 #include "isbnrequest.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QString>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
@@ -43,7 +44,7 @@ IsbnRequest::IsbnRequest(const QString &isbn, QObject *parent)
     : QObject{parent}, p_isbnKey("ISBN:" + isbn) {
   setObjectName("IsbnRequest");
 
-  QString req("http://openlibrary.org/api/books?bibkeys=ISBN:");
+  QString req("https://openlibrary.org/api/books?bibkeys=ISBN:");
   req.append(isbn);
   req.append("&jscmd=data&format=json");
   p_url = QUrl(req);
@@ -157,9 +158,7 @@ void IsbnRequest::slotReadyRead() {
     buf.resize(chunk + 1);
     memset(&buf[0], 0, chunk + 1);
     if (chunk != m_reply->read(&buf[0], chunk)) {
-      qDebug("IsbnRequest -> read error");
-    } else {
-      qDebug("IsbnRequest -> read ok");
+      qDebug("IsbnRequest: buffer read error");
     }
     response += &buf[0];
   }
@@ -167,14 +166,13 @@ void IsbnRequest::slotReadyRead() {
   importResponse(response);
 }
 
-/*
-curl -v \
-'http://openlibrary.org/api/books?bibkeys=ISBN:3921524679&jscmd=data&format=json'
-*/
 void IsbnRequest::triggerRequest() {
   QNetworkRequest request(p_url);
+  // https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
+  request.setRawHeader(QByteArray("Accept-Language"),QByteArray("de, de_DE.utf8;q=0.8, en;q=0.7"));
+  // grep -i json /etc/mime.types
+  request.setRawHeader(QByteArray("Accept"),QByteArray("text/*, application/json; charset=utf8"));
   if (setManager()) {
-    qDebug() << "IsbnRequest::startRequest" << request.url();
     m_reply = m_manager->get(request);
     connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
             SLOT(slotError(QNetworkReply::NetworkError)));

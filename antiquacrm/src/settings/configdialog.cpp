@@ -70,12 +70,19 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent)
 void ConfigDialog::createItemSelection()
 {
     QListWidgetItem *m1 = new QListWidgetItem("ui_settings", m_listWidget);
-    m1->setText(tr("Allgemein"));
+    m1->setText(tr("Generally"));
+    m1->setIcon(myIcon("list"));
     m_listWidget->addItem(m1);
 
     QListWidgetItem *m2 = new QListWidgetItem("sql_settings", m_listWidget);
-    m2->setText(tr("SQL Server"));
+    m2->setText(tr("Database"));
+    m2->setIcon(myIcon("database"));
     m_listWidget->addItem(m2);
+
+    QListWidgetItem *m3 = new QListWidgetItem("isbn_settings", m_listWidget);
+    m3->setText(tr("OpenLibray"));
+    m3->setIcon(myIcon("autostart"));
+    m_listWidget->addItem(m3);
 
     connect (m_listWidget, SIGNAL ( itemDoubleClicked(QListWidgetItem*) ),
            this, SLOT( setPage(QListWidgetItem*) ));
