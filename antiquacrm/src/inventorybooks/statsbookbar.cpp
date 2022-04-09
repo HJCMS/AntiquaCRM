@@ -65,11 +65,6 @@ StatsBookBar::StatsBookBar(QWidget *parent) : QToolBar{parent} {
   timerID = startTimer(1000);
 }
 
-/**
-EXTRACT(ISODOW FROM ib_changed)=(EXTRACT(ISODOW FROM now()))
-EXTRACT(MONTH FROM ib_changed)=(EXTRACT(MONTH FROM now()))
-EXTRACT(ISOYEAR FROM ib_changed)=(EXTRACT(YEAR FROM now()))
-*/
 void StatsBookBar::addComboBoxData() {
   int i = 0;
   QIcon sIcon = myIcon("edit");
@@ -87,20 +82,10 @@ void StatsBookBar::timerEvent(QTimerEvent *t) {
     setThisDayHistory();
     killTimer(timerID);
   }
-  if (countIDs > 30)
+  if (countIDs > timeToLife)
     killTimer(timerID);
 }
 
-/**
-@brief StatsBookBar::historyChanged
-@short Erstellt eine Verlaufsanfrage
-@code
- SELECT b.ib_id,b.ib_title FROM inventory_books as b
- LEFT JOIN inventory AS i
- WHERE
-@endcode
-@param i  Index von m_showHistory
-*/
 void StatsBookBar::historyChanged(int i) {
   if (i > 0 && !m_showHistory->itemData(i, Qt::UserRole).toString().isEmpty()) {
     emit s_queryHistory(m_showHistory->itemData(i, Qt::UserRole).toString());

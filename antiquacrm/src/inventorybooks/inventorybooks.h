@@ -34,8 +34,23 @@ private:
 private Q_SLOTS:
   void parseLineInput(const QString &);
   void searchConvert();
-  void selectArticleId(const QHash<QString, QString> &);
-  void updatePlaceHolder(int);
+
+  /**
+     @brief articleSelected
+     Wird bei der Tabellen Suchansicht mit einem Doppelklick
+     das Signal @ref BooksTableView::s_articleSelected ausgelöst.
+     Wird an Hand des @b "ib_id" Feldes eine SQL Abfrage erstellt
+     und der Editor mit @ref openEditor("ib_id={$id}") geöffnet!
+     @param id
+  */
+  void articleSelected(int id);
+
+  /**
+     @brief updateValidator
+     Wird der Suchfilter geändert dann wird hier an
+     @ref SearchBar::setValidation ein update gesendet.
+   */
+  void updateValidator(int);
 
 public Q_SLOTS:
   void createBookArticle();

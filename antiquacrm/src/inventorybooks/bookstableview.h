@@ -28,7 +28,7 @@ private Q_SLOTS:
   void clickedGetArticleID(const QModelIndex &);
 
 Q_SIGNALS:
-  void articleIdSelected(const QHash<QString, QString> &);
+  void s_articleSelected(int id);
 
 public Q_SLOTS:
   void queryHistory(const QString &);

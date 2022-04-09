@@ -461,7 +461,7 @@ ORDER BY xgr.artnr ASC;
         $values .= "'$title',";
         ## Titel erweitert mit Max 148 Zeichen
         $title = ($r->{'ib_title_extended'}) ? prepare_title_extended($r->{'ib_title_extended'}) : "";
-        if(length($title) > 100) {
+        if(length($title) > 80) {
           $insert .= "ib_title_extended,";
           $values .= "'$title',";
         }

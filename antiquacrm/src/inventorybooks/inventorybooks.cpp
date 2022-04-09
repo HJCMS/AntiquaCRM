@@ -15,6 +15,38 @@
 #include <QtWidgets/QLayout>
 #include <QtWidgets/QVBoxLayout>
 
+/**
+   @brief bookSearchFilter
+   Muss für jedes Suchtab einzeln definiert sein.
+   @ref SearchBar::addSearchFilters
+   @return const QList<SearchFilter>
+*/
+static const QList<SearchFilter> bookSearchFilter() {
+  SearchFilter a;
+  QList<SearchFilter> filter;
+  a.index = 0;
+  a.title = QObject::tr("Book Title");
+  a.filter = QString("");
+  filter.append(a);
+  a.index = 1;
+  a.title = QObject::tr("Book Title (starts with)");
+  a.filter = QString("title_first");
+  filter.append(a);
+  a.index = 2;
+  a.title = QObject::tr("Article ID");
+  a.filter = QString("id");
+  filter.append(a);
+  a.index = 3;
+  a.title = QObject::tr("ISBN");
+  a.filter = QString("isbn");
+  filter.append(a);
+  a.index = 4;
+  a.title = QObject::tr("Author");
+  a.filter = QString("author");
+  filter.append(a);
+  return filter;
+}
+
 InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
     : Inventory{index, parent} {
   setObjectName("InventoryBooks");
@@ -26,41 +58,14 @@ InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("InventoryBooksLayout");
 
-  // begin SearchBar
+  /**
+    @brief m_searchBar
+    Siehe auch @ref updateValidator(int)!
+  */
   m_searchBar = new SearchBar(this);
   m_searchBar->setValidation(SearchBar::Pattern);
-
-  /**
-   \note Wenn hier etwas geändert wird!
-    Dann muss SearchLineEdit::updatePlaceHolder(int)
-    auch geändert werden!
-  */
-  SearchFilter a;
-  QList<SearchFilter> filter;
-  a.index = 0;
-  a.title = tr("Book Title");
-  a.filter = QString("");
-  filter.append(a);
-  a.index = 1;
-  a.title = tr("Book Title (starts with)");
-  a.filter = QString("title_first");
-  filter.append(a);
-  a.index = 2;
-  a.title = tr("Article ID");
-  a.filter = QString("id");
-  filter.append(a);
-  a.index = 3;
-  a.title = tr("ISBN");
-  a.filter = QString("isbn");
-  filter.append(a);
-  a.index = 4;
-  a.title = tr("Author");
-  a.filter = QString("author");
-  filter.append(a);
-  m_searchBar->addSearchFilters(filter);
-
+  m_searchBar->addSearchFilters(bookSearchFilter());
   layout->addWidget(m_searchBar);
-  // end SearchBar
 
   m_tableView = new BooksTableView(this);
   layout->addWidget(m_tableView);
@@ -77,7 +82,7 @@ InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
   connect(m_searchBar, SIGNAL(searchClicked()), this, SLOT(searchConvert()));
 
   connect(m_searchBar, SIGNAL(currentFilterChanged(int)), this,
-          SLOT(updatePlaceHolder(int)));
+          SLOT(updateValidator(int)));
 
   // Verlaufs abfragen
   connect(m_statsBookBar, SIGNAL(s_queryHistory(const QString &)), m_tableView,
@@ -86,10 +91,9 @@ InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
   connect(m_statsBookBar, SIGNAL(s_createEntryClicked()), this,
           SLOT(createBookArticle()));
 
-  // ID in Tabelle ausgewählt
-  connect(m_tableView,
-          SIGNAL(articleIdSelected(const QHash<QString, QString> &)), this,
-          SLOT(selectArticleId(const QHash<QString, QString> &)));
+  // ID wurde in Tabellenansicht ausgewählt
+  connect(m_tableView, SIGNAL(s_articleSelected(int)), this,
+          SLOT(articleSelected(int)));
 }
 
 void InventoryBooks::parseLineInput(const QString &str) {
@@ -128,6 +132,7 @@ void InventoryBooks::openEditor(const QString &sql) {
   EditorDialog *dialog = new EditorDialog(this);
   dialog->setWindowTitle(tr("Edit Book"));
   dialog->setMinimumSize(850, 620);
+  dialog->setShortcutEnabled(false);
 
   m_bookEditor = new BookEditor(dialog);
   if (!sql.isEmpty()) {
@@ -144,24 +149,16 @@ void InventoryBooks::openEditor(const QString &sql) {
 
 void InventoryBooks::createBookArticle() { openEditor(QString()); }
 
-void InventoryBooks::selectArticleId(const QHash<QString, QString> &c) {
-  if (c.isEmpty())
+void InventoryBooks::articleSelected(int id) {
+  if (id < 1)
     return;
 
-  QHashIterator<QString, QString> i(c);
-  while (i.hasNext()) {
-    i.next();
-    QString s("ib_id=");
-    s.append(i.key());
-    s.append(" AND ib_title ILIKE '");
-    s.append(i.value());
-    s.append("'");
-    openEditor(s);
-    break;
-  }
+  QString s("ib_id=");
+  s.append(QString::number(id));
+  openEditor(s);
 }
 
-void InventoryBooks::updatePlaceHolder(int id) {
+void InventoryBooks::updateValidator(int id) {
   switch (id) {
   case 2:
     m_searchBar->setValidation(SearchBar::Number);

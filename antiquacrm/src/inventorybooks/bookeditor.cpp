@@ -447,20 +447,28 @@ void BookEditor::updateDataSet() {
         set.append(",");
       }
     } else if (f.vtype == QVariant::String) {
-      StrLineEdit *sp =
-          findChild<StrLineEdit *>(f.field, Qt::FindDirectChildrenOnly);
-      if (sp != nullptr) {
-        set.append(f.field);
-        set.append("='");
-        set.append(sp->value().toString());
-        set.append("',");
-      } else if (f.field.contains("ib_description")) {
+      if (f.field.contains("ib_description")) {
         set.append(f.field);
         set.append("='");
         QString plainText = ib_description->toPlainText();
         QRegExp reg("[\\']+");
         set.append(plainText.replace(reg, ""));
         set.append("',");
+      } else if (f.field.contains("ib_language")) {
+        set.append(f.field);
+        set.append("='");
+        set.append(ib_language->value().toString());
+        set.append("',");
+      } else {
+        // Jetzt alle StrLineEdit* durchgehen.
+        StrLineEdit *sp =
+            findChild<StrLineEdit *>(f.field, Qt::FindDirectChildrenOnly);
+        if (sp != nullptr) {
+          set.append(f.field);
+          set.append("='");
+          set.append(sp->value().toString());
+          set.append("',");
+        }
       }
     } else if (f.vtype == QVariant::Double) {
       if (f.field.contains("ib_price")) {
@@ -653,11 +661,13 @@ void BookEditor::readDataBaseEntry(const QString &sql) {
         widgetList << list.at(i)->objectName();
     }
   }
-  // Fixme -- Missing Fields
-  if (!widgetList.contains("ib_description"))
+  // Fixme -- add Missing Fields
+  if (!widgetList.contains("ib_description")) {
     widgetList << "ib_description";
-  if (!widgetList.contains("ib_title_extended"))
+  }
+  if (!widgetList.contains("ib_title_extended")) {
     widgetList << "ib_title_extended";
+  }
 
   QSqlDatabase db(QSqlDatabase::database(sqlConnectionName));
   // qDebug() "SELECT ->" << select << db.isValid();

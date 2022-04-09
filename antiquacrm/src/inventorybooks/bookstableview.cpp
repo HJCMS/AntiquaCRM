@@ -55,18 +55,12 @@ BooksTableView::BooksTableView(QWidget *parent) : QTableView{parent} {
  * @param index
  */
 void BooksTableView::clickedGetArticleID(const QModelIndex &index) {
-  // ib_id
-  if (m_queryModel->data(index.sibling(index.row(), 0), Qt::EditRole).toInt() >=
-      1) {
-    // ib_title
-    QString id = m_queryModel->data(index.sibling(index.row(), 0), Qt::EditRole)
-                     .toString();
-    QString str =
-        m_queryModel->data(index.sibling(index.row(), 2), Qt::EditRole)
-            .toString();
-    QHash<QString, QString> data;
-    data.insert(id, str);
-    emit articleIdSelected(data);
+  QModelIndex id(index);
+  if (m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
+    int i = m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
+
+    if (i >= 1)
+      emit s_articleSelected(i);
   }
 }
 

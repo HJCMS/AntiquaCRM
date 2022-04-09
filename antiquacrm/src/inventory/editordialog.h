@@ -6,6 +6,7 @@
 #define EDITORDIALOG_H
 
 #include <QtCore/QObject>
+#include <QtGui/QKeyEvent>
 #include <QtWidgets/QAbstractButton>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
@@ -20,6 +21,14 @@ class EditorDialog : public QDialog {
 private:
   QVBoxLayout *m_layout;
   QDialogButtonBox *m_buttonBox;
+
+protected:
+  /**
+   @brief keyPressEvent
+   Damit keine Daten aus versehen Gespeichert werden!
+   Die Eingabe von Key::{Return,Enter} unterbinden!
+  */
+  void keyPressEvent(QKeyEvent *);
 
 protected Q_SLOTS:
   void saveClicked();

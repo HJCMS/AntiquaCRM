@@ -96,7 +96,7 @@ void SearchBar::updateEditPlaceHolder() {
 
 void SearchBar::searchFilterChanged(int) { updateEditPlaceHolder(); }
 
-void SearchBar::addSearchFilters(QList<SearchFilter> &list) {
+void SearchBar::addSearchFilters(const QList<SearchFilter> &list) {
   if (list.isEmpty())
     return;
 

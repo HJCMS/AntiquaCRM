@@ -43,7 +43,7 @@ private:
   Workspace *m_workSpace;
   ADockWidget *m_adockWidget;
   ApplSettings *m_Settings;
-  void createMenuTree();
+  void setupActions();
 
 private Q_SLOTS:
   void openConfiguration(bool);

@@ -97,7 +97,7 @@ public:
         filter.insert("Display Text","User Value");
     @endcode
    */
-  void addSearchFilters(QList<SearchFilter> &);
+  void addSearchFilters(const QList<SearchFilter> &);
 
   /**
      @brief Gibt den Suchfilter mit dem Index zurück.

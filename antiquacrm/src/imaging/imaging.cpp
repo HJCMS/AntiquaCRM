@@ -6,6 +6,7 @@
 
 #include <QtCore/QDebug>
 
+
 Imaging::Imaging(QWidget *parent) : QWidget{parent} {
   setObjectName("Imaging");
   /**

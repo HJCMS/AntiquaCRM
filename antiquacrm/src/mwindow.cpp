@@ -35,7 +35,7 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
 
   // Menues
   m_menuBar = menuBar();
-  createMenuTree();
+  setupActions();
 
   // DockWidget
   m_adockWidget = new ADockWidget(m_mainWidget);
@@ -72,19 +72,23 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
 /**
  * @brief MWindow::createMenuBars
  */
-void MWindow::createMenuTree() {
+void MWindow::setupActions() {
   m_applicationMenu = m_menuBar->addMenu(tr("Application"));
   m_applicationMenu->setObjectName(QLatin1String("ApplicationMenu"));
 
-  QAction *a_dbc = m_applicationMenu->addAction(tr("DB Connect"));
-  a_dbc->setObjectName("db_connect_action");
-  a_dbc->setIcon(myIcon("database"));
-  connect(a_dbc, SIGNAL(triggered(bool)), this, SLOT(reconnectDatabase(bool)));
+  QIcon dbIcon = myIcon("database");
+
+  QMenu *menu_db = m_applicationMenu->addMenu(dbIcon,tr("Database"));
+  menu_db->setObjectName("menu_database");
+
+  QAction *ac_dbConnect = menu_db->addAction(dbIcon,tr("Connect"));
+  ac_dbConnect->setObjectName("ac_dbconnect");
+  connect(ac_dbConnect, SIGNAL(triggered(bool)), this, SLOT(reconnectDatabase(bool)));
 
   m_applicationMenu->addSeparator();
 
   m_quitAction = m_applicationMenu->addAction(tr("Quit"));
-  m_quitAction->setObjectName("close_action");
+  m_quitAction->setObjectName("ac_closeApp");
   m_quitAction->setIcon(myIcon("close_mini"));
   connect(m_quitAction, SIGNAL(triggered(bool)), this, SLOT(close()));
 

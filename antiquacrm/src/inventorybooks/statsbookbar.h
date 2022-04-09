@@ -47,6 +47,12 @@ private:
   int countIDs;
 
   /**
+     @brief timeToLife
+     Zeit bis Timer Zwangsbeendet wird.
+  */
+  int timeToLife = 30;
+
+  /**
     @brief Info Textfeld
     Hier werden Nachrichten ausgegeben.
   */
@@ -59,37 +65,56 @@ private:
   QComboBox *m_showHistory;
 
   /**
-   @brief Knopf für den erstellen Dialog
+   @brief Öffnet Bucheintrag erstellen Dialog
   */
   QPushButton *m_createEntryBtn;
 
   /**
    @brief Auswahl Verlaufabfrage erstellen
+   @note Die Definition ist abhängig von
+       @ref BooksTableView::queryHistory()
   */
   void addComboBoxData();
 
 private Q_SLOTS:
   /**
-   @brief Auswahl verlauf wurde ausgelöst
+    @brief Erstellt eine Verlaufsanfrage
+    Löst bei vorhandenen Daten das Signal
+    @ref s_queryHistory aus. Die ComboBox
+    wird danach wieder auf currentIndex(0)
+    gestellt.
+    @note Während des Zurücksetzens sind
+          alle Signale blockiert!
   */
   void historyChanged(int);
 
 protected:
   /**
-   @brief Timer für
+   @brief Timer wartet auf db::isOpen
+   Weil zum Zeitpunkt der Klassen
+   Initialisierung noch keine Datenbank
+   Verbindung besteht. Läuft hier der
+   Timer so lange bis er eine findet.
+   @li Wenn Ja - Wird setThisDayHistory
+       ausgelöst und der Timer beendet.
+   @li Wenn Nein - Wird er sich nach 30s
+       beenden und gibt den Speicher frei.
+       Siehe @see timeToLife
   */
   void timerEvent(QTimerEvent *);
 
 Q_SIGNALS:
   /**
    @brief Signal neuen Eintrag erstellen
+   Wird von @ref m_createEntryBtn ausgelöst.
   */
   void s_createEntryClicked();
 
   /**
      @brief Auswahl Verlauf wurde getätigt
-     Gibt den Wert von Qt::UserRole zurück.
-     @see historyChanged(int)
+     Gibt den Benutzerdefiniert zurück.
+     @note Siehe Verlaufsauswahl in der
+           Klassenbeschreibung!
   */
   void s_queryHistory(const QString &);
 

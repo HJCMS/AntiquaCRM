@@ -5,17 +5,8 @@
 #include "version.h"
 
 #include <QtCore/QDebug>
-#include <QtCore/QRegExp>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
-
-/**
-   @brief Wird mehrfach verwendet
-   @return QRegExp
- */
-static const QRegExp pcre() {
-  return QRegExp("([\\w\\d\\s\\-\\+,\\.\\?\\!\\/`´:;&#]+)");
-}
 
 StrLineEdit::StrLineEdit(QWidget *parent) : QLineEdit{parent} {
   setObjectName("StrLineEdit");
@@ -25,6 +16,8 @@ StrLineEdit::StrLineEdit(QWidget *parent) : QLineEdit{parent} {
 
   connect(this, SIGNAL(textChanged(const QString &)), this,
           SLOT(inputChanged(const QString &)));
+
+  connect(this, SIGNAL(returnPressed()), this, SLOT(checkReturnPressed()));
 }
 
 void StrLineEdit::setValue(const QVariant &str) {
@@ -60,13 +53,15 @@ void StrLineEdit::setLineEditCompliter(const QStringList &list) {
   setCompleter(m_completer);
 }
 
-void StrLineEdit::inputChanged(const QString &s) {
-  if (s.length() >= (maxLength() - 1)) {
+void StrLineEdit::inputChanged(const QString &str) {
+  if (str.length() >= (maxLength() - 1)) {
     setStyleSheet("color: red;");
   } else {
     setStyleSheet("");
   }
 }
+
+void StrLineEdit::checkReturnPressed() {}
 
 void StrLineEdit::setKeyword(const QString &key) {
   if (key.isEmpty())
@@ -91,7 +86,8 @@ void StrLineEdit::setKeyword(const QString &key) {
         list << q.value(0).toString();
     }
   }
-  setLineEditCompliter(list);
+  if (list.size() > 1)
+    setLineEditCompliter(list);
 }
 
 void StrLineEdit::setMaxAllowedLength(int l) {
