@@ -131,7 +131,7 @@ void InventoryBooks::openEditor(const QString &sql) {
   // qDebug() << "InventoryBooks::openEditor" << sql;
   EditorDialog *dialog = new EditorDialog(this);
   dialog->setWindowTitle(tr("Edit Book"));
-  dialog->setMinimumSize(850, 620);
+  dialog->setMinimumSize(850,650);
   dialog->setShortcutEnabled(false);
 
   m_bookEditor = new BookEditor(dialog);

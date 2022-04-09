@@ -11,6 +11,7 @@ INCLUDE_DIRECTORIES (
 
 SET (subproject_SOURCES
   inventorybooks.cpp
+  booksimageview.cpp
   bookstableview.cpp
   bookstablemodel.cpp
   statsbookbar.cpp
@@ -19,6 +20,7 @@ SET (subproject_SOURCES
 
 SET (subproject_HEADERS
   inventorybooks.h
+  booksimageview.h
   bookstableview.h
   bookstablemodel.h
   statsbookbar.h

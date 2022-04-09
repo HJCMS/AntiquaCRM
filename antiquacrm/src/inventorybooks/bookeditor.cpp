@@ -1,6 +1,8 @@
 #include "bookeditor.h"
 #include "articleid.h"
+#include "booksimageview.h"
 #include "editionedit.h"
+#include "imagedialog.h"
 #include "isbnedit.h"
 #include "isbnrequest.h"
 #include "messagebox.h"
@@ -27,12 +29,14 @@
 #include <QtWidgets/QListWidgetItem>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSizePolicy>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
 
 BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
   setObjectName("BookEditor");
   setWindowTitle(tr("Edit Book Title"));
+  setMinimumSize(800, 600);
 
   Qt::Alignment defaultAlignment =
       (Qt::AlignRight | Qt::AlignTrailing | Qt::AlignVCenter);
@@ -150,12 +154,8 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
 
   gridLayout->addLayout(lay2, 0, 0, 1, 1);
 
-  image_preview = new QWidget(this);
-  image_preview->setObjectName("image_preview");
-  image_preview->setMinimumSize(QSize(320, 400));
-  image_preview->setMaximumSize(QSize(320, 450));
-
-  gridLayout->addWidget(image_preview, 0, 1, 3, 1);
+  m_imageView = new BooksImageView(this);
+  gridLayout->addWidget(m_imageView, 0, 1, 3, 1);
 
   QHBoxLayout *lay3 = new QHBoxLayout();
   lay3->setObjectName("lay3");
@@ -295,7 +295,7 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
   m_btnQueryISBN->setText("OpenLibrary ISBN");
   m_btnQueryISBN->setToolTip(tr("Send ISBN request to openlibrary.org"));
   m_btnQueryISBN->setEnabled(false);
-  m_btnQueryISBN->setIcon(myIcon("autostart"));
+  m_btnQueryISBN->setIcon(myIcon("folder_txt"));
   lay4->addWidget(m_btnQueryISBN, 8, 0, 1, 1);
 
   ib_isbn = new IsbnEdit(this);
@@ -318,22 +318,34 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
 
   lay4->addWidget(ib_language, 9, 1, 1, 1);
 
-  gridLayout->addLayout(lay4, 2, 0, 1, 1);
-
-  mainLayout->addLayout(gridLayout);
-
   QHBoxLayout *lay5 = new QHBoxLayout();
+  lay5->setObjectName("last_horizontal_layout");
+
+  btn_createJob = new QPushButton(myIcon("autostart"), tr("Create order"), this);
+  btn_createJob->setObjectName("CreateJobFromThis");
+  btn_createJob->setToolTip(tr("Create a purchase order from this listing."));
+  btn_createJob->setEnabled(false);
+  lay5->addWidget(btn_createJob);
 
   lay5->addItem(m_horizontalSpacer);
-  // TODO PushButton
+
   btn_imaging = new QPushButton(myIcon("image"), tr("Picture"), this);
   btn_imaging->setObjectName("OpenImagingButton");
   btn_imaging->setToolTip(
       tr("Open the Imaging Dialog for Import and Edit Pictures."));
-
   lay5->addWidget(btn_imaging);
 
+  lay4->addLayout(lay5, 10, 0, 1, 2);
+
+  gridLayout->addLayout(lay4, 2, 0, 1, 1);
+  mainLayout->addLayout(gridLayout);
+
+  /*
+  QHBoxLayout *lay5 = new QHBoxLayout();
+  lay5->addItem(m_horizontalSpacer);
+  // TODO PushButton
   mainLayout->addLayout(lay5);
+  */
 
   // TabWidget
   m_tabWidget = new QTabWidget(this);
@@ -379,8 +391,17 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
 }
 
 void BookEditor::triggerImageEdit() {
-  double id = ib_id->value().toDouble();
+  qulonglong id = ib_id->value().toLongLong();
   emit s_openImageEditor(id);
+  qDebug() << "Open Image Editor with ID:" << id;
+  ImageDialog *dialog = new ImageDialog(id, this);
+  // TODO CONFIG READ IMAGE_SOURCE_PATH
+  QString p("/home/heinemann/Developement/antiqua/database/tmp/2021-12-10");
+  if (!dialog->setSourceTarget(p)) {
+    qDebug() << "Invalid Source Target:" << p;
+    return;
+  }
+  dialog->exec();
 }
 
 /**
@@ -542,6 +563,11 @@ void BookEditor::createDataSet() {
   }
 
   blockSignals(false);
+
+  // Suche Bilddaten
+  int id = ib_id->value().toInt();
+  if (id > 0)
+    m_imageView->searchImageById(id);
 }
 
 void BookEditor::restoreDataset() {

@@ -10,10 +10,12 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (subproject_SOURCES
+  imagedialog.cpp
   imaging.cpp
 )
 
 SET (subproject_HEADERS
+  imagedialog.h
   imaging.h
 )
 

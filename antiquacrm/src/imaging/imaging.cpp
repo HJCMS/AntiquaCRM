@@ -1,17 +1,14 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "version.h"
 #include "imaging.h"
+#include "version.h"
 
 #include <QtCore/QDebug>
 
-
-Imaging::Imaging(QWidget *parent) : QWidget{parent} {
+Imaging::Imaging(QWidget *parent) : QLabel{parent} {
   setObjectName("Imaging");
-  /**
-  setMinimumSize(QSize(320, 400));
-  setMaximumSize(QSize(320, 450));
-  */
+  setBackgroundRole(QPalette::Base);
+  setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+  setScaledContents(true);
 }
-

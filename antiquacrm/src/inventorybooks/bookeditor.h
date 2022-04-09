@@ -24,6 +24,7 @@ class EditionEdit;
 class StrLineEdit;
 class IsbnEdit;
 class IsbnRequest;
+class BooksImageView;
 
 /**
    @brief BookDataField
@@ -83,16 +84,16 @@ private:
   StrLineEdit *ib_title;          /**< @brief Buch Titel */
   StrLineEdit *ib_title_extended; /**< @brief Ereiterte Titel  */
   QTextEdit *ib_description;      /**< @brief Textfeld Beschreibung */
+  QPushButton *btn_createJob;     /**< @brief Auftragserstellung */
   QPushButton *btn_imaging;       /**< @brief IMage Import/Edit Dialog */
   IsbnRequest *m_isbnRequest;     /**< @brief ISBN Abfrage Klasse */
   QTabWidget *m_tabWidget;   /**< @brief BeschreibungsText und ISBN Info  */
   QListWidget *m_listWidget; /**< @brief ISBN Abfrage-Vorschau */
 
   /**
-     @brief image_preview
-     @todo Siehe @b imaging Unterprojekt!
+     @brief m_imageView
    */
-  QWidget *image_preview;
+  BooksImageView *m_imageView;
 
   /**
    @brief Hier werden die Daten aus der Abfrage eingefügt.
