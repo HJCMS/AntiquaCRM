@@ -155,6 +155,7 @@ void BooksTableView::queryStatement(const SearchStatement &cl) {
   q.append(") ORDER BY b.ib_count DESC LIMIT 1000;");
   p_db = QSqlDatabase::database(sqlConnectionName);
   if (p_db.open()) {
+    // qDebug() << Q_FUNC_INFO << q;
     m_queryModel->setQuery(q, p_db);
     if (m_queryModel->lastError().isValid()) {
       qDebug() << "BooksTableView::queryStatement"

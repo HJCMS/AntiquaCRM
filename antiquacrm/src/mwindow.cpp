@@ -8,12 +8,13 @@
 #include "statusbar.h"
 #include "version.h"
 #include "workspace.h"
-/* Sub Modules */
+#include "filedialog.h"
 #include "configdialog.h"
 #include "sqlcore.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDebug>
+#include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QTabWidget>
 
@@ -77,13 +78,22 @@ void MWindow::setupActions() {
   m_applicationMenu->setObjectName(QLatin1String("ApplicationMenu"));
 
   QIcon dbIcon = myIcon("database");
-
-  QMenu *menu_db = m_applicationMenu->addMenu(dbIcon,tr("Database"));
+  QMenu *menu_db = m_applicationMenu->addMenu(dbIcon, tr("Database"));
   menu_db->setObjectName("menu_database");
 
-  QAction *ac_dbConnect = menu_db->addAction(dbIcon,tr("Connect"));
+  QAction *ac_dbConnect = menu_db->addAction(dbIcon, tr("Connect"));
   ac_dbConnect->setObjectName("ac_dbconnect");
-  connect(ac_dbConnect, SIGNAL(triggered(bool)), this, SLOT(reconnectDatabase(bool)));
+  connect(ac_dbConnect, SIGNAL(triggered(bool)), this,
+          SLOT(reconnectDatabase(bool)));
+
+  QMenu *menu_files = m_applicationMenu->addMenu(myIcon("folder_green"), tr("Open"));
+  menu_files->setObjectName("menu_filemenu");
+
+  QAction *ac_openfile = menu_files->addAction(myIcon("folder_txt"), tr("Open file"));
+  ac_openfile->setObjectName("ac_fileopen");
+  ac_openfile->setEnabled(false);
+  connect(ac_openfile, SIGNAL(triggered(bool)), this,
+          SLOT(openFileDialog(bool)));
 
   m_applicationMenu->addSeparator();
 
@@ -109,6 +119,16 @@ void MWindow::setupActions() {
 
   QAction *a_cfg = m_settingsMenu->addAction(tr("Configuration"));
   connect(a_cfg, SIGNAL(triggered(bool)), this, SLOT(openConfiguration(bool)));
+}
+
+void MWindow::openFileDialog(bool b) {
+  Q_UNUSED(b)
+  FileDialog *m_fileDialog = new FileDialog(this);
+  m_fileDialog->setObjectName("m_file_dialog");
+  if(m_fileDialog->exec())
+  {
+    qDebug() << Q_FUNC_INFO << m_fileDialog->selectedFiles();
+  }
 }
 
 /**

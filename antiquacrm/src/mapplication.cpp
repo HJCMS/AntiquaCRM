@@ -19,6 +19,8 @@ MApplication::MApplication(int &argc, char **argv)
   setDesktopFileName(ANTIQUACRM_NAME);
   setOrganizationDomain(ANTIQUACRM_CONFIG_DOMAIN);
 
+  Q_INIT_RESOURCE(icons);
+
   QString d(applicationDirPath());
   QTranslator *transl = new QTranslator(this);
   if (transl->load(QString("%1/i18n/antiquacrm_%2").arg(d, QLocale().bcp47Name())))

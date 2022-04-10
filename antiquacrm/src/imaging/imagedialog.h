@@ -8,12 +8,19 @@
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QObject>
+#include <QtGui/QImage>
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QFileDialog>
 #include <QtWidgets/QScrollArea>
+#include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
 class Imaging;
+class FileDialog;
 
+/**
+   @brief The ImageDialog class
+*/
 class ImageDialog : public QDialog {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -30,6 +37,12 @@ private:
     @brief sourcePath
   */
   QDir sourceDir;
+
+  /**
+     @brief m_toolBar
+     Bildberabeitungsleister
+   */
+  QToolBar *m_toolBar;
 
   /**
      @brief m_scrollArea
@@ -52,10 +65,29 @@ private:
   int maximumSize = 450;
 
   /**
+     @brief m_fileDialog
+     Bilder öffnen ...
+  */
+  FileDialog *m_fileDialog;
+
+  /**
+     @brief addActions
+     ToolBar Operationen
+   */
+  void addActions();
+
+  /**
      @brief loadFile
      Lade Bildaten und erstelle Imaging
   */
   void loadFile(const QFileInfo &);
+
+private Q_SLOTS:
+  /**
+     @brief openFileDialog
+     Bilder öffnen aufrufen
+  */
+  void openFileDialog();
 
 Q_SIGNALS:
   /**
@@ -81,7 +113,7 @@ public:
 
      @return QImage()
   */
-  const QImage getDatabaseImage();
+  const QImage getImage();
 
   /**
      @brief setSourceTarget

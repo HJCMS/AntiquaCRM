@@ -401,7 +401,9 @@ void BookEditor::triggerImageEdit() {
     qDebug() << "Invalid Source Target:" << p;
     return;
   }
-  dialog->exec();
+  if(dialog->exec()) {
+    m_imageView->addNewImage(id,dialog->getImage());
+  }
 }
 
 /**

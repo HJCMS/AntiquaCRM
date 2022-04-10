@@ -4,14 +4,15 @@
 #include "booksimageview.h"
 #include "version.h"
 
+#include <QtCore/QBuffer>
 #include <QtCore/QDebug>
+#include <QtGui/QImageReader>
 #include <QtGui/QPixmap>
-#include <QtWidgets/QVBoxLayout>
-
-/* QtSql */
 #include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlRecord>
+#include <QtWidgets/QVBoxLayout>
 
 BooksImageView::BooksImageView(QWidget *parent) : QWidget{parent} {
   setObjectName("BooksImageViewer");
@@ -34,8 +35,11 @@ BooksImageView::BooksImageView(QWidget *parent) : QWidget{parent} {
 }
 
 void BooksImageView::insertImage(const QByteArray &data) {
-  QImage image = QImage::fromData(data, "jpg");
-  if (!image.isNull()) {
+  QImage image = QImage::fromData(data, "jpeg");
+  if (image.isNull()) {
+    // qDebug() << Q_FUNC_INFO << "No valid image data";
+    return;
+  } else {
     m_imageLabel->setPixmap(QPixmap::fromImage(image));
     m_scrollArea->setWidget(m_imageLabel);
   }
@@ -52,10 +56,63 @@ void BooksImageView::searchImageById(int id) {
   if (db.isValid()) {
     QSqlQuery q = db.exec(select);
     if (q.next()) {
+      // qDebug() << Q_FUNC_INFO << q.record();
       data = q.value(0).toByteArray();
     }
     db.close();
+
+    data = QByteArray::fromBase64(data, QByteArray::Base64Encoding);
     if (data.size() > 1024)
       insertImage(data);
+  }
+}
+
+void BooksImageView::addNewImage(int id, const QImage &img) {
+  if (img.isNull())
+    return;
+
+  QByteArray rawimg;
+  QBuffer buffer(&rawimg);
+  buffer.open(QIODevice::WriteOnly);
+  img.save(&buffer, "jpeg");
+  buffer.close();
+  insertImage(rawimg);
+
+  QByteArray b64 = rawimg.toBase64();
+
+  QString sql("SELECT im_id FROM inventory_images WHERE im_id=");
+  sql.append(QString::number(id));
+  sql.append(" LIMIT 1;");
+
+  bool update = false;
+  QSqlDatabase db = QSqlDatabase::database(sqlConnectionName);
+  if (db.isValid()) {
+    QSqlQuery q = db.exec(sql);
+    update = q.next();
+  }
+
+  if (update) {
+    sql = QString("UPDATE inventory_images SET ");
+    sql.append("im_imgdata='");
+    sql.append(b64);
+    sql.append("' WHERE im_id=");
+    sql.append(QString::number(id));
+    sql.append(";");
+  } else {
+    sql = QString("INSERT INTO inventory_images (");
+    sql.append("im_id,im_imgdata) VALUES (");
+    sql.append(QString::number(id));
+    sql.append(",'");
+    sql.append(b64);
+    sql.append("');");
+  }
+
+  qDebug() << Q_FUNC_INFO << sql;
+  if (db.isValid()) {
+    QSqlQuery q = db.exec(sql);
+    if (q.lastError().isValid())
+      qDebug() << Q_FUNC_INFO << q.lastError();
+
+    db.close();
   }
 }

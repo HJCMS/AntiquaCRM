@@ -60,6 +60,14 @@ public Q_SLOTS:
 
 public:
   explicit BooksImageView(QWidget *parent = nullptr);
+
+  /**
+     @brief addImageData
+     Schreibe Imagedaten in Tabelle "inventory_images"
+     @param img QImage
+   */
+  void addNewImage(int id,const QImage &img);
+
 };
 
 #endif // BOOKSIMAGEVIEW_H

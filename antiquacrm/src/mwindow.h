@@ -46,6 +46,7 @@ private:
   void setupActions();
 
 private Q_SLOTS:
+  void openFileDialog(bool);
   void openConfiguration(bool);
   void sqlErrorMessageBox(const QString &);
   void toggleFullScreen(bool);

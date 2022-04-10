@@ -10,6 +10,7 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (subproject_SOURCES
+  filedialog.cpp
   articleid.cpp
   editionedit.cpp
   editordialog.cpp
@@ -25,6 +26,7 @@ SET (subproject_SOURCES
 )
 
 SET (subproject_HEADERS
+  filedialog.h
   articleid.h
   editionedit.h
   editordialog.h
