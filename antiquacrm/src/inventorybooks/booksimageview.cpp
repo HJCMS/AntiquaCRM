@@ -107,7 +107,7 @@ void BooksImageView::addNewImage(int id, const QImage &img) {
     sql.append("');");
   }
 
-  qDebug() << Q_FUNC_INFO << sql;
+  // qDebug() << Q_FUNC_INFO << sql;
   if (db.isValid()) {
     QSqlQuery q = db.exec(sql);
     if (q.lastError().isValid())

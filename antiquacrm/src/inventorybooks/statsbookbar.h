@@ -127,6 +127,13 @@ public Q_SLOTS:
   void showMessage(const QString &);
 
   /**
+     @brief showRowCount
+     Tabellenzeilenanzahl ausgeben
+     @param count
+   */
+  void showRowCount(int count);
+
+  /**
     @brief Wähle DB-Verlauf von @b Heute aus
   */
   void setThisDayHistory();

@@ -11,12 +11,12 @@ INCLUDE_DIRECTORIES (
 
 SET (subproject_SOURCES
   imagedialog.cpp
-  imaging.cpp
+  imgviewer.cpp
 )
 
 SET (subproject_HEADERS
   imagedialog.h
-  imaging.h
+  imgviewer.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

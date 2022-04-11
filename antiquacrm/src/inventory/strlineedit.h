@@ -68,10 +68,10 @@ private Q_SLOTS:
   void inputChanged(const QString &str);
 
   /**
-    @brief checkReturnPressed
-    @todo checkInput when Signal::returnPressed() emitted
+    @brief skipReturnPressed
+    @warning Enter soll das Formular nicht absenden!
   */
-  void checkReturnPressed();
+  inline void skipReturnPressed() {};
 
 public:
   explicit StrLineEdit(QWidget *parent = nullptr);

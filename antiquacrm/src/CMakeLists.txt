@@ -8,9 +8,8 @@ QT5_ADD_RESOURCES (QRC_FILES icons.qrc)
 SET (PROJECT_HEADERS
   mapplication.h
   mwindow.h
-  searchtoolbar.h
   statusbar.h
-  adockwidget.h
+  dockbarwidget.h
   workspace.h
 )
 
@@ -18,9 +17,8 @@ SET (PROJECT_SOURCES
   main.cpp
   mapplication.cpp
   mwindow.cpp
-  searchtoolbar.cpp
   statusbar.cpp
-  adockwidget.cpp
+  dockbarwidget.cpp
   workspace.cpp
   ${QRC_FILES}
 )

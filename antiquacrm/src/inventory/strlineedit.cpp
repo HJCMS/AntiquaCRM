@@ -17,7 +17,7 @@ StrLineEdit::StrLineEdit(QWidget *parent) : QLineEdit{parent} {
   connect(this, SIGNAL(textChanged(const QString &)), this,
           SLOT(inputChanged(const QString &)));
 
-  connect(this, SIGNAL(returnPressed()), this, SLOT(checkReturnPressed()));
+  connect(this, SIGNAL(returnPressed()), this, SLOT(skipReturnPressed()));
 }
 
 void StrLineEdit::setValue(const QVariant &str) {
@@ -60,8 +60,6 @@ void StrLineEdit::inputChanged(const QString &str) {
     setStyleSheet("");
   }
 }
-
-void StrLineEdit::checkReturnPressed() {}
 
 void StrLineEdit::setKeyword(const QString &key) {
   if (key.isEmpty())

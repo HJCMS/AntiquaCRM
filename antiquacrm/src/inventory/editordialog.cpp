@@ -49,7 +49,7 @@ EditorDialog::EditorDialog(QWidget *parent) : QDialog{parent} {
 
 void EditorDialog::keyPressEvent(QKeyEvent *e) {
   if (e->key() == Qt::Key_Return) {
-    qInfo("Press enter key will ignored in editor dialog");
+    qInfo("Key press enter or return will ignored in editor dialog");
     return;
   }
   QDialog::keyPressEvent(e);

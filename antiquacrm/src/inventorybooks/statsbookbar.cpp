@@ -44,6 +44,7 @@ StatsBookBar::StatsBookBar(QWidget *parent) : QToolBar{parent} {
   m_createEntryBtn->setText(tr("New Bookentry"));
   m_createEntryBtn->setToolTip(tr("Opens the create new bookentry dialog."));
   m_createEntryBtn->setIcon(myIcon("edit_add"));
+  m_createEntryBtn->setEnabled(false);
   addWidget(m_createEntryBtn);
   addSeparator();
 
@@ -98,6 +99,15 @@ void StatsBookBar::historyChanged(int i) {
 
 void StatsBookBar::showMessage(const QString &str) {
   m_infoLabel->setText(str);
+}
+
+void StatsBookBar::showRowCount(int count) {
+  QString rows(tr("Rowcounts"));
+  rows.append(": ");
+  rows.append(QString::number(count));
+  showMessage(rows);
+  if(count>0)
+    m_createEntryBtn->setEnabled(true);
 }
 
 void StatsBookBar::setThisDayHistory() {

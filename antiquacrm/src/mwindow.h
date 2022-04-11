@@ -20,7 +20,7 @@
 class StatusBar;
 class Workspace;
 class ApplSettings;
-class ADockWidget;
+class DockBarWidget;
 
 namespace HJCMS {
  class SqlCore;
@@ -39,9 +39,8 @@ private:
   QMenuBar *m_menuBar;
   QAction *m_quitAction;
   StatusBar *m_statusBar;
-  QWidget *m_mainWidget;
   Workspace *m_workSpace;
-  ADockWidget *m_adockWidget;
+  DockBarWidget *m_dockBarWidget;
   ApplSettings *m_Settings;
   void setupActions();
 

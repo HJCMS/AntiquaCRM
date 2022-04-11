@@ -20,7 +20,6 @@ class ArticleID;
 class YearEdit;
 class PriceEdit;
 class StorageEdit;
-class EditionEdit;
 class StrLineEdit;
 class IsbnEdit;
 class IsbnRequest;
@@ -65,7 +64,6 @@ class BookEditor : public QWidget {
 private:
   QCheckBox *ib_signed;           /**< @brief Signiert? */
   QCheckBox *ib_restricted;       /**< @brief Zensiert? */
-  EditionEdit *ib_edition;        /**< @brief Ausgabe */
   SetLanguage *ib_language;       /**< @brief Sprache */
   StorageEdit *ib_storage;        /**< @brief Lager bestimmung */
   YearEdit *ib_year;              /**< @brief Jahr */
@@ -74,6 +72,7 @@ private:
   QSpinBox *ib_pagecount;         /**< @brief Seitenanzahl */
   QSpinBox *ib_weight;            /**< @brief Gewicht */
   QSpinBox *ib_volume;            /**< @brief Band ? */
+  QSpinBox *ib_edition;           /**< @brief Ausgabe */
   ArticleID *ib_id;               /**< @brief ReadOnly:ArticleID */
   IsbnEdit *ib_isbn;              /**< @brief ISBN */
   StrLineEdit *ib_author;         /**< @brief Buchautor */

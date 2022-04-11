@@ -8,14 +8,14 @@
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QObject>
-#include <QtGui/QImage>
+#include <QtWidgets/QAbstractButton>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QScrollArea>
-#include <QtWidgets/QToolBar>
+#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
 
-class Imaging;
+class ImgViewer;
 class FileDialog;
 
 /**
@@ -39,22 +39,16 @@ private:
   QDir sourceDir;
 
   /**
-     @brief m_toolBar
-     Bildberabeitungsleister
-   */
-  QToolBar *m_toolBar;
-
-  /**
      @brief m_scrollArea
      Scrollbereich
   */
   QScrollArea *m_scrollArea;
 
   /**
-     @brief m_imageWidget
+     @brief m_imgViewer
      Bild Darstellung
   */
-  Imaging *m_imageLabel;
+  ImgViewer *m_imgViewer;
 
   /**
      @brief maximumSize
@@ -71,16 +65,31 @@ private:
   FileDialog *m_fileDialog;
 
   /**
-     @brief addActions
-     ToolBar Operationen
+     @brief m_statusBar
+     Zeige Bild Informationen
    */
-  void addActions();
+  QStatusBar *m_statusBar;
+
+  /**
+     @brief createSizeMessage
+     Erstellt eine Info zur Bildgröße
+   */
+  void setSizeMessage(const QSize &s);
 
   /**
      @brief loadFile
      Lade Bildaten und erstelle Imaging
   */
   void loadFile(const QFileInfo &);
+
+  /**
+     @brief findImageSourceFiles
+     Suche im Quellen Verzeichnis nach Bildern
+     mit der Atrikel ID.
+     @note Kann mehrfach Vorkommen
+     @return
+   */
+  void findImageSourceFiles();
 
 private Q_SLOTS:
   /**

@@ -12,12 +12,12 @@
 int main(int argc, char *argv[]) {
   /**
    * @TODO Create Sinlge Application
-   */
+
   if (QFile::exists(lockFilePath())) {
     qInfo("Allready Running.");
     return 0;
   }
-
+   */
   MApplication app(argc, argv);
   return app.exec();
 }

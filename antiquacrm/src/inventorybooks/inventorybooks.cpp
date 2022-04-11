@@ -94,6 +94,8 @@ InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
   // ID wurde in Tabellenansicht ausgewählt
   connect(m_tableView, SIGNAL(s_articleSelected(int)), this,
           SLOT(articleSelected(int)));
+  connect(m_tableView, SIGNAL(s_rowsChanged(int)), m_statsBookBar,
+          SLOT(showRowCount(int)));
 }
 
 void InventoryBooks::parseLineInput(const QString &str) {
@@ -131,7 +133,7 @@ void InventoryBooks::openEditor(const QString &sql) {
   // qDebug() << "InventoryBooks::openEditor" << sql;
   EditorDialog *dialog = new EditorDialog(this);
   dialog->setWindowTitle(tr("Edit Book"));
-  dialog->setMinimumSize(850,650);
+  dialog->setMinimumSize(850, 650);
   dialog->setShortcutEnabled(false);
 
   m_bookEditor = new BookEditor(dialog);
@@ -161,9 +163,6 @@ void InventoryBooks::articleSelected(int id) {
 void InventoryBooks::updateValidator(int id) {
   switch (id) {
   case 2:
-    m_searchBar->setValidation(SearchBar::Number);
-    break;
-
   case 3:
     m_searchBar->setValidation(SearchBar::Number);
     break;

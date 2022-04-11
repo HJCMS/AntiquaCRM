@@ -3,14 +3,14 @@
 
 /* Project */
 #include "mwindow.h"
-#include "adockwidget.h"
 #include "applsettings.h"
+#include "configdialog.h"
+#include "dockbarwidget.h"
+#include "filedialog.h"
+#include "sqlcore.h"
 #include "statusbar.h"
 #include "version.h"
 #include "workspace.h"
-#include "filedialog.h"
-#include "configdialog.h"
-#include "sqlcore.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDebug>
@@ -39,13 +39,15 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
   setupActions();
 
   // DockWidget
-  m_adockWidget = new ADockWidget(m_mainWidget);
+  /*
+  m_dockBarWidget = new DockBarWidget();
   QString dockPos = m_Settings->value("dockarea/position", "left").toString();
   if (dockPos.contains("left")) {
-    addDockWidget(Qt::LeftDockWidgetArea, m_adockWidget);
+    addDockWidget(Qt::LeftDockWidgetArea, m_dockBarWidget);
   } else {
-    addDockWidget(Qt::RightDockWidgetArea, m_adockWidget);
+    addDockWidget(Qt::RightDockWidgetArea, m_dockBarWidget);
   }
+  */
 
   // m_statusBar->setDatabaseStatusIcon(bool);
   m_statusBar = new StatusBar(statusBar());
@@ -86,10 +88,12 @@ void MWindow::setupActions() {
   connect(ac_dbConnect, SIGNAL(triggered(bool)), this,
           SLOT(reconnectDatabase(bool)));
 
-  QMenu *menu_files = m_applicationMenu->addMenu(myIcon("folder_green"), tr("Open"));
+  QMenu *menu_files =
+      m_applicationMenu->addMenu(myIcon("folder_green"), tr("Open"));
   menu_files->setObjectName("menu_filemenu");
 
-  QAction *ac_openfile = menu_files->addAction(myIcon("folder_txt"), tr("Open file"));
+  QAction *ac_openfile =
+      menu_files->addAction(myIcon("folder_txt"), tr("Open file"));
   ac_openfile->setObjectName("ac_fileopen");
   ac_openfile->setEnabled(false);
   connect(ac_openfile, SIGNAL(triggered(bool)), this,
@@ -125,8 +129,7 @@ void MWindow::openFileDialog(bool b) {
   Q_UNUSED(b)
   FileDialog *m_fileDialog = new FileDialog(this);
   m_fileDialog->setObjectName("m_file_dialog");
-  if(m_fileDialog->exec())
-  {
+  if (m_fileDialog->exec()) {
     qDebug() << Q_FUNC_INFO << m_fileDialog->selectedFiles();
   }
 }

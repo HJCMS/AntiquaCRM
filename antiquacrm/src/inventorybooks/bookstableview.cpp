@@ -7,21 +7,40 @@
 #include "version.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QPoint>
 #include <QtCore/QRegExp>
+#include <QtCore/QSignalMapper>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QMenu>
 
 /**
-    @brief queryFields
+    @brief querySelect
     Die Feldabfragen für die Suche sind immer gleich!
     Wenn sich etwas ändern sollte, dann muss in Klasse
     \ref BooksTableModel die Feld Definition geändert werden!
-    b.ib_id,b.ib_count,b.ib_title,b.ib_author,b.ib_publisher,b.ib_year,b.ib_price,s.sl_storage,b.ib_isbn
 */
-static const QString queryFields() {
+static const QString querySelect() {
   QString s("b.ib_id,b.ib_count,b.ib_title,b.ib_author,");
-  s.append("b.ib_publisher,b.ib_year,b.ib_price,s.sl_storage,b.ib_isbn");
+  s.append("b.ib_publisher,b.ib_year,b.ib_price,s.sl_storage,b.ib_isbn,b.ib_"
+           "changed");
+  s.append(",(CASE WHEN i.im_id IS NOT NULL THEN true ELSE false END) AS "
+           "image_exists ");
+  // s.append("");
+  return s;
+}
+
+/**
+   @brief queryTables
+   Tabellen Definition
+*/
+static const QString queryTables() {
+  QString s(" FROM inventory_books AS b");
+  s.append(" LEFT JOIN ref_storage_location AS s ON s.sl_id=b.ib_storage");
+  s.append(" LEFT JOIN inventory_images AS i ON i.im_id=b.ib_id ");
+  // s.append(" ");
   return s;
 }
 
@@ -49,11 +68,6 @@ BooksTableView::BooksTableView(QWidget *parent) : QTableView{parent} {
           SLOT(clickedGetArticleID(const QModelIndex &)));
 }
 
-/**
- * @brief SQLTitleSearch::clickedGetArticleID
- * @short Suche nach Artikel ID und Titeltext
- * @param index
- */
 void BooksTableView::clickedGetArticleID(const QModelIndex &index) {
   QModelIndex id(index);
   if (m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
@@ -64,11 +78,31 @@ void BooksTableView::clickedGetArticleID(const QModelIndex &index) {
   }
 }
 
+void BooksTableView::openBookByContext() { clickedGetArticleID(p_modelIndex); }
+
+void BooksTableView::createOrderByContext() {
+  // TODO create order --> p_modelIndex
+  qInfo("currently not implemented");
+}
+
+void BooksTableView::contextMenuEvent(QContextMenuEvent *ev) {
+  p_modelIndex = indexAt(ev->pos());
+  QMenu *m = new QMenu("Actions", this);
+  // Eintrag öffnen  Bestellung anlegen
+  QAction *ac_open = m->addAction(myIcon("spreadsheet"), tr("Open entry"));
+  ac_open->setObjectName("ac_context_open_book");
+  connect(ac_open, SIGNAL(triggered()), this, SLOT(openBookByContext()));
+  QAction *ac_order = m->addAction(myIcon("autostart"), tr("Create order"));
+  ac_order->setObjectName("ac_context_create_order");
+  connect(ac_order, SIGNAL(triggered()), this, SLOT(createOrderByContext()));
+  m->exec(ev->globalPos());
+  delete m;
+}
+
 void BooksTableView::queryHistory(const QString &str) {
   QString q("SELECT ");
-  q.append(queryFields());
-  q.append(" FROM inventory_books AS b ");
-  q.append(" LEFT JOIN ref_storage_location AS s ON s.sl_id=b.ib_storage");
+  q.append(querySelect());
+  q.append(queryTables());
   q.append(" WHERE ");
   if (str.contains("#today")) {
     q.append("DATE(b.ib_changed)=(DATE(now()))");
@@ -85,7 +119,9 @@ void BooksTableView::queryHistory(const QString &str) {
   } else {
     return;
   }
-  q.append(" ORDER BY b.ib_count DESC LIMIT 3500;");
+  q.append(" ORDER BY b.ib_count DESC LIMIT ");
+  q.append(QString::number(maxRowCount));
+  q.append(";");
 
   p_db = QSqlDatabase::database(sqlConnectionName);
   if (p_db.open()) {
@@ -123,10 +159,10 @@ void BooksTableView::queryStatement(const SearchStatement &cl) {
     return;
   }
 
+  str.replace("*","%");
   QString q("SELECT ");
-  q.append(queryFields());
-  q.append(" FROM inventory_books AS b ");
-  q.append(" LEFT JOIN ref_storage_location AS s ON s.sl_id=b.ib_storage");
+  q.append(querySelect());
+  q.append(queryTables());
   if (field.contains("id")) {
     // Numeric Search
     q.append(" WHERE (b.ib_id=");
@@ -138,7 +174,7 @@ void BooksTableView::queryStatement(const SearchStatement &cl) {
   } else if (field.contains("author")) {
     // String Search
     q.append(" WHERE (b.ib_author ILIKE '%");
-    q.append(str);
+    q.append(str.replace(" ","%"));
     q.append("%'");
   } else {
     // String Search
@@ -148,14 +184,24 @@ void BooksTableView::queryStatement(const SearchStatement &cl) {
       q.append(" WHERE (b.ib_title ILIKE '%");
     }
     q.append(str);
-    q.append("%') OR (b.ib_title_extended ILIKE '");
-    q.append(str);
+    q.append("%')");
+    if (exact_match) {
+      q.append(" OR (b.ib_title_extended ILIKE '");
+      q.append(str);
+    } else {
+      q.append(" OR (b.ib_title_extended ILIKE '%");
+      q.append(str.replace(" ","%"));
+    }
     q.append("%'");
   }
-  q.append(") ORDER BY b.ib_count DESC LIMIT 1000;");
+  q.append(") ORDER BY b.ib_count DESC LIMIT ");
+  q.append(QString::number(maxRowCount));
+  q.append(";");
+
+  qDebug() << Q_FUNC_INFO << q;
+  // return;
   p_db = QSqlDatabase::database(sqlConnectionName);
   if (p_db.open()) {
-    // qDebug() << Q_FUNC_INFO << q;
     m_queryModel->setQuery(q, p_db);
     if (m_queryModel->lastError().isValid()) {
       qDebug() << "BooksTableView::queryStatement"
@@ -165,5 +211,6 @@ void BooksTableView::queryStatement(const SearchStatement &cl) {
     }
     resizeRowsToContents();
     resizeColumnsToContents();
+    emit s_rowsChanged(m_queryModel->rowCount());
   }
 }

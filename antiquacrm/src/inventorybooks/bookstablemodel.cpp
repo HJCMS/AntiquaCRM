@@ -5,7 +5,9 @@
 #include "version.h"
 
 /* QtCore */
+#include <QtCore/QDateTime>
 #include <QtCore/QDebug>
+#include <QtCore/QLocale>
 #include <QtCore/QString>
 #include <QtCore/QVariant>
 
@@ -27,10 +29,19 @@ BooksTableModel::BooksTableModel(QObject *parent) : QSqlQueryModel{parent} {
 
 QVariant BooksTableModel::data(const QModelIndex &index, int role) const {
   const QVariant val;
-  if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole))
+  if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole &&
+                           role != Qt::DecorationRole))
     return val;
 
   QVariant item = QSqlQueryModel::data(index, role);
+
+  if (!index.isValid() || (role == Qt::DecorationRole)) {
+    if (index.column() == 10) // image_exists
+      return myIcon("image");
+
+    return val;
+  }
+
   switch (index.column()) {
   case 0: // ib_id
     return item.toUInt();
@@ -84,8 +95,14 @@ QVariant BooksTableModel::data(const QModelIndex &index, int role) const {
   case 8: // ib_isbn
   {
     QString buf = item.toString();
-    return (buf.length()<10) ? QString() : buf;
+    return (buf.length() < 10) ? QString() : buf;
   }
+
+  case 9: // ib_changed
+    return item.toDateTime().date().toString(Qt::RFC2822Date);
+
+  case 10: // image_exists
+    return (item.toBool()) ? tr("Yes") : tr("No");
 
   default: // nicht registrierter Datentype !!!
     return item;
@@ -125,6 +142,12 @@ QVariant BooksTableModel::headerData(int section, Qt::Orientation orientation,
 
     case 8: // ib_isbn
       return setHeaderTitel(tr("ISBN"));
+
+    case 9: // ib_changed
+      return setHeaderTitel(tr("Last change"));
+
+    case 10: // image_exists
+      return setHeaderTitel(tr("Image exits"));
 
     default:
       return QString("%1").arg(section);
