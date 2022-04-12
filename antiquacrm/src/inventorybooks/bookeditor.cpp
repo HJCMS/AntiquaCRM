@@ -211,6 +211,7 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
   ib_title = new StrLineEdit(this);
   ib_title->setObjectName("ib_title");
   ib_title->setMaxAllowedLength(80);
+  ib_title->setToolTip(tr("Required input field. Limited to 80 characters, Webshop Systems require this."));
   ibTitleLabel->setBuddy(ib_title);
 
   lay4->addWidget(ib_title, 0, 1, 1, 1);
@@ -226,6 +227,7 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
   ib_title_extended = new StrLineEdit(this);
   ib_title_extended->setObjectName("ib_title_extended");
   ib_title_extended->setMaxAllowedLength(148);
+  ib_title_extended->setToolTip(tr("Extended Title or Book Subtitle."));
 
   lay4->addWidget(ib_title_extended, 1, 1, 1, 1);
 
@@ -240,7 +242,7 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
   ib_author = new StrLineEdit(this);
   ib_author->setObjectName("ib_author");
   ib_author->setMaxAllowedLength(128);
-  ib_author->setToolTip(tr("Requiered input field"));
+  ib_author->setToolTip(tr("Format: Firstname lastname (Different Authors separated by comma)."));
   ibAuthorLabel->setBuddy(ib_author);
 
   lay4->addWidget(ib_author, 2, 1, 1, 1);
@@ -250,6 +252,7 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
   ibPublisherLabel->setObjectName("ib_publisherLabel");
   ibPublisherLabel->setAlignment(defaultAlignment);
   ibPublisherLabel->setText(tr("Publisher:"));
+  ibPublisherLabel->setToolTip(tr("Enter hier the Book Publisher."));
 
   lay4->addWidget(ibPublisherLabel, 3, 0, 1, 1);
 
@@ -270,6 +273,7 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
   ib_keyword = new StrLineEdit(this);
   ib_keyword->setObjectName("ib_keyword");
   ib_keyword->setMaxAllowedLength(60);
+  ib_keyword->setToolTip(tr("Category Keywords for Shopsystems."));
 
   lay4->addWidget(ib_keyword, 4, 1, 1, 1);
 
@@ -285,6 +289,7 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
   ib_condition->setObjectName("ib_condition");
   ib_condition->setKeyword("ib_condition");
   ib_condition->setMaxAllowedLength(128);
+  ib_condition->setToolTip(tr("Condition of this Book. See also Configuration conditions Table."));
 
   lay4->addWidget(ib_condition, 5, 1, 1, 1);
 
