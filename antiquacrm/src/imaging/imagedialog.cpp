@@ -131,6 +131,7 @@ void ImageDialog::findImageSourceFiles() {
 void ImageDialog::openFileDialog() {
   m_fileDialog = new FileDialog(this);
   m_fileDialog->setObjectName("imgfile_dialog");
+  m_fileDialog->setImageFilter();
   if (m_fileDialog->exec()) {
     QStringList list = m_fileDialog->selectedFiles();
     loadFile(list.first());

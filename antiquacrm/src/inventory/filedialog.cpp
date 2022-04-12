@@ -5,8 +5,10 @@
 #include "version.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QFileInfo>
 #include <QtCore/QList>
 #include <QtCore/QMimeData>
+#include <QtCore/QMimeDatabase>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QStringList>
 #include <QtCore/QUrl>
@@ -32,7 +34,6 @@ FileDialog::FileDialog(QWidget *parent)
   setLabelText(QFileDialog::Reject, tr("Close"));
 
   findSidebarUrls();
-  setDefaultMimeFilters();
 }
 
 void FileDialog::findSidebarUrls() {
@@ -59,25 +60,14 @@ void FileDialog::findSidebarUrls() {
   setSidebarUrls(urls);
 }
 
-void FileDialog::setDefaultMimeFilters() {
-  QStringList filters("inode/directory");
-  filters << "image/jpeg";
-  filters << "image/png";
-#ifdef Q_OS_WIN
-  filters << "application/x-director";
-#endif
-  setMimeTypeFilters(filters);
-  selectMimeTypeFilter("image/jpeg");
-}
-
 bool FileDialog::checkFile(const QString &file) {
-  QImageReader img(file);
-  if (img.format().contains("jpeg")) {
-    qDebug() << Q_FUNC_INFO << "Accepted";
+  QMimeType type = QMimeDatabase().mimeTypeForFile(
+      QFileInfo(file), QMimeDatabase::MatchExtension);
+  if (type.name() == selectedMimeTypeFilter()) {
     setResult(QDialog::Accepted);
     return true;
   }
-  qDebug() << Q_FUNC_INFO << "Rejected";
+  qDebug() << Q_FUNC_INFO << "Rejected:" << type.name();
   setResult(QDialog::Rejected);
   return false;
 }
@@ -90,15 +80,34 @@ void FileDialog::accept() {
   QFileDialog::accept();
 }
 
-void FileDialog::setCustomMimeFilter() {
+void FileDialog::setImageFilter() {
   QStringList filters("inode/directory");
   filters << "image/jpeg";
-  filters << "image/png";
-  filters << "text/plain";
+  // filters << "image/png";
+#ifdef Q_OS_WIN
+  filters << "application/x-director";
+#endif
+  setMimeTypeFilters(filters);
+  selectMimeTypeFilter("image/jpeg");
+}
+
+void FileDialog::setCertsFilter() {
+  QStringList filters("inode/directory");
+  filters << "application/pkix-cert";
+  filters << "application/x-x509-ca-cert";
+#ifdef Q_OS_WIN
+  filters << "application/x-director";
+#endif
+  setMimeTypeFilters(filters);
+  selectMimeTypeFilter("application/x-x509-ca-cert");
+}
+
+void FileDialog::setPdfFilter() {
+  QStringList filters("inode/directory");
   filters << "application/pdf";
 #ifdef Q_OS_WIN
   filters << "application/x-director";
 #endif
   setMimeTypeFilters(filters);
-  selectMimeTypeFilter("text/plain");
+  selectMimeTypeFilter("application/pdf");
 }

@@ -27,6 +27,9 @@ private:
     QLineEdit *psql_ssl_clientcert;
     QHash<QString,QVariant> p_hash;
 
+private Q_SLOTS:
+    void openCertFileDialog();
+
 public Q_SLOTS:
     void updateConfigSets(const QHash<QString,QVariant> &);
 

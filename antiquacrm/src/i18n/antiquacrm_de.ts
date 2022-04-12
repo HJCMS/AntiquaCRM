@@ -129,69 +129,69 @@
         <translation>Zusätliche Angaben</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="757"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="750"/>
         <source>No datasets were found.</source>
         <translation>Es wurden keine Datensätze gefunden.</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="786"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="779"/>
         <source>Booktitle</source>
         <translation>Buchtitel</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="793"/>
-        <location filename="../inventorybooks/bookeditor.cpp" line="796"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="786"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="789"/>
         <source>Authors</source>
         <translation>Autoren</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="830"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="823"/>
         <source>Open Webpage in Browser for full Description.</source>
         <translation>Öffnen Sie die Webseite im Browser für eine vollständige Beschreibung.</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="834"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="827"/>
         <source>External Book Description</source>
         <translation>Öffne externe Buch Beschreibung</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="850"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="843"/>
         <source>An image exists on OpenLibrary.org</source>
         <translation>Ein Bild existiert auf OpenLibrary.org</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="853"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="846"/>
         <source>Images</source>
         <translation>Bilder</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="860"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="853"/>
         <source>OpenLibrary is free to use, but we need your Help!</source>
         <translation>OpenLibrary kann kostenlos verwendet werden, aber wir brauchen Ihre Hilfe!</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="863"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="856"/>
         <source>Donation</source>
         <translation>Spenden</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="783"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="776"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="804"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="797"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="807"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="800"/>
         <source>Publisher Year</source>
         <translation>Herausgeber Jahr</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="819"/>
-        <location filename="../inventorybooks/bookeditor.cpp" line="822"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="812"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="815"/>
         <source>Publisher</source>
         <translation>Herausgeber</translation>
     </message>
@@ -206,7 +206,7 @@
         <translation>Öffnet den Dialog für Bilder Importieren oder Editieren.</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="439"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="436"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
@@ -326,49 +326,6 @@
     </message>
 </context>
 <context>
-    <name>CustomSearch</name>
-    <message>
-        <location filename="../customsearch.cpp" line="28"/>
-        <source>Search in ...</source>
-        <translation>Suche in ...</translation>
-    </message>
-    <message>
-        <location filename="../customsearch.cpp" line="29"/>
-        <source>Books</source>
-        <translation>Bücher</translation>
-    </message>
-    <message>
-        <location filename="../customsearch.cpp" line="30"/>
-        <source>Prints, Stitches and Graphics</source>
-        <translation>Drucke, Stiche und Grafiken</translation>
-    </message>
-    <message>
-        <location filename="../customsearch.cpp" line="31"/>
-        <source>Special inventory</source>
-        <translation>Spezial Sortiment</translation>
-    </message>
-    <message>
-        <location filename="../customsearch.cpp" line="32"/>
-        <source>Costumers</source>
-        <translation>Kunden</translation>
-    </message>
-    <message>
-        <location filename="../customsearch.cpp" line="39"/>
-        <source>Search by date</source>
-        <translation>Suche mit Datum</translation>
-    </message>
-    <message>
-        <location filename="../customsearch.cpp" line="45"/>
-        <source>from</source>
-        <translation>von</translation>
-    </message>
-    <message>
-        <location filename="../customsearch.cpp" line="59"/>
-        <source>to</source>
-        <translation>bis</translation>
-    </message>
-</context>
-<context>
     <name>EditorDialog</name>
     <message>
         <location filename="../inventory/editordialog.cpp" line="24"/>
@@ -404,32 +361,32 @@
 <context>
     <name>FileDialog</name>
     <message>
-        <location filename="../inventory/filedialog.cpp" line="19"/>
+        <location filename="../inventory/filedialog.cpp" line="21"/>
         <source>Open Files</source>
         <translation>Öffne Dateien</translation>
     </message>
     <message>
-        <location filename="../inventory/filedialog.cpp" line="28"/>
+        <location filename="../inventory/filedialog.cpp" line="30"/>
         <source>Target</source>
         <translation>Ziel</translation>
     </message>
     <message>
-        <location filename="../inventory/filedialog.cpp" line="29"/>
+        <location filename="../inventory/filedialog.cpp" line="31"/>
         <source>File</source>
         <translation>Datei</translation>
     </message>
     <message>
-        <location filename="../inventory/filedialog.cpp" line="30"/>
+        <location filename="../inventory/filedialog.cpp" line="32"/>
         <source>Types</source>
         <translation>Typen</translation>
     </message>
     <message>
-        <location filename="../inventory/filedialog.cpp" line="31"/>
+        <location filename="../inventory/filedialog.cpp" line="33"/>
         <source>&amp;Open</source>
         <translation>&amp;Öffne</translation>
     </message>
     <message>
-        <location filename="../inventory/filedialog.cpp" line="32"/>
+        <location filename="../inventory/filedialog.cpp" line="34"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
@@ -621,72 +578,72 @@
 <context>
     <name>PostgreSqlSettings</name>
     <message>
-        <location filename="../settings/postgresqlsettings.cpp" line="16"/>
+        <location filename="../settings/postgresqlsettings.cpp" line="18"/>
         <source>Database Server Configuration</source>
         <translation>Datenbank Server-Konfiguration</translation>
     </message>
     <message>
-        <location filename="../settings/postgresqlsettings.cpp" line="25"/>
+        <location filename="../settings/postgresqlsettings.cpp" line="27"/>
         <source>Connection settings to PostgreSQL server.</source>
         <translation>Verbindungseinstllungen zum PostgreSQL Server.</translation>
     </message>
     <message>
-        <location filename="../settings/postgresqlsettings.cpp" line="39"/>
+        <location filename="../settings/postgresqlsettings.cpp" line="43"/>
         <source>Hostname</source>
         <translation>Hostname</translation>
     </message>
     <message>
-        <location filename="../settings/postgresqlsettings.cpp" line="44"/>
+        <location filename="../settings/postgresqlsettings.cpp" line="49"/>
         <source>In your Network a DNS Server exists. Then use a Fully Qualified Hostname (FQDN) to connect the PostgreSQL Server. If Not, it&apos;s better to insert the IP Address in here. Warning: SSL Certification based Connection need a Hostname for translate the &lt;b&gt;CommonName&lt;/b&gt; Attribute.</source>
         <translation>In Ihrem Netzwerk existiert ein DNS-Server. Verwenden Sie dann einen vollständig qualifizierten Hostnamen (FQDN), um eine Verbindung zum PostgreSQL-Server herzustellen. Wenn nicht, ist es besser, hier die IP-Adresse einzugeben. Warnung: SSL-zertifizierungsbasierte Verbindungen benötigen einen Hostnamen zum Übersetzen das &lt;b&gt;CommonName&lt;/b&gt;-Attributes.</translation>
     </message>
     <message>
-        <location filename="../settings/postgresqlsettings.cpp" line="50"/>
+        <location filename="../settings/postgresqlsettings.cpp" line="59"/>
         <source>Port Address</source>
         <translation>Port Adresse</translation>
     </message>
     <message>
-        <location filename="../settings/postgresqlsettings.cpp" line="61"/>
+        <location filename="../settings/postgresqlsettings.cpp" line="70"/>
         <source>The default port address is 5432</source>
         <translation>Die Standard Port-Adresse ist 5432</translation>
     </message>
     <message>
-        <location filename="../settings/postgresqlsettings.cpp" line="71"/>
+        <location filename="../settings/postgresqlsettings.cpp" line="82"/>
         <source>Databasename</source>
         <translation>Datebankname</translation>
     </message>
     <message>
-        <location filename="../settings/postgresqlsettings.cpp" line="76"/>
+        <location filename="../settings/postgresqlsettings.cpp" line="87"/>
         <source>The name must be letters with no spaces.</source>
         <translation>Der Name muss aus Buchstaben ohne Leerzeichen bestehen.</translation>
     </message>
     <message>
-        <location filename="../settings/postgresqlsettings.cpp" line="82"/>
+        <location filename="../settings/postgresqlsettings.cpp" line="94"/>
         <source>Loginname</source>
         <translation>Anmeldename</translation>
     </message>
     <message>
-        <location filename="../settings/postgresqlsettings.cpp" line="87"/>
+        <location filename="../settings/postgresqlsettings.cpp" line="99"/>
         <source>The username must be letters with no spaces.</source>
         <translation>Der Benutzername muss aus Buchstaben ohne Leerzeichen bestehen.</translation>
     </message>
     <message>
-        <location filename="../settings/postgresqlsettings.cpp" line="93"/>
+        <location filename="../settings/postgresqlsettings.cpp" line="106"/>
         <source>Password</source>
         <translation>Passwort</translation>
     </message>
     <message>
-        <location filename="../settings/postgresqlsettings.cpp" line="109"/>
+        <location filename="../settings/postgresqlsettings.cpp" line="122"/>
         <source>Enable SSL Connection</source>
         <translation>Aktiviere SSL Verbindung</translation>
     </message>
     <message>
-        <location filename="../settings/postgresqlsettings.cpp" line="119"/>
+        <location filename="../settings/postgresqlsettings.cpp" line="132"/>
         <source>Clientcert</source>
         <translation>Klient Zertifikat</translation>
     </message>
     <message>
-        <location filename="../settings/postgresqlsettings.cpp" line="132"/>
+        <location filename="../settings/postgresqlsettings.cpp" line="151"/>
         <source>If you using SSL/TLS or SSL Client certificates. Make sure, you have also the CA-Root Certificate in your System Issuer cache.</source>
         <translation>Wenn Sie SSL/TLS- oder SSL-Klientzertifikate verwenden. Stellen Sie sicher, dass Sie auch das CA-Root-Zertifikat in Ihrem Systemaussteller-Speicher haben.</translation>
     </message>
@@ -922,7 +879,7 @@
 <context>
     <name>StrLineEdit</name>
     <message>
-        <location filename="../inventory/strlineedit.cpp" line="98"/>
+        <location filename="../inventory/strlineedit.cpp" line="96"/>
         <source>Max allowed length</source>
         <translation>Maximal erlaubte Zeichenlänge</translation>
     </message>

@@ -19,17 +19,16 @@ class FileDialog : public QFileDialog {
 private:
   QDir p_dir;
   void findSidebarUrls();
-  void setDefaultMimeFilters();
   bool checkFile(const QString &);
 
 protected Q_SLOTS:
   virtual void accept();
 
-public Q_SLOTS:
-  void setCustomMimeFilter();
-
 public:
   explicit FileDialog(QWidget *parent = nullptr);
+  void setImageFilter();
+  void setCertsFilter();
+  void setPdfFilter();
 };
 
 #endif // FILEDIALOG_H
