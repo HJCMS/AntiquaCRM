@@ -211,7 +211,8 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
   ib_title = new StrLineEdit(this);
   ib_title->setObjectName("ib_title");
   ib_title->setMaxAllowedLength(80);
-  ib_title->setToolTip(tr("Required input field. Limited to 80 characters, Webshop Systems require this."));
+  ib_title->setToolTip(tr("Required input field. Limited to 80 characters, "
+                          "Webshop Systems require this."));
   ibTitleLabel->setBuddy(ib_title);
 
   lay4->addWidget(ib_title, 0, 1, 1, 1);
@@ -242,7 +243,8 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
   ib_author = new StrLineEdit(this);
   ib_author->setObjectName("ib_author");
   ib_author->setMaxAllowedLength(128);
-  ib_author->setToolTip(tr("Format: Firstname lastname (Different Authors separated by comma)."));
+  ib_author->setToolTip(
+      tr("Format: Firstname lastname (Different Authors separated by comma)."));
   ibAuthorLabel->setBuddy(ib_author);
 
   lay4->addWidget(ib_author, 2, 1, 1, 1);
@@ -289,7 +291,8 @@ BookEditor::BookEditor(QDialog *parent) : QWidget{parent} {
   ib_condition->setObjectName("ib_condition");
   ib_condition->setKeyword("ib_condition");
   ib_condition->setMaxAllowedLength(128);
-  ib_condition->setToolTip(tr("Condition of this Book. See also Configuration conditions Table."));
+  ib_condition->setToolTip(
+      tr("Condition of this Book. See also Configuration conditions Table."));
 
   lay4->addWidget(ib_condition, 5, 1, 1, 1);
 
@@ -424,7 +427,9 @@ void BookEditor::triggerImageEdit() {
   }
   emit s_openImageEditor(id);
   if (dialog->exec()) {
-    m_imageView->addNewImage(id, dialog->getImage());
+    QImage img = dialog->getImage();
+    if (!img.isNull())
+      m_imageView->addNewImage(id, img);
   }
 }
 

@@ -10,13 +10,21 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (subproject_SOURCES
+  fileviewmodel.cpp
   imagedialog.cpp
-  imgviewer.cpp
+  imageview.cpp
+  listview.cpp
+  openimagedialog.cpp
+  toolbar.cpp
 )
 
 SET (subproject_HEADERS
+  fileviewmodel.h
   imagedialog.h
-  imgviewer.h
+  imageview.h
+  listview.h
+  openimagedialog.h
+  toolbar.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC
@@ -34,4 +42,3 @@ TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Gui
   Qt${QT_VERSION_MAJOR}::Widgets
 )
-

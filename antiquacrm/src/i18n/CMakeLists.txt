@@ -31,5 +31,5 @@ INSTALL (FILES ${QM_FILES}
 INSTALL (FILES
   ${PROJECTNAME}_untranslated.ts
   DESTINATION share/${PROJECTNAME}/i18n
-  COMPONENT translation
+  COMPONENT data
 )

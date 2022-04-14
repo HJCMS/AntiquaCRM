@@ -83,11 +83,15 @@ ADD_SUBDIRECTORY (src)
 ## LGPL/GPL3 Exceptions
 ##############################################################
 
+SET (PROJECT_DOCUMENTS
+ README
+ AUTHORS
+ ChangeLog
+ LICENCE
+)
+
 INSTALL (FILES
-  README
-  AUTHORS
-  ChangeLog
-  LICENCE
+  ${PROJECT_DOCUMENTS}
   DESTINATION share/${CMAKE_PROJECT_NAME}
   COMPONENT data
 )

@@ -73,6 +73,9 @@ INCLUDE_DIRECTORIES (
   \${CMAKE_CURRENT_SOURCE_DIR}
 )
 
+SET (subproject_FILES
+)
+
 SET (subproject_SOURCES
   ${_name}.cpp
 )

@@ -9,6 +9,10 @@ INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
+SET (subproject_DATAFILES
+  LIESMICH
+)
+
 SET (subproject_SOURCES
   addentrydialog.cpp
   datadelegation.cpp

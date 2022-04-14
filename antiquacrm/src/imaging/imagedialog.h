@@ -11,12 +11,11 @@
 #include <QtWidgets/QAbstractButton>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFileDialog>
-#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
 
-class ImgViewer;
-class FileDialog;
+class ImageView;
+class OpenImageDialog;
 
 /**
    @brief The ImageDialog class
@@ -39,16 +38,10 @@ private:
   QDir sourceDir;
 
   /**
-     @brief m_scrollArea
-     Scrollbereich
-  */
-  QScrollArea *m_scrollArea;
-
-  /**
      @brief m_imgViewer
      Bild Darstellung
   */
-  ImgViewer *m_imgViewer;
+  ImageView *m_imgView;
 
   /**
      @brief maximumSize
@@ -62,7 +55,7 @@ private:
      @brief m_fileDialog
      Bilder öffnen ...
   */
-  FileDialog *m_fileDialog;
+  OpenImageDialog *m_fileDialog;
 
   /**
      @brief m_statusBar
@@ -105,6 +98,11 @@ private Q_SLOTS:
   void openFileDialog();
 
 Q_SIGNALS:
+  /**
+     Wenn ein Bild Erfolgreich geldaen wurde!
+  */
+  void s_imageLoaded(bool);
+
   /**
    @brief s_imageScaled
    Wird ausgelöst wenn eine Bild Scalierung

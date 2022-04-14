@@ -2,9 +2,9 @@
 // vim: set fileencoding=utf-8
 
 #include "imagedialog.h"
-#include "filedialog.h"
-#include "imgedit.h"
-#include "imgviewer.h"
+#include "applsettings.h"
+#include "imageview.h"
+#include "openimagedialog.h"
 #include "version.h"
 
 #include <QtCore/QDebug>
@@ -13,9 +13,9 @@
 #include <QtGui/QImageReader>
 #include <QtGui/QPixmap>
 #include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QToolButton>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
 
 ImageDialog::ImageDialog(qulonglong id, QWidget *parent)
@@ -28,12 +28,8 @@ ImageDialog::ImageDialog(qulonglong id, QWidget *parent)
 
   QVBoxLayout *m_vLayout = new QVBoxLayout(this);
 
-  m_scrollArea = new QScrollArea(this);
-  m_scrollArea->setObjectName("dialog_scrollarea");
-  m_scrollArea->setVisible(true);
-  m_scrollArea->setWidgetResizable(false);
-  m_scrollArea->setBackgroundRole(QPalette::Dark);
-  m_vLayout->addWidget(m_scrollArea);
+  m_imgView = new ImageView(this);
+  m_vLayout->addWidget(m_imgView);
 
   QToolBar *toolBar = new QToolBar(this);
   m_vLayout->addWidget(toolBar);
@@ -57,6 +53,7 @@ ImageDialog::ImageDialog(qulonglong id, QWidget *parent)
   m_commit->setObjectName("dialog_commit_button");
   m_commit->setToolTip(tr("Close the dialog with saving."));
   m_commit->setIcon(myIcon("filesave"));
+  m_commit->setEnabled(false);
   m_commit->setShortcut(QKeySequence::Save);
 
   QPushButton *m_close =
@@ -75,16 +72,20 @@ ImageDialog::ImageDialog(qulonglong id, QWidget *parent)
   connect(btn_openimg, SIGNAL(clicked()), this, SLOT(openFileDialog()));
   connect(m_buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
   connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+  connect(this, SIGNAL(s_imageLoaded(bool)), m_commit, SLOT(setEnabled(bool)));
 }
 
 void ImageDialog::rotateImage(qreal r) {
-  QImage img(m_imgViewer->image());
+  QImage img(m_imgView->image());
+  if (img.isNull())
+    return;
+
   QTransform transform;
   transform.rotate(r);
   QImage out = img.transformed(transform, Qt::SmoothTransformation);
   if (!out.isNull()) {
-    m_imgViewer->setPixmap(QPixmap::fromImage(out));
-    m_imgViewer->update();
+    m_imgView->setImage(out);
+    m_imgView->update();
   }
 }
 
@@ -97,23 +98,25 @@ void ImageDialog::setSizeMessage(const QSize &s) {
 }
 
 void ImageDialog::loadFile(const QFileInfo &file) {
+  if (!file.exists())
+    return;
+
   QImageReader reader(file.absoluteFilePath());
   reader.setAutoTransform(true);
-  qDebug() << reader.format();
   QImage image = reader.read();
   if (!image.isNull()) {
+    emit s_imageLoaded(true);
     QImage medium = image.scaled(QSize(maximumSize, maximumSize),
                                  Qt::KeepAspectRatio, Qt::SmoothTransformation);
     if (!medium.isNull()) {
-      m_imgViewer = new ImgViewer(m_scrollArea);
-      m_imgViewer->setPixmap(QPixmap::fromImage(medium));
-      m_scrollArea->setWidget(m_imgViewer);
+      m_imgView->setImage(medium);
       setSizeMessage(medium.size());
       emit s_imageScaled(true);
       return;
     }
     emit s_imageScaled(false);
   }
+  emit s_imageLoaded(false);
 }
 
 void ImageDialog::findImageSourceFiles() {
@@ -136,7 +139,8 @@ void ImageDialog::findImageSourceFiles() {
 
   if (search.isEmpty()) {
     m_statusBar->showMessage(tr("No Image for this Arcticle found."));
-    qWarning("No image were found");
+    qWarning("No image were found in archive");
+    emit s_imageLoaded(false);
     return;
   }
 
@@ -151,16 +155,17 @@ void ImageDialog::findImageSourceFiles() {
 }
 
 void ImageDialog::openFileDialog() {
-  m_fileDialog = new FileDialog(this);
+  ApplSettings cfg;
+  m_fileDialog = new OpenImageDialog(this);
   m_fileDialog->setObjectName("imgfile_dialog");
-  m_fileDialog->setImageFilter();
+  m_fileDialog->setStart(
+      cfg.value("image_source_path", QDir::homePath()).toString());
   if (m_fileDialog->exec()) {
-    QStringList list = m_fileDialog->selectedFiles();
-    loadFile(list.first());
+    loadFile(m_fileDialog->file());
   }
 }
 
-const QImage ImageDialog::getImage() { return m_imgViewer->image(); }
+const QImage ImageDialog::getImage() { return m_imgView->image(); }
 
 bool ImageDialog::setSourceTarget(const QString &path) {
   sourceDir.setPath(path);

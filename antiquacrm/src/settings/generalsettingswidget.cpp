@@ -31,6 +31,7 @@ GeneralSettingsWidget::GeneralSettingsWidget(QWidget *parent)
   ml1->setText(tr("Main Location from Image source Directory."));
   gridLayout->addWidget(ml1, 0, 0, 1, 3);
 
+  // value("image_source_path",QDir::homePath()).toString();
   m_editImageSrc = new QLineEdit(this);
   m_editImageSrc->setObjectName("image_source_path");
   m_editImageSrc->setPlaceholderText(tr("complete path to the main target"));
