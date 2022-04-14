@@ -10,7 +10,7 @@ ImgViewer::ImgViewer(QWidget *parent) : QLabel{parent} {
   setObjectName("ImgViewer");
   setBackgroundRole(QPalette::Base);
   setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-  setScaledContents(true);
+  setScaledContents(false);
 }
 
 const QImage ImgViewer::image() {

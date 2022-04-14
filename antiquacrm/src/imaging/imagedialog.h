@@ -91,6 +91,12 @@ private:
    */
   void findImageSourceFiles();
 
+  /**
+     @brief rotateImage
+     Bild Drehen
+   */
+  void rotateImage(qreal r);
+
 private Q_SLOTS:
   /**
      @brief openFileDialog
@@ -105,6 +111,9 @@ Q_SIGNALS:
    oder Änderung gut/schlecht verlaufen ist.
   */
   void s_imageScaled(bool);
+
+public Q_SLOTS:
+  inline void rotateRightClicked() { rotateImage(90.0); }
 
 public:
   explicit ImageDialog(qulonglong id, QWidget *parent = nullptr);

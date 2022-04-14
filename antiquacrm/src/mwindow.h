@@ -5,12 +5,9 @@
 #ifndef ANTIQUACRM_MWINDOW_H
 #define ANTIQUACRM_MWINDOW_H
 
-/* QtCore */
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
-/* QtGui */
 #include <QtGui/QCloseEvent>
-/* QtWidgets */
 #include <QtWidgets/QAction>
 #include <QtWidgets/QDockWidget>
 #include <QtWidgets/QMainWindow>
@@ -23,7 +20,7 @@ class ApplSettings;
 class DockBarWidget;
 
 namespace HJCMS {
- class SqlCore;
+class SqlCore;
 }
 
 class MWindow : public QMainWindow {
@@ -33,10 +30,11 @@ class MWindow : public QMainWindow {
 
 private:
   HJCMS::SqlCore *m_postgreSQL;
+  QMenuBar *m_menuBar;
   QMenu *m_applicationMenu;
   QMenu *m_viewsMenu;
   QMenu *m_settingsMenu;
-  QMenuBar *m_menuBar;
+  QMenu *m_tablesMenu;
   QAction *m_quitAction;
   StatusBar *m_statusBar;
   Workspace *m_workSpace;
@@ -46,6 +44,8 @@ private:
 
 private Q_SLOTS:
   void openFileDialog(bool);
+  void openEditCondition(bool);
+  void openEditDesignation(bool);
   void openConfiguration(bool);
   void sqlErrorMessageBox(const QString &);
   void toggleFullScreen(bool);
@@ -63,6 +63,6 @@ public Q_SLOTS:
 public:
   explicit MWindow(QWidget *parent = nullptr);
   void connectSqlDatabase();
-  ~MWindow();
+  virtual ~MWindow();
 };
 #endif // ANTIQUACRM_MWINDOW_H

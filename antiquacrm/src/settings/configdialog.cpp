@@ -28,14 +28,6 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent)
     QHBoxLayout* hLayout = new QHBoxLayout();
     hLayout->setObjectName("hlayout");
 
-    m_listWidget = new QListWidget(this);
-    m_listWidget->setObjectName("ListConfigWidget");
-    m_listWidget->setResizeMode(QListView::Adjust);
-    m_listWidget->setSortingEnabled(false);
-    m_listWidget->setMinimumWidth(100);
-    m_listWidget->setMaximumWidth(150);
-    hLayout->addWidget(m_listWidget,Qt::AlignLeft);
-
     m_pageSet = new QStackedLayout();
     m_pageSet->setObjectName("CentralLayout");
     hLayout->addLayout(m_pageSet,Qt::AlignLeft);
@@ -47,6 +39,14 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent)
     m_pageSet->addWidget(m_page2);
 
     m_vLayout->addLayout(hLayout);
+
+    m_listWidget = new QListWidget(this);
+    m_listWidget->setObjectName("ListConfigWidget");
+    m_listWidget->setResizeMode(QListView::Adjust);
+    m_listWidget->setSortingEnabled(false);
+    m_listWidget->setMinimumWidth(100);
+    m_listWidget->setMaximumWidth(150);
+    hLayout->addWidget(m_listWidget,Qt::AlignLeft);
 
     QDialogButtonBox *m_btnBox = new QDialogButtonBox(this);
     m_btnBox->setObjectName("ButtonBox");

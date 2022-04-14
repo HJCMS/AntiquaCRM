@@ -23,13 +23,16 @@ BooksImageView::BooksImageView(QWidget *parent) : QWidget{parent} {
 
   m_scrollArea = new QScrollArea(this);
   m_scrollArea->setObjectName("image_viewer_scrollarea");
+  m_scrollArea->setVisible(true);
+  m_scrollArea->setWidgetResizable(false);
   layout->addWidget(m_scrollArea);
 
   m_imageLabel = new QLabel(m_scrollArea);
   m_imageLabel->setObjectName("image_view_item");
   m_imageLabel->setBackgroundRole(QPalette::Base);
-  m_imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-  m_imageLabel->setScaledContents(true);
+  m_imageLabel->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+  m_imageLabel->setScaledContents(false);
+  //m_imageLabel->setAlignment();
 
   setLayout(layout);
 }
@@ -41,6 +44,7 @@ void BooksImageView::insertImage(const QByteArray &data) {
     return;
   } else {
     m_imageLabel->setPixmap(QPixmap::fromImage(image));
+    m_imageLabel->update();
     m_scrollArea->setWidget(m_imageLabel);
   }
 }

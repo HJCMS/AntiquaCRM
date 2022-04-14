@@ -4,6 +4,7 @@
 /* Project */
 #include "mwindow.h"
 #include "applsettings.h"
+#include "completertable.h"
 #include "configdialog.h"
 #include "dockbarwidget.h"
 #include "filedialog.h"
@@ -119,26 +120,55 @@ void MWindow::setupActions() {
   connect(a_fs, SIGNAL(triggered(bool)), this, SLOT(toggleFullScreen(bool)));
 
   m_settingsMenu = m_menuBar->addMenu(tr("Settings"));
-  m_settingsMenu->setObjectName(QLatin1String("SettingsMenu"));
+  m_settingsMenu->setObjectName("SettingsMenu");
 
   QAction *a_cfg = m_settingsMenu->addAction(tr("Configuration"));
+  a_cfg->setIcon(myIcon("configure"));
   connect(a_cfg, SIGNAL(triggered(bool)), this, SLOT(openConfiguration(bool)));
+
+  m_tablesMenu = m_settingsMenu->addMenu(tr("Edit tables"));
+  m_tablesMenu->setObjectName("TablesMenu");
+  m_tablesMenu->setIcon(myIcon("database"));
+
+  QAction *a_ect = m_tablesMenu->addAction(tr("Condition"));
+  a_ect->setIcon(myIcon("spreadsheet"));
+  connect(a_ect, SIGNAL(triggered(bool)), this, SLOT(openEditCondition(bool)));
+
+  QAction *a_edt = m_tablesMenu->addAction(tr("Designation"));
+  a_edt->setIcon(myIcon("spreadsheet"));
+  connect(a_edt, SIGNAL(triggered(bool)), this,
+          SLOT(openEditDesignation(bool)));
 }
 
-void MWindow::openFileDialog(bool b) {
-  Q_UNUSED(b)
-  FileDialog *m_fileDialog = new FileDialog(this);
-  m_fileDialog->setObjectName("m_file_dialog");
-  if (m_fileDialog->exec()) {
-    qDebug() << Q_FUNC_INFO << m_fileDialog->selectedFiles();
+void MWindow::openFileDialog(bool) {
+  FileDialog *m_dialog = new FileDialog(this);
+  m_dialog->setObjectName("m_file_dialog");
+  if (m_dialog->exec()) {
+    qInfo("Filedialog finished");
+    // m_dialog->selectedFiles();
+  }
+}
+
+void MWindow::openEditCondition(bool) {
+  CompleterTable *m_dialog = new CompleterTable(this, "ib_condition");
+  m_dialog->setObjectName("ib_condition_dialog");
+  if (m_dialog->exec()) {
+    qInfo("Editing finished");
+  }
+}
+
+void MWindow::openEditDesignation(bool) {
+  CompleterTable *m_dialog = new CompleterTable(this, "ib_designation");
+  m_dialog->setObjectName("ib_designation_dialog");
+  if (m_dialog->exec()) {
+    qInfo("Editing finished");
   }
 }
 
 /**
  * @brief Öffne das Konfigurationen Dialog Fenster
  */
-void MWindow::openConfiguration(bool b) {
-  Q_UNUSED(b);
+void MWindow::openConfiguration(bool) {
   ConfigDialog *m_dialog = new ConfigDialog(this);
   m_dialog->exec();
 }
@@ -196,4 +226,6 @@ void MWindow::connectSqlDatabase() {
   m_postgreSQL->openDatabase();
 }
 
-MWindow::~MWindow() {}
+MWindow::~MWindow() {
+  qInfo("Mainwindow onload");
+}

@@ -13,6 +13,8 @@
 #include <QtGui/QImageReader>
 #include <QtGui/QPixmap>
 #include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QToolBar>
+#include <QtWidgets/QToolButton>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
 
@@ -29,7 +31,16 @@ ImageDialog::ImageDialog(qulonglong id, QWidget *parent)
   m_scrollArea = new QScrollArea(this);
   m_scrollArea->setObjectName("dialog_scrollarea");
   m_scrollArea->setVisible(true);
+  m_scrollArea->setWidgetResizable(false);
+  m_scrollArea->setBackgroundRole(QPalette::Dark);
   m_vLayout->addWidget(m_scrollArea);
+
+  QToolBar *toolBar = new QToolBar(this);
+  m_vLayout->addWidget(toolBar);
+
+  QToolButton *m_rotateRight = new QToolButton(toolBar);
+  m_rotateRight->setText(tr("Rotate"));
+  toolBar->addWidget(m_rotateRight);
 
   QDialogButtonBox *m_buttonBox = new QDialogButtonBox(Qt::Horizontal, this);
   m_buttonBox->setShortcutEnabled(false);
@@ -60,9 +71,21 @@ ImageDialog::ImageDialog(qulonglong id, QWidget *parent)
   m_statusBar->setSizeGripEnabled(false);
   m_vLayout->addWidget(m_statusBar);
 
+  connect(m_rotateRight, SIGNAL(clicked()), this, SLOT(rotateRightClicked()));
   connect(btn_openimg, SIGNAL(clicked()), this, SLOT(openFileDialog()));
   connect(m_buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
   connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+}
+
+void ImageDialog::rotateImage(qreal r) {
+  QImage img(m_imgViewer->image());
+  QTransform transform;
+  transform.rotate(r);
+  QImage out = img.transformed(transform, Qt::SmoothTransformation);
+  if (!out.isNull()) {
+    m_imgViewer->setPixmap(QPixmap::fromImage(out));
+    m_imgViewer->update();
+  }
 }
 
 void ImageDialog::setSizeMessage(const QSize &s) {
@@ -117,8 +140,7 @@ void ImageDialog::findImageSourceFiles() {
     return;
   }
 
-  if(search.size())
-  {
+  if (search.size()) {
     m_statusBar->showMessage(tr("Warning - More then one found!"));
   }
   QString image(search.first());

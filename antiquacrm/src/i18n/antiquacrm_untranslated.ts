@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>AddEntryDialog</name>
+    <message>
+        <location filename="../sqltables/addentrydialog.cpp" line="22"/>
+        <source>A new entry require a valid Keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BookEditor</name>
     <message>
         <location filename="../inventorybooks/bookeditor.cpp" line="45"/>
@@ -328,6 +336,61 @@
     </message>
 </context>
 <context>
+    <name>CompleterTable</name>
+    <message>
+        <location filename="../sqltables/completertable.cpp" line="30"/>
+        <source>Modify Edition dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sqltables/completertable.cpp" line="32"/>
+        <source>Modify Designation dateset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sqltables/completertable.cpp" line="34"/>
+        <source>Editing Keyword Tables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sqltables/completertable.cpp" line="43"/>
+        <source>Please enter the keywords here that should be suggested in the editor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sqltables/completertable.cpp" line="79"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sqltables/completertable.cpp" line="89"/>
+        <location filename="../sqltables/completertable.cpp" line="123"/>
+        <source>add new entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sqltables/completertable.cpp" line="95"/>
+        <location filename="../sqltables/completertable.cpp" line="126"/>
+        <source>remove entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sqltables/completertable.cpp" line="109"/>
+        <source>Entry delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sqltables/completertable.cpp" line="109"/>
+        <source>Do you really want to delete this entry?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sqltables/completertable.cpp" line="122"/>
+        <source>Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConfigDialog</name>
     <message>
         <location filename="../settings/configdialog.cpp" line="19"/>
@@ -347,6 +410,24 @@
     <message>
         <location filename="../settings/configdialog.cpp" line="83"/>
         <source>OpenLibray</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DataTableModel</name>
+    <message>
+        <location filename="../sqltables/datatablemodel.cpp" line="92"/>
+        <source>Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sqltables/datatablemodel.cpp" line="95"/>
+        <source>Keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sqltables/datatablemodel.cpp" line="98"/>
+        <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -419,8 +500,23 @@
 <context>
     <name>GeneralSettingsWidget</name>
     <message>
-        <location filename="../settings/generalsettingswidget.cpp" line="18"/>
+        <location filename="../settings/generalsettingswidget.cpp" line="16"/>
         <source>General Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settings/generalsettingswidget.cpp" line="31"/>
+        <source>Main Location from Image source Directory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settings/generalsettingswidget.cpp" line="36"/>
+        <source>complete path to the main target</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../settings/generalsettingswidget.cpp" line="41"/>
+        <source>Open Directory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -440,47 +536,52 @@
 <context>
     <name>ImageDialog</name>
     <message>
-        <location filename="../imaging/imagedialog.cpp" line="22"/>
+        <location filename="../imaging/imagedialog.cpp" line="24"/>
         <source>Picture Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../imaging/imagedialog.cpp" line="45"/>
+        <location filename="../imaging/imagedialog.cpp" line="42"/>
+        <source>Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../imaging/imagedialog.cpp" line="56"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../imaging/imagedialog.cpp" line="47"/>
+        <location filename="../imaging/imagedialog.cpp" line="58"/>
         <source>Close the dialog with saving.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../imaging/imagedialog.cpp" line="52"/>
+        <location filename="../imaging/imagedialog.cpp" line="63"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../imaging/imagedialog.cpp" line="54"/>
+        <location filename="../imaging/imagedialog.cpp" line="65"/>
         <source>Close the dialog without saving.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../imaging/imagedialog.cpp" line="73"/>
+        <location filename="../imaging/imagedialog.cpp" line="96"/>
         <source>Current Image Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../imaging/imagedialog.cpp" line="115"/>
+        <location filename="../imaging/imagedialog.cpp" line="138"/>
         <source>No Image for this Arcticle found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../imaging/imagedialog.cpp" line="122"/>
+        <location filename="../imaging/imagedialog.cpp" line="144"/>
         <source>Warning - More then one found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../imaging/imagedialog.cpp" line="39"/>
+        <location filename="../imaging/imagedialog.cpp" line="50"/>
         <source>Open Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -522,67 +623,82 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="79"/>
+        <location filename="../mwindow.cpp" line="80"/>
         <source>Application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mwindow.cpp" line="92"/>
+        <location filename="../mwindow.cpp" line="93"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mwindow.cpp" line="96"/>
+        <location filename="../mwindow.cpp" line="97"/>
         <source>Open file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mwindow.cpp" line="104"/>
+        <location filename="../mwindow.cpp" line="105"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mwindow.cpp" line="109"/>
+        <location filename="../mwindow.cpp" line="110"/>
         <source>Views</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mwindow.cpp" line="115"/>
+        <location filename="../mwindow.cpp" line="116"/>
         <source>Open Tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mwindow.cpp" line="150"/>
+        <location filename="../mwindow.cpp" line="129"/>
+        <source>Edit tables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mwindow.cpp" line="133"/>
+        <source>Condition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mwindow.cpp" line="137"/>
+        <source>Designation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mwindow.cpp" line="180"/>
         <source>SQL Server Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mwindow.cpp" line="193"/>
+        <location filename="../mwindow.cpp" line="223"/>
         <source>Wait for Database connection ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mwindow.cpp" line="118"/>
+        <location filename="../mwindow.cpp" line="119"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mwindow.cpp" line="83"/>
+        <location filename="../mwindow.cpp" line="84"/>
         <source>Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mwindow.cpp" line="86"/>
+        <location filename="../mwindow.cpp" line="87"/>
         <source>Connect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mwindow.cpp" line="121"/>
+        <location filename="../mwindow.cpp" line="122"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mwindow.cpp" line="124"/>
+        <location filename="../mwindow.cpp" line="125"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
