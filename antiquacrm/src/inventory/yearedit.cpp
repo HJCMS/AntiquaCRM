@@ -11,12 +11,23 @@ YearEdit::YearEdit(QWidget *parent) : QDateEdit{parent} {
   setObjectName("YearEdit");
   setDisplayFormat("yyyy");
   setMaximumDate(QDate());
+  setModified(false);
 }
+
+void YearEdit::setModified(bool b) { modified = b; }
 
 void YearEdit::setValue(const QVariant &v) {
   double y = v.toDouble();
   QDate d(y, 1, 1);
   setDate(d);
+  setModified(false);
 }
+
+void YearEdit::reset() {
+  setDate(QDate());
+  setModified(false);
+}
+
+bool YearEdit::hasModified() { return modified; }
 
 const QVariant YearEdit::value() { return date().year(); }

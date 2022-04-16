@@ -27,15 +27,25 @@ void StrLineEdit::setValue(const QVariant &str) {
   QRegExp reg("[\\n\\r]+");
   QString data = str.toString().trimmed();
   data = data.replace(reg, "");
+  reg.setPattern("\\'");
+  data = data.replace(reg, "´");
   QRegExp reg2(pcre());
   if (data.contains(reg2)) {
     setText(data);
+    setModified(false);
     return;
   }
   qDebug() << "TODO"
            << "StrLineEdit::setValue"
            << " INVALID ENTRY" << str;
 }
+
+void StrLineEdit::reset() {
+  clear();
+  setModified(false);
+}
+
+bool StrLineEdit::hasModified() { return isModified(); }
 
 const QVariant StrLineEdit::value() {
   QRegExp reg("[\\n\\r]+");
@@ -59,9 +69,10 @@ void StrLineEdit::inputChanged(const QString &str) {
   } else {
     setStyleSheet("");
   }
+  setModified(true);
 }
 
-void StrLineEdit::setKeyword(const QString &key) {
+void StrLineEdit::loadDataset(const QString &key) {
   if (key.isEmpty())
     return;
 
@@ -83,6 +94,7 @@ void StrLineEdit::setKeyword(const QString &key) {
       if (q.value(0).isValid())
         list << q.value(0).toString();
     }
+    setModified(true);
   }
   if (list.size() > 1)
     setLineEditCompliter(list);

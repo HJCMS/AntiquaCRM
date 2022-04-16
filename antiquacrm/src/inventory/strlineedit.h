@@ -71,11 +71,9 @@ private Q_SLOTS:
     @brief skipReturnPressed
     @warning Enter soll das Formular nicht absenden!
   */
-  inline void skipReturnPressed() {};
+  inline void skipReturnPressed() { setModified(true); };
 
-public:
-  explicit StrLineEdit(QWidget *parent = nullptr);
-
+public Q_SLOTS:
   /**
     @brief setValue
     Die SQL Daten sind vom Type QVariant
@@ -89,6 +87,13 @@ public:
     @param str - SQL Datensatz
    */
   void setValue(const QVariant &str);
+
+  Q_INVOKABLE void reset();
+
+public:
+  explicit StrLineEdit(QWidget *parent = nullptr);
+
+  Q_INVOKABLE bool hasModified();
 
   /**
     @brief value
@@ -107,14 +112,14 @@ public:
   static const QString tableName() { return QString("ui_autofill_keywords"); };
 
   /**
-    @brief setKeyword
+    @brief loadDataset
     Sucht Schlüsselwörter mit dem Parameter
     @i key aus Tabelle @ref tableName().
     Bei Erfolg wird @ref setLineEditCompliter
     aufgerufen.
     @param key - column_name Qt::CaseSensitive
   */
-  void setKeyword(const QString &key);
+  void loadDataset(const QString &key);
 
   /**
     @brief setMaxAllowedLength

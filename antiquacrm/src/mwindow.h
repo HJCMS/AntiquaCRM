@@ -19,17 +19,12 @@ class Workspace;
 class ApplSettings;
 class DockBarWidget;
 
-namespace HJCMS {
-class SqlCore;
-}
-
 class MWindow : public QMainWindow {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "http://www.hjcms.de")
 
 private:
-  HJCMS::SqlCore *m_postgreSQL;
   QMenuBar *m_menuBar;
   QMenu *m_applicationMenu;
   QMenu *m_viewsMenu;
@@ -62,7 +57,6 @@ public Q_SLOTS:
 
 public:
   explicit MWindow(QWidget *parent = nullptr);
-  void connectSqlDatabase();
   virtual ~MWindow();
 };
 #endif // ANTIQUACRM_MWINDOW_H

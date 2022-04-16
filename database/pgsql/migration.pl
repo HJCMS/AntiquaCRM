@@ -110,6 +110,7 @@ sub prepare_condition {
   $_s =~ s/\//, /mg;
   $_s =~ s/\s+/ /mg;
   $_s =~ s/katoniert/kartoniert/ig;
+  $_s =~ s/Zustand \d[\/,]{1}//ig;
   return ucfirst $_s;
 };
 
@@ -418,13 +419,14 @@ sub create_inventory_books {
   LEFT(xgr.titel,148) AS ib_title_extended,
   xgr.jahr AS ib_year,
   LEFT(xgr.erhalt,128) AS ib_condition,
-  xgr.herausgeber AS ib_description,
+  xgr.herausgeber AS ib_internal_description,
   REPLACE(xgr.isbn,'-','') AS ib_isbn,
   xgr.stueck AS ib_count,
   xgr.format AS ib_pagecount,
   IFNULL(xgr.vk_preis,0.00) AS ib_price,
   IFNULL(xgr.gewicht,0) AS ib_weight,
-  xgr.zeitstempel AS ib_changed
+  xgr.zeitstempel AS ib_changed,
+  info
 FROM xgr
 WHERE xgr.art LIKE 'bu' AND xgr.artnr>0 AND length(xgr.titel)>1
 ORDER BY xgr.artnr ASC;
@@ -482,9 +484,9 @@ ORDER BY xgr.artnr ASC;
         $values .= "'$condition',";
       }
       ## Buch Beschreibung
-      my $description = ($r->{'ib_description'}) ? prepare_text($r->{'ib_description'}) : "";
+      my $description = ($r->{'ib_internal_description'}) ? prepare_text($r->{'ib_internal_description'}) : "";
       if(length($description) gt 3) {
-        $insert .= "ib_description,";
+        $insert .= "ib_internal_description,";
         $values .= "'$description',";
       }
       ## ISBN
@@ -526,7 +528,11 @@ ORDER BY xgr.artnr ASC;
         $values .= "'$timestamp'";
       } else {
         $insert .= "ib_changed";
-        $values .= "now()";
+        $values .= "CURRENT_TIMESTAMP";
+      }
+      if($r->{'info'}) {
+          $insert .= ",ib_description";
+          $values .= ",'".prepare_text($r->{'info'})."'";
       }
       ## Schreiben
       print FH "INSERT INTO $table ($insert) VALUES ($values);\n";
@@ -668,13 +674,15 @@ sub create_inventory_prints {
   kolorit,
   technik,
   jahr,
+  herausgeber AS ip_internal_description,
   format,
   querhoch,
   erhalt,
   zusatz, 
   vk_preis,
   FORMAT(vk_preis,2,'POSIX') AS price,
-  info
+  info,
+  xgr.zeitstempel AS ip_changed
 FROM hai.xgr
 WHERE xgr.art LIKE 'po' OR xgr.art LIKE 'an' OR xgr.art LIKE 'ka' AND artnr>0
 ORDER BY artnr ASC;");
@@ -750,6 +758,12 @@ ORDER BY artnr ASC;");
             $values .= ",false";
           }
         }
+        ## ip_internal_description
+        my $description = ($r->{'ip_internal_description'}) ? prepare_text($r->{'ip_internal_description'}) : "";
+        if(length($description) gt 3) {
+          $insert .= "ip_internal_description,";
+          $values .= "'$description',";
+        }
         ## ip_year
         if($r->{'jahr'}) {
           $insert .= ",ip_year";
@@ -782,6 +796,15 @@ ORDER BY artnr ASC;");
         } elsif($r->{'info'}) {
           $insert .= ",ip_description";
           $values .= ",'".prepare_text($r->{'info'})."'";
+        }
+        ## Datum
+        if($r->{'ip_changed'}) {
+          my $timestamp = $r->{'ip_changed'};
+          $insert .= ",ip_changed";
+          $values .= "'$timestamp'";
+        } else {
+          $insert .= ",ip_changed";
+          $values .= "CURRENT_TIMESTAMP";
         }
 
         print FH "INSERT INTO $table ($insert) VALUES ($values);\n";

@@ -1,4 +1,5 @@
 #include "statusbar.h"
+#include "sqlcore.h"
 #include "version.h"
 
 #include <QtCore/QDebug>
@@ -8,38 +9,48 @@
 StatusBar::StatusBar(QWidget *parent) : QStatusBar{parent} {
   setObjectName("StatusBar");
 
-  createConnectionWidget();
-  addPermanentWidget(m_connectionWidget, 0);
-}
+  m_sql = new HJCMS::SqlCore(this);
 
-void StatusBar::createConnectionWidget() {
-  m_connectionWidget = new QWidget(this);
-  m_connectionWidget->setObjectName("PostgreSQLConnectionStatus");
+  QWidget *m_widget = new QWidget(this);
+  m_widget->setObjectName("PostgreSQLConnectionStatus");
 
-  QHBoxLayout *layout = new QHBoxLayout(m_connectionWidget);
+  QHBoxLayout *layout = new QHBoxLayout(m_widget);
 
   QLabel *m_dbInfo = new QLabel(this);
   m_dbInfo->setObjectName("ConnectionInfo");
   m_dbInfo->setText(tr("Database status"));
   layout->addWidget(m_dbInfo);
 
-  m_dbStatusButton = new QToolButton(m_connectionWidget);
-  m_dbStatusButton->setIcon(myIcon("db_status"));
-  layout->addWidget(m_dbStatusButton);
+  m_dbStatus = new QToolButton(m_widget);
+  m_dbStatus->setIcon(myIcon("db_status"));
+  layout->addWidget(m_dbStatus);
 
-  m_connectionWidget->setLayout(layout);
+  m_widget->setLayout(layout);
+
+  addPermanentWidget(m_widget, 0);
+
+  connect(m_sql, SIGNAL(s_databaseMessage(const QString &)), this,
+          SLOT(sqlStatusMessage(const QString &)));
+  connect(m_sql, SIGNAL(s_errorMessage(const QString &)), this,
+          SLOT(sqlStatusMessage(const QString &)));
+  connect(m_sql, SIGNAL(s_connectionStatus(bool)), this,
+          SLOT(setDatabaseStatusIcon(bool)));
+
+  // first shot
+  m_sql->openDatabase();
 }
 
 void StatusBar::sqlStatusMessage(const QString &str) {
-  // qDebug() << "StatusBar::sqlStatusMessage: " << str;
+  // qDebug() << Q_FUNC_INFO << str;
   showMessage(str);
 }
 
 void StatusBar::setDatabaseStatusIcon(bool b) {
+  // qDebug() << Q_FUNC_INFO << Qt::endl;
   if (b) {
-    m_dbStatusButton->setIcon(myIcon("database"));
+    m_dbStatus->setIcon(myIcon("database"));
   } else {
-    m_dbStatusButton->setIcon(myIcon("db_status"));
+    m_dbStatus->setIcon(myIcon("db_status"));
   }
 }
 

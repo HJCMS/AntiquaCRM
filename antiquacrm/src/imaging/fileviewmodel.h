@@ -16,13 +16,25 @@ class FileViewModel : public QFileSystemModel {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  /**
+     Aktuelle Verzeichnisebene
+   */
   QDir p_curDir;
 
 private Q_SLOTS:
+  /**
+     Setzt @ref p_curDir bei einem
+     Verzeichniswechsel oder wenn der Wurzelpfad
+     geändert wurde.
+   */
   void currentTarget(const QString &path);
 
 public:
   explicit FileViewModel(QObject *parent = nullptr);
+
+  /**
+    Übergibt das zuletzt gesetzte Verzeichnis zurück.
+  */
   const QDir last();
 };
 

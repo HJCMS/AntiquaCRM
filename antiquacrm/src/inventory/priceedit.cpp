@@ -9,6 +9,7 @@
 
 PriceEdit::PriceEdit(QWidget *parent) : QWidget{parent} {
   setObjectName("PriceEdit");
+  modified = false;
 
   QVBoxLayout *mainlayout = new QVBoxLayout(this);
   mainlayout->setObjectName("PriceLayout");
@@ -23,10 +24,24 @@ PriceEdit::PriceEdit(QWidget *parent) : QWidget{parent} {
 
   mainlayout->addWidget(m_box);
   setLayout(mainlayout);
+
+  connect(m_box, SIGNAL(valueChanged(double)), this, SLOT(itemChanged(double)));
 }
+
+void PriceEdit::itemChanged(double) { setModified(true); }
 
 void PriceEdit::setValue(const QVariant &val) {
   m_box->setValue(val.toDouble());
+  setModified(false);
 }
+
+void PriceEdit::setModified(bool b) { modified = b; }
+
+void PriceEdit::reset() {
+  m_box->setValue(0);
+  setModified(false);
+}
+
+bool PriceEdit::hasModified() { return modified; }
 
 const QVariant PriceEdit::value() { return QVariant(m_box->value()); }

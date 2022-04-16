@@ -9,20 +9,23 @@
 #include <QtWidgets/QDateEdit>
 #include <QtWidgets/QWidget>
 
-class YearEdit : public QDateEdit
-{
+class YearEdit : public QDateEdit {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "http://www.hjcms.de")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
+
+private:
+  bool modified;
 
 public Q_SLOTS:
-  void setValue(const QVariant  &);
+  void setModified(bool b = true);
+  void setValue(const QVariant &);
+  Q_INVOKABLE void reset();
 
 public:
   explicit YearEdit(QWidget *parent = nullptr);
+  Q_INVOKABLE bool hasModified();
   const QVariant value();
-
 };
 
 #endif // YEAREDIT_H
-

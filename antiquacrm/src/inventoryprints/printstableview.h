@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef BOOKSTABLEVIEW_H
-#define BOOKSTABLEVIEW_H
+#ifndef PRINTSTABLEVIEW_H
+#define PRINTSTABLEVIEW_H
 
 #include <QtCore/QHash>
 #include <QtCore/QItemSelectionModel>
@@ -13,10 +13,10 @@
 #include <QtSql/QSqlTableModel>
 #include <QtWidgets/QTableView>
 
-class BooksTableModel;
+class PrintsTableModel;
 class SearchStatement; /**< @ref SearchBar */
 
-class BooksTableView : public QTableView {
+class PrintsTableView : public QTableView {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "http://www.hjcms.de")
@@ -25,30 +25,11 @@ private:
   int maxRowCount = 2500;
   QSqlDatabase p_db;
   QModelIndex p_modelIndex;
-  BooksTableModel *m_queryModel;
+  PrintsTableModel *m_queryModel;
 
 private Q_SLOTS:
-  /**
-   @brief Suche Datensatz mit Index
-   Wenn vorhanden Sende Signal @ref s_articleSelected
-  */
-  void queryArticleID(const QModelIndex &);
-
-  /**
-   @brief Ableitung für @ref clickedGetArticleID
-  */
+  void clickedGetArticleID(const QModelIndex &);
   void openBookByContext();
-
-  /**
-     @brief Einen neuen Eintrag erstellen wenn ...
-     @todo Die Suchanfrage kein Ergebnis lieferte
-  */
-  void newBookByContext();
-
-  /**
-     @brief  Auftrage Erstellung
-     @todo Im Moment noch verfügbar
-  */
   void createOrderByContext();
 
 protected:
@@ -57,14 +38,13 @@ protected:
 Q_SIGNALS:
   void s_rowsChanged(int count);
   void s_articleSelected(int id);
-  void s_newEntryPlease();
 
 public Q_SLOTS:
   void queryHistory(const QString &);
   void queryStatement(const SearchStatement &);
 
 public:
-  explicit BooksTableView(QWidget *parent = nullptr);
+  explicit PrintsTableView(QWidget *parent = nullptr);
 };
 
-#endif // BOOKSTABLEVIEW_H
+#endif // PRINTSTABLEVIEW_H

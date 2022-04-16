@@ -17,16 +17,34 @@ class StorageEdit : public QComboBox {
   Q_CLASSINFO("URL", "http://www.hjcms.de")
 
 private:
+  bool modified;
+
   /**
      @brief Tabellendaten "ref_storage_location"
    */
   void setStorageData();
 
 public Q_SLOTS:
-  void setValue(const QVariant &);
+  void setModified(bool b = true);
+
+  /**
+     Lade Datenbankdaten in die Auswahlbox
+     Wird nach der Klasseninitialisierung
+     aufgerufen!
+  */
+  void loadStorageData();
+
+  /**
+    Suche Lager mit ID
+  */
+  void setValue(const QVariant &val);
+
+  Q_INVOKABLE void reset();
 
 public:
   explicit StorageEdit(QWidget *parent = nullptr);
+
+  Q_INVOKABLE bool hasModified();
 
   /**
      @brief Identisch mit currentIndex()

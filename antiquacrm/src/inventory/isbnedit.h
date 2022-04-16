@@ -29,10 +29,16 @@ private Q_SLOTS:
 Q_SIGNALS:
   void s_isbnIsValid(bool);
 
+public Q_SLOTS:
+  void setValue(const QVariant &);
+  Q_INVOKABLE void reset();
+
 public:
   explicit IsbnEdit(QWidget *parent = nullptr);
 
-  void setValue(const QVariant &);
+  Q_INVOKABLE bool hasModified();
+
+  bool isValid();
 
   const QVariant value();
 };

@@ -5,8 +5,8 @@
 #ifndef SETLANGUAGE_H
 #define SETLANGUAGE_H
 
-#include <QtCore/QList>
 #include <QtCore/QHash>
+#include <QtCore/QList>
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
 #include <QtWidgets/QComboBox>
@@ -20,9 +20,20 @@ class SetLanguage : public QComboBox {
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "http://www.hjcms.de")
 
+private:
+  bool modified;
+
+private Q_SLOTS:
+  void itemChanged(int);
+
+public Q_SLOTS:
+  void setValue(const QVariant &);
+  void setModified(bool b = true);
+  Q_INVOKABLE void reset();
+
 public:
   explicit SetLanguage(QWidget *parent = nullptr);
-  void setValue(const QVariant &);
+  Q_INVOKABLE bool hasModified();
   const QVariant value();
 };
 

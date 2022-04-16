@@ -4,6 +4,7 @@
 #include "sqlcore.h"
 #include "sqlconfig.h"
 
+#include <QtCore/QCoreApplication>
 #include <QtCore/QDebug>
 #include <QtCore/QSettings>
 #include <QtNetwork/QTcpSocket>
@@ -18,12 +19,23 @@ int timerInterval = 15000; /**< Timer Interval 15s (15 * 1000) */
 SqlCore::SqlCore(QObject *parent) : QObject{parent} {
   setObjectName("PostgreSqlCoreDriver");
   statusTimerID = 0;
-  // dummy
-  p_db = QSqlDatabase();
-  // load nativ settings class
   m_cfg = new SqlConfig();
-  // load driver
-  initSQLDriver();
+
+  /**
+   @note Wir können nur einmal die Datenbank Verbindung festlegen!
+   Damit es bei weiteren Klassenaufrufen nicht Fehler hagelt.
+   An dieser Stelle nach einer Exitierenden Verbindungen suchen
+   und diese wieder aktivieren!
+  */
+  QSqlDatabase db = QSqlDatabase::database(m_cfg->getConnectioName());
+  if (db.isValid()) {
+    p_db = db;
+    database = new QSqlDatabase(p_db);
+  } else {
+    p_db = QSqlDatabase();
+    // load driver
+    initSQLDriver();
+  }
 }
 
 const QString SqlCore::prepareErrorMessage() {
@@ -63,9 +75,13 @@ bool SqlCore::initSQLDriver() {
     return false;
   }
   database = new QSqlDatabase(p_db);
-  qInfo("PostgreSQL Driver QPSQL:%s loaded ...",
-        qPrintable(database->connectionName()));
-  return true;
+  if (database->isValid()) {
+    qInfo("SqlCore::initSQLDriver QPSQL:%s loaded ...",
+          qPrintable(database->connectionName()));
+
+    return true;
+  }
+  return false;
 }
 
 bool SqlCore::socketConnectionTest() {
@@ -152,6 +168,8 @@ void SqlCore::openDatabase(bool b) {
     emit s_connectionStatus(false);
   }
 }
+
+bool SqlCore::initialDatabase() { return initDatabase(); }
 
 const QString SqlCore::getConnectionName() {
   return database->connectionName();

@@ -49,7 +49,7 @@ private:
      Bilder auf ein Maximale Größe von
      450x450 Pixeln begrenzt!
   */
-  int maximumSize = 450;
+  int maximumSize = 350;
 
   /**
      @brief m_fileDialog

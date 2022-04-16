@@ -30,6 +30,12 @@ public:
   explicit MessageBox(QWidget *parent = nullptr);
 
   /**
+     @brief noticeMessage
+     @param QString Message
+   */
+  void noticeMessage(const QString &);
+
+  /**
      @brief queryFail
      @param QString Message
    */

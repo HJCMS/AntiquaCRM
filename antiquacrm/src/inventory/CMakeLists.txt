@@ -10,11 +10,12 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (subproject_SOURCES
+  boolbox.cpp
   filedialog.cpp
   articleid.cpp
   editionedit.cpp
   editordialog.cpp
-  inventory.cpp
+  editoractionbar.cpp
   isbnedit.cpp
   priceedit.cpp
   searchbar.cpp
@@ -23,14 +24,17 @@ SET (subproject_SOURCES
   strlineedit.cpp
   yearedit.cpp
   messagebox.cpp
+  intspinbox.cpp
+  textfield.cpp
 )
 
 SET (subproject_HEADERS
+  boolbox.h
   filedialog.h
   articleid.h
   editionedit.h
   editordialog.h
-  inventory.h
+  editoractionbar.h
   isbnedit.h
   priceedit.h
   setlanguage.h
@@ -38,7 +42,9 @@ SET (subproject_HEADERS
   storageedit.h
   strlineedit.h
   yearedit.h
+  intspinbox.h
   messagebox.h
+  textfield.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

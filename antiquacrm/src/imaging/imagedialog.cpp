@@ -159,7 +159,7 @@ void ImageDialog::openFileDialog() {
   m_fileDialog = new OpenImageDialog(this);
   m_fileDialog->setObjectName("imgfile_dialog");
   m_fileDialog->setStart(
-      cfg.value("image_source_path", QDir::homePath()).toString());
+      cfg.value("imaging/sourcepath", QDir::homePath()).toString());
   if (m_fileDialog->exec()) {
     loadFile(m_fileDialog->file());
   }

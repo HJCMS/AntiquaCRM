@@ -9,6 +9,7 @@
 SetLanguage::SetLanguage(QWidget *parent) : QComboBox{parent} {
   setObjectName("SetLanguage");
   addItem(tr("German"), QString("de_DE"));
+  addItem(tr("Europe"), QString("eu_EU"));
   addItem(tr("Czech"), QString("cs_CS"));
   addItem(tr("Danish"), QString("da_DA"));
   addItem(tr("English"), QString("en_EN"));
@@ -22,11 +23,27 @@ SetLanguage::SetLanguage(QWidget *parent) : QComboBox{parent} {
   addItem(tr("Portuguese"), QString("pt_PT"));
   addItem(tr("Slovenian"), QString("sl_SL"));
   addItem(tr("Swedish"), QString("sv_SV"));
+  setModified(false);
+
+  connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(itemChanged(int)));
 }
+
+void SetLanguage::itemChanged(int) { setModified(true); }
 
 void SetLanguage::setValue(const QVariant &v) {
   int index = findData(v, Qt::UserRole, Qt::MatchExactly);
   setCurrentIndex(index);
+  setModified(false);
+}
+
+void SetLanguage::setModified(bool b) { modified = b; }
+
+bool SetLanguage::hasModified() { return modified; }
+
+void SetLanguage::reset()
+{
+  setCurrentIndex(0);
+  setModified(false);
 }
 
 const QVariant SetLanguage::value() {

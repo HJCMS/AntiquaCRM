@@ -2,35 +2,34 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef PRICEEDIT_H
-#define PRICEEDIT_H
+#ifndef TEXTFIELD_H
+#define TEXTFIELD_H
 
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
-#include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
-class PriceEdit : public QWidget {
+class TextField : public QTextEdit {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "http://www.hjcms.de")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
   bool modified;
-  QDoubleSpinBox *m_box;
 
 private Q_SLOTS:
-  void itemChanged(double);
+  void dataChanged();
 
 public Q_SLOTS:
   void setModified(bool b = true);
   Q_INVOKABLE void reset();
 
 public:
-  explicit PriceEdit(QWidget *parent = nullptr);
+  explicit TextField(QWidget *parent = nullptr);
   void setValue(const QVariant &);
   Q_INVOKABLE bool hasModified();
   const QVariant value();
 };
 
-#endif // PRICEEDIT_H
+#endif // TEXTFIELD_H

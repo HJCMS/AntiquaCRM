@@ -6,6 +6,8 @@
 #include "bookeditor.h"
 #include "bookstableview.h"
 #include "editordialog.h"
+#include "messagebox.h"
+#include "searchbar.h"
 #include "statsbookbar.h"
 #include "version.h"
 
@@ -48,15 +50,24 @@ static const QList<SearchFilter> bookSearchFilter() {
 }
 
 InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
-    : Inventory{index, parent} {
+    : QWidget{parent} {
   setObjectName("InventoryBooks");
   setWindowTitle("TabBooks");
 
   ApplSettings cfg;
-  minLength = cfg.value("search/minlength", 5).toInt();
+  minLength = cfg.value("search/startlength", 5).toInt();
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("InventoryBooksLayout");
+
+  m_stackedWidget = new QStackedWidget(this);
+  m_stackedWidget->setObjectName("books_stacked_widget");
+
+  // Begin Page#0
+  QWidget *siteOneWidget = new QWidget(m_stackedWidget);
+  siteOneWidget->setObjectName("books_site_one_widget");
+  QVBoxLayout *siteOneLayout = new QVBoxLayout(siteOneWidget);
+  siteOneLayout->setObjectName("books_site_one_layout");
 
   /**
     @brief m_searchBar
@@ -65,17 +76,28 @@ InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
   m_searchBar = new SearchBar(this);
   m_searchBar->setValidation(SearchBar::Pattern);
   m_searchBar->addSearchFilters(bookSearchFilter());
-  layout->addWidget(m_searchBar);
+  siteOneLayout->addWidget(m_searchBar);
 
   m_tableView = new BooksTableView(this);
-  layout->addWidget(m_tableView);
+  siteOneLayout->addWidget(m_tableView);
 
   m_statsBookBar = new StatsBookBar(this);
-  layout->addWidget(m_statsBookBar);
+  siteOneLayout->addWidget(m_statsBookBar);
+  m_stackedWidget->insertWidget(0, siteOneWidget);
+  // END Page#0
+
+  // Begin Page#1
+  m_bookEditor = new BookEditor(m_stackedWidget);
+  m_stackedWidget->insertWidget(1, m_bookEditor);
+  m_bookEditor->setEnabled(false);
+  // END Page#1
+
+  m_stackedWidget->setCurrentIndex(0);
+  layout->addWidget(m_stackedWidget);
 
   setLayout(layout);
 
-  // Such anfragen
+  // Signals
   connect(m_searchBar, SIGNAL(searchTextChanged(const QString &)), this,
           SLOT(parseLineInput(const QString &)));
 
@@ -84,18 +106,21 @@ InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
   connect(m_searchBar, SIGNAL(currentFilterChanged(int)), this,
           SLOT(updateValidator(int)));
 
-  // Verlaufs abfragen
   connect(m_statsBookBar, SIGNAL(s_queryHistory(const QString &)), m_tableView,
           SLOT(queryHistory(const QString &)));
 
-  connect(m_statsBookBar, SIGNAL(s_createEntryClicked()), this,
-          SLOT(createBookArticle()));
-
-  // ID wurde in Tabellenansicht ausgewählt
   connect(m_tableView, SIGNAL(s_articleSelected(int)), this,
           SLOT(articleSelected(int)));
+
   connect(m_tableView, SIGNAL(s_rowsChanged(int)), m_statsBookBar,
           SLOT(showRowCount(int)));
+
+  connect(m_tableView, SIGNAL(s_newEntryPlease()), this,
+          SLOT(createBookEntry()));
+
+  connect(m_bookEditor, SIGNAL(s_sendMessage(const QString &)), this,
+          SLOT(displayMessageBox(const QString &)));
+  connect(m_bookEditor, SIGNAL(s_leaveEditor()), this, SLOT(backToTableView()));
 }
 
 void InventoryBooks::parseLineInput(const QString &str) {
@@ -125,31 +150,36 @@ void InventoryBooks::searchConvert() {
     s.SearchString = buf;
     qDebug("QueryStatement:'%s':'%s'", qPrintable(s.SearchField),
            qPrintable(s.SearchString));
-    m_tableView->queryStatement(s);
+
+    if (m_tableView != nullptr)
+      m_tableView->queryStatement(s);
   }
 }
+
+void InventoryBooks::backToTableView() {
+  m_stackedWidget->setCurrentIndex(0);
+  m_bookEditor->setEnabled(false);
+};
 
 void InventoryBooks::openEditor(const QString &sql) {
   // qDebug() << "InventoryBooks::openEditor" << sql;
-  EditorDialog *dialog = new EditorDialog(this);
-  dialog->setWindowTitle(tr("Edit Book"));
-  dialog->setMinimumSize(850, 650);
-  dialog->setShortcutEnabled(false);
-
-  m_bookEditor = new BookEditor(dialog);
   if (!sql.isEmpty()) {
+    m_bookEditor->setEnabled(true);
     m_bookEditor->readDataBaseEntry(sql);
+    m_stackedWidget->setCurrentWidget(m_bookEditor);
   }
-  dialog->setMainWidget(m_bookEditor);
-  connect(dialog, SIGNAL(s_restoreDataset()), m_bookEditor,
-          SLOT(restoreDataset()));
-
-  connect(dialog, SIGNAL(s_commitDataset()), m_bookEditor, SLOT(saveData()));
-
-  dialog->show();
 }
 
-void InventoryBooks::createBookArticle() { openEditor(QString()); }
+void InventoryBooks::displayMessageBox(const QString &msg) {
+  MessageBox *box = new MessageBox(this);
+  box->noticeMessage(msg);
+}
+
+void InventoryBooks::createBookEntry() {
+  qDebug() << Q_FUNC_INFO;
+  m_bookEditor->setEnabled(true);
+  m_stackedWidget->setCurrentWidget(m_bookEditor);
+}
 
 void InventoryBooks::articleSelected(int id) {
   if (id < 1)

@@ -10,17 +10,19 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QWidget>
 
-class ArticleID : public QLineEdit
-{
+class ArticleID : public QLineEdit {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "http://www.hjcms.de")
 
+public Q_SLOTS:
+  void setValue(const QVariant &);
+  Q_INVOKABLE void reset();
+
 public:
   explicit ArticleID(QWidget *parent = nullptr);
-  void setValue(const QVariant &);
+  Q_INVOKABLE bool hasModified();
   const QVariant value();
 };
 
 #endif // ARTICLEID_H
-

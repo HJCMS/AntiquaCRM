@@ -5,17 +5,18 @@
 #include "version.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QSettings>
 #include <QtCore/QStandardPaths>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 
-ToolBar::ToolBar(QWidget *parent) : QToolBar{parent} {
+ToolBar::ToolBar(QWidget *parent) : QWidget{parent} {
   setObjectName("ImageDialogToolbar");
-  setOrientation(Qt::Horizontal);
-  setMovable(false);
+  setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-  QWidget *w = new QWidget(this);
-  QHBoxLayout *layout = new QHBoxLayout(w);
+  QHBoxLayout *layout = new QHBoxLayout(this);
   m_setTargets = new QComboBox(this);
   int i = 0;
   m_setTargets->insertItem(
@@ -41,21 +42,32 @@ ToolBar::ToolBar(QWidget *parent) : QToolBar{parent} {
       i++, tr("Cache"),
       QStandardPaths::standardLocations(QStandardPaths::GenericCacheLocation));
 #endif
+
+  QSettings cfg;
+  QString p = cfg.value("imaging/sourcepath").toString();
+  if (!p.isEmpty()) {
+    m_setTargets->insertItem(i++, tr("Company Storage"), p);
+  }
   layout->addWidget(m_setTargets);
 
-  QSpacerItem *sp = new QSpacerItem(8,8,QSizePolicy::Expanding,QSizePolicy::Minimum);
+  QSpacerItem *sp =
+      new QSpacerItem(8, 8, QSizePolicy::Expanding, QSizePolicy::Minimum);
   layout->addSpacerItem(sp);
 
-  w->setLayout(layout);
+  QLabel *lb = new QLabel(this);
+  lb->setText(tr("Supported Format: JPG"));
+  layout->addWidget(lb);
 
-  addWidget(w);
+  layout->addSpacerItem(sp);
 
-  addSeparator();
-
-  QAction *m_up = addAction(myIcon("undo"),tr("Upward"));
+  QPushButton *m_up = new QPushButton(tr("Upward"), this);
   m_up->setToolTip(tr("Upward"));
+  m_up->setIcon(myIcon("undo"));
+  layout->addWidget(m_up);
 
-  connect(m_up, SIGNAL(triggered(bool)), this, SLOT(goUpClicked(bool)));
+  setLayout(layout);
+
+  connect(m_up, SIGNAL(clicked(bool)), this, SLOT(goUpClicked(bool)));
 
   connect(m_setTargets, SIGNAL(currentIndexChanged(int)), this,
           SLOT(targetChanged(int)));
@@ -65,7 +77,4 @@ void ToolBar::targetChanged(int index) {
   emit goTo(m_setTargets->itemData(index, Qt::UserRole).toString());
 }
 
-void ToolBar::goUpClicked(bool)
-{
-    emit goUp();
-}
+void ToolBar::goUpClicked(bool) { emit goUp(); }

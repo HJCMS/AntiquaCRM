@@ -5,11 +5,9 @@
 #ifndef INVENTORYBOOKS_H
 #define INVENTORYBOOKS_H
 
-#include "inventory.h"
-#include "searchbar.h"
-
 #include <QtCore/QList>
 #include <QtCore/QObject>
+#include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QWidget>
 
@@ -18,13 +16,14 @@ class BooksTableView;
 class StatsBookBar;
 class BookEditor;
 
-class InventoryBooks : public Inventory {
+class InventoryBooks : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "http://www.hjcms.de")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
   int minLength;
+  QStackedWidget *m_stackedWidget;
   SearchBar *m_searchBar;
   BooksTableView *m_tableView;
   StatsBookBar *m_statsBookBar;
@@ -34,6 +33,11 @@ private:
 private Q_SLOTS:
   void parseLineInput(const QString &);
   void searchConvert();
+
+  /**
+     @brief Gehe zurück zur Tabellenansicht
+  */
+  void backToTableView();
 
   /**
      @brief articleSelected
@@ -52,8 +56,12 @@ private Q_SLOTS:
    */
   void updateValidator(int);
 
+Q_SIGNALS:
+  void s_postMessage(const QString &);
+
 public Q_SLOTS:
-  void createBookArticle();
+  void displayMessageBox(const QString &);
+  void createBookEntry();
 
 public:
   explicit InventoryBooks(int index, QTabWidget *parent = nullptr);

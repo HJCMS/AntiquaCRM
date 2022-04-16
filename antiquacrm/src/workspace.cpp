@@ -15,12 +15,13 @@ Workspace::Workspace(QWidget * parent) : QTabWidget{parent}
 {
     setObjectName("WorkspaceTabWidget");
     setMovable(false);
-    setTabsClosable(true);
-    setUsesScrollButtons(true);
+    setTabsClosable(false);
+    setUsesScrollButtons(false);
 
     m_cfg = new ApplSettings();
 
     tabIndex = 0;
+
     m_inventoryBooks = new InventoryBooks(tabIndex,this);
     insertTab(tabIndex,m_inventoryBooks,tr("Books"));
     setTabToolTip(tabIndex,tr("Book Inventory"));
@@ -31,12 +32,12 @@ Workspace::Workspace(QWidget * parent) : QTabWidget{parent}
     setTabToolTip(tabIndex,tr("Prints, Stitches and Photo inventory"));
     setTabIcon(tabIndex,myIcon("image"));
 
-    connect(this,SIGNAL(tabCloseRequested(int)),SLOT(closeTabClicked(int)));
+    // connect(this,SIGNAL(tabCloseRequested(int)),SLOT(closeTabClicked(int)));
 }
 
 void Workspace::addCustomersTab()
 {
-    qDebug() << __FUNCTION__ << ++tabIndex;
+    qDebug() << Q_FUNC_INFO << ++tabIndex;
     return;
     m_inventoryCustomers = new InventoryCustomers(tabIndex,this);
     insertTab(tabIndex,m_inventoryCustomers,tr("Customers"));
@@ -46,6 +47,6 @@ void Workspace::addCustomersTab()
 
 void Workspace::closeTabClicked(int index)
 {
-    qDebug() << __FUNCTION__ << index << "TODO Check State before close...";
+    qDebug() << Q_FUNC_INFO << index << "TODO Check State before close...";
     // removeTab(index);
 }

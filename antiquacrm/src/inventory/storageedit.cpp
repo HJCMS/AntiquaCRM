@@ -12,8 +12,10 @@ StorageEdit::StorageEdit(QWidget *parent) : QComboBox{parent} {
   setObjectName("StorageEdit");
   setMaxVisibleItems(10);
   setSizeAdjustPolicy(QComboBox::AdjustToContentsOnFirstShow);
-  setStorageData();
+  setModified(false);
 }
+
+void StorageEdit::setModified(bool b) { modified = b; }
 
 void StorageEdit::setStorageData() {
   QSqlDatabase db(QSqlDatabase::database(sqlConnectionName));
@@ -37,11 +39,27 @@ void StorageEdit::setStorageData() {
       if (q.value(3).isValid())
         setItemData(index, q.value(3).toString(), Qt::ToolTipRole);
     }
+    setModified(true);
   }
 }
 
+void StorageEdit::loadStorageData() { setStorageData(); }
+
 void StorageEdit::setValue(const QVariant &val) {
+  if (count() < 2) {
+    qWarning("StorageEdit isEmpty !"
+             "Did you forget loadStorageData() first?");
+    return;
+  }
   setCurrentIndex(val.toInt());
+  setModified(false);
 }
+
+void StorageEdit::reset() {
+  setCurrentIndex(0);
+  setModified(false);
+}
+
+bool StorageEdit::hasModified() { return modified; }
 
 const QVariant StorageEdit::value() { return QVariant(currentIndex()); }

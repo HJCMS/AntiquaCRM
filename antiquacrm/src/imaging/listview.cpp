@@ -33,7 +33,7 @@ bool ListView::checkJpeg(const QFileInfo &info) {
 void ListView::checkSingleClicked(const QModelIndex &index) {
   QFileInfo info = m_model->fileInfo(index);
   if (checkJpeg(info)) {
-    emit previewImage(info.filePath());
+    emit s_previewImage(info.filePath());
     return;
   }
 }
@@ -45,7 +45,7 @@ void ListView::checkDoubleClicked(const QModelIndex &index) {
   }
   QFileInfo info = m_model->fileInfo(index);
   if (checkJpeg(info)) {
-    emit selectionChanged(info.filePath());
+    emit s_selectionChanged(info.filePath());
     return;
   }
 }

@@ -105,12 +105,6 @@ protected:
 
 Q_SIGNALS:
   /**
-   @brief Signal neuen Eintrag erstellen
-   Wird von @ref m_createEntryBtn ausgelöst.
-  */
-  void s_createEntryClicked();
-
-  /**
      @brief Auswahl Verlauf wurde getätigt
      Gibt den Benutzerdefiniert zurück.
      @note Siehe Verlaufsauswahl in der

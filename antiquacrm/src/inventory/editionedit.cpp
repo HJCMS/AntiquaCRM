@@ -22,21 +22,31 @@ SELECT cell FROM information_schema.columns WHERE table_name = 'edition_t';
 */
 EditionEdit::EditionEdit(QWidget *parent) : QComboBox{parent} {
   setObjectName("EditionEdit");
-
   QMapIterator<int, QString> it(editionTypes());
   while (it.hasNext()) {
     it.next();
     insertItem(it.key(), it.value());
   }
+  setModified(false);
 }
 
 void EditionEdit::setValue(const QVariant &val) {
   int index = val.toInt();
   if (index < 0) {
     setCurrentIndex(0);
+    setModified(true);
     return;
   }
   setCurrentIndex(index);
+  setModified(false);
+}
+
+void EditionEdit::setModified(bool b) { modified = b; }
+bool EditionEdit::hasModiefied() { return modified; }
+
+void EditionEdit::reset() {
+  setCurrentIndex(0);
+  setModified(false);
 }
 
 const QVariant EditionEdit::value() {

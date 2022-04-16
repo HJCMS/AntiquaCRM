@@ -1,29 +1,28 @@
 #ifndef BOOKEDITOR_H
 #define BOOKEDITOR_H
 
+#include <QtCore/QEvent>
 #include <QtCore/QList>
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
-#include <QtWidgets/QCheckBox>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QDialog>
 #include <QtWidgets/QListWidget>
-#include <QtWidgets/QListWidgetItem>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QTabWidget>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
-class SetLanguage;
 class ArticleID;
-class YearEdit;
-class PriceEdit;
-class StorageEdit;
-class StrLineEdit;
+class BooksImageView;
+class BoolBox;
+class EditorActionBar;
+class IntSpinBox;
 class IsbnEdit;
 class IsbnRequest;
-class BooksImageView;
+class PriceEdit;
+class SetLanguage;
+class StorageEdit;
+class StrLineEdit;
+class TextField;
+class YearEdit;
 
 /**
    @brief BookDataField
@@ -62,17 +61,17 @@ class BookEditor : public QWidget {
   Q_CLASSINFO("URL", "http://www.hjcms.de")
 
 private:
-  QCheckBox *ib_signed;           /**< @brief Signiert? */
-  QCheckBox *ib_restricted;       /**< @brief Zensiert? */
+  BoolBox *ib_signed;             /**< @brief Signiert? */
+  BoolBox *ib_restricted;         /**< @brief Zensiert? */
   SetLanguage *ib_language;       /**< @brief Sprache */
   StorageEdit *ib_storage;        /**< @brief Lager bestimmung */
   YearEdit *ib_year;              /**< @brief Jahr */
   PriceEdit *ib_price;            /**< @brief Preis */
-  QSpinBox *ib_count;             /**< @brief Bestandsangabe */
-  QSpinBox *ib_pagecount;         /**< @brief Seitenanzahl */
-  QSpinBox *ib_weight;            /**< @brief Gewicht */
-  QSpinBox *ib_volume;            /**< @brief Band ? */
-  QSpinBox *ib_edition;           /**< @brief Ausgabe */
+  IntSpinBox *ib_count;           /**< @brief Bestandsangabe */
+  IntSpinBox *ib_pagecount;       /**< @brief Seitenanzahl */
+  IntSpinBox *ib_weight;          /**< @brief Gewicht */
+  IntSpinBox *ib_volume;          /**< @brief Band ? */
+  IntSpinBox *ib_edition;         /**< @brief Ausgabe */
   ArticleID *ib_id;               /**< @brief ReadOnly:ArticleID */
   IsbnEdit *ib_isbn;              /**< @brief ISBN */
   StrLineEdit *ib_author;         /**< @brief Buchautor */
@@ -82,15 +81,27 @@ private:
   StrLineEdit *ib_publisher;      /**< @brief Herausgeber/Verlag */
   StrLineEdit *ib_title;          /**< @brief Buch Titel */
   StrLineEdit *ib_title_extended; /**< @brief Ereiterte Titel  */
-  QTextEdit *ib_description;      /**< @brief Textfeld Beschreibung */
+  TextField *ib_description;      /**< @brief Öffentliche Beschreibung */
   QPushButton *btn_createJob;     /**< @brief Auftragserstellung */
   QPushButton *btn_imaging;       /**< @brief IMage Import/Edit Dialog */
   IsbnRequest *m_isbnRequest;     /**< @brief ISBN Abfrage Klasse */
-  QTabWidget *m_tabWidget;   /**< @brief BeschreibungsText und ISBN Info  */
-  QListWidget *m_listWidget; /**< @brief ISBN Abfrage-Vorschau */
+  QTabWidget *m_tabWidget; /**< @brief BeschreibungsText und ISBN Info  */
+  TextField *ib_internal_description; /**< @brief Interne Beschreibung */
+  QListWidget *m_listWidget;          /**< @brief ISBN Abfrage-Vorschau */
 
   /**
-     @brief m_imageView
+     @brief Beinhaltet Zurücksetzen/Speichern/Verlassen
+   */
+  EditorActionBar *m_actionBar;
+
+  /**
+    @brief Wird im Konstruktor bei TabWidget gesetzt
+    und in @ref setIsbnInfo verwendet!
+  */
+  int isbnTabIndex;
+
+  /**
+    @brief m_imageView
    */
   BooksImageView *m_imageView;
 
@@ -185,7 +196,6 @@ private Q_SLOTS:
   */
   void infoISBNDoubleClicked(QListWidgetItem *);
 
-public Q_SLOTS:
   /**
      @brief Durchläuft @ref dbDataSet und ruft @ref addDataFromQuery auf.
      @note Die Größe von @ref dbDataSet muss mindestenz 16 betragen!
@@ -193,19 +203,61 @@ public Q_SLOTS:
   void createDataSet();
 
   /**
+     @brief Alle Datenfelder zurücksetzen!
+   */
+  void clearDataFields();
+
+  /**
+   @brief Suche nach nicht gespeicherten Daten
+   Wenn es keine Daten zu Speichern gibt sende
+   das Signal @ref s_leaveEditor(), wenn doch
+   an dieser Stelle das verlassen verweigern
+   und den Nutzer einen Hinweis geben!
+ */
+  void checkLeaveEditor();
+
+protected:
+  /**
+    @brief Fange @ref QEvent::EnabledChange ab!
+    Lade Datenfelder nur wenn das Fenster Aktiviert wurde!
+    Um fehlerhafte Tastenbindungen oder eingaben zu verhindern
+    ist das Fenster im Standard erst mal deaktiviert.
+    Und wird es serst, wenn von StackedWidget aufgerufen.
+    @note Für Unterklassen die eine SQL Abfrage erfordern,
+       kann hier die "loadDataset" Methode aufgerufen werden.
+  */
+  virtual void changeEvent(QEvent *event);
+
+public Q_SLOTS:
+  /**
      @brief Methode für Zurücksetzen Button
    */
   void restoreDataset();
 
 Q_SIGNALS:
   /**
-     @brief Bildbearbeitung öffnen
-     @todo
+    @brief Sende Signal das die Ansicht verlassen werden kann!
+  */
+  void s_leaveEditor();
+
+  /**
+    @brief Bildbearbeitung öffnen
   */
   void s_openImageEditor(double);
 
+  /**
+    @brief Nachricht Ausgeben
+  */
+  void s_sendMessage(const QString &);
+
 public:
-  BookEditor(QDialog *parent = nullptr);
+  BookEditor(QWidget *parent = nullptr);
+
+  /**
+    @brief Prüfe auf Datensatzänderungen!
+    @return Bei @b true, wurden Datenfelder nicht gespeichert!
+   */
+  bool checkUnsafedData();
 
   /**
     @brief Wenn Bearbeiten darf der Eintrag nicht 0 sein!

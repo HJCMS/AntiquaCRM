@@ -1,8 +1,8 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "bookstableview.h"
-#include "bookstablemodel.h"
+#include "printstableview.h"
+#include "printstablemodel.h"
 #include "searchbar.h"
 #include "version.h"
 
@@ -23,9 +23,8 @@
     \ref BooksTableModel die Feld Definition geändert werden!
 */
 static const QString querySelect() {
-  QString s("b.ib_id,b.ib_count,b.ib_title,b.ib_author,");
-  s.append("b.ib_publisher,b.ib_year,b.ib_price,s.sl_storage,b.ib_isbn,b.ib_"
-           "changed");
+  QString s("b.ip_id,b.ip_count,b.ip_title,b.ip_author,");
+  s.append("b.ip_technique,b.ip_year,b.ip_price,s.sl_storage,b.ip_landscape,b.ip_changed");
   s.append(",(CASE WHEN i.im_id IS NOT NULL THEN true ELSE false END) AS "
            "image_exists ");
   // s.append("");
@@ -37,15 +36,15 @@ static const QString querySelect() {
    Tabellen Definition
 */
 static const QString queryTables() {
-  QString s(" FROM inventory_books AS b");
-  s.append(" LEFT JOIN ref_storage_location AS s ON s.sl_id=b.ib_storage");
-  s.append(" LEFT JOIN inventory_images AS i ON i.im_id=b.ib_id ");
+  QString s(" FROM inventory_prints AS b");
+  s.append(" LEFT JOIN ref_storage_location AS s ON s.sl_id=b.ip_storage");
+  s.append(" LEFT JOIN inventory_images AS i ON i.im_id=b.ip_id ");
   // s.append(" ");
   return s;
 }
 
-BooksTableView::BooksTableView(QWidget *parent) : QTableView{parent} {
-  setObjectName("BooksTableView");
+PrintsTableView::PrintsTableView(QWidget *parent) : QTableView{parent} {
+  setObjectName("PrintsTableView");
   setEditTriggers(QAbstractItemView::DoubleClicked);
   setCornerButtonEnabled(false);
   setSortingEnabled(false);
@@ -56,7 +55,7 @@ BooksTableView::BooksTableView(QWidget *parent) : QTableView{parent} {
   setSelectionBehavior(QAbstractItemView::SelectRows);
   setSelectionMode(QAbstractItemView::SingleSelection);
 
-  m_queryModel = new BooksTableModel(this);
+  m_queryModel = new PrintsTableModel(this);
   setModel(m_queryModel);
 
   /* Kopfzeilen anpassen */
@@ -65,10 +64,10 @@ BooksTableView::BooksTableView(QWidget *parent) : QTableView{parent} {
   tHeader->setStretchLastSection(true);
 
   connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
-          SLOT(queryArticleID(const QModelIndex &)));
+          SLOT(clickedGetArticleID(const QModelIndex &)));
 }
 
-void BooksTableView::queryArticleID(const QModelIndex &index) {
+void PrintsTableView::clickedGetArticleID(const QModelIndex &index) {
   QModelIndex id(index);
   if (m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
     int i = m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
@@ -78,29 +77,20 @@ void BooksTableView::queryArticleID(const QModelIndex &index) {
   }
 }
 
-void BooksTableView::openBookByContext() { queryArticleID(p_modelIndex); }
+void PrintsTableView::openBookByContext() { clickedGetArticleID(p_modelIndex); }
 
-void BooksTableView::newBookByContext() {
-    qDebug() << Q_FUNC_INFO << "TODO" << "Check Rowcount before add";
-    emit s_newEntryPlease();
+void PrintsTableView::createOrderByContext() {
+  // TODO create order --> p_modelIndex
+  qInfo("currently not implemented");
 }
 
-void BooksTableView::createOrderByContext() {
-    qDebug() << Q_FUNC_INFO << "Noch nicht Implementiert";
-}
-
-void BooksTableView::contextMenuEvent(QContextMenuEvent *ev) {
+void PrintsTableView::contextMenuEvent(QContextMenuEvent *ev) {
   p_modelIndex = indexAt(ev->pos());
   QMenu *m = new QMenu("Actions", this);
   // Eintrag öffnen  Bestellung anlegen
   QAction *ac_open = m->addAction(myIcon("spreadsheet"), tr("Open entry"));
   ac_open->setObjectName("ac_context_open_book");
   connect(ac_open, SIGNAL(triggered()), this, SLOT(openBookByContext()));
-
-  QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create entry"));
-  ac_create->setObjectName("ac_context_create_book");
-  connect(ac_create, SIGNAL(triggered()), this, SLOT(newBookByContext()));
-
   QAction *ac_order = m->addAction(myIcon("autostart"), tr("Create order"));
   ac_order->setObjectName("ac_context_create_order");
   connect(ac_order, SIGNAL(triggered()), this, SLOT(createOrderByContext()));
@@ -108,48 +98,48 @@ void BooksTableView::contextMenuEvent(QContextMenuEvent *ev) {
   delete m;
 }
 
-void BooksTableView::queryHistory(const QString &str) {
+void PrintsTableView::queryHistory(const QString &str) {
   QString q("SELECT ");
   q.append(querySelect());
   q.append(queryTables());
   q.append(" WHERE ");
   if (str.contains("#today")) {
-    q.append("DATE(b.ib_changed)=(DATE(now()))");
+    q.append("DATE(b.ip_changed)=(DATE(now()))");
   } else if (str.contains("#yesterday")) {
-    q.append("DATE(b.ib_changed)=(DATE(now() - INTERVAL '1 day'))");
+    q.append("DATE(b.ip_changed)=(DATE(now() - INTERVAL '1 day'))");
   } else if (str.contains("#last7days")) {
-    q.append("DATE(b.ib_changed)>=(DATE(now() - INTERVAL '7 days'))");
+    q.append("DATE(b.ip_changed)>=(DATE(now() - INTERVAL '7 days'))");
   } else if (str.contains("#thismonth")) {
-    q.append("EXTRACT(MONTH FROM b.ib_changed)=(EXTRACT(MONTH FROM now()))");
-    q.append(" AND b.ib_count>0");
+    q.append("EXTRACT(MONTH FROM b.ip_changed)=(EXTRACT(MONTH FROM now()))");
+    q.append(" AND b.ip_count>0");
   } else if (str.contains("#thisyear")) {
-    q.append("EXTRACT(ISOYEAR FROM b.ib_changed)=(EXTRACT(YEAR FROM now()))");
-    q.append(" AND b.ib_count>0");
+    q.append("EXTRACT(ISOYEAR FROM b.ip_changed)=(EXTRACT(YEAR FROM now()))");
+    q.append(" AND b.ip_count>0");
   } else {
     return;
   }
-  q.append(" ORDER BY b.ib_count DESC LIMIT ");
+  q.append(" ORDER BY b.ip_count DESC LIMIT ");
   q.append(QString::number(maxRowCount));
   q.append(";");
 
+  qDebug() << Q_FUNC_INFO << q;
+  return;
   p_db = QSqlDatabase::database(sqlConnectionName);
   if (p_db.open()) {
-    // qDebug() << "BooksTableView::queryHistory" << q << Qt::endl;
+    // qDebug() << "PrintsTableView::queryHistory" << q << Qt::endl;
     m_queryModel->setQuery(q, p_db);
     if (m_queryModel->lastError().isValid()) {
-      qDebug() << "BooksTableView::queryHistory"
+      qDebug() << Q_FUNC_INFO << Qt::endl
                << "{SQL Query} " << q << Qt::endl
                << "{SQL Error} " << m_queryModel->lastError() << Qt::endl;
       return;
     }
     resizeRowsToContents();
     resizeColumnsToContents();
-  } else {
-    qWarning("No SQL Connection in Booktable");
   }
 }
 
-void BooksTableView::queryStatement(const SearchStatement &cl) {
+void PrintsTableView::queryStatement(const SearchStatement &cl) {
   /**
      @brief exact_match
       false = irgendwo im feld
@@ -170,60 +160,54 @@ void BooksTableView::queryStatement(const SearchStatement &cl) {
     return;
   }
 
-  str.replace("*", "%");
+  str.replace("*","%");
   QString q("SELECT ");
   q.append(querySelect());
   q.append(queryTables());
   if (field.contains("id")) {
     // Numeric Search
-    q.append(" WHERE (b.ib_id=");
-    q.append(str);
-  } else if (field.contains("isbn")) {
-    // Numeric Search
-    q.append(" WHERE (b.ib_isbn=");
+    q.append(" WHERE (b.ip_id=");
     q.append(str);
   } else if (field.contains("author")) {
     // String Search
-    q.append(" WHERE (b.ib_author ILIKE '%");
-    q.append(str.replace(" ", "%"));
+    q.append(" WHERE (b.ip_author ILIKE '%");
+    q.append(str.replace(" ","%"));
     q.append("%'");
   } else {
     // String Search
     if (exact_match) {
-      q.append(" WHERE (b.ib_title ILIKE '");
+      q.append(" WHERE (b.ip_title ILIKE '");
     } else {
-      q.append(" WHERE (b.ib_title ILIKE '%");
+      q.append(" WHERE (b.ip_title ILIKE '%");
     }
     q.append(str);
     q.append("%')");
     if (exact_match) {
-      q.append(" OR (b.ib_title_extended ILIKE '");
+      q.append(" OR (b.ip_title_extended ILIKE '");
       q.append(str);
     } else {
-      q.append(" OR (b.ib_title_extended ILIKE '%");
-      q.append(str.replace(" ", "%"));
+      q.append(" OR (b.ip_title_extended ILIKE '%");
+      q.append(str.replace(" ","%"));
     }
     q.append("%'");
   }
-  q.append(") ORDER BY b.ib_count DESC LIMIT ");
+  q.append(") ORDER BY b.ip_count DESC LIMIT ");
   q.append(QString::number(maxRowCount));
   q.append(";");
 
-  // qDebug() << Q_FUNC_INFO << q;
-  // return;
+  qDebug() << Q_FUNC_INFO << q;
+  return;
   p_db = QSqlDatabase::database(sqlConnectionName);
   if (p_db.open()) {
     m_queryModel->setQuery(q, p_db);
     if (m_queryModel->lastError().isValid()) {
-      qDebug() << "BooksTableView::queryStatement"
-               << "{SQL Query} " << q << Qt::endl
-               << "{SQL Error} " << m_queryModel->lastError() << Qt::endl;
+      qDebug() << Q_FUNC_INFO << Qt::endl
+              << "{SQL Query} " << q << Qt::endl
+              << "{SQL Error} " << m_queryModel->lastError() << Qt::endl;
       return;
     }
     resizeRowsToContents();
     resizeColumnsToContents();
     emit s_rowsChanged(m_queryModel->rowCount());
-  } else {
-    qWarning("No SQL Connection in Booktable");
   }
 }

@@ -15,11 +15,17 @@ class EditionEdit : public QComboBox {
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "http://www.hjcms.de")
 
+private:
+  bool modified;
+
 public Q_SLOTS:
   void setValue(const QVariant &);
+  void setModified(bool b = true);
+  Q_INVOKABLE void reset();
 
 public:
   explicit EditionEdit(QWidget *parent = nullptr);
+  Q_INVOKABLE bool hasModiefied();
   const QVariant value();
 };
 

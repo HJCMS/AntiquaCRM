@@ -16,7 +16,8 @@
 
 BooksImageView::BooksImageView(QWidget *parent) : QWidget{parent} {
   setObjectName("BooksImageViewer");
-  setMinimumSize(QSize(300, 450));
+  setMinimumSize(QSize(300, 360));
+  setMaximumWidth(300);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("image_viewer_layout");
@@ -30,10 +31,9 @@ BooksImageView::BooksImageView(QWidget *parent) : QWidget{parent} {
   m_imageLabel = new QLabel(m_scrollArea);
   m_imageLabel->setObjectName("image_view_item");
   m_imageLabel->setBackgroundRole(QPalette::Base);
-  m_imageLabel->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+  m_imageLabel->setSizePolicy(QSizePolicy::MinimumExpanding,
+                              QSizePolicy::MinimumExpanding);
   m_imageLabel->setScaledContents(false);
-  //m_imageLabel->setAlignment();
-
   setLayout(layout);
 }
 
@@ -47,6 +47,12 @@ void BooksImageView::insertImage(const QByteArray &data) {
     m_imageLabel->update();
     m_scrollArea->setWidget(m_imageLabel);
   }
+}
+
+void BooksImageView::clear() {
+  m_imageLabel->clear();
+  m_imageLabel->update();
+  update();
 }
 
 void BooksImageView::searchImageById(int id) {
@@ -81,6 +87,11 @@ void BooksImageView::addNewImage(int id, const QImage &img) {
   img.save(&buffer, "jpeg");
   buffer.close();
   insertImage(rawimg);
+
+  if (id < 1) {
+    qWarning("No Article ID - no image save");
+    return;
+  }
 
   QByteArray b64 = rawimg.toBase64();
 

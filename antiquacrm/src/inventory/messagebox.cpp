@@ -29,6 +29,12 @@ void MessageBox::timerEvent(QTimerEvent *ev) {
   buildTimerMessage();
 }
 
+void MessageBox::noticeMessage(const QString &msg) {
+  setIcon(QMessageBox::Warning);
+  setText(msg);
+  exec();
+}
+
 void MessageBox::queryFail(const QString &msg) {
   setIcon(QMessageBox::Critical);
   setText(msg);

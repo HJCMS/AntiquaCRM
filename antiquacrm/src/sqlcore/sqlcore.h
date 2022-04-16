@@ -96,6 +96,13 @@ public:
   bool sqlDriversExists();
 
   /**
+     @brief initialDatabase
+     Wird bei der ersten Verbindung aufgerufen!
+     @warning Ist nur einmal Notwendig!
+   */
+  bool initialDatabase();
+
+  /**
      @brief Registrierten Verbindungsnamen abrufen.
      @return connectionName
    */

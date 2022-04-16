@@ -11,10 +11,16 @@ INCLUDE_DIRECTORIES (
 
 SET (subproject_SOURCES
   inventoryprints.cpp
+  printstablemodel.cpp
+  printstableview.cpp
+  printseditor.cpp
 )
 
 SET (subproject_HEADERS
   inventoryprints.h
+  printstablemodel.h
+  printstableview.h
+  printseditor.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

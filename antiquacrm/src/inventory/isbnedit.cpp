@@ -75,6 +75,22 @@ void IsbnEdit::setValue(const QVariant &val) {
     return;
 
   setText(QString::number(i));
+  setModified(false);
+}
+
+void IsbnEdit::reset() {
+  clear();
+  setModified(false);
+}
+
+bool IsbnEdit::hasModified() { return isModified(); }
+
+bool IsbnEdit::isValid() {
+  int len = text().length();
+  if ((len == 10) || (len == 13)) {
+    return true;
+  }
+  return false;
 }
 
 const QVariant IsbnEdit::value() {
@@ -87,7 +103,7 @@ const QVariant IsbnEdit::value() {
 
   bool b;
   qulonglong isbn = txt.toLong(&b);
-  qDebug() << "" << txt << "isbn():" << b << isbn;
+  // qDebug() << "" << txt << "isbn():" << b << isbn;
   if (b)
     return isbn;
 

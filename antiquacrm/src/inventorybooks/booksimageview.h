@@ -48,6 +48,11 @@ private:
 
 public Q_SLOTS:
   /**
+     @brief Anzeige leeren
+   */
+  void clear();
+
+  /**
     @brief searchImageById
     Sucht mit der ArticleID nach den Bilddaten.
     Werden Daten gefunden:
@@ -66,8 +71,7 @@ public:
      Schreibe Imagedaten in Tabelle "inventory_images"
      @param img QImage
    */
-  void addNewImage(int id,const QImage &img);
-
+  void addNewImage(int id, const QImage &img);
 };
 
 #endif // BOOKSIMAGEVIEW_H

@@ -7,10 +7,13 @@
 
 #include <QtCore/QObject>
 #include <QtWidgets/QComboBox>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
-class ToolBar : public QToolBar {
+/**
+ Einfacher Toolbar mit einer ComboBox und
+ einem PushButton für die Navigation.
+*/
+class ToolBar : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -19,12 +22,30 @@ private:
   QComboBox *m_setTargets;
 
 private Q_SLOTS:
+  /**
+     AuwahlBox für Wurzelverzeichnis
+     wurde augewählt.
+   */
   void targetChanged(int);
+
+  /**
+     Ein Verzeichnis nach oben gehen
+     wurde ausgewählt.
+   */
   void goUpClicked(bool);
 
 Q_SIGNALS:
-  void goUp(); /**< e.g. QDir::cdUp() */
+  /**
+     AuwahlBox für Wurzelverzecihnisse
+     wurde ausgeführt.
+   */
   void goTo(const QString &);
+
+  /**
+     Ein Verzeichnis nach oben gehen
+     wurde ausgeführt.
+   */
+  void goUp();
 
 public:
   explicit ToolBar(QWidget *parent = nullptr);

@@ -21,7 +21,7 @@ OpenImageDialog::OpenImageDialog(QWidget *parent) : QDialog(parent) {
   setWindowTitle(tr("Open Image from Disk"));
   setShortcutEnabled(false);
   setSizeGripEnabled(true);
-  setMinimumSize(QSize(500, 300));
+  setMinimumSize(QSize(500, 400));
 
   QVBoxLayout *verticalLayout = new QVBoxLayout(this);
 
@@ -30,19 +30,22 @@ OpenImageDialog::OpenImageDialog(QWidget *parent) : QDialog(parent) {
 
   m_splitter = new QSplitter(this);
   m_splitter->setOrientation(Qt::Horizontal);
+  m_splitter->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+  m_splitter->setMinimumHeight(250);
   verticalLayout->addWidget(m_splitter);
 
   m_thumbsView = new ImageView(this);
   m_thumbsView->setMinimumWidth(125);
   m_splitter->insertWidget(0, m_thumbsView);
   m_splitter->setCollapsible(0, false);
-  m_splitter->setStretchFactor(0, QSizePolicy::Minimum);
+  m_splitter->setStretchFactor(0, 35);
 
   m_listView = new ListView(this);
   m_listView->setMinimumWidth(250);
+  m_listView->setToolTip(tr("Onclick for preview and double click to set image for open."));
   m_splitter->insertWidget(1, m_listView);
   m_splitter->setCollapsible(1, false);
-  m_splitter->setStretchFactor(1, QSizePolicy::Maximum);
+  m_splitter->setStretchFactor(1, 65);
 
   m_lineEdit = new QLineEdit(this);
   verticalLayout->addWidget(m_lineEdit);
@@ -64,10 +67,10 @@ OpenImageDialog::OpenImageDialog(QWidget *parent) : QDialog(parent) {
 
   setLayout(verticalLayout);
 
-  connect(m_listView, SIGNAL(previewImage(const QString &)), m_thumbsView,
+  connect(m_listView, SIGNAL(s_previewImage(const QString &)), m_thumbsView,
           SLOT(setImage(const QString &)));
 
-  connect(m_listView, SIGNAL(selectionChanged(const QString &)), this,
+  connect(m_listView, SIGNAL(s_selectionChanged(const QString &)), this,
           SLOT(isValid(const QString &)));
 
   connect(this, SIGNAL(imageChanged(bool)),

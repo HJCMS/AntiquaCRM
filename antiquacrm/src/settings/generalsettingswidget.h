@@ -20,6 +20,7 @@ class GeneralSettingsWidget : public SettingsWidget {
 
 private:
   QLineEdit *m_editImageSrc; /**< Pfad zu den Bildquellen */
+  QSpinBox *m_searchStart; /**< Ab wann startet die Suche */
   QHash<QString, QVariant> p_hash;
 
 public Q_SLOTS:

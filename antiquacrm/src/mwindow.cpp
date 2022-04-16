@@ -8,7 +8,6 @@
 #include "configdialog.h"
 #include "dockbarwidget.h"
 #include "filedialog.h"
-#include "sqlcore.h"
 #include "statusbar.h"
 #include "version.h"
 #include "workspace.h"
@@ -22,14 +21,11 @@
 MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
   setObjectName("MainWindow");
   setWindowTitle(ANTIQUACRM_DISPLAYNAME);
-  setMinimumSize(QSize(500, 350));
+  setMinimumSize(QSize(800,600));
   setWindowIcon(myIcon("database"));
 
   // Settings
   m_Settings = new ApplSettings();
-
-  // SQL Database
-  m_postgreSQL = new HJCMS::SqlCore(this);
 
   // Main Widget
   m_workSpace = new Workspace(this);
@@ -50,7 +46,6 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
   }
   */
 
-  // m_statusBar->setDatabaseStatusIcon(bool);
   m_statusBar = new StatusBar(statusBar());
   setStatusBar(m_statusBar);
 
@@ -59,15 +54,6 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
 
   if (m_Settings->contains("window/windowState"))
     restoreState(m_Settings->value("window/windowState").toByteArray());
-
-  connect(m_postgreSQL, SIGNAL(s_connectionStatus(bool)), m_statusBar,
-          SLOT(setDatabaseStatusIcon(bool)));
-
-  connect(m_postgreSQL, SIGNAL(s_databaseMessage(const QString &)), this,
-          SLOT(postStatusBarMessage(const QString &)));
-
-  connect(m_postgreSQL, SIGNAL(s_errorMessage(const QString &)), this,
-          SLOT(sqlErrorMessageBox(const QString &)));
 
   connect(this, SIGNAL(setStatusMessage(const QString &)), this,
           SLOT(postStatusBarMessage(const QString &)));
@@ -199,7 +185,7 @@ void MWindow::toggleFullScreen(bool b) {
  */
 void MWindow::reconnectDatabase(bool b) {
   Q_UNUSED(b);
-  connectSqlDatabase();
+  // connectSqlDatabase();
 }
 
 void MWindow::closeEvent(QCloseEvent *event) {
@@ -215,17 +201,4 @@ void MWindow::postStatusBarMessage(const QString &info) {
   m_statusBar->sqlStatusMessage(info);
 }
 
-/**
- * @brief Mit PostgreSQL Verbinden
- */
-void MWindow::connectSqlDatabase() {
-  if (m_postgreSQL->sqlDriversExists())
-    postStatusBarMessage(tr("Wait for Database connection ..."));
-
-  qInfo("Connect to Database Server ...");
-  m_postgreSQL->openDatabase();
-}
-
-MWindow::~MWindow() {
-  qInfo("Mainwindow onload");
-}
+MWindow::~MWindow() { qInfo("Mainwindow onload"); }
