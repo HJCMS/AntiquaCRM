@@ -4,6 +4,7 @@
 #include "textfield.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QRegExp>
 
 TextField::TextField(QWidget *parent) : QTextEdit{parent} {
   setObjectName("TextField");
@@ -28,4 +29,8 @@ void TextField::reset() {
 
 bool TextField::hasModified() { return modified; }
 
-const QVariant TextField::value() { return QVariant(toPlainText()); }
+const QVariant TextField::value() {
+  QString data = toPlainText();
+  QRegExp reg("[\\']+");
+  return QVariant(data.replace(reg, ""));
+}

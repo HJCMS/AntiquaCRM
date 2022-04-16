@@ -94,7 +94,6 @@ void StrLineEdit::loadDataset(const QString &key) {
       if (q.value(0).isValid())
         list << q.value(0).toString();
     }
-    setModified(true);
   }
   if (list.size() > 1)
     setLineEditCompliter(list);

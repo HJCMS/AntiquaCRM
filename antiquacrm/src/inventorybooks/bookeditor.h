@@ -115,6 +115,11 @@ private:
   QList<BookDataField> dbDataSet;
 
   /**
+    @brief Nach dem Speichern alle Markierungen wieder aufheben.
+  */
+  void resetModified();
+
+  /**
      @brief sendToDatabase
      @param INSERT/UPDATE SQL Statement senden!
    */

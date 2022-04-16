@@ -18,10 +18,10 @@
 #include "yearedit.h"
 
 #include <QtCore/QDebug>
-#include <QtCore/QMetaObject>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
 #include <QtCore/QList>
+#include <QtCore/QMetaObject>
 #include <QtCore/QUrl>
 #include <QtGui/QDesktopServices>
 #include <QtSql/QSqlDatabase>
@@ -442,7 +442,7 @@ void BookEditor::triggerImageEdit() {
     qDebug() << Q_FUNC_INFO << id << "Invalid Source Target:" << p;
     return;
   }
-  if(id>=1)
+  if (id >= 1)
     emit s_openImageEditor(id);
 
   if (dialog->exec()) {
@@ -450,6 +450,31 @@ void BookEditor::triggerImageEdit() {
     if (!img.isNull())
       m_imageView->addNewImage(id, img);
   }
+}
+
+void BookEditor::resetModified() {
+  ib_author->setModified(false);
+  ib_condition->setModified(false);
+  ib_count->setModified(false);
+  ib_description->setModified(false);
+  ib_designation->setModified(false);
+  ib_edition->setModified(false);
+  ib_id->setModified(false);
+  ib_internal_description->setModified(false);
+  ib_isbn->setModified(false);
+  ib_keyword->setModified(false);
+  ib_language->setModified(false);
+  ib_pagecount->setModified(false);
+  ib_price->setModified(false);
+  ib_publisher->setModified(false);
+  ib_restricted->setModified(false);
+  ib_signed->setModified(false);
+  ib_storage->setModified(false);
+  ib_title_extended->setModified(false);
+  ib_title->setModified(false);
+  ib_volume->setModified(false);
+  ib_weight->setModified(false);
+  ib_year->setModified(false);
 }
 
 void BookEditor::sendQueryDatabase(const QString &sqlStatement) {
@@ -463,6 +488,7 @@ void BookEditor::sendQueryDatabase(const QString &sqlStatement) {
     } else {
       MessageBox msgBox(this);
       msgBox.querySuccess(tr("Bookdata saved successfully!"), 1);
+      resetModified();
     }
     db.close();
   }
@@ -513,16 +539,12 @@ void BookEditor::updateDataSet() {
       if (f.field.contains("ib_description")) {
         set.append(f.field);
         set.append("='");
-        QString plainText = ib_description->toPlainText();
-        QRegExp reg("[\\']+");
-        set.append(plainText.replace(reg, ""));
+        set.append(ib_description->value().toString());
         set.append("',");
       } else if (f.field.contains("ib_internal_description")) {
         set.append(f.field);
         set.append("='");
-        QString plainText = ib_internal_description->toPlainText();
-        QRegExp reg("[\\']+");
-        set.append(plainText.replace(reg, ""));
+        set.append(ib_internal_description->value().toString());
         set.append("',");
       }
       if (f.field.contains("ib_language")) {
@@ -647,9 +669,13 @@ void BookEditor::checkLeaveEditor() {
         tr("Unsaved Changes, don't leave this page before saved."));
     return;
   }
+  // OpenLibrary Anzeige leeren
+  m_listWidget->clear();
+  // Temporäre Daten
+  dbDataSet.clear();
   // Aufräumen
   clearDataFields();
-  dbDataSet.clear();
+  // Knopf wieder ausschalten
   m_actionBar->setRestoreable(false);
   // und tschüss
   emit s_leaveEditor();
@@ -796,6 +822,8 @@ void BookEditor::readDataBaseEntry(const QString &sql) {
   if (!widgetList.contains("ib_title_extended")) {
     widgetList << "ib_title_extended";
   }
+
+  qDebug() << widgetList;
 
   QSqlDatabase db(QSqlDatabase::database(sqlConnectionName));
   // qDebug() "SELECT ->" << select << db.isValid();
