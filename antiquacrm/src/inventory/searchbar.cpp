@@ -72,7 +72,7 @@ SearchBar::SearchBar(QWidget *parent) : QToolBar(parent) {
 
 void SearchBar::beforeTextChanged() {
   if (m_searchLineEdit->text().length() >= 2)
-    emit searchTextChanged(m_searchLineEdit->text());
+    emit searchTextChanged(currentSearchText());
 }
 
 void SearchBar::beforeTextChanged(const QString &str) {
@@ -133,5 +133,13 @@ void SearchBar::setValidation(SearchBar::Validation v) {
 int SearchBar::currentFilterIndex() { return m_filterSection->currentIndex(); }
 
 const QString SearchBar::currentSearchText() {
-  return m_searchLineEdit->text();
+  QString buffer = m_searchLineEdit->text();
+
+  QRegExp reg("[\\'\\\"]+");
+  buffer = buffer.replace(reg, "");
+
+  reg.setPattern("(\\s|\\t|\\n|\\r)+");
+  buffer = buffer.replace(reg, " ");
+
+  return buffer.trimmed();
 }

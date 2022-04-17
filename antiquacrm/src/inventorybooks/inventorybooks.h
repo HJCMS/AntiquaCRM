@@ -16,54 +16,156 @@ class BooksTableView;
 class StatsBookBar;
 class BookEditor;
 
+/**
+ @class InventoryBooks
+ Primäre Klasse für das Bücherarchiv
+ Die Fenster werden mit einem StackedWidget gruppiert.
+ Es sind enthalten:
+  @li Suchbeingabe
+  @li Tabellenansicht
+  @li Statusbalken und Historienauswahl
+  @li Bucheditor
+ @note Im ladezustand ist das BuchEditor Fenster deaktiviert.
+*/
 class InventoryBooks : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  /**
+    @brief Ist der TabIndex siehe Konstruktor
+  */
+  int tabIndex;
+
+  /**
+    @brief Ab Zeichenanzahl startet die Abfrage!
+    @see searchConvert
+  */
   int minLength;
+
+  /**
+    @brief Fenster gruppierung
+  */
   QStackedWidget *m_stackedWidget;
+
+  /**
+    @defgroup StackeWidget Page 1
+    @{
+  */
+
+  /**
+    @brief Sucheingabe für Bücher
+  */
   SearchBar *m_searchBar;
+
+  /**
+    @brief Tabellenansicht
+  */
   BooksTableView *m_tableView;
+
+  /**
+    @brief Statusbalken mit Historienauswahl
+  */
   StatsBookBar *m_statsBookBar;
+
+  /**
+    @}
+
+    @defgroup StackeWidget Page 2
+    @{
+  */
+
+  /**
+    @brief BuchEditor Fenster
+  */
   BookEditor *m_bookEditor;
-  void openEditor(const QString &);
+
+  /** @} */
+
+  /**
+    @brief Öffne mit der SQL-Abfrage den Bucheditor
+    Wenn die Abfrage nicht leer ist wechsle zum
+    Bucheditor und aktiviere das Editor Widget.
+    Die Abfrage condition besteht aus @b ib_id
+    und @b ib_title Feldabfrage.
+    @note Wegen Tastenbindungen ist das Editor
+      Fenster deaktiviert und muss hier wieder
+      aktiviert werden.
+    Ablauf des Fensterwechsel ist:
+      @li Prüfe Abfrage auf nicht Leer
+      @li Aktiviere Editor Widget
+      @li Rufe queryBookEntry(SQL) auf
+      @li Setze das StackedWidget auf den Editor.
+  */
+  void openEditor(const QString &condition);
 
 private Q_SLOTS:
-  void parseLineInput(const QString &);
+  /**
+    @brief Reagiert auf LineEdit
+      Überwacht QLineEdit::textChanged
+      und startet erst wenn @ref minLength
+      überstiegen wurde. Leitet dann weiter
+      an @ref searchConvert()
+   */
+  void searchConvert(const QString &);
+
+  /**
+    @brief Reagiert auf Suchknopf & EnterTaste
+    Liest @ref m_searchBar::currentSearchText()
+    aus und Prüft auf min. 2 Zeichen (Performance)!
+    @note In @class SearchBar wird bereits die
+        Zeichenersetzung durchgeführt!
+   */
   void searchConvert();
 
   /**
-     @brief Gehe zurück zur Tabellenansicht
+    @brief Öffne Tabellenansicht
+    Wird mit @ref BookEditor::s_leaveEditor aufgerufen.
+    @note Standard ist Tabellenansicht "Page 1"
   */
-  void backToTableView();
+  void openTableView();
 
   /**
-     @brief articleSelected
+     @brief Ein Artikel wurd ausgewählt
      Wird bei der Tabellen Suchansicht mit einem Doppelklick
-     das Signal @ref BooksTableView::s_articleSelected ausgelöst.
-     Wird an Hand des @b "ib_id" Feldes eine SQL Abfrage erstellt
-     und der Editor mit @ref openEditor("ib_id={$id}") geöffnet!
+     das Signal @ref BooksTableView::s_articleSelected ausgelöst
+     und an Hand des @b "ib_id" Feldes eine SQL Abfrage erstellt,
+     jetzt der Editor mit @ref openEditor("ib_id={$id}") geöffnet!
      @param id
   */
   void articleSelected(int id);
 
   /**
-     @brief updateValidator
+     @brief Setze den Validator für die Ausgewählte suche.
      Wird der Suchfilter geändert dann wird hier an
      @ref SearchBar::setValidation ein update gesendet.
    */
   void updateValidator(int);
 
 Q_SIGNALS:
+  /**
+    @brief Sende eine Nachricht an das Elternfenster
+  */
   void s_postMessage(const QString &);
 
 public Q_SLOTS:
+  /**
+    @brief Öffnet das Nachrichtenfenster
+  */
   void displayMessageBox(const QString &);
+
+  /**
+    @brief Aktiviert das BuchEditor Fenster
+    @li Aktiviere BuchEditor Widget
+    @li Wechsle zum BuchEditor
+  */
   void createBookEntry();
 
 public:
+  /**
+    @param index Ist der TabWidget Index
+  */
   explicit InventoryBooks(int index, QTabWidget *parent = nullptr);
 };
 

@@ -7,11 +7,25 @@
 #include <QtCore/QDate>
 #include <QtCore/QDebug>
 
-YearEdit::YearEdit(QWidget *parent) : QDateEdit{parent} {
+static const QDate currentDate()
+{
+    return QDateTime::currentDateTime().date();
+}
+
+YearEdit::YearEdit(QWidget *parent) : QDateEdit{parent}, startDate(currentDate()) {
   setObjectName("YearEdit");
   setDisplayFormat("yyyy");
-  setMaximumDate(QDate());
+  setMaximumDate(startDate);
   setModified(false);
+  setDate(startDate);
+
+  connect(this, SIGNAL(dateChanged(const QDate &)), this,
+          SLOT(dataChanged(const QDate &)));
+}
+
+void YearEdit::dataChanged(const QDate &d) {
+  Q_UNUSED(d);
+  setModified(true);
 }
 
 void YearEdit::setModified(bool b) { modified = b; }
@@ -28,6 +42,21 @@ void YearEdit::reset() {
   setModified(false);
 }
 
+void YearEdit::setRequired(bool b) { required = b; }
+
+bool YearEdit::isRequired() { return required; }
+
 bool YearEdit::hasModified() { return modified; }
 
 const QVariant YearEdit::value() { return date().year(); }
+
+bool YearEdit::isValid() {
+  if (required && date() == startDate)
+    return false;
+
+  return true;
+}
+
+const QString YearEdit::notes() {
+  return tr("The Year must contain a valid entry.");
+}

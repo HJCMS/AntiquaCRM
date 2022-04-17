@@ -22,9 +22,26 @@
 class StrLineEdit : public QLineEdit {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "http://www.hjcms.de")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
+  Q_PROPERTY(bool required READ isRequired WRITE setRequired NOTIFY requireChanged);
 
 private:
+  /**
+    @brief Volatile Variable für Required
+  */
+  bool required = false;
+
+  /**
+    @bug Wenn Completer aktiviert ist stimmt von QLineEdit
+      das isModified() nicht. Deshalb setze ich noch zusätzlich
+      bei setModified() meine eigene Variable und verwende
+      in @ref hasModified() eine Abfrage.
+    @code
+      qDebug() << objectName() << (isModified() || modified);
+    @endcode
+  */
+  bool modified = false;
+
   /**
     @brief m_completer
     Siehe @ref setLineEditCompliter
@@ -71,7 +88,10 @@ private Q_SLOTS:
     @brief skipReturnPressed
     @warning Enter soll das Formular nicht absenden!
   */
-  inline void skipReturnPressed() { setModified(true); };
+  void skipReturnPressed();
+
+Q_SIGNALS:
+  void requireChanged();
 
 public Q_SLOTS:
   /**
@@ -88,19 +108,39 @@ public Q_SLOTS:
    */
   void setValue(const QVariant &str);
 
+  /**
+     @brief Auf Modifiziert setzen/entfernen.
+  */
+  Q_INVOKABLE void setModified(bool b);
+
+  /**
+     @brief Datensatz leeren
+  */
   Q_INVOKABLE void reset();
 
 public:
   explicit StrLineEdit(QWidget *parent = nullptr);
 
+  /**
+     @brief Setze Datensatz auf erforderlich
+  */
+  void setRequired(bool b);
+
+  /**
+    @brief Abfrage für Datensatz erforderlich
+  */
+  bool isRequired();
+
+  /**
+     @brief Wurde der Datensatz geändert?
+  */
   Q_INVOKABLE bool hasModified();
 
   /**
-    @brief value
+    @brief Aktueller Rückgabewert
     Gibt den aktuellen Wert als QVariant
     zurück damit er besser Verarbeitet
     werden kann. (SQL|LineEdit) etc.
-    @return QVariant::String
   */
   const QVariant value();
 
@@ -127,6 +167,16 @@ public:
     und erstellt @ref QLineEdit::setPlaceholderText
    */
   void setMaxAllowedLength(int);
+
+  /**
+     @brief Prüfung ob die Bedingungen erfüllt sind!
+   */
+  bool isValid();
+
+  /**
+     @brief Nachricht bei Fehlern für das PoUp-Fenster
+  */
+  const QString notes();
 };
 
 #endif // STRLINEEDIT_H

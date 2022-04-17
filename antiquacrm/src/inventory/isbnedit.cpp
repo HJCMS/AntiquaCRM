@@ -21,6 +21,7 @@
 */
 IsbnEdit::IsbnEdit(QWidget *parent) : QLineEdit{parent} {
   setObjectName("IsbnEdit");
+  setWindowTitle("ISBN");
   setMaxLength(13);
   setPlaceholderText(tr("ISBN/EAN 10/13 (ISO 2108)"));
   setClearButtonEnabled(true);
@@ -83,10 +84,14 @@ void IsbnEdit::reset() {
   setModified(false);
 }
 
+void IsbnEdit::setRequired(bool b) { required = b; }
+
+bool IsbnEdit::isRequired() { return required; }
+
 bool IsbnEdit::hasModified() { return isModified(); }
 
 bool IsbnEdit::isValid() {
-  int len = text().length();
+  int len = text().trimmed().length();
   if ((len == 10) || (len == 13)) {
     return true;
   }
@@ -103,9 +108,12 @@ const QVariant IsbnEdit::value() {
 
   bool b;
   qulonglong isbn = txt.toLong(&b);
-  // qDebug() << "" << txt << "isbn():" << b << isbn;
   if (b)
     return isbn;
 
   return 0;
+}
+
+const QString IsbnEdit::notes() {
+  return tr("ISBN is set to required and must be a valid 10 or 13 digit number.");
 }

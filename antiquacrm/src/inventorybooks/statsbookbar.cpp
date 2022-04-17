@@ -91,8 +91,6 @@ void StatsBookBar::showRowCount(int count) {
   rows.append(": ");
   rows.append(QString::number(count));
   showMessage(rows);
-  if(count>0)
-    m_createEntryBtn->setEnabled(true);
 }
 
 void StatsBookBar::setThisDayHistory() {

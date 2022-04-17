@@ -9,7 +9,10 @@
 #include <QtSql/QSqlQuery>
 
 StrLineEdit::StrLineEdit(QWidget *parent) : QLineEdit{parent} {
-  setObjectName("StrLineEdit");
+  if (objectName().isEmpty())
+    setObjectName("StrLineEdit");
+
+  setWindowTitle(tr("String edit"));
 
   m_validator = new QRegExpValidator(pcre(), this);
   setValidator(m_validator);
@@ -32,12 +35,15 @@ void StrLineEdit::setValue(const QVariant &str) {
   QRegExp reg2(pcre());
   if (data.contains(reg2)) {
     setText(data);
-    setModified(false);
+    setModified(true);
     return;
   }
-  qDebug() << "TODO"
-           << "StrLineEdit::setValue"
-           << " INVALID ENTRY" << str;
+  qDebug() << Q_FUNC_INFO << " INVALID DATA" << str;
+}
+
+void StrLineEdit::setModified(bool b) {
+  modified = b;
+  QLineEdit::setModified(b);
 }
 
 void StrLineEdit::reset() {
@@ -45,7 +51,13 @@ void StrLineEdit::reset() {
   setModified(false);
 }
 
-bool StrLineEdit::hasModified() { return isModified(); }
+void StrLineEdit::setRequired(bool b) { required = b; }
+
+bool StrLineEdit::isRequired() { return required; }
+
+bool StrLineEdit::hasModified() {
+  return (isModified() || modified);
+}
 
 const QVariant StrLineEdit::value() {
   QRegExp reg("[\\n\\r]+");
@@ -72,6 +84,8 @@ void StrLineEdit::inputChanged(const QString &str) {
   setModified(true);
 }
 
+void StrLineEdit::skipReturnPressed() { setModified(true); }
+
 void StrLineEdit::loadDataset(const QString &key) {
   if (key.isEmpty())
     return;
@@ -94,6 +108,9 @@ void StrLineEdit::loadDataset(const QString &key) {
       if (q.value(0).isValid())
         list << q.value(0).toString();
     }
+  } else {
+    qWarning("%s: %s", qUtf8Printable(objectName()),
+             qUtf8Printable(" - can not open Database."));
   }
   if (list.size() > 1)
     setLineEditCompliter(list);
@@ -108,4 +125,33 @@ void StrLineEdit::setMaxAllowedLength(int l) {
   txt.append(" ");
   txt.append(QString::number(l));
   setPlaceholderText(txt);
+}
+
+bool StrLineEdit::isValid() {
+  if (required && text().isEmpty()) {
+    return false;
+  } else if (text().length() > maxLength()) {
+    return false;
+  }
+
+  return true;
+}
+
+const QString StrLineEdit::notes() {
+  QString msg(tr("The field"));
+  if (windowTitle().isEmpty()) {
+    msg.append(" " + objectName() + " ");
+  } else {
+    msg.append(" " + windowTitle() + " ");
+  }
+  if (text().isEmpty()) {
+    msg.append(tr("is required and can not empty."));
+    return msg;
+  } else if (text().length() > maxLength()) {
+    msg.append(tr("invalid length."));
+    return msg;
+  } else {
+    msg.append(tr("contains invalid input."));
+    return msg;
+  }
 }

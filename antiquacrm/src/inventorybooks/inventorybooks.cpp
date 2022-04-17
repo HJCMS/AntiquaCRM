@@ -50,7 +50,7 @@ static const QList<SearchFilter> bookSearchFilter() {
 }
 
 InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
-    : QWidget{parent} {
+    : QWidget{parent}, tabIndex{index} {
   setObjectName("InventoryBooks");
   setWindowTitle("TabBooks");
 
@@ -58,12 +58,12 @@ InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
   minLength = cfg.value("search/startlength", 5).toInt();
 
   QVBoxLayout *layout = new QVBoxLayout(this);
-  layout->setObjectName("InventoryBooksLayout");
+  layout->setObjectName("inventory_books_layout");
 
   m_stackedWidget = new QStackedWidget(this);
   m_stackedWidget->setObjectName("books_stacked_widget");
 
-  // Begin Page#0
+  // BEGIN Page#0
   QWidget *siteOneWidget = new QWidget(m_stackedWidget);
   siteOneWidget->setObjectName("books_site_one_widget");
   QVBoxLayout *siteOneLayout = new QVBoxLayout(siteOneWidget);
@@ -86,7 +86,7 @@ InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
   m_stackedWidget->insertWidget(0, siteOneWidget);
   // END Page#0
 
-  // Begin Page#1
+  // BEGIN Page#1
   m_bookEditor = new BookEditor(m_stackedWidget);
   m_stackedWidget->insertWidget(1, m_bookEditor);
   m_bookEditor->setEnabled(false);
@@ -99,7 +99,7 @@ InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
 
   // Signals
   connect(m_searchBar, SIGNAL(searchTextChanged(const QString &)), this,
-          SLOT(parseLineInput(const QString &)));
+          SLOT(searchConvert(const QString &)));
 
   connect(m_searchBar, SIGNAL(searchClicked()), this, SLOT(searchConvert()));
 
@@ -120,11 +120,12 @@ InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
 
   connect(m_bookEditor, SIGNAL(s_sendMessage(const QString &)), this,
           SLOT(displayMessageBox(const QString &)));
-  connect(m_bookEditor, SIGNAL(s_leaveEditor()), this, SLOT(backToTableView()));
+
+  connect(m_bookEditor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
 }
 
-void InventoryBooks::parseLineInput(const QString &str) {
-  if (str.length() <= minLength)
+void InventoryBooks::searchConvert(const QString &query) {
+  if (query.length() <= minLength)
     return;
 
   searchConvert();
@@ -135,14 +136,6 @@ void InventoryBooks::searchConvert() {
     return;
 
   QString buf = m_searchBar->currentSearchText();
-  QRegExp reg("[\\'\\\"]+");
-  buf.replace(reg, "");
-
-  reg.setPattern("(\\s|\\t)+");
-  buf.replace(reg, " ");
-
-  buf = buf.trimmed();
-
   if (buf.length() >= 2) {
     SearchStatement s;
     s.SearchField =
@@ -156,16 +149,15 @@ void InventoryBooks::searchConvert() {
   }
 }
 
-void InventoryBooks::backToTableView() {
+void InventoryBooks::openTableView() {
   m_stackedWidget->setCurrentIndex(0);
   m_bookEditor->setEnabled(false);
 };
 
-void InventoryBooks::openEditor(const QString &sql) {
-  // qDebug() << "InventoryBooks::openEditor" << sql;
-  if (!sql.isEmpty()) {
+void InventoryBooks::openEditor(const QString &condition) {
+  if (!condition.isEmpty()) {
     m_bookEditor->setEnabled(true);
-    m_bookEditor->readDataBaseEntry(sql);
+    m_bookEditor->queryBookEntry(condition);
     m_stackedWidget->setCurrentWidget(m_bookEditor);
   }
 }
@@ -176,7 +168,6 @@ void InventoryBooks::displayMessageBox(const QString &msg) {
 }
 
 void InventoryBooks::createBookEntry() {
-  qDebug() << Q_FUNC_INFO;
   m_bookEditor->setEnabled(true);
   m_stackedWidget->setCurrentWidget(m_bookEditor);
 }

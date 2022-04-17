@@ -10,21 +10,49 @@
 #include <QtCore/QStringList>
 #include <QtCore/QTimerEvent>
 #include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlError>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlRecord>
 
 namespace HJCMS {
 
 class SqlConfig;
 
+/**
+ @class HJCMS::SqlCore
+ @brief Stellt die Datenbankverbindung
+ Es wird mit @ref HJCMS::SqlConfig nach den Einstellungen
+ gesucht und eine Verbindung hergestellt.
+
+*/
 class SqlCore : public QObject {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "http://www.hjcms.de")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  /**
+    @brief Test Verbindung
+    Wird erstellt bevor @ref database
+    Initialisiert wird!
+  */
   QSqlDatabase p_db;
+
+  /**
+    @brief Konfiguration auslesen
+  */
   SqlConfig *m_cfg;
+
+  /**
+   @brief Datenbank Verbindung
+  */
   QSqlDatabase *database;
+
+  /**
+     @brief Timer ID von startTimer
+   */
   int statusTimerID;
+
   /**
      @brief Fehler Meldungen aufarbeiten
      @return ERROR Message
@@ -103,10 +131,30 @@ public:
   bool initialDatabase();
 
   /**
+     @brief connection
+     @return Aktuelle Datenbank Verbindung
+   */
+  QSqlDatabase* connection();
+
+  /**
      @brief Registrierten Verbindungsnamen abrufen.
      @return connectionName
    */
   const QString getConnectionName();
+
+  /**
+     @brief Stelle eine SQL Abfrage
+     @param statement SQL-Statement
+     @return QSqlQuery
+   */
+  const QSqlQuery query(const QString &statement);
+
+  /**
+     @brief Stelle eine Feldabfrage
+     @param Tabelle
+     @return QSqlRecord
+   */
+  const QSqlRecord record(const QString &table);
 
   virtual ~SqlCore();
 };

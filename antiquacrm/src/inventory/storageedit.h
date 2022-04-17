@@ -14,9 +14,11 @@
 class StorageEdit : public QComboBox {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "http://www.hjcms.de")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
+  Q_PROPERTY(bool required READ isRequired WRITE setRequired NOTIFY requireChanged);
 
 private:
+  bool required = false;
   bool modified;
 
   /**
@@ -24,8 +26,14 @@ private:
    */
   void setStorageData();
 
+private Q_SLOTS:
+  void dataChanged(int);
+
+Q_SIGNALS:
+  void requireChanged();
+
 public Q_SLOTS:
-  void setModified(bool b = true);
+  Q_INVOKABLE void setModified(bool b = true);
 
   /**
      Lade Datenbankdaten in die Auswahlbox
@@ -43,14 +51,12 @@ public Q_SLOTS:
 
 public:
   explicit StorageEdit(QWidget *parent = nullptr);
-
+  void setRequired(bool b);
+  bool isRequired();
   Q_INVOKABLE bool hasModified();
-
-  /**
-     @brief Identisch mit currentIndex()
-     @return sl_id
-   */
   const QVariant value();
+  bool isValid();
+  const QString notes();
 };
 
 #endif // STORAGEEDIT_H

@@ -9,6 +9,7 @@
 
 PriceEdit::PriceEdit(QWidget *parent) : QWidget{parent} {
   setObjectName("PriceEdit");
+  setWindowTitle("Price");
   modified = false;
 
   QVBoxLayout *mainlayout = new QVBoxLayout(this);
@@ -30,6 +31,12 @@ PriceEdit::PriceEdit(QWidget *parent) : QWidget{parent} {
 
 void PriceEdit::itemChanged(double) { setModified(true); }
 
+void PriceEdit::setMinimum(double min) { m_box->setMinimum(min); }
+
+void PriceEdit::setRequired(bool b) { required = b; }
+
+bool PriceEdit::isRequired() { return required; }
+
 void PriceEdit::setValue(const QVariant &val) {
   m_box->setValue(val.toDouble());
   setModified(false);
@@ -45,3 +52,17 @@ void PriceEdit::reset() {
 bool PriceEdit::hasModified() { return modified; }
 
 const QVariant PriceEdit::value() { return QVariant(m_box->value()); }
+
+bool PriceEdit::isValid() {
+  if (required && (m_box->value() <= m_box->minimum()))
+    return false;
+
+  if (m_box->value() <= m_box->minimum())
+    return false;
+
+  return true;
+}
+
+const QString PriceEdit::notes() {
+  return tr("A valid Price is required and must set.");
+}

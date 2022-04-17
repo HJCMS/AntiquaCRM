@@ -65,11 +65,6 @@ private:
   QComboBox *m_showHistory;
 
   /**
-   @brief Öffnet Bucheintrag erstellen Dialog
-  */
-  QPushButton *m_createEntryBtn;
-
-  /**
    @brief Auswahl Verlaufabfrage erstellen
    @note Die Definition ist abhängig von
        @ref BooksTableView::queryHistory()

@@ -1,5 +1,4 @@
 #include "bookeditor.h"
-#include "applsettings.h"
 #include "articleid.h"
 #include "booksimageview.h"
 #include "boolbox.h"
@@ -11,6 +10,7 @@
 #include "messagebox.h"
 #include "priceedit.h"
 #include "setlanguage.h"
+#include "sqlcore.h"
 #include "storageedit.h"
 #include "strlineedit.h"
 #include "textfield.h"
@@ -18,37 +18,24 @@
 #include "yearedit.h"
 
 #include <QtCore/QDebug>
-#include <QtCore/QJsonArray>
-#include <QtCore/QJsonObject>
 #include <QtCore/QList>
 #include <QtCore/QMetaObject>
 #include <QtCore/QUrl>
 #include <QtGui/QDesktopServices>
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlError>
-#include <QtSql/QSqlQuery>
-#include <QtSql/QSqlRecord>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListWidgetItem>
-#include <QtWidgets/QMessageBox>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QSizePolicy>
-#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
 
-// @see triggerImageEdit
-static const QString imgPath() {
-  QString p = QDir::homePath();
-  p.append("/Developement/antiqua/database/tmp/BildDaten");
-  return p;
-};
-
-BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
+BookEditor::BookEditor(QWidget *parent)
+    : QWidget{parent}, p_objPattern("^ib_[a-z_]+\\b$"), config() {
   setObjectName("BookEditor");
   setWindowTitle(tr("Edit Book Title"));
   setMinimumSize(800, 600);
+
+  db = new HJCMS::SqlCore(this);
 
   Qt::Alignment defaultAlignment =
       (Qt::AlignRight | Qt::AlignTrailing | Qt::AlignVCenter);
@@ -69,6 +56,7 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
 
   ib_id = new ArticleID(this);
   ib_id->setObjectName("ib_id");
+  ib_id->setRequired(true);
 
   lay1->addWidget(ib_id);
 
@@ -81,6 +69,7 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
 
   ib_count = new IntSpinBox(this);
   ib_count->setObjectName("ib_count");
+  ib_count->setWindowTitle(tr("Count"));
 
   lay1->addWidget(ib_count);
 
@@ -90,8 +79,11 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
 
   lay1->addWidget(ibPriceLabel);
 
+  double minPrice = config.value("general/price_limit", 10.00).toDouble();
   ib_price = new PriceEdit(this);
   ib_price->setObjectName("ib_price");
+  ib_price->setRequired(true);
+  ib_price->setMinimum(minPrice);
 
   lay1->addWidget(ib_price);
 
@@ -136,6 +128,8 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   ib_pagecount->setMinimum(10);
   ib_pagecount->setMaximum(100000);
   ib_pagecount->setSingleStep(10);
+  ib_pagecount->setWindowTitle(tr("Pagecount"));
+  ib_pagecount->setRequired(true);
 
   lay2->addWidget(ib_pagecount);
 
@@ -151,6 +145,8 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   ib_weight->setMinimum(100);
   ib_weight->setMaximum(100000000);
   ib_weight->setSuffix(tr("g"));
+  ib_weight->setWindowTitle(tr("Weight"));
+  ib_weight->setRequired(true);
 
   lay2->addWidget(ib_weight);
 
@@ -163,6 +159,8 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
 
   ib_year = new YearEdit(this);
   ib_year->setObjectName("ib_year");
+  ib_year->setWindowTitle(tr("Year"));
+  ib_year->setRequired(true);
 
   lay2->addWidget(ib_year);
 
@@ -179,6 +177,7 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
 
   ib_storage = new StorageEdit(this);
   ib_storage->setObjectName("ib_storage");
+  ib_storage->setRequired(true);
 
   lay3->addWidget(ib_storage);
 
@@ -190,6 +189,8 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
 
   ib_edition = new IntSpinBox(this);
   ib_edition->setObjectName("ib_edition");
+  ib_edition->setRequired(true);
+  ib_edition->setWindowTitle(tr("Edition"));
   lay3->addWidget(ib_edition);
 
   QLabel *ibVolumeLabel = new QLabel(this);
@@ -202,6 +203,7 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   ib_volume = new IntSpinBox(this);
   ib_volume->setObjectName("ib_volume");
   ib_volume->setPrefix(tr("Bd."));
+  ib_volume->setWindowTitle(tr("Volume"));
 
   lay3->addWidget(ib_volume);
 
@@ -224,6 +226,8 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   ib_title = new StrLineEdit(this);
   ib_title->setObjectName("ib_title");
   ib_title->setMaxAllowedLength(80);
+  ib_title->setRequired(true);
+  ib_title->setWindowTitle(tr("Booktitle"));
   ib_title->setToolTip(tr("Required input field. Limited to 80 characters, "
                           "Webshop Systems require this."));
   ibTitleLabel->setBuddy(ib_title);
@@ -242,6 +246,7 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   ib_title_extended->setObjectName("ib_title_extended");
   ib_title_extended->setMaxAllowedLength(148);
   ib_title_extended->setToolTip(tr("Extended Title or Book Subtitle."));
+  ib_title_extended->setWindowTitle(tr("Extended Title"));
 
   lay4->addWidget(ib_title_extended, glc++, 1, 1, 1);
 
@@ -256,6 +261,8 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   ib_author = new StrLineEdit(this);
   ib_author->setObjectName("ib_author");
   ib_author->setMaxAllowedLength(128);
+  ib_author->setRequired(true);
+  ib_author->setWindowTitle(tr("Author"));
   ib_author->setToolTip(
       tr("Format: Firstname lastname (Different Authors separated by comma)."));
   ibAuthorLabel->setBuddy(ib_author);
@@ -274,6 +281,7 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   ib_publisher = new StrLineEdit(this);
   ib_publisher->setObjectName("ib_publisher");
   ib_publisher->setMaxAllowedLength(128);
+  ib_publisher->setWindowTitle(tr("Publisher"));
 
   lay4->addWidget(ib_publisher, glc++, 1, 1, 1);
 
@@ -289,6 +297,7 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   ib_keyword->setObjectName("ib_keyword");
   ib_keyword->setMaxAllowedLength(60);
   ib_keyword->setToolTip(tr("Category Keywords for Shopsystems."));
+  ib_keyword->setWindowTitle(tr("Chop Keyword"));
 
   lay4->addWidget(ib_keyword, glc++, 1, 1, 1);
 
@@ -303,6 +312,8 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   ib_condition = new StrLineEdit(this);
   ib_condition->setObjectName("ib_condition");
   ib_condition->setMaxAllowedLength(128);
+  ib_condition->setRequired(true);
+  ib_condition->setWindowTitle(tr("Condition"));
   ib_condition->setToolTip(
       tr("Condition of this Book. See also Configuration conditions Table."));
 
@@ -319,6 +330,8 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   ib_designation = new StrLineEdit(this);
   ib_designation->setObjectName("ib_designation");
   ib_designation->setMaxAllowedLength(128);
+  ib_designation->setRequired(true);
+  ib_designation->setWindowTitle(tr("Designation"));
 
   lay4->addWidget(ib_designation, glc++, 1, 1, 1);
 
@@ -379,12 +392,14 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
 
   ib_description = new TextField(this);
   ib_description->setObjectName("ib_description");
+  ib_description->setWindowTitle(tr("Public Description"));
   m_tabWidget->insertTab(0, ib_description, tr("Public Description"));
   m_tabWidget->setTabIcon(0, myIcon("edit"));
   m_tabWidget->setTabToolTip(0, tr("This text is displayed on web pages"));
 
   ib_internal_description = new TextField(this);
   ib_internal_description->setObjectName("ib_internal_description");
+  ib_description->setWindowTitle(tr("Internal Description"));
   m_tabWidget->insertTab(1, ib_internal_description,
                          tr("Internal Description"));
   m_tabWidget->setTabIcon(1, myIcon("edit"));
@@ -423,7 +438,7 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   connect(ib_isbn, SIGNAL(s_isbnIsValid(bool)), m_btnQueryISBN,
           SLOT(setEnabled(bool)));
   connect(m_btnQueryISBN, SIGNAL(clicked()), this, SLOT(triggerIsbnQuery()));
-  connect(btn_imaging, SIGNAL(clicked()), this, SLOT(triggerImageEdit()));
+  connect(btn_imaging, SIGNAL(clicked()), this, SLOT(openImageDialog()));
   connect(m_listWidget, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
           SLOT(infoISBNDoubleClicked(QListWidgetItem *)));
   connect(m_actionBar, SIGNAL(s_restoreClicked()), this,
@@ -431,12 +446,24 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   connect(m_actionBar, SIGNAL(s_saveClicked()), this, SLOT(saveData()));
   connect(m_actionBar, SIGNAL(s_finishClicked()), this,
           SLOT(checkLeaveEditor()));
+
+  setInputList();
 }
 
-void BookEditor::triggerImageEdit() {
+void BookEditor::setInputList() {
+  QList<QObject *> list =
+      findChildren<QObject *>(p_objPattern, Qt::FindChildrenRecursively);
+  for (int i = 0; i < list.size(); ++i) {
+    if (list.at(i) != nullptr) {
+      if (!list.at(i)->objectName().isEmpty())
+        inputList << list.at(i)->objectName();
+    }
+  }
+}
+
+void BookEditor::openImageDialog() {
   qulonglong id = ib_id->value().toLongLong();
-  ApplSettings cfg;
-  QString p = cfg.value("imaging/sourcepath", imgPath()).toString();
+  QString p = config.value("imaging/sourcepath").toString();
   ImageDialog *dialog = new ImageDialog(id, this);
   if (!dialog->setSourceTarget(p)) {
     qDebug() << Q_FUNC_INFO << id << "Invalid Source Target:" << p;
@@ -453,63 +480,104 @@ void BookEditor::triggerImageEdit() {
 }
 
 void BookEditor::resetModified() {
-  ib_author->setModified(false);
-  ib_condition->setModified(false);
-  ib_count->setModified(false);
-  ib_description->setModified(false);
-  ib_designation->setModified(false);
-  ib_edition->setModified(false);
-  ib_id->setModified(false);
-  ib_internal_description->setModified(false);
-  ib_isbn->setModified(false);
-  ib_keyword->setModified(false);
-  ib_language->setModified(false);
-  ib_pagecount->setModified(false);
-  ib_price->setModified(false);
-  ib_publisher->setModified(false);
-  ib_restricted->setModified(false);
-  ib_signed->setModified(false);
-  ib_storage->setModified(false);
-  ib_title_extended->setModified(false);
-  ib_title->setModified(false);
-  ib_volume->setModified(false);
-  ib_weight->setModified(false);
-  ib_year->setModified(false);
-}
-
-void BookEditor::sendQueryDatabase(const QString &sqlStatement) {
-  // qDebug() << Q_FUNC_INFO << sqlStatement;
-  QSqlDatabase db(QSqlDatabase::database(sqlConnectionName));
-  if (db.isValid()) {
-    // qDebug() << "BookEditor::sendToDatabase" << sqlStatement;
-    QSqlQuery q = db.exec(sqlStatement);
-    if (q.lastError().type() != QSqlError::NoError) {
-      qDebug() << q.lastError();
-    } else {
-      MessageBox msgBox(this);
-      msgBox.querySuccess(tr("Bookdata saved successfully!"), 1);
-      resetModified();
+  foreach (QString name, inputList) {
+    QObject *child = findChild<QObject *>(name, Qt::FindChildrenRecursively);
+    if (child != nullptr) {
+      QMetaObject::invokeMethod(child, "setModified", Qt::DirectConnection,
+                                Q_ARG(bool, false));
     }
-    db.close();
   }
 }
 
-const QString BookEditor::stripValue(const QVariant &v) {
-  QString s = v.toString().trimmed();
-  if (s.isEmpty())
-    return QString();
-
-  QRegExp reg("[\\'\\\"]+");
-  s = s.replace(reg, "");
-  reg.setPattern("[\\s\\t]+");
-  return s.replace(reg, " ");
+void BookEditor::sendSqlQuery(const QString &sqlStatement) {
+  // qDebug() << Q_FUNC_INFO << sqlStatement;
+  MessageBox msgBox(this);
+  QSqlQuery q = db->query(sqlStatement);
+  if (q.lastError().type() != QSqlError::NoError) {
+    msgBox.queryFail(q.lastError().text());
+  } else {
+    msgBox.querySuccess(tr("Bookdata saved successfully!"), 1);
+    resetModified();
+  }
 }
 
-void BookEditor::updateDataSet() {
+const QHash<QString, QVariant> BookEditor::createSqlDataset() {
+  QHash<QString, QVariant> data;
+  MessageBox messanger;
+  // BEGIN StrLineEdit
+  QList<StrLineEdit *> listStr =
+      findChildren<StrLineEdit *>(p_objPattern, Qt::FindDirectChildrenOnly);
+  QList<StrLineEdit *>::Iterator i_str;
+  for (i_str = listStr.begin(); i_str != listStr.end(); ++i_str) {
+    StrLineEdit *cur = *i_str;
+    if (cur->isRequired() && !cur->isValid()) {
+      messanger.noticeMessage(cur->notes());
+      cur->setFocus();
+      data.clear();
+      return data;
+    }
+    if (cur->value().toString().isEmpty())
+      continue;
+
+    data.insert(cur->objectName(), cur->value());
+  }
+  listStr.clear();
+  // END
+  // BEGIN IntBoxes
+  QList<IntSpinBox *> listInt =
+      findChildren<IntSpinBox *>(p_objPattern, Qt::FindDirectChildrenOnly);
+  QList<IntSpinBox *>::Iterator i_int;
+  for (i_int = listInt.begin(); i_int != listInt.end(); ++i_int) {
+    IntSpinBox *cur = *i_int;
+    if (cur->isRequired() && !cur->isValid()) {
+      messanger.noticeMessage(cur->notes());
+      cur->setFocus();
+      data.clear();
+      return data;
+    }
+    if (cur->value().toInt() == 0)
+      continue;
+
+    data.insert(cur->objectName(), cur->value());
+  }
+  listInt.clear();
+  // END
+  if (ib_signed->isChecked()) {
+    data.insert("ib_signed", ib_signed->value());
+  }
+  if (ib_restricted->isChecked()) {
+    data.insert("ib_restricted", ib_restricted->value());
+  }
+  if (ib_isbn->isValid()) {
+    data.insert("ib_isbn", ib_isbn->value());
+  }
+  if (ib_description->isValid()) {
+    data.insert("ib_description", ib_description->value());
+  }
+  if (ib_internal_description->isValid()) {
+    data.insert("ib_internal_description", ib_internal_description->value());
+  }
+  if (!ib_year->isValid()) {
+    messanger.noticeMessage(ib_year->notes());
+    ib_year->setFocus();
+    data.clear();
+  } else {
+    data.insert("ib_year", ib_year->value());
+  }
+  if (!ib_price->isValid()) {
+    messanger.noticeMessage(ib_price->notes());
+    ib_price->setFocus();
+    data.clear();
+  } else {
+    data.insert("ib_price", ib_price->value());
+  }
+  return data;
+}
+
+void BookEditor::createSqlUpdate() {
   QString set;
-  QString sql("UPDATE inventory_books SET ");
-  for (int i = 0; i < dbDataSet.size(); ++i) {
-    BookDataField f = dbDataSet.at(i);
+  for (int i = 0; i < sqlQueryResult.size(); ++i) {
+    BookData f = sqlQueryResult.at(i);
     if (f.field.contains("ib_id"))
       continue;
 
@@ -590,57 +658,64 @@ void BookEditor::updateDataSet() {
     }
   }
 
+  QString sql("UPDATE inventory_books SET ");
   sql.append(set);
   sql.append("ib_changed=CURRENT_TIMESTAMP WHERE ib_id=");
   sql.append(ib_id->value().toString());
   sql.append(";");
-  sendQueryDatabase(sql);
+  sendSqlQuery(sql);
 }
 
-/**
-   SQL INSERT Statement erstellen!
+void BookEditor::createSqlInsert() {
+  /** Bei neu Einträgen immer erforderlich */
+  ib_count->setRequired(true);
 
-  struct BookDataField {
-    QString field; @brief Fieldname
-    int vtype;    @brief QVariant::Type
-    QVariant data; @brief Datset
-  };
-*/
-void BookEditor::insertDataSet() {
-  qDebug() << "BookEditor::insertDataSet";
-  QString fieldSet; /**< SQL Column */
-  QString valueSet; /**< SQL Value */
-  for (int i = 0; i < dbDataSet.size(); ++i) {
-    BookDataField f = dbDataSet.at(i);
-    if (f.field.contains("ib_id"))
+  QHash<QString, QVariant> data = createSqlDataset();
+  if (data.size() < 1)
+    return;
+
+  QStringList column; /**< SQL Columns */
+  QStringList values; /**< SQL Values */
+  QHash<QString, QVariant>::iterator it;
+  for (it = data.begin(); it != data.end(); ++it) {
+    if (it.value().toString().isEmpty())
       continue;
 
-    fieldSet.append(f.field);
-    valueSet.append("TODO");
-  } // end for
+    column.append(it.key());
+    if (it.value().type() == QVariant::String) {
+      values.append("'" + it.value().toString() + "'");
+    } else {
+      values.append(it.value().toString());
+    }
+  }
 
   QString sql("INSERT INTO inventory_books (");
-  sql.append(fieldSet);
-  sql.append("= VALUES (");
-  sql.append(valueSet);
-  sql.append(");");
-
+  sql.append(column.join(","));
+  sql.append(",ib_changed) VALUES (");
+  sql.append(values.join(","));
+  sql.append(",CURRENT_TIMESTAMP);");
+  qDebug() << Q_FUNC_INFO << "TODO:";
   qDebug() << sql << Qt::endl;
-  // sendQueryDatabase(sql);
+  // sendSqlQuery(sql);
+  // ONLY FOR TESTING
+  resetModified();
 }
 
-void BookEditor::createDataSet() {
-  if (dbDataSet.size() < 15)
+void BookEditor::importSqlResult() {
+  if (sqlQueryResult.size() < 15)
     return;
 
   blockSignals(true);
-
-  for (int i = 0; i < dbDataSet.size(); ++i) {
-    BookDataField f = dbDataSet.at(i);
-    addDataFromQuery(f.field, f.data);
+  for (int i = 0; i < sqlQueryResult.size(); ++i) {
+    BookData f = sqlQueryResult.at(i);
+    setSqlQueryData(f.field, f.data);
   }
-
   blockSignals(false);
+
+  /**
+    @note Beim ersten Eintragen wieder zurück setzen!
+  */
+  resetModified();
 
   // Suche Bilddaten
   int id = ib_id->value().toInt();
@@ -649,10 +724,8 @@ void BookEditor::createDataSet() {
 }
 
 void BookEditor::clearDataFields() {
-  QRegularExpression reg("^ib_[a-z_]+\\b$");
-  QStringList widgetList;
   QList<QObject *> list =
-      findChildren<QObject *>(reg, Qt::FindChildrenRecursively);
+      findChildren<QObject *>(p_objPattern, Qt::FindChildrenRecursively);
   for (int i = 0; i < list.size(); ++i) {
     if (list.at(i) != nullptr) {
       QMetaObject::invokeMethod(list.at(i), "reset", Qt::QueuedConnection);
@@ -661,10 +734,30 @@ void BookEditor::clearDataFields() {
   m_imageView->clear();
 }
 
+bool BookEditor::checkIsModified() {
+  QList<QObject *> list =
+      findChildren<QObject *>(p_objPattern, Qt::FindChildrenRecursively);
+  for (int i = 0; i < list.size(); ++i) {
+    if (list.at(i) != nullptr) {
+      bool b = false;
+      if (QMetaObject::invokeMethod(list.at(i), "hasModified",
+                                    Qt::DirectConnection,
+                                    Q_RETURN_ARG(bool, b))) {
+
+        if (list.at(i)->objectName().contains("ib_price"))
+          qDebug() << Q_FUNC_INFO << list.at(i)->objectName() << b;
+
+        if (b) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
 void BookEditor::checkLeaveEditor() {
-  if (checkUnsafedData()) {
-    // Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht,
-    // bevor Sie sie gespeichert haben.
+  if (checkIsModified()) {
     emit s_sendMessage(
         tr("Unsaved Changes, don't leave this page before saved."));
     return;
@@ -672,7 +765,7 @@ void BookEditor::checkLeaveEditor() {
   // OpenLibrary Anzeige leeren
   m_listWidget->clear();
   // Temporäre Daten
-  dbDataSet.clear();
+  sqlQueryResult.clear();
   // Aufräumen
   clearDataFields();
   // Knopf wieder ausschalten
@@ -682,13 +775,13 @@ void BookEditor::checkLeaveEditor() {
 }
 
 void BookEditor::restoreDataset() {
-  if (dbDataSet.isEmpty())
+  if (sqlQueryResult.isEmpty())
     return;
 
-  createDataSet();
+  importSqlResult();
 }
 
-void BookEditor::addDataFromQuery(const QString &key, const QVariant &value) {
+void BookEditor::setSqlQueryData(const QString &key, const QVariant &value) {
   // qDebug() << key << value;
   // "ib_id" QVariant(int)
   if (key.contains("ib_id")) {
@@ -725,18 +818,7 @@ void BookEditor::addDataFromQuery(const QString &key, const QVariant &value) {
     ib_language->setValue(value);
     return;
   }
-  // ib_description
-  if (key.contains("ib_description")) {
-    ib_description->setValue(value);
-    return;
-  }
-  // ib_internal_description
-  if (key.contains("ib_internal_description")) {
-    ib_internal_description->setValue(value);
-    return;
-  }
-  // "ib_signed" QVariant(bool)
-  // "ib_restricted" QVariant(bool)
+  // BoolBox
   if (value.type() == QVariant::Bool) {
     BoolBox *v = findChild<BoolBox *>(key, Qt::FindDirectChildrenOnly);
     if (v != nullptr)
@@ -744,10 +826,7 @@ void BookEditor::addDataFromQuery(const QString &key, const QVariant &value) {
 
     return;
   }
-  // "ib_volume" QVariant(int)
-  // "ib_count" QVariant(int)
-  // "ib_pagecount" QVariant(int)
-  // "ib_weight" QVariant(int)
+  // IntSpinBox
   if (value.type() == QVariant::Int) {
     IntSpinBox *v = findChild<IntSpinBox *>(key, Qt::FindDirectChildrenOnly);
     if (v != nullptr)
@@ -755,13 +834,7 @@ void BookEditor::addDataFromQuery(const QString &key, const QVariant &value) {
 
     return;
   }
-  // "ib_title" QVariant(QString)
-  // "ib_title_extended" QVariant(QString)
-  // "ib_author" QVariant(QString)
-  // "ib_publisher" QVariant(QString)
-  // "ib_keyword" QVariant(QString)
-  // "ib_condition" QVariant(QString)
-  // "ib_designation" QVariant(QString)
+  // StrLineEdit
   if (value.type() == QVariant::String) {
     StrLineEdit *v = findChild<StrLineEdit *>(key, Qt::FindDirectChildrenOnly);
     if (v != nullptr) {
@@ -772,91 +845,57 @@ void BookEditor::addDataFromQuery(const QString &key, const QVariant &value) {
       return;
     }
   }
+  // ib_description
+  if (key.contains("ib_description")) {
+    ib_description->setValue(value);
+    return;
+  }
+  // ib_internal_description
+  if (key.contains("ib_internal_description")) {
+    ib_internal_description->setValue(value);
+    return;
+  }
   qDebug() << "Missing" << key << value << value.type();
 }
 
-bool BookEditor::checkUnsafedData() {
-  for (int i = 0; i < dbDataSet.size(); ++i) {
-    BookDataField f = dbDataSet.at(i);
-    QObject *obj = findChild<QObject *>(f.field, Qt::FindChildrenRecursively);
-    if (obj != nullptr) {
-      bool b = false;
-      if (QMetaObject::invokeMethod(obj, "hasModified", Qt::DirectConnection,
-                                    Q_RETURN_ARG(bool, b))) {
-        if (b) {
-          qDebug() << Q_FUNC_INFO << f.field << f.data << b << Qt::endl;
-          return true;
-        }
-      }
-    }
-  }
-  return false;
-}
-
-void BookEditor::readDataBaseEntry(const QString &sql) {
-  if (sql.length() < 5)
+void BookEditor::queryBookEntry(const QString &condition) {
+  if (condition.length() < 5)
     return;
 
-  QString select("SELECT DISTINCT * FROM ");
-  select.append("inventory_books WHERE ");
-  select.append(sql);
+  QString select("SELECT * FROM inventory_books WHERE ");
+  select.append(condition);
   select.append(" ORDER BY ib_id LIMIT 1;");
 
-  QRegularExpression reg("^ib_[a-z_]+\\b$");
-  QStringList widgetList;
-  QList<QObject *> list =
-      findChildren<QObject *>(reg, Qt::FindChildrenRecursively);
-  for (int i = 0; i < list.size(); ++i) {
-    if (list.at(i) != nullptr) {
-      if (!list.at(i)->objectName().isEmpty())
-        widgetList << list.at(i)->objectName();
-    }
-  }
-  // Fixme -- add Missing Fields
-  if (!widgetList.contains("ib_description")) {
-    widgetList << "ib_description";
-  }
-  if (!widgetList.contains("ib_internal_description")) {
-    widgetList << "ib_internal_description";
-  }
-  if (!widgetList.contains("ib_title_extended")) {
-    widgetList << "ib_title_extended";
-  }
-
-  qDebug() << widgetList;
-
-  QSqlDatabase db(QSqlDatabase::database(sqlConnectionName));
   // qDebug() "SELECT ->" << select << db.isValid();
-  if (db.isValid()) {
-    QSqlQuery q = db.exec(select);
-    QSqlRecord r = db.record("inventory_books");
-    dbDataSet.clear();
+  QSqlQuery q = db->query(select);
+  if (q.size() != 0) {
+    QSqlRecord r = db->record("inventory_books");
+    sqlQueryResult.clear();
     while (q.next()) {
-      foreach (QString key, widgetList) {
+      foreach (QString key, inputList) {
         QVariant val = q.value(r.indexOf(key));
         // qDebug() << "KEY -->" << key << val;
-        BookDataField d;
+        BookData d;
         d.field = key;
         d.vtype = val.type();
         d.data = val;
-        dbDataSet.append(d);
+        sqlQueryResult.append(d);
       }
     }
-    db.close();
   }
 
-  if (!dbDataSet.isEmpty() && !m_actionBar->isRestoreable())
+  if (!sqlQueryResult.isEmpty() && !m_actionBar->isRestoreable())
     m_actionBar->setRestoreable(true);
 
   // Jetzt Daten einfügen ...
-  createDataSet();
+  importSqlResult();
 }
 
 void BookEditor::saveData() {
   if (ib_id->text().isEmpty()) {
-    insertDataSet();
+    createSqlInsert();
   } else {
-    updateDataSet();
+    createSqlUpdate();
   }
 }
 

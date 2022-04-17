@@ -13,7 +13,6 @@ SET (subproject_SOURCES
   boolbox.cpp
   filedialog.cpp
   articleid.cpp
-  editionedit.cpp
   editordialog.cpp
   editoractionbar.cpp
   isbnedit.cpp
@@ -32,7 +31,6 @@ SET (subproject_HEADERS
   boolbox.h
   filedialog.h
   articleid.h
-  editionedit.h
   editordialog.h
   editoractionbar.h
   isbnedit.h

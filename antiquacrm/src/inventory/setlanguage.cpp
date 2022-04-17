@@ -38,14 +38,23 @@ void SetLanguage::setValue(const QVariant &v) {
 
 void SetLanguage::setModified(bool b) { modified = b; }
 
+void SetLanguage::setRequired(bool b) { required = b; }
+
+bool SetLanguage::isRequired() { return required; }
+
 bool SetLanguage::hasModified() { return modified; }
 
-void SetLanguage::reset()
-{
+void SetLanguage::reset() {
   setCurrentIndex(0);
   setModified(false);
 }
 
 const QVariant SetLanguage::value() {
   return itemData(currentIndex(), Qt::UserRole);
+}
+
+bool SetLanguage::isValid() { return true; }
+
+const QString SetLanguage::notes() {
+  return tr("Language field is required and must set.");
 }

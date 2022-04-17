@@ -1,14 +1,22 @@
 #ifndef BOOKEDITOR_H
 #define BOOKEDITOR_H
 
+#include "applsettings.h"
+
 #include <QtCore/QEvent>
-#include <QtCore/QList>
+#include <QtCore/QHash>
 #include <QtCore/QObject>
+#include <QtCore/QRegularExpression>
 #include <QtCore/QVariant>
+#include <QtCore/QVector>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QWidget>
+
+namespace HJCMS {
+class SqlCore;
+};
 
 class ArticleID;
 class BooksImageView;
@@ -25,7 +33,7 @@ class TextField;
 class YearEdit;
 
 /**
-   @brief BookDataField
+   @brief BookData
    Lese die Datenfelder mit @ref BookEditor::readDataBaseEntry
    und schreibe sie für die Zurücksetzen funktion hier rein.
 
@@ -45,8 +53,8 @@ class YearEdit;
    @warning Wenn sich bei der Datenbank Tabelle ein Spalten Typ
     ändert. Muss das hier Kontrolliert und Überarbeitet werden!
  */
-struct BookDataField {
-  QString field; /**< @brief Fieldname */
+struct BookData {
+  QString field; /**< @brief SQL-Fieldname is equil to {INPUT}.objectName() */
   int vtype;     /**< @brief QVariant::Type */
   QVariant data; /**< @brief Values */
 };
@@ -58,9 +66,10 @@ struct BookDataField {
 class BookEditor : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "http://www.hjcms.de")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  HJCMS::SqlCore *db;             /**< @brief SQL Database Connection */
   BoolBox *ib_signed;             /**< @brief Signiert? */
   BoolBox *ib_restricted;         /**< @brief Zensiert? */
   SetLanguage *ib_language;       /**< @brief Sprache */
@@ -90,6 +99,16 @@ private:
   QListWidget *m_listWidget;          /**< @brief ISBN Abfrage-Vorschau */
 
   /**
+     @brief Standard Einstellungen lesen
+   */
+  ApplSettings config;
+
+  /**
+     @brief Wird für findchild benötigt!
+  */
+  const QRegularExpression p_objPattern;
+
+  /**
      @brief Beinhaltet Zurücksetzen/Speichern/Verlassen
    */
   EditorActionBar *m_actionBar;
@@ -106,42 +125,61 @@ private:
   BooksImageView *m_imageView;
 
   /**
+    @brief Liste der Eingabefelder Objektnamen
+  */
+  QStringList inputList;
+
+  /**
    @brief Hier werden die Daten aus der Abfrage eingefügt.
 
    Weil beim einfügen blockSignals() wegen isModified()
    eingesetz wird. Darf das nicht innerhalb der SQLQuery
    schleife erfolgen!
   */
-  QList<BookDataField> dbDataSet;
+  QVector<BookData> sqlQueryResult;
 
   /**
-    @brief Nach dem Speichern alle Markierungen wieder aufheben.
+    @brief Erstellt aus allen Feldern den Datensatz.
+  */
+  const QHash<QString, QVariant> createSqlDataset();
+
+  /**
+    @brief Alle Eingabefelder in @ref inputList einfügen.
+  */
+  void setInputList();
+
+  /**
+    @brief Setzt alle Markierungen wieder zurück.
+    Wird nach einem Speichern ausgeführt!
+    @see sendQueryDatabase
   */
   void resetModified();
 
   /**
-     @brief sendToDatabase
+     @brief Sende SQL Statement an die Datenbank
+     Bei erfolg wird @ref resetModified ausgeführt!
+
      @param INSERT/UPDATE SQL Statement senden!
    */
-  void sendQueryDatabase(const QString &sqlStatement);
-
-  /**
-     @brief Alles was Gift ist muss raus ...
-     @return String
-   */
-  const QString stripValue(const QVariant &);
+  void sendSqlQuery(const QString &sqlStatement);
 
   /**
      @brief SQL UPDATE Statement erstellen!
      @note In @ref saveData() erfolgt eine @i ib_id Abfrage!
    */
-  void updateDataSet();
+  void createSqlUpdate();
 
   /**
      @brief SQL INSERT Statement erstellen!
      @note In @ref saveData() erfolgt eine @i ib_id Abfrage!
    */
-  void insertDataSet();
+  void createSqlInsert();
+
+  /**
+     @brief Durchläuft @ref sqlQueryResult und ruft @ref addDataFromQuery auf.
+     @note Die Größe von @ref sqlQueryResult muss mindestenz 16 betragen!
+   */
+  void importSqlResult();
 
   /**
      @brief Suche nach Objektnamen mit @i findChild(key);
@@ -171,13 +209,13 @@ private:
       }
      @endcode
    */
-  void addDataFromQuery(const QString &key, const QVariant &value);
+  void setSqlQueryData(const QString &key, const QVariant &value);
 
 private Q_SLOTS:
   /**
      @brief Button open Imaging clicked()
    */
-  void triggerImageEdit();
+  void openImageDialog();
 
   /**
      @brief Signal accept() abfangen.
@@ -202,15 +240,15 @@ private Q_SLOTS:
   void infoISBNDoubleClicked(QListWidgetItem *);
 
   /**
-     @brief Durchläuft @ref dbDataSet und ruft @ref addDataFromQuery auf.
-     @note Die Größe von @ref dbDataSet muss mindestenz 16 betragen!
-   */
-  void createDataSet();
-
-  /**
      @brief Alle Datenfelder zurücksetzen!
    */
   void clearDataFields();
+
+  /**
+    @brief Prüfe auf Datensatzänderungen!
+    @return Bei @b true, wurden Datenfelder nicht gespeichert!
+   */
+  bool checkIsModified();
 
   /**
    @brief Suche nach nicht gespeicherten Daten
@@ -259,18 +297,12 @@ public:
   BookEditor(QWidget *parent = nullptr);
 
   /**
-    @brief Prüfe auf Datensatzänderungen!
-    @return Bei @b true, wurden Datenfelder nicht gespeichert!
-   */
-  bool checkUnsafedData();
-
-  /**
     @brief Wenn Bearbeiten darf der Eintrag nicht 0 sein!
-    @param sql Abfragekorpus @i ohne WHERE
+    @param condition Abfragekorpus @i ohne WHERE
   */
-  void readDataBaseEntry(const QString &sql);
+  void queryBookEntry(const QString &condition);
 };
 
-Q_DECLARE_METATYPE(BookDataField);
+Q_DECLARE_METATYPE(BookData);
 
 #endif // BOOKEDITOR_H

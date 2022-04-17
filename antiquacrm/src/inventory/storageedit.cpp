@@ -13,7 +13,11 @@ StorageEdit::StorageEdit(QWidget *parent) : QComboBox{parent} {
   setMaxVisibleItems(10);
   setSizeAdjustPolicy(QComboBox::AdjustToContentsOnFirstShow);
   setModified(false);
+
+  connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(dataChanged(int)));
 }
+
+void StorageEdit::dataChanged(int) { setModified(true); }
 
 void StorageEdit::setModified(bool b) { modified = b; }
 
@@ -39,7 +43,8 @@ void StorageEdit::setStorageData() {
       if (q.value(3).isValid())
         setItemData(index, q.value(3).toString(), Qt::ToolTipRole);
     }
-    setModified(true);
+  } else {
+    qWarning("Can not open Database to read Storage locations.");
   }
 }
 
@@ -60,6 +65,29 @@ void StorageEdit::reset() {
   setModified(false);
 }
 
-bool StorageEdit::hasModified() { return modified; }
+void StorageEdit::setRequired(bool b) { required = b; }
+
+bool StorageEdit::isRequired() { return required; }
+
+bool StorageEdit::hasModified() {
+  if (currentIndex() == 0)
+    return true;
+
+  return modified;
+}
 
 const QVariant StorageEdit::value() { return QVariant(currentIndex()); }
+
+bool StorageEdit::isValid() {
+  if (required && (currentIndex() == 0))
+    return false;
+
+  if (currentIndex() < 1)
+    return false;
+
+  return true;
+}
+
+const QString StorageEdit::notes() {
+  return tr("The Storage location is required and must set.");
+}

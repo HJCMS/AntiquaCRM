@@ -112,8 +112,11 @@ public:
   int currentFilterIndex();
 
   /**
-     @brief currentSearchText
-     @return QLineEdit::text();
+    @brief Gibt die aktuelle Sucheingabe zurück.
+    Es wird vor der Ausgabe mit Regexp entfernt:
+      @li doppelte Leerzeichen
+      @li Tabulatur und Zeilenumbrüche (Copy Paste Problem)
+      @li Apostroph und Anführungszeichen (SQL-Statement)
    */
   const QString currentSearchText();
 };

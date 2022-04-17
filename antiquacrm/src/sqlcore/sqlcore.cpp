@@ -7,6 +7,7 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDebug>
 #include <QtCore/QSettings>
+#include <QtCore/QtGlobal>
 #include <QtNetwork/QTcpSocket>
 #include <QtSql/QSqlDriver>
 #include <QtSql/QSqlError>
@@ -170,6 +171,25 @@ void SqlCore::openDatabase(bool b) {
 }
 
 bool SqlCore::initialDatabase() { return initDatabase(); }
+
+QSqlDatabase *SqlCore::connection() {
+  Q_ASSERT_X(database != nullptr, "SqlDatabase", "Connection Error");
+  return database;
+}
+
+const QSqlQuery SqlCore::query(const QString &statement) {
+  if (!connection()->isOpen())
+    connection()->open();
+
+  return connection()->exec(statement);
+}
+
+const QSqlRecord SqlCore::record(const QString &table) {
+  if (!connection()->isOpen())
+    connection()->open();
+
+  return connection()->record(table);
+}
 
 const QString SqlCore::getConnectionName() {
   return database->connectionName();
