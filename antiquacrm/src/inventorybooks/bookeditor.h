@@ -1,7 +1,9 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+// @COPYRIGHT_HOLDER@
+
 #ifndef BOOKEDITOR_H
 #define BOOKEDITOR_H
-
-#include "applsettings.h"
 
 #include <QtCore/QEvent>
 #include <QtCore/QHash>
@@ -99,14 +101,9 @@ private:
   QListWidget *m_listWidget;          /**< @brief ISBN Abfrage-Vorschau */
 
   /**
-     @brief Standard Einstellungen lesen
-   */
-  ApplSettings config;
-
-  /**
-     @brief Wird für findchild benötigt!
+     @brief Wird für QObject::findchild benötigt!
   */
-  const QRegularExpression p_objPattern;
+  const QRegularExpression p_objPattern = QRegularExpression("^ib_[a-z_]+\\b$");
 
   /**
      @brief Beinhaltet Zurücksetzen/Speichern/Verlassen
@@ -161,7 +158,7 @@ private:
 
      @param INSERT/UPDATE SQL Statement senden!
    */
-  void sendSqlQuery(const QString &sqlStatement);
+  bool sendSqlQuery(const QString &sqlStatement);
 
   /**
      @brief SQL UPDATE Statement erstellen!
@@ -300,7 +297,8 @@ public:
     @brief Wenn Bearbeiten darf der Eintrag nicht 0 sein!
     @param condition Abfragekorpus @i ohne WHERE
   */
-  void queryBookEntry(const QString &condition);
+  void openBookEntry(const QString &condition);
+  void createBookEntry();
 };
 
 Q_DECLARE_METATYPE(BookData);

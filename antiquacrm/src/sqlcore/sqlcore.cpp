@@ -117,6 +117,8 @@ bool SqlCore::initDatabase() {
       return false;
   }
 
+  // Q_ASSERT_X(database != nullptr, "SqlDatabase", "Connection Error");
+
   if (database != nullptr) {
     QString connName = database->connectionName();
     if (connName.isEmpty())
@@ -172,23 +174,22 @@ void SqlCore::openDatabase(bool b) {
 
 bool SqlCore::initialDatabase() { return initDatabase(); }
 
-QSqlDatabase *SqlCore::connection() {
-  Q_ASSERT_X(database != nullptr, "SqlDatabase", "Connection Error");
-  return database;
+const QSqlDatabase SqlCore::db() {
+  return p_db;
 }
 
 const QSqlQuery SqlCore::query(const QString &statement) {
-  if (!connection()->isOpen())
-    connection()->open();
+  if (!database->isOpen())
+    database->open();
 
-  return connection()->exec(statement);
+  return database->exec(statement);
 }
 
 const QSqlRecord SqlCore::record(const QString &table) {
-  if (!connection()->isOpen())
-    connection()->open();
+  if (!database->isOpen())
+    database->open();
 
-  return connection()->record(table);
+  return database->record(table);
 }
 
 const QString SqlCore::getConnectionName() {

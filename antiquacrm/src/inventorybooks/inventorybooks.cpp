@@ -157,7 +157,7 @@ void InventoryBooks::openTableView() {
 void InventoryBooks::openEditor(const QString &condition) {
   if (!condition.isEmpty()) {
     m_bookEditor->setEnabled(true);
-    m_bookEditor->queryBookEntry(condition);
+    m_bookEditor->openBookEntry(condition);
     m_stackedWidget->setCurrentWidget(m_bookEditor);
   }
 }
@@ -168,7 +168,7 @@ void InventoryBooks::displayMessageBox(const QString &msg) {
 }
 
 void InventoryBooks::createBookEntry() {
-  m_bookEditor->setEnabled(true);
+  m_bookEditor->createBookEntry();
   m_stackedWidget->setCurrentWidget(m_bookEditor);
 }
 

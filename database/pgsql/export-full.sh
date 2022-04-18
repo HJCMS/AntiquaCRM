@@ -42,30 +42,33 @@ __init_tempfile
 
 echo "-- pgdump Structure Backup: schema-only.sql"
 pg_dump \
-  -h ${_config[0]} \
-  -d ${_config[2]} \
-  -U ${_config[3]} \
+  --host=${_config[0]} \
+  --port=${_config[1]} \
+  --dbname=${_config[2]} \
+  --username=${_config[3]} \
+  --encoding=UTF8 \
+  --no-owner \
   --schema-only \
   --schema=${_scheme} \
-  --no-owner \
   --create \
   --if-exists \
-  --clean | tee $HOME/.cache/${_output}.sql 1> /dev/null
+  --clean \
+  --file=$HOME/.cache/${_output}.sql
 
 mv -b $HOME/.cache/${_output}.sql ${_dest}/${_date}/schema-only.sql
 
-echo "-- pgdump Complite Backup: scheme-inserts.sql"
-pg_dump \
-  -h ${_config[0]} \
-  -d ${_config[2]} \
-  -U ${_config[3]} \
-  --schema=${_scheme} \
-  --no-owner \
-  --if-exists \
-  --clean \
-  --inserts \
-  --column-inserts | tee $HOME/.cache/${_output}.sql 1> /dev/null
-
-mv -b $HOME/.cache/${_output}.sql ${_dest}/${_date}/scheme-inserts.sql
+# echo "-- pgdump Complite Backup: scheme-inserts.sql"
+# pg_dump \
+#   -h ${_config[0]} \
+#   -d ${_config[2]} \
+#   -U ${_config[3]} \
+#   --schema=${_scheme} \
+#   --no-owner \
+#   --if-exists \
+#   --clean \
+#   --inserts \
+#   --column-inserts | tee $HOME/.cache/${_output}.sql 1> /dev/null
+#
+# mv -b $HOME/.cache/${_output}.sql ${_dest}/${_date}/scheme-inserts.sql
 
 ##EOF

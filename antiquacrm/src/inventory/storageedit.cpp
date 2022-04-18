@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "storageedit.h"
-#include "version.h"
+#include "applsettings.h"
 
 #include <QtCore/QDebug>
 #include <QtSql/QSqlDatabase>
@@ -22,7 +22,7 @@ void StorageEdit::dataChanged(int) { setModified(true); }
 void StorageEdit::setModified(bool b) { modified = b; }
 
 void StorageEdit::setStorageData() {
-  QSqlDatabase db(QSqlDatabase::database(sqlConnectionName));
+  QSqlDatabase db(QSqlDatabase::database(ApplSettings::sqlConnectioName()));
   if (db.isValid()) {
     QString select("SELECT * FROM ");
     select.append("ref_storage_location");

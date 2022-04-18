@@ -13,17 +13,21 @@
 #include <QtSql/QSqlTableModel>
 #include <QtWidgets/QTableView>
 
+namespace HJCMS {
+class SqlCore;
+};
+
 class BooksTableModel;
 class SearchStatement; /**< @ref SearchBar */
 
 class BooksTableView : public QTableView {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "http://www.hjcms.de")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
   int maxRowCount = 2500;
-  QSqlDatabase p_db;
+  HJCMS::SqlCore *m_sql;
   QModelIndex p_modelIndex;
   BooksTableModel *m_queryModel;
 

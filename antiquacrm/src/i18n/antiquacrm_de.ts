@@ -35,314 +35,314 @@
         <translation>Editiere Buchtitel</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="53"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="55"/>
         <source>Article ID:</source>
         <translation>Artikel Nr.:</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="66"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="68"/>
         <source>Count:</source>
         <translation>Bestand:</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="78"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="80"/>
         <source>Price:</source>
         <translation>Preis:</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="92"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="94"/>
         <source>Signed Version</source>
         <translation>Sgnierte Version</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="156"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="158"/>
         <source>Year:</source>
         <translation>Jahr:</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="121"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="123"/>
         <source>Page Count:</source>
         <translation>Buchseiten:</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="72"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="74"/>
         <source>Count</source>
         <translation>Bestand</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="131"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="133"/>
         <source>Pagecount</source>
         <translation>Seitenanzahl</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="139"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="141"/>
         <source>Weight:</source>
         <translation>Gewicht:</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="147"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="149"/>
         <source>g</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="148"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="150"/>
         <source>Weight</source>
         <translation>Gewicht</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="193"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="195"/>
         <source>Edition</source>
         <translation>Ausgabe</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="199"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="201"/>
         <source>Volume:</source>
         <translation>Band:</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="205"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="207"/>
         <source>Bd.</source>
         <translation>Bd.</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="206"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="208"/>
         <source>Volume</source>
         <translation>Band</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="222"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="224"/>
         <source>Book &amp;Title:</source>
         <translation>Buch &amp;Titel:</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="241"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="243"/>
         <source>Book Title Extended:</source>
         <translation>Erweiterter Buchtitel:</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="249"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="251"/>
         <source>Extended Title</source>
         <translation>Erweiterter Titel</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="257"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="259"/>
         <source>&amp;Author:</source>
         <translation>&amp;Autor:</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="265"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="267"/>
         <source>Author</source>
         <translation>Autor</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="276"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="278"/>
         <source>Publisher:</source>
         <translation>Herausgeber:</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="292"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="294"/>
         <source>Keyword:</source>
         <translation>Schlüsselwort:</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="300"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="302"/>
         <source>Chop Keyword</source>
         <translation>Shop Schlüüselwort</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="308"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="310"/>
         <source>Condition:</source>
         <translation>Zustand:</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="316"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="318"/>
         <source>Condition</source>
         <translation>Zustand</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="326"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="328"/>
         <source>Designation:</source>
         <translation>Umschreibung:</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="187"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="189"/>
         <source>Edition:</source>
         <translation>Ausgabe:</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="354"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="356"/>
         <source>Send ISBN request to openlibrary.org</source>
         <translation>Stelle ISBN-Anfrage an openlibrary.org</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="342"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="344"/>
         <source>Language:</source>
         <translation>Sprache:</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="231"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="233"/>
         <source>Required input field. Limited to 80 characters, Webshop Systems require this.</source>
         <translation>Erforderliches Eingabefeld. Begrenzt auf 80 Zeichen. Für Webshop-Systeme erforderlich.</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="248"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="250"/>
         <source>Extended Title or Book Subtitle.</source>
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="267"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="269"/>
         <source>Format: Firstname lastname (Different Authors separated by comma).</source>
         <translation>Format: Vorname Nachname (Weitere Autoren durch Komma getrennt).</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="277"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="279"/>
         <source>Enter hier the Book Publisher.</source>
         <translation>Geben Sie hier den Buchverlag ein.</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="299"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="301"/>
         <source>Category Keywords for Shopsystems.</source>
         <translation>Kategorie Schlüsselwörter für Shopsysteme.</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="318"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="320"/>
         <source>Condition of this Book. See also Configuration conditions Table.</source>
         <translation>Zustand dieses Buches. Siehe auch Konfigurations Tabellen.</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="334"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="336"/>
         <source>Designation</source>
         <translation>Umschreibung</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="368"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="370"/>
         <source>Create order</source>
         <translation>Bestellung anlegen</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="370"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="372"/>
         <source>Create a purchase order from this listing.</source>
         <translation>Erstelle einen Bestellauftrag von diesem Eintrag.</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="762"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="765"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="910"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="880"/>
         <source>No datasets were found.</source>
         <translation>Es wurden keine Datensätze gefunden.</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="230"/>
-        <location filename="../inventorybooks/bookeditor.cpp" line="939"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="232"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="909"/>
         <source>Booktitle</source>
         <translation>Buchtitel</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="946"/>
-        <location filename="../inventorybooks/bookeditor.cpp" line="949"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="916"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="919"/>
         <source>Authors</source>
         <translation>Autoren</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="983"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="953"/>
         <source>Open Webpage in Browser for full Description.</source>
         <translation>Öffnen Sie die Webseite im Browser für eine vollständige Beschreibung.</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="987"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="957"/>
         <source>External Book Description</source>
         <translation>Öffne externe Buch Beschreibung</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="1003"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="973"/>
         <source>An image exists on OpenLibrary.org</source>
         <translation>Ein Bild existiert auf OpenLibrary.org</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="1006"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="976"/>
         <source>Images</source>
         <translation>Bilder</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="1013"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="983"/>
         <source>OpenLibrary is free to use, but we need your Help!</source>
         <translation>OpenLibrary kann kostenlos verwendet werden, aber wir brauchen Ihre Hilfe!</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="1016"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="986"/>
         <source>Donation</source>
         <translation>Spenden</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="936"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="906"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="395"/>
-        <location filename="../inventorybooks/bookeditor.cpp" line="396"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="397"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="398"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="398"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="400"/>
         <source>This text is displayed on web pages</source>
         <translation>Dieser Text wird auf Webseiten angezeigt</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="402"/>
         <location filename="../inventorybooks/bookeditor.cpp" line="404"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="406"/>
         <source>Internal Description</source>
         <translation>Interne Notizen</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="406"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="408"/>
         <source>This text is for internal purposes</source>
         <translation>Dieser Text dient internen Zwecken</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="162"/>
-        <location filename="../inventorybooks/bookeditor.cpp" line="957"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="164"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="927"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="960"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="930"/>
         <source>Publisher Year</source>
         <translation>Herausgeber Jahr</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="284"/>
-        <location filename="../inventorybooks/bookeditor.cpp" line="972"/>
-        <location filename="../inventorybooks/bookeditor.cpp" line="975"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="286"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="942"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="945"/>
         <source>Publisher</source>
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="376"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="378"/>
         <source>Picture</source>
         <translation>Bilder</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="379"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="381"/>
         <source>Open the Imaging Dialog for Import and Edit Pictures.</source>
         <translation>Öffnet den Dialog für Bilder Importieren oder Editieren.</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="499"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="504"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="98"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="100"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="100"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="102"/>
         <source>Is the title not for sale nationally or is it on a censorship list. This is relevant for the Shopsystem.</source>
         <translation>Ist der Titel national unverkäuflich oder steht er auf einer Zensurliste? Dies ist für das Shopsystem relevant.</translation>
     </message>
@@ -418,17 +418,17 @@
 <context>
     <name>BooksTableView</name>
     <message>
-        <location filename="../inventorybooks/bookstableview.cpp" line="96"/>
+        <location filename="../inventorybooks/bookstableview.cpp" line="100"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookstableview.cpp" line="100"/>
+        <location filename="../inventorybooks/bookstableview.cpp" line="104"/>
         <source>Create entry</source>
         <translation>Eintrag erstellen</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/bookstableview.cpp" line="104"/>
+        <location filename="../inventorybooks/bookstableview.cpp" line="108"/>
         <source>Create order</source>
         <translation>Bestellung anlegen</translation>
     </message>
@@ -449,54 +449,54 @@
 <context>
     <name>CompleterTable</name>
     <message>
-        <location filename="../sqltables/completertable.cpp" line="30"/>
+        <location filename="../sqltables/completertable.cpp" line="31"/>
         <source>Modify Edition dataset</source>
         <translation>Bearbeite Zustandsbeschreibung</translation>
     </message>
     <message>
-        <location filename="../sqltables/completertable.cpp" line="32"/>
+        <location filename="../sqltables/completertable.cpp" line="33"/>
         <source>Modify Designation dateset</source>
         <translation>Bearbeite Umschlags Beschreibung</translation>
     </message>
     <message>
-        <location filename="../sqltables/completertable.cpp" line="34"/>
+        <location filename="../sqltables/completertable.cpp" line="35"/>
         <source>Editing Keyword Tables</source>
         <translation>Bearbeite Schlüsselwort Tabelle</translation>
     </message>
     <message>
-        <location filename="../sqltables/completertable.cpp" line="43"/>
+        <location filename="../sqltables/completertable.cpp" line="44"/>
         <source>Please enter the keywords here that should be suggested in the editor.</source>
         <translation>Bitte fügen Sie hier die Schlagworte ein, welche im Editor vorgeschlagen werden sollen.</translation>
     </message>
     <message>
-        <location filename="../sqltables/completertable.cpp" line="79"/>
+        <location filename="../sqltables/completertable.cpp" line="80"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="../sqltables/completertable.cpp" line="89"/>
-        <location filename="../sqltables/completertable.cpp" line="123"/>
+        <location filename="../sqltables/completertable.cpp" line="90"/>
+        <location filename="../sqltables/completertable.cpp" line="124"/>
         <source>add new entry</source>
         <translation>Erstelle neuen Eintrag</translation>
     </message>
     <message>
-        <location filename="../sqltables/completertable.cpp" line="95"/>
-        <location filename="../sqltables/completertable.cpp" line="126"/>
+        <location filename="../sqltables/completertable.cpp" line="96"/>
+        <location filename="../sqltables/completertable.cpp" line="127"/>
         <source>remove entry</source>
         <translation>Entferne Eintrag</translation>
     </message>
     <message>
-        <location filename="../sqltables/completertable.cpp" line="109"/>
+        <location filename="../sqltables/completertable.cpp" line="110"/>
         <source>Entry delete</source>
         <translation>Eintrag entfernen</translation>
     </message>
     <message>
-        <location filename="../sqltables/completertable.cpp" line="109"/>
+        <location filename="../sqltables/completertable.cpp" line="110"/>
         <source>Do you really want to delete this entry?</source>
         <translation>Möchten Sie diesen Eintrag wirklich löschen?</translation>
     </message>
     <message>
-        <location filename="../sqltables/completertable.cpp" line="122"/>
+        <location filename="../sqltables/completertable.cpp" line="123"/>
         <source>Actions</source>
         <translation>Aktionen</translation>
     </message>
@@ -546,33 +546,43 @@
     <name>EditorActionBar</name>
     <message>
         <location filename="../inventory/editoractionbar.cpp" line="15"/>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <location filename="../inventory/editoractionbar.cpp" line="17"/>
+        <source>Exit without saving.</source>
+        <translation>Beende ohne Speichern.</translation>
+    </message>
+    <message>
+        <location filename="../inventory/editoractionbar.cpp" line="21"/>
         <source>Restore</source>
         <translation>Zurücksetzen</translation>
     </message>
     <message>
-        <location filename="../inventory/editoractionbar.cpp" line="17"/>
+        <location filename="../inventory/editoractionbar.cpp" line="23"/>
         <source>Restore dataset to last save operation.</source>
         <translation>Setzt die Daten zum letzten Speicherpunkt zurück.</translation>
     </message>
     <message>
-        <location filename="../inventory/editoractionbar.cpp" line="25"/>
+        <location filename="../inventory/editoractionbar.cpp" line="31"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="../inventory/editoractionbar.cpp" line="27"/>
+        <location filename="../inventory/editoractionbar.cpp" line="33"/>
         <source>Save current dataset</source>
         <translation>Speichert den aktuellen Datensatz</translation>
     </message>
     <message>
-        <location filename="../inventory/editoractionbar.cpp" line="32"/>
-        <source>Finished</source>
-        <translation>Abschließen</translation>
+        <location filename="../inventory/editoractionbar.cpp" line="38"/>
+        <source>Back</source>
+        <translation>Zurück</translation>
     </message>
     <message>
-        <location filename="../inventory/editoractionbar.cpp" line="34"/>
-        <source>Finish and back to Mainview</source>
-        <translation>Beendet und geht Zurück in die Hauptansicht</translation>
+        <location filename="../inventory/editoractionbar.cpp" line="40"/>
+        <source>Go back to Mainview</source>
+        <translation>Gehe zurück zur Hauptansicht</translation>
     </message>
 </context>
 <context>
@@ -677,7 +687,7 @@
         <translation>Fehler beim laden des SQL Treibers</translation>
     </message>
     <message>
-        <location filename="../sqlcore/sqlcore.cpp" line="166"/>
+        <location filename="../sqlcore/sqlcore.cpp" line="168"/>
         <source>PostgreSQL connected successfully!</source>
         <translation>Verbindung zur PostgreSQL Datenbank erfolgreich!</translation>
     </message>
@@ -1039,12 +1049,12 @@
 <context>
     <name>PrintsTableView</name>
     <message>
-        <location filename="../inventoryprints/printstableview.cpp" line="91"/>
+        <location filename="../inventoryprints/printstableview.cpp" line="92"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
     <message>
-        <location filename="../inventoryprints/printstableview.cpp" line="94"/>
+        <location filename="../inventoryprints/printstableview.cpp" line="95"/>
         <source>Create order</source>
         <translation>Bestellung anlegen</translation>
     </message>
@@ -1205,42 +1215,42 @@
 <context>
     <name>StatsBookBar</name>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="44"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="45"/>
         <source>Books data history from ...</source>
         <translation>Buchdaten Historie der ...</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="57"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="58"/>
         <source>Book data history</source>
         <translation>Buch Datenhistorie</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="58"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="59"/>
         <source>Today</source>
         <translation>Heute</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="59"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="60"/>
         <source>Yesterday</source>
         <translation>Gestern</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="60"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="61"/>
         <source>Last 7 Days</source>
         <translation>Die letzten 7 Tage</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="61"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="62"/>
         <source>This Month</source>
         <translation>diesen Monat</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="62"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="63"/>
         <source>This Year</source>
         <translation>dieses Jahr</translation>
     </message>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="90"/>
+        <location filename="../inventorybooks/statsbookbar.cpp" line="91"/>
         <source>Rowcounts</source>
         <translation>Zeilenanzahl</translation>
     </message>

@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "statsbookbar.h"
+#include "applsettings.h"
 #include "version.h"
 
 #include <QtCore/QDebug>
@@ -64,7 +65,7 @@ void StatsBookBar::addComboBoxData() {
 
 void StatsBookBar::timerEvent(QTimerEvent *t) {
   ++countIDs;
-  if (QSqlDatabase::database(sqlConnectionName).isValid()) {
+  if (QSqlDatabase::database(ApplSettings::sqlConnectioName()).isValid()) {
     setThisDayHistory();
     killTimer(timerID);
   }

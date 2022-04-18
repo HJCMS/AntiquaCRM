@@ -2,6 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "booksimageview.h"
+#include "applsettings.h"
+#include "sqlcore.h"
 #include "version.h"
 
 #include <QtCore/QBuffer>
@@ -18,6 +20,8 @@ BooksImageView::BooksImageView(QWidget *parent) : QWidget{parent} {
   setObjectName("BooksImageViewer");
   setMinimumSize(QSize(300, 360));
   setMaximumWidth(300);
+
+  m_sql = new HJCMS::SqlCore(this);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("image_viewer_layout");
@@ -62,17 +66,11 @@ void BooksImageView::searchImageById(int id) {
   select.append(" ORDER BY im_id LIMIT 1;");
 
   QByteArray data;
-  QSqlDatabase db = QSqlDatabase::database(sqlConnectionName);
-  if (db.isValid()) {
-    QSqlQuery q = db.exec(select);
-    if (q.next()) {
-      // qDebug() << Q_FUNC_INFO << q.record();
-      data = q.value(0).toByteArray();
-    }
-    db.close();
-
-    data = QByteArray::fromBase64(data, QByteArray::Base64Encoding);
-    if (data.size() > 1024)
+  QSqlQuery q = m_sql->query(select);
+  if (q.next()) {
+    data = QByteArray::fromBase64(q.value(0).toByteArray(),
+                                  QByteArray::Base64Encoding);
+    if (data.size() > 60)
       insertImage(data);
   }
 }
@@ -94,19 +92,12 @@ void BooksImageView::addNewImage(int id, const QImage &img) {
   }
 
   QByteArray b64 = rawimg.toBase64();
-
   QString sql("SELECT im_id FROM inventory_images WHERE im_id=");
   sql.append(QString::number(id));
   sql.append(" LIMIT 1;");
 
-  bool update = false;
-  QSqlDatabase db = QSqlDatabase::database(sqlConnectionName);
-  if (db.isValid()) {
-    QSqlQuery q = db.exec(sql);
-    update = q.next();
-  }
-
-  if (update) {
+  QSqlQuery p_query = m_sql->query(sql);
+  if (p_query.next()) {
     sql = QString("UPDATE inventory_images SET ");
     sql.append("im_imgdata='");
     sql.append(b64);
@@ -121,13 +112,8 @@ void BooksImageView::addNewImage(int id, const QImage &img) {
     sql.append(b64);
     sql.append("');");
   }
-
-  // qDebug() << Q_FUNC_INFO << sql;
-  if (db.isValid()) {
-    QSqlQuery q = db.exec(sql);
-    if (q.lastError().isValid())
-      qDebug() << Q_FUNC_INFO << q.lastError();
-
-    db.close();
+  p_query = m_sql->query(sql);
+  if (p_query.lastError().isValid()) {
+    qDebug() << Q_FUNC_INFO << p_query.lastError().text() << Qt::endl;
   }
 }

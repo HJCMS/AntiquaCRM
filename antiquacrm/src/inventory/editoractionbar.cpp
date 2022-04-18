@@ -12,6 +12,12 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
 
   QHBoxLayout *layout = new QHBoxLayout(this);
 
+  m_cancelBtn = new QPushButton(tr("Cancel"), this);
+  m_cancelBtn->setObjectName("CancelEditorActionBar");
+  m_cancelBtn->setToolTip(tr("Exit without saving."));
+  m_cancelBtn->setIcon(myIcon("button_cancel"));
+  layout->addWidget(m_cancelBtn);
+
   m_restoreBtn = new QPushButton(tr("Restore"), this);
   m_restoreBtn->setObjectName("RestoreEditorActionBar");
   m_restoreBtn->setToolTip(tr("Restore dataset to last save operation."));
@@ -29,15 +35,16 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
   m_saveBtn->setShortcut(QKeySequence::Save);
   layout->addWidget(m_saveBtn);
 
-  m_readyBtn = new QPushButton(tr("Finished"), this);
+  m_readyBtn = new QPushButton(tr("Back"), this);
   m_readyBtn->setObjectName("FinishEditorActionBar");
-  m_readyBtn->setToolTip(tr("Finish and back to Mainview"));
+  m_readyBtn->setToolTip(tr("Go back to Mainview"));
   m_readyBtn->setIcon(myIcon("button_ok"));
   layout->addWidget(m_readyBtn);
 
   setLayout(layout);
 
   connect(m_restoreBtn, SIGNAL(clicked()), this, SIGNAL(s_restoreClicked()));
+  connect(m_cancelBtn, SIGNAL(clicked()), this, SIGNAL(s_cancelClicked()));
   connect(m_saveBtn, SIGNAL(clicked()), this, SIGNAL(s_saveClicked()));
   connect(m_readyBtn, SIGNAL(clicked()), this, SIGNAL(s_finishClicked()));
 }

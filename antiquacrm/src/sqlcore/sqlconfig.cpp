@@ -5,21 +5,34 @@
 #include "version.h"
 
 #include <QtCore/QDebug>
-#include <QtCore/QVariant>
 #include <QtCore/QFileInfo>
+#include <QtCore/QVariant>
 
 namespace HJCMS {
 
-static const QString section(const QString &f) {
+static const QString config_domain() {
+  QString str = QString::fromUtf8(HJCMS_CONFIG_DOMAIN);
+  str.append(QDir::separator());
+  str.append(QString::fromUtf8(ANTIQUACRM_NAME));
+  return str;
+}
+
+SqlConfig::SqlConfig(QObject *parent)
+    : QSettings(QSettings::NativeFormat, QSettings::UserScope, config_domain(),
+                ANTIQUACRM_NAME, parent) {
+  setObjectName("hjcms_sql_config");
+}
+
+const QString SqlConfig::section(const QString &f) {
   QString p("postgresql/");
   p.append(f);
   return p;
 }
 
-SqlConfig::SqlConfig() : QSettings(ANTIQUACRM_CONFIG_DOMAIN, ANTIQUACRM_NAME) {}
-
 const QString SqlConfig::getConnectioName() {
-  return QString(sqlConnectionName);
+  QString str(ANTIQUACRM_CONNECTION_PREFIX);
+  str.append(ANTIQUACRM_NAME);
+  return str;
 }
 
 void SqlConfig::setAddress(const QString &str) {
@@ -102,22 +115,19 @@ const QStringList SqlConfig::getOptions() {
   return value(s).toStringList();
 }
 
-void SqlConfig::setCertificate(const QString &p)
-{
+void SqlConfig::setCertificate(const QString &p) {
   QString s(section("certpath"));
   QFileInfo f(p);
-  if(f.exists())
-  {
-    setValue(s,f.absoluteFilePath());
+  if (f.exists()) {
+    setValue(s, f.absoluteFilePath());
     return;
   }
   remove(s);
 }
 
-const QString SqlConfig::getCertificate()
-{
+const QString SqlConfig::getCertificate() {
   QString s(section("certpath"));
-  return value(s,QString()).toString();
+  return value(s, QString()).toString();
 }
 
 }; // namespace HJCMS

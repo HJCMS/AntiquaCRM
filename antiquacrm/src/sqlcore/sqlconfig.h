@@ -5,44 +5,51 @@
 #ifndef HJCMS_SQLCONFIG_H
 #define HJCMS_SQLCONFIG_H
 
+#include <QtCore/QObject>
 #include <QtCore/QSettings>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
 
 namespace HJCMS {
-  /**
-    * @class SqlConfig
-    * @short Connection Settings
-    * @see https://www.postgresql.org/docs/current/runtime-config-connection.html
-    * @ingroup SQL
-    */
-  class SqlConfig : QSettings
-  {
-  public:
-    explicit SqlConfig();
+/**
+ * @class SqlConfig
+ * @short Connection Settings
+ * @see https://www.postgresql.org/docs/current/runtime-config-connection.html
+ * @ingroup SQL
+ */
+class SqlConfig : QSettings {
+  Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
 
-    const QString getConnectioName();
+protected:
+  static const QString section(const QString &);
 
-    void setAddress(const QString &);
-    const QString getAddress();
+public:
+  explicit SqlConfig(QObject *parent = nullptr);
 
-    void setPort(int);
-    int getPort();
+  static const QString getConnectioName();
 
-    void setDatabase(const QString &);
-    const QString getDatabase();
+  void setAddress(const QString &);
+  const QString getAddress();
 
-    void setUserName(const QString &);
-    const QString getUserName();
+  void setPort(int);
+  int getPort();
 
-    void setPassword(const QString &);
-    const QString getPassword();
+  void setDatabase(const QString &);
+  const QString getDatabase();
 
-    void setOptions(const QStringList &);
-    const QStringList getOptions();
+  void setUserName(const QString &);
+  const QString getUserName();
 
-    void setCertificate(const QString &);
-    const QString getCertificate();
-  };
+  void setPassword(const QString &);
+  const QString getPassword();
+
+  void setOptions(const QStringList &);
+  const QStringList getOptions();
+
+  void setCertificate(const QString &);
+  const QString getCertificate();
+};
 };     // namespace HJCMS
 #endif // SQLCONFIG_H

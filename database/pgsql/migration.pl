@@ -343,6 +343,7 @@ sub show_table_fields {
 =cut
 sub create_article_inserts {
   my $table = "public.inventory";
+  my $table_seq = "public.inventory_id_seq";
   my $query = $dbc->prepare("SELECT artnr,zeitstempel FROM xgr WHERE artnr>0 ORDER BY artnr ASC;");
   my $rows = $query->execute();
   if($rows)
@@ -359,6 +360,8 @@ sub create_article_inserts {
       $inserts++;
     }
     $query->finish;
+    print FH "\n-- Update Sequence --\n";
+    print FH "SELECT pg_catalog.setval('$table_seq', (SELECT MAX(i_id) FROM $table), true);\n\n";
     print "-- DONE: From $rows rows, created $inserts Storage inserts.\n";
     print FH "--\n-- Query-Result: $rows\n--\n";
     close(FH);
@@ -385,7 +388,7 @@ sub create_storage_locations {
     print "-- Generate: ${table}.INSERT\n";
     open(FH, '>:encoding(UTF-8)', "./import/${table}.INSERT.sql") or die $!;
     print FH "--\n-- PostgreSQL INSERT INTO $table --\n--\n\n";
-    print FH "TRUNCATE $table RESTART IDENTITY CASCADE;\n\n";
+    print FH "TRUNCATE $table RESTART IDENTITY;\n\n";
     print FH "INSERT INTO $table (sl_id,sl_storage,sl_identifier) OVERRIDING SYSTEM VALUE VALUES (0,'OPEN','Keine Zuordnung');\n";
 
     my $inserts = 0;
@@ -439,7 +442,8 @@ ORDER BY xgr.artnr ASC;
     print "-- Generate: ${table}.INSERT\n";
     open(FH, '>:encoding(UTF-8)', "./import/${table}.INSERT.sql") or die $!;
     print FH "--\n-- PostgreSQL INSERT INTO $table --\n--\n\n";
-    print FH "TRUNCATE $table CASCADE;\n\n";
+    print FH "TRUNCATE $table;\n\n";
+    print FH "DROP TRIGGER IF EXISTS new_print_article ON ${table};\n\n";
 
     my $created = 0;
     while (my $r = $query->fetchrow_hashref())
@@ -539,8 +543,10 @@ ORDER BY xgr.artnr ASC;
       $created++;
     }
     $query->finish;
+    print FH "\n-- Add Trigger to Table 'inventory' --\n";
+    print FH "\n\nCREATE TRIGGER new_print_article BEFORE INSERT ON $table FOR EACH ROW EXECUTE PROCEDURE new_print_article();\n";
     print "-- DONE: From $rows rows, created $created Book inserts.\n";
-    print FH "--\n-- Query-Result: $rows\n--\n";
+    print FH "\n--\n-- Query-Result: $rows\n--\n";
     close(FH);
   }
 };
@@ -696,7 +702,10 @@ ORDER BY artnr ASC;");
     print "-- Generate: ${table}.INSERT\n";
     open(FH, '>:encoding(UTF-8)', "./import/${table}.INSERT.sql") or die $!;
     print FH "--\n-- PostgreSQL UPDATE SET $table --\n--\n";
-    print FH "TRUNCATE $table CASCADE;\n\n";
+    print FH "TRUNCATE $table;\n\n";
+    print FH "ALTER TABLE $table DROP CONSTRAINT IF EXISTS foreign_technique_key;\n\n";
+
+    ## "foreign_technique_key" FOREIGN KEY (ip_technique) REFERENCES ref_print_technique(rpt_id)
 
     while (my $r = $query->fetchrow_hashref())
     {
@@ -761,8 +770,8 @@ ORDER BY artnr ASC;");
         ## ip_internal_description
         my $description = ($r->{'ip_internal_description'}) ? prepare_text($r->{'ip_internal_description'}) : "";
         if(length($description) gt 3) {
-          $insert .= "ip_internal_description,";
-          $values .= "'$description',";
+          $insert .= ",ip_internal_description";
+          $values .= ",'$description'";
         }
         ## ip_year
         if($r->{'jahr'}) {
@@ -801,10 +810,10 @@ ORDER BY artnr ASC;");
         if($r->{'ip_changed'}) {
           my $timestamp = $r->{'ip_changed'};
           $insert .= ",ip_changed";
-          $values .= "'$timestamp'";
+          $values .= ",'$timestamp'";
         } else {
           $insert .= ",ip_changed";
-          $values .= "CURRENT_TIMESTAMP";
+          $values .= ",CURRENT_TIMESTAMP";
         }
 
         print FH "INSERT INTO $table ($insert) VALUES ($values);\n";

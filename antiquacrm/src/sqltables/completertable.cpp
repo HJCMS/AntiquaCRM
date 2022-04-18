@@ -4,6 +4,7 @@
 #include "completertable.h"
 #include "datadelegation.h"
 #include "datatablemodel.h"
+#include "applsettings.h"
 #include "version.h"
 
 #include <QtCore/QDebug>
@@ -21,7 +22,7 @@
 #include <QtWidgets/QVBoxLayout>
 
 CompleterTable::CompleterTable(QWidget *parent, const QString &filter)
-    : QDialog{parent}, p_db(QSqlDatabase::database(sqlConnectionName)) {
+    : QDialog{parent}, p_db(QSqlDatabase::database(ApplSettings::sqlConnectioName())) {
   setObjectName("CompleterTableDialog");
   setSizeGripEnabled(true);
   setMinimumSize(QSize(650, 400));

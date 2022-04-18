@@ -3,16 +3,12 @@
 #ifndef ANTIQUACRM_MAPPLICATION_H
 #define ANTIQUACRM_MAPPLICATION_H
 
-/* QtCore */
 #include <QtCore/QEvent>
-#include <QtCore/QLockFile>
 #include <QtCore/QObject>
-/* QtWidgets */
 #include <QtWidgets/QApplication>
-/* QtSQL */
-#include <QtSql/QSqlDatabase>
-/* Project */
-#include "mwindow.h"
+
+class ApplSettings;
+class MWindow;
 
 class MApplication : public QApplication {
   Q_OBJECT
@@ -20,8 +16,8 @@ class MApplication : public QApplication {
   Q_CLASSINFO("URL", "http://www.hjcms.de")
 
 private:
+  ApplSettings *m_settings;
   MWindow *m_mainWindow;
-  QLockFile sessionLock;
 
 public:
   explicit MApplication(int &argc, char **argv);

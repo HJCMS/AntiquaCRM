@@ -134,7 +134,7 @@ public:
      @brief connection
      @return Aktuelle Datenbank Verbindung
    */
-  QSqlDatabase* connection();
+  const QSqlDatabase db();
 
   /**
      @brief Registrierten Verbindungsnamen abrufen.

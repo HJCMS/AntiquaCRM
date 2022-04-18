@@ -49,14 +49,18 @@ function __export_table()
 
   echo "-- pgdump full Table backup: ${_t}.sql"
   pg_dump \
-    -h ${_server} \
-    -d ${_config[2]} \
-    -U ${_config[3]} \
-    -w -t ${_t} \
+    --host=${_server} \
+    --port=${_config[1]} \
+    --dbname=${_config[2]} \
+    --username=${_config[3]} \
+    --table=${_t} \
+    --no-password \
     --no-owner \
     --if-exists \
     --clean \
-    --inserts | tee $HOME/.cache/${_output}.sql 1> /dev/null
+    --inserts  \
+    --attribute-inserts \
+    --file=$HOME/.cache/${_output}.sql
 
   mv -b $HOME/.cache/${_output}.sql ${_dest}/${_date}/${_t}.sql
 }

@@ -11,6 +11,10 @@
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QWidget>
 
+namespace HJCMS {
+class SqlCore;
+};
+
 /**
    @brief The BooksImageView class
    Liest mit der Article ID aus Tabelle
@@ -21,9 +25,11 @@
 class BooksImageView : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "http://www.hjcms.de")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  HJCMS::SqlCore *m_sql;
+
   /**
     @brief m_scrollArea
     Zeigt das Bild Label an ...

@@ -3,8 +3,10 @@
 
 #include "bookstableview.h"
 #include "bookstablemodel.h"
+#include "applsettings.h"
 #include "searchbar.h"
 #include "version.h"
+#include "sqlcore.h"
 
 #include <QtCore/QDebug>
 #include <QtCore/QPoint>
@@ -55,6 +57,8 @@ BooksTableView::BooksTableView(QWidget *parent) : QTableView{parent} {
   setAlternatingRowColors(true);
   setSelectionBehavior(QAbstractItemView::SelectRows);
   setSelectionMode(QAbstractItemView::SingleSelection);
+
+  m_sql = new HJCMS::SqlCore(this);
 
   m_queryModel = new BooksTableModel(this);
   setModel(m_queryModel);
@@ -132,10 +136,10 @@ void BooksTableView::queryHistory(const QString &str) {
   q.append(QString::number(maxRowCount));
   q.append(";");
 
-  p_db = QSqlDatabase::database(sqlConnectionName);
-  if (p_db.open()) {
+  QSqlDatabase db(m_sql->db());
+  if (db.open()) {
     // qDebug() << "BooksTableView::queryHistory" << q << Qt::endl;
-    m_queryModel->setQuery(q, p_db);
+    m_queryModel->setQuery(q, db);
     if (m_queryModel->lastError().isValid()) {
       qDebug() << "BooksTableView::queryHistory"
                << "{SQL Query} " << q << Qt::endl
@@ -211,9 +215,9 @@ void BooksTableView::queryStatement(const SearchStatement &cl) {
 
   // qDebug() << Q_FUNC_INFO << q;
   // return;
-  p_db = QSqlDatabase::database(sqlConnectionName);
-  if (p_db.open()) {
-    m_queryModel->setQuery(q, p_db);
+  QSqlDatabase db(m_sql->db());
+  if (db.open()) {
+    m_queryModel->setQuery(q, db);
     if (m_queryModel->lastError().isValid()) {
       qDebug() << "BooksTableView::queryStatement"
                << "{SQL Query} " << q << Qt::endl

@@ -1,4 +1,5 @@
 #include "bookeditor.h"
+#include "applsettings.h"
 #include "articleid.h"
 #include "booksimageview.h"
 #include "boolbox.h"
@@ -29,11 +30,12 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
 
-BookEditor::BookEditor(QWidget *parent)
-    : QWidget{parent}, p_objPattern("^ib_[a-z_]+\\b$"), config() {
+BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   setObjectName("BookEditor");
   setWindowTitle(tr("Edit Book Title"));
   setMinimumSize(800, 600);
+
+  ApplSettings config;
 
   db = new HJCMS::SqlCore(this);
 
@@ -441,6 +443,8 @@ BookEditor::BookEditor(QWidget *parent)
   connect(btn_imaging, SIGNAL(clicked()), this, SLOT(openImageDialog()));
   connect(m_listWidget, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
           SLOT(infoISBNDoubleClicked(QListWidgetItem *)));
+  connect(m_actionBar, SIGNAL(s_cancelClicked()), this,
+          SIGNAL(s_leaveEditor()));
   connect(m_actionBar, SIGNAL(s_restoreClicked()), this,
           SLOT(restoreDataset()));
   connect(m_actionBar, SIGNAL(s_saveClicked()), this, SLOT(saveData()));
@@ -463,7 +467,8 @@ void BookEditor::setInputList() {
 
 void BookEditor::openImageDialog() {
   qulonglong id = ib_id->value().toLongLong();
-  QString p = config.value("imaging/sourcepath").toString();
+  ApplSettings cfg;
+  QString p = cfg.value("imaging/sourcepath").toString();
   ImageDialog *dialog = new ImageDialog(id, this);
   if (!dialog->setSourceTarget(p)) {
     qDebug() << Q_FUNC_INFO << id << "Invalid Source Target:" << p;
@@ -489,15 +494,17 @@ void BookEditor::resetModified() {
   }
 }
 
-void BookEditor::sendSqlQuery(const QString &sqlStatement) {
+bool BookEditor::sendSqlQuery(const QString &sqlStatement) {
   // qDebug() << Q_FUNC_INFO << sqlStatement;
   MessageBox msgBox(this);
   QSqlQuery q = db->query(sqlStatement);
   if (q.lastError().type() != QSqlError::NoError) {
     msgBox.queryFail(q.lastError().text());
+    return false;
   } else {
     msgBox.querySuccess(tr("Bookdata saved successfully!"), 1);
     resetModified();
+    return true;
   }
 }
 
@@ -694,11 +701,10 @@ void BookEditor::createSqlInsert() {
   sql.append(",ib_changed) VALUES (");
   sql.append(values.join(","));
   sql.append(",CURRENT_TIMESTAMP);");
-  qDebug() << Q_FUNC_INFO << "TODO:";
-  qDebug() << sql << Qt::endl;
-  // sendSqlQuery(sql);
-  // ONLY FOR TESTING
-  resetModified();
+  // qDebug() << Q_FUNC_INFO << "TODO:";
+  // qDebug() << sql << Qt::endl;
+  if (sendSqlQuery(sql))
+    checkLeaveEditor();
 }
 
 void BookEditor::importSqlResult() {
@@ -856,39 +862,6 @@ void BookEditor::setSqlQueryData(const QString &key, const QVariant &value) {
     return;
   }
   qDebug() << "Missing" << key << value << value.type();
-}
-
-void BookEditor::queryBookEntry(const QString &condition) {
-  if (condition.length() < 5)
-    return;
-
-  QString select("SELECT * FROM inventory_books WHERE ");
-  select.append(condition);
-  select.append(" ORDER BY ib_id LIMIT 1;");
-
-  // qDebug() "SELECT ->" << select << db.isValid();
-  QSqlQuery q = db->query(select);
-  if (q.size() != 0) {
-    QSqlRecord r = db->record("inventory_books");
-    sqlQueryResult.clear();
-    while (q.next()) {
-      foreach (QString key, inputList) {
-        QVariant val = q.value(r.indexOf(key));
-        // qDebug() << "KEY -->" << key << val;
-        BookData d;
-        d.field = key;
-        d.vtype = val.type();
-        d.data = val;
-        sqlQueryResult.append(d);
-      }
-    }
-  }
-
-  if (!sqlQueryResult.isEmpty() && !m_actionBar->isRestoreable())
-    m_actionBar->setRestoreable(true);
-
-  // Jetzt Daten einfügen ...
-  importSqlResult();
 }
 
 void BookEditor::saveData() {
@@ -1074,4 +1047,45 @@ void BookEditor::triggerIsbnQuery() {
   connect(m_isbnRequest, SIGNAL(requestFinished(bool)), this,
           SLOT(setIsbnInfo(bool)));
   m_isbnRequest->triggerRequest();
+}
+
+void BookEditor::openBookEntry(const QString &condition) {
+  if (condition.length() < 5)
+    return;
+
+  QString select("SELECT * FROM inventory_books WHERE ");
+  select.append(condition);
+  select.append(" ORDER BY ib_id LIMIT 1;");
+
+  // qDebug() "SELECT ->" << select << db.isValid();
+  QSqlQuery q = db->query(select);
+  if (q.size() != 0) {
+    QSqlRecord r = db->record("inventory_books");
+    sqlQueryResult.clear();
+    while (q.next()) {
+      foreach (QString key, inputList) {
+        QVariant val = q.value(r.indexOf(key));
+        // qDebug() << "KEY -->" << key << val;
+        BookData d;
+        d.field = key;
+        d.vtype = val.type();
+        d.data = val;
+        sqlQueryResult.append(d);
+      }
+    }
+  }
+
+  if (!sqlQueryResult.isEmpty() && !m_actionBar->isRestoreable())
+    m_actionBar->setRestoreable(true);
+
+  // Jetzt Daten einfügen ...
+  importSqlResult();
+}
+
+void BookEditor::createBookEntry() {
+  /**
+    @note Beim ersten Eintragen wieder zurück setzen!
+  */
+  setEnabled(true);
+  resetModified();
 }

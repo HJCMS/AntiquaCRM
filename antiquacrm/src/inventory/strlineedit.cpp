@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "strlineedit.h"
-#include "version.h"
+#include "applsettings.h"
 
 #include <QtCore/QDebug>
 #include <QtSql/QSqlDatabase>
@@ -100,7 +100,7 @@ void StrLineEdit::loadDataset(const QString &key) {
   select.append("';");
 
   QStringList list;
-  QSqlDatabase db(QSqlDatabase::database(sqlConnectionName));
+  QSqlDatabase db(QSqlDatabase::database(ApplSettings::sqlConnectioName()));
   // qDebug() << select << db.isValid();
   if (db.isValid()) {
     QSqlQuery q = db.exec(select);

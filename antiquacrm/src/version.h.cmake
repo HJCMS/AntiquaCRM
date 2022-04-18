@@ -13,27 +13,36 @@
 /**
  * @short Project title settings
  */
+#ifndef ANTIQUACRM_NAME
 #define ANTIQUACRM_NAME "@PROJECTNAME@"
+#endif
+
+#ifndef ANTIQUACRM_DISPLAYNAME
 #define ANTIQUACRM_DISPLAYNAME "@DISPLAYNAME@"
+#endif
+
+#ifndef ANTIQUACRM_VERSION
 #define ANTIQUACRM_VERSION "@ANTIQUACRM_VERSION_MAJOR@.@ANTIQUACRM_VERSION_MINOR@.@ANTIQUACRM_VERSION_RELEASE@"
+#endif
+
+#ifndef ANTIQUACRM_VERSION_STRING
 #define ANTIQUACRM_VERSION_STRING "@ANTIQUACRM_VERSION_STRING@"
-#define ANTIQUACRM_CONFIG_DOMAIN "hjcms.de"
+#endif
 
-
-static const QUrl AntiquaHomepage = QUrl("@HOMEPAGEURL@");
+#ifndef HJCMS_CONFIG_DOMAIN
+#define HJCMS_CONFIG_DOMAIN "de.hjcms"
+#endif
 
 /**
- * @short sqlConnectionName
- */
-static QLatin1String sqlConnectionName = QLatin1String("ANTIQUA_SQL_CLIENT");
+* @brief System Hostname must append to this ...
+*/
+#ifndef ANTIQUACRM_CONNECTION_PREFIX
+#define ANTIQUACRM_CONNECTION_PREFIX "de.hjcms."
+#endif
 
-static const QString lockFilePath()
-{
-  QString sid(".lock");
-  sid.prepend(ANTIQUACRM_NAME);
-  sid.prepend("qtsingleapplication-");
-  return QDir::temp().absoluteFilePath(sid);
-}
+#ifndef ANTIQUACRM_HOMEPAGE
+#define ANTIQUACRM_HOMEPAGE "@HOMEPAGEURL@"
+#endif
 
 /**
  * @brief myIcon

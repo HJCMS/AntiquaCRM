@@ -4,6 +4,7 @@
 #include "printstableview.h"
 #include "printstablemodel.h"
 #include "searchbar.h"
+#include "applsettings.h"
 #include "version.h"
 
 #include <QtCore/QDebug>
@@ -124,7 +125,7 @@ void PrintsTableView::queryHistory(const QString &str) {
 
   qDebug() << Q_FUNC_INFO << q;
   return;
-  p_db = QSqlDatabase::database(sqlConnectionName);
+  p_db = QSqlDatabase::database(ApplSettings::sqlConnectioName());
   if (p_db.open()) {
     // qDebug() << "PrintsTableView::queryHistory" << q << Qt::endl;
     m_queryModel->setQuery(q, p_db);
@@ -197,7 +198,7 @@ void PrintsTableView::queryStatement(const SearchStatement &cl) {
 
   qDebug() << Q_FUNC_INFO << q;
   return;
-  p_db = QSqlDatabase::database(sqlConnectionName);
+  p_db = QSqlDatabase::database(ApplSettings::sqlConnectioName());
   if (p_db.open()) {
     m_queryModel->setQuery(q, p_db);
     if (m_queryModel->lastError().isValid()) {

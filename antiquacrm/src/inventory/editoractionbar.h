@@ -16,11 +16,13 @@ class EditorActionBar : public QWidget {
 
 private:
   QPushButton *m_restoreBtn;
+  QPushButton *m_cancelBtn;
   QPushButton *m_saveBtn;
   QPushButton *m_readyBtn;
 
 Q_SIGNALS:
   void s_restoreClicked();
+  void s_cancelClicked();
   void s_saveClicked();
   void s_finishClicked();
 
