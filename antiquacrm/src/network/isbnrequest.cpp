@@ -4,45 +4,119 @@
 #include "isbnrequest.h"
 
 #include <QtCore/QDebug>
-#include <QtCore/QString>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include <QtCore/QJsonValue>
 #include <QtCore/QJsonValueRef>
+#include <QtCore/QString>
 #include <QtCore/QVector>
 #include <QtNetwork/QNetworkRequest>
 
-/**
- @brief stringsList()
- Alle Stringvariablen
-*/
-static const QStringList stringsList() {
-  QStringList l;
-  l << "url";             /**< Externe Referenz URL */
-  l << "title";           /**< Buchtitel */
-  l << "number_of_pages"; /**< Seitenanzahl */
-  l << "publish_date";    /**< Jahr */
-  l << "medium";          /**< Image Url medium */
-  l << "large";           /**< Image Url large */
-  return l;
+IsbnData::IsbnData(const QString &isbn) : p_isbn(isbn) {
+  p_ignoreList << "key" << "large" << "medium"
+   << "small" << "notes" << "pagination" << "weight";
 }
 
-/**
-   @brief arrayList()
-   Alle Arrayvariablen
-*/
-static const QStringList arrayList() {
-  QStringList l;
-  l << "publishers";     /**< Verlag  */
-  l << "publish_places"; /**< Verlag Herkunft  */
-  l << "authors";        /**< Autoren  */
-  return l;
+void IsbnData::addItems(const QString &key, const QJsonArray &array) {
+  if (array.size() < 1)
+    return;
+
+  for (int i = 0; i < array.size(); i++) {
+    if (array[i].type() == QJsonValue::Object) {
+      if (array[i].toObject().contains("name")) {
+        setData(key, array[i].toObject().take("name"));
+      } else {
+        setData(key, array[i].toObject());
+      }
+    }
+  }
+}
+
+void IsbnData::setData(const QString &key, const QJsonValue &data) {
+  if (key.isEmpty())
+    return;
+
+  if (data.type() == QJsonValue::Double) {
+    if (key == "number_of_pages") {
+      // a future year will ignored in BookEditor :)
+      double pages = data.toDouble(2999);
+      p_pages = QString::number(pages);
+    }
+  } else if (data.type() == QJsonValue::Array) {
+    if (key == "authors") {
+      addItems(key, data.toArray());
+    } else if (key == "publishers") {
+      addItems(key, data.toArray());
+    } else if (key == "cover") {
+      p_images = true; // Copyright
+    }
+  } else {
+    if (key == "title") {
+      p_title = data.toString();
+    } else if (key == "subtitle") {
+      p_subtitle = data.toString();
+    } else if (key == "url") {
+      p_url = QUrl(data.toString());
+    } else if (key == "publish_date") {
+      QRegExp reg("(\\d{4})");
+      QStringList list = data.toString().split(" ");
+      if (list.size() > 0) {
+        foreach (QString l, list) {
+          QString buf = l.trimmed();
+          if (buf.contains(reg)) {
+            p_year = buf;
+            break;
+          }
+        }
+      }
+    } else if (key == "by_statement") {
+      foreach (QString author, data.toString().split(",")) {
+        QString name = author.trimmed().trimmed();
+        if (!p_authors.contains(name))
+          p_authors.append(name);
+      }
+    } else if (key == "authors") {
+      QString name = data.toString().trimmed();
+      if (!p_authors.contains(name))
+        p_authors.append(name);
+    } else if (key == "publishers") {
+      p_publisher.append(data.toString().trimmed());
+    } else if (key == "publish_places") {
+      p_publish_places.append(data.toString().trimmed());
+    } else {
+      if (!p_ignoreList.contains(key))
+        qInfo("ISBN Key(%s) ignored.", qPrintable(key));
+    }
+  }
+}
+
+QMap<QString, QVariant> IsbnData::data() {
+  QMap<QString, QVariant> map;
+  if (p_title.isEmpty())
+    return map;
+
+  map.insert("isbn", p_isbn);
+  map.insert("url", p_url);
+  map.insert("title", p_title);
+  map.insert("title_extended", p_subtitle);
+  map.insert("authors", p_authors.join("/"));
+  map.insert("pages", p_pages);
+  map.insert("year", p_year);
+  map.insert("images", p_images);
+
+  QString publisher(p_publisher);
+  if (!p_publish_places.isEmpty())
+    publisher.append("/" + p_publish_places);
+
+  map.insert("publisher", publisher);
+  return map;
 }
 
 IsbnRequest::IsbnRequest(const QString &isbn, QObject *parent)
     : QObject{parent}, p_isbnKey("ISBN:" + isbn) {
   setObjectName("IsbnRequest");
+
+  m_isbn = new IsbnData(isbn);
 
   QString req("https://openlibrary.org/api/books?bibkeys=ISBN:");
   req.append(isbn);
@@ -66,35 +140,8 @@ void IsbnRequest::read(const QJsonObject &obj) {
     if (it.value().isObject()) {
       QJsonObject child = it.value().toObject();
       foreach (const QString &key, child.keys()) {
-        QJsonValue v = child[key];
-        if (stringsList().contains(key)) {
-          if (v.toString().isEmpty())
-            continue;
-
-          if (key == "number_of_pages") {
-            p_data.insert(key, v.toInt());
-          } else if (key == "publish_date") {
-            p_data.insert(key, v.toString());
-          } else if (key == "medium") {
-            p_data.insert("medium_image", v.toString());
-          } else if (key == "large") {
-            p_data.insert("large_image", v.toString());
-          } else {
-            p_data.insert(key, v.toString());
-          }
-        } else if (arrayList().contains(key)) {
-          // Array
-          QJsonArray ar = v.toArray();
-          if (ar.size() < 1)
-            continue;
-
-          for (int i = 0; i < ar.size(); i++) {
-            if (ar[i].toObject().contains("name")) {
-              QString value = ar[i].toObject().take("name").toString();
-              p_data.insert(key, value);
-            }
-          }
-        }
+        if (child[key].type() != QJsonValue::Object)
+          m_isbn->setData(key, child[key]);
       } // end foreach
       read(child);
     }
@@ -113,12 +160,12 @@ void IsbnRequest::importResponse(const QByteArray &b) {
 }
 
 void IsbnRequest::replyFinished(QNetworkReply *reply) {
-  qDebug() << "IsbnRequest::replyFinished" << reply->url();
+  // qDebug() << "IsbnRequest::replyFinished" << reply->url();
   if (reply->error() == QNetworkReply::NoError) {
     m_reply->deleteLater();
   }
 
-  emit requestFinished((p_data.size() > 1));
+  emit requestFinished((m_isbn->data().size() > 1));
 }
 
 void IsbnRequest::slotError(QNetworkReply::NetworkError err) {
@@ -169,9 +216,11 @@ void IsbnRequest::slotReadyRead() {
 void IsbnRequest::triggerRequest() {
   QNetworkRequest request(p_url);
   // https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
-  request.setRawHeader(QByteArray("Accept-Language"),QByteArray("de, de_DE.utf8;q=0.8, en;q=0.7"));
+  request.setRawHeader(QByteArray("Accept-Language"),
+                       QByteArray("de, de_DE.utf8;q=0.8, en;q=0.7"));
   // grep -i json /etc/mime.types
-  request.setRawHeader(QByteArray("Accept"),QByteArray("text/*, application/json; charset=utf8"));
+  request.setRawHeader(QByteArray("Accept"),
+                       QByteArray("text/*, application/json; charset=utf8"));
   if (setManager()) {
     m_reply = m_manager->get(request);
     connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
@@ -185,8 +234,10 @@ void IsbnRequest::triggerRequest() {
 }
 
 const QMap<QString, QVariant> IsbnRequest::getResponse() {
-  if (p_data.isEmpty())
-    p_data.clear();
+  return m_isbn->data();
+}
 
-  return p_data;
+IsbnRequest::~IsbnRequest() {
+  if (m_isbn != nullptr)
+    delete m_isbn;
 }

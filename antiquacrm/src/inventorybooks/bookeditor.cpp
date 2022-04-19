@@ -18,17 +18,9 @@
 #include "version.h"
 #include "yearedit.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QList>
-#include <QtCore/QMetaObject>
-#include <QtCore/QUrl>
+#include <QtCore>
 #include <QtGui/QDesktopServices>
-#include <QtWidgets/QGridLayout>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QListWidgetItem>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets>
 
 BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   setObjectName("BookEditor");
@@ -388,7 +380,6 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
 
   mainLayout->addLayout(gridLayout);
 
-  // TabWidget
   m_tabWidget = new QTabWidget(this);
   m_tabWidget->setObjectName("TabWidget");
 
@@ -513,7 +504,6 @@ bool BookEditor::sendSqlQuery(const QString &sqlStatement) {
 const QHash<QString, QVariant> BookEditor::createSqlDataset() {
   QHash<QString, QVariant> data;
   MessageBox messanger;
-  // BEGIN StrLineEdit
   QList<StrLineEdit *> listStr =
       findChildren<StrLineEdit *>(p_objPattern, Qt::FindDirectChildrenOnly);
   QList<StrLineEdit *>::Iterator i_str;
@@ -531,8 +521,6 @@ const QHash<QString, QVariant> BookEditor::createSqlDataset() {
     data.insert(cur->objectName(), cur->value());
   }
   listStr.clear();
-  // END
-  // BEGIN IntBoxes
   QList<IntSpinBox *> listInt =
       findChildren<IntSpinBox *>(p_objPattern, Qt::FindDirectChildrenOnly);
   QList<IntSpinBox *>::Iterator i_int;
@@ -550,7 +538,6 @@ const QHash<QString, QVariant> BookEditor::createSqlDataset() {
     data.insert(cur->objectName(), cur->value());
   }
   listInt.clear();
-  // END
   if (ib_signed->isChecked()) {
     data.insert("ib_signed", ib_signed->value());
   }
@@ -630,7 +617,6 @@ void BookEditor::createSqlUpdate() {
         set.append(ib_language->value().toString());
         set.append("',");
       } else {
-        // Jetzt alle StrLineEdit* durchgehen.
         StrLineEdit *sp =
             findChild<StrLineEdit *>(f.field, Qt::FindDirectChildrenOnly);
         if (sp != nullptr) {
@@ -662,8 +648,7 @@ void BookEditor::createSqlUpdate() {
         set.append(",");
       }
     } else {
-      qWarning("Unknown or Empty Datatype:");
-      qDebug() << Q_FUNC_INFO << f.field << f.vtype << f.data;
+      qWarning("Unknown Field '%s' in UPDATE statement.", qPrintable(f.field));
     }
   }
 
@@ -703,8 +688,7 @@ void BookEditor::createSqlInsert() {
   sql.append(",ib_changed) VALUES (");
   sql.append(values.join(","));
   sql.append(",CURRENT_TIMESTAMP);");
-  // qDebug() << Q_FUNC_INFO << "TODO:";
-  // qDebug() << sql << Qt::endl;
+  // qDebug() << Q_FUNC_INFO << sql << Qt::endl;
   if (sendSqlQuery(sql))
     checkLeaveEditor();
 }
@@ -720,9 +704,7 @@ void BookEditor::importSqlResult() {
   }
   blockSignals(false);
 
-  /**
-    @note Beim ersten Eintragen wieder zurück setzen!
-  */
+  // Nach Ersteintrag zurück setzen!
   resetModified();
 
   // Suche Bilddaten
@@ -770,16 +752,11 @@ void BookEditor::checkLeaveEditor() {
         tr("Unsaved Changes, don't leave this page before saved."));
     return;
   }
-  // OpenLibrary Anzeige leeren
-  m_listWidget->clear();
-  // Temporäre Daten
-  sqlQueryResult.clear();
-  // Aufräumen
-  clearDataFields();
-  // Knopf wieder ausschalten
-  m_actionBar->setRestoreable(false);
-  // und tschüss
-  emit s_leaveEditor();
+  m_listWidget->clear();              /**< OpenLibrary.org Anzeige leeren */
+  sqlQueryResult.clear();             /**< SQL History leeren */
+  clearDataFields();                  /**< Alle Datenfelder leeren */
+  m_actionBar->setRestoreable(false); /**< ResetButton off */
+  emit s_leaveEditor();               /**< Zurück */
 }
 
 void BookEditor::restoreDataset() {
@@ -791,42 +768,34 @@ void BookEditor::restoreDataset() {
 
 void BookEditor::setSqlQueryData(const QString &key, const QVariant &value) {
   // qDebug() << key << value;
-  // "ib_id" QVariant(int)
   if (key.contains("ib_id")) {
     ib_id->setValue(value);
     return;
   }
-  // "ib_isbn" QVariant(qulonglong)
   if (key.contains("ib_isbn")) {
     ib_isbn->setValue(value);
     return;
   }
-  // "ib_year" QVariant(double)
   if (key.contains("ib_year")) {
     ib_year->setValue(value);
     return;
   }
-  // "ib_storage" QVariant(int)
   if (key.contains("ib_storage")) {
     ib_storage->setValue(value);
     return;
   }
-  // "ib_price" QVariant(double)
   if (key.contains("ib_price")) {
     ib_price->setValue(value);
     return;
   }
-  // "ib_edition"
   if (key.contains("ib_edition")) {
     ib_edition->setValue(value);
     return;
   }
-  // "ib_language" QVariant(QString, "de_DE")
   if (key.contains("ib_language")) {
     ib_language->setValue(value);
     return;
   }
-  // BoolBox
   if (value.type() == QVariant::Bool) {
     BoolBox *v = findChild<BoolBox *>(key, Qt::FindDirectChildrenOnly);
     if (v != nullptr)
@@ -834,7 +803,6 @@ void BookEditor::setSqlQueryData(const QString &key, const QVariant &value) {
 
     return;
   }
-  // IntSpinBox
   if (value.type() == QVariant::Int) {
     IntSpinBox *v = findChild<IntSpinBox *>(key, Qt::FindDirectChildrenOnly);
     if (v != nullptr)
@@ -842,7 +810,6 @@ void BookEditor::setSqlQueryData(const QString &key, const QVariant &value) {
 
     return;
   }
-  // StrLineEdit
   if (value.type() == QVariant::String) {
     StrLineEdit *v = findChild<StrLineEdit *>(key, Qt::FindDirectChildrenOnly);
     if (v != nullptr) {
@@ -853,12 +820,10 @@ void BookEditor::setSqlQueryData(const QString &key, const QVariant &value) {
       return;
     }
   }
-  // ib_description
   if (key.contains("ib_description")) {
     ib_description->setValue(value);
     return;
   }
-  // ib_internal_description
   if (key.contains("ib_internal_description")) {
     ib_internal_description->setValue(value);
     return;
@@ -897,23 +862,24 @@ void BookEditor::setIsbnInfo(bool b) {
   if (isbnData.size() < 1)
     return;
 
-  /*
-    QMapIterator<QString, QVariant> i(isbnData);
-    while (i.hasNext()) {
-       i.next();
-       qDebug() << i.key() << i.value() << Qt::endl;
-    }
-  */
-
   // ib_title
   QListWidgetItem *title = new QListWidgetItem(m_listWidget);
   QString title_txt = isbnData.value("title").toString();
-  title->setData(Qt::DisplayRole, tr("Title") + ": " + title_txt);
+  title->setData(Qt::DisplayRole, tr("Booktitle") + ": " + title_txt);
   title->setData(Qt::UserRole, "ib_title:" + title_txt);
   title->setIcon(myIcon("edit"));
-  title->setToolTip(tr("Booktitle"));
   title->setFlags(flags);
   m_listWidget->addItem(title);
+
+  if (!isbnData.value("title_extended").isNull()) {
+    QListWidgetItem *title_ex = new QListWidgetItem(m_listWidget);
+    QString title_ext_txt = isbnData.value("title_extended").toString();
+    title_ex->setData(Qt::DisplayRole, tr("Subtitle") + ": " + title_ext_txt);
+    title_ex->setData(Qt::UserRole, "ib_title_extended:" + title_ext_txt);
+    title_ex->setIcon(myIcon("edit"));
+    title_ex->setFlags(flags);
+    m_listWidget->addItem(title_ex);
+  }
 
   if (!isbnData.value("authors").isNull()) {
     QListWidgetItem *author = new QListWidgetItem(m_listWidget);
@@ -921,33 +887,26 @@ void BookEditor::setIsbnInfo(bool b) {
     author->setData(Qt::DisplayRole, tr("Authors") + ": " + authors);
     author->setData(Qt::UserRole, "ib_author:" + authors);
     author->setIcon(myIcon("edit_group"));
-    author->setToolTip(tr("Authors"));
     author->setFlags(flags);
     m_listWidget->addItem(author);
   }
 
-  if (!isbnData.value("publish_date").isNull()) {
+  if (!isbnData.value("year").isNull()) {
     QListWidgetItem *year = new QListWidgetItem(m_listWidget);
-    QString year_txt = isbnData.value("publish_date").toString();
+    QString year_txt = isbnData.value("year").toString();
     year->setData(Qt::DisplayRole, tr("Year") + ": " + year_txt);
     year->setData(Qt::UserRole, "ib_year:" + year_txt);
     year->setIcon(myIcon("edit"));
-    year->setToolTip(tr("Publisher Year"));
     year->setFlags(flags);
     m_listWidget->addItem(year);
   }
 
-  if (!isbnData.value("publishers").isNull()) {
-    QString publisher_txt = isbnData.value("publishers").toString();
-    if (!isbnData.value("publish_places").isNull()) {
-      publisher_txt.append("/");
-      publisher_txt.append(isbnData.value("publish_places").toString());
-    }
+  if (!isbnData.value("publisher").isNull()) {
+    QString publisher_txt = isbnData.value("publisher").toString();
     QListWidgetItem *publisher = new QListWidgetItem(m_listWidget);
     publisher->setData(Qt::DisplayRole, tr("Publisher") + ": " + publisher_txt);
     publisher->setData(Qt::UserRole, "ib_publisher:" + publisher_txt);
     publisher->setIcon(myIcon("group"));
-    publisher->setToolTip(tr("Publisher"));
     publisher->setFlags(flags);
     m_listWidget->addItem(publisher);
   }
@@ -964,21 +923,21 @@ void BookEditor::setIsbnInfo(bool b) {
     m_listWidget->addItem(website);
   }
 
-  int images = 0;
-  // Ein Bild existiert auf OpenLibrary.org
-  if (!isbnData.value("medium_image").isNull()) {
-    ++images;
+  if (!isbnData.value("pages").isNull()) {
+    QListWidgetItem *pages = new QListWidgetItem(m_listWidget);
+    QString pages_txt =isbnData.value("pages").toString();
+    pages->setData(Qt::DisplayRole, tr("Pages") + ": " + pages_txt);
+    pages->setData(Qt::UserRole, "ib_pagecount:" + pages_txt);
+    pages->setIcon(myIcon("edit"));
+    pages->setFlags(flags ^ Qt::ItemIsEnabled);
+    m_listWidget->addItem(pages);
   }
-  if (!isbnData.value("large_image").isNull()) {
-    ++images;
-    ;
-  }
-  if (images > 0) {
+
+  if (isbnData.value("images").toBool()) {
     QListWidgetItem *graphs = new QListWidgetItem(m_listWidget);
     graphs->setData(Qt::DisplayRole, tr("An image exists on OpenLibrary.org"));
-    graphs->setData(Qt::UserRole, images);
+    graphs->setData(Qt::UserRole, true);
     graphs->setIcon(myIcon("image"));
-    graphs->setToolTip(tr("Images"));
     graphs->setFlags(flags ^ Qt::ItemIsEnabled);
     m_listWidget->addItem(graphs);
   }
@@ -988,11 +947,9 @@ void BookEditor::setIsbnInfo(bool b) {
                   tr("OpenLibrary is free to use, but we need your Help!"));
   donate->setData(Qt::UserRole, "ib_website:https://archive.org/donate/");
   donate->setIcon(myIcon("html"));
-  donate->setToolTip(tr("Donation"));
   donate->setFlags(flags);
   m_listWidget->addItem(donate);
 
-  // Tab anzeigen
   m_tabWidget->setCurrentIndex(isbnTabIndex);
 }
 
@@ -1002,12 +959,8 @@ void BookEditor::infoISBNDoubleClicked(QListWidgetItem *item) {
   if (data.contains("ib_title:")) {
     regexp.setPattern("^ib_title:\\b");
     data = data.replace(regexp, "");
-    /**
-     Überlange Einträge von externen
-     Quelle unterbinden! Wenn der
-     Vorschlag zu lang ist dann in
-     "ib_title_extended" einfügen!
-    */
+    // Überlange Einträge von externen Quelle unterbinden! Wenn der
+    // Vorschlag zu lang ist dann in "ib_title_extended" einfügen!
     if (data.length() > 79) {
       ib_title_extended->setValue(data);
     } else {
@@ -1067,7 +1020,6 @@ void BookEditor::openBookEntry(const QString &condition) {
     while (q.next()) {
       foreach (QString key, inputList) {
         QVariant val = q.value(r.indexOf(key));
-        // qDebug() << "KEY -->" << key << val;
         BookData d;
         d.field = key;
         d.vtype = val.type();
@@ -1075,19 +1027,17 @@ void BookEditor::openBookEntry(const QString &condition) {
         sqlQueryResult.append(d);
       }
     }
+  } else {
+    qDebug() << Q_FUNC_INFO << condition << db->fetchErrors() << Qt::endl;
   }
 
   if (!sqlQueryResult.isEmpty() && !m_actionBar->isRestoreable())
     m_actionBar->setRestoreable(true);
 
-  // Jetzt Daten einfügen ...
   importSqlResult();
 }
 
 void BookEditor::createBookEntry() {
-  /**
-    @note Beim ersten Eintragen wieder zurück setzen!
-  */
   setEnabled(true);
   resetModified();
 }

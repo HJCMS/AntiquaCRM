@@ -41,6 +41,12 @@ class ${_class} : public QWidget
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
+private:
+
+Q_SIGNALS:
+
+public Q_SLOTS:
+
 public:
   explicit ${_class}(QWidget *parent = nullptr);
 
@@ -55,10 +61,12 @@ cat > ./${_subdir}/${_filename}.cpp <<EOF
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "version.h"
 #include "${_filename}.h"
+// #include "version.h"
 
 #include <QtCore/QDebug>
+// #include <QtGui>
+#include <QtWidgets>
 
 ${_class}::${_class}(QWidget *parent) : QWidget{parent} {
   setObjectName("${_class}");

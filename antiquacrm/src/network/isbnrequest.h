@@ -5,7 +5,9 @@
 #ifndef ISBNREQUEST_H
 #define ISBNREQUEST_H
 
+#include <QtCore/QJsonArray>
 #include <QtCore/QJsonObject>
+#include <QtCore/QJsonValue>
 #include <QtCore/QMap>
 #include <QtCore/QObject>
 #include <QtCore/QUrl>
@@ -13,6 +15,28 @@
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QSslError>
+
+class IsbnData {
+private:
+  const QString p_isbn;
+  QStringList p_ignoreList;
+  QUrl p_url;
+  QString p_title;
+  QString p_subtitle;
+  QStringList p_authors;
+  QString p_publisher;
+  QString p_publish_places;
+  QString p_pages;
+  QString p_year;
+  bool p_images;
+
+  void addItems(const QString &key, const QJsonArray &array);
+
+public:
+  explicit IsbnData(const QString &isbn);
+  void setData(const QString &key, const QJsonValue &data);
+  QMap<QString, QVariant> data();
+};
 
 /**
    @brief The IsbnRequest Klasse
@@ -48,14 +72,14 @@
 class IsbnRequest : public QObject {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "http://www.hjcms.de")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  IsbnData *m_isbn;
   const QString p_isbnKey;
   QUrl p_url;
   QNetworkReply *m_reply;
   QNetworkAccessManager *m_manager;
-  QMap<QString,QVariant> p_data;
   QJsonObject p_respJsonObject;
   bool setManager();
   void read(const QJsonObject &);
@@ -73,7 +97,8 @@ Q_SIGNALS:
 public:
   explicit IsbnRequest(const QString &, QObject *parent = nullptr);
   void triggerRequest();
-  const QMap<QString,QVariant> getResponse();
+  const QMap<QString, QVariant> getResponse();
+  ~IsbnRequest();
 };
 
 #endif // ISBNREQUEST_H

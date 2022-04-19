@@ -30,7 +30,7 @@
 <context>
     <name>BookEditor</name>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="+35"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="+27"/>
         <source>Edit Book Title</source>
         <translation>Editiere Buchtitel</translation>
     </message>
@@ -225,29 +225,38 @@
         <translation>Erstelle einen Bestellauftrag von diesem Eintrag.</translation>
     </message>
     <message>
-        <location line="+398"/>
+        <location line="+388"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+98"/>
         <source>No datasets were found.</source>
         <translation>Es wurden keine Datensätze gefunden.</translation>
     </message>
     <message>
-        <location line="-653"/>
-        <location line="+682"/>
+        <location line="-626"/>
+        <location line="+644"/>
         <source>Booktitle</source>
         <translation>Buchtitel</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location line="+3"/>
+        <location line="+9"/>
+        <source>Subtitle</source>
+        <translation>Untertitel</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Authors</source>
         <translation>Autoren</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+42"/>
+        <source>Pages</source>
+        <translation>Seitenanzahl</translation>
+    </message>
+    <message>
+        <location line="-12"/>
         <source>Open Webpage in Browser for full Description.</source>
         <translation>Öffnen Sie die Webseite im Browser für eine vollständige Beschreibung.</translation>
     </message>
@@ -257,32 +266,17 @@
         <translation>Öffne externe Buch Beschreibung</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+17"/>
         <source>An image exists on OpenLibrary.org</source>
         <translation>Ein Bild existiert auf OpenLibrary.org</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Images</source>
-        <translation>Bilder</translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location line="+9"/>
         <source>OpenLibrary is free to use, but we need your Help!</source>
         <translation>OpenLibrary kann kostenlos verwendet werden, aber wir brauchen Ihre Hilfe!</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Donation</source>
-        <translation>Spenden</translation>
-    </message>
-    <message>
-        <location line="-80"/>
-        <source>Title</source>
-        <translation>Titel</translation>
-    </message>
-    <message>
-        <location line="-514"/>
+        <location line="-559"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -304,25 +298,19 @@
         <translation>Dieser Text dient internen Zwecken</translation>
     </message>
     <message>
-        <location line="-244"/>
-        <location line="+768"/>
+        <location line="-243"/>
+        <location line="+741"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Publisher Year</source>
-        <translation>Herausgeber Jahr</translation>
-    </message>
-    <message>
-        <location line="-649"/>
-        <location line="+661"/>
-        <location line="+3"/>
+        <location line="-619"/>
+        <location line="+629"/>
         <source>Publisher</source>
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="-572"/>
+        <location line="-537"/>
         <source>Picture</source>
         <translation>Bilder</translation>
     </message>
@@ -332,12 +320,12 @@
         <translation>Öffnet den Dialog für Bilder Importieren oder Editieren.</translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+125"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-407"/>
+        <location line="-406"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
