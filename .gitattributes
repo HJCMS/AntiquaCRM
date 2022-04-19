@@ -1,2 +1,4 @@
-*.ts   text
-*.xml  filter=filter.indent
+*.ts                    text
+*.xml                   filter=filter.indent
+.tag                    export-subst
+.commit-template        export-ignore

@@ -5,6 +5,7 @@
 #include "version.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QDir>
 
 static const QString config_domain() {
   QString str = QString::fromUtf8(HJCMS_CONFIG_DOMAIN);

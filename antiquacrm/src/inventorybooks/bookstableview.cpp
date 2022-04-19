@@ -2,11 +2,11 @@
 // vim: set fileencoding=utf-8
 
 #include "bookstableview.h"
-#include "bookstablemodel.h"
 #include "applsettings.h"
+#include "bookstablemodel.h"
 #include "searchbar.h"
-#include "version.h"
 #include "sqlcore.h"
+#include "version.h"
 
 #include <QtCore/QDebug>
 #include <QtCore/QPoint>
@@ -85,12 +85,34 @@ void BooksTableView::queryArticleID(const QModelIndex &index) {
 void BooksTableView::openBookByContext() { queryArticleID(p_modelIndex); }
 
 void BooksTableView::newBookByContext() {
-    qDebug() << Q_FUNC_INFO << "TODO" << "Check Rowcount before add";
-    emit s_newEntryPlease();
+  qDebug() << Q_FUNC_INFO << "TODO"
+           << "Check Rowcount before add";
+  emit s_newEntryPlease();
 }
 
 void BooksTableView::createOrderByContext() {
-    qDebug() << Q_FUNC_INFO << "Noch nicht Implementiert";
+  qDebug() << Q_FUNC_INFO << "Noch nicht Implementiert";
+}
+
+bool BooksTableView::sqlExecQuery(const QString &statement) {
+  if (!statement.contains("SELECT"))
+    return false;
+
+  QSqlDatabase db(m_sql->db());
+  if (db.open()) {
+    m_queryModel->setQuery(statement, db);
+    if (m_queryModel->lastError().isValid()) {
+      qDebug() << Q_FUNC_INFO << "{SQL Query} " << statement << "{SQL Error} "
+               << m_queryModel->lastError() << Qt::endl
+               << m_sql->fetchErrors() << Qt::endl;
+      return false;
+    }
+    return true;
+    emit s_rowsChanged(m_queryModel->rowCount());
+  } else {
+    qWarning("No SQL Connection in Booktable");
+  }
+  return false;
 }
 
 void BooksTableView::contextMenuEvent(QContextMenuEvent *ev) {
@@ -110,6 +132,13 @@ void BooksTableView::contextMenuEvent(QContextMenuEvent *ev) {
   connect(ac_order, SIGNAL(triggered()), this, SLOT(createOrderByContext()));
   m->exec(ev->globalPos());
   delete m;
+}
+
+void BooksTableView::refreshView() {
+  if (sqlExecQuery(p_historyQuery)) {
+    resizeRowsToContents();
+    resizeColumnsToContents();
+  }
 }
 
 void BooksTableView::queryHistory(const QString &str) {
@@ -136,20 +165,10 @@ void BooksTableView::queryHistory(const QString &str) {
   q.append(QString::number(maxRowCount));
   q.append(";");
 
-  QSqlDatabase db(m_sql->db());
-  if (db.open()) {
-    // qDebug() << "BooksTableView::queryHistory" << q << Qt::endl;
-    m_queryModel->setQuery(q, db);
-    if (m_queryModel->lastError().isValid()) {
-      qDebug() << "BooksTableView::queryHistory"
-               << "{SQL Query} " << q << Qt::endl
-               << "{SQL Error} " << m_queryModel->lastError() << Qt::endl;
-      return;
-    }
+  if (sqlExecQuery(q)) {
     resizeRowsToContents();
     resizeColumnsToContents();
-  } else {
-    qWarning("No SQL Connection in Booktable");
+    p_historyQuery = q;
   }
 }
 
@@ -213,21 +232,9 @@ void BooksTableView::queryStatement(const SearchStatement &cl) {
   q.append(QString::number(maxRowCount));
   q.append(";");
 
-  // qDebug() << Q_FUNC_INFO << q;
-  // return;
-  QSqlDatabase db(m_sql->db());
-  if (db.open()) {
-    m_queryModel->setQuery(q, db);
-    if (m_queryModel->lastError().isValid()) {
-      qDebug() << "BooksTableView::queryStatement"
-               << "{SQL Query} " << q << Qt::endl
-               << "{SQL Error} " << m_queryModel->lastError() << Qt::endl;
-      return;
-    }
+  if (sqlExecQuery(q)) {
     resizeRowsToContents();
     resizeColumnsToContents();
-    emit s_rowsChanged(m_queryModel->rowCount());
-  } else {
-    qWarning("No SQL Connection in Booktable");
+    p_historyQuery = q;
   }
 }

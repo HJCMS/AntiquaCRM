@@ -3,13 +3,14 @@
 #include "version.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QDir>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
 
-#include <QTableWidget>
+#include <QtWidgets/QTableWidget>
 
 GeneralSettingsWidget::GeneralSettingsWidget(QWidget *parent)
     : SettingsWidget{parent} {
@@ -17,7 +18,7 @@ GeneralSettingsWidget::GeneralSettingsWidget(QWidget *parent)
   setWindowTitle(tr("General Configuration"));
   setConfigSection("general");
 
-  ApplSettings p_cfg; /**< Konfigurationen laden */
+  ApplSettings p_cfg(this); /**< Konfigurationen laden */
 
   QSpacerItem *verticalSpacer =
       new QSpacerItem(10, 10, QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -40,7 +41,7 @@ GeneralSettingsWidget::GeneralSettingsWidget(QWidget *parent)
   ml1->setText(tr("Main Location from Image source Directory."));
   gridLayout->addWidget(ml1, 0, 0, 1, 3);
 
-  //=BEGIN#1
+  //BEGIN#1
   if (!p_cfg.contains("imaging/sourcepath"))
     p_cfg.setValue("imaging/sourcepath", QDir::homePath());
 
@@ -54,9 +55,9 @@ GeneralSettingsWidget::GeneralSettingsWidget(QWidget *parent)
   m_btn->setIcon(myIcon("folder_green"));
   m_btn->setText(tr("Open Directory"));
   gridLayout->addWidget(m_btn, 1, 2, 1, 1);
-  //=END#1
+  //END#1
 
-  //=BEGIN#2
+  //BEGIN#2
   QHBoxLayout *hl2 = new QHBoxLayout();
   QLabel *ml2 = new QLabel(this);
   ml2->setText(
@@ -75,7 +76,14 @@ GeneralSettingsWidget::GeneralSettingsWidget(QWidget *parent)
   hl2->addWidget(m_searchStart);
   hl2->addSpacerItem(horizontalSpacer);
   gridLayout->addLayout(hl2, 2, 0, 1, 3);
-  //=END#2
+  //END#2
+
+  //BEGIN#3
+  if (!p_cfg.contains("books/min_price"))
+        p_cfg.setValue("books/min_price", 8.00);
+
+  qDebug() << "TODO BOOKD MIN PRICE";
+  //END#3
 
   mainLayout->addLayout(gridLayout);
 

@@ -109,6 +109,9 @@ InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
   connect(m_statsBookBar, SIGNAL(s_queryHistory(const QString &)), m_tableView,
           SLOT(queryHistory(const QString &)));
 
+  connect(m_statsBookBar, SIGNAL(s_refreshView()), m_tableView,
+          SLOT(refreshView()));
+
   connect(m_tableView, SIGNAL(s_articleSelected(int)), this,
           SLOT(articleSelected(int)));
 

@@ -38,6 +38,13 @@ StatsBookBar::StatsBookBar(QWidget *parent) : QToolBar{parent} {
   addWidget(m_info);
   // END "Messanger Area"
 
+  QPushButton *refresh = new QPushButton(tr("Refresh"), this);
+  refresh->setObjectName("refresh_button");
+  refresh->setIcon(myIcon("reload"));
+  addWidget(refresh);
+
+  connect(refresh, SIGNAL(clicked()), this, SIGNAL(s_refreshView()));
+
   addSeparator();
 
   m_showHistory = new QComboBox(this);

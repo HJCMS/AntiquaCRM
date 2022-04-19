@@ -30,6 +30,7 @@ private:
   HJCMS::SqlCore *m_sql;
   QModelIndex p_modelIndex;
   BooksTableModel *m_queryModel;
+  QString p_historyQuery;
 
 private Q_SLOTS:
   /**
@@ -55,6 +56,11 @@ private Q_SLOTS:
   */
   void createOrderByContext();
 
+  /**
+   @brief contextMenuEvent
+  */
+  bool sqlExecQuery(const QString &statement);
+
 protected:
   void contextMenuEvent(QContextMenuEvent *);
 
@@ -64,7 +70,22 @@ Q_SIGNALS:
   void s_newEntryPlease();
 
 public Q_SLOTS:
+  /**
+   Anzeige auffrischen in dem der zuletzt
+   in @ref p_historyQuery gespeicherte SQL
+   Befehl noch einmal aufgerufen wird.
+  */
+  void refreshView();
+
+  /**
+    Wird von @ref StatsBookBar::m_showHistory()
+    aufgerufen und fragt den Verlauf ab.
+  */
   void queryHistory(const QString &);
+
+  /**
+    Startet Abfrage ausgehend von Text/Sucheingabe
+  */
   void queryStatement(const SearchStatement &);
 
 public:

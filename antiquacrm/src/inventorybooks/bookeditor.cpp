@@ -81,7 +81,7 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
 
   lay1->addWidget(ibPriceLabel);
 
-  double minPrice = config.value("general/price_limit", 10.00).toDouble();
+  double minPrice = config.value("books/min_price", 8.00).toDouble();
   ib_price = new PriceEdit(this);
   ib_price->setObjectName("ib_price");
   ib_price->setRequired(true);
@@ -499,7 +499,9 @@ bool BookEditor::sendSqlQuery(const QString &sqlStatement) {
   MessageBox msgBox(this);
   QSqlQuery q = db->query(sqlStatement);
   if (q.lastError().type() != QSqlError::NoError) {
-    msgBox.queryFail(q.lastError().text());
+    QString errorString = db->fetchErrors();
+    qDebug() << errorString << Qt::endl;
+    msgBox.queryFail(errorString);
     return false;
   } else {
     msgBox.querySuccess(tr("Bookdata saved successfully!"), 1);

@@ -30,7 +30,7 @@
 class StatsBookBar : public QToolBar {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "http://www.hjcms.de")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
   /**
@@ -99,6 +99,11 @@ protected:
   void timerEvent(QTimerEvent *);
 
 Q_SIGNALS:
+  /**
+     @brief Knopf auffrischen wurde ausgelöst.
+   */
+  void s_refreshView();
+
   /**
      @brief Auswahl Verlauf wurde getätigt
      Gibt den Benutzerdefiniert zurück.

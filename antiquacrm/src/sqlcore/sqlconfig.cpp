@@ -5,6 +5,7 @@
 #include "version.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QVariant>
 

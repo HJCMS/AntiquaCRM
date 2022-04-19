@@ -39,36 +39,6 @@ SqlCore::SqlCore(QObject *parent) : QObject{parent} {
   }
 }
 
-const QString SqlCore::prepareErrorMessage() {
-  QString message("Unknown SQL error:");
-
-  if (database == nullptr) {
-    return tr("SQL Driver initialization error");
-  }
-
-  QSqlError err = database->lastError();
-  switch (err.type()) {
-  case QSqlError::ConnectionError:
-    message = "SqlCore::ConnectionError:";
-    message.append(err.driverText());
-    break;
-
-  case QSqlError::StatementError:
-    message = "SqlCore::StatementError:";
-    message.append(err.databaseText());
-    break;
-
-  case QSqlError::TransactionError:
-    message = "SqlCore::TransactionError:";
-    message.append(err.databaseText());
-    break;
-
-  default:
-    break;
-  };
-  return message;
-}
-
 bool SqlCore::initSQLDriver() {
   p_db = QSqlDatabase::addDatabase("QPSQL", m_cfg->getConnectioName());
   if (!p_db.isValid()) {
@@ -138,7 +108,7 @@ bool SqlCore::initDatabase() {
       return false;
 
     if (database->isOpenError()) {
-      prepareErrorMessage();
+      return false;
     }
 
     if (database->isValid()) {
@@ -162,6 +132,37 @@ void SqlCore::timerEvent(QTimerEvent *ev) {
   }
 }
 
+const QString SqlCore::fetchErrors() {
+  QString message("Unknown SQL error:");
+
+  if (database == nullptr) {
+    return tr("SQL Driver initialization error");
+  }
+
+  QSqlError err = database->lastError();
+  switch (err.type()) {
+  case QSqlError::ConnectionError:
+    message = "SqlCore::ConnectionError:";
+    message.append(err.driverText());
+    break;
+
+  case QSqlError::StatementError:
+    message = "SqlCore::StatementError:";
+    message.append(err.databaseText());
+    break;
+
+  case QSqlError::TransactionError:
+    message = "SqlCore::TransactionError:";
+    message.append(err.databaseText());
+    break;
+
+  default:
+    message.append(err.text());
+    break;
+  };
+  return message;
+}
+
 void SqlCore::openDatabase(bool b) {
   Q_UNUSED(b);
   if (initDatabase()) {
@@ -174,9 +175,7 @@ void SqlCore::openDatabase(bool b) {
 
 bool SqlCore::initialDatabase() { return initDatabase(); }
 
-const QSqlDatabase SqlCore::db() {
-  return p_db;
-}
+const QSqlDatabase SqlCore::db() { return p_db; }
 
 const QSqlQuery SqlCore::query(const QString &statement) {
   if (!database->isOpen())

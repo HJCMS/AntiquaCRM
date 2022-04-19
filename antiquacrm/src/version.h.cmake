@@ -2,12 +2,7 @@
 #define ANTIQUACRM_VERSION_H
 
 #include <QtCore/QGlobalStatic>
-#include <QtCore/QUrl>
 #include <QtCore/QString>
-#include <QtCore/QCryptographicHash>
-#include <QtCore/QDir>
-#include <QtCore/QByteArray>
-#include <QtCore/QMap>
 #include <QtGui/QIcon>
 
 /**

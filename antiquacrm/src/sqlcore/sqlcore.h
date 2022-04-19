@@ -54,12 +54,6 @@ private:
   int statusTimerID;
 
   /**
-     @brief Fehler Meldungen aufarbeiten
-     @return ERROR Message
-   */
-  const QString prepareErrorMessage();
-
-  /**
      @brief QSQLDriver inittialisieren
      @return bool
    */
@@ -108,6 +102,12 @@ Q_SIGNALS:
   void s_connectionStatus(bool);
 
 public Q_SLOTS:
+  /**
+     @brief Fehler Meldungen aufarbeiten
+     @return ERROR Message
+   */
+  const QString fetchErrors();
+
   /**
      @brief Die Datenbank Verbindung erneut herstellen
      @param b (Unused)
