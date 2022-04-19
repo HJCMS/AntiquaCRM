@@ -3,6 +3,7 @@
 
 #include "isbnrequest.h"
 
+#include <QtCore/QByteArray>
 #include <QtCore/QDebug>
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
@@ -12,49 +13,68 @@
 #include <QtCore/QVector>
 #include <QtNetwork/QNetworkRequest>
 
-IsbnData::IsbnData(const QString &isbn) : p_isbn(isbn) {
-  p_ignoreList << "key" << "large" << "medium"
-   << "small" << "notes" << "pagination" << "weight";
-}
+IsbnData::IsbnData(const QString &isbn) : p_isbn(isbn) {}
 
-void IsbnData::addItems(const QString &key, const QJsonArray &array) {
+void IsbnData::addArray(const QString &key, const QJsonArray &array) {
   if (array.size() < 1)
     return;
 
   for (int i = 0; i < array.size(); i++) {
     if (array[i].type() == QJsonValue::Object) {
       if (array[i].toObject().contains("name")) {
-        setData(key, array[i].toObject().take("name"));
+        addValue(key, array[i].toObject().take("name"));
       } else {
-        setData(key, array[i].toObject());
+        addValue(key, array[i].toObject());
       }
     }
   }
 }
 
-void IsbnData::setData(const QString &key, const QJsonValue &data) {
+bool IsbnData::compareAuthors(const QString &a) {
+  if (p_authors.isEmpty())
+    return true;
+
+  if (p_authors.contains(a))
+    return false;
+
+  foreach (const QString n, p_authors) {
+    foreach (const QString s, a.split(" "))
+    {
+      if(n.contains(s))
+        return false;
+    }
+  }
+
+  return true;
+}
+
+void IsbnData::addValue(const QString &key, const QJsonValue &data) {
   if (key.isEmpty())
     return;
 
+  // No Lineend Dots
+  QRegExp nld("\\.$");
   if (data.type() == QJsonValue::Double) {
     if (key == "number_of_pages") {
       // a future year will ignored in BookEditor :)
       double pages = data.toDouble(2999);
       p_pages = QString::number(pages);
     }
+  } else if (data.type() == QJsonValue::Object) {
+    if ((key == "cover") && (data.toObject().keys().size() > 0)) {
+      p_images = true; // Copyright
+    }
   } else if (data.type() == QJsonValue::Array) {
     if (key == "authors") {
-      addItems(key, data.toArray());
+      addArray(key, data.toArray());
     } else if (key == "publishers") {
-      addItems(key, data.toArray());
-    } else if (key == "cover") {
-      p_images = true; // Copyright
+      addArray(key, data.toArray());
     }
   } else {
     if (key == "title") {
-      p_title = data.toString();
+      p_title = data.toString().replace(nld, "");
     } else if (key == "subtitle") {
-      p_subtitle = data.toString();
+      p_subtitle = data.toString().replace(nld, "");
     } else if (key == "url") {
       p_url = QUrl(data.toString());
     } else if (key == "publish_date") {
@@ -70,22 +90,22 @@ void IsbnData::setData(const QString &key, const QJsonValue &data) {
         }
       }
     } else if (key == "by_statement") {
-      foreach (QString author, data.toString().split(",")) {
-        QString name = author.trimmed().trimmed();
-        if (!p_authors.contains(name))
+      QString list = data.toString().replace(nld, "").trimmed();
+      foreach (QString author, list.split(",")) {
+        QString name = author.trimmed().replace(nld, "");
+        if (!name.isEmpty() && compareAuthors(name)) {
           p_authors.append(name);
+        }
       }
     } else if (key == "authors") {
-      QString name = data.toString().trimmed();
-      if (!p_authors.contains(name))
+      QString name = data.toString().replace(nld, "").trimmed();
+      if (!name.isEmpty() && compareAuthors(name)) {
         p_authors.append(name);
+      }
     } else if (key == "publishers") {
       p_publisher.append(data.toString().trimmed());
     } else if (key == "publish_places") {
       p_publish_places.append(data.toString().trimmed());
-    } else {
-      if (!p_ignoreList.contains(key))
-        qInfo("ISBN Key(%s) ignored.", qPrintable(key));
     }
   }
 }
@@ -99,7 +119,7 @@ QMap<QString, QVariant> IsbnData::data() {
   map.insert("url", p_url);
   map.insert("title", p_title);
   map.insert("title_extended", p_subtitle);
-  map.insert("authors", p_authors.join("/"));
+  map.insert("authors", p_authors.join(","));
   map.insert("pages", p_pages);
   map.insert("year", p_year);
   map.insert("images", p_images);
@@ -137,11 +157,14 @@ void IsbnRequest::read(const QJsonObject &obj) {
   QJsonObject sobj(obj);
   QJsonObject::iterator it;
   for (it = sobj.begin(); it != sobj.end(); ++it) {
-    if (it.value().isObject()) {
+    if (it.value().type() == QJsonValue::Array) {
+      m_isbn->addArray(it.key(), it.value().toArray());
+    } else if (it.value().type() == QJsonValue::String) {
+      m_isbn->addValue(it.key(), it.value());
+    } else {
       QJsonObject child = it.value().toObject();
       foreach (const QString &key, child.keys()) {
-        if (child[key].type() != QJsonValue::Object)
-          m_isbn->setData(key, child[key]);
+        m_isbn->addValue(key, child[key]);
       } // end foreach
       read(child);
     }

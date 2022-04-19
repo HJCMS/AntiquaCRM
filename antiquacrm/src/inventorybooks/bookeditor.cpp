@@ -434,8 +434,7 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   connect(btn_imaging, SIGNAL(clicked()), this, SLOT(openImageDialog()));
   connect(m_listWidget, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
           SLOT(infoISBNDoubleClicked(QListWidgetItem *)));
-  connect(m_actionBar, SIGNAL(s_cancelClicked()), this,
-          SIGNAL(s_leaveEditor()));
+  connect(m_actionBar, SIGNAL(s_cancelClicked()), this, SLOT(andLeaveEditor()));
   connect(m_actionBar, SIGNAL(s_restoreClicked()), this,
           SLOT(restoreDataset()));
   connect(m_actionBar, SIGNAL(s_saveClicked()), this, SLOT(saveData()));
@@ -538,6 +537,12 @@ const QHash<QString, QVariant> BookEditor::createSqlDataset() {
     data.insert(cur->objectName(), cur->value());
   }
   listInt.clear();
+  if (ib_storage->isValid()) {
+    data.insert("ib_storage", ib_storage->value());
+  }
+  if (ib_language->isValid()) {
+    data.insert("ib_language", ib_language->value());
+  }
   if (ib_signed->isChecked()) {
     data.insert("ib_signed", ib_signed->value());
   }
@@ -752,6 +757,10 @@ void BookEditor::checkLeaveEditor() {
         tr("Unsaved Changes, don't leave this page before saved."));
     return;
   }
+  andLeaveEditor();
+}
+
+void BookEditor::andLeaveEditor() {
   m_listWidget->clear();              /**< OpenLibrary.org Anzeige leeren */
   sqlQueryResult.clear();             /**< SQL History leeren */
   clearDataFields();                  /**< Alle Datenfelder leeren */
@@ -763,6 +772,7 @@ void BookEditor::restoreDataset() {
   if (sqlQueryResult.isEmpty())
     return;
 
+  clearDataFields();
   importSqlResult();
 }
 
@@ -925,7 +935,7 @@ void BookEditor::setIsbnInfo(bool b) {
 
   if (!isbnData.value("pages").isNull()) {
     QListWidgetItem *pages = new QListWidgetItem(m_listWidget);
-    QString pages_txt =isbnData.value("pages").toString();
+    QString pages_txt = isbnData.value("pages").toString();
     pages->setData(Qt::DisplayRole, tr("Pages") + ": " + pages_txt);
     pages->setData(Qt::UserRole, "ib_pagecount:" + pages_txt);
     pages->setIcon(myIcon("edit"));
@@ -1034,10 +1044,12 @@ void BookEditor::openBookEntry(const QString &condition) {
   if (!sqlQueryResult.isEmpty() && !m_actionBar->isRestoreable())
     m_actionBar->setRestoreable(true);
 
+  btn_imaging->setEnabled(true);
   importSqlResult();
 }
 
 void BookEditor::createBookEntry() {
   setEnabled(true);
+  btn_imaging->setEnabled(false);
   resetModified();
 }

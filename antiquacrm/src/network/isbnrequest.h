@@ -19,7 +19,6 @@
 class IsbnData {
 private:
   const QString p_isbn;
-  QStringList p_ignoreList;
   QUrl p_url;
   QString p_title;
   QString p_subtitle;
@@ -29,12 +28,12 @@ private:
   QString p_pages;
   QString p_year;
   bool p_images;
-
-  void addItems(const QString &key, const QJsonArray &array);
+  bool compareAuthors(const QString &a);
 
 public:
   explicit IsbnData(const QString &isbn);
-  void setData(const QString &key, const QJsonValue &data);
+  void addArray(const QString &key, const QJsonArray &array);
+  void addValue(const QString &key, const QJsonValue &data);
   QMap<QString, QVariant> data();
 };
 

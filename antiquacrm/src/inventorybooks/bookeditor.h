@@ -256,6 +256,11 @@ private Q_SLOTS:
  */
   void checkLeaveEditor();
 
+  /**
+    @brief Kommt nach @ref checkLeaveEditor und beendet.
+  */
+  void andLeaveEditor();
+
 protected:
   /**
     @brief Fange @ref QEvent::EnabledChange ab!

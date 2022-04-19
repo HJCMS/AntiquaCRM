@@ -10,11 +10,6 @@
 /*
   Siehe OpenLibrary https://openlibrary.org/dev/docs/api/books
 
-  curl
-  'http://openlibrary.org/api/books?bibkeys=ISBN:${_isbn}&jscmd=data&format=json'
-
-  https://openlibrary.org/isbn/${_isbn}.json
-
   Alternativen isbnsearch.org oder die Google Books API
   Beispielseite für die Google Books API Nutzung:
     https://www.labnol.org/code/20020-query-book-by-isbn
@@ -45,6 +40,12 @@ IsbnEdit::IsbnEdit(QWidget *parent) : QLineEdit{parent} {
 void IsbnEdit::isbnChanged(const QString &s) {
   QRegExp r("^97[89]\\d+");
   switch (s.length()) {
+  case 0: {
+    setStyleSheet("");
+    emit s_isbnIsValid(true);
+    return;
+  }
+
   case 10: {
     if (r.exactMatch(s)) {
       setStyleSheet("color: red;");
@@ -101,10 +102,9 @@ bool IsbnEdit::isValid() {
 const QVariant IsbnEdit::value() {
   QString txt = text().trimmed();
   int l = txt.length();
-  if (l > 13 && l != 10)
+  if (l != 13 || l != 10) {
     return 0;
-  else if (l != 13)
-    return 0;
+  }
 
   bool b;
   qulonglong isbn = txt.toLong(&b);
@@ -115,5 +115,6 @@ const QVariant IsbnEdit::value() {
 }
 
 const QString IsbnEdit::notes() {
-  return tr("ISBN is set to required and must be a valid 10 or 13 digit number.");
+  return tr(
+      "ISBN is set to required and must be a valid 10 or 13 digit number.");
 }
