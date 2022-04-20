@@ -12,17 +12,18 @@
 <context>
     <name>ArticleID</name>
     <message>
-        <location filename="../inventory/articleid.cpp" line="+11"/>
+        <location filename="../inventory/articleid.cpp" line="+12"/>
+        <location line="+1"/>
         <source>Article ID</source>
         <translation>Artikel Nr</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Not editable</source>
-        <translation>Nicht Veränderbar</translation>
+        <location line="+8"/>
+        <source>Article ID:</source>
+        <translation>Artikel Nr.:</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+49"/>
         <source>The Arcticle ID is required and can not empty.</source>
         <translation>Die Artikel Nummer ist erforderlich und darf nicht Leer sein.</translation>
     </message>
@@ -35,12 +36,7 @@
         <translation>Editiere Buchtitel</translation>
     </message>
     <message>
-        <location line="+20"/>
-        <source>Article ID:</source>
-        <translation>Artikel Nr.:</translation>
-    </message>
-    <message>
-        <location line="+13"/>
+        <location line="+26"/>
         <source>Count:</source>
         <translation>Bestand:</translation>
     </message>
@@ -90,7 +86,7 @@
         <translation>Gewicht</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+44"/>
         <source>Edition</source>
         <translation>Ausgabe</translation>
     </message>
@@ -225,18 +221,23 @@
         <translation>Erstelle einen Bestellauftrag von diesem Eintrag.</translation>
     </message>
     <message>
-        <location line="+388"/>
+        <location line="+227"/>
+        <source>Missing Article ID for Update.</source>
+        <translation>Keine Artikel ID für Update vorhanden.</translation>
+    </message>
+    <message>
+        <location line="+112"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+98"/>
+        <location line="+103"/>
         <source>No datasets were found.</source>
         <translation>Es wurden keine Datensätze gefunden.</translation>
     </message>
     <message>
-        <location line="-626"/>
-        <location line="+644"/>
+        <location line="-582"/>
+        <location line="+600"/>
         <source>Booktitle</source>
         <translation>Buchtitel</translation>
     </message>
@@ -276,7 +277,7 @@
         <translation>OpenLibrary kann kostenlos verwendet werden, aber wir brauchen Ihre Hilfe!</translation>
     </message>
     <message>
-        <location line="-559"/>
+        <location line="-515"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -298,19 +299,19 @@
         <translation>Dieser Text dient internen Zwecken</translation>
     </message>
     <message>
-        <location line="-243"/>
-        <location line="+741"/>
+        <location line="-242"/>
+        <location line="+696"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
     <message>
-        <location line="-619"/>
-        <location line="+629"/>
+        <location line="-575"/>
+        <location line="+585"/>
         <source>Publisher</source>
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="-537"/>
+        <location line="-493"/>
         <source>Picture</source>
         <translation>Bilder</translation>
     </message>
@@ -325,7 +326,7 @@
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-406"/>
+        <location line="-405"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -406,17 +407,17 @@
 <context>
     <name>BooksTableView</name>
     <message>
-        <location filename="../inventorybooks/bookstableview.cpp" line="+122"/>
+        <location filename="../inventorybooks/bookstableview.cpp" line="+127"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Create entry</source>
         <translation>Eintrag erstellen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Create order</source>
         <translation>Bestellung anlegen</translation>
     </message>
@@ -749,7 +750,7 @@
 <context>
     <name>IsbnEdit</name>
     <message>
-        <location filename="../inventory/isbnedit.cpp" line="+26"/>
+        <location filename="../inventory/isbnedit.cpp" line="+21"/>
         <source>ISBN/EAN 10/13 (ISO 2108)</source>
         <translation>ISBN/EAN 10/13 (ISO 2108)</translation>
     </message>
@@ -759,7 +760,7 @@
         <translation>Die ISBN Nummer muss eine 10 oder 13 Stellige Zahl sein.</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+95"/>
         <source>ISBN is set to required and must be a valid 10 or 13 digit number.</source>
         <translation>Die ISBN ist auf erforderlich gesetzt und muss eine gültige 10- oder 13-stellige Nummer sein.</translation>
     </message>
@@ -845,7 +846,7 @@
 <context>
     <name>MessageBox</name>
     <message>
-        <location filename="../inventory/messagebox.cpp" line="+16"/>
+        <location filename="../inventory/messagebox.cpp" line="+18"/>
         <source>Message closed in </source>
         <translation>Nachricht schließt sich in </translation>
     </message>
@@ -853,6 +854,11 @@
         <location line="+3"/>
         <source>Seconds</source>
         <translation>Sekunden</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>SQL Syntaxerror</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -965,6 +971,206 @@
     </message>
 </context>
 <context>
+    <name>PrintsEditor</name>
+    <message>
+        <location filename="../inventoryprints/printseditor.cpp" line="+62"/>
+        <source>Count:</source>
+        <translation>Bestand:</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Count</source>
+        <translation>Anzahl</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Price:</source>
+        <translation>Preis:</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Signed Version</source>
+        <translation>Signierte Version</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Restricted Sale</source>
+        <translation>Eingeschränkter verkauf</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Is the title not for sale nationally or is it on a censorship list. This is relevant for the Shopsystem.</source>
+        <translation>Ist der Titel national unverkäuflich oder steht er auf einer Zensurliste? Dies ist für das Shopsystem relevant.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Year:</source>
+        <translation>Jahr:</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Year</source>
+        <translation>Jahr</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>Book &amp;Title:</source>
+        <translation>Buch &amp;Titel:</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Booktitle</source>
+        <translation>Buchtitel</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Required input field. Limited to 80 characters, Webshop Systems require this.</source>
+        <translation>Erforderliches Eingabefeld. Begrenzt auf 80 Zeichen. Für Webshop-Systeme erforderlich.</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Book Title Extended:</source>
+        <translation>Erweiterter Buchtitel:</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Extended Title or Book Subtitle.</source>
+        <translation>Erweiterter Buchtitel oder Untertitel.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Extended Title</source>
+        <translation>Erweiterter Titel</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>&amp;Author:</source>
+        <translation>&amp;Autor:</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Author</source>
+        <translation>Autor</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Format: Firstname lastname (Different Authors separated by comma).</source>
+        <translation>Format: Vorname Nachname (Weitere Autoren durch Komma getrennt).</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Technique:</source>
+        <translation>Technik:</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Enter the technique.</source>
+        <translation>Eiinfügen der Technik.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Publisher</source>
+        <translation>Herausgeber</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Format:</source>
+        <translation>Format:</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Category Keywords for Shopsystems.</source>
+        <translation>Kategorie Schlüsselwörter für Shopsysteme.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Chop Keyword</source>
+        <translation>Shop Schlüüselwort</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Condition:</source>
+        <translation>Zustand:</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Condition</source>
+        <translation>Zustand</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Condition of this Book. See also Configuration conditions Table.</source>
+        <translation>Zustand dieses Buches. Siehe auch Konfigurations Tabellen.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Designation:</source>
+        <translation>Umschreibung:</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Designation</source>
+        <translation>Umschreibung</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Create order</source>
+        <translation>Bestellung anlegen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Create a purchase order from this listing.</source>
+        <translation>Erstelle einen Bestellauftrag von diesem Eintrag.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Picture</source>
+        <translation>Bilder</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Open the Imaging Dialog for Import and Edit Pictures.</source>
+        <translation>Öffnet den Dialog für Bilder Importieren oder Editieren.</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <location line="+1"/>
+        <source>Public Description</source>
+        <translation>Öffentliche Beschreibung</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>This text is displayed on web pages</source>
+        <translation>Dieser Text wird auf Webseiten angezeigt</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+2"/>
+        <source>Internal Description</source>
+        <translation>Interne Notizen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>This text is for internal purposes</source>
+        <translation>Dieser Text dient internen Zwecken</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>Data saved successfully!</source>
+        <translation>Daten Erfolgreich gespeichert!</translation>
+    </message>
+    <message>
+        <location line="+84"/>
+        <source>Missing Article ID for Update.</source>
+        <translation>Keine Artikel ID für ein Update.</translation>
+    </message>
+    <message>
+        <location line="+112"/>
+        <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
+        <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
+    </message>
+</context>
+<context>
     <name>PrintsTableModel</name>
     <message>
         <location filename="../inventoryprints/printstablemodel.cpp" line="+96"/>
@@ -1037,12 +1243,17 @@
 <context>
     <name>PrintsTableView</name>
     <message>
-        <location filename="../inventoryprints/printstableview.cpp" line="+92"/>
+        <location filename="../inventoryprints/printstableview.cpp" line="+128"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+5"/>
+        <source>Create entry</source>
+        <translation>Eintrag erstellen</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Create order</source>
         <translation>Bestellung anlegen</translation>
     </message>
@@ -1061,7 +1272,7 @@
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../inventoryprints/inventoryprints.cpp" line="+35"/>
+        <location filename="../inventoryprints/inventoryprints.cpp" line="+37"/>
         <source>Article ID</source>
         <translation>Artikel Nr</translation>
     </message>
@@ -1077,6 +1288,11 @@
         <translation>Autor</translation>
     </message>
     <message>
+        <location line="+4"/>
+        <source>Publisher</source>
+        <translation>Herausgeber</translation>
+    </message>
+    <message>
         <location filename="../inventoryprints/inventoryprints.cpp" line="-12"/>
         <source>Title</source>
         <translation>Titel</translation>
@@ -1085,6 +1301,11 @@
         <location line="+4"/>
         <source>Title (starts with)</source>
         <translation>Titel (Startet mit)</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Current inventory</source>
+        <translation>Aktuelles Inventar</translation>
     </message>
 </context>
 <context>
@@ -1201,21 +1422,21 @@
     </message>
 </context>
 <context>
-    <name>StatsBookBar</name>
+    <name>StatsActionBar</name>
     <message>
-        <location filename="../inventorybooks/statsbookbar.cpp" line="+41"/>
+        <location filename="../inventory/statsactionbar.cpp" line="+43"/>
         <source>Refresh</source>
         <translation>Erneuern</translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>Books data history from ...</source>
-        <translation>Buchdaten Historie der ...</translation>
+        <source>Show data history from ...</source>
+        <translation>Anzeigen der Datenhistorie ...</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>Book data history</source>
-        <translation>Buch Datenhistorie</translation>
+        <source>View history</source>
+        <translation>Zeige Verlauf</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1259,12 +1480,17 @@
 <context>
     <name>StorageEdit</name>
     <message>
-        <location filename="../inventory/storageedit.cpp" line="+35"/>
+        <location filename="../inventory/storageedit.cpp" line="+28"/>
+        <source>Storage</source>
+        <translation>Lagerort</translation>
+    </message>
+    <message>
+        <location line="+40"/>
         <source>Storage Location</source>
         <translation>Lagerort</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+59"/>
         <source>The Storage location is required and must set.</source>
         <translation>Der Speicherort ist erforderlich und muss eingestellt werden.</translation>
     </message>

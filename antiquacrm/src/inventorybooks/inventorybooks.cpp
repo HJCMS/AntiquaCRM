@@ -8,7 +8,7 @@
 #include "editordialog.h"
 #include "messagebox.h"
 #include "searchbar.h"
-#include "statsbookbar.h"
+#include "statsactionbar.h"
 #include "version.h"
 
 #include <QtCore/QDebug>
@@ -23,9 +23,9 @@
    @ref SearchBar::addSearchFilters
    @return const QList<SearchFilter>
 */
-static const QList<SearchFilter> bookSearchFilter() {
-  SearchFilter a;
-  QList<SearchFilter> filter;
+static const QList<SearchBar::SearchFilter> bookSearchFilter() {
+  SearchBar::SearchFilter a;
+  QList<SearchBar::SearchFilter> filter;
   a.index = 0;
   a.title = QObject::tr("Book Title");
   a.filter = QString("");
@@ -45,6 +45,10 @@ static const QList<SearchFilter> bookSearchFilter() {
   a.index = 4;
   a.title = QObject::tr("Author");
   a.filter = QString("author");
+  filter.append(a);
+  a.index = 5;
+  a.title = QObject::tr("Publisher");
+  a.filter = QString("publisher");
   filter.append(a);
   return filter;
 }
@@ -81,7 +85,7 @@ InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
   m_tableView = new BooksTableView(this);
   siteOneLayout->addWidget(m_tableView);
 
-  m_statsBookBar = new StatsBookBar(this);
+  m_statsBookBar = new StatsActionBar(this);
   siteOneLayout->addWidget(m_statsBookBar);
   m_stackedWidget->insertWidget(0, siteOneWidget);
   // END Page#0
@@ -155,12 +159,12 @@ void InventoryBooks::searchConvert() {
 void InventoryBooks::openTableView() {
   m_stackedWidget->setCurrentIndex(0);
   m_bookEditor->setEnabled(false);
-};
+}
 
 void InventoryBooks::openEditor(const QString &condition) {
   if (!condition.isEmpty()) {
     m_bookEditor->setEnabled(true);
-    m_bookEditor->openBookEntry(condition);
+    m_bookEditor->editBookEntry(condition);
     m_stackedWidget->setCurrentWidget(m_bookEditor);
   }
 }
@@ -186,12 +190,12 @@ void InventoryBooks::articleSelected(int id) {
 
 void InventoryBooks::updateValidator(int id) {
   switch (id) {
-  case 2:
-  case 3:
+  case 2: /**< Artikel ID */
+  case 3: /**< ISBN */
     m_searchBar->setValidation(SearchBar::Number);
     break;
 
-  default:
+  default: /**< Zeichenketten */
     m_searchBar->setValidation(SearchBar::Pattern);
     break;
   };

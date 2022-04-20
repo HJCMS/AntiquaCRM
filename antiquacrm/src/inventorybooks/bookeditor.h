@@ -21,7 +21,7 @@ class SqlCore;
 };
 
 class ArticleID;
-class BooksImageView;
+class ImageWidget;
 class BoolBox;
 class EditorActionBar;
 class IntSpinBox;
@@ -33,33 +33,6 @@ class StorageEdit;
 class StrLineEdit;
 class TextField;
 class YearEdit;
-
-/**
-   @brief BookData
-   Lese die Datenfelder mit @ref BookEditor::readDataBaseEntry
-   und schreibe sie für die Zurücksetzen funktion hier rein.
-
-   @note Die Objektnamen die Typangabe in @b field (Feldnamen)
-    stimmen mit den SQL Tabellenspalten Bezeichnungen überein!
-
-   @li Die Typangabe @b field ist für das Identifizieren
-    der Eingabefelder in der Klasse zuständig.
-
-   @li Mit @b vtype wird die Entscheidung getroffen welches
-    Datensatzformat verwendet werden soll. Die Entscheidung
-    liegt zu 100% beim Rückgabe ergebnis von QSqlQuery.
-
-   @li Der Wert @b data ist vom Type Variant, was die Erstellung
-    der SQL INSERT/UPDATE Statements vereinfachen soll.
-
-   @warning Wenn sich bei der Datenbank Tabelle ein Spalten Typ
-    ändert. Muss das hier Kontrolliert und Überarbeitet werden!
- */
-struct BookData {
-  QString field; /**< @brief SQL-Fieldname is equil to {INPUT}.objectName() */
-  int vtype;     /**< @brief QVariant::Type */
-  QVariant data; /**< @brief Values */
-};
 
 /**
    @brief BookEditor
@@ -101,96 +74,158 @@ private:
   QListWidget *m_listWidget;          /**< @brief ISBN Abfrage-Vorschau */
 
   /**
+     @brief DataEntries
+     Lese die Datenfelder mit @ref BookEditor::editBookEntry
+     und schreibe sie für die Zurücksetzen funktion hier rein.
+
+     @note Die Objektnamen die Typangabe in @b field (Feldnamen)
+      stimmen mit den SQL Tabellenspalten Bezeichnungen überein!
+
+     @li Die Typangabe @b field ist für das Identifizieren
+      der Eingabefelder in der Klasse zuständig.
+
+     @li Mit @b vtype wird die Entscheidung getroffen welches
+      Datensatzformat verwendet werden soll. Die Entscheidung
+      liegt zu 100% beim Rückgabe ergebnis von QSqlQuery.
+
+     @li Der Wert @b data ist vom Type Variant, was die Erstellung
+      der SQL INSERT/UPDATE Statements vereinfachen soll.
+
+     @warning Wenn sich bei der Datenbank Tabelle ein Spalten Typ
+      ändert. Muss das hier Kontrolliert und Überarbeitet werden!
+   */
+  struct DataEntries {
+    QString field; /**< @brief Feld ist gleichwertig mit {INPUT}.objectName() */
+    int vtype;     /**< @brief QVariant::Type */
+    QVariant data; /**< @brief Datenwert */
+  };
+
+  /**
      @brief Wird für QObject::findchild benötigt!
+     Dieser Reguläre Ausdruck wird verwendet um die Eingabe-Objektklassen
+     zu finden. Sie sind Identisch mit den SQL Feldern und beginnen bei
+     der Buchtabelle "inventory_books" immer mit "ib_".
   */
   const QRegularExpression p_objPattern = QRegularExpression("^ib_[a-z_]+\\b$");
 
   /**
-     @brief Beinhaltet Zurücksetzen/Speichern/Verlassen
+     @brief Beinhaltet Cancel, Restore, Save und GoBack.
    */
   EditorActionBar *m_actionBar;
 
   /**
     @brief Wird im Konstruktor bei TabWidget gesetzt
-    und in @ref setIsbnInfo verwendet!
+    und in für IsbnInfo Operationen verwendet!
   */
   int isbnTabIndex;
 
   /**
-    @brief m_imageView
+    @brief Eingebettete Bildansicht
    */
-  BooksImageView *m_imageView;
+  ImageWidget *m_imageView;
 
   /**
-    @brief Liste der Eingabefelder Objektnamen
+    @brief Objektnamen-Liste der Eingabefelder
   */
   QStringList inputList;
 
   /**
    @brief Hier werden die Daten aus der Abfrage eingefügt.
-
-   Weil beim einfügen blockSignals() wegen isModified()
-   eingesetz wird. Darf das nicht innerhalb der SQLQuery
-   schleife erfolgen!
+   Er wird nur in @ref editBookEntry befüllt und in
+   @ref finalLeaveEditor wieder geleert!
   */
-  QVector<BookData> sqlQueryResult;
+  QVector<DataEntries> sqlQueryResult;
 
   /**
-    @brief Erstellt aus allen Feldern den Datensatz.
+    @brief Prüft und erstellt die Datensatzfelder.
+
+    In dieser Methode werden alle Datenfelder abgefragt und bei
+    Erfolg in den Hash geschrieben. Je nach Klassenhäufigkeit
+    werden Schleifen verwendet. Jedoch sind auch viele
+    Datenfeldabfragen manuell eingefügt. Die Erstellung ist von
+    mehreren Faktoren abhängig und beinhaltet folgende Vorgangsweise,
+    welche sich für jedes Datenfeld wiederholt.
+
+    @note Es werden keine leeren Datenfelder in den Hash geschrieben!
+
+    1) Suche je nach Klassen-Type mit findChild die Datenfelder.
+    2) Prüfe Datenfeld Klasse auf @b isRequired() @b isValid()
+    3) Wenn die vorherige Abfrage fehlschlägt dann:
+      a) MessageBox aufrufen,
+      b) setFocus auf das Datenfeld,
+      c) den Hash wieder leeren und abbrechen.
+
+    Die Leerung muss zur Fehlervermeidung und für die Abfrage Methoden
+    durchgeführt werden.
+
+    @note Alle @i caller verwenden eine Abfrage auf data.size()
   */
   const QHash<QString, QVariant> createSqlDataset();
 
   /**
     @brief Alle Eingabefelder in @ref inputList einfügen.
+    Erstellt mit findChildren(p_objPattern, Qt::FindChildrenRecursively)
+    ein Liste aller Eingabe Objekte und schreibt diese in @ref inputList
+    Sie wird am Ende des Konstruktors aufgerufen und dient als Helfer für
+    die QObject::findChild(objectName,*) Methode welche z.B. beim Erstellen
+    der SQL Statements verwendet wird.
   */
   void setInputList();
 
   /**
     @brief Setzt alle Markierungen wieder zurück.
-    Wird nach einem Speichern ausgeführt!
-    @see sendQueryDatabase
+    Wird z.B. nach erfolgreichen Speichern ausgeführt!
+    @see sendSqlQuery
   */
   void resetModified();
 
   /**
-     @brief Sende SQL Statement an die Datenbank
-     Bei erfolg wird @ref resetModified ausgeführt!
+     @brief Sende das erstellte SQL Statements an die Datenbank
+     Bei Erfolg wird @ref resetModified() ausgeführt!
+     Es wird zusätzlich bei Erfolg/Fehler, Messagebox ausgeführt.
 
-     @param INSERT/UPDATE SQL Statement senden!
+     @note Wird nur von @ref createSqlUpdate() und
+           @ref createSqlInsert() aufgerufen.
+
+     @param Übergabewert ist das INSERT/UPDATE SQL Statement senden!
    */
   bool sendSqlQuery(const QString &sqlStatement);
 
   /**
      @brief SQL UPDATE Statement erstellen!
-     @note In @ref saveData() erfolgt eine @i ib_id Abfrage!
+     @note Wird nur von Slot @ref saveData() aufgerufen!
    */
   void createSqlUpdate();
 
   /**
      @brief SQL INSERT Statement erstellen!
-     @note In @ref saveData() erfolgt eine @i ib_id Abfrage!
+     @note Wird nur von Slot @ref saveData() aufgerufen!
    */
   void createSqlInsert();
 
   /**
-     @brief Durchläuft @ref sqlQueryResult und ruft @ref addDataFromQuery auf.
-     @note Die Größe von @ref sqlQueryResult muss mindestenz 16 betragen!
+     @brief Durchläuft @ref sqlQueryResult und ruft @ref setSqlQueryData auf.
+      Die Abfolge ist:
+        @li blockSignals(true);
+        @li Schleife: setSqlQueryData(Feld,Daten);
+        @li blockSignals(false);
+        @li resetModified();
+        @li m_imageView->searchImageById(ArticleID);
    */
   void importSqlResult();
 
   /**
-     @brief Suche nach Objektnamen mit @i findChild(key);
-     @param key   - Der SQL Datenfeldbezeichner.
-                    Dieser ist/muss Identisch mit
-                    dem Eingabe Objektnamen sein.
+     @brief Suche nach Objektnamen mit @i findChild(objectName);
+     @param key - Ist der SQL Datenfeldbezeichner.
+       Dieser muss Identisch mit dem Eingabe Objektnamen sein.
      @param value - Tabellenspalten Wert
      @note Es werden die Datenfeldtypen vom SQL Query gelesen!
-           Wenn sich also hier etwas ändert!
+           Wenn sich also bei SQL Datenfeldern etwas ändert!
            Muss die Methode überarbeitet werden.
 
      Je nach Objekttyp werden die Eingabefelder manuel zugewiesen
-     und dann mit @i findChild(key) Identiufiziert. Das wird
-     überwiegend bei den (QCheckBox,QSpinBox) Klassen eingesetzt.
+     und dann mit @i findChild(objectName) Identifiziert. Das wird
+     überwiegend bei den (IntSpinBox,StrLineEdit) Klassen eingesetzt.
      @code
       // "ib_isbn" QVariant(qulonglong)
       if (key.contains("ib_isbn")) {
@@ -199,10 +234,8 @@ private:
       }
       // "ib_count" QVariant(int)
       if (value.type() == QVariant::Int) {
-        QSpinBox *v = findChild<QSpinBox *>(key, Qt::FindDirectChildrenOnly);
-        if (v != nullptr)
-          v->setValue(value.toInt());
-        return;
+        IntSpinBox *v = findChild<IntSpinBox *>(key,
+     Qt::FindDirectChildrenOnly); if (v != nullptr) v->setValue(value.toInt());
       }
      @endcode
    */
@@ -215,30 +248,39 @@ private Q_SLOTS:
   void openImageDialog();
 
   /**
-     @brief Signal accept() abfangen.
+     @brief Signal Verarbeitung für @ref m_actionBar::s_saveClicked()
+     Kontrolliert ob @ref ib_id ein gültige Artikel ID enthält.
+        @li Ist das Ergebnis Negativ - wird @ref createSqlInsert aufgerufen.
+        @li Ist das Ergebnis Positiv - wird @ref createSqlUpdate aufgerufen.
    */
   void saveData();
 
   /**
-     @brief Öffne den ISBN Dialog
+     @brief Konvertiert das ISBN ergebnis.
+     Wenn ein Eintrag gefunden wurde werden hier die
+     Einträge für @ref m_listWidget->widget(isbnTabIndex);
+     eingefügt und gesetzt.
      @see triggerIsbnQuery()
    */
   void setIsbnInfo(bool);
 
   /**
-     @brief triggerISBNQuery
-     @todo ISBN Anfragen Versenden
+     @brief Sendet eine ISBN Anfragen
    */
   void triggerIsbnQuery();
 
   /**
-     @brief Öffne Url
+     @brief Öffne die Url aus der Ergebnisanzeige.
   */
   void infoISBNDoubleClicked(QListWidgetItem *);
 
   /**
      @brief Alle Datenfelder zurücksetzen!
-   */
+     Verwended die Methoden:
+        @li @ref clearDataFields();
+        @li @ref importSqlResult();
+     um die Datenfelder wieder zurück zu setzen.
+  */
   void clearDataFields();
 
   /**
@@ -248,18 +290,27 @@ private Q_SLOTS:
   bool checkIsModified();
 
   /**
-   @brief Suche nach nicht gespeicherten Daten
-   Wenn es keine Daten zu Speichern gibt sende
-   das Signal @ref s_leaveEditor(), wenn doch
-   an dieser Stelle das verlassen verweigern
-   und den Nutzer einen Hinweis geben!
+   @brief Vor dem verlassen nach Änderungen suchen.
+   @note Die Methode verwendet @ref checkIsModified()
+
+   Wenn es keine Daten zu Speichern gibt, gehe weiter zu
+   @ref finalLeaveEditor, wenn doch, an dieser Stelle das
+   verlassen Verweigern und dem Nutzer einen MessageBox
+   Hinweis geben!
  */
   void checkLeaveEditor();
 
   /**
-    @brief Kommt nach @ref checkLeaveEditor und beendet.
+    @brief Kommt nach @ref checkLeaveEditor() und beendet den Editor.
+    Wird auch von Signal @ref EditorActionBar::s_cancelClicked() aufgerufen!
+    Die Methode arbeitet folgende Operationen durch und beendet den Editor!
+     @li OpenLibrary.org Ausgabe leeren,
+     @li SQL Ergebnis Historie leeren,
+     @li alle Datenfelder leeren,
+     @li den ResetButton auschalten,
+     @li signal @ref s_leaveEditor an Parent senden!
   */
-  void andLeaveEditor();
+  void finalLeaveEditor();
 
 protected:
   /**
@@ -267,7 +318,7 @@ protected:
     Lade Datenfelder nur wenn das Fenster Aktiviert wurde!
     Um fehlerhafte Tastenbindungen oder eingaben zu verhindern
     ist das Fenster im Standard erst mal deaktiviert.
-    Und wird es serst, wenn von StackedWidget aufgerufen.
+    Und wird erst Aktiviert, wenn von StackedWidget aufgerufen.
     @note Für Unterklassen die eine SQL Abfrage erfordern,
        kann hier die "loadDataset" Methode aufgerufen werden.
   */
@@ -302,10 +353,8 @@ public:
     @brief Wenn Bearbeiten darf der Eintrag nicht 0 sein!
     @param condition Abfragekorpus @i ohne WHERE
   */
-  void openBookEntry(const QString &condition);
+  void editBookEntry(const QString &condition);
   void createBookEntry();
 };
-
-Q_DECLARE_METATYPE(BookData);
 
 #endif // BOOKEDITOR_H

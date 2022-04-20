@@ -2,17 +2,20 @@
 // vim: set fileencoding=utf-8
 
 #include "printstableview.h"
+#include "messagebox.h"
 #include "printstablemodel.h"
 #include "searchbar.h"
-#include "applsettings.h"
+#include "sqlcore.h"
 #include "version.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QItemSelectionModel>
 #include <QtCore/QPoint>
 #include <QtCore/QRegExp>
 #include <QtCore/QSignalMapper>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>
+#include <QtSql/QSqlTableModel>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMenu>
@@ -25,7 +28,8 @@
 */
 static const QString querySelect() {
   QString s("b.ip_id,b.ip_count,b.ip_title,b.ip_author,");
-  s.append("b.ip_technique,b.ip_year,b.ip_price,s.sl_storage,b.ip_landscape,b.ip_changed");
+  s.append("b.ip_technique,b.ip_year,b.ip_price,s.sl_storage,b.ip_landscape,b."
+           "ip_changed");
   s.append(",(CASE WHEN i.im_id IS NOT NULL THEN true ELSE false END) AS "
            "image_exists ");
   // s.append("");
@@ -56,6 +60,8 @@ PrintsTableView::PrintsTableView(QWidget *parent) : QTableView{parent} {
   setSelectionBehavior(QAbstractItemView::SelectRows);
   setSelectionMode(QAbstractItemView::SingleSelection);
 
+  m_sql = new HJCMS::SqlCore(this);
+
   m_queryModel = new PrintsTableModel(this);
   setModel(m_queryModel);
 
@@ -65,10 +71,10 @@ PrintsTableView::PrintsTableView(QWidget *parent) : QTableView{parent} {
   tHeader->setStretchLastSection(true);
 
   connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
-          SLOT(clickedGetArticleID(const QModelIndex &)));
+          SLOT(queryArticleID(const QModelIndex &)));
 }
 
-void PrintsTableView::clickedGetArticleID(const QModelIndex &index) {
+void PrintsTableView::queryArticleID(const QModelIndex &index) {
   QModelIndex id(index);
   if (m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
     int i = m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
@@ -78,25 +84,71 @@ void PrintsTableView::clickedGetArticleID(const QModelIndex &index) {
   }
 }
 
-void PrintsTableView::openBookByContext() { clickedGetArticleID(p_modelIndex); }
+void PrintsTableView::openByContext() { queryArticleID(p_modelIndex); }
 
-void PrintsTableView::createOrderByContext() {
+void PrintsTableView::createByContext() {
+  qDebug() << Q_FUNC_INFO << "TODO"
+           << "Check Rowcount before add";
+  emit s_newEntryPlease();
+}
+
+void PrintsTableView::orderByContext() {
   // TODO create order --> p_modelIndex
   qInfo("currently not implemented");
 }
 
+bool PrintsTableView::sqlExecQuery(const QString &statement) {
+  if (!statement.contains("SELECT"))
+    return false;
+
+  QSqlDatabase db(m_sql->db());
+  if (db.open()) {
+    // qDebug() << Q_FUNC_INFO << statement;
+    m_queryModel->setQuery(statement, db);
+    if (m_queryModel->lastError().isValid()) {
+      MessageBox message(this);
+      message.queryFail(statement,m_queryModel->lastError().text());
+      return false;
+    }
+    emit s_rowsChanged(m_queryModel->rowCount());
+    return true;
+  } else {
+    qWarning("No SQL Connection in Booktable");
+  }
+  return false;
+}
+
 void PrintsTableView::contextMenuEvent(QContextMenuEvent *ev) {
   p_modelIndex = indexAt(ev->pos());
+  // Aktiviere/Deaktivieren der Einträge
+  bool b = p_modelIndex.isValid();
+
   QMenu *m = new QMenu("Actions", this);
   // Eintrag öffnen  Bestellung anlegen
   QAction *ac_open = m->addAction(myIcon("spreadsheet"), tr("Open entry"));
-  ac_open->setObjectName("ac_context_open_book");
-  connect(ac_open, SIGNAL(triggered()), this, SLOT(openBookByContext()));
+  ac_open->setObjectName("ac_context_open_print");
+  ac_open->setEnabled(b);
+  connect(ac_open, SIGNAL(triggered()), this, SLOT(openByContext()));
+
+  QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create entry"));
+  ac_create->setObjectName("ac_context_create_print");
+  ac_create->setEnabled(b);
+  connect(ac_create, SIGNAL(triggered()), this, SLOT(createByContext()));
+
   QAction *ac_order = m->addAction(myIcon("autostart"), tr("Create order"));
-  ac_order->setObjectName("ac_context_create_order");
-  connect(ac_order, SIGNAL(triggered()), this, SLOT(createOrderByContext()));
+  ac_order->setObjectName("ac_context_order_print");
+  connect(ac_order, SIGNAL(triggered()), this, SLOT(orderByContext()));
+  ac_order->setEnabled(b);
+
   m->exec(ev->globalPos());
   delete m;
+}
+
+void PrintsTableView::refreshView() {
+  if (sqlExecQuery(p_historyQuery)) {
+    resizeRowsToContents();
+    resizeColumnsToContents();
+  }
 }
 
 void PrintsTableView::queryHistory(const QString &str) {
@@ -123,20 +175,10 @@ void PrintsTableView::queryHistory(const QString &str) {
   q.append(QString::number(maxRowCount));
   q.append(";");
 
-  qDebug() << Q_FUNC_INFO << q;
-  return;
-  p_db = QSqlDatabase::database(ApplSettings::sqlConnectioName());
-  if (p_db.open()) {
-    // qDebug() << "PrintsTableView::queryHistory" << q << Qt::endl;
-    m_queryModel->setQuery(q, p_db);
-    if (m_queryModel->lastError().isValid()) {
-      qDebug() << Q_FUNC_INFO << Qt::endl
-               << "{SQL Query} " << q << Qt::endl
-               << "{SQL Error} " << m_queryModel->lastError() << Qt::endl;
-      return;
-    }
+  if (sqlExecQuery(q)) {
     resizeRowsToContents();
     resizeColumnsToContents();
+    p_historyQuery = q;
   }
 }
 
@@ -161,18 +203,22 @@ void PrintsTableView::queryStatement(const SearchStatement &cl) {
     return;
   }
 
-  str.replace("*","%");
+  str.replace("*", "%");
   QString q("SELECT ");
   q.append(querySelect());
   q.append(queryTables());
-  if (field.contains("id")) {
+  if (field == "id") {
     // Numeric Search
     q.append(" WHERE (b.ip_id=");
     q.append(str);
-  } else if (field.contains("author")) {
+  } else if (field == "count") {
+    // Numeric Search
+    q.append(" WHERE (b.ip_count=");
+    q.append(str);
+  } else if (field == "author") {
     // String Search
     q.append(" WHERE (b.ip_author ILIKE '%");
-    q.append(str.replace(" ","%"));
+    q.append(str.replace(" ", "%"));
     q.append("%'");
   } else {
     // String Search
@@ -188,7 +234,7 @@ void PrintsTableView::queryStatement(const SearchStatement &cl) {
       q.append(str);
     } else {
       q.append(" OR (b.ip_title_extended ILIKE '%");
-      q.append(str.replace(" ","%"));
+      q.append(str.replace(" ", "%"));
     }
     q.append("%'");
   }
@@ -196,19 +242,9 @@ void PrintsTableView::queryStatement(const SearchStatement &cl) {
   q.append(QString::number(maxRowCount));
   q.append(";");
 
-  qDebug() << Q_FUNC_INFO << q;
-  return;
-  p_db = QSqlDatabase::database(ApplSettings::sqlConnectioName());
-  if (p_db.open()) {
-    m_queryModel->setQuery(q, p_db);
-    if (m_queryModel->lastError().isValid()) {
-      qDebug() << Q_FUNC_INFO << Qt::endl
-              << "{SQL Query} " << q << Qt::endl
-              << "{SQL Error} " << m_queryModel->lastError() << Qt::endl;
-      return;
-    }
+  if (sqlExecQuery(q)) {
     resizeRowsToContents();
     resizeColumnsToContents();
-    emit s_rowsChanged(m_queryModel->rowCount());
+    p_historyQuery = q;
   }
 }

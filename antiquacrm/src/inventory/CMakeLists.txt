@@ -25,6 +25,8 @@ SET (subproject_SOURCES
   messagebox.cpp
   intspinbox.cpp
   textfield.cpp
+  statsactionbar.cpp
+  imagewidget.cpp
 )
 
 SET (subproject_HEADERS
@@ -43,6 +45,8 @@ SET (subproject_HEADERS
   intspinbox.h
   messagebox.h
   textfield.h
+  statsactionbar.h
+  imagewidget.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "statsbookbar.h"
+#include "statsactionbar.h"
 #include "applsettings.h"
 #include "version.h"
 
@@ -14,8 +14,10 @@
 
 static const QIcon comboBoxIcon() { return myIcon("info"); }
 
-StatsBookBar::StatsBookBar(QWidget *parent) : QToolBar{parent} {
-  setObjectName("StatsBookBar");
+StatsActionBar::StatsActionBar(QWidget *parent) : QToolBar{parent} {
+  if(objectName().isEmpty())
+    setObjectName("StatsActionBar");
+
   setOrientation(Qt::Horizontal);
   setFloatable(false);
   timerID = -1;
@@ -49,7 +51,7 @@ StatsBookBar::StatsBookBar(QWidget *parent) : QToolBar{parent} {
 
   m_showHistory = new QComboBox(this);
   m_showHistory->setObjectName("SelectHistoryComboBox");
-  m_showHistory->setToolTip(tr("Books data history from ..."));
+  m_showHistory->setToolTip(tr("Show data history from ..."));
   addComboBoxData();
   addWidget(m_showHistory);
 
@@ -59,10 +61,10 @@ StatsBookBar::StatsBookBar(QWidget *parent) : QToolBar{parent} {
   timerID = startTimer(1000);
 }
 
-void StatsBookBar::addComboBoxData() {
+void StatsActionBar::addComboBoxData() {
   int i = 0;
   QIcon sIcon = myIcon("edit");
-  m_showHistory->insertItem(i++, comboBoxIcon(), tr("Book data history"), "");
+  m_showHistory->insertItem(i++, comboBoxIcon(), tr("View history"), "");
   m_showHistory->insertItem(i++, sIcon, tr("Today"), "#today");
   m_showHistory->insertItem(i++, sIcon, tr("Yesterday"), "#yesterday");
   m_showHistory->insertItem(i++, sIcon, tr("Last 7 Days"), "#last7days");
@@ -70,7 +72,7 @@ void StatsBookBar::addComboBoxData() {
   m_showHistory->insertItem(i++, sIcon, tr("This Year"), "#thisyear");
 }
 
-void StatsBookBar::timerEvent(QTimerEvent *t) {
+void StatsActionBar::timerEvent(QTimerEvent *t) {
   ++countIDs;
   if (QSqlDatabase::database(ApplSettings::sqlConnectioName()).isValid()) {
     setThisDayHistory();
@@ -80,7 +82,7 @@ void StatsBookBar::timerEvent(QTimerEvent *t) {
     killTimer(timerID);
 }
 
-void StatsBookBar::historyChanged(int i) {
+void StatsActionBar::historyChanged(int i) {
   if (i > 0 && !m_showHistory->itemData(i, Qt::UserRole).toString().isEmpty()) {
     emit s_queryHistory(m_showHistory->itemData(i, Qt::UserRole).toString());
 
@@ -90,18 +92,18 @@ void StatsBookBar::historyChanged(int i) {
   }
 }
 
-void StatsBookBar::showMessage(const QString &str) {
+void StatsActionBar::showMessage(const QString &str) {
   m_infoLabel->setText(str);
 }
 
-void StatsBookBar::showRowCount(int count) {
+void StatsActionBar::showRowCount(int count) {
   QString rows(tr("Rowcounts"));
   rows.append(": ");
   rows.append(QString::number(count));
   showMessage(rows);
 }
 
-void StatsBookBar::setThisDayHistory() {
+void StatsActionBar::setThisDayHistory() {
   int i = m_showHistory->findData("#today", Qt::UserRole);
   if (i >= 1)
     m_showHistory->setCurrentIndex(i);

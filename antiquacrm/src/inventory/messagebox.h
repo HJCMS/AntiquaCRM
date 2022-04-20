@@ -39,7 +39,7 @@ public:
      @brief queryFail
      @param QString Message
    */
-  void queryFail(const QString &);
+  void queryFail(const QString &err, const QString &details = QString());
 
   /**
      @brief querySuccess

@@ -212,12 +212,14 @@ bool SqlCore::sqlDriversExists() {
 }
 
 SqlCore::~SqlCore() {
+/*
   if (database != nullptr) {
     if (database->isOpen()) {
       qInfo("Database '%s' closed", qPrintable(database->connectionName()));
       database->close();
     }
   }
+*/
   if (statusTimerID > 0)
     killTimer(statusTimerID);
 }

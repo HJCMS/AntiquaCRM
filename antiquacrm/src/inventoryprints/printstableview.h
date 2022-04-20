@@ -6,12 +6,14 @@
 #define PRINTSTABLEVIEW_H
 
 #include <QtCore/QHash>
-#include <QtCore/QItemSelectionModel>
 #include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtGui/QContextMenuEvent>
-#include <QtSql/QSqlTableModel>
 #include <QtWidgets/QTableView>
+
+namespace HJCMS {
+class SqlCore;
+};
 
 class PrintsTableModel;
 class SearchStatement; /**< @ref SearchBar */
@@ -23,14 +25,39 @@ class PrintsTableView : public QTableView {
 
 private:
   int maxRowCount = 2500;
-  QSqlDatabase p_db;
+  HJCMS::SqlCore *m_sql;
   QModelIndex p_modelIndex;
   PrintsTableModel *m_queryModel;
+  QString p_historyQuery;
+
+  /**
+   @brief SQL Query Database
+  */
+  bool sqlExecQuery(const QString &statement);
 
 private Q_SLOTS:
-  void clickedGetArticleID(const QModelIndex &);
-  void openBookByContext();
-  void createOrderByContext();
+  /**
+   @brief Suche Datensatz mit Index
+   Wenn vorhanden Sende Signal @ref s_articleSelected
+  */
+  void queryArticleID(const QModelIndex &);
+
+  /**
+   @brief Ableitung für @ref clickedGetArticleID
+  */
+  void openByContext();
+
+  /**
+     @brief Einen neuen Eintrag erstellen wenn ...
+     @todo Die Suchanfrage kein Ergebnis lieferte
+  */
+  void createByContext();
+
+  /**
+     @brief  Auftrage Erstellung
+     @todo Im Moment noch verfügbar
+  */
+  void orderByContext();
 
 protected:
   void contextMenuEvent(QContextMenuEvent *);
@@ -38,9 +65,25 @@ protected:
 Q_SIGNALS:
   void s_rowsChanged(int count);
   void s_articleSelected(int id);
+  void s_newEntryPlease();
 
 public Q_SLOTS:
+  /**
+   Anzeige auffrischen in dem der zuletzt
+   in @ref p_historyQuery gespeicherte SQL
+   Befehl noch einmal aufgerufen wird.
+  */
+  void refreshView();
+
+  /**
+    Wird von @ref StatsBookBar::m_showHistory()
+    aufgerufen und fragt den Verlauf ab.
+  */
   void queryHistory(const QString &);
+
+  /**
+    Startet Abfrage ausgehend von Text/Sucheingabe
+  */
   void queryStatement(const SearchStatement &);
 
 public:

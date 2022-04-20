@@ -8,6 +8,8 @@
 MessageBox::MessageBox(QWidget *parent) : QMessageBox{parent} {
   setObjectName("MessageBox");
   setDefaultButton(QMessageBox::Ok);
+  setTextFormat(Qt::PlainText);
+  setTextInteractionFlags(Qt::TextSelectableByMouse|Qt::TextSelectableByKeyboard);
 }
 
 void MessageBox::buildTimerMessage() {
@@ -35,9 +37,13 @@ void MessageBox::noticeMessage(const QString &msg) {
   exec();
 }
 
-void MessageBox::queryFail(const QString &msg) {
+void MessageBox::queryFail(const QString &err, const QString &details) {
   setIcon(QMessageBox::Critical);
-  setText(msg);
+  setText(tr("SQL Syntaxerror"));
+  setInformativeText(err);
+  if (!details.isEmpty())
+    setDetailedText(details);
+
   exec();
 }
 

@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "booksimageview.h"
+#include "imagewidget.h"
 #include "applsettings.h"
 #include "sqlcore.h"
 #include "version.h"
@@ -16,8 +16,8 @@
 #include <QtSql/QSqlRecord>
 #include <QtWidgets/QVBoxLayout>
 
-BooksImageView::BooksImageView(QWidget *parent) : QWidget{parent} {
-  setObjectName("BooksImageViewer");
+ImageWidget::ImageWidget(QWidget *parent) : QWidget{parent} {
+  setObjectName("ImageWidgetViewer");
   setMinimumSize(QSize(300, 360));
   setMaximumWidth(300);
 
@@ -41,7 +41,7 @@ BooksImageView::BooksImageView(QWidget *parent) : QWidget{parent} {
   setLayout(layout);
 }
 
-void BooksImageView::insertImage(const QByteArray &data) {
+void ImageWidget::insertImage(const QByteArray &data) {
   QImage image = QImage::fromData(data, "jpeg");
   if (image.isNull()) {
     // qDebug() << Q_FUNC_INFO << "No valid image data";
@@ -53,13 +53,13 @@ void BooksImageView::insertImage(const QByteArray &data) {
   }
 }
 
-void BooksImageView::clear() {
+void ImageWidget::clear() {
   m_imageLabel->clear();
   m_imageLabel->update();
   update();
 }
 
-void BooksImageView::searchImageById(int id) {
+void ImageWidget::searchImageById(int id) {
   QString select("SELECT im_imgdata FROM ");
   select.append("inventory_images WHERE im_id=");
   select.append(QString::number(id));
@@ -75,7 +75,7 @@ void BooksImageView::searchImageById(int id) {
   }
 }
 
-void BooksImageView::addNewImage(int id, const QImage &img) {
+void ImageWidget::addNewImage(int id, const QImage &img) {
   if (img.isNull())
     return;
 

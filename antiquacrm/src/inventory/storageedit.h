@@ -8,18 +8,24 @@
 #include <QtCore/QModelIndex>
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
+#include <QtGui/QFocusEvent>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QFrame>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QWidget>
 
-class StorageEdit : public QComboBox {
+class StorageEdit : public QFrame {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
-  Q_PROPERTY(bool required READ isRequired WRITE setRequired NOTIFY requireChanged);
+  Q_PROPERTY(
+      bool required READ isRequired WRITE setRequired NOTIFY requireChanged);
 
 private:
-  bool required = false;
-  bool modified;
+  bool required = true;
+  bool modified = false;
+  QComboBox *m_storage;
+  QLineEdit *m_search;
 
   /**
      @brief Tabellendaten "ref_storage_location"
@@ -28,6 +34,10 @@ private:
 
 private Q_SLOTS:
   void dataChanged(int);
+  void filterChanged(const QString &);
+
+protected:
+  void focusInEvent(QFocusEvent *);
 
 Q_SIGNALS:
   void requireChanged();

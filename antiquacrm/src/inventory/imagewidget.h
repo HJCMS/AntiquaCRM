@@ -16,13 +16,13 @@ class SqlCore;
 };
 
 /**
-   @brief The BooksImageView class
+   @brief The ImageWidget class
    Liest mit der Article ID aus Tabelle
    "inventory_images" die Binärdaten
    von Bildern aus.
    @note Es wird nur "jpg" Format Unterstützt!
 */
-class BooksImageView : public QWidget {
+class ImageWidget : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -70,7 +70,7 @@ public Q_SLOTS:
   void searchImageById(int id);
 
 public:
-  explicit BooksImageView(QWidget *parent = nullptr);
+  explicit ImageWidget(QWidget *parent = nullptr);
 
   /**
      @brief addImageData

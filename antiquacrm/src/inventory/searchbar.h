@@ -14,12 +14,6 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
-struct SearchFilter {
-  int index;
-  QString title;
-  QString filter;
-};
-
 struct SearchStatement {
   QString SearchField;
   QString SearchString;
@@ -79,6 +73,13 @@ public Q_SLOTS:
   void setSearchFilter(int index);
 
 public:
+
+  struct SearchFilter {
+    int index;
+    QString title;
+    QString filter;
+  };
+
   explicit SearchBar(QWidget *main);
   /**
      @short Ändert bei der Sucheingabe die Validierung.
@@ -122,6 +123,5 @@ public:
 };
 
 Q_DECLARE_METATYPE(SearchStatement)
-Q_DECLARE_METATYPE(SearchFilter)
 
 #endif // SEARCHBAR_H

@@ -13,7 +13,7 @@
 
 class SearchBar;
 class BooksTableView;
-class StatsBookBar;
+class StatsActionBar;
 class BookEditor;
 
 /**
@@ -67,7 +67,7 @@ private:
   /**
     @brief Statusbalken mit Historienauswahl
   */
-  StatsBookBar *m_statsBookBar;
+  StatsActionBar *m_statsBookBar;
 
   /**
     @}
@@ -97,6 +97,8 @@ private:
       @li Aktiviere Editor Widget
       @li Rufe queryBookEntry(SQL) auf
       @li Setze das StackedWidget auf den Editor.
+
+    @param SQL Anfrageausdruck
   */
   void openEditor(const QString &condition);
 
@@ -107,6 +109,8 @@ private Q_SLOTS:
       und startet erst wenn @ref minLength
       überstiegen wurde. Leitet dann weiter
       an @ref searchConvert()
+
+    @param Sucheingabe
    */
   void searchConvert(const QString &);
 
@@ -146,12 +150,14 @@ private Q_SLOTS:
 Q_SIGNALS:
   /**
     @brief Sende eine Nachricht an das Elternfenster
+    @param MessageBody
   */
   void s_postMessage(const QString &);
 
 public Q_SLOTS:
   /**
     @brief Öffnet das Nachrichtenfenster
+    @param MessageBody
   */
   void displayMessageBox(const QString &);
 
@@ -164,7 +170,8 @@ public Q_SLOTS:
 
 public:
   /**
-    @param index Ist der TabWidget Index
+    @param index  Ist der Tab-Index
+    @param parent TabWidget
   */
   explicit InventoryBooks(int index, QTabWidget *parent = nullptr);
 };

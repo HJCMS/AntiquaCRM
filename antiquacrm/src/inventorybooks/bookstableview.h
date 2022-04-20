@@ -6,11 +6,9 @@
 #define BOOKSTABLEVIEW_H
 
 #include <QtCore/QHash>
-#include <QtCore/QItemSelectionModel>
 #include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtGui/QContextMenuEvent>
-#include <QtSql/QSqlTableModel>
 #include <QtWidgets/QTableView>
 
 namespace HJCMS {
@@ -32,6 +30,11 @@ private:
   BooksTableModel *m_queryModel;
   QString p_historyQuery;
 
+  /**
+   @brief SQL Query Database
+  */
+  bool sqlExecQuery(const QString &statement);
+
 private Q_SLOTS:
   /**
    @brief Suche Datensatz mit Index
@@ -42,24 +45,19 @@ private Q_SLOTS:
   /**
    @brief Ableitung für @ref clickedGetArticleID
   */
-  void openBookByContext();
+  void openByContext();
 
   /**
      @brief Einen neuen Eintrag erstellen wenn ...
      @todo Die Suchanfrage kein Ergebnis lieferte
   */
-  void newBookByContext();
+  void createByContext();
 
   /**
      @brief  Auftrage Erstellung
      @todo Im Moment noch verfügbar
   */
-  void createOrderByContext();
-
-  /**
-   @brief contextMenuEvent
-  */
-  bool sqlExecQuery(const QString &statement);
+  void orderByContext();
 
 protected:
   void contextMenuEvent(QContextMenuEvent *);

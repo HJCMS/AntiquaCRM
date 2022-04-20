@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef STATSBOOKBAR_H
-#define STATSBOOKBAR_H
+#ifndef STATSACTIONBAR_H
+#define STATSACTIONBAR_H
 
 #include <QtCore/QObject>
 #include <QtCore/QTimerEvent>
@@ -13,7 +13,7 @@
 #include <QtWidgets/QToolBar>
 
 /**
-    @brief StatsBookBar
+    @brief StatsActionBar
     Wird unterhalb der Buchtabelle angezeigt.
     In diesem Toolbar ist enthalten:
      @li Text Nachrichten (Label)
@@ -27,7 +27,7 @@
      @li 4: "#thismonth"
      @li 5: "#thisyear"
 */
-class StatsBookBar : public QToolBar {
+class StatsActionBar : public QToolBar {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -133,7 +133,7 @@ public Q_SLOTS:
   void setThisDayHistory();
 
 public:
-  explicit StatsBookBar(QWidget *parent = nullptr);
+  explicit StatsActionBar(QWidget *parent = nullptr);
 };
 
-#endif // STATSBOOKBAR_H
+#endif // STATSACTIONBAR_H

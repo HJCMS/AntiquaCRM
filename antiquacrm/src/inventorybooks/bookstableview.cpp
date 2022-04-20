@@ -17,6 +17,8 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMenu>
+#include <QtCore/QItemSelectionModel>
+#include <QtSql/QSqlTableModel>
 
 /**
     @brief querySelect
@@ -72,28 +74,6 @@ BooksTableView::BooksTableView(QWidget *parent) : QTableView{parent} {
           SLOT(queryArticleID(const QModelIndex &)));
 }
 
-void BooksTableView::queryArticleID(const QModelIndex &index) {
-  QModelIndex id(index);
-  if (m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
-    int i = m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
-
-    if (i >= 1)
-      emit s_articleSelected(i);
-  }
-}
-
-void BooksTableView::openBookByContext() { queryArticleID(p_modelIndex); }
-
-void BooksTableView::newBookByContext() {
-  qDebug() << Q_FUNC_INFO << "TODO"
-           << "Check Rowcount before add";
-  emit s_newEntryPlease();
-}
-
-void BooksTableView::createOrderByContext() {
-  qDebug() << Q_FUNC_INFO << "Noch nicht Implementiert";
-}
-
 bool BooksTableView::sqlExecQuery(const QString &statement) {
   if (!statement.contains("SELECT"))
     return false;
@@ -107,29 +87,58 @@ bool BooksTableView::sqlExecQuery(const QString &statement) {
                << m_sql->fetchErrors() << Qt::endl;
       return false;
     }
-    return true;
     emit s_rowsChanged(m_queryModel->rowCount());
+    return true;
   } else {
     qWarning("No SQL Connection in Booktable");
   }
   return false;
 }
 
+void BooksTableView::queryArticleID(const QModelIndex &index) {
+  QModelIndex id(index);
+  if (m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
+    int i = m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
+
+    if (i >= 1)
+      emit s_articleSelected(i);
+  }
+}
+
+void BooksTableView::openByContext() { queryArticleID(p_modelIndex); }
+
+void BooksTableView::createByContext() {
+  qDebug() << Q_FUNC_INFO << "TODO"
+           << "Check Rowcount before add";
+  emit s_newEntryPlease();
+}
+
+void BooksTableView::orderByContext() {
+  qDebug() << Q_FUNC_INFO << "Noch nicht Implementiert";
+}
+
 void BooksTableView::contextMenuEvent(QContextMenuEvent *ev) {
   p_modelIndex = indexAt(ev->pos());
+  // Aktiviere/Deaktivieren der Einträge
+  bool b = p_modelIndex.isValid();
+
   QMenu *m = new QMenu("Actions", this);
   // Eintrag öffnen  Bestellung anlegen
   QAction *ac_open = m->addAction(myIcon("spreadsheet"), tr("Open entry"));
   ac_open->setObjectName("ac_context_open_book");
-  connect(ac_open, SIGNAL(triggered()), this, SLOT(openBookByContext()));
+  ac_open->setEnabled(b);
+  connect(ac_open, SIGNAL(triggered()), this, SLOT(openByContext()));
 
   QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create entry"));
   ac_create->setObjectName("ac_context_create_book");
-  connect(ac_create, SIGNAL(triggered()), this, SLOT(newBookByContext()));
+  ac_create->setEnabled(b);
+  connect(ac_create, SIGNAL(triggered()), this, SLOT(createByContext()));
 
   QAction *ac_order = m->addAction(myIcon("autostart"), tr("Create order"));
-  ac_order->setObjectName("ac_context_create_order");
-  connect(ac_order, SIGNAL(triggered()), this, SLOT(createOrderByContext()));
+  ac_order->setObjectName("ac_context_order_book");
+  connect(ac_order, SIGNAL(triggered()), this, SLOT(orderByContext()));
+  ac_order->setEnabled(b);
+
   m->exec(ev->globalPos());
   delete m;
 }
@@ -189,7 +198,7 @@ void BooksTableView::queryStatement(const SearchStatement &cl) {
 
   QString str = cl.SearchString;
   if (reg.exactMatch(str)) {
-    qDebug() << "Rejected:" << str;
+    qWarning("Rejected:%s\n", qPrintable(str));
     return;
   }
 
@@ -208,6 +217,11 @@ void BooksTableView::queryStatement(const SearchStatement &cl) {
   } else if (field.contains("author")) {
     // String Search
     q.append(" WHERE (b.ib_author ILIKE '%");
+    q.append(str.replace(" ", "%"));
+    q.append("%'");
+  } else if (field.contains("publisher")) {
+    // String Search
+    q.append(" WHERE (b.ib_publisher ILIKE '%");
     q.append(str.replace(" ", "%"));
     q.append("%'");
   } else {
