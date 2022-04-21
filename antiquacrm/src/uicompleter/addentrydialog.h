@@ -8,6 +8,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
 class StrLineEdit;
@@ -18,11 +19,15 @@ class AddEntryDialog : public QDialog {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  StrLineEdit *m_lineEdit;
+  StrLineEdit *m_keyword;
+  QTextEdit *m_description;
 
 public:
   explicit AddEntryDialog(QWidget *parent = nullptr);
-  const QVariant value();
+  void setKeyword(const QString &);
+  void setDescription(const QString &);
+  const QString keyword();
+  const QString description();
 };
 
 #endif // ADDENTRYDIALOG_H

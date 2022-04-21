@@ -2,6 +2,7 @@
 #include "applsettings.h"
 #include "articleid.h"
 #include "imagewidget.h"
+#include "imagetoolbar.h"
 #include "boolbox.h"
 #include "editoractionbar.h"
 #include "imagedialog.h"
@@ -47,12 +48,12 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
 
   lay1->addWidget(ib_id);
 
-  QLabel *ibCountLabel = new QLabel(this);
-  ibCountLabel->setObjectName("ib_countLabel");
-  ibCountLabel->setAlignment(defaultAlignment);
-  ibCountLabel->setText(tr("Count:"));
+  QLabel *countLabel = new QLabel(this);
+  countLabel->setObjectName("countLabel");
+  countLabel->setAlignment(defaultAlignment);
+  countLabel->setText(tr("Count:"));
 
-  lay1->addWidget(ibCountLabel);
+  lay1->addWidget(countLabel);
 
   ib_count = new IntSpinBox(this);
   ib_count->setObjectName("ib_count");
@@ -60,11 +61,11 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
 
   lay1->addWidget(ib_count);
 
-  QLabel *ibPriceLabel = new QLabel(this);
-  ibPriceLabel->setObjectName("ib_priceLabel");
-  ibPriceLabel->setText(tr("Price:"));
+  QLabel *priceLabel = new QLabel(this);
+  priceLabel->setObjectName("priceLabel");
+  priceLabel->setText(tr("Price:"));
 
-  lay1->addWidget(ibPriceLabel);
+  lay1->addWidget(priceLabel);
 
   double minPrice = config.value("books/min_price", 8.00).toDouble();
   ib_price = new PriceEdit(this);
@@ -102,12 +103,12 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   lay2->setObjectName("lay2");
   lay2->addStretch(1);
 
-  QLabel *ibPagecountLabel = new QLabel(this);
-  ibPagecountLabel->setObjectName("ib_pagecountLabel");
-  ibPagecountLabel->setAlignment(defaultAlignment);
-  ibPagecountLabel->setText(tr("Page Count:"));
+  QLabel *pagecountLabel = new QLabel(this);
+  pagecountLabel->setObjectName("pagecountLabel");
+  pagecountLabel->setAlignment(defaultAlignment);
+  pagecountLabel->setText(tr("Page Count:"));
 
-  lay2->addWidget(ibPagecountLabel);
+  lay2->addWidget(pagecountLabel);
 
   ib_pagecount = new IntSpinBox(this);
   ib_pagecount->setObjectName("ib_pagecount");
@@ -120,12 +121,12 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
 
   lay2->addWidget(ib_pagecount);
 
-  QLabel *ibWeightLabel = new QLabel(this);
-  ibWeightLabel->setObjectName("ib_weightLabel");
-  ibWeightLabel->setAlignment(defaultAlignment);
-  ibWeightLabel->setText(tr("Weight:"));
+  QLabel *weightLabel = new QLabel(this);
+  weightLabel->setObjectName("weightLabel");
+  weightLabel->setAlignment(defaultAlignment);
+  weightLabel->setText(tr("Weight:"));
 
-  lay2->addWidget(ibWeightLabel);
+  lay2->addWidget(weightLabel);
 
   ib_weight = new IntSpinBox(this);
   ib_weight->setObjectName("ib_weight");
@@ -137,12 +138,12 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
 
   lay2->addWidget(ib_weight);
 
-  QLabel *ibYearLabel = new QLabel(this);
-  ibYearLabel->setObjectName("ib_yearLabel");
-  ibYearLabel->setAlignment(defaultAlignment);
-  ibYearLabel->setText(tr("Year:"));
+  QLabel *yearLabel = new QLabel(this);
+  yearLabel->setObjectName("yearLabel");
+  yearLabel->setAlignment(defaultAlignment);
+  yearLabel->setText(tr("Year:"));
 
-  lay2->addWidget(ibYearLabel);
+  lay2->addWidget(yearLabel);
 
   ib_year = new YearEdit(this);
   ib_year->setObjectName("ib_year");
@@ -160,18 +161,18 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   // Begin gridLayout:Row(1)
   QHBoxLayout *lay3 = new QHBoxLayout();
   lay3->setObjectName("lay3");
-  lay3->addStretch(1);
 
   ib_storage = new StorageEdit(this);
   ib_storage->setObjectName("ib_storage");
 
   lay3->addWidget(ib_storage);
+  lay3->addStretch(1);
 
-  QLabel *ibEditionLabel = new QLabel(this);
-  ibEditionLabel->setObjectName("ibeditionlabel");
-  ibEditionLabel->setAlignment(defaultAlignment);
-  ibEditionLabel->setText(tr("Edition:"));
-  lay3->addWidget(ibEditionLabel);
+  QLabel *editionlabel = new QLabel(this);
+  editionlabel->setObjectName("editionlabel");
+  editionlabel->setAlignment(defaultAlignment);
+  editionlabel->setText(tr("Edition:"));
+  lay3->addWidget(editionlabel);
 
   ib_edition = new IntSpinBox(this);
   ib_edition->setObjectName("ib_edition");
@@ -179,12 +180,12 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   ib_edition->setWindowTitle(tr("Edition"));
   lay3->addWidget(ib_edition);
 
-  QLabel *ibVolumeLabel = new QLabel(this);
-  ibVolumeLabel->setObjectName("ib_volumeLabel");
-  ibVolumeLabel->setAlignment(defaultAlignment);
-  ibVolumeLabel->setText(tr("Volume:"));
+  QLabel *volumeLabel = new QLabel(this);
+  volumeLabel->setObjectName("volumeLabel");
+  volumeLabel->setAlignment(defaultAlignment);
+  volumeLabel->setText(tr("Volume:"));
 
-  lay3->addWidget(ibVolumeLabel);
+  lay3->addWidget(volumeLabel);
 
   ib_volume = new IntSpinBox(this);
   ib_volume->setObjectName("ib_volume");
@@ -202,47 +203,47 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   lay4->setObjectName("lay4");
   int glc = 0; /**< Gridlayout Row Counter */
 
-  QLabel *ibTitleLabel = new QLabel(this);
-  ibTitleLabel->setObjectName("ib_titleLabel");
-  ibTitleLabel->setAlignment(defaultAlignment);
-  ibTitleLabel->setText(tr("Book &Title:"));
+  QLabel *titleLabel = new QLabel(this);
+  titleLabel->setObjectName("titleLabel");
+  titleLabel->setAlignment(defaultAlignment);
+  titleLabel->setText(tr("Book &Title:"));
 
-  lay4->addWidget(ibTitleLabel, glc, 0, 1, 1);
+  lay4->addWidget(titleLabel, glc, 0, 1, 1);
 
   ib_title = new StrLineEdit(this);
   ib_title->setObjectName("ib_title");
   ib_title->setMaxAllowedLength(80);
   ib_title->setRequired(true);
-  ib_title->setWindowTitle(tr("Booktitle"));
+  ib_title->setWindowTitle(tr("Title"));
   ib_title->setToolTip(tr("Required input field. Limited to 80 characters, "
                           "Webshop Systems require this."));
-  ibTitleLabel->setBuddy(ib_title);
+  titleLabel->setBuddy(ib_title);
 
   lay4->addWidget(ib_title, glc++, 1, 1, 1);
 
   // Zeile 1
-  QLabel *ibExtendedLabel = new QLabel(this);
-  ibExtendedLabel->setObjectName("ib_extendedLabel");
-  ibExtendedLabel->setAlignment(defaultAlignment);
-  ibExtendedLabel->setText(tr("Book Title Extended:"));
+  QLabel *extendedLabel = new QLabel(this);
+  extendedLabel->setObjectName("extendedLabel");
+  extendedLabel->setAlignment(defaultAlignment);
+  extendedLabel->setText(tr("Booktitle Extended:"));
 
-  lay4->addWidget(ibExtendedLabel, glc, 0, 1, 1);
+  lay4->addWidget(extendedLabel, glc, 0, 1, 1);
 
   ib_title_extended = new StrLineEdit(this);
   ib_title_extended->setObjectName("ib_title_extended");
   ib_title_extended->setMaxAllowedLength(148);
-  ib_title_extended->setToolTip(tr("Extended Title or Book Subtitle."));
+  ib_title_extended->setToolTip(tr("Extended Title or Subtitle."));
   ib_title_extended->setWindowTitle(tr("Extended Title"));
 
   lay4->addWidget(ib_title_extended, glc++, 1, 1, 1);
 
   // Zeile 2
-  QLabel *ibAuthorLabel = new QLabel(this);
-  ibAuthorLabel->setObjectName("ib_authorLabel");
-  ibAuthorLabel->setAlignment(defaultAlignment);
-  ibAuthorLabel->setText(tr("&Author:"));
+  QLabel *authorLabel = new QLabel(this);
+  authorLabel->setObjectName("authorLabel");
+  authorLabel->setAlignment(defaultAlignment);
+  authorLabel->setText(tr("&Author:"));
 
-  lay4->addWidget(ibAuthorLabel, glc, 0, 1, 1);
+  lay4->addWidget(authorLabel, glc, 0, 1, 1);
 
   ib_author = new StrLineEdit(this);
   ib_author->setObjectName("ib_author");
@@ -251,18 +252,18 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   ib_author->setWindowTitle(tr("Author"));
   ib_author->setToolTip(
       tr("Format: Firstname lastname (Different Authors separated by comma)."));
-  ibAuthorLabel->setBuddy(ib_author);
+  authorLabel->setBuddy(ib_author);
 
   lay4->addWidget(ib_author, glc++, 1, 1, 1);
 
   // Zeile 3
-  QLabel *ibPublisherLabel = new QLabel(this);
-  ibPublisherLabel->setObjectName("ib_publisherLabel");
-  ibPublisherLabel->setAlignment(defaultAlignment);
-  ibPublisherLabel->setText(tr("Publisher:"));
-  ibPublisherLabel->setToolTip(tr("Enter hier the Book Publisher."));
+  QLabel *publisherLabel = new QLabel(this);
+  publisherLabel->setObjectName("publisherLabel");
+  publisherLabel->setAlignment(defaultAlignment);
+  publisherLabel->setText(tr("Publisher:"));
+  publisherLabel->setToolTip(tr("Enter hier the Book Publisher."));
 
-  lay4->addWidget(ibPublisherLabel, glc, 0, 1, 1);
+  lay4->addWidget(publisherLabel, glc, 0, 1, 1);
 
   ib_publisher = new StrLineEdit(this);
   ib_publisher->setObjectName("ib_publisher");
@@ -272,12 +273,12 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   lay4->addWidget(ib_publisher, glc++, 1, 1, 1);
 
   // Zeile 4
-  QLabel *ibKeywordLabel = new QLabel(this);
-  ibKeywordLabel->setObjectName("ib_keywordLabel");
-  ibKeywordLabel->setAlignment(defaultAlignment);
-  ibKeywordLabel->setText(tr("Keyword:"));
+  QLabel *keywordLabel = new QLabel(this);
+  keywordLabel->setObjectName("keywordLabel");
+  keywordLabel->setAlignment(defaultAlignment);
+  keywordLabel->setText(tr("Keyword:"));
 
-  lay4->addWidget(ibKeywordLabel, glc, 0, 1, 1);
+  lay4->addWidget(keywordLabel, glc, 0, 1, 1);
 
   ib_keyword = new StrLineEdit(this);
   ib_keyword->setObjectName("ib_keyword");
@@ -288,12 +289,12 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   lay4->addWidget(ib_keyword, glc++, 1, 1, 1);
 
   // Zeile 5
-  QLabel *ibConditionLabel = new QLabel(this);
-  ibConditionLabel->setObjectName("ib_conditionLabel");
-  ibConditionLabel->setAlignment(defaultAlignment);
-  ibConditionLabel->setText(tr("Condition:"));
+  QLabel *conditionLabel = new QLabel(this);
+  conditionLabel->setObjectName("conditionLabel");
+  conditionLabel->setAlignment(defaultAlignment);
+  conditionLabel->setText(tr("Condition:"));
 
-  lay4->addWidget(ibConditionLabel, glc, 0, 1, 1);
+  lay4->addWidget(conditionLabel, glc, 0, 1, 1);
 
   ib_condition = new StrLineEdit(this);
   ib_condition->setObjectName("ib_condition");
@@ -306,12 +307,12 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   lay4->addWidget(ib_condition, glc++, 1, 1, 1);
 
   // Zeile 6
-  QLabel *ibDesignationLabel = new QLabel(this);
-  ibDesignationLabel->setObjectName("ib_designationLabel");
-  ibDesignationLabel->setAlignment(defaultAlignment);
-  ibDesignationLabel->setText(tr("Designation:"));
+  QLabel *designationLabel = new QLabel(this);
+  designationLabel->setObjectName("designationLabel");
+  designationLabel->setAlignment(defaultAlignment);
+  designationLabel->setText(tr("Designation:"));
 
-  lay4->addWidget(ibDesignationLabel, glc, 0, 1, 1);
+  lay4->addWidget(designationLabel, glc, 0, 1, 1);
 
   ib_designation = new StrLineEdit(this);
   ib_designation->setObjectName("ib_designation");
@@ -322,12 +323,12 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   lay4->addWidget(ib_designation, glc++, 1, 1, 1);
 
   // Zeile 7
-  QLabel *ibLanguageLabel = new QLabel(this);
-  ibLanguageLabel->setObjectName("ib_languageLabel");
-  ibLanguageLabel->setAlignment(defaultAlignment);
-  ibLanguageLabel->setText(tr("Language:"));
+  QLabel *languageLabel = new QLabel(this);
+  languageLabel->setObjectName("languageLabel");
+  languageLabel->setAlignment(defaultAlignment);
+  languageLabel->setText(tr("Language:"));
 
-  lay4->addWidget(ibLanguageLabel, glc, 0, 1, 1);
+  lay4->addWidget(languageLabel, glc, 0, 1, 1);
 
   ib_language = new SetLanguage(this);
   ib_language->setObjectName("ib_language");
@@ -350,20 +351,11 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   QHBoxLayout *lay5 = new QHBoxLayout();
   lay5->setObjectName("last_horizontal_layout");
 
-  btn_createJob =
-      new QPushButton(myIcon("autostart"), tr("Create order"), this);
-  btn_createJob->setObjectName("CreateJobFromThis");
-  btn_createJob->setToolTip(tr("Create a purchase order from this listing."));
-  btn_createJob->setEnabled(false);
-  lay5->addWidget(btn_createJob);
-
   lay5->addStretch(1);
 
-  btn_imaging = new QPushButton(myIcon("image"), tr("Picture"), this);
-  btn_imaging->setObjectName("OpenImagingButton");
-  btn_imaging->setToolTip(
-      tr("Open the Imaging Dialog for Import and Edit Pictures."));
-  lay5->addWidget(btn_imaging);
+  m_imageToolBar = new ImageToolBar(this);
+  m_imageToolBar->setObjectName("books_image_actions_bar");
+  lay5->addWidget(m_imageToolBar);
 
   lay4->addLayout(lay5, glc++, 0, 1, 2);
 
@@ -401,29 +393,17 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   m_actionBar = new EditorActionBar(this);
   mainLayout->addWidget(m_actionBar);
 
-  // TabOrder
-  setTabOrder(ib_id, ib_count);
-  setTabOrder(ib_count, ib_price);
-  setTabOrder(ib_price, ib_pagecount);
-  setTabOrder(ib_pagecount, ib_weight);
-  setTabOrder(ib_weight, ib_year);
-  setTabOrder(ib_year, ib_storage);
-  setTabOrder(ib_storage, ib_edition);
-  setTabOrder(ib_edition, ib_volume);
-  setTabOrder(ib_volume, ib_title);
-  setTabOrder(ib_title, ib_title_extended);
-  setTabOrder(ib_title_extended, ib_author);
-  setTabOrder(ib_author, ib_publisher);
-  setTabOrder(ib_publisher, ib_keyword);
-  setTabOrder(ib_keyword, ib_condition);
-  setTabOrder(ib_condition, ib_designation);
-  setTabOrder(ib_designation, ib_language);
-  setTabOrder(ib_language, ib_isbn);
+  // TODO
+  // setTabOrder(ib_id, ib_count);
+  // setTabOrder(ib_count, ib_price);
 
   connect(ib_isbn, SIGNAL(s_isbnIsValid(bool)), m_btnQueryISBN,
           SLOT(setEnabled(bool)));
   connect(m_btnQueryISBN, SIGNAL(clicked()), this, SLOT(triggerIsbnQuery()));
-  connect(btn_imaging, SIGNAL(clicked()), this, SLOT(openImageDialog()));
+
+  connect(m_imageToolBar, SIGNAL(s_openImage()), this, SLOT(openImageDialog()));
+  // connect(m_imageToolBar, SIGNAL(s_deleteImage(int)), this, SLOT(__TODO__(int)));
+
   connect(m_listWidget, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
           SLOT(infoISBNDoubleClicked(QListWidgetItem *)));
   connect(m_actionBar, SIGNAL(s_cancelClicked()), this,
@@ -484,10 +464,10 @@ bool BookEditor::sendSqlQuery(const QString &sqlStatement) {
   if (q.lastError().type() != QSqlError::NoError) {
     QString errorString = db->fetchErrors();
     qDebug() << errorString << Qt::endl;
-    msgBox.queryFail(sqlStatement, errorString);
+    msgBox.failed(sqlStatement, errorString);
     return false;
   } else {
-    msgBox.querySuccess(tr("Bookdata saved successfully!"), 1);
+    msgBox.success(tr("Bookdata saved successfully!"), 1);
     resetModified();
     return true;
   }
@@ -502,7 +482,7 @@ const QHash<QString, QVariant> BookEditor::createSqlDataset() {
   for (i_str = listStr.begin(); i_str != listStr.end(); ++i_str) {
     StrLineEdit *cur = *i_str;
     if (cur->isRequired() && !cur->isValid()) {
-      messanger.noticeMessage(cur->notes());
+      messanger.notice(cur->notes());
       cur->setFocus();
       data.clear();
       return data;
@@ -519,7 +499,7 @@ const QHash<QString, QVariant> BookEditor::createSqlDataset() {
   for (i_int = listInt.begin(); i_int != listInt.end(); ++i_int) {
     IntSpinBox *cur = *i_int;
     if (cur->isRequired() && !cur->isValid()) {
-      messanger.noticeMessage(cur->notes());
+      messanger.notice(cur->notes());
       cur->setFocus();
       data.clear();
       return data;
@@ -549,7 +529,7 @@ const QHash<QString, QVariant> BookEditor::createSqlDataset() {
     data.insert("ib_internal_description", ib_internal_description->value());
   }
   if (!ib_year->isValid()) {
-    messanger.noticeMessage(ib_year->notes());
+    messanger.notice(ib_year->notes());
     ib_year->setFocus();
     data.clear();
     return data;
@@ -559,7 +539,7 @@ const QHash<QString, QVariant> BookEditor::createSqlDataset() {
   if (ib_storage->isValid()) {
     data.insert("ib_storage", ib_storage->value());
   } else {
-    messanger.noticeMessage(ib_storage->notes());
+    messanger.notice(ib_storage->notes());
     ib_storage->setFocus();
     data.clear();
     return data;
@@ -567,7 +547,7 @@ const QHash<QString, QVariant> BookEditor::createSqlDataset() {
   if (ib_price->isValid()) {
     data.insert("ib_price", ib_price->value());
   } else {
-    messanger.noticeMessage(ib_price->notes());
+    messanger.notice(ib_price->notes());
     ib_price->setFocus();
     data.clear();
     return data;
@@ -650,13 +630,15 @@ void BookEditor::importSqlResult() {
   }
   blockSignals(false);
 
-  // Nach Ersteintrag zurück setzen!
-  resetModified();
-
   // Suche Bilddaten
   int id = ib_id->value().toInt();
-  if (id > 0)
+  if (id > 0) {
+    m_imageToolBar->setArticleId(id);
+    m_imageToolBar->setActive(true);
     m_imageView->searchImageById(id);
+  }
+  // Nach Ersteintrag zurück setzen!
+  resetModified();
 }
 
 void BookEditor::clearDataFields() {
@@ -703,6 +685,7 @@ void BookEditor::finalLeaveEditor() {
   sqlQueryResult.clear();             /**< SQL History leeren */
   clearDataFields();                  /**< Alle Datenfelder leeren */
   m_actionBar->setRestoreable(false); /**< ResetButton off */
+  m_imageToolBar->setActive(false);   /**< Bilder Aktionsleiste zurücksetzen */
   emit s_leaveEditor();               /**< Zurück */
 }
 
@@ -934,8 +917,8 @@ void BookEditor::infoISBNDoubleClicked(QListWidgetItem *item) {
 
 void BookEditor::changeEvent(QEvent *event) {
   if (event->type() == QEvent::EnabledChange) {
-    ib_storage->loadStorageData();
-    ib_condition->loadDataset("ib_condition");
+    ib_storage->loadDataset();
+    ib_condition->loadDataset("condition");
     ib_designation->loadDataset("ib_designation");
   }
 }
@@ -978,19 +961,18 @@ void BookEditor::editBookEntry(const QString &condition) {
     }
   } else {
     MessageBox messanger(this);
-    messanger.queryFail(db->fetchErrors(), condition);
+    messanger.failed(db->fetchErrors(), condition);
     return;
   }
 
   if (!sqlQueryResult.isEmpty() && !m_actionBar->isRestoreable())
     m_actionBar->setRestoreable(true);
 
-  btn_imaging->setEnabled(true);
   importSqlResult();
 }
 
 void BookEditor::createBookEntry() {
   setEnabled(true);
-  btn_imaging->setEnabled(false);
+  m_imageToolBar->setActive(false);
   resetModified();
 }

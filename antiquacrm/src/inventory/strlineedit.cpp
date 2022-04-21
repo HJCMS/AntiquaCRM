@@ -72,6 +72,7 @@ void StrLineEdit::setLineEditCompliter(const QStringList &list) {
 
   m_completer = new QCompleter(list, this);
   m_completer->setCaseSensitivity(Qt::CaseInsensitive);
+  m_completer->setFilterMode(Qt::MatchContains);
   setCompleter(m_completer);
 }
 

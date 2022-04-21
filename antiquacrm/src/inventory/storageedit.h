@@ -50,7 +50,7 @@ public Q_SLOTS:
      Wird nach der Klasseninitialisierung
      aufgerufen!
   */
-  void loadStorageData();
+  void loadDataset();
 
   /**
     Suche Lager mit ID

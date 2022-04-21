@@ -10,43 +10,47 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (subproject_SOURCES
-  boolbox.cpp
-  filedialog.cpp
-  articleid.cpp
-  editordialog.cpp
-  editoractionbar.cpp
-  isbnedit.cpp
-  priceedit.cpp
-  searchbar.cpp
-  setlanguage.cpp
-  storageedit.cpp
-  strlineedit.cpp
-  yearedit.cpp
-  messagebox.cpp
-  intspinbox.cpp
-  textfield.cpp
-  statsactionbar.cpp
-  imagewidget.cpp
+ articleid.cpp
+ boolbox.cpp
+ editoractionbar.cpp
+ editordialog.cpp
+ filedialog.cpp
+ imagetoolbar.cpp
+ imagewidget.cpp
+ intspinbox.cpp
+ isbnedit.cpp
+ messagebox.cpp
+ priceedit.cpp
+ searchbar.cpp
+ setlanguage.cpp
+ statsactionbar.cpp
+ storageedit.cpp
+ strlineedit.cpp
+ techniqueedit.cpp
+ textfield.cpp
+ yearedit.cpp
 )
 
 SET (subproject_HEADERS
-  boolbox.h
-  filedialog.h
-  articleid.h
-  editordialog.h
-  editoractionbar.h
-  isbnedit.h
-  priceedit.h
-  setlanguage.h
-  searchbar.h
-  storageedit.h
-  strlineedit.h
-  yearedit.h
-  intspinbox.h
-  messagebox.h
-  textfield.h
-  statsactionbar.h
-  imagewidget.h
+ articleid.h
+ boolbox.h
+ editoractionbar.h
+ editordialog.h
+ filedialog.h
+ imagetoolbar.h
+ imagewidget.h
+ intspinbox.h
+ isbnedit.h
+ messagebox.h
+ priceedit.h
+ searchbar.h
+ setlanguage.h
+ statsactionbar.h
+ storageedit.h
+ strlineedit.h
+ techniqueedit.h
+ textfield.h
+ yearedit.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

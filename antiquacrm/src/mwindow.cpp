@@ -4,7 +4,7 @@
 /* Project */
 #include "mwindow.h"
 #include "applsettings.h"
-#include "completertable.h"
+#include "completerdialog.h"
 #include "configdialog.h"
 #include "dockbarwidget.h"
 #include "filedialog.h"
@@ -21,7 +21,7 @@
 MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
   setObjectName("MainWindow");
   setWindowTitle(ANTIQUACRM_DISPLAYNAME);
-  setMinimumSize(QSize(800,600));
+  setMinimumSize(QSize(1024, 700));
   setWindowIcon(myIcon("database"));
 
   // Settings
@@ -93,7 +93,7 @@ void MWindow::setupActions() {
   m_quitAction->setIcon(myIcon("close_mini"));
   connect(m_quitAction, SIGNAL(triggered(bool)), this, SLOT(close()));
 
-  m_viewsMenu = m_menuBar->addMenu(tr("Views"));
+  QMenu *m_viewsMenu = m_menuBar->addMenu(tr("Views"));
   m_viewsMenu->setObjectName(QLatin1String("ViewsMenu"));
 
   /**
@@ -105,26 +105,61 @@ void MWindow::setupActions() {
   QAction *a_fs = m_viewsMenu->addAction(tr("Fullscreen"));
   connect(a_fs, SIGNAL(triggered(bool)), this, SLOT(toggleFullScreen(bool)));
 
-  m_settingsMenu = m_menuBar->addMenu(tr("Settings"));
-  m_settingsMenu->setObjectName("SettingsMenu");
+  QMenu *m_settingsMenu = m_menuBar->addMenu(tr("Settings"));
+  m_settingsMenu->setObjectName("settings_menu");
 
   QAction *a_cfg = m_settingsMenu->addAction(tr("Configuration"));
   a_cfg->setIcon(myIcon("configure"));
   connect(a_cfg, SIGNAL(triggered(bool)), this, SLOT(openConfiguration(bool)));
 
-  m_tablesMenu = m_settingsMenu->addMenu(tr("Edit tables"));
-  m_tablesMenu->setObjectName("TablesMenu");
+  QMenu *m_tablesMenu = m_settingsMenu->addMenu(tr("Edit tables"));
+  m_tablesMenu->setObjectName("top_table_menu");
   m_tablesMenu->setIcon(myIcon("database"));
 
-  QAction *a_ect = m_tablesMenu->addAction(tr("Condition"));
-  a_ect->setIcon(myIcon("spreadsheet"));
-  connect(a_ect, SIGNAL(triggered(bool)), this, SLOT(openEditCondition(bool)));
+  QAction *a_bct = m_tablesMenu->addAction(tr("Conditions"));
+  a_bct->setIcon(myIcon("spreadsheet"));
+  connect(a_bct, SIGNAL(triggered(bool)), this, SLOT(openCondition(bool)));
 
-  QAction *a_edt = m_tablesMenu->addAction(tr("Designation"));
-  a_edt->setIcon(myIcon("spreadsheet"));
-  connect(a_edt, SIGNAL(triggered(bool)), this,
-          SLOT(openEditDesignation(bool)));
+  QAction *a_bdt = m_tablesMenu->addAction(tr("Book Designations"));
+  a_bdt->setIcon(myIcon("spreadsheet"));
+  connect(a_bdt, SIGNAL(triggered(bool)), this,
+          SLOT(openBookDesignation(bool)));
+
+  QAction *a_pdt = m_tablesMenu->addAction(tr("Prints Designation"));
+  a_pdt->setIcon(myIcon("spreadsheet"));
+  connect(a_pdt, SIGNAL(triggered(bool)), this,
+          SLOT(openPrintsDesignation(bool)));
 }
+
+void MWindow::openEditCondition() {
+  CompleterDialog *m_dialog = new CompleterDialog(this, "condition");
+  m_dialog->setObjectName("condition_dialog");
+  if (m_dialog->exec()) {
+    qInfo("Editing finished");
+  }
+}
+
+void MWindow::openEditDesignation(const QString &section) {
+  QString key("designation");
+  if (section.contains("ib_")) {
+    key.prepend("ib_");
+  } else if (section.contains("ip_")) {
+    key.prepend("ip_");
+  } else {
+    return;
+  }
+  CompleterDialog *m_dialog = new CompleterDialog(this, key);
+  m_dialog->setObjectName("designation_dialog");
+  if (m_dialog->exec()) {
+    qInfo("Editing finished");
+  }
+}
+
+void MWindow::openCondition(bool) { openEditCondition(); };
+
+void MWindow::openBookDesignation(bool) { openEditDesignation("ib_"); };
+
+void MWindow::openPrintsDesignation(bool) { openEditDesignation("ip_"); };
 
 void MWindow::openFileDialog(bool) {
   FileDialog *m_dialog = new FileDialog(this);
@@ -132,22 +167,6 @@ void MWindow::openFileDialog(bool) {
   if (m_dialog->exec()) {
     qInfo("Filedialog finished");
     // m_dialog->selectedFiles();
-  }
-}
-
-void MWindow::openEditCondition(bool) {
-  CompleterTable *m_dialog = new CompleterTable(this, "ib_condition");
-  m_dialog->setObjectName("ib_condition_dialog");
-  if (m_dialog->exec()) {
-    qInfo("Editing finished");
-  }
-}
-
-void MWindow::openEditDesignation(bool) {
-  CompleterTable *m_dialog = new CompleterTable(this, "ib_designation");
-  m_dialog->setObjectName("ib_designation_dialog");
-  if (m_dialog->exec()) {
-    qInfo("Editing finished");
   }
 }
 

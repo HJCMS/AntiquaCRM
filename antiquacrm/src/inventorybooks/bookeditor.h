@@ -33,6 +33,7 @@ class StorageEdit;
 class StrLineEdit;
 class TextField;
 class YearEdit;
+class ImageToolBar;
 
 /**
    @brief BookEditor
@@ -66,8 +67,6 @@ private:
   StrLineEdit *ib_title;          /**< @brief Buch Titel */
   StrLineEdit *ib_title_extended; /**< @brief Ereiterte Titel  */
   TextField *ib_description;      /**< @brief Öffentliche Beschreibung */
-  QPushButton *btn_createJob;     /**< @brief Auftragserstellung */
-  QPushButton *btn_imaging;       /**< @brief IMage Import/Edit Dialog */
   IsbnRequest *m_isbnRequest;     /**< @brief ISBN Abfrage Klasse */
   QTabWidget *m_tabWidget; /**< @brief BeschreibungsText und ISBN Info  */
   TextField *ib_internal_description; /**< @brief Interne Beschreibung */
@@ -118,6 +117,11 @@ private:
     und in für IsbnInfo Operationen verwendet!
   */
   int isbnTabIndex;
+
+  /**
+    @brief Bilder operations Knopfleiste
+  */
+  ImageToolBar *m_imageToolBar;
 
   /**
     @brief Eingebettete Bildansicht

@@ -101,16 +101,14 @@ bool IsbnEdit::isValid() {
 
 const QVariant IsbnEdit::value() {
   QString txt = text().trimmed();
-  int l = txt.length();
-  if (l != 13 || l != 10) {
-    return 0;
+  int len = txt.length();
+  if ((len == 10) || (len == 13)) {
+    // qInfo("ISBN:%s Lenght:%s", qPrintable(txt), qPrintable(QString::number(len)));
+    bool b;
+    qulonglong isbn = txt.toLong(&b);
+    if (b)
+      return isbn;
   }
-
-  bool b;
-  qulonglong isbn = txt.toLong(&b);
-  if (b)
-    return isbn;
-
   return 0;
 }
 

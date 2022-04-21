@@ -31,13 +31,13 @@ void MessageBox::timerEvent(QTimerEvent *ev) {
   buildTimerMessage();
 }
 
-void MessageBox::noticeMessage(const QString &msg) {
+void MessageBox::notice(const QString &msg) {
   setIcon(QMessageBox::Warning);
   setText(msg);
   exec();
 }
 
-void MessageBox::queryFail(const QString &err, const QString &details) {
+void MessageBox::failed(const QString &err, const QString &details) {
   setIcon(QMessageBox::Critical);
   setText(tr("SQL Syntaxerror"));
   setInformativeText(err);
@@ -47,7 +47,7 @@ void MessageBox::queryFail(const QString &err, const QString &details) {
   exec();
 }
 
-void MessageBox::querySuccess(const QString &msg, int s) {
+void MessageBox::success(const QString &msg, int s) {
   timeout = s;
   message = msg;
   setIcon(QMessageBox::Information);

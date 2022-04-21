@@ -30,23 +30,23 @@ public:
   explicit MessageBox(QWidget *parent = nullptr);
 
   /**
-     @brief noticeMessage
+     @brief notice
      @param QString Message
    */
-  void noticeMessage(const QString &);
+  void notice(const QString &);
 
   /**
      @brief queryFail
      @param QString Message
    */
-  void queryFail(const QString &err, const QString &details = QString());
+  void failed(const QString &err, const QString &details = QString());
 
   /**
      @brief querySuccess
      @param QString Message
      @param s - timeout in seconds
    */
-  void querySuccess(const QString &, int s = 10);
+  void success(const QString &, int s = 10);
 };
 
 #endif // MESSAGEBOX_H

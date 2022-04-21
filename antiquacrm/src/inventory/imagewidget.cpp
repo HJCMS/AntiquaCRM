@@ -3,8 +3,8 @@
 
 #include "imagewidget.h"
 #include "applsettings.h"
+#include "messagebox.h"
 #include "sqlcore.h"
-#include "version.h"
 
 #include <QtCore/QBuffer>
 #include <QtCore/QDebug>
@@ -44,12 +44,13 @@ ImageWidget::ImageWidget(QWidget *parent) : QWidget{parent} {
 void ImageWidget::insertImage(const QByteArray &data) {
   QImage image = QImage::fromData(data, "jpeg");
   if (image.isNull()) {
-    // qDebug() << Q_FUNC_INFO << "No valid image data";
+    emit s_imageFound(false);
     return;
   } else {
     m_imageLabel->setPixmap(QPixmap::fromImage(image));
     m_imageLabel->update();
     m_scrollArea->setWidget(m_imageLabel);
+    emit s_imageFound(true);
   }
 }
 
@@ -72,6 +73,8 @@ void ImageWidget::searchImageById(int id) {
                                   QByteArray::Base64Encoding);
     if (data.size() > 60)
       insertImage(data);
+  } else {
+    emit s_sendMessage(tr("no image in database"));
   }
 }
 
@@ -87,7 +90,7 @@ void ImageWidget::addNewImage(int id, const QImage &img) {
   insertImage(rawimg);
 
   if (id < 1) {
-    qWarning("No Article ID - no image save");
+    emit s_sendMessage(tr("Missing Article Number"));
     return;
   }
 
@@ -114,6 +117,7 @@ void ImageWidget::addNewImage(int id, const QImage &img) {
   }
   p_query = m_sql->query(sql);
   if (p_query.lastError().isValid()) {
-    qDebug() << Q_FUNC_INFO << p_query.lastError().text() << Qt::endl;
+    MessageBox msg(this);
+    msg.failed(tr("SQL Image Query fails."), p_query.lastError().text());
   }
 }

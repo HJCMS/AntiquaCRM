@@ -52,6 +52,17 @@ private:
    */
   void insertImage(const QByteArray &data);
 
+Q_SIGNALS:
+  /**
+     @brief Bild gefunden Rückmeldung
+  */
+  void s_imageFound(bool);
+
+  /**
+    @brief Nachricht Ausgeben
+  */
+  void s_sendMessage(const QString &);
+
 public Q_SLOTS:
   /**
      @brief Anzeige leeren

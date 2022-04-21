@@ -23,22 +23,23 @@ class DataTableModel : public QSqlTableModel {
 private:
   QSqlDatabase p_db;
   const QString p_type;
+  const QString p_table = QString("ui_autofill_keywords");
 
 private Q_SLOTS:
-  void dataUpdate(const QModelIndex &, const QModelIndex &);
+  bool updateData(const QModelIndex &index, const QVariant &value);
 
 Q_SIGNALS:
-  void s_dataChanged(bool b = true);
+  void s_dataChanged(bool b);
+  void s_sqlError(const QString &);
 
 public Q_SLOTS:
-  void insertEntry();
   void removeData(const QModelIndex &index);
 
 public:
   explicit DataTableModel(const QString &field, QTableView *parent = nullptr,
                           QSqlDatabase db = QSqlDatabase());
 
-  bool setTableQuery(const QString &field);
+  bool insertSqlQuery(const QSqlRecord &rec);
 
   QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 
@@ -47,8 +48,6 @@ public:
 
   QVariant headerData(int section, Qt::Orientation orientation,
                       int role = Qt::DisplayRole) const;
-
-  virtual ~DataTableModel();
 };
 
 #endif // DATATABLEMODEL_H

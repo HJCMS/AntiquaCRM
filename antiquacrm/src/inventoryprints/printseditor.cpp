@@ -7,6 +7,7 @@
 #include "boolbox.h"
 #include "editoractionbar.h"
 #include "imagedialog.h"
+#include "imagetoolbar.h"
 #include "imagewidget.h"
 #include "intspinbox.h"
 #include "messagebox.h"
@@ -16,6 +17,7 @@
 #include "strlineedit.h"
 #include "textfield.h"
 #include "version.h"
+#include "techniqueedit.h"
 #include "yearedit.h"
 
 #include <QtCore>
@@ -46,34 +48,34 @@ PrintsEditor::PrintsEditor(QWidget *parent) : QWidget{parent} {
   gridLayout->setObjectName("gridLayout");
   int glc = 0; /**< Gridlayout Row Counter */
 
-  // Begin ErsteZeile
-  QHBoxLayout *lay1 = new QHBoxLayout();
-  lay1->setObjectName("lay1");
+  // Begin #1
+  QHBoxLayout *row1 = new QHBoxLayout();
+  row1->setObjectName("layout_row_one");
 
   ip_id = new ArticleID(this);
   ip_id->setObjectName("ip_id");
   ip_id->setRequired(true);
 
-  lay1->addWidget(ip_id);
+  row1->addWidget(ip_id);
 
-  QLabel *ibCountLabel = new QLabel(this);
-  ibCountLabel->setObjectName("ip_countLabel");
-  ibCountLabel->setAlignment(defaultAlignment);
-  ibCountLabel->setText(tr("Count:"));
+  QLabel *countLabel = new QLabel(this);
+  countLabel->setObjectName("countLabel");
+  countLabel->setAlignment(defaultAlignment);
+  countLabel->setText(tr("Count:"));
 
-  lay1->addWidget(ibCountLabel);
+  row1->addWidget(countLabel);
 
   ip_count = new IntSpinBox(this);
   ip_count->setObjectName("ip_count");
   ip_count->setWindowTitle(tr("Count"));
 
-  lay1->addWidget(ip_count);
+  row1->addWidget(ip_count);
 
-  QLabel *ibPriceLabel = new QLabel(this);
-  ibPriceLabel->setObjectName("ip_priceLabel");
-  ibPriceLabel->setText(tr("Price:"));
+  QLabel *priceLabel = new QLabel(this);
+  priceLabel->setObjectName("priceLabel");
+  priceLabel->setText(tr("Price:"));
 
-  lay1->addWidget(ibPriceLabel);
+  row1->addWidget(priceLabel);
 
   double minPrice = config.value("books/min_price", 8.00).toDouble();
   ip_price = new PriceEdit(this);
@@ -81,14 +83,45 @@ PrintsEditor::PrintsEditor(QWidget *parent) : QWidget{parent} {
   ip_price->setRequired(true);
   ip_price->setMinimum(minPrice);
 
-  lay1->addWidget(ip_price);
+  row1->addWidget(ip_price);
+
+  QLabel *yearLabel = new QLabel(this);
+  yearLabel->setObjectName("yearLabel");
+  yearLabel->setAlignment(defaultAlignment);
+  yearLabel->setText(tr("Year:"));
+
+  row1->addWidget(yearLabel);
+
+  ip_year = new YearEdit(this);
+  ip_year->setObjectName("ip_year");
+  ip_year->setWindowTitle(tr("Year"));
+  ip_year->setRequired(true);
+
+  row1->addWidget(ip_year);
+
+  row1->addStretch(1);
 
   ip_kolorit = new BoolBox(this);
   ip_kolorit->setObjectName("ip_kolorit");
-  ip_kolorit->setText(tr("Signed Version"));
+  ip_kolorit->setText(tr("Kolorit"));
 
-  lay1->addWidget(ip_kolorit);
+  row1->addWidget(ip_kolorit);
 
+  ip_landscape = new BoolBox(this);
+  ip_landscape->setObjectName("ip_landscape");
+  ip_landscape->setText(tr("Landscape"));
+
+  row1->addWidget(ip_landscape);
+
+  ip_views = new BoolBox(this);
+  ip_views->setObjectName("ip_views");
+  ip_views->setText(tr("Views"));
+  row1->addWidget(ip_views);
+
+  gridLayout->addLayout(row1, glc++, 0, 1, 2);
+  // End #1
+
+  // BEGIN #2
   ip_restricted = new BoolBox(this);
   ip_restricted->setObjectName("ip_restricted");
   ip_restricted->setText(tr("Restricted Sale"));
@@ -96,60 +129,46 @@ PrintsEditor::PrintsEditor(QWidget *parent) : QWidget{parent} {
       tr("Is the title not for sale nationally or is it on a censorship list. "
          "This is relevant for the Shopsystem."));
 
-  lay1->addWidget(ip_restricted);
+  gridLayout->addWidget(ip_restricted, glc, 0, 1, 1);
 
-  QLabel *ibYearLabel = new QLabel(this);
-  ibYearLabel->setObjectName("ip_yearLabel");
-  ibYearLabel->setAlignment(defaultAlignment);
-  ibYearLabel->setText(tr("Year:"));
+  QHBoxLayout *row2b = new QHBoxLayout();
+  row2b->setObjectName("layout_row_tw");
 
-  lay1->addWidget(ibYearLabel);
+  row2b->addStretch(1);
 
-  ip_year = new YearEdit(this);
-  ip_year->setObjectName("ip_year");
-  ip_year->setWindowTitle(tr("Year"));
-  ip_year->setRequired(true);
-
-  lay1->addWidget(ip_year);
-
-  lay1->addStretch(1);
-
-  gridLayout->addLayout(lay1, glc++, 0, 1, 2);
-  // End ErsteZeile
-
-  QHBoxLayout *storageLayout = new QHBoxLayout();
   ip_storage = new StorageEdit(this);
   ip_storage->setObjectName("ip_storage");
   ip_storage->setMinimumWidth(300);
-  storageLayout->addWidget(ip_storage);
-  storageLayout->addStretch(1);
-  gridLayout->addLayout(storageLayout, glc++, 0, 1, 2);
+  row2b->addWidget(ip_storage);
 
-  QLabel *ibTitleLabel = new QLabel(this);
-  ibTitleLabel->setObjectName("ip_titleLabel");
-  ibTitleLabel->setAlignment(defaultAlignment);
-  ibTitleLabel->setText(tr("Book &Title:"));
+  gridLayout->addLayout(row2b, glc++, 1, 1, 1);
+  // END #2
 
-  gridLayout->addWidget(ibTitleLabel, glc, 0, 1, 1);
+  QLabel *titleLabel = new QLabel(this);
+  titleLabel->setObjectName("titleLabel");
+  titleLabel->setAlignment(defaultAlignment);
+  titleLabel->setText(tr("Book &Title:"));
+
+  gridLayout->addWidget(titleLabel, glc, 0, 1, 1);
 
   ip_title = new StrLineEdit(this);
   ip_title->setObjectName("ip_title");
   ip_title->setMaxAllowedLength(80);
   ip_title->setRequired(true);
-  ip_title->setWindowTitle(tr("Booktitle"));
+  ip_title->setWindowTitle(tr("Title"));
   ip_title->setToolTip(tr("Required input field. Limited to 80 characters, "
                           "Webshop Systems require this."));
-  ibTitleLabel->setBuddy(ip_title);
+  titleLabel->setBuddy(ip_title);
 
   gridLayout->addWidget(ip_title, glc++, 1, 1, 1);
 
   // Zeile 1
-  QLabel *ibExtendedLabel = new QLabel(this);
-  ibExtendedLabel->setObjectName("ip_extendedLabel");
-  ibExtendedLabel->setAlignment(defaultAlignment);
-  ibExtendedLabel->setText(tr("Book Title Extended:"));
+  QLabel *extTitleLabel = new QLabel(this);
+  extTitleLabel->setObjectName("extTitleLabel");
+  extTitleLabel->setAlignment(defaultAlignment);
+  extTitleLabel->setText(tr("Book Title Extended:"));
 
-  gridLayout->addWidget(ibExtendedLabel, glc, 0, 1, 1);
+  gridLayout->addWidget(extTitleLabel, glc, 0, 1, 1);
 
   ip_title_extended = new StrLineEdit(this);
   ip_title_extended->setObjectName("ip_title_extended");
@@ -160,12 +179,12 @@ PrintsEditor::PrintsEditor(QWidget *parent) : QWidget{parent} {
   gridLayout->addWidget(ip_title_extended, glc++, 1, 1, 1);
 
   // Zeile 2
-  QLabel *ibAuthorLabel = new QLabel(this);
-  ibAuthorLabel->setObjectName("ip_authorLabel");
-  ibAuthorLabel->setAlignment(defaultAlignment);
-  ibAuthorLabel->setText(tr("&Author:"));
+  QLabel *authorLabel = new QLabel(this);
+  authorLabel->setObjectName("authorLabel");
+  authorLabel->setAlignment(defaultAlignment);
+  authorLabel->setText(tr("&Author:"));
 
-  gridLayout->addWidget(ibAuthorLabel, glc, 0, 1, 1);
+  gridLayout->addWidget(authorLabel, glc, 0, 1, 1);
 
   ip_author = new StrLineEdit(this);
   ip_author->setObjectName("ip_author");
@@ -173,91 +192,83 @@ PrintsEditor::PrintsEditor(QWidget *parent) : QWidget{parent} {
   ip_author->setWindowTitle(tr("Author"));
   ip_author->setToolTip(
       tr("Format: Firstname lastname (Different Authors separated by comma)."));
-  ibAuthorLabel->setBuddy(ip_author);
+  authorLabel->setBuddy(ip_author);
 
   gridLayout->addWidget(ip_author, glc++, 1, 1, 1);
 
   // Zeile 3
-  QLabel *ibPublisherLabel = new QLabel(this);
-  ibPublisherLabel->setObjectName("ip_techniqueLabel");
-  ibPublisherLabel->setAlignment(defaultAlignment);
-  ibPublisherLabel->setText(tr("Technique:"));
-  ibPublisherLabel->setToolTip(tr("Enter the technique."));
+  QLabel *techniqueLabel = new QLabel(this);
+  techniqueLabel->setObjectName("techniqueLabel");
+  techniqueLabel->setAlignment(defaultAlignment);
+  techniqueLabel->setText(tr("Technique:"));
 
-  gridLayout->addWidget(ibPublisherLabel, glc, 0, 1, 1);
+  gridLayout->addWidget(techniqueLabel, glc, 0, 1, 1);
 
-  ip_technique = new StrLineEdit(this);
+  ip_technique = new TechniqueEdit(this);
   ip_technique->setObjectName("ip_technique");
-  ip_technique->setMaxAllowedLength(128);
-  ip_technique->setWindowTitle(tr("Publisher"));
+  ip_technique->setWindowTitle(tr("Technique"));
+  ip_technique->setToolTip(tr("Select technique."));
+  ip_technique->setRequired(true);
 
   gridLayout->addWidget(ip_technique, glc++, 1, 1, 1);
 
   // Zeile 4
-  QLabel *ibKeywordLabel = new QLabel(this);
-  ibKeywordLabel->setObjectName("ip_formatLabel");
-  ibKeywordLabel->setAlignment(defaultAlignment);
-  ibKeywordLabel->setText(tr("Format:"));
+  QLabel *formatLabel = new QLabel(this);
+  formatLabel->setObjectName("formatLabel");
+  formatLabel->setAlignment(defaultAlignment);
+  formatLabel->setText(tr("Representation:"));
 
-  gridLayout->addWidget(ibKeywordLabel, glc, 0, 1, 1);
+  gridLayout->addWidget(formatLabel, glc, 0, 1, 1);
 
   ip_format = new StrLineEdit(this);
   ip_format->setObjectName("ip_format");
   ip_format->setMaxAllowedLength(60);
-  ip_format->setToolTip(tr("Category Keywords for Shopsystems."));
-  ip_format->setWindowTitle(tr("Chop Keyword"));
+  ip_format->setToolTip(
+      tr("Representation format (width)x(height) followed bei format unit."));
+  ip_format->setWindowTitle(tr("Representation format"));
 
   gridLayout->addWidget(ip_format, glc++, 1, 1, 1);
 
   // Zeile 5
-  QLabel *ibConditionLabel = new QLabel(this);
-  ibConditionLabel->setObjectName("ip_conditionLabel");
-  ibConditionLabel->setAlignment(defaultAlignment);
-  ibConditionLabel->setText(tr("Condition:"));
+  QLabel *conditionLabel = new QLabel(this);
+  conditionLabel->setObjectName("conditionLabel");
+  conditionLabel->setAlignment(defaultAlignment);
+  conditionLabel->setText(tr("Condition:"));
 
-  gridLayout->addWidget(ibConditionLabel, glc, 0, 1, 1);
+  gridLayout->addWidget(conditionLabel, glc, 0, 1, 1);
 
   ip_condition = new StrLineEdit(this);
   ip_condition->setObjectName("ip_condition");
   ip_condition->setMaxAllowedLength(128);
   ip_condition->setWindowTitle(tr("Condition"));
-  ip_condition->setToolTip(
-      tr("Condition of this Book. See also Configuration conditions Table."));
+  ip_condition->setToolTip(tr("Condition from this object"));
 
   gridLayout->addWidget(ip_condition, glc++, 1, 1, 1);
 
   // Zeile 6
-  QLabel *ibDesignationLabel = new QLabel(this);
-  ibDesignationLabel->setObjectName("ip_designationLabel");
-  ibDesignationLabel->setAlignment(defaultAlignment);
-  ibDesignationLabel->setText(tr("Designation:"));
+  QLabel *designationLabel = new QLabel(this);
+  designationLabel->setObjectName("designationLabel");
+  designationLabel->setAlignment(defaultAlignment);
+  designationLabel->setText(tr("Designation:"));
 
-  gridLayout->addWidget(ibDesignationLabel, glc, 0, 1, 1);
+  gridLayout->addWidget(designationLabel, glc, 0, 1, 1);
 
   ip_designation = new StrLineEdit(this);
   ip_designation->setObjectName("ip_designation");
   ip_designation->setMaxAllowedLength(128);
   ip_designation->setWindowTitle(tr("Designation"));
+  ip_designation->setToolTip(tr("Outer Description"));
 
   gridLayout->addWidget(ip_designation, glc++, 1, 1, 1);
 
   QHBoxLayout *lay5 = new QHBoxLayout();
   lay5->setObjectName("last_horizontal_layout");
 
-  btn_createJob =
-      new QPushButton(myIcon("autostart"), tr("Create order"), this);
-  btn_createJob->setObjectName("CreateJobFromThis");
-  btn_createJob->setToolTip(tr("Create a purchase order from this listing."));
-  btn_createJob->setEnabled(false);
-  lay5->addWidget(btn_createJob);
-
   lay5->addStretch(1);
 
-  btn_imaging = new QPushButton(myIcon("image"), tr("Picture"), this);
-  btn_imaging->setObjectName("OpenImagingButton");
-  btn_imaging->setToolTip(
-      tr("Open the Imaging Dialog for Import and Edit Pictures."));
-  lay5->addWidget(btn_imaging);
+  m_imageToolBar = new ImageToolBar(this);
+  m_imageToolBar->setObjectName("OpenImagingButton");
+  lay5->addWidget(m_imageToolBar);
 
   gridLayout->addLayout(lay5, glc++, 0, 1, 2);
   horizontalLayout->addLayout(gridLayout);
@@ -294,7 +305,7 @@ PrintsEditor::PrintsEditor(QWidget *parent) : QWidget{parent} {
   m_actionBar = new EditorActionBar(this);
   mainLayout->addWidget(m_actionBar);
 
-  connect(btn_imaging, SIGNAL(clicked()), this, SLOT(openImageDialog()));
+  connect(m_imageToolBar, SIGNAL(s_openImage()), this, SLOT(openImageDialog()));
   connect(m_actionBar, SIGNAL(s_cancelClicked()), this,
           SLOT(finalLeaveEditor()));
   connect(m_actionBar, SIGNAL(s_restoreClicked()), this,
@@ -347,15 +358,14 @@ void PrintsEditor::resetModified() {
 }
 
 bool PrintsEditor::sendSqlQuery(const QString &sqlStatement) {
-  MessageBox msgBox(this);
+  MessageBox messanger(this);
   QSqlQuery q = db->query(sqlStatement);
   if (q.lastError().type() != QSqlError::NoError) {
     QString errorString = db->fetchErrors();
-    qDebug() << errorString << Qt::endl;
-    msgBox.queryFail(sqlStatement, errorString);
+    messanger.failed(sqlStatement, errorString);
     return false;
   } else {
-    msgBox.querySuccess(tr("Data saved successfully!"), 1);
+    messanger.success(tr("Data saved successfully!"), 1);
     resetModified();
     return true;
   }
@@ -363,14 +373,14 @@ bool PrintsEditor::sendSqlQuery(const QString &sqlStatement) {
 
 const QHash<QString, QVariant> PrintsEditor::createSqlDataset() {
   QHash<QString, QVariant> data;
-  MessageBox messanger;
+  MessageBox messanger(this);
   QList<StrLineEdit *> listStr =
       findChildren<StrLineEdit *>(p_objPattern, Qt::FindDirectChildrenOnly);
   QList<StrLineEdit *>::Iterator i_str;
   for (i_str = listStr.begin(); i_str != listStr.end(); ++i_str) {
     StrLineEdit *cur = *i_str;
     if (cur->isRequired() && !cur->isValid()) {
-      messanger.noticeMessage(cur->notes());
+      messanger.notice(cur->notes());
       cur->setFocus();
       data.clear();
       return data;
@@ -387,7 +397,7 @@ const QHash<QString, QVariant> PrintsEditor::createSqlDataset() {
   for (i_int = listInt.begin(); i_int != listInt.end(); ++i_int) {
     IntSpinBox *cur = *i_int;
     if (cur->isRequired() && !cur->isValid()) {
-      messanger.noticeMessage(cur->notes());
+      messanger.notice(cur->notes());
       cur->setFocus();
       data.clear();
       return data;
@@ -398,39 +408,58 @@ const QHash<QString, QVariant> PrintsEditor::createSqlDataset() {
     data.insert(cur->objectName(), cur->value());
   }
   listInt.clear();
-  if (ip_kolorit->isChecked()) {
-    data.insert("ip_kolorit", ip_kolorit->value());
+  QList<BoolBox *> listBool =
+      findChildren<BoolBox *>(p_objPattern, Qt::FindDirectChildrenOnly);
+  QList<BoolBox *>::Iterator i_bool;
+  for (i_bool = listBool.begin(); i_bool != listBool.end(); ++i_bool) {
+    BoolBox *cur = *i_bool;
+    if (cur->isRequired() && !cur->isValid()) {
+      messanger.notice(cur->notes());
+      cur->setFocus();
+      data.clear();
+      return data;
+    }
+    data.insert(cur->objectName(), cur->value());
   }
-  if (ip_restricted->isChecked()) {
-    data.insert("ip_restricted", ip_restricted->value());
-  }
+  listBool.clear();
+  // Textfelder
   if (ip_description->isValid()) {
     data.insert("ip_description", ip_description->value());
   }
   if (ip_internal_description->isValid()) {
     data.insert("ip_internal_description", ip_internal_description->value());
   }
+  // SpinBoxen
+  if (ip_price->isValid()) {
+    data.insert("ip_price", ip_price->value());
+  } else {
+    messanger.notice(ip_price->notes());
+    ip_price->setFocus();
+    data.clear();
+    return data;
+  }
   if (!ip_year->isValid()) {
-    messanger.noticeMessage(ip_year->notes());
+    messanger.notice(ip_year->notes());
     ip_year->setFocus();
     data.clear();
     return data;
   } else {
     data.insert("ip_year", ip_year->value());
   }
-  if (ip_storage->isValid()) {
-    data.insert("ip_storage", ip_storage->value());
+  // Auswahlboxen
+  if (ip_technique->isValid()) {
+    data.insert("ip_technique", ip_technique->value());
   } else {
-    messanger.noticeMessage(ip_storage->notes());
-    ip_storage->setFocus();
+    messanger.notice(ip_technique->notes());
+    ip_technique->setFocus();
     data.clear();
     return data;
   }
-  if (ip_price->isValid()) {
-    data.insert("ip_price", ip_price->value());
+  if (ip_storage->isValid()) {
+    data.insert("ip_storage", ip_storage->value());
   } else {
-    messanger.noticeMessage(ip_price->notes());
-    ip_price->setFocus();
+    messanger.notice(ip_storage->notes());
+    ip_storage->setFocus();
     data.clear();
     return data;
   }
@@ -509,13 +538,15 @@ void PrintsEditor::importSqlResult() {
   }
   blockSignals(false);
 
-  // Nach Ersteintrag zurück setzen!
-  resetModified();
-
   // Suche Bilddaten
   int id = ip_id->value().toInt();
-  if (id > 0)
+  if (id > 0) {
+    m_imageToolBar->setArticleId(id);
+    m_imageToolBar->setActive(true);
     m_imageView->searchImageById(id);
+  }
+  // Nach Ersteintrag zurück setzen!
+  resetModified();
 }
 
 void PrintsEditor::clearDataFields() {
@@ -585,6 +616,10 @@ void PrintsEditor::setSqlQueryData(const QString &key, const QVariant &value) {
     ip_storage->setValue(value);
     return;
   }
+  if (key.contains("ip_technique")) {
+    ip_technique->setValue(value);
+    return;
+  }
   if (key.contains("ip_price")) {
     ip_price->setValue(value);
     return;
@@ -633,9 +668,10 @@ void PrintsEditor::saveData() {
 
 void PrintsEditor::changeEvent(QEvent *event) {
   if (event->type() == QEvent::EnabledChange) {
-    ip_condition->loadDataset("ip_condition");
+    ip_condition->loadDataset("condition");
+    ip_technique->loadDataset();
     ip_designation->loadDataset("ip_designation");
-    ip_storage->loadStorageData();
+    ip_storage->loadDataset();
   }
 }
 
@@ -663,19 +699,18 @@ void PrintsEditor::editPrintsEntry(const QString &condition) {
     }
   } else {
     MessageBox messanger(this);
-    messanger.queryFail(db->fetchErrors(), condition);
+    messanger.failed(db->fetchErrors(), condition);
     return;
   }
 
   if (!sqlQueryResult.isEmpty() && !m_actionBar->isRestoreable())
     m_actionBar->setRestoreable(true);
 
-  btn_imaging->setEnabled(true);
   importSqlResult();
 }
 
 void PrintsEditor::createPrintsEntry() {
   setEnabled(true);
-  btn_imaging->setEnabled(false);
+  m_imageToolBar->setActive(false);
   resetModified();
 }

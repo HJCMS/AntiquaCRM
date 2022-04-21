@@ -2,62 +2,86 @@
 // vim: set fileencoding=utf-8
 
 #include "datatablemodel.h"
-#include "addentrydialog.h"
 #include "version.h"
 
 #include <QtCore/QDebug>
-#include <QtSql/QSqlError>
-#include <QtSql/QSqlField>
-#include <QtSql/QSqlIndex>
-#include <QtSql/QSqlQuery>
-#include <QtSql/QSqlRelationalDelegate>
+#include <QtSql>
 
 DataTableModel::DataTableModel(const QString &field, QTableView *parent,
                                QSqlDatabase db)
     : QSqlTableModel{parent, db}, p_db(db), p_type(field) {
   setObjectName("DataTableModel");
-  setTable("ui_autofill_keywords");
-  setPrimaryKey(p_db.primaryIndex("ui_autofill_keywords"));
+  setTable(p_table);
   setFilter("k_table_cell LIKE '" + p_type + "'");
-  setSort(1, Qt::AscendingOrder);
+  setSort(1, Qt::AscendingOrder); /**< ORDER BY */
   setEditStrategy(QSqlTableModel::OnManualSubmit);
-
-  connect(this, SIGNAL(dataChanged(const QModelIndex &, const QModelIndex &)),
-          this, SLOT(dataUpdate(const QModelIndex &, const QModelIndex &)));
 }
 
-void DataTableModel::dataUpdate(const QModelIndex &topLeft,
-                                const QModelIndex &bottomRight) {
-  // if (topLeft.isValid() || bottomRight.isValid())
-    emit s_dataChanged(true);
-}
+bool DataTableModel::updateData(const QModelIndex &index,
+                                const QVariant &value) {
+  if (!index.isValid())
+    return false;
 
-void DataTableModel::insertEntry() {
-  QSqlRecord rec = record();
-  rec.setValue("k_table_cell", p_type);
-
-  AddEntryDialog dialog;
-  if (dialog.exec()) {
-    QString data = dialog.value().toString();
-    if (data.isEmpty())
-      return;
-
-    rec.setValue("k_keyword", data);
-  } else {
-    return;
+  QString set;
+  QStringList list;
+  QSqlRecord rec = record(index.row());
+  for (int i = 0; i < rec.count(); i++) {
+    if (rec.field(i).name() == rec.field(index.column()).name()) {
+      set = rec.field(i).name() + "='" + value.toString() + "'";
+    } else {
+      QString w(rec.field(i).name());
+      w.append(" LIKE '");
+      w.append(rec.value(i).toString());
+      w.append("'");
+      list.append(w);
+    }
   }
 
-  if (insertRowIntoTable(rec)) {
-    submitAll();
-  } else {
-    qDebug() << p_db.lastError().text();
+  QString sql("UPDATE " + p_table + " SET ");
+  sql.append(set);
+  sql.append(" WHERE ");
+  sql.append(list.join(" AND "));
+  sql.append(";");
+
+  QSqlQuery query(p_db);
+  if (!query.exec(sql)) {
+    QString err = query.lastError().text();
+    qDebug() << Q_FUNC_INFO << sql << err;
+    emit s_sqlError(err);
+    return false;
   }
+  submitAll();
+  return true;
 }
 
 void DataTableModel::removeData(const QModelIndex &index) {
   selectRow(index.row());
   if (removeRow(index.row()))
     submitAll();
+}
+
+bool DataTableModel::insertSqlQuery(const QSqlRecord &record) {
+  QStringList fields;
+  QStringList values;
+  for (int i = 0; i < record.count(); i++) {
+    fields.append(record.fieldName(i));
+    values.append("'" + record.value(i).toString() + "'");
+  }
+  QString sql("INSERT INTO " + p_table + " (");
+  sql.append(fields.join(","));
+  sql.append(") VALUES (");
+  sql.append(values.join(","));
+  sql.append(");");
+
+  QSqlQuery query(p_db);
+  if (!query.exec(sql)) {
+    QString err = query.lastError().text();
+    qDebug() << Q_FUNC_INFO << sql << err;
+    emit s_sqlError(err);
+    return false;
+  }
+  submitAll();
+  return true;
 }
 
 QVariant DataTableModel::data(const QModelIndex &index, int role) const {
@@ -130,7 +154,5 @@ bool DataTableModel::setData(const QModelIndex &index, const QVariant &value,
   default: // Unknown
     return false;
   }
-  return QSqlTableModel::setData(index, buffer, role);
+  return updateData(index, buffer);
 }
-
-DataTableModel::~DataTableModel() {}

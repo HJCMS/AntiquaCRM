@@ -4,8 +4,18 @@
 <context>
     <name>AddEntryDialog</name>
     <message>
-        <location filename="../sqltables/addentrydialog.cpp" line="+22"/>
+        <location filename="../uicompleter/addentrydialog.cpp" line="+19"/>
+        <source>Add new entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>A new entry require a valid Keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -31,7 +41,7 @@
 <context>
     <name>BookEditor</name>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="+27"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="+28"/>
         <source>Edit Book Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -111,12 +121,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
-        <source>Book Title Extended:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="+27"/>
         <source>Extended Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -181,12 +186,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
-        <source>Extended Title or Book Subtitle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+19"/>
+        <location line="+36"/>
         <source>Format: Firstname lastname (Different Authors separated by comma).</source>
         <translation type="unfinished"></translation>
     </message>
@@ -211,33 +211,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+34"/>
-        <source>Create order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Create a purchase order from this listing.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+227"/>
+        <location line="+242"/>
         <source>Missing Article ID for Update.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+114"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+104"/>
         <source>No datasets were found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-582"/>
-        <location line="+600"/>
+        <location line="+18"/>
         <source>Booktitle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -262,7 +251,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-631"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Booktitle Extended:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Extended Title or Subtitle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+617"/>
         <source>External Book Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -277,7 +281,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-515"/>
+        <location line="-506"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -299,34 +303,24 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-242"/>
-        <location line="+696"/>
+        <location line="-233"/>
+        <location line="+678"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-575"/>
-        <location line="+585"/>
+        <location line="-557"/>
+        <location line="+567"/>
         <source>Publisher</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-493"/>
-        <source>Picture</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Open the Imaging Dialog for Import and Edit Pictures.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+125"/>
+        <location line="-368"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-405"/>
+        <location line="-384"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -436,9 +430,9 @@
     </message>
 </context>
 <context>
-    <name>CompleterTable</name>
+    <name>CompleterDialog</name>
     <message>
-        <location filename="../sqltables/completertable.cpp" line="+31"/>
+        <location filename="../uicompleter/completerdialog.cpp" line="+21"/>
         <source>Modify Edition dataset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -448,34 +442,25 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Editing Keyword Tables</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
+        <location line="+6"/>
         <source>Please enter the keywords here that should be suggested in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+13"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>CompleterView</name>
     <message>
-        <location line="+10"/>
-        <location line="+34"/>
-        <source>add new entry</source>
+        <location filename="../uicompleter/completerview.cpp" line="+59"/>
+        <source>SQL Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-28"/>
-        <location line="+31"/>
-        <source>remove entry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-17"/>
+        <location line="+26"/>
         <source>Entry delete</source>
         <translation type="unfinished"></translation>
     </message>
@@ -487,6 +472,16 @@
     <message>
         <location line="+13"/>
         <source>Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Add new entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Remove entry</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -516,7 +511,7 @@
 <context>
     <name>DataTableModel</name>
     <message>
-        <location filename="../sqltables/datatablemodel.cpp" line="+92"/>
+        <location filename="../uicompleter/datatablemodel.cpp" line="+116"/>
         <source>Group</source>
         <translation type="unfinished"></translation>
     </message>
@@ -735,6 +730,47 @@
     </message>
 </context>
 <context>
+    <name>ImageToolBar</name>
+    <message>
+        <location filename="../inventory/imagetoolbar.cpp" line="+17"/>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Open the Imaging Dialog for Import and Edit Pictures.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Remove image from Database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ImageWidget</name>
+    <message>
+        <location filename="../inventory/imagewidget.cpp" line="+77"/>
+        <source>no image in database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Missing Article Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>SQL Image Query fails.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>IntSpinBox</name>
     <message>
         <location filename="../inventory/intspinbox.cpp" line="+11"/>
@@ -760,7 +796,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+93"/>
         <source>ISBN is set to required and must be a valid 10 or 13 digit number.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -804,21 +840,26 @@
     </message>
     <message>
         <location line="+4"/>
-        <source>Condition</source>
+        <source>Conditions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Designation</source>
+        <source>Book Designations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+5"/>
+        <source>Prints Designation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+57"/>
         <source>SQL Server Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-61"/>
+        <location line="-80"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -973,7 +1014,7 @@
 <context>
     <name>PrintsEditor</name>
     <message>
-        <location filename="../inventoryprints/printseditor.cpp" line="+62"/>
+        <location filename="../inventoryprints/printseditor.cpp" line="+64"/>
         <source>Count:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -988,12 +1029,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Signed Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="+51"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1003,7 +1039,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-38"/>
         <source>Year:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1013,13 +1049,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+9"/>
+        <source>Kolorit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Views</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+32"/>
         <source>Book &amp;Title:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>Booktitle</source>
+        <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1063,47 +1114,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Enter the technique.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Publisher</source>
+        <location line="+16"/>
+        <source>Representation:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>Format:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Category Keywords for Shopsystems.</source>
+        <source>Representation format (width)x(height) followed bei format unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Chop Keyword</source>
+        <source>Representation format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+16"/>
+        <source>Condition from this object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-8"/>
         <source>Condition:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-27"/>
+        <source>Technique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Select technique.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Condition of this Book. See also Configuration conditions Table.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Designation:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1113,27 +1164,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Create order</source>
+        <location line="+1"/>
+        <source>Outer Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Create a purchase order from this listing.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Picture</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Open the Imaging Dialog for Import and Edit Pictures.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+20"/>
+        <location line="+30"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -1155,17 +1191,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+67"/>
         <source>Data saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+103"/>
         <source>Missing Article ID for Update.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+114"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1243,7 +1279,7 @@
 <context>
     <name>PrintsTableView</name>
     <message>
-        <location filename="../inventoryprints/printstableview.cpp" line="+128"/>
+        <location filename="../inventoryprints/printstableview.cpp" line="+129"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1480,8 +1516,8 @@
 <context>
     <name>StorageEdit</name>
     <message>
-        <location filename="../inventory/storageedit.cpp" line="+28"/>
-        <source>Storage</source>
+        <location filename="../inventory/storageedit.cpp" line="+27"/>
+        <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1503,7 +1539,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+109"/>
+        <location line="+110"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1525,6 +1561,14 @@
     <message>
         <location line="+3"/>
         <source>contains invalid input.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TechniqueEdit</name>
+    <message>
+        <location filename="../inventory/techniqueedit.cpp" line="+60"/>
+        <source>Technique field is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

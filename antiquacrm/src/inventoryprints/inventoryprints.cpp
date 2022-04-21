@@ -160,7 +160,7 @@ void InventoryPrints::openEditor(const QString &condition) {
 
 void InventoryPrints::displayMessageBox(const QString &msg) {
   MessageBox *box = new MessageBox(this);
-  box->noticeMessage(msg);
+  box->notice(msg);
 }
 
 void InventoryPrints::createPrintsEntry() {

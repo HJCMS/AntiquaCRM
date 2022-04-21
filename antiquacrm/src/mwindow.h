@@ -27,20 +27,20 @@ class MWindow : public QMainWindow {
 private:
   QMenuBar *m_menuBar;
   QMenu *m_applicationMenu;
-  QMenu *m_viewsMenu;
-  QMenu *m_settingsMenu;
-  QMenu *m_tablesMenu;
   QAction *m_quitAction;
   StatusBar *m_statusBar;
   Workspace *m_workSpace;
   DockBarWidget *m_dockBarWidget;
   ApplSettings *m_Settings;
   void setupActions();
+  void openEditCondition();
+  void openEditDesignation(const QString &section);
 
 private Q_SLOTS:
+  void openCondition(bool);
+  void openBookDesignation(bool);
+  void openPrintsDesignation(bool);
   void openFileDialog(bool);
-  void openEditCondition(bool);
-  void openEditDesignation(bool);
   void openConfiguration(bool);
   void sqlErrorMessageBox(const QString &);
   void toggleFullScreen(bool);

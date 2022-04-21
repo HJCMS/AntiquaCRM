@@ -28,7 +28,7 @@
 */
 static const QString querySelect() {
   QString s("b.ip_id,b.ip_count,b.ip_title,b.ip_author,");
-  s.append("b.ip_technique,b.ip_year,b.ip_price,s.sl_storage,b.ip_landscape,b."
+  s.append("t.rpt_type,b.ip_year,b.ip_price,s.sl_storage,b.ip_landscape,b."
            "ip_changed");
   s.append(",(CASE WHEN i.im_id IS NOT NULL THEN true ELSE false END) AS "
            "image_exists ");
@@ -43,6 +43,7 @@ static const QString querySelect() {
 static const QString queryTables() {
   QString s(" FROM inventory_prints AS b");
   s.append(" LEFT JOIN ref_storage_location AS s ON s.sl_id=b.ip_storage");
+  s.append(" LEFT JOIN ref_print_technique AS t ON t.rpt_id=b.ip_technique");
   s.append(" LEFT JOIN inventory_images AS i ON i.im_id=b.ip_id ");
   // s.append(" ");
   return s;
@@ -107,7 +108,7 @@ bool PrintsTableView::sqlExecQuery(const QString &statement) {
     m_queryModel->setQuery(statement, db);
     if (m_queryModel->lastError().isValid()) {
       MessageBox message(this);
-      message.queryFail(statement,m_queryModel->lastError().text());
+      message.failed(statement,m_queryModel->lastError().text());
       return false;
     }
     emit s_rowsChanged(m_queryModel->rowCount());

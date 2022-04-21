@@ -24,8 +24,7 @@ StorageEdit::StorageEdit(QWidget *parent) : QFrame{parent} {
   layout->addWidget(m_storage);
 
   m_search = new QLineEdit(this);
-  m_search->setMaximumWidth(100);
-  m_search->setPlaceholderText(tr("Storage"));
+  m_search->setPlaceholderText(tr("Search"));
   layout->addWidget(m_search);
 
   setLayout(layout);
@@ -82,7 +81,7 @@ void StorageEdit::setStorageData() {
   }
 }
 
-void StorageEdit::loadStorageData() { setStorageData(); }
+void StorageEdit::loadDataset() { setStorageData(); }
 
 void StorageEdit::setValue(const QVariant &val) {
   if (m_storage->count() < 2) {

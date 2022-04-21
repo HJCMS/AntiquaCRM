@@ -23,7 +23,8 @@ class StrLineEdit : public QLineEdit {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
-  Q_PROPERTY(bool required READ isRequired WRITE setRequired NOTIFY requireChanged);
+  Q_PROPERTY(
+      bool required READ isRequired WRITE setRequired NOTIFY requireChanged);
 
 private:
   /**
@@ -159,7 +160,7 @@ public:
     aufgerufen.
     @param key - column_name Qt::CaseSensitive
   */
-  void loadDataset(const QString &key);
+  void loadDataset(const QString &key = QString("condition"));
 
   /**
     @brief setMaxAllowedLength

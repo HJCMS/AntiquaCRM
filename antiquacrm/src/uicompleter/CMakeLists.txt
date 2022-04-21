@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
 
-SET(_subproject "SqlTables")
+SET(_subproject "UiCompleter")
 
 INCLUDE_DIRECTORIES (
   ${PROJECT_INCLUDE_DIRS}
@@ -15,16 +15,18 @@ SET (subproject_DATAFILES
 
 SET (subproject_SOURCES
   addentrydialog.cpp
+  completerdialog.cpp
+  completerview.cpp
   datadelegation.cpp
   datatablemodel.cpp
-  completertable.cpp
 )
 
 SET (subproject_HEADERS
   addentrydialog.h
+  completerdialog.h
+  completerview.h
   datadelegation.h
   datatablemodel.h
-  completertable.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

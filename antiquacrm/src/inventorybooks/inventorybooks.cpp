@@ -171,7 +171,7 @@ void InventoryBooks::openEditor(const QString &condition) {
 
 void InventoryBooks::displayMessageBox(const QString &msg) {
   MessageBox *box = new MessageBox(this);
-  box->noticeMessage(msg);
+  box->notice(msg);
 }
 
 void InventoryBooks::createBookEntry() {

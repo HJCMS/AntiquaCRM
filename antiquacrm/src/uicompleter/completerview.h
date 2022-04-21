@@ -2,44 +2,42 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef COMPLETERTABLE_H
-#define COMPLETERTABLE_H
+#ifndef COMPLETERVIEW_H
+#define COMPLETERVIEW_H
 
-#include <QtCore/QHash>
 #include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QTimerEvent>
 #include <QtGui/QContextMenuEvent>
 #include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlQuery>
-#include <QtWidgets/QDialog>
 #include <QtWidgets/QShortcut>
 #include <QtWidgets/QTableView>
+#include <QtWidgets/QWidget>
 
 class DataTableModel;
 
-class CompleterTable : public QDialog {
+class CompleterView : public QTableView {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
   QSqlDatabase p_db;
-  QTableView *m_tableView;
+  const QString p_type;
   DataTableModel *m_model;
   QShortcut *m_addShortcut;
-  QShortcut *m_delShortcut;
 
 private Q_SLOTS:
-  void removeSelectedEntries();
+  void errorPopUp(const QString &);
+  void createNewEntry();
+  void removeSelection();
 
 protected:
   void contextMenuEvent(QContextMenuEvent *ev);
 
+//Q_SIGNALS:
+//public Q_SLOTS:
+
 public:
-  explicit CompleterTable(QWidget *parent = nullptr,
-                          const QString &filter = QString("IS NOT NULL"));
+  explicit CompleterView(const QString &filter, QWidget *parent = nullptr);
 };
 
-#endif // COMPLETERTABLE_H
+#endif // COMPLETERVIEW_H

@@ -32,6 +32,8 @@ class StorageEdit;
 class StrLineEdit;
 class TextField;
 class YearEdit;
+class ImageToolBar;
+class TechniqueEdit;
 
 class PrintsEditor : public QWidget {
   Q_OBJECT
@@ -40,8 +42,10 @@ class PrintsEditor : public QWidget {
 
 private:
   HJCMS::SqlCore *db;                 /**< @brief SQL Database Connection */
-  BoolBox *ip_kolorit;                /**< @brief koloriert? */
-  BoolBox *ip_restricted;             /**< @brief Zensiert? */
+  BoolBox *ip_kolorit;                /**< @brief koloriert */
+  BoolBox *ip_landscape;              /**< @brief Ansicht */
+  BoolBox *ip_views;                  /**< @brief koloriert */
+  BoolBox *ip_restricted;             /**< @brief Zensiert */
   StorageEdit *ip_storage;            /**< @brief Lager bestimmung */
   YearEdit *ip_year;                  /**< @brief Jahr */
   PriceEdit *ip_price;                /**< @brief Preis */
@@ -51,15 +55,12 @@ private:
   StrLineEdit *ip_condition;          /**< @brief Zustands beschreibung */
   StrLineEdit *ip_designation;        /**< @brief Umschreibung */
   StrLineEdit *ip_format;             /**< @brief Ausgabeformat */
-  StrLineEdit *ip_technique;          /**< @brief Herausgeber/Verlag */
   StrLineEdit *ip_title;              /**< @brief Print Titel */
   StrLineEdit *ip_title_extended;     /**< @brief Ereiterte Titel  */
   TextField *ip_internal_description; /**< @brief Interne Beschreibung */
   TextField *ip_description;          /**< @brief Öffentliche Beschreibung */
-  QPushButton *btn_createJob;         /**< @brief Auftragserstellung */
-  QPushButton *btn_imaging;           /**< @brief IMage Import/Edit Dialog */
-  IsbnRequest *m_isbnRequest;         /**< @brief ISBN Abfrage Klasse */
-  QTabWidget *m_tabWidget;   /**< @brief BeschreibungsText und ISBN Info  */
+  TechniqueEdit *ip_technique;        /**< @brief Herausgeber/Verlag */
+  QTabWidget *m_tabWidget; /**< @brief BeschreibungsText und ISBN Info  */
 
   /**
      @brief PrintData
@@ -102,10 +103,9 @@ private:
   EditorActionBar *m_actionBar;
 
   /**
-    @brief Wird im Konstruktor bei TabWidget gesetzt
-    und in für IsbnInfo Operationen verwendet!
+    @brief Bilder operations Knopfleiste
   */
-  int isbnTabIndex;
+  ImageToolBar *m_imageToolBar;
 
   /**
     @brief Eingebettete Bildansicht
