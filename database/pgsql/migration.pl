@@ -13,6 +13,9 @@ use DBI;
 use Text::Roman qw(:all);
 use Switch;
 
+
+my $enable_migration = "customers";
+
 ## Wird für Umlaute auf dem terminial benötigt
 # use open ':utf8';
 binmode STDOUT, ":utf8";
@@ -929,6 +932,9 @@ ORDER BY artnr ASC;"
   }
 };
 
+## BEGIN FULL Migration
+if ($enable_migration == "full") {
+
 =begin MAIN
   Beginne mit der Script verarbeitung.
 =cut
@@ -960,8 +966,10 @@ create_inventory_prints();
 ## Nehme Technik ID's aus Tabelle "ref_print_technique"
 update_prints_technique();
 
+} ## END FULL Migration
+
 ## Alle Inventar Artikel
-# show_table_fields("xgrart");
+show_table_fields("");
 
 ## Tabellenfelder abfragen
 # show_table_fields("xgr");
@@ -971,8 +979,6 @@ update_prints_technique();
 # test_query();
 
 # print "--\n";
-# print "VACUUM VERBOSE ANALYZE public.inventory_books;\n";
-# print "ANALYZE VERBOSE public.inventory_prints;\n";
 
 =begin disconnect
   Aufräumen und SQL Verbindungen schliessen.

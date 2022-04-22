@@ -25,4 +25,5 @@ InventoryCustomers::InventoryCustomers(int index, QTabWidget *parent)
   layout->addWidget(w);
 
   setLayout(layout);
+  // connect(, SIGNAL(s_isModified(bool)), this, SLOT(setClosable(bool)));
 }

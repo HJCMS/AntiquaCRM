@@ -336,6 +336,11 @@ public Q_SLOTS:
 
 Q_SIGNALS:
   /**
+     @brief Sende Änderungen an parent::
+  */
+  void s_isModified(bool);
+
+  /**
     @brief Sende Signal das die Ansicht verlassen werden kann!
   */
   void s_leaveEditor();

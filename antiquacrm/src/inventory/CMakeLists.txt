@@ -13,7 +13,6 @@ SET (subproject_SOURCES
  articleid.cpp
  boolbox.cpp
  editoractionbar.cpp
- editordialog.cpp
  filedialog.cpp
  imagetoolbar.cpp
  imagewidget.cpp
@@ -35,7 +34,6 @@ SET (subproject_HEADERS
  articleid.h
  boolbox.h
  editoractionbar.h
- editordialog.h
  filedialog.h
  imagetoolbar.h
  imagewidget.h

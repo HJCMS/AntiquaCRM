@@ -31,6 +31,9 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
   m_workSpace = new Workspace(this);
   setCentralWidget(m_workSpace);
 
+  m_signalMapper = new QSignalMapper(this);
+  m_signalMapper->setObjectName("open_tab_signals");
+
   // Menues
   m_menuBar = menuBar();
   setupActions();
@@ -55,8 +58,30 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
   if (m_Settings->contains("window/windowState"))
     restoreState(m_Settings->value("window/windowState").toByteArray());
 
+  connect(m_signalMapper, SIGNAL(mappedInt(int)), m_workSpace,
+          SLOT(openTab(int)));
+
   connect(this, SIGNAL(setStatusMessage(const QString &)), this,
           SLOT(postStatusBarMessage(const QString &)));
+}
+
+void MWindow::setupTabMenu(QMenu *parent) {
+  const QIcon tabIcon = myIcon("tab_new");
+
+  QAction *ac_Books = parent->addAction(tabIcon, tr("Books"));
+  ac_Books->setObjectName("open_book_tab");
+  m_signalMapper->setMapping(ac_Books, Workspace::Books);
+  connect(ac_Books, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
+
+  QAction *ac_Prints = parent->addAction(tabIcon, tr("Prints"));
+  ac_Prints->setObjectName("open_book_tab");
+  m_signalMapper->setMapping(ac_Prints, Workspace::Prints);
+  connect(ac_Prints, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
+
+  QAction *ac_Customers = parent->addAction(tabIcon, tr("Customers"));
+  ac_Customers->setObjectName("open_book_tab");
+  m_signalMapper->setMapping(ac_Customers, Workspace::Customers);
+  connect(ac_Customers, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
 }
 
 /**
@@ -99,7 +124,7 @@ void MWindow::setupActions() {
   /**
    @todo Open hidden Tabs
   */
-  m_viewsMenu->addAction(tr("Open Tab"));
+  setupTabMenu(m_viewsMenu);
 
   m_viewsMenu->addSeparator();
   QAction *a_fs = m_viewsMenu->addAction(tr("Fullscreen"));

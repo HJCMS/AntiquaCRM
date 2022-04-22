@@ -34,6 +34,11 @@ class InventoryBooks : public QWidget {
 
 private:
   /**
+   @brief Gibt es Änderungen?
+  */
+  bool closable = false;
+
+  /**
     @brief Ist der TabIndex siehe Konstruktor
   */
   int tabIndex;
@@ -103,6 +108,12 @@ private:
   void openEditor(const QString &condition);
 
 private Q_SLOTS:
+  /**
+     @brief Änderungen wie isModified abfangen.
+     Wird von {*}Editor ausgelöst.
+  */
+  void setClosable(bool b) { closable = ((b) ? false : true); };
+
   /**
     @brief Reagiert auf LineEdit
       Überwacht QLineEdit::textChanged
@@ -174,6 +185,8 @@ public:
     @param parent TabWidget
   */
   explicit InventoryBooks(int index, QTabWidget *parent = nullptr);
+
+  Q_INVOKABLE bool isClosable() { return closable; };
 };
 
 #endif // INVENTORYBOOKS_H

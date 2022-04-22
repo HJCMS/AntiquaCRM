@@ -129,6 +129,8 @@ InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
           SLOT(displayMessageBox(const QString &)));
 
   connect(m_bookEditor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
+  connect(m_bookEditor, SIGNAL(s_isModified(bool)), this,
+          SLOT(setClosable(bool)));
 }
 
 void InventoryBooks::searchConvert(const QString &query) {

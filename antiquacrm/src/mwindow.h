@@ -7,6 +7,7 @@
 
 #include <QtCore/QEvent>
 #include <QtCore/QObject>
+#include <QtCore/QSignalMapper>
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QDockWidget>
@@ -32,6 +33,8 @@ private:
   Workspace *m_workSpace;
   DockBarWidget *m_dockBarWidget;
   ApplSettings *m_Settings;
+  QSignalMapper *m_signalMapper;
+  void setupTabMenu(QMenu *parent);
   void setupActions();
   void openEditCondition();
   void openEditDesignation(const QString &section);

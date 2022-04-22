@@ -23,7 +23,11 @@ class InventoryPrints : public QWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-private:
+  /**
+   @brief Gibt es Änderungen?
+  */
+  bool closable = false;
+
   /**
     @brief Ist der TabIndex siehe Konstruktor
   */
@@ -95,6 +99,11 @@ private:
 
 private Q_SLOTS:
   /**
+     @brief Änderungen wie isModified abfangen.
+  */
+  void setClosable(bool b) { closable = ((b) ? false : true); };
+
+  /**
     @brief Reagiert auf LineEdit
       Überwacht QLineEdit::textChanged
       und startet erst wenn @ref minLength
@@ -154,6 +163,8 @@ public Q_SLOTS:
 
 public:
   explicit InventoryPrints(int index, QTabWidget *parent = nullptr);
+
+  Q_INVOKABLE bool isClosable() { return closable; };
 };
 
 #endif // INVENTORYPRINTS_H
