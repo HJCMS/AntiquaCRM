@@ -10,11 +10,29 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (subproject_SOURCES
-  inventorycustomers.cpp
+ customeradditional.cpp
+ customerbillinginfo.cpp
+ customercontact.cpp
+ customeroverview.cpp
+ editcustomer.cpp
+ genderbox.cpp
+ salutationbox.cpp
+ inventorycustomers.cpp
+ phoneedit.cpp
+ emailedit.cpp
 )
 
 SET (subproject_HEADERS
-  inventorycustomers.h
+ customeradditional.h
+ customerbillinginfo.h
+ customercontact.h
+ customeroverview.h
+ editcustomer.h
+ genderbox.h
+ salutationbox.h
+ inventorycustomers.h
+ phoneedit.h
+ emailedit.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

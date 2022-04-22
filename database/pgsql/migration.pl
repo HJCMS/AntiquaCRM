@@ -14,7 +14,7 @@ use Text::Roman qw(:all);
 use Switch;
 
 
-my $enable_migration = "customers";
+my $enable_migration = "customers"; ## full
 
 ## Wird für Umlaute auf dem terminial benötigt
 # use open ':utf8';
@@ -911,6 +911,34 @@ ORDER BY artnr ASC;");
   }
 };
 
+sub insert_costumers {
+  my $table = "public.costumers";
+  my $query = $dbc->prepare("SELECT kdnr AS c_id,
+  name1 AS , plz_strasse, ort,strasse
+FROM xkd WHERE postfach IS NULL
+  AND habacht IS NULL AND aktiv='J'
+  AND ort IS NOT NULL
+  AND plz_strasse IS NOT NULL
+  AND strasse IS NOT NULL
+  AND LENGTH(plz_strasse) > 4
+ORDER BY kdnr;");
+  my $rows = $query->execute();
+  if($rows)
+  {
+    add_migration_order("${table}.INSERT");
+    print "-- Generate: ${table}.INSERT\n";
+    open(FH, '>:encoding(UTF-8)', "./import/${table}.INSERT.sql") or die $!;
+    print FH "--\n-- PostgreSQL INSERT SET $table --\n--\n";
+
+    my $set = "";
+    my $updates = 0;
+    while (my $r = $query->fetchrow_hashref())
+    {
+    }
+
+  }
+};
+
 =begin test_query
   Test Funktion für Verschiedene abfragen.
 =cut
@@ -930,10 +958,14 @@ ORDER BY artnr ASC;"
     }
     $query->finish;
   }
+  $query->finish;
+  print FH "--\n-- Query-Result: $rows\n--\n";
+  close(FH);
+  print "-- DONE: Query $rows rows and Updates $updates created.\n";
 };
 
 ## BEGIN FULL Migration
-if ($enable_migration == "full") {
+if ($enable_migration eq "full") {
 
 =begin MAIN
   Beginne mit der Script verarbeitung.
@@ -969,7 +1001,7 @@ update_prints_technique();
 } ## END FULL Migration
 
 ## Alle Inventar Artikel
-show_table_fields("");
+show_table_fields("xkd");
 
 ## Tabellenfelder abfragen
 # show_table_fields("xgr");

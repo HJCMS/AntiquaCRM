@@ -52,16 +52,10 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
   m_statusBar = new StatusBar(statusBar());
   setStatusBar(m_statusBar);
 
-  if (m_Settings->contains("window/geometry"))
-    restoreGeometry(m_Settings->value("window/geometry").toByteArray());
-
-  if (m_Settings->contains("window/windowState"))
-    restoreState(m_Settings->value("window/windowState").toByteArray());
-
   connect(m_signalMapper, SIGNAL(mappedInt(int)), m_workSpace,
           SLOT(openTab(int)));
 
-  connect(m_workSpace, SIGNAL(postMessage(const QString &)), this,
+  connect(m_workSpace, SIGNAL(s_postMessage(const QString &)), this,
           SLOT(postStatusBarMessage(const QString &)));
 
   connect(this, SIGNAL(setStatusMessage(const QString &)), this,
@@ -253,6 +247,18 @@ void MWindow::closeEvent(QCloseEvent *event) {
 
 void MWindow::postStatusBarMessage(const QString &info) {
   m_statusBar->sqlStatusMessage(info);
+}
+
+void MWindow::initDefaults() {
+  if (m_Settings->contains("window/geometry"))
+    restoreGeometry(m_Settings->value("window/geometry").toByteArray());
+
+  if (m_Settings->contains("window/windowState"))
+    restoreState(m_Settings->value("window/windowState").toByteArray());
+
+  m_workSpace->openTab(Workspace::Books);
+  m_workSpace->openTab(Workspace::Prints);
+  m_workSpace->openTab(Workspace::Customers);
 }
 
 MWindow::~MWindow() { qInfo("Mainwindow onload"); }

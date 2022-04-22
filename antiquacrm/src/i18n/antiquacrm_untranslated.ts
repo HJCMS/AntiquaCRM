@@ -221,7 +221,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+102"/>
         <source>No datasets were found.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -251,7 +251,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-631"/>
+        <location line="-629"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -266,7 +266,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+617"/>
+        <location line="+615"/>
         <source>External Book Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -281,7 +281,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-506"/>
+        <location line="-504"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -304,18 +304,18 @@
     </message>
     <message>
         <location line="-233"/>
-        <location line="+678"/>
+        <location line="+676"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-557"/>
-        <location line="+567"/>
+        <location line="-555"/>
+        <location line="+565"/>
         <source>Publisher</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-368"/>
+        <location line="-366"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -509,6 +509,84 @@
     </message>
 </context>
 <context>
+    <name>CustomerContact</name>
+    <message>
+        <location filename="../inventorycustomers/customercontact.cpp" line="+27"/>
+        <source>Gender:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Title:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Firstname:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Firstname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Lastname:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Lastname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Primary phone number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Secundary phone number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Primary mobile number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Secundary mobile number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>fax number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Website:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Primary E-Mail Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Secundary E-Mail Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Company, Institute or Organisation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DataTableModel</name>
     <message>
         <location filename="../uicompleter/datatablemodel.cpp" line="+116"/>
@@ -523,6 +601,42 @@
     <message>
         <location line="+3"/>
         <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EMailEdit</name>
+    <message>
+        <location filename="../inventorycustomers/emailedit.cpp" line="+22"/>
+        <source>usage.example@example.com</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+73"/>
+        <source>a E-Mail Address is required and can not empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EditCustomer</name>
+    <message>
+        <location filename="../inventorycustomers/editcustomer.cpp" line="+44"/>
+        <source>Overview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Edit Contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Edit Billing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Additional</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -570,39 +684,6 @@
     </message>
 </context>
 <context>
-    <name>EditorDialog</name>
-    <message>
-        <location filename="../inventory/editordialog.cpp" line="+24"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Save current dataset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Close the dialog without saving.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Restore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Restore dataset to last save operation.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>FileDialog</name>
     <message>
         <location filename="../inventory/filedialog.cpp" line="+21"/>
@@ -632,6 +713,34 @@
     <message>
         <location line="+1"/>
         <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GenderBox</name>
+    <message>
+        <location filename="../inventorycustomers/genderbox.cpp" line="+11"/>
+        <source>Gender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Without disclosures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Male</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Female</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Various</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -804,7 +913,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+66"/>
+        <location filename="../mwindow.cpp" line="+88"/>
         <source>Application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -829,12 +938,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Open Tab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
+        <location line="+21"/>
         <source>Edit tables</source>
         <translation type="unfinished"></translation>
     </message>
@@ -859,12 +963,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-80"/>
+        <location line="-82"/>
+        <location line="+95"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-35"/>
+        <location line="-154"/>
+        <source>Books</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Prints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Customers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -874,13 +994,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+37"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+91"/>
+        <source>Disable Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -922,6 +1047,14 @@
     <message>
         <location line="+6"/>
         <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PhoneEdit</name>
+    <message>
+        <location filename="../inventorycustomers/phoneedit.cpp" line="+103"/>
+        <source>The Phone Number is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1297,7 +1430,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../inventorybooks/inventorybooks.cpp" line="+30"/>
+        <location filename="../inventorybooks/inventorybooks.cpp" line="+28"/>
         <source>Book Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1341,6 +1474,24 @@
     <message>
         <location line="+12"/>
         <source>Current inventory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SalutationBox</name>
+    <message>
+        <location filename="../inventorycustomers/salutationbox.cpp" line="+30"/>
+        <source>Title or Salutation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Without disclosures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <source>a Title is requierd</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1657,7 +1808,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Prints</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1667,13 +1818,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+6"/>
         <source>Customers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Customers inventory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Cant close this tab, unsafed changes!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

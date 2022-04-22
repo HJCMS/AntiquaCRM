@@ -599,7 +599,6 @@ void PrintsEditor::restoreDataset() {
   if (sqlQueryResult.isEmpty())
     return;
 
-  clearDataFields(); /**< Alle Datenfelder leeren */
   importSqlResult();
 }
 

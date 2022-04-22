@@ -26,6 +26,15 @@ private:
   */
   bool closable = true;
 
+protected:
+  /**
+    @brief Ab Zeichenanzahl startet die Abfrage!
+    @see searchConvert
+  */
+  int minLength = 5;
+
+  virtual void openEditor(const QString &) = 0;
+
 protected Q_SLOTS:
   /**
      @brief Änderungen wie isModified abfangen.
@@ -38,6 +47,19 @@ Q_SIGNALS:
     @brief Wegen QML hier eingefügt.
   */
   void closeableChanged(bool);
+
+  /**
+    @brief Sende eine Nachricht an das Elternfenster
+    @param MessageBody
+  */
+  void s_postMessage(const QString &);
+
+public Q_SLOTS:
+  /**
+    @brief Öffnet das Nachrichtenfenster
+    @param MessageBody
+  */
+  void displayMessageBox(const QString &);
 
 public:
   explicit Inventory(QWidget *parent = nullptr);

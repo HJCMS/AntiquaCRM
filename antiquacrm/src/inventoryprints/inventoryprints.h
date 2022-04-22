@@ -26,17 +26,6 @@ class InventoryPrints : public Inventory {
 
 private:
   /**
-    @brief Ist der TabIndex siehe Konstruktor
-  */
-  int tabIndex;
-
-  /**
-    @brief Ab Zeichenanzahl startet die Abfrage!
-    @see searchConvert
-  */
-  int minLength;
-
-  /**
     @brief Fenster gruppierung
   */
   QStackedWidget *m_stackedWidget;
@@ -75,6 +64,7 @@ private:
 
   /** @} */
 
+protected:
   /**
     @brief Öffne mit der SQL-Abfrage den Printsditor
     Wenn die Abfrage nicht leer ist wechsle zum
@@ -140,12 +130,6 @@ private Q_SLOTS:
   void updateValidator(int);
 
 public Q_SLOTS:
-  /**
-    @brief Öffnet das Nachrichtenfenster
-    @param MessageBody
-  */
-  void displayMessageBox(const QString &);
-
   /**
     @brief Aktiviert das PrintsEditor Fenster
     @li Aktiviere PrintsEditor Widget

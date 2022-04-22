@@ -1,5 +1,4 @@
 #include "workspace.h"
-#include "applsettings.h"
 #include "inventorybooks.h"
 #include "inventorycustomers.h"
 #include "inventoryprints.h"
@@ -8,8 +7,6 @@
 #include <QtCore/QDebug>
 #include <QtCore/QMetaObject>
 #include <QtWidgets/QTabBar>
-
-static const QIcon ptabIcon() { return myIcon("windowlist"); }
 
 Workspace::Workspace(QWidget *parent) : QTabWidget{parent} {
   setObjectName("WorkspaceTabWidget");
@@ -20,8 +17,6 @@ Workspace::Workspace(QWidget *parent) : QTabWidget{parent} {
   setDocumentMode(true);
   tabBar()->setExpanding(true);
 #endif
-
-  m_cfg = new ApplSettings();
 
   connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeTabClicked(int)));
 }
@@ -56,7 +51,7 @@ void Workspace::closeTabClicked(int index) {
     removeTab(index);
     return;
   }
-  emit postMessage(tr("Cant close this tab, unsafed changes!"));
+  emit s_postMessage(tr("Cant close this tab, unsafed changes!"));
 }
 
 void Workspace::tabRemoved(int index) {

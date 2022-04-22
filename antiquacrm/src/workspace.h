@@ -9,7 +9,6 @@
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QWidget>
 
-class ApplSettings;
 class InventoryBooks;
 class InventoryPrints;
 class InventoryCustomers;
@@ -20,23 +19,36 @@ class Workspace : public QTabWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  ApplSettings *m_cfg;
   InventoryBooks *m_tabBooks;
   InventoryPrints *m_tabPrints;
   InventoryCustomers *m_tabCustomers;
+
+  /**
+     @brief Bücher Inventar öffnen
+  */
   void addInventoryBooks(int);
+
+  /**
+     @brief Drucke & Stiche Inventar öffnen
+  */
   void addInventoryPrints(int);
+
+  /**
+     @brief Kundenregister Inventar öffnen
+  */
   void addInventoryCustomers(int);
 
 private Q_SLOTS:
+  /**
+    @brief Wenn der Tabe schließen Knopf betätigt wurde.
+  */
   void closeTabClicked(int);
 
 protected:
+  /**
+    @brief Kann der Tab aus dem Speicher freigegeben werden?
+  */
   virtual void tabRemoved(int index);
-
-Q_SIGNALS:
-  void postMessage(const QString &);
-  void tabEntered(int);
 
 public Q_SLOTS:
   /**
@@ -45,7 +57,16 @@ public Q_SLOTS:
   */
   void openTab(int index = 0);
 
+Q_SIGNALS:
+  /**
+    @brief Nachrichten an das Hauptfenster
+  */
+  void s_postMessage(const QString &);
+
 public:
+  /**
+     @brief Helfer zur Identifizierung der Tabs
+  */
   enum Tab { Books = 1, Prints = 2, Customers = 3 };
   Q_ENUM(Tab)
 

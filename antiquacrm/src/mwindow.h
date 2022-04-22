@@ -61,6 +61,7 @@ public Q_SLOTS:
 
 public:
   explicit MWindow(QWidget *parent = nullptr);
+  void initDefaults();
   virtual ~MWindow();
 };
 #endif // ANTIQUACRM_MWINDOW_H

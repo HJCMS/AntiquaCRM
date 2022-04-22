@@ -5,8 +5,6 @@
 #include "applsettings.h"
 #include "bookeditor.h"
 #include "bookstableview.h"
-#include "editordialog.h"
-#include "messagebox.h"
 #include "searchbar.h"
 #include "statsactionbar.h"
 #include "version.h"
@@ -168,11 +166,6 @@ void InventoryBooks::openEditor(const QString &condition) {
     m_bookEditor->editBookEntry(condition);
     m_stackedWidget->setCurrentWidget(m_bookEditor);
   }
-}
-
-void InventoryBooks::displayMessageBox(const QString &msg) {
-  MessageBox *box = new MessageBox(this);
-  box->notice(msg);
 }
 
 void InventoryBooks::createBookEntry() {

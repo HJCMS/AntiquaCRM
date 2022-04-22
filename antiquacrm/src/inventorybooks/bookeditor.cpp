@@ -693,12 +693,10 @@ void BookEditor::restoreDataset() {
   if (sqlQueryResult.isEmpty())
     return;
 
-  clearDataFields();
   importSqlResult();
 }
 
 void BookEditor::setSqlQueryData(const QString &key, const QVariant &value) {
-  // qDebug() << key << value;
   if (key.contains("ib_id")) {
     ib_id->setValue(value);
     return;

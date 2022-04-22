@@ -43,6 +43,7 @@ int MApplication::exec() {
   m_mainWindow->show();
   m_mainWindow->setFocus(Qt::ActiveWindowFocusReason);
   m_mainWindow->activateWindow();
+  m_mainWindow->initDefaults();
 
   return QApplication::exec();
 }

@@ -160,11 +160,6 @@ void InventoryPrints::openEditor(const QString &condition) {
   }
 }
 
-void InventoryPrints::displayMessageBox(const QString &msg) {
-  MessageBox *box = new MessageBox(this);
-  box->notice(msg);
-}
-
 void InventoryPrints::createPrintsEntry() {
   m_printsEditor->createPrintsEntry();
   m_stackedWidget->setCurrentWidget(m_printsEditor);
