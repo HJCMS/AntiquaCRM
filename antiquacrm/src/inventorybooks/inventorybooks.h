@@ -5,6 +5,8 @@
 #ifndef INVENTORYBOOKS_H
 #define INVENTORYBOOKS_H
 
+#include "inventory.h"
+
 #include <QtCore/QList>
 #include <QtCore/QObject>
 #include <QtWidgets/QStackedWidget>
@@ -27,22 +29,12 @@ class BookEditor;
   @li Bucheditor
  @note Im ladezustand ist das BuchEditor Fenster deaktiviert.
 */
-class InventoryBooks : public QWidget {
+class InventoryBooks : public Inventory {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  /**
-   @brief Gibt es Änderungen?
-  */
-  bool closable = false;
-
-  /**
-    @brief Ist der TabIndex siehe Konstruktor
-  */
-  int tabIndex;
-
   /**
     @brief Ab Zeichenanzahl startet die Abfrage!
     @see searchConvert
@@ -108,12 +100,6 @@ private:
   void openEditor(const QString &condition);
 
 private Q_SLOTS:
-  /**
-     @brief Änderungen wie isModified abfangen.
-     Wird von {*}Editor ausgelöst.
-  */
-  void setClosable(bool b) { closable = ((b) ? false : true); };
-
   /**
     @brief Reagiert auf LineEdit
       Überwacht QLineEdit::textChanged
@@ -184,9 +170,7 @@ public:
     @param index  Ist der Tab-Index
     @param parent TabWidget
   */
-  explicit InventoryBooks(int index, QTabWidget *parent = nullptr);
-
-  Q_INVOKABLE bool isClosable() { return closable; };
+  explicit InventoryBooks(QWidget *parent = nullptr);
 };
 
 #endif // INVENTORYBOOKS_H

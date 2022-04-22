@@ -61,6 +61,9 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
   connect(m_signalMapper, SIGNAL(mappedInt(int)), m_workSpace,
           SLOT(openTab(int)));
 
+  connect(m_workSpace, SIGNAL(postMessage(const QString &)), this,
+          SLOT(postStatusBarMessage(const QString &)));
+
   connect(this, SIGNAL(setStatusMessage(const QString &)), this,
           SLOT(postStatusBarMessage(const QString &)));
 }
@@ -127,8 +130,10 @@ void MWindow::setupActions() {
   setupTabMenu(m_viewsMenu);
 
   m_viewsMenu->addSeparator();
-  QAction *a_fs = m_viewsMenu->addAction(tr("Fullscreen"));
-  connect(a_fs, SIGNAL(triggered(bool)), this, SLOT(toggleFullScreen(bool)));
+  m_toggleFullScreen = m_viewsMenu->addAction(tr("Fullscreen"));
+  m_toggleFullScreen->setIcon(myIcon("window_fullscreen"));
+  connect(m_toggleFullScreen, SIGNAL(triggered(bool)), this,
+          SLOT(toggleFullScreen(bool)));
 
   QMenu *m_settingsMenu = m_menuBar->addMenu(tr("Settings"));
   m_settingsMenu->setObjectName("settings_menu");
@@ -217,10 +222,15 @@ void MWindow::sqlErrorMessageBox(const QString &err) {
  */
 void MWindow::toggleFullScreen(bool b) {
   Q_UNUSED(b);
-  if (isFullScreen())
+  if (isFullScreen()) {
     setWindowState(windowState() & ~Qt::WindowFullScreen);
-  else
+    m_toggleFullScreen->setIcon(myIcon("window_fullscreen"));
+    m_toggleFullScreen->setText(tr("Fullscreen"));
+  } else {
     setWindowState(windowState() ^ Qt::WindowFullScreen);
+    m_toggleFullScreen->setIcon(myIcon("window_nofullscreen"));
+    m_toggleFullScreen->setText(tr("Disable Fullscreen"));
+  }
 }
 
 /**

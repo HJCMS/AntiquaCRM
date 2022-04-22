@@ -35,6 +35,7 @@ protected:
   virtual void tabRemoved(int index);
 
 Q_SIGNALS:
+  void postMessage(const QString &);
   void tabEntered(int);
 
 public Q_SLOTS:

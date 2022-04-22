@@ -29,6 +29,7 @@ private:
   QMenuBar *m_menuBar;
   QMenu *m_applicationMenu;
   QAction *m_quitAction;
+  QAction *m_toggleFullScreen;
   StatusBar *m_statusBar;
   Workspace *m_workSpace;
   DockBarWidget *m_dockBarWidget;

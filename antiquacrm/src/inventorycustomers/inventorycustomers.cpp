@@ -9,8 +9,8 @@
 #include <QtWidgets/QLayout>
 #include <QtWidgets/QVBoxLayout>
 
-InventoryCustomers::InventoryCustomers(int index, QTabWidget *parent)
-    : QWidget{parent} {
+InventoryCustomers::InventoryCustomers(QWidget *parent)
+    : Inventory{parent} {
   setObjectName("InventoryCustomers");
   setWindowTitle("TabCustomers");
 

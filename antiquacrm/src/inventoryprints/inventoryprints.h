@@ -5,6 +5,8 @@
 #ifndef INVENTORYPRINTS_H
 #define INVENTORYPRINTS_H
 
+#include "inventory.h"
+
 #include <QtCore/QList>
 #include <QtCore/QObject>
 #include <QtWidgets/QPushButton>
@@ -17,17 +19,12 @@ class PrintsTableView;
 class PrintsEditor;
 class StatsActionBar;
 
-class InventoryPrints : public QWidget {
+class InventoryPrints : public Inventory {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  /**
-   @brief Gibt es Änderungen?
-  */
-  bool closable = false;
-
   /**
     @brief Ist der TabIndex siehe Konstruktor
   */
@@ -99,11 +96,6 @@ private:
 
 private Q_SLOTS:
   /**
-     @brief Änderungen wie isModified abfangen.
-  */
-  void setClosable(bool b) { closable = ((b) ? false : true); };
-
-  /**
     @brief Reagiert auf LineEdit
       Überwacht QLineEdit::textChanged
       und startet erst wenn @ref minLength
@@ -162,9 +154,7 @@ public Q_SLOTS:
   void createPrintsEntry();
 
 public:
-  explicit InventoryPrints(int index, QTabWidget *parent = nullptr);
-
-  Q_INVOKABLE bool isClosable() { return closable; };
+  explicit InventoryPrints(QWidget *parent = nullptr);
 };
 
 #endif // INVENTORYPRINTS_H

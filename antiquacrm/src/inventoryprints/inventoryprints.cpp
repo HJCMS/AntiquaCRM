@@ -48,8 +48,8 @@ static const QList<SearchBar::SearchFilter> bookSearchFilter() {
   return filter;
 }
 
-InventoryPrints::InventoryPrints(int index, QTabWidget *parent)
-    : QWidget{parent} {
+InventoryPrints::InventoryPrints(QWidget *parent)
+    : Inventory{parent} {
   setObjectName("InventoryPrints");
   setWindowTitle("TabPrints");
 

@@ -18,6 +18,7 @@ SET (subproject_SOURCES
  imagewidget.cpp
  intspinbox.cpp
  isbnedit.cpp
+ inventory.cpp
  messagebox.cpp
  priceedit.cpp
  searchbar.cpp
@@ -39,6 +40,7 @@ SET (subproject_HEADERS
  imagewidget.h
  intspinbox.h
  isbnedit.h
+ inventory.h
  messagebox.h
  priceedit.h
  searchbar.h

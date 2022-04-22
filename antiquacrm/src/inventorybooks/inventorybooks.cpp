@@ -53,8 +53,7 @@ static const QList<SearchBar::SearchFilter> bookSearchFilter() {
   return filter;
 }
 
-InventoryBooks::InventoryBooks(int index, QTabWidget *parent)
-    : QWidget{parent}, tabIndex{index} {
+InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   setObjectName("InventoryBooks");
   setWindowTitle("TabBooks");
 
