@@ -22,7 +22,7 @@
 <context>
     <name>ArticleID</name>
     <message>
-        <location filename="../inventory/articleid.cpp" line="+12"/>
+        <location filename="../utils/articleid.cpp" line="+12"/>
         <location line="+1"/>
         <source>Article ID</source>
         <translation type="unfinished"></translation>
@@ -419,7 +419,7 @@
 <context>
     <name>BoolBox</name>
     <message>
-        <location filename="../inventory/boolbox.cpp" line="+10"/>
+        <location filename="../utils/boolbox.cpp" line="+10"/>
         <source>Checkbox</source>
         <translation type="unfinished"></translation>
     </message>
@@ -607,7 +607,7 @@
 <context>
     <name>EMailEdit</name>
     <message>
-        <location filename="../inventorycustomers/emailedit.cpp" line="+22"/>
+        <location filename="../utils/emailedit.cpp" line="+22"/>
         <source>usage.example@example.com</source>
         <translation type="unfinished"></translation>
     </message>
@@ -643,7 +643,7 @@
 <context>
     <name>EditorActionBar</name>
     <message>
-        <location filename="../inventory/editoractionbar.cpp" line="+15"/>
+        <location filename="../utils/editoractionbar.cpp" line="+15"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -686,7 +686,7 @@
 <context>
     <name>FileDialog</name>
     <message>
-        <location filename="../inventory/filedialog.cpp" line="+21"/>
+        <location filename="../utils/filedialog.cpp" line="+21"/>
         <source>Open Files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -719,7 +719,7 @@
 <context>
     <name>GenderBox</name>
     <message>
-        <location filename="../inventorycustomers/genderbox.cpp" line="+11"/>
+        <location filename="../utils/genderbox.cpp" line="+11"/>
         <source>Gender</source>
         <translation type="unfinished"></translation>
     </message>
@@ -841,7 +841,7 @@
 <context>
     <name>ImageToolBar</name>
     <message>
-        <location filename="../inventory/imagetoolbar.cpp" line="+17"/>
+        <location filename="../utils/imagetoolbar.cpp" line="+17"/>
         <source>Import</source>
         <translation type="unfinished"></translation>
     </message>
@@ -864,7 +864,7 @@
 <context>
     <name>ImageWidget</name>
     <message>
-        <location filename="../inventory/imagewidget.cpp" line="+77"/>
+        <location filename="../utils/imagewidget.cpp" line="+77"/>
         <source>no image in database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -882,7 +882,7 @@
 <context>
     <name>IntSpinBox</name>
     <message>
-        <location filename="../inventory/intspinbox.cpp" line="+11"/>
+        <location filename="../utils/intspinbox.cpp" line="+11"/>
         <source>Number</source>
         <translation type="unfinished"></translation>
     </message>
@@ -895,7 +895,7 @@
 <context>
     <name>IsbnEdit</name>
     <message>
-        <location filename="../inventory/isbnedit.cpp" line="+21"/>
+        <location filename="../utils/isbnedit.cpp" line="+21"/>
         <source>ISBN/EAN 10/13 (ISO 2108)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1012,7 +1012,7 @@
 <context>
     <name>MessageBox</name>
     <message>
-        <location filename="../inventory/messagebox.cpp" line="+18"/>
+        <location filename="../utils/messagebox.cpp" line="+18"/>
         <source>Message closed in </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1053,7 +1053,7 @@
 <context>
     <name>PhoneEdit</name>
     <message>
-        <location filename="../inventorycustomers/phoneedit.cpp" line="+103"/>
+        <location filename="../utils/phoneedit.cpp" line="+103"/>
         <source>The Phone Number is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1134,7 +1134,7 @@
 <context>
     <name>PriceEdit</name>
     <message>
-        <location filename="../inventory/priceedit.cpp" line="+21"/>
+        <location filename="../utils/priceedit.cpp" line="+21"/>
         <source>€</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1480,7 +1480,7 @@
 <context>
     <name>SalutationBox</name>
     <message>
-        <location filename="../inventorycustomers/salutationbox.cpp" line="+30"/>
+        <location filename="../utils/salutationbox.cpp" line="+30"/>
         <source>Title or Salutation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1498,7 +1498,7 @@
 <context>
     <name>SearchBar</name>
     <message>
-        <location filename="../inventory/searchbar.cpp" line="+40"/>
+        <location filename="../utils/searchbar.cpp" line="+40"/>
         <source>You can use a wildcard * to broaden the search.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1528,7 +1528,7 @@
 <context>
     <name>SetLanguage</name>
     <message>
-        <location filename="../inventory/setlanguage.cpp" line="+11"/>
+        <location filename="../utils/setlanguage.cpp" line="+11"/>
         <source>German</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1611,7 +1611,7 @@
 <context>
     <name>StatsActionBar</name>
     <message>
-        <location filename="../inventory/statsactionbar.cpp" line="+43"/>
+        <location filename="../utils/statsactionbar.cpp" line="+43"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1667,7 +1667,7 @@
 <context>
     <name>StorageEdit</name>
     <message>
-        <location filename="../inventory/storageedit.cpp" line="+27"/>
+        <location filename="../utils/storageedit.cpp" line="+27"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1685,7 +1685,7 @@
 <context>
     <name>StrLineEdit</name>
     <message>
-        <location filename="../inventory/strlineedit.cpp" line="+15"/>
+        <location filename="../utils/strlineedit.cpp" line="+15"/>
         <source>String edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1718,7 +1718,7 @@
 <context>
     <name>TechniqueEdit</name>
     <message>
-        <location filename="../inventory/techniqueedit.cpp" line="+60"/>
+        <location filename="../utils/techniqueedit.cpp" line="+60"/>
         <source>Technique field is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1726,7 +1726,7 @@
 <context>
     <name>TextField</name>
     <message>
-        <location filename="../inventory/textfield.cpp" line="+13"/>
+        <location filename="../utils/textfield.cpp" line="+13"/>
         <source>Textfield</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1836,7 +1836,7 @@
 <context>
     <name>YearEdit</name>
     <message>
-        <location filename="../inventory/yearedit.cpp" line="+61"/>
+        <location filename="../utils/yearedit.cpp" line="+61"/>
         <source>The Year must contain a valid entry.</source>
         <translation type="unfinished"></translation>
     </message>

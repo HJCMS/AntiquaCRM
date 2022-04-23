@@ -79,7 +79,6 @@ CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
   c_phone_1->setObjectName("c_phone_1");
   c_phone_1->setInfoText(tr("Secundary phone number"));
   row2->addWidget(c_phone_1, 0, 1, 1, 1);
-  layout->addLayout(row2);
 
   /** Mobilerufnummer 1 */
   c_mobil_0 = new PhoneEdit(this);

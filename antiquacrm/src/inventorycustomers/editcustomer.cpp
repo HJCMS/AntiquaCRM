@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "editcustomer.h"
-#include "articleid.h"
+#include "serialid.h"
 #include "customeradditional.h"
 #include "customerbillinginfo.h"
 #include "customercontact.h"
@@ -23,8 +23,9 @@ EditCustomer::EditCustomer(QWidget *parent) : QWidget{parent} {
   QHBoxLayout *headerLayout = new QHBoxLayout();
   headerLayout->setObjectName("header_layout");
 
-  c_id = new ArticleID(this);
+  c_id = new SerialID(this);
   c_id->setObjectName("c_id");
+  c_id->setInfo(tr("Customers ID:"));
   c_id->setValue(36589);
   headerLayout->addWidget(c_id);
 

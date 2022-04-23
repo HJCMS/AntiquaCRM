@@ -1,6 +1,6 @@
 #include "bookeditor.h"
 #include "applsettings.h"
-#include "articleid.h"
+#include "serialid.h"
 #include "imagewidget.h"
 #include "imagetoolbar.h"
 #include "boolbox.h"
@@ -42,7 +42,7 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   QHBoxLayout *lay1 = new QHBoxLayout();
   lay1->setObjectName("lay1");
 
-  ib_id = new ArticleID(this);
+  ib_id = new SerialID(this);
   ib_id->setObjectName("ib_id");
   ib_id->setRequired(true);
 
@@ -761,7 +761,7 @@ void BookEditor::setSqlQueryData(const QString &key, const QVariant &value) {
 }
 
 void BookEditor::saveData() {
-  if (ib_id->text().isEmpty()) {
+  if (ib_id->value().toString().isEmpty()) {
     createSqlInsert();
   } else {
     createSqlUpdate();

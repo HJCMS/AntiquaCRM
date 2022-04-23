@@ -20,7 +20,7 @@ namespace HJCMS {
 class SqlCore;
 };
 
-class ArticleID;
+class SerialID;
 class ImageWidget;
 class BoolBox;
 class EditorActionBar;
@@ -50,7 +50,7 @@ private:
   YearEdit *ip_year;                  /**< @brief Jahr */
   PriceEdit *ip_price;                /**< @brief Preis */
   IntSpinBox *ip_count;               /**< @brief Bestandsangabe */
-  ArticleID *ip_id;                   /**< @brief ReadOnly:ArticleID */
+  SerialID *ip_id;                   /**< @brief ReadOnly:ArticleID */
   StrLineEdit *ip_author;             /**< @brief Printautor */
   StrLineEdit *ip_condition;          /**< @brief Zustands beschreibung */
   StrLineEdit *ip_designation;        /**< @brief Umschreibung */

@@ -2,27 +2,24 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ARTICLEID_H
-#define ARTICLEID_H
+#ifndef SERIALID_H
+#define SERIALID_H
 
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QLabel>
 
-class ArticleID : public QFrame {
+#include <UtilsMain>
+
+class SerialID : public UtilsMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
-  Q_PROPERTY(bool required READ isRequired WRITE setRequired NOTIFY requireChanged)
 
 private:
-  QLabel *id_label;
-  bool required = false;
-  bool modified = false;
-
-Q_SIGNALS:
-  void requireChanged();
+  QLabel *m_infoLabel;
+  QLabel *m_serialLabel;
 
 public Q_SLOTS:
   /**
@@ -35,23 +32,8 @@ public Q_SLOTS:
   */
   Q_INVOKABLE void reset();
 
-  /**
-   @brief Artikel ID setzt Modifiziert
-  */
-  Q_INVOKABLE void setModified(bool b);
-
 public:
-  explicit ArticleID(QWidget *parent = nullptr);
-
-  /**
-   @brief Artikel ID Anforderung setzen.
-  */
-  void setRequired(bool b);
-
-  /**
-   @brief Artikel ID ist gefordert?
-  */
-  bool isRequired();
+  explicit SerialID(QWidget *parent = nullptr);
 
   /**
    @brief Artikel ID wurde modifiziert
@@ -59,9 +41,14 @@ public:
   Q_INVOKABLE bool hasModified();
 
   /**
-   @brief Artikel ID Text
+     @brief Setze Label Infotext
+   */
+  void setInfo(const QString &);
+
+  /**
+   @brief Nehme Label Text
   */
-  const QString text();
+  const QString info();
 
   /**
    @brief Aktuelle Artikel ID
@@ -79,4 +66,4 @@ public:
   const QString notes();
 };
 
-#endif // ARTICLEID_H
+#endif // SERIALID_H

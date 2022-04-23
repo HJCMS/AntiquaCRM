@@ -3,7 +3,7 @@
 
 #include "printseditor.h"
 #include "applsettings.h"
-#include "articleid.h"
+#include "serialid.h"
 #include "boolbox.h"
 #include "editoractionbar.h"
 #include "imagedialog.h"
@@ -52,8 +52,9 @@ PrintsEditor::PrintsEditor(QWidget *parent) : QWidget{parent} {
   QHBoxLayout *row1 = new QHBoxLayout();
   row1->setObjectName("layout_row_one");
 
-  ip_id = new ArticleID(this);
+  ip_id = new SerialID(this);
   ip_id->setObjectName("ip_id");
+  ip_id->setInfo(tr("Article ID:"));
   ip_id->setRequired(true);
 
   row1->addWidget(ip_id);
@@ -658,7 +659,7 @@ void PrintsEditor::setSqlQueryData(const QString &key, const QVariant &value) {
 }
 
 void PrintsEditor::saveData() {
-  if (ip_id->text().isEmpty()) {
+  if (ip_id->value().toString().isEmpty()) {
     createSqlInsert();
   } else {
     createSqlUpdate();

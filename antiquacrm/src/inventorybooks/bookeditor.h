@@ -20,7 +20,7 @@ namespace HJCMS {
 class SqlCore;
 };
 
-class ArticleID;
+class SerialID;
 class ImageWidget;
 class BoolBox;
 class EditorActionBar;
@@ -57,7 +57,7 @@ private:
   IntSpinBox *ib_weight;          /**< @brief Gewicht */
   IntSpinBox *ib_volume;          /**< @brief Band ? */
   IntSpinBox *ib_edition;         /**< @brief Ausgabe */
-  ArticleID *ib_id;               /**< @brief ReadOnly:ArticleID */
+  SerialID *ib_id;               /**< @brief ReadOnly:ArticleID */
   IsbnEdit *ib_isbn;              /**< @brief ISBN */
   StrLineEdit *ib_author;         /**< @brief Buchautor */
   StrLineEdit *ib_condition;      /**< @brief Zustands beschreibung */

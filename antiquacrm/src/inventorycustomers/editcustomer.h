@@ -10,7 +10,7 @@
 #include <QtWidgets/QToolBox>
 #include <QtWidgets/QWidget>
 
-class ArticleID;
+class SerialID;
 class CustomerAdditional;
 class CustomerContact;
 class CustomerOverview;
@@ -24,7 +24,7 @@ class EditCustomer : public QWidget {
 private:
   QLabel *infoLabel;
   QToolBox *m_dataBox;
-  ArticleID *c_id;
+  SerialID *c_id;
   CustomerOverview *m_overview;
   CustomerContact *m_contact;
   CustomerBillingInfo *m_billing;

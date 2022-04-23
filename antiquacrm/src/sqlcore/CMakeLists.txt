@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
 
-SET(_subproject "sqlcore")
+SET(_subproject "SqlCore")
 
 INCLUDE_DIRECTORIES (
   ${PROJECT_INCLUDE_DIRS}

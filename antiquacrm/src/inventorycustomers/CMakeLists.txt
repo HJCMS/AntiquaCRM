@@ -10,29 +10,21 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (subproject_SOURCES
- customeradditional.cpp
- customerbillinginfo.cpp
- customercontact.cpp
- customeroverview.cpp
- editcustomer.cpp
- genderbox.cpp
- salutationbox.cpp
- inventorycustomers.cpp
- phoneedit.cpp
- emailedit.cpp
+  customeradditional.cpp
+  customerbillinginfo.cpp
+  customercontact.cpp
+  customeroverview.cpp
+  editcustomer.cpp
+  inventorycustomers.cpp
 )
 
 SET (subproject_HEADERS
- customeradditional.h
- customerbillinginfo.h
- customercontact.h
- customeroverview.h
- editcustomer.h
- genderbox.h
- salutationbox.h
- inventorycustomers.h
- phoneedit.h
- emailedit.h
+  customeradditional.h
+  customerbillinginfo.h
+  customercontact.h
+  customeroverview.h
+  editcustomer.h
+  inventorycustomers.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC
@@ -48,5 +40,5 @@ SET_TARGET_PROPERTIES (${_subproject} PROPERTIES
 TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
+  Utils
 )
-

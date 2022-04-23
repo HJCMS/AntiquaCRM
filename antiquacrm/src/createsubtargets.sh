@@ -17,6 +17,28 @@ function __check_sub_project()
   fi
 }
 
+## TODO
+function __create_header_utils()
+{
+  cat > Utils <<EOF
+#ifndef UTILS_MODULE_H
+#define UTILS_MODULE_H
+EOF
+
+  if test -d utils ; then
+    pushd utils
+      for _h in $(ls *.h | sort) ; do
+        echo "#incude \"${_h}\"" >> Utils
+      done
+    popd
+  fi
+  cat >> Utils <<EOF
+#endif
+EOF
+}
+## echo "# Build UTILS_MODULE_H"
+## __create_header_utils
+
 echo "# CMAKE Targets" > CMakeSubTargets.cmake
 
 cat > CMakeSubTargets.cmake <<EOF
@@ -69,3 +91,4 @@ cat >> CMakeSubTargets.cmake <<EOF
 )
 
 EOF
+
