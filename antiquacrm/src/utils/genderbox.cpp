@@ -6,13 +6,34 @@
 
 #include <QtCore/QDebug>
 
+Gender::Gender() {
+  p_data.insert(0, QObject::tr("Without disclosures")); /**< Ohne Angabe */
+  p_data.insert(1, QObject::tr("Male"));                /**< Männlich */
+  p_data.insert(2, QObject::tr("Female"));              /**< Weiblich */
+  p_data.insert(3, QObject::tr("Various"));             /**< Diverse */
+}
+
+int Gender::size() { return p_data.size(); }
+
+const QString Gender::value(int index) { return p_data.value(index); }
+
+const QStringList Gender::all() {
+  QStringList list;
+  QHash<int, QString>::iterator i;
+  for (i = p_data.begin(); i != p_data.end(); ++i) {
+    list.append(i.value());
+  }
+  return list;
+}
+
 GenderBox::GenderBox(QWidget *parent) : QComboBox{parent} {
   setObjectName("GenderBox");
   setToolTip(tr("Gender"));
-  addItem(myIcon("group"), tr("Without disclosures")); /**< Ohne Angabe */
-  addItem(myIcon("edit_group"), tr("Male"));           /**< Männlich */
-  addItem(myIcon("edit_group"), tr("Female"));         /**< Weiblich */
-  addItem(myIcon("edit_group"), tr("Various"));        /**< Diverse */
+  Gender gender;
+  for (int i = 0; i < gender.size(); i++)
+  {
+      addItem(myIcon("group"),gender.value(i));
+  }
   connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(itemChanged(int)));
 }
 

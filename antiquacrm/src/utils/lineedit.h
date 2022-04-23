@@ -6,10 +6,10 @@
 #define LINEEDIT_UTILS_H
 
 #include <QtCore/QObject>
+#include <QtWidgets/QCompleter>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QWidget>
-#include <QtWidgets/QCompleter>
 #include <UtilsMain>
 
 class LineEdit : public UtilsMain {
@@ -31,7 +31,19 @@ public Q_SLOTS:
 
 public:
   explicit LineEdit(QWidget *parent = nullptr);
+
+  /**
+   * @brief Erscheinungsbild einschränken
+   * @param length Zeichenlänge einschränken
+   * @param width  Weite einschränken
+   */
+  void restrictDisplay(int length, int width);
+
+  /**
+   *  @note Die Liste darf nicht Leer sein!
+   */
   void addCompleter(const QStringList &);
+
   void setInfo(const QString &);
   const QString info();
   void setPlaceholderText(const QString &);

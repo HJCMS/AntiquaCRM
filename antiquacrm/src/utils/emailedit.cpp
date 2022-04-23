@@ -49,7 +49,13 @@ void EMailEdit::setValue(const QVariant &id) {
 }
 
 void EMailEdit::inputChanged(const QString &str) {
-  Q_UNUSED(str);
+  QRegularExpression r(pcre().pattern());
+  QRegularExpressionMatch m = r.match(str.trimmed());
+  if (m.hasMatch()) {
+    m_mail->setStyleSheet("");
+  } else {
+    m_mail->setStyleSheet("color: red;");
+  }
   setModified(true);
 }
 

@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "customercontact.h"
-// #include "version.h"
+#include "version.h"
 #include <SqlCore>
 
 #include <QtCore/QDebug>
@@ -35,26 +35,18 @@ CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
   c_title = new SalutationBox(this);
   row1->addWidget(c_title);
 
-  QLabel *firstNameLabel = new QLabel(this);
-  firstNameLabel->setText(tr("Firstname:"));
-  row1->addWidget(firstNameLabel);
-
-  c_firstname = new QLineEdit(this);
+  c_firstname = new LineEdit(this);
   c_firstname->setObjectName("c_firstname");
   c_firstname->setPlaceholderText(tr("Firstname"));
-  c_firstname->setMinimumWidth(150);
-  c_firstname->setMaxLength(80);
+  c_firstname->setInfo(tr("Firstname"));
+  c_firstname->restrictDisplay(80, 150);
   row1->addWidget(c_firstname);
 
-  QLabel *lastNameLabel = new QLabel(this);
-  lastNameLabel->setText(tr("Lastname:"));
-  row1->addWidget(lastNameLabel);
-
-  c_lastname = new QLineEdit(this);
+  c_lastname = new LineEdit(this);
   c_lastname->setObjectName("c_lastname");
   c_lastname->setPlaceholderText(tr("Lastname"));
-  c_lastname->setMinimumWidth(150);
-  c_lastname->setMaxLength(80);
+  c_lastname->restrictDisplay(80, 150);
+  c_lastname->setInfo(tr("Lastname"));
   row1->addWidget(c_lastname);
 
   row1->addStretch(1);
@@ -88,7 +80,7 @@ CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
   // BEGIN #3
   int gridRow = 0;
   QGridLayout *row3 = new QGridLayout();
-  row3->setObjectName("contact_edit_row2");
+  row3->setObjectName("contact_edit_row3");
 
   /** Telefon Nummer 1 */
   c_phone_0 = new PhoneEdit(this);
@@ -146,14 +138,51 @@ CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
   c_company->setObjectName("c_company");
   c_company->setTitle(tr("Company, Institute or Organisation"));
   c_company->setCheckable(true);
-  c_company->setChecked(true);
+  c_company->setChecked(false);
+  QHBoxLayout *boxLayout = new QHBoxLayout(c_company);
+  boxLayout->setContentsMargins(1, 1, 1, 1);
+  c_company_name = new LineEdit(this);
+  c_company_name->setObjectName("c_company_name");
+  c_company_name->setInfo(tr("Company Name"));
+  boxLayout->addWidget(c_company_name);
+  c_company_employer = new LineEdit(this);
+  c_company_employer->setObjectName("c_company_employer");
+  c_company_employer->setInfo(tr("Company Member"));
+  boxLayout->addWidget(c_company_employer);
+  c_company->setLayout(boxLayout);
   layout->addWidget(c_company);
   // END 4
+
+  // BEGIN #5
+  QGridLayout *row5 = new QGridLayout();
+  row5->setObjectName("contact_edit_row3");
+
+  QPushButton *addressGen = new QPushButton(this);
+  addressGen->setToolTip(tr("Generate Address with given Dataset."));
+  addressGen->setText(tr("Address"));
+  addressGen->setIcon(myIcon("group"));
+  row5->addWidget(addressGen, 0, 0, 1, 1);
+
+  QLabel *infoShippingAddress = new QLabel(this);
+  infoShippingAddress->setText(tr("Shipping Address"));
+  row5->addWidget(infoShippingAddress, 0, 1, 1, 1);
+
+  c_postal_address = new TextField(this);
+  c_postal_address->setObjectName("c_postal_address");
+  row5->addWidget(c_postal_address, 1, 0, 1, 1);
+
+  c_shipping_address = new TextField(this);
+  c_shipping_address->setObjectName("c_shipping_address");
+  row5->addWidget(c_shipping_address, 1, 1, 1, 1);
+
+  layout->addLayout(row5);
+  // END 5
 
   layout->addStretch(1);
 
   setLayout(layout);
 
+  connect(addressGen, SIGNAL(clicked()), this, SLOT(generateAddressBody()));
   connect(c_postalcode, SIGNAL(editingFinished()), this,
           SLOT(postalCodeComplite()));
 }
@@ -178,3 +207,42 @@ void CustomerContact::fetchCountryFromPostal() {
 }
 
 void CustomerContact::postalCodeComplite() { fetchCountryFromPostal(); }
+
+void CustomerContact::generateAddressBody() {
+  QStringList name;
+  QStringList address;
+  /**< Gender */
+  if (c_gender->value().toInt() != 0) {
+    int i = c_gender->value().toInt();
+    name.append(Gender().value(i));
+  }
+  /**< Titelanrede */
+  if (!c_title->value().toString().isEmpty()) {
+    name.append(c_title->value().toString());
+  }
+  /**< Vorname */
+  if (!c_firstname->value().toString().isEmpty()) {
+    name.append(c_firstname->value().toString());
+  }
+  /**< Nachname */
+  if (!c_lastname->value().toString().isEmpty()) {
+    name.append(c_lastname->value().toString());
+  }
+  /**< Postleitzahl */
+  if (!c_postalcode->value().toString().isEmpty()) {
+    address.append(c_postalcode->value().toString());
+  }
+  /**< Wohnort */
+  if (!c_location->value().toString().isEmpty()) {
+    address.append(c_location->value().toString());
+  }
+  QString body = name.join(" ");
+  body.append("\n");
+  body.append(address.join(" "));
+  body.append("\n");
+  /**< Straße */
+  if (!c_street->value().toString().isEmpty()) {
+    body.append(c_street->value().toString());
+  }
+  c_postal_address->setValue(body);
+}

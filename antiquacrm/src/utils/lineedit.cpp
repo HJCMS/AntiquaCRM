@@ -46,11 +46,16 @@ void LineEdit::reset() {
   m_edit->clear();
 }
 
+void LineEdit::restrictDisplay(int length, int width) {
+  m_edit->setMaxLength(length);
+  m_edit->setMaximumWidth(width);
+}
+
 void LineEdit::addCompleter(const QStringList &list) {
   m_completer = new QCompleter(list, m_edit);
   m_completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
   m_edit->setCompleter(m_completer);
-  emit  m_completer->activated(list.last());
+  emit m_completer->activated(list.last());
 }
 
 void LineEdit::setInfo(const QString &info) {

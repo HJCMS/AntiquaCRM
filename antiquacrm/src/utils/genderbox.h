@@ -5,9 +5,21 @@
 #ifndef GENDERBOX_UTILS_H
 #define GENDERBOX_UTILS_H
 
+#include <QtCore/QHash>
 #include <QtCore/QObject>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QWidget>
+
+class Gender {
+private:
+  QHash<int, QString> p_data;
+
+public:
+  explicit Gender();
+  int size();
+  const QString value(int);
+  const QStringList all();
+};
 
 class GenderBox : public QComboBox {
   Q_OBJECT

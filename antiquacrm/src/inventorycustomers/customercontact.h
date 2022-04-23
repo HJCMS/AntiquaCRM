@@ -25,8 +25,8 @@ private:
   HJCMS::SqlCore *m_sql;    /**< Wird für einige Unterabfragen benötigt! */
   GenderBox *c_gender;      /**< Geschlecht */
   SalutationBox *c_title;   /**< Titelanrede */
-  QLineEdit *c_firstname;   /**< Vorname */
-  QLineEdit *c_lastname;    /**< Nachname */
+  LineEdit *c_firstname;    /**< Vorname */
+  LineEdit *c_lastname;     /**< Nachname */
   PostalCode *c_postalcode; /**< Postleitzahl */
   LineEdit *c_location;     /**< Wohnort */
   LineEdit *c_street;       /**< Straße */
@@ -39,6 +39,10 @@ private:
   EMailEdit *c_email_1;     /**< E-Mail Adresse */
   LineEdit *c_website;      /**< Webseite */
   QGroupBox *c_company;     /**< Firma/Institut oder Organisation ? */
+  LineEdit *c_company_name; /**< Firmen Name */
+  LineEdit *c_company_employer;  /**< Ansprechpartner */
+  TextField *c_postal_address;   /**< Adresse */
+  TextField *c_shipping_address; /**< Lieferadresse */
 
   /**
    * Mit Postleitzahl Wohnort und Bundesland ermitteln!
@@ -53,7 +57,14 @@ private Q_SLOTS:
    */
   void postalCodeComplite();
 
-Q_SIGNALS:
+  /**
+   * Wenn Knopf generieren geklickt wird.
+   * Erstellt wir hier den Adressenkopf für den Kunden.
+   * @note Es müssen alle Adress Datenfelder gesetzt sein.
+   */
+  void generateAddressBody();
+
+// Q_SIGNALS:
 
 public:
   explicit CustomerContact(QWidget *parent = nullptr);

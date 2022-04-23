@@ -492,7 +492,7 @@
 <context>
     <name>CustomerContact</name>
     <message>
-        <location filename="../inventorycustomers/customercontact.cpp" line="+22"/>
+        <location filename="../inventorycustomers/customercontact.cpp" line="+25"/>
         <source>Gender:</source>
         <translation>Geschlecht:</translation>
     </message>
@@ -502,34 +502,41 @@
         <translation>Titel:</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Firstname:</source>
-        <translation>Vorname:</translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+8"/>
+        <location line="+1"/>
         <source>Firstname</source>
         <translation>Vorname</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Lastname:</source>
-        <translation>Nachname:</translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+2"/>
         <source>Lastname</source>
         <translation>Nachname</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+12"/>
+        <source>Postalcode</source>
+        <translation>Postleitzahl</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Location</source>
+        <translation>Wohnort</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Street</source>
+        <translation>Straße</translation>
+    </message>
+    <message>
+        <location line="+15"/>
         <source>Primary phone number</source>
-        <translation>Primäre Telefon Nr.</translation>
+        <translation>Primäre Telefonnummer</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Secundary phone number</source>
-        <translation>Sekundäre Telefon Nr.</translation>
+        <translation>Sekundäre Telefonnummer</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -552,7 +559,7 @@
         <translation>Webseite</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Primary E-Mail Address</source>
         <translation>Primäre E-Mail Adresse</translation>
     </message>
@@ -565,6 +572,31 @@
         <location line="+8"/>
         <source>Company, Institute or Organisation</source>
         <translation>Firma, Institut oder Organsisation</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Company Name</source>
+        <translation>Firmenname</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Company Member</source>
+        <translation>Ansprechpartner</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Generate Address with given Dataset.</source>
+        <translation>Adresse mit gegebenem Datensatz generieren.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Address</source>
+        <translation>Adresse</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Shipping Address</source>
+        <translation>Lieferadresse</translation>
     </message>
 </context>
 <context>
@@ -593,7 +625,7 @@
         <translation>benutzer.beispiel@beispiel.de</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+66"/>
         <source>a E-Mail Address is required and can not empty.</source>
         <translation>Ein E-Mail Adresse ist gefordert und darf nicht Leer sein.</translation>
     </message>
@@ -705,29 +737,9 @@
 <context>
     <name>GenderBox</name>
     <message>
-        <location filename="../utils/genderbox.cpp" line="+11"/>
+        <location filename="../utils/genderbox.cpp" line="+31"/>
         <source>Gender</source>
         <translation>Geschlecht</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Without disclosures</source>
-        <translation>Keine Angaben</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Male</source>
-        <translation>Männlich</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Female</source>
-        <translation>Weiblich</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Various</source>
-        <translation>Diverse</translation>
     </message>
 </context>
 <context>
@@ -897,6 +909,14 @@
     </message>
 </context>
 <context>
+    <name>LineEdit</name>
+    <message>
+        <location filename="../utils/lineedit.cpp" line="+83"/>
+        <source>a Valid Url must edit.</source>
+        <translation>Ein gültige Url ist gefordert.</translation>
+    </message>
+</context>
+<context>
     <name>MWindow</name>
     <message>
         <location filename="../mwindow.cpp" line="+88"/>
@@ -1039,9 +1059,32 @@
 <context>
     <name>PhoneEdit</name>
     <message>
-        <location filename="../utils/phoneedit.cpp" line="+103"/>
+        <location filename="../utils/phoneedit.cpp" line="+94"/>
         <source>The Phone Number is required and can not empty.</source>
         <translation>Eine Rufnummer ist erforderlich und darf nicht Leer sein.</translation>
+    </message>
+</context>
+<context>
+    <name>PostalCode</name>
+    <message>
+        <location filename="../utils/postalcode.cpp" line="+44"/>
+        <source>currently supported helper functions</source>
+        <translation>derzeit unterstützte Hilfsfunktionen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>German</source>
+        <translation>Deutsch</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Austria</source>
+        <translation>Österreich</translation>
+    </message>
+    <message>
+        <location line="+63"/>
+        <source>a valid Postalcode is required!</source>
+        <translation>eine gültige Postleitzahl ist erforderlich!</translation>
     </message>
 </context>
 <context>
@@ -1467,6 +1510,26 @@
         <source>Current inventory</source>
         <translation>Aktuelles Inventar</translation>
     </message>
+    <message>
+        <location filename="../utils/genderbox.cpp" line="-21"/>
+        <source>Without disclosures</source>
+        <translation>Keine Angaben</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Male</source>
+        <translation>Männlich</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Female</source>
+        <translation>Weiblich</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Various</source>
+        <translation>Diverse</translation>
+    </message>
 </context>
 <context>
     <name>SalutationBox</name>
@@ -1803,19 +1866,6 @@
         <location line="+1"/>
         <source>Upward</source>
         <translation>Aufwärts</translation>
-    </message>
-</context>
-<context>
-    <name>UrlEdit</name>
-    <message>
-        <location filename="../utils/urledit.cpp" line="+24"/>
-        <source>Homepage URL</source>
-        <translation>Webseiten URL</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>a Valid Url must edit.</source>
-        <translation>Ein gültige Url ist gefordert.</translation>
     </message>
 </context>
 <context>
