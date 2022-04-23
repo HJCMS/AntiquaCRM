@@ -60,35 +60,11 @@ public Q_SLOTS:
 
 public:
   explicit EMailEdit(QWidget *parent = nullptr);
-
-  /**
-   @brief E-Mail wurde modifiziert
-  */
   Q_INVOKABLE bool hasModified();
-
-  /**
-   @brief E-Mail Text
-  */
-  const QString text();
-
-  /**
-   @brief Aktuelle E-Mail
-  */
   const QVariant value();
-
-  /**
-   @brief Datenprüfung
-  */
   bool isValid();
-
-  /**
-     @brief Info Text
-  */
-  void setInfoText(const QString &);
-
-  /**
-   @brief Fehlernachricht
-  */
+  void setInfo(const QString &);
+  const QString info();
   const QString notes();
 };
 

@@ -21,8 +21,10 @@ SET (subproject_SOURCES
   intspinbox.cpp
   inventory.cpp
   isbnedit.cpp
+  lineedit.cpp
   messagebox.cpp
   phoneedit.cpp
+  postalcode.cpp
   priceedit.cpp
   salutationbox.cpp
   searchbar.cpp
@@ -34,7 +36,6 @@ SET (subproject_SOURCES
   textfield.cpp
   yearedit.cpp
   utilsmain.cpp
-  urledit.cpp
 )
 
 SET (subproject_HEADERS
@@ -49,8 +50,10 @@ SET (subproject_HEADERS
   intspinbox.h
   inventory.h
   isbnedit.h
+  lineedit.h
   messagebox.h
   phoneedit.h
+  postalcode.h
   priceedit.h
   salutationbox.h
   searchbar.h
@@ -62,7 +65,6 @@ SET (subproject_HEADERS
   textfield.h
   yearedit.h
   utilsmain.h
-  urledit.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

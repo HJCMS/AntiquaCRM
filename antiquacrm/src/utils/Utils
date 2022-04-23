@@ -30,11 +30,17 @@
 #ifndef ISBNEDIT_UTILS_H
 #include "isbnedit.h"
 #endif
+#ifndef LINEEDIT_UTILS_H
+#include "lineedit.h"
+#endif
 #ifndef MESSAGEBOX_UTILS_H
 #include "messagebox.h"
 #endif
 #ifndef PHONEEDIT_UTILS_H
 #include "phoneedit.h"
+#endif
+#ifndef POSTALCODE_UTILS_H
+#include "postalcode.h"
 #endif
 #ifndef PRICEEDIT_UTILS_H
 #include "priceedit.h"
@@ -65,9 +71,6 @@
 #endif
 #ifndef TEXTFIELD_UTILS_H
 #include "textfield.h"
-#endif
-#ifndef URLEDIT_UTILS_H
-#include "urledit.h"
 #endif
 #ifndef UTILSMAIN_UTILS_H
 #include "utilsmain.h"

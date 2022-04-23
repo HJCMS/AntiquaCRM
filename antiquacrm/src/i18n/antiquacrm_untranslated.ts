@@ -20,28 +20,9 @@
     </message>
 </context>
 <context>
-    <name>ArticleID</name>
-    <message>
-        <location filename="../utils/articleid.cpp" line="+12"/>
-        <location line="+1"/>
-        <source>Article ID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Article ID:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+49"/>
-        <source>The Arcticle ID is required and can not empty.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>BookEditor</name>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="+28"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="+13"/>
         <source>Edit Book Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -511,7 +492,7 @@
 <context>
     <name>CustomerContact</name>
     <message>
-        <location filename="../inventorycustomers/customercontact.cpp" line="+27"/>
+        <location filename="../inventorycustomers/customercontact.cpp" line="+22"/>
         <source>Gender:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -551,7 +532,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Primary mobile number</source>
         <translation type="unfinished"></translation>
     </message>
@@ -567,11 +548,11 @@
     </message>
     <message>
         <location line="+6"/>
-        <source>Website:</source>
+        <source>Website</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+6"/>
         <source>Primary E-Mail Address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -607,12 +588,12 @@
 <context>
     <name>EMailEdit</name>
     <message>
-        <location filename="../utils/emailedit.cpp" line="+22"/>
+        <location filename="../utils/emailedit.cpp" line="+25"/>
         <source>usage.example@example.com</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+64"/>
         <source>a E-Mail Address is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -620,7 +601,12 @@
 <context>
     <name>EditCustomer</name>
     <message>
-        <location filename="../inventorycustomers/editcustomer.cpp" line="+44"/>
+        <location filename="../inventorycustomers/editcustomer.cpp" line="+28"/>
+        <source>Customers ID:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
         <source>Overview</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1147,7 +1133,7 @@
 <context>
     <name>PrintsEditor</name>
     <message>
-        <location filename="../inventoryprints/printseditor.cpp" line="+64"/>
+        <location filename="../inventoryprints/printseditor.cpp" line="+51"/>
         <source>Count:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1177,7 +1163,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-35"/>
+        <source>Article ID:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+41"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1526,6 +1517,25 @@
     </message>
 </context>
 <context>
+    <name>SerialID</name>
+    <message>
+        <location filename="../utils/serialid.cpp" line="+12"/>
+        <location line="+1"/>
+        <source>Article ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Article ID:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+45"/>
+        <source>The Arcticle ID is required and can not empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SetLanguage</name>
     <message>
         <location filename="../utils/setlanguage.cpp" line="+11"/>
@@ -1792,6 +1802,19 @@
         <location line="+5"/>
         <location line="+1"/>
         <source>Upward</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UrlEdit</name>
+    <message>
+        <location filename="../utils/urledit.cpp" line="+24"/>
+        <source>Homepage URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+40"/>
+        <source>a Valid Url must edit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

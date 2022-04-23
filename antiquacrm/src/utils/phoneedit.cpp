@@ -2,19 +2,21 @@
 // vim: set fileencoding=utf-8
 
 #include "phoneedit.h"
-// #include "version.h"
 
 #include <QtCore/QDebug>
 #include <QtWidgets/QHBoxLayout>
 
-PhoneEdit::PhoneEdit(QWidget *parent) : QFrame{parent} {
+PhoneEdit::PhoneEdit(QWidget *parent) : UtilsMain{parent} {
   if (objectName().isEmpty())
     setObjectName("PhoneEdit");
+
+  setModified(false);
+  setRequired(false);
 
   QHBoxLayout *layout = new QHBoxLayout(this);
 
   m_label = new QLabel(this);
-  m_label->setAlignment(Qt::AlignVCenter|Qt::AlignRight);
+  m_label->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
   layout->addWidget(m_label);
 
   id_phone = new QLineEdit(this);
@@ -26,7 +28,6 @@ PhoneEdit::PhoneEdit(QWidget *parent) : QFrame{parent} {
   id_phone->setValidator(m_validator);
 
   setLayout(layout);
-  setModified(false);
 
   connect(id_phone, SIGNAL(textChanged(const QString &)), this,
           SLOT(inputChanged(const QString &)));
@@ -50,22 +51,12 @@ void PhoneEdit::inputChanged(const QString &str) {
   setModified(true);
 }
 
-void PhoneEdit::skipReturnPressed() { setModified(true); }
-
 void PhoneEdit::reset() {
   id_phone->clear();
   setModified(false);
 }
 
-void PhoneEdit::setModified(bool b) { modified = b; }
-
-void PhoneEdit::setRequired(bool b) { required = b; }
-
-bool PhoneEdit::isRequired() { return required; }
-
-bool PhoneEdit::hasModified() { return modified; }
-
-const QString PhoneEdit::text() { return id_phone->text(); }
+bool PhoneEdit::hasModified() { return isModified(); }
 
 const QVariant PhoneEdit::value() {
   qDebug() << Q_FUNC_INFO << "Todo Parser";
@@ -73,24 +64,8 @@ const QVariant PhoneEdit::value() {
   return data;
 }
 
-void PhoneEdit::setInfoText(const QString &txt) {
-  QString info(txt);
-  info.append(":");
-  m_label->setText(info);
-
-  if (objectName().contains("c_mobil_")) {
-    QString info("049 152 1234 1234 123");
-    id_phone->setToolTip(info);
-    id_phone->setPlaceholderText(info);
-  } else {
-    QString info("049 7632 4565 456");
-    id_phone->setToolTip(info);
-    id_phone->setPlaceholderText(info);
-  }
-}
-
 bool PhoneEdit::isValid() {
-  if (required && id_phone->text().isEmpty())
+  if (isRequired() && id_phone->text().isEmpty())
     return false;
 
   if (QVariant(id_phone->text()).toULongLong() < 1)
@@ -98,6 +73,22 @@ bool PhoneEdit::isValid() {
 
   return true;
 }
+
+void PhoneEdit::setInfo(const QString &txt) {
+  QString info(txt);
+  info.append(":");
+  m_label->setText(info);
+  m_label->setToolTip(txt);
+  if (objectName().contains("c_mobil_")) {
+    id_phone->setPlaceholderText("049 152 1234 1234 123");
+    id_phone->setToolTip("049 152 1234 1234 123");
+  } else {
+    id_phone->setPlaceholderText("049 7632 4565 456");
+    id_phone->setToolTip("049 7632 4565 456");
+  }
+}
+
+const QString PhoneEdit::info() { return m_label->text(); }
 
 const QString PhoneEdit::notes() {
   return tr("The Phone Number is required and can not empty.");

@@ -13,18 +13,16 @@
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QWidget>
+#include <UtilsMain>
 
-class PhoneEdit : public QFrame {
+class PhoneEdit : public UtilsMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
-  Q_PROPERTY(bool required READ isRequired WRITE setRequired NOTIFY requireChanged)
 
 private:
   QLabel *m_label;
   QLineEdit *id_phone;
-  bool required = false;
-  bool modified = false;
 
   /**
     @brief m_validator
@@ -41,21 +39,12 @@ private:
   */
   static const QRegExp pcre() { return QRegExp("([\\d\\s]+)"); }
 
-private Q_SLOTS:
+protected Q_SLOTS:
   /**
     @brief Kontrolliert die Eingabe
     @param str - Aktuelle Zeicheneingabe
    */
   void inputChanged(const QString &str);
-
-  /**
-    @brief skipReturnPressed
-    @warning Enter soll das Formular nicht absenden!
-  */
-  void skipReturnPressed();
-
-Q_SIGNALS:
-  void requireChanged();
 
 public Q_SLOTS:
   /**
@@ -68,52 +57,13 @@ public Q_SLOTS:
   */
   Q_INVOKABLE void reset();
 
-  /**
-   @brief Rufnummer setzt Modifiziert
-  */
-  Q_INVOKABLE void setModified(bool b);
-
 public:
   explicit PhoneEdit(QWidget *parent = nullptr);
-
-  /**
-   @brief Rufnummer Anforderung setzen.
-  */
-  void setRequired(bool b);
-
-  /**
-   @brief Rufnummer ist gefordert?
-  */
-  bool isRequired();
-
-  /**
-   @brief Rufnummer wurde modifiziert
-  */
   Q_INVOKABLE bool hasModified();
-
-  /**
-   @brief Rufnummer Text
-  */
-  const QString text();
-
-  /**
-   @brief Aktuelle Rufnummer
-  */
   const QVariant value();
-
-  /**
-   @brief Datenprüfung
-  */
   bool isValid();
-
-  /**
-     @brief Info Text
-  */
-  void setInfoText(const QString &);
-
-  /**
-   @brief Fehlernachricht
-  */
+  void setInfo(const QString &);
+  const QString info();
   const QString notes();
 };
 

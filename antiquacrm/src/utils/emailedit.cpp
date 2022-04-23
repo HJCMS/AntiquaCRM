@@ -20,7 +20,7 @@ EMailEdit::EMailEdit(QWidget *parent) : UtilsMain{parent} {
   layout->addWidget(m_label);
 
   m_mail = new QLineEdit(this);
-  m_mail->setMaxLength(30);
+  m_mail->setMaxLength(80);
   m_mail->setMaximumWidth(220);
   m_mail->setPlaceholderText(tr("usage.example@example.com"));
   layout->addWidget(m_mail);
@@ -39,8 +39,7 @@ EMailEdit::EMailEdit(QWidget *parent) : UtilsMain{parent} {
 const QRegExp EMailEdit::pcre() {
   QRegExp reg;
   reg.setCaseSensitivity(Qt::CaseInsensitive);
-  reg.setPattern("^[\\da-z]+([\\da-z][-._+])[\\da-z]+@[\\da-z]+([-.][\\da-z]+)("
-                 "[\\da-z][.])[a-z]{2,6}$");
+  reg.setPattern("^([\\d\\w\\-\\.]{3,})@([\\d\\w\\-\\.]{3,})\\.([a-z]{2,6})$");
   return reg;
 }
 
@@ -54,37 +53,26 @@ void EMailEdit::inputChanged(const QString &str) {
   setModified(true);
 }
 
-void EMailEdit::skipReturnPressed() { setModified(true); }
-
 void EMailEdit::reset() {
   m_mail->clear();
   setModified(false);
 }
 
-void EMailEdit::setModified(bool b) { modified = b; }
+bool EMailEdit::hasModified() { return isModified(); }
 
-void EMailEdit::setRequired(bool b) { required = b; }
+const QString EMailEdit::info() { return m_label->text(); }
 
-bool EMailEdit::isRequired() { return required; }
+const QVariant EMailEdit::value() { return m_mail->text(); }
 
-bool EMailEdit::hasModified() { return modified; }
-
-const QString EMailEdit::text() { return m_mail->text(); }
-
-const QVariant EMailEdit::value() {
-  qDebug() << Q_FUNC_INFO << "Todo Parser";
-  QVariant data = QVariant(m_mail->text());
-  return data;
-}
-
-void EMailEdit::setInfoText(const QString &txt) {
-  QString info(txt);
-  info.append(":");
-  m_label->setText(info);
+void EMailEdit::setInfo(const QString &info) {
+  QString label(info);
+  label.append(":");
+  m_label->setText(label);
+  m_mail->setToolTip(info);
 }
 
 bool EMailEdit::isValid() {
-  if (required && m_mail->text().isEmpty())
+  if (isRequired() && m_mail->text().isEmpty())
     return false;
 
   if (QVariant(m_mail->text()).toULongLong() < 1)

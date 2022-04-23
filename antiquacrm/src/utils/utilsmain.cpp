@@ -12,6 +12,13 @@ UtilsMain::UtilsMain(QWidget *parent) : QFrame{parent} {
 
 void UtilsMain::skipReturnPressed() { setModified(true); }
 
+void UtilsMain::focusOutEvent(QFocusEvent *e) {
+  if (e->type() == QEvent::FocusOut)
+    emit editingFinished();
+
+  QFrame::focusOutEvent(e);
+}
+
 void UtilsMain::setModified(bool b) {
   emit modifiedChanged();
   modified = b;

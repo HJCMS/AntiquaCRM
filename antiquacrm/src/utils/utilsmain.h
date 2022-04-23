@@ -7,6 +7,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
+#include <QtGui/QFocusEvent>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QWidget>
 
@@ -26,10 +27,12 @@ protected:
 
 protected Q_SLOTS:
   virtual void skipReturnPressed();
+  virtual void focusOutEvent(QFocusEvent *);
 
 Q_SIGNALS:
   void requireChanged();  /**< Wegen QML eingefügt */
   void modifiedChanged(); /**< Wegen QML eingefügt */
+  void editingFinished(); /**< Wird von focusOutEvent abgefangen */
 
 public Q_SLOTS:
   /**
