@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef PHONEEDIT_H
-#define PHONEEDIT_H
+#ifndef PHONEEDIT_UTILS_H
+#define PHONEEDIT_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtCore/QRegExp>
@@ -117,4 +117,4 @@ public:
   const QString notes();
 };
 
-#endif // PHONEEDIT_H
+#endif // PHONEEDIT_UTILS_H

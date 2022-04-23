@@ -2,11 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "customercontact.h"
-#include "genderbox.h"
-#include "phoneedit.h"
-#include "salutationbox.h"
-#include "emailedit.h"
-#include "strlineedit.h"
 // #include "version.h"
 
 #include <QtCore/QDebug>
@@ -99,16 +94,10 @@ CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
   row2->addWidget(c_fax_0, 2, 0, 1, 1);
 
   /** Webseite */
-  QHBoxLayout *webLayout = new QHBoxLayout();
-  QLabel *infoWeb = new QLabel(this);
-  infoWeb->setText(tr("Website:"));
-  webLayout->addWidget(infoWeb);
-
-  c_website = new StrLineEdit(this);
+  c_website = new UrlEdit(this);
   c_website->setObjectName("c_website");
-  c_website->setMaxAllowedLength(80);
-  webLayout->addWidget(c_website);
-  row2->addLayout(webLayout, 2, 1, 1, 1);
+  c_website->setInfo(tr("Website"));
+  row2->addWidget(c_website, 2, 1, 1, 1);
 
   /** E-Mail Adresse */
   c_email_0 = new EMailEdit(this);

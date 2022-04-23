@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef IMAGEDIALOG_H
-#define IMAGEDIALOG_H
+#ifndef IMAGEDIALOG_IMAGING_H
+#define IMAGEDIALOG_IMAGING_H
 
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
@@ -147,4 +147,4 @@ public:
   const QString sourceTarget();
 };
 
-#endif // IMAGEDIALOG_H
+#endif // IMAGEDIALOG_IMAGING_H

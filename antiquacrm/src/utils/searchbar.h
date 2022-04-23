@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef SEARCHBAR_H
-#define SEARCHBAR_H
+#ifndef SEARCHBAR_UTILS_H
+#define SEARCHBAR_UTILS_H
 
 #include <QtCore/QList>
 #include <QtCore/QObject>
@@ -124,4 +124,4 @@ public:
 
 Q_DECLARE_METATYPE(SearchStatement)
 
-#endif // SEARCHBAR_H
+#endif // SEARCHBAR_UTILS_H

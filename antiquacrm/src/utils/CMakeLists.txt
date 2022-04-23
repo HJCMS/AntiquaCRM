@@ -69,6 +69,7 @@ ADD_LIBRARY (${_subproject} STATIC
   ${subproject_HEADERS}
   ${subproject_SOURCES}
   UtilsMain
+  Utils
 )
 
 SET_TARGET_PROPERTIES (${_subproject} PROPERTIES

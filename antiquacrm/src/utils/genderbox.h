@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef GENDERBOX_H
-#define GENDERBOX_H
+#ifndef GENDERBOX_UTILS_H
+#define GENDERBOX_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtWidgets/QComboBox>
@@ -40,4 +40,4 @@ public:
   const QString notes();
 };
 
-#endif // GENDERBOX_H
+#endif // GENDERBOX_UTILS_H

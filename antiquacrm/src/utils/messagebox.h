@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef MESSAGEBOX_H
-#define MESSAGEBOX_H
+#ifndef MESSAGEBOX_UTILS_H
+#define MESSAGEBOX_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtCore/QTimerEvent>
@@ -49,4 +49,4 @@ public:
   void success(const QString &, int s = 10);
 };
 
-#endif // MESSAGEBOX_H
+#endif // MESSAGEBOX_UTILS_H

@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef YEAREDIT_H
-#define YEAREDIT_H
+#ifndef YEAREDIT_UTILS_H
+#define YEAREDIT_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtWidgets/QDateEdit>
@@ -41,4 +41,4 @@ public:
   const QString notes();
 };
 
-#endif // YEAREDIT_H
+#endif // YEAREDIT_UTILS_H

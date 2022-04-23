@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef TOOLBAR_H
-#define TOOLBAR_H
+#ifndef TOOLBAR_IMAGING_H
+#define TOOLBAR_IMAGING_H
 
 #include <QtCore/QObject>
 #include <QtWidgets/QComboBox>
@@ -51,4 +51,4 @@ public:
   explicit ToolBar(QWidget *parent = nullptr);
 };
 
-#endif // TOOLBAR_H
+#endif // TOOLBAR_IMAGING_H

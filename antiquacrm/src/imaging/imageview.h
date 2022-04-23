@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef IMAGEVIEW_H
-#define IMAGEVIEW_H
+#ifndef IMAGEVIEW_IMAGING_H
+#define IMAGEVIEW_IMAGING_H
 
 #include <QtCore/QObject>
 #include <QtGui/QImage>
@@ -32,4 +32,4 @@ public:
   const QImage image();
 };
 
-#endif // IMAGEVIEW_H
+#endif // IMAGEVIEW_IMAGING_H

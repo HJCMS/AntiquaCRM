@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef IMAGETOOLBAR_H
-#define IMAGETOOLBAR_H
+#ifndef IMAGETOOLBAR_UTILS_H
+#define IMAGETOOLBAR_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtWidgets/QPushButton>
@@ -38,4 +38,4 @@ public:
   inline int getArticleId() { return aId; };
 };
 
-#endif // IMAGETOOLBAR_H
+#endif // IMAGETOOLBAR_UTILS_H

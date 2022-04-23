@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef HJCMS_SQLCORE_H
-#define HJCMS_SQLCORE_H
+#ifndef HJCMS_SQLCORE_SQLCORE_H
+#define HJCMS_SQLCORE_SQLCORE_H
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
@@ -160,4 +160,4 @@ public:
 };
 
 };     // namespace HJCMS
-#endif // HJCMS_SQLCORE_H
+#endif // HJCMS_SQLCORE_SQLCORE_H

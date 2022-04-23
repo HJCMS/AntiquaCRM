@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef INVENTORY_H
-#define INVENTORY_H
+#ifndef INVENTORY_UTILS_H
+#define INVENTORY_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtWidgets/QWidget>
@@ -70,4 +70,4 @@ public:
   Q_INVOKABLE bool isClosable();
 };
 
-#endif // INVENTORY_H
+#endif // INVENTORY_UTILS_H

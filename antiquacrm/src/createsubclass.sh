@@ -19,6 +19,7 @@ test -n "${_subdir}" || {
 
 _filename=$(echo ${_class} | sed -e 's/ //' | awk '{print tolower($1)}')
 _uppper=$(echo ${_filename} | awk '{print toupper($1)}')
+_MACRO=$(echo ${_filename}_${subdir} | awk '{print toupper($1)}')
 
 if test -d ./${_subdir} ; then
 
@@ -29,8 +30,10 @@ cat > ./${_subdir}/${_filename}.h <<EOF
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ${_uppper}_H
-#define ${_uppper}_H
+#ifndef ${_MACRO}_H
+#define ${_MACRO}_H
+
+// #include <UtilsMain>
 
 #include <QtCore/QObject>
 #include <QtWidgets/QWidget>
@@ -52,7 +55,7 @@ public:
 
 };
 
-#endif // ${_uppper}_H
+#endif // ${_MACRO}_H
 
 EOF
 
@@ -64,14 +67,13 @@ cat > ./${_subdir}/${_filename}.cpp <<EOF
 #include "${_filename}.h"
 // #include "version.h"
 
-#include <QtCore/QDebug>
-// #include <QtGui>
+#include <QtCore>
+#include <QtGui>
 #include <QtWidgets>
 
 ${_class}::${_class}(QWidget *parent) : QWidget{parent} {
   setObjectName("${_class}");
 }
-
 EOF
 
 echo "done"

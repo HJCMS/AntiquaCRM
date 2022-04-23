@@ -6,9 +6,12 @@
 #include <QtCore/QDebug>
 #include <QtWidgets/QHBoxLayout>
 
-EMailEdit::EMailEdit(QWidget *parent) : QFrame{parent} {
+EMailEdit::EMailEdit(QWidget *parent) : UtilsMain{parent} {
   if (objectName().isEmpty())
     setObjectName("EMailEdit");
+
+  setModified(false);
+  setRequired(false);
 
   QHBoxLayout *layout = new QHBoxLayout(this);
 
@@ -26,7 +29,6 @@ EMailEdit::EMailEdit(QWidget *parent) : QFrame{parent} {
   m_mail->setValidator(m_validator);
 
   setLayout(layout);
-  setModified(false);
 
   connect(m_mail, SIGNAL(textChanged(const QString &)), this,
           SLOT(inputChanged(const QString &)));

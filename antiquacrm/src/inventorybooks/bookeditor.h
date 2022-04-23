@@ -16,24 +16,20 @@
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QWidget>
 
+/**
+* @defgroup HJCMS
+* @{
+*/
+#include <Utils>
+#include <Imaging>
+
 namespace HJCMS {
 class SqlCore;
 };
 
-class SerialID;
-class ImageWidget;
-class BoolBox;
-class EditorActionBar;
-class IntSpinBox;
 class IsbnEdit;
 class IsbnRequest;
-class PriceEdit;
-class SetLanguage;
-class StorageEdit;
-class StrLineEdit;
-class TextField;
-class YearEdit;
-class ImageToolBar;
+/** }@ */
 
 /**
    @brief BookEditor
@@ -45,7 +41,7 @@ class BookEditor : public QWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  HJCMS::SqlCore *db;             /**< @brief SQL Database Connection */
+  HJCMS::SqlCore *m_sql;          /**< @brief SQL Database Connection */
   BoolBox *ib_signed;             /**< @brief Signiert? */
   BoolBox *ib_restricted;         /**< @brief Zensiert? */
   SetLanguage *ib_language;       /**< @brief Sprache */

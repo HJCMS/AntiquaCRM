@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef SALUTATIONBOX_H
-#define SALUTATIONBOX_H
+#ifndef SALUTATIONBOX_UTILS_H
+#define SALUTATIONBOX_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtWidgets/QComboBox>
@@ -42,4 +42,4 @@ public:
   const QString notes();
 };
 
-#endif // SALUTATIONBOX_H
+#endif // SALUTATIONBOX_UTILS_H

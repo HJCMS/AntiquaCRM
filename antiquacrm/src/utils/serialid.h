@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef SERIALID_H
-#define SERIALID_H
+#ifndef SERIALID_UTILS_H
+#define SERIALID_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
@@ -66,4 +66,4 @@ public:
   const QString notes();
 };
 
-#endif // SERIALID_H
+#endif // SERIALID_UTILS_H

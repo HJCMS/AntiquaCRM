@@ -17,6 +17,7 @@ SET (subproject_SOURCES
 SET (subproject_HEADERS
   sqlconfig.h
   sqlcore.h
+  ${_subproject}
 )
 
 ADD_LIBRARY (${_subproject} STATIC

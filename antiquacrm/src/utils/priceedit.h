@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef PRICEEDIT_H
-#define PRICEEDIT_H
+#ifndef PRICEEDIT_UTILS_H
+#define PRICEEDIT_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
@@ -43,4 +43,4 @@ public:
   const QString notes();
 };
 
-#endif // PRICEEDIT_H
+#endif // PRICEEDIT_UTILS_H

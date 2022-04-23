@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef LISTVIEW_H
-#define LISTVIEW_H
+#ifndef LISTVIEW_IMAGING_H
+#define LISTVIEW_IMAGING_H
 
 #include <QtCore/QFileInfo>
 #include <QtCore/QModelIndex>
@@ -76,4 +76,4 @@ public:
   explicit ListView(QWidget *parent = nullptr);
 };
 
-#endif // LISTVIEW_H
+#endif // LISTVIEW_IMAGING_H

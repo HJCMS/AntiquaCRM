@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef BOOKSIMAGEVIEW_H
-#define BOOKSIMAGEVIEW_H
+#ifndef BOOKSIMAGEVIEW_UTILS_H
+#define BOOKSIMAGEVIEW_UTILS_H
 
 #include <QtCore/QByteArray>
 #include <QtCore/QObject>
@@ -91,4 +91,4 @@ public:
   void addNewImage(int id, const QImage &img);
 };
 
-#endif // BOOKSIMAGEVIEW_H
+#endif // BOOKSIMAGEVIEW_UTILS_H

@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef STRLINEEDIT_H
-#define STRLINEEDIT_H
+#ifndef STRLINEEDIT_UTILS_H
+#define STRLINEEDIT_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtCore/QRegExp>
@@ -179,4 +179,4 @@ public:
   const QString notes();
 };
 
-#endif // STRLINEEDIT_H
+#endif // STRLINEEDIT_UTILS_H

@@ -17,27 +17,40 @@ function __check_sub_project()
   fi
 }
 
-## TODO
-function __create_header_utils()
+function __create_header_subs()
 {
-  cat > Utils <<EOF
-#ifndef UTILS_MODULE_H
-#define UTILS_MODULE_H
-EOF
-
-  if test -d utils ; then
-    pushd utils
-      for _h in $(ls *.h | sort) ; do
-        echo "#incude \"${_h}\"" >> Utils
-      done
-    popd
+  _scope=${1:-"failed"}
+  _namespace=""
+  if test -n "$2" ; then
+    _namespace="$(echo $2 | awk '{print toupper($1)}')_"
   fi
-  cat >> Utils <<EOF
+  _dest=$(echo ${_scope} | awk '{print tolower($1)}')
+  _module=$(echo ${_scope} | awk '{print toupper($1)}')
+  if test -d ${_dest} ; then
+  pushd ${_dest}
+  cat > ${_scope} <<EOF
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+EOF
+    for _h in $(ls *.h | sort) ; do
+      _class=$(echo ${_h} | sed 's,\.h,,' | awk '{print toupper($1)}')
+  cat >> ${_scope} <<EOF
+#ifndef ${_namespace}${_class}_${_module}_H
+#include "${_h}"
 #endif
 EOF
+    done
+  cat >> ${_scope} <<EOF
+// EOF
+EOF
+  popd
+  fi
 }
-## echo "# Build UTILS_MODULE_H"
-## __create_header_utils
+
+echo "# Build Sub Header Processing"
+__create_header_subs Utils
+__create_header_subs Imaging
+__create_header_subs SqlCore HJCMS
 
 echo "# CMAKE Targets" > CMakeSubTargets.cmake
 

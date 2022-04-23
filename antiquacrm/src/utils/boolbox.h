@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef BOOLBOX_H
-#define BOOLBOX_H
+#ifndef BOOLBOX_UTILS_H
+#define BOOLBOX_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtWidgets/QCheckBox>
@@ -40,4 +40,4 @@ public:
   const QString notes();
 };
 
-#endif // BOOLBOX_H
+#endif // BOOLBOX_UTILS_H

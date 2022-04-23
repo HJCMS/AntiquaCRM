@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef OPENIMAGEDIALOG_H
-#define OPENIMAGEDIALOG_H
+#ifndef OPENIMAGEDIALOG_IMAGING_H
+#define OPENIMAGEDIALOG_IMAGING_H
 
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
@@ -89,4 +89,4 @@ public:
 
   virtual ~OpenImageDialog();
 };
-#endif // OPENIMAGEDIALOG_H
+#endif // OPENIMAGEDIALOG_IMAGING_H

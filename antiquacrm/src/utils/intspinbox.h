@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef INTSPINBOX_H
-#define INTSPINBOX_H
+#ifndef INTSPINBOX_UTILS_H
+#define INTSPINBOX_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
@@ -41,4 +41,4 @@ public:
   const QString notes();
 };
 
-#endif // INTSPINBOX_H
+#endif // INTSPINBOX_UTILS_H

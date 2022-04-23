@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ISBNEDIT_H
-#define ISBNEDIT_H
+#ifndef ISBNEDIT_UTILS_H
+#define ISBNEDIT_UTILS_H
 
 #include <QtCore/QString>
 #include <QtGui/QRegExpValidator>
@@ -47,4 +47,4 @@ public:
   const QString notes();
 };
 
-#endif // ISBNEDIT_H
+#endif // ISBNEDIT_UTILS_H

@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef TECHNIQUEEDIT_H
-#define TECHNIQUEEDIT_H
+#ifndef TECHNIQUEEDIT_UTILS_H
+#define TECHNIQUEEDIT_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
@@ -43,4 +43,4 @@ public:
   const QString notes();
 };
 
-#endif // TECHNIQUEEDIT_H
+#endif // TECHNIQUEEDIT_UTILS_H

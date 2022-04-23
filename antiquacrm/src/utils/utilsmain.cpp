@@ -10,6 +10,8 @@ UtilsMain::UtilsMain(QWidget *parent) : QFrame{parent} {
   modified = false;
 }
 
+void UtilsMain::skipReturnPressed() { setModified(true); }
+
 void UtilsMain::setModified(bool b) {
   emit modifiedChanged();
   modified = b;

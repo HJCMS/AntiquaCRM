@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef STORAGEEDIT_H
-#define STORAGEEDIT_H
+#ifndef STORAGEEDIT_UTILS_H
+#define STORAGEEDIT_UTILS_H
 
 #include <QtCore/QModelIndex>
 #include <QtCore/QObject>
@@ -69,4 +69,4 @@ public:
   const QString notes();
 };
 
-#endif // STORAGEEDIT_H
+#endif // STORAGEEDIT_UTILS_H

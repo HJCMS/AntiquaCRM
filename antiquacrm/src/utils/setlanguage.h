@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef SETLANGUAGE_H
-#define SETLANGUAGE_H
+#ifndef SETLANGUAGE_UTILS_H
+#define SETLANGUAGE_UTILS_H
 
 #include <QtCore/QHash>
 #include <QtCore/QList>
@@ -46,4 +46,4 @@ public:
   const QString notes();
 };
 
-#endif // SETLANGUAGE_H
+#endif // SETLANGUAGE_UTILS_H

@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef FILEDIALOG_H
-#define FILEDIALOG_H
+#ifndef FILEDIALOG_UTILS_H
+#define FILEDIALOG_UTILS_H
 
 #include <QtCore/QDir>
 #include <QtCore/QObject>
@@ -31,4 +31,4 @@ public:
   void setPdfFilter();
 };
 
-#endif // FILEDIALOG_H
+#endif // FILEDIALOG_UTILS_H

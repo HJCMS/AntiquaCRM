@@ -1,25 +1,10 @@
 #include "bookeditor.h"
 #include "applsettings.h"
-#include "serialid.h"
-#include "imagewidget.h"
-#include "imagetoolbar.h"
-#include "boolbox.h"
-#include "editoractionbar.h"
-#include "imagedialog.h"
-#include "intspinbox.h"
-#include "isbnedit.h"
 #include "isbnrequest.h"
-#include "messagebox.h"
-#include "priceedit.h"
-#include "setlanguage.h"
 #include "sqlcore.h"
-#include "storageedit.h"
-#include "strlineedit.h"
-#include "textfield.h"
 #include "version.h"
-#include "yearedit.h"
 
-#include <QtCore>
+#include <QtCore/QDebug>
 #include <QtGui/QDesktopServices>
 #include <QtWidgets>
 
@@ -30,7 +15,7 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
 
   ApplSettings config;
 
-  db = new HJCMS::SqlCore(this);
+  m_sql = new HJCMS::SqlCore(this);
 
   Qt::Alignment defaultAlignment =
       (Qt::AlignRight | Qt::AlignTrailing | Qt::AlignVCenter);
@@ -460,9 +445,9 @@ void BookEditor::resetModified() {
 bool BookEditor::sendSqlQuery(const QString &sqlStatement) {
   // qDebug() << Q_FUNC_INFO << sqlStatement;
   MessageBox msgBox(this);
-  QSqlQuery q = db->query(sqlStatement);
+  QSqlQuery q = m_sql->query(sqlStatement);
   if (q.lastError().type() != QSqlError::NoError) {
-    QString errorString = db->fetchErrors();
+    QString errorString = m_sql->fetchErrors();
     qDebug() << errorString << Qt::endl;
     msgBox.failed(sqlStatement, errorString);
     return false;
@@ -943,9 +928,9 @@ void BookEditor::editBookEntry(const QString &condition) {
   select.append(" ORDER BY ib_id LIMIT 1;");
 
   // qDebug() "SELECT ->" << select << db.isValid();
-  QSqlQuery q = db->query(select);
+  QSqlQuery q = m_sql->query(select);
   if (q.size() != 0) {
-    QSqlRecord r = db->record("inventory_books");
+    QSqlRecord r = m_sql->record("inventory_books");
     sqlQueryResult.clear();
     while (q.next()) {
       foreach (QString key, inputList) {
@@ -959,7 +944,7 @@ void BookEditor::editBookEntry(const QString &condition) {
     }
   } else {
     MessageBox messanger(this);
-    messanger.failed(db->fetchErrors(), condition);
+    messanger.failed(m_sql->fetchErrors(), condition);
     return;
   }
 

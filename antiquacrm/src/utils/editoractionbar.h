@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef EDITORACTIONBAR_H
-#define EDITORACTIONBAR_H
+#ifndef EDITORACTIONBAR_UTILS_H
+#define EDITORACTIONBAR_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtWidgets/QPushButton>
@@ -34,4 +34,4 @@ public:
   bool isRestoreable();
 };
 
-#endif // EDITORACTIONBAR_H
+#endif // EDITORACTIONBAR_UTILS_H

@@ -3,22 +3,8 @@
 
 #include "printseditor.h"
 #include "applsettings.h"
-#include "serialid.h"
-#include "boolbox.h"
-#include "editoractionbar.h"
-#include "imagedialog.h"
-#include "imagetoolbar.h"
-#include "imagewidget.h"
-#include "intspinbox.h"
-#include "messagebox.h"
-#include "priceedit.h"
 #include "sqlcore.h"
-#include "storageedit.h"
-#include "strlineedit.h"
-#include "textfield.h"
 #include "version.h"
-#include "techniqueedit.h"
-#include "yearedit.h"
 
 #include <QtCore>
 #include <QtGui/QDesktopServices>
@@ -30,7 +16,7 @@ PrintsEditor::PrintsEditor(QWidget *parent) : QWidget{parent} {
 
   ApplSettings config;
 
-  db = new HJCMS::SqlCore(this);
+  m_sql = new HJCMS::SqlCore(this);
 
   Qt::Alignment defaultAlignment =
       (Qt::AlignRight | Qt::AlignTrailing | Qt::AlignVCenter);
@@ -360,9 +346,9 @@ void PrintsEditor::resetModified() {
 
 bool PrintsEditor::sendSqlQuery(const QString &sqlStatement) {
   MessageBox messanger(this);
-  QSqlQuery q = db->query(sqlStatement);
+  QSqlQuery q = m_sql->query(sqlStatement);
   if (q.lastError().type() != QSqlError::NoError) {
-    QString errorString = db->fetchErrors();
+    QString errorString = m_sql->fetchErrors();
     messanger.failed(sqlStatement, errorString);
     return false;
   } else {
@@ -683,9 +669,9 @@ void PrintsEditor::editPrintsEntry(const QString &condition) {
   select.append(condition);
   select.append(" ORDER BY ip_id LIMIT 1;");
 
-  QSqlQuery q = db->query(select);
+  QSqlQuery q = m_sql->query(select);
   if (q.size() != 0) {
-    QSqlRecord r = db->record("inventory_prints");
+    QSqlRecord r = m_sql->record("inventory_prints");
     sqlQueryResult.clear();
     while (q.next()) {
       foreach (QString key, inputList) {
@@ -699,7 +685,7 @@ void PrintsEditor::editPrintsEntry(const QString &condition) {
     }
   } else {
     MessageBox messanger(this);
-    messanger.failed(db->fetchErrors(), condition);
+    messanger.failed(m_sql->fetchErrors(), condition);
     return;
   }
 

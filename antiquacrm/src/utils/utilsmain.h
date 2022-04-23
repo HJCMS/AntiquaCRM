@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef UTILSMAIN_H
-#define UTILSMAIN_H
+#ifndef UTILSMAIN_UTILS_H
+#define UTILSMAIN_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
@@ -23,6 +23,9 @@ private:
 
 protected:
   QVariant p_value;
+
+protected Q_SLOTS:
+  virtual void skipReturnPressed();
 
 Q_SIGNALS:
   void requireChanged();  /**< Wegen QML eingefügt */
@@ -78,4 +81,4 @@ public:
   virtual const QString notes() = 0;
 };
 
-#endif // UTILSMAIN_H
+#endif // UTILSMAIN_UTILS_H

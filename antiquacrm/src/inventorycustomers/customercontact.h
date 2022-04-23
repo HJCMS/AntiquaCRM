@@ -10,11 +10,7 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QWidget>
 
-class SalutationBox;
-class GenderBox;
-class PhoneEdit;
-class EMailEdit;
-class StrLineEdit;
+#include <Utils>
 
 class CustomerContact : public QWidget {
   Q_OBJECT
@@ -22,19 +18,19 @@ class CustomerContact : public QWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  GenderBox *c_gender;     /**< Geschlecht */
-  SalutationBox *c_title;  /**< Titelanrede */
-  QLineEdit *c_firstname;  /**< Vorname */
-  QLineEdit *c_lastname;   /**< Nachname */
-  QGroupBox *c_company;    /**< Firma/Institut oder Organisation ? */
-  PhoneEdit *c_phone_0;    /**< Telefon Nummer 1 */
-  PhoneEdit *c_phone_1;    /**< Telefon Nummer 2 */
-  PhoneEdit *c_mobil_0;    /**< Mobilerufnummer 1 */
-  PhoneEdit *c_mobil_1;    /**< Mobilerufnummer 2 */
-  PhoneEdit *c_fax_0;      /**< Faxnummer */
-  EMailEdit *c_email_0;    /**< E-Mail Adresse */
-  EMailEdit *c_email_1;    /**< E-Mail Adresse */
-  StrLineEdit *c_website;  /**< Webseite */
+  GenderBox *c_gender;    /**< Geschlecht */
+  SalutationBox *c_title; /**< Titelanrede */
+  QLineEdit *c_firstname; /**< Vorname */
+  QLineEdit *c_lastname;  /**< Nachname */
+  QGroupBox *c_company;   /**< Firma/Institut oder Organisation ? */
+  PhoneEdit *c_phone_0;   /**< Telefon Nummer 1 */
+  PhoneEdit *c_phone_1;   /**< Telefon Nummer 2 */
+  PhoneEdit *c_mobil_0;   /**< Mobilerufnummer 1 */
+  PhoneEdit *c_mobil_1;   /**< Mobilerufnummer 2 */
+  PhoneEdit *c_fax_0;     /**< Faxnummer */
+  EMailEdit *c_email_0;   /**< E-Mail Adresse */
+  EMailEdit *c_email_1;   /**< E-Mail Adresse */
+  UrlEdit *c_website;     /**< Webseite */
 
 Q_SIGNALS:
 

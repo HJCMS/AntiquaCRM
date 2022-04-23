@@ -1,0 +1,9 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+#ifndef HJCMS_SQLCONFIG_SQLCORE_H
+#include "sqlconfig.h"
+#endif
+#ifndef HJCMS_SQLCORE_SQLCORE_H
+#include "sqlcore.h"
+#endif
+// EOF

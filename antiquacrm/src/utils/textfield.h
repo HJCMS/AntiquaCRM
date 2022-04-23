@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef TEXTFIELD_H
-#define TEXTFIELD_H
+#ifndef TEXTFIELD_UTILS_H
+#define TEXTFIELD_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
@@ -41,4 +41,4 @@ public:
   const QString notes();
 };
 
-#endif // TEXTFIELD_H
+#endif // TEXTFIELD_UTILS_H

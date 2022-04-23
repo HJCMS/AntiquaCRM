@@ -25,6 +25,7 @@ SET (subproject_HEADERS
   listview.h
   openimagedialog.h
   toolbar.h
+  ${_subproject}
 )
 
 ADD_LIBRARY (${_subproject} STATIC

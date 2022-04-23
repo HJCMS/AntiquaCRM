@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef FILEVIEWMODEL_H
-#define FILEVIEWMODEL_H
+#ifndef FILEVIEWMODEL_IMAGING_H
+#define FILEVIEWMODEL_IMAGING_H
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
@@ -38,4 +38,4 @@ public:
   const QDir last();
 };
 
-#endif // FILEVIEWMODEL_H
+#endif // FILEVIEWMODEL_IMAGING_H

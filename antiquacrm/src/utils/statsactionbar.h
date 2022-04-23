@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef STATSACTIONBAR_H
-#define STATSACTIONBAR_H
+#ifndef STATSACTIONBAR_UTILS_H
+#define STATSACTIONBAR_UTILS_H
 
 #include <QtCore/QObject>
 #include <QtCore/QTimerEvent>
@@ -136,4 +136,4 @@ public:
   explicit StatsActionBar(QWidget *parent = nullptr);
 };
 
-#endif // STATSACTIONBAR_H
+#endif // STATSACTIONBAR_UTILS_H
