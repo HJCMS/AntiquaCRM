@@ -22,52 +22,22 @@
 <context>
     <name>BookEditor</name>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="+18"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="+17"/>
         <source>Edit Book Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+26"/>
-        <source>Count:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Price:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
+        <location line="+31"/>
         <source>Signed Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+64"/>
-        <source>Year:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-35"/>
-        <source>Page Count:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-49"/>
+        <location line="-13"/>
         <source>Count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+59"/>
-        <source>Pagecount</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Weight:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="+47"/>
         <source>g</source>
         <translation type="unfinished"></translation>
     </message>
@@ -77,17 +47,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="-16"/>
         <source>Edition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Volume:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="+28"/>
         <source>Bd.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -102,102 +67,117 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+23"/>
         <source>Extended Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+6"/>
         <source>&amp;Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Author</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+9"/>
         <source>Publisher:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+13"/>
         <source>Keyword:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Chop Keyword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+6"/>
         <source>Condition:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <source>Designation:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-139"/>
-        <source>Edition:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+167"/>
+        <location line="+22"/>
         <source>Send ISBN request to openlibrary.org</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-12"/>
+        <location line="-9"/>
         <source>Language:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-111"/>
+        <location line="-182"/>
+        <source>Article ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>Page count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Required input field. Limited to 80 characters, Webshop Systems require this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+30"/>
         <source>Format: Firstname lastname (Different Authors separated by comma).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <source>Enter hier the Book Publisher.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+18"/>
         <source>Category Keywords for Shopsystems.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+16"/>
         <source>Condition of this Book. See also Configuration conditions Table.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+13"/>
         <source>Designation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+231"/>
+        <location line="+222"/>
         <source>Missing Article ID for Update.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+114"/>
+        <location line="+128"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -212,7 +192,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+34"/>
         <source>No datasets were found.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -242,27 +222,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-643"/>
+        <location line="-631"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+9"/>
         <source>Booktitle Extended:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Extended Title or Subtitle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+518"/>
+        <location line="+508"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+112"/>
         <source>External Book Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -277,7 +257,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-518"/>
+        <location line="-535"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -299,24 +279,24 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-233"/>
-        <location line="+690"/>
+        <location line="-166"/>
+        <location line="+640"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-569"/>
-        <location line="+579"/>
+        <location line="-566"/>
+        <location line="+576"/>
         <source>Publisher</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-377"/>
+        <location line="-392"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-387"/>
+        <location line="-295"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -508,11 +488,11 @@
     <name>CustomerContact</name>
     <message>
         <location filename="../inventorycustomers/customercontact.cpp" line="+25"/>
-        <source>Gender:</source>
+        <source>Gender</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>Title:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -750,14 +730,6 @@
     </message>
 </context>
 <context>
-    <name>GenderBox</name>
-    <message>
-        <location filename="../utils/genderbox.cpp" line="+31"/>
-        <source>Gender</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>GeneralSettingsWidget</name>
     <message>
         <location filename="../settings/generalsettingswidget.cpp" line="+18"/>
@@ -877,7 +849,7 @@
 <context>
     <name>ImageWidget</name>
     <message>
-        <location filename="../utils/imagewidget.cpp" line="+77"/>
+        <location filename="../utils/imagewidget.cpp" line="+78"/>
         <source>no image in database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -895,12 +867,7 @@
 <context>
     <name>IntSpinBox</name>
     <message>
-        <location filename="../utils/intspinbox.cpp" line="+11"/>
-        <source>Number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+37"/>
+        <location filename="../utils/intspinbox.cpp" line="+78"/>
         <source>is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1178,12 +1145,12 @@
 <context>
     <name>PriceEdit</name>
     <message>
-        <location filename="../utils/priceedit.cpp" line="+21"/>
+        <location filename="../utils/priceedit.cpp" line="+23"/>
         <source>€</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+48"/>
         <source>A valid Price is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1191,22 +1158,12 @@
 <context>
     <name>PrintsEditor</name>
     <message>
-        <location filename="../inventoryprints/printseditor.cpp" line="+51"/>
-        <source>Count:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location filename="../inventoryprints/printseditor.cpp" line="+45"/>
         <source>Count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Price:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+51"/>
+        <location line="+36"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1216,37 +1173,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-38"/>
-        <source>Year:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-35"/>
+        <location line="-45"/>
         <source>Article ID:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+21"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+8"/>
         <source>Kolorit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+25"/>
         <source>Landscape</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-20"/>
         <source>Views</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="-19"/>
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+55"/>
         <source>Book &amp;Title:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1526,7 +1483,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../utils/genderbox.cpp" line="-21"/>
+        <location filename="../utils/genderbox.cpp" line="+11"/>
         <source>Without disclosures</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1597,18 +1554,7 @@
 <context>
     <name>SerialID</name>
     <message>
-        <location filename="../utils/serialid.cpp" line="+12"/>
-        <location line="+1"/>
-        <source>Article ID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Article ID:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+45"/>
+        <location filename="../utils/serialid.cpp" line="+67"/>
         <source>The Arcticle ID is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1755,7 +1701,7 @@
 <context>
     <name>StorageEdit</name>
     <message>
-        <location filename="../utils/storageedit.cpp" line="+27"/>
+        <location filename="../utils/storageedit.cpp" line="+25"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1765,7 +1711,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+56"/>
         <source>The Storage location is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1924,7 +1870,7 @@
 <context>
     <name>YearEdit</name>
     <message>
-        <location filename="../utils/yearedit.cpp" line="+61"/>
+        <location filename="../utils/yearedit.cpp" line="+75"/>
         <source>The Year must contain a valid entry.</source>
         <translation type="unfinished"></translation>
     </message>
