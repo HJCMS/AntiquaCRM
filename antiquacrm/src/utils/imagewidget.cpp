@@ -25,6 +25,7 @@ ImageWidget::ImageWidget(QWidget *parent) : QWidget{parent} {
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("image_viewer_layout");
+  layout->setContentsMargins(0, 0, 0, 0);
 
   m_scrollArea = new QScrollArea(this);
   m_scrollArea->setObjectName("image_viewer_scrollarea");
@@ -74,7 +75,7 @@ void ImageWidget::searchImageById(int id) {
     if (data.size() > 60)
       insertImage(data);
   } else {
-    emit s_sendMessage(tr("no image in database"));
+    emit s_postMessage(tr("no image in database"));
   }
 }
 
@@ -90,7 +91,7 @@ void ImageWidget::addNewImage(int id, const QImage &img) {
   insertImage(rawimg);
 
   if (id < 1) {
-    emit s_sendMessage(tr("Missing Article Number"));
+    emit s_postMessage(tr("Missing Article Number"));
     return;
   }
 

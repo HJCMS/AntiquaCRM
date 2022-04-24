@@ -3,23 +3,18 @@
 
 #include "printseditor.h"
 #include "applsettings.h"
-#include "sqlcore.h"
 #include "version.h"
 
 #include <QtCore>
 #include <QtGui/QDesktopServices>
 #include <QtWidgets>
 
-PrintsEditor::PrintsEditor(QWidget *parent) : QWidget{parent} {
+PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
   setObjectName("PrintEditor");
-  setMinimumSize(800, 600);
 
   ApplSettings config;
 
-  m_sql = new HJCMS::SqlCore(this);
-
-  Qt::Alignment defaultAlignment =
-      (Qt::AlignRight | Qt::AlignTrailing | Qt::AlignVCenter);
+  Qt::Alignment defaultAlignment = (Qt::AlignRight | Qt::AlignVCenter);
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setObjectName("print_editor_layout");
@@ -45,45 +40,24 @@ PrintsEditor::PrintsEditor(QWidget *parent) : QWidget{parent} {
 
   row1->addWidget(ip_id);
 
-  QLabel *countLabel = new QLabel(this);
-  countLabel->setObjectName("countLabel");
-  countLabel->setAlignment(defaultAlignment);
-  countLabel->setText(tr("Count:"));
-
-  row1->addWidget(countLabel);
-
   ip_count = new IntSpinBox(this);
   ip_count->setObjectName("ip_count");
-  ip_count->setWindowTitle(tr("Count"));
+  ip_count->setInfo(tr("Count"));
 
   row1->addWidget(ip_count);
-
-  QLabel *priceLabel = new QLabel(this);
-  priceLabel->setObjectName("priceLabel");
-  priceLabel->setText(tr("Price:"));
-
-  row1->addWidget(priceLabel);
 
   double minPrice = config.value("books/min_price", 8.00).toDouble();
   ip_price = new PriceEdit(this);
   ip_price->setObjectName("ip_price");
   ip_price->setRequired(true);
+  ip_price->setInfo(tr("Price"));
   ip_price->setMinimum(minPrice);
-
   row1->addWidget(ip_price);
-
-  QLabel *yearLabel = new QLabel(this);
-  yearLabel->setObjectName("yearLabel");
-  yearLabel->setAlignment(defaultAlignment);
-  yearLabel->setText(tr("Year:"));
-
-  row1->addWidget(yearLabel);
 
   ip_year = new YearEdit(this);
   ip_year->setObjectName("ip_year");
-  ip_year->setWindowTitle(tr("Year"));
+  ip_year->setInfo(tr("Year"));
   ip_year->setRequired(true);
-
   row1->addWidget(ip_year);
 
   row1->addStretch(1);
@@ -91,14 +65,7 @@ PrintsEditor::PrintsEditor(QWidget *parent) : QWidget{parent} {
   ip_kolorit = new BoolBox(this);
   ip_kolorit->setObjectName("ip_kolorit");
   ip_kolorit->setInfo(tr("Kolorit"));
-
   row1->addWidget(ip_kolorit);
-
-  ip_landscape = new BoolBox(this);
-  ip_landscape->setObjectName("ip_landscape");
-  ip_landscape->setInfo(tr("Landscape"));
-
-  row1->addWidget(ip_landscape);
 
   ip_views = new BoolBox(this);
   ip_views->setObjectName("ip_views");
@@ -115,11 +82,15 @@ PrintsEditor::PrintsEditor(QWidget *parent) : QWidget{parent} {
   ip_restricted->setToolTip(
       tr("Is the title not for sale nationally or is it on a censorship list. "
          "This is relevant for the Shopsystem."));
-
   gridLayout->addWidget(ip_restricted, glc, 0, 1, 1);
 
   QHBoxLayout *row2b = new QHBoxLayout();
   row2b->setObjectName("layout_row_tw");
+
+  ip_landscape = new BoolBox(this);
+  ip_landscape->setObjectName("ip_landscape");
+  ip_landscape->setInfo(tr("Landscape"));
+  row2b->addWidget(ip_landscape);
 
   row2b->addStretch(1);
 
@@ -455,7 +426,7 @@ const QHash<QString, QVariant> PrintsEditor::createSqlDataset() {
 
 void PrintsEditor::createSqlUpdate() {
   if (!ip_id->isValid()) {
-    emit s_sendMessage(tr("Missing Article ID for Update."));
+    emit s_postMessage(tr("Missing Article ID for Update."));
     return;
   }
 
@@ -568,7 +539,7 @@ bool PrintsEditor::checkIsModified() {
 
 void PrintsEditor::checkLeaveEditor() {
   if (checkIsModified()) {
-    emit s_sendMessage(
+    emit s_postMessage(
         tr("Unsaved Changes, don't leave this page before saved."));
     return;
   }

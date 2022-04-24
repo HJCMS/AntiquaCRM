@@ -10,6 +10,11 @@ UtilsMain::UtilsMain(QWidget *parent) : QFrame{parent} {
   modified = false;
 }
 
+Qt::Alignment UtilsMain::labelAlignment()
+{
+    return (Qt::AlignRight | Qt::AlignTrailing | Qt::AlignVCenter);
+}
+
 void UtilsMain::skipReturnPressed() { setModified(true); }
 
 void UtilsMain::focusOutEvent(QFocusEvent *e) {

@@ -9,25 +9,21 @@
 
 SerialID::SerialID(QWidget *parent) : UtilsMain{parent} {
   setObjectName("SerialID");
-  setWindowTitle(tr("Article ID"));
-  setToolTip(tr("Article ID"));
-  setContentsMargins(0, 0, 0, 0);
-  setModified(false);
 
   QHBoxLayout *layout = new QHBoxLayout(this);
 
   m_infoLabel = new QLabel(this);
-  m_infoLabel->setAlignment(Qt::AlignRight | Qt::AlignTrailing | Qt::AlignVCenter);
-  m_infoLabel->setText(tr("Article ID:"));
+  m_infoLabel->setAlignment(labelAlignment());
   layout->addWidget(m_infoLabel);
 
   m_serialLabel = new QLabel(this);
   m_serialLabel->setTextFormat(Qt::PlainText);
   m_serialLabel->setStyleSheet("font-weight: bold;");
-  m_serialLabel->setAlignment(Qt::AlignLeft | Qt::AlignTrailing | Qt::AlignVCenter);
   m_serialLabel->setTextInteractionFlags(Qt::TextSelectableByKeyboard |
-                                    Qt::TextSelectableByMouse);
+                                         Qt::TextSelectableByMouse);
   layout->addWidget(m_serialLabel);
+
+  setModified(false);
   setLayout(layout);
 }
 
@@ -43,7 +39,12 @@ void SerialID::reset() {
 
 bool SerialID::hasModified() { return isModified(); }
 
-void SerialID::setInfo(const QString &txt) { m_infoLabel->setText(txt); }
+void SerialID::setInfo(const QString &info) {
+  QString txt(info);
+  txt.append(":");
+  m_infoLabel->setText(txt);
+  m_serialLabel->setToolTip(info);
+}
 
 const QString SerialID::info() { return m_infoLabel->text(); }
 

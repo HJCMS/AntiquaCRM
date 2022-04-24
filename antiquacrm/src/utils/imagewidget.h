@@ -61,7 +61,7 @@ Q_SIGNALS:
   /**
     @brief Nachricht Ausgeben
   */
-  void s_sendMessage(const QString &);
+  void s_postMessage(const QString &);
 
 public Q_SLOTS:
   /**

@@ -13,6 +13,7 @@ SET (subproject_SOURCES
   serialid.cpp
   boolbox.cpp
   editoractionbar.cpp
+  editormain.cpp
   emailedit.cpp
   filedialog.cpp
   genderbox.cpp
@@ -43,6 +44,7 @@ SET (subproject_HEADERS
   boolbox.h
   editoractionbar.h
   emailedit.h
+  editormain.h
   filedialog.h
   genderbox.h
   imagetoolbar.h
@@ -71,6 +73,7 @@ ADD_LIBRARY (${_subproject} STATIC
   ${subproject_HEADERS}
   ${subproject_SOURCES}
   UtilsMain
+  EditorMain
   Utils
 )
 

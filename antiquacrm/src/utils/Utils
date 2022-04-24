@@ -6,6 +6,9 @@
 #ifndef EDITORACTIONBAR_UTILS_H
 #include "editoractionbar.h"
 #endif
+#ifndef EDITORMAIN_UTILS_H
+#include "editormain.h"
+#endif
 #ifndef EMAILEDIT_UTILS_H
 #include "emailedit.h"
 #endif
@@ -38,6 +41,9 @@
 #endif
 #ifndef PHONEEDIT_UTILS_H
 #include "phoneedit.h"
+#endif
+#ifndef POSTALCODEDATAMODEL_UTILS_H
+#include "postalcodedatamodel.h"
 #endif
 #ifndef POSTALCODE_UTILS_H
 #include "postalcode.h"

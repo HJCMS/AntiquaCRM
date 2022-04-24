@@ -8,14 +8,12 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QSizePolicy>
 
-StorageEdit::StorageEdit(QWidget *parent) : QFrame{parent} {
+StorageEdit::StorageEdit(QWidget *parent) : UtilsMain{parent} {
   if (objectName().isEmpty())
     setObjectName("StorageEdit");
 
-  setContentsMargins(0, 0, 0, 0);
-  setModified(false);
-
   QHBoxLayout *layout = new QHBoxLayout(this);
+  layout->setContentsMargins(0, 0, 0, 0);
 
   m_storage = new QComboBox(this);
   m_storage->setInsertPolicy(QComboBox::NoInsert);
@@ -28,6 +26,8 @@ StorageEdit::StorageEdit(QWidget *parent) : QFrame{parent} {
   layout->addWidget(m_search);
 
   setLayout(layout);
+
+  setModified(false);
 
   connect(m_search, SIGNAL(textChanged(const QString &)), this,
           SLOT(filterChanged(const QString &)));
@@ -52,8 +52,6 @@ void StorageEdit::focusInEvent(QFocusEvent *ev) {
   if (ev->type() == QEvent::FocusIn)
     m_storage->setFocus();
 }
-
-void StorageEdit::setModified(bool b) { modified = b; }
 
 void StorageEdit::setStorageData() {
   HJCMS::SqlCore *db = new HJCMS::SqlCore(this);
@@ -97,23 +95,14 @@ void StorageEdit::reset() {
   setModified(false);
 }
 
-void StorageEdit::setRequired(bool b) { required = b; }
-
-bool StorageEdit::isRequired() { return required; }
-
-bool StorageEdit::hasModified() {
-  if (m_storage->currentIndex() == 0)
-    return true;
-
-  return modified;
-}
+bool StorageEdit::hasModified() { return isModified(); }
 
 const QVariant StorageEdit::value() {
   return QVariant(m_storage->currentIndex());
 }
 
 bool StorageEdit::isValid() {
-  if (required && (m_storage->currentIndex() == 0))
+  if (isRequired() && (m_storage->currentIndex() == 0))
     return false;
 
   if (m_storage->currentIndex() > 0)
@@ -121,6 +110,12 @@ bool StorageEdit::isValid() {
 
   return false;
 }
+
+void StorageEdit::setInfo(const QString &info) {
+  m_storage->setToolTip(info);
+}
+
+const QString StorageEdit::info() { return m_storage->toolTip(); }
 
 const QString StorageEdit::notes() {
   return tr("The Storage location is required and must set.");

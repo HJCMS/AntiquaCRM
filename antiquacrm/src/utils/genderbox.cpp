@@ -5,6 +5,7 @@
 #include "version.h"
 
 #include <QtCore/QDebug>
+#include <QtWidgets/QHBoxLayout>
 
 Gender::Gender() {
   p_data.insert(0, QObject::tr("Without disclosures")); /**< Ohne Angabe */
@@ -26,39 +27,57 @@ const QStringList Gender::all() {
   return list;
 }
 
-GenderBox::GenderBox(QWidget *parent) : QComboBox{parent} {
+GenderBox::GenderBox(QWidget *parent) : UtilsMain{parent} {
   setObjectName("GenderBox");
-  setToolTip(tr("Gender"));
+
+  QHBoxLayout *layout = new QHBoxLayout(this);
+
+  m_info = new QLabel(this);
+  m_info->setAlignment(labelAlignment());
+  layout->addWidget(m_info);
+
+  m_comboBox = new QComboBox(this);
+  m_comboBox->setEditable(false);
+  layout->addWidget(m_comboBox);
+
+  setLayout(layout);
+
   Gender gender;
-  for (int i = 0; i < gender.size(); i++)
-  {
-      addItem(myIcon("group"),gender.value(i));
+  for (int i = 0; i < gender.size(); i++) {
+    m_comboBox->addItem(myIcon("group"), gender.value(i));
   }
-  connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(itemChanged(int)));
+
+  setModified(false);
+  setRequired(false);
+
+  connect(m_comboBox, SIGNAL(currentIndexChanged(int)), this,
+          SLOT(itemChanged(int)));
 }
 
 void GenderBox::itemChanged(int) { setModified(true); }
 
 void GenderBox::setValue(const QVariant &i) {
-  setCurrentIndex(i.toInt());
-  setModified(false);
+  m_comboBox->setCurrentIndex(i.toInt());
 }
 
-void GenderBox::setModified(bool b) { modified = b; }
-
-void GenderBox::setRequired(bool b) { required = b; }
-
-bool GenderBox::isRequired() { return required; }
-
-bool GenderBox::hasModified() { return modified; }
+bool GenderBox::hasModified() { return isModified(); }
 
 void GenderBox::reset() {
-  setCurrentIndex(0);
+  m_comboBox->setCurrentIndex(0);
   setModified(false);
 }
 
-const QVariant GenderBox::value() { return currentIndex(); }
+const QVariant GenderBox::value() { return m_comboBox->currentIndex(); }
 
 bool GenderBox::isValid() { return true; }
+
+void GenderBox::setInfo(const QString &info) {
+  QString txt(info);
+  txt.append(":");
+  m_info->setText(txt);
+  m_comboBox->setToolTip(info);
+}
+
+const QString GenderBox::info() { return m_info->text(); }
 
 const QString GenderBox::notes() { return QString(); }

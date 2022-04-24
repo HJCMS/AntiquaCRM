@@ -5,28 +5,22 @@
 #ifndef STORAGEEDIT_UTILS_H
 #define STORAGEEDIT_UTILS_H
 
-#include <QtCore/QModelIndex>
 #include <QtCore/QObject>
-#include <QtCore/QVariant>
 #include <QtGui/QFocusEvent>
 #include <QtWidgets/QComboBox>
-#include <QtWidgets/QFrame>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QWidget>
 
-class StorageEdit : public QFrame {
+#include <UtilsMain>
+
+class StorageEdit : public UtilsMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
-  Q_PROPERTY(
-      bool required READ isRequired WRITE setRequired NOTIFY requireChanged);
 
 private:
-  bool required = true;
-  bool modified = false;
   QComboBox *m_storage;
   QLineEdit *m_search;
-
   /**
      @brief Tabellendaten "ref_storage_location"
    */
@@ -39,12 +33,7 @@ private Q_SLOTS:
 protected:
   void focusInEvent(QFocusEvent *);
 
-Q_SIGNALS:
-  void requireChanged();
-
 public Q_SLOTS:
-  Q_INVOKABLE void setModified(bool b = true);
-
   /**
      Lade Datenbankdaten in die Auswahlbox
      Wird nach der Klasseninitialisierung
@@ -61,11 +50,11 @@ public Q_SLOTS:
 
 public:
   explicit StorageEdit(QWidget *parent = nullptr);
-  void setRequired(bool b);
-  bool isRequired();
   Q_INVOKABLE bool hasModified();
   const QVariant value();
   bool isValid();
+  void setInfo(const QString &);
+  const QString info();
   const QString notes();
 };
 

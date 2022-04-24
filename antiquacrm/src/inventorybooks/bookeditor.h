@@ -10,7 +10,6 @@
 #include <QtCore/QObject>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QVariant>
-#include <QtCore/QVector>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTabWidget>
@@ -22,10 +21,7 @@
  */
 #include <Imaging>
 #include <Utils>
-
-namespace HJCMS {
-class SqlCore;
-};
+#include <EditorMain>
 
 class IsbnEdit;
 class IsbnRequest;
@@ -35,13 +31,12 @@ class IsbnRequest;
    @brief BookEditor
    Primäre Klasse zum erstellen/bearbeiten von Bucheinträgen.
  */
-class BookEditor : public QWidget {
+class BookEditor : public EditorMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  HJCMS::SqlCore *m_sql;          /**< @brief SQL Database Connection */
   BoolBox *ib_signed;             /**< @brief Signiert? */
   BoolBox *ib_restricted;         /**< @brief Zensiert? */
   SetLanguage *ib_language;       /**< @brief Sprache */
@@ -67,33 +62,6 @@ private:
   QTabWidget *m_tabWidget; /**< @brief BeschreibungsText und ISBN Info  */
   TextField *ib_internal_description; /**< @brief Interne Beschreibung */
   QListWidget *m_listWidget;          /**< @brief ISBN Abfrage-Vorschau */
-
-  /**
-     @brief DataEntries
-     Lese die Datenfelder mit @ref BookEditor::editBookEntry
-     und schreibe sie für die Zurücksetzen funktion hier rein.
-
-     @note Die Objektnamen die Typangabe in @b field (Feldnamen)
-      stimmen mit den SQL Tabellenspalten Bezeichnungen überein!
-
-     @li Die Typangabe @b field ist für das Identifizieren
-      der Eingabefelder in der Klasse zuständig.
-
-     @li Mit @b vtype wird die Entscheidung getroffen welches
-      Datensatzformat verwendet werden soll. Die Entscheidung
-      liegt zu 100% beim Rückgabe ergebnis von QSqlQuery.
-
-     @li Der Wert @b data ist vom Type Variant, was die Erstellung
-      der SQL INSERT/UPDATE Statements vereinfachen soll.
-
-     @warning Wenn sich bei der Datenbank Tabelle ein Spalten Typ
-      ändert. Muss das hier Kontrolliert und Überarbeitet werden!
-   */
-  struct DataEntries {
-    QString field; /**< @brief Feld ist gleichwertig mit {INPUT}.objectName() */
-    int vtype;     /**< @brief QVariant::Type */
-    QVariant data; /**< @brief Datenwert */
-  };
 
   /**
      @brief Wird für QObject::findchild benötigt!
@@ -123,18 +91,6 @@ private:
     @brief Eingebettete Bildansicht
    */
   ImageWidget *m_imageView;
-
-  /**
-    @brief Objektnamen-Liste der Eingabefelder
-  */
-  QStringList inputList;
-
-  /**
-   @brief Hier werden die Daten aus der Abfrage eingefügt.
-   Er wird nur in @ref editBookEntry befüllt und in
-   @ref finalLeaveEditor wieder geleert!
-  */
-  QVector<DataEntries> sqlQueryResult;
 
   /**
     @brief Prüft und erstellt die Datensatzfelder.
@@ -338,40 +294,6 @@ public Q_SLOTS:
      @brief Methode für Zurücksetzen Button
    */
   void restoreDataset();
-
-Q_SIGNALS:
-  /**
-     @brief Sende Änderungen an parent::
-  */
-  void s_isModified(bool);
-
-  /**
-    @brief Sende Signal das die Ansicht verlassen werden kann!
-  */
-  void s_leaveEditor();
-
-  /**
-   * @brief Bildbearbeitung öffnen
-   */
-  void s_openImageEditor(double);
-
-  /**
-   * @brief Meldungen an Parent senden!
-   */
-  void s_sendMessage(const QString &);
-
-  /**
-   * @brief Meldung Artikel Aktiviert/Deaktiviert.
-   * Nachricht das der Artikel Aktiviert oder Deaktiviert wurde.
-   * Wird in @ref createSqlUpdate und in @ref realyDeactivateBookEntry
-   * ausgelöst! Es wird nicht beim Insert abgefangen weil die Artikel ID zu
-   * diesem Zeitpunkt noch nicht vorhanden ist. (Also auch keine Augträge
-   * vorhanden sein können!)
-   * @note Das Signal ist Relevant für die Auftrags und Shop Verwaltung!
-   * @li true  = Artikel wurde @b Aktiviert
-   * @li false = Artikel wurde @b Deaktiviert
-   */
-  void s_articleActivation(bool);
 
 public:
   BookEditor(QWidget *parent = nullptr);

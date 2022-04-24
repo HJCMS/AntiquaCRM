@@ -2,24 +2,35 @@
 // vim: set fileencoding=utf-8
 
 #include "yearedit.h"
-#include "version.h"
 
 #include <QtCore/QDate>
 #include <QtCore/QDebug>
+#include <QtWidgets/QHBoxLayout>
 
-static const QDate currentDate()
-{
-    return QDateTime::currentDateTime().date();
-}
+static const QDate currentDate() { return QDateTime::currentDateTime().date(); }
 
-YearEdit::YearEdit(QWidget *parent) : QDateEdit{parent}, startDate(currentDate()) {
+YearEdit::YearEdit(QWidget *parent)
+    : UtilsMain{parent}, startDate(currentDate()) {
   setObjectName("YearEdit");
-  setDisplayFormat("yyyy");
-  setMaximumDate(startDate);
-  setModified(false);
-  setDate(startDate);
 
-  connect(this, SIGNAL(dateChanged(const QDate &)), this,
+  QHBoxLayout *layout = new QHBoxLayout(this);
+
+  m_info = new QLabel(this);
+  m_info->setAlignment(labelAlignment());
+  layout->addWidget(m_info);
+
+  m_year = new QDateEdit(this);
+  m_year->setDisplayFormat("yyyy");
+  m_year->setMaximumDate(startDate);
+  m_year->setDate(startDate);
+  layout->addWidget(m_year);
+
+  setLayout(layout);
+
+  setModified(false);
+  setRequired(false);
+
+  connect(m_year, SIGNAL(dateChanged(const QDate &)), this,
           SLOT(dataChanged(const QDate &)));
 }
 
@@ -28,34 +39,37 @@ void YearEdit::dataChanged(const QDate &d) {
   setModified(true);
 }
 
-void YearEdit::setModified(bool b) { modified = b; }
-
 void YearEdit::setValue(const QVariant &v) {
   double y = v.toDouble();
   QDate d(y, 1, 1);
-  setDate(d);
-  setModified(false);
+  m_year->setDate(d);
+  setModified(true);
 }
 
 void YearEdit::reset() {
-  setDate(QDate());
+  m_year->setDate(startDate);
   setModified(false);
 }
 
-void YearEdit::setRequired(bool b) { required = b; }
+bool YearEdit::hasModified() { return isModified(); }
 
-bool YearEdit::isRequired() { return required; }
-
-bool YearEdit::hasModified() { return modified; }
-
-const QVariant YearEdit::value() { return date().year(); }
+const QVariant YearEdit::value() { return m_year->date().year(); }
 
 bool YearEdit::isValid() {
-  if (required && date() == startDate)
+  if (isRequired() && m_year->date() == startDate)
     return false;
 
   return true;
 }
+
+void YearEdit::setInfo(const QString &info) {
+  QString txt(info);
+  txt.append(":");
+  m_info->setText(txt);
+  m_year->setToolTip(info);
+}
+
+const QString YearEdit::info() { return m_info->text(); }
 
 const QString YearEdit::notes() {
   return tr("The Year must contain a valid entry.");

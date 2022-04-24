@@ -114,12 +114,15 @@ InventoryPrints::InventoryPrints(QWidget *parent)
   connect(m_searchBar, SIGNAL(currentFilterChanged(int)), this,
           SLOT(updateValidator(int)));
 
-  connect(m_printsEditor, SIGNAL(s_sendMessage(const QString &)), this,
+  connect(m_printsEditor, SIGNAL(s_postMessage(const QString &)), this,
           SLOT(displayMessageBox(const QString &)));
 
   connect(m_printsEditor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
   connect(m_printsEditor, SIGNAL(s_isModified(bool)), this,
           SLOT(setClosable(bool)));
+
+//  connect(m_printsEditor, SIGNAL(s_articleActivation(bool)), this,
+//          SLOT(articleActivation(bool)));
 }
 
 void InventoryPrints::searchConvert(const QString &query) {

@@ -21,11 +21,8 @@ CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
   QHBoxLayout *row1 = new QHBoxLayout();
   row1->setObjectName("contact_edit_row1");
 
-  QLabel *genderLabel = new QLabel(this);
-  genderLabel->setText(tr("Gender:"));
-  row1->addWidget(genderLabel);
-
   c_gender = new GenderBox(this);
+  c_gender->setInfo(tr("Gender"));
   row1->addWidget(c_gender);
 
   QLabel *titleLabel = new QLabel(this);
@@ -211,11 +208,6 @@ void CustomerContact::postalCodeComplite() { fetchCountryFromPostal(); }
 void CustomerContact::generateAddressBody() {
   QStringList name;
   QStringList address;
-  /**< Gender */
-  if (c_gender->value().toInt() != 0) {
-    int i = c_gender->value().toInt();
-    name.append(Gender().value(i));
-  }
   /**< Titelanrede */
   if (!c_title->value().toString().isEmpty()) {
     name.append(c_title->value().toString());
@@ -240,9 +232,12 @@ void CustomerContact::generateAddressBody() {
   body.append("\n");
   body.append(address.join(" "));
   body.append("\n");
+
   /**< Straße */
   if (!c_street->value().toString().isEmpty()) {
     body.append(c_street->value().toString());
   }
-  c_postal_address->setValue(body);
+
+  if (!body.trimmed().isEmpty())
+    c_postal_address->setValue(body);
 }

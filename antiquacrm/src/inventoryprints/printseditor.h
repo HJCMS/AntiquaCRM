@@ -10,7 +10,6 @@
 #include <QtCore/QObject>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QVariant>
-#include <QtCore/QVector>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTabWidget>
@@ -22,19 +21,15 @@
 */
 #include <Utils>
 #include <Imaging>
-
-namespace HJCMS {
-class SqlCore;
-};
+#include <EditorMain>
 /** }@ */
 
-class PrintsEditor : public QWidget {
+class PrintsEditor : public EditorMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  HJCMS::SqlCore *m_sql;              /**< @brief SQL Database Connection */
   BoolBox *ip_kolorit;                /**< @brief koloriert */
   BoolBox *ip_landscape;              /**< @brief Ansicht */
   BoolBox *ip_views;                  /**< @brief koloriert */
@@ -54,33 +49,6 @@ private:
   TextField *ip_description;          /**< @brief Öffentliche Beschreibung */
   TechniqueEdit *ip_technique;        /**< @brief Herausgeber/Verlag */
   QTabWidget *m_tabWidget; /**< @brief BeschreibungsText und ISBN Info  */
-
-  /**
-     @brief PrintData
-     Lese die Datenfelder mit @ref editPrintEntry
-     und schreibe sie für die Zurücksetzen funktion hier rein.
-
-     @note Die Objektnamen die Typangabe in @b field (Feldnamen)
-      stimmen mit den SQL Tabellenspalten Bezeichnungen überein!
-
-     @li Die Typangabe @b field ist für das Identifizieren
-      der Eingabefelder in der Klasse zuständig.
-
-     @li Mit @b vtype wird die Entscheidung getroffen welches
-      Datensatzformat verwendet werden soll. Die Entscheidung
-      liegt zu 100% beim Rückgabe ergebnis von QSqlQuery.
-
-     @li Der Wert @b data ist vom Type Variant, was die Erstellung
-      der SQL INSERT/UPDATE Statements vereinfachen soll.
-
-     @warning Wenn sich bei der Datenbank Tabelle ein Spalten Typ
-      ändert. Muss das hier Kontrolliert und Überarbeitet werden!
-   */
-  struct DataEntries {
-    QString field; /**< @brief Feld ist gleichwertig mit {INPUT}.objectName() */
-    int vtype;     /**< @brief QVariant::Type */
-    QVariant data; /**< @brief Datenwert */
-  };
 
   /**
      @brief Wird für QObject::findchild benötigt!
@@ -104,18 +72,6 @@ private:
     @brief Eingebettete Bildansicht
    */
   ImageWidget *m_imageView;
-
-  /**
-    @brief Objektnamen-Liste der Eingabefelder
-  */
-  QStringList inputList;
-
-  /**
-   @brief Hier werden die Daten aus der Abfrage eingefügt.
-   Er wird nur in @ref editPrintsEntry befüllt und in
-   @ref finalLeaveEditor wieder geleert!
-  */
-  QVector<DataEntries> sqlQueryResult;
 
   /**
     @brief Prüft und erstellt die Datensatzfelder.
@@ -291,27 +247,6 @@ public Q_SLOTS:
      @brief Methode für Zurücksetzen Button
    */
   void restoreDataset();
-
-Q_SIGNALS:
-  /**
-     @brief Sende Änderungen an parent::
-  */
-  void s_isModified(bool);
-
-  /**
-    @brief Sende Signal das die Ansicht verlassen werden kann!
-  */
-  void s_leaveEditor();
-
-  /**
-    @brief Bildbearbeitung öffnen
-  */
-  void s_openImageEditor(double);
-
-  /**
-    @brief Nachricht Ausgeben
-  */
-  void s_sendMessage(const QString &);
 
 public:
   explicit PrintsEditor(QWidget *parent = nullptr);

@@ -24,6 +24,7 @@ private:
 
 protected:
   QVariant p_value;
+  Qt::Alignment labelAlignment();
 
 protected Q_SLOTS:
   virtual void skipReturnPressed();
