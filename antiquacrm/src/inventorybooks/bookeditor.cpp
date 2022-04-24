@@ -8,6 +8,11 @@
 #include <QtGui/QDesktopServices>
 #include <QtWidgets>
 
+// Schalte SQL ausgaben ein
+#ifndef SHOW_SQL_QUERIES
+#define SHOW_SQL_QUERIES false
+#endif
+
 BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   setObjectName("BookEditor");
   setWindowTitle(tr("Edit Book Title"));
@@ -62,13 +67,13 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
 
   ib_signed = new BoolBox(this);
   ib_signed->setObjectName("ib_signed");
-  ib_signed->setText(tr("Signed Version"));
+  ib_signed->setInfo(tr("Signed Version"));
 
   lay1->addWidget(ib_signed);
 
   ib_restricted = new BoolBox(this);
   ib_restricted->setObjectName("ib_restricted");
-  ib_restricted->setText(tr("Restricted Sale"));
+  ib_restricted->setInfo(tr("Restricted Sale"));
   ib_restricted->setToolTip(
       tr("Is the title not for sale nationally or is it on a censorship list. "
          "This is relevant for the Shopsystem."));
@@ -387,7 +392,8 @@ BookEditor::BookEditor(QWidget *parent) : QWidget{parent} {
   connect(m_btnQueryISBN, SIGNAL(clicked()), this, SLOT(triggerIsbnQuery()));
 
   connect(m_imageToolBar, SIGNAL(s_openImage()), this, SLOT(openImageDialog()));
-  // connect(m_imageToolBar, SIGNAL(s_deleteImage(int)), this, SLOT(__TODO__(int)));
+  // connect(m_imageToolBar, SIGNAL(s_deleteImage(int)), this,
+  // SLOT(__TODO__(int)));
 
   connect(m_listWidget, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
           SLOT(infoISBNDoubleClicked(QListWidgetItem *)));
@@ -443,7 +449,9 @@ void BookEditor::resetModified() {
 }
 
 bool BookEditor::sendSqlQuery(const QString &sqlStatement) {
-  // qDebug() << Q_FUNC_INFO << sqlStatement;
+  if (SHOW_SQL_QUERIES) {
+    qDebug() << Q_FUNC_INFO << sqlStatement;
+  }
   MessageBox msgBox(this);
   QSqlQuery q = m_sql->query(sqlStatement);
   if (q.lastError().type() != QSqlError::NoError) {
@@ -472,9 +480,6 @@ const QHash<QString, QVariant> BookEditor::createSqlDataset() {
       data.clear();
       return data;
     }
-    if (cur->value().toString().isEmpty())
-      continue;
-
     data.insert(cur->objectName(), cur->value());
   }
   listStr.clear();
@@ -489,29 +494,12 @@ const QHash<QString, QVariant> BookEditor::createSqlDataset() {
       data.clear();
       return data;
     }
-    if (cur->value().toInt() == 0)
-      continue;
-
     data.insert(cur->objectName(), cur->value());
   }
   listInt.clear();
-  if (ib_language->isValid()) {
-    data.insert("ib_language", ib_language->value());
-  }
-  if (ib_signed->isChecked()) {
-    data.insert("ib_signed", ib_signed->value());
-  }
-  if (ib_restricted->isChecked()) {
-    data.insert("ib_restricted", ib_restricted->value());
-  }
+  // Fleder welche geprüft werden müssen
   if (ib_isbn->isValid()) {
     data.insert("ib_isbn", ib_isbn->value());
-  }
-  if (ib_description->isValid()) {
-    data.insert("ib_description", ib_description->value());
-  }
-  if (ib_internal_description->isValid()) {
-    data.insert("ib_internal_description", ib_internal_description->value());
   }
   if (!ib_year->isValid()) {
     messanger.notice(ib_year->notes());
@@ -537,6 +525,12 @@ const QHash<QString, QVariant> BookEditor::createSqlDataset() {
     data.clear();
     return data;
   }
+  // Felder die immer gesetzt werden
+  data.insert("ib_description", ib_description->value());
+  data.insert("ib_internal_description", ib_internal_description->value());
+  data.insert("ib_language", ib_language->value());
+  data.insert("ib_signed", ib_signed->value());
+  data.insert("ib_restricted", ib_restricted->value());
   return data;
 }
 
@@ -560,6 +554,20 @@ void BookEditor::createSqlUpdate() {
       set.append(it.key() + "='" + it.value().toString() + "'");
     } else {
       set.append(it.key() + "=" + it.value().toString());
+    }
+  }
+
+  /** Auf Aktivierung prüfen */
+  if (ib_count->value().toInt() != 0) {
+    for (int i = 0; i < sqlQueryResult.size(); ++i) {
+      DataEntries f = sqlQueryResult.at(i);
+      if (f.field == "ib_count") {
+        if (f.data.toInt() == 0) {
+          /** Aktivierung */
+          emit s_articleActivation(true);
+          break;
+        }
+      }
     }
   }
 
@@ -745,9 +753,35 @@ void BookEditor::setSqlQueryData(const QString &key, const QVariant &value) {
   qDebug() << "Missing" << key << value << value.type();
 }
 
+bool BookEditor::realyDeactivateBookEntry() {
+  QString body = tr("When setting the count of this book to 0. All existing "
+                    "orders from this entry are also deactivated and shop "
+                    "system entries are marked for deletion.");
+  body.append("<br/><p>");
+  body.append(tr("Are you sure to deactivate this entry?"));
+  body.append("</p>");
+
+  int ret = QMessageBox::question(this, tr("Book deactivation"), body);
+  if (ret == QMessageBox::No) {
+    for (int i = 0; i < sqlQueryResult.size(); ++i) {
+      DataEntries f = sqlQueryResult.at(i);
+      if (f.field == "ib_count") {
+        ib_count->setValue(f.data);
+        break;
+      }
+    }
+    return false;
+  }
+  emit s_articleActivation(false); /**< Deaktivierung */
+  return true;
+}
+
 void BookEditor::saveData() {
   if (ib_id->value().toString().isEmpty()) {
     createSqlInsert();
+  } else if (ib_count->value().toInt() == 0) {
+    if (realyDeactivateBookEntry())
+      createSqlUpdate();
   } else {
     createSqlUpdate();
   }

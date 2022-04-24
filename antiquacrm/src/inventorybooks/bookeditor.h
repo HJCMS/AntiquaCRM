@@ -17,11 +17,11 @@
 #include <QtWidgets/QWidget>
 
 /**
-* @defgroup HJCMS
-* @{
-*/
-#include <Utils>
+ * @defgroup HJCMS
+ * @{
+ */
 #include <Imaging>
+#include <Utils>
 
 namespace HJCMS {
 class SqlCore;
@@ -53,7 +53,7 @@ private:
   IntSpinBox *ib_weight;          /**< @brief Gewicht */
   IntSpinBox *ib_volume;          /**< @brief Band ? */
   IntSpinBox *ib_edition;         /**< @brief Ausgabe */
-  SerialID *ib_id;               /**< @brief ReadOnly:ArticleID */
+  SerialID *ib_id;                /**< @brief ReadOnly:ArticleID */
   IsbnEdit *ib_isbn;              /**< @brief ISBN */
   StrLineEdit *ib_author;         /**< @brief Buchautor */
   StrLineEdit *ib_condition;      /**< @brief Zustands beschreibung */
@@ -241,6 +241,15 @@ private:
    */
   void setSqlQueryData(const QString &key, const QVariant &value);
 
+  /**
+   * Wenn der Benutzer den Artikel Bestand auf 0 setzt!
+   * Einen Hinweis ausgeben das der Artikel gleichzeitig
+   * auch aus dem Auftrags-System geworfen wird und die
+   * Online Shops auf einen Löschenauftrag erhalten!
+   * @note Die Meldung wird in @ref saveData ausgelöst!
+   */
+  bool realyDeactivateBookEntry();
+
 private Q_SLOTS:
   /**
      @brief Button open Imaging clicked()
@@ -342,14 +351,27 @@ Q_SIGNALS:
   void s_leaveEditor();
 
   /**
-    @brief Bildbearbeitung öffnen
-  */
+   * @brief Bildbearbeitung öffnen
+   */
   void s_openImageEditor(double);
 
   /**
-    @brief Nachricht Ausgeben
-  */
+   * @brief Meldungen an Parent senden!
+   */
   void s_sendMessage(const QString &);
+
+  /**
+   * @brief Meldung Artikel Aktiviert/Deaktiviert.
+   * Nachricht das der Artikel Aktiviert oder Deaktiviert wurde.
+   * Wird in @ref createSqlUpdate und in @ref realyDeactivateBookEntry
+   * ausgelöst! Es wird nicht beim Insert abgefangen weil die Artikel ID zu
+   * diesem Zeitpunkt noch nicht vorhanden ist. (Also auch keine Augträge
+   * vorhanden sein können!)
+   * @note Das Signal ist Relevant für die Auftrags und Shop Verwaltung!
+   * @li true  = Artikel wurde @b Aktiviert
+   * @li false = Artikel wurde @b Deaktiviert
+   */
+  void s_articleActivation(bool);
 
 public:
   BookEditor(QWidget *parent = nullptr);

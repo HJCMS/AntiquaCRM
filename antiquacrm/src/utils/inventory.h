@@ -42,6 +42,13 @@ protected Q_SLOTS:
   */
   void setClosable(bool b);
 
+  /**
+   * @brief Meldung vom Bucheditor verarbeiten.
+   * Ob ein Bucheintrag Aktiviert/Deaktiviert wurde!
+   * @note Ist für die Auftrags/Shop Verwaltung erforderlich!
+   */
+  void articleActivation(bool);
+
 Q_SIGNALS:
   /**
     @brief Wegen QML hier eingefügt.

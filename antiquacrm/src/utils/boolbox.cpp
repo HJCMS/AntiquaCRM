@@ -2,45 +2,57 @@
 // vim: set fileencoding=utf-8
 
 #include "boolbox.h"
-#include "version.h"
 
 #include <QtCore/QDebug>
+#include <QtWidgets/QHBoxLayout>
 
-BoolBox::BoolBox(QWidget *parent) : QCheckBox{parent} {
+BoolBox::BoolBox(QWidget *parent) : UtilsMain{parent} {
   setWindowTitle(tr("Checkbox"));
+
+  QHBoxLayout *layout = new QHBoxLayout(this);
+
+  m_checkBox = new QCheckBox(this);
+  layout->addWidget(m_checkBox);
+
+  setLayout(layout);
+
   setModified(false);
-  connect(this, SIGNAL(stateChanged(int)), this, SLOT(itemChanged(int)));
+  setRequired(false);
+
+  connect(m_checkBox, SIGNAL(stateChanged(int)), this, SLOT(itemChanged(int)));
 }
 
 void BoolBox::itemChanged(int) { setModified(true); }
 
-void BoolBox::setModified(bool b) { modified = b; }
-
-void BoolBox::setRequired(bool b) { required = b; }
-
-bool BoolBox::isRequired() { return required; }
-
 void BoolBox::setValue(const QVariant &val) {
-  bool value = val.toBool();
-  setChecked(value);
-  setModified(false);
-}
-
-void BoolBox::reset() {
-  setChecked(false);
+  bool b = val.toBool();
+  m_checkBox->setChecked(b);
   setModified(true);
 }
 
-bool BoolBox::hasModified() { return modified; }
+void BoolBox::reset() {
+  m_checkBox->setChecked(false);
+  setModified(false);
+}
 
-const QVariant BoolBox::value() { return QVariant(isChecked()); }
+void BoolBox::setChecked(bool b) { m_checkBox->setChecked(b); }
+
+bool BoolBox::hasModified() { return isModified(); }
+
+bool BoolBox::isChecked() { return m_checkBox->isChecked(); }
+
+const QVariant BoolBox::value() { return QVariant(m_checkBox->isChecked()); }
 
 bool BoolBox::isValid() {
-  if (required && !isChecked())
-    return false;
+  if (isRequired())
+    return m_checkBox->isChecked();
 
   return true;
 }
+
+void BoolBox::setInfo(const QString &txt) { m_checkBox->setText(txt); }
+
+const QString BoolBox::info() { return m_checkBox->text(); }
 
 const QString BoolBox::notes() {
   QString msg(windowTitle());

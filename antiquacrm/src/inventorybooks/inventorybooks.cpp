@@ -128,6 +128,9 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   connect(m_bookEditor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
   connect(m_bookEditor, SIGNAL(s_isModified(bool)), this,
           SLOT(setClosable(bool)));
+
+  connect(m_bookEditor, SIGNAL(s_articleActivation(bool)), this,
+          SLOT(articleActivation(bool)));
 }
 
 void InventoryBooks::searchConvert(const QString &query) {

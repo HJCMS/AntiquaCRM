@@ -9,15 +9,16 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QWidget>
 
-class BoolBox : public QCheckBox {
+#include <UtilsMain>
+
+class BoolBox : public UtilsMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
   Q_PROPERTY(bool required READ isRequired WRITE setRequired NOTIFY requireChanged);
 
 private:
-  bool required = false;
-  bool modified;
+  QCheckBox *m_checkBox;
 
 private Q_SLOTS:
   void itemChanged(int);
@@ -26,17 +27,18 @@ Q_SIGNALS:
   void requireChanged();
 
 public Q_SLOTS:
-  Q_INVOKABLE void setModified(bool b = true);
   Q_INVOKABLE void reset();
+  void setChecked(bool);
 
 public:
   explicit BoolBox(QWidget *parent = nullptr);
-  void setRequired(bool b);
-  bool isRequired();
-  void setValue(const QVariant &);
   Q_INVOKABLE bool hasModified();
+  bool isChecked();
+  void setValue(const QVariant &);
   const QVariant value();
   bool isValid();
+  void setInfo(const QString &);
+  const QString info();
   const QString notes();
 };
 

@@ -22,7 +22,7 @@
 <context>
     <name>BookEditor</name>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="+13"/>
+        <location filename="../inventorybooks/bookeditor.cpp" line="+18"/>
         <source>Edit Book Title</source>
         <translation>Editiere Buchtitel</translation>
     </message>
@@ -192,7 +192,7 @@
         <translation>Umschreibung</translation>
     </message>
     <message>
-        <location line="+242"/>
+        <location line="+231"/>
         <source>Missing Article ID for Update.</source>
         <translation>Keine Artikel ID für Update vorhanden.</translation>
     </message>
@@ -202,7 +202,17 @@
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+91"/>
+        <source>Are you sure to deactivate this entry?</source>
+        <translation>Möchten Sie diesen Eintrag wirklich deaktivieren?</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Book deactivation</source>
+        <translation>Buch Deaktivierung</translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>No datasets were found.</source>
         <translation>Es wurden keine Datensätze gefunden.</translation>
     </message>
@@ -232,7 +242,7 @@
         <translation>Öffnen Sie die Webseite im Browser für eine vollständige Beschreibung.</translation>
     </message>
     <message>
-        <location line="-629"/>
+        <location line="-643"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -247,7 +257,12 @@
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
     <message>
-        <location line="+615"/>
+        <location line="+518"/>
+        <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
+        <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
+    </message>
+    <message>
+        <location line="+111"/>
         <source>External Book Description</source>
         <translation>Öffne externe Buch Beschreibung</translation>
     </message>
@@ -262,7 +277,7 @@
         <translation>OpenLibrary kann kostenlos verwendet werden, aber wir brauchen Ihre Hilfe!</translation>
     </message>
     <message>
-        <location line="-504"/>
+        <location line="-518"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -285,23 +300,23 @@
     </message>
     <message>
         <location line="-233"/>
-        <location line="+676"/>
+        <location line="+690"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
     <message>
-        <location line="-555"/>
-        <location line="+565"/>
+        <location line="-569"/>
+        <location line="+579"/>
         <source>Publisher</source>
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="-366"/>
+        <location line="-377"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-384"/>
+        <location line="-387"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -405,7 +420,7 @@
         <translation>Auswahlbox</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+50"/>
         <source>is required must selected.</source>
         <translation>ist Erforderlich und mus gesetzt werden.</translation>
     </message>

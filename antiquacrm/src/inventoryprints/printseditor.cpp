@@ -90,19 +90,19 @@ PrintsEditor::PrintsEditor(QWidget *parent) : QWidget{parent} {
 
   ip_kolorit = new BoolBox(this);
   ip_kolorit->setObjectName("ip_kolorit");
-  ip_kolorit->setText(tr("Kolorit"));
+  ip_kolorit->setInfo(tr("Kolorit"));
 
   row1->addWidget(ip_kolorit);
 
   ip_landscape = new BoolBox(this);
   ip_landscape->setObjectName("ip_landscape");
-  ip_landscape->setText(tr("Landscape"));
+  ip_landscape->setInfo(tr("Landscape"));
 
   row1->addWidget(ip_landscape);
 
   ip_views = new BoolBox(this);
   ip_views->setObjectName("ip_views");
-  ip_views->setText(tr("Views"));
+  ip_views->setInfo(tr("Views"));
   row1->addWidget(ip_views);
 
   gridLayout->addLayout(row1, glc++, 0, 1, 2);
@@ -111,7 +111,7 @@ PrintsEditor::PrintsEditor(QWidget *parent) : QWidget{parent} {
   // BEGIN #2
   ip_restricted = new BoolBox(this);
   ip_restricted->setObjectName("ip_restricted");
-  ip_restricted->setText(tr("Restricted Sale"));
+  ip_restricted->setInfo(tr("Restricted Sale"));
   ip_restricted->setToolTip(
       tr("Is the title not for sale nationally or is it on a censorship list. "
          "This is relevant for the Shopsystem."));
