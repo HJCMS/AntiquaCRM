@@ -63,7 +63,7 @@ protected:
   void contextMenuEvent(QContextMenuEvent *);
 
 Q_SIGNALS:
-  void s_rowsChanged(int count);
+  void s_reportQuery(const QString &);
   void s_articleSelected(int id);
   void s_newEntryPlease();
 

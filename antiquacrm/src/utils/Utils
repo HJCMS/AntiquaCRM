@@ -78,6 +78,9 @@
 #ifndef TEXTFIELD_UTILS_H
 #include "textfield.h"
 #endif
+#ifndef TRUSTBOX_UTILS_H
+#include "trustbox.h"
+#endif
 #ifndef UTILSMAIN_UTILS_H
 #include "utilsmain.h"
 #endif

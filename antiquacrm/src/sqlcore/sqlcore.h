@@ -31,6 +31,8 @@ class SqlCore : public QObject {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  int queryTimeSpend = 0;
+
   /**
     @brief Test Verbindung
     Wird erstellt bevor @ref database
@@ -147,6 +149,13 @@ public:
      @return connectionName
    */
   const QString getConnectionName();
+
+  /**
+   * @brief Wie lange die letzte Abfrage gedauert hat.
+   * Wird in Millisekunden zurück ausgegeben und
+   * nur bei @ref exec ausgeführt!
+   */
+  int timeSpend();
 
   /**
      @brief Stelle eine SQL Abfrage

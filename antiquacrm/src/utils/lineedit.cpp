@@ -13,6 +13,7 @@ LineEdit::LineEdit(QWidget *parent) : UtilsMain{parent} {
   setModified(false);
 
   QHBoxLayout *layout = new QHBoxLayout(this);
+  layout->setContentsMargins(0, 0, 0, 0);
 
   m_label = new QLabel(this);
   m_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);

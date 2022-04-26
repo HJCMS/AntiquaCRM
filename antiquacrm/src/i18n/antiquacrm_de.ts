@@ -197,12 +197,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="+34"/>
-        <source>No datasets were found.</source>
-        <translation>Es wurden keine Datensätze gefunden.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
+        <location line="+71"/>
         <source>Booktitle</source>
         <translation>Buchtitel</translation>
     </message>
@@ -227,7 +222,7 @@
         <translation>Öffnen Sie die Webseite im Browser für eine vollständige Beschreibung.</translation>
     </message>
     <message>
-        <location line="-643"/>
+        <location line="-662"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -247,7 +242,13 @@
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+46"/>
+        <location line="+12"/>
+        <source>No Result: Search with %1</source>
+        <translation>Kein Ergebnis, suche mit %1</translation>
+    </message>
+    <message>
+        <location line="+73"/>
         <source>External Book Description</source>
         <translation>Öffne externe Buch Beschreibung</translation>
     </message>
@@ -262,7 +263,7 @@
         <translation>OpenLibrary kann kostenlos verwendet werden, aber wir brauchen Ihre Hilfe!</translation>
     </message>
     <message>
-        <location line="-549"/>
+        <location line="-568"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -285,18 +286,18 @@
     </message>
     <message>
         <location line="-164"/>
-        <location line="+652"/>
+        <location line="+671"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
     <message>
-        <location line="-578"/>
-        <location line="+588"/>
+        <location line="-597"/>
+        <location line="+607"/>
         <source>Publisher</source>
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="-392"/>
+        <location line="-411"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
@@ -382,7 +383,12 @@
 <context>
     <name>BooksTableView</name>
     <message>
-        <location filename="../inventorybooks/bookstableview.cpp" line="+128"/>
+        <location filename="../inventorybooks/bookstableview.cpp" line="+98"/>
+        <source>Rows: %1, Time: %2 msec.</source>
+        <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
+    </message>
+    <message>
+        <location line="+36"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
@@ -490,6 +496,29 @@
     </message>
 </context>
 <context>
+    <name>CustomerBillingInfo</name>
+    <message>
+        <location filename="../inventorycustomers/customerbillinginfo.cpp" line="+28"/>
+        <source>Tax Id.</source>
+        <translation>Steuer Id.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>IBAN Ident</source>
+        <translation>IBAN Nummer</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>BIC Swift Code</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Comments</source>
+        <translation>Bemerkungen</translation>
+    </message>
+</context>
+<context>
     <name>CustomerContact</name>
     <message>
         <location filename="../inventorycustomers/customercontact.cpp" line="+25"/>
@@ -508,33 +537,38 @@
         <translation>Vorname</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <location line="+2"/>
         <source>Lastname</source>
         <translation>Nachname</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+16"/>
         <source>Postalcode</source>
         <translation>Postleitzahl</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>State / Canton</source>
-        <translation>Bundesland oder Kanton</translation>
+        <location line="+7"/>
+        <source>Country</source>
+        <translation>Land</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+1"/>
+        <source>Country/State or Canton</source>
+        <translation>Land/Bundesland oder Kanton</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Location</source>
         <translation>Wohnort</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Street</source>
         <translation>Straße</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+7"/>
         <source>Primary phone number</source>
         <translation>Primäre Telefonnummer</translation>
     </message>
@@ -625,7 +659,7 @@
 <context>
     <name>EMailEdit</name>
     <message>
-        <location filename="../utils/emailedit.cpp" line="+25"/>
+        <location filename="../utils/emailedit.cpp" line="+26"/>
         <source>usage.example@example.com</source>
         <translation>benutzer.beispiel@beispiel.de</translation>
     </message>
@@ -770,7 +804,7 @@
 <context>
     <name>HJCMS::SqlCore</name>
     <message>
-        <location filename="../sqlcore/sqlcore.cpp" line="+72"/>
+        <location filename="../sqlcore/sqlcore.cpp" line="+73"/>
         <source>Database server not connected</source>
         <translation>Nicht mit der Datenbank verbunden</translation>
     </message>
@@ -913,7 +947,7 @@
         <translation>Erstelle ISBN Anfrage an OpenLibrary.org</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+36"/>
         <source>Required</source>
         <translation>Erforderlich</translation>
     </message>
@@ -926,7 +960,7 @@
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../utils/lineedit.cpp" line="+83"/>
+        <location filename="../utils/lineedit.cpp" line="+84"/>
         <source>a Valid Url must edit.</source>
         <translation>Ein gültige Url ist gefordert.</translation>
     </message>
@@ -1074,7 +1108,7 @@
 <context>
     <name>PhoneEdit</name>
     <message>
-        <location filename="../utils/phoneedit.cpp" line="+92"/>
+        <location filename="../utils/phoneedit.cpp" line="+93"/>
         <source>The Phone Number is required and can not empty.</source>
         <translation>Eine Rufnummer ist erforderlich und darf nicht Leer sein.</translation>
     </message>
@@ -1082,7 +1116,7 @@
 <context>
     <name>PostalCode</name>
     <message>
-        <location filename="../utils/postalcode.cpp" line="+43"/>
+        <location filename="../utils/postalcode.cpp" line="+44"/>
         <source>currently supported helper functions</source>
         <translation>derzeit unterstützte Hilfsfunktionen</translation>
     </message>
@@ -1497,8 +1531,8 @@
     </message>
     <message>
         <location line="+4"/>
-        <source>Storage Category</source>
-        <translation>Lager Kategorie</translation>
+        <source>Duration by Keyword</source>
+        <translation>Bestand mit Lagerkategorie</translation>
     </message>
     <message>
         <location filename="../inventoryprints/inventoryprints.cpp" line="-12"/>
@@ -1757,7 +1791,7 @@
 <context>
     <name>StrLineEdit</name>
     <message>
-        <location filename="../utils/strlineedit.cpp" line="+128"/>
+        <location filename="../utils/strlineedit.cpp" line="+150"/>
         <source>Max allowed length</source>
         <translation>Maximal erlaubte Zeichenlänge</translation>
     </message>
@@ -1855,6 +1889,59 @@
         <location line="+1"/>
         <source>Upward</source>
         <translation>Aufwärts</translation>
+    </message>
+</context>
+<context>
+    <name>TrustBox</name>
+    <message>
+        <location filename="../utils/trustbox.cpp" line="+22"/>
+        <source>Trust Settings</source>
+        <translation>Vertrauenseinstellungen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Pays on time</source>
+        <translation>Zahlt Pünktlich</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Pays reliable</source>
+        <translation>Zahlt Zuverlässig</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Pays with delay</source>
+        <translation>Zahlt verzögernd</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Prepayment</source>
+        <translation>Nur mit Vorauskasse</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Has been warned before</source>
+        <translation>Wurde schon mal Abgemahnt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Already had a debt collection process</source>
+        <translation>Hatte bereits ein Inkassoverfahren</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Collection procedure unsuccessful</source>
+        <translation>Inkassoverfahren Erfolglos</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>No delivery or order</source>
+        <translation>Kein Auslieferung oder Bestellung</translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>Trusted Verification is required.</source>
+        <translation>Eine vertrauenswürdige Überprüfung ist erforderlich.</translation>
     </message>
 </context>
 <context>

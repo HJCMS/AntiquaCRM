@@ -37,6 +37,7 @@ SET (subproject_SOURCES
   textfield.cpp
   yearedit.cpp
   utilsmain.cpp
+  trustbox.cpp
 )
 
 SET (subproject_HEADERS
@@ -67,6 +68,7 @@ SET (subproject_HEADERS
   textfield.h
   yearedit.h
   utilsmain.h
+  trustbox.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

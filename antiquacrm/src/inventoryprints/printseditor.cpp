@@ -624,7 +624,7 @@ void PrintsEditor::saveData() {
 }
 
 void PrintsEditor::changeEvent(QEvent *event) {
-  if (event->type() == QEvent::EnabledChange) {
+  if (event->type() == QEvent::EnabledChange && isEnabled()) {
     ip_condition->loadDataset("condition");
     ip_technique->loadDataset();
     ip_designation->loadDataset("ip_designation");

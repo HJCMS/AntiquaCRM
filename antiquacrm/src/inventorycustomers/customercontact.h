@@ -28,8 +28,8 @@ private:
   LineEdit *c_firstname;    /**< Vorname */
   LineEdit *c_lastname;     /**< Nachname */
   PostalCode *c_postalcode; /**< Postleitzahl */
+  LineEdit *c_country;      /**< Land */
   LineEdit *c_location;     /**< Wohnort */
-  QLabel   *helper_state;   /**< @note Nicht Datenrelevant INFO Feld */
   LineEdit *c_street;       /**< Straße */
   PhoneEdit *c_phone_0;     /**< Telefon Nummer 1 */
   PhoneEdit *c_phone_1;     /**< Telefon Nummer 2 */

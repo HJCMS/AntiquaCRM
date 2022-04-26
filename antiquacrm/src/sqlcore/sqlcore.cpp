@@ -6,9 +6,10 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDebug>
-#include <QtCore/QSettings>
-#include <QtCore/QtGlobal>
 #include <QtCore/QMutex>
+#include <QtCore/QSettings>
+#include <QtCore/QTime>
+#include <QtCore/QtGlobal>
 #include <QtNetwork/QTcpSocket>
 #include <QtSql/QSqlDriver>
 #include <QtSql/QSqlError>
@@ -205,7 +206,14 @@ const QSqlQuery SqlCore::query(const QString &statement) {
   if (!database->isOpen())
     database->open();
 
-  return database->exec(statement);
+  QSqlQuery q;
+  QTime t = QTime::currentTime();
+  QMutex m(QMutex::NonRecursive);
+  m.lock();
+  q = database->exec(statement);
+  m.unlock();
+  queryTimeSpend = t.msec();
+  return q;
 }
 
 const QSqlRecord SqlCore::record(const QString &table) {
@@ -218,6 +226,8 @@ const QSqlRecord SqlCore::record(const QString &table) {
 const QString SqlCore::getConnectionName() {
   return database->connectionName();
 }
+
+int SqlCore::timeSpend() { return queryTimeSpend; }
 
 /**
    @brief Statusabfrage ob die Datenbank offen ist!

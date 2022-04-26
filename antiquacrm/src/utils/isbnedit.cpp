@@ -49,6 +49,8 @@ IsbnEdit::IsbnEdit(QWidget *parent) : UtilsMain{parent} {
   m_query = new QPushButton(this);
   m_query->setText("OpenLibrary.org");
   m_query->setToolTip(tr("ISBN request to openlibrary.org"));
+  m_query->setIcon(myIcon("edit"));
+  m_query->setEnabled(false);
   layout->addWidget(m_query);
 
   m_info = new QLabel(this);

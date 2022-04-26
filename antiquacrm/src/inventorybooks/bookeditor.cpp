@@ -691,11 +691,30 @@ void BookEditor::setIsbnInfo(bool b) {
                       Qt::ItemNeverHasChildren);
 
   if (!b) {
-    QListWidgetItem *noData = new QListWidgetItem(m_listWidget);
-    noData->setData(Qt::DisplayRole, tr("No datasets were found."));
-    noData->setIcon(myIcon("messagebox_warning"));
-    noData->setFlags(flags ^ Qt::ItemIsEnabled);
-    m_listWidget->addItem(noData);
+    QString ref_isbn = ib_isbn->value().toString();
+
+    QString bookfinder_url("https://www.bookfinder.com/?mode=isbn&isbn=");
+    bookfinder_url.append(ref_isbn);
+    QListWidgetItem *bookfinder = new QListWidgetItem(m_listWidget);
+    bookfinder->setData(Qt::DisplayRole,
+                        tr("No Result: Search with %1").arg("Bookfinder.com"));
+    bookfinder->setIcon(myIcon("html"));
+    bookfinder->setFlags(flags);
+    bookfinder->setData(Qt::UserRole, "ib_website:" + bookfinder_url);
+    m_listWidget->addItem(bookfinder);
+
+    QString gsearch;
+    gsearch.append("https://books.google.com/advanced_book_search?lr=lang_de");
+    gsearch.append("&hl=de&isbn=" + ref_isbn);
+
+    QListWidgetItem *google = new QListWidgetItem(m_listWidget);
+    google->setData(Qt::DisplayRole,
+                    tr("No Result: Search with %1").arg("Google"));
+    google->setIcon(myIcon("html"));
+    google->setFlags(flags);
+    google->setData(Qt::UserRole, "ib_website:" + gsearch);
+    m_listWidget->addItem(google);
+
     m_tabWidget->setCurrentIndex(isbnTabIndex);
     return;
   }
@@ -830,8 +849,9 @@ void BookEditor::infoISBNDoubleClicked(QListWidgetItem *item) {
 }
 
 void BookEditor::changeEvent(QEvent *event) {
-  if (event->type() == QEvent::EnabledChange) {
+  if (event->type() == QEvent::EnabledChange && isEnabled()) {
     ib_storage->loadDataset();
+    ib_keyword->loadStorageKeywords();
     ib_condition->loadDataset("condition");
     ib_designation->loadDataset("ib_designation");
   }

@@ -14,6 +14,7 @@ EMailEdit::EMailEdit(QWidget *parent) : UtilsMain{parent} {
   setRequired(false);
 
   QHBoxLayout *layout = new QHBoxLayout(this);
+  layout->setContentsMargins(0, 0, 0, 0);
 
   m_label = new QLabel(this);
   m_label->setAlignment(Qt::AlignVCenter | Qt::AlignRight);

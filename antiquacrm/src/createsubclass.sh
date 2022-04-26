@@ -125,7 +125,7 @@ void ${_class}::setInfo(const QString &info)
   return m_info->setText(info);
 }
 
-const ${_class}::QString info()
+const QString ${_class}::info()
 {
   return m_info->text();
 }

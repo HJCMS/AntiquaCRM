@@ -92,6 +92,28 @@ void StrLineEdit::setTableName(const QString &table) { p_table = table; }
 
 const QString StrLineEdit::tableName() { return p_table; }
 
+void StrLineEdit::loadStorageKeywords() {
+  // Nur wenn Autovervollständigen an ist, einschalten!
+  m_lineEdit->setClearButtonEnabled(true);
+
+  QString select("SELECT DISTINCT c_name FROM extern_categories");
+  select.append(" WHERE c_name IS NOT NULL ORDER BY c_name ASC;");
+
+  QStringList list;
+  QSqlQuery q = m_sql->query(select);
+  if (q.size() > 0) {
+    while (q.next()) {
+      if (q.value(0).isValid())
+        list << q.value(0).toString();
+    }
+  } else {
+    qDebug() << Q_FUNC_INFO << m_sql->lastError();
+  }
+
+  if (list.size() > 1)
+    setLineEditCompliter(list);
+}
+
 void StrLineEdit::loadDataset(const QString &key) {
   if (key.isEmpty())
     return;

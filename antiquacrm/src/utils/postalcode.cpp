@@ -24,6 +24,7 @@ PostalCode::PostalCode(QWidget *parent) : UtilsMain{parent} {
     setObjectName("PostalCodeEditor");
 
   QHBoxLayout *layout = new QHBoxLayout(this);
+  layout->setContentsMargins(0, 0, 0, 0);
 
   m_info = new QLabel(this);
   m_info->setAlignment(Qt::AlignVCenter | Qt::AlignRight);

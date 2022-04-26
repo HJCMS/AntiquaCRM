@@ -49,7 +49,7 @@ static const QList<SearchBar::SearchFilter> bookSearchFilter() {
   a.filter = QString("publisher");
   filter.append(a);
   a.index = 6;
-  a.title = QObject::tr("Storage Category");
+  a.title = QObject::tr("Duration by Keyword");
   a.filter = QString("storage");
   filter.append(a);
   return filter;
@@ -120,8 +120,8 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   connect(m_tableView, SIGNAL(s_articleSelected(int)), this,
           SLOT(articleSelected(int)));
 
-  connect(m_tableView, SIGNAL(s_rowsChanged(int)), m_statsBookBar,
-          SLOT(showRowCount(int)));
+  connect(m_tableView, SIGNAL(s_reportQuery(const QString &)), m_statsBookBar,
+          SLOT(showMessage(const QString &)));
 
   connect(m_tableView, SIGNAL(s_newEntryPlease()), this,
           SLOT(createBookEntry()));
@@ -171,9 +171,7 @@ void InventoryBooks::searchConvert() {
     s.SearchField =
         m_searchBar->getSearchFilter(m_searchBar->currentFilterIndex());
     s.SearchString = buf;
-    qDebug("QueryStatement:'%s':'%s'", qPrintable(s.SearchField),
-           qPrintable(s.SearchString));
-
+    // qDebug("'%s':'%s'", qPrintable(s.SearchField), qPrintable(s.SearchString));
     if (m_tableView != nullptr)
       m_tableView->queryStatement(s);
   }

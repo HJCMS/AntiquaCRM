@@ -14,12 +14,15 @@
 #include <QtCore/QPoint>
 #include <QtCore/QRegExp>
 #include <QtCore/QSignalMapper>
+#include <QtCore/QTime>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlTableModel>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMenu>
+// needed fo time format
+#include <cstdio>
 
 /**
     @brief querySelect
@@ -81,6 +84,9 @@ bool BooksTableView::sqlExecQuery(const QString &statement) {
 
   QSqlDatabase db(m_sql->db());
   if (db.open()) {
+    QMutex mutex(QMutex::NonRecursive);
+    mutex.lock();
+    QTime time = QTime::currentTime();
     m_queryModel->setQuery(statement, db);
     if (m_queryModel->lastError().isValid()) {
       qDebug() << Q_FUNC_INFO << "{SQL Query} " << statement << "{SQL Error} "
@@ -88,7 +94,11 @@ bool BooksTableView::sqlExecQuery(const QString &statement) {
                << m_sql->fetchErrors() << Qt::endl;
       return false;
     }
-    emit s_rowsChanged(m_queryModel->rowCount());
+    mutex.unlock();
+    QString m = QString(tr("Rows: %1, Time: %2 msec."))
+                    .arg(QString::asprintf("%d", m_queryModel->rowCount()),
+                         QString::asprintf("%d", time.msec()));
+    emit s_reportQuery(m);
     return true;
   } else {
     qWarning("No SQL Connection in Booktable");
@@ -108,11 +118,7 @@ void BooksTableView::queryArticleID(const QModelIndex &index) {
 
 void BooksTableView::openByContext() { queryArticleID(p_modelIndex); }
 
-void BooksTableView::createByContext() {
-  qDebug() << Q_FUNC_INFO << "TODO"
-           << "Check Rowcount before add";
-  emit s_newEntryPlease();
-}
+void BooksTableView::createByContext() { emit s_newEntryPlease(); }
 
 void BooksTableView::orderByContext() {
   qDebug() << Q_FUNC_INFO << "Noch nicht Implementiert";
@@ -232,20 +238,16 @@ void BooksTableView::queryStatement(const SearchStatement &cl) {
     q.append("%'");
   } else {
     // Titelsuche
-    if (exact_match) {
-      q.append(" WHERE (b.ib_title ILIKE '");
-    } else {
-      q.append(" WHERE (b.ib_title ILIKE '%");
+    q.append(" WHERE (b.ib_title ILIKE '");
+    if (!exact_match) {
+      q.append("%");
     }
     q.append(str);
-    q.append("%')");
-    if (exact_match) {
-      q.append(" OR (b.ib_title_extended ILIKE '");
-      q.append(str);
-    } else {
-      q.append(" OR (b.ib_title_extended ILIKE '%");
-      q.append(str.replace(" ", "%"));
+    q.append("%') OR (b.ib_title_extended ILIKE '");
+    if (!exact_match) {
+      q.append("%");
     }
+    q.append(str);
     q.append("%'");
   }
   q.append(") ORDER BY b.ib_count DESC LIMIT ");

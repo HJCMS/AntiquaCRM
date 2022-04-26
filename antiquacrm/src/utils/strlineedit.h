@@ -127,6 +127,12 @@ public:
   const QString tableName();
 
   /**
+   * @brief Zusatz für Schlüsselwörter
+   * @note Wird nur von ib_keyword benötigt!
+   */
+  void loadStorageKeywords();
+
+  /**
    * @brief loadDataset
    * Sucht Schlüsselwörter mit dem Parameter
    * @i key aus Tabelle @ref tableName().

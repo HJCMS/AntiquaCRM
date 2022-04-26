@@ -197,12 +197,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+34"/>
-        <source>No datasets were found.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
+        <location line="+71"/>
         <source>Booktitle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -227,7 +222,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-643"/>
+        <location line="-662"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -247,7 +242,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+46"/>
+        <location line="+12"/>
+        <source>No Result: Search with %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+73"/>
         <source>External Book Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -262,7 +263,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-549"/>
+        <location line="-568"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -285,18 +286,18 @@
     </message>
     <message>
         <location line="-164"/>
-        <location line="+652"/>
+        <location line="+671"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-578"/>
-        <location line="+588"/>
+        <location line="-597"/>
+        <location line="+607"/>
         <source>Publisher</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-392"/>
+        <location line="-411"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -382,7 +383,12 @@
 <context>
     <name>BooksTableView</name>
     <message>
-        <location filename="../inventorybooks/bookstableview.cpp" line="+128"/>
+        <location filename="../inventorybooks/bookstableview.cpp" line="+98"/>
+        <source>Rows: %1, Time: %2 msec.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+36"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -490,6 +496,29 @@
     </message>
 </context>
 <context>
+    <name>CustomerBillingInfo</name>
+    <message>
+        <location filename="../inventorycustomers/customerbillinginfo.cpp" line="+28"/>
+        <source>Tax Id.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>IBAN Ident</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>BIC Swift Code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Comments</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CustomerContact</name>
     <message>
         <location filename="../inventorycustomers/customercontact.cpp" line="+25"/>
@@ -508,33 +537,38 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <location line="+2"/>
         <source>Lastname</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+16"/>
         <source>Postalcode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>State / Canton</source>
+        <location line="+7"/>
+        <source>Country</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+1"/>
+        <source>Country/State or Canton</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Street</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+7"/>
         <source>Primary phone number</source>
         <translation type="unfinished"></translation>
     </message>
@@ -625,7 +659,7 @@
 <context>
     <name>EMailEdit</name>
     <message>
-        <location filename="../utils/emailedit.cpp" line="+25"/>
+        <location filename="../utils/emailedit.cpp" line="+26"/>
         <source>usage.example@example.com</source>
         <translation type="unfinished"></translation>
     </message>
@@ -770,7 +804,7 @@
 <context>
     <name>HJCMS::SqlCore</name>
     <message>
-        <location filename="../sqlcore/sqlcore.cpp" line="+72"/>
+        <location filename="../sqlcore/sqlcore.cpp" line="+73"/>
         <source>Database server not connected</source>
         <translation type="unfinished"></translation>
     </message>
@@ -913,7 +947,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+36"/>
         <source>Required</source>
         <translation type="unfinished"></translation>
     </message>
@@ -926,7 +960,7 @@
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../utils/lineedit.cpp" line="+83"/>
+        <location filename="../utils/lineedit.cpp" line="+84"/>
         <source>a Valid Url must edit.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1074,7 +1108,7 @@
 <context>
     <name>PhoneEdit</name>
     <message>
-        <location filename="../utils/phoneedit.cpp" line="+92"/>
+        <location filename="../utils/phoneedit.cpp" line="+93"/>
         <source>The Phone Number is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1082,7 +1116,7 @@
 <context>
     <name>PostalCode</name>
     <message>
-        <location filename="../utils/postalcode.cpp" line="+43"/>
+        <location filename="../utils/postalcode.cpp" line="+44"/>
         <source>currently supported helper functions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1497,7 +1531,7 @@
     </message>
     <message>
         <location line="+4"/>
-        <source>Storage Category</source>
+        <source>Duration by Keyword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1757,7 +1791,7 @@
 <context>
     <name>StrLineEdit</name>
     <message>
-        <location filename="../utils/strlineedit.cpp" line="+128"/>
+        <location filename="../utils/strlineedit.cpp" line="+150"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1854,6 +1888,59 @@
         <location line="+5"/>
         <location line="+1"/>
         <source>Upward</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TrustBox</name>
+    <message>
+        <location filename="../utils/trustbox.cpp" line="+22"/>
+        <source>Trust Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Pays on time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Pays reliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Pays with delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Prepayment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Has been warned before</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Already had a debt collection process</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Collection procedure unsuccessful</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>No delivery or order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>Trusted Verification is required.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
