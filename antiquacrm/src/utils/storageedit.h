@@ -50,7 +50,6 @@ public Q_SLOTS:
 
 public:
   explicit StorageEdit(QWidget *parent = nullptr);
-  Q_INVOKABLE bool hasModified();
   const QVariant value();
   bool isValid();
   void setInfo(const QString &);

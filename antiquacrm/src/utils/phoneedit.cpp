@@ -56,8 +56,6 @@ void PhoneEdit::reset() {
   setModified(false);
 }
 
-bool PhoneEdit::hasModified() { return isModified(); }
-
 const QVariant PhoneEdit::value() {
   qDebug() << Q_FUNC_INFO << "Todo Parser";
   QVariant data = QVariant(id_phone->text());

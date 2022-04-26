@@ -64,8 +64,6 @@ void EMailEdit::reset() {
   setModified(false);
 }
 
-bool EMailEdit::hasModified() { return isModified(); }
-
 const QString EMailEdit::info() { return m_label->text(); }
 
 const QVariant EMailEdit::value() { return m_mail->text(); }

@@ -60,8 +60,6 @@ void GenderBox::setValue(const QVariant &i) {
   m_comboBox->setCurrentIndex(i.toInt());
 }
 
-bool GenderBox::hasModified() { return isModified(); }
-
 void GenderBox::reset() {
   m_comboBox->setCurrentIndex(0);
   setModified(false);

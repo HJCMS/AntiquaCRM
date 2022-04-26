@@ -31,7 +31,6 @@ public:
   explicit PriceEdit(QWidget *parent = nullptr);
   void setMinimum(double);
   void setValue(const QVariant &);
-  Q_INVOKABLE bool hasModified();
   const QVariant value();
   bool isValid();
   void setInfo(const QString &);

@@ -95,8 +95,6 @@ void StorageEdit::reset() {
   setModified(false);
 }
 
-bool StorageEdit::hasModified() { return isModified(); }
-
 const QVariant StorageEdit::value() {
   return QVariant(m_storage->currentIndex());
 }

@@ -51,8 +51,6 @@ void YearEdit::reset() {
   setModified(false);
 }
 
-bool YearEdit::hasModified() { return isModified(); }
-
 const QVariant YearEdit::value() { return m_year->date().year(); }
 
 bool YearEdit::isValid() {

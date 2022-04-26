@@ -215,12 +215,10 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   ib_language->setObjectName("ib_language");
   row2->addWidget(ib_language, 8, 1, 1, 1);
 
-  QPushButton *m_btnQueryISBN = new QPushButton(this);
-  m_btnQueryISBN->setText("OpenLibrary ISBN");
-  m_btnQueryISBN->setToolTip(tr("Send ISBN request to openlibrary.org"));
-  m_btnQueryISBN->setEnabled(false);
-  m_btnQueryISBN->setIcon(myIcon("folder_txt"));
-  row2->addWidget(m_btnQueryISBN, 9, 0, 1, 1);
+  QLabel *isbnLabel = new QLabel(this);
+  isbnLabel->setText("ISBN:");
+  isbnLabel->setAlignment(defaultAlignment);
+  row2->addWidget(isbnLabel, 9, 0, 1, 1);
 
   ib_isbn = new IsbnEdit(this);
   ib_isbn->setObjectName("ib_isbn");
@@ -268,9 +266,7 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
 
   setLayout(mainLayout);
 
-  connect(ib_isbn, SIGNAL(s_isbnIsValid(bool)), m_btnQueryISBN,
-          SLOT(setEnabled(bool)));
-  connect(m_btnQueryISBN, SIGNAL(clicked()), this, SLOT(triggerIsbnQuery()));
+  connect(ib_isbn, SIGNAL(clicked()), this, SLOT(triggerIsbnQuery()));
 
   connect(m_imageToolBar, SIGNAL(s_openImage()), this, SLOT(openImageDialog()));
   connect(m_imageToolBar, SIGNAL(s_deleteImage(int)), this,
@@ -552,7 +548,7 @@ bool BookEditor::checkIsModified() {
   for (int i = 0; i < list.size(); ++i) {
     if (list.at(i) != nullptr) {
       bool b = false;
-      if (QMetaObject::invokeMethod(list.at(i), "hasModified",
+      if (QMetaObject::invokeMethod(list.at(i), "isModified",
                                     Qt::DirectConnection,
                                     Q_RETURN_ARG(bool, b))) {
 
@@ -842,7 +838,7 @@ void BookEditor::changeEvent(QEvent *event) {
 }
 
 void BookEditor::triggerIsbnQuery() {
-  QString isbn = ib_isbn->text().trimmed();
+  QString isbn = ib_isbn->value().toString().trimmed();
   int l = isbn.length();
   if (l > 13 && l != 10) {
     return;

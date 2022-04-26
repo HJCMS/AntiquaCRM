@@ -524,7 +524,7 @@ bool PrintsEditor::checkIsModified() {
   for (int i = 0; i < list.size(); ++i) {
     if (list.at(i) != nullptr) {
       bool b = false;
-      if (QMetaObject::invokeMethod(list.at(i), "hasModified",
+      if (QMetaObject::invokeMethod(list.at(i), "isModified",
                                     Qt::DirectConnection,
                                     Q_RETURN_ARG(bool, b))) {
 

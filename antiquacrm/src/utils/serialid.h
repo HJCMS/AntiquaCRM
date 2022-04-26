@@ -36,11 +36,6 @@ public:
   explicit SerialID(QWidget *parent = nullptr);
 
   /**
-   @brief Artikel ID wurde modifiziert
-  */
-  Q_INVOKABLE bool hasModified();
-
-  /**
      @brief Setze Label Infotext
    */
   void setInfo(const QString &);

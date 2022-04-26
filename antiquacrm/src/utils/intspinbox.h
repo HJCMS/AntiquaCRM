@@ -41,7 +41,6 @@ public:
   void setSuffix(const QString &);
   void setPrefix(const QString &);
   void setValue(const QVariant &);
-  Q_INVOKABLE bool hasModified();
   const QVariant value();
   bool isValid();
   void setInfo(const QString &);

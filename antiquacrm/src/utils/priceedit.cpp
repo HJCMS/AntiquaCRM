@@ -44,8 +44,6 @@ void PriceEdit::reset() {
   setModified(false);
 }
 
-bool PriceEdit::hasModified() { return isModified(); }
-
 const QVariant PriceEdit::value() { return QVariant(m_box->value()); }
 
 bool PriceEdit::isValid() {

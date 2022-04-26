@@ -6,12 +6,17 @@
 #define STRLINEEDIT_UTILS_H
 
 #include <QtCore/QObject>
-#include <QtCore/QRegExp>
 #include <QtCore/QStringList>
-#include <QtCore/QVariant>
 #include <QtGui/QRegExpValidator>
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QLineEdit>
+
+#include <SqlCore>
+#include <UtilsMain>
+
+namespace HJCMS {
+class SqlCore;
+};
 
 /**
  @class StrLineEdit
@@ -19,79 +24,69 @@
  @note Die Eingabeprüfung erfolgt mit geringen Aufwand,
  muss vor dem absenden der SQL Anweisung unbedingt geprüft werden.
 */
-class StrLineEdit : public QLineEdit {
+class StrLineEdit : public UtilsMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
-  Q_PROPERTY(bool required READ isRequired WRITE setRequired NOTIFY requireChanged);
 
 private:
   /**
-    @brief Volatile Variable für Required
-  */
-  bool required = false;
+   * @brief Datenbank abfragen
+   */
+  HJCMS::SqlCore *m_sql;
 
   /**
-    @bug Wenn Completer aktiviert ist stimmt von QLineEdit
-      das isModified() nicht. Deshalb setze ich noch zusätzlich
-      bei setModified() meine eigene Variable und verwende
-      in @ref hasModified() eine Abfrage.
-    @code
-      qDebug() << objectName() << (isModified() || modified);
-    @endcode
-  */
-  bool modified = false;
+   * @brief Tabellenname
+   * Die Vervollständigung list aus dieser Tabelle.
+   */
+  QString p_table;
 
   /**
-    @brief m_completer
-    Siehe @ref setLineEditCompliter
-  */
+   * @brief Eingabefeld
+   */
+  QLineEdit *m_lineEdit;
+
+  /**
+   * @brief Verollständigung
+   * Siehe @ref setLineEditCompliter
+   */
   QCompleter *m_completer;
 
   /**
-    @brief m_validator
-    Wird im Header initialisiert
-    und verwendet @ref pcre
-  */
+   * @brief Validierer
+   * Wird im Header initialisiert und verwendet.
+   */
   QRegExpValidator *m_validator;
 
   /**
-    @brief setLineEditCompliter
-    Setzt an Hand der Liste die
-    Autovervollständigung.
-    @note Wird @ref setKeyword ausgelöst!
-  */
+   * @brief Initialisiere Vervollständigung
+   * Setzt an Hand der Liste die Autovervollständigung.
+   * @note Wird @ref setKeyword ausgelöst!
+   */
   void setLineEditCompliter(const QStringList &);
 
   /**
-    @brief Wird mehrfach verwendet
-    Das aktuell zulässige Eingabeschema für
-    Datenbank Textfelder.
-    @warning Zeichen wie "'<> dürfen hier nicht vorkommen!
-    @note Wir Escapen wegen der Datenbanksuche nicht!
-    @return QRegExp
-  */
-  static const QRegExp pcre() {
-    return QRegExp("([\\w\\d\\s\\-\\+,\\.\\?\\!\\/`´:;&#]+)");
-  }
+   * @brief Wird mehrfach verwendet
+   * Das aktuell zulässige Eingabeschema für Datenbank Textfelder.
+   * @warning Zeichen wie "'<> dürfen hier nicht vorkommen!
+   * @note Wir Escapen wegen der Datenbanksuche nicht!
+   */
+  const QString regPattern = QString("([\\w\\d\\s\\-\\+,\\.\\?\\!\\/`´:;&#]+)");
 
 private Q_SLOTS:
   /**
-    @brief inputChanged
-    Kontrolliert die erlaubte Zeichenlänge
-    und gibt bei Überlauf den Text in "Rot" an!
-    @param str - Aktuelle Zeicheneingabe
+   * @brief inputChanged
+   * Kontrolliert die erlaubte Zeichenlänge
+   * und gibt bei Überlauf den Text in "Rot" an!
+   * @param str - Aktuelle Zeicheneingabe
    */
   void inputChanged(const QString &str);
 
   /**
-    @brief skipReturnPressed
-    @warning Enter soll das Formular nicht absenden!
-  */
+   * @brief skipReturnPressed
+   * @warning Enter soll das Formular nicht absenden!
+   */
   void skipReturnPressed();
-
-Q_SIGNALS:
-  void requireChanged();
 
 public Q_SLOTS:
   /**
@@ -109,11 +104,6 @@ public Q_SLOTS:
   void setValue(const QVariant &str);
 
   /**
-     @brief Auf Modifiziert setzen/entfernen.
-  */
-  Q_INVOKABLE void setModified(bool b);
-
-  /**
      @brief Datensatz leeren
   */
   Q_INVOKABLE void reset();
@@ -122,60 +112,44 @@ public:
   explicit StrLineEdit(QWidget *parent = nullptr);
 
   /**
-     @brief Setze Datensatz auf erforderlich
-  */
-  void setRequired(bool b);
-
-  /**
-    @brief Abfrage für Datensatz erforderlich
-  */
-  bool isRequired();
-
-  /**
-     @brief Wurde der Datensatz geändert?
-  */
-  Q_INVOKABLE bool hasModified();
-
-  /**
-    @brief Aktueller Rückgabewert
-    Gibt den aktuellen Wert als QVariant
-    zurück damit er besser Verarbeitet
-    werden kann. (SQL|LineEdit) etc.
-  */
+   * @brief Aktueller Rückgabewert
+   * Gibt den aktuellen Wert als QVariant zurück
+   * damit er besser Verarbeitet werden kann.
+   * (SQL|LineEdit) etc.
+   */
   const QVariant value();
 
   /**
-    @brief tableName
-    Referenztabelle aus der gelesen wird.
-    @return
+   * @brief Tabelle für die Vervollständigung
+   * Referenztabelle aus der gelesen wird.
    */
-  static const QString tableName() { return QString("ui_autofill_keywords"); };
+  void setTableName(const QString &table);
+  const QString tableName();
 
   /**
-    @brief loadDataset
-    Sucht Schlüsselwörter mit dem Parameter
-    @i key aus Tabelle @ref tableName().
-    Bei Erfolg wird @ref setLineEditCompliter
-    aufgerufen.
-    @param key - column_name Qt::CaseSensitive
-  */
+   * @brief loadDataset
+   * Sucht Schlüsselwörter mit dem Parameter
+   * @i key aus Tabelle @ref tableName().
+   * Bei Erfolg wird @ref setLineEditCompliter aufgerufen.
+   * @param key - column_name Qt::CaseSensitive
+   */
   void loadDataset(const QString &key = QString("condition"));
 
   /**
-    @brief setMaxAllowedLength
-    Setzt die Maximal erlaubte Zeichsatzlänge
-    und erstellt @ref QLineEdit::setPlaceholderText
+   * @brief setMaxAllowedLength
+   * Setzt die Maximal erlaubte Zeichsatzlänge und
+   * erstellt @ref QLineEdit::setPlaceholderText
    */
   void setMaxAllowedLength(int);
 
   /**
-     @brief Prüfung ob die Bedingungen erfüllt sind!
+   * @brief Prüfung ob die Bedingungen erfüllt sind!
    */
   bool isValid();
 
   /**
-     @brief Nachricht bei Fehlern für das PoUp-Fenster
-  */
+   * @brief Nachricht bei Fehlern für das PoUp-Fenster
+   */
   const QString notes();
 };
 

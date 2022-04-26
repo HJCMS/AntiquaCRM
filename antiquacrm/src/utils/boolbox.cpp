@@ -37,8 +37,6 @@ void BoolBox::reset() {
 
 void BoolBox::setChecked(bool b) { m_checkBox->setChecked(b); }
 
-bool BoolBox::hasModified() { return isModified(); }
-
 bool BoolBox::isChecked() { return m_checkBox->isChecked(); }
 
 const QVariant BoolBox::value() { return QVariant(m_checkBox->isChecked()); }

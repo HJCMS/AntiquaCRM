@@ -112,12 +112,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
-        <source>Send ISBN request to openlibrary.org</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-9"/>
+        <location line="+13"/>
         <source>Language:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -172,7 +167,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+118"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -232,7 +227,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-647"/>
+        <location line="-643"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -247,7 +242,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+524"/>
+        <location line="+520"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -267,7 +262,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-551"/>
+        <location line="-549"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -289,14 +284,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-166"/>
-        <location line="+656"/>
+        <location line="-164"/>
+        <location line="+652"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-582"/>
-        <location line="+592"/>
+        <location line="-578"/>
+        <location line="+588"/>
         <source>Publisher</source>
         <translation type="unfinished"></translation>
     </message>
@@ -306,7 +301,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-311"/>
+        <location line="-307"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -410,7 +405,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+48"/>
         <source>is required must selected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -635,7 +630,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+64"/>
         <source>a E-Mail Address is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -887,7 +882,7 @@
 <context>
     <name>IntSpinBox</name>
     <message>
-        <location filename="../utils/intspinbox.cpp" line="+89"/>
+        <location filename="../utils/intspinbox.cpp" line="+87"/>
         <source>is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -895,7 +890,7 @@
 <context>
     <name>InventoryBooks</name>
     <message>
-        <location filename="../inventorybooks/inventorybooks.cpp" line="+145"/>
+        <location filename="../inventorybooks/inventorybooks.cpp" line="+144"/>
         <source>Automatic search disabled in this mode. Press enter to start the search!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -903,17 +898,27 @@
 <context>
     <name>IsbnEdit</name>
     <message>
-        <location filename="../utils/isbnedit.cpp" line="+21"/>
+        <location filename="../utils/isbnedit.cpp" line="+39"/>
         <source>ISBN/EAN 10/13 (ISO 2108)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>The ISBN number must consist of 10 or 13 digits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+7"/>
+        <source>ISBN request to openlibrary.org</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <source>Required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+97"/>
         <source>ISBN is set to required and must be a valid 10 or 13 digit number.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1069,7 +1074,7 @@
 <context>
     <name>PhoneEdit</name>
     <message>
-        <location filename="../utils/phoneedit.cpp" line="+94"/>
+        <location filename="../utils/phoneedit.cpp" line="+92"/>
         <source>The Phone Number is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1173,7 +1178,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+46"/>
         <source>A valid Price is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1459,7 +1464,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../inventorybooks/inventorybooks.cpp" line="-117"/>
+        <location filename="../inventorybooks/inventorybooks.cpp" line="-116"/>
         <source>Book Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1534,7 +1539,7 @@
 <context>
     <name>SalutationBox</name>
     <message>
-        <location filename="../utils/salutationbox.cpp" line="+30"/>
+        <location filename="../utils/salutationbox.cpp" line="+34"/>
         <source>Title or Salutation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1544,8 +1549,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+42"/>
-        <source>a Title is requierd</source>
+        <location line="+39"/>
+        <source>a Title is required</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1582,7 +1587,7 @@
 <context>
     <name>SerialID</name>
     <message>
-        <location filename="../utils/serialid.cpp" line="+67"/>
+        <location filename="../utils/serialid.cpp" line="+65"/>
         <source>The Arcticle ID is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1590,7 +1595,12 @@
 <context>
     <name>SetLanguage</name>
     <message>
-        <location filename="../utils/setlanguage.cpp" line="+11"/>
+        <location filename="../utils/setlanguage.cpp" line="+16"/>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>German</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1665,7 +1675,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+38"/>
         <source>Language field is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1739,7 +1749,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+54"/>
         <source>The Storage location is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1747,17 +1757,12 @@
 <context>
     <name>StrLineEdit</name>
     <message>
-        <location filename="../utils/strlineedit.cpp" line="+15"/>
-        <source>String edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+110"/>
+        <location filename="../utils/strlineedit.cpp" line="+128"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+16"/>
         <source>The field</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1780,7 +1785,7 @@
 <context>
     <name>TechniqueEdit</name>
     <message>
-        <location filename="../utils/techniqueedit.cpp" line="+60"/>
+        <location filename="../utils/techniqueedit.cpp" line="+67"/>
         <source>Technique field is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1788,12 +1793,7 @@
 <context>
     <name>TextField</name>
     <message>
-        <location filename="../utils/textfield.cpp" line="+13"/>
-        <source>Textfield</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+40"/>
+        <location filename="../utils/textfield.cpp" line="+55"/>
         <source>The field</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1898,7 +1898,7 @@
 <context>
     <name>YearEdit</name>
     <message>
-        <location filename="../utils/yearedit.cpp" line="+75"/>
+        <location filename="../utils/yearedit.cpp" line="+73"/>
         <source>The Year must contain a valid entry.</source>
         <translation type="unfinished"></translation>
     </message>

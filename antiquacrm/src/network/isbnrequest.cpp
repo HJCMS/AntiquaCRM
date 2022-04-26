@@ -132,6 +132,11 @@ QMap<QString, QVariant> IsbnData::data() {
   return map;
 }
 
+/**
+  Alternativen isbnsearch.org oder die Google Books API
+  Beispielseite für die Google Books API Nutzung:
+    https://www.labnol.org/code/20020-query-book-by-isbn
+*/
 IsbnRequest::IsbnRequest(const QString &isbn, QObject *parent)
     : QObject{parent}, p_isbnKey("ISBN:" + isbn) {
   setObjectName("IsbnRequest");

@@ -32,7 +32,6 @@ public Q_SLOTS:
 
 public:
   explicit BoolBox(QWidget *parent = nullptr);
-  Q_INVOKABLE bool hasModified();
   bool isChecked();
   void setValue(const QVariant &);
   const QVariant value();

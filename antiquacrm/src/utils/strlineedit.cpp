@@ -2,25 +2,37 @@
 // vim: set fileencoding=utf-8
 
 #include "strlineedit.h"
-#include "applsettings.h"
 
 #include <QtCore/QDebug>
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlQuery>
+#include <QtCore/QRegExp>
+#include <QtCore/QRegularExpression>
+#include <QtWidgets/QHBoxLayout>
 
-StrLineEdit::StrLineEdit(QWidget *parent) : QLineEdit{parent} {
+StrLineEdit::StrLineEdit(QWidget *parent)
+    : UtilsMain{parent}, p_table("ui_autofill_keywords") {
   if (objectName().isEmpty())
     setObjectName("StrLineEdit");
 
-  setWindowTitle(tr("String edit"));
+  m_sql = new HJCMS::SqlCore(this);
 
-  m_validator = new QRegExpValidator(pcre(), this);
-  setValidator(m_validator);
+  QHBoxLayout *layout = new QHBoxLayout(this);
+  layout->setContentsMargins(0, 0, 0, 0);
 
-  connect(this, SIGNAL(textChanged(const QString &)), this,
+  m_lineEdit = new QLineEdit(this);
+  layout->addWidget(m_lineEdit);
+
+  QRegExp reg(regPattern);
+  m_validator = new QRegExpValidator(reg, this);
+  m_lineEdit->setValidator(m_validator);
+
+  setLayout(layout);
+  setRequired(false);
+  setModified(false);
+
+  connect(m_lineEdit, SIGNAL(textChanged(const QString &)), this,
           SLOT(inputChanged(const QString &)));
 
-  connect(this, SIGNAL(returnPressed()), this, SLOT(skipReturnPressed()));
+  connect(m_lineEdit, SIGNAL(returnPressed()), this, SLOT(skipReturnPressed()));
 }
 
 void StrLineEdit::setValue(const QVariant &str) {
@@ -32,36 +44,25 @@ void StrLineEdit::setValue(const QVariant &str) {
   data = data.replace(reg, "");
   reg.setPattern("\\'");
   data = data.replace(reg, "´");
-  QRegExp reg2(pcre());
-  if (data.contains(reg2)) {
-    setText(data);
+
+  QRegularExpression regexp(regPattern);
+  QRegularExpressionMatch match = regexp.match(data);
+  if (match.hasMatch()) {
+    m_lineEdit->setText(data);
     setModified(true);
     return;
   }
-  qDebug() << Q_FUNC_INFO << " INVALID DATA" << str;
-}
-
-void StrLineEdit::setModified(bool b) {
-  modified = b;
-  QLineEdit::setModified(b);
+  qDebug() << Q_FUNC_INFO << "Invalid:" << str;
 }
 
 void StrLineEdit::reset() {
-  clear();
+  m_lineEdit->clear();
   setModified(false);
-}
-
-void StrLineEdit::setRequired(bool b) { required = b; }
-
-bool StrLineEdit::isRequired() { return required; }
-
-bool StrLineEdit::hasModified() {
-  return (isModified() || modified);
 }
 
 const QVariant StrLineEdit::value() {
   QRegExp reg("[\\n\\r]+");
-  QString buffer(text().trimmed());
+  QString buffer(m_lineEdit->text().trimmed());
   buffer = buffer.replace(reg, "");
   return QVariant(buffer);
 }
@@ -73,11 +74,11 @@ void StrLineEdit::setLineEditCompliter(const QStringList &list) {
   m_completer = new QCompleter(list, this);
   m_completer->setCaseSensitivity(Qt::CaseInsensitive);
   m_completer->setFilterMode(Qt::MatchContains);
-  setCompleter(m_completer);
+  m_lineEdit->setCompleter(m_completer);
 }
 
 void StrLineEdit::inputChanged(const QString &str) {
-  if (str.length() >= (maxLength() - 1)) {
+  if (str.length() >= (m_lineEdit->maxLength() - 1)) {
     setStyleSheet("color: red;");
   } else {
     setStyleSheet("");
@@ -87,12 +88,16 @@ void StrLineEdit::inputChanged(const QString &str) {
 
 void StrLineEdit::skipReturnPressed() { setModified(true); }
 
+void StrLineEdit::setTableName(const QString &table) { p_table = table; }
+
+const QString StrLineEdit::tableName() { return p_table; }
+
 void StrLineEdit::loadDataset(const QString &key) {
   if (key.isEmpty())
     return;
 
   // Nur wenn Autovervollständigen an ist, einschalten!
-  setClearButtonEnabled(true);
+  m_lineEdit->setClearButtonEnabled(true);
 
   QString select("SELECT DISTINCT k_keyword FROM ");
   select.append(tableName());
@@ -101,18 +106,16 @@ void StrLineEdit::loadDataset(const QString &key) {
   select.append("';");
 
   QStringList list;
-  QSqlDatabase db(QSqlDatabase::database(ApplSettings::sqlConnectioName()));
-  // qDebug() << select << db.isValid();
-  if (db.isValid()) {
-    QSqlQuery q = db.exec(select);
+  QSqlQuery q = m_sql->query(select);
+  if (q.size() > 0) {
     while (q.next()) {
       if (q.value(0).isValid())
         list << q.value(0).toString();
     }
   } else {
-    qWarning("%s: %s", qUtf8Printable(objectName()),
-             qUtf8Printable(" - can not open Database."));
+    qDebug() << Q_FUNC_INFO << m_sql->lastError();
   }
+
   if (list.size() > 1)
     setLineEditCompliter(list);
 }
@@ -120,21 +123,20 @@ void StrLineEdit::loadDataset(const QString &key) {
 void StrLineEdit::setMaxAllowedLength(int l) {
   // Standard Wert ist 32767.
   if (l > 4 && l < 32767)
-    setMaxLength(l);
+    m_lineEdit->setMaxLength(l);
 
   QString txt(tr("Max allowed length"));
   txt.append(" ");
   txt.append(QString::number(l));
-  setPlaceholderText(txt);
+  m_lineEdit->setPlaceholderText(txt);
 }
 
 bool StrLineEdit::isValid() {
-  if (required && text().isEmpty()) {
+  if (isRequired() && m_lineEdit->text().isEmpty()) {
     return false;
-  } else if (text().length() > maxLength()) {
+  } else if (m_lineEdit->text().length() > m_lineEdit->maxLength()) {
     return false;
   }
-
   return true;
 }
 
@@ -145,10 +147,10 @@ const QString StrLineEdit::notes() {
   } else {
     msg.append(" " + windowTitle() + " ");
   }
-  if (text().isEmpty()) {
+  if (m_lineEdit->text().isEmpty()) {
     msg.append(tr("is required and can not empty."));
     return msg;
-  } else if (text().length() > maxLength()) {
+  } else if (m_lineEdit->text().length() > m_lineEdit->maxLength()) {
     msg.append(tr("invalid length."));
     return msg;
   } else {

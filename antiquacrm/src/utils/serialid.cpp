@@ -37,8 +37,6 @@ void SerialID::reset() {
   setModified(false);
 }
 
-bool SerialID::hasModified() { return isModified(); }
-
 void SerialID::setInfo(const QString &info) {
   QString txt(info);
   txt.append(":");
