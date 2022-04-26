@@ -75,10 +75,10 @@ void MWindow::setupTabMenu(QMenu *parent) {
   m_signalMapper->setMapping(ac_Prints, Workspace::Prints);
   connect(ac_Prints, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
 
-  QAction *ac_Customers = parent->addAction(tabIcon, tr("Customers"));
-  ac_Customers->setObjectName("open_book_tab");
-  m_signalMapper->setMapping(ac_Customers, Workspace::Customers);
-  connect(ac_Customers, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
+  QAction *ac_Costumers = parent->addAction(tabIcon, tr("Costumers"));
+  ac_Costumers->setObjectName("open_book_tab");
+  m_signalMapper->setMapping(ac_Costumers, Workspace::Costumers);
+  connect(ac_Costumers, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
 }
 
 /**
@@ -258,7 +258,7 @@ void MWindow::initDefaults() {
 
   m_workSpace->openTab(Workspace::Books);
   m_workSpace->openTab(Workspace::Prints);
-  m_workSpace->openTab(Workspace::Customers);
+  m_workSpace->openTab(Workspace::Costumers);
 }
 
 MWindow::~MWindow() { qInfo("Mainwindow onload"); }

@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef EDITCUSTOMER_H
-#define EDITCUSTOMER_H
+#ifndef EDITCOSTUMER_H
+#define EDITCOSTUMER_H
 
 #include <QtCore/QObject>
 #include <QtWidgets/QLabel>
@@ -11,12 +11,12 @@
 #include <QtWidgets/QWidget>
 
 class SerialID;
-class CustomerAdditional;
-class CustomerContact;
-class CustomerOverview;
-class CustomerBillingInfo;
+class CostumerAdditional;
+class CostumerContact;
+class CostumerOverview;
+class CostumerBillingInfo;
 
-class EditCustomer : public QWidget {
+class EditCostumer : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -25,17 +25,17 @@ private:
   QLabel *infoLabel;
   QToolBox *m_dataBox;
   SerialID *c_id;
-  CustomerOverview *m_overview;
-  CustomerContact *m_contact;
-  CustomerBillingInfo *m_billing;
-  CustomerAdditional *m_additional;
+  CostumerOverview *m_overview;
+  CostumerContact *m_contact;
+  CostumerBillingInfo *m_billing;
+  CostumerAdditional *m_additional;
 
 Q_SIGNALS:
 
 public Q_SLOTS:
 
 public:
-  explicit EditCustomer(QWidget *parent = nullptr);
+  explicit EditCostumer(QWidget *parent = nullptr);
 };
 
-#endif // EDITCUSTOMER_H
+#endif // EDITCOSTUMER_H

@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "customerbillinginfo.h"
+#include "costumerbillinginfo.h"
 #include "version.h"
 #include <SqlCore>
 
@@ -9,8 +9,8 @@
 // #include <QtGui>
 #include <QtWidgets>
 
-CustomerBillingInfo::CustomerBillingInfo(QWidget *parent) : QWidget{parent} {
-  setObjectName("CustomerBillingInfo");
+CostumerBillingInfo::CostumerBillingInfo(QWidget *parent) : QWidget{parent} {
+  setObjectName("CostumerBillingInfo");
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("billing_info_layout");

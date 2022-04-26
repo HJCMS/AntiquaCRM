@@ -2,28 +2,19 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef CUSTOMERADDITIONAL_H
-#define CUSTOMERADDITIONAL_H
+#ifndef COSTUMEROVERVIEW_H
+#define COSTUMEROVERVIEW_H
 
 #include <QtCore/QObject>
 #include <QtWidgets/QWidget>
 
-class CustomerAdditional : public QWidget
-{
+class CostumerOverview : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
-private:
-
-Q_SIGNALS:
-
-public Q_SLOTS:
-
 public:
-  explicit CustomerAdditional(QWidget *parent = nullptr);
-
+  explicit CostumerOverview(QWidget *parent = nullptr);
 };
 
-#endif // CUSTOMERADDITIONAL_H
-
+#endif // COSTUMEROVERVIEW_H

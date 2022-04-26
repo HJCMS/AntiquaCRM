@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
 
-SET(_subproject "InventoryCustomers")
+SET(_subproject "InventoryCostumers")
 
 INCLUDE_DIRECTORIES (
   ${PROJECT_INCLUDE_DIRS}
@@ -10,21 +10,25 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (subproject_SOURCES
-  customeradditional.cpp
-  customerbillinginfo.cpp
-  customercontact.cpp
-  customeroverview.cpp
-  editcustomer.cpp
-  inventorycustomers.cpp
+  costumeradditional.cpp
+  costumerbillinginfo.cpp
+  costumercontact.cpp
+  costumeroverview.cpp
+  costumertableview.cpp
+  costumerstablemodel.cpp
+  editcostumer.cpp
+  inventorycostumers.cpp
 )
 
 SET (subproject_HEADERS
-  customeradditional.h
-  customerbillinginfo.h
-  customercontact.h
-  customeroverview.h
-  editcustomer.h
-  inventorycustomers.h
+  costumeradditional.h
+  costumerbillinginfo.h
+  costumercontact.h
+  costumeroverview.h
+  costumertableview.h
+  costumerstablemodel.h
+  editcostumer.h
+  inventorycostumers.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC
@@ -40,5 +44,6 @@ SET_TARGET_PROPERTIES (${_subproject} PROPERTIES
 TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
+  Qt${QT_VERSION_MAJOR}::Sql
   Utils
 )

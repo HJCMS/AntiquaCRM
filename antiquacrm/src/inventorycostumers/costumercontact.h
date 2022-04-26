@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef CUSTOMERCONTACT_H
-#define CUSTOMERCONTACT_H
+#ifndef COSTUMERCONTACT_H
+#define COSTUMERCONTACT_H
 
 #include <QtCore/QObject>
 #include <QtWidgets/QGroupBox>
@@ -16,7 +16,7 @@ namespace HJCMS {
 class SqlCore;
 };
 
-class CustomerContact : public QWidget {
+class CostumerContact : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -68,7 +68,7 @@ private Q_SLOTS:
   // Q_SIGNALS:
 
 public:
-  explicit CustomerContact(QWidget *parent = nullptr);
+  explicit CostumerContact(QWidget *parent = nullptr);
 };
 
-#endif // CUSTOMERCONTACT_H
+#endif // COSTUMERCONTACT_H

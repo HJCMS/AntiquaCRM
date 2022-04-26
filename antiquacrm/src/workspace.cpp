@@ -1,6 +1,6 @@
 #include "workspace.h"
 #include "inventorybooks.h"
-#include "inventorycustomers.h"
+#include "inventorycostumers.h"
 #include "inventoryprints.h"
 #include "version.h"
 
@@ -35,10 +35,10 @@ void Workspace::addInventoryPrints(int index) {
   setTabIcon(i, myIcon("image"));
 }
 
-void Workspace::addInventoryCustomers(int index) {
-  m_tabCustomers = new InventoryCustomers(this);
-  int i = insertTab(index, m_tabCustomers, tr("Customers"));
-  setTabToolTip(i, tr("Customers inventory"));
+void Workspace::addInventoryCostumers(int index) {
+  m_tabCostumers = new InventoryCostumers(this);
+  int i = insertTab(index, m_tabCostumers, tr("Costumers"));
+  setTabToolTip(i, tr("Costumers inventory"));
   setTabIcon(i, myIcon("edit_group"));
 }
 
@@ -72,11 +72,11 @@ void Workspace::openTab(int index) {
     } else {
       setCurrentWidget(m_tabPrints);
     }
-  } else if (index == Tab::Customers) {
-    if (indexOf(m_tabCustomers) < 0) {
-      addInventoryCustomers(count() + 1);
+  } else if (index == Tab::Costumers) {
+    if (indexOf(m_tabCostumers) < 0) {
+      addInventoryCostumers(count() + 1);
     } else {
-      setCurrentWidget(m_tabCustomers);
+      setCurrentWidget(m_tabCostumers);
     }
   }
 }

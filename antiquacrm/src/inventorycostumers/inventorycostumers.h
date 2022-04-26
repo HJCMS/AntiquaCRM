@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef INVENTORYCUSTOMERS_H
-#define INVENTORYCUSTOMERS_H
+#ifndef INVENTORYCOSTUMERS_H
+#define INVENTORYCOSTUMERS_H
 
 #include "inventory.h"
 
@@ -13,10 +13,10 @@
 #include <QtWidgets/QTableView>
 #include <QtWidgets/QWidget>
 
-class SearchBar;
-class EditCustomer;
+class EditCostumer;
+class CostumerTableView;
 
-class InventoryCustomers : public Inventory {
+class InventoryCostumers : public Inventory {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -35,12 +35,12 @@ private:
   /**
     @brief Sucheingabe für Bücher
   */
-  SearchBar *m_searchBar;
+  QWidget *m_searchBar;
 
   /**
     @brief Tabellenansicht
   */
-  QTableView *m_tableView;
+  CostumerTableView *m_tableView;
 
   /**
     @}
@@ -52,7 +52,7 @@ private:
   /**
     @brief BuchEditor Fenster
   */
-  EditCustomer *m_editCustomer;
+  EditCostumer *m_editCostumer;
 
   /** @} */
 
@@ -63,7 +63,7 @@ private Q_SLOTS:
   // TODO
 
 public:
-  explicit InventoryCustomers(QWidget *parent = nullptr);
+  explicit InventoryCostumers(QWidget *parent = nullptr);
 };
 
-#endif // INVENTORYCUSTOMERS_H
+#endif // INVENTORYCOSTUMERS_H

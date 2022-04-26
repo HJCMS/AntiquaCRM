@@ -1,19 +1,19 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "inventorycustomers.h"
+#include "inventorycostumers.h"
+#include "costumertableview.h"
 #include "applsettings.h"
-#include "editcustomer.h"
-#include "searchbar.h"
+#include "editcostumer.h"
 #include "version.h"
 
 #include <QtCore/QDebug>
 #include <QtWidgets/QLayout>
 #include <QtWidgets/QVBoxLayout>
 
-InventoryCustomers::InventoryCustomers(QWidget *parent) : Inventory{parent} {
-  setObjectName("InventoryCustomers");
-  setWindowTitle("TabCustomers");
+InventoryCostumers::InventoryCostumers(QWidget *parent) : Inventory{parent} {
+  setObjectName("InventoryCostumers");
+  setWindowTitle("TabCostumers");
 
   ApplSettings cfg;
   minLength = cfg.value("search/startlength", 5).toInt();
@@ -27,33 +27,36 @@ InventoryCustomers::InventoryCustomers(QWidget *parent) : Inventory{parent} {
 
   // BEGIN Page#0
   QWidget *siteOneWidget = new QWidget(m_stackedWidget);
-  siteOneWidget->setObjectName("customer_site_one_widget");
+  siteOneWidget->setObjectName("costumer_site_one_widget");
   QVBoxLayout *siteOneLayout = new QVBoxLayout(siteOneWidget);
-  siteOneLayout->setObjectName("customer_site_one_layout");
+  siteOneLayout->setObjectName("costumer_site_one_layout");
 
-  m_searchBar = new SearchBar(this);
-  m_searchBar->setObjectName("customers_searchbar");
+  m_searchBar = new QWidget(this);
+  m_searchBar->setObjectName("costumers_searchbar");
   siteOneLayout->addWidget(m_searchBar);
 
-  m_tableView = new QTableView(this);
+  m_tableView = new CostumerTableView(this);
   siteOneLayout->addWidget(m_tableView);
+  m_tableView->queryStatement("TESTING");
 
   siteOneWidget->setLayout(siteOneLayout);
   m_stackedWidget->insertWidget(0, siteOneWidget);
   // END Page#0
 
   // BEGIN Page#1
-  m_editCustomer = new EditCustomer(m_stackedWidget);
-  m_stackedWidget->insertWidget(1, m_editCustomer);
-  // m_editCustomer->setEnabled(false);
+  m_editCostumer = new EditCostumer(m_stackedWidget);
+  m_editCostumer->setEnabled(false);
+  m_stackedWidget->insertWidget(1, m_editCostumer);
   // END Page#1
-
-  m_stackedWidget->setCurrentIndex(1);
 
   setLayout(layout);
   // connect(, SIGNAL(s_isModified(bool)), this, SLOT(setClosable(bool)));
 }
 
-void InventoryCustomers::openEditor(const QString &) {
-
+void InventoryCostumers::openEditor(const QString &condition) {
+  if (!condition.isEmpty()) {
+    m_editCostumer->setEnabled(true);
+    // m_editCostumer->(condition);
+    m_stackedWidget->setCurrentWidget(m_editCostumer);
+  }
 }

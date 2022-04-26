@@ -2,13 +2,13 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef CUSTOMEROVERVIEW_H
-#define CUSTOMEROVERVIEW_H
+#ifndef COSTUMERADDITIONAL_H
+#define COSTUMERADDITIONAL_H
 
 #include <QtCore/QObject>
 #include <QtWidgets/QWidget>
 
-class CustomerOverview : public QWidget
+class CostumerAdditional : public QWidget
 {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -21,9 +21,9 @@ Q_SIGNALS:
 public Q_SLOTS:
 
 public:
-  explicit CustomerOverview(QWidget *parent = nullptr);
+  explicit CostumerAdditional(QWidget *parent = nullptr);
 
 };
 
-#endif // CUSTOMEROVERVIEW_H
+#endif // COSTUMERADDITIONAL_H
 

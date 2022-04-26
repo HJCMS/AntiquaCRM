@@ -11,7 +11,7 @@
 
 class InventoryBooks;
 class InventoryPrints;
-class InventoryCustomers;
+class InventoryCostumers;
 
 class Workspace : public QTabWidget {
   Q_OBJECT
@@ -21,7 +21,7 @@ class Workspace : public QTabWidget {
 private:
   InventoryBooks *m_tabBooks;
   InventoryPrints *m_tabPrints;
-  InventoryCustomers *m_tabCustomers;
+  InventoryCostumers *m_tabCostumers;
 
   /**
      @brief Bücher Inventar öffnen
@@ -36,7 +36,7 @@ private:
   /**
      @brief Kundenregister Inventar öffnen
   */
-  void addInventoryCustomers(int);
+  void addInventoryCostumers(int);
 
 private Q_SLOTS:
   /**
@@ -67,7 +67,7 @@ public:
   /**
      @brief Helfer zur Identifizierung der Tabs
   */
-  enum Tab { Books = 1, Prints = 2, Customers = 3 };
+  enum Tab { Books = 1, Prints = 2, Costumers = 3 };
   Q_ENUM(Tab)
 
   explicit Workspace(QWidget *parent = 0);

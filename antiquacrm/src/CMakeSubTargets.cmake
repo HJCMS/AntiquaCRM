@@ -9,8 +9,6 @@ SET (TARGET_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/settings
  ${CMAKE_CURRENT_BINARY_DIR}/plugins
  ${CMAKE_CURRENT_SOURCE_DIR}/plugins
- ${CMAKE_CURRENT_BINARY_DIR}/inventorycustomers
- ${CMAKE_CURRENT_SOURCE_DIR}/inventorycustomers
  ${CMAKE_CURRENT_BINARY_DIR}/sqlcore
  ${CMAKE_CURRENT_SOURCE_DIR}/sqlcore
  ${CMAKE_CURRENT_BINARY_DIR}/inventoryprints
@@ -27,6 +25,8 @@ SET (TARGET_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/uicompleter
  ${CMAKE_CURRENT_BINARY_DIR}/utils
  ${CMAKE_CURRENT_SOURCE_DIR}/utils
+ ${CMAKE_CURRENT_BINARY_DIR}/inventorycostumers
+ ${CMAKE_CURRENT_SOURCE_DIR}/inventorycostumers
  ${CMAKE_CURRENT_BINARY_DIR}/icons
  ${CMAKE_CURRENT_SOURCE_DIR}/icons
  ${CMAKE_CURRENT_BINARY_DIR}/src
@@ -37,7 +37,6 @@ INCLUDE_DIRECTORIES (${TARGET_INCLUDE_DIRS})
 
 ADD_SUBDIRECTORY (settings)
 ADD_SUBDIRECTORY (plugins)
-ADD_SUBDIRECTORY (inventorycustomers)
 ADD_SUBDIRECTORY (sqlcore)
 ADD_SUBDIRECTORY (inventoryprints)
 ADD_SUBDIRECTORY (inventorybooks)
@@ -46,11 +45,11 @@ ADD_SUBDIRECTORY (imaging)
 ADD_SUBDIRECTORY (i18n)
 ADD_SUBDIRECTORY (uicompleter)
 ADD_SUBDIRECTORY (utils)
+ADD_SUBDIRECTORY (inventorycostumers)
 ADD_SUBDIRECTORY (icons)
 
 SET(_link_sub_libs
 Settings
-InventoryCustomers
 SqlCore
 InventoryPrints
 InventoryBooks
@@ -58,5 +57,6 @@ Network
 Imaging
 UiCompleter
 Utils
+InventoryCostumers
 )
 

@@ -21,8 +21,6 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMenu>
-// needed fo time format
-#include <cstdio>
 
 /**
     @brief querySelect
