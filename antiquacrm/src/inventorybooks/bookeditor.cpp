@@ -268,17 +268,13 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
 
   setLayout(mainLayout);
 
-  // FIXME
-  // setTabOrder(ib_id, ib_count);
-  // setTabOrder(ib_count, ib_price);
-
   connect(ib_isbn, SIGNAL(s_isbnIsValid(bool)), m_btnQueryISBN,
           SLOT(setEnabled(bool)));
   connect(m_btnQueryISBN, SIGNAL(clicked()), this, SLOT(triggerIsbnQuery()));
 
   connect(m_imageToolBar, SIGNAL(s_openImage()), this, SLOT(openImageDialog()));
-  // connect(m_imageToolBar, SIGNAL(s_deleteImage(int)), this,
-  // SLOT(__TODO__(int)));
+  connect(m_imageToolBar, SIGNAL(s_deleteImage(int)), this,
+          SLOT(removeImageDialog(int)));
 
   connect(m_listWidget, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
           SLOT(infoISBNDoubleClicked(QListWidgetItem *)));
@@ -320,6 +316,26 @@ void BookEditor::openImageDialog() {
     QImage img = dialog->getImage();
     if (!img.isNull())
       m_imageView->addNewImage(id, img);
+  }
+}
+
+void BookEditor::removeImageDialog(int id) {
+  if (ib_id->value().toInt() != id)
+    return;
+
+  QString image_id = QString::number(id);
+  QString t(tr("Remove Image from Database"));
+  QString ask(tr("Do you realy wan't to delete the Image fom Database?"));
+  QString m = QString("%1\n\nImage - Article ID: %2").arg(ask, image_id);
+  QMessageBox::StandardButton set = QMessageBox::question(this, t, m);
+  if (set == QMessageBox::Yes) {
+    QSqlQuery q = m_sql->query(
+        "DELETE FROM inventory_images WHERE im_id=" + image_id + ";");
+    if (q.lastError().isValid()) {
+      qWarning("Delete Image SQL-Error:\n%s", qPrintable(m_sql->lastError()));
+    } else {
+      m_imageView->clear();
+    }
   }
 }
 

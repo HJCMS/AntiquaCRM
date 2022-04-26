@@ -48,6 +48,10 @@ static const QList<SearchBar::SearchFilter> bookSearchFilter() {
   a.title = QObject::tr("Publisher");
   a.filter = QString("publisher");
   filter.append(a);
+  a.index = 6;
+  a.title = QObject::tr("Storage Category");
+  a.filter = QString("storage");
+  filter.append(a);
   return filter;
 }
 
@@ -136,6 +140,23 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
 void InventoryBooks::searchConvert(const QString &query) {
   if (query.length() <= minLength)
     return;
+
+  QString info(tr("Automatic search disabled in this mode. Press enter to "
+                  "start the search!"));
+
+  int filter = m_searchBar->currentFilterIndex();
+  switch (filter) {
+  case 0: {
+    m_statsBookBar->showMessage(info);
+    return;
+  }
+  case 6: {
+    m_statsBookBar->showMessage(info);
+    return;
+  }
+  default:
+    break;
+  };
 
   searchConvert();
 }

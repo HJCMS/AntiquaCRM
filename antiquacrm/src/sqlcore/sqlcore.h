@@ -88,7 +88,7 @@ Q_SIGNALS:
   /**
      @brief Operations Nachrichten
    */
-  void s_databaseMessage(const QString &);
+  void s_noticeMessage(const QString &);
 
   /**
      @brief SQLQuery Fehlermeldungen
@@ -122,6 +122,12 @@ public:
      @return bool
    */
   bool sqlDriversExists();
+
+  /**
+   * @brief Letzte Fehlermeldung ausgeben!
+   * @return ErroString
+   */
+  const QString lastError();
 
   /**
      @brief initialDatabase

@@ -19,6 +19,7 @@ class PostalCodeModel : public QSqlQueryModel {
 
 public:
   explicit PostalCodeModel(const QString &table, QObject *parent = nullptr);
+  int size();
 };
 
 class PostalCode : public UtilsMain {
@@ -31,6 +32,7 @@ private:
   QLineEdit *m_plz;
   QCompleter *m_completer;
   QComboBox *m_country;
+  bool fetchCompleterTables();
   bool setCompleterModel(const QString &table);
 
 private Q_SLOTS:

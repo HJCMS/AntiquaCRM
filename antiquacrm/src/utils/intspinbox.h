@@ -19,8 +19,11 @@ class IntSpinBox : public UtilsMain {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  int min = 0; /**< Wir verwenden keine Netgativ Werte */
+  int max = 9999; /**< Startwert siehe @ref setRange */
   QLabel *m_info;
   QSpinBox *m_spinBox;
+  void p_construct();
 
 private Q_SLOTS:
   void itemChanged(int);
@@ -30,7 +33,10 @@ public Q_SLOTS:
 
 public:
   explicit IntSpinBox(QWidget *parent = nullptr);
-  void setRange(int min, int max);
+  IntSpinBox(int minimum, int maximum, QWidget *parent = nullptr);
+  ~IntSpinBox();
+
+  void setRange(int minimum, int maximum);
   void setSingleStep(int);
   void setSuffix(const QString &);
   void setPrefix(const QString &);

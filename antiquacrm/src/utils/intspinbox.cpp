@@ -2,12 +2,20 @@
 // vim: set fileencoding=utf-8
 
 #include "intspinbox.h"
-#include "version.h"
 
 #include <QtCore/QDebug>
 #include <QtWidgets/QHBoxLayout>
 
-IntSpinBox::IntSpinBox(QWidget *parent) : UtilsMain{parent} {
+IntSpinBox::IntSpinBox(QWidget *parent) : UtilsMain{parent} { p_construct(); }
+
+IntSpinBox::IntSpinBox(int minimum, int maximum, QWidget *parent)
+    : UtilsMain{parent} {
+  min = minimum;
+  max = maximum;
+  p_construct();
+}
+
+void IntSpinBox::p_construct() {
   if (objectName().isEmpty())
     setObjectName("IntSpinBox");
 
@@ -18,7 +26,8 @@ IntSpinBox::IntSpinBox(QWidget *parent) : UtilsMain{parent} {
   layout->addWidget(m_info);
 
   m_spinBox = new QSpinBox(this);
-  m_spinBox->setMinimum(0);
+  m_spinBox->setMinimum(min);
+  m_spinBox->setMaximum(max);
   layout->addWidget(m_spinBox);
 
   setLayout(layout);
@@ -31,9 +40,11 @@ IntSpinBox::IntSpinBox(QWidget *parent) : UtilsMain{parent} {
 
 void IntSpinBox::itemChanged(int) { setModified(true); }
 
-void IntSpinBox::setRange(int min, int max) {
-  m_spinBox->setMinimum(min);
-  m_spinBox->setMaximum(max);
+void IntSpinBox::setRange(int minimum, int maximum) {
+  min = minimum;
+  m_spinBox->setMinimum(minimum);
+  max = maximum;
+  m_spinBox->setMaximum(maximum);
 }
 
 void IntSpinBox::setSingleStep(int i) { m_spinBox->setSingleStep(i); }
@@ -78,3 +89,5 @@ const QString IntSpinBox::notes() {
   msg.append(tr("is required and can not empty."));
   return msg;
 }
+
+IntSpinBox::~IntSpinBox() {}

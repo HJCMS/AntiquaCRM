@@ -58,6 +58,11 @@ CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
   c_postalcode->setInfo(tr("Postalcode"));
   row2->addWidget(c_postalcode);
 
+  helper_state = new QLabel(this);
+  helper_state->setObjectName("c_postalcode");
+  helper_state->setToolTip(tr("State / Canton"));
+  row2->addWidget(helper_state);
+
   /** Wohnort */
   c_location = new LineEdit(this);
   c_location->setObjectName("c_location");
@@ -79,32 +84,32 @@ CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
   QGridLayout *row3 = new QGridLayout();
   row3->setObjectName("contact_edit_row3");
 
-  /** Telefon Nummer 1 */
+  /** Phone 1 */
   c_phone_0 = new PhoneEdit(this);
   c_phone_0->setObjectName("c_phone_0");
   c_phone_0->setInfo(tr("Primary phone number"));
   c_phone_0->setRequired(true);
   row3->addWidget(c_phone_0, gridRow, 0, 1, 1);
 
-  /** Telefon Nummer 2 */
+  /** Phone 2 */
   c_phone_1 = new PhoneEdit(this);
   c_phone_1->setObjectName("c_phone_1");
   c_phone_1->setInfo(tr("Secundary phone number"));
   row3->addWidget(c_phone_1, gridRow++, 1, 1, 1);
 
-  /** Mobilerufnummer 1 */
+  /** Mobil 1 */
   c_mobil_0 = new PhoneEdit(this);
   c_mobil_0->setObjectName("c_mobil_0");
   c_mobil_0->setInfo(tr("Primary mobile number"));
   row3->addWidget(c_mobil_0, gridRow, 0, 1, 1);
 
-  /** Mobilerufnummer 2 */
+  /** Mobil 2 */
   c_mobil_1 = new PhoneEdit(this);
   c_mobil_1->setObjectName("c_mobil_1");
   c_mobil_1->setInfo(tr("Secundary mobile number"));
   row3->addWidget(c_mobil_1, gridRow++, 1, 1, 1);
 
-  /** Faxnummer */
+  /** Faxnumber */
   c_fax_0 = new PhoneEdit(this);
   c_fax_0->setObjectName("c_fax_0");
   c_fax_0->setInfo(tr("fax number"));
@@ -117,12 +122,13 @@ CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
   c_website->setPlaceholderText("https://antiquacrm.hjcms.de");
   row3->addWidget(c_website, gridRow++, 1, 1, 1);
 
-  /** E-Mail Adresse */
+  /** E-Mail Primary */
   c_email_0 = new EMailEdit(this);
   c_email_0->setObjectName("c_email_0");
   c_email_0->setInfo(tr("Primary E-Mail Address"));
   row3->addWidget(c_email_0, gridRow, 0, 1, 1);
 
+  /** E-Mail Secundary */
   c_email_1 = new EMailEdit(this);
   c_email_1->setObjectName("c_email_1");
   c_email_1->setInfo(tr("Secundary E-Mail Address"));
@@ -131,6 +137,7 @@ CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
   // END #3
 
   // BEGIN #4
+  /** Company */
   c_company = new QGroupBox(this);
   c_company->setObjectName("c_company");
   c_company->setTitle(tr("Company, Institute or Organisation"));
@@ -144,7 +151,7 @@ CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
   boxLayout->addWidget(c_company_name);
   c_company_employer = new LineEdit(this);
   c_company_employer->setObjectName("c_company_employer");
-  c_company_employer->setInfo(tr("Company Member"));
+  c_company_employer->setInfo(tr("Employer"));
   boxLayout->addWidget(c_company_employer);
   c_company->setLayout(boxLayout);
   layout->addWidget(c_company);
@@ -198,6 +205,7 @@ void CustomerContact::fetchCountryFromPostal() {
   if (q.size() > 0) {
     while (q.next()) {
       list.append(q.value("p_location").toString());
+      helper_state->setText(q.value("p_state").toString());
     }
   }
   c_location->addCompleter(list);

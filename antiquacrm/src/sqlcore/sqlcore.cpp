@@ -8,6 +8,7 @@
 #include <QtCore/QDebug>
 #include <QtCore/QSettings>
 #include <QtCore/QtGlobal>
+#include <QtCore/QMutex>
 #include <QtNetwork/QTcpSocket>
 #include <QtSql/QSqlDriver>
 #include <QtSql/QSqlError>
@@ -56,6 +57,8 @@ bool SqlCore::initSQLDriver() {
 }
 
 bool SqlCore::socketConnectionTest() {
+  QMutex mutex(QMutex::NonRecursive);
+  mutex.lock();
   QTcpSocket *m_socket = new QTcpSocket(this);
   m_socket->connectToHost(m_cfg->getAddress(), m_cfg->getPort());
   if (!m_socket->waitForConnected(5)) {
@@ -65,10 +68,13 @@ bool SqlCore::socketConnectionTest() {
     err.append(database->hostName());
     err.append("' - ");
     err.append(m_socket->errorString());
-    emit s_databaseMessage(err);
+    emit s_errorMessage(err);
+    emit s_noticeMessage(tr("Database server not connected"));
+    mutex.unlock();
     return false;
   }
   m_socket->close();
+  mutex.unlock();
   return true;
 }
 
@@ -166,7 +172,7 @@ const QString SqlCore::fetchErrors() {
 void SqlCore::openDatabase(bool b) {
   Q_UNUSED(b);
   if (initDatabase()) {
-    emit s_databaseMessage(tr("PostgreSQL connected successfully!"));
+    emit s_noticeMessage(tr("PostgreSQL connected successfully!"));
     emit s_connectionStatus(true);
   } else {
     emit s_connectionStatus(false);
@@ -174,6 +180,24 @@ void SqlCore::openDatabase(bool b) {
 }
 
 bool SqlCore::initialDatabase() { return initDatabase(); }
+
+const QString SqlCore::lastError() {
+  QSqlError err = database->lastError();
+  switch (err.type()) {
+  case QSqlError::ConnectionError:
+    return err.driverText();
+
+  case QSqlError::StatementError:
+    return err.databaseText();
+
+  case QSqlError::TransactionError:
+    return err.databaseText();
+
+  default:
+    return err.text();
+  };
+  return QString();
+}
 
 const QSqlDatabase SqlCore::db() { return p_db; }
 
@@ -212,14 +236,14 @@ bool SqlCore::sqlDriversExists() {
 }
 
 SqlCore::~SqlCore() {
-/*
-  if (database != nullptr) {
-    if (database->isOpen()) {
-      qInfo("Database '%s' closed", qPrintable(database->connectionName()));
-      database->close();
+  /*
+    if (database != nullptr) {
+      if (database->isOpen()) {
+        qInfo("Database '%s' closed", qPrintable(database->connectionName()));
+        database->close();
+      }
     }
-  }
-*/
+  */
   if (statusTimerID > 0)
     killTimer(statusTimerID);
 }

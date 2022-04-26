@@ -172,7 +172,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+122"/>
+        <source>Remove Image from Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do you realy wan&apos;t to delete the Image fom Database?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+115"/>
         <source>Missing Article ID for Update.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -222,7 +232,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-631"/>
+        <location line="-647"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -237,7 +247,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+508"/>
+        <location line="+524"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -257,7 +267,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-535"/>
+        <location line="-551"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -280,13 +290,13 @@
     </message>
     <message>
         <location line="-166"/>
-        <location line="+640"/>
+        <location line="+656"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-566"/>
-        <location line="+576"/>
+        <location line="-582"/>
+        <location line="+592"/>
         <source>Publisher</source>
         <translation type="unfinished"></translation>
     </message>
@@ -296,7 +306,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-295"/>
+        <location line="-311"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -377,7 +387,7 @@
 <context>
     <name>BooksTableView</name>
     <message>
-        <location filename="../inventorybooks/bookstableview.cpp" line="+127"/>
+        <location filename="../inventorybooks/bookstableview.cpp" line="+128"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -514,6 +524,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+5"/>
+        <source>State / Canton</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+6"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
@@ -559,12 +574,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Secundary E-Mail Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Company, Institute or Organisation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -575,7 +590,7 @@
     </message>
     <message>
         <location line="+4"/>
-        <source>Company Member</source>
+        <source>Employer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -760,7 +775,12 @@
 <context>
     <name>HJCMS::SqlCore</name>
     <message>
-        <location filename="../sqlcore/sqlcore.cpp" line="+139"/>
+        <location filename="../sqlcore/sqlcore.cpp" line="+72"/>
+        <source>Database server not connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+73"/>
         <source>SQL Driver initialization error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -867,8 +887,16 @@
 <context>
     <name>IntSpinBox</name>
     <message>
-        <location filename="../utils/intspinbox.cpp" line="+78"/>
+        <location filename="../utils/intspinbox.cpp" line="+89"/>
         <source>is required and can not empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InventoryBooks</name>
+    <message>
+        <location filename="../inventorybooks/inventorybooks.cpp" line="+145"/>
+        <source>Automatic search disabled in this mode. Press enter to start the search!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1049,22 +1077,17 @@
 <context>
     <name>PostalCode</name>
     <message>
-        <location filename="../utils/postalcode.cpp" line="+44"/>
+        <location filename="../utils/postalcode.cpp" line="+43"/>
         <source>currently supported helper functions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>German</source>
+        <source>Select Helper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Austria</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+63"/>
+        <location line="+91"/>
         <source>a valid Postalcode is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1436,7 +1459,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../inventorybooks/inventorybooks.cpp" line="+28"/>
+        <location filename="../inventorybooks/inventorybooks.cpp" line="-117"/>
         <source>Book Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1465,6 +1488,11 @@
     <message>
         <location line="+4"/>
         <source>Publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Storage Category</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

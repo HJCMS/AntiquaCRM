@@ -9,16 +9,17 @@
 #include "version.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QItemSelectionModel>
+#include <QtCore/QMutex>
 #include <QtCore/QPoint>
 #include <QtCore/QRegExp>
 #include <QtCore/QSignalMapper>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>
+#include <QtSql/QSqlTableModel>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMenu>
-#include <QtCore/QItemSelectionModel>
-#include <QtSql/QSqlTableModel>
 
 /**
     @brief querySelect
@@ -207,25 +208,30 @@ void BooksTableView::queryStatement(const SearchStatement &cl) {
   q.append(querySelect());
   q.append(queryTables());
   if (field.contains("id")) {
-    // Numeric Search
+    // Artikel ID Suche
     q.append(" WHERE (b.ib_id=");
     q.append(str);
   } else if (field.contains("isbn")) {
-    // Numeric Search
+    // ISBN Suche
     q.append(" WHERE (b.ib_isbn=");
     q.append(str);
   } else if (field.contains("author")) {
-    // String Search
+    // Autoren suche
     q.append(" WHERE (b.ib_author ILIKE '%");
     q.append(str.replace(" ", "%"));
     q.append("%'");
   } else if (field.contains("publisher")) {
-    // String Search
+    // Herausgeber
     q.append(" WHERE (b.ib_publisher ILIKE '%");
     q.append(str.replace(" ", "%"));
     q.append("%'");
+  } else if (field.contains("storage")) {
+    // mit Lager Kategorie
+    q.append(" WHERE (b.ib_count!=0 AND s.sl_identifier ILIKE '");
+    q.append(str.replace("%", "")); /**< @note Wegen Performance */
+    q.append("%'");
   } else {
-    // String Search
+    // Titelsuche
     if (exact_match) {
       q.append(" WHERE (b.ib_title ILIKE '");
     } else {

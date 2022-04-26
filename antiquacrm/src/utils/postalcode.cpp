@@ -17,12 +17,11 @@ PostalCodeModel::PostalCodeModel(const QString &table, QObject *parent)
            m_sql->db());
 }
 
+int PostalCodeModel::size() { return rowCount(QModelIndex()); }
+
 PostalCode::PostalCode(QWidget *parent) : UtilsMain{parent} {
   if (objectName().isEmpty())
     setObjectName("PostalCodeEditor");
-
-  setModified(false);
-  setRequired(false);
 
   QHBoxLayout *layout = new QHBoxLayout(this);
 
@@ -42,11 +41,18 @@ PostalCode::PostalCode(QWidget *parent) : UtilsMain{parent} {
 
   m_country = new QComboBox(this);
   m_country->setToolTip(tr("currently supported helper functions"));
-  m_country->insertItem(0, tr("German"), QVariant("ref_postalcodes_de"));
-  m_country->insertItem(1, tr("Austria"), QVariant("ref_postalcodes_at"));
+  m_country->insertItem(0, tr("Select Helper"), QString());
   layout->addWidget(m_country);
 
+  if (!fetchCompleterTables())
+    qWarning("PostalCode: No data tables found!");
+
   setLayout(layout);
+
+  setModified(false);
+  setRequired(false);
+
+  setTabOrder(m_country, m_plz);
 
   connect(m_country, SIGNAL(currentIndexChanged(int)), this,
           SLOT(loadDataset(int)));
@@ -54,9 +60,29 @@ PostalCode::PostalCode(QWidget *parent) : UtilsMain{parent} {
   connect(m_plz, SIGNAL(editingFinished()), this, SIGNAL(editingFinished()));
 }
 
+bool PostalCode::fetchCompleterTables() {
+  HJCMS::SqlCore *m_sql = new HJCMS::SqlCore(this);
+  QString sql("SELECT p_id,p_country,p_table from ui_postalcodes");
+  sql.append(" WHERE p_table IS NOT NULL ORDER BY p_id;");
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    while (q.next()) {
+      if (q.value("p_id").isValid()) {
+        m_country->insertItem(q.value("p_id").toInt(),
+                              q.value("p_country").toString(),
+                              q.value("p_table"));
+      }
+    }
+    return true;
+  }
+  return false;
+}
+
 bool PostalCode::setCompleterModel(const QString &table) {
   PostalCodeModel *m_model = new PostalCodeModel(table, m_completer);
-  m_completer->setModel(m_model);
+  if (m_model->size() > 0)
+    m_completer->setModel(m_model);
+
   return true;
 }
 

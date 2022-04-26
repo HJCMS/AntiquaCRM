@@ -19,9 +19,9 @@
  * @defgroup HJCMS
  * @{
  */
+#include <EditorMain>
 #include <Imaging>
 #include <Utils>
-#include <EditorMain>
 
 class IsbnEdit;
 class IsbnRequest;
@@ -211,6 +211,11 @@ private Q_SLOTS:
      @brief Button open Imaging clicked()
    */
   void openImageDialog();
+
+  /**
+   * @brief Enferne Bild mit Artikel ID - Dialog.
+   */
+  void removeImageDialog(int);
 
   /**
      @brief Signal Verarbeitung für @ref m_actionBar::s_saveClicked()
