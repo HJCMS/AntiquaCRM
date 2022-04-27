@@ -13,6 +13,7 @@
 #include <QtWidgets/QTableView>
 #include <QtWidgets/QWidget>
 
+class SearchBar;
 class EditCostumer;
 class CostumerTableView;
 
@@ -22,6 +23,8 @@ class InventoryCostumers : public Inventory {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  const QString primaryIndex = "c_id";
+
   /**
     @brief Fenster gruppierung
   */
@@ -35,7 +38,7 @@ private:
   /**
     @brief Sucheingabe für Bücher
   */
-  QWidget *m_searchBar;
+  SearchBar *m_searchBar;
 
   /**
     @brief Tabellenansicht
@@ -56,11 +59,15 @@ private:
 
   /** @} */
 
-protected:
   void openEditor(const QString &);
 
 private Q_SLOTS:
-  // TODO
+  void editCostumer(int);
+  void searchConvert(const QString &);
+  void searchConvert();
+
+public Q_SLOTS:
+  void messageHandler(const QString &message, int type = 0);
 
 public:
   explicit InventoryCostumers(QWidget *parent = nullptr);

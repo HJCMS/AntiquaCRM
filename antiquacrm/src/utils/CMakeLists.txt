@@ -17,6 +17,7 @@ SET (subproject_SOURCES
   emailedit.cpp
   filedialog.cpp
   genderbox.cpp
+  groupbox.cpp
   imagetoolbar.cpp
   imagewidget.cpp
   intspinbox.cpp
@@ -48,6 +49,7 @@ SET (subproject_HEADERS
   editormain.h
   filedialog.h
   genderbox.h
+  groupbox.h
   imagetoolbar.h
   imagewidget.h
   intspinbox.h

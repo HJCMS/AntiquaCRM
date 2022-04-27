@@ -13,6 +13,7 @@
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlRecord>
+#include <QtSql/QSqlField>
 
 namespace HJCMS {
 
@@ -170,6 +171,13 @@ public:
      @return QSqlRecord
    */
   const QSqlRecord record(const QString &table);
+
+  /**
+     @brief Alle Feldnamen von Tabelle
+     @param Tabelle
+     @return QStrinList
+   */
+  const QStringList fields(const QString &table);
 
   virtual ~SqlCore();
 };

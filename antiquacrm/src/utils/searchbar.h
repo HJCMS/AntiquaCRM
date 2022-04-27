@@ -119,6 +119,7 @@ public:
       @li Tabulatur und Zeilenumbrüche (Copy Paste Problem)
       @li Apostroph und Anführungszeichen (SQL-Statement)
    */
+  void setSearchText(const QString &);
   const QString currentSearchText();
 };
 

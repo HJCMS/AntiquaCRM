@@ -74,26 +74,6 @@ private:
 
   /** @} */
 
-protected:
-  /**
-    @brief Öffne mit der SQL-Abfrage den Bucheditor
-    Wenn die Abfrage nicht leer ist wechsle zum
-    Bucheditor und aktiviere das Editor Widget.
-    Die Abfrage condition besteht aus @b ib_id
-    und @b ib_title Feldabfrage.
-    @note Wegen Tastenbindungen ist das Editor
-      Fenster deaktiviert und muss hier wieder
-      aktiviert werden.
-    Ablauf des Fensterwechsel ist:
-      @li Prüfe Abfrage auf nicht Leer
-      @li Aktiviere Editor Widget
-      @li Rufe queryBookEntry(SQL) auf
-      @li Setze das StackedWidget auf den Editor.
-
-    @param SQL Anfrageausdruck
-  */
-  void openEditor(const QString &condition);
-
 private Q_SLOTS:
   /**
     @brief Reagiert auf LineEdit
@@ -138,6 +118,26 @@ private Q_SLOTS:
      @ref SearchBar::setValidation ein update gesendet.
    */
   void updateValidator(int);
+
+protected:
+  /**
+    @brief Öffne mit der SQL-Abfrage den Bucheditor
+    Wenn die Abfrage nicht leer ist wechsle zum
+    Bucheditor und aktiviere das Editor Widget.
+    Die Abfrage condition besteht aus @b ib_id
+    und @b ib_title Feldabfrage.
+    @note Wegen Tastenbindungen ist das Editor
+      Fenster deaktiviert und muss hier wieder
+      aktiviert werden.
+    Ablauf des Fensterwechsel ist:
+      @li Prüfe Abfrage auf nicht Leer
+      @li Aktiviere Editor Widget
+      @li Rufe queryBookEntry(SQL) auf
+      @li Setze das StackedWidget auf den Editor.
+
+    @param SQL Anfrageausdruck
+  */
+  void openEditor(const QString &condition);
 
 public Q_SLOTS:
   /**

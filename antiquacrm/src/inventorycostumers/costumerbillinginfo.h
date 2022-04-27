@@ -20,19 +20,15 @@ class CostumerBillingInfo : public QWidget {
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
-private:
+public:
   BoolBox *c_locked;     /**< Gesperrt */
   TrustBox *c_trusted;   /**< Vetrauenswürdigkeit */
   LineEdit *c_iban;      /**< IBAN Nummer */
   LineEdit *c_swift_bic; /**< BIC Swift Code ISO 9362 */
   LineEdit *c_tax_id;    /**< Umsatzsteuer-Identifikationsnummer */
+  EMailEdit *c_shipping_email; /**< E-Mail z.b: für PayPal */
   TextField *c_comments; /**< Anmerkungen */
 
-Q_SIGNALS:
-
-public Q_SLOTS:
-
-public:
   explicit CostumerBillingInfo(QWidget *parent = nullptr);
 };
 

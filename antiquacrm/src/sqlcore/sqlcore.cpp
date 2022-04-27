@@ -223,6 +223,18 @@ const QSqlRecord SqlCore::record(const QString &table) {
   return database->record(table);
 }
 
+const QStringList SqlCore::fields(const QString &table) {
+  QStringList l;
+  QSqlRecord r = record(table);
+  if (!r.isEmpty()) {
+    for (int i = 0; i < r.count(); i++) {
+      if (!r.field(i).name().isEmpty())
+        l.append(r.field(i).name());
+    }
+  }
+  return l;
+}
+
 const QString SqlCore::getConnectionName() {
   return database->connectionName();
 }

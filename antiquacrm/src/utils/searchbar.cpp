@@ -37,7 +37,8 @@ SearchBar::SearchBar(QWidget *parent) : QToolBar(parent) {
 
   m_searchLineEdit = new QLineEdit(this);
   m_searchLineEdit->setObjectName("SearchLineEdit");
-  m_searchLineEdit->setStatusTip(tr("You can use a wildcard * to broaden the search."));
+  m_searchLineEdit->setStatusTip(
+      tr("You can use a wildcard * to broaden the search."));
   m_searchLineEdit->setPlaceholderText(tr("Search for"));
   m_searchLineEdit->setValidator(m_textValidator);
   addWidget(m_searchLineEdit);
@@ -131,6 +132,11 @@ void SearchBar::setValidation(SearchBar::Validation v) {
 }
 
 int SearchBar::currentFilterIndex() { return m_filterSection->currentIndex(); }
+
+void SearchBar::setSearchText(const QString &search) {
+  if (search.length() > 2)
+    m_searchLineEdit->setText(search);
+}
 
 const QString SearchBar::currentSearchText() {
   QString buffer = m_searchLineEdit->text();

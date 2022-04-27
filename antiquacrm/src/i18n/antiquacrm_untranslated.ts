@@ -383,7 +383,7 @@
 <context>
     <name>BooksTableView</name>
     <message>
-        <location filename="../inventorybooks/bookstableview.cpp" line="+98"/>
+        <location filename="../inventorybooks/bookstableview.cpp" line="+96"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -496,9 +496,14 @@
     </message>
 </context>
 <context>
-    <name>CustomerBillingInfo</name>
+    <name>CostumerBillingInfo</name>
     <message>
-        <location filename="../inventorycustomers/customerbillinginfo.cpp" line="+28"/>
+        <location filename="../inventorycostumers/costumerbillinginfo.cpp" line="+23"/>
+        <source>Locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Tax Id.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -517,11 +522,16 @@
         <source>Comments</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+5"/>
+        <source>Billing E-Mail</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
-    <name>CustomerContact</name>
+    <name>CostumerContact</name>
     <message>
-        <location filename="../inventorycustomers/customercontact.cpp" line="+25"/>
+        <location filename="../inventorycostumers/costumercontact.cpp" line="+26"/>
         <source>Gender</source>
         <translation type="unfinished"></translation>
     </message>
@@ -531,7 +541,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <location line="+1"/>
         <source>Firstname</source>
         <translation type="unfinished"></translation>
@@ -613,17 +623,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Company Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
+        <location line="+10"/>
         <source>Employer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+10"/>
         <source>Generate Address with given Dataset.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -635,6 +640,72 @@
     <message>
         <location line="+5"/>
         <source>Shipping Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CostumerTableView</name>
+    <message>
+        <location filename="../inventorycostumers/costumertableview.cpp" line="+66"/>
+        <source>Rows: %1, Time: %2 msec.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <source>Open entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Create entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Create order</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CostumersTableModel</name>
+    <message>
+        <location filename="../inventorycostumers/costumerstablemodel.cpp" line="+60"/>
+        <source>ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Purchases</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Fullname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Phone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Mobil</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Since</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -657,6 +728,14 @@
     </message>
 </context>
 <context>
+    <name>Document</name>
+    <message>
+        <location filename="../inventorycostumers/costumeroverview.cpp" line="+12"/>
+        <source>Costumer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EMailEdit</name>
     <message>
         <location filename="../utils/emailedit.cpp" line="+26"/>
@@ -670,10 +749,10 @@
     </message>
 </context>
 <context>
-    <name>EditCustomer</name>
+    <name>EditCostumer</name>
     <message>
-        <location filename="../inventorycustomers/editcustomer.cpp" line="+28"/>
-        <source>Customers ID:</source>
+        <location filename="../inventorycostumers/editcostumer.cpp" line="+35"/>
+        <source>Costumers ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -692,8 +771,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Additional</source>
+        <location line="+54"/>
+        <source>Saved successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+126"/>
+        <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -968,7 +1052,12 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+88"/>
+        <location filename="../mwindow.cpp" line="+78"/>
+        <source>Costumers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1034,12 +1123,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Customers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
+        <location line="+19"/>
         <source>Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1569,6 +1653,21 @@
         <source>Various</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../inventorycostumers/inventorycostumers.cpp" line="+22"/>
+        <source>Sort by Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Sort by ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Sort by Date</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SalutationBox</name>
@@ -1591,7 +1690,7 @@
 <context>
     <name>SearchBar</name>
     <message>
-        <location filename="../utils/searchbar.cpp" line="+40"/>
+        <location filename="../utils/searchbar.cpp" line="+41"/>
         <source>You can use a wildcard * to broaden the search.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1968,12 +2067,12 @@
     </message>
     <message>
         <location line="+6"/>
-        <source>Customers</source>
+        <source>Costumers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Customers inventory</source>
+        <source>Costumers inventory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

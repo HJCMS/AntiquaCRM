@@ -21,7 +21,7 @@ class CostumerContact : public QWidget {
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
-private:
+public:
   HJCMS::SqlCore *m_sql;    /**< Wird für einige Unterabfragen benötigt! */
   GenderBox *c_gender;      /**< Geschlecht */
   SalutationBox *c_title;   /**< Titelanrede */
@@ -39,12 +39,15 @@ private:
   EMailEdit *c_email_0;     /**< E-Mail Adresse */
   EMailEdit *c_email_1;     /**< E-Mail Adresse */
   LineEdit *c_website;      /**< Webseite */
-  QGroupBox *c_company;     /**< Firma/Institut oder Organisation ? */
-  LineEdit *c_company_name; /**< Firmen Name */
+  GroupBox *c_company;      /**< Firma/Institut oder Organisation ? */
+  StrLineEdit *c_company_name; /**< Firmen Name */
   LineEdit *c_company_employer;  /**< Ansprechpartner */
   TextField *c_postal_address;   /**< Adresse */
   TextField *c_shipping_address; /**< Lieferadresse */
 
+  explicit CostumerContact(QWidget *parent = nullptr);
+
+private:
   /**
    * Mit Postleitzahl Wohnort und Bundesland ermitteln!
    * @note Wird von @ref postalCodeComplite() ausgelöst!
@@ -66,9 +69,6 @@ private Q_SLOTS:
   void generateAddressBody();
 
   // Q_SIGNALS:
-
-public:
-  explicit CostumerContact(QWidget *parent = nullptr);
 };
 
 #endif // COSTUMERCONTACT_H

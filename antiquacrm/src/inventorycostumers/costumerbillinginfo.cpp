@@ -19,6 +19,7 @@ CostumerBillingInfo::CostumerBillingInfo(QWidget *parent) : QWidget{parent} {
   row1->setObjectName("billing_info_row1");
 
   c_locked = new BoolBox(this);
+  c_locked->setObjectName("c_locked");
   c_locked->setInfo(tr("Locked"));
   row1->addWidget(c_locked, 0, 0, 1, 1);
 
@@ -44,7 +45,12 @@ CostumerBillingInfo::CostumerBillingInfo(QWidget *parent) : QWidget{parent} {
 
   QLabel *infoComments = new QLabel(this);
   infoComments->setText(tr("Comments"));
-  row1->addWidget(infoComments, 2, 0, 1, 3);
+  row1->addWidget(infoComments, 2, 0, 1, 1);
+
+  c_shipping_email = new EMailEdit(this);
+  c_shipping_email->setObjectName("c_shipping_email");
+  c_shipping_email->setInfo(tr("Billing E-Mail"));
+  row1->addWidget(c_shipping_email, 2, 1, 1, 2);
 
   c_comments = new TextField(this);
   c_comments->setObjectName("c_comments");

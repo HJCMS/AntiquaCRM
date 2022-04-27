@@ -256,8 +256,8 @@ void MWindow::initDefaults() {
   if (m_Settings->contains("window/windowState"))
     restoreState(m_Settings->value("window/windowState").toByteArray());
 
-  m_workSpace->openTab(Workspace::Books);
-  m_workSpace->openTab(Workspace::Prints);
+  //m_workSpace->openTab(Workspace::Books);
+  //m_workSpace->openTab(Workspace::Prints);
   m_workSpace->openTab(Workspace::Costumers);
 }
 

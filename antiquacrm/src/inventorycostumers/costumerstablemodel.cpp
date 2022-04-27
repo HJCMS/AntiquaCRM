@@ -25,7 +25,7 @@ static const QString setHeaderTitel(const QString &t) {
 
 CostumersTableModel::CostumersTableModel(QObject *parent)
     : QSqlQueryModel{parent} {
-    setObjectName("CostumersTableModel");
+  setObjectName("CostumersTableModel");
 }
 
 QVariant CostumersTableModel::data(const QModelIndex &index, int role) const {
@@ -37,40 +37,13 @@ QVariant CostumersTableModel::data(const QModelIndex &index, int role) const {
   QVariant item = QSqlQueryModel::data(index, role);
 
   switch (index.column()) {
-  case 0: //
-    return item;
+  case 0: // id
+    return item.toInt();
 
-  case 1: //
-    return item;
+  case 7: // since
+    return item.toDateTime().date().toString(Qt::RFC2822Date);
 
-  case 2: //
-    return item;
-
-  case 3: //
-    return item;
-
-  case 4: //
-    return item;
-
-  case 5: //
-    return item;
-
-  case 6: //
-    return item;
-
-  case 7: //
-    return item;
-
-  case 8: //
-    return item;
-
-  case 9: //
-    return item;
-
-  case 10: //
-    return item;
-
-  default: // nicht registrierter Datentype !!!
+  default:
     return item;
   }
 }
@@ -83,38 +56,29 @@ QVariant CostumersTableModel::headerData(int section,
 
   if (orientation == Qt::Horizontal) {
     switch (section) {
-    case 0: //
-      return setHeaderTitel(tr("1"));
+    case 0: // id
+      return setHeaderTitel(tr("ID"));
 
-    case 1: //
-      return setHeaderTitel(tr("2"));
+    case 1: // c_purchases
+      return setHeaderTitel(tr("Purchases"));
 
-    case 2: //
-      return setHeaderTitel(tr("3"));
+    case 2: // company
+      return setHeaderTitel(tr("Type"));
 
-    case 3: //
-      return setHeaderTitel(tr("4"));
+    case 3: // shurename
+      return setHeaderTitel(tr("Fullname"));
 
-    case 4: // ib_publisher
-      return setHeaderTitel(tr("5"));
+    case 4: // phone
+      return setHeaderTitel(tr("Phone"));
 
-    case 5: //
-      return setHeaderTitel(tr("6"));
+    case 5: // mobil
+      return setHeaderTitel(tr("Mobil"));
 
-    case 6: //
-      return setHeaderTitel(tr("7"));
+    case 6: // address
+      return setHeaderTitel(tr("Address"));
 
-    case 7: //
-      return setHeaderTitel(tr("8"));
-
-    case 8: //
-      return setHeaderTitel(tr("9"));
-
-    case 9: //
-      return setHeaderTitel(tr("10"));
-
-    case 10: //
-      return setHeaderTitel(tr("11"));
+    case 7: // since
+      return setHeaderTitel(tr("Since"));
 
     default:
       return QString("%1").arg(section);

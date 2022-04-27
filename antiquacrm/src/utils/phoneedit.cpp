@@ -22,7 +22,7 @@ PhoneEdit::PhoneEdit(QWidget *parent) : UtilsMain{parent} {
 
   id_phone = new QLineEdit(this);
   id_phone->setMaxLength(30);
-  id_phone->setMaximumWidth(220);
+  id_phone->setMaximumWidth(300);
   layout->addWidget(id_phone);
 
   m_validator = new QRegExpValidator(pcre(), id_phone);

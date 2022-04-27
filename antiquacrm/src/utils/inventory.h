@@ -20,34 +20,50 @@ class Inventory : public QWidget {
 
 private:
   /**
-    @brief Kann das Fenster geschlossen werden?
-    Wird von den Editor Klassen ausgelöst und muss
-    in den vererbten Klassen hierhin weiter geleitet werden.
-  */
+   * @brief Kann das Fenster geschlossen werden?
+   * Wird von den Editor Klassen ausgelöst und muss
+   * in den vererbten Klassen hierhin weiter geleitet werden.
+   * @see Q_PROPERTY
+   */
   bool closable = true;
 
 protected:
   /**
-    @brief Ab Zeichenanzahl startet die Abfrage!
-    @see searchConvert
-  */
+   * @brief Ab Zeichenanzahl startet die Abfrage!
+   * @see searchConvert
+   */
   int minLength = 5;
 
+  /**
+   * @brief Öffne das Editor Fenster
+   * Wegen Tastenbindungen ist das Editor Fenster
+   * deaktiviert und muss hier wieder aktiviert werden.
+   */
   virtual void openEditor(const QString &) = 0;
 
 protected Q_SLOTS:
   /**
-     @brief Änderungen wie isModified abfangen.
-     Wird von {*}Editorklassen ausgelöst.
-  */
+   * @brief Änderungen wie isModified abfangen.
+   * Wird von den Editorklassen ausgelöst.
+   */
   void setClosable(bool b);
 
   /**
-   * @brief Meldung vom Bucheditor verarbeiten.
-   * Ob ein Bucheintrag Aktiviert/Deaktiviert wurde!
+   * @brief Meldung vom Editoren verarbeiten.
    * @note Ist für die Auftrags/Shop Verwaltung erforderlich!
    */
   void articleActivation(bool);
+
+  /**
+   * @brief Methode für Suche während eingabe.
+   * @param Sucheingabe
+   */
+  virtual void searchConvert(const QString &search) = 0;
+
+  /**
+    @brief Methode für Suchknopf
+   */
+  virtual void searchConvert() = 0;
 
 Q_SIGNALS:
   /**

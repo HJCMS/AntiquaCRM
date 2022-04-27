@@ -21,7 +21,7 @@ LineEdit::LineEdit(QWidget *parent) : UtilsMain{parent} {
 
   m_edit = new QLineEdit(this);
   m_edit->setMaxLength(80);
-  m_edit->setMaximumWidth(220);
+  m_edit->setMaximumWidth(300);
   layout->addWidget(m_edit);
 
   setLayout(layout);

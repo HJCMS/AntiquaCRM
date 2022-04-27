@@ -18,6 +18,9 @@
 #ifndef GENDERBOX_UTILS_H
 #include "genderbox.h"
 #endif
+#ifndef GROUPBOX_UTILS_H
+#include "groupbox.h"
+#endif
 #ifndef IMAGETOOLBAR_UTILS_H
 #include "imagetoolbar.h"
 #endif

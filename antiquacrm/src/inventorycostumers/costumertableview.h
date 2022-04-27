@@ -16,6 +16,7 @@ class SqlCore;
 };
 
 class CostumersTableModel;
+class SearchStatement;
 
 class CostumerTableView : public QTableView {
   Q_OBJECT
@@ -56,7 +57,7 @@ public Q_SLOTS:
   /**
    * Startet Abfrage ausgehend von Text/Sucheingabe
    */
-  void queryStatement(const QString &);
+  void queryStatement(const SearchStatement &);
 
 public:
   explicit CostumerTableView(QWidget *parent = nullptr);

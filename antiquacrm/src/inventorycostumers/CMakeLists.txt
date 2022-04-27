@@ -10,7 +10,6 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (subproject_SOURCES
-  costumeradditional.cpp
   costumerbillinginfo.cpp
   costumercontact.cpp
   costumeroverview.cpp
@@ -21,7 +20,6 @@ SET (subproject_SOURCES
 )
 
 SET (subproject_HEADERS
-  costumeradditional.h
   costumerbillinginfo.h
   costumercontact.h
   costumeroverview.h

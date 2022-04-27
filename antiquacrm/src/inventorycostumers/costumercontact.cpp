@@ -22,6 +22,7 @@ CostumerContact::CostumerContact(QWidget *parent) : QWidget{parent} {
   row1->setObjectName("contact_edit_row1");
 
   c_gender = new GenderBox(this);
+  c_gender->setObjectName("c_gender");
   c_gender->setInfo(tr("Gender"));
   row1->addWidget(c_gender);
 
@@ -30,6 +31,7 @@ CostumerContact::CostumerContact(QWidget *parent) : QWidget{parent} {
   row1->addWidget(titleLabel);
 
   c_title = new SalutationBox(this);
+  c_title->setObjectName("c_title");
   row1->addWidget(c_title);
 
   c_firstname = new LineEdit(this);
@@ -140,23 +142,21 @@ CostumerContact::CostumerContact(QWidget *parent) : QWidget{parent} {
 
   // BEGIN #3
   /** Company */
-  c_company = new QGroupBox(this);
+  c_company = new GroupBox(this);
   c_company->setObjectName("c_company");
-  c_company->setTitle(tr("Company, Institute or Organisation"));
-  c_company->setCheckable(true);
-  c_company->setChecked(false);
-  QHBoxLayout *boxLayout = new QHBoxLayout(c_company);
-  boxLayout->setContentsMargins(1, 1, 1, 1);
-  c_company_name = new LineEdit(this);
+  c_company->setInfo(tr("Company, Institute or Organisation"));
+  layout->addWidget(c_company);
+  QHBoxLayout *groupBoxLayout = new QHBoxLayout(c_company->box);
+  groupBoxLayout->setContentsMargins(1, 1, 1, 1);
+  c_company_name = new StrLineEdit(this);
   c_company_name->setObjectName("c_company_name");
-  c_company_name->setInfo(tr("Company Name"));
-  boxLayout->addWidget(c_company_name);
+  // c_company_name->setInfo(tr("Company Name"));
+  groupBoxLayout->addWidget(c_company_name);
   c_company_employer = new LineEdit(this);
   c_company_employer->setObjectName("c_company_employer");
   c_company_employer->setInfo(tr("Employer"));
-  boxLayout->addWidget(c_company_employer);
-  c_company->setLayout(boxLayout);
-  layout->addWidget(c_company);
+  groupBoxLayout->addWidget(c_company_employer);
+  c_company->box->setLayout(groupBoxLayout);
   // END 3
 
   // BEGIN #4
@@ -252,7 +252,13 @@ void CostumerContact::generateAddressBody() {
   if (!c_location->value().toString().isEmpty()) {
     address.append(c_location->value().toString());
   }
-  QString body = name.join(" ");
+  QString body;
+  /**< Company */
+  if (!c_company_name->value().toString().isEmpty()) {
+    body.append(c_company_name->value().toString());
+    body.append("\n");
+  }
+  body.append(name.join(" "));
   body.append("\n");
   body.append(address.join(" "));
   body.append("\n");

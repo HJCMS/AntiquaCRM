@@ -22,7 +22,7 @@ EMailEdit::EMailEdit(QWidget *parent) : UtilsMain{parent} {
 
   m_mail = new QLineEdit(this);
   m_mail->setMaxLength(80);
-  m_mail->setMaximumWidth(220);
+  m_mail->setMaximumWidth(300);
   m_mail->setPlaceholderText(tr("usage.example@example.com"));
   layout->addWidget(m_mail);
 
