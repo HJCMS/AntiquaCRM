@@ -11,11 +11,13 @@ INCLUDE_DIRECTORIES (
 
 SET (subproject_SOURCES
   sqlconfig.cpp
+  sqlconnection.cpp
   sqlcore.cpp
 )
 
 SET (subproject_HEADERS
   sqlconfig.h
+  sqlconnection.h
   sqlcore.h
   ${_subproject}
 )

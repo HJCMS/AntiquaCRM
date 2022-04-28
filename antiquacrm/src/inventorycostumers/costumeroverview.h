@@ -5,12 +5,25 @@
 #ifndef COSTUMEROVERVIEW_H
 #define COSTUMEROVERVIEW_H
 
+#include <QtCore/QHash>
 #include <QtCore/QObject>
-#include <QtCore/QStringList>
+#include <QtCore/QString>
+#include <QtCore/QVariant>
 #include <QtGui/QTextCursor>
 #include <QtGui/QTextDocument>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QWidget>
+#include <QtXml/QDomDocument>
+#include <QtXml/QDomElement>
+
+class DomDocument : public QDomDocument {
+public:
+  QDomElement div;
+  explicit DomDocument(const QString &name);
+  QDomElement createElementNode(const QString &nodeName, const QString &data);
+  QDomElement createLinkNode(const QString &set, const QString &data);
+  QDomElement createAddressNode(const QString &data);
+};
 
 class Document : public QTextDocument {
   Q_OBJECT
@@ -29,16 +42,11 @@ class CostumerOverview : public QTextBrowser {
 private:
   QTextCursor cursor;
   Document *document;
-  static bool check(const QString &p, const QString &k, const QVariant &v);
-  void setLinkNode(const QString &key, const QVariant &value);
-  void setTextNode(const QString &key, const QVariant &value);
-  void setAddressNode(const QString &key, const QVariant &value);
-
-public Q_SLOTS:
-  void setTextBlock(const QString &key, const QVariant &data);
+  DomDocument *dom;
 
 public:
   explicit CostumerOverview(QWidget *parent = nullptr);
+  void createDocument(QHash<QString, QString> &);
 };
 
 #endif // COSTUMEROVERVIEW_H

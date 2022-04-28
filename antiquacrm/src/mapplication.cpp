@@ -34,8 +34,8 @@ bool MApplication::isRunning() {
  */
 int MApplication::exec() {
   // SQL Database
-  HJCMS::SqlCore *m_postgreSQL = new HJCMS::SqlCore(this);
-  if (!m_postgreSQL->sqlDriversExists()) {
+  m_sqlDB = new HJCMS::SqlCore(this);
+  if (!m_sqlDB->sqlDriversExists()) {
     qInfo("TODO QWizzard Dialog first Access");
     return 0;
   }
@@ -45,7 +45,7 @@ int MApplication::exec() {
     return 1;
   }
 
-  if (!m_postgreSQL->initialDatabase()) {
+  if (!m_sqlDB->initialDatabase()) {
     qWarning("Database connection failed ...");
     return 0;
   }
@@ -66,4 +66,8 @@ int MApplication::exec() {
 
 MApplication::~MApplication() {
   SocketServer::removeServer(SocketServer::name());
+  if(m_sqlDB != nullptr)
+  {
+    m_sqlDB->close();
+  }
 }

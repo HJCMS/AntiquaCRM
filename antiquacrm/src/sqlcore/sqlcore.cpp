@@ -3,6 +3,7 @@
 
 #include "sqlcore.h"
 #include "sqlconfig.h"
+#include "sqlconnection.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDebug>
@@ -23,6 +24,7 @@ SqlCore::SqlCore(QObject *parent) : QObject{parent} {
   setObjectName("PostgreSqlCoreDriver");
   statusTimerID = 0;
   m_cfg = new SqlConfig();
+  m_socket = new SqlConnection(this);
 
   /**
    @note Wir können nur einmal die Datenbank Verbindung festlegen!
@@ -39,6 +41,9 @@ SqlCore::SqlCore(QObject *parent) : QObject{parent} {
     // load driver
     initSQLDriver();
   }
+
+  connect(m_socket, SIGNAL(warnMessage(const QString &)), this,
+          SIGNAL(s_noticeMessage(const QString &)));
 }
 
 bool SqlCore::initSQLDriver() {
@@ -58,25 +63,12 @@ bool SqlCore::initSQLDriver() {
 }
 
 bool SqlCore::socketConnectionTest() {
+  bool b = false;
   QMutex mutex(QMutex::NonRecursive);
   mutex.lock();
-  QTcpSocket *m_socket = new QTcpSocket(this);
-  m_socket->connectToHost(m_cfg->getAddress(), m_cfg->getPort());
-  if (!m_socket->waitForConnected(5)) {
-    QString err = QString("Server not responding on Port:");
-    err.append(QString::number(database->port()));
-    err.append(" and Address:'");
-    err.append(database->hostName());
-    err.append("' - ");
-    err.append(m_socket->errorString());
-    emit s_errorMessage(err);
-    emit s_noticeMessage(tr("Database server not connected"));
-    mutex.unlock();
-    return false;
-  }
-  m_socket->close();
+  b = m_socket->connect();
   mutex.unlock();
-  return true;
+  return b;
 }
 
 /**
@@ -93,8 +85,6 @@ bool SqlCore::initDatabase() {
     if (!initSQLDriver())
       return false;
   }
-
-  // Q_ASSERT_X(database != nullptr, "SqlDatabase", "Connection Error");
 
   if (database != nullptr) {
     QString connName = database->connectionName();
@@ -129,12 +119,6 @@ bool SqlCore::initDatabase() {
 void SqlCore::timerEvent(QTimerEvent *ev) {
   if (ev->timerId() > 0) {
     bool tcp = socketConnectionTest();
-    /*
-    qDebug() << "Timer Start ID:" << statusTimerID
-             << "Timer Event ID:" << ev->timerId()
-             << "sql query connections exists:" << database->isOpen()
-             << "Socket:" << tcp;
-    */
     emit s_connectionStatus(tcp);
   }
 }
@@ -257,15 +241,16 @@ bool SqlCore::sqlDriversExists() {
   }
 }
 
-SqlCore::~SqlCore() {
-  /*
-    if (database != nullptr) {
-      if (database->isOpen()) {
-        qInfo("Database '%s' closed", qPrintable(database->connectionName()));
-        database->close();
-      }
+void SqlCore::close() {
+  if (database != nullptr) {
+    if (database->isOpen()) {
+      database->close();
+      qInfo("Database '%s' closed", qPrintable(database->connectionName()));
     }
-  */
+  }
+}
+
+SqlCore::~SqlCore() {
   if (statusTimerID > 0)
     killTimer(statusTimerID);
 }

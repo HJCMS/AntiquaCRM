@@ -12,12 +12,17 @@ class ApplSettings;
 class MWindow;
 class SocketServer;
 
+namespace HJCMS {
+  class SqlCore;
+};
+
 class MApplication : public QApplication {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  HJCMS::SqlCore *m_sqlDB;
   ApplSettings *m_settings;
   MWindow *m_mainWindow;
   SocketServer *m_socket;

@@ -24,6 +24,7 @@ class DockBarWidget : public QDockWidget {
 private:
   ApplSettings *m_cfg;
   QTabWidget *m_tabWidget;
+  QWidget *m_search;
 
 private Q_SLOTS:
   void dockPositionChanged(Qt::DockWidgetArea);

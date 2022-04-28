@@ -88,12 +88,15 @@ void EditCostumer::importSqlResult() {
     return;
 
   blockSignals(true);
+  QHash<QString, QString> nodeset;
   for (int i = 0; i < sqlQueryResult.size(); ++i) {
     DataEntries f = sqlQueryResult.at(i);
     setSqlQueryData(f.field, f.data);
+    nodeset.insert(f.field, f.data.toString());
   }
   blockSignals(false);
 
+  m_overview->createDocument(nodeset);
   resetModified();
 }
 
@@ -294,8 +297,6 @@ void EditCostumer::createSqlInsert() {
 }
 
 void EditCostumer::setSqlQueryData(const QString &key, const QVariant &value) {
-  /** Overview */
-  m_overview->setTextBlock(key, value);
   /** Dataset */
   if (key.contains("c_id")) {
     c_id->setValue(value);

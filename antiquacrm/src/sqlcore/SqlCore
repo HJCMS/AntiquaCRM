@@ -3,6 +3,9 @@
 #ifndef HJCMS_SQLCONFIG_SQLCORE_H
 #include "sqlconfig.h"
 #endif
+#ifndef HJCMS_SQLCONNECTION_SQLCORE_H
+#include "sqlconnection.h"
+#endif
 #ifndef HJCMS_SQLCORE_SQLCORE_H
 #include "sqlcore.h"
 #endif

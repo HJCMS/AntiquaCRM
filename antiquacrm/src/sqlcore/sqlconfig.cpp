@@ -116,6 +116,16 @@ const QStringList SqlConfig::getOptions() {
   return value(s).toStringList();
 }
 
+void SqlConfig::setSecureEnabled(bool b) {
+  QString s(section("ssl"));
+  setValue(s, b);
+}
+
+bool SqlConfig::isSecureEnabled() {
+  QString s(section("ssl"));
+  return value(s, false).toBool();
+}
+
 void SqlConfig::setCertificate(const QString &p) {
   QString s(section("certpath"));
   QFileInfo f(p);

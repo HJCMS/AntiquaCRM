@@ -72,6 +72,7 @@ SET(PROJECT_BINDINGS
  Widgets
  Sql
  Network
+ Xml
  LinguistTools
 )
 

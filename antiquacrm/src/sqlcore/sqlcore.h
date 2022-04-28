@@ -18,6 +18,7 @@
 namespace HJCMS {
 
 class SqlConfig;
+class SqlConnection;
 
 /**
  @class HJCMS::SqlCore
@@ -45,6 +46,11 @@ private:
     @brief Konfiguration auslesen
   */
   SqlConfig *m_cfg;
+
+  /**
+   * @brief Prüft die Socket Verbindung
+   */
+  SqlConnection *m_socket;
 
   /**
    @brief Datenbank Verbindung
@@ -178,6 +184,12 @@ public:
      @return QStrinList
    */
   const QStringList fields(const QString &table);
+
+  /**
+   * @brief Schliest die Datenbanken
+   * @note Darf nur beim Beenden der Anwendung ausgeführt werden!
+   */
+  void close();
 
   virtual ~SqlCore();
 };

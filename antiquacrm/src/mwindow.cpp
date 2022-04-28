@@ -48,7 +48,6 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
     addDockWidget(Qt::RightDockWidgetArea, m_dockBarWidget);
   }
   */
-
   m_statusBar = new StatusBar(statusBar());
   setStatusBar(m_statusBar);
 

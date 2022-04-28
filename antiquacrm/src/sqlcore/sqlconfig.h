@@ -48,6 +48,9 @@ public:
   void setOptions(const QStringList &);
   const QStringList getOptions();
 
+  void setSecureEnabled(bool b = false);
+  bool isSecureEnabled();
+
   void setCertificate(const QString &);
   const QString getCertificate();
 };

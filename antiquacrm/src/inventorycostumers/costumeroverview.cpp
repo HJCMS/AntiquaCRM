@@ -3,9 +3,65 @@
 
 #include "costumeroverview.h"
 
+#include <QtCore/QLocale>
 #include <QtCore>
 #include <QtGui>
 #include <QtWidgets>
+
+DomDocument::DomDocument(const QString &name) {
+  QDomElement html = createElement("html");
+  html.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
+  html.setAttribute("xml:lang", QLocale().bcp47Name());
+  appendChild(html);
+  QDomElement head = createElement("head");
+  html.appendChild(head);
+  QDomElement meta = createElement("meta");
+  meta.setAttribute("http-equiv", "Content-Type");
+  meta.setAttribute("content", "text/html; charset=utf-8");
+  head.appendChild(meta);
+  QDomElement body = createElement("body");
+  body.setAttribute("class", "body");
+  html.appendChild(body);
+  div = createElement("div");
+  body.setAttribute("class", "container");
+  body.appendChild(div);
+}
+
+QDomElement DomDocument::createElementNode(const QString &nodeName,
+                                           const QString &data) {
+  QDomElement element = createElement(nodeName);
+  element.appendChild(createTextNode(data));
+  return element;
+}
+
+QDomElement DomDocument::createLinkNode(const QString &set,
+                                        const QString &data) {
+  QDomElement element = createElement("p");
+  QDomElement a = createElement("a");
+  a.setAttribute("target", "_blank");
+  if (set == "tel") {
+    a.setAttribute("href", "tel:" + data);
+    a.appendChild(createTextNode("Phone: " + data));
+  } else if (set == "mail") {
+    a.setAttribute("href", "mailto:" + data);
+    a.appendChild(createTextNode("E-Mail: " + data));
+  } else {
+    a.setAttribute("href", data);
+    a.appendChild(createTextNode(data));
+  }
+  element.appendChild(a);
+  return element;
+}
+
+QDomElement DomDocument::createAddressNode(const QString &data) {
+  QDomElement address = createElement("address");
+  foreach (QString n, data.split("\n")) {
+    QDomElement p = createElement("p");
+    p.appendChild(createTextNode(n));
+    address.appendChild(p);
+  }
+  return address;
+}
 
 Document::Document(QTextEdit *parent) : QTextDocument{parent} {
   setObjectName("AddressDocument");
@@ -21,105 +77,83 @@ CostumerOverview::CostumerOverview(QWidget *parent) : QTextBrowser{parent} {
   setTextInteractionFlags(Qt::TextBrowserInteraction);
 
   document = new Document(this);
-
-  QString css("p { page-break-before: always; }");
+  QString css("div { page-break-before: always; }");
+  css.append("body { padding: 10px;}");
   document->setDefaultStyleSheet(css);
-
-  QString html("<html><head>");
-  html.append("<meta http-equiv=\"Content-Type\" content=\"text/html; "
-              "charset=utf-8\">");
-  html.append("</head><body><div>");
-  html.append("<h3>@C_COMPANY_NAME@</h3><hr/>");
-  html.append("<p><b>@FULLNAME@</b></p>");
-  html.append("<p><address>@ADDRESS@</address></p><hr/>");
-  html.append("<p>@PHONE@</p>");
-  html.append("<p>@MAILTO@</p>");
-  html.append("<p>@website@</p>");
-  html.append("</div></body></html>");
-  document->setHtml(html);
-
   setDocument(document);
-  cursor = QTextCursor(document);
 }
 
-bool CostumerOverview::check(const QString &p, const QString &k,
-                             const QVariant &v) {
-  QString a(p.trimmed().toLower());
-  QString b(k.trimmed().toLower());
-  QString c(v.toString().trimmed());
-  return ((a == b) && !c.isEmpty()) ? true : false;
-}
-
-void CostumerOverview::setLinkNode(const QString &key, const QVariant &value) {
-  QString link(value.toString().trimmed());
-  if (key == "mailto") {
-    link.prepend("mailto:");
-  } else if (key == "phone") {
-    link.prepend("tel:");
-  }
-  QString html("<p>" + link + "</p>");
-  html.append("</a>");
-  html.prepend("<a href=\"" + link + "\" target=\"_blank\">");
-  QString tag("@" + key.toUpper().trimmed() + "@");
-  QTextCursor c = document->find(tag, cursor, QTextDocument::FindWholeWords);
-  c.beginEditBlock();
-  c.insertHtml(html);
-  c.endEditBlock();
-}
-
-void CostumerOverview::setTextNode(const QString &key, const QVariant &value) {
-  QString txt(value.toString().trimmed());
-  QString tag("@" + key.toUpper().trimmed() + "@");
-  QTextCursor c = document->find(tag, cursor, QTextDocument::FindWholeWords);
-  c.beginEditBlock();
-  c.insertText(txt);
-  c.endEditBlock();
-}
-
-void CostumerOverview::setAddressNode(const QString &key,
-                                      const QVariant &value) {
-  QString tag("@" + key.toUpper().trimmed() + "@");
-  QTextCursor c = document->find(tag, cursor, QTextDocument::FindWholeWords);
-
-  QString html;
-  foreach (QString l, value.toString().split("\n")) {
-    html.append("<dd>" + l.trimmed() + "</dd>");
+void CostumerOverview::createDocument(QHash<QString, QString> &data) {
+  dom = new DomDocument("costumerview");
+  QString buffer;
+  if (data.contains("c_company_name")) {
+    buffer = data.value("c_company_name");
+    dom->div.appendChild(dom->createElementNode("h2", buffer));
   }
 
-  c.beginEditBlock();
-  c.insertHtml("<dt>" + html + "</dt>");
-  c.endEditBlock();
-}
+  QDomElement person = dom->createElement("div");
+  dom->div.appendChild(person);
+  if (data.contains("c_title")) {
+    buffer = data.value("c_title");
+    person.appendChild(dom->createTextNode(buffer+" "));
+  }
+  if (data.contains("fullname")) {
+    buffer = data.value("fullname");
+    person.appendChild(dom->createTextNode(buffer));
+  }
+  dom->div.appendChild(dom->createElement("hr"));
 
-void CostumerOverview::setTextBlock(const QString &key, const QVariant &data) {
-  if (key == "c_company_name") {
-    setTextNode("c_company_name", data.toString());
-    return;
+  dom->div.appendChild(dom->createElementNode("h4", tr("Address") + ":"));
+  if (data.contains("c_postal_address")) {
+    buffer = data.value("c_postal_address");
+    dom->div.appendChild(dom->createAddressNode(buffer));
   }
-  if (check("fullname", key, data)) {
-    setTextNode("fullname", data);
-    return;
+  dom->div.appendChild(dom->createElement("hr"));
+
+  QDomElement contact = dom->createElement("div");
+  contact.appendChild(dom->createElementNode("h4", tr("Phone/E-Mail") + ":"));
+  dom->div.appendChild(contact);
+  if (data.contains("c_phone_0")) {
+    buffer = data.value("c_phone_0");
+    if (!buffer.isEmpty())
+      contact.appendChild(dom->createLinkNode("tel", buffer));
   }
-  if (check("c_postal_address", key, data)) {
-    setAddressNode("address", data);
-    return;
+  if (data.contains("c_phone_1")) {
+    buffer = data.value("c_phone_1");
+    if (!buffer.isEmpty())
+      contact.appendChild(dom->createLinkNode("tel", buffer));
   }
-  if (check("c_email_0", key, data)) {
-    setLinkNode("mailto", data);
-    return;
-  } else if (check("c_email_1", key, data)) {
-    setLinkNode("mailto", data);
-    return;
+  if (data.contains("c_mobil_0")) {
+    buffer = data.value("c_mobil_0");
+    if (!buffer.isEmpty())
+      contact.appendChild(dom->createLinkNode("tel", buffer));
   }
-  if (check("c_phone_0", key, data)) {
-    setLinkNode("phone", data);
-    return;
-  } else if (check("c_phone_1", key, data)) {
-    setLinkNode("phone", data);
-    return;
+  if (data.contains("c_mobil_1")) {
+    buffer = data.value("c_mobil_1");
+    if (!buffer.isEmpty())
+      contact.appendChild(dom->createLinkNode("tel", buffer));
   }
-  if (check("c_website", key, data)) {
-    setLinkNode("website", data);
-    return;
+  if (data.contains("c_email_0")) {
+    buffer = data.value("c_email_0");
+    if (!buffer.isEmpty())
+      contact.appendChild(dom->createLinkNode("mail", buffer));
   }
+  if (data.contains("c_email_1")) {
+    buffer = data.value("c_email_1");
+    if (!buffer.isEmpty())
+      contact.appendChild(dom->createLinkNode("mail", buffer));
+  }
+  dom->div.appendChild(dom->createElement("hr"));
+
+  QDomElement additional = dom->createElementNode("h4", tr("Additional") + ":");
+  dom->div.appendChild(additional);
+  if (data.contains("c_since")) {
+    QDateTime t = QDateTime::fromString(data.value("c_since"),Qt::ISODate);
+    buffer = t.date().toString(Qt::RFC2822Date);
+    buffer.prepend(": ");
+    buffer.prepend(tr("Since"));
+    additional.appendChild(dom->createElementNode("p", buffer));
+  }
+
+  document->setHtml(dom->toString(-1));
 }
