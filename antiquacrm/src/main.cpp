@@ -20,6 +20,11 @@ int main(int argc, char *argv[]) {
   app.setDesktopFileName(ANTIQUACRM_NAME);
   app.setOrganizationDomain(HJCMS_CONFIG_DOMAIN);
 
+  if (app.isRunning()) {
+    qWarning("Application is already started!");
+    return 0;
+  }
+
   Q_INIT_RESOURCE(icons);
 
   QString d(app.applicationDirPath());

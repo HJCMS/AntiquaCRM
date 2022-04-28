@@ -11,6 +11,7 @@ SET (PROJECT_HEADERS
   statusbar.h
   dockbarwidget.h
   workspace.h
+  socketserver.h
 )
 
 SET (PROJECT_SOURCES
@@ -20,6 +21,7 @@ SET (PROJECT_SOURCES
   statusbar.cpp
   dockbarwidget.cpp
   workspace.cpp
+  socketserver.cpp
   ${QRC_FILES}
 )
 

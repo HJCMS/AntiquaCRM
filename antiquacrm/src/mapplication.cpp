@@ -1,19 +1,31 @@
 /** @COPYRIGHT_HOLDER@ */
 /* Project */
-#include "mwindow.h"
 #include "mapplication.h"
 #include "applsettings.h"
+#include "mwindow.h"
+#include "socketserver.h"
 #include "sqlcore.h"
 #include "version.h"
 
 #include <QtCore/QDebug>
+#include <QtNetwork/QLocalSocket>
 
-MApplication::MApplication(int &argc, char **argv)
-    : QApplication(argc, argv) {
+MApplication::MApplication(int &argc, char **argv) : QApplication(argc, argv) {
   setObjectName("MApplicationApplication");
   setQuitOnLastWindowClosed(true);
 
   m_settings = new ApplSettings(this);
+}
+
+bool MApplication::initialSocketServer() {
+  m_socket = new SocketServer(this);
+  return m_socket->listen(m_socket->name());
+}
+
+bool MApplication::isRunning() {
+  QLocalSocket socket(this);
+  socket.setServerName(SocketServer::name());
+  return socket.open();
 }
 
 /**
@@ -28,7 +40,11 @@ int MApplication::exec() {
     return 0;
   }
 
-  qInfo("Open Database connection ...");
+  if (!initialSocketServer()) {
+    qFatal("socket server is down ...");
+    return 1;
+  }
+
   if (!m_postgreSQL->initialDatabase()) {
     qWarning("Database connection failed ...");
     return 0;
@@ -48,4 +64,6 @@ int MApplication::exec() {
   return QApplication::exec();
 }
 
-MApplication::~MApplication() {}
+MApplication::~MApplication() {
+  SocketServer::removeServer(SocketServer::name());
+}
