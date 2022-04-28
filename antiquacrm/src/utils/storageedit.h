@@ -47,6 +47,7 @@ public Q_SLOTS:
   void setValue(const QVariant &val);
 
   Q_INVOKABLE void reset();
+  void setFocus();
 
 public:
   explicit StorageEdit(QWidget *parent = nullptr);

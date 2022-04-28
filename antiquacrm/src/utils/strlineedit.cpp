@@ -60,6 +60,8 @@ void StrLineEdit::reset() {
   setModified(false);
 }
 
+void StrLineEdit::setFocus() { m_lineEdit->setFocus(); }
+
 const QVariant StrLineEdit::value() {
   QRegExp reg("[\\n\\r]+");
   QString buffer(m_lineEdit->text().trimmed());
@@ -79,9 +81,9 @@ void StrLineEdit::setLineEditCompliter(const QStringList &list) {
 
 void StrLineEdit::inputChanged(const QString &str) {
   if (str.length() >= (m_lineEdit->maxLength() - 1)) {
-    setStyleSheet("color: red;");
+    m_lineEdit->setStyleSheet("color: red;");
   } else {
-    setStyleSheet("");
+    m_lineEdit->setStyleSheet("");
   }
   setModified(true);
 }

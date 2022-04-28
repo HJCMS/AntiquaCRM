@@ -31,6 +31,7 @@ public Q_SLOTS:
    @brief Eingabefeld zurücksetzen
   */
   Q_INVOKABLE void reset();
+  void setFocus();
 
 public:
   explicit SerialID(QWidget *parent = nullptr);
@@ -46,7 +47,9 @@ public:
   const QString info();
 
   /**
-   @brief Aktuelle Artikel ID
+   * @brief Aktuelle Artikel ID
+   * @warning Es darf keine 0 zurück gegeben werden!
+   * @return Positiver Wert oder Null wegen parsen!
   */
   const QVariant value();
 

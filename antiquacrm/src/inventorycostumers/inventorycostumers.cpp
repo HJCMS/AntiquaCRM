@@ -9,7 +9,9 @@
 #include "version.h"
 
 #include <QtCore/QDebug>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLayout>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
 
 /**
@@ -61,6 +63,18 @@ InventoryCostumers::InventoryCostumers(QWidget *parent) : Inventory{parent} {
   m_tableView = new CostumerTableView(this);
   siteOneLayout->addWidget(m_tableView);
 
+  QWidget *m_statusBar = new QWidget(this);
+  QHBoxLayout *statusLayout = new QHBoxLayout(m_statusBar);
+  QPushButton *btn_refresh = new QPushButton(m_statusBar);
+  m_statusInfo = new QLabel(m_statusBar);
+  statusLayout->addWidget(m_statusInfo);
+  statusLayout->addStretch(1);
+  btn_refresh->setText(tr("Refresh"));
+  btn_refresh->setIcon(myIcon("reload"));
+  statusLayout->addWidget(btn_refresh);
+  m_statusBar->setLayout(statusLayout);
+  siteOneLayout->addWidget(m_statusBar);
+
   siteOneWidget->setLayout(siteOneLayout);
   m_stackedWidget->insertWidget(0, siteOneWidget);
   // END Page#0
@@ -81,11 +95,21 @@ InventoryCostumers::InventoryCostumers(QWidget *parent) : Inventory{parent} {
   connect(m_tableView, SIGNAL(s_updateCostumer(int)), this,
           SLOT(editCostumer(int)));
 
-  connect(m_tableView, SIGNAL(s_reportQuery(const QString &)), this,
-          SLOT(messageHandler(const QString &)));
+  connect(m_tableView, SIGNAL(s_insertCostumer()), this,
+          SLOT(createCostumer()));
+
+  connect(m_tableView, SIGNAL(s_reportQuery(const QString &)), m_statusInfo,
+          SLOT(setText(const QString &)));
+
+  connect(m_editCostumer, SIGNAL(s_postMessage(const QString &)), this,
+          SLOT(displayMessageBox(const QString &)));
+
+  connect(m_editCostumer, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
+
+  connect(btn_refresh, SIGNAL(clicked()), m_tableView, SLOT(refreshView()));
 
   // Testen
-  m_searchBar->setSearchText("Herrman Wilms");
+  m_searchBar->setSearchText("Herrmann Wilms");
   // connect(, SIGNAL(s_isModified(bool)), this, SLOT(setClosable(bool)));
 }
 
@@ -107,6 +131,12 @@ void InventoryCostumers::editCostumer(int id) {
   openEditor(s);
 }
 
+void InventoryCostumers::createCostumer() {
+  m_editCostumer->setEnabled(true);
+  m_editCostumer->createCostumer();
+  m_stackedWidget->setCurrentWidget(m_editCostumer);
+}
+
 void InventoryCostumers::searchConvert(const QString &search) {
   if (search.length() <= minLength)
     return;
@@ -124,14 +154,14 @@ void InventoryCostumers::searchConvert() {
     s.SearchField =
         m_searchBar->getSearchFilter(m_searchBar->currentFilterIndex());
     s.SearchString = buf;
-    // qDebug("'%s':'%s'", qPrintable(s.SearchField), qPrintable(s.SearchString));
+    // qDebug("'%s':'%s'", qPrintable(s.SearchField),
+    // qPrintable(s.SearchString));
     if (m_tableView != nullptr)
       m_tableView->queryStatement(s);
   }
 }
 
-void InventoryCostumers::messageHandler(const QString &message, int type) {
-  Q_UNUSED(message);
-  Q_UNUSED(type);
-  // qDebug() << Q_FUNC_INFO << type << message << Qt::endl;
+void InventoryCostumers::openTableView() {
+  m_stackedWidget->setCurrentIndex(0);
+  m_editCostumer->setEnabled(false);
 }

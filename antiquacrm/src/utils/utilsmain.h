@@ -51,6 +51,11 @@ public Q_SLOTS:
   */
   Q_INVOKABLE void setModified(bool b);
 
+  /**
+   * @brief Wegen Verschachtelung notwendig!
+   */
+  virtual void setFocus() = 0;
+
 public:
   explicit UtilsMain(QWidget *parent = nullptr);
 

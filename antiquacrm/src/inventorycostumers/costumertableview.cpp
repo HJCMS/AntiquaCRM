@@ -20,6 +20,11 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMenu>
 
+// Schalte SQL ausgaben ein
+#ifndef SHOW_SQL_QUERIES
+#define SHOW_SQL_QUERIES false
+#endif
+
 CostumerTableView::CostumerTableView(QWidget *parent) : QTableView{parent} {
   setObjectName("CostumerTableView");
   setEditTriggers(QAbstractItemView::DoubleClicked);
@@ -52,6 +57,9 @@ bool CostumerTableView::sqlExecQuery(const QString &statement) {
 
   QSqlDatabase db(m_sql->db());
   if (db.open()) {
+    if (SHOW_SQL_QUERIES) {
+      qDebug() << Q_FUNC_INFO << statement;
+    }
     QMutex mutex(QMutex::NonRecursive);
     mutex.lock();
     QTime time = QTime::currentTime();
@@ -124,17 +132,16 @@ void CostumerTableView::refreshView() {
 }
 
 void CostumerTableView::queryStatement(const SearchStatement &search) {
-  QString clause;
-  QRegExp reg("\\W+");
   QString str(search.SearchString);
-  str.replace(reg, "");
-  reg.setPattern("\\b\\s\\b");
+  QRegExp reg("\\s+");
   QStringList list = str.split(reg);
+  QStringList clause;
   foreach (QString s, list) {
-    clause.append("OR c_firstname ILIKE '" + s + "%' ");
-    clause.append("OR c_lastname ILIKE '" + s + "%' ");
-    clause.append("OR c_company_name ILIKE '" + s + "%' ");
-    clause.append("OR c_company_employer ILIKE '" + s + "%' ");
+    QString buffer;
+    buffer.append("(c_firstname ILIKE '" + s + "%' ");
+    buffer.append("OR c_lastname ILIKE '" + s + "%')");
+    clause.append(buffer);
+    clause.append("(c_company_name ILIKE '%" + s + "%')");
   }
 
   QString q("SELECT c_id AS id, c_purchases,");
@@ -146,8 +153,8 @@ void CostumerTableView::queryStatement(const SearchStatement &search) {
            "mobil,");
   q.append("concat_ws(' ',c_postalcode,c_location,c_street) AS address,");
   q.append("c_since AS since ");
-  q.append("FROM public.costumers WHERE c_id!=0 ");
-  q.append(clause);
+  q.append("FROM public.costumers WHERE c_id!=0 AND ");
+  q.append(clause.join(" OR "));
   q.append(" ORDER BY " + search.SearchField);
   q.append(" ASC;");
 

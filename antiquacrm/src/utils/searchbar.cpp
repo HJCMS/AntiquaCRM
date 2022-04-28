@@ -64,11 +64,17 @@ SearchBar::SearchBar(QWidget *parent) : QToolBar(parent) {
   connect(m_searchLineEdit, SIGNAL(returnPressed()), this,
           SIGNAL(searchClicked()));
 
-  connect(m_clear, SIGNAL(triggered()), m_searchLineEdit, SLOT(clear()));
+  connect(m_clear, SIGNAL(triggered()), this, SLOT(clearAndFocus()));
   connect(searchBtn, SIGNAL(released()), this, SIGNAL(searchClicked()));
 
   connect(m_filterSection, SIGNAL(currentIndexChanged(int)), this,
           SLOT(searchFilterChanged(int)));
+}
+
+void SearchBar::clearAndFocus()
+{
+  m_searchLineEdit->clear();
+  m_searchLineEdit->setFocus();
 }
 
 void SearchBar::beforeTextChanged() {

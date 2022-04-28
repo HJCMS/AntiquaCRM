@@ -28,6 +28,7 @@ public Q_SLOTS:
   void loadDataset();
   void setValue(const QVariant &);
   Q_INVOKABLE void reset();
+  void setFocus();
 
 public:
   explicit TechniqueEdit(QWidget *parent = nullptr);

@@ -51,6 +51,8 @@ void YearEdit::reset() {
   setModified(false);
 }
 
+void YearEdit::setFocus() { m_year->setFocus(); }
+
 const QVariant YearEdit::value() { return m_year->date().year(); }
 
 bool YearEdit::isValid() {

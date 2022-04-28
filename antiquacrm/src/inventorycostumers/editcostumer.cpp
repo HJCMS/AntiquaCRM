@@ -33,11 +33,9 @@ EditCostumer::EditCostumer(QWidget *parent) : EditorMain{parent} {
   c_id = new SerialID(this);
   c_id->setObjectName("c_id");
   c_id->setInfo(tr("Costumers ID"));
-  c_id->setValue(0);
   headerLayout->addWidget(c_id);
 
   infoLabel = new QLabel(this);
-  infoLabel->setText("Buch- und Kunsthandlung Antiquariat Wilms");
   headerLayout->addWidget(infoLabel);
   headerLayout->addStretch(1);
   mainLayout->addLayout(headerLayout);
@@ -117,12 +115,185 @@ bool EditCostumer::sendSqlQuery(const QString &sqlStatement) {
   }
 }
 
-void EditCostumer::createSqlUpdate() { qDebug() << Q_FUNC_INFO << "__TODO__"; }
+const QHash<QString, QVariant> EditCostumer::createSqlDataset() {
+  QHash<QString, QVariant> data;
+  MessageBox messanger;
+  foreach (QString k, inputList) {
+    if (k == "c_id")
+      continue;
 
-void EditCostumer::createSqlInsert() { qDebug() << Q_FUNC_INFO << "__TODO__"; }
+    if (k == "c_gender") { /**< Integer */
+      // GenderBox
+      data.insert(k, m_contact->c_gender->value());
+      continue;
+    }
+    if (k == "c_title") { /**< String */
+      // SalutationBox
+      data.insert(k, m_contact->c_title->value());
+      continue;
+    }
+    if (k == "c_postalcode") { /**< String */
+      // PostalCode
+      data.insert(k, m_contact->c_postalcode->value());
+      continue;
+    }
+    if (k == "c_company") { /**< Boolean */
+      // GroupBox
+      data.insert(k, m_contact->c_company->value());
+      continue;
+    }
+    if (k == "c_trusted") { /**< Integer */
+      data.insert(k, m_billing->c_trusted->value());
+      continue;
+    }
+    // Booleans
+    QList<BoolBox *> bb = findChildren<BoolBox *>(k, findOption);
+    QList<BoolBox *>::Iterator bb_it;
+    for (bb_it = bb.begin(); bb_it != bb.end(); ++bb_it) {
+      BoolBox *bEdit = *bb_it;
+      if (bEdit->isRequired() && !bEdit->isValid()) {
+        messanger.notice(bEdit->notes());
+        bEdit->setFocus();
+        data.clear();
+        return data;
+      }
+      data.insert(bEdit->objectName(), bEdit->value());
+    }
+    // LineEdit
+    QList<LineEdit *> le = findChildren<LineEdit *>(k, findOption);
+    QList<LineEdit *>::Iterator le_it;
+    for (le_it = le.begin(); le_it != le.end(); ++le_it) {
+      LineEdit *lEdit = *le_it;
+      if (lEdit->isRequired() && !lEdit->isValid()) {
+        messanger.notice(lEdit->notes());
+        lEdit->setFocus();
+        data.clear();
+        return data;
+      }
+      data.insert(lEdit->objectName(), lEdit->value());
+    }
+    // PhoneEdit
+    QList<PhoneEdit *> pe = findChildren<PhoneEdit *>(k, findOption);
+    QList<PhoneEdit *>::Iterator pe_it;
+    for (pe_it = pe.begin(); pe_it != pe.end(); ++pe_it) {
+      PhoneEdit *pEdit = *pe_it;
+      if (pEdit->isRequired() && !pEdit->isValid()) {
+        messanger.notice(pEdit->notes());
+        pEdit->setFocus();
+        data.clear();
+        return data;
+      }
+      data.insert(pEdit->objectName(), pEdit->value());
+    }
+    // EMailEdit
+    QList<EMailEdit *> ee = findChildren<EMailEdit *>(k, findOption);
+    QList<EMailEdit *>::Iterator ee_it;
+    for (ee_it = ee.begin(); ee_it != ee.end(); ++ee_it) {
+      EMailEdit *eEdit = *ee_it;
+      if (eEdit->isRequired() && !eEdit->isValid()) {
+        messanger.notice(eEdit->notes());
+        eEdit->setFocus();
+        data.clear();
+        return data;
+      }
+      data.insert(eEdit->objectName(), eEdit->value());
+    }
+    // StrLineEdit
+    QList<StrLineEdit *> se = findChildren<StrLineEdit *>(k, findOption);
+    QList<StrLineEdit *>::Iterator se_it;
+    for (se_it = se.begin(); se_it != se.end(); ++se_it) {
+      StrLineEdit *sEdit = *se_it;
+      if (sEdit->isRequired() && !sEdit->isValid()) {
+        messanger.notice(sEdit->notes());
+        sEdit->setFocus();
+        data.clear();
+        return data;
+      }
+      data.insert(sEdit->objectName(), sEdit->value());
+    }
+    // TextField
+    QList<TextField *> te = findChildren<TextField *>(k, findOption);
+    QList<TextField *>::Iterator te_it;
+    for (te_it = te.begin(); te_it != te.end(); ++te_it) {
+      TextField *tEdit = *te_it;
+      if (tEdit->isRequired() && !tEdit->isValid()) {
+        messanger.notice(tEdit->notes());
+        tEdit->setFocus();
+        data.clear();
+        return data;
+      }
+      data.insert(tEdit->objectName(), tEdit->value());
+    }
+  }
+
+  return data;
+}
+
+void EditCostumer::createSqlUpdate() {
+  QString cid = c_id->value().toString();
+  if (cid.isEmpty())
+    return;
+
+  QHash<QString, QVariant> data = createSqlDataset();
+  if (data.size() < 3)
+    return;
+
+  QStringList set;
+  QHash<QString, QVariant>::iterator it;
+  for (it = data.begin(); it != data.end(); ++it) {
+    if (it.value().type() == QVariant::String) {
+      set.append(it.key() + "='" + it.value().toString() + "'");
+    } else {
+      set.append(it.key() + "=" + it.value().toString());
+    }
+  }
+
+  QString sql("UPDATE " + tableName);
+  sql.append(" SET ");
+  sql.append(set.join(","));
+  sql.append(",c_changed=CURRENT_TIMESTAMP");
+  sql.append(" WHERE c_id=");
+  sql.append(cid);
+  sql.append(";");
+
+  sendSqlQuery(sql);
+}
+
+void EditCostumer::createSqlInsert() {
+  QString cid = c_id->value().toString();
+  if (!cid.isEmpty())
+    return;
+
+  QHash<QString, QVariant> data = createSqlDataset();
+  if (data.size() < 3)
+    return;
+
+  QStringList column; /**< SQL Columns */
+  QStringList values; /**< SQL Values */
+  QHash<QString, QVariant>::iterator it;
+  for (it = data.begin(); it != data.end(); ++it) {
+    if (it.value().toString().isEmpty())
+      continue;
+
+    column.append(it.key());
+    if (it.value().type() == QVariant::String) {
+      values.append("'" + it.value().toString() + "'");
+    } else {
+      values.append(it.value().toString());
+    }
+  }
+
+  QString sql("INSERT INTO " + tableName + " (");
+  sql.append(column.join(","));
+  sql.append(",c_since,c_changed) VALUES (");
+  sql.append(values.join(","));
+  sql.append(",CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);");
+
+  if (sendSqlQuery(sql))
+    checkLeaveEditor();
+}
 
 void EditCostumer::setSqlQueryData(const QString &key, const QVariant &value) {
-  Qt::FindChildOptions option(Qt::FindChildrenRecursively);
   /** Overview */
   m_overview->setTextBlock(key, value);
   /** Dataset */
@@ -134,7 +305,11 @@ void EditCostumer::setSqlQueryData(const QString &key, const QVariant &value) {
     infoLabel->setText(value.toString());
   }
   if (value.type() == QVariant::Bool) {
-    BoolBox *v = findChild<BoolBox *>(key, option);
+    if (key == "c_company") {
+      m_contact->c_company->setValue(value);
+      return;
+    }
+    BoolBox *v = findChild<BoolBox *>(key, findOption);
     if (v != nullptr)
       v->setValue(value);
 
@@ -151,27 +326,27 @@ void EditCostumer::setSqlQueryData(const QString &key, const QVariant &value) {
     }
   }
   if (value.type() == QVariant::String) {
-    StrLineEdit *l1 = findChild<StrLineEdit *>(key, option);
+    StrLineEdit *l1 = findChild<StrLineEdit *>(key, findOption);
     if (l1 != nullptr) {
       l1->setValue(value);
       return;
     }
-    LineEdit *l2 = findChild<LineEdit *>(key, option);
+    LineEdit *l2 = findChild<LineEdit *>(key, findOption);
     if (l2 != nullptr) {
       l2->setValue(value);
       return;
     }
-    PhoneEdit *l3 = findChild<PhoneEdit *>(key, option);
+    PhoneEdit *l3 = findChild<PhoneEdit *>(key, findOption);
     if (l3 != nullptr) {
       l3->setValue(value);
       return;
     }
-    EMailEdit *l4 = findChild<EMailEdit *>(key, option);
+    EMailEdit *l4 = findChild<EMailEdit *>(key, findOption);
     if (l4 != nullptr) {
       l4->setValue(value);
       return;
     }
-    TextField *l5 = findChild<TextField *>(key, option);
+    TextField *l5 = findChild<TextField *>(key, findOption);
     if (l5 != nullptr) {
       l5->setValue(value);
       return;
@@ -199,9 +374,9 @@ void EditCostumer::resetModified() {
 }
 
 void EditCostumer::saveData() {
-  if (c_id->value().toString().isEmpty()) {
+  if (c_id->value().toInt() < 1) {
     createSqlInsert();
-  } else {
+  } else if (c_id->value().toInt() > 0) {
     createSqlUpdate();
   }
 }
@@ -211,8 +386,6 @@ void EditCostumer::clearDataFields() {
     QObject *child = findChild<QObject *>(name, Qt::FindChildrenRecursively);
     if (child != nullptr) {
       QMetaObject::invokeMethod(child, "reset", Qt::DirectConnection);
-    } else {
-      qDebug() << Q_FUNC_INFO << "MISSING" << name;
     }
   }
 }
@@ -280,8 +453,7 @@ void EditCostumer::updateCostumer(const QString &id) {
         d.data = val;
         sqlQueryResult.append(d);
       }
-      if(q.value("fullname").isValid())
-      {
+      if (q.value("fullname").isValid()) {
         QVariant val = q.value("fullname");
         DataEntries d;
         d.field = "fullname";
@@ -302,4 +474,12 @@ void EditCostumer::updateCostumer(const QString &id) {
   importSqlResult();
 }
 
-void EditCostumer::createCostumer() { setInputList(); }
+void EditCostumer::createCostumer() {
+  setInputList();
+  sqlQueryResult.clear();             /**< SQL History leeren */
+  clearDataFields();                  /**< Alle Datenfelder leeren */
+  m_actionBar->setRestoreable(false); /**< ResetButton off */
+  if (inputList.size()) {
+    m_dataBox->setCurrentWidget(m_contact);
+  }
+}

@@ -30,6 +30,7 @@ private Q_SLOTS:
 
 public Q_SLOTS:
   Q_INVOKABLE void reset();
+  void setFocus();
 
 public:
   explicit IntSpinBox(QWidget *parent = nullptr);

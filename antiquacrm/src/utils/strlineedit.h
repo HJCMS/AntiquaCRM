@@ -107,6 +107,7 @@ public Q_SLOTS:
      @brief Datensatz leeren
   */
   Q_INVOKABLE void reset();
+  void setFocus();
 
 public:
   explicit StrLineEdit(QWidget *parent = nullptr);

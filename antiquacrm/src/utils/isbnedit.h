@@ -43,6 +43,7 @@ Q_SIGNALS:
 public Q_SLOTS:
   void setValue(const QVariant &);
   Q_INVOKABLE void reset();
+  void setFocus();
 
 public:
   explicit IsbnEdit(QWidget *parent = nullptr);

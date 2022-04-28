@@ -15,6 +15,7 @@ GroupBox::GroupBox(QWidget *parent) : UtilsMain{parent} {
   layout->setContentsMargins(1, 1, 1, 1);
   box = new QGroupBox(this);
   box->setCheckable(true);
+  box->setChecked(false);
   box->setFlat(true);
   layout->addWidget(box);
 
@@ -35,6 +36,8 @@ void GroupBox::reset() {
   box->setChecked(false);
   setModified(false);
 }
+
+void GroupBox::setFocus() { box->setFocus(); }
 
 const QVariant GroupBox::value() { return box->isChecked(); }
 

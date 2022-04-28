@@ -47,6 +47,8 @@ void LineEdit::reset() {
   m_edit->clear();
 }
 
+void LineEdit::setFocus() { m_edit->setFocus(); }
+
 void LineEdit::restrictDisplay(int length, int width) {
   m_edit->setMaxLength(length);
   m_edit->setMaximumWidth(width);
@@ -81,4 +83,7 @@ bool LineEdit::isValid() {
   return true;
 }
 
-const QString LineEdit::notes() { return tr("a Valid Url must edit."); }
+const QString LineEdit::notes() {
+  QString info(m_edit->toolTip());
+  return tr("The field '%1' is requiered but empty!").arg(info);
+}

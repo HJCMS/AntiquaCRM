@@ -43,9 +43,12 @@ private:
 
   const QString tableName = "costumers";
 
+  Qt::FindChildOptions findOption = (Qt::FindChildrenRecursively);
+
   void setInputList();
   void importSqlResult();
   bool sendSqlQuery(const QString &);
+  const QHash<QString, QVariant> createSqlDataset();
   void createSqlUpdate();
   void createSqlInsert();
   void setSqlQueryData(const QString &key, const QVariant &value);

@@ -64,6 +64,8 @@ void IntSpinBox::reset() {
   setModified(false);
 }
 
+void IntSpinBox::setFocus() { m_spinBox->setFocus(); }
+
 const QVariant IntSpinBox::value() { return m_spinBox->value(); }
 
 bool IntSpinBox::isValid() {

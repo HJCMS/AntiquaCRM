@@ -10,6 +10,8 @@ MessageBox::MessageBox(QWidget *parent) : QMessageBox{parent} {
   setDefaultButton(QMessageBox::Ok);
   setTextFormat(Qt::PlainText);
   setTextInteractionFlags(Qt::TextSelectableByMouse|Qt::TextSelectableByKeyboard);
+  setSizeGripEnabled(true);
+  setMinimumSize(250,150);
 }
 
 void MessageBox::buildTimerMessage() {

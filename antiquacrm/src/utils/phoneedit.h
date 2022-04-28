@@ -34,10 +34,8 @@ private:
   /**
     @brief Wird mehrfach verwendet
     Das aktuell zulässige Eingabeschema für Telefon Nummern.
-    @note Wir Escapen wegen der Datenbanksuche nicht!
-    @return QRegExp
   */
-  static const QRegExp pcre() { return QRegExp("([\\d\\s]+)"); }
+  const QRegularExpression regexp = QRegularExpression("^(0[\\d]{2}\\s[\\d]{3,4}[\\s\\d]+)$");
 
 protected Q_SLOTS:
   /**
@@ -56,6 +54,8 @@ public Q_SLOTS:
    @brief Eingabefeld zurücksetzen
   */
   Q_INVOKABLE void reset();
+
+  void setFocus();
 
 public:
   explicit PhoneEdit(QWidget *parent = nullptr);

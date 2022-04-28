@@ -28,6 +28,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   Q_INVOKABLE void reset();
+  void setFocus();
   void setChecked(bool);
 
 public:

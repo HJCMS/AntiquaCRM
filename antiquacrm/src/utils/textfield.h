@@ -25,12 +25,15 @@ private Q_SLOTS:
 
 public Q_SLOTS:
   Q_INVOKABLE void reset();
+  void setFocus();
 
 public:
   explicit TextField(QWidget *parent = nullptr);
   void setValue(const QVariant &);
   const QVariant value();
   bool isValid();
+  void setInfo(const QString &);
+  const QString info();
   const QString notes();
 };
 

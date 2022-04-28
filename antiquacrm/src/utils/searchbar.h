@@ -35,6 +35,7 @@ private:
   QDoubleValidator *m_numValidator;
 
 private Q_SLOTS:
+  void clearAndFocus();
   void beforeTextChanged();
   void beforeTextChanged(const QString &);
   void updateEditPlaceHolder();

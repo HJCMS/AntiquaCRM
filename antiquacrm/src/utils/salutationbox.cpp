@@ -62,6 +62,8 @@ void SalutationBox::reset() {
   setModified(false);
 }
 
+void SalutationBox::setFocus() { m_comboBox->setFocus(); }
+
 const QVariant SalutationBox::value() {
   if (m_comboBox->currentIndex() == 0)
     return QString();

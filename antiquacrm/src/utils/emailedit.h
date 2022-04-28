@@ -58,6 +58,8 @@ public Q_SLOTS:
   */
   Q_INVOKABLE void reset();
 
+  void setFocus();
+
 public:
   explicit EMailEdit(QWidget *parent = nullptr);
   const QVariant value();

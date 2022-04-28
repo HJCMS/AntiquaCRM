@@ -4,6 +4,8 @@
 #include "phoneedit.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QRegularExpression>
+#include <QtCore/QRegularExpressionMatch>
 #include <QtWidgets/QHBoxLayout>
 
 PhoneEdit::PhoneEdit(QWidget *parent) : UtilsMain{parent} {
@@ -25,7 +27,8 @@ PhoneEdit::PhoneEdit(QWidget *parent) : UtilsMain{parent} {
   id_phone->setMaximumWidth(300);
   layout->addWidget(id_phone);
 
-  m_validator = new QRegExpValidator(pcre(), id_phone);
+  QRegExp reg("([\\d\\s]+)");
+  m_validator = new QRegExpValidator(reg, id_phone);
   id_phone->setValidator(m_validator);
 
   setLayout(layout);
@@ -37,17 +40,24 @@ PhoneEdit::PhoneEdit(QWidget *parent) : UtilsMain{parent} {
 }
 
 void PhoneEdit::setValue(const QVariant &id) {
-  id_phone->setText(id.toString());
-  setModified(true);
+  QString tel = id.toString();
+  if (tel.length() > 10) {
+    tel.insert(3, " ");
+    if (objectName().contains("c_mobil_")) {
+      tel.insert(7, " ");
+    } else {
+      tel.insert(8, " ");
+    }
+  }
+  id_phone->setText(tel);
 }
 
 void PhoneEdit::inputChanged(const QString &str) {
-  int pos = 0;
-  QRegExp reg(pcre());
-  if (reg.indexIn(str, pos) == -1) {
-    setStyleSheet("color: red;");
+  QRegularExpressionMatch match = regexp.match(str.trimmed());
+  if (match.hasMatch()) {
+    id_phone->setStyleSheet("");
   } else {
-    setStyleSheet("");
+    id_phone->setStyleSheet("color: red;");
   }
   setModified(true);
 }
@@ -57,17 +67,20 @@ void PhoneEdit::reset() {
   setModified(false);
 }
 
+void PhoneEdit::setFocus() { id_phone->setFocus(); }
+
 const QVariant PhoneEdit::value() {
-  qDebug() << Q_FUNC_INFO << "Todo Parser";
-  QVariant data = QVariant(id_phone->text());
-  return data;
+  QString data = id_phone->text().trimmed();
+  QRegExp reg("\\D+");
+  return data.replace(reg, "");
 }
 
 bool PhoneEdit::isValid() {
-  if (isRequired() && id_phone->text().isEmpty())
+  QString check(id_phone->text());
+  if (isRequired() && check.isEmpty())
     return false;
 
-  if (QVariant(id_phone->text()).toULongLong() < 1)
+  if (check.length() < 10)
     return false;
 
   return true;
@@ -79,11 +92,11 @@ void PhoneEdit::setInfo(const QString &txt) {
   m_label->setText(info);
   m_label->setToolTip(txt);
   if (objectName().contains("c_mobil_")) {
-    id_phone->setPlaceholderText("049 152 1234 1234 123");
-    id_phone->setToolTip("049 152 1234 1234 123");
+    id_phone->setPlaceholderText("049 152 12345678");
+    id_phone->setToolTip("049 152 12345678");
   } else {
-    id_phone->setPlaceholderText("049 7632 4565 456");
-    id_phone->setToolTip("049 7632 4565 456");
+    id_phone->setPlaceholderText("049 7632 1234567");
+    id_phone->setToolTip("049 7632 1234567");
   }
 }
 

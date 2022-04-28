@@ -37,6 +37,8 @@ void SerialID::reset() {
   setModified(false);
 }
 
+void SerialID::setFocus() { m_serialLabel->setFocus(); }
+
 void SerialID::setInfo(const QString &info) {
   QString txt(info);
   txt.append(":");
@@ -48,6 +50,10 @@ const QString SerialID::info() { return m_infoLabel->text(); }
 
 const QVariant SerialID::value() {
   QVariant data = QVariant(m_serialLabel->text()).toULongLong();
+  /**< @warning Es darf keine 0 zurück gegeben werden */
+  if (data.toInt() < 1)
+    return QVariant();
+
   return data;
 }
 

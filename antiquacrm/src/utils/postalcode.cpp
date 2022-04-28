@@ -108,6 +108,8 @@ void PostalCode::reset() {
   setModified(false);
 }
 
+void PostalCode::setFocus() { m_plz->setFocus(); }
+
 const QVariant PostalCode::value() { return m_plz->text(); }
 
 bool PostalCode::isValid() {

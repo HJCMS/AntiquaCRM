@@ -8,6 +8,7 @@
 #include "inventory.h"
 
 #include <QtCore/QObject>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTableView>
@@ -46,6 +47,11 @@ private:
   CostumerTableView *m_tableView;
 
   /**
+   * @brief Status Informationen
+   */
+  QLabel *m_statusInfo;
+
+  /**
     @}
 
     @defgroup StackeWidget Page 2
@@ -63,11 +69,10 @@ private:
 
 private Q_SLOTS:
   void editCostumer(int);
+  void createCostumer();
   void searchConvert(const QString &);
   void searchConvert();
-
-public Q_SLOTS:
-  void messageHandler(const QString &message, int type = 0);
+  void openTableView();
 
 public:
   explicit InventoryCostumers(QWidget *parent = nullptr);

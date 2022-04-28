@@ -158,6 +158,8 @@ void IsbnEdit::reset() {
   setModified(false);
 }
 
+void IsbnEdit::setFocus() { m_isbn->setFocus(); }
+
 bool IsbnEdit::isValid() {
   int len = m_isbn->text().trimmed().length();
   if ((len == 10) || (len == 13)) {

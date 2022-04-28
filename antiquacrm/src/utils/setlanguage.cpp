@@ -54,6 +54,8 @@ void SetLanguage::reset() {
   setModified(false);
 }
 
+void SetLanguage::setFocus() { m_comboBox->setFocus(); }
+
 const QVariant SetLanguage::value() {
   return m_comboBox->itemData(m_comboBox->currentIndex(), Qt::UserRole);
 }

@@ -59,6 +59,8 @@ void TechniqueEdit::reset() {
   setModified(false);
 }
 
+void TechniqueEdit::setFocus() { m_comboBox->setFocus(); }
+
 const QVariant TechniqueEdit::value() { return m_comboBox->currentIndex(); }
 
 bool TechniqueEdit::isValid() { return true; }

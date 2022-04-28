@@ -65,6 +65,13 @@ protected Q_SLOTS:
    */
   virtual void searchConvert() = 0;
 
+  /**
+    @brief Öffne Tabellenansicht
+    Wird mit SIGNAL s_leaveEditor aufgerufen.
+    @note Standard ist Tabellenansicht "Page 1"
+  */
+  virtual void openTableView() = 0;
+
 Q_SIGNALS:
   /**
     @brief Wegen QML hier eingefügt.

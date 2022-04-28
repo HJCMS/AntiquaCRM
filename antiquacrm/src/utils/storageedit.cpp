@@ -95,6 +95,8 @@ void StorageEdit::reset() {
   setModified(false);
 }
 
+void StorageEdit::setFocus() { m_storage->setFocus(); }
+
 const QVariant StorageEdit::value() {
   return QVariant(m_storage->currentIndex());
 }

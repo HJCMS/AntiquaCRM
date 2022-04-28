@@ -38,6 +38,8 @@ void TextField::reset() {
   setModified(false);
 }
 
+void TextField::setFocus() { m_edit->setFocus(); }
+
 const QVariant TextField::value() {
   QString data = m_edit->toPlainText();
   QRegExp reg("[\\']+");
@@ -51,13 +53,14 @@ bool TextField::isValid() {
   return true;
 }
 
+void TextField::setInfo(const QString &info) { m_edit->setToolTip(info); }
+
+const QString TextField::info() { return m_edit->toolTip(); }
+
 const QString TextField::notes() {
-  QString msg(tr("The field"));
-  if (windowTitle().isEmpty()) {
+  QString msg(m_edit->toolTip());
+  if (msg.isEmpty()) {
     msg.append(" " + objectName() + " ");
-  } else {
-    msg.append(" " + windowTitle() + " ");
   }
-  msg.append(tr("is required and can not empty."));
-  return msg;
+  return tr("a '%1' required and can not empty.").arg(msg);
 }

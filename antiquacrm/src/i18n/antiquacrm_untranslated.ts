@@ -411,7 +411,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+50"/>
         <source>is required must selected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -639,14 +639,20 @@
     </message>
     <message>
         <location line="+5"/>
+        <location line="+11"/>
         <source>Shipping Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-5"/>
+        <source>Postal Address</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CostumerTableView</name>
     <message>
-        <location filename="../inventorycostumers/costumertableview.cpp" line="+66"/>
+        <location filename="../inventorycostumers/costumertableview.cpp" line="+74"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -743,7 +749,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+66"/>
         <source>a E-Mail Address is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -756,7 +762,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+15"/>
         <source>Overview</source>
         <translation type="unfinished"></translation>
     </message>
@@ -776,7 +782,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+301"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1000,7 +1006,7 @@
 <context>
     <name>IntSpinBox</name>
     <message>
-        <location filename="../utils/intspinbox.cpp" line="+87"/>
+        <location filename="../utils/intspinbox.cpp" line="+89"/>
         <source>is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1010,6 +1016,14 @@
     <message>
         <location filename="../inventorybooks/inventorybooks.cpp" line="+144"/>
         <source>Automatic search disabled in this mode. Press enter to start the search!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InventoryCostumers</name>
+    <message>
+        <location filename="../inventorycostumers/inventorycostumers.cpp" line="+72"/>
+        <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1036,7 +1050,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+97"/>
+        <location line="+99"/>
         <source>ISBN is set to required and must be a valid 10 or 13 digit number.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1044,8 +1058,8 @@
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../utils/lineedit.cpp" line="+84"/>
-        <source>a Valid Url must edit.</source>
+        <location filename="../utils/lineedit.cpp" line="+88"/>
+        <source>The field &apos;%1&apos; is requiered but empty!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1151,7 +1165,7 @@
 <context>
     <name>MessageBox</name>
     <message>
-        <location filename="../utils/messagebox.cpp" line="+18"/>
+        <location filename="../utils/messagebox.cpp" line="+20"/>
         <source>Message closed in </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1192,7 +1206,7 @@
 <context>
     <name>PhoneEdit</name>
     <message>
-        <location filename="../utils/phoneedit.cpp" line="+93"/>
+        <location filename="../utils/phoneedit.cpp" line="+106"/>
         <source>The Phone Number is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1210,7 +1224,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+93"/>
         <source>a valid Postalcode is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1296,7 +1310,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+48"/>
         <source>A valid Price is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1654,7 +1668,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventorycostumers/inventorycostumers.cpp" line="+22"/>
+        <location filename="../inventorycostumers/inventorycostumers.cpp" line="-48"/>
         <source>Sort by Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1682,7 +1696,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+41"/>
         <source>a Title is required</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1696,12 +1710,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+50"/>
+        <location line="+56"/>
         <source>Search for</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-51"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1720,7 +1734,7 @@
 <context>
     <name>SerialID</name>
     <message>
-        <location filename="../utils/serialid.cpp" line="+65"/>
+        <location filename="../utils/serialid.cpp" line="+71"/>
         <source>The Arcticle ID is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1808,7 +1822,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+40"/>
         <source>Language field is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1882,7 +1896,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+56"/>
         <source>The Storage location is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1890,7 +1904,7 @@
 <context>
     <name>StrLineEdit</name>
     <message>
-        <location filename="../utils/strlineedit.cpp" line="+150"/>
+        <location filename="../utils/strlineedit.cpp" line="+152"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1918,7 +1932,7 @@
 <context>
     <name>TechniqueEdit</name>
     <message>
-        <location filename="../utils/techniqueedit.cpp" line="+67"/>
+        <location filename="../utils/techniqueedit.cpp" line="+69"/>
         <source>Technique field is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1926,13 +1940,8 @@
 <context>
     <name>TextField</name>
     <message>
-        <location filename="../utils/textfield.cpp" line="+55"/>
-        <source>The field</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>is required and can not empty.</source>
+        <location filename="../utils/textfield.cpp" line="+65"/>
+        <source>a &apos;%1&apos; required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2038,7 +2047,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+39"/>
         <source>Trusted Verification is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2084,7 +2093,7 @@
 <context>
     <name>YearEdit</name>
     <message>
-        <location filename="../utils/yearedit.cpp" line="+73"/>
+        <location filename="../utils/yearedit.cpp" line="+75"/>
         <source>The Year must contain a valid entry.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -65,6 +65,8 @@ void EMailEdit::reset() {
   setModified(false);
 }
 
+void EMailEdit::setFocus() { m_mail->setFocus(); }
+
 const QString EMailEdit::info() { return m_label->text(); }
 
 const QVariant EMailEdit::value() { return m_mail->text(); }

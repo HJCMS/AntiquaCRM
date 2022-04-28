@@ -52,6 +52,8 @@ void TrustBox::reset() {
   setModified(false);
 }
 
+void TrustBox::setFocus() { m_trusted->setFocus(); }
+
 const QVariant TrustBox::value() { return m_trusted->currentIndex(); }
 
 bool TrustBox::isValid() { return true; }

@@ -26,17 +26,17 @@ private:
   /**
      @brief Bücher Inventar öffnen
   */
-  void addInventoryBooks(int);
+  int addInventoryBooks(int);
 
   /**
      @brief Drucke & Stiche Inventar öffnen
   */
-  void addInventoryPrints(int);
+  int addInventoryPrints(int);
 
   /**
      @brief Kundenregister Inventar öffnen
   */
-  void addInventoryCostumers(int);
+  int addInventoryCostumers(int);
 
 private Q_SLOTS:
   /**

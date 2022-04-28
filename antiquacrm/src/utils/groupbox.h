@@ -20,7 +20,8 @@ class GroupBox : public UtilsMain
 
 public Q_SLOTS:
   void setValue(const QVariant &);
-  void reset();
+  Q_INVOKABLE void reset();
+  void setFocus();
 
 public:
   QGroupBox *box;

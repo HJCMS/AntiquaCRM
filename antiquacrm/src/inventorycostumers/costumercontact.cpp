@@ -176,10 +176,12 @@ CostumerContact::CostumerContact(QWidget *parent) : QWidget{parent} {
   c_postal_address = new TextField(this);
   c_postal_address->setObjectName("c_postal_address");
   c_postal_address->setRequired(true);
+  c_postal_address->setInfo(tr("Postal Address"));
   row4->addWidget(c_postal_address, 1, 0, 1, 1);
 
   c_shipping_address = new TextField(this);
   c_shipping_address->setObjectName("c_shipping_address");
+  c_shipping_address->setInfo(tr("Shipping Address"));
   row4->addWidget(c_shipping_address, 1, 1, 1, 1);
 
   layout->addLayout(row4);

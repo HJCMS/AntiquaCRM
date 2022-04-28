@@ -35,6 +35,8 @@ void BoolBox::reset() {
   setModified(false);
 }
 
+void BoolBox::setFocus() { m_checkBox->setFocus(); }
+
 void BoolBox::setChecked(bool b) { m_checkBox->setChecked(b); }
 
 bool BoolBox::isChecked() { return m_checkBox->isChecked(); }

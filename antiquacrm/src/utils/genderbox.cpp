@@ -64,6 +64,7 @@ void GenderBox::reset() {
   m_comboBox->setCurrentIndex(0);
   setModified(false);
 }
+void GenderBox::setFocus() { m_comboBox->setFocus(); }
 
 const QVariant GenderBox::value() { return m_comboBox->currentIndex(); }
 

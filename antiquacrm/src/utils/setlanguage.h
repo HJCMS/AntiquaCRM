@@ -31,6 +31,7 @@ private Q_SLOTS:
 public Q_SLOTS:
   void setValue(const QVariant &);
   Q_INVOKABLE void reset();
+  void setFocus();
 
 public:
   explicit SetLanguage(QWidget *parent = nullptr);
