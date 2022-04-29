@@ -7,13 +7,13 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
-#include <QtCore/QVector>
 #include <QtWidgets/QWidget>
 
 /**
  * @defgroup HJCMS
  * @{
  */
+#include <AntiquaCRM>
 #include <SqlCore>
 
 namespace HJCMS {
@@ -42,33 +42,6 @@ protected:
   HJCMS::SqlCore *m_sql;
 
   /**
-     @brief DataEntries
-     Lese die Datenfelder und schreibe sie für die Zurücksetzen
-     funktion hier rein.
-
-     @note Die Objektnamen die Typangabe in @b field (Feldnamen)
-      stimmen mit den SQL Tabellenspalten Bezeichnungen überein!
-
-     @li Die Typangabe @b field ist für das Identifizieren
-      der Eingabefelder in der Klasse zuständig.
-
-     @li Mit @b vtype wird die Entscheidung getroffen welches
-      Datensatzformat verwendet werden soll. Die Entscheidung
-      liegt zu 100% beim Rückgabe ergebnis von QSqlQuery.
-
-     @li Der Wert @b data ist vom Type Variant, was die Erstellung
-      der SQL INSERT/UPDATE Statements vereinfachen soll.
-
-     @warning Wenn sich bei der Datenbank Tabelle ein Spalten Typ
-      ändert. Muss das hier Kontrolliert und Überarbeitet werden!
-   */
-  struct DataEntries {
-    QString field; /**< @brief Feld ist gleichwertig mit {INPUT}.objectName() */
-    int vtype;     /**< @brief QVariant::Type */
-    QVariant data; /**< @brief Datenwert */
-  };
-
-  /**
    * @defgroup inputList
    * @{
    * @brief Objektnamen-Liste der Eingabefelder
@@ -88,7 +61,7 @@ protected:
    * @brief Hier werden die Daten aus der Abfrage eingefügt.
    * Die vorgesehene Mehtode zum befüllen ist @ref importSqlResult
    */
-  QVector<DataEntries> sqlQueryResult;
+  DataFields sqlQueryResult;
 
   /**
    * @brief Methode zum befüllen von @ref sqlQueryResult
@@ -119,7 +92,7 @@ protected:
    * @param key   =  QString(Datenfeld Bezeichner)
    * @param value = QVariant(Datenfeld Wert)
    */
-  virtual void setSqlQueryData(const QString &key, const QVariant &value) = 0;
+  virtual void setData(const QString &key, const QVariant &value, bool required = false) = 0;
   /** }@ */
 
   /**

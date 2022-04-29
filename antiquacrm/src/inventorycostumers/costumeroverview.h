@@ -14,6 +14,8 @@
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 
+#include <AntiquaCRM>
+
 class DomDocument : public QDomDocument {
 public:
   QDomElement div;
@@ -43,7 +45,7 @@ private:
 
 public:
   explicit CostumerOverview(QWidget *parent = nullptr);
-  void createDocument(QHash<QString, QString> &);
+  void createDocument(const DataFields &);
 };
 
 #endif // COSTUMEROVERVIEW_H

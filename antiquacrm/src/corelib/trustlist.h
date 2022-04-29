@@ -2,13 +2,45 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef TRUSTLIST_ANTIQUA_CORE_H
-#define TRUSTLIST_ANTIQUA_CORE_H
+#ifndef TRUSTLIST_ANTIQUACORE_H
+#define TRUSTLIST_ANTIQUACORE_H
+
+#include "antiqua_global.h"
 
 #include <QtCore/QList>
+#include <QtCore/QString>
 #include <QtCore/QMetaType>
 
-class Trust;
+/**
+ * @brief Trust SQL Field Class
+ * @see c_trusted in public.costumers Table
+ */
+class ANTIQUACORE_EXPORT Trust {
+private:
+  int p_index;
+  QString p_title;
+
+public:
+  explicit Trust();
+
+  /**
+   * @brief Trust
+   * @param index Datafield Index
+   * @param title DataField Translation
+   */
+  Trust(int index, const QString &title);
+
+  /**
+   * @brief Current Index
+   */
+  int index();
+
+  /**
+   * @brief Current Title
+   */
+  const QString title();
+};
+Q_DECLARE_TYPEINFO(Trust, Q_PRIMITIVE_TYPE);
 
 /**
  * @class TrustList
@@ -26,8 +58,8 @@ class Trust;
 
   TrustList list;
   int s = list.size();
-  Trust myItem(++s,tr("Personal trusted definition"));
-  list.append(Trust);
+  Trust myTrust(++s,tr("Personal trusted definition"));
+  list.append(myTrust);
 
   QComboBox *m_box = new QComboBox(this);
   for (int i = 0; i < list.size(); i++)
@@ -37,7 +69,7 @@ class Trust;
   }
  * @endcode
  */
-QT_SHARED class TrustList : public QList<Trust> {
+class ANTIQUACORE_EXPORT TrustList : public QList<Trust> {
 private:
   /**
    * @brief filled by Constructor
@@ -70,7 +102,6 @@ public:
    */
   const QString trustTitle(int index);
 };
-
 Q_DECLARE_TYPEINFO(TrustList, Q_COMPLEX_TYPE);
 
-#endif // TRUSTLIST_ANTIQUA_CORE_H
+#endif // TRUSTLIST_ANTIQUACORE_H

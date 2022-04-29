@@ -491,8 +491,8 @@ void PrintsEditor::importSqlResult() {
 
   blockSignals(true);
   for (int i = 0; i < sqlQueryResult.size(); ++i) {
-    DataEntries f = sqlQueryResult.at(i);
-    setSqlQueryData(f.field, f.data);
+    DataField f = sqlQueryResult.at(i);
+    setData(f.field(), f.value(), f.isRequired());
   }
   blockSignals(false);
 
@@ -560,7 +560,8 @@ void PrintsEditor::restoreDataset() {
   importSqlResult();
 }
 
-void PrintsEditor::setSqlQueryData(const QString &key, const QVariant &value) {
+void PrintsEditor::setData(const QString &key, const QVariant &value,
+                           bool required) {
   if (key.contains("ip_id")) {
     ip_id->setValue(value);
     return;
@@ -647,10 +648,12 @@ void PrintsEditor::editPrintsEntry(const QString &condition) {
     while (q.next()) {
       foreach (QString key, inputList) {
         QVariant val = q.value(r.indexOf(key));
-        DataEntries d;
-        d.field = key;
-        d.vtype = val.type();
-        d.data = val;
+        bool required = (r.field(key).requiredStatus() == QSqlField::Required);
+        DataField d;
+        d.setField(key);
+        d.setType(val.type());
+        d.setRequired(required);
+        d.setValue(val);
         sqlQueryResult.append(d);
       }
     }

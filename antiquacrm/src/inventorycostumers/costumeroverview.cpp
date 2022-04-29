@@ -3,6 +3,7 @@
 
 #include "costumeroverview.h"
 
+#include <QtCore/QDebug>
 #include <QtCore/QLocale>
 #include <QtCore/QDateTime>
 
@@ -187,8 +188,11 @@ void CostumerOverview::createAdditionalSection() {
   addLineBreak();
 }
 
-void CostumerOverview::createDocument(QHash<QString, QString> &data) {
-  items = data;
+void CostumerOverview::createDocument(const DataFields &data) {
+  for (int i = 0; i < data.count(); i++) {
+    DataField df = data.at(i);
+    items.insert(df.field(),df.value().toString());
+  }
   dom = new DomDocument("costumerview");
   createCompanySection();
   createTitleSection();

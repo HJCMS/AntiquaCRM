@@ -176,7 +176,7 @@ private:
       }
      @endcode
    */
-  void setSqlQueryData(const QString &key, const QVariant &value);
+  void setData(const QString &key, const QVariant &value, bool required = false);
 
 private Q_SLOTS:
   /**

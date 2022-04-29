@@ -89,15 +89,13 @@ void EditCostumer::importSqlResult() {
     return;
 
   blockSignals(true);
-  QHash<QString, QString> nodeset;
   for (int i = 0; i < sqlQueryResult.size(); ++i) {
-    DataEntries f = sqlQueryResult.at(i);
-    setSqlQueryData(f.field, f.data);
-    nodeset.insert(f.field, f.data.toString());
+    DataField f = sqlQueryResult.at(i);
+    setData(f.field(), f.value(), f.isRequired());
   }
   blockSignals(false);
 
-  m_overview->createDocument(nodeset);
+  m_overview->createDocument(sqlQueryResult);
   resetModified();
 }
 
@@ -297,7 +295,7 @@ void EditCostumer::createSqlInsert() {
     checkLeaveEditor();
 }
 
-void EditCostumer::setSqlQueryData(const QString &key, const QVariant &value) {
+void EditCostumer::setData(const QString &key, const QVariant &value, bool required) {
   /** Dataset */
   if (key.contains("c_id")) {
     c_id->setValue(value);
@@ -449,18 +447,17 @@ void EditCostumer::updateCostumer(const QString &id) {
     while (q.next()) {
       foreach (QString key, inputList) {
         QVariant val = q.value(r.indexOf(key));
-        DataEntries d;
-        d.field = key;
-        d.vtype = val.type();
-        d.data = val;
+        bool required = (r.field(key).requiredStatus() == QSqlField::Required);
+        DataField d;
+        d.setField(key);
+        d.setType(val.type());
+        d.setRequired(required);
+        d.setValue(val);
         sqlQueryResult.append(d);
       }
       if (q.value("fullname").isValid()) {
         QVariant val = q.value("fullname");
-        DataEntries d;
-        d.field = "fullname";
-        d.vtype = val.type();
-        d.data = val;
+        DataField d("fullname",val.type(),false,val);
         sqlQueryResult.append(d);
       }
     }

@@ -51,7 +51,7 @@ private:
   const QHash<QString, QVariant> createSqlDataset();
   void createSqlUpdate();
   void createSqlInsert();
-  void setSqlQueryData(const QString &key, const QVariant &value);
+  void setData(const QString &key, const QVariant &value, bool required = false);
   void resetModified();
 
 private Q_SLOTS:

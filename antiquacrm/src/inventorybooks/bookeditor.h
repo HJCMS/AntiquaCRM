@@ -195,7 +195,7 @@ private:
       }
      @endcode
    */
-  void setSqlQueryData(const QString &key, const QVariant &value);
+  void setData(const QString &key, const QVariant &value, bool required = false);
 
   /**
    * Wenn der Benutzer den Artikel Bestand auf 0 setzt!

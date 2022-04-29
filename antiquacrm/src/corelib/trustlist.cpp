@@ -2,9 +2,23 @@
 // vim: set fileencoding=utf-8
 
 #include "trustlist.h"
-#include "trust.h"
+#include "antiqua_global.h"
 
 #include <QObject>
+
+Trust::Trust() {
+  p_index = -1;
+  p_title = QString();
+}
+
+Trust::Trust(int index, const QString &title) {
+  p_index = index;
+  p_title = title;
+}
+
+int Trust::index() { return p_index; }
+
+const QString Trust::title() { return p_title; }
 
 TrustList::TrustList() : p_list() {
   p_list.clear();
@@ -18,8 +32,7 @@ TrustList::TrustList() : p_list() {
 
 int TrustList::size() { return p_list.size(); };
 
-const Trust TrustList::trust(int index)
-{
+const Trust TrustList::trust(int index) {
   Trust ret(p_list.at(0));
   for (int i = 0; i < p_list.size(); i++) {
     Trust cur = p_list.at(i);
@@ -29,8 +42,7 @@ const Trust TrustList::trust(int index)
   return ret;
 }
 
-const int TrustList::trustIndex(int index)
-{
+const int TrustList::trustIndex(int index) {
   Trust ret = trust(index);
   return ret.index();
 }

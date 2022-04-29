@@ -457,9 +457,9 @@ void BookEditor::createSqlUpdate() {
   /** Auf Aktivierung prüfen */
   if (ib_count->value().toInt() != 0) {
     for (int i = 0; i < sqlQueryResult.size(); ++i) {
-      DataEntries f = sqlQueryResult.at(i);
-      if (f.field == "ib_count") {
-        if (f.data.toInt() == 0) {
+      DataField f = sqlQueryResult.at(i);
+      if (f.field() == "ib_count") {
+        if (f.value().toInt() == 0) {
           /** Aktivierung */
           emit s_articleActivation(true);
           break;
@@ -515,8 +515,8 @@ void BookEditor::importSqlResult() {
 
   blockSignals(true);
   for (int i = 0; i < sqlQueryResult.size(); ++i) {
-    DataEntries f = sqlQueryResult.at(i);
-    setSqlQueryData(f.field, f.data);
+    DataField f = sqlQueryResult.at(i);
+    setData(f.field(), f.value(), f.isRequired());
   }
   blockSignals(false);
 
@@ -586,7 +586,7 @@ void BookEditor::restoreDataset() {
   importSqlResult();
 }
 
-void BookEditor::setSqlQueryData(const QString &key, const QVariant &value) {
+void BookEditor::setData(const QString &key, const QVariant &value, bool required) {
   if (key.contains("ib_id")) {
     ib_id->setValue(value);
     return;
@@ -661,9 +661,9 @@ bool BookEditor::realyDeactivateBookEntry() {
   int ret = QMessageBox::question(this, tr("Book deactivation"), body);
   if (ret == QMessageBox::No) {
     for (int i = 0; i < sqlQueryResult.size(); ++i) {
-      DataEntries f = sqlQueryResult.at(i);
-      if (f.field == "ib_count") {
-        ib_count->setValue(f.data);
+      DataField f = sqlQueryResult.at(i);
+      if (f.field() == "ib_count") {
+        ib_count->setValue(f.value());
         break;
       }
     }
@@ -886,10 +886,12 @@ void BookEditor::editBookEntry(const QString &condition) {
     while (q.next()) {
       foreach (QString key, inputList) {
         QVariant val = q.value(r.indexOf(key));
-        DataEntries d;
-        d.field = key;
-        d.vtype = val.type();
-        d.data = val;
+        bool required = (r.field(key).requiredStatus() == QSqlField::Required);
+        DataField d;
+        d.setField(key);
+        d.setType(val.type());
+        d.setRequired(required);
+        d.setValue(val);
         sqlQueryResult.append(d);
       }
     }
