@@ -652,7 +652,7 @@
 <context>
     <name>CostumerOverview</name>
     <message>
-        <location filename="../inventorycostumers/costumeroverview.cpp" line="+122"/>
+        <location filename="../inventorycostumers/costumeroverview.cpp" line="+123"/>
         <source>Phone</source>
         <translation>Telefon</translation>
     </message>
@@ -810,7 +810,7 @@
         <translation>Rechnungsinformationen bearbeiten</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+55"/>
         <source>Saved successfully!</source>
         <translation>Speichern erfolgreich!</translation>
     </message>
@@ -1724,7 +1724,7 @@
         <translation>Sortiert mit Datum</translation>
     </message>
     <message>
-        <location filename="../corelib/trustlist.cpp" line="+11"/>
+        <location filename="../corelib/trustlist.cpp" line="+25"/>
         <source>Trust Settings</source>
         <translation>Vertrauenseinstellungen</translation>
     </message>

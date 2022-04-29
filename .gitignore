@@ -2,5 +2,4 @@
 *.log
 *.bak
 build-*
-
 CMakeLists.txt.user
