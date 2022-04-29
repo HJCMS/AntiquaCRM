@@ -11,11 +11,12 @@
 #include "version.h"
 
 #include <QtCore/QDebug>
-#include <QtWidgets>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QVBoxLayout>
 
 // Schalte SQL ausgaben ein
 #ifndef SHOW_SQL_QUERIES
-#define SHOW_SQL_QUERIES true
+#define SHOW_SQL_QUERIES false
 #endif
 
 EditCostumer::EditCostumer(QWidget *parent) : EditorMain{parent} {

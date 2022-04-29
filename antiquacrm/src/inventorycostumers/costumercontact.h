@@ -6,8 +6,6 @@
 #define COSTUMERCONTACT_H
 
 #include <QtCore/QObject>
-#include <QtWidgets/QGroupBox>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QWidget>
 
 #include <Utils>
@@ -22,7 +20,6 @@ class CostumerContact : public QWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 public:
-  HJCMS::SqlCore *m_sql;    /**< Wird für einige Unterabfragen benötigt! */
   GenderBox *c_gender;      /**< Geschlecht */
   SalutationBox *c_title;   /**< Titelanrede */
   LineEdit *c_firstname;    /**< Vorname */
@@ -48,6 +45,8 @@ public:
   explicit CostumerContact(QWidget *parent = nullptr);
 
 private:
+  HJCMS::SqlCore *m_sql;    /**< Wird für einige Unterabfragen benötigt! */
+
   /**
    * Mit Postleitzahl Wohnort und Bundesland ermitteln!
    * @note Wird von @ref postalCodeComplite() ausgelöst!

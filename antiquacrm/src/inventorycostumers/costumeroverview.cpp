@@ -4,9 +4,7 @@
 #include "costumeroverview.h"
 
 #include <QtCore/QLocale>
-#include <QtCore>
-#include <QtGui>
-#include <QtWidgets>
+#include <QtCore/QDateTime>
 
 DomDocument::DomDocument(const QString &name) {
   QDomElement html = createElement("html");

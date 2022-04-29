@@ -9,13 +9,12 @@
 #include "version.h"
 
 #include <QtCore/QDebug>
-#include <QtCore/QItemSelectionModel>
 #include <QtCore/QMutex>
 #include <QtCore/QPoint>
 #include <QtCore/QRegExp>
+#include <QtCore/QStringList>
 #include <QtCore/QSignalMapper>
 #include <QtCore/QTime>
-#include <QtSql/QSqlTableModel>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMenu>

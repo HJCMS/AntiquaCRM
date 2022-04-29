@@ -8,6 +8,8 @@
 #include <QtCore/QString>
 #include <QtWidgets/QHBoxLayout>
 
+#include <AntiquaCRM>
+
 TrustBox::TrustBox(QWidget *parent) : UtilsMain{parent} {
   if (objectName().isEmpty())
     setObjectName("TrustBox");
@@ -19,15 +21,12 @@ TrustBox::TrustBox(QWidget *parent) : UtilsMain{parent} {
   layout->addWidget(m_info);
 
   m_trusted = new QComboBox(this);
-  m_trusted->insertItem(0, tr("Trust Settings"));
-  m_trusted->insertItem(1, tr("Pays on time"));
-  m_trusted->insertItem(2, tr("Pays reliable"));
-  m_trusted->insertItem(3, tr("Pays with delay"));
-  m_trusted->insertItem(4, tr("Prepayment"));
-  m_trusted->insertItem(5, tr("Has been warned before"));
-  m_trusted->insertItem(6, tr("Already had a debt collection process"));
-  m_trusted->insertItem(7, tr("Collection procedure unsuccessful"));
-  m_trusted->insertItem(8, tr("No delivery or order"));
+  TrustList list;
+  for (int i = 0; i < list.size(); i++)
+  {
+    Trust t = list.trust(i);
+    m_trusted->insertItem(t.index(),t.title());
+  }
   layout->addWidget(m_trusted);
 
   setLayout(layout);

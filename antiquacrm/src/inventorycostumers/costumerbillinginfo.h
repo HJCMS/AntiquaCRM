@@ -6,7 +6,6 @@
 #define COSTUMERBILLINGINFO_H
 
 #include <QtCore/QObject>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QWidget>
 
 #include <Utils>

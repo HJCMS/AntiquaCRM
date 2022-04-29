@@ -652,7 +652,7 @@
 <context>
     <name>CostumerOverview</name>
     <message>
-        <location filename="../inventorycostumers/costumeroverview.cpp" line="+124"/>
+        <location filename="../inventorycostumers/costumeroverview.cpp" line="+122"/>
         <source>Phone</source>
         <translation type="unfinished"></translation>
     </message>
@@ -675,7 +675,7 @@
 <context>
     <name>CostumerTableView</name>
     <message>
-        <location filename="../inventorycostumers/costumertableview.cpp" line="+74"/>
+        <location filename="../inventorycostumers/costumertableview.cpp" line="+73"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -698,7 +698,17 @@
 <context>
     <name>CostumersTableModel</name>
     <message>
-        <location filename="../inventorycostumers/costumerstablemodel.cpp" line="+60"/>
+        <location filename="../inventorycostumers/costumerstablemodel.cpp" line="+47"/>
+        <source>Company</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Personal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
         <source>ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -780,7 +790,7 @@
 <context>
     <name>EditCostumer</name>
     <message>
-        <location filename="../inventorycostumers/editcostumer.cpp" line="+35"/>
+        <location filename="../inventorycostumers/editcostumer.cpp" line="+36"/>
         <source>Costumers ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1713,6 +1723,36 @@
         <source>Sort by Date</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../corelib/trustlist.cpp" line="+11"/>
+        <source>Trust Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Pays on time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Pays reliable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Pays with delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Prepayment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>No delivery or order</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SalutationBox</name>
@@ -2033,52 +2073,7 @@
 <context>
     <name>TrustBox</name>
     <message>
-        <location filename="../utils/trustbox.cpp" line="+22"/>
-        <source>Trust Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Pays on time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Pays reliable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Pays with delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Prepayment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Has been warned before</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Already had a debt collection process</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Collection procedure unsuccessful</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>No delivery or order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+39"/>
+        <location filename="../utils/trustbox.cpp" line="+68"/>
         <source>Trusted Verification is required.</source>
         <translation type="unfinished"></translation>
     </message>

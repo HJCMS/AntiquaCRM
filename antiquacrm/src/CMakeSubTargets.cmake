@@ -9,6 +9,8 @@ SET (TARGET_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/settings
  ${CMAKE_CURRENT_BINARY_DIR}/plugins
  ${CMAKE_CURRENT_SOURCE_DIR}/plugins
+ ${CMAKE_CURRENT_BINARY_DIR}/corelib
+ ${CMAKE_CURRENT_SOURCE_DIR}/corelib
  ${CMAKE_CURRENT_BINARY_DIR}/sqlcore
  ${CMAKE_CURRENT_SOURCE_DIR}/sqlcore
  ${CMAKE_CURRENT_BINARY_DIR}/inventoryprints
@@ -37,6 +39,7 @@ INCLUDE_DIRECTORIES (${TARGET_INCLUDE_DIRS})
 
 ADD_SUBDIRECTORY (settings)
 ADD_SUBDIRECTORY (plugins)
+ADD_SUBDIRECTORY (corelib)
 ADD_SUBDIRECTORY (sqlcore)
 ADD_SUBDIRECTORY (inventoryprints)
 ADD_SUBDIRECTORY (inventorybooks)
@@ -50,6 +53,7 @@ ADD_SUBDIRECTORY (icons)
 
 SET(_link_sub_libs
 Settings
+AntiquaCore
 SqlCore
 InventoryPrints
 InventoryBooks

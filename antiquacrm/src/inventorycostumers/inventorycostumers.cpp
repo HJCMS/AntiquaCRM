@@ -107,10 +107,6 @@ InventoryCostumers::InventoryCostumers(QWidget *parent) : Inventory{parent} {
   connect(m_editCostumer, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
 
   connect(btn_refresh, SIGNAL(clicked()), m_tableView, SLOT(refreshView()));
-
-  // Testen
-  m_searchBar->setSearchText("Herrmann Wilms");
-  // connect(, SIGNAL(s_isModified(bool)), this, SLOT(setClosable(bool)));
 }
 
 void InventoryCostumers::openEditor(const QString &costumer) {

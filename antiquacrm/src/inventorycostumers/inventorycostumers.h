@@ -10,8 +10,6 @@
 #include <QtCore/QObject>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QStackedWidget>
-#include <QtWidgets/QTabWidget>
-#include <QtWidgets/QTableView>
 #include <QtWidgets/QWidget>
 
 class SearchBar;

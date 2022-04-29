@@ -6,8 +6,8 @@
 #include <SqlCore>
 
 #include <QtCore/QDebug>
-// #include <QtGui>
-#include <QtWidgets>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QVBoxLayout>
 
 CostumerContact::CostumerContact(QWidget *parent) : QWidget{parent} {
   setObjectName("CostumerContact");
@@ -186,9 +186,7 @@ CostumerContact::CostumerContact(QWidget *parent) : QWidget{parent} {
 
   layout->addLayout(row4);
   // END 4
-
   layout->addStretch(1);
-
   setLayout(layout);
 
   connect(addressGen, SIGNAL(clicked()), this, SLOT(generateAddressBody()));
@@ -256,9 +254,11 @@ void CostumerContact::generateAddressBody() {
   }
   QString body;
   /**< Company */
-  if (!c_company_name->value().toString().isEmpty()) {
-    body.append(c_company_name->value().toString());
-    body.append("\n");
+  if (c_company->value().toBool()) {
+    if (!c_company_name->value().toString().isEmpty()) {
+      body.append(c_company_name->value().toString());
+      body.append("\n");
+    }
   }
   body.append(name.join(" "));
   body.append("\n");

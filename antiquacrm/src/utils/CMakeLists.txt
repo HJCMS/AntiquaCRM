@@ -91,5 +91,6 @@ TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Gui
   Qt${QT_VERSION_MAJOR}::Widgets
   Qt${QT_VERSION_MAJOR}::Sql
+  AntiquaCore
 )
 

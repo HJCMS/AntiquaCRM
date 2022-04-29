@@ -5,9 +5,9 @@
 #ifndef COSTUMERTABLEVIEW_H
 #define COSTUMERTABLEVIEW_H
 
-#include <QtCore/QHash>
 #include <QtCore/QObject>
 #include <QtCore/QString>
+#include <QtCore/QModelIndex>
 #include <QtGui/QContextMenuEvent>
 #include <QtWidgets/QTableView>
 

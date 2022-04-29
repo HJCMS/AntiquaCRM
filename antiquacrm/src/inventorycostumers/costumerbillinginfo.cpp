@@ -2,12 +2,12 @@
 // vim: set fileencoding=utf-8
 
 #include "costumerbillinginfo.h"
-#include "version.h"
 #include <SqlCore>
 
 #include <QtCore/QDebug>
-// #include <QtGui>
-#include <QtWidgets>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QVBoxLayout>
 
 CostumerBillingInfo::CostumerBillingInfo(QWidget *parent) : QWidget{parent} {
   setObjectName("CostumerBillingInfo");

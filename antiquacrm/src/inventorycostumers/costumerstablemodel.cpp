@@ -10,8 +10,6 @@
 #include <QtCore/QLocale>
 #include <QtCore/QString>
 #include <QtCore/QVariant>
-
-/* QtSql */
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlRecord>
 
@@ -30,8 +28,10 @@ CostumersTableModel::CostumersTableModel(QObject *parent)
 
 QVariant CostumersTableModel::data(const QModelIndex &index, int role) const {
   const QVariant val;
-  if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole &&
-                           role != Qt::DecorationRole))
+  if ((role == Qt::DecorationRole) && (index.column() == 1))
+    return myIcon("toggle_log");
+
+  if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole))
     return val;
 
   QVariant item = QSqlQueryModel::data(index, role);
@@ -40,11 +40,23 @@ QVariant CostumersTableModel::data(const QModelIndex &index, int role) const {
   case 0: // id
     return item.toInt();
 
+  case 1: // c_purchases
+    return item.toInt();
+
+  case 2: // company
+    return (item.toString().trimmed() == "C") ? tr("Company") : tr("Personal");
+
+  case 3: // shurename
+  case 4: // phone
+  case 5: // mobil
+  case 6: // address
+    return item.toString().trimmed();
+
   case 7: // since
     return item.toDateTime().date().toString(Qt::RFC2822Date);
 
   default:
-    return item;
+    return item.toString().trimmed();
   }
 }
 

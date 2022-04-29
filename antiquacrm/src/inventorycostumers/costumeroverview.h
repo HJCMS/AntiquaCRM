@@ -8,7 +8,6 @@
 #include <QtCore/QHash>
 #include <QtCore/QObject>
 #include <QtCore/QString>
-#include <QtCore/QVariant>
 #include <QtGui/QTextDocument>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QWidget>

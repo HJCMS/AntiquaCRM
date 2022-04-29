@@ -35,7 +35,7 @@ QVariant BooksTableModel::data(const QModelIndex &index, int role) const {
 
   QVariant item = QSqlQueryModel::data(index, role);
 
-  if (!index.isValid() || (role == Qt::DecorationRole)) {
+  if (role == Qt::DecorationRole) {
     if (index.column() == 10) // image_exists
       return myIcon("image");
 
