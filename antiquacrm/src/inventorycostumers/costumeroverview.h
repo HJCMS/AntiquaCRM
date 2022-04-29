@@ -9,7 +9,6 @@
 #include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QVariant>
-#include <QtGui/QTextCursor>
 #include <QtGui/QTextDocument>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QWidget>
@@ -25,24 +24,23 @@ public:
   QDomElement createAddressNode(const QString &data);
 };
 
-class Document : public QTextDocument {
-  Q_OBJECT
-  Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "https://www.hjcms.de")
-
-public:
-  explicit Document(QTextEdit *parent = nullptr);
-};
-
 class CostumerOverview : public QTextBrowser {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  QTextCursor cursor;
-  Document *document;
+  QTextDocument *doc;
   DomDocument *dom;
+  QHash<QString, QString> items;
+  bool check(const QString &key);
+  void addLineBreak();
+  void createCompanySection();
+  void createTitleSection();
+  void createPhoneSection();
+  void createEMailSection();
+  void createAddressSection();
+  void createAdditionalSection();
 
 public:
   explicit CostumerOverview(QWidget *parent = nullptr);

@@ -650,6 +650,29 @@
     </message>
 </context>
 <context>
+    <name>CostumerOverview</name>
+    <message>
+        <location filename="../inventorycostumers/costumeroverview.cpp" line="+124"/>
+        <source>Phone</source>
+        <translation>Telefon</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>eMail</source>
+        <translation>E-Mail</translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>Additional</source>
+        <translation>Ergänzungen</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Since</source>
+        <translation>Erstellt</translation>
+    </message>
+</context>
+<context>
     <name>CostumerTableView</name>
     <message>
         <location filename="../inventorycostumers/costumertableview.cpp" line="+74"/>
@@ -734,11 +757,11 @@
     </message>
 </context>
 <context>
-    <name>Document</name>
+    <name>DockBarWidget</name>
     <message>
-        <location filename="../inventorycostumers/costumeroverview.cpp" line="+12"/>
-        <source>Costumer</source>
-        <translation>Kunde</translation>
+        <location filename="../dockbarwidget.cpp" line="+21"/>
+        <source>Search</source>
+        <translation>Suche</translation>
     </message>
 </context>
 <context>
@@ -777,12 +800,12 @@
         <translation>Rechnungsinformationen bearbeiten</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+57"/>
         <source>Saved successfully!</source>
         <translation>Speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+301"/>
+        <location line="+299"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
@@ -892,14 +915,22 @@
     </message>
 </context>
 <context>
-    <name>HJCMS::SqlCore</name>
+    <name>HJCMS::SqlConnection</name>
     <message>
-        <location filename="../sqlcore/sqlcore.cpp" line="+73"/>
-        <source>Database server not connected</source>
-        <translation>Nicht mit der Datenbank verbunden</translation>
+        <location filename="../sqlcore/sqlconnection.cpp" line="+60"/>
+        <source>No Database server connected!</source>
+        <translation>Keine Serververbindung zur Datenbank!</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+22"/>
+        <source>No Secured Database server connected!</source>
+        <translation>Keine gesicherte Datenbank Verbindung!</translation>
+    </message>
+</context>
+<context>
+    <name>HJCMS::SqlCore</name>
+    <message>
+        <location filename="../sqlcore/sqlcore.cpp" line="+130"/>
         <source>SQL Driver initialization error</source>
         <translation>Fehler beim laden des SQL Treibers</translation>
     </message>
@@ -1066,7 +1097,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+78"/>
+        <location filename="../mwindow.cpp" line="+77"/>
         <source>Costumers</source>
         <translation>Kunden</translation>
     </message>
@@ -2065,7 +2096,7 @@
         <translation>Bücher Inventar</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Prints</source>
         <translation>Drucke</translation>
     </message>
@@ -2075,7 +2106,7 @@
         <translation>Drucke, Stiche und Bilder Inventar</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Costumers</source>
         <translation>Kunden</translation>
     </message>
@@ -2085,7 +2116,7 @@
         <translation>Kunden Inventar</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Cant close this tab, unsafed changes!</source>
         <translation>Kann das Tab nicht schliessen, nicht gespeicherte Änderungen!</translation>
     </message>
