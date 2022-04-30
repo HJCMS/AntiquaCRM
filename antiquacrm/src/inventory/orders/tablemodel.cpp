@@ -5,6 +5,8 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
+#include <AntiquaCRM>
+
 /* QtCore */
 #include <QtCore/QDateTime>
 #include <QtCore/QDebug>
@@ -26,6 +28,15 @@ static const QString setHeaderTitel(const QString &t) {
 
 TableModel::TableModel(QObject *parent) : QSqlQueryModel{parent} {
   setObjectName("OrderTableModel");
+
+  connect(this, SIGNAL(dataChanged(const QModelIndex &, const QModelIndex &)),
+          this, SLOT(update(const QModelIndex &, const QModelIndex &)));
+}
+
+void TableModel::update(const QModelIndex &topLeft,
+                        const QModelIndex &bottomRight) {
+  if (topLeft.isValid() || bottomRight.isValid())
+    emit dataUpdated(true);
 }
 
 QVariant TableModel::data(const QModelIndex &index, int role) const {
@@ -40,10 +51,14 @@ QVariant TableModel::data(const QModelIndex &index, int role) const {
     return item.toUInt();
 
   case 1: // o_since
-    return item.toDateTime().date().toString(Qt::RFC2822Date);;
+    return item.toDateTime().date().toString(Qt::RFC2822Date);
+    ;
 
   case 2: // o_order_status
-    return item;
+  {
+    OrderStatusList list;
+    return list.title(item.toInt());
+  }
 
   case 3: // o_article_id
     return item.toInt();
@@ -58,7 +73,7 @@ QVariant TableModel::data(const QModelIndex &index, int role) const {
     return item.toBool();
 
   case 7: // o_closed
-    return item.toBool();;
+    return item.toBool();
 
   case 8: // o_order_type ???
     return item;
@@ -72,7 +87,7 @@ QVariant TableModel::data(const QModelIndex &index, int role) const {
 }
 
 QVariant TableModel::headerData(int section, Qt::Orientation orientation,
-                                     int role) const {
+                                int role) const {
   if (role != Qt::DisplayRole)
     return QVariant();
 

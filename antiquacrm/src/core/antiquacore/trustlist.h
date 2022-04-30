@@ -95,12 +95,12 @@ public:
   /**
    * @brief find Trust::index() with Index
    */
-  const int trustIndex(int index);
+  const int index(int index);
 
   /**
    * @brief find Trust::title() with Index
    */
-  const QString trustTitle(int index);
+  const QString title(int index);
 };
 Q_DECLARE_TYPEINFO(TrustList, Q_COMPLEX_TYPE);
 

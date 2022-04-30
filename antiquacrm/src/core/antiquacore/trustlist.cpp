@@ -42,12 +42,12 @@ const Trust TrustList::trust(int index) {
   return ret;
 }
 
-const int TrustList::trustIndex(int index) {
+const int TrustList::index(int index) {
   Trust ret = trust(index);
   return ret.index();
 }
 
-const QString TrustList::trustTitle(int index) {
+const QString TrustList::title(int index) {
   Trust ret = trust(index);
   return ret.title();
 }

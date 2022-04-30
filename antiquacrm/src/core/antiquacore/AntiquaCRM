@@ -10,4 +10,8 @@
 # include "datafield.h"
 #endif
 
+#ifndef ORDERSTATUS_ANTIQUACORE_H
+# include "orderstatus.h"
+#endif
+
 // EOF

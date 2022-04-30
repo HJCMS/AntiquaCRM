@@ -76,6 +76,8 @@ public Q_SLOTS:
 
   void initOrders();
 
+  void updateStatus();
+
 public:
   explicit TableView(QWidget *parent = nullptr);
 };

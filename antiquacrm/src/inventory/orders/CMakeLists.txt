@@ -22,12 +22,14 @@ SET (subproject_SOURCES
   inventoryorders.cpp
   tablemodel.cpp
   tableview.cpp
+  orderstatusbox.cpp
 )
 
 SET (subproject_HEADERS
   inventoryorders.h
   tablemodel.h
   tableview.h
+  orderstatusbox.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

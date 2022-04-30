@@ -5,6 +5,7 @@
 #include "antiqua_global.h"
 #include "applsettings.h"
 #include "myicontheme.h"
+#include "orderstatusbox.h"
 #include "sqlcore.h"
 #include "tablemodel.h"
 
@@ -41,6 +42,15 @@ static const QString defaultQuery() {
   return sql;
 }
 
+static const QString defaultUpdate(int id, int status) {
+  QString sql("UPDATE inventory_orders SET o_order_status=");
+  sql.append(QString::number(status));
+  sql.append(" WHERE o_id=");
+  sql.append(QString::number(id));
+  sql.append(";");
+  return sql;
+}
+
 TableView::TableView(QWidget *parent) : QTableView{parent} {
   setObjectName("AssigmentTableView");
   setEditTriggers(QAbstractItemView::DoubleClicked);
@@ -51,7 +61,6 @@ TableView::TableView(QWidget *parent) : QTableView{parent} {
   setWordWrap(false);
   setAlternatingRowColors(true);
   setSelectionBehavior(QAbstractItemView::SelectRows);
-  setSelectionMode(QAbstractItemView::SingleSelection);
 
   m_sql = new HJCMS::SqlCore(this);
 
@@ -88,10 +97,16 @@ bool TableView::sqlExecQuery(const QString &statement) {
       return false;
     }
     mutex.unlock();
+
     QString m = QString(tr("Rows: %1, Time: %2 msec."))
                     .arg(QString::asprintf("%d", m_queryModel->rowCount()),
                          QString::asprintf("%d", time.msec()));
     emit s_reportQuery(m);
+
+    if (statement.contains("SELECT")) {
+      resizeRowsToContents();
+      resizeColumnsToContents();
+    }
     return true;
   } else {
     qWarning("No SQL Connection in Booktable");
@@ -123,17 +138,22 @@ void TableView::contextMenuEvent(QContextMenuEvent *ev) {
   QMenu *m = new QMenu("Actions", this);
   // Eintrag öffnen  Bestellung anlegen
   QAction *ac_open = m->addAction(myIcon("spreadsheet"), tr("Open entry"));
-  ac_open->setObjectName("ac_context_open_book");
+  ac_open->setObjectName("ac_context_open_order");
   ac_open->setEnabled(b);
   connect(ac_open, SIGNAL(triggered()), this, SLOT(openByContext()));
 
   QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create entry"));
-  ac_create->setObjectName("ac_context_create_book");
+  ac_create->setObjectName("ac_context_create_order");
   ac_create->setEnabled(b);
   connect(ac_create, SIGNAL(triggered()), this, SLOT(createByContext()));
 
+  QAction *ac_status = m->addAction(myIcon("db_add"), tr("Update Status"));
+  ac_status->setObjectName("ac_context_status_order");
+  connect(ac_status, SIGNAL(triggered()), this, SLOT(updateStatus()));
+  ac_status->setEnabled(b);
+
   QAction *ac_order = m->addAction(myIcon("autostart"), tr("Create order"));
-  ac_order->setObjectName("ac_context_order_book");
+  ac_order->setObjectName("ac_context_order_order");
   connect(ac_order, SIGNAL(triggered()), this, SLOT(orderByContext()));
   ac_order->setEnabled(b);
 
@@ -143,9 +163,27 @@ void TableView::contextMenuEvent(QContextMenuEvent *ev) {
 
 void TableView::refreshView() { initOrders(); }
 
-void TableView::initOrders() {
-  if (sqlExecQuery(defaultQuery())) {
-    resizeRowsToContents();
-    resizeColumnsToContents();
+void TableView::initOrders() { sqlExecQuery(defaultQuery()); }
+
+void TableView::updateStatus() {
+  QModelIndexList list = selectedIndexes();
+  int article_id = 0;
+  for (int i = 0; i < list.size(); i++) {
+    QModelIndex index = list.at(i);
+    if (index.isValid() && (index.column() == 0))
+      article_id = m_queryModel->data(index, Qt::EditRole).toInt();
+
+    if (index.isValid() && (index.column() == 2)) {
+      QString title = m_queryModel->data(index, Qt::EditRole).toString();
+      StatusDialog dialog(title,this);
+      int set = dialog.exec();
+      if (set == QDialog::Accepted) {
+        int status = dialog.index();
+        if (sqlExecQuery(defaultUpdate(article_id, status)))
+          sqlExecQuery(defaultQuery());
+
+        return;
+      }
+    }
   }
 }

@@ -1766,6 +1766,36 @@
         <source>No delivery or order</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../core/antiquacore/orderstatus.cpp" line="+25"/>
+        <source>open order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>order start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>package picked up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>package delivery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>package delivered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>delivery completed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SalutationBox</name>
@@ -1968,6 +1998,14 @@
     </message>
 </context>
 <context>
+    <name>StatusDialog</name>
+    <message>
+        <location filename="../inventory/orders/orderstatusbox.cpp" line="+41"/>
+        <source>Update current Order status.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>StorageEdit</name>
     <message>
         <location filename="../custom/utils/storageedit.cpp" line="+25"/>
@@ -2016,7 +2054,7 @@
 <context>
     <name>TableModel</name>
     <message>
-        <location filename="../inventory/orders/tablemodel.cpp" line="+85"/>
+        <location filename="../inventory/orders/tablemodel.cpp" line="+96"/>
         <source>Since</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2064,7 +2102,7 @@
 <context>
     <name>TableView</name>
     <message>
-        <location filename="../inventory/orders/tableview.cpp" line="+91"/>
+        <location filename="../inventory/orders/tableview.cpp" line="+100"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2076,6 +2114,11 @@
     <message>
         <location line="+5"/>
         <source>Create entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Update Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

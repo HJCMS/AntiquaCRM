@@ -16,6 +16,12 @@ class TableModel : public QSqlQueryModel {
   Q_CLASSINFO("Author", "Jürgen Heinemann (Undefined)")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
+private Q_SLOTS:
+  void update(const QModelIndex &, const QModelIndex &);
+
+Q_SIGNALS:
+  void dataUpdated(bool);
+
 public:
   explicit TableModel(QObject *parent = nullptr);
   QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
