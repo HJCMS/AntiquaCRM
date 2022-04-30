@@ -9,8 +9,9 @@
 #include "dockbarwidget.h"
 #include "filedialog.h"
 #include "statusbar.h"
-#include "version.h"
+#include "antiqua_global.h"
 #include "workspace.h"
+#include "myicontheme.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDebug>
@@ -70,14 +71,19 @@ void MWindow::setupTabMenu(QMenu *parent) {
   connect(ac_Books, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
 
   QAction *ac_Prints = parent->addAction(tabIcon, tr("Prints"));
-  ac_Prints->setObjectName("open_book_tab");
+  ac_Prints->setObjectName("open_prints_tab");
   m_signalMapper->setMapping(ac_Prints, Workspace::Prints);
   connect(ac_Prints, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
 
   QAction *ac_Costumers = parent->addAction(tabIcon, tr("Costumers"));
-  ac_Costumers->setObjectName("open_book_tab");
+  ac_Costumers->setObjectName("open_costumer_tab");
   m_signalMapper->setMapping(ac_Costumers, Workspace::Costumers);
   connect(ac_Costumers, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
+
+  QAction *ac_Orders = parent->addAction(tabIcon, tr("Orders"));
+  ac_Orders->setObjectName("open_order_tab");
+  m_signalMapper->setMapping(ac_Orders, Workspace::Orders);
+  connect(ac_Orders, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
 }
 
 /**
@@ -255,9 +261,9 @@ void MWindow::initDefaults() {
   if (m_Settings->contains("window/windowState"))
     restoreState(m_Settings->value("window/windowState").toByteArray());
 
-  m_workSpace->openTab(Workspace::Books);
-  m_workSpace->openTab(Workspace::Prints);
   m_workSpace->openTab(Workspace::Costumers);
+  m_workSpace->openTab(Workspace::Books);
+  m_workSpace->openTab(Workspace::Orders);
 }
 
 MWindow::~MWindow() { qInfo("Mainwindow onload"); }

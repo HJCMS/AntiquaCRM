@@ -4,7 +4,7 @@
 <context>
     <name>AddEntryDialog</name>
     <message>
-        <location filename="../uicompleter/addentrydialog.cpp" line="+19"/>
+        <location filename="../custom/completer/addentrydialog.cpp" line="+20"/>
         <source>Add new entry</source>
         <translation>Erstelle Eintrag</translation>
     </message>
@@ -22,7 +22,7 @@
 <context>
     <name>BookEditor</name>
     <message>
-        <location filename="../inventorybooks/bookeditor.cpp" line="+17"/>
+        <location filename="../inventory/books/bookeditor.cpp" line="+18"/>
         <source>Edit Book Title</source>
         <translation>Editiere Buchtitel</translation>
     </message>
@@ -315,7 +315,7 @@
 <context>
     <name>BooksTableModel</name>
     <message>
-        <location filename="../inventorybooks/bookstablemodel.cpp" line="+105"/>
+        <location filename="../inventory/books/bookstablemodel.cpp" line="+106"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
@@ -383,7 +383,7 @@
 <context>
     <name>BooksTableView</name>
     <message>
-        <location filename="../inventorybooks/bookstableview.cpp" line="+96"/>
+        <location filename="../inventory/books/bookstableview.cpp" line="+97"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
@@ -406,7 +406,7 @@
 <context>
     <name>BoolBox</name>
     <message>
-        <location filename="../utils/boolbox.cpp" line="+10"/>
+        <location filename="../custom/utils/boolbox.cpp" line="+10"/>
         <source>Checkbox</source>
         <translation>Auswahlbox</translation>
     </message>
@@ -419,7 +419,7 @@
 <context>
     <name>CompleterDialog</name>
     <message>
-        <location filename="../uicompleter/completerdialog.cpp" line="+21"/>
+        <location filename="../custom/completer/completerdialog.cpp" line="+22"/>
         <source>Modify Edition dataset</source>
         <translation>Bearbeite Zustandsbeschreibung</translation>
     </message>
@@ -442,7 +442,7 @@
 <context>
     <name>CompleterView</name>
     <message>
-        <location filename="../uicompleter/completerview.cpp" line="+59"/>
+        <location filename="../custom/completer/completerview.cpp" line="+60"/>
         <source>SQL Error</source>
         <translation>SQL Fehler</translation>
     </message>
@@ -475,7 +475,7 @@
 <context>
     <name>ConfigDialog</name>
     <message>
-        <location filename="../settings/configdialog.cpp" line="+19"/>
+        <location filename="../custom/settings/configdialog.cpp" line="+21"/>
         <source>Configuration</source>
         <translation>Konfiguration</translation>
     </message>
@@ -498,7 +498,7 @@
 <context>
     <name>CostumerBillingInfo</name>
     <message>
-        <location filename="../inventorycostumers/costumerbillinginfo.cpp" line="+23"/>
+        <location filename="../inventory/costumers/costumerbillinginfo.cpp" line="+24"/>
         <source>Locked</source>
         <translation>Gesperrt</translation>
     </message>
@@ -531,7 +531,7 @@
 <context>
     <name>CostumerContact</name>
     <message>
-        <location filename="../inventorycostumers/costumercontact.cpp" line="+26"/>
+        <location filename="../inventory/costumers/costumercontact.cpp" line="+27"/>
         <source>Gender</source>
         <translation>Geschlecht</translation>
     </message>
@@ -652,7 +652,7 @@
 <context>
     <name>CostumerOverview</name>
     <message>
-        <location filename="../inventorycostumers/costumeroverview.cpp" line="+123"/>
+        <location filename="../inventory/costumers/costumeroverview.cpp" line="+124"/>
         <source>Phone</source>
         <translation>Telefon</translation>
     </message>
@@ -675,7 +675,7 @@
 <context>
     <name>CostumerTableView</name>
     <message>
-        <location filename="../inventorycostumers/costumertableview.cpp" line="+73"/>
+        <location filename="../inventory/costumers/costumertableview.cpp" line="+74"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
@@ -698,7 +698,7 @@
 <context>
     <name>CostumersTableModel</name>
     <message>
-        <location filename="../inventorycostumers/costumerstablemodel.cpp" line="+47"/>
+        <location filename="../inventory/costumers/costumerstablemodel.cpp" line="+48"/>
         <source>Company</source>
         <translation>Unternehmen</translation>
     </message>
@@ -751,7 +751,7 @@
 <context>
     <name>DataTableModel</name>
     <message>
-        <location filename="../uicompleter/datatablemodel.cpp" line="+116"/>
+        <location filename="../custom/completer/datatablemodel.cpp" line="+116"/>
         <source>Group</source>
         <translation>Gruppe</translation>
     </message>
@@ -769,7 +769,7 @@
 <context>
     <name>DockBarWidget</name>
     <message>
-        <location filename="../dockbarwidget.cpp" line="+21"/>
+        <location filename="../dockbarwidget.cpp" line="+22"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
@@ -777,7 +777,7 @@
 <context>
     <name>EMailEdit</name>
     <message>
-        <location filename="../utils/emailedit.cpp" line="+26"/>
+        <location filename="../custom/utils/emailedit.cpp" line="+26"/>
         <source>usage.example@example.com</source>
         <translation>benutzer.beispiel@beispiel.de</translation>
     </message>
@@ -790,7 +790,7 @@
 <context>
     <name>EditCostumer</name>
     <message>
-        <location filename="../inventorycostumers/editcostumer.cpp" line="+36"/>
+        <location filename="../inventory/costumers/editcostumer.cpp" line="+37"/>
         <source>Costumers ID</source>
         <translation>Kunden Nr</translation>
     </message>
@@ -823,7 +823,7 @@
 <context>
     <name>EditorActionBar</name>
     <message>
-        <location filename="../utils/editoractionbar.cpp" line="+15"/>
+        <location filename="../custom/utils/editoractionbar.cpp" line="+16"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
@@ -866,7 +866,7 @@
 <context>
     <name>FileDialog</name>
     <message>
-        <location filename="../utils/filedialog.cpp" line="+21"/>
+        <location filename="../custom/utils/filedialog.cpp" line="+21"/>
         <source>Open Files</source>
         <translation>Öffne Dateien</translation>
     </message>
@@ -899,7 +899,7 @@
 <context>
     <name>GeneralSettingsWidget</name>
     <message>
-        <location filename="../settings/generalsettingswidget.cpp" line="+18"/>
+        <location filename="../custom/settings/generalsettingswidget.cpp" line="+19"/>
         <source>General Configuration</source>
         <translation>Hauptkonfiguration</translation>
     </message>
@@ -927,7 +927,7 @@
 <context>
     <name>HJCMS::SqlConnection</name>
     <message>
-        <location filename="../sqlcore/sqlconnection.cpp" line="+60"/>
+        <location filename="../core/sqlcore/sqlconnection.cpp" line="+60"/>
         <source>No Database server connected!</source>
         <translation>Keine Serververbindung zur Datenbank!</translation>
     </message>
@@ -940,7 +940,7 @@
 <context>
     <name>HJCMS::SqlCore</name>
     <message>
-        <location filename="../sqlcore/sqlcore.cpp" line="+130"/>
+        <location filename="../core/sqlcore/sqlcore.cpp" line="+130"/>
         <source>SQL Driver initialization error</source>
         <translation>Fehler beim laden des SQL Treibers</translation>
     </message>
@@ -953,7 +953,7 @@
 <context>
     <name>ImageDialog</name>
     <message>
-        <location filename="../imaging/imagedialog.cpp" line="+24"/>
+        <location filename="../custom/imaging/imagedialog.cpp" line="+25"/>
         <source>Picture Editor</source>
         <translation>Bildeditor</translation>
     </message>
@@ -1006,7 +1006,7 @@
 <context>
     <name>ImageToolBar</name>
     <message>
-        <location filename="../utils/imagetoolbar.cpp" line="+17"/>
+        <location filename="../custom/utils/imagetoolbar.cpp" line="+18"/>
         <source>Import</source>
         <translation>Einfügen</translation>
     </message>
@@ -1029,7 +1029,7 @@
 <context>
     <name>ImageWidget</name>
     <message>
-        <location filename="../utils/imagewidget.cpp" line="+78"/>
+        <location filename="../custom/utils/imagewidget.cpp" line="+78"/>
         <source>no image in database</source>
         <translation>Kein Bild in der Datenbank</translation>
     </message>
@@ -1047,7 +1047,7 @@
 <context>
     <name>IntSpinBox</name>
     <message>
-        <location filename="../utils/intspinbox.cpp" line="+89"/>
+        <location filename="../custom/utils/intspinbox.cpp" line="+89"/>
         <source>is required and can not empty.</source>
         <translation>ist Erforderlich und mus gesetzt werden.</translation>
     </message>
@@ -1055,7 +1055,7 @@
 <context>
     <name>InventoryBooks</name>
     <message>
-        <location filename="../inventorybooks/inventorybooks.cpp" line="+144"/>
+        <location filename="../inventory/books/inventorybooks.cpp" line="+145"/>
         <source>Automatic search disabled in this mode. Press enter to start the search!</source>
         <translation>Automatische Suche in diesem Modus deaktiviert. Drücken Sie die Eingabetaste, um die Suche zu starten!</translation>
     </message>
@@ -1063,15 +1063,23 @@
 <context>
     <name>InventoryCostumers</name>
     <message>
-        <location filename="../inventorycostumers/inventorycostumers.cpp" line="+72"/>
+        <location filename="../inventory/costumers/inventorycostumers.cpp" line="+73"/>
         <source>Refresh</source>
         <translation>Erneuern</translation>
     </message>
 </context>
 <context>
+    <name>InventoryOrders</name>
+    <message>
+        <location filename="../inventory/orders/inventoryorders.cpp" line="+18"/>
+        <source>Orders</source>
+        <translation>Aufträge</translation>
+    </message>
+</context>
+<context>
     <name>IsbnEdit</name>
     <message>
-        <location filename="../utils/isbnedit.cpp" line="+39"/>
+        <location filename="../custom/utils/isbnedit.cpp" line="+41"/>
         <source>ISBN/EAN 10/13 (ISO 2108)</source>
         <translation>ISBN/EAN 10/13 (ISO 2108)</translation>
     </message>
@@ -1099,7 +1107,7 @@
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../utils/lineedit.cpp" line="+88"/>
+        <location filename="../custom/utils/lineedit.cpp" line="+88"/>
         <source>The field &apos;%1&apos; is requiered but empty!</source>
         <translation>Das Feld &apos;%1&apos; darf nicht Leer sein!</translation>
     </message>
@@ -1107,9 +1115,14 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+77"/>
+        <location filename="../mwindow.cpp" line="+78"/>
         <source>Costumers</source>
         <translation>Kunden</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Orders</source>
+        <translation>Aufträge</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1168,7 +1181,7 @@
         <translation>Vollansicht</translation>
     </message>
     <message>
-        <location line="-154"/>
+        <location line="-159"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
@@ -1178,7 +1191,7 @@
         <translation>Drucke und Stiche</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+24"/>
         <source>Database</source>
         <translation>Datenbank</translation>
     </message>
@@ -1206,7 +1219,7 @@
 <context>
     <name>MessageBox</name>
     <message>
-        <location filename="../utils/messagebox.cpp" line="+20"/>
+        <location filename="../custom/utils/messagebox.cpp" line="+20"/>
         <source>Message closed in </source>
         <translation>Nachricht schließt sich in </translation>
     </message>
@@ -1224,7 +1237,7 @@
 <context>
     <name>OpenImageDialog</name>
     <message>
-        <location filename="../imaging/openimagedialog.cpp" line="+21"/>
+        <location filename="../custom/imaging/openimagedialog.cpp" line="+22"/>
         <source>Open Image from Disk</source>
         <translation>Öffne Bild von Festplatte</translation>
     </message>
@@ -1247,7 +1260,7 @@
 <context>
     <name>PhoneEdit</name>
     <message>
-        <location filename="../utils/phoneedit.cpp" line="+106"/>
+        <location filename="../custom/utils/phoneedit.cpp" line="+106"/>
         <source>The Phone Number is required and can not empty.</source>
         <translation>Eine Rufnummer ist erforderlich und darf nicht Leer sein.</translation>
     </message>
@@ -1255,7 +1268,7 @@
 <context>
     <name>PostalCode</name>
     <message>
-        <location filename="../utils/postalcode.cpp" line="+44"/>
+        <location filename="../custom/utils/postalcode.cpp" line="+44"/>
         <source>currently supported helper functions</source>
         <translation>derzeit unterstützte Hilfsfunktionen</translation>
     </message>
@@ -1273,7 +1286,7 @@
 <context>
     <name>PostgreSqlSettings</name>
     <message>
-        <location filename="../settings/postgresqlsettings.cpp" line="+18"/>
+        <location filename="../custom/settings/postgresqlsettings.cpp" line="+19"/>
         <source>Database Server Configuration</source>
         <translation>Datenbank Server-Konfiguration</translation>
     </message>
@@ -1346,7 +1359,7 @@
 <context>
     <name>PriceEdit</name>
     <message>
-        <location filename="../utils/priceedit.cpp" line="+23"/>
+        <location filename="../custom/utils/priceedit.cpp" line="+23"/>
         <source>€</source>
         <translation>€</translation>
     </message>
@@ -1359,7 +1372,7 @@
 <context>
     <name>PrintsEditor</name>
     <message>
-        <location filename="../inventoryprints/printseditor.cpp" line="+45"/>
+        <location filename="../inventory/prints/printseditor.cpp" line="+46"/>
         <source>Count</source>
         <translation>Anzahl</translation>
     </message>
@@ -1549,7 +1562,7 @@
 <context>
     <name>PrintsTableModel</name>
     <message>
-        <location filename="../inventoryprints/printstablemodel.cpp" line="+96"/>
+        <location filename="../inventory/prints/printstablemodel.cpp" line="+97"/>
         <location line="+6"/>
         <source>Yes</source>
         <translation>Ja</translation>
@@ -1619,7 +1632,7 @@
 <context>
     <name>PrintsTableView</name>
     <message>
-        <location filename="../inventoryprints/printstableview.cpp" line="+129"/>
+        <location filename="../inventory/prints/printstableview.cpp" line="+130"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
@@ -1637,7 +1650,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../inventorybooks/inventorybooks.cpp" line="-116"/>
+        <location filename="../inventory/books/inventorybooks.cpp" line="-116"/>
         <source>Book Title</source>
         <translation>Buchtitel</translation>
     </message>
@@ -1648,7 +1661,7 @@
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../inventoryprints/inventoryprints.cpp" line="+37"/>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="+38"/>
         <source>Article ID</source>
         <translation>Artikel Nr</translation>
     </message>
@@ -1659,7 +1672,7 @@
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../inventoryprints/inventoryprints.cpp" line="+4"/>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="+4"/>
         <source>Author</source>
         <translation>Autor</translation>
     </message>
@@ -1674,7 +1687,7 @@
         <translation>Bestand mit Lagerkategorie</translation>
     </message>
     <message>
-        <location filename="../inventoryprints/inventoryprints.cpp" line="-12"/>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="-12"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -1689,7 +1702,7 @@
         <translation>Aktuelles Inventar</translation>
     </message>
     <message>
-        <location filename="../utils/genderbox.cpp" line="+11"/>
+        <location filename="../custom/utils/genderbox.cpp" line="+12"/>
         <source>Without disclosures</source>
         <translation>Keine Angaben</translation>
     </message>
@@ -1709,7 +1722,7 @@
         <translation>Diverse</translation>
     </message>
     <message>
-        <location filename="../inventorycostumers/inventorycostumers.cpp" line="-48"/>
+        <location filename="../inventory/costumers/inventorycostumers.cpp" line="-48"/>
         <source>Sort by Name</source>
         <translation>Sortiert mit Name</translation>
     </message>
@@ -1724,7 +1737,7 @@
         <translation>Sortiert mit Datum</translation>
     </message>
     <message>
-        <location filename="../corelib/trustlist.cpp" line="+25"/>
+        <location filename="../core/antiquacore/trustlist.cpp" line="+25"/>
         <source>Trust Settings</source>
         <translation>Vertrauenseinstellungen</translation>
     </message>
@@ -1757,7 +1770,7 @@
 <context>
     <name>SalutationBox</name>
     <message>
-        <location filename="../utils/salutationbox.cpp" line="+34"/>
+        <location filename="../custom/utils/salutationbox.cpp" line="+34"/>
         <source>Title or Salutation</source>
         <translation>Titel oder Anrede</translation>
     </message>
@@ -1775,7 +1788,7 @@
 <context>
     <name>SearchBar</name>
     <message>
-        <location filename="../utils/searchbar.cpp" line="+41"/>
+        <location filename="../custom/utils/searchbar.cpp" line="+42"/>
         <source>You can use a wildcard * to broaden the search.</source>
         <translation>Sie können einen Platzhalter * verwenden, um die Suche zu erweitern.</translation>
     </message>
@@ -1805,7 +1818,7 @@
 <context>
     <name>SerialID</name>
     <message>
-        <location filename="../utils/serialid.cpp" line="+71"/>
+        <location filename="../custom/utils/serialid.cpp" line="+71"/>
         <source>The Arcticle ID is required and can not empty.</source>
         <translation>Die Artikel Nummer ist erforderlich und darf nicht Leer sein.</translation>
     </message>
@@ -1813,7 +1826,7 @@
 <context>
     <name>SetLanguage</name>
     <message>
-        <location filename="../utils/setlanguage.cpp" line="+16"/>
+        <location filename="../custom/utils/setlanguage.cpp" line="+16"/>
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
@@ -1901,7 +1914,7 @@
 <context>
     <name>StatsActionBar</name>
     <message>
-        <location filename="../utils/statsactionbar.cpp" line="+43"/>
+        <location filename="../custom/utils/statsactionbar.cpp" line="+44"/>
         <source>Refresh</source>
         <translation>Erneuern</translation>
     </message>
@@ -1949,7 +1962,7 @@
 <context>
     <name>StatusBar</name>
     <message>
-        <location filename="../statusbar.cpp" line="+21"/>
+        <location filename="../statusbar.cpp" line="+22"/>
         <source>Database status</source>
         <translation>Datenbankstatus</translation>
     </message>
@@ -1957,7 +1970,7 @@
 <context>
     <name>StorageEdit</name>
     <message>
-        <location filename="../utils/storageedit.cpp" line="+25"/>
+        <location filename="../custom/utils/storageedit.cpp" line="+25"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
@@ -1975,7 +1988,7 @@
 <context>
     <name>StrLineEdit</name>
     <message>
-        <location filename="../utils/strlineedit.cpp" line="+152"/>
+        <location filename="../custom/utils/strlineedit.cpp" line="+152"/>
         <source>Max allowed length</source>
         <translation>Maximal erlaubte Zeichenlänge</translation>
     </message>
@@ -2001,9 +2014,80 @@
     </message>
 </context>
 <context>
+    <name>TableModel</name>
+    <message>
+        <location filename="../inventory/orders/tablemodel.cpp" line="+85"/>
+        <source>Since</source>
+        <translation>Erstellt</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Status</source>
+        <translation>Status</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Article ID</source>
+        <translation>Artikel ID</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Costumer</source>
+        <translation>Kunde</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Deliver</source>
+        <translation>Lieferant</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Locked</source>
+        <translation>Gesperrt</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Closed</source>
+        <translation>Geschlossen</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Order Type</source>
+        <translation>Auftrags Typ</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Runtime</source>
+        <translation>Laufzeit</translation>
+    </message>
+</context>
+<context>
+    <name>TableView</name>
+    <message>
+        <location filename="../inventory/orders/tableview.cpp" line="+91"/>
+        <source>Rows: %1, Time: %2 msec.</source>
+        <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <source>Open entry</source>
+        <translation>Auftrag öffnen</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Create entry</source>
+        <translation>Auftrag erstellen</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Create order</source>
+        <translation>Auftrag anlegen</translation>
+    </message>
+</context>
+<context>
     <name>TechniqueEdit</name>
     <message>
-        <location filename="../utils/techniqueedit.cpp" line="+69"/>
+        <location filename="../custom/utils/techniqueedit.cpp" line="+69"/>
         <source>Technique field is required and must set.</source>
         <translation>Technikfeld ist erforderlich und muss gesetzt werden.</translation>
     </message>
@@ -2011,7 +2095,7 @@
 <context>
     <name>TextField</name>
     <message>
-        <location filename="../utils/textfield.cpp" line="+65"/>
+        <location filename="../custom/utils/textfield.cpp" line="+65"/>
         <source>a &apos;%1&apos; required and can not empty.</source>
         <translation>Bei &apos;%1&apos; ist eine Eingabe erforderlich.</translation>
     </message>
@@ -2019,7 +2103,7 @@
 <context>
     <name>ToolBar</name>
     <message>
-        <location filename="../imaging/toolbar.cpp" line="+23"/>
+        <location filename="../custom/imaging/toolbar.cpp" line="+24"/>
         <source>Home</source>
         <translation>Heimverzeichnis</translation>
     </message>
@@ -2073,7 +2157,7 @@
 <context>
     <name>TrustBox</name>
     <message>
-        <location filename="../utils/trustbox.cpp" line="+68"/>
+        <location filename="../custom/utils/trustbox.cpp" line="+68"/>
         <source>Trusted Verification is required.</source>
         <translation>Eine vertrauenswürdige Überprüfung ist erforderlich.</translation>
     </message>
@@ -2081,7 +2165,7 @@
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../workspace.cpp" line="+26"/>
+        <location filename="../workspace.cpp" line="+28"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
@@ -2111,6 +2195,16 @@
         <translation>Kunden Inventar</translation>
     </message>
     <message>
+        <location line="+7"/>
+        <source>Orders</source>
+        <translation>Aufträge</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Order Inventory</source>
+        <translation>Auftrags Inventar</translation>
+    </message>
+    <message>
         <location line="+14"/>
         <source>Cant close this tab, unsafed changes!</source>
         <translation>Kann das Tab nicht schliessen, nicht gespeicherte Änderungen!</translation>
@@ -2119,7 +2213,7 @@
 <context>
     <name>YearEdit</name>
     <message>
-        <location filename="../utils/yearedit.cpp" line="+75"/>
+        <location filename="../custom/utils/yearedit.cpp" line="+75"/>
         <source>The Year must contain a valid entry.</source>
         <translation>Das Jahr benötigt einen gültigen Eintrag.</translation>
     </message>

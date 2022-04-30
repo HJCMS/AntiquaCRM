@@ -1,0 +1,6 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+
+#ifndef UTILSMAIN_UTILS_H
+# include "utilsmain.h"
+#endif

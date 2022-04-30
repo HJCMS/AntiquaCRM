@@ -1,5 +1,6 @@
 #include "dockbarwidget.h"
-#include "version.h"
+#include "antiqua_global.h"
+#include "myicontheme.h"
 
 #include <QtCore/QDebug>
 #include <QtCore/QPropertyAnimation>

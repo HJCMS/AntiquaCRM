@@ -12,6 +12,7 @@
 class InventoryBooks;
 class InventoryPrints;
 class InventoryCostumers;
+class InventoryOrders;
 
 class Workspace : public QTabWidget {
   Q_OBJECT
@@ -19,6 +20,7 @@ class Workspace : public QTabWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  InventoryOrders *m_tabOrders;
   InventoryBooks *m_tabBooks;
   InventoryPrints *m_tabPrints;
   InventoryCostumers *m_tabCostumers;
@@ -26,17 +28,22 @@ private:
   /**
      @brief Bücher Inventar öffnen
   */
-  int addInventoryBooks(int);
+  int addInventoryBooks(int index);
 
   /**
      @brief Drucke & Stiche Inventar öffnen
   */
-  int addInventoryPrints(int);
+  int addInventoryPrints(int index);
 
   /**
      @brief Kundenregister Inventar öffnen
   */
-  int addInventoryCostumers(int);
+  int addInventoryCostumers(int index);
+
+  /**
+     @brief Bücher Inventar öffnen
+  */
+  int addInventoryOrders(int index);
 
 private Q_SLOTS:
   /**
@@ -67,7 +74,7 @@ public:
   /**
      @brief Helfer zur Identifizierung der Tabs
   */
-  enum Tab { Books = 1, Prints = 2, Costumers = 3 };
+  enum Tab { Books = 1, Prints = 2, Costumers = 3, Orders = 4 };
   Q_ENUM(Tab)
 
   explicit Workspace(QWidget *parent = 0);

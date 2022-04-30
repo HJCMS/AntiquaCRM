@@ -1,8 +1,10 @@
 #include "workspace.h"
+#include "antiqua_global.h"
+#include "inventoryorders.h"
 #include "inventorybooks.h"
 #include "inventorycostumers.h"
 #include "inventoryprints.h"
-#include "version.h"
+#include "myicontheme.h"
 
 #include <QtCore/QDebug>
 #include <QtCore/QMetaObject>
@@ -45,6 +47,14 @@ int Workspace::addInventoryCostumers(int index) {
   return i;
 }
 
+int Workspace::addInventoryOrders(int index) {
+  m_tabOrders = new InventoryOrders(this);
+  int i = insertTab(index, m_tabOrders, tr("Orders"));
+  setTabToolTip(i, tr("Order Inventory"));
+  setTabIcon(i, myIcon("spreadsheet"));
+  return i;
+}
+
 void Workspace::closeTabClicked(int index) {
   bool closable = false;
   QMetaObject::invokeMethod(widget(index), "isClosable", Qt::DirectConnection,
@@ -83,6 +93,13 @@ void Workspace::openTab(int index) {
       i = addInventoryCostumers(count() + 1);
     } else {
       setCurrentWidget(m_tabCostumers);
+      return;
+    }
+  } else if (index == Tab::Orders) {
+    if (indexOf(m_tabOrders) < 0) {
+      i = addInventoryOrders(count() + 1);
+    } else {
+      setCurrentWidget(m_tabOrders);
       return;
     }
   }

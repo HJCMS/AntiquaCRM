@@ -5,7 +5,7 @@
 #include "mwindow.h"
 #include "socketserver.h"
 #include "sqlcore.h"
-#include "version.h"
+#include "antiqua_global.h"
 
 #include <QtCore/QDebug>
 #include <QtNetwork/QLocalSocket>

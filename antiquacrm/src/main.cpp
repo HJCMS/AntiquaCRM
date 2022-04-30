@@ -3,7 +3,7 @@
 // @COPYRIGHT_HOLDER@
 
 #include "mapplication.h"
-#include "version.h"
+#include "antiqua_global.h"
 
 /* QtCore */
 #include <QtCore/QDebug>

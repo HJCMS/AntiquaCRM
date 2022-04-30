@@ -1,5 +1,5 @@
 #include "socketserver.h"
-#include "version.h"
+#include "antiqua_global.h"
 
 #include <QtCore/QSysInfo>
 
