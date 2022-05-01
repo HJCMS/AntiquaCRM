@@ -112,7 +112,7 @@ void CostumerTableView::contextMenuEvent(QContextMenuEvent *ev) {
 
   QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create entry"));
   ac_create->setObjectName("ac_context_create_costumer");
-  ac_create->setEnabled(b);
+  ac_create->setEnabled(true);
   connect(ac_create, SIGNAL(triggered()), this, SLOT(createByContext()));
 
   QAction *ac_order = m->addAction(myIcon("autostart"), tr("Create order"));

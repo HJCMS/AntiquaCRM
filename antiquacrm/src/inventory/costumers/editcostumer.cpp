@@ -2,14 +2,14 @@
 // vim: set fileencoding=utf-8
 
 #include "editcostumer.h"
+#include "antiqua_global.h"
 #include "costumerbillinginfo.h"
 #include "costumercontact.h"
 #include "costumeroverview.h"
 #include "editoractionbar.h"
 #include "genderbox.h"
-#include "serialid.h"
-#include "antiqua_global.h"
 #include "myicontheme.h"
+#include "serialid.h"
 
 #include <QtCore/QDebug>
 #include <QtWidgets/QHBoxLayout>
@@ -97,7 +97,7 @@ void EditCostumer::importSqlResult() {
   blockSignals(false);
 
   m_overview->createDocument(sqlQueryResult);
-  resetModified();
+  resetModified(inputList);
 }
 
 bool EditCostumer::sendSqlQuery(const QString &sqlStatement) {
@@ -113,7 +113,7 @@ bool EditCostumer::sendSqlQuery(const QString &sqlStatement) {
     return false;
   } else {
     msgBox.success(tr("Saved successfully!"), 1);
-    resetModified();
+    resetModified(inputList);
     return true;
   }
 }
@@ -296,7 +296,8 @@ void EditCostumer::createSqlInsert() {
     checkLeaveEditor();
 }
 
-void EditCostumer::setData(const QString &key, const QVariant &value, bool required) {
+void EditCostumer::setData(const QString &key, const QVariant &value,
+                           bool required) {
   /** Dataset */
   if (key.contains("c_id")) {
     c_id->setValue(value);
@@ -364,16 +365,6 @@ void EditCostumer::setData(const QString &key, const QVariant &value, bool requi
   // qDebug() << "MISSING" << key << value;
 }
 
-void EditCostumer::resetModified() {
-  foreach (QString name, inputList) {
-    QObject *child = findChild<QObject *>(name, Qt::FindChildrenRecursively);
-    if (child != nullptr) {
-      QMetaObject::invokeMethod(child, "setModified", Qt::DirectConnection,
-                                Q_ARG(bool, false));
-    }
-  }
-}
-
 void EditCostumer::saveData() {
   if (c_id->value().toInt() < 1) {
     createSqlInsert();
@@ -382,34 +373,8 @@ void EditCostumer::saveData() {
   }
 }
 
-void EditCostumer::clearDataFields() {
-  foreach (QString name, inputList) {
-    QObject *child = findChild<QObject *>(name, Qt::FindChildrenRecursively);
-    if (child != nullptr) {
-      QMetaObject::invokeMethod(child, "reset", Qt::DirectConnection);
-    }
-  }
-}
-
-bool EditCostumer::checkIsModified() {
-  foreach (QString name, inputList) {
-    QObject *child = findChild<QObject *>(name, Qt::FindChildrenRecursively);
-    if (child != nullptr) {
-      bool b = false;
-      if (QMetaObject::invokeMethod(child, "isModified", Qt::DirectConnection,
-                                    Q_RETURN_ARG(bool, b))) {
-
-        if (b) {
-          return true;
-        }
-      }
-    }
-  }
-  return false;
-}
-
 void EditCostumer::checkLeaveEditor() {
-  if (checkIsModified()) {
+  if (checkIsModified(p_objPattern)) {
     emit s_postMessage(
         tr("Unsaved Changes, don't leave this page before saved."));
     return;
@@ -419,7 +384,7 @@ void EditCostumer::checkLeaveEditor() {
 
 void EditCostumer::finalLeaveEditor() {
   sqlQueryResult.clear();             /**< SQL History leeren */
-  clearDataFields();                  /**< Alle Datenfelder leeren */
+  clearDataFields(p_objPattern);      /**< Alle Datenfelder leeren */
   m_actionBar->setRestoreable(false); /**< ResetButton off */
   emit s_leaveEditor();               /**< Zurück */
 }
@@ -458,7 +423,7 @@ void EditCostumer::updateCostumer(const QString &id) {
       }
       if (q.value("fullname").isValid()) {
         QVariant val = q.value("fullname");
-        DataField d("fullname",val.type(),false,val);
+        DataField d("fullname", val.type(), false, val);
         sqlQueryResult.append(d);
       }
     }
@@ -477,9 +442,8 @@ void EditCostumer::updateCostumer(const QString &id) {
 void EditCostumer::createCostumer() {
   setInputList();
   sqlQueryResult.clear();             /**< SQL History leeren */
-  clearDataFields();                  /**< Alle Datenfelder leeren */
+  clearDataFields(p_objPattern);      /**< Alle Datenfelder leeren */
   m_actionBar->setRestoreable(false); /**< ResetButton off */
-  if (inputList.size()) {
-    m_dataBox->setCurrentWidget(m_contact);
-  }
+  m_dataBox->setCurrentWidget(m_contact);
+  resetModified(inputList);
 }

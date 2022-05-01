@@ -20,16 +20,21 @@ SET (subproject_LINKER
 
 SET (subproject_SOURCES
   inventoryorders.cpp
-  tablemodel.cpp
-  tableview.cpp
+  orderstable.cpp
+  orderstablemodel.cpp
   orderstatusbox.cpp
+  orderspaymentbox.cpp
+  ordereditor.cpp
 )
 
 SET (subproject_HEADERS
+  orderstatements.h
   inventoryorders.h
-  tablemodel.h
-  tableview.h
+  orderstable.h
+  orderstablemodel.h
   orderstatusbox.h
+  orderspaymentbox.h
+  ordereditor.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

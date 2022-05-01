@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ASSIGNMENTS_TABLEVIEW_H
-#define ASSIGNMENTS_TABLEVIEW_H
+#ifndef PRINTSTABLE_H
+#define PRINTSTABLE_H
 
 #include <QtCore/QHash>
 #include <QtCore/QObject>
@@ -11,22 +11,25 @@
 #include <QtGui/QContextMenuEvent>
 #include <QtWidgets/QTableView>
 
+#include <SqlCore>
+
 namespace HJCMS {
 class SqlCore;
 };
 
-class TableModel;
+class PrintsTableModel;
+class SearchStatement; /**< @ref SearchBar */
 
-class TableView : public QTableView {
+class PrintsTable : public QTableView {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "https://www.hjcms.de")
+  Q_CLASSINFO("URL", "http://www.hjcms.de")
 
 private:
   int maxRowCount = 2500;
   HJCMS::SqlCore *m_sql;
   QModelIndex p_modelIndex;
-  TableModel *m_queryModel;
+  PrintsTableModel *m_queryModel;
   QString p_historyQuery;
 
   /**
@@ -39,7 +42,7 @@ private Q_SLOTS:
    @brief Suche Datensatz mit Index
    Wenn vorhanden Sende Signal @ref s_articleSelected
   */
-  void queryOrder(const QModelIndex &);
+  void queryArticleID(const QModelIndex &);
 
   /**
    @brief Ableitung für @ref clickedGetArticleID
@@ -52,19 +55,13 @@ private Q_SLOTS:
   */
   void createByContext();
 
-  /**
-     @brief  Auftrage Erstellung
-     @todo Im Moment noch verfügbar
-  */
-  void orderByContext();
-
 protected:
   void contextMenuEvent(QContextMenuEvent *);
 
 Q_SIGNALS:
-  void s_reportQuery(const QString &);
-  void s_editOrder(int id);
-  void s_createOrder();
+  void s_rowsChanged(int count);
+  void s_articleSelected(int id);
+  void s_newEntryPlease();
 
 public Q_SLOTS:
   /**
@@ -74,12 +71,19 @@ public Q_SLOTS:
   */
   void refreshView();
 
-  void initOrders();
+  /**
+    Wird von @ref StatsBookBar::m_showHistory()
+    aufgerufen und fragt den Verlauf ab.
+  */
+  void queryHistory(const QString &);
 
-  void updateStatus();
+  /**
+    Startet Abfrage ausgehend von Text/Sucheingabe
+  */
+  void queryStatement(const SearchStatement &);
 
 public:
-  explicit TableView(QWidget *parent = nullptr);
+  explicit PrintsTable(QWidget *parent = nullptr);
 };
 
-#endif // ASSIGNMENTS_TABLEVIEW_H
+#endif // PRINTSTABLE_H

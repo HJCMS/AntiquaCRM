@@ -36,6 +36,7 @@ StatusDialog::StatusDialog(const QString &current, QWidget *parent)
   setObjectName("status_dialog_box");
   setSizeGripEnabled(true);
   setWindowTitle(tr("Edit Order Status"));
+  setMinimumWidth(300);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
 
@@ -45,7 +46,7 @@ StatusDialog::StatusDialog(const QString &current, QWidget *parent)
 
   m_box = new OrderStatusBox(this);
   int i = m_box->findText(current, Qt::MatchExactly);
-  if (i != 0)
+  if (i > 0)
     m_box->setCurrentIndex(i);
 
   layout->addWidget(m_box);

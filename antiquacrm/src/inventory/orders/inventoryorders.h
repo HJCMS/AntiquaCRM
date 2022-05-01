@@ -14,7 +14,7 @@
 #include <QtWidgets/QWidget>
 
 class StatsActionBar;
-class TableView;
+class OrdersTable;
 
 /**
  @class InventoryOrders
@@ -39,7 +39,7 @@ private:
   /**
     @brief Tabellenansicht
   */
-  TableView *m_tableView;
+  OrdersTable *m_tableView;
 
   /**
     @brief Statusbalken mit Historienauswahl

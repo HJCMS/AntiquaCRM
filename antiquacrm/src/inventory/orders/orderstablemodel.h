@@ -2,16 +2,17 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ASSIGNMENTS_TABLEMODEL_H
-#define ASSIGNMENTS_TABLEMODEL_H
+#ifndef ORDERSTABLEMODEL_H
+#define ORDERSTABLEMODEL_H
 
+#include <QtCore/QDateTime>
 #include <QtCore/QModelIndex>
 #include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QVariant>
 #include <QtSql/QSqlQueryModel>
 
-class TableModel : public QSqlQueryModel {
+class OrdersTableModel : public QSqlQueryModel {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann (Undefined)")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -21,13 +22,14 @@ private Q_SLOTS:
 
 Q_SIGNALS:
   void dataUpdated(bool);
+  void datealert(int);
 
 public:
-  explicit TableModel(QObject *parent = nullptr);
+  explicit OrdersTableModel(QObject *parent = nullptr);
   QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 
   QVariant headerData(int section, Qt::Orientation orientation,
                       int role = Qt::DisplayRole) const;
 };
 
-#endif // ASSIGNMENTS_TABLEMODEL_H
+#endif // ORDERSTABLEMODEL_H

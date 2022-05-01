@@ -14,7 +14,7 @@
 #include <QtWidgets/QWidget>
 
 class SearchBar;
-class BooksTableView;
+class BooksTable;
 class StatsActionBar;
 class BookEditor;
 
@@ -53,7 +53,7 @@ private:
   /**
     @brief Tabellenansicht
   */
-  BooksTableView *m_tableView;
+  BooksTable *m_tableView;
 
   /**
     @brief Statusbalken mit Historienauswahl

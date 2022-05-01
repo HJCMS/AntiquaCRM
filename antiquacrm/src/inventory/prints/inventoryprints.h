@@ -15,7 +15,7 @@
 #include <QtWidgets/QWidget>
 
 class SearchBar;
-class PrintsTableView;
+class PrintsTable;
 class PrintsEditor;
 class StatsActionBar;
 
@@ -48,7 +48,7 @@ private:
   /**
     @brief Tabellenansicht
   */
-  PrintsTableView *m_tableView;
+  PrintsTable *m_tableView;
 
   /**
     @}

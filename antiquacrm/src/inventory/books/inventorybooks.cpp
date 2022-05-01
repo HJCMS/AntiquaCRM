@@ -4,7 +4,7 @@
 #include "inventorybooks.h"
 #include "applsettings.h"
 #include "bookeditor.h"
-#include "bookstableview.h"
+#include "bookstable.h"
 #include "searchbar.h"
 #include "statsactionbar.h"
 #include "antiqua_global.h"
@@ -84,7 +84,7 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   m_searchBar->addSearchFilters(bookSearchFilter());
   siteOneLayout->addWidget(m_searchBar);
 
-  m_tableView = new BooksTableView(this);
+  m_tableView = new BooksTable(this);
   siteOneLayout->addWidget(m_tableView);
 
   m_statsBookBar = new StatsActionBar(this);

@@ -1,3 +1,7 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+// @COPYRIGHT_HOLDER@
+
 #ifndef ORDERSTATUSBOX_H
 #define ORDERSTATUSBOX_H
 

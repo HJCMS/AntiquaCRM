@@ -19,17 +19,17 @@ SET (subproject_LINKER
 )
 
 SET (subproject_SOURCES
-  inventorybooks.cpp
-  bookstableview.cpp
-  bookstablemodel.cpp
   bookeditor.cpp
+  bookstable.cpp
+  bookstablemodel.cpp
+  inventorybooks.cpp
 )
 
 SET (subproject_HEADERS
-  inventorybooks.h
-  bookstableview.h
-  bookstablemodel.h
   bookeditor.h
+  bookstable.h
+  bookstablemodel.h
+  inventorybooks.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

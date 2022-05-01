@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef PRINTSTABLEVIEW_H
-#define PRINTSTABLEVIEW_H
+#ifndef BOOKSTABLE_H
+#define BOOKSTABLE_H
 
 #include <QtCore/QHash>
 #include <QtCore/QObject>
@@ -11,23 +11,25 @@
 #include <QtGui/QContextMenuEvent>
 #include <QtWidgets/QTableView>
 
+#include <SqlCore>
+
 namespace HJCMS {
 class SqlCore;
 };
 
-class PrintsTableModel;
+class BooksTableModel;
 class SearchStatement; /**< @ref SearchBar */
 
-class PrintsTableView : public QTableView {
+class BooksTable : public QTableView {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "http://www.hjcms.de")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
   int maxRowCount = 2500;
   HJCMS::SqlCore *m_sql;
   QModelIndex p_modelIndex;
-  PrintsTableModel *m_queryModel;
+  BooksTableModel *m_queryModel;
   QString p_historyQuery;
 
   /**
@@ -53,17 +55,11 @@ private Q_SLOTS:
   */
   void createByContext();
 
-  /**
-     @brief  Auftrage Erstellung
-     @todo Im Moment noch verfügbar
-  */
-  void orderByContext();
-
 protected:
   void contextMenuEvent(QContextMenuEvent *);
 
 Q_SIGNALS:
-  void s_rowsChanged(int count);
+  void s_reportQuery(const QString &);
   void s_articleSelected(int id);
   void s_newEntryPlease();
 
@@ -87,7 +83,7 @@ public Q_SLOTS:
   void queryStatement(const SearchStatement &);
 
 public:
-  explicit PrintsTableView(QWidget *parent = nullptr);
+  explicit BooksTable(QWidget *parent = nullptr);
 };
 
-#endif // PRINTSTABLEVIEW_H
+#endif // BOOKSTABLE_H

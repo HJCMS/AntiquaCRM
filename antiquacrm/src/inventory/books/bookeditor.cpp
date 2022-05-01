@@ -1,7 +1,7 @@
 #include "bookeditor.h"
+#include "antiqua_global.h"
 #include "applsettings.h"
 #include "isbnrequest.h"
-#include "antiqua_global.h"
 #include "myicontheme.h"
 
 #include <QtCore/QDebug>
@@ -336,16 +336,6 @@ void BookEditor::removeImageDialog(int id) {
   }
 }
 
-void BookEditor::resetModified() {
-  foreach (QString name, inputList) {
-    QObject *child = findChild<QObject *>(name, Qt::FindChildrenRecursively);
-    if (child != nullptr) {
-      QMetaObject::invokeMethod(child, "setModified", Qt::DirectConnection,
-                                Q_ARG(bool, false));
-    }
-  }
-}
-
 bool BookEditor::sendSqlQuery(const QString &sqlStatement) {
   if (SHOW_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << sqlStatement;
@@ -359,7 +349,7 @@ bool BookEditor::sendSqlQuery(const QString &sqlStatement) {
     return false;
   } else {
     msgBox.success(tr("Bookdata saved successfully!"), 1);
-    resetModified();
+    resetModified(inputList);
     return true;
   }
 }
@@ -529,41 +519,11 @@ void BookEditor::importSqlResult() {
     m_imageView->searchImageById(id);
   }
   // Nach Ersteintrag zurück setzen!
-  resetModified();
-}
-
-void BookEditor::clearDataFields() {
-  QList<QObject *> list =
-      findChildren<QObject *>(p_objPattern, Qt::FindChildrenRecursively);
-  for (int i = 0; i < list.size(); ++i) {
-    if (list.at(i) != nullptr) {
-      QMetaObject::invokeMethod(list.at(i), "reset", Qt::QueuedConnection);
-    }
-  }
-  m_imageView->clear();
-}
-
-bool BookEditor::checkIsModified() {
-  QList<QObject *> list =
-      findChildren<QObject *>(p_objPattern, Qt::FindChildrenRecursively);
-  for (int i = 0; i < list.size(); ++i) {
-    if (list.at(i) != nullptr) {
-      bool b = false;
-      if (QMetaObject::invokeMethod(list.at(i), "isModified",
-                                    Qt::DirectConnection,
-                                    Q_RETURN_ARG(bool, b))) {
-
-        if (b) {
-          return true;
-        }
-      }
-    }
-  }
-  return false;
+  resetModified(inputList);
 }
 
 void BookEditor::checkLeaveEditor() {
-  if (checkIsModified()) {
+  if (checkIsModified(p_objPattern)) {
     emit s_postMessage(
         tr("Unsaved Changes, don't leave this page before saved."));
     return;
@@ -574,8 +534,9 @@ void BookEditor::checkLeaveEditor() {
 void BookEditor::finalLeaveEditor() {
   m_listWidget->clear();              /**< OpenLibrary.org Anzeige leeren */
   sqlQueryResult.clear();             /**< SQL History leeren */
-  clearDataFields();                  /**< Alle Datenfelder leeren */
+  clearDataFields(p_objPattern);      /**< Alle Datenfelder leeren */
   m_actionBar->setRestoreable(false); /**< ResetButton off */
+  m_imageView->clear();               /**< Imaging clear */
   m_imageToolBar->setActive(false);   /**< Bilder Aktionsleiste zurücksetzen */
   emit s_leaveEditor();               /**< Zurück */
 }
@@ -587,7 +548,8 @@ void BookEditor::restoreDataset() {
   importSqlResult();
 }
 
-void BookEditor::setData(const QString &key, const QVariant &value, bool required) {
+void BookEditor::setData(const QString &key, const QVariant &value,
+                         bool required) {
   if (key.contains("ib_id")) {
     ib_id->setValue(value);
     return;
@@ -911,5 +873,5 @@ void BookEditor::editBookEntry(const QString &condition) {
 void BookEditor::createBookEntry() {
   setEnabled(true);
   m_imageToolBar->setActive(false);
-  resetModified();
+  resetModified(inputList);
 }

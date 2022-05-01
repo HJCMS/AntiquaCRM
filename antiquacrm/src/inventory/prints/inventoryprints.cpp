@@ -5,7 +5,7 @@
 #include "applsettings.h"
 #include "messagebox.h"
 #include "printseditor.h"
-#include "printstableview.h"
+#include "printstable.h"
 #include "searchbar.h"
 #include "statsactionbar.h"
 #include "antiqua_global.h"
@@ -74,7 +74,7 @@ InventoryPrints::InventoryPrints(QWidget *parent)
   m_searchBar->addSearchFilters(bookSearchFilter());
   siteOneLayout->addWidget(m_searchBar);
 
-  m_tableView = new PrintsTableView(this);
+  m_tableView = new PrintsTable(this);
   siteOneLayout->addWidget(m_tableView);
 
   m_statsPrintBar = new StatsActionBar(this);

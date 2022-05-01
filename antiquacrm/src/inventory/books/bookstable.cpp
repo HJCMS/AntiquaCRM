@@ -1,13 +1,12 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "bookstableview.h"
+#include "bookstable.h"
+#include "antiqua_global.h"
 #include "applsettings.h"
 #include "bookstablemodel.h"
-#include "searchbar.h"
-#include "sqlcore.h"
-#include "antiqua_global.h"
 #include "myicontheme.h"
+#include "searchbar.h"
 
 #include <QtCore/QDebug>
 #include <QtCore/QItemSelectionModel>
@@ -51,8 +50,8 @@ static const QString queryTables() {
   return s;
 }
 
-BooksTableView::BooksTableView(QWidget *parent) : QTableView{parent} {
-  setObjectName("BooksTableView");
+BooksTable::BooksTable(QWidget *parent) : QTableView{parent} {
+  setObjectName("BooksTable");
   setEditTriggers(QAbstractItemView::DoubleClicked);
   setCornerButtonEnabled(false);
   setSortingEnabled(false);
@@ -66,6 +65,7 @@ BooksTableView::BooksTableView(QWidget *parent) : QTableView{parent} {
   m_sql = new HJCMS::SqlCore(this);
 
   m_queryModel = new BooksTableModel(this);
+  m_queryModel->setObjectName("book_table_model");
   setModel(m_queryModel);
 
   /* Kopfzeilen anpassen */
@@ -77,7 +77,7 @@ BooksTableView::BooksTableView(QWidget *parent) : QTableView{parent} {
           SLOT(queryArticleID(const QModelIndex &)));
 }
 
-bool BooksTableView::sqlExecQuery(const QString &statement) {
+bool BooksTable::sqlExecQuery(const QString &statement) {
   if (!statement.contains("SELECT"))
     return false;
 
@@ -105,7 +105,7 @@ bool BooksTableView::sqlExecQuery(const QString &statement) {
   return false;
 }
 
-void BooksTableView::queryArticleID(const QModelIndex &index) {
+void BooksTable::queryArticleID(const QModelIndex &index) {
   QModelIndex id(index);
   if (m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
     int i = m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
@@ -115,15 +115,11 @@ void BooksTableView::queryArticleID(const QModelIndex &index) {
   }
 }
 
-void BooksTableView::openByContext() { queryArticleID(p_modelIndex); }
+void BooksTable::openByContext() { queryArticleID(p_modelIndex); }
 
-void BooksTableView::createByContext() { emit s_newEntryPlease(); }
+void BooksTable::createByContext() { emit s_newEntryPlease(); }
 
-void BooksTableView::orderByContext() {
-  qDebug() << Q_FUNC_INFO << "Noch nicht Implementiert";
-}
-
-void BooksTableView::contextMenuEvent(QContextMenuEvent *ev) {
+void BooksTable::contextMenuEvent(QContextMenuEvent *ev) {
   p_modelIndex = indexAt(ev->pos());
   // Aktiviere/Deaktivieren der Einträge
   bool b = p_modelIndex.isValid();
@@ -140,23 +136,23 @@ void BooksTableView::contextMenuEvent(QContextMenuEvent *ev) {
   ac_create->setEnabled(b);
   connect(ac_create, SIGNAL(triggered()), this, SLOT(createByContext()));
 
-  QAction *ac_order = m->addAction(myIcon("autostart"), tr("Create order"));
-  ac_order->setObjectName("ac_context_order_book");
-  connect(ac_order, SIGNAL(triggered()), this, SLOT(orderByContext()));
-  ac_order->setEnabled(b);
+  QAction *ac_refresh = m->addAction(myIcon("reload"), tr("Refresh"));
+  ac_refresh->setObjectName("ac_context_refresh_books");
+  connect(ac_refresh, SIGNAL(triggered()), this, SLOT(refreshView()));
+  ac_refresh->setEnabled(b);
 
   m->exec(ev->globalPos());
   delete m;
 }
 
-void BooksTableView::refreshView() {
+void BooksTable::refreshView() {
   if (sqlExecQuery(p_historyQuery)) {
     resizeRowsToContents();
     resizeColumnsToContents();
   }
 }
 
-void BooksTableView::queryHistory(const QString &str) {
+void BooksTable::queryHistory(const QString &str) {
   QString q("SELECT ");
   q.append(querySelect());
   q.append(queryTables());
@@ -187,7 +183,7 @@ void BooksTableView::queryHistory(const QString &str) {
   }
 }
 
-void BooksTableView::queryStatement(const SearchStatement &cl) {
+void BooksTable::queryStatement(const SearchStatement &cl) {
   /**
      @brief exact_match
       false = irgendwo im feld

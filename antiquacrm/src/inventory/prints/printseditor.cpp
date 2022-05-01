@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "printseditor.h"
-#include "applsettings.h"
 #include "antiqua_global.h"
+#include "applsettings.h"
 #include "myicontheme.h"
 
 #include <QtCore>
@@ -306,16 +306,6 @@ void PrintsEditor::openImageDialog() {
   }
 }
 
-void PrintsEditor::resetModified() {
-  foreach (QString name, inputList) {
-    QObject *child = findChild<QObject *>(name, Qt::FindChildrenRecursively);
-    if (child != nullptr) {
-      QMetaObject::invokeMethod(child, "setModified", Qt::DirectConnection,
-                                Q_ARG(bool, false));
-    }
-  }
-}
-
 bool PrintsEditor::sendSqlQuery(const QString &sqlStatement) {
   MessageBox messanger(this);
   QSqlQuery q = m_sql->query(sqlStatement);
@@ -325,7 +315,7 @@ bool PrintsEditor::sendSqlQuery(const QString &sqlStatement) {
     return false;
   } else {
     messanger.success(tr("Data saved successfully!"), 1);
-    resetModified();
+    resetModified(inputList);
     return true;
   }
 }
@@ -505,41 +495,11 @@ void PrintsEditor::importSqlResult() {
     m_imageView->searchImageById(id);
   }
   // Nach Ersteintrag zurück setzen!
-  resetModified();
-}
-
-void PrintsEditor::clearDataFields() {
-  QList<QObject *> list =
-      findChildren<QObject *>(p_objPattern, Qt::FindChildrenRecursively);
-  for (int i = 0; i < list.size(); ++i) {
-    if (list.at(i) != nullptr) {
-      QMetaObject::invokeMethod(list.at(i), "reset", Qt::QueuedConnection);
-    }
-  }
-  m_imageView->clear();
-}
-
-bool PrintsEditor::checkIsModified() {
-  QList<QObject *> list =
-      findChildren<QObject *>(p_objPattern, Qt::FindChildrenRecursively);
-  for (int i = 0; i < list.size(); ++i) {
-    if (list.at(i) != nullptr) {
-      bool b = false;
-      if (QMetaObject::invokeMethod(list.at(i), "isModified",
-                                    Qt::DirectConnection,
-                                    Q_RETURN_ARG(bool, b))) {
-
-        if (b) {
-          return true;
-        }
-      }
-    }
-  }
-  return false;
+  resetModified(inputList);
 }
 
 void PrintsEditor::checkLeaveEditor() {
-  if (checkIsModified()) {
+  if (checkIsModified(p_objPattern)) {
     emit s_postMessage(
         tr("Unsaved Changes, don't leave this page before saved."));
     return;
@@ -549,8 +509,9 @@ void PrintsEditor::checkLeaveEditor() {
 
 void PrintsEditor::finalLeaveEditor() {
   sqlQueryResult.clear();             /**< SQL History leeren */
-  clearDataFields();                  /**< Alle Datenfelder leeren */
+  clearDataFields(p_objPattern);      /**< Alle Datenfelder leeren */
   m_actionBar->setRestoreable(false); /**< ResetButton off */
+  m_imageView->clear();               /**< Imaging clear */
   emit s_leaveEditor();               /**< Zurück */
 }
 
@@ -673,5 +634,5 @@ void PrintsEditor::editPrintsEntry(const QString &condition) {
 void PrintsEditor::createPrintsEntry() {
   setEnabled(true);
   m_imageToolBar->setActive(false);
-  resetModified();
+  resetModified(inputList);
 }

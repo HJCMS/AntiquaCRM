@@ -129,13 +129,6 @@ private:
   void setInputList();
 
   /**
-    @brief Setzt alle Markierungen wieder zurück.
-    Wird z.B. nach erfolgreichen Speichern ausgeführt!
-    @see sendSqlQuery
-  */
-  void resetModified();
-
-  /**
      @brief Sende das erstellte SQL Statements an die Datenbank
      Bei Erfolg wird @ref resetModified() ausgeführt!
      Es wird zusätzlich bei Erfolg/Fehler, Messagebox ausgeführt.
@@ -243,21 +236,6 @@ private Q_SLOTS:
      @brief Öffne die Url aus der Ergebnisanzeige.
   */
   void infoISBNDoubleClicked(QListWidgetItem *);
-
-  /**
-     @brief Alle Datenfelder zurücksetzen!
-     Verwended die Methoden:
-        @li @ref clearDataFields();
-        @li @ref importSqlResult();
-     um die Datenfelder wieder zurück zu setzen.
-  */
-  void clearDataFields();
-
-  /**
-    @brief Prüfe auf Datensatzänderungen!
-    @return Bei @b true, wurden Datenfelder nicht gespeichert!
-   */
-  bool checkIsModified();
 
   /**
    @brief Vor dem verlassen nach Änderungen suchen.

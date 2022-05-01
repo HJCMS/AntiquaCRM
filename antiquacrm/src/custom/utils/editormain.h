@@ -6,6 +6,7 @@
 #define EDITORMAIN_UTILS_H
 
 #include <QtCore/QObject>
+#include <QtCore/QRegularExpression>
 #include <QtCore/QVariant>
 #include <QtWidgets/QWidget>
 
@@ -92,7 +93,8 @@ protected:
    * @param key   =  QString(Datenfeld Bezeichner)
    * @param value = QVariant(Datenfeld Wert)
    */
-  virtual void setData(const QString &key, const QVariant &value, bool required = false) = 0;
+  virtual void setData(const QString &key, const QVariant &value,
+                       bool required = false) = 0;
   /** }@ */
 
   /**
@@ -100,7 +102,13 @@ protected:
    * Wenn Eingaben auf isModified stehen.
    * Kann das hier wieder zurück gesetzt werden.
    */
-  virtual void resetModified() = 0;
+  void resetModified(const QStringList &);
+
+  /**
+   * @brief Prüfung für Datensatzänderungen!
+   * @return Bei @b true, wurden Datenfelder nicht gespeichert!
+   */
+  bool checkIsModified(const QRegularExpression &);
 
 protected Q_SLOTS:
   /**
@@ -111,13 +119,7 @@ protected Q_SLOTS:
   /**
    * @brief Routine zum Daten zurücksetzen
    */
-  virtual void clearDataFields() = 0;
-
-  /**
-   * @brief Prüfung für Datensatzänderungen!
-   * @return Bei @b true, wurden Datenfelder nicht gespeichert!
-   */
-  virtual bool checkIsModified() = 0;
+  void clearDataFields(const QRegularExpression &);
 
   /**
    * @brief Vor dem verlassen nach Änderungen suchen.

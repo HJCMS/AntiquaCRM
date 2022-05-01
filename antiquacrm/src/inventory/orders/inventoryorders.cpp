@@ -3,7 +3,7 @@
 
 #include "inventoryorders.h"
 #include "applsettings.h"
-#include "tableview.h"
+#include "orderstable.h"
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
@@ -32,7 +32,7 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
   QVBoxLayout *siteOneLayout = new QVBoxLayout(siteOneWidget);
   siteOneLayout->setObjectName("assignments_site_one_layout");
 
-  m_tableView = new TableView(this);
+  m_tableView = new OrdersTable(this);
   siteOneLayout->addWidget(m_tableView);
   // END Page#0
 

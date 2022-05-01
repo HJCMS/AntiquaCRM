@@ -1,13 +1,14 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "tableview.h"
+#include "orderstable.h"
 #include "antiqua_global.h"
 #include "applsettings.h"
 #include "myicontheme.h"
+#include "orderspaymentbox.h"
+#include "orderstablemodel.h"
 #include "orderstatusbox.h"
-#include "sqlcore.h"
-#include "tablemodel.h"
+#include "orderstatements.h"
 
 #include <QtCore/QDebug>
 #include <QtCore/QItemSelectionModel>
@@ -22,36 +23,9 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QMessageBox>
 
-// Schalte SQL ausgaben ein
-#ifndef SHOW_SQL_QUERIES
-#define SHOW_SQL_QUERIES false
-#endif
-
-static const QString defaultQuery() {
-  QString fields("a.o_id,a.o_since,a.o_order_status,a.o_article_id");
-  fields.append(",concat_ws(' ',c.c_firstname,c.c_lastname) AS costumer");
-  fields.append(",d.d_name,a.o_locked,a.o_closed,a.o_order_type");
-  fields.append(",age(CURRENT_TIMESTAMP,o_since) AS age");
-  QString sql("SELECT " + fields + " ");
-  sql.append("FROM inventory_orders AS a ");
-  sql.append("LEFT JOIN costumers AS c ON c.c_id=a.o_costumer_id ");
-  sql.append(
-      "LEFT JOIN ref_delivery_service AS d ON d.d_id=a.o_delivery_service ");
-  sql.append("WHERE o_closed=false ORDER BY o_since DESC;");
-  return sql;
-}
-
-static const QString defaultUpdate(int id, int status) {
-  QString sql("UPDATE inventory_orders SET o_order_status=");
-  sql.append(QString::number(status));
-  sql.append(" WHERE o_id=");
-  sql.append(QString::number(id));
-  sql.append(";");
-  return sql;
-}
-
-TableView::TableView(QWidget *parent) : QTableView{parent} {
+OrdersTable::OrdersTable(QWidget *parent) : QTableView{parent} {
   setObjectName("AssigmentTableView");
   setEditTriggers(QAbstractItemView::DoubleClicked);
   setCornerButtonEnabled(false);
@@ -64,7 +38,8 @@ TableView::TableView(QWidget *parent) : QTableView{parent} {
 
   m_sql = new HJCMS::SqlCore(this);
 
-  m_queryModel = new TableModel(this);
+  m_queryModel = new OrdersTableModel(this);
+  m_queryModel->setObjectName("orders_table_model");
   setModel(m_queryModel);
 
   /* Kopfzeilen anpassen */
@@ -76,7 +51,7 @@ TableView::TableView(QWidget *parent) : QTableView{parent} {
           SLOT(queryOrder(const QModelIndex &)));
 }
 
-bool TableView::sqlExecQuery(const QString &statement) {
+bool OrdersTable::sqlExecQuery(const QString &statement) {
   if (statement.isEmpty())
     return false;
 
@@ -114,7 +89,7 @@ bool TableView::sqlExecQuery(const QString &statement) {
   return false;
 }
 
-void TableView::queryOrder(const QModelIndex &index) {
+void OrdersTable::queryOrder(const QModelIndex &index) {
   QModelIndex id(index);
   if (m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
     int i = m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
@@ -124,13 +99,11 @@ void TableView::queryOrder(const QModelIndex &index) {
   }
 }
 
-void TableView::openByContext() { queryOrder(p_modelIndex); }
+void OrdersTable::openByContext() { queryOrder(p_modelIndex); }
 
-void TableView::createByContext() { emit s_createOrder(); }
+void OrdersTable::createByContext() { emit s_createOrder(); }
 
-void TableView::orderByContext() { qDebug() << Q_FUNC_INFO << "_TODO_"; }
-
-void TableView::contextMenuEvent(QContextMenuEvent *ev) {
+void OrdersTable::contextMenuEvent(QContextMenuEvent *ev) {
   p_modelIndex = indexAt(ev->pos());
   // Aktiviere/Deaktivieren der Einträge
   bool b = p_modelIndex.isValid();
@@ -142,30 +115,37 @@ void TableView::contextMenuEvent(QContextMenuEvent *ev) {
   ac_open->setEnabled(b);
   connect(ac_open, SIGNAL(triggered()), this, SLOT(openByContext()));
 
-  QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create entry"));
+  QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create order"));
   ac_create->setObjectName("ac_context_create_order");
-  ac_create->setEnabled(b);
+  ac_create->setEnabled(true);
   connect(ac_create, SIGNAL(triggered()), this, SLOT(createByContext()));
 
-  QAction *ac_status = m->addAction(myIcon("db_add"), tr("Update Status"));
+  QAction *ac_status =
+      m->addAction(myIcon("autostart"), tr("Update Progress status"));
   ac_status->setObjectName("ac_context_status_order");
-  connect(ac_status, SIGNAL(triggered()), this, SLOT(updateStatus()));
+  connect(ac_status, SIGNAL(triggered()), this, SLOT(updateOrderStatus()));
   ac_status->setEnabled(b);
 
-  QAction *ac_order = m->addAction(myIcon("autostart"), tr("Create order"));
-  ac_order->setObjectName("ac_context_order_order");
-  connect(ac_order, SIGNAL(triggered()), this, SLOT(orderByContext()));
-  ac_order->setEnabled(b);
+  QAction *ac_payment =
+      m->addAction(myIcon("autostart"), tr("Update Payment status"));
+  ac_payment->setObjectName("ac_context_payment_order");
+  connect(ac_payment, SIGNAL(triggered()), this, SLOT(updatePaymentStatus()));
+  ac_payment->setEnabled(b);
+
+  QAction *ac_close = m->addAction(myIcon("db_remove"), tr("Finish order"));
+  ac_close->setObjectName("ac_context_payment_order");
+  connect(ac_close, SIGNAL(triggered()), this, SLOT(closeInventoryOrder()));
+  ac_close->setEnabled(b);
 
   m->exec(ev->globalPos());
   delete m;
 }
 
-void TableView::refreshView() { initOrders(); }
+void OrdersTable::refreshView() { initOrders(); }
 
-void TableView::initOrders() { sqlExecQuery(defaultQuery()); }
+void OrdersTable::initOrders() { sqlExecQuery(defaultQuery()); }
 
-void TableView::updateStatus() {
+void OrdersTable::updateOrderStatus() {
   QModelIndexList list = selectedIndexes();
   int article_id = 0;
   for (int i = 0; i < list.size(); i++) {
@@ -173,17 +153,68 @@ void TableView::updateStatus() {
     if (index.isValid() && (index.column() == 0))
       article_id = m_queryModel->data(index, Qt::EditRole).toInt();
 
-    if (index.isValid() && (index.column() == 2)) {
+    if (index.isValid() && (index.column() == status_column)) {
       QString title = m_queryModel->data(index, Qt::EditRole).toString();
-      StatusDialog dialog(title,this);
+      StatusDialog dialog(title, this);
       int set = dialog.exec();
       if (set == QDialog::Accepted) {
         int status = dialog.index();
-        if (sqlExecQuery(defaultUpdate(article_id, status)))
+        if (sqlExecQuery(progresUpdate(article_id, status)))
           sqlExecQuery(defaultQuery());
 
-        return;
+        return; // end loop
       }
+    }
+  }
+}
+
+void OrdersTable::updatePaymentStatus() {
+  QModelIndexList list = selectedIndexes();
+  int article_id = 0;
+  for (int i = 0; i < list.size(); i++) {
+    QModelIndex index = list.at(i);
+    if (index.isValid() && (index.column() == 0))
+      article_id = m_queryModel->data(index, Qt::EditRole).toInt();
+
+    if (index.isValid() && (index.column() == payment_column)) {
+      QString title = m_queryModel->data(index, Qt::EditRole).toString();
+      PaymentStatusDialog dialog(title, this);
+      int set = dialog.exec();
+      if (set == QDialog::Accepted) {
+        bool status = dialog.status();
+        if (sqlExecQuery(paymentUpdate(article_id, status)))
+          sqlExecQuery(defaultQuery());
+
+        return; // end loop
+      }
+    }
+  }
+}
+
+void OrdersTable::closeInventoryOrder() {
+  QModelIndexList list = selectedIndexes();
+  int order_id = 0;
+  for (int i = 0; i < list.size(); i++) {
+    QModelIndex index = list.at(i);
+    if (index.isValid() && (index.column() == 0))
+      order_id = m_queryModel->data(index, Qt::EditRole).toInt();
+
+    if (index.isValid() && (index.column() == close_column)) {
+      if (order_id < 1)
+        return;
+
+      QString body("<p>");
+      body.append(tr("Do you really want to close this order and pass it on "
+                     "to accounting?"));
+      body.append("</p><p>");
+      body.append(tr("If so, the entry will no longer be visible here!"));
+      body.append("</p>");
+      int ret = QMessageBox::question(this, tr("Finish order"), body);
+      if (ret == QMessageBox::Yes) {
+        if (sqlExecQuery(closeOrder(order_id)))
+          sqlExecQuery(defaultQuery());
+      }
+      return; // end loop
     }
   }
 }

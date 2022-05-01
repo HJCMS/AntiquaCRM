@@ -52,12 +52,9 @@ private:
   void createSqlUpdate();
   void createSqlInsert();
   void setData(const QString &key, const QVariant &value, bool required = false);
-  void resetModified();
 
 private Q_SLOTS:
   void saveData();
-  void clearDataFields();
-  bool checkIsModified();
   void checkLeaveEditor();
   void finalLeaveEditor();
 

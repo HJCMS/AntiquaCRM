@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef BOOKSTABLEVIEW_H
-#define BOOKSTABLEVIEW_H
+#ifndef ORDERSTABLE_H
+#define ORDERSTABLE_H
 
 #include <QtCore/QHash>
 #include <QtCore/QObject>
@@ -11,23 +11,27 @@
 #include <QtGui/QContextMenuEvent>
 #include <QtWidgets/QTableView>
 
+#include <SqlCore>
+
 namespace HJCMS {
 class SqlCore;
 };
 
-class BooksTableModel;
-class SearchStatement; /**< @ref SearchBar */
+class OrdersTableModel;
 
-class BooksTableView : public QTableView {
+class OrdersTable : public QTableView {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  int maxRowCount = 2500;
+  int maxRowCount = 500;
+  int status_column = 2;  /**< o_order_status */
+  int payment_column = 3; /**< o_payment_status */
+  int close_column = 7;   /**< o_closed */
   HJCMS::SqlCore *m_sql;
   QModelIndex p_modelIndex;
-  BooksTableModel *m_queryModel;
+  OrdersTableModel *m_queryModel;
   QString p_historyQuery;
 
   /**
@@ -40,7 +44,7 @@ private Q_SLOTS:
    @brief Suche Datensatz mit Index
    Wenn vorhanden Sende Signal @ref s_articleSelected
   */
-  void queryArticleID(const QModelIndex &);
+  void queryOrder(const QModelIndex &);
 
   /**
    @brief Ableitung für @ref clickedGetArticleID
@@ -53,19 +57,13 @@ private Q_SLOTS:
   */
   void createByContext();
 
-  /**
-     @brief  Auftrage Erstellung
-     @todo Im Moment noch verfügbar
-  */
-  void orderByContext();
-
 protected:
   void contextMenuEvent(QContextMenuEvent *);
 
 Q_SIGNALS:
   void s_reportQuery(const QString &);
-  void s_articleSelected(int id);
-  void s_newEntryPlease();
+  void s_editOrder(int id);
+  void s_createOrder();
 
 public Q_SLOTS:
   /**
@@ -75,19 +73,28 @@ public Q_SLOTS:
   */
   void refreshView();
 
-  /**
-    Wird von @ref StatsBookBar::m_showHistory()
-    aufgerufen und fragt den Verlauf ab.
-  */
-  void queryHistory(const QString &);
+  void initOrders();
 
   /**
-    Startet Abfrage ausgehend von Text/Sucheingabe
-  */
-  void queryStatement(const SearchStatement &);
+   * @brief SQL Spalte "o_order_status" aktualisieren.
+   */
+  void updateOrderStatus();
+
+  /**
+   * @brief SQL Spalte "o_payment_status" aktualisieren.
+   */
+  void updatePaymentStatus();
+
+  /**
+   * @brief SQL Spalte "o_closed" true setzen.
+   * Wenn diese Aktion ausgeführt wird ist es nur noch
+   * für die Buchhaltung sichtbar!
+   * Der Auftrag ist somit abgeschlossen!
+   */
+  void closeInventoryOrder();
 
 public:
-  explicit BooksTableView(QWidget *parent = nullptr);
+  explicit OrdersTable(QWidget *parent = nullptr);
 };
 
-#endif // BOOKSTABLEVIEW_H
+#endif // ORDERSTABLE_H

@@ -1,11 +1,10 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "printstableview.h"
+#include "printstable.h"
 #include "messagebox.h"
 #include "printstablemodel.h"
 #include "searchbar.h"
-#include "sqlcore.h"
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
@@ -21,12 +20,6 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMenu>
 
-/**
-    @brief querySelect
-    Die Feldabfragen für die Suche sind immer gleich!
-    Wenn sich etwas ändern sollte, dann muss in Klasse
-    \ref BooksTableModel die Feld Definition geändert werden!
-*/
 static const QString querySelect() {
   QString s("b.ip_id,b.ip_count,b.ip_title,b.ip_author,");
   s.append("t.rpt_type,b.ip_year,b.ip_price,s.sl_storage,b.ip_landscape,b."
@@ -37,10 +30,6 @@ static const QString querySelect() {
   return s;
 }
 
-/**
-   @brief queryTables
-   Tabellen Definition
-*/
 static const QString queryTables() {
   QString s(" FROM inventory_prints AS b");
   s.append(" LEFT JOIN ref_storage_location AS s ON s.sl_id=b.ip_storage");
@@ -50,8 +39,8 @@ static const QString queryTables() {
   return s;
 }
 
-PrintsTableView::PrintsTableView(QWidget *parent) : QTableView{parent} {
-  setObjectName("PrintsTableView");
+PrintsTable::PrintsTable(QWidget *parent) : QTableView{parent} {
+  setObjectName("PrintsTable");
   setEditTriggers(QAbstractItemView::DoubleClicked);
   setCornerButtonEnabled(false);
   setSortingEnabled(false);
@@ -76,7 +65,7 @@ PrintsTableView::PrintsTableView(QWidget *parent) : QTableView{parent} {
           SLOT(queryArticleID(const QModelIndex &)));
 }
 
-void PrintsTableView::queryArticleID(const QModelIndex &index) {
+void PrintsTable::queryArticleID(const QModelIndex &index) {
   QModelIndex id(index);
   if (m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
     int i = m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
@@ -86,21 +75,16 @@ void PrintsTableView::queryArticleID(const QModelIndex &index) {
   }
 }
 
-void PrintsTableView::openByContext() { queryArticleID(p_modelIndex); }
+void PrintsTable::openByContext() { queryArticleID(p_modelIndex); }
 
-void PrintsTableView::createByContext() {
+void PrintsTable::createByContext() {
   qDebug() << Q_FUNC_INFO << "TODO"
            << "Check Rowcount before add";
   emit s_newEntryPlease();
 }
 
-void PrintsTableView::orderByContext() {
-  // TODO create order --> p_modelIndex
-  qInfo("currently not implemented");
-}
-
-bool PrintsTableView::sqlExecQuery(const QString &statement) {
-  if (!statement.contains("SELECT"))
+bool PrintsTable::sqlExecQuery(const QString &statement) {
+  if (statement.isEmpty() || statement.length() < 10)
     return false;
 
   QSqlDatabase db(m_sql->db());
@@ -120,7 +104,7 @@ bool PrintsTableView::sqlExecQuery(const QString &statement) {
   return false;
 }
 
-void PrintsTableView::contextMenuEvent(QContextMenuEvent *ev) {
+void PrintsTable::contextMenuEvent(QContextMenuEvent *ev) {
   p_modelIndex = indexAt(ev->pos());
   // Aktiviere/Deaktivieren der Einträge
   bool b = p_modelIndex.isValid();
@@ -137,23 +121,23 @@ void PrintsTableView::contextMenuEvent(QContextMenuEvent *ev) {
   ac_create->setEnabled(b);
   connect(ac_create, SIGNAL(triggered()), this, SLOT(createByContext()));
 
-  QAction *ac_order = m->addAction(myIcon("autostart"), tr("Create order"));
-  ac_order->setObjectName("ac_context_order_print");
-  connect(ac_order, SIGNAL(triggered()), this, SLOT(orderByContext()));
-  ac_order->setEnabled(b);
+  QAction *ac_refresh = m->addAction(myIcon("reload"), tr("Refresh"));
+  ac_refresh->setObjectName("ac_context_refresh_view");
+  connect(ac_refresh, SIGNAL(triggered()), this, SLOT(refreshView()));
+  ac_refresh->setEnabled(b);
 
   m->exec(ev->globalPos());
   delete m;
 }
 
-void PrintsTableView::refreshView() {
+void PrintsTable::refreshView() {
   if (sqlExecQuery(p_historyQuery)) {
     resizeRowsToContents();
     resizeColumnsToContents();
   }
 }
 
-void PrintsTableView::queryHistory(const QString &str) {
+void PrintsTable::queryHistory(const QString &str) {
   QString q("SELECT ");
   q.append(querySelect());
   q.append(queryTables());
@@ -184,7 +168,7 @@ void PrintsTableView::queryHistory(const QString &str) {
   }
 }
 
-void PrintsTableView::queryStatement(const SearchStatement &cl) {
+void PrintsTable::queryStatement(const SearchStatement &cl) {
   /**
      @brief exact_match
       false = irgendwo im feld

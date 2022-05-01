@@ -21,14 +21,14 @@ SET (subproject_LINKER
 SET (subproject_SOURCES
   inventoryprints.cpp
   printstablemodel.cpp
-  printstableview.cpp
+  printstable.cpp
   printseditor.cpp
 )
 
 SET (subproject_HEADERS
   inventoryprints.h
   printstablemodel.h
-  printstableview.h
+  printstable.h
   printseditor.h
 )
 
