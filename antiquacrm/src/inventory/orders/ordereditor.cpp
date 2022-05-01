@@ -28,8 +28,40 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   o_id->setRequired(true);
   row0->addWidget(o_id);
 
+  QLabel *m_infoOrderStatus = new QLabel(this);
+  m_infoOrderStatus->setText(tr("Status")+":");
+  row0->addWidget(m_infoOrderStatus);
+
+  o_order_status = new OrderStatusBox(this);
+  row0->addWidget(o_order_status);
+
+  QLabel *m_payment = new QLabel(this);
+  m_payment->setText(tr("Payment")+":");
+  row0->addWidget(m_payment);
+
+  o_payment_status = new OrdersPaymentBox(this);
+  row0->addWidget(o_payment_status);
+
+  o_delivery_service = new DeliveryService(this);
+  o_delivery_service->setInfo(tr("Delivery Service"));
+  row0->addWidget(o_delivery_service);
+
+  row0->addStretch(1);
   mainLayout->addLayout(row0);
 
+  QHBoxLayout *row1 = new QHBoxLayout();
+  o_locked = new BoolBox(this);
+  o_locked->setInfo(tr("lock"));
+  row1->addWidget(o_locked);
+
+  o_closed = new BoolBox(this);
+  o_closed->setInfo(tr("close"));
+  row1->addWidget(o_closed);
+
+  row1->addStretch(1);
+  mainLayout->addLayout(row1);
+
+  mainLayout->addStretch(1);
   setLayout(mainLayout);
 }
 
@@ -38,10 +70,11 @@ void OrderEditor::setInputList() {
   if (inputList.isEmpty()) {
     qWarning("Costumers InputList is Empty!");
   }
+  inputList.removeOne("o_since");
 }
 
 void OrderEditor::importSqlResult() {
-  if (sqlQueryResult.size() < 15)
+  if (sqlQueryResult.size() < 5)
     return;
 
   blockSignals(true);
@@ -82,7 +115,9 @@ void OrderEditor::createSqlInsert() {
 }
 
 void OrderEditor::setData(const QString &key, const QVariant &value,
-                          bool required) {}
+                          bool required) {
+  qDebug() << "DATA:" << key << value << required;
+}
 
 void OrderEditor::saveData() {
   if (o_id->value().toString().isEmpty()) {
@@ -114,19 +149,34 @@ void OrderEditor::restoreDataset() {
   importSqlResult();
 }
 
-void OrderEditor::updateOrder(int order) {
-  if (order < 1)
-    return;
+void OrderEditor::initDefaults()
+{
+  setInputList();
+  setEnabled(true);
+  resetModified(inputList);
+  o_delivery_service->loadSqlDataset();
+}
 
-  QString select = defaultQuery(order);
+void OrderEditor::updateOrder(int order) {
+  initDefaults();
+  if (order < 1) {
+    qWarning("Empty o_id ...");
+    return;
+  }
+
+  QString select("SELECT * FROM " + tableName + " WHERE o_id=");
+  select.append(QString::number(order));
+  select.append(";");
+
   QSqlQuery q = m_sql->query(select);
-  if (q.size() != 0) {
+  if (q.size() > 0) {
     QSqlRecord r = m_sql->record(tableName);
     sqlQueryResult.clear();
     while (q.next()) {
       foreach (QString key, inputList) {
         QVariant val = q.value(r.indexOf(key));
         bool required = (r.field(key).requiredStatus() == QSqlField::Required);
+        // qDebug() << Q_FUNC_INFO << key << val << required;
         DataField d;
         d.setField(key);
         d.setType(val.type());
@@ -141,16 +191,13 @@ void OrderEditor::updateOrder(int order) {
     return;
   }
 
-  setEnabled(true);
   if (!sqlQueryResult.isEmpty())
     importSqlResult();
 }
 
 void OrderEditor::createOrder(int costumerId) {
-  if(costumerId > 0)
-  {
+  initDefaults();
+  if (costumerId > 0) {
     qDebug() << Q_FUNC_INFO << costumerId;
   }
-  setEnabled(true);
-  resetModified(inputList);
 }

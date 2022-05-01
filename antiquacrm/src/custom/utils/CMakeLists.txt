@@ -16,6 +16,7 @@ SET (subproject_LINKER
 SET (subproject_SOURCES
   serialid.cpp
   boolbox.cpp
+  deliveryservice.cpp
   editoractionbar.cpp
   editormain.cpp
   emailedit.cpp
@@ -49,6 +50,7 @@ SET (subproject_SOURCES
 SET (subproject_HEADERS
   serialid.h
   boolbox.h
+  deliveryservice.h
   editoractionbar.h
   emailedit.h
   editormain.h

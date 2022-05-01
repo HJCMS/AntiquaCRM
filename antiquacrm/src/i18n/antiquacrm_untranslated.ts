@@ -767,6 +767,19 @@
     </message>
 </context>
 <context>
+    <name>DeliveryService</name>
+    <message>
+        <location filename="../custom/utils/deliveryservice.cpp" line="+17"/>
+        <source>Without disclosures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+59"/>
+        <source>Delevery Service is needet!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DockBarWidget</name>
     <message>
         <location filename="../dockbarwidget.cpp" line="+22"/>
@@ -1071,8 +1084,13 @@
 <context>
     <name>InventoryOrders</name>
     <message>
-        <location filename="../inventory/orders/inventoryorders.cpp" line="+18"/>
+        <location filename="../inventory/orders/inventoryorders.cpp" line="+19"/>
         <source>Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1270,12 +1288,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+5"/>
+        <source>Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Delivery Service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+45"/>
         <source>Order saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+30"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation type="unfinished"></translation>
     </message>

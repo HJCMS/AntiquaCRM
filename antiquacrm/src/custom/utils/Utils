@@ -5,6 +5,10 @@
 # include "boolbox.h"
 #endif
 
+#ifndef DELIVERYSERVICE_UTILS_H
+# include "deliveryservice.h"
+#endif
+
 #ifndef EDITORACTIONBAR_UTILS_H
 # include "editoractionbar.h"
 #endif

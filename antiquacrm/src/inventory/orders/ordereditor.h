@@ -21,14 +21,14 @@ class OrderEditor : public EditorMain {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  SerialID *o_id;                     /**< Order ID */
-  OrderStatusBox *o_order_status;     /**< o_order_status */
-  OrdersPaymentBox *o_payment_status; /**< o_payment_status */
-  LineEdit *o_costumer_id;            /**< o_costumer_id */
-                                      /**< o_delivery_service */
-  LineEdit *o_provider;               /**< o_provider */
-  BoolBox *o_locked;                  /**< o_locked */
-  BoolBox *o_closed;                  /**< o_closed */
+  SerialID *o_id;                      /**< Order ID */
+  OrderStatusBox *o_order_status;      /**< o_order_status */
+  OrdersPaymentBox *o_payment_status;  /**< o_payment_status */
+  LineEdit *o_costumer_id;             /**< o_costumer_id */
+  DeliveryService *o_delivery_service; /**< o_delivery_service */
+  LineEdit *o_provider;                /**< o_provider */
+  BoolBox *o_locked;                   /**< o_locked */
+  BoolBox *o_closed;                   /**< o_closed */
 
   const QString tableName = QString("inventory_orders");
 
@@ -41,6 +41,8 @@ private:
   void createSqlInsert();
   void setData(const QString &key, const QVariant &value,
                bool required = false);
+
+  void initDefaults();
 
 private Q_SLOTS:
   void saveData();
