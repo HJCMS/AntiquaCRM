@@ -11,10 +11,12 @@
 #include <QtCore/QObject>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QWidget>
 
 class StatsActionBar;
 class OrdersTable;
+class OrderEditor;
 
 /**
  @class InventoryOrders
@@ -42,9 +44,9 @@ private:
   OrdersTable *m_tableView;
 
   /**
-    @brief Statusbalken mit Historienauswahl
-  */
-  StatsActionBar *m_statsBookBar;
+   * @brief Status Informationen
+   */
+  QLabel *m_statusInfo;
 
   /**
     @}
@@ -52,6 +54,7 @@ private:
     @defgroup StackeWidget Page 2
     @{
   */
+  OrderEditor *m_editor;
 
   /** @} */
 
@@ -91,14 +94,7 @@ private Q_SLOTS:
      jetzt der Editor mit @ref openEditor("ib_id={$id}") geöffnet!
      @param id
   */
-  void articleSelected(int id);
-
-  /**
-     @brief Setze den Validator für die Ausgewählte suche.
-     Wird der Suchfilter geändert dann wird hier an
-     @ref SearchBar::setValidation ein update gesendet.
-   */
-  void updateValidator(int);
+  void orderSelected(int id);
 
 protected:
   /**
@@ -119,6 +115,9 @@ protected:
     @param SQL Anfrageausdruck
   */
   void openEditor(const QString &condition);
+
+public Q_SLOTS:
+  void createOrder(int costumerId);
 
 public:
   /**

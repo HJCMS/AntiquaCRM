@@ -146,7 +146,11 @@ void OrderEditor::updateOrder(int order) {
     importSqlResult();
 }
 
-void OrderEditor::createOrder() {
+void OrderEditor::createOrder(int costumerId) {
+  if(costumerId > 0)
+  {
+    qDebug() << Q_FUNC_INFO << costumerId;
+  }
   setEnabled(true);
   resetModified(inputList);
 }

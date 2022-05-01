@@ -53,7 +53,7 @@ public Q_SLOTS:
 public:
   explicit OrderEditor(QWidget *parent = nullptr);
   void updateOrder(int);
-  void createOrder();
+  void createOrder(int costumerId = 0);
 };
 
 #endif // INVENTORY_ORDEREDITOR_H

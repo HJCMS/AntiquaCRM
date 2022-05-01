@@ -2,10 +2,11 @@
 // vim: set fileencoding=utf-8
 
 #include "inventoryorders.h"
-#include "applsettings.h"
-#include "orderstable.h"
 #include "antiqua_global.h"
+#include "applsettings.h"
 #include "myicontheme.h"
+#include "ordereditor.h"
+#include "orderstable.h"
 
 #include <QtCore/QDebug>
 #include <QtCore/QHash>
@@ -34,47 +35,69 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
 
   m_tableView = new OrdersTable(this);
   siteOneLayout->addWidget(m_tableView);
+
+  QWidget *m_statusBar = new QWidget(this);
+  QHBoxLayout *statusLayout = new QHBoxLayout(m_statusBar);
+  QPushButton *btn_refresh = new QPushButton(m_statusBar);
+  m_statusInfo = new QLabel(m_statusBar);
+  statusLayout->addWidget(m_statusInfo);
+  statusLayout->addStretch(1);
+  btn_refresh->setText(tr("Refresh"));
+  btn_refresh->setIcon(myIcon("reload"));
+  statusLayout->addWidget(btn_refresh);
+  m_statusBar->setLayout(statusLayout);
+  siteOneLayout->addWidget(m_statusBar);
+
+  m_stackedWidget->insertWidget(0, siteOneWidget);
   // END Page#0
 
   // BEGIN Page#1
-  // TODO Editor
+  m_editor = new OrderEditor(this);
+  m_editor->setEnabled(false);
+  m_stackedWidget->insertWidget(1, m_editor);
   // END Page#1
 
-  m_stackedWidget->insertWidget(0, siteOneWidget);
   m_stackedWidget->setCurrentIndex(0);
   layout->addWidget(m_stackedWidget);
 
   setLayout(layout);
 
-  // Signals
-//   connect(m_tableView, SIGNAL(s_articleSelected(int)), this,
-//           SLOT(articleSelected(int)));
-//   connect(m_bookEditor, SIGNAL(s_postMessage(const QString &)), this,
-//           SLOT(displayMessageBox(const QString &)));
+  connect(m_tableView, SIGNAL(s_editOrder(int)), this,
+          SLOT(orderSelected(int)));
+
+  connect(m_editor, SIGNAL(s_postMessage(const QString &)), this,
+          SLOT(displayMessageBox(const QString &)));
+
+  connect(m_editor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
 
   m_tableView->initOrders();
 }
 
-void InventoryOrders::searchConvert(const QString &query) {
-  qDebug() << Q_FUNC_INFO << "TODO" << query;
-}
+void InventoryOrders::searchConvert(const QString &query) {}
 
-void InventoryOrders::searchConvert() {
-  qDebug() << Q_FUNC_INFO << "TODO";
-}
+void InventoryOrders::searchConvert() {}
 
 void InventoryOrders::openTableView() {
-  qDebug() << Q_FUNC_INFO << "TODO";
+  m_stackedWidget->setCurrentIndex(0);
+  m_editor->setEnabled(false);
 }
 
 void InventoryOrders::openEditor(const QString &condition) {
-  qDebug() << Q_FUNC_INFO << "TODO" << condition;
+  Q_UNUSED(condition)
 }
 
-void InventoryOrders::articleSelected(int id) {
-  qDebug() << Q_FUNC_INFO << "TODO" << id;
+void InventoryOrders::orderSelected(int id) {
+  if (id < 1) {
+    return;
+  }
+
+  m_editor->setEnabled(true);
+  m_editor->updateOrder(id);
+  m_stackedWidget->setCurrentWidget(m_editor);
 }
 
-void InventoryOrders::updateValidator(int id) {
-  qDebug() << Q_FUNC_INFO << "TODO" << id;
+void InventoryOrders::createOrder(int costumerId) {
+  m_editor->setEnabled(true);
+  m_editor->createOrder(costumerId);
+  m_stackedWidget->setCurrentWidget(m_editor);
 }
