@@ -11,6 +11,8 @@ SET (PROJECT_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/core/sqlcore
  ${CMAKE_CURRENT_BINARY_DIR}/custom
  ${CMAKE_CURRENT_SOURCE_DIR}/custom
+ ${CMAKE_CURRENT_BINARY_DIR}/custom/assistant
+ ${CMAKE_CURRENT_SOURCE_DIR}/custom/assistant
  ${CMAKE_CURRENT_BINARY_DIR}/custom/completer
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/completer
  ${CMAKE_CURRENT_BINARY_DIR}/custom/imaging
@@ -53,6 +55,7 @@ Completer
 Networking
 Utils
 Imaging
+Assistant
 InventoryBooks
 InventoryCostumers
 InventoryPrints

@@ -496,6 +496,102 @@
     </message>
 </context>
 <context>
+    <name>ConfigPgSQL</name>
+    <message>
+        <location filename="../custom/assistant/configpgsql.cpp" line="+14"/>
+        <source>Database Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Address:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Database:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Port:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Username:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Password:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ConfigSSL</name>
+    <message>
+        <location filename="../custom/assistant/configssl.cpp" line="+18"/>
+        <source>SSL/TLS Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>if not know about this settings, don&apos;t touch it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>SSL/TLS Peer Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Peer Certificate: ~/.postgresql/postgresql.crt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Private Keyfile: ~/.postgresql/postgresql.key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Server Certificate: CommonName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Issuer (CA) from Server Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>CA Root directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>CA Issuer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <source>Open CA Bundle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Certificate (*.pem)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CostumerBillingInfo</name>
     <message>
         <location filename="../inventory/costumers/costumerbillinginfo.cpp" line="+24"/>
@@ -776,6 +872,69 @@
     <message>
         <location line="+59"/>
         <source>Delevery Service is needet!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Dialog</name>
+    <message>
+        <location filename="../custom/assistant/dialog.cpp" line="+88"/>
+        <source>Restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Restart Assistant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Previous page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Next page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Save current changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Finalize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Finishing and close the assistant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Connection successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+97"/>
+        <source>Unfinished Assistant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do not close the Assistant without saving!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2262,6 +2421,24 @@
     <message>
         <location filename="../custom/utils/techniqueedit.cpp" line="+69"/>
         <source>Technique field is required and must set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TestConfig</name>
+    <message>
+        <location filename="../custom/assistant/testconfig.cpp" line="+14"/>
+        <source>Connection test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>create conenction test</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

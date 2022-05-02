@@ -496,6 +496,102 @@
     </message>
 </context>
 <context>
+    <name>ConfigPgSQL</name>
+    <message>
+        <location filename="../custom/assistant/configpgsql.cpp" line="+14"/>
+        <source>Database Configuration</source>
+        <translation>Datenbank Konfiguration</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Address:</source>
+        <translation>Adresse:</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Database:</source>
+        <translation>Datenbank:</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Port:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Username:</source>
+        <translation>Benutzername:</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Password:</source>
+        <translation>Passwort:</translation>
+    </message>
+</context>
+<context>
+    <name>ConfigSSL</name>
+    <message>
+        <location filename="../custom/assistant/configssl.cpp" line="+18"/>
+        <source>SSL/TLS Configuration</source>
+        <translation>SSL/TLS Konfiguration</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>if not know about this settings, don&apos;t touch it.</source>
+        <translation>Wenn Sie diese Einstellungen nicht kennen. Überspringen Sie diesen Teil.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>SSL/TLS Peer Configuration</source>
+        <translation>SSL/TLS Peer Konfiguration</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Peer Certificate: ~/.postgresql/postgresql.crt</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Private Keyfile: ~/.postgresql/postgresql.key</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Server Certificate: CommonName</source>
+        <translation>Server Zertifikat: CommonName</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Issuer (CA) from Server Certificate</source>
+        <translation>Unterzeichner (CA) Zertifikat vom Server</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>CA Root directory</source>
+        <translation>CA Stammverzeichniss</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Set</source>
+        <translation>Setzen</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>CA Issuer</source>
+        <translation>CA Unterzeichner</translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <source>Open CA Bundle</source>
+        <translation>Öffne CA Bündel</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Certificate (*.pem)</source>
+        <translation>Zertifikat (*.pem)</translation>
+    </message>
+</context>
+<context>
     <name>CostumerBillingInfo</name>
     <message>
         <location filename="../inventory/costumers/costumerbillinginfo.cpp" line="+24"/>
@@ -777,6 +873,69 @@
         <location line="+59"/>
         <source>Delevery Service is needet!</source>
         <translation>Ein Lieferservice ist erforderlich!</translation>
+    </message>
+</context>
+<context>
+    <name>Dialog</name>
+    <message>
+        <location filename="../custom/assistant/dialog.cpp" line="+88"/>
+        <source>Restart</source>
+        <translation>Nochmal</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Restart Assistant</source>
+        <translation>Assistent neu starten</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Back</source>
+        <translation>Zurück</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Previous page</source>
+        <translation>letze Seite</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Next</source>
+        <translation>Weiter</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Next page</source>
+        <translation>nächste Seite</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Save current changes</source>
+        <translation>Aktuelle änderungen Speichern</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Finalize</source>
+        <translation>Abschließen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Finishing and close the assistant</source>
+        <translation>Beendet und schließt den Assistent</translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Connection successfully!</source>
+        <translation>Verbindung erfolgreich!</translation>
+    </message>
+    <message>
+        <location line="+97"/>
+        <source>Unfinished Assistant</source>
+        <translation>Unvollständiger Fortschritt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do not close the Assistant without saving!</source>
+        <translation>Schließen Sie den Assistenten nicht ohne zu Speichern!</translation>
     </message>
 </context>
 <context>
@@ -2263,6 +2422,24 @@
         <location filename="../custom/utils/techniqueedit.cpp" line="+69"/>
         <source>Technique field is required and must set.</source>
         <translation>Technikfeld ist erforderlich und muss gesetzt werden.</translation>
+    </message>
+</context>
+<context>
+    <name>TestConfig</name>
+    <message>
+        <location filename="../custom/assistant/testconfig.cpp" line="+14"/>
+        <source>Connection test</source>
+        <translation>Verbindungs Test</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Connect</source>
+        <translation>Verbinden</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>create conenction test</source>
+        <translation>Verbindungstest erstellen</translation>
     </message>
 </context>
 <context>
