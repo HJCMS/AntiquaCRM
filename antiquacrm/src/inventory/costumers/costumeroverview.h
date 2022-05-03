@@ -5,14 +5,14 @@
 #ifndef COSTUMEROVERVIEW_H
 #define COSTUMEROVERVIEW_H
 
-#include <QtCore/QHash>
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtGui/QTextDocument>
-#include <QtWidgets/QTextBrowser>
-#include <QtWidgets/QWidget>
-#include <QtXml/QDomDocument>
-#include <QtXml/QDomElement>
+#include <QHash>
+#include <QObject>
+#include <QString>
+#include <QTextDocument>
+#include <QTextBrowser>
+#include <QWidget>
+#include <QDomDocument>
+#include <QDomElement>
 
 #include <AntiquaCRM>
 

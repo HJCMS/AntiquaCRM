@@ -8,17 +8,17 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QItemSelectionModel>
-#include <QtCore/QPoint>
-#include <QtCore/QRegExp>
-#include <QtCore/QSignalMapper>
-#include <QtSql/QSqlError>
-#include <QtSql/QSqlQuery>
-#include <QtSql/QSqlTableModel>
-#include <QtWidgets/QAction>
-#include <QtWidgets/QHeaderView>
-#include <QtWidgets/QMenu>
+#include <QDebug>
+#include <QItemSelectionModel>
+#include <QPoint>
+#include <QRegExp>
+#include <QSignalMapper>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QSqlTableModel>
+#include <QAction>
+#include <QHeaderView>
+#include <QMenu>
 
 static const QString querySelect() {
   QString s("b.ip_id,b.ip_count,b.ip_title,b.ip_author,");

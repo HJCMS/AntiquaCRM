@@ -3,9 +3,9 @@
 
 #include "antiqua_global.h"
 
-#include <QtCore/QList>
-#include <QtCore/QMetaType>
-#include <QtCore/QString>
+#include <QList>
+#include <QMetaType>
+#include <QString>
 
 /**
  * @brief SQL Order Status handle

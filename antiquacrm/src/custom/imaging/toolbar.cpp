@@ -5,13 +5,13 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QSettings>
-#include <QtCore/QStandardPaths>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QSpacerItem>
+#include <QDebug>
+#include <QSettings>
+#include <QStandardPaths>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QSpacerItem>
 
 ToolBar::ToolBar(QWidget *parent) : QWidget{parent} {
   setObjectName("ImageDialogToolbar");

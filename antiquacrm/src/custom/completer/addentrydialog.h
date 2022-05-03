@@ -5,11 +5,11 @@
 #ifndef ADDENTRYDIALOG_H
 #define ADDENTRYDIALOG_H
 
-#include <QtCore/QObject>
-#include <QtCore/QVariant>
-#include <QtWidgets/QDialog>
-#include <QtWidgets/QTextEdit>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QVariant>
+#include <QDialog>
+#include <QTextEdit>
+#include <QWidget>
 
 class StrLineEdit;
 

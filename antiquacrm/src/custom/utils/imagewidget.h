@@ -5,11 +5,11 @@
 #ifndef BOOKSIMAGEVIEW_UTILS_H
 #define BOOKSIMAGEVIEW_UTILS_H
 
-#include <QtCore/QByteArray>
-#include <QtCore/QObject>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QScrollArea>
-#include <QtWidgets/QWidget>
+#include <QByteArray>
+#include <QObject>
+#include <QLabel>
+#include <QScrollArea>
+#include <QWidget>
 
 namespace HJCMS {
 class SqlCore;

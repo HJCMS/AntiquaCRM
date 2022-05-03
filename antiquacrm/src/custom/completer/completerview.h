@@ -5,12 +5,12 @@
 #ifndef COMPLETERVIEW_H
 #define COMPLETERVIEW_H
 
-#include <QtCore/QObject>
-#include <QtGui/QContextMenuEvent>
-#include <QtSql/QSqlDatabase>
-#include <QtWidgets/QShortcut>
-#include <QtWidgets/QTableView>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QContextMenuEvent>
+#include <QSqlDatabase>
+#include <QShortcut>
+#include <QTableView>
+#include <QWidget>
 
 class DataTableModel;
 

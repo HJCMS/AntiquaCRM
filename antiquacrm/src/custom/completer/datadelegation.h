@@ -5,12 +5,12 @@
 #ifndef DATADELEGATION_H
 #define DATADELEGATION_H
 
-#include <QtCore/QObject>
-#include <QtGui/QPainter>
-#include <QtWidgets/QItemDelegate>
-#include <QtWidgets/QStyleOptionViewItem>
-#include <QtWidgets/QTableView>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QPainter>
+#include <QItemDelegate>
+#include <QStyleOptionViewItem>
+#include <QTableView>
+#include <QWidget>
 
 class DataDelegation : public QItemDelegate {
   Q_OBJECT

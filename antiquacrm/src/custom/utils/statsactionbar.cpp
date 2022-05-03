@@ -6,12 +6,12 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QList>
-#include <QtCore/QObject>
-#include <QtSql/QSqlDatabase>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QSpacerItem>
+#include <QDebug>
+#include <QList>
+#include <QObject>
+#include <QSqlDatabase>
+#include <QHBoxLayout>
+#include <QSpacerItem>
 
 static const QIcon comboBoxIcon() { return myIcon("info"); }
 

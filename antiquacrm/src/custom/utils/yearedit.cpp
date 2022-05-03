@@ -3,9 +3,9 @@
 
 #include "yearedit.h"
 
-#include <QtCore/QDate>
-#include <QtCore/QDebug>
-#include <QtWidgets/QHBoxLayout>
+#include <QDate>
+#include <QDebug>
+#include <QHBoxLayout>
 
 static const QDate currentDate() { return QDateTime::currentDateTime().date(); }
 

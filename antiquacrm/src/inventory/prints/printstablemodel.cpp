@@ -6,15 +6,15 @@
 #include "myicontheme.h"
 
 /* QtCore */
-#include <QtCore/QDateTime>
-#include <QtCore/QDebug>
-#include <QtCore/QLocale>
-#include <QtCore/QString>
-#include <QtCore/QVariant>
+#include <QDateTime>
+#include <QDebug>
+#include <QLocale>
+#include <QString>
+#include <QVariant>
 
 /* QtSql */
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlRecord>
+#include <QSqlDatabase>
+#include <QSqlRecord>
 
 static const QString setHeaderTitel(const QString &t) {
   QString b;

@@ -8,16 +8,16 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QDirIterator>
-#include <QtCore/QFileInfo>
-#include <QtGui/QImageReader>
-#include <QtGui/QPixmap>
-#include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QToolBar>
-#include <QtWidgets/QToolButton>
-#include <QtWidgets/QVBoxLayout>
+#include <QDebug>
+#include <QDirIterator>
+#include <QFileInfo>
+#include <QImageReader>
+#include <QPixmap>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QToolBar>
+#include <QToolButton>
+#include <QVBoxLayout>
 
 ImageDialog::ImageDialog(qulonglong id, QWidget *parent)
     : QDialog{parent}, imageID(id) {

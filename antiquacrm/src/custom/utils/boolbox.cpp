@@ -3,8 +3,8 @@
 
 #include "boolbox.h"
 
-#include <QtCore/QDebug>
-#include <QtWidgets/QHBoxLayout>
+#include <QDebug>
+#include <QHBoxLayout>
 
 BoolBox::BoolBox(QWidget *parent) : UtilsMain{parent} {
   setWindowTitle(tr("Checkbox"));

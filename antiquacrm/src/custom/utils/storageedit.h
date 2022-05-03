@@ -5,11 +5,11 @@
 #ifndef STORAGEEDIT_UTILS_H
 #define STORAGEEDIT_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtGui/QFocusEvent>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QLineEdit>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QFocusEvent>
+#include <QComboBox>
+#include <QLineEdit>
+#include <QWidget>
 
 #include <UtilsMain>
 

@@ -4,10 +4,10 @@
 #include "listview.h"
 #include "fileviewmodel.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QMimeData>
-#include <QtCore/QMimeDatabase>
-#include <QtCore/QMimeType>
+#include <QDebug>
+#include <QMimeData>
+#include <QMimeDatabase>
+#include <QMimeType>
 
 ListView::ListView(QWidget *parent) : QListView(parent) {
   setObjectName("ListViewImages");

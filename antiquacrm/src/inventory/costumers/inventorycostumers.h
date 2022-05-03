@@ -7,10 +7,10 @@
 
 #include "inventory.h"
 
-#include <QtCore/QObject>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QStackedWidget>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QLabel>
+#include <QStackedWidget>
+#include <QWidget>
 
 class SearchBar;
 class EditCostumer;

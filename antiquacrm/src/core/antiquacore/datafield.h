@@ -7,10 +7,10 @@
 
 #include "antiqua_global.h"
 
-#include <QtCore/QMetaType>
-#include <QtCore/QList>
-#include <QtCore/QString>
-#include <QtCore/QVariant>
+#include <QMetaType>
+#include <QList>
+#include <QString>
+#include <QVariant>
 
 /**
  * @brief SQL Datafield

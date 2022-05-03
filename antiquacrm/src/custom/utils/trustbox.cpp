@@ -3,10 +3,10 @@
 
 #include "trustbox.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QMap>
-#include <QtCore/QString>
-#include <QtWidgets/QHBoxLayout>
+#include <QDebug>
+#include <QMap>
+#include <QString>
+#include <QHBoxLayout>
 
 #include <AntiquaCRM>
 

@@ -8,15 +8,15 @@
 #include <AntiquaCRM>
 
 /* QtCore */
-#include <QtCore/QDebug>
-#include <QtCore/QLocale>
-#include <QtCore/QString>
-#include <QtCore/QTime>
-#include <QtCore/QVariant>
+#include <QDebug>
+#include <QLocale>
+#include <QString>
+#include <QTime>
+#include <QVariant>
 
 /* QtSql */
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlRecord>
+#include <QSqlDatabase>
+#include <QSqlRecord>
 
 static const QString setHeaderTitel(const QString &t) {
   QString b;

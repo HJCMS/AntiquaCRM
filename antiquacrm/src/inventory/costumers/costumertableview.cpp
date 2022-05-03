@@ -9,16 +9,16 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QMutex>
-#include <QtCore/QPoint>
-#include <QtCore/QRegExp>
-#include <QtCore/QStringList>
-#include <QtCore/QSignalMapper>
-#include <QtCore/QTime>
-#include <QtWidgets/QAction>
-#include <QtWidgets/QHeaderView>
-#include <QtWidgets/QMenu>
+#include <QDebug>
+#include <QMutex>
+#include <QPoint>
+#include <QRegExp>
+#include <QStringList>
+#include <QSignalMapper>
+#include <QTime>
+#include <QAction>
+#include <QHeaderView>
+#include <QMenu>
 
 // Schalte SQL ausgaben ein
 #ifndef SHOW_SQL_QUERIES

@@ -3,15 +3,15 @@
 #include "applsettings.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QDir>
-#include <QtWidgets/QGridLayout>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QVBoxLayout>
+#include <QDebug>
+#include <QDir>
+#include <QGridLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QSpacerItem>
+#include <QVBoxLayout>
 
-#include <QtWidgets/QTableWidget>
+#include <QTableWidget>
 
 GeneralSettingsWidget::GeneralSettingsWidget(QWidget *parent)
     : SettingsWidget{parent} {

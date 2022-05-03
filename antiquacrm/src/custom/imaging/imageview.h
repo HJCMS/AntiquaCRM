@@ -5,13 +5,13 @@
 #ifndef IMAGEVIEW_IMAGING_H
 #define IMAGEVIEW_IMAGING_H
 
-#include <QtCore/QObject>
-#include <QtGui/QImage>
-#include <QtGui/QPixmap>
-#include <QtWidgets/QGraphicsScene>
-#include <QtWidgets/QGraphicsView>
-#include <QtWidgets/QGraphicsPixmapItem>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QImage>
+#include <QPixmap>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsPixmapItem>
+#include <QWidget>
 
 class ImageView : public QGraphicsView {
   Q_OBJECT

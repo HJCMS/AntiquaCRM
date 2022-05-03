@@ -5,9 +5,9 @@
 #ifndef EDITORACTIONBAR_UTILS_H
 #define EDITORACTIONBAR_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QPushButton>
+#include <QWidget>
 
 class EditorActionBar : public QWidget {
   Q_OBJECT

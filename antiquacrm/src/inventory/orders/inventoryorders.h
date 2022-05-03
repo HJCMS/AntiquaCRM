@@ -7,12 +7,12 @@
 
 #include "inventory.h"
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
-#include <QtWidgets/QStackedWidget>
-#include <QtWidgets/QTabWidget>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QWidget>
+#include <QList>
+#include <QObject>
+#include <QStackedWidget>
+#include <QTabWidget>
+#include <QLabel>
+#include <QWidget>
 
 class StatsActionBar;
 class OrdersTable;

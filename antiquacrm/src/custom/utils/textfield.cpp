@@ -3,9 +3,9 @@
 
 #include "textfield.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QRegExp>
-#include <QtWidgets/QVBoxLayout>
+#include <QDebug>
+#include <QRegExp>
+#include <QVBoxLayout>
 
 TextField::TextField(QWidget *parent) : UtilsMain{parent} {
   if (objectName().isEmpty())

@@ -5,14 +5,14 @@
 #ifndef IMAGEDIALOG_IMAGING_H
 #define IMAGEDIALOG_IMAGING_H
 
-#include <QtCore/QDir>
-#include <QtCore/QFileInfo>
-#include <QtCore/QObject>
-#include <QtWidgets/QAbstractButton>
-#include <QtWidgets/QDialog>
-#include <QtWidgets/QFileDialog>
-#include <QtWidgets/QStatusBar>
-#include <QtWidgets/QWidget>
+#include <QDir>
+#include <QFileInfo>
+#include <QObject>
+#include <QAbstractButton>
+#include <QDialog>
+#include <QFileDialog>
+#include <QStatusBar>
+#include <QWidget>
 
 class ImageView;
 class OpenImageDialog;

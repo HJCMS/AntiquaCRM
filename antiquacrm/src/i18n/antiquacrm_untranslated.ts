@@ -1661,7 +1661,7 @@
 <context>
     <name>PostgreSqlSettings</name>
     <message>
-        <location filename="../custom/settings/postgresqlsettings.cpp" line="+32"/>
+        <location filename="../custom/settings/postgresqlsettings.cpp" line="+24"/>
         <source>Database Connection settings to PostgreSQL server.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1748,7 +1748,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+5"/>
+        <source>Issuer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Server Cert</source>
         <translation type="unfinished"></translation>
     </message>

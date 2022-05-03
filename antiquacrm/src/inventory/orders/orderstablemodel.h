@@ -5,12 +5,12 @@
 #ifndef ORDERSTABLEMODEL_H
 #define ORDERSTABLEMODEL_H
 
-#include <QtCore/QDateTime>
-#include <QtCore/QModelIndex>
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QVariant>
-#include <QtSql/QSqlQueryModel>
+#include <QDateTime>
+#include <QModelIndex>
+#include <QObject>
+#include <QString>
+#include <QVariant>
+#include <QSqlQueryModel>
 
 class OrdersTableModel : public QSqlQueryModel {
   Q_OBJECT

@@ -8,14 +8,14 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QFileInfo>
-#include <QtCore/QList>
-#include <QtCore/QStandardPaths>
-#include <QtGui/QImageReader>
-#include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QVBoxLayout>
+#include <QDebug>
+#include <QFileInfo>
+#include <QList>
+#include <QStandardPaths>
+#include <QImageReader>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 OpenImageDialog::OpenImageDialog(QWidget *parent) : QDialog(parent) {
   setObjectName("OpenImageDialogMain");

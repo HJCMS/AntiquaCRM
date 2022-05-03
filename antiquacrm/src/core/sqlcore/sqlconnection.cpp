@@ -4,12 +4,12 @@
 #include "sqlconnection.h"
 #include "sqlconfig.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QFile>
-#include <QtCore/QIODevice>
-#include <QtNetwork/QSslConfiguration>
-#include <QtNetwork/QSslSocket>
-#include <QtNetwork/QTcpSocket>
+#include <QDebug>
+#include <QFile>
+#include <QIODevice>
+#include <QSslConfiguration>
+#include <QSslSocket>
+#include <QTcpSocket>
 
 namespace HJCMS {
 

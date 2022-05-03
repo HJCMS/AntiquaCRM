@@ -4,7 +4,7 @@
 #include "antiqua_global.h"
 #include "datadelegation.h"
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
 DataDelegation::DataDelegation(QTableView *parent) : QItemDelegate{parent} {
   setObjectName("DataDelegation");

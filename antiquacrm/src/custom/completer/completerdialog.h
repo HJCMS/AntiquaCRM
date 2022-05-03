@@ -5,8 +5,8 @@
 #ifndef COMPLETERDIALOG_H
 #define COMPLETERDIALOG_H
 
-#include <QtCore/QObject>
-#include <QtWidgets/QDialog>
+#include <QObject>
+#include <QDialog>
 
 class CompleterView;
 

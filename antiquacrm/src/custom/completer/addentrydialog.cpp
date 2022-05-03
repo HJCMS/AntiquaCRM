@@ -6,14 +6,14 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QRegExp>
-#include <QtCore/QString>
-#include <QtWidgets/QAction>
-#include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QVBoxLayout>
+#include <QDebug>
+#include <QRegExp>
+#include <QString>
+#include <QAction>
+#include <QDialogButtonBox>
+#include <QLabel>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 AddEntryDialog::AddEntryDialog(QWidget *parent) : QDialog{parent} {
   setObjectName("AddEntryDialog");

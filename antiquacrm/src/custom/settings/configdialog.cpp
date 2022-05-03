@@ -4,17 +4,17 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QStringList>
-#include <QtCore/QVariant>
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QListView>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QVBoxLayout>
-#include <QtWidgets/QWidget>
+#include <QDebug>
+#include <QStringList>
+#include <QVariant>
+#include <QApplication>
+#include <QDialogButtonBox>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QListView>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QWidget>
 
 ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   setObjectName("ConfigDialog");

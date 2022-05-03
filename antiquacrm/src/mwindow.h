@@ -5,15 +5,15 @@
 #ifndef ANTIQUACRM_MWINDOW_H
 #define ANTIQUACRM_MWINDOW_H
 
-#include <QtCore/QEvent>
-#include <QtCore/QObject>
-#include <QtCore/QSignalMapper>
-#include <QtGui/QCloseEvent>
-#include <QtWidgets/QAction>
-#include <QtWidgets/QDockWidget>
-#include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
-#include <QtWidgets/QToolBar>
+#include <QEvent>
+#include <QObject>
+#include <QSignalMapper>
+#include <QCloseEvent>
+#include <QAction>
+#include <QDockWidget>
+#include <QMainWindow>
+#include <QMenuBar>
+#include <QToolBar>
 
 class StatusBar;
 class Workspace;

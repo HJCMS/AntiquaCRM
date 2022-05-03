@@ -6,11 +6,11 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QMessageBox>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QVBoxLayout>
+#include <QDialogButtonBox>
+#include <QLabel>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 CompleterDialog::CompleterDialog(QWidget *parent, const QString &filter)
     : QDialog{parent} {

@@ -4,11 +4,11 @@
 #include "sqlconfig.h"
 #include "antiqua_global.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QDir>
-#include <QtCore/QFileInfo>
-#include <QtCore/QVariant>
-#include <QtNetwork/QSslConfiguration>
+#include <QDebug>
+#include <QDir>
+#include <QFileInfo>
+#include <QVariant>
+#include <QSslConfiguration>
 
 namespace HJCMS {
 

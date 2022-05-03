@@ -5,10 +5,10 @@
 #ifndef FILEVIEWMODEL_IMAGING_H
 #define FILEVIEWMODEL_IMAGING_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtWidgets/QFileIconProvider>
-#include <QtWidgets/QFileSystemModel>
+#include <QObject>
+#include <QString>
+#include <QFileIconProvider>
+#include <QFileSystemModel>
 
 class FileViewModel : public QFileSystemModel {
   Q_OBJECT

@@ -5,10 +5,10 @@
 #ifndef LISTVIEW_IMAGING_H
 #define LISTVIEW_IMAGING_H
 
-#include <QtCore/QFileInfo>
-#include <QtCore/QModelIndex>
-#include <QtCore/QObject>
-#include <QtWidgets/QListView>
+#include <QFileInfo>
+#include <QModelIndex>
+#include <QObject>
+#include <QListView>
 
 class FileViewModel;
 

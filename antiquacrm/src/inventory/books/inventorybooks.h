@@ -7,11 +7,11 @@
 
 #include "inventory.h"
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
-#include <QtWidgets/QStackedWidget>
-#include <QtWidgets/QTabWidget>
-#include <QtWidgets/QWidget>
+#include <QList>
+#include <QObject>
+#include <QStackedWidget>
+#include <QTabWidget>
+#include <QWidget>
 
 class SearchBar;
 class BooksTable;

@@ -4,8 +4,8 @@
 #include "priceedit.h"
 #include "antiqua_global.h"
 
-#include <QtCore/QDebug>
-#include <QtWidgets/QHBoxLayout>
+#include <QDebug>
+#include <QHBoxLayout>
 
 PriceEdit::PriceEdit(QWidget *parent) : UtilsMain{parent} {
   setObjectName("PriceEdit");

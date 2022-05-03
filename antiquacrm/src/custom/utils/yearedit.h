@@ -5,10 +5,10 @@
 #ifndef YEAREDIT_UTILS_H
 #define YEAREDIT_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtWidgets/QDateEdit>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QDateEdit>
+#include <QLabel>
+#include <QWidget>
 // Personal
 #include <UtilsMain>
 

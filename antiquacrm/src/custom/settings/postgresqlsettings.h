@@ -7,10 +7,10 @@
 
 #include "settingswidget.h"
 
-#include <QtCore/QObject>
-#include <QtNetwork/QSslCertificate>
-#include <QtWidgets/QGroupBox>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QSslCertificate>
+#include <QGroupBox>
+#include <QWidget>
 
 #include <Utils>
 

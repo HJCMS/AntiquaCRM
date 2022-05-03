@@ -5,8 +5,8 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtWidgets/QHBoxLayout>
+#include <QDebug>
+#include <QHBoxLayout>
 
 Gender::Gender() {
   p_data.insert(0, QObject::tr("Without disclosures")); /**< Ohne Angabe */

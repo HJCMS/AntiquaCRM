@@ -5,10 +5,10 @@
 #ifndef TRUSTBOX_UTILS_H
 #define TRUSTBOX_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QComboBox>
+#include <QLabel>
+#include <QWidget>
 
 #include <UtilsMain>
 

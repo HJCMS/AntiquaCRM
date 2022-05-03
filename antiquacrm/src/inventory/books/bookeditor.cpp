@@ -4,8 +4,8 @@
 #include "isbnrequest.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtGui/QDesktopServices>
+#include <QDebug>
+#include <QDesktopServices>
 #include <QtWidgets>
 
 // Schalte SQL ausgaben ein

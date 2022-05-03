@@ -5,11 +5,11 @@
 #ifndef COSTUMERTABLEVIEW_H
 #define COSTUMERTABLEVIEW_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QModelIndex>
-#include <QtGui/QContextMenuEvent>
-#include <QtWidgets/QTableView>
+#include <QObject>
+#include <QString>
+#include <QModelIndex>
+#include <QContextMenuEvent>
+#include <QTableView>
 
 namespace HJCMS {
 class SqlCore;

@@ -10,11 +10,11 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QHash>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QLayout>
-#include <QtWidgets/QVBoxLayout>
+#include <QDebug>
+#include <QHash>
+#include <QLabel>
+#include <QLayout>
+#include <QVBoxLayout>
 
 /**
    @brief bookSearchFilter

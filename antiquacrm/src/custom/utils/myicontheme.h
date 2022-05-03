@@ -5,9 +5,9 @@
 #ifndef MYICONTHEME_UTILS_H
 #define MYICONTHEME_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtGui/QIcon>
-#include <QtGui/QIconEngine>
+#include <QObject>
+#include <QIcon>
+#include <QIconEngine>
 
 /**
  * @todo MyIconTheme class

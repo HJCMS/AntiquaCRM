@@ -4,9 +4,9 @@
 #include "costumeroverview.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QLocale>
-#include <QtCore/QDateTime>
+#include <QDebug>
+#include <QLocale>
+#include <QDateTime>
 
 DomDocument::DomDocument(const QString &name) {
   QDomElement html = createElement("html");

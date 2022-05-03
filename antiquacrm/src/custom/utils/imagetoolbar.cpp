@@ -5,7 +5,7 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtWidgets/QHBoxLayout>
+#include <QHBoxLayout>
 
 ImageToolBar::ImageToolBar(QWidget *parent) : QWidget{parent} {
   setObjectName("ImageActionToolBar");

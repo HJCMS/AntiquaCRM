@@ -3,8 +3,8 @@
 
 #include "emailedit.h"
 
-#include <QtCore/QDebug>
-#include <QtWidgets/QHBoxLayout>
+#include <QDebug>
+#include <QHBoxLayout>
 
 EMailEdit::EMailEdit(QWidget *parent) : UtilsMain{parent} {
   if (objectName().isEmpty())

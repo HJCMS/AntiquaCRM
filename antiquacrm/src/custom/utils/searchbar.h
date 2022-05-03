@@ -5,14 +5,14 @@
 #ifndef SEARCHBAR_UTILS_H
 #define SEARCHBAR_UTILS_H
 
-#include <QtCore/QList>
-#include <QtCore/QObject>
-#include <QtGui/QDoubleValidator>
-#include <QtGui/QRegExpValidator>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QLineEdit>
-#include <QtWidgets/QToolBar>
-#include <QtWidgets/QWidget>
+#include <QList>
+#include <QObject>
+#include <QDoubleValidator>
+#include <QRegExpValidator>
+#include <QComboBox>
+#include <QLineEdit>
+#include <QToolBar>
+#include <QWidget>
 
 struct SearchStatement {
   QString SearchField;

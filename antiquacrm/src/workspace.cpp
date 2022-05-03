@@ -9,9 +9,9 @@
 #include "inventoryprints.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QMetaObject>
-#include <QtWidgets/QTabBar>
+#include <QDebug>
+#include <QMetaObject>
+#include <QTabBar>
 
 Workspace::Workspace(QWidget *parent) : QTabWidget{parent} {
   setObjectName("WorkspaceTabWidget");

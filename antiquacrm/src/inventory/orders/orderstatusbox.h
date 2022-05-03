@@ -5,10 +5,10 @@
 #ifndef ORDERSTATUSBOX_H
 #define ORDERSTATUSBOX_H
 
-#include <QtCore/QObject>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QDialog>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QComboBox>
+#include <QDialog>
+#include <QWidget>
 
 class OrderStatusBox : public QComboBox {
   Q_OBJECT

@@ -5,9 +5,9 @@
 #ifndef SOCKETSERVER_H
 #define SOCKETSERVER_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtNetwork/QLocalServer>
+#include <QObject>
+#include <QString>
+#include <QLocalServer>
 
 class SocketServer : public QLocalServer {
   Q_OBJECT

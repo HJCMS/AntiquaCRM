@@ -8,12 +8,12 @@
 #include "generalsettingswidget.h"
 #include "postgresqlsettings.h"
 
-#include <QtCore/QObject>
-#include <QtWidgets/QWidget>
-#include <QtWidgets/QDialog>
-#include <QtWidgets/QStackedLayout>
-#include <QtWidgets/QListWidget>
-#include <QtWidgets/QListWidgetItem>
+#include <QObject>
+#include <QWidget>
+#include <QDialog>
+#include <QStackedLayout>
+#include <QListWidget>
+#include <QListWidgetItem>
 
 class ConfigDialog : public QDialog
 {

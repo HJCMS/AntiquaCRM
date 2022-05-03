@@ -5,10 +5,10 @@
 #ifndef POSTALCODEDATAMODEL_UTILS_H
 #define POSTALCODEDATAMODEL_UTILS_H
 
-#include <QtCore/QStringListModel>
-#include <QtCore/QModelIndex>
-#include <QtCore/QObject>
-#include <QtSql/QSqlQueryModel>
+#include <QStringListModel>
+#include <QModelIndex>
+#include <QObject>
+#include <QSqlQueryModel>
 
 namespace HJCMS {
 class SqlCore;

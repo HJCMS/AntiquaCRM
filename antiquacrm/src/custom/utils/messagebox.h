@@ -5,10 +5,10 @@
 #ifndef MESSAGEBOX_UTILS_H
 #define MESSAGEBOX_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtCore/QTimerEvent>
-#include <QtWidgets/QMessageBox>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QTimerEvent>
+#include <QMessageBox>
+#include <QWidget>
 
 class MessageBox : public QMessageBox {
   Q_OBJECT

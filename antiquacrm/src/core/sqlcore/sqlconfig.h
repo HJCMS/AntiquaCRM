@@ -5,11 +5,11 @@
 #ifndef HJCMS_SQLCONFIG_SQLCORE_H
 #define HJCMS_SQLCONFIG_SQLCORE_H
 
-#include <QtCore/QObject>
-#include <QtCore/QSettings>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtNetwork/QSslCertificate>
+#include <QObject>
+#include <QSettings>
+#include <QString>
+#include <QStringList>
+#include <QSslCertificate>
 
 namespace HJCMS {
 /**

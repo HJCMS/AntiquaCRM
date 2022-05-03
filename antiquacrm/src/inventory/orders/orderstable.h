@@ -5,11 +5,11 @@
 #ifndef ORDERSTABLE_H
 #define ORDERSTABLE_H
 
-#include <QtCore/QHash>
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtGui/QContextMenuEvent>
-#include <QtWidgets/QTableView>
+#include <QHash>
+#include <QObject>
+#include <QString>
+#include <QContextMenuEvent>
+#include <QTableView>
 
 #include <SqlCore>
 

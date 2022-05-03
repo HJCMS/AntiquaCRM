@@ -5,15 +5,15 @@
 #ifndef BOOKEDITOR_H
 #define BOOKEDITOR_H
 
-#include <QtCore/QEvent>
-#include <QtCore/QHash>
-#include <QtCore/QObject>
-#include <QtCore/QRegularExpression>
-#include <QtCore/QVariant>
-#include <QtWidgets/QListWidget>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QTabWidget>
-#include <QtWidgets/QWidget>
+#include <QEvent>
+#include <QHash>
+#include <QObject>
+#include <QRegularExpression>
+#include <QVariant>
+#include <QListWidget>
+#include <QPushButton>
+#include <QTabWidget>
+#include <QWidget>
 
 /**
  * @defgroup HJCMS

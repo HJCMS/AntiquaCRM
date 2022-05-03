@@ -4,7 +4,7 @@
 #include "salutationbox.h"
 #include "antiqua_global.h"
 
-#include <QtCore/QDebug>
+#include <QDebug>
 // #include <QtGui>
 #include <QtWidgets>
 

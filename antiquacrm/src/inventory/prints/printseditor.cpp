@@ -7,7 +7,7 @@
 #include "myicontheme.h"
 
 #include <QtCore>
-#include <QtGui/QDesktopServices>
+#include <QDesktopServices>
 #include <QtWidgets>
 
 PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {

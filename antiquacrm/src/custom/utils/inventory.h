@@ -5,8 +5,8 @@
 #ifndef INVENTORY_UTILS_H
 #define INVENTORY_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QWidget>
 
 /**
  @brief Elternklasse für Inventory Tabs

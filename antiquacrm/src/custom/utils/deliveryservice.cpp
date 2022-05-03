@@ -1,6 +1,6 @@
 #include "deliveryservice.h"
 
-#include <QtWidgets/QHBoxLayout>
+#include <QHBoxLayout>
 
 #include <SqlCore>
 

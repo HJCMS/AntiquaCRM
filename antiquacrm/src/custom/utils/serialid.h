@@ -5,10 +5,10 @@
 #ifndef SERIALID_UTILS_H
 #define SERIALID_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtCore/QVariant>
-#include <QtWidgets/QFrame>
-#include <QtWidgets/QLabel>
+#include <QObject>
+#include <QVariant>
+#include <QFrame>
+#include <QLabel>
 
 #include <UtilsMain>
 

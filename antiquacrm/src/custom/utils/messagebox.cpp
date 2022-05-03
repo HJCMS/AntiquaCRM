@@ -3,7 +3,7 @@
 
 #include "messagebox.h"
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
 MessageBox::MessageBox(QWidget *parent) : QMessageBox{parent} {
   setObjectName("MessageBox");

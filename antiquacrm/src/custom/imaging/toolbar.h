@@ -5,9 +5,9 @@
 #ifndef TOOLBAR_IMAGING_H
 #define TOOLBAR_IMAGING_H
 
-#include <QtCore/QObject>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QComboBox>
+#include <QWidget>
 
 /**
  Einfacher Toolbar mit einer ComboBox und

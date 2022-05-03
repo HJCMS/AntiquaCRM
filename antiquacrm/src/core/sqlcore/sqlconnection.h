@@ -5,9 +5,8 @@
 #ifndef HJCMS_SQLCONNECTION_SQLCORE_H
 #define HJCMS_SQLCONNECTION_SQLCORE_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtNetwork/QSslCertificate>
+#include <QObject>
+#include <QString>
 
 namespace HJCMS {
 

@@ -5,11 +5,11 @@
 #ifndef STRLINEEDIT_UTILS_H
 #define STRLINEEDIT_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtCore/QStringList>
-#include <QtGui/QRegExpValidator>
-#include <QtWidgets/QCompleter>
-#include <QtWidgets/QLineEdit>
+#include <QObject>
+#include <QStringList>
+#include <QRegExpValidator>
+#include <QCompleter>
+#include <QLineEdit>
 
 #include <SqlCore>
 #include <UtilsMain>

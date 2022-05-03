@@ -5,8 +5,8 @@
 #ifndef COSTUMERCONTACT_H
 #define COSTUMERCONTACT_H
 
-#include <QtCore/QObject>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QWidget>
 
 #include <Utils>
 

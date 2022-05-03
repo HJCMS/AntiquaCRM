@@ -5,10 +5,10 @@
 #ifndef SALUTATIONBOX_UTILS_H
 #define SALUTATIONBOX_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QLineEdit>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QComboBox>
+#include <QLineEdit>
+#include <QWidget>
 
 #include <UtilsMain>
 

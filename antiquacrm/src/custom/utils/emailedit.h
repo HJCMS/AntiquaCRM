@@ -5,14 +5,14 @@
 #ifndef EMAILEDIT_UTILS_H
 #define EMAILEDIT_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtCore/QRegExp>
-#include <QtCore/QVariant>
-#include <QtGui/QRegExpValidator>
-#include <QtWidgets/QFrame>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QLineEdit>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QRegExp>
+#include <QVariant>
+#include <QRegExpValidator>
+#include <QFrame>
+#include <QLabel>
+#include <QLineEdit>
+#include <QWidget>
 
 #include <UtilsMain>
 

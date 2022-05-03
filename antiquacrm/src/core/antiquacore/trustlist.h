@@ -7,9 +7,9 @@
 
 #include "antiqua_global.h"
 
-#include <QtCore/QList>
-#include <QtCore/QString>
-#include <QtCore/QMetaType>
+#include <QList>
+#include <QString>
+#include <QMetaType>
 
 /**
  * @brief Trust SQL Field Class

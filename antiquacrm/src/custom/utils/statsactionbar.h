@@ -5,12 +5,12 @@
 #ifndef STATSACTIONBAR_UTILS_H
 #define STATSACTIONBAR_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtCore/QTimerEvent>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QToolBar>
+#include <QObject>
+#include <QTimerEvent>
+#include <QComboBox>
+#include <QLabel>
+#include <QPushButton>
+#include <QToolBar>
 
 /**
     @brief StatsActionBar

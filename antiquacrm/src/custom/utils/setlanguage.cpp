@@ -3,8 +3,8 @@
 
 #include "setlanguage.h"
 
-#include <QtCore/QDebug>
-#include <QtWidgets/QHBoxLayout>
+#include <QDebug>
+#include <QHBoxLayout>
 
 SetLanguage::SetLanguage(QWidget *parent) : UtilsMain{parent} {
   setObjectName("SetLanguage");

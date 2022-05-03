@@ -5,12 +5,12 @@
 #ifndef SETLANGUAGE_UTILS_H
 #define SETLANGUAGE_UTILS_H
 
-#include <QtCore/QHash>
-#include <QtCore/QList>
-#include <QtCore/QObject>
-#include <QtCore/QVariant>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QWidget>
+#include <QHash>
+#include <QList>
+#include <QObject>
+#include <QVariant>
+#include <QComboBox>
+#include <QWidget>
 
 #include <UtilsMain>
 

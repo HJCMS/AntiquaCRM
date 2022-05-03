@@ -5,12 +5,12 @@
 #ifndef OPENIMAGEDIALOG_IMAGING_H
 #define OPENIMAGEDIALOG_IMAGING_H
 
-#include <QtCore/QDir>
-#include <QtCore/QFileInfo>
-#include <QtCore/QObject>
-#include <QtWidgets/QDialog>
-#include <QtWidgets/QLineEdit>
-#include <QtWidgets/QSplitter>
+#include <QDir>
+#include <QFileInfo>
+#include <QObject>
+#include <QDialog>
+#include <QLineEdit>
+#include <QSplitter>
 
 class ToolBar;
 class ImageView;

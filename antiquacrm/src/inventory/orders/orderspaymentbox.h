@@ -5,10 +5,10 @@
 #ifndef ORDERSPAYMENTBOX_H
 #define ORDERSPAYMENTBOX_H
 
-#include <QtCore/QObject>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QDialog>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QComboBox>
+#include <QDialog>
+#include <QWidget>
 
 class OrdersPaymentBox : public QComboBox {
   Q_OBJECT

@@ -3,8 +3,8 @@
 
 #include "intspinbox.h"
 
-#include <QtCore/QDebug>
-#include <QtWidgets/QHBoxLayout>
+#include <QDebug>
+#include <QHBoxLayout>
 
 IntSpinBox::IntSpinBox(QWidget *parent) : UtilsMain{parent} { p_construct(); }
 

@@ -2,9 +2,9 @@
 
 #include <AntiquaCRM>
 
-#include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QVBoxLayout>
+#include <QDialogButtonBox>
+#include <QLabel>
+#include <QVBoxLayout>
 
 OrderStatusBox::OrderStatusBox(QWidget *parent) : QComboBox{parent} {
   setObjectName("o_order_status");

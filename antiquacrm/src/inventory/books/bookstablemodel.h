@@ -5,11 +5,11 @@
 #ifndef BOOKSTABLEMODEL_H
 #define BOOKSTABLEMODEL_H
 
-#include <QtCore/QModelIndex>
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QVariant>
-#include <QtSql/QSqlQueryModel>
+#include <QModelIndex>
+#include <QObject>
+#include <QString>
+#include <QVariant>
+#include <QSqlQueryModel>
 
 class BooksTableModel : public QSqlQueryModel {
   Q_OBJECT

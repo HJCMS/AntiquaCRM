@@ -3,9 +3,9 @@
 
 #include "fileviewmodel.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QDir>
-#include <QtCore/QFileInfo>
+#include <QDebug>
+#include <QDir>
+#include <QFileInfo>
 
 FileViewModel::FileViewModel(QObject *parent) : QFileSystemModel(parent) {
   setOption(QFileSystemModel::DontWatchForChanges, true);

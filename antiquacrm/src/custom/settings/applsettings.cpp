@@ -5,8 +5,8 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QDir>
+#include <QDebug>
+#include <QDir>
 
 static const QString config_domain() {
   QString str = QString::fromUtf8(HJCMS_CONFIG_DOMAIN);

@@ -3,13 +3,13 @@
 #ifndef SETTINGSWIDGET_H
 #define SETTINGSWIDGET_H
 
-#include <QtCore/QHash>
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QVariant>
+#include <QHash>
+#include <QObject>
+#include <QString>
+#include <QVariant>
 
-#include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QWidget>
+#include <QSpacerItem>
+#include <QWidget>
 
 #include "applsettings.h"
 

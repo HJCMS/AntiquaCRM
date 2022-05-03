@@ -6,15 +6,15 @@
 #include "messagebox.h"
 #include "sqlcore.h"
 
-#include <QtCore/QBuffer>
-#include <QtCore/QDebug>
-#include <QtGui/QImageReader>
-#include <QtGui/QPixmap>
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlError>
-#include <QtSql/QSqlQuery>
-#include <QtSql/QSqlRecord>
-#include <QtWidgets/QVBoxLayout>
+#include <QBuffer>
+#include <QDebug>
+#include <QImageReader>
+#include <QPixmap>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QSqlRecord>
+#include <QVBoxLayout>
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget{parent} {
   setObjectName("ImageWidgetViewer");

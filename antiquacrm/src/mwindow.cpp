@@ -13,11 +13,11 @@
 #include "workspace.h"
 #include "myicontheme.h"
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QDebug>
-#include <QtWidgets/QFileDialog>
-#include <QtWidgets/QMessageBox>
-#include <QtWidgets/QTabWidget>
+#include <QCoreApplication>
+#include <QDebug>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QTabWidget>
 
 MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
   setObjectName("MainWindow");

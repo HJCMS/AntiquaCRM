@@ -4,7 +4,7 @@
 #include "datatablemodel.h"
 #include "antiqua_global.h"
 
-#include <QtCore/QDebug>
+#include <QDebug>
 #include <QtSql>
 
 DataTableModel::DataTableModel(const QString &field, QTableView *parent,

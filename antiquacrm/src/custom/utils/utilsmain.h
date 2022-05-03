@@ -5,11 +5,11 @@
 #ifndef UTILSMAIN_UTILS_H
 #define UTILSMAIN_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtCore/QVariant>
-#include <QtGui/QFocusEvent>
-#include <QtWidgets/QFrame>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QVariant>
+#include <QFocusEvent>
+#include <QFrame>
+#include <QWidget>
 
 class UtilsMain : public QFrame {
   Q_OBJECT

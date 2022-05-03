@@ -4,9 +4,9 @@
 #include "storageedit.h"
 #include "sqlcore.h"
 
-#include <QtCore/QDebug>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QSizePolicy>
+#include <QDebug>
+#include <QHBoxLayout>
+#include <QSizePolicy>
 
 StorageEdit::StorageEdit(QWidget *parent) : UtilsMain{parent} {
   if (objectName().isEmpty())

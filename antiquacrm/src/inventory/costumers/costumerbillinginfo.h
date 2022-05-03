@@ -5,8 +5,8 @@
 #ifndef COSTUMERBILLINGINFO_H
 #define COSTUMERBILLINGINFO_H
 
-#include <QtCore/QObject>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QWidget>
 
 #include <Utils>
 

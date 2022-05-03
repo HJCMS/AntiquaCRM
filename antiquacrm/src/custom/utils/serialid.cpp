@@ -4,8 +4,8 @@
 #include "serialid.h"
 #include "antiqua_global.h"
 
-#include <QtCore/QDebug>
-#include <QtWidgets/QHBoxLayout>
+#include <QDebug>
+#include <QHBoxLayout>
 
 SerialID::SerialID(QWidget *parent) : UtilsMain{parent} {
   setObjectName("SerialID");

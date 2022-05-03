@@ -8,13 +8,13 @@
 #include "applsettings.h"
 
 /* QtCore */
-#include <QtCore/QEvent>
-#include <QtCore/QObject>
+#include <QEvent>
+#include <QObject>
 
 /* QtWidgets */
-#include <QtWidgets/QDockWidget>
-#include <QtWidgets/QTabWidget>
-#include <QtWidgets/QWidget>
+#include <QDockWidget>
+#include <QTabWidget>
+#include <QWidget>
 
 class DockBarWidget : public QDockWidget {
   Q_OBJECT

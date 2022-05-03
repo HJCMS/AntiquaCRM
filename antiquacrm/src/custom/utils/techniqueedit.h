@@ -5,10 +5,10 @@
 #ifndef TECHNIQUEEDIT_UTILS_H
 #define TECHNIQUEEDIT_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtCore/QVariant>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QVariant>
+#include <QComboBox>
+#include <QWidget>
 
 #include <UtilsMain>
 

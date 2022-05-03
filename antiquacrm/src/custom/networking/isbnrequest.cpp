@@ -3,15 +3,15 @@
 
 #include "isbnrequest.h"
 
-#include <QtCore/QByteArray>
-#include <QtCore/QDebug>
-#include <QtCore/QJsonArray>
-#include <QtCore/QJsonDocument>
-#include <QtCore/QJsonObject>
-#include <QtCore/QJsonValueRef>
-#include <QtCore/QString>
-#include <QtCore/QVector>
-#include <QtNetwork/QNetworkRequest>
+#include <QByteArray>
+#include <QDebug>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValueRef>
+#include <QString>
+#include <QVector>
+#include <QNetworkRequest>
 
 IsbnData::IsbnData(const QString &isbn) : p_isbn(isbn) {}
 

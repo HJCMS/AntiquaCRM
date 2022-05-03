@@ -10,8 +10,8 @@
 #include "antiqua_global.h"
 #include "assistant.h"
 
-#include <QtCore/QDebug>
-#include <QtNetwork/QLocalSocket>
+#include <QDebug>
+#include <QLocalSocket>
 
 MApplication::MApplication(int &argc, char **argv) : QApplication(argc, argv) {
   setObjectName("MApplicationApplication");

@@ -4,16 +4,16 @@
 #include "filedialog.h"
 #include "antiqua_global.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QFileInfo>
-#include <QtCore/QList>
-#include <QtCore/QMimeData>
-#include <QtCore/QMimeDatabase>
-#include <QtCore/QStandardPaths>
-#include <QtCore/QStringList>
-#include <QtCore/QUrl>
-#include <QtGui/QImageReader>
-#include <QtWidgets/QDialogButtonBox>
+#include <QDebug>
+#include <QFileInfo>
+#include <QList>
+#include <QMimeData>
+#include <QMimeDatabase>
+#include <QStandardPaths>
+#include <QStringList>
+#include <QUrl>
+#include <QImageReader>
+#include <QDialogButtonBox>
 
 FileDialog::FileDialog(QWidget *parent)
     : QFileDialog{parent, Qt::Dialog}, p_dir(QDir::home()) {

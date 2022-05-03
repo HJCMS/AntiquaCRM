@@ -6,9 +6,9 @@
 #include "myicontheme.h"
 #include <SqlCore>
 
-#include <QtCore/QDebug>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QVBoxLayout>
+#include <QDebug>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 
 CostumerContact::CostumerContact(QWidget *parent) : QWidget{parent} {
   setObjectName("CostumerContact");

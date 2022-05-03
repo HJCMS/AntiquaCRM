@@ -5,18 +5,18 @@
 #include "sqlconfig.h"
 #include "sqlconnection.h"
 
-#include <QtCore/QCoreApplication>
-#include <QtCore/QDebug>
-#include <QtCore/QFileInfo>
-#include <QtCore/QMutex>
-#include <QtCore/QSettings>
-#include <QtCore/QTime>
-#include <QtCore/QtGlobal>
-#include <QtNetwork/QSslConfiguration>
-#include <QtNetwork/QTcpSocket>
-#include <QtSql/QSqlDriver>
-#include <QtSql/QSqlError>
-#include <QtSql/QSqlQuery>
+#include <QCoreApplication>
+#include <QDebug>
+#include <QFileInfo>
+#include <QMutex>
+#include <QSettings>
+#include <QTime>
+#include <QtGlobal>
+#include <QSslConfiguration>
+#include <QTcpSocket>
+#include <QSqlDriver>
+#include <QSqlError>
+#include <QSqlQuery>
 
 namespace HJCMS {
 

@@ -9,11 +9,11 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QLayout>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QVBoxLayout>
+#include <QDebug>
+#include <QHBoxLayout>
+#include <QLayout>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 /**
    @ref SearchBar::addSearchFilters

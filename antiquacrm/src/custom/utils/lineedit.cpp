@@ -3,7 +3,7 @@
 
 #include "lineedit.h"
 
-#include <QtWidgets/QHBoxLayout>
+#include <QHBoxLayout>
 
 LineEdit::LineEdit(QWidget *parent) : UtilsMain{parent} {
   if (objectName().isEmpty())

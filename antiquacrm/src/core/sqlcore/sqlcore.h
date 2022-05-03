@@ -5,15 +5,15 @@
 #ifndef HJCMS_SQLCORE_SQLCORE_H
 #define HJCMS_SQLCORE_SQLCORE_H
 
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QTimerEvent>
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlError>
-#include <QtSql/QSqlQuery>
-#include <QtSql/QSqlRecord>
-#include <QtSql/QSqlField>
+#include <QObject>
+#include <QString>
+#include <QStringList>
+#include <QTimerEvent>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QSqlRecord>
+#include <QSqlField>
 
 namespace HJCMS {
 

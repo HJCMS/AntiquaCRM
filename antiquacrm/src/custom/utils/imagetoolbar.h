@@ -5,9 +5,9 @@
 #ifndef IMAGETOOLBAR_UTILS_H
 #define IMAGETOOLBAR_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QPushButton>
+#include <QWidget>
 
 class ImageToolBar : public QWidget {
   Q_OBJECT

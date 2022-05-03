@@ -4,7 +4,7 @@
 #include "socketserver.h"
 #include "antiqua_global.h"
 
-#include <QtCore/QSysInfo>
+#include <QSysInfo>
 
 SocketServer::SocketServer(QObject *parent) : QLocalServer{parent} {
   setObjectName("socket_server");

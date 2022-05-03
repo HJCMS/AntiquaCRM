@@ -5,11 +5,11 @@
 #ifndef FILEDIALOG_UTILS_H
 #define FILEDIALOG_UTILS_H
 
-#include <QtCore/QDir>
-#include <QtCore/QObject>
-#include <QtCore/QStringList>
-#include <QtWidgets/QFileDialog>
-#include <QtWidgets/QWidget>
+#include <QDir>
+#include <QObject>
+#include <QStringList>
+#include <QFileDialog>
+#include <QWidget>
 
 class FileDialog : public QFileDialog {
   Q_OBJECT

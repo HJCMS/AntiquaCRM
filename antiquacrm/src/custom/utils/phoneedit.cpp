@@ -3,10 +3,10 @@
 
 #include "phoneedit.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QRegularExpression>
-#include <QtCore/QRegularExpressionMatch>
-#include <QtWidgets/QHBoxLayout>
+#include <QDebug>
+#include <QRegularExpression>
+#include <QRegularExpressionMatch>
+#include <QHBoxLayout>
 
 PhoneEdit::PhoneEdit(QWidget *parent) : UtilsMain{parent} {
   if (objectName().isEmpty())

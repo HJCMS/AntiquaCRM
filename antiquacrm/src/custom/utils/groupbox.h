@@ -5,10 +5,10 @@
 #ifndef GROUPBOX_UTILS_H
 #define GROUPBOX_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QGroupBox>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QLabel>
+#include <QGroupBox>
+#include <QWidget>
 
 #include <UtilsMain>
 

@@ -8,19 +8,19 @@
 #include "myicontheme.h"
 #include "searchbar.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QItemSelectionModel>
-#include <QtCore/QMutex>
-#include <QtCore/QPoint>
-#include <QtCore/QRegExp>
-#include <QtCore/QSignalMapper>
-#include <QtCore/QTime>
-#include <QtSql/QSqlError>
-#include <QtSql/QSqlQuery>
-#include <QtSql/QSqlTableModel>
-#include <QtWidgets/QAction>
-#include <QtWidgets/QHeaderView>
-#include <QtWidgets/QMenu>
+#include <QDebug>
+#include <QItemSelectionModel>
+#include <QMutex>
+#include <QPoint>
+#include <QRegExp>
+#include <QSignalMapper>
+#include <QTime>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QSqlTableModel>
+#include <QAction>
+#include <QHeaderView>
+#include <QMenu>
 
 /**
     @brief querySelect

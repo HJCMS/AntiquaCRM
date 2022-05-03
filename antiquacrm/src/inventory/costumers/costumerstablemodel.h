@@ -5,11 +5,11 @@
 #ifndef COSTUMERSTABLEMODEL_H
 #define COSTUMERSTABLEMODEL_H
 
-#include <QtCore/QModelIndex>
-#include <QtCore/QObject>
-#include <QtCore/QString>
-#include <QtCore/QVariant>
-#include <QtSql/QSqlQueryModel>
+#include <QModelIndex>
+#include <QObject>
+#include <QString>
+#include <QVariant>
+#include <QSqlQueryModel>
 
 class CostumersTableModel : public QSqlQueryModel {
   Q_OBJECT

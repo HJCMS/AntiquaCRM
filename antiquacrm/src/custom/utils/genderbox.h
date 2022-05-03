@@ -5,11 +5,11 @@
 #ifndef GENDERBOX_UTILS_H
 #define GENDERBOX_UTILS_H
 
-#include <QtCore/QHash>
-#include <QtCore/QObject>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QWidget>
+#include <QHash>
+#include <QObject>
+#include <QLabel>
+#include <QComboBox>
+#include <QWidget>
 // Personal
 #include <UtilsMain>
 class Gender {

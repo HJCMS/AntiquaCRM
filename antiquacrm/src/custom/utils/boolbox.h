@@ -5,9 +5,9 @@
 #ifndef BOOLBOX_UTILS_H
 #define BOOLBOX_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtWidgets/QCheckBox>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QCheckBox>
+#include <QWidget>
 
 #include <UtilsMain>
 

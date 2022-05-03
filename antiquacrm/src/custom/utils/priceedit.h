@@ -5,10 +5,10 @@
 #ifndef PRICEEDIT_UTILS_H
 #define PRICEEDIT_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtWidgets/QDoubleSpinBox>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QDoubleSpinBox>
+#include <QLabel>
+#include <QWidget>
 // Personal
 #include <UtilsMain>
 

@@ -5,9 +5,9 @@
 #ifndef INVENTORY_ORDEREDITOR_H
 #define INVENTORY_ORDEREDITOR_H
 
-#include <QtCore/QObject>
-#include <QtCore/QVariant>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QVariant>
+#include <QWidget>
 
 #include <EditorMain>
 #include <Utils>

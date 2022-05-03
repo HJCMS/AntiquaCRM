@@ -5,10 +5,10 @@
 #ifndef ANTIQUACRM_MAPPLICATION_H
 #define ANTIQUACRM_MAPPLICATION_H
 
-#include <QtCore/QEvent>
-#include <QtCore/QObject>
-#include <QtNetwork/QLocalServer>
-#include <QtWidgets/QApplication>
+#include <QEvent>
+#include <QObject>
+#include <QLocalServer>
+#include <QApplication>
 
 class ApplSettings;
 class MWindow;

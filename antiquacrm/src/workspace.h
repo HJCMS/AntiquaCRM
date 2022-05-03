@@ -6,8 +6,8 @@
 #define WORKSPACE_H
 
 #include <QObject>
-#include <QtWidgets/QTabWidget>
-#include <QtWidgets/QWidget>
+#include <QTabWidget>
+#include <QWidget>
 
 class InventoryBooks;
 class InventoryPrints;

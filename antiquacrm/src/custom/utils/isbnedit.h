@@ -5,14 +5,14 @@
 #ifndef ISBNEDIT_UTILS_H
 #define ISBNEDIT_UTILS_H
 
-#include <QtCore/QString>
-#include <QtGui/QRegExpValidator>
-#include <QtGui/QIcon>
-#include <QtWidgets/QCompleter>
-#include <QtWidgets/QLineEdit>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QWidget>
+#include <QString>
+#include <QRegExpValidator>
+#include <QIcon>
+#include <QCompleter>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QLabel>
+#include <QWidget>
 #include <UtilsMain>
 
 /**

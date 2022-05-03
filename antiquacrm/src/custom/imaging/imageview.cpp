@@ -3,11 +3,11 @@
 
 #include "imageview.h"
 
-#include <QtCore/QDebug>
-#include <QtGui/QImageReader>
-#include <QtGui/QPixmap>
-#include <QtWidgets/QGraphicsItem>
-#include <QtWidgets/QGraphicsPixmapItem>
+#include <QDebug>
+#include <QImageReader>
+#include <QPixmap>
+#include <QGraphicsItem>
+#include <QGraphicsPixmapItem>
 
 ImageView::ImageView(QWidget *parent) : QGraphicsView(parent) {
   setObjectName("ImagePreview");

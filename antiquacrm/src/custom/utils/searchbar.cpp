@@ -5,14 +5,14 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QRegExp>
-#include <QtWidgets/QAction>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QLayout>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QToolButton>
-#include <QtWidgets/QWidget>
+#include <QDebug>
+#include <QRegExp>
+#include <QAction>
+#include <QHBoxLayout>
+#include <QLayout>
+#include <QPushButton>
+#include <QToolButton>
+#include <QWidget>
 
 SearchBar::SearchBar(QWidget *parent) : QToolBar(parent) {
   setObjectName("SearchBar");

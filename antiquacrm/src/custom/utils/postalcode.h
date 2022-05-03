@@ -5,12 +5,12 @@
 #ifndef POSTALCODE_H
 #define POSTALCODE_H
 
-#include <QtCore/QObject>
-#include <QtSql/QSqlQueryModel>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QCompleter>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QLineEdit>
+#include <QObject>
+#include <QSqlQueryModel>
+#include <QComboBox>
+#include <QCompleter>
+#include <QLabel>
+#include <QLineEdit>
 
 #include <UtilsMain>
 

@@ -5,10 +5,10 @@
 #ifndef EDITORMAIN_UTILS_H
 #define EDITORMAIN_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtCore/QRegularExpression>
-#include <QtCore/QVariant>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QRegularExpression>
+#include <QVariant>
+#include <QWidget>
 
 /**
  * @defgroup HJCMS

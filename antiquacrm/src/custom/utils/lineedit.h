@@ -5,12 +5,12 @@
 #ifndef LINEEDIT_UTILS_H
 #define LINEEDIT_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtCore/QByteArray>
-#include <QtWidgets/QCompleter>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QLineEdit>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QByteArray>
+#include <QCompleter>
+#include <QLabel>
+#include <QLineEdit>
+#include <QWidget>
 #include <UtilsMain>
 
 class LineEdit : public UtilsMain {

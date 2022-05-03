@@ -5,16 +5,16 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QRegularExpression>
-#include <QtCore/QRegularExpressionMatch>
-#include <QtCore/QStringList>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QSizePolicy>
+#include <QDebug>
+#include <QRegularExpression>
+#include <QRegularExpressionMatch>
+#include <QStringList>
+#include <QHBoxLayout>
+#include <QSizePolicy>
 
 /*
-#include <QtCore/QDir>
-#include <QtCore/QFile>
+#include <QDir>
+#include <QFile>
 static QStringList isbn_patterns() {
   QStringList l;
   QFile fp(QDir::homePath() + "/.cache/isbn.log");

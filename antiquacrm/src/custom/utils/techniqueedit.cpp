@@ -4,8 +4,8 @@
 #include "techniqueedit.h"
 #include "sqlcore.h"
 
-#include <QtCore/QDebug>
-#include <QtWidgets/QHBoxLayout>
+#include <QDebug>
+#include <QHBoxLayout>
 
 TechniqueEdit::TechniqueEdit(QWidget *parent) : UtilsMain{parent} {
   setObjectName("TechniqueEdit");

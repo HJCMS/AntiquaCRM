@@ -5,10 +5,10 @@
 #ifndef TEXTFIELD_UTILS_H
 #define TEXTFIELD_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtCore/QVariant>
-#include <QtWidgets/QTextEdit>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QVariant>
+#include <QTextEdit>
+#include <QWidget>
 
 #include <UtilsMain>
 

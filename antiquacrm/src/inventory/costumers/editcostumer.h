@@ -5,11 +5,11 @@
 #ifndef EDITCOSTUMER_H
 #define EDITCOSTUMER_H
 
-#include <QtCore/QObject>
-#include <QtCore/QRegularExpression>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QToolBox>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QRegularExpression>
+#include <QLabel>
+#include <QToolBox>
+#include <QWidget>
 
 #include <EditorMain>
 

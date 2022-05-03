@@ -5,12 +5,12 @@
 #ifndef ANTIQUACRM_SETTINGS_H
 #define ANTIQUACRM_SETTINGS_H
 
-#include <QtCore/QHash>
-#include <QtCore/QObject>
-#include <QtCore/QSettings>
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QVariant>
+#include <QHash>
+#include <QObject>
+#include <QSettings>
+#include <QString>
+#include <QStringList>
+#include <QVariant>
 
 class ApplSettings : public QSettings {
   Q_OBJECT

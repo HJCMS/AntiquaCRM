@@ -5,8 +5,8 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtWidgets/QHBoxLayout>
+#include <QDebug>
+#include <QHBoxLayout>
 
 EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
   setObjectName("EditorActionBar");

@@ -7,7 +7,7 @@
 #include "orderstatements.h"
 #include "orderstatusbox.h"
 
-#include <QtCore/QDebug>
+#include <QDebug>
 #include <QtWidgets>
 
 OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {

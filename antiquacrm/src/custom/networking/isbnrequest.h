@@ -5,16 +5,16 @@
 #ifndef ISBNREQUEST_H
 #define ISBNREQUEST_H
 
-#include <QtCore/QJsonArray>
-#include <QtCore/QJsonObject>
-#include <QtCore/QJsonValue>
-#include <QtCore/QMap>
-#include <QtCore/QObject>
-#include <QtCore/QUrl>
-#include <QtCore/QVariant>
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkReply>
-#include <QtNetwork/QSslError>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QMap>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QObject>
+#include <QSslError>
+#include <QUrl>
+#include <QVariant>
 
 class IsbnData {
 private:

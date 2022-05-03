@@ -6,9 +6,9 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QLabel>
+#include <QDebug>
+#include <QHBoxLayout>
+#include <QLabel>
 
 StatusBar::StatusBar(QWidget *parent) : QStatusBar{parent} {
   setObjectName("StatusBar");

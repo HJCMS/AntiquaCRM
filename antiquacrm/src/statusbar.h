@@ -5,12 +5,12 @@
 #ifndef STATUSBAR_H
 #define STATUSBAR_H
 
-#include <QtCore/QObject>
-#include <QtCore/QTimerEvent>
-#include <QtSql/QSqlDatabase>
-#include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolButton>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QTimerEvent>
+#include <QSqlDatabase>
+#include <QStatusBar>
+#include <QToolButton>
+#include <QWidget>
 
 namespace HJCMS {
 class SqlCore;

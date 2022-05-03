@@ -5,10 +5,10 @@
 #include "myicontheme.h"
 #include <SqlCore>
 
-#include <QtCore/QDebug>
-#include <QtWidgets/QGridLayout>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QVBoxLayout>
+#include <QDebug>
+#include <QGridLayout>
+#include <QLabel>
+#include <QVBoxLayout>
 
 CostumerBillingInfo::CostumerBillingInfo(QWidget *parent) : QWidget{parent} {
   setObjectName("CostumerBillingInfo");

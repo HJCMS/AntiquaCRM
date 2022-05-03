@@ -6,11 +6,11 @@
 #include "antiqua_global.h"
 
 /* QtCore */
-#include <QtCore/QDebug>
-#include <QtCore/QLibraryInfo>
-#include <QtCore/QLocale>
-#include <QtCore/QString>
-#include <QtCore/QTranslator>
+#include <QDebug>
+#include <QLibraryInfo>
+#include <QLocale>
+#include <QString>
+#include <QTranslator>
 
 int main(int argc, char *argv[]) {
   MApplication app(argc, argv);

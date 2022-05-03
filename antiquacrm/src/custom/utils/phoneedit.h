@@ -5,14 +5,14 @@
 #ifndef PHONEEDIT_UTILS_H
 #define PHONEEDIT_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtCore/QRegExp>
-#include <QtCore/QVariant>
-#include <QtGui/QRegExpValidator>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QFrame>
-#include <QtWidgets/QLineEdit>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QRegExp>
+#include <QVariant>
+#include <QRegExpValidator>
+#include <QLabel>
+#include <QFrame>
+#include <QLineEdit>
+#include <QWidget>
 #include <UtilsMain>
 
 class PhoneEdit : public UtilsMain {

@@ -5,15 +5,15 @@
 #ifndef DATATABLEMODEL_H
 #define DATATABLEMODEL_H
 
-#include <QtCore/QAbstractTableModel>
-#include <QtCore/QModelIndex>
-#include <QtCore/QObject>
-#include <QtCore/QVariant>
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlRecord>
-#include <QtSql/QSqlTableModel>
-#include <QtWidgets/QTableView>
-#include <QtWidgets/QWidget>
+#include <QAbstractTableModel>
+#include <QModelIndex>
+#include <QObject>
+#include <QVariant>
+#include <QSqlDatabase>
+#include <QSqlRecord>
+#include <QSqlTableModel>
+#include <QTableView>
+#include <QWidget>
 
 class DataTableModel : public QSqlTableModel {
   Q_OBJECT

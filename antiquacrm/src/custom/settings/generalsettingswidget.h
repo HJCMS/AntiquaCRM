@@ -5,13 +5,13 @@
 
 #include "settingswidget.h"
 
-#include <QtCore/QHash>
-#include <QtCore/QObject>
-#include <QtWidgets/QGroupBox>
-#include <QtWidgets/QLineEdit>
-#include <QtWidgets/QSpinBox>
-#include <QtWidgets/QToolButton>
-#include <QtWidgets/QWidget>
+#include <QHash>
+#include <QObject>
+#include <QGroupBox>
+#include <QLineEdit>
+#include <QSpinBox>
+#include <QToolButton>
+#include <QWidget>
 
 #include <Utils>
 

@@ -10,11 +10,11 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtSql/QSqlRecord>
-#include <QtWidgets/QHeaderView>
-#include <QtWidgets/QAction>
-#include <QtWidgets/QMenu>
+#include <QDebug>
+#include <QSqlRecord>
+#include <QHeaderView>
+#include <QAction>
+#include <QMenu>
 
 CompleterView::CompleterView(const QString &filter, QWidget *parent)
     : QTableView{parent}, p_type(filter) {

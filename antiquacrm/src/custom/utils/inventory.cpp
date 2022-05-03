@@ -4,7 +4,7 @@
 #include "inventory.h"
 #include "messagebox.h"
 
-#include <QtCore/QDebug>
+#include <QDebug>
 
 Inventory::Inventory(QWidget *parent) : QWidget{parent} {
   if (objectName().isEmpty())

@@ -3,10 +3,10 @@
 
 #include "strlineedit.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QRegExp>
-#include <QtCore/QRegularExpression>
-#include <QtWidgets/QHBoxLayout>
+#include <QDebug>
+#include <QRegExp>
+#include <QRegularExpression>
+#include <QHBoxLayout>
 
 StrLineEdit::StrLineEdit(QWidget *parent)
     : UtilsMain{parent}, p_table("ui_autofill_keywords") {

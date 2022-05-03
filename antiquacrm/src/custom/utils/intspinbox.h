@@ -5,11 +5,11 @@
 #ifndef INTSPINBOX_UTILS_H
 #define INTSPINBOX_UTILS_H
 
-#include <QtCore/QObject>
-#include <QtCore/QVariant>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QSpinBox>
-#include <QtWidgets/QWidget>
+#include <QObject>
+#include <QVariant>
+#include <QLabel>
+#include <QSpinBox>
+#include <QWidget>
 // Personal
 #include <UtilsMain>
 

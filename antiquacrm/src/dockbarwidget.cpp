@@ -5,10 +5,10 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QtCore/QDebug>
-#include <QtCore/QPropertyAnimation>
-#include <QtCore/QSize>
-#include <QtWidgets/QTabBar>
+#include <QDebug>
+#include <QPropertyAnimation>
+#include <QSize>
+#include <QTabBar>
 
 DockBarWidget::DockBarWidget(QWidget *parent) : QDockWidget{parent} {
   setObjectName("DockAreaWidget");
