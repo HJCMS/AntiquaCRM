@@ -6,8 +6,6 @@ SET (subproject_LINKER
 )
 
 SET (subproject_FILES
-  settings.cpp.tpl
-  settings.h.tpl
   README
   TODO
 )
@@ -15,17 +13,17 @@ SET (subproject_FILES
 SET (subproject_SOURCES
   applsettings.cpp
   configdialog.cpp
-  settingswidget.cpp
   generalsettingswidget.cpp
   postgresqlsettings.cpp
+  settingswidget.cpp
 )
 
 SET (subproject_HEADERS
   applsettings.h
   configdialog.h
-  settingswidget.h
   generalsettingswidget.h
   postgresqlsettings.h
+  settingswidget.h
 )
 
 INCLUDE_DIRECTORIES (
@@ -51,5 +49,6 @@ SET_TARGET_PROPERTIES (${_subproject} PROPERTIES
 TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
+  Qt${QT_VERSION_MAJOR}::Network
   ${subproject_LINKER}
 )

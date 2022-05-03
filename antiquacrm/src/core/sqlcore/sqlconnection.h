@@ -23,7 +23,9 @@ private:
   SqlConfig *config;
 
 private:
-  const QSslCertificate peerCert();
+  const QString peerCertfile();
+  const QString peerKeyfile();
+  const QString rootCaFile();
 
   /**
    * @brief TCPSocket Verbindung

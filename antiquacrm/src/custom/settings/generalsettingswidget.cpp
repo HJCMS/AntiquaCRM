@@ -1,6 +1,6 @@
 #include "generalsettingswidget.h"
-#include "applsettings.h"
 #include "antiqua_global.h"
+#include "applsettings.h"
 #include "myicontheme.h"
 
 #include <QtCore/QDebug>
@@ -17,88 +17,67 @@ GeneralSettingsWidget::GeneralSettingsWidget(QWidget *parent)
     : SettingsWidget{parent} {
   setObjectName("general_config_widget");
   setWindowTitle(tr("General Configuration"));
-  setConfigSection("general");
+  setSection("general");
 
-  ApplSettings p_cfg(this); /**< Konfigurationen laden */
+  QString buffer; /**< Info Titel Puffer */
+  QVBoxLayout *layout = new QVBoxLayout(this);
+  layout->setObjectName("general_config_layout");
 
-  QSpacerItem *verticalSpacer =
-      new QSpacerItem(10, 10, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-  QSpacerItem *horizontalSpacer =
-      new QSpacerItem(10, 10, QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-  QVBoxLayout *mainLayout = new QVBoxLayout(this);
-  mainLayout->setObjectName("general_config_layout");
-
-  QGridLayout *gridLayout = new QGridLayout();
-
-  // Layout
-  // |--0--|--1--|--2--|--3--|
-  // |---------Label---------|
-  // |----LinieEdit----|-Btn-|
-  // |--Label+SpinBox+Spacer-|
-  //
-  QLabel *ml1 = new QLabel(this);
-  ml1->setText(tr("Main Location from Image source Directory."));
-  gridLayout->addWidget(ml1, 0, 0, 1, 3);
-
-  //BEGIN#1
-  if (!p_cfg.contains("imaging/sourcepath"))
-    p_cfg.setValue("imaging/sourcepath", QDir::homePath());
-
-  m_editImageSrc = new QLineEdit(this);
-  m_editImageSrc->setObjectName("imaging/sourcepath");
+  // BEGIN
+  QHBoxLayout *lay1 = new QHBoxLayout();
+  buffer = tr("Image search Directory");
+  m_editImageSrc = new LineEdit(this);
   m_editImageSrc->setPlaceholderText(tr("complete path to the main target"));
-  m_editImageSrc->setMinimumWidth(200);
-  gridLayout->addWidget(m_editImageSrc, 1, 0, 1, 2);
+  m_editImageSrc->setInfo(buffer);
+  lay1->addWidget(m_editImageSrc);
 
-  QPushButton *m_btn = new QPushButton(this);
-  m_btn->setIcon(myIcon("folder_green"));
-  m_btn->setText(tr("Open Directory"));
-  gridLayout->addWidget(m_btn, 1, 2, 1, 1);
-  //END#1
+  QPushButton *btn_image_src = new QPushButton(this);
+  btn_image_src->setIcon(myIcon("folder_green"));
+  btn_image_src->setText(tr("Open Directory"));
+  lay1->addWidget(btn_image_src);
+  layout->addLayout(lay1);
+  // END
 
-  //BEGIN#2
-  QHBoxLayout *hl2 = new QHBoxLayout();
-  QLabel *ml2 = new QLabel(this);
-  ml2->setText(
-      tr("From how many characters does the search start when you type in."));
-  ml2->setWordWrap(true);
-  ml2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-  hl2->addWidget(ml2);
-
-  if (!p_cfg.contains("search/startlength"))
-    p_cfg.setValue("search/startlength", 5);
-
-  m_searchStart = new QSpinBox(this);
+  // BEGIN
+  m_searchStart = new IntSpinBox(5, 20, this);
   m_searchStart->setObjectName("search/startlength");
-  m_searchStart->setRange(5, 20);
-  m_searchStart->setValue(p_cfg.value("search/startlength", 5).toInt());
-  hl2->addWidget(m_searchStart);
-  hl2->addSpacerItem(horizontalSpacer);
-  gridLayout->addLayout(hl2, 2, 0, 1, 3);
-  //END#2
+  buffer = tr("From how many chars does the search start when you type in.");
+  m_searchStart->setInfo(buffer);
+  layout->addWidget(m_searchStart);
+  // END
 
-  //BEGIN#3
-  if (!p_cfg.contains("books/min_price"))
-        p_cfg.setValue("books/min_price", 8.00);
+  // BEGIN
+  m_minPrice = new IntSpinBox(5, 100, this);
+  m_minPrice->setObjectName("books/min_price");
+  buffer = tr("The lowest permissible selling price.");
+  m_minPrice->setInfo(buffer);
+  layout->addWidget(m_minPrice);
+  // END
 
-  qDebug() << "TODO BOOKD MIN PRICE";
-  //END#3
-
-  mainLayout->addLayout(gridLayout);
-
-  mainLayout->addSpacerItem(verticalSpacer);
-  setLayout(mainLayout);
+  layout->addStretch(1);
+  setLayout(layout);
+  connect(btn_image_src, SIGNAL(clicked()), this, SLOT(setImageDir()));
 }
 
-void GeneralSettingsWidget::updateConfigSets(const QHash<QString, QVariant> &) {
+void GeneralSettingsWidget::setImageDir() {
+  QVariant spath = config->value("imaging/sourcepath", QDir::homePath());
+  QString src = getDirectory(spath.toString());
+  if (src.isEmpty())
+    return;
 
+  m_editImageSrc->setValue(src);
 }
 
-const QHash<QString, QVariant> &GeneralSettingsWidget::getSectionConfig() {
-  if (!p_hash.isEmpty())
-    p_hash.clear();
+void GeneralSettingsWidget::loadSectionConfig() {
+  QVariant spath = config->value("imaging/sourcepath", QDir::homePath());
+  m_editImageSrc->setValue(spath);
+  m_editImageSrc->setToolTip(spath.toString());
+  m_searchStart->setValue(config->value("search/startlength", 5));
+  m_minPrice->setValue(config->value("books/min_price", 5));
+}
 
-  return p_hash;
+void GeneralSettingsWidget::saveSectionConfig() {
+  config->setValue("imaging/sourcepath", m_editImageSrc->value());
+  config->setValue("search/startlength", m_searchStart->value());
+  config->setValue("books/min_price", m_minPrice->value());
 }

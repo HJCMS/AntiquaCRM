@@ -23,4 +23,4 @@ signals:
 
 };
 
-#endif // GENERALSETTINGSWIDGET_H
+#endif // @CLASSNAME@_H

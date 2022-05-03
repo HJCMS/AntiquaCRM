@@ -7,55 +7,31 @@
 #include <QtCore/QDebug>
 #include <QtCore/QFile>
 #include <QtCore/QIODevice>
+#include <QtNetwork/QSslConfiguration>
 #include <QtNetwork/QSslSocket>
 #include <QtNetwork/QTcpSocket>
-#include <QtNetwork/QSslConfiguration>
 
 namespace HJCMS {
-
-static QSslConfiguration sslConfig()
-{
-  HJCMS::SqlConfig config;
-  QSslConfiguration ssl;
-  ssl.addCaCertificates(config.getCertificate());
-  return ssl;
-}
 
 SqlConnection::SqlConnection(QObject *parent) : QObject{parent} {
   setObjectName("SqlConnection");
   config = new SqlConfig(this);
 }
 
-const QSslCertificate SqlConnection::peerCert() {
-  QString p = config->getCertificate();
-  if (p.isEmpty())
-    return QSslCertificate();
+const QString SqlConnection::peerCertfile() { return config->getCertificate(); }
 
-  QByteArray buffer;
-  QFile fp(p);
-  if (fp.open(QIODevice::ReadOnly)) {
-    while (!fp.atEnd()) {
-      buffer.append(fp.readLine());
-    }
-    fp.close();
-  } else {
-    return QSslCertificate();
-  }
+const QString SqlConnection::peerKeyfile() { return config->getPrivateKey(); }
 
-  QSslCertificate sslCert(buffer, QSsl::Pem);
-  return sslCert;
-}
+const QString SqlConnection::rootCaFile() { return config->getCaRootCert(); }
 
-void SqlConnection::isEncrypted()
-{
-  qDebug() << Q_FUNC_INFO;
-}
+void SqlConnection::isEncrypted() { qDebug() << Q_FUNC_INFO; }
 
 bool SqlConnection::simpleConnect() {
   bool b = true;
   int t = (timeout * 1000);
   QTcpSocket *m_tcp = new QTcpSocket(this);
-  m_tcp->connectToHost(config->getAddress(),config->getPort(),QIODevice::ReadOnly);
+  m_tcp->connectToHost(config->getAddress(), config->getPort(),
+                       QIODevice::ReadOnly);
   if (!m_tcp->waitForConnected(t)) {
     emit warnMessage(tr("No Database server connected!"));
     b = false;
@@ -67,14 +43,17 @@ bool SqlConnection::simpleConnect() {
 bool SqlConnection::secureConnect() {
   bool b = false;
   int t = (timeout * 1000);
+
+  QSslConfiguration sslConfig;
+  sslConfig.addCaCertificate(config->getCaCert());
+
   QSslSocket *m_ssl = new QSslSocket(this);
   m_ssl->setProtocol(QSsl::DtlsV1_2OrLater);
-  m_ssl->setSslConfiguration(sslConfig());
-  // m_ssl->setLocalCertificate(peerCert());
+  m_ssl->setSslConfiguration(sslConfig);
+
   QObject::connect(m_ssl, SIGNAL(encrypted()), this, SLOT(isEncrypted()));
   m_ssl->connectToHostEncrypted(config->getAddress(), config->getPort());
   if (m_ssl->waitForConnected(t)) {
-    qDebug() << Q_FUNC_INFO << "TODO" << m_ssl->isEncrypted();
     b = true;
   }
   m_ssl->close();
@@ -86,12 +65,7 @@ bool SqlConnection::secureConnect() {
 
 bool SqlConnection::connect(int t) {
   timeout = t;
-  if (config->isSecureEnabled()) {
-    return secureConnect();
-  } else {
-    return simpleConnect();
-  }
-  return false;
+  return simpleConnect();
 }
 
 SqlConnection::~SqlConnection() {}

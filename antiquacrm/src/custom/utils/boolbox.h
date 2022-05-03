@@ -15,7 +15,6 @@ class BoolBox : public UtilsMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
-  Q_PROPERTY(bool required READ isRequired WRITE setRequired NOTIFY requireChanged);
 
 private:
   QCheckBox *m_checkBox;
@@ -24,7 +23,7 @@ private Q_SLOTS:
   void itemChanged(int);
 
 Q_SIGNALS:
-  void requireChanged();
+  void checked(bool);
 
 public Q_SLOTS:
   Q_INVOKABLE void reset();

@@ -9,6 +9,7 @@
 #include <QtCore/QSettings>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
+#include <QtNetwork/QSslCertificate>
 
 namespace HJCMS {
 /**
@@ -53,6 +54,21 @@ public:
 
   void setCertificate(const QString &);
   const QString getCertificate();
+
+  void setPrivateKey(const QString &);
+  const QString getPrivateKey();
+
+  void setCaCN(const QString &);
+  const QString getCaCN();
+
+  void setCaRootCert(const QString &ca);
+  const QString getCaRootCert();
+
+  void setCaCert(const QString &cn);
+  const QSslCertificate getCaCert();
+
+  void setCaBundle(const QString &);
+  const QString getCaBundle();
 };
 };     // namespace HJCMS
 #endif // HJCMS_SQLCONFIG_SQLCORE_H

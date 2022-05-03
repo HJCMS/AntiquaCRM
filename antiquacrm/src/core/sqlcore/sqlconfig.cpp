@@ -8,6 +8,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QVariant>
+#include <QtNetwork/QSslConfiguration>
 
 namespace HJCMS {
 
@@ -127,18 +128,71 @@ bool SqlConfig::isSecureEnabled() {
 }
 
 void SqlConfig::setCertificate(const QString &p) {
-  QString s(section("certpath"));
-  QFileInfo f(p);
-  if (f.exists()) {
-    setValue(s, f.absoluteFilePath());
-    return;
-  }
-  remove(s);
+  setValue("ssloptions/ssl_peer_cert", p);
 }
 
 const QString SqlConfig::getCertificate() {
-  QString s(section("certpath"));
-  return value(s, QString()).toString();
+  return value("ssloptions/ssl_peer_cert").toString();
+}
+
+void SqlConfig::setPrivateKey(const QString &p) {
+  setValue("ssloptions/ssl_peer_key", p);
+}
+
+const QString SqlConfig::getPrivateKey() {
+  return value("ssloptions/ssl_peer_key").toString();
+}
+
+void SqlConfig::setCaCN(const QString &cn) {
+  setValue("ssloptions/ssl_CN", cn);
+}
+
+const QString SqlConfig::getCaCN() {
+  return value("ssloptions/ssl_CN").toString();
+}
+
+void SqlConfig::setCaRootCert(const QString &ca) {
+  setValue("ssloptions/ssl_root_cert", ca);
+}
+
+const QString SqlConfig::getCaRootCert() {
+  return value("ssloptions/ssl_root_cert").toString();
+}
+
+void SqlConfig::setCaCert(const QString &cn) {
+  setValue("ssloptions/ssl_CA", cn);
+}
+
+const QSslCertificate SqlConfig::getCaCert() {
+  QString name = getCaCN();
+  QSslCertificate cert;
+  if (name.isEmpty()) {
+    qWarning("SqlConfig ssl_CA is not set!");
+    return cert;
+  }
+
+  QSslConfiguration ssl;
+  if (!ssl.addCaCertificates(getCaBundle(), QSsl::Pem)) {
+    qWarning("SqlConfig ssl_bundle import ca-bundle failed!");
+    return cert;
+  }
+
+  QList<QSslCertificate> list = ssl.caCertificates();
+  for (int i = 0; i < list.size(); i++) {
+    QSslCertificate pem = list.at(i);
+    if (!pem.isNull() && (pem.issuerDisplayName() == name)) {
+      return pem;
+    }
+  }
+  return cert;
+}
+
+void SqlConfig::setCaBundle(const QString &p) {
+  setValue("ssloptions/ssl_bundle", p);
+}
+
+const QString SqlConfig::getCaBundle() {
+  return value("ssloptions/ssl_bundle").toString();
 }
 
 }; // namespace HJCMS

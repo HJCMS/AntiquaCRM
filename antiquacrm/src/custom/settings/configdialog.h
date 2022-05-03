@@ -28,7 +28,6 @@ private:
     GeneralSettingsWidget* m_page1;
     PostgreSqlSettings* m_page2;
     void createItemSelection();
-    void readWidgetConfig();
 
 private Q_SLOTS:
     void setPage(QListWidgetItem *);

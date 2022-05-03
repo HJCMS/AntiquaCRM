@@ -20,6 +20,69 @@
     </message>
 </context>
 <context>
+    <name>Assistant</name>
+    <message>
+        <location filename="../custom/assistant/assistant.cpp" line="+88"/>
+        <source>Restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Restart Assistant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Previous page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Next page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Save current changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Finalize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Finishing and close the assistant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Connection successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+102"/>
+        <source>Unfinished Assistant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do not close the Assistant without saving!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BookEditor</name>
     <message>
         <location filename="../inventory/books/bookeditor.cpp" line="+18"/>
@@ -411,7 +474,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+68"/>
         <source>is required must selected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -480,7 +543,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+39"/>
+        <source>&amp;Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&amp;Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
         <source>Generally</source>
         <translation type="unfinished"></translation>
     </message>
@@ -876,72 +949,9 @@
     </message>
 </context>
 <context>
-    <name>Dialog</name>
-    <message>
-        <location filename="../custom/assistant/dialog.cpp" line="+88"/>
-        <source>Restart</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Restart Assistant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Previous page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Next page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Save current changes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Finalize</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Finishing and close the assistant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Connection successfully!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+97"/>
-        <source>Unfinished Assistant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Do not close the Assistant without saving!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DockBarWidget</name>
     <message>
-        <location filename="../dockbarwidget.cpp" line="+22"/>
+        <location filename="../dockbarwidget.cpp" line="+25"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1076,12 +1086,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
-        <source>Main Location from Image source Directory.</source>
+        <location line="+9"/>
+        <source>Image search Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+2"/>
         <source>complete path to the main target</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1092,19 +1102,24 @@
     </message>
     <message>
         <location line="+8"/>
-        <source>From how many characters does the search start when you type in.</source>
+        <source>From how many chars does the search start when you type in.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>The lowest permissible selling price.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>HJCMS::SqlConnection</name>
     <message>
-        <location filename="../core/sqlcore/sqlconnection.cpp" line="+60"/>
+        <location filename="../core/sqlcore/sqlconnection.cpp" line="+36"/>
         <source>No Database server connected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+25"/>
         <source>No Secured Database server connected!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1112,7 +1127,7 @@
 <context>
     <name>HJCMS::SqlCore</name>
     <message>
-        <location filename="../core/sqlcore/sqlcore.cpp" line="+130"/>
+        <location filename="../core/sqlcore/sqlcore.cpp" line="+147"/>
         <source>SQL Driver initialization error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1219,7 +1234,7 @@
 <context>
     <name>IntSpinBox</name>
     <message>
-        <location filename="../custom/utils/intspinbox.cpp" line="+89"/>
+        <location filename="../custom/utils/intspinbox.cpp" line="+92"/>
         <source>is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1284,7 +1299,7 @@
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../custom/utils/lineedit.cpp" line="+88"/>
+        <location filename="../custom/utils/lineedit.cpp" line="+101"/>
         <source>The field &apos;%1&apos; is requiered but empty!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1646,28 +1661,44 @@
 <context>
     <name>PostgreSqlSettings</name>
     <message>
-        <location filename="../custom/settings/postgresqlsettings.cpp" line="+19"/>
-        <source>Database Server Configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Connection settings to PostgreSQL server.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Hostname</source>
+        <location filename="../custom/settings/postgresqlsettings.cpp" line="+32"/>
+        <source>Database Connection settings to PostgreSQL server.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>In your Network a DNS Server exists. Then use a Fully Qualified Hostname (FQDN) to connect the PostgreSQL Server. If Not, it&apos;s better to insert the IP Address in here. Warning: SSL Certification based Connection need a Hostname for translate the &lt;b&gt;CommonName&lt;/b&gt; Attribute.</source>
+        <source>Access Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Port Address</source>
+        <location line="+5"/>
+        <source>Hostname/Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>192.168.178.2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+7"/>
+        <source>antiquacrm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <source>Database Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Database Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>min length 8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1676,43 +1707,114 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
-        <source>Databasename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>The name must be letters with no spaces.</source>
+        <location line="+1"/>
+        <source>Port</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Loginname</source>
+        <source>Timeout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>The username must be letters with no spaces.</source>
+        <location line="+1"/>
+        <source>Timeout in seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Enable SSL Connection</source>
+        <location line="+6"/>
+        <source>Enable SSL/TLS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Clientcert</source>
+        <source>SSL/TLS Connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
-        <source>If you using SSL/TLS or SSL Client certificates. Make sure, you have also the CA-Root Certificate in your System Issuer cache.</source>
+        <location line="+9"/>
+        <location line="+7"/>
+        <source>CA Bundle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-5"/>
+        <source>Open ca-bundle.* in Pem Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Servercertificate (CN)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Server Cert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Open Server Issuer Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>SSL/TLS Verification priority</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Prefer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Verify CA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Verify full</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>SSL Peer Connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Private Keyfile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <source>Open Certfile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Certificate (*.pem *.crt *.key)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-159"/>
+        <source>Databasename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+124"/>
+        <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2302,6 +2404,14 @@
     </message>
 </context>
 <context>
+    <name>SettingsWidget</name>
+    <message>
+        <location filename="../custom/settings/settingswidget.cpp" line="+15"/>
+        <source>Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>StatsActionBar</name>
     <message>
         <location filename="../custom/utils/statsactionbar.cpp" line="+44"/>
@@ -2352,7 +2462,7 @@
 <context>
     <name>StatusBar</name>
     <message>
-        <location filename="../statusbar.cpp" line="+22"/>
+        <location filename="../statusbar.cpp" line="+25"/>
         <source>Database status</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2515,7 +2625,7 @@
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../workspace.cpp" line="+28"/>
+        <location filename="../workspace.cpp" line="+31"/>
         <source>Books</source>
         <translation type="unfinished"></translation>
     </message>

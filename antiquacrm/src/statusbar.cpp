@@ -1,3 +1,6 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+
 #include "statusbar.h"
 #include "sqlcore.h"
 #include "antiqua_global.h"

@@ -16,7 +16,7 @@ CONFIGURE_FILE (config_p.h.cmake
 SET (subproject_SOURCES
   configpgsql.cpp
   configssl.cpp
-  dialog.cpp
+  assistant.cpp
   infopage.cpp
   testconfig.cpp
   documents.qrc
@@ -26,7 +26,7 @@ SET (subproject_HEADERS
   config_p.h
   configpgsql.h
   configssl.h
-  dialog.h
+  assistant.h
   infopage.h
   testconfig.h
 )

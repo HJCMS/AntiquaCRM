@@ -20,6 +20,69 @@
     </message>
 </context>
 <context>
+    <name>Assistant</name>
+    <message>
+        <location filename="../custom/assistant/assistant.cpp" line="+88"/>
+        <source>Restart</source>
+        <translation>Neustart</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Restart Assistant</source>
+        <translation>Assistent neu starten</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Back</source>
+        <translation>Zurück</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Previous page</source>
+        <translation>zur letzten Seite</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Next</source>
+        <translation>Weiter</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Next page</source>
+        <translation>zur nächsten Seite</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Save current changes</source>
+        <translation>Aktuelle änderungen Speichern</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Finalize</source>
+        <translation>Abschließen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Finishing and close the assistant</source>
+        <translation>Beendet und schließt den Assistent</translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Connection successfully!</source>
+        <translation>Verbindung erfolgreich!</translation>
+    </message>
+    <message>
+        <location line="+102"/>
+        <source>Unfinished Assistant</source>
+        <translation>Unvollständiger Fortschritt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do not close the Assistant without saving!</source>
+        <translation>Schließen Sie den Assistenten nicht ohne zu Speichern!</translation>
+    </message>
+</context>
+<context>
     <name>BookEditor</name>
     <message>
         <location filename="../inventory/books/bookeditor.cpp" line="+18"/>
@@ -411,7 +474,7 @@
         <translation>Auswahlbox</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+68"/>
         <source>is required must selected.</source>
         <translation>ist Erforderlich und mus gesetzt werden.</translation>
     </message>
@@ -480,7 +543,17 @@
         <translation>Konfiguration</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+39"/>
+        <source>&amp;Save</source>
+        <translation>&amp;Speichern</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&amp;Quit</source>
+        <translation>Be&amp;enden</translation>
+    </message>
+    <message>
+        <location line="+17"/>
         <source>Generally</source>
         <translation>Allgemein</translation>
     </message>
@@ -876,72 +949,9 @@
     </message>
 </context>
 <context>
-    <name>Dialog</name>
-    <message>
-        <location filename="../custom/assistant/dialog.cpp" line="+88"/>
-        <source>Restart</source>
-        <translation>Nochmal</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Restart Assistant</source>
-        <translation>Assistent neu starten</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Back</source>
-        <translation>Zurück</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Previous page</source>
-        <translation>letze Seite</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Next</source>
-        <translation>Weiter</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Next page</source>
-        <translation>nächste Seite</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Save current changes</source>
-        <translation>Aktuelle änderungen Speichern</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Finalize</source>
-        <translation>Abschließen</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Finishing and close the assistant</source>
-        <translation>Beendet und schließt den Assistent</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Connection successfully!</source>
-        <translation>Verbindung erfolgreich!</translation>
-    </message>
-    <message>
-        <location line="+97"/>
-        <source>Unfinished Assistant</source>
-        <translation>Unvollständiger Fortschritt</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Do not close the Assistant without saving!</source>
-        <translation>Schließen Sie den Assistenten nicht ohne zu Speichern!</translation>
-    </message>
-</context>
-<context>
     <name>DockBarWidget</name>
     <message>
-        <location filename="../dockbarwidget.cpp" line="+22"/>
+        <location filename="../dockbarwidget.cpp" line="+25"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
@@ -1076,12 +1086,12 @@
         <translation>Hauptkonfiguration</translation>
     </message>
     <message>
-        <location line="+23"/>
-        <source>Main Location from Image source Directory.</source>
-        <translation>Hauptspeicherort aus dem Bildquellenverzeichnis.</translation>
+        <location line="+9"/>
+        <source>Image search Directory</source>
+        <translation>Bilder Suchpfad</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+2"/>
         <source>complete path to the main target</source>
         <translation>Vollständiger Pfad zum Hauptverzeichnis</translation>
     </message>
@@ -1092,19 +1102,24 @@
     </message>
     <message>
         <location line="+8"/>
-        <source>From how many characters does the search start when you type in.</source>
-        <translation>Ab wie vielen Zeichen beginnt die Suche bei der Eingabe.</translation>
+        <source>From how many chars does the search start when you type in.</source>
+        <translation>Ab wie vielen Zeichen startet die Suche.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>The lowest permissible selling price.</source>
+        <translation>Der kleinste zulässige Verkaufspreis.</translation>
     </message>
 </context>
 <context>
     <name>HJCMS::SqlConnection</name>
     <message>
-        <location filename="../core/sqlcore/sqlconnection.cpp" line="+60"/>
+        <location filename="../core/sqlcore/sqlconnection.cpp" line="+36"/>
         <source>No Database server connected!</source>
         <translation>Keine Serververbindung zur Datenbank!</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+25"/>
         <source>No Secured Database server connected!</source>
         <translation>Keine gesicherte Datenbank Verbindung!</translation>
     </message>
@@ -1112,7 +1127,7 @@
 <context>
     <name>HJCMS::SqlCore</name>
     <message>
-        <location filename="../core/sqlcore/sqlcore.cpp" line="+130"/>
+        <location filename="../core/sqlcore/sqlcore.cpp" line="+147"/>
         <source>SQL Driver initialization error</source>
         <translation>Fehler beim laden des SQL Treibers</translation>
     </message>
@@ -1219,7 +1234,7 @@
 <context>
     <name>IntSpinBox</name>
     <message>
-        <location filename="../custom/utils/intspinbox.cpp" line="+89"/>
+        <location filename="../custom/utils/intspinbox.cpp" line="+92"/>
         <source>is required and can not empty.</source>
         <translation>ist Erforderlich und mus gesetzt werden.</translation>
     </message>
@@ -1284,7 +1299,7 @@
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../custom/utils/lineedit.cpp" line="+88"/>
+        <location filename="../custom/utils/lineedit.cpp" line="+101"/>
         <source>The field &apos;%1&apos; is requiered but empty!</source>
         <translation>Das Feld &apos;%1&apos; darf nicht Leer sein!</translation>
     </message>
@@ -1646,29 +1661,45 @@
 <context>
     <name>PostgreSqlSettings</name>
     <message>
-        <location filename="../custom/settings/postgresqlsettings.cpp" line="+19"/>
-        <source>Database Server Configuration</source>
-        <translation>Datenbank Server-Konfiguration</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Connection settings to PostgreSQL server.</source>
-        <translation>Verbindungseinstllungen zum PostgreSQL Server.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Hostname</source>
-        <translation>Hostname</translation>
+        <location filename="../custom/settings/postgresqlsettings.cpp" line="+32"/>
+        <source>Database Connection settings to PostgreSQL server.</source>
+        <translation>Datenbank Verbindungs-Einstellungen zum PostgreSQL Server.</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>In your Network a DNS Server exists. Then use a Fully Qualified Hostname (FQDN) to connect the PostgreSQL Server. If Not, it&apos;s better to insert the IP Address in here. Warning: SSL Certification based Connection need a Hostname for translate the &lt;b&gt;CommonName&lt;/b&gt; Attribute.</source>
-        <translation>In Ihrem Netzwerk existiert ein DNS-Server. Verwenden Sie dann einen vollständig qualifizierten Hostnamen (FQDN), um eine Verbindung zum PostgreSQL-Server herzustellen. Wenn nicht, ist es besser, hier die IP-Adresse einzugeben. Warnung: SSL-zertifizierungsbasierte Verbindungen benötigen einen Hostnamen zum Übersetzen das &lt;b&gt;CommonName&lt;/b&gt;-Attributes.</translation>
+        <source>Access Configuration</source>
+        <translation>Zugangs Konfiguration</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Port Address</source>
-        <translation>Port Adresse</translation>
+        <location line="+5"/>
+        <source>Hostname/Address</source>
+        <translation>Rechnername/Adresse</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>192.168.178.2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+7"/>
+        <source>antiquacrm</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <source>Database Username</source>
+        <translation>Datenbank Benutzername</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Database Password</source>
+        <translation>Datenbank Passwort</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>min length 8</source>
+        <translation>mindestens 8 Zeichen</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -1676,44 +1707,115 @@
         <translation>Die Standard Port-Adresse ist 5432</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+1"/>
+        <source>Port</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Timeout</source>
+        <translation>Wartezeit</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Timeout in seconds</source>
+        <translation>Wartezeit in Sekunden</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Enable SSL/TLS</source>
+        <translation>Aktiviere SSL/TLS</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>SSL/TLS Connection</source>
+        <translation>SSL/TLS Vebindung</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <location line="+7"/>
+        <source>CA Bundle</source>
+        <translation>CA Paket</translation>
+    </message>
+    <message>
+        <location line="-5"/>
+        <source>Open ca-bundle.* in Pem Format</source>
+        <translation>Öffne CA-Paket im Pem Format</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Servercertificate (CN)</source>
+        <translation>Serverzertifikat (CN)</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Server Cert</source>
+        <translation>Server Zert</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Open Server Issuer Certificate</source>
+        <translation>Öffne Server Unterzeichner Zertifikat</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>SSL/TLS Verification priority</source>
+        <translation>SSL/TLS Überprüfungspriorität</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Prefer</source>
+        <translation>SSL vor Standard</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Required</source>
+        <translation>Nur SSL/TLS</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Verify CA</source>
+        <translation>Zertifikat Verifizierung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Verify full</source>
+        <translation>Vollständig vertrauen</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>SSL Peer Connection</source>
+        <translation>SSL-Peer-Verbindung</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Certificate</source>
+        <translation>Zertifikat</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Private Keyfile</source>
+        <translation>Privater Schlüssel</translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <source>Open Certfile</source>
+        <translation>Öffne Zertifikat</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Certificate (*.pem *.crt *.key)</source>
+        <translation>Zertifikat (*.pem *.crt *.key)</translation>
+    </message>
+    <message>
+        <location line="-159"/>
         <source>Databasename</source>
         <translation>Datebankname</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>The name must be letters with no spaces.</source>
-        <translation>Der Name muss aus Buchstaben ohne Leerzeichen bestehen.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Loginname</source>
-        <translation>Anmeldename</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>The username must be letters with no spaces.</source>
-        <translation>Der Benutzername muss aus Buchstaben ohne Leerzeichen bestehen.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location line="+124"/>
         <source>Password</source>
         <translation>Passwort</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Enable SSL Connection</source>
-        <translation>Aktiviere SSL Verbindung</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Clientcert</source>
-        <translation>Klient Zertifikat</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>If you using SSL/TLS or SSL Client certificates. Make sure, you have also the CA-Root Certificate in your System Issuer cache.</source>
-        <translation>Wenn Sie SSL/TLS- oder SSL-Klientzertifikate verwenden. Stellen Sie sicher, dass Sie auch das CA-Root-Zertifikat in Ihrem Systemaussteller-Speicher haben.</translation>
     </message>
 </context>
 <context>
@@ -2302,6 +2404,14 @@
     </message>
 </context>
 <context>
+    <name>SettingsWidget</name>
+    <message>
+        <location filename="../custom/settings/settingswidget.cpp" line="+15"/>
+        <source>Directory</source>
+        <translation>Verzeichnis</translation>
+    </message>
+</context>
+<context>
     <name>StatsActionBar</name>
     <message>
         <location filename="../custom/utils/statsactionbar.cpp" line="+44"/>
@@ -2352,7 +2462,7 @@
 <context>
     <name>StatusBar</name>
     <message>
-        <location filename="../statusbar.cpp" line="+22"/>
+        <location filename="../statusbar.cpp" line="+25"/>
         <source>Database status</source>
         <translation>Datenbankstatus</translation>
     </message>
@@ -2515,7 +2625,7 @@
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../workspace.cpp" line="+28"/>
+        <location filename="../workspace.cpp" line="+31"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>

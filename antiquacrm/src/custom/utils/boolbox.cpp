@@ -10,6 +10,7 @@ BoolBox::BoolBox(QWidget *parent) : UtilsMain{parent} {
   setWindowTitle(tr("Checkbox"));
 
   QHBoxLayout *layout = new QHBoxLayout(this);
+  layout->setContentsMargins(0, 0, 0, 0);
 
   m_checkBox = new QCheckBox(this);
   layout->addWidget(m_checkBox);
@@ -22,7 +23,24 @@ BoolBox::BoolBox(QWidget *parent) : UtilsMain{parent} {
   connect(m_checkBox, SIGNAL(stateChanged(int)), this, SLOT(itemChanged(int)));
 }
 
-void BoolBox::itemChanged(int) { setModified(true); }
+void BoolBox::itemChanged(int state) {
+  setModified(true);
+  switch (state) {
+  case Qt::Unchecked:
+    emit checked(false);
+    break;
+
+  case Qt::Checked:
+    emit checked(true);
+    break;
+
+  case Qt::PartiallyChecked:
+    break;
+
+  default:
+    emit checked(false);
+  };
+}
 
 void BoolBox::setValue(const QVariant &val) {
   bool b = val.toBool();

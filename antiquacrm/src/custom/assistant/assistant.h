@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef DIALOG_ASSISTANT_H
-#define DIALOG_ASSISTANT_H
+#ifndef ASSISTANT_H
+#define ASSISTANT_H
 
 #include <QDialog>
 #include <QDialogButtonBox>
@@ -22,7 +22,7 @@ class ConfigPgSQL;
 class ConfigSSL;
 class TestConfig;
 
-class Dialog : public QDialog {
+class Assistant : public QDialog {
   Q_OBJECT
 
 private:
@@ -57,7 +57,7 @@ private Q_SLOTS:
   bool event(QEvent *);
 
 public:
-  explicit Dialog(QWidget *parent = nullptr);
-  ~Dialog();
+  explicit Assistant(QWidget *parent = nullptr);
+  ~Assistant();
 };
-#endif // DIALOG_ASSISTANT_H
+#endif // ASSISTANT_H

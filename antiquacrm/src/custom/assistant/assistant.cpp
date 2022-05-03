@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "dialog.h"
+#include "assistant.h"
 #include "config_p.h"
 #include "configpgsql.h"
 #include "configssl.h"
@@ -25,7 +25,7 @@ static const QString my_domain() {
 
 static const QString my_app() { return QString::fromUtf8(HJCMS_PROJECT_NAME); }
 
-Dialog::Dialog(QWidget *parent) : QDialog(parent) {
+Assistant::Assistant(QWidget *parent) : QDialog(parent) {
   setObjectName("assistant_dialog");
   setWindowTitle(HJCMS_HOMEPAGE);
   setSizeGripEnabled(true);
@@ -81,7 +81,7 @@ Dialog::Dialog(QWidget *parent) : QDialog(parent) {
   connect(m_lastTest, SIGNAL(startTest()), this, SLOT(test()));
 }
 
-void Dialog::setButtonBox() {
+void Assistant::setButtonBox() {
   m_buttonBox->setOrientation(Qt::Horizontal);
   QPushButton *btn_restore =
       m_buttonBox->addButton(QDialogButtonBox::RestoreDefaults);
@@ -115,7 +115,7 @@ void Dialog::setButtonBox() {
   connect(btn_close, SIGNAL(clicked()), this, SLOT(beforeClose()));
 }
 
-bool Dialog::connectionTest() {
+bool Assistant::connectionTest() {
   QMap<QString, QString> db = m_configPgSQL->configuration();
   QMap<QString, QString> ssl = m_configSSL->configuration();
   QSqlDatabase psql = QSqlDatabase::addDatabase("QPSQL", my_domain());
@@ -148,50 +148,55 @@ bool Dialog::connectionTest() {
   return false;
 }
 
-int Dialog::index() { return m_stackedWidget->currentIndex(); }
+int Assistant::index() { return m_stackedWidget->currentIndex(); }
 
-void Dialog::goTo(int index) { m_stackedWidget->setCurrentIndex(index); }
+void Assistant::goTo(int index) { m_stackedWidget->setCurrentIndex(index); }
 
-void Dialog::restart() {
+void Assistant::restart() {
   if (index() > 0)
     goTo(0);
 
   unsaved = false;
 }
 
-void Dialog::previousPage() {
+void Assistant::previousPage() {
   if (index() > 0)
     goTo((index() - 1));
 
   unsaved = true;
 }
 
-void Dialog::nextPage() {
+void Assistant::nextPage() {
   if (index() >= 0 && index() < m_stackedWidget->count())
     goTo((index() + 1));
 
   unsaved = true;
 }
 
-void Dialog::beforeAccept() { save(); }
+void Assistant::beforeAccept() { save(); }
 
-void Dialog::beforeClose() {
+void Assistant::beforeClose() {
   unsaved = true;
   save();
   accept();
 }
 
-void Dialog::test() {
+void Assistant::test() {
   save();
   connectionTest();
 }
 
-void Dialog::save() {
+void Assistant::save() {
   QMapIterator<QString, QString> sql(m_configPgSQL->configuration());
   cfg->beginGroup("postgresql");
   while (sql.hasNext()) {
     sql.next();
     cfg->setValue(sql.key(), sql.value());
+    if(sql.key() == "password")
+    {
+      QByteArray pw = sql.value().toLocal8Bit().toBase64(QByteArray::Base64Encoding);
+      cfg->setValue(sql.key(), pw);
+    }
   }
   cfg->endGroup();
 
@@ -206,9 +211,9 @@ void Dialog::save() {
   unsaved = false;
 }
 
-void Dialog::pageEntered(int index) { Q_UNUSED(index) }
+void Assistant::pageEntered(int index) { Q_UNUSED(index) }
 
-bool Dialog::event(QEvent *e) {
+bool Assistant::event(QEvent *e) {
   if (e->type() == QEvent::StatusTip) {
     QStatusTipEvent *t = static_cast<QStatusTipEvent *>(e);
     if (t->tip().isEmpty())
@@ -220,7 +225,7 @@ bool Dialog::event(QEvent *e) {
   return QDialog::event(e);
 }
 
-void Dialog::keyPressEvent(QKeyEvent *e) {
+void Assistant::keyPressEvent(QKeyEvent *e) {
   if (e->key() == Qt::Key_Return) {
     qInfo("Key press enter or return will ignored!");
     return;
@@ -228,7 +233,7 @@ void Dialog::keyPressEvent(QKeyEvent *e) {
   QDialog::keyPressEvent(e);
 }
 
-void Dialog::closeEvent(QCloseEvent *e) {
+void Assistant::closeEvent(QCloseEvent *e) {
   if (e->type() == QEvent::Close) {
     if (unsaved) {
       int retval =
@@ -244,4 +249,4 @@ void Dialog::closeEvent(QCloseEvent *e) {
   QDialog::closeEvent(e);
 }
 
-Dialog::~Dialog() {}
+Assistant::~Assistant() {}

@@ -3,35 +3,59 @@
 #ifndef SETTINGSWIDGET_H
 #define SETTINGSWIDGET_H
 
-#include <QtCore/QObject>
 #include <QtCore/QHash>
+#include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QVariant>
-#include <QtWidgets/QWidget>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QLayout>
 
-class SettingsWidget : public QWidget
-{
-    Q_OBJECT
-    Q_CLASSINFO ( "Author", "Jürgen Heinemann" )
-    Q_CLASSINFO ( "URL", "http://www.hjcms.de" )
-    Q_PROPERTY ( QString ConfigSection READ configSection WRITE setConfigSection NOTIFY configSectionChanged REQUIRED )
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QWidget>
+
+#include "applsettings.h"
+
+class SettingsWidget : public QWidget {
+  Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "http://www.hjcms.de")
+  Q_PROPERTY(QString Section READ getSection WRITE setSection NOTIFY
+                 sectionChanged REQUIRED)
 
 private:
-    QString p_configSection;
+  QString Section;
 
 Q_SIGNALS:
-    void configSectionChanged(const QString &);
+  void sectionChanged(const QString &);
 
-public Q_SLOTS:
-    virtual void updateConfigSets(const QHash<QString,QVariant> &) = 0;
+protected:
+  ApplSettings *config;
+  Qt::Alignment grid_label_align =
+      (Qt::AlignRight | Qt::AlignTrailing | Qt::AlignVCenter);
+
+  const QString getDirectory(const QString &dest);
 
 public:
-    explicit SettingsWidget(QWidget *parent = nullptr);
-    const QString configSection();
-    void setConfigSection(const QString &);
-    virtual const QHash<QString,QVariant> & getSectionConfig() = 0;
+  explicit SettingsWidget(QWidget *parent = nullptr);
+
+  /**
+   * @brief loadSectionConfig
+   */
+  virtual void loadSectionConfig() = 0;
+
+  /**
+   * @brief saveSectionConfig
+   */
+  virtual void saveSectionConfig() = 0;
+
+  /**
+   * @brief setConfigSection
+   */
+  virtual void setSection(const QString &);
+
+  /**
+   * @brief configSection
+   */
+  const QString getSection();
+
 };
 
 #endif // SETTINGSWIDGET_H

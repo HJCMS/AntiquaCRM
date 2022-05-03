@@ -49,6 +49,14 @@ void LineEdit::reset() {
 
 void LineEdit::setFocus() { m_edit->setFocus(); }
 
+void LineEdit::setPasswordInput(bool b) {
+  p_passwordInput = b;
+  if (b) {
+    m_edit->setInputMethodHints(Qt::ImhHiddenText);
+    m_edit->setEchoMode(QLineEdit::PasswordEchoOnEdit);
+  }
+}
+
 void LineEdit::restrictDisplay(int length, int width) {
   m_edit->setMaxLength(length);
   m_edit->setMaximumWidth(width);
@@ -74,7 +82,12 @@ void LineEdit::setPlaceholderText(const QString &txt) {
   m_edit->setPlaceholderText(txt);
 }
 
-const QVariant LineEdit::value() { return m_edit->text(); }
+const QVariant LineEdit::value() {
+  if (p_passwordInput)
+    return m_edit->text().toLocal8Bit();
+
+  return m_edit->text();
+}
 
 bool LineEdit::isValid() {
   if (isRequired() && m_edit->text().isEmpty())

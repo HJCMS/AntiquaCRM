@@ -6,6 +6,7 @@
 #define LINEEDIT_UTILS_H
 
 #include <QtCore/QObject>
+#include <QtCore/QByteArray>
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -21,6 +22,7 @@ private:
   QLabel *m_label;
   QLineEdit *m_edit;
   QCompleter *m_completer;
+  bool p_passwordInput = false;
 
 private Q_SLOTS:
   void inputChanged(const QString &);
@@ -32,6 +34,12 @@ public Q_SLOTS:
 
 public:
   explicit LineEdit(QWidget *parent = nullptr);
+
+  /**
+   * @brief setPasswordInput
+   * @note Wenn gesetzt gibt @ref value() ein ByteArray zurück!
+   */
+  void setPasswordInput(bool);
 
   /**
    * @brief Erscheinungsbild einschränken

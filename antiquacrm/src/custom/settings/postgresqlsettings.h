@@ -1,4 +1,6 @@
-/** @COPYRIGHT_HOLDER@ */
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+// @COPYRIGHT_HOLDER@
 
 #ifndef POSTGRESQLSETTINGS_H
 #define POSTGRESQLSETTINGS_H
@@ -6,37 +8,158 @@
 #include "settingswidget.h"
 
 #include <QtCore/QObject>
-#include <QtWidgets/QWidget>
+#include <QtNetwork/QSslCertificate>
 #include <QtWidgets/QGroupBox>
-#include <QtWidgets/QLineEdit>
-#include <QtWidgets/QSpinBox>
+#include <QtWidgets/QWidget>
 
-class PostgreSqlSettings : public SettingsWidget
-{
-    Q_OBJECT
-    Q_CLASSINFO ( "Author", "Jürgen Heinemann" )
-    Q_CLASSINFO ( "URL", "http://www.hjcms.de" )
+#include <Utils>
+
+/**
+ * @class PostgreSqlSettings
+ * @brief PostgreSQL Configuration
+ * Parameter Key Words:
+ *  @link https://www.postgresql.org/docs/current/libpq-connect.html
+ *
+ */
+class PostgreSqlSettings final : public SettingsWidget {
+  Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-    QLineEdit *psql_hostname;
-    QLineEdit *psql_databasename;
-    QLineEdit *psql_username;
-    QLineEdit *psql_password;
-    QSpinBox  *psql_port;
-    QGroupBox *psql_ssl;
-    QLineEdit *psql_ssl_clientcert;
-    QHash<QString,QVariant> p_hash;
+  /**
+   * @defgroup postgresql
+   * @{
+   * @brief sql_hostname
+   * PostgreSQL option: host|hostaddr
+   */
+  LineEdit *sql_hostname;
+
+  /**
+   * @brief sql_databasename
+   * PostgreSQL option: dbname
+   */
+  LineEdit *sql_databasename;
+
+  /**
+   * @brief sql_username
+   * PostgreSQL option: user
+   */
+  LineEdit *sql_username;
+
+  /**
+   * @brief sql_password
+   * PostgreSQL option: password
+   */
+  LineEdit *sql_password;
+
+  /**
+   * @brief sql_port
+   * PostgreSQL option: port
+   */
+  IntSpinBox *sql_port;
+
+  /**
+   * @brief sql_timeout
+   * PostgreSQL option: connect_timeout
+   */
+  IntSpinBox *sql_timeout;
+
+  /**
+   * @brief m_ssl
+   * Enable SQL SSL/TLS Support
+   */
+  BoolBox *sql_ssl;
+  /** @} */
+
+  /**
+   * @defgroup SSL/TLS Connection
+   * @{
+   */
+  
+  /**
+   * @brief Edit SSL/TLS
+   */
+  QGroupBox *m_tls;
+
+  /**
+   * @brief System SSL/TLS ca-bundle.pem
+   */
+  LineEdit *ssl_ca_bundle;
+
+  /**
+   * @brief Server Certificate CommonName (CN)
+   */
+  LineEdit *ssl_CN;
+
+  /**
+   * @brief CA Subjectname from ca-bundle.pem
+   */
+  QComboBox *ssl_ca_CN;
+
+  /**
+   * @brief Location of the Server Issuer CA
+   * PostgreSQL option: @b sslrootcert
+   * Default ~/.postgresql/root.crt
+   */
+  LineEdit *ssl_root_cert;
+
+  /**
+   * @brief m_sslmode
+   * PostgreSQL option:
+   *  @li prefer (default)
+   *  @li verify-ca (AntiquaCRM Default)
+   */
+  QComboBox *m_sslmode;
+
+  /** @} */
+
+  /**
+   * @defgroup SSL/Peer Connection
+   * @{
+   * @brief Enable SSL/TLS Support
+   */
+  QGroupBox *ssl_peer;
+
+  /**
+   * @brief ssl_peer_certfile
+   * PostgreSQL option: @b sslcert
+   * Default ~/.postgresql/postgresql.crt
+   */
+  LineEdit *ssl_peer_cert;
+
+  /**
+   * @brief ssl_peer_keyfile
+   * PostgreSQL option: @b sslkey
+   * Default ~/.postgresql/postgresql.key
+   */
+  LineEdit *ssl_peer_key;
+
+  /**
+   * @brief ssl_peer_sslpassword
+   * PostgreSQL option: @b sslpassword
+   */
+  LineEdit *ssl_peer_pass;
+
+  /** @} */
+
+  /**
+   * @brief Configuration
+   */
+  QHash<QString, QVariant> p_hash;
+
+  void initCaBundleData(const QString &bundle);
+
+  const QString openFileDialog(const QString &dest = QString());
 
 private Q_SLOTS:
-    void openCertFileDialog();
-
-public Q_SLOTS:
-    void updateConfigSets(const QHash<QString,QVariant> &);
+  void openCaBundle();
+  void openRootCert();
 
 public:
-    explicit PostgreSqlSettings(QWidget *parent = nullptr);
-    const QHash<QString,QVariant> & getSectionConfig();
-
+  explicit PostgreSqlSettings(QWidget *parent = nullptr);
+  void loadSectionConfig();
+  void saveSectionConfig();
 };
 
 #endif // POSTGRESQLSETTINGS_H

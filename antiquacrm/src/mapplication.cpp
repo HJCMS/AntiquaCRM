@@ -1,4 +1,6 @@
-/** @COPYRIGHT_HOLDER@ */
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+
 /* Project */
 #include "mapplication.h"
 #include "applsettings.h"
@@ -6,6 +8,7 @@
 #include "socketserver.h"
 #include "sqlcore.h"
 #include "antiqua_global.h"
+#include "assistant.h"
 
 #include <QtCore/QDebug>
 #include <QtNetwork/QLocalSocket>
@@ -33,6 +36,15 @@ bool MApplication::isRunning() {
  * @return int
  */
 int MApplication::exec() {
+  // First Run ?
+  if(m_settings->value("postgresql/hostname").toString().isEmpty())
+  {
+    Assistant assistant;
+    assistant.exec();
+    qDebug() << "assistant";
+    return 0;
+  }
+
   // SQL Database
   m_sqlDB = new HJCMS::SqlCore(this);
   if (!m_sqlDB->sqlDriversExists()) {

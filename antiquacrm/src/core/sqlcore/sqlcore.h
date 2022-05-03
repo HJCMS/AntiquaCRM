@@ -34,6 +34,7 @@ class SqlCore : public QObject {
 
 private:
   int queryTimeSpend = 0;
+  QString p_sqlOptions;
 
   /**
     @brief Test Verbindung

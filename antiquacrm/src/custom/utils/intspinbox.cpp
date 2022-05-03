@@ -20,6 +20,7 @@ void IntSpinBox::p_construct() {
     setObjectName("IntSpinBox");
 
   QHBoxLayout *layout = new QHBoxLayout(this);
+  layout->setContentsMargins(0, 0, 0, 0);
 
   m_info = new QLabel(this);
   m_info->setAlignment(labelAlignment());
@@ -28,8 +29,10 @@ void IntSpinBox::p_construct() {
   m_spinBox = new QSpinBox(this);
   m_spinBox->setMinimum(min);
   m_spinBox->setMaximum(max);
+  m_spinBox->setMaximumWidth(300);
   layout->addWidget(m_spinBox);
 
+  layout->addStretch(1);
   setLayout(layout);
 
   setModified(false);

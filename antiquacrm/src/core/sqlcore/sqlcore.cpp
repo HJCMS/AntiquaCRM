@@ -7,10 +7,12 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDebug>
+#include <QtCore/QFileInfo>
 #include <QtCore/QMutex>
 #include <QtCore/QSettings>
 #include <QtCore/QTime>
 #include <QtCore/QtGlobal>
+#include <QtNetwork/QSslConfiguration>
 #include <QtNetwork/QTcpSocket>
 #include <QtSql/QSqlDriver>
 #include <QtSql/QSqlError>
@@ -26,6 +28,15 @@ SqlCore::SqlCore(QObject *parent) : QObject{parent} {
   m_cfg = new SqlConfig();
   m_socket = new SqlConnection(this);
 
+  // https://www.postgresql.org/docs/current/libpq-connect.html
+  QStringList options("connect_timeout=5");
+  QFileInfo ca_root_cert(m_cfg->getCaRootCert());
+  if (ca_root_cert.exists()) {
+    options.append("sslmode=verify-ca");
+    options.append("sslrootcert=" + ca_root_cert.filePath());
+  }
+  p_sqlOptions = options.join(";");
+
   /**
    @note Wir können nur einmal die Datenbank Verbindung festlegen!
    Damit es bei weiteren Klassenaufrufen nicht Fehler hagelt.
@@ -37,8 +48,7 @@ SqlCore::SqlCore(QObject *parent) : QObject{parent} {
     p_db = db;
     database = new QSqlDatabase(p_db);
   } else {
-    p_db = QSqlDatabase();
-    // load driver
+    p_db = QSqlDatabase(); /**< First try */
     initSQLDriver();
   }
 
@@ -48,15 +58,18 @@ SqlCore::SqlCore(QObject *parent) : QObject{parent} {
 
 bool SqlCore::initSQLDriver() {
   p_db = QSqlDatabase::addDatabase("QPSQL", m_cfg->getConnectioName());
+  p_db.setConnectOptions(p_sqlOptions);
   if (!p_db.isValid()) {
     qFatal("PostgreSQL Driver int error ...");
     return false;
   }
   database = new QSqlDatabase(p_db);
   if (database->isValid()) {
+    /*
     qInfo("SqlCore::initSQLDriver QPSQL:%s loaded ...",
           qPrintable(database->connectionName()));
-
+    qDebug() << Q_FUNC_INFO << database->connectOptions();
+    */
     return true;
   }
   return false;
@@ -99,7 +112,11 @@ bool SqlCore::initDatabase() {
     database->setDatabaseName(m_cfg->getDatabase());
     database->setUserName(m_cfg->getUserName());
     database->setPassword(m_cfg->getPassword());
-    database->setConnectOptions("connect_timeout=5");
+    /**
+     * Sind zwar bereits in initSQLDriver gesetzt!
+     * Zur Sicherheit noch einmal.
+     */
+    database->setConnectOptions(p_sqlOptions);
 
     if (!socketConnectionTest())
       return false;

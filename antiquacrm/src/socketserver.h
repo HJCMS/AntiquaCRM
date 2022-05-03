@@ -1,3 +1,7 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+// @COPYRIGHT_HOLDER@
+
 #ifndef SOCKETSERVER_H
 #define SOCKETSERVER_H
 

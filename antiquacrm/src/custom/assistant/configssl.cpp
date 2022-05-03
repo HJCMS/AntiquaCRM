@@ -26,10 +26,10 @@ ConfigSSL::ConfigSSL(QWidget *parent) : QWidget{parent} {
   sslPeer->setTitle(tr("SSL/TLS Peer Configuration"));
   sslPeer->setChecked(false);
   QVBoxLayout *bl = new QVBoxLayout(sslPeer);
-  sslPeerCertPath = new QLineEdit(sslPeer);
+  sslPeerCertPath = new QLineEdit(sslPeer); /**< ssl_peer_cert */
   sslPeerCertPath->setPlaceholderText(tr("Peer Certificate: ~/.postgresql/postgresql.crt"));
   bl->addWidget(sslPeerCertPath);
-  sslKeyFilePath = new QLineEdit(sslPeer);
+  sslKeyFilePath = new QLineEdit(sslPeer); /**< ssl_peer_key */
   sslKeyFilePath->setPlaceholderText(tr("Private Keyfile: ~/.postgresql/postgresql.key"));
   bl->addWidget(sslKeyFilePath);
   sslPeer->setLayout(bl);

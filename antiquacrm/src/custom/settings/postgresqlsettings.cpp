@@ -1,208 +1,275 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+
 #include "postgresqlsettings.h"
-#include "filedialog.h"
 #include "antiqua_global.h"
+#include "filedialog.h"
 #include "myicontheme.h"
 
-#include <QtCore/QByteArray>
-#include <QtCore/QDebug>
-#include <QtWidgets/QGridLayout>
-#include <QtWidgets/QGroupBox>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QToolButton>
-#include <QtWidgets/QVBoxLayout>
+#include <QByteArray>
+#include <QDebug>
+#include <QDir>
+#include <QSslConfiguration>
+#include <QStandardPaths>
+#include <QtWidgets>
 
 PostgreSqlSettings::PostgreSqlSettings(QWidget *parent)
     : SettingsWidget{parent} {
-  setObjectName("sql_config_widget");
-  setWindowTitle(tr("Database Server Configuration"));
-  setConfigSection("postgresql");
+  setObjectName("postgresql_config_widget");
+  setSection("postgresql");
 
-  QVBoxLayout *mainLayout = new QVBoxLayout(this);
-  mainLayout->setObjectName("sql_config_layout");
+  QVBoxLayout *layout = new QVBoxLayout(this);
+  layout->setObjectName("postgresql_config_layout");
 
-  QHBoxLayout *titleLayout = new QHBoxLayout();
-  QLabel *lt_m = new QLabel(this);
-  lt_m->setObjectName("pagetitel");
-  lt_m->setText(tr("Connection settings to PostgreSQL server."));
-  titleLayout->addWidget(lt_m);
+  QString title = tr("Database Connection settings to PostgreSQL server.");
+  QLabel *lb_title = new QLabel(this);
+  lb_title->setText(title);
+  layout->addWidget(lb_title);
 
-  QSpacerItem *sp =
-      new QSpacerItem(10, 10, QSizePolicy::Maximum, QSizePolicy::Minimum);
-  titleLayout->addSpacerItem(sp);
+  QGroupBox *group_connect = new QGroupBox(this);
+  group_connect->setTitle(tr("Access Configuration"));
+  QVBoxLayout *g_sql_layout = new QVBoxLayout(group_connect);
 
-  mainLayout->addLayout(titleLayout);
+  sql_hostname = new LineEdit(this);
+  sql_hostname->setObjectName("hostname");
+  sql_hostname->setInfo(tr("Hostname/Address"));
+  sql_hostname->setPlaceholderText(tr("192.168.178.2"));
+  sql_hostname->setRequired(true);
+  g_sql_layout->addWidget(sql_hostname);
 
-  QGridLayout *gridLayout = new QGridLayout();
-  gridLayout->setObjectName("gridLayout");
+  sql_databasename = new LineEdit(this);
+  sql_databasename->setObjectName("database");
+  sql_databasename->setInfo(tr("Databasename"));
+  sql_databasename->setPlaceholderText(tr("antiquacrm"));
+  sql_databasename->setRequired(true);
+  g_sql_layout->addWidget(sql_databasename);
 
-  QLabel *lt_hostname = new QLabel(this);
-  lt_hostname->setObjectName("lb2");
-  lt_hostname->setAlignment(Qt::AlignRight | Qt::AlignTrailing |
-                            Qt::AlignVCenter);
-  lt_hostname->setText(tr("Hostname"));
-  gridLayout->addWidget(lt_hostname, 0, 0, 1, 1);
+  sql_username = new LineEdit(this);
+  sql_username->setObjectName("username");
+  sql_username->setInfo(tr("Database Username"));
+  sql_username->setPlaceholderText(tr("antiquacrm"));
+  sql_username->setRequired(true);
+  g_sql_layout->addWidget(sql_username);
 
-  psql_hostname = new QLineEdit(this);
-  psql_hostname->setObjectName("psql_hostname");
-  psql_hostname->setToolTip(
-      tr("In your Network a DNS Server exists. Then use a Fully Qualified "
-         "Hostname (FQDN) to connect the PostgreSQL Server. If Not, it's "
-         "better to insert the IP Address in here. Warning: SSL Certification "
-         "based Connection need a Hostname for translate the <b>CommonName</b> "
-         "Attribute."));
-  gridLayout->addWidget(psql_hostname, 0, 1, 1, 1);
+  sql_password = new LineEdit(this);
+  sql_password->setObjectName("password");
+  sql_password->setInfo(tr("Database Password"));
+  sql_password->setPlaceholderText(tr("min length 8"));
+  sql_password->setRequired(true);
+  sql_password->setPasswordInput(true);
+  g_sql_layout->addWidget(sql_password);
 
-  QLabel *lt_port = new QLabel(this);
-  lt_port->setObjectName("lb3");
-  lt_port->setAlignment(Qt::AlignRight | Qt::AlignTrailing | Qt::AlignVCenter);
-  lt_port->setText(tr("Port Address"));
-  gridLayout->addWidget(lt_port, 1, 0, 1, 1);
+  QHBoxLayout *gh_sql_alyout = new QHBoxLayout();
+  gh_sql_alyout->addStretch(1);
 
-  QHBoxLayout *m_portLayout = new QHBoxLayout();
-  m_portLayout->setObjectName("portLayout");
+  sql_port = new IntSpinBox(1024, 9999, this);
+  sql_port->setObjectName("port");
+  sql_port->setValue(5432);
+  sql_port->setToolTip(tr("The default port address is 5432"));
+  sql_port->setInfo(tr("Port"));
+  sql_port->setRequired(true);
+  gh_sql_alyout->addWidget(sql_port);
 
-  psql_port = new QSpinBox(this);
-  psql_port->setObjectName("psql_port");
-  psql_port->setMinimum(1024);
-  psql_port->setMaximum(9999);
-  psql_port->setValue(5432);
-  psql_port->setToolTip(tr("The default port address is 5432"));
-  m_portLayout->addWidget(psql_port);
+  sql_timeout = new IntSpinBox(5, 30, this);
+  sql_timeout->setObjectName("connect_timeout");
+  sql_timeout->setValue(5);
+  sql_timeout->setInfo(tr("Timeout"));
+  sql_timeout->setToolTip(tr("Timeout in seconds"));
+  gh_sql_alyout->addWidget(sql_timeout);
 
-  QSpacerItem *horizontalSpacer =
-      new QSpacerItem(100, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
-  m_portLayout->addItem(horizontalSpacer);
-  gridLayout->addLayout(m_portLayout, 1, 1, 1, 1);
+  sql_ssl = new BoolBox(this);
+  sql_ssl->setObjectName("ssl");
+  sql_ssl->setChecked(false);
+  sql_ssl->setInfo(tr("Enable SSL/TLS"));
+  gh_sql_alyout->addWidget(sql_ssl);
 
-  QLabel *lt_dbname = new QLabel(this);
-  lt_dbname->setObjectName("lb4");
-  lt_dbname->setAlignment(Qt::AlignRight | Qt::AlignTrailing |
-                          Qt::AlignVCenter);
-  lt_dbname->setText(tr("Databasename"));
-  gridLayout->addWidget(lt_dbname, 2, 0, 1, 1);
+  g_sql_layout->addLayout(gh_sql_alyout);
+  group_connect->setLayout(g_sql_layout);
+  layout->addWidget(group_connect);
 
-  psql_databasename = new QLineEdit(this);
-  psql_databasename->setObjectName("psql_databasename");
-  psql_databasename->setToolTip(tr("The name must be letters with no spaces."));
-  gridLayout->addWidget(psql_databasename, 2, 1, 1, 1);
+  // BEGIN SSL/TLS
+  m_tls = new QGroupBox(this);
+  m_tls->setEnabled(false);
+  m_tls->setTitle(tr("SSL/TLS Connection"));
+  QGridLayout *tls_layout = new QGridLayout(m_tls);
 
-  QLabel *lt_dbuser = new QLabel(this);
-  lt_dbuser->setObjectName("lb4");
-  lt_dbuser->setAlignment(Qt::AlignRight | Qt::AlignTrailing |
-                          Qt::AlignVCenter);
-  lt_dbuser->setText(tr("Loginname"));
-  gridLayout->addWidget(lt_dbuser, 3, 0, 1, 1);
+  ssl_ca_CN = new QComboBox(m_tls);
+  ssl_ca_CN->setObjectName("ssl_CA");
+  ssl_ca_CN->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+  tls_layout->addWidget(ssl_ca_CN, 0, 0, 1, 1);
 
-  psql_username = new QLineEdit(this);
-  psql_username->setObjectName("psql_username");
-  psql_username->setToolTip(tr("The username must be letters with no spaces."));
-  gridLayout->addWidget(psql_username, 3, 1, 1, 1);
+  QPushButton *btn_ca_bundle = new QPushButton(m_tls);
+  btn_ca_bundle->setText(tr("CA Bundle"));
+  btn_ca_bundle->setIcon(myIcon("folder_red"));
+  btn_ca_bundle->setToolTip(tr("Open ca-bundle.* in Pem Format"));
+  tls_layout->addWidget(btn_ca_bundle, 0, 1, 1, 1);
 
-  QLabel *lt_password = new QLabel(this);
-  lt_password->setObjectName("lb5");
-  lt_password->setAlignment(Qt::AlignRight | Qt::AlignTrailing |
-                            Qt::AlignVCenter);
-  lt_password->setText(tr("Password"));
-  gridLayout->addWidget(lt_password, 4, 0, 1, 1);
+  ssl_ca_bundle = new LineEdit(m_tls);
+  ssl_ca_bundle->setObjectName("ssl_bundle");
+  ssl_ca_bundle->setInfo(tr("CA Bundle"));
+  tls_layout->addWidget(ssl_ca_bundle, 1, 0, 1, 2);
 
-  psql_password = new QLineEdit(this);
-  psql_password->setObjectName("psql_password");
-  psql_password->setInputMethodHints(Qt::ImhHiddenText);
-  psql_password->setEchoMode(QLineEdit::PasswordEchoOnEdit);
-  gridLayout->addWidget(psql_password, 4, 1, 1, 1);
+  ssl_CN = new LineEdit(m_tls);
+  ssl_CN->setObjectName("ssl_CN");
+  ssl_CN->setInfo(tr("Servercertificate (CN)"));
+  tls_layout->addWidget(ssl_CN, 2, 0, 1, 2);
 
-  mainLayout->addLayout(gridLayout);
+  ssl_root_cert = new LineEdit(m_tls);
+  ssl_root_cert->setObjectName("ssl_root_cert");
+  ssl_root_cert->setInfo(tr("Issuer"));
+  ssl_root_cert->setToolTip("Issuer Certificate");
+  ssl_root_cert->setPlaceholderText("Issuer Certification path");
+  tls_layout->addWidget(ssl_root_cert, 3, 0, 1, 1);
 
-  psql_ssl = new QGroupBox(this);
-  psql_ssl->setObjectName("sslGroupBox");
-  psql_ssl->setMinimumSize(QSize(100, 150));
-  psql_ssl->setCheckable(true);
-  psql_ssl->setChecked(false);
-  psql_ssl->setTitle(tr("Enable SSL Connection"));
+  QPushButton *btn_root_cert = new QPushButton(m_tls);
+  btn_root_cert->setText(tr("Server Cert"));
+  btn_root_cert->setIcon(myIcon("folder_red"));
+  btn_root_cert->setToolTip(tr("Open Server Issuer Certificate"));
+  tls_layout->addWidget(btn_root_cert, 3, 1, 1, 1);
 
-  QVBoxLayout *verticalLayout = new QVBoxLayout(psql_ssl);
-  verticalLayout->setObjectName("verticalLayout");
+  QLabel *modeinfo = new QLabel(m_tls);
+  modeinfo->setAlignment(grid_label_align);
+  modeinfo->setText(tr("SSL/TLS Verification priority"));
+  tls_layout->addWidget(modeinfo, 4, 0, 1, 1);
 
-  QHBoxLayout *m_hL2 = new QHBoxLayout();
-  m_hL2->setObjectName("m_hL2");
+  m_sslmode = new QComboBox(m_tls);
+  m_sslmode->setObjectName("ssl_mode");
+  m_sslmode->insertItem(0, tr("Prefer"), QVariant("prefer"));
+  m_sslmode->insertItem(1, tr("Required"), QVariant("require"));
+  m_sslmode->insertItem(2, tr("Verify CA"), QVariant("verify-ca"));
+  m_sslmode->insertItem(3, tr("Verify full"), QVariant("verify-full"));
+  tls_layout->addWidget(m_sslmode, 4, 1, 1, 1);
 
-  QLabel *lb6 = new QLabel(psql_ssl);
-  lb6->setObjectName("lb6");
-  lb6->setText(tr("Clientcert"));
-  m_hL2->addWidget(lb6);
+  m_tls->setLayout(tls_layout);
+  layout->addWidget(m_tls);
+  // END SSL/TLS
 
-  psql_ssl_clientcert = new QLineEdit(psql_ssl);
-  psql_ssl_clientcert->setObjectName("psql_ssl_clientcert");
-  m_hL2->addWidget(psql_ssl_clientcert);
+  // BEGIN SSL Peer
+  ssl_peer = new QGroupBox(this);
+  ssl_peer->setCheckable(true);
+  ssl_peer->setChecked(false);
+  ssl_peer->setTitle(tr("SSL Peer Connection"));
+  QVBoxLayout *peer_layout = new QVBoxLayout(ssl_peer);
 
-  QToolButton *psql_open_cert = new QToolButton(this);
-  psql_open_cert->setObjectName("open_cert_button");
-  psql_open_cert->setIcon(myIcon("folder_green"));
-  m_hL2->addWidget(psql_open_cert);
+  ssl_peer_cert = new LineEdit(ssl_peer);
+  ssl_peer_cert->setObjectName("ssl_peer_cert");
+  ssl_peer_cert->setInfo(tr("Certificate"));
+  peer_layout->addWidget(ssl_peer_cert);
 
-  verticalLayout->addLayout(m_hL2);
+  ssl_peer_key = new LineEdit(ssl_peer);
+  ssl_peer_key->setObjectName("ssl_peer_key");
+  ssl_peer_key->setInfo(tr("Private Keyfile"));
+  peer_layout->addWidget(ssl_peer_key);
 
-  QLabel *lb7 = new QLabel(psql_ssl);
-  lb7->setObjectName("lb7");
-  lb7->setAlignment(Qt::AlignLeading | Qt::AlignLeft | Qt::AlignTop);
-  lb7->setWordWrap(true);
-  lb7->setText(
-      tr("If you using SSL/TLS or SSL Client certificates. Make sure, you have "
-         "also the CA-Root Certificate in your System Issuer cache."));
-  verticalLayout->addWidget(lb7);
+  ssl_peer_pass = new LineEdit(ssl_peer);
+  ssl_peer_pass->setObjectName("ssl_peer_pass");
+  ssl_peer_pass->setInfo(tr("Password"));
+  peer_layout->addWidget(ssl_peer_pass);
 
-  mainLayout->addWidget(psql_ssl);
+  ssl_peer->setLayout(peer_layout);
+  layout->addWidget(ssl_peer);
+  // END SSL Peer
 
-  QSpacerItem *vsp =
-      new QSpacerItem(50, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
-  mainLayout->addItem(vsp);
+  layout->addStretch(1);
+  setLayout(layout);
 
-  setLayout(mainLayout);
-
-  connect(psql_open_cert, SIGNAL(clicked()), this, SLOT(openCertFileDialog()));
+  connect(btn_ca_bundle, SIGNAL(clicked()), this, SLOT(openCaBundle()));
+  connect(btn_root_cert, SIGNAL(clicked()), this, SLOT(openRootCert()));
+  connect(sql_ssl, SIGNAL(checked(bool)), m_tls, SLOT(setEnabled(bool)));
 }
 
-void PostgreSqlSettings::openCertFileDialog() {
-  FileDialog *m_d = new FileDialog(this);
-  m_d->setObjectName("certfile_dialog");
-  m_d->setCertsFilter();
-  if (m_d->exec()) {
-    QStringList list = m_d->selectedFiles();
-    psql_ssl_clientcert->setText(list.first());
+void PostgreSqlSettings::initCaBundleData(const QString &bundle) {
+  if (bundle.isEmpty())
+    return;
+
+  QSslConfiguration sslConfig;
+  if (sslConfig.addCaCertificates(bundle, QSsl::Pem)) {
+    ssl_ca_CN->clear();
+    QList<QSslCertificate> list = sslConfig.caCertificates();
+    for (int i = 0; i < list.size(); i++) {
+      QSslCertificate cert = list.at(i);
+      if (!cert.isNull()) {
+        ssl_ca_CN->addItem(cert.issuerDisplayName());
+      }
+    }
   }
 }
 
-void PostgreSqlSettings::updateConfigSets(const QHash<QString, QVariant> &d) {
-  if (d.isEmpty())
-    return;
-
-  QByteArray pw = QByteArray::fromBase64(d.value("password").toByteArray(),
-                                         QByteArray::Base64UrlEncoding);
-  QString pass(pw);
-
-  psql_hostname->setText(d.value("hostname").toString());
-  psql_databasename->setText(d.value("database").toString());
-  psql_username->setText(d.value("username").toString());
-  psql_password->setText(pass);
-  psql_port->setValue(d.value("port").toInt());
-  psql_ssl->setChecked(d.value("ssl").toBool());
-  psql_ssl_clientcert->setText(d.value("certpath").toString());
+const QString PostgreSqlSettings::openFileDialog(const QString &dest) {
+  QString dir = (dest.isEmpty()) ? QDir::homePath() : dest;
+  QString title = tr("Open Certfile");
+  QString type = tr("Certificate (*.pem *.crt *.key)");
+  QString cert = QFileDialog::getOpenFileName(this, title, dir, type);
+  return (cert.isEmpty()) ? QString() : cert;
 }
 
-const QHash<QString, QVariant> &PostgreSqlSettings::getSectionConfig() {
-  if (!p_hash.isEmpty())
-    p_hash.clear();
+void PostgreSqlSettings::openCaBundle() {
+  QString ca = openFileDialog(QDir::rootPath());
+  if (ca.isEmpty())
+    return;
 
-  p_hash.insert("hostname", psql_hostname->text());
-  p_hash.insert("database", psql_databasename->text());
-  p_hash.insert("username", psql_username->text());
+  ssl_ca_bundle->setValue(ca);
+  initCaBundleData(ca);
+}
+
+void PostgreSqlSettings::openRootCert() {
+  QString cert = openFileDialog(QDir::homePath());
+  if (cert.isEmpty())
+    return;
+
+  ssl_root_cert->setValue(cert);
+}
+
+void PostgreSqlSettings::loadSectionConfig() {
+  QHash<QString, QVariant> psql = config->readGroupConfig("postgresql");
+  sql_hostname->setValue(psql.value("hostname"));
+  sql_databasename->setValue(psql.value("database"));
+  sql_username->setValue(psql.value("username"));
+  QByteArray pw = QByteArray::fromBase64(psql.value("password").toByteArray(),
+                                         QByteArray::Base64UrlEncoding);
+  sql_password->setValue(QString(pw));
+  sql_port->setValue(psql.value("port"));
+  sql_timeout->setValue(psql.value("connect_timeout"));
+  sql_ssl->setValue(psql.value("ssl"));
+  QHash<QString, QVariant> ssloptions = config->readGroupConfig("ssloptions");
+  QString ca_bundle = ssloptions.value("ssl_bundle").toString();
+  ssl_ca_bundle->setValue(ca_bundle);
+  ssl_root_cert->setValue(ssloptions.value("ssl_root_cert"));
+  ssl_CN->setValue(ssloptions.value("ssl_CN"));
+  initCaBundleData(ca_bundle);
+  ssl_peer->setChecked(ssloptions.value("ssl_peer").toBool());
+  ssl_peer_cert->setValue(ssloptions.value("ssl_peer_cert"));
+  ssl_peer_key->setValue(ssloptions.value("ssl_peer_key"));
+  ssl_peer_pass->setValue(ssloptions.value("ssl_peer_pass"));
+  if (ssl_ca_CN->count() > 2) {
+    int index = ssl_ca_CN->findData(ssloptions.value("ssl_CA"), Qt::DisplayRole,
+                                    Qt::MatchExactly);
+    if (index >= 0)
+      ssl_ca_CN->setCurrentIndex(index);
+  }
+}
+
+void PostgreSqlSettings::saveSectionConfig() {
+  QHash<QString, QVariant> pg_options;
+  pg_options.insert("hostname", sql_hostname->value());
+  pg_options.insert("database", sql_databasename->value());
+  pg_options.insert("username", sql_username->value());
   QByteArray pw =
-      psql_password->text().toLocal8Bit().toBase64(QByteArray::Base64Encoding);
-  p_hash.insert("password", pw);
-  p_hash.insert("port", psql_port->value());
-  p_hash.insert("ssl", psql_ssl->isChecked());
-  p_hash.insert("certpath", psql_ssl_clientcert->text());
-  return p_hash;
+      sql_password->value().toByteArray().toBase64(QByteArray::Base64Encoding);
+  pg_options.insert("password", pw);
+  pg_options.insert("port", sql_port->value());
+  pg_options.insert("timeout", sql_timeout->value());
+  pg_options.insert("ssl", sql_ssl->value());
+  config->writeGroupConfig("postgresql", pg_options);
+
+  QHash<QString, QVariant> ssl_options;
+  ssl_options.insert("ssl_CA", ssl_ca_CN->currentData(Qt::DisplayRole));
+  ssl_options.insert("ssl_CN", ssl_CN->value());
+  ssl_options.insert("ssl_bundle", ssl_ca_bundle->value());
+  ssl_options.insert("ssl_peer", ssl_peer->isChecked());
+  ssl_options.insert("ssl_peer_cert", ssl_peer_cert->value());
+  ssl_options.insert("ssl_peer_key", ssl_peer_key->value());
+  ssl_options.insert("ssl_peer_pass", ssl_peer_pass->value());
+  ssl_options.insert("ssl_root_cert", ssl_root_cert->value());
+  config->writeGroupConfig("ssloptions", ssl_options);
 }
