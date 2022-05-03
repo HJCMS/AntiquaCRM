@@ -76,8 +76,8 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
   case 7: // o_closed
     return (item.toBool()) ? tr("Yes") : tr("No");
 
-  case 8: // age TODO
-    return item.toTime();
+  case 8: // age Siehe SQL Statement!
+    return item.toString();
 
   default: // nicht registrierter Datentype !!!
     return item;

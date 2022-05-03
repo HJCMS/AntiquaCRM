@@ -132,13 +132,13 @@ PostgreSqlSettings::PostgreSqlSettings(QWidget *parent)
   modeinfo->setText(tr("SSL/TLS Verification priority"));
   tls_layout->addWidget(modeinfo, 4, 0, 1, 1);
 
-  m_sslmode = new QComboBox(m_tls);
-  m_sslmode->setObjectName("ssl_mode");
-  m_sslmode->insertItem(0, tr("Prefer"), QVariant("prefer"));
-  m_sslmode->insertItem(1, tr("Required"), QVariant("require"));
-  m_sslmode->insertItem(2, tr("Verify CA"), QVariant("verify-ca"));
-  m_sslmode->insertItem(3, tr("Verify full"), QVariant("verify-full"));
-  tls_layout->addWidget(m_sslmode, 4, 1, 1, 1);
+  ssl_mode = new QComboBox(m_tls);
+  ssl_mode->setObjectName("ssl_mode");
+  ssl_mode->insertItem(0, tr("Prefer"), QVariant("prefer"));
+  ssl_mode->insertItem(1, tr("Required"), QVariant("require"));
+  ssl_mode->insertItem(2, tr("Verify CA"), QVariant("verify-ca"));
+  ssl_mode->insertItem(3, tr("Verify full"), QVariant("verify-full"));
+  tls_layout->addWidget(ssl_mode, 4, 1, 1, 1);
 
   m_tls->setLayout(tls_layout);
   layout->addWidget(m_tls);
@@ -242,10 +242,16 @@ void PostgreSqlSettings::loadSectionConfig() {
   ssl_peer_key->setValue(ssloptions.value("ssl_peer_key"));
   ssl_peer_pass->setValue(ssloptions.value("ssl_peer_pass"));
   if (ssl_ca_CN->count() > 2) {
-    int index = ssl_ca_CN->findData(ssloptions.value("ssl_CA"), Qt::DisplayRole,
-                                    Qt::MatchExactly);
-    if (index >= 0)
-      ssl_ca_CN->setCurrentIndex(index);
+    int ca_index = ssl_ca_CN->findData(ssloptions.value("ssl_CA"),
+                                       Qt::DisplayRole, Qt::MatchExactly);
+    if (ca_index >= 0)
+      ssl_ca_CN->setCurrentIndex(ca_index);
+  }
+  QString mode = ssloptions.value("ssl_mode").toString();
+  if (!mode.isEmpty()) {
+    int mode_index = ssl_mode->findData(mode, Qt::UserRole, Qt::MatchExactly);
+    if (mode_index >= 0)
+      ssl_mode->setCurrentIndex(mode_index);
   }
 }
 
@@ -264,6 +270,7 @@ void PostgreSqlSettings::saveSectionConfig() {
 
   QHash<QString, QVariant> ssl_options;
   ssl_options.insert("ssl_CA", ssl_ca_CN->currentData(Qt::DisplayRole));
+  ssl_options.insert("ssl_mode", ssl_mode->currentData(Qt::UserRole));
   ssl_options.insert("ssl_CN", ssl_CN->value());
   ssl_options.insert("ssl_bundle", ssl_ca_bundle->value());
   ssl_options.insert("ssl_peer", ssl_peer->isChecked());

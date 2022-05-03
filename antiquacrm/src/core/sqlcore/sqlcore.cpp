@@ -16,6 +16,7 @@
 #include <QTcpSocket>
 #include <QSqlDriver>
 #include <QSqlError>
+#include <QLocale>
 #include <QSqlQuery>
 
 namespace HJCMS {
@@ -28,14 +29,7 @@ SqlCore::SqlCore(QObject *parent) : QObject{parent} {
   m_cfg = new SqlConfig();
   m_socket = new SqlConnection(this);
 
-  // https://www.postgresql.org/docs/current/libpq-connect.html
-  QStringList options("connect_timeout=5");
-  QFileInfo ca_root_cert(m_cfg->getCaRootCert());
-  if (ca_root_cert.exists()) {
-    options.append("sslmode=verify-ca");
-    options.append("sslrootcert=" + ca_root_cert.filePath());
-  }
-  p_sqlOptions = options.join(";");
+  p_sqlOptions = m_cfg->getOptions().join(";");
 
   /**
    @note Wir können nur einmal die Datenbank Verbindung festlegen!

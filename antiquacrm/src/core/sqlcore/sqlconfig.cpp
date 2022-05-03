@@ -7,8 +7,8 @@
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
-#include <QVariant>
 #include <QSslConfiguration>
+#include <QVariant>
 
 namespace HJCMS {
 
@@ -102,19 +102,27 @@ const QString SqlConfig::getPassword() {
 }
 
 void SqlConfig::setOptions(const QStringList &list) {
-  QString s(section("options"));
-  if (list.isEmpty()) {
-    QStringList l(list);
-    l << QString("connect_timeout=5");
-    setValue(s, l);
-    return;
-  }
-  setValue(s, list);
+  qDebug() << Q_FUNC_INFO << "TODO" << list;
 }
 
 const QStringList SqlConfig::getOptions() {
-  QString s(section("options"));
-  return value(s).toStringList();
+  // https://www.postgresql.org/docs/current/libpq-connect.html
+  QStringList options;
+  options.append("connect_timeout=" + value(section("timeout"), 5).toString());
+  options.append("application_name=" + QString(ANTIQUACRM_NAME));
+  QFileInfo ca_root_cert(getCaRootCert());
+  if (ca_root_cert.exists()) {
+    options.append("sslmode=" +
+                   value("ssloptions/ssl_mode", "prefer").toString());
+    options.append("sslrootcert=" + ca_root_cert.filePath());
+  }
+  if (value("ssloptions/ssl_peer").toBool()) {
+    QString sslcert = value("ssloptions/ssl_peer_cert").toString();
+    options.append("sslcert=" + sslcert);
+    QString sslkey = value("ssloptions/ssl_peer_key").toString();
+    options.append("sslkey=" + sslkey);
+  }
+  return options;
 }
 
 void SqlConfig::setSecureEnabled(bool b) {

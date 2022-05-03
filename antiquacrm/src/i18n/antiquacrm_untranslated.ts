@@ -2263,6 +2263,26 @@
         <source>delivery completed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../inventory/orders/orderstatements.h" line="+17"/>
+        <source>Hours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Months</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Years</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SalutationBox</name>

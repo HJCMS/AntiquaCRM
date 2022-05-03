@@ -1729,7 +1729,7 @@
     <message>
         <location line="+10"/>
         <source>SSL/TLS Connection</source>
-        <translation>SSL/TLS Vebindung</translation>
+        <translation>SSL/TLS Verbindung</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -2262,6 +2262,26 @@
         <location line="+1"/>
         <source>delivery completed</source>
         <translation>Lieferung abgeschlossen</translation>
+    </message>
+    <message>
+        <location filename="../inventory/orders/orderstatements.h" line="+17"/>
+        <source>Hours</source>
+        <translation>Stunden</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Days</source>
+        <translation>Tage</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Months</source>
+        <translation>Monate</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Years</source>
+        <translation>Jahre</translation>
     </message>
 </context>
 <context>

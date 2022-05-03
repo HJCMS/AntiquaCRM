@@ -105,12 +105,12 @@ private:
   LineEdit *ssl_root_cert;
 
   /**
-   * @brief m_sslmode
+   * @brief ssl_mode
    * PostgreSQL option:
    *  @li prefer (default)
    *  @li verify-ca (AntiquaCRM Default)
    */
-  QComboBox *m_sslmode;
+  QComboBox *ssl_mode;
 
   /** @} */
 
