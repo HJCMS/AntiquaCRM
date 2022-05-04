@@ -5,33 +5,44 @@
 #ifndef ORDERSPAYMENTBOX_H
 #define ORDERSPAYMENTBOX_H
 
-#include <QObject>
 #include <QComboBox>
 #include <QDialog>
+#include <QLabel>
+#include <QObject>
 #include <QWidget>
 
-class OrdersPaymentBox : public QComboBox {
+#include <UtilsMain>
+
+class OrdersPaymentBox : public UtilsMain {
   Q_OBJECT
-  Q_CLASSINFO("Author", "Jürgen Heinemann (Undefined)")
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
-  Q_PROPERTY(int paymentStatus READ getPaymentStatus WRITE setPaymentStatus
-                 NOTIFY paymentStatusChanged)
 
 private:
+  int p_value = 0;
+  QLabel *m_info;
+  QComboBox *m_box;
   bool paymentStatus;
 
 private Q_SLOTS:
   void indexChanged(int);
 
 Q_SIGNALS:
-  void paymentStatusChanged(bool);
+  void statusChanged(bool);
 
 public Q_SLOTS:
-  void setPaymentStatus(bool);
+  void setValue(const QVariant &);
+  Q_INVOKABLE void reset();
+  void setFocus();
 
 public:
   OrdersPaymentBox(QWidget *parent = nullptr);
-  bool getPaymentStatus();
+  int findIndex(const QString &);
+  const QVariant value();
+  bool isValid();
+  void setInfo(const QString &);
+  const QString info();
+  const QString notes();
 };
 
 class PaymentStatusDialog : public QDialog {
@@ -40,7 +51,7 @@ class PaymentStatusDialog : public QDialog {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  OrdersPaymentBox *m_box;
+  OrdersPaymentBox *m_paymentBox;
 
 public:
   explicit PaymentStatusDialog(const QString &search,

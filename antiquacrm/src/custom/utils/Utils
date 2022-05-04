@@ -1,6 +1,11 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
+/**
+ * @defgroup Utils
+ * @{
+ */
+
 #ifndef BOOLBOX_UTILS_H
 # include "boolbox.h"
 #endif
@@ -63,6 +68,14 @@
 
 #ifndef MYICONTHEME_UTILS_H
 # include "myicontheme.h"
+#endif
+
+#ifndef ORDERSPAYMENTBOX_UTILS_H
+# include "orderspaymentbox.h"
+#endif
+
+#ifndef ORDERSTATUSBOX_UTILS_H
+# include "orderstatusbox.h"
 #endif
 
 #ifndef PHONEEDIT_UTILS_H
@@ -129,4 +142,4 @@
 # include "yearedit.h"
 #endif
 
-// EOF
+/** @} */

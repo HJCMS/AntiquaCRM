@@ -132,11 +132,6 @@ void OrdersTable::contextMenuEvent(QContextMenuEvent *ev) {
   connect(ac_payment, SIGNAL(triggered()), this, SLOT(updatePaymentStatus()));
   ac_payment->setEnabled(b);
 
-  QAction *ac_close = m->addAction(myIcon("db_remove"), tr("Finish order"));
-  ac_close->setObjectName("ac_context_payment_order");
-  connect(ac_close, SIGNAL(triggered()), this, SLOT(closeInventoryOrder()));
-  ac_close->setEnabled(b);
-
   m->exec(ev->globalPos());
   delete m;
 }
@@ -182,6 +177,7 @@ void OrdersTable::updatePaymentStatus() {
       int set = dialog.exec();
       if (set == QDialog::Accepted) {
         bool status = dialog.status();
+        // qDebug() << Q_FUNC_INFO << "PaymentStatus::Close" << status;
         if (sqlExecQuery(paymentUpdate(article_id, status)))
           sqlExecQuery(defaultQuery());
 
@@ -191,30 +187,3 @@ void OrdersTable::updatePaymentStatus() {
   }
 }
 
-void OrdersTable::closeInventoryOrder() {
-  QModelIndexList list = selectedIndexes();
-  int order_id = 0;
-  for (int i = 0; i < list.size(); i++) {
-    QModelIndex index = list.at(i);
-    if (index.isValid() && (index.column() == 0))
-      order_id = m_queryModel->data(index, Qt::EditRole).toInt();
-
-    if (index.isValid() && (index.column() == close_column)) {
-      if (order_id < 1)
-        return;
-
-      QString body("<p>");
-      body.append(tr("Do you really want to close this order and pass it on "
-                     "to accounting?"));
-      body.append("</p><p>");
-      body.append(tr("If so, the entry will no longer be visible here!"));
-      body.append("</p>");
-      int ret = QMessageBox::question(this, tr("Finish order"), body);
-      if (ret == QMessageBox::Yes) {
-        if (sqlExecQuery(closeOrder(order_id)))
-          sqlExecQuery(defaultQuery());
-      }
-      return; // end loop
-    }
-  }
-}

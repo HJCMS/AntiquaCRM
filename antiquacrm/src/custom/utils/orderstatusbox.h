@@ -5,29 +5,43 @@
 #ifndef ORDERSTATUSBOX_H
 #define ORDERSTATUSBOX_H
 
-#include <QObject>
 #include <QComboBox>
 #include <QDialog>
+#include <QLabel>
+#include <QObject>
 #include <QWidget>
 
-class OrderStatusBox : public QComboBox {
+#include <UtilsMain>
+
+class OrderStatusBox : public UtilsMain {
   Q_OBJECT
-  Q_CLASSINFO("Author", "Jürgen Heinemann (Undefined)")
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
-  Q_PROPERTY(int index READ getIndex WRITE setIndex NOTIFY indexChanged)
 
 private:
-  int index;
+  int p_value = 0;
+  QLabel *m_info;
+  QComboBox *m_box;
+
+private Q_SLOTS:
+  void setIndex(int);
 
 Q_SIGNALS:
   void indexChanged(int);
 
 public Q_SLOTS:
-  void setIndex(int);
+  void setValue(const QVariant &);
+  Q_INVOKABLE void reset();
+  void setFocus();
 
 public:
   OrderStatusBox(QWidget *parent = nullptr);
-  int getIndex();
+  int findIndex(const QString &);
+  const QVariant value();
+  bool isValid();
+  void setInfo(const QString &);
+  const QString info();
+  const QString notes();
 };
 
 class StatusDialog : public QDialog {
@@ -36,7 +50,7 @@ class StatusDialog : public QDialog {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  OrderStatusBox *m_box;
+  OrderStatusBox *m_statusBox;
 
 public:
   explicit StatusDialog(const QString &current, QWidget *parent = nullptr);

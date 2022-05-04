@@ -32,6 +32,11 @@ function __create_header_subs()
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
+/**
+ * @defgroup ${_scope}
+ * @{
+ */
+
 EOF
     for _h in $(ls *.h | sort) ; do
       _class=$(echo ${_h} | sed 's,\.h,,' | awk '{print toupper($1)}')
@@ -43,7 +48,7 @@ EOF
 EOF
     done
   cat >> ${_scope} <<EOF
-// EOF
+/** @} */
 EOF
   popd
   fi

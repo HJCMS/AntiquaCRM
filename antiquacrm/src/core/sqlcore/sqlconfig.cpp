@@ -32,9 +32,7 @@ const QString SqlConfig::section(const QString &f) {
 }
 
 const QString SqlConfig::getConnectioName() {
-  QString str(ANTIQUACRM_CONNECTION_PREFIX);
-  str.append(ANTIQUACRM_NAME);
-  return str;
+  return QString(ANTIQUACRM_CONNECTION_DOMAIN);
 }
 
 void SqlConfig::setAddress(const QString &str) {

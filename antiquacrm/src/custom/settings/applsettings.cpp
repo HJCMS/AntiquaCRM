@@ -24,9 +24,7 @@ ApplSettings::ApplSettings(QObject *parent)
 }
 
 const QString ApplSettings::sqlConnectioName() {
-  QString str(ANTIQUACRM_CONNECTION_PREFIX);
-  str.append(ANTIQUACRM_NAME);
-  return str;
+  return QString(ANTIQUACRM_CONNECTION_DOMAIN);
 }
 
 const QHash<QString, QVariant> &

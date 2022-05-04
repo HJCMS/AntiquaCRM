@@ -12,6 +12,8 @@ _build_dest="${_PROJECT_TARGET}/build-antiquacrm-Desktop_Qt_5_15_2_GCC_64bit-Deb
 # _ts_qt5=""
 _ts_project="${_PROJECT_SOURCE}/i18n/antiquacrm_de.ts"
 
+_options="-compress -silent -nounfinished -removeidentical"
+
 mkdir -p ${_build_dest}
 rm -f ${_build_dest}/antiquacrm_de.qm
-${_QT5_HOME}/bin/lrelease -removeidentical ${_ts_project} -qm ${_build_dest}/antiquacrm_de.qm
+${_QT5_HOME}/bin/lrelease ${_options} ${_ts_project} -qm ${_build_dest}/antiquacrm_de.qm

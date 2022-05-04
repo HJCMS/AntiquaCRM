@@ -5,6 +5,7 @@
 #ifndef INVENTORY_ORDERSTATEMENTS_H
 #define INVENTORY_ORDERSTATEMENTS_H
 
+#include <QMetaType>
 #include <QObject>
 #include <QString>
 
@@ -64,6 +65,14 @@ static const QString closeOrder(int id) {
   sql.append(" o_closed=true WHERE o_id=");
   sql.append(QString::number(id));
   sql.append(";");
+  return sql;
+}
+
+static const QString findBookArticle(int id) {
+  QString sql("SELECT ib_id,ib_count,ib_price,ib_title");
+  sql.append(" FROM inventory_books WHERE ib_id=");
+  sql.append(QString::number(id));
+  sql.append(" AND ib_count>0 ORDER BY ib_id;");
   return sql;
 }
 

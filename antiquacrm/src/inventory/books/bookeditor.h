@@ -23,7 +23,6 @@
 #include <Imaging>
 #include <Utils>
 
-class IsbnEdit;
 class IsbnRequest;
 /** }@ */
 
@@ -101,8 +100,6 @@ private:
     Datenfeldabfragen manuell eingefügt. Die Erstellung ist von
     mehreren Faktoren abhängig und beinhaltet folgende Vorgangsweise,
     welche sich für jedes Datenfeld wiederholt.
-
-    @note Es werden keine leeren Datenfelder in den Hash geschrieben!
 
     1) Suche je nach Klassen-Type mit findChild die Datenfelder.
     2) Prüfe Datenfeld Klasse auf @b isRequired() @b isValid()

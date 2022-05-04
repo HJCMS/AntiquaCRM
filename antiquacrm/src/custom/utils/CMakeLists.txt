@@ -30,6 +30,8 @@ SET (subproject_SOURCES
   isbnedit.cpp
   lineedit.cpp
   messagebox.cpp
+  orderstatusbox.cpp
+  orderspaymentbox.cpp
   phoneedit.cpp
   postalcode.cpp
   priceedit.cpp
@@ -64,6 +66,8 @@ SET (subproject_HEADERS
   isbnedit.h
   lineedit.h
   messagebox.h
+  orderstatusbox.h
+  orderspaymentbox.h
   phoneedit.h
   postalcode.h
   priceedit.h

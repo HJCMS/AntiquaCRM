@@ -19,6 +19,10 @@ class SqlCore;
 
 class OrdersTableModel;
 
+/**
+ * @ingroup InventoryOrders
+ * @class OrdersTable
+ */
 class OrdersTable : public QTableView {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -84,14 +88,6 @@ public Q_SLOTS:
    * @brief SQL Spalte "o_payment_status" aktualisieren.
    */
   void updatePaymentStatus();
-
-  /**
-   * @brief SQL Spalte "o_closed" true setzen.
-   * Wenn diese Aktion ausgeführt wird ist es nur noch
-   * für die Buchhaltung sichtbar!
-   * Der Auftrag ist somit abgeschlossen!
-   */
-  void closeInventoryOrder();
 
 public:
   explicit OrdersTable(QWidget *parent = nullptr);

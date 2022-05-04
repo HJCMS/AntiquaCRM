@@ -1,6 +1,11 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
+/**
+ * @defgroup Imaging
+ * @{
+ */
+
 #ifndef FILEVIEWMODEL_IMAGING_H
 # include "fileviewmodel.h"
 #endif
@@ -25,4 +30,4 @@
 # include "toolbar.h"
 #endif
 
-// EOF
+/** @} */

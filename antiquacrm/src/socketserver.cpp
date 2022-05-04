@@ -17,8 +17,7 @@ void SocketServer::incomingConnection(quintptr socketDescriptor) {
 }
 
 const QString SocketServer::name() {
-  QString name(ANTIQUACRM_CONNECTION_PREFIX);
-  name.append(ANTIQUACRM_NAME);
+  QString name(ANTIQUACRM_CONNECTION_DOMAIN);
   name.append(".");
   name.append(QSysInfo::machineHostName());
   return name;

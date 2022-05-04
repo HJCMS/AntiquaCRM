@@ -38,10 +38,10 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
 
   QWidget *m_statusBar = new QWidget(this);
   QHBoxLayout *statusLayout = new QHBoxLayout(m_statusBar);
-  QPushButton *btn_refresh = new QPushButton(m_statusBar);
   m_statusInfo = new QLabel(m_statusBar);
   statusLayout->addWidget(m_statusInfo);
   statusLayout->addStretch(1);
+  QPushButton *btn_refresh = new QPushButton(m_statusBar);
   btn_refresh->setText(tr("Refresh"));
   btn_refresh->setIcon(myIcon("reload"));
   statusLayout->addWidget(btn_refresh);
@@ -69,6 +69,9 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
           SLOT(displayMessageBox(const QString &)));
 
   connect(m_editor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
+
+  connect(btn_refresh, SIGNAL(clicked()), m_tableView,
+          SLOT(refreshView()));
 
   m_tableView->initOrders();
 }

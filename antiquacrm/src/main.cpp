@@ -15,7 +15,7 @@
 int main(int argc, char *argv[]) {
   MApplication app(argc, argv);
   app.setApplicationName(ANTIQUACRM_NAME);
-  app.setApplicationVersion(ANTIQUACRM_VERSION_STRING);
+  app.setApplicationVersion(ANTIQUACRM_VERSION);
   app.setApplicationDisplayName(ANTIQUACRM_NAME);
   app.setDesktopFileName(ANTIQUACRM_NAME);
   app.setOrganizationDomain(HJCMS_CONFIG_DOMAIN);

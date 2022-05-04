@@ -11,6 +11,12 @@
 #include <QFrame>
 #include <QWidget>
 
+/**
+ * @class UtilsMain
+ * @abstract
+ * @ingroup Utils
+ * @brief Hauptklasse für Eingabe Klassen
+ */
 class UtilsMain : public QFrame {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")

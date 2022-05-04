@@ -9,16 +9,18 @@
 #include <QWidget>
 
 /**
- @brief Elternklasse für Inventory Tabs
- @see Workspace
-*/
+ * @class Inventory inventory.h Utils
+ * @abstract
+ * @brief Hauptklasse für alle Inventory Tabulaturen
+ */
 class Inventory : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
-  Q_PROPERTY(bool closable READ isClosable WRITE setClosable NOTIFY closeableChanged)
+  Q_PROPERTY(
+      bool closable READ isClosable WRITE setClosable NOTIFY closeableChanged)
 
-private:
+protected:
   /**
    * @brief Kann das Fenster geschlossen werden?
    * Wird von den Editor Klassen ausgelöst und muss
@@ -27,15 +29,20 @@ private:
    */
   bool closable = true;
 
-protected:
   /**
-   * @brief Ab Zeichenanzahl startet die Abfrage!
-   * @see searchConvert
+   * Standard Zeichenanzahl bis die Suchabfrage startet!
+   * Diese Variable wird auch in den Einstellungen fest gelegt.
+   * Kann auch in den Unterklassen überschrieben werden.
+   * Wird z.B. in searchConvert verwendet, damit es nicht zu
+   * viele Abfragen auf einemal gibt.
+   * @issue
+   * @see QSettings::value("search/startlength").toInt();
    */
   int minLength = 5;
 
   /**
-   * @brief Öffne das Editor Fenster
+   * @brief Öffnet das Editor Fenster
+   * @ref editormain.h
    * Wegen Tastenbindungen ist das Editor Fenster
    * deaktiviert und muss hier wieder aktiviert werden.
    */

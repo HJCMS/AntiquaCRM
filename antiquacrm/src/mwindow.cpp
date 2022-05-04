@@ -3,15 +3,15 @@
 
 /* Project */
 #include "mwindow.h"
+#include "antiqua_global.h"
 #include "applsettings.h"
 #include "completerdialog.h"
 #include "configdialog.h"
 #include "dockbarwidget.h"
 #include "filedialog.h"
-#include "statusbar.h"
-#include "antiqua_global.h"
-#include "workspace.h"
 #include "myicontheme.h"
+#include "statusbar.h"
+#include "workspace.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -21,8 +21,8 @@
 
 MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
   setObjectName("MainWindow");
-  setWindowTitle(ANTIQUACRM_DISPLAYNAME);
-  setMinimumSize(QSize(1024, 700));
+  setWindowTitle(ANTIQUACRM_WINDOW_TITLE);
+  setMinimumSize(QSize(1024, 720));
   setWindowIcon(myIcon("database"));
 
   // Settings

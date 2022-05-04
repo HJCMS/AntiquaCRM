@@ -10,21 +10,18 @@
 #include <QVariant>
 #include <QWidget>
 
-/**
- * @defgroup HJCMS
- * @{
- */
 #include <AntiquaCRM>
 #include <SqlCore>
 
 namespace HJCMS {
 class SqlCore;
 };
-/** }@ */
 
 /**
  * @class EditorMain
- * @brief Abstraktions Klasse für Editoren
+ * @abstract
+ * @ingroup Utils
+ * @brief Hauptklasse für die Inventory Editoren
  * Diese Klasse dient für die Vereinheitlichung von
  * SQL Abfragen und Signalen in den Editor Fenstern.
  * @see Siehe auch @class Inventory

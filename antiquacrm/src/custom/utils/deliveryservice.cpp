@@ -1,5 +1,6 @@
 #include "deliveryservice.h"
 
+#include <QDebug>
 #include <QHBoxLayout>
 
 #include <SqlCore>
@@ -14,7 +15,7 @@ DeliveryService::DeliveryService(QWidget *parent) : UtilsMain{parent} {
   layout->addWidget(m_info);
 
   m_box = new QComboBox(this);
-  m_box->insertItem(0,tr("Without disclosures"));
+  m_box->insertItem(0, tr("Without disclosures"));
   layout->addWidget(m_box);
 
   setLayout(layout);
@@ -33,6 +34,7 @@ void DeliveryService::itemChanged(int i) {
 
 void DeliveryService::setValue(const QVariant &val) {
   p_value = val.toInt();
+  m_box->setCurrentIndex(p_value);
 }
 
 void DeliveryService::reset() {
@@ -47,11 +49,15 @@ void DeliveryService::loadSqlDataset() {
   HJCMS::SqlCore *m_sql = new HJCMS::SqlCore(this);
   QString sql("SELECT d_id,d_name FROM " + sqlTable + " ORDER BY d_id ASC;");
   QSqlQuery q = m_sql->query(sql);
-  if(q.size() > 0) {
+  if (q.size() > 0) {
+    if (m_box->count() >= 1) {
+      m_box->clear();
+      m_box->insertItem(0, tr("Without disclosures"));
+    }
     while (q.next()) {
       int i = q.value("d_id").toInt();
       QString t = q.value("d_name").toString();
-      m_box->insertItem(i,t);
+      m_box->insertItem(i, t);
     }
   }
 }
@@ -67,7 +73,7 @@ bool DeliveryService::isValid() {
 
 void DeliveryService::setInfo(const QString &info) {
   m_box->setToolTip(info);
-  m_info->setText(info+":");
+  m_info->setText(info + ":");
 }
 
 const QString DeliveryService::info() { return m_box->toolTip(); }

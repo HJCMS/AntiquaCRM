@@ -938,12 +938,13 @@
 <context>
     <name>DeliveryService</name>
     <message>
-        <location filename="../custom/utils/deliveryservice.cpp" line="+17"/>
+        <location filename="../custom/utils/deliveryservice.cpp" line="+18"/>
+        <location line="+37"/>
         <source>Without disclosures</source>
         <translation>Keine Angaben</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+27"/>
         <source>Delevery Service is needet!</source>
         <translation>Ein Lieferservice ist erforderlich!</translation>
     </message>
@@ -1127,7 +1128,7 @@
 <context>
     <name>HJCMS::SqlCore</name>
     <message>
-        <location filename="../core/sqlcore/sqlcore.cpp" line="+147"/>
+        <location filename="../core/sqlcore/sqlcore.cpp" line="+141"/>
         <source>SQL Driver initialization error</source>
         <translation>Fehler beim laden des SQL Treibers</translation>
     </message>
@@ -1452,7 +1453,7 @@
 <context>
     <name>OrderEditor</name>
     <message>
-        <location filename="../inventory/orders/ordereditor.cpp" line="+15"/>
+        <location filename="../inventory/orders/ordereditor.cpp" line="+17"/>
         <source>Edit Order</source>
         <translation>Auftrag bearbeiten</translation>
     </message>
@@ -1467,40 +1468,159 @@
         <translation>Status</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>Payment</source>
         <translation>Zahlung</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>Delivery Service</source>
         <translation>Lieferservice</translation>
     </message>
     <message>
         <location line="+8"/>
+        <source>Costumer ID</source>
+        <translation>Kunden Nr.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Provider</source>
+        <translation>Dienstleister</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>lock</source>
         <translation>Sperren</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+64"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+77"/>
+        <source>Article %1, Price %2, Count: %3, Title: %4</source>
+        <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Do you really want to close this order and pass it on to accounting?</source>
+        <translation>Möchten Sie wirklich diesen Auftrag schließen und an die Buchhaltung weiter reichen?</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>If so, the entry will no longer be visible here!</source>
+        <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Finish order</source>
+        <translation>Auftrag abschließen</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Notice</source>
+        <translation>Hinweis</translation>
+    </message>
+</context>
+<context>
+    <name>OrderPaymentsTable</name>
+    <message>
+        <location filename="../inventory/orders/orderpaymentstable.cpp" line="+15"/>
+        <source>Article</source>
+        <translation>Artikel</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>article id</source>
+        <translation>Artikel ID</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Price</source>
+        <translation>Preis</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>selling price</source>
+        <translation>Preis</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Retail Price</source>
+        <translation>VK Preis</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Count</source>
+        <translation>Anzahl</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Article count</source>
+        <translation>Artikelanzahl</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Summary</source>
+        <translation>Zusammenfassung</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Article Summary</source>
+        <translation>Artikel Zusammenfassung</translation>
+    </message>
+</context>
+<context>
+    <name>OrderStatusBox</name>
+    <message>
+        <location filename="../custom/utils/orderstatusbox.cpp" line="+76"/>
+        <source>Order status is required</source>
+        <translation>Auftrags Status ist erforderlich</translation>
+    </message>
+</context>
+<context>
+    <name>OrdersItemList</name>
+    <message>
+        <location filename="../inventory/orders/ordersitemlist.cpp" line="+30"/>
+        <source>Info about Article found by input ...</source>
+        <translation>Info zur Artikelsuche wird hier Angezeigt ...</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Insert Article</source>
+        <translation>Artikel einfügen</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Add here the article Ids for this order:</source>
+        <translation>Stellen Sie hier die Auftrags Artikel ID&apos;s ein:</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Check</source>
+        <translation>Prüfen</translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <source>Duplicate Entry</source>
+        <translation>Doppelter Eintrag</translation>
     </message>
 </context>
 <context>
     <name>OrdersPaymentBox</name>
     <message>
-        <location filename="../inventory/orders/orderspaymentbox.cpp" line="+12"/>
+        <location filename="../custom/utils/orderspaymentbox.cpp" line="+20"/>
         <source>waiting for payment</source>
         <translation>Warte auf Zahlung</translation>
     </message>
@@ -1508,6 +1628,11 @@
         <location line="+1"/>
         <source>payment received</source>
         <translation>Zahlung eingegangen</translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>Payment Status is required</source>
+        <translation>Ein Zahlungstatus ist erforderlich</translation>
     </message>
 </context>
 <context>
@@ -1533,23 +1658,7 @@
         <translation>Zahlungsstatus aktualisieren</translation>
     </message>
     <message>
-        <location line="+77"/>
-        <source>Do you really want to close this order and pass it on to accounting?</source>
-        <translation>Möchten Sie wirklich diesen Auftrag schließen und an die Buchhaltung weiter reichen?</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>If so, the entry will no longer be visible here!</source>
-        <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
-    </message>
-    <message>
-        <location line="-75"/>
-        <location line="+77"/>
-        <source>Finish order</source>
-        <translation>Auftrag abschließen</translation>
-    </message>
-    <message>
-        <location line="-94"/>
+        <location line="-12"/>
         <source>Create order</source>
         <translation>Auftrag anlegen</translation>
     </message>
@@ -1622,7 +1731,7 @@
 <context>
     <name>PaymentStatusDialog</name>
     <message>
-        <location filename="../inventory/orders/orderspaymentbox.cpp" line="+24"/>
+        <location filename="../custom/utils/orderspaymentbox.cpp" line="+7"/>
         <source>Paymentstatus</source>
         <translation>Zahlungstatus</translation>
     </message>
@@ -2264,7 +2373,7 @@
         <translation>Lieferung abgeschlossen</translation>
     </message>
     <message>
-        <location filename="../inventory/orders/orderstatements.h" line="+17"/>
+        <location filename="../inventory/orders/orderstatements.h" line="+18"/>
         <source>Hours</source>
         <translation>Stunden</translation>
     </message>
@@ -2277,11 +2386,6 @@
         <location line="+1"/>
         <source>Months</source>
         <translation>Monate</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Years</source>
-        <translation>Jahre</translation>
     </message>
 </context>
 <context>
@@ -2495,7 +2599,7 @@
 <context>
     <name>StatusDialog</name>
     <message>
-        <location filename="../inventory/orders/orderstatusbox.cpp" line="+38"/>
+        <location filename="../custom/utils/orderstatusbox.cpp" line="+6"/>
         <source>Edit Order Status</source>
         <translation>Bearbeite Autragsstatus</translation>
     </message>

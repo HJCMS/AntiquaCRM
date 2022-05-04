@@ -19,8 +19,9 @@ class OrdersTable;
 class OrderEditor;
 
 /**
- @class InventoryOrders
- Primäre Klasse für das Auftrags System
+ * @group InventoryOrders
+ * @class InventoryOrders
+ * Primäre Klasse für das Auftrags System
 */
 class InventoryOrders : public Inventory {
   Q_OBJECT

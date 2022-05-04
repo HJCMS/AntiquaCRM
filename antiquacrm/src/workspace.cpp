@@ -16,7 +16,7 @@
 Workspace::Workspace(QWidget *parent) : QTabWidget{parent} {
   setObjectName("WorkspaceTabWidget");
   setMovable(true);
-  setTabsClosable(true);
+  setTabsClosable(false);
   setUsesScrollButtons(false);
 #ifndef Q_OS_UNIX
   setDocumentMode(true);
