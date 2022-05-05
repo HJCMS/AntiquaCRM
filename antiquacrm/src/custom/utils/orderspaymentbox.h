@@ -27,9 +27,6 @@ private:
 private Q_SLOTS:
   void indexChanged(int);
 
-Q_SIGNALS:
-  void statusChanged(bool);
-
 public Q_SLOTS:
   void setValue(const QVariant &);
   Q_INVOKABLE void reset();

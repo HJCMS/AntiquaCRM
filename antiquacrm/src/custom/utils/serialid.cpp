@@ -29,6 +29,7 @@ SerialID::SerialID(QWidget *parent) : UtilsMain{parent} {
 
 void SerialID::setValue(const QVariant &id) {
   m_serialLabel->setText(id.toString());
+  emit s_serialChanged(id.toInt());
   setModified(true);
 }
 

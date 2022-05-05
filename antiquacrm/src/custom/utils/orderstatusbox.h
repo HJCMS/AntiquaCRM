@@ -24,9 +24,6 @@ private:
   QComboBox *m_box;
 
 private Q_SLOTS:
-  void setIndex(int);
-
-Q_SIGNALS:
   void indexChanged(int);
 
 public Q_SLOTS:

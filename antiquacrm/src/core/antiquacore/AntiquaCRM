@@ -14,4 +14,8 @@
 # include "orderstatus.h"
 #endif
 
+#ifndef ORDERARTICLE_ANTIQUACORE_H
+# include "orderarticle.h"
+#endif
+
 // EOF

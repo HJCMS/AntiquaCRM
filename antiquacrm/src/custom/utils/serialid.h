@@ -5,10 +5,10 @@
 #ifndef SERIALID_UTILS_H
 #define SERIALID_UTILS_H
 
-#include <QObject>
-#include <QVariant>
 #include <QFrame>
 #include <QLabel>
+#include <QObject>
+#include <QVariant>
 
 #include <UtilsMain>
 
@@ -21,15 +21,11 @@ private:
   QLabel *m_infoLabel;
   QLabel *m_serialLabel;
 
-public Q_SLOTS:
-  /**
-   @brief Artikel ID setzen
-  */
-  void setValue(const QVariant &);
+Q_SIGNALS:
+  void s_serialChanged(int);
 
-  /**
-   @brief Eingabefeld zurücksetzen
-  */
+public Q_SLOTS:
+  void setValue(const QVariant &);
   Q_INVOKABLE void reset();
   void setFocus();
 
@@ -50,7 +46,7 @@ public:
    * @brief Aktuelle Artikel ID
    * @warning Es darf keine 0 zurück gegeben werden!
    * @return Positiver Wert oder Null wegen parsen!
-  */
+   */
   const QVariant value();
 
   /**

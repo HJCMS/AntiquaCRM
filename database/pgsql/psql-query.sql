@@ -1,7 +1,37 @@
-SELECT a.o_id,a.o_since,a.o_order_status,a.o_payment_status,
-  CASE WHEN c.c_company=true THEN c.c_company_name ELSE concat_ws(' ',c.c_firstname,c.c_lastname) END AS costumer,
-  d.d_name,a.o_locked,a.o_closed,age(CURRENT_TIMESTAMP,o_since) AS age
-FROM inventory_orders AS a
-LEFT JOIN costumers AS c ON c.c_id=a.o_costumer_id
-LEFT JOIN ref_delivery_service AS d ON d.d_id=a.o_delivery_service
-WHERE a.o_closed=false ORDER BY a.o_since DESC;
+
+DROP TABLE IF EXISTS public.article_orders;
+
+CREATE TABLE public.article_orders (
+  a_order_id integer NOT NULL,
+  a_article_id integer NOT NULL,
+  a_costumer_id integer NOT NULL,
+  a_title character varying(80) NOT NULL,
+  a_price numeric(6,2) DEFAULT 0.00,
+  a_sell_price numeric(6,2) DEFAULT 0.00,
+  a_modified timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+COMMENT ON TABLE public.article_orders IS 'Auftraege System';
+
+COMMENT ON COLUMN public.article_orders.a_order_id IS 'Auftrags ID';
+
+COMMENT ON COLUMN public.article_orders.a_article_id IS 'Artikel ID';
+
+COMMENT ON COLUMN public.article_orders.a_costumer_id IS 'Kunden ID';
+
+COMMENT ON COLUMN public.article_orders.a_title IS 'Artikel Titel';
+
+COMMENT ON COLUMN public.article_orders.a_price IS 'Artikel Preis';
+
+COMMENT ON COLUMN public.article_orders.a_sell_price IS 'Artikel Verkaufs Preis';
+
+COMMENT ON COLUMN public.article_orders.a_modified IS 'Aenderungen';
+
+ALTER TABLE ONLY public.article_orders
+  ADD CONSTRAINT order_id FOREIGN KEY (a_order_id) REFERENCES public.inventory_orders(o_id);
+
+ALTER TABLE ONLY public.article_orders
+  ADD CONSTRAINT article_id FOREIGN KEY (a_article_id) REFERENCES public.inventory(i_id);
+
+ALTER TABLE ONLY public.article_orders
+  ADD CONSTRAINT costumer_id FOREIGN KEY (a_costumer_id) REFERENCES public.costumers(c_id);

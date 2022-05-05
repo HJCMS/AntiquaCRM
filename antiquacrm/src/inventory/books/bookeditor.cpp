@@ -357,68 +357,21 @@ bool BookEditor::sendSqlQuery(const QString &sqlStatement) {
 const QHash<QString, QVariant> BookEditor::createSqlDataset() {
   QHash<QString, QVariant> data;
   MessageBox messanger;
-  QList<StrLineEdit *> listStr =
-      findChildren<StrLineEdit *>(p_objPattern, Qt::FindDirectChildrenOnly);
-  QList<StrLineEdit *>::Iterator i_str;
-  for (i_str = listStr.begin(); i_str != listStr.end(); ++i_str) {
-    StrLineEdit *cur = *i_str;
+  QList<UtilsMain *> list =
+      findChildren<UtilsMain *>(p_objPattern, Qt::FindChildrenRecursively);
+  QList<UtilsMain *>::Iterator it;
+  for (it = list.begin(); it != list.end(); ++it) {
+    UtilsMain *cur = *it;
     if (cur->isRequired() && !cur->isValid()) {
       messanger.notice(cur->notes());
       cur->setFocus();
       data.clear();
       return data;
     }
+    // qDebug() << "Book:" << cur->objectName() << cur->value();
     data.insert(cur->objectName(), cur->value());
   }
-  listStr.clear();
-  QList<IntSpinBox *> listInt =
-      findChildren<IntSpinBox *>(p_objPattern, Qt::FindDirectChildrenOnly);
-  QList<IntSpinBox *>::Iterator i_int;
-  for (i_int = listInt.begin(); i_int != listInt.end(); ++i_int) {
-    IntSpinBox *cur = *i_int;
-    if (cur->isRequired() && !cur->isValid()) {
-      messanger.notice(cur->notes());
-      cur->setFocus();
-      data.clear();
-      return data;
-    }
-    data.insert(cur->objectName(), cur->value());
-  }
-  listInt.clear();
-  // Fleder welche geprüft werden müssen
-  if (ib_isbn->isValid()) {
-    data.insert("ib_isbn", ib_isbn->value());
-  }
-  if (!ib_year->isValid()) {
-    messanger.notice(ib_year->notes());
-    ib_year->setFocus();
-    data.clear();
-    return data;
-  } else {
-    data.insert("ib_year", ib_year->value());
-  }
-  if (ib_storage->isValid()) {
-    data.insert("ib_storage", ib_storage->value());
-  } else {
-    messanger.notice(ib_storage->notes());
-    ib_storage->setFocus();
-    data.clear();
-    return data;
-  }
-  if (ib_price->isValid()) {
-    data.insert("ib_price", ib_price->value());
-  } else {
-    messanger.notice(ib_price->notes());
-    ib_price->setFocus();
-    data.clear();
-    return data;
-  }
-  // Felder die immer gesetzt werden
-  data.insert("ib_description", ib_description->value());
-  data.insert("ib_internal_description", ib_internal_description->value());
-  data.insert("ib_language", ib_language->value());
-  data.insert("ib_signed", ib_signed->value());
-  data.insert("ib_restricted", ib_restricted->value());
+  list.clear();
   return data;
 }
 
@@ -438,6 +391,9 @@ void BookEditor::createSqlUpdate() {
   QStringList set;
   QHash<QString, QVariant>::iterator it;
   for (it = data.begin(); it != data.end(); ++it) {
+    if (it.key() == "ib_id")
+      continue;
+
     if (it.value().type() == QVariant::String) {
       set.append(it.key() + "='" + it.value().toString() + "'");
     } else {
@@ -550,67 +506,19 @@ void BookEditor::restoreDataset() {
 
 void BookEditor::setData(const QString &key, const QVariant &value,
                          bool required) {
-  if (key.contains("ib_id")) {
-    ib_id->setValue(value);
+  if (key.isEmpty())
     return;
-  }
-  if (key.contains("ib_isbn")) {
-    ib_isbn->setValue(value);
-    return;
-  }
-  if (key.contains("ib_year")) {
-    ib_year->setValue(value);
-    return;
-  }
-  if (key.contains("ib_storage")) {
-    ib_storage->setValue(value);
-    return;
-  }
-  if (key.contains("ib_price")) {
-    ib_price->setValue(value);
-    return;
-  }
-  if (key.contains("ib_edition")) {
-    ib_edition->setValue(value);
-    return;
-  }
-  if (key.contains("ib_language")) {
-    ib_language->setValue(value);
-    return;
-  }
-  if (value.type() == QVariant::Bool) {
-    BoolBox *v = findChild<BoolBox *>(key, Qt::FindDirectChildrenOnly);
-    if (v != nullptr)
-      v->setValue(value);
+
+  UtilsMain *inp = findChild<UtilsMain *>(key, Qt::FindChildrenRecursively);
+  if (inp != nullptr) {
+    inp->setValue(value);
+    if (required && !inp->isRequired())
+      inp->setRequired(required);
 
     return;
   }
-  if (value.type() == QVariant::Int) {
-    IntSpinBox *v = findChild<IntSpinBox *>(key, Qt::FindDirectChildrenOnly);
-    if (v != nullptr)
-      v->setValue(value);
-
-    return;
-  }
-  if (value.type() == QVariant::String) {
-    StrLineEdit *v = findChild<StrLineEdit *>(key, Qt::FindDirectChildrenOnly);
-    if (v != nullptr) {
-      if (!value.toString().contains("NOT_SET")) {
-        // TODO FIXME SET RED COLOR
-        v->setValue(value);
-      }
-      return;
-    }
-  }
-  if (key.contains("ib_description")) {
-    ib_description->setValue(value);
-    return;
-  }
-  if (key.contains("ib_internal_description")) {
-    ib_internal_description->setValue(value);
-    return;
-  }
-  qDebug() << "Missing" << key << value << value.type();
+  qDebug() << "Missing Key:" << key << " Value" << value
+           << " Required:" << required;
 }
 
 bool BookEditor::realyDeactivateBookEntry() {

@@ -37,28 +37,39 @@ private:
   */
   bool sqlExecQuery(const QString &statement);
 
+  /**
+   * @brief Suche Datensatz mit Index
+   * Wenn vorhanden Sende Signal @ref s_articleSelected
+  */
+  int queryArticleID(const QModelIndex &);
+
 private Q_SLOTS:
   /**
-   @brief Suche Datensatz mit Index
-   Wenn vorhanden Sende Signal @ref s_articleSelected
-  */
-  void queryArticleID(const QModelIndex &);
+   * @brief Wird von Tablemodel ausgelöst
+   */
+  void articleClicked(const QModelIndex &);
 
   /**
-   @brief Ableitung für @ref clickedGetArticleID
+   * @brief Ableitung für @ref clickedGetArticleID
   */
   void openByContext();
 
   /**
-     @brief Einen neuen Eintrag erstellen wenn ...
-     @todo Die Suchanfrage kein Ergebnis lieferte
+   * @brief Einen neuen Eintrag erstellen wenn ...
+   * @todo Die Suchanfrage kein Ergebnis lieferte
   */
   void createByContext();
+
+  /**
+   * @brief Kopiert die ID in das Clipboard
+   */
+  void copyToClipboard();
 
 protected:
   void contextMenuEvent(QContextMenuEvent *);
 
 Q_SIGNALS:
+  void s_toClibboard(const QVariant &);
   void s_reportQuery(const QString &);
   void s_articleSelected(int id);
   void s_newEntryPlease();

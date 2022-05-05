@@ -20,7 +20,7 @@ private:
   const QString sqlTable = QString("ref_delivery_service");
 
 private Q_SLOTS:
-  void itemChanged(int);
+  void indexChanged(int);
 
 public Q_SLOTS:
   void setValue(const QVariant &);

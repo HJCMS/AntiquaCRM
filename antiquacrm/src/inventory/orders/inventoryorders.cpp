@@ -83,6 +83,7 @@ void InventoryOrders::searchConvert() {}
 void InventoryOrders::openTableView() {
   m_stackedWidget->setCurrentIndex(0);
   m_editor->setEnabled(false);
+  m_tableView->initOrders();
 }
 
 void InventoryOrders::openEditor(const QString &condition) {
@@ -93,7 +94,7 @@ void InventoryOrders::orderSelected(int id) {
   if (id < 1) {
     return;
   }
-
+  // qDebug() << Q_FUNC_INFO << id;
   m_editor->setEnabled(true);
   m_editor->updateOrder(id);
   m_stackedWidget->setCurrentWidget(m_editor);

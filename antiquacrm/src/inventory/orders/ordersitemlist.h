@@ -13,6 +13,8 @@
 #include <QTableWidgetItem>
 #include <QWidget>
 
+#include <AntiquaCRM>
+
 class OrderPaymentsTable;
 
 /**
@@ -23,15 +25,6 @@ class OrdersItemList : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
-
-public:
-  struct Article {
-    int articleId;   /**< Artikel Nummer */
-    int count;       /**< Anzahl */
-    QString title;   /**< Titel */
-    double price;    /**< Aktuelle Preis */
-    QString summary; /**< Info Anzeige */
-  };
 
 private:
   /**
@@ -52,7 +45,7 @@ private:
   /**
    * @brief Artikeldaten
    */
-  Article p_article;
+  OrderArticle p_article;
 
   /**
    * @brief Preiseingabe Box
@@ -106,12 +99,17 @@ public Q_SLOTS:
 
 public:
   OrdersItemList(QWidget *parent = nullptr);
+
+  /**
+   * @brief Aktuelle Bestelliste ermitteln.
+   */
+  const OrderArticleList getArticleOrder();
+
   /**
    * Wenn ein Artikel gefunden wird diesen
    * hier einfügen.
    */
-  void foundArticle(const Article &);
+  void foundArticle(const OrderArticle &);
 };
-Q_DECLARE_METATYPE(OrdersItemList::Article);
 
 #endif // INVENTORY_ORDERSITEMLIST_H

@@ -6,6 +6,7 @@
 #define INVENTORY_UTILS_H
 
 #include <QObject>
+#include <QVariant>
 #include <QWidget>
 
 /**
@@ -50,16 +51,15 @@ protected:
 
 protected Q_SLOTS:
   /**
+   * @brief Kopiert Text in das Clipboard
+   */
+  void copyIntoClipboard(const QVariant &);
+
+  /**
    * @brief Änderungen wie isModified abfangen.
    * Wird von den Editorklassen ausgelöst.
    */
-  void setClosable(bool b);
-
-  /**
-   * @brief Meldung vom Editoren verarbeiten.
-   * @note Ist für die Auftrags/Shop Verwaltung erforderlich!
-   */
-  void articleActivation(bool);
+  void setClosable(bool b = false);
 
   /**
    * @brief Methode für Suche während eingabe.

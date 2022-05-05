@@ -240,17 +240,17 @@
         <translation>Möchten Sie das Bild wirklich aus der Datenbank entfernen?</translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+58"/>
         <source>Missing Article ID for Update.</source>
         <translation>Keine Artikel ID für Update vorhanden.</translation>
     </message>
     <message>
-        <location line="+98"/>
+        <location line="+101"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+45"/>
         <source>Are you sure to deactivate this entry?</source>
         <translation>Möchten Sie diesen Eintrag wirklich deaktivieren?</translation>
     </message>
@@ -285,7 +285,7 @@
         <translation>Öffnen Sie die Webseite im Browser für eine vollständige Beschreibung.</translation>
     </message>
     <message>
-        <location line="-624"/>
+        <location line="-532"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -300,7 +300,7 @@
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
     <message>
-        <location line="+482"/>
+        <location line="+390"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
@@ -326,7 +326,7 @@
         <translation>OpenLibrary kann kostenlos verwendet werden, aber wir brauchen Ihre Hilfe!</translation>
     </message>
     <message>
-        <location line="-530"/>
+        <location line="-438"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -349,18 +349,18 @@
     </message>
     <message>
         <location line="-164"/>
-        <location line="+633"/>
+        <location line="+541"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
     <message>
-        <location line="-559"/>
-        <location line="+569"/>
+        <location line="-467"/>
+        <location line="+477"/>
         <source>Publisher</source>
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="-383"/>
+        <location line="-291"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
@@ -383,9 +383,14 @@
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+40"/>
         <source>Open entry</source>
         <translation>Öffne Eintrag</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Copy Article Id</source>
+        <translation>Kopiere Artikel Nummer</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -939,7 +944,7 @@
     <name>DeliveryService</name>
     <message>
         <location filename="../custom/utils/deliveryservice.cpp" line="+18"/>
-        <location line="+37"/>
+        <location line="+36"/>
         <source>Without disclosures</source>
         <translation>Keine Angaben</translation>
     </message>
@@ -993,12 +998,12 @@
         <translation>Rechnungsinformationen bearbeiten</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+58"/>
         <source>Saved successfully!</source>
         <translation>Speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+264"/>
+        <location line="+126"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
@@ -1463,57 +1468,62 @@
         <translation>Auftrags ID</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Payment</source>
         <translation>Zahlung</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Delivery Service</source>
         <translation>Lieferservice</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Costumer ID</source>
-        <translation>Kunden Nr.</translation>
+        <location line="+9"/>
+        <source>Address for Costumer ID</source>
+        <translation>Adresse und Kunden Nummer</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Provider</source>
-        <translation>Dienstleister</translation>
+        <location line="+4"/>
+        <source>Provider Order</source>
+        <translation>Dienstleister Bestellung</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+14"/>
+        <source>Notification</source>
+        <translation>Benachrichtigung</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>lock</source>
         <translation>Sperren</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+91"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+83"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+18"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>Do you really want to close this order and pass it on to accounting?</source>
         <translation>Möchten Sie wirklich diesen Auftrag schließen und an die Buchhaltung weiter reichen?</translation>
     </message>
@@ -1528,9 +1538,19 @@
         <translation>Auftrag abschließen</translation>
     </message>
     <message>
+        <location line="+3"/>
+        <source>Order deactivated!</source>
+        <translation>Auftrag deaktiviert!</translation>
+    </message>
+    <message>
         <location line="+16"/>
         <source>Notice</source>
         <translation>Hinweis</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>Shipping Address</source>
+        <translation>Lieferadresse</translation>
     </message>
 </context>
 <context>
@@ -1584,7 +1604,7 @@
 <context>
     <name>OrderStatusBox</name>
     <message>
-        <location filename="../custom/utils/orderstatusbox.cpp" line="+76"/>
+        <location filename="../custom/utils/orderstatusbox.cpp" line="+71"/>
         <source>Order status is required</source>
         <translation>Auftrags Status ist erforderlich</translation>
     </message>
@@ -1602,17 +1622,17 @@
         <translation>Artikel einfügen</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Add here the article Ids for this order:</source>
         <translation>Stellen Sie hier die Auftrags Artikel ID&apos;s ein:</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+10"/>
         <source>Check</source>
         <translation>Prüfen</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+49"/>
         <source>Duplicate Entry</source>
         <translation>Doppelter Eintrag</translation>
     </message>
@@ -1630,7 +1650,7 @@
         <translation>Zahlung eingegangen</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+46"/>
         <source>Payment Status is required</source>
         <translation>Ein Zahlungstatus ist erforderlich</translation>
     </message>
@@ -1744,7 +1764,7 @@
 <context>
     <name>PhoneEdit</name>
     <message>
-        <location filename="../custom/utils/phoneedit.cpp" line="+106"/>
+        <location filename="../custom/utils/phoneedit.cpp" line="+105"/>
         <source>The Phone Number is required and can not empty.</source>
         <translation>Eine Rufnummer ist erforderlich und darf nicht Leer sein.</translation>
     </message>
@@ -2125,12 +2145,12 @@
         <translation>Daten Erfolgreich gespeichert!</translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+29"/>
         <source>Missing Article ID for Update.</source>
         <translation>Keine Artikel ID für ein Update.</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+87"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
@@ -2373,7 +2393,7 @@
         <translation>Lieferung abgeschlossen</translation>
     </message>
     <message>
-        <location filename="../inventory/orders/orderstatements.h" line="+18"/>
+        <location filename="../inventory/orders/orderstatements.h" line="+37"/>
         <source>Hours</source>
         <translation>Stunden</translation>
     </message>
@@ -2439,7 +2459,7 @@
 <context>
     <name>SerialID</name>
     <message>
-        <location filename="../custom/utils/serialid.cpp" line="+71"/>
+        <location filename="../custom/utils/serialid.cpp" line="+72"/>
         <source>The Arcticle ID is required and can not empty.</source>
         <translation>Die Artikel Nummer ist erforderlich und darf nicht Leer sein.</translation>
     </message>

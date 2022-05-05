@@ -31,19 +31,46 @@ private:
   SerialID *o_costumer_id;             /**< o_costumer_id */
   TextField *m_costumer_address;       /**< Kunden Adresse */
   DeliveryService *o_delivery_service; /**< o_delivery_service */
-  LineEdit *o_provider;                /**< o_provider */
-  TextField *m_provider_info;          /**< Informationen zum Dienstleister */
+  LineEdit *o_provider_name;           /**< o_provider */
+  TextField *o_provider_order;         /**< Informationen zum Dienstleister */
+  BoolBox *o_notify;                   /**< o_notify */
   BoolBox *o_locked;                   /**< o_locked */
   BoolBox *o_closed;                   /**< o_closed */
-  EditorActionBar *m_actionBar;        /**< Actions Bar */
-  OrdersItemList *m_paymentList;       /**< Liste der Bestellten Artikel */
+  LineEdit *o_modified;                /**< o_modified */
 
-  const QString tableName = QString("inventory_orders");
+  /**
+   * @brief Standard ActionsBar
+   */
+  EditorActionBar *m_actionBar;
 
+  /**
+   * @brief Liste der Bestellten Artikel
+   */
+  OrdersItemList *m_paymentList;
+
+  /**
+   * @brief Suchpattern für Eingabefelder
+   */
   const QRegularExpression p_objPattern = QRegularExpression("^o_[a-z_]+\\b$");
 
+  /**
+   * @brief Lese die aktuellen Datenfelder mit QSqlRecord aus Tabelle!
+   */
   void setInputList();
+
+  /**
+   * @brief Datensatz in Felder importieren
+   */
   void importSqlResult();
+
+  /**
+   * @brief Aktuelle eingabe einlesen!
+   * Wenn @b isRequired() und nicht @b isValid() zuschlagen.
+   * Wird der Hash geleert und eine Fehlermeldung ausgegeben!
+   * @return Datensatz
+   */
+  const QHash<QString, QVariant> createSqlDataset();
+
   bool sendSqlQuery(const QString &);
   void createSqlUpdate();
   void createSqlInsert();
@@ -54,6 +81,7 @@ private:
   void setCostumerAddress(int);
 
 private Q_SLOTS:
+  void findCostumer(int);
   void findArticle(int);
   void saveData();
   void checkLeaveEditor();
@@ -71,19 +99,23 @@ public Q_SLOTS:
   void restoreDataset();
   void showMessagePoUp(const QString &);
 
+Q_SIGNALS:
+  void postMessage(const QString &);
+
 public:
   explicit OrderEditor(QWidget *parent = nullptr);
 
   /**
-   * @brief updateOrder
+   * @brief Eintrage Bearbeiten
+   * @parem Order ID
    */
-  void updateOrder(int);
+  void updateOrder(int oid = -1);
 
   /**
-   * @brief Einen Auftrag mit ID erstellen
+   * @brief Einen Auftrag mit Kunden ID erstellen!
    * @param Costumer Id
    */
-  void createOrder(int costumerId = 0);
+  void createOrder(int cid = 0);
 };
 
 #endif // INVENTORY_ORDEREDITOR_H

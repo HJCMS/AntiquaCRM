@@ -8,19 +8,19 @@
 #include "myicontheme.h"
 #include "searchbar.h"
 
+#include <QAction>
 #include <QDebug>
+#include <QHeaderView>
 #include <QItemSelectionModel>
+#include <QMenu>
 #include <QMutex>
 #include <QPoint>
 #include <QRegExp>
 #include <QSignalMapper>
-#include <QTime>
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlTableModel>
-#include <QAction>
-#include <QHeaderView>
-#include <QMenu>
+#include <QTime>
 
 /**
     @brief querySelect
@@ -74,7 +74,7 @@ BooksTable::BooksTable(QWidget *parent) : QTableView{parent} {
   tHeader->setStretchLastSection(true);
 
   connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
-          SLOT(queryArticleID(const QModelIndex &)));
+          SLOT(articleClicked(const QModelIndex &)));
 }
 
 bool BooksTable::sqlExecQuery(const QString &statement) {
@@ -105,17 +105,25 @@ bool BooksTable::sqlExecQuery(const QString &statement) {
   return false;
 }
 
-void BooksTable::queryArticleID(const QModelIndex &index) {
+int BooksTable::queryArticleID(const QModelIndex &index) {
   QModelIndex id(index);
   if (m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
-    int i = m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
-
-    if (i >= 1)
-      emit s_articleSelected(i);
+    return m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
   }
+  return -1;
 }
 
-void BooksTable::openByContext() { queryArticleID(p_modelIndex); }
+void BooksTable::articleClicked(const QModelIndex &index) {
+  int i = queryArticleID(index);
+  if (i >= 1)
+    emit s_articleSelected(i);
+}
+
+void BooksTable::openByContext() {
+  int i = queryArticleID(p_modelIndex);
+  if (i >= 1)
+    emit s_articleSelected(i);
+}
 
 void BooksTable::createByContext() { emit s_newEntryPlease(); }
 
@@ -131,6 +139,12 @@ void BooksTable::contextMenuEvent(QContextMenuEvent *ev) {
   ac_open->setEnabled(b);
   connect(ac_open, SIGNAL(triggered()), this, SLOT(openByContext()));
 
+  // Von Eintrag die ID Kopieren
+  QAction *ac_copy = m->addAction(myIcon("edit"), tr("Copy Article Id"));
+  ac_copy->setObjectName("ac_context_copy_book");
+  ac_copy->setEnabled(b);
+  connect(ac_copy, SIGNAL(triggered()), this, SLOT(copyToClipboard()));
+
   QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create entry"));
   ac_create->setObjectName("ac_context_create_book");
   ac_create->setEnabled(b);
@@ -143,6 +157,11 @@ void BooksTable::contextMenuEvent(QContextMenuEvent *ev) {
 
   m->exec(ev->globalPos());
   delete m;
+}
+
+void BooksTable::copyToClipboard() {
+  QVariant id = queryArticleID(p_modelIndex);
+  emit s_toClibboard(id);
 }
 
 void BooksTable::refreshView() {

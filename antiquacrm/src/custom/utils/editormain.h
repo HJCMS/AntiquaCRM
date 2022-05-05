@@ -68,6 +68,15 @@ protected:
   /** }@ */
 
   /**
+   * @brief Datensätze aufarbeiten
+   * Soll von @ref createSqlUpdate und @ref createSqlInsert
+   * aufgerufen werden.
+   * @note Bei Fehlern einen leeren Hash zurück geben.
+   * @return Hash
+   */
+  virtual const QHash<QString, QVariant> createSqlDataset() = 0;
+
+  /**
    * @defgroup SQL Query Processing
    * @{
    * @brief Methode für SQL Anfragen absenden.

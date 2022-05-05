@@ -3,6 +3,8 @@
 
 #include "editormain.h"
 
+#include <QDebug>
+
 EditorMain::EditorMain(QWidget *parent) : QWidget{parent} {
   setMinimumSize(800, 600);
   setContentsMargins(5, 5, 5, 5);
@@ -41,6 +43,7 @@ bool EditorMain::checkIsModified(const QRegularExpression &pattern) {
                                     Qt::DirectConnection,
                                     Q_RETURN_ARG(bool, b))) {
 
+        // qDebug() << Q_FUNC_INFO << list.at(i)->objectName() << b;
         if (b) {
           return true;
         }

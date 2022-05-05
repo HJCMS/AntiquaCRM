@@ -9,11 +9,30 @@
 #include <QObject>
 #include <QString>
 
-// Schalte SQL ausgaben ein
+/**
+ * @group Order SQL Statements
+ * Hier werden für das Auftragssystem die
+ * SQL Abfragen definiert.
+ */
+
+/**
+ * @def SHOW_SQL_QUERIES
+ * @ingroup Order SQL Statements
+ * @section Debugging
+ * @brief SQL Abfrageanzeige
+ * Schaltet die SQL-Statements im Terminal
+ * auf sichtbar.
+ */
 #ifndef SHOW_SQL_QUERIES
 #define SHOW_SQL_QUERIES false
 #endif
 
+/**
+ * @ingroup Order SQL Statements
+ * @brief Standard Auftrags Tabellenausgabe
+ * @param id - Artikel Id
+ * @return SQL Query
+ */
 static const QString defaultQuery(int id = 0) {
   QString hh(QObject::tr("Hours"));
   QString dd(QObject::tr("Days"));
@@ -42,6 +61,15 @@ static const QString defaultQuery(int id = 0) {
   return sql;
 }
 
+/**
+ * @ingroup Order SQL Statements
+ * @brief Update auf den Abwicklungs Status
+ * Setzt in der Spalte "o_order_status" den Fortschritt.
+ * @note Die Stufen werden in Klasse @ref OrderStatus definiert!
+ * @param id     - Artikel Id
+ * @param status - Stufe
+ * @return SQL Query
+ */
 static const QString progresUpdate(int id, int status) {
   QString sql("UPDATE inventory_orders SET o_order_status=");
   sql.append(QString::number(status));
@@ -51,6 +79,14 @@ static const QString progresUpdate(int id, int status) {
   return sql;
 }
 
+/**
+ * @ingroup Order SQL Statements
+ * @brief Setzt den Verkausstatus für den Autrag.
+ * Update auf "o_payment_status" in Tabelle "inventory_orders"
+ * @param id     - Artikel Id
+ * @param status - (true/false) (Bezahlt/nicht Bezahlt)
+ * @return SQL Query
+ */
 static const QString paymentUpdate(int id, bool status) {
   QString sql("UPDATE inventory_orders SET o_payment_status=");
   sql.append(((status) ? "true" : "false"));
@@ -60,6 +96,12 @@ static const QString paymentUpdate(int id, bool status) {
   return sql;
 }
 
+/**
+ * @ingroup Order SQL Statements
+ * @brief Schliest einen Auftrag
+ * @param id - Artikel Id
+ * @return SQL Query
+ */
 static const QString closeOrder(int id) {
   QString sql("UPDATE inventory_orders SET");
   sql.append(" o_closed=true WHERE o_id=");
@@ -68,11 +110,36 @@ static const QString closeOrder(int id) {
   return sql;
 }
 
-static const QString findBookArticle(int id) {
-  QString sql("SELECT ib_id,ib_count,ib_price,ib_title");
-  sql.append(" FROM inventory_books WHERE ib_id=");
-  sql.append(QString::number(id));
-  sql.append(" AND ib_count>0 ORDER BY ib_id;");
+/**
+ * @ingroup Order SQL Statements
+ * @brief Inventory* Artikel ermitteln.
+ * Es wir in den folgenden Tabellen gesucht:
+ *  @li "inventory_books"
+ *  @li "inventory_prints"
+ * Wird vom Autragseditor @ref OrderEditor benötigt damit
+ * der Benutzer den richtigen Artikel einfügt!
+ * Wenn ein Treffer erfolgt werden die folgende Rückgabewerte erwartet.
+ *  @li aid    = Artikel ID
+ *  @li counts = Lagerbestand (Anzahl)
+ *  @li price  = Aktuelle Verkaufspreis
+ *  @li title  = Titel des Artikels
+ *
+ * @param id - Suche mit Artikelnummer
+ * @return SQL Query
+ */
+static const QString inventoryArticle(int id) {
+  QString aid = QString::number(id);
+  QString sql("SELECT ib_id AS aid,");
+  sql.append("ib_count AS counts,");
+  sql.append("ib_price AS price,");
+  sql.append("ib_title AS title ");
+  sql.append("FROM inventory_books ");
+  sql.append("WHERE (ib_id=" + aid + " AND ib_count>0) ");
+  sql.append("UNION SELECT ");
+  sql.append("ip_id,ip_count,ip_price,ip_title ");
+  sql.append("FROM inventory_prints ");
+  sql.append("WHERE (ip_id=" + aid + " AND ip_count>0)");
+  sql.append(";");
   return sql;
 }
 

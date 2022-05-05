@@ -121,6 +121,9 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   connect(m_tableView, SIGNAL(s_articleSelected(int)), this,
           SLOT(articleSelected(int)));
 
+  connect(m_tableView, SIGNAL(s_toClibboard(const QVariant &)), this,
+          SLOT(copyIntoClipboard(const QVariant &)));
+
   connect(m_tableView, SIGNAL(s_reportQuery(const QString &)), m_statsBookBar,
           SLOT(showMessage(const QString &)));
 
@@ -133,9 +136,6 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   connect(m_bookEditor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
   connect(m_bookEditor, SIGNAL(s_isModified(bool)), this,
           SLOT(setClosable(bool)));
-
-  connect(m_bookEditor, SIGNAL(s_articleActivation(bool)), this,
-          SLOT(articleActivation(bool)));
 }
 
 void InventoryBooks::searchConvert(const QString &query) {

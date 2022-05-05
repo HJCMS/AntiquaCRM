@@ -32,13 +32,12 @@ OrdersPaymentBox::OrdersPaymentBox(QWidget *parent) : UtilsMain{parent} {
 
 void OrdersPaymentBox::indexChanged(int i) {
   paymentStatus = ((i == 0) ? false : true);
-  emit statusChanged(true);
+  setModified(true);
 }
 
 void OrdersPaymentBox::setValue(const QVariant &val) {
   paymentStatus = val.toBool();
   m_box->setCurrentIndex(((paymentStatus) ? 1 : 0));
-  emit statusChanged(true);
 }
 
 void OrdersPaymentBox::reset() {
@@ -53,9 +52,7 @@ int OrdersPaymentBox::findIndex(const QString &search) {
   return m_box->findText(search, Qt::MatchExactly);
 }
 
-const QVariant OrdersPaymentBox::value() {
-  return ((m_box->currentIndex() == 0) ? false : true);
-}
+const QVariant OrdersPaymentBox::value() { return paymentStatus; }
 
 bool OrdersPaymentBox::isValid() { return true; }
 

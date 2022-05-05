@@ -20,14 +20,13 @@ DeliveryService::DeliveryService(QWidget *parent) : UtilsMain{parent} {
 
   setLayout(layout);
 
-  setModified(false);
   setRequired(false);
 
   connect(m_box, SIGNAL(currentIndexChanged(int)), this,
-          SLOT(itemChanged(int)));
+          SLOT(indexChanged(int)));
 }
 
-void DeliveryService::itemChanged(int i) {
+void DeliveryService::indexChanged(int i) {
   p_value = i;
   setModified(true);
 }

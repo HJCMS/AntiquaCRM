@@ -37,7 +37,7 @@ private:
   */
   const QRegularExpression regexp = QRegularExpression("^(0[\\d]{2}\\s[\\d]{3,4}[\\s\\d]+)$");
 
-protected Q_SLOTS:
+private Q_SLOTS:
   /**
     @brief Kontrolliert die Eingabe
     @param str - Aktuelle Zeicheneingabe
@@ -45,16 +45,8 @@ protected Q_SLOTS:
   void inputChanged(const QString &str);
 
 public Q_SLOTS:
-  /**
-   @brief Rufnummer setzen
-  */
   void setValue(const QVariant &);
-
-  /**
-   @brief Eingabefeld zurücksetzen
-  */
   Q_INVOKABLE void reset();
-
   void setFocus();
 
 public:

@@ -39,9 +39,7 @@ private:
      zu finden. Sie sind Identisch mit den SQL Feldern und beginnen bei
      der Tabelle "costumers" immer mit "c_".
   */
-  const QRegularExpression p_objPattern = QRegularExpression("^c_[a-z_]+\\b$");
-
-  const QString tableName = "costumers";
+  const QRegularExpression p_objPattern = QRegularExpression("^c_[a-z0-3_]+$");
 
   Qt::FindChildOptions findOption = (Qt::FindChildrenRecursively);
 

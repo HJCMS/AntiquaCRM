@@ -113,12 +113,6 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   /**
-     @brief Fehler Meldungen aufarbeiten
-     @return ERROR Message
-   */
-  const QString fetchErrors();
-
-  /**
      @brief Die Datenbank Verbindung erneut herstellen
      @param b (Unused)
    */
@@ -134,8 +128,14 @@ public:
   bool sqlDriversExists();
 
   /**
+     @brief Fehler Meldungen aufarbeiten
+     @return Vollständige Fehler Meldung
+   */
+  const QString fetchErrors();
+
+  /**
    * @brief Letzte Fehlermeldung ausgeben!
-   * @return ErroString
+   * @return Nur Fehlermeldung
    */
   const QString lastError();
 

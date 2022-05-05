@@ -323,95 +323,21 @@ bool PrintsEditor::sendSqlQuery(const QString &sqlStatement) {
 const QHash<QString, QVariant> PrintsEditor::createSqlDataset() {
   QHash<QString, QVariant> data;
   MessageBox messanger(this);
-  QList<StrLineEdit *> listStr =
-      findChildren<StrLineEdit *>(p_objPattern, Qt::FindDirectChildrenOnly);
-  QList<StrLineEdit *>::Iterator i_str;
-  for (i_str = listStr.begin(); i_str != listStr.end(); ++i_str) {
-    StrLineEdit *cur = *i_str;
+  QList<UtilsMain *> list =
+      findChildren<UtilsMain *>(p_objPattern, Qt::FindChildrenRecursively);
+  QList<UtilsMain *>::Iterator it;
+  for (it = list.begin(); it != list.end(); ++it) {
+    UtilsMain *cur = *it;
     if (cur->isRequired() && !cur->isValid()) {
       messanger.notice(cur->notes());
       cur->setFocus();
       data.clear();
       return data;
     }
-    if (cur->value().toString().isEmpty())
-      continue;
-
+    // qDebug() << "Prints:" << cur->objectName() << cur->value();
     data.insert(cur->objectName(), cur->value());
   }
-  listStr.clear();
-  QList<IntSpinBox *> listInt =
-      findChildren<IntSpinBox *>(p_objPattern, Qt::FindDirectChildrenOnly);
-  QList<IntSpinBox *>::Iterator i_int;
-  for (i_int = listInt.begin(); i_int != listInt.end(); ++i_int) {
-    IntSpinBox *cur = *i_int;
-    if (cur->isRequired() && !cur->isValid()) {
-      messanger.notice(cur->notes());
-      cur->setFocus();
-      data.clear();
-      return data;
-    }
-    if (cur->value().toInt() == 0)
-      continue;
-
-    data.insert(cur->objectName(), cur->value());
-  }
-  listInt.clear();
-  QList<BoolBox *> listBool =
-      findChildren<BoolBox *>(p_objPattern, Qt::FindDirectChildrenOnly);
-  QList<BoolBox *>::Iterator i_bool;
-  for (i_bool = listBool.begin(); i_bool != listBool.end(); ++i_bool) {
-    BoolBox *cur = *i_bool;
-    if (cur->isRequired() && !cur->isValid()) {
-      messanger.notice(cur->notes());
-      cur->setFocus();
-      data.clear();
-      return data;
-    }
-    data.insert(cur->objectName(), cur->value());
-  }
-  listBool.clear();
-  // Textfelder
-  if (ip_description->isValid()) {
-    data.insert("ip_description", ip_description->value());
-  }
-  if (ip_internal_description->isValid()) {
-    data.insert("ip_internal_description", ip_internal_description->value());
-  }
-  // SpinBoxen
-  if (ip_price->isValid()) {
-    data.insert("ip_price", ip_price->value());
-  } else {
-    messanger.notice(ip_price->notes());
-    ip_price->setFocus();
-    data.clear();
-    return data;
-  }
-  if (!ip_year->isValid()) {
-    messanger.notice(ip_year->notes());
-    ip_year->setFocus();
-    data.clear();
-    return data;
-  } else {
-    data.insert("ip_year", ip_year->value());
-  }
-  // Auswahlboxen
-  if (ip_technique->isValid()) {
-    data.insert("ip_technique", ip_technique->value());
-  } else {
-    messanger.notice(ip_technique->notes());
-    ip_technique->setFocus();
-    data.clear();
-    return data;
-  }
-  if (ip_storage->isValid()) {
-    data.insert("ip_storage", ip_storage->value());
-  } else {
-    messanger.notice(ip_storage->notes());
-    ip_storage->setFocus();
-    data.clear();
-    return data;
-  }
+  list.clear();
   return data;
 }
 
@@ -428,6 +354,9 @@ void PrintsEditor::createSqlUpdate() {
   QStringList set;
   QHash<QString, QVariant>::iterator it;
   for (it = data.begin(); it != data.end(); ++it) {
+    if (it.key() == "ip_id")
+      continue;
+
     if (it.value().type() == QVariant::String) {
       set.append(it.key() + "='" + it.value().toString() + "'");
     } else {

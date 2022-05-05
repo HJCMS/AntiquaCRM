@@ -12,9 +12,6 @@ PhoneEdit::PhoneEdit(QWidget *parent) : UtilsMain{parent} {
   if (objectName().isEmpty())
     setObjectName("PhoneEdit");
 
-  setModified(false);
-  setRequired(false);
-
   QHBoxLayout *layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 
@@ -32,6 +29,8 @@ PhoneEdit::PhoneEdit(QWidget *parent) : UtilsMain{parent} {
   id_phone->setValidator(m_validator);
 
   setLayout(layout);
+
+  setRequired(false);
 
   connect(id_phone, SIGNAL(textChanged(const QString &)), this,
           SLOT(inputChanged(const QString &)));
@@ -53,13 +52,13 @@ void PhoneEdit::setValue(const QVariant &id) {
 }
 
 void PhoneEdit::inputChanged(const QString &str) {
+  setModified(true);
   QRegularExpressionMatch match = regexp.match(str.trimmed());
   if (match.hasMatch()) {
     id_phone->setStyleSheet("");
   } else {
     id_phone->setStyleSheet("color: red;");
   }
-  setModified(true);
 }
 
 void PhoneEdit::reset() {

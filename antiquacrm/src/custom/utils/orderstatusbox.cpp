@@ -32,13 +32,13 @@ OrderStatusBox::OrderStatusBox(QWidget *parent) : UtilsMain{parent} {
   setRequired(false);
 
   setLayout(layout);
-  connect(m_box, SIGNAL(currentIndexChanged(int)), this, SLOT(setIndex(int)));
+  connect(m_box, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
 }
 
-void OrderStatusBox::setIndex(int i) {
+void OrderStatusBox::indexChanged(int i) {
+  p_value = i;
   setValue(i);
   setModified(true);
-  emit indexChanged(p_value);
 }
 
 void OrderStatusBox::setValue(const QVariant &val) {
@@ -59,12 +59,7 @@ int OrderStatusBox::findIndex(const QString &search) {
 
 const QVariant OrderStatusBox::value() { return p_value; }
 
-bool OrderStatusBox::isValid() {
-  if (isRequired() && m_box->currentIndex() < 1)
-    return false;
-
-  return true;
-}
+bool OrderStatusBox::isValid() { return true; }
 
 void OrderStatusBox::setInfo(const QString &info) {
   m_info->setText(info);

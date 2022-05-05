@@ -21,12 +21,14 @@ SET (subproject_SOURCES
   trustlist.cpp
   datafield.cpp
   orderstatus.cpp
+  orderarticle.cpp
 )
 
 SET (subproject_HEADERS
   trustlist.h
   datafield.h
   orderstatus.h
+  orderarticle.h
   AntiquaCRM
   antiqua_global.h
 )

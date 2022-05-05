@@ -41,6 +41,7 @@ private:
   QString p_title;
 };
 Q_DECLARE_TYPEINFO(OrderStatus, Q_PRIMITIVE_TYPE);
+Q_DECLARE_METATYPE(OrderStatus);
 
 /**
  * @brief OrderStatus List class
@@ -79,5 +80,6 @@ public:
   const QString title(int index);
 };
 Q_DECLARE_TYPEINFO(OrderStatusList, Q_COMPLEX_TYPE);
+Q_DECLARE_METATYPE(OrderStatusList);
 
 #endif // ORDERSTATUS_ANTIQUACORE_H

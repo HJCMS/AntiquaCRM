@@ -38,13 +38,16 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   btn_add->setMinimumWidth(150);
   layout->addWidget(btn_add, 1, 2, 1, 1);
 
+  QHBoxLayout *searchLayout = new QHBoxLayout();
   QLabel *info = new QLabel(this);
   info->setText(tr("Add here the article Ids for this order:"));
-  layout->addWidget(info, 2, 0, 1, 1, Qt::AlignRight);
-
+  searchLayout->addWidget(info);
   m_insertID = new QSpinBox(this);
   m_insertID->setRange(1, 99999999);
-  layout->addWidget(m_insertID, 2, 1, 1, 1);
+  m_insertID->setButtonSymbols(QAbstractSpinBox::NoButtons);
+  m_insertID->clear();
+  searchLayout->addWidget(m_insertID);
+  layout->addLayout(searchLayout, 2, 0, 1, 2, Qt::AlignRight);
 
   QPushButton *btn_check = new QPushButton(this);
   btn_check->setText(tr("Check"));
@@ -85,22 +88,22 @@ QTableWidgetItem *OrdersItemList::createItem(const QVariant &val) {
 void OrdersItemList::addTableRow() {
   int r = m_table->rowCount();
   m_table->setRowCount((m_table->rowCount() + 1));
-  m_table->setItem(r, 0, createItem(p_article.articleId));
-  m_table->setCellWidget(r, 1, addPriceBox(p_article.price, true));
-  m_table->setCellWidget(r, 2, addPriceBox(p_article.price));
-  m_table->setCellWidget(r, 3, addCountBox(p_article.count));
-  m_table->setItem(r, 4, createItem(p_article.title));
+  m_table->setItem(r, 0, createItem(p_article.article()));
+  m_table->setCellWidget(r, 1, addPriceBox(p_article.price(), true));
+  m_table->setCellWidget(r, 2, addPriceBox(p_article.sellPrice()));
+  m_table->setCellWidget(r, 3, addCountBox(p_article.count()));
+  m_table->setItem(r, 4, createItem(p_article.title()));
   clearInput();
 }
 
 void OrdersItemList::insertArticle() {
-  for (int r = 0; r < m_table->rowCount(); r++) {
-    if (m_table->getArticleId(r) == p_article.articleId) {
-      emit statusMessage(tr("Duplicate Entry"));
-      return;
-    }
-  }
-  addTableRow();
+   for (int r = 0; r < m_table->rowCount(); r++) {
+     if (m_table->getArticleId(r) == p_article.article()) {
+       emit statusMessage(tr("Duplicate Entry"));
+       return;
+     }
+   }
+   addTableRow();
 }
 
 void OrdersItemList::createSignal() {
@@ -117,10 +120,24 @@ void OrdersItemList::clearInput() {
   m_searchInfo->clear();
 }
 
-void OrdersItemList::foundArticle(const Article &found) {
-  QString buffer(found.summary.trimmed());
+const OrderArticleList OrdersItemList::getArticleOrder() {
+  OrderArticleList list;
+  for (int r = 0; r < m_table->rowCount(); r++) {
+    OrderArticle d;
+    d.setArticle(m_table->item(r, 0)->text().toInt());
+    d.setCount(QDoubleSpinBox(m_table->cellWidget(r, 1)).value());
+    d.setPrice(QDoubleSpinBox(m_table->cellWidget(r, 2)).value());
+    d.setSellPrice(QSpinBox(m_table->cellWidget(r, 3)).value());
+    d.setTitle(m_table->item(r, 4)->text());
+    list.append(d);
+  }
+  return list;
+}
+
+void OrdersItemList::foundArticle(const OrderArticle &found) {
+  p_article = found;
+  QString buffer(p_article.summary().trimmed());
   if (!buffer.isEmpty()) {
     m_searchInfo->setText(buffer);
-    p_article = found;
   }
 }
