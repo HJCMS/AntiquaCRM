@@ -62,6 +62,19 @@ static const QString defaultQuery(int id = 0) {
 }
 
 /**
+ * @brief Kunden Addressen finden
+ * @param costumerId
+ * @return SQL Query
+ */
+static const QString queryCostumerAddress(int costumerId) {
+  QString sql("SELECT c_postal_address,c_shipping_address");
+  sql.append(" FROM costumers WHERE c_id=");
+  sql.append(QString::number(costumerId));
+  sql.append(";");
+  return sql;
+}
+
+/**
  * @ingroup Order SQL Statements
  * @brief Update auf den Abwicklungs Status
  * Setzt in der Spalte "o_order_status" den Fortschritt.
@@ -116,7 +129,7 @@ static const QString closeOrder(int id) {
  * @param id - Bestellungs Id
  * @return SQL Query
  */
-static const QString paymentArticleOrders(int oid,int cid) {
+static const QString paymentArticleOrders(int oid, int cid) {
   QString sql("SELECT * FROM article_orders ");
   sql.append("WHERE a_order_id=");
   sql.append(QString::number(oid));
@@ -126,7 +139,7 @@ static const QString paymentArticleOrders(int oid,int cid) {
   return sql;
 }
 
-static const QString paymentRemove(const QString &pId,const QString &aId) {
+static const QString paymentRemove(const QString &pId, const QString &aId) {
   QString sql("DELETE FROM article_orders WHERE a_payment_id=");
   sql.append(pId);
   sql.append(" AND a_article_id=");

@@ -169,7 +169,7 @@ void OrdersItemList::clearSearchInput() {
 }
 
 void OrdersItemList::clearTable() {
-  m_table->clear();
+  m_table->clearContents();
   m_table->setRowCount(0);
 }
 

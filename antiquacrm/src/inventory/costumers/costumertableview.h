@@ -5,10 +5,10 @@
 #ifndef COSTUMERTABLEVIEW_H
 #define COSTUMERTABLEVIEW_H
 
+#include <QContextMenuEvent>
+#include <QModelIndex>
 #include <QObject>
 #include <QString>
-#include <QModelIndex>
-#include <QContextMenuEvent>
 #include <QTableView>
 
 namespace HJCMS {
@@ -23,6 +23,10 @@ class CostumerTableView : public QTableView {
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
+public:
+  enum QueryType { Create = 1, Update = 2, Order = 3 };
+  Q_ENUM(QueryType);
+
 private:
   int maxRowCount = 2500;
   HJCMS::SqlCore *m_sql;
@@ -31,6 +35,8 @@ private:
   QString p_historyQuery;
 
   bool sqlExecQuery(const QString &statement);
+
+  bool queryCostumerID(const QModelIndex &, CostumerTableView::QueryType type);
 
 private Q_SLOTS:
   void queryCostumerID(const QModelIndex &);
@@ -45,6 +51,7 @@ Q_SIGNALS:
   void s_reportQuery(const QString &);
   void s_updateCostumer(int id);
   void s_insertCostumer();
+  void s_createOrder(int costumerId);
 
 public Q_SLOTS:
   /**

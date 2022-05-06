@@ -91,6 +91,12 @@ Q_SIGNALS:
   */
   void s_postMessage(const QString &);
 
+  /**
+   * @brief Auftrage erstellen
+   * @param costumerId
+   */
+  void s_createOrder(int costumerId);
+
 public Q_SLOTS:
   /**
     @brief Öffnet das Nachrichtenfenster

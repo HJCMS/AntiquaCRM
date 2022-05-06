@@ -7,6 +7,7 @@
 
 #include <QObject>
 #include <QTabWidget>
+#include <QSignalMapper>
 #include <QWidget>
 
 class InventoryBooks;
@@ -20,6 +21,7 @@ class Workspace : public QTabWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  QSignalMapper *m_signalMapper;
   InventoryOrders *m_tabOrders;
   InventoryBooks *m_tabBooks;
   InventoryPrints *m_tabPrints;
@@ -50,6 +52,11 @@ private Q_SLOTS:
     @brief Wenn der Tabe schließen Knopf betätigt wurde.
   */
   void closeTabClicked(int);
+
+  /**
+   * @brief Auftrag erstellen
+   */
+  void createOrder(int);
 
 protected:
   /**

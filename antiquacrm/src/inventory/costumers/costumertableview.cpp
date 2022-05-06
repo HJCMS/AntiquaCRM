@@ -2,23 +2,23 @@
 // vim: set fileencoding=utf-8
 
 #include "costumertableview.h"
+#include "antiqua_global.h"
 #include "applsettings.h"
 #include "costumerstablemodel.h"
+#include "myicontheme.h"
 #include "searchbar.h"
 #include "sqlcore.h"
-#include "antiqua_global.h"
-#include "myicontheme.h"
 
+#include <QAction>
 #include <QDebug>
+#include <QHeaderView>
+#include <QMenu>
 #include <QMutex>
 #include <QPoint>
 #include <QRegExp>
-#include <QStringList>
 #include <QSignalMapper>
+#include <QStringList>
 #include <QTime>
-#include <QAction>
-#include <QHeaderView>
-#include <QMenu>
 
 // Schalte SQL ausgaben ein
 #ifndef SHOW_SQL_QUERIES
@@ -82,21 +82,42 @@ bool CostumerTableView::sqlExecQuery(const QString &statement) {
   return false;
 }
 
-void CostumerTableView::queryCostumerID(const QModelIndex &index) {
+bool CostumerTableView::queryCostumerID(const QModelIndex &index,
+                                        QueryType type) {
   QModelIndex id(index);
   if (m_tableModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
     int i = m_tableModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
+    if (i < 1)
+      return false;
 
-    if (i >= 1)
+    if (type == Update) {
       emit s_updateCostumer(i);
+      return true;
+    }
+    if (type == Order) {
+      emit s_createOrder(i);
+      return true;
+    }
   }
+  return false;
 }
 
-void CostumerTableView::openByContext() { queryCostumerID(p_modelIndex); }
+void CostumerTableView::queryCostumerID(const QModelIndex &index) {
+  queryCostumerID(index, QueryType::Update);
+}
 
-void CostumerTableView::createByContext() { emit s_insertCostumer(); }
+void CostumerTableView::openByContext() {
+  queryCostumerID(p_modelIndex, QueryType::Update);
+}
 
-void CostumerTableView::orderByContext() { qDebug() << Q_FUNC_INFO << "TODO"; }
+void CostumerTableView::createByContext() {
+  // queryCostumerID(p_modelIndex, QueryType::Create);
+  emit s_insertCostumer();
+}
+
+void CostumerTableView::orderByContext() {
+  queryCostumerID(p_modelIndex, QueryType::Order);
+}
 
 void CostumerTableView::contextMenuEvent(QContextMenuEvent *ev) {
   p_modelIndex = indexAt(ev->pos());

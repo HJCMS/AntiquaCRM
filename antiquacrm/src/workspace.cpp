@@ -3,9 +3,9 @@
 
 #include "workspace.h"
 #include "antiqua_global.h"
-#include "inventoryorders.h"
 #include "inventorybooks.h"
 #include "inventorycostumers.h"
+#include "inventoryorders.h"
 #include "inventoryprints.h"
 #include "myicontheme.h"
 
@@ -24,6 +24,7 @@ Workspace::Workspace(QWidget *parent) : QTabWidget{parent} {
 #endif
 
   connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeTabClicked(int)));
+  // m_signalMapper = new QSignalMapper(this);
 }
 
 int Workspace::addInventoryBooks(int index) {
@@ -44,6 +45,8 @@ int Workspace::addInventoryPrints(int index) {
 
 int Workspace::addInventoryCostumers(int index) {
   m_tabCostumers = new InventoryCostumers(this);
+  connect(m_tabCostumers, SIGNAL(s_createOrder(int)), this,
+          SLOT(createOrder(int)));
   int i = insertTab(index, m_tabCostumers, tr("Costumers"));
   setTabToolTip(i, tr("Costumers inventory"));
   setTabIcon(i, myIcon("edit_group"));
@@ -68,6 +71,15 @@ void Workspace::closeTabClicked(int index) {
     return;
   }
   emit s_postMessage(tr("Cant close this tab, unsafed changes!"));
+}
+
+void Workspace::createOrder(int costumerId) {
+  if (costumerId > 0 && (m_tabOrders != nullptr)) {
+    m_tabOrders->createOrder(costumerId);
+    setCurrentWidget(m_tabOrders);
+  } else {
+    emit s_postMessage(tr("Order tab isn't open!"));
+  }
 }
 
 void Workspace::tabRemoved(int index) {

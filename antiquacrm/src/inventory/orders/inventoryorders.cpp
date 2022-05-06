@@ -63,7 +63,7 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
   setLayout(layout);
 
   connect(m_tableView, SIGNAL(s_editOrder(int)), this,
-          SLOT(orderSelected(int)));
+          SLOT(updateOrder(int)));
 
   connect(m_editor, SIGNAL(s_postMessage(const QString &)), this,
           SLOT(displayMessageBox(const QString &)));
@@ -90,17 +90,19 @@ void InventoryOrders::openEditor(const QString &condition) {
   Q_UNUSED(condition)
 }
 
-void InventoryOrders::orderSelected(int id) {
-  if (id < 1) {
+void InventoryOrders::updateOrder(int costumerId) {
+  if (costumerId < 1) {
     return;
   }
-  // qDebug() << Q_FUNC_INFO << id;
   m_editor->setEnabled(true);
-  m_editor->openUpdateOrder(id);
+  m_editor->openUpdateOrder(costumerId);
   m_stackedWidget->setCurrentWidget(m_editor);
 }
 
 void InventoryOrders::createOrder(int costumerId) {
+  if (costumerId < 1) {
+    return;
+  }
   m_editor->setEnabled(true);
   m_editor->openCreateOrder(costumerId);
   m_stackedWidget->setCurrentWidget(m_editor);

@@ -476,11 +476,7 @@ bool OrderEditor::getCostumerAddress(int costumerId) {
   if (costumerId < 1)
     return false;
 
-  QString select("SELECT c_postal_address,c_shipping_address");
-  select.append(" FROM costumers WHERE c_id=");
-  select.append(QString::number(costumerId));
-  select.append(";");
-
+  QString select = queryCostumerAddress(costumerId);
   if (SHOW_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << select << Qt::endl;
   }
@@ -559,6 +555,7 @@ void OrderEditor::openUpdateOrder(int oid) {
 void OrderEditor::openCreateOrder(int cid) {
   initDefaults();
   if (cid > 0) {
+    qDebug() << Q_FUNC_INFO << cid;
     o_costumer_id->setValue(cid);
     if (getCostumerAddress(cid))
       emit isModified(true);

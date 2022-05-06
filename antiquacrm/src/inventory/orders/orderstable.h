@@ -55,19 +55,12 @@ private Q_SLOTS:
   */
   void openByContext();
 
-  /**
-     @brief Einen neuen Eintrag erstellen wenn ...
-     @todo Die Suchanfrage kein Ergebnis lieferte
-  */
-  void createByContext();
-
 protected:
   void contextMenuEvent(QContextMenuEvent *);
 
 Q_SIGNALS:
   void s_reportQuery(const QString &);
   void s_editOrder(int id);
-  void s_createOrder();
 
 public Q_SLOTS:
   /**

@@ -87,16 +87,6 @@ private Q_SLOTS:
   */
   void openTableView();
 
-  /**
-     @brief Ein Artikel wurd ausgewählt
-     Wird bei der Tabellen Suchansicht mit einem Doppelklick
-     das Signal @ref BooksTableView::s_articleSelected ausgelöst
-     und an Hand des @b "ib_id" Feldes eine SQL Abfrage erstellt,
-     jetzt der Editor mit @ref openEditor("ib_id={$id}") geöffnet!
-     @param id
-  */
-  void orderSelected(int id);
-
 protected:
   /**
     @brief Öffne mit der SQL-Abfrage den Bucheditor
@@ -118,6 +108,16 @@ protected:
   void openEditor(const QString &condition);
 
 public Q_SLOTS:
+  /**
+     @brief Ein Artikel wurd ausgewählt
+     Wird bei der Tabellen Suchansicht mit einem Doppelklick
+     das Signal @ref BooksTableView::s_articleSelected ausgelöst
+     und an Hand des @b "ib_id" Feldes eine SQL Abfrage erstellt,
+     jetzt der Editor mit @ref openEditor("ib_id={$id}") geöffnet!
+     @param id
+  */
+  void updateOrder(int costumerId);
+
   void createOrder(int costumerId);
 
 public:

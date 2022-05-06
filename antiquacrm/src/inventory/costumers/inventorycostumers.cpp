@@ -2,12 +2,12 @@
 // vim: set fileencoding=utf-8
 
 #include "inventorycostumers.h"
+#include "antiqua_global.h"
 #include "applsettings.h"
 #include "costumertableview.h"
 #include "editcostumer.h"
-#include "searchbar.h"
-#include "antiqua_global.h"
 #include "myicontheme.h"
+#include "searchbar.h"
 
 #include <QDebug>
 #include <QHBoxLayout>
@@ -98,6 +98,9 @@ InventoryCostumers::InventoryCostumers(QWidget *parent) : Inventory{parent} {
 
   connect(m_tableView, SIGNAL(s_insertCostumer()), this,
           SLOT(createCostumer()));
+
+  connect(m_tableView, SIGNAL(s_createOrder(int)), this,
+          SIGNAL(s_createOrder(int)));
 
   connect(m_tableView, SIGNAL(s_reportQuery(const QString &)), m_statusInfo,
           SLOT(setText(const QString &)));

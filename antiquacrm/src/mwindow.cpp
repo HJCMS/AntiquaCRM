@@ -262,8 +262,8 @@ void MWindow::initDefaults() {
     restoreState(m_Settings->value("window/windowState").toByteArray());
 
   m_workSpace->openTab(Workspace::Costumers);
-  m_workSpace->openTab(Workspace::Books);
   m_workSpace->openTab(Workspace::Orders);
+  m_workSpace->openTab(Workspace::Books);
 }
 
 MWindow::~MWindow() { qInfo("Mainwindow onload"); }

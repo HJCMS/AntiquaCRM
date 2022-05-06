@@ -7,23 +7,23 @@
 #include "myicontheme.h"
 #include "orderspaymentbox.h"
 #include "orderstablemodel.h"
-#include "orderstatusbox.h"
 #include "orderstatements.h"
+#include "orderstatusbox.h"
 
+#include <QAction>
 #include <QDebug>
+#include <QHeaderView>
 #include <QItemSelectionModel>
+#include <QMenu>
+#include <QMessageBox>
 #include <QMutex>
 #include <QPoint>
 #include <QRegExp>
 #include <QSignalMapper>
-#include <QTime>
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlTableModel>
-#include <QAction>
-#include <QHeaderView>
-#include <QMenu>
-#include <QMessageBox>
+#include <QTime>
 
 OrdersTable::OrdersTable(QWidget *parent) : QTableView{parent} {
   setObjectName("AssigmentTableView");
@@ -93,15 +93,14 @@ void OrdersTable::queryOrder(const QModelIndex &index) {
   QModelIndex id(index);
   if (m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
     int i = m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
+    if (i < 1)
+      return;
 
-    if (i >= 1)
-      emit s_editOrder(i);
+    emit s_editOrder(i);
   }
 }
 
 void OrdersTable::openByContext() { queryOrder(p_modelIndex); }
-
-void OrdersTable::createByContext() { emit s_createOrder(); }
 
 void OrdersTable::contextMenuEvent(QContextMenuEvent *ev) {
   p_modelIndex = indexAt(ev->pos());
@@ -114,11 +113,6 @@ void OrdersTable::contextMenuEvent(QContextMenuEvent *ev) {
   ac_open->setObjectName("ac_context_open_order");
   ac_open->setEnabled(b);
   connect(ac_open, SIGNAL(triggered()), this, SLOT(openByContext()));
-
-  QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create order"));
-  ac_create->setObjectName("ac_context_create_order");
-  ac_create->setEnabled(true);
-  connect(ac_create, SIGNAL(triggered()), this, SLOT(createByContext()));
 
   QAction *ac_status =
       m->addAction(myIcon("autostart"), tr("Update Progress status"));
@@ -186,4 +180,3 @@ void OrdersTable::updatePaymentStatus() {
     }
   }
 }
-
