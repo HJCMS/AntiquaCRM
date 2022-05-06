@@ -25,6 +25,7 @@ class OrderEditor : public EditorMain {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  bool showSuccessFully = true;
   SerialID *o_id;                      /**< Order ID */
   OrderStatusBox *o_order_status;      /**< o_order_status */
   OrdersPaymentBox *o_payment_status;  /**< o_payment_status */
@@ -72,17 +73,20 @@ private:
   const QHash<QString, QVariant> createSqlDataset();
 
   bool sendSqlQuery(const QString &);
+  bool createSqlArticleOrder();
   void createSqlUpdate();
   void createSqlInsert();
   void setData(const QString &key, const QVariant &value,
                bool required = false);
 
   void initDefaults();
-  void setCostumerAddress(int);
+  const QList<OrderArticle> getOrderArticles(int orderId, int costumerId);
+  bool getCostumerAddress(int costumerId);
 
 private Q_SLOTS:
   void findCostumer(int);
   void findArticle(int);
+  void findRemoveTableRow(int);
   void saveData();
   void checkLeaveEditor();
   void finalLeaveEditor();
@@ -101,6 +105,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
   void postMessage(const QString &);
+  void isModified(bool);
 
 public:
   explicit OrderEditor(QWidget *parent = nullptr);
@@ -109,13 +114,13 @@ public:
    * @brief Eintrage Bearbeiten
    * @parem Order ID
    */
-  void updateOrder(int oid = -1);
+  void openUpdateOrder(int oid = -1);
 
   /**
    * @brief Einen Auftrag mit Kunden ID erstellen!
    * @param Costumer Id
    */
-  void createOrder(int cid = 0);
+  void openCreateOrder(int cid = 0);
 };
 
 #endif // INVENTORY_ORDEREDITOR_H

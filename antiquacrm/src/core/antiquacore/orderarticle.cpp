@@ -6,6 +6,7 @@
 #include <QDebug>
 
 OrderArticle::OrderArticle() {
+  p_payment = -1;
   p_article = -1;
   p_orderid = -1;
   p_costumer = -1;
@@ -15,6 +16,10 @@ OrderArticle::OrderArticle() {
   p_title = QString();
   p_summary = QString();
 }
+
+void OrderArticle::setPayment(int id) { p_payment = id; }
+
+int OrderArticle::payment() { return p_payment; }
 
 void OrderArticle::setArticle(int id) { p_article = id; }
 

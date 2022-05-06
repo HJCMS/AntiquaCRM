@@ -68,7 +68,7 @@ static const QString defaultQuery(int id = 0) {
  * @note Die Stufen werden in Klasse @ref OrderStatus definiert!
  * @param id     - Artikel Id
  * @param status - Stufe
- * @return SQL Query
+ * @return SQL Update
  */
 static const QString progresUpdate(int id, int status) {
   QString sql("UPDATE inventory_orders SET o_order_status=");
@@ -85,7 +85,7 @@ static const QString progresUpdate(int id, int status) {
  * Update auf "o_payment_status" in Tabelle "inventory_orders"
  * @param id     - Artikel Id
  * @param status - (true/false) (Bezahlt/nicht Bezahlt)
- * @return SQL Query
+ * @return SQL Update
  */
 static const QString paymentUpdate(int id, bool status) {
   QString sql("UPDATE inventory_orders SET o_payment_status=");
@@ -100,12 +100,37 @@ static const QString paymentUpdate(int id, bool status) {
  * @ingroup Order SQL Statements
  * @brief Schliest einen Auftrag
  * @param id - Artikel Id
- * @return SQL Query
+ * @return SQL Update
  */
 static const QString closeOrder(int id) {
   QString sql("UPDATE inventory_orders SET");
   sql.append(" o_closed=true WHERE o_id=");
   sql.append(QString::number(id));
+  sql.append(";");
+  return sql;
+}
+
+/**
+ * @ingroup Order SQL Statements
+ * @brief Suche mit "a_order_id" nach Bestellungen
+ * @param id - Bestellungs Id
+ * @return SQL Query
+ */
+static const QString paymentArticleOrders(int oid,int cid) {
+  QString sql("SELECT * FROM article_orders ");
+  sql.append("WHERE a_order_id=");
+  sql.append(QString::number(oid));
+  sql.append(" AND a_costumer_id=");
+  sql.append(QString::number(cid));
+  sql.append(";");
+  return sql;
+}
+
+static const QString paymentRemove(const QString &pId,const QString &aId) {
+  QString sql("DELETE FROM article_orders WHERE a_payment_id=");
+  sql.append(pId);
+  sql.append(" AND a_article_id=");
+  sql.append(aId);
   sql.append(";");
   return sql;
 }

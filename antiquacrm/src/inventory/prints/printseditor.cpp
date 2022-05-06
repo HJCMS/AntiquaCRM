@@ -47,7 +47,7 @@ PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
 
   row1->addWidget(ip_count);
 
-  double minPrice = config.value("books/min_price", 8.00).toDouble();
+  double minPrice = config.value("payment/min_price", 8.00).toDouble();
   ip_price = new PriceEdit(this);
   ip_price->setObjectName("ip_price");
   ip_price->setRequired(true);

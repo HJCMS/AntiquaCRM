@@ -96,12 +96,12 @@ void InventoryOrders::orderSelected(int id) {
   }
   // qDebug() << Q_FUNC_INFO << id;
   m_editor->setEnabled(true);
-  m_editor->updateOrder(id);
+  m_editor->openUpdateOrder(id);
   m_stackedWidget->setCurrentWidget(m_editor);
 }
 
 void InventoryOrders::createOrder(int costumerId) {
   m_editor->setEnabled(true);
-  m_editor->createOrder(costumerId);
+  m_editor->openCreateOrder(costumerId);
   m_stackedWidget->setCurrentWidget(m_editor);
 }

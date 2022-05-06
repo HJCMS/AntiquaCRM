@@ -107,6 +107,8 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   connect(o_closed, SIGNAL(checked(bool)), this, SLOT(createCloseOrder(bool)));
   connect(o_costumer_id, SIGNAL(s_serialChanged(int)), this,
           SLOT(findCostumer(int)));
+  connect(m_paymentList, SIGNAL(askToRemoveRow(int)), this,
+          SLOT(findRemoveTableRow(int)));
 }
 
 void OrderEditor::setInputList() {
@@ -152,7 +154,6 @@ const QHash<QString, QVariant> OrderEditor::createSqlDataset() {
     data.insert(cur->objectName(), cur->value());
   }
   list.clear();
-
   return data;
 }
 
@@ -168,10 +169,87 @@ bool OrderEditor::sendSqlQuery(const QString &sqlStatement) {
     messanger.failed(sqlStatement, errorString);
     return false;
   } else {
-    messanger.success(tr("Order saved successfully!"), 1);
+    if (showSuccessFully) {
+      messanger.success(tr("Order saved successfully!"), 1);
+    }
     resetModified(inputList);
     return true;
   }
+}
+
+bool OrderEditor::createSqlArticleOrder() {
+  int payments = m_paymentList->payments();
+  if (payments < 1) {
+    qWarning("Missing Payments");
+    return false;
+  }
+
+  int oid = o_id->value().toInt();
+  int cid = o_costumer_id->value().toInt();
+  if (o_costumer_id->value().toString().isEmpty() || cid < 1) {
+    qWarning("Missing Costumer ID");
+    return false;
+  }
+
+  QStringList queries;
+  for (int row = 0; row < payments; row++) {
+    QStringList fields;
+    QStringList values;
+    QHash<QString, QString> updateSet;
+    QHashIterator<QString, QVariant> it(m_paymentList->getTableRow(row));
+    int primaryIndex = 0;
+    while (it.hasNext()) {
+      it.next();
+      QString key = it.key();
+      if (key == "a_payment_id") {
+        int index = it.value().toInt();
+        if (index >= 1) {
+          primaryIndex = index;
+        }
+        continue;
+      }
+      fields.append(key);
+      if (key == "a_order_id") {
+        updateSet.insert(key, o_id->value().toString());
+        values.append(o_id->value().toString());
+        continue;
+      } else if (key == "a_costumer_id") {
+        updateSet.insert(key, o_costumer_id->value().toString());
+        values.append(o_costumer_id->value().toString());
+        continue;
+      }
+
+      QString data = it.value().toString();
+      if (it.value().type() == QVariant::String) {
+        data = "'" + it.value().toString() + "'";
+        updateSet.insert(key, data);
+        values.append(data);
+      } else {
+        updateSet.insert(key, data);
+        values.append(data);
+      }
+    }
+    if (primaryIndex > 0) {
+      QString sql("UPDATE article_orders SET ");
+      QHashIterator<QString, QString> fields(updateSet);
+      while (fields.hasNext()) {
+        fields.next();
+        sql.append(fields.key() + "=" + fields.value() + ",");
+      }
+      sql.append("a_modified=CURRENT_TIMESTAMP WHERE a_payment_id=");
+      sql.append(QString::number(primaryIndex));
+      sql.append(";");
+      queries.append(sql);
+    } else {
+      QString sql("INSERT INTO article_orders (");
+      sql.append(fields.join(","));
+      sql.append(") VALUES (");
+      sql.append(values.join(","));
+      sql.append(");");
+      queries.append(sql);
+    }
+  }
+  return sendSqlQuery(queries.join(" "));
 }
 
 void OrderEditor::createSqlUpdate() {
@@ -196,23 +274,25 @@ void OrderEditor::createSqlUpdate() {
     }
   }
 
+  // Artikel Bestelliste aktualisieren
+  showSuccessFully = false;
+  if (!createSqlArticleOrder()) {
+    qWarning("UPDATE cancled");
+    return;
+  }
+  showSuccessFully = true;
+
   QString sql("UPDATE inventory_orders SET ");
   sql.append(set.join(","));
   sql.append(",o_modified=CURRENT_TIMESTAMP");
   sql.append(" WHERE o_id=");
   sql.append(oid);
   sql.append(";");
-
-  qDebug() << Q_FUNC_INFO << "WARNING TODO UPDATE INSERT article_orders ";
-
-  m_paymentList->getArticleOrder();
-
-  // sendSqlQuery(sql);
+  sendSqlQuery(sql);
 }
 
 void OrderEditor::createSqlInsert() {
-  qDebug() << Q_FUNC_INFO
-           << "WARNING TODO INSERT inventory_orders,article_orders";
+  qDebug() << Q_FUNC_INFO << "TODO INSERT inventory_orders,article_orders";
 }
 
 void OrderEditor::setData(const QString &key, const QVariant &value,
@@ -230,11 +310,15 @@ void OrderEditor::setData(const QString &key, const QVariant &value,
 
     return;
   }
-  qDebug() << "Missing:" << key << " Value" << value
-           << " Required:" << required;
+  qDebug() << "Missing k:" << key << " v:" << value << " r:" << required;
 }
 
-void OrderEditor::findCostumer(int cid) { setCostumerAddress(cid); }
+void OrderEditor::findCostumer(int cid) {
+  getCostumerAddress(cid);
+  if (o_id->value().toInt() >= 1) {
+    // findPayments(int orderId, int costumerId);
+  }
+}
 
 void OrderEditor::findArticle(int aid) {
   QString select = inventoryArticle(aid);
@@ -249,6 +333,7 @@ void OrderEditor::findArticle(int aid) {
   if (q.size() > 0) {
     q.next();
     OrderArticle data;
+    data.setPayment(-1); // Darf keine positive Zahl sein!
     data.setArticle(q.value("aid").toInt());
     data.setCount(q.value("counts").toInt());
     data.setPrice(q.value("price").toDouble());
@@ -259,8 +344,31 @@ void OrderEditor::findArticle(int aid) {
             .arg(q.value("aid").toString(), q.value("price").toString(),
                  q.value("counts").toString(), q.value("title").toString()));
 
-    m_paymentList->foundArticle(data);
+    m_paymentList->addArticleRow(data);
   }
+}
+
+void OrderEditor::findRemoveTableRow(int row) {
+  QHash<QString, QVariant> items(m_paymentList->getTableRow(row));
+  QString pId = items.value("a_payment_id").toString();
+  QString aId = items.value("a_article_id").toString();
+  QString body("<p>");
+  body.append(tr("Do you really want to remove this Article from the list?"));
+  body.append("</p><p>" + items.value("a_title").toString() + "</p><p>");
+  body.append("</p><p>");
+  body.append(tr("If so, the entry will no longer be visible here!"));
+  body.append("</p>");
+  int ret = QMessageBox::question(this, tr("Delete"), body);
+  if (ret == QMessageBox::Yes) {
+    m_paymentList->removeTableRow(row);
+    if (sendSqlQuery(paymentRemove(pId, aId))) {
+      emit postMessage(tr("Item removed!"));
+      emit s_isModified(true);
+    }
+  }
+  pId.clear();
+  aId.clear();
+  items.clear();
 }
 
 void OrderEditor::saveData() {
@@ -283,6 +391,7 @@ void OrderEditor::checkLeaveEditor() {
 void OrderEditor::finalLeaveEditor() {
   sqlQueryResult.clear();        /**< SQL History leeren */
   clearDataFields(p_objPattern); /**< Alle Datenfelder leeren */
+  m_paymentList->clearTable();   /**< Tabelle leeren */
   emit s_leaveEditor();          /**< Zurück */
 }
 
@@ -326,13 +435,50 @@ void OrderEditor::initDefaults() {
   o_delivery_service->loadSqlDataset();
 }
 
-void OrderEditor::setCostumerAddress(int id) {
-  if (id < 1)
-    return;
+const QList<OrderArticle> OrderEditor::getOrderArticles(int orderId,
+                                                        int costumerId) {
+  QList<OrderArticle> list;
+  QString sql = paymentArticleOrders(orderId, costumerId);
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() >= 1) {
+    QSqlRecord r = q.record();
+    while (q.next()) {
+      OrderArticle order;
+      for (int f = 0; f < r.count(); f++) {
+        QString fn(r.fieldName(f));
+        if (fn == "a_payment_id") {
+          order.setPayment(q.value(fn).toInt());
+        } else if (fn == "a_order_id") {
+          order.setOrder(q.value(fn).toInt());
+        } else if (fn == "a_article_id") {
+          order.setArticle(q.value(fn).toInt());
+        } else if (fn == "a_costumer_id") {
+          order.setCostumer(q.value(fn).toInt());
+        } else if (fn == "a_price") {
+          order.setPrice(q.value(fn).toDouble());
+        } else if (fn == "a_sell_price") {
+          order.setSellPrice(q.value(fn).toDouble());
+        } else if (fn == "a_count") {
+          order.setCount(q.value(fn).toInt());
+        } else if (fn == "a_title") {
+          order.setTitle(q.value(fn).toString());
+        }
+      }
+      list.append(order);
+    }
+  } else {
+    qWarning("SQL ERROR: %s", qPrintable(m_sql->lastError()));
+  }
+  return list;
+}
+
+bool OrderEditor::getCostumerAddress(int costumerId) {
+  if (costumerId < 1)
+    return false;
 
   QString select("SELECT c_postal_address,c_shipping_address");
   select.append(" FROM costumers WHERE c_id=");
-  select.append(QString::number(id));
+  select.append(QString::number(costumerId));
   select.append(";");
 
   if (SHOW_SQL_QUERIES) {
@@ -355,9 +501,10 @@ void OrderEditor::setCostumerAddress(int id) {
   } else {
     qWarning("SQL ERROR: %s", qPrintable(m_sql->lastError()));
   }
+  return true;
 }
 
-void OrderEditor::updateOrder(int oid) {
+void OrderEditor::openUpdateOrder(int oid) {
   initDefaults();
   if (oid < 1) {
     qWarning("Empty o_id ...");
@@ -372,6 +519,7 @@ void OrderEditor::updateOrder(int oid) {
     qDebug() << Q_FUNC_INFO << select << Qt::endl;
   }
 
+  int cid = -1;
   QSqlQuery q = m_sql->query(select);
   if (q.size() > 0) {
     QSqlRecord r = m_sql->record("inventory_orders");
@@ -381,6 +529,9 @@ void OrderEditor::updateOrder(int oid) {
         QVariant val = q.value(r.indexOf(key));
         bool required = (r.field(key).requiredStatus() == QSqlField::Required);
         // qDebug() << Q_FUNC_INFO << key << val << required;
+        if (key == "o_costumer_id") {
+          cid = val.toInt();
+        }
         DataField d;
         d.setField(key);
         d.setType(val.type());
@@ -395,14 +546,21 @@ void OrderEditor::updateOrder(int oid) {
     return;
   }
 
+  if (cid >= 1) {
+    const QList<OrderArticle> list = getOrderArticles(oid, cid);
+    if (list.size() >= 1)
+      m_paymentList->importPayments(list);
+  }
+
   if (!sqlQueryResult.isEmpty())
     importSqlResult();
 }
 
-void OrderEditor::createOrder(int cid) {
+void OrderEditor::openCreateOrder(int cid) {
   initDefaults();
   if (cid > 0) {
     o_costumer_id->setValue(cid);
-    setCostumerAddress(cid);
+    if (getCostumerAddress(cid))
+      emit isModified(true);
   }
 }

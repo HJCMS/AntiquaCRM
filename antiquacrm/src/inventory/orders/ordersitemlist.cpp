@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "ordersitemlist.h"
+#include "applsettings.h"
 #include "myicontheme.h"
 #include "orderpaymentstable.h"
 
@@ -14,11 +15,14 @@
 #include <QTableWidgetItem>
 
 OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
+  setObjectName("orders_item_list");
 
   QGridLayout *layout = new QGridLayout(this);
   layout->setContentsMargins(0, 1, 0, 1);
   layout->setColumnStretch(0, 1);
   layout->setColumnStretch(1, 1);
+
+  m_cfg = new ApplSettings(this);
 
   QSizePolicy policy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -58,55 +62,99 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   setLayout(layout);
 
   connect(btn_add, SIGNAL(clicked()), this, SLOT(insertArticle()));
-  connect(btn_check, SIGNAL(clicked()), this, SLOT(createSignal()));
+  connect(btn_check, SIGNAL(clicked()), this, SLOT(createSearchSignal()));
+  connect(m_table, SIGNAL(s_removeTableRow(int)), this,
+          SIGNAL(askToRemoveRow(int)));
 }
 
-QDoubleSpinBox *OrdersItemList::addPriceBox(double val, bool edit) {
+QDoubleSpinBox *OrdersItemList::addPrice(double val, int row) {
   QDoubleSpinBox *p = new QDoubleSpinBox(m_table);
-  p->setReadOnly(edit);
+  p->setObjectName("a_price#" + QString::number(row));
+  p->setReadOnly(true);
   p->setValue(val);
-  p->setSuffix("€");
+  p->setSuffix(m_cfg->value("payment/currency", "€").toString());
   return p;
 }
 
-QSpinBox *OrdersItemList::addCountBox(const QVariant &val) {
+double OrdersItemList::getPrice(int row) {
+  double retval = 0.00;
+  QDoubleSpinBox *p =
+      qobject_cast<QDoubleSpinBox *>(m_table->cellWidget(row, 2));
+  if (p != nullptr)
+    retval = p->value();
+
+  return retval;
+}
+
+QDoubleSpinBox *OrdersItemList::addSellPrice(double val, int row) {
+  QDoubleSpinBox *p = new QDoubleSpinBox(m_table);
+  p->setObjectName("a_sell_price#" + QString::number(row));
+  p->setValue(val);
+  p->setSuffix(m_cfg->value("payment/currency", "€").toString());
+  p->setMinimum(m_cfg->value("payment/min_price", 5).toDouble());
+  p->setMaximum(999999.00);
+  return p;
+}
+
+double OrdersItemList::getSellPrice(int row) {
+  double retval = 0.00;
+  QDoubleSpinBox *p =
+      qobject_cast<QDoubleSpinBox *>(m_table->cellWidget(row, 3));
+  if (p != nullptr)
+    retval = p->value();
+
+  return retval;
+}
+
+QSpinBox *OrdersItemList::addCount(const QVariant &val, int row) {
   int count = val.toInt();
   QSpinBox *c = new QSpinBox(m_table);
+  c->setObjectName("a_count#" + QString::number(row));
   c->setMinimum(1);
-  c->setMaximum(count);
-  // c->setReadOnly((count > 1));
   c->setValue(count);
+  c->setMaximum(count);
   return c;
+}
+
+int OrdersItemList::getCount(int row) {
+  int retval = -1;
+  QSpinBox *c = qobject_cast<QSpinBox *>(m_table->cellWidget(row, 4));
+  if (c != nullptr)
+    retval = c->value();
+
+  return retval;
 }
 
 QTableWidgetItem *OrdersItemList::createItem(const QVariant &val) {
   QString str(val.toString());
   QTableWidgetItem *item = new QTableWidgetItem(str.trimmed());
+  item->setFlags(Qt::ItemIsEnabled); // Kein Editieren zulassen!
   return item;
 }
 
 void OrdersItemList::addTableRow() {
   int r = m_table->rowCount();
   m_table->setRowCount((m_table->rowCount() + 1));
-  m_table->setItem(r, 0, createItem(p_article.article()));
-  m_table->setCellWidget(r, 1, addPriceBox(p_article.price(), true));
-  m_table->setCellWidget(r, 2, addPriceBox(p_article.sellPrice()));
-  m_table->setCellWidget(r, 3, addCountBox(p_article.count()));
-  m_table->setItem(r, 4, createItem(p_article.title()));
-  clearInput();
+  m_table->setItem(r, 0, createItem(p_payments.payment()));
+  m_table->setItem(r, 1, createItem(p_payments.article()));
+  m_table->setCellWidget(r, 2, addPrice(p_payments.price(), r));
+  m_table->setCellWidget(r, 3, addSellPrice(p_payments.sellPrice(), r));
+  m_table->setCellWidget(r, 4, addCount(p_payments.count(), r));
+  m_table->setItem(r, 5, createItem(p_payments.title()));
+  clearSearchInput();
 }
 
 void OrdersItemList::insertArticle() {
-   for (int r = 0; r < m_table->rowCount(); r++) {
-     if (m_table->getArticleId(r) == p_article.article()) {
-       emit statusMessage(tr("Duplicate Entry"));
-       return;
-     }
-   }
-   addTableRow();
+  for (int r = 0; r < m_table->rowCount(); r++) {
+    if (m_table->getArticleId(r) == p_payments.article()) {
+      emit statusMessage(tr("Duplicate Entry"));
+      return;
+    }
+  }
+  addTableRow();
 }
 
-void OrdersItemList::createSignal() {
+void OrdersItemList::createSearchSignal() {
   int id = m_insertID->value();
   if (id < 1)
     return;
@@ -115,28 +163,48 @@ void OrdersItemList::createSignal() {
   emit searchArticle(id);
 }
 
-void OrdersItemList::clearInput() {
+void OrdersItemList::clearSearchInput() {
   m_insertID->clear();
   m_searchInfo->clear();
 }
 
-const OrderArticleList OrdersItemList::getArticleOrder() {
-  OrderArticleList list;
-  for (int r = 0; r < m_table->rowCount(); r++) {
-    OrderArticle d;
-    d.setArticle(m_table->item(r, 0)->text().toInt());
-    d.setCount(QDoubleSpinBox(m_table->cellWidget(r, 1)).value());
-    d.setPrice(QDoubleSpinBox(m_table->cellWidget(r, 2)).value());
-    d.setSellPrice(QSpinBox(m_table->cellWidget(r, 3)).value());
-    d.setTitle(m_table->item(r, 4)->text());
-    list.append(d);
+void OrdersItemList::clearTable() {
+  m_table->clear();
+  m_table->setRowCount(0);
+}
+
+void OrdersItemList::removeTableRow(int row) {
+  int c = m_table->rowCount();
+  m_table->removeRow(row);
+  m_table->setRowCount(c - 1);
+}
+
+int OrdersItemList::payments() { return m_table->rowCount(); }
+
+void OrdersItemList::importPayments(const QList<OrderArticle> &list) {
+  QListIterator<OrderArticle> it(list);
+  while (it.hasNext()) {
+    p_payments = it.next();
+    addTableRow();
   }
+}
+
+const QHash<QString, QVariant> OrdersItemList::getTableRow(int row) {
+  QHash<QString, QVariant> list;
+  list.insert("a_payment_id", m_table->item(row, 0)->text().toInt());
+  list.insert("a_order_id", 0);
+  list.insert("a_article_id", m_table->item(row, 1)->text().toInt());
+  list.insert("a_costumer_id", 0);
+  list.insert("a_count", getCount(row));
+  list.insert("a_title", m_table->item(row, 5)->text());
+  list.insert("a_price", getPrice(row));
+  list.insert("a_sell_price", getSellPrice(row));
   return list;
 }
 
-void OrdersItemList::foundArticle(const OrderArticle &found) {
-  p_article = found;
-  QString buffer(p_article.summary().trimmed());
+void OrdersItemList::addArticleRow(const OrderArticle &set) {
+  p_payments = set;
+  QString buffer(p_payments.summary().trimmed());
   if (!buffer.isEmpty()) {
     m_searchInfo->setText(buffer);
   }

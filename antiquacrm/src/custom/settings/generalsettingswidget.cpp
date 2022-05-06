@@ -48,7 +48,7 @@ GeneralSettingsWidget::GeneralSettingsWidget(QWidget *parent)
 
   // BEGIN
   m_minPrice = new IntSpinBox(5, 100, this);
-  m_minPrice->setObjectName("books/min_price");
+  m_minPrice->setObjectName("payment/min_price");
   buffer = tr("The lowest permissible selling price.");
   m_minPrice->setInfo(buffer);
   layout->addWidget(m_minPrice);
@@ -73,11 +73,12 @@ void GeneralSettingsWidget::loadSectionConfig() {
   m_editImageSrc->setValue(spath);
   m_editImageSrc->setToolTip(spath.toString());
   m_searchStart->setValue(config->value("search/startlength", 5));
-  m_minPrice->setValue(config->value("books/min_price", 5));
+  m_minPrice->setValue(config->value("payment/min_price", 5));
 }
 
 void GeneralSettingsWidget::saveSectionConfig() {
   config->setValue("imaging/sourcepath", m_editImageSrc->value());
   config->setValue("search/startlength", m_searchStart->value());
-  config->setValue("books/min_price", m_minPrice->value());
+  config->setValue("payment/min_price", m_minPrice->value());
+  config->setValue("payment/currency","€"); // TODO
 }

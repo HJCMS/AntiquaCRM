@@ -36,7 +36,7 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   ib_count->setInfo(tr("Count"));
   row0->addWidget(ib_count);
 
-  double minPrice = config.value("books/min_price", 8.00).toDouble();
+  double minPrice = config.value("payment/min_price", 8.00).toDouble();
   ib_price = new PriceEdit(this);
   ib_price->setObjectName("ib_price");
   ib_price->setRequired(true);

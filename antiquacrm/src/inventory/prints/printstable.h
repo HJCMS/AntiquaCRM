@@ -42,7 +42,7 @@ private Q_SLOTS:
    @brief Suche Datensatz mit Index
    Wenn vorhanden Sende Signal @ref s_articleSelected
   */
-  void queryArticleID(const QModelIndex &);
+  int queryArticleID(const QModelIndex &);
 
   /**
    @brief Ableitung für @ref clickedGetArticleID
@@ -55,10 +55,16 @@ private Q_SLOTS:
   */
   void createByContext();
 
+  /**
+   * @brief Kopiert die ID in das Clipboard
+   */
+  void copyToClipboard();
+
 protected:
   void contextMenuEvent(QContextMenuEvent *);
 
 Q_SIGNALS:
+  void s_toClibboard(const QVariant &);
   void s_rowsChanged(int count);
   void s_articleSelected(int id);
   void s_newEntryPlease();

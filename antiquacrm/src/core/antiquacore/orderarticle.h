@@ -13,6 +13,7 @@
 
 class ANTIQUACORE_EXPORT OrderArticle final {
 private:
+  int p_payment;
   int p_article;
   int p_orderid;
   int p_costumer;
@@ -25,24 +26,37 @@ private:
 public:
   explicit OrderArticle();
 
+  inline const QString primaryIndex() { return "a_payment_id"; };
+
+  /** a_payment_id */
+  void setPayment(int);
+  int payment();
+
+  /** a_article_id */
   void setArticle(int);
   int article();
 
+  /** a_article_id */
   void setOrder(int);
   int order();
 
+  /** a_costumer_id */
   void setCostumer(int);
   int costumer();
 
+  /** a_count */
   void setCount(int);
   int count();
 
+  /** a_price */
   void setPrice(double);
   double price();
 
+  /** a_sell_price */
   void setSellPrice(double);
   double sellPrice();
 
+  /** a_title */
   void setTitle(const QString &);
   const QString title();
 
@@ -50,8 +64,5 @@ public:
   const QString summary();
 };
 Q_DECLARE_TYPEINFO(OrderArticle, Q_COMPLEX_TYPE);
-
-typedef QList<OrderArticle> OrderArticleList;
-Q_DECLARE_METATYPE(OrderArticleList);
 
 #endif // ORDERARTICLE_ANTIQUACORE_H

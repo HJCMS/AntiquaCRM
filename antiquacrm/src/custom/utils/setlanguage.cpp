@@ -61,9 +61,6 @@ const QVariant SetLanguage::value() {
 }
 
 bool SetLanguage::isValid() {
-  if (isRequired() == m_comboBox->currentIndex() == 0)
-    return false;
-
   return true;
 }
 

@@ -1508,27 +1508,43 @@
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+93"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+170"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+13"/>
+        <source>Do you really want to remove this Article from the list?</source>
+        <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Delete</source>
+        <translation>Löschen</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Item removed!</source>
+        <translation>Eintrag entfernt!</translation>
+    </message>
+    <message>
+        <location line="+20"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+19"/>
         <source>Do you really want to close this order and pass it on to accounting?</source>
         <translation>Möchten Sie wirklich diesen Auftrag schließen und an die Buchhaltung weiter reichen?</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-45"/>
+        <location line="+48"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
@@ -1548,7 +1564,7 @@
         <translation>Hinweis</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+67"/>
         <source>Shipping Address</source>
         <translation>Lieferadresse</translation>
     </message>
@@ -1556,7 +1572,12 @@
 <context>
     <name>OrderPaymentsTable</name>
     <message>
-        <location filename="../inventory/orders/orderpaymentstable.cpp" line="+15"/>
+        <location filename="../inventory/orders/orderpaymentstable.cpp" line="+18"/>
+        <source>payment id</source>
+        <translation>Bestellnummer</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
@@ -1600,6 +1621,11 @@
         <source>Article Summary</source>
         <translation>Artikel Zusammenfassung</translation>
     </message>
+    <message>
+        <location line="+25"/>
+        <source>delete selected article</source>
+        <translation>Ausgewählten Artikel entfernen</translation>
+    </message>
 </context>
 <context>
     <name>OrderStatusBox</name>
@@ -1612,7 +1638,7 @@
 <context>
     <name>OrdersItemList</name>
     <message>
-        <location filename="../inventory/orders/ordersitemlist.cpp" line="+30"/>
+        <location filename="../inventory/orders/ordersitemlist.cpp" line="+34"/>
         <source>Info about Article found by input ...</source>
         <translation>Info zur Artikelsuche wird hier Angezeigt ...</translation>
     </message>
@@ -1632,7 +1658,7 @@
         <translation>Prüfen</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+93"/>
         <source>Duplicate Entry</source>
         <translation>Doppelter Eintrag</translation>
     </message>
@@ -2158,9 +2184,14 @@
 <context>
     <name>PrintsTable</name>
     <message>
-        <location filename="../inventory/prints/printstable.cpp" line="+114"/>
+        <location filename="../inventory/prints/printstable.cpp" line="+117"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Copy Article Id</source>
+        <translation>Kopiere Artikel Nummer</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -2547,7 +2578,7 @@
         <translation>Schwedisch</translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+37"/>
         <source>Language field is required and must set.</source>
         <translation>Das Sprachfeld ist erforderlich und muss gesetzt werden.</translation>
     </message>

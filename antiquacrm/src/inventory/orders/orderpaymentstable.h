@@ -5,6 +5,7 @@
 #ifndef INVENTORY_ORDERPAYMENTSTABLE_H
 #define INVENTORY_ORDERPAYMENTSTABLE_H
 
+#include <QContextMenuEvent>
 #include <QObject>
 #include <QTableWidget>
 #include <QVariant>
@@ -24,6 +25,18 @@ private:
    * @brief Einen neuen QTableWidgetItem erstellen.
    */
   void addHeaderItem(int, const QString &name, const QString &tip);
+
+private Q_SLOTS:
+  void removeTableItem();
+
+protected:
+  void contextMenuEvent(QContextMenuEvent *);
+
+Q_SIGNALS:
+  /**
+   * @brief Signal Tabellenzeile entfernen
+   */
+  void s_removeTableRow(int row);
 
 public:
   /**

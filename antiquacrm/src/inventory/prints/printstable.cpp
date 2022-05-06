@@ -2,23 +2,23 @@
 // vim: set fileencoding=utf-8
 
 #include "printstable.h"
+#include "antiqua_global.h"
 #include "messagebox.h"
+#include "myicontheme.h"
 #include "printstablemodel.h"
 #include "searchbar.h"
-#include "antiqua_global.h"
-#include "myicontheme.h"
 
+#include <QAction>
 #include <QDebug>
+#include <QHeaderView>
 #include <QItemSelectionModel>
+#include <QMenu>
 #include <QPoint>
 #include <QRegExp>
 #include <QSignalMapper>
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlTableModel>
-#include <QAction>
-#include <QHeaderView>
-#include <QMenu>
 
 static const QString querySelect() {
   QString s("b.ip_id,b.ip_count,b.ip_title,b.ip_author,");
@@ -65,17 +65,20 @@ PrintsTable::PrintsTable(QWidget *parent) : QTableView{parent} {
           SLOT(queryArticleID(const QModelIndex &)));
 }
 
-void PrintsTable::queryArticleID(const QModelIndex &index) {
+int PrintsTable::queryArticleID(const QModelIndex &index) {
   QModelIndex id(index);
   if (m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
     int i = m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
-
-    if (i >= 1)
-      emit s_articleSelected(i);
+    return i;
   }
+  return -1;
 }
 
-void PrintsTable::openByContext() { queryArticleID(p_modelIndex); }
+void PrintsTable::openByContext() {
+  int i = queryArticleID(p_modelIndex);
+  if (i >= 1)
+    emit s_articleSelected(i);
+}
 
 void PrintsTable::createByContext() {
   qDebug() << Q_FUNC_INFO << "TODO"
@@ -93,7 +96,7 @@ bool PrintsTable::sqlExecQuery(const QString &statement) {
     m_queryModel->setQuery(statement, db);
     if (m_queryModel->lastError().isValid()) {
       MessageBox message(this);
-      message.failed(statement,m_queryModel->lastError().text());
+      message.failed(statement, m_queryModel->lastError().text());
       return false;
     }
     emit s_rowsChanged(m_queryModel->rowCount());
@@ -116,6 +119,12 @@ void PrintsTable::contextMenuEvent(QContextMenuEvent *ev) {
   ac_open->setEnabled(b);
   connect(ac_open, SIGNAL(triggered()), this, SLOT(openByContext()));
 
+  // Von Eintrag die ID Kopieren
+  QAction *ac_copy = m->addAction(myIcon("edit"), tr("Copy Article Id"));
+  ac_copy->setObjectName("ac_context_copy_book");
+  ac_copy->setEnabled(b);
+  connect(ac_copy, SIGNAL(triggered()), this, SLOT(copyToClipboard()));
+
   QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create entry"));
   ac_create->setObjectName("ac_context_create_print");
   ac_create->setEnabled(b);
@@ -128,6 +137,11 @@ void PrintsTable::contextMenuEvent(QContextMenuEvent *ev) {
 
   m->exec(ev->globalPos());
   delete m;
+}
+
+void PrintsTable::copyToClipboard() {
+  QVariant id = queryArticleID(p_modelIndex);
+  emit s_toClibboard(id);
 }
 
 void PrintsTable::refreshView() {

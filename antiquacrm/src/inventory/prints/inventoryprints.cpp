@@ -112,6 +112,9 @@ InventoryPrints::InventoryPrints(QWidget *parent)
   connect(m_tableView, SIGNAL(s_newEntryPlease()), this,
           SLOT(createPrintsEntry()));
 
+  connect(m_tableView, SIGNAL(s_toClibboard(const QVariant &)), this,
+          SLOT(copyIntoClipboard(const QVariant &)));
+
   connect(m_searchBar, SIGNAL(currentFilterChanged(int)), this,
           SLOT(updateValidator(int)));
 
@@ -143,9 +146,6 @@ void InventoryPrints::searchConvert() {
     s.SearchField =
         m_searchBar->getSearchFilter(m_searchBar->currentFilterIndex());
     s.SearchString = buf;
-    qDebug("QueryStatement:'%s':'%s'", qPrintable(s.SearchField),
-           qPrintable(s.SearchString));
-
     if (m_tableView != nullptr)
       m_tableView->queryStatement(s);
   }
