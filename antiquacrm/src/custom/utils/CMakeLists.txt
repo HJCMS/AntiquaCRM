@@ -14,6 +14,7 @@ SET (subproject_LINKER
 )
 
 SET (subproject_SOURCES
+  applicationclient.cpp
   serialid.cpp
   boolbox.cpp
   deliveryservice.cpp
@@ -50,6 +51,7 @@ SET (subproject_SOURCES
 )
 
 SET (subproject_HEADERS
+  applicationclient.h
   serialid.h
   boolbox.h
   deliveryservice.h
@@ -102,6 +104,7 @@ TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Gui
   Qt${QT_VERSION_MAJOR}::Widgets
+  Qt${QT_VERSION_MAJOR}::Network
   Qt${QT_VERSION_MAJOR}::Sql
   ${subproject_LINKER}
 )

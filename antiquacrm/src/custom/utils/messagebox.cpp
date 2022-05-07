@@ -3,15 +3,16 @@
 
 #include "messagebox.h"
 
-#include <QDebug>
-
 MessageBox::MessageBox(QWidget *parent) : QMessageBox{parent} {
-  setObjectName("MessageBox");
+  setObjectName("antiqua_message_box");
+  setWindowFlag(Qt::MSWindowsFixedSizeDialogHint, false);
   setDefaultButton(QMessageBox::Ok);
+  // Warning !!! Kein RichText wegen tr().arg() verwenden!!!
   setTextFormat(Qt::PlainText);
-  setTextInteractionFlags(Qt::TextSelectableByMouse|Qt::TextSelectableByKeyboard);
+  setTextInteractionFlags(Qt::TextSelectableByMouse |
+                          Qt::TextSelectableByKeyboard);
   setSizeGripEnabled(true);
-  setMinimumSize(250,150);
+  setMinimumSize(300, 200);
 }
 
 void MessageBox::buildTimerMessage() {
@@ -33,28 +34,28 @@ void MessageBox::timerEvent(QTimerEvent *ev) {
   buildTimerMessage();
 }
 
-void MessageBox::notice(const QString &msg) {
+int MessageBox::notice(const QString &msg) {
   setIcon(QMessageBox::Warning);
   setText(msg);
-  exec();
+  return exec();
 }
 
-void MessageBox::failed(const QString &err, const QString &details) {
+int MessageBox::failed(const QString &err, const QString &details) {
   setIcon(QMessageBox::Critical);
   setText(tr("SQL Syntaxerror"));
   setInformativeText(err);
   if (!details.isEmpty())
     setDetailedText(details);
 
-  exec();
+  return exec();
 }
 
-void MessageBox::success(const QString &msg, int s) {
+int MessageBox::success(const QString &msg, int s) {
   timeout = s;
   message = msg;
   setIcon(QMessageBox::Information);
   setText(msg);
   timerID = startTimer(1000);
   buildTimerMessage();
-  exec();
+  return exec();
 }

@@ -111,7 +111,7 @@ QSpinBox *OrdersItemList::addCount(const QVariant &val, int row) {
   QSpinBox *c = new QSpinBox(m_table);
   c->setObjectName("a_count#" + QString::number(row));
   c->setMinimum(1);
-  c->setValue(count);
+  c->setValue(1);
   c->setMaximum(count);
   return c;
 }

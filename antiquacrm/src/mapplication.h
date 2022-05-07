@@ -29,6 +29,7 @@ private:
   MWindow *m_mainWindow;
   SocketServer *m_socket;
   bool initialSocketServer();
+  bool initTranslations();
 
 public:
   explicit MApplication(int &argc, char **argv);

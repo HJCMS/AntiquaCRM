@@ -3,15 +3,18 @@
 
 /* Project */
 #include "mapplication.h"
+#include "antiqua_global.h"
 #include "applsettings.h"
+#include "assistant.h"
 #include "mwindow.h"
 #include "socketserver.h"
 #include "sqlcore.h"
-#include "antiqua_global.h"
-#include "assistant.h"
 
 #include <QDebug>
+#include <QDir>
 #include <QLocalSocket>
+#include <QLocale>
+#include <QTranslator>
 
 MApplication::MApplication(int &argc, char **argv) : QApplication(argc, argv) {
   setObjectName("MApplicationApplication");
@@ -25,10 +28,24 @@ bool MApplication::initialSocketServer() {
   return m_socket->listen(m_socket->name());
 }
 
+bool MApplication::initTranslations() {
+  QString d(applicationDirPath());
+  d.append(QDir::separator());
+  d.append("i18n");
+  d.append(QDir::separator());
+
+  QTranslator *transl = new QTranslator(this);
+  if (transl->load(d + "antiquacrm_de")) {
+    installTranslator(transl);
+    return true;
+  }
+  return false;
+}
+
 bool MApplication::isRunning() {
   QLocalSocket socket(this);
   socket.setServerName(SocketServer::name());
-  return socket.open();
+  return socket.open(QLocalSocket::ReadOnly);
 }
 
 /**
@@ -36,9 +53,12 @@ bool MApplication::isRunning() {
  * @return int
  */
 int MApplication::exec() {
+  if (!initTranslations()) {
+    qWarning("Translation not loaded!");
+  }
+
   // First Run ?
-  if(m_settings->value("postgresql/hostname").toString().isEmpty())
-  {
+  if (m_settings->value("postgresql/hostname").toString().isEmpty()) {
     Assistant assistant;
     assistant.exec();
     qDebug() << "assistant";
@@ -63,6 +83,8 @@ int MApplication::exec() {
   }
 
   m_mainWindow = new MWindow();
+  connect(m_socket,SIGNAL(statusMessage(const QString &)),
+          m_mainWindow,SLOT(statusMessage(const QString &)));
   if (m_mainWindow == nullptr) {
     qFatal("Application error");
     return 0;
@@ -78,8 +100,7 @@ int MApplication::exec() {
 
 MApplication::~MApplication() {
   SocketServer::removeServer(SocketServer::name());
-  if(m_sqlDB != nullptr)
-  {
+  if (m_sqlDB != nullptr) {
     m_sqlDB->close();
   }
 }

@@ -6,8 +6,8 @@
 #include "applsettings.h"
 #include "myicontheme.h"
 
-#include <QtCore>
 #include <QDesktopServices>
+#include <QtCore>
 #include <QtWidgets>
 
 PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
@@ -272,8 +272,6 @@ PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
   connect(m_actionBar, SIGNAL(s_saveClicked()), this, SLOT(saveData()));
   connect(m_actionBar, SIGNAL(s_finishClicked()), this,
           SLOT(checkLeaveEditor()));
-
-  setInputList();
 }
 
 void PrintsEditor::setInputList() {
@@ -307,14 +305,12 @@ void PrintsEditor::openImageDialog() {
 }
 
 bool PrintsEditor::sendSqlQuery(const QString &sqlStatement) {
-  MessageBox messanger(this);
   QSqlQuery q = m_sql->query(sqlStatement);
   if (q.lastError().type() != QSqlError::NoError) {
-    QString errorString = m_sql->fetchErrors();
-    messanger.failed(sqlStatement, errorString);
+    sqlErrnoMessage(sqlStatement, m_sql->fetchErrors());
     return false;
   } else {
-    messanger.success(tr("Data saved successfully!"), 1);
+    sqlSuccessMessage(tr("Data saved successfully!"));
     resetModified(inputList);
     return true;
   }
@@ -322,14 +318,13 @@ bool PrintsEditor::sendSqlQuery(const QString &sqlStatement) {
 
 const QHash<QString, QVariant> PrintsEditor::createSqlDataset() {
   QHash<QString, QVariant> data;
-  MessageBox messanger(this);
   QList<UtilsMain *> list =
       findChildren<UtilsMain *>(p_objPattern, Qt::FindChildrenRecursively);
   QList<UtilsMain *>::Iterator it;
   for (it = list.begin(); it != list.end(); ++it) {
     UtilsMain *cur = *it;
     if (cur->isRequired() && !cur->isValid()) {
-      messanger.notice(cur->notes());
+      sqlNoticeMessage(cur->notes());
       cur->setFocus();
       data.clear();
       return data;
@@ -528,6 +523,8 @@ void PrintsEditor::editPrintsEntry(const QString &condition) {
   if (condition.length() < 5)
     return;
 
+  setInputList();
+
   QString select("SELECT * FROM inventory_prints WHERE ");
   select.append(condition);
   select.append(" ORDER BY ip_id LIMIT 1;");
@@ -549,8 +546,7 @@ void PrintsEditor::editPrintsEntry(const QString &condition) {
       }
     }
   } else {
-    MessageBox messanger(this);
-    messanger.failed(m_sql->fetchErrors(), condition);
+    sqlErrnoMessage(condition, m_sql->fetchErrors());
     return;
   }
 
@@ -561,6 +557,7 @@ void PrintsEditor::editPrintsEntry(const QString &condition) {
 }
 
 void PrintsEditor::createPrintsEntry() {
+  setInputList();
   setEnabled(true);
   m_imageToolBar->setActive(false);
   resetModified(inputList);

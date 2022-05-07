@@ -45,8 +45,7 @@ StatusBar::StatusBar(QWidget *parent) : QStatusBar{parent} {
 }
 
 void StatusBar::sqlStatusMessage(const QString &str) {
-  // qDebug() << Q_FUNC_INFO << str;
-  showMessage(str);
+  showMessage(str, 15000);
 }
 
 void StatusBar::setDatabaseStatusIcon(bool b) {

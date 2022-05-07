@@ -33,20 +33,20 @@ public:
      @brief notice
      @param QString Message
    */
-  void notice(const QString &);
+  int notice(const QString &);
 
   /**
      @brief queryFail
      @param QString Message
    */
-  void failed(const QString &err, const QString &details = QString());
+  int failed(const QString &err, const QString &details = QString());
 
   /**
      @brief querySuccess
      @param QString Message
      @param s - timeout in seconds
    */
-  void success(const QString &, int s = 10);
+  int success(const QString &, int s = 10);
 };
 
 #endif // MESSAGEBOX_UTILS_H

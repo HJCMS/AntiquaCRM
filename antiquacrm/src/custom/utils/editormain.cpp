@@ -2,18 +2,30 @@
 // vim: set fileencoding=utf-8
 
 #include "editormain.h"
+#include "applicationclient.h"
+#include "messagebox.h"
+
+#ifndef EDITOR_SHOW_DEBUG
+#define EDITOR_SHOW_DEBUG false
+#endif
 
 #include <QDebug>
 
 EditorMain::EditorMain(QWidget *parent) : QWidget{parent} {
   setMinimumSize(800, 600);
   setContentsMargins(5, 5, 5, 5);
+
   m_sql = new HJCMS::SqlCore(this);
+
+  m_ipc = new ApplicationClient(this);
+}
+
+void EditorMain::socketStatusMessage(const QString &message) {
+  m_ipc->sendMessage(message);
 }
 
 void EditorMain::resetModified(const QStringList &list) {
-  if(list.isEmpty())
-  {
+  if (list.isEmpty()) {
     qWarning("Empty list");
     return;
   }
@@ -28,8 +40,7 @@ void EditorMain::resetModified(const QStringList &list) {
 }
 
 bool EditorMain::checkIsModified(const QRegularExpression &pattern) {
-  if(!pattern.isValid())
-  {
+  if (!pattern.isValid()) {
     qWarning("Invalid QRegularExpression::objPattern");
     return false;
   }
@@ -43,7 +54,9 @@ bool EditorMain::checkIsModified(const QRegularExpression &pattern) {
                                     Qt::DirectConnection,
                                     Q_RETURN_ARG(bool, b))) {
 
-        // qDebug() << Q_FUNC_INFO << list.at(i)->objectName() << b;
+        if (EDITOR_SHOW_DEBUG) {
+          qDebug() << "checkIsModified" << list.at(i)->objectName() << b;
+        }
         if (b) {
           return true;
         }
@@ -54,8 +67,7 @@ bool EditorMain::checkIsModified(const QRegularExpression &pattern) {
 }
 
 void EditorMain::clearDataFields(const QRegularExpression &pattern) {
-  if(!pattern.isValid())
-  {
+  if (!pattern.isValid()) {
     qWarning("Invalid QRegularExpression::objPattern");
     return;
   }
@@ -69,4 +81,30 @@ void EditorMain::clearDataFields(const QRegularExpression &pattern) {
   }
 }
 
-EditorMain::~EditorMain() { sqlQueryResult.clear(); }
+int EditorMain::sqlErrnoMessage(const QString &code, const QString &error) {
+  MessageBox *mbox = new MessageBox(this);
+  mbox->setObjectName("sql_errno_message");
+  if (EDITOR_SHOW_DEBUG) {
+    qDebug() << "PgSQL Errno:" << code << error << Qt::endl;
+  }
+  return mbox->failed(code, error);
+}
+
+int EditorMain::sqlSuccessMessage(const QString &info, int timeout) {
+  MessageBox *mbox = new MessageBox(this);
+  mbox->setObjectName("sql_success_message");
+  socketStatusMessage(info);
+  return mbox->success(info, timeout);
+}
+
+int EditorMain::sqlNoticeMessage(const QString &info) {
+  MessageBox *mbox = new MessageBox(this);
+  mbox->setObjectName("sql_notice_message");
+  return mbox->notice(info);
+}
+
+EditorMain::~EditorMain() {
+  sqlQueryResult.clear();
+  if (m_socketClient != nullptr)
+    m_socketClient->deleteLater();
+}

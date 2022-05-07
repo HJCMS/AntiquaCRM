@@ -138,14 +138,13 @@ void OrderEditor::importSqlResult() {
 
 const QHash<QString, QVariant> OrderEditor::createSqlDataset() {
   QHash<QString, QVariant> data;
-  MessageBox messanger;
   QList<UtilsMain *> list =
       findChildren<UtilsMain *>(p_objPattern, Qt::FindChildrenRecursively);
   QList<UtilsMain *>::Iterator it;
   for (it = list.begin(); it != list.end(); ++it) {
     UtilsMain *cur = *it;
     if (cur->isRequired() && !cur->isValid()) {
-      messanger.notice(cur->notes());
+      sqlNoticeMessage(cur->notes());
       cur->setFocus();
       data.clear();
       return data;
@@ -161,16 +160,21 @@ bool OrderEditor::sendSqlQuery(const QString &sqlStatement) {
   if (SHOW_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << sqlStatement;
   }
-  MessageBox messanger(this);
   QSqlQuery q = m_sql->query(sqlStatement);
   if (q.lastError().type() != QSqlError::NoError) {
-    QString errorString = m_sql->fetchErrors();
-    qDebug() << errorString << Qt::endl;
-    messanger.failed(sqlStatement, errorString);
+    sqlErrnoMessage(sqlStatement, m_sql->fetchErrors());
     return false;
   } else {
+    if (q.next()) {
+      if (!q.isNull("o_id")) {
+        o_id->setValue(q.value("o_id"));
+      }
+      if (!q.isNull("a_payment_id")) {
+        qDebug() << "a_payment_id" << q.value("a_payment_id").toInt();
+      }
+    }
     if (showSuccessFully) {
-      messanger.success(tr("Order saved successfully!"), 1);
+      sqlSuccessMessage(tr("Order saved successfully!"));
     }
     resetModified(inputList);
     return true;
@@ -185,6 +189,11 @@ bool OrderEditor::createSqlArticleOrder() {
   }
 
   int oid = o_id->value().toInt();
+  if (oid < 1) {
+    qWarning("Missing Order ID");
+    return false;
+  }
+
   int cid = o_costumer_id->value().toInt();
   if (o_costumer_id->value().toString().isEmpty() || cid < 1) {
     qWarning("Missing Costumer ID");
@@ -245,7 +254,7 @@ bool OrderEditor::createSqlArticleOrder() {
       sql.append(fields.join(","));
       sql.append(") VALUES (");
       sql.append(values.join(","));
-      sql.append(");");
+      sql.append(") RETURNING a_payment_id;");
       queries.append(sql);
     }
   }
@@ -292,7 +301,42 @@ void OrderEditor::createSqlUpdate() {
 }
 
 void OrderEditor::createSqlInsert() {
-  qDebug() << Q_FUNC_INFO << "TODO INSERT inventory_orders,article_orders";
+  if (!o_id->value().toString().isEmpty())
+    return;
+
+  o_id->setRequired(false);
+  QHash<QString, QVariant> data = createSqlDataset();
+  if (data.size() < 1)
+    return;
+
+  QStringList fields;
+  QStringList values;
+  QHash<QString, QVariant>::iterator it;
+  for (it = data.begin(); it != data.end(); ++it) {
+    if (it.key() == "o_id")
+      continue;
+
+    fields.append(it.key());
+    if (it.value().type() == QVariant::String) {
+      values.append("'" + it.value().toString() + "'");
+    } else {
+      values.append(it.value().toString());
+    }
+  }
+
+  QString sql("INSERT INTO inventory_orders (");
+  sql.append(fields.join(","));
+  sql.append(") VALUES (");
+  sql.append(values.join(","));
+  sql.append(") RETURNING o_id;");
+
+  bool result = sendSqlQuery(sql);
+  if (result && !o_id->value().toString().isEmpty()) {
+    m_paymentList->setEnabled(true);
+    return;
+  } else if (result) {
+    finalLeaveEditor();
+  }
 }
 
 void OrderEditor::setData(const QString &key, const QVariant &value,
@@ -506,6 +550,7 @@ void OrderEditor::openUpdateOrder(int oid) {
     qWarning("Empty o_id ...");
     return;
   }
+  m_paymentList->setEnabled(true);
 
   QString select("SELECT * FROM inventory_orders WHERE o_id=");
   select.append(QString::number(oid));
@@ -537,8 +582,7 @@ void OrderEditor::openUpdateOrder(int oid) {
       }
     }
   } else {
-    MessageBox messanger(this);
-    messanger.failed(m_sql->fetchErrors(), select);
+    sqlErrnoMessage(m_sql->fetchErrors(), select);
     return;
   }
 
@@ -555,9 +599,10 @@ void OrderEditor::openUpdateOrder(int oid) {
 void OrderEditor::openCreateOrder(int cid) {
   initDefaults();
   if (cid > 0) {
-    qDebug() << Q_FUNC_INFO << cid;
+    m_paymentList->setEnabled(false);
     o_costumer_id->setValue(cid);
-    if (getCostumerAddress(cid))
+    if (getCostumerAddress(cid)) {
       emit isModified(true);
+    }
   }
 }

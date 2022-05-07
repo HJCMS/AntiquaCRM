@@ -9,6 +9,7 @@
 #include <QRegularExpression>
 #include <QVariant>
 #include <QWidget>
+#include <QLocalSocket>
 
 #include <AntiquaCRM>
 #include <SqlCore>
@@ -16,6 +17,8 @@
 namespace HJCMS {
 class SqlCore;
 };
+
+class ApplicationClient;
 
 /**
  * @class EditorMain
@@ -40,12 +43,23 @@ protected:
   HJCMS::SqlCore *m_sql;
 
   /**
+   * @brief Message Client
+   */
+  ApplicationClient *m_ipc;
+
+  /**
    * @defgroup inputList
    * @{
    * @brief Objektnamen-Liste der Eingabefelder
    * Die vorgesehene Mehtode zum befüllen ist @ref setInputList
    */
   QStringList inputList;
+
+  /**
+   * @brief Nachrichten an Hauptfenster
+   */
+  QLocalSocket *m_socketClient;
+  void socketStatusMessage(const QString &message);
 
   /**
    * @brief Alle Eingabefelder in @ref inputList einfügen.
@@ -115,6 +129,25 @@ protected:
    * @return Bei @b true, wurden Datenfelder nicht gespeichert!
    */
   bool checkIsModified(const QRegularExpression &);
+
+  /**
+   * @brief SQL Fehler Nachrichten ausgeben
+   * @param code  - SQL Statement
+   * @param error - SQL Error
+   */
+  int sqlErrnoMessage(const QString &code, const QString &error);
+
+  /**
+   * @brief SQL Erfolgreich Nachricht
+   * @param info
+   */
+  int sqlSuccessMessage(const QString &info, int timeout = 1);
+
+  /**
+   * @brief SQL Hinweis Nachricht
+   * @param info
+   */
+  int sqlNoticeMessage(const QString &info);
 
 protected Q_SLOTS:
   /**

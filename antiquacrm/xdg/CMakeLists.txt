@@ -16,3 +16,7 @@ INSTALL (FILES
   DESTINATION share/applications
   COMPONENT data
 )
+
+CONFIGURE_FILE (qt.conf.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/qt.conf
+)

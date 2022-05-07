@@ -854,7 +854,7 @@
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+55"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
@@ -1564,7 +1564,7 @@
         <translation>Hinweis</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+63"/>
         <source>Shipping Address</source>
         <translation>Lieferadresse</translation>
     </message>
@@ -1689,12 +1689,12 @@
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+36"/>
         <source>Open entry</source>
         <translation>Öffne Auftrag</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+6"/>
         <source>Update Progress status</source>
         <translation>Auftragsstatus aktualisieren</translation>
     </message>
@@ -1702,11 +1702,6 @@
         <location line="+6"/>
         <source>Update Payment status</source>
         <translation>Zahlungsstatus aktualisieren</translation>
-    </message>
-    <message>
-        <location line="-12"/>
-        <source>Create order</source>
-        <translation>Auftrag anlegen</translation>
     </message>
 </context>
 <context>
@@ -2805,7 +2800,7 @@
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../workspace.cpp" line="+31"/>
+        <location filename="../workspace.cpp" line="+32"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
@@ -2825,7 +2820,7 @@
         <translation>Drucke, Stiche und Bilder Inventar</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+9"/>
         <source>Costumers</source>
         <translation>Kunden</translation>
     </message>
@@ -2848,6 +2843,11 @@
         <location line="+14"/>
         <source>Cant close this tab, unsafed changes!</source>
         <translation>Kann das Tab nicht schliessen, nicht gespeicherte Änderungen!</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Order tab isn&apos;t open!</source>
+        <translation>Das Auftrags Tab ist nicht geöffnet!</translation>
     </message>
 </context>
 <context>

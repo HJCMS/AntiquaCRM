@@ -4,16 +4,32 @@
 #include "socketserver.h"
 #include "antiqua_global.h"
 
+#include <QByteArray>
+#include <QDataStream>
+#include <QDebug>
 #include <QSysInfo>
+#include <QVector>
 
 SocketServer::SocketServer(QObject *parent) : QLocalServer{parent} {
   setObjectName("socket_server");
   setSocketOptions(QLocalServer::UserAccessOption);
-  setMaxPendingConnections(1);
+  setMaxPendingConnections(100);
+}
+
+void SocketServer::readClientConnection() {
+  if (m_listener->waitForReadyRead(timeout)) {
+    QByteArray data = m_listener->readAll();
+    // qDebug() << Q_FUNC_INFO << "BytesRead:" << data;
+    QString msg = QString::fromLocal8Bit(data);
+    emit statusMessage(msg);
+  }
 }
 
 void SocketServer::incomingConnection(quintptr socketDescriptor) {
-  qDebug() << Q_FUNC_INFO << "TODO" << socketDescriptor;
+  m_listener = new QLocalSocket(this);
+  m_listener->setObjectName("local_socket_manager");
+  m_listener->setSocketDescriptor(socketDescriptor);
+  readClientConnection();
 }
 
 const QString SocketServer::name() {

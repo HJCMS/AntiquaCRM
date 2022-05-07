@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QString>
 #include <QLocalServer>
+#include <QLocalSocket>
 
 class SocketServer : public QLocalServer {
   Q_OBJECT
@@ -16,9 +17,15 @@ class SocketServer : public QLocalServer {
 
 private:
   int timeout = 5000;
+  QLocalSocket *m_listener;
+
+  void readClientConnection();
 
 protected:
   void incomingConnection(quintptr socketDescriptor);
+
+Q_SIGNALS:
+  void statusMessage(const QString &);
 
 public:
   explicit SocketServer(QObject *parent = nullptr);

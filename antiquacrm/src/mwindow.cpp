@@ -56,10 +56,7 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
           SLOT(openTab(int)));
 
   connect(m_workSpace, SIGNAL(s_postMessage(const QString &)), this,
-          SLOT(postStatusBarMessage(const QString &)));
-
-  connect(this, SIGNAL(setStatusMessage(const QString &)), this,
-          SLOT(postStatusBarMessage(const QString &)));
+          SLOT(statusMessage(const QString &)));
 }
 
 void MWindow::setupTabMenu(QMenu *parent) {
@@ -250,7 +247,7 @@ void MWindow::closeEvent(QCloseEvent *event) {
   QMainWindow::closeEvent(event);
 }
 
-void MWindow::postStatusBarMessage(const QString &info) {
+void MWindow::statusMessage(const QString &info) {
   m_statusBar->sqlStatusMessage(info);
 }
 

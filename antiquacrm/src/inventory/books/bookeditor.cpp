@@ -282,19 +282,15 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   connect(m_actionBar, SIGNAL(s_saveClicked()), this, SLOT(saveData()));
   connect(m_actionBar, SIGNAL(s_finishClicked()), this,
           SLOT(checkLeaveEditor()));
-
-  setInputList();
 }
 
 void BookEditor::setInputList() {
-  QList<QObject *> list =
-      findChildren<QObject *>(p_objPattern, Qt::FindChildrenRecursively);
-  for (int i = 0; i < list.size(); ++i) {
-    if (list.at(i) != nullptr) {
-      if (!list.at(i)->objectName().isEmpty())
-        inputList << list.at(i)->objectName();
-    }
+  inputList = m_sql->fields("inventory_books");
+  if (inputList.isEmpty()) {
+    qWarning("Books InputList is Empty!");
   }
+  // Wird Manuel gesetzt!
+  inputList.removeOne("ib_changed");
 }
 
 void BookEditor::openImageDialog() {
@@ -340,15 +336,17 @@ bool BookEditor::sendSqlQuery(const QString &sqlStatement) {
   if (SHOW_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << sqlStatement;
   }
-  MessageBox msgBox(this);
   QSqlQuery q = m_sql->query(sqlStatement);
   if (q.lastError().type() != QSqlError::NoError) {
-    QString errorString = m_sql->fetchErrors();
-    qDebug() << errorString << Qt::endl;
-    msgBox.failed(sqlStatement, errorString);
+    sqlErrnoMessage(sqlStatement, m_sql->fetchErrors());
     return false;
   } else {
-    msgBox.success(tr("Bookdata saved successfully!"), 1);
+    if (q.next()) {
+      if (!q.isNull("ib_id")) {
+        ib_id->setValue(q.value("ib_id"));
+      }
+    }
+    sqlSuccessMessage(tr("Bookdata saved successfully!"));
     resetModified(inputList);
     return true;
   }
@@ -356,19 +354,18 @@ bool BookEditor::sendSqlQuery(const QString &sqlStatement) {
 
 const QHash<QString, QVariant> BookEditor::createSqlDataset() {
   QHash<QString, QVariant> data;
-  MessageBox messanger;
   QList<UtilsMain *> list =
       findChildren<UtilsMain *>(p_objPattern, Qt::FindChildrenRecursively);
   QList<UtilsMain *>::Iterator it;
   for (it = list.begin(); it != list.end(); ++it) {
     UtilsMain *cur = *it;
     if (cur->isRequired() && !cur->isValid()) {
-      messanger.notice(cur->notes());
+      sqlNoticeMessage(cur->notes());
       cur->setFocus();
       data.clear();
       return data;
     }
-    // qDebug() << "Book:" << cur->objectName() << cur->value();
+    // qDebug() << "Book:" << cur->objectName() << cur->value() << cur->notes();
     data.insert(cur->objectName(), cur->value());
   }
   list.clear();
@@ -424,8 +421,15 @@ void BookEditor::createSqlUpdate() {
 }
 
 void BookEditor::createSqlInsert() {
+  if (ib_id->value().toInt() >= 1) {
+    qWarning("No Book insert");
+    createSqlUpdate();
+    return;
+  }
+
   /** Bei neu Einträgen immer erforderlich */
   ib_count->setRequired(true);
+  ib_id->setRequired(false);
 
   QHash<QString, QVariant> data = createSqlDataset();
   if (data.size() < 1)
@@ -450,10 +454,10 @@ void BookEditor::createSqlInsert() {
   sql.append(column.join(","));
   sql.append(",ib_changed) VALUES (");
   sql.append(values.join(","));
-  sql.append(",CURRENT_TIMESTAMP);");
-  // qDebug() << Q_FUNC_INFO << sql << Qt::endl;
-  if (sendSqlQuery(sql))
-    checkLeaveEditor();
+  sql.append(",CURRENT_TIMESTAMP) RETURNING ib_id;");
+  if (sendSqlQuery(sql) && ib_id->value().toInt() >= 1) {
+    m_imageToolBar->setActive(false);
+  }
 }
 
 void BookEditor::importSqlResult() {
@@ -742,6 +746,7 @@ void BookEditor::triggerIsbnQuery() {
 }
 
 void BookEditor::editBookEntry(const QString &condition) {
+  setInputList();
   if (condition.length() < 5)
     return;
 
@@ -767,8 +772,7 @@ void BookEditor::editBookEntry(const QString &condition) {
       }
     }
   } else {
-    MessageBox messanger(this);
-    messanger.failed(m_sql->fetchErrors(), condition);
+    sqlErrnoMessage(m_sql->fetchErrors(), condition);
     return;
   }
 
@@ -779,6 +783,7 @@ void BookEditor::editBookEntry(const QString &condition) {
 }
 
 void BookEditor::createBookEntry() {
+  setInputList();
   setEnabled(true);
   m_imageToolBar->setActive(false);
   resetModified(inputList);

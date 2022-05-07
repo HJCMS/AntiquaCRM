@@ -57,7 +57,7 @@ Q_SIGNALS:
   void setStatusMessage(const QString &);
 
 public Q_SLOTS:
-  void postStatusBarMessage(const QString &);
+  void statusMessage(const QString &);
 
 public:
   explicit MWindow(QWidget *parent = nullptr);

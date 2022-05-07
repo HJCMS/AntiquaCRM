@@ -6,6 +6,10 @@
  * @{
  */
 
+#ifndef APPLICATIONCLIENT_UTILS_H
+# include "applicationclient.h"
+#endif
+
 #ifndef BOOLBOX_UTILS_H
 # include "boolbox.h"
 #endif

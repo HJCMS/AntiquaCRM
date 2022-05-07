@@ -37,7 +37,6 @@ static const QString defaultQuery(int id = 0) {
   QString hh(QObject::tr("Hours"));
   QString dd(QObject::tr("Days"));
   QString mm(QObject::tr("Months"));
-  // QString yy(QObject::tr("Years"));
   QString fs("a.o_id,a.o_since,a.o_order_status,a.o_payment_status,");
   fs.append("CASE WHEN c.c_company=true THEN c.c_company_name ELSE ");
   fs.append("concat_ws(' ',c.c_firstname,c.c_lastname) END AS costumer,");

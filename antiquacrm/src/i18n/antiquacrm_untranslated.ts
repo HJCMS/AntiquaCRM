@@ -854,7 +854,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+55"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1564,7 +1564,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+63"/>
         <source>Shipping Address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1689,23 +1689,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+36"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+6"/>
         <source>Update Progress status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Update Payment status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-12"/>
-        <source>Create order</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2805,7 +2800,7 @@
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../workspace.cpp" line="+31"/>
+        <location filename="../workspace.cpp" line="+32"/>
         <source>Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2825,7 +2820,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+9"/>
         <source>Costumers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2847,6 +2842,11 @@
     <message>
         <location line="+14"/>
         <source>Cant close this tab, unsafed changes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Order tab isn&apos;t open!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

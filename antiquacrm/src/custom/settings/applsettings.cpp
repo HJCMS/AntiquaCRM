@@ -6,6 +6,7 @@
 #include "myicontheme.h"
 
 #include <QDebug>
+#include <QApplication>
 #include <QDir>
 
 static const QString config_domain() {
@@ -21,6 +22,11 @@ ApplSettings::ApplSettings(QObject *parent)
 
     setValue("application/name",ANTIQUACRM_NAME);
     setValue("application/version",ANTIQUACRM_VERSION);
+
+    beginGroup("Paths");
+    setValue("Prefix",qApp->applicationDirPath());
+    setValue("Translations","i18n");
+    endGroup();
 }
 
 const QString ApplSettings::sqlConnectioName() {
