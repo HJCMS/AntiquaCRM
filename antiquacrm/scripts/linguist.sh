@@ -8,6 +8,6 @@ _srcpath="$(dirname "$(readlink -f $0)")"
 
 . ${_srcpath}/scriptsconfig.bash
 
-_ts="$(ls ${_PROJECT_SOURCE}/i18n/*_de.ts)"
+_ts="$(ls ${_PROJECT_SOURCE}/i18n/antiqua*_de.ts)"
 
 ${_QT5_HOME}/bin/linguist ${_ts}

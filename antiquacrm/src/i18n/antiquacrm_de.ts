@@ -230,7 +230,7 @@
         <translation>Umschreibung</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+114"/>
         <source>Remove Image from Database</source>
         <translation>Entferne Bild aus der Datenbank</translation>
     </message>
@@ -240,12 +240,12 @@
         <translation>Möchten Sie das Bild wirklich aus der Datenbank entfernen?</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+59"/>
         <source>Missing Article ID for Update.</source>
         <translation>Keine Artikel ID für Update vorhanden.</translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="+108"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
@@ -285,7 +285,7 @@
         <translation>Öffnen Sie die Webseite im Browser für eine vollständige Beschreibung.</translation>
     </message>
     <message>
-        <location line="-532"/>
+        <location line="-536"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -300,7 +300,7 @@
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
     <message>
-        <location line="+390"/>
+        <location line="+394"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
@@ -326,7 +326,7 @@
         <translation>OpenLibrary kann kostenlos verwendet werden, aber wir brauchen Ihre Hilfe!</translation>
     </message>
     <message>
-        <location line="-438"/>
+        <location line="-442"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -349,23 +349,23 @@
     </message>
     <message>
         <location line="-164"/>
-        <location line="+541"/>
+        <location line="+545"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
     <message>
-        <location line="-467"/>
-        <location line="+477"/>
+        <location line="-471"/>
+        <location line="+481"/>
         <source>Publisher</source>
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="-291"/>
+        <location line="-297"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-297"/>
+        <location line="-295"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -1313,7 +1313,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+78"/>
+        <location filename="../mwindow.cpp" line="+75"/>
         <source>Costumers</source>
         <translation>Kunden</translation>
     </message>
@@ -1417,7 +1417,7 @@
 <context>
     <name>MessageBox</name>
     <message>
-        <location filename="../custom/utils/messagebox.cpp" line="+20"/>
+        <location filename="../custom/utils/messagebox.cpp" line="+21"/>
         <source>Message closed in </source>
         <translation>Nachricht schließt sich in </translation>
     </message>
@@ -1508,12 +1508,12 @@
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+97"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
-        <location line="+170"/>
+        <location line="+210"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
@@ -2161,12 +2161,12 @@
         <translation>Dieser Text dient internen Zwecken</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+53"/>
         <source>Data saved successfully!</source>
         <translation>Daten Erfolgreich gespeichert!</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+28"/>
         <source>Missing Article ID for Update.</source>
         <translation>Keine Artikel ID für ein Update.</translation>
     </message>
