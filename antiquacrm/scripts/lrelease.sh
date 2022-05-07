@@ -10,9 +10,9 @@ _srcpath="$(dirname "$(readlink -f $0)")"
 
 _build_dest="${_PROJECT_TARGET}/build-antiquacrm-Desktop_Qt_5_15_2_GCC_64bit-Debug/src/i18n"
 # _ts_qt5=""
-_ts_project="${_PROJECT_SOURCE}/i18n/antiquacrm_de.ts"
+_ts_project="$(ls ${_PROJECT_SOURCE}/i18n/{qtbase,antiquacrm}_de.ts)"
 
-_options="-compress -silent -nounfinished -removeidentical"
+_options="-compress -verbose -nounfinished -removeidentical"
 
 mkdir -p ${_build_dest}
 rm -f ${_build_dest}/antiquacrm_de.qm
