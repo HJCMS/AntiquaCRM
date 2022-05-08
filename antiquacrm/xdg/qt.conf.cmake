@@ -1,4 +1,4 @@
 [Paths]
-Prefix = @CMAKE_CURRENT_BINARY_DIR@
+Prefix = .
 Translations = i18n
 Plugins = plugins
