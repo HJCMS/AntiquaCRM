@@ -25,6 +25,7 @@ void InfoPage::setContent(const QString &key) {
   if (fp.open(QFile::ReadOnly)) {
     QString buffer;
     QTextStream in(&fp);
+    in.setCodec("UTF-8");
     while (!in.atEnd()) {
       buffer.append(in.readLine());
     }
