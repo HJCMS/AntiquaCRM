@@ -1,0 +1,22 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+
+#ifndef APPL_SETTINGS_H
+#include "applsettings.h"
+#endif // APPL_SETTINGS_H
+
+#ifndef WIDGET_SETTINGS_H
+#include "settingswidget.h"
+#endif // WIDGET_SETTINGS_H
+
+#ifndef GENERAL_SETTINGS_H
+#include "generalsettings.h"
+#endif // GENERAL_SETTINGS_H
+
+#ifndef PGSQL_SETTINGS_H
+#include "pgsqlsettings.h"
+#endif // PGSQL_SETTINGS_H
+
+#ifndef VIEW_SETTINGS_H
+#include "viewsettings.h"
+#endif // VIEW_SETTINGS_H

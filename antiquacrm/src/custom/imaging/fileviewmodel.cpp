@@ -3,7 +3,7 @@
 
 #include "fileviewmodel.h"
 
-#include <QDebug>
+// #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
 

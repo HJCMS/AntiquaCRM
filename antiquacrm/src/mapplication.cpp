@@ -12,12 +12,14 @@
 
 #include <QDebug>
 #include <QDir>
+#include <QFont>
 #include <QLocalSocket>
 #include <QLocale>
+#include <QStyleFactory>
 #include <QTranslator>
 
 MApplication::MApplication(int &argc, char **argv) : QApplication(argc, argv) {
-  setObjectName("MApplicationApplication");
+  setObjectName("antiquacrm_application");
   setQuitOnLastWindowClosed(true);
 
   m_settings = new ApplSettings(this);
@@ -46,6 +48,14 @@ bool MApplication::isRunning() {
   QLocalSocket socket(this);
   socket.setServerName(SocketServer::name());
   return socket.open(QLocalSocket::ReadOnly);
+}
+
+void MApplication::initThemeStyle() {
+  setStyle(QStyleFactory::create("Fusion"));
+  QFont font = qApp->font();
+  if (font.fromString(m_settings->value("font", font.family()).toString())) {
+    setFont(font);
+  }
 }
 
 /**
@@ -83,8 +93,8 @@ int MApplication::exec() {
   }
 
   m_mainWindow = new MWindow();
-  connect(m_socket,SIGNAL(statusMessage(const QString &)),
-          m_mainWindow,SLOT(statusMessage(const QString &)));
+  connect(m_socket, SIGNAL(statusMessage(const QString &)), m_mainWindow,
+          SLOT(statusMessage(const QString &)));
   if (m_mainWindow == nullptr) {
     qFatal("Application error");
     return 0;

@@ -1,19 +1,19 @@
-/** @COPYRIGHT_HOLDER@ */
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+// @COPYRIGHT_HOLDER@
 
 #ifndef ANTIQUA_CONFIGDIALOG_H
 #define ANTIQUA_CONFIGDIALOG_H
 
-#include "applsettings.h"
-#include "settingswidget.h"
-#include "generalsettingswidget.h"
-#include "postgresqlsettings.h"
+#include <SettingsDialog>
 
 #include <QObject>
 #include <QWidget>
 #include <QDialog>
-#include <QStackedLayout>
+#include <QStackedWidget>
 #include <QListWidget>
 #include <QListWidgetItem>
+#include <QStatusBar>
 
 class ConfigDialog : public QDialog
 {
@@ -22,23 +22,32 @@ class ConfigDialog : public QDialog
     Q_CLASSINFO ( "URL", "http://www.hjcms.de" )
 
 private:
-    ApplSettings* m_settings;
-    QStackedLayout* m_pageSet;
     QListWidget* m_listWidget;
-    GeneralSettingsWidget* m_page1;
-    PostgreSqlSettings* m_page2;
-    void createItemSelection();
+    GeneralSettings* m_page1;
+    PgSQLSettings* m_page2;
+    ViewSettings* m_page3;
+    QStatusBar *m_statusbar;
 
 private Q_SLOTS:
     void setPage(QListWidgetItem *);
 
-public:
-    explicit ConfigDialog(QWidget *parent = nullptr);
-
 public Q_SLOTS:
+    void statusMessage(const QString &);
     void saveConfig();
     void closeDialog();
 
+public:
+    /**
+     * @brief Configuration Pages
+     */
+    QStackedWidget* ConfigPages;
+
+    explicit ConfigDialog(QWidget *parent = nullptr);
+
+    /**
+     * @brief Lädt die Einstellungen und erstellt das Menü!
+     */
+    int exec();
 };
 
 #endif // ANTIQUA_CONFIGDIALOG_H

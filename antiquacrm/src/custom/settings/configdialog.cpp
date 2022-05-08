@@ -1,59 +1,68 @@
-/** @COPYRIGHT_HOLDER@ */
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
 
 #include "configdialog.h"
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QDebug>
-#include <QStringList>
-#include <QVariant>
-#include <QApplication>
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
-#include <QLabel>
-#include <QListView>
-#include <QPushButton>
+#include <QScrollArea>
 #include <QVBoxLayout>
-#include <QWidget>
 
 ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
-  setObjectName("ConfigDialog");
+  setObjectName("antiqua_config_dialog");
   setWindowTitle(tr("Configuration"));
   setSizeGripEnabled(true);
-  setMinimumSize(800, 600);
+  setMinimumSize(800, 560);
 
-  m_settings = new ApplSettings();
+  QVBoxLayout *layout = new QVBoxLayout(this);
+  layout->setContentsMargins(5, 0, 5, 0);
+  layout->setObjectName("vlayout");
 
-  QVBoxLayout *m_vLayout = new QVBoxLayout(this);
-  m_vLayout->setObjectName("vlayout");
+  // BEGIN Area{"Settings Widgets"|"ListWidget"}
+  QHBoxLayout *horizontal_layout = new QHBoxLayout();
+  horizontal_layout->setObjectName("hlayout");
 
-  QHBoxLayout *hLayout = new QHBoxLayout();
-  hLayout->setObjectName("hlayout");
+  QScrollArea *m_scrollarea = new QScrollArea(this);
+  m_scrollarea->setObjectName("config_dialog_scrollarea");
+  m_scrollarea->setWidgetResizable(true);
+  horizontal_layout->addWidget(m_scrollarea, Qt::AlignLeft);
 
-  m_pageSet = new QStackedLayout();
-  m_pageSet->setObjectName("CentralLayout");
-  hLayout->addLayout(m_pageSet, Qt::AlignLeft);
+  ConfigPages = new QStackedWidget(m_scrollarea);
+  ConfigPages->setObjectName("config_dialog_statckedwidget");
+  m_scrollarea->setWidget(ConfigPages);
 
-  m_page1 = new GeneralSettingsWidget(this);
-  m_page1->loadSectionConfig();
-  m_pageSet->addWidget(m_page1);
+  m_page1 = new GeneralSettings(ConfigPages);
+  m_page1->setObjectName("main_settings");
+  m_page1->setPageTitle(tr("Application"));
+  m_page1->setPageIcon(myIcon("list"));
+  ConfigPages->addWidget(m_page1);
 
-  m_page2 = new PostgreSqlSettings(this);
-  m_page2->loadSectionConfig();
-  m_pageSet->addWidget(m_page2);
+  m_page2 = new PgSQLSettings(ConfigPages);
+  m_page2->setObjectName("database_settings");
+  m_page2->setPageTitle(tr("Database"));
+  m_page2->setPageIcon(myIcon("database"));
+  ConfigPages->addWidget(m_page2);
 
-  m_vLayout->addLayout(hLayout);
+  m_page3 = new ViewSettings(ConfigPages);
+  m_page3->setObjectName("appearance_settings");
+  m_page3->setPageTitle(tr("Appearance"));
+  m_page3->setPageIcon(myIcon("autostart"));
+  ConfigPages->addWidget(m_page3);
 
   m_listWidget = new QListWidget(this);
-  m_listWidget->setObjectName("ListConfigWidget");
+  m_listWidget->setObjectName("config_dialog_menue");
   m_listWidget->setResizeMode(QListView::Adjust);
   m_listWidget->setSortingEnabled(false);
   m_listWidget->setMinimumWidth(100);
   m_listWidget->setMaximumWidth(150);
-  hLayout->addWidget(m_listWidget, Qt::AlignLeft);
+  horizontal_layout->addWidget(m_listWidget, Qt::AlignLeft);
+  layout->addLayout(horizontal_layout);
+  // END
 
   QDialogButtonBox *m_btnBox = new QDialogButtonBox(this);
-  m_btnBox->setObjectName("ButtonBox");
+  m_btnBox->setObjectName("config_dialog_buttenbox");
   m_btnBox->setOrientation(Qt::Horizontal);
 
   QPushButton *btn_save = m_btnBox->addButton(QDialogButtonBox::Save);
@@ -65,51 +74,61 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   connect(m_btnBox, SIGNAL(accepted()), this, SLOT(saveConfig()));
   connect(m_btnBox, SIGNAL(rejected()), this, SLOT(closeDialog()));
 
-  m_vLayout->addWidget(m_btnBox);
+  layout->addWidget(m_btnBox);
 
-  setLayout(m_vLayout);
+  m_statusbar = new QStatusBar(this);
+  m_statusbar->setObjectName("config_dialog_statusbar");
+  m_statusbar->setSizeGripEnabled(false);
+  layout->addWidget(m_statusbar);
 
-  createItemSelection();
+  setLayout(layout);
 }
 
 /**
  * @brief ConfigDialog::createItemSelection
  */
-void ConfigDialog::createItemSelection() {
-  QListWidgetItem *m1 = new QListWidgetItem("ui_settings", m_listWidget);
-  m1->setText(tr("Generally"));
-  m1->setIcon(myIcon("list"));
-  m_listWidget->addItem(m1);
-
-  QListWidgetItem *m2 = new QListWidgetItem("sql_settings", m_listWidget);
-  m2->setText(tr("Database"));
-  m2->setIcon(myIcon("database"));
-  m_listWidget->addItem(m2);
-
-  QListWidgetItem *m3 = new QListWidgetItem("isbn_settings", m_listWidget);
-  m3->setText(tr("OpenLibray"));
-  m3->setIcon(myIcon("autostart"));
-  m_listWidget->addItem(m3);
-
-  connect(m_listWidget, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
+int ConfigDialog::exec() {
+  for (int i = 0; i < ConfigPages->count(); i++) {
+    if (ConfigPages->widget(i) != nullptr) {
+      SettingsWidget *w =
+          qobject_cast<SettingsWidget *>(ConfigPages->widget(i));
+      if (w != nullptr) {
+        w->loadSectionConfig();
+        QListWidgetItem *lwi = new QListWidgetItem(m_listWidget);
+        lwi->setText(w->getPageTitle());
+        lwi->setIcon(w->getPageIcon());
+        m_listWidget->addItem(lwi);
+      }
+    }
+  }
+  connect(m_listWidget, SIGNAL(itemClicked(QListWidgetItem *)), this,
           SLOT(setPage(QListWidgetItem *)));
+
+  return QDialog::exec();
 }
 
 void ConfigDialog::setPage(QListWidgetItem *item) {
   int i = (m_listWidget->currentRow());
-  if (m_pageSet->itemAt(i) != nullptr) {
-    m_pageSet->setCurrentIndex(i);
+  if (ConfigPages->widget(i) != nullptr) {
+    ConfigPages->setCurrentIndex(i);
   }
+  statusMessage(tr("Page %1 entered").arg(i));
+}
+
+void ConfigDialog::statusMessage(const QString &message) {
+  m_statusbar->showMessage(message, 5000);
 }
 
 void ConfigDialog::saveConfig() {
   for (int i = 0; i < m_listWidget->count(); i++) {
-    if (m_pageSet->widget(i) != nullptr) {
-      SettingsWidget *w = qobject_cast<SettingsWidget *>(m_pageSet->widget(i));
+    if (ConfigPages->widget(i) != nullptr) {
+      SettingsWidget *w =
+          qobject_cast<SettingsWidget *>(ConfigPages->widget(i));
       if (w != nullptr)
         w->saveSectionConfig();
     }
   }
+  m_statusbar->showMessage(tr("Configuration saved successfully"), 3000);
 }
 
 void ConfigDialog::closeDialog() { accept(); }

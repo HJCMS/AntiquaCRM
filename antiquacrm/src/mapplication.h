@@ -8,6 +8,7 @@
 #include <QEvent>
 #include <QObject>
 #include <QLocalServer>
+#include <QStyle>
 #include <QApplication>
 
 class ApplSettings;
@@ -34,6 +35,7 @@ private:
 public:
   explicit MApplication(int &argc, char **argv);
   bool isRunning();
+  void initThemeStyle();
   int exec();
   virtual ~MApplication();
 };

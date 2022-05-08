@@ -9,7 +9,7 @@
 #include <QPushButton>
 #include <QWidget>
 
-class ImageToolBar : public QWidget {
+class ImageToolBar final : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")

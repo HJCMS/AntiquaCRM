@@ -1,23 +1,20 @@
-#include "generalsettingswidget.h"
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+
+#include "generalsettings.h"
 #include "antiqua_global.h"
 #include "applsettings.h"
 #include "myicontheme.h"
 
 #include <QDebug>
 #include <QDir>
-#include <QGridLayout>
-#include <QLabel>
 #include <QPushButton>
-#include <QSpacerItem>
+#include <QHBoxLayout>
 #include <QVBoxLayout>
 
-#include <QTableWidget>
-
-GeneralSettingsWidget::GeneralSettingsWidget(QWidget *parent)
+GeneralSettings::GeneralSettings(QWidget *parent)
     : SettingsWidget{parent} {
-  setObjectName("general_config_widget");
-  setWindowTitle(tr("General Configuration"));
-  setSection("general");
+  setObjectName("general_settings");
 
   QString buffer; /**< Info Titel Puffer */
   QVBoxLayout *layout = new QVBoxLayout(this);
@@ -59,7 +56,7 @@ GeneralSettingsWidget::GeneralSettingsWidget(QWidget *parent)
   connect(btn_image_src, SIGNAL(clicked()), this, SLOT(setImageDir()));
 }
 
-void GeneralSettingsWidget::setImageDir() {
+void GeneralSettings::setImageDir() {
   QVariant spath = config->value("imaging/sourcepath", QDir::homePath());
   QString src = getDirectory(spath.toString());
   if (src.isEmpty())
@@ -68,7 +65,21 @@ void GeneralSettingsWidget::setImageDir() {
   m_editImageSrc->setValue(src);
 }
 
-void GeneralSettingsWidget::loadSectionConfig() {
+void GeneralSettings::setPageTitle(const QString &title) {
+  pageTitle = title;
+  emit pageTitleChanged();
+}
+
+const QString GeneralSettings::getPageTitle() { return pageTitle; }
+
+void GeneralSettings::setPageIcon(const QIcon &icon) {
+  pageIcon = icon;
+  emit pageIconChanged();
+}
+
+const QIcon GeneralSettings::getPageIcon() { return pageIcon; }
+
+void GeneralSettings::loadSectionConfig() {
   QVariant spath = config->value("imaging/sourcepath", QDir::homePath());
   m_editImageSrc->setValue(spath);
   m_editImageSrc->setToolTip(spath.toString());
@@ -76,7 +87,7 @@ void GeneralSettingsWidget::loadSectionConfig() {
   m_minPrice->setValue(config->value("payment/min_price", 5));
 }
 
-void GeneralSettingsWidget::saveSectionConfig() {
+void GeneralSettings::saveSectionConfig() {
   config->setValue("imaging/sourcepath", m_editImageSrc->value());
   config->setValue("search/startlength", m_searchStart->value());
   config->setValue("payment/min_price", m_minPrice->value());

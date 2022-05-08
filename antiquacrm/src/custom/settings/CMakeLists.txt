@@ -11,19 +11,22 @@ SET (subproject_FILES
 )
 
 SET (subproject_SOURCES
-  applsettings.cpp
-  configdialog.cpp
-  generalsettingswidget.cpp
-  postgresqlsettings.cpp
-  settingswidget.cpp
+ applsettings.cpp
+ configdialog.cpp
+ generalsettings.cpp
+ pgsqlsettings.cpp
+ settingswidget.cpp
+ viewsettings.cpp
 )
 
 SET (subproject_HEADERS
-  applsettings.h
-  configdialog.h
-  generalsettingswidget.h
-  postgresqlsettings.h
-  settingswidget.h
+ applsettings.h
+ configdialog.h
+ generalsettings.h
+ pgsqlsettings.h
+ settingswidget.h
+ viewsettings.h
+ SettingsDialog
 )
 
 INCLUDE_DIRECTORIES (

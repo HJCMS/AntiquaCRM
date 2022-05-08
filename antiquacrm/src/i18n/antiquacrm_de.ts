@@ -85,7 +85,7 @@
 <context>
     <name>BookEditor</name>
     <message>
-        <location filename="../inventory/books/bookeditor.cpp" line="+18"/>
+        <location filename="../inventory/books/bookeditor.cpp" line="+22"/>
         <source>Edit Book Title</source>
         <translation>Editiere Buchtitel</translation>
     </message>
@@ -230,7 +230,7 @@
         <translation>Umschreibung</translation>
     </message>
     <message>
-        <location line="+114"/>
+        <location line="+115"/>
         <source>Remove Image from Database</source>
         <translation>Entferne Bild aus der Datenbank</translation>
     </message>
@@ -260,32 +260,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="+71"/>
-        <source>Booktitle</source>
-        <translation>Buchtitel</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Subtitle</source>
-        <translation>Untertitel</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Authors</source>
-        <translation>Autoren</translation>
-    </message>
-    <message>
-        <location line="+42"/>
-        <source>Pages</source>
-        <translation>Seitenanzahl</translation>
-    </message>
-    <message>
-        <location line="-12"/>
-        <source>Open Webpage in Browser for full Description.</source>
-        <translation>Öffnen Sie die Webseite im Browser für eine vollständige Beschreibung.</translation>
-    </message>
-    <message>
-        <location line="-536"/>
+        <location line="-417"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -300,33 +275,12 @@
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
     <message>
-        <location line="+394"/>
+        <location line="+395"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
     <message>
-        <location line="+46"/>
-        <location line="+12"/>
-        <source>No Result: Search with %1</source>
-        <translation>Kein Ergebnis, suche mit %1</translation>
-    </message>
-    <message>
-        <location line="+73"/>
-        <source>External Book Description</source>
-        <translation>Öffne externe Buch Beschreibung</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>An image exists on OpenLibrary.org</source>
-        <translation>Ein Bild existiert auf OpenLibrary.org</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>OpenLibrary is free to use, but we need your Help!</source>
-        <translation>OpenLibrary kann kostenlos verwendet werden, aber wir brauchen Ihre Hilfe!</translation>
-    </message>
-    <message>
-        <location line="-442"/>
+        <location line="-286"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -349,23 +303,21 @@
     </message>
     <message>
         <location line="-164"/>
-        <location line="+545"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
     <message>
-        <location line="-471"/>
-        <location line="+481"/>
+        <location line="+74"/>
         <source>Publisher</source>
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="-297"/>
+        <location line="+185"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-295"/>
+        <location line="-296"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -543,12 +495,22 @@
 <context>
     <name>ConfigDialog</name>
     <message>
-        <location filename="../custom/settings/configdialog.cpp" line="+21"/>
+        <location filename="../custom/settings/configdialog.cpp" line="+15"/>
         <source>Configuration</source>
         <translation>Konfiguration</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+23"/>
+        <source>Application</source>
+        <translation>Anwendung</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Appearance</source>
+        <translation>Aussehen</translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
@@ -558,19 +520,19 @@
         <translation>Be&amp;enden</translation>
     </message>
     <message>
-        <location line="+17"/>
-        <source>Generally</source>
-        <translation>Allgemein</translation>
+        <location line="+43"/>
+        <source>Page %1 entered</source>
+        <translation>Seite %1 aufgerufen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+16"/>
+        <source>Configuration saved successfully</source>
+        <translation>Konfiguration erfolgreich gespeichert</translation>
+    </message>
+    <message>
+        <location line="-87"/>
         <source>Database</source>
         <translation>Datenbank</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>OpenLibray</source>
-        <translation>OpenLibray</translation>
     </message>
 </context>
 <context>
@@ -1085,14 +1047,9 @@
     </message>
 </context>
 <context>
-    <name>GeneralSettingsWidget</name>
+    <name>GeneralSettings</name>
     <message>
-        <location filename="../custom/settings/generalsettingswidget.cpp" line="+19"/>
-        <source>General Configuration</source>
-        <translation>Hauptkonfiguration</translation>
-    </message>
-    <message>
-        <location line="+9"/>
+        <location filename="../custom/settings/generalsettings.cpp" line="+25"/>
         <source>Image search Directory</source>
         <translation>Bilder Suchpfad</translation>
     </message>
@@ -1144,6 +1101,70 @@
     </message>
 </context>
 <context>
+    <name>ISBNResults</name>
+    <message>
+        <location filename="../inventory/books/isbnresults.cpp" line="+45"/>
+        <location line="+12"/>
+        <source>No Result: Search with %1</source>
+        <translation>Kein Ergebnis, suche mit %1</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Booktitle</source>
+        <translation>Buchtitel</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Subtitle</source>
+        <translation>Untertitel</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Authors</source>
+        <translation>Autoren</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Year</source>
+        <translation>Jahr</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Publisher</source>
+        <translation>Herausgeber</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Open Webpage in Browser for full Description.</source>
+        <translation>Öffnen Sie die Webseite im Browser für eine vollständige Beschreibung.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>External Book Description</source>
+        <translation>Öffne externe Buch Beschreibung</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Pages</source>
+        <translation>Seitenanzahl</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>An image exists on OpenLibrary.org</source>
+        <translation>Ein Bild existiert auf OpenLibrary.org</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>OpenLibrary is free to use, but we need your Help!</source>
+        <translation>OpenLibrary kann kostenlos verwendet werden, aber wir brauchen Ihre Hilfe!</translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Copy Article Id</source>
+        <translation>Kopiere Artikel Nummer</translation>
+    </message>
+</context>
+<context>
     <name>ImageDialog</name>
     <message>
         <location filename="../custom/imaging/imagedialog.cpp" line="+25"/>
@@ -1152,11 +1173,11 @@
     </message>
     <message>
         <location line="+14"/>
-        <source>Rotate</source>
-        <translation>Drehen</translation>
+        <source>Rotate Image</source>
+        <translation>Bild drehen</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+15"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
@@ -1181,7 +1202,7 @@
         <translation>Aktuelle Bildgröße</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+47"/>
         <source>No Image for this Arcticle found.</source>
         <translation>Kein Bild für diesen Artikel gefunden.</translation>
     </message>
@@ -1191,7 +1212,7 @@
         <translation>Warnung - Mehr als ein Bild gefunden!</translation>
     </message>
     <message>
-        <location line="-102"/>
+        <location line="-105"/>
         <source>Open Image</source>
         <translation>Öffne Bild</translation>
     </message>
@@ -1440,7 +1461,7 @@
         <translation>Öffne Bild von Festplatte</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+25"/>
         <source>Onclick for preview and double click to set image for open.</source>
         <translation>Klicken Sie auf das Bild, um eine Vorschau anzuzeigen, und doppelklicken Sie, um das Bild zum Öffnen festzulegen.</translation>
     </message>
@@ -1508,12 +1529,12 @@
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+97"/>
+        <location line="+98"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
-        <location line="+210"/>
+        <location line="+211"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
@@ -1533,18 +1554,18 @@
         <translation>Eintrag entfernt!</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+18"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+25"/>
         <source>Do you really want to close this order and pass it on to accounting?</source>
         <translation>Möchten Sie wirklich diesen Auftrag schließen und an die Buchhaltung weiter reichen?</translation>
     </message>
     <message>
-        <location line="-45"/>
-        <location line="+48"/>
+        <location line="-49"/>
+        <location line="+52"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
@@ -1659,6 +1680,16 @@
     </message>
     <message>
         <location line="+93"/>
+        <source>Inserting an empty entry is cowardly denied.</source>
+        <translation>Das einfügen eines leeren Eintrags wird feige verweigert.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Please search for an entry using an item ID first.</source>
+        <translation>Bitte suchen Sie einen Eintrag zunächst anhand einer Artikel-ID.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Duplicate Entry</source>
         <translation>Doppelter Eintrag</translation>
     </message>
@@ -1783,35 +1814,9 @@
     </message>
 </context>
 <context>
-    <name>PhoneEdit</name>
+    <name>PgSQLSettings</name>
     <message>
-        <location filename="../custom/utils/phoneedit.cpp" line="+105"/>
-        <source>The Phone Number is required and can not empty.</source>
-        <translation>Eine Rufnummer ist erforderlich und darf nicht Leer sein.</translation>
-    </message>
-</context>
-<context>
-    <name>PostalCode</name>
-    <message>
-        <location filename="../custom/utils/postalcode.cpp" line="+44"/>
-        <source>currently supported helper functions</source>
-        <translation>derzeit unterstützte Hilfsfunktionen</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Select Helper</source>
-        <translation>Helfer auswählen</translation>
-    </message>
-    <message>
-        <location line="+93"/>
-        <source>a valid Postalcode is required!</source>
-        <translation>eine gültige Postleitzahl ist erforderlich!</translation>
-    </message>
-</context>
-<context>
-    <name>PostgreSqlSettings</name>
-    <message>
-        <location filename="../custom/settings/postgresqlsettings.cpp" line="+24"/>
+        <location filename="../custom/settings/pgsqlsettings.cpp" line="+33"/>
         <source>Database Connection settings to PostgreSQL server.</source>
         <translation>Datenbank Verbindungs-Einstellungen zum PostgreSQL Server.</translation>
     </message>
@@ -1831,7 +1836,12 @@
         <translation></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
+        <source>Databasename</source>
+        <translation>Datebankname</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <location line="+7"/>
         <source>antiquacrm</source>
         <translation></translation>
@@ -1925,7 +1935,7 @@
     <message>
         <location line="+1"/>
         <source>Required</source>
-        <translation>Nur SSL/TLS</translation>
+        <translation>Erforderlich</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1953,7 +1963,12 @@
         <translation>Privater Schlüssel</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+5"/>
+        <source>Password</source>
+        <translation>Passwort</translation>
+    </message>
+    <message>
+        <location line="+34"/>
         <source>Open Certfile</source>
         <translation>Öffne Zertifikat</translation>
     </message>
@@ -1962,15 +1977,31 @@
         <source>Certificate (*.pem *.crt *.key)</source>
         <translation>Zertifikat (*.pem *.crt *.key)</translation>
     </message>
+</context>
+<context>
+    <name>PhoneEdit</name>
     <message>
-        <location line="-159"/>
-        <source>Databasename</source>
-        <translation>Datebankname</translation>
+        <location filename="../custom/utils/phoneedit.cpp" line="+105"/>
+        <source>The Phone Number is required and can not empty.</source>
+        <translation>Eine Rufnummer ist erforderlich und darf nicht Leer sein.</translation>
+    </message>
+</context>
+<context>
+    <name>PostalCode</name>
+    <message>
+        <location filename="../custom/utils/postalcode.cpp" line="+44"/>
+        <source>currently supported helper functions</source>
+        <translation>derzeit unterstützte Hilfsfunktionen</translation>
     </message>
     <message>
-        <location line="+124"/>
-        <source>Password</source>
-        <translation>Passwort</translation>
+        <location line="+1"/>
+        <source>Select Helper</source>
+        <translation>Helfer auswählen</translation>
+    </message>
+    <message>
+        <location line="+93"/>
+        <source>a valid Postalcode is required!</source>
+        <translation>eine gültige Postleitzahl ist erforderlich!</translation>
     </message>
 </context>
 <context>
@@ -2581,7 +2612,7 @@
 <context>
     <name>SettingsWidget</name>
     <message>
-        <location filename="../custom/settings/settingswidget.cpp" line="+15"/>
+        <location filename="../custom/settings/settingswidget.cpp" line="+16"/>
         <source>Directory</source>
         <translation>Verzeichnis</translation>
     </message>
@@ -2738,42 +2769,42 @@
 <context>
     <name>ToolBar</name>
     <message>
-        <location filename="../custom/imaging/toolbar.cpp" line="+24"/>
+        <location filename="../custom/imaging/toolbar.cpp" line="+28"/>
         <source>Home</source>
         <translation>Heimverzeichnis</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>Desktop</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>Pictures</source>
         <translation>Bilder</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>Downloads</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>Documents</source>
         <translation>Dokumente</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Temp</source>
         <translation>Temporäre Daten</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>Cache</source>
         <translation>Lokale Temporäre Daten</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+15"/>
         <source>Company Storage</source>
         <translation>Firmen Verzeichnis</translation>
     </message>
@@ -2795,6 +2826,19 @@
         <location filename="../custom/utils/trustbox.cpp" line="+68"/>
         <source>Trusted Verification is required.</source>
         <translation>Eine vertrauenswürdige Überprüfung ist erforderlich.</translation>
+    </message>
+</context>
+<context>
+    <name>ViewSettings</name>
+    <message>
+        <location filename="../custom/settings/viewsettings.cpp" line="+20"/>
+        <source>fonts representation</source>
+        <translation>Schriften darstellung</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Open</source>
+        <translation>Öffnen</translation>
     </message>
 </context>
 <context>

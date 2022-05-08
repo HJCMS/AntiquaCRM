@@ -2,14 +2,13 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_SETTINGS_H
-#define ANTIQUACRM_SETTINGS_H
+#ifndef APPL_SETTINGS_H
+#define APPL_SETTINGS_H
 
 #include <QHash>
 #include <QObject>
 #include <QSettings>
 #include <QString>
-#include <QStringList>
 #include <QVariant>
 
 class ApplSettings : public QSettings {
@@ -28,4 +27,4 @@ public:
   virtual ~ApplSettings();
 };
 
-#endif // ANTIQUACRM_SETTINGS_H
+#endif // APPL_SETTINGS_H

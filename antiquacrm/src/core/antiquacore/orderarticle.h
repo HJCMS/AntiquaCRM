@@ -26,6 +26,8 @@ private:
 public:
   explicit OrderArticle();
 
+  void clear();
+
   inline const QString primaryIndex() { return "a_payment_id"; };
 
   /** a_payment_id */

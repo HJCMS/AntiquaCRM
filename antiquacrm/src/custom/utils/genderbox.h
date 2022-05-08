@@ -23,7 +23,7 @@ public:
   const QStringList all();
 };
 
-class GenderBox : public UtilsMain {
+class GenderBox final : public UtilsMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")

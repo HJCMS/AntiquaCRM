@@ -5,13 +5,18 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QDebug>
-#include <QSettings>
-#include <QStandardPaths>
+#include <QDir>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
+#include <QSettings>
 #include <QSpacerItem>
+#include <QStandardPaths>
+
+static const QString getTarget(QStandardPaths::StandardLocation l) {
+  QStringList list = QStandardPaths::standardLocations(l);
+  return list.first();
+}
 
 ToolBar::ToolBar(QWidget *parent) : QWidget{parent} {
   setObjectName("ImageDialogToolbar");
@@ -20,29 +25,30 @@ ToolBar::ToolBar(QWidget *parent) : QWidget{parent} {
   QHBoxLayout *layout = new QHBoxLayout(this);
   m_setTargets = new QComboBox(this);
   int i = 0;
-  m_setTargets->insertItem(
-      i++, tr("Home"),
-      QStandardPaths::standardLocations(QStandardPaths::HomeLocation));
-  m_setTargets->insertItem(
-      i++, tr("Desktop"),
-      QStandardPaths::standardLocations(QStandardPaths::DesktopLocation));
-  m_setTargets->insertItem(
-      i++, tr("Pictures"),
-      QStandardPaths::standardLocations(QStandardPaths::PicturesLocation));
-  m_setTargets->insertItem(
-      i++, tr("Downloads"),
-      QStandardPaths::standardLocations(QStandardPaths::DownloadLocation));
-  m_setTargets->insertItem(
-      i++, tr("Documents"),
-      QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation));
+  m_setTargets->insertItem(i++, tr("Home"),
+                           getTarget(QStandardPaths::HomeLocation));
+  m_setTargets->insertItem(i++, tr("Desktop"),
+                           getTarget(QStandardPaths::DesktopLocation));
+  m_setTargets->insertItem(i++, tr("Pictures"),
+                           getTarget(QStandardPaths::PicturesLocation));
+  m_setTargets->insertItem(i++, tr("Downloads"),
+                           getTarget(QStandardPaths::DownloadLocation));
+  m_setTargets->insertItem(i++, tr("Documents"),
+                           getTarget(QStandardPaths::DocumentsLocation));
 #ifdef Q_OS_UNIX
-  m_setTargets->insertItem(
-      i++, tr("Temp"),
-      QStandardPaths::standardLocations(QStandardPaths::TempLocation));
-  m_setTargets->insertItem(
-      i++, tr("Cache"),
-      QStandardPaths::standardLocations(QStandardPaths::GenericCacheLocation));
+  m_setTargets->insertItem(i++, tr("Temp"),
+                           getTarget(QStandardPaths::TempLocation));
+  m_setTargets->insertItem(i++, tr("Cache"),
+                           getTarget(QStandardPaths::GenericCacheLocation));
 #endif
+
+  foreach (QFileInfo info, QDir::drives()) {
+    if (info.isReadable())
+    {
+      QString name = info.baseName().isEmpty() ? "System" : info.baseName();
+      m_setTargets->insertItem(i++, name, info.absolutePath());
+    }
+  }
 
   QSettings cfg;
   QString p = cfg.value("imaging/sourcepath").toString();

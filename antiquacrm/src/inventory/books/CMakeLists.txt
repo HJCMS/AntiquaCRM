@@ -22,6 +22,7 @@ SET (subproject_SOURCES
   bookeditor.cpp
   bookstable.cpp
   bookstablemodel.cpp
+  isbnresults.cpp
   inventorybooks.cpp
 )
 
@@ -29,6 +30,7 @@ SET (subproject_HEADERS
   bookeditor.h
   bookstable.h
   bookstablemodel.h
+  isbnresults.h
   inventorybooks.h
 )
 

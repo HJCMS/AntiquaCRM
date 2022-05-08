@@ -18,7 +18,7 @@
 /**
  @brief Klasse für ISBN/EAN nach ISO 2108
 */
-class IsbnEdit : public UtilsMain {
+class IsbnEdit final : public UtilsMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")

@@ -1,7 +1,8 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "postgresqlsettings.h"
+#include "pgsqlsettings.h"
+#include "applsettings.h"
 #include "antiqua_global.h"
 #include "filedialog.h"
 #include "myicontheme.h"
@@ -12,11 +13,19 @@
 #include <QSslConfiguration>
 #include <QStandardPaths>
 #include <QtWidgets>
+#include <QSslCertificate>
+#include <QGroupBox>
+#include <QWidget>
+#include <QHash>
+#include <QWidget>
+#include <QLineEdit>
+#include <QSpinBox>
+#include <QToolButton>
 
-PostgreSqlSettings::PostgreSqlSettings(QWidget *parent)
+
+PgSQLSettings::PgSQLSettings(QWidget *parent)
     : SettingsWidget{parent} {
-  setObjectName("postgresql_config_widget");
-  setSection("postgresql");
+  setObjectName("pgsql_settings");
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("postgresql_config_layout");
@@ -178,7 +187,7 @@ PostgreSqlSettings::PostgreSqlSettings(QWidget *parent)
   connect(sql_ssl, SIGNAL(checked(bool)), m_tls, SLOT(setEnabled(bool)));
 }
 
-void PostgreSqlSettings::initCaBundleData(const QString &bundle) {
+void PgSQLSettings::initCaBundleData(const QString &bundle) {
   if (bundle.isEmpty())
     return;
 
@@ -195,7 +204,7 @@ void PostgreSqlSettings::initCaBundleData(const QString &bundle) {
   }
 }
 
-const QString PostgreSqlSettings::openFileDialog(const QString &dest) {
+const QString PgSQLSettings::openFileDialog(const QString &dest) {
   QString dir = (dest.isEmpty()) ? QDir::homePath() : dest;
   QString title = tr("Open Certfile");
   QString type = tr("Certificate (*.pem *.crt *.key)");
@@ -203,7 +212,21 @@ const QString PostgreSqlSettings::openFileDialog(const QString &dest) {
   return (cert.isEmpty()) ? QString() : cert;
 }
 
-void PostgreSqlSettings::openCaBundle() {
+void PgSQLSettings::setPageTitle(const QString &title) {
+  pageTitle = title;
+  emit pageTitleChanged();
+}
+
+const QString PgSQLSettings::getPageTitle() { return pageTitle; }
+
+void PgSQLSettings::setPageIcon(const QIcon &icon) {
+  pageIcon = icon;
+  emit pageIconChanged();
+}
+
+const QIcon PgSQLSettings::getPageIcon() { return pageIcon; }
+
+void PgSQLSettings::openCaBundle() {
   QString ca = openFileDialog(QDir::rootPath());
   if (ca.isEmpty())
     return;
@@ -212,7 +235,7 @@ void PostgreSqlSettings::openCaBundle() {
   initCaBundleData(ca);
 }
 
-void PostgreSqlSettings::openRootCert() {
+void PgSQLSettings::openRootCert() {
   QString cert = openFileDialog(QDir::homePath());
   if (cert.isEmpty())
     return;
@@ -220,7 +243,7 @@ void PostgreSqlSettings::openRootCert() {
   ssl_root_cert->setValue(cert);
 }
 
-void PostgreSqlSettings::loadSectionConfig() {
+void PgSQLSettings::loadSectionConfig() {
   QHash<QString, QVariant> psql = config->readGroupConfig("postgresql");
   sql_hostname->setValue(psql.value("hostname"));
   sql_databasename->setValue(psql.value("database"));
@@ -255,7 +278,7 @@ void PostgreSqlSettings::loadSectionConfig() {
   }
 }
 
-void PostgreSqlSettings::saveSectionConfig() {
+void PgSQLSettings::saveSectionConfig() {
   QHash<QString, QVariant> pg_options;
   pg_options.insert("hostname", sql_hostname->value());
   pg_options.insert("database", sql_databasename->value());

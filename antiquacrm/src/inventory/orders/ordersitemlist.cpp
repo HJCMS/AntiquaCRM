@@ -142,9 +142,19 @@ void OrdersItemList::addTableRow() {
   m_table->setCellWidget(r, 4, addCount(p_payments.count(), r));
   m_table->setItem(r, 5, createItem(p_payments.title()));
   clearSearchInput();
+  setModified(true);
 }
 
 void OrdersItemList::insertArticle() {
+  if (p_payments.article() <= 0) {
+    QString msg(tr("Inserting an empty entry is cowardly denied."));
+    msg.append("<p>");
+    msg.append(tr("Please search for an entry using an item ID first."));
+    msg.append("</p>");
+    emit statusMessage(msg);
+    return;
+  }
+
   for (int r = 0; r < m_table->rowCount(); r++) {
     if (m_table->getArticleId(r) == p_payments.article()) {
       emit statusMessage(tr("Duplicate Entry"));
@@ -166,11 +176,17 @@ void OrdersItemList::createSearchSignal() {
 void OrdersItemList::clearSearchInput() {
   m_insertID->clear();
   m_searchInfo->clear();
+  p_payments.clear();
 }
 
 void OrdersItemList::clearTable() {
   m_table->clearContents();
   m_table->setRowCount(0);
+}
+
+void OrdersItemList::setModified(bool b) {
+  modified = b;
+  emit hasModified(modified);
 }
 
 void OrdersItemList::removeTableRow(int row) {

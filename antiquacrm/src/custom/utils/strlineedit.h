@@ -24,7 +24,7 @@ class SqlCore;
  @note Die Eingabeprüfung erfolgt mit geringen Aufwand,
  muss vor dem absenden der SQL Anweisung unbedingt geprüft werden.
 */
-class StrLineEdit : public UtilsMain {
+class StrLineEdit final : public UtilsMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")

@@ -1,7 +1,11 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+
 #include "bookeditor.h"
 #include "antiqua_global.h"
 #include "applsettings.h"
 #include "isbnrequest.h"
+#include "isbnresults.h"
 #include "myicontheme.h"
 
 #include <QDebug>
@@ -254,11 +258,10 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   m_tabWidget->setTabIcon(1, myIcon("edit"));
   m_tabWidget->setTabToolTip(1, tr("This text is for internal purposes"));
 
-  isbnTabIndex = 2; /**< @note Wird von setIsbnInfo benötigt */
-  m_listWidget = new QListWidget(this);
-  m_listWidget->setObjectName("isbnqueryresult");
-  m_tabWidget->insertTab(isbnTabIndex, m_listWidget, "OpenLibrary.org");
-  m_tabWidget->setTabIcon(isbnTabIndex, myIcon("folder_txt"));
+  m_isbnWidget = new ISBNResults(this); // ISBNResults
+  m_isbnWidget->setObjectName("isbnqueryresult");
+  m_tabWidget->insertTab(2, m_isbnWidget, "OpenLibrary.org");
+  m_tabWidget->setTabIcon(2, myIcon("folder_txt"));
 
   mainLayout->addWidget(m_tabWidget);
 
@@ -267,14 +270,16 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
 
   setLayout(mainLayout);
 
-  connect(ib_isbn, SIGNAL(clicked()), this, SLOT(triggerIsbnQuery()));
+  connect(ib_isbn, SIGNAL(clicked()), this, SLOT(createIsbnQuery()));
 
   connect(m_imageToolBar, SIGNAL(s_openImage()), this, SLOT(openImageDialog()));
   connect(m_imageToolBar, SIGNAL(s_deleteImage(int)), this,
           SLOT(removeImageDialog(int)));
 
-  connect(m_listWidget, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
+  connect(m_isbnWidget, SIGNAL(requestFinished()), this, SLOT(viewIsbnTab()));
+  connect(m_isbnWidget, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
           SLOT(infoISBNDoubleClicked(QListWidgetItem *)));
+
   connect(m_actionBar, SIGNAL(s_cancelClicked()), this,
           SLOT(finalLeaveEditor()));
   connect(m_actionBar, SIGNAL(s_restoreClicked()), this,
@@ -492,7 +497,7 @@ void BookEditor::checkLeaveEditor() {
 }
 
 void BookEditor::finalLeaveEditor() {
-  m_listWidget->clear();              /**< OpenLibrary.org Anzeige leeren */
+  m_isbnWidget->clear();              /**< OpenLibrary.org Anzeige leeren */
   sqlQueryResult.clear();             /**< SQL History leeren */
   clearDataFields(p_objPattern);      /**< Alle Datenfelder leeren */
   m_actionBar->setRestoreable(false); /**< ResetButton off */
@@ -559,139 +564,6 @@ void BookEditor::saveData() {
   }
 }
 
-void BookEditor::setIsbnInfo(bool b) {
-  m_listWidget->clear();
-
-  Qt::ItemFlags flags(Qt::ItemIsEnabled | Qt::ItemIsSelectable |
-                      Qt::ItemNeverHasChildren);
-
-  if (!b) {
-    QString ref_isbn = ib_isbn->value().toString();
-
-    QString bookfinder_url("https://www.bookfinder.com/?mode=isbn&isbn=");
-    bookfinder_url.append(ref_isbn);
-    QListWidgetItem *bookfinder = new QListWidgetItem(m_listWidget);
-    bookfinder->setData(Qt::DisplayRole,
-                        tr("No Result: Search with %1").arg("Bookfinder.com"));
-    bookfinder->setIcon(myIcon("html"));
-    bookfinder->setFlags(flags);
-    bookfinder->setData(Qt::UserRole, "ib_website:" + bookfinder_url);
-    m_listWidget->addItem(bookfinder);
-
-    QString gsearch;
-    gsearch.append("https://books.google.com/advanced_book_search?lr=lang_de");
-    gsearch.append("&hl=de&isbn=" + ref_isbn);
-
-    QListWidgetItem *google = new QListWidgetItem(m_listWidget);
-    google->setData(Qt::DisplayRole,
-                    tr("No Result: Search with %1").arg("Google"));
-    google->setIcon(myIcon("html"));
-    google->setFlags(flags);
-    google->setData(Qt::UserRole, "ib_website:" + gsearch);
-    m_listWidget->addItem(google);
-
-    m_tabWidget->setCurrentIndex(isbnTabIndex);
-    return;
-  }
-
-  if (m_isbnRequest == nullptr)
-    return;
-
-  const QMap<QString, QVariant> isbnData = m_isbnRequest->getResponse();
-  if (isbnData.size() < 1)
-    return;
-
-  // ib_title
-  QListWidgetItem *title = new QListWidgetItem(m_listWidget);
-  QString title_txt = isbnData.value("title").toString();
-  title->setData(Qt::DisplayRole, tr("Booktitle") + ": " + title_txt);
-  title->setData(Qt::UserRole, "ib_title:" + title_txt);
-  title->setIcon(myIcon("edit"));
-  title->setFlags(flags);
-  m_listWidget->addItem(title);
-
-  if (!isbnData.value("title_extended").isNull()) {
-    QListWidgetItem *title_ex = new QListWidgetItem(m_listWidget);
-    QString title_ext_txt = isbnData.value("title_extended").toString();
-    title_ex->setData(Qt::DisplayRole, tr("Subtitle") + ": " + title_ext_txt);
-    title_ex->setData(Qt::UserRole, "ib_title_extended:" + title_ext_txt);
-    title_ex->setIcon(myIcon("edit"));
-    title_ex->setFlags(flags);
-    m_listWidget->addItem(title_ex);
-  }
-
-  if (!isbnData.value("authors").isNull()) {
-    QListWidgetItem *author = new QListWidgetItem(m_listWidget);
-    QString authors = isbnData.value("authors").toString();
-    author->setData(Qt::DisplayRole, tr("Authors") + ": " + authors);
-    author->setData(Qt::UserRole, "ib_author:" + authors);
-    author->setIcon(myIcon("edit_group"));
-    author->setFlags(flags);
-    m_listWidget->addItem(author);
-  }
-
-  if (!isbnData.value("year").isNull()) {
-    QListWidgetItem *year = new QListWidgetItem(m_listWidget);
-    QString year_txt = isbnData.value("year").toString();
-    year->setData(Qt::DisplayRole, tr("Year") + ": " + year_txt);
-    year->setData(Qt::UserRole, "ib_year:" + year_txt);
-    year->setIcon(myIcon("edit"));
-    year->setFlags(flags);
-    m_listWidget->addItem(year);
-  }
-
-  if (!isbnData.value("publisher").isNull()) {
-    QString publisher_txt = isbnData.value("publisher").toString();
-    QListWidgetItem *publisher = new QListWidgetItem(m_listWidget);
-    publisher->setData(Qt::DisplayRole, tr("Publisher") + ": " + publisher_txt);
-    publisher->setData(Qt::UserRole, "ib_publisher:" + publisher_txt);
-    publisher->setIcon(myIcon("group"));
-    publisher->setFlags(flags);
-    m_listWidget->addItem(publisher);
-  }
-
-  if (!isbnData.value("url").isNull()) {
-    QListWidgetItem *website = new QListWidgetItem(m_listWidget);
-    website->setData(Qt::DisplayRole,
-                     tr("Open Webpage in Browser for full Description."));
-    website->setData(Qt::UserRole,
-                     "ib_website:" + isbnData.value("url").toString());
-    website->setIcon(myIcon("html"));
-    website->setToolTip(tr("External Book Description"));
-    website->setFlags(flags);
-    m_listWidget->addItem(website);
-  }
-
-  if (!isbnData.value("pages").isNull()) {
-    QListWidgetItem *pages = new QListWidgetItem(m_listWidget);
-    QString pages_txt = isbnData.value("pages").toString();
-    pages->setData(Qt::DisplayRole, tr("Pages") + ": " + pages_txt);
-    pages->setData(Qt::UserRole, "ib_pagecount:" + pages_txt);
-    pages->setIcon(myIcon("edit"));
-    pages->setFlags(flags ^ Qt::ItemIsEnabled);
-    m_listWidget->addItem(pages);
-  }
-
-  if (isbnData.value("images").toBool()) {
-    QListWidgetItem *graphs = new QListWidgetItem(m_listWidget);
-    graphs->setData(Qt::DisplayRole, tr("An image exists on OpenLibrary.org"));
-    graphs->setData(Qt::UserRole, true);
-    graphs->setIcon(myIcon("image"));
-    graphs->setFlags(flags ^ Qt::ItemIsEnabled);
-    m_listWidget->addItem(graphs);
-  }
-
-  QListWidgetItem *donate = new QListWidgetItem(m_listWidget);
-  donate->setData(Qt::DisplayRole,
-                  tr("OpenLibrary is free to use, but we need your Help!"));
-  donate->setData(Qt::UserRole, "ib_website:https://archive.org/donate/");
-  donate->setIcon(myIcon("html"));
-  donate->setFlags(flags);
-  m_listWidget->addItem(donate);
-
-  m_tabWidget->setCurrentIndex(isbnTabIndex);
-}
-
 void BookEditor::infoISBNDoubleClicked(QListWidgetItem *item) {
   QRegExp regexp;
   QString data = item->data(Qt::UserRole).toString();
@@ -732,17 +604,14 @@ void BookEditor::changeEvent(QEvent *event) {
   }
 }
 
-void BookEditor::triggerIsbnQuery() {
-  QString isbn = ib_isbn->value().toString().trimmed();
-  int l = isbn.length();
-  if (l > 13 && l != 10) {
-    return;
-  }
-  m_isbnRequest = new IsbnRequest(isbn, this);
-  connect(m_isbnRequest, SIGNAL(requestFinished(bool)), this,
-          SLOT(setIsbnInfo(bool)));
+void BookEditor::createIsbnQuery() {
+  m_isbnWidget->fetchIsbnData(ib_isbn->value());
+}
 
-  m_isbnRequest->triggerRequest();
+void BookEditor::viewIsbnTab() {
+  int index = m_tabWidget->indexOf(m_isbnWidget);
+  if (index >= 0)
+    m_tabWidget->setCurrentIndex(index);
 }
 
 void BookEditor::editBookEntry(const QString &condition) {

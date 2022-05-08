@@ -134,6 +134,7 @@ void OrderEditor::importSqlResult() {
 
   // Nach Ersteintrag zurück setzen!
   resetModified(inputList);
+  m_paymentList->setModified(false);
 }
 
 const QHash<QString, QVariant> OrderEditor::createSqlDataset() {
@@ -177,6 +178,7 @@ bool OrderEditor::sendSqlQuery(const QString &sqlStatement) {
       sqlSuccessMessage(tr("Order saved successfully!"));
     }
     resetModified(inputList);
+    m_paymentList->setModified(false);
     return true;
   }
 }
@@ -424,9 +426,13 @@ void OrderEditor::saveData() {
 }
 
 void OrderEditor::checkLeaveEditor() {
+  QString notify(tr("Unsaved Changes, don't leave this page before saved."));
   if (checkIsModified(p_objPattern)) {
-    emit s_postMessage(
-        tr("Unsaved Changes, don't leave this page before saved."));
+    emit s_postMessage(notify);
+    return;
+  }
+  if(m_paymentList->isModified()) {
+    emit s_postMessage(notify);
     return;
   }
   finalLeaveEditor();

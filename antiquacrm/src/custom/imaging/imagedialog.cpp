@@ -2,18 +2,18 @@
 // vim: set fileencoding=utf-8
 
 #include "imagedialog.h"
+#include "antiqua_global.h"
 #include "applsettings.h"
 #include "imageview.h"
-#include "openimagedialog.h"
-#include "antiqua_global.h"
 #include "myicontheme.h"
+#include "openimagedialog.h"
 
 #include <QDebug>
+#include <QDialogButtonBox>
 #include <QDirIterator>
 #include <QFileInfo>
 #include <QImageReader>
 #include <QPixmap>
-#include <QDialogButtonBox>
 #include <QPushButton>
 #include <QToolBar>
 #include <QToolButton>
@@ -35,9 +35,10 @@ ImageDialog::ImageDialog(qulonglong id, QWidget *parent)
   QToolBar *toolBar = new QToolBar(this);
   m_vLayout->addWidget(toolBar);
 
-  QToolButton *m_rotateRight = new QToolButton(toolBar);
-  m_rotateRight->setText(tr("Rotate"));
-  toolBar->addWidget(m_rotateRight);
+  QPushButton *btn_rotate = new QPushButton(toolBar);
+  btn_rotate->setText(tr("Rotate Image"));
+  btn_rotate->setIcon(myIcon("redo"));
+  toolBar->addWidget(btn_rotate);
 
   QDialogButtonBox *m_buttonBox = new QDialogButtonBox(Qt::Horizontal, this);
   m_buttonBox->setShortcutEnabled(false);
@@ -69,7 +70,7 @@ ImageDialog::ImageDialog(qulonglong id, QWidget *parent)
   m_statusBar->setSizeGripEnabled(false);
   m_vLayout->addWidget(m_statusBar);
 
-  connect(m_rotateRight, SIGNAL(clicked()), this, SLOT(rotateRightClicked()));
+  connect(btn_rotate, SIGNAL(clicked()), this, SLOT(rotateRightClicked()));
   connect(btn_openimg, SIGNAL(clicked()), this, SLOT(openFileDialog()));
   connect(m_buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
   connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
@@ -121,6 +122,9 @@ void ImageDialog::loadFile(const QFileInfo &file) {
 }
 
 void ImageDialog::findImageSourceFiles() {
+  if (!sourceDir.exists())
+    return;
+
   QString basePath = sourceDir.path();
   QStringList search;
   search << QString::number(imageID) + ".JPG";
@@ -148,6 +152,7 @@ void ImageDialog::findImageSourceFiles() {
   if (search.size()) {
     m_statusBar->showMessage(tr("Warning - More then one found!"));
   }
+
   QString image(search.first());
   QFileInfo info(sourceDir, image);
   if (info.exists()) {

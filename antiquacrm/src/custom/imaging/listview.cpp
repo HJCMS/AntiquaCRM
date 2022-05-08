@@ -4,7 +4,7 @@
 #include "listview.h"
 #include "fileviewmodel.h"
 
-#include <QDebug>
+// #include <QDebug>
 #include <QMimeData>
 #include <QMimeDatabase>
 #include <QMimeType>

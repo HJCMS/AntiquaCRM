@@ -17,6 +17,18 @@ OrderArticle::OrderArticle() {
   p_summary = QString();
 }
 
+void OrderArticle::clear() {
+  p_payment = -1;
+  p_article = -1;
+  p_orderid = -1;
+  p_costumer = -1;
+  p_count = -1;
+  p_price = 0;
+  p_sell_price = 0;
+  p_title = QString();
+  p_summary = QString();
+}
+
 void OrderArticle::setPayment(int id) { p_payment = id; }
 
 int OrderArticle::payment() { return p_payment; }

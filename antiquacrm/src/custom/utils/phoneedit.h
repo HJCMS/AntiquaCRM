@@ -15,7 +15,7 @@
 #include <QWidget>
 #include <UtilsMain>
 
-class PhoneEdit : public UtilsMain {
+class PhoneEdit final : public UtilsMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")

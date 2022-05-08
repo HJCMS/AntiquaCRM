@@ -14,7 +14,7 @@
 
 #include <UtilsMain>
 
-class PostalCodeModel : public QSqlQueryModel {
+class PostalCodeModel final : public QSqlQueryModel {
   Q_OBJECT
 
 public:

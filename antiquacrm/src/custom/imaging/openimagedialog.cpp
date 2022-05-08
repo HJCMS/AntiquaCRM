@@ -2,19 +2,19 @@
 // vim: set fileencoding=utf-8
 
 #include "openimagedialog.h"
+#include "antiqua_global.h"
 #include "imageview.h"
 #include "listview.h"
-#include "toolbar.h"
-#include "antiqua_global.h"
 #include "myicontheme.h"
+#include "toolbar.h"
 
 #include <QDebug>
-#include <QFileInfo>
-#include <QList>
-#include <QStandardPaths>
-#include <QImageReader>
 #include <QDialogButtonBox>
+#include <QFileInfo>
+#include <QImageReader>
+#include <QList>
 #include <QPushButton>
+#include <QStandardPaths>
 #include <QVBoxLayout>
 
 OpenImageDialog::OpenImageDialog(QWidget *parent) : QDialog(parent) {
@@ -24,16 +24,16 @@ OpenImageDialog::OpenImageDialog(QWidget *parent) : QDialog(parent) {
   setSizeGripEnabled(true);
   setMinimumSize(QSize(500, 400));
 
-  QVBoxLayout *verticalLayout = new QVBoxLayout(this);
+  QVBoxLayout *layout = new QVBoxLayout(this);
 
   m_toolBar = new ToolBar(this);
-  verticalLayout->addWidget(m_toolBar);
+  layout->addWidget(m_toolBar);
 
   m_splitter = new QSplitter(this);
   m_splitter->setOrientation(Qt::Horizontal);
-  m_splitter->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+  m_splitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   m_splitter->setMinimumHeight(250);
-  verticalLayout->addWidget(m_splitter);
+  layout->addWidget(m_splitter);
 
   m_thumbsView = new ImageView(this);
   m_thumbsView->setMinimumWidth(125);
@@ -43,17 +43,18 @@ OpenImageDialog::OpenImageDialog(QWidget *parent) : QDialog(parent) {
 
   m_listView = new ListView(this);
   m_listView->setMinimumWidth(250);
-  m_listView->setToolTip(tr("Onclick for preview and double click to set image for open."));
+  m_listView->setToolTip(
+      tr("Onclick for preview and double click to set image for open."));
   m_splitter->insertWidget(1, m_listView);
   m_splitter->setCollapsible(1, false);
   m_splitter->setStretchFactor(1, 65);
 
   m_lineEdit = new QLineEdit(this);
-  verticalLayout->addWidget(m_lineEdit);
+  layout->addWidget(m_lineEdit);
 
   QDialogButtonBox *m_buttonBox = new QDialogButtonBox(Qt::Horizontal, this);
   m_buttonBox->setShortcutEnabled(false);
-  verticalLayout->addWidget(m_buttonBox);
+  layout->addWidget(m_buttonBox);
 
   QPushButton *m_save =
       m_buttonBox->addButton(tr("Save"), QDialogButtonBox::AcceptRole);
@@ -66,7 +67,7 @@ OpenImageDialog::OpenImageDialog(QWidget *parent) : QDialog(parent) {
   m_close->setIcon(myIcon("button_cancel"));
   m_close->setObjectName("CloseButtonDialog");
 
-  setLayout(verticalLayout);
+  setLayout(layout);
 
   connect(m_listView, SIGNAL(s_previewImage(const QString &)), m_thumbsView,
           SLOT(setImage(const QString &)));
@@ -74,8 +75,7 @@ OpenImageDialog::OpenImageDialog(QWidget *parent) : QDialog(parent) {
   connect(m_listView, SIGNAL(s_selectionChanged(const QString &)), this,
           SLOT(isValid(const QString &)));
 
-  connect(this, SIGNAL(imageChanged(bool)),
-          m_save, SLOT(setEnabled(bool)));
+  connect(this, SIGNAL(imageChanged(bool)), m_save, SLOT(setEnabled(bool)));
 
   connect(m_toolBar, SIGNAL(goUp()), m_listView, SLOT(goUpward()));
   connect(m_toolBar, SIGNAL(goTo(const QString &)), m_listView,
@@ -94,15 +94,19 @@ void OpenImageDialog::isValid(const QString &path) {
   emit imageChanged(false);
 }
 
-void OpenImageDialog::setStart(const QString &path)
-{
+void OpenImageDialog::setStart(const QString &path) {
+  if (!path.isEmpty())
     m_listView->goTo(path);
 }
 
 const QImage OpenImageDialog::image() {
-  QImageReader reader(m_lineEdit->text());
-  reader.setAutoTransform(true);
-  return reader.read();
+  QString path = m_lineEdit->text();
+  if (!path.isEmpty()) {
+    QImageReader reader(path);
+    reader.setAutoTransform(true);
+    return reader.read();
+  }
+  return QImage();
 }
 
 const QFileInfo OpenImageDialog::file() {

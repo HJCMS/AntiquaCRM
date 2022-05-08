@@ -2,26 +2,25 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef POSTGRESQLSETTINGS_H
-#define POSTGRESQLSETTINGS_H
+#ifndef PGSQL_SETTINGS_H
+#define PGSQL_SETTINGS_H
 
 #include "settingswidget.h"
 
-#include <QObject>
-#include <QSslCertificate>
+#include <QComboBox>
 #include <QGroupBox>
-#include <QWidget>
-
-#include <Utils>
+#include <QHash>
+#include <QObject>
+#include <QVariant>
 
 /**
- * @class PostgreSqlSettings
+ * @class PgSQLSettings
  * @brief PostgreSQL Configuration
  * Parameter Key Words:
  *  @link https://www.postgresql.org/docs/current/libpq-connect.html
  *
  */
-class PostgreSqlSettings final : public SettingsWidget {
+class PgSQLSettings final : public SettingsWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -76,7 +75,7 @@ private:
    * @defgroup SSL/TLS Connection
    * @{
    */
-  
+
   /**
    * @brief Edit SSL/TLS
    */
@@ -157,9 +156,13 @@ private Q_SLOTS:
   void openRootCert();
 
 public:
-  explicit PostgreSqlSettings(QWidget *parent = nullptr);
+  explicit PgSQLSettings(QWidget *parent = nullptr);
+  void setPageTitle(const QString &);
+  const QString getPageTitle();
+  void setPageIcon(const QIcon &);
+  const QIcon getPageIcon();
   void loadSectionConfig();
   void saveSectionConfig();
 };
 
-#endif // POSTGRESQLSETTINGS_H
+#endif // PGSQL_SETTINGS_H

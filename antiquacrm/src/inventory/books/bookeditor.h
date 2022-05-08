@@ -7,12 +7,12 @@
 
 #include <QEvent>
 #include <QHash>
-#include <QObject>
-#include <QRegularExpression>
-#include <QVariant>
 #include <QListWidget>
+#include <QObject>
 #include <QPushButton>
+#include <QRegularExpression>
 #include <QTabWidget>
+#include <QVariant>
 #include <QWidget>
 
 /**
@@ -23,7 +23,7 @@
 #include <Imaging>
 #include <Utils>
 
-class IsbnRequest;
+class ISBNResults;
 /** }@ */
 
 /**
@@ -56,11 +56,10 @@ private:
   StrLineEdit *ib_publisher;      /**< @brief Herausgeber/Verlag */
   StrLineEdit *ib_title;          /**< @brief Buch Titel */
   StrLineEdit *ib_title_extended; /**< @brief Ereiterte Titel  */
-  TextField *ib_description;      /**< @brief Öffentliche Beschreibung */
-  IsbnRequest *m_isbnRequest;     /**< @brief ISBN Abfrage Klasse */
-  QTabWidget *m_tabWidget; /**< @brief BeschreibungsText und ISBN Info  */
+  QTabWidget *m_tabWidget;   /**< @brief BeschreibungsText und ISBN Info  */
+  TextField *ib_description; /**< @brief Öffentliche Beschreibung */
   TextField *ib_internal_description; /**< @brief Interne Beschreibung */
-  QListWidget *m_listWidget;          /**< @brief ISBN Abfrage-Vorschau */
+  ISBNResults *m_isbnWidget;          /**< @brief ISBN Abfrage-Vorschau */
 
   /**
      @brief Wird für QObject::findchild benötigt!
@@ -74,12 +73,6 @@ private:
      @brief Beinhaltet Cancel, Restore, Save und GoBack.
    */
   EditorActionBar *m_actionBar;
-
-  /**
-    @brief Wird im Konstruktor bei TabWidget gesetzt
-    und in für IsbnInfo Operationen verwendet!
-  */
-  int isbnTabIndex;
 
   /**
     @brief Bilder operations Knopfleiste
@@ -185,7 +178,8 @@ private:
       }
      @endcode
    */
-  void setData(const QString &key, const QVariant &value, bool required = false);
+  void setData(const QString &key, const QVariant &value,
+               bool required = false);
 
   /**
    * Wenn der Benutzer den Artikel Bestand auf 0 setzt!
@@ -216,18 +210,14 @@ private Q_SLOTS:
   void saveData();
 
   /**
-     @brief Konvertiert das ISBN ergebnis.
-     Wenn ein Eintrag gefunden wurde werden hier die
-     Einträge für @ref m_listWidget->widget(isbnTabIndex);
-     eingefügt und gesetzt.
-     @see triggerIsbnQuery()
-   */
-  void setIsbnInfo(bool);
-
-  /**
      @brief Sendet eine ISBN Anfragen
    */
-  void triggerIsbnQuery();
+  void createIsbnQuery();
+
+  /**
+   * @brief Wenn ein Ergebnis kommt auf das Tabe wechseln!
+   */
+  void viewIsbnTab();
 
   /**
      @brief Öffne die Url aus der Ergebnisanzeige.

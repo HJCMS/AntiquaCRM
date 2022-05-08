@@ -9,9 +9,13 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValueRef>
+#include <QNetworkRequest>
 #include <QString>
 #include <QVector>
-#include <QNetworkRequest>
+
+#ifndef ISBN_DEBUG_OUTPUT
+#define ISBN_DEBUG_OUTPUT false
+#endif
 
 IsbnData::IsbnData(const QString &isbn) : p_isbn(isbn) {}
 
@@ -38,9 +42,8 @@ bool IsbnData::compareAuthors(const QString &a) {
     return false;
 
   foreach (const QString n, p_authors) {
-    foreach (const QString s, a.split(" "))
-    {
-      if(n.contains(s))
+    foreach (const QString s, a.split(" ")) {
+      if (n.contains(s))
         return false;
     }
   }
@@ -177,6 +180,9 @@ void IsbnRequest::read(const QJsonObject &obj) {
 }
 
 void IsbnRequest::importResponse(const QByteArray &b) {
+  if (ISBN_DEBUG_OUTPUT) {
+    qDebug() << Q_FUNC_INFO << QString::fromLocal8Bit(b);
+  }
   QJsonDocument json = QJsonDocument::fromJson(b);
   if (json.isNull()) {
     qDebug("IsbnRequest::importResponse = failed");
@@ -188,7 +194,9 @@ void IsbnRequest::importResponse(const QByteArray &b) {
 }
 
 void IsbnRequest::replyFinished(QNetworkReply *reply) {
-  // qDebug() << "IsbnRequest::replyFinished" << reply->url();
+  if (ISBN_DEBUG_OUTPUT) {
+    qDebug() << "IsbnRequest::replyFinished" << reply->url();
+  }
   if (reply->error() == QNetworkReply::NoError) {
     m_reply->deleteLater();
   }
