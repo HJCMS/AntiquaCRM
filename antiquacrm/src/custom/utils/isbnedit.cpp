@@ -177,7 +177,7 @@ const QVariant IsbnEdit::value() {
     // qInfo("ISBN:%s Lenght:%s", qPrintable(txt),
     // qPrintable(QString::number(len)));
     bool b;
-    qulonglong isbn = txt.toLong(&b);
+    qulonglong isbn = txt.toULong(&b);
     if (b)
       return isbn;
   }

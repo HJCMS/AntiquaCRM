@@ -21,7 +21,10 @@ void ISBNResults::fetchIsbnData(const QVariant &isbn) {
   int l = query.length();
   if (l > 13 && l != 10) {
     return;
+  } else if (l < 10) {
+    return;
   }
+
   m_isbnRequest = new IsbnRequest(query, this);
   connect(m_isbnRequest, SIGNAL(requestFinished(bool)), this,
           SLOT(setIsbnInfo(bool)));
@@ -163,12 +166,12 @@ void ISBNResults::setIsbnInfo(bool b) {
 
 void ISBNResults::copySelectedItem() {
   QListWidgetItem *item = currentItem();
-  if(item != nullptr) {
+  if (item != nullptr) {
     QString buffer(item->text().trimmed());
     QRegExp strip("([\\'\\\";:\\[\\]\\{\\}]+)");
-    buffer.replace(strip,"");
+    buffer.replace(strip, "");
     buffer = buffer.trimmed();
-    if(!buffer.isEmpty())
+    if (!buffer.isEmpty())
       qApp->clipboard()->setText(buffer, QClipboard::Clipboard);
   }
 }
