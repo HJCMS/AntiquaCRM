@@ -7,19 +7,21 @@
 
 #include "settingswidget.h"
 
-#include <QtCore/QObject>
-#include <QtWidgets>
+#include <QObject>
+#include <QWidget>
 
-class @CLASSNAME@ : public SettingsWidget
+class @CLASSNAME@ : public @PARENT@
 {
-    Q_OBJECT
-    Q_CLASSINFO ( "Author", "Jürgen Heinemann" )
-    Q_CLASSINFO ( "URL", "http://www.hjcms.de" )
+  Q_OBJECT
+
+private:
+
+private Q_SLOTS:
+
+Q_SIGNALS:
 
 public:
-    explicit @CLASSNAME@(QWidget *parent = nullptr);
-
-signals:
+  explicit @CLASSNAME@(QWidget *parent = nullptr);
 
 };
 

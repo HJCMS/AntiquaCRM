@@ -360,9 +360,11 @@ void OrderEditor::setData(const QString &key, const QVariant &value,
 }
 
 void OrderEditor::findCostumer(int cid) {
-  getCostumerAddress(cid);
-  if (o_id->value().toInt() >= 1) {
-    // findPayments(int orderId, int costumerId);
+  if (cid <= 1)
+    return;
+
+  if (!getCostumerAddress(cid)) {
+    qWarning("No Costumer Data");
   }
 }
 
@@ -407,10 +409,12 @@ void OrderEditor::findRemoveTableRow(int row) {
   int ret = QMessageBox::question(this, tr("Delete"), body);
   if (ret == QMessageBox::Yes) {
     m_paymentList->removeTableRow(row);
+    showSuccessFully = false;
     if (sendSqlQuery(paymentRemove(pId, aId))) {
       emit postMessage(tr("Item removed!"));
-      emit s_isModified(true);
+      m_paymentList->setModified(true);
     }
+    showSuccessFully = true;
   }
   pId.clear();
   aId.clear();
@@ -431,7 +435,8 @@ void OrderEditor::checkLeaveEditor() {
     emit s_postMessage(notify);
     return;
   }
-  if(m_paymentList->isModified()) {
+  /** @note Muss Manuel gesetzt werden */
+  if (m_paymentList->isModified()) {
     emit s_postMessage(notify);
     return;
   }
@@ -460,7 +465,7 @@ void OrderEditor::createCloseOrder(bool b) {
   if (ret == QMessageBox::Yes) {
     if (sendSqlQuery(closeOrder(order_id))) {
       emit postMessage(tr("Order deactivated!"));
-      emit s_isModified(true);
+      m_paymentList->setModified(true);
     }
   } else {
     o_closed->setChecked(false);
@@ -485,10 +490,9 @@ void OrderEditor::initDefaults() {
   o_delivery_service->loadSqlDataset();
 }
 
-const QList<OrderArticle> OrderEditor::getOrderArticles(int orderId,
-                                                        int costumerId) {
+const QList<OrderArticle> OrderEditor::getOrderArticles(int oid, int cid) {
   QList<OrderArticle> list;
-  QString sql = paymentArticleOrders(orderId, costumerId);
+  QString sql = paymentArticleOrders(oid, cid);
   QSqlQuery q = m_sql->query(sql);
   if (q.size() >= 1) {
     QSqlRecord r = q.record();
@@ -522,11 +526,11 @@ const QList<OrderArticle> OrderEditor::getOrderArticles(int orderId,
   return list;
 }
 
-bool OrderEditor::getCostumerAddress(int costumerId) {
-  if (costumerId < 1)
+bool OrderEditor::getCostumerAddress(int cid) {
+  if (cid < 1)
     return false;
 
-  QString select = queryCostumerAddress(costumerId);
+  QString select = queryCostumerAddress(cid);
   if (SHOW_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << select << Qt::endl;
   }

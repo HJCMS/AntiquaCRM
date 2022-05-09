@@ -37,6 +37,7 @@ void EditorMain::resetModified(const QStringList &list) {
                                 Q_ARG(bool, false));
     }
   }
+  emit s_isModified(false);
 }
 
 bool EditorMain::checkIsModified(const QRegularExpression &pattern) {
@@ -58,11 +59,13 @@ bool EditorMain::checkIsModified(const QRegularExpression &pattern) {
           qDebug() << "checkIsModified" << list.at(i)->objectName() << b;
         }
         if (b) {
+          emit s_isModified(true);
           return true;
         }
       }
     }
   }
+  emit s_isModified(false);
   return false;
 }
 

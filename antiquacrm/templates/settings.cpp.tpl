@@ -1,24 +1,12 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
 
-#include "version.h"
 #include "@CLASSNAME@.h"
 
-#include <QtCore/QDebug>
-#include <QtWidgets/QGridLayout>
-#include <QtWidgets/QGroupBox>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QVBoxLayout>
-#include <QtWidgets/QVBoxLayout>
+#include <QtCore>
+#include <QtWidgets>
 
-@CLASSNAME@::@CLASSNAME@(QWidget *parent)
-    : SettingsWidget{parent}
+@CLASSNAME@::@CLASSNAME@(QWidget *parent) : @PARENT@{parent}
 {
-    setObjectName("@CLASSNAME@");
-  /* Required  Settings
-    setConfigSection("");
-    setWindowTitle(tr(""));
-    setConfigTitle(tr(""));
-  */
+  setObjectName("@CLASSNAME@");
 }
-

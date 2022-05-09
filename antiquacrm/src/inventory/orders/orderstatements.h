@@ -138,11 +138,18 @@ static const QString paymentArticleOrders(int oid, int cid) {
   return sql;
 }
 
-static const QString paymentRemove(const QString &pId, const QString &aId) {
+/**
+ * @brief Datensatz aus "article_orders" löschen.
+ * Eintrag mit "a_payment_id" und "a_article_id" löschen.
+ * @param pid - Payment ID
+ * @param aid - Article ID
+ * @return
+ */
+static const QString paymentRemove(const QString &pid, const QString &aid) {
   QString sql("DELETE FROM article_orders WHERE a_payment_id=");
-  sql.append(pId);
+  sql.append(pid);
   sql.append(" AND a_article_id=");
-  sql.append(aId);
+  sql.append(aid);
   sql.append(";");
   return sql;
 }

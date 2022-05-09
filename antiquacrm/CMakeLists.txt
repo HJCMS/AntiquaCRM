@@ -98,6 +98,7 @@ SET (PROJECT_INCLUDE_DIRS
   ${Qt${QT_VERSION_MAJOR}Xml_INCLUDE_DIRS}
 )
 
+ADD_SUBDIRECTORY (templates)
 ADD_SUBDIRECTORY (src)
 
 ##############################################################
