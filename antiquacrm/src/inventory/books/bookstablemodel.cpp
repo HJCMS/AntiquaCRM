@@ -28,6 +28,11 @@ BooksTableModel::BooksTableModel(QObject *parent) : QSqlQueryModel{parent} {
   setObjectName("BooksTableModel");
 }
 
+const QString BooksTableModel::displayDate(const QVariant &value) const {
+  QDateTime dt(value.toDateTime());
+  return QLocale::system().toString(dt, "dd MMMM yyyy");
+}
+
 QVariant BooksTableModel::data(const QModelIndex &index, int role) const {
   const QVariant val;
   if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole &&
@@ -100,7 +105,7 @@ QVariant BooksTableModel::data(const QModelIndex &index, int role) const {
   }
 
   case 9: // ib_changed
-    return item.toDateTime().date().toString(Qt::RFC2822Date);
+    return displayDate(item);
 
   case 10: // image_exists
     return (item.toBool()) ? tr("Yes") : tr("No");

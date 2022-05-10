@@ -7,21 +7,21 @@
 
 #include <QEvent>
 #include <QHash>
-#include <QObject>
-#include <QRegularExpression>
-#include <QVariant>
 #include <QListWidget>
+#include <QObject>
 #include <QPushButton>
+#include <QRegularExpression>
 #include <QTabWidget>
+#include <QVariant>
 #include <QWidget>
 
 /**
-* @defgroup HJCMS
-* @{
-*/
-#include <Utils>
-#include <Imaging>
+ * @defgroup HJCMS
+ * @{
+ */
 #include <EditorMain>
+#include <Imaging>
+#include <Utils>
 /** }@ */
 
 class PrintsEditor : public EditorMain {
@@ -38,7 +38,7 @@ private:
   YearEdit *ip_year;                  /**< @brief Jahr */
   PriceEdit *ip_price;                /**< @brief Preis */
   IntSpinBox *ip_count;               /**< @brief Bestandsangabe */
-  SerialID *ip_id;                   /**< @brief ReadOnly:ArticleID */
+  SerialID *ip_id;                    /**< @brief ReadOnly:ArticleID */
   StrLineEdit *ip_author;             /**< @brief Printautor */
   StrLineEdit *ip_condition;          /**< @brief Zustands beschreibung */
   StrLineEdit *ip_designation;        /**< @brief Umschreibung */
@@ -122,107 +122,100 @@ private:
   bool sendSqlQuery(const QString &sqlStatement);
 
   /**
-     @brief SQL UPDATE Statement erstellen!
-     @note Wird nur von Slot @ref saveData() aufgerufen!
+   * @brief SQL UPDATE Statement erstellen!
+   * @note Wird nur von Slot @ref saveData() aufgerufen!
    */
   void createSqlUpdate();
 
   /**
-     @brief SQL INSERT Statement erstellen!
-     @note Wird nur von Slot @ref saveData() aufgerufen!
+   * @brief SQL INSERT Statement erstellen!
+   * @note Wird nur von Slot @ref saveData() aufgerufen!
    */
   void createSqlInsert();
 
   /**
-     @brief Durchläuft @ref sqlQueryResult und ruft @ref setSqlQueryData auf.
-      Die Abfolge ist:
-        @li blockSignals(true);
-        @li Schleife: setSqlQueryData(Feld,Daten);
-        @li blockSignals(false);
-        @li resetModified();
-        @li m_imageView->searchImageById(ArticleID);
+   * @brief Durchläuft @ref sqlQueryResult und ruft @ref setSqlQueryData auf.
+   *  Die Abfolge ist:
+   *   @li blockSignals(true);
+   *   @li Schleife: setSqlQueryData(Feld,Daten);
+   *   @li blockSignals(false);
+   *   @li resetModified();
+   *   @li m_imageView->searchImageById(ArticleID);
    */
   void importSqlResult();
 
   /**
-     @brief Suche nach Objektnamen mit @i findChild(objectName);
-     @param key - Ist der SQL Datenfeldbezeichner.
-       Dieser muss Identisch mit dem Eingabe Objektnamen sein.
-     @param value - Tabellenspalten Wert
-     @note Es werden die Datenfeldtypen vom SQL Query gelesen!
-           Wenn sich also bei SQL Datenfeldern etwas ändert!
-           Muss die Methode überarbeitet werden.
-
-     Je nach Objekttyp werden die Eingabefelder manuel zugewiesen
-     und dann mit @i findChild(objectName) Identifiziert. Das wird
-     überwiegend bei den (IntSpinBox,StrLineEdit) Klassen eingesetzt.
-     @code
-      // "ip_isbn" QVariant(qulonglong)
-      if (key.contains("ip_isbn")) {
-        ip_isbn->setIsbn(value.toLongLong());
-        return;
-      }
-      // "ip_count" QVariant(int)
-      if (value.type() == QVariant::Int) {
-        IntSpinBox *v = findChild<IntSpinBox *>(key,
-     Qt::FindDirectChildrenOnly); if (v != nullptr) v->setValue(value.toInt());
-      }
-     @endcode
+   * @brief Suche nach Objektnamen mit @i findChild(objectName);
+   * @param key - Ist der SQL Datenfeldbezeichner.
+   *  Dieser muss Identisch mit dem Eingabe Objektnamen sein.
+   *  @param value - Tabellenspalten Wert
+   *  @note Es werden die Datenfeldtypen vom SQL Query gelesen!
+   *       Wenn sich also bei SQL Datenfeldern etwas ändert!
+   *       Muss die Methode überarbeitet werden.
+   * Je nach Objekttyp werden die Eingabefelder manuel zugewiesen
+   * und dann mit @i findChild(objectName) Identifiziert. Das wird
+   * überwiegend bei den (IntSpinBox,StrLineEdit) Klassen eingesetzt.
    */
-  void setData(const QString &key, const QVariant &value, bool required = false);
+  void setData(const QString &key, const QVariant &value,
+               bool required = false);
 
 private Q_SLOTS:
   /**
-     @brief Button open Imaging clicked()
+   * @brief Button open Imaging clicked()
    */
   void openImageDialog();
 
   /**
-     @brief Signal Verarbeitung für @ref m_actionBar::s_saveClicked()
-     Kontrolliert ob @ref ip_id ein gültige Artikel ID enthält.
-        @li Ist das Ergebnis Negativ - wird @ref createSqlInsert aufgerufen.
-        @li Ist das Ergebnis Positiv - wird @ref createSqlUpdate aufgerufen.
+   * @brief Bild entfernen
+   * @param id
+   */
+  void removeImageDialog(int id);
+
+  /**
+   * @brief Signal Verarbeitung für @ref m_actionBar::s_saveClicked()
+   * Kontrolliert ob @ref ip_id ein gültige Artikel ID enthält.
+   * @li Ist das Ergebnis Negativ - wird @ref createSqlInsert aufgerufen.
+   * @li Ist das Ergebnis Positiv - wird @ref createSqlUpdate aufgerufen.
    */
   void saveData();
 
   /**
-   @brief Vor dem verlassen nach Änderungen suchen.
-   @note Die Methode verwendet @ref checkIsModified()
-
-   Wenn es keine Daten zu Speichern gibt, gehe weiter zu
-   @ref finalLeaveEditor, wenn doch, an dieser Stelle das
-   verlassen Verweigern und dem Nutzer einen MessageBox
-   Hinweis geben!
- */
+   * @brief Vor dem verlassen nach Änderungen suchen.
+   * @note Die Methode verwendet @ref checkIsModified()
+   *
+   * Wenn es keine Daten zu Speichern gibt, gehe weiter zu
+   * @ref finalLeaveEditor, wenn doch, an dieser Stelle das verlassen
+   * Verweigern und dem Nutzer einen MessageBox Hinweis geben!
+   */
   void checkLeaveEditor();
 
   /**
-    @brief Kommt nach @ref checkLeaveEditor() und beendet den Editor.
-    Wird auch von Signal @ref EditorActionBar::s_cancelClicked() aufgerufen!
-    Die Methode arbeitet folgende Operationen durch und beendet den Editor!
-     @li OpenLibrary.org Ausgabe leeren,
-     @li SQL Ergebnis Historie leeren,
-     @li alle Datenfelder leeren,
-     @li den ResetButton auschalten,
-     @li signal @ref s_leaveEditor an Parent senden!
-  */
+   * @brief Kommt nach @ref checkLeaveEditor() und beendet den Editor.
+   * Wird auch von Signal @ref EditorActionBar::s_cancelClicked() aufgerufen!
+   * Die Methode arbeitet folgende Operationen durch und beendet den Editor!
+   *  @li OpenLibrary.org Ausgabe leeren,
+   *  @li SQL Ergebnis Historie leeren,
+   *  @li alle Datenfelder leeren,
+   *  @li den ResetButton auschalten,
+   *  @li signal @ref s_leaveEditor an Parent senden!
+   */
   void finalLeaveEditor();
 
 protected:
   /**
-    @brief Fange @ref QEvent::EnabledChange ab!
-    Lade Datenfelder nur wenn das Fenster Aktiviert wurde!
-    Um fehlerhafte Tastenbindungen oder eingaben zu verhindern
-    ist das Fenster im Standard erst mal deaktiviert.
-    Und wird erst Aktiviert, wenn von StackedWidget aufgerufen.
-    @note Für Unterklassen die eine SQL Abfrage erfordern,
-       kann hier die "loadDataset" Methode aufgerufen werden.
-  */
+   * @brief Fange @ref QEvent::EnabledChange ab!
+   * Lade Datenfelder nur wenn das Fenster Aktiviert wurde!
+   * Um fehlerhafte Tastenbindungen oder eingaben zu verhindern
+   * ist das Fenster im Standard erst mal deaktiviert.
+   * Und wird erst Aktiviert, wenn von StackedWidget aufgerufen.
+   * @note Für Unterklassen die eine SQL Abfrage erfordern,
+   * kann hier die "loadDataset" Methode aufgerufen werden.
+   */
   virtual void changeEvent(QEvent *event);
 
 public Q_SLOTS:
   /**
-     @brief Methode für Zurücksetzen Button
+   * @brief Methode für Zurücksetzen Button
    */
   void restoreDataset();
 
@@ -230,10 +223,14 @@ public:
   explicit PrintsEditor(QWidget *parent = nullptr);
 
   /**
-    @brief Wenn Bearbeiten darf der Eintrag nicht 0 sein!
-    @param condition Abfragekorpus @i ohne WHERE
-  */
+   * @brief Wenn Bearbeiten darf der Eintrag nicht 0 sein!
+   * @param condition Abfragekorpus @i ohne WHERE
+   */
   void editPrintsEntry(const QString &condition);
+
+  /**
+   * @brief Neuen EIntrag erstellen
+   */
   void createPrintsEntry();
 };
 

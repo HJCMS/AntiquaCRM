@@ -128,6 +128,12 @@ public:
   const QString tableName();
 
   /**
+   * @brief Xml Autofill Completer
+   * @ref Autofill
+   */
+  void loadXmlCompleter(const QString &fieldname);
+
+  /**
    * @brief Zusatz für Schlüsselwörter
    * @note Wird nur von ib_keyword benötigt!
    */

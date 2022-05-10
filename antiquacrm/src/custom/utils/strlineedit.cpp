@@ -2,11 +2,12 @@
 // vim: set fileencoding=utf-8
 
 #include "strlineedit.h"
+#include "autofill.h"
 
 #include <QDebug>
+#include <QHBoxLayout>
 #include <QRegExp>
 #include <QRegularExpression>
-#include <QHBoxLayout>
 
 StrLineEdit::StrLineEdit(QWidget *parent)
     : UtilsMain{parent}, p_table("ui_autofill_keywords") {
@@ -93,6 +94,17 @@ void StrLineEdit::skipReturnPressed() { setModified(true); }
 void StrLineEdit::setTableName(const QString &table) { p_table = table; }
 
 const QString StrLineEdit::tableName() { return p_table; }
+
+void StrLineEdit::loadXmlCompleter(const QString &fieldname) {
+  if (!fieldname.isEmpty()) {
+    Autofill *autofill = new Autofill(this);
+    QCompleter *cpl = autofill->loadAutofill(fieldname);
+    if (cpl != nullptr) {
+      m_lineEdit->setClearButtonEnabled(true);
+      m_lineEdit->setCompleter(cpl);
+    }
+  }
+}
 
 void StrLineEdit::loadStorageKeywords() {
   // Nur wenn Autovervollständigen an ist, einschalten!

@@ -119,6 +119,11 @@ Q_SIGNALS:
    */
   void askToRemoveRow(int row);
 
+  /**
+   * @brief Benachrichtigung Doppelter Eintrag
+   */
+  void duplicateEntry();
+
 public Q_SLOTS:
   /**
    * @brief Such/Einfügen Felder nach dem einfügen leeren.

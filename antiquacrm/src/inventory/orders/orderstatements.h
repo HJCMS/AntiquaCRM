@@ -33,17 +33,12 @@
  * @param id - Artikel Id
  * @return SQL Query
  */
-static const QString defaultQuery(int id = 0) {
-  QString hh(QObject::tr("Hours"));
-  QString dd(QObject::tr("Days"));
-  QString mm(QObject::tr("Months"));
+static const QString defaultOrdersQuery(int id = 0) {
   QString fs("a.o_id,a.o_since,a.o_order_status,a.o_payment_status,");
   fs.append("CASE WHEN c.c_company=true THEN c.c_company_name ELSE ");
   fs.append("concat_ws(' ',c.c_firstname,c.c_lastname) END AS costumer,");
   fs.append("d.d_name,a.o_locked,a.o_closed,");
-  fs.append("TO_CHAR(age(CURRENT_TIMESTAMP,o_since),");
-  fs.append("'HH:MI \"" + hh + "\" DD \"" + dd + "\"");
-  fs.append(" mm \"" + mm + "\"') AS age");
+  fs.append("age(CURRENT_DATE,a.o_since) as age");
 
   QString sql("SELECT " + fs + " ");
   sql.append("FROM inventory_orders AS a ");

@@ -11,7 +11,7 @@
 #include <QDebug>
 #include <QLocale>
 #include <QString>
-#include <QTime>
+#include <QDateTime>
 #include <QVariant>
 
 /* QtSql */
@@ -33,6 +33,11 @@ OrdersTableModel::OrdersTableModel(QObject *parent) : QSqlQueryModel{parent} {
           this, SLOT(update(const QModelIndex &, const QModelIndex &)));
 }
 
+const QString OrdersTableModel::displayDate(const QVariant &value) const {
+  QDateTime dt(value.toDateTime());
+  return QLocale::system().toString(dt, "dd MMMM yyyy");
+}
+
 void OrdersTableModel::update(const QModelIndex &topLeft,
                               const QModelIndex &bottomRight) {
   if (topLeft.isValid() || bottomRight.isValid())
@@ -51,7 +56,7 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
     return item.toUInt();
 
   case 1: // o_since
-    return item.toDateTime().date().toString(Qt::RFC2822Date);
+    return displayDate(item);
 
   case 2: // o_order_status
   {
@@ -91,17 +96,7 @@ QVariant OrdersTableModel::headerData(int section, Qt::Orientation orientation,
     return dummy;
 
   if (role == Qt::DecorationRole) {
-    switch (section) {
-    case 2:
-    case 3:
-      return myIcon("autostart");
-
-    case 4:
-      return myIcon("edit_group");
-
-    default:
-      return dummy;
-    };
+    return myIcon("autostart");
   }
 
   if (role != Qt::DisplayRole)

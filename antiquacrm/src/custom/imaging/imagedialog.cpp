@@ -75,6 +75,8 @@ ImageDialog::ImageDialog(qulonglong id, QWidget *parent)
   connect(m_buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
   connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
   connect(this, SIGNAL(s_imageLoaded(bool)), m_commit, SLOT(setEnabled(bool)));
+
+  setSourceTarget();
 }
 
 void ImageDialog::rotateImage(qreal r) {
@@ -88,6 +90,14 @@ void ImageDialog::rotateImage(qreal r) {
   if (!out.isNull()) {
     m_imgView->setImage(out);
     m_imgView->update();
+  }
+}
+
+void ImageDialog::setSourceTarget() {
+  ApplSettings cfg;
+  sourceDir.setPath(cfg.value("imaging/sourcepath").toString());
+  if (sourceDir.exists()) {
+    findImageSourceFiles();
   }
 }
 
@@ -172,14 +182,5 @@ void ImageDialog::openFileDialog() {
 }
 
 const QImage ImageDialog::getImage() { return m_imgView->image(); }
-
-bool ImageDialog::setSourceTarget(const QString &path) {
-  sourceDir.setPath(path);
-  if (sourceDir.exists()) {
-    findImageSourceFiles();
-    return true;
-  }
-  return false;
-}
 
 const QString ImageDialog::sourceTarget() { return sourceDir.absolutePath(); }

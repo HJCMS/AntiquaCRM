@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ISBNREQUEST_H
-#define ISBNREQUEST_H
+#ifndef ISBNREQUEST_NETWORKING_H
+#define ISBNREQUEST_NETWORKING_H
 
 #include <QJsonArray>
 #include <QJsonObject>
@@ -68,6 +68,9 @@ public:
     }
     @endcode
  */
+
+class Networker;
+
 class IsbnRequest : public QObject {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -78,7 +81,7 @@ private:
   const QString p_isbnKey;
   QUrl p_url;
   QNetworkReply *m_reply;
-  QNetworkAccessManager *m_manager;
+  Networker *m_manager;
   QJsonObject p_respJsonObject;
   bool setManager();
   void read(const QJsonObject &);
@@ -86,8 +89,6 @@ private:
 
 private Q_SLOTS:
   void replyFinished(QNetworkReply *);
-  void slotError(QNetworkReply::NetworkError);
-  void slotSslErrors(QList<QSslError>);
   void slotReadyRead();
 
 Q_SIGNALS:
@@ -100,4 +101,4 @@ public:
   ~IsbnRequest();
 };
 
-#endif // ISBNREQUEST_H
+#endif // ISBNREQUEST_NETWORKING_H

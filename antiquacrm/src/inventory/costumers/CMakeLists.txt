@@ -29,6 +29,7 @@ SET (subproject_SOURCES
 )
 
 SET (subproject_HEADERS
+  costumerstatements.h
   costumerbillinginfo.h
   costumercontact.h
   costumeroverview.h

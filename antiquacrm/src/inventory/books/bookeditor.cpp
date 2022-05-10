@@ -300,13 +300,7 @@ void BookEditor::setInputList() {
 
 void BookEditor::openImageDialog() {
   qulonglong id = ib_id->value().toLongLong();
-  ApplSettings cfg;
-  QString p = cfg.value("imaging/sourcepath").toString();
   ImageDialog *dialog = new ImageDialog(id, this);
-  if (!dialog->setSourceTarget(p)) {
-    qDebug() << Q_FUNC_INFO << id << "Invalid Source Target:" << p;
-    return;
-  }
   if (id >= 1)
     emit s_openImageEditor(id);
 
@@ -323,7 +317,7 @@ void BookEditor::removeImageDialog(int id) {
 
   QString image_id = QString::number(id);
   QString t(tr("Remove Image from Database"));
-  QString ask(tr("Do you realy wan't to delete the Image fom Database?"));
+  QString ask(tr("Do you realy wan't to delete the Image?"));
   QString m = QString("%1\n\nImage - Article ID: %2").arg(ask, image_id);
   QMessageBox::StandardButton set = QMessageBox::question(this, t, m);
   if (set == QMessageBox::Yes) {
@@ -599,6 +593,7 @@ void BookEditor::changeEvent(QEvent *event) {
   if (event->type() == QEvent::EnabledChange && isEnabled()) {
     ib_storage->loadDataset();
     ib_keyword->loadStorageKeywords();
+    ib_publisher->loadXmlCompleter("ib_publisher");
     ib_condition->loadDataset("condition");
     ib_designation->loadDataset("ib_designation");
   }

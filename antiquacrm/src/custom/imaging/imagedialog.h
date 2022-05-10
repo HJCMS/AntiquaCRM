@@ -90,6 +90,12 @@ private:
    */
   void rotateImage(qreal r);
 
+  /**
+     @brief setSourceTarget
+     Wuche im Verzeichnis nach der Bild ID
+   */
+  void setSourceTarget();
+
 private Q_SLOTS:
   /**
      @brief openFileDialog
@@ -130,14 +136,6 @@ public:
      @return QImage()
   */
   const QImage getImage();
-
-  /**
-     @brief setSourceTarget
-     Wuche im Verzeichnis nach der Bild ID
-     @param path
-     @return bool
-   */
-  bool setSourceTarget(const QString &path);
 
   /**
      @brief sourceTarget

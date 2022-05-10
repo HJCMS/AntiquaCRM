@@ -5,10 +5,10 @@
 #ifndef PRINTSTABLE_H
 #define PRINTSTABLE_H
 
+#include <QContextMenuEvent>
 #include <QHash>
 #include <QObject>
 #include <QString>
-#include <QContextMenuEvent>
 #include <QTableView>
 
 #include <SqlCore>
@@ -39,10 +39,14 @@ private:
 
 private Q_SLOTS:
   /**
-   @brief Suche Datensatz mit Index
-   Wenn vorhanden Sende Signal @ref s_articleSelected
-  */
+   * @brief Suche Datensatz mit Index
+   */
   int queryArticleID(const QModelIndex &);
+
+  /**
+   * @brief  Wenn vorhanden Sende Signal @ref s_articleSelected
+   */
+  void articleClicked(const QModelIndex &index);
 
   /**
    @brief Ableitung für @ref clickedGetArticleID

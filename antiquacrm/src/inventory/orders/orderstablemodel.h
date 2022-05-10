@@ -5,17 +5,21 @@
 #ifndef ORDERSTABLEMODEL_H
 #define ORDERSTABLEMODEL_H
 
-#include <QDateTime>
+#include <QDate>
 #include <QModelIndex>
 #include <QObject>
+#include <QSqlQueryModel>
+#include <QSqlRelation>
 #include <QString>
 #include <QVariant>
-#include <QSqlQueryModel>
 
 class OrdersTableModel : public QSqlQueryModel {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann (Undefined)")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
+
+private:
+  const QString displayDate(const QVariant &value) const;
 
 private Q_SLOTS:
   void update(const QModelIndex &, const QModelIndex &);

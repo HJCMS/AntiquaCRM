@@ -11,6 +11,7 @@ INCLUDE_DIRECTORIES (
 
 SET (subproject_LINKER
  AntiquaCore
+ Settings
  Utils
 )
 

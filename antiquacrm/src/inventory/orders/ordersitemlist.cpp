@@ -157,7 +157,11 @@ void OrdersItemList::insertArticle() {
 
   for (int r = 0; r < m_table->rowCount(); r++) {
     if (m_table->getArticleId(r) == p_payments.article()) {
-      emit statusMessage(tr("Duplicate Entry"));
+      QString msg("<p>");
+      msg.append(tr("Duplicate Entry"));
+      msg.append(": " + QString::number(p_payments.article()));
+      msg.append("</p>");
+      emit statusMessage(msg);
       return;
     }
   }

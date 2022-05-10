@@ -28,7 +28,7 @@ public:
   Q_ENUM(QueryType);
 
 private:
-  int maxRowCount = 2500;
+  int maxRowCount = 1000;
   HJCMS::SqlCore *m_sql;
   QModelIndex p_modelIndex;
   CostumersTableModel *m_tableModel;
@@ -62,9 +62,14 @@ public Q_SLOTS:
   void refreshView();
 
   /**
-   * Startet Abfrage ausgehend von Text/Sucheingabe
+   * @brief Verlaufsabfrage
    */
-  void queryStatement(const SearchStatement &);
+  void queryHistory(const QString &history);
+
+  /**
+   * Starte Abfrage ausgehend von Text/Sucheingabe
+   */
+  void queryStatement(const SearchStatement &search);
 
 public:
   explicit CostumerTableView(QWidget *parent = nullptr);

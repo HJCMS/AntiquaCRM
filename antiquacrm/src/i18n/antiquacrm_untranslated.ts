@@ -230,17 +230,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+109"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Do you realy wan&apos;t to delete the Image fom Database?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+59"/>
+        <location line="+60"/>
         <source>Missing Article ID for Update.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -260,7 +255,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-417"/>
+        <location line="-411"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -275,12 +270,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+395"/>
+        <location line="+181"/>
+        <source>Do you realy wan&apos;t to delete the Image?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+208"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-286"/>
+        <location line="-280"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -312,12 +312,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+185"/>
+        <location line="+179"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-296"/>
+        <location line="-290"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -358,7 +358,7 @@
 <context>
     <name>BooksTableModel</name>
     <message>
-        <location filename="../inventory/books/bookstablemodel.cpp" line="+106"/>
+        <location filename="../inventory/books/bookstablemodel.cpp" line="+111"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -811,7 +811,7 @@
 <context>
     <name>CostumerTableView</name>
     <message>
-        <location filename="../inventory/costumers/costumertableview.cpp" line="+74"/>
+        <location filename="../inventory/costumers/costumertableview.cpp" line="+70"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -834,7 +834,7 @@
 <context>
     <name>CostumersTableModel</name>
     <message>
-        <location filename="../inventory/costumers/costumerstablemodel.cpp" line="+48"/>
+        <location filename="../inventory/costumers/costumerstablemodel.cpp" line="+53"/>
         <source>Company</source>
         <translation type="unfinished"></translation>
     </message>
@@ -859,7 +859,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Fullname</source>
         <translation type="unfinished"></translation>
     </message>
@@ -879,7 +879,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-12"/>
         <source>Since</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1103,7 +1103,7 @@
 <context>
     <name>ISBNResults</name>
     <message>
-        <location filename="../inventory/books/isbnresults.cpp" line="+45"/>
+        <location filename="../inventory/books/isbnresults.cpp" line="+48"/>
         <location line="+12"/>
         <source>No Result: Search with %1</source>
         <translation type="unfinished"></translation>
@@ -1197,7 +1197,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+45"/>
         <source>Current Image Size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1212,7 +1212,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-105"/>
+        <location line="-115"/>
         <source>Open Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1271,14 +1271,6 @@
     <message>
         <location filename="../inventory/books/inventorybooks.cpp" line="+145"/>
         <source>Automatic search disabled in this mode. Press enter to start the search!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>InventoryCostumers</name>
-    <message>
-        <location filename="../inventory/costumers/inventorycostumers.cpp" line="+73"/>
-        <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1534,7 +1526,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+211"/>
+        <location line="+213"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1549,23 +1541,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Item removed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+19"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>Do you really want to close this order and pass it on to accounting?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-49"/>
-        <location line="+52"/>
+        <location line="-52"/>
+        <location line="+55"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1585,7 +1577,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+62"/>
         <source>Shipping Address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1598,7 +1590,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1689,7 +1681,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Duplicate Entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1738,7 +1730,7 @@
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../inventory/orders/orderstablemodel.cpp" line="+116"/>
+        <location filename="../inventory/orders/orderstablemodel.cpp" line="+111"/>
         <source>Since</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1748,7 +1740,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-55"/>
+        <location line="-45"/>
         <source>received</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1770,7 +1762,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+35"/>
         <source>Payment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1887,7 +1879,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>SSL/TLS Connection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1948,7 +1940,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>SSL Peer Connection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2192,7 +2184,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+49"/>
+        <source>Remove Image from Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do you realy wan&apos;t to delete the Image?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
         <source>Data saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2210,7 +2212,7 @@
 <context>
     <name>PrintsTable</name>
     <message>
-        <location filename="../inventory/prints/printstable.cpp" line="+117"/>
+        <location filename="../inventory/prints/printstable.cpp" line="+123"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2375,7 +2377,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../inventory/costumers/inventorycostumers.cpp" line="-48"/>
+        <location filename="../inventory/costumers/inventorycostumers.cpp" line="+27"/>
         <source>Sort by Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2447,21 +2449,6 @@
     <message>
         <location line="+1"/>
         <source>delivery completed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../inventory/orders/orderstatements.h" line="+37"/>
-        <source>Hours</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Days</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Months</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2707,7 +2694,7 @@
 <context>
     <name>StrLineEdit</name>
     <message>
-        <location filename="../custom/utils/strlineedit.cpp" line="+152"/>
+        <location filename="../custom/utils/strlineedit.cpp" line="+164"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>

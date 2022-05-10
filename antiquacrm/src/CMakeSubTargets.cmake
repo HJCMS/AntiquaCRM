@@ -13,6 +13,8 @@ SET (PROJECT_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/custom
  ${CMAKE_CURRENT_BINARY_DIR}/custom/assistant
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/assistant
+ ${CMAKE_CURRENT_BINARY_DIR}/custom/autofill
+ ${CMAKE_CURRENT_SOURCE_DIR}/custom/autofill
  ${CMAKE_CURRENT_BINARY_DIR}/custom/completer
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/completer
  ${CMAKE_CURRENT_BINARY_DIR}/custom/imaging
@@ -39,6 +41,8 @@ SET (PROJECT_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/inventory/prints
  ${CMAKE_CURRENT_BINARY_DIR}/plugins
  ${CMAKE_CURRENT_SOURCE_DIR}/plugins
+ ${CMAKE_CURRENT_BINARY_DIR}/xml
+ ${CMAKE_CURRENT_SOURCE_DIR}/xml
 )
 
 INCLUDE_DIRECTORIES (${PROJECT_INCLUDE_DIRS})
@@ -47,6 +51,7 @@ ADD_SUBDIRECTORY (core)
 ADD_SUBDIRECTORY (custom)
 ADD_SUBDIRECTORY (i18n)
 ADD_SUBDIRECTORY (inventory)
+ADD_SUBDIRECTORY (xml)
 ADD_SUBDIRECTORY (plugins)
 ADD_SUBDIRECTORY (icons)
 
@@ -59,6 +64,7 @@ Networking
 Utils
 Imaging
 Assistant
+Autofill
 InventoryBooks
 InventoryCostumers
 InventoryPrints

@@ -9,10 +9,10 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QLocale>
-#include <QString>
-#include <QVariant>
 #include <QSqlDatabase>
 #include <QSqlRecord>
+#include <QString>
+#include <QVariant>
 
 static const QString setHeaderTitel(const QString &t) {
   QString b;
@@ -25,6 +25,11 @@ static const QString setHeaderTitel(const QString &t) {
 CostumersTableModel::CostumersTableModel(QObject *parent)
     : QSqlQueryModel{parent} {
   setObjectName("CostumersTableModel");
+}
+
+const QString CostumersTableModel::displayDate(const QVariant &value) const {
+  QDateTime dt(value.toDateTime());
+  return QLocale::system().toString(dt, "dd MMMM yyyy");
 }
 
 QVariant CostumersTableModel::data(const QModelIndex &index, int role) const {
@@ -47,14 +52,14 @@ QVariant CostumersTableModel::data(const QModelIndex &index, int role) const {
   case 2: // company
     return (item.toString().trimmed() == "C") ? tr("Company") : tr("Personal");
 
-  case 3: // shurename
-  case 4: // phone
-  case 5: // mobil
-  case 6: // address
-    return item.toString().trimmed();
+  case 3:                     // since
+    return displayDate(item); //.toDateTime().date().toString(Qt::RFC2822Date);
 
-  case 7: // since
-    return item.toDateTime().date().toString(Qt::RFC2822Date);
+  case 4: // shurename
+  case 5: // phone
+  case 6: // mobil
+  case 7: // address
+    return item.toString().trimmed();
 
   default:
     return item.toString().trimmed();
@@ -78,20 +83,20 @@ QVariant CostumersTableModel::headerData(int section,
     case 2: // company
       return setHeaderTitel(tr("Type"));
 
-    case 3: // shurename
+    case 3: // since
+      return setHeaderTitel(tr("Since"));
+
+    case 4: // shurename
       return setHeaderTitel(tr("Fullname"));
 
-    case 4: // phone
+    case 5: // phone
       return setHeaderTitel(tr("Phone"));
 
-    case 5: // mobil
+    case 6: // mobil
       return setHeaderTitel(tr("Mobil"));
 
-    case 6: // address
+    case 7: // address
       return setHeaderTitel(tr("Address"));
-
-    case 7: // since
-      return setHeaderTitel(tr("Since"));
 
     default:
       return QString("%1").arg(section);

@@ -8,9 +8,11 @@
 #include "editcostumer.h"
 #include "myicontheme.h"
 #include "searchbar.h"
+#include "statsactionbar.h"
 
 #include <QDebug>
 #include <QHBoxLayout>
+#include <QLabel>
 #include <QLayout>
 #include <QPushButton>
 #include <QVBoxLayout>
@@ -64,17 +66,9 @@ InventoryCostumers::InventoryCostumers(QWidget *parent) : Inventory{parent} {
   m_tableView = new CostumerTableView(this);
   siteOneLayout->addWidget(m_tableView);
 
-  QWidget *m_statusBar = new QWidget(this);
-  QHBoxLayout *statusLayout = new QHBoxLayout(m_statusBar);
-  QPushButton *btn_refresh = new QPushButton(m_statusBar);
-  m_statusInfo = new QLabel(m_statusBar);
-  statusLayout->addWidget(m_statusInfo);
-  statusLayout->addStretch(1);
-  btn_refresh->setText(tr("Refresh"));
-  btn_refresh->setIcon(myIcon("reload"));
-  statusLayout->addWidget(btn_refresh);
-  m_statusBar->setLayout(statusLayout);
-  siteOneLayout->addWidget(m_statusBar);
+  m_statsActionBar = new StatsActionBar(this);
+  m_statsActionBar->setObjectName("costumers_statusbar");
+  siteOneLayout->addWidget(m_statsActionBar);
 
   siteOneWidget->setLayout(siteOneLayout);
   m_stackedWidget->insertWidget(0, siteOneWidget);
@@ -102,15 +96,19 @@ InventoryCostumers::InventoryCostumers(QWidget *parent) : Inventory{parent} {
   connect(m_tableView, SIGNAL(s_createOrder(int)), this,
           SIGNAL(s_createOrder(int)));
 
-  connect(m_tableView, SIGNAL(s_reportQuery(const QString &)), m_statusInfo,
-          SLOT(setText(const QString &)));
-
-  connect(m_editCostumer, SIGNAL(s_postMessage(const QString &)), this,
-          SLOT(displayMessageBox(const QString &)));
+  connect(m_tableView, SIGNAL(s_reportQuery(const QString &)), m_statsActionBar,
+          SLOT(showMessage(const QString &)));
 
   connect(m_editCostumer, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
 
-  connect(btn_refresh, SIGNAL(clicked()), m_tableView, SLOT(refreshView()));
+  connect(m_statsActionBar, SIGNAL(s_queryHistory(const QString &)),
+          m_tableView, SLOT(queryHistory(const QString &)));
+
+  connect(m_statsActionBar, SIGNAL(s_refreshView()), m_tableView,
+          SLOT(refreshView()));
+
+  connect(m_editCostumer, SIGNAL(s_postMessage(const QString &)), this,
+          SLOT(displayMessageBox(const QString &)));
 }
 
 void InventoryCostumers::openEditor(const QString &costumer) {

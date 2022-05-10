@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "isbnrequest.h"
+#include "networker.h"
 
 #include <QByteArray>
 #include <QDebug>
@@ -153,7 +154,7 @@ IsbnRequest::IsbnRequest(const QString &isbn, QObject *parent)
 }
 
 bool IsbnRequest::setManager() {
-  m_manager = new QNetworkAccessManager(this);
+  m_manager = new Networker(this);
   m_manager->setObjectName("NetworkAccessManager");
   connect(m_manager, SIGNAL(finished(QNetworkReply *)), this,
           SLOT(replyFinished(QNetworkReply *)));
@@ -204,31 +205,6 @@ void IsbnRequest::replyFinished(QNetworkReply *reply) {
   emit requestFinished((m_isbn->data().size() > 1));
 }
 
-void IsbnRequest::slotError(QNetworkReply::NetworkError err) {
-  switch (err) {
-  case QNetworkReply::ConnectionRefusedError:
-    qDebug() << "Access ConnectionRefusedError";
-    return;
-
-  case QNetworkReply::TimeoutError:
-    qDebug() << "Access TimeoutError";
-    return;
-
-  case QNetworkReply::HostNotFoundError:
-    qDebug() << "Access HostNotFoundError";
-    return;
-
-  default:
-    qDebug() << "Unknown Error:" << err;
-    return;
-  }
-}
-
-void IsbnRequest::slotSslErrors(QList<QSslError>) {
-  qDebug() << "slotSslErrors"
-           << "TODO";
-}
-
 void IsbnRequest::slotReadyRead() {
   QVector<char> buf;
   QByteArray response;
@@ -250,19 +226,13 @@ void IsbnRequest::slotReadyRead() {
 }
 
 void IsbnRequest::triggerRequest() {
-  QNetworkRequest request(p_url);
-  // https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
-  request.setRawHeader(QByteArray("Accept-Language"),
-                       QByteArray("de, de_DE.utf8;q=0.8, en;q=0.7"));
-  // grep -i json /etc/mime.types
-  request.setRawHeader(QByteArray("Accept"),
-                       QByteArray("text/*, application/json; charset=utf8"));
+  QNetworkRequest request = Networker::getRequest(p_url);
   if (setManager()) {
     m_reply = m_manager->get(request);
-    connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
+    connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), m_manager,
             SLOT(slotError(QNetworkReply::NetworkError)));
 
-    connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
+    connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), m_manager,
             SLOT(slotSslErrors(QList<QSslError>)));
 
     connect(m_reply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));

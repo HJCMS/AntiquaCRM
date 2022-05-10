@@ -21,6 +21,8 @@ class OrderPaymentsTable : public QTableWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  int articleTableCell = 1;
+
   /**
    * @brief Einen neuen QTableWidgetItem erstellen.
    */

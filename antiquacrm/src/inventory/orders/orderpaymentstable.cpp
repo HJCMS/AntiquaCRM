@@ -16,6 +16,7 @@ OrderPaymentsTable::OrderPaymentsTable(QWidget *parent) : QTableWidget{parent} {
   setObjectName("order_payments_table");
   setColumnCount(6);
   addHeaderItem(0, "ID", tr("payment id"));
+  articleTableCell = 1;
   addHeaderItem(1, tr("Article"), tr("article id"));
   addHeaderItem(2, tr("Price"), tr("selling price"));
   addHeaderItem(3, tr("Retail Price"), tr("Retail Price"));
@@ -47,15 +48,13 @@ void OrderPaymentsTable::contextMenuEvent(QContextMenuEvent *ev) {
   QAction *ac_remove =
       m->addAction(myIcon("delete_table_row"), tr("delete selected article"));
   ac_remove->setObjectName("ac_context_remove_row");
-  // ac_open->setEnabled(b);
   connect(ac_remove, SIGNAL(triggered()), this, SLOT(removeTableItem()));
-  qDebug() << Q_FUNC_INFO;
   m->exec(ev->globalPos());
   delete m;
 }
 
 int OrderPaymentsTable::getArticleId(int row) const {
-  QTableWidgetItem *item = QTableWidget::item(row, 0);
+  QTableWidgetItem *item = QTableWidget::item(row, articleTableCell);
   if (item != nullptr)
     return item->text().toInt();
 

@@ -57,7 +57,8 @@ const QIcon ViewSettings::getPageIcon() { return pageIcon; }
 void ViewSettings::loadSectionConfig() {
   config->beginGroup("application");
   QFont font = qApp->font();
-  if (font.fromString(config->value("font", font.family()).toString())) {
+  if (!font.fromString(config->value("font").toString())) {
+    font.setFamily(config->value("font_family").toString());
     font.setPointSize(config->value("font_size", font.pointSize()).toInt());
   }
   view_font_config->setFont(font);
@@ -66,6 +67,9 @@ void ViewSettings::loadSectionConfig() {
 
 void ViewSettings::saveSectionConfig() {
   QFont font = view_font_config->font();
-  config->setValue("application/font", font.toString());
-  config->setValue("application/font_size", font.pointSize());
+  config->beginGroup("application");
+  config->setValue("font", font.toString());
+  config->setValue("font_size", font.pointSize());
+  config->setValue("font_family", font.family());
+  config->endGroup();
 }

@@ -1,26 +1,18 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
 
-SET(_subproject "Networking")
-
-INCLUDE_DIRECTORIES (
-  ${PROJECT_INCLUDE_DIRS}
-  ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}
-)
+SET(_subproject "Autofill")
 
 SET (subproject_LINKER
  AntiquaCore
 )
 
 SET (subproject_SOURCES
-  networker.cpp
-  isbnrequest.cpp
+  autofill.cpp
 )
 
 SET (subproject_HEADERS
-  networker.h
-  isbnrequest.h
+  autofill.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC
@@ -36,7 +28,6 @@ SET_TARGET_PROPERTIES (${_subproject} PROPERTIES
 TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
-  Qt${QT_VERSION_MAJOR}::Network
+  Qt${QT_VERSION_MAJOR}::Xml
   ${subproject_LINKER}
 )
-

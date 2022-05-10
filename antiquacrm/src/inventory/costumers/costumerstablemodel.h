@@ -5,6 +5,7 @@
 #ifndef COSTUMERSTABLEMODEL_H
 #define COSTUMERSTABLEMODEL_H
 
+#include <QDate>
 #include <QModelIndex>
 #include <QObject>
 #include <QString>
@@ -15,6 +16,9 @@ class CostumersTableModel : public QSqlQueryModel {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
+
+private:
+  const QString displayDate(const QVariant &value) const;
 
 public:
   explicit CostumersTableModel(QObject *parent = nullptr);

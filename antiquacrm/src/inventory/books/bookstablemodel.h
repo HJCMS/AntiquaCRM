@@ -16,6 +16,9 @@ class BooksTableModel : public QSqlQueryModel {
   Q_CLASSINFO("Author", "Jürgen Heinemann (Undefined)")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
+private:
+  const QString displayDate(const QVariant &value) const;
+
 public:
   explicit BooksTableModel(QObject *parent = nullptr);
   QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;

@@ -5,6 +5,7 @@
 #include "antiqua_global.h"
 #include "applsettings.h"
 #include "costumerstablemodel.h"
+#include "costumerstatements.h"
 #include "myicontheme.h"
 #include "searchbar.h"
 #include "sqlcore.h"
@@ -19,11 +20,6 @@
 #include <QSignalMapper>
 #include <QStringList>
 #include <QTime>
-
-// Schalte SQL ausgaben ein
-#ifndef SHOW_SQL_QUERIES
-#define SHOW_SQL_QUERIES false
-#endif
 
 CostumerTableView::CostumerTableView(QWidget *parent) : QTableView{parent} {
   setObjectName("CostumerTableView");
@@ -152,6 +148,38 @@ void CostumerTableView::refreshView() {
   }
 }
 
+void CostumerTableView::queryHistory(const QString &history) {
+  if (!isVisible())
+    return;
+
+  QString q = c_sqlTableQueryBody();
+  if (history.contains("#today")) {
+    q.append("DATE(c_changed)=(DATE(now()))");
+  } else if (history.contains("#yesterday")) {
+    q.append("DATE(c_changed)=(DATE(now() - INTERVAL '1 day'))");
+  } else if (history.contains("#last7days")) {
+    q.append("DATE(c_changed)>=(DATE(now() - INTERVAL '7 days'))");
+  } else if (history.contains("#thismonth")) {
+    q.append("EXTRACT(MONTH FROM c_changed)=(EXTRACT(MONTH FROM now()))");
+  } else if (history.contains("#thisyear")) {
+    q.append("EXTRACT(ISOYEAR FROM c_changed)=(EXTRACT(YEAR FROM now()))");
+  } else {
+    return;
+  }
+  q.append(" ORDER BY c_id DESC LIMIT ");
+  q.append(QString::number(maxRowCount));
+  q.append(";");
+
+  if (SHOW_SQL_QUERIES)
+    qDebug() << Q_FUNC_INFO << q;
+
+  if (sqlExecQuery(q)) {
+    resizeRowsToContents();
+    resizeColumnsToContents();
+    p_historyQuery = q;
+  }
+}
+
 void CostumerTableView::queryStatement(const SearchStatement &search) {
   QString str(search.SearchString);
   QRegExp reg("\\s+");
@@ -165,16 +193,7 @@ void CostumerTableView::queryStatement(const SearchStatement &search) {
     clause.append("(c_company_name ILIKE '%" + s + "%')");
   }
 
-  QString q("SELECT c_id AS id, c_purchases,");
-  q.append("(CASE WHEN c_company IS TRUE THEN 'C' ELSE 'P' END) AS company,");
-  q.append("concat_ws(' ',c_title,c_firstname,c_lastname) AS shurename,");
-  q.append("(CASE WHEN c_phone_0 IS NULL THEN c_phone_1 ELSE c_phone_0 END) AS "
-           "phone,");
-  q.append("(CASE WHEN c_mobil_0 IS NULL THEN c_mobil_1 ELSE c_mobil_0 END) AS "
-           "mobil,");
-  q.append("concat_ws(' ',c_postalcode,c_location,c_street) AS address,");
-  q.append("c_since AS since ");
-  q.append("FROM public.costumers WHERE c_id!=0 AND ");
+  QString q = c_sqlTableQueryBody();
   q.append(clause.join(" OR "));
   q.append(" ORDER BY " + search.SearchField);
   q.append(" ASC;");

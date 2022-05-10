@@ -53,8 +53,9 @@ bool MApplication::isRunning() {
 void MApplication::initThemeStyle() {
   setStyle(QStyleFactory::create("Fusion"));
   QFont font = qApp->font();
-  if (font.fromString(m_settings->value("font", font.family()).toString())) {
-    setFont(font);
+  QString fontdef = m_settings->value("application/font", QString()).toString();
+  if (!fontdef.isEmpty() && font.fromString(fontdef)) {
+    qApp->setFont(font);
   }
 }
 

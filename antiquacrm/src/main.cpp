@@ -7,6 +7,7 @@
 
 #include <QApplication>
 #include <QDir>
+#include <QLocale>
 #include <QString>
 
 int main(int argc, char *argv[]) {
@@ -16,6 +17,7 @@ int main(int argc, char *argv[]) {
   antiqua->setApplicationDisplayName(ANTIQUACRM_NAME);
   antiqua->setDesktopFileName(ANTIQUACRM_NAME);
   antiqua->setOrganizationDomain(HJCMS_CONFIG_DOMAIN);
+  antiqua->initThemeStyle();
 
   if (antiqua->isRunning()) {
     qWarning("Application is already started!");
@@ -23,7 +25,6 @@ int main(int argc, char *argv[]) {
   }
 
   Q_INIT_RESOURCE(icons);
-  antiqua->initThemeStyle();
 
   return antiqua->exec();
 }

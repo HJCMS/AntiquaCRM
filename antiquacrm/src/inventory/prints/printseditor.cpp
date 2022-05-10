@@ -265,6 +265,9 @@ PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
   mainLayout->addWidget(m_actionBar);
 
   connect(m_imageToolBar, SIGNAL(s_openImage()), this, SLOT(openImageDialog()));
+  connect(m_imageToolBar, SIGNAL(s_deleteImage(int)), this,
+          SLOT(removeImageDialog(int)));
+
   connect(m_actionBar, SIGNAL(s_cancelClicked()), this,
           SLOT(finalLeaveEditor()));
   connect(m_actionBar, SIGNAL(s_restoreClicked()), this,
@@ -287,13 +290,7 @@ void PrintsEditor::setInputList() {
 
 void PrintsEditor::openImageDialog() {
   qulonglong id = ip_id->value().toLongLong();
-  ApplSettings cfg;
-  QString p = cfg.value("imaging/sourcepath").toString();
   ImageDialog *dialog = new ImageDialog(id, this);
-  if (!dialog->setSourceTarget(p)) {
-    qDebug() << Q_FUNC_INFO << id << "Invalid Source Target:" << p;
-    return;
-  }
   if (id >= 1)
     emit s_openImageEditor(id);
 
@@ -301,6 +298,26 @@ void PrintsEditor::openImageDialog() {
     QImage img = dialog->getImage();
     if (!img.isNull())
       m_imageView->addNewImage(id, img);
+  }
+}
+
+void PrintsEditor::removeImageDialog(int id) {
+  if (ip_id->value().toInt() != id)
+    return;
+
+  QString image_id = QString::number(id);
+  QString t(tr("Remove Image from Database"));
+  QString ask(tr("Do you realy wan't to delete the Image?"));
+  QString m = QString("%1\n\nImage - Article ID: %2").arg(ask, image_id);
+  QMessageBox::StandardButton set = QMessageBox::question(this, t, m);
+  if (set == QMessageBox::Yes) {
+    QSqlQuery q = m_sql->query(
+        "DELETE FROM inventory_images WHERE im_id=" + image_id + ";");
+    if (q.lastError().isValid()) {
+      qWarning("Delete Image SQL-Error:\n%s", qPrintable(m_sql->lastError()));
+    } else {
+      m_imageView->clear();
+    }
   }
 }
 

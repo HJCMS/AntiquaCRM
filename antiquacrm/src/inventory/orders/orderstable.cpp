@@ -132,7 +132,7 @@ void OrdersTable::contextMenuEvent(QContextMenuEvent *ev) {
 
 void OrdersTable::refreshView() { initOrders(); }
 
-void OrdersTable::initOrders() { sqlExecQuery(defaultQuery()); }
+void OrdersTable::initOrders() { sqlExecQuery(defaultOrdersQuery()); }
 
 void OrdersTable::updateOrderStatus() {
   QModelIndexList list = selectedIndexes();
@@ -149,7 +149,7 @@ void OrdersTable::updateOrderStatus() {
       if (set == QDialog::Accepted) {
         int status = dialog.index();
         if (sqlExecQuery(progresUpdate(article_id, status)))
-          sqlExecQuery(defaultQuery());
+          sqlExecQuery(defaultOrdersQuery());
 
         return; // end loop
       }
@@ -173,7 +173,7 @@ void OrdersTable::updatePaymentStatus() {
         bool status = dialog.status();
         // qDebug() << Q_FUNC_INFO << "PaymentStatus::Close" << status;
         if (sqlExecQuery(paymentUpdate(article_id, status)))
-          sqlExecQuery(defaultQuery());
+          sqlExecQuery(defaultOrdersQuery());
 
         return; // end loop
       }

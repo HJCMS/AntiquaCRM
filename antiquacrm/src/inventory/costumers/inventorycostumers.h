@@ -8,11 +8,11 @@
 #include "inventory.h"
 
 #include <QObject>
-#include <QLabel>
 #include <QStackedWidget>
 #include <QWidget>
 
 class SearchBar;
+class StatsActionBar;
 class EditCostumer;
 class CostumerTableView;
 
@@ -45,9 +45,9 @@ private:
   CostumerTableView *m_tableView;
 
   /**
-   * @brief Status Informationen
+   * @brief Status Informationen und Verlauf
    */
-  QLabel *m_statusInfo;
+  StatsActionBar *m_statsActionBar;
 
   /**
     @}

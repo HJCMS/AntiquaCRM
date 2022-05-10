@@ -97,6 +97,7 @@ PgSQLSettings::PgSQLSettings(QWidget *parent)
   layout->addWidget(group_connect);
 
   // BEGIN SSL/TLS
+  // https://www.postgresql.org/docs/current/ssl-tcp.html
   m_tls = new QGroupBox(this);
   m_tls->setEnabled(false);
   m_tls->setTitle(tr("SSL/TLS Connection"));
@@ -154,6 +155,7 @@ PgSQLSettings::PgSQLSettings(QWidget *parent)
   // END SSL/TLS
 
   // BEGIN SSL Peer
+  // https://www.postgresql.org/docs/current/libpq-ssl.html
   ssl_peer = new QGroupBox(this);
   ssl_peer->setCheckable(true);
   ssl_peer->setChecked(false);

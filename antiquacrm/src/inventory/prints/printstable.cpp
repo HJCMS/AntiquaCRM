@@ -62,7 +62,7 @@ PrintsTable::PrintsTable(QWidget *parent) : QTableView{parent} {
   tHeader->setStretchLastSection(true);
 
   connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
-          SLOT(queryArticleID(const QModelIndex &)));
+          SLOT(articleClicked(const QModelIndex &)));
 }
 
 int PrintsTable::queryArticleID(const QModelIndex &index) {
@@ -72,6 +72,12 @@ int PrintsTable::queryArticleID(const QModelIndex &index) {
     return i;
   }
   return -1;
+}
+
+void PrintsTable::articleClicked(const QModelIndex &index) {
+  int i = queryArticleID(index);
+  if (i >= 1)
+    emit s_articleSelected(i);
 }
 
 void PrintsTable::openByContext() {
@@ -152,6 +158,9 @@ void PrintsTable::refreshView() {
 }
 
 void PrintsTable::queryHistory(const QString &str) {
+  if (!isVisible())
+    return;
+
   QString q("SELECT ");
   q.append(querySelect());
   q.append(queryTables());

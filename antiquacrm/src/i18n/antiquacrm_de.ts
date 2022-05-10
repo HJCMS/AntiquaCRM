@@ -230,17 +230,12 @@
         <translation>Umschreibung</translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+109"/>
         <source>Remove Image from Database</source>
         <translation>Entferne Bild aus der Datenbank</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Do you realy wan&apos;t to delete the Image fom Database?</source>
-        <translation>Möchten Sie das Bild wirklich aus der Datenbank entfernen?</translation>
-    </message>
-    <message>
-        <location line="+59"/>
+        <location line="+60"/>
         <source>Missing Article ID for Update.</source>
         <translation>Keine Artikel ID für Update vorhanden.</translation>
     </message>
@@ -260,7 +255,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-417"/>
+        <location line="-411"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -275,12 +270,17 @@
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
     <message>
-        <location line="+395"/>
+        <location line="+181"/>
+        <source>Do you realy wan&apos;t to delete the Image?</source>
+        <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
+    </message>
+    <message>
+        <location line="+208"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
     <message>
-        <location line="-286"/>
+        <location line="-280"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -312,12 +312,12 @@
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="+185"/>
+        <location line="+179"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-296"/>
+        <location line="-290"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -358,7 +358,7 @@
 <context>
     <name>BooksTableModel</name>
     <message>
-        <location filename="../inventory/books/bookstablemodel.cpp" line="+106"/>
+        <location filename="../inventory/books/bookstablemodel.cpp" line="+111"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
@@ -811,7 +811,7 @@
 <context>
     <name>CostumerTableView</name>
     <message>
-        <location filename="../inventory/costumers/costumertableview.cpp" line="+74"/>
+        <location filename="../inventory/costumers/costumertableview.cpp" line="+70"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
@@ -834,7 +834,7 @@
 <context>
     <name>CostumersTableModel</name>
     <message>
-        <location filename="../inventory/costumers/costumerstablemodel.cpp" line="+48"/>
+        <location filename="../inventory/costumers/costumerstablemodel.cpp" line="+53"/>
         <source>Company</source>
         <translation>Unternehmen</translation>
     </message>
@@ -859,7 +859,7 @@
         <translation>Typ</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Fullname</source>
         <translation>Name</translation>
     </message>
@@ -879,7 +879,7 @@
         <translation>Adresse</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-12"/>
         <source>Since</source>
         <translation>Erstellt am</translation>
     </message>
@@ -1103,7 +1103,7 @@
 <context>
     <name>ISBNResults</name>
     <message>
-        <location filename="../inventory/books/isbnresults.cpp" line="+45"/>
+        <location filename="../inventory/books/isbnresults.cpp" line="+48"/>
         <location line="+12"/>
         <source>No Result: Search with %1</source>
         <translation>Kein Ergebnis, suche mit %1</translation>
@@ -1197,7 +1197,7 @@
         <translation>Schließt das Fenster ohne speichern.</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+45"/>
         <source>Current Image Size</source>
         <translation>Aktuelle Bildgröße</translation>
     </message>
@@ -1212,7 +1212,7 @@
         <translation>Warnung - Mehr als ein Bild gefunden!</translation>
     </message>
     <message>
-        <location line="-105"/>
+        <location line="-115"/>
         <source>Open Image</source>
         <translation>Öffne Bild</translation>
     </message>
@@ -1272,14 +1272,6 @@
         <location filename="../inventory/books/inventorybooks.cpp" line="+145"/>
         <source>Automatic search disabled in this mode. Press enter to start the search!</source>
         <translation>Automatische Suche in diesem Modus deaktiviert. Drücken Sie die Eingabetaste, um die Suche zu starten!</translation>
-    </message>
-</context>
-<context>
-    <name>InventoryCostumers</name>
-    <message>
-        <location filename="../inventory/costumers/inventorycostumers.cpp" line="+73"/>
-        <source>Refresh</source>
-        <translation>Erneuern</translation>
     </message>
 </context>
 <context>
@@ -1534,7 +1526,7 @@
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
-        <location line="+211"/>
+        <location line="+213"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
@@ -1549,23 +1541,23 @@
         <translation>Löschen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Item removed!</source>
         <translation>Eintrag entfernt!</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+19"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>Do you really want to close this order and pass it on to accounting?</source>
         <translation>Möchten Sie wirklich diesen Auftrag schließen und an die Buchhaltung weiter reichen?</translation>
     </message>
     <message>
-        <location line="-49"/>
-        <location line="+52"/>
+        <location line="-52"/>
+        <location line="+55"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
@@ -1585,7 +1577,7 @@
         <translation>Hinweis</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+62"/>
         <source>Shipping Address</source>
         <translation>Lieferadresse</translation>
     </message>
@@ -1598,7 +1590,7 @@
         <translation>Bestellnummer</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
@@ -1689,7 +1681,7 @@
         <translation>Bitte suchen Sie einen Eintrag zunächst anhand einer Artikel-ID.</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Duplicate Entry</source>
         <translation>Doppelter Eintrag</translation>
     </message>
@@ -1738,7 +1730,7 @@
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../inventory/orders/orderstablemodel.cpp" line="+116"/>
+        <location filename="../inventory/orders/orderstablemodel.cpp" line="+111"/>
         <source>Since</source>
         <translation>Erstellt</translation>
     </message>
@@ -1748,7 +1740,7 @@
         <translation>Status</translation>
     </message>
     <message>
-        <location line="-55"/>
+        <location line="-45"/>
         <source>received</source>
         <translation>erhalten</translation>
     </message>
@@ -1770,7 +1762,7 @@
         <translation>Nein</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+35"/>
         <source>Payment</source>
         <translation>Zahlung</translation>
     </message>
@@ -1887,7 +1879,7 @@
         <translation>Aktiviere SSL/TLS</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>SSL/TLS Connection</source>
         <translation>SSL/TLS Verbindung</translation>
     </message>
@@ -1948,7 +1940,7 @@
         <translation>Vollständig vertrauen</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>SSL Peer Connection</source>
         <translation>SSL-Peer-Verbindung</translation>
     </message>
@@ -2192,7 +2184,17 @@
         <translation>Dieser Text dient internen Zwecken</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+49"/>
+        <source>Remove Image from Database</source>
+        <translation>Entferne Bild aus der Datenbank</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do you realy wan&apos;t to delete the Image?</source>
+        <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
+    </message>
+    <message>
+        <location line="+20"/>
         <source>Data saved successfully!</source>
         <translation>Daten Erfolgreich gespeichert!</translation>
     </message>
@@ -2210,7 +2212,7 @@
 <context>
     <name>PrintsTable</name>
     <message>
-        <location filename="../inventory/prints/printstable.cpp" line="+117"/>
+        <location filename="../inventory/prints/printstable.cpp" line="+123"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
@@ -2375,7 +2377,7 @@
         <translation>Diverse</translation>
     </message>
     <message>
-        <location filename="../inventory/costumers/inventorycostumers.cpp" line="-48"/>
+        <location filename="../inventory/costumers/inventorycostumers.cpp" line="+27"/>
         <source>Sort by Name</source>
         <translation>Sortiert mit Name</translation>
     </message>
@@ -2448,21 +2450,6 @@
         <location line="+1"/>
         <source>delivery completed</source>
         <translation>Lieferung abgeschlossen</translation>
-    </message>
-    <message>
-        <location filename="../inventory/orders/orderstatements.h" line="+37"/>
-        <source>Hours</source>
-        <translation>Stunden</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Days</source>
-        <translation>Tage</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Months</source>
-        <translation>Monate</translation>
     </message>
 </context>
 <context>
@@ -2707,7 +2694,7 @@
 <context>
     <name>StrLineEdit</name>
     <message>
-        <location filename="../custom/utils/strlineedit.cpp" line="+152"/>
+        <location filename="../custom/utils/strlineedit.cpp" line="+164"/>
         <source>Max allowed length</source>
         <translation>Maximal erlaubte Zeichenlänge</translation>
     </message>
