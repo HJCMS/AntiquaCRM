@@ -788,7 +788,12 @@
 <context>
     <name>CostumerOverview</name>
     <message>
-        <location filename="../inventory/costumers/costumeroverview.cpp" line="+124"/>
+        <location filename="../inventory/costumers/costumeroverview.cpp" line="+117"/>
+        <source>Locked</source>
+        <translation>Gesperrt</translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>Phone</source>
         <translation>Telefon</translation>
     </message>
@@ -798,12 +803,27 @@
         <translation>E-Mail</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+34"/>
         <source>Additional</source>
-        <translation>Ergänzungen</translation>
+        <translation>Erweitert</translation>
     </message>
     <message>
         <location line="+5"/>
+        <source>Transactions</source>
+        <translation>Transaktionen</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Purchases</source>
+        <translation>Einkäufe</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>last Modified</source>
+        <translation>zuletzt Geändert</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Since</source>
         <translation>Erstellt</translation>
     </message>
@@ -940,7 +960,7 @@
 <context>
     <name>EditCostumer</name>
     <message>
-        <location filename="../inventory/costumers/editcostumer.cpp" line="+37"/>
+        <location filename="../inventory/costumers/editcostumer.cpp" line="+48"/>
         <source>Costumers ID</source>
         <translation>Kunden Nr</translation>
     </message>
@@ -960,12 +980,12 @@
         <translation>Rechnungsinformationen bearbeiten</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+55"/>
         <source>Saved successfully!</source>
         <translation>Speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+132"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
@@ -1526,7 +1546,7 @@
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
-        <location line="+213"/>
+        <location line="+229"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
@@ -2455,17 +2475,17 @@
 <context>
     <name>SalutationBox</name>
     <message>
-        <location filename="../custom/utils/salutationbox.cpp" line="+34"/>
+        <location filename="../custom/utils/salutationbox.cpp" line="+37"/>
         <source>Title or Salutation</source>
         <translation>Titel oder Anrede</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+10"/>
         <source>Without disclosures</source>
         <translation>Keine Angaben</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+38"/>
         <source>a Title is required</source>
         <translation>Titelfeld ist erforderlich</translation>
     </message>
@@ -2609,7 +2629,7 @@
     <message>
         <location filename="../custom/utils/statsactionbar.cpp" line="+44"/>
         <source>Refresh</source>
-        <translation>Erneuern</translation>
+        <translation>Aktualisieren</translation>
     </message>
     <message>
         <location line="+11"/>

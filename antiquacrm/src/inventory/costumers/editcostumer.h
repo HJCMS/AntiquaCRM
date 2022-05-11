@@ -43,7 +43,16 @@ private:
 
   Qt::FindChildOptions findOption = (Qt::FindChildrenRecursively);
 
+  /**
+   * @brief Felder die Ignoriert werden können!
+   */
+  QStringList ignoreList;
+
+  /**
+   * @brief Erstelle QStringList::inputList
+   */
   void setInputList();
+
   void importSqlResult();
   bool sendSqlQuery(const QString &);
   const QHash<QString, QVariant> createSqlDataset();

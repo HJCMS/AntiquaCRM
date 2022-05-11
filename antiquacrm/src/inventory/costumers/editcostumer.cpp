@@ -25,6 +25,17 @@ EditCostumer::EditCostumer(QWidget *parent) : EditorMain{parent} {
 
   m_sql = new HJCMS::SqlCore(this);
 
+  /**
+   * Tabellenfelder welche NICHT bei INSERT/UPDATE
+   * benötigt werden aber im Overview enthalten sind.
+   */
+  QStringList ignore;
+  ignore.append("c_since");
+  ignore.append("c_changed");
+  ignore.append("c_transactions");
+  ignore.append("c_purchases");
+  ignoreList = ignore;
+
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setObjectName("costumer_edit_layout");
 
@@ -83,9 +94,6 @@ void EditCostumer::setInputList() {
   if (inputList.isEmpty()) {
     qWarning("Costumers InputList is Empty!");
   }
-  /** Werden Manuel gesetzt! */
-  inputList.removeOne("c_since");
-  inputList.removeOne("c_changed");
 }
 
 void EditCostumer::importSqlResult() {
@@ -129,14 +137,15 @@ const QHash<QString, QVariant> EditCostumer::createSqlDataset() {
   QList<UtilsMain *>::Iterator it;
   for (it = list.begin(); it != list.end(); ++it) {
     UtilsMain *cur = *it;
+    if (ignoreList.contains(cur->objectName(), Qt::CaseSensitive))
+      continue;
+
     if (cur->isRequired() && !cur->isValid()) {
       messanger.notice(cur->notes());
       cur->setFocus();
       data.clear();
       return data;
     }
-    // qDebug() << "Costumer:" << cur->objectName() << cur->value();
-    // 049 152 29331138
     data.insert(cur->objectName(), cur->value());
   }
   list.clear();
@@ -214,9 +223,15 @@ void EditCostumer::setData(const QString &key, const QVariant &value,
   if (key.isEmpty())
     return;
 
-  if (key == "fullname" || key == "c_company_name") {
+  if (key == "fullname") {
+    infoLabel->setText(value.toString());
+    return; // aussteigen
+  } else if (key == "c_company_name") {
     infoLabel->setText(value.toString());
   }
+
+  if (ignoreList.contains(key, Qt::CaseSensitive))
+    return;
 
   UtilsMain *inp = findChild<UtilsMain *>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
@@ -226,8 +241,7 @@ void EditCostumer::setData(const QString &key, const QVariant &value,
 
     return;
   }
-  qDebug() << "Missing Key:" << key << " Value" << value
-           << " Required:" << required;
+  qDebug() << "Missing Key:" << key;
 }
 
 void EditCostumer::saveData() {

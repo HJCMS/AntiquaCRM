@@ -35,6 +35,7 @@ private:
   DomDocument *dom;
   QHash<QString, QString> items;
   bool check(const QString &key);
+  const QString convertDate(const QString &value);
   void addLineBreak();
   void createCompanySection();
   void createTitleSection();

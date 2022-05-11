@@ -6,9 +6,7 @@
 #include "mapplication.h"
 
 #include <QApplication>
-#include <QDir>
-#include <QLocale>
-#include <QString>
+#include <QDebug>
 
 int main(int argc, char *argv[]) {
   MApplication *antiqua = new MApplication(argc, argv);

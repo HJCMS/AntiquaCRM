@@ -5,33 +5,113 @@
 #ifndef NETWORKER_NETWORKING_H
 #define NETWORKER_NETWORKING_H
 
+#include <QJsonDocument>
 #include <QNetworkAccessManager>
-#include <QSslConfiguration>
-#include <QSslError>
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QObject>
+#include <QSslConfiguration>
+#include <QSslError>
+#include <QTextCodec>
 
 class ApplSettings;
 
-class Networker : public QNetworkAccessManager {
+/**
+ * @group Networking
+ * @brief Standard Klasse für Netzwerkabfragen.
+ * @class Networker
+ *
+ * Hier werden Sprache, Zeichensatz und Fehlermeldungen verabeitet.
+ * Die Netzwerk antworten müssen in den Abfrage-Klassen verarbeitet werden!
+ */
+class Networker final : public QNetworkAccessManager {
   Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  /**
+   * @brief Einstellungen lesen
+   */
   ApplSettings *config;
-  QNetworkReply *m_reply;
 
+  /**
+   * @brief TextCodec für Read/Write Operationen
+   */
+  QTextCodec *m_codec;
+
+  /**
+   * @brief Standard Zeichensatz der verwendet wird.
+   */
+  QString p_charset = QString("utf8");
+
+  /**
+   * @brief Registriere Reply für die Fehlerbehandlung
+   * @see jsonPostRequest und jsonGetRequest
+   */
+  QNetworkReply *reply;
+
+  /**
+   * @brief Setze CA-Bundle und SSL-Protokoll
+   */
   const QSslConfiguration sslConfigguration();
 
-public Q_SLOTS:
-  void slotReplyFinished(QNetworkReply *reply);
+  /**
+   * @brief HTTP-Accept-Language (RFC2616)
+   */
+  const QByteArray languageRange();
+
+  /**
+   * @brief HTTP-Accept (RFC2616) Json
+   */
+  const QByteArray acceptJson();
+
+  /**
+   * @brief HTTP-Header Content-Type Json deklaration.
+   */
+  const QByteArray headerJson();
+
+private Q_SLOTS:
+  /**
+   * @brief Übertragungsfehler verarbeiten
+   */
   void slotError(QNetworkReply::NetworkError error);
+
+  /**
+   * @brief Wenn die Anfrage beendet wurde.
+   */
+  void slotFinished(QNetworkReply *reply);
+
+  /**
+   * @brief SSL Fehlerverarbeitung
+   */
   void slotSslErrors(const QList<QSslError> &list);
+
+Q_SIGNALS:
+  /**
+   * @brief Anfrage abgeschlossen
+   * @param errors - Wenn ja true
+   */
+  void requestFinished(bool errors);
 
 public:
   explicit Networker(QObject *parent = nullptr);
-  static const QNetworkRequest getRequest(const QUrl &url);
-  ~Networker();
+
+  /**
+   * @brief Erstelle eine Json HTTP_POST Anfrage
+   * @param url   Anfrage URL
+   * @param name  HTTP_FORM_DATA_NAME "form-data; name={key}"
+   * @param body  HTTP_FORM_DATA_BODY
+   * @return NetworkReply
+   */
+  QNetworkReply *jsonPostRequest(const QUrl &url, const QString &name,
+                                 const QJsonDocument &body);
+  QNetworkReply *jsonGetRequest(const QUrl &url);
+
+  /**
+   * @brief Aufräumen
+   */
+  virtual ~Networker();
 };
 
 #endif // NETWORKER_NETWORKING_H

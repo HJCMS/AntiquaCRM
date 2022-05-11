@@ -18,7 +18,16 @@
 #define ISBN_DEBUG_OUTPUT false
 #endif
 
-IsbnData::IsbnData(const QString &isbn) : p_isbn(isbn) {}
+IsbnData::IsbnData(const QString &isbn) : p_isbn(isbn) {
+  p_url = QUrl();
+  p_title = QString();
+  p_subtitle = QString();
+  p_authors = QStringList();
+  p_publisher = QString();
+  p_publish_places = QString();
+  p_pages = QString();
+  p_year = QString();
+}
 
 void IsbnData::addArray(const QString &key, const QJsonArray &array) {
   if (array.size() < 1)
@@ -226,15 +235,8 @@ void IsbnRequest::slotReadyRead() {
 }
 
 void IsbnRequest::triggerRequest() {
-  QNetworkRequest request = Networker::getRequest(p_url);
   if (setManager()) {
-    m_reply = m_manager->get(request);
-    connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), m_manager,
-            SLOT(slotError(QNetworkReply::NetworkError)));
-
-    connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), m_manager,
-            SLOT(slotSslErrors(QList<QSslError>)));
-
+    m_reply = m_manager->jsonGetRequest(p_url);
     connect(m_reply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
   }
 }

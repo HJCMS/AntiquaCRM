@@ -102,6 +102,12 @@ private:
   OrdersItemList *m_paymentList;
 
   /**
+   * @brief Wenn ein Auftrag hinzugeügt wurde!
+   * Hier die "a_payment_id" einfügen!
+   */
+  int last_payment_id = -1;
+
+  /**
    * @brief Suchpattern für Eingabefelder
    */
   const QRegularExpression p_objPattern = QRegularExpression("^o_[a-z_]+\\b$");

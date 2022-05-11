@@ -27,7 +27,7 @@ private:
   QString p_publish_places;
   QString p_pages;
   QString p_year;
-  bool p_images;
+  bool p_images = false;
   bool compareAuthors(const QString &a);
 
 public:

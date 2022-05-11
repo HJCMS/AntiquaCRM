@@ -4,9 +4,9 @@
 #include "costumeroverview.h"
 #include "myicontheme.h"
 
+#include <QDateTime>
 #include <QDebug>
 #include <QLocale>
-#include <QDateTime>
 
 DomDocument::DomDocument(const QString &name) {
   QDomElement html = createElement("html");
@@ -87,6 +87,11 @@ bool CostumerOverview::check(const QString &key) {
   return (items.contains(key) && (!items.value(key).isEmpty()));
 }
 
+const QString CostumerOverview::convertDate(const QString &value) {
+  QDateTime dt = QDateTime::fromString(value, Qt::ISODate);
+  return QLocale::system().toString(dt, "dd MMMM yyyy");
+}
+
 void CostumerOverview::addLineBreak() {
   dom->div.appendChild(dom->createElement("br"));
 }
@@ -106,6 +111,12 @@ void CostumerOverview::createTitleSection() {
   QString buffer;
   QDomElement person = dom->createElement("div");
   dom->div.appendChild(person);
+  if (check("c_locked") && (items.value("c_locked") == "true")) {
+    QDomElement b = dom->createElement("h4");
+    b.setAttribute("style", "color:red");
+    b.appendChild(dom->createTextNode(tr("Locked")));
+    person.appendChild(b);
+  }
   if (check("c_title")) {
     buffer = items.value("c_title");
     person.appendChild(dom->createTextNode(buffer + " "));
@@ -176,23 +187,45 @@ void CostumerOverview::createAddressSection() {
 }
 
 void CostumerOverview::createAdditionalSection() {
-  if (!check("c_since"))
-    return;
 
-  QDomElement additional = dom->createElementNode("dt", tr("Additional")+": ");
+  QDomElement additional =
+      dom->createElementNode("dt", tr("Additional") + ": ");
   dom->div.appendChild(additional);
 
-  QDateTime t = QDateTime::fromString(items.value("c_since"), Qt::ISODate);
-  QString buffer = t.date().toString(Qt::RFC2822Date);
-  buffer.prepend(tr("Since") + ": ");
-  additional.appendChild(dom->createElementNode("dd", buffer));
-  addLineBreak();
+  if (check("c_transactions")) {
+    QString buffer = items.value("c_transactions");
+    buffer.prepend(tr("Transactions") + ": ");
+    additional.appendChild(dom->createElementNode("dd", buffer));
+    addLineBreak();
+  }
+
+  if (check("c_purchases")) {
+    QString buffer = items.value("c_purchases");
+    buffer.prepend(tr("Purchases") + ": ");
+    additional.appendChild(dom->createElementNode("dd", buffer));
+    addLineBreak();
+  }
+
+  if (check("c_changed")) {
+    QString buffer = convertDate(items.value("c_changed"));
+    buffer.prepend(tr("last Modified") + ": ");
+    additional.appendChild(dom->createElementNode("dd", buffer));
+    addLineBreak();
+  }
+
+  if (check("c_since")) {
+    QString buffer = convertDate(items.value("c_since"));
+    buffer.prepend(tr("Since") + ": ");
+    additional.appendChild(dom->createElementNode("dd", buffer));
+    addLineBreak();
+  }
 }
 
 void CostumerOverview::createDocument(const DataFields &data) {
   for (int i = 0; i < data.count(); i++) {
     DataField df = data.at(i);
-    items.insert(df.field(),df.value().toString());
+    // qDebug() << Q_FUNC_INFO << df.field() << df.value();
+    items.insert(df.field(), df.value().toString());
   }
   dom = new DomDocument("costumerview");
   createCompanySection();

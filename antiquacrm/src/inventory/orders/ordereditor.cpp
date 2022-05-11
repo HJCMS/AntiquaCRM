@@ -167,11 +167,11 @@ bool OrderEditor::sendSqlQuery(const QString &sqlStatement) {
     return false;
   } else {
     if (q.next()) {
-      if (!q.isNull("o_id")) {
+      if (!q.record().isNull("o_id")) {
         o_id->setValue(q.value("o_id"));
       }
-      if (!q.isNull("a_payment_id")) {
-        qDebug() << "a_payment_id" << q.value("a_payment_id").toInt();
+      if (!q.record().isNull("a_payment_id")) {
+        last_payment_id = q.value("a_payment_id").toInt();
       }
     }
     if (showSuccessFully) {
@@ -190,6 +190,9 @@ bool OrderEditor::createSqlArticleOrder() {
     return false;
   }
 
+  /**
+   * WARNING Die Id's "oid" und "cid" sind hier zwingend Notwendig!
+   */
   int oid = o_id->value().toInt();
   if (oid < 1) {
     qWarning("Missing Order ID");
@@ -260,7 +263,20 @@ bool OrderEditor::createSqlArticleOrder() {
       queries.append(sql);
     }
   }
-  return sendSqlQuery(queries.join(" "));
+  if (sendSqlQuery(queries.join(" "))) {
+    /**
+     * @note Wir müssen hier alles neu einlesen!
+     * Weil "a_payment_id" sonst in der ArtikelTabelle
+     * fehlt und es zu Doppelten Einträgen kommt!
+     */
+    const QList<OrderArticle> list = getOrderArticles(oid, cid);
+    if (list.size() >= 1) {
+      m_paymentList->clearTable();
+      m_paymentList->importPayments(list);
+    }
+    return true;
+  }
+  return false;
 }
 
 void OrderEditor::createSqlUpdate() {
