@@ -279,6 +279,11 @@ public:
   explicit OrderEditor(QWidget *parent = nullptr);
 
   /**
+   * @brief Füge Artikel ID zur Prüfung ein!
+   */
+  void addArticleId(int articleId);
+
+  /**
    * @brief Eintrag Bearbeiten
    * Erstellt SQL mit Auftragsnummer und sendet Anfrage
    * an Datenbank, bei erfold werden die Daten eingefügt.

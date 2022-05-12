@@ -67,8 +67,7 @@ const QString OrdersPaymentBox::notes() {
   return tr("Payment Status is required");
 }
 
-PaymentStatusDialog::PaymentStatusDialog(const QString &search, QWidget *parent)
-    : QDialog{parent} {
+PaymentStatusDialog::PaymentStatusDialog(QWidget *parent) : QDialog{parent} {
   setObjectName("payment_status_dialog");
   setSizeGripEnabled(true);
   setWindowTitle(tr("Paymentstatus"));
@@ -82,9 +81,6 @@ PaymentStatusDialog::PaymentStatusDialog(const QString &search, QWidget *parent)
 
   m_paymentBox = new OrdersPaymentBox(this);
   layout->addWidget(m_paymentBox);
-  int i = m_paymentBox->findIndex(search);
-  if (i > 0)
-    m_paymentBox->setValue(i);
 
   QDialogButtonBox *btn = new QDialogButtonBox(QDialogButtonBox::Ok);
   layout->addWidget(btn);
@@ -92,6 +88,19 @@ PaymentStatusDialog::PaymentStatusDialog(const QString &search, QWidget *parent)
   setLayout(layout);
 
   connect(btn, SIGNAL(accepted()), this, SLOT(accept()));
+}
+
+PaymentStatusDialog::PaymentStatusDialog(qint64 index, QWidget *parent)
+    : PaymentStatusDialog{parent} {
+  if (index > 0)
+    m_paymentBox->setValue(index);
+}
+
+PaymentStatusDialog::PaymentStatusDialog(const QString &search, QWidget *parent)
+    : PaymentStatusDialog{parent} {
+  int i = m_paymentBox->findIndex(search);
+  if (i > 0)
+    m_paymentBox->setValue(i);
 }
 
 void PaymentStatusDialog::setStatus(bool b) { m_paymentBox->setValue(b); }

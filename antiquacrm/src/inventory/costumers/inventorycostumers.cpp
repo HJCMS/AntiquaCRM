@@ -41,6 +41,7 @@ static const QList<SearchBar::SearchFilter> bookSearchFilter() {
 InventoryCostumers::InventoryCostumers(QWidget *parent) : Inventory{parent} {
   setObjectName("InventoryCostumers");
   setWindowTitle("TabCostumers");
+  setClosable(false);
 
   ApplSettings cfg;
   minLength = cfg.value("search/startlength", 5).toInt();
@@ -109,6 +110,8 @@ InventoryCostumers::InventoryCostumers(QWidget *parent) : Inventory{parent} {
 
   connect(m_editCostumer, SIGNAL(s_postMessage(const QString &)), this,
           SLOT(displayMessageBox(const QString &)));
+  connect(m_editCostumer, SIGNAL(s_isModified(bool)), this,
+          SLOT(setIsModified(bool)));
 }
 
 void InventoryCostumers::openEditor(const QString &costumer) {

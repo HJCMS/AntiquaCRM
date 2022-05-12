@@ -570,6 +570,10 @@ bool OrderEditor::getCostumerAddress(int cid) {
   return true;
 }
 
+void OrderEditor::addArticleId(int articleId) {
+  m_paymentList->insertSearchId(articleId);
+}
+
 void OrderEditor::openUpdateOrder(int oid) {
   initDefaults();
   if (oid < 1) {

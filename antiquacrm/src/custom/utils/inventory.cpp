@@ -4,9 +4,9 @@
 #include "inventory.h"
 #include "messagebox.h"
 
-#include <QDebug>
 #include <QApplication>
 #include <QClipboard>
+#include <QDebug>
 
 Inventory::Inventory(QWidget *parent) : QWidget{parent} {
   if (objectName().isEmpty())
@@ -18,12 +18,13 @@ void Inventory::displayMessageBox(const QString &msg) {
   box->notice(msg);
 }
 
-void Inventory::copyIntoClipboard(const QVariant &val)
-{
+void Inventory::copyIntoClipboard(const QVariant &val) {
   QString buf = val.toString();
   QApplication::clipboard()->setText(buf, QClipboard::Clipboard);
 }
 
-void Inventory::setClosable(bool b) { closable = ((b) ? false : true); }
+void Inventory::setClosable(bool b) { closable = b; }
+
+void Inventory::setIsModified(bool b) { setWindowModified(b); }
 
 bool Inventory::isClosable() { return closable; }

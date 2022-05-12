@@ -32,7 +32,8 @@ OrderStatusBox::OrderStatusBox(QWidget *parent) : UtilsMain{parent} {
   setRequired(false);
 
   setLayout(layout);
-  connect(m_box, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
+  connect(m_box, SIGNAL(currentIndexChanged(int)), this,
+          SLOT(indexChanged(int)));
 }
 
 void OrderStatusBox::indexChanged(int i) {
@@ -70,8 +71,7 @@ const QString OrderStatusBox::info() { return m_box->toolTip(); }
 
 const QString OrderStatusBox::notes() { return tr("Order status is required"); }
 
-StatusDialog::StatusDialog(const QString &current, QWidget *parent)
-    : QDialog{parent} {
+StatusDialog::StatusDialog(QWidget *parent) : QDialog{parent} {
   setObjectName("status_dialog_box");
   setSizeGripEnabled(true);
   setWindowTitle(tr("Edit Order Status"));
@@ -84,10 +84,6 @@ StatusDialog::StatusDialog(const QString &current, QWidget *parent)
   layout->addWidget(info);
 
   m_statusBox = new OrderStatusBox(this);
-  int i = m_statusBox->findIndex(current);
-  if (i > 0)
-    m_statusBox->setValue(i);
-
   layout->addWidget(m_statusBox);
 
   QDialogButtonBox *btn = new QDialogButtonBox(QDialogButtonBox::Ok);
@@ -96,6 +92,19 @@ StatusDialog::StatusDialog(const QString &current, QWidget *parent)
   setLayout(layout);
 
   connect(btn, SIGNAL(accepted()), this, SLOT(accept()));
+}
+
+StatusDialog::StatusDialog(qint64 index, QWidget *parent)
+    : StatusDialog{parent} {
+  if (index > 0)
+    m_statusBox->setValue(index);
+}
+
+StatusDialog::StatusDialog(const QString &current, QWidget *parent)
+    : StatusDialog{parent} {
+  int i = m_statusBox->findIndex(current);
+  if (i > 0)
+    m_statusBox->setValue(i);
 }
 
 int StatusDialog::index() { return m_statusBox->value().toInt(); }

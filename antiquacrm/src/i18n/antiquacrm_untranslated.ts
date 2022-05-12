@@ -340,17 +340,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+11"/>
         <source>Copy Article Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-6"/>
         <source>Create entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+11"/>
+        <source>add Article to opened Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1110,13 +1115,13 @@
 <context>
     <name>HJCMS::SqlCore</name>
     <message>
-        <location filename="../core/sqlcore/sqlcore.cpp" line="+141"/>
+        <location filename="../core/sqlcore/sqlcore.cpp" line="+143"/>
         <source>SQL Driver initialization error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+30"/>
-        <source>PostgreSQL connected successfully!</source>
+        <source>Database connected successfully!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1289,7 +1294,7 @@
 <context>
     <name>InventoryBooks</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="+145"/>
+        <location filename="../inventory/books/inventorybooks.cpp" line="+149"/>
         <source>Automatic search disabled in this mode. Press enter to start the search!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1302,8 +1307,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+27"/>
         <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <source>There is no Order open!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1663,7 +1673,7 @@
 <context>
     <name>OrderStatusBox</name>
     <message>
-        <location filename="../custom/utils/orderstatusbox.cpp" line="+71"/>
+        <location filename="../custom/utils/orderstatusbox.cpp" line="+72"/>
         <source>Order status is required</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1750,7 +1760,7 @@
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../inventory/orders/orderstablemodel.cpp" line="+111"/>
+        <location filename="../inventory/orders/orderstablemodel.cpp" line="+119"/>
         <source>Since</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1760,17 +1770,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-38"/>
         <source>received</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location line="-42"/>
+        <source>no time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>%1 days, %2 hours, %3 minutes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>%1 hours, %2 minutes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>%1 minutes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+30"/>
         <source>waiting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+4"/>
         <location line="+3"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
@@ -1782,7 +1812,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+34"/>
         <source>Payment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1815,7 +1845,7 @@
 <context>
     <name>PaymentStatusDialog</name>
     <message>
-        <location filename="../custom/utils/orderspaymentbox.cpp" line="+7"/>
+        <location filename="../custom/utils/orderspaymentbox.cpp" line="+6"/>
         <source>Paymentstatus</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2237,17 +2267,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+11"/>
         <source>Copy Article Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-6"/>
         <source>Create entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+11"/>
+        <source>add Article to opened Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2325,7 +2360,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="-116"/>
+        <location filename="../inventory/books/inventorybooks.cpp" line="-120"/>
         <source>Book Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2369,11 +2404,6 @@
     <message>
         <location line="+4"/>
         <source>Title (starts with)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Current inventory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2683,7 +2713,7 @@
 <context>
     <name>StatusDialog</name>
     <message>
-        <location filename="../custom/utils/orderstatusbox.cpp" line="+6"/>
+        <location filename="../custom/utils/orderstatusbox.cpp" line="+5"/>
         <source>Edit Order Status</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2851,53 +2881,62 @@
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../workspace.cpp" line="+32"/>
+        <location filename="../workspace.cpp" line="+62"/>
         <source>Books</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Book Inventory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Prints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Prints, Stitches and Photo inventory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+11"/>
         <source>Costumers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Costumers inventory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+9"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Order Inventory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+12"/>
         <source>Cant close this tab, unsafed changes!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
+        <location line="+11"/>
         <source>Order tab isn&apos;t open!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WorkspaceTabBar</name>
+    <message>
+        <location line="-96"/>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

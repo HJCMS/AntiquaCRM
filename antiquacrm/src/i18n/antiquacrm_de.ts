@@ -340,17 +340,22 @@
         <translation>Öffne Eintrag</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+11"/>
         <source>Copy Article Id</source>
         <translation>Kopiere Artikel Nummer</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-6"/>
         <source>Create entry</source>
         <translation>Eintrag erstellen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+11"/>
+        <source>add Article to opened Order</source>
+        <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Refresh</source>
         <translation>Erneuern</translation>
     </message>
@@ -1110,14 +1115,14 @@
 <context>
     <name>HJCMS::SqlCore</name>
     <message>
-        <location filename="../core/sqlcore/sqlcore.cpp" line="+141"/>
+        <location filename="../core/sqlcore/sqlcore.cpp" line="+143"/>
         <source>SQL Driver initialization error</source>
         <translation>Fehler beim laden des SQL Treibers</translation>
     </message>
     <message>
         <location line="+30"/>
-        <source>PostgreSQL connected successfully!</source>
-        <translation>Verbindung zur PostgreSQL Datenbank erfolgreich!</translation>
+        <source>Database connected successfully!</source>
+        <translation>Verbindung zur Datenbank hergestellt!</translation>
     </message>
 </context>
 <context>
@@ -1289,7 +1294,7 @@
 <context>
     <name>InventoryBooks</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="+145"/>
+        <location filename="../inventory/books/inventorybooks.cpp" line="+149"/>
         <source>Automatic search disabled in this mode. Press enter to start the search!</source>
         <translation>Automatische Suche in diesem Modus deaktiviert. Drücken Sie die Eingabetaste, um die Suche zu starten!</translation>
     </message>
@@ -1302,9 +1307,14 @@
         <translation>Aufträge</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+27"/>
         <source>Refresh</source>
         <translation>Erneuern</translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <source>There is no Order open!</source>
+        <translation>Es ist keine Bestellung geöffnet!</translation>
     </message>
 </context>
 <context>
@@ -1663,7 +1673,7 @@
 <context>
     <name>OrderStatusBox</name>
     <message>
-        <location filename="../custom/utils/orderstatusbox.cpp" line="+71"/>
+        <location filename="../custom/utils/orderstatusbox.cpp" line="+72"/>
         <source>Order status is required</source>
         <translation>Auftrags Status ist erforderlich</translation>
     </message>
@@ -1750,7 +1760,7 @@
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../inventory/orders/orderstablemodel.cpp" line="+111"/>
+        <location filename="../inventory/orders/orderstablemodel.cpp" line="+119"/>
         <source>Since</source>
         <translation>Erstellt</translation>
     </message>
@@ -1760,17 +1770,37 @@
         <translation>Status</translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-38"/>
         <source>received</source>
         <translation>erhalten</translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location line="-42"/>
+        <source>no time</source>
+        <translation>Keine Zeit enthalten</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>%1 days, %2 hours, %3 minutes</source>
+        <translation>%1 Tage, %2 Stunden, %3 Minuten</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>%1 hours, %2 minutes</source>
+        <translation>%1 Stunden, %2 Minuten</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>%1 minutes</source>
+        <translation>%1 Minuten</translation>
+    </message>
+    <message>
+        <location line="+30"/>
         <source>waiting</source>
         <translation>wartend</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+4"/>
         <location line="+3"/>
         <source>Yes</source>
         <translation>Ja</translation>
@@ -1782,7 +1812,7 @@
         <translation>Nein</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+34"/>
         <source>Payment</source>
         <translation>Zahlung</translation>
     </message>
@@ -1815,7 +1845,7 @@
 <context>
     <name>PaymentStatusDialog</name>
     <message>
-        <location filename="../custom/utils/orderspaymentbox.cpp" line="+7"/>
+        <location filename="../custom/utils/orderspaymentbox.cpp" line="+6"/>
         <source>Paymentstatus</source>
         <translation>Zahlungstatus</translation>
     </message>
@@ -2237,17 +2267,22 @@
         <translation>Eintrag öffnen</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+11"/>
         <source>Copy Article Id</source>
         <translation>Kopiere Artikel Nummer</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-6"/>
         <source>Create entry</source>
         <translation>Eintrag erstellen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+11"/>
+        <source>add Article to opened Order</source>
+        <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Refresh</source>
         <translation>Erneuern</translation>
     </message>
@@ -2325,7 +2360,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="-116"/>
+        <location filename="../inventory/books/inventorybooks.cpp" line="-120"/>
         <source>Book Title</source>
         <translation>Buchtitel</translation>
     </message>
@@ -2370,11 +2405,6 @@
         <location line="+4"/>
         <source>Title (starts with)</source>
         <translation>Titel (Startet mit)</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Current inventory</source>
-        <translation>Aktuelles Inventar</translation>
     </message>
     <message>
         <location filename="../custom/utils/genderbox.cpp" line="+12"/>
@@ -2683,7 +2713,7 @@
 <context>
     <name>StatusDialog</name>
     <message>
-        <location filename="../custom/utils/orderstatusbox.cpp" line="+6"/>
+        <location filename="../custom/utils/orderstatusbox.cpp" line="+5"/>
         <source>Edit Order Status</source>
         <translation>Bearbeite Autragsstatus</translation>
     </message>
@@ -2851,54 +2881,63 @@
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../workspace.cpp" line="+32"/>
+        <location filename="../workspace.cpp" line="+62"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Book Inventory</source>
         <translation>Bücher Inventar</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Prints</source>
         <translation>Drucke</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Prints, Stitches and Photo inventory</source>
         <translation>Drucke, Stiche und Bilder Inventar</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+11"/>
         <source>Costumers</source>
         <translation>Kunden</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Costumers inventory</source>
         <translation>Kunden Inventar</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+9"/>
         <source>Orders</source>
         <translation>Aufträge</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Order Inventory</source>
         <translation>Auftrags Inventar</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+12"/>
         <source>Cant close this tab, unsafed changes!</source>
         <translation>Kann das Tab nicht schliessen, nicht gespeicherte Änderungen!</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
+        <location line="+11"/>
         <source>Order tab isn&apos;t open!</source>
         <translation>Das Auftrags Tab ist nicht geöffnet!</translation>
+    </message>
+</context>
+<context>
+    <name>WorkspaceTabBar</name>
+    <message>
+        <location line="-96"/>
+        <source>Close</source>
+        <translation>Schließen</translation>
     </message>
 </context>
 <context>

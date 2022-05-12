@@ -8,10 +8,10 @@
 #include <AntiquaCRM>
 
 /* QtCore */
+#include <QDateTime>
 #include <QDebug>
 #include <QLocale>
 #include <QString>
-#include <QDateTime>
 #include <QVariant>
 
 /* QtSql */
@@ -38,6 +38,24 @@ const QString OrdersTableModel::displayDate(const QVariant &value) const {
   return QLocale::system().toString(dt, "dd MMMM yyyy");
 }
 
+const QString OrdersTableModel::runTimeString(const qint64 &seconds) const {
+  QString retval = tr("no time");
+  // Sekunden pro Tag (24 * 60 * 60)
+  const qint64 spt = 86400;
+  QTime t = QTime(0, 0).addSecs(seconds);
+  qint64 d = (t.msec() / spt);
+  qint64 h = t.hour();
+  qint64 m = t.minute();
+  if (d > 0) {
+    return tr("%1 days, %2 hours, %3 minutes").arg(d).arg(h).arg(m);
+  } else if (h > 1) {
+    return tr("%1 hours, %2 minutes").arg(h).arg(m);
+  } else {
+    return tr("%1 minutes").arg(m);
+  }
+  return retval;
+}
+
 void OrdersTableModel::update(const QModelIndex &topLeft,
                               const QModelIndex &bottomRight) {
   if (topLeft.isValid() || bottomRight.isValid())
@@ -50,43 +68,33 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
     return val;
 
   QVariant item = QSqlQueryModel::data(index, role);
+  if (role == Qt::DisplayRole) {
+    switch (index.column()) {
+    case 1: // o_since
+      return displayDate(item);
 
-  switch (index.column()) {
-  case 0: // ib_id
-    return item.toUInt();
+    case 2: // o_order_status
+    {
+      OrderStatusList list;
+      return list.title(item.toInt());
+    }
 
-  case 1: // o_since
-    return displayDate(item);
+    case 3: // o_payment_status
+    {
+      return (item.toBool()) ? tr("received") : tr("waiting");
+    }
 
-  case 2: // o_order_status
-  {
-    OrderStatusList list;
-    return list.title(item.toInt());
+    case 6: // o_locked
+      return (item.toBool()) ? tr("Yes") : tr("No");
+
+    case 7: // o_closed
+      return (item.toBool()) ? tr("Yes") : tr("No");
+
+    case 8: // age Siehe SQL Statement!
+      return runTimeString(item.toInt());
+    }
   }
-
-  case 3: // o_payment_status
-  {
-    return (item.toBool()) ? tr("received") : tr("waiting");
-  }
-
-  case 4: // costumer
-    return item.toString();
-
-  case 5: // d_name
-    return item.toString();
-
-  case 6: // o_locked
-    return (item.toBool()) ? tr("Yes") : tr("No");
-
-  case 7: // o_closed
-    return (item.toBool()) ? tr("Yes") : tr("No");
-
-  case 8: // age Siehe SQL Statement!
-    return item.toString();
-
-  default: // nicht registrierter Datentype !!!
-    return item;
-  }
+  return item;
 }
 
 QVariant OrdersTableModel::headerData(int section, Qt::Orientation orientation,

@@ -143,8 +143,8 @@ void OrdersTable::updateOrderStatus() {
       article_id = m_queryModel->data(index, Qt::EditRole).toInt();
 
     if (index.isValid() && (index.column() == status_column)) {
-      QString title = m_queryModel->data(index, Qt::EditRole).toString();
-      StatusDialog dialog(title, this);
+      qint64 status = m_queryModel->data(index, Qt::EditRole).toInt();
+      StatusDialog dialog(status, this);
       int set = dialog.exec();
       if (set == QDialog::Accepted) {
         int status = dialog.index();
@@ -166,8 +166,8 @@ void OrdersTable::updatePaymentStatus() {
       article_id = m_queryModel->data(index, Qt::EditRole).toInt();
 
     if (index.isValid() && (index.column() == payment_column)) {
-      QString title = m_queryModel->data(index, Qt::EditRole).toString();
-      PaymentStatusDialog dialog(title, this);
+      qint64 current = m_queryModel->data(index, Qt::EditRole).toInt();
+      PaymentStatusDialog dialog(current, this);
       int set = dialog.exec();
       if (set == QDialog::Accepted) {
         bool status = dialog.status();

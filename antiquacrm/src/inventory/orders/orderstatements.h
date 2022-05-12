@@ -34,11 +34,15 @@
  * @return SQL Query
  */
 static const QString defaultOrdersQuery(int id = 0) {
+  QString age("(EXTRACT(EPOCH FROM timestamptz (CURRENT_TIMESTAMP))");
+  age.append(" - ");
+  age.append("EXTRACT(EPOCH FROM timestamptz (a.o_since))) AS age");
+
   QString fs("a.o_id,a.o_since,a.o_order_status,a.o_payment_status,");
   fs.append("CASE WHEN c.c_company=true THEN c.c_company_name ELSE ");
   fs.append("concat_ws(' ',c.c_firstname,c.c_lastname) END AS costumer,");
   fs.append("d.d_name,a.o_locked,a.o_closed,");
-  fs.append("age(CURRENT_DATE,a.o_since) as age");
+  fs.append(age);
 
   QString sql("SELECT " + fs + " ");
   sql.append("FROM inventory_orders AS a ");

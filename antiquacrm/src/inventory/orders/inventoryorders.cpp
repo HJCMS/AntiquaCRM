@@ -17,6 +17,7 @@
 InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
   setObjectName("InventoryOrders");
   setWindowTitle(tr("Orders"));
+  setClosable(false);
 
   ApplSettings cfg;
   minLength = cfg.value("search/startlength", 5).toInt();
@@ -62,16 +63,13 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
 
   setLayout(layout);
 
-  connect(m_tableView, SIGNAL(s_editOrder(int)), this,
-          SLOT(updateOrder(int)));
-
+  connect(m_tableView, SIGNAL(s_editOrder(int)), this, SLOT(updateOrder(int)));
   connect(m_editor, SIGNAL(s_postMessage(const QString &)), this,
           SLOT(displayMessageBox(const QString &)));
-
   connect(m_editor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
-
-  connect(btn_refresh, SIGNAL(clicked()), m_tableView,
-          SLOT(refreshView()));
+  connect(m_editor, SIGNAL(s_isModified(bool)), this,
+          SLOT(setIsModified(bool)));
+  connect(btn_refresh, SIGNAL(clicked()), m_tableView, SLOT(refreshView()));
 
   m_tableView->initOrders();
 }
@@ -106,4 +104,20 @@ void InventoryOrders::createOrder(int costumerId) {
   m_editor->setEnabled(true);
   m_editor->openCreateOrder(costumerId);
   m_stackedWidget->setCurrentWidget(m_editor);
+}
+
+bool InventoryOrders::addArticleToOrder(int articleId) {
+  if (isEditorActive()) {
+    m_editor->addArticleId(articleId);
+    return true;
+  }
+  emit s_postMessage(tr("There is no Order open!"));
+  return false;
+}
+
+bool InventoryOrders::isEditorActive() {
+  if (m_stackedWidget->currentWidget() == m_editor) {
+    return m_editor->isEnabled();
+  }
+  return false;
 }

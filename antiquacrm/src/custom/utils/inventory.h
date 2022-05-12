@@ -49,6 +49,11 @@ protected:
    */
   virtual void openEditor(const QString &) = 0;
 
+  /**
+   * @brief Darf dieser Tab geschlossen werden?
+   */
+  void setClosable(bool b = false);
+
 protected Q_SLOTS:
   /**
    * @brief Kopiert Text in das Clipboard
@@ -56,10 +61,9 @@ protected Q_SLOTS:
   void copyIntoClipboard(const QVariant &);
 
   /**
-   * @brief Änderungen wie isModified abfangen.
-   * Wird von den Editorklassen ausgelöst.
+   * @brief Wurde das Fenster geändert
    */
-  void setClosable(bool b = false);
+  void setIsModified(bool);
 
   /**
    * @brief Methode für Suche während eingabe.
@@ -96,6 +100,11 @@ Q_SIGNALS:
    * @param costumerId
    */
   void s_createOrder(int costumerId);
+
+  /**
+   * @brief Einen Artikel zu einem Auftrag hinzufügen!
+   */
+  void s_addArticleOrder(int articleId);
 
 public Q_SLOTS:
   /**

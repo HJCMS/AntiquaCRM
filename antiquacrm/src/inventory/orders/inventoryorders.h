@@ -118,6 +118,9 @@ public Q_SLOTS:
   */
   void updateOrder(int costumerId);
 
+  /**
+   * @brief Erstelle einen neuen Auftrag für Kunden Nummer.
+   */
   void createOrder(int costumerId);
 
 public:
@@ -126,6 +129,17 @@ public:
     @param parent TabWidget
   */
   explicit InventoryOrders(QWidget *parent = nullptr);
+
+  /**
+   * @brief Füge einen Artikel zu einem Auftrag hinzu.
+   */
+  bool addArticleToOrder(int articleId);
+
+  /**
+   * @brief Ist der Editor aktiv?
+   * @return
+   */
+  bool isEditorActive();
 };
 
 #endif // INVENTORY_ORDERS_H

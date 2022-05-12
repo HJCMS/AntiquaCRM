@@ -108,7 +108,7 @@ QVariant PrintsTableModel::data(const QModelIndex &index, int role) const {
 }
 
 QVariant PrintsTableModel::headerData(int section, Qt::Orientation orientation,
-                                     int role) const {
+                                      int role) const {
   if (role != Qt::DisplayRole)
     return QVariant();
 

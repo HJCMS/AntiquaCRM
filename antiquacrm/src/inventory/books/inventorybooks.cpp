@@ -2,13 +2,13 @@
 // vim: set fileencoding=utf-8
 
 #include "inventorybooks.h"
+#include "antiqua_global.h"
 #include "applsettings.h"
 #include "bookeditor.h"
 #include "bookstable.h"
+#include "myicontheme.h"
 #include "searchbar.h"
 #include "statsactionbar.h"
-#include "antiqua_global.h"
-#include "myicontheme.h"
 
 #include <QDebug>
 #include <QHash>
@@ -59,6 +59,7 @@ static const QList<SearchBar::SearchFilter> bookSearchFilter() {
 InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   setObjectName("InventoryBooks");
   setWindowTitle("TabBooks");
+  setClosable(false);
 
   ApplSettings cfg;
   minLength = cfg.value("search/startlength", 5).toInt();
@@ -121,6 +122,9 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   connect(m_tableView, SIGNAL(s_articleSelected(int)), this,
           SLOT(articleSelected(int)));
 
+  connect(m_tableView, SIGNAL(s_articleToOrders(int)), this,
+          SIGNAL(s_addArticleOrder(int)));
+
   connect(m_tableView, SIGNAL(s_toClibboard(const QVariant &)), this,
           SLOT(copyIntoClipboard(const QVariant &)));
 
@@ -135,7 +139,7 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
 
   connect(m_bookEditor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
   connect(m_bookEditor, SIGNAL(s_isModified(bool)), this,
-          SLOT(setClosable(bool)));
+          SLOT(setIsModified(bool)));
 }
 
 void InventoryBooks::searchConvert(const QString &query) {
@@ -172,7 +176,8 @@ void InventoryBooks::searchConvert() {
     s.SearchField =
         m_searchBar->getSearchFilter(m_searchBar->currentFilterIndex());
     s.SearchString = buf;
-    // qDebug("'%s':'%s'", qPrintable(s.SearchField), qPrintable(s.SearchString));
+    // qDebug("'%s':'%s'", qPrintable(s.SearchField),
+    // qPrintable(s.SearchString));
     if (m_tableView != nullptr)
       m_tableView->queryStatement(s);
   }

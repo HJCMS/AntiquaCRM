@@ -125,16 +125,22 @@ void PrintsTable::contextMenuEvent(QContextMenuEvent *ev) {
   ac_open->setEnabled(b);
   connect(ac_open, SIGNAL(triggered()), this, SLOT(openByContext()));
 
-  // Von Eintrag die ID Kopieren
-  QAction *ac_copy = m->addAction(myIcon("edit"), tr("Copy Article Id"));
-  ac_copy->setObjectName("ac_context_copy_book");
-  ac_copy->setEnabled(b);
-  connect(ac_copy, SIGNAL(triggered()), this, SLOT(copyToClipboard()));
-
   QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create entry"));
   ac_create->setObjectName("ac_context_create_print");
   ac_create->setEnabled(b);
   connect(ac_create, SIGNAL(triggered()), this, SLOT(createByContext()));
+
+  // BEGIN Einträge für Auftrag
+  QAction *ac_copy = m->addAction(myIcon("edit"), tr("Copy Article Id"));
+  ac_copy->setObjectName("ac_context_copy_print");
+  ac_copy->setEnabled(b);
+  connect(ac_copy, SIGNAL(triggered()), this, SLOT(copyToClipboard()));
+
+  QAction *ac_order = m->addAction(myIcon("autostart"), tr("add Article to opened Order"));
+  ac_order->setObjectName("ac_context_book_to_order");
+  ac_order->setEnabled(b);
+  connect(ac_order, SIGNAL(triggered()), this, SLOT(createOrderSignal()));
+  // END
 
   QAction *ac_refresh = m->addAction(myIcon("reload"), tr("Refresh"));
   ac_refresh->setObjectName("ac_context_refresh_view");
@@ -148,6 +154,11 @@ void PrintsTable::contextMenuEvent(QContextMenuEvent *ev) {
 void PrintsTable::copyToClipboard() {
   QVariant id = queryArticleID(p_modelIndex);
   emit s_toClibboard(id);
+}
+
+void PrintsTable::createOrderSignal() {
+  QVariant id = queryArticleID(p_modelIndex);
+  emit s_articleToOrders(id.toInt());
 }
 
 void PrintsTable::refreshView() {
@@ -219,10 +230,6 @@ void PrintsTable::queryStatement(const SearchStatement &cl) {
   if (field == "id") {
     // Numeric Search
     q.append(" WHERE (b.ip_id=");
-    q.append(str);
-  } else if (field == "count") {
-    // Numeric Search
-    q.append(" WHERE (b.ip_count=");
     q.append(str);
   } else if (field == "author") {
     // String Search

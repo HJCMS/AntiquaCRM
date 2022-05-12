@@ -51,8 +51,9 @@ private:
   OrdersPaymentBox *m_paymentBox;
 
 public:
-  explicit PaymentStatusDialog(const QString &search,
-                               QWidget *parent = nullptr);
+  explicit PaymentStatusDialog(QWidget *parent = nullptr);
+  PaymentStatusDialog(qint64 index, QWidget *parent = nullptr);
+  PaymentStatusDialog(const QString &search, QWidget *parent = nullptr);
   void setStatus(bool);
   bool status();
 };

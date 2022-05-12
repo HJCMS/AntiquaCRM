@@ -193,6 +193,11 @@ void OrdersItemList::setModified(bool b) {
   emit hasModified(modified);
 }
 
+void OrdersItemList::insertSearchId(int articleId) {
+  if (articleId >= 0)
+    m_insertID->setValue(articleId);
+}
+
 void OrdersItemList::removeTableRow(int row) {
   int c = m_table->rowCount();
   m_table->removeRow(row);

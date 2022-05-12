@@ -32,6 +32,7 @@ test -e ${_sourcepath}/servercfg.bash || {
 }
 
 chmod -c 0600 ${_sourcepath}/servercfg.bash
+
 source ${_sourcepath}/servercfg.bash
 
 __create_targets
@@ -39,6 +40,46 @@ __create_targets
 __init_sql_enviroment
 
 __init_tempfile
+
+function __export_table()
+{
+  _t=${1}
+
+  rm -f $HOME/.cache/${_output}.sql
+
+  echo "-- pgdump full Table backup: ${_t}.sql"
+  pg_dump \
+    --host=${_server} \
+    --port=${_config[1]} \
+    --dbname=${_config[2]} \
+    --username=${_config[3]} \
+    --table=${_t} \
+    --no-password \
+    --no-owner \
+    --if-exists \
+    --clean \
+    --inserts  \
+    --attribute-inserts \
+    --file=$HOME/.cache/${_output}.sql
+
+  mv -b $HOME/.cache/${_output}.sql ${_dest}/${_date}/${_t}.sql
+}
+
+test -n "$PGSERVICE" || {
+  echo "Enviroment \$PGSERVICE not exits"
+  exit 1
+}
+
+PGSERVICE=$PGSERVICE psql --csv -c "${_sql_query_tables}" > .tmp.log
+
+_pattern="^${_scheme}"
+while read _t; do
+  if [[ "${_t}" =~ $_pattern ]] ; then
+    __export_table ${_t}
+  fi
+done < .tmp.log
+
+rm -f .tmp.log
 
 echo "-- pgdump Structure Backup: schema-only.sql"
 pg_dump \
@@ -53,22 +94,8 @@ pg_dump \
   --create \
   --if-exists \
   --clean \
-  --file=$HOME/.cache/${_output}.sql
+  --file=$HOME/.cache/schema-only.sql
 
-mv -b $HOME/.cache/${_output}.sql ${_dest}/${_date}/schema-only.sql
-
-# echo "-- pgdump Complite Backup: scheme-inserts.sql"
-# pg_dump \
-#   -h ${_config[0]} \
-#   -d ${_config[2]} \
-#   -U ${_config[3]} \
-#   --schema=${_scheme} \
-#   --no-owner \
-#   --if-exists \
-#   --clean \
-#   --inserts \
-#   --column-inserts | tee $HOME/.cache/${_output}.sql 1> /dev/null
-#
-# mv -b $HOME/.cache/${_output}.sql ${_dest}/${_date}/scheme-inserts.sql
+mv -b $HOME/.cache/schema-only.sql ${_dest}/${_date}/schema-only.sql
 
 ##EOF

@@ -96,6 +96,10 @@ int MApplication::exec() {
   m_mainWindow = new MWindow();
   connect(m_socket, SIGNAL(statusMessage(const QString &)), m_mainWindow,
           SLOT(statusMessage(const QString &)));
+  connect(m_mainWindow, SIGNAL(s_connectDatabase(bool)), m_sqlDB,
+          SLOT(openDatabase(bool)));
+  connect(m_sqlDB, SIGNAL(s_connectionStatus(bool)), m_mainWindow,
+          SLOT(connectionStatus(bool)));
   if (m_mainWindow == nullptr) {
     qFatal("Application error");
     return 0;

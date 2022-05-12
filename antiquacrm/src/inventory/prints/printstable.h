@@ -64,13 +64,19 @@ private Q_SLOTS:
    */
   void copyToClipboard();
 
+  /**
+   * @brief Suche Artikel ID und sende @ref s_articleToOrders
+   */
+  void createOrderSignal();
+
 protected:
   void contextMenuEvent(QContextMenuEvent *);
 
 Q_SIGNALS:
   void s_toClibboard(const QVariant &);
   void s_rowsChanged(int count);
-  void s_articleSelected(int id);
+  void s_articleSelected(int articleId);
+  void s_articleToOrders(int articleId);
   void s_newEntryPlease();
 
 public Q_SLOTS:

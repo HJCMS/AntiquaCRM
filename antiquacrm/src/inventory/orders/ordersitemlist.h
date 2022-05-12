@@ -145,6 +145,11 @@ public:
   OrdersItemList(QWidget *parent = nullptr);
 
   /**
+   * @brief Füge Artikel ID in die Suche ein!
+   */
+  void insertSearchId(int articleId);
+
+  /**
    * @brief Gibt es Änderungen am Objekt
    */
   inline bool isModified() { return modified; }

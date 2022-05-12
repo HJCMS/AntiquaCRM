@@ -5,9 +5,10 @@
 #ifndef WORKSPACE_H
 #define WORKSPACE_H
 
+#include <QContextMenuEvent>
 #include <QObject>
+#include <QTabBar>
 #include <QTabWidget>
-#include <QSignalMapper>
 #include <QWidget>
 
 class InventoryBooks;
@@ -15,13 +16,35 @@ class InventoryPrints;
 class InventoryCostumers;
 class InventoryOrders;
 
+class WorkspaceTabBar : public QTabBar {
+  Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
+
+private:
+  int index = -1;
+
+private Q_SLOTS:
+  void checkToClose();
+
+protected:
+  void tabInserted(int index);
+  void contextMenuEvent(QContextMenuEvent *event);
+
+Q_SIGNALS:
+  void s_closeTab(int index);
+
+public:
+  explicit WorkspaceTabBar(QWidget *parent = nullptr);
+};
+
 class Workspace : public QTabWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  QSignalMapper *m_signalMapper;
+  WorkspaceTabBar *m_tabBar;
   InventoryOrders *m_tabOrders;
   InventoryBooks *m_tabBooks;
   InventoryPrints *m_tabPrints;
@@ -54,9 +77,14 @@ private Q_SLOTS:
   void closeTabClicked(int);
 
   /**
-   * @brief Auftrag erstellen
+   * @brief Auftrag von Kunden ID erstellen
    */
-  void createOrder(int);
+  void createOrder(int costumerId);
+
+  /**
+   * @brief Artikel zu Auftrag hinzufügen
+   */
+  void addArticleOrder(int articleId);
 
 protected:
   /**

@@ -55,9 +55,11 @@ protected Q_SLOTS:
 
 Q_SIGNALS:
   void setStatusMessage(const QString &);
+  void s_connectDatabase(bool);
 
 public Q_SLOTS:
   void statusMessage(const QString &);
+  void connectionStatus(bool b);
 
 public:
   explicit MWindow(QWidget *parent = nullptr);

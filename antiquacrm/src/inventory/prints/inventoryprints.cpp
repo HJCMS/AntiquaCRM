@@ -42,10 +42,6 @@ static const QList<SearchBar::SearchFilter> bookSearchFilter() {
   a.title = QObject::tr("Author");
   a.filter = QString("author");
   filter.append(a);
-  a.index = 4;
-  a.title = QObject::tr("Current inventory");
-  a.filter = QString("count");
-  filter.append(a);
   return filter;
 }
 
@@ -53,6 +49,7 @@ InventoryPrints::InventoryPrints(QWidget *parent)
     : Inventory{parent} {
   setObjectName("InventoryPrints");
   setWindowTitle("TabPrints");
+  setClosable(true);
 
   ApplSettings cfg;
   minLength = cfg.value("search/startlength", 5).toInt();
@@ -97,36 +94,26 @@ InventoryPrints::InventoryPrints(QWidget *parent)
   // Signals
   connect(m_searchBar, SIGNAL(searchTextChanged(const QString &)), this,
           SLOT(searchConvert(const QString &)));
-
   connect(m_searchBar, SIGNAL(searchClicked()), this, SLOT(searchConvert()));
-
   connect(m_tableView, SIGNAL(s_articleSelected(int)), this,
           SLOT(articleSelected(int)));
-
+  connect(m_tableView, SIGNAL(s_articleToOrders(int)), this,
+          SIGNAL(s_addArticleOrder(int)));
   connect(m_statsPrintBar, SIGNAL(s_queryHistory(const QString &)), m_tableView,
           SLOT(queryHistory(const QString &)));
-
   connect(m_statsPrintBar, SIGNAL(s_refreshView()), m_tableView,
           SLOT(refreshView()));
-
   connect(m_tableView, SIGNAL(s_newEntryPlease()), this,
           SLOT(createPrintsEntry()));
-
   connect(m_tableView, SIGNAL(s_toClibboard(const QVariant &)), this,
           SLOT(copyIntoClipboard(const QVariant &)));
-
   connect(m_searchBar, SIGNAL(currentFilterChanged(int)), this,
           SLOT(updateValidator(int)));
-
   connect(m_printsEditor, SIGNAL(s_postMessage(const QString &)), this,
           SLOT(displayMessageBox(const QString &)));
-
   connect(m_printsEditor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
   connect(m_printsEditor, SIGNAL(s_isModified(bool)), this,
-          SLOT(setClosable(bool)));
-
-//  connect(m_printsEditor, SIGNAL(s_articleActivation(bool)), this,
-//          SLOT(articleActivation(bool)));
+          SLOT(setIsModified(bool)));
 }
 
 void InventoryPrints::searchConvert(const QString &query) {

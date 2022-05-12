@@ -35,9 +35,6 @@ private:
   */
   QToolButton *m_dbStatus;
 
-private Q_SLOTS:
-  void setDatabaseStatusIcon(bool b = false);
-
 protected:
   /**
    @brief Verzögerung bis @ref m_sql gestartet wird!
@@ -46,6 +43,7 @@ protected:
 
 public Q_SLOTS:
   void sqlStatusMessage(const QString &);
+  void setDatabaseStatusIcon(bool b = false);
 
 public:
   explicit StatusBar(QWidget *parent = 0);

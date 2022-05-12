@@ -233,10 +233,7 @@ void MWindow::toggleFullScreen(bool b) {
    @brief Neu mit der Datenbank Verbinden
    @param b UNUSED
  */
-void MWindow::reconnectDatabase(bool b) {
-  Q_UNUSED(b);
-  // connectSqlDatabase();
-}
+void MWindow::reconnectDatabase(bool b) { emit s_connectDatabase(b); }
 
 void MWindow::closeEvent(QCloseEvent *event) {
   if (isFullScreen()) // Keine Vollansicht Speichern!
@@ -251,6 +248,10 @@ void MWindow::statusMessage(const QString &info) {
   m_statusBar->sqlStatusMessage(info);
 }
 
+void MWindow::connectionStatus(bool b) {
+  m_statusBar->setDatabaseStatusIcon(b);
+}
+
 void MWindow::initDefaults() {
   if (m_Settings->contains("window/geometry"))
     restoreGeometry(m_Settings->value("window/geometry").toByteArray());
@@ -258,9 +259,11 @@ void MWindow::initDefaults() {
   if (m_Settings->contains("window/windowState"))
     restoreState(m_Settings->value("window/windowState").toByteArray());
 
-  m_workSpace->openTab(Workspace::Costumers);
   m_workSpace->openTab(Workspace::Orders);
   m_workSpace->openTab(Workspace::Books);
+  m_workSpace->openTab(Workspace::Costumers);
+  // Nach Vorne holen
+  m_workSpace->openTab(Workspace::Orders);
 }
 
 MWindow::~MWindow() { qInfo("Mainwindow onload"); }

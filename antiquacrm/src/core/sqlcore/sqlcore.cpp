@@ -8,16 +8,16 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QFileInfo>
+#include <QLocale>
 #include <QMutex>
 #include <QSettings>
-#include <QTime>
-#include <QtGlobal>
-#include <QSslConfiguration>
-#include <QTcpSocket>
 #include <QSqlDriver>
 #include <QSqlError>
-#include <QLocale>
 #include <QSqlQuery>
+#include <QSslConfiguration>
+#include <QTcpSocket>
+#include <QTime>
+#include <QtGlobal>
 
 namespace HJCMS {
 
@@ -95,8 +95,10 @@ bool SqlCore::initDatabase() {
 
   if (database != nullptr) {
     QString connName = database->connectionName();
-    if (connName.isEmpty())
+    if (connName.isEmpty()) {
+      qWarning("Missing SQL::ConnectionName");
       return false;
+    }
 
     if (statusTimerID > 0)
       killTimer(statusTimerID);
@@ -168,7 +170,7 @@ const QString SqlCore::fetchErrors() {
 void SqlCore::openDatabase(bool b) {
   Q_UNUSED(b);
   if (initDatabase()) {
-    emit s_noticeMessage(tr("PostgreSQL connected successfully!"));
+    emit s_noticeMessage(tr("Database connected successfully!"));
     emit s_connectionStatus(true);
   } else {
     emit s_connectionStatus(false);

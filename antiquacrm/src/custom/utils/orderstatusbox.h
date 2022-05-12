@@ -50,7 +50,9 @@ private:
   OrderStatusBox *m_statusBox;
 
 public:
-  explicit StatusDialog(const QString &current, QWidget *parent = nullptr);
+  explicit StatusDialog(QWidget *parent = nullptr);
+  StatusDialog(qint64 index, QWidget *parent = nullptr);
+  StatusDialog(const QString &current, QWidget *parent = nullptr);
   int index();
 };
 
