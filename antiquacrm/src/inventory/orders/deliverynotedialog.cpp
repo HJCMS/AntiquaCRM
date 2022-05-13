@@ -18,14 +18,7 @@ PaintArea::PaintArea(QWidget *parent) : QTextEdit{parent} {
 
 // void PaintArea::paintEvent(QPaintEvent *event) {}
 
-void PaintArea::setDocumentHeader() {
-  QTextBlock block = m_document->firstBlock();
-  QTextFormat format;
-  QTextCursor tc = textCursor();
-  tc.beginEditBlock();
-  tc.insertText("Buch- und Kunsthandlung Antiquariat");
-  tc.endEditBlock();
-}
+void PaintArea::setDocumentHeader() {}
 
 DeliveryNoteDialog::DeliveryNoteDialog(const QString &tmpfile, QWidget *parent)
     : QDialog{parent} {

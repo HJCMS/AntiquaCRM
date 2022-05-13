@@ -69,3 +69,7 @@ Thumbs.db
 # --------
 *.dll
 *.exe
+
+# Project
+*.kdev4
+

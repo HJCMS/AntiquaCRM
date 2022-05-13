@@ -2,5 +2,6 @@
 *.log
 *.bak
 build-*
+build_kdev
 CMakeLists.txt.user
 testbuild.sh
