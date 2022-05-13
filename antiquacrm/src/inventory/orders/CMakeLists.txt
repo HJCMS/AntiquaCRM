@@ -20,6 +20,7 @@ SET (subproject_LINKER
 
 SET (subproject_SOURCES
   inventoryorders.cpp
+  deliverynotedialog.cpp
   ordersitemlist.cpp
   orderstable.cpp
   orderstablemodel.cpp
@@ -29,6 +30,7 @@ SET (subproject_SOURCES
 
 SET (subproject_HEADERS
   orderstatements.h
+  deliverynotedialog.h
   ordersitemlist.h
   inventoryorders.h
   orderstable.h

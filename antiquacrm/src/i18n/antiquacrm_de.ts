@@ -1008,7 +1008,7 @@
         <translation>Beende ohne Speichern.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Restore</source>
         <translation>Zurücksetzen</translation>
     </message>
@@ -1018,7 +1018,17 @@
         <translation>Setzt die Daten zum letzten Speicherpunkt zurück.</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
+        <source>Printing</source>
+        <translation>Drucken</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Open Print dialog</source>
+        <translation>Öffne Drucker Dialog</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
@@ -1028,7 +1038,7 @@
         <translation>Speichert den aktuellen Datensatz</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Back</source>
         <translation>Zurück</translation>
     </message>
@@ -1551,7 +1561,7 @@
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+98"/>
+        <location line="+101"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
@@ -1581,13 +1591,13 @@
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+31"/>
         <source>Do you really want to close this order and pass it on to accounting?</source>
         <translation>Möchten Sie wirklich diesen Auftrag schließen und an die Buchhaltung weiter reichen?</translation>
     </message>
     <message>
-        <location line="-52"/>
-        <location line="+55"/>
+        <location line="-57"/>
+        <location line="+60"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>

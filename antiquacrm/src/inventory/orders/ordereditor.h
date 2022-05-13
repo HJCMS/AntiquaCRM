@@ -246,6 +246,11 @@ private Q_SLOTS:
   void finalLeaveEditor();
 
   /**
+   * @brief Drucker Dialog öffnen
+   */
+  void openPrinterDialog();
+
+  /**
    * @brief SQL Spalte "o_closed" true setzen.
    * Wenn diese Aktion ausgeführt wird ist es nur noch
    * für die Buchhaltung sichtbar und der Editor wird verlassen!

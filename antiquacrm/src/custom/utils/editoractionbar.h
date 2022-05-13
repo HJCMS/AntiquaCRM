@@ -5,6 +5,7 @@
 #ifndef EDITORACTIONBAR_UTILS_H
 #define EDITORACTIONBAR_UTILS_H
 
+#include <QFlags>
 #include <QObject>
 #include <QPushButton>
 #include <QWidget>
@@ -16,12 +17,14 @@ class EditorActionBar final : public QWidget {
 
 private:
   QPushButton *m_restoreBtn;
+  QPushButton *m_printBtn;
   QPushButton *m_cancelBtn;
   QPushButton *m_saveBtn;
   QPushButton *m_readyBtn;
 
 Q_SIGNALS:
   void s_restoreClicked();
+  void s_printClicked();
   void s_cancelClicked();
   void s_saveClicked();
   void s_finishClicked();
@@ -31,6 +34,7 @@ public Q_SLOTS:
 
 public:
   explicit EditorActionBar(QWidget *parent = nullptr);
+  void viewPrintButton(bool b = false);
   bool isRestoreable();
 };
 

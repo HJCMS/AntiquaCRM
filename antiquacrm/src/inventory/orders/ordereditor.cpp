@@ -3,6 +3,7 @@
 
 #include "ordereditor.h"
 #include "applsettings.h"
+#include "deliverynotedialog.h"
 #include "editoractionbar.h"
 #include "myicontheme.h"
 #include "ordersitemlist.h"
@@ -89,6 +90,7 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
 
   m_actionBar = new EditorActionBar(this);
   m_actionBar->setObjectName("m_actionBar");
+  m_actionBar->viewPrintButton(true);
   mainLayout->addWidget(m_actionBar);
 
   setLayout(mainLayout);
@@ -100,6 +102,8 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   connect(m_actionBar, SIGNAL(s_saveClicked()), this, SLOT(saveData()));
   connect(m_actionBar, SIGNAL(s_finishClicked()), this,
           SLOT(checkLeaveEditor()));
+  connect(m_actionBar, SIGNAL(s_printClicked()), this,
+          SLOT(openPrinterDialog()));
   connect(m_paymentList, SIGNAL(searchArticle(int)), this,
           SLOT(findArticle(int)));
   connect(m_paymentList, SIGNAL(statusMessage(const QString &)), this,
@@ -464,6 +468,15 @@ void OrderEditor::finalLeaveEditor() {
   clearDataFields(p_objPattern); /**< Alle Datenfelder leeren */
   m_paymentList->clearTable();   /**< Tabelle leeren */
   emit s_leaveEditor();          /**< Zurück */
+}
+
+void OrderEditor::openPrinterDialog() {
+  const QString pdf = QDir::homePath() + "/.cache/temp.pdf";
+  DeliveryNoteDialog *dialog = new DeliveryNoteDialog(pdf,this);
+  dialog->setObjectName("delivery_note");
+  if (dialog->exec()) {
+    qDebug() << Q_FUNC_INFO << "TODO";
+  }
 }
 
 void OrderEditor::createCloseOrder(bool b) {
