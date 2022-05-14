@@ -65,10 +65,25 @@ static const QString defaultOrdersQuery(int id = 0) {
  * @return SQL Query
  */
 static const QString queryCostumerAddress(int costumerId) {
-  QString sql("SELECT c_postal_address,c_shipping_address");
-  sql.append(" FROM costumers WHERE c_id=");
+  QString sql("SELECT c_postal_address,c_shipping_address ");
+  sql.append("FROM costumers WHERE c_id=");
   sql.append(QString::number(costumerId));
   sql.append(";");
+  return sql;
+}
+
+/**
+ * @brief queryCostumerShippingAddress
+ * @param costumerId
+ * @code
+ * SELECT func_shipping_address AS address FROM func_shipping_address(3);
+ * @endcode
+ */
+static const QString queryCostumerShippingAddress(int costumerId) {
+  QString sql("SELECT func_shipping_address AS address");
+  sql.append(" FROM func_shipping_address(");
+  sql.append(QString::number(costumerId));
+  sql.append(");");
   return sql;
 }
 
@@ -135,6 +150,28 @@ static const QString paymentArticleOrders(int oid, int cid) {
   sql.append(QString::number(cid));
   sql.append(";");
   return sql;
+}
+
+/**
+ * @brief Erstelle Lieferscheinabfrage
+ * @param oid
+ * @param cid
+ * @return (aid,quant,title)
+ */
+static const QString queryDeliveryNotes(int oid, int cid) {
+  QString s("SELECT a.a_article_id AS aid, a.a_count AS quant,");
+  s.append(" (CASE WHEN b.ib_title IS NOT NULL THEN");
+  s.append(" CONCAT_WS(' - ',b.ib_title,b.ib_author,b.ib_publisher,b.ib_year)");
+  s.append(" ELSE CONCAT_WS(' -  ',p.ip_title,p.ip_author) END) AS title");
+  s.append(" FROM article_orders AS a");
+  s.append(" LEFT JOIN inventory_books AS b ON b.ib_id=a.a_article_id");
+  s.append(" LEFT JOIN inventory_prints AS p ON p.ip_id=a.a_article_id");
+  s.append(" WHERE a.a_order_id=");
+  s.append(QString::number(oid));
+  s.append(" AND a.a_costumer_id=");
+  s.append(QString::number(cid));
+  s.append(";");
+  return s;
 }
 
 /**

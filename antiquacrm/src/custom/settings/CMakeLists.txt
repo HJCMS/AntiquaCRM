@@ -17,6 +17,7 @@ SET (subproject_SOURCES
  pgsqlsettings.cpp
  settingswidget.cpp
  viewsettings.cpp
+ companysettings.cpp
 )
 
 SET (subproject_HEADERS
@@ -26,6 +27,7 @@ SET (subproject_HEADERS
  pgsqlsettings.h
  settingswidget.h
  viewsettings.h
+ companysettings.h
  SettingsDialog
 )
 

@@ -442,6 +442,74 @@
     </message>
 </context>
 <context>
+    <name>CompanySettings</name>
+    <message>
+        <location filename="../custom/settings/companysettings.cpp" line="+18"/>
+        <source>On this page you configure your company&apos;s printer settings.</source>
+        <translation>Auf dieser Seite konfigurieren Sie die Druckereinstellungen Ihres Unternehmens.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Company name displayed in the letterhead.</source>
+        <translation>Firmenname der im Briefkopf angezeigt wird.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Company title</source>
+        <translation>Firmenname</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Company short title</source>
+        <translation>Firmenname kurzform</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Company address for the letterhead.</source>
+        <translation>Firmenadresse für den Briefkopf.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Street Number</source>
+        <translation>Strasse und Nummer</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Postalcode Location / Country</source>
+        <translation>Postleitzahl Ort / Land</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>employer</source>
+        <translation>Arbeitgeber*in</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>tax number</source>
+        <translation>Steuer Nummer</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>phone number</source>
+        <translation>Telefon Nummer</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>fax number</source>
+        <translation>Fax Nummer</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>email</source>
+        <translation>E-Mail Adresse</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Notes on the order form.</source>
+        <translation>Hinweise - Lieferschein unter der Artikleliste.</translation>
+    </message>
+</context>
+<context>
     <name>CompleterDialog</name>
     <message>
         <location filename="../custom/completer/completerdialog.cpp" line="+22"/>
@@ -515,6 +583,11 @@
         <translation>Aussehen</translation>
     </message>
     <message>
+        <location line="+6"/>
+        <source>Company</source>
+        <translation>Unternehmen</translation>
+    </message>
+    <message>
         <location line="+19"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
@@ -535,7 +608,7 @@
         <translation>Konfiguration erfolgreich gespeichert</translation>
     </message>
     <message>
-        <location line="-87"/>
+        <location line="-93"/>
         <source>Database</source>
         <translation>Datenbank</translation>
     </message>
@@ -925,6 +998,85 @@
         <location line="+3"/>
         <source>Description</source>
         <translation>Beschreibung</translation>
+    </message>
+</context>
+<context>
+    <name>DeliveryNote</name>
+    <message>
+        <location filename="../custom/printing/deliverynote.cpp" line="+14"/>
+        <location line="+173"/>
+        <source>Delivery note</source>
+        <translation>Lieferschein</translation>
+    </message>
+    <message>
+        <location line="-157"/>
+        <source>&lt;p&gt;Your Company configuration is incomplite!&lt;/p&gt;Edit Company settings first!</source>
+        <translation>&lt;p&gt;Die Konfiguration der Unternehmerdaten sind unvollständig!&lt;/p&gt;Bitte konfigurieren Sie erst Ihre Firmendaten!</translation>
+    </message>
+    <message>
+        <location line="+47"/>
+        <source>Delivey note</source>
+        <translation>Lieferschein</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Order-ID:</source>
+        <translation>Bestellnummer:</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Costumer-ID:</source>
+        <translation>Kundennummer:</translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Article-ID</source>
+        <translation>Artikel Nr.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Designation</source>
+        <translation>Bezeichnung</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Quantity</source>
+        <translation>Menge</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>email</source>
+        <translation>E-Mail</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>phone</source>
+        <translation>Telefon</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>fax</source>
+        <translation>Fax</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>tax number</source>
+        <translation>Steuer Nummer</translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>There is no Order-Id to generate this delivery!</source>
+        <translation>Es gibt keine Bestellnummer für die Erstellung!</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>There is no Costumer Id to generate this delivery!</source>
+        <translation>Es gibt keine Kunennummer für die Erstellung!</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>&lt;p&gt;Costumer Address is empty!&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Kunden Adresse ist leer!&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -1511,7 +1663,7 @@
 <context>
     <name>OrderEditor</name>
     <message>
-        <location filename="../inventory/orders/ordereditor.cpp" line="+17"/>
+        <location filename="../inventory/orders/ordereditor.cpp" line="+18"/>
         <source>Edit Order</source>
         <translation>Auftrag bearbeiten</translation>
     </message>
@@ -1591,13 +1743,33 @@
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+23"/>
+        <source>Missing Order-Id</source>
+        <translation>Fehlende Bestellnummer</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Missing Costumer-Id</source>
+        <translation>Fehlende Kundennummer</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>No Costumer Address found</source>
+        <translation>Konnte keine Kundenadresse finden</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>no deliveries found</source>
+        <translation>Keine Bestellungen gefunden</translation>
+    </message>
+    <message>
+        <location line="+15"/>
         <source>Do you really want to close this order and pass it on to accounting?</source>
         <translation>Möchten Sie wirklich diesen Auftrag schließen und an die Buchhaltung weiter reichen?</translation>
     </message>
     <message>
-        <location line="-57"/>
-        <location line="+60"/>
+        <location line="-103"/>
+        <location line="+106"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
@@ -2067,6 +2239,14 @@
         <location line="+48"/>
         <source>A valid Price is required and must set.</source>
         <translation>Ein gültiger Preis ist erforderlich und muss festgelegt werden.</translation>
+    </message>
+</context>
+<context>
+    <name>Printing</name>
+    <message>
+        <location filename="../custom/printing/printing.cpp" line="+44"/>
+        <source>Printing</source>
+        <translation>Drucken</translation>
     </message>
 </context>
 <context>

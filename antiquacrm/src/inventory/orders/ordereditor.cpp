@@ -3,7 +3,7 @@
 
 #include "ordereditor.h"
 #include "applsettings.h"
-#include "deliverynotedialog.h"
+#include "deliverynote.h"
 #include "editoractionbar.h"
 #include "myicontheme.h"
 #include "ordersitemlist.h"
@@ -471,10 +471,52 @@ void OrderEditor::finalLeaveEditor() {
 }
 
 void OrderEditor::openPrinterDialog() {
-  const QString pdf = QDir::homePath() + "/.cache/temp.pdf";
-  DeliveryNoteDialog *dialog = new DeliveryNoteDialog(pdf,this);
-  dialog->setObjectName("delivery_note");
-  if (dialog->exec()) {
+  int oid = o_id->value().toInt();
+  if (oid < 1) {
+    emit s_postMessage(tr("Missing Order-Id"));
+    return;
+  }
+
+  int cid = o_costumer_id->value().toInt();
+  if (cid < 1) {
+    emit s_postMessage(tr("Missing Costumer-Id"));
+    return;
+  }
+
+  DeliveryNote *dialog = new DeliveryNote(this);
+  dialog->setObjectName("delivery_note_dialog");
+  dialog->setDelivery(oid, cid);
+  // Address
+  QString c_add;
+  QString sql = queryCostumerShippingAddress(cid);
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    q.next();
+    c_add.append(q.value(0).toString());
+  } else {
+    qDebug() << Q_FUNC_INFO << m_sql->lastError();
+    emit s_postMessage(tr("No Costumer Address found"));
+    return;
+  }
+  dialog->setCostumerAddress(c_add);
+  // Articles
+  QList<DeliveryNote::Delivery> deliveries;
+  q = m_sql->query(queryDeliveryNotes(oid, cid));
+  QRegExp strip("\\-\\s+\\-");
+  while (q.next()) {
+    DeliveryNote::Delivery d;
+    d.articleid = q.value("aid").toString();
+    d.designation = q.value("title").toString().replace(strip,"-");
+    d.quantity = q.value("quant").toString();
+    deliveries.append(d);
+  }
+  if (deliveries.count() < 1) {
+    qDebug() << m_sql->lastError();
+    emit s_postMessage(tr("no deliveries found"));
+    return;
+  }
+  // Start Dialog
+  if (dialog->exec(deliveries)) {
     qDebug() << Q_FUNC_INFO << "TODO";
   }
 }

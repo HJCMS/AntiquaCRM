@@ -26,6 +26,7 @@ private:
     GeneralSettings* m_page1;
     PgSQLSettings* m_page2;
     ViewSettings* m_page3;
+    CompanySettings* m_page4;
     QStatusBar *m_statusbar;
 
 private Q_SLOTS:

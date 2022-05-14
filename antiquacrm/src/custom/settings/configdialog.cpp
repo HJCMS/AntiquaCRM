@@ -51,6 +51,12 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   m_page3->setPageIcon(myIcon("autostart"));
   ConfigPages->addWidget(m_page3);
 
+  m_page4 = new CompanySettings(ConfigPages);
+  m_page4->setObjectName("company_settings");
+  m_page4->setPageTitle(tr("Company"));
+  m_page4->setPageIcon(myIcon("database"));
+  ConfigPages->addWidget(m_page4);
+
   m_listWidget = new QListWidget(this);
   m_listWidget->setObjectName("config_dialog_menue");
   m_listWidget->setResizeMode(QListView::Adjust);

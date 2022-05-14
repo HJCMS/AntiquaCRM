@@ -21,6 +21,8 @@ SET (PROJECT_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/imaging
  ${CMAKE_CURRENT_BINARY_DIR}/custom/networking
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/networking
+ ${CMAKE_CURRENT_BINARY_DIR}/custom/printing
+ ${CMAKE_CURRENT_SOURCE_DIR}/custom/printing
  ${CMAKE_CURRENT_BINARY_DIR}/custom/settings
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/settings
  ${CMAKE_CURRENT_BINARY_DIR}/custom/utils
@@ -65,6 +67,7 @@ Utils
 Imaging
 Assistant
 Autofill
+Printing
 InventoryBooks
 InventoryCostumers
 InventoryPrints
