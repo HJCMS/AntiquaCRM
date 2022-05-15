@@ -21,6 +21,8 @@ class ViewSettings final : public SettingsWidget
 private:
   QLabel *view_font_config;
 
+  void initSignalChanged();
+
 private Q_SLOTS:
   void openFontDialog();
 

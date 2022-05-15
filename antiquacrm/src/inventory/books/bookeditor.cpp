@@ -270,6 +270,15 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
 
   setLayout(mainLayout);
 
+  // SIGNALS
+  QList<UtilsMain *> list =
+      findChildren<UtilsMain *>(p_objPattern, Qt::FindChildrenRecursively);
+  QList<UtilsMain *>::Iterator it;
+  for (it = list.begin(); it != list.end(); ++it) {
+    UtilsMain *e = *it;
+    connect(e, SIGNAL(hasModified(bool)), this, SLOT(setWindowModified(bool)));
+  }
+
   connect(ib_isbn, SIGNAL(clicked()), this, SLOT(createIsbnQuery()));
 
   connect(m_imageToolBar, SIGNAL(s_openImage()), this, SLOT(openImageDialog()));

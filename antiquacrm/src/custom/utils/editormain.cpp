@@ -74,7 +74,6 @@ void EditorMain::clearDataFields(const QRegularExpression &pattern) {
     qWarning("Invalid QRegularExpression::objPattern");
     return;
   }
-
   QList<QObject *> list =
       findChildren<QObject *>(pattern, Qt::FindChildrenRecursively);
   for (int i = 0; i < list.size(); ++i) {

@@ -95,6 +95,17 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
 
   setLayout(mainLayout);
 
+  // SIGNALS
+  QList<UtilsMain *> list =
+      findChildren<UtilsMain *>(p_objPattern, Qt::FindChildrenRecursively);
+  QList<UtilsMain *>::Iterator it;
+  for (it = list.begin(); it != list.end(); ++it) {
+    UtilsMain *e = *it;
+    connect(e, SIGNAL(hasModified(bool)), this, SLOT(setWindowModified(bool)));
+  }
+  connect(m_paymentList, SIGNAL(hasModified(bool)), this,
+          SLOT(setWindowModified(bool)));
+
   connect(m_actionBar, SIGNAL(s_cancelClicked()), this,
           SLOT(finalLeaveEditor()));
   connect(m_actionBar, SIGNAL(s_restoreClicked()), this,
@@ -183,6 +194,7 @@ bool OrderEditor::sendSqlQuery(const QString &sqlStatement) {
     }
     resetModified(inputList);
     m_paymentList->setModified(false);
+    emit s_isModified(false);
     return true;
   }
 }
@@ -254,6 +266,7 @@ bool OrderEditor::createSqlArticleOrder() {
         fields.next();
         sql.append(fields.key() + "=" + fields.value() + ",");
       }
+      // qDebug() << Q_FUNC_INFO << it.key() << it.value() << sql;
       sql.append("a_modified=CURRENT_TIMESTAMP WHERE a_payment_id=");
       sql.append(QString::number(primaryIndex));
       sql.append(";");
@@ -277,6 +290,7 @@ bool OrderEditor::createSqlArticleOrder() {
     if (list.size() >= 1) {
       m_paymentList->clearTable();
       m_paymentList->importPayments(list);
+      m_paymentList->setModified(false);
     }
     return true;
   }
@@ -308,7 +322,7 @@ void OrderEditor::createSqlUpdate() {
   // Artikel Bestelliste aktualisieren
   showSuccessFully = false;
   if (!createSqlArticleOrder()) {
-    qWarning("UPDATE cancled");
+    qWarning("UPDATE canceld");
     return;
   }
   showSuccessFully = true;
@@ -403,7 +417,12 @@ void OrderEditor::findArticle(int aid) {
     OrderArticle data;
     data.setPayment(-1); // Darf keine positive Zahl sein!
     data.setArticle(q.value("aid").toInt());
-    data.setCount(q.value("counts").toInt());
+    int count = q.value("counts").toInt();
+    if (count > 0) {
+      // Wir fügen immer nur ein Artikel ein!
+      count = 1;
+    }
+    data.setCount(count);
     data.setPrice(q.value("price").toDouble());
     data.setSellPrice(q.value("price").toDouble());
     data.setTitle(q.value("title").toString());
@@ -506,7 +525,7 @@ void OrderEditor::openPrinterDialog() {
   while (q.next()) {
     DeliveryNote::Delivery d;
     d.articleid = q.value("aid").toString();
-    d.designation = q.value("title").toString().replace(strip,"-");
+    d.designation = q.value("title").toString().replace(strip, "-");
     d.quantity = q.value("quant").toString();
     deliveries.append(d);
   }

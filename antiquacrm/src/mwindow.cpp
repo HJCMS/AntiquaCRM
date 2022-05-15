@@ -21,7 +21,7 @@
 
 MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
   setObjectName("MainWindow");
-  setWindowTitle(ANTIQUACRM_WINDOW_TITLE);
+  setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
   setMinimumSize(QSize(1024, 720));
   setWindowIcon(myIcon("database"));
 
@@ -57,6 +57,8 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
 
   connect(m_workSpace, SIGNAL(s_postMessage(const QString &)), this,
           SLOT(statusMessage(const QString &)));
+  connect(m_workSpace, SIGNAL(s_windowModified(bool)), this,
+          SLOT(setWindowModified(bool)));
 }
 
 void MWindow::setupTabMenu(QMenu *parent) {
@@ -101,6 +103,7 @@ void MWindow::setupActions() {
 
   QMenu *menu_files =
       m_applicationMenu->addMenu(myIcon("folder_green"), tr("Open"));
+  menu_files->setEnabled(false);
   menu_files->setObjectName("menu_filemenu");
 
   QAction *ac_openfile =
@@ -115,7 +118,7 @@ void MWindow::setupActions() {
   m_quitAction = m_applicationMenu->addAction(tr("Quit"));
   m_quitAction->setObjectName("ac_closeApp");
   m_quitAction->setIcon(myIcon("close_mini"));
-  connect(m_quitAction, SIGNAL(triggered(bool)), this, SLOT(close()));
+  connect(m_quitAction, SIGNAL(triggered(bool)), this, SLOT(closeWindow()));
 
   QMenu *m_viewsMenu = m_menuBar->addMenu(tr("Views"));
   m_viewsMenu->setObjectName(QLatin1String("ViewsMenu"));
@@ -155,6 +158,18 @@ void MWindow::setupActions() {
   a_pdt->setIcon(myIcon("spreadsheet"));
   connect(a_pdt, SIGNAL(triggered(bool)), this,
           SLOT(openPrintsDesignation(bool)));
+}
+
+void MWindow::closeWindow() {
+  if (isWindowModified()) {
+    int ret = QMessageBox::question(
+        this, tr("Save request"),
+        tr("<b>You have unsaved changes.</b><p>Do you really want to close the application?</p>"));
+    if (ret == QMessageBox::No) {
+      return;
+    }
+  }
+  close();
 }
 
 void MWindow::openEditCondition() {
@@ -266,4 +281,5 @@ void MWindow::initDefaults() {
   m_workSpace->openTab(Workspace::Orders);
 }
 
-MWindow::~MWindow() { qInfo("Mainwindow onload"); }
+MWindow::~MWindow() { /* TODO */
+}

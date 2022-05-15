@@ -8,12 +8,11 @@
 
 #include <QDebug>
 #include <QDir>
-#include <QPushButton>
 #include <QHBoxLayout>
+#include <QPushButton>
 #include <QVBoxLayout>
 
-GeneralSettings::GeneralSettings(QWidget *parent)
-    : SettingsWidget{parent} {
+GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   setObjectName("general_settings");
 
   QString buffer; /**< Info Titel Puffer */
@@ -54,6 +53,21 @@ GeneralSettings::GeneralSettings(QWidget *parent)
   layout->addStretch(1);
   setLayout(layout);
   connect(btn_image_src, SIGNAL(clicked()), this, SLOT(setImageDir()));
+
+  initSignalChanged();
+}
+
+void GeneralSettings::initSignalChanged() {
+  QList<UtilsMain *> l =
+      findChildren<UtilsMain *>(QString(), Qt::FindChildrenRecursively);
+  if (l.count() > 1) {
+    for (int i = 0; i < l.count(); i++) {
+      UtilsMain *w = l.at(i);
+      if (w != nullptr) {
+        connect(w, SIGNAL(hasModified(bool)), this, SLOT(chieldModified(bool)));
+      }
+    }
+  }
 }
 
 void GeneralSettings::setImageDir() {
@@ -91,5 +105,5 @@ void GeneralSettings::saveSectionConfig() {
   config->setValue("imaging/sourcepath", m_editImageSrc->value());
   config->setValue("search/startlength", m_searchStart->value());
   config->setValue("payment/min_price", m_minPrice->value());
-  config->setValue("payment/currency","€"); // TODO
+  config->setValue("payment/currency", "€"); // TODO
 }

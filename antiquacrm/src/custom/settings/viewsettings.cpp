@@ -32,6 +32,9 @@ ViewSettings::ViewSettings(QWidget *parent) : SettingsWidget{parent} {
   connect(btn_fontdialog, SIGNAL(clicked()), this, SLOT(openFontDialog()));
 }
 
+void ViewSettings::initSignalChanged() { /* TODO */
+}
+
 void ViewSettings::openFontDialog() {
   QFontDialog *fd = new QFontDialog(this);
   fd->setCurrentFont(qApp->font());

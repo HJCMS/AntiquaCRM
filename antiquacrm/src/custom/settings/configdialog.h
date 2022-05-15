@@ -41,7 +41,7 @@ public:
     /**
      * @brief Configuration Pages
      */
-    QStackedWidget* ConfigPages;
+    QStackedWidget* pages;
 
     explicit ConfigDialog(QWidget *parent = nullptr);
 

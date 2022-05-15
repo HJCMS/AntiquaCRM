@@ -25,6 +25,10 @@ OrderPaymentsTable::OrderPaymentsTable(QWidget *parent) : QTableWidget{parent} {
   horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
   horizontalHeader()->setStretchLastSection(true);
   horizontalHeader()->setSectionHidden(0, true);
+
+  connect(this,
+          SIGNAL(currentItemChanged(QTableWidgetItem *, QTableWidgetItem *)),
+          this, SLOT(checkChanged(QTableWidgetItem *, QTableWidgetItem *)));
 }
 
 void OrderPaymentsTable::addHeaderItem(int i, const QString &name,
@@ -40,6 +44,10 @@ void OrderPaymentsTable::removeTableItem() {
   if (item != nullptr) {
     emit s_removeTableRow(item->row());
   }
+}
+
+void OrderPaymentsTable::checkChanged(QTableWidgetItem *, QTableWidgetItem *) {
+  emit hasModified(true);
 }
 
 void OrderPaymentsTable::contextMenuEvent(QContextMenuEvent *ev) {

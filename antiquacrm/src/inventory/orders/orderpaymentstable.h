@@ -8,6 +8,7 @@
 #include <QContextMenuEvent>
 #include <QObject>
 #include <QTableWidget>
+#include <QTableWidgetItem>
 #include <QVariant>
 #include <QWidget>
 
@@ -30,11 +31,14 @@ private:
 
 private Q_SLOTS:
   void removeTableItem();
+  void checkChanged(QTableWidgetItem *,QTableWidgetItem *);
 
 protected:
   void contextMenuEvent(QContextMenuEvent *);
 
 Q_SIGNALS:
+  void hasModified(bool);
+
   /**
    * @brief Signal Tabellenzeile entfernen
    */

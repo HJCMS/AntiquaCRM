@@ -41,6 +41,7 @@ private:
   void openEditDesignation(const QString &section);
 
 private Q_SLOTS:
+  void closeWindow();
   void openCondition(bool);
   void openBookDesignation(bool);
   void openPrintsDesignation(bool);

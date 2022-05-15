@@ -264,6 +264,15 @@ PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
   m_actionBar = new EditorActionBar(this);
   mainLayout->addWidget(m_actionBar);
 
+  // SIGNALS
+  QList<UtilsMain *> list =
+      findChildren<UtilsMain *>(p_objPattern, Qt::FindChildrenRecursively);
+  QList<UtilsMain *>::Iterator it;
+  for (it = list.begin(); it != list.end(); ++it) {
+    UtilsMain *e = *it;
+    connect(e, SIGNAL(hasModified(bool)), this, SLOT(setWindowModified(bool)));
+  }
+
   connect(m_imageToolBar, SIGNAL(s_openImage()), this, SLOT(openImageDialog()));
   connect(m_imageToolBar, SIGNAL(s_deleteImage(int)), this,
           SLOT(removeImageDialog(int)));

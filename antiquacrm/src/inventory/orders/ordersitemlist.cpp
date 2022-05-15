@@ -65,6 +65,7 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   connect(btn_check, SIGNAL(clicked()), this, SLOT(createSearchSignal()));
   connect(m_table, SIGNAL(s_removeTableRow(int)), this,
           SIGNAL(askToRemoveRow(int)));
+  connect(m_table, SIGNAL(hasModified(bool)), this, SIGNAL(hasModified(bool)));
 }
 
 QDoubleSpinBox *OrdersItemList::addPrice(double val, int row) {
@@ -106,13 +107,13 @@ double OrdersItemList::getSellPrice(int row) {
   return retval;
 }
 
-QSpinBox *OrdersItemList::addCount(const QVariant &val, int row) {
+QSpinBox *OrdersItemList::addCount(const QVariant &val, int row, int max) {
   int count = val.toInt();
   QSpinBox *c = new QSpinBox(m_table);
   c->setObjectName("a_count#" + QString::number(row));
   c->setMinimum(1);
-  c->setValue(1);
-  c->setMaximum(count);
+  c->setValue(count);
+  c->setMaximum(max);
   return c;
 }
 

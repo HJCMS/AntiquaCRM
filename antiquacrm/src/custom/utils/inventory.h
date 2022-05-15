@@ -83,7 +83,14 @@ protected Q_SLOTS:
   */
   virtual void openTableView() = 0;
 
+  void findModifySignals();
+
 Q_SIGNALS:
+  /**
+   * @brief Änderungen aufzeichnen
+   */
+  void s_windowModified(bool);
+
   /**
     @brief Wegen QML hier eingefügt.
   */

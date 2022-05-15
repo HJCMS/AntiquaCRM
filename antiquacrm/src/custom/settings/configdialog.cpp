@@ -12,7 +12,7 @@
 
 ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   setObjectName("antiqua_config_dialog");
-  setWindowTitle(tr("Configuration"));
+  setWindowTitle(tr("Configuration") + " [*]");
   setSizeGripEnabled(true);
   setMinimumSize(800, 560);
 
@@ -29,33 +29,33 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   m_scrollarea->setWidgetResizable(true);
   horizontal_layout->addWidget(m_scrollarea, Qt::AlignLeft);
 
-  ConfigPages = new QStackedWidget(m_scrollarea);
-  ConfigPages->setObjectName("config_dialog_statckedwidget");
-  m_scrollarea->setWidget(ConfigPages);
+  pages = new QStackedWidget(m_scrollarea);
+  pages->setObjectName("config_dialog_statckedwidget");
+  m_scrollarea->setWidget(pages);
 
-  m_page1 = new GeneralSettings(ConfigPages);
+  m_page1 = new GeneralSettings(pages);
   m_page1->setObjectName("main_settings");
   m_page1->setPageTitle(tr("Application"));
   m_page1->setPageIcon(myIcon("list"));
-  ConfigPages->addWidget(m_page1);
+  pages->addWidget(m_page1);
 
-  m_page2 = new PgSQLSettings(ConfigPages);
+  m_page2 = new PgSQLSettings(pages);
   m_page2->setObjectName("database_settings");
   m_page2->setPageTitle(tr("Database"));
   m_page2->setPageIcon(myIcon("database"));
-  ConfigPages->addWidget(m_page2);
+  pages->addWidget(m_page2);
 
-  m_page3 = new ViewSettings(ConfigPages);
+  m_page3 = new ViewSettings(pages);
   m_page3->setObjectName("appearance_settings");
   m_page3->setPageTitle(tr("Appearance"));
   m_page3->setPageIcon(myIcon("autostart"));
-  ConfigPages->addWidget(m_page3);
+  pages->addWidget(m_page3);
 
-  m_page4 = new CompanySettings(ConfigPages);
+  m_page4 = new CompanySettings(pages);
   m_page4->setObjectName("company_settings");
   m_page4->setPageTitle(tr("Company"));
   m_page4->setPageIcon(myIcon("database"));
-  ConfigPages->addWidget(m_page4);
+  pages->addWidget(m_page4);
 
   m_listWidget = new QListWidget(this);
   m_listWidget->setObjectName("config_dialog_menue");
@@ -94,16 +94,17 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
  * @brief ConfigDialog::createItemSelection
  */
 int ConfigDialog::exec() {
-  for (int i = 0; i < ConfigPages->count(); i++) {
-    if (ConfigPages->widget(i) != nullptr) {
-      SettingsWidget *w =
-          qobject_cast<SettingsWidget *>(ConfigPages->widget(i));
+  for (int i = 0; i < pages->count(); i++) {
+    if (pages->widget(i) != nullptr) {
+      SettingsWidget *w = qobject_cast<SettingsWidget *>(pages->widget(i));
       if (w != nullptr) {
         w->loadSectionConfig();
         QListWidgetItem *lwi = new QListWidgetItem(m_listWidget);
         lwi->setText(w->getPageTitle());
         lwi->setIcon(w->getPageIcon());
         m_listWidget->addItem(lwi);
+        connect(w, SIGNAL(pageModified(bool)), this,
+                SLOT(setWindowModified(bool)));
       }
     }
   }
@@ -115,8 +116,8 @@ int ConfigDialog::exec() {
 
 void ConfigDialog::setPage(QListWidgetItem *item) {
   int i = (m_listWidget->currentRow());
-  if (ConfigPages->widget(i) != nullptr) {
-    ConfigPages->setCurrentIndex(i);
+  if (pages->widget(i) != nullptr) {
+    pages->setCurrentIndex(i);
   }
   statusMessage(tr("Page %1 entered").arg(i));
 }
@@ -127,14 +128,20 @@ void ConfigDialog::statusMessage(const QString &message) {
 
 void ConfigDialog::saveConfig() {
   for (int i = 0; i < m_listWidget->count(); i++) {
-    if (ConfigPages->widget(i) != nullptr) {
-      SettingsWidget *w =
-          qobject_cast<SettingsWidget *>(ConfigPages->widget(i));
+    if (pages->widget(i) != nullptr) {
+      SettingsWidget *w = qobject_cast<SettingsWidget *>(pages->widget(i));
       if (w != nullptr)
         w->saveSectionConfig();
     }
   }
   m_statusbar->showMessage(tr("Configuration saved successfully"), 3000);
+  setWindowModified(false);
 }
 
-void ConfigDialog::closeDialog() { accept(); }
+void ConfigDialog::closeDialog() {
+  if (isWindowModified()) {
+    m_statusbar->showMessage(tr("Unsafed changes!"));
+    return;
+  }
+  accept();
+}

@@ -100,6 +100,7 @@ public Q_SLOTS:
   void openTab(int index = 0);
 
 Q_SIGNALS:
+  void s_windowModified(bool);
   /**
     @brief Nachrichten an das Hauptfenster
   */

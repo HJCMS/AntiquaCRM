@@ -444,69 +444,140 @@
 <context>
     <name>CompanySettings</name>
     <message>
-        <location filename="../custom/settings/companysettings.cpp" line="+18"/>
-        <source>On this page you configure your company&apos;s printer settings.</source>
-        <translation>Auf dieser Seite konfigurieren Sie die Druckereinstellungen Ihres Unternehmens.</translation>
-    </message>
-    <message>
-        <location line="+4"/>
+        <location filename="../custom/settings/companysettings.cpp" line="+22"/>
         <source>Company name displayed in the letterhead.</source>
         <translation>Firmenname der im Briefkopf angezeigt wird.</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Company title</source>
+        <location line="-4"/>
+        <source>On this page you configure your company&apos;s presentation settings.</source>
+        <translation>Auf dieser Seite konfigurieren Sie die Präsentationseinstellungen Ihres Unternehmens.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Company name</source>
         <translation>Firmenname</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+3"/>
+        <source>Full Company title</source>
+        <translation>Ausführlicher Firmenname</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Company</source>
+        <translation>Unternehmen</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Company short title</source>
-        <translation>Firmenname kurzform</translation>
+        <translation>Firmenname in Kurzform</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Company address for the letterhead.</source>
-        <translation>Firmenadresse für den Briefkopf.</translation>
+        <translation>Ihre Firmenadresse für den Briefkopf.</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+4"/>
+        <source>Street</source>
+        <translation>Straße</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Street Number</source>
-        <translation>Strasse und Nummer</translation>
+        <translation>Strasse und Hausnummer</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+3"/>
+        <source>Location</source>
+        <translation>Wohnort</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Postalcode Location / Country</source>
         <translation>Postleitzahl Ort / Land</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+3"/>
+        <source>Employer</source>
+        <translation>Arbeitgeber*in</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>employer</source>
         <translation>Arbeitgeber*in</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>tax number</source>
-        <translation>Steuer Nummer</translation>
+        <location line="+3"/>
+        <source>Phone number</source>
+        <translation>Telefon Nummer</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+18"/>
+        <source>Bank details on Document footer bottom right.</source>
+        <translation>Bankverbindung in der Fußzeile des Dokuments unten rechts.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Bank</source>
+        <translation>Bank</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>bankname</source>
+        <translation>Bankname</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>BIC Swift</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>BIC Swift Code</source>
+        <translation>BIC-Swift-Code</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>IBAN</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>IBAN number</source>
+        <translation>IBAN Nummer</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+3"/>
+        <source>Tax number</source>
+        <translation>Steuernummer</translation>
+    </message>
+    <message>
+        <location line="-40"/>
         <source>phone number</source>
         <translation>Telefon Nummer</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+3"/>
+        <source>Fax Number</source>
+        <translation>Fax Nummer</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>fax number</source>
         <translation>Fax Nummer</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>email</source>
-        <translation>E-Mail Adresse</translation>
+        <location line="+3"/>
+        <source>eMail</source>
+        <translation>E-Mail</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Notes on the order form.</source>
-        <translation>Hinweise - Lieferschein unter der Artikleliste.</translation>
+        <source>email</source>
+        <translation>E-Mail Adresse</translation>
     </message>
 </context>
 <context>
@@ -598,17 +669,22 @@
         <translation>Be&amp;enden</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+44"/>
         <source>Page %1 entered</source>
         <translation>Seite %1 aufgerufen</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+15"/>
         <source>Configuration saved successfully</source>
         <translation>Konfiguration erfolgreich gespeichert</translation>
     </message>
     <message>
-        <location line="-93"/>
+        <location line="+6"/>
+        <source>Unsafed changes!</source>
+        <translation>Nicht gespeicherte Änderungen!</translation>
+    </message>
+    <message>
+        <location line="-99"/>
         <source>Database</source>
         <translation>Datenbank</translation>
     </message>
@@ -1137,7 +1213,7 @@
         <translation>Rechnungsinformationen bearbeiten</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+63"/>
         <source>Saved successfully!</source>
         <translation>Speichern erfolgreich!</translation>
     </message>
@@ -1236,7 +1312,7 @@
 <context>
     <name>GeneralSettings</name>
     <message>
-        <location filename="../custom/settings/generalsettings.cpp" line="+25"/>
+        <location filename="../custom/settings/generalsettings.cpp" line="+24"/>
         <source>Image search Directory</source>
         <translation>Bilder Suchpfad</translation>
     </message>
@@ -1456,9 +1532,22 @@
 <context>
     <name>InventoryBooks</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="+149"/>
+        <location filename="../inventory/books/inventorybooks.cpp" line="+61"/>
+        <source>Books</source>
+        <translation>Bücher</translation>
+    </message>
+    <message>
+        <location line="+88"/>
         <source>Automatic search disabled in this mode. Press enter to start the search!</source>
         <translation>Automatische Suche in diesem Modus deaktiviert. Drücken Sie die Eingabetaste, um die Suche zu starten!</translation>
+    </message>
+</context>
+<context>
+    <name>InventoryCostumers</name>
+    <message>
+        <location filename="../inventory/costumers/inventorycostumers.cpp" line="+43"/>
+        <source>Costumers</source>
+        <translation>Kunden</translation>
     </message>
 </context>
 <context>
@@ -1477,6 +1566,14 @@
         <location line="+68"/>
         <source>There is no Order open!</source>
         <translation>Es ist keine Bestellung geöffnet!</translation>
+    </message>
+</context>
+<context>
+    <name>InventoryPrints</name>
+    <message>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="+50"/>
+        <source>Prints</source>
+        <translation>Drucke</translation>
     </message>
 </context>
 <context>
@@ -1518,7 +1615,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+75"/>
+        <location filename="../mwindow.cpp" line="+77"/>
         <source>Costumers</source>
         <translation>Kunden</translation>
     </message>
@@ -1538,7 +1635,7 @@
         <translation>Öffne</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Open file</source>
         <translation>Öffne Datei</translation>
     </message>
@@ -1573,18 +1670,28 @@
         <translation>Umschreibung</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+9"/>
+        <source>Save request</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&lt;b&gt;You have unsaved changes.&lt;/b&gt;&lt;p&gt;Do you really want to close the application?&lt;/p&gt;</source>
+        <translation>&lt;b&gt;Sie haben nicht gespeicherte Änderungen.&lt;/b&gt;&lt;p&gt;Möchten sie wirklich die Anwendung schließen?&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location line="+59"/>
         <source>SQL Server Error</source>
         <translation>SQL Serverfehler</translation>
     </message>
     <message>
-        <location line="-82"/>
-        <location line="+95"/>
+        <location line="-94"/>
+        <location line="+107"/>
         <source>Fullscreen</source>
         <translation>Vollansicht</translation>
     </message>
     <message>
-        <location line="-159"/>
+        <location line="-172"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
@@ -1604,7 +1711,7 @@
         <translation>Verbinden</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+38"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
@@ -1614,7 +1721,7 @@
         <translation>Konfiguration</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+103"/>
         <source>Disable Fullscreen</source>
         <translation>Vollansicht beenden</translation>
     </message>
@@ -2040,7 +2147,7 @@
 <context>
     <name>PgSQLSettings</name>
     <message>
-        <location filename="../custom/settings/pgsqlsettings.cpp" line="+33"/>
+        <location filename="../custom/settings/pgsqlsettings.cpp" line="+30"/>
         <source>Database Connection settings to PostgreSQL server.</source>
         <translation>Datenbank Verbindungs-Einstellungen zum PostgreSQL Server.</translation>
     </message>
@@ -2192,7 +2299,7 @@
         <translation>Passwort</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+54"/>
         <source>Open Certfile</source>
         <translation>Öffne Zertifikat</translation>
     </message>
@@ -2561,7 +2668,7 @@
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../inventory/prints/inventoryprints.cpp" line="+38"/>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="-12"/>
         <source>Article ID</source>
         <translation>Artikel Nr</translation>
     </message>
@@ -2617,7 +2724,7 @@
         <translation>Diverse</translation>
     </message>
     <message>
-        <location filename="../inventory/costumers/inventorycostumers.cpp" line="+27"/>
+        <location filename="../inventory/costumers/inventorycostumers.cpp" line="-16"/>
         <source>Sort by Name</source>
         <translation>Sortiert mit Name</translation>
     </message>
@@ -2839,7 +2946,7 @@
 <context>
     <name>SettingsWidget</name>
     <message>
-        <location filename="../custom/settings/settingswidget.cpp" line="+16"/>
+        <location filename="../custom/settings/settingswidget.cpp" line="+15"/>
         <source>Directory</source>
         <translation>Verzeichnis</translation>
     </message>
@@ -3071,7 +3178,12 @@
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../workspace.cpp" line="+62"/>
+        <location filename="../workspace.cpp" line="+46"/>
+        <source>Workspace</source>
+        <translation>Arbeitsbereich</translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
@@ -3081,7 +3193,7 @@
         <translation>Bücher Inventar</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+13"/>
         <source>Prints</source>
         <translation>Drucke</translation>
     </message>
@@ -3091,7 +3203,7 @@
         <translation>Drucke, Stiche und Bilder Inventar</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+13"/>
         <source>Costumers</source>
         <translation>Kunden</translation>
     </message>
@@ -3101,7 +3213,7 @@
         <translation>Kunden Inventar</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+11"/>
         <source>Orders</source>
         <translation>Aufträge</translation>
     </message>
@@ -3125,7 +3237,7 @@
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-96"/>
+        <location line="-105"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>

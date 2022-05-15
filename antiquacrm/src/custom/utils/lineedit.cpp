@@ -45,6 +45,7 @@ void LineEdit::setValue(const QVariant &val) {
 void LineEdit::reset() {
   p_value.clear();
   m_edit->clear();
+  setModified(false);
 }
 
 void LineEdit::setFocus() { m_edit->setFocus(); }

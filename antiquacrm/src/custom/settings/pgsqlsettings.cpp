@@ -2,29 +2,26 @@
 // vim: set fileencoding=utf-8
 
 #include "pgsqlsettings.h"
-#include "applsettings.h"
 #include "antiqua_global.h"
+#include "applsettings.h"
 #include "filedialog.h"
 #include "myicontheme.h"
 
 #include <QByteArray>
 #include <QDebug>
 #include <QDir>
-#include <QSslConfiguration>
-#include <QStandardPaths>
-#include <QtWidgets>
-#include <QSslCertificate>
 #include <QGroupBox>
-#include <QWidget>
 #include <QHash>
-#include <QWidget>
 #include <QLineEdit>
 #include <QSpinBox>
+#include <QSslCertificate>
+#include <QSslConfiguration>
+#include <QStandardPaths>
 #include <QToolButton>
+#include <QWidget>
+#include <QtWidgets>
 
-
-PgSQLSettings::PgSQLSettings(QWidget *parent)
-    : SettingsWidget{parent} {
+PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
   setObjectName("pgsql_settings");
 
   QVBoxLayout *layout = new QVBoxLayout(this);
@@ -187,6 +184,26 @@ PgSQLSettings::PgSQLSettings(QWidget *parent)
   connect(btn_ca_bundle, SIGNAL(clicked()), this, SLOT(openCaBundle()));
   connect(btn_root_cert, SIGNAL(clicked()), this, SLOT(openRootCert()));
   connect(sql_ssl, SIGNAL(checked(bool)), m_tls, SLOT(setEnabled(bool)));
+  connect(m_tls, SIGNAL(clicked(bool)), this, SLOT(chieldModified(bool)));
+  connect(ssl_mode, SIGNAL(currentIndexChanged(int)), this,
+          SLOT(chieldChanged(int)));
+  connect(ssl_ca_CN, SIGNAL(currentIndexChanged(int)), this,
+          SLOT(chieldChanged(int)));
+  connect(ssl_peer, SIGNAL(clicked(bool)), this, SLOT(chieldModified(bool)));
+  initSignalChanged();
+}
+
+void PgSQLSettings::initSignalChanged() {
+  QList<UtilsMain *> l =
+      findChildren<UtilsMain *>(QString(), Qt::FindChildrenRecursively);
+  if (l.count() > 1) {
+    for (int i = 0; i < l.count(); i++) {
+      UtilsMain *w = l.at(i);
+      if (w != nullptr) {
+        connect(w, SIGNAL(hasModified(bool)), this, SLOT(chieldModified(bool)));
+      }
+    }
+  }
 }
 
 void PgSQLSettings::initCaBundleData(const QString &bundle) {

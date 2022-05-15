@@ -3,11 +3,11 @@
 #ifndef WIDGET_SETTINGS_H
 #define WIDGET_SETTINGS_H
 
+#include <QIcon>
 #include <QObject>
 #include <QSpacerItem>
 #include <QString>
 #include <QWidget>
-#include <QIcon>
 
 #include <Utils>
 
@@ -23,8 +23,10 @@ class SettingsWidget : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "http://www.hjcms.de")
-  Q_PROPERTY(QString pageTitle READ getPageTitle WRITE setPageTitle NOTIFY pageTitleChanged REQUIRED)
-  Q_PROPERTY(QIcon pageIcon READ getPageIcon WRITE setPageIcon NOTIFY pageIconChanged REQUIRED)
+  Q_PROPERTY(QString pageTitle READ getPageTitle WRITE setPageTitle NOTIFY
+                 pageTitleChanged REQUIRED)
+  Q_PROPERTY(QIcon pageIcon READ getPageIcon WRITE setPageIcon NOTIFY
+                 pageIconChanged REQUIRED)
 
 protected:
   QString pageTitle;
@@ -46,9 +48,19 @@ protected:
    */
   const QString getDirectory(const QString &dest);
 
+  /**
+   * @brief Änderungen aufzeichen Registrieren
+   */
+  virtual void initSignalChanged() = 0;
+
+protected Q_SLOTS:
+  void chieldModified(bool);
+  void chieldChanged(int);
+
 Q_SIGNALS:
   void pageTitleChanged();
   void pageIconChanged();
+  void pageModified(bool);
 
 public:
   explicit SettingsWidget(QWidget *parent = nullptr);

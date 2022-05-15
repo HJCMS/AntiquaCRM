@@ -2,19 +2,19 @@
 // vim: set fileencoding=utf-8
 
 #include "inventoryprints.h"
+#include "antiqua_global.h"
 #include "applsettings.h"
 #include "messagebox.h"
+#include "myicontheme.h"
 #include "printseditor.h"
 #include "printstable.h"
 #include "searchbar.h"
 #include "statsactionbar.h"
-#include "antiqua_global.h"
-#include "myicontheme.h"
 
 #include <QDebug>
-#include <QList>
 #include <QLabel>
 #include <QLayout>
+#include <QList>
 #include <QVBoxLayout>
 
 /**
@@ -45,10 +45,9 @@ static const QList<SearchBar::SearchFilter> bookSearchFilter() {
   return filter;
 }
 
-InventoryPrints::InventoryPrints(QWidget *parent)
-    : Inventory{parent} {
+InventoryPrints::InventoryPrints(QWidget *parent) : Inventory{parent} {
   setObjectName("InventoryPrints");
-  setWindowTitle("TabPrints");
+  setWindowTitle(tr("Prints") + " [*]");
   setClosable(true);
 
   ApplSettings cfg;

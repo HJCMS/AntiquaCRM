@@ -3,6 +3,7 @@
 
 #include "inventory.h"
 #include "messagebox.h"
+#include "utilsmain.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -25,6 +26,22 @@ void Inventory::copyIntoClipboard(const QVariant &val) {
 
 void Inventory::setClosable(bool b) { closable = b; }
 
-void Inventory::setIsModified(bool b) { setWindowModified(b); }
+void Inventory::setIsModified(bool b) {
+  setWindowModified(b);
+  emit s_windowModified(b);
+}
 
 bool Inventory::isClosable() { return closable; }
+
+void Inventory::findModifySignals() {
+  QList<UtilsMain *> l =
+      findChildren<UtilsMain *>(QString(), Qt::FindChildrenRecursively);
+  if (l.count() > 1) {
+    for (int i = 0; i < l.count(); i++) {
+      UtilsMain *w = l.at(i);
+      if (w != nullptr) {
+        connect(w, SIGNAL(hasModified(bool)), this, SLOT(setIsModified(bool)));
+      }
+    }
+  }
+}

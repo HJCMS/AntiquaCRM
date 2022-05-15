@@ -43,6 +43,7 @@ void WorkspaceTabBar::contextMenuEvent(QContextMenuEvent *ev) {
 
 Workspace::Workspace(QWidget *parent) : QTabWidget{parent} {
   setObjectName("WorkspaceTabWidget");
+  setWindowTitle(tr("Workspace") + " [*]");
   setTabsClosable(false);
   setUsesScrollButtons(false);
 
@@ -57,6 +58,8 @@ int Workspace::addInventoryBooks(int index) {
   m_tabBooks = new InventoryBooks(this);
   connect(m_tabBooks, SIGNAL(s_addArticleOrder(int)), this,
           SLOT(addArticleOrder(int)));
+  connect(m_tabBooks, SIGNAL(s_windowModified(bool)), this,
+          SIGNAL(s_windowModified(bool)));
   connect(m_tabBooks, SIGNAL(s_postMessage(const QString &)), this,
           SIGNAL(s_postMessage(const QString &)));
   int i = insertTab(index, m_tabBooks, tr("Books"));
@@ -70,6 +73,8 @@ int Workspace::addInventoryPrints(int index) {
   m_tabPrints = new InventoryPrints(this);
   connect(m_tabPrints, SIGNAL(s_addArticleOrder(int)), this,
           SLOT(addArticleOrder(int)));
+  connect(m_tabPrints, SIGNAL(s_windowModified(bool)), this,
+          SIGNAL(s_windowModified(bool)));
   connect(m_tabPrints, SIGNAL(s_postMessage(const QString &)), this,
           SIGNAL(s_postMessage(const QString &)));
   int i = insertTab(index, m_tabPrints, tr("Prints"));
@@ -83,6 +88,8 @@ int Workspace::addInventoryCostumers(int index) {
   m_tabCostumers = new InventoryCostumers(this);
   connect(m_tabCostumers, SIGNAL(s_createOrder(int)), this,
           SLOT(createOrder(int)));
+  connect(m_tabCostumers, SIGNAL(s_windowModified(bool)), this,
+          SIGNAL(s_windowModified(bool)));
   connect(m_tabCostumers, SIGNAL(s_postMessage(const QString &)), this,
           SIGNAL(s_postMessage(const QString &)));
   int i = insertTab(index, m_tabCostumers, tr("Costumers"));
@@ -94,6 +101,8 @@ int Workspace::addInventoryCostumers(int index) {
 
 int Workspace::addInventoryOrders(int index) {
   m_tabOrders = new InventoryOrders(this);
+  connect(m_tabOrders, SIGNAL(s_windowModified(bool)), this,
+          SIGNAL(s_windowModified(bool)));
   connect(m_tabOrders, SIGNAL(s_postMessage(const QString &)), this,
           SIGNAL(s_postMessage(const QString &)));
   int i = insertTab(index, m_tabOrders, tr("Orders"));

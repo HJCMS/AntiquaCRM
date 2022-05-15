@@ -147,6 +147,8 @@ private:
    */
   QHash<QString, QVariant> p_hash;
 
+  void initSignalChanged();
+
   void initCaBundleData(const QString &bundle);
 
   const QString openFileDialog(const QString &dest = QString());

@@ -26,6 +26,7 @@ void UtilsMain::focusOutEvent(QFocusEvent *e) {
 
 void UtilsMain::setModified(bool b) {
   emit modifiedChanged();
+  emit hasModified(true);
   modified = b;
 }
 

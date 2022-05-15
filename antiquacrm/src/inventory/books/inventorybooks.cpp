@@ -58,7 +58,7 @@ static const QList<SearchBar::SearchFilter> bookSearchFilter() {
 
 InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   setObjectName("InventoryBooks");
-  setWindowTitle("TabBooks");
+  setWindowTitle(tr("Books") + "[*]");
   setClosable(false);
 
   ApplSettings cfg;

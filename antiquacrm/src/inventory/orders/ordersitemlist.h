@@ -71,7 +71,7 @@ private:
   /**
    * @brief Artikel Bestandsanzeige
    */
-  QSpinBox *addCount(const QVariant &val, int row);
+  QSpinBox *addCount(const QVariant &val, int row, int max = 1);
   int getCount(int row);
 
   /**

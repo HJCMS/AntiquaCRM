@@ -19,6 +19,8 @@ private:
   IntSpinBox *m_searchStart; /**< Ab wann startet die Suche */
   IntSpinBox *m_minPrice;    /**< Kleinster Verkaufspreis */
 
+  void initSignalChanged();
+
 private Q_SLOTS:
   void setImageDir();
 

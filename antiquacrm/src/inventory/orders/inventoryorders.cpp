@@ -16,7 +16,7 @@
 
 InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
   setObjectName("InventoryOrders");
-  setWindowTitle(tr("Orders"));
+  setWindowTitle(tr("Orders") + "[*]");
   setClosable(false);
 
   ApplSettings cfg;
@@ -82,6 +82,7 @@ void InventoryOrders::openTableView() {
   m_stackedWidget->setCurrentIndex(0);
   m_editor->setEnabled(false);
   m_tableView->initOrders();
+  setIsModified(false);
 }
 
 void InventoryOrders::openEditor(const QString &condition) {

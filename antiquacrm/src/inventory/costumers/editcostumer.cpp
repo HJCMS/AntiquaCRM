@@ -80,6 +80,14 @@ EditCostumer::EditCostumer(QWidget *parent) : EditorMain{parent} {
   setLayout(mainLayout);
 
   // SIGNALS
+  QList<UtilsMain *> list =
+      findChildren<UtilsMain *>(p_objPattern, Qt::FindChildrenRecursively);
+  QList<UtilsMain *>::Iterator it;
+  for (it = list.begin(); it != list.end(); ++it) {
+    UtilsMain *e = *it;
+    connect(e, SIGNAL(hasModified(bool)), this, SLOT(setWindowModified(bool)));
+  }
+
   connect(m_actionBar, SIGNAL(s_cancelClicked()), this,
           SLOT(finalLeaveEditor()));
   connect(m_actionBar, SIGNAL(s_restoreClicked()), this,

@@ -37,6 +37,7 @@ protected Q_SLOTS:
   virtual void focusOutEvent(QFocusEvent *);
 
 Q_SIGNALS:
+  void hasModified(bool); /**< Änderungen aufzeichnen */
   void requireChanged();  /**< Wegen QML eingefügt */
   void modifiedChanged(); /**< Wegen QML eingefügt */
   void editingFinished(); /**< Wird von focusOutEvent abgefangen */
