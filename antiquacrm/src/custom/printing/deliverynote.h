@@ -8,6 +8,7 @@
 #include <QHash>
 #include <QMetaType>
 #include <QObject>
+#include <QPrinter>
 #include <QWidget>
 
 #include "printing.h"
@@ -27,6 +28,7 @@ private:
   ApplSettings *config;
   QHash<QString, QString> companyData;
   QTextTable *m_articleTable;
+  QTextTableCell p_infoCell;
 
   void readConfiguration();
   void constructHeader();
@@ -38,6 +40,7 @@ private:
                      const QString &quantity);
 
 private Q_SLOTS:
+  void printDocument(QPrinter *);
   void openPrintPreview();
 
 public Q_SLOTS:

@@ -39,6 +39,8 @@ class Printing : public QDialog {
                  smallFontChanged)
 
 protected:
+  int resolution = 300;
+
   /**
    * @brief Briefkopf schrift
    */

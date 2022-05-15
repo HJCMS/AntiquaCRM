@@ -15,33 +15,38 @@
 Printing::Printing(QWidget *parent) : QDialog{parent} {
   setObjectName("printing_dialog");
   setSizeGripEnabled(true);
-  setMinimumSize(600, 400);
+  setMinimumSize(650, 600);
 
   headerFont = QFont("URW Chancery L [urw]", 26);
   normalFont = QFont("Tahoma", 11);
   smallFont = QFont("Tahoma", 8);
+  // 210 x 297 mm, 8.26 x 11.69 inches
   page_size = QPageSize(QPageSize::A4);
-  page_layout =
-      QPageLayout(page_size, QPageLayout::Portrait, QMarginsF(0, 0, 0, 0),
-                  QPageLayout::Point, QMarginsF(0, 0, 0, 0));
+  page_layout = QPageLayout(page_size /* DIN A4 */, QPageLayout::Portrait,
+                            QMarginsF(0, 0, 0, 0), QPageLayout::Point,
+                            QMarginsF(0, 0, 0, 0));
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("printing_layout");
 
   QScrollArea *scroll_area = new QScrollArea(this);
   scroll_area->setVisible(true);
-  scroll_area->setWidgetResizable(true);
   layout->addWidget(scroll_area);
 
   editor = new TextEditor(scroll_area);
   editor->setObjectName("printing_editor");
-  editor->setBaseSize(page_size.sizePoints());
+  editor->setFixedSize(page_size.sizePoints());
   scroll_area->setWidget(editor);
+  scroll_area->setWidgetResizable(false);
 
-  buttonBox = new QDialogButtonBox(
-      (QDialogButtonBox::Close | QDialogButtonBox::Apply), this);
-  printButton =
-      buttonBox->addButton(tr("Printing"), QDialogButtonBox::ActionRole);
+  /**
+   * @warning Wird in den Unterklassen zur größen
+   *    Berechnung verwendet und muss gesetzt sein!
+   */
+  editor->document()->setPageSize(page_size.sizePoints());
+
+  buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
+  printButton = buttonBox->addButton(tr("Printing"), QDialogButtonBox::ActionRole);
   layout->addWidget(buttonBox);
 
   setLayout(layout);

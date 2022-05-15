@@ -6,8 +6,8 @@
 #include "myicontheme.h"
 #include "texteditor.h"
 
-#include <QtCore>
-#include <QtWidgets>
+#include <QMessageBox>
+#include <QPrintPreviewDialog>
 
 DeliveryNote::DeliveryNote(QWidget *parent) : Printing{parent} {
   setObjectName("printing_delivery_note");
@@ -84,10 +84,10 @@ void DeliveryNote::constructAddressBody() {
   QTextTableCell tc11 = m_addressTable->cellAt(1, 1);
   tc11.setFormat(normalFormat());
   cursor = tc11.firstCursorPosition();
-  cursor.insertText(tr("Order-ID:"));
+  cursor.insertText(tr("Order-ID:") + " ");
   cursor.insertText(p_orderId);
   cursor.insertText("\n");
-  cursor.insertText(tr("Costumer-ID:"));
+  cursor.insertText(tr("Costumer-ID:") + " ");
   cursor.insertText(p_costumerId);
   cursor.insertText("\n");
 }
@@ -128,12 +128,25 @@ void DeliveryNote::constructBody() {
 
 void DeliveryNote::constructFooter() {
   QTextCursor cursor = editor->textCursor();
+  // BEGIN Erstelle Info Zelle
+  int row = m_articleTable->rows();
+  m_articleTable->insertRows(row, 1);
+  p_infoCell = m_articleTable->cellAt(row, 1);
+  // END
+
+  QTextTableCellFormat cellFormat;
+  cellFormat.setTopBorder(1);
+  cellFormat.setBorderBrush(Qt::black);
+  cellFormat.setTopBorderStyle(QTextFrameFormat::BorderStyle_Solid);
+
+  // FOOTER
   QTextTableFormat format = tableFormat();
   format.setBorderStyle(QTextFrameFormat::BorderStyle_None);
-  format.setTopMargin(100);
+  format.setTopMargin(0);
   QTextTable *table = cursor.insertTable(1, 2, format);
 
-  QTextTableCell ce00 = table->cellAt(0,0);
+  QTextTableCell ce00 = table->cellAt(0, 0);
+  ce00.setFormat(cellFormat);
   cursor = ce00.firstCursorPosition();
   cursor.setCharFormat(smallFormat());
   cursor.insertText(companyData.value("name") + "\n");
@@ -146,15 +159,31 @@ void DeliveryNote::constructFooter() {
   cursor.insertText(tr("fax") + ": ");
   cursor.insertText(companyData.value("fax") + "\n");
 
-  QTextTableCell ce01 = table->cellAt(0,1);
+  QTextTableCell ce01 = table->cellAt(0, 1);
+  ce01.setFormat(cellFormat);
   cursor = ce01.firstCursorPosition();
   cursor.setCharFormat(smallFormat());
-  qDebug() << Q_FUNC_INFO << "TODO";
-  cursor.insertText("Sparkasse SÜW\n");
-  cursor.insertText("SWIFT-BIC: LANS DE 55\n");
-  cursor.insertText("IBAN: DE21 54850010 0026001701\n");
+  cursor.insertText(companyData.value("bank") + "\n");
+  cursor.insertText("SWIFT-BIC: ");
+  cursor.insertText(companyData.value("bicswift") + "\n");
+  cursor.insertText("IBAN: ");
+  cursor.insertText(companyData.value("iban") + "\n");
   cursor.insertText(tr("tax number") + ": ");
   cursor.insertText(companyData.value("taxnumber") + "\n");
+
+  // :-) i know...
+  int max = editor->size().height();
+  max -= (editor->cursorRect().height() * 2);
+  cursor = p_infoCell.firstCursorPosition();
+  int bl = pageSize().rectPoints().bottomLeft().ry();
+  for (int i = 0; i < 50; i++) {
+    if (max > editor->document()->size().height()) {
+      cursor.insertText("\n");
+    } else {
+      break;
+    }
+  }
+  editor->setReadOnly(true);
 }
 
 void DeliveryNote::insertArticle(const QString &articleid,
@@ -180,7 +209,24 @@ void DeliveryNote::insertArticle(const QString &articleid,
   cursor.insertText(quantity);
 }
 
-void DeliveryNote::openPrintPreview() { /* TODO */
+void DeliveryNote::printDocument(QPrinter *printer) {
+  if (printer != nullptr)
+    editor->print(printer);
+}
+
+void DeliveryNote::openPrintPreview() {
+  QPrinter *printer = new QPrinter(QPrinter::HighResolution);
+  printer->setPageLayout(pageLayout());
+  printer->setColorMode(QPrinter::GrayScale);
+  printer->setPrintRange(QPrinter::CurrentPage);
+  printer->setFullPage(true);
+  printer->setPageMargins(QMarginsF(0,0,0,0));
+
+  QPrintPreviewDialog *preview = new QPrintPreviewDialog(printer, this);
+  connect(preview, SIGNAL(paintRequested(QPrinter *)), this,
+          SLOT(printDocument(QPrinter *)));
+
+  preview->exec();
 }
 
 int DeliveryNote::warningMessageBox(const QString &txt) {
