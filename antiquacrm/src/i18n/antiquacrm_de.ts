@@ -230,7 +230,7 @@
         <translation>Umschreibung</translation>
     </message>
     <message>
-        <location line="+109"/>
+        <location line="+118"/>
         <source>Remove Image from Database</source>
         <translation>Entferne Bild aus der Datenbank</translation>
     </message>
@@ -255,7 +255,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-411"/>
+        <location line="-420"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -270,7 +270,7 @@
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
     <message>
-        <location line="+181"/>
+        <location line="+190"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
@@ -280,7 +280,7 @@
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
     <message>
-        <location line="-280"/>
+        <location line="-289"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -312,12 +312,12 @@
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="+179"/>
+        <location line="+188"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-290"/>
+        <location line="-299"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -1079,18 +1079,18 @@
 <context>
     <name>DeliveryNote</name>
     <message>
-        <location filename="../custom/printing/deliverynote.cpp" line="+14"/>
-        <location line="+173"/>
+        <location filename="../custom/printing/deliverynote.cpp" line="+30"/>
+        <location line="+338"/>
         <source>Delivery note</source>
         <translation>Lieferschein</translation>
     </message>
     <message>
-        <location line="-157"/>
+        <location line="-323"/>
         <source>&lt;p&gt;Your Company configuration is incomplite!&lt;/p&gt;Edit Company settings first!</source>
         <translation>&lt;p&gt;Die Konfiguration der Unternehmerdaten sind unvollständig!&lt;/p&gt;Bitte konfigurieren Sie erst Ihre Firmendaten!</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+56"/>
         <source>Delivey note</source>
         <translation>Lieferschein</translation>
     </message>
@@ -1105,7 +1105,12 @@
         <translation>Kundennummer:</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+3"/>
+        <source>Delivery-ID:</source>
+        <translation>Lieferschein Nr.:</translation>
+    </message>
+    <message>
+        <location line="+28"/>
         <source>Article-ID</source>
         <translation>Artikel Nr.</translation>
     </message>
@@ -1120,7 +1125,7 @@
         <translation>Menge</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+25"/>
         <source>email</source>
         <translation>E-Mail</translation>
     </message>
@@ -1135,12 +1140,22 @@
         <translation>Fax</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+12"/>
         <source>tax number</source>
         <translation>Steuer Nummer</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+129"/>
+        <source>save pdf</source>
+        <translation>PDF speichern</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>PDF Files</source>
+        <translation>PDF Datei</translation>
+    </message>
+    <message>
+        <location line="+62"/>
         <source>There is no Order-Id to generate this delivery!</source>
         <translation>Es gibt keine Bestellnummer für die Erstellung!</translation>
     </message>
@@ -1563,7 +1578,7 @@
         <translation>Erneuern</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+69"/>
         <source>There is no Order open!</source>
         <translation>Es ist keine Bestellung geöffnet!</translation>
     </message>
@@ -1607,7 +1622,7 @@
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../custom/utils/lineedit.cpp" line="+101"/>
+        <location filename="../custom/utils/lineedit.cpp" line="+102"/>
         <source>The field &apos;%1&apos; is requiered but empty!</source>
         <translation>Das Feld &apos;%1&apos; darf nicht Leer sein!</translation>
     </message>
@@ -1820,12 +1835,12 @@
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="+112"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
-        <location line="+229"/>
+        <location line="+237"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
@@ -1954,7 +1969,7 @@
         <translation>Artikel Zusammenfassung</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+33"/>
         <source>delete selected article</source>
         <translation>Ausgewählten Artikel entfernen</translation>
     </message>
@@ -1990,7 +2005,7 @@
         <translation>Prüfen</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+94"/>
         <source>Inserting an empty entry is cowardly denied.</source>
         <translation>Das einfügen eines leeren Eintrags wird feige verweigert.</translation>
     </message>
@@ -2351,9 +2366,14 @@
 <context>
     <name>Printing</name>
     <message>
-        <location filename="../custom/printing/printing.cpp" line="+44"/>
+        <location filename="../custom/printing/printing.cpp" line="+80"/>
         <source>Printing</source>
         <translation>Drucken</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Save as pdf</source>
+        <translation>Als PDF speichern</translation>
     </message>
 </context>
 <context>
@@ -2531,7 +2551,7 @@
         <translation>Dieser Text dient internen Zwecken</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+58"/>
         <source>Remove Image from Database</source>
         <translation>Entferne Bild aus der Datenbank</translation>
     </message>

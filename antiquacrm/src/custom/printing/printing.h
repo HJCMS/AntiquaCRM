@@ -8,15 +8,17 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QFont>
+#include <QMarginsF>
 #include <QObject>
 #include <QPageLayout>
 #include <QPageSize>
+#include <QPrinter>
 #include <QPushButton>
 #include <QSize>
-#include <QTextTable>
-#include <QTextTableFormat>
 #include <QTextCharFormat>
 #include <QTextDocument>
+#include <QTextTable>
+#include <QTextTableFormat>
 #include <QWidget>
 
 class TextEditor;
@@ -39,8 +41,6 @@ class Printing : public QDialog {
                  smallFontChanged)
 
 protected:
-  int resolution = 300;
-
   /**
    * @brief Briefkopf schrift
    */
@@ -57,19 +57,25 @@ protected:
   QFont smallFont;
 
   /**
-   * @brief Seitengröße
+   * @brief Seitenränder der Druckerausgabe
+   */
+  QMarginsF page_margins;
+
+  /**
+   * @brief Seitengrößet DIN A4
    */
   QPageSize page_size;
 
   /**
-   * @brief Seiten Layout DIN A4
-   */
-  QPageLayout page_layout;
-
-  /**
    * @brief Text Editor
+   * @group printArea
+   * @{
    */
-  TextEditor *editor;
+  QWidget *printArea;
+  TextEditor *header;
+  TextEditor *body;
+  TextEditor *footer;
+  /** @} */
 
   /**
    * @brief Dialog Knopfleiste
@@ -77,7 +83,7 @@ protected:
   QDialogButtonBox *buttonBox;
 
   /**
-   * @brief drucken Knopf
+   * @brief Drucken/PDF Aktionsknöpfe
    */
   QPushButton *printButton;
 
@@ -102,11 +108,6 @@ protected:
   const QTextTableFormat tableFormat();
 
   /**
-   * @brief Adressen Kopf Table
-   */
-  QTextTable *m_addressTable;
-
-  /**
    * @brief Erstelle Briefkopf
    */
   virtual void constructHeader() = 0;
@@ -120,6 +121,10 @@ protected:
    * @brief Fußnote erstellen
    */
   virtual void constructFooter() = 0;
+
+protected Q_SLOTS:
+  virtual void printToFile(QPrinter *printer) = 0;
+  virtual void printDocument(QPrinter *printer) = 0;
 
 Q_SIGNALS:
   void headerFontChanged();

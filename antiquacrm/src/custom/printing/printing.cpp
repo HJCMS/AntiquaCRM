@@ -7,49 +7,86 @@
 #include <QDebug>
 #include <QFontDatabase>
 #include <QMarginsF>
-#include <QScrollArea>
+#include <QPageSetupDialog>
+#include <QPrintDialog>
+#include <QPrintPreviewDialog>
 #include <QTextFrameFormat>
 #include <QTextLength>
+#include <QScrollArea>
 #include <QVBoxLayout>
+
+//protected:
+//  void paintEvent(QPaintEvent *);
+//void DeliveryNote::paintEvent(QPaintEvent *event) {
+//  QDialog::paintEvent(event);
+//  return;
+//}
 
 Printing::Printing(QWidget *parent) : QDialog{parent} {
   setObjectName("printing_dialog");
   setSizeGripEnabled(true);
-  setMinimumSize(650, 600);
+  setMinimumSize(640, 580);
 
   headerFont = QFont("URW Chancery L [urw]", 26);
-  normalFont = QFont("Tahoma", 11);
+  normalFont = QFont("Tahoma", 10);
   smallFont = QFont("Tahoma", 8);
   // 210 x 297 mm, 8.26 x 11.69 inches
+  page_margins = QMarginsF(5, 1, 1, 1);
   page_size = QPageSize(QPageSize::A4);
-  page_layout = QPageLayout(page_size /* DIN A4 */, QPageLayout::Portrait,
-                            QMarginsF(0, 0, 0, 0), QPageLayout::Point,
-                            QMarginsF(0, 0, 0, 0));
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("printing_layout");
 
-  QScrollArea *scroll_area = new QScrollArea(this);
-  scroll_area->setVisible(true);
-  layout->addWidget(scroll_area);
+  QRect pageRect = pageLayout().fullRectPoints();
+  int maxWidth = pageRect.width();
 
-  editor = new TextEditor(scroll_area);
-  editor->setObjectName("printing_editor");
-  editor->setFixedSize(page_size.sizePoints());
-  scroll_area->setWidget(editor);
-  scroll_area->setWidgetResizable(false);
+  QScrollArea *scrollAera = new QScrollArea(this);
+  scrollAera->setObjectName("scroll_area");
+  layout->addWidget(scrollAera);
 
-  /**
-   * @warning Wird in den Unterklassen zur größen
-   *    Berechnung verwendet und muss gesetzt sein!
-   */
-  editor->document()->setPageSize(page_size.sizePoints());
+  printArea = new QWidget(scrollAera);
+  printArea->setObjectName("printing_area");
+  printArea->setContentsMargins(0, 0, 0, 0);
+  printArea->setStyleSheet("border:none;");
+  printArea->setFixedSize(pageRect.size());
+  QVBoxLayout *frame_layout = new QVBoxLayout(printArea);
+  frame_layout->setContentsMargins(0, 0, 0, 0);
+  frame_layout->setSizeConstraint(QLayout::SetMinimumSize);
+  frame_layout->setSpacing(0);
+  header = new TextEditor(printArea);
+  header->setObjectName("printing_header");
+  header->setMinimumHeight(25);
+  header->setMaximumWidth(maxWidth);
+  header->setTextColor(Qt::black);
+  header->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  frame_layout->addWidget(header);
+  body = new TextEditor(printArea);
+  body->setObjectName("printing_body");
+  body->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
+  body->setMaximumWidth(maxWidth);
+  body->setTextColor(Qt::black);
+  frame_layout->addWidget(body);
+  footer = new TextEditor(printArea);
+  footer->setObjectName("printing_footer");
+  footer->setMinimumHeight(20);
+  footer->setMaximumWidth(maxWidth);
+  footer->setTextColor(Qt::black);
+  footer->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  frame_layout->addWidget(footer);
+  frame_layout->setStretchFactor(header, 35);
+  frame_layout->setStretchFactor(body, 45);
+  frame_layout->setStretchFactor(footer, 20);
+  scrollAera->setWidget(printArea);
 
   buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
-  printButton = buttonBox->addButton(tr("Printing"), QDialogButtonBox::ActionRole);
+  printButton = buttonBox->addButton(tr("Printing"), /* Sofort drucken */
+                                     QDialogButtonBox::ActionRole);
   layout->addWidget(buttonBox);
 
   setLayout(layout);
+
+  connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+  connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
 }
 
 const QTextCharFormat Printing::headerFormat() {
@@ -82,7 +119,14 @@ const QTextTableFormat Printing::tableFormat() {
 
 const QPageSize Printing::pageSize() { return page_size; }
 
-const QPageLayout Printing::pageLayout() { return page_layout; }
+const QPageLayout Printing::pageLayout() {
+  QPageLayout pageLayout;
+  pageLayout.setOrientation(QPageLayout::Portrait);
+  pageLayout.setPageSize(page_size, page_margins);
+  pageLayout.setMode(QPageLayout::FullPageMode);
+  pageLayout.setUnits(QPageLayout::Millimeter);
+  return pageLayout;
+}
 
 bool Printing::fontFamilyExists(const QString &family) {
   foreach (QString f, QFontDatabase().families(QFontDatabase::Latin)) {

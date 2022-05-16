@@ -99,6 +99,7 @@ void GeneralSettings::loadSectionConfig() {
   m_editImageSrc->setToolTip(spath.toString());
   m_searchStart->setValue(config->value("search/startlength", 5));
   m_minPrice->setValue(config->value("payment/min_price", 5));
+  // config->value("delivery_target", QDir::homePath()).toString();
 }
 
 void GeneralSettings::saveSectionConfig() {
@@ -106,4 +107,7 @@ void GeneralSettings::saveSectionConfig() {
   config->setValue("search/startlength", m_searchStart->value());
   config->setValue("payment/min_price", m_minPrice->value());
   config->setValue("payment/currency", "€"); // TODO
+  config->setValue("targets/deliverynotes", QDir::homePath());
+  QString _test = QDir::homePath() + "/Developement/files/druck_header.png";
+  config->setValue("targets/attachment", _test);
 }

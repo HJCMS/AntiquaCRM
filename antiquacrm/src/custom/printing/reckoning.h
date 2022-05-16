@@ -22,6 +22,8 @@ private:
   void constructFooter() { /* TODO */ };
 
 private Q_SLOTS:
+  void printToFile(QPrinter *printer) { /* TODO */ };
+  void printDocument(QPrinter *printer) { /* TODO */ };
 
 Q_SIGNALS:
 

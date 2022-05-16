@@ -8,7 +8,6 @@
 #include <QHash>
 #include <QMetaType>
 #include <QObject>
-#include <QPrinter>
 #include <QWidget>
 
 #include "printing.h"
@@ -32,16 +31,27 @@ private:
 
   void readConfiguration();
   void constructHeader();
-  void constructAddressBody();
+  void constructAddress();
   void constructBody();
   void constructFooter();
 
   void insertArticle(const QString &articleid, const QString &designation,
                      const QString &quantity);
 
+  QTextDocument *docHeader();
+  const QString htmlHeader();
+
+  QTextDocument *docBody();
+  const QString htmlBody();
+
+  QTextDocument *docFooter();
+  const QString htmlFooter();
+
 private Q_SLOTS:
-  void printDocument(QPrinter *);
-  void openPrintPreview();
+  void printToFile(QPrinter *printer) { /* not needed */ };
+  void printDocument(QPrinter *printer);
+  void saveDeliveryNote();
+  void printDeliveryNote();
 
 public Q_SLOTS:
   int warningMessageBox(const QString &);
@@ -53,6 +63,11 @@ public:
     QString quantity;    /**< Quantity */
   };
   explicit DeliveryNote(QWidget *parent = nullptr);
+
+  /**
+   * @brief Nummer für PDF Dateiname
+   */
+  const QString deliveryNumber();
 
   /**
    * @brief Add Costumer Address

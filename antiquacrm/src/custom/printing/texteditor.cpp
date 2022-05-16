@@ -8,7 +8,7 @@
 
 TextEditor::TextEditor(QWidget *parent) : QTextEdit{parent}
 {
-  setObjectName("text_editor");
+  setContentsMargins(0, 0, 0, 0);
   QPalette p = palette();
   p.setColor(QPalette::Base,Qt::white);
   p.setColor(QPalette::Text,Qt::black);
