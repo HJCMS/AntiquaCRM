@@ -14,4 +14,9 @@ TextEditor::TextEditor(QWidget *parent) : QTextEdit{parent}
   p.setColor(QPalette::Text,Qt::black);
   setPalette(p);
   setWindowModified(true);
+
+  QString css("* { color: black; }");
+  css.append("p, li { white-space: pre-wrap; }");
+  document()->setDefaultStyleSheet(css);
+  document()->setModified(true);
 }

@@ -9,17 +9,16 @@
 #include <QTextEdit>
 #include <QWidget>
 
+/**
+ * @brief Textköper
+ * @ingroup printArea
+ * @class TextEditor
+ */
 class TextEditor : public QTextEdit
 {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
-
-private:
-
-private Q_SLOTS:
-
-Q_SIGNALS:
 
 public:
   explicit TextEditor(QWidget *parent = nullptr);

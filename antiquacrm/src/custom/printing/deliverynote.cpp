@@ -6,19 +6,15 @@
 #include "myicontheme.h"
 #include "texteditor.h"
 
-#include <QAbstractTextDocumentLayout>
 #include <QDate>
 #include <QDebug>
 #include <QDir>
 #include <QFile>
-#include <QFileDialog>
+#include <QFileInfo>
 #include <QMessageBox>
 #include <QPainter>
 #include <QPrintDialog>
-#include <QPrintPreviewDialog>
-#include <QPrinter>
 #include <QTextCodec>
-#include <QUrl>
 
 static const QByteArray defaultCodec() {
   QTextCodec *c = QTextCodec::codecForLocale();
@@ -32,7 +28,7 @@ DeliveryNote::DeliveryNote(QWidget *parent) : Printing{parent} {
   config = new ApplSettings(this);
 
   printButton->setIcon(myIcon("printer"));
-  connect(printButton, SIGNAL(clicked()), this, SLOT(printDeliveryNote()));
+  connect(printButton, SIGNAL(clicked()), this, SLOT(openPrintDialog()));
   readConfiguration();
 }
 
@@ -48,6 +44,11 @@ void DeliveryNote::readConfiguration() {
     companyData.insert(k, config->value(k).toString());
   }
   config->endGroup();
+}
+
+const QString DeliveryNote::outputDirectory() {
+  QVariant dest = config->value("targets/deliverynotes", QDir::homePath());
+  return dest.toString();
 }
 
 void DeliveryNote::constructHeader() {
@@ -70,7 +71,7 @@ void DeliveryNote::constructHeader() {
   header->document()->setModified(true);
 }
 
-void DeliveryNote::constructAddress() {
+void DeliveryNote::constructSubject() {
   QTextCursor cursor = body->textCursor();
   QTextTableFormat format = tableFormat();
   format.setBorderStyle(QTextFrameFormat::BorderStyle_None);
@@ -120,7 +121,7 @@ void DeliveryNote::constructAddress() {
 }
 
 void DeliveryNote::constructBody() {
-  constructAddress();
+  constructSubject();
 
   QTextCursor cursor = body->textCursor();
   QTextTableFormat format = tableFormat();
@@ -234,22 +235,39 @@ void DeliveryNote::insertArticle(const QString &articleid,
   body->document()->setModified(true);
 }
 
-QTextDocument *DeliveryNote::docHeader() { return header->document(); }
-
-const QString DeliveryNote::htmlHeader() {
-  return docHeader()->toHtml(defaultCodec());
+const QString DeliveryNote::getHeaderHTML() {
+  return header->document()->toHtml(defaultCodec());
 }
 
-QTextDocument *DeliveryNote::docBody() { return body->document(); }
-
-const QString DeliveryNote::htmlBody() {
-  return docBody()->toHtml(defaultCodec());
+const QString DeliveryNote::getBodyHTML() {
+  return body->document()->toHtml(defaultCodec());
 }
 
-QTextDocument *DeliveryNote::docFooter() { return footer->document(); }
+const QString DeliveryNote::getFooterHTML() {
+  return footer->document()->toHtml(defaultCodec());
+}
 
-const QString DeliveryNote::htmlFooter() {
-  return docFooter()->toHtml(defaultCodec());
+const QImage DeliveryNote::getWatermark() {
+  QStringList accept({"PNG", "JPG", "TIFF"});
+  QString filepath(config->value("targets/attachment").toString());
+  QFileInfo info(filepath);
+  if (info.isFile()) {
+    QString type = info.completeSuffix().split(".").last().toUpper();
+    if (!accept.contains(type)) {
+      qWarning("unsupported image type");
+      return QImage();
+    }
+    QByteArray buffer;
+    QFile fp(filepath);
+    if (fp.open(QIODevice::ReadOnly)) {
+      while (!fp.atEnd()) {
+        buffer += fp.readLine();
+      }
+    }
+    fp.close();
+    return QImage::fromData(buffer, "PNG");
+  }
+  return QImage();
 }
 
 void DeliveryNote::printDocument(QPrinter *printer) {
@@ -257,85 +275,52 @@ void DeliveryNote::printDocument(QPrinter *printer) {
   int documentWidth = pageRect.size().width();
   int bodyHeight = pageRect.size().height();
 
-  QString css("* { color: black; }");
-  css.append("p, li { white-space: pre-wrap; }");
+  QTextDocument *htmlHead = header->document();
+  htmlHead->setHtml(getHeaderHTML());
+  htmlHead->setPageSize(QSizeF(documentWidth, htmlHead->size().height()));
+  bodyHeight -= htmlHead->size().height();
 
-  QTextDocument *header = docHeader();
-  header->setDefaultStyleSheet(css);
-  header->setHtml(htmlHeader());
-  header->setPageSize(QSizeF(documentWidth, header->size().height()));
-  bodyHeight -= header->size().height();
+  QTextDocument *htmlFooter = footer->document();
+  htmlFooter->setHtml(getFooterHTML());
+  htmlFooter->setPageSize(QSizeF(documentWidth, htmlFooter->size().height()));
+  bodyHeight -= htmlFooter->size().height();
 
-  QTextDocument *footer = docFooter();
-  footer->setDefaultStyleSheet(css);
-  footer->setHtml(htmlFooter());
-  footer->setPageSize(QSizeF(documentWidth, footer->size().height()));
-  bodyHeight -= footer->size().height();
-  bodyHeight -= 100;
+  QTextDocument *htmlBody = body->document();
+  htmlBody->setHtml(getBodyHTML());
+  htmlBody->setPageSize(QSizeF(documentWidth, bodyHeight).toSize());
+  htmlBody->setModified(true);
 
-  QTextDocument *body = docBody();
-  body->setDefaultStyleSheet(css);
-  body->setHtml(htmlBody());
-  body->setPageSize(QSizeF(documentWidth, bodyHeight));
-  body->setModified(true);
+  QRect headerRect = QRect(QPoint(0, 0), htmlHead->pageSize().toSize());
+  QRect bodycoRect = QRect(QPoint(0, 0), htmlBody->pageSize().toSize());
+  QRect footerRect = QRect(QPoint(0, 0), htmlFooter->pageSize().toSize());
 
-  QRect headerRect = QRect(QPoint(0, 0), header->pageSize().toSize());
-  QRect bodycoRect = QRect(QPoint(0, 0), body->pageSize().toSize());
-  QRect footerRect = QRect(QPoint(0, 0), footer->pageSize().toSize());
-
-  QByteArray buffer;
-  QFile fp(config->value("targets/attachment").toString());
-  if (fp.open(QIODevice::ReadOnly)) {
-    while (!fp.atEnd()) {
-      buffer += fp.readLine();
-      ;
-    }
-  }
-  fp.close();
-  QImage attachment = QImage::fromData(buffer, "PNG");
-
+  QImage image = getWatermark();
   QPainter painter;
   painter.begin(printer);
-  if (!attachment.isNull()) {
+  if (!image.isNull()) {
     painter.translate(0, 0);
     painter.setOpacity(0.3);
-    painter.drawImage(QPoint(0, 0), attachment);
+    painter.drawImage(QPoint(0, 0), image);
     painter.setOpacity(1.0);
   }
 
   int pY = 0;
   painter.translate(0, pY);
-  header->drawContents(&painter, headerRect);
+  htmlHead->drawContents(&painter, headerRect);
   pY += headerRect.height();
   painter.translate(0, pY);
-  body->drawContents(&painter, bodycoRect);
+  htmlBody->drawContents(&painter, bodycoRect);
   pY += bodycoRect.height();
   painter.translate(0, pY);
-  footer->drawContents(&painter, footerRect);
+  htmlFooter->drawContents(&painter, footerRect);
   pY += footerRect.height();
   painter.translate(0, pY);
   painter.end();
 }
 
-void DeliveryNote::saveDeliveryNote() {
-  QVariant dest = config->value("targets/deliverynotes", QDir::homePath());
-  QFileDialog *dialog = new QFileDialog(this, tr("save pdf"), dest.toString());
-  dialog->selectMimeTypeFilter("application/pdf");
-  dialog->setNameFilter(tr("PDF Files") + " (*.pdf *.PDF)");
-  dialog->setDefaultSuffix(".pdf");
-  dialog->selectFile(deliveryNumber() + ".pdf");
-  dialog->setAcceptMode(QFileDialog::AcceptSave);
-  if (dialog->exec() == QDialog::Accepted) {
-    QStringList list = dialog->selectedFiles();
-    qDebug() << Q_FUNC_INFO << list.first();
-    //    if (saveAsPDF(list.first()))
-    //      accept();
-  }
-}
-
-void DeliveryNote::printDeliveryNote() {
+void DeliveryNote::openPrintDialog() {
   QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
-  QString dest = QDir::tempPath();
+  QString dest = outputDirectory();
   dest.append(QDir::separator());
   dest.append(deliveryNumber());
   dest.append(".pdf");
@@ -348,15 +333,8 @@ void DeliveryNote::printDeliveryNote() {
   connect(dialog, SIGNAL(accepted(QPrinter *)), this,
           SLOT(printDocument(QPrinter *)));
   if (dialog->exec() == QDialog::Accepted) {
-    accepted();
+    accept();
   }
-
-  // QPrintPreviewDialog *preview = new QPrintPreviewDialog(printer, this);
-  // connect(preview, SIGNAL(paintRequested(QPrinter *)), this,
-  //         SLOT(printDocument(QPrinter *)));
-  // if (preview->exec() == QDialog::Accepted) {
-  //   accepted();
-  // }
 }
 
 int DeliveryNote::warningMessageBox(const QString &txt) {

@@ -5,22 +5,8 @@
 #include "texteditor.h"
 
 #include <QDebug>
-#include <QFontDatabase>
-#include <QMarginsF>
-#include <QPageSetupDialog>
-#include <QPrintDialog>
-#include <QPrintPreviewDialog>
-#include <QTextFrameFormat>
-#include <QTextLength>
 #include <QScrollArea>
 #include <QVBoxLayout>
-
-//protected:
-//  void paintEvent(QPaintEvent *);
-//void DeliveryNote::paintEvent(QPaintEvent *event) {
-//  QDialog::paintEvent(event);
-//  return;
-//}
 
 Printing::Printing(QWidget *parent) : QDialog{parent} {
   setObjectName("printing_dialog");
@@ -53,6 +39,7 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
   frame_layout->setContentsMargins(0, 0, 0, 0);
   frame_layout->setSizeConstraint(QLayout::SetMinimumSize);
   frame_layout->setSpacing(0);
+
   header = new TextEditor(printArea);
   header->setObjectName("printing_header");
   header->setMinimumHeight(25);
@@ -73,8 +60,8 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
   footer->setTextColor(Qt::black);
   footer->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   frame_layout->addWidget(footer);
-  frame_layout->setStretchFactor(header, 35);
-  frame_layout->setStretchFactor(body, 45);
+  frame_layout->setStretchFactor(header, 30);
+  frame_layout->setStretchFactor(body, 40);
   frame_layout->setStretchFactor(footer, 20);
   scrollAera->setWidget(printArea);
 

@@ -10,26 +10,28 @@
 
 #include "printing.h"
 
-class Reckoning : public Printing
-{
+/**
+ * @brief Rechnungs Erstellung
+ * @ingroup Printing
+ * @class Reckoning
+ */
+class Reckoning : public Printing {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  void constructHeader() { /* TODO */ };
-  void constructBody() { /* TODO */ };
-  void constructFooter() { /* TODO */ };
+  void constructHeader(){/* TODO */};
+  void constructBody(){/* TODO */};
+  void constructFooter(){/* TODO */};
 
 private Q_SLOTS:
-  void printToFile(QPrinter *printer) { /* TODO */ };
-  void printDocument(QPrinter *printer) { /* TODO */ };
-
-Q_SIGNALS:
+  void printToFile(QPrinter *printer){/* TODO */};
+  void printDocument(QPrinter *printer){/* TODO */};
+  void openPrintDialog(){/* TODO */};
 
 public:
   explicit Reckoning(QWidget *parent = nullptr);
-
 };
 
 #endif // RECKONING_PRINTING_H

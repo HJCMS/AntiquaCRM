@@ -14,46 +14,37 @@
 #include <QPageSize>
 #include <QPrinter>
 #include <QPushButton>
-#include <QSize>
 #include <QTextCharFormat>
 #include <QTextDocument>
 #include <QTextTable>
+#include <QTextTableCell>
 #include <QTextTableFormat>
 #include <QWidget>
 
 class TextEditor;
 
 /**
- * @brief Abstract Printing class
+ * @brief Drucker Dialog Klasse
  * @class Printing
  * @group Printing
- * Drucker Dialog Klasse
+ * Das Dokument wird aus drei Textkörpern erstellt.
+ * Mit einem Kopfbereich, Inhaltsbereich und Fußzeilenbereich.
+ * Anders ist es nicht möglich die Fußzeile sauber zu setzen.
  */
 class Printing : public QDialog {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
-  Q_PROPERTY(QFont headerFont READ getHeaderFont WRITE setHeaderFont NOTIFY
-                 headerFontChanged)
-  Q_PROPERTY(QFont normalFont READ getNormalFont WRITE setNormalFont NOTIFY
-                 normalFontChanged)
-  Q_PROPERTY(QFont smallFont READ getSmallFont WRITE setSmallFont NOTIFY
-                 smallFontChanged)
+  Q_PROPERTY(QFont headerFont READ getHeaderFont WRITE setHeaderFont NOTIFY headerFontChanged)
+  Q_PROPERTY(QFont normalFont READ getNormalFont WRITE setNormalFont NOTIFY normalFontChanged)
+  Q_PROPERTY(QFont smallFont READ getSmallFont WRITE setSmallFont NOTIFY smallFontChanged)
 
 protected:
   /**
-   * @brief Briefkopf schrift
+   * @brief Schriften
    */
   QFont headerFont;
-
-  /**
-   * @brief Standard schrift
-   */
   QFont normalFont;
-
-  /**
-   * @brief Fußnoten schrift
-   */
   QFont smallFont;
 
   /**
@@ -62,7 +53,8 @@ protected:
   QMarginsF page_margins;
 
   /**
-   * @brief Seitengrößet DIN A4
+   * @brief Seitengröße
+   * @note Standard ist DIN A4
    */
   QPageSize page_size;
 
@@ -70,10 +62,32 @@ protected:
    * @brief Text Editor
    * @group printArea
    * @{
+   * Das Widget @ref printArea enthält
+   * das Layout für die Text Editoren.
+   * @b Besonderheiten:
+   *  @li Es besitzt eine feste Größe.
+   *  @li Die größe ist auf den Druckerbreich eingeschränkt.
+   *  @li Es hat keine Ränder css{border:none;}
+   *  @li Das Dimensions verhalten der Editoren ist mit
+   *      setStretchFactor() in Prozent eingeschränkt.
+   *      Aktuelle angaben: Header(30%) Body(40%) Footer(20%)
+   *  @li Die Editoren "header" und "footer" besitzen keinen Scrollbalken.
    */
   QWidget *printArea;
+
+  /**
+   * @brief Kopzeilen Editor
+   */
   TextEditor *header;
+
+  /**
+   * @brief Inhalts Editor
+   */
   TextEditor *body;
+
+  /**
+   * @brief Fußzeilen Editor
+   */
   TextEditor *footer;
   /** @} */
 
@@ -123,8 +137,20 @@ protected:
   virtual void constructFooter() = 0;
 
 protected Q_SLOTS:
+  /**
+   * @brief In Datei Speichern
+   */
   virtual void printToFile(QPrinter *printer) = 0;
+
+  /**
+   * @brief Ausdruck erstellen
+   */
   virtual void printDocument(QPrinter *printer) = 0;
+
+  /**
+   * @brief Drucker Dialog öffnen
+   */
+  virtual void openPrintDialog() = 0;
 
 Q_SIGNALS:
   void headerFontChanged();
