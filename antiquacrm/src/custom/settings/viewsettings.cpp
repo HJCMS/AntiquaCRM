@@ -36,10 +36,11 @@ void ViewSettings::initSignalChanged() { /* TODO */
 }
 
 void ViewSettings::openFontDialog() {
-  QFontDialog *fd = new QFontDialog(this);
-  fd->setCurrentFont(qApp->font());
-  if (fd->exec()) {
-    view_font_config->setFont(fd->currentFont());
+  bool b = true;
+  QFont font = QFontDialog::getFont(&b, qApp->font(), this);
+  if (b) {
+    view_font_config->setFont(font);
+    chieldModified(true);
   }
 }
 

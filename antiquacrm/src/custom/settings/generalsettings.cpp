@@ -71,7 +71,7 @@ void GeneralSettings::initSignalChanged() {
 }
 
 void GeneralSettings::setImageDir() {
-  QVariant spath = config->value("imaging/sourcepath", QDir::homePath());
+  QVariant spath = config->value("dirs/images", QDir::homePath());
   QString src = getDirectory(spath.toString());
   if (src.isEmpty())
     return;
@@ -94,20 +94,18 @@ void GeneralSettings::setPageIcon(const QIcon &icon) {
 const QIcon GeneralSettings::getPageIcon() { return pageIcon; }
 
 void GeneralSettings::loadSectionConfig() {
-  QVariant spath = config->value("imaging/sourcepath", QDir::homePath());
+  QVariant spath = config->value("dirs/images", QDir::homePath());
   m_editImageSrc->setValue(spath);
   m_editImageSrc->setToolTip(spath.toString());
   m_searchStart->setValue(config->value("search/startlength", 5));
   m_minPrice->setValue(config->value("payment/min_price", 5));
-  // config->value("delivery_target", QDir::homePath()).toString();
+  // config->value("dirs/deliverynotes", QDir::homePath()).toString();
 }
 
 void GeneralSettings::saveSectionConfig() {
-  config->setValue("imaging/sourcepath", m_editImageSrc->value());
+  config->setValue("dirs/images", m_editImageSrc->value());
   config->setValue("search/startlength", m_searchStart->value());
   config->setValue("payment/min_price", m_minPrice->value());
   config->setValue("payment/currency", "€"); // TODO
-  config->setValue("targets/deliverynotes", QDir::homePath());
-  QString _test = QDir::homePath() + "/Developement/files/druck_header.png";
-  config->setValue("targets/attachment", _test);
+  config->setValue("dirs/deliverynotes", QDir::homePath() + "/Downloads/");
 }

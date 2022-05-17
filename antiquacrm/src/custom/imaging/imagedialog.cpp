@@ -95,7 +95,7 @@ void ImageDialog::rotateImage(qreal r) {
 
 void ImageDialog::setSourceTarget() {
   ApplSettings cfg;
-  sourceDir.setPath(cfg.value("imaging/sourcepath").toString());
+  sourceDir.setPath(cfg.value("dirs/images").toString());
   if (sourceDir.exists()) {
     findImageSourceFiles();
   }
@@ -175,7 +175,7 @@ void ImageDialog::openFileDialog() {
   m_fileDialog = new OpenImageDialog(this);
   m_fileDialog->setObjectName("imgfile_dialog");
   m_fileDialog->setStart(
-      cfg.value("imaging/sourcepath", QDir::homePath()).toString());
+      cfg.value("dirs/images", QDir::homePath()).toString());
   if (m_fileDialog->exec()) {
     loadFile(m_fileDialog->file());
   }

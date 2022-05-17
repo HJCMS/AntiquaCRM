@@ -1,6 +1,7 @@
 #include "settingswidget.h"
 #include "applsettings.h"
 
+#include <QApplication>
 #include <QDebug>
 #include <QDir>
 #include <QFileDialog>

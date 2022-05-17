@@ -8,6 +8,7 @@
 #include <QSpacerItem>
 #include <QString>
 #include <QWidget>
+#include <QFont>
 
 #include <Utils>
 

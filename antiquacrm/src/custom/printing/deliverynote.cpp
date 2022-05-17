@@ -14,7 +14,12 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <QPrintDialog>
+#include <QPrintPreviewDialog>
 #include <QTextCodec>
+
+#ifndef DEBUG_PRINTVIEW
+#define DEBUG_PRINTVIEW false
+#endif
 
 static const QByteArray defaultCodec() {
   QTextCodec *c = QTextCodec::codecForLocale();
@@ -44,10 +49,22 @@ void DeliveryNote::readConfiguration() {
     companyData.insert(k, config->value(k).toString());
   }
   config->endGroup();
+  config->beginGroup("printer");
+  QFont font;
+  if (font.fromString(config->value("header_font").toString())) {
+    headerFont.swap(font);
+  }
+  if (font.fromString(config->value("normal_font").toString())) {
+    normalFont.swap(font);
+  }
+  if (font.fromString(config->value("small_font").toString())) {
+    smallFont.swap(font);
+  }
+  config->endGroup();
 }
 
 const QString DeliveryNote::outputDirectory() {
-  QVariant dest = config->value("targets/deliverynotes", QDir::homePath());
+  QVariant dest = config->value("dirs/deliverynotes", QDir::homePath());
   return dest.toString();
 }
 
@@ -232,6 +249,7 @@ void DeliveryNote::insertArticle(const QString &articleid,
   cursor = ce02.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.insertText(quantity);
+
   body->document()->setModified(true);
 }
 
@@ -248,24 +266,26 @@ const QString DeliveryNote::getFooterHTML() {
 }
 
 const QImage DeliveryNote::getWatermark() {
-  QStringList accept({"PNG", "JPG", "TIFF"});
-  QString filepath(config->value("targets/attachment").toString());
-  QFileInfo info(filepath);
-  if (info.isFile()) {
+  QStringList accept({"PNG", "JPG"});
+  QString file(config->value("printer/attachments").toString());
+  file.append(QDir::separator());
+  file.append(config->value("printer/watermark").toString());
+  QFileInfo info(file);
+  if (info.isFile() && info.isReadable()) {
     QString type = info.completeSuffix().split(".").last().toUpper();
-    if (!accept.contains(type)) {
+    if (!accept.contains(type, Qt::CaseSensitive)) {
       qWarning("unsupported image type");
       return QImage();
     }
     QByteArray buffer;
-    QFile fp(filepath);
+    QFile fp(info.filePath());
     if (fp.open(QIODevice::ReadOnly)) {
       while (!fp.atEnd()) {
         buffer += fp.readLine();
       }
     }
     fp.close();
-    return QImage::fromData(buffer, "PNG");
+    return QImage::fromData(buffer, type.toLocal8Bit());
   }
   return QImage();
 }
@@ -273,26 +293,24 @@ const QImage DeliveryNote::getWatermark() {
 void DeliveryNote::printDocument(QPrinter *printer) {
   QRect pageRect = pageLayout().fullRectPoints();
   int documentWidth = pageRect.size().width();
-  int bodyHeight = pageRect.size().height();
 
   QTextDocument *htmlHead = header->document();
   htmlHead->setHtml(getHeaderHTML());
   htmlHead->setPageSize(QSizeF(documentWidth, htmlHead->size().height()));
-  bodyHeight -= htmlHead->size().height();
+  htmlHead->setModified(true);
+  QRect headerRect = QRect(QPoint(0, 0), header->size());
+
+  QTextDocument *htmlBody = body->document();
+  htmlBody->setHtml(getBodyHTML());
+  htmlBody->setModified(true);
+  QRect bodyRect = QRect(QPoint(0, 0), body->size());
 
   QTextDocument *htmlFooter = footer->document();
   htmlFooter->setHtml(getFooterHTML());
   htmlFooter->setPageSize(QSizeF(documentWidth, htmlFooter->size().height()));
-  bodyHeight -= htmlFooter->size().height();
-
-  QTextDocument *htmlBody = body->document();
-  htmlBody->setHtml(getBodyHTML());
-  htmlBody->setPageSize(QSizeF(documentWidth, bodyHeight).toSize());
-  htmlBody->setModified(true);
-
-  QRect headerRect = QRect(QPoint(0, 0), htmlHead->pageSize().toSize());
-  QRect bodycoRect = QRect(QPoint(0, 0), htmlBody->pageSize().toSize());
-  QRect footerRect = QRect(QPoint(0, 0), htmlFooter->pageSize().toSize());
+  htmlFooter->setModified(true);
+  QRectF footerRect = QRectF(QPoint(0, 0), htmlFooter->pageSize());
+  int yPosFooter = (pageRect.height() - (footerRect.height()*2));
 
   QImage image = getWatermark();
   QPainter painter;
@@ -305,16 +323,12 @@ void DeliveryNote::printDocument(QPrinter *printer) {
   }
 
   int pY = 0;
-  painter.translate(0, pY);
+  painter.translate(0, 0);
   htmlHead->drawContents(&painter, headerRect);
-  pY += headerRect.height();
-  painter.translate(0, pY);
-  htmlBody->drawContents(&painter, bodycoRect);
-  pY += bodycoRect.height();
-  painter.translate(0, pY);
+  painter.translate(0, headerRect.height());
+  htmlBody->drawContents(&painter, bodyRect);
+  painter.translate(0, yPosFooter);
   htmlFooter->drawContents(&painter, footerRect);
-  pY += footerRect.height();
-  painter.translate(0, pY);
   painter.end();
 }
 
@@ -329,11 +343,20 @@ void DeliveryNote::openPrintDialog() {
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPaperSource(QPrinter::FormSource);
   printer->setPageMargins(page_margins);
-  QPrintDialog *dialog = new QPrintDialog(printer, this);
-  connect(dialog, SIGNAL(accepted(QPrinter *)), this,
-          SLOT(printDocument(QPrinter *)));
-  if (dialog->exec() == QDialog::Accepted) {
-    accept();
+  if (DEBUG_PRINTVIEW) {
+    QPrintPreviewDialog *dialog = new QPrintPreviewDialog(printer, this);
+    connect(dialog, SIGNAL(paintRequested(QPrinter *)), this,
+            SLOT(printDocument(QPrinter *)));
+    if (dialog->exec() == QDialog::Accepted) {
+      accept();
+    }
+  } else {
+    QPrintDialog *dialog = new QPrintDialog(printer, this);
+    connect(dialog, SIGNAL(accepted(QPrinter *)), this,
+            SLOT(printDocument(QPrinter *)));
+    if (dialog->exec() == QDialog::Accepted) {
+      accept();
+    }
   }
 }
 
@@ -347,7 +370,6 @@ const QString DeliveryNote::deliveryNumber() {
   f.append(QString::number(date.year()));
   f.append(QString::number(date.dayOfYear()));
   f.append(p_orderId);
-  f.append(p_costumerId);
   return f;
 }
 

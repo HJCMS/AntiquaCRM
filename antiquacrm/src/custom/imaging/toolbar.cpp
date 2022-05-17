@@ -51,7 +51,7 @@ ToolBar::ToolBar(QWidget *parent) : QWidget{parent} {
   }
 
   QSettings cfg;
-  QString p = cfg.value("imaging/sourcepath").toString();
+  QString p = cfg.value("dirs/images").toString();
   if (!p.isEmpty()) {
     m_setTargets->insertItem(i++, tr("Company Storage"), p);
   }

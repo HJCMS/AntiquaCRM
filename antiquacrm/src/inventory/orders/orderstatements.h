@@ -41,7 +41,7 @@ static const QString defaultOrdersQuery(int id = 0) {
   QString fs("a.o_id,a.o_since,a.o_order_status,a.o_payment_status,");
   fs.append("CASE WHEN c.c_company=true THEN c.c_company_name ELSE ");
   fs.append("concat_ws(' ',c.c_firstname,c.c_lastname) END AS costumer,");
-  fs.append("d.d_name,a.o_locked,a.o_closed,");
+  fs.append("d.d_name,a.o_locked,a.o_closed,a.o_delivery, ");
   fs.append(age);
 
   QString sql("SELECT " + fs + " ");
@@ -84,6 +84,21 @@ static const QString queryCostumerShippingAddress(int costumerId) {
   sql.append(" FROM func_shipping_address(");
   sql.append(QString::number(costumerId));
   sql.append(");");
+  return sql;
+}
+
+/**
+ * @brief Füge die Lieferscheinnummer ein!
+ * @param oId
+ * @param dId
+ * @return SQL UPDATE
+ */
+static const QString setOrderDeliveryId(int oId, const QString &dId) {
+  QString sql("UPDATE inventory_orders SET o_delivery='");
+  sql.append(dId);
+  sql.append("', o_modified=CURRENT_TIMESTAMP WHERE o_id=");
+  sql.append(QString::number(oId));
+  sql.append(";");
   return sql;
 }
 

@@ -134,6 +134,7 @@ void OrderEditor::setInputList() {
   // Werden manuell gesetzt!
   inputList.removeOne("o_since");
   inputList.removeOne("o_modified");
+  inputList.removeOne("o_delivery");
 }
 
 void OrderEditor::importSqlResult() {
@@ -536,7 +537,10 @@ void OrderEditor::openPrinterDialog() {
   }
   // Start Dialog
   if (dialog->exec(deliveries)) {
-    qDebug() << Q_FUNC_INFO << "TODO";
+    m_sql->query(setOrderDeliveryId(oid, dialog->deliveryNumber()));
+    if(!m_sql->lastError().isEmpty()) {
+      qDebug() << Q_FUNC_INFO << m_sql->lastError();
+    }
   }
 }
 

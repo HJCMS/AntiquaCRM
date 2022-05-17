@@ -14,7 +14,7 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   setObjectName("antiqua_config_dialog");
   setWindowTitle(tr("Configuration") + " [*]");
   setSizeGripEnabled(true);
-  setMinimumSize(800, 560);
+  setMinimumSize(800, 500);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setContentsMargins(5, 0, 5, 0);
@@ -56,6 +56,12 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   m_page4->setPageTitle(tr("Company"));
   m_page4->setPageIcon(myIcon("database"));
   pages->addWidget(m_page4);
+
+  m_page5 = new PrintSettings(pages);
+  m_page5->setObjectName("printing_settings");
+  m_page5->setPageTitle(tr("Printing"));
+  m_page5->setPageIcon(myIcon("printer"));
+  pages->addWidget(m_page5);
 
   m_listWidget = new QListWidget(this);
   m_listWidget->setObjectName("config_dialog_menue");

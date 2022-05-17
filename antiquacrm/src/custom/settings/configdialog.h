@@ -7,48 +7,48 @@
 
 #include <SettingsDialog>
 
-#include <QObject>
-#include <QWidget>
 #include <QDialog>
-#include <QStackedWidget>
 #include <QListWidget>
 #include <QListWidgetItem>
+#include <QObject>
+#include <QStackedWidget>
 #include <QStatusBar>
+#include <QWidget>
 
-class ConfigDialog : public QDialog
-{
-    Q_OBJECT
-    Q_CLASSINFO ( "Author", "Jürgen Heinemann" )
-    Q_CLASSINFO ( "URL", "http://www.hjcms.de" )
+class ConfigDialog : public QDialog {
+  Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "http://www.hjcms.de")
 
 private:
-    QListWidget* m_listWidget;
-    GeneralSettings* m_page1;
-    PgSQLSettings* m_page2;
-    ViewSettings* m_page3;
-    CompanySettings* m_page4;
-    QStatusBar *m_statusbar;
+  QListWidget *m_listWidget;
+  GeneralSettings *m_page1;
+  PgSQLSettings *m_page2;
+  ViewSettings *m_page3;
+  CompanySettings *m_page4;
+  PrintSettings *m_page5;
+  QStatusBar *m_statusbar;
 
 private Q_SLOTS:
-    void setPage(QListWidgetItem *);
+  void setPage(QListWidgetItem *);
 
 public Q_SLOTS:
-    void statusMessage(const QString &);
-    void saveConfig();
-    void closeDialog();
+  void statusMessage(const QString &);
+  void saveConfig();
+  void closeDialog();
 
 public:
-    /**
-     * @brief Configuration Pages
-     */
-    QStackedWidget* pages;
+  /**
+   * @brief Configuration Pages
+   */
+  QStackedWidget *pages;
 
-    explicit ConfigDialog(QWidget *parent = nullptr);
+  explicit ConfigDialog(QWidget *parent = nullptr);
 
-    /**
-     * @brief Lädt die Einstellungen und erstellt das Menü!
-     */
-    int exec();
+  /**
+   * @brief Lädt die Einstellungen und erstellt das Menü!
+   */
+  int exec();
 };
 
 #endif // ANTIQUA_CONFIGDIALOG_H

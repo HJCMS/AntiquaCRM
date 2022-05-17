@@ -659,6 +659,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+6"/>
+        <source>Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+19"/>
         <source>&amp;Save</source>
         <translation type="unfinished"></translation>
@@ -684,7 +689,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-99"/>
+        <location line="-105"/>
         <source>Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1079,18 +1084,18 @@
 <context>
     <name>DeliveryNote</name>
     <message>
-        <location filename="../custom/printing/deliverynote.cpp" line="+30"/>
-        <location line="+338"/>
+        <location filename="../custom/printing/deliverynote.cpp" line="+31"/>
+        <location line="+333"/>
         <source>Delivery note</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-323"/>
+        <location line="-320"/>
         <source>&lt;p&gt;Your Company configuration is incomplite!&lt;/p&gt;Edit Company settings first!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+74"/>
         <source>Delivey note</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1125,7 +1130,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>email</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1145,17 +1150,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+129"/>
-        <source>save pdf</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>PDF Files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+62"/>
+        <location line="+170"/>
         <source>There is no Order-Id to generate this delivery!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1835,7 +1830,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+113"/>
         <source>Order saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1885,13 +1880,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>Do you really want to close this order and pass it on to accounting?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-103"/>
-        <location line="+106"/>
+        <location line="-106"/>
+        <location line="+109"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2064,7 +2059,7 @@
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../inventory/orders/orderstablemodel.cpp" line="+119"/>
+        <location filename="../inventory/orders/orderstablemodel.cpp" line="+122"/>
         <source>Since</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2074,7 +2069,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-38"/>
+        <location line="-41"/>
         <source>received</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2116,7 +2111,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+37"/>
         <source>Payment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2138,6 +2133,11 @@
     <message>
         <location line="+3"/>
         <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Delivery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2364,15 +2364,79 @@
     </message>
 </context>
 <context>
-    <name>Printing</name>
+    <name>PrintSettings</name>
     <message>
-        <location filename="../custom/printing/printing.cpp" line="+80"/>
-        <source>Printing</source>
+        <location filename="../custom/settings/printsettings.cpp" line="+32"/>
+        <source>Printer settings for delivery note and invoicing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Save as pdf</source>
+        <location line="+4"/>
+        <source>Document Header</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Document Body</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Document Footer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Normal Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Small Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Directory specification for the file attachments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Attachments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Open Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+58"/>
+        <source>Watermark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-54"/>
+        <source>Open File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>set Font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Printing</name>
+    <message>
+        <location filename="../custom/printing/printing.cpp" line="+69"/>
+        <source>Printing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2966,7 +3030,7 @@
 <context>
     <name>SettingsWidget</name>
     <message>
-        <location filename="../custom/settings/settingswidget.cpp" line="+15"/>
+        <location filename="../custom/settings/settingswidget.cpp" line="+16"/>
         <source>Directory</source>
         <translation type="unfinished"></translation>
     </message>

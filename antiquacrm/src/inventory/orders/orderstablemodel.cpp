@@ -42,8 +42,8 @@ const QString OrdersTableModel::runTimeString(const qint64 &seconds) const {
   QString retval = tr("no time");
   // Sekunden pro Tag (24 * 60 * 60)
   const qint64 spt = 86400;
+  qint64 d = (seconds / spt);
   QTime t = QTime(0, 0).addSecs(seconds);
-  qint64 d = (t.msec() / spt);
   qint64 h = t.hour();
   qint64 m = t.minute();
   if (d > 0) {
@@ -90,7 +90,10 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
     case 7: // o_closed
       return (item.toBool()) ? tr("Yes") : tr("No");
 
-    case 8: // age Siehe SQL Statement!
+    case 8: // Lieferschein Nummer
+      return item;
+
+    case 9: // age Siehe SQL Statement!
       return runTimeString(item.toInt());
     }
   }
@@ -136,7 +139,10 @@ QVariant OrdersTableModel::headerData(int section, Qt::Orientation orientation,
     case 7: // o_closed
       return setHeaderTitel(tr("Closed"));
 
-    case 8: // age
+    case 8: // o_delivery
+      return setHeaderTitel(tr("Delivery"));
+
+    case 9: // age
       return setHeaderTitel(tr("Runtime"));
 
     default:
