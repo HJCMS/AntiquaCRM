@@ -190,7 +190,6 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
   connect(ssl_ca_CN, SIGNAL(currentIndexChanged(int)), this,
           SLOT(chieldChanged(int)));
   connect(ssl_peer, SIGNAL(clicked(bool)), this, SLOT(chieldModified(bool)));
-  initSignalChanged();
 }
 
 void PgSQLSettings::initSignalChanged() {
@@ -295,6 +294,7 @@ void PgSQLSettings::loadSectionConfig() {
     if (mode_index >= 0)
       ssl_mode->setCurrentIndex(mode_index);
   }
+  initSignalChanged();
 }
 
 void PgSQLSettings::saveSectionConfig() {

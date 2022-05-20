@@ -27,6 +27,7 @@ private:
   ViewSettings *m_page3;
   CompanySettings *m_page4;
   PrintSettings *m_page5;
+  ProviderSettings *m_page6;
   QStatusBar *m_statusbar;
 
 private Q_SLOTS:

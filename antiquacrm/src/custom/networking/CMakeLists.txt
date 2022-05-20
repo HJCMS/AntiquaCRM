@@ -11,16 +11,19 @@ INCLUDE_DIRECTORIES (
 
 SET (subproject_LINKER
  AntiquaCore
+ ${CURL_LIBRARIES}
 )
 
 SET (subproject_SOURCES
   networker.cpp
   isbnrequest.cpp
+  provider.cpp
 )
 
 SET (subproject_HEADERS
   networker.h
   isbnrequest.h
+  provider.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

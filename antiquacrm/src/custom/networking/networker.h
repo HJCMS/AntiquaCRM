@@ -30,6 +30,7 @@ class Networker final : public QNetworkAccessManager {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  int tranfer_timeout = 15;
   /**
    * @brief Einstellungen lesen
    */
@@ -73,14 +74,15 @@ private:
 
 private Q_SLOTS:
   /**
-   * @brief Übertragungsfehler verarbeiten
-   */
-  void slotError(QNetworkReply::NetworkError error);
-
-  /**
    * @brief Wenn die Anfrage beendet wurde.
    */
   void slotFinished(QNetworkReply *reply);
+
+public Q_SLOTS:
+  /**
+   * @brief Übertragungsfehler verarbeiten
+   */
+  void slotError(QNetworkReply::NetworkError error);
 
   /**
    * @brief SSL Fehlerverarbeitung
@@ -99,13 +101,27 @@ public:
 
   /**
    * @brief Erstelle eine Json HTTP_POST Anfrage
+   * @note Wenn es eine https Verbindung ist und der
+   *    Host mit QUrl:setHost() in der URL gesetzt ist.
+   *    Wird SSL Verschlüsselung verwendet (sonst nicht)!
    * @param url   Anfrage URL
    * @param name  HTTP_FORM_DATA_NAME "form-data; name={key}"
    * @param body  HTTP_FORM_DATA_BODY
    * @return NetworkReply
    */
-  QNetworkReply *jsonPostRequest(const QUrl &url, const QString &name,
-                                 const QJsonDocument &body);
+  QNetworkReply *jsonPostRequest(const QUrl &url, const QJsonDocument &body);
+
+  QNetworkReply *jsonMultiPartRequest(const QUrl &url, const QString &name,
+                                      const QJsonDocument &body);
+
+  /**
+   * @brief Standard GET Anfrage
+   * @note Wenn es eine https Verbindung ist und der
+   *    Host mit QUrl:setHost() in der URL gesetzt ist.
+   *    Wird SSL Verschlüsselung verwendet (sonst nicht)!
+   * @param url
+   * @return
+   */
   QNetworkReply *jsonGetRequest(const QUrl &url);
 
   /**

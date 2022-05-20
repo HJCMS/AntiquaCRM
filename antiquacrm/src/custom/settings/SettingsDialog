@@ -28,3 +28,7 @@
 #ifndef PRINT_SETTINGS_H
 #include "printsettings.h"
 #endif // PRINT_SETTINGS_H
+
+#ifndef PROVIDER_SETTINGS_H
+#include "providersettings.h"
+#endif // PROVIDER_SETTINGS_H

@@ -63,6 +63,12 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   m_page5->setPageIcon(myIcon("printer"));
   pages->addWidget(m_page5);
 
+  m_page6 = new ProviderSettings(pages);
+  m_page6->setObjectName("provider_settings");
+  m_page6->setPageTitle(tr("Provider"));
+  m_page6->setPageIcon(myIcon("autostart"));
+  pages->addWidget(m_page6);
+
   m_listWidget = new QListWidget(this);
   m_listWidget->setObjectName("config_dialog_menue");
   m_listWidget->setResizeMode(QListView::Adjust);

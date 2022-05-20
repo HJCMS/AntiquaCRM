@@ -19,6 +19,7 @@ SET (subproject_SOURCES
  viewsettings.cpp
  companysettings.cpp
  printsettings.cpp
+ providersettings.cpp
 )
 
 SET (subproject_HEADERS
@@ -30,6 +31,7 @@ SET (subproject_HEADERS
  viewsettings.h
  companysettings.h
  printsettings.h
+ providersettings.h
  SettingsDialog
 )
 

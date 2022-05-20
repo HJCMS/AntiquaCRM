@@ -13,6 +13,9 @@
 #include "statusbar.h"
 #include "workspace.h"
 
+#include <QJsonDocument>
+#include <QJsonObject>
+
 #include <QCoreApplication>
 #include <QDebug>
 #include <QFileDialog>
@@ -101,15 +104,16 @@ void MWindow::setupActions() {
   connect(ac_dbConnect, SIGNAL(triggered(bool)), this,
           SLOT(reconnectDatabase(bool)));
 
+  bool enable_file = false;
   QMenu *menu_files =
       m_applicationMenu->addMenu(myIcon("folder_green"), tr("Open"));
-  menu_files->setEnabled(false);
+  menu_files->setEnabled(enable_file);
   menu_files->setObjectName("menu_filemenu");
 
   QAction *ac_openfile =
       menu_files->addAction(myIcon("folder_txt"), tr("Open file"));
   ac_openfile->setObjectName("ac_fileopen");
-  ac_openfile->setEnabled(false);
+  ac_openfile->setEnabled(enable_file);
   connect(ac_openfile, SIGNAL(triggered(bool)), this,
           SLOT(openFileDialog(bool)));
 

@@ -12,6 +12,7 @@
 #include <QJsonValueRef>
 #include <QNetworkRequest>
 #include <QString>
+#include <QUrlQuery>
 #include <QVector>
 
 #ifndef ISBN_DEBUG_OUTPUT
@@ -156,20 +157,26 @@ IsbnRequest::IsbnRequest(const QString &isbn, QObject *parent)
 
   m_isbn = new IsbnData(isbn);
 
-  QString req("https://openlibrary.org/api/books?bibkeys=ISBN:");
+  QUrl url;
+  url.setScheme("https");
+  url.setHost("openlibrary.org");
+  url.setPath("/api/books");
+
+  QString req("bibkeys=ISBN:");
   req.append(isbn);
   req.append("&jscmd=data&format=json");
-  p_url = QUrl(req);
-}
 
-bool IsbnRequest::setManager() {
+  QUrlQuery query(req);
+  url.setQuery(query);
+  p_url = url;
+
   m_manager = new Networker(this);
-  m_manager->setObjectName("NetworkAccessManager");
+  m_manager->setObjectName("isbn_network_manager");
   connect(m_manager, SIGNAL(finished(QNetworkReply *)), this,
           SLOT(replyFinished(QNetworkReply *)));
-
-  return (m_manager != nullptr);
 }
+
+bool IsbnRequest::setManager() { return (m_manager != nullptr); }
 
 void IsbnRequest::read(const QJsonObject &obj) {
   QJsonObject sobj(obj);

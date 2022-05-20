@@ -2,11 +2,25 @@
 // vim: set fileencoding=utf-8
 
 #include "networker.h"
+#include "antiqua_global.h"
 #include "applsettings.h"
 
 #include <QHttpMultiPart>
 #include <QHttpPart>
 #include <QLocale>
+
+static const QByteArray userAgentString() {
+  QLocale locale = QLocale::system();
+  QString iso639_1 = locale.bcp47Name();
+  QString iso3166 = locale.name();
+  QString str("Mozilla/5.0 (compatible; ");
+  str.append(ANTIQUACRM_DISPLAYNAME);
+  str.append("/");
+  str.append(ANTIQUACRM_VERSION);
+  str.append(" " + iso639_1 + ", " + iso3166);
+  str.append(") AppleWebKit (KHTML, like Gecko)");
+  return str.toLocal8Bit();
+}
 
 Networker::Networker(QObject *parent) : QNetworkAccessManager{parent} {
   setObjectName("antiquacrm_networker");
@@ -29,7 +43,6 @@ const QSslConfiguration Networker::sslConfigguration() {
   if (!cfg.addCaCertificates(ca_bundle, QSsl::Pem)) {
     qWarning("Missing ca-bundle to import!");
   }
-  cfg.setProtocol(QSsl::DtlsV1_2OrLater);
   return cfg;
 }
 
@@ -46,7 +59,7 @@ const QByteArray Networker::languageRange() {
 }
 
 const QByteArray Networker::acceptJson() {
-  QString accept("application/ld+json,application/json,*/*;q=0.1");
+  QString accept("application/ld+json,application/json,text/*;q=0.1");
   return accept.toLocal8Bit();
 }
 
@@ -72,6 +85,18 @@ void Networker::slotError(QNetworkReply::NetworkError error) {
     qWarning("Networker: Host NotFound Error");
     return;
 
+  case QNetworkReply::RemoteHostClosedError:
+    qWarning("Networker: RemoteHost Closed Error");
+    return;
+
+  case QNetworkReply::OperationCanceledError:
+    qWarning("Networker: Operation Canceled Error");
+    return;
+
+  case QNetworkReply::InsecureRedirectError:
+    qWarning("Networker: Insecure Redirect Error");
+    return;
+
   default:
     qWarning("Networker: Unknown Error:%s", qPrintable(QString::number(error)));
     return;
@@ -94,11 +119,52 @@ void Networker::slotSslErrors(const QList<QSslError> &list) {
   }
 }
 
-QNetworkReply *Networker::jsonPostRequest(const QUrl &url, const QString &name,
+QNetworkReply *Networker::jsonPostRequest(const QUrl &url, /* Response URL */
                                           const QJsonDocument &body) {
   QNetworkRequest request(url);
+  request.setRawHeader(QByteArray("User-Agent"), userAgentString());
   request.setRawHeader(QByteArray("Accept-Language"), languageRange());
   request.setRawHeader(QByteArray("Accept"), acceptJson());
+  request.setRawHeader(QByteArray("Cache-Control"),
+                       QByteArray("no-cache, private"));
+  request.setRawHeader(QByteArray("Content-Type"),
+                       QByteArray("application/json"));
+
+  if (url.scheme().contains("https") && !url.host().isEmpty()) {
+    QSslConfiguration sslConfig = sslConfigguration();
+    request.setSslConfiguration(sslConfig);
+  }
+
+  QByteArray data = body.toJson(QJsonDocument::Compact);
+  QByteArray size = QString::number(data.size()).toLocal8Bit();
+  request.setRawHeader(QByteArray("Content-Length"), size);
+
+  reply = post(request, data);
+
+  connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
+          SLOT(slotError(QNetworkReply::NetworkError)));
+
+  connect(reply, SIGNAL(sslErrors(QList<QSslError>)), this,
+          SLOT(slotSslErrors(QList<QSslError>)));
+
+  return reply;
+}
+
+QNetworkReply *Networker::jsonMultiPartRequest(/* Multipart */
+                                               const QUrl &url,
+                                               const QString &name,
+                                               const QJsonDocument &body) {
+  QNetworkRequest request(url);
+  request.setRawHeader(QByteArray("User-Agent"), userAgentString());
+  request.setRawHeader(QByteArray("Accept-Language"), languageRange());
+  request.setRawHeader(QByteArray("Accept"), acceptJson());
+  request.setRawHeader(QByteArray("Cache-Control"),
+                       QByteArray("no-cache, private"));
+  request.setTransferTimeout((tranfer_timeout * 1000));
+  if (url.scheme().contains("https") && !url.host().isEmpty()) {
+    QSslConfiguration sslConfig = sslConfigguration();
+    request.setSslConfiguration(sslConfig);
+  }
 
   QByteArray data = body.toJson(QJsonDocument::Compact);
   QHttpMultiPart *formData = new QHttpMultiPart(QHttpMultiPart::FormDataType);
@@ -126,8 +192,16 @@ QNetworkReply *Networker::jsonPostRequest(const QUrl &url, const QString &name,
 QNetworkReply *Networker::jsonGetRequest(const QUrl &url) {
   // https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
   QNetworkRequest request(url);
+  request.setRawHeader(QByteArray("User-Agent"), userAgentString());
   request.setRawHeader(QByteArray("Accept-Language"), languageRange());
   request.setRawHeader(QByteArray("Accept"), acceptJson());
+  request.setRawHeader(QByteArray("Cache-Control"),
+                       QByteArray("no-cache, private"));
+  request.setTransferTimeout((tranfer_timeout * 1000));
+  if (url.scheme().contains("https") && !url.host().isEmpty()) {
+    QSslConfiguration sslConfig = sslConfigguration();
+    request.setSslConfiguration(sslConfig);
+  }
 
   reply = get(request);
   connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this,

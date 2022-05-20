@@ -108,4 +108,5 @@ void GeneralSettings::saveSectionConfig() {
   config->setValue("payment/min_price", m_minPrice->value());
   config->setValue("payment/currency", "€"); // TODO
   config->setValue("dirs/deliverynotes", QDir::homePath() + "/Downloads/");
+
 }
