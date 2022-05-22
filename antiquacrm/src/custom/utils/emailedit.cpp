@@ -45,7 +45,7 @@ const QRegExp EMailEdit::pcre() {
 }
 
 void EMailEdit::setValue(const QVariant &id) {
-  m_mail->setText(id.toString());
+  m_mail->setText(id.toString().toLower());
   setModified(true);
 }
 

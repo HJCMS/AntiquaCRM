@@ -135,7 +135,7 @@ public:
    */
   bool postForm(const QUrl &url, const QString &param, const QByteArray &body);
 
-  void run();
+  void run() override;
 
   virtual ~ProviderRequest();
 };
@@ -188,8 +188,16 @@ public:
 
   explicit Provider(QObject *parent = nullptr, bool debug = false);
 
+  /**
+   * @brief Einfache GET Anfrage senden
+   */
   void sendGet(const QUrl &url);
 
+  /**
+   * @brief Ein application/json POST Senden
+   * @param url  Server Adresse
+   * @param body Json Document
+   */
   void sendPost(const QUrl &url, const QByteArray &body);
 
   void sendPostForm(const QUrl &url, const QString &param,

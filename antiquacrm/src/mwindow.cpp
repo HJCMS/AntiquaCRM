@@ -280,6 +280,7 @@ void MWindow::initDefaults() {
 
   m_workSpace->openTab(Workspace::Orders);
   m_workSpace->openTab(Workspace::Books);
+  m_workSpace->openTab(Workspace::Providers);
   m_workSpace->openTab(Workspace::Costumers);
   // Nach Vorne holen
   m_workSpace->openTab(Workspace::Orders);

@@ -93,7 +93,7 @@ CostumerContact::CostumerContact(QWidget *parent) : QWidget{parent} {
   c_phone_0 = new PhoneEdit(this);
   c_phone_0->setObjectName("c_phone_0");
   c_phone_0->setInfo(tr("Primary phone number"));
-  c_phone_0->setRequired(true);
+  c_phone_0->setRequired(false);
   row2->addWidget(c_phone_0, gridRow, 0, 1, 1);
 
   /** Phone 2 */

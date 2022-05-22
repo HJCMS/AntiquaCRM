@@ -442,6 +442,130 @@
     </message>
 </context>
 <context>
+    <name>BuchfreundDisplay</name>
+    <message>
+        <location filename="../inventory/providers/buchfreund.cpp" line="+65"/>
+        <source>Order Details</source>
+        <translation>Bestelldetails</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Article Id</source>
+        <translation>Artikel Id</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Provider Id</source>
+        <translation>Dienstleister Id</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Quantity</source>
+        <translation>Menge</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Price</source>
+        <translation>Preis</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Ordered on</source>
+        <translation>Bestellung vom</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>purchaser</source>
+        <translation>Einkäufer*in</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Firstname</source>
+        <translation>Vorname</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Lastname</source>
+        <translation>Nachname</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Postalcode</source>
+        <translation>Postleitzahl</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Location</source>
+        <translation>Wohnort</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Street</source>
+        <translation>Straße</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Country</source>
+        <translation>Land</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Phone</source>
+        <translation>Telefon</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>eMail</source>
+        <translation>E-Mail</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Create</source>
+        <translation>Erstellen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>create a new database entry</source>
+        <translation>Erstelle einen Neuen Datenbankeintrag</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Search</source>
+        <translation>Suche</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Costumer Id</source>
+        <translation>Kunden Nr</translation>
+    </message>
+    <message>
+        <location line="+70"/>
+        <source>costumer add</source>
+        <translation>Kunde angelegt</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location line="+38"/>
+        <source>SQL errors!</source>
+        <translation>Datenbank Fehler!</translation>
+    </message>
+    <message>
+        <location line="-8"/>
+        <source>found Costumer</source>
+        <translation>Kundeneintrag gefunden</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Costumer not exists!</source>
+        <translation>Dieser Kunden existiert nicht!</translation>
+    </message>
+    <message>
+        <location line="-117"/>
+        <source>Search Costumer in Database</source>
+        <translation>Kunde im Adressbuch suchen</translation>
+    </message>
+</context>
+<context>
     <name>CompanySettings</name>
     <message>
         <location filename="../custom/settings/companysettings.cpp" line="+22"/>
@@ -664,6 +788,11 @@
         <translation>Drucken</translation>
     </message>
     <message>
+        <location line="+6"/>
+        <source>Provider</source>
+        <translation>Dienstleister</translation>
+    </message>
+    <message>
         <location line="+19"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
@@ -689,7 +818,7 @@
         <translation>Nicht gespeicherte Änderungen!</translation>
     </message>
     <message>
-        <location line="-105"/>
+        <location line="-111"/>
         <source>Database</source>
         <translation>Datenbank</translation>
     </message>
@@ -1079,6 +1208,14 @@
         <location line="+3"/>
         <source>Description</source>
         <translation>Beschreibung</translation>
+    </message>
+</context>
+<context>
+    <name>DateTimeEdit</name>
+    <message>
+        <location filename="../custom/utils/datetimeedit.cpp" line="+116"/>
+        <source>a valid Datetime is needed.</source>
+        <translation>Ein gültiges Datum ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -1587,6 +1724,14 @@
     </message>
 </context>
 <context>
+    <name>InventoryProviders</name>
+    <message>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+59"/>
+        <source>Providers</source>
+        <translation>Dienstleister</translation>
+    </message>
+</context>
+<context>
     <name>IsbnEdit</name>
     <message>
         <location filename="../custom/utils/isbnedit.cpp" line="+41"/>
@@ -1625,7 +1770,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+77"/>
+        <location filename="../mwindow.cpp" line="+80"/>
         <source>Costumers</source>
         <translation>Kunden</translation>
     </message>
@@ -1640,7 +1785,7 @@
         <translation>Programm</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Open</source>
         <translation>Öffne</translation>
     </message>
@@ -1701,7 +1846,7 @@
         <translation>Vollansicht</translation>
     </message>
     <message>
-        <location line="-172"/>
+        <location line="-173"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
@@ -1721,7 +1866,7 @@
         <translation>Verbinden</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+39"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
@@ -2314,7 +2459,7 @@
         <translation>Passwort</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+53"/>
         <source>Open Certfile</source>
         <translation>Öffne Zertifikat</translation>
     </message>
@@ -2736,6 +2881,57 @@
         <location line="+3"/>
         <source>Image exits</source>
         <translation>Bild</translation>
+    </message>
+</context>
+<context>
+    <name>ProviderSettings</name>
+    <message>
+        <location filename="../custom/settings/providersettings.cpp" line="+24"/>
+        <source>Protocoll</source>
+        <translation>Protokoll</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Domain</source>
+        <translation>Domäne</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>API Key</source>
+        <translation>API Schlüssel</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>API Path</source>
+        <translation>API Pfad</translation>
+    </message>
+</context>
+<context>
+    <name>ProvidersToolBar</name>
+    <message>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="-40"/>
+        <source>Providers</source>
+        <translation>Dienstleister</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>set Providers page</source>
+        <translation>setze Dienstleisterseite</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Current Provider Page</source>
+        <translation>Aktuelle Dienstleisterseite</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Create Order</source>
+        <translation>Auftrag erstellen</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Refresh</source>
+        <translation>Aktualisieren</translation>
     </message>
 </context>
 <context>
@@ -3262,7 +3458,7 @@
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../workspace.cpp" line="+46"/>
+        <location filename="../workspace.cpp" line="+47"/>
         <source>Workspace</source>
         <translation>Arbeitsbereich</translation>
     </message>
@@ -3307,6 +3503,16 @@
         <translation>Auftrags Inventar</translation>
     </message>
     <message>
+        <location line="+11"/>
+        <source>Providers</source>
+        <translation>Dienstleister</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Providers Inventory</source>
+        <translation>Dienstleister Inventar</translation>
+    </message>
+    <message>
         <location line="+12"/>
         <source>Cant close this tab, unsafed changes!</source>
         <translation>Kann das Tab nicht schliessen, nicht gespeicherte Änderungen!</translation>
@@ -3321,7 +3527,7 @@
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-105"/>
+        <location line="-118"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>

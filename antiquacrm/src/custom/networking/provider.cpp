@@ -2,6 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "provider.h"
+#include "antiqua_global.h"
+#include "applsettings.h"
 
 #include <QByteArray>
 #include <QDebug>
@@ -11,7 +13,7 @@
 #include <iostream>
 
 #ifndef ENABLE_DEBUG
-#define ENABLE_DEBUG true
+#define ENABLE_DEBUG false
 #endif
 
 // BEGIN ProviderRequest
@@ -58,16 +60,16 @@ static int cUrlTrace(CURL *handle, curl_infotype type, unsigned char *data,
 static const char *jsonParserError(int err) {
   switch (err) {
   case (QJsonParseError::UnterminatedObject):
-    return "Object is not correctly terminated with a closing curly bracket";
+    return "Object is not correctly terminated";
 
   case (QJsonParseError::MissingNameSeparator):
     return "A comma separating different items is missing";
 
   case (QJsonParseError::UnterminatedArray):
-    return "Array is not correctly terminated with a closing square bracket";
+    return "Array is not correctly terminated";
 
   case (QJsonParseError::MissingValueSeparator):
-    return "A colon separating keys from values inside objects is missing";
+    return "A colon separating key from values is missing";
 
   case (QJsonParseError::IllegalValue):
     return "The value is illegal";
@@ -79,25 +81,25 @@ static const char *jsonParserError(int err) {
     return "The number is not well formed";
 
   case (QJsonParseError::IllegalEscapeSequence):
-    return "An illegal escape sequence occurred in the input";
+    return "An illegal escape sequence occurred";
 
   case (QJsonParseError::IllegalUTF8String):
-    return "An illegal UTF8 sequence occurred in the input";
+    return "An illegal UTF8 sequence occurred";
 
   case (QJsonParseError::UnterminatedString):
-    return "A string wasn't terminated with a quote";
+    return "String wasn't terminated with a quote";
 
   case (QJsonParseError::MissingObject):
-    return "An object was expected but couldn't be found";
+    return "Object was expected but couldn't be found";
 
   case (QJsonParseError::DeepNesting):
-    return "Document is too deeply nested for the parser to parse it";
+    return "Document is too deeply nested";
 
   case (QJsonParseError::DocumentTooLarge):
-    return "Document is too large for the parser to parse it";
+    return "Document is too large";
 
   case (QJsonParseError::GarbageAtEnd):
-    return "Document contains additional garbage characters at the end";
+    return "Document contains additional garbage characters";
 
   default:
     return "Unknown";
@@ -161,6 +163,7 @@ curl_slist *ProviderRequest::setHeader() {
   curl_slist *list = NULL;
   list = curl_slist_append(list, acceptLanguage());
   list = curl_slist_append(list, acceptJsonLanguage());
+  // WARNING - Wird zur Zeit nicht unterztützt!
   // list = curl_slist_append(list, "Accept-Encoding: gzip, deflate");
   list = curl_slist_append(list, contentTypeJson());
   return list;
@@ -246,7 +249,7 @@ bool ProviderRequest::initDefaultOptions() {
   curl_easy_setopt(m_curl, CURLOPT_SSL_VERIFYHOST, true);
   curl_easy_setopt(m_curl, CURLOPT_SSL_VERIFYPEER, 1);
   curl_easy_setopt(m_curl, CURLOPT_SERVICE_NAME, "AntiquaCRM");
-  curl_easy_setopt(m_curl, CURLOPT_USERAGENT, "AntiquaCRM/0.1");
+  curl_easy_setopt(m_curl, CURLOPT_USERAGENT, ANTIQUACRM_USERAGENT);
   // curl_easy_setopt(curl, CURLOPT_CAINFO, "/etc/ssl/ca-bundle.pem");
 
   if (verbose) {

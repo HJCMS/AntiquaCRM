@@ -38,6 +38,15 @@
 #endif
 
 /**
+ * @def ANTIQUACRM_USERAGENT
+ * @brief required by QNetworkAccessManager and cUrl
+ * @warning This fixed string is needet for OAuth
+ */
+#ifndef ANTIQUACRM_USERAGENT
+#define ANTIQUACRM_USERAGENT "AntiquaCRM/0.1"
+#endif
+
+/**
  * @def ANTIQUACRM_VERSION
  * @brief versioning
  */

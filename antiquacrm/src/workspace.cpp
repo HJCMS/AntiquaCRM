@@ -7,6 +7,7 @@
 #include "inventorycostumers.h"
 #include "inventoryorders.h"
 #include "inventoryprints.h"
+#include "inventoryproviders.h"
 #include "myicontheme.h"
 
 #include <QAction>
@@ -112,6 +113,19 @@ int Workspace::addInventoryOrders(int index) {
   return i;
 }
 
+int Workspace::addInventoryProviders(int index) {
+  m_tabProviders = new InventoryProviders(this);
+  connect(m_tabProviders, SIGNAL(s_windowModified(bool)), this,
+          SIGNAL(s_windowModified(bool)));
+  connect(m_tabProviders, SIGNAL(s_postMessage(const QString &)), this,
+          SIGNAL(s_postMessage(const QString &)));
+  int i = insertTab(index, m_tabProviders, tr("Providers"));
+  m_tabBar->setTabData(i, m_tabProviders->isClosable());
+  setTabToolTip(i, tr("Providers Inventory"));
+  setTabIcon(i, myIcon("autostart"));
+  return i;
+}
+
 void Workspace::closeTabClicked(int index) {
   Inventory *tab = qobject_cast<Inventory *>(widget(index));
   if (tab != nullptr && tab->isClosable()) {
@@ -176,6 +190,13 @@ void Workspace::openTab(int index) {
       i = addInventoryOrders(count() + 1);
     } else {
       setCurrentWidget(m_tabOrders);
+      return;
+    }
+  } else if (index == Tab::Providers) {
+    if (indexOf(m_tabProviders) < 0) {
+      i = addInventoryProviders(count() + 1);
+    } else {
+      setCurrentWidget(m_tabProviders);
       return;
     }
   }

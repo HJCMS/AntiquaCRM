@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
 
-SET(_subproject "Networking")
+SET(_subproject "InventoryProviders")
 
 INCLUDE_DIRECTORIES (
   ${PROJECT_INCLUDE_DIRS}
@@ -10,21 +10,24 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (subproject_LINKER
+ SqlCore
  AntiquaCore
  Settings
- ${CURL_LIBRARIES}
+ Networking
+ Utils
+ Imaging
+ Printing
 )
 
 SET (subproject_SOURCES
-  networker.cpp
-  isbnrequest.cpp
-  provider.cpp
+  inventoryproviders.cpp
+  buchfreund.cpp
 )
 
 SET (subproject_HEADERS
-  networker.h
-  isbnrequest.h
-  provider.h
+  providersstatements.h
+  inventoryproviders.h
+  buchfreund.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC
@@ -39,8 +42,7 @@ SET_TARGET_PROPERTIES (${_subproject} PROPERTIES
 
 TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
+  Qt${QT_VERSION_MAJOR}::Gui
   Qt${QT_VERSION_MAJOR}::Widgets
-  Qt${QT_VERSION_MAJOR}::Network
   ${subproject_LINKER}
 )
-

@@ -35,7 +35,7 @@ private:
     @brief Wird mehrfach verwendet
     Das aktuell zulässige Eingabeschema für Telefon Nummern.
   */
-  const QRegularExpression regexp = QRegularExpression("^(0[\\d]{2}\\s[\\d]{3,4}[\\s\\d]+)$");
+  const QRegularExpression regexp = QRegularExpression("^(0[\\d]{2}\\s[\\d]{2,4}[\\s\\d]+)$");
 
 private Q_SLOTS:
   /**

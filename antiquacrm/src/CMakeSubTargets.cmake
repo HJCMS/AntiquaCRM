@@ -41,6 +41,8 @@ SET (PROJECT_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/inventory/orders
  ${CMAKE_CURRENT_BINARY_DIR}/inventory/prints
  ${CMAKE_CURRENT_SOURCE_DIR}/inventory/prints
+ ${CMAKE_CURRENT_BINARY_DIR}/inventory/providers
+ ${CMAKE_CURRENT_SOURCE_DIR}/inventory/providers
  ${CMAKE_CURRENT_BINARY_DIR}/plugins
  ${CMAKE_CURRENT_SOURCE_DIR}/plugins
  ${CMAKE_CURRENT_BINARY_DIR}/xml
@@ -72,5 +74,6 @@ InventoryBooks
 InventoryCostumers
 InventoryPrints
 InventoryOrders
+InventoryProviders
 )
 

@@ -138,8 +138,8 @@
 # include "trustbox.h"
 #endif
 
-#ifndef UTILSMAIN_UTILS_H
-# include "utilsmain.h"
+#ifndef DATETIMEEDIT_UTILS_H
+# include "datetimeedit.h"
 #endif
 
 #ifndef YEAREDIT_UTILS_H

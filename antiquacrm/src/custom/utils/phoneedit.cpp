@@ -95,7 +95,7 @@ void PhoneEdit::setInfo(const QString &txt) {
     id_phone->setToolTip("049 152 12345678");
   } else {
     id_phone->setPlaceholderText("049 7632 1234567");
-    id_phone->setToolTip("049 7632 1234567");
+    id_phone->setToolTip("049 40 1234567 (Hamburg)");
   }
 }
 
