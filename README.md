@@ -6,7 +6,7 @@ Es bietet eine Verwaltung der Artikelbestände und einige Online Schnittstellen 
 
 Es stellt z.B. ISBN Abfragen an OpenLibrary.org und ermöglicht es somit Dateneingaben zu prüfen.
 
-Das Programm wird mit der Qt-C++ Version 5.12.* Community Liezens geschrieben und verwendet eine PostgreSQL Datenbank ab Version 14.* für die Datenverwaltung.
+Das Programm wird mit der Qt-C++ Version 5.12.* Community Lizens geschrieben und verwendet eine PostgreSQL Datenbank ab Version 14.* für die Datenverwaltung.
 
 Zur Zeit sind folgende Funktionen enthalten:
 1) Kunden Adressbuch
