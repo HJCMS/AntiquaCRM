@@ -64,6 +64,12 @@ bool SetLanguage::isValid() {
   return true;
 }
 
+void SetLanguage::setInfo(const QString &info) {
+  m_comboBox->setToolTip(info);
+}
+
+const QString SetLanguage::info() { return m_comboBox->toolTip(); }
+
 const QString SetLanguage::notes() {
   return tr("Language field is required and must set.");
 }

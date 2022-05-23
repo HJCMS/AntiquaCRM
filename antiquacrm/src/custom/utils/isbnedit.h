@@ -49,6 +49,8 @@ public:
   explicit IsbnEdit(QWidget *parent = nullptr);
   bool isValid();
   const QVariant value();
+  void setInfo(const QString &);
+  const QString info();
   const QString notes();
 };
 

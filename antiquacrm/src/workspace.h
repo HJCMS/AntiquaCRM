@@ -98,6 +98,11 @@ private Q_SLOTS:
    */
   void addArticleOrder(int articleId);
 
+  /**
+   * @brief Wenn ein Tab nach vornde geholt wird
+   */
+  void tabViewClicked(int);
+
 protected:
   /**
     @brief Kann der Tab aus dem Speicher freigegeben werden?

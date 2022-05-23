@@ -55,11 +55,15 @@ void BoolBox::reset() {
 
 void BoolBox::setFocus() { m_checkBox->setFocus(); }
 
-void BoolBox::setChecked(bool b) { m_checkBox->setChecked(b); }
+void BoolBox::setChecked(bool b) {
+  setModified(true);
+  m_checkBox->setChecked(b);
+  m_checkBox->setFocus();
+}
 
 bool BoolBox::isChecked() { return m_checkBox->isChecked(); }
 
-const QVariant BoolBox::value() { return QVariant(m_checkBox->isChecked()); }
+const QVariant BoolBox::value() { return m_checkBox->isChecked(); }
 
 bool BoolBox::isValid() {
   if (isRequired())

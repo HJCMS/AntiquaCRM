@@ -37,6 +37,8 @@ public:
   explicit SetLanguage(QWidget *parent = nullptr);
   const QVariant value();
   bool isValid();
+  void setInfo(const QString &);
+  const QString info();
   const QString notes();
 };
 

@@ -176,6 +176,12 @@ bool StrLineEdit::isValid() {
   return true;
 }
 
+void StrLineEdit::setInfo(const QString &info) {
+  m_lineEdit->setToolTip(info);
+}
+
+const QString StrLineEdit::info() { return m_lineEdit->toolTip(); }
+
 const QString StrLineEdit::notes() {
   QString msg(tr("The field"));
   if (windowTitle().isEmpty()) {

@@ -92,6 +92,16 @@ public:
   virtual bool isValid() = 0;
 
   /**
+   * Info Label
+   */
+  virtual void setInfo(const QString &) = 0;
+
+  /**
+   * @brief toolTip
+   */
+  virtual const QString info() = 0;
+
+  /**
    Standard Fehlernachricht
   */
   virtual const QString notes() = 0;

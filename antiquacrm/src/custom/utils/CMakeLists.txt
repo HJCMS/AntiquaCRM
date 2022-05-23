@@ -18,6 +18,7 @@ SET (subproject_SOURCES
   applicationclient.cpp
   serialid.cpp
   boolbox.cpp
+  cancellation.cpp
   datetimeedit.cpp
   deliveryservice.cpp
   editoractionbar.cpp
@@ -56,6 +57,7 @@ SET (subproject_HEADERS
   applicationclient.h
   serialid.h
   boolbox.h
+  cancellation.h
   datetimeedit.h
   deliveryservice.h
   editoractionbar.h

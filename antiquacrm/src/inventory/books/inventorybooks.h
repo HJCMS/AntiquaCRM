@@ -147,6 +147,11 @@ public Q_SLOTS:
   */
   void createBookEntry();
 
+  /**
+   * @brief Wenn das Tab im Vordergund geht, dann eine Aktionen starten
+   */
+  void onEnterChanged() { /* TODO */ };
+
 public:
   /**
     @param index  Ist der Tab-Index

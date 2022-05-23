@@ -120,6 +120,13 @@ public Q_SLOTS:
   */
   void displayMessageBox(const QString &);
 
+  /**
+   * @brief Wenn das Tab im Vordergund geht, dann eine Aktionen ausführen.
+   * @warning Wird immer aufgerufen wenn ein Tab nach vorne geklickt wird!
+   * Behandle diese Funktion mit Vorsicht, denn sie kann Eingaben verwerfen!
+   */
+  virtual void onEnterChanged() = 0;
+
 public:
   explicit Inventory(QWidget *parent = nullptr);
   /**

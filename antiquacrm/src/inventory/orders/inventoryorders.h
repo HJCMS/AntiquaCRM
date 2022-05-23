@@ -87,6 +87,11 @@ private Q_SLOTS:
   */
   void openTableView();
 
+  /**
+   * @brief Wenn das Tab im Vordergund geht, dann eine Aktionen starten
+   */
+  void onEnterChanged() { /* TODO */ };
+
 protected:
   /**
     @brief Öffne mit der SQL-Abfrage den Bucheditor

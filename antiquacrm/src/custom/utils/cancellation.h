@@ -2,35 +2,40 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef SALUTATIONBOX_UTILS_H
-#define SALUTATIONBOX_UTILS_H
+#ifndef CANCELLATION_UTILS_H
+#define CANCELLATION_UTILS_H
 
-#include <QObject>
 #include <QComboBox>
-#include <QLineEdit>
-#include <QWidget>
+#include <QLabel>
+#include <QObject>
 
 #include <UtilsMain>
 
-class SalutationBox final : public UtilsMain {
+class Cancellation final : public UtilsMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
+public:
+  enum Mode { NUMERIC = 1, TEXT = 2 };
+  Q_ENUM(Mode);
+
 private:
-  QComboBox *m_comboBox;
-  QLineEdit *m_edit;
+  Cancellation::Mode p_mode = Cancellation::NUMERIC;
+  QLabel *m_info;
+  QComboBox *m_box;
 
 private Q_SLOTS:
   void itemChanged(int);
 
 public Q_SLOTS:
   void setValue(const QVariant &);
-  Q_INVOKABLE void reset();
+  Q_INVOKABLE virtual void reset();
   void setFocus();
 
 public:
-  explicit SalutationBox(QWidget *parent = nullptr);
+  explicit Cancellation(QWidget *parent = nullptr,
+                        Cancellation::Mode mode = Cancellation::NUMERIC);
   const QVariant value();
   bool isValid();
   void setInfo(const QString &);
@@ -38,4 +43,4 @@ public:
   const QString notes();
 };
 
-#endif // SALUTATIONBOX_UTILS_H
+#endif // CANCELLATION_UTILS_H

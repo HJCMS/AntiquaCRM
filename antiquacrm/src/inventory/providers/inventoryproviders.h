@@ -190,6 +190,13 @@ private Q_SLOTS:
    */
   void sendViewCustomer(int cid);
 
+public Q_SLOTS:
+  /**
+   * Wenn das Tab in den Vordergrund geht, eine Abfrage für die aktuelle
+   * Listansicht auf dass StackedWidget, welches zu sehen ist, machen.
+   */
+  void onEnterChanged();
+
   /**
    * @brief Knopf Signal verarbeiten
    */

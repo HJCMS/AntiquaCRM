@@ -444,7 +444,7 @@
 <context>
     <name>BuchfreundDisplay</name>
     <message>
-        <location filename="../inventory/providers/buchfreund.cpp" line="+106"/>
+        <location filename="../inventory/providers/buchfreund.cpp" line="+119"/>
         <source>Order Details</source>
         <translation>Bestelldetails</translation>
     </message>
@@ -524,12 +524,28 @@
         <translation>E-Mail</translation>
     </message>
     <message>
-        <location line="+108"/>
+        <location line="+26"/>
+        <location line="+4"/>
+        <source>cancellation</source>
+        <translation>Stornierung</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Reason</source>
+        <translation>Begründung</translation>
+    </message>
+    <message>
+        <location line="+97"/>
         <source>Create</source>
         <translation>Erstellen</translation>
     </message>
     <message>
-        <location line="-101"/>
+        <location line="+79"/>
+        <source>If you cancel the order, the entry will be deactivated with the service provider and is no longer visible here.</source>
+        <translation>Wenn Sie die Bestellung stornieren, wird der Eintrag beim Dienstanbieter deaktiviert und ist hier nicht mehr Sichtbar.</translation>
+    </message>
+    <message>
+        <location line="-203"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
@@ -539,23 +555,23 @@
         <translation>Kunden Nr</translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+103"/>
         <source>customer add</source>
         <translation>Kunde angelegt</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+50"/>
+        <location line="+49"/>
         <source>SQL errors!</source>
         <translation>Datenbank Fehler!</translation>
     </message>
     <message>
-        <location line="-38"/>
+        <location line="-37"/>
         <source>Display</source>
         <translation>Anzeigen</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+29"/>
         <source>found Customer</source>
         <translation>Kundeneintrag gefunden</translation>
     </message>
@@ -570,9 +586,47 @@
         <translation>Artikel ist nicht Verfügbar!</translation>
     </message>
     <message>
-        <location line="-162"/>
+        <location line="-184"/>
         <source>Search Customer in Database</source>
         <translation>Kunde im Adressbuch suchen</translation>
+    </message>
+</context>
+<context>
+    <name>Cancellation</name>
+    <message>
+        <location filename="../custom/utils/cancellation.cpp" line="+18"/>
+        <source>without disclosures</source>
+        <translation>Keine Angaben</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>is currently not available</source>
+        <translation>Zurzeit nicht verfügbar</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>item is sold out</source>
+        <translation>Artikel ist Ausverkauft</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>the client has canceled</source>
+        <translation>Besteller*in hat storniert</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>No delivery address available</source>
+        <translation>Keine gültige Liefer- /Kontaktadresse verfügbar</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Creditworthiness</source>
+        <translation>Kreditwürdigkeit</translation>
+    </message>
+    <message>
+        <location line="+53"/>
+        <source>a cancellation is required</source>
+        <translation>Eine Begründung ist erforderlich</translation>
     </message>
 </context>
 <context>
@@ -1736,7 +1790,7 @@
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+134"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+140"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
@@ -1764,7 +1818,7 @@
         <translation>Erforderlich</translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+105"/>
         <source>ISBN is set to required and must be a valid 10 or 13 digit number.</source>
         <translation>Die ISBN ist auf erforderlich gesetzt und muss eine gültige 10- oder 13-stellige Nummer sein.</translation>
     </message>
@@ -2919,7 +2973,7 @@
 <context>
     <name>ProvidersPager</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="-115"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="-118"/>
         <source>Previous</source>
         <translation>Letzte</translation>
     </message>
@@ -2942,7 +2996,12 @@
         <translation>Auftrag erstellen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+1"/>
+        <source>You must first open the customer before an order can be placed.</source>
+        <translation>Sie müssen zuerst den Kunden öffnen, bevor eine Bestellung aufgegeben werden kann.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -3117,7 +3176,7 @@
         <translation>Keine Angaben</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+44"/>
         <source>a Title is required</source>
         <translation>Titelfeld ist erforderlich</translation>
     </message>
@@ -3243,7 +3302,7 @@
         <translation>Schwedisch</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+43"/>
         <source>Language field is required and must set.</source>
         <translation>Das Sprachfeld ist erforderlich und muss gesetzt werden.</translation>
     </message>
@@ -3351,7 +3410,7 @@
         <translation>Maximal erlaubte Zeichenlänge</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+22"/>
         <source>The field</source>
         <translation>Das Feld</translation>
     </message>
@@ -3374,7 +3433,7 @@
 <context>
     <name>TechniqueEdit</name>
     <message>
-        <location filename="../custom/utils/techniqueedit.cpp" line="+69"/>
+        <location filename="../custom/utils/techniqueedit.cpp" line="+75"/>
         <source>Technique field is required and must set.</source>
         <translation>Technikfeld ist erforderlich und muss gesetzt werden.</translation>
     </message>

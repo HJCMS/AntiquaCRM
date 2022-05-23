@@ -137,6 +137,11 @@ public Q_SLOTS:
   */
   void createPrintsEntry();
 
+  /**
+   * @brief Wenn das Tab im Vordergund geht, dann eine Aktionen starten
+   */
+  void onEnterChanged() { /* TODO */ };
+
 public:
   explicit InventoryPrints(QWidget *parent = nullptr);
 };

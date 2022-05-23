@@ -82,4 +82,10 @@ const QVariant SalutationBox::value() {
 
 bool SalutationBox::isValid() { return true; }
 
+void SalutationBox::setInfo(const QString &info) {
+  m_comboBox->setToolTip(info);
+}
+
+const QString SalutationBox::info() { return m_comboBox->toolTip(); }
+
 const QString SalutationBox::notes() { return tr("a Title is required"); }

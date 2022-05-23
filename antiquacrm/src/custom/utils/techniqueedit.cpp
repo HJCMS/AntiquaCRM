@@ -65,6 +65,12 @@ const QVariant TechniqueEdit::value() { return m_comboBox->currentIndex(); }
 
 bool TechniqueEdit::isValid() { return true; }
 
+void TechniqueEdit::setInfo(const QString &info) {
+  m_comboBox->setToolTip(info);
+}
+
+const QString TechniqueEdit::info() { return m_comboBox->toolTip(); }
+
 const QString TechniqueEdit::notes() {
   return tr("Technique field is required and must set.");
 }

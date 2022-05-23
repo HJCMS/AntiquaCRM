@@ -14,6 +14,10 @@
 # include "boolbox.h"
 #endif
 
+#ifndef CANCELLATION_UTILS_H
+# include "cancellation.h"
+#endif
+
 #ifndef DATETIMEEDIT_UTILS_H
 # include "datetimeedit.h"
 #endif

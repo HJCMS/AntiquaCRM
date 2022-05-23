@@ -184,6 +184,12 @@ const QVariant IsbnEdit::value() {
   return 0;
 }
 
+void IsbnEdit::setInfo(const QString &info) {
+  m_isbn->setToolTip(info);
+}
+
+const QString IsbnEdit::info() { return m_isbn->toolTip(); }
+
 const QString IsbnEdit::notes() {
   return tr(
       "ISBN is set to required and must be a valid 10 or 13 digit number.");

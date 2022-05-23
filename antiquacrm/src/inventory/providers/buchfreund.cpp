@@ -15,10 +15,11 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QVBoxLayout>
+#include <QMessageBox>
 
 BF_Translater::BF_Translater() : QMap<QString, QString>{} {
   // public.customers @{
-  insert("person","a_customer_id");
+  insert("person", "a_customer_id");
   insert("anrede", "c_gender");
   insert("vorname", "c_firstname");
   insert("name", "c_lastname");
@@ -43,9 +44,9 @@ BF_Translater::BF_Translater() : QMap<QString, QString>{} {
   insert("provider", "o_provider_name");
   insert("menge_storniert", "o_cancellation");
   insert("stornogrund", "o_cancellation_text");
+  insert("storniert_am", "o_cancellation_datetime");
   insert("lagerfach", "sl_storage");
   // @}
-
 }
 
 const QString BF_Translater::sqlParam(const QString &key) {
@@ -211,8 +212,18 @@ BuchfreundDisplay::BuchfreundDisplay(QWidget *parent) : QWidget{parent} {
   QGroupBox *cancellationBox = new QGroupBox(this);
   cancellationBox->setObjectName("display_cancellation");
   cancellationBox->setTitle(tr("cancellation"));
-  QGridLayout *cancellationLayout = new QGridLayout(cancellationBox);
-  // TODO
+  QHBoxLayout *cancellationLayout = new QHBoxLayout(cancellationBox);
+  o_cancellation = new BoolBox(cancellationBox);
+  o_cancellation->setObjectName("o_cancellation");
+  o_cancellation->setInfo(tr("cancellation"));
+  cancellationLayout->addWidget(o_cancellation);
+  o_cancellation_text = new Cancellation(cancellationBox, Cancellation::TEXT);
+  o_cancellation_text->setObjectName("o_cancellation_text");
+  o_cancellation_text->setInfo(tr("Reason"));
+  cancellationLayout->addWidget(o_cancellation_text);
+  o_cancellation_datetime = new DateTimeEdit(cancellationBox);
+  o_cancellation_datetime->setObjectName("o_cancellation_datetime");
+  cancellationLayout->addWidget(o_cancellation_datetime);
   cancellationBox->setLayout(cancellationLayout);
   layout->addWidget(cancellationBox);
   // END
@@ -223,6 +234,8 @@ BuchfreundDisplay::BuchfreundDisplay(QWidget *parent) : QWidget{parent} {
   connect(btn_search_customer, SIGNAL(clicked()), this,
           SLOT(searchSqlCustomer()));
   connect(btn_customer, SIGNAL(clicked()), this, SLOT(createSqlCustomer()));
+  connect(o_cancellation, SIGNAL(checked(bool)), this,
+          SLOT(noticeCancelation(bool)));
 }
 
 const QHash<QString, QVariant>
@@ -377,6 +390,19 @@ void BuchfreundDisplay::resetDataFields() {
   }
 }
 
+void BuchfreundDisplay::noticeCancelation(bool b) {
+  if (!b)
+    return;
+
+  QString info = tr("If you cancel the order, the entry will be deactivated with the service provider and is no longer visible here.");
+  int ret = QMessageBox::question(this,tr("cancellation"),info);
+  if (ret == QMessageBox::Ok) {
+    qDebug() << Q_FUNC_INFO << "TOOD: Stornieren";
+    return;
+  }
+  o_cancellation->setChecked(false);
+}
+
 void BuchfreundDisplay::setContent(const QJsonDocument &doc) {
   if (doc.isEmpty())
     return;
@@ -467,7 +493,7 @@ const ProviderOrders BuchfreundDisplay::fetchOrderData() {
 
   ProviderOrder o1;
   o1.setGroup("provider");
-  o0.setParam("provider");
+  o1.setParam("provider");
   o1.setFieldname("o_provider_name");
   o1.setValue("www.buchfreund.de");
   p_data.append(o1);
@@ -476,7 +502,7 @@ const ProviderOrders BuchfreundDisplay::fetchOrderData() {
   QHashIterator<QString, QVariant> it(data);
   while (it.hasNext()) {
     it.next();
-    if(bfTr.jsonParam(it.key()).isEmpty() || it.key().contains("c_"))
+    if (bfTr.jsonParam(it.key()).isEmpty() || it.key().contains("c_"))
       continue;
 
     ProviderOrder o;
@@ -513,21 +539,6 @@ Buchfreund::Buchfreund(QWidget *parent)
   // SIGNALS
   connect(bfList, SIGNAL(orderClicked(const QJsonDocument &)), this,
           SLOT(getOrderContent(const QJsonDocument &)));
-
-  testing();
-}
-
-void Buchfreund::testing() {
-  QString sub("/Developement/antiqua/database/tmp/testfile.json");
-  QFile fp(QDir::homePath() + sub);
-  if (fp.open(QIODevice::ReadOnly)) {
-    QTextStream r(&fp);
-    QString data(r.readAll());
-    QJsonDocument jDoc = QJsonDocument::fromJson(data.toLocal8Bit());
-    fp.close();
-
-    bfDisplay->setContent(jDoc);
-  }
 }
 
 const QUrl Buchfreund::apiQuery(const QString &operation) {

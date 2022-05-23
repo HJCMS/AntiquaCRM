@@ -107,6 +107,10 @@ ProvidersToolBar::ProvidersToolBar(QWidget *parent) : QFrame{parent} {
   layout->addWidget(pager);
 
   btn_order = new QPushButton(myIcon("db_add"), tr("Create Order"), this);
+  QString info =
+      tr("You must first open the customer before an order can be placed.");
+  btn_order->setToolTip(info);
+  btn_order->setStatusTip(info);
   btn_order->setEnabled(false);
   layout->addWidget(btn_order);
 
@@ -184,16 +188,22 @@ void InventoryProviders::sendViewCustomer(int cid) {
   }
 }
 
-void InventoryProviders::createEditOrders()
-{
+void InventoryProviders::onEnterChanged() {
+  if (m_stackedWidget->currentWidget() == bfProvider) {
+    bfProvider->getOpenOrders();
+  } else {
+    qDebug() << Q_FUNC_INFO << "TODO";
+  }
+}
+
+void InventoryProviders::createEditOrders() {
   qDebug() << Q_FUNC_INFO << customerId;
-  if(customerId < 1)
+  if (customerId < 1)
     return;
 
   ProviderOrders list = bfProvider->bfDisplay->fetchOrderData();
   ProviderOrders::iterator i;
-  for (i = list.begin(); i != list.end(); ++i)
-  {
+  for (i = list.begin(); i != list.end(); ++i) {
     ProviderOrder o(*i);
     qDebug() << o.group() << o.param() << o.fieldname() << o.value();
   }

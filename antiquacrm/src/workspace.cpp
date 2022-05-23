@@ -53,6 +53,7 @@ Workspace::Workspace(QWidget *parent) : QTabWidget{parent} {
 
   connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeTabClicked(int)));
   connect(m_tabBar, SIGNAL(s_closeTab(int)), SLOT(closeTabClicked(int)));
+  connect(m_tabBar, SIGNAL(tabBarClicked(int)), SLOT(tabViewClicked(int)));
 }
 
 int Workspace::addInventoryBooks(int index) {
@@ -166,6 +167,10 @@ void Workspace::addArticleOrder(int articleId) {
   } else {
     emit s_postMessage(tr("Order tab isn't open!"));
   }
+}
+
+void Workspace::tabViewClicked(int i) {
+  reinterpret_cast<Inventory *>(widget(i))->onEnterChanged();
 }
 
 void Workspace::tabRemoved(int index) {

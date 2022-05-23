@@ -160,6 +160,9 @@ public:
    */
   bool isValid();
 
+  void setInfo(const QString &);
+  const QString info();
+
   /**
    * @brief Nachricht bei Fehlern für das PoUp-Fenster
    */

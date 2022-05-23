@@ -74,6 +74,11 @@ public Q_SLOTS:
   void editCustomer(int);
   void createCustomer();
 
+  /**
+   * @brief Wenn das Tab im Vordergund geht, dann eine Aktionen starten
+   */
+  void onEnterChanged() { /* TODO */ };
+
 public:
   explicit InventoryCustomers(QWidget *parent = nullptr);
 };

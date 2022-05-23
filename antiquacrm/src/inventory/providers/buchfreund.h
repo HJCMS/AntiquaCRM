@@ -123,6 +123,9 @@ private:
   PriceEdit *a_sell_price;
   QLineEdit *a_title;
   DateTimeEdit *a_modified;
+  BoolBox *o_cancellation;
+  Cancellation *o_cancellation_text;
+  DateTimeEdit *o_cancellation_datetime;
   /** @} */
 
   QPushButton *btn_customer;
@@ -175,6 +178,11 @@ private Q_SLOTS:
    * @brief SQL Artikel Prüfung
    */
   void checkArticleId();
+
+  /**
+   * @brief Hinweis zum Ablauf wenn ausgeführt!
+   */
+  void noticeCancelation(bool);
 
 public Q_SLOTS:
   /**
@@ -264,8 +272,6 @@ public:
   BuchfreundDisplay *bfDisplay;
 
   explicit Buchfreund(QWidget *parent = nullptr);
-  // TEMP
-  void testing();
 };
 
 #endif // INVENTORY_PROVIDERS_BUCHFREUND_H
