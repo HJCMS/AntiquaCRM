@@ -444,7 +444,7 @@
 <context>
     <name>BuchfreundDisplay</name>
     <message>
-        <location filename="../inventory/providers/buchfreund.cpp" line="+65"/>
+        <location filename="../inventory/providers/buchfreund.cpp" line="+106"/>
         <source>Order Details</source>
         <translation type="unfinished"></translation>
     </message>
@@ -476,6 +476,11 @@
     <message>
         <location line="+8"/>
         <source>purchaser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -539,13 +544,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+75"/>
         <source>costumer add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+38"/>
+        <location line="+39"/>
         <source>SQL errors!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -560,7 +565,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-117"/>
+        <location line="+23"/>
+        <source>Article is not available!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-146"/>
         <source>Search Costumer in Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1306,7 +1316,7 @@
     <name>DeliveryService</name>
     <message>
         <location filename="../custom/utils/deliveryservice.cpp" line="+18"/>
-        <location line="+36"/>
+        <location line="+46"/>
         <source>Without disclosures</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1726,7 +1736,7 @@
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+59"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+134"/>
         <source>Providers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2907,29 +2917,32 @@
     </message>
 </context>
 <context>
-    <name>ProvidersToolBar</name>
+    <name>ProvidersPager</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="-40"/>
-        <source>Providers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>set Providers page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Current Provider Page</source>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="-115"/>
+        <source>Previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
+        <source>Providers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProvidersToolBar</name>
+    <message>
+        <location line="+76"/>
         <source>Create Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2990,17 +3003,29 @@
     </message>
     <message>
         <location line="+1"/>
+        <location line="+19"/>
         <source>Male</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-18"/>
+        <location line="+21"/>
         <source>Female</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-20"/>
         <source>Various</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Mr.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Mrs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

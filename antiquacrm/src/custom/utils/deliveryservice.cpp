@@ -32,8 +32,18 @@ void DeliveryService::indexChanged(int i) {
 }
 
 void DeliveryService::setValue(const QVariant &val) {
-  p_value = val.toInt();
-  m_box->setCurrentIndex(p_value);
+  int i = -1;
+  if (val.type() == QVariant::Int) {
+    i = val.toInt();
+  } else {
+    i = m_box->findData(val.toString());
+  }
+
+  if (i > 0) {
+    p_value = i;
+    m_box->setCurrentIndex(i);
+    setModified(true);
+  }
 }
 
 void DeliveryService::reset() {

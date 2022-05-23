@@ -28,6 +28,16 @@ const QStringList Gender::all() {
   return list;
 }
 
+const QString Gender::formOfAddress(const QString &search) {
+  if (QObject::tr("Male") == search)
+    return QObject::tr("Mr.");
+
+  if (QObject::tr("Female") == search)
+    return QObject::tr("Mrs");
+
+  return QString();
+}
+
 GenderBox::GenderBox(QWidget *parent) : UtilsMain{parent} {
   setObjectName("GenderBox");
 
@@ -45,7 +55,11 @@ GenderBox::GenderBox(QWidget *parent) : UtilsMain{parent} {
 
   Gender gender;
   for (int i = 0; i < gender.size(); i++) {
-    m_comboBox->addItem(myIcon("group"), gender.value(i));
+    m_comboBox->insertItem(i, myIcon("group"), gender.value(i));
+    QString form = gender.formOfAddress(gender.value(i));
+    if (!form.isEmpty()) {
+      m_comboBox->setItemData(i, form, Qt::UserRole);
+    }
   }
 
   setModified(false);
@@ -57,8 +71,21 @@ GenderBox::GenderBox(QWidget *parent) : UtilsMain{parent} {
 
 void GenderBox::itemChanged(int) { setModified(true); }
 
-void GenderBox::setValue(const QVariant &i) {
-  m_comboBox->setCurrentIndex(i.toInt());
+void GenderBox::setValue(const QVariant &val) {
+  int i = -1;
+  if (val.type() == QVariant::Int) {
+    i = val.toInt();
+  } else {
+    i = m_comboBox->findData(val.toString(), Qt::UserRole);
+    if (i < 1)
+      i = m_comboBox->findData(val.toString(), Qt::DisplayRole);
+  }
+
+  if (i > 0) {
+    p_value = i;
+    m_comboBox->setCurrentIndex(i);
+    setModified(true);
+  }
 }
 
 void GenderBox::reset() {

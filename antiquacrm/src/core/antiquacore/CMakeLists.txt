@@ -22,6 +22,7 @@ SET (subproject_SOURCES
   datafield.cpp
   orderstatus.cpp
   orderarticle.cpp
+  providerorders.cpp
 )
 
 SET (subproject_HEADERS
@@ -29,6 +30,7 @@ SET (subproject_HEADERS
   datafield.h
   orderstatus.h
   orderarticle.h
+  providerorders.h
   AntiquaCRM
   antiqua_global.h
 )

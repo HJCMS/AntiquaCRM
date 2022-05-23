@@ -39,44 +39,21 @@
 #endif
 
 /**
- * @brief Übersetzt die Json Datenfelder zu den SQL Spalten.
- * @param key  - QJsonValue Schlüsselname
- * @param swap - Wenn true dann Umgekehrt suchen (wert == key)
- * @return SQL Spaltenname
+ * @brief Sucht Artikel der einen Bestand ausfweist!
+ * @param aid
+ * @return
  */
-static const QString fieldTranslate(const QString &key, bool swap = false) {
-  QMap<QString, QString> fields;
-  // public.costumers @{
-  fields.insert("vorname", "c_firstname");
-  fields.insert("name", "c_lastname");
-  fields.insert("adresse", "c_street");
-  fields.insert("plz", "c_postalcode");
-  fields.insert("ort", "c_location");
-  fields.insert("land", "c_country");
-  fields.insert("telefon", "c_phone_0");
-  fields.insert("email", "c_email_0");
-  // @}
-
-  // public.article_orders @{
-  fields.insert("id", "a_provider_id");
-  fields.insert("bestellnr", "a_article_id");
-  fields.insert("menge_bestellt", "a_count");
-  fields.insert("preis_pro_einheit", "a_sell_price");
-  fields.insert("datum", "a_modified");
-  fields.insert("titel", "a_title");
-  // @}
-
-  QMap<QString, QString>::iterator fi;
-  for (fi = fields.begin(); fi != fields.end(); ++fi) {
-    if (swap) {
-      if (fi.value() == key)
-        return fi.key();
-    } else {
-      if (fi.key() == key)
-        return fi.value();
-    }
-  }
-  return QString();
+const QString queryArticleExists(const QString &aid)
+{
+  QString sql("SELECT ib_id AS a_article_id");
+  sql.append(" FROM inventory_books ");
+  sql.append("WHERE (ib_id=" + aid + " AND ib_count>0) ");
+  sql.append("UNION SELECT ");
+  sql.append("ip_id AS a_article_id ");
+  sql.append("FROM inventory_prints ");
+  sql.append("WHERE (ip_id=" + aid + " AND ip_count>0)");
+  sql.append(";");
+  return sql;
 }
 
 #endif // INVENTORY_PROVIDERSSTATEMENTS_H

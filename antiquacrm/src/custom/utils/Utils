@@ -14,6 +14,10 @@
 # include "boolbox.h"
 #endif
 
+#ifndef DATETIMEEDIT_UTILS_H
+# include "datetimeedit.h"
+#endif
+
 #ifndef DELIVERYSERVICE_UTILS_H
 # include "deliveryservice.h"
 #endif
@@ -138,8 +142,8 @@
 # include "trustbox.h"
 #endif
 
-#ifndef DATETIMEEDIT_UTILS_H
-# include "datetimeedit.h"
+#ifndef UTILSMAIN_UTILS_H
+# include "utilsmain.h"
 #endif
 
 #ifndef YEAREDIT_UTILS_H

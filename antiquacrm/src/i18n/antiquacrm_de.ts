@@ -444,7 +444,7 @@
 <context>
     <name>BuchfreundDisplay</name>
     <message>
-        <location filename="../inventory/providers/buchfreund.cpp" line="+65"/>
+        <location filename="../inventory/providers/buchfreund.cpp" line="+106"/>
         <source>Order Details</source>
         <translation>Bestelldetails</translation>
     </message>
@@ -477,6 +477,11 @@
         <location line="+8"/>
         <source>purchaser</source>
         <translation>Einkäufer*in</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Form</source>
+        <translation>Anrede</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -539,13 +544,13 @@
         <translation>Kunden Nr</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+75"/>
         <source>costumer add</source>
         <translation>Kunde angelegt</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+38"/>
+        <location line="+39"/>
         <source>SQL errors!</source>
         <translation>Datenbank Fehler!</translation>
     </message>
@@ -560,7 +565,12 @@
         <translation>Dieser Kunden existiert nicht!</translation>
     </message>
     <message>
-        <location line="-117"/>
+        <location line="+23"/>
+        <source>Article is not available!</source>
+        <translation>Artikel ist nicht Verfügbar!</translation>
+    </message>
+    <message>
+        <location line="-146"/>
         <source>Search Costumer in Database</source>
         <translation>Kunde im Adressbuch suchen</translation>
     </message>
@@ -1306,7 +1316,7 @@
     <name>DeliveryService</name>
     <message>
         <location filename="../custom/utils/deliveryservice.cpp" line="+18"/>
-        <location line="+36"/>
+        <location line="+46"/>
         <source>Without disclosures</source>
         <translation>Keine Angaben</translation>
     </message>
@@ -1726,7 +1736,7 @@
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+59"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+134"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
@@ -2907,29 +2917,32 @@
     </message>
 </context>
 <context>
-    <name>ProvidersToolBar</name>
+    <name>ProvidersPager</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="-40"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="-115"/>
+        <source>Previous</source>
+        <translation>Letzte</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>set Providers page</source>
-        <translation>setze Dienstleisterseite</translation>
+        <location line="+4"/>
+        <source>Next</source>
+        <translation>Nächste</translation>
     </message>
+</context>
+<context>
+    <name>ProvidersToolBar</name>
     <message>
-        <location line="+1"/>
-        <source>Current Provider Page</source>
-        <translation>Aktuelle Dienstleisterseite</translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location line="+76"/>
         <source>Create Order</source>
         <translation>Auftrag erstellen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -2990,18 +3003,30 @@
     </message>
     <message>
         <location line="+1"/>
+        <location line="+19"/>
         <source>Male</source>
         <translation>Männlich</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-18"/>
+        <location line="+21"/>
         <source>Female</source>
         <translation>Weiblich</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-20"/>
         <source>Various</source>
         <translation>Diverse</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Mr.</source>
+        <translation>Herr</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Mrs</source>
+        <translation>Frau</translation>
     </message>
     <message>
         <location filename="../inventory/costumers/inventorycostumers.cpp" line="-16"/>

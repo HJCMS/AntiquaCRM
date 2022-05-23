@@ -18,4 +18,8 @@
 # include "orderarticle.h"
 #endif
 
+#ifndef PROVIDERORDERS_ANTIQUACORE_H
+# include "providerorders.h"
+#endif
+
 // EOF

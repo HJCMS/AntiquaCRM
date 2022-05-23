@@ -12,14 +12,55 @@
 #include <QtCore>
 #include <QtWidgets>
 
-Buchfreundliste::Buchfreundliste(QWidget *parent) : QListWidget{parent} {
+BF_Translater::BF_Translater() : QMap<QString, QString>{} {
+  // public.costumers @{
+  insert("anrede", "c_gender");
+  insert("vorname", "c_firstname");
+  insert("name", "c_lastname");
+  insert("adresse", "c_street");
+  insert("plz", "c_postalcode");
+  insert("ort", "c_location");
+  insert("land", "c_country");
+  insert("telefon", "c_phone_0");
+  insert("email", "c_email_0");
+  // @}
+
+  // public.article_orders @{
+  insert("id", "a_provider_id");
+  insert("bestellnr", "a_article_id");
+  insert("menge_bestellt", "a_count");
+  insert("preis_pro_einheit", "a_sell_price");
+  insert("datum", "a_modified");
+  insert("titel", "a_title");
+  // @}
+}
+
+const QString BF_Translater::sqlParam(const QString &key) {
+  QMap<QString, QString>::iterator fi;
+  for (fi = begin(); fi != end(); ++fi) {
+    if (fi.key() == key)
+      return fi.value();
+  }
+  return QString();
+}
+
+const QString BF_Translater::jsonParam(const QString &key) {
+  QMap<QString, QString>::iterator fi;
+  for (fi = begin(); fi != end(); ++fi) {
+    if (fi.value() == key)
+      return fi.key();
+  }
+  return QString();
+}
+
+Buchfreundlist::Buchfreundlist(QWidget *parent) : QListWidget{parent} {
   setObjectName("inventory_buchfreund_liste");
 
   connect(this, SIGNAL(itemClicked(QListWidgetItem *)), this,
           SLOT(getItemData(QListWidgetItem *)));
 }
 
-void Buchfreundliste::addOrder(const QString &id, const QDateTime &date) {
+void Buchfreundlist::addOrder(const QString &id, const QDateTime &date) {
   QListWidgetItem *item = new QListWidgetItem(this, QListWidgetItem::UserType);
   item->setData(Qt::DecorationRole, myIcon("autostart"));
   item->setData(Qt::DisplayRole, date.toString(Qt::SystemLocaleShortDate));
@@ -28,14 +69,14 @@ void Buchfreundliste::addOrder(const QString &id, const QDateTime &date) {
   addItem(item);
 }
 
-void Buchfreundliste::getItemData(QListWidgetItem *item) {
+void Buchfreundlist::getItemData(QListWidgetItem *item) {
   QJsonObject obj;
   obj.insert("id", QJsonValue(item->data(Qt::UserRole).toString()));
   QJsonDocument doc(obj);
-  emit itemClicked(doc);
+  emit orderClicked(doc);
 }
 
-void Buchfreundliste::setView(const QJsonDocument &doc) {
+void Buchfreundlist::setView(const QJsonDocument &doc) {
   if (doc.isEmpty())
     return;
 
@@ -96,14 +137,18 @@ BuchfreundDisplay::BuchfreundDisplay(QWidget *parent) : QWidget{parent} {
   costumerBox->setObjectName("display_purchaser");
   costumerBox->setTitle(tr("purchaser"));
   QGridLayout *costumerLayout = new QGridLayout(costumerBox);
+  c_gender = new GenderBox(costumerBox);
+  c_gender->setObjectName("c_gender");
+  c_gender->setInfo(tr("Form"));
+  costumerLayout->addWidget(c_gender, 0, 0, 1, 1);
   c_firstname = new LineEdit(costumerBox);
   c_firstname->setObjectName("c_firstname");
   c_firstname->setInfo(tr("Firstname"));
-  costumerLayout->addWidget(c_firstname, 0, 0, 1, 1);
+  costumerLayout->addWidget(c_firstname, 0, 1, 1, 1);
   c_lastname = new LineEdit(costumerBox);
   c_lastname->setObjectName("c_lastname");
   c_lastname->setInfo(tr("Lastname"));
-  costumerLayout->addWidget(c_lastname, 0, 1, 1, 1);
+  costumerLayout->addWidget(c_lastname, 0, 2, 1, 1);
   c_postalcode = new PostalCode(costumerBox);
   c_postalcode->setObjectName("c_postalcode");
   c_postalcode->setInfo(tr("Postalcode"));
@@ -111,7 +156,7 @@ BuchfreundDisplay::BuchfreundDisplay(QWidget *parent) : QWidget{parent} {
   c_location = new LineEdit(costumerBox);
   c_location->setObjectName("c_location");
   c_location->setInfo(tr("Location"));
-  costumerLayout->addWidget(c_location, 1, 1, 1, 1);
+  costumerLayout->addWidget(c_location, 1, 1, 1, 2);
   c_street = new LineEdit(costumerBox);
   c_street->setObjectName("c_street");
   c_street->setInfo(tr("Street"));
@@ -119,7 +164,7 @@ BuchfreundDisplay::BuchfreundDisplay(QWidget *parent) : QWidget{parent} {
   c_country = new LineEdit(costumerBox);
   c_country->setObjectName("c_country");
   c_country->setInfo(tr("Country"));
-  costumerLayout->addWidget(c_country, 2, 1, 1, 1);
+  costumerLayout->addWidget(c_country, 2, 1, 1, 2);
   c_phone_0 = new PhoneEdit(costumerBox);
   c_phone_0->setObjectName("c_phone_0");
   c_phone_0->setInfo(tr("Phone"));
@@ -127,7 +172,7 @@ BuchfreundDisplay::BuchfreundDisplay(QWidget *parent) : QWidget{parent} {
   c_email_0 = new EMailEdit(costumerBox);
   c_email_0->setObjectName("c_email_0");
   c_email_0->setInfo(tr("eMail"));
-  costumerLayout->addWidget(c_email_0, 3, 1, 1, 1);
+  costumerLayout->addWidget(c_email_0, 3, 1, 1, 2);
   QHBoxLayout *actions_layout = new QHBoxLayout();
   btn_create_costumer = new QPushButton(costumerBox);
   btn_create_costumer->setText(tr("Create"));
@@ -147,7 +192,7 @@ BuchfreundDisplay::BuchfreundDisplay(QWidget *parent) : QWidget{parent} {
   actions_layout->addWidget(c_id);
   costumer_info = new QLabel(costumerBox);
   actions_layout->addWidget(costumer_info);
-  costumerLayout->addLayout(actions_layout, 4, 0, 1, 2, Qt::AlignLeft);
+  costumerLayout->addLayout(actions_layout, 4, 0, 1, 3, Qt::AlignLeft);
   costumerBox->setLayout(costumerLayout);
   layout->addWidget(costumerBox);
   // END
@@ -155,11 +200,13 @@ BuchfreundDisplay::BuchfreundDisplay(QWidget *parent) : QWidget{parent} {
   layout->addStretch(1);
   setLayout(layout);
 
-  connect(btn_search_costumer, SIGNAL(clicked()), this, SLOT(searchCostumer()));
-  connect(btn_create_costumer, SIGNAL(clicked()), this, SLOT(createCostumer()));
+  connect(btn_search_costumer, SIGNAL(clicked()), this,
+          SLOT(searchSqlCostumer()));
+  connect(btn_create_costumer, SIGNAL(clicked()), this,
+          SLOT(createSqlCostumer()));
 }
 
-const QHash<QString, QVariant> BuchfreundDisplay::createSqlDataset() {
+const QHash<QString, QVariant> BuchfreundDisplay::createDataset() {
   QHash<QString, QVariant> data;
   MessageBox messanger(this);
   QList<UtilsMain *> list =
@@ -179,8 +226,8 @@ const QHash<QString, QVariant> BuchfreundDisplay::createSqlDataset() {
   return data;
 }
 
-void BuchfreundDisplay::createCostumer() {
-  QHash<QString, QVariant> data = createSqlDataset();
+void BuchfreundDisplay::createSqlCostumer() {
+  QHash<QString, QVariant> data = createDataset();
   if (data.size() < 3)
     return;
 
@@ -227,7 +274,7 @@ void BuchfreundDisplay::createCostumer() {
   }
 }
 
-void BuchfreundDisplay::searchCostumer() {
+void BuchfreundDisplay::searchSqlCostumer() {
   QString buffer;
   QString sql("SELECT c_id FROM costumers WHERE ");
   buffer = c_firstname->value().toString();
@@ -266,6 +313,25 @@ void BuchfreundDisplay::searchCostumer() {
   }
 }
 
+void BuchfreundDisplay::checkArticleId() {
+  if (a_article_id->value().toInt() < 1)
+    return;
+
+  QString sql = queryArticleExists(a_article_id->value().toString());
+  if (SHOW_SQL_QUERIES) {
+    qDebug() << Q_FUNC_INFO << sql;
+  }
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    q.next();
+    if (q.value("a_article_id").toString().isEmpty()) {
+      qDebug() << Q_FUNC_INFO << m_sql->lastError();
+    }
+  } else {
+    emit s_warning(tr("Article is not available!"));
+  }
+}
+
 void BuchfreundDisplay::setContent(const QJsonDocument &doc) {
   if (doc.isEmpty())
     return;
@@ -274,11 +340,12 @@ void BuchfreundDisplay::setContent(const QJsonDocument &doc) {
   if (errors)
     return;
 
+  BF_Translater bfTr;
   QJsonObject response = QJsonValue(doc["response"]).toObject();
   if (!response.isEmpty()) {
     QJsonObject::iterator it; // Iterator
     for (it = response.begin(); it != response.end(); ++it) {
-      QString f = fieldTranslate(it.key());
+      QString f = bfTr.sqlParam(it.key());
       QJsonValue val = it.value();
       if (!f.isEmpty() && !val.toString().isEmpty()) {
         setValue(f, val.toVariant());
@@ -288,7 +355,7 @@ void BuchfreundDisplay::setContent(const QJsonDocument &doc) {
         QJsonValue(doc["response"]["rechnungsadresse"]).toObject();
     if (!shippingsaddr.isEmpty()) {
       for (it = shippingsaddr.begin(); it != shippingsaddr.end(); ++it) {
-        QString f = fieldTranslate(it.key());
+        QString f = bfTr.sqlParam(it.key());
         QJsonValue val = it.value();
         if (!f.isEmpty() && !val.toString().isEmpty()) {
           setValue(f, val.toVariant());
@@ -296,6 +363,7 @@ void BuchfreundDisplay::setContent(const QJsonDocument &doc) {
       }
     }
   }
+
   QJsonArray positionen = QJsonValue(doc["response"]["positionen"]).toArray();
   if (positionen.count() > 0) {
     QJsonArray::iterator at;
@@ -303,7 +371,7 @@ void BuchfreundDisplay::setContent(const QJsonDocument &doc) {
       QJsonObject article = (*at).toObject();
       QJsonObject::iterator it;
       for (it = article.begin(); it != article.end(); ++it) {
-        QString f = fieldTranslate(it.key());
+        QString f = bfTr.sqlParam(it.key());
         QVariant val = it.value().toVariant();
         if (!f.isEmpty() && !val.isNull()) {
           setValue(f, val);
@@ -312,7 +380,9 @@ void BuchfreundDisplay::setContent(const QJsonDocument &doc) {
     }
   }
   // Jetzt nach Kunde suchen
-  searchCostumer();
+  searchSqlCostumer();
+  // Artikel Prüfen
+  checkArticleId();
 }
 
 void BuchfreundDisplay::setValue(const QString &objName,
@@ -340,22 +410,19 @@ Buchfreund::Buchfreund(QWidget *parent)
   scroolArea->setWidgetResizable(true);
   insertWidget(0, scroolArea);
 
-  m_display = new BuchfreundDisplay(scroolArea);
-  scroolArea->setWidget(m_display);
+  bfDisplay = new BuchfreundDisplay(scroolArea);
+  scroolArea->setWidget(bfDisplay);
 
-  m_listView = new Buchfreundliste(this);
-  m_listView->setMinimumWidth(150);
-  insertWidget(1, m_listView);
+  bfList = new Buchfreundlist(this);
+  bfList->setMinimumWidth(150);
+  insertWidget(1, bfList);
 
   setStretchFactor(0, 70);
   setStretchFactor(1, 30);
 
   // SIGNALS
-  connect(m_listView, SIGNAL(itemClicked(const QJsonDocument &)), this,
+  connect(bfList, SIGNAL(orderClicked(const QJsonDocument &)), this,
           SLOT(getOrderContent(const QJsonDocument &)));
-
-  // weiterleiten
-  connect(m_display, SIGNAL(s_costumer(int)), this, SIGNAL(s_costumer(int)));
 
   testing();
 }
@@ -368,7 +435,7 @@ void Buchfreund::testing() {
     QJsonDocument jDoc = QJsonDocument::fromJson(data.toLocal8Bit());
     fp.close();
 
-    m_display->setContent(jDoc);
+    bfDisplay->setContent(jDoc);
   }
 }
 
@@ -404,7 +471,7 @@ void Buchfreund::queryListViewContent() {
   QUrl url = apiQuery("bestellungen");
   Provider *prQuery = new Provider(this, false);
   prQuery->setObjectName("buchfreund_query_list");
-  connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), m_listView,
+  connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), bfList,
           SLOT(setView(const QJsonDocument &)));
   connect(prQuery, SIGNAL(finished()), prQuery, SLOT(deleteLater()));
 
@@ -418,7 +485,7 @@ void Buchfreund::getOrderContent(const QJsonDocument &doc) {
   QUrl url = apiQuery("bestellung");
   Provider *prQuery = new Provider(this, false);
   prQuery->setObjectName("buchfreund_query_view");
-  connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), m_display,
+  connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), bfDisplay,
           SLOT(setContent(const QJsonDocument &)));
   connect(prQuery, SIGNAL(finished()), prQuery, SLOT(deleteLater()));
 

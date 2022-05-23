@@ -5,13 +5,14 @@
 #ifndef GENDERBOX_UTILS_H
 #define GENDERBOX_UTILS_H
 
-#include <QHash>
-#include <QObject>
-#include <QLabel>
 #include <QComboBox>
+#include <QHash>
+#include <QLabel>
+#include <QObject>
 #include <QWidget>
 // Personal
 #include <UtilsMain>
+
 class Gender {
 private:
   QHash<int, QString> p_data;
@@ -21,6 +22,7 @@ public:
   int size();
   const QString value(int);
   const QStringList all();
+  const QString formOfAddress(const QString &search);
 };
 
 class GenderBox final : public UtilsMain {
@@ -29,6 +31,7 @@ class GenderBox final : public UtilsMain {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  int p_value = 0;
   QLabel *m_info;
   QComboBox *m_comboBox;
 
