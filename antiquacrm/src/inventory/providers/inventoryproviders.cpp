@@ -121,13 +121,13 @@ void ProvidersToolBar::statusMessage(const QString &msg) {
   QTimer::singleShot((15 * 1000), m_status, SLOT(clear()));
 }
 
+void ProvidersToolBar::enableOrderButton(bool b) { btn_order->setEnabled(b); }
+
 void ProvidersToolBar::enterPage(const QString &title) {
   int index = pager->findPage(title);
   if (index >= 0)
     pager->setPage(index);
 }
-
-void ProvidersToolBar::enableOrderButton(bool b) { btn_order->setEnabled(b); }
 
 InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   setObjectName("inventory_providers");
@@ -150,26 +150,35 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
 
   setLayout(layout);
 
+  initPages();
+
+  connect(m_toolBar, SIGNAL(s_refresh()), bfProvider, SLOT(getOpenOrders()));
+
+  connect(bfProvider->bfDisplay, SIGNAL(s_orderEdit(bool)), m_toolBar,
+          SLOT(enableOrderButton(bool)));
+
+  connect(bfProvider->bfDisplay, SIGNAL(s_editCustomer(int)), this,
+          SLOT(sendViewCustomer(int)));
+
+  connect(bfProvider->bfDisplay, SIGNAL(s_warning(const QString &)), m_toolBar,
+          SLOT(statusMessage(const QString &)));
+}
+
+void InventoryProviders::initPages() {
   QStringList list;
   for (int i = 0; i < m_stackedWidget->count(); i++) {
     list.append(m_stackedWidget->widget(i)->windowTitle());
   }
   m_toolBar->pager->addPages(list);
   m_toolBar->enterPage(m_stackedWidget->currentWidget()->windowTitle());
-
-  connect(m_toolBar, SIGNAL(s_refresh()), bfProvider, SLOT(getOpenOrders()));
-  connect(bfProvider->bfDisplay, SIGNAL(s_costumer(int)), this,
-          SLOT(setButtonState(int)));
-
-  connect(bfProvider->bfDisplay, SIGNAL(s_warning(const QString &)), m_toolBar,
-          SLOT(statusMessage(const QString &)));
 }
 
-void InventoryProviders::setButtonState(int cid) {
+void InventoryProviders::sendViewCustomer(int cid) {
   if (cid > 0) {
-    costumerId = cid;
-    m_toolBar->enableOrderButton(true);
+    customerId = cid;
+    emit openEditCustomer(customerId);
+  } else {
+    customerId = -1;
+    m_toolBar->enableOrderButton(false);
   }
-
-  qDebug() << Q_FUNC_INFO << costumerId;
 }

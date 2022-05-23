@@ -127,8 +127,8 @@ QVariant OrdersTableModel::headerData(int section, Qt::Orientation orientation,
     case 3: // o_payment_status
       return setHeaderTitel(tr("Payment"));
 
-    case 4: // costumer
-      return setHeaderTitel(tr("Costumer"));
+    case 4: // customer
+      return setHeaderTitel(tr("Customer"));
 
     case 5: // d_name
       return setHeaderTitel(tr("Deliver"));

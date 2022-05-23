@@ -184,7 +184,7 @@ public:
   /**
    * @brief Wenn ein Artikel gefunden wird dieser hier einfügen.
    * @note Hier wird nur ein Teildatensatz erstellt!
-   *  Datenfelder wie order_id, artikel_id und costumer_id sind
+   *  Datenfelder wie order_id, artikel_id und customer_id sind
    *  hierin @b nicht enthalten!
    */
   void addArticleRow(const OrderArticle &set);

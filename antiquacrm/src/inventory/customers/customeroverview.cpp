@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "costumeroverview.h"
+#include "customeroverview.h"
 #include "myicontheme.h"
 
 #include <QDateTime>
@@ -70,8 +70,8 @@ QDomElement DomDocument::createAddressNode(const QString &data) {
   return address;
 }
 
-CostumerOverview::CostumerOverview(QWidget *parent) : QTextBrowser{parent} {
-  setObjectName("CostumerOverview");
+CustomerOverview::CustomerOverview(QWidget *parent) : QTextBrowser{parent} {
+  setObjectName("CustomerOverview");
   setLineWrapMode(QTextEdit::WidgetWidth);
   setReadOnly(true);
   setOpenExternalLinks(true);
@@ -83,20 +83,20 @@ CostumerOverview::CostumerOverview(QWidget *parent) : QTextBrowser{parent} {
   setDocument(doc);
 }
 
-bool CostumerOverview::check(const QString &key) {
+bool CustomerOverview::check(const QString &key) {
   return (items.contains(key) && (!items.value(key).isEmpty()));
 }
 
-const QString CostumerOverview::convertDate(const QString &value) {
+const QString CustomerOverview::convertDate(const QString &value) {
   QDateTime dt = QDateTime::fromString(value, Qt::ISODate);
   return QLocale::system().toString(dt, "dd MMMM yyyy");
 }
 
-void CostumerOverview::addLineBreak() {
+void CustomerOverview::addLineBreak() {
   dom->div.appendChild(dom->createElement("br"));
 }
 
-void CostumerOverview::createCompanySection() {
+void CustomerOverview::createCompanySection() {
   if (!check("c_company_name"))
     return;
 
@@ -107,7 +107,7 @@ void CostumerOverview::createCompanySection() {
   m.appendChild(dom->createElementNode("h2", buffer));
 }
 
-void CostumerOverview::createTitleSection() {
+void CustomerOverview::createTitleSection() {
   QString buffer;
   QDomElement person = dom->createElement("div");
   dom->div.appendChild(person);
@@ -128,7 +128,7 @@ void CostumerOverview::createTitleSection() {
   addLineBreak();
 }
 
-void CostumerOverview::createPhoneSection() {
+void CustomerOverview::createPhoneSection() {
   QString buffer;
   QDomElement phone = dom->createElement("div");
   dom->div.appendChild(phone);
@@ -151,7 +151,7 @@ void CostumerOverview::createPhoneSection() {
   }
 }
 
-void CostumerOverview::createEMailSection() {
+void CustomerOverview::createEMailSection() {
   QString buffer;
   QDomElement email = dom->createElement("div");
   dom->div.appendChild(email);
@@ -166,7 +166,7 @@ void CostumerOverview::createEMailSection() {
   }
 }
 
-void CostumerOverview::createAddressSection() {
+void CustomerOverview::createAddressSection() {
   if (!check("c_postal_address"))
     return;
 
@@ -186,7 +186,7 @@ void CostumerOverview::createAddressSection() {
   }
 }
 
-void CostumerOverview::createAdditionalSection() {
+void CustomerOverview::createAdditionalSection() {
 
   QDomElement additional =
       dom->createElementNode("dt", tr("Additional") + ": ");
@@ -221,13 +221,13 @@ void CostumerOverview::createAdditionalSection() {
   }
 }
 
-void CostumerOverview::createDocument(const DataFields &data) {
+void CustomerOverview::createDocument(const DataFields &data) {
   for (int i = 0; i < data.count(); i++) {
     DataField df = data.at(i);
     // qDebug() << Q_FUNC_INFO << df.field() << df.value();
     items.insert(df.field(), df.value().toString());
   }
-  dom = new DomDocument("costumerview");
+  dom = new DomDocument("customerview");
   createCompanySection();
   createTitleSection();
   createAddressSection();

@@ -220,7 +220,7 @@ const QHash<QString, QVariant> OrdersItemList::getTableRow(int row) {
   list.insert("a_payment_id", m_table->item(row, 0)->text().toInt());
   list.insert("a_order_id", 0);
   list.insert("a_article_id", m_table->item(row, 1)->text().toInt());
-  list.insert("a_costumer_id", 0);
+  list.insert("a_customer_id", 0);
   list.insert("a_count", getCount(row));
   list.insert("a_title", m_table->item(row, 5)->text());
   list.insert("a_price", getPrice(row));

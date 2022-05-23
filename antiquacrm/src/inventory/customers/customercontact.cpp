@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "costumercontact.h"
+#include "customercontact.h"
 #include "antiqua_global.h"
 #include "myicontheme.h"
 #include <SqlCore>
@@ -10,8 +10,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
-CostumerContact::CostumerContact(QWidget *parent) : QWidget{parent} {
-  setObjectName("CostumerContact");
+CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
+  setObjectName("CustomerContact");
 
   m_sql = new HJCMS::SqlCore(this);
 
@@ -195,7 +195,7 @@ CostumerContact::CostumerContact(QWidget *parent) : QWidget{parent} {
           SLOT(postalCodeComplite()));
 }
 
-void CostumerContact::fetchCountryFromPostal() {
+void CustomerContact::fetchCountryFromPostal() {
   QString plz = c_postalcode->value().toString();
   if (plz.isEmpty() || (plz.length() < 4))
     return;
@@ -228,9 +228,9 @@ void CostumerContact::fetchCountryFromPostal() {
   }
 }
 
-void CostumerContact::postalCodeComplite() { fetchCountryFromPostal(); }
+void CustomerContact::postalCodeComplite() { fetchCountryFromPostal(); }
 
-void CostumerContact::generateAddressBody() {
+void CustomerContact::generateAddressBody() {
   QStringList name;
   QStringList address;
   /**< Titelanrede */

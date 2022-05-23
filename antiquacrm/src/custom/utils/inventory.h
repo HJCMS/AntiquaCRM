@@ -104,9 +104,9 @@ Q_SIGNALS:
 
   /**
    * @brief Auftrage erstellen
-   * @param costumerId
+   * @param customerId
    */
-  void s_createOrder(int costumerId);
+  void s_createOrder(int customerId);
 
   /**
    * @brief Einen Artikel zu einem Auftrag hinzufügen!

@@ -40,13 +40,13 @@ static const QString defaultOrdersQuery(int id = 0) {
 
   QString fs("a.o_id,a.o_since,a.o_order_status,a.o_payment_status,");
   fs.append("CASE WHEN c.c_company=true THEN c.c_company_name ELSE ");
-  fs.append("concat_ws(' ',c.c_firstname,c.c_lastname) END AS costumer,");
+  fs.append("concat_ws(' ',c.c_firstname,c.c_lastname) END AS customer,");
   fs.append("d.d_name,a.o_locked,a.o_closed,a.o_delivery, ");
   fs.append(age);
 
   QString sql("SELECT " + fs + " ");
   sql.append("FROM inventory_orders AS a ");
-  sql.append("LEFT JOIN costumers AS c ON c.c_id=a.o_costumer_id ");
+  sql.append("LEFT JOIN customers AS c ON c.c_id=a.o_customer_id ");
   sql.append(
       "LEFT JOIN ref_delivery_service AS d ON d.d_id=a.o_delivery_service ");
   if (id > 0) {
@@ -61,28 +61,28 @@ static const QString defaultOrdersQuery(int id = 0) {
 
 /**
  * @brief Kunden Addressen finden
- * @param costumerId
+ * @param customerId
  * @return SQL Query
  */
-static const QString queryCostumerAddress(int costumerId) {
+static const QString queryCustomerAddress(int customerId) {
   QString sql("SELECT c_postal_address,c_shipping_address ");
-  sql.append("FROM costumers WHERE c_id=");
-  sql.append(QString::number(costumerId));
+  sql.append("FROM customers WHERE c_id=");
+  sql.append(QString::number(customerId));
   sql.append(";");
   return sql;
 }
 
 /**
- * @brief queryCostumerShippingAddress
- * @param costumerId
+ * @brief queryCustomerShippingAddress
+ * @param customerId
  * @code
  * SELECT func_shipping_address AS address FROM func_shipping_address(3);
  * @endcode
  */
-static const QString queryCostumerShippingAddress(int costumerId) {
+static const QString queryCustomerShippingAddress(int customerId) {
   QString sql("SELECT func_shipping_address AS address");
   sql.append(" FROM func_shipping_address(");
-  sql.append(QString::number(costumerId));
+  sql.append(QString::number(customerId));
   sql.append(");");
   return sql;
 }
@@ -161,7 +161,7 @@ static const QString paymentArticleOrders(int oid, int cid) {
   QString sql("SELECT * FROM article_orders ");
   sql.append("WHERE a_order_id=");
   sql.append(QString::number(oid));
-  sql.append(" AND a_costumer_id=");
+  sql.append(" AND a_customer_id=");
   sql.append(QString::number(cid));
   sql.append(";");
   return sql;
@@ -183,7 +183,7 @@ static const QString queryDeliveryNotes(int oid, int cid) {
   s.append(" LEFT JOIN inventory_prints AS p ON p.ip_id=a.a_article_id");
   s.append(" WHERE a.a_order_id=");
   s.append(QString::number(oid));
-  s.append(" AND a.a_costumer_id=");
+  s.append(" AND a.a_customer_id=");
   s.append(QString::number(cid));
   s.append(";");
   return s;

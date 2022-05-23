@@ -116,12 +116,12 @@ public Q_SLOTS:
      jetzt der Editor mit @ref openEditor("ib_id={$id}") geöffnet!
      @param id
   */
-  void updateOrder(int costumerId);
+  void updateOrder(int customerId);
 
   /**
    * @brief Erstelle einen neuen Auftrag für Kunden Nummer.
    */
-  void createOrder(int costumerId);
+  void createOrder(int customerId);
 
 public:
   /**

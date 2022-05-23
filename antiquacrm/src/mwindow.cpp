@@ -77,10 +77,10 @@ void MWindow::setupTabMenu(QMenu *parent) {
   m_signalMapper->setMapping(ac_Prints, Workspace::Prints);
   connect(ac_Prints, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
 
-  QAction *ac_Costumers = parent->addAction(tabIcon, tr("Costumers"));
-  ac_Costumers->setObjectName("open_costumer_tab");
-  m_signalMapper->setMapping(ac_Costumers, Workspace::Costumers);
-  connect(ac_Costumers, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
+  QAction *ac_Customers = parent->addAction(tabIcon, tr("Customers"));
+  ac_Customers->setObjectName("open_customer_tab");
+  m_signalMapper->setMapping(ac_Customers, Workspace::Customers);
+  connect(ac_Customers, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
 
   QAction *ac_Orders = parent->addAction(tabIcon, tr("Orders"));
   ac_Orders->setObjectName("open_order_tab");
@@ -281,7 +281,7 @@ void MWindow::initDefaults() {
   m_workSpace->openTab(Workspace::Orders);
   m_workSpace->openTab(Workspace::Books);
   m_workSpace->openTab(Workspace::Providers);
-  m_workSpace->openTab(Workspace::Costumers);
+  m_workSpace->openTab(Workspace::Customers);
   // Nach Vorne holen
   m_workSpace->openTab(Workspace::Orders);
 }

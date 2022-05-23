@@ -9,7 +9,7 @@ OrderArticle::OrderArticle() {
   p_payment = -1;
   p_article = -1;
   p_orderid = -1;
-  p_costumer = -1;
+  p_customer = -1;
   p_count = -1;
   p_price = 0;
   p_sell_price = 0;
@@ -21,7 +21,7 @@ void OrderArticle::clear() {
   p_payment = -1;
   p_article = -1;
   p_orderid = -1;
-  p_costumer = -1;
+  p_customer = -1;
   p_count = -1;
   p_price = 0;
   p_sell_price = 0;
@@ -41,9 +41,9 @@ void OrderArticle::setOrder(int id) { p_orderid = id; }
 
 int OrderArticle::order() { return p_orderid; }
 
-void OrderArticle::setCostumer(int id) { p_costumer = id; }
+void OrderArticle::setCustomer(int id) { p_customer = id; }
 
-int OrderArticle::costumer() { return p_costumer; }
+int OrderArticle::customer() { return p_customer; }
 
 void OrderArticle::setCount(int c) { p_count = c; }
 

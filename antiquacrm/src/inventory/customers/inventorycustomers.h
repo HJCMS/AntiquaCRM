@@ -13,10 +13,10 @@
 
 class SearchBar;
 class StatsActionBar;
-class EditCostumer;
-class CostumerTableView;
+class EditCustomer;
+class CustomerTableView;
 
-class InventoryCostumers : public Inventory {
+class InventoryCustomers : public Inventory {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -42,7 +42,7 @@ private:
   /**
     @brief Tabellenansicht
   */
-  CostumerTableView *m_tableView;
+  CustomerTableView *m_tableView;
 
   /**
    * @brief Status Informationen und Verlauf
@@ -59,21 +59,23 @@ private:
   /**
     @brief BuchEditor Fenster
   */
-  EditCostumer *m_editCostumer;
+  EditCustomer *m_editCustomer;
 
   /** @} */
 
   void openEditor(const QString &);
 
 private Q_SLOTS:
-  void editCostumer(int);
-  void createCostumer();
   void searchConvert(const QString &);
   void searchConvert();
   void openTableView();
 
+public Q_SLOTS:
+  void editCustomer(int);
+  void createCustomer();
+
 public:
-  explicit InventoryCostumers(QWidget *parent = nullptr);
+  explicit InventoryCustomers(QWidget *parent = nullptr);
 };
 
 #endif // INVENTORYCOSTUMERS_H

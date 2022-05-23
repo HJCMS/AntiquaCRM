@@ -34,7 +34,7 @@ private:
   /**
    * @brief Kundennummer
    */
-  QString p_costumerId;
+  QString p_customerId;
 
   /**
    * @brief Lieferschein Nummer
@@ -44,7 +44,7 @@ private:
   /**
    * @brief Kunden Anschrift
    */
-  QString p_costumerAddress;
+  QString p_customerAddress;
 
   /**
    * @brief Einlesen der Einstellungen
@@ -163,16 +163,16 @@ public:
   const QString deliveryNumber();
 
   /**
-   * @brief Add Costumer Address
+   * @brief Add Customer Address
    * @note Muss vor @ref exec() gesetzt sein!
    */
-  void setCostumerAddress(const QString &);
+  void setCustomerAddress(const QString &);
 
   /**
    * @brief Wichtige Nummern angeben
    * @note Muss vor @ref exec() gesetzt sein!
    */
-  void setDelivery(int &orderId, int &costumerId);
+  void setDelivery(int &orderId, int &customerId);
 
   /**
    * @brief Erstelle Inhalt und öffne Dialog.

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
 
-SET(_subproject "InventoryCostumers")
+SET(_subproject "InventoryCustomers")
 
 INCLUDE_DIRECTORIES (
   ${PROJECT_INCLUDE_DIRS}
@@ -19,24 +19,24 @@ SET (subproject_LINKER
 )
 
 SET (subproject_SOURCES
-  costumerbillinginfo.cpp
-  costumercontact.cpp
-  costumeroverview.cpp
-  costumertableview.cpp
-  costumerstablemodel.cpp
-  editcostumer.cpp
-  inventorycostumers.cpp
+  customerbillinginfo.cpp
+  customercontact.cpp
+  customeroverview.cpp
+  customertableview.cpp
+  customerstablemodel.cpp
+  editcustomer.cpp
+  inventorycustomers.cpp
 )
 
 SET (subproject_HEADERS
-  costumerstatements.h
-  costumerbillinginfo.h
-  costumercontact.h
-  costumeroverview.h
-  costumertableview.h
-  costumerstablemodel.h
-  editcostumer.h
-  inventorycostumers.h
+  customerstatements.h
+  customerbillinginfo.h
+  customercontact.h
+  customeroverview.h
+  customertableview.h
+  customerstablemodel.h
+  editcustomer.h
+  inventorycustomers.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

@@ -89,21 +89,21 @@ void InventoryOrders::openEditor(const QString &condition) {
   Q_UNUSED(condition)
 }
 
-void InventoryOrders::updateOrder(int costumerId) {
-  if (costumerId < 1) {
+void InventoryOrders::updateOrder(int customerId) {
+  if (customerId < 1) {
     return;
   }
   m_editor->setEnabled(true);
-  m_editor->openUpdateOrder(costumerId);
+  m_editor->openUpdateOrder(customerId);
   m_stackedWidget->setCurrentWidget(m_editor);
 }
 
-void InventoryOrders::createOrder(int costumerId) {
-  if (costumerId < 1) {
+void InventoryOrders::createOrder(int customerId) {
+  if (customerId < 1) {
     return;
   }
   m_editor->setEnabled(true);
-  m_editor->openCreateOrder(costumerId);
+  m_editor->openCreateOrder(customerId);
   m_stackedWidget->setCurrentWidget(m_editor);
 }
 

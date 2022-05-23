@@ -1,11 +1,11 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "costumertableview.h"
+#include "customertableview.h"
 #include "antiqua_global.h"
 #include "applsettings.h"
-#include "costumerstablemodel.h"
-#include "costumerstatements.h"
+#include "customerstablemodel.h"
+#include "customerstatements.h"
 #include "myicontheme.h"
 #include "searchbar.h"
 #include "sqlcore.h"
@@ -21,8 +21,8 @@
 #include <QStringList>
 #include <QTime>
 
-CostumerTableView::CostumerTableView(QWidget *parent) : QTableView{parent} {
-  setObjectName("CostumerTableView");
+CustomerTableView::CustomerTableView(QWidget *parent) : QTableView{parent} {
+  setObjectName("CustomerTableView");
   setEditTriggers(QAbstractItemView::DoubleClicked);
   setCornerButtonEnabled(false);
   setSortingEnabled(false);
@@ -35,7 +35,7 @@ CostumerTableView::CostumerTableView(QWidget *parent) : QTableView{parent} {
 
   m_sql = new HJCMS::SqlCore(this);
 
-  m_tableModel = new CostumersTableModel(this);
+  m_tableModel = new CustomersTableModel(this);
   setModel(m_tableModel);
 
   /* Kopfzeilen anpassen */
@@ -44,10 +44,10 @@ CostumerTableView::CostumerTableView(QWidget *parent) : QTableView{parent} {
   tHeader->setStretchLastSection(true);
 
   connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
-          SLOT(queryCostumerID(const QModelIndex &)));
+          SLOT(queryCustomerID(const QModelIndex &)));
 }
 
-bool CostumerTableView::sqlExecQuery(const QString &statement) {
+bool CustomerTableView::sqlExecQuery(const QString &statement) {
   if (!statement.contains("SELECT"))
     return false;
 
@@ -73,12 +73,12 @@ bool CostumerTableView::sqlExecQuery(const QString &statement) {
     emit s_reportQuery(m);
     return true;
   } else {
-    qWarning("No SQL Connection for Costumers query.");
+    qWarning("No SQL Connection for Customers query.");
   }
   return false;
 }
 
-bool CostumerTableView::queryCostumerID(const QModelIndex &index,
+bool CustomerTableView::queryCustomerID(const QModelIndex &index,
                                         QueryType type) {
   QModelIndex id(index);
   if (m_tableModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
@@ -87,7 +87,7 @@ bool CostumerTableView::queryCostumerID(const QModelIndex &index,
       return false;
 
     if (type == Update) {
-      emit s_updateCostumer(i);
+      emit s_updateCustomer(i);
       return true;
     }
     if (type == Order) {
@@ -98,24 +98,24 @@ bool CostumerTableView::queryCostumerID(const QModelIndex &index,
   return false;
 }
 
-void CostumerTableView::queryCostumerID(const QModelIndex &index) {
-  queryCostumerID(index, QueryType::Update);
+void CustomerTableView::queryCustomerID(const QModelIndex &index) {
+  queryCustomerID(index, QueryType::Update);
 }
 
-void CostumerTableView::openByContext() {
-  queryCostumerID(p_modelIndex, QueryType::Update);
+void CustomerTableView::openByContext() {
+  queryCustomerID(p_modelIndex, QueryType::Update);
 }
 
-void CostumerTableView::createByContext() {
-  // queryCostumerID(p_modelIndex, QueryType::Create);
-  emit s_insertCostumer();
+void CustomerTableView::createByContext() {
+  // queryCustomerID(p_modelIndex, QueryType::Create);
+  emit s_insertCustomer();
 }
 
-void CostumerTableView::orderByContext() {
-  queryCostumerID(p_modelIndex, QueryType::Order);
+void CustomerTableView::orderByContext() {
+  queryCustomerID(p_modelIndex, QueryType::Order);
 }
 
-void CostumerTableView::contextMenuEvent(QContextMenuEvent *ev) {
+void CustomerTableView::contextMenuEvent(QContextMenuEvent *ev) {
   p_modelIndex = indexAt(ev->pos());
   // Aktiviere/Deaktivieren der Einträge
   bool b = p_modelIndex.isValid();
@@ -123,17 +123,17 @@ void CostumerTableView::contextMenuEvent(QContextMenuEvent *ev) {
   QMenu *m = new QMenu("Actions", this);
   // Eintrag öffnen  Bestellung anlegen
   QAction *ac_open = m->addAction(myIcon("spreadsheet"), tr("Open entry"));
-  ac_open->setObjectName("ac_context_open_costumer");
+  ac_open->setObjectName("ac_context_open_customer");
   ac_open->setEnabled(b);
   connect(ac_open, SIGNAL(triggered()), this, SLOT(openByContext()));
 
   QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create entry"));
-  ac_create->setObjectName("ac_context_create_costumer");
+  ac_create->setObjectName("ac_context_create_customer");
   ac_create->setEnabled(true);
   connect(ac_create, SIGNAL(triggered()), this, SLOT(createByContext()));
 
   QAction *ac_order = m->addAction(myIcon("autostart"), tr("Create order"));
-  ac_order->setObjectName("ac_context_order_costumer");
+  ac_order->setObjectName("ac_context_order_customer");
   connect(ac_order, SIGNAL(triggered()), this, SLOT(orderByContext()));
   ac_order->setEnabled(b);
 
@@ -141,14 +141,14 @@ void CostumerTableView::contextMenuEvent(QContextMenuEvent *ev) {
   delete m;
 }
 
-void CostumerTableView::refreshView() {
+void CustomerTableView::refreshView() {
   if (sqlExecQuery(p_historyQuery)) {
     resizeRowsToContents();
     resizeColumnsToContents();
   }
 }
 
-void CostumerTableView::queryHistory(const QString &history) {
+void CustomerTableView::queryHistory(const QString &history) {
   if (!isVisible())
     return;
 
@@ -180,7 +180,7 @@ void CostumerTableView::queryHistory(const QString &history) {
   }
 }
 
-void CostumerTableView::queryStatement(const SearchStatement &search) {
+void CustomerTableView::queryStatement(const SearchStatement &search) {
   QString str(search.SearchString);
   QRegExp reg("\\s+");
   QStringList list = str.split(reg);

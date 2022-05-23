@@ -14,12 +14,12 @@
 #include <EditorMain>
 
 class SerialID;
-class CostumerContact;
-class CostumerOverview;
-class CostumerBillingInfo;
+class CustomerContact;
+class CustomerOverview;
+class CustomerBillingInfo;
 class EditorActionBar;
 
-class EditCostumer : public EditorMain {
+class EditCustomer : public EditorMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -28,16 +28,16 @@ private:
   QLabel *infoLabel;
   QToolBox *m_dataBox;
   SerialID *c_id;
-  CostumerOverview *m_overview;
-  CostumerContact *m_contact;
-  CostumerBillingInfo *m_billing;
+  CustomerOverview *m_overview;
+  CustomerContact *m_contact;
+  CustomerBillingInfo *m_billing;
   EditorActionBar *m_actionBar;
 
   /**
      @brief Wird für QObject::findchild benötigt!
      Dieser Reguläre Ausdruck wird verwendet um die Eingabe-Objektklassen
      zu finden. Sie sind Identisch mit den SQL Feldern und beginnen bei
-     der Tabelle "costumers" immer mit "c_".
+     der Tabelle "customers" immer mit "c_".
   */
   const QRegularExpression p_objPattern = QRegularExpression("^c_[a-z0-3_]+$");
 
@@ -67,11 +67,11 @@ private Q_SLOTS:
 
 public Q_SLOTS:
   void restoreDataset();
-  void updateCostumer(const QString &);
-  void createCostumer();
+  void updateCustomer(const QString &);
+  void createCustomer();
 
 public:
-  explicit EditCostumer(QWidget *parent = nullptr);
+  explicit EditCustomer(QWidget *parent = nullptr);
 };
 
 #endif // EDITCOSTUMER_H

@@ -50,17 +50,17 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   mainLayout->addLayout(row0);
 
   QGridLayout *row1 = new QGridLayout();
-  o_costumer_id = new SerialID(this);
-  o_costumer_id->setObjectName("o_costumer_id");
-  o_costumer_id->setInfo(tr("Address for Costumer ID"));
-  row1->addWidget(o_costumer_id, 0, 0, 1, 1, Qt::AlignLeft);
+  o_customer_id = new SerialID(this);
+  o_customer_id->setObjectName("o_customer_id");
+  o_customer_id->setInfo(tr("Address for Customer ID"));
+  row1->addWidget(o_customer_id, 0, 0, 1, 1, Qt::AlignLeft);
   o_provider_name = new LineEdit(this);
   o_provider_name->setObjectName("o_provider_name");
   o_provider_name->setInfo(tr("Provider Order"));
   row1->addWidget(o_provider_name, 0, 1, 1, 1);
-  m_costumer_address = new TextField(this);
-  m_costumer_address->setObjectName("m_costumer_address");
-  row1->addWidget(m_costumer_address, 1, 0, 1, 1);
+  m_customer_address = new TextField(this);
+  m_customer_address->setObjectName("m_customer_address");
+  row1->addWidget(m_customer_address, 1, 0, 1, 1);
   o_provider_order = new TextField(this);
   o_provider_order->setObjectName("o_provider_order");
   row1->addWidget(o_provider_order, 1, 1, 1, 1);
@@ -120,8 +120,8 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   connect(m_paymentList, SIGNAL(statusMessage(const QString &)), this,
           SLOT(showMessagePoUp(const QString &)));
   connect(o_closed, SIGNAL(checked(bool)), this, SLOT(createCloseOrder(bool)));
-  connect(o_costumer_id, SIGNAL(s_serialChanged(int)), this,
-          SLOT(findCostumer(int)));
+  connect(o_customer_id, SIGNAL(s_serialChanged(int)), this,
+          SLOT(findCustomer(int)));
   connect(m_paymentList, SIGNAL(askToRemoveRow(int)), this,
           SLOT(findRemoveTableRow(int)));
 }
@@ -129,7 +129,7 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
 void OrderEditor::setInputList() {
   inputList = m_sql->fields("inventory_orders");
   if (inputList.isEmpty()) {
-    qWarning("Costumers InputList is Empty!");
+    qWarning("Customers InputList is Empty!");
   }
   // Werden manuell gesetzt!
   inputList.removeOne("o_since");
@@ -216,9 +216,9 @@ bool OrderEditor::createSqlArticleOrder() {
     return false;
   }
 
-  int cid = o_costumer_id->value().toInt();
-  if (o_costumer_id->value().toString().isEmpty() || cid < 1) {
-    qWarning("Missing Costumer ID");
+  int cid = o_customer_id->value().toInt();
+  if (o_customer_id->value().toString().isEmpty() || cid < 1) {
+    qWarning("Missing Customer ID");
     return false;
   }
 
@@ -244,9 +244,9 @@ bool OrderEditor::createSqlArticleOrder() {
         updateSet.insert(key, o_id->value().toString());
         values.append(o_id->value().toString());
         continue;
-      } else if (key == "a_costumer_id") {
-        updateSet.insert(key, o_costumer_id->value().toString());
-        values.append(o_costumer_id->value().toString());
+      } else if (key == "a_customer_id") {
+        updateSet.insert(key, o_customer_id->value().toString());
+        values.append(o_customer_id->value().toString());
         continue;
       }
 
@@ -394,12 +394,12 @@ void OrderEditor::setData(const QString &key, const QVariant &value,
   qDebug() << "Missing k:" << key << " v:" << value << " r:" << required;
 }
 
-void OrderEditor::findCostumer(int cid) {
+void OrderEditor::findCustomer(int cid) {
   if (cid <= 1)
     return;
 
-  if (!getCostumerAddress(cid)) {
-    qWarning("No Costumer Data");
+  if (!getCustomerAddress(cid)) {
+    qWarning("No Customer Data");
   }
 }
 
@@ -497,9 +497,9 @@ void OrderEditor::openPrinterDialog() {
     return;
   }
 
-  int cid = o_costumer_id->value().toInt();
+  int cid = o_customer_id->value().toInt();
   if (cid < 1) {
-    emit s_postMessage(tr("Missing Costumer-Id"));
+    emit s_postMessage(tr("Missing Customer-Id"));
     return;
   }
 
@@ -508,17 +508,17 @@ void OrderEditor::openPrinterDialog() {
   dialog->setDelivery(oid, cid);
   // Address
   QString c_add;
-  QString sql = queryCostumerShippingAddress(cid);
+  QString sql = queryCustomerShippingAddress(cid);
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
     q.next();
     c_add.append(q.value(0).toString());
   } else {
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
-    emit s_postMessage(tr("No Costumer Address found"));
+    emit s_postMessage(tr("No Customer Address found"));
     return;
   }
-  dialog->setCostumerAddress(c_add);
+  dialog->setCustomerAddress(c_add);
   // Articles
   QList<DeliveryNote::Delivery> deliveries;
   q = m_sql->query(queryDeliveryNotes(oid, cid));
@@ -600,8 +600,8 @@ const QList<OrderArticle> OrderEditor::getOrderArticles(int oid, int cid) {
           order.setOrder(q.value(fn).toInt());
         } else if (fn == "a_article_id") {
           order.setArticle(q.value(fn).toInt());
-        } else if (fn == "a_costumer_id") {
-          order.setCostumer(q.value(fn).toInt());
+        } else if (fn == "a_customer_id") {
+          order.setCustomer(q.value(fn).toInt());
         } else if (fn == "a_price") {
           order.setPrice(q.value(fn).toDouble());
         } else if (fn == "a_sell_price") {
@@ -620,11 +620,11 @@ const QList<OrderArticle> OrderEditor::getOrderArticles(int oid, int cid) {
   return list;
 }
 
-bool OrderEditor::getCostumerAddress(int cid) {
+bool OrderEditor::getCustomerAddress(int cid) {
   if (cid < 1)
     return false;
 
-  QString select = queryCostumerAddress(cid);
+  QString select = queryCustomerAddress(cid);
   if (SHOW_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << select << Qt::endl;
   }
@@ -641,7 +641,7 @@ bool OrderEditor::getCostumerAddress(int cid) {
         break;
       }
     }
-    m_costumer_address->setValue(buffer);
+    m_customer_address->setValue(buffer);
   } else {
     qWarning("SQL ERROR: %s", qPrintable(m_sql->lastError()));
   }
@@ -678,7 +678,7 @@ void OrderEditor::openUpdateOrder(int oid) {
         QVariant val = q.value(r.indexOf(key));
         bool required = (r.field(key).requiredStatus() == QSqlField::Required);
         // qDebug() << Q_FUNC_INFO << key << val << required;
-        if (key == "o_costumer_id") {
+        if (key == "o_customer_id") {
           cid = val.toInt();
         }
         DataField d;
@@ -708,8 +708,8 @@ void OrderEditor::openCreateOrder(int cid) {
   initDefaults();
   if (cid > 0) {
     m_paymentList->setEnabled(false);
-    o_costumer_id->setValue(cid);
-    if (getCostumerAddress(cid)) {
+    o_customer_id->setValue(cid);
+    if (getCustomerAddress(cid)) {
       emit isModified(true);
     }
   }

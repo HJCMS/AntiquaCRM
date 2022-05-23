@@ -14,7 +14,7 @@ namespace HJCMS {
 class SqlCore;
 };
 
-class CostumerBillingInfo : public QWidget {
+class CustomerBillingInfo : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -28,7 +28,7 @@ public:
   EMailEdit *c_shipping_email; /**< E-Mail z.b: für PayPal */
   TextField *c_comments; /**< Anmerkungen */
 
-  explicit CostumerBillingInfo(QWidget *parent = nullptr);
+  explicit CustomerBillingInfo(QWidget *parent = nullptr);
 };
 
 #endif // COSTUMERBILLINGINFO_H

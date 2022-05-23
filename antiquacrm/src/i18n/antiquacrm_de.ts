@@ -524,44 +524,44 @@
         <translation>E-Mail</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+108"/>
         <source>Create</source>
         <translation>Erstellen</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>create a new database entry</source>
-        <translation>Erstelle einen Neuen Datenbankeintrag</translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="-101"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Costumer Id</source>
+        <source>Customer Id</source>
         <translation>Kunden Nr</translation>
     </message>
     <message>
-        <location line="+75"/>
-        <source>costumer add</source>
+        <location line="+80"/>
+        <source>customer add</source>
         <translation>Kunde angelegt</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+39"/>
+        <location line="+50"/>
         <source>SQL errors!</source>
         <translation>Datenbank Fehler!</translation>
     </message>
     <message>
-        <location line="-8"/>
-        <source>found Costumer</source>
+        <location line="-38"/>
+        <source>Display</source>
+        <translation>Anzeigen</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>found Customer</source>
         <translation>Kundeneintrag gefunden</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Costumer not exists!</source>
+        <source>Customer not exists!</source>
         <translation>Dieser Kunden existiert nicht!</translation>
     </message>
     <message>
@@ -570,8 +570,8 @@
         <translation>Artikel ist nicht Verfügbar!</translation>
     </message>
     <message>
-        <location line="-146"/>
-        <source>Search Costumer in Database</source>
+        <location line="-162"/>
+        <source>Search Customer in Database</source>
         <translation>Kunde im Adressbuch suchen</translation>
     </message>
 </context>
@@ -930,9 +930,9 @@
     </message>
 </context>
 <context>
-    <name>CostumerBillingInfo</name>
+    <name>CustomerBillingInfo</name>
     <message>
-        <location filename="../inventory/costumers/costumerbillinginfo.cpp" line="+24"/>
+        <location filename="../inventory/customers/customerbillinginfo.cpp" line="+24"/>
         <source>Locked</source>
         <translation>Gesperrt</translation>
     </message>
@@ -963,9 +963,9 @@
     </message>
 </context>
 <context>
-    <name>CostumerContact</name>
+    <name>CustomerContact</name>
     <message>
-        <location filename="../inventory/costumers/costumercontact.cpp" line="+27"/>
+        <location filename="../inventory/customers/customercontact.cpp" line="+27"/>
         <source>Gender</source>
         <translation>Geschlecht</translation>
     </message>
@@ -1084,9 +1084,9 @@
     </message>
 </context>
 <context>
-    <name>CostumerOverview</name>
+    <name>CustomerOverview</name>
     <message>
-        <location filename="../inventory/costumers/costumeroverview.cpp" line="+117"/>
+        <location filename="../inventory/customers/customeroverview.cpp" line="+117"/>
         <source>Locked</source>
         <translation>Gesperrt</translation>
     </message>
@@ -1127,9 +1127,9 @@
     </message>
 </context>
 <context>
-    <name>CostumerTableView</name>
+    <name>CustomerTableView</name>
     <message>
-        <location filename="../inventory/costumers/costumertableview.cpp" line="+70"/>
+        <location filename="../inventory/customers/customertableview.cpp" line="+70"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
@@ -1150,9 +1150,9 @@
     </message>
 </context>
 <context>
-    <name>CostumersTableModel</name>
+    <name>CustomersTableModel</name>
     <message>
-        <location filename="../inventory/costumers/costumerstablemodel.cpp" line="+53"/>
+        <location filename="../inventory/customers/customerstablemodel.cpp" line="+53"/>
         <source>Company</source>
         <translation>Unternehmen</translation>
     </message>
@@ -1253,7 +1253,7 @@
     </message>
     <message>
         <location line="+3"/>
-        <source>Costumer-ID:</source>
+        <source>Customer-ID:</source>
         <translation>Kundennummer:</translation>
     </message>
     <message>
@@ -1303,12 +1303,12 @@
     </message>
     <message>
         <location line="+6"/>
-        <source>There is no Costumer Id to generate this delivery!</source>
+        <source>There is no Customer Id to generate this delivery!</source>
         <translation>Es gibt keine Kunennummer für die Erstellung!</translation>
     </message>
     <message>
         <location line="+14"/>
-        <source>&lt;p&gt;Costumer Address is empty!&lt;/p&gt;</source>
+        <source>&lt;p&gt;Customer Address is empty!&lt;/p&gt;</source>
         <translation>&lt;p&gt;Kunden Adresse ist leer!&lt;/p&gt;</translation>
     </message>
 </context>
@@ -1348,10 +1348,10 @@
     </message>
 </context>
 <context>
-    <name>EditCostumer</name>
+    <name>EditCustomer</name>
     <message>
-        <location filename="../inventory/costumers/editcostumer.cpp" line="+48"/>
-        <source>Costumers ID</source>
+        <location filename="../inventory/customers/editcustomer.cpp" line="+48"/>
+        <source>Customers ID</source>
         <translation>Kunden Nr</translation>
     </message>
     <message>
@@ -1700,10 +1700,10 @@
     </message>
 </context>
 <context>
-    <name>InventoryCostumers</name>
+    <name>InventoryCustomers</name>
     <message>
-        <location filename="../inventory/costumers/inventorycostumers.cpp" line="+43"/>
-        <source>Costumers</source>
+        <location filename="../inventory/customers/inventorycustomers.cpp" line="+43"/>
+        <source>Customers</source>
         <translation>Kunden</translation>
     </message>
 </context>
@@ -1781,7 +1781,7 @@
     <name>MWindow</name>
     <message>
         <location filename="../mwindow.cpp" line="+80"/>
-        <source>Costumers</source>
+        <source>Customers</source>
         <translation>Kunden</translation>
     </message>
     <message>
@@ -1961,7 +1961,7 @@
     </message>
     <message>
         <location line="+9"/>
-        <source>Address for Costumer ID</source>
+        <source>Address for Customer ID</source>
         <translation>Adresse und Kunden Nummer</translation>
     </message>
     <message>
@@ -2021,12 +2021,12 @@
     </message>
     <message>
         <location line="+6"/>
-        <source>Missing Costumer-Id</source>
+        <source>Missing Customer-Id</source>
         <translation>Fehlende Kundennummer</translation>
     </message>
     <message>
         <location line="+16"/>
-        <source>No Costumer Address found</source>
+        <source>No Customer Address found</source>
         <translation>Konnte keine Kundenadresse finden</translation>
     </message>
     <message>
@@ -2272,7 +2272,7 @@
     </message>
     <message>
         <location line="+3"/>
-        <source>Costumer</source>
+        <source>Customer</source>
         <translation>Kunde</translation>
     </message>
     <message>
@@ -3029,7 +3029,7 @@
         <translation>Frau</translation>
     </message>
     <message>
-        <location filename="../inventory/costumers/inventorycostumers.cpp" line="-16"/>
+        <location filename="../inventory/customers/inventorycustomers.cpp" line="-16"/>
         <source>Sort by Name</source>
         <translation>Sortiert mit Name</translation>
     </message>
@@ -3509,12 +3509,12 @@
     </message>
     <message>
         <location line="+13"/>
-        <source>Costumers</source>
+        <source>Customers</source>
         <translation>Kunden</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Costumers inventory</source>
+        <source>Customers inventory</source>
         <translation>Kunden Inventar</translation>
     </message>
     <message>
@@ -3528,7 +3528,7 @@
         <translation>Auftrags Inventar</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+13"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
@@ -3544,6 +3544,7 @@
     </message>
     <message>
         <location line="+9"/>
+        <location line="+9"/>
         <location line="+11"/>
         <source>Order tab isn&apos;t open!</source>
         <translation>Das Auftrags Tab ist nicht geöffnet!</translation>
@@ -3552,7 +3553,7 @@
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-118"/>
+        <location line="-129"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>

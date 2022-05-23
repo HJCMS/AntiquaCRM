@@ -8,6 +8,7 @@
 #include "inventory.h"
 #include <AntiquaCRM>
 
+#include <QAction>
 #include <QComboBox>
 #include <QFrame>
 #include <QLabel>
@@ -17,11 +18,14 @@
 #include <QStackedWidget>
 #include <QTabWidget>
 #include <QToolBar>
-#include <QAction>
 #include <QWidget>
 
 class Buchfreund;
 
+/**
+ * @brief Navigation für Dienstleister Seiten
+ * @class ProvidersPager
+ */
 class ProvidersPager : public QToolBar {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -30,35 +34,60 @@ class ProvidersPager : public QToolBar {
 
 private:
   int page = 0;
-  QHash<int,QString> pages;
+  QHash<int, QString> pages;
   QAction *btnLast;
   QLabel *current;
   QAction *btnNext;
 
 Q_SIGNALS:
+  /**
+   * @brief Seite geändert
+   */
   void pageEntered(int);
+
+  /**
+   * @brief Auf Seitenname geändert
+   */
   void pageChanged(const QString &);
 
 public Q_SLOTS:
+  /**
+   * @brief Eine Seite weiter
+   */
   void next(bool);
+
+  /**
+   * @brief Eine Seite zurück
+   */
   void last(bool);
 
 public:
   explicit ProvidersPager(QWidget *parent = nullptr);
+
   /**
-   * @brief Eine Dienstleister Seiet einfügen
+   * @brief Eine Dienstleister Seite einfügen
    */
   void addPages(const QStringList &list);
 
+  /**
+   * @brief Seite wechseln zu index ...
+   */
   void setPage(int index);
 
+  /**
+   * @brief Finde Seiten Index
+   */
   int findPage(const QString &);
 
+  /**
+   * @brief Aktueller Seiten Index
+   */
   int currentPage();
 };
 
 /**
  * @brief Einfacher ToolBar für die Navigation
+ * @class ProvidersToolBar
  */
 class ProvidersToolBar : public QFrame {
   Q_OBJECT
@@ -76,6 +105,10 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   void statusMessage(const QString &);
+  /**
+   * @brief Erstellen Knopf Ein/Ausschalten
+   */
+  void enableOrderButton(bool);
 
 public:
   /**
@@ -90,11 +123,6 @@ public:
    * @param title
    */
   void enterPage(const QString &title);
-
-  /**
-   * @brief Erstellen Knopf Ein/Ausschalten
-   */
-  void enableOrderButton(bool);
 };
 
 /**
@@ -108,7 +136,7 @@ class InventoryProviders : public Inventory {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  int costumerId = -1;
+  int customerId = -1;
 
   ProvidersToolBar *m_toolBar;
 
@@ -124,7 +152,15 @@ private:
    */
   Buchfreund *bfProvider;
 
+  /**
+   * @brief Suche Dienstleister und erstelle Seiten
+   */
+  void initPages();
+
   void openEditor(const QString &){/* TODO */};
+
+Q_SIGNALS:
+  void openEditCustomer(int cid);
 
 private Q_SLOTS:
   void searchConvert(const QString &search) { /* TODO */
@@ -132,18 +168,20 @@ private Q_SLOTS:
   };
 
   /**
-    @brief Methode für Suchknopf
+   * @brief Methode für Suchknopf
    */
-  void searchConvert(){/* TODO */};
+  void searchConvert(){/* hier nicht notwendig */};
 
   /**
-    @brief Öffne Tabellenansicht
-    Wird mit SIGNAL s_leaveEditor aufgerufen.
-    @note Standard ist Tabellenansicht "Page 1"
-  */
-  void openTableView(){/* TODO */};
+   * @brief Öffne Tabellenansicht
+   */
+  void openTableView(){/* hier nicht notwendig */};
 
-  void setButtonState(int);
+  /**
+   * @brief Anhand der Kundennummer bestimmen
+   *  ob der Erstellen Knopf aktiviert wird!
+   */
+  void sendViewCustomer(int cid);
 
 public:
   /**

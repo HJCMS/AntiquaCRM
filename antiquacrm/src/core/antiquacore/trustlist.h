@@ -13,7 +13,7 @@
 
 /**
  * @brief Trust SQL Field Class
- * @see c_trusted in public.costumers Table
+ * @see c_trusted in public.customers Table
  */
 class ANTIQUACORE_EXPORT Trust {
 private:
@@ -50,7 +50,7 @@ Q_DECLARE_TYPEINFO(Trust, Q_PRIMITIVE_TYPE);
  *
  * The "c_trusted" Field is a Type from smallint.
  * To your own Organise individual Types.
- * \ds costumers
+ * \ds customers
  *      c_trusted | smallint
  *
  * @code

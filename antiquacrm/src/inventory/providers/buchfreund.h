@@ -124,9 +124,9 @@ private:
   DateTimeEdit *a_modified;
   /** @} */
 
-  QPushButton *btn_create_costumer;
-  QPushButton *btn_search_costumer;
-  QLabel *costumer_info;
+  QPushButton *btn_customer;
+  QPushButton *btn_search_customer;
+  QLabel *customer_info;
 
   /**
    * @brief Datenbank Verbindung
@@ -134,27 +134,34 @@ private:
   HJCMS::SqlCore *m_sql;
 
   /**
-   * @brief Wird für QObject::findchild benötigt!
+   * @brief Wird für findchild<UtilsMain *> benötigt!
+   * @note Wird Aktuell nur für "customers" Insert verwendet!
+   * @see createDataset
    */
-  const QRegularExpression p_objPattern =
-      QRegularExpression("^[ac]_[a-z0-3_]+$");
+  const QRegularExpression c_regExp = QRegularExpression("^c_[a-z0-3_]+$");
 
   /**
-   * @brief Mit @ref p_objPattern nach Datenfeldern suchen
+   * @brief Mit @ref c_regExp nach Datenfeldern suchen
    * @return QHash<ObjectName,Datenwert>
    */
   const QHash<QString, QVariant> createDataset();
+
+  /**
+   * @brief setCustomerButton
+   * @param type 0 = create  1 = display
+   */
+  void setCustomerButton(int type);
 
 private Q_SLOTS:
   /**
    * @brief SQL Kunde erstellen
    */
-  void createSqlCostumer();
+  void createSqlCustomer();
 
   /**
    * @brief SQL Kundenprüfung
    */
-  void searchSqlCostumer();
+  void searchSqlCustomer();
 
   /**
    * @brief SQL Artikel Prüfung
@@ -162,6 +169,11 @@ private Q_SLOTS:
   void checkArticleId();
 
 public Q_SLOTS:
+  /**
+   * @brief Datenfelder zurück setzen!
+   */
+  void resetDataFields();
+
   /**
    * @brief Durchlaufe das Json Dokument und ...
    * Übersetze mit @ref BF_Translater die Datenfelder,
@@ -183,9 +195,14 @@ Q_SIGNALS:
   void s_warning(const QString &);
 
   /**
-   * @brief Wenn Kundennummer enthalten ...
+   * @brief Editor aktivieren
    */
-  void s_costumer(int);
+  void s_orderEdit(bool);
+
+  /**
+   * @brief Kunde Anzeigen/Bearbeiten
+   */
+  void s_editCustomer(int);
 
 public:
   explicit BuchfreundDisplay(QWidget *parent = nullptr);

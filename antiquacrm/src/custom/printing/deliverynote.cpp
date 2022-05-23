@@ -116,11 +116,11 @@ void DeliveryNote::constructSubject() {
   tc01.setFormat(cellFormat);
   cursor = tc01.firstCursorPosition();
   cursor.insertText(tr("Delivey note"));
-  // Costumer Address
+  // Customer Address
   QTextTableCell tc10 = table->cellAt(1, 0);
   tc10.setFormat(normalFormat());
   cursor = tc10.firstCursorPosition();
-  cursor.insertText(p_costumerAddress);
+  cursor.insertText(p_customerAddress);
   // Delivery Infos
   QTextTableCell tc11 = table->cellAt(1, 1);
   tc11.setFormat(normalFormat());
@@ -128,8 +128,8 @@ void DeliveryNote::constructSubject() {
   cursor.insertText(tr("Order-ID:") + " ");
   cursor.insertText(p_orderId);
   cursor.insertText("\n");
-  cursor.insertText(tr("Costumer-ID:") + " ");
-  cursor.insertText(p_costumerId);
+  cursor.insertText(tr("Customer-ID:") + " ");
+  cursor.insertText(p_customerId);
   cursor.insertText("\n");
   cursor.insertText(tr("Delivery-ID:") + " ");
   cursor.insertText(deliveryNumber());
@@ -373,37 +373,37 @@ const QString DeliveryNote::deliveryNumber() {
   return f;
 }
 
-void DeliveryNote::setCostumerAddress(const QString &address) {
+void DeliveryNote::setCustomerAddress(const QString &address) {
   if (address.isEmpty()) {
-    qWarning("empty costumer address");
+    qWarning("empty customer address");
     return;
   }
-  p_costumerAddress = address;
+  p_customerAddress = address;
 }
 
-void DeliveryNote::setDelivery(int &orderId, int &costumerId) {
+void DeliveryNote::setDelivery(int &orderId, int &customerId) {
   if (orderId < 1) {
     warningMessageBox(tr("There is no Order-Id to generate this delivery!"));
     return;
   }
   p_orderId = QString::number(orderId);
 
-  if (costumerId < 1) {
-    warningMessageBox(tr("There is no Costumer Id to generate this delivery!"));
+  if (customerId < 1) {
+    warningMessageBox(tr("There is no Customer Id to generate this delivery!"));
     return;
   }
-  p_costumerId = QString::number(costumerId);
+  p_customerId = QString::number(customerId);
 }
 
 int DeliveryNote::exec(const QList<Delivery> &list) {
   if (p_orderId < 1) {
     qFatal("you must call setDelivery() before exec!");
     return 1;
-  } else if (p_costumerId < 1) {
+  } else if (p_customerId < 1) {
     qFatal("you must call setDelivery() before exec!");
     return 1;
-  } else if (p_costumerAddress.isEmpty()) {
-    warningMessageBox(tr("<p>Costumer Address is empty!</p>"));
+  } else if (p_customerAddress.isEmpty()) {
+    warningMessageBox(tr("<p>Customer Address is empty!</p>"));
     return 1;
   }
 

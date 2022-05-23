@@ -10,14 +10,14 @@
 #include <QString>
 
 /**
- * @group Costumer SQL Statements
+ * @group Customer SQL Statements
  * Hier werden für das Auftragssystem die
  * SQL Abfragen definiert.
  */
 
 /**
  * @def SHOW_SQL_QUERIES
- * @ingroup Costumer SQL Statements
+ * @ingroup Customer SQL Statements
  * @section Debugging
  * @brief SQL Abfrageanzeige
  * Schaltet die SQL-Statements im Terminal
@@ -28,7 +28,7 @@
 #endif
 
 /**
- * @ingroup Costumer SQL Statements
+ * @ingroup Customer SQL Statements
  * @brief Standard Select Statement für Tabellenausgabe
  * @return SQL Query
  */
@@ -40,7 +40,7 @@ static const QString c_sqlTableQueryBody() {
   q.append("(CASE WHEN c_phone_0 IS NULL THEN c_phone_1 ELSE c_phone_0 END) AS phone,");
   q.append("(CASE WHEN c_mobil_0 IS NULL THEN c_mobil_1 ELSE c_mobil_0 END) AS mobil,");
   q.append("concat_ws(' ',c_country,c_postalcode,c_location,c_street) AS address");
-  q.append(" FROM costumers WHERE c_id!=0 AND ");
+  q.append(" FROM customers WHERE c_id!=0 AND ");
   return q;
 }
 

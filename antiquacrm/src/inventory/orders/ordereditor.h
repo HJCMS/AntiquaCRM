@@ -48,12 +48,12 @@ private:
   /**
    * @brief Kunden ID
    */
-  SerialID *o_costumer_id;
+  SerialID *o_customer_id;
 
   /**
    * @brief Kundenandresse
    */
-  TextField *m_costumer_address;
+  TextField *m_customer_address;
 
   /**
    * @brief Lieferservice
@@ -182,10 +182,10 @@ private:
 
   /**
    * Erstellt, sendet SQL Abfrage für Kunden und Lieferadresse.
-   * @warning Darf nicht direkt aufgerufen werden, @see findCostumer
+   * @warning Darf nicht direkt aufgerufen werden, @see findCustomer
    * @param cid - Kundennummer
    */
-  bool getCostumerAddress(int cid);
+  bool getCustomerAddress(int cid);
 
 private Q_SLOTS:
   /**
@@ -194,7 +194,7 @@ private Q_SLOTS:
    * hier erst Sichergestellt werden das die Kunden Nummer vorhanden ist.
    * @param cid - Kundennummer
    */
-  void findCostumer(int cid);
+  void findCustomer(int cid);
 
   /**
    * @brief Wird von Signal @ref OrdersItemList::searchArticle ausgelöst.

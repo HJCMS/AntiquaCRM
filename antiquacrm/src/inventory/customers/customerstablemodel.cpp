@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "costumerstablemodel.h"
+#include "customerstablemodel.h"
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
@@ -22,17 +22,17 @@ static const QString setHeaderTitel(const QString &t) {
   return b;
 }
 
-CostumersTableModel::CostumersTableModel(QObject *parent)
+CustomersTableModel::CustomersTableModel(QObject *parent)
     : QSqlQueryModel{parent} {
-  setObjectName("CostumersTableModel");
+  setObjectName("CustomersTableModel");
 }
 
-const QString CostumersTableModel::displayDate(const QVariant &value) const {
+const QString CustomersTableModel::displayDate(const QVariant &value) const {
   QDateTime dt(value.toDateTime());
   return QLocale::system().toString(dt, "dd MMMM yyyy");
 }
 
-QVariant CostumersTableModel::data(const QModelIndex &index, int role) const {
+QVariant CustomersTableModel::data(const QModelIndex &index, int role) const {
   const QVariant val;
   if ((role == Qt::DecorationRole) && (index.column() == 1))
     return myIcon("toggle_log");
@@ -66,7 +66,7 @@ QVariant CostumersTableModel::data(const QModelIndex &index, int role) const {
   }
 }
 
-QVariant CostumersTableModel::headerData(int section,
+QVariant CustomersTableModel::headerData(int section,
                                          Qt::Orientation orientation,
                                          int role) const {
   if (role != Qt::DisplayRole)

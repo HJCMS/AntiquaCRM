@@ -15,10 +15,10 @@ namespace HJCMS {
 class SqlCore;
 };
 
-class CostumersTableModel;
+class CustomersTableModel;
 class SearchStatement;
 
-class CostumerTableView : public QTableView {
+class CustomerTableView : public QTableView {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -31,15 +31,15 @@ private:
   int maxRowCount = 1000;
   HJCMS::SqlCore *m_sql;
   QModelIndex p_modelIndex;
-  CostumersTableModel *m_tableModel;
+  CustomersTableModel *m_tableModel;
   QString p_historyQuery;
 
   bool sqlExecQuery(const QString &statement);
 
-  bool queryCostumerID(const QModelIndex &, CostumerTableView::QueryType type);
+  bool queryCustomerID(const QModelIndex &, CustomerTableView::QueryType type);
 
 private Q_SLOTS:
-  void queryCostumerID(const QModelIndex &);
+  void queryCustomerID(const QModelIndex &);
   void openByContext();
   void createByContext();
   void orderByContext();
@@ -49,9 +49,9 @@ protected:
 
 Q_SIGNALS:
   void s_reportQuery(const QString &);
-  void s_updateCostumer(int id);
-  void s_insertCostumer();
-  void s_createOrder(int costumerId);
+  void s_updateCustomer(int id);
+  void s_insertCustomer();
+  void s_createOrder(int customerId);
 
 public Q_SLOTS:
   /**
@@ -72,7 +72,7 @@ public Q_SLOTS:
   void queryStatement(const SearchStatement &search);
 
 public:
-  explicit CostumerTableView(QWidget *parent = nullptr);
+  explicit CustomerTableView(QWidget *parent = nullptr);
 };
 
 #endif // COSTUMERTABLEVIEW_H

@@ -14,7 +14,7 @@ namespace HJCMS {
 class SqlCore;
 };
 
-class CostumerContact : public QWidget {
+class CustomerContact : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -42,7 +42,7 @@ public:
   TextField *c_postal_address;   /**< Adresse */
   TextField *c_shipping_address; /**< Lieferadresse */
 
-  explicit CostumerContact(QWidget *parent = nullptr);
+  explicit CustomerContact(QWidget *parent = nullptr);
 
 private:
   HJCMS::SqlCore *m_sql;    /**< Wird für einige Unterabfragen benötigt! */

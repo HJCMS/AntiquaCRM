@@ -13,7 +13,7 @@
 
 class InventoryBooks;
 class InventoryPrints;
-class InventoryCostumers;
+class InventoryCustomers;
 class InventoryOrders;
 class InventoryProviders;
 
@@ -49,7 +49,7 @@ private:
   InventoryOrders *m_tabOrders;
   InventoryBooks *m_tabBooks;
   InventoryPrints *m_tabPrints;
-  InventoryCostumers *m_tabCostumers;
+  InventoryCustomers *m_tabCustomers;
   InventoryProviders *m_tabProviders;
 
   /**
@@ -65,7 +65,7 @@ private:
   /**
      @brief Kundenregister Inventar öffnen
   */
-  int addInventoryCostumers(int index);
+  int addInventoryCustomers(int index);
 
   /**
      @brief Bücher Inventar öffnen
@@ -86,7 +86,12 @@ private Q_SLOTS:
   /**
    * @brief Auftrag von Kunden ID erstellen
    */
-  void createOrder(int costumerId);
+  void createOrder(int customerId);
+
+  /**
+   * @brief Auftrag von Kunden ID erstellen
+   */
+  void editCustomer(int customerId);
 
   /**
    * @brief Artikel zu Auftrag hinzufügen
@@ -120,7 +125,7 @@ public:
   enum Tab {
     Books = 0x000001,
     Prints = 0x000010,
-    Costumers = 0x000100,
+    Customers = 0x000100,
     Orders = 0x001000,
     Providers = 0x010000
   };

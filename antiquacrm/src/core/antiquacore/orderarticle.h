@@ -16,7 +16,7 @@ private:
   int p_payment;
   int p_article;
   int p_orderid;
-  int p_costumer;
+  int p_customer;
   int p_count;
   double p_price;
   double p_sell_price;
@@ -42,9 +42,9 @@ public:
   void setOrder(int);
   int order();
 
-  /** a_costumer_id */
-  void setCostumer(int);
-  int costumer();
+  /** a_customer_id */
+  void setCustomer(int);
+  int customer();
 
   /** a_count */
   void setCount(int);

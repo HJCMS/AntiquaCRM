@@ -1,11 +1,11 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "editcostumer.h"
+#include "editcustomer.h"
 #include "antiqua_global.h"
-#include "costumerbillinginfo.h"
-#include "costumercontact.h"
-#include "costumeroverview.h"
+#include "customerbillinginfo.h"
+#include "customercontact.h"
+#include "customeroverview.h"
 #include "editoractionbar.h"
 #include "genderbox.h"
 #include "myicontheme.h"
@@ -20,8 +20,8 @@
 #define SHOW_SQL_QUERIES false
 #endif
 
-EditCostumer::EditCostumer(QWidget *parent) : EditorMain{parent} {
-  setObjectName("EditCostumer");
+EditCustomer::EditCustomer(QWidget *parent) : EditorMain{parent} {
+  setObjectName("EditCustomer");
 
   m_sql = new HJCMS::SqlCore(this);
 
@@ -37,7 +37,7 @@ EditCostumer::EditCostumer(QWidget *parent) : EditorMain{parent} {
   ignoreList = ignore;
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
-  mainLayout->setObjectName("costumer_edit_layout");
+  mainLayout->setObjectName("customer_edit_layout");
 
   // BEGIN Info Header
   QHBoxLayout *headerLayout = new QHBoxLayout();
@@ -45,7 +45,7 @@ EditCostumer::EditCostumer(QWidget *parent) : EditorMain{parent} {
 
   c_id = new SerialID(this);
   c_id->setObjectName("c_id");
-  c_id->setInfo(tr("Costumers ID"));
+  c_id->setInfo(tr("Customers ID"));
   headerLayout->addWidget(c_id);
 
   infoLabel = new QLabel(this);
@@ -56,17 +56,17 @@ EditCostumer::EditCostumer(QWidget *parent) : EditorMain{parent} {
 
   // BEGIN ToolBox
   m_dataBox = new QToolBox(this);
-  m_dataBox->setObjectName("costumer_edit_box");
+  m_dataBox->setObjectName("customer_edit_box");
 
-  m_overview = new CostumerOverview(m_dataBox);
+  m_overview = new CustomerOverview(m_dataBox);
   m_overview->setObjectName("overview");
   m_dataBox->addItem(m_overview, myIcon("edit_group"), tr("Overview"));
 
-  m_contact = new CostumerContact(m_dataBox);
+  m_contact = new CustomerContact(m_dataBox);
   m_contact->setObjectName("contact");
   m_dataBox->addItem(m_contact, myIcon("identity"), tr("Edit Contact"));
 
-  m_billing = new CostumerBillingInfo(m_dataBox);
+  m_billing = new CustomerBillingInfo(m_dataBox);
   m_billing->setObjectName("shipping");
   m_dataBox->addItem(m_billing, myIcon("list"), tr("Edit Billing"));
   mainLayout->addWidget(m_dataBox);
@@ -97,14 +97,14 @@ EditCostumer::EditCostumer(QWidget *parent) : EditorMain{parent} {
           SLOT(checkLeaveEditor()));
 }
 
-void EditCostumer::setInputList() {
-  inputList = m_sql->fields("costumers");
+void EditCustomer::setInputList() {
+  inputList = m_sql->fields("customers");
   if (inputList.isEmpty()) {
-    qWarning("Costumers InputList is Empty!");
+    qWarning("Customers InputList is Empty!");
   }
 }
 
-void EditCostumer::importSqlResult() {
+void EditCustomer::importSqlResult() {
   if (sqlQueryResult.size() < 15)
     return;
 
@@ -119,7 +119,7 @@ void EditCostumer::importSqlResult() {
   resetModified(inputList);
 }
 
-bool EditCostumer::sendSqlQuery(const QString &sqlStatement) {
+bool EditCustomer::sendSqlQuery(const QString &sqlStatement) {
   if (SHOW_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << sqlStatement;
   }
@@ -137,7 +137,7 @@ bool EditCostumer::sendSqlQuery(const QString &sqlStatement) {
   }
 }
 
-const QHash<QString, QVariant> EditCostumer::createSqlDataset() {
+const QHash<QString, QVariant> EditCustomer::createSqlDataset() {
   QHash<QString, QVariant> data;
   MessageBox messanger(this);
   QList<UtilsMain *> list =
@@ -160,7 +160,7 @@ const QHash<QString, QVariant> EditCostumer::createSqlDataset() {
   return data;
 }
 
-void EditCostumer::createSqlUpdate() {
+void EditCustomer::createSqlUpdate() {
   QString cid = c_id->value().toString();
   if (cid.isEmpty())
     return;
@@ -182,7 +182,7 @@ void EditCostumer::createSqlUpdate() {
     }
   }
 
-  QString sql("UPDATE costumers SET ");
+  QString sql("UPDATE customers SET ");
   sql.append(set.join(","));
   sql.append(",c_changed=CURRENT_TIMESTAMP");
   sql.append(" WHERE c_id=");
@@ -192,7 +192,7 @@ void EditCostumer::createSqlUpdate() {
   sendSqlQuery(sql);
 }
 
-void EditCostumer::createSqlInsert() {
+void EditCustomer::createSqlInsert() {
   QString cid = c_id->value().toString();
   if (!cid.isEmpty())
     return;
@@ -216,7 +216,7 @@ void EditCostumer::createSqlInsert() {
     }
   }
 
-  QString sql("INSERT INTO costumers (");
+  QString sql("INSERT INTO customers (");
   sql.append(column.join(","));
   sql.append(",c_since,c_changed) VALUES (");
   sql.append(values.join(","));
@@ -226,7 +226,7 @@ void EditCostumer::createSqlInsert() {
     checkLeaveEditor();
 }
 
-void EditCostumer::setData(const QString &key, const QVariant &value,
+void EditCustomer::setData(const QString &key, const QVariant &value,
                            bool required) {
   if (key.isEmpty())
     return;
@@ -252,7 +252,7 @@ void EditCostumer::setData(const QString &key, const QVariant &value,
   qDebug() << "Missing Key:" << key;
 }
 
-void EditCostumer::saveData() {
+void EditCustomer::saveData() {
   if (c_id->value().toInt() < 1) {
     createSqlInsert();
   } else if (c_id->value().toInt() > 0) {
@@ -260,7 +260,7 @@ void EditCostumer::saveData() {
   }
 }
 
-void EditCostumer::checkLeaveEditor() {
+void EditCustomer::checkLeaveEditor() {
   if (checkIsModified(p_objPattern)) {
     emit s_postMessage(
         tr("Unsaved Changes, don't leave this page before saved."));
@@ -269,24 +269,24 @@ void EditCostumer::checkLeaveEditor() {
   finalLeaveEditor();
 }
 
-void EditCostumer::finalLeaveEditor() {
+void EditCustomer::finalLeaveEditor() {
   sqlQueryResult.clear();             /**< SQL History leeren */
   clearDataFields(p_objPattern);      /**< Alle Datenfelder leeren */
   m_actionBar->setRestoreable(false); /**< ResetButton off */
   emit s_leaveEditor();               /**< Zurück */
 }
 
-void EditCostumer::restoreDataset() {
+void EditCustomer::restoreDataset() {
   if (sqlQueryResult.isEmpty())
     return;
 
   importSqlResult();
 }
 
-void EditCostumer::updateCostumer(const QString &id) {
+void EditCustomer::updateCustomer(const QString &id) {
   setInputList();
   QString sql("SELECT *, concat_ws(' ',c_firstname,c_lastname) AS fullname ");
-  sql.append(" FROM costumers");
+  sql.append(" FROM customers");
   sql.append(" WHERE " + id);
   sql.append(" ORDER BY c_id LIMIT 1;");
 
@@ -295,7 +295,7 @@ void EditCostumer::updateCostumer(const QString &id) {
     if (SHOW_SQL_QUERIES) {
       qDebug() << Q_FUNC_INFO << sql;
     }
-    QSqlRecord r = m_sql->record("costumers");
+    QSqlRecord r = m_sql->record("customers");
     sqlQueryResult.clear();
     while (q.next()) {
       foreach (QString key, inputList) {
@@ -326,7 +326,7 @@ void EditCostumer::updateCostumer(const QString &id) {
   importSqlResult();
 }
 
-void EditCostumer::createCostumer() {
+void EditCustomer::createCustomer() {
   setInputList();
   sqlQueryResult.clear();             /**< SQL History leeren */
   clearDataFields(p_objPattern);      /**< Alle Datenfelder leeren */

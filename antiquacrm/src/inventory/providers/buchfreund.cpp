@@ -13,7 +13,7 @@
 #include <QtWidgets>
 
 BF_Translater::BF_Translater() : QMap<QString, QString>{} {
-  // public.costumers @{
+  // public.customers @{
   insert("anrede", "c_gender");
   insert("vorname", "c_firstname");
   insert("name", "c_lastname");
@@ -132,85 +132,81 @@ BuchfreundDisplay::BuchfreundDisplay(QWidget *parent) : QWidget{parent} {
   orderBox->setLayout(orderLayout);
   layout->addWidget(orderBox);
 
-  // BEGIN Costumer
-  QGroupBox *costumerBox = new QGroupBox(this);
-  costumerBox->setObjectName("display_purchaser");
-  costumerBox->setTitle(tr("purchaser"));
-  QGridLayout *costumerLayout = new QGridLayout(costumerBox);
-  c_gender = new GenderBox(costumerBox);
+  // BEGIN Customer
+  QGroupBox *customerBox = new QGroupBox(this);
+  customerBox->setObjectName("display_purchaser");
+  customerBox->setTitle(tr("purchaser"));
+  QGridLayout *customerLayout = new QGridLayout(customerBox);
+  c_gender = new GenderBox(customerBox);
   c_gender->setObjectName("c_gender");
   c_gender->setInfo(tr("Form"));
-  costumerLayout->addWidget(c_gender, 0, 0, 1, 1);
-  c_firstname = new LineEdit(costumerBox);
+  customerLayout->addWidget(c_gender, 0, 0, 1, 1);
+  c_firstname = new LineEdit(customerBox);
   c_firstname->setObjectName("c_firstname");
   c_firstname->setInfo(tr("Firstname"));
-  costumerLayout->addWidget(c_firstname, 0, 1, 1, 1);
-  c_lastname = new LineEdit(costumerBox);
+  customerLayout->addWidget(c_firstname, 0, 1, 1, 1);
+  c_lastname = new LineEdit(customerBox);
   c_lastname->setObjectName("c_lastname");
   c_lastname->setInfo(tr("Lastname"));
-  costumerLayout->addWidget(c_lastname, 0, 2, 1, 1);
-  c_postalcode = new PostalCode(costumerBox);
+  customerLayout->addWidget(c_lastname, 0, 2, 1, 1);
+  c_postalcode = new PostalCode(customerBox);
   c_postalcode->setObjectName("c_postalcode");
   c_postalcode->setInfo(tr("Postalcode"));
-  costumerLayout->addWidget(c_postalcode, 1, 0, 1, 1);
-  c_location = new LineEdit(costumerBox);
+  customerLayout->addWidget(c_postalcode, 1, 0, 1, 1);
+  c_location = new LineEdit(customerBox);
   c_location->setObjectName("c_location");
   c_location->setInfo(tr("Location"));
-  costumerLayout->addWidget(c_location, 1, 1, 1, 2);
-  c_street = new LineEdit(costumerBox);
+  customerLayout->addWidget(c_location, 1, 1, 1, 2);
+  c_street = new LineEdit(customerBox);
   c_street->setObjectName("c_street");
   c_street->setInfo(tr("Street"));
-  costumerLayout->addWidget(c_street, 2, 0, 1, 1);
-  c_country = new LineEdit(costumerBox);
+  customerLayout->addWidget(c_street, 2, 0, 1, 1);
+  c_country = new LineEdit(customerBox);
   c_country->setObjectName("c_country");
   c_country->setInfo(tr("Country"));
-  costumerLayout->addWidget(c_country, 2, 1, 1, 2);
-  c_phone_0 = new PhoneEdit(costumerBox);
+  customerLayout->addWidget(c_country, 2, 1, 1, 2);
+  c_phone_0 = new PhoneEdit(customerBox);
   c_phone_0->setObjectName("c_phone_0");
   c_phone_0->setInfo(tr("Phone"));
-  costumerLayout->addWidget(c_phone_0, 3, 0, 1, 1);
-  c_email_0 = new EMailEdit(costumerBox);
+  customerLayout->addWidget(c_phone_0, 3, 0, 1, 1);
+  c_email_0 = new EMailEdit(customerBox);
   c_email_0->setObjectName("c_email_0");
   c_email_0->setInfo(tr("eMail"));
-  costumerLayout->addWidget(c_email_0, 3, 1, 1, 2);
+  customerLayout->addWidget(c_email_0, 3, 1, 1, 2);
   QHBoxLayout *actions_layout = new QHBoxLayout();
-  btn_create_costumer = new QPushButton(costumerBox);
-  btn_create_costumer->setText(tr("Create"));
-  btn_create_costumer->setToolTip(tr("create a new database entry"));
-  btn_create_costumer->setIcon(myIcon("db_add"));
-  btn_create_costumer->setEnabled(false);
-  actions_layout->addWidget(btn_create_costumer);
-  btn_search_costumer = new QPushButton(costumerBox);
-  btn_search_costumer->setText(tr("Search"));
-  btn_search_costumer->setToolTip(tr("Search Costumer in Database"));
-  btn_search_costumer->setIcon(myIcon("search"));
-  actions_layout->addWidget(btn_search_costumer);
-  c_id = new SerialID(costumerBox);
+  btn_customer = new QPushButton(customerBox);
+  setCustomerButton(0);
+  actions_layout->addWidget(btn_customer);
+  btn_search_customer = new QPushButton(customerBox);
+  btn_search_customer->setText(tr("Search"));
+  btn_search_customer->setToolTip(tr("Search Customer in Database"));
+  btn_search_customer->setIcon(myIcon("search"));
+  actions_layout->addWidget(btn_search_customer);
+  c_id = new SerialID(customerBox);
   c_id->setObjectName("c_id");
-  c_id->setInfo(tr("Costumer Id"));
+  c_id->setInfo(tr("Customer Id"));
   c_id->setRequired(false);
   actions_layout->addWidget(c_id);
-  costumer_info = new QLabel(costumerBox);
-  actions_layout->addWidget(costumer_info);
-  costumerLayout->addLayout(actions_layout, 4, 0, 1, 3, Qt::AlignLeft);
-  costumerBox->setLayout(costumerLayout);
-  layout->addWidget(costumerBox);
+  customer_info = new QLabel(customerBox);
+  actions_layout->addWidget(customer_info);
+  customerLayout->addLayout(actions_layout, 4, 0, 1, 3, Qt::AlignLeft);
+  customerBox->setLayout(customerLayout);
+  layout->addWidget(customerBox);
   // END
 
   layout->addStretch(1);
   setLayout(layout);
 
-  connect(btn_search_costumer, SIGNAL(clicked()), this,
-          SLOT(searchSqlCostumer()));
-  connect(btn_create_costumer, SIGNAL(clicked()), this,
-          SLOT(createSqlCostumer()));
+  connect(btn_search_customer, SIGNAL(clicked()), this,
+          SLOT(searchSqlCustomer()));
+  connect(btn_customer, SIGNAL(clicked()), this, SLOT(createSqlCustomer()));
 }
 
 const QHash<QString, QVariant> BuchfreundDisplay::createDataset() {
   QHash<QString, QVariant> data;
   MessageBox messanger(this);
   QList<UtilsMain *> list =
-      findChildren<UtilsMain *>(p_objPattern, Qt::FindChildrenRecursively);
+      findChildren<UtilsMain *>(c_regExp, Qt::FindChildrenRecursively);
   QList<UtilsMain *>::Iterator it;
   for (it = list.begin(); it != list.end(); ++it) {
     UtilsMain *cur = *it;
@@ -226,7 +222,13 @@ const QHash<QString, QVariant> BuchfreundDisplay::createDataset() {
   return data;
 }
 
-void BuchfreundDisplay::createSqlCostumer() {
+void BuchfreundDisplay::createSqlCustomer() {
+  int cid = c_id->value().toInt();
+  if (cid > 0) {
+    emit s_editCustomer(cid);
+    return;
+  }
+
   QHash<QString, QVariant> data = createDataset();
   if (data.size() < 3)
     return;
@@ -246,7 +248,7 @@ void BuchfreundDisplay::createSqlCostumer() {
     }
   }
 
-  QString sql("INSERT INTO costumers (");
+  QString sql("INSERT INTO customers (");
   sql.append(column.join(","));
   sql.append(",c_since,c_changed) VALUES (");
   sql.append(values.join(","));
@@ -261,22 +263,33 @@ void BuchfreundDisplay::createSqlCostumer() {
     if (q.value("c_id").toInt() > 0) {
       int cid = q.value("c_id").toInt();
       c_id->setValue(cid);
-      emit s_costumer(cid);
-      costumer_info->setText(tr("costumer add"));
-      btn_create_costumer->setEnabled(false);
+      emit s_orderEdit(true);
+      customer_info->setText(tr("customer add"));
+      setCustomerButton(1);
     }
   } else {
     QString errors = m_sql->lastError();
     if (!errors.isEmpty()) {
-      costumer_info->setText(tr("SQL errors!"));
+      customer_info->setText(tr("SQL errors!"));
       qDebug() << Q_FUNC_INFO << errors;
     }
+    setCustomerButton(0);
   }
 }
 
-void BuchfreundDisplay::searchSqlCostumer() {
+void BuchfreundDisplay::setCustomerButton(int type) {
+  if (type == 1) {
+    btn_customer->setText(tr("Create"));
+    btn_customer->setIcon(myIcon("db_add"));
+  } else {
+    btn_customer->setText(tr("Display"));
+    btn_customer->setIcon(myIcon("db_update"));
+  }
+}
+
+void BuchfreundDisplay::searchSqlCustomer() {
   QString buffer;
-  QString sql("SELECT c_id FROM costumers WHERE ");
+  QString sql("SELECT c_id FROM customers WHERE ");
   buffer = c_firstname->value().toString();
   sql.append("c_firstname ILIKE '" + buffer + "'");
   sql.append(" AND ");
@@ -298,16 +311,16 @@ void BuchfreundDisplay::searchSqlCostumer() {
     if (q.value("c_id").toInt() > 0) {
       int cid = q.value("c_id").toInt();
       c_id->setValue(cid);
-      emit s_costumer(cid);
-      costumer_info->setText(tr("found Costumer"));
+      emit s_orderEdit(true);
+      customer_info->setText(tr("found Customer"));
     }
   } else {
     QString errors = m_sql->lastError();
     if (errors.isEmpty()) {
-      btn_create_costumer->setEnabled(true);
-      costumer_info->setText(tr("Costumer not exists!"));
+      setCustomerButton(0);
+      customer_info->setText(tr("Customer not exists!"));
     } else {
-      costumer_info->setText(tr("SQL errors!"));
+      customer_info->setText(tr("SQL errors!"));
       qDebug() << Q_FUNC_INFO << errors;
     }
   }
@@ -332,6 +345,15 @@ void BuchfreundDisplay::checkArticleId() {
   }
 }
 
+void BuchfreundDisplay::resetDataFields() {
+  QList<UtilsMain *> list =
+      findChildren<UtilsMain *>(QString(), Qt::FindChildrenRecursively);
+  QList<UtilsMain *>::Iterator it;
+  for (it = list.begin(); it != list.end(); ++it) {
+    (*it)->reset();
+  }
+}
+
 void BuchfreundDisplay::setContent(const QJsonDocument &doc) {
   if (doc.isEmpty())
     return;
@@ -339,6 +361,9 @@ void BuchfreundDisplay::setContent(const QJsonDocument &doc) {
   int errors = QJsonValue(doc["error"]).toBool();
   if (errors)
     return;
+
+  // Aufräumen
+  resetDataFields();
 
   BF_Translater bfTr;
   QJsonObject response = QJsonValue(doc["response"]).toObject();
@@ -380,7 +405,7 @@ void BuchfreundDisplay::setContent(const QJsonDocument &doc) {
     }
   }
   // Jetzt nach Kunde suchen
-  searchSqlCostumer();
+  searchSqlCustomer();
   // Artikel Prüfen
   checkArticleId();
 }

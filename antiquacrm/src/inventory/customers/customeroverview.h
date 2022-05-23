@@ -25,7 +25,7 @@ public:
   QDomElement createAddressNode(const QString &data);
 };
 
-class CostumerOverview : public QTextBrowser {
+class CustomerOverview : public QTextBrowser {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -45,7 +45,7 @@ private:
   void createAdditionalSection();
 
 public:
-  explicit CostumerOverview(QWidget *parent = nullptr);
+  explicit CustomerOverview(QWidget *parent = nullptr);
   void createDocument(const DataFields &);
 };
 

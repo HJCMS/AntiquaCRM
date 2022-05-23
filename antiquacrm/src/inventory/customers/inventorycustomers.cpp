@@ -1,11 +1,11 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "inventorycostumers.h"
+#include "inventorycustomers.h"
 #include "antiqua_global.h"
 #include "applsettings.h"
-#include "costumertableview.h"
-#include "editcostumer.h"
+#include "customertableview.h"
+#include "editcustomer.h"
 #include "myicontheme.h"
 #include "searchbar.h"
 #include "statsactionbar.h"
@@ -38,9 +38,9 @@ static const QList<SearchBar::SearchFilter> bookSearchFilter() {
   return filter;
 }
 
-InventoryCostumers::InventoryCostumers(QWidget *parent) : Inventory{parent} {
-  setObjectName("InventoryCostumers");
-  setWindowTitle(tr("Costumers") + "[*]");
+InventoryCustomers::InventoryCustomers(QWidget *parent) : Inventory{parent} {
+  setObjectName("InventoryCustomers");
+  setWindowTitle(tr("Customers") + "[*]");
   setClosable(false);
 
   ApplSettings cfg;
@@ -55,20 +55,20 @@ InventoryCostumers::InventoryCostumers(QWidget *parent) : Inventory{parent} {
 
   // BEGIN Page#0
   QWidget *siteOneWidget = new QWidget(m_stackedWidget);
-  siteOneWidget->setObjectName("costumer_site_one_widget");
+  siteOneWidget->setObjectName("customer_site_one_widget");
   QVBoxLayout *siteOneLayout = new QVBoxLayout(siteOneWidget);
-  siteOneLayout->setObjectName("costumer_site_one_layout");
+  siteOneLayout->setObjectName("customer_site_one_layout");
 
   m_searchBar = new SearchBar(this);
-  m_searchBar->setObjectName("costumers_searchbar");
+  m_searchBar->setObjectName("customers_searchbar");
   m_searchBar->addSearchFilters(bookSearchFilter());
   siteOneLayout->addWidget(m_searchBar);
 
-  m_tableView = new CostumerTableView(this);
+  m_tableView = new CustomerTableView(this);
   siteOneLayout->addWidget(m_tableView);
 
   m_statsActionBar = new StatsActionBar(this);
-  m_statsActionBar->setObjectName("costumers_statusbar");
+  m_statsActionBar->setObjectName("customers_statusbar");
   siteOneLayout->addWidget(m_statsActionBar);
 
   siteOneWidget->setLayout(siteOneLayout);
@@ -76,9 +76,9 @@ InventoryCostumers::InventoryCostumers(QWidget *parent) : Inventory{parent} {
   // END Page#0
 
   // BEGIN Page#1
-  m_editCostumer = new EditCostumer(m_stackedWidget);
-  m_editCostumer->setEnabled(false);
-  m_stackedWidget->insertWidget(1, m_editCostumer);
+  m_editCustomer = new EditCustomer(m_stackedWidget);
+  m_editCustomer->setEnabled(false);
+  m_stackedWidget->insertWidget(1, m_editCustomer);
   // END Page#1
 
   setLayout(layout);
@@ -88,11 +88,11 @@ InventoryCostumers::InventoryCostumers(QWidget *parent) : Inventory{parent} {
 
   connect(m_searchBar, SIGNAL(searchClicked()), this, SLOT(searchConvert()));
 
-  connect(m_tableView, SIGNAL(s_updateCostumer(int)), this,
-          SLOT(editCostumer(int)));
+  connect(m_tableView, SIGNAL(s_updateCustomer(int)), this,
+          SLOT(editCustomer(int)));
 
-  connect(m_tableView, SIGNAL(s_insertCostumer()), this,
-          SLOT(createCostumer()));
+  connect(m_tableView, SIGNAL(s_insertCustomer()), this,
+          SLOT(createCustomer()));
 
   connect(m_tableView, SIGNAL(s_createOrder(int)), this,
           SIGNAL(s_createOrder(int)));
@@ -100,7 +100,7 @@ InventoryCostumers::InventoryCostumers(QWidget *parent) : Inventory{parent} {
   connect(m_tableView, SIGNAL(s_reportQuery(const QString &)), m_statsActionBar,
           SLOT(showMessage(const QString &)));
 
-  connect(m_editCostumer, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
+  connect(m_editCustomer, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
 
   connect(m_statsActionBar, SIGNAL(s_queryHistory(const QString &)),
           m_tableView, SLOT(queryHistory(const QString &)));
@@ -108,21 +108,21 @@ InventoryCostumers::InventoryCostumers(QWidget *parent) : Inventory{parent} {
   connect(m_statsActionBar, SIGNAL(s_refreshView()), m_tableView,
           SLOT(refreshView()));
 
-  connect(m_editCostumer, SIGNAL(s_postMessage(const QString &)), this,
+  connect(m_editCustomer, SIGNAL(s_postMessage(const QString &)), this,
           SLOT(displayMessageBox(const QString &)));
-  connect(m_editCostumer, SIGNAL(s_isModified(bool)), this,
+  connect(m_editCustomer, SIGNAL(s_isModified(bool)), this,
           SLOT(setIsModified(bool)));
 }
 
-void InventoryCostumers::openEditor(const QString &costumer) {
-  if (costumer.contains(primaryIndex)) {
-    m_editCostumer->setEnabled(true);
-    m_editCostumer->updateCostumer(costumer);
-    m_stackedWidget->setCurrentWidget(m_editCostumer);
+void InventoryCustomers::openEditor(const QString &customer) {
+  if (customer.contains(primaryIndex)) {
+    m_editCustomer->setEnabled(true);
+    m_editCustomer->updateCustomer(customer);
+    m_stackedWidget->setCurrentWidget(m_editCustomer);
   }
 }
 
-void InventoryCostumers::editCostumer(int id) {
+void InventoryCustomers::editCustomer(int id) {
   if (id < 1)
     return;
 
@@ -132,20 +132,20 @@ void InventoryCostumers::editCostumer(int id) {
   openEditor(s);
 }
 
-void InventoryCostumers::createCostumer() {
-  m_editCostumer->setEnabled(true);
-  m_editCostumer->createCostumer();
-  m_stackedWidget->setCurrentWidget(m_editCostumer);
+void InventoryCustomers::createCustomer() {
+  m_editCustomer->setEnabled(true);
+  m_editCustomer->createCustomer();
+  m_stackedWidget->setCurrentWidget(m_editCustomer);
 }
 
-void InventoryCostumers::searchConvert(const QString &search) {
+void InventoryCustomers::searchConvert(const QString &search) {
   if (search.length() <= minLength)
     return;
 
   searchConvert();
 }
 
-void InventoryCostumers::searchConvert() {
+void InventoryCustomers::searchConvert() {
   if (m_searchBar->currentSearchText().length() < 2)
     return;
 
@@ -162,7 +162,7 @@ void InventoryCostumers::searchConvert() {
   }
 }
 
-void InventoryCostumers::openTableView() {
+void InventoryCustomers::openTableView() {
   m_stackedWidget->setCurrentIndex(0);
-  m_editCostumer->setEnabled(false);
+  m_editCustomer->setEnabled(false);
 }

@@ -35,8 +35,8 @@ SET (PROJECT_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/inventory
  ${CMAKE_CURRENT_BINARY_DIR}/inventory/books
  ${CMAKE_CURRENT_SOURCE_DIR}/inventory/books
- ${CMAKE_CURRENT_BINARY_DIR}/inventory/costumers
- ${CMAKE_CURRENT_SOURCE_DIR}/inventory/costumers
+ ${CMAKE_CURRENT_BINARY_DIR}/inventory/customers
+ ${CMAKE_CURRENT_SOURCE_DIR}/inventory/customers
  ${CMAKE_CURRENT_BINARY_DIR}/inventory/orders
  ${CMAKE_CURRENT_SOURCE_DIR}/inventory/orders
  ${CMAKE_CURRENT_BINARY_DIR}/inventory/prints
@@ -71,9 +71,9 @@ Assistant
 Autofill
 Printing
 InventoryBooks
-InventoryCostumers
 InventoryPrints
 InventoryOrders
 InventoryProviders
+InventoryCustomers
 )
 

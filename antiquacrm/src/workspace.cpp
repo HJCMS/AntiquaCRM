@@ -4,7 +4,7 @@
 #include "workspace.h"
 #include "antiqua_global.h"
 #include "inventorybooks.h"
-#include "inventorycostumers.h"
+#include "inventorycustomers.h"
 #include "inventoryorders.h"
 #include "inventoryprints.h"
 #include "inventoryproviders.h"
@@ -85,17 +85,17 @@ int Workspace::addInventoryPrints(int index) {
   return i;
 }
 
-int Workspace::addInventoryCostumers(int index) {
-  m_tabCostumers = new InventoryCostumers(this);
-  connect(m_tabCostumers, SIGNAL(s_createOrder(int)), this,
+int Workspace::addInventoryCustomers(int index) {
+  m_tabCustomers = new InventoryCustomers(this);
+  connect(m_tabCustomers, SIGNAL(s_createOrder(int)), this,
           SLOT(createOrder(int)));
-  connect(m_tabCostumers, SIGNAL(s_windowModified(bool)), this,
+  connect(m_tabCustomers, SIGNAL(s_windowModified(bool)), this,
           SIGNAL(s_windowModified(bool)));
-  connect(m_tabCostumers, SIGNAL(s_postMessage(const QString &)), this,
+  connect(m_tabCustomers, SIGNAL(s_postMessage(const QString &)), this,
           SIGNAL(s_postMessage(const QString &)));
-  int i = insertTab(index, m_tabCostumers, tr("Costumers"));
-  m_tabBar->setTabData(i, m_tabCostumers->isClosable());
-  setTabToolTip(i, tr("Costumers inventory"));
+  int i = insertTab(index, m_tabCustomers, tr("Customers"));
+  m_tabBar->setTabData(i, m_tabCustomers->isClosable());
+  setTabToolTip(i, tr("Customers inventory"));
   setTabIcon(i, myIcon("edit_group"));
   return i;
 }
@@ -119,6 +119,8 @@ int Workspace::addInventoryProviders(int index) {
           SIGNAL(s_windowModified(bool)));
   connect(m_tabProviders, SIGNAL(s_postMessage(const QString &)), this,
           SIGNAL(s_postMessage(const QString &)));
+  connect(m_tabProviders, SIGNAL(openEditCustomer(int)), this,
+          SLOT(editCustomer(int)));
   int i = insertTab(index, m_tabProviders, tr("Providers"));
   m_tabBar->setTabData(i, m_tabProviders->isClosable());
   setTabToolTip(i, tr("Providers Inventory"));
@@ -137,10 +139,19 @@ void Workspace::closeTabClicked(int index) {
   }
 }
 
-void Workspace::createOrder(int costumerId) {
-  if (costumerId > 0 && (m_tabOrders != nullptr)) {
-    m_tabOrders->createOrder(costumerId);
+void Workspace::createOrder(int customerId) {
+  if (customerId > 0 && (m_tabOrders != nullptr)) {
+    m_tabOrders->createOrder(customerId);
     setCurrentWidget(m_tabOrders);
+  } else {
+    emit s_postMessage(tr("Order tab isn't open!"));
+  }
+}
+
+void Workspace::editCustomer(int customerId) {
+  if (customerId > 0 && (m_tabCustomers != nullptr)) {
+    m_tabCustomers->editCustomer(customerId);
+    setCurrentWidget(m_tabCustomers);
   } else {
     emit s_postMessage(tr("Order tab isn't open!"));
   }
@@ -178,11 +189,11 @@ void Workspace::openTab(int index) {
       setCurrentWidget(m_tabPrints);
       return;
     }
-  } else if (index == Tab::Costumers) {
-    if (indexOf(m_tabCostumers) < 0) {
-      i = addInventoryCostumers(count() + 1);
+  } else if (index == Tab::Customers) {
+    if (indexOf(m_tabCustomers) < 0) {
+      i = addInventoryCustomers(count() + 1);
     } else {
-      setCurrentWidget(m_tabCostumers);
+      setCurrentWidget(m_tabCustomers);
       return;
     }
   } else if (index == Tab::Orders) {
