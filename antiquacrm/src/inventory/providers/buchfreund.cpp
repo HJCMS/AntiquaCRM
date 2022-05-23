@@ -9,11 +9,16 @@
 #include "providersstatements.h"
 #include "sqlcore.h"
 
-#include <QtCore>
-#include <QtWidgets>
+#include <QDir>
+#include <QGridLayout>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QVBoxLayout>
 
 BF_Translater::BF_Translater() : QMap<QString, QString>{} {
   // public.customers @{
+  insert("person","a_customer_id");
   insert("anrede", "c_gender");
   insert("vorname", "c_firstname");
   insert("name", "c_lastname");
@@ -26,13 +31,21 @@ BF_Translater::BF_Translater() : QMap<QString, QString>{} {
   // @}
 
   // public.article_orders @{
-  insert("id", "a_provider_id");
   insert("bestellnr", "a_article_id");
   insert("menge_bestellt", "a_count");
   insert("preis_pro_einheit", "a_sell_price");
   insert("datum", "a_modified");
   insert("titel", "a_title");
   // @}
+
+  // public.inventory_orders @{
+  insert("id", "o_provider_order_id");
+  insert("provider", "o_provider_name");
+  insert("menge_storniert", "o_cancellation");
+  insert("stornogrund", "o_cancellation_text");
+  insert("lagerfach", "sl_storage");
+  // @}
+
 }
 
 const QString BF_Translater::sqlParam(const QString &key) {
@@ -109,10 +122,10 @@ BuchfreundDisplay::BuchfreundDisplay(QWidget *parent) : QWidget{parent} {
   a_article_id->setObjectName("a_article_id");
   a_article_id->setInfo(tr("Article Id"));
   orderLayout->addWidget(a_article_id, 0, 0, 1, 1);
-  a_provider_id = new LineEdit(orderBox);
-  a_provider_id->setObjectName("a_provider_id");
-  a_provider_id->setInfo(tr("Provider Id"));
-  orderLayout->addWidget(a_provider_id, 0, 1, 1, 1);
+  o_provider_order_id = new LineEdit(orderBox);
+  o_provider_order_id->setObjectName("o_provider_order_id");
+  o_provider_order_id->setInfo(tr("Provider Id"));
+  orderLayout->addWidget(o_provider_order_id, 0, 1, 1, 1);
   a_count = new IntSpinBox(orderBox);
   a_count->setObjectName("a_count");
   a_count->setInfo(tr("Quantity"));
@@ -194,6 +207,16 @@ BuchfreundDisplay::BuchfreundDisplay(QWidget *parent) : QWidget{parent} {
   layout->addWidget(customerBox);
   // END
 
+  // BEGIN cancellation
+  QGroupBox *cancellationBox = new QGroupBox(this);
+  cancellationBox->setObjectName("display_cancellation");
+  cancellationBox->setTitle(tr("cancellation"));
+  QGridLayout *cancellationLayout = new QGridLayout(cancellationBox);
+  // TODO
+  cancellationBox->setLayout(cancellationLayout);
+  layout->addWidget(cancellationBox);
+  // END
+
   layout->addStretch(1);
   setLayout(layout);
 
@@ -202,11 +225,13 @@ BuchfreundDisplay::BuchfreundDisplay(QWidget *parent) : QWidget{parent} {
   connect(btn_customer, SIGNAL(clicked()), this, SLOT(createSqlCustomer()));
 }
 
-const QHash<QString, QVariant> BuchfreundDisplay::createDataset() {
+const QHash<QString, QVariant>
+BuchfreundDisplay::createDataset(/* pattern */
+                                 const QRegularExpression &pattern) {
   QHash<QString, QVariant> data;
   MessageBox messanger(this);
   QList<UtilsMain *> list =
-      findChildren<UtilsMain *>(c_regExp, Qt::FindChildrenRecursively);
+      findChildren<UtilsMain *>(pattern, Qt::FindChildrenRecursively);
   QList<UtilsMain *>::Iterator it;
   for (it = list.begin(); it != list.end(); ++it) {
     UtilsMain *cur = *it;
@@ -229,7 +254,7 @@ void BuchfreundDisplay::createSqlCustomer() {
     return;
   }
 
-  QHash<QString, QVariant> data = createDataset();
+  QHash<QString, QVariant> data = createDataset(c_regExp);
   if (data.size() < 3)
     return;
 
@@ -263,7 +288,6 @@ void BuchfreundDisplay::createSqlCustomer() {
     if (q.value("c_id").toInt() > 0) {
       int cid = q.value("c_id").toInt();
       c_id->setValue(cid);
-      emit s_orderEdit(true);
       customer_info->setText(tr("customer add"));
       setCustomerButton(1);
     }
@@ -311,7 +335,6 @@ void BuchfreundDisplay::searchSqlCustomer() {
     if (q.value("c_id").toInt() > 0) {
       int cid = q.value("c_id").toInt();
       c_id->setValue(cid);
-      emit s_orderEdit(true);
       customer_info->setText(tr("found Customer"));
     }
   } else {
@@ -365,6 +388,7 @@ void BuchfreundDisplay::setContent(const QJsonDocument &doc) {
   // Aufräumen
   resetDataFields();
 
+  p_data.clear();
   BF_Translater bfTr;
   QJsonObject response = QJsonValue(doc["response"]).toObject();
   if (!response.isEmpty()) {
@@ -397,9 +421,9 @@ void BuchfreundDisplay::setContent(const QJsonDocument &doc) {
       QJsonObject::iterator it;
       for (it = article.begin(); it != article.end(); ++it) {
         QString f = bfTr.sqlParam(it.key());
-        QVariant val = it.value().toVariant();
-        if (!f.isEmpty() && !val.isNull()) {
-          setValue(f, val);
+        QVariant curValue = it.value().toVariant();
+        if (!f.isEmpty() && !curValue.isNull()) {
+          setValue(f, curValue);
         }
       }
     }
@@ -423,6 +447,47 @@ void BuchfreundDisplay::setValue(const QString &objName,
     obj->setValue(value);
     return;
   }
+}
+
+const ProviderOrders BuchfreundDisplay::fetchOrderData() {
+  p_data.clear();
+  int cid = c_id->value().toInt();
+  if (cid < 1) {
+    qWarning("Empty Customer ID");
+    return p_data;
+  }
+
+  BF_Translater bfTr;
+  ProviderOrder o0;
+  o0.setGroup("order");
+  o0.setParam(bfTr.jsonParam("a_customer_id"));
+  o0.setFieldname("a_customer_id");
+  o0.setValue(c_id->value());
+  p_data.append(o0);
+
+  ProviderOrder o1;
+  o1.setGroup("provider");
+  o0.setParam("provider");
+  o1.setFieldname("o_provider_name");
+  o1.setValue("www.buchfreund.de");
+  p_data.append(o1);
+
+  QHash<QString, QVariant> data = createDataset(regExp);
+  QHashIterator<QString, QVariant> it(data);
+  while (it.hasNext()) {
+    it.next();
+    if(bfTr.jsonParam(it.key()).isEmpty() || it.key().contains("c_"))
+      continue;
+
+    ProviderOrder o;
+    o.setGroup("order");
+    o.setParam(bfTr.jsonParam(it.key()));
+    o.setFieldname(it.key());
+    o.setValue(it.value());
+    p_data.append(o);
+  }
+
+  return p_data;
 }
 
 Buchfreund::Buchfreund(QWidget *parent)
@@ -453,7 +518,8 @@ Buchfreund::Buchfreund(QWidget *parent)
 }
 
 void Buchfreund::testing() {
-  QFile fp("/tmp/testfile.json");
+  QString sub("/Developement/antiqua/database/tmp/testfile.json");
+  QFile fp(QDir::homePath() + sub);
   if (fp.open(QIODevice::ReadOnly)) {
     QTextStream r(&fp);
     QString data(r.readAll());

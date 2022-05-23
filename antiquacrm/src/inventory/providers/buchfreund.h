@@ -13,6 +13,7 @@
 #include <QWidget>
 
 #include <Utils>
+#include <AntiquaCRM>
 
 namespace HJCMS {
 class SqlCore;
@@ -117,7 +118,7 @@ private:
    * @{
    */
   SerialID *a_article_id;
-  LineEdit *a_provider_id;
+  LineEdit *o_provider_order_id;
   IntSpinBox *a_count;
   PriceEdit *a_sell_price;
   QLineEdit *a_title;
@@ -135,16 +136,23 @@ private:
 
   /**
    * @brief Wird für findchild<UtilsMain *> benötigt!
-   * @note Wird Aktuell nur für "customers" Insert verwendet!
+   * @li c_regExp : Wird Aktuell nur für "customers" verwendet!
+   * @li regExp : Wird Aktuell nur für "Erstellung" verwendet!
    * @see createDataset
    */
   const QRegularExpression c_regExp = QRegularExpression("^c_[a-z0-3_]+$");
+  const QRegularExpression regExp = QRegularExpression("^[aco]_[a-z0-3_]+$");
 
   /**
    * @brief Mit @ref c_regExp nach Datenfeldern suchen
    * @return QHash<ObjectName,Datenwert>
    */
-  const QHash<QString, QVariant> createDataset();
+  const QHash<QString, QVariant> createDataset(const QRegularExpression &);
+
+  /**
+   * @brief Aktuelle Bestelldaten
+   */
+  ProviderOrders p_data;
 
   /**
    * @brief setCustomerButton
@@ -195,17 +203,17 @@ Q_SIGNALS:
   void s_warning(const QString &);
 
   /**
-   * @brief Editor aktivieren
-   */
-  void s_orderEdit(bool);
-
-  /**
    * @brief Kunde Anzeigen/Bearbeiten
    */
   void s_editCustomer(int);
 
 public:
   explicit BuchfreundDisplay(QWidget *parent = nullptr);
+
+  /**
+   * @brief Datensatz für Auftragserstellung
+   */
+  const ProviderOrders fetchOrderData();
 };
 
 class Buchfreund : public QSplitter {

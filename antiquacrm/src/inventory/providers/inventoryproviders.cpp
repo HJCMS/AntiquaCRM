@@ -7,8 +7,11 @@
 #include "buchfreund.h"
 #include "myicontheme.h"
 
-#include <QtCore>
-#include <QtWidgets>
+#include <QHBoxLayout>
+#include <QStringList>
+#include <QStyle>
+#include <QTimer>
+#include <QVBoxLayout>
 
 ProvidersPager::ProvidersPager(QWidget *parent) : QToolBar{parent} {
   setObjectName("inventory_providers_pager");
@@ -153,9 +156,7 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   initPages();
 
   connect(m_toolBar, SIGNAL(s_refresh()), bfProvider, SLOT(getOpenOrders()));
-
-  connect(bfProvider->bfDisplay, SIGNAL(s_orderEdit(bool)), m_toolBar,
-          SLOT(enableOrderButton(bool)));
+  connect(m_toolBar, SIGNAL(s_createOrder()), this, SLOT(createEditOrders()));
 
   connect(bfProvider->bfDisplay, SIGNAL(s_editCustomer(int)), this,
           SLOT(sendViewCustomer(int)));
@@ -174,11 +175,28 @@ void InventoryProviders::initPages() {
 }
 
 void InventoryProviders::sendViewCustomer(int cid) {
+  m_toolBar->enableOrderButton(true);
   if (cid > 0) {
     customerId = cid;
     emit openEditCustomer(customerId);
   } else {
     customerId = -1;
-    m_toolBar->enableOrderButton(false);
   }
+}
+
+void InventoryProviders::createEditOrders()
+{
+  qDebug() << Q_FUNC_INFO << customerId;
+  if(customerId < 1)
+    return;
+
+  ProviderOrders list = bfProvider->bfDisplay->fetchOrderData();
+  ProviderOrders::iterator i;
+  for (i = list.begin(); i != list.end(); ++i)
+  {
+    ProviderOrder o(*i);
+    qDebug() << o.group() << o.param() << o.fieldname() << o.value();
+  }
+
+  qDebug() << Q_FUNC_INFO << customerId << list.size();
 }

@@ -9,14 +9,11 @@
 #include <AntiquaCRM>
 
 #include <QAction>
-#include <QComboBox>
 #include <QFrame>
 #include <QLabel>
 #include <QObject>
 #include <QPushButton>
-#include <QSplitter>
 #include <QStackedWidget>
-#include <QTabWidget>
 #include <QToolBar>
 #include <QWidget>
 
@@ -141,14 +138,15 @@ private:
   ProvidersToolBar *m_toolBar;
 
   /**
-    @brief Fenster gruppierung
-  */
+   * @brief Fenster gruppierung
+   * @section Stacked Widgets
+   */
   QStackedWidget *m_stackedWidget;
 
   /**
-   * @brief Schnittstelle zu "buchfreund.de"
+   * @brief Schnittstelle zu Dienstleistern
    * Die Kommunikation erfolgt über JSON Fifo
-   *
+   * @section Stacked Widgets
    */
   Buchfreund *bfProvider;
 
@@ -160,10 +158,19 @@ private:
   void openEditor(const QString &){/* TODO */};
 
 Q_SIGNALS:
+  /**
+   * @brief Sende SIGNAL in Editoransicht öffnen.
+   */
   void openEditCustomer(int cid);
 
+  /**
+   * @brief Sende SIGNAL an Auftragseditor.
+   */
+  void createEditOrder(/* TODO */);
+
 private Q_SLOTS:
-  void searchConvert(const QString &search) { /* TODO */
+  void searchConvert(const QString &search) {
+    /* hier nicht notwendig */
     Q_UNUSED(search)
   };
 
@@ -182,6 +189,11 @@ private Q_SLOTS:
    *  ob der Erstellen Knopf aktiviert wird!
    */
   void sendViewCustomer(int cid);
+
+  /**
+   * @brief Knopf Signal verarbeiten
+   */
+  void createEditOrders();
 
 public:
   /**
