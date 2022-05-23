@@ -911,8 +911,8 @@ ORDER BY artnr ASC;");
   }
 };
 
-sub insert_costumers {
-  my $table = "public.costumers";
+sub insert_customers {
+  my $table = "public.customers";
   my $query = $dbc->prepare("SELECT kdnr AS c_id,
   name1 AS , plz_strasse, ort,strasse
 FROM xkd WHERE postfach IS NULL
