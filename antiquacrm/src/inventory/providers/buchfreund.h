@@ -9,7 +9,7 @@
 #include <QListWidget>
 #include <QObject>
 #include <QRegularExpression>
-#include <QSplitter>
+#include <QScrollArea>
 #include <QWidget>
 
 #include <Utils>
@@ -18,6 +18,9 @@
 namespace HJCMS {
 class SqlCore;
 };
+
+class ProvidersOrderTable;
+class ProvidersCustomerData;
 
 /**
  * @class BF_Translater
@@ -48,193 +51,16 @@ public:
 };
 
 /**
- * @class Buchfreundlist
- * @ingroup Providers
- * @brief Anzeige der Buchfreund Bestellliste
+ * @brief Stellt JSon Bestellanfragen
+ * Es werden nur die Bestellungen der letzten
+ * 14 Tage ausgegeben!
  */
-class Buchfreundlist : public QListWidget {
+class BF_JSonQuery : public QObject {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  /**
-   * @brief Erstellt ein ListWidgetItem und fügt es ein.
-   */
-  void addOrder(const QString &, const QDateTime &);
-
-private Q_SLOTS:
-  /**
-   * @brief Signalverarbeitung für itemClicked
-   */
-  void getItemData(QListWidgetItem *);
-
-public Q_SLOTS:
-  /**
-   * @brief Json Dokument einlesen
-   */
-  void setView(const QJsonDocument &doc);
-
-Q_SIGNALS:
-  /**
-   * @brief Erstellt Json abfrage und leitet weiter
-   */
-  void orderClicked(const QJsonDocument &);
-
-public:
-  explicit Buchfreundlist(QWidget *parent = nullptr);
-};
-
-/**
- * @ingroup Providers
- * @class BuchfreundDisplay
- * @brief Anzeige der Buchfreund Bestelldetails
- */
-class BuchfreundDisplay : public QWidget {
-  Q_OBJECT
-  Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "https://www.hjcms.de")
-
-private:
-  /**
-   * @section Bestellerdaten
-   * @{
-   */
-  GenderBox *c_gender;
-  LineEdit *c_firstname;
-  LineEdit *c_lastname;
-  LineEdit *c_location;
-  LineEdit *c_street;
-  EMailEdit *c_email_0;
-  LineEdit *c_country;
-  SerialID *c_id;
-  PhoneEdit *c_phone_0;
-  PostalCode *c_postalcode;
-
-  /**
-   * @}
-   *
-   * @section Bestell informationen
-   * @{
-   */
-  SerialID *a_article_id;
-  LineEdit *o_provider_order_id;
-  IntSpinBox *a_count;
-  PriceEdit *a_sell_price;
-  QLineEdit *a_title;
-  DateTimeEdit *a_modified;
-  BoolBox *o_cancellation;
-  Cancellation *o_cancellation_text;
-  DateTimeEdit *o_cancellation_datetime;
-  /** @} */
-
-  QPushButton *btn_customer;
-  QPushButton *btn_search_customer;
-  QLabel *customer_info;
-
-  /**
-   * @brief Datenbank Verbindung
-   */
-  HJCMS::SqlCore *m_sql;
-
-  /**
-   * @brief Wird für findchild<UtilsMain *> benötigt!
-   * @li c_regExp : Wird Aktuell nur für "customers" verwendet!
-   * @li regExp : Wird Aktuell nur für "Erstellung" verwendet!
-   * @see createDataset
-   */
-  const QRegularExpression c_regExp = QRegularExpression("^c_[a-z0-3_]+$");
-  const QRegularExpression regExp = QRegularExpression("^[aco]_[a-z0-3_]+$");
-
-  /**
-   * @brief Mit @ref c_regExp nach Datenfeldern suchen
-   * @return QHash<ObjectName,Datenwert>
-   */
-  const QHash<QString, QVariant> createDataset(const QRegularExpression &);
-
-  /**
-   * @brief Aktuelle Bestelldaten
-   */
-  ProviderOrders p_data;
-
-  /**
-   * @brief setCustomerButton
-   * @param type 0 = create  1 = display
-   */
-  void setCustomerButton(int type);
-
-private Q_SLOTS:
-  /**
-   * @brief SQL Kunde erstellen
-   */
-  void createSqlCustomer();
-
-  /**
-   * @brief SQL Kundenprüfung
-   */
-  void searchSqlCustomer();
-
-  /**
-   * @brief SQL Artikel Prüfung
-   */
-  void checkArticleId();
-
-  /**
-   * @brief Hinweis zum Ablauf wenn ausgeführt!
-   */
-  void noticeCancelation(bool);
-
-public Q_SLOTS:
-  /**
-   * @brief Datenfelder zurück setzen!
-   */
-  void resetDataFields();
-
-  /**
-   * @brief Durchlaufe das Json Dokument und ...
-   * Übersetze mit @ref BF_Translater die Datenfelder,
-   * bei erfolg werden sie an @ref setValue weiter gereicht.
-   */
-  void setContent(const QJsonDocument &);
-
-  /**
-   * @brief Befülle Datenfeld
-   * @param objName  - Objektname des Datenfeldes
-   * @param value    - Inhalt
-   */
-  void setValue(const QString &objName, const QVariant &value);
-
-Q_SIGNALS:
-  /**
-   * @brief Fehler an Elternfenster senden!
-   */
-  void s_warning(const QString &);
-
-  /**
-   * @brief Kunde Anzeigen/Bearbeiten
-   */
-  void s_editCustomer(int);
-
-public:
-  explicit BuchfreundDisplay(QWidget *parent = nullptr);
-
-  /**
-   * @brief Datensatz für Auftragserstellung
-   */
-  const ProviderOrders fetchOrderData();
-};
-
-class Buchfreund : public QSplitter {
-  Q_OBJECT
-  Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "https://www.hjcms.de")
-
-private:
-  /**
-   * @brief Settings Konfigurations Gruppe
-   */
-  const QString configGroup;
-
   /**
    * @brief Erstelle Url für die Abfrage
    * @param operation
@@ -242,35 +68,47 @@ private:
    */
   const QUrl apiQuery(const QString &operation);
 
-  /**
-   * @brief Abfrage und erstellen der Listenansicht
-   */
-  void queryListViewContent();
+Q_SIGNALS:
+  void listResponsed(const QJsonDocument &doc);
+  void orderResponsed(const QJsonDocument &doc);
 
 public Q_SLOTS:
-  /**
-   * @brief Listenabfrage starten
-   * Api-JSon-Query BF::"bestellungen"
-   */
-  void getOpenOrders();
-
+  void queryList();
   /**
    * @brief Detailabfrage mit BF-* Id stellen.
    * Api-JSon-Query BF::"bestellung"
    */
-  void getOrderContent(const QJsonDocument &);
+  void queryOrder(const QString &bfId);
 
 public:
-  /**
-   * @brief Liste der Offnenen Bestellungen
-   */
-  Buchfreundlist *bfList;
+  explicit BF_JSonQuery(QObject * parent = nullptr);
+};
+
+class Buchfreund : public QScrollArea {
+  Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
+
+private:
+  HJCMS::SqlCore *m_sql;
+
+  ProvidersOrderTable *m_ordersTable;
+  ProvidersCustomerData *m_customerData;
 
   /**
-   * @brief Bestellungs Details
+   * @brief Werte einfügen
+   * @param objName
+   * @param value
    */
-  BuchfreundDisplay *bfDisplay;
+  void setValue(const QString &objName, const QVariant &value);
 
+private Q_SLOTS:
+  void setContent(const QJsonDocument &);
+
+public Q_SLOTS:
+  QT_DEPRECATED void fetchOrderContent(const QString &bfid);
+
+public:
   explicit Buchfreund(QWidget *parent = nullptr);
 };
 

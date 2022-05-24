@@ -19,10 +19,31 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
 
   ApplSettings config;
 
+  /**
+   * Tabellenfelder welche NICHT bei INSERT/UPDATE
+   * benötigt werden aber im Overview enthalten sind.
+   */
+  ignoreList.clear();
+  ignoreList.append("o_since");
+  ignoreList.append("o_modified");
+
   Qt::Alignment defaultAlignment = (Qt::AlignRight | Qt::AlignVCenter);
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
+  mainLayout->setContentsMargins(2, 2, 2, 2);
   mainLayout->setObjectName("mainLayout");
+
+  QScrollArea *m_scroolView = new QScrollArea(this);
+  m_scroolView->setObjectName("editor_scroll_view");
+  m_scroolView->setWidgetResizable(true);
+
+  QWidget *mainWidget = new QWidget(m_scroolView);
+  mainWidget->setObjectName("editor_main_widget");
+  mainWidget->setMinimumHeight(680);
+  m_scroolView->setWidget(mainWidget);
+
+  QVBoxLayout *mainWidgetLayout = new QVBoxLayout(mainWidget);
+  mainWidgetLayout->setObjectName("mainLayout");
 
   QHBoxLayout *row0 = new QHBoxLayout();
   o_id = new SerialID(this);
@@ -31,40 +52,40 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   o_id->setRequired(true);
   row0->addWidget(o_id);
 
-  o_order_status = new OrderStatusBox(this);
+  o_order_status = new OrderStatusBox(mainWidget);
   o_order_status->setObjectName("o_order_status");
   o_order_status->setInfo(tr("Status"));
   row0->addWidget(o_order_status);
 
-  o_payment_status = new OrdersPaymentBox(this);
+  o_payment_status = new OrdersPaymentBox(mainWidget);
   o_payment_status->setObjectName("o_payment_status");
   o_payment_status->setInfo(tr("Payment"));
   row0->addWidget(o_payment_status);
 
-  o_delivery_service = new DeliveryService(this);
+  o_delivery_service = new DeliveryService(mainWidget);
   o_delivery_service->setObjectName("o_delivery_service");
   o_delivery_service->setInfo(tr("Delivery Service"));
   row0->addWidget(o_delivery_service);
 
   row0->addStretch(1);
-  mainLayout->addLayout(row0);
+  mainWidgetLayout->addLayout(row0);
 
   QGridLayout *row1 = new QGridLayout();
-  o_customer_id = new SerialID(this);
+  o_customer_id = new SerialID(mainWidget);
   o_customer_id->setObjectName("o_customer_id");
   o_customer_id->setInfo(tr("Address for Customer ID"));
   row1->addWidget(o_customer_id, 0, 0, 1, 1, Qt::AlignLeft);
-  o_provider_name = new LineEdit(this);
+  o_provider_name = new LineEdit(mainWidget);
   o_provider_name->setObjectName("o_provider_name");
   o_provider_name->setInfo(tr("Provider Order"));
   row1->addWidget(o_provider_name, 0, 1, 1, 1);
-  m_customer_address = new TextField(this);
+  m_customer_address = new TextField(mainWidget);
   m_customer_address->setObjectName("m_customer_address");
   row1->addWidget(m_customer_address, 1, 0, 1, 1);
-  o_provider_order = new TextField(this);
+  o_provider_order = new TextField(mainWidget);
   o_provider_order->setObjectName("o_provider_order");
   row1->addWidget(o_provider_order, 1, 1, 1, 1);
-  mainLayout->addLayout(row1);
+  mainWidgetLayout->addLayout(row1);
 
   QHBoxLayout *row2 = new QHBoxLayout();
   row2->addStretch(1);
@@ -80,13 +101,40 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   o_closed->setObjectName("o_closed");
   o_closed->setInfo(tr("close"));
   row2->addWidget(o_closed);
-  mainLayout->addLayout(row2);
+  mainWidgetLayout->addLayout(row2);
 
-  m_paymentList = new OrdersItemList(this);
+  m_paymentList = new OrdersItemList(mainWidget);
   m_paymentList->setObjectName("m_paymentList");
-  mainLayout->addWidget(m_paymentList);
+  mainWidgetLayout->addWidget(m_paymentList);
 
-  mainLayout->addStretch(1);
+  // Stornierung
+  m_cancellation = new QGroupBox(mainWidget);
+  m_cancellation->setObjectName("cancellation");
+  m_cancellation->setCheckable(true);
+  m_cancellation->setChecked(false);
+  m_cancellation->setTitle(tr("cancellation"));
+  QGridLayout *cancleLayout = new QGridLayout(m_cancellation);
+
+  o_cancellation_text = new Cancellation(m_cancellation);
+  o_cancellation_text->setObjectName("o_cancellation_text");
+  o_cancellation_text->setInfo(tr("Reason"));
+  cancleLayout->addWidget(o_cancellation_text, 0, 0, 1, 2);
+
+  o_cancellation_datetime = new DateTimeEdit(m_cancellation);
+  o_cancellation_datetime->setObjectName("o_cancellation_datetime");
+  cancleLayout->addWidget(o_cancellation_datetime, 1, 0, 1, 1);
+
+  o_cancellation = new BoolBox(m_cancellation);
+  o_cancellation->setObjectName("o_cancellation");
+  o_cancellation->setInfo(tr("cancel this order"));
+  cancleLayout->addWidget(o_cancellation, 1, 1, 1, 1);
+
+  m_cancellation->setLayout(cancleLayout);
+  mainWidgetLayout->addWidget(m_cancellation);
+
+  mainWidgetLayout->addStretch(1);
+  mainWidget->setLayout(mainWidgetLayout);
+  mainLayout->addWidget(m_scroolView);
 
   m_actionBar = new EditorActionBar(this);
   m_actionBar->setObjectName("m_actionBar");
@@ -160,6 +208,9 @@ const QHash<QString, QVariant> OrderEditor::createSqlDataset() {
   QList<UtilsMain *>::Iterator it;
   for (it = list.begin(); it != list.end(); ++it) {
     UtilsMain *cur = *it;
+    if (ignoreList.contains(cur->objectName(), Qt::CaseSensitive))
+      continue;
+
     if (cur->isRequired() && !cur->isValid()) {
       sqlNoticeMessage(cur->notes());
       cur->setFocus();
@@ -538,7 +589,7 @@ void OrderEditor::openPrinterDialog() {
   // Start Dialog
   if (dialog->exec(deliveries)) {
     m_sql->query(setOrderDeliveryId(oid, dialog->deliveryNumber()));
-    if(!m_sql->lastError().isEmpty()) {
+    if (!m_sql->lastError().isEmpty()) {
       qDebug() << Q_FUNC_INFO << m_sql->lastError();
     }
   }

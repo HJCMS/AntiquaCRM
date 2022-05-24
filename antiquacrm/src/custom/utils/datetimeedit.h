@@ -30,7 +30,8 @@ class DateTimeEdit final : public UtilsMain {
 private:
   bool readOnly = false;
   QDateTime p_value;
-  QString p_format;
+  QString p_displayFormat;
+  QString p_outputFormat;
   QLabel *m_info;
   QDateTimeEdit *m_edit;
   CalendarViewer *m_popup;
@@ -47,8 +48,10 @@ public:
   explicit DateTimeEdit(QWidget *parent = nullptr);
   const QDateTime system();
   void setDisplayFormat(const QString &format = QString("dd.MM.yyyy"));
+  void setOutputFormat(const QString &format = QString("CURRENT_TIMESTAMP"));
   void setReadOnly(bool b = false);
   const QVariant value();
+  const QVariant dateTime();
   bool isValid();
   void setInfo(const QString &);
   const QString info();

@@ -6,6 +6,8 @@
 #include "applsettings.h"
 #include "myicontheme.h"
 #include "provider.h"
+#include "providerscustomerdata.h"
+#include "providersordertable.h"
 #include "providersstatements.h"
 #include "sqlcore.h"
 
@@ -14,8 +16,11 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonValue>
-#include <QVBoxLayout>
+#include <QLabel>
 #include <QMessageBox>
+#include <QVBoxLayout>
+
+static const QString getConfigGroup() { return QString("provider/whsoft"); }
 
 BF_Translater::BF_Translater() : QMap<QString, QString>{} {
   // public.customers @{
@@ -67,343 +72,95 @@ const QString BF_Translater::jsonParam(const QString &key) {
   return QString();
 }
 
-Buchfreundlist::Buchfreundlist(QWidget *parent) : QListWidget{parent} {
-  setObjectName("inventory_buchfreund_liste");
-
-  connect(this, SIGNAL(itemClicked(QListWidgetItem *)), this,
-          SLOT(getItemData(QListWidgetItem *)));
+BF_JSonQuery::BF_JSonQuery(QObject *parent) : QObject{parent} {
+  setObjectName("buchfreund_json_query");
 }
 
-void Buchfreundlist::addOrder(const QString &id, const QDateTime &date) {
-  QListWidgetItem *item = new QListWidgetItem(this, QListWidgetItem::UserType);
-  item->setData(Qt::DecorationRole, myIcon("autostart"));
-  item->setData(Qt::DisplayRole, date.toString(Qt::SystemLocaleShortDate));
-  item->setData(Qt::ToolTipRole, date.toString(Qt::SystemLocaleLongDate));
-  item->setData(Qt::UserRole, id);
-  addItem(item);
+const QUrl BF_JSonQuery::apiQuery(const QString &operation) {
+  QRegExp pattern("([\\/]{2,})");
+  ApplSettings cfg;
+
+  QUrl url;
+  cfg.beginGroup(getConfigGroup());
+  url.setScheme(cfg.value("api_scheme").toString());
+  url.setHost(cfg.value("api_host").toString());
+  QString path(cfg.value("api_basepath").toString());
+  path.append("/");
+  path.append(cfg.value("api_key").toString());
+  path.append("/" + operation);
+  cfg.endGroup();
+  url.setPath(path.replace(pattern, "/"));
+  return url;
 }
 
-void Buchfreundlist::getItemData(QListWidgetItem *item) {
+void BF_JSonQuery::queryList() {
+  QDateTime curDt = QDateTime::currentDateTime();
+  QTime t(curDt.time().hour(), curDt.time().minute(), 0);
+  curDt.setTime(t);
+  QDateTime from = curDt.addDays(-14);
   QJsonObject obj;
-  obj.insert("id", QJsonValue(item->data(Qt::UserRole).toString()));
+  obj.insert("datum_von",
+             QJsonValue::fromVariant(from.toString(BF_DATE_FORMAT)));
+  obj.insert("datum_bis",
+             QJsonValue::fromVariant(curDt.toString(BF_DATE_FORMAT)));
   QJsonDocument doc(obj);
-  emit orderClicked(doc);
+  QByteArray data = doc.toJson(QJsonDocument::Compact);
+  QUrl url = apiQuery("bestellungen");
+  Provider *prQuery = new Provider(this, false);
+  prQuery->setObjectName("buchfreund_query_list");
+  connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), this,
+          SIGNAL(listResponsed(const QJsonDocument &)));
+  connect(prQuery, SIGNAL(finished()), prQuery, SLOT(deleteLater()));
+  prQuery->sendPost(url, data);
 }
 
-void Buchfreundlist::setView(const QJsonDocument &doc) {
-  if (doc.isEmpty())
-    return;
-
-  int errors = QJsonValue(doc["error"]).toBool();
-  if (!errors) {
-    clear();
-    QJsonArray array = QJsonValue(doc["response"]).toArray();
-    for (int i = 0; i < array.count(); i++) {
-      QJsonObject obj = array[i].toObject();
-      QString id = obj["id"].toString();
-      QString ds = obj["datum"].toString();
-      QDateTime dt = QDateTime::fromString(ds, BF_DATE_FORMAT);
-      addOrder(id, dt);
-    }
-  }
+void BF_JSonQuery::queryOrder(const QString &bfId) {
+  QJsonObject obj;
+  obj.insert("id", QJsonValue(bfId));
+  QJsonDocument doc(obj);
+  QByteArray data = doc.toJson(QJsonDocument::Compact);
+  QUrl url = apiQuery("bestellung");
+  Provider *prQuery = new Provider(this, false);
+  prQuery->setObjectName("buchfreund_query_view");
+  connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), this,
+          SIGNAL(orderResponsed(const QJsonDocument &)));
+  connect(prQuery, SIGNAL(finished()), prQuery, SLOT(deleteLater()));
+  prQuery->sendPost(url, data);
 }
 
-BuchfreundDisplay::BuchfreundDisplay(QWidget *parent) : QWidget{parent} {
-  setObjectName("inventory_buchfreund_anzeige");
+Buchfreund::Buchfreund(QWidget *parent) : QScrollArea{parent} {
+  setWidgetResizable(true);
 
   m_sql = new HJCMS::SqlCore(this);
 
-  QVBoxLayout *layout = new QVBoxLayout(this);
+  QWidget *mainWidget = new QWidget(this);
+  QVBoxLayout *layout = new QVBoxLayout(mainWidget);
+  layout->setContentsMargins(0, 0, 0, 0);
 
-  QGroupBox *orderBox = new QGroupBox(this);
-  orderBox->setObjectName("display_order_box");
-  orderBox->setTitle(tr("Order Details"));
-  QGridLayout *orderLayout = new QGridLayout(orderBox);
-  a_article_id = new SerialID(orderBox);
-  a_article_id->setObjectName("a_article_id");
-  a_article_id->setInfo(tr("Article Id"));
-  orderLayout->addWidget(a_article_id, 0, 0, 1, 1);
-  o_provider_order_id = new LineEdit(orderBox);
-  o_provider_order_id->setObjectName("o_provider_order_id");
-  o_provider_order_id->setInfo(tr("Provider Id"));
-  orderLayout->addWidget(o_provider_order_id, 0, 1, 1, 1);
-  a_count = new IntSpinBox(orderBox);
-  a_count->setObjectName("a_count");
-  a_count->setInfo(tr("Quantity"));
-  orderLayout->addWidget(a_count, 0, 2, 1, 1, Qt::AlignRight);
-  a_sell_price = new PriceEdit(orderBox);
-  a_sell_price->setObjectName("a_sell_price");
-  a_sell_price->setInfo(tr("Price"));
-  orderLayout->addWidget(a_sell_price, 0, 3, 1, 1);
-  a_title = new QLineEdit(orderBox);
-  a_title->setObjectName("a_title");
-  orderLayout->addWidget(a_title, 1, 0, 1, 4);
-  a_modified = new DateTimeEdit(orderBox);
-  a_modified->setObjectName("a_modified");
-  a_modified->setReadOnly(true);
-  a_modified->setInfo(tr("Ordered on"));
-  orderLayout->addWidget(a_modified, 2, 0, 1, 4);
-  orderBox->setLayout(orderLayout);
-  layout->addWidget(orderBox);
+  m_ordersTable = new ProvidersOrderTable(mainWidget);
+  layout->addWidget(m_ordersTable);
 
-  // BEGIN Customer
-  QGroupBox *customerBox = new QGroupBox(this);
-  customerBox->setObjectName("display_purchaser");
-  customerBox->setTitle(tr("purchaser"));
-  QGridLayout *customerLayout = new QGridLayout(customerBox);
-  c_gender = new GenderBox(customerBox);
-  c_gender->setObjectName("c_gender");
-  c_gender->setInfo(tr("Form"));
-  customerLayout->addWidget(c_gender, 0, 0, 1, 1);
-  c_firstname = new LineEdit(customerBox);
-  c_firstname->setObjectName("c_firstname");
-  c_firstname->setInfo(tr("Firstname"));
-  customerLayout->addWidget(c_firstname, 0, 1, 1, 1);
-  c_lastname = new LineEdit(customerBox);
-  c_lastname->setObjectName("c_lastname");
-  c_lastname->setInfo(tr("Lastname"));
-  customerLayout->addWidget(c_lastname, 0, 2, 1, 1);
-  c_postalcode = new PostalCode(customerBox);
-  c_postalcode->setObjectName("c_postalcode");
-  c_postalcode->setInfo(tr("Postalcode"));
-  customerLayout->addWidget(c_postalcode, 1, 0, 1, 1);
-  c_location = new LineEdit(customerBox);
-  c_location->setObjectName("c_location");
-  c_location->setInfo(tr("Location"));
-  customerLayout->addWidget(c_location, 1, 1, 1, 2);
-  c_street = new LineEdit(customerBox);
-  c_street->setObjectName("c_street");
-  c_street->setInfo(tr("Street"));
-  customerLayout->addWidget(c_street, 2, 0, 1, 1);
-  c_country = new LineEdit(customerBox);
-  c_country->setObjectName("c_country");
-  c_country->setInfo(tr("Country"));
-  customerLayout->addWidget(c_country, 2, 1, 1, 2);
-  c_phone_0 = new PhoneEdit(customerBox);
-  c_phone_0->setObjectName("c_phone_0");
-  c_phone_0->setInfo(tr("Phone"));
-  customerLayout->addWidget(c_phone_0, 3, 0, 1, 1);
-  c_email_0 = new EMailEdit(customerBox);
-  c_email_0->setObjectName("c_email_0");
-  c_email_0->setInfo(tr("eMail"));
-  customerLayout->addWidget(c_email_0, 3, 1, 1, 2);
-  QHBoxLayout *actions_layout = new QHBoxLayout();
-  btn_customer = new QPushButton(customerBox);
-  setCustomerButton(0);
-  actions_layout->addWidget(btn_customer);
-  btn_search_customer = new QPushButton(customerBox);
-  btn_search_customer->setText(tr("Search"));
-  btn_search_customer->setToolTip(tr("Search Customer in Database"));
-  btn_search_customer->setIcon(myIcon("search"));
-  actions_layout->addWidget(btn_search_customer);
-  c_id = new SerialID(customerBox);
-  c_id->setObjectName("c_id");
-  c_id->setInfo(tr("Customer Id"));
-  c_id->setRequired(false);
-  actions_layout->addWidget(c_id);
-  customer_info = new QLabel(customerBox);
-  actions_layout->addWidget(customer_info);
-  customerLayout->addLayout(actions_layout, 4, 0, 1, 3, Qt::AlignLeft);
-  customerBox->setLayout(customerLayout);
-  layout->addWidget(customerBox);
-  // END
+  QLabel *lbInfo = new QLabel(tr("purchaser"));
+  lbInfo->setIndent(5);
+  layout->addWidget(lbInfo);
 
-  // BEGIN cancellation
-  QGroupBox *cancellationBox = new QGroupBox(this);
-  cancellationBox->setObjectName("display_cancellation");
-  cancellationBox->setTitle(tr("cancellation"));
-  QHBoxLayout *cancellationLayout = new QHBoxLayout(cancellationBox);
-  o_cancellation = new BoolBox(cancellationBox);
-  o_cancellation->setObjectName("o_cancellation");
-  o_cancellation->setInfo(tr("cancellation"));
-  cancellationLayout->addWidget(o_cancellation);
-  o_cancellation_text = new Cancellation(cancellationBox, Cancellation::TEXT);
-  o_cancellation_text->setObjectName("o_cancellation_text");
-  o_cancellation_text->setInfo(tr("Reason"));
-  cancellationLayout->addWidget(o_cancellation_text);
-  o_cancellation_datetime = new DateTimeEdit(cancellationBox);
-  o_cancellation_datetime->setObjectName("o_cancellation_datetime");
-  cancellationLayout->addWidget(o_cancellation_datetime);
-  cancellationBox->setLayout(cancellationLayout);
-  layout->addWidget(cancellationBox);
-  // END
+  m_customerData = new ProvidersCustomerData(mainWidget);
+  layout->addWidget(m_customerData);
 
   layout->addStretch(1);
-  setLayout(layout);
-
-  connect(btn_search_customer, SIGNAL(clicked()), this,
-          SLOT(searchSqlCustomer()));
-  connect(btn_customer, SIGNAL(clicked()), this, SLOT(createSqlCustomer()));
-  connect(o_cancellation, SIGNAL(checked(bool)), this,
-          SLOT(noticeCancelation(bool)));
+  mainWidget->setLayout(layout);
+  setWidget(mainWidget);
 }
 
-const QHash<QString, QVariant>
-BuchfreundDisplay::createDataset(/* pattern */
-                                 const QRegularExpression &pattern) {
-  QHash<QString, QVariant> data;
-  MessageBox messanger(this);
-  QList<UtilsMain *> list =
-      findChildren<UtilsMain *>(pattern, Qt::FindChildrenRecursively);
-  QList<UtilsMain *>::Iterator it;
-  for (it = list.begin(); it != list.end(); ++it) {
-    UtilsMain *cur = *it;
-    if (cur->isRequired() && !cur->isValid()) {
-      messanger.notice(cur->notes());
-      cur->setFocus();
-      data.clear();
-      return data;
-    }
-    data.insert(cur->objectName(), cur->value());
-  }
-  list.clear();
-  return data;
-}
-
-void BuchfreundDisplay::createSqlCustomer() {
-  int cid = c_id->value().toInt();
-  if (cid > 0) {
-    emit s_editCustomer(cid);
+void Buchfreund::setValue(const QString &objName, const QVariant &value) {
+  UtilsMain *obj = findChild<UtilsMain *>(objName, Qt::FindChildrenRecursively);
+  if (obj != nullptr) {
+    obj->setValue(value);
     return;
   }
-
-  QHash<QString, QVariant> data = createDataset(c_regExp);
-  if (data.size() < 3)
-    return;
-
-  QStringList column; /**< SQL Columns */
-  QStringList values; /**< SQL Values */
-  QHash<QString, QVariant>::iterator it;
-  for (it = data.begin(); it != data.end(); ++it) {
-    if (it.value().toString().isEmpty())
-      continue;
-
-    column.append(it.key());
-    if (it.value().type() == QVariant::String) {
-      values.append("'" + it.value().toString() + "'");
-    } else {
-      values.append(it.value().toString());
-    }
-  }
-
-  QString sql("INSERT INTO customers (");
-  sql.append(column.join(","));
-  sql.append(",c_since,c_changed) VALUES (");
-  sql.append(values.join(","));
-  sql.append(",CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)");
-  sql.append(" RETURNING c_id;");
-  if (SHOW_SQL_QUERIES) {
-    qDebug() << Q_FUNC_INFO << sql;
-  }
-  QSqlQuery q = m_sql->query(sql);
-  if (q.size() > 0) {
-    q.next();
-    if (q.value("c_id").toInt() > 0) {
-      int cid = q.value("c_id").toInt();
-      c_id->setValue(cid);
-      customer_info->setText(tr("customer add"));
-      setCustomerButton(1);
-    }
-  } else {
-    QString errors = m_sql->lastError();
-    if (!errors.isEmpty()) {
-      customer_info->setText(tr("SQL errors!"));
-      qDebug() << Q_FUNC_INFO << errors;
-    }
-    setCustomerButton(0);
-  }
 }
 
-void BuchfreundDisplay::setCustomerButton(int type) {
-  if (type == 1) {
-    btn_customer->setText(tr("Create"));
-    btn_customer->setIcon(myIcon("db_add"));
-  } else {
-    btn_customer->setText(tr("Display"));
-    btn_customer->setIcon(myIcon("db_update"));
-  }
-}
-
-void BuchfreundDisplay::searchSqlCustomer() {
-  QString buffer;
-  QString sql("SELECT c_id FROM customers WHERE ");
-  buffer = c_firstname->value().toString();
-  sql.append("c_firstname ILIKE '" + buffer + "'");
-  sql.append(" AND ");
-  buffer = c_lastname->value().toString();
-  sql.append("c_lastname ILIKE '" + buffer + "'");
-  sql.append(" AND ");
-  buffer = c_postalcode->value().toString();
-  sql.append("c_postalcode ILIKE '" + buffer + "'");
-  sql.append(" AND ");
-  buffer = c_location->value().toString();
-  sql.append("c_location ILIKE '" + buffer + "'");
-  sql.append(" ORDER BY c_id;");
-  if (SHOW_SQL_QUERIES) {
-    qDebug() << Q_FUNC_INFO << sql;
-  }
-  QSqlQuery q = m_sql->query(sql);
-  if (q.size() > 0) {
-    q.next();
-    if (q.value("c_id").toInt() > 0) {
-      int cid = q.value("c_id").toInt();
-      c_id->setValue(cid);
-      customer_info->setText(tr("found Customer"));
-    }
-  } else {
-    QString errors = m_sql->lastError();
-    if (errors.isEmpty()) {
-      setCustomerButton(0);
-      customer_info->setText(tr("Customer not exists!"));
-    } else {
-      customer_info->setText(tr("SQL errors!"));
-      qDebug() << Q_FUNC_INFO << errors;
-    }
-  }
-}
-
-void BuchfreundDisplay::checkArticleId() {
-  if (a_article_id->value().toInt() < 1)
-    return;
-
-  QString sql = queryArticleExists(a_article_id->value().toString());
-  if (SHOW_SQL_QUERIES) {
-    qDebug() << Q_FUNC_INFO << sql;
-  }
-  QSqlQuery q = m_sql->query(sql);
-  if (q.size() > 0) {
-    q.next();
-    if (q.value("a_article_id").toString().isEmpty()) {
-      qDebug() << Q_FUNC_INFO << m_sql->lastError();
-    }
-  } else {
-    emit s_warning(tr("Article is not available!"));
-  }
-}
-
-void BuchfreundDisplay::resetDataFields() {
-  QList<UtilsMain *> list =
-      findChildren<UtilsMain *>(QString(), Qt::FindChildrenRecursively);
-  QList<UtilsMain *>::Iterator it;
-  for (it = list.begin(); it != list.end(); ++it) {
-    (*it)->reset();
-  }
-}
-
-void BuchfreundDisplay::noticeCancelation(bool b) {
-  if (!b)
-    return;
-
-  QString info = tr("If you cancel the order, the entry will be deactivated with the service provider and is no longer visible here.");
-  int ret = QMessageBox::question(this,tr("cancellation"),info);
-  if (ret == QMessageBox::Ok) {
-    qDebug() << Q_FUNC_INFO << "TOOD: Stornieren";
-    return;
-  }
-  o_cancellation->setChecked(false);
-}
-
-void BuchfreundDisplay::setContent(const QJsonDocument &doc) {
+void Buchfreund::setContent(const QJsonDocument &doc) {
   if (doc.isEmpty())
     return;
 
@@ -411,10 +168,8 @@ void BuchfreundDisplay::setContent(const QJsonDocument &doc) {
   if (errors)
     return;
 
-  // Aufräumen
-  resetDataFields();
+  QString bf_id(windowTitle());
 
-  p_data.clear();
   BF_Translater bfTr;
   QJsonObject response = QJsonValue(doc["response"]).toObject();
   if (!response.isEmpty()) {
@@ -445,151 +200,42 @@ void BuchfreundDisplay::setContent(const QJsonDocument &doc) {
     for (at = positionen.begin(); at != positionen.end(); ++at) {
       QJsonObject article = (*at).toObject();
       QJsonObject::iterator it;
+      int column = 0;
+      int row = m_ordersTable->rowCount();
+      m_ordersTable->setRowCount((m_ordersTable->rowCount() + 1));
+      QTableWidgetItem *item = m_ordersTable->createItem(bf_id);
+      m_ordersTable->setItem(row, column++, item);
       for (it = article.begin(); it != article.end(); ++it) {
         QString f = bfTr.sqlParam(it.key());
         QVariant curValue = it.value().toVariant();
-        if (!f.isEmpty() && !curValue.isNull()) {
-          setValue(f, curValue);
+        if (!f.isEmpty() && !curValue.isNull() && f.contains("a_")) {
+          QString txt = curValue.toString().trimmed();
+          QTableWidgetItem *item = m_ordersTable->createItem(txt);
+          m_ordersTable->setItem(row, column++, item);
         }
       }
     }
   }
-  // Jetzt nach Kunde suchen
-  searchSqlCustomer();
-  // Artikel Prüfen
-  checkArticleId();
 }
 
-void BuchfreundDisplay::setValue(const QString &objName,
-                                 const QVariant &value) {
-  if (objName == "a_title") {
-    a_title->setText(value.toString());
+void Buchfreund::fetchOrderContent(const QString &bfid) {
+
+  // DUMMY TEST
+  QString buffer;
+  QString p("/Developement/antiqua/database/tmp/testfile.json");
+  QFile fp(QDir::homePath() + p);
+  if (fp.open(QIODevice::ReadOnly)) {
+    QTextStream str(&fp);
+    str.setCodec("UTF8");
+    buffer.append(str.readAll());
+    fp.close();
   }
-  if (objName == "a_modified") {
-    a_modified->setValue(value.toDateTime());
-  }
-  UtilsMain *obj = findChild<UtilsMain *>(objName, Qt::FindChildrenRecursively);
-  if (obj != nullptr) {
-    obj->setValue(value);
+
+  QJsonParseError parser;
+  QJsonDocument doc = QJsonDocument::fromJson(buffer.toLocal8Bit(), &parser);
+  if (parser.error != QJsonParseError::NoError) {
+    qWarning("Json Parse Error!");
     return;
   }
-}
-
-const ProviderOrders BuchfreundDisplay::fetchOrderData() {
-  p_data.clear();
-  int cid = c_id->value().toInt();
-  if (cid < 1) {
-    qWarning("Empty Customer ID");
-    return p_data;
-  }
-
-  BF_Translater bfTr;
-  ProviderOrder o0;
-  o0.setGroup("order");
-  o0.setParam(bfTr.jsonParam("a_customer_id"));
-  o0.setFieldname("a_customer_id");
-  o0.setValue(c_id->value());
-  p_data.append(o0);
-
-  ProviderOrder o1;
-  o1.setGroup("provider");
-  o1.setParam("provider");
-  o1.setFieldname("o_provider_name");
-  o1.setValue("www.buchfreund.de");
-  p_data.append(o1);
-
-  QHash<QString, QVariant> data = createDataset(regExp);
-  QHashIterator<QString, QVariant> it(data);
-  while (it.hasNext()) {
-    it.next();
-    if (bfTr.jsonParam(it.key()).isEmpty() || it.key().contains("c_"))
-      continue;
-
-    ProviderOrder o;
-    o.setGroup("order");
-    o.setParam(bfTr.jsonParam(it.key()));
-    o.setFieldname(it.key());
-    o.setValue(it.value());
-    p_data.append(o);
-  }
-
-  return p_data;
-}
-
-Buchfreund::Buchfreund(QWidget *parent)
-    : QSplitter{parent}, configGroup("provider/whsoft") {
-  setObjectName("inventory_buchfreund");
-  setOrientation(Qt::Horizontal);
-  setWindowTitle("buchfreund.de");
-
-  QScrollArea *scroolArea = new QScrollArea(this);
-  scroolArea->setWidgetResizable(true);
-  insertWidget(0, scroolArea);
-
-  bfDisplay = new BuchfreundDisplay(scroolArea);
-  scroolArea->setWidget(bfDisplay);
-
-  bfList = new Buchfreundlist(this);
-  bfList->setMinimumWidth(150);
-  insertWidget(1, bfList);
-
-  setStretchFactor(0, 70);
-  setStretchFactor(1, 30);
-
-  // SIGNALS
-  connect(bfList, SIGNAL(orderClicked(const QJsonDocument &)), this,
-          SLOT(getOrderContent(const QJsonDocument &)));
-}
-
-const QUrl Buchfreund::apiQuery(const QString &operation) {
-  QRegExp pattern("([\\/]{2,})");
-  ApplSettings cfg;
-
-  QUrl url;
-  cfg.beginGroup(configGroup);
-  url.setScheme(cfg.value("api_scheme").toString());
-  url.setHost(cfg.value("api_host").toString());
-  QString path(cfg.value("api_basepath").toString());
-  path.append("/");
-  path.append(cfg.value("api_key").toString());
-  path.append("/" + operation);
-  cfg.endGroup();
-  url.setPath(path.replace(pattern, "/"));
-  return url;
-}
-
-void Buchfreund::queryListViewContent() {
-  QDateTime curDt = QDateTime::currentDateTime();
-  QTime t(curDt.time().hour(), curDt.time().minute(), 0);
-  curDt.setTime(t);
-  QDateTime from = curDt.addDays(-14);
-  QJsonObject obj;
-  obj.insert("datum_von",
-             QJsonValue::fromVariant(from.toString(BF_DATE_FORMAT)));
-  obj.insert("datum_bis",
-             QJsonValue::fromVariant(curDt.toString(BF_DATE_FORMAT)));
-  QJsonDocument doc(obj);
-  QByteArray data = doc.toJson(QJsonDocument::Compact);
-  QUrl url = apiQuery("bestellungen");
-  Provider *prQuery = new Provider(this, false);
-  prQuery->setObjectName("buchfreund_query_list");
-  connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), bfList,
-          SLOT(setView(const QJsonDocument &)));
-  connect(prQuery, SIGNAL(finished()), prQuery, SLOT(deleteLater()));
-
-  prQuery->sendPost(url, data);
-}
-
-void Buchfreund::getOpenOrders() { queryListViewContent(); }
-
-void Buchfreund::getOrderContent(const QJsonDocument &doc) {
-  QByteArray data = doc.toJson(QJsonDocument::Compact);
-  QUrl url = apiQuery("bestellung");
-  Provider *prQuery = new Provider(this, false);
-  prQuery->setObjectName("buchfreund_query_view");
-  connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), bfDisplay,
-          SLOT(setContent(const QJsonDocument &)));
-  connect(prQuery, SIGNAL(finished()), prQuery, SLOT(deleteLater()));
-
-  prQuery->sendPost(url, data);
+  setContent(doc);
 }

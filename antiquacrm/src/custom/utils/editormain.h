@@ -48,7 +48,7 @@ protected:
   ApplicationClient *m_ipc;
 
   /**
-   * @defgroup inputList
+   * @group Feldlisten
    * @{
    * @brief Objektnamen-Liste der Eingabefelder
    * Die vorgesehene Mehtode zum befüllen ist @ref setInputList
@@ -56,16 +56,23 @@ protected:
   QStringList inputList;
 
   /**
-   * @brief Nachrichten an Hauptfenster
+   * @ingroup Feldlisten
+   * @brief Felder von Standardabfragen ausschließen
    */
-  QLocalSocket *m_socketClient;
-  void socketStatusMessage(const QString &message);
+  QStringList ignoreList;
 
   /**
+   * @ingroup Feldlisten
    * @brief Alle Eingabefelder in @ref inputList einfügen.
    */
   virtual void setInputList() = 0;
   /** }@ */
+
+  /**
+   * @brief Nachrichten an Hauptfenster
+   */
+  QLocalSocket *m_socketClient;
+  void socketStatusMessage(const QString &message);
 
   /**
    * @defgroup sqlQueryResult

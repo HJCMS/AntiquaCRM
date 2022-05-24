@@ -436,159 +436,17 @@
         <translation>Auswahlbox</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+72"/>
         <source>is required must selected.</source>
         <translation>ist Erforderlich und mus gesetzt werden.</translation>
     </message>
 </context>
 <context>
-    <name>BuchfreundDisplay</name>
+    <name>Buchfreund</name>
     <message>
-        <location filename="../inventory/providers/buchfreund.cpp" line="+119"/>
-        <source>Order Details</source>
-        <translation>Bestelldetails</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Article Id</source>
-        <translation>Artikel Id</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Provider Id</source>
-        <translation>Dienstleister Id</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Quantity</source>
-        <translation>Menge</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Price</source>
-        <translation>Preis</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Ordered on</source>
-        <translation>Bestellung vom</translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location filename="../inventory/providers/buchfreund.cpp" line="+86"/>
         <source>purchaser</source>
         <translation>Einkäufer*in</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Form</source>
-        <translation>Anrede</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Firstname</source>
-        <translation>Vorname</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Lastname</source>
-        <translation>Nachname</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Postalcode</source>
-        <translation>Postleitzahl</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Location</source>
-        <translation>Wohnort</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Street</source>
-        <translation>Straße</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Country</source>
-        <translation>Land</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Phone</source>
-        <translation>Telefon</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>eMail</source>
-        <translation>E-Mail</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <location line="+4"/>
-        <source>cancellation</source>
-        <translation>Stornierung</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Reason</source>
-        <translation>Begründung</translation>
-    </message>
-    <message>
-        <location line="+97"/>
-        <source>Create</source>
-        <translation>Erstellen</translation>
-    </message>
-    <message>
-        <location line="+79"/>
-        <source>If you cancel the order, the entry will be deactivated with the service provider and is no longer visible here.</source>
-        <translation>Wenn Sie die Bestellung stornieren, wird der Eintrag beim Dienstanbieter deaktiviert und ist hier nicht mehr Sichtbar.</translation>
-    </message>
-    <message>
-        <location line="-203"/>
-        <source>Search</source>
-        <translation>Suche</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Customer Id</source>
-        <translation>Kunden Nr</translation>
-    </message>
-    <message>
-        <location line="+103"/>
-        <source>customer add</source>
-        <translation>Kunde angelegt</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+49"/>
-        <source>SQL errors!</source>
-        <translation>Datenbank Fehler!</translation>
-    </message>
-    <message>
-        <location line="-37"/>
-        <source>Display</source>
-        <translation>Anzeigen</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>found Customer</source>
-        <translation>Kundeneintrag gefunden</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Customer not exists!</source>
-        <translation>Dieser Kunden existiert nicht!</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Article is not available!</source>
-        <translation>Artikel ist nicht Verfügbar!</translation>
-    </message>
-    <message>
-        <location line="-184"/>
-        <source>Search Customer in Database</source>
-        <translation>Kunde im Adressbuch suchen</translation>
     </message>
 </context>
 <context>
@@ -1277,7 +1135,7 @@
 <context>
     <name>DateTimeEdit</name>
     <message>
-        <location filename="../custom/utils/datetimeedit.cpp" line="+116"/>
+        <location filename="../custom/utils/datetimeedit.cpp" line="+146"/>
         <source>a valid Datetime is needed.</source>
         <translation>Ein gültiges Datum ist erforderlich.</translation>
     </message>
@@ -1404,7 +1262,7 @@
 <context>
     <name>EditCustomer</name>
     <message>
-        <location filename="../inventory/customers/editcustomer.cpp" line="+48"/>
+        <location filename="../inventory/customers/editcustomer.cpp" line="+47"/>
         <source>Customers ID</source>
         <translation>Kunden Nr</translation>
     </message>
@@ -1790,7 +1648,7 @@
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+140"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+19"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
@@ -1994,7 +1852,7 @@
         <translation>Auftrag bearbeiten</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+33"/>
         <source>Order ID</source>
         <translation>Auftrags ID</translation>
     </message>
@@ -2039,7 +1897,22 @@
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+113"/>
+        <location line="+13"/>
+        <source>cancellation</source>
+        <translation>Stornierung</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Reason</source>
+        <translation>Begründung</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>cancel this order</source>
+        <translation>Auftrag schließen</translation>
+    </message>
+    <message>
+        <location line="+116"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
@@ -2971,9 +2844,115 @@
     </message>
 </context>
 <context>
+    <name>ProvidersCustomerData</name>
+    <message>
+        <location filename="../inventory/providers/providerscustomerdata.cpp" line="+14"/>
+        <source>purchaser</source>
+        <translation>Einkäufer*in</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Form</source>
+        <translation>Anrede</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Firstname</source>
+        <translation>Vorname</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Lastname</source>
+        <translation>Nachname</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Postalcode</source>
+        <translation>Postleitzahl</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Location</source>
+        <translation>Wohnort</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Street</source>
+        <translation>Straße</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Country</source>
+        <translation>Land</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Phone</source>
+        <translation>Telefon</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>eMail</source>
+        <translation>E-Mail</translation>
+    </message>
+</context>
+<context>
+    <name>ProvidersOrderTable</name>
+    <message>
+        <location filename="../inventory/providers/providersordertable.cpp" line="+15"/>
+        <source>Provider</source>
+        <translation>Anbieter</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>order id</source>
+        <translation>Bestellnummer</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Article</source>
+        <translation>Artikel</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>article id</source>
+        <translation>Artikel Id</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Price</source>
+        <translation>Preis</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>selling price</source>
+        <translation>Verkaufs-Preis</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Count</source>
+        <translation>Menge</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Article count</source>
+        <translation>Artikelanzahl</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Summary</source>
+        <translation>Zusammenfassung</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Article Summary</source>
+        <translation>Artikel Zusammenfassung</translation>
+    </message>
+</context>
+<context>
     <name>ProvidersPager</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="-118"/>
+        <location filename="../inventory/providers/providerstoolbar.cpp" line="+22"/>
         <source>Previous</source>
         <translation>Letzte</translation>
     </message>
@@ -2996,7 +2975,7 @@
         <translation>Auftrag erstellen</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>You must first open the customer before an order can be placed.</source>
         <translation>Sie müssen zuerst den Kunden öffnen, bevor eine Bestellung aufgegeben werden kann.</translation>
     </message>
@@ -3004,6 +2983,14 @@
         <location line="+6"/>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
+    </message>
+</context>
+<context>
+    <name>ProvidersTreeView</name>
+    <message>
+        <location filename="../inventory/providers/providerstreeview.cpp" line="+30"/>
+        <source>Orders</source>
+        <translation>Aufträge</translation>
     </message>
 </context>
 <context>
@@ -3547,7 +3534,7 @@
         <translation>Arbeitsbereich</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
@@ -3612,7 +3599,7 @@
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-129"/>
+        <location line="-130"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>

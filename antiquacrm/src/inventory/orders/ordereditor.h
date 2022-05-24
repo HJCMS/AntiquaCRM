@@ -92,6 +92,14 @@ private:
   LineEdit *o_modified;
 
   /**
+   * @brief Stornierung
+   */
+  QGroupBox *m_cancellation;
+  BoolBox *o_cancellation;
+  Cancellation *o_cancellation_text;
+  DateTimeEdit *o_cancellation_datetime;
+
+  /**
    * @brief Standard ActionsBar
    */
   EditorActionBar *m_actionBar;

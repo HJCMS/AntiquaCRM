@@ -29,12 +29,11 @@ EditCustomer::EditCustomer(QWidget *parent) : EditorMain{parent} {
    * Tabellenfelder welche NICHT bei INSERT/UPDATE
    * benötigt werden aber im Overview enthalten sind.
    */
-  QStringList ignore;
-  ignore.append("c_since");
-  ignore.append("c_changed");
-  ignore.append("c_transactions");
-  ignore.append("c_purchases");
-  ignoreList = ignore;
+  ignoreList.clear();
+  ignoreList.append("c_since");
+  ignoreList.append("c_changed");
+  ignoreList.append("c_transactions");
+  ignoreList.append("c_purchases");
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setObjectName("customer_edit_layout");

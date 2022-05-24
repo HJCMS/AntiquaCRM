@@ -20,14 +20,22 @@ SET (subproject_LINKER
 )
 
 SET (subproject_SOURCES
-  inventoryproviders.cpp
   buchfreund.cpp
+  providersordertable.cpp
+  providerscustomerdata.cpp
+  inventoryproviders.cpp
+  providerstoolbar.cpp
+  providerstreeview.cpp
 )
 
 SET (subproject_HEADERS
-  providersstatements.h
-  inventoryproviders.h
   buchfreund.h
+  providersordertable.h
+  providerscustomerdata.h
+  providersstatements.h
+  providerstoolbar.h
+  providerstreeview.h
+  inventoryproviders.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

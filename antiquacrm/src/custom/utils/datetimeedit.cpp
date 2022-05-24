@@ -11,22 +11,33 @@
 #define DISPLAY_FORMAT "dddd dd. MMMM yyyy"
 #endif
 
+/**
+ * @example SELECT CURRENT_TIMESTAMP;
+ */
+#ifndef OUTPUT_FORMAT
+#define OUTPUT_FORMAT "dd.MM.yyyy hh:mm:ss.zzz t"
+#endif
+
 CalendarViewer::CalendarViewer(QWidget *parent) : QCalendarWidget{parent} {}
 
 DateTimeEdit::DateTimeEdit(QWidget *parent) : UtilsMain{parent} {
 
+  p_displayFormat = QString(DISPLAY_FORMAT);
+  p_outputFormat = QString(OUTPUT_FORMAT);
+
   QHBoxLayout *layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 
-  QDate curDate = QDate::currentDate();
+  QDateTime curDateTime = QDateTime::currentDateTime();
 
   m_info = new QLabel(this);
   m_info->setAlignment(labelAlignment());
   layout->addWidget(m_info);
 
-  m_edit = new QDateTimeEdit(curDate);
-  m_edit->setMaximumDate(curDate.addDays(365));
-  m_edit->setDisplayFormat(DISPLAY_FORMAT);
+  m_edit = new QDateTimeEdit(curDateTime);
+  m_edit->setMinimumDate(curDateTime.date().addDays(-365));
+  m_edit->setMaximumDate(curDateTime.date().addDays(365));
+  m_edit->setDisplayFormat(p_displayFormat);
   layout->addWidget(m_edit);
 
   m_popup = new CalendarViewer(m_edit);
@@ -67,8 +78,17 @@ void DateTimeEdit::timeChanged(const QTime &val) {
 const QDateTime DateTimeEdit::system() { return QDateTime::currentDateTime(); }
 
 void DateTimeEdit::setDisplayFormat(const QString &format) {
-  p_format = format;
-  m_edit->setDisplayFormat(format);
+  p_displayFormat = format;
+  m_edit->setDisplayFormat(p_displayFormat);
+  setModified(true);
+}
+
+void DateTimeEdit::setOutputFormat(const QString &format) {
+  if (format == "CURRENT_TIMESTAMP")
+    p_outputFormat = QString(OUTPUT_FORMAT);
+  else
+    p_outputFormat = format;
+
   setModified(true);
 }
 
@@ -96,7 +116,17 @@ void DateTimeEdit::reset() {
 
 void DateTimeEdit::setFocus() { m_edit->setFocus(); }
 
-const QVariant DateTimeEdit::value() { return m_edit->dateTime(); }
+const QVariant DateTimeEdit::value() {
+  QDateTime dt(QDateTime::currentDateTime());
+  dt.setDate(m_edit->dateTime().date());
+  return dt.toString(p_outputFormat);
+}
+
+const QVariant DateTimeEdit::dateTime() {
+  QDateTime dt(QDateTime::currentDateTime());
+  dt.setDate(m_edit->dateTime().date());
+  return dt;
+}
 
 bool DateTimeEdit::isValid() {
   if (isRequired() && !m_edit->dateTime().isValid())
