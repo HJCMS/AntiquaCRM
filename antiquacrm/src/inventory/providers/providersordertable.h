@@ -16,13 +16,16 @@ class ProvidersOrderTable : public QTableWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  int p_articleColumn;
   /**
    * @brief Einen neuen QTableWidgetItem erstellen.
    */
   void addHeaderItem(int, const QString &name);
 
 public:
+  int articleColumn();
   ProvidersOrderTable(QWidget *parent = nullptr);
+  const QVariant getData(int row, int column);
   QTableWidgetItem *createItem(const QString &title) const;
 };
 

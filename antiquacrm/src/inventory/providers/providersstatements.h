@@ -24,7 +24,7 @@
  * auf sichtbar.
  */
 #ifndef SHOW_SQL_QUERIES
-#define SHOW_SQL_QUERIES false
+#define SHOW_SQL_QUERIES true
 #endif
 
 /**

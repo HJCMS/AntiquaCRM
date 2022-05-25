@@ -6,14 +6,15 @@
 #define INVENTORY_PROVIDERS_BUCHFREUND_H
 
 #include <QJsonDocument>
+#include <QList>
 #include <QListWidget>
 #include <QObject>
 #include <QRegularExpression>
 #include <QScrollArea>
 #include <QWidget>
 
-#include <Utils>
 #include <AntiquaCRM>
+#include <Utils>
 
 namespace HJCMS {
 class SqlCore;
@@ -81,7 +82,7 @@ public Q_SLOTS:
   void queryOrder(const QString &bfId);
 
 public:
-  explicit BF_JSonQuery(QObject * parent = nullptr);
+  explicit BF_JSonQuery(QObject *parent = nullptr);
 };
 
 class Buchfreund : public QScrollArea {
@@ -91,6 +92,8 @@ class Buchfreund : public QScrollArea {
 
 private:
   HJCMS::SqlCore *m_sql;
+
+  BF_JSonQuery *m_jsonQuery;
 
   ProvidersOrderTable *m_ordersTable;
   ProvidersCustomerData *m_customerData;
@@ -104,10 +107,16 @@ private:
 
 public Q_SLOTS:
   void setContent(const QJsonDocument &);
-  QT_DEPRECATED void fetchOrderContent(const QString &bfid);
+  Q_INVOKABLE void checkCustomer();
+  QT_DEPRECATED void testContent();
+
+Q_SIGNALS:
+  void openCustomer(int);
 
 public:
-  explicit Buchfreund(QWidget *parent = nullptr);
+  explicit Buchfreund(const QString &id, QWidget *parent = nullptr);
+  const QList<int> getArticleIds();
+  static void queryListEntries(QWidget *receiver);
 };
 
 #endif // INVENTORY_PROVIDERS_BUCHFREUND_H

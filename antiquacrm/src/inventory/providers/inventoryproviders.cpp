@@ -24,8 +24,6 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   setWindowTitle(tr("Providers") + "[*]");
   setClosable(false);
 
-  p_providerList = QStringList({"Buchfreund", "ZVAB", "AbeBooks"});
-
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("inventory_providers_layout");
   layout->setContentsMargins(2, 2, 2, 2);
@@ -53,13 +51,33 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   layout->setStretch(0, 1);
   setLayout(layout);
 
+  p_providerList = QStringList({"Buchfreund", "ZVAB", "AbeBooks"});
   m_listView->addProviders(p_providerList);
-  m_listView->addOrder("Buchfreund", "BF-2249986");
 
-  connect(m_toolBar, SIGNAL(s_refresh()), this, SLOT(searchConvert()));
+  // BEGIN TESTING
+  Buchfreund *bf = new Buchfreund("BF-2249986", this);
+  addTab(bf);
+  bf->testContent();
+  connect(bf, SIGNAL(openCustomer(int)), this, SLOT(createEditCustomer(int)));
+  // END
+
+  connect(m_toolBar, SIGNAL(s_customerView()), this, SLOT(checkCustomer()));
+  connect(m_toolBar, SIGNAL(s_refresh()), this, SLOT(initProviders()));
   connect(m_toolBar, SIGNAL(s_createOrder()), this, SLOT(createEditOrders()));
   connect(m_listView, SIGNAL(s_queryOrder(const QString &, const QString &)),
           this, SLOT(queryOrder(const QString &, const QString &)));
+}
+
+void InventoryProviders::checkCustomer() {
+  QMetaObject::invokeMethod(m_pageView->currentWidget(), "checkCustomer",
+                            Qt::DirectConnection);
+}
+
+bool InventoryProviders::initProviders() {
+  // Buchfreund
+  Buchfreund::queryListEntries(this);
+
+  return true;
 }
 
 bool InventoryProviders::addTab(QWidget *w) {
@@ -74,24 +92,14 @@ bool InventoryProviders::addTab(QWidget *w) {
   return true;
 }
 
-void InventoryProviders::searchConvert(const QString &search) {
-  Q_UNUSED(search)
-  /* im moment hier nicht notwendig */
+void InventoryProviders::openEditor(const QString &customerId) {
+  qDebug() << Q_FUNC_INFO << "TODO" << customerId;
+  /**
+   * @todo Abstrakte Klasse erstellen damit ich die Daten neutraler abfangen kann!
+   */
 }
 
-void InventoryProviders::searchConvert() {
-  BF_JSonQuery *bfq = new BF_JSonQuery(this);
-  connect(bfq, SIGNAL(listResponsed(const QJsonDocument &)), this,
-          SLOT(readProviderOrders(const QJsonDocument &)));
-
-  bfq->queryList();
-}
-
-void InventoryProviders::openTableView() {
-  /* im moment hier nicht notwendig */
-}
-
-void InventoryProviders::readProviderOrders(const QJsonDocument &doc) {
+void InventoryProviders::readBFOrders(const QJsonDocument &doc) {
   if (doc.isEmpty())
     return;
 
@@ -103,7 +111,7 @@ void InventoryProviders::readProviderOrders(const QJsonDocument &doc) {
       QString id = obj["id"].toString();
       QString ds = obj["datum"].toString();
       QDateTime dt = QDateTime::fromString(ds, BF_DATE_FORMAT);
-      m_listView->addOrder("Buchfreund",id);
+      m_listView->addOrder("Buchfreund", id);
     }
   }
 }
@@ -114,20 +122,18 @@ void InventoryProviders::queryOrder(const QString &provider,
     return;
 
   if (provider == "Buchfreund") {
-    Buchfreund *bf = new Buchfreund(this);
-    bf->setObjectName(orderId);
-    bf->setWindowTitle(orderId);
-    if (addTab(bf)) {
-      bf->fetchOrderContent(orderId);
-    }
+    Buchfreund *bf = new Buchfreund(orderId, this);
+    connect(bf, SIGNAL(openCustomer(int)), this, SLOT(createEditCustomer(int)));
+    addTab(bf);
     return;
   }
 
-  qDebug() << Q_FUNC_INFO << provider << orderId;
+  qDebug() << Q_FUNC_INFO << "TODO" << provider << orderId;
 }
 
 void InventoryProviders::createEditCustomer(int cid) {
   m_toolBar->enableOrderButton(true);
+  qDebug() << Q_FUNC_INFO << cid;
   if (cid > 0) {
     customerId = cid;
     emit openEditCustomer(customerId);
@@ -137,13 +143,15 @@ void InventoryProviders::createEditCustomer(int cid) {
 }
 
 void InventoryProviders::createEditOrders() {
-  qDebug() << Q_FUNC_INFO;
   if (customerId < 1)
     return;
+
+  openEditor(QString::number(customerId));
 }
 
 void InventoryProviders::onEnterChanged() {
-  qDebug() << Q_FUNC_INFO << "Aktuell Deaktiviert";
+  if (firstStart)
+    return;
 
-  return;
+  firstStart = true; // initProviders();
 }

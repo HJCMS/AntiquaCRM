@@ -5,18 +5,20 @@
 #ifndef INVENTORY_PROVIDERS_CUSTOMERDATA_H
 #define INVENTORY_PROVIDERS_CUSTOMERDATA_H
 
-#include <QObject>
 #include <QGroupBox>
+#include <QObject>
 #include <QWidget>
 
 #include <Utils>
 
-class ProvidersCustomerData : public QGroupBox {
+class ProvidersCustomerData final : public QGroupBox {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
+  Q_PROPERTY(int id READ customerId WRITE setCustomerId NOTIFY customerIdChanged)
 
 private:
+  int id = 0;
   GenderBox *c_gender;
   LineEdit *c_firstname;
   LineEdit *c_lastname;
@@ -24,12 +26,29 @@ private:
   LineEdit *c_street;
   EMailEdit *c_email_0;
   LineEdit *c_country;
-  SerialID *c_id;
   PhoneEdit *c_phone_0;
   PostalCode *c_postalcode;
+  SerialID *c_id;
+  QLabel *m_info;
+  TextField *c_shipping_address;
+  TextField *m_customerComment;
+
+private Q_SLOTS:
+  void distributeSignals(int customerId);
+
+Q_SIGNALS:
+  void customerIdChanged(int);
+
+public Q_SLOTS:
+  void setCustomerId(int customerId);
 
 public:
+  /**
+   * @brief ProvidersCustomerData
+   */
   explicit ProvidersCustomerData(QWidget *parent = nullptr);
+  int customerId();
+  const QVariant getValue(const QString &objName);
 };
 
 #endif // INVENTORY_PROVIDERS_CUSTOMERDATA_H

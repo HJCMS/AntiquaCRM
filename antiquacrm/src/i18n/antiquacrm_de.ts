@@ -444,7 +444,7 @@
 <context>
     <name>Buchfreund</name>
     <message>
-        <location filename="../inventory/providers/buchfreund.cpp" line="+86"/>
+        <location filename="../inventory/providers/buchfreund.cpp" line="+157"/>
         <source>purchaser</source>
         <translation>Einkäufer*in</translation>
     </message>
@@ -1648,7 +1648,7 @@
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+19"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+24"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
@@ -2895,6 +2895,36 @@
         <source>eMail</source>
         <translation>E-Mail</translation>
     </message>
+    <message>
+        <location line="+4"/>
+        <source>Customer Id</source>
+        <translation>Kundennummer</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>at first, click on the customer button and check his dataset, it prevents create order failures.</source>
+        <translation>Klicken Sie zuerst auf die Kundenschaltfläche und überprüfen den Datensatz. Es verhindert ein fehlschlagen der Bestellung.</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>delivery address</source>
+        <translation>Lieferadresse</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Comments</source>
+        <translation>Bemerkungen</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Customer exists, don&apos;t forget to check his Dataset!</source>
+        <translation>Dieser Kunde existiert. Bitte vergessen Sie nicht seinen Datensatz zu prüfen!</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>simply click again the customer button.</source>
+        <translation>Klicken Sie hierfür erneut auf den Kundenknopf.</translation>
+    </message>
 </context>
 <context>
     <name>ProvidersOrderTable</name>
@@ -2904,49 +2934,24 @@
         <translation>Anbieter</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>order id</source>
-        <translation>Bestellnummer</translation>
-    </message>
-    <message>
         <location line="+1"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>article id</source>
-        <translation>Artikel Id</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Price</source>
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>selling price</source>
-        <translation>Verkaufs-Preis</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="-1"/>
         <source>Count</source>
         <translation>Menge</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Article count</source>
-        <translation>Artikelanzahl</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Summary</source>
         <translation>Zusammenfassung</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Article Summary</source>
-        <translation>Artikel Zusammenfassung</translation>
     </message>
 </context>
 <context>
@@ -2971,6 +2976,16 @@
     <name>ProvidersToolBar</name>
     <message>
         <location line="+76"/>
+        <source>Customer</source>
+        <translation>Kunde</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Check Customer or open Customer Editor.</source>
+        <translation>Kundendatesatz prüfen oder Anzeigen.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Create Order</source>
         <translation>Auftrag erstellen</translation>
     </message>
@@ -2988,7 +3003,7 @@
 <context>
     <name>ProvidersTreeView</name>
     <message>
-        <location filename="../inventory/providers/providerstreeview.cpp" line="+30"/>
+        <location filename="../inventory/providers/providerstreeview.cpp" line="+59"/>
         <source>Orders</source>
         <translation>Aufträge</translation>
     </message>

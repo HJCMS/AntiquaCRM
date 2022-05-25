@@ -54,5 +54,54 @@ ProvidersCustomerData::ProvidersCustomerData(QWidget *parent)
   c_email_0->setObjectName("c_email_0");
   c_email_0->setInfo(tr("eMail"));
   customerLayout->addWidget(c_email_0, 3, 1, 1, 1);
+  c_id = new SerialID(this);
+  c_id->setObjectName("c_id");
+  c_id->setInfo(tr("Customer Id"));
+  customerLayout->addWidget(c_id, 4, 0, 1, 1);
+  m_info = new QLabel(this);
+  m_info->setWordWrap(true);
+  QString info(tr("at first, click on the customer button and check his "
+                  "dataset, it prevents create order failures."));
+  m_info->setText(info);
+  customerLayout->addWidget(m_info, 5, 0, 1, 2);
+  QTabWidget *m_tabWidget = new QTabWidget(this);
+  customerLayout->addWidget(m_tabWidget, 6, 0, 1, 2);
+
+  c_shipping_address = new TextField(this);
+  c_shipping_address->setObjectName("c_shipping_address");
+  m_tabWidget->addTab(c_shipping_address, myIcon("identity"),
+                      tr("delivery address"));
+
+  m_customerComment = new TextField(this);
+  m_customerComment->setObjectName("m_customerComment");
+  m_tabWidget->addTab(m_customerComment, myIcon("info"), tr("Comments"));
+
   setLayout(customerLayout);
+
+  connect(c_id, SIGNAL(s_serialChanged(int)), this,
+          SLOT(distributeSignals(int)));
+}
+
+void ProvidersCustomerData::distributeSignals(int customerId) {
+  if (customerId > 0) {
+    QString info(tr("Customer exists, don't forget to check his Dataset!"));
+    info.append(" ");
+    info.append(tr("simply click again the customer button."));
+    m_info->setText(info);
+    customerIdChanged(customerId);
+  }
+}
+
+void ProvidersCustomerData::setCustomerId(int customerId) {
+  c_id->setValue(customerId);
+}
+
+int ProvidersCustomerData::customerId() { return c_id->value().toInt(); }
+
+const QVariant ProvidersCustomerData::getValue(const QString &objName) {
+  UtilsMain *w = findChild<UtilsMain *>(objName);
+  if (w != nullptr) {
+    return w->value();
+  }
+  return QVariant();
 }

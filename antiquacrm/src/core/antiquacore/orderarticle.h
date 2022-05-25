@@ -38,7 +38,7 @@ public:
   void setArticle(int);
   int article();
 
-  /** a_article_id */
+  /** a_order_id */
   void setOrder(int);
   int order();
 

@@ -32,6 +32,8 @@ BF_Translater::BF_Translater() : QMap<QString, QString>{} {
   insert("land", "c_country");
   insert("telefon", "c_phone_0");
   insert("email", "c_email_0");
+  insert("kundenkommentar", "m_customerComment");
+  insert("lieferadresse", "c_shipping_address");
   // @}
 
   // public.article_orders @{
@@ -126,10 +128,24 @@ void BF_JSonQuery::queryOrder(const QString &bfId) {
   prQuery->sendPost(url, data);
 }
 
-Buchfreund::Buchfreund(QWidget *parent) : QScrollArea{parent} {
+Buchfreund::Buchfreund(const QString &id, QWidget *parent)
+    : QScrollArea{parent} {
   setWidgetResizable(true);
+  /**
+   * @warning Der Objekt Name wird als Identifikator verwendet!
+   */
+  setObjectName(id);
+  setWindowTitle(id);
+
+  QString oid(id);
+  oid.replace("-", "_");
+  oid = oid.toLower();
 
   m_sql = new HJCMS::SqlCore(this);
+  m_sql->setObjectName("sql_query_" + oid);
+
+  m_jsonQuery = new BF_JSonQuery(this);
+  m_jsonQuery->setObjectName("json_query_" + oid);
 
   QWidget *mainWidget = new QWidget(this);
   QVBoxLayout *layout = new QVBoxLayout(mainWidget);
@@ -146,9 +162,17 @@ Buchfreund::Buchfreund(QWidget *parent) : QScrollArea{parent} {
   layout->addWidget(m_customerData);
 
   layout->addStretch(1);
+
+  QToolBar *m_toolBar = new QToolBar(this);
+  layout->addWidget(m_toolBar);
+
   mainWidget->setLayout(layout);
   setWidget(mainWidget);
 
+  connect(m_jsonQuery, SIGNAL(orderResponsed(const QJsonDocument &)), this,
+          SLOT(setContent(const QJsonDocument &)));
+
+  m_jsonQuery->queryOrder(id);
 }
 
 void Buchfreund::setValue(const QString &objName, const QVariant &value) {
@@ -191,6 +215,26 @@ void Buchfreund::setContent(const QJsonDocument &doc) {
         }
       }
     }
+    QJsonObject deliveryAddress =
+        QJsonValue(doc["response"]["lieferadresse"]).toObject();
+    if (!deliveryAddress.isEmpty()) {
+      QStringList delivery;
+      QString person(deliveryAddress["vorname"].toString().trimmed());
+      person.append(" ");
+      person.append(deliveryAddress["name"].toString().trimmed());
+      delivery.append(person);
+
+      QString location(deliveryAddress["plz"].toString().trimmed());
+      location.append(" ");
+      location.append(deliveryAddress["ort"].toString().trimmed());
+      delivery.append(location);
+
+      QString street(deliveryAddress["adresse"].toString().trimmed());
+      delivery.append(street);
+
+      QString f = bfTr.sqlParam("lieferadresse");
+      setValue(f, delivery.join("\n"));
+    }
   }
 
   QJsonArray positionen = QJsonValue(doc["response"]["positionen"]).toArray();
@@ -217,8 +261,64 @@ void Buchfreund::setContent(const QJsonDocument &doc) {
   }
 }
 
-void Buchfreund::fetchOrderContent(const QString &bfid) {
+void Buchfreund::checkCustomer() {
+  int cid = m_customerData->customerId();
+  if (cid >= 1) {
+    emit openCustomer(cid);
+    return;
+  }
 
+  QString buffer;
+  QString sql("SELECT c_id FROM customers WHERE ");
+  buffer = m_customerData->getValue("c_firstname").toString();
+  sql.append("c_firstname ILIKE '" + buffer + "'");
+  sql.append(" AND ");
+  buffer = m_customerData->getValue("c_lastname").toString();
+  sql.append("c_lastname ILIKE '" + buffer + "'");
+  sql.append(" AND ");
+  buffer = m_customerData->getValue("c_postalcode").toString();
+  sql.append("c_postalcode ILIKE '" + buffer + "'");
+  sql.append(" AND ");
+  buffer = m_customerData->getValue("c_location").toString();
+  sql.append("c_location ILIKE '" + buffer + "'");
+  sql.append(" ORDER BY c_id;");
+  if (SHOW_SQL_QUERIES) {
+    qDebug() << Q_FUNC_INFO << sql;
+  }
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    q.next();
+    if (q.value("c_id").toInt() > 0) {
+      int cid = q.value("c_id").toInt();
+      m_customerData->setCustomerId(cid);
+    }
+  } else {
+    QString errors = m_sql->lastError();
+    if (!errors.isEmpty()) {
+      qDebug() << Q_FUNC_INFO << errors;
+    }
+  }
+}
+
+const QList<int> Buchfreund::getArticleIds() {
+  QList<int> list;
+  int c = m_ordersTable->articleColumn();
+  for (int r = 0; r < m_ordersTable->rowCount(); r++) {
+    int aid = m_ordersTable->getData(r, c).toInt();
+    list.append(aid);
+  }
+  return list;
+}
+
+void Buchfreund::queryListEntries(QWidget *receiver) {
+  BF_JSonQuery *m_q = new BF_JSonQuery(receiver);
+  connect(m_q, SIGNAL(listResponsed(const QJsonDocument &)), receiver,
+          SLOT(readBFOrders(const QJsonDocument &)));
+
+  m_q->queryList();
+}
+
+void Buchfreund::testContent() {
   // DUMMY TEST
   QString buffer;
   QString p("/Developement/antiqua/database/tmp/testfile.json");

@@ -87,6 +87,7 @@ class ProvidersToolBar : public QFrame {
 
 private:
   QLabel *m_status;
+  QPushButton *btn_customer;
   QPushButton *btn_order;
   QPushButton *btn_refresh;
   /**
@@ -95,6 +96,7 @@ private:
   ProvidersPager *pager;
 
 Q_SIGNALS:
+  void s_customerView();
   void s_createOrder();
   void s_refresh();
 

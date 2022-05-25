@@ -16,6 +16,8 @@
 class ProvidersToolBar;
 class ProvidersTreeView;
 
+class BF_JSonQuery;
+
 /**
  * @group Providers
  * @class InventoryProviders
@@ -27,6 +29,7 @@ class InventoryProviders : public Inventory {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  bool firstStart = false;
   int customerId = -1;
 
   QStringList p_providerList;
@@ -53,17 +56,57 @@ private:
 
   /**
    * @brief Eine Bestellung einfügen
-   * Such nach vorhandenen Tab mit dem Objektnamen
-   * Wenn eines gefunden wird dann nach vorne holen
-   * und "false" zurück geben. Nur bei neuen Tabs
-   * wird "true" zurück gegeben damit die Signale
-   * nicht doppelt Resgistriert werden.
+   * Such nach vorhandenen Tab mit dem Objektnamen Wenn eines gefunden wird dann
+   * nach vorne holen und "false" zurück geben. Nur bei neuen Tabs wird "true"
+   * zurück gegeben damit die Signale nicht doppelt Registriert werden.
    * @note Die Identifizierung der Objektnamen erfolgt
    *  durch die Bestellnummer des Dienstleisters!
    */
   bool addTab(QWidget *);
 
-  void openEditor(const QString &){/* TODO */};
+  /**
+   * @brief Erstelle Daten für AuftragsEditor
+   * Wenn alle Datensätze Aufgearbeitet und Vorhanden sende Daten an den
+   * Workspace.
+   */
+  void openEditor(const QString &customerId);
+
+private Q_SLOTS:
+  void searchConvert(const QString &){/* dummy */};
+  void searchConvert(){/* dummy */};
+  void openTableView(){/* dummy */};
+
+  /**
+   * @brief Beim Aktuellen Tab den Kunden ermitteln!
+   */
+  void checkCustomer();
+
+  /**
+   * @brief Dienstleister Initialisieren und Bestelliste setzen.
+   * Wird nur einmal beim Start aufgerufen und die Variable @ref firstStart
+   * gesetzt. Danach muss der Refresh Knopf des ToolBars verwendet werden.
+   * @return bool
+   */
+  bool initProviders();
+
+  void readBFOrders(const QJsonDocument &doc);
+
+  void queryOrder(const QString &provider, const QString &orderId);
+
+  /**
+   * @brief Kundennummer prüfen ...
+   * Wenn die Kundennummer enthalten ist, diese in @ref customerId schreiben und
+   * den Erstellen Knopf aktivieren! Danach das Signal::openEditCustomer an der
+   * Workspace weitergeben, damit der Kunden-Editor geöffnet wird. Dieser
+   * Schritt ist Notwendig damit die Adressdaten überprüft werden.
+   * @note Es ist Aufgabe des Benutzers die Daten zu prüfen!
+   */
+  void createEditCustomer(int cid);
+
+  /**
+   * @brief Knopf Signal verarbeiten und an @ref openEditor weiterleiten.
+   */
+  void createEditOrders();
 
 Q_SIGNALS:
   /**
@@ -75,26 +118,6 @@ Q_SIGNALS:
    * @brief Sende SIGNAL an Auftragseditor.
    */
   void createEditOrder(/* TODO */);
-
-private Q_SLOTS:
-  void searchConvert(const QString &search);
-  void searchConvert();
-  void openTableView();
-
-  void readProviderOrders(const QJsonDocument &doc);
-
-  void queryOrder(const QString &provider, const QString &orderId);
-
-  /**
-   * @brief Anhand der Kundennummer bestimmen
-   *  ob der Erstellen Knopf aktiviert wird!
-   */
-  void createEditCustomer(int cid);
-
-  /**
-   * @brief Knopf Signal verarbeiten
-   */
-  void createEditOrders();
 
 public Q_SLOTS:
   /**

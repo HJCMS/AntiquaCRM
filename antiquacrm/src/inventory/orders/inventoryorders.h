@@ -128,6 +128,8 @@ public Q_SLOTS:
    */
   void createOrder(int customerId);
 
+  void createOrder(int customerId, QList<int> articleIds);
+
 public:
   /**
     @param index  Ist der Tab-Index

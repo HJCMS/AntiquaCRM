@@ -107,6 +107,17 @@ void InventoryOrders::createOrder(int customerId) {
   m_stackedWidget->setCurrentWidget(m_editor);
 }
 
+void InventoryOrders::createOrder(int customerId, QList<int> articleIds)
+{
+  if (customerId < 1) {
+    return;
+  }
+  m_editor->setEnabled(true);
+  m_editor->openCreateOrder(customerId);
+  m_stackedWidget->setCurrentWidget(m_editor);
+  qDebug() << Q_FUNC_INFO << "TODO IMPORT ARTICLE IDS" << articleIds.size();
+}
+
 bool InventoryOrders::addArticleToOrder(int articleId) {
   if (isEditorActive()) {
     m_editor->addArticleId(articleId);
