@@ -38,13 +38,11 @@ private:
 
   /**
    * @brief Fenster gruppierung
-   * @section Stacked Widgets
    */
   QTabWidget *m_pageView;
 
   /**
-   * @brief List der Dienstleister Bestellungen
-   * @section Stacked Widgets
+   * @brief Liste der Dienstleister Bestellungen
    */
   ProvidersTreeView *m_listView;
 
@@ -82,6 +80,8 @@ private Q_SLOTS:
   void searchConvert(const QString &search);
   void searchConvert();
   void openTableView();
+
+  void readProviderOrders(const QJsonDocument &doc);
 
   void queryOrder(const QString &provider, const QString &orderId);
 

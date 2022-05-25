@@ -43,11 +43,11 @@ public:
   const QString sqlParam(const QString &key);
 
   /**
-   * @brief Such mit SQL Feldname nach Json Parameter
+   * @brief Such mit SQL Feldname nach API Parameter
    * @param key - SQL Tabellen Feldname
    * @return Json Parameter | QString()
    */
-  const QString jsonParam(const QString &key);
+  const QString apiParam(const QString &key);
 };
 
 /**
@@ -102,10 +102,8 @@ private:
    */
   void setValue(const QString &objName, const QVariant &value);
 
-private Q_SLOTS:
-  void setContent(const QJsonDocument &);
-
 public Q_SLOTS:
+  void setContent(const QJsonDocument &);
   QT_DEPRECATED void fetchOrderContent(const QString &bfid);
 
 public:

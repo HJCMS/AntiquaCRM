@@ -20,8 +20,6 @@
 #include <QMessageBox>
 #include <QVBoxLayout>
 
-static const QString getConfigGroup() { return QString("provider/whsoft"); }
-
 BF_Translater::BF_Translater() : QMap<QString, QString>{} {
   // public.customers @{
   insert("person", "a_customer_id");
@@ -63,7 +61,7 @@ const QString BF_Translater::sqlParam(const QString &key) {
   return QString();
 }
 
-const QString BF_Translater::jsonParam(const QString &key) {
+const QString BF_Translater::apiParam(const QString &key) {
   QMap<QString, QString>::iterator fi;
   for (fi = begin(); fi != end(); ++fi) {
     if (fi.value() == key)
@@ -81,7 +79,7 @@ const QUrl BF_JSonQuery::apiQuery(const QString &operation) {
   ApplSettings cfg;
 
   QUrl url;
-  cfg.beginGroup(getConfigGroup());
+  cfg.beginGroup(BF_CONFIG_GROUP);
   url.setScheme(cfg.value("api_scheme").toString());
   url.setHost(cfg.value("api_host").toString());
   QString path(cfg.value("api_basepath").toString());
@@ -141,7 +139,7 @@ Buchfreund::Buchfreund(QWidget *parent) : QScrollArea{parent} {
   layout->addWidget(m_ordersTable);
 
   QLabel *lbInfo = new QLabel(tr("purchaser"));
-  lbInfo->setIndent(5);
+  lbInfo->setIndent(10);
   layout->addWidget(lbInfo);
 
   m_customerData = new ProvidersCustomerData(mainWidget);
@@ -150,6 +148,7 @@ Buchfreund::Buchfreund(QWidget *parent) : QScrollArea{parent} {
   layout->addStretch(1);
   mainWidget->setLayout(layout);
   setWidget(mainWidget);
+
 }
 
 void Buchfreund::setValue(const QString &objName, const QVariant &value) {

@@ -15,17 +15,23 @@ class ProvidersTreeView : public QTreeWidget {
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
+private:
+  QTreeWidgetItem *getParent(const QString &name);
+  QTreeWidgetItem *getChild(const QString &provider, const QString &id);
+
 private Q_SLOTS:
   void itemSelected(QTreeWidgetItem *, int);
 
 public Q_SLOTS:
   void addOrder(const QString &provider, const QString &id);
+  void removeOrder(const QString &provider, const QString &id);
 
 Q_SIGNALS:
   void s_queryOrder(const QString &provider, const QString &id);
 
 public:
   explicit ProvidersTreeView(QWidget *parent = nullptr);
+  bool exists(const QString &provider, const QString &id);
   void setTreeViewHeaders();
   void addProviders(const QStringList &);
 };

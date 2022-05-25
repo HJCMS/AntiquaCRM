@@ -39,11 +39,18 @@
 #endif
 
 /**
+ * @brief Konfigurationsgruppe
+ */
+#ifndef BF_CONFIG_GROUP
+#define BF_CONFIG_GROUP "provider/whsoft"
+#endif
+
+/**
  * @brief Sucht Artikel der einen Bestand ausfweist!
  * @param aid
  * @return
  */
-const QString queryArticleExists(const QString &aid)
+static const QString queryArticleExists(const QString &aid)
 {
   QString sql("SELECT ib_id AS a_article_id");
   sql.append(" FROM inventory_books ");

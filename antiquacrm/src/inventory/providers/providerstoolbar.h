@@ -89,6 +89,10 @@ private:
   QLabel *m_status;
   QPushButton *btn_order;
   QPushButton *btn_refresh;
+  /**
+   * @brief Seiten Navigator
+   */
+  ProvidersPager *pager;
 
 Q_SIGNALS:
   void s_createOrder();
@@ -102,11 +106,6 @@ public Q_SLOTS:
   void enableOrderButton(bool);
 
 public:
-  /**
-   * @brief Seiten Navigator
-   */
-  ProvidersPager *pager;
-
   explicit ProvidersToolBar(QWidget *parent = nullptr);
 
   /**

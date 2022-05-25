@@ -97,14 +97,14 @@ ProvidersToolBar::ProvidersToolBar(QWidget *parent) : QFrame{parent} {
   QHBoxLayout *layout = new QHBoxLayout(this);
   layout->setObjectName("providers_statusbar_layout");
 
+  pager = new ProvidersPager(this);
+  layout->addWidget(pager);
+
   m_status = new QLabel(this);
   m_status->setStyleSheet("color:red;");
   layout->addWidget(m_status);
 
   layout->addStretch(1);
-
-  pager = new ProvidersPager(this);
-  layout->addWidget(pager);
 
   btn_order = new QPushButton(myIcon("db_add"), tr("Create Order"), this);
   QString info =

@@ -3,16 +3,21 @@
 
 #include "inventoryproviders.h"
 #include "antiqua_global.h"
-//#include "applsettings.h"
-//#include "myicontheme.h"
+#include "applsettings.h"
 #include "buchfreund.h"
+#include "providersstatements.h"
 #include "providerstoolbar.h"
 #include "providerstreeview.h"
 
 #include <QDebug>
-#include <QSizePolicy>
 #include <QStringList>
 #include <QVBoxLayout>
+
+// QJson
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QVariant>
 
 InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   setObjectName("inventory_providers");
@@ -51,6 +56,7 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   m_listView->addProviders(p_providerList);
   m_listView->addOrder("Buchfreund", "BF-2249986");
 
+  connect(m_toolBar, SIGNAL(s_refresh()), this, SLOT(searchConvert()));
   connect(m_toolBar, SIGNAL(s_createOrder()), this, SLOT(createEditOrders()));
   connect(m_listView, SIGNAL(s_queryOrder(const QString &, const QString &)),
           this, SLOT(queryOrder(const QString &, const QString &)));
@@ -74,11 +80,32 @@ void InventoryProviders::searchConvert(const QString &search) {
 }
 
 void InventoryProviders::searchConvert() {
-  /* im moment hier nicht notwendig */
+  BF_JSonQuery *bfq = new BF_JSonQuery(this);
+  connect(bfq, SIGNAL(listResponsed(const QJsonDocument &)), this,
+          SLOT(readProviderOrders(const QJsonDocument &)));
+
+  bfq->queryList();
 }
 
 void InventoryProviders::openTableView() {
   /* im moment hier nicht notwendig */
+}
+
+void InventoryProviders::readProviderOrders(const QJsonDocument &doc) {
+  if (doc.isEmpty())
+    return;
+
+  int errors = QJsonValue(doc["error"]).toBool();
+  if (!errors) {
+    QJsonArray array = QJsonValue(doc["response"]).toArray();
+    for (int i = 0; i < array.count(); i++) {
+      QJsonObject obj = array[i].toObject();
+      QString id = obj["id"].toString();
+      QString ds = obj["datum"].toString();
+      QDateTime dt = QDateTime::fromString(ds, BF_DATE_FORMAT);
+      m_listView->addOrder("Buchfreund",id);
+    }
+  }
 }
 
 void InventoryProviders::queryOrder(const QString &provider,
@@ -117,5 +144,6 @@ void InventoryProviders::createEditOrders() {
 
 void InventoryProviders::onEnterChanged() {
   qDebug() << Q_FUNC_INFO << "Aktuell Deaktiviert";
+
   return;
 }
