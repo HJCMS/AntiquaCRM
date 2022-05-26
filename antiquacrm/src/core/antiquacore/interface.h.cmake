@@ -31,7 +31,7 @@ namespace Antiqua {
     /**
      * @brief Wird für Konfigurationen benötigt
      */
-    virtual const QString configGroupName() = 0;
+    virtual const QString configGroupName() const = 0;
 
     /**
      * @brief Erstellt Url für die Abfrage
@@ -47,7 +47,7 @@ namespace Antiqua {
      * Deshalb müssen die Parameter vor der Weiterleitung an dieser Stelle
      * übersetzt werden.
      */
-    virtual const QMap<QString, QString> fieldTranslate() = 0;
+    virtual const QMap<QString, QString> fieldTranslate() const = 0;
 
     /**
      * @brief SQL Datenfeld zurück geben

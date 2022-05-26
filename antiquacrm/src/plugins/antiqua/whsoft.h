@@ -22,7 +22,7 @@ private:
 public:
   bool createInterface(QObject *parent);
 
-  inline const QString configGroupName() { return QString("whsoft"); };
+  inline const QString configGroupName() const { return QString("whsoft"); };
 
   const QUrl apiQuery(const QString &apiKey, const QString &operation);
 
@@ -32,7 +32,8 @@ public:
    * Deshalb müssen die Parameter vor der Weiterleitung an dieser Stelle
    * übersetzt werden.
    */
-  const QMap<QString, QString> fieldTranslate();
+  const QMap<QString, QString> fieldTranslate() const;
+
   /**
    * @brief SQL Datenfeld zurück geben
    * @param key - Json Parameter

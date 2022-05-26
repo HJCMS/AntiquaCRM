@@ -21,7 +21,7 @@ const QUrl WHSoft::apiQuery(const QString &apiKey, const QString &operation) {
   return url;
 }
 
-const QMap<QString, QString> WHSoft::fieldTranslate() {
+const QMap<QString, QString> WHSoft::fieldTranslate() const {
   QMap<QString, QString> map;
   // public.customers @{
   map.insert("person", "a_customer_id");
