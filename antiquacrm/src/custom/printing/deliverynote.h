@@ -11,9 +11,9 @@
 #include <QObject>
 #include <QWidget>
 
-#include "printing.h"
+#include <AntiquaCRM>
 
-class ApplSettings;
+#include "printing.h"
 
 /**
  * @brief Lieferschein Erstellung

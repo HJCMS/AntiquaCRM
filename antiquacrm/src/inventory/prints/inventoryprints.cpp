@@ -2,8 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "inventoryprints.h"
-#include "antiqua_global.h"
-#include "applsettings.h"
 #include "messagebox.h"
 #include "myicontheme.h"
 #include "printseditor.h"

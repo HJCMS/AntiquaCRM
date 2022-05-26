@@ -2,6 +2,10 @@
 // vim: set fileencoding=utf-8
 #include "antiqua_global.h"
 
+#ifndef APPLSETTINGS_ANTIQUACORE_H
+# include "applsettings.h"
+#endif
+
 #ifndef TRUSTLIST_ANTIQUACORE_H
 # include "trustlist.h"
 #endif

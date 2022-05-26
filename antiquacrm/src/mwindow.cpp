@@ -3,8 +3,6 @@
 
 /* Project */
 #include "mwindow.h"
-#include "antiqua_global.h"
-#include "applsettings.h"
 #include "completerdialog.h"
 #include "configdialog.h"
 #include "dockbarwidget.h"

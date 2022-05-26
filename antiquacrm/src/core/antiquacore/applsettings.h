@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef APPL_SETTINGS_H
-#define APPL_SETTINGS_H
+#ifndef APPLSETTINGS_ANTIQUACORE_H
+#define APPLSETTINGS_ANTIQUACORE_H
 
 #include <QHash>
 #include <QObject>
@@ -27,4 +27,4 @@ public:
   virtual ~ApplSettings();
 };
 
-#endif // APPL_SETTINGS_H
+#endif // APPLSETTINGS_ANTIQUACORE_H

@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "isbnrequest.h"
-#include "networker.h"
 
 #include <QByteArray>
 #include <QDebug>
@@ -170,7 +169,7 @@ IsbnRequest::IsbnRequest(const QString &isbn, QObject *parent)
   url.setQuery(query);
   p_url = url;
 
-  m_manager = new Networker(this);
+  m_manager = new Antiqua::Networker(this);
   m_manager->setObjectName("isbn_network_manager");
   connect(m_manager, SIGNAL(finished(QNetworkReply *)), this,
           SLOT(replyFinished(QNetworkReply *)));

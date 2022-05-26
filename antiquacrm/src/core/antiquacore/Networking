@@ -1,0 +1,12 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+
+#ifndef NETWORKER_NETWORKING_H
+# include "networker.h"
+#endif
+
+#ifndef PROVIDER_NETWORKING_H
+# include "provider.h"
+#endif
+
+// EOF

@@ -2,11 +2,10 @@
 // vim: set fileencoding=utf-8
 
 #include "inventoryorders.h"
-#include "antiqua_global.h"
-#include "applsettings.h"
 #include "myicontheme.h"
 #include "ordereditor.h"
 #include "orderstable.h"
+#include <AntiquaCRM>
 
 #include <QDebug>
 #include <QHash>
@@ -107,8 +106,7 @@ void InventoryOrders::createOrder(int customerId) {
   m_stackedWidget->setCurrentWidget(m_editor);
 }
 
-void InventoryOrders::createOrder(int customerId, QList<int> articleIds)
-{
+void InventoryOrders::createOrder(int customerId, QList<int> articleIds) {
   if (customerId < 1) {
     return;
   }

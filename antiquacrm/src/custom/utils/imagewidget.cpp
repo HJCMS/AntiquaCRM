@@ -2,9 +2,9 @@
 // vim: set fileencoding=utf-8
 
 #include "imagewidget.h"
-#include "applsettings.h"
 #include "messagebox.h"
 #include "sqlcore.h"
+#include <AntiquaCRM>
 
 #include <QBuffer>
 #include <QDebug>

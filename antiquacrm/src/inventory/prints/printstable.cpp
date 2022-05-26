@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "printstable.h"
-#include "antiqua_global.h"
 #include "messagebox.h"
 #include "myicontheme.h"
 #include "printstablemodel.h"

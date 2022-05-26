@@ -2,11 +2,10 @@
 // vim: set fileencoding=utf-8
 
 #include "imagedialog.h"
-#include "antiqua_global.h"
-#include "applsettings.h"
 #include "imageview.h"
 #include "myicontheme.h"
 #include "openimagedialog.h"
+#include <AntiquaCRM>
 
 #include <QDebug>
 #include <QDialogButtonBox>

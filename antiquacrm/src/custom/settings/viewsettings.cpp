@@ -2,12 +2,13 @@
 // vim: set fileencoding=utf-8
 
 #include "viewsettings.h"
-#include "antiqua_global.h"
-#include "applsettings.h"
 #include "myicontheme.h"
 
-#include <QtWidgets>
-// #include <QFontDialog>
+#include <QApplication>
+#include <QVBoxLayout>
+#include <QGridLayout>
+#include <QPushButton>
+#include <QFontDialog>
 
 ViewSettings::ViewSettings(QWidget *parent) : SettingsWidget{parent} {
   setObjectName("view_settings");

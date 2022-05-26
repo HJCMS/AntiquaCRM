@@ -2,9 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "statsactionbar.h"
-#include "applsettings.h"
-#include "antiqua_global.h"
 #include "myicontheme.h"
+#include <AntiquaCRM>
 
 #include <QDebug>
 #include <QList>

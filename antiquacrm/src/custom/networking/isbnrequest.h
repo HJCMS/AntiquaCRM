@@ -16,6 +16,8 @@
 #include <QUrl>
 #include <QVariant>
 
+#include <Networking>
+
 class IsbnData {
 private:
   const QString p_isbn;
@@ -69,8 +71,6 @@ public:
     @endcode
  */
 
-class Networker;
-
 class IsbnRequest : public QObject {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -81,7 +81,7 @@ private:
   const QString p_isbnKey;
   QUrl p_url;
   QNetworkReply *m_reply;
-  Networker *m_manager;
+  Antiqua::Networker *m_manager;
   QJsonObject p_respJsonObject;
   bool setManager();
   void read(const QJsonObject &);

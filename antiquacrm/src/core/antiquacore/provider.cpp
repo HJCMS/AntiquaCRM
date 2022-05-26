@@ -2,8 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "provider.h"
-#include "antiqua_global.h"
-#include "applsettings.h"
 
 #include <QByteArray>
 #include <QDebug>
@@ -17,6 +15,8 @@
 #endif
 
 // BEGIN ProviderRequest
+
+namespace Antiqua {
 
 static int cUrlTrace(CURL *handle, curl_infotype type, unsigned char *data,
                      size_t size, void *userp) {
@@ -401,4 +401,5 @@ void Provider::run() {
   emit requestFinished(status);
 }
 
+}; // namespace Antiqua
 // END

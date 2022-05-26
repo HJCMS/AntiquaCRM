@@ -11,7 +11,8 @@
 #include <QStyle>
 #include <QApplication>
 
-class ApplSettings;
+#include <AntiquaCRM>
+
 class MWindow;
 class SocketServer;
 

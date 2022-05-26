@@ -2,12 +2,12 @@
 // vim: set fileencoding=utf-8
 
 #include "ordereditor.h"
-#include "applsettings.h"
 #include "deliverynote.h"
 #include "editoractionbar.h"
 #include "myicontheme.h"
 #include "ordersitemlist.h"
 #include "orderstatements.h"
+#include <AntiquaCRM>
 
 #include <QDebug>
 #include <QMessageBox>

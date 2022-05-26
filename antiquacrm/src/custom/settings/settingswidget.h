@@ -1,4 +1,6 @@
-/** @COPYRIGHT_HOLDER@ */
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+// @COPYRIGHT_HOLDER@
 
 #ifndef WIDGET_SETTINGS_H
 #define WIDGET_SETTINGS_H
@@ -11,8 +13,7 @@
 #include <QFont>
 
 #include <Utils>
-
-class ApplSettings;
+#include <AntiquaCRM>
 
 /**
  * @brief Definitionsklasse für den Konfigurations Dialog

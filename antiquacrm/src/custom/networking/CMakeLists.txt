@@ -7,25 +7,19 @@ INCLUDE_DIRECTORIES (
   ${PROJECT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CURL_INCLUDE_DIRS}
 )
 
 SET (subproject_LINKER
  AntiquaCore
  Settings
- ${CURL_LIBRARIES}
 )
 
 SET (subproject_SOURCES
-  networker.cpp
   isbnrequest.cpp
-  provider.cpp
 )
 
 SET (subproject_HEADERS
-  networker.h
   isbnrequest.h
-  provider.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

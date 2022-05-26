@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "printstablemodel.h"
-#include "antiqua_global.h"
 #include "myicontheme.h"
 
 /* QtCore */

@@ -14,6 +14,7 @@
 #include <QWidget>
 
 #include <AntiquaCRM>
+#include <Networking>
 #include <AntiquaInterface>
 #include <Utils>
 

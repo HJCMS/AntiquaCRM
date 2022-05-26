@@ -11,7 +11,6 @@ SET (subproject_FILES
 )
 
 SET (subproject_SOURCES
- applsettings.cpp
  configdialog.cpp
  generalsettings.cpp
  pgsqlsettings.cpp
@@ -23,7 +22,6 @@ SET (subproject_SOURCES
 )
 
 SET (subproject_HEADERS
- applsettings.h
  configdialog.h
  generalsettings.h
  pgsqlsettings.h

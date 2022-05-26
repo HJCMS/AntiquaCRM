@@ -2,8 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "companysettings.h"
-#include "antiqua_global.h"
-#include "applsettings.h"
 
 #include <QGridLayout>
 

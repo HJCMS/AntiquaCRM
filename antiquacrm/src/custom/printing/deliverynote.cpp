@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "deliverynote.h"
-#include "applsettings.h"
 #include "myicontheme.h"
 #include "texteditor.h"
 

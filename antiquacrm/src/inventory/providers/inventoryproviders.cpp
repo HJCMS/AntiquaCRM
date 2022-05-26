@@ -2,8 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "inventoryproviders.h"
-#include "antiqua_global.h"
-#include "applsettings.h"
 #include "buchfreund.h"
 #include "providersstatements.h"
 #include "providerstoolbar.h"
@@ -54,12 +52,12 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   p_providerList = QStringList({"Buchfreund", "ZVAB", "AbeBooks"});
   m_listView->addProviders(p_providerList);
 
-  // BEGIN TESTING
-  Buchfreund *bf = new Buchfreund("BF-2249986", this);
-  addTab(bf);
-  bf->testContent();
-  connect(bf, SIGNAL(openCustomer(int)), this, SLOT(createEditCustomer(int)));
-  // END
+//  // BEGIN TESTING
+//  Buchfreund *bf = new Buchfreund("BF-2249986", this);
+//  addTab(bf);
+//  bf->testContent();
+//  connect(bf, SIGNAL(openCustomer(int)), this, SLOT(createEditCustomer(int)));
+//  // END
 
   connect(m_toolBar, SIGNAL(s_customerView()), this, SLOT(checkCustomer()));
   connect(m_toolBar, SIGNAL(s_refresh()), this, SLOT(initProviders()));

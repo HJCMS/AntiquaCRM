@@ -2,8 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "bookstable.h"
-#include "antiqua_global.h"
-#include "applsettings.h"
 #include "bookstablemodel.h"
 #include "myicontheme.h"
 #include "searchbar.h"

@@ -15,9 +15,10 @@
 #include <QMenuBar>
 #include <QToolBar>
 
+#include <AntiquaCRM>
+
 class StatusBar;
 class Workspace;
-class ApplSettings;
 class DockBarWidget;
 
 class MWindow : public QMainWindow {

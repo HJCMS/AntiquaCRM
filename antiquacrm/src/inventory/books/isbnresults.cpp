@@ -2,8 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "isbnresults.h"
-#include "antiqua_global.h"
-#include "applsettings.h"
 #include "isbnrequest.h"
 #include "myicontheme.h"
 

@@ -1,5 +1,7 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+
 #include "settingswidget.h"
-#include "applsettings.h"
 
 #include <QApplication>
 #include <QDebug>

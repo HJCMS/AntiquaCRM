@@ -2,8 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "inventorycustomers.h"
-#include "antiqua_global.h"
-#include "applsettings.h"
 #include "customertableview.h"
 #include "editcustomer.h"
 #include "myicontheme.h"

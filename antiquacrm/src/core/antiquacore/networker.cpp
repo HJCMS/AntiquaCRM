@@ -2,12 +2,12 @@
 // vim: set fileencoding=utf-8
 
 #include "networker.h"
-#include "antiqua_global.h"
-#include "applsettings.h"
 
 #include <QHttpMultiPart>
 #include <QHttpPart>
 #include <QLocale>
+
+namespace Antiqua {
 
 static const QByteArray userAgentString() {
   QLocale locale = QLocale::system();
@@ -217,3 +217,5 @@ Networker::~Networker() {
   if (reply != nullptr)
     reply->deleteLater();
 }
+
+}; // namespace Antiqua

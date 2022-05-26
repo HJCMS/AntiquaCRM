@@ -3,8 +3,6 @@
 
 /* Project */
 #include "mapplication.h"
-#include "antiqua_global.h"
-#include "applsettings.h"
 #include "assistant.h"
 #include "mwindow.h"
 #include "socketserver.h"

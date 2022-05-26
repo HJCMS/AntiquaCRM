@@ -2,13 +2,12 @@
 // vim: set fileencoding=utf-8
 
 #include "inventorybooks.h"
-#include "antiqua_global.h"
-#include "applsettings.h"
 #include "bookeditor.h"
 #include "bookstable.h"
 #include "myicontheme.h"
 #include "searchbar.h"
 #include "statsactionbar.h"
+#include <AntiquaCRM>
 
 #include <QDebug>
 #include <QHash>

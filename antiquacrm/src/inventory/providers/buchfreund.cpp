@@ -2,10 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "buchfreund.h"
-#include "antiqua_global.h"
-#include "applsettings.h"
 #include "myicontheme.h"
-#include "provider.h"
 #include "providerscustomerdata.h"
 #include "providersordertable.h"
 #include "providersstatements.h"
@@ -54,7 +51,7 @@ void BF_JSonQuery::queryList() {
   QJsonDocument doc(obj);
   QByteArray data = doc.toJson(QJsonDocument::Compact);
   QUrl url = apiQuery("bestellungen");
-  Provider *prQuery = new Provider(this, false);
+  Antiqua::Provider *prQuery = new Antiqua::Provider(this, false);
   prQuery->setObjectName("buchfreund_query_list");
   connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), this,
           SIGNAL(listResponsed(const QJsonDocument &)));
@@ -68,7 +65,7 @@ void BF_JSonQuery::queryOrder(const QString &bfId) {
   QJsonDocument doc(obj);
   QByteArray data = doc.toJson(QJsonDocument::Compact);
   QUrl url = apiQuery("bestellung");
-  Provider *prQuery = new Provider(this, false);
+  Antiqua::Provider *prQuery = new Antiqua::Provider(this, false);
   prQuery->setObjectName("buchfreund_query_view");
   connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), this,
           SIGNAL(orderResponsed(const QJsonDocument &)));
