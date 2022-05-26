@@ -20,58 +20,6 @@
 #include <QMessageBox>
 #include <QVBoxLayout>
 
-BF_Translater::BF_Translater() : QMap<QString, QString>{} {
-  // public.customers @{
-  insert("person", "a_customer_id");
-  insert("anrede", "c_gender");
-  insert("vorname", "c_firstname");
-  insert("name", "c_lastname");
-  insert("adresse", "c_street");
-  insert("plz", "c_postalcode");
-  insert("ort", "c_location");
-  insert("land", "c_country");
-  insert("telefon", "c_phone_0");
-  insert("email", "c_email_0");
-  insert("kundenkommentar", "m_customerComment");
-  insert("lieferadresse", "c_shipping_address");
-  // @}
-
-  // public.article_orders @{
-  insert("bestellnr", "a_article_id");
-  insert("menge_bestellt", "a_count");
-  insert("preis_pro_einheit", "a_sell_price");
-  insert("datum", "a_modified");
-  insert("titel", "a_title");
-  // @}
-
-  // public.inventory_orders @{
-  insert("id", "o_provider_order_id");
-  insert("provider", "o_provider_name");
-  insert("menge_storniert", "o_cancellation");
-  insert("stornogrund", "o_cancellation_text");
-  insert("storniert_am", "o_cancellation_datetime");
-  insert("lagerfach", "sl_storage");
-  // @}
-}
-
-const QString BF_Translater::sqlParam(const QString &key) {
-  QMap<QString, QString>::iterator fi;
-  for (fi = begin(); fi != end(); ++fi) {
-    if (fi.key() == key)
-      return fi.value();
-  }
-  return QString();
-}
-
-const QString BF_Translater::apiParam(const QString &key) {
-  QMap<QString, QString>::iterator fi;
-  for (fi = begin(); fi != end(); ++fi) {
-    if (fi.value() == key)
-      return fi.key();
-  }
-  return QString();
-}
-
 BF_JSonQuery::BF_JSonQuery(QObject *parent) : QObject{parent} {
   setObjectName("buchfreund_json_query");
 }
@@ -169,10 +117,22 @@ Buchfreund::Buchfreund(const QString &id, QWidget *parent)
   mainWidget->setLayout(layout);
   setWidget(mainWidget);
 
+  loadPlugins();
+
   connect(m_jsonQuery, SIGNAL(orderResponsed(const QJsonDocument &)), this,
           SLOT(setContent(const QJsonDocument &)));
 
   m_jsonQuery->queryOrder(id);
+}
+
+void Buchfreund::loadPlugins() {
+  Antiqua::PluginLoader loader(this);
+  loader.setFileName("whsoft");
+  if (!loader.load()) {
+    qWarning("Plugin load Failed:%s", qPrintable(loader.errorString()));
+    return;
+  }
+  m_bfPlugin = qobject_cast<Antiqua::Interface *>(loader.instance());
 }
 
 void Buchfreund::setValue(const QString &objName, const QVariant &value) {
@@ -193,12 +153,11 @@ void Buchfreund::setContent(const QJsonDocument &doc) {
 
   QString bf_id(windowTitle());
 
-  BF_Translater bfTr;
   QJsonObject response = QJsonValue(doc["response"]).toObject();
   if (!response.isEmpty()) {
     QJsonObject::iterator it; // Iterator
     for (it = response.begin(); it != response.end(); ++it) {
-      QString f = bfTr.sqlParam(it.key());
+      QString f = m_bfPlugin->sqlParam(it.key());
       QJsonValue val = it.value();
       if (!f.isEmpty() && !val.toString().isEmpty()) {
         setValue(f, val.toVariant());
@@ -208,7 +167,7 @@ void Buchfreund::setContent(const QJsonDocument &doc) {
         QJsonValue(doc["response"]["rechnungsadresse"]).toObject();
     if (!shippingsaddr.isEmpty()) {
       for (it = shippingsaddr.begin(); it != shippingsaddr.end(); ++it) {
-        QString f = bfTr.sqlParam(it.key());
+        QString f = m_bfPlugin->sqlParam(it.key());
         QJsonValue val = it.value();
         if (!f.isEmpty() && !val.toString().isEmpty()) {
           setValue(f, val.toVariant());
@@ -232,11 +191,12 @@ void Buchfreund::setContent(const QJsonDocument &doc) {
       QString street(deliveryAddress["adresse"].toString().trimmed());
       delivery.append(street);
 
-      QString f = bfTr.sqlParam("lieferadresse");
+      QString f = m_bfPlugin->sqlParam("lieferadresse");
       setValue(f, delivery.join("\n"));
     }
   }
 
+  m_ordersTable->setRowCount(0);
   QJsonArray positionen = QJsonValue(doc["response"]["positionen"]).toArray();
   if (positionen.count() > 0) {
     QJsonArray::iterator at;
@@ -249,7 +209,7 @@ void Buchfreund::setContent(const QJsonDocument &doc) {
       QTableWidgetItem *item = m_ordersTable->createItem(bf_id);
       m_ordersTable->setItem(row, column++, item);
       for (it = article.begin(); it != article.end(); ++it) {
-        QString f = bfTr.sqlParam(it.key());
+        QString f = m_bfPlugin->sqlParam(it.key());
         QVariant curValue = it.value().toVariant();
         if (!f.isEmpty() && !curValue.isNull() && f.contains("a_")) {
           QString txt = curValue.toString().trimmed();

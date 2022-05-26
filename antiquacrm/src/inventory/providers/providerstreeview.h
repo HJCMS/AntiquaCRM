@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
+#include <QDateTime>
 #include <QWidget>
 
 class ProvidersTreeView : public QTreeWidget {
@@ -23,7 +24,8 @@ private Q_SLOTS:
   void itemSelected(QTreeWidgetItem *, int);
 
 public Q_SLOTS:
-  void addOrder(const QString &provider, const QString &id);
+  void addOrder(const QString &provider, const QString &id,
+                const QDateTime &dt);
   void removeOrder(const QString &provider, const QString &id);
 
 Q_SIGNALS:

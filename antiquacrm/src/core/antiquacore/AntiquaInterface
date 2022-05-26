@@ -1,0 +1,10 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+
+#ifndef ANTIQUA_INTERFACE_H
+# include "interface.h"
+#endif
+
+#ifndef ANTIQUA_PLUGINLOADER_H
+# include "pluginloader.h"
+#endif

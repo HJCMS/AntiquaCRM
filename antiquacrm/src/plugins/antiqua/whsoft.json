@@ -1,0 +1,6 @@
+{
+  "Keys": [ "libwhsoft" ],
+  "Name": "W+H Software Plugin",
+  "Files": "whsoft.h whsoft.cpp",
+  "Description": "JSON Integration der W+H Software Schnittstelle"
+}

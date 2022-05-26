@@ -13,6 +13,10 @@ CONFIGURE_FILE (antiqua_global.h.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/antiqua_global.h
 )
 
+CONFIGURE_FILE (interface.h.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/interface.h
+)
+
 SET (subproject_FILES
   README
 )
@@ -23,6 +27,7 @@ SET (subproject_SOURCES
   orderstatus.cpp
   orderarticle.cpp
   providerorders.cpp
+  pluginloader.cpp
 )
 
 SET (subproject_HEADERS
@@ -33,6 +38,9 @@ SET (subproject_HEADERS
   providerorders.h
   AntiquaCRM
   antiqua_global.h
+  pluginloader.h
+  interface.h
+  AntiquaInterface
 )
 
 ADD_LIBRARY (${_subproject} SHARED

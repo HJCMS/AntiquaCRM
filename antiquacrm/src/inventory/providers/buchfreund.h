@@ -14,6 +14,7 @@
 #include <QWidget>
 
 #include <AntiquaCRM>
+#include <AntiquaInterface>
 #include <Utils>
 
 namespace HJCMS {
@@ -22,34 +23,6 @@ class SqlCore;
 
 class ProvidersOrderTable;
 class ProvidersCustomerData;
-
-/**
- * @class BF_Translater
- * @ingroup Providers
- * @brief Übersetzt die Buchfreund.de Json Datenfelder zu SQL Spaltenname.
- * Wir verwenden andere Datenfeld Bezeichnungen als der Dienstanbieter.
- * Deshalb müssen die Parameter vor der Weiterleitung an dieser Stelle übersetzt
- * werden.
- * @note Die Daten werden mit @ref ProviderOrders weitergeleitet!
- */
-class BF_Translater : public QMap<QString, QString> {
-public:
-  explicit BF_Translater();
-
-  /**
-   * @brief SQL Datenfeld zurück geben
-   * @param key - Json Parameter
-   * @return SQL Column | QString()
-   */
-  const QString sqlParam(const QString &key);
-
-  /**
-   * @brief Such mit SQL Feldname nach API Parameter
-   * @param key - SQL Tabellen Feldname
-   * @return Json Parameter | QString()
-   */
-  const QString apiParam(const QString &key);
-};
 
 /**
  * @brief Stellt JSon Bestellanfragen
@@ -93,10 +66,14 @@ class Buchfreund : public QScrollArea {
 private:
   HJCMS::SqlCore *m_sql;
 
+  Antiqua::Interface *m_bfPlugin;
+
   BF_JSonQuery *m_jsonQuery;
 
   ProvidersOrderTable *m_ordersTable;
   ProvidersCustomerData *m_customerData;
+
+  void loadPlugins();
 
   /**
    * @brief Werte einfügen

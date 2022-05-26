@@ -95,7 +95,8 @@ bool InventoryProviders::addTab(QWidget *w) {
 void InventoryProviders::openEditor(const QString &customerId) {
   qDebug() << Q_FUNC_INFO << "TODO" << customerId;
   /**
-   * @todo Abstrakte Klasse erstellen damit ich die Daten neutraler abfangen kann!
+   * @todo Abstrakte Klasse erstellen damit ich die Daten neutraler abfangen
+   * kann!
    */
 }
 
@@ -111,7 +112,7 @@ void InventoryProviders::readBFOrders(const QJsonDocument &doc) {
       QString id = obj["id"].toString();
       QString ds = obj["datum"].toString();
       QDateTime dt = QDateTime::fromString(ds, BF_DATE_FORMAT);
-      m_listView->addOrder("Buchfreund", id);
+      m_listView->addOrder("Buchfreund", id, dt);
     }
   }
 }
