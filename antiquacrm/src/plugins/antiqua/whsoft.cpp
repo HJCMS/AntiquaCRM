@@ -3,6 +3,125 @@
 
 #include "whsoft.h"
 
+#include <QDateTime>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QTime>
+#include <QVariant>
+
+/**
+ * @def DATE_FORMAT
+ * @ingroup Providers SQL Statements
+ * @brief Datumsformat von Buchfreund.de
+ * Wird benötigt für die Json anfragen zur erstellen.
+ * Gleichzeitig wird es auch für den Import benötigt!
+ */
+#ifndef DATE_FORMAT
+#define DATE_FORMAT "yyyy-MM-dd hh:mm:ss"
+#endif
+
+/**
+ * @brief Konfigurationsgruppe
+ */
+#ifndef CONFIG_GROUP
+#define CONFIG_GROUP "provider/whsoft"
+#endif
+
+WHSoftJSonQuery::WHSoftJSonQuery(QObject *parent) : QObject{parent} {
+  setObjectName("whsoft_json_query");
+}
+
+const QUrl WHSoftJSonQuery::apiQuery(const QString &operation) {
+  QRegExp pattern("([\\/]{2,})");
+  ApplSettings cfg;
+
+  QUrl url;
+  cfg.beginGroup(CONFIG_GROUP);
+  url.setScheme(cfg.value("api_scheme").toString());
+  url.setHost(cfg.value("api_host").toString());
+  QString path(cfg.value("api_basepath").toString());
+  path.append("/");
+  path.append(cfg.value("api_key").toString());
+  path.append("/" + operation);
+  cfg.endGroup();
+  url.setPath(path.replace(pattern, "/"));
+  return url;
+}
+
+void WHSoftJSonQuery::queryList() {
+  QDateTime curDt = QDateTime::currentDateTime();
+  QTime t(curDt.time().hour(), curDt.time().minute(), 0);
+  curDt.setTime(t);
+  QDateTime from = curDt.addDays(-14);
+  QJsonObject obj;
+  obj.insert("datum_von", QJsonValue::fromVariant(from.toString(DATE_FORMAT)));
+  obj.insert("datum_bis", QJsonValue::fromVariant(curDt.toString(DATE_FORMAT)));
+  QJsonDocument doc(obj);
+  QByteArray data = doc.toJson(QJsonDocument::Compact);
+  QUrl url = apiQuery("bestellungen");
+  Antiqua::Provider *prQuery = new Antiqua::Provider(this, false);
+  prQuery->setObjectName("buchfreund_query_list");
+  connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), this,
+          SIGNAL(listResponsed(const QJsonDocument &)));
+  connect(prQuery, SIGNAL(finished()), prQuery, SLOT(deleteLater()));
+  prQuery->sendPost(url, data);
+}
+
+void WHSoftJSonQuery::queryOrder(const QString &bfId) {
+  QJsonObject obj;
+  obj.insert("id", QJsonValue(bfId));
+  QJsonDocument doc(obj);
+  QByteArray data = doc.toJson(QJsonDocument::Compact);
+  QUrl url = apiQuery("bestellung");
+  Antiqua::Provider *prQuery = new Antiqua::Provider(this, false);
+  prQuery->setObjectName("buchfreund_query_view");
+  connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), this,
+          SIGNAL(orderResponsed(const QJsonDocument &)));
+  connect(prQuery, SIGNAL(finished()), prQuery, SLOT(deleteLater()));
+  prQuery->sendPost(url, data);
+}
+
+WHSoftWidget::WHSoftWidget(const QString &widgetId, QWidget *parent)
+    : Antiqua::InterfaceWidget{widgetId, parent} {
+  setObjectName(widgetId);
+  setWindowTitle(widgetId);
+
+}
+
+void WHSoftWidget::setContent(const QJsonDocument &) { /* TODO */
+}
+
+void WHSoftWidget::checkCustomer() { /* TODO */
+}
+
+const QList<int> WHSoftWidget::getArticleIds() {
+  QList<int> list;
+
+  return list;
+}
+
+void WHSoft::prepareJsonListResponse(const QJsonDocument &doc) {
+  bool errors = QJsonValue(doc["error"]).toBool();
+  if (!errors) {
+    QJsonArray senderArray;
+    QJsonArray array = QJsonValue(doc["response"]).toArray();
+    for (int i = 0; i < array.count(); i++) {
+      QJsonObject convert;
+      QJsonObject obj = array[i].toObject();
+      convert.insert("id", obj["id"]);
+      QDateTime d = QDateTime::fromString(obj["datum"].toString(), DATE_FORMAT);
+      convert.insert("datum", QJsonValue(d.toString(Qt::ISODate)));
+      senderArray.append(convert);
+    }
+    QJsonObject senderObject;
+    senderObject.insert("provider", QJsonValue("Buchfreund"));
+    senderObject.insert("items", senderArray);
+    QJsonDocument jsDoc(senderObject);
+    emit listResponse(jsDoc);
+  }
+}
+
 bool WHSoft::createInterface(QObject *parent) {
   if (parent) {
     m_whsoft = new QObject(parent);
@@ -12,13 +131,11 @@ bool WHSoft::createInterface(QObject *parent) {
   return false;
 }
 
-const QUrl WHSoft::apiQuery(const QString &apiKey, const QString &operation) {
-  QUrl url;
-  url.setScheme("https");
-  url.setHost("www.buchfreund.de");
-  QString path("/verkaeufer/api/");
-  path.append(apiKey + "/" + operation);
-  return url;
+Antiqua::InterfaceWidget *WHSoft::addWidget(const QString &widgetId,
+                                            QWidget *parent) {
+  WHSoftWidget *m_widget = new WHSoftWidget(widgetId, parent);
+  m_widget->setObjectName(widgetId);
+  return m_widget;
 }
 
 const QMap<QString, QString> WHSoft::fieldTranslate() const {
@@ -75,4 +192,13 @@ const QString WHSoft::apiParam(const QString &key) {
       return fi.key();
   }
   return QString();
+}
+
+void WHSoft::queryMenueEntries() {
+  WHSoftJSonQuery *mjs = new WHSoftJSonQuery(this);
+  mjs->setObjectName("Buchfreund");
+  connect(mjs, SIGNAL(listResponsed(const QJsonDocument &)), this,
+          SLOT(prepareJsonListResponse(const QJsonDocument &)));
+
+  mjs->queryList();
 }

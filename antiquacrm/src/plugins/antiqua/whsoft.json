@@ -1,6 +1,6 @@
 {
   "Keys": [ "libwhsoft" ],
-  "Name": "W+H Software Plugin",
-  "Files": "whsoft.h whsoft.cpp",
+  "Name": "Buchfreund",
+  "Title": "W+H Software Plugin",
   "Description": "JSON Integration der W+H Software Schnittstelle"
 }

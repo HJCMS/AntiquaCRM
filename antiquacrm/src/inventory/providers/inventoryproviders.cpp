@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "inventoryproviders.h"
-#include "buchfreund.h"
+#include "myicontheme.h"
 #include "providersstatements.h"
 #include "providerstoolbar.h"
 #include "providerstreeview.h"
@@ -49,45 +49,11 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   layout->setStretch(0, 1);
   setLayout(layout);
 
-  p_providerList = QStringList({"Buchfreund", "ZVAB", "AbeBooks"});
-  m_listView->addProviders(p_providerList);
-
-//  // BEGIN TESTING
-//  Buchfreund *bf = new Buchfreund("BF-2249986", this);
-//  addTab(bf);
-//  bf->testContent();
-//  connect(bf, SIGNAL(openCustomer(int)), this, SLOT(createEditCustomer(int)));
-//  // END
-
   connect(m_toolBar, SIGNAL(s_customerView()), this, SLOT(checkCustomer()));
-  connect(m_toolBar, SIGNAL(s_refresh()), this, SLOT(initProviders()));
+  connect(m_toolBar, SIGNAL(s_refresh()), this, SLOT(searchConvert()));
   connect(m_toolBar, SIGNAL(s_createOrder()), this, SLOT(createEditOrders()));
   connect(m_listView, SIGNAL(s_queryOrder(const QString &, const QString &)),
           this, SLOT(queryOrder(const QString &, const QString &)));
-}
-
-void InventoryProviders::checkCustomer() {
-  QMetaObject::invokeMethod(m_pageView->currentWidget(), "checkCustomer",
-                            Qt::DirectConnection);
-}
-
-bool InventoryProviders::initProviders() {
-  // Buchfreund
-  Buchfreund::queryListEntries(this);
-
-  return true;
-}
-
-bool InventoryProviders::addTab(QWidget *w) {
-  QString identity = w->objectName();
-  for (int i = 0; i < m_pageView->count(); i++) {
-    if (m_pageView->widget(i)->objectName() == identity) {
-      m_pageView->setCurrentIndex(i);
-      return false;
-    }
-  }
-  m_pageView->addTab(w, myIcon("edit_group"), identity);
-  return true;
 }
 
 void InventoryProviders::openEditor(const QString &customerId) {
@@ -98,21 +64,47 @@ void InventoryProviders::openEditor(const QString &customerId) {
    */
 }
 
-void InventoryProviders::readBFOrders(const QJsonDocument &doc) {
-  if (doc.isEmpty())
-    return;
-
-  int errors = QJsonValue(doc["error"]).toBool();
-  if (!errors) {
-    QJsonArray array = QJsonValue(doc["response"]).toArray();
-    for (int i = 0; i < array.count(); i++) {
-      QJsonObject obj = array[i].toObject();
-      QString id = obj["id"].toString();
-      QString ds = obj["datum"].toString();
-      QDateTime dt = QDateTime::fromString(ds, BF_DATE_FORMAT);
-      m_listView->addOrder("Buchfreund", id, dt);
+bool InventoryProviders::tabExists(const QString &id) {
+  for (int p = 0; p < m_pageView->count(); p++) {
+    if (m_pageView->widget(p)->objectName() == id) {
+      m_pageView->setCurrentIndex(p);
+      return true;
     }
   }
+  return false;
+}
+
+void InventoryProviders::searchConvert() {
+  if (p_iFaces.count() > 0) {
+    QListIterator<Antiqua::Interface *> it(p_iFaces);
+    while (it.hasNext()) {
+      Antiqua::Interface *iface = it.next();
+      if (iface != nullptr)
+        iface->queryMenueEntries();
+    }
+  }
+}
+
+void InventoryProviders::checkCustomer() {
+  QMetaObject::invokeMethod(m_pageView->currentWidget(), "checkCustomer",
+                            Qt::DirectConnection);
+}
+
+bool InventoryProviders::loadInterfaces() {
+  p_providerList.clear();
+  Antiqua::PluginLoader loader(this);
+  QListIterator<Antiqua::Interface *> it(loader.pluginInterfaces(this));
+  while (it.hasNext()) {
+    Antiqua::Interface *iface = it.next();
+    m_listView->addProvider(iface->objectName());
+    p_providerList.append(iface->objectName());
+    connect(iface, SIGNAL(listResponse(const QJsonDocument &)), this,
+            SLOT(readOrderList(const QJsonDocument &)));
+
+    p_iFaces.append(iface);
+    iface->queryMenueEntries();
+  }
+  return true;
 }
 
 void InventoryProviders::queryOrder(const QString &provider,
@@ -120,14 +112,21 @@ void InventoryProviders::queryOrder(const QString &provider,
   if (!p_providerList.contains(provider))
     return;
 
-  if (provider == "Buchfreund") {
-    Buchfreund *bf = new Buchfreund(orderId, this);
-    connect(bf, SIGNAL(openCustomer(int)), this, SLOT(createEditCustomer(int)));
-    addTab(bf);
+  if (tabExists(orderId))
     return;
-  }
 
-  qDebug() << Q_FUNC_INFO << "TODO" << provider << orderId;
+  QListIterator<Antiqua::Interface *> it(p_iFaces);
+  while (it.hasNext()) {
+    Antiqua::Interface *iFace = it.next();
+    if (iFace->objectName() == provider) {
+      Antiqua::InterfaceWidget *w = iFace->addWidget(orderId, m_pageView);
+      connect(w, SIGNAL(openCustomer(int)), this,
+              SLOT(createEditCustomer(int)));
+      m_pageView->addTab(w, myIcon("edit_group"), orderId);
+      return;
+    }
+  }
+  qDebug() << Q_FUNC_INFO << "Missing:" << provider << orderId;
 }
 
 void InventoryProviders::createEditCustomer(int cid) {
@@ -148,9 +147,22 @@ void InventoryProviders::createEditOrders() {
   openEditor(QString::number(customerId));
 }
 
+void InventoryProviders::readOrderList(const QJsonDocument &doc) {
+  if (doc.isEmpty())
+    return;
+
+  QString provider = QJsonValue(doc["provider"]).toString();
+  QJsonArray array = QJsonValue(doc["items"]).toArray();
+  for (int i = 0; i < array.count(); i++) {
+    QJsonObject obj = array[i].toObject();
+    QDateTime dt = QDateTime::fromString(obj["datum"].toString(), Qt::ISODate);
+    m_listView->addOrder(provider, obj["id"].toString(), dt);
+  }
+}
+
 void InventoryProviders::onEnterChanged() {
   if (firstStart)
     return;
 
-  firstStart = true; // initProviders();
+  firstStart = loadInterfaces();
 }

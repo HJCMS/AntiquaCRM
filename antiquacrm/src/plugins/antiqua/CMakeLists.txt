@@ -14,6 +14,7 @@ SET (antiquacrm_LINKER
 SET (whsoft_SOURCES
   whsoft.cpp
   whsoft.h
+  whsoft.json
 )
 
 ADD_LIBRARY (whsoft MODULE

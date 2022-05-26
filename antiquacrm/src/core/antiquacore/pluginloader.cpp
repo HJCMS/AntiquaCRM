@@ -83,9 +83,19 @@ const QList<Interface *> PluginLoader::pluginInterfaces(QObject *parent) {
     setFileName(file);
     QObject *plug = instance();
     if (plug) {
+      QJsonObject info = metaData().value("MetaData").toObject();
+      QString objName = info.value("Name").toString();
+      if (objName.isEmpty()) {
+        qWarning("Missing Metadata: %s", qPrintable(file));
+        continue;
+      }
       Interface *m_Iface = qobject_cast<Interface *>(plug);
-      if (m_Iface != nullptr && m_Iface->createInterface(parent))
+      if (m_Iface != nullptr && m_Iface->createInterface(parent)) {
+        qInfo("Loading '%s' success",
+              qPrintable(info.value("Title").toString()));
+        m_Iface->setObjectName(objName);
         list << m_Iface;
+      }
     } else
       qWarning("(Antiqua) Pluginloader: %s", qPrintable(errorString()));
   }

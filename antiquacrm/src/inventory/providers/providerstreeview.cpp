@@ -97,14 +97,18 @@ void ProvidersTreeView::removeOrder(const QString &provider,
   resizeColumnToContents(0);
 }
 
-void ProvidersTreeView::addProviders(const QStringList &list) {
-  foreach (QString t, list) {
-    QTreeWidgetItem *item = new QTreeWidgetItem(this, QTreeWidgetItem::Type);
-    item->setText(0, t);
-    item->setIcon(0, myIcon("autostart"));
-    item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
-    item->setExpanded(true);
-    addTopLevelItem(item);
+void ProvidersTreeView::addProvider(const QString &provider) {
+  QTreeWidgetItem *parent = getParent(provider);
+  if (parent != nullptr) {
+    parent->setSelected(true);
+    return;
   }
+
+  QTreeWidgetItem *item = new QTreeWidgetItem(this, QTreeWidgetItem::Type);
+  item->setText(0, provider);
+  item->setIcon(0, myIcon("autostart"));
+  item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
+  item->setExpanded(true);
+  addTopLevelItem(item);
   resizeColumnToContents(0);
 }

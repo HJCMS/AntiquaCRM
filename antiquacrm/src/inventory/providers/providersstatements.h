@@ -28,24 +28,6 @@
 #endif
 
 /**
- * @def BF_DATE_FORMAT
- * @ingroup Providers SQL Statements
- * @brief Datumsformat von Buchfreund.de
- * Wird benötigt für die Json anfragen zur erstellen.
- * Gleichzeitig wird es auch für den Import benötigt!
- */
-#ifndef BF_DATE_FORMAT
-#define BF_DATE_FORMAT "yyyy-MM-dd hh:mm:ss"
-#endif
-
-/**
- * @brief Konfigurationsgruppe
- */
-#ifndef BF_CONFIG_GROUP
-#define BF_CONFIG_GROUP "provider/whsoft"
-#endif
-
-/**
  * @brief Sucht Artikel der einen Bestand ausfweist!
  * @param aid
  * @return

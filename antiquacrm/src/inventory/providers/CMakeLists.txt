@@ -20,7 +20,6 @@ SET (subproject_LINKER
 )
 
 SET (subproject_SOURCES
-  buchfreund.cpp
   providersordertable.cpp
   providerscustomerdata.cpp
   inventoryproviders.cpp
@@ -29,7 +28,6 @@ SET (subproject_SOURCES
 )
 
 SET (subproject_HEADERS
-  buchfreund.h
   providersordertable.h
   providerscustomerdata.h
   providersstatements.h

@@ -7,6 +7,7 @@
 
 #include "inventory.h"
 #include <AntiquaCRM>
+#include <AntiquaInterface>
 
 #include <QObject>
 #include <QSplitter>
@@ -15,8 +16,6 @@
 
 class ProvidersToolBar;
 class ProvidersTreeView;
-
-class BF_JSonQuery;
 
 /**
  * @group Providers
@@ -33,6 +32,8 @@ private:
   int customerId = -1;
 
   QStringList p_providerList;
+
+  QList<Antiqua::Interface *> p_iFaces;
 
   /**
    * @brief Hauptansicht
@@ -55,25 +56,24 @@ private:
   ProvidersToolBar *m_toolBar;
 
   /**
-   * @brief Eine Bestellung einfügen
-   * Such nach vorhandenen Tab mit dem Objektnamen Wenn eines gefunden wird dann
-   * nach vorne holen und "false" zurück geben. Nur bei neuen Tabs wird "true"
-   * zurück gegeben damit die Signale nicht doppelt Registriert werden.
-   * @note Die Identifizierung der Objektnamen erfolgt
-   *  durch die Bestellnummer des Dienstleisters!
-   */
-  bool addTab(QWidget *);
-
-  /**
    * @brief Erstelle Daten für AuftragsEditor
    * Wenn alle Datensätze Aufgearbeitet und Vorhanden sende Daten an den
    * Workspace.
    */
   void openEditor(const QString &customerId);
 
+  /**
+   * @brief Eine Bestellung einfügen
+   * Such nach vorhandenen Tab mit dem Objektnamen Wenn eines gefunden wird dann
+   * nach vorne holen und "true" zurück geben.
+   * @note Die Identifizierung der Objektnamen erfolgt
+   *  durch die Bestellnummer des Dienstleisters!
+   */
+  bool tabExists(const QString &id);
+
 private Q_SLOTS:
   void searchConvert(const QString &){/* dummy */};
-  void searchConvert(){/* dummy */};
+  void searchConvert();
   void openTableView(){/* dummy */};
 
   /**
@@ -82,14 +82,12 @@ private Q_SLOTS:
   void checkCustomer();
 
   /**
-   * @brief Dienstleister Initialisieren und Bestelliste setzen.
+   * @brief Dienstleister Initialisieren und Bestellerliste setzen.
    * Wird nur einmal beim Start aufgerufen und die Variable @ref firstStart
-   * gesetzt. Danach muss der Refresh Knopf des ToolBars verwendet werden.
+   * gesetzt.
    * @return bool
    */
-  bool initProviders();
-
-  void readBFOrders(const QJsonDocument &doc);
+  bool loadInterfaces();
 
   void queryOrder(const QString &provider, const QString &orderId);
 
@@ -108,6 +106,20 @@ private Q_SLOTS:
    */
   void createEditOrders();
 
+  /**
+   * @brief readOrderList
+   * @code
+   * Erwartet dieses Format:
+   * QJsonObject({
+   *  "items":[{
+   *    "datum":"2022-05-14T18:10:23",
+   *    "id":"BF-2251499"
+   *  }],
+   *  "provider":"Provider ObjekName"
+   *  })
+   */
+  void readOrderList(const QJsonDocument &doc);
+
 Q_SIGNALS:
   /**
    * @brief Sende SIGNAL in Editoransicht öffnen.
@@ -117,7 +129,7 @@ Q_SIGNALS:
   /**
    * @brief Sende SIGNAL an Auftragseditor.
    */
-  void createEditOrder(/* TODO */);
+  void openEditOrder(int cid);
 
 public Q_SLOTS:
   /**

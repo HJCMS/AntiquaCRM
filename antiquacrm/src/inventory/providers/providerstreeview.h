@@ -35,7 +35,7 @@ public:
   explicit ProvidersTreeView(QWidget *parent = nullptr);
   bool exists(const QString &provider, const QString &id);
   void setTreeViewHeaders();
-  void addProviders(const QStringList &);
+  void addProvider(const QString &);
 };
 
 #endif // INVENTORY_PROVIDERS_TREEVIEW_H
