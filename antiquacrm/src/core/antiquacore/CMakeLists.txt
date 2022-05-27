@@ -32,6 +32,7 @@ SET (subproject_SOURCES
   pluginloader.cpp
   networker.cpp
   provider.cpp
+  interface.cpp
 )
 
 SET (subproject_HEADERS

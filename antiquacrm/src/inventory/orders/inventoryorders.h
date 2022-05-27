@@ -6,6 +6,7 @@
 #define INVENTORY_ORDERS_H
 
 #include "inventory.h"
+#include "providerorders.h"
 
 #include <QList>
 #include <QObject>
@@ -127,8 +128,7 @@ public Q_SLOTS:
    * @brief Erstelle einen neuen Auftrag für Kunden Nummer.
    */
   void createOrder(int customerId);
-
-  void createOrder(int customerId, QList<int> articleIds);
+  void createOrder(const ProviderOrder &order);
 
 public:
   /**

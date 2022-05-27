@@ -7,11 +7,10 @@
 
 #include "antiqua_global.h"
 
-#include <QHash>
 #include <QList>
-#include <QMetaObject>
+#include <QMetaType>
 #include <QString>
-#include <QVariant>
+#include <QStringList>
 
 /**
  * @brief Dienstleister Datensätze
@@ -21,66 +20,21 @@
  */
 class ANTIQUACORE_EXPORT ProviderOrder {
 private:
-  QString p_group;
-  QString p_param;
-  QString p_field;
-  QVariant p_value;
+  QString p_providerId;
+  int p_customerId;
+  QStringList p_articleIds;
 
 public:
-  /**
-   * @brief ProviderShipping
-   * @param param - Parameter von Json Dokument
-   * @param field - Der SQL Spaltenname wo es hin soll
-   * @param value
-   */
-  explicit ProviderOrder(const QString &param, const QString &field,
-                            const QVariant &value = QVariant(),
-                            const QString &group = QString());
+  explicit ProviderOrder();
 
-  /**
-   * @brief Erstellt einen leeren container
-   */
-  ProviderOrder();
+  void setProvider(const QString &id);
+  const QString provider();
 
-  /**
-   * @brief Json{Tree} Gruppe
-   */
-  void setGroup(const QString &p);
+  void setCustomerId(int &id);
+  int customerId();
 
-  /**
-   * @brief Json Gruppe
-   */
-  const QString group();
-
-  /**
-   * @brief Json{Tree} Parameter
-   */
-  void setParam(const QString &p);
-
-  /**
-   * @brief Json parameter
-   */
-  const QString param();
-
-  /**
-   * @brief SQL Feldname setzen
-   */
-  void setFieldname(const QString &f);
-
-  /**
-   * @brief SQL  Feldname
-   */
-  const QString fieldname();
-
-  /**
-   * @brief Wert setzen
-   */
-  void setValue(const QVariant &v);
-
-  /**
-   * @brief Rückgabewert
-   */
-  const QVariant value();
+  void setArticleIds(const QStringList &ids);
+  const QStringList articleIds();
 };
 Q_DECLARE_TYPEINFO(ProviderOrder, Q_PRIMITIVE_TYPE);
 

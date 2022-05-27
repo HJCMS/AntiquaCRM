@@ -8,6 +8,7 @@
 #include "inventory.h"
 #include <AntiquaCRM>
 #include <AntiquaInterface>
+#include <SqlCore>
 
 #include <QObject>
 #include <QSplitter>
@@ -30,6 +31,8 @@ class InventoryProviders : public Inventory {
 private:
   bool firstStart = false;
   int customerId = -1;
+
+  HJCMS::SqlCore *m_sql;
 
   QStringList p_providerList;
 
@@ -56,11 +59,18 @@ private:
   ProvidersToolBar *m_toolBar;
 
   /**
+   * @brief Aktuelles Tab Widget ermitteln.
+   */
+  Antiqua::InterfaceWidget *currentTabWidget();
+
+  /**
    * @brief Erstelle Daten für AuftragsEditor
    * Wenn alle Datensätze Aufgearbeitet und Vorhanden sende Daten an den
    * Workspace.
    */
-  void openEditor(const QString &customerId);
+  void openEditor(const QString &) {
+    /* Disabled in this class */
+  };
 
   /**
    * @brief Eine Bestellung einfügen
@@ -72,14 +82,22 @@ private:
   bool tabExists(const QString &id);
 
 private Q_SLOTS:
-  void searchConvert(const QString &){/* dummy */};
+  /**
+   * @brief Suche ...
+   * @note Wird hier nicht eingesetzt
+   */
+  void searchConvert(const QString &){};
+
+  /**
+   * @brief Suche alle offenen Tabs und sende ein Update and TreeWidget
+   */
   void searchConvert();
-  void openTableView(){/* dummy */};
 
   /**
    * @brief Beim Aktuellen Tab den Kunden ermitteln!
+   * @note Zweckentfremdung damit nicht ungenutzt!
    */
-  void checkCustomer();
+  void openTableView();
 
   /**
    * @brief Dienstleister Initialisieren und Bestellerliste setzen.
@@ -100,6 +118,16 @@ private Q_SLOTS:
    * @note Es ist Aufgabe des Benutzers die Daten zu prüfen!
    */
   void createEditCustomer(int cid);
+
+  /**
+   * @brief Kundendatensetz erstellen und absenden
+   */
+  void createNewCustomer(const QJsonDocument &doc);
+
+  /**
+   * @brief Kundenabfrage erstellen und absenden
+   */
+  void createQueryCustomer(const QJsonDocument &doc);
 
   /**
    * @brief Knopf Signal verarbeiten und an @ref openEditor weiterleiten.
@@ -130,6 +158,11 @@ Q_SIGNALS:
    * @brief Sende SIGNAL an Auftragseditor.
    */
   void openEditOrder(int cid);
+
+  /**
+   * @brief Auftrag erstellen and Elternfenster senden ...
+   */
+  void createOrder(const ProviderOrder &);
 
 public Q_SLOTS:
   /**

@@ -173,7 +173,7 @@ public:
   const QSqlQuery query(const QString &statement);
 
   /**
-     @brief Stelle eine Feldabfrage
+     @brief Stelle ein Feldabfrage an Tabelle
      @param Tabelle
      @return QSqlRecord
    */
@@ -182,7 +182,7 @@ public:
   /**
      @brief Alle Feldnamen von Tabelle
      @param Tabelle
-     @return QStrinList
+     @return QStringList
    */
   const QStringList fields(const QString &table);
 

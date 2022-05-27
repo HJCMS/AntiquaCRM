@@ -9,6 +9,7 @@
 #include "inventoryprints.h"
 #include "inventoryproviders.h"
 #include "myicontheme.h"
+#include "providerorders.h"
 
 #include <QAction>
 #include <QDebug>
@@ -122,6 +123,8 @@ int Workspace::addInventoryProviders(int index) {
           SIGNAL(s_postMessage(const QString &)));
   connect(m_tabProviders, SIGNAL(openEditCustomer(int)), this,
           SLOT(editCustomer(int)));
+  connect(m_tabProviders, SIGNAL(createOrder(const ProviderOrder &)), this,
+          SLOT(createOrder(const ProviderOrder &)));
   int i = insertTab(index, m_tabProviders, tr("Providers"));
   m_tabBar->setTabData(i, m_tabProviders->isClosable());
   setTabToolTip(i, tr("Providers Inventory"));
@@ -143,6 +146,15 @@ void Workspace::closeTabClicked(int index) {
 void Workspace::createOrder(int customerId) {
   if (customerId > 0 && (m_tabOrders != nullptr)) {
     m_tabOrders->createOrder(customerId);
+    setCurrentWidget(m_tabOrders);
+  } else {
+    emit s_postMessage(tr("Order tab isn't open!"));
+  }
+}
+
+void Workspace::createOrder(const ProviderOrder &order) {
+  if (m_tabOrders != nullptr) {
+    m_tabOrders->createOrder(order);
     setCurrentWidget(m_tabOrders);
   } else {
     emit s_postMessage(tr("Order tab isn't open!"));

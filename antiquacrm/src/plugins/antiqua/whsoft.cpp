@@ -5,10 +5,12 @@
 
 #include <QDateTime>
 #include <QJsonArray>
-#include <QJsonObject>
 #include <QJsonValue>
+#include <QStyle>
+#include <QTabWidget>
+#include <QTableWidget>
 #include <QTime>
-#include <QVariant>
+#include <QVBoxLayout>
 
 /**
  * @def DATE_FORMAT
@@ -27,6 +29,30 @@
 #ifndef CONFIG_GROUP
 #define CONFIG_GROUP "provider/whsoft"
 #endif
+
+#ifndef CONFIG_PROVIDER
+#define CONFIG_PROVIDER "Buchfreund"
+#endif
+
+/**
+ * Wir verwenden keine Anrede in der Datenbank.
+ * Es ist kein Adresskopf-Pflichtfeld, zu dem nicht mehr
+ * Zeitgemäß. @see Landesgleichstellungsgesetz - LGG
+ * In der Datenbank werden 4 Definitionen behandelt.
+ * @li 0 = without disclosures => Keine Angaben
+ * @li 1 = Male  => Männlich
+ * @li 2 = Female => Weiblich
+ * @li 3 = Various => Diverse
+ * @return int
+ */
+static int genderFromString(const QString &anrede) {
+  if (anrede.contains("herr", Qt::CaseInsensitive))
+    return 1;
+  else if (anrede.contains("frau", Qt::CaseInsensitive))
+    return 2;
+  else
+    return 0;
+}
 
 WHSoftJSonQuery::WHSoftJSonQuery(QObject *parent) : QObject{parent} {
   setObjectName("whsoft_json_query");
@@ -82,23 +108,363 @@ void WHSoftJSonQuery::queryOrder(const QString &bfId) {
   prQuery->sendPost(url, data);
 }
 
+WHSoftTable::WHSoftTable(QWidget *parent)
+    : Antiqua::PurchaserOrderTable{parent} {}
+
+WHSoftPurchaser::WHSoftPurchaser(QWidget *parent)
+    : Antiqua::PurchaserWidget{parent} {
+  QStyle *wStyle = style();
+  QVBoxLayout *customerLayout = new QVBoxLayout(this);
+  QHBoxLayout *h1l = new QHBoxLayout();
+  QLabel *anrede = new QLabel(this);
+  anrede->setObjectName("anrede");
+  anrede->setIndent(5);
+  h1l->addWidget(anrede);
+  QLabel *vorname = new QLabel(this);
+  vorname->setObjectName("vorname");
+  h1l->addWidget(vorname);
+  QLabel *name = new QLabel(this);
+  name->setObjectName("name");
+  h1l->addWidget(name);
+  QLabel *email = new QLabel(this);
+  email->setObjectName("email");
+  email->setTextInteractionFlags(Qt::TextEditorInteraction);
+  email->setIndent(5);
+  h1l->addWidget(email);
+  h1l->addStretch(1);
+  QLabel *info_CustomerId = new QLabel(this);
+  info_CustomerId->setIndent(5);
+  info_CustomerId->setText(tr("Customer") + ":");
+  h1l->addWidget(info_CustomerId);
+  QLabel *costumerId = new QLabel(this);
+  costumerId->setObjectName("costumerId");
+  costumerId->setText("<b>" + tr("Not exists") + "</b>");
+  h1l->addWidget(costumerId);
+  customerLayout->addLayout(h1l);
+
+  QTabWidget *m_tabWidget = new QTabWidget(this);
+  m_tabWidget->setMinimumHeight(100);
+  customerLayout->addWidget(m_tabWidget);
+
+  rechnungsadresse = new QTextEdit(this);
+  rechnungsadresse->setObjectName("rechnungsadresse");
+  m_tabWidget->addTab(rechnungsadresse,
+                      wStyle->standardIcon(QStyle::SP_FileIcon),
+                      tr("shipping address"));
+
+  lieferadresse = new QTextEdit(this);
+  lieferadresse->setObjectName("lieferadresse");
+  m_tabWidget->addTab(lieferadresse, wStyle->standardIcon(QStyle::SP_FileIcon),
+                      tr("delivery address"));
+
+  QTextEdit *kundenkommentar = new QTextEdit(this);
+  kundenkommentar->setObjectName("kundenkommentar");
+  kundenkommentar->setReadOnly(true);
+  m_tabWidget->addTab(kundenkommentar,
+                      wStyle->standardIcon(QStyle::SP_MessageBoxQuestion),
+                      tr("Comments"));
+
+  setLayout(customerLayout);
+}
+
+void WHSoftPurchaser::setCustomerId(int customerId) {
+  id = customerId;
+  setValue("costumerId", QString::number(id));
+  emit customerIdChanged(id);
+}
+
+void WHSoftPurchaser::setValue(const QString &objName, const QVariant &value) {
+  if (objName.isEmpty() || value.isNull())
+    return;
+
+  QLabel *lb = findChild<QLabel *>(objName, Qt::FindChildrenRecursively);
+  if (lb != nullptr) {
+    lb->setText(value.toString());
+  }
+  QTextEdit *tx = findChild<QTextEdit *>(objName, Qt::FindChildrenRecursively);
+  if (tx != nullptr) {
+    tx->setPlainText(value.toString());
+  }
+}
+
+const QVariant WHSoftPurchaser::getValue(const QString &objName) {
+  QLabel *lb = findChild<QLabel *>(objName, Qt::FindChildrenRecursively);
+  if (lb != nullptr)
+    return lb->text();
+
+  QTextEdit *tx = findChild<QTextEdit *>(objName, Qt::FindChildrenRecursively);
+  if (tx != nullptr) {
+    return tx->toPlainText();
+  }
+
+  return QVariant();
+}
+
 WHSoftWidget::WHSoftWidget(const QString &widgetId, QWidget *parent)
     : Antiqua::InterfaceWidget{widgetId, parent} {
+  setWidgetResizable(true);
   setObjectName(widgetId);
   setWindowTitle(widgetId);
 
+  QWidget *mainWidget = new QWidget(this);
+  QVBoxLayout *layout = new QVBoxLayout(mainWidget);
+  layout->setContentsMargins(0, 0, 0, 0);
+  // BEGIN Artikelanzeige
+  m_orderTable = new WHSoftTable(mainWidget);
+  layout->addWidget(m_orderTable);
+  // END
+
+  QLabel *lbInfo = new QLabel(tr("purchaser"));
+  lbInfo->setIndent(10);
+  layout->addWidget(lbInfo);
+
+  // BEGIN Verkäufer
+  m_purchaserWidget = new WHSoftPurchaser(this);
+  layout->addWidget(m_purchaserWidget);
+  // END
+
+  layout->addStretch(1);
+  mainWidget->setLayout(layout);
+  setWidget(mainWidget);
 }
 
-void WHSoftWidget::setContent(const QJsonDocument &) { /* TODO */
+const QVariant WHSoftWidget::tableData(int row, int column) {
+  QTableWidgetItem *item = m_orderTable->item(row, column);
+  if (item != nullptr)
+    return item->data(Qt::DisplayRole);
+
+  return QVariant();
 }
 
-void WHSoftWidget::checkCustomer() { /* TODO */
+void WHSoftWidget::createCustomerDocument() {
+  if (p_currentDocument.isEmpty()) {
+    qWarning("Current Json Document is empty!");
+    return;
+  }
+
+  QString mainKey("response");
+  QJsonDocument doc = p_currentDocument;
+  QJsonObject obj = QJsonValue(doc[mainKey]).toObject();
+
+  QJsonObject queryObject;
+  queryObject.insert("provider", QJsonValue(CONFIG_PROVIDER));
+  queryObject.insert("type", "customer_create");
+
+  QJsonObject::iterator it; // Iterator
+  for (it = obj.begin(); it != obj.end(); ++it) {
+    QString f = sqlParam(it.key());
+    QString v = it.value().toString();
+    if (!v.isEmpty())
+      queryObject.insert(f, v);
+  }
+
+  QJsonObject addr = QJsonValue(doc[mainKey]["rechnungsadresse"]).toObject();
+  if (!addr.isEmpty()) {
+    for (it = addr.begin(); it != addr.end(); ++it) {
+      QString f = sqlParam(it.key());
+      QString v = it.value().toString();
+      if ((f == "c_gender" || f == "anrede") && !v.isEmpty()) {
+        queryObject.insert(f, QString::number(genderFromString(v)));
+      } else if (!f.isEmpty() && !v.isEmpty()) {
+        queryObject.insert(f, v);
+      }
+    }
+  }
+
+  emit createCustomer(QJsonDocument(queryObject));
 }
 
-const QList<int> WHSoftWidget::getArticleIds() {
-  QList<int> list;
+const QJsonDocument WHSoftWidget::customerRequest(const QJsonObject &object) {
+  QJsonObject queryObject;
+  queryObject.insert("provider", QJsonValue(CONFIG_PROVIDER));
+  queryObject.insert("type", "customer_request");
+  queryObject.insert("c_firstname", object["vorname"]);
+  queryObject.insert("c_lastname", object["name"]);
+  queryObject.insert("c_postalcode", object["plz"]);
+  queryObject.insert("c_location", object["ort"]);
+  return QJsonDocument(queryObject);
+}
 
-  return list;
+void WHSoftWidget::parseAddressBody(const QString &section,
+                                    const QJsonObject &object) {
+  QStringList buffer;
+  QString person;
+  QString gender(object["anrede"].toString().trimmed());
+  if (!gender.isEmpty()) {
+    person.append(gender);
+    person.append(" ");
+  }
+  person.append(object["vorname"].toString().trimmed());
+  person.append(" ");
+  person.append(object["name"].toString().trimmed());
+  buffer.append(person);
+
+  QString street(object["adresse"].toString().trimmed());
+  buffer.append(street);
+
+  QString location(object["plz"].toString().trimmed());
+  location.append(" ");
+  location.append(object["ort"].toString().trimmed());
+  QString country = object["land"].toString().trimmed();
+  if (!country.isEmpty()) {
+    location.append("/" + country);
+  }
+  buffer.append(location);
+
+  m_purchaserWidget->setValue(section, buffer.join("\n"));
+  buffer.clear();
+
+  // Sende SQL Abfrage an Hauptfenster!
+  if (section == "rechnungsadresse") {
+    QJsonDocument qDoc = customerRequest(object);
+    if (!qDoc.isEmpty())
+      emit checkCustomer(qDoc);
+  }
+}
+
+void WHSoftWidget::setContent(const QJsonDocument &doc) {
+  if (doc.isEmpty())
+    return;
+
+  int errors = QJsonValue(doc["error"]).toBool();
+  if (errors)
+    return;
+
+  // Speichern
+  p_currentDocument = doc;
+
+  QString mainKey("response");
+  QJsonObject response = QJsonValue(doc[mainKey]).toObject();
+  if (!response.isEmpty()) {
+    QJsonObject::iterator it;
+    for (it = response.begin(); it != response.end(); ++it) {
+      QString f = it.key();
+      QJsonValue val = it.value();
+      if (!f.isEmpty() && !val.toString().isEmpty()) {
+        m_purchaserWidget->setValue(f, val.toVariant());
+      }
+    }
+
+    QJsonObject addr1 = QJsonValue(doc[mainKey]["rechnungsadresse"]).toObject();
+    if (!addr1.isEmpty()) {
+      for (it = addr1.begin(); it != addr1.end(); ++it) {
+        QString f = it.key();
+        QJsonValue val = it.value();
+        if (!f.isEmpty() && !val.toString().isEmpty()) {
+          m_purchaserWidget->setValue(f, val.toString());
+        }
+      }
+      parseAddressBody("rechnungsadresse", addr1);
+    }
+    QJsonObject addr2 = QJsonValue(doc[mainKey]["lieferadresse"]).toObject();
+    if (!addr2.isEmpty()) {
+      parseAddressBody("lieferadresse", addr2);
+    }
+  }
+
+  // Bestellartikel einfügen
+  m_orderTable->setRowCount(0);
+  QJsonArray positionen = QJsonValue(doc["response"]["positionen"]).toArray();
+  if (positionen.count() > 0) {
+    QJsonArray::iterator at;
+    for (at = positionen.begin(); at != positionen.end(); ++at) {
+      QJsonObject article = (*at).toObject();
+      QJsonObject::iterator it;
+      int column = 0;
+      int row = m_orderTable->rowCount();
+      m_orderTable->setRowCount((m_orderTable->rowCount() + 1));
+      QTableWidgetItem *item = m_orderTable->createItem(windowTitle());
+      m_orderTable->setItem(row, column++, item);
+      for (it = article.begin(); it != article.end(); ++it) {
+        QString f = sqlParam(it.key());
+        QVariant curValue = it.value().toVariant();
+        if (!f.isEmpty() && !curValue.isNull() && f.contains("a_")) {
+          QString txt = curValue.toString().trimmed();
+          QTableWidgetItem *item = m_orderTable->createItem(txt);
+          m_orderTable->setItem(row, column++, item);
+        }
+      }
+    }
+  }
+}
+
+void WHSoftWidget::createOrderRequest(const QString &bfId) {
+  // DUMMY TEST
+  QString buffer;
+  QString p("/Developement/antiqua/antiquacrm/src/plugins/antiqua/");
+  p.append("example-whsoft-order.json");
+
+  QFile fp(QDir::homePath() + p);
+  if (fp.open(QIODevice::ReadOnly)) {
+    QTextStream str(&fp);
+    str.setCodec("UTF8");
+    buffer.append(str.readAll());
+    fp.close();
+  }
+
+  QJsonParseError parser;
+  QJsonDocument doc = QJsonDocument::fromJson(buffer.toLocal8Bit(), &parser);
+  if (parser.error != QJsonParseError::NoError) {
+    qWarning("Json Parse Error!");
+    return;
+  }
+  setContent(doc);
+
+  qDebug() << Q_FUNC_INFO << "DUMMY" << bfId;
+  return;
+  WHSoftJSonQuery *mq = new WHSoftJSonQuery(this);
+  mq->setObjectName("json_query_" + objectName());
+  connect(mq, SIGNAL(orderResponsed(const QJsonDocument &)), this,
+          SLOT(setContent(const QJsonDocument &)));
+
+  mq->queryOrder(bfId);
+}
+
+void WHSoftWidget::setCustomerId(int customerId) {
+  if (customerId > 0) {
+    currentCustomerId = customerId;
+    m_purchaserWidget->setCustomerId(customerId);
+  }
+}
+
+const QMap<QString, QString> WHSoftWidget::fieldTranslate() const {
+  QMap<QString, QString> map;
+  // public.customers @{
+  map.insert("person", "a_customer_id");
+  map.insert("anrede", "c_gender");
+  map.insert("vorname", "c_firstname");
+  map.insert("name", "c_lastname");
+  map.insert("adresse", "c_street");
+  map.insert("plz", "c_postalcode");
+  map.insert("ort", "c_location");
+  map.insert("land", "c_country");
+  map.insert("telefon", "c_phone_0");
+  map.insert("email", "c_email_0");
+  // @}
+
+  // public.article_orders @{
+  map.insert("bestellnr", "a_article_id");
+  map.insert("menge_bestellt", "a_count");
+  map.insert("preis_pro_einheit", "a_sell_price");
+  map.insert("titel", "a_title");
+  // @}
+  return map;
+}
+
+const ProviderOrder WHSoftWidget::getProviderOrder() {
+  ProviderOrder order;
+  int cid = m_purchaserWidget->getValue("costumerId").toInt();
+  order.setProvider(objectName());
+  order.setCustomerId(cid);
+  int col = 1; /**< CustomerId Cell */
+  QStringList ids;
+  for (int r = 0; r < m_orderTable->rowCount(); r++) {
+    QString aid = tableData(r, col).toString();
+    if (!aid.isEmpty())
+      ids.append(aid);
+  }
+  order.setArticleIds(ids);
+  return order;
 }
 
 void WHSoft::prepareJsonListResponse(const QJsonDocument &doc) {
@@ -115,7 +481,7 @@ void WHSoft::prepareJsonListResponse(const QJsonDocument &doc) {
       senderArray.append(convert);
     }
     QJsonObject senderObject;
-    senderObject.insert("provider", QJsonValue("Buchfreund"));
+    senderObject.insert("provider", QJsonValue(CONFIG_PROVIDER));
     senderObject.insert("items", senderArray);
     QJsonDocument jsDoc(senderObject);
     emit listResponse(jsDoc);
@@ -133,70 +499,16 @@ bool WHSoft::createInterface(QObject *parent) {
 
 Antiqua::InterfaceWidget *WHSoft::addWidget(const QString &widgetId,
                                             QWidget *parent) {
-  WHSoftWidget *m_widget = new WHSoftWidget(widgetId, parent);
-  m_widget->setObjectName(widgetId);
-  return m_widget;
+  m_whsoftWidget = new WHSoftWidget(widgetId, parent);
+  m_whsoftWidget->setObjectName(widgetId);
+  return m_whsoftWidget;
 }
 
-const QMap<QString, QString> WHSoft::fieldTranslate() const {
-  QMap<QString, QString> map;
-  // public.customers @{
-  map.insert("person", "a_customer_id");
-  map.insert("anrede", "c_gender");
-  map.insert("vorname", "c_firstname");
-  map.insert("name", "c_lastname");
-  map.insert("adresse", "c_street");
-  map.insert("plz", "c_postalcode");
-  map.insert("ort", "c_location");
-  map.insert("land", "c_country");
-  map.insert("telefon", "c_phone_0");
-  map.insert("email", "c_email_0");
-  map.insert("kundenkommentar", "m_customerComment");
-  map.insert("lieferadresse", "c_shipping_address");
-  // @}
-
-  // public.article_orders @{
-  map.insert("bestellnr", "a_article_id");
-  map.insert("menge_bestellt", "a_count");
-  map.insert("preis_pro_einheit", "a_sell_price");
-  map.insert("datum", "a_modified");
-  map.insert("titel", "a_title");
-  // @}
-
-  // public.inventory_orders @{
-  map.insert("id", "o_provider_order_id");
-  map.insert("provider", "o_provider_name");
-  map.insert("menge_storniert", "o_cancellation");
-  map.insert("stornogrund", "o_cancellation_text");
-  map.insert("storniert_am", "o_cancellation_datetime");
-  map.insert("lagerfach", "sl_storage");
-  // @}
-  return map;
-}
-
-const QString WHSoft::sqlParam(const QString &key) {
-  QMap<QString, QString> map = fieldTranslate();
-  QMap<QString, QString>::iterator fi;
-  for (fi = map.begin(); fi != map.end(); ++fi) {
-    if (fi.key() == key)
-      return fi.value();
-  }
-  return QString();
-}
-
-const QString WHSoft::apiParam(const QString &key) {
-  QMap<QString, QString> map = fieldTranslate();
-  QMap<QString, QString>::iterator fi;
-  for (fi = map.begin(); fi != map.end(); ++fi) {
-    if (fi.value() == key)
-      return fi.key();
-  }
-  return QString();
-}
+const QString WHSoft::provider() const { return QString(CONFIG_PROVIDER); }
 
 void WHSoft::queryMenueEntries() {
   WHSoftJSonQuery *mjs = new WHSoftJSonQuery(this);
-  mjs->setObjectName("Buchfreund");
+  mjs->setObjectName(CONFIG_PROVIDER);
   connect(mjs, SIGNAL(listResponsed(const QJsonDocument &)), this,
           SLOT(prepareJsonListResponse(const QJsonDocument &)));
 

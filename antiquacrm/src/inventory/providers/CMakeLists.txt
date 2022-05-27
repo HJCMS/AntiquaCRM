@@ -20,16 +20,12 @@ SET (subproject_LINKER
 )
 
 SET (subproject_SOURCES
-  providersordertable.cpp
-  providerscustomerdata.cpp
   inventoryproviders.cpp
   providerstoolbar.cpp
   providerstreeview.cpp
 )
 
 SET (subproject_HEADERS
-  providersordertable.h
-  providerscustomerdata.h
   providersstatements.h
   providerstoolbar.h
   providerstreeview.h

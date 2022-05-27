@@ -3,28 +3,26 @@
 
 #include "providerorders.h"
 
-ProviderOrder::ProviderOrder(const QString &param, const QString &field,
-                           const QVariant &value, const QString &group) {
-  p_group = group;
-  p_param = param;
-  p_field = field;
-  p_value = value;
+ProviderOrder::ProviderOrder() {
+  p_providerId = QString();
+  p_customerId = -1;
+  p_articleIds = QStringList();
 }
 
-ProviderOrder::ProviderOrder() : ProviderOrder{QString(), QString()} {}
+void ProviderOrder::setProvider(const QString &id) { p_providerId = id; }
 
-void ProviderOrder::setGroup(const QString &p) { p_group = p; }
+const QString ProviderOrder::provider() { return p_providerId; }
 
-const QString ProviderOrder::group() { return p_group; }
+void ProviderOrder::setCustomerId(int &id) {
+  if (id > 0)
+    p_customerId = id;
+}
 
-void ProviderOrder::setParam(const QString &p) { p_param = p; }
+int ProviderOrder::customerId() { return p_customerId; }
 
-const QString ProviderOrder::param() { return p_param; }
+void ProviderOrder::setArticleIds(const QStringList &ids) {
+  if (ids.size() > 0)
+    p_articleIds = ids;
+}
 
-void ProviderOrder::setFieldname(const QString &f) { p_field = f; }
-
-const QString ProviderOrder::fieldname() { return p_field; }
-
-void ProviderOrder::setValue(const QVariant &v) { p_value = v; }
-
-const QVariant ProviderOrder::value() { return p_value; }
+const QStringList ProviderOrder::articleIds() { return p_articleIds; }

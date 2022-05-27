@@ -14,6 +14,7 @@
 #include <Utils>
 
 class OrdersItemList;
+class ProviderOrder;
 
 /**
  * @ingroup InventoryOrders
@@ -277,6 +278,7 @@ public Q_SLOTS:
    */
   void showMessagePoUp(const QString &);
 
+
 Q_SIGNALS:
   /**
    * @brief Statusbar Nachrichten
@@ -309,6 +311,11 @@ public:
    * @param cid - Kunden ID
    */
   void openCreateOrder(int cid = -1);
+
+  /**
+   * @brief Neuen Eintrag mit Datenliste erstellen.
+   */
+  void openCreateOrder(const ProviderOrder &order);
 };
 
 #endif // INVENTORY_ORDEREDITOR_H

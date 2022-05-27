@@ -16,6 +16,7 @@ class InventoryPrints;
 class InventoryCustomers;
 class InventoryOrders;
 class InventoryProviders;
+class ProviderOrder;
 
 class WorkspaceTabBar : public QTabBar {
   Q_OBJECT
@@ -87,6 +88,7 @@ private Q_SLOTS:
    * @brief Auftrag von Kunden ID erstellen
    */
   void createOrder(int customerId);
+  void createOrder(const ProviderOrder &);
 
   /**
    * @brief Auftrag von Kunden ID erstellen

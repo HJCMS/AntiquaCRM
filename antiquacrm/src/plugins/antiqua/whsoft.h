@@ -5,7 +5,12 @@
 #ifndef ANTIQUA_WHSOFT_PLUGIN_H
 #define ANTIQUA_WHSOFT_PLUGIN_H
 
+#include <QLabel>
 #include <QObject>
+#include <QTableWidget>
+#include <QTableWidgetItem>
+#include <QTextEdit>
+#include <QVariant>
 #include <QWidget>
 
 #include <AntiquaCRM>
@@ -16,7 +21,7 @@
  * @brief Stellt JSon Bestellanfragen
  * Es wird nur die Liste der letzten 14 Tage ausgegeben!
  */
-class ANTIQUACORE_EXPORT WHSoftJSonQuery : public QObject {
+class ANTIQUACORE_EXPORT WHSoftJSonQuery final : public QObject {
   Q_OBJECT
 
 private:
@@ -43,35 +48,79 @@ public:
   explicit WHSoftJSonQuery(QObject *parent = nullptr);
 };
 
-class ANTIQUACORE_EXPORT WHSoftWidget : public Antiqua::InterfaceWidget {
+class ANTIQUACORE_EXPORT WHSoftTable : public Antiqua::PurchaserOrderTable {
+  Q_OBJECT
+
+public:
+  explicit WHSoftTable(QWidget *parent = nullptr);
+};
+
+class ANTIQUACORE_EXPORT WHSoftPurchaser final
+    : public Antiqua::PurchaserWidget {
   Q_OBJECT
 
 public Q_SLOTS:
+  void setCustomerId(int customerId);
+  void setValue(const QString &objName, const QVariant &value);
+
+public:
+  QTextEdit *rechnungsadresse;
+  QTextEdit *lieferadresse;
+  explicit WHSoftPurchaser(QWidget *parent = nullptr);
+  const QVariant getValue(const QString &objName);
+};
+
+class ANTIQUACORE_EXPORT WHSoftWidget final : public Antiqua::InterfaceWidget {
+  Q_OBJECT
+
+private:
+  WHSoftTable *m_orderTable;
+  WHSoftPurchaser *m_purchaserWidget;
+  QJsonDocument p_currentDocument;
+
+  const QVariant tableData(int row, int column);
+
+  /**
+   * @brief Erstellt abfrage Datensatz für Kundenabfrage
+   * @code
+   *  {
+   *    "provider" : String::"Antiqua::Interface::provider()",
+   *    "type" : "customer_request",
+   *    "c_firstname",  String::Vorname,
+   *    "c_lastname",   String::Nachname,
+   *    "c_postalcode", String::Postleitzahl,
+   *    "c_location",   String::Wohnort
+   *  }
+   * @endcode
+   * @see SIGNAL::checkCustomer(const QJsonDocument &)
+   */
+  const QJsonDocument customerRequest(const QJsonObject &object);
+
+  /**
+   * @brief Rechnungs und Lieferadressen einlesen
+   */
+  void parseAddressBody(const QString &section, const QJsonObject &object);
+
+public Q_SLOTS:
+  /**
+   * @brief createCustomerDocument
+   */
+  void createCustomerDocument();
+
   void setContent(const QJsonDocument &);
-  Q_INVOKABLE void checkCustomer();
+
+  /**
+   * @brief Menü Einträge suchen
+   */
+  void createOrderRequest(const QString &bfId);
 
 public:
   WHSoftWidget(const QString &widgetId, QWidget *parent = nullptr);
-  const QList<int> getArticleIds();
-};
 
-class ANTIQUACORE_EXPORT WHSoft : public Antiqua::Interface {
-  Q_OBJECT
-  Q_PLUGIN_METADATA(IID "de.hjcms.antiquacrm.Antiqua.WHSoft" FILE "whsoft.json")
-  Q_INTERFACES(Antiqua::Interface)
-
-private:
-  QObject *m_whsoft;
-
-private Q_SLOTS:
-  void prepareJsonListResponse(const QJsonDocument &);
-
-public:
-  bool createInterface(QObject *parent);
-
-  Antiqua::InterfaceWidget *addWidget(const QString &widgetId, QWidget *parent);
-
-  inline const QString configGroupName() const { return QString("whsoft"); };
+  /**
+   * @brief Kundennummer eintragen
+   */
+  void setCustomerId(int customerId);
 
   /**
    * @brief Übersetzt die Buchfreund.de Json Datenfelder zu SQL Spaltenname.
@@ -82,18 +131,53 @@ public:
   const QMap<QString, QString> fieldTranslate() const;
 
   /**
+   * @brief Komplette Bestellung abfragen.
+   */
+  const ProviderOrder getProviderOrder();
+};
+
+class ANTIQUACORE_EXPORT WHSoft : public Antiqua::Interface {
+  Q_OBJECT
+  Q_PLUGIN_METADATA(IID "de.hjcms.antiquacrm.Antiqua.WHSoft" FILE "whsoft.json")
+  Q_INTERFACES(Antiqua::Interface)
+
+private:
+  QObject *m_whsoft;
+  WHSoftWidget *m_whsoftWidget;
+
+private Q_SLOTS:
+  void prepareJsonListResponse(const QJsonDocument &);
+
+public:
+  bool createInterface(QObject *parent);
+
+  /**
+   * @brief Anzeigefenster
+   */
+  Antiqua::InterfaceWidget *addWidget(const QString &widgetId, QWidget *parent);
+
+  const QString provider() const;
+
+  /**
+   * @brief Wird für Anwender Konfiguration benötigt
+   */
+  inline const QString configGroup() const {
+    return QString("provider/whsoft");
+  };
+
+  /**
    * @brief SQL Datenfeld zurück geben
    * @param key - Json Parameter
    * @return SQL Column | QString()
    */
-  const QString sqlParam(const QString &key);
+  // const QString sqlParam(const QString &key);
 
   /**
    * @brief Such mit SQL Feldname nach API Parameter
    * @param key - SQL Tabellen Feldname
    * @return Json Parameter | QString()
    */
-  const QString apiParam(const QString &key);
+  // const QString apiParam(const QString &key);
 
   /**
    * @brief Menü Einträge suchen

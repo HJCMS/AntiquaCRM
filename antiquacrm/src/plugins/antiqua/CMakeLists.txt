@@ -15,6 +15,7 @@ SET (whsoft_SOURCES
   whsoft.cpp
   whsoft.h
   whsoft.json
+  example-whsoft-order.json
 )
 
 ADD_LIBRARY (whsoft MODULE

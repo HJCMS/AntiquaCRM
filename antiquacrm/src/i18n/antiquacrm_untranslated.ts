@@ -20,6 +20,42 @@
     </message>
 </context>
 <context>
+    <name>Antiqua::PurchaserOrderTable</name>
+    <message>
+        <location filename="../core/antiquacore/interface.cpp" line="+15"/>
+        <source>Provider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Article</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Summary</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Antiqua::PurchaserWidget</name>
+    <message>
+        <location line="+18"/>
+        <source>purchaser</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Assistant</name>
     <message>
         <location filename="../custom/assistant/assistant.cpp" line="+88"/>
@@ -85,7 +121,7 @@
 <context>
     <name>BookEditor</name>
     <message>
-        <location filename="../inventory/books/bookeditor.cpp" line="+22"/>
+        <location filename="../inventory/books/bookeditor.cpp" line="+21"/>
         <source>Edit Book Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -330,7 +366,7 @@
 <context>
     <name>BooksTable</name>
     <message>
-        <location filename="../inventory/books/bookstable.cpp" line="+97"/>
+        <location filename="../inventory/books/bookstable.cpp" line="+95"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -442,14 +478,6 @@
     </message>
 </context>
 <context>
-    <name>Buchfreund</name>
-    <message>
-        <location filename="../inventory/providers/buchfreund.cpp" line="+157"/>
-        <source>purchaser</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Cancellation</name>
     <message>
         <location filename="../custom/utils/cancellation.cpp" line="+18"/>
@@ -490,7 +518,7 @@
 <context>
     <name>CompanySettings</name>
     <message>
-        <location filename="../custom/settings/companysettings.cpp" line="+22"/>
+        <location filename="../custom/settings/companysettings.cpp" line="+20"/>
         <source>Company name displayed in the letterhead.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -685,7 +713,7 @@
 <context>
     <name>ConfigDialog</name>
     <message>
-        <location filename="../custom/settings/configdialog.cpp" line="+15"/>
+        <location filename="../custom/settings/configdialog.cpp" line="+14"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1041,7 +1069,7 @@
 <context>
     <name>CustomerTableView</name>
     <message>
-        <location filename="../inventory/customers/customertableview.cpp" line="+70"/>
+        <location filename="../inventory/customers/customertableview.cpp" line="+68"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1143,7 +1171,7 @@
 <context>
     <name>DeliveryNote</name>
     <message>
-        <location filename="../custom/printing/deliverynote.cpp" line="+31"/>
+        <location filename="../custom/printing/deliverynote.cpp" line="+30"/>
         <location line="+333"/>
         <source>Delivery note</source>
         <translation type="unfinished"></translation>
@@ -1381,7 +1409,7 @@
 <context>
     <name>GeneralSettings</name>
     <message>
-        <location filename="../custom/settings/generalsettings.cpp" line="+24"/>
+        <location filename="../custom/settings/generalsettings.cpp" line="+22"/>
         <source>Image search Directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1435,7 +1463,7 @@
 <context>
     <name>ISBNResults</name>
     <message>
-        <location filename="../inventory/books/isbnresults.cpp" line="+48"/>
+        <location filename="../inventory/books/isbnresults.cpp" line="+46"/>
         <location line="+12"/>
         <source>No Result: Search with %1</source>
         <translation type="unfinished"></translation>
@@ -1499,7 +1527,7 @@
 <context>
     <name>ImageDialog</name>
     <message>
-        <location filename="../custom/imaging/imagedialog.cpp" line="+25"/>
+        <location filename="../custom/imaging/imagedialog.cpp" line="+24"/>
         <source>Picture Editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1601,7 +1629,7 @@
 <context>
     <name>InventoryBooks</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="+61"/>
+        <location filename="../inventory/books/inventorybooks.cpp" line="+60"/>
         <source>Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1614,7 +1642,7 @@
 <context>
     <name>InventoryCustomers</name>
     <message>
-        <location filename="../inventory/customers/inventorycustomers.cpp" line="+43"/>
+        <location filename="../inventory/customers/inventorycustomers.cpp" line="+41"/>
         <source>Customers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1622,7 +1650,7 @@
 <context>
     <name>InventoryOrders</name>
     <message>
-        <location filename="../inventory/orders/inventoryorders.cpp" line="+19"/>
+        <location filename="../inventory/orders/inventoryorders.cpp" line="+18"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1632,7 +1660,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+79"/>
         <source>There is no Order open!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1640,7 +1668,7 @@
 <context>
     <name>InventoryPrints</name>
     <message>
-        <location filename="../inventory/prints/inventoryprints.cpp" line="+50"/>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="+48"/>
         <source>Prints</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1648,8 +1676,18 @@
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+24"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+22"/>
         <source>Providers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+210"/>
+        <source>customer found in database!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>customer not exits!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1692,7 +1730,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+80"/>
+        <location filename="../mwindow.cpp" line="+78"/>
         <source>Customers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2062,7 +2100,7 @@
 <context>
     <name>OrdersItemList</name>
     <message>
-        <location filename="../inventory/orders/ordersitemlist.cpp" line="+34"/>
+        <location filename="../inventory/orders/ordersitemlist.cpp" line="+33"/>
         <source>Info about Article found by input ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2118,7 +2156,7 @@
 <context>
     <name>OrdersTable</name>
     <message>
-        <location filename="../inventory/orders/orderstable.cpp" line="+76"/>
+        <location filename="../inventory/orders/orderstable.cpp" line="+74"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2244,7 +2282,7 @@
 <context>
     <name>PgSQLSettings</name>
     <message>
-        <location filename="../custom/settings/pgsqlsettings.cpp" line="+30"/>
+        <location filename="../custom/settings/pgsqlsettings.cpp" line="+28"/>
         <source>Database Connection settings to PostgreSQL server.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2448,7 +2486,7 @@
 <context>
     <name>PrintSettings</name>
     <message>
-        <location filename="../custom/settings/printsettings.cpp" line="+32"/>
+        <location filename="../custom/settings/printsettings.cpp" line="+30"/>
         <source>Printer settings for delivery note and invoicing.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2525,7 +2563,7 @@
 <context>
     <name>PrintsEditor</name>
     <message>
-        <location filename="../inventory/prints/printseditor.cpp" line="+46"/>
+        <location filename="../inventory/prints/printseditor.cpp" line="+44"/>
         <source>Count</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2725,7 +2763,7 @@
 <context>
     <name>PrintsTable</name>
     <message>
-        <location filename="../inventory/prints/printstable.cpp" line="+123"/>
+        <location filename="../inventory/prints/printstable.cpp" line="+122"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2753,7 +2791,7 @@
 <context>
     <name>PrintsTableModel</name>
     <message>
-        <location filename="../inventory/prints/printstablemodel.cpp" line="+97"/>
+        <location filename="../inventory/prints/printstablemodel.cpp" line="+96"/>
         <location line="+6"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
@@ -2823,7 +2861,7 @@
 <context>
     <name>ProviderSettings</name>
     <message>
-        <location filename="../custom/settings/providersettings.cpp" line="+24"/>
+        <location filename="../custom/settings/providersettings.cpp" line="+22"/>
         <source>Protocoll</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2844,158 +2882,29 @@
     </message>
 </context>
 <context>
-    <name>ProvidersCustomerData</name>
-    <message>
-        <location filename="../inventory/providers/providerscustomerdata.cpp" line="+14"/>
-        <source>purchaser</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Firstname</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Lastname</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Postalcode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Street</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Country</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Phone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>eMail</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Customer Id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>at first, click on the customer button and check his dataset, it prevents create order failures.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>delivery address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Comments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Customer exists, don&apos;t forget to check his Dataset!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>simply click again the customer button.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ProvidersOrderTable</name>
-    <message>
-        <location filename="../inventory/providers/providersordertable.cpp" line="+15"/>
-        <source>Provider</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Article</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Price</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-1"/>
-        <source>Count</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Summary</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ProvidersPager</name>
-    <message>
-        <location filename="../inventory/providers/providerstoolbar.cpp" line="+22"/>
-        <source>Previous</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Providers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ProvidersToolBar</name>
     <message>
-        <location line="+76"/>
-        <source>Customer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Check Customer or open Customer Editor.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Create Order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>You must first open the customer before an order can be placed.</source>
+        <location filename="../inventory/providers/providerstoolbar.cpp" line="+25"/>
+        <source>Open view/edit Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
+        <source>Customer context</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Create Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>first open the customer before an order can be placed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3312,7 +3221,7 @@
 <context>
     <name>SettingsWidget</name>
     <message>
-        <location filename="../custom/settings/settingswidget.cpp" line="+16"/>
+        <location filename="../custom/settings/settingswidget.cpp" line="+18"/>
         <source>Directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3320,7 +3229,7 @@
 <context>
     <name>StatsActionBar</name>
     <message>
-        <location filename="../custom/utils/statsactionbar.cpp" line="+44"/>
+        <location filename="../custom/utils/statsactionbar.cpp" line="+43"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3531,13 +3440,49 @@
 <context>
     <name>ViewSettings</name>
     <message>
-        <location filename="../custom/settings/viewsettings.cpp" line="+20"/>
+        <location filename="../custom/settings/viewsettings.cpp" line="+21"/>
         <source>fonts representation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WHSoftPurchaser</name>
+    <message>
+        <location filename="../plugins/antiqua/whsoft.cpp" line="+138"/>
+        <source>Customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Not exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>shipping address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>delivery address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Comments</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WHSoftWidget</name>
+    <message>
+        <location line="+52"/>
+        <source>purchaser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

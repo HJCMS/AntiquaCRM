@@ -765,3 +765,53 @@ void OrderEditor::openCreateOrder(int cid) {
     }
   }
 }
+
+void OrderEditor::openCreateOrder(const ProviderOrder &order) {
+  initDefaults();
+  ProviderOrder copy(order);
+  int cid = copy.customerId();
+  if (cid > 0) {
+    o_customer_id->setValue(cid);
+    o_provider_name->setValue(copy.provider());
+    if (getCustomerAddress(cid)) {
+      QList<OrderArticle> list;
+      foreach (QString said, copy.articleIds()) {
+        int aid = said.toInt();
+        QString sql = inventoryArticle(aid);
+        QSqlQuery q = m_sql->query(sql);
+        if (q.size() > 0) {
+          QSqlRecord r = q.record();
+          while (q.next()) {
+            OrderArticle d;
+            d.setPayment(-1);
+            d.setArticle(q.value("aid").toInt());
+            d.setOrder(-1);
+            d.setCustomer(cid);
+            int count = q.value("counts").toInt();
+            if (count > 0) {
+              // Wir fügen immer nur ein Artikel ein!
+              count = 1;
+            }
+            d.setCount(count);
+            d.setPrice(q.value("price").toDouble());
+            d.setSellPrice(q.value("price").toDouble());
+            d.setTitle(q.value("title").toString());
+            d.setSummary(tr("Article %1, Price %2, Count: %3, Title: %4")
+                             .arg(q.value("aid").toString(),
+                                  q.value("price").toString(),
+                                  q.value("counts").toString(),
+                                  q.value("title").toString()));
+
+            list.append(d);
+          }
+        } else {
+          sqlErrnoMessage(m_sql->fetchErrors(), sql);
+          return;
+        }
+      }
+      m_paymentList->importPayments(list);
+      m_paymentList->setEnabled(true);
+      emit isModified(true);
+    }
+  }
+}
