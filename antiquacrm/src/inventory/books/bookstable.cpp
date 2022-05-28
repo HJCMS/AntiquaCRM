@@ -79,6 +79,8 @@ bool BooksTable::sqlExecQuery(const QString &statement) {
   if (!statement.contains("SELECT"))
     return false;
 
+  qDebug() << Q_FUNC_INFO << statement;
+
   QSqlDatabase db(m_sql->db());
   if (db.open()) {
     QMutex mutex(QMutex::NonRecursive);
@@ -233,7 +235,7 @@ void BooksTable::queryStatement(const SearchStatement &cl) {
   }
 
   str.replace("*", "%");
-  QString q("SELECT ");
+  QString q("SELECT DISTINCT ");
   q.append(querySelect());
   q.append(queryTables());
   if (field.contains("id")) {

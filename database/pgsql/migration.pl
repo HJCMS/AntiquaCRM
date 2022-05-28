@@ -14,7 +14,7 @@ use Text::Roman qw(:all);
 use Switch;
 
 
-my $enable_migration = "customers"; ## full
+my $enable_migration = "full";
 
 ## Wird für Umlaute auf dem terminial benötigt
 # use open ':utf8';
@@ -355,7 +355,11 @@ sub create_article_inserts {
     print "-- Generate: ${table}.INSERT\n";
     open(FH, '>:encoding(UTF-8)', "./import/${table}.INSERT.sql") or die $!;
     print FH "--\n-- PostgreSQL INSERT INTO $table --\n--\n\n";
+    print FH "TRUNCATE public.inventory_books RESTART IDENTITY;\n\n";
+    print FH "TRUNCATE public.inventory_prints RESTART IDENTITY;\n\n";
+    print FH "TRUNCATE public.ref_storage_location RESTART IDENTITY CASCADE;\n\n";
     print FH "TRUNCATE $table RESTART IDENTITY CASCADE;\n\n";
+    print FH "SELECT pg_catalog.setval('$table_seq', 1, true);\n\n";
     my $inserts = 0;
     while (my $ref = $query->fetchrow_hashref())
     {
@@ -383,6 +387,7 @@ sub create_article_inserts {
 =cut
 sub create_storage_locations {
   my $table = "public.ref_storage_location";
+  my $table_seq = "public.ref_storage_location_id_seq";
   my $query = $dbc->prepare("SELECT lagerort AS sl_storage,bezeichnung AS sl_identifier FROM hai.xgrlagerort ORDER BY lagerort ASC;");
   my $rows = $query->execute();
   if($rows)
@@ -391,7 +396,7 @@ sub create_storage_locations {
     print "-- Generate: ${table}.INSERT\n";
     open(FH, '>:encoding(UTF-8)', "./import/${table}.INSERT.sql") or die $!;
     print FH "--\n-- PostgreSQL INSERT INTO $table --\n--\n\n";
-    print FH "TRUNCATE $table RESTART IDENTITY;\n\n";
+    print FH "SELECT pg_catalog.setval('$table_seq', 1, true);\n\n";
     print FH "INSERT INTO $table (sl_id,sl_storage,sl_identifier) OVERRIDING SYSTEM VALUE VALUES (0,'OPEN','Keine Zuordnung');\n";
 
     my $inserts = 0;
@@ -406,6 +411,8 @@ sub create_storage_locations {
       }
     }
     $query->finish;
+    print FH "\n-- Update Sequence --\n";
+    print FH "SELECT pg_catalog.setval('$table_seq', (SELECT MAX(sl_id) FROM $table), true);\n\n";
     print "-- DONE: From $rows rows, created $inserts Storage inserts.\n";
     print FH "--\n-- Query-Result: $rows\n--\n";
     close(FH);
@@ -417,7 +424,6 @@ sub create_storage_locations {
 =cut
 sub create_inventory_books {
   my $table = "public.inventory_books";
-
   my $query = $dbc->prepare("SELECT
   xgr.artnr AS ib_id,
   IFNULL(xgr.ort,'NOT_SET') AS ib_author,
@@ -445,8 +451,9 @@ ORDER BY xgr.artnr ASC;
     print "-- Generate: ${table}.INSERT\n";
     open(FH, '>:encoding(UTF-8)', "./import/${table}.INSERT.sql") or die $!;
     print FH "--\n-- PostgreSQL INSERT INTO $table --\n--\n\n";
-    print FH "TRUNCATE $table;\n\n";
-    print FH "DROP TRIGGER IF EXISTS new_print_article ON ${table};\n\n";
+    ## NOTE Sie wird durch CONSTRAINT: "inventory", "ref_storage_location" geleert!
+    ##   print FH "TRUNCATE $table;\n\n";
+    print FH "DROP TRIGGER IF EXISTS new_book_article ON ${table};\n\n";
 
     my $created = 0;
     while (my $r = $query->fetchrow_hashref())
@@ -547,7 +554,7 @@ ORDER BY xgr.artnr ASC;
     }
     $query->finish;
     print FH "\n-- Add Trigger to Table 'inventory' --\n";
-    print FH "\n\nCREATE TRIGGER new_print_article BEFORE INSERT ON $table FOR EACH ROW EXECUTE PROCEDURE new_print_article();\n";
+    print FH "\n\nCREATE TRIGGER new_book_article BEFORE INSERT ON $table FOR EACH ROW EXECUTE PROCEDURE new_book_article();\n";
     print "-- DONE: From $rows rows, created $created Book inserts.\n";
     print FH "\n--\n-- Query-Result: $rows\n--\n";
     close(FH);
@@ -705,9 +712,8 @@ ORDER BY artnr ASC;");
     print "-- Generate: ${table}.INSERT\n";
     open(FH, '>:encoding(UTF-8)', "./import/${table}.INSERT.sql") or die $!;
     print FH "--\n-- PostgreSQL UPDATE SET $table --\n--\n";
-    print FH "TRUNCATE $table;\n\n";
+    print FH "DROP TRIGGER IF EXISTS new_print_article ON ${table};\n\n";
     print FH "ALTER TABLE $table DROP CONSTRAINT IF EXISTS foreign_technique_key;\n\n";
-
     ## "foreign_technique_key" FOREIGN KEY (ip_technique) REFERENCES ref_print_technique(rpt_id)
 
     while (my $r = $query->fetchrow_hashref())
@@ -823,7 +829,10 @@ ORDER BY artnr ASC;");
         $inserts++;
       }
     }
-    $query->finish; 
+    $query->finish;
+    print FH "\n-- Add Trigger to Table '$table' --\n\n";
+    print FH "CREATE TRIGGER new_print_article BEFORE INSERT ON $table FOR EACH ROW EXECUTE PROCEDURE new_print_article();\n\n";
+    print FH "ALTER TABLE $table ADD CONSTRAINT foreign_technique_key FOREIGN KEY (ip_technique) REFERENCES ref_print_technique(rpt_id);\n";
     print FH "--\n-- Query-Result: $rows\n--\n";
     close(FH);
     print "-- DONE: Query $rows rows and INSERT $inserts Prints.\n";
@@ -948,12 +957,15 @@ sub test_query {
 WHERE art LIKE 'po' OR art LIKE 'an' OR art LIKE 'ka' AND artnr>0
 ORDER BY artnr ASC;"
 );
-  if($query->execute())
+  my $updates = 0;
+  my $rows = $query->execute();
+  if($rows)
   {
     while (my $ref = $query->fetchrow_hashref())
     {
       if($ref->{$field}) {
         print $ref->{$field} . "\n";
+        $updates++;
       }
     }
     $query->finish;
@@ -1001,7 +1013,7 @@ update_prints_technique();
 } ## END FULL Migration
 
 ## Alle Inventar Artikel
-show_table_fields("xkd");
+# show_table_fields("xkd");
 
 ## Tabellenfelder abfragen
 # show_table_fields("xgr");

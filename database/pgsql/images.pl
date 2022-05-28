@@ -96,7 +96,7 @@ sub createImageIndex {
       print "-- $_id\n";
       my $_img = scale_image($file);
       if($_img) {
-        my $sql = "INSERT INTO  (im_id,im_imgdata,im_changed) VALUES ";
+        my $sql = "INSERT INTO inventory_images (im_id,im_imgdata,im_changed) VALUES ";
         $_id =~ s/\D+//ig;
         $_img =~ s/[\n\r]+//ig;
         $sql .= "($_id,'$_img',CURRENT_TIMESTAMP);\n";
