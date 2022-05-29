@@ -5,6 +5,7 @@
 #include "myicontheme.h"
 #include "providersstatements.h"
 #include "providerstoolbar.h"
+#include "providerspageview.h"
 #include "providerstreeview.h"
 
 #include <QDebug>
@@ -35,8 +36,7 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   m_splitter->setOrientation(Qt::Horizontal);
   layout->addWidget(m_splitter);
 
-  m_pageView = new QTabWidget(m_splitter);
-  m_pageView->setObjectName("providers_pages");
+  m_pageView = new ProvidersPageView(m_splitter);
   m_pageView->setTabPosition(QTabWidget::South);
   m_splitter->insertWidget(0, m_pageView);
 
@@ -58,11 +58,6 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   connect(m_toolBar, SIGNAL(s_createOrder()), this, SLOT(createEditOrders()));
   connect(m_listView, SIGNAL(s_queryOrder(const QString &, const QString &)),
           this, SLOT(queryOrder(const QString &, const QString &)));
-}
-
-Antiqua::InterfaceWidget *InventoryProviders::currentTabWidget() {
-  return reinterpret_cast<Antiqua::InterfaceWidget *>(
-      m_pageView->currentWidget());
 }
 
 bool InventoryProviders::tabExists(const QString &id) {
@@ -88,7 +83,7 @@ void InventoryProviders::searchConvert() {
 
 void InventoryProviders::openTableView() {
   int cid = -1;
-  Antiqua::InterfaceWidget *tab = currentTabWidget();
+  Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
   if (tab != nullptr) {
     cid = tab->getCustomerId();
     if (cid > 0) {
@@ -133,7 +128,7 @@ void InventoryProviders::queryOrder(const QString &provider,
               SLOT(createQueryCustomer(const QJsonDocument &)));
       connect(w, SIGNAL(createCustomer(const QJsonDocument &)), this,
               SLOT(createNewCustomer(const QJsonDocument &)));
-      m_pageView->addTab(w, myIcon("edit_group"), orderId);
+      m_pageView->addPage(w, orderId);
       /**
        * @warning tabExists() @b MUSS UNBEDINGT vor createOrderRequest()
        * aufgerufen werden! Ansonsten wird die Antwort an den Slot
@@ -195,7 +190,7 @@ void InventoryProviders::createNewCustomer(const QJsonDocument &doc) {
     q.next();
     if (q.value("c_id").toInt() > 0) {
       customerId = q.value("c_id").toInt();
-      Antiqua::InterfaceWidget *tab = currentTabWidget();
+      Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
       if (tab != nullptr) {
         tab->setCustomerId(customerId);
         m_toolBar->enableOrderButton(true);
@@ -232,7 +227,7 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
     q.next();
     if (q.value("c_id").toInt() > 0) {
       customerId = q.value("c_id").toInt();
-      Antiqua::InterfaceWidget *tab = currentTabWidget();
+      Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
       if (tab != nullptr) {
         qDebug() << "Customer Found:" << customerId << tab->objectName();
         tab->setCustomerId(customerId);
@@ -254,7 +249,7 @@ void InventoryProviders::createEditOrders() {
   if (customerId < 1)
     return;
 
-  Antiqua::InterfaceWidget *tab = currentTabWidget();
+  Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
   if (tab != nullptr && tab->getCustomerId() == customerId) {
     m_toolBar->statusMessage(tr("open order editor"));
     emit createOrder(tab->getProviderOrder());

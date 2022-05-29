@@ -15,6 +15,7 @@
 
 class ProvidersToolBar;
 class ProvidersTreeView;
+class ProvidersPageView;
 
 /**
  * @group Providers
@@ -57,7 +58,7 @@ private:
   /**
    * @brief Alle Dienstleisteraufträge hier anzeigen.
    */
-  QTabWidget *m_pageView;
+  ProvidersPageView *m_pageView;
 
   /**
    * @brief Liste der Dienstleisteraufträge
@@ -68,13 +69,6 @@ private:
    * @brief Einfacher Toolbar mit den wichtigsten Aktionen
    */
   ProvidersToolBar *m_toolBar;
-
-  /**
-   * @brief Aktuelles Tab Fenster ermitteln.
-   * Ableitung von QTabWidget::currentWidget()
-   * Ermittelt das aktuelle Antiqua::InterfaceWidget
-   */
-  Antiqua::InterfaceWidget *currentTabWidget();
 
   /**
    * @brief Wird hier nicht eingesetzt ...
@@ -172,8 +166,8 @@ private Q_SLOTS:
    * @brief Knopf Auftrag erstellen verarbeiten.
    * Wird von Signal @ref ProvidersToolBar::s_createOrder aufgerufen und sucht
    * zuerst nach @ref customerId, prüft ob diese Gesetzt ist. Danach wird die Id
-   * mit @ref currentTabWidget() verglichen. Wenn ok, erstelle mit @ref
-   * Antiqua::InterfaceWidget::getProviderOrder den bnötigten Datensatz und
+   * mit @ref ProvidersPageView::currentPage() verglichen. Wenn ok, erstelle mit
+   * @ref Antiqua::InterfaceWidget::getProviderOrder den benötigten Datensatz und
    * sende das Signal @ref createOrder an das Eltern Fenster.
    */
   void createEditOrders();

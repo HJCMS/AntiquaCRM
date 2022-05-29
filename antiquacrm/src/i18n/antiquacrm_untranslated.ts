@@ -1675,12 +1675,12 @@
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+23"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+24"/>
         <source>Providers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+216"/>
+        <location line="+210"/>
         <source>customer found in database!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2893,6 +2893,28 @@
     <message>
         <location line="+4"/>
         <source>API Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProvidersPageView</name>
+    <message>
+        <location filename="../inventory/providers/providerspageview.cpp" line="+69"/>
+        <location line="+1"/>
+        <source>Order:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProvidersTabBar</name>
+    <message>
+        <location line="-42"/>
+        <source>Order Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

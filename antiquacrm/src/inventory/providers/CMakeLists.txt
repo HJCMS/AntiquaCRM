@@ -23,12 +23,14 @@ SET (subproject_SOURCES
   inventoryproviders.cpp
   providerstoolbar.cpp
   providerstreeview.cpp
+  providerspageview.cpp
 )
 
 SET (subproject_HEADERS
   providersstatements.h
   providerstoolbar.h
   providerstreeview.h
+  providerspageview.h
   inventoryproviders.h
 )
 
