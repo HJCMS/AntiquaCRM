@@ -24,11 +24,12 @@
  * auf sichtbar.
  */
 #ifndef SHOW_SQL_QUERIES
-#define SHOW_SQL_QUERIES true
+#define SHOW_SQL_QUERIES false
 #endif
 
 /**
  * @brief Sucht Artikel der einen Bestand aufweist!
+ * @ingroup Providers SQL Statements
  * @param aid
  * @return SqlQuery
  */
@@ -46,6 +47,7 @@ static const QString queryArticleExists(const QString &aid) {
 
 /**
  * @brief Kunden abfrage
+ * @ingroup Providers SQL Statements
  * @param c_firstname
  * @param c_lastname
  * @param c_postalcode

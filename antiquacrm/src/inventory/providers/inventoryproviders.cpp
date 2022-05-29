@@ -10,6 +10,7 @@
 #include <QDebug>
 #include <QStringList>
 #include <QVBoxLayout>
+#include <QSplitter>
 
 // QJson
 #include <QJsonArray>
@@ -29,7 +30,7 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   layout->setObjectName("inventory_providers_layout");
   layout->setContentsMargins(2, 2, 2, 2);
 
-  m_splitter = new QSplitter(this);
+  QSplitter *m_splitter = new QSplitter(this);
   m_splitter->setObjectName("inventory_providers_splitter");
   m_splitter->setOrientation(Qt::Horizontal);
   layout->addWidget(m_splitter);
@@ -133,8 +134,15 @@ void InventoryProviders::queryOrder(const QString &provider,
       connect(w, SIGNAL(createCustomer(const QJsonDocument &)), this,
               SLOT(createNewCustomer(const QJsonDocument &)));
       m_pageView->addTab(w, myIcon("edit_group"), orderId);
-      w->createOrderRequest(orderId);
-      return;
+      /**
+       * @warning tabExists() @b MUSS UNBEDINGT vor createOrderRequest()
+       * aufgerufen werden! Ansonsten wird die Antwort an den Slot
+       * createQueryCustomer() das falsche Tab abrufen und die Daten falsch
+       * einfügen!
+       */
+      if (tabExists(orderId)) {
+        w->createOrderRequest(orderId);
+      }
     }
   }
 }
@@ -212,8 +220,12 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
                                     QJsonValue(doc["c_location"]).toString());
 
   if (SHOW_SQL_QUERIES) {
-    qDebug() << Q_FUNC_INFO << sql;
+    qDebug() << Q_FUNC_INFO << sql << doc;
   }
+
+  QString orderid = doc.object().value("orderid").toString();
+  if (!tabExists(orderid))
+    return;
 
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
@@ -222,6 +234,7 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
       customerId = q.value("c_id").toInt();
       Antiqua::InterfaceWidget *tab = currentTabWidget();
       if (tab != nullptr) {
+        qDebug() << "Customer Found:" << customerId << tab->objectName();
         tab->setCustomerId(customerId);
         m_toolBar->statusMessage(tr("customer found in database!"));
         m_toolBar->enableOrderButton(true);

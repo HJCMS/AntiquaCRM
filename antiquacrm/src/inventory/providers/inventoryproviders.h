@@ -6,12 +6,10 @@
 #define INVENTORY_PROVIDERS_H
 
 #include "inventory.h"
-#include <AntiquaCRM>
 #include <AntiquaInterface>
 #include <SqlCore>
 
 #include <QObject>
-#include <QSplitter>
 #include <QTabWidget>
 #include <QWidget>
 
@@ -21,59 +19,70 @@ class ProvidersTreeView;
 /**
  * @group Providers
  * @class InventoryProviders
- * Primäre Klasse für das Auftrags System
+ * Primäre Klasse für das Diesntleister Auftrags System
+ *
  */
-class InventoryProviders : public Inventory {
+class InventoryProviders final : public Inventory {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  /**
+   * @brief Wird beim Start gesetzt.
+   * Soll verhindern das die Plugins mehrfach geladen werden.
+   */
   bool firstStart = false;
+
+  /**
+   * @brief Kundennummer des Aktuellen Fensters
+   */
   int customerId = -1;
 
+  /**
+   * @brief SQL Abfragen
+   */
   HJCMS::SqlCore *m_sql;
 
+  /**
+   * @brief Dienstleister Liste
+   */
   QStringList p_providerList;
 
+  /**
+   * @brief Alle geladenen Plugins
+   */
   QList<Antiqua::Interface *> p_iFaces;
 
   /**
-   * @brief Hauptansicht
-   */
-  QSplitter *m_splitter;
-
-  /**
-   * @brief Fenster gruppierung
+   * @brief Alle Dienstleisteraufträge hier anzeigen.
    */
   QTabWidget *m_pageView;
 
   /**
-   * @brief Liste der Dienstleister Bestellungen
+   * @brief Liste der Dienstleisteraufträge
    */
   ProvidersTreeView *m_listView;
 
   /**
-   * @brief ToolBar
+   * @brief Einfacher Toolbar mit den wichtigsten Aktionen
    */
   ProvidersToolBar *m_toolBar;
 
   /**
-   * @brief Aktuelles Tab Widget ermitteln.
+   * @brief Aktuelles Tab Fenster ermitteln.
+   * Ableitung von QTabWidget::currentWidget()
+   * Ermittelt das aktuelle Antiqua::InterfaceWidget
    */
   Antiqua::InterfaceWidget *currentTabWidget();
 
   /**
-   * @brief Erstelle Daten für AuftragsEditor
-   * Wenn alle Datensätze Aufgearbeitet und Vorhanden sende Daten an den
-   * Workspace.
+   * @brief Wird hier nicht eingesetzt ...
    */
-  void openEditor(const QString &) {
-    /* Disabled in this class */
-  };
+  void openEditor(const QString &){/* Unused */};
 
   /**
-   * @brief Eine Bestellung einfügen
+   * @brief Einfache Fensterabfrage, bei vorhanden in den Vordergrund schieben.
    * Such nach vorhandenen Tab mit dem Objektnamen Wenn eines gefunden wird dann
    * nach vorne holen und "true" zurück geben.
    * @note Die Identifizierung der Objektnamen erfolgt
@@ -83,30 +92,55 @@ private:
 
 private Q_SLOTS:
   /**
-   * @brief Suche ...
-   * @note Wird hier nicht eingesetzt
+   * @brief Wird hier nicht eingesetzt ...
    */
-  void searchConvert(const QString &){};
+  void searchConvert(const QString &){/* Unused */};
 
   /**
-   * @brief Suche alle offenen Tabs und sende ein Update and TreeWidget
+   * @brief Suche alle offenen Tabs und sendet ein Update and TreeWidget
+   * Wird von Signal @ref ProvidersToolBar::s_refresh aufgerufen.
+   * Durchläuft alle Einträge von @ref p_iFaces und stellt eine Netzwerk
+   * abfrage @ref Antiqua::Interface::queryMenueEntries
+   * @note Die Signale wurden bereits in @ref loadInterfaces Registriert!
    */
   void searchConvert();
 
   /**
    * @brief Beim Aktuellen Tab den Kunden ermitteln!
    * @note Zweckentfremdung damit nicht ungenutzt!
+   * Wird von Signal @ref ProvidersToolBar::s_customerAction aufgerufen.
+   * @li Es wird vom aktuell aktivierten Tab das InterfaceWidget ermittelt.
+   * @li Im nächsten Schritt wird mit @ref InterfaceWidget::getCustomerId nach
+   *     der Kundennummer gefragt.
+   * @li Ist diese vorhanden wird mit @ref createEditCustomer ein Anfrage an den
+   *     Kunden Editor gesendet.
+   * @li Wenn nicht stelle Anfrage @ref InterfaceWidget::createCustomerDocument
    */
   void openTableView();
 
   /**
    * @brief Dienstleister Initialisieren und Bestellerliste setzen.
    * Wird nur einmal beim Start aufgerufen und die Variable @ref firstStart
-   * gesetzt.
+   * gesetzt damit das Plugin nicht zweimal geladen wird.
+   * @note Hier werden alle verfügbaren Dienstleister Plugins geladen.
    * @return bool
    */
   bool loadInterfaces();
 
+  /**
+   * @brief Verarbeitet das Signal @ref ProvidersTreeView::s_queryOrder
+   * Primärer Slot in dem Dienstleister Name und Bestellnummer zum erstellen
+   * eines Neunen Interface Fensters verwendet wird.
+   * Hier wird geprüft ob ein Fenster mit der Id"orderId" existiert.
+   * @li Ist es vorhanden, wird es mit @ref tabExists nach vorne geholt.
+   * @li Wenn nicht, wird ein neues @ref Antiqua::InterfaceWidget erstellt
+   *     und die Signale für dieses Fenster registriert.
+   * @li Zum abschluss wird mit @ref createOrderRequest eine Anfrage an das
+   *     Fenster gestellt.
+   *
+   * @param provider  - Dienstleistername
+   * @param orderId   - Auftrags Id des Dienstleisters
+   */
   void queryOrder(const QString &provider, const QString &orderId);
 
   /**
@@ -121,30 +155,49 @@ private Q_SLOTS:
 
   /**
    * @brief Kundendatensetz erstellen und absenden
+   * @ingroup Providers SQL Statements
+   * Erstelle SQL Insert für "PgSQL:Table:customers"
    */
   void createNewCustomer(const QJsonDocument &doc);
 
   /**
    * @brief Kundenabfrage erstellen und absenden
+   * @ingroup Providers SQL Statements
+   * Erstellt SQL @ref queryCustomerExists Abfrage aus den Übermittelten Daten.
+   * @see Antiqua::InterfaceWidget::checkCustomer
    */
   void createQueryCustomer(const QJsonDocument &doc);
 
   /**
-   * @brief Knopf Signal verarbeiten und an @ref openEditor weiterleiten.
+   * @brief Knopf Auftrag erstellen verarbeiten.
+   * Wird von Signal @ref ProvidersToolBar::s_createOrder aufgerufen und sucht
+   * zuerst nach @ref customerId, prüft ob diese Gesetzt ist. Danach wird die Id
+   * mit @ref currentTabWidget() verglichen. Wenn ok, erstelle mit @ref
+   * Antiqua::InterfaceWidget::getProviderOrder den bnötigten Datensatz und
+   * sende das Signal @ref createOrder an das Eltern Fenster.
    */
   void createEditOrders();
 
   /**
-   * @brief readOrderList
+   * @brief Rückgabe Daten von Interface verarbeiten.
+   * Wenn @ref Antiqua::Interface::listResponse antwortet. Die Daten hier
+   * einlesen und an @ref ProvidersTreeView::addOrder senden. Es wird
+   * folgendes Format erwartet und alle Parameter müssen gesetzt sein.
+   *
    * @code
-   * Erwartet dieses Format:
    * QJsonObject({
+   *  "provider":"Providername",
    *  "items":[{
-   *    "datum":"2022-05-14T18:10:23",
-   *    "id":"BF-2251499"
-   *  }],
-   *  "provider":"Provider ObjekName"
+   *    "datum":"Datum/Zeit in ISO 8601 Format",
+   *    "id":"Provider Bestellungs Id"
+   *  }]
    *  })
+   * @endcode
+   *
+   * @li provider - Identifizierung der Hauptgruppe
+   * @li items - Einträge mit Datum  und Id
+   *
+   * @param doc - Siehe Formatvorgabe
    */
   void readOrderList(const QJsonDocument &doc);
 
@@ -160,7 +213,7 @@ Q_SIGNALS:
   void openEditOrder(int cid);
 
   /**
-   * @brief Auftrag erstellen and Elternfenster senden ...
+   * @brief Signal - Auftrag erstellen und an Elternfenster senden.
    */
   void createOrder(const ProviderOrder &);
 
@@ -168,6 +221,7 @@ public Q_SLOTS:
   /**
    * Wenn das Tab in den Vordergrund geht, eine Abfrage für die aktuelle
    * Listansicht auf dass StackedWidget, welches zu sehen ist, machen.
+   * @note Hier wird @ref firstStart gesetzt und @ref loadInterfaces aufgerufen!
    */
   void onEnterChanged();
 

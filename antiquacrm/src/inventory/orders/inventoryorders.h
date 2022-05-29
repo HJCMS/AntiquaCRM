@@ -24,7 +24,7 @@ class OrderEditor;
  * @class InventoryOrders
  * Primäre Klasse für das Auftrags System
 */
-class InventoryOrders : public Inventory {
+class InventoryOrders final : public Inventory {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")

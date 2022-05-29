@@ -75,10 +75,17 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   o_customer_id->setObjectName("o_customer_id");
   o_customer_id->setInfo(tr("Address for Customer ID"));
   row1->addWidget(o_customer_id, 0, 0, 1, 1, Qt::AlignLeft);
+  // Provider Settings
+  QHBoxLayout *prLayout = new QHBoxLayout();
+  o_provider_order_id = new LineEdit(mainWidget);
+  o_provider_order_id->setObjectName("o_provider_order_id");
+  o_provider_order_id->setInfo(tr("Provider Order"));
+  prLayout->addWidget(o_provider_order_id);
   o_provider_name = new LineEdit(mainWidget);
   o_provider_name->setObjectName("o_provider_name");
-  o_provider_name->setInfo(tr("Provider Order"));
-  row1->addWidget(o_provider_name, 0, 1, 1, 1);
+  o_provider_name->setInfo(tr("Provider"));
+  prLayout->addWidget(o_provider_name);
+  row1->addLayout(prLayout, 0, 1, 1, 1);
   m_customer_address = new TextField(mainWidget);
   m_customer_address->setObjectName("m_customer_address");
   row1->addWidget(m_customer_address, 1, 0, 1, 1);
@@ -182,7 +189,7 @@ void OrderEditor::setInputList() {
   // Werden manuell gesetzt!
   inputList.removeOne("o_since");
   inputList.removeOne("o_modified");
-  inputList.removeOne("o_delivery");
+  // inputList.removeOne("o_delivery");
 }
 
 void OrderEditor::importSqlResult() {
@@ -254,7 +261,7 @@ bool OrderEditor::sendSqlQuery(const QString &sqlStatement) {
 bool OrderEditor::createSqlArticleOrder() {
   int payments = m_paymentList->payments();
   if (payments < 1) {
-    qWarning("Missing Payments");
+    qWarning("Create SQL Article Order - Missing Payments");
     return false;
   }
 
@@ -420,7 +427,14 @@ void OrderEditor::createSqlInsert() {
 
   bool result = sendSqlQuery(sql);
   if (result && !o_id->value().toString().isEmpty()) {
+    /**
+     * Wenn die Artikel-Bestellisten Tabelle nicht leer ist.
+     * Danach createSqlArticleOrder() aufrufen!
+     */
     m_paymentList->setEnabled(true);
+    if (m_paymentList->payments() > 0) {
+      createSqlArticleOrder();
+    }
     return;
   } else if (result) {
     finalLeaveEditor();
@@ -772,6 +786,7 @@ void OrderEditor::openCreateOrder(const ProviderOrder &order) {
   int cid = copy.customerId();
   if (cid > 0) {
     o_customer_id->setValue(cid);
+    o_provider_order_id->setValue(copy.providerId());
     o_provider_name->setValue(copy.provider());
     if (getCustomerAddress(cid)) {
       QList<OrderArticle> list;
@@ -780,7 +795,7 @@ void OrderEditor::openCreateOrder(const ProviderOrder &order) {
         QString sql = inventoryArticle(aid);
         QSqlQuery q = m_sql->query(sql);
         if (q.size() > 0) {
-          QSqlRecord r = q.record();
+          // QSqlRecord r = q.record();
           while (q.next()) {
             OrderArticle d;
             d.setPayment(-1);
@@ -810,7 +825,7 @@ void OrderEditor::openCreateOrder(const ProviderOrder &order) {
         }
       }
       m_paymentList->importPayments(list);
-      m_paymentList->setEnabled(true);
+      m_paymentList->setEnabled(false);
       emit isModified(true);
     }
   }

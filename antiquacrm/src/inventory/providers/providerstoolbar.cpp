@@ -38,6 +38,9 @@ ProvidersToolBar::ProvidersToolBar(QWidget *parent) : QFrame{parent} {
   btn_order->setEnabled(false);
   layout->addWidget(btn_order);
   btn_refresh = new QPushButton(myIcon("reload"), tr("Refresh"), this);
+  QString refreshTip = tr("refreshing orders list");
+  btn_refresh->setToolTip(refreshTip);
+  btn_refresh->setStatusTip(refreshTip);
   layout->addWidget(btn_refresh);
   setLayout(layout);
 

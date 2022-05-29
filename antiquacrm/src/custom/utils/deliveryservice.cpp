@@ -15,7 +15,7 @@ DeliveryService::DeliveryService(QWidget *parent) : UtilsMain{parent} {
   layout->addWidget(m_info);
 
   m_box = new QComboBox(this);
-  m_box->insertItem(0, tr("Without disclosures"));
+  m_box->insertItem(0, tr("Internal"));
   layout->addWidget(m_box);
 
   setLayout(layout);
@@ -61,7 +61,6 @@ void DeliveryService::loadSqlDataset() {
   if (q.size() > 0) {
     if (m_box->count() >= 1) {
       m_box->clear();
-      m_box->insertItem(0, tr("Without disclosures"));
     }
     while (q.next()) {
       int i = q.value("d_id").toInt();

@@ -4,14 +4,19 @@
 #include "providerorders.h"
 
 ProviderOrder::ProviderOrder() {
+  p_provider = QString();
   p_providerId = QString();
   p_customerId = -1;
   p_articleIds = QStringList();
 }
 
-void ProviderOrder::setProvider(const QString &id) { p_providerId = id; }
+void ProviderOrder::setProvider(const QString &name) { p_provider = name; }
 
-const QString ProviderOrder::provider() { return p_providerId; }
+const QString ProviderOrder::provider() { return p_provider; }
+
+void ProviderOrder::setProviderId(const QString &id) { p_providerId = id; }
+
+const QString ProviderOrder::providerId() { return p_providerId; }
 
 void ProviderOrder::setCustomerId(int &id) {
   if (id > 0)

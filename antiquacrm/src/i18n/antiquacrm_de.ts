@@ -366,7 +366,7 @@
 <context>
     <name>BooksTable</name>
     <message>
-        <location filename="../inventory/books/bookstable.cpp" line="+95"/>
+        <location filename="../inventory/books/bookstable.cpp" line="+97"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
@@ -1256,12 +1256,11 @@
     <name>DeliveryService</name>
     <message>
         <location filename="../custom/utils/deliveryservice.cpp" line="+18"/>
-        <location line="+46"/>
-        <source>Without disclosures</source>
-        <translation>Keine Angaben</translation>
+        <source>Internal</source>
+        <translation>Intern</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+72"/>
         <source>Delevery Service is needet!</source>
         <translation>Ein Lieferservice ist erforderlich!</translation>
     </message>
@@ -1660,7 +1659,7 @@
         <translation>Erneuern</translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+75"/>
         <source>There is no Order open!</source>
         <translation>Es ist keine Bestellung geöffnet!</translation>
     </message>
@@ -1676,12 +1675,12 @@
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+22"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+23"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="+210"/>
+        <location line="+216"/>
         <source>customer found in database!</source>
         <translation>Kundeneintrag gefunden!</translation>
     </message>
@@ -1689,6 +1688,16 @@
         <location line="+10"/>
         <source>customer not exits!</source>
         <translation>Kunde existiert nicht!</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>open order editor</source>
+        <translation>Öffne Auftragseditor</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>current tab and customer id not equal</source>
+        <translation>Aktuelles Fenster und Kundennummer sind nicht Identisch</translation>
     </message>
 </context>
 <context>
@@ -1915,12 +1924,17 @@
         <translation>Adresse und Kunden Nummer</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Provider Order</source>
         <translation>Dienstleister Bestellung</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+4"/>
+        <source>Provider</source>
+        <translation>Dienstleister</translation>
+    </message>
+    <message>
+        <location line="+15"/>
         <source>Notification</source>
         <translation>Benachrichtigung</translation>
     </message>
@@ -1955,12 +1969,13 @@
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
-        <location line="+237"/>
+        <location line="+244"/>
+        <location line="+318"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="-305"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
     </message>
@@ -2908,6 +2923,11 @@
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
     </message>
+    <message>
+        <location line="+1"/>
+        <source>refreshing orders list</source>
+        <translation>Bestellliste aktualisieren</translation>
+    </message>
 </context>
 <context>
     <name>ProvidersTreeView</name>
@@ -3453,7 +3473,7 @@
 <context>
     <name>WHSoftPurchaser</name>
     <message>
-        <location filename="../plugins/antiqua/whsoft.cpp" line="+138"/>
+        <location filename="../plugins/antiqua/whsoft.cpp" line="+141"/>
         <source>Customer</source>
         <translation>Kunde</translation>
     </message>
@@ -3489,7 +3509,7 @@
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../workspace.cpp" line="+47"/>
+        <location filename="../workspace.cpp" line="+48"/>
         <source>Workspace</source>
         <translation>Arbeitsbereich</translation>
     </message>
@@ -3534,7 +3554,7 @@
         <translation>Auftrags Inventar</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
@@ -3551,6 +3571,7 @@
     <message>
         <location line="+9"/>
         <location line="+9"/>
+        <location line="+9"/>
         <location line="+11"/>
         <source>Order tab isn&apos;t open!</source>
         <translation>Das Auftrags Tab ist nicht geöffnet!</translation>
@@ -3559,7 +3580,7 @@
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-130"/>
+        <location line="-141"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>

@@ -29,7 +29,7 @@ class BookEditor;
   @li Bucheditor
  @note Im ladezustand ist das BuchEditor Fenster deaktiviert.
 */
-class InventoryBooks : public Inventory {
+class InventoryBooks final : public Inventory {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")

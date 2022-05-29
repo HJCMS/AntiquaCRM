@@ -30,6 +30,10 @@
 #define CONFIG_GROUP "provider/whsoft"
 #endif
 
+#ifndef PLUGIN_TEST_MODE
+#define PLUGIN_TEST_MODE false
+#endif
+
 #ifndef CONFIG_PROVIDER
 #define CONFIG_PROVIDER "Buchfreund"
 #endif
@@ -277,6 +281,7 @@ void WHSoftWidget::createCustomerDocument() {
 const QJsonDocument WHSoftWidget::customerRequest(const QJsonObject &object) {
   QJsonObject queryObject;
   queryObject.insert("provider", QJsonValue(CONFIG_PROVIDER));
+  queryObject.insert("orderid", QJsonValue(objectName()));
   queryObject.insert("type", "customer_request");
   queryObject.insert("c_firstname", object["vorname"]);
   queryObject.insert("c_lastname", object["name"]);
@@ -389,29 +394,32 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
 }
 
 void WHSoftWidget::createOrderRequest(const QString &bfId) {
-  // DUMMY TEST
-  QString buffer;
-  QString p("/Developement/antiqua/antiquacrm/src/plugins/antiqua/");
-  p.append("example-whsoft-order.json");
+  if (PLUGIN_TEST_MODE) {
+    // DUMMY TEST
+    QString buffer;
+    QString p("/Developement/antiqua/antiquacrm/src/plugins/antiqua/");
+    p.append("example-whsoft-order.json");
 
-  QFile fp(QDir::homePath() + p);
-  if (fp.open(QIODevice::ReadOnly)) {
-    QTextStream str(&fp);
-    str.setCodec("UTF8");
-    buffer.append(str.readAll());
-    fp.close();
-  }
+    QFile fp(QDir::homePath() + p);
+    if (fp.open(QIODevice::ReadOnly)) {
+      QTextStream str(&fp);
+      str.setCodec("UTF8");
+      buffer.append(str.readAll());
+      fp.close();
+    }
 
-  QJsonParseError parser;
-  QJsonDocument doc = QJsonDocument::fromJson(buffer.toLocal8Bit(), &parser);
-  if (parser.error != QJsonParseError::NoError) {
-    qWarning("Json Parse Error!");
+    QJsonParseError parser;
+    QJsonDocument doc = QJsonDocument::fromJson(buffer.toLocal8Bit(), &parser);
+    if (parser.error != QJsonParseError::NoError) {
+      qWarning("Json Parse Error!");
+      return;
+    }
+    setContent(doc);
+
+    qDebug() << Q_FUNC_INFO << "DUMMY" << bfId;
     return;
   }
-  setContent(doc);
 
-  qDebug() << Q_FUNC_INFO << "DUMMY" << bfId;
-  return;
   WHSoftJSonQuery *mq = new WHSoftJSonQuery(this);
   mq->setObjectName("json_query_" + objectName());
   connect(mq, SIGNAL(orderResponsed(const QJsonDocument &)), this,
@@ -454,7 +462,8 @@ const QMap<QString, QString> WHSoftWidget::fieldTranslate() const {
 const ProviderOrder WHSoftWidget::getProviderOrder() {
   ProviderOrder order;
   int cid = m_purchaserWidget->getValue("costumerId").toInt();
-  order.setProvider(objectName());
+  order.setProvider(CONFIG_PROVIDER);
+  order.setProviderId(objectName());
   order.setCustomerId(cid);
   int col = 1; /**< CustomerId Cell */
   QStringList ids;

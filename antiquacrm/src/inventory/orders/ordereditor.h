@@ -64,11 +64,8 @@ private:
   /**
    * @brief Dienstleister
    */
+  LineEdit *o_provider_order_id;
   LineEdit *o_provider_name;
-
-  /**
-   * @brief Bestellinformationen
-   */
   TextField *o_provider_order;
 
   /**

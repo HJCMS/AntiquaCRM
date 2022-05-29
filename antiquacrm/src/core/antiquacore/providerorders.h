@@ -20,6 +20,7 @@
  */
 class ANTIQUACORE_EXPORT ProviderOrder {
 private:
+  QString p_provider;
   QString p_providerId;
   int p_customerId;
   QStringList p_articleIds;
@@ -27,8 +28,11 @@ private:
 public:
   explicit ProviderOrder();
 
-  void setProvider(const QString &id);
+  void setProvider(const QString &name);
   const QString provider();
+
+  void setProviderId(const QString &id);
+  const QString providerId();
 
   void setCustomerId(int &id);
   int customerId();

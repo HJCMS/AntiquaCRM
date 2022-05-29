@@ -79,7 +79,7 @@ bool BooksTable::sqlExecQuery(const QString &statement) {
   if (!statement.contains("SELECT"))
     return false;
 
-  qDebug() << Q_FUNC_INFO << statement;
+  // qDebug() << Q_FUNC_INFO << statement;
 
   QSqlDatabase db(m_sql->db());
   if (db.open()) {
