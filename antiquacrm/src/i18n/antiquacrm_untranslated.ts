@@ -2037,13 +2037,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+648"/>
+        <location line="+647"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-618"/>
+        <location line="-617"/>
         <source>close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2059,12 +2059,12 @@
     </message>
     <message>
         <location line="+258"/>
-        <location line="+424"/>
+        <location line="+423"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-411"/>
+        <location line="-410"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2107,7 +2107,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+5"/>
+        <location line="+65"/>
+        <source>Printer dialog aborted!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-46"/>
         <source>Missing Invoice-Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2117,7 +2123,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+14"/>
         <source>Do you really want to close this order and pass it on to accounting?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2137,18 +2143,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-424"/>
-        <location line="+178"/>
+        <location line="-423"/>
+        <location line="+177"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-628"/>
+        <location line="-627"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+630"/>
+        <location line="+629"/>
         <source>Finish order</source>
         <translation type="unfinished"></translation>
     </message>

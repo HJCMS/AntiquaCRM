@@ -647,8 +647,8 @@ void OrderEditor::openPrinterDeliveryDialog() {
     return;
   }
   // Start Dialog
-  if (dialog->exec(deliveries)) {
-    qDebug() << Q_FUNC_INFO << "Finished";
+  if (!dialog->exec(deliveries)) {
+    emit s_postMessage(tr("Printer dialog aborted!"));
   }
 }
 
@@ -712,9 +712,8 @@ void OrderEditor::openPrinterInvoiceDialog() {
     emit s_postMessage(tr("No Billing Info found"));
     return;
   }
-
-  if (dialog->exec(list)) {
-    qDebug() << Q_FUNC_INFO << "TODO";
+  if (!dialog->exec(list)) {
+    emit s_postMessage(tr("Printer dialog aborted!"));
   }
 }
 
