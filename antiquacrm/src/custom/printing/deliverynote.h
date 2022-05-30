@@ -158,11 +158,6 @@ public:
   explicit DeliveryNote(QWidget *parent = nullptr);
 
   /**
-   * @brief Konvetrierte Lieferschein Nummer
-   */
-  const QString deliveryNumber();
-
-  /**
    * @brief Add Customer Address
    * @note Muss vor @ref exec() gesetzt sein!
    */
@@ -172,7 +167,7 @@ public:
    * @brief Wichtige Nummern angeben
    * @note Muss vor @ref exec() gesetzt sein!
    */
-  void setDelivery(int &orderId, int &customerId);
+  void setDelivery(int &orderId, int &customerId, const QString &deliverNoteId);
 
   /**
    * @brief Erstelle Inhalt und öffne Dialog.

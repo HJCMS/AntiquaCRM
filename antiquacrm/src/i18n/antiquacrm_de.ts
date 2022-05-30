@@ -1172,17 +1172,17 @@
     <name>DeliveryNote</name>
     <message>
         <location filename="../custom/printing/deliverynote.cpp" line="+30"/>
-        <location line="+333"/>
+        <location line="+336"/>
         <source>Delivery note</source>
         <translation>Lieferschein</translation>
     </message>
     <message>
-        <location line="-320"/>
+        <location line="-323"/>
         <source>&lt;p&gt;Your Company configuration is incomplite!&lt;/p&gt;Edit Company settings first!</source>
         <translation>&lt;p&gt;Die Konfiguration der Unternehmerdaten sind unvollständig!&lt;/p&gt;Bitte konfigurieren Sie erst Ihre Firmendaten!</translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+77"/>
         <source>Delivey note</source>
         <translation>Lieferschein</translation>
     </message>
@@ -1237,7 +1237,7 @@
         <translation>Steuer Nummer</translation>
     </message>
     <message>
-        <location line="+170"/>
+        <location line="+162"/>
         <source>There is no Order-Id to generate this delivery!</source>
         <translation>Es gibt keine Bestellnummer für die Erstellung!</translation>
     </message>
@@ -1245,6 +1245,11 @@
         <location line="+6"/>
         <source>There is no Customer Id to generate this delivery!</source>
         <translation>Es gibt keine Kunennummer für die Erstellung!</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>delivery note number is empty!</source>
+        <translation>Die Lieferschein Nummer ist leer!</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -1680,7 +1685,7 @@
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="+210"/>
+        <location line="+212"/>
         <source>customer found in database!</source>
         <translation>Kundeneintrag gefunden!</translation>
     </message>
@@ -1690,7 +1695,17 @@
         <translation>Kunde existiert nicht!</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+9"/>
+        <source>this</source>
+        <translation>Dieser</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>article is not available!</source>
+        <translation>Artikel ist nicht verfügbar!</translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>open order editor</source>
         <translation>Öffne Auftragseditor</translation>
     </message>
@@ -1899,7 +1914,7 @@
         <translation>Auftrag bearbeiten</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+31"/>
         <source>Order ID</source>
         <translation>Auftrags ID</translation>
     </message>
@@ -1914,68 +1929,69 @@
         <translation>Zahlung</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+19"/>
+        <source>Customer Info</source>
+        <translation>Kundeninformation</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Delivery Service</source>
         <translation>Lieferservice</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="-16"/>
         <source>Address for Customer ID</source>
         <translation>Adresse und Kunden Nummer</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Provider Order</source>
-        <translation>Dienstleister Bestellung</translation>
-    </message>
-    <message>
+        <location line="+44"/>
         <location line="+4"/>
         <source>Provider</source>
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="-24"/>
         <source>Notification</source>
         <translation>Benachrichtigung</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+50"/>
         <source>lock</source>
         <translation>Sperren</translation>
     </message>
     <message>
+        <location line="-45"/>
+        <source>Package send id</source>
+        <translation>Paketvervollgungs Nr</translation>
+    </message>
+    <message>
         <location line="+4"/>
+        <source>Delivery note number</source>
+        <translation>Lieferschein Nummer</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Generate delivery note Number</source>
+        <translation>Generiere Lieferschein Nummer</translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <source>cancellation</source>
-        <translation>Stornierung</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Reason</source>
-        <translation>Begründung</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>cancel this order</source>
-        <translation>Auftrag schließen</translation>
-    </message>
-    <message>
-        <location line="+116"/>
+        <location line="+124"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
-        <location line="+244"/>
-        <location line="+318"/>
+        <location line="+248"/>
+        <location line="+335"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="-305"/>
+        <location line="-322"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
     </message>
@@ -2020,13 +2036,33 @@
         <translation>Möchten Sie wirklich diesen Auftrag schließen und an die Buchhaltung weiter reichen?</translation>
     </message>
     <message>
-        <location line="-106"/>
+        <location line="+225"/>
+        <source>One or more items on the list are not available!</source>
+        <translation>Ein oder mehrere Artikel auf der Liste sind nicht Verfügbar!</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Therefore, they cannot be added</source>
+        <translation>Sie können nicht eingefügt werden</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Order</source>
+        <translation>Bestellung</translation>
+    </message>
+    <message>
+        <location line="-335"/>
         <location line="+109"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-547"/>
+        <source>Service</source>
+        <translation>Sender</translation>
+    </message>
+    <message>
+        <location line="+549"/>
         <source>Finish order</source>
         <translation>Auftrag abschließen</translation>
     </message>
@@ -2036,7 +2072,7 @@
         <translation>Auftrag deaktiviert!</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+23"/>
         <source>Notice</source>
         <translation>Hinweis</translation>
     </message>
@@ -2272,8 +2308,8 @@
     </message>
     <message>
         <location line="+3"/>
-        <source>Delivery</source>
-        <translation>Lieferung</translation>
+        <source>Provider</source>
+        <translation>Dienstleister</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -2570,7 +2606,7 @@
 <context>
     <name>Printing</name>
     <message>
-        <location filename="../custom/printing/printing.cpp" line="+69"/>
+        <location filename="../custom/printing/printing.cpp" line="+70"/>
         <source>Printing</source>
         <translation>Drucken</translation>
     </message>
@@ -3495,7 +3531,7 @@
 <context>
     <name>WHSoftPurchaser</name>
     <message>
-        <location filename="../plugins/antiqua/whsoft.cpp" line="+141"/>
+        <location filename="../plugins/antiqua/whsoft.cpp" line="+153"/>
         <source>Customer</source>
         <translation>Kunde</translation>
     </message>
@@ -3521,9 +3557,17 @@
     </message>
 </context>
 <context>
+    <name>WHSoftTable</name>
+    <message>
+        <location line="-58"/>
+        <source>inspect article</source>
+        <translation>Untersuche/Prüfe Artikel</translation>
+    </message>
+</context>
+<context>
     <name>WHSoftWidget</name>
     <message>
-        <location line="+52"/>
+        <location line="+110"/>
         <source>purchaser</source>
         <translation>Einkäufer*in</translation>
     </message>

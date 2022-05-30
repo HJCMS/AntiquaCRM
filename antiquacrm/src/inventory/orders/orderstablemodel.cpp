@@ -90,7 +90,7 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
     case 7: // o_closed
       return (item.toBool()) ? tr("Yes") : tr("No");
 
-    case 8: // Lieferschein Nummer
+    case 8: // o_provider_info
       return item;
 
     case 9: // age Siehe SQL Statement!
@@ -139,8 +139,8 @@ QVariant OrdersTableModel::headerData(int section, Qt::Orientation orientation,
     case 7: // o_closed
       return setHeaderTitel(tr("Closed"));
 
-    case 8: // o_delivery
-      return setHeaderTitel(tr("Delivery"));
+    case 8: // o_provider_info
+      return setHeaderTitel(tr("Provider"));
 
     case 9: // age
       return setHeaderTitel(tr("Runtime"));

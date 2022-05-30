@@ -59,43 +59,26 @@ private:
   /**
    * @brief Lieferservice
    */
-  DeliveryService *o_delivery_service;
+  QGroupBox *m_deliveryBox;
+  DeliveryService *o_delivery_service; /**< @brief Paketdienst */
+  LineEdit *o_delivery_send_id;        /**< @brief Paket Sende Nummer */
+  LineEdit *o_delivery;                /**< @brief Lieferschein Nummer */
 
   /**
    * @brief Dienstleister
    */
+  QGroupBox *m_providerBox;
   LineEdit *o_provider_order_id;
   LineEdit *o_provider_name;
-  TextField *o_provider_order;
 
   /**
-   * @brief Benachrichtigungen
-   * cron job system
+   * @brief Aktionen
    */
-  BoolBox *o_notify;
-
-  /**
-   * @brief Sperren
-   */
-  BoolBox *o_locked;
-
-  /**
-   * @brief Abschliessen
-   */
-  BoolBox *o_closed;
-
-  /**
-   * @brief Zeitstempel
-   */
-  LineEdit *o_modified;
-
-  /**
-   * @brief Stornierung
-   */
-  QGroupBox *m_cancellation;
-  BoolBox *o_cancellation;
-  Cancellation *o_cancellation_text;
-  DateTimeEdit *o_cancellation_datetime;
+  QGroupBox *m_actionsBox;
+  BoolBox *o_notify;    /**< @brief Benachrichtigung */
+  BoolBox *o_locked;    /**< @brief Sperren */
+  BoolBox *o_closed;    /**< @brief Abschliessen */
+  LineEdit *o_modified; /**< @brief Zeitstempel */
 
   /**
    * @brief Standard ActionsBar
@@ -264,6 +247,12 @@ private Q_SLOTS:
    */
   void createCloseOrder(bool b = false);
 
+  /**
+   * @brief Wird von ToolButton aufgerufen und verwendet
+   * @ref deliveryNumber zum erstellen der LieferscheinNummer.
+   */
+  void generateDeliveryNumber();
+
 public Q_SLOTS:
   /**
    * @brief Alle Datenfelder zurück setzen
@@ -274,7 +263,6 @@ public Q_SLOTS:
    * @brief Hinweise an Benutzer
    */
   void showMessagePoUp(const QString &);
-
 
 Q_SIGNALS:
   /**
@@ -289,6 +277,8 @@ Q_SIGNALS:
 
 public:
   explicit OrderEditor(QWidget *parent = nullptr);
+
+  const QString deliveryNumber();
 
   /**
    * @brief Füge Artikel ID zur Prüfung ein!

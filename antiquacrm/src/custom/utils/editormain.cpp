@@ -6,7 +6,7 @@
 #include "messagebox.h"
 
 #ifndef EDITOR_SHOW_DEBUG
-#define EDITOR_SHOW_DEBUG false
+#define EDITOR_SHOW_DEBUG true
 #endif
 
 #include <QDebug>
@@ -86,8 +86,9 @@ void EditorMain::clearDataFields(const QRegularExpression &pattern) {
 int EditorMain::sqlErrnoMessage(const QString &code, const QString &error) {
   MessageBox *mbox = new MessageBox(this);
   mbox->setObjectName("sql_errno_message");
+  mbox->setMinimumSize(350, 100);
   if (EDITOR_SHOW_DEBUG) {
-    qDebug() << "PgSQL Errno:" << code << error << Qt::endl;
+    qDebug() << "PgSQL Error:" << code << error << Qt::endl;
   }
   return mbox->failed(code, error);
 }
@@ -95,6 +96,7 @@ int EditorMain::sqlErrnoMessage(const QString &code, const QString &error) {
 int EditorMain::sqlSuccessMessage(const QString &info, int timeout) {
   MessageBox *mbox = new MessageBox(this);
   mbox->setObjectName("sql_success_message");
+  mbox->setMinimumSize(350, 100);
   socketStatusMessage(info);
   return mbox->success(info, timeout);
 }
@@ -102,6 +104,7 @@ int EditorMain::sqlSuccessMessage(const QString &info, int timeout) {
 int EditorMain::sqlNoticeMessage(const QString &info) {
   MessageBox *mbox = new MessageBox(this);
   mbox->setObjectName("sql_notice_message");
+  mbox->setMinimumSize(350, 100);
   return mbox->notice(info);
 }
 

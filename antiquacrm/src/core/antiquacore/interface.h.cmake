@@ -22,7 +22,7 @@
 #include "providerorders.h"
 
 #ifndef ANTIQUA_INTERFACE
-# define ANTIQUA_INTERFACE "de.hjcms.@PROJECTNAME@.Antiqua"
+# define ANTIQUA_INTERFACE "de.hjcms.@PROJECTNAME@.AntiquaFactoryInterface"
 #endif
 
 /**

@@ -34,21 +34,28 @@
  * @return SQL Query
  */
 static const QString defaultOrdersQuery(int id = 0) {
-  QString age("(EXTRACT(EPOCH FROM timestamptz (CURRENT_TIMESTAMP))");
-  age.append(" - ");
-  age.append("EXTRACT(EPOCH FROM timestamptz (a.o_since))) AS age");
-
+  QString fieldSelect;
   QString fs("a.o_id,a.o_since,a.o_order_status,a.o_payment_status,");
   fs.append("CASE WHEN c.c_company=true THEN c.c_company_name ELSE ");
   fs.append("concat_ws(' ',c.c_firstname,c.c_lastname) END AS customer,");
-  fs.append("d.d_name,a.o_locked,a.o_closed,a.o_delivery, ");
-  fs.append(age);
+  fs.append("d.d_name,a.o_locked,a.o_closed");
+  fieldSelect.append(fs);
 
-  QString sql("SELECT " + fs + " ");
+  QString prInfo("CONCAT_WS(': ', o_provider_name, o_provider_order_id)");
+  prInfo.append(" AS o_provider_info");
+  fieldSelect.append(",");
+  fieldSelect.append(prInfo);
+
+  QString age("(EXTRACT(EPOCH FROM timestamptz (CURRENT_TIMESTAMP))");
+  age.append(" - ");
+  age.append("EXTRACT(EPOCH FROM timestamptz (a.o_since))) AS age");
+  fieldSelect.append(",");
+  fieldSelect.append(age);
+
+  QString sql("SELECT " + fieldSelect + " ");
   sql.append("FROM inventory_orders AS a ");
-  sql.append("LEFT JOIN customers AS c ON c.c_id=a.o_customer_id ");
-  sql.append(
-      "LEFT JOIN ref_delivery_service AS d ON d.d_id=a.o_delivery_service ");
+  sql.append("LEFT JOIN customers AS c ON c.c_id=a.o_customer_id LEFT JOIN ");
+  sql.append("ref_delivery_service AS d ON d.d_id=a.o_delivery_service ");
   if (id > 0) {
     sql.append("WHERE a.o_id=");
     sql.append(QString::number(id));
@@ -224,18 +231,16 @@ static const QString paymentRemove(const QString &pid, const QString &aid) {
  */
 static const QString inventoryArticle(int id) {
   QString aid = QString::number(id);
-  QString sql("SELECT ib_id AS aid,");
-  sql.append("ib_count AS counts,");
-  sql.append("ib_price AS price,");
-  sql.append("ib_title AS title ");
-  sql.append("FROM inventory_books ");
-  sql.append("WHERE (ib_id=" + aid + " AND ib_count>0) ");
-  sql.append("UNION SELECT ");
-  sql.append("ip_id,ip_count,ip_price,ip_title ");
-  sql.append("FROM inventory_prints ");
-  sql.append("WHERE (ip_id=" + aid + " AND ip_count>0)");
-  sql.append(";");
-  return sql;
+  QString s("SELECT DISTINCT ");
+  s.append("nullif(coalesce(b.ib_id),p.ip_id) AS aid,");
+  s.append("nullif(coalesce(b.ib_count),p.ip_count) AS counts,");
+  s.append("nullif(coalesce(b.ib_price),p.ip_price) AS price,");
+  s.append("nullif(coalesce(b.ib_title),p.ip_title) AS title");
+  s.append(" FROM inventory_books AS b");
+  s.append(" LEFT JOIN inventory_prints AS p ON p.ip_id=");
+  s.append(aid + " WHERE (b.ib_id=" + aid);
+  s.append(" AND b.ib_count>0) OR (p.ip_count>0);");
+  return s;
 }
 
 #endif // INVENTORY_ORDERSTATEMENTS_H

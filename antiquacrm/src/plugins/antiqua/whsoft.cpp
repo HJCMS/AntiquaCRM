@@ -3,9 +3,11 @@
 
 #include "whsoft.h"
 
+#include <QAction>
 #include <QDateTime>
 #include <QJsonArray>
 #include <QJsonValue>
+#include <QMenu>
 #include <QStyle>
 #include <QTabWidget>
 #include <QTableWidget>
@@ -114,6 +116,16 @@ void WHSoftJSonQuery::queryOrder(const QString &bfId) {
 
 WHSoftTable::WHSoftTable(QWidget *parent)
     : Antiqua::PurchaserOrderTable{parent} {}
+
+void WHSoftTable::contextMenuEvent(QContextMenuEvent *e) {
+  QMenu *m = new QMenu("Actions", this);
+  QAction *ac_remove = m->addAction(
+      style()->standardIcon(QStyle::SP_ComputerIcon), tr("inspect article"));
+  ac_remove->setObjectName("ac_context_search_article");
+  connect(ac_remove, SIGNAL(triggered()), this, SIGNAL(findArticleNumbers()));
+  m->exec(e->globalPos());
+  delete m;
+}
 
 WHSoftPurchaser::WHSoftPurchaser(QWidget *parent)
     : Antiqua::PurchaserWidget{parent} {
@@ -230,6 +242,9 @@ WHSoftWidget::WHSoftWidget(const QString &widgetId, QWidget *parent)
   layout->addStretch(1);
   mainWidget->setLayout(layout);
   setWidget(mainWidget);
+
+  connect(m_orderTable, SIGNAL(findArticleNumbers()), this,
+          SLOT(readCurrentArticleIds()));
 }
 
 const QVariant WHSoftWidget::tableData(int row, int column) {
@@ -325,6 +340,17 @@ void WHSoftWidget::parseAddressBody(const QString &section,
     if (!qDoc.isEmpty())
       emit checkCustomer(qDoc);
   }
+}
+
+void WHSoftWidget::readCurrentArticleIds() {
+  QList<int> ids;
+  for (int r = 0; r < m_orderTable->rowCount(); r++) {
+    QTableWidgetItem *item = m_orderTable->item(r, 1);
+    if (item != nullptr) {
+      ids.append(item->data(Qt::DisplayRole).toInt());
+    }
+  }
+  emit s_checkArticles(ids);
 }
 
 void WHSoftWidget::setContent(const QJsonDocument &doc) {

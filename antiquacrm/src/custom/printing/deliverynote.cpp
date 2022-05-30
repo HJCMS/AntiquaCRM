@@ -56,6 +56,9 @@ void DeliveryNote::readConfiguration() {
   if (font.fromString(config->value("normal_font").toString())) {
     normalFont.swap(font);
   }
+  if (font.fromString(config->value("footer_font").toString())) {
+    footerFont.swap(font);
+  }
   if (font.fromString(config->value("small_font").toString())) {
     smallFont.swap(font);
   }
@@ -131,7 +134,7 @@ void DeliveryNote::constructSubject() {
   cursor.insertText(p_customerId);
   cursor.insertText("\n");
   cursor.insertText(tr("Delivery-ID:") + " ");
-  cursor.insertText(deliveryNumber());
+  cursor.insertText(p_deliveryId);
   cursor.insertText("\n");
   body->document()->setModified(true);
 }
@@ -191,7 +194,7 @@ void DeliveryNote::constructFooter() {
   QTextTableCell ce00 = table->cellAt(0, 0);
   ce00.setFormat(cellFormat);
   cursor = ce00.firstCursorPosition();
-  cursor.setCharFormat(smallFormat());
+  cursor.setCharFormat(footerFormat());
   QString name = companyData.value("name");
   cursor.insertText(name.replace("#", " ") + "\n");
   cursor.insertText(companyData.value("street") + " ");
@@ -206,7 +209,7 @@ void DeliveryNote::constructFooter() {
   QTextTableCell ce01 = table->cellAt(0, 1);
   ce01.setFormat(cellFormat);
   cursor = ce01.firstCursorPosition();
-  cursor.setCharFormat(smallFormat());
+  cursor.setCharFormat(footerFormat());
   cursor.insertText(companyData.value("bank") + "\n");
   cursor.insertText("SWIFT-BIC: ");
   cursor.insertText(companyData.value("bicswift") + "\n");
@@ -309,7 +312,7 @@ void DeliveryNote::printDocument(QPrinter *printer) {
   htmlFooter->setPageSize(QSizeF(documentWidth, htmlFooter->size().height()));
   htmlFooter->setModified(true);
   QRectF footerRect = QRectF(QPoint(0, 0), htmlFooter->pageSize());
-  int yPosFooter = (pageRect.height() - (footerRect.height()*2));
+  int yPosFooter = (pageRect.height() - (footerRect.height() * 2));
 
   QImage image = getWatermark();
   QPainter painter;
@@ -335,7 +338,7 @@ void DeliveryNote::openPrintDialog() {
   QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
   QString dest = outputDirectory();
   dest.append(QDir::separator());
-  dest.append(deliveryNumber());
+  dest.append(p_deliveryId);
   dest.append(".pdf");
   printer->setOutputFileName(dest);
   printer->setPageLayout(pageLayout());
@@ -363,15 +366,6 @@ int DeliveryNote::warningMessageBox(const QString &txt) {
   return QMessageBox::warning(this, tr("Delivery note"), txt, QMessageBox::Ok);
 }
 
-const QString DeliveryNote::deliveryNumber() {
-  QString f;
-  QDate date = QDate::currentDate();
-  f.append(QString::number(date.year()));
-  f.append(QString::number(date.dayOfYear()));
-  f.append(p_orderId);
-  return f;
-}
-
 void DeliveryNote::setCustomerAddress(const QString &address) {
   if (address.isEmpty()) {
     qWarning("empty customer address");
@@ -380,7 +374,8 @@ void DeliveryNote::setCustomerAddress(const QString &address) {
   p_customerAddress = address;
 }
 
-void DeliveryNote::setDelivery(int &orderId, int &customerId) {
+void DeliveryNote::setDelivery(int &orderId, int &customerId,
+                               const QString &deliverNoteId) {
   if (orderId < 1) {
     warningMessageBox(tr("There is no Order-Id to generate this delivery!"));
     return;
@@ -392,6 +387,12 @@ void DeliveryNote::setDelivery(int &orderId, int &customerId) {
     return;
   }
   p_customerId = QString::number(customerId);
+
+  if (deliverNoteId.isEmpty()) {
+    warningMessageBox(tr("delivery note number is empty!"));
+    return;
+  }
+  p_deliveryId = deliverNoteId;
 }
 
 int DeliveryNote::exec(const QList<Delivery> &list) {

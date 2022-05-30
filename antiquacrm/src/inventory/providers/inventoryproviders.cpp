@@ -3,15 +3,16 @@
 
 #include "inventoryproviders.h"
 #include "myicontheme.h"
+#include "providerspageview.h"
 #include "providersstatements.h"
 #include "providerstoolbar.h"
-#include "providerspageview.h"
 #include "providerstreeview.h"
 
 #include <QDebug>
+#include <QMessageBox>
+#include <QSplitter>
 #include <QStringList>
 #include <QVBoxLayout>
-#include <QSplitter>
 
 // QJson
 #include <QJsonArray>
@@ -128,6 +129,8 @@ void InventoryProviders::queryOrder(const QString &provider,
               SLOT(createQueryCustomer(const QJsonDocument &)));
       connect(w, SIGNAL(createCustomer(const QJsonDocument &)), this,
               SLOT(createNewCustomer(const QJsonDocument &)));
+      connect(w, SIGNAL(s_checkArticles(QList<int> &)), this,
+              SLOT(checkArticleExists(QList<int> &)));
       m_pageView->addPage(w, orderId);
       /**
        * @warning tabExists() @b MUSS UNBEDINGT vor createOrderRequest()
@@ -242,6 +245,20 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
     }
     m_toolBar->enableOrderButton(false);
     m_toolBar->statusMessage(tr("customer not exits!"));
+  }
+}
+
+void InventoryProviders::checkArticleExists(QList<int> &list) {
+  for (int i = 0; i < list.size(); i++) {
+    QString aid = QString::number(list[i]);
+    QSqlQuery q = m_sql->query(queryArticleExists(aid));
+    if (q.size() < 1) {
+      QString info(tr("this"));
+      info.append(" " + aid + " ");
+      info.append(tr("article is not available!"));
+      QMessageBox::warning(this, tr("Article"), info);
+      continue;
+    }
   }
 }
 

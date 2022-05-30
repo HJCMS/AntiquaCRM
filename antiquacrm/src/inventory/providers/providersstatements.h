@@ -34,15 +34,16 @@
  * @return SqlQuery
  */
 static const QString queryArticleExists(const QString &aid) {
-  QString sql("SELECT ib_id AS a_article_id");
-  sql.append(" FROM inventory_books ");
-  sql.append("WHERE (ib_id=" + aid + " AND ib_count>0) ");
-  sql.append("UNION SELECT ");
-  sql.append("ip_id AS a_article_id ");
-  sql.append("FROM inventory_prints ");
-  sql.append("WHERE (ip_id=" + aid + " AND ip_count>0)");
-  sql.append(";");
-  return sql;
+  QString s("SELECT DISTINCT ");
+  s.append("nullif(coalesce(b.ib_id),p.ip_id) AS aid,");
+  s.append("nullif(coalesce(b.ib_count),p.ip_count) AS counts,");
+  s.append("nullif(coalesce(b.ib_price),p.ip_price) AS price,");
+  s.append("nullif(coalesce(b.ib_title),p.ip_title) AS title");
+  s.append(" FROM inventory_books AS b");
+  s.append(" LEFT JOIN inventory_prints AS p ON p.ip_id=");
+  s.append(aid + " WHERE (b.ib_id=" + aid);
+  s.append(" AND b.ib_count>0) OR (p.ip_count>0);");
+  return s;
 }
 
 /**

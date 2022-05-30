@@ -17,8 +17,6 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   setObjectName("order_editor");
   setWindowTitle(tr("Edit Order"));
 
-  ApplSettings config;
-
   /**
    * Tabellenfelder welche NICHT bei INSERT/UPDATE
    * benötigt werden aber im Overview enthalten sind.
@@ -62,82 +60,93 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   o_payment_status->setInfo(tr("Payment"));
   row0->addWidget(o_payment_status);
 
-  o_delivery_service = new DeliveryService(mainWidget);
-  o_delivery_service->setObjectName("o_delivery_service");
-  o_delivery_service->setInfo(tr("Delivery Service"));
-  row0->addWidget(o_delivery_service);
-
   row0->addStretch(1);
   mainWidgetLayout->addLayout(row0);
 
+  // Zweite Reihe
   QGridLayout *row1 = new QGridLayout();
   o_customer_id = new SerialID(mainWidget);
   o_customer_id->setObjectName("o_customer_id");
   o_customer_id->setInfo(tr("Address for Customer ID"));
-  row1->addWidget(o_customer_id, 0, 0, 1, 1, Qt::AlignLeft);
-  // Provider Settings
-  QHBoxLayout *prLayout = new QHBoxLayout();
-  o_provider_order_id = new LineEdit(mainWidget);
-  o_provider_order_id->setObjectName("o_provider_order_id");
-  o_provider_order_id->setInfo(tr("Provider Order"));
-  prLayout->addWidget(o_provider_order_id);
-  o_provider_name = new LineEdit(mainWidget);
-  o_provider_name->setObjectName("o_provider_name");
-  o_provider_name->setInfo(tr("Provider"));
-  prLayout->addWidget(o_provider_name);
-  row1->addLayout(prLayout, 0, 1, 1, 1);
+  row1->addWidget(o_customer_id, 0, 0, 1, 2, Qt::AlignLeft);
+
+  /*
+   * GridLayout links
+   * Dient nur zur Info die Daten werden mit Tabelle "customers" Verknüpft!
+   */
   m_customer_address = new TextField(mainWidget);
   m_customer_address->setObjectName("m_customer_address");
+  m_customer_address->setToolTip(tr("Customer Info"));
   row1->addWidget(m_customer_address, 1, 0, 1, 1);
-  o_provider_order = new TextField(mainWidget);
-  o_provider_order->setObjectName("o_provider_order");
-  row1->addWidget(o_provider_order, 1, 1, 1, 1);
-  mainWidgetLayout->addLayout(row1);
 
-  QHBoxLayout *row2 = new QHBoxLayout();
-  row2->addStretch(1);
+  // GridLayout rechts
+  QVBoxLayout *rFrameLayout = new QVBoxLayout();
+  // Lieferdienst
+  m_deliveryBox = new QGroupBox(this);
+  m_deliveryBox->setTitle(tr("Delivery Service"));
+  QGridLayout *dsLayout = new QGridLayout(m_deliveryBox);
+  o_delivery_service = new DeliveryService(m_deliveryBox);
+  o_delivery_service->setObjectName("o_delivery_service");
+  o_delivery_service->setInfo(tr("Service"));
+  dsLayout->addWidget(o_delivery_service, 0, 0, 1, 1, Qt::AlignLeft);
   o_notify = new BoolBox(this);
   o_notify->setObjectName("o_notify");
   o_notify->setInfo(tr("Notification"));
-  row2->addWidget(o_notify);
-  o_locked = new BoolBox(this);
-  o_locked->setObjectName("o_locked");
-  o_locked->setInfo(tr("lock"));
-  row2->addWidget(o_locked);
-  o_closed = new BoolBox(this);
-  o_closed->setObjectName("o_closed");
-  o_closed->setInfo(tr("close"));
-  row2->addWidget(o_closed);
-  mainWidgetLayout->addLayout(row2);
+  dsLayout->addWidget(o_notify, 0, 1, 1, 2, Qt::AlignRight);
 
+  o_delivery_send_id = new LineEdit(m_deliveryBox);
+  o_delivery_send_id->setObjectName("o_delivery_send_id");
+  o_delivery_send_id->setInfo(tr("Package send id"));
+  dsLayout->addWidget(o_delivery_send_id, 1, 0, 1, 2);
+  o_delivery = new LineEdit(m_deliveryBox);
+  o_delivery->setObjectName("o_delivery");
+  o_delivery->setInfo(tr("Delivery note number"));
+  dsLayout->addWidget(o_delivery, 2, 1, 1, 1);
+  QToolButton *btn_gen_deliver = new QToolButton(m_deliveryBox);
+  btn_gen_deliver->setObjectName("btn_gen_delivernote_id");
+  btn_gen_deliver->setToolTip(tr("Generate delivery note Number"));
+  btn_gen_deliver->setIcon(myIcon("folder_public"));
+  dsLayout->addWidget(btn_gen_deliver, 2, 2, 1, 1);
+  rFrameLayout->addWidget(m_deliveryBox);
+
+  // Dienstleister
+  m_providerBox = new QGroupBox(this);
+  m_providerBox->setTitle(tr("Provider"));
+  QVBoxLayout *providerLayout = new QVBoxLayout(m_providerBox);
+  o_provider_name = new LineEdit(mainWidget);
+  o_provider_name->setObjectName("o_provider_name");
+  o_provider_name->setInfo(tr("Provider"));
+  providerLayout->addWidget(o_provider_name);
+  o_provider_order_id = new LineEdit(mainWidget);
+  o_provider_order_id->setObjectName("o_provider_order_id");
+  o_provider_order_id->setInfo("Id");
+  providerLayout->addWidget(o_provider_order_id);
+  m_providerBox->setLayout(providerLayout);
+  rFrameLayout->addWidget(m_providerBox);
+
+  rFrameLayout->addStretch(1);
+  row1->addLayout(rFrameLayout, 1, 1, 1, 1);
+  mainWidgetLayout->addLayout(row1);
+
+  // Artikel Einkaufsliste
   m_paymentList = new OrdersItemList(mainWidget);
   m_paymentList->setObjectName("m_paymentList");
   mainWidgetLayout->addWidget(m_paymentList);
 
-  // Stornierung
-  m_cancellation = new QGroupBox(mainWidget);
-  m_cancellation->setObjectName("cancellation");
-  m_cancellation->setCheckable(true);
-  m_cancellation->setChecked(false);
-  m_cancellation->setTitle(tr("cancellation"));
-  QGridLayout *cancleLayout = new QGridLayout(m_cancellation);
+  m_actionsBox = new QGroupBox(this);
+  QHBoxLayout *actionsLayout = new QHBoxLayout(m_actionsBox);
+  o_closed = new BoolBox(this);
+  o_closed->setObjectName("o_closed");
+  o_closed->setInfo(tr("close"));
+  actionsLayout->addWidget(o_closed);
+  o_locked = new BoolBox(this);
+  o_locked->setObjectName("o_locked");
+  o_locked->setInfo(tr("lock"));
+  actionsLayout->addWidget(o_locked);
+  actionsLayout->addStretch(1);
+  m_actionsBox->setLayout(actionsLayout);
 
-  o_cancellation_text = new Cancellation(m_cancellation);
-  o_cancellation_text->setObjectName("o_cancellation_text");
-  o_cancellation_text->setInfo(tr("Reason"));
-  cancleLayout->addWidget(o_cancellation_text, 0, 0, 1, 2);
-
-  o_cancellation_datetime = new DateTimeEdit(m_cancellation);
-  o_cancellation_datetime->setObjectName("o_cancellation_datetime");
-  cancleLayout->addWidget(o_cancellation_datetime, 1, 0, 1, 1);
-
-  o_cancellation = new BoolBox(m_cancellation);
-  o_cancellation->setObjectName("o_cancellation");
-  o_cancellation->setInfo(tr("cancel this order"));
-  cancleLayout->addWidget(o_cancellation, 1, 1, 1, 1);
-
-  m_cancellation->setLayout(cancleLayout);
-  mainWidgetLayout->addWidget(m_cancellation);
+  mainWidgetLayout->addWidget(m_actionsBox, Qt::AlignLeft);
 
   mainWidgetLayout->addStretch(1);
   mainWidget->setLayout(mainWidgetLayout);
@@ -161,6 +170,8 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   connect(m_paymentList, SIGNAL(hasModified(bool)), this,
           SLOT(setWindowModified(bool)));
 
+  connect(btn_gen_deliver, SIGNAL(clicked()), this,
+          SLOT(generateDeliveryNumber()));
   connect(m_actionBar, SIGNAL(s_cancelClicked()), this,
           SLOT(finalLeaveEditor()));
   connect(m_actionBar, SIGNAL(s_restoreClicked()), this,
@@ -186,10 +197,11 @@ void OrderEditor::setInputList() {
   if (inputList.isEmpty()) {
     qWarning("Customers InputList is Empty!");
   }
-  // Werden manuell gesetzt!
+  /**
+   * Werden manuell gesetzt oder sind hier nicht notwendig!
+   */
   inputList.removeOne("o_since");
   inputList.removeOne("o_modified");
-  // inputList.removeOne("o_delivery");
 }
 
 void OrderEditor::importSqlResult() {
@@ -266,7 +278,7 @@ bool OrderEditor::createSqlArticleOrder() {
   }
 
   /**
-   * WARNING Die Id's "oid" und "cid" sind hier zwingend Notwendig!
+   * @warning Die Id's "oid" und "cid" sind hier zwingend Notwendig!
    */
   int oid = o_id->value().toInt();
   if (oid < 1) {
@@ -427,7 +439,11 @@ void OrderEditor::createSqlInsert() {
 
   bool result = sendSqlQuery(sql);
   if (result && !o_id->value().toString().isEmpty()) {
-    /**
+    /*
+     *  Erstelle Lieferschein Nummer
+     */
+    generateDeliveryNumber();
+    /*
      * Wenn die Artikel-Bestellisten Tabelle nicht leer ist.
      * Danach createSqlArticleOrder() aufrufen!
      */
@@ -570,7 +586,7 @@ void OrderEditor::openPrinterDialog() {
 
   DeliveryNote *dialog = new DeliveryNote(this);
   dialog->setObjectName("delivery_note_dialog");
-  dialog->setDelivery(oid, cid);
+  dialog->setDelivery(oid, cid, deliveryNumber());
   // Address
   QString c_add;
   QString sql = queryCustomerShippingAddress(cid);
@@ -602,7 +618,7 @@ void OrderEditor::openPrinterDialog() {
   }
   // Start Dialog
   if (dialog->exec(deliveries)) {
-    m_sql->query(setOrderDeliveryId(oid, dialog->deliveryNumber()));
+    m_sql->query(setOrderDeliveryId(oid, deliveryNumber()));
     if (!m_sql->lastError().isEmpty()) {
       qDebug() << Q_FUNC_INFO << m_sql->lastError();
     }
@@ -628,6 +644,13 @@ void OrderEditor::createCloseOrder(bool b) {
     }
   } else {
     o_closed->setChecked(false);
+  }
+}
+
+void OrderEditor::generateDeliveryNumber() {
+  QString did = o_delivery->value().toString();
+  if (did.isEmpty()) {
+    o_delivery->setValue(deliveryNumber());
   }
 }
 
@@ -711,6 +734,16 @@ bool OrderEditor::getCustomerAddress(int cid) {
     qWarning("SQL ERROR: %s", qPrintable(m_sql->lastError()));
   }
   return true;
+}
+
+const QString OrderEditor::deliveryNumber() {
+  int order_id = o_id->value().toInt();
+  QString f;
+  QDate date = QDate::currentDate();
+  f.append(QString::number(date.year()));
+  f.append(QString::number(date.dayOfYear()));
+  f.append(QString::number(order_id));
+  return f;
 }
 
 void OrderEditor::addArticleId(int articleId) {
@@ -820,7 +853,18 @@ void OrderEditor::openCreateOrder(const ProviderOrder &order) {
             list.append(d);
           }
         } else {
-          sqlErrnoMessage(m_sql->fetchErrors(), sql);
+          QString sqlError = m_sql->lastError();
+          if (sqlError.isEmpty()) {
+            QString info("<p>");
+            info.append(tr("One or more items on the list are not available!"));
+            info.append("</p><p>");
+            info.append(tr("Therefore, they cannot be added"));
+            info.append("</p>");
+            QMessageBox::warning(this, tr("Order"), info, QMessageBox::Ok);
+          } else {
+            sqlErrnoMessage(sqlError, sql);
+          }
+          m_paymentList->setEnabled(false);
           return;
         }
       }

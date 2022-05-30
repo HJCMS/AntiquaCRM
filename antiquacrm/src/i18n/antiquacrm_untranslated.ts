@@ -1172,17 +1172,17 @@
     <name>DeliveryNote</name>
     <message>
         <location filename="../custom/printing/deliverynote.cpp" line="+30"/>
-        <location line="+333"/>
+        <location line="+336"/>
         <source>Delivery note</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-320"/>
+        <location line="-323"/>
         <source>&lt;p&gt;Your Company configuration is incomplite!&lt;/p&gt;Edit Company settings first!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+77"/>
         <source>Delivey note</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1237,13 +1237,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+170"/>
+        <location line="+162"/>
         <source>There is no Order-Id to generate this delivery!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
         <source>There is no Customer Id to generate this delivery!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>delivery note number is empty!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1680,7 +1685,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+210"/>
+        <location line="+212"/>
         <source>customer found in database!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1690,7 +1695,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+9"/>
+        <source>this</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>article is not available!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>open order editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1899,7 +1914,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+31"/>
         <source>Order ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1914,68 +1929,69 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+19"/>
+        <source>Customer Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Delivery Service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="-16"/>
         <source>Address for Customer ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Provider Order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
+        <location line="+44"/>
         <location line="+4"/>
         <source>Provider</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="-24"/>
         <source>Notification</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+50"/>
         <source>lock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="-45"/>
+        <source>Package send id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+4"/>
+        <source>Delivery note number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Generate delivery note Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
-        <source>cancellation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Reason</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>cancel this order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+116"/>
+        <location line="+124"/>
         <source>Order saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+244"/>
-        <location line="+318"/>
+        <location line="+248"/>
+        <location line="+335"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-305"/>
+        <location line="-322"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2020,13 +2036,33 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-106"/>
+        <location line="+225"/>
+        <source>One or more items on the list are not available!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Therefore, they cannot be added</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-335"/>
         <location line="+109"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-547"/>
+        <source>Service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+549"/>
         <source>Finish order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2036,7 +2072,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+23"/>
         <source>Notice</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2272,7 +2308,7 @@
     </message>
     <message>
         <location line="+3"/>
-        <source>Delivery</source>
+        <source>Provider</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2570,7 +2606,7 @@
 <context>
     <name>Printing</name>
     <message>
-        <location filename="../custom/printing/printing.cpp" line="+69"/>
+        <location filename="../custom/printing/printing.cpp" line="+70"/>
         <source>Printing</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3495,7 +3531,7 @@
 <context>
     <name>WHSoftPurchaser</name>
     <message>
-        <location filename="../plugins/antiqua/whsoft.cpp" line="+141"/>
+        <location filename="../plugins/antiqua/whsoft.cpp" line="+153"/>
         <source>Customer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3521,9 +3557,17 @@
     </message>
 </context>
 <context>
+    <name>WHSoftTable</name>
+    <message>
+        <location line="-58"/>
+        <source>inspect article</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>WHSoftWidget</name>
     <message>
-        <location line="+52"/>
+        <location line="+110"/>
         <source>purchaser</source>
         <translation type="unfinished"></translation>
     </message>

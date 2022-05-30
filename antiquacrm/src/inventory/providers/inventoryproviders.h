@@ -20,7 +20,7 @@ class ProvidersPageView;
 /**
  * @group Providers
  * @class InventoryProviders
- * Primäre Klasse für das Diesntleister Auftrags System
+ * Primäre Klasse für das Dienstleister Auftrags System
  *
  */
 class InventoryProviders final : public Inventory {
@@ -77,7 +77,7 @@ private:
 
   /**
    * @brief Einfache Fensterabfrage, bei vorhanden in den Vordergrund schieben.
-   * Such nach vorhandenen Tab mit dem Objektnamen Wenn eines gefunden wird dann
+   * Suche nach vorhandenen Tab mit dem Objektnamen Wenn eines gefunden wird dann
    * nach vorne holen und "true" zurück geben.
    * @note Die Identifizierung der Objektnamen erfolgt
    *  durch die Bestellnummer des Dienstleisters!
@@ -91,7 +91,7 @@ private Q_SLOTS:
   void searchConvert(const QString &){/* Unused */};
 
   /**
-   * @brief Suche alle offenen Tabs und sendet ein Update and TreeWidget
+   * @brief Suche alle offenen Tabs und sendet ein Update an TreeWidget
    * Wird von Signal @ref ProvidersToolBar::s_refresh aufgerufen.
    * Durchläuft alle Einträge von @ref p_iFaces und stellt eine Netzwerk
    * abfrage @ref Antiqua::Interface::queryMenueEntries
@@ -163,12 +163,18 @@ private Q_SLOTS:
   void createQueryCustomer(const QJsonDocument &doc);
 
   /**
+   * @brief Suche Artikel Nummer in Tabelle
+   * List alle Artikel Nummern aus Tabelle aus und sendet eine SQL:Suchanfrage
+   */
+  void checkArticleExists(QList<int> &);
+
+  /**
    * @brief Knopf Auftrag erstellen verarbeiten.
    * Wird von Signal @ref ProvidersToolBar::s_createOrder aufgerufen und sucht
    * zuerst nach @ref customerId, prüft ob diese Gesetzt ist. Danach wird die Id
    * mit @ref ProvidersPageView::currentPage() verglichen. Wenn ok, erstelle mit
-   * @ref Antiqua::InterfaceWidget::getProviderOrder den benötigten Datensatz und
-   * sende das Signal @ref createOrder an das Eltern Fenster.
+   * @ref Antiqua::InterfaceWidget::getProviderOrder den benötigten Datensatz
+   * und sende das Signal @ref createOrder an das Eltern Fenster.
    */
   void createEditOrders();
 
@@ -213,8 +219,8 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   /**
-   * Wenn das Tab in den Vordergrund geht, eine Abfrage für die aktuelle
-   * Listansicht auf dass StackedWidget, welches zu sehen ist, machen.
+   * Wenn das Tab Initialisiert wird, eine Abfrage für die aktuelle Listansicht
+   * ausführen.
    * @note Hier wird @ref firstStart gesetzt und @ref loadInterfaces aufgerufen!
    */
   void onEnterChanged();

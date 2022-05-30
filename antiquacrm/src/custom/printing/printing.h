@@ -45,6 +45,7 @@ protected:
    */
   QFont headerFont;
   QFont normalFont;
+  QFont footerFont;
   QFont smallFont;
 
   /**
@@ -113,6 +114,11 @@ protected:
 
   /**
    * @brief Textformat für die Fußnote
+   */
+  const QTextCharFormat footerFormat();
+
+  /**
+   * @brief Textformat für die Kleine Schrift
    */
   const QTextCharFormat smallFormat();
 

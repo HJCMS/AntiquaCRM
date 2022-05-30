@@ -14,7 +14,8 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
   setMinimumSize(640, 580);
 
   headerFont = QFont("URW Chancery L [urw]", 26);
-  normalFont = QFont("Tahoma", 10);
+  normalFont = QFont("Tahoma", 11);
+  footerFont = QFont("Tahoma", 10);
   smallFont = QFont("Tahoma", 8);
   // 210 x 297 mm, 8.26 x 11.69 inches
   page_margins = QMarginsF(5, 1, 1, 1);
@@ -85,6 +86,12 @@ const QTextCharFormat Printing::headerFormat() {
 const QTextCharFormat Printing::normalFormat() {
   QTextCharFormat f;
   f.setFont(normalFont);
+  return f;
+}
+
+const QTextCharFormat Printing::footerFormat() {
+  QTextCharFormat f;
+  f.setFont(footerFont);
   return f;
 }
 

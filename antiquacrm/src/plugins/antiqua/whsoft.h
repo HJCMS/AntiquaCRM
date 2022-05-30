@@ -5,6 +5,7 @@
 #ifndef ANTIQUA_WHSOFT_PLUGIN_H
 #define ANTIQUA_WHSOFT_PLUGIN_H
 
+#include <QContextMenuEvent>
 #include <QLabel>
 #include <QObject>
 #include <QTableWidget>
@@ -50,6 +51,12 @@ public:
 
 class ANTIQUACORE_EXPORT WHSoftTable : public Antiqua::PurchaserOrderTable {
   Q_OBJECT
+
+protected:
+  void contextMenuEvent(QContextMenuEvent *);
+
+Q_SIGNALS:
+  void findArticleNumbers();
 
 public:
   explicit WHSoftTable(QWidget *parent = nullptr);
@@ -101,6 +108,9 @@ private:
    */
   void parseAddressBody(const QString &section, const QJsonObject &object);
 
+private Q_SLOTS:
+  void readCurrentArticleIds();
+
 public Q_SLOTS:
   /**
    * @brief createCustomerDocument
@@ -113,6 +123,9 @@ public Q_SLOTS:
    * @brief Menü Einträge suchen
    */
   void createOrderRequest(const QString &bfId);
+
+Q_SIGNALS:
+  void s_checkArticles(QList<int> &);
 
 public:
   WHSoftWidget(const QString &widgetId, QWidget *parent = nullptr);
@@ -138,7 +151,8 @@ public:
 
 class ANTIQUACORE_EXPORT WHSoft : public Antiqua::Interface {
   Q_OBJECT
-  Q_PLUGIN_METADATA(IID "de.hjcms.antiquacrm.Antiqua.WHSoft" FILE "whsoft.json")
+  Q_PLUGIN_METADATA(IID "de.hjcms.antiquacrm.AntiquaFactoryInterface" FILE
+                        "whsoft.json")
   Q_INTERFACES(Antiqua::Interface)
 
 private:
