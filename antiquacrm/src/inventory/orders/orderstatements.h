@@ -196,6 +196,23 @@ static const QString queryDeliveryNotes(int oid, int cid) {
   return s;
 }
 
+static const QString queryBillingInfo(int oid, int cid) {
+  QString s("SELECT a.a_article_id AS aid, a.a_count AS quant,");
+  s.append("a.a_sell_price AS sellPrice,");
+  s.append(" (CASE WHEN b.ib_title IS NOT NULL THEN");
+  s.append(" CONCAT_WS(' - ',b.ib_title,b.ib_author,b.ib_publisher,b.ib_year)");
+  s.append(" ELSE CONCAT_WS(' -  ',p.ip_title,p.ip_author) END) AS title");
+  s.append(" FROM article_orders AS a");
+  s.append(" LEFT JOIN inventory_books AS b ON b.ib_id=a.a_article_id");
+  s.append(" LEFT JOIN inventory_prints AS p ON p.ip_id=a.a_article_id");
+  s.append(" WHERE a.a_order_id=");
+  s.append(QString::number(oid));
+  s.append(" AND a.a_customer_id=");
+  s.append(QString::number(cid));
+  s.append(";");
+  return s;
+}
+
 /**
  * @brief Datensatz aus "article_orders" löschen.
  * Eintrag mit "a_payment_id" und "a_article_id" löschen.

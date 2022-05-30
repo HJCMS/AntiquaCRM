@@ -1,7 +1,8 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "deliverynote.h"
+#include "invoice.h"
+#include "applsettings.h"
 #include "myicontheme.h"
 #include "texteditor.h"
 
@@ -16,16 +17,15 @@
 #define DEBUG_PRINTVIEW false
 #endif
 
-DeliveryNote::DeliveryNote(QWidget *parent) : Printing{parent} {
-  setObjectName("printing_delivery_note");
-  setWindowTitle(tr("Delivery note"));
+Invoice::Invoice(QWidget *parent) : Printing{parent} {
+  setObjectName("printing_invoice");
 
   printButton->setIcon(myIcon("printer"));
   connect(printButton, SIGNAL(clicked()), this, SLOT(openPrintDialog()));
   readConfiguration();
 }
 
-void DeliveryNote::constructSubject() {
+void Invoice::constructSubject() {
   QTextCursor cursor = body->textCursor();
   QTextTableFormat format = tableFormat();
   format.setBorderStyle(QTextFrameFormat::BorderStyle_None);
@@ -48,11 +48,11 @@ void DeliveryNote::constructSubject() {
   addr.append(" - ");
   addr.append(companyData.value("location"));
   cursor.insertText(addr);
-  // Delivey note
+  // Invoice
   QTextTableCell tc01 = table->cellAt(0, 1);
   tc01.setFormat(cellFormat);
   cursor = tc01.firstCursorPosition();
-  cursor.insertText(tr("Delivey note"));
+  cursor.insertText(tr("Invoice"));
   // Customer Address
   QTextTableCell tc10 = table->cellAt(1, 0);
   tc10.setFormat(normalFormat());
@@ -62,6 +62,9 @@ void DeliveryNote::constructSubject() {
   QTextTableCell tc11 = table->cellAt(1, 1);
   tc11.setFormat(normalFormat());
   cursor = tc11.firstCursorPosition();
+  cursor.insertText(tr("Invoice-ID:") + " ");
+  cursor.insertText(p_invoiceId);
+  cursor.insertText("\n");
   cursor.insertText(tr("Order-ID:") + " ");
   cursor.insertText(p_orderId);
   cursor.insertText("\n");
@@ -74,15 +77,15 @@ void DeliveryNote::constructSubject() {
   body->document()->setModified(true);
 }
 
-void DeliveryNote::constructBody() {
+void Invoice::constructBody() {
   constructSubject();
 
   QTextCursor cursor = body->textCursor();
   QTextTableFormat format = tableFormat();
   format.setBorderStyle(QTextFrameFormat::BorderStyle_None);
   format.setTopMargin(30);
-  m_articleTable = cursor.insertTable(1, 3, format);
-  m_articleTable->setObjectName("article_table");
+  m_billingTable = cursor.insertTable(1, 4, format);
+  m_billingTable->setObjectName("billings_table");
 
   QTextTableCellFormat cellFormat;
   cellFormat.setTopBorder(1);
@@ -92,52 +95,93 @@ void DeliveryNote::constructBody() {
   cellFormat.setBottomBorderBrush(Qt::SolidPattern);
   cellFormat.setBottomBorderStyle(QTextFrameFormat::BorderStyle_Solid);
 
-  QTextTableCell ce00 = m_articleTable->cellAt(0, 0);
+  QTextTableCell ce00 = m_billingTable->cellAt(0, 0);
   cursor = ce00.firstCursorPosition();
   ce00.setFormat(cellFormat);
   cursor.setCharFormat(normalFormat());
   cursor.insertText(tr("Article-ID"));
 
-  QTextTableCell ce01 = m_articleTable->cellAt(0, 1);
+  QTextTableCell ce01 = m_billingTable->cellAt(0, 1);
   ce01.setFormat(cellFormat);
   cursor = ce01.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.insertText(tr("Designation"));
 
-  QTextTableCell ce02 = m_articleTable->cellAt(0, 2);
+  QTextTableCell ce02 = m_billingTable->cellAt(0, 2);
   ce02.setFormat(cellFormat);
   cursor = ce02.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.insertText(tr("Quantity"));
+
+  QTextTableCell ce03 = m_billingTable->cellAt(0, 3);
+  ce03.setFormat(cellFormat);
+  cursor = ce03.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.insertText(tr("Price"));
+
   body->document()->setModified(true);
 }
 
-void DeliveryNote::insertArticle(const QString &articleid,
-                                 const QString &designation,
-                                 const QString &quantity) {
-  int row = m_articleTable->rows();
-  m_articleTable->insertRows(row, 1);
+void Invoice::insertBilling(const QString &articleid,
+                            const QString &designation, int quantity,
+                            double sellPrice) {
+  int row = m_billingTable->rows();
+  m_billingTable->insertRows(row, 1);
 
   QTextCursor cursor = body->textCursor();
-  QTextTableCell ce00 = m_articleTable->cellAt(row, 0);
+  QTextTableCell ce00 = m_billingTable->cellAt(row, 0);
   cursor = ce00.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.insertText(articleid);
 
-  QTextTableCell ce01 = m_articleTable->cellAt(row, 1);
+  QTextTableCell ce01 = m_billingTable->cellAt(row, 1);
   cursor = ce01.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.insertText(designation);
 
-  QTextTableCell ce02 = m_articleTable->cellAt(row, 2);
+  QTextTableCell ce02 = m_billingTable->cellAt(row, 2);
   cursor = ce02.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
-  cursor.insertText(quantity);
+  cursor.insertText(QString::number(quantity));
+
+  QTextTableCell ce03 = m_billingTable->cellAt(row, 3);
+  cursor = ce03.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  double price = sellPrice;
+  if (quantity > 1) {
+    price = (quantity * sellPrice);
+  }
+  p_fullPrice += price;
+  QString str = QString::number(price, 'f', 2);
+  cursor.insertText(str + " " + p_currency);
 
   body->document()->setModified(true);
 }
 
-void DeliveryNote::printDocument(QPrinter *printer) {
+void Invoice::finalizeBillings() {
+  int row = m_billingTable->rows();
+  m_billingTable->insertRows(row, 1);
+
+  QTextCursor cursor = body->textCursor();
+  QTextTableCell ce02 = m_billingTable->cellAt(row, 2);
+  cursor = ce02.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.insertText(tr("Summary:"));
+
+  QTextTableCellFormat cellFormat;
+  cellFormat.setTopBorder(1);
+  cellFormat.setTopBorderBrush(Qt::SolidPattern);
+  cellFormat.setTopBorderStyle(QTextFrameFormat::BorderStyle_Solid);
+
+  QTextTableCell ce03 = m_billingTable->cellAt(row, 3);
+  cursor = ce03.firstCursorPosition();
+  ce03.setFormat(cellFormat);
+  cursor.setCharFormat(normalFormat());
+  QString str = QString::number(p_fullPrice, 'f', 2);
+  cursor.insertText(str + " " + p_currency);
+}
+
+void Invoice::printDocument(QPrinter *printer) {
   QRectF pageRect = printer->pageRect(QPrinter::Point);
   int documentWidth = pageRect.size().width();
 
@@ -179,7 +223,7 @@ void DeliveryNote::printDocument(QPrinter *printer) {
   painter.end();
 }
 
-void DeliveryNote::openPrintDialog() {
+void Invoice::openPrintDialog() {
   QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
   QString dest = outputDirectory();
   dest.append(QDir::separator());
@@ -207,19 +251,27 @@ void DeliveryNote::openPrintDialog() {
   }
 }
 
-void DeliveryNote::setDelivery(int orderId, int customerId,
-                               const QString &deliverNoteId) {
+void Invoice::setInvoice(int orderId,    /* Bestellnummer */
+                         int customerId, /* Kundennummer */
+                         int invoiceId,  /* Rechnungsnummer */
+                         const QString &deliverNoteId) {
   if (orderId < 1) {
-    warningMessageBox(tr("There is no Order-Id to generate this delivery!"));
+    warningMessageBox(tr("There is no Order-Id to generate this invoice!"));
     return;
   }
   p_orderId = QString::number(orderId);
 
   if (customerId < 1) {
-    warningMessageBox(tr("There is no Customer Id to generate this delivery!"));
+    warningMessageBox(tr("There is no Customer Id to generate this invoice!"));
     return;
   }
   p_customerId = QString::number(customerId);
+
+  if (invoiceId < 1) {
+    warningMessageBox(tr("There is no Invoice Id to generate this invoice!"));
+    return;
+  }
+  p_invoiceId = QString::number(invoiceId);
 
   if (deliverNoteId.isEmpty()) {
     warningMessageBox(tr("delivery note number is empty!"));
@@ -228,27 +280,34 @@ void DeliveryNote::setDelivery(int orderId, int customerId,
   p_deliveryId = deliverNoteId;
 }
 
-int DeliveryNote::exec(const QList<Delivery> &list) {
-  if (p_orderId < 1) {
-    qFatal("you must call setDelivery() before exec!");
+int Invoice::exec(const QList<BillingInfo> &list) {
+  if (p_orderId.isEmpty()) {
+    qFatal("you must call setInvoice() before exec!");
     return 1;
-  } else if (p_customerId < 1) {
-    qFatal("you must call setDelivery() before exec!");
+  } else if (p_customerId.isEmpty()) {
+    qFatal("you must call setInvoice() before exec!");
     return 1;
-  } else if (p_customerAddress.isEmpty()) {
-    warningMessageBox(tr("<p>Customer Address is empty!</p>"));
+  } else if (p_invoiceId.isEmpty()) {
+    qFatal("you must call setInvoice() before exec!");
+    return 1;
+  } else if (p_deliveryId.isEmpty()) {
+    qFatal("you must call setInvoice() before exec!");
     return 1;
   }
+
+  p_currency = config->value("payment/currency").toString();
 
   constructHeader();
   constructFooter();
   constructBody();
 
-  QListIterator<Delivery> it(list);
+  QListIterator<BillingInfo> it(list);
   while (it.hasNext()) {
-    Delivery d = it.next();
-    insertArticle(d.articleid, d.designation, d.quantity);
+    BillingInfo d = it.next();
+    insertBilling(d.articleid, d.designation, d.quantity, d.sellPrice);
   }
+
+  finalizeBillings();
   body->setReadOnly(true);
 
   return Printing::exec();

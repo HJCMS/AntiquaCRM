@@ -4,6 +4,7 @@
 #include "ordereditor.h"
 #include "deliverynote.h"
 #include "editoractionbar.h"
+#include "invoice.h"
 #include "myicontheme.h"
 #include "ordersitemlist.h"
 #include "orderstatements.h"
@@ -24,6 +25,10 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   ignoreList.clear();
   ignoreList.append("o_since");
   ignoreList.append("o_modified");
+
+  ignoreOnInsert.clear();
+  ignoreOnInsert.append("o_invoice_id");
+  ignoreOnInsert.append("o_delivery");
 
   Qt::Alignment defaultAlignment = (Qt::AlignRight | Qt::AlignVCenter);
 
@@ -50,14 +55,21 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   o_id->setRequired(true);
   row0->addWidget(o_id);
 
+  o_invoice_id = new SerialID(this);
+  o_invoice_id->setObjectName("o_invoice_id");
+  o_invoice_id->setInfo(tr("Invoice ID"));
+  row0->addWidget(o_invoice_id);
+
   o_order_status = new OrderStatusBox(mainWidget);
   o_order_status->setObjectName("o_order_status");
   o_order_status->setInfo(tr("Status"));
+  o_order_status->setValue(1);
   row0->addWidget(o_order_status);
 
   o_payment_status = new OrdersPaymentBox(mainWidget);
   o_payment_status->setObjectName("o_payment_status");
   o_payment_status->setInfo(tr("Payment"));
+  o_payment_status->setValue(0);
   row0->addWidget(o_payment_status);
 
   row0->addStretch(1);
@@ -179,8 +191,10 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   connect(m_actionBar, SIGNAL(s_saveClicked()), this, SLOT(saveData()));
   connect(m_actionBar, SIGNAL(s_finishClicked()), this,
           SLOT(checkLeaveEditor()));
-  connect(m_actionBar, SIGNAL(s_printClicked()), this,
-          SLOT(openPrinterDialog()));
+  connect(m_actionBar, SIGNAL(s_printDeliveryNote()), this,
+          SLOT(openPrinterDeliveryDialog()));
+  connect(m_actionBar, SIGNAL(s_printInvoiceNote()), this,
+          SLOT(openPrinterInvoiceDialog()));
   connect(m_paymentList, SIGNAL(searchArticle(int)), this,
           SLOT(findArticle(int)));
   connect(m_paymentList, SIGNAL(statusMessage(const QString &)), this,
@@ -373,6 +387,13 @@ void OrderEditor::createSqlUpdate() {
   if (oid.isEmpty())
     return;
 
+  QString did = o_delivery->value().toString();
+  if (did.isEmpty()) {
+    generateDeliveryNumber();
+  }
+
+  o_id->setRequired(true);
+  o_invoice_id->setRequired(true);
   QHash<QString, QVariant> data = createSqlDataset();
   if (data.size() < 1)
     return;
@@ -412,6 +433,7 @@ void OrderEditor::createSqlInsert() {
     return;
 
   o_id->setRequired(false);
+  o_invoice_id->setRequired(false);
   QHash<QString, QVariant> data = createSqlDataset();
   if (data.size() < 1)
     return;
@@ -421,6 +443,9 @@ void OrderEditor::createSqlInsert() {
   QHash<QString, QVariant>::iterator it;
   for (it = data.begin(); it != data.end(); ++it) {
     if (it.key() == "o_id")
+      continue;
+
+    if (ignoreOnInsert.contains(it.key(), Qt::CaseSensitive))
       continue;
 
     fields.append(it.key());
@@ -443,6 +468,8 @@ void OrderEditor::createSqlInsert() {
      *  Erstelle Lieferschein Nummer
      */
     generateDeliveryNumber();
+
+    initInvoiceNumber(o_id->value().toInt());
     /*
      * Wenn die Artikel-Bestellisten Tabelle nicht leer ist.
      * Danach createSqlArticleOrder() aufrufen!
@@ -451,9 +478,6 @@ void OrderEditor::createSqlInsert() {
     if (m_paymentList->payments() > 0) {
       createSqlArticleOrder();
     }
-    return;
-  } else if (result) {
-    finalLeaveEditor();
   }
 }
 
@@ -571,7 +595,7 @@ void OrderEditor::finalLeaveEditor() {
   emit s_leaveEditor();          /**< Zurück */
 }
 
-void OrderEditor::openPrinterDialog() {
+void OrderEditor::openPrinterDeliveryDialog() {
   int oid = o_id->value().toInt();
   if (oid < 1) {
     emit s_postMessage(tr("Missing Order-Id"));
@@ -584,9 +608,15 @@ void OrderEditor::openPrinterDialog() {
     return;
   }
 
+  QString did = o_delivery->value().toString();
+  if (did.isEmpty()) {
+    did = deliveryNumber();
+    o_delivery->setValue(did);
+  }
+
   DeliveryNote *dialog = new DeliveryNote(this);
-  dialog->setObjectName("delivery_note_dialog");
-  dialog->setDelivery(oid, cid, deliveryNumber());
+  dialog->setObjectName("print_delivery_note_dialog");
+  dialog->setDelivery(oid, cid, did);
   // Address
   QString c_add;
   QString sql = queryCustomerShippingAddress(cid);
@@ -618,10 +648,73 @@ void OrderEditor::openPrinterDialog() {
   }
   // Start Dialog
   if (dialog->exec(deliveries)) {
-    m_sql->query(setOrderDeliveryId(oid, deliveryNumber()));
-    if (!m_sql->lastError().isEmpty()) {
-      qDebug() << Q_FUNC_INFO << m_sql->lastError();
+    qDebug() << Q_FUNC_INFO << "Finished";
+  }
+}
+
+void OrderEditor::openPrinterInvoiceDialog() {
+  int oid = o_id->value().toInt();
+  if (oid < 1) {
+    emit s_postMessage(tr("Missing Order-Id"));
+    return;
+  }
+
+  int cid = o_customer_id->value().toInt();
+  if (cid < 1) {
+    emit s_postMessage(tr("Missing Customer-Id"));
+    return;
+  }
+
+  int in_id = o_invoice_id->value().toInt();
+  if (in_id < 1) {
+    emit s_postMessage(tr("Missing Invoice-Id"));
+    return;
+  }
+
+  QString did = o_delivery->value().toString();
+  if (did.isEmpty()) {
+    did = deliveryNumber();
+    o_delivery->setValue(did);
+  }
+
+  Invoice *dialog = new Invoice(this);
+  dialog->setObjectName("print_invoice_dialog");
+  // Address
+  QString c_add;
+  QString sql = queryCustomerShippingAddress(cid);
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    q.next();
+    c_add.append(q.value(0).toString());
+  } else {
+    qDebug() << Q_FUNC_INFO << m_sql->lastError();
+    emit s_postMessage(tr("No Customer Address found"));
+    return;
+  }
+  dialog->setCustomerAddress(c_add);
+  dialog->setInvoice(oid, cid, in_id, did);
+
+  QList<Invoice::BillingInfo> list;
+  q = m_sql->query(queryBillingInfo(oid, cid));
+  if (q.size() > 0) {
+    QRegExp strip("\\-\\s+\\-");
+    while (q.next()) {
+      Invoice::BillingInfo d;
+      d.articleid = q.value("aid").toString();
+      d.designation = q.value("title").toString().replace(strip, "-");
+      d.quantity = q.value("quant").toInt();
+      d.sellPrice = q.value("sellPrice").toDouble();
+      list.append(d);
     }
+  } else {
+    list.clear();
+    qDebug() << Q_FUNC_INFO << m_sql->lastError();
+    emit s_postMessage(tr("No Billing Info found"));
+    return;
+  }
+
+  if (dialog->exec(list)) {
+    qDebug() << Q_FUNC_INFO << "TODO";
   }
 }
 
@@ -670,6 +763,26 @@ void OrderEditor::initDefaults() {
   setEnabled(true);
   resetModified(inputList);
   o_delivery_service->loadSqlDataset();
+  if (o_provider_name->value().toString().isEmpty())
+    o_provider_name->setValue(tr("Internal"));
+
+  if (o_provider_order_id->value().toString().isEmpty())
+    o_provider_order_id->setValue(tr("Internal"));
+}
+
+void OrderEditor::initInvoiceNumber(int orderId) {
+  QString sql("SELECT o_invoice_id FROM ");
+  sql.append("inventory_orders WHERE o_id=");
+  sql.append(QString::number(orderId));
+  sql.append(";");
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() >= 1) {
+    while (q.next()) {
+      o_invoice_id->setValue(q.value("o_invoice_id"));
+    }
+  } else {
+    qWarning("SQL ERROR: %s", qPrintable(m_sql->lastError()));
+  }
 }
 
 const QList<OrderArticle> OrderEditor::getOrderArticles(int oid, int cid) {

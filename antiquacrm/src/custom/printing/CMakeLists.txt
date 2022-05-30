@@ -11,14 +11,14 @@ SET (subproject_LINKER
 SET (subproject_SOURCES
   printing.cpp
   deliverynote.cpp
-  reckoning.cpp
+  invoice.cpp
   texteditor.cpp
 )
 
 SET (subproject_HEADERS
   printing.h
   deliverynote.h
-  reckoning.h
+  invoice.h
   texteditor.h
 )
 

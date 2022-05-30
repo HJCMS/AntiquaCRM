@@ -31,10 +31,13 @@ private:
    */
   bool showSuccessFully = true;
 
+  QStringList ignoreOnInsert;
+
   /**
    * @brief Auftragsnummer
    */
   SerialID *o_id;
+  SerialID *o_invoice_id;
 
   /**
    * @brief Auftragsstatus
@@ -161,6 +164,12 @@ private:
   void initDefaults();
 
   /**
+   * @brief Rechnummer suchen und einsetzen!
+   * @param orderId
+   */
+  void initInvoiceNumber(int orderId);
+
+  /**
    * @brief Lese Daten aus Tabelle "article_orders"
    * Die Daten werden hier für @class OrdersItemList vorbereitet
    * und an @ref OrdersItemList::importPayments übergeben.
@@ -237,7 +246,8 @@ private Q_SLOTS:
   /**
    * @brief Drucker Dialog öffnen
    */
-  void openPrinterDialog();
+  void openPrinterDeliveryDialog();
+  void openPrinterInvoiceDialog();
 
   /**
    * @brief SQL Spalte "o_closed" true setzen.

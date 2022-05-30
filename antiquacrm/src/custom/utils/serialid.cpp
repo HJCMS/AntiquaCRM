@@ -69,5 +69,7 @@ bool SerialID::isValid() {
 }
 
 const QString SerialID::notes() {
-  return tr("The Arcticle ID is required and can not empty.");
+  QString msg("'" + objectName() + "' ");
+  msg.append(tr("is required and can not empty."));
+  return msg;
 }

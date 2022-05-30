@@ -15,6 +15,7 @@
 #include <QPrinter>
 #include <QPushButton>
 #include <QTextCharFormat>
+#include <QTextCodec>
 #include <QTextDocument>
 #include <QTextTable>
 #include <QTextTableCell>
@@ -22,6 +23,7 @@
 #include <QWidget>
 
 class TextEditor;
+class ApplSettings;
 
 /**
  * @brief Drucker Dialog Klasse
@@ -37,9 +39,10 @@ class Printing : public QDialog {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
   Q_PROPERTY(QFont headerFont READ getHeaderFont WRITE setHeaderFont NOTIFY headerFontChanged)
   Q_PROPERTY(QFont normalFont READ getNormalFont WRITE setNormalFont NOTIFY normalFontChanged)
+  Q_PROPERTY(QFont footerFont READ getFooterFont WRITE setFooterFont NOTIFY footerFontChanged)
   Q_PROPERTY(QFont smallFont READ getSmallFont WRITE setSmallFont NOTIFY smallFontChanged)
 
-protected:
+private:
   /**
    * @brief Schriften
    */
@@ -47,6 +50,42 @@ protected:
   QFont normalFont;
   QFont footerFont;
   QFont smallFont;
+
+protected:
+  /**
+   * @brief Bestellnummer
+   */
+  QString p_orderId;
+
+  /**
+   * @brief Kundennummer
+   */
+  QString p_customerId;
+
+  /**
+   * @brief Lieferschein Nummer
+   */
+  QString p_deliveryId;
+
+  /**
+   * @brief Rechnungs Nummer
+   */
+  QString p_invoiceId;
+
+  /**
+   * @brief Kunden Anschrift
+   */
+  QString p_customerAddress;
+
+  /**
+   * @brief Einlesen der Einstellungen
+   */
+  ApplSettings *config;
+
+  /**
+   * @brief Wird von @ref readConfiguration() befüllt.
+   */
+  QHash<QString, QString> companyData;
 
   /**
    * @brief Seitenränder der Druckerausgabe
@@ -103,6 +142,11 @@ protected:
   QPushButton *printButton;
 
   /**
+   * @brief Firmen Einstellungen lesen
+   */
+  void readConfiguration();
+
+  /**
    * @brief Textformat für den Briefkopf
    */
   const QTextCharFormat headerFormat();
@@ -130,7 +174,9 @@ protected:
   /**
    * @brief Erstelle Briefkopf
    */
-  virtual void constructHeader() = 0;
+  virtual void constructHeader();
+
+  virtual void constructSubject() = 0;
 
   /**
    * @brief Inhalt erstellen
@@ -140,7 +186,29 @@ protected:
   /**
    * @brief Fußnote erstellen
    */
-  virtual void constructFooter() = 0;
+  virtual void constructFooter();
+
+  /**
+   * @brief Standard PDF Ausgabe Verzeichnis
+   */
+  const QString outputDirectory(const QString &target = QString("deliverynotes"));
+
+  /**
+   * @group HTML Ausgaben für Printer
+   * @{
+   */
+  const QString getHeaderHTML();
+
+  const QString getBodyHTML();
+
+  const QString getFooterHTML();
+  /** @} */
+
+  /**
+   * @brief Wenn vorhanden ...
+   * Wasserzeichen oben Links einfügen.
+   */
+  const QImage getWatermark();
 
 protected Q_SLOTS:
   /**
@@ -161,7 +229,15 @@ protected Q_SLOTS:
 Q_SIGNALS:
   void headerFontChanged();
   void normalFontChanged();
+  void footerFontChanged();
   void smallFontChanged();
+
+public Q_SLOTS:
+  /**
+   * @brief Warnung ausgeben wenn ...
+   * Wichtige Parameter nicht gesetzt sind!
+   */
+  int warningMessageBox(const QString &);
 
 public:
   explicit Printing(QWidget *parent = nullptr);
@@ -194,10 +270,24 @@ public:
   const QFont getNormalFont();
 
   /**
+   * @brief Fußzeilen schrift ändern
+   */
+  void setFooterFont(const QFont &font);
+  const QFont getFooterFont();
+
+  /**
    * @brief Fußnoten schrift ändern
    */
   void setSmallFont(const QFont &font);
   const QFont getSmallFont();
+
+  /**
+   * @brief Add Customer Address
+   * @note Muss vor @ref exec() gesetzt sein!
+   */
+  void setCustomerAddress(const QString &);
+
+  static const QByteArray defaultCodec();
 };
 
 #endif // PRINTING_PRINTING_H

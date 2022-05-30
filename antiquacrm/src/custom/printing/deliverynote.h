@@ -27,36 +27,6 @@ class DeliveryNote : public Printing {
 
 private:
   /**
-   * @brief Bestellnummer
-   */
-  QString p_orderId;
-
-  /**
-   * @brief Kundennummer
-   */
-  QString p_customerId;
-
-  /**
-   * @brief Lieferschein Nummer
-   */
-  QString p_deliveryId;
-
-  /**
-   * @brief Kunden Anschrift
-   */
-  QString p_customerAddress;
-
-  /**
-   * @brief Einlesen der Einstellungen
-   */
-  ApplSettings *config;
-
-  /**
-   * @brief Wird von @ref readConfiguration() befüllt.
-   */
-  QHash<QString, QString> companyData;
-
-  /**
    * @brief Hier werden die Bestellartikel eingefügt.
    */
   QTextTable *m_articleTable;
@@ -66,21 +36,6 @@ private:
    *  unterhalb der Bestellartikel.
    */
   QTextTableCell p_infoCell;
-
-  /**
-   * @brief Firmen Einstellungen lesen
-   */
-  void readConfiguration();
-
-  /**
-   * @brief Standard PDF Ausgabe Verzeichnis
-   */
-  const QString outputDirectory();
-
-  /**
-   * @brief Briefkopf erstellen
-   */
-  void constructHeader();
 
   /**
    * @brief Anschrift und Lieferschein
@@ -96,11 +51,6 @@ private:
   void constructBody();
 
   /**
-   * @brief Adresse und Finanz Informationen
-   */
-  void constructFooter();
-
-  /**
    * @brief Artikel in @ref m_articleTable einfügen.
    * @param articleid   - Artikel Nummer
    * @param designation - Bezeichnung
@@ -108,23 +58,6 @@ private:
    */
   void insertArticle(const QString &articleid, const QString &designation,
                      const QString &quantity);
-
-  /**
-   * @group HTML Ausgaben für Printer
-   * @{
-   */
-  const QString getHeaderHTML();
-
-  const QString getBodyHTML();
-
-  const QString getFooterHTML();
-  /** @} */
-
-  /**
-   * @brief Wenn vorhanden ...
-   * Wasserzeichen obne Links einfügen.
-   */
-  const QImage getWatermark();
 
 private Q_SLOTS:
   void printToFile(QPrinter *printer){/* not needed */};
@@ -139,13 +72,6 @@ private Q_SLOTS:
    */
   void openPrintDialog();
 
-public Q_SLOTS:
-  /**
-   * @brief Warnung ausgeben wenn ...
-   * Wichtige Parameter nicht gesetzt sind!
-   */
-  int warningMessageBox(const QString &);
-
 public:
   /**
    * @brief Container für das befüllen der Tabellenzellen.
@@ -158,16 +84,10 @@ public:
   explicit DeliveryNote(QWidget *parent = nullptr);
 
   /**
-   * @brief Add Customer Address
-   * @note Muss vor @ref exec() gesetzt sein!
-   */
-  void setCustomerAddress(const QString &);
-
-  /**
    * @brief Wichtige Nummern angeben
    * @note Muss vor @ref exec() gesetzt sein!
    */
-  void setDelivery(int &orderId, int &customerId, const QString &deliverNoteId);
+  void setDelivery(int orderId, int customerId, const QString &deliverNoteId);
 
   /**
    * @brief Erstelle Inhalt und öffne Dialog.

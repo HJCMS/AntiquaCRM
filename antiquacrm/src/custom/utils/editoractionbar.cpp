@@ -29,15 +29,26 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
   connect(m_restoreBtn, SIGNAL(clicked()), this, SIGNAL(s_restoreClicked()));
   layout->addWidget(m_restoreBtn);
 
-  m_printBtn = new QPushButton(tr("Printing"), this);
-  m_printBtn->setObjectName("editor_action_button_print");
-  m_printBtn->setToolTip(tr("Open Print dialog"));
-  m_printBtn->setIcon(myIcon("printer"));
-  m_printBtn->setShortcut(QKeySequence::Print);
-  m_printBtn->setEnabled(false);
-  m_printBtn->setVisible(false);
-  connect(m_printBtn, SIGNAL(clicked()), this, SIGNAL(s_printClicked()));
-  layout->addWidget(m_printBtn);
+  m_printDeliveryBtn = new QPushButton(tr("Print Deliverynote"), this);
+  m_printDeliveryBtn->setObjectName("editor_action_btn_print_delivery");
+  m_printDeliveryBtn->setToolTip(tr("Open Print Deliverynote"));
+  m_printDeliveryBtn->setIcon(myIcon("printer"));
+  m_printDeliveryBtn->setShortcut(QKeySequence::Print);
+  m_printDeliveryBtn->setEnabled(false);
+  m_printDeliveryBtn->setVisible(false);
+  connect(m_printDeliveryBtn, SIGNAL(clicked()), this,
+          SIGNAL(s_printDeliveryNote()));
+  layout->addWidget(m_printDeliveryBtn);
+
+  m_printInvoiceBtn = new QPushButton(tr("Print Invoice"), this);
+  m_printInvoiceBtn->setObjectName("editor_action_btn_print_invoice");
+  m_printInvoiceBtn->setToolTip(tr("Open Print Invoice"));
+  m_printInvoiceBtn->setIcon(myIcon("printer"));
+  m_printInvoiceBtn->setEnabled(false);
+  m_printInvoiceBtn->setVisible(false);
+  connect(m_printInvoiceBtn, SIGNAL(clicked()), this,
+          SIGNAL(s_printInvoiceNote()));
+  layout->addWidget(m_printInvoiceBtn);
 
   layout->addStretch(1);
 
@@ -62,8 +73,10 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
 void EditorActionBar::setRestoreable(bool b) { m_restoreBtn->setEnabled(b); }
 
 void EditorActionBar::viewPrintButton(bool b) {
-  m_printBtn->setEnabled(b);
-  m_printBtn->setVisible(b);
+  m_printDeliveryBtn->setEnabled(b);
+  m_printDeliveryBtn->setVisible(b);
+  m_printInvoiceBtn->setEnabled(b);
+  m_printInvoiceBtn->setVisible(b);
 }
 
 bool EditorActionBar::isRestoreable() { return m_restoreBtn->isEnabled(); }
