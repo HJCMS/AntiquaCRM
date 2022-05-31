@@ -25,6 +25,8 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   ignoreList.clear();
   ignoreList.append("o_since");
   ignoreList.append("o_modified");
+  ignoreList.append("a_modified");
+  ignoreList.append("o_provider_order");
 
   ignoreOnInsert.clear();
   ignoreOnInsert.append("o_invoice_id");
@@ -108,7 +110,7 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
 
   o_delivery_send_id = new LineEdit(m_deliveryBox);
   o_delivery_send_id->setObjectName("o_delivery_send_id");
-  o_delivery_send_id->setInfo(tr("Package send id"));
+  o_delivery_send_id->setInfo(tr("Parcel Shipment Number"));
   dsLayout->addWidget(o_delivery_send_id, 1, 0, 1, 2);
   o_delivery = new LineEdit(m_deliveryBox);
   o_delivery->setObjectName("o_delivery");
@@ -179,8 +181,6 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
     UtilsMain *e = *it;
     connect(e, SIGNAL(hasModified(bool)), this, SLOT(setWindowModified(bool)));
   }
-  connect(m_paymentList, SIGNAL(hasModified(bool)), this,
-          SLOT(setWindowModified(bool)));
 
   connect(btn_gen_deliver, SIGNAL(clicked()), this,
           SLOT(generateDeliveryNumber()));
@@ -199,6 +199,9 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
           SLOT(findArticle(int)));
   connect(m_paymentList, SIGNAL(statusMessage(const QString &)), this,
           SLOT(showMessagePoUp(const QString &)));
+  connect(m_paymentList, SIGNAL(hasModified(bool)), this,
+          SLOT(setWindowModified(bool)));
+  connect(o_notify, SIGNAL(checked(bool)), this, SLOT(createNotifyOrder(bool)));
   connect(o_closed, SIGNAL(checked(bool)), this, SLOT(createCloseOrder(bool)));
   connect(o_customer_id, SIGNAL(s_serialChanged(int)), this,
           SLOT(findCustomer(int)));
@@ -211,11 +214,10 @@ void OrderEditor::setInputList() {
   if (inputList.isEmpty()) {
     qWarning("Customers InputList is Empty!");
   }
-  /**
-   * Werden manuell gesetzt oder sind hier nicht notwendig!
-   */
-  inputList.removeOne("o_since");
-  inputList.removeOne("o_modified");
+  /* Werden manuell gesetzt oder sind hier nicht notwendig! */
+  foreach (QString f, ignoreList) {
+    inputList.removeOne(f);
+  }
 }
 
 void OrderEditor::importSqlResult() {
@@ -343,6 +345,7 @@ bool OrderEditor::createSqlArticleOrder() {
         updateSet.insert(key, data);
         values.append(data);
       }
+      // if(a_provider_id)
     }
     if (primaryIndex > 0) {
       QString sql("UPDATE article_orders SET ");
@@ -647,8 +650,8 @@ void OrderEditor::openPrinterDeliveryDialog() {
     return;
   }
   // Start Dialog
-  if (!dialog->exec(deliveries)) {
-    emit s_postMessage(tr("Printer dialog aborted!"));
+  if (dialog->exec(deliveries)) {
+    /* Unused */
   }
 }
 
@@ -713,7 +716,26 @@ void OrderEditor::openPrinterInvoiceDialog() {
     return;
   }
   if (!dialog->exec(list)) {
-    emit s_postMessage(tr("Printer dialog aborted!"));
+    /* Unused */
+  }
+}
+
+void OrderEditor::createNotifyOrder(bool b) {
+  o_notify->setModified(true);
+  if (!b)
+    return;
+
+  if (o_delivery_send_id->value().toString().isEmpty()) {
+    QString body("<p>");
+    body.append(tr("The notification system requires a valid Parcel Shipment "
+                   "ID to send customer emails."));
+    body.append("</p><p>");
+    body.append(
+        tr("First add a valid Parcel Shipment ID from your delivery service."));
+    body.append("</p>");
+    QMessageBox::information(this, tr("Notifications"), body);
+    o_notify->setChecked(false);
+    return;
   }
 }
 

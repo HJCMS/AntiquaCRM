@@ -1976,7 +1976,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+36"/>
         <source>Order ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2022,12 +2022,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-45"/>
-        <source>Package send id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
+        <location line="-41"/>
         <source>Delivery note number</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2037,13 +2032,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+647"/>
+        <location line="+667"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-617"/>
+        <location line="-637"/>
         <source>close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2053,18 +2048,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+218"/>
+        <location line="+51"/>
+        <source>Parcel Shipment Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+169"/>
         <source>Order saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+258"/>
-        <location line="+423"/>
+        <location line="+441"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-410"/>
+        <location line="-428"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2107,13 +2107,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <location line="+65"/>
-        <source>Printer dialog aborted!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-46"/>
+        <location line="+24"/>
         <source>Missing Invoice-Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2123,7 +2117,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+18"/>
+        <source>First add a valid Parcel Shipment ID from your delivery service.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
         <source>Do you really want to close this order and pass it on to accounting?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2143,18 +2147,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-423"/>
-        <location line="+177"/>
+        <location line="-441"/>
+        <location line="+195"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-627"/>
+        <location line="-647"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+629"/>
+        <location line="+627"/>
+        <source>The notification system requires a valid Parcel Shipment ID to send customer emails.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>Finish order</source>
         <translation type="unfinished"></translation>
     </message>
