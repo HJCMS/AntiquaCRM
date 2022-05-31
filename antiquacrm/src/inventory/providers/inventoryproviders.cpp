@@ -57,6 +57,8 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   connect(m_toolBar, SIGNAL(s_customerAction()), this, SLOT(openTableView()));
   connect(m_toolBar, SIGNAL(s_refresh()), this, SLOT(searchConvert()));
   connect(m_toolBar, SIGNAL(s_createOrder()), this, SLOT(createEditOrders()));
+  connect(m_listView, SIGNAL(s_queryProvider(const QString &)), this,
+          SLOT(queryProviderPage(const QString &)));
   connect(m_listView, SIGNAL(s_queryOrder(const QString &, const QString &)),
           this, SLOT(queryOrder(const QString &, const QString &)));
 }
@@ -110,6 +112,23 @@ bool InventoryProviders::loadInterfaces() {
     iface->queryMenueEntries();
   }
   return true;
+}
+
+void InventoryProviders::queryProviderPage(const QString &provider)
+{
+  if (tabExists(provider))
+    return;
+
+  QListIterator<Antiqua::Interface *> it(p_iFaces);
+  while (it.hasNext()) {
+    Antiqua::Interface *iFace = it.next();
+    if (iFace->objectName() == provider) {
+      Antiqua::ProviderWidget *w = iFace->providerWidget(provider, m_pageView);
+      m_pageView->addMainPage(w, provider);
+      return;
+    }
+  }
+  qDebug() << Q_FUNC_INFO << "TODO" << provider;
 }
 
 void InventoryProviders::queryOrder(const QString &provider,

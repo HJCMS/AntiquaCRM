@@ -45,13 +45,29 @@ private Q_SLOTS:
 
 public:
   explicit ProvidersPageView(QWidget *parent);
+
   /**
    * @brief Aktuelles Tab Fenster ermitteln.
    * Ableitung von QTabWidget::currentWidget()
-   * Ermittelt das aktuelle Antiqua::InterfaceWidget
+   * Ermittelt das aktuelles Antiqua::ProviderWidget
+   */
+  Antiqua::ProviderWidget *currentMainPage();
+
+  /**
+   * @brief Dienstleisterseite
+   */
+  int addMainPage(Antiqua::ProviderWidget *aiw, const QString &id);
+
+  /**
+   * @brief Aktuelles Tab Fenster ermitteln.
+   * Ableitung von QTabWidget::currentWidget()
+   * Ermittelt das aktuelles Antiqua::InterfaceWidget
    */
   Antiqua::InterfaceWidget *currentPage();
 
+  /**
+   * @brief Bestellerseite
+   */
   int addPage(Antiqua::InterfaceWidget *aiw, const QString &id);
 };
 

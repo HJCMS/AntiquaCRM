@@ -8,6 +8,7 @@
 #include <QJsonArray>
 #include <QJsonValue>
 #include <QMenu>
+#include <QPushButton>
 #include <QStyle>
 #include <QTabWidget>
 #include <QTableWidget>
@@ -114,6 +115,18 @@ void WHSoftJSonQuery::queryOrder(const QString &bfId) {
   prQuery->sendPost(url, data);
 }
 
+void WHSoftJSonQuery::customQuery(const QString &operation,
+                                  const QJsonDocument &doc) {
+  QByteArray data = doc.toJson(QJsonDocument::Compact);
+  QUrl url = apiQuery(operation);
+  Antiqua::Provider *prQuery = new Antiqua::Provider(this, false);
+  prQuery->setObjectName("buchfreund_query_" + operation);
+  connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), this,
+          SIGNAL(orderResponsed(const QJsonDocument &)));
+  connect(prQuery, SIGNAL(finished()), prQuery, SLOT(deleteLater()));
+  prQuery->sendPost(url, data);
+}
+
 WHSoftTable::WHSoftTable(QWidget *parent)
     : Antiqua::PurchaserOrderTable{parent} {}
 
@@ -214,6 +227,75 @@ const QVariant WHSoftPurchaser::getValue(const QString &objName) {
   }
 
   return QVariant();
+}
+
+Buchfreund::Buchfreund(const QString &widgetId, QWidget *parent)
+    : Antiqua::ProviderWidget{widgetId, parent} {
+  setObjectName("buchfreund_main");
+  QVBoxLayout *layout = new QVBoxLayout(this);
+
+  // Artikel Bestandsänderungen
+  QHBoxLayout *r0Layout = new QHBoxLayout();
+  QGroupBox *m_duration = new QGroupBox(this);
+  m_duration->setTitle(tr("Modify Item inventory count"));
+  QGridLayout *durLayout = new QGridLayout(m_duration);
+  QLabel *lb1 = new QLabel(tr("Article Id") + ":", m_duration);
+  durLayout->addWidget(lb1, 0, 0, 1, 1, Qt::AlignRight);
+  m_articleId = new QLineEdit(m_duration);
+  durLayout->addWidget(m_articleId, 0, 1, 1, 1, Qt::AlignLeft);
+  m_count = new QSpinBox(m_duration);
+  m_count->setToolTip(tr("itemcount"));
+  m_count->setRange(0, 99);
+  durLayout->addWidget(m_count, 1, 0, 1, 1, Qt::AlignRight);
+  QPushButton *btn_queryArticle = new QPushButton(m_duration);
+  btn_queryArticle->setText(tr("Update"));
+  durLayout->addWidget(btn_queryArticle, 1, 1, 1, 1, Qt::AlignLeft);
+  m_duration->setLayout(durLayout);
+  r0Layout->addWidget(m_duration);
+  r0Layout->addStretch(1);
+  layout->addLayout(r0Layout);
+
+  m_response = new QTextEdit(this);
+  layout->addWidget(m_response);
+
+  layout->addStretch(1);
+  setLayout(layout);
+
+  connect(btn_queryArticle, SIGNAL(clicked()), this,
+          SLOT(updateArticleCount()));
+}
+
+void Buchfreund::jsonQuery(const QString &operation, const QJsonDocument &doc) {
+  WHSoftJSonQuery *mq = new WHSoftJSonQuery(this);
+  mq->setObjectName("json_query_buchfreund_counts");
+  connect(mq, SIGNAL(orderResponsed(const QJsonDocument &)), this,
+          SLOT(queryResponse(const QJsonDocument &)));
+
+  mq->customQuery(operation, doc);
+}
+
+void Buchfreund::updateArticleCount() {
+  QString id = m_articleId->text();
+  if (id.isEmpty())
+    return;
+
+  int count = m_count->value();
+
+  QJsonObject obj;
+  obj.insert("bestellnr", QJsonValue(id));
+  obj.insert("bestand", QJsonValue(count));
+  QJsonArray arr;
+  arr.append(obj);
+
+  QJsonObject sender;
+  sender.insert("produkte", arr);
+
+  QJsonDocument doc(sender);
+  jsonQuery("bestand", doc);
+}
+
+void Buchfreund::queryResponse(const QJsonDocument &doc) {
+  qDebug() << Q_FUNC_INFO << doc;
 }
 
 WHSoftWidget::WHSoftWidget(const QString &widgetId, QWidget *parent)
@@ -530,6 +612,13 @@ bool WHSoft::createInterface(QObject *parent) {
     return true;
   }
   return false;
+}
+
+Antiqua::ProviderWidget *WHSoft::providerWidget(const QString &widgetId,
+                                                QWidget *parent) {
+  m_buchfreundWidget = new Buchfreund(widgetId, parent);
+  m_buchfreundWidget->setObjectName(widgetId);
+  return m_buchfreundWidget;
 }
 
 Antiqua::InterfaceWidget *WHSoft::addWidget(const QString &widgetId,

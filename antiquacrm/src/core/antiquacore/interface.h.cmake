@@ -82,6 +82,19 @@ namespace Antiqua {
   };
 
   /**
+   * @class Antiqua::ProviderWidget
+   * @ingroup Antiqua Plugin Interface
+   */
+  class ANTIQUACORE_EXPORT ProviderWidget : public QWidget
+  {
+    Q_OBJECT
+
+  public:
+    explicit ProviderWidget(const QString &widgetId, QWidget *parent = nullptr);
+
+  };
+
+  /**
    * @class Antiqua::InterfaceWidget
    * @ingroup Antiqua Plugin Interface
    */
@@ -210,6 +223,11 @@ namespace Antiqua {
 
   public:
     virtual bool createInterface(QObject * parent) = 0;
+
+    /**
+     * @brief Hauptseite des Dienstanbieters
+     */
+    virtual Antiqua::ProviderWidget *providerWidget(const QString &widgetId, QWidget * parent) = 0;
 
     /**
      * @brief Tab das eingefügt wird wenn Daten empfangen werden!

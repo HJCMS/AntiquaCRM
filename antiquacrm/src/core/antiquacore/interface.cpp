@@ -41,6 +41,9 @@ PurchaserWidget::PurchaserWidget(QWidget *parent) : QGroupBox{parent} {
 
 int PurchaserWidget::customerId() { return id; };
 
+ProviderWidget::ProviderWidget(const QString &widgetId, QWidget *parent)
+    : QWidget{parent} {}
+
 InterfaceWidget::InterfaceWidget(const QString &widgetId, QWidget *parent)
     : QScrollArea{parent} {}
 

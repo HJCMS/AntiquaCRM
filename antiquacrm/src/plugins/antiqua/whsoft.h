@@ -7,7 +7,9 @@
 
 #include <QContextMenuEvent>
 #include <QLabel>
+#include <QLineEdit>
 #include <QObject>
+#include <QSpinBox>
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QTextEdit>
@@ -45,6 +47,13 @@ public Q_SLOTS:
    */
   void queryOrder(const QString &bfId);
 
+  /**
+   * @brief Erweiterte abfragen
+   * @param operation   - Aktion
+   * @param doc         - Body
+   */
+  void customQuery(const QString &operation, const QJsonDocument &doc);
+
 public:
   explicit WHSoftJSonQuery(QObject *parent = nullptr);
 };
@@ -75,6 +84,24 @@ public:
   QTextEdit *lieferadresse;
   explicit WHSoftPurchaser(QWidget *parent = nullptr);
   const QVariant getValue(const QString &objName);
+};
+
+class ANTIQUACORE_EXPORT Buchfreund final : public Antiqua::ProviderWidget {
+  Q_OBJECT
+
+private:
+  QLineEdit *m_articleId;
+  QSpinBox *m_count;
+  QTextEdit *m_response;
+
+  void jsonQuery(const QString &operation, const QJsonDocument &doc);
+
+private Q_SLOTS:
+  void updateArticleCount();
+  void queryResponse(const QJsonDocument &);
+
+public:
+  explicit Buchfreund(const QString &widgetId, QWidget *parent = nullptr);
 };
 
 class ANTIQUACORE_EXPORT WHSoftWidget final : public Antiqua::InterfaceWidget {
@@ -151,12 +178,14 @@ public:
 
 class ANTIQUACORE_EXPORT WHSoft : public Antiqua::Interface {
   Q_OBJECT
-  Q_PLUGIN_METADATA(IID "de.hjcms.antiquacrm.AntiquaFactoryInterface" FILE "whsoft.json")
+  Q_PLUGIN_METADATA(IID "de.hjcms.antiquacrm.AntiquaFactoryInterface" FILE
+                        "whsoft.json")
   Q_INTERFACES(Antiqua::Interface)
 
 private:
   QObject *m_whsoft;
-  WHSoftWidget *m_whsoftWidget;
+  WHSoftWidget *m_whsoftWidget;   /**< Antiqua::InterfaceWidget */
+  Buchfreund *m_buchfreundWidget; /**< Antiqua::ProviderWidget */
 
 private Q_SLOTS:
   void prepareJsonListResponse(const QJsonDocument &);
@@ -165,7 +194,13 @@ public:
   bool createInterface(QObject *parent);
 
   /**
-   * @brief Anzeigefenster
+   * @brief Hauptseite
+   */
+  Antiqua::ProviderWidget *providerWidget(const QString &widgetId,
+                                          QWidget *parent);
+
+  /**
+   * @brief Bestellungen
    */
   Antiqua::InterfaceWidget *addWidget(const QString &widgetId, QWidget *parent);
 
@@ -177,20 +212,6 @@ public:
   inline const QString configGroup() const {
     return QString("provider/whsoft");
   };
-
-  /**
-   * @brief SQL Datenfeld zurück geben
-   * @param key - Json Parameter
-   * @return SQL Column | QString()
-   */
-  // const QString sqlParam(const QString &key);
-
-  /**
-   * @brief Such mit SQL Feldname nach API Parameter
-   * @param key - SQL Tabellen Feldname
-   * @return Json Parameter | QString()
-   */
-  // const QString apiParam(const QString &key);
 
   /**
    * @brief Menü Einträge suchen

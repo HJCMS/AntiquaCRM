@@ -478,6 +478,29 @@
     </message>
 </context>
 <context>
+    <name>Buchfreund</name>
+    <message>
+        <location filename="../plugins/antiqua/whsoft.cpp" line="+240"/>
+        <source>Modify Item inventory count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Article Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>itemcount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Cancellation</name>
     <message>
         <location filename="../custom/utils/cancellation.cpp" line="+18"/>
@@ -1669,7 +1692,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+212"/>
+        <location line="+231"/>
         <source>customer found in database!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1976,7 +1999,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+37"/>
         <source>Order ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2053,18 +2076,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+169"/>
+        <location line="+167"/>
         <source>Order saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+258"/>
-        <location line="+441"/>
+        <location line="+259"/>
+        <location line="+442"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-428"/>
+        <location line="-429"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2117,7 +2140,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+19"/>
         <source>First add a valid Parcel Shipment ID from your delivery service.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2147,8 +2170,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-441"/>
-        <location line="+195"/>
+        <location line="-442"/>
+        <location line="+196"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2158,12 +2181,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+627"/>
+        <location line="+626"/>
         <source>The notification system requires a valid Parcel Shipment ID to send customer emails.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+23"/>
         <source>Finish order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3073,6 +3096,12 @@
     <message>
         <location filename="../inventory/providers/providerspageview.cpp" line="+69"/>
         <location line="+1"/>
+        <source>Provider:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <location line="+1"/>
         <source>Order:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3080,7 +3109,7 @@
 <context>
     <name>ProvidersTabBar</name>
     <message>
-        <location line="-42"/>
+        <location line="-61"/>
         <source>Order Actions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3126,7 +3155,7 @@
 <context>
     <name>ProvidersTreeView</name>
     <message>
-        <location filename="../inventory/providers/providerstreeview.cpp" line="+59"/>
+        <location filename="../inventory/providers/providerstreeview.cpp" line="+61"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3667,7 +3696,7 @@
 <context>
     <name>WHSoftPurchaser</name>
     <message>
-        <location filename="../plugins/antiqua/whsoft.cpp" line="+153"/>
+        <location filename="../plugins/antiqua/whsoft.cpp" line="-85"/>
         <source>Customer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3703,7 +3732,7 @@
 <context>
     <name>WHSoftWidget</name>
     <message>
-        <location line="+110"/>
+        <location line="+179"/>
         <source>purchaser</source>
         <translation type="unfinished"></translation>
     </message>

@@ -41,8 +41,10 @@ QTreeWidgetItem *ProvidersTreeView::getChild(const QString &provider,
 }
 
 void ProvidersTreeView::itemSelected(QTreeWidgetItem *item, int) {
-  if (item->type() != QTreeWidgetItem::UserType)
+  if (item->type() != QTreeWidgetItem::UserType) {
+    emit s_queryProvider(item->text(0));
     return;
+  }
 
   QString provider = item->parent()->text(0);
   if (!item->text(0).isEmpty() && !provider.isEmpty()) {

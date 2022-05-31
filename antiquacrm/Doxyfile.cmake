@@ -124,13 +124,13 @@ WARNINGS               = YES
 WARN_IF_UNDOCUMENTED   = YES
 WARN_IF_DOC_ERROR      = YES
 WARN_NO_PARAMDOC       = YES
-WARN_AS_ERROR          = YES
+WARN_AS_ERROR          = NO
 WARN_FORMAT            = "$line : $text : $file"
 WARN_LOGFILE           = @CMAKE_CURRENT_SOURCE_DIR@/doc/doxygen.log
 #---------------------------------------------------------------------------
 # Configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  = src
+INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/src
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.h
 RECURSIVE              = YES
@@ -175,7 +175,7 @@ HTML_OUTPUT            = html
 HTML_FILE_EXTENSION    = .html
 HTML_HEADER            = @CMAKE_CURRENT_SOURCE_DIR@/scripts/doxy/header.html
 HTML_FOOTER            = @CMAKE_CURRENT_SOURCE_DIR@/scripts/doxy/footer.html
-HTML_STYLESHEET        =
+HTML_STYLESHEET        = @CMAKE_CURRENT_SOURCE_DIR@/scripts/doxy/offline.css
 HTML_EXTRA_STYLESHEET  =
 HTML_EXTRA_FILES       =
 ## http://www.stack.nl/~dimitri/doxygen/config.html#cfg_html_colorstyle_hue
