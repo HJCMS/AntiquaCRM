@@ -15,14 +15,9 @@
 #include <QVariant>
 #include <QWidget>
 
-/**
- * @defgroup HJCMS
- * @{
- */
 #include <EditorMain>
 #include <Imaging>
 #include <Utils>
-/** }@ */
 
 class PrintsEditor : public EditorMain {
   Q_OBJECT
@@ -203,7 +198,7 @@ private Q_SLOTS:
 
 protected:
   /**
-   * @brief Fange @ref QEvent::EnabledChange ab!
+   * @brief Fange QEvent::EnabledChange ab!
    * Lade Datenfelder nur wenn das Fenster Aktiviert wurde!
    * Um fehlerhafte Tastenbindungen oder eingaben zu verhindern
    * ist das Fenster im Standard erst mal deaktiviert.

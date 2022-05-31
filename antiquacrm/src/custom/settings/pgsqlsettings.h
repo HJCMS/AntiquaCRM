@@ -17,8 +17,7 @@
  * @class PgSQLSettings
  * @brief PostgreSQL Configuration
  * Parameter Key Words:
- *  @link https://www.postgresql.org/docs/current/libpq-connect.html
- *
+ * @see https://www.postgresql.org/docs/current/libpq-connect.html
  */
 class PgSQLSettings final : public SettingsWidget {
   Q_OBJECT
@@ -27,8 +26,6 @@ class PgSQLSettings final : public SettingsWidget {
 
 private:
   /**
-   * @defgroup postgresql
-   * @{
    * @brief sql_hostname
    * PostgreSQL option: host|hostaddr
    */
@@ -69,12 +66,6 @@ private:
    * Enable SQL SSL/TLS Support
    */
   BoolBox *sql_ssl;
-  /** @} */
-
-  /**
-   * @defgroup SSL/TLS Connection
-   * @{
-   */
 
   /**
    * @brief Edit SSL/TLS
@@ -111,11 +102,7 @@ private:
    */
   QComboBox *ssl_mode;
 
-  /** @} */
-
   /**
-   * @defgroup SSL/Peer Connection
-   * @{
    * @brief Enable SSL/TLS Support
    */
   QGroupBox *ssl_peer;
@@ -139,8 +126,6 @@ private:
    * PostgreSQL option: @b sslpassword
    */
   LineEdit *ssl_peer_pass;
-
-  /** @} */
 
   /**
    * @brief Configuration

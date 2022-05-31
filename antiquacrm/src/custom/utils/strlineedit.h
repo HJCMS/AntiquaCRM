@@ -142,7 +142,7 @@ public:
   /**
    * @brief loadDataset
    * Sucht Schlüsselwörter mit dem Parameter
-   * @i key aus Tabelle @ref tableName().
+   * @li key aus Tabelle @ref tableName().
    * Bei Erfolg wird @ref setLineEditCompliter aufgerufen.
    * @param key - column_name Qt::CaseSensitive
    */
@@ -151,7 +151,7 @@ public:
   /**
    * @brief setMaxAllowedLength
    * Setzt die Maximal erlaubte Zeichsatzlänge und
-   * erstellt @ref QLineEdit::setPlaceholderText
+   * erstellt QLineEdit::setPlaceholderText
    */
   void setMaxAllowedLength(int);
 

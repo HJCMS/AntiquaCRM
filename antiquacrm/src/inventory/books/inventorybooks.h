@@ -36,43 +36,29 @@ class InventoryBooks final : public Inventory {
 
 private:
   /**
-    @brief Fenster gruppierung
-  */
+   * @brief Fenster gruppierung
+   */
   QStackedWidget *m_stackedWidget;
 
   /**
-    @defgroup StackeWidget Page 1
-    @{
-  */
-
-  /**
-    @brief Sucheingabe für Bücher
-  */
+   * @brief Sucheingabe für Bücher
+   */
   SearchBar *m_searchBar;
 
   /**
-    @brief Tabellenansicht
-  */
+   * @brief Tabellenansicht
+   */
   BooksTable *m_tableView;
 
   /**
-    @brief Statusbalken mit Historienauswahl
-  */
+   * @brief Statusbalken mit Historienauswahl
+   */
   StatsActionBar *m_statsBookBar;
 
   /**
-    @}
-
-    @defgroup StackeWidget Page 2
-    @{
-  */
-
-  /**
-    @brief BuchEditor Fenster
-  */
+   * @brief BuchEditor Fenster
+   */
   BookEditor *m_bookEditor;
-
-  /** @} */
 
 private Q_SLOTS:
   /**
@@ -150,7 +136,7 @@ public Q_SLOTS:
   /**
    * @brief Wenn das Tab im Vordergund geht, dann eine Aktionen starten
    */
-  void onEnterChanged() { /* TODO */ };
+  void onEnterChanged(){/* TODO */};
 
 public:
   /**

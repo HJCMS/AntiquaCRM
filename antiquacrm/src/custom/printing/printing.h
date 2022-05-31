@@ -28,7 +28,7 @@ class ApplSettings;
 /**
  * @brief Drucker Dialog Klasse
  * @class Printing
- * @group Printing
+ * @defgroup Printing Printing
  * Das Dokument wird aus drei Textkörpern erstellt.
  * Mit einem Kopfbereich, Inhaltsbereich und Fußzeilenbereich.
  * Anders ist es nicht möglich die Fußzeile sauber zu setzen.
@@ -100,8 +100,6 @@ protected:
 
   /**
    * @brief Text Editor
-   * @group printArea
-   * @{
    * Das Widget @ref printArea enthält
    * das Layout für die Text Editoren.
    * @b Besonderheiten:
@@ -129,7 +127,6 @@ protected:
    * @brief Fußzeilen Editor
    */
   TextEditor *footer;
-  /** @} */
 
   /**
    * @brief Dialog Knopfleiste
@@ -194,7 +191,7 @@ protected:
   const QString outputDirectory(const QString &target = QString("deliverynotes"));
 
   /**
-   * @group HTML Ausgaben für Printer
+   * @brief HTML Ausgaben für Printer
    * @{
    */
   const QString getHeaderHTML();

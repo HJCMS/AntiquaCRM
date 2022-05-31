@@ -75,8 +75,6 @@ protected:
   void socketStatusMessage(const QString &message);
 
   /**
-   * @defgroup sqlQueryResult
-   * @{
    * @brief Hier werden die Daten aus der Abfrage eingefügt.
    * Die vorgesehene Mehtode zum befüllen ist @ref importSqlResult
    */
@@ -86,7 +84,6 @@ protected:
    * @brief Methode zum befüllen von @ref sqlQueryResult
    */
   virtual void importSqlResult() = 0;
-  /** }@ */
 
   /**
    * @brief Datensätze aufarbeiten
@@ -98,8 +95,6 @@ protected:
   virtual const QHash<QString, QVariant> createSqlDataset() = 0;
 
   /**
-   * @defgroup SQL Query Processing
-   * @{
    * @brief Methode für SQL Anfragen absenden.
    */
   virtual bool sendSqlQuery(const QString &) = 0;
@@ -122,7 +117,6 @@ protected:
    */
   virtual void setData(const QString &key, const QVariant &value,
                        bool required = false) = 0;
-  /** }@ */
 
   /**
    * @brief Routine für Eingabeklassen
@@ -207,7 +201,7 @@ Q_SIGNALS:
   /**
    * @brief Meldung Artikel Aktiviert/Deaktiviert.
    * Nachricht das der Artikel Aktiviert oder Deaktiviert wurde.
-   * Wird in @ref createSqlUpdate und in @ref realyDeactivateBookEntry
+   * Wird in "createSqlUpdate" und in "realyDeactivateBookEntry"
    * ausgelöst! Es wird nicht beim Insert abgefangen weil die Artikel ID zu
    * diesem Zeitpunkt noch nicht vorhanden ist. (Also auch keine Augträge
    * vorhanden sein können!)

@@ -18,7 +18,6 @@ class ProvidersTreeView;
 class ProvidersPageView;
 
 /**
- * @group Providers
  * @class InventoryProviders
  * Primäre Klasse für das Dienstleister Auftrags System
  *

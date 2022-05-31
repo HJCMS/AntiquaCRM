@@ -62,6 +62,8 @@ Thumbs.db
 *.Debug
 *.Release
 
+Doxyfile
+
 # Python byte code
 *.pyc
 
@@ -73,3 +75,4 @@ Thumbs.db
 # Project
 *.kdev4
 
+doc/*

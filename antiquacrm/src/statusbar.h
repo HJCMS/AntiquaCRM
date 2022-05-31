@@ -6,9 +6,9 @@
 #define STATUSBAR_H
 
 #include <QObject>
-#include <QTimerEvent>
 #include <QSqlDatabase>
 #include <QStatusBar>
+#include <QTimerEvent>
 #include <QToolButton>
 #include <QWidget>
 
@@ -23,22 +23,21 @@ class StatusBar : public QStatusBar {
 
 private:
   /**
-    @brief Verbindung für Listener!
-  */
+   * @brief Verbindung für Listener!
+   */
   HJCMS::SqlCore *m_sql;
 
   /**
-    @brief Datenbankstatus
-    Zeigt den aktuellen Datenbank Status
-    in einem ToolButton an.
-    @todo  Bei onclick Status Widget öffnen!
-  */
+   * @brief Datenbankstatus
+   * Zeigt den aktuellen Datenbank Status in einem ToolButton an.
+   * @todo  Bei onclick Status Widget öffnen!
+   */
   QToolButton *m_dbStatus;
 
 protected:
   /**
-   @brief Verzögerung bis @ref m_sql gestartet wird!
-  */
+   * @brief Verzögerung bis @ref HJCMS::SqlCore gestartet wird!
+   */
   void timerEvent(QTimerEvent *){};
 
 public Q_SLOTS:

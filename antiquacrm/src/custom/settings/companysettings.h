@@ -12,6 +12,11 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief The CompanySettings class
+ * @class CompanySettings
+ * Hier werden all Unternehmens Einstellungen eingefügt!
+ */
 class CompanySettings : public SettingsWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")

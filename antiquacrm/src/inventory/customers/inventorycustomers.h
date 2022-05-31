@@ -16,6 +16,10 @@ class StatsActionBar;
 class EditCustomer;
 class CustomerTableView;
 
+/**
+ * @brief The InventoryCustomers class
+ * @class InventoryCustomers
+ */
 class InventoryCustomers final : public Inventory {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -25,23 +29,18 @@ private:
   const QString primaryIndex = "c_id";
 
   /**
-    @brief Fenster gruppierung
-  */
+   * @brief Fenster gruppierung
+   */
   QStackedWidget *m_stackedWidget;
 
   /**
-    @defgroup StackeWidget Page 1
-    @{
-  */
-
-  /**
-    @brief Sucheingabe für Bücher
-  */
+   * @brief Sucheingabe für Bücher
+   */
   SearchBar *m_searchBar;
 
   /**
-    @brief Tabellenansicht
-  */
+   * @brief Tabellenansicht
+   */
   CustomerTableView *m_tableView;
 
   /**
@@ -50,18 +49,9 @@ private:
   StatsActionBar *m_statsActionBar;
 
   /**
-    @}
-
-    @defgroup StackeWidget Page 2
-    @{
-  */
-
-  /**
-    @brief BuchEditor Fenster
-  */
+   * @brief BuchEditor Fenster
+   */
   EditCustomer *m_editCustomer;
-
-  /** @} */
 
   void openEditor(const QString &);
 
@@ -77,7 +67,7 @@ public Q_SLOTS:
   /**
    * @brief Wenn das Tab im Vordergund geht, dann eine Aktionen starten
    */
-  void onEnterChanged() { /* TODO */ };
+  void onEnterChanged(){/* TODO */};
 
 public:
   explicit InventoryCustomers(QWidget *parent = nullptr);

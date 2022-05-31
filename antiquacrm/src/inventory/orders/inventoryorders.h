@@ -8,11 +8,11 @@
 #include "inventory.h"
 #include "providerorders.h"
 
+#include <QLabel>
 #include <QList>
 #include <QObject>
 #include <QStackedWidget>
 #include <QTabWidget>
-#include <QLabel>
 #include <QWidget>
 
 class StatsActionBar;
@@ -20,10 +20,9 @@ class OrdersTable;
 class OrderEditor;
 
 /**
- * @group InventoryOrders
  * @class InventoryOrders
  * Primäre Klasse für das Auftrags System
-*/
+ */
 class InventoryOrders final : public Inventory {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -31,18 +30,13 @@ class InventoryOrders final : public Inventory {
 
 private:
   /**
-    @brief Fenster gruppierung
-  */
+   * @brief Fenster gruppierung
+   */
   QStackedWidget *m_stackedWidget;
 
   /**
-    @defgroup StackeWidget Page 1
-    @{
-  */
-
-  /**
-    @brief Tabellenansicht
-  */
+   * @brief Tabellenansicht
+   */
   OrdersTable *m_tableView;
 
   /**
@@ -51,47 +45,38 @@ private:
   QLabel *m_statusInfo;
 
   /**
-    @}
-
-    @defgroup StackeWidget Page 2
-    @{
-  */
+   *  @brief Editor
+   */
   OrderEditor *m_editor;
-
-  /** @} */
 
 private Q_SLOTS:
   /**
-    @brief Reagiert auf LineEdit
-      Überwacht QLineEdit::textChanged
-      und startet erst wenn @ref minLength
-      überstiegen wurde. Leitet dann weiter
-      an @ref searchConvert()
-
-    @param Sucheingabe
+   * @brief Reagiert auf LineEdit
+   * Überwacht QLineEdit::textChanged und startet erst wenn @ref minLength
+   * überstiegen wurde. Leitet dann weiter an @ref searchConvert()
+   * @param Sucheingabe
    */
   void searchConvert(const QString &);
 
   /**
-    @brief Reagiert auf Suchknopf & EnterTaste
-    Liest @ref m_searchBar::currentSearchText()
-    aus und Prüft auf min. 2 Zeichen (Performance)!
-    @note In @class SearchBar wird bereits die
-        Zeichenersetzung durchgeführt!
+   * @brief Reagiert auf Suchknopf & EnterTaste
+   * Liest @ref m_searchBar::currentSearchText() aus und Prüft auf min. 2
+   * Zeichen (Performance)!
+   * @note In @class SearchBar wird bereits die Zeichenersetzung durchgeführt!
    */
   void searchConvert();
 
   /**
-    @brief Öffne Tabellenansicht
-    Wird mit @ref BookEditor::s_leaveEditor aufgerufen.
-    @note Standard ist Tabellenansicht "Page 1"
-  */
+   * @brief Öffne Tabellenansicht
+   * Wird mit @ref OrderEditor::s_leaveEditor aufgerufen.
+   * @note Standard ist Tabellenansicht "Page 1"
+   */
   void openTableView();
 
   /**
    * @brief Wenn das Tab im Vordergund geht, dann eine Aktionen starten
    */
-  void onEnterChanged() { /* TODO */ };
+  void onEnterChanged(){/* TODO */};
 
 protected:
   /**
@@ -115,13 +100,13 @@ protected:
 
 public Q_SLOTS:
   /**
-     @brief Ein Artikel wurd ausgewählt
-     Wird bei der Tabellen Suchansicht mit einem Doppelklick
-     das Signal @ref BooksTableView::s_articleSelected ausgelöst
-     und an Hand des @b "ib_id" Feldes eine SQL Abfrage erstellt,
-     jetzt der Editor mit @ref openEditor("ib_id={$id}") geöffnet!
-     @param id
-  */
+   * @brief Ein Artikel wurd ausgewählt
+   * Wird bei der Tabellen Suchansicht mit einem Doppelklick das Signal @ref
+   * OrdersTable::s_editOrder ausgelöst und an Hand des @b "ib_id" Feldes
+   * eine SQL Abfrage erstellt, jetzt der Editor mit @ref
+   * openEditor("ib_id={$id}") geöffnet!
+   * @param customerId
+   */
   void updateOrder(int customerId);
 
   /**

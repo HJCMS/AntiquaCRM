@@ -19,6 +19,9 @@ class PrintsTable;
 class PrintsEditor;
 class StatsActionBar;
 
+/**
+ * @brief The InventoryPrints class
+ */
 class InventoryPrints final : public Inventory {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -26,43 +29,29 @@ class InventoryPrints final : public Inventory {
 
 private:
   /**
-    @brief Fenster gruppierung
-  */
+   * @brief Fenster gruppierung
+   */
   QStackedWidget *m_stackedWidget;
 
   /**
-    @defgroup StackeWidget Page 1
-    @{
-  */
-
-  /**
-    @brief Sucheingabe für Bücher
-  */
+   * @brief Sucheingabe für Bücher
+   */
   SearchBar *m_searchBar;
 
   /**
-     @brief Zeige alles was im bestand ist!
+   * @brief Zeige alles was im bestand ist!
    */
   StatsActionBar *m_statsPrintBar;
 
   /**
-    @brief Tabellenansicht
-  */
+   * @brief Tabellenansicht
+   */
   PrintsTable *m_tableView;
 
   /**
-    @}
-
-    @defgroup StackeWidget Page 2
-    @{
-  */
-
-  /**
-    @brief Editor Fenster
-  */
+   * @brief Editor Fenster
+   */
   PrintsEditor *m_printsEditor;
-
-  /** @} */
 
 protected:
   /**
@@ -140,7 +129,7 @@ public Q_SLOTS:
   /**
    * @brief Wenn das Tab im Vordergund geht, dann eine Aktionen starten
    */
-  void onEnterChanged() { /* TODO */ };
+  void onEnterChanged(){/* TODO */};
 
 public:
   explicit InventoryPrints(QWidget *parent = nullptr);

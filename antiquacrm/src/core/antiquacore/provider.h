@@ -29,8 +29,8 @@ namespace Antiqua {
    * @class ProviderRequest
    * @ingroup Networking
    * @warning Nur mit QThread aufrufen!
-   * @see @ref Provider
-   * @link https://everything.curl.dev/
+   * @see Provider
+   * <a href="https://everything.curl.dev/">cUrl</a>
    */
   class ANTIQUACORE_EXPORT ProviderRequest : public QRunnable {
 
@@ -147,7 +147,6 @@ namespace Antiqua {
    * @class Provider
    * @ingroup Networking
    * @brief Alternative Klasse für Json anfragen
-   * @link https://curl.se/libcurl/c/
    * Ich verwende deshalb an dieser Stelle cUrl weil der QNetworkAccessManager
    * Probleme mit HTTP/2 Redirected hat. Mit cURL habe ich hier bessere
    * Erfahrungen gemacht und setze es deshalb ein.
