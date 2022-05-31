@@ -260,7 +260,7 @@ const QHash<QString, QVariant> OrderEditor::createSqlDataset() {
 }
 
 bool OrderEditor::sendSqlQuery(const QString &sqlStatement) {
-  if (SHOW_SQL_QUERIES) {
+  if (SHOW_ORDER_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << sqlStatement;
   }
   QSqlQuery q = m_sql->query(sqlStatement);
@@ -516,7 +516,7 @@ void OrderEditor::findArticle(int aid) {
   if (select.isEmpty())
     return;
 
-  if (SHOW_SQL_QUERIES) {
+  if (SHOW_ORDER_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << select << Qt::endl;
   }
 
@@ -541,6 +541,8 @@ void OrderEditor::findArticle(int aid) {
                  q.value("counts").toString(), q.value("title").toString()));
 
     m_paymentList->addArticleRow(data);
+  } else {
+    qDebug() << m_sql->lastError();
   }
 }
 
@@ -847,7 +849,7 @@ bool OrderEditor::getCustomerAddress(int cid) {
     return false;
 
   QString select = queryCustomerAddress(cid);
-  if (SHOW_SQL_QUERIES) {
+  if (SHOW_ORDER_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << select << Qt::endl;
   }
 
@@ -896,7 +898,7 @@ void OrderEditor::openUpdateOrder(int oid) {
   select.append(QString::number(oid));
   select.append(";");
 
-  if (SHOW_SQL_QUERIES) {
+  if (SHOW_ORDER_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << select << Qt::endl;
   }
 

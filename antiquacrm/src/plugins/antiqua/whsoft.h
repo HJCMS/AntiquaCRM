@@ -178,8 +178,7 @@ public:
 
 class ANTIQUACORE_EXPORT WHSoft : public Antiqua::Interface {
   Q_OBJECT
-  Q_PLUGIN_METADATA(IID "de.hjcms.antiquacrm.AntiquaFactoryInterface" FILE
-                        "whsoft.json")
+  Q_PLUGIN_METADATA(IID "de.hjcms.antiquacrm.AntiquaFactoryInterface" FILE "whsoft.json")
   Q_INTERFACES(Antiqua::Interface)
 
 private:

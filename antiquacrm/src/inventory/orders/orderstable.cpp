@@ -53,7 +53,7 @@ bool OrdersTable::sqlExecQuery(const QString &statement) {
   if (statement.isEmpty())
     return false;
 
-  if (SHOW_SQL_QUERIES) {
+  if (SHOW_ORDER_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << statement;
   }
 

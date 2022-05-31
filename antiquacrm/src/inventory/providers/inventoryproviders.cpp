@@ -271,12 +271,15 @@ void InventoryProviders::checkArticleExists(QList<int> &list) {
   for (int i = 0; i < list.size(); i++) {
     QString aid = QString::number(list[i]);
     QSqlQuery q = m_sql->query(queryArticleExists(aid));
-    if (q.size() < 1) {
+    if (q.size() > 0) {
+      q.next();
+      qDebug() << Q_FUNC_INFO << "Found Article:" << q.value(0);
+      m_toolBar->statusMessage(tr("article exits!"));
+    } else {
       QString info(tr("this"));
       info.append(" " + aid + " ");
       info.append(tr("article is not available!"));
       QMessageBox::warning(this, tr("Article"), info);
-      continue;
     }
   }
 }

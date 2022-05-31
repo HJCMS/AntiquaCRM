@@ -255,6 +255,10 @@ Buchfreund::Buchfreund(const QString &widgetId, QWidget *parent)
   r0Layout->addStretch(1);
   layout->addLayout(r0Layout);
 
+  layout->addStretch(1);
+  QLabel *lb2 = new QLabel(tr("Response Information"), this);
+  layout->addWidget(lb2);
+
   m_response = new QTextEdit(this);
   layout->addWidget(m_response);
 
@@ -295,7 +299,8 @@ void Buchfreund::updateArticleCount() {
 }
 
 void Buchfreund::queryResponse(const QJsonDocument &doc) {
-  qDebug() << Q_FUNC_INFO << doc;
+  QString d = QString::fromLocal8Bit(doc.toJson(QJsonDocument::Indented));
+  m_response->setPlainText(d);
 }
 
 WHSoftWidget::WHSoftWidget(const QString &widgetId, QWidget *parent)

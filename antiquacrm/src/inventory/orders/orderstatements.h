@@ -16,15 +16,15 @@
  */
 
 /**
- * @def SHOW_SQL_QUERIES
+ * @def SHOW_ORDER_SQL_QUERIES
  * @ingroup Order SQL Statements
  * @section Debugging
  * @brief SQL Abfrageanzeige
  * Schaltet die SQL-Statements im Terminal
  * auf sichtbar.
  */
-#ifndef SHOW_SQL_QUERIES
-#define SHOW_SQL_QUERIES false
+#ifndef SHOW_ORDER_SQL_QUERIES
+#define SHOW_ORDER_SQL_QUERIES true
 #endif
 
 /**
@@ -179,6 +179,7 @@ static const QString paymentArticleOrders(int oid, int cid) {
  * @param oid
  * @param cid
  * @return (aid,quant,title)
+ * @bug TODO Falsches JOIN Statement
  */
 static const QString queryDeliveryNotes(int oid, int cid) {
   QString s("SELECT a.a_article_id AS aid, a.a_count AS quant,");
@@ -247,16 +248,15 @@ static const QString paymentRemove(const QString &pid, const QString &aid) {
  * @return SQL Query
  */
 static const QString inventoryArticle(int id) {
-  QString aid = QString::number(id);
-  QString s("SELECT DISTINCT ");
-  s.append("nullif(coalesce(b.ib_id),p.ip_id) AS aid,");
-  s.append("nullif(coalesce(b.ib_count),p.ip_count) AS counts,");
-  s.append("nullif(coalesce(b.ib_price),p.ip_price) AS price,");
-  s.append("nullif(coalesce(b.ib_title),p.ip_title) AS title");
-  s.append(" FROM inventory_books AS b");
-  s.append(" LEFT JOIN inventory_prints AS p ON p.ip_id=");
-  s.append(aid + " WHERE (b.ib_id=" + aid);
-  s.append(" AND b.ib_count>0) OR (p.ip_count>0);");
+  QString s("SELECT COALESCE(b.ib_id,p.ip_id) AS aid,");
+  s.append("COALESCE(b.ib_count,p.ip_count) AS counts,");
+  s.append("COALESCE(b.ib_price,p.ip_price) AS price,");
+  s.append("COALESCE(b.ib_title,p.ip_title) AS title");
+  s.append(" FROM inventory AS i");
+  s.append(" LEFT JOIN inventory_books AS b ON i.i_id=b.ib_id");
+  s.append(" LEFT JOIN inventory_prints AS p ON i.i_id=p.ip_id");
+  s.append(" WHERE i.i_id=" + QString::number(id));
+  s.append(" AND (b.ib_count>0 OR p.ip_count>0);");
   return s;
 }
 

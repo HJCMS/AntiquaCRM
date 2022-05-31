@@ -34,15 +34,8 @@
  * @return SqlQuery
  */
 static const QString queryArticleExists(const QString &aid) {
-  QString s("SELECT DISTINCT ");
-  s.append("nullif(coalesce(b.ib_id),p.ip_id) AS aid,");
-  s.append("nullif(coalesce(b.ib_count),p.ip_count) AS counts,");
-  s.append("nullif(coalesce(b.ib_price),p.ip_price) AS price,");
-  s.append("nullif(coalesce(b.ib_title),p.ip_title) AS title");
-  s.append(" FROM inventory_books AS b");
-  s.append(" LEFT JOIN inventory_prints AS p ON p.ip_id=");
-  s.append(aid + " WHERE (b.ib_id=" + aid);
-  s.append(" AND b.ib_count>0) OR (p.ip_count>0);");
+  QString s("SELECT func_find_inventory_articleid(");
+  s.append(aid + ");");
   return s;
 }
 
