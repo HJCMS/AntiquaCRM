@@ -5,13 +5,15 @@
 #ifndef APPLSETTINGS_ANTIQUACORE_H
 #define APPLSETTINGS_ANTIQUACORE_H
 
+#include "antiqua_global.h"
+
 #include <QHash>
 #include <QObject>
 #include <QSettings>
 #include <QString>
 #include <QVariant>
 
-class ApplSettings : public QSettings {
+class ANTIQUACORE_EXPORT ApplSettings : public QSettings {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")

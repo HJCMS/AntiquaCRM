@@ -32,7 +32,7 @@ namespace Antiqua {
    * @see Provider
    * <a href="https://everything.curl.dev/">cUrl</a>
    */
-  class ANTIQUACORE_EXPORT ProviderRequest : public QRunnable {
+  class ANTIQUACORE_EXPORT ProviderRequest final : public QRunnable {
 
   private:
     /**
@@ -151,7 +151,7 @@ namespace Antiqua {
    * Probleme mit HTTP/2 Redirected hat. Mit cURL habe ich hier bessere
    * Erfahrungen gemacht und setze es deshalb ein.
    */
-  class Provider : public QThread {
+  class ANTIQUACORE_EXPORT Provider final : public QThread {
     Q_OBJECT
     Q_CLASSINFO("Author", "Jürgen Heinemann")
     Q_CLASSINFO("URL", "https://www.hjcms.de")
