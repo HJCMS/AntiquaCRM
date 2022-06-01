@@ -9,6 +9,10 @@
 #include <QFileInfo>
 #include <QLibraryInfo>
 
+#ifndef DEBUG_PLUGINLOADER
+#define DEBUG_PLUGINLOADER false
+#endif
+
 static const QStringList filter() {
 #ifdef Q_OS_LINUX
   return QStringList("*.so");
@@ -29,12 +33,17 @@ PluginLoader::PluginLoader(QObject *parent) : QPluginLoader{parent} {
   QString gp(QLibraryInfo::location(QLibraryInfo::LibrariesPath));
   gp.append(QDir::separator());
   gp.append("antiqua");
-  lp.append(QDir::separator());
-  lp.append("plugins");
+  gp.append(QDir::separator());
+  gp.append("plugins");
 
   QStringList paths;
   paths << gp;
   paths << lp;
+  paths << QLibraryInfo::location(QLibraryInfo::PluginsPath);
+
+  if(DEBUG_PLUGINLOADER) {
+    qDebug() << Q_FUNC_INFO << paths;
+  }
 
   p_dir.setSearchPaths("plugins", paths);
   p_dir.setNameFilters(filter());
