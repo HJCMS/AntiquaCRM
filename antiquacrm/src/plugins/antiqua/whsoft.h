@@ -178,7 +178,8 @@ public:
 
 class ANTIQUACORE_EXPORT WHSoft : public Antiqua::Interface {
   Q_OBJECT
-  Q_PLUGIN_METADATA(IID "de.hjcms.antiquacrm.AntiquaFactoryInterface" FILE "whsoft.json")
+  Q_PLUGIN_METADATA(IID "de.hjcms.antiquacrm.AntiquaFactoryInterface" FILE
+                        "whsoft.json")
   Q_INTERFACES(Antiqua::Interface)
 
 private:
@@ -208,9 +209,7 @@ public:
   /**
    * @brief Wird für Anwender Konfiguration benötigt
    */
-  inline const QString configGroup() const {
-    return QString("provider/whsoft");
-  };
+  const QString configGroup() const;
 
   /**
    * @brief Menü Einträge suchen

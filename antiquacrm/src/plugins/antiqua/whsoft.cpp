@@ -19,26 +19,24 @@
  * @def DATE_FORMAT
  * @ingroup Providers SQL Statements
  * @brief Datumsformat von Buchfreund.de
- * Wird benötigt für die Json anfragen zur erstellen.
- * Gleichzeitig wird es auch für den Import benötigt!
+ * Wird für lesen/schreiben der JSon Datenfelder benötigt.
  */
 #ifndef DATE_FORMAT
 #define DATE_FORMAT "yyyy-MM-dd hh:mm:ss"
 #endif
 
-/**
- * @brief Konfigurationsgruppe
- */
+/** @brief Konfigurationsgruppe */
 #ifndef CONFIG_GROUP
 #define CONFIG_GROUP "provider/whsoft"
 #endif
 
-#ifndef PLUGIN_TEST_MODE
-#define PLUGIN_TEST_MODE false
-#endif
-
+/** @brief Wird für Menüeintrag und Gruppenzuweisung benötigt! */
 #ifndef CONFIG_PROVIDER
 #define CONFIG_PROVIDER "Buchfreund"
+#endif
+
+#ifndef PLUGIN_TEST_MODE
+#define PLUGIN_TEST_MODE false
 #endif
 
 /**
@@ -53,9 +51,12 @@
  * @return int
  */
 static int genderFromString(const QString &anrede) {
-  if (anrede.contains("herr", Qt::CaseInsensitive))
+  QString str = anrede.trimmed();
+  if (str.startsWith("herr", Qt::CaseInsensitive) ||
+      str.startsWith("mr.", Qt::CaseInsensitive))
     return 1;
-  else if (anrede.contains("frau", Qt::CaseInsensitive))
+  else if (str.startsWith("frau", Qt::CaseInsensitive) ||
+           str.startsWith("mrs", Qt::CaseInsensitive))
     return 2;
   else
     return 0;
@@ -634,6 +635,8 @@ Antiqua::InterfaceWidget *WHSoft::addWidget(const QString &widgetId,
 }
 
 const QString WHSoft::provider() const { return QString(CONFIG_PROVIDER); }
+
+const QString WHSoft::configGroup() const { return QString(CONFIG_GROUP); }
 
 void WHSoft::queryMenueEntries() {
   WHSoftJSonQuery *mjs = new WHSoftJSonQuery(this);

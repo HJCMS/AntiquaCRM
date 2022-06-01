@@ -6,7 +6,7 @@
 #include "messagebox.h"
 
 #ifndef EDITOR_SHOW_DEBUG
-#define EDITOR_SHOW_DEBUG true
+#define EDITOR_SHOW_DEBUG false
 #endif
 
 #include <QDebug>

@@ -98,4 +98,24 @@ pg_dump \
 
 mv -b $HOME/.cache/schema-only.sql ${_dest}/${_date}/schema-only.sql
 
+echo "-- pgdump Structure Backup: Antiqua-PgSQL14.sql"
+pg_dump \
+  --host=${_config[0]} \
+  --port=${_config[1]} \
+  --dbname=${_config[2]} \
+  --username=${_config[3]} \
+  --encoding=UTF8 \
+  --no-owner \
+  --no-comments \
+  --schema-only \
+  --schema=${_scheme} \
+  --clean \
+  --create \
+  --if-exists \
+  --strict-names \
+  --no-owner \
+  --file=$HOME/.cache/Antiqua-PgSQL14.sql
+
+perl -pi -e 's,\bheinemann\b,antiqua,g' $HOME/.cache/Antiqua-PgSQL14.sql
+
 ##EOF

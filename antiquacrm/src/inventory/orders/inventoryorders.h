@@ -113,6 +113,10 @@ public Q_SLOTS:
    * @brief Erstelle einen neuen Auftrag für Kunden Nummer.
    */
   void createOrder(int customerId);
+
+  /**
+   * @brief Erstelle neuen Eintrag mit Datensatz
+   */
   void createOrder(const ProviderOrder &order);
 
 public:

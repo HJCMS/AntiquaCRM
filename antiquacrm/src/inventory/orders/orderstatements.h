@@ -24,7 +24,7 @@
  * auf sichtbar.
  */
 #ifndef SHOW_ORDER_SQL_QUERIES
-#define SHOW_ORDER_SQL_QUERIES true
+#define SHOW_ORDER_SQL_QUERIES false
 #endif
 
 /**

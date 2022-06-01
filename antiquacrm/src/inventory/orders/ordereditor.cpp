@@ -345,7 +345,6 @@ bool OrderEditor::createSqlArticleOrder() {
         updateSet.insert(key, data);
         values.append(data);
       }
-      // if(a_provider_id)
     }
     if (primaryIndex > 0) {
       QString sql("UPDATE article_orders SET ");
@@ -354,7 +353,6 @@ bool OrderEditor::createSqlArticleOrder() {
         fields.next();
         sql.append(fields.key() + "=" + fields.value() + ",");
       }
-      // qDebug() << Q_FUNC_INFO << it.key() << it.value() << sql;
       sql.append("a_modified=CURRENT_TIMESTAMP WHERE a_payment_id=");
       sql.append(QString::number(primaryIndex));
       sql.append(";");
