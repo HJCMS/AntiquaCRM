@@ -23,6 +23,8 @@ pushd ${_BUILDDIR}
 
   ln -s ${_QT5_TOOLS_HOME}/Ninja/ninja ninja
 
+  # -DLIB_SUFFIX:STRING=64 \
+
   cmake -Wno-dev -Wno-deprecated \
     -DCMAKE_GENERATOR:STRING=Ninja \
     -DCMAKE_BUILD_TYPE:STRING=MINSIZEREL \
@@ -30,8 +32,8 @@ pushd ${_BUILDDIR}
     -DANTIQUA_LSB_INSTALL:BOOL=OFF \
     -DCMAKE_INSTALL_PREFIX:PATH=${_BUILDDIR}/opt/antiquacrm \
     -DCMAKE_PROJECT_INCLUDE_BEFORE:FILEPATH=${_QT5_NINJA_SETUP} \
+    -DCURL_DIR:PATH=/usr \
     -DQT_QMAKE_EXECUTABLE:FILEPATH=${_QT5_HOME}/bin/qmake \
-    -DLIB_SUFFIX:STRING=64 \
     -DCMAKE_SKIP_RPATH:BOOL=ON \
     ${_PROJECT_TARGET}/antiquacrm
 
