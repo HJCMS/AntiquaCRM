@@ -46,6 +46,11 @@ namespace Antiqua {
     CURL *m_curl;
 
     /**
+     * @brief CA Paketpfad
+     */
+    QByteArray p_ca_bundle;
+
+    /**
      * @brief System Kodierung einlesen
      */
     QTextCodec *m_txtCodec;
@@ -107,6 +112,13 @@ namespace Antiqua {
 
   public:
     explicit ProviderRequest(bool verbose = false);
+
+    /**
+     * @brief Setze CA-Paketpfad für Windows
+     * @note Muss vor run() gesetzt werden!
+     * Unter Linux ist das nicht notwendig.
+     */
+    void setCaBundlePath(const QByteArray &path);
 
     /**
      * @brief cUrl Fehlermeldung ausgeben.

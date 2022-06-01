@@ -12,10 +12,6 @@
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
 
-#ifndef DEBUG_PRINTVIEW
-#define DEBUG_PRINTVIEW false
-#endif
-
 DeliveryNote::DeliveryNote(QWidget *parent) : Printing{parent} {
   setObjectName("printing_delivery_note");
   setWindowTitle(tr("Delivery note"));
@@ -190,7 +186,7 @@ void DeliveryNote::openPrintDialog() {
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPaperSource(QPrinter::FormSource);
   printer->setPageMargins(page_margins);
-  if (DEBUG_PRINTVIEW) {
+  if (NO_NATIVE_PRINTDRIVER) {
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(printer, this);
     connect(dialog, SIGNAL(paintRequested(QPrinter *)), this,
             SLOT(printDocument(QPrinter *)));
@@ -213,13 +209,13 @@ void DeliveryNote::setDelivery(int orderId, int customerId,
     warningMessageBox(tr("There is no Order-Id to generate this delivery!"));
     return;
   }
-  p_orderId = QString::number(orderId);
+  p_orderId = QString::number(orderId).rightJustified(7, '0');
 
   if (customerId < 1) {
     warningMessageBox(tr("There is no Customer Id to generate this delivery!"));
     return;
   }
-  p_customerId = QString::number(customerId);
+  p_customerId = QString::number(customerId).rightJustified(7, '0');
 
   if (deliverNoteId.isEmpty()) {
     warningMessageBox(tr("delivery note number is empty!"));

@@ -22,6 +22,19 @@
 #include <QTextTableFormat>
 #include <QWidget>
 
+/**
+ * @ingroup Printing
+ * @brief On Windows, Qt didn't support none Native Printerdrivers
+ * Unix system with Cups can handle this :)
+ */
+#ifndef NO_NATIVE_PRINTDRIVER
+#ifdef Q_OS_WINDOWS
+#define NO_NATIVE_PRINTDRIVER true
+#else
+#define NO_NATIVE_PRINTDRIVER false
+#endif
+#endif
+
 class TextEditor;
 class ApplSettings;
 
@@ -173,6 +186,9 @@ protected:
    */
   virtual void constructHeader();
 
+  /**
+   * @brief Reihe mit Anschrift und Kategorie
+   */
   virtual void constructSubject() = 0;
 
   /**
@@ -188,7 +204,8 @@ protected:
   /**
    * @brief Standard PDF Ausgabe Verzeichnis
    */
-  const QString outputDirectory(const QString &target = QString("deliverynotes"));
+  const QString
+  outputDirectory(const QString &target = QString("deliverynotes"));
 
   /**
    * @brief HTML Ausgaben für Printer

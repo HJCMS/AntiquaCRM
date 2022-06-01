@@ -2,9 +2,11 @@
 // vim: set fileencoding=utf-8
 
 #include "provider.h"
+#include "applsettings.h"
 
 #include <QByteArray>
 #include <QDebug>
+#include <QFileInfo>
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QLocale>
@@ -17,6 +19,16 @@
 // BEGIN ProviderRequest
 
 namespace Antiqua {
+
+static const QByteArray caBundleConfigPath() {
+  ApplSettings cfg;
+  QString ca = cfg.value("ssloptions/ssl_bundle").toString();
+  QFileInfo info(ca);
+  if (info.isReadable()) {
+    return ca.toLocal8Bit();
+  }
+  return QByteArray();
+}
 
 static int cUrlTrace(CURL *handle, curl_infotype type, unsigned char *data,
                      size_t size, void *userp) {
@@ -108,7 +120,7 @@ static const char *jsonParserError(int err) {
 
 ProviderRequest::ProviderRequest(bool debug) : QRunnable() {
   verbose = debug;
-
+  p_ca_bundle = QByteArray();
   m_txtCodec = QTextCodec::codecForLocale();
   QString charset = QString::fromLocal8Bit(m_txtCodec->name());
   if (!charset.isEmpty()) {
@@ -250,7 +262,9 @@ bool ProviderRequest::initDefaultOptions() {
   curl_easy_setopt(m_curl, CURLOPT_SSL_VERIFYPEER, 1);
   curl_easy_setopt(m_curl, CURLOPT_SERVICE_NAME, "AntiquaCRM");
   curl_easy_setopt(m_curl, CURLOPT_USERAGENT, ANTIQUACRM_USERAGENT);
-  // curl_easy_setopt(curl, CURLOPT_CAINFO, "/etc/ssl/ca-bundle.pem");
+  if (!p_ca_bundle.isEmpty()) {
+    curl_easy_setopt(m_curl, CURLOPT_CAINFO, p_ca_bundle.data());
+  }
 
   if (verbose) {
     curl_easy_setopt(m_curl, CURLOPT_VERBOSE, 1);
@@ -258,6 +272,10 @@ bool ProviderRequest::initDefaultOptions() {
   }
 
   return true;
+}
+
+void ProviderRequest::setCaBundlePath(const QByteArray &path) {
+  p_ca_bundle = path;
 }
 
 const QString ProviderRequest::getResponseError() {
@@ -374,6 +392,9 @@ const QJsonDocument Provider::getDocument() { return p_json; }
 void Provider::run() {
   p_mutex.lock();
   ProviderRequest *req = new ProviderRequest(verbose);
+#ifdef Q_OS_WINDOWS
+  req->setCaBundlePath(caBundleConfigPath());
+#endif
   bool status = false;
   switch (p_type) {
   case (Provider::POST):
@@ -387,6 +408,7 @@ void Provider::run() {
   default:
     status = req->get(p_url);
   };
+
   if (status) {
     req->run();
     p_json = req->getResponseData();

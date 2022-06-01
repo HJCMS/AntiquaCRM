@@ -13,10 +13,6 @@
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
 
-#ifndef DEBUG_PRINTVIEW
-#define DEBUG_PRINTVIEW false
-#endif
-
 Invoice::Invoice(QWidget *parent) : Printing{parent} {
   setObjectName("printing_invoice");
 
@@ -234,7 +230,7 @@ void Invoice::openPrintDialog() {
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPaperSource(QPrinter::FormSource);
   printer->setPageMargins(page_margins);
-  if (DEBUG_PRINTVIEW) {
+  if (NO_NATIVE_PRINTDRIVER) {
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(printer, this);
     connect(dialog, SIGNAL(paintRequested(QPrinter *)), this,
             SLOT(printDocument(QPrinter *)));
@@ -259,19 +255,19 @@ void Invoice::setInvoice(int orderId,    /* Bestellnummer */
     warningMessageBox(tr("There is no Order-Id to generate this invoice!"));
     return;
   }
-  p_orderId = QString::number(orderId);
+  p_orderId = QString::number(orderId).rightJustified(7, '0');
 
   if (customerId < 1) {
     warningMessageBox(tr("There is no Customer Id to generate this invoice!"));
     return;
   }
-  p_customerId = QString::number(customerId);
+  p_customerId = QString::number(customerId).rightJustified(7, '0');
 
   if (invoiceId < 1) {
     warningMessageBox(tr("There is no Invoice Id to generate this invoice!"));
     return;
   }
-  p_invoiceId = QString::number(invoiceId);
+  p_invoiceId = QString::number(invoiceId).rightJustified(7, '0');
 
   if (deliverNoteId.isEmpty()) {
     warningMessageBox(tr("delivery note number is empty!"));
