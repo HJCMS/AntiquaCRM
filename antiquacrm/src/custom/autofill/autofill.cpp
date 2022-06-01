@@ -10,8 +10,7 @@
 #include <QtCore>
 
 static const QString dataLocation(const QString &sfile) {
-  QStringList list =
-      QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+  QStringList list = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
   QFileInfo fi;
   foreach (QString l, list) {
     fi.setFile(l + sfile);
@@ -50,7 +49,6 @@ const QString Autofill::findFile(const QString &key) const {
 QCompleter *Autofill::loadAutofill(const QString &key) {
   QString file = findFile(key);
   if (!file.isEmpty()) {
-    // qDebug() << Q_FUNC_INFO << file;
     QStringList list;
     QFile fp(file);
     if (fp.open(QIODevice::ReadOnly | QIODevice::Text)) {

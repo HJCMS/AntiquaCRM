@@ -25,10 +25,12 @@ PluginLoader::PluginLoader(QObject *parent) : QPluginLoader{parent} {
   lp.append("plugins");
   lp.append(QDir::separator());
   lp.append("antiqua");
-  // Global PluginPath
-  QString gp(QLibraryInfo::location(QLibraryInfo::PluginsPath));
+  // LSB LIBRARY DESTINATION lib${LIB_SUFFIX}/antiqua/plugins
+  QString gp(QLibraryInfo::location(QLibraryInfo::LibrariesPath));
   gp.append(QDir::separator());
   gp.append("antiqua");
+  lp.append(QDir::separator());
+  lp.append("plugins");
 
   QStringList paths;
   paths << gp;
