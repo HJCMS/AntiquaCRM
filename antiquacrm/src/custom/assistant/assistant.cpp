@@ -191,10 +191,13 @@ void Assistant::save() {
   cfg->beginGroup("postgresql");
   while (sql.hasNext()) {
     sql.next();
+    if(sql.value().isNull())
+      continue;
+
     cfg->setValue(sql.key(), sql.value());
-    if(sql.key() == "password")
-    {
-      QByteArray pw = sql.value().toLocal8Bit().toBase64(QByteArray::Base64Encoding);
+    if (sql.key() == "password") {
+      QByteArray pw =
+          sql.value().toLocal8Bit().toBase64(QByteArray::Base64Encoding);
       cfg->setValue(sql.key(), pw);
     }
   }
@@ -204,6 +207,9 @@ void Assistant::save() {
   cfg->beginGroup("ssloptions");
   while (ssl.hasNext()) {
     ssl.next();
+    if(sql.value().isNull())
+      continue;
+
     cfg->setValue(ssl.key(), ssl.value());
   }
   cfg->endGroup();
@@ -211,7 +217,34 @@ void Assistant::save() {
   unsaved = false;
 }
 
-void Assistant::pageEntered(int index) { Q_UNUSED(index) }
+void Assistant::pageEntered(int index) {
+  // SQL Daten Laden
+  if (m_stackedWidget->widget(index)->objectName() == "page2") {
+    cfg->beginGroup("postgresql");
+    foreach (QString k, cfg->allKeys()) {
+      if (k.contains("password"))
+        continue;
+
+      QPair<QString, QVariant> data;
+      data.first = k;
+      data.second = cfg->value(k);
+      m_configPgSQL->setData(data);
+    }
+    cfg->endGroup();
+  } else if (m_stackedWidget->widget(index)->objectName() == "page3") {
+    cfg->beginGroup("ssloptions");
+    foreach (QString k, cfg->allKeys()) {
+      if (k.contains("ssl_peer_pass"))
+        continue;
+
+      QPair<QString, QVariant> data;
+      data.first = k;
+      data.second = cfg->value(k);
+      m_configSSL->setData(data);
+    }
+    cfg->endGroup();
+  }
+}
 
 bool Assistant::event(QEvent *e) {
   if (e->type() == QEvent::StatusTip) {

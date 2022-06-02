@@ -22,7 +22,7 @@
 <context>
     <name>Antiqua::PurchaserOrderTable</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+15"/>
+        <location filename="../core/antiquacore/interface.cpp" line="+17"/>
         <source>Provider</source>
         <translation>Bestell Nr</translation>
     </message>
@@ -46,11 +46,16 @@
         <source>Summary</source>
         <translation>Zusammenfassung</translation>
     </message>
+    <message>
+        <location line="+8"/>
+        <source>inspect article</source>
+        <translation>Untersuche/Prüfe Artikel</translation>
+    </message>
 </context>
 <context>
     <name>Antiqua::PurchaserWidget</name>
     <message>
-        <location line="+18"/>
+        <location line="+20"/>
         <source>purchaser</source>
         <translation>Einkäufer*in</translation>
     </message>
@@ -108,7 +113,7 @@
         <translation>Verbindung erfolgreich!</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+135"/>
         <source>Unfinished Assistant</source>
         <translation>Unvollständiger Fortschritt</translation>
     </message>
@@ -480,7 +485,7 @@
 <context>
     <name>Buchfreund</name>
     <message>
-        <location filename="../plugins/antiqua/whsoft.cpp" line="+240"/>
+        <location filename="../plugins/antiqua/whsoft.cpp" line="+225"/>
         <source>Modify Item inventory count</source>
         <translation>Artikelbestand ändern</translation>
     </message>
@@ -498,6 +503,11 @@
         <location line="+4"/>
         <source>Update</source>
         <translation>Ändern</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Response Information</source>
+        <translation>Antwortinformationen</translation>
     </message>
 </context>
 <context>
@@ -842,32 +852,37 @@
         <translation>Wenn Sie diese Einstellungen nicht kennen. Überspringen Sie diesen Teil.</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>SSL/TLS Peer Configuration</source>
         <translation>SSL/TLS Peer Konfiguration</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Peer Certificate: ~/.postgresql/postgresql.crt</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+5"/>
         <source>Private Keyfile: ~/.postgresql/postgresql.key</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+4"/>
+        <source>Password</source>
+        <translation>Passwort</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Server Certificate: CommonName</source>
         <translation>Server Zertifikat: CommonName</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Issuer (CA) from Server Certificate</source>
         <translation>Unterzeichner (CA) Zertifikat vom Server</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>CA Root directory</source>
         <translation>CA Stammverzeichniss</translation>
     </message>
@@ -877,12 +892,12 @@
         <translation>Setzen</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>CA Issuer</source>
         <translation>CA Unterzeichner</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+50"/>
         <source>Open CA Bundle</source>
         <translation>Öffne CA Bündel</translation>
     </message>
@@ -1194,7 +1209,7 @@
 <context>
     <name>DeliveryNote</name>
     <message>
-        <location filename="../custom/printing/deliverynote.cpp" line="+21"/>
+        <location filename="../custom/printing/deliverynote.cpp" line="+17"/>
         <source>Delivery note</source>
         <translation>Lieferschein</translation>
     </message>
@@ -1382,6 +1397,29 @@
         <location line="+2"/>
         <source>Go back to Mainview</source>
         <translation>Gehe zurück zur Hauptansicht</translation>
+    </message>
+</context>
+<context>
+    <name>EditorWidget</name>
+    <message>
+        <location filename="../custom/storage/storagelocation.cpp" line="+14"/>
+        <source>Storage ID</source>
+        <translation>Lager-Id</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Storage</source>
+        <translation>Lager</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Identifier</source>
+        <translation>Zuordnung</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Location</source>
+        <translation>Ort</translation>
     </message>
 </context>
 <context>
@@ -1692,32 +1730,33 @@
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="+231"/>
+        <location line="+57"/>
+        <source>exists with count</source>
+        <translation>ist Verfügbar mit der Anzahl</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>is not available!</source>
+        <translation>ist nicht Verfügbar!</translation>
+    </message>
+    <message>
+        <location line="+184"/>
         <source>customer found in database!</source>
         <translation>Kundeneintrag gefunden!</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>customer not exits!</source>
         <translation>Kunde existiert nicht!</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>this</source>
-        <translation>Dieser</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>article is not available!</source>
-        <translation>Artikel ist nicht verfügbar!</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="-204"/>
+        <location line="+12"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+217"/>
         <source>open order editor</source>
         <translation>Öffne Auftragseditor</translation>
     </message>
@@ -1730,7 +1769,7 @@
 <context>
     <name>Invoice</name>
     <message>
-        <location filename="../custom/printing/invoice.cpp" line="+55"/>
+        <location filename="../custom/printing/invoice.cpp" line="+51"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
@@ -1757,7 +1796,7 @@
     <message>
         <location line="+28"/>
         <source>Article-ID</source>
-        <translation>Artikel Nr.</translation>
+        <translation>Artikel Nummer</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -1839,7 +1878,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+78"/>
+        <location filename="../mwindow.cpp" line="+79"/>
         <source>Customers</source>
         <translation>Kunden</translation>
     </message>
@@ -1880,6 +1919,11 @@
     </message>
     <message>
         <location line="+4"/>
+        <source>Storage Locations</source>
+        <translation>Lager Positionen</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Conditions</source>
         <translation>Zustand</translation>
     </message>
@@ -1904,18 +1948,18 @@
         <translation>&lt;b&gt;Sie haben nicht gespeicherte Änderungen.&lt;/b&gt;&lt;p&gt;Möchten sie wirklich die Anwendung schließen?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+67"/>
         <source>SQL Server Error</source>
         <translation>SQL Serverfehler</translation>
     </message>
     <message>
-        <location line="-94"/>
-        <location line="+107"/>
+        <location line="-106"/>
+        <location line="+119"/>
         <source>Fullscreen</source>
         <translation>Vollansicht</translation>
     </message>
     <message>
-        <location line="-173"/>
+        <location line="-185"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
@@ -1945,7 +1989,7 @@
         <translation>Konfiguration</translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+115"/>
         <source>Disable Fullscreen</source>
         <translation>Vollansicht beenden</translation>
     </message>
@@ -2081,8 +2125,8 @@
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
-        <location line="+259"/>
-        <location line="+442"/>
+        <location line="+257"/>
+        <location line="+444"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
@@ -3557,6 +3601,52 @@
     </message>
 </context>
 <context>
+    <name>StorageLocation</name>
+    <message>
+        <location filename="../custom/storage/storagelocation.cpp" line="+24"/>
+        <source>new entry</source>
+        <translation>Neuer Eintrag</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>insert a new storage location</source>
+        <translation>Erstelle einen neuen Eintrag</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>search</source>
+        <translation>Suche</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>search in table</source>
+        <translation>Suche in Tabelle</translation>
+    </message>
+</context>
+<context>
+    <name>StorageModel</name>
+    <message>
+        <location filename="../custom/storage/storagemodel.cpp" line="+32"/>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Storage</source>
+        <translation>Lager</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Identifier</source>
+        <translation>Zuweisung</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Location</source>
+        <translation>Lagerort</translation>
+    </message>
+</context>
+<context>
     <name>StrLineEdit</name>
     <message>
         <location filename="../custom/utils/strlineedit.cpp" line="+164"/>
@@ -3696,7 +3786,7 @@
 <context>
     <name>WHSoftPurchaser</name>
     <message>
-        <location filename="../plugins/antiqua/whsoft.cpp" line="-85"/>
+        <location filename="../plugins/antiqua/whsoft.cpp" line="-93"/>
         <source>Customer</source>
         <translation>Kunde</translation>
     </message>
@@ -3722,19 +3812,16 @@
     </message>
 </context>
 <context>
-    <name>WHSoftTable</name>
-    <message>
-        <location line="-58"/>
-        <source>inspect article</source>
-        <translation>Untersuche/Prüfe Artikel</translation>
-    </message>
-</context>
-<context>
     <name>WHSoftWidget</name>
     <message>
-        <location line="+179"/>
+        <location line="+128"/>
         <source>purchaser</source>
         <translation>Einkäufer*in</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>article check</source>
+        <translation>Artikel prüfen</translation>
     </message>
 </context>
 <context>

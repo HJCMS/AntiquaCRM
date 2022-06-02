@@ -4,6 +4,7 @@
 #ifndef ANTIQUA_INTERFACE_H
 #define ANTIQUA_INTERFACE_H
 
+#include <QContextMenuEvent>
 #include <QGroupBox>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -13,16 +14,37 @@
 #include <QMetaType>
 #include <QObject>
 #include <QScrollArea>
-#include <QUrl>
-#include <QWidget>
 #include <QTableWidget>
 #include <QTableWidgetItem>
+#include <QUrl>
+#include <QWidget>
+#include <QDateTime>
 
 #include "antiqua_global.h"
 #include "providerorders.h"
 
+/**
+ * @def ANTIQUA_INTERFACE
+ * @ingroup Antiqua Plugin Interface
+ */
 #ifndef ANTIQUA_INTERFACE
-# define ANTIQUA_INTERFACE "de.hjcms.@PROJECTNAME@.AntiquaFactoryInterface"
+#define ANTIQUA_INTERFACE "de.hjcms.@PROJECTNAME@.AntiquaFactoryInterface"
+#endif
+
+/**
+ * @def ANTIQUA_DATETIME_FORMAT
+ * @ingroup Antiqua Plugin Interface
+ * @brief Das vom System vorgegebene Datumsformat ist ISO 8601!
+ * Soll verhindern das bei der Umwandlung von einem String, die Konvertierung nicht fehlschlägt!
+ * @code
+ *  QJsonObject import;
+ *  QJsonObject obj = jsonArray[i].toObject();
+ *  QDateTime d = QDateTime::fromString(obj["datetime"].toString(), "yyyy-MM-dd hh:mm:ss");
+ *  import.insert("datetime", QJsonValue(d.toString(ANTIQUA_DATETIME_FORMAT)));
+ * @endcode
+ */
+#ifndef ANTIQUA_DATETIME_FORMAT
+#define ANTIQUA_DATETIME_FORMAT Qt::ISODate
 #endif
 
 /**
@@ -33,7 +55,7 @@ namespace Antiqua {
   /**
    * @class Antiqua::PurchaserOrderTable
    * @ingroup Antiqua Plugin Interface
-   * @brief Tabelle für die Bestellartikel Anzeige
+   * @brief Tabelle für die Bestellartikel anzeigen
    * Die Standardformatierung der Zellen ist Text und alle Zellen sind
    * auf nur lesen gestellt. Die Tabelle dient Primär zur Bestellungsanzeige.
    * Es werden die Artikel Nr. mit Antiqua::InterfaceWidget::getArticleIds(column) ausgelesen.
@@ -46,11 +68,15 @@ namespace Antiqua {
    *  --------------------------------------------------------
    * @endcode
    */
-  class ANTIQUACORE_EXPORT PurchaserOrderTable : public QTableWidget {
+  class ANTIQUACORE_EXPORT PurchaserOrderTable final : public QTableWidget {
     Q_OBJECT
 
   protected:
     void addHeaderItem(int, const QString &name);
+    void contextMenuEvent(QContextMenuEvent *);
+
+  Q_SIGNALS:
+    void findArticleNumbers();
 
   public:
     explicit PurchaserOrderTable(QWidget *parent = nullptr);
@@ -84,6 +110,7 @@ namespace Antiqua {
   /**
    * @class Antiqua::ProviderWidget
    * @ingroup Antiqua Plugin Interface
+   * @brief Haupseite des Dienstleisters
    */
   class ANTIQUACORE_EXPORT ProviderWidget : public QWidget
   {
@@ -97,6 +124,7 @@ namespace Antiqua {
   /**
    * @class Antiqua::InterfaceWidget
    * @ingroup Antiqua Plugin Interface
+   * @brief Hier werden die Bestellungen verarbeitet.
    */
   class ANTIQUACORE_EXPORT InterfaceWidget : public QScrollArea
   {
@@ -105,6 +133,27 @@ namespace Antiqua {
   protected:
     int currentCustomerId = -1;
     virtual const QVariant tableData(int row, int column) = 0;
+
+    /**
+    * @brief Erstellt abfrage Datensatz für Kundenabfrage
+    * @code
+    *  {
+    *    "provider" : String::"Antiqua::Interface::provider()",
+    *    "type" : "customer_request",
+    *    "c_firstname",  String::Vorname,
+    *    "c_lastname",   String::Nachname,
+    *    "c_postalcode", String::Postleitzahl,
+    *    "c_location",   String::Wohnort
+    *  }
+    * @endcode
+    * @see SIGNAL::checkCustomer(const QJsonDocument &)
+    */
+    virtual const QJsonDocument customerRequest(const QJsonObject &object) = 0;
+
+    /**
+    * @brief Rechnungs und Lieferadressen einlesen
+    */
+    virtual void parseAddressBody(const QString &section, const QJsonObject &object) = 0;
 
   Q_SIGNALS:
     /**
@@ -128,6 +177,11 @@ namespace Antiqua {
      * @brief Kundendatensetz erstellen!
      */
     void createCustomer(const QJsonDocument &);
+
+    /**
+     * @brief Sende Signal mit Liste der eingefügten Bestellnummern
+     */
+    void checkArticleIds(QList<int> &);
 
   public Q_SLOTS:
     /**
@@ -198,7 +252,7 @@ namespace Antiqua {
     Q_OBJECT
     Q_CLASSINFO("Interface", ANTIQUA_INTERFACE)
     Q_CLASSINFO("Description", "@DISPLAYNAME@ Interface")
-    Q_CLASSINFO("Version", "@ANTIQUACRM_VERSION_MAJOR@.@ANTIQUACRM_VERSION_MINOR@.@ANTIQUACRM_VERSION_RELEASE@")
+    Q_CLASSINFO("Version", "@ANTIQUACRM_VERSION_STRING@")
     Q_CLASSINFO("Url", "https://www.hjcms.de")
 
   Q_SIGNALS:
@@ -214,7 +268,7 @@ namespace Antiqua {
      * {
      *  "provider":"String",
      *  "items":[{
-     *    "datum": "String:Datum:ISO8601",
+     *    "datum": ANTIQUA_DATETIME_FORMAT,
      *    "id": "Provider Bestellnummer"
      *  }]
      * }
@@ -226,6 +280,7 @@ namespace Antiqua {
 
     /**
      * @brief Hauptseite des Dienstanbieters
+     * Auf dieser Seite können zusätzliche Operationen zum Provider eingefügt werden.
      */
     virtual Antiqua::ProviderWidget *providerWidget(const QString &widgetId, QWidget * parent) = 0;
 

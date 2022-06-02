@@ -10,6 +10,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QMap>
+#include <QPair>
 #include <QString>
 
 class ConfigPgSQL : public QWidget {
@@ -17,13 +18,14 @@ class ConfigPgSQL : public QWidget {
 
 private:
   QLineEdit *hostname;
-  QLineEdit *dbname;
+  QLineEdit *database;
   QLineEdit *port;
   QLineEdit *username;
   QLineEdit *password;
 
 public:
   explicit ConfigPgSQL(QWidget *parent = nullptr);
+  void setData(const QPair<QString,QVariant> &);
   const QMap<QString,QString> configuration();
 };
 

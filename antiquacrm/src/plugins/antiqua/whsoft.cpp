@@ -3,11 +3,8 @@
 
 #include "whsoft.h"
 
-#include <QAction>
-#include <QDateTime>
 #include <QJsonArray>
 #include <QJsonValue>
-#include <QMenu>
 #include <QPushButton>
 #include <QStyle>
 #include <QTabWidget>
@@ -126,19 +123,6 @@ void WHSoftJSonQuery::customQuery(const QString &operation,
           SIGNAL(orderResponsed(const QJsonDocument &)));
   connect(prQuery, SIGNAL(finished()), prQuery, SLOT(deleteLater()));
   prQuery->sendPost(url, data);
-}
-
-WHSoftTable::WHSoftTable(QWidget *parent)
-    : Antiqua::PurchaserOrderTable{parent} {}
-
-void WHSoftTable::contextMenuEvent(QContextMenuEvent *e) {
-  QMenu *m = new QMenu("Actions", this);
-  QAction *ac_remove = m->addAction(
-      style()->standardIcon(QStyle::SP_ComputerIcon), tr("inspect article"));
-  ac_remove->setObjectName("ac_context_search_article");
-  connect(ac_remove, SIGNAL(triggered()), this, SIGNAL(findArticleNumbers()));
-  m->exec(e->globalPos());
-  delete m;
 }
 
 WHSoftPurchaser::WHSoftPurchaser(QWidget *parent)
@@ -314,13 +298,21 @@ WHSoftWidget::WHSoftWidget(const QString &widgetId, QWidget *parent)
   QVBoxLayout *layout = new QVBoxLayout(mainWidget);
   layout->setContentsMargins(0, 0, 0, 0);
   // BEGIN Artikelanzeige
-  m_orderTable = new WHSoftTable(mainWidget);
+  m_orderTable = new Antiqua::PurchaserOrderTable(mainWidget);
   layout->addWidget(m_orderTable);
   // END
 
+  QHBoxLayout *infoLayout = new QHBoxLayout();
+  infoLayout->setContentsMargins(10, 2, 10, 2);
   QLabel *lbInfo = new QLabel(tr("purchaser"));
   lbInfo->setIndent(10);
-  layout->addWidget(lbInfo);
+  infoLayout->addWidget(lbInfo);
+  infoLayout->addStretch(1);
+  QPushButton *btn_check = new QPushButton(this);
+  btn_check->setText(tr("article check"));
+  btn_check->setIcon(style()->standardIcon(QStyle::SP_MessageBoxQuestion));
+  infoLayout->addWidget(btn_check);
+  layout->addLayout(infoLayout);
 
   // BEGIN Verkäufer
   m_purchaserWidget = new WHSoftPurchaser(this);
@@ -332,6 +324,8 @@ WHSoftWidget::WHSoftWidget(const QString &widgetId, QWidget *parent)
   setWidget(mainWidget);
 
   connect(m_orderTable, SIGNAL(findArticleNumbers()), this,
+          SLOT(readCurrentArticleIds()));
+  connect(btn_check, SIGNAL(clicked()), this,
           SLOT(readCurrentArticleIds()));
 }
 
@@ -438,7 +432,8 @@ void WHSoftWidget::readCurrentArticleIds() {
       ids.append(item->data(Qt::DisplayRole).toInt());
     }
   }
-  emit s_checkArticles(ids);
+  if (ids.count() > 0)
+    emit checkArticleIds(ids);
 }
 
 void WHSoftWidget::setContent(const QJsonDocument &doc) {
@@ -508,32 +503,6 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
 }
 
 void WHSoftWidget::createOrderRequest(const QString &bfId) {
-  if (PLUGIN_TEST_MODE) {
-    // DUMMY TEST
-    QString buffer;
-    QString p("/Developement/antiqua/antiquacrm/src/plugins/antiqua/");
-    p.append("example-whsoft-order.json");
-
-    QFile fp(QDir::homePath() + p);
-    if (fp.open(QIODevice::ReadOnly)) {
-      QTextStream str(&fp);
-      str.setCodec("UTF8");
-      buffer.append(str.readAll());
-      fp.close();
-    }
-
-    QJsonParseError parser;
-    QJsonDocument doc = QJsonDocument::fromJson(buffer.toLocal8Bit(), &parser);
-    if (parser.error != QJsonParseError::NoError) {
-      qWarning("Json Parse Error!");
-      return;
-    }
-    setContent(doc);
-
-    qDebug() << Q_FUNC_INFO << "DUMMY" << bfId;
-    return;
-  }
-
   WHSoftJSonQuery *mq = new WHSoftJSonQuery(this);
   mq->setObjectName("json_query_" + objectName());
   connect(mq, SIGNAL(orderResponsed(const QJsonDocument &)), this,
@@ -600,7 +569,7 @@ void WHSoft::prepareJsonListResponse(const QJsonDocument &doc) {
       QJsonObject obj = array[i].toObject();
       convert.insert("id", obj["id"]);
       QDateTime d = QDateTime::fromString(obj["datum"].toString(), DATE_FORMAT);
-      convert.insert("datum", QJsonValue(d.toString(Qt::ISODate)));
+      convert.insert("datum", QJsonValue(d.toString(ANTIQUA_DATETIME_FORMAT)));
       senderArray.append(convert);
     }
     QJsonObject senderObject;

@@ -42,6 +42,11 @@ bool MApplication::initTranslations() {
   return false;
 }
 
+void MApplication::openAssistant() {
+  Assistant assistant;
+  assistant.exec();
+}
+
 bool MApplication::isRunning() {
   QLocalSocket socket(this);
   socket.setServerName(SocketServer::name());
@@ -68,9 +73,7 @@ int MApplication::exec() {
 
   // First Run ?
   if (m_settings->value("postgresql/hostname").toString().isEmpty()) {
-    Assistant assistant;
-    assistant.exec();
-    qDebug() << "assistant";
+    openAssistant();
     return 0;
   }
 
@@ -78,6 +81,7 @@ int MApplication::exec() {
   m_sqlDB = new HJCMS::SqlCore(this);
   if (!m_sqlDB->sqlDriversExists()) {
     qInfo("TODO QWizzard Dialog first Access");
+    openAssistant();
     return 0;
   }
 
@@ -88,6 +92,7 @@ int MApplication::exec() {
 
   if (!m_sqlDB->initialDatabase()) {
     qWarning("Database connection failed ...");
+    openAssistant();
     return 0;
   }
 

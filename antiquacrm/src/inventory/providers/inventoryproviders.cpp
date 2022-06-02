@@ -73,6 +73,23 @@ bool InventoryProviders::tabExists(const QString &id) {
   return false;
 }
 
+void InventoryProviders::statusMessageArticle(int articleId, int count) {
+  QString info(tr("Article"));
+  info.append(" '");
+  info.append(QString::number(articleId));
+  info.append("' ");
+  if (count > 0) {
+    info.append(tr("exists with count"));
+    info.append(" '");
+    info.append(QString::number(count));
+    info.append("'.");
+    m_toolBar->statusMessage(info);
+  } else {
+    info.append(tr("is not available!"));
+    QMessageBox::warning(this, tr("Article"), info);
+  }
+}
+
 void InventoryProviders::searchConvert() {
   if (p_iFaces.count() > 0) {
     QListIterator<Antiqua::Interface *> it(p_iFaces);
@@ -114,8 +131,7 @@ bool InventoryProviders::loadInterfaces() {
   return true;
 }
 
-void InventoryProviders::queryProviderPage(const QString &provider)
-{
+void InventoryProviders::queryProviderPage(const QString &provider) {
   if (tabExists(provider))
     return;
 
@@ -148,8 +164,9 @@ void InventoryProviders::queryOrder(const QString &provider,
               SLOT(createQueryCustomer(const QJsonDocument &)));
       connect(w, SIGNAL(createCustomer(const QJsonDocument &)), this,
               SLOT(createNewCustomer(const QJsonDocument &)));
-      connect(w, SIGNAL(s_checkArticles(QList<int> &)), this,
+      connect(w, SIGNAL(checkArticleIds(QList<int> &)), this,
               SLOT(checkArticleExists(QList<int> &)));
+
       m_pageView->addPage(w, orderId);
       /**
        * @warning tabExists() @b MUSS UNBEDINGT vor createOrderRequest()
@@ -165,12 +182,12 @@ void InventoryProviders::queryOrder(const QString &provider,
 }
 
 void InventoryProviders::createEditCustomer(int cid) {
-  m_toolBar->enableOrderButton(true);
   if (cid > 0) {
     customerId = cid;
     emit openEditCustomer(customerId);
   } else {
     customerId = -1;
+    m_toolBar->enableOrderButton(false);
   }
 }
 
@@ -215,7 +232,6 @@ void InventoryProviders::createNewCustomer(const QJsonDocument &doc) {
       Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
       if (tab != nullptr) {
         tab->setCustomerId(customerId);
-        m_toolBar->enableOrderButton(true);
         emit openEditCustomer(customerId);
       }
     }
@@ -254,7 +270,6 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
         qDebug() << "Customer Found:" << customerId << tab->objectName();
         tab->setCustomerId(customerId);
         m_toolBar->statusMessage(tr("customer found in database!"));
-        m_toolBar->enableOrderButton(true);
       }
     }
   } else {
@@ -268,20 +283,18 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
 }
 
 void InventoryProviders::checkArticleExists(QList<int> &list) {
+  bool exists = true;
   for (int i = 0; i < list.size(); i++) {
-    QString aid = QString::number(list[i]);
-    QSqlQuery q = m_sql->query(queryArticleExists(aid));
+    int aid = list[i];
+    QSqlQuery q = m_sql->query(queryArticleCount(aid));
     if (q.size() > 0) {
       q.next();
-      qDebug() << Q_FUNC_INFO << "Found Article:" << q.value(0);
-      m_toolBar->statusMessage(tr("article exits!"));
-    } else {
-      QString info(tr("this"));
-      info.append(" " + aid + " ");
-      info.append(tr("article is not available!"));
-      QMessageBox::warning(this, tr("Article"), info);
+      int count = q.value("count").toInt();
+      statusMessageArticle(aid, count);
+      exists = (count>0 && exists) ? true: false;
     }
   }
+  m_toolBar->enableOrderButton(exists);
 }
 
 void InventoryProviders::createEditOrders() {

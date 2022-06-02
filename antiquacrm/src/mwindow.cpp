@@ -9,6 +9,7 @@
 #include "filedialog.h"
 #include "myicontheme.h"
 #include "statusbar.h"
+#include "storagelocation.h"
 #include "workspace.h"
 
 #include <QJsonDocument>
@@ -147,6 +148,10 @@ void MWindow::setupActions() {
   m_tablesMenu->setObjectName("top_table_menu");
   m_tablesMenu->setIcon(myIcon("database"));
 
+  QAction *a_bst = m_tablesMenu->addAction(tr("Storage Locations"));
+  a_bst->setIcon(myIcon("spreadsheet"));
+  connect(a_bst, SIGNAL(triggered(bool)), this, SLOT(openStorageLocation(bool)));
+
   QAction *a_bct = m_tablesMenu->addAction(tr("Conditions"));
   a_bct->setIcon(myIcon("spreadsheet"));
   connect(a_bct, SIGNAL(triggered(bool)), this, SLOT(openCondition(bool)));
@@ -164,9 +169,10 @@ void MWindow::setupActions() {
 
 void MWindow::closeWindow() {
   if (isWindowModified()) {
-    int ret = QMessageBox::question(
-        this, tr("Save request"),
-        tr("<b>You have unsaved changes.</b><p>Do you really want to close the application?</p>"));
+    int ret =
+        QMessageBox::question(this, tr("Save request"),
+                              tr("<b>You have unsaved changes.</b><p>Do you "
+                                 "really want to close the application?</p>"));
     if (ret == QMessageBox::No) {
       return;
     }
@@ -198,11 +204,18 @@ void MWindow::openEditDesignation(const QString &section) {
   }
 }
 
-void MWindow::openCondition(bool) { openEditCondition(); };
+void MWindow::openStorageLocation(bool) {
+  StorageLocation *d = new StorageLocation(this);
+  if (d->exec()) {
+    qDebug() << Q_FUNC_INFO << "TODO";
+  }
+}
 
-void MWindow::openBookDesignation(bool) { openEditDesignation("ib_"); };
+void MWindow::openCondition(bool) { openEditCondition(); }
 
-void MWindow::openPrintsDesignation(bool) { openEditDesignation("ip_"); };
+void MWindow::openBookDesignation(bool) { openEditDesignation("ib_"); }
+
+void MWindow::openPrintsDesignation(bool) { openEditDesignation("ip_"); }
 
 void MWindow::openFileDialog(bool) {
   FileDialog *m_dialog = new FileDialog(this);

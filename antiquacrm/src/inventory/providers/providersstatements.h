@@ -28,14 +28,15 @@
 #endif
 
 /**
- * @brief Sucht Artikel der einen Bestand aufweist!
+ * @brief Suche Artikel und gebe die Menge zurück!
  * @ingroup Providers SQL Statements
  * @param aid
- * @return SqlQuery
+ * @return SqlQuery count
  */
-static const QString queryArticleExists(const QString &aid) {
-  QString s("SELECT func_find_inventory_articleid(");
-  s.append(aid + ");");
+static const QString queryArticleCount(int aid) {
+  QString s("SELECT func_get_article_count(");
+  s.append(QString::number(aid));
+  s.append(") AS count;");
   return s;
 }
 

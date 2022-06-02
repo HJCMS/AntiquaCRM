@@ -43,6 +43,10 @@ private:
   void setButtonBox();
   bool connectionTest();
 
+  void keyPressEvent(QKeyEvent *);
+  void closeEvent(QCloseEvent *);
+  bool event(QEvent *);
+
 private Q_SLOTS:
   void restart();
   void previousPage();
@@ -52,9 +56,6 @@ private Q_SLOTS:
   void test();
   void save();
   void pageEntered(int);
-  void keyPressEvent(QKeyEvent *);
-  void closeEvent(QCloseEvent *);
-  bool event(QEvent *);
 
 public:
   explicit Assistant(QWidget *parent = nullptr);

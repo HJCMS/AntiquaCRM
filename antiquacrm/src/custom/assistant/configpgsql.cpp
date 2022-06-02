@@ -27,10 +27,10 @@ ConfigPgSQL::ConfigPgSQL(QWidget *parent) : QWidget{parent} {
   t_dbname->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   layout->addWidget(t_dbname, row, 0, 1, 1);
 
-  dbname = new QLineEdit(this);
-  dbname->setObjectName("databasename");
-  dbname->setPlaceholderText("antiquacrm");
-  layout->addWidget(dbname, row++, 1, 1, 1);
+  database = new QLineEdit(this);
+  database->setObjectName("database");
+  database->setPlaceholderText("antiquacrm");
+  layout->addWidget(database, row++, 1, 1, 1);
 
   QLabel *t_port = new QLabel(tr("Port:"), this);
   t_port->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -62,10 +62,22 @@ ConfigPgSQL::ConfigPgSQL(QWidget *parent) : QWidget{parent} {
   setLayout(layout);
 }
 
+void ConfigPgSQL::setData(const QPair<QString, QVariant> &data) {
+  QString name = data.first;
+  QVariant value = data.second;
+  if (name.isEmpty() || value.isNull())
+    return;
+
+  QLineEdit *e = findChild<QLineEdit *>(name);
+  if (e != nullptr && value.type() == QVariant::String) {
+    e->setText(value.toString().trimmed());
+  }
+}
+
 const QMap<QString, QString> ConfigPgSQL::configuration() {
   QMap<QString, QString> m;
   m.insert("hostname", hostname->text().trimmed());
-  m.insert("database", dbname->text().trimmed());
+  m.insert("database", database->text().trimmed());
   m.insert("port", port->text().trimmed());
   m.insert("username", username->text().trimmed());
   m.insert("password", password->text().trimmed());

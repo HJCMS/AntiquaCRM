@@ -12,6 +12,7 @@
 #include <QComboBox>
 #include <QSslCertificate>
 #include <QMap>
+#include <QPair>
 
 class ConfigSSL : public QWidget {
   Q_OBJECT
@@ -20,6 +21,7 @@ private:
   QGroupBox *sslPeer;
   QLineEdit *sslPeerCertPath;
   QLineEdit *sslKeyFilePath;
+  QLineEdit *sslPeerPass;
   QLineEdit *sslCommonName;
   QLineEdit *sslCaBundlePath;
   QLineEdit *sslCaIssuer;
@@ -33,6 +35,7 @@ private Q_SLOTS:
 
 public:
   explicit ConfigSSL(QWidget *parent = nullptr);
+  void setData(const QPair<QString,QVariant> &);
   const QMap<QString,QString> configuration();
   const QSslCertificate getCA();
 };

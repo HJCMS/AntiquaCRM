@@ -5,7 +5,6 @@
 #ifndef ANTIQUA_WHSOFT_PLUGIN_H
 #define ANTIQUA_WHSOFT_PLUGIN_H
 
-#include <QContextMenuEvent>
 #include <QLabel>
 #include <QLineEdit>
 #include <QObject>
@@ -58,19 +57,6 @@ public:
   explicit WHSoftJSonQuery(QObject *parent = nullptr);
 };
 
-class ANTIQUACORE_EXPORT WHSoftTable : public Antiqua::PurchaserOrderTable {
-  Q_OBJECT
-
-protected:
-  void contextMenuEvent(QContextMenuEvent *);
-
-Q_SIGNALS:
-  void findArticleNumbers();
-
-public:
-  explicit WHSoftTable(QWidget *parent = nullptr);
-};
-
 class ANTIQUACORE_EXPORT WHSoftPurchaser final
     : public Antiqua::PurchaserWidget {
   Q_OBJECT
@@ -86,6 +72,10 @@ public:
   const QVariant getValue(const QString &objName);
 };
 
+/**
+ * @brief Hauptseite des Dienstleisters
+ * @ingroup Antiqua Plugin Interface
+ */
 class ANTIQUACORE_EXPORT Buchfreund final : public Antiqua::ProviderWidget {
   Q_OBJECT
 
@@ -104,11 +94,15 @@ public:
   explicit Buchfreund(const QString &widgetId, QWidget *parent = nullptr);
 };
 
+/**
+ * @brief In dieser Klasse werden die Bestellungen verarbeitet.
+ * @ingroup Antiqua Plugin Interface
+ */
 class ANTIQUACORE_EXPORT WHSoftWidget final : public Antiqua::InterfaceWidget {
   Q_OBJECT
 
 private:
-  WHSoftTable *m_orderTable;
+  Antiqua::PurchaserOrderTable *m_orderTable;
   WHSoftPurchaser *m_purchaserWidget;
   QJsonDocument p_currentDocument;
 
@@ -116,17 +110,6 @@ private:
 
   /**
    * @brief Erstellt abfrage Datensatz für Kundenabfrage
-   * @code
-   *  {
-   *    "provider" : String::"Antiqua::Interface::provider()",
-   *    "type" : "customer_request",
-   *    "c_firstname",  String::Vorname,
-   *    "c_lastname",   String::Nachname,
-   *    "c_postalcode", String::Postleitzahl,
-   *    "c_location",   String::Wohnort
-   *  }
-   * @endcode
-   * @see SIGNAL::checkCustomer(const QJsonDocument &)
    */
   const QJsonDocument customerRequest(const QJsonObject &object);
 
@@ -150,9 +133,6 @@ public Q_SLOTS:
    * @brief Menü Einträge suchen
    */
   void createOrderRequest(const QString &bfId);
-
-Q_SIGNALS:
-  void s_checkArticles(QList<int> &);
 
 public:
   WHSoftWidget(const QString &widgetId, QWidget *parent = nullptr);

@@ -43,6 +43,7 @@ private:
 
 private Q_SLOTS:
   void closeWindow();
+  void openStorageLocation(bool);
   void openCondition(bool);
   void openBookDesignation(bool);
   void openPrintsDesignation(bool);

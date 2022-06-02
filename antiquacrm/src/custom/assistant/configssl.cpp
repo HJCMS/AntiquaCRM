@@ -22,16 +22,26 @@ ConfigSSL::ConfigSSL(QWidget *parent) : QWidget{parent} {
   layout->addWidget(title);
 
   sslPeer = new QGroupBox(this);
+  sslPeer->setObjectName("ssl_peer");
   sslPeer->setCheckable(true);
   sslPeer->setTitle(tr("SSL/TLS Peer Configuration"));
   sslPeer->setChecked(false);
   QVBoxLayout *bl = new QVBoxLayout(sslPeer);
-  sslPeerCertPath = new QLineEdit(sslPeer); /**< ssl_peer_cert */
-  sslPeerCertPath->setPlaceholderText(tr("Peer Certificate: ~/.postgresql/postgresql.crt"));
+  sslPeerCertPath = new QLineEdit(sslPeer);
+  sslPeerCertPath->setObjectName("ssl_peer_cert");
+  sslPeerCertPath->setPlaceholderText(
+      tr("Peer Certificate: ~/.postgresql/postgresql.crt"));
   bl->addWidget(sslPeerCertPath);
-  sslKeyFilePath = new QLineEdit(sslPeer); /**< ssl_peer_key */
-  sslKeyFilePath->setPlaceholderText(tr("Private Keyfile: ~/.postgresql/postgresql.key"));
+  sslKeyFilePath = new QLineEdit(sslPeer);
+  sslKeyFilePath->setObjectName("ssl_peer_key");
+  sslKeyFilePath->setPlaceholderText(
+      tr("Private Keyfile: ~/.postgresql/postgresql.key"));
   bl->addWidget(sslKeyFilePath);
+  sslPeerPass = new QLineEdit(sslPeer);
+  sslPeerPass->setObjectName("ssl_peer_pass");
+  sslPeerPass->setPlaceholderText(tr("Password"));
+  sslPeerPass->setEchoMode(QLineEdit::PasswordEchoOnEdit);
+  bl->addWidget(sslPeerPass);
   sslPeer->setLayout(bl);
   layout->addWidget(sslPeer);
 
@@ -41,6 +51,7 @@ ConfigSSL::ConfigSSL(QWidget *parent) : QWidget{parent} {
 
   sslCommonName = new QLineEdit(this);
   sslCommonName->setPlaceholderText("CN");
+  sslCommonName->setObjectName("ssl_CN");
   layout->addWidget(sslCommonName);
 
   QLabel *t_issuerPath = new QLabel(this);
@@ -49,6 +60,7 @@ ConfigSSL::ConfigSSL(QWidget *parent) : QWidget{parent} {
 
   QHBoxLayout *sp_layout = new QHBoxLayout();
   sslCaBundlePath = new QLineEdit(this);
+  sslCaBundlePath->setObjectName("ssl_bundle");
   sslCaBundlePath->setPlaceholderText(tr("CA Root directory"));
   sp_layout->addWidget(sslCaBundlePath);
   QPushButton *openFileDialog = new QPushButton(tr("Set"), this);
@@ -59,6 +71,7 @@ ConfigSSL::ConfigSSL(QWidget *parent) : QWidget{parent} {
   layout->addWidget(sslIssuers);
 
   sslCaIssuer = new QLineEdit(this);
+  sslCaIssuer->setObjectName("ssl_root_cert");
   sslCaIssuer->setPlaceholderText(tr("CA Issuer"));
   layout->addWidget(sslCaIssuer);
 
@@ -68,6 +81,24 @@ ConfigSSL::ConfigSSL(QWidget *parent) : QWidget{parent} {
   connect(openFileDialog, SIGNAL(clicked()), this, SLOT(setCaBundlePath()));
   connect(sslIssuers, SIGNAL(currentIndexChanged(int)), this,
           SLOT(setCaChanged(int)));
+}
+
+void ConfigSSL::setData(const QPair<QString, QVariant> &data) {
+  QString name = data.first;
+  QVariant value = data.second;
+  if (name.isEmpty() || value.isNull())
+    return;
+
+  QLineEdit *e = findChild<QLineEdit *>(name);
+  if (e != nullptr && value.type() == QVariant::String) {
+    QString str = value.toString().trimmed();
+    e->setText(str);
+    if (name == "ssl_bundle")
+      initCACertificates(str);
+  }
+
+  if (name == "ssl_peer")
+    sslPeer->setChecked(value.toBool());
 }
 
 void ConfigSSL::initCACertificates(const QString &dest) {

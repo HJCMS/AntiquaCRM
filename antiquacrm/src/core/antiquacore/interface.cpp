@@ -3,8 +3,10 @@
 
 #include "interface.h"
 
+#include <QAction>
 #include <QHeaderView>
 #include <QIcon>
+#include <QMenu>
 #include <QStyle>
 
 namespace Antiqua {
@@ -19,6 +21,16 @@ PurchaserOrderTable::PurchaserOrderTable(QWidget *parent)
   addHeaderItem(4, tr("Summary"));
   horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
   horizontalHeader()->setStretchLastSection(true);
+}
+
+void PurchaserOrderTable::contextMenuEvent(QContextMenuEvent *e) {
+  QMenu *m = new QMenu("Actions", this);
+  QAction *ac_remove = m->addAction(
+      style()->standardIcon(QStyle::SP_ComputerIcon), tr("inspect article"));
+  ac_remove->setObjectName("ac_context_search_article");
+  connect(ac_remove, SIGNAL(triggered()), this, SIGNAL(findArticleNumbers()));
+  m->exec(e->globalPos());
+  delete m;
 }
 
 void PurchaserOrderTable::addHeaderItem(int i, const QString &name) {

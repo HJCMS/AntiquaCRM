@@ -32,6 +32,7 @@ private:
   SocketServer *m_socket;
   bool initialSocketServer();
   bool initTranslations();
+  void openAssistant();
 
 public:
   explicit MApplication(int &argc, char **argv);

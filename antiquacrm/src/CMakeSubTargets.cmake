@@ -25,6 +25,8 @@ SET (PROJECT_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/printing
  ${CMAKE_CURRENT_BINARY_DIR}/custom/settings
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/settings
+ ${CMAKE_CURRENT_BINARY_DIR}/custom/storage
+ ${CMAKE_CURRENT_SOURCE_DIR}/custom/storage
  ${CMAKE_CURRENT_BINARY_DIR}/custom/utils
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/utils
  ${CMAKE_CURRENT_BINARY_DIR}/i18n
@@ -72,6 +74,7 @@ Imaging
 Assistant
 Autofill
 Printing
+StorageLocation
 InventoryBooks
 InventoryPrints
 InventoryOrders

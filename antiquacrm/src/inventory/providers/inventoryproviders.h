@@ -20,7 +20,6 @@ class ProvidersPageView;
 /**
  * @class InventoryProviders
  * Primäre Klasse für das Dienstleister Auftrags System
- *
  */
 class InventoryProviders final : public Inventory {
   Q_OBJECT
@@ -76,12 +75,19 @@ private:
 
   /**
    * @brief Einfache Fensterabfrage, bei vorhanden in den Vordergrund schieben.
-   * Suche nach vorhandenen Tab mit dem Objektnamen Wenn eines gefunden wird dann
-   * nach vorne holen und "true" zurück geben.
+   * Suche nach vorhandenen Tab mit dem Objektnamen Wenn eines gefunden wird
+   * dann nach vorne holen und "true" zurück geben.
    * @note Die Identifizierung der Objektnamen erfolgt
    *  durch die Bestellnummer des Dienstleisters!
    */
   bool tabExists(const QString &id);
+
+  /**
+   * @brief Nachricht über Verfügbarkeit
+   * @param articleId - Artikel Nummer
+   * @param count     - Verfügbarer Bestand
+   */
+  void statusMessageArticle(int articleId, int count = 0);
 
 private Q_SLOTS:
   /**
@@ -167,8 +173,12 @@ private Q_SLOTS:
   void createQueryCustomer(const QJsonDocument &doc);
 
   /**
-   * @brief Suche Artikel Nummer in Tabelle
-   * List alle Artikel Nummern aus Tabelle aus und sendet eine SQL:Suchanfrage
+   * @brief Suche Artikelbestand von Tabelle Bestellungen.
+   * Wird vom Plugin das Signal "checkArticleIds" gesendet. Werden hier
+   * alle Artikel Nummern mit einer SQL Stückzahlanfrage versehen und
+   * verarbeitet. Ist einer der Artikel @b nicht Verfügbar, wird der Auftrag
+   * erstellen Knopf mit @ref ProvidersToolBar::enableOrderButton Deaktiviert.
+   * Es wird Zusätzlich eine Info mit @ref statusMessageArticle erzeugt.
    */
   void checkArticleExists(QList<int> &);
 
@@ -195,7 +205,7 @@ private Q_SLOTS:
    *    "datum":"Datum/Zeit in ISO 8601 Format",
    *    "id":"Provider Bestellungs Id"
    *  }]
-   *  })
+   * })
    * @endcode
    *
    * @li provider - Identifizierung der Hauptgruppe
@@ -207,17 +217,20 @@ private Q_SLOTS:
 
 Q_SIGNALS:
   /**
-   * @brief Sende SIGNAL in Editoransicht öffnen.
+   * @brief Sende SIGNAL in Kunde im Editor öffnen.
+   * @see InventoryCustomers::editCustomer
    */
   void openEditCustomer(int cid);
 
   /**
-   * @brief Sende SIGNAL an Auftragseditor.
+   * @brief Sende SIGNAL an Auftrag erstellen.
+   * @see InventoryOrders::createOrder
    */
-  void openEditOrder(int cid);
+  QT_DEPRECATED void openEditOrder(int cid);
 
   /**
    * @brief Signal - Auftrag erstellen und an Elternfenster senden.
+   * @see InventoryOrders::createOrder
    */
   void createOrder(const ProviderOrder &);
 
