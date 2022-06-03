@@ -65,6 +65,8 @@ int Workspace::addInventoryBooks(int index) {
           SIGNAL(s_windowModified(bool)));
   connect(m_tabBooks, SIGNAL(s_postMessage(const QString &)), this,
           SIGNAL(s_postMessage(const QString &)));
+  connect(m_tabBooks, SIGNAL(s_articleCount(int, int)), this,
+          SLOT(updateArticleCount(int, int)));
   int i = insertTab(index, m_tabBooks, tr("Books"));
   m_tabBar->setTabData(i, m_tabBooks->isClosable());
   setTabToolTip(i, tr("Book Inventory"));
@@ -80,6 +82,8 @@ int Workspace::addInventoryPrints(int index) {
           SIGNAL(s_windowModified(bool)));
   connect(m_tabPrints, SIGNAL(s_postMessage(const QString &)), this,
           SIGNAL(s_postMessage(const QString &)));
+  connect(m_tabPrints, SIGNAL(s_articleCount(int, int)), this,
+          SLOT(updateArticleCount(int, int)));
   int i = insertTab(index, m_tabPrints, tr("Prints"));
   m_tabBar->setTabData(i, m_tabPrints->isClosable());
   setTabToolTip(i, tr("Prints, Stitches and Photo inventory"));
@@ -178,6 +182,18 @@ void Workspace::addArticleOrder(int articleId) {
     }
   } else {
     emit s_postMessage(tr("Order tab isn't open!"));
+  }
+}
+
+void Workspace::updateArticleCount(int articleId, int count) {
+  if (m_tabProviders != nullptr) {
+    if (m_tabProviders->updateArticleCount(articleId, count)) {
+      emit s_postMessage(tr("successfully"));
+    } else {
+      emit s_postMessage(tr("an error occurred"));
+    }
+  } else {
+    emit s_postMessage(tr("Provider tab isn't open!"));
   }
 }
 

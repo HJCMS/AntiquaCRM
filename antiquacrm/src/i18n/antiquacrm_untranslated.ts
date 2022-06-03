@@ -281,7 +281,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+108"/>
+        <location line="+109"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -296,7 +296,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-420"/>
+        <location line="-421"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -316,12 +316,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+208"/>
+        <location line="+209"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-289"/>
+        <location line="-290"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -485,7 +485,7 @@
 <context>
     <name>Buchfreund</name>
     <message>
-        <location filename="../plugins/antiqua/whsoft.cpp" line="+225"/>
+        <location filename="../plugins/antiqua/whsoft.cpp" line="+239"/>
         <source>Modify Item inventory count</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1688,7 +1688,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+90"/>
         <source>Automatic search disabled in this mode. Press enter to start the search!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1745,7 +1745,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+184"/>
+        <location line="+186"/>
         <source>customer found in database!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1755,13 +1755,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-204"/>
+        <location line="+48"/>
+        <source>an error occurred</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>successfully</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-256"/>
         <location line="+12"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+217"/>
+        <location line="+219"/>
         <source>open order editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3212,7 +3222,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="-120"/>
+        <location filename="../inventory/books/inventorybooks.cpp" line="-122"/>
         <source>Book Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3842,7 +3852,7 @@
 <context>
     <name>WHSoftWidget</name>
     <message>
-        <location line="+128"/>
+        <location line="+118"/>
         <source>purchaser</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3860,7 +3870,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+22"/>
         <source>Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3870,7 +3880,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>Prints</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3922,11 +3932,26 @@
         <source>Order tab isn&apos;t open!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+7"/>
+        <source>successfully</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>an error occurred</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Provider tab isn&apos;t open!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-141"/>
+        <location line="-157"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>

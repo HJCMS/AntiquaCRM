@@ -275,6 +275,9 @@ namespace Antiqua {
      */
     virtual void prepareJsonListResponse(const QJsonDocument &) = 0;
 
+  Q_SIGNALS:
+    void s_queryResponse(bool successfull);
+
   public:
     virtual bool createInterface(QObject * parent) = 0;
 
@@ -306,6 +309,11 @@ namespace Antiqua {
      * @brief Abfrage ob Daten vorhanden sind.
      */
     virtual void queryMenueEntries() = 0;
+
+    /**
+     * @brief Artikelbestands Änderungen senden.
+     */
+    virtual void updateArticleCount(int articleId, int count) = 0;
   };
 };
 

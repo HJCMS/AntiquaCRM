@@ -215,6 +215,12 @@ private Q_SLOTS:
    */
   void readOrderList(const QJsonDocument &doc);
 
+  /**
+   * @brief Anfrage Antwort Status
+   * @param errors  true = Antwortete mit fehlern!
+   */
+  void hasResponsed(bool errors);
+
 Q_SIGNALS:
   /**
    * @brief Sende SIGNAL in Kunde im Editor öffnen.
@@ -248,6 +254,14 @@ public:
     @param parent TabWidget
   */
   explicit InventoryProviders(QWidget *parent = nullptr);
+
+  /**
+   * @brief Sende Bestandsänderung
+   * @param articleId - Artikel Nummer
+   * @param count     - Aktuelle Anzahl im Bestand
+   */
+  bool updateArticleCount(int articleId, int count);
+
 };
 
 #endif // INVENTORY_PROVIDERS_H

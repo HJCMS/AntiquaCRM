@@ -86,6 +86,12 @@ protected:
   virtual void importSqlResult() = 0;
 
   /**
+   * @brief Suche in "sqlQueryResult" für Vergleichsoperationen
+   * @param key  Zeiger auf Datenfeld
+   */
+  const QVariant findResultValue(const QString &key);
+
+  /**
    * @brief Datensätze aufarbeiten
    * Soll von @ref createSqlUpdate und @ref createSqlInsert
    * aufgerufen werden.
@@ -199,20 +205,19 @@ Q_SIGNALS:
   void s_postMessage(const QString &);
 
   /**
-   * @brief Meldung Artikel Aktiviert/Deaktiviert.
-   * Nachricht das der Artikel Aktiviert oder Deaktiviert wurde.
-   * Wird in "createSqlUpdate" und in "realyDeactivateBookEntry"
-   * ausgelöst! Es wird nicht beim Insert abgefangen weil die Artikel ID zu
-   * diesem Zeitpunkt noch nicht vorhanden ist. (Also auch keine Augträge
-   * vorhanden sein können!)
+   * @brief Meldung Artikelbestand Remote ändern!
+   * Info senden das die Artikelanzahl sich geändert hat. Wird in
+   * "createSqlUpdate" und in "realyDeactivateBookEntry" ausgelöst! Es wird
+   * nicht beim Insert abgefangen weil die Artikel ID zu diesem Zeitpunkt noch
+   * nicht vorhanden ist. Also auch keine Aufträge vorhanden sein können!
    * @note Das Signal ist Relevant für die Auftrags und Shop Verwaltung!
    *       Es soll nur mitteilen das sich was geändert hat.
    *       Die Prüfung der Datensätze erlogt an anderer Stelle!
    *
-   * @li true  = Artikel wurde @b Aktiviert
-   * @li false = Artikel wurde @b Deaktiviert
+   * @param articleId  - Artikel Nummer
+   * @param count      - Artikel Bestand
    */
-  void s_articleActivation(bool);
+  void s_articleCount(int articleId, int count);
 
 public Q_SLOTS:
   /**

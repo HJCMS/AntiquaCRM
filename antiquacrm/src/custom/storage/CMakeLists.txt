@@ -4,7 +4,7 @@
 SET(_subproject "StorageLocation")
 
 SET (subproject_LINKER
- AntiquaCore
+ SqlCore
  Utils
 )
 

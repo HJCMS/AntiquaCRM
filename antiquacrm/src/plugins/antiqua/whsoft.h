@@ -169,6 +169,7 @@ private:
 
 private Q_SLOTS:
   void prepareJsonListResponse(const QJsonDocument &);
+  void responseAnswerCheck(const QJsonDocument &);
 
 public:
   bool createInterface(QObject *parent);
@@ -195,6 +196,13 @@ public:
    * @brief Menü Einträge suchen
    */
   void queryMenueEntries();
+
+  /**
+   * @brief Artikelbestand ändern!
+   * @param articleId
+   * @param count
+   */
+  void updateArticleCount(int articleId, int count);
 };
 
 #endif // ANTIQUA_WHSOFT_PLUGIN_H

@@ -111,6 +111,8 @@ InventoryPrints::InventoryPrints(QWidget *parent) : Inventory{parent} {
   connect(m_printsEditor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
   connect(m_printsEditor, SIGNAL(s_isModified(bool)), this,
           SLOT(setIsModified(bool)));
+  connect(m_printsEditor, SIGNAL(s_articleCount(int, int)), this,
+          SIGNAL(s_articleCount(int, int)));
 }
 
 void InventoryPrints::searchConvert(const QString &query) {

@@ -124,6 +124,8 @@ bool InventoryProviders::loadInterfaces() {
     p_providerList.append(iface->objectName());
     connect(iface, SIGNAL(listResponse(const QJsonDocument &)), this,
             SLOT(readOrderList(const QJsonDocument &)));
+    connect(iface, SIGNAL(s_queryResponse(bool)), this,
+            SLOT(hasResponsed(bool)));
 
     p_iFaces.append(iface);
     iface->queryMenueEntries();
@@ -291,7 +293,7 @@ void InventoryProviders::checkArticleExists(QList<int> &list) {
       q.next();
       int count = q.value("count").toInt();
       statusMessageArticle(aid, count);
-      exists = (count>0 && exists) ? true: false;
+      exists = (count > 0 && exists) ? true : false;
     }
   }
   m_toolBar->enableOrderButton(exists);
@@ -323,9 +325,36 @@ void InventoryProviders::readOrderList(const QJsonDocument &doc) {
   }
 }
 
+void InventoryProviders::hasResponsed(bool errors) {
+  if (errors) {
+    qWarning("InventoryProviders - plugin answered with an error!");
+    m_toolBar->statusMessage(tr("an error occurred"));
+  } else {
+    m_toolBar->statusMessage(tr("successfully"));
+  }
+}
+
 void InventoryProviders::onEnterChanged() {
   if (firstStart)
     return;
 
   firstStart = loadInterfaces();
+}
+
+bool InventoryProviders::updateArticleCount(int articleId, int count) {
+  if (!firstStart)
+    onEnterChanged();
+
+  if (p_iFaces.count() < 1)
+    return false;
+
+  QListIterator<Antiqua::Interface *> it(p_iFaces);
+  while (it.hasNext()) {
+    Antiqua::Interface *iface = it.next();
+    if (iface != nullptr) {
+      qDebug() << "Update:" << iface->provider() << articleId << count;
+      iface->updateArticleCount(articleId, count);
+    }
+  }
+  return true;
 }

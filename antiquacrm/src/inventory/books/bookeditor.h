@@ -25,7 +25,7 @@ class ISBNResults;
    @brief BookEditor
    Primäre Klasse zum erstellen/bearbeiten von Bucheinträgen.
  */
-class BookEditor : public EditorMain {
+class BookEditor final : public EditorMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")

@@ -54,34 +54,34 @@ private:
   InventoryProviders *m_tabProviders;
 
   /**
-     @brief Bücher Inventar öffnen
-  */
+   * @brief Bücher Inventar öffnen
+   */
   int addInventoryBooks(int index);
 
   /**
-     @brief Drucke & Stiche Inventar öffnen
-  */
+   * @brief Drucke & Stiche Inventar öffnen
+   */
   int addInventoryPrints(int index);
 
   /**
-     @brief Kundenregister Inventar öffnen
-  */
+   * @brief Kundenregister Inventar öffnen
+   */
   int addInventoryCustomers(int index);
 
   /**
-     @brief Bücher Inventar öffnen
-  */
+   * @brief Bücher Inventar öffnen
+   */
   int addInventoryOrders(int index);
 
   /**
-     @brief Bücher Inventar öffnen
-  */
+   * @brief Dienstleister Seite öffnen
+   */
   int addInventoryProviders(int index);
 
 private Q_SLOTS:
   /**
-    @brief Wenn der Tabe schließen Knopf betätigt wurde.
-  */
+   * @brief Wenn der Tabe schließen Knopf betätigt wurde.
+   */
   void closeTabClicked(int);
 
   /**
@@ -99,6 +99,11 @@ private Q_SLOTS:
    * @brief Artikel zu Auftrag hinzufügen
    */
   void addArticleOrder(int articleId);
+
+  /**
+   * @brief Artikel beim Dienstleister Aktivieren/Deaktivieren
+   */
+  void updateArticleCount(int articleId, int count);
 
   /**
    * @brief Wenn ein Tab nach vornde geholt wird

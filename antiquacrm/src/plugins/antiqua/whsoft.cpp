@@ -32,8 +32,8 @@
 #define CONFIG_PROVIDER "Buchfreund"
 #endif
 
-#ifndef PLUGIN_TEST_MODE
-#define PLUGIN_TEST_MODE false
+#ifndef PLUGIN_WHSOFT_DEBUG
+#define PLUGIN_WHSOFT_DEBUG false
 #endif
 
 /**
@@ -57,6 +57,20 @@ static int genderFromString(const QString &anrede) {
     return 2;
   else
     return 0;
+}
+
+static QJsonDocument createUpdateArtcileCount(int id, int count) {
+  QJsonObject obj;
+  obj.insert("bestellnr", QJsonValue(QString::number(id)));
+  obj.insert("bestand", QJsonValue(count));
+  QJsonArray arr;
+  arr.append(obj);
+
+  QJsonObject sender;
+  sender.insert("produkte", arr);
+
+  QJsonDocument doc(sender);
+  return doc;
 }
 
 WHSoftJSonQuery::WHSoftJSonQuery(QObject *parent) : QObject{parent} {
@@ -91,7 +105,7 @@ void WHSoftJSonQuery::queryList() {
   QJsonDocument doc(obj);
   QByteArray data = doc.toJson(QJsonDocument::Compact);
   QUrl url = apiQuery("bestellungen");
-  Antiqua::Provider *prQuery = new Antiqua::Provider(this, false);
+  Antiqua::Provider *prQuery = new Antiqua::Provider(this, PLUGIN_WHSOFT_DEBUG);
   prQuery->setObjectName("buchfreund_query_list");
   connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), this,
           SIGNAL(listResponsed(const QJsonDocument &)));
@@ -105,7 +119,7 @@ void WHSoftJSonQuery::queryOrder(const QString &bfId) {
   QJsonDocument doc(obj);
   QByteArray data = doc.toJson(QJsonDocument::Compact);
   QUrl url = apiQuery("bestellung");
-  Antiqua::Provider *prQuery = new Antiqua::Provider(this, false);
+  Antiqua::Provider *prQuery = new Antiqua::Provider(this, PLUGIN_WHSOFT_DEBUG);
   prQuery->setObjectName("buchfreund_query_view");
   connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), this,
           SIGNAL(orderResponsed(const QJsonDocument &)));
@@ -117,7 +131,7 @@ void WHSoftJSonQuery::customQuery(const QString &operation,
                                   const QJsonDocument &doc) {
   QByteArray data = doc.toJson(QJsonDocument::Compact);
   QUrl url = apiQuery(operation);
-  Antiqua::Provider *prQuery = new Antiqua::Provider(this, false);
+  Antiqua::Provider *prQuery = new Antiqua::Provider(this, PLUGIN_WHSOFT_DEBUG);
   prQuery->setObjectName("buchfreund_query_" + operation);
   connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), this,
           SIGNAL(orderResponsed(const QJsonDocument &)));
@@ -264,22 +278,12 @@ void Buchfreund::jsonQuery(const QString &operation, const QJsonDocument &doc) {
 }
 
 void Buchfreund::updateArticleCount() {
-  QString id = m_articleId->text();
-  if (id.isEmpty())
+  int id = m_articleId->text().toInt();
+  if (id < 1)
     return;
 
   int count = m_count->value();
-
-  QJsonObject obj;
-  obj.insert("bestellnr", QJsonValue(id));
-  obj.insert("bestand", QJsonValue(count));
-  QJsonArray arr;
-  arr.append(obj);
-
-  QJsonObject sender;
-  sender.insert("produkte", arr);
-
-  QJsonDocument doc(sender);
+  QJsonDocument doc = createUpdateArtcileCount(id, count);
   jsonQuery("bestand", doc);
 }
 
@@ -325,8 +329,7 @@ WHSoftWidget::WHSoftWidget(const QString &widgetId, QWidget *parent)
 
   connect(m_orderTable, SIGNAL(findArticleNumbers()), this,
           SLOT(readCurrentArticleIds()));
-  connect(btn_check, SIGNAL(clicked()), this,
-          SLOT(readCurrentArticleIds()));
+  connect(btn_check, SIGNAL(clicked()), this, SLOT(readCurrentArticleIds()));
 }
 
 const QVariant WHSoftWidget::tableData(int row, int column) {
@@ -580,6 +583,13 @@ void WHSoft::prepareJsonListResponse(const QJsonDocument &doc) {
   }
 }
 
+void WHSoft::responseAnswerCheck(const QJsonDocument &doc) {
+  // qDebug() << Q_FUNC_INFO << doc;
+  // QJsonDocument({"error":false,"response":"ok"})
+  bool errors = QJsonValue(doc["error"]).toBool();
+  emit s_queryResponse(errors);
+}
+
 bool WHSoft::createInterface(QObject *parent) {
   if (parent) {
     m_whsoft = new QObject(parent);
@@ -614,4 +624,18 @@ void WHSoft::queryMenueEntries() {
           SLOT(prepareJsonListResponse(const QJsonDocument &)));
 
   mjs->queryList();
+}
+
+void WHSoft::updateArticleCount(int articleId, int count) {
+  QJsonDocument doc = createUpdateArtcileCount(articleId, count);
+  if (doc.isEmpty()) {
+    emit s_queryResponse(false);
+    return;
+  }
+  WHSoftJSonQuery *jq = new WHSoftJSonQuery(this);
+  jq->setObjectName("json_update_article_counts");
+  connect(jq, SIGNAL(orderResponsed(const QJsonDocument &)), this,
+          SLOT(responseAnswerCheck(const QJsonDocument &)));
+
+  jq->customQuery("bestand", doc);
 }

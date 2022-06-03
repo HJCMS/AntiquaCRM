@@ -281,7 +281,7 @@
         <translation>Keine Artikel ID für Update vorhanden.</translation>
     </message>
     <message>
-        <location line="+108"/>
+        <location line="+109"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
@@ -296,7 +296,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-420"/>
+        <location line="-421"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -316,12 +316,12 @@
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
     <message>
-        <location line="+208"/>
+        <location line="+209"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
     <message>
-        <location line="-289"/>
+        <location line="-290"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -485,7 +485,7 @@
 <context>
     <name>Buchfreund</name>
     <message>
-        <location filename="../plugins/antiqua/whsoft.cpp" line="+225"/>
+        <location filename="../plugins/antiqua/whsoft.cpp" line="+239"/>
         <source>Modify Item inventory count</source>
         <translation>Artikelbestand ändern</translation>
     </message>
@@ -1688,7 +1688,7 @@
         <translation>Bücher</translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+90"/>
         <source>Automatic search disabled in this mode. Press enter to start the search!</source>
         <translation>Automatische Suche in diesem Modus deaktiviert. Drücken Sie die Eingabetaste, um die Suche zu starten!</translation>
     </message>
@@ -1745,7 +1745,7 @@
         <translation>ist nicht Verfügbar!</translation>
     </message>
     <message>
-        <location line="+184"/>
+        <location line="+186"/>
         <source>customer found in database!</source>
         <translation>Kundeneintrag gefunden!</translation>
     </message>
@@ -1755,13 +1755,23 @@
         <translation>Kunde existiert nicht!</translation>
     </message>
     <message>
-        <location line="-204"/>
+        <location line="+48"/>
+        <source>an error occurred</source>
+        <translation>ein Fehler ist aufgetreten</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>successfully</source>
+        <translation>Erfolgreich</translation>
+    </message>
+    <message>
+        <location line="-256"/>
         <location line="+12"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
     <message>
-        <location line="+217"/>
+        <location line="+219"/>
         <source>open order editor</source>
         <translation>Öffne Auftragseditor</translation>
     </message>
@@ -3212,7 +3222,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="-120"/>
+        <location filename="../inventory/books/inventorybooks.cpp" line="-122"/>
         <source>Book Title</source>
         <translation>Buchtitel</translation>
     </message>
@@ -3842,7 +3852,7 @@
 <context>
     <name>WHSoftWidget</name>
     <message>
-        <location line="+128"/>
+        <location line="+118"/>
         <source>purchaser</source>
         <translation>Einkäufer*in</translation>
     </message>
@@ -3860,7 +3870,7 @@
         <translation>Arbeitsbereich</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+22"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
@@ -3870,7 +3880,7 @@
         <translation>Bücher Inventar</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>Prints</source>
         <translation>Drucke</translation>
     </message>
@@ -3922,11 +3932,26 @@
         <source>Order tab isn&apos;t open!</source>
         <translation>Das Auftrags Tab ist nicht geöffnet!</translation>
     </message>
+    <message>
+        <location line="+7"/>
+        <source>successfully</source>
+        <translation>Erfolgreich</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>an error occurred</source>
+        <translation>ein Fehler ist aufgetreten</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Provider tab isn&apos;t open!</source>
+        <translation>Dienstleister Tab ist nicht offen!</translation>
+    </message>
 </context>
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-141"/>
+        <location line="-157"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>

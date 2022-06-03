@@ -24,6 +24,20 @@ void EditorMain::socketStatusMessage(const QString &message) {
   m_ipc->sendMessage(message);
 }
 
+const QVariant EditorMain::findResultValue(const QString &key) {
+  QVariant out;
+  if (sqlQueryResult.count() < 1)
+    return out;
+
+  for (int i = 0; i < sqlQueryResult.size(); ++i) {
+    DataField f = sqlQueryResult.at(i);
+    if (f.field() == key) {
+      return f.value();
+    }
+  }
+  return out;
+}
+
 void EditorMain::resetModified(const QStringList &list) {
   if (list.isEmpty()) {
     qWarning("Empty list");

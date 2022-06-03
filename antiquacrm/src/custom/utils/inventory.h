@@ -113,6 +113,14 @@ Q_SIGNALS:
    */
   void s_addArticleOrder(int articleId);
 
+  /**
+   * @brief Signal Artikelanzahl Remote ändern!
+   * Das Signal wird von EditorMain empfangen und weiter gereicht!
+   * @param articleId  - Artikel Nummer
+   * @param count      - Bestand
+   */
+  void s_articleCount(int articleId, int count);
+
 public Q_SLOTS:
   /**
     @brief Öffnet das Nachrichtenfenster

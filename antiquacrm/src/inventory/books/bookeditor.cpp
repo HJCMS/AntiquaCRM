@@ -406,15 +406,16 @@ void BookEditor::createSqlUpdate() {
   }
 
   /** Auf Aktivierung prüfen */
-  if (ib_count->value().toInt() != 0) {
+  int articleId = ib_id->value().toInt();
+  int articleCount = ib_count->value().toInt();
+  if (articleCount != 0) {
     for (int i = 0; i < sqlQueryResult.size(); ++i) {
       DataField f = sqlQueryResult.at(i);
-      if (f.field() == "ib_count") {
-        if (f.value().toInt() == 0) {
-          /** Aktivierung */
-          emit s_articleActivation(true);
-          break;
-        }
+      /* Wenn sich die Anzahl geändert hat, ein Update senden! */
+      if ((f.field() == "ib_count") && (f.value().toInt() != articleCount)) {
+        qInfo("Sending Article count update signal!");
+        emit s_articleCount(articleId, articleCount);
+        break;
       }
     }
   }
@@ -533,6 +534,11 @@ void BookEditor::setData(const QString &key, const QVariant &value,
 }
 
 bool BookEditor::realyDeactivateBookEntry() {
+  int countNew = ib_count->value().toInt();
+  int countOld = findResultValue("ib_count").toInt();
+  if(countNew == countOld)
+    return true; // alles ok
+
   QString body = tr("When setting the count of this book to 0. All existing "
                     "orders from this entry are also deactivated and shop "
                     "system entries are marked for deletion.");
@@ -542,6 +548,7 @@ bool BookEditor::realyDeactivateBookEntry() {
 
   int ret = QMessageBox::question(this, tr("Book deactivation"), body);
   if (ret == QMessageBox::No) {
+    // Zurücksetzen!
     for (int i = 0; i < sqlQueryResult.size(); ++i) {
       DataField f = sqlQueryResult.at(i);
       if (f.field() == "ib_count") {
@@ -551,7 +558,10 @@ bool BookEditor::realyDeactivateBookEntry() {
     }
     return false;
   }
-  emit s_articleActivation(false); /**< Deaktivierung */
+
+  /* Änderung senden */
+  int articleId = ib_id->value().toInt();
+  emit s_articleCount(articleId, countNew);
   return true;
 }
 
