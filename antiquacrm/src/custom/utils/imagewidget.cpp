@@ -21,8 +21,6 @@ ImageWidget::ImageWidget(QWidget *parent) : QWidget{parent} {
   setMinimumSize(QSize(300, 360));
   setMaximumWidth(300);
 
-  m_sql = new HJCMS::SqlCore(this);
-
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("image_viewer_layout");
   layout->setContentsMargins(0, 0, 0, 0);
@@ -67,6 +65,8 @@ void ImageWidget::searchImageById(int id) {
   select.append(QString::number(id));
   select.append(" ORDER BY im_id LIMIT 1;");
 
+  HJCMS::SqlCore *m_sql = new HJCMS::SqlCore(this);
+
   QByteArray data;
   QSqlQuery q = m_sql->query(select);
   if (q.next()) {
@@ -76,49 +76,5 @@ void ImageWidget::searchImageById(int id) {
       insertImage(data);
   } else {
     emit s_postMessage(tr("no image in database"));
-  }
-}
-
-void ImageWidget::addNewImage(int id, const QImage &img) {
-  if (img.isNull())
-    return;
-
-  QByteArray rawimg;
-  QBuffer buffer(&rawimg);
-  buffer.open(QIODevice::WriteOnly);
-  img.save(&buffer, "jpeg");
-  buffer.close();
-  insertImage(rawimg);
-
-  if (id < 1) {
-    emit s_postMessage(tr("Missing Article Number"));
-    return;
-  }
-
-  QByteArray b64 = rawimg.toBase64();
-  QString sql("SELECT im_id FROM inventory_images WHERE im_id=");
-  sql.append(QString::number(id));
-  sql.append(" LIMIT 1;");
-
-  QSqlQuery p_query = m_sql->query(sql);
-  if (p_query.next()) {
-    sql = QString("UPDATE inventory_images SET ");
-    sql.append("im_imgdata='");
-    sql.append(b64);
-    sql.append("' WHERE im_id=");
-    sql.append(QString::number(id));
-    sql.append(";");
-  } else {
-    sql = QString("INSERT INTO inventory_images (");
-    sql.append("im_id,im_imgdata) VALUES (");
-    sql.append(QString::number(id));
-    sql.append(",'");
-    sql.append(b64);
-    sql.append("');");
-  }
-  p_query = m_sql->query(sql);
-  if (p_query.lastError().isValid()) {
-    MessageBox msg(this);
-    msg.failed(tr("SQL Image Query fails."), p_query.lastError().text());
   }
 }

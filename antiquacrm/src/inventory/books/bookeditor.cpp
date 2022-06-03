@@ -20,6 +20,8 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   setObjectName("BookEditor");
   setWindowTitle(tr("Edit Book Title"));
 
+  count_temp = -1; /**< Initialisieren */
+
   ApplSettings config;
 
   Qt::Alignment defaultAlignment = (Qt::AlignRight | Qt::AlignVCenter);
@@ -307,15 +309,13 @@ void BookEditor::setInputList() {
 }
 
 void BookEditor::openImageDialog() {
-  qulonglong id = ib_id->value().toLongLong();
+  int id = ib_id->value().toLongLong();
   ImageDialog *dialog = new ImageDialog(id, this);
   if (id >= 1)
     emit s_openImageEditor(id);
 
   if (dialog->exec()) {
-    QImage img = dialog->getImage();
-    if (!img.isNull())
-      m_imageView->addNewImage(id, img);
+    m_imageView->searchImageById(id);
   }
 }
 
@@ -408,12 +408,13 @@ void BookEditor::createSqlUpdate() {
   /** Auf Aktivierung prüfen */
   int articleId = ib_id->value().toInt();
   int articleCount = ib_count->value().toInt();
-  if (articleCount != 0) {
+  if (articleCount != 0 && (count_temp != articleCount)) {
     for (int i = 0; i < sqlQueryResult.size(); ++i) {
       DataField f = sqlQueryResult.at(i);
       /* Wenn sich die Anzahl geändert hat, ein Update senden! */
       if ((f.field() == "ib_count") && (f.value().toInt() != articleCount)) {
         qInfo("Sending Article count update signal!");
+        count_temp = articleCount;
         emit s_articleCount(articleId, articleCount);
         break;
       }
@@ -536,7 +537,7 @@ void BookEditor::setData(const QString &key, const QVariant &value,
 bool BookEditor::realyDeactivateBookEntry() {
   int countNew = ib_count->value().toInt();
   int countOld = findResultValue("ib_count").toInt();
-  if(countNew == countOld)
+  if ((countNew == countOld) || (countNew == count_temp))
     return true; // alles ok
 
   QString body = tr("When setting the count of this book to 0. All existing "
@@ -561,6 +562,7 @@ bool BookEditor::realyDeactivateBookEntry() {
 
   /* Änderung senden */
   int articleId = ib_id->value().toInt();
+  count_temp = countNew;
   emit s_articleCount(articleId, countNew);
   return true;
 }

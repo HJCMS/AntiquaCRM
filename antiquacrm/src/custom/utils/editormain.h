@@ -197,7 +197,7 @@ Q_SIGNALS:
   /**
    * @brief Bildbearbeitung öffnen
    */
-  void s_openImageEditor(double);
+  void s_openImageEditor(int);
 
   /**
    * @brief Meldungen absenden!

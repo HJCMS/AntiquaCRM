@@ -296,15 +296,13 @@ void PrintsEditor::setInputList() {
 }
 
 void PrintsEditor::openImageDialog() {
-  qulonglong id = ip_id->value().toLongLong();
+  int id = ip_id->value().toLongLong();
   ImageDialog *dialog = new ImageDialog(id, this);
   if (id >= 1)
     emit s_openImageEditor(id);
 
   if (dialog->exec()) {
-    QImage img = dialog->getImage();
-    if (!img.isNull())
-      m_imageView->addNewImage(id, img);
+    m_imageView->searchImageById(id);
   }
 }
 

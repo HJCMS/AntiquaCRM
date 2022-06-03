@@ -57,6 +57,14 @@ private:
   ISBNResults *m_isbnWidget;          /**< @brief ISBN Abfrage-Vorschau */
 
   /**
+   * @brief Speichert die Anzahl Temporär
+   * Soll verhindern das wenn sich die Menge geändert hat nicht nach jedem
+   * zwischenspeichern die DAten noch mal an den Dienstleister gsendet werden!
+   * @see EditorMain::s_articleCount
+   */
+  int count_temp;
+
+  /**
      @brief Wird für QObject::findchild benötigt!
      Dieser Reguläre Ausdruck wird verwendet um die Eingabe-Objektklassen
      zu finden. Sie sind Identisch mit den SQL Feldern und beginnen bei

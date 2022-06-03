@@ -11,10 +11,6 @@
 #include <QScrollArea>
 #include <QWidget>
 
-namespace HJCMS {
-class SqlCore;
-};
-
 /**
    @brief The ImageWidget class
    Liest mit der Article ID aus Tabelle
@@ -28,8 +24,6 @@ class ImageWidget : public QWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  HJCMS::SqlCore *m_sql;
-
   /**
     @brief m_scrollArea
     Zeigt das Bild Label an ...
@@ -82,13 +76,6 @@ public Q_SLOTS:
 
 public:
   explicit ImageWidget(QWidget *parent = nullptr);
-
-  /**
-     @brief addImageData
-     Schreibe Imagedaten in Tabelle "inventory_images"
-     @param img QImage
-   */
-  void addNewImage(int id, const QImage &img);
 };
 
 #endif // BOOKSIMAGEVIEW_UTILS_H

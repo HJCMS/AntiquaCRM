@@ -131,7 +131,7 @@
         <translation>Editiere Buchtitel</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+33"/>
         <source>Signed Version</source>
         <translation>Sgnierte Version</translation>
     </message>
@@ -281,12 +281,12 @@
         <translation>Keine Artikel ID für Update vorhanden.</translation>
     </message>
     <message>
-        <location line="+109"/>
+        <location line="+110"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+50"/>
         <source>Are you sure to deactivate this entry?</source>
         <translation>Möchten Sie diesen Eintrag wirklich deaktivieren?</translation>
     </message>
@@ -296,7 +296,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-421"/>
+        <location line="-427"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -316,12 +316,12 @@
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
     <message>
-        <location line="+209"/>
+        <location line="+215"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
     <message>
-        <location line="-290"/>
+        <location line="-296"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -1581,54 +1581,24 @@
 <context>
     <name>ImageDialog</name>
     <message>
-        <location filename="../custom/imaging/imagedialog.cpp" line="+24"/>
+        <location filename="../custom/imaging/imagedialog.cpp" line="+17"/>
         <source>Picture Editor</source>
         <translation>Bildeditor</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Image jpeg files (*.jpg *.JPG *.jpeg *.JPEG)</source>
+        <translation>JPG Bild Dateien (*.jpg *.JPG *.jpeg *.JPEG)</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Save Image</source>
+        <translation>Bild Speichern</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Rotate Image</source>
         <translation>Bild drehen</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Save</source>
-        <translation>Speichern</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Close the dialog with saving.</source>
-        <translation>Speichern und schließen.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Close</source>
-        <translation>Schließen</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Close the dialog without saving.</source>
-        <translation>Schließt das Fenster ohne speichern.</translation>
-    </message>
-    <message>
-        <location line="+45"/>
-        <source>Current Image Size</source>
-        <translation>Aktuelle Bildgröße</translation>
-    </message>
-    <message>
-        <location line="+47"/>
-        <source>No Image for this Arcticle found.</source>
-        <translation>Kein Bild für diesen Artikel gefunden.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Warning - More then one found!</source>
-        <translation>Warnung - Mehr als ein Bild gefunden!</translation>
-    </message>
-    <message>
-        <location line="-115"/>
-        <source>Open Image</source>
-        <translation>Öffne Bild</translation>
     </message>
 </context>
 <context>

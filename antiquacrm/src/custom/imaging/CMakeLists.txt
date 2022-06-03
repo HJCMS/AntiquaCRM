@@ -16,21 +16,13 @@ SET (subproject_LINKER
 )
 
 SET (subproject_SOURCES
-  fileviewmodel.cpp
   imagedialog.cpp
   imageview.cpp
-  listview.cpp
-  openimagedialog.cpp
-  toolbar.cpp
 )
 
 SET (subproject_HEADERS
-  fileviewmodel.h
   imagedialog.h
   imageview.h
-  listview.h
-  openimagedialog.h
-  toolbar.h
   ${_subproject}
 )
 

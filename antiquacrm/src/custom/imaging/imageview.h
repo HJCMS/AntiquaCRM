@@ -5,13 +5,18 @@
 #ifndef IMAGEVIEW_IMAGING_H
 #define IMAGEVIEW_IMAGING_H
 
-#include <QObject>
-#include <QImage>
-#include <QPixmap>
+#include <QFileInfo>
+#include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include <QGraphicsPixmapItem>
+#include <QImage>
+#include <QObject>
+#include <QPixmap>
 #include <QWidget>
+
+namespace HJCMS {
+class SqlCore;
+};
 
 class ImageView : public QGraphicsView {
   Q_OBJECT
@@ -19,17 +24,53 @@ class ImageView : public QGraphicsView {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  HJCMS::SqlCore *m_sql;
   QPixmap p_pixmap;
   QGraphicsScene *m_scene;
   QGraphicsPixmapItem *m_pixmap;
 
 public Q_SLOTS:
-  void setImage(const QString &);
-  void setImage(const QImage &);
+  /**
+   * @brief Bild in die Ansicht einfügen!
+   */
+  void setImage(const QImage &img);
+
+  /**
+   * @brief Bild in die Ansicht einfügen!
+   * @ref setImage(const QImage &)
+   */
+  void setImageFile(const QFileInfo &file);
+
+  /**
+   * @brief Rohdaten einfügen
+   * @ref setImage(const QImage &)
+   */
+  void setRawImage(const QByteArray &data);
+
+  /**
+   * @brief drehen
+   */
+  void rotate();
 
 public:
   ImageView(QWidget *parent = nullptr);
-  const QImage image();
+
+  /**
+   * @brief Suche Bild in Datenbank
+   * @param articleId
+   */
+  bool loadFromDatabase(int articleId);
+
+  /**
+   * @brief In Datenbank Speichern
+   * Schreibe Imagedaten in Tabelle "inventory_images"
+   */
+  bool storeImage(int articleId);
+
+  /**
+   * @brief Ansicht zurückgeben!
+   */
+  const QImage getImage();
 };
 
 #endif // IMAGEVIEW_IMAGING_H

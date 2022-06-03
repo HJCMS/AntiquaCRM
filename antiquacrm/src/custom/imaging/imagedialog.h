@@ -5,144 +5,53 @@
 #ifndef IMAGEDIALOG_IMAGING_H
 #define IMAGEDIALOG_IMAGING_H
 
+#include <QCloseEvent>
 #include <QDir>
+#include <QFileDialog>
 #include <QFileInfo>
 #include <QObject>
-#include <QAbstractButton>
-#include <QDialog>
-#include <QFileDialog>
-#include <QStatusBar>
+#include <QToolBar>
 #include <QWidget>
 
+class ApplSettings;
 class ImageView;
-class OpenImageDialog;
 
-/**
-   @brief The ImageDialog class
-*/
-class ImageDialog : public QDialog {
+class ImageDialog : public QFileDialog {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "http://www.hjcms.de")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  /**
-     @brief imageID
-     @note Muss gleich mit ArticleID sein!
-  */
-  qulonglong imageID;
+  const int p_articleId;
+  ApplSettings *config;
+  QDir imagesArchiv;
+  QAction *ac_rotate;
+  ImageView *m_view;
+  QToolBar *m_toolBar;
 
   /**
-    @brief sourcePath
-  */
-  QDir sourceDir;
-
-  /**
-     @brief m_imgViewer
-     Bild Darstellung
-  */
-  ImageView *m_imgView;
-
-  /**
-     @brief maximumSize
-     Wegene Webshops und Datenbank sind
-     Bilder auf ein Maximale Größe von
-     450x450 Pixeln begrenzt!
-  */
-  int maximumSize = 350;
-
-  /**
-     @brief m_fileDialog
-     Bilder öffnen ...
-  */
-  OpenImageDialog *m_fileDialog;
-
-  /**
-     @brief m_statusBar
-     Zeige Bild Informationen
+   * @brief Suche Bildnummer im Archiv
    */
-  QStatusBar *m_statusBar;
+  void findSourceImage();
 
   /**
-     @brief createSizeMessage
-     Erstellt eine Info zur Bildgröße
+   * @brief Lade Einstellungen beim öffnen.
    */
-  void setSizeMessage(const QSize &s);
+  void showEvent(QShowEvent *event) override;
 
   /**
-     @brief loadFile
-     Lade Bildaten und erstelle Imaging
-  */
-  void loadFile(const QFileInfo &);
-
-  /**
-     @brief findImageSourceFiles
-     Suche im Quellen Verzeichnis nach Bildern
-     mit der Atrikel ID.
-     @note Kann mehrfach Vorkommen
-     @return
+   * @brief Automatsuches schließen unterdrücken!
+   * Der Dialog soll sich nicht schließen wenn kein explizites Beenden
+   * aufgerufen wird!
    */
-  void findImageSourceFiles();
-
-  /**
-     @brief rotateImage
-     Bild Drehen
-   */
-  void rotateImage(qreal r);
-
-  /**
-     @brief setSourceTarget
-     Wuche im Verzeichnis nach der Bild ID
-   */
-  void setSourceTarget();
+  void accept() override;
 
 private Q_SLOTS:
-  /**
-     @brief openFileDialog
-     Bilder öffnen aufrufen
-  */
-  void openFileDialog();
-
-Q_SIGNALS:
-  /**
-     Wenn ein Bild Erfolgreich geldaen wurde!
-  */
-  void s_imageLoaded(bool);
-
-  /**
-   @brief s_imageScaled
-   Wird ausgelöst wenn eine Bild Scalierung
-   oder Änderung gut/schlecht verlaufen ist.
-  */
-  void s_imageScaled(bool);
-
-public Q_SLOTS:
-  inline void rotateRightClicked() { rotateImage(90.0); }
+  void save();
+  void imagePreview(const QString &);
 
 public:
-  explicit ImageDialog(qulonglong id, QWidget *parent = nullptr);
-
-  /**
-     @brief getImage
-     Wenn Bild geladen und sich die Größe
-     geändert hat. Kann das Bild hier
-     abgefragt werden.
-     @warning Das Bild ist Leer wenn es
-        nicht gefunden wurde oder keine
-        Transformierung statt gefunden
-        hat. Signal @ref s_imageScaled
-        gibt mehr aufschluss.
-
-     @return QImage()
-  */
-  const QImage getImage();
-
-  /**
-     @brief sourceTarget
-     Gibt den Verzeichnis Pfad des Bildes zurück
-     @return QString
-   */
-  const QString sourceTarget();
+  explicit ImageDialog(int articleId, QWidget *parent = nullptr);
 };
 
 #endif // IMAGEDIALOG_IMAGING_H
