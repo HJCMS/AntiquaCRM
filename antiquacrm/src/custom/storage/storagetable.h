@@ -32,6 +32,7 @@ class StorageTable final : public QTableView {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  const QString whereClause;
   HJCMS::SqlCore *m_sql;
   StorageHeader *m_header;
   StorageModel *m_model;
@@ -39,11 +40,15 @@ private:
 private Q_SLOTS:
   void itemClicked(const QModelIndex &);
 
+Q_SIGNALS:
+  void queryMessages(const QString &);
+
 public Q_SLOTS:
+  void sqlQuery(const QString &statement);
   void findColumn(const QString &);
 
 public:
-  struct Item {
+  struct RowValues {
     int sl_id;
     QString sl_storage;
     QString sl_identifier;
@@ -52,8 +57,8 @@ public:
   StorageTable(QWidget *parent = nullptr);
 
 Q_SIGNALS:
-  void itemChanged(const StorageTable::Item &i);
+  void itemChanged(const StorageTable::RowValues &i);
 };
-Q_DECLARE_METATYPE(StorageTable::Item);
+Q_DECLARE_METATYPE(StorageTable::RowValues);
 
 #endif // STORAGE_TABLE_H

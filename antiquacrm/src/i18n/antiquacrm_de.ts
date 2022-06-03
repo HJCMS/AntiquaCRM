@@ -1402,12 +1402,17 @@
 <context>
     <name>EditorWidget</name>
     <message>
-        <location filename="../custom/storage/storagelocation.cpp" line="+14"/>
+        <location filename="../custom/storage/storagelocation.cpp" line="+21"/>
         <source>Storage ID</source>
         <translation>Lager-Id</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
+        <source>Empty data fields not accepted and reject this operation.</source>
+        <translation>Leere Datenfelder sind nicht erlaubt und werden abgelehnt.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Storage</source>
         <translation>Lager</translation>
     </message>
@@ -1923,7 +1928,7 @@
         <translation>Lager Positionen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Conditions</source>
         <translation>Zustand</translation>
     </message>
@@ -1948,18 +1953,18 @@
         <translation>&lt;b&gt;Sie haben nicht gespeicherte Änderungen.&lt;/b&gt;&lt;p&gt;Möchten sie wirklich die Anwendung schließen?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+69"/>
         <source>SQL Server Error</source>
         <translation>SQL Serverfehler</translation>
     </message>
     <message>
-        <location line="-106"/>
-        <location line="+119"/>
+        <location line="-109"/>
+        <location line="+122"/>
         <source>Fullscreen</source>
         <translation>Vollansicht</translation>
     </message>
     <message>
-        <location line="-185"/>
+        <location line="-188"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
@@ -1989,7 +1994,7 @@
         <translation>Konfiguration</translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+118"/>
         <source>Disable Fullscreen</source>
         <translation>Vollansicht beenden</translation>
     </message>
@@ -3603,7 +3608,7 @@
 <context>
     <name>StorageLocation</name>
     <message>
-        <location filename="../custom/storage/storagelocation.cpp" line="+24"/>
+        <location filename="../custom/storage/storagelocation.cpp" line="+71"/>
         <source>new entry</source>
         <translation>Neuer Eintrag</translation>
     </message>
@@ -3613,7 +3618,7 @@
         <translation>Erstelle einen neuen Eintrag</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>search</source>
         <translation>Suche</translation>
     </message>
@@ -3621,6 +3626,11 @@
         <location line="+1"/>
         <source>search in table</source>
         <translation>Suche in Tabelle</translation>
+    </message>
+    <message>
+        <location line="+62"/>
+        <source>invalid input</source>
+        <translation>ungültige Eingabe</translation>
     </message>
 </context>
 <context>
@@ -3644,6 +3654,24 @@
         <location line="+3"/>
         <source>Location</source>
         <translation>Lagerort</translation>
+    </message>
+</context>
+<context>
+    <name>StorageTable</name>
+    <message>
+        <location filename="../custom/storage/storagetable.cpp" line="+63"/>
+        <source>an error occurred</source>
+        <translation>ein Fehler ist aufgetreten</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>sql error occurred</source>
+        <translation>SQL-Fehler aufgetreten</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>successful saved</source>
+        <translation>erfolgreich gespeichert</translation>
     </message>
 </context>
 <context>

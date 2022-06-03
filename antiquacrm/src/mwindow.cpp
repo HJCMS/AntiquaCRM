@@ -150,7 +150,8 @@ void MWindow::setupActions() {
 
   QAction *a_bst = m_tablesMenu->addAction(tr("Storage Locations"));
   a_bst->setIcon(myIcon("spreadsheet"));
-  connect(a_bst, SIGNAL(triggered(bool)), this, SLOT(openStorageLocation(bool)));
+  connect(a_bst, SIGNAL(triggered(bool)), this,
+          SLOT(openStorageLocation(bool)));
 
   QAction *a_bct = m_tablesMenu->addAction(tr("Conditions"));
   a_bct->setIcon(myIcon("spreadsheet"));
@@ -201,13 +202,15 @@ void MWindow::openEditDesignation(const QString &section) {
   m_dialog->setObjectName("designation_dialog");
   if (m_dialog->exec()) {
     qInfo("Editing finished");
+    m_dialog->deleteLater();
   }
 }
 
 void MWindow::openStorageLocation(bool) {
   StorageLocation *d = new StorageLocation(this);
   if (d->exec()) {
-    qDebug() << Q_FUNC_INFO << "TODO";
+    qInfo("Editing finished");
+    d->deleteLater();
   }
 }
 

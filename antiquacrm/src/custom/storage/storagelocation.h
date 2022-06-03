@@ -9,8 +9,10 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QEvent>
+#include <QHash>
 #include <QKeyEvent>
 #include <QLineEdit>
+#include <QRegularExpression>
 #include <QSpinBox>
 #include <QStatusBar>
 #include <QToolBar>
@@ -23,16 +25,21 @@ class EditorWidget final : public QWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  const QRegularExpression pattern;
   QSpinBox *sl_id;
   QLineEdit *sl_storage;
   QLineEdit *sl_identifier;
   QLineEdit *sl_location;
 
+  bool check(QLineEdit *);
+
 public Q_SLOTS:
-  void setValue(const StorageTable::Item &item);
+  void setValue(const StorageTable::RowValues &items);
+  void clear();
 
 public:
   EditorWidget(QWidget *parent = nullptr);
+  const QString sqlQuery();
 };
 
 class StorageLocation final : public QDialog {
@@ -53,9 +60,8 @@ private:
   bool event(QEvent *);
 
 private Q_SLOTS:
+  void searchClicked();
   void saveClicked();
-
-Q_SIGNALS:
 
 public:
   explicit StorageLocation(QWidget *parent = nullptr);

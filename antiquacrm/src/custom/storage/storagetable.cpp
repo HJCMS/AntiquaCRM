@@ -6,6 +6,7 @@
 #include "storagemodel.h"
 
 #include <QDebug>
+#include <QMessageBox>
 
 StorageHeader::StorageHeader(QWidget *parent)
     : QHeaderView{Qt::Horizontal, parent} {
@@ -13,7 +14,8 @@ StorageHeader::StorageHeader(QWidget *parent)
   setMinimumSectionSize(30);
 }
 
-StorageTable::StorageTable(QWidget *parent) : QTableView{parent} {
+StorageTable::StorageTable(QWidget *parent)
+    : QTableView{parent}, whereClause("sl_id>0") {
   setEditTriggers(QAbstractItemView::NoEditTriggers);
   setCornerButtonEnabled(false);
   setDragEnabled(false);
@@ -34,17 +36,15 @@ StorageTable::StorageTable(QWidget *parent) : QTableView{parent} {
   m_header->setSectionResizeMode(1, QHeaderView::ResizeToContents);
   m_header->setSectionResizeMode(2, QHeaderView::ResizeToContents);
 
-  connect(this, SIGNAL(clicked(const QModelIndex &)),
-          this, SLOT(itemClicked(const QModelIndex &)));
+  connect(this, SIGNAL(clicked(const QModelIndex &)), this,
+          SLOT(itemClicked(const QModelIndex &)));
 }
 
-void StorageTable::itemClicked(const QModelIndex &index)
-{
+void StorageTable::itemClicked(const QModelIndex &index) {
   QModelIndex p = index.sibling(index.row(), 0);
   int sl_id = m_model->data(p).toInt();
-  if(sl_id>0)
-  {
-    Item i;
+  if (sl_id > 0) {
+    RowValues i;
     i.sl_id = sl_id;
     i.sl_storage = m_model->data(p.sibling(p.row(), 1)).toString();
     i.sl_identifier = m_model->data(p.sibling(p.row(), 2)).toString();
@@ -53,13 +53,28 @@ void StorageTable::itemClicked(const QModelIndex &index)
   }
 }
 
+void StorageTable::sqlQuery(const QString &statement) {
+  QString sql = statement.trimmed();
+  if (sql.isEmpty())
+    return;
+
+  m_sql->query(sql);
+  if (!m_sql->lastError().isEmpty()) {
+    emit queryMessages(tr("an error occurred"));
+    QMessageBox::critical(this, tr("sql error occurred"), m_sql->lastError());
+    return;
+  }
+  emit queryMessages(tr("successful saved"));
+  m_model->setFilter(whereClause);
+}
+
 void StorageTable::findColumn(const QString &str) {
   if (str.length() > 3) {
-    QString sql("sl_id>0 AND sl_identifier ILIKE '%");
+    QString sql(whereClause + " AND sl_identifier ILIKE '%");
     sql.append(str.trimmed());
     sql.append("%'");
     m_model->setFilter(sql);
   } else {
-    m_model->setFilter("sl_id>0");
+    m_model->setFilter(whereClause);
   }
 }
