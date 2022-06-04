@@ -5,15 +5,18 @@
 #define MyAppDisplayName "@DISPLAYNAME@"
 #define MyAppVersion "@ANTIQUACRM_VERSION_STRING@"
 #define MyAppPublisher "HJCMS"
-#define MyAppURL "https://www.hjcms.de"
+#define MyAppURL "@HOMEPAGEURL@"
 #define MyAppExeName "@PROJECTNAME@.exe"
 #define MyDomainName "hjcms.de"
-#define QT5_PATH "F:\Development\qt\5.15.2\mingw81_64\bin"
-#define PgSQL_PATH "F:\Development\PostgreSQL\bin"
-#define BUID_DIR "F:\Development\antiqua\build"
+#define QT5_PATH "@CMAKE_PREFIX_PATH@"
+#define PgSQL_PATH "E:\Development\PostgreSQL\bin"
+#define CURL_PATH "E:\Development\cUrl\bin"
+#define BUID_DIR "@CMAKE_CURRENT_BINARY_DIR@"
+#define TPL_DIR "@CMAKE_CURRENT_SOURCE_DIR@"
+#define COPY_DIR "__TODO__"
 
 [Setup]
-AppId=
+AppId=9E3A7398-4493-45AE-AF59-5D5FA84DB2F7
 AppName={#MyAppDisplayName}
 AppVersion={#MyAppVersion}
 AppVerName={#MyAppName} {#MyAppVersion}
@@ -26,13 +29,14 @@ AppComments="Antiquarisches Datenbank Verwaltungsprogramm"
 DefaultDirName={pf}\{#MyAppPublisher}\{#MyAppName}
 DisableDirPage=yes
 DefaultGroupName={#MyAppName}
-LicenseFile=COPYING
+LicenseFile={#TPL_DIR}\LICENSE.md
 OutputDir=.
-SetupIconFile=.\xdg\antiqua.ico
 Compression=lzma
 SolidCompression=yes
 CreateUninstallRegKey=yes
 PrivilegesRequired=admin
+ArchitecturesAllowed=x64
+SetupIconFile={#TPL_DIR}\antiqua.ico
 Uninstallable=yes
 UserInfoPage=no
 DirExistsWarning=yes
@@ -41,9 +45,6 @@ OutputBaseFilename={#MyAppName}-{#MyAppVersion}-x86_64-installer
 ;; Window Style
 WindowVisible=yes
 WindowShowCaption=no
-WizardImageStretch=yes  
-WizardImageFile=.\xdg\antiqua-label.bmp
-WizardImageBackColor=clAqua
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -60,29 +61,40 @@ BeveledLabel=Copyright(C) 2011-2022 {#MyAppPublisher} {#MyAppURL}
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
-
 
 [Dirs]
+Name: "{app}\i18n"; Attribs: system;
+Name: "{app}\xml"; Attribs: system;
+Name: "{app}\company"; Attribs: system;
 Name: "{app}\plugins"; Attribs: system;
+Name: "{app}\plugins\antiqua"; Attribs: system;
 Name: "{app}\plugins\imageformats"; Attribs: system;
 Name: "{app}\plugins\platforms"; Attribs: system;
 Name: "{app}\plugins\printsupport"; Attribs: system;
 Name: "{app}\plugins\sqldrivers"; Attribs: system;
+Name: "{app}\plugins\generic"; Attribs: system;
+Name: "{app}\plugins\imageformats"; Attribs: system;
+Name: "{app}\plugins\iconengines"; Attribs: system;
+Name: "{app}\plugins\platforms"; Attribs: system;
+Name: "{app}\plugins\platformthemes"; Attribs: system;
+Name: "{app}\plugins\printsupport"; Attribs: system;
+Name: "{app}\plugins\sqldrivers"; Attribs: system;
 
-[Files]  
+[Files]
 Source: "{#BUID_DIR}\src\antiquacrm.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#BUID_DIR}\xdg\antiquacrm.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#BUID_DIR}\xdg\qt.conf"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#QT5_PATH}\src\i18n\antiquacrm_de.qm"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#BUID_DIR}\src\core\antiquacore\libAntiquaCore.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#TPL_DIR}\qt.conf"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#BUID_DIR}\src\i18n\antiquacrm.qm"; DestDir: "{app}\i18n"; Flags: ignoreversion
+Source: "{#BUID_DIR}\src\xml\*.xml"; DestDir: "{app}\xml"; Flags: ignoreversion
+Source: "{#BUID_DIR}\src\plugins\antiqua\lib*.dll"; DestDir: "{app}\plugins\antiqua"; Flags: ignoreversion
 ;; MinGW
-;; Source: "{#QT5_PATH}\gpsvc.dll"; DestDir: "{app}"; Flags: ignoreversion
-;; Source: "{#QT5_PATH}\IEShims.dll"; DestDir: "{app}"; Flags: ignoreversion
-;; Source: "{#QT5_PATH}\libeay32.dll"; DestDir: "{app}"; Flags: ignoreversion
-;; Source: "{#QT5_PATH}\ssleay32.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#QT5_PATH}\libgcc_s_seh-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#QT5_PATH}\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#QT5_PATH}\libwinpthread-1".dll; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#QT5_PATH}\bin\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#QT5_PATH}\bin\libgcc_s_seh-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#QT5_PATH}\bin\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#QT5_PATH}\bin\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+;; cUrl
+Source: "{#CURL_PATH}\libcurl-x64.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#CURL_PATH}\curl-ca-bundle.crt"; DestDir: "{app}"; Flags: ignoreversion
 ;; PostgreSQL
 Source: "{#PgSQL_PATH}\libcrypto-1_1-x64.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#PgSQL_PATH}\libiconv-2.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -93,33 +105,40 @@ Source: "{#PgSQL_PATH}\libssl-1_1-x64.dll"; DestDir: "{app}"; Flags: ignoreversi
 Source: "{#PgSQL_PATH}\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#PgSQL_PATH}\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
 ;; Qt5
-Source: "{#QT5_PATH}\Qt5Core.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#QT5_PATH}\Qt5Gui.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#QT5_PATH}\Qt5Widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#QT5_PATH}\Qt5Network.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#QT5_PATH}\Qt5Sql.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#QT5_PATH}\Qt5Xml.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#QT5_PATH}\plugins\imageformats\q*.dll"; DestDir: "{app}\plugins\imageformats"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#QT5_PATH}\plugins\platforms\qwindows.dll"; DestDir: "{app}\plugins\platforms"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#QT5_PATH}\plugins\printsupport\windowsprintersupport.dll"; DestDir: "{app}\plugins\printsupport"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#QT5_PATH}\bin\Qt5Core.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#QT5_PATH}\bin\Qt5Gui.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#QT5_PATH}\bin\Qt5Widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#QT5_PATH}\bin\Qt5Network.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#QT5_PATH}\bin\Qt5NetworkAuth.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#QT5_PATH}\bin\Qt5Sql.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#QT5_PATH}\bin\Qt5Svg.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#QT5_PATH}\bin\Qt5Xml.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#QT5_PATH}\bin\Qt5PrintSupport.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#QT5_PATH}\bin\Qt5WinExtras.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#QT5_PATH}\plugins\generic\*.dll"; DestDir: "{app}\plugins\generic"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#QT5_PATH}\plugins\imageformats\*.dll"; DestDir: "{app}\plugins\imageformats"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#QT5_PATH}\plugins\iconengines\*.dll"; DestDir: "{app}\plugins\iconengines"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#QT5_PATH}\plugins\platforms\*.dll"; DestDir: "{app}\plugins\platforms"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#QT5_PATH}\plugins\platformthemes\*.dll"; DestDir: "{app}\plugins\platformthemes"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#QT5_PATH}\plugins\printsupport\*.dll"; DestDir: "{app}\plugins\printsupport"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#QT5_PATH}\plugins\sqldrivers\qsqlpsql.dll"; DestDir: "{app}\plugins\sqldrivers"; Flags: ignoreversion recursesubdirs createallsubdirs
+;; Kundendaten
+Source: "{#COPY_DIR}\URWChancery_L-Medium-Italic.ttf"; DestDir: "{app}\company"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#COPY_DIR}\druck_header.png"; DestDir: "{app}\company"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#COPY_DIR}\HJCMS-Personal-CA.crt"; DestDir: "{app}\"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
 
 [Registry]
 ;; HKEY_LOCAL_MACHINE
 Root: HKLM; Subkey: "Software\HJCMS\{#MyAppExeName}";
 Root: HKLM; Subkey: "Software\HJCMS\{#MyAppExeName}"; ValueType: string; ValueName: "Version"; ValueData: "{#MyAppVersion}"; Flags: uninsdeletekey;
-Root: HKLM; Subkey: "Software\HJCMS\{#MyAppExeName}"; ValueType: string; ValueName: "Author"; ValueData: "{#MyAppPublisher}"; Flags: uninsdeletekey; 
+Root: HKLM; Subkey: "Software\HJCMS\{#MyAppExeName}"; ValueType: string; ValueName: "Author"; ValueData: "{#MyAppPublisher}"; Flags: uninsdeletekey;
 Root: HKLM; Subkey: "Software\HJCMS\{#MyAppExeName}"; ValueType: string; ValueName: "Homepage"; ValueData: "{#MyAppURL}"; Flags: uninsdeletekey;
-Root: HKLM; Subkey: "Software\HJCMS\{#MyAppExeName}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{pf}\HJCMS\{#MyAppExeName}"; Flags: uninsdeletekey;
-;; HKEY_CURRENT_USER
-Root: HKCU; Subkey: "Software\{#MyDomainName}\{#MyAppExeName}"; Flags: uninsdeletekey;
-Root: HKCU; Subkey: "Software\{#MyDomainName}"; Flags: uninsdeletekeyifempty
+Root: HKLM; Subkey: "Software\HJCMS\{#MyAppExeName}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{commonpf}\HJCMS\{#MyAppExeName}"; Flags: uninsdeletekey;
 
 ;; EOF
 
