@@ -6,7 +6,14 @@
 #include "imageview.h"
 #include "myicontheme.h"
 
+#ifndef DEBUG_IMAGE_DIALOG
+#define DEBUG_IMAGE_DIALOG false
+#endif
+
+#if DEBUG_IMAGE_DIALOG
 #include <QDebug>
+#endif
+#include <QFileInfo>
 #include <QDialogButtonBox>
 #include <QDirIterator>
 #include <QSplitter>
@@ -14,7 +21,7 @@
 
 ImageDialog::ImageDialog(int articleId, QWidget *parent)
     : QFileDialog{parent}, p_articleId{articleId} {
-  setObjectName("ImageDialog");
+  setObjectName("image_open_edit_dialog");
   setWindowTitle(tr("Picture Editor"));
   setWindowIcon(myIcon("image"));
   setSizeGripEnabled(true);
@@ -24,21 +31,27 @@ ImageDialog::ImageDialog(int articleId, QWidget *parent)
 
   config = new ApplSettings(this);
 
+  QSize maxImageSize =
+      config->value("image/max_size", QSize(320, 320)).toSize();
+
   QSplitter *splitter = findChild<QSplitter *>();
   if (splitter != nullptr) {
     QWidget *previewArea = new QWidget(splitter);
     QVBoxLayout *paLayout = new QVBoxLayout(previewArea);
     paLayout->setContentsMargins(0, 0, 0, 0);
-    m_view = new ImageView(previewArea);
+    m_view = new ImageView(maxImageSize, previewArea);
     paLayout->addWidget(m_view);
     m_toolBar = new QToolBar(previewArea);
-    m_toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    ac_rotate = m_toolBar->addAction(myIcon("redo"), /* drehen */
-                                     tr("Rotate Image"));
+    m_toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    ac_scale = m_toolBar->addAction(myIcon("scale"),"Scale");
+    m_toolBar->addSeparator();
+    ac_rotate = m_toolBar->addAction(tr("rotate image clockwise"));
+    ac_rotate->setIcon(myIcon("rotate-right"));
     paLayout->addWidget(m_toolBar);
     previewArea->setLayout(paLayout);
     splitter->addWidget(previewArea);
     connect(ac_rotate, SIGNAL(triggered()), m_view, SLOT(rotate()));
+    connect(ac_scale, SIGNAL(triggered()), m_view, SLOT(zoomReset()));
   }
 
   QDialogButtonBox *btnBox = findChild<QDialogButtonBox *>();
@@ -49,9 +62,9 @@ ImageDialog::ImageDialog(int articleId, QWidget *parent)
           SLOT(imagePreview(const QString &)));
 }
 
-void ImageDialog::findSourceImage() {
+bool ImageDialog::findSourceImage() {
   if (!imagesArchiv.exists())
-    return;
+    return false;
 
   QString imageId = QString::number(p_articleId);
 
@@ -72,30 +85,27 @@ void ImageDialog::findSourceImage() {
     found << file.replace(basePath, "");
   }
 
-  if (found.isEmpty()) {
-    m_view->loadFromDatabase(p_articleId);
-    return;
-  }
+  if(found.size() < 1)
+    return false;
 
   QString imageFile = found.first();
   QFileInfo info(basePath, imageFile);
-  setDirectory(info.path());
-  selectFile(info.filePath());
-  m_view->setImageFile(info);
-}
-
-void ImageDialog::showEvent(QShowEvent *event) {
-  QString key("imaging/sourcepath");
-  if (config->contains(key)) {
-    QString p = config->value(key).toString();
-    setDirectory(p);
-    imagesArchiv = directory();
-    findSourceImage();
+  if(info.exists()) {
+    setDirectory(info.path());
+    selectFile(info.filePath());
+    m_view->setImageFile(info);
+    return true;
   }
-  QFileDialog::enterEvent(event);
+  return false;
 }
 
-void ImageDialog::accept() { /* FIXME */ }
+void ImageDialog::accept() {
+  /**
+   * Ich weiss ... :-(
+   * Das hier ist nicht gerade die feine Art.
+   * Ich bin für Vorschläge und Tips offen.
+   */
+}
 
 void ImageDialog::save() {
   if (m_view->getImage().isNull()) {
@@ -103,7 +113,7 @@ void ImageDialog::save() {
     return;
   }
   // Bild Speichern und beenden
-  if (m_view->storeImage(p_articleId))
+  if (m_view->storeInDatabase(p_articleId))
     done(QDialogButtonBox::Ok);
 }
 
@@ -111,4 +121,19 @@ void ImageDialog::imagePreview(const QString &file) {
   QFileInfo info(file);
   if (info.isReadable())
     m_view->setImageFile(info);
+}
+
+int ImageDialog::exec() {
+  QString key("dirs/images");
+  if (config->contains(key)) {
+    QString p = config->value(key).toString();
+    setDirectory(p);
+    imagesArchiv = directory();
+  }
+
+  if (!findSourceImage()) {
+    m_view->readFromDatabase(p_articleId);
+  }
+
+  return QFileDialog::exec();
 }

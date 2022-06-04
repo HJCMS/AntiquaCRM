@@ -10,9 +10,8 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (subproject_LINKER
+ SqlCore
  AntiquaCore
- Settings
- Utils
 )
 
 SET (subproject_SOURCES

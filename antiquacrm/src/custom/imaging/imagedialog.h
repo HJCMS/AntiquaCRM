@@ -5,7 +5,6 @@
 #ifndef IMAGEDIALOG_IMAGING_H
 #define IMAGEDIALOG_IMAGING_H
 
-#include <QCloseEvent>
 #include <QDir>
 #include <QFileDialog>
 #include <QFileInfo>
@@ -26,25 +25,21 @@ private:
   ApplSettings *config;
   QDir imagesArchiv;
   QAction *ac_rotate;
+  QAction *ac_scale;
   ImageView *m_view;
   QToolBar *m_toolBar;
 
   /**
    * @brief Suche Bildnummer im Archiv
    */
-  void findSourceImage();
-
-  /**
-   * @brief Lade Einstellungen beim öffnen.
-   */
-  void showEvent(QShowEvent *event) override;
+  bool findSourceImage();
 
   /**
    * @brief Automatsuches schließen unterdrücken!
    * Der Dialog soll sich nicht schließen wenn kein explizites Beenden
    * aufgerufen wird!
    */
-  void accept() override;
+  void accept();
 
 private Q_SLOTS:
   void save();
@@ -52,6 +47,7 @@ private Q_SLOTS:
 
 public:
   explicit ImageDialog(int articleId, QWidget *parent = nullptr);
+  int exec();
 };
 
 #endif // IMAGEDIALOG_IMAGING_H

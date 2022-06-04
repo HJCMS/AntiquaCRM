@@ -81,5 +81,8 @@
         <file>icons/window_nofullscreen.png</file>
         <file>icons/xcalc.png</file>
         <file>icons/printer.png</file>
+        <file>icons/scale.png</file>
+        <file>icons/rotate-left.png</file>
+        <file>icons/rotate-right.png</file>
     </qresource>
 </RCC>

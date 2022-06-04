@@ -98,13 +98,16 @@ void GeneralSettings::loadSectionConfig() {
   m_searchStart->setValue(config->value("search/startlength", 5));
   m_minPrice->setValue(config->value("payment/min_price", 5));
   // config->value("dirs/deliverynotes", QDir::homePath()).toString();
+  // config->value("dirs/invoices", QDir::homePath()).toString();
+  // config->value("image/max_size", QSize(320, 320)).toSize();
 }
 
 void GeneralSettings::saveSectionConfig() {
   config->setValue("dirs/images", m_editImageSrc->value());
+  config->setValue("dirs/deliverynotes", QDir::homePath() + "/Downloads/");
+  config->setValue("dirs/invoices", QDir::homePath() + "/Downloads/");
   config->setValue("search/startlength", m_searchStart->value());
+  config->setValue("image/max_size", QSize(320, 320));
   config->setValue("payment/min_price", m_minPrice->value());
   config->setValue("payment/currency", "€"); // TODO
-  config->setValue("dirs/deliverynotes", QDir::homePath() + "/Downloads/");
-
 }
