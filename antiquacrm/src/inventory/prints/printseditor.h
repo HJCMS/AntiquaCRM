@@ -66,7 +66,7 @@ private:
   /**
     @brief Eingebettete Bildansicht
    */
-  ImageWidget *m_imageView;
+  ImageView *m_imageView;
 
   /**
     @brief Prüft und erstellt die Datensatzfelder.

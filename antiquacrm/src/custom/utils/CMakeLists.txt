@@ -28,7 +28,6 @@ SET (subproject_SOURCES
   genderbox.cpp
   groupbox.cpp
   imagetoolbar.cpp
-  imagewidget.cpp
   intspinbox.cpp
   inventory.cpp
   isbnedit.cpp
@@ -67,7 +66,6 @@ SET (subproject_HEADERS
   genderbox.h
   groupbox.h
   imagetoolbar.h
-  imagewidget.h
   intspinbox.h
   inventory.h
   isbnedit.h

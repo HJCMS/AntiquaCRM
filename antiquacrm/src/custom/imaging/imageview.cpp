@@ -28,6 +28,8 @@ ImageView::ImageView(QSize maxsize, QWidget *parent)
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   setCacheMode(QGraphicsView::CacheNone);
   setMinimumWidth((p_max.width() / 2));
+  m_sql = new HJCMS::SqlCore(this);
+
   m_scene = new QGraphicsScene(this);
 }
 
@@ -122,6 +124,8 @@ void ImageView::rotate() {
   update();
 }
 
+void ImageView::clear() { m_scene->clear(); }
+
 bool ImageView::readFromDatabase(int articleId) {
   if (articleId < 1)
     return false;
@@ -136,8 +140,7 @@ bool ImageView::readFromDatabase(int articleId) {
   select.append(" ORDER BY im_id LIMIT 1;");
 
   QByteArray data;
-  HJCMS::SqlCore sqlCore(this);
-  QSqlQuery q = sqlCore.query(select);
+  QSqlQuery q = m_sql->query(select);
   if (q.next()) {
     data = QByteArray::fromBase64(q.value(0).toByteArray(),
                                   QByteArray::Base64Encoding);
@@ -180,8 +183,7 @@ bool ImageView::storeInDatabase(int articleId) {
   // Aufräumen
   rawimg.clear();
 
-  HJCMS::SqlCore sqlCore(this);
-  QSqlQuery q = sqlCore.query(sql);
+  QSqlQuery q = m_sql->query(sql);
   if (q.next()) {
     sql = QString("UPDATE inventory_images SET ");
     sql.append("im_imgdata='");
@@ -197,14 +199,39 @@ bool ImageView::storeInDatabase(int articleId) {
     sql.append(base64);
     sql.append("');");
   }
-  sqlCore.query(sql);
-  if (!sqlCore.lastError().isEmpty()) {
-    qDebug() << sqlCore.lastError();
+  m_sql->query(sql);
+  if (!m_sql->lastError().isEmpty()) {
+    qDebug() << m_sql->lastError();
     return false;
   }
   // Aufräumen
   q.clear();
   base64.clear();
+  return true;
+}
+
+bool ImageView::removeFromDatabase(int articleId) {
+  if (articleId < 1)
+    return false;
+
+  QString strArticleId = QString::number(articleId);
+  if (strArticleId.isEmpty())
+    return false;
+
+  QString sql("DELETE FROM inventory_images ");
+  sql.append("WHERE im_id=");
+  sql.append(strArticleId);
+  sql.append(";");
+
+#if DEBUG_IMAGE_VIEW
+  qDebug() << Q_FUNC_INFO << sql;
+#endif
+
+  m_sql->query(sql);
+  if (!m_sql->lastError().isEmpty()) {
+    qDebug() << m_sql->lastError();
+    return false;
+  }
   return true;
 }
 

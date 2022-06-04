@@ -234,7 +234,8 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   m_imageToolBar->setObjectName("books_image_actions_bar");
   row2->addWidget(m_imageToolBar, 10, 0, 1, 2, Qt::AlignRight);
 
-  m_imageView = new ImageWidget(this);
+  QSize maximageSize = config.value("image/max_size", QSize(320, 320)).toSize();
+  m_imageView = new ImageView(maximageSize, this);
   row2->addWidget(m_imageView, 0, 2, 11, 1);
 
   mainLayout->addLayout(row2);
@@ -315,7 +316,7 @@ void BookEditor::openImageDialog() {
     emit s_openImageEditor(id);
 
   if (dialog->exec()) {
-    m_imageView->searchImageById(id);
+    m_imageView->readFromDatabase(id);
   }
 }
 
@@ -329,12 +330,9 @@ void BookEditor::removeImageDialog(int id) {
   QString m = QString("%1\n\nImage - Article ID: %2").arg(ask, image_id);
   QMessageBox::StandardButton set = QMessageBox::question(this, t, m);
   if (set == QMessageBox::Yes) {
-    QSqlQuery q = m_sql->query(
-        "DELETE FROM inventory_images WHERE im_id=" + image_id + ";");
-    if (q.lastError().isValid()) {
-      qWarning("Delete Image SQL-Error:\n%s", qPrintable(m_sql->lastError()));
-    } else {
+    if (m_imageView->removeFromDatabase(id)) {
       m_imageView->clear();
+      sqlSuccessMessage(tr("Image delete successfully!"));
     }
   }
 }
@@ -485,7 +483,7 @@ void BookEditor::importSqlResult() {
   if (id > 0) {
     m_imageToolBar->setArticleId(id);
     m_imageToolBar->setActive(true);
-    m_imageView->searchImageById(id);
+    m_imageView->readFromDatabase(id);
   }
   // Nach Ersteintrag zurück setzen!
   resetModified(inputList);

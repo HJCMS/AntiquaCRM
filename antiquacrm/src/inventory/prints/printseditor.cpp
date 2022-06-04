@@ -231,7 +231,8 @@ PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
   horizontalLayout->addLayout(gridLayout);
   // END gridLayout
 
-  m_imageView = new ImageWidget(this);
+  QSize maxImageSize = config.value("image/max_size", QSize(320, 320)).toSize();
+  m_imageView = new ImageView(maxImageSize, this);
   m_imageView->setObjectName("prints_image_view");
   m_imageView->setMinimumWidth(200);
   horizontalLayout->addWidget(m_imageView);
@@ -302,7 +303,7 @@ void PrintsEditor::openImageDialog() {
     emit s_openImageEditor(id);
 
   if (dialog->exec()) {
-    m_imageView->searchImageById(id);
+    m_imageView->readFromDatabase(id);
   }
 }
 
@@ -316,12 +317,9 @@ void PrintsEditor::removeImageDialog(int id) {
   QString m = QString("%1\n\nImage - Article ID: %2").arg(ask, image_id);
   QMessageBox::StandardButton set = QMessageBox::question(this, t, m);
   if (set == QMessageBox::Yes) {
-    QSqlQuery q = m_sql->query(
-        "DELETE FROM inventory_images WHERE im_id=" + image_id + ";");
-    if (q.lastError().isValid()) {
-      qWarning("Delete Image SQL-Error:\n%s", qPrintable(m_sql->lastError()));
-    } else {
+    if (m_imageView->removeFromDatabase(id)) {
       m_imageView->clear();
+      sqlSuccessMessage(tr("Image delete successfully!"));
     }
   }
 }
@@ -438,7 +436,7 @@ void PrintsEditor::importSqlResult() {
   if (id > 0) {
     m_imageToolBar->setArticleId(id);
     m_imageToolBar->setActive(true);
-    m_imageView->searchImageById(id);
+    m_imageView->readFromDatabase(id);
   }
   // Nach Ersteintrag zurück setzen!
   resetModified(inputList);

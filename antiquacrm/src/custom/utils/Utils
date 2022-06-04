@@ -54,10 +54,6 @@
 # include "imagetoolbar.h"
 #endif
 
-#ifndef IMAGEWIDGET_UTILS_H
-# include "imagewidget.h"
-#endif
-
 #ifndef INTSPINBOX_UTILS_H
 # include "intspinbox.h"
 #endif

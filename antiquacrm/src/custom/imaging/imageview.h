@@ -17,12 +17,17 @@
 #include <QWheelEvent>
 #include <QWidget>
 
+namespace HJCMS {
+class SqlCore;
+};
+
 class ImageView : public QGraphicsView {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  HJCMS::SqlCore *m_sql;
   const QSize p_max;
   QPixmap p_pixmap;
   QGraphicsScene *m_scene;
@@ -63,6 +68,7 @@ public Q_SLOTS:
   void zoomOut();
   void zoomReset();
   void rotate();
+  void clear();
 
 public:
   ImageView(QSize maxsize, QWidget *parent = nullptr);
@@ -78,6 +84,11 @@ public:
    * Schreibe Bilddatei in Tabelle "inventory_images"
    */
   bool storeInDatabase(int articleId);
+
+  /**
+   * @brief Bild aus Datenbank entfernen!
+   */
+  bool removeFromDatabase(int articleId);
 
   /**
    * @brief Ansicht zurückgeben!
