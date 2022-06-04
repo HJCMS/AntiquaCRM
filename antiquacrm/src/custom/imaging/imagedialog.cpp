@@ -7,68 +7,93 @@
 #include "myicontheme.h"
 
 #ifndef DEBUG_IMAGE_DIALOG
-#define DEBUG_IMAGE_DIALOG false
+#define DEBUG_IMAGE_DIALOG true
 #endif
 
 #if DEBUG_IMAGE_DIALOG
 #include <QDebug>
 #endif
-#include <QFileInfo>
 #include <QDialogButtonBox>
 #include <QDirIterator>
+#include <QFileInfo>
 #include <QSplitter>
 #include <QVBoxLayout>
 
+FileBrowser::FileBrowser(QWidget *parent) : QFileDialog{parent} {
+  setObjectName("file_dialog_widget");
+  setOption(QFileDialog::DontUseNativeDialog, true);
+  setWindowModality(Qt::NonModal);
+  setWindowFlags(Qt::Widget);
+  setWindowState(Qt::WindowNoState);
+  setNameFilter(tr("Image jpeg files (*.jpg *.JPG *.jpeg *.JPEG)"));
+  setSizeGripEnabled(false);
+}
+
+void FileBrowser::accept() { /* don't touch me */
+}
+
+void FileBrowser::reject() { emit s_close(); }
+
 ImageDialog::ImageDialog(int articleId, QWidget *parent)
-    : QFileDialog{parent}, p_articleId{articleId} {
+    : QDialog{parent}, p_articleId{articleId} {
   setObjectName("image_open_edit_dialog");
   setWindowTitle(tr("Picture Editor"));
   setWindowIcon(myIcon("image"));
-  setSizeGripEnabled(true);
   setMinimumSize(QSize(600, 400));
-  setNameFilter(tr("Image jpeg files (*.jpg *.JPG *.jpeg *.JPEG)"));
-  setLabelText(QFileDialog::Accept, tr("Save Image"));
+  setSizeGripEnabled(true);
 
   config = new ApplSettings(this);
 
-  QSize maxImageSize =
-      config->value("image/max_size", QSize(320, 320)).toSize();
+  QVBoxLayout *layout = new QVBoxLayout(this);
+  layout->setObjectName("image_open_edit_layout");
+  layout->setContentsMargins(0, 0, 0, 0);
 
-  QSplitter *splitter = findChild<QSplitter *>();
-  if (splitter != nullptr) {
-    QWidget *previewArea = new QWidget(splitter);
-    QVBoxLayout *paLayout = new QVBoxLayout(previewArea);
-    paLayout->setContentsMargins(0, 0, 0, 0);
-    m_view = new ImageView(maxImageSize, previewArea);
-    paLayout->addWidget(m_view);
-    m_toolBar = new QToolBar(previewArea);
-    m_toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    ac_scale = m_toolBar->addAction(myIcon("scale"),"Scale");
-    m_toolBar->addSeparator();
-    ac_rotate = m_toolBar->addAction(tr("rotate image clockwise"));
-    ac_rotate->setIcon(myIcon("rotate-right"));
-    paLayout->addWidget(m_toolBar);
-    previewArea->setLayout(paLayout);
-    splitter->addWidget(previewArea);
-    connect(ac_rotate, SIGNAL(triggered()), m_view, SLOT(rotate()));
-    connect(ac_scale, SIGNAL(triggered()), m_view, SLOT(zoomReset()));
-  }
+  QSize mSize = config->value("image/max_size", QSize(320, 320)).toSize();
+  QSplitter *m_splitter = new QSplitter(this);
+  m_view = new ImageView(mSize, m_splitter);
+  m_splitter->insertWidget(0, m_view);
+  m_splitter->setStretchFactor(0, 20);
 
-  QDialogButtonBox *btnBox = findChild<QDialogButtonBox *>();
-  if (btnBox != nullptr)
-    connect(btnBox, SIGNAL(accepted()), this, SLOT(save()));
+  browser = new FileBrowser(m_splitter);
+  m_splitter->insertWidget(1, browser);
+  m_splitter->setStretchFactor(1, 70);
+  layout->insertWidget(0, m_splitter);
 
-  connect(this, SIGNAL(currentChanged(const QString &)), this,
+  m_statusBar = new QStatusBar(this);
+  m_statusBar->setObjectName("image_open_edit_statusbar");
+  m_toolBar = new QToolBar(m_statusBar);
+  ac_scale = m_toolBar->addAction(myIcon("scale"), tr("Scale"));
+  m_toolBar->addSeparator();
+  ac_rotate = m_toolBar->addAction(tr("rotate clockwise"));
+  ac_rotate->setIcon(myIcon("rotate-right"));
+  m_toolBar->addSeparator();
+  m_toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+  ac_save = m_toolBar->addAction(myIcon("filesave"), tr("Save"));
+  m_toolBar->addSeparator();
+  ac_close = m_toolBar->addAction(myIcon("exit"), tr("Close"));
+  m_statusBar->addPermanentWidget(m_toolBar);
+  layout->insertWidget(1, m_statusBar);
+  layout->setStretch(0, 1);
+  setLayout(layout);
+
+  connect(ac_rotate, SIGNAL(triggered()), m_view, SLOT(rotate()));
+  connect(ac_scale, SIGNAL(triggered()), m_view, SLOT(zoomReset()));
+  connect(ac_save, SIGNAL(triggered()), this, SLOT(save()));
+  connect(ac_close, SIGNAL(triggered()), this, SLOT(accept()));
+  connect(browser, SIGNAL(currentChanged(const QString &)), this,
           SLOT(imagePreview(const QString &)));
+  connect(browser, SIGNAL(s_close()), this, SLOT(reject()));
 }
 
 bool ImageDialog::findSourceImage() {
-  if (!imagesArchiv.exists())
+  if (!imagesArchiv.exists()) {
+    notifyStatus(tr("archiv isn't readable!"));
     return false;
+  }
 
   QString imageId = QString::number(p_articleId);
 
-  QString basePath = directory().path();
+  QString basePath = browser->directory().path();
   QStringList search;
   search << imageId + ".JPG";
   search << imageId + ".jpg";
@@ -85,36 +110,29 @@ bool ImageDialog::findSourceImage() {
     found << file.replace(basePath, "");
   }
 
-  if(found.size() < 1)
+  if (found.size() < 1)
     return false;
 
   QString imageFile = found.first();
   QFileInfo info(basePath, imageFile);
-  if(info.exists()) {
-    setDirectory(info.path());
-    selectFile(info.filePath());
+  if (info.exists()) {
+    browser->setDirectory(info.path());
+    browser->selectFile(info.filePath());
     m_view->setImageFile(info);
     return true;
   }
+  notifyStatus(tr("no source image exists!"));
   return false;
-}
-
-void ImageDialog::accept() {
-  /**
-   * Ich weiss ... :-(
-   * Das hier ist nicht gerade die feine Art.
-   * Ich bin für Vorschläge und Tips offen.
-   */
 }
 
 void ImageDialog::save() {
   if (m_view->getImage().isNull()) {
+    notifyStatus(tr("no valid image found"));
     reject();
     return;
   }
-  // Bild Speichern und beenden
   if (m_view->storeInDatabase(p_articleId))
-    done(QDialogButtonBox::Ok);
+    notifyStatus(tr("image saved successfully!"));
 }
 
 void ImageDialog::imagePreview(const QString &file) {
@@ -123,17 +141,22 @@ void ImageDialog::imagePreview(const QString &file) {
     m_view->setImageFile(info);
 }
 
+void ImageDialog::notifyStatus(const QString &str) {
+  m_statusBar->showMessage(str, (10 * 1000));
+}
+
 int ImageDialog::exec() {
   QString key("dirs/images");
   if (config->contains(key)) {
     QString p = config->value(key).toString();
-    setDirectory(p);
-    imagesArchiv = directory();
+    browser->setDirectory(p);
+    imagesArchiv = browser->directory();
   }
 
   if (!findSourceImage()) {
-    m_view->readFromDatabase(p_articleId);
+    if (m_view->readFromDatabase(p_articleId))
+      notifyStatus(tr("image from database!"));
   }
 
-  return QFileDialog::exec();
+  return QDialog::exec();
 }

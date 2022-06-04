@@ -271,12 +271,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+117"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+7"/>
+        <source>Image delete successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+50"/>
         <source>Missing Article ID for Update.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -296,7 +301,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-427"/>
+        <location line="-423"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -311,17 +316,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+190"/>
+        <location line="+189"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+215"/>
+        <location line="+212"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-296"/>
+        <location line="-291"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -343,7 +348,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-164"/>
+        <location line="-165"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
@@ -353,12 +358,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+188"/>
+        <location line="+184"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-299"/>
+        <location line="-295"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1428,6 +1433,14 @@
     </message>
 </context>
 <context>
+    <name>FileBrowser</name>
+    <message>
+        <location filename="../custom/imaging/imagedialog.cpp" line="+28"/>
+        <source>Image jpeg files (*.jpg *.JPG *.jpeg *.JPEG)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FileDialog</name>
     <message>
         <location filename="../custom/utils/filedialog.cpp" line="+21"/>
@@ -1581,23 +1594,53 @@
 <context>
     <name>ImageDialog</name>
     <message>
-        <location filename="../custom/imaging/imagedialog.cpp" line="+17"/>
+        <location filename="../custom/imaging/imagedialog.cpp" line="+12"/>
         <source>Picture Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+25"/>
+        <source>Scale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>rotate clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+4"/>
-        <source>Image jpeg files (*.jpg *.JPG *.jpeg *.JPEG)</source>
+        <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Save Image</source>
+        <location line="+2"/>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Rotate Image</source>
+        <location line="+17"/>
+        <source>archiv isn&apos;t readable!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <source>no source image exists!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>no valid image found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>image saved successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>image from database!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1621,24 +1664,6 @@
     <message>
         <location line="+1"/>
         <source>Remove image from Database.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ImageWidget</name>
-    <message>
-        <location filename="../custom/utils/imagewidget.cpp" line="+78"/>
-        <source>no image in database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Missing Article Number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>SQL Image Query fails.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1994,29 +2019,6 @@
     <message>
         <location line="+21"/>
         <source>SQL Syntaxerror</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>OpenImageDialog</name>
-    <message>
-        <location filename="../custom/imaging/openimagedialog.cpp" line="+22"/>
-        <source>Open Image from Disk</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Onclick for preview and double click to set image for open.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2952,7 +2954,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+31"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -2974,7 +2976,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+56"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2984,7 +2986,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+6"/>
+        <source>Image delete successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Data saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3713,60 +3720,6 @@
     <message>
         <location filename="../custom/utils/textfield.cpp" line="+65"/>
         <source>a &apos;%1&apos; required and can not empty.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ToolBar</name>
-    <message>
-        <location filename="../custom/imaging/toolbar.cpp" line="+28"/>
-        <source>Home</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Desktop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Pictures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Downloads</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Documents</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Temp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Cache</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Company Storage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Supported Format: JPG</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location line="+1"/>
-        <source>Upward</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

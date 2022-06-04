@@ -172,7 +172,7 @@ void InventoryBooks::searchConvert() {
     return;
 
   QString buf = m_searchBar->currentSearchText();
-  if (buf.length() >= 2) {
+  if (buf.length() > 1) {
     SearchStatement s;
     s.SearchField =
         m_searchBar->getSearchFilter(m_searchBar->currentFilterIndex());

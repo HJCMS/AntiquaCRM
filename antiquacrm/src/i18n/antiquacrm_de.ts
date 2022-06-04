@@ -271,12 +271,17 @@
         <translation>Umschreibung</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+117"/>
         <source>Remove Image from Database</source>
         <translation>Entferne Bild aus der Datenbank</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+7"/>
+        <source>Image delete successfully!</source>
+        <translation>Das Bild wurde Erfolgreich gelöscht!</translation>
+    </message>
+    <message>
+        <location line="+50"/>
         <source>Missing Article ID for Update.</source>
         <translation>Keine Artikel ID für Update vorhanden.</translation>
     </message>
@@ -296,7 +301,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-427"/>
+        <location line="-423"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -311,17 +316,17 @@
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
     <message>
-        <location line="+190"/>
+        <location line="+189"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
     <message>
-        <location line="+215"/>
+        <location line="+212"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
     <message>
-        <location line="-296"/>
+        <location line="-291"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -343,7 +348,7 @@
         <translation>Dieser Text dient internen Zwecken</translation>
     </message>
     <message>
-        <location line="-164"/>
+        <location line="-165"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
@@ -353,12 +358,12 @@
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="+188"/>
+        <location line="+184"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-299"/>
+        <location line="-295"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -1428,6 +1433,14 @@
     </message>
 </context>
 <context>
+    <name>FileBrowser</name>
+    <message>
+        <location filename="../custom/imaging/imagedialog.cpp" line="+28"/>
+        <source>Image jpeg files (*.jpg *.JPG *.jpeg *.JPEG)</source>
+        <translation>JPG Bild Dateien (*.jpg *.JPG *.jpeg *.JPEG)</translation>
+    </message>
+</context>
+<context>
     <name>FileDialog</name>
     <message>
         <location filename="../custom/utils/filedialog.cpp" line="+21"/>
@@ -1581,24 +1594,54 @@
 <context>
     <name>ImageDialog</name>
     <message>
-        <location filename="../custom/imaging/imagedialog.cpp" line="+17"/>
+        <location filename="../custom/imaging/imagedialog.cpp" line="+12"/>
         <source>Picture Editor</source>
         <translation>Bildeditor</translation>
     </message>
     <message>
+        <location line="+25"/>
+        <source>Scale</source>
+        <translation>Skalieren</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>rotate clockwise</source>
+        <translation>Im Uhrzeigersinn drehen</translation>
+    </message>
+    <message>
         <location line="+4"/>
-        <source>Image jpeg files (*.jpg *.JPG *.jpeg *.JPEG)</source>
-        <translation>JPG Bild Dateien (*.jpg *.JPG *.jpeg *.JPEG)</translation>
+        <source>Save</source>
+        <translation>Speichern</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Save Image</source>
-        <translation>Bild Speichern</translation>
+        <location line="+2"/>
+        <source>Close</source>
+        <translation>Beenden</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Rotate Image</source>
-        <translation>Bild drehen</translation>
+        <location line="+17"/>
+        <source>archiv isn&apos;t readable!</source>
+        <translation>Archiv ist nicht lesbar!</translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <source>no source image exists!</source>
+        <translation>Keine Bildquelle gefunden!</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>no valid image found</source>
+        <translation>Kein gültiges Bild gefunden</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>image saved successfully!</source>
+        <translation>Bild wurde Erfolgreich gespeichert!</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>image from database!</source>
+        <translation>Nehme Bild aus der Datenbank!</translation>
     </message>
 </context>
 <context>
@@ -1622,24 +1665,6 @@
         <location line="+1"/>
         <source>Remove image from Database.</source>
         <translation>Entferne Bild aus der Datenbank.</translation>
-    </message>
-</context>
-<context>
-    <name>ImageWidget</name>
-    <message>
-        <location filename="../custom/utils/imagewidget.cpp" line="+78"/>
-        <source>no image in database</source>
-        <translation>Kein Bild in der Datenbank</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Missing Article Number</source>
-        <translation>Keine Artikel Nummer verfügbar</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>SQL Image Query fails.</source>
-        <translation>SQL Bildabfrage fehlgeschlagen.</translation>
     </message>
 </context>
 <context>
@@ -1995,29 +2020,6 @@
         <location line="+21"/>
         <source>SQL Syntaxerror</source>
         <translation></translation>
-    </message>
-</context>
-<context>
-    <name>OpenImageDialog</name>
-    <message>
-        <location filename="../custom/imaging/openimagedialog.cpp" line="+22"/>
-        <source>Open Image from Disk</source>
-        <translation>Öffne Bild von Festplatte</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Onclick for preview and double click to set image for open.</source>
-        <translation>Klicken Sie auf das Bild, um eine Vorschau anzuzeigen, und doppelklicken Sie, um das Bild zum Öffnen festzulegen.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Save</source>
-        <translation>Speichern</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Close</source>
-        <translation>Schließen</translation>
     </message>
 </context>
 <context>
@@ -2952,7 +2954,7 @@
         <translation>Äußere Beschreibung</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+31"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -2974,7 +2976,7 @@
         <translation>Dieser Text dient internen Zwecken</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+56"/>
         <source>Remove Image from Database</source>
         <translation>Entferne Bild aus der Datenbank</translation>
     </message>
@@ -2984,7 +2986,12 @@
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+6"/>
+        <source>Image delete successfully!</source>
+        <translation>Das Bild wurde Erfolgreich gelöscht!</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Data saved successfully!</source>
         <translation>Daten Erfolgreich gespeichert!</translation>
     </message>
@@ -3714,60 +3721,6 @@
         <location filename="../custom/utils/textfield.cpp" line="+65"/>
         <source>a &apos;%1&apos; required and can not empty.</source>
         <translation>Bei &apos;%1&apos; ist eine Eingabe erforderlich.</translation>
-    </message>
-</context>
-<context>
-    <name>ToolBar</name>
-    <message>
-        <location filename="../custom/imaging/toolbar.cpp" line="+28"/>
-        <source>Home</source>
-        <translation>Heimverzeichnis</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Desktop</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Pictures</source>
-        <translation>Bilder</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Downloads</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Documents</source>
-        <translation>Dokumente</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Temp</source>
-        <translation>Temporäre Daten</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Cache</source>
-        <translation>Lokale Temporäre Daten</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Company Storage</source>
-        <translation>Firmen Verzeichnis</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Supported Format: JPG</source>
-        <translation>Untertütztes Format: JPG</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location line="+1"/>
-        <source>Upward</source>
-        <translation>Aufwärts</translation>
     </message>
 </context>
 <context>

@@ -258,7 +258,7 @@ void BooksTable::queryStatement(const SearchStatement &cl) {
     q.append("%'");
   } else if (field.contains("storage")) {
     // mit Lager Kategorie
-    q.append(" WHERE (b.ib_count!=0 AND s.sl_identifier ILIKE '");
+    q.append(" WHERE (b.ib_count>0 AND s.sl_identifier ILIKE '");
     q.append(str.replace("%", "")); /**< @note Wegen Performance */
     q.append("%'");
   } else {
