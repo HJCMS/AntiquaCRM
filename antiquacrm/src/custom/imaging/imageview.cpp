@@ -25,12 +25,13 @@ ImageView::ImageView(QSize maxsize, QWidget *parent)
   setObjectName("ImagePreview");
   setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
   setBackgroundRole(QPalette::Base);
-  setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   setCacheMode(QGraphicsView::CacheNone);
   setMinimumWidth((p_max.width() / 2));
   m_sql = new HJCMS::SqlCore(this);
 
   m_scene = new QGraphicsScene(this);
+  /** @warning Lese die ImageView::clear() Dokumentation */
+  clear();
 }
 
 const QSize ImageView::screenSize() const {
@@ -57,7 +58,7 @@ void ImageView::wheelEvent(QWheelEvent *event) {
 }
 
 void ImageView::resizeEvent(QResizeEvent *event) {
-  if (m_pixmap != nullptr) {
+  if (m_pixmap != nullptr && !m_pixmap->pixmap().isNull()) {
     fitInView(m_pixmap, Qt::KeepAspectRatio);
   }
   QGraphicsView::resizeEvent(event);
@@ -66,7 +67,7 @@ void ImageView::resizeEvent(QResizeEvent *event) {
 void ImageView::setImage(const QImage &img) {
   QPixmap p = QPixmap::fromImage(img);
   if (p.isNull()) {
-    emit s_loadSuccess(false);
+    emit s_imageLoadSuccess(false);
     return;
   }
 
@@ -77,14 +78,14 @@ void ImageView::setImage(const QImage &img) {
   m_pixmap = m_scene->addPixmap(p_pixmap);
   setSceneRect(p_pixmap.rect());
   setScene(m_scene);
-  emit s_loadSuccess(true);
+  emit s_imageLoadSuccess(true);
 }
 
 void ImageView::setImageFile(const QFileInfo &file) {
   QImageReader reader(file.filePath());
   QImage img = reader.read();
   if (img.isNull()) {
-    emit s_loadSuccess(false);
+    emit s_imageLoadSuccess(false);
     return;
   }
   setImage(img);
@@ -93,7 +94,7 @@ void ImageView::setImageFile(const QFileInfo &file) {
 void ImageView::setRawImage(const QByteArray &data) {
   QImage img = QImage::fromData(data, "jpeg");
   if (img.isNull()) {
-    emit s_loadSuccess(false);
+    emit s_imageLoadSuccess(false);
     return;
   }
   setImage(img);
@@ -124,7 +125,10 @@ void ImageView::rotate() {
   update();
 }
 
-void ImageView::clear() { m_scene->clear(); }
+void ImageView::clear() {
+  m_scene->clear();
+  m_pixmap = m_scene->addPixmap(QPixmap(0, 0));
+}
 
 bool ImageView::readFromDatabase(int articleId) {
   if (articleId < 1)
@@ -246,6 +250,7 @@ const QImage ImageView::getImage() {
 }
 
 ImageView::~ImageView() {
+  m_pixmap = m_scene->addPixmap(QPixmap(0, 0));
   p_pixmap.detach();
   m_scene->deleteLater();
 }
