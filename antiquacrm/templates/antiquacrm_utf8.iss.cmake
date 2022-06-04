@@ -53,8 +53,6 @@ Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 [CustomMessages]
 english.NormalInst=Default Application Data
 german.NormalInst=Standard Programm Dateien
-english.DevelInst=Development Headers and Library
-german.DevelInst=Entwickler Bibliotheken und Include Dateien.
 
 [Messages]
 BeveledLabel=Copyright(C) 2011-2022 {#MyAppPublisher} {#MyAppURL}
