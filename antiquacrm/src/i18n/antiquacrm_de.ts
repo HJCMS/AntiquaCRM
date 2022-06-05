@@ -1516,7 +1516,17 @@
         <translation>Währungsangabe</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+14"/>
+        <source>Minimum Image size</source>
+        <translation>Minimale Bildgröße</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Maximum Image size</source>
+        <translation>Maximale Bildgröße</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>Font Settings</source>
         <translation>Schriften Einstellung</translation>
     </message>
@@ -1911,9 +1921,9 @@
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../custom/utils/lineedit.cpp" line="+102"/>
-        <source>The field &apos;%1&apos; is requiered but empty!</source>
-        <translation>Das Feld &apos;%1&apos; darf nicht Leer sein!</translation>
+        <location filename="../custom/utils/lineedit.cpp" line="+109"/>
+        <source>is required and can&apos;t empty.</source>
+        <translation>ist Erforderlich und darf nicht Leer sein.</translation>
     </message>
 </context>
 <context>
@@ -3534,6 +3544,19 @@
         <location filename="../custom/settings/settingswidget.cpp" line="+18"/>
         <source>Directory</source>
         <translation>Verzeichnis</translation>
+    </message>
+</context>
+<context>
+    <name>SizeEdit</name>
+    <message>
+        <location filename="../custom/utils/sizeedit.cpp" line="+12"/>
+        <source>Size Editor</source>
+        <translation>Größen Editor</translation>
+    </message>
+    <message>
+        <location line="+88"/>
+        <source>is required must selected.</source>
+        <translation>ist Erforderlich und mus gesetzt werden.</translation>
     </message>
 </context>
 <context>
