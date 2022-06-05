@@ -5,12 +5,11 @@
 
 #include <QHBoxLayout>
 
-LineEdit::LineEdit(QWidget *parent) : UtilsMain{parent} {
+LineEdit::LineEdit(QWidget *parent, bool enableStretch) : UtilsMain{parent} {
   if (objectName().isEmpty())
     setObjectName("LineEdit");
 
-  setRequired(false);
-  setModified(false);
+  QSizePolicy sp(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
 
   QHBoxLayout *layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
@@ -21,10 +20,17 @@ LineEdit::LineEdit(QWidget *parent) : UtilsMain{parent} {
 
   m_edit = new QLineEdit(this);
   m_edit->setMaxLength(80);
-  m_edit->setMaximumWidth(300);
+  m_edit->setMinimumWidth(30);
+  m_edit->setSizePolicy(sp);
   layout->addWidget(m_edit);
 
+  if (enableStretch) {
+    layout->addStretch(1);
+  }
   setLayout(layout);
+
+  setRequired(false);
+  setModified(false);
 
   connect(m_edit, SIGNAL(textChanged(const QString &)), this,
           SLOT(inputChanged(const QString &)));
@@ -98,6 +104,8 @@ bool LineEdit::isValid() {
 }
 
 const QString LineEdit::notes() {
-  QString info(m_edit->toolTip());
-  return tr("The field '%1' is requiered but empty!").arg(info);
+  QString msg(m_edit->toolTip());
+  msg.append(" ");
+  msg.append(tr("is required and can't empty."));
+  return msg;
 }

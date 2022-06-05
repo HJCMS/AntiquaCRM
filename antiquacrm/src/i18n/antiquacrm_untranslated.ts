@@ -761,11 +761,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
-        <source>Appearance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location line="+6"/>
         <source>Company</source>
         <translation type="unfinished"></translation>
@@ -776,7 +771,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+12"/>
         <source>Provider</source>
         <translation type="unfinished"></translation>
     </message>
@@ -806,7 +801,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-111"/>
+        <location line="-93"/>
         <source>Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1476,28 +1471,64 @@
 <context>
     <name>GeneralSettings</name>
     <message>
-        <location filename="../custom/settings/generalsettings.cpp" line="+22"/>
-        <source>Image search Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>complete path to the main target</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location filename="../custom/settings/generalsettings.cpp" line="+17"/>
         <source>Open Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+6"/>
+        <source>Archive paths</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Delivery Notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Invoices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Additional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>From how many chars does the search start when you type in.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+6"/>
         <source>The lowest permissible selling price.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Currency indication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Font Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+94"/>
+        <source>fonts representation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-92"/>
+        <source>open font settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

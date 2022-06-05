@@ -13,7 +13,7 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   setObjectName("antiqua_config_dialog");
   setWindowTitle(tr("Configuration") + " [*]");
   setSizeGripEnabled(true);
-  setMinimumSize(800, 500);
+  setMinimumSize(800, 550);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setContentsMargins(5, 0, 5, 0);
@@ -32,41 +32,35 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   pages->setObjectName("config_dialog_statckedwidget");
   m_scrollarea->setWidget(pages);
 
-  m_page1 = new GeneralSettings(pages);
-  m_page1->setObjectName("main_settings");
-  m_page1->setPageTitle(tr("Application"));
-  m_page1->setPageIcon(myIcon("list"));
-  pages->addWidget(m_page1);
+  m_pageGeneral = new GeneralSettings(pages);
+  m_pageGeneral->setObjectName("main_settings");
+  m_pageGeneral->setPageTitle(tr("Application"));
+  m_pageGeneral->setPageIcon(myIcon("list"));
+  pages->addWidget(m_pageGeneral);
 
-  m_page2 = new PgSQLSettings(pages);
-  m_page2->setObjectName("database_settings");
-  m_page2->setPageTitle(tr("Database"));
-  m_page2->setPageIcon(myIcon("database"));
-  pages->addWidget(m_page2);
+  m_pageCompany = new CompanySettings(pages);
+  m_pageCompany->setObjectName("company_settings");
+  m_pageCompany->setPageTitle(tr("Company"));
+  m_pageCompany->setPageIcon(myIcon("edit_group"));
+  pages->addWidget(m_pageCompany);
 
-  m_page3 = new ViewSettings(pages);
-  m_page3->setObjectName("appearance_settings");
-  m_page3->setPageTitle(tr("Appearance"));
-  m_page3->setPageIcon(myIcon("autostart"));
-  pages->addWidget(m_page3);
+  m_pagePrinting = new PrintSettings(pages);
+  m_pagePrinting->setObjectName("printing_settings");
+  m_pagePrinting->setPageTitle(tr("Printing"));
+  m_pagePrinting->setPageIcon(myIcon("printer"));
+  pages->addWidget(m_pagePrinting);
 
-  m_page4 = new CompanySettings(pages);
-  m_page4->setObjectName("company_settings");
-  m_page4->setPageTitle(tr("Company"));
-  m_page4->setPageIcon(myIcon("database"));
-  pages->addWidget(m_page4);
+  m_pageDatabase = new PgSQLSettings(pages);
+  m_pageDatabase->setObjectName("database_settings");
+  m_pageDatabase->setPageTitle(tr("Database"));
+  m_pageDatabase->setPageIcon(myIcon("database"));
+  pages->addWidget(m_pageDatabase);
 
-  m_page5 = new PrintSettings(pages);
-  m_page5->setObjectName("printing_settings");
-  m_page5->setPageTitle(tr("Printing"));
-  m_page5->setPageIcon(myIcon("printer"));
-  pages->addWidget(m_page5);
-
-  m_page6 = new ProviderSettings(pages);
-  m_page6->setObjectName("provider_settings");
-  m_page6->setPageTitle(tr("Provider"));
-  m_page6->setPageIcon(myIcon("autostart"));
-  pages->addWidget(m_page6);
+  m_pageProviders = new ProviderSettings(pages);
+  m_pageProviders->setObjectName("provider_settings");
+  m_pageProviders->setPageTitle(tr("Provider"));
+  m_pageProviders->setPageIcon(myIcon("autostart"));
+  pages->addWidget(m_pageProviders);
 
   m_listWidget = new QListWidget(this);
   m_listWidget->setObjectName("config_dialog_menue");

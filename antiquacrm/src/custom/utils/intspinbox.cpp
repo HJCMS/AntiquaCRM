@@ -82,13 +82,13 @@ void IntSpinBox::setInfo(const QString &info) {
   QString txt(info);
   txt.append(":");
   m_info->setText(txt);
-  m_spinBox->setToolTip(info);
+  setToolTip(info);
 }
 
 const QString IntSpinBox::info() { return m_info->text(); }
 
 const QString IntSpinBox::notes() {
-  QString msg(windowTitle() + " ");
+  QString msg(toolTip() + " ");
   msg.append(tr("is required and can not empty."));
   return msg;
 }

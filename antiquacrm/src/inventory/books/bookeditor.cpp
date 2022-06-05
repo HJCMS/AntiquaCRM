@@ -579,6 +579,7 @@ void BookEditor::saveData() {
 void BookEditor::infoISBNDoubleClicked(QListWidgetItem *item) {
   QRegExp regexp;
   QString data = item->data(Qt::UserRole).toString();
+  // qDebug() << Q_FUNC_INFO << data;
   if (data.contains("ib_title:")) {
     regexp.setPattern("^ib_title:\\b");
     data = data.replace(regexp, "");
@@ -589,6 +590,9 @@ void BookEditor::infoISBNDoubleClicked(QListWidgetItem *item) {
     } else {
       ib_title->setValue(data);
     }
+  } else if (data.contains("ib_title_extended:")) {
+    regexp.setPattern("^ib_title_extended:\\b");
+    ib_title_extended->setValue(data.replace(regexp, ""));
   } else if (data.contains("ib_author:")) {
     regexp.setPattern("^ib_author:\\b");
     ib_author->setValue(data.replace(regexp, ""));

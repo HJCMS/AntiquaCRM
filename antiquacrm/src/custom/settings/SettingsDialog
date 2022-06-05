@@ -17,10 +17,6 @@
 #include "pgsqlsettings.h"
 #endif // PGSQL_SETTINGS_H
 
-#ifndef VIEW_SETTINGS_H
-#include "viewsettings.h"
-#endif // VIEW_SETTINGS_H
-
 #ifndef COMPANY_SETTINGS_H
 #include "companysettings.h"
 #endif // COMPANY_SETTINGS_H

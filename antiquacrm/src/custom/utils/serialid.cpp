@@ -44,7 +44,7 @@ void SerialID::setInfo(const QString &info) {
   QString txt(info);
   txt.append(":");
   m_infoLabel->setText(txt);
-  m_serialLabel->setToolTip(info);
+  setToolTip(info);
 }
 
 const QString SerialID::info() { return m_infoLabel->text(); }
@@ -69,7 +69,7 @@ bool SerialID::isValid() {
 }
 
 const QString SerialID::notes() {
-  QString msg("'" + objectName() + "' ");
+  QString msg("'" + toolTip() + "' ");
   msg.append(tr("is required and can not empty."));
   return msg;
 }

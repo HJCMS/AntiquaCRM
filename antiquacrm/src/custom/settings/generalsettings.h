@@ -8,6 +8,8 @@
 #include "settingswidget.h"
 
 #include <QObject>
+#include <QToolButton>
+#include <QPushButton>
 
 class GeneralSettings final : public SettingsWidget {
   Q_OBJECT
@@ -15,14 +17,28 @@ class GeneralSettings final : public SettingsWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  LineEdit *m_editImageSrc;  /**< Pfad zu den Bildquellen */
-  IntSpinBox *m_searchStart; /**< Ab wann startet die Suche */
-  IntSpinBox *m_minPrice;    /**< Kleinster Verkaufspreis */
+  LineEdit *m_img_archiv_path; /**< Bilderarchiv */
+  LineEdit *m_delivery_path;   /**< Lieferscheine */
+  LineEdit *m_invoice_path;    /**< Rechnungen */
+  LineEdit *m_currency;        /**< Währung */
+  IntSpinBox *m_searchStart;   /**< Start Zeichen suche */
+  IntSpinBox *m_minPrice;      /**< Kleinster Verkaufspreis */
+  SizeEdit *m_minSize;         /**< Minimale Bildgröße */
+  SizeEdit *m_maxSize;         /**< Maximale Bildgröße */
+  QLabel *view_font_config;    /**< Schriftdarstellung */
+
+  QToolButton *btn_imgsrc;
+  QToolButton *btn_delivery;
+  QToolButton *btn_invoice;
+  QPushButton *btn_fontdialog;
 
   void initSignalChanged();
 
 private Q_SLOTS:
-  void setImageDir();
+  void openFontDialog();
+  void setImageArchiv();
+  void setDeliveryArchiv();
+  void setInvoiceArchiv();
 
 public:
   explicit GeneralSettings(QWidget *parent = nullptr);

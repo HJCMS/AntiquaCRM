@@ -40,6 +40,7 @@ SET (subproject_SOURCES
   priceedit.cpp
   salutationbox.cpp
   searchbar.cpp
+  sizeedit.cpp
   setlanguage.cpp
   statsactionbar.cpp
   storageedit.cpp
@@ -78,6 +79,7 @@ SET (subproject_HEADERS
   priceedit.h
   salutationbox.h
   searchbar.h
+  sizeedit.h
   setlanguage.h
   statsactionbar.h
   storageedit.h

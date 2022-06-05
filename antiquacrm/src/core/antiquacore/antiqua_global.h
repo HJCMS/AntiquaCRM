@@ -71,7 +71,7 @@
  * @brief Support link
  */
 #ifndef ANTIQUACRM_HOMEPAGE
-#define ANTIQUACRM_HOMEPAGE "https://antiquacrm.hjcms.de"
+#define ANTIQUACRM_HOMEPAGE "https://www.hjcms.de"
 #endif
 
 /**

@@ -33,7 +33,7 @@ public Q_SLOTS:
   void setFocus();
 
 public:
-  explicit LineEdit(QWidget *parent = nullptr);
+  explicit LineEdit(QWidget *parent = nullptr, bool enableStretch = false);
 
   /**
    * @brief setPasswordInput

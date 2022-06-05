@@ -10,6 +10,7 @@
 #include <QFocusEvent>
 #include <QFrame>
 #include <QWidget>
+#include <QMetaType>
 
 /**
  * @class UtilsMain
@@ -106,5 +107,8 @@ public:
   */
   virtual const QString notes() = 0;
 };
+
+typedef QList<UtilsMain *> UtilsMainList;
+Q_DECLARE_METATYPE (UtilsMainList)
 
 #endif // UTILSMAIN_UTILS_H

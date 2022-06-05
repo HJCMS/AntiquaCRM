@@ -118,6 +118,10 @@
 # include "setlanguage.h"
 #endif
 
+#ifndef SIZEEDIT_UTILS_H
+# include "sizeedit.h"
+#endif
+
 #ifndef STATSACTIONBAR_UTILS_H
 # include "statsactionbar.h"
 #endif

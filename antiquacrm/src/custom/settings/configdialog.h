@@ -22,12 +22,11 @@ class ConfigDialog : public QDialog {
 
 private:
   QListWidget *m_listWidget;
-  GeneralSettings *m_page1;
-  PgSQLSettings *m_page2;
-  ViewSettings *m_page3;
-  CompanySettings *m_page4;
-  PrintSettings *m_page5;
-  ProviderSettings *m_page6;
+  GeneralSettings *m_pageGeneral;
+  PgSQLSettings *m_pageDatabase;
+  CompanySettings *m_pageCompany;
+  PrintSettings *m_pagePrinting;
+  ProviderSettings *m_pageProviders;
   QStatusBar *m_statusbar;
 
 private Q_SLOTS:
