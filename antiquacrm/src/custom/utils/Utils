@@ -38,6 +38,10 @@
 # include "emailedit.h"
 #endif
 
+#ifndef ECURRENCY_UTILS_H
+# include "ecurrency.h"
+#endif
+
 #ifndef FILEDIALOG_UTILS_H
 # include "filedialog.h"
 #endif

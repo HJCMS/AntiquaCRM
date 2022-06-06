@@ -21,6 +21,7 @@ SET (subproject_SOURCES
   cancellation.cpp
   datetimeedit.cpp
   deliveryservice.cpp
+  ecurrency.cpp
   editoractionbar.cpp
   editormain.cpp
   emailedit.cpp
@@ -62,6 +63,7 @@ SET (subproject_HEADERS
   deliveryservice.h
   editoractionbar.h
   emailedit.h
+  ecurrency.h
   editormain.h
   filedialog.h
   genderbox.h

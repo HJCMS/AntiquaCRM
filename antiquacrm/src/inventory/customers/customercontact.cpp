@@ -17,6 +17,7 @@ CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("contact_edit_layout");
+  layout->setContentsMargins(5, 5, 5, 5);
 
   // BEGIN #1
   QHBoxLayout *row1 = new QHBoxLayout();

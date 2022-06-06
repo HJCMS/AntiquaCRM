@@ -21,12 +21,11 @@
 
 FileBrowser::FileBrowser(QWidget *parent) : QFileDialog{parent} {
   setObjectName("file_dialog_widget");
-  setOption(QFileDialog::DontUseNativeDialog, true);
-  setWindowModality(Qt::NonModal);
   setWindowFlags(Qt::Widget);
+  setWindowModality(Qt::NonModal);
   setWindowState(Qt::WindowNoState);
-  setNameFilter(tr("Image jpeg files (*.jpg *.JPG *.jpeg *.JPEG)"));
   setSizeGripEnabled(false);
+  setNameFilter(tr("Image jpeg files (*.jpg *.JPG *.jpeg *.JPEG)"));
 }
 
 void FileBrowser::accept() { /* don't touch me */

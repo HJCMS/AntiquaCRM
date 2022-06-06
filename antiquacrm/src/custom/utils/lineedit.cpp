@@ -9,13 +9,14 @@ LineEdit::LineEdit(QWidget *parent, bool enableStretch) : UtilsMain{parent} {
   if (objectName().isEmpty())
     setObjectName("LineEdit");
 
-  QSizePolicy sp(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+  QSizePolicy sp(QSizePolicy::MinimumExpanding, /* klein halten */
+                 QSizePolicy::Fixed, QSizePolicy::LineEdit);
 
   QHBoxLayout *layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 
   m_label = new QLabel(this);
-  m_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+  m_label->setAlignment(labelAlignment());
   layout->addWidget(m_label);
 
   m_edit = new QLineEdit(this);

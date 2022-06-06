@@ -77,11 +77,10 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   m_minPrice->setInfo(buffer);
   lt_groupBox2->addWidget(m_minPrice);
   // min Price
-  buffer = tr("Currency indication");
-  m_currency = new LineEdit(m_grouBox2, true);
+  buffer = tr("The currency for price calculation.");
+  m_currency = new Ecurrency(m_grouBox2);
   m_currency->setObjectName("payment/currency");
   m_currency->setInfo(buffer);
-  m_currency->setValue("€");
   lt_groupBox2->addWidget(m_currency);
   m_grouBox2->setLayout(lt_groupBox2);
   layout->addWidget(m_grouBox2);

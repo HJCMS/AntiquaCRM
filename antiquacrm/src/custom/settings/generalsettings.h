@@ -8,8 +8,8 @@
 #include "settingswidget.h"
 
 #include <QObject>
-#include <QToolButton>
 #include <QPushButton>
+#include <QToolButton>
 
 class GeneralSettings final : public SettingsWidget {
   Q_OBJECT
@@ -20,7 +20,7 @@ private:
   LineEdit *m_img_archiv_path; /**< Bilderarchiv */
   LineEdit *m_delivery_path;   /**< Lieferscheine */
   LineEdit *m_invoice_path;    /**< Rechnungen */
-  LineEdit *m_currency;        /**< Währung */
+  Ecurrency *m_currency;       /**< Währung */
   IntSpinBox *m_searchStart;   /**< Start Zeichen suche */
   IntSpinBox *m_minPrice;      /**< Kleinster Verkaufspreis */
   SizeEdit *m_minSize;         /**< Minimale Bildgröße */

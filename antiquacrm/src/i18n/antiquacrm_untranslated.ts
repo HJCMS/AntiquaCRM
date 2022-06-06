@@ -943,7 +943,7 @@
 <context>
     <name>CustomerContact</name>
     <message>
-        <location filename="../inventory/customers/customercontact.cpp" line="+27"/>
+        <location filename="../inventory/customers/customercontact.cpp" line="+28"/>
         <source>Gender</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1304,6 +1304,24 @@
     </message>
 </context>
 <context>
+    <name>Ecurrency</name>
+    <message>
+        <location filename="../custom/utils/ecurrency.cpp" line="+12"/>
+        <source>Ecurrency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Without disclosures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+94"/>
+        <source>Ecurrency is requierd!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EditCustomer</name>
     <message>
         <location filename="../inventory/customers/editcustomer.cpp" line="+47"/>
@@ -1512,11 +1530,11 @@
     </message>
     <message>
         <location line="+6"/>
-        <source>Currency indication</source>
+        <source>The currency for price calculation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+13"/>
         <source>Minimum Image size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1635,7 +1653,7 @@
 <context>
     <name>ImageDialog</name>
     <message>
-        <location filename="../custom/imaging/imagedialog.cpp" line="+12"/>
+        <location filename="../custom/imaging/imagedialog.cpp" line="+11"/>
         <source>Picture Editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1921,7 +1939,7 @@
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../custom/utils/lineedit.cpp" line="+109"/>
+        <location filename="../custom/utils/lineedit.cpp" line="+110"/>
         <source>is required and can&apos;t empty.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -2,38 +2,36 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef BOOLBOX_UTILS_H
-#define BOOLBOX_UTILS_H
+#ifndef ECURRENCY_UTILS_H
+#define ECURRENCY_UTILS_H
 
+#include <QComboBox>
+#include <QLabel>
+#include <QLineEdit>
 #include <QObject>
-#include <QCheckBox>
-#include <QWidget>
 
 #include <UtilsMain>
 
-class BoolBox final : public UtilsMain {
+class Ecurrency final : public UtilsMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  QCheckBox *m_checkBox;
+  QLabel *m_info;
+  QLineEdit *m_lineEdit;
+  QComboBox *m_comboBox;
 
 private Q_SLOTS:
   void itemChanged(int);
 
-Q_SIGNALS:
-  void checked(bool);
-
 public Q_SLOTS:
   Q_INVOKABLE void reset();
   void setFocus();
-  void setChecked(bool);
   void setValue(const QVariant &);
 
 public:
-  explicit BoolBox(QWidget *parent = nullptr);
-  bool isChecked();
+  explicit Ecurrency(QWidget *parent = nullptr);
   const QVariant value();
   bool isValid();
   void setInfo(const QString &);
@@ -41,4 +39,4 @@ public:
   const QString notes();
 };
 
-#endif // BOOLBOX_UTILS_H
+#endif // ECURRENCY_UTILS_H
