@@ -70,26 +70,24 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   m_searchStart->setObjectName("search/startlength");
   m_searchStart->setInfo(buffer);
   lt_groupBox2->addWidget(m_searchStart);
-  // min Price
+  // Preis
   buffer = tr("The lowest permissible selling price.");
   m_minPrice = new IntSpinBox(5, 100, m_grouBox2);
   m_minPrice->setObjectName("payment/min_price");
   m_minPrice->setInfo(buffer);
   lt_groupBox2->addWidget(m_minPrice);
-  // min Price
-  buffer = tr("The currency for price calculation.");
+  buffer.clear();
+  // Währung
   m_currency = new Ecurrency(m_grouBox2);
   m_currency->setObjectName("payment/currency");
-  m_currency->setInfo(buffer);
+  m_currency->setInfo(tr("currency for price calculation."));
   lt_groupBox2->addWidget(m_currency);
-  m_grouBox2->setLayout(lt_groupBox2);
-  layout->addWidget(m_grouBox2);
   // Minimum Image Size
   m_minSize = new SizeEdit(this);
   m_minSize->setObjectName("image/min_size");
   m_minSize->setMinimum(80, 80);
   m_minSize->setMaximum(800, 800);
-  m_minSize->setValue(QSize(250, 250));
+  m_minSize->setValue(QSize(125, 125));
   m_minSize->setInfo(tr("Minimum Image size"));
   lt_groupBox2->addWidget(m_minSize);
   // Maximum Image Size
@@ -100,7 +98,9 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   m_maxSize->setValue(QSize(320, 320));
   m_maxSize->setInfo(tr("Maximum Image size"));
   lt_groupBox2->addWidget(m_maxSize);
-  buffer.clear();
+
+  m_grouBox2->setLayout(lt_groupBox2);
+  layout->addWidget(m_grouBox2);
   // END
 
   // BEGIN
@@ -193,7 +193,7 @@ void GeneralSettings::loadSectionConfig() {
   if (l.count() > 1) {
     for (int i = 0; i < l.count(); i++) {
       UtilsMain *w = l.at(i);
-      if (w != nullptr) {
+      if (w != nullptr && config->contains(w->objectName())) {
         w->setValue(config->value(w->objectName()));
       }
     }

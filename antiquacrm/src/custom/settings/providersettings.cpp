@@ -13,6 +13,8 @@ ProviderSettings::ProviderSettings(QWidget *parent) : SettingsWidget{parent} {
   layout->setObjectName("provider_config_layout");
   // BEGIN W+H Software
   m_whsoft = new QGroupBox(this);
+  m_whsoft->setCheckable(true);
+  m_whsoft->setChecked(false);
   m_whsoft->setObjectName("whsoft");
   m_whsoft->setTitle("W+H Software (buchfreund.de)");
   QVBoxLayout *box1Layout = new QVBoxLayout(m_whsoft);
@@ -25,7 +27,7 @@ ProviderSettings::ProviderSettings(QWidget *parent) : SettingsWidget{parent} {
   m_whsoft_api_host = new LineEdit(m_whsoft);
   m_whsoft_api_host->setObjectName("api_host");
   m_whsoft_api_host->setInfo(tr("Domain"));
-  m_whsoft_api_host->setValue("buchfreund.de");
+  m_whsoft_api_host->setValue("www.buchfreund.de");
   box1Layout->addWidget(m_whsoft_api_host);
   m_whsoft_api_key = new LineEdit(m_whsoft);
   m_whsoft_api_key->setObjectName("api_key");
@@ -74,6 +76,8 @@ const QIcon ProviderSettings::getPageIcon() { return pageIcon; }
 
 void ProviderSettings::loadSectionConfig() {
   config->beginGroup("provider/whsoft");
+  // NOTE Alle müssen gesetzt sein!
+  m_whsoft->setChecked((config->allKeys().count() == 4));
   QStringList keys = config->allKeys();
   foreach (QString s, keys) {
     LineEdit *e =
@@ -87,16 +91,20 @@ void ProviderSettings::loadSectionConfig() {
 }
 
 void ProviderSettings::saveSectionConfig() {
-  config->beginGroup("provider/whsoft");
-  QList<LineEdit *> l =
-      m_whsoft->findChildren<LineEdit *>(QString(), Qt::FindDirectChildrenOnly);
-  if (l.count() > 0) {
-    for (int i = 0; i < l.count(); i++) {
-      LineEdit *e = l.at(i);
-      if (e != nullptr) {
-        config->setValue(e->objectName(), e->value());
+  if (!m_whsoft->isChecked()) {
+    config->remove("provider/whsoft");
+  } else {
+    config->beginGroup("provider/whsoft");
+    QList<LineEdit *> l = m_whsoft->findChildren<LineEdit *>(
+        QString(), Qt::FindDirectChildrenOnly);
+    if (l.count() > 0) {
+      for (int i = 0; i < l.count(); i++) {
+        LineEdit *e = l.at(i);
+        if (e != nullptr) {
+          config->setValue(e->objectName(), e->value());
+        }
       }
     }
+    config->endGroup();
   }
-  config->endGroup();
 }

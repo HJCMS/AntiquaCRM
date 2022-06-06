@@ -221,7 +221,7 @@ void Invoice::printDocument(QPrinter *printer) {
 
 void Invoice::openPrintDialog() {
   QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
-  QString dest = outputDirectory();
+  QString dest = outputDirectory("invoices");
   dest.append(QDir::separator());
   dest.append(p_invoiceId);
   dest.append(".pdf");

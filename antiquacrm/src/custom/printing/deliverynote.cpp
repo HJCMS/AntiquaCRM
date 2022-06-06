@@ -177,7 +177,7 @@ void DeliveryNote::printDocument(QPrinter *printer) {
 
 void DeliveryNote::openPrintDialog() {
   QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
-  QString dest = outputDirectory();
+  QString dest = outputDirectory("deliverynotes");
   dest.append(QDir::separator());
   dest.append(p_deliveryId);
   dest.append(".pdf");

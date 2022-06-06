@@ -26,9 +26,9 @@ class MApplication : public QApplication {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  HJCMS::SqlCore *m_sqlDB;
-  ApplSettings *m_settings;
-  MWindow *m_mainWindow;
+  HJCMS::SqlCore *m_sql;
+  ApplSettings *m_config;
+  MWindow *m_window;
   SocketServer *m_socket;
   bool initialSocketServer();
   bool initTranslations();

@@ -1529,9 +1529,9 @@
         <translation>Der kleinste zulässige Verkaufspreis.</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>The currency for price calculation.</source>
-        <translation>Die Währung für die Preisberechnung.</translation>
+        <location line="+7"/>
+        <source>currency for price calculation.</source>
+        <translation>Währung für die Preisberechnung.</translation>
     </message>
     <message>
         <location line="+13"/>

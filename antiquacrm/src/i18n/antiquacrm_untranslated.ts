@@ -1529,8 +1529,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>The currency for price calculation.</source>
+        <location line="+7"/>
+        <source>currency for price calculation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

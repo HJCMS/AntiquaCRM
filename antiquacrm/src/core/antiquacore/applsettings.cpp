@@ -5,8 +5,8 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QDebug>
 #include <QApplication>
+#include <QDebug>
 #include <QDir>
 
 static const QString config_domain() {
@@ -17,20 +17,30 @@ static const QString config_domain() {
 }
 
 ApplSettings::ApplSettings(QObject *parent)
-    : QSettings(QSettings::NativeFormat, QSettings::UserScope,
-                config_domain(), ANTIQUACRM_NAME, parent) {
-
-    setValue("application/name",ANTIQUACRM_NAME);
-    setValue("application/version",ANTIQUACRM_VERSION);
-
-    beginGroup("Paths");
-    setValue("Prefix",qApp->applicationDirPath());
-    setValue("Translations","i18n");
-    endGroup();
+    : QSettings(QSettings::NativeFormat, QSettings::UserScope, config_domain(),
+                ANTIQUACRM_NAME, parent) {
+  beginGroup("application");
+  setValue("name", ANTIQUACRM_NAME);
+  setValue("version", ANTIQUACRM_VERSION);
+  endGroup();
 }
 
 const QString ApplSettings::sqlConnectioName() {
   return QString(ANTIQUACRM_CONNECTION_DOMAIN);
+}
+
+bool ApplSettings::needAssistant() {
+  QStringList requires("postgresql/database");
+  requires << "postgresql/hostname";
+  requires << "postgresql/username";
+  requires << "postgresql/password";
+  requires << "postgresql/port";
+  foreach (QString k, requires) {
+    if (!contains(k) || value(k).isNull()) {
+      return true;
+    }
+  }
+  return false;
 }
 
 const QHash<QString, QVariant> &

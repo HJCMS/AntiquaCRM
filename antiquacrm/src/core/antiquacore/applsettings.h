@@ -24,6 +24,7 @@ private:
 public:
   explicit ApplSettings(QObject *parent = nullptr);
   static const QString sqlConnectioName();
+  bool needAssistant();
   void writeGroupConfig(const QString &, const QHash<QString, QVariant> &);
   const QHash<QString, QVariant> &readGroupConfig(const QString &);
   virtual ~ApplSettings();

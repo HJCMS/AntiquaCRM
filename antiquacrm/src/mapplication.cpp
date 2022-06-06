@@ -20,7 +20,7 @@ MApplication::MApplication(int &argc, char **argv) : QApplication(argc, argv) {
   setObjectName("antiquacrm_application");
   setQuitOnLastWindowClosed(true);
 
-  m_settings = new ApplSettings(this);
+  m_config = new ApplSettings(this);
 }
 
 bool MApplication::initialSocketServer() {
@@ -56,7 +56,7 @@ bool MApplication::isRunning() {
 void MApplication::initThemeStyle() {
   setStyle(QStyleFactory::create("Fusion"));
   QFont font = qApp->font();
-  QString fontdef = m_settings->value("application/font", QString()).toString();
+  QString fontdef = m_config->value("application/font", QString()).toString();
   if (!fontdef.isEmpty() && font.fromString(fontdef)) {
     qApp->setFont(font);
   }
@@ -71,16 +71,14 @@ int MApplication::exec() {
     qWarning("Translation not loaded!");
   }
 
-  // First Run ?
-  if (m_settings->value("postgresql/hostname").toString().isEmpty()) {
+  if (m_config->needAssistant()) {
     openAssistant();
     return 0;
   }
 
   // SQL Database
-  m_sqlDB = new HJCMS::SqlCore(this);
-  if (!m_sqlDB->sqlDriversExists()) {
-    qInfo("TODO QWizzard Dialog first Access");
+  m_sql = new HJCMS::SqlCore(this);
+  if (!m_sql->sqlDriversExists()) {
     openAssistant();
     return 0;
   }
@@ -90,35 +88,35 @@ int MApplication::exec() {
     return 1;
   }
 
-  if (!m_sqlDB->initialDatabase()) {
+  if (!m_sql->initialDatabase()) {
     qWarning("Database connection failed ...");
     openAssistant();
     return 0;
   }
 
-  m_mainWindow = new MWindow();
-  connect(m_socket, SIGNAL(statusMessage(const QString &)), m_mainWindow,
+  m_window = new MWindow();
+  connect(m_socket, SIGNAL(statusMessage(const QString &)), m_window,
           SLOT(statusMessage(const QString &)));
-  connect(m_mainWindow, SIGNAL(s_connectDatabase(bool)), m_sqlDB,
+  connect(m_window, SIGNAL(s_connectDatabase(bool)), m_sql,
           SLOT(openDatabase(bool)));
-  connect(m_sqlDB, SIGNAL(s_connectionStatus(bool)), m_mainWindow,
+  connect(m_sql, SIGNAL(s_connectionStatus(bool)), m_window,
           SLOT(connectionStatus(bool)));
-  if (m_mainWindow == nullptr) {
+  if (m_window == nullptr) {
     qFatal("Application error");
     return 0;
   }
 
-  m_mainWindow->show();
-  m_mainWindow->setFocus(Qt::ActiveWindowFocusReason);
-  m_mainWindow->activateWindow();
-  m_mainWindow->initDefaults();
+  m_window->show();
+  m_window->setFocus(Qt::ActiveWindowFocusReason);
+  m_window->activateWindow();
+  m_window->initDefaults();
 
   return QApplication::exec();
 }
 
 MApplication::~MApplication() {
   SocketServer::removeServer(SocketServer::name());
-  if (m_sqlDB != nullptr) {
-    m_sqlDB->close();
+  if (m_sql != nullptr) {
+    m_sql->close();
   }
 }

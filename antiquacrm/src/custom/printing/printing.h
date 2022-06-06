@@ -205,7 +205,7 @@ protected:
    * @brief Standard PDF Ausgabe Verzeichnis
    */
   const QString
-  outputDirectory(const QString &target = QString("deliverynotes"));
+  outputDirectory(const QString &target);
 
   /**
    * @brief HTML Ausgaben für Printer
