@@ -25,6 +25,38 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("postgresql_config_layout");
 
+  QString ca_info = tr(
+      "CA Bundle is the file that contains root and intermediate certificates. "
+      "Together with your server certificate (issued specifically for your "
+      "domain), these files complete the SSL chain of trust. The chain is "
+      "required to verify the Authentication with the main application.");
+
+  QString cn_info = tr(
+      "The Common Name (CN), also known as the Fully Qualified Domain Name "
+      "(FQDN). CN is the machine name of the remote system you want to "
+      "connect. If the certificate CN is not the same on the connecting "
+      "machine, the trust relationship between client and server will fail.");
+
+  QString peer_info =
+      tr("The peer authentication method works by obtaining the client's "
+         "operating system user name from the system and using it as the "
+         "allowed database user name. This method is only supported on "
+         "local-system connections.");
+
+  QString rootcert_info =
+      tr("The certificate of the trusted certificate authority and not the "
+         "server certificate! The server sends its certificate, which is "
+         "checked by the issuer and classified as trustworthy.");
+
+  QString sslmode_info =
+      tr("For a connection to be known as SSL-secured, SSL usage must be "
+         "configured on both the client and server before the connection is "
+         "established. If it is only configured on the server, the client may "
+         "send sensitive information (e.g. passwords) before knowing that the "
+         "server requires high security. In this case, secure connections can "
+         "be guaranteed by setting the SSL connection to „Required“, „Verify "
+         "full“ or „Verify-CA“.");
+
   QString title = tr("Database Connection settings to PostgreSQL server.");
   QLabel *lb_title = new QLabel(this);
   lb_title->setText(title);
@@ -92,6 +124,7 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
   layout->addWidget(group_connect);
 
   // BEGIN SSL/TLS
+  // https://www.postgresql.org/docs/current/libpq-ssl.html
   // https://www.postgresql.org/docs/current/ssl-tcp.html
   m_tls = new QGroupBox(this);
   m_tls->setEnabled(false);
@@ -101,33 +134,42 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
   ssl_ca_CN = new QComboBox(m_tls);
   ssl_ca_CN->setObjectName("ssl_CA");
   ssl_ca_CN->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+  ssl_ca_CN->setWhatsThis(ca_info);
   tls_layout->addWidget(ssl_ca_CN, 0, 0, 1, 1);
 
   QPushButton *btn_ca_bundle = new QPushButton(m_tls);
   btn_ca_bundle->setText(tr("CA Bundle"));
   btn_ca_bundle->setIcon(myIcon("folder_red"));
   btn_ca_bundle->setToolTip(tr("Open ca-bundle.* in Pem Format"));
+  btn_ca_bundle->setWhatsThis(ca_info);
   tls_layout->addWidget(btn_ca_bundle, 0, 1, 1, 1);
 
   ssl_ca_bundle = new LineEdit(m_tls);
   ssl_ca_bundle->setObjectName("ssl_bundle");
   ssl_ca_bundle->setInfo(tr("CA Bundle"));
+  ssl_ca_bundle->setWhatsThis(ca_info);
   tls_layout->addWidget(ssl_ca_bundle, 1, 0, 1, 2);
 
   ssl_CN = new LineEdit(m_tls);
   ssl_CN->setObjectName("ssl_CN");
   ssl_CN->setInfo(tr("Servercertificate (CN)"));
+  ssl_CN->setWhatsThis(cn_info);
   tls_layout->addWidget(ssl_CN, 2, 0, 1, 2);
 
+  /**
+   * Trusted Certificate Authorities
+   * Checks that server certificate is signed by a trusted certificate authority
+   */
   ssl_root_cert = new LineEdit(m_tls);
   ssl_root_cert->setObjectName("ssl_root_cert");
   ssl_root_cert->setInfo(tr("Issuer"));
   ssl_root_cert->setToolTip("Issuer Certificate");
   ssl_root_cert->setPlaceholderText("Issuer Certification path");
+  ssl_root_cert->setWhatsThis(rootcert_info);
   tls_layout->addWidget(ssl_root_cert, 3, 0, 1, 1);
 
   QPushButton *btn_root_cert = new QPushButton(m_tls);
-  btn_root_cert->setText(tr("Server Cert"));
+  btn_root_cert->setText(tr("Issuer Cert"));
   btn_root_cert->setIcon(myIcon("folder_red"));
   btn_root_cert->setToolTip(tr("Open Server Issuer Certificate"));
   tls_layout->addWidget(btn_root_cert, 3, 1, 1, 1);
@@ -139,6 +181,8 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
 
   ssl_mode = new QComboBox(m_tls);
   ssl_mode->setObjectName("ssl_mode");
+  ssl_mode->setToolTip(tr("SSL Protection Provided in Different Modes."));
+  ssl_mode->setWhatsThis(sslmode_info);
   ssl_mode->insertItem(0, tr("Prefer"), QVariant("prefer"));
   ssl_mode->insertItem(1, tr("Required"), QVariant("require"));
   ssl_mode->insertItem(2, tr("Verify CA"), QVariant("verify-ca"));
@@ -154,7 +198,8 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
   ssl_peer = new QGroupBox(this);
   ssl_peer->setCheckable(true);
   ssl_peer->setChecked(false);
-  ssl_peer->setTitle(tr("SSL Peer Connection"));
+  ssl_peer->setTitle(tr("Local SSL Peer Connections"));
+  ssl_peer->setWhatsThis(peer_info);
   QVBoxLayout *peer_layout = new QVBoxLayout(ssl_peer);
 
   ssl_peer_cert = new LineEdit(ssl_peer);
@@ -223,7 +268,7 @@ void PgSQLSettings::initCaBundleData(const QString &bundle) {
 const QString PgSQLSettings::openFileDialog(const QString &dest) {
   QString dir = (dest.isEmpty()) ? QDir::homePath() : dest;
   QString title = tr("Open Certfile");
-  QString type = tr("Certificate (*.pem *.crt *.key)");
+  QString type = tr("Certificates") + " (*.pem *.crt *.cert *.key)";
   QString cert = QFileDialog::getOpenFileName(this, title, dir, type);
   return (cert.isEmpty()) ? QString() : cert;
 }

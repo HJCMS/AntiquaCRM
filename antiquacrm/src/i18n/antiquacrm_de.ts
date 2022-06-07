@@ -133,7 +133,7 @@
     <message>
         <location line="+33"/>
         <source>Signed Version</source>
-        <translation>Sgnierte Version</translation>
+        <translation>Signierte Version</translation>
     </message>
     <message>
         <location line="-13"/>
@@ -1529,12 +1529,12 @@
         <translation>Der kleinste zulässige Verkaufspreis.</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+9"/>
         <source>currency for price calculation.</source>
         <translation>Währung für die Preisberechnung.</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+8"/>
         <source>Minimum Image size</source>
         <translation>Minimale Bildgröße</translation>
     </message>
@@ -1544,7 +1544,7 @@
         <translation>Maximale Bildgröße</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+11"/>
         <source>Font Settings</source>
         <translation>Schriften Einstellung</translation>
     </message>
@@ -2547,7 +2547,7 @@
 <context>
     <name>PgSQLSettings</name>
     <message>
-        <location filename="../custom/settings/pgsqlsettings.cpp" line="+28"/>
+        <location filename="../custom/settings/pgsqlsettings.cpp" line="+60"/>
         <source>Database Connection settings to PostgreSQL server.</source>
         <translation>Datenbank Verbindungs-Einstellungen zum PostgreSQL Server.</translation>
     </message>
@@ -2618,38 +2618,68 @@
         <translation>Aktiviere SSL/TLS</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>SSL/TLS Connection</source>
         <translation>SSL/TLS Verbindung</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+41"/>
+        <source>Issuer Cert</source>
+        <translation>Unterzeichner</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Local SSL Peer Connections</source>
+        <translation>Lokale SSL-Peer-Verbindungen</translation>
+    </message>
+    <message>
+        <location line="-173"/>
+        <source>CA Bundle is the file that contains root and intermediate certificates. Together with your server certificate (issued specifically for your domain), these files complete the SSL chain of trust. The chain is required to verify the Authentication with the main application.</source>
+        <translation>CA-Bundle ist die Datei, die Stamm- und Zwischenzertifikate enthält. Zusammen mit Ihrem (speziell für Ihre Domain ausgestellten) Serverzertifikat vervollständigen diese Dateien die SSL-Vertrauenskette. Die Kette wird benötigt, um die Authentifizierung mit der Hauptanwendung zu überprüfen.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>The Common Name (CN), also known as the Fully Qualified Domain Name (FQDN). CN is the machine name of the remote system you want to connect. If the certificate CN is not the same on the connecting machine, the trust relationship between client and server will fail.</source>
+        <translation>Der Common Name (CN), auch bekannt als Fully Qualified Domain Name (FQDN). CN ist der Maschinenname des Remotesystems, das Sie verbinden möchten. Wenn der Zertifikats-CN bei der Verbindungsmaschine nicht gleich ist, schlägt die Vertrauensstellung zwischen Klient und Server fehl.</translation>
+    </message>
+    <message>
         <location line="+7"/>
+        <source>The peer authentication method works by obtaining the client&apos;s operating system user name from the system and using it as the allowed database user name. This method is only supported on local-system connections.</source>
+        <translation>Bei der Peer-Authentifizierungsmethode wird der Betriebssystem-Benutzername des Klienten vom System abgerufen und als zulässiger Datenbank-Benutzername verwendet. Diese Methode ist deshalb nur bei lokalen Systemenverbindungen zulässig.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>The certificate of the trusted certificate authority and not the server certificate! The server sends its certificate, which is checked by the issuer and classified as trustworthy.</source>
+        <translation>Das Zertifikat der vertrauenswürdigen Zertifizierungsstelle und nicht das Serverzertifikat! Der Server sendet sein Zertifikat, das vom Aussteller geprüft und als vertrauenswürdig eingestuft wird.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>For a connection to be known as SSL-secured, SSL usage must be configured on both the client and server before the connection is established. If it is only configured on the server, the client may send sensitive information (e.g. passwords) before knowing that the server requires high security. In this case, secure connections can be guaranteed by setting the SSL connection to „Required“, „Verify full“ or „Verify-CA“.</source>
+        <translation>Damit eine Verbindung als SSL-gesichert bezeichnet wird, muss die SSL-Nutzung sowohl auf dem Klient als auch auf dem Server konfiguriert werden, bevor die Verbindung hergestellt wird. Wenn es nur auf dem Server konfiguriert ist, kann der Klient sensible Informationen (z. B. Passwörter) senden, bevor er weiß, dass der Server hohe Sicherheit benötigt. In diesem Fall können sichere Verbindungen garantiert werden, indem die SSL-Verbindung auf „Erforderlich“, „Vollständig vertrauen“ oder „Zertifikat Verifizierung“ gesetzt wird.</translation>
+    </message>
+    <message>
+        <location line="+89"/>
+        <location line="+8"/>
         <source>CA Bundle</source>
         <translation>CA Paket</translation>
     </message>
     <message>
-        <location line="-5"/>
+        <location line="-6"/>
         <source>Open ca-bundle.* in Pem Format</source>
         <translation>Öffne CA-Paket im Pem Format</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+12"/>
         <source>Servercertificate (CN)</source>
         <translation>Serverzertifikat (CN)</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+10"/>
         <source>Issuer</source>
         <translation>Unterzeichner</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Server Cert</source>
-        <translation>Server Zert</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+9"/>
         <source>Open Server Issuer Certificate</source>
         <translation>Öffne Server Unterzeichner Zertifikat</translation>
     </message>
@@ -2660,6 +2690,11 @@
     </message>
     <message>
         <location line="+5"/>
+        <source>SSL Protection Provided in Different Modes.</source>
+        <translation>SSL-Schutz wird in verschiedenen Modi bereitgestellt.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Prefer</source>
         <translation>SSL vor Standard</translation>
     </message>
@@ -2679,12 +2714,7 @@
         <translation>Vollständig vertrauen</translation>
     </message>
     <message>
-        <location line="+12"/>
-        <source>SSL Peer Connection</source>
-        <translation>SSL-Peer-Verbindung</translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+18"/>
         <source>Certificate</source>
         <translation>Zertifikat</translation>
     </message>
@@ -2705,8 +2735,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Certificate (*.pem *.crt *.key)</source>
-        <translation>Zertifikat (*.pem *.crt *.key)</translation>
+        <source>Certificates</source>
+        <translation>Zertifikate</translation>
     </message>
 </context>
 <context>
@@ -3166,7 +3196,7 @@
 <context>
     <name>ProviderSettings</name>
     <message>
-        <location filename="../custom/settings/providersettings.cpp" line="+22"/>
+        <location filename="../custom/settings/providersettings.cpp" line="+24"/>
         <source>Protocoll</source>
         <translation>Protokoll</translation>
     </message>

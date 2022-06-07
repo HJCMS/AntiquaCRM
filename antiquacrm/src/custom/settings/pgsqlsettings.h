@@ -10,6 +10,7 @@
 #include <QComboBox>
 #include <QGroupBox>
 #include <QHash>
+#include <QUrl>
 #include <QObject>
 #include <QVariant>
 
@@ -150,6 +151,14 @@ public:
   const QIcon getPageIcon();
   void loadSectionConfig();
   void saveSectionConfig();
+
+  static const QUrl pgsqlClientAuthDocUrl() {
+    QUrl url;
+    url.setScheme("https");
+    url.setHost("www.postgresql.org");
+    url.setPath("/docs/current/client-authentication.html");
+    return url;
+  }
 };
 
 #endif // PGSQL_SETTINGS_H
