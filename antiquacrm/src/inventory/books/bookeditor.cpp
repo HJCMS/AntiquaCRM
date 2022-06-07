@@ -613,11 +613,24 @@ void BookEditor::infoISBNDoubleClicked(QListWidgetItem *item) {
 
 void BookEditor::changeEvent(QEvent *event) {
   if (event->type() == QEvent::EnabledChange && isEnabled()) {
+    /**
+     * @warning Die Suche muss bei einem Öffnen Leer sein!
+     * Danach kann loadDatset ausgeführt werden!
+     */
+    ib_storage->reset();
     ib_storage->loadDataset();
-    ib_keyword->loadStorageKeywords();
+
+    /**
+     * Lade Herausgeber XML
+     */
     ib_publisher->loadXmlCompleter("ib_publisher");
+
+    /**
+     * Lese aus SQL Datenbank Autovervollständigungen
+     */
     ib_condition->loadDataset("condition");
     ib_designation->loadDataset("ib_designation");
+    ib_keyword->loadStorageKeywords();
   }
 }
 
@@ -639,8 +652,7 @@ void BookEditor::editBookEntry(const QString &condition) {
   QString select("SELECT * FROM inventory_books WHERE ");
   select.append(condition);
   select.append(" ORDER BY ib_id LIMIT 1;");
-
-  // qDebug() "SELECT ->" << select << db.isValid();
+  // qDebug() << Q_FUNC_INFO << "SELECT ->" << select;
   QSqlQuery q = m_sql->query(select);
   if (q.size() != 0) {
     QSqlRecord r = m_sql->record("inventory_books");
@@ -649,6 +661,7 @@ void BookEditor::editBookEntry(const QString &condition) {
       foreach (QString key, inputList) {
         QVariant val = q.value(r.indexOf(key));
         bool required = (r.field(key).requiredStatus() == QSqlField::Required);
+        // qDebug() << Q_FUNC_INFO << key << val << required;
         DataField d;
         d.setField(key);
         d.setType(val.type());

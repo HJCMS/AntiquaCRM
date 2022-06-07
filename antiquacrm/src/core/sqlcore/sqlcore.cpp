@@ -53,6 +53,7 @@ SqlCore::SqlCore(QObject *parent) : QObject{parent} {
 bool SqlCore::initSQLDriver() {
   p_db = QSqlDatabase::addDatabase("QPSQL", m_cfg->getConnectioName());
   p_db.setConnectOptions(p_sqlOptions);
+  // qDebug() << Q_FUNC_INFO << p_sqlOptions;
   if (!p_db.isValid()) {
     qFatal("PostgreSQL Driver int error ...");
     return false;

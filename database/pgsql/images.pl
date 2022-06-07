@@ -32,7 +32,7 @@ my $dbc = DBI->connect("$dsn", "heinemann", "MariaDB2022Access",{RaiseError => 1
 =cut
 my $PGCMD = "pg-heinemann";
 
-my $IMAGE_LOCATION = "/home/heinemann/Developement/antiqua/database/tmp/BildDaten/Vorhanden";
+my $IMAGE_LOCATION = "/home/heinemann/Developement/antiqua/database/tmp/BildDaten";
 
 
 =begin
@@ -64,7 +64,7 @@ sub scale_image {
   $exifTool->ClearOptions();
   $rotate = (($rotate) && ($rotate >= 90)) ? $rotate : 0;
   ## Convert
-  my @args = ("convert","-resize","350x","-rotate",$rotate,"-quality",80,"/tmp/import.jpg","/tmp/out.jpg");
+  my @args = ("convert","-resize","320x","-rotate",$rotate,"-quality",80,"/tmp/import.jpg","/tmp/out.jpg");
   system(@args) == 0
   or system("rm -f /tmp/out.jpg");
 

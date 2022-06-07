@@ -35,11 +35,14 @@ StorageEdit::StorageEdit(QWidget *parent) : UtilsMain{parent} {
           SLOT(dataChanged(int)));
 }
 
-void StorageEdit::dataChanged(int) { setModified(true); }
+void StorageEdit::dataChanged(int index) {
+  p_value = index;
+  setModified(true);
+}
 
 void StorageEdit::filterChanged(const QString &filter) {
   int index = 0;
-  if (filter.length() < 2) {
+  if (filter.length() < 3) {
     index = m_storage->findText(filter, Qt::MatchStartsWith);
   } else {
     index = m_storage->findText(filter, Qt::MatchContains);
@@ -86,12 +89,22 @@ void StorageEdit::setValue(const QVariant &val) {
     qWarning("Storage isEmpty. Did you forget loadStorageData() first?");
     return;
   }
-  m_storage->setCurrentIndex(val.toInt());
-  setModified(false);
+  int index = -1;
+  if (val.type() == QVariant::Int)
+    index = m_storage->findData(val, Qt::UserRole);
+  else if (val.type() == QVariant::String)
+    index = m_storage->findData(val, Qt::DisplayRole);
+
+  if (index < 1)
+    return;
+
+  p_value = index;
+  m_storage->setCurrentIndex(index);
 }
 
 void StorageEdit::reset() {
   m_storage->setCurrentIndex(0);
+  m_search->clear();
   setModified(false);
 }
 
@@ -111,12 +124,10 @@ bool StorageEdit::isValid() {
   return false;
 }
 
-void StorageEdit::setInfo(const QString &info) {
-  m_storage->setToolTip(info);
-}
+void StorageEdit::setInfo(const QString &info) { setToolTip(info); }
 
-const QString StorageEdit::info() { return m_storage->toolTip(); }
+const QString StorageEdit::info() { return toolTip(); }
 
 const QString StorageEdit::notes() {
-  return tr("The Storage location is required and must set.");
+  return tr("Storage location is required and must set.");
 }

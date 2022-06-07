@@ -67,9 +67,8 @@ public:
   const QString getPassword();
 
   /**
-   * @brief PgSQL Verbindungs Optionen setzen
+   * @brief Verbindungs Optionen
    */
-  void setOptions(const QStringList &);
   const QStringList getOptions();
 
   /**
