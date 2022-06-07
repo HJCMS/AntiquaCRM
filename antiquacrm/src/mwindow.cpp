@@ -66,25 +66,15 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
 void MWindow::setupTabMenu(QMenu *parent) {
   const QIcon tabIcon = myIcon("tab_new");
 
-  QAction *ac_Books = parent->addAction(tabIcon, tr("Books"));
-  ac_Books->setObjectName("open_book_tab");
-  m_signalMapper->setMapping(ac_Books, Workspace::Books);
-  connect(ac_Books, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
-
   QAction *ac_Prints = parent->addAction(tabIcon, tr("Prints"));
   ac_Prints->setObjectName("open_prints_tab");
   m_signalMapper->setMapping(ac_Prints, Workspace::Prints);
   connect(ac_Prints, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
 
-  QAction *ac_Customers = parent->addAction(tabIcon, tr("Customers"));
-  ac_Customers->setObjectName("open_customer_tab");
-  m_signalMapper->setMapping(ac_Customers, Workspace::Customers);
-  connect(ac_Customers, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
-
-  QAction *ac_Orders = parent->addAction(tabIcon, tr("Orders"));
-  ac_Orders->setObjectName("open_order_tab");
-  m_signalMapper->setMapping(ac_Orders, Workspace::Orders);
-  connect(ac_Orders, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
+  QAction *ac_views = parent->addAction(tabIcon, tr("Views"));
+  ac_views->setObjectName("open_views_tab");
+  m_signalMapper->setMapping(ac_views, Workspace::Views);
+  connect(ac_views, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
 }
 
 /**

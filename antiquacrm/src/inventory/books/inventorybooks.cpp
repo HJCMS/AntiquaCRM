@@ -202,6 +202,15 @@ void InventoryBooks::createBookEntry() {
   m_stackedWidget->setCurrentWidget(m_bookEditor);
 }
 
+void InventoryBooks::editBookEntry(int id) {
+  QString condition("ib_id=");
+  QString ib_id = QString::number(id);
+  if (!ib_id.isEmpty()) {
+    condition.append(ib_id);
+    openEditor(condition);
+  }
+}
+
 void InventoryBooks::articleSelected(int id) {
   if (id < 1)
     return;

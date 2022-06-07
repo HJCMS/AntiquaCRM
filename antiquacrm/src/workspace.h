@@ -17,6 +17,7 @@ class InventoryCustomers;
 class InventoryOrders;
 class InventoryProviders;
 class ProviderOrder;
+class InventoryViews;
 
 class WorkspaceTabBar : public QTabBar {
   Q_OBJECT
@@ -52,6 +53,7 @@ private:
   InventoryPrints *m_tabPrints;
   InventoryCustomers *m_tabCustomers;
   InventoryProviders *m_tabProviders;
+  InventoryViews *m_tabViews;
 
   /**
    * @brief Bücher Inventar öffnen
@@ -78,11 +80,21 @@ private:
    */
   int addInventoryProviders(int index);
 
+  /**
+   * @brief Dienstleister Seite öffnen
+   */
+  int addInventoryViews(int index);
+
 private Q_SLOTS:
   /**
    * @brief Wenn der Tabe schließen Knopf betätigt wurde.
    */
   void closeTabClicked(int);
+
+  /**
+   * @brief Buch editieren
+   */
+  void editBookEntry(int articleId);
 
   /**
    * @brief Auftrag von Kunden ID erstellen
@@ -139,7 +151,8 @@ public:
     Prints = 0x000010,
     Customers = 0x000100,
     Orders = 0x001000,
-    Providers = 0x010000
+    Providers = 0x010000,
+    Views =  0x100000
   };
   Q_ENUM(Tab)
 

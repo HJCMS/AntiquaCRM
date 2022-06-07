@@ -21,7 +21,7 @@
 
 CustomerTableView::CustomerTableView(QWidget *parent) : QTableView{parent} {
   setObjectName("CustomerTableView");
-  setEditTriggers(QAbstractItemView::DoubleClicked);
+  setEditTriggers(QAbstractItemView::NoEditTriggers);
   setCornerButtonEnabled(false);
   setSortingEnabled(false);
   setDragEnabled(false);

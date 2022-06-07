@@ -1576,7 +1576,7 @@
 <context>
     <name>HJCMS::SqlCore</name>
     <message>
-        <location filename="../core/sqlcore/sqlcore.cpp" line="+143"/>
+        <location filename="../core/sqlcore/sqlcore.cpp" line="+144"/>
         <source>SQL Driver initialization error</source>
         <translation>Fehler beim laden des SQL Treibers</translation>
     </message>
@@ -1947,17 +1947,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+79"/>
-        <source>Customers</source>
-        <translation>Kunden</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Orders</source>
-        <translation>Aufträge</translation>
-    </message>
-    <message>
-        <location line="+10"/>
+        <location filename="../mwindow.cpp" line="+84"/>
         <source>Application</source>
         <translation>Programm</translation>
     </message>
@@ -1977,7 +1967,8 @@
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-37"/>
+        <location line="+42"/>
         <source>Views</source>
         <translation>Ansichten</translation>
     </message>
@@ -2028,17 +2019,12 @@
         <translation>Vollansicht</translation>
     </message>
     <message>
-        <location line="-188"/>
-        <source>Books</source>
-        <translation>Bücher</translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="-178"/>
         <source>Prints</source>
         <translation>Drucke und Stiche</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+19"/>
         <source>Database</source>
         <translation>Datenbank</translation>
     </message>
@@ -3714,14 +3700,14 @@
         <translation>Suche</translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+43"/>
         <source>Storage Location</source>
         <translation>Lagerort</translation>
     </message>
     <message>
-        <location line="+56"/>
-        <source>The Storage location is required and must set.</source>
-        <translation>Der Speicherort ist erforderlich und muss eingestellt werden.</translation>
+        <location line="+64"/>
+        <source>Storage location is required and must set.</source>
+        <translation>Eine Lagerangabe ist Erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -3877,6 +3863,52 @@
     </message>
 </context>
 <context>
+    <name>ViewsTableModel</name>
+    <message>
+        <location filename="../inventory/views/viewstable.cpp" line="+23"/>
+        <source>Article</source>
+        <translation>Artikel</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Author</source>
+        <translation>Autor</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Storage</source>
+        <translation>Lager</translation>
+    </message>
+</context>
+<context>
+    <name>ViewsToolBar</name>
+    <message>
+        <location filename="../inventory/views/viewstoolbar.cpp" line="+17"/>
+        <source>select your operation</source>
+        <translation>Wähle deine Aktion</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show me all Bookentries without Pictures</source>
+        <translation>Zeige mir alle Bucheinträge ohne Bild</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Show me all Prints and Stitches without Pictures</source>
+        <translation>Zeige mir alle Drucke und Stiche ohne Bild</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>start query</source>
+        <translation>Starte abfrage</translation>
+    </message>
+</context>
+<context>
     <name>WHSoftPurchaser</name>
     <message>
         <location filename="../plugins/antiqua/whsoft.cpp" line="-93"/>
@@ -3920,7 +3952,7 @@
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../workspace.cpp" line="+48"/>
+        <location filename="../workspace.cpp" line="+49"/>
         <source>Workspace</source>
         <translation>Arbeitsbereich</translation>
     </message>
@@ -3975,11 +4007,18 @@
         <translation>Dienstleister Inventar</translation>
     </message>
     <message>
+        <location line="+16"/>
+        <location line="+2"/>
+        <source>Views</source>
+        <translation>Ansichten</translation>
+    </message>
+    <message>
         <location line="+12"/>
         <source>Cant close this tab, unsafed changes!</source>
         <translation>Kann das Tab nicht schliessen, nicht gespeicherte Änderungen!</translation>
     </message>
     <message>
+        <location line="+9"/>
         <location line="+9"/>
         <location line="+9"/>
         <location line="+9"/>
@@ -4006,7 +4045,7 @@
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-157"/>
+        <location line="-184"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>

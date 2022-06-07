@@ -26,6 +26,10 @@
 # include "deliveryservice.h"
 #endif
 
+#ifndef ECURRENCY_UTILS_H
+# include "ecurrency.h"
+#endif
+
 #ifndef EDITORACTIONBAR_UTILS_H
 # include "editoractionbar.h"
 #endif
@@ -36,10 +40,6 @@
 
 #ifndef EMAILEDIT_UTILS_H
 # include "emailedit.h"
-#endif
-
-#ifndef ECURRENCY_UTILS_H
-# include "ecurrency.h"
 #endif
 
 #ifndef FILEDIALOG_UTILS_H

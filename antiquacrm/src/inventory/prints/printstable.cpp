@@ -40,7 +40,7 @@ static const QString queryTables() {
 
 PrintsTable::PrintsTable(QWidget *parent) : QTableView{parent} {
   setObjectName("PrintsTable");
-  setEditTriggers(QAbstractItemView::DoubleClicked);
+  setEditTriggers(QAbstractItemView::NoEditTriggers);
   setCornerButtonEnabled(false);
   setSortingEnabled(false);
   setDragEnabled(false);

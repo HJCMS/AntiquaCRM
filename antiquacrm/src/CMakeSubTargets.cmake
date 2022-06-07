@@ -45,6 +45,8 @@ SET (PROJECT_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/inventory/prints
  ${CMAKE_CURRENT_BINARY_DIR}/inventory/providers
  ${CMAKE_CURRENT_SOURCE_DIR}/inventory/providers
+ ${CMAKE_CURRENT_BINARY_DIR}/inventory/views
+ ${CMAKE_CURRENT_SOURCE_DIR}/inventory/views
  ${CMAKE_CURRENT_BINARY_DIR}/plugins
  ${CMAKE_CURRENT_SOURCE_DIR}/plugins
  ${CMAKE_CURRENT_BINARY_DIR}/plugins/antiqua
@@ -80,5 +82,6 @@ InventoryPrints
 InventoryOrders
 InventoryProviders
 InventoryCustomers
+InventoryViews
 )
 

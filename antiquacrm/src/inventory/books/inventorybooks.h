@@ -134,6 +134,11 @@ public Q_SLOTS:
   void createBookEntry();
 
   /**
+   * @brief Eine Buch im Editor bearbeiten
+   */
+  void editBookEntry(int id);
+
+  /**
    * @brief Wenn das Tab im Vordergund geht, dann eine Aktionen starten
    */
   void onEnterChanged(){/* TODO */};

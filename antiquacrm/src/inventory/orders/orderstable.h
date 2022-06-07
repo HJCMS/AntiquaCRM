@@ -13,10 +13,6 @@
 
 #include <SqlCore>
 
-namespace HJCMS {
-class SqlCore;
-};
-
 class OrdersTableModel;
 
 /**

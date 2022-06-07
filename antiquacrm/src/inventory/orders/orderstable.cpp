@@ -25,7 +25,7 @@
 
 OrdersTable::OrdersTable(QWidget *parent) : QTableView{parent} {
   setObjectName("AssigmentTableView");
-  setEditTriggers(QAbstractItemView::DoubleClicked);
+  setEditTriggers(QAbstractItemView::NoEditTriggers);
   setCornerButtonEnabled(false);
   setSortingEnabled(false);
   setDragEnabled(false);

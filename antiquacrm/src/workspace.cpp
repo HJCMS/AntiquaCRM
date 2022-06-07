@@ -8,6 +8,7 @@
 #include "inventoryorders.h"
 #include "inventoryprints.h"
 #include "inventoryproviders.h"
+#include "inventoryviews.h"
 #include "myicontheme.h"
 #include "providerorders.h"
 
@@ -136,6 +137,24 @@ int Workspace::addInventoryProviders(int index) {
   return i;
 }
 
+int Workspace::addInventoryViews(int index) {
+  m_tabViews = new InventoryViews(this);
+  connect(m_tabViews, SIGNAL(s_windowModified(bool)), this,
+          SIGNAL(s_windowModified(bool)));
+  connect(m_tabViews, SIGNAL(s_postMessage(const QString &)), this,
+          SIGNAL(s_postMessage(const QString &)));
+  connect(m_tabViews, SIGNAL(s_editBookEntry(int)), this,
+          SLOT(editBookEntry(int)));
+  connect(m_tabViews, SIGNAL(s_editCustomerEntry(int)), this,
+          SLOT(editCustomer(int)));
+  // connect(m_tabViews, SIGNAL(s_editPrintsEntry(int)), this, SLOT((int)));
+  int i = insertTab(index, m_tabViews, tr("Views"));
+  m_tabBar->setTabData(i, m_tabViews->isClosable());
+  setTabToolTip(i, tr("Views"));
+  setTabIcon(i, myIcon("search"));
+  return i;
+}
+
 void Workspace::closeTabClicked(int index) {
   Inventory *tab = qobject_cast<Inventory *>(widget(index));
   if (tab != nullptr && tab->isClosable()) {
@@ -144,6 +163,15 @@ void Workspace::closeTabClicked(int index) {
       return;
     }
     emit s_postMessage(tr("Cant close this tab, unsafed changes!"));
+  }
+}
+
+void Workspace::editBookEntry(int articleId) {
+  if (articleId > 0 && (m_tabBooks != nullptr)) {
+    m_tabBooks->editBookEntry(articleId);
+    setCurrentWidget(m_tabBooks);
+  } else {
+    emit s_postMessage(tr("Order tab isn't open!"));
   }
 }
 
@@ -241,6 +269,13 @@ void Workspace::openTab(int index) {
       i = addInventoryProviders(count() + 1);
     } else {
       setCurrentWidget(m_tabProviders);
+      return;
+    }
+  } else if (index == Tab::Views) {
+    if (indexOf(m_tabViews) < 0) {
+      i = addInventoryViews(count() + 1);
+    } else {
+      setCurrentWidget(m_tabViews);
       return;
     }
   }

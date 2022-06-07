@@ -11,9 +11,7 @@
 #include <QString>
 #include <QTableView>
 
-namespace HJCMS {
-class SqlCore;
-};
+#include <SqlCore>
 
 class CustomersTableModel;
 class SearchStatement;

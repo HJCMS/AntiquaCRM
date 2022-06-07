@@ -50,7 +50,7 @@ static const QString queryTables() {
 
 BooksTable::BooksTable(QWidget *parent) : QTableView{parent} {
   setObjectName("BooksTable");
-  setEditTriggers(QAbstractItemView::DoubleClicked);
+  setEditTriggers(QAbstractItemView::NoEditTriggers);
   setCornerButtonEnabled(false);
   setSortingEnabled(false);
   setDragEnabled(false);
