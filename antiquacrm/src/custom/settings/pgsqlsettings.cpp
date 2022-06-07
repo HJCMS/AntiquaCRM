@@ -25,6 +25,22 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("postgresql_config_layout");
 
+  QString sql_hostname_info =
+      tr("Hostname of the server you want to connect to. If you are not using "
+         "SSL, the IP address can also be added in this field.");
+
+  QString sql_database_info =
+      tr("The name of the server database to which you want to connect.");
+
+  QString sql_username_info =
+      tr("The Username from the server database to which you want to connect.");
+
+  QString sql_port_info =
+      tr("Port number to connect to the server. The default port address to a "
+         "PostgreSQL server is „5432“. However, if you connect from outside, "
+         "you need the configured router port. Your administrator can "
+         "communicate this.");
+
   QString ca_info = tr(
       "CA Bundle is the file that contains root and intermediate certificates. "
       "Together with your server certificate (issued specifically for your "
@@ -57,6 +73,15 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
          "be guaranteed by setting the SSL connection to „Required“, „Verify "
          "full“ or „Verify-CA“.");
 
+  QString ssl_pgsql_link_description("");
+  ssl_pgsql_link_description.append(
+      tr("Full Information about Secured SQL Connections, you can find at"));
+  ssl_pgsql_link_description.append(" <a href='");
+  ssl_pgsql_link_description.append(pgsqlClientAuthDocUrl().toString());
+  ssl_pgsql_link_description.append("' target='_blank'>");
+  ssl_pgsql_link_description.append(pgsqlClientAuthDocUrl().toString());
+  ssl_pgsql_link_description.append("</a>");
+
   QString title = tr("Database Connection settings to PostgreSQL server.");
   QLabel *lb_title = new QLabel(this);
   lb_title->setText(title);
@@ -71,6 +96,7 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
   sql_hostname->setInfo(tr("Hostname/Address"));
   sql_hostname->setPlaceholderText(tr("192.168.178.2"));
   sql_hostname->setRequired(true);
+  sql_hostname->setWhatsThis(sql_hostname_info);
   g_sql_layout->addWidget(sql_hostname);
 
   sql_databasename = new LineEdit(this);
@@ -78,6 +104,7 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
   sql_databasename->setInfo(tr("Databasename"));
   sql_databasename->setPlaceholderText(tr("antiquacrm"));
   sql_databasename->setRequired(true);
+  sql_databasename->setWhatsThis(sql_database_info);
   g_sql_layout->addWidget(sql_databasename);
 
   sql_username = new LineEdit(this);
@@ -85,6 +112,7 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
   sql_username->setInfo(tr("Database Username"));
   sql_username->setPlaceholderText(tr("antiquacrm"));
   sql_username->setRequired(true);
+  sql_username->setWhatsThis(sql_username_info);
   g_sql_layout->addWidget(sql_username);
 
   sql_password = new LineEdit(this);
@@ -104,6 +132,7 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
   sql_port->setToolTip(tr("The default port address is 5432"));
   sql_port->setInfo(tr("Port"));
   sql_port->setRequired(true);
+  sql_port->setWhatsThis(sql_port_info);
   gh_sql_alyout->addWidget(sql_port);
 
   sql_timeout = new IntSpinBox(5, 30, this);
@@ -117,6 +146,7 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
   sql_ssl->setObjectName("ssl");
   sql_ssl->setChecked(false);
   sql_ssl->setInfo(tr("Enable SSL/TLS"));
+  sql_ssl->setToolTip(tr("Enable SSL/TLS secure Connection configuration."));
   gh_sql_alyout->addWidget(sql_ssl);
 
   g_sql_layout->addLayout(gh_sql_alyout);
@@ -162,16 +192,16 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
    */
   ssl_root_cert = new LineEdit(m_tls);
   ssl_root_cert->setObjectName("ssl_root_cert");
-  ssl_root_cert->setInfo(tr("Issuer"));
-  ssl_root_cert->setToolTip("Issuer Certificate");
-  ssl_root_cert->setPlaceholderText("Issuer Certification path");
+  ssl_root_cert->setInfo(tr("Exhibitor"));
+  ssl_root_cert->setToolTip("Exhibitor Certificate");
+  ssl_root_cert->setPlaceholderText("Exhibitor Certification path");
   ssl_root_cert->setWhatsThis(rootcert_info);
   tls_layout->addWidget(ssl_root_cert, 3, 0, 1, 1);
 
   QPushButton *btn_root_cert = new QPushButton(m_tls);
-  btn_root_cert->setText(tr("Issuer Cert"));
+  btn_root_cert->setText(tr("Exhibitor Certificate"));
   btn_root_cert->setIcon(myIcon("folder_red"));
-  btn_root_cert->setToolTip(tr("Open Server Issuer Certificate"));
+  btn_root_cert->setToolTip(tr("Open Server Exhibitor Certificate"));
   tls_layout->addWidget(btn_root_cert, 3, 1, 1, 1);
 
   QLabel *modeinfo = new QLabel(m_tls);
@@ -220,6 +250,12 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
   ssl_peer->setLayout(peer_layout);
   layout->addWidget(ssl_peer);
   // END SSL Peer
+
+  QLabel *infolink = new QLabel(this);
+  infolink->setWordWrap(true);
+  infolink->setOpenExternalLinks(true);
+  infolink->setText(ssl_pgsql_link_description);
+  layout->addWidget(infolink);
 
   layout->addStretch(1);
   setLayout(layout);

@@ -2547,7 +2547,7 @@
 <context>
     <name>PgSQLSettings</name>
     <message>
-        <location filename="../custom/settings/pgsqlsettings.cpp" line="+60"/>
+        <location filename="../custom/settings/pgsqlsettings.cpp" line="+85"/>
         <source>Database Connection settings to PostgreSQL server.</source>
         <translation>Datenbank Verbindungs-Einstellungen zum PostgreSQL Server.</translation>
     </message>
@@ -2567,13 +2567,13 @@
         <translation></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Databasename</source>
         <translation>Datebankname</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>antiquacrm</source>
         <translation></translation>
     </message>
@@ -2583,7 +2583,7 @@
         <translation>Datenbank Benutzername</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Database Password</source>
         <translation>Datenbank Passwort</translation>
     </message>
@@ -2603,7 +2603,7 @@
         <translation></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Timeout</source>
         <translation>Wartezeit</translation>
     </message>
@@ -2618,27 +2618,52 @@
         <translation>Aktiviere SSL/TLS</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>SSL/TLS Connection</source>
         <translation>SSL/TLS Verbindung</translation>
     </message>
     <message>
-        <location line="+41"/>
-        <source>Issuer Cert</source>
-        <translation>Unterzeichner</translation>
+        <location line="+34"/>
+        <source>Exhibitor</source>
+        <translation>Aussteller</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+9"/>
+        <source>Open Server Exhibitor Certificate</source>
+        <translation>Öffne Serverzertifikat Aussteller</translation>
+    </message>
+    <message>
+        <location line="+27"/>
         <source>Local SSL Peer Connections</source>
         <translation>Lokale SSL-Peer-Verbindungen</translation>
     </message>
     <message>
-        <location line="-173"/>
+        <location line="-187"/>
         <source>CA Bundle is the file that contains root and intermediate certificates. Together with your server certificate (issued specifically for your domain), these files complete the SSL chain of trust. The chain is required to verify the Authentication with the main application.</source>
         <translation>CA-Bundle ist die Datei, die Stamm- und Zwischenzertifikate enthält. Zusammen mit Ihrem (speziell für Ihre Domain ausgestellten) Serverzertifikat vervollständigen diese Dateien die SSL-Vertrauenskette. Die Kette wird benötigt, um die Authentifizierung mit der Hauptanwendung zu überprüfen.</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-15"/>
+        <source>Hostname of the server you want to connect to. If you are not using SSL, the IP address can also be added in this field.</source>
+        <translation>Hostname des Servers, mit dem Sie sich verbinden. Wenn Sie SSL/TLS nicht verwenden, kann die IP-Adresse auch in diesem Feld eingefügt werden.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>The name of the server database to which you want to connect.</source>
+        <translation>Der Name der Serverdatenbank, zu der Sie eine Verbindung herstellen möchten.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The Username from the server database to which you want to connect.</source>
+        <translation>Der Benutzername aus der Serverdatenbank, mit der Sie sich verbinden möchten.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Port number to connect to the server. The default port address to a PostgreSQL server is „5432“. However, if you connect from outside, you need the configured router port. Your administrator can communicate this.</source>
+        <translation>Portnummer für die Verbindung zum Server. Die Standardportadresse zu einem PostgreSQL Server ist „5432“. Wenn Sie sich jedoch von außerhalb verbinden, benötigen Sie den konfigurierten Router-Port. Ihr Administrator kann dies mitteilen.</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>The Common Name (CN), also known as the Fully Qualified Domain Name (FQDN). CN is the machine name of the remote system you want to connect. If the certificate CN is not the same on the connecting machine, the trust relationship between client and server will fail.</source>
         <translation>Der Common Name (CN), auch bekannt als Fully Qualified Domain Name (FQDN). CN ist der Maschinenname des Remotesystems, das Sie verbinden möchten. Wenn der Zertifikats-CN bei der Verbindungsmaschine nicht gleich ist, schlägt die Vertrauensstellung zwischen Klient und Server fehl.</translation>
     </message>
@@ -2658,7 +2683,17 @@
         <translation>Damit eine Verbindung als SSL-gesichert bezeichnet wird, muss die SSL-Nutzung sowohl auf dem Klient als auch auf dem Server konfiguriert werden, bevor die Verbindung hergestellt wird. Wenn es nur auf dem Server konfiguriert ist, kann der Klient sensible Informationen (z. B. Passwörter) senden, bevor er weiß, dass der Server hohe Sicherheit benötigt. In diesem Fall können sichere Verbindungen garantiert werden, indem die SSL-Verbindung auf „Erforderlich“, „Vollständig vertrauen“ oder „Zertifikat Verifizierung“ gesetzt wird.</translation>
     </message>
     <message>
-        <location line="+89"/>
+        <location line="+10"/>
+        <source>Full Information about Secured SQL Connections, you can find at</source>
+        <translation>Vollständige Informationen zu sicheren SQL-Verbindungen finden Sie unter</translation>
+    </message>
+    <message>
+        <location line="+71"/>
+        <source>Enable SSL/TLS secure Connection configuration.</source>
+        <translation>Aktiviert die Konfiguration sichere SSL/TLS-Verbindung.</translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <location line="+8"/>
         <source>CA Bundle</source>
         <translation>CA Paket</translation>
@@ -2674,17 +2709,12 @@
         <translation>Serverzertifikat (CN)</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Issuer</source>
-        <translation>Unterzeichner</translation>
+        <location line="+17"/>
+        <source>Exhibitor Certificate</source>
+        <translation>Austeller Zertifikat</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Open Server Issuer Certificate</source>
-        <translation>Öffne Server Unterzeichner Zertifikat</translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source>SSL/TLS Verification priority</source>
         <translation>SSL/TLS Überprüfungspriorität</translation>
     </message>
@@ -2729,7 +2759,7 @@
         <translation>Passwort</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+59"/>
         <source>Open Certfile</source>
         <translation>Öffne Zertifikat</translation>
     </message>

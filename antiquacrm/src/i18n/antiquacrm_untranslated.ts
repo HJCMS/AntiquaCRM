@@ -2547,7 +2547,7 @@
 <context>
     <name>PgSQLSettings</name>
     <message>
-        <location filename="../custom/settings/pgsqlsettings.cpp" line="+60"/>
+        <location filename="../custom/settings/pgsqlsettings.cpp" line="+85"/>
         <source>Database Connection settings to PostgreSQL server.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2567,13 +2567,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Databasename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>antiquacrm</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2583,7 +2583,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Database Password</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2603,7 +2603,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Timeout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2618,27 +2618,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>SSL/TLS Connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+41"/>
-        <source>Issuer Cert</source>
+        <location line="+34"/>
+        <source>Exhibitor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+9"/>
+        <source>Open Server Exhibitor Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
         <source>Local SSL Peer Connections</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-173"/>
+        <location line="-187"/>
         <source>CA Bundle is the file that contains root and intermediate certificates. Together with your server certificate (issued specifically for your domain), these files complete the SSL chain of trust. The chain is required to verify the Authentication with the main application.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-15"/>
+        <source>Hostname of the server you want to connect to. If you are not using SSL, the IP address can also be added in this field.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>The name of the server database to which you want to connect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The Username from the server database to which you want to connect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Port number to connect to the server. The default port address to a PostgreSQL server is „5432“. However, if you connect from outside, you need the configured router port. Your administrator can communicate this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>The Common Name (CN), also known as the Fully Qualified Domain Name (FQDN). CN is the machine name of the remote system you want to connect. If the certificate CN is not the same on the connecting machine, the trust relationship between client and server will fail.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2658,7 +2683,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+89"/>
+        <location line="+10"/>
+        <source>Full Information about Secured SQL Connections, you can find at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+71"/>
+        <source>Enable SSL/TLS secure Connection configuration.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <location line="+8"/>
         <source>CA Bundle</source>
         <translation type="unfinished"></translation>
@@ -2674,17 +2709,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Issuer</source>
+        <location line="+17"/>
+        <source>Exhibitor Certificate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Open Server Issuer Certificate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source>SSL/TLS Verification priority</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2729,7 +2759,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+59"/>
         <source>Open Certfile</source>
         <translation type="unfinished"></translation>
     </message>
