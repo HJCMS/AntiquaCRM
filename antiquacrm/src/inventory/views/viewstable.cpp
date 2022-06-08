@@ -45,10 +45,10 @@ ViewsTable::ViewsTable(QWidget *parent) : QTableView{parent} {
   setSortingEnabled(false);
   setDragEnabled(false);
   setDragDropOverwriteMode(false);
-  setWordWrap(false);
+  setWordWrap(true);
   setAlternatingRowColors(true);
   setSelectionBehavior(QAbstractItemView::SelectRows);
-  setSelectionMode(QAbstractItemView::SingleSelection);
+  setSelectionMode(QAbstractItemView::MultiSelection);
 
   m_sql = new HJCMS::SqlCore(this);
 
@@ -59,6 +59,8 @@ ViewsTable::ViewsTable(QWidget *parent) : QTableView{parent} {
   /* Kopfzeilen anpassen */
   m_headerView = horizontalHeader();
   m_headerView->setDefaultAlignment(Qt::AlignCenter);
+  m_headerView->setSectionResizeMode(QHeaderView::ResizeToContents);
+  m_headerView->setStretchLastSection(true);
   setHorizontalHeader(m_headerView);
 
   connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
@@ -73,6 +75,11 @@ void ViewsTable::articleClicked(const QModelIndex &index) {
       emit s_articleSelected(id, "bookeditor");
     else if (id > 0 && m_model->tableName().contains("_print_"))
       emit s_articleSelected(id, "printseditor");
+    else if (id > 0 && m_model->tableName().contains("_customer_"))
+      emit s_articleSelected(id, "customereditor");
+    else
+      qWarning("Unused Id: %s in Views Table.",
+               qPrintable(QString::number(id)));
   }
 }
 
@@ -82,10 +89,7 @@ void ViewsTable::sqlQuery(const QString &viewtable) {
 
   m_model->setTable(viewtable);
   if (m_model->select()) {
-    m_headerView->hideSection(0); /**< ID */
-    m_headerView->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-    m_headerView->setSectionResizeMode(2, QHeaderView::ResizeToContents);
-    m_headerView->setStretchLastSection(true);
+    emit s_queryFinished();
   }
 }
 

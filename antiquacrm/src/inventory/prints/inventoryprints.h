@@ -127,6 +127,11 @@ public Q_SLOTS:
   void createPrintsEntry();
 
   /**
+   * @brief Bearbeite Drucke und Stiche
+   */
+  void editPrintsEntry(int);
+
+  /**
    * @brief Wenn das Tab im Vordergund geht, dann eine Aktionen starten
    */
   void onEnterChanged(){/* TODO */};

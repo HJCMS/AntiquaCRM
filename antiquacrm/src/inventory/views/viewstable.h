@@ -25,6 +25,11 @@ public:
                       int role = Qt::DisplayRole) const;
 };
 
+/**
+ * @brief Hier werden nur PostgreSQL Sichten ausgegeben.
+ * @class ViewsTable
+ * @ingroup Inventory
+ */
 class ViewsTable : public QTableView {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -39,9 +44,13 @@ private Q_SLOTS:
   void articleClicked(const QModelIndex &);
 
 Q_SIGNALS:
+  void s_queryFinished();
   void s_articleSelected(int articleId, const QString &editor);
 
 public Q_SLOTS:
+  /**
+   * @brief Sichten Tabellenname hier entgegen nehmen.
+   */
   void sqlQuery(const QString &viewtable);
 
 public:

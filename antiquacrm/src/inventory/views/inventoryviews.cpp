@@ -46,7 +46,7 @@ void InventoryViews::columnEditClicked(int id, const QString &section) {
 
   if (section == "bookeditor") {
     emit s_editBookEntry(id);
-  } else if (section == "printsditor") {
+  } else if (section == "printseditor") {
     emit s_editPrintsEntry(id);
   } else if (section == "customereditor") {
     emit s_editCustomerEntry(id);

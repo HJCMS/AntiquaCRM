@@ -60,12 +60,16 @@ Workspace::Workspace(QWidget *parent) : QTabWidget{parent} {
 
 int Workspace::addInventoryBooks(int index) {
   m_tabBooks = new InventoryBooks(this);
+  // Zur Bestellung hinzufügen
   connect(m_tabBooks, SIGNAL(s_addArticleOrder(int)), this,
           SLOT(addArticleOrder(int)));
+  // Änderungen aufzeichenen
   connect(m_tabBooks, SIGNAL(s_windowModified(bool)), this,
           SIGNAL(s_windowModified(bool)));
+  // Nachrichten an Hauptfenster
   connect(m_tabBooks, SIGNAL(s_postMessage(const QString &)), this,
           SIGNAL(s_postMessage(const QString &)));
+  // Artikel Bestandsänderung an Providers senden
   connect(m_tabBooks, SIGNAL(s_articleCount(int, int)), this,
           SLOT(updateArticleCount(int, int)));
   int i = insertTab(index, m_tabBooks, tr("Books"));
@@ -77,12 +81,16 @@ int Workspace::addInventoryBooks(int index) {
 
 int Workspace::addInventoryPrints(int index) {
   m_tabPrints = new InventoryPrints(this);
+  // Zur Bestellung hinzufügen
   connect(m_tabPrints, SIGNAL(s_addArticleOrder(int)), this,
           SLOT(addArticleOrder(int)));
+  // Änderungen aufzeichenen
   connect(m_tabPrints, SIGNAL(s_windowModified(bool)), this,
           SIGNAL(s_windowModified(bool)));
+  // Nachrichten an Hauptfenster
   connect(m_tabPrints, SIGNAL(s_postMessage(const QString &)), this,
           SIGNAL(s_postMessage(const QString &)));
+  // Artikel Bestandsänderung an Providers senden
   connect(m_tabPrints, SIGNAL(s_articleCount(int, int)), this,
           SLOT(updateArticleCount(int, int)));
   int i = insertTab(index, m_tabPrints, tr("Prints"));
@@ -94,10 +102,13 @@ int Workspace::addInventoryPrints(int index) {
 
 int Workspace::addInventoryCustomers(int index) {
   m_tabCustomers = new InventoryCustomers(this);
+  // Neue Bestellung anlegen
   connect(m_tabCustomers, SIGNAL(s_createOrder(int)), this,
           SLOT(createOrder(int)));
+  // Änderungen aufzeichenen
   connect(m_tabCustomers, SIGNAL(s_windowModified(bool)), this,
           SIGNAL(s_windowModified(bool)));
+  // Nachrichten an Hauptfenster
   connect(m_tabCustomers, SIGNAL(s_postMessage(const QString &)), this,
           SIGNAL(s_postMessage(const QString &)));
   int i = insertTab(index, m_tabCustomers, tr("Customers"));
@@ -109,8 +120,10 @@ int Workspace::addInventoryCustomers(int index) {
 
 int Workspace::addInventoryOrders(int index) {
   m_tabOrders = new InventoryOrders(this);
+  // Änderungen aufzeichenen
   connect(m_tabOrders, SIGNAL(s_windowModified(bool)), this,
           SIGNAL(s_windowModified(bool)));
+  // Nachrichten an Hauptfenster
   connect(m_tabOrders, SIGNAL(s_postMessage(const QString &)), this,
           SIGNAL(s_postMessage(const QString &)));
   int i = insertTab(index, m_tabOrders, tr("Orders"));
@@ -122,12 +135,16 @@ int Workspace::addInventoryOrders(int index) {
 
 int Workspace::addInventoryProviders(int index) {
   m_tabProviders = new InventoryProviders(this);
+  // Änderunge aufzeichenen
   connect(m_tabProviders, SIGNAL(s_windowModified(bool)), this,
           SIGNAL(s_windowModified(bool)));
+  // Nachrichten an Hauptfenster
   connect(m_tabProviders, SIGNAL(s_postMessage(const QString &)), this,
           SIGNAL(s_postMessage(const QString &)));
+  // Kunden Editieren
   connect(m_tabProviders, SIGNAL(openEditCustomer(int)), this,
-          SLOT(editCustomer(int)));
+          SLOT(editCustomerEntry(int)));
+  // Auftrag/Bestellung erstellen
   connect(m_tabProviders, SIGNAL(createOrder(const ProviderOrder &)), this,
           SLOT(createOrder(const ProviderOrder &)));
   int i = insertTab(index, m_tabProviders, tr("Providers"));
@@ -139,15 +156,21 @@ int Workspace::addInventoryProviders(int index) {
 
 int Workspace::addInventoryViews(int index) {
   m_tabViews = new InventoryViews(this);
+  // Änderunge aufzeichenen
   connect(m_tabViews, SIGNAL(s_windowModified(bool)), this,
           SIGNAL(s_windowModified(bool)));
+  // Nachrichten an Hauptfenster
   connect(m_tabViews, SIGNAL(s_postMessage(const QString &)), this,
           SIGNAL(s_postMessage(const QString &)));
+  // Buch editieren
   connect(m_tabViews, SIGNAL(s_editBookEntry(int)), this,
           SLOT(editBookEntry(int)));
+  // Kunden editieren
   connect(m_tabViews, SIGNAL(s_editCustomerEntry(int)), this,
-          SLOT(editCustomer(int)));
-  // connect(m_tabViews, SIGNAL(s_editPrintsEntry(int)), this, SLOT((int)));
+          SLOT(editCustomerEntry(int)));
+  // Drucke und Stiche editieren
+  connect(m_tabViews, SIGNAL(s_editPrintsEntry(int)), this,
+          SLOT(editPrintsEntry(int)));
   int i = insertTab(index, m_tabViews, tr("Views"));
   m_tabBar->setTabData(i, m_tabViews->isClosable());
   setTabToolTip(i, tr("Views"));
@@ -155,28 +178,35 @@ int Workspace::addInventoryViews(int index) {
   return i;
 }
 
-void Workspace::closeTabClicked(int index) {
-  Inventory *tab = qobject_cast<Inventory *>(widget(index));
-  if (tab != nullptr && tab->isClosable()) {
-    if (!tab->isWindowModified()) {
-      removeTab(index);
-      return;
-    }
-    emit s_postMessage(tr("Cant close this tab, unsafed changes!"));
+void Workspace::editBookEntry(int articleId) {
+  if (articleId > 0 && indexOf(m_tabBooks) >= 0) {
+    m_tabBooks->editBookEntry(articleId);
+    setCurrentWidget(m_tabBooks);
+  } else {
+    emit s_postMessage(tr("Books tab isn't open!"));
   }
 }
 
-void Workspace::editBookEntry(int articleId) {
-  if (articleId > 0 && (m_tabBooks != nullptr)) {
-    m_tabBooks->editBookEntry(articleId);
-    setCurrentWidget(m_tabBooks);
+void Workspace::editPrintsEntry(int articleId) {
+  if (articleId > 0 && indexOf(m_tabPrints) >= 0) {
+    m_tabPrints->editPrintsEntry(articleId);
+    setCurrentWidget(m_tabPrints);
+  } else {
+    emit s_postMessage(tr("Prints tab isn't open!"));
+  }
+}
+
+void Workspace::editCustomerEntry(int customerId) {
+  if (customerId > 0 && indexOf(m_tabCustomers) >= 0) {
+    m_tabCustomers->editCustomer(customerId);
+    setCurrentWidget(m_tabCustomers);
   } else {
     emit s_postMessage(tr("Order tab isn't open!"));
   }
 }
 
 void Workspace::createOrder(int customerId) {
-  if (customerId > 0 && (m_tabOrders != nullptr)) {
+  if (customerId > 0 && indexOf(m_tabOrders) >= 0) {
     m_tabOrders->createOrder(customerId);
     setCurrentWidget(m_tabOrders);
   } else {
@@ -185,7 +215,7 @@ void Workspace::createOrder(int customerId) {
 }
 
 void Workspace::createOrder(const ProviderOrder &order) {
-  if (m_tabOrders != nullptr) {
+  if (indexOf(m_tabOrders) >= 0) {
     m_tabOrders->createOrder(order);
     setCurrentWidget(m_tabOrders);
   } else {
@@ -193,17 +223,8 @@ void Workspace::createOrder(const ProviderOrder &order) {
   }
 }
 
-void Workspace::editCustomer(int customerId) {
-  if (customerId > 0 && (m_tabCustomers != nullptr)) {
-    m_tabCustomers->editCustomer(customerId);
-    setCurrentWidget(m_tabCustomers);
-  } else {
-    emit s_postMessage(tr("Order tab isn't open!"));
-  }
-}
-
 void Workspace::addArticleOrder(int articleId) {
-  if (articleId > 0 && (m_tabOrders != nullptr)) {
+  if (articleId > 0 && indexOf(m_tabOrders) >= 0) {
     bool b = m_tabOrders->addArticleToOrder(articleId);
     if (b) {
       setCurrentWidget(m_tabOrders);
@@ -214,7 +235,8 @@ void Workspace::addArticleOrder(int articleId) {
 }
 
 void Workspace::updateArticleCount(int articleId, int count) {
-  if (m_tabProviders != nullptr) {
+  if (indexOf(m_tabProviders) >= 0) {
+    // qDebug() << Q_FUNC_INFO << articleId << count;
     if (m_tabProviders->updateArticleCount(articleId, count)) {
       emit s_postMessage(tr("successfully"));
     } else {
@@ -222,6 +244,17 @@ void Workspace::updateArticleCount(int articleId, int count) {
     }
   } else {
     emit s_postMessage(tr("Provider tab isn't open!"));
+  }
+}
+
+void Workspace::closeTabClicked(int index) {
+  Inventory *tab = qobject_cast<Inventory *>(widget(index));
+  if (tab != nullptr && tab->isClosable()) {
+    if (!tab->isWindowModified()) {
+      removeTab(index);
+      return;
+    }
+    emit s_postMessage(tr("Cant close this tab, unsafed changes!"));
   }
 }
 

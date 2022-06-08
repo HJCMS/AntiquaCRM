@@ -155,6 +155,16 @@ void InventoryPrints::createPrintsEntry() {
   m_stackedWidget->setCurrentWidget(m_printsEditor);
 }
 
+void InventoryPrints::editPrintsEntry(int id) {
+  if (id < 1)
+    return;
+
+  QString aid = QString::number(id);
+  QString condition("ip_id=");
+  condition.append(aid);
+  openEditor(condition);
+}
+
 void InventoryPrints::articleSelected(int id) {
   if (id < 1)
     return;

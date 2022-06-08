@@ -33,6 +33,7 @@ SET(CMAKE_AUTOUIC OFF)
 SET(CMAKE_AUTOMOC ON)
 SET(CMAKE_AUTORCC ON)
 
+## cmake --system-information | less
 OPTION (ANTIQUA_LSB_INSTALL "Standard LSB Installation" ON)
 
 ###
