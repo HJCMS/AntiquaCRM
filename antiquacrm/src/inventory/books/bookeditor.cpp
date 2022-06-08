@@ -5,6 +5,7 @@
 #include "isbnrequest.h"
 #include "isbnresults.h"
 #include "myicontheme.h"
+#include "bookcard.h"
 #include <AntiquaCRM>
 
 #include <QDebug>
@@ -268,6 +269,7 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   mainLayout->addWidget(m_tabWidget);
 
   m_actionBar = new EditorActionBar(this);
+  m_actionBar->viewPrintBookCardButton(true);
   mainLayout->addWidget(m_actionBar);
 
   setLayout(mainLayout);
@@ -298,6 +300,8 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   connect(m_actionBar, SIGNAL(s_saveClicked()), this, SLOT(saveData()));
   connect(m_actionBar, SIGNAL(s_finishClicked()), this,
           SLOT(checkLeaveEditor()));
+  connect(m_actionBar, SIGNAL(s_printBookCard()), this,
+          SLOT(printingBookCard()));
 }
 
 void BookEditor::setInputList() {
@@ -608,6 +612,23 @@ void BookEditor::infoISBNDoubleClicked(QListWidgetItem *item) {
     regexp.setPattern("^ib_website:\\b");
     QUrl url(data.replace(regexp, ""));
     QDesktopServices::openUrl(url);
+  }
+}
+
+void BookEditor::printingBookCard()
+{
+  BookCard *dialog = new BookCard(this);
+  dialog->setObjectName("book_card_printing");
+
+  QHash<QString, QVariant> data;
+  data.insert("id",ib_id->value());
+  data.insert("title",ib_title->value());
+  data.insert("author",ib_author->value());
+  data.insert("year",ib_year->value());
+  data.insert("storage",ib_storage->description());
+
+  if(dialog->exec(data) == QDialog::Accepted) {
+    qDebug() << Q_FUNC_INFO << "TODO";
   }
 }
 

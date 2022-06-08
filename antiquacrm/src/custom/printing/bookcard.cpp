@@ -1,0 +1,177 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+
+#include "bookcard.h"
+#include "applsettings.h"
+#include "myicontheme.h"
+#include "printing.h"
+
+#include <QPrintDialog>
+#include <QPrintPreviewDialog>
+#include <QStyle>
+#include <QtWidgets>
+
+BookCardPaintWidget::BookCardPaintWidget(QWidget *parent) : QWidget{parent} {
+  setAttribute(Qt::WA_NoSystemBackground, true);
+  setAttribute(Qt::WA_OpaquePaintEvent, true);
+}
+
+void BookCardPaintWidget::paintEvent(QPaintEvent *p) {
+  QRect r = p->rect();
+  int w = p->rect().width();
+  int h = p->rect().height();
+  int padding = 5;
+  QFontMetricsF fm(font());
+  qreal fontHeight = fm.height();
+  qreal yPos = 0;
+
+  QPainter painter;
+  painter.begin(this);
+  painter.fillRect(r, Qt::white);
+  painter.setBrush(QBrush(Qt::black, Qt::SolidPattern));
+
+  qreal txt_width = fm.horizontalAdvance(p_id);
+  yPos = (fontHeight + padding);
+  painter.drawText((w - txt_width - padding), yPos, p_id);
+
+  QStaticText storage(p_storage);
+  yPos += (fontHeight + padding);
+  painter.drawStaticText(padding, yPos, storage);
+
+  yPos += (fontHeight + padding);
+  foreach (QString line, p_description) {
+    QStaticText block("→ " + line);
+    block.setTextFormat(Qt::PlainText);
+    block.setTextWidth((w - (padding * 2)));
+    painter.drawStaticText(padding, yPos, block);
+    yPos += (block.size().height() + padding);
+  }
+
+  painter.drawLine(0, yPos, w, yPos);
+
+  QStaticText __todo(" -- TODO QRCode -- ");
+  painter.drawStaticText(padding, yPos, __todo);
+
+  painter.end();
+}
+
+void BookCardPaintWidget::setArticleId(const QString &txt) {
+  p_id = tr("Book Nr.");
+  p_id.append(": ");
+  p_id.append(txt);
+}
+
+void BookCardPaintWidget::setStorage(const QString &txt) { p_storage = txt; }
+
+void BookCardPaintWidget::setBookDescription(const QStringList &txt) {
+  p_description << txt;
+}
+
+BookCard::BookCard(QWidget *parent) : QDialog{parent} {
+  setObjectName("printing_book_card");
+  setWindowTitle(tr("Printing book card"));
+  setSizeGripEnabled(false);
+
+  config = new ApplSettings(this);
+
+  page_size = QPageSize(QPageSize::A6);
+
+  QVBoxLayout *layout = new QVBoxLayout(this);
+  layout->setObjectName("printing_card_layout");
+
+  QRect pageRect = pageLayout().fullRectPoints();
+  int maxWidth = pageRect.width();
+
+  m_card = new BookCardPaintWidget(this);
+  m_card->setObjectName("printing_header");
+  m_card->setStyleSheet("border:none;color:black;");
+  m_card->setFixedSize(pageRect.size());
+  m_card->setContentsMargins(0, 0, 0, 0);
+  m_card->setWindowModified(true);
+  layout->addWidget(m_card);
+
+  QDialogButtonBox *btn_box = new QDialogButtonBox(this);
+  btn_box->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Close);
+  layout->addWidget(btn_box);
+
+  layout->setSizeConstraint(QLayout::SetFixedSize);
+  setLayout(layout);
+  connect(btn_box, SIGNAL(accepted()), this, SLOT(openPrintDialog()));
+  connect(btn_box, SIGNAL(rejected()), this, SLOT(reject()));
+}
+
+void BookCard::readConfiguration() {
+  config->beginGroup("printer");
+  QFont font = m_card->font();
+  if (font.fromString(config->value("normal_font").toString())) {
+    m_card->setFont(font);
+  }
+  config->endGroup();
+  p_destination = config->value("dirs/deliverynotes").toString();
+}
+
+const QPageLayout BookCard::pageLayout() {
+  QPageLayout pageLayout;
+  pageLayout.setOrientation(QPageLayout::Portrait);
+  pageLayout.setPageSize(page_size, QMarginsF(2, 2, 2, 2));
+  pageLayout.setMode(QPageLayout::FullPageMode);
+  pageLayout.setUnits(QPageLayout::Millimeter);
+  return pageLayout;
+}
+
+void BookCard::printDocument(QPrinter *printer) {
+  QPageLayout layout = pageLayout();
+  printer->setPageLayout(layout);
+  QPainter painter(printer);
+  painter.translate(0, 0);
+  m_card->render(&painter);
+}
+
+void BookCard::openPrintDialog() {
+  QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
+  QString dest = p_destination;
+  dest.append(QDir::separator());
+  dest.append(p_filename);
+  dest.append(".pdf");
+  printer->setOutputFileName(dest);
+  printer->setPageLayout(pageLayout());
+  printer->setColorMode(QPrinter::GrayScale);
+  printer->setFullPage(true);
+  if (NO_NATIVE_PRINTDRIVER) {
+    QPrintPreviewDialog *dialog = new QPrintPreviewDialog(printer, this);
+    connect(dialog, SIGNAL(paintRequested(QPrinter *)), this,
+            SLOT(printDocument(QPrinter *)));
+    if (dialog->exec() == QDialog::Accepted) {
+      accept();
+    }
+  } else {
+    QPrintDialog *dialog = new QPrintDialog(printer, this);
+    connect(dialog, SIGNAL(accepted(QPrinter *)), this,
+            SLOT(printDocument(QPrinter *)));
+    if (dialog->exec() == QDialog::Accepted) {
+      accept();
+    }
+  }
+}
+
+int BookCard::exec(const QHash<QString, QVariant> &data) {
+  readConfiguration();
+
+  if (data.count() < 1)
+    return QDialog::Rejected;
+
+  QString id = data.value("id").toString();
+  m_card->setArticleId(id);
+
+  id.prepend("card_");
+  p_filename = id;
+
+  QStringList title(data.value("title").toString());
+  title << data.value("author").toString();
+  title << data.value("year").toString();
+  m_card->setBookDescription(title);
+
+  m_card->setStorage(data.value("storage").toString());
+
+  return QDialog::exec();
+}

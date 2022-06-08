@@ -50,6 +50,16 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
           SIGNAL(s_printInvoiceNote()));
   layout->addWidget(m_printInvoiceBtn);
 
+  m_printBookCardBtn = new QPushButton(tr("Print book card"), this);
+  m_printBookCardBtn->setObjectName("editor_action_btn_print_card");
+  m_printBookCardBtn->setToolTip(tr("Printing a Book card"));
+  m_printBookCardBtn->setIcon(myIcon("printer"));
+  m_printBookCardBtn->setEnabled(false);
+  m_printBookCardBtn->setVisible(false);
+  connect(m_printBookCardBtn, SIGNAL(clicked()), this,
+          SIGNAL(s_printBookCard()));
+  layout->addWidget(m_printBookCardBtn);
+
   layout->addStretch(1);
 
   m_saveBtn = new QPushButton(tr("Save"), this);
@@ -77,6 +87,12 @@ void EditorActionBar::viewPrintButton(bool b) {
   m_printDeliveryBtn->setVisible(b);
   m_printInvoiceBtn->setEnabled(b);
   m_printInvoiceBtn->setVisible(b);
+}
+
+void EditorActionBar::viewPrintBookCardButton(bool b)
+{
+  m_printBookCardBtn->setEnabled(b);
+  m_printBookCardBtn->setVisible(b);
 }
 
 bool EditorActionBar::isRestoreable() { return m_restoreBtn->isEnabled(); }

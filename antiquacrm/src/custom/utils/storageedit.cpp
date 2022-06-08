@@ -110,6 +110,11 @@ void StorageEdit::reset() {
 
 void StorageEdit::setFocus() { m_storage->setFocus(); }
 
+const QString StorageEdit::description() {
+  int i = m_storage->currentIndex();
+  return m_storage->itemData(i, Qt::DisplayRole).toString();
+}
+
 const QVariant StorageEdit::value() {
   return QVariant(m_storage->currentIndex());
 }

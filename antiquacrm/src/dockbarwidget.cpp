@@ -23,15 +23,7 @@ DockBarWidget::DockBarWidget(QWidget *parent) : QDockWidget{parent} {
   m_search = new QWidget(m_tabWidget);
   m_search->setObjectName("pro_search");
   m_tabWidget->addTab(m_search, myIcon("tab"), tr("Search"));
-/*
-  QRect s = m_search->rect();
-  QPropertyAnimation animation(m_search, "geometry");
-  animation.setDuration(20000);
-  animation.setStartValue(QRect(s.topRight(), QSize(2, s.height())));
-  animation.setEndValue(QRect(s.topLeft(), QSize(262, s.height())));
-  animation.start();
-  qDebug() << s << s.topRight() << m_search->rect();
-*/
+
   setWidget(m_tabWidget);
 
   connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), this,

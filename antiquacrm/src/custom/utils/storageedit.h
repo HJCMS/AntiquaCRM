@@ -51,6 +51,7 @@ public Q_SLOTS:
 
 public:
   explicit StorageEdit(QWidget *parent = nullptr);
+  const QString description();
   const QVariant value();
   bool isValid();
   void setInfo(const QString &);

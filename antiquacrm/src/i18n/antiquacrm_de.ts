@@ -124,9 +124,25 @@
     </message>
 </context>
 <context>
+    <name>BookCard</name>
+    <message>
+        <location filename="../custom/printing/bookcard.cpp" line="+72"/>
+        <source>Printing book card</source>
+        <translation>Drucke Buchkarte</translation>
+    </message>
+</context>
+<context>
+    <name>BookCardPaintWidget</name>
+    <message>
+        <location line="-13"/>
+        <source>Book Nr.</source>
+        <translation>Buch Nr.</translation>
+    </message>
+</context>
+<context>
     <name>BookEditor</name>
     <message>
-        <location filename="../inventory/books/bookeditor.cpp" line="+21"/>
+        <location filename="../inventory/books/bookeditor.cpp" line="+22"/>
         <source>Edit Book Title</source>
         <translation>Editiere Buchtitel</translation>
     </message>
@@ -271,7 +287,7 @@
         <translation>Umschreibung</translation>
     </message>
     <message>
-        <location line="+117"/>
+        <location line="+120"/>
         <source>Remove Image from Database</source>
         <translation>Entferne Bild aus der Datenbank</translation>
     </message>
@@ -301,7 +317,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-423"/>
+        <location line="-426"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -316,7 +332,7 @@
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
     <message>
-        <location line="+189"/>
+        <location line="+192"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
@@ -326,7 +342,7 @@
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
     <message>
-        <location line="-291"/>
+        <location line="-294"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -358,12 +374,12 @@
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="+184"/>
+        <location line="+187"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-295"/>
+        <location line="-298"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -1395,6 +1411,16 @@
         <location line="+2"/>
         <source>Open Print Invoice</source>
         <translation>Öffne Rechnung drucken</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Print book card</source>
+        <translation>Drucke Buchkarte</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Printing a Book card</source>
+        <translation>Drucke eine Buchkarte</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -3705,7 +3731,7 @@
         <translation>Lagerort</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+69"/>
         <source>Storage location is required and must set.</source>
         <translation>Eine Lagerangabe ist Erforderlich.</translation>
     </message>
@@ -3957,7 +3983,7 @@
         <translation>Arbeitsbereich</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+26"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
@@ -3967,7 +3993,7 @@
         <translation>Bücher Inventar</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+19"/>
         <source>Prints</source>
         <translation>Drucke</translation>
     </message>
@@ -3977,7 +4003,7 @@
         <translation>Drucke, Stiche und Bilder Inventar</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+16"/>
         <source>Customers</source>
         <translation>Kunden</translation>
     </message>
@@ -3987,7 +4013,7 @@
         <translation>Kunden Inventar</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+13"/>
         <source>Orders</source>
         <translation>Aufträge</translation>
     </message>
@@ -3997,7 +4023,7 @@
         <translation>Auftrags Inventar</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+19"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
@@ -4007,19 +4033,28 @@
         <translation>Dienstleister Inventar</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+22"/>
         <location line="+2"/>
         <source>Views</source>
         <translation>Ansichten</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+10"/>
+        <source>Books tab isn&apos;t open!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Prints tab isn&apos;t open!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+62"/>
         <source>Cant close this tab, unsafed changes!</source>
         <translation>Kann das Tab nicht schliessen, nicht gespeicherte Änderungen!</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <location line="+9"/>
+        <location line="-53"/>
         <location line="+9"/>
         <location line="+9"/>
         <location line="+11"/>
@@ -4027,7 +4062,7 @@
         <translation>Das Auftrags Tab ist nicht geöffnet!</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>successfully</source>
         <translation>Erfolgreich</translation>
     </message>
@@ -4045,7 +4080,7 @@
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-184"/>
+        <location line="-206"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>

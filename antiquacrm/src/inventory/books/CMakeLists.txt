@@ -15,6 +15,7 @@ SET (subproject_LINKER
  Settings
  Networking
  Utils
+ Printing
  Imaging
 )
 

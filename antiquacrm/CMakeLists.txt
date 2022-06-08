@@ -52,6 +52,9 @@ SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 ## cUrl
 FIND_PACKAGE(CURL REQUIRED libcurl)
 
+## libqrencode
+## https://github.com/fukuchi/libqrencode
+
 SET(PROJECT_BINDINGS
  Core
  Widgets

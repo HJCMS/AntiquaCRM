@@ -65,25 +65,25 @@ private:
   int count_temp;
 
   /**
-     @brief Wird für QObject::findchild benötigt!
-     Dieser Reguläre Ausdruck wird verwendet um die Eingabe-Objektklassen
-     zu finden. Sie sind Identisch mit den SQL Feldern und beginnen bei
-     der Buchtabelle "inventory_books" immer mit "ib_".
-  */
+   * @brief Wird für QObject::findchild benötigt!
+   * Dieser Reguläre Ausdruck wird verwendet um die Eingabe-Objektklassen zu
+   * finden. Sie sind Identisch mit den SQL Feldern und beginnen bei der
+   * Buchtabelle "inventory_books" immer mit "ib_".
+   */
   const QRegularExpression p_objPattern = QRegularExpression("^ib_[a-z_]+\\b$");
 
   /**
-     @brief Beinhaltet Cancel, Restore, Save und GoBack.
+   * @brief Beinhaltet Cancel, Restore, Save und GoBack.
    */
   EditorActionBar *m_actionBar;
 
   /**
-    @brief Bilder operations Knopfleiste
-  */
+   * @brief Bilder operations Knopfleiste
+   */
   ImageToolBar *m_imageToolBar;
 
   /**
-    @brief Eingebettete Bildansicht
+   * @brief Eingebettete Bildansicht
    */
   ImageView *m_imageView;
 
@@ -134,14 +134,14 @@ private:
   bool sendSqlQuery(const QString &sqlStatement);
 
   /**
-     @brief SQL UPDATE Statement erstellen!
-     @note Wird nur von Slot @ref saveData() aufgerufen!
+   * @brief SQL UPDATE Statement erstellen!
+   * @note Wird nur von Slot @ref saveData() aufgerufen!
    */
   void createSqlUpdate();
 
   /**
-     @brief SQL INSERT Statement erstellen!
-     @note Wird nur von Slot @ref saveData() aufgerufen!
+   * @brief SQL INSERT Statement erstellen!
+   * @note Wird nur von Slot @ref saveData() aufgerufen!
    */
   void createSqlInsert();
 
@@ -195,7 +195,7 @@ private:
 
 private Q_SLOTS:
   /**
-     @brief Button open Imaging clicked()
+   * @brief Button open Imaging clicked()
    */
   void openImageDialog();
 
@@ -205,15 +205,15 @@ private Q_SLOTS:
   void removeImageDialog(int);
 
   /**
-     @brief Signal Verarbeitung für @ref m_actionBar::s_saveClicked()
-     Kontrolliert ob @ref ib_id ein gültige Artikel ID enthält.
-        @li Ist das Ergebnis Negativ - wird @ref createSqlInsert aufgerufen.
-        @li Ist das Ergebnis Positiv - wird @ref createSqlUpdate aufgerufen.
+   * @brief Signal Verarbeitung für @ref m_actionBar::s_saveClicked()
+   * Kontrolliert ob @ref ib_id ein gültige Artikel ID enthält.
+   *  @li Ist das Ergebnis Negativ - wird @ref createSqlInsert aufgerufen.
+   *  @li Ist das Ergebnis Positiv - wird @ref createSqlUpdate aufgerufen.
    */
   void saveData();
 
   /**
-     @brief Sendet eine ISBN Anfragen
+   * @brief Sendet eine ISBN Anfragen
    */
   void createIsbnQuery();
 
@@ -223,9 +223,14 @@ private Q_SLOTS:
   void viewIsbnTab();
 
   /**
-     @brief Öffne die Url aus der Ergebnisanzeige.
-  */
+   * @brief Öffne die Url aus der Ergebnisanzeige.
+   */
   void infoISBNDoubleClicked(QListWidgetItem *);
+
+  /**
+   * @brief Eine Buchkarte drucken
+   */
+  void printingBookCard();
 
   /**
    @brief Vor dem verlassen nach Änderungen suchen.
