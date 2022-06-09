@@ -20,7 +20,7 @@ void BookCardPaintWidget::paintEvent(QPaintEvent *p) {
   QRect r = p->rect();
   int w = p->rect().width();
   int h = p->rect().height();
-  int padding = 5;
+  int margin = 5;
   QFontMetricsF fm(font());
   qreal fontHeight = fm.height();
   qreal yPos = 0;
@@ -31,29 +31,35 @@ void BookCardPaintWidget::paintEvent(QPaintEvent *p) {
   painter.setBrush(QBrush(Qt::black, Qt::SolidPattern));
 
   qreal txt_width = fm.horizontalAdvance(p_id);
-  yPos = (fontHeight + padding);
-  painter.drawText((w - txt_width - padding), yPos, p_id);
+  yPos = (fontHeight + margin);
+  painter.drawText((w - txt_width - margin), yPos, p_id);
 
   QStaticText storage(p_storage);
-  yPos += (fontHeight + padding);
-  painter.drawStaticText(padding, yPos, storage);
+  yPos += (fontHeight + margin);
+  painter.drawStaticText(margin, yPos, storage);
 
-  yPos += (fontHeight + padding);
+  yPos += (fontHeight + margin);
   foreach (QString line, p_description) {
     QStaticText block("→ " + line);
     block.setTextFormat(Qt::PlainText);
-    block.setTextWidth((w - (padding * 2)));
-    painter.drawStaticText(padding, yPos, block);
-    yPos += (block.size().height() + padding);
+    block.setTextWidth((w - (margin * 2)));
+    painter.drawStaticText(margin, yPos, block);
+    yPos += (block.size().height() + margin);
   }
 
   painter.drawLine(0, yPos, w, yPos);
 
-  QStaticText __todo(" -- TODO QRCode -- ");
-  painter.drawStaticText(padding, yPos, __todo);
+  m_qrCode.setData(p_queryUrl.toEncoded(QUrl::None));
+  QImage image = m_qrCodePainter.toImage(m_qrCode, qr_size.height());
+
+  int _x = (w - qr_size.height()) / 2;
+  int _y = yPos + (((h - yPos) / 2) - (qr_size.height() / 2));
+  painter.drawImage(QPointF(_x, _y), image);
 
   painter.end();
 }
+
+void BookCardPaintWidget::setQrUrl(const QUrl &url) { p_queryUrl = url; }
 
 void BookCardPaintWidget::setArticleId(const QString &txt) {
   p_id = tr("Book Nr.");
@@ -110,6 +116,20 @@ void BookCard::readConfiguration() {
   p_destination = config->value("dirs/deliverynotes").toString();
 }
 
+const QUrl BookCard::generateQRCodeUrl() {
+  QUrl url;
+  config->beginGroup("qrcode");
+  url.setScheme(config->value("schema", "https").toString());
+  url.setHost(config->value("server").toString());
+  url.setPath(config->value("path").toString());
+  QString query(config->value("parameter").toString());
+  query.append("=");
+  query.append(QString::number(p_articleId));
+  url.setQuery(query);
+  config->endGroup();
+  return url;
+}
+
 const QPageLayout BookCard::pageLayout() {
   QPageLayout pageLayout;
   pageLayout.setOrientation(QPageLayout::Portrait);
@@ -157,11 +177,21 @@ void BookCard::openPrintDialog() {
 int BookCard::exec(const QHash<QString, QVariant> &data) {
   readConfiguration();
 
-  if (data.count() < 1)
+  if (data.count() < 1) {
+    qWarning("Invalid data count for Card printing!");
     return QDialog::Rejected;
+  }
 
-  QString id = data.value("id").toString();
+  p_articleId = data.value("id").toInt();
+  if (p_articleId < 1) {
+    qWarning("Invalid Article ID!");
+    return QDialog::Rejected;
+  }
+
+  QString id = QString::number(p_articleId);
   m_card->setArticleId(id);
+
+  m_card->setQrUrl(generateQRCodeUrl());
 
   id.prepend("card_");
   p_filename = id;

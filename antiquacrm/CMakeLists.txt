@@ -54,6 +54,8 @@ FIND_PACKAGE(CURL REQUIRED libcurl)
 
 ## libqrencode
 ## https://github.com/fukuchi/libqrencode
+FIND_PACKAGE(qrencode REQUIRED libqrencode)
+
 
 SET(PROJECT_BINDINGS
  Core

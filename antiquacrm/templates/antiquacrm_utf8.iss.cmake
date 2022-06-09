@@ -9,6 +9,7 @@
 #define MyAppExeName "@PROJECTNAME@.exe"
 #define MyDomainName "hjcms.de"
 #define QT5_PATH "@CMAKE_PREFIX_PATH@"
+#define QRENCODE_PATH "@CMAKE_PREFIX_PATH@"
 #define PgSQL_PATH "E:\Development\PostgreSQL\bin"
 #define CURL_PATH "E:\Development\cUrl\bin"
 #define BUID_DIR "@CMAKE_CURRENT_BINARY_DIR@"
@@ -102,6 +103,8 @@ Source: "{#PgSQL_PATH}\libpq.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#PgSQL_PATH}\libssl-1_1-x64.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#PgSQL_PATH}\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#PgSQL_PATH}\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
+;; QREncode
+Source: "{#QRENCODE_PATH}\lib\libqrencode.dll"; DestDir: "{app}"; Flags: ignoreversion
 ;; Qt5
 Source: "{#QT5_PATH}\bin\Qt5Core.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#QT5_PATH}\bin\Qt5Gui.dll"; DestDir: "{app}"; Flags: ignoreversion

@@ -3,9 +3,12 @@
 
 SET(_subproject "Printing")
 
+ADD_SUBDIRECTORY (qrcode)
+
 SET (subproject_LINKER
  AntiquaCore
  Settings
+ QTQRCode
 )
 
 SET (subproject_SOURCES
@@ -38,6 +41,5 @@ TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
   Qt${QT_VERSION_MAJOR}::PrintSupport
-  Qt${QT_VERSION_MAJOR}::Xml
   ${subproject_LINKER}
 )

@@ -126,7 +126,7 @@
 <context>
     <name>BookCard</name>
     <message>
-        <location filename="../custom/printing/bookcard.cpp" line="+72"/>
+        <location filename="../custom/printing/bookcard.cpp" line="+73"/>
         <source>Printing book card</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2869,17 +2869,42 @@
     </message>
     <message>
         <location line="+7"/>
-        <location line="+58"/>
+        <location line="+88"/>
         <source>Watermark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-54"/>
+        <location line="-84"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+6"/>
+        <source>QR Code Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>The settings for the connectivity to the company server are set in this area. These settings will be embedded in the QR image. Note: Please keep in mind that QR images must be recreated if you change something here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Server Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Url Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Query Parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+32"/>
         <source>set Font</source>
         <translation type="unfinished"></translation>
     </message>

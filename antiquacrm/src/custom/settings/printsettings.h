@@ -10,6 +10,7 @@
 #include <QFont>
 #include <QPushButton>
 #include <QSignalMapper>
+#include <QRegularExpression>
 #include <QWidget>
 
 #include "settingswidget.h"
@@ -51,6 +52,13 @@ private:
   QLabel *small_font;
 
   /**
+   * @brief Wird für QObject::findchild benötigt!
+   * Dieser Reguläre Ausdruck wird verwendet um die Eingabe-Objektklassen zu
+   * finden.
+   */
+  const QRegularExpression p_fontPattern = QRegularExpression("^\\w+_font$");
+
+  /**
    * @brief Pfad für Dateianhänge!
    */
   LineEdit *m_attachments;
@@ -59,6 +67,15 @@ private:
    * @brief Wasserzeichen Bild
    */
   LineEdit *m_watermark;
+
+  /**
+   * @brief QRCode Einstellungen
+   */
+  QGroupBox *qrcodeGroup;
+  LineEdit *qr_server_schema;
+  LineEdit *qr_server_address;
+  LineEdit *qr_server_path;
+  LineEdit *qr_server_query;
 
   /**
    * @brief Setze font für Kategorie und Label

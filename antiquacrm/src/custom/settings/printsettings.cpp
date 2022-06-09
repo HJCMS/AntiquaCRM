@@ -92,6 +92,42 @@ PrintSettings::PrintSettings(QWidget *parent) : SettingsWidget{parent} {
   btn_watermark->setIcon(style()->standardIcon(QStyle::SP_DirIcon));
   layout->addWidget(btn_watermark, row++, 1, 1, 1);
 
+  qrcodeGroup = new QGroupBox(this);
+  qrcodeGroup->setTitle(tr("QR Code Settings"));
+  QGridLayout *qrLayout = new QGridLayout(qrcodeGroup);
+  int qrRow = 0;
+  QString qrInfo = tr("The settings for the connectivity to the company server "
+                      "are set in this area. These settings will be embedded "
+                      "in the QR image. Note: Please keep in mind that QR "
+                      "images must be recreated if you change something here.");
+  QLabel *qrInfoLabel = new QLabel(qrInfo, qrcodeGroup);
+  qrInfoLabel->setWordWrap(true);
+  qrLayout->addWidget(qrInfoLabel, qrRow++, 0, 1, 2);
+  qrLayout->addWidget(new QLabel(tr("Url Schema"), qrcodeGroup), qrRow, 0, 1, 1,
+                      Qt::AlignRight);
+  qr_server_schema = new LineEdit(qrcodeGroup);
+  qr_server_schema->setObjectName("qrcode_schema");
+  qrLayout->addWidget(qr_server_schema, qrRow++, 1, 1, 1);
+  qrLayout->addWidget(new QLabel(tr("Server Address"), qrcodeGroup), qrRow, 0, 1, 1,
+                      Qt::AlignRight);
+  qr_server_address = new LineEdit(qrcodeGroup);
+  qr_server_address->setObjectName("qrcode_server");
+  qrLayout->addWidget(qr_server_address, qrRow++, 1, 1, 1);
+  qrLayout->addWidget(new QLabel(tr("Url Path"), qrcodeGroup), qrRow, 0, 1, 1,
+                      Qt::AlignRight);
+  qr_server_path = new LineEdit(qrcodeGroup);
+  qr_server_path->setObjectName("qrcode_path");
+  qrLayout->addWidget(qr_server_path, qrRow++, 1, 1, 1);
+  qrLayout->addWidget(new QLabel(tr("Query Parameter"), qrcodeGroup), qrRow, 0, 1,
+                      1, Qt::AlignRight);
+  qr_server_query = new LineEdit(qrcodeGroup);
+  qr_server_query->setObjectName("qrcode_parameter");
+  qrLayout->addWidget(qr_server_query, qrRow++, 1, 1, 1);
+
+  //
+  qrcodeGroup->setLayout(qrLayout);
+  layout->addWidget(qrcodeGroup, row++, 0, 1, 2);
+
   layout->setColumnStretch(0, 75);
   layout->setColumnStretch(1, 25);
   layout->setRowStretch(row, 1);
@@ -173,7 +209,7 @@ const QIcon PrintSettings::getPageIcon() { return pageIcon; }
 void PrintSettings::loadSectionConfig() {
   config->beginGroup("printer");
   QList<QLabel *> labels =
-      findChildren<QLabel *>(QString(), Qt::FindDirectChildrenOnly);
+      findChildren<QLabel *>(p_fontPattern, Qt::FindDirectChildrenOnly);
   if (labels.count() > 1) {
     for (int i = 0; i < labels.count(); i++) {
       QLabel *w = labels.at(i);
@@ -191,12 +227,20 @@ void PrintSettings::loadSectionConfig() {
   m_attachments->setValue(config->value("attachments", documentLocation()));
   m_watermark->setValue(config->value("watermark"));
   config->endGroup();
+  config->beginGroup("qrcode");
+  foreach (QString key, config->allKeys()) {
+    LineEdit *e = qrcodeGroup->findChild<LineEdit *>("qrcode_" + key);
+    if (e != nullptr) {
+      e->setValue(config->value(key));
+    }
+  }
+  config->endGroup();
 }
 
 void PrintSettings::saveSectionConfig() {
   config->beginGroup("printer");
   QList<QLabel *> labels =
-      findChildren<QLabel *>(QString(), Qt::FindDirectChildrenOnly);
+      findChildren<QLabel *>(p_fontPattern, Qt::FindDirectChildrenOnly);
   if (labels.count() > 1) {
     for (int i = 0; i < labels.count(); i++) {
       QLabel *w = labels.at(i);
@@ -210,5 +254,18 @@ void PrintSettings::saveSectionConfig() {
   }
   config->setValue("watermark", m_watermark->value());
   config->setValue("attachments", m_attachments->value());
+  config->endGroup();
+
+  config->beginGroup("qrcode");
+  QList<LineEdit *> ledits = qrcodeGroup->findChildren<LineEdit *>(QString());
+  if (ledits.count() > 1) {
+    for (int i = 0; i < ledits.count(); i++) {
+      LineEdit *e = ledits.at(i);
+      if (e != nullptr) {
+        QStringList section(e->objectName().split("_"));
+        config->setValue(section.last(), e->value());
+      }
+    }
+  }
   config->endGroup();
 }

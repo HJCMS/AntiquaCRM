@@ -12,10 +12,12 @@
 #include <QPageLayout>
 #include <QPageSize>
 #include <QPrinter>
-#include <QDomDocument>
-#include <QDomElement>
-#include <QDomNode>
+#include <QUrl>
 #include <QWidget>
+
+// libQTQRcode
+#include "qtqrcode.h"
+#include "qtqrcodepainter.h"
 
 class ApplSettings;
 class TextEditor;
@@ -29,12 +31,17 @@ private:
   QString p_id;
   QStringList p_description;
   QString p_storage;
+  QUrl p_queryUrl;
+  const QSize qr_size = QSize(128, 128);
+  QtQrCode m_qrCode;
+  QtQrCodePainter m_qrCodePainter;
 
 protected:
   void paintEvent(QPaintEvent *);
 
 public:
-  explicit BookCardPaintWidget(QWidget * parent);
+  explicit BookCardPaintWidget(QWidget *parent);
+  void setQrUrl(const QUrl &);
   void setArticleId(const QString &);
   void setStorage(const QString &);
   void setBookDescription(const QStringList &);
@@ -51,6 +58,7 @@ class BookCard final : public QDialog {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  int p_articleId = -1;
   ApplSettings *config;
   QPageSize page_size;
   BookCardPaintWidget *m_card;
@@ -58,6 +66,8 @@ private:
   QString p_destination;
 
   void readConfiguration();
+
+  const QUrl generateQRCodeUrl();
 
   const QPageLayout pageLayout();
 

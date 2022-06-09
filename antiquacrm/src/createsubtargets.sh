@@ -103,6 +103,10 @@ if test ! -n "$(grep _subproject ${_s}/CMakeLists.txt 2> /dev/null)" ; then
   if [[ "${_s}" = "plugins/antiqua" ]] ; then
     continue;
   fi
+  ## Plugins nicht in das Projekt laden
+  if [[ "${_s}" = "custom/libextern" ]] ; then
+    continue;
+  fi
   if test ${_s} != . ; then
   cat >> CMakeSubTargets.cmake <<EOF
 ADD_SUBDIRECTORY (${_s})
