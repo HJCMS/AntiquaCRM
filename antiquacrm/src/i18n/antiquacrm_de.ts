@@ -204,7 +204,7 @@
     <message>
         <location line="+23"/>
         <source>Extended Title</source>
-        <translation>Erweiteter Untertitel</translation>
+        <translation>Untertitel</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -339,7 +339,7 @@
     <message>
         <location line="+9"/>
         <source>Booktitle Extended:</source>
-        <translation>Buchtitel erweitert:</translation>
+        <translation>Untertitel:</translation>
     </message>
     <message>
         <location line="+6"/>

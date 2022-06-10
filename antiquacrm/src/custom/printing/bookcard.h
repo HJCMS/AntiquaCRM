@@ -34,7 +34,7 @@ private:
   QString p_year;
   QString p_storage;
   QUrl p_queryUrl;
-  const QSize qr_size = QSize(128, 128);
+  const QSize qr_size = QSize(200, 200);
   QtQrCode m_qrCode;
   QtQrCodePainter m_qrCodePainter;
 
@@ -60,6 +60,16 @@ class BookCard final : public QDialog {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  /**
+   * @brief Drucker Unterstützung
+   */
+  bool native_print = false;
+
+  /**
+   * @brief Druckervorschau zuerst Anzeigen!
+   */
+  bool print_preview = false;
+
   int p_articleId = -1;
   ApplSettings *config;
   QPageSize page_size;
@@ -74,7 +84,7 @@ private:
   const QPageLayout pageLayout();
 
 private Q_SLOTS:
-  void printDocument(QPrinter *printer);
+  bool printDocument(QPrinter *printer);
   void openPrintDialog();
 
 public:

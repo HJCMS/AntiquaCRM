@@ -3,14 +3,18 @@
 
 #include "printing.h"
 #include "applsettings.h"
+#include "myicontheme.h"
 #include "texteditor.h"
 
+#include <QtGlobal>
 #include <QDate>
 #include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QPrinterInfo>
+#include <QProcess>
 #include <QScrollArea>
 #include <QVBoxLayout>
 
@@ -74,15 +78,22 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
   frame_layout->setStretchFactor(footer, 20);
   scrollAera->setWidget(printArea);
 
-  buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
-  printButton = buttonBox->addButton(tr("Printing"), /* Sofort drucken */
-                                     QDialogButtonBox::ActionRole);
-  layout->addWidget(buttonBox);
+  QWidget *buttonWidget = new QWidget(this);
+  QHBoxLayout *hLayout = new QHBoxLayout(buttonWidget);
+  selectPrinter = new QComboBox(buttonWidget);
+  hLayout->addWidget(selectPrinter);
+  hLayout->addStretch(1);
+  printButton = new QPushButton(tr("Printing"), buttonWidget);
+  printButton->setIcon(myIcon("printer"));
+  hLayout->addWidget(printButton);
+  quitButton = new QPushButton(tr("Close"), buttonWidget);
+  quitButton->setIcon(myIcon("exit"));
+  hLayout->addWidget(quitButton);
+  layout->addWidget(buttonWidget);
 
   setLayout(layout);
 
-  connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-  connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+  connect(quitButton, SIGNAL(clicked()), this, SLOT(reject()));
 }
 
 void Printing::readConfiguration() {
@@ -264,6 +275,24 @@ const QImage Printing::getWatermark() {
     return QImage::fromData(buffer, type.toLocal8Bit());
   }
   return QImage();
+}
+
+void Printing::addPrinters() {
+  selectPrinter->clear();
+  selectPrinter->addItem(tr("Printers"));
+  QListIterator<QPrinterInfo> it(QPrinterInfo::availablePrinters());
+  while (it.hasNext()) {
+    QPrinterInfo info = it.next();
+    selectPrinter->addItem(myIcon("printer"), info.printerName(),
+                           info.isDefault());
+  }
+}
+
+void Printing::sendToWindowsSpooler(const QString &pdf) {
+#ifdef Q_OS_WIN
+  qDebug() << Q_FUNC_INFO << "Execute: spool.exe" << pdf;
+  QProcess::execute("spool.exe", QStringList(pdf));
+#endif
 }
 
 const QPageSize Printing::pageSize() { return page_size; }

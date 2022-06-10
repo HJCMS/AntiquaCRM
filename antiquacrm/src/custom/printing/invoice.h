@@ -41,8 +41,7 @@ private:
   void finalizeBillings();
 
 private Q_SLOTS:
-  void printToFile(QPrinter *printer){/* not needed */};
-  void printDocument(QPrinter *printer);
+  bool generateDocument(QPrinter *printer);
   void openPrintDialog();
 
 public:

@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "deliverynote.h"
-#include "myicontheme.h"
 #include "texteditor.h"
 
 #include <QDate>
@@ -16,7 +15,6 @@ DeliveryNote::DeliveryNote(QWidget *parent) : Printing{parent} {
   setObjectName("printing_delivery_note");
   setWindowTitle(tr("Delivery note"));
 
-  printButton->setIcon(myIcon("printer"));
   connect(printButton, SIGNAL(clicked()), this, SLOT(openPrintDialog()));
   readConfiguration();
 }
@@ -133,7 +131,7 @@ void DeliveryNote::insertArticle(const QString &articleid,
   body->document()->setModified(true);
 }
 
-void DeliveryNote::printDocument(QPrinter *printer) {
+bool DeliveryNote::generateDocument(QPrinter *printer) {
   QRectF pageRect = printer->pageRect(QPrinter::Point);
   int documentWidth = pageRect.size().width();
 
@@ -173,6 +171,8 @@ void DeliveryNote::printDocument(QPrinter *printer) {
   painter.translate(0, yPosFooter);
   htmlFooter->drawContents(&painter, footerRect);
   painter.end();
+
+  return true;
 }
 
 void DeliveryNote::openPrintDialog() {
@@ -182,23 +182,29 @@ void DeliveryNote::openPrintDialog() {
   dest.append(p_deliveryId);
   dest.append(".pdf");
   printer->setOutputFileName(dest);
+  printer->setOutputFormat(QPrinter::PdfFormat);
   printer->setPageLayout(pageLayout());
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPaperSource(QPrinter::FormSource);
   printer->setPageMargins(page_margins);
-  if (NO_NATIVE_PRINTDRIVER) {
+  if (print_preview) {
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(printer, this);
     connect(dialog, SIGNAL(paintRequested(QPrinter *)), this,
-            SLOT(printDocument(QPrinter *)));
+            SLOT(generateDocument(QPrinter *)));
+    if (dialog->exec() == QDialog::Accepted) {
+      accept();
+    }
+  } else if (native_print) {
+    QPrintDialog *dialog = new QPrintDialog(printer, this);
+    connect(dialog, SIGNAL(accepted(QPrinter *)), this,
+            SLOT(generateDocument(QPrinter *)));
     if (dialog->exec() == QDialog::Accepted) {
       accept();
     }
   } else {
-    QPrintDialog *dialog = new QPrintDialog(printer, this);
-    connect(dialog, SIGNAL(accepted(QPrinter *)), this,
-            SLOT(printDocument(QPrinter *)));
-    if (dialog->exec() == QDialog::Accepted) {
-      accept();
+    if (generateDocument(printer)) {
+      sendToWindowsSpooler(printer->outputFileName());
+      done(QDialog::Accepted);
     }
   }
 }
@@ -246,6 +252,8 @@ int DeliveryNote::exec(const QList<Delivery> &list) {
     insertArticle(d.articleid, d.designation, d.quantity);
   }
   body->setReadOnly(true);
+
+  addPrinters();
 
   return Printing::exec();
 }

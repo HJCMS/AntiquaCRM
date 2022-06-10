@@ -37,8 +37,8 @@ void BookCardPaintWidget::paintEvent(QPaintEvent *p) {
   yPos = (fontHeight + margin);
   painter.drawText((w - txt_width - margin), yPos, p_id);
 
+  yPos += margin;
   QStaticText storage(p_storage);
-  yPos += (fontHeight + margin);
   painter.drawStaticText(margin, yPos, storage);
 
   yPos += (fontHeight + margin);
@@ -155,12 +155,13 @@ const QPageLayout BookCard::pageLayout() {
   return pageLayout;
 }
 
-void BookCard::printDocument(QPrinter *printer) {
+bool BookCard::printDocument(QPrinter *printer) {
   QPageLayout layout = pageLayout();
   printer->setPageLayout(layout);
   QPainter painter(printer);
   painter.translate(0, 0);
   m_card->render(&painter);
+  return true;
 }
 
 void BookCard::openPrintDialog() {
@@ -170,22 +171,28 @@ void BookCard::openPrintDialog() {
   dest.append(p_filename);
   dest.append(".pdf");
   printer->setOutputFileName(dest);
+  printer->setOutputFormat(QPrinter::PdfFormat);
   printer->setPageLayout(pageLayout());
   printer->setColorMode(QPrinter::GrayScale);
   printer->setFullPage(true);
-  if (NO_NATIVE_PRINTDRIVER) {
+  if (native_print) {
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(printer, this);
     connect(dialog, SIGNAL(paintRequested(QPrinter *)), this,
             SLOT(printDocument(QPrinter *)));
     if (dialog->exec() == QDialog::Accepted) {
       accept();
     }
-  } else {
+  } else if (print_preview) {
     QPrintDialog *dialog = new QPrintDialog(printer, this);
     connect(dialog, SIGNAL(accepted(QPrinter *)), this,
             SLOT(printDocument(QPrinter *)));
     if (dialog->exec() == QDialog::Accepted) {
       accept();
+    }
+  } else {
+    if (printDocument(printer)) {
+      Printing::sendToWindowsSpooler(printer->outputFileName());
+      done(QDialog::Accepted);
     }
   }
 }

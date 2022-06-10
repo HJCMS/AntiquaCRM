@@ -60,16 +60,7 @@ private:
                      const QString &quantity);
 
 private Q_SLOTS:
-  void printToFile(QPrinter *printer){/* not needed */};
-
-  /**
-   * @brief Erstelle Druckdokument mit QPainter
-   */
-  void printDocument(QPrinter *printer);
-
-  /**
-   * @brief Drucker Dialog aufrufen
-   */
+  bool generateDocument(QPrinter *printer);
   void openPrintDialog();
 
 public:

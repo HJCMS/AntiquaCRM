@@ -5,13 +5,15 @@
 #ifndef PRINTING_PRINTING_H
 #define PRINTING_PRINTING_H
 
+#include <QComboBox>
 #include <QDialog>
-#include <QDialogButtonBox>
 #include <QFont>
 #include <QMarginsF>
 #include <QObject>
 #include <QPageLayout>
 #include <QPageSize>
+#include <QPrintDialog>
+#include <QPrintPreviewDialog>
 #include <QPrinter>
 #include <QPushButton>
 #include <QTextCharFormat>
@@ -21,19 +23,6 @@
 #include <QTextTableCell>
 #include <QTextTableFormat>
 #include <QWidget>
-
-/**
- * @ingroup Printing
- * @brief On Windows, Qt didn't support none Native Printerdrivers
- * Unix system with Cups can handle this :)
- */
-#ifndef NO_NATIVE_PRINTDRIVER
-#ifdef Q_OS_WINDOWS
-#define NO_NATIVE_PRINTDRIVER true
-#else
-#define NO_NATIVE_PRINTDRIVER false
-#endif
-#endif
 
 class TextEditor;
 class ApplSettings;
@@ -50,10 +39,14 @@ class Printing : public QDialog {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
-  Q_PROPERTY(QFont headerFont READ getHeaderFont WRITE setHeaderFont NOTIFY headerFontChanged)
-  Q_PROPERTY(QFont normalFont READ getNormalFont WRITE setNormalFont NOTIFY normalFontChanged)
-  Q_PROPERTY(QFont footerFont READ getFooterFont WRITE setFooterFont NOTIFY footerFontChanged)
-  Q_PROPERTY(QFont smallFont READ getSmallFont WRITE setSmallFont NOTIFY smallFontChanged)
+  Q_PROPERTY(QFont headerFont READ getHeaderFont WRITE setHeaderFont NOTIFY
+                 headerFontChanged)
+  Q_PROPERTY(QFont normalFont READ getNormalFont WRITE setNormalFont NOTIFY
+                 normalFontChanged)
+  Q_PROPERTY(QFont footerFont READ getFooterFont WRITE setFooterFont NOTIFY
+                 footerFontChanged)
+  Q_PROPERTY(QFont smallFont READ getSmallFont WRITE setSmallFont NOTIFY
+                 smallFontChanged)
 
 private:
   /**
@@ -65,6 +58,16 @@ private:
   QFont smallFont;
 
 protected:
+  /**
+   * @brief Drucker Unterstützung
+   */
+  bool native_print = false;
+
+  /**
+   * @brief Druckervorschau zuerst Anzeigen!
+   */
+  bool print_preview = false;
+
   /**
    * @brief Bestellnummer
    */
@@ -142,14 +145,11 @@ protected:
   TextEditor *footer;
 
   /**
-   * @brief Dialog Knopfleiste
-   */
-  QDialogButtonBox *buttonBox;
-
-  /**
    * @brief Drucken/PDF Aktionsknöpfe
    */
+  QComboBox *selectPrinter;
   QPushButton *printButton;
+  QPushButton *quitButton;
 
   /**
    * @brief Firmen Einstellungen lesen
@@ -204,8 +204,7 @@ protected:
   /**
    * @brief Standard PDF Ausgabe Verzeichnis
    */
-  const QString
-  outputDirectory(const QString &target);
+  const QString outputDirectory(const QString &target);
 
   /**
    * @brief HTML Ausgaben für Printer
@@ -224,16 +223,16 @@ protected:
    */
   const QImage getWatermark();
 
-protected Q_SLOTS:
   /**
-   * @brief In Datei Speichern
+   * @brief Drucker in @ref selectPrinter einfügen!
    */
-  virtual void printToFile(QPrinter *printer) = 0;
+  void addPrinters();
 
+protected Q_SLOTS:
   /**
    * @brief Ausdruck erstellen
    */
-  virtual void printDocument(QPrinter *printer) = 0;
+  virtual bool generateDocument(QPrinter *printer) = 0;
 
   /**
    * @brief Drucker Dialog öffnen
@@ -255,6 +254,8 @@ public Q_SLOTS:
 
 public:
   explicit Printing(QWidget *parent = nullptr);
+
+  static void sendToWindowsSpooler(const QString &pdf);
 
   /**
    * @brief Vordefinierte Seitengröße
@@ -300,6 +301,11 @@ public:
    * @note Muss vor @ref exec() gesetzt sein!
    */
   void setCustomerAddress(const QString &);
+
+  /**
+   * @brief Druckervorschau aktivieren
+   */
+  void enablePrintPreview(bool b = false);
 
   static const QByteArray defaultCodec();
 };

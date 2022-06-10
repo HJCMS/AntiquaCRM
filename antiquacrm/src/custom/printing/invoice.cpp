@@ -3,7 +3,6 @@
 
 #include "invoice.h"
 #include "applsettings.h"
-#include "myicontheme.h"
 #include "texteditor.h"
 
 #include <QDate>
@@ -16,7 +15,6 @@
 Invoice::Invoice(QWidget *parent) : Printing{parent} {
   setObjectName("printing_invoice");
 
-  printButton->setIcon(myIcon("printer"));
   connect(printButton, SIGNAL(clicked()), this, SLOT(openPrintDialog()));
   readConfiguration();
 }
@@ -177,7 +175,7 @@ void Invoice::finalizeBillings() {
   cursor.insertText(str + " " + p_currency);
 }
 
-void Invoice::printDocument(QPrinter *printer) {
+bool Invoice::generateDocument(QPrinter *printer) {
   QRectF pageRect = printer->pageRect(QPrinter::Point);
   int documentWidth = pageRect.size().width();
 
@@ -226,23 +224,29 @@ void Invoice::openPrintDialog() {
   dest.append(p_invoiceId);
   dest.append(".pdf");
   printer->setOutputFileName(dest);
+  printer->setOutputFormat(QPrinter::PdfFormat);
   printer->setPageLayout(pageLayout());
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPaperSource(QPrinter::FormSource);
   printer->setPageMargins(page_margins);
-  if (NO_NATIVE_PRINTDRIVER) {
+  if (print_preview) {
     QPrintPreviewDialog *dialog = new QPrintPreviewDialog(printer, this);
     connect(dialog, SIGNAL(paintRequested(QPrinter *)), this,
-            SLOT(printDocument(QPrinter *)));
+            SLOT(generateDocument(QPrinter *)));
+    if (dialog->exec() == QDialog::Accepted) {
+      accept();
+    }
+  } else if (native_print) {
+    QPrintDialog *dialog = new QPrintDialog(printer, this);
+    connect(dialog, SIGNAL(accepted(QPrinter *)), this,
+            SLOT(generateDocument(QPrinter *)));
     if (dialog->exec() == QDialog::Accepted) {
       accept();
     }
   } else {
-    QPrintDialog *dialog = new QPrintDialog(printer, this);
-    connect(dialog, SIGNAL(accepted(QPrinter *)), this,
-            SLOT(printDocument(QPrinter *)));
-    if (dialog->exec() == QDialog::Accepted) {
-      accept();
+    if (generateDocument(printer)) {
+      sendToWindowsSpooler(printer->outputFileName());
+      done(QDialog::Accepted);
     }
   }
 }
@@ -305,6 +309,8 @@ int Invoice::exec(const QList<BillingInfo> &list) {
 
   finalizeBillings();
   body->setReadOnly(true);
+
+  addPrinters();
 
   return Printing::exec();
 }
