@@ -11,7 +11,10 @@
 #include <QStyle>
 #include <QtWidgets>
 
-BookCardPaintWidget::BookCardPaintWidget(QWidget *parent) : QWidget{parent} {
+BookCardPaintWidget::BookCardPaintWidget(QWidget *parent)
+    : QWidget{parent}, m_qrCode(QtQrCode::StringMode),
+      m_qrCodePainter(1, QBrush(Qt::white, Qt::SolidPattern),
+                      QBrush(Qt::black, Qt::SolidPattern)) {
   setAttribute(Qt::WA_NoSystemBackground, true);
   setAttribute(Qt::WA_OpaquePaintEvent, true);
 }
