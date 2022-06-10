@@ -126,7 +126,7 @@
 <context>
     <name>BookCard</name>
     <message>
-        <location filename="../custom/printing/bookcard.cpp" line="+73"/>
+        <location filename="../custom/printing/bookcard.cpp" line="+94"/>
         <source>Printing book card</source>
         <translation type="unfinished"></translation>
     </message>
@@ -134,8 +134,23 @@
 <context>
     <name>BookCardPaintWidget</name>
     <message>
-        <location line="-13"/>
+        <location line="-16"/>
         <source>Book Nr.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1540,6 +1555,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+10"/>
+        <source>Cards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+16"/>
         <source>Additional</source>
         <translation type="unfinished"></translation>
@@ -1576,12 +1596,12 @@
     </message>
     <message>
         <location line="+4"/>
-        <location line="+94"/>
+        <location line="+102"/>
         <source>fonts representation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-92"/>
+        <location line="-100"/>
         <source>open font settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2869,12 +2889,12 @@
     </message>
     <message>
         <location line="+7"/>
-        <location line="+88"/>
+        <location line="+94"/>
         <source>Watermark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-84"/>
+        <location line="-90"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2884,12 +2904,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>The settings for the connectivity to the company server are set in this area. These settings will be embedded in the QR image. Note: Please keep in mind that QR images must be recreated if you change something here.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
+        <source>Url Schema</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Server Address</source>
         <translation type="unfinished"></translation>
     </message>

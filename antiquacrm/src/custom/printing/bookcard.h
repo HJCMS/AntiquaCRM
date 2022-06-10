@@ -29,7 +29,9 @@ class BookCardPaintWidget final : public QWidget {
 
 private:
   QString p_id;
-  QStringList p_description;
+  QString p_author;
+  QString p_title;
+  QString p_year;
   QString p_storage;
   QUrl p_queryUrl;
   const QSize qr_size = QSize(128, 128);
@@ -44,7 +46,7 @@ public:
   void setQrUrl(const QUrl &);
   void setArticleId(const QString &);
   void setStorage(const QString &);
-  void setBookDescription(const QStringList &);
+  void setBookDescription(const QHash<QString, QVariant> &);
 };
 
 /**

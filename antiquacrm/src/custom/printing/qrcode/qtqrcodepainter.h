@@ -28,63 +28,55 @@
 #ifndef QRCODEPAINTER_H
 #define QRCODEPAINTER_H
 
-#include <QImage>
 #include <QBrush>
+#include <QImage>
 #include <QPainter>
 
 #include "qtqrcode.h"
 
-class QtQrCodePainter
-{
+class QtQrCodePainter {
 public:
-    QtQrCodePainter(float margin = 0.0, const QBrush &background = Qt::white,
-                    const QBrush &foreground = Qt::black);
-    ~QtQrCodePainter();
+  QtQrCodePainter(float margin = 0.0, const QBrush &background = Qt::white,
+                  const QBrush &foreground = Qt::black);
+  ~QtQrCodePainter();
 
-    void paint(const QtQrCode &qrCode, QPainter &painter);
-    void paint(const QtQrCode &qrCode, QPainter &painter, int width, int height);
-    void paint(const QtQrCode &qrCode, QPainter &painter, int painterWidth);
-    QImage toImage(const QtQrCode &qrCode, int size);
-#ifdef ENABLE_SVG_SUPPORT
-    bool saveSvg(const QtQrCode &qrCode, const QString &fileName, int size);
-#endif
-    inline float margin() const { return m_margin; }
-    inline  bool setMargin(float margin)
-    {
-        if (m_margin != margin) {
-            m_margin = margin;
-            return true;
-        }
-        return false;
+  void paint(const QtQrCode &qrCode, QPainter &painter);
+  void paint(const QtQrCode &qrCode, QPainter &painter, int width, int height);
+  void paint(const QtQrCode &qrCode, QPainter &painter, int painterWidth);
+  QImage toImage(const QtQrCode &qrCode, int size);
+  inline float margin() const { return m_margin; }
+  inline bool setMargin(float margin) {
+    if (m_margin != margin) {
+      m_margin = margin;
+      return true;
     }
+    return false;
+  }
 
-    inline const QBrush &background() const { return m_background; }
-    inline  bool setBackground(const QBrush &background)
-    {
-        if (m_background != background) {
-            m_background = background;
-            return true;
-        }
-        return false;
+  inline const QBrush &background() const { return m_background; }
+  inline bool setBackground(const QBrush &background) {
+    if (m_background != background) {
+      m_background = background;
+      return true;
     }
+    return false;
+  }
 
-    inline const QBrush &foreground() const { return m_foreground; }
-    inline  bool setForeground(const QBrush &foreground)
-    {
-        if (m_foreground != foreground) {
-            m_foreground = foreground;
-            return true;
-        }
-        return false;
+  inline const QBrush &foreground() const { return m_foreground; }
+  inline bool setForeground(const QBrush &foreground) {
+    if (m_foreground != foreground) {
+      m_foreground = foreground;
+      return true;
     }
+    return false;
+  }
 
 private:
-    float m_margin;
-    float m_offsetX;
-    float m_offsetY;
-    bool m_svgPaint;
-    QBrush m_background;
-    QBrush m_foreground;
+  float m_margin;
+  float m_offsetX;
+  float m_offsetY;
+  QBrush m_background;
+  QBrush m_foreground;
 };
 
 #endif // QRCODEPAINTER_H

@@ -52,10 +52,20 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   btn_invoice->setIcon(icon_open_btn);
   btn_invoice->setText(txt_open_dir);
   lt_groupBox1->addWidget(btn_invoice, row++, 1, 1, 1);
+  connect(btn_invoice, SIGNAL(clicked()), this, SLOT(setInvoiceArchiv()));
+  // Cards
+  m_cards_path = new LineEdit(this);
+  m_cards_path->setObjectName("dirs/cards");
+  m_cards_path->setInfo(tr("Cards"));
+  lt_groupBox1->addWidget(m_cards_path, row, 0, 1, 1);
+  btn_cards = new QToolButton(m_grouBox1);
+  btn_cards->setIcon(icon_open_btn);
+  btn_cards->setText(txt_open_dir);
+  lt_groupBox1->addWidget(btn_cards, row++, 1, 1, 1);
+  connect(btn_cards, SIGNAL(clicked()), this, SLOT(setCardsArchiv()));
   m_grouBox1->setLayout(lt_groupBox1);
   layout->addWidget(m_grouBox1);
   buffer.clear();
-  connect(btn_invoice, SIGNAL(clicked()), this, SLOT(setInvoiceArchiv()));
   // END
 
   // BEGIN
@@ -170,6 +180,14 @@ void GeneralSettings::setInvoiceArchiv() {
   QString src = getDirectory(spath.toString());
   if (!src.isEmpty()) {
     m_invoice_path->setValue(src);
+  }
+}
+
+void GeneralSettings::setCardsArchiv() {
+  QVariant spath = config->value("dirs/cards", QDir::homePath());
+  QString src = getDirectory(spath.toString());
+  if (!src.isEmpty()) {
+    m_cards_path->setValue(src);
   }
 }
 

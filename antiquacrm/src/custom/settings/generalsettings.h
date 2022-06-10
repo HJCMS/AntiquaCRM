@@ -20,6 +20,7 @@ private:
   LineEdit *m_img_archiv_path; /**< Bilderarchiv */
   LineEdit *m_delivery_path;   /**< Lieferscheine */
   LineEdit *m_invoice_path;    /**< Rechnungen */
+  LineEdit *m_cards_path;      /**< Buchkarten */
   Ecurrency *m_currency;       /**< Währung */
   IntSpinBox *m_searchStart;   /**< Start Zeichen suche */
   IntSpinBox *m_minPrice;      /**< Kleinster Verkaufspreis */
@@ -30,6 +31,7 @@ private:
   QToolButton *btn_imgsrc;
   QToolButton *btn_delivery;
   QToolButton *btn_invoice;
+  QToolButton *btn_cards;
   QPushButton *btn_fontdialog;
 
   void initSignalChanged();
@@ -39,6 +41,7 @@ private Q_SLOTS:
   void setImageArchiv();
   void setDeliveryArchiv();
   void setInvoiceArchiv();
+  void setCardsArchiv();
 
 public:
   explicit GeneralSettings(QWidget *parent = nullptr);

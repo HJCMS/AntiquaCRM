@@ -42,13 +42,23 @@ void BookCardPaintWidget::paintEvent(QPaintEvent *p) {
   painter.drawStaticText(margin, yPos, storage);
 
   yPos += (fontHeight + margin);
-  foreach (QString line, p_description) {
-    QStaticText block("→ " + line);
-    block.setTextFormat(Qt::PlainText);
-    block.setTextWidth((w - (margin * 2)));
-    painter.drawStaticText(margin, yPos, block);
-    yPos += (block.size().height() + margin);
-  }
+  QStaticText txtAuthor(p_author);
+  txtAuthor.setTextFormat(Qt::PlainText);
+  txtAuthor.setTextWidth((w - (margin * 2)));
+  painter.drawStaticText(margin, yPos, txtAuthor);
+  yPos += (txtAuthor.size().height() + margin);
+
+  QStaticText txtTitle(p_title);
+  txtTitle.setTextFormat(Qt::PlainText);
+  txtTitle.setTextWidth((w - (margin * 2)));
+  painter.drawStaticText(margin, yPos, txtTitle);
+  yPos += (txtTitle.size().height() + margin);
+
+  QStaticText txtYear(p_year);
+  txtYear.setTextFormat(Qt::PlainText);
+  txtYear.setTextWidth((w - (margin * 2)));
+  painter.drawStaticText(margin, yPos, txtYear);
+  yPos += (txtYear.size().height() + margin);
 
   painter.drawLine(0, yPos, w, yPos);
 
@@ -72,8 +82,11 @@ void BookCardPaintWidget::setArticleId(const QString &txt) {
 
 void BookCardPaintWidget::setStorage(const QString &txt) { p_storage = txt; }
 
-void BookCardPaintWidget::setBookDescription(const QStringList &txt) {
-  p_description << txt;
+void BookCardPaintWidget::setBookDescription(
+    const QHash<QString, QVariant> &list) {
+  p_title = tr("Title") + ": " + list.value("title").toString();
+  p_author = tr("Author") + ": " + list.value("author").toString();
+  p_year = tr("Year") + ": " + list.value("year").toString();
 }
 
 BookCard::BookCard(QWidget *parent) : QDialog{parent} {
@@ -116,16 +129,16 @@ void BookCard::readConfiguration() {
     m_card->setFont(font);
   }
   config->endGroup();
-  p_destination = config->value("dirs/deliverynotes").toString();
+  p_destination = config->value("dirs/cards").toString();
 }
 
 const QUrl BookCard::generateQRCodeUrl() {
   QUrl url;
   config->beginGroup("qrcode");
   url.setScheme(config->value("schema", "https").toString());
-  url.setHost(config->value("server").toString());
-  url.setPath(config->value("path").toString());
-  QString query(config->value("parameter").toString());
+  url.setHost(config->value("server", "localhost").toString());
+  url.setPath(config->value("path", "/").toString());
+  QString query(config->value("parameter", "articleid").toString());
   query.append("=");
   query.append(QString::number(p_articleId));
   url.setQuery(query);
@@ -196,13 +209,8 @@ int BookCard::exec(const QHash<QString, QVariant> &data) {
 
   m_card->setQrUrl(generateQRCodeUrl());
 
-  id.prepend("card_");
   p_filename = id;
-
-  QStringList title(data.value("title").toString());
-  title << data.value("author").toString();
-  title << data.value("year").toString();
-  m_card->setBookDescription(title);
+  m_card->setBookDescription(data);
 
   m_card->setStorage(data.value("storage").toString());
 
