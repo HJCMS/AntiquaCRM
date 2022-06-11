@@ -6,7 +6,6 @@
 #include "myicontheme.h"
 #include "texteditor.h"
 
-#include <QtGlobal>
 #include <QDate>
 #include <QDebug>
 #include <QDir>
@@ -17,6 +16,7 @@
 #include <QProcess>
 #include <QScrollArea>
 #include <QVBoxLayout>
+#include <QtGlobal>
 
 Printing::Printing(QWidget *parent) : QDialog{parent} {
   setObjectName("printing_dialog");
@@ -91,9 +91,17 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
   hLayout->addWidget(quitButton);
   layout->addWidget(buttonWidget);
 
+  m_statusBar = new QStatusBar(this);
+  m_statusBar->setSizeGripEnabled(false);
+  layout->addWidget(m_statusBar);
+
   setLayout(layout);
 
   connect(quitButton, SIGNAL(clicked()), this, SLOT(reject()));
+  connect(selectPrinter, SIGNAL(currentIndexChanged(int)), this,
+          SLOT(printerSelected(int)));
+  connect(this, SIGNAL(statusMessage(const QString &)), m_statusBar,
+          SLOT(showMessage(const QString &)));
 }
 
 void Printing::readConfiguration() {
@@ -278,21 +286,31 @@ const QImage Printing::getWatermark() {
 }
 
 void Printing::addPrinters() {
+  int index = 0;
   selectPrinter->clear();
-  selectPrinter->addItem(tr("Printers"));
+  selectPrinter->insertItem(index++, tr("Printers"));
   QListIterator<QPrinterInfo> it(QPrinterInfo::availablePrinters());
   while (it.hasNext()) {
     QPrinterInfo info = it.next();
-    selectPrinter->addItem(myIcon("printer"), info.printerName(),
-                           info.isDefault());
+    selectPrinter->insertItem(index, myIcon("printer"), info.printerName(),
+                              info.isDefault());
+    if (info.isDefault())
+      selectPrinter->setCurrentIndex(index);
+
+    index++;
   }
 }
 
-void Printing::sendToWindowsSpooler(const QString &pdf) {
-#ifdef Q_OS_WIN
-  qDebug() << Q_FUNC_INFO << "Execute: spool.exe" << pdf;
-  QProcess::execute("spool.exe", QStringList(pdf));
-#endif
+void Printing::printerSelected(int index) {
+  QString name = selectPrinter->itemData(index, Qt::DisplayRole).toString();
+  QPrinterInfo info = QPrinterInfo::printerInfo(name);
+  if (!info.isNull()) {
+    p_printerName = name;
+    emit printerChanged(true);
+    emit statusMessage(info.description());
+    return;
+  }
+  p_printerName = QString();
 }
 
 const QPageSize Printing::pageSize() { return page_size; }

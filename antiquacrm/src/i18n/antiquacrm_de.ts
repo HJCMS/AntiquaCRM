@@ -1267,7 +1267,7 @@
     <message>
         <location line="+28"/>
         <source>Article-ID</source>
-        <translation>Artikel Nr.</translation>
+        <translation>Artikel Nr</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -1280,7 +1280,12 @@
         <translation>Menge</translation>
     </message>
     <message>
-        <location line="+110"/>
+        <location line="+87"/>
+        <source>PDF File written.</source>
+        <translation>PDF Datei wurde erstellt.</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>There is no Order-Id to generate this delivery!</source>
         <translation>Es gibt keine Bestellnummer für die Erstellung!</translation>
     </message>
@@ -1959,7 +1964,12 @@
         <translation>Gesamt:</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+72"/>
+        <source>PDF File written.</source>
+        <translation>PDF Datei wurde erstellt.</translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>There is no Order-Id to generate this invoice!</source>
         <translation></translation>
     </message>
@@ -2977,7 +2987,7 @@
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+23"/>
         <source>Your Company configuration is incomplete!</source>
         <translation>Ihre Firmeneinstellungen sind Unvollständig!</translation>
     </message>
@@ -3007,12 +3017,12 @@
         <translation>Steuer Nummer</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+60"/>
         <source>Printers</source>
         <translation>Drucker</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+82"/>
         <source>Delivery note</source>
         <translation>Lieferschein</translation>
     </message>

@@ -175,23 +175,14 @@ void BookCard::openPrintDialog() {
   printer->setPageLayout(pageLayout());
   printer->setColorMode(QPrinter::GrayScale);
   printer->setFullPage(true);
-  if (native_print) {
-    QPrintPreviewDialog *dialog = new QPrintPreviewDialog(printer, this);
-    connect(dialog, SIGNAL(paintRequested(QPrinter *)), this,
-            SLOT(printDocument(QPrinter *)));
-    if (dialog->exec() == QDialog::Accepted) {
-      accept();
-    }
-  } else if (print_preview) {
+  if (printDocument(printer)) {
+    qInfo("PDF File written.");
+  }
+  if (print_preview) {
     QPrintDialog *dialog = new QPrintDialog(printer, this);
     connect(dialog, SIGNAL(accepted(QPrinter *)), this,
             SLOT(printDocument(QPrinter *)));
     if (dialog->exec() == QDialog::Accepted) {
-      accept();
-    }
-  } else {
-    if (printDocument(printer)) {
-      Printing::sendToWindowsSpooler(printer->outputFileName());
       done(QDialog::Accepted);
     }
   }

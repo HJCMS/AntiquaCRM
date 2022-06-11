@@ -13,9 +13,9 @@
 #include <QPageLayout>
 #include <QPageSize>
 #include <QPrintDialog>
-#include <QPrintPreviewDialog>
 #include <QPrinter>
 #include <QPushButton>
+#include <QStatusBar>
 #include <QTextCharFormat>
 #include <QTextCodec>
 #include <QTextDocument>
@@ -59,14 +59,10 @@ private:
 
 protected:
   /**
-   * @brief Drucker Unterstützung
+   * @brief Ausgewählter Drucker
+   * @note Wenn keiner Ausgwählt wird dann PDF export!
    */
-  bool native_print = false;
-
-  /**
-   * @brief Druckervorschau zuerst Anzeigen!
-   */
-  bool print_preview = false;
+  QString p_printerName = QString();
 
   /**
    * @brief Bestellnummer
@@ -152,6 +148,11 @@ protected:
   QPushButton *quitButton;
 
   /**
+   * @brief StatusBar
+   */
+  QStatusBar *m_statusBar;
+
+  /**
    * @brief Firmen Einstellungen lesen
    */
   void readConfiguration();
@@ -230,6 +231,11 @@ protected:
 
 protected Q_SLOTS:
   /**
+   * @brief Ein Drucker wurde ausgewählt.
+   */
+  void printerSelected(int index);
+
+  /**
    * @brief Ausdruck erstellen
    */
   virtual bool generateDocument(QPrinter *printer) = 0;
@@ -244,6 +250,8 @@ Q_SIGNALS:
   void normalFontChanged();
   void footerFontChanged();
   void smallFontChanged();
+  void printerChanged(bool);
+  void statusMessage(const QString &);
 
 public Q_SLOTS:
   /**
@@ -254,8 +262,6 @@ public Q_SLOTS:
 
 public:
   explicit Printing(QWidget *parent = nullptr);
-
-  static void sendToWindowsSpooler(const QString &pdf);
 
   /**
    * @brief Vordefinierte Seitengröße

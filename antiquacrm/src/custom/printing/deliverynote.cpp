@@ -187,23 +187,16 @@ void DeliveryNote::openPrintDialog() {
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPaperSource(QPrinter::FormSource);
   printer->setPageMargins(page_margins);
-  if (print_preview) {
-    QPrintPreviewDialog *dialog = new QPrintPreviewDialog(printer, this);
-    connect(dialog, SIGNAL(paintRequested(QPrinter *)), this,
-            SLOT(generateDocument(QPrinter *)));
-    if (dialog->exec() == QDialog::Accepted) {
-      accept();
-    }
-  } else if (native_print) {
+  if (generateDocument(printer)) {
+    qInfo("PDF File written!");
+    emit statusMessage(tr("PDF File written."));
+  }
+  if (!p_printerName.isEmpty()) {
+    printer->setPrinterName(p_printerName);
     QPrintDialog *dialog = new QPrintDialog(printer, this);
     connect(dialog, SIGNAL(accepted(QPrinter *)), this,
             SLOT(generateDocument(QPrinter *)));
     if (dialog->exec() == QDialog::Accepted) {
-      accept();
-    }
-  } else {
-    if (generateDocument(printer)) {
-      sendToWindowsSpooler(printer->outputFileName());
       done(QDialog::Accepted);
     }
   }

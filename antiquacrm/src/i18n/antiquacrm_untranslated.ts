@@ -1280,7 +1280,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+110"/>
+        <location line="+87"/>
+        <source>PDF File written.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>There is no Order-Id to generate this delivery!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1959,7 +1964,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+72"/>
+        <source>PDF File written.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>There is no Order-Id to generate this invoice!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2977,7 +2987,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+23"/>
         <source>Your Company configuration is incomplete!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3007,12 +3017,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+60"/>
         <source>Printers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+82"/>
         <source>Delivery note</source>
         <translation type="unfinished"></translation>
     </message>
