@@ -1,6 +1,12 @@
 ; -*- coding: utf-8 -*-
 ; vim: set fileencoding=utf-8
-
+;
+; TODO - Required Package
+; Visual C++ Redistributable für Visual Studio 2015
+; https://www.microsoft.com/de-de/download/details.aspx?id=48145
+; https://docs.microsoft.com/de-DE/cpp/windows/latest-supported-vc-redist?view=msvc-170
+; PermaLink: https://aka.ms/vs/17/release/vc_redist.x64.exe
+;
 #define MyAppName "@PROJECTNAME@"
 #define MyAppDisplayName "@DISPLAYNAME@"
 #define MyAppVersion "@ANTIQUACRM_VERSION_STRING@"
