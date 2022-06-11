@@ -181,7 +181,9 @@ void BookCard::openPrintDialog() {
   }
   if (!p_printerName.isEmpty()) {
     printer->setPrinterName(p_printerName);
+#ifndef Q_OS_WIN
     printer->setOutputFormat(QPrinter::NativeFormat);
+#endif
     QPrintDialog *dialog = new QPrintDialog(printer, this);
     dialog->setOptions(QAbstractPrintDialog::PrintShowPageSize);
     connect(dialog, SIGNAL(accepted(QPrinter *)), this,

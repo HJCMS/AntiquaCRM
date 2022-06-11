@@ -235,7 +235,9 @@ void Invoice::openPrintDialog() {
   }
   if (!p_printerName.isEmpty()) {
     printer->setPrinterName(p_printerName);
+#ifndef Q_OS_WIN
     printer->setOutputFormat(QPrinter::NativeFormat);
+#endif
     printer->setPageOrientation(QPageLayout::Portrait);
     QPrintDialog *dialog = new QPrintDialog(printer, this);
     connect(dialog, SIGNAL(accepted(QPrinter *)), this,
