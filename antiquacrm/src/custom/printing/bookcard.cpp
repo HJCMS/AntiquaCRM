@@ -128,6 +128,7 @@ void BookCard::readConfiguration() {
   if (font.fromString(config->value("normal_font").toString())) {
     m_card->setFont(font);
   }
+  p_printerName = config->value("DIN_A6_Printer","").toString();
   config->endGroup();
   p_destination = config->value("dirs/cards").toString();
 }
@@ -178,8 +179,11 @@ void BookCard::openPrintDialog() {
   if (printDocument(printer)) {
     qInfo("PDF File written.");
   }
-  if (print_preview) {
+  if (!p_printerName.isEmpty()) {
+    printer->setPrinterName(p_printerName);
+    printer->setOutputFormat(QPrinter::NativeFormat);
     QPrintDialog *dialog = new QPrintDialog(printer, this);
+    dialog->setOptions(QAbstractPrintDialog::PrintShowPageSize);
     connect(dialog, SIGNAL(accepted(QPrinter *)), this,
             SLOT(printDocument(QPrinter *)));
     if (dialog->exec() == QDialog::Accepted) {

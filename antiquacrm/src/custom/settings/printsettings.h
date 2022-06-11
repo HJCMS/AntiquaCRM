@@ -5,12 +5,13 @@
 #ifndef PRINT_SETTINGS_H
 #define PRINT_SETTINGS_H
 
-#include <QObject>
-#include <QLabel>
 #include <QFont>
+#include <QLabel>
+#include <QObject>
+#include <QPrinterInfo>
 #include <QPushButton>
-#include <QSignalMapper>
 #include <QRegularExpression>
+#include <QSignalMapper>
 #include <QWidget>
 
 #include "settingswidget.h"
@@ -69,6 +70,13 @@ private:
   LineEdit *m_watermark;
 
   /**
+   * @brief Standard Drucker Setzen
+   */
+  QGroupBox *m_printerGroup;
+  QComboBox *m_dinA4Printer;
+  QComboBox *m_dinA6Printer;
+
+  /**
    * @brief QRCode Einstellungen
    */
   QGroupBox *qrcodeGroup;
@@ -83,6 +91,11 @@ private:
   void setLabelFont(QLabel *);
 
   /**
+   * @brief Drucker für Auswahlboxen finden
+   */
+  void initPrinterInfos();
+
+  /**
    * @brief Setze QPushButton und ...
    * Registriere die Signale für den Mapper.
    * @param objName - Empfänger Objektname
@@ -93,7 +106,7 @@ private:
    * @note Wird hier nicht benötigt!
    * @see setLabelFont
    */
-  void initSignalChanged() {};
+  void initSignalChanged(){};
 
 private Q_SLOTS:
   void openFontDialog(const QString &objName);

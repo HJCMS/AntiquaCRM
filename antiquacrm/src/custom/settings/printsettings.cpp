@@ -92,6 +92,22 @@ PrintSettings::PrintSettings(QWidget *parent) : SettingsWidget{parent} {
   btn_watermark->setIcon(style()->standardIcon(QStyle::SP_DirIcon));
   layout->addWidget(btn_watermark, row++, 1, 1, 1);
 
+  m_printerGroup = new QGroupBox(this);
+  m_printerGroup->setTitle(tr("Settings Default Printers"));
+  QGridLayout *prLayout = new QGridLayout(m_printerGroup);
+
+  prLayout->addWidget(new QLabel("DIN A4:", m_printerGroup), 0, 0, 1, 1);
+  m_dinA4Printer = new QComboBox(m_printerGroup);
+  prLayout->addWidget(m_dinA4Printer, 0, 1, 1, 1);
+
+  prLayout->addWidget(new QLabel("DIN A6:", m_printerGroup), 1, 0, 1, 1);
+  m_dinA6Printer = new QComboBox(m_printerGroup);
+  prLayout->addWidget(m_dinA6Printer, 1, 1, 1, 1);
+
+  prLayout->setColumnStretch(1, 1);
+  m_printerGroup->setLayout(prLayout);
+  layout->addWidget(m_printerGroup, row++, 0, 1, 2);
+
   qrcodeGroup = new QGroupBox(this);
   qrcodeGroup->setTitle(tr("QR Code Settings"));
   QGridLayout *qrLayout = new QGridLayout(qrcodeGroup);
@@ -108,8 +124,8 @@ PrintSettings::PrintSettings(QWidget *parent) : SettingsWidget{parent} {
   qr_server_schema = new LineEdit(qrcodeGroup);
   qr_server_schema->setObjectName("qrcode_schema");
   qrLayout->addWidget(qr_server_schema, qrRow++, 1, 1, 1);
-  qrLayout->addWidget(new QLabel(tr("Server Address"), qrcodeGroup), qrRow, 0, 1, 1,
-                      Qt::AlignRight);
+  qrLayout->addWidget(new QLabel(tr("Server Address"), qrcodeGroup), qrRow, 0,
+                      1, 1, Qt::AlignRight);
   qr_server_address = new LineEdit(qrcodeGroup);
   qr_server_address->setObjectName("qrcode_server");
   qrLayout->addWidget(qr_server_address, qrRow++, 1, 1, 1);
@@ -118,13 +134,11 @@ PrintSettings::PrintSettings(QWidget *parent) : SettingsWidget{parent} {
   qr_server_path = new LineEdit(qrcodeGroup);
   qr_server_path->setObjectName("qrcode_path");
   qrLayout->addWidget(qr_server_path, qrRow++, 1, 1, 1);
-  qrLayout->addWidget(new QLabel(tr("Query Parameter"), qrcodeGroup), qrRow, 0, 1,
-                      1, Qt::AlignRight);
+  qrLayout->addWidget(new QLabel(tr("Query Parameter"), qrcodeGroup), qrRow, 0,
+                      1, 1, Qt::AlignRight);
   qr_server_query = new LineEdit(qrcodeGroup);
   qr_server_query->setObjectName("qrcode_parameter");
   qrLayout->addWidget(qr_server_query, qrRow++, 1, 1, 1);
-
-  //
   qrcodeGroup->setLayout(qrLayout);
   layout->addWidget(qrcodeGroup, row++, 0, 1, 2);
 
@@ -146,6 +160,27 @@ void PrintSettings::setLabelFont(QLabel *lb) {
     lb->setFont(font);
     chieldModified(true);
   }
+}
+
+void PrintSettings::initPrinterInfos() {
+  QListIterator<QPrinterInfo> it(QPrinterInfo::availablePrinters());
+  while (it.hasNext()) {
+    QPrinterInfo info = it.next();
+    if (!info.isNull()) {
+      m_dinA4Printer->addItem(info.printerName());
+      m_dinA6Printer->addItem(info.printerName());
+    }
+  }
+  int i = 0;
+  QString a4p = config->value("printer/DIN_A4_Printer").toString();
+  i = m_dinA4Printer->findText(a4p);
+  if (i > 0)
+    m_dinA4Printer->setCurrentIndex(i);
+
+  QString a6p = config->value("printer/DIN_A6_Printer").toString();
+  i = m_dinA6Printer->findText(a6p);
+  if (i > 0)
+    m_dinA6Printer->setCurrentIndex(i);
 }
 
 QPushButton *PrintSettings::setFontButton(const QString &objName) {
@@ -207,6 +242,7 @@ void PrintSettings::setPageIcon(const QIcon &icon) {
 const QIcon PrintSettings::getPageIcon() { return pageIcon; }
 
 void PrintSettings::loadSectionConfig() {
+  initPrinterInfos();
   config->beginGroup("printer");
   QList<QLabel *> labels =
       findChildren<QLabel *>(p_fontPattern, Qt::FindDirectChildrenOnly);
@@ -254,6 +290,8 @@ void PrintSettings::saveSectionConfig() {
   }
   config->setValue("watermark", m_watermark->value());
   config->setValue("attachments", m_attachments->value());
+  config->setValue("DIN_A4_Printer", m_dinA4Printer->currentText());
+  config->setValue("DIN_A6_Printer", m_dinA6Printer->currentText());
   config->endGroup();
 
   config->beginGroup("qrcode");

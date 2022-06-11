@@ -60,16 +60,7 @@ class BookCard final : public QDialog {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  /**
-   * @brief Drucker Unterstützung
-   */
-  bool native_print = false;
-
-  /**
-   * @brief Druckervorschau zuerst Anzeigen!
-   */
-  bool print_preview = false;
-
+  QString p_printerName = QString();
   int p_articleId = -1;
   ApplSettings *config;
   QPageSize page_size;

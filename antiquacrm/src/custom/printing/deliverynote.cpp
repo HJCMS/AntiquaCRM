@@ -188,11 +188,12 @@ void DeliveryNote::openPrintDialog() {
   printer->setPaperSource(QPrinter::FormSource);
   printer->setPageMargins(page_margins);
   if (generateDocument(printer)) {
-    qInfo("PDF File written!");
     emit statusMessage(tr("PDF File written."));
   }
   if (!p_printerName.isEmpty()) {
     printer->setPrinterName(p_printerName);
+    printer->setOutputFormat(QPrinter::NativeFormat);
+    printer->setPageOrientation(QPageLayout::Portrait);
     QPrintDialog *dialog = new QPrintDialog(printer, this);
     connect(dialog, SIGNAL(accepted(QPrinter *)), this,
             SLOT(generateDocument(QPrinter *)));
@@ -226,13 +227,13 @@ void DeliveryNote::setDelivery(int orderId, int customerId,
 int DeliveryNote::exec(const QList<Delivery> &list) {
   if (p_orderId < 1) {
     qFatal("you must call setDelivery() before exec!");
-    return 1;
+    return QDialog::Rejected;
   } else if (p_customerId < 1) {
     qFatal("you must call setDelivery() before exec!");
-    return 1;
+    return QDialog::Rejected;
   } else if (p_customerAddress.isEmpty()) {
     warningMessageBox(tr("<p>Customer Address is empty!</p>"));
-    return 1;
+    return QDialog::Rejected;
   }
 
   constructHeader();

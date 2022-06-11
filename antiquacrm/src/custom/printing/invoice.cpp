@@ -231,11 +231,12 @@ void Invoice::openPrintDialog() {
   printer->setPaperSource(QPrinter::FormSource);
   printer->setPageMargins(page_margins);
   if (generateDocument(printer)) {
-    qInfo("PDF File written!");
     emit statusMessage(tr("PDF File written."));
   }
   if (!p_printerName.isEmpty()) {
     printer->setPrinterName(p_printerName);
+    printer->setOutputFormat(QPrinter::NativeFormat);
+    printer->setPageOrientation(QPageLayout::Portrait);
     QPrintDialog *dialog = new QPrintDialog(printer, this);
     connect(dialog, SIGNAL(accepted(QPrinter *)), this,
             SLOT(generateDocument(QPrinter *)));
@@ -277,16 +278,16 @@ void Invoice::setInvoice(int orderId,    /* Bestellnummer */
 int Invoice::exec(const QList<BillingInfo> &list) {
   if (p_orderId.isEmpty()) {
     qFatal("you must call setInvoice() before exec!");
-    return 1;
+    return QDialog::Rejected;
   } else if (p_customerId.isEmpty()) {
     qFatal("you must call setInvoice() before exec!");
-    return 1;
+    return QDialog::Rejected;
   } else if (p_invoiceId.isEmpty()) {
     qFatal("you must call setInvoice() before exec!");
-    return 1;
+    return QDialog::Rejected;
   } else if (p_deliveryId.isEmpty()) {
     qFatal("you must call setInvoice() before exec!");
-    return 1;
+    return QDialog::Rejected;
   }
 
   p_currency = config->value("payment/currency").toString();
