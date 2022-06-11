@@ -5,7 +5,7 @@
 #include "sqlcore.h"
 
 #ifndef DEBUG_IMAGE_VIEW
-#define DEBUG_IMAGE_VIEW false
+#define DEBUG_IMAGE_VIEW true
 #endif
 
 #if DEBUG_IMAGE_VIEW

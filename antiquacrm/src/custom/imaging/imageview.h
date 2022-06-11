@@ -21,6 +21,11 @@ namespace HJCMS {
 class SqlCore;
 };
 
+/**
+ * @brief Bilder Vorschau
+ * @class ImageView
+ * @ingroup Imaging
+ */
 class ImageView final : public QGraphicsView {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")

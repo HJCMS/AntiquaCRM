@@ -16,8 +16,20 @@
 #include <QDialogButtonBox>
 #include <QDirIterator>
 #include <QFileInfo>
-#include <QSplitter>
+#include <QMessageBox>
 #include <QVBoxLayout>
+
+const QString SourceInfo::getCopyTarget(const QDir &dest) {
+  if (!dest.exists() || (fileId < 1))
+    return QString();
+
+  QString p = dest.path();
+  QString name = imageBaseName(fileId);
+  name.append("." + completeSuffix().toLower());
+  p.append(dest.separator());
+  p.append(name);
+  return p;
+}
 
 FileBrowser::FileBrowser(QWidget *parent) : QFileDialog{parent} {
   setObjectName("file_dialog_widget");
@@ -38,22 +50,25 @@ ImageDialog::ImageDialog(int articleId, QWidget *parent)
   setObjectName("image_open_edit_dialog");
   setWindowTitle(tr("Picture Editor"));
   setWindowIcon(myIcon("image"));
-  setMinimumSize(QSize(600, 400));
+  setMinimumSize(QSize(800, 400));
   setSizeGripEnabled(true);
 
   config = new ApplSettings(this);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("image_open_edit_layout");
-  layout->setContentsMargins(0, 0, 0, 0);
+  layout->setContentsMargins(10, 0, 0, 0);
 
   QSize mSize = config->value("image/max_size", QSize(320, 320)).toSize();
-  QSplitter *m_splitter = new QSplitter(this);
+  m_splitter = new QSplitter(this);
+  m_splitter->setObjectName("image_open_edit_splitter");
   m_view = new ImageView(mSize, m_splitter);
+  m_view->setObjectName("image_open_edit_preview");
   m_splitter->insertWidget(0, m_view);
   m_splitter->setStretchFactor(0, 20);
 
   browser = new FileBrowser(m_splitter);
+  browser->setObjectName("image_open_edit_browser");
   m_splitter->insertWidget(1, browser);
   m_splitter->setStretchFactor(1, 70);
   layout->insertWidget(0, m_splitter);
@@ -71,6 +86,7 @@ ImageDialog::ImageDialog(int articleId, QWidget *parent)
   m_toolBar->addSeparator();
   ac_close = m_toolBar->addAction(myIcon("exit"), tr("Close"));
   m_statusBar->addPermanentWidget(m_toolBar);
+
   layout->insertWidget(1, m_statusBar);
   layout->setStretch(0, 1);
   setLayout(layout);
@@ -80,7 +96,7 @@ ImageDialog::ImageDialog(int articleId, QWidget *parent)
   connect(ac_save, SIGNAL(triggered()), this, SLOT(save()));
   connect(ac_close, SIGNAL(triggered()), this, SLOT(accept()));
   connect(browser, SIGNAL(currentChanged(const QString &)), this,
-          SLOT(imagePreview(const QString &)));
+          SLOT(fileChanged(const QString &)));
   connect(browser, SIGNAL(s_close()), this, SLOT(reject()));
 }
 
@@ -91,6 +107,7 @@ bool ImageDialog::findSourceImage() {
   }
 
   QString imageId = QString::number(p_articleId);
+  QString fullImageId = SourceInfo::imageBaseName(p_articleId);
 
   QString basePath = browser->directory().path();
   QStringList search;
@@ -98,6 +115,10 @@ bool ImageDialog::findSourceImage() {
   search << imageId + ".jpg";
   search << imageId + ".JPEG";
   search << imageId + ".jpeg";
+  search << fullImageId + ".JPG";
+  search << fullImageId + ".jpg";
+  search << fullImageId + ".JPEG";
+  search << fullImageId + ".jpeg";
 
   QStringList found;
   QDirIterator it(basePath, search, QDir::NoFilter,
@@ -124,20 +145,74 @@ bool ImageDialog::findSourceImage() {
   return false;
 }
 
+bool ImageDialog::askToCopyFile() {
+  QString question = tr("<p>Do you want to copy this Image into the Picture "
+                        "Archiv?</p><b>Note:</b> This will replace Images "
+                        "with identical Article Filename!");
+  QString title(tr("Copy image?"));
+  int ret = QMessageBox::question(this, title, question);
+  if (ret == QMessageBox::Yes) {
+    return true;
+  }
+  return false;
+}
+
+bool ImageDialog::imagePreview(const SourceInfo &info) {
+  if (info.isFile() && info.isReadable()) {
+    m_view->setImageFile(info);
+    return true;
+  }
+  return false;
+}
+
 void ImageDialog::save() {
   if (m_view->getImage().isNull()) {
     notifyStatus(tr("no valid image found"));
     reject();
     return;
   }
+
+  // Bild in das Quellenarchiv kopieren!
+  QStringList files = browser->selectedFiles();
+  QString filePath = files.last();
+  if (!filePath.isEmpty()) {
+    SourceInfo info(filePath);
+    if (!isImageFromArchive(info)) {
+      info.setFileId(p_articleId);
+      QString dest = info.getCopyTarget(imagesArchiv);
+      if (askToCopyFile() && !dest.isEmpty()) {
+        QFile fp(info.path());
+        notifyStatus(tr("copy image in progress ..."));
+        if (fp.copy(dest))
+          notifyStatus(tr("successfully - image to archive copied"));
+        else
+          notifyStatus(tr("warning - image not copied"));
+      }
+    }
+    filePath.clear();
+  }
+  // In Datenbank Speichern!
   if (m_view->storeInDatabase(p_articleId))
     notifyStatus(tr("image saved successfully!"));
+
+  // Aufräumen
+  files.clear();
 }
 
-void ImageDialog::imagePreview(const QString &file) {
-  QFileInfo info(file);
-  if (info.isReadable())
-    m_view->setImageFile(info);
+void ImageDialog::fileChanged(const QString &file) {
+  SourceInfo info(file);
+  if (!info.isReadable())
+    return;
+
+  imagePreview(info);
+}
+
+void ImageDialog::closeEvent(QCloseEvent *e) {
+  config->beginGroup("imaging");
+  config->setValue("geometry", saveGeometry());
+  config->setValue("windowState", m_splitter->saveState());
+  config->endGroup();
+  QDialog::closeEvent(e);
 }
 
 void ImageDialog::notifyStatus(const QString &str) {
@@ -147,9 +222,18 @@ void ImageDialog::notifyStatus(const QString &str) {
 int ImageDialog::exec() {
   QString key("dirs/images");
   if (config->contains(key)) {
-    QString p = config->value(key).toString();
+    QString p = config->value(key, QDir::homePath()).toString();
     browser->setDirectory(p);
     imagesArchiv = browser->directory();
+  }
+
+  if (config->contains("imaging/geometry")) {
+    config->beginGroup("imaging");
+    restoreGeometry(config->value("geometry").toByteArray());
+    if (config->contains("windowState"))
+      m_splitter->restoreState(config->value("windowState").toByteArray());
+
+    config->endGroup();
   }
 
   if (!findSourceImage()) {

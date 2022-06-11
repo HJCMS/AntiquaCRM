@@ -1240,12 +1240,12 @@
 <context>
     <name>DeliveryNote</name>
     <message>
-        <location filename="../custom/printing/deliverynote.cpp" line="+17"/>
+        <location filename="../custom/printing/deliverynote.cpp" line="+16"/>
         <source>Delivery note</source>
         <translation>Lieferschein</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+33"/>
         <source>Delivey note</source>
         <translation>Lieferschein</translation>
     </message>
@@ -1280,7 +1280,7 @@
         <translation>Menge</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+110"/>
         <source>There is no Order-Id to generate this delivery!</source>
         <translation>Es gibt keine Bestellnummer für die Erstellung!</translation>
     </message>
@@ -1489,7 +1489,7 @@
 <context>
     <name>FileBrowser</name>
     <message>
-        <location filename="../custom/imaging/imagedialog.cpp" line="+28"/>
+        <location filename="../custom/imaging/imagedialog.cpp" line="+40"/>
         <source>Image jpeg files (*.jpg *.JPG *.jpeg *.JPEG)</source>
         <translation>JPG Bild Dateien (*.jpg *.JPG *.jpeg *.JPEG)</translation>
     </message>
@@ -1704,7 +1704,7 @@
         <translation>Bildeditor</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+28"/>
         <source>Scale</source>
         <translation>Skalieren</translation>
     </message>
@@ -1724,27 +1724,52 @@
         <translation>Beenden</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+18"/>
         <source>archiv isn&apos;t readable!</source>
         <translation>Archiv ist nicht lesbar!</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+39"/>
         <source>no source image exists!</source>
         <translation>Keine Bildquelle gefunden!</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
+        <source>&lt;p&gt;Do you want to copy this Image into the Picture Archiv?&lt;/p&gt;&lt;b&gt;Note:&lt;/b&gt; This will replace Images with identical Article Filename!</source>
+        <translation>&lt;p&gt;Möchten Sie dieses Bild in das Bildarchiv kopieren?&lt;/p&gt;&lt;b&gt;Hinweis:&lt;/b&gt; Dadurch werden Bilder mit identischem Artikel-Dateinamen ersetzt!</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Copy image?</source>
+        <translation>Bild kopieren?</translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>no valid image found</source>
         <translation>Kein gültiges Bild gefunden</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+15"/>
+        <source>copy image in progress ...</source>
+        <translation>Bild kopieren läuft ...</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>successfully - image to archive copied</source>
+        <translation>Bild - Wurde Erfolgreich kopiert</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>warning - image not copied</source>
+        <translation>Warnung - Bild konnte nicht Kopiert werden</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>image saved successfully!</source>
         <translation>Bild wurde Erfolgreich gespeichert!</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+45"/>
         <source>image from database!</source>
         <translation>Nehme Bild aus der Datenbank!</translation>
     </message>
@@ -1884,7 +1909,7 @@
 <context>
     <name>Invoice</name>
     <message>
-        <location filename="../custom/printing/invoice.cpp" line="+51"/>
+        <location filename="../custom/printing/invoice.cpp" line="+49"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
@@ -1934,7 +1959,7 @@
         <translation>Gesamt:</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+96"/>
         <source>There is no Order-Id to generate this invoice!</source>
         <translation></translation>
     </message>
@@ -2942,9 +2967,14 @@
 <context>
     <name>Printing</name>
     <message>
-        <location filename="../custom/printing/printing.cpp" line="+78"/>
+        <location filename="../custom/printing/printing.cpp" line="+86"/>
         <source>Printing</source>
         <translation>Drucken</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Close</source>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -2977,7 +3007,12 @@
         <translation>Steuer Nummer</translation>
     </message>
     <message>
-        <location line="+114"/>
+        <location line="+59"/>
+        <source>Printers</source>
+        <translation>Drucker</translation>
+    </message>
+    <message>
+        <location line="+73"/>
         <source>Delivery note</source>
         <translation>Lieferschein</translation>
     </message>
@@ -4091,12 +4126,12 @@
     <message>
         <location line="+10"/>
         <source>Books tab isn&apos;t open!</source>
-        <translation type="unfinished"></translation>
+        <translation>Buch tab ist nicht geöffnet!</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Prints tab isn&apos;t open!</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucke und Stiche tab ist nicht geöffnet!</translation>
     </message>
     <message>
         <location line="+62"/>
