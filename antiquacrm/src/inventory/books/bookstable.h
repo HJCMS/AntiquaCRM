@@ -5,10 +5,10 @@
 #ifndef BOOKSTABLE_H
 #define BOOKSTABLE_H
 
+#include <QContextMenuEvent>
 #include <QHash>
 #include <QObject>
 #include <QString>
-#include <QContextMenuEvent>
 #include <QTableView>
 
 #include <SqlCore>
@@ -29,15 +29,23 @@ private:
   QString p_historyQuery;
 
   /**
-   @brief SQL Query Database
-  */
+   * @brief SQL Query Database
+   */
   bool sqlExecQuery(const QString &statement);
 
   /**
    * @brief Suche Datensatz mit Index
    * Wenn vorhanden Sende Signal @ref s_articleSelected
-  */
+   */
   int queryArticleID(const QModelIndex &);
+
+  /**
+   * @brief Positions tausch der Suchworte
+   * Wenn die Suche zwei Zeichenketten besitzt dann eine
+   * Klausel wie folgt erstellen.
+   */
+  const QString prepareSearch(const QString &fieldname,
+                              const QString &search) const;
 
 private Q_SLOTS:
   /**
@@ -47,13 +55,13 @@ private Q_SLOTS:
 
   /**
    * @brief Ableitung für @ref clickedGetArticleID
-  */
+   */
   void openByContext();
 
   /**
    * @brief Einen neuen Eintrag erstellen wenn ...
    * @todo Die Suchanfrage kein Ergebnis lieferte
-  */
+   */
   void createByContext();
 
   /**
@@ -78,21 +86,20 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   /**
-   Anzeige auffrischen in dem der zuletzt
-   in @ref p_historyQuery gespeicherte SQL
-   Befehl noch einmal aufgerufen wird.
-  */
+   * Anzeige auffrischen in dem der zuletzt in @ref p_historyQuery gespeicherte
+   * SQL Befehl noch einmal aufgerufen wird.
+   */
   void refreshView();
 
   /**
-    Wird von @ref StatsBookBar::m_showHistory()
-    aufgerufen und fragt den Verlauf ab.
-  */
+   * Wird von @ref StatsBookBar::m_showHistory()
+   * aufgerufen und fragt den Verlauf ab.
+   */
   void queryHistory(const QString &);
 
   /**
-    Startet Abfrage ausgehend von Text/Sucheingabe
-  */
+   * Startet Abfrage ausgehend von Text/Sucheingabe
+   */
   void queryStatement(const SearchStatement &);
 
 public:

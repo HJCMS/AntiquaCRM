@@ -5,12 +5,12 @@
 #include "antiqua_global.h"
 #include "myicontheme.h"
 
-#include <QDebug>
-#include <QRegExp>
 #include <QAction>
+#include <QDebug>
 #include <QHBoxLayout>
 #include <QLayout>
 #include <QPushButton>
+#include <QRegExp>
 #include <QToolButton>
 #include <QWidget>
 
@@ -37,18 +37,13 @@ SearchBar::SearchBar(QWidget *parent) : QToolBar(parent) {
   addSeparator();
 
   m_searchLineEdit = new QLineEdit(this);
-  m_searchLineEdit->setObjectName("SearchLineEdit");
+  m_searchLineEdit->setObjectName("sql_search_statement");
+  m_searchLineEdit->setClearButtonEnabled(true);
   m_searchLineEdit->setStatusTip(
       tr("You can use a wildcard * to broaden the search."));
   m_searchLineEdit->setPlaceholderText(tr("Search for"));
   m_searchLineEdit->setValidator(m_textValidator);
   addWidget(m_searchLineEdit);
-  addSeparator();
-
-  QAction *m_clear = addAction(tr("Clear"));
-  m_clear->setIcon(myIcon("clear_left"));
-  m_clear->setToolTip(tr("Clear searchinput"));
-
   addSeparator();
 
   QPushButton *searchBtn = new QPushButton(tr("Start search"), this);
@@ -65,15 +60,13 @@ SearchBar::SearchBar(QWidget *parent) : QToolBar(parent) {
   connect(m_searchLineEdit, SIGNAL(returnPressed()), this,
           SIGNAL(searchClicked()));
 
-  connect(m_clear, SIGNAL(triggered()), this, SLOT(clearAndFocus()));
   connect(searchBtn, SIGNAL(released()), this, SIGNAL(searchClicked()));
 
   connect(m_filterSection, SIGNAL(currentIndexChanged(int)), this,
           SLOT(searchFilterChanged(int)));
 }
 
-void SearchBar::clearAndFocus()
-{
+void SearchBar::clearAndFocus() {
   m_searchLineEdit->clear();
   m_searchLineEdit->setFocus();
 }

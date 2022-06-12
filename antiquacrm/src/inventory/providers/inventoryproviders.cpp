@@ -57,8 +57,11 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   connect(m_toolBar, SIGNAL(s_customerAction()), this, SLOT(openTableView()));
   connect(m_toolBar, SIGNAL(s_refresh()), this, SLOT(searchConvert()));
   connect(m_toolBar, SIGNAL(s_createOrder()), this, SLOT(createEditOrders()));
+#ifndef Q_OS_WIN
+  // Developement
   connect(m_listView, SIGNAL(s_queryProvider(const QString &)), this,
           SLOT(queryProviderPage(const QString &)));
+#endif
   connect(m_listView, SIGNAL(s_queryOrder(const QString &, const QString &)),
           this, SLOT(queryOrder(const QString &, const QString &)));
 }

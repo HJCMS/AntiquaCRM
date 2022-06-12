@@ -1280,12 +1280,12 @@
         <translation>Menge</translation>
     </message>
     <message>
-        <location line="+87"/>
+        <location line="+86"/>
         <source>PDF File written.</source>
         <translation>PDF Datei wurde erstellt.</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+20"/>
         <source>There is no Order-Id to generate this delivery!</source>
         <translation>Es gibt keine Bestellnummer für die Erstellung!</translation>
     </message>
@@ -1964,12 +1964,12 @@
         <translation>Gesamt:</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+71"/>
         <source>PDF File written.</source>
         <translation>PDF Datei wurde erstellt.</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+22"/>
         <source>There is no Order-Id to generate this invoice!</source>
         <translation></translation>
     </message>
@@ -2910,7 +2910,7 @@
     <message>
         <location line="+7"/>
         <source>Directory specification for the file attachments</source>
-        <translation>Verzeichnisangabe zu den Dateianhängen.</translation>
+        <translation>Verzeichnisangabe zu den Dateianhängen</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -2924,17 +2924,22 @@
     </message>
     <message>
         <location line="+7"/>
-        <location line="+94"/>
+        <location line="+129"/>
         <source>Watermark</source>
         <translation>Wasserzeichen</translation>
     </message>
     <message>
-        <location line="-90"/>
+        <location line="-125"/>
         <source>Open File</source>
         <translation>Öffne Datei</translation>
     </message>
     <message>
         <location line="+6"/>
+        <source>Settings Default Printers</source>
+        <translation>Setze Standarddrucker</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>QR Code Settings</source>
         <translation>QR Kodierungs Einstellungen</translation>
     </message>
@@ -2964,7 +2969,7 @@
         <translation>Abfrage Parameter</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+51"/>
         <source>set Font</source>
         <translation>Schrift setzen</translation>
     </message>
@@ -3600,28 +3605,43 @@
 <context>
     <name>SearchBar</name>
     <message>
-        <location filename="../custom/utils/searchbar.cpp" line="+42"/>
+        <location filename="../custom/utils/searchbar.cpp" line="+43"/>
         <source>You can use a wildcard * to broaden the search.</source>
         <translation>Sie können einen Platzhalter * verwenden, um die Suche zu erweitern.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+56"/>
+        <location line="+61"/>
         <source>Search for</source>
         <translation>Suche nach</translation>
     </message>
     <message>
-        <location line="-51"/>
-        <source>Clear</source>
-        <translation>Leeren</translation>
+        <location line="-54"/>
+        <source>order by</source>
+        <translation>Abfrage mit</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Clear searchinput</source>
-        <translation>Leere die Sucheingabe</translation>
+        <location line="+1"/>
+        <source>Duration</source>
+        <translation>Bestand</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+1"/>
+        <source>Author</source>
+        <translation>Autor</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Keywords</source>
+        <translation>Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <location line="+2"/>
         <source>Start search</source>
         <translation>Suche starten</translation>
