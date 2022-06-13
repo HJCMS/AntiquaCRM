@@ -159,14 +159,15 @@ const QPageLayout BookCard::pageLayout() {
 
 bool BookCard::createPDF() {
   QPrinter *printer = new QPrinter(QPrinter::ScreenResolution);
+  printer->setPageLayout(pageLayout());
+  printer->setResolution(72);
+  printer->setOutputFormat(QPrinter::PdfFormat);
+  printer->setCreator("AntiquaCRM");
   QString dest = p_destination;
   dest.append(QDir::separator());
   dest.append(p_filename);
   dest.append(".pdf");
   printer->setOutputFileName(dest);
-  printer->setOutputFormat(QPrinter::PdfFormat);
-  printer->setCreator("AntiquaCRM");
-  printer->setPageLayout(pageLayout());
   return printDocument(printer);
 }
 
@@ -192,7 +193,8 @@ void BookCard::openPrintDialog() {
   }
 
   QPrinterInfo p_info = QPrinterInfo::printerInfo(p_printerName);
-  QPrinter *printer = new QPrinter(p_info, QPrinter::PrinterResolution);
+  QPrinter *printer = new QPrinter(p_info, QPrinter::ScreenResolution);
+  printer->setResolution(72);
   printer->setPageLayout(pageLayout());
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPrinterName(p_printerName);

@@ -100,17 +100,6 @@ protected:
   QHash<QString, QString> companyData;
 
   /**
-   * @brief Seitenränder der Druckerausgabe
-   */
-  QMarginsF page_margins;
-
-  /**
-   * @brief Seitengröße
-   * @note Standard ist DIN A4
-   */
-  QPageSize page_size;
-
-  /**
    * @brief Text Editor
    * Das Widget @ref printArea enthält
    * das Layout für die Text Editoren.
@@ -229,7 +218,11 @@ protected:
    */
   void addPrinters();
 
-  virtual bool createPDF() = 0;
+  /**
+   * @brief PDF Erstellen
+   * @param section - Konfigurations Sektion
+   */
+  bool createPDF(const QString &section);
 
 protected Q_SLOTS:
   /**
@@ -268,17 +261,17 @@ public:
   /**
    * @brief Vordefinierte Seitengröße
    */
-  const QPageSize pageSize();
+  const QPageSize pageSize() const;
 
   /**
    * @brief Drucker Layout
    */
-  const QPageLayout pageLayout();
+  const QPageLayout pageLayout() const;
 
   /**
    * @brief PDF File Layout
    */
-  const QPageLayout pdfLayout();
+  const QPageLayout pdfLayout() const;
 
   /**
    * @brief Suche Schrift in der Datenbank

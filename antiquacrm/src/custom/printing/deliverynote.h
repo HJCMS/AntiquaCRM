@@ -59,11 +59,6 @@ private:
   void insertArticle(const QString &articleid, const QString &designation,
                      const QString &quantity);
 
-  /**
-   * @brief PDF Datei erstellen
-   */
-  bool createPDF();
-
 private Q_SLOTS:
   bool generateDocument(QPrinter *printer);
   void openPrintDialog();

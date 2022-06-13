@@ -8,9 +8,9 @@
 #include <QDebug>
 #include <QDir>
 #include <QPainter>
-#include <QPrinterInfo>
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
+#include <QPrinterInfo>
 
 DeliveryNote::DeliveryNote(QWidget *parent) : Printing{parent} {
   setObjectName("printing_delivery_note");
@@ -132,52 +132,32 @@ void DeliveryNote::insertArticle(const QString &articleid,
   body->document()->setModified(true);
 }
 
-bool DeliveryNote::createPDF() {
-  QPrinter *printer = new QPrinter(QPrinter::ScreenResolution);
-  QString dest = outputDirectory("deliverynotes");
-  dest.append(QDir::separator());
-  dest.append(p_deliveryId);
-  dest.append(".pdf");
-  printer->setOutputFileName(dest);
-  printer->setOutputFormat(QPrinter::PdfFormat);
-  printer->setCreator("AntiquaCRM");
-  printer->setPageLayout(pdfLayout());
-  return generateDocument(printer);
-}
-
 bool DeliveryNote::generateDocument(QPrinter *printer) {
-  QRectF pageRect = printer->pageRect(QPrinter::Point);
+  QRectF pageRect = printer->pageLayout().paintRect(QPageLayout::Point);
   int border = printer->pageLayout().margins().left();
-  int documentWidth = qRound(pageRect.size().width() - (border * 2));
+  int documentWidth = qRound(pageRect.size().width() - border);
 
   QTextDocument *htmlHead = header->document();
   htmlHead->setHtml(getHeaderHTML());
-  htmlHead->setPageSize(QSizeF(documentWidth, htmlHead->size().height()));
+  htmlHead->setPageSize(QSizeF(documentWidth, header->size().height()));
   htmlHead->setModified(true);
   QRectF headerRect = QRectF(QPointF(0, 0), htmlHead->pageSize());
 
   QTextDocument *htmlBody = body->document();
   htmlBody->setHtml(getBodyHTML());
-  htmlBody->setPageSize(QSizeF(documentWidth, htmlBody->size().height()));
+  htmlBody->setPageSize(QSizeF(documentWidth, body->size().height()));
   htmlBody->setModified(true);
   QRectF bodyRect = QRectF(QPointF(0, 0), htmlBody->pageSize());
 
   QTextDocument *htmlFooter = footer->document();
   htmlFooter->setHtml(getFooterHTML());
-  htmlFooter->setPageSize(QSizeF(documentWidth, htmlFooter->size().height()));
+  htmlFooter->setPageSize(QSizeF(documentWidth, footer->size().height()));
   htmlFooter->setModified(true);
   QRectF footerRect = QRectF(QPointF(0, 0), htmlFooter->pageSize());
   int yPosFooter = (pageRect.height() - (footerRect.height() * 2));
 
-  /*
-    qDebug() << Q_FUNC_INFO << "Head:" << headerRect << Qt::endl
-             << "Body:" << bodyRect << Qt::endl
-             << "Footer." << footerRect;
-  */
-
   QImage image = getWatermark();
   QPainter painter;
-  painter.setViewport(pageRect.toRect());
   painter.begin(printer);
   if (!image.isNull()) {
     painter.translate(0, 0);
@@ -199,7 +179,7 @@ bool DeliveryNote::generateDocument(QPrinter *printer) {
 }
 
 void DeliveryNote::openPrintDialog() {
-  if (createPDF()) {
+  if (createPDF("deliverynotes")) {
     emit statusMessage(tr("PDF File written."));
   } else {
     emit statusMessage(tr("PDF not generated"));
@@ -211,7 +191,8 @@ void DeliveryNote::openPrintDialog() {
   }
 
   QPrinterInfo p_info = QPrinterInfo::printerInfo(p_printerName);
-  QPrinter *printer = new QPrinter(p_info, QPrinter::PrinterResolution);
+  QPrinter *printer = new QPrinter(p_info, QPrinter::ScreenResolution);
+  printer->setResolution(72);
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPageLayout(pageLayout());
   printer->setFullPage(true);

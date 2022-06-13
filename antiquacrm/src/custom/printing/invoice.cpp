@@ -9,9 +9,9 @@
 #include <QDebug>
 #include <QDir>
 #include <QPainter>
-#include <QPrinterInfo>
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
+#include <QPrinterInfo>
 
 Invoice::Invoice(QWidget *parent) : Printing{parent} {
   setObjectName("printing_invoice");
@@ -178,27 +178,15 @@ void Invoice::finalizeBillings() {
   body->document()->setModified(true);
 }
 
-bool Invoice::createPDF() {
-  QPrinter *printer = new QPrinter(QPrinter::ScreenResolution);
-  QString dest = outputDirectory("invoices");
-  dest.append(QDir::separator());
-  dest.append(p_invoiceId);
-  dest.append(".pdf");
-  printer->setOutputFileName(dest);
-  printer->setOutputFormat(QPrinter::PdfFormat);
-  printer->setCreator("AntiquaCRM");
-  printer->setPageLayout(pdfLayout());
-  return generateDocument(printer);
-}
-
 bool Invoice::generateDocument(QPrinter *printer) {
-  QRectF pageRect = printer->pageRect(QPrinter::Point);
+  QImage image = getWatermark();
+  QRectF pageRect = printer->pageLayout().paintRect(QPageLayout::Point);
   int border = printer->pageLayout().margins().left();
-  int documentWidth = qRound(pageRect.size().width() - (border * 2));
+  int documentWidth = qRound(pageRect.size().width() - border);
 
   QTextDocument *htmlHead = header->document();
   htmlHead->setHtml(getHeaderHTML());
-  htmlHead->setPageSize(QSizeF(documentWidth, htmlHead->size().height()));
+  htmlHead->setPageSize(QSizeF(documentWidth, header->size().height()));
   htmlHead->setModified(true);
   QRectF headerRect = QRectF(QPointF(0, 0), htmlHead->pageSize());
 
@@ -215,9 +203,7 @@ bool Invoice::generateDocument(QPrinter *printer) {
   QRectF footerRect = QRectF(QPointF(0, 0), htmlFooter->pageSize());
   int yPosFooter = (pageRect.height() - (footerRect.height() * 2));
 
-  QImage image = getWatermark();
   QPainter painter;
-  painter.setViewport(pageRect.toRect());
   painter.begin(printer);
   if (!image.isNull()) {
     painter.translate(0, 0);
@@ -238,7 +224,7 @@ bool Invoice::generateDocument(QPrinter *printer) {
 }
 
 void Invoice::openPrintDialog() {
-  if (createPDF()) {
+  if (createPDF("invoices")) {
     emit statusMessage(tr("PDF File written."));
   } else {
     emit statusMessage(tr("PDF not generated"));

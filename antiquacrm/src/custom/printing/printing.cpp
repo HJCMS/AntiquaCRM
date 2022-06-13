@@ -29,15 +29,12 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
   normalFont = QFont("Tahoma", 11);
   footerFont = QFont("Tahoma", 10);
   smallFont = QFont("Tahoma", 8);
-  // 210 x 297 mm, 8.26 x 11.69 inches
-  page_margins = QMarginsF(10, 0, 10, 0);
-  page_size = QPageSize(QPageSize::A4);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("printing_layout");
 
-  QRect pageRect = pageLayout().fullRectPoints();
-  int maxWidth = pageRect.width();
+  QRectF pageRect = pageLayout().fullRect(QPageLayout::Point);
+  int pageWidth = pageRect.width();
 
   QScrollArea *scrollAera = new QScrollArea(this);
   scrollAera->setObjectName("scroll_area");
@@ -47,7 +44,7 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
   printArea->setObjectName("printing_area");
   printArea->setContentsMargins(0, 0, 0, 0);
   printArea->setStyleSheet("border:none;");
-  printArea->setFixedSize(pageRect.size());
+  printArea->setFixedSize(pageRect.toRect().size());
   QVBoxLayout *frame_layout = new QVBoxLayout(printArea);
   frame_layout->setContentsMargins(0, 0, 0, 0);
   frame_layout->setSizeConstraint(QLayout::SetMinimumSize);
@@ -56,20 +53,23 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
   header = new TextEditor(printArea);
   header->setObjectName("printing_header");
   header->setMinimumHeight(25);
-  header->setMaximumWidth(maxWidth);
+  header->setMinimumWidth(pageWidth);
+  header->setMaximumWidth(pageWidth);
   header->setTextColor(Qt::black);
   header->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   frame_layout->addWidget(header);
   body = new TextEditor(printArea);
   body->setObjectName("printing_body");
   body->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
-  body->setMaximumWidth(maxWidth);
+  body->setMinimumWidth(pageWidth);
+  body->setMaximumWidth(pageWidth);
   body->setTextColor(Qt::black);
   frame_layout->addWidget(body);
   footer = new TextEditor(printArea);
   footer->setObjectName("printing_footer");
   footer->setMinimumHeight(20);
-  footer->setMaximumWidth(maxWidth);
+  footer->setMinimumWidth(pageWidth);
+  footer->setMaximumWidth(pageWidth);
   footer->setTextColor(Qt::black);
   footer->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   frame_layout->addWidget(footer);
@@ -162,7 +162,7 @@ const QTextCharFormat Printing::smallFormat() {
 
 const QTextTableFormat Printing::tableFormat() {
   QTextTableFormat f;
-  f.setWidth(QTextLength(QTextLength().PercentageLength, 95));
+  f.setWidth(QTextLength(QTextLength().PercentageLength, 90));
   f.setCellPadding(2);
   f.setCellSpacing(0);
   f.setTopMargin(0);
@@ -180,10 +180,9 @@ void Printing::constructHeader() {
   QString str = companyData.value("name");
   cursor.insertText(str.replace("#", "\n"));
   cursor.atEnd();
+  QFontMetricsF fm(headerFont);
   int w = header->size().width();
-  int fh = cursor.blockCharFormat().font().pointSize();
-  int lc = header->document()->lineCount();
-  int h = (fh * (lc + 1));
+  int h = qRound(fm.height() * header->document()->lineCount());
   header->resize(QSize(w, h));
   header->update();
   header->setMaximumHeight(h);
@@ -313,25 +312,42 @@ void Printing::printerSelected(int index) {
   p_printerName = QString();
 }
 
-const QPageSize Printing::pageSize() { return page_size; }
+const QPageSize Printing::pageSize() const {
+  QPageSize init(QPageSize::A4);
+  return QPageSize(init.definitionSize(), QPageSize::Point, init.name(),
+                   QPageSize::ExactMatch);
+}
 
-const QPageLayout Printing::pageLayout() {
+const QPageLayout Printing::pageLayout() const {
   QPageLayout pageLayout;
   pageLayout.setOrientation(QPageLayout::Portrait);
-  pageLayout.setPageSize(page_size, page_margins);
-  pageLayout.setMode(QPageLayout::StandardMode);
-  pageLayout.setUnits(QPageLayout::Millimeter);
+  pageLayout.setPageSize(QPageSize(QPageSize::A4), QMarginsF(20, 0, 0, 0));
+  pageLayout.setMode(QPageLayout::FullPageMode);
+  pageLayout.setUnits(QPageLayout::Point);
   return pageLayout;
 }
 
-const QPageLayout Printing::pdfLayout() {
-  QMarginsF pdfMargins(1, 1, 1, 1);
+const QPageLayout Printing::pdfLayout() const {
   QPageLayout pageLayout;
   pageLayout.setOrientation(QPageLayout::Portrait);
-  pageLayout.setPageSize(page_size, pdfMargins);
+  pageLayout.setPageSize(QPageSize(QPageSize::A4), QMarginsF(1, 1, 1, 1));
   pageLayout.setMode(QPageLayout::FullPageMode);
-  // pageLayout.setUnits(QPageLayout::Millimeter);
+  pageLayout.setUnits(QPageLayout::Point);
   return pageLayout;
+}
+
+bool Printing::createPDF(const QString &section) {
+  QPrinter *printer = new QPrinter(QPrinter::ScreenResolution);
+  printer->setResolution(72);
+  printer->setPageLayout(pdfLayout());
+  printer->setOutputFormat(QPrinter::PdfFormat);
+  printer->setCreator("AntiquaCRM");
+  QString dest = outputDirectory(section);
+  dest.append(QDir::separator());
+  dest.append(p_deliveryId);
+  dest.append(".pdf");
+  printer->setOutputFileName(dest);
+  return generateDocument(printer);
 }
 
 bool Printing::fontFamilyExists(const QString &family) {
