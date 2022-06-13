@@ -10,6 +10,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QImage>
+#include <QFileInfo>
 #include <QObject>
 #include <QPixmap>
 #include <QResizeEvent>
@@ -20,6 +21,8 @@
 namespace HJCMS {
 class SqlCore;
 };
+
+class SourceInfo;
 
 /**
  * @brief Bilder Vorschau
@@ -34,6 +37,7 @@ class ImageView final : public QGraphicsView {
 private:
   HJCMS::SqlCore *m_sql;
   const QSize p_max;
+  const QByteArray p_format;
   QPixmap p_pixmap;
   QGraphicsScene *m_scene;
   QGraphicsPixmapItem *m_pixmap;
@@ -118,6 +122,13 @@ public Q_SLOTS:
 
 public:
   ImageView(QSize maxsize, QWidget *parent = nullptr);
+
+  /**
+   * @brief Das gedrehte Bild in das Archiv speichern
+   * Es wird gleichzeitig mit screenSize() die Maximal Bildgröße ermittelt.
+   * Dies setzt den Größenfaktor für die Archivbilder.
+   */
+  bool saveImageTo(const SourceInfo &info);
 
   /**
    * @brief Suche/Lade Bild aus der Datenbank

@@ -40,6 +40,11 @@ private:
 
   void finalizeBillings();
 
+  /**
+   * @brief PDF Datei erstellen
+   */
+  bool createPDF();
+
 private Q_SLOTS:
   bool generateDocument(QPrinter *printer);
   void openPrintDialog();

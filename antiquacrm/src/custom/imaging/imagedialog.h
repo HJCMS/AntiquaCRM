@@ -18,46 +18,7 @@
 
 class ApplSettings;
 class ImageView;
-
-/**
- * @brief Erweiterte Datei Info erstellen
- * @class SourceInfo
- * @ingroup Imaging
- */
-class SourceInfo final : public QFileInfo {
-private:
-  /**
-   * @brief Artikel Nummer angeben.
-   * Wird Später für das Speichern benötigt!
-   */
-  int fileId = -1;
-
-public:
-  explicit SourceInfo(const QFileInfo &other) : QFileInfo{other} {}
-
-  /**
-   * @brief Artikel Nummer mit Setzen.
-   */
-  void setFileId(int id) { fileId = id; };
-
-  /**
-   * @brief Artikel Nummer abfragen.
-   */
-  int getFileId() { return fileId; };
-
-  /**
-   * @brief Neuer Bildname
-   * @param id Artikel Nummer
-   */
-  static const QString imageBaseName(int id) {
-    return QString::number(id).rightJustified(8, '0');
-  }
-
-  /**
-   * @brief Neues Bild Ziel definieren!
-   */
-  const QString getCopyTarget(const QDir &dest);
-};
+class SourceInfo;
 
 /**
  * @brief Ableitung von QFileDialog
@@ -150,9 +111,7 @@ private:
    * Quellearchiv kopieren/einfügen.
    * @return bool - „true“ = Ist ein Archivbild.
    */
-  inline bool isImageFromArchive(const SourceInfo &info) {
-    return info.path().startsWith(imagesArchiv.path());
-  }
+  inline bool isImageFromArchive(const SourceInfo &info);
 
   /**
    * @brief Hinweis und Nachfragen ob das Bild Kopiert werden soll.

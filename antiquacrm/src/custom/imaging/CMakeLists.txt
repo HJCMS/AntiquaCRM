@@ -17,12 +17,14 @@ SET (subproject_LINKER
 SET (subproject_SOURCES
   imagedialog.cpp
   imageview.cpp
+  sourceinfo.cpp
 )
 
 SET (subproject_HEADERS
   imagedialog.h
   imageview.h
-  ${_subproject}
+  sourceinfo.h
+  Imaging
 )
 
 ADD_LIBRARY (${_subproject} STATIC

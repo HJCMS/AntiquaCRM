@@ -186,6 +186,7 @@ void BookCard::openPrintDialog() {
 #endif
     QPrintDialog *dialog = new QPrintDialog(printer, this);
     dialog->setOptions(QAbstractPrintDialog::PrintShowPageSize);
+    dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);
     connect(dialog, SIGNAL(accepted(QPrinter *)), this,
             SLOT(printDocument(QPrinter *)));
     if (dialog->exec() == QDialog::Accepted) {

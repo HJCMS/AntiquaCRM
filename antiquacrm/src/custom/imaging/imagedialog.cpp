@@ -5,6 +5,7 @@
 #include "applsettings.h"
 #include "imageview.h"
 #include "myicontheme.h"
+#include "sourceinfo.h"
 
 #ifndef DEBUG_IMAGE_DIALOG
 #define DEBUG_IMAGE_DIALOG true
@@ -18,18 +19,6 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QVBoxLayout>
-
-const QString SourceInfo::getCopyTarget(const QDir &dest) {
-  if (!dest.exists() || (fileId < 1))
-    return QString();
-
-  QString p = dest.path();
-  QString name = imageBaseName(fileId);
-  name.append("." + completeSuffix().toLower());
-  p.append(dest.separator());
-  p.append(name);
-  return p;
-}
 
 FileBrowser::FileBrowser(QWidget *parent) : QFileDialog{parent} {
   setObjectName("file_dialog_widget");
@@ -145,6 +134,10 @@ bool ImageDialog::findSourceImage() {
   return false;
 }
 
+bool ImageDialog::isImageFromArchive(const SourceInfo &info) {
+  return info.path().startsWith(imagesArchiv.path());
+}
+
 bool ImageDialog::askToCopyFile() {
   QString question = tr("<p>Do you want to copy this Image into the Picture "
                         "Archiv?</p><b>Note:</b> This will replace Images "
@@ -178,19 +171,21 @@ void ImageDialog::save() {
   if (!filePath.isEmpty()) {
     SourceInfo info(filePath);
     if (!isImageFromArchive(info)) {
-      info.setFileId(p_articleId);
-      QString dest = info.getCopyTarget(imagesArchiv);
-      if (askToCopyFile() && !dest.isEmpty()) {
-        QFile fp(info.path());
+      if (askToCopyFile()) {
         notifyStatus(tr("copy image in progress ..."));
-        if (fp.copy(dest))
+        info.setFileId(p_articleId);
+        info.setTarget(imagesArchiv);
+        if (m_view->saveImageTo(info)) {
           notifyStatus(tr("successfully - image to archive copied"));
-        else
+        } else {
           notifyStatus(tr("warning - image not copied"));
+          qWarning("image copy failed");
+        }
       }
     }
     filePath.clear();
   }
+
   // In Datenbank Speichern!
   if (m_view->storeInDatabase(p_articleId))
     notifyStatus(tr("image saved successfully!"));

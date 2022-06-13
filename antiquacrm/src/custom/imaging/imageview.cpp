@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "imageview.h"
+#include "sourceinfo.h"
 #include "sqlcore.h"
 
 #ifndef DEBUG_IMAGE_VIEW
@@ -13,6 +14,8 @@
 #endif
 #include <QApplication>
 #include <QBuffer>
+#include <QDataStream>
+#include <QDir>
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
 #include <QImageReader>
@@ -21,7 +24,7 @@
 #include <QtMath>
 
 ImageView::ImageView(QSize maxsize, QWidget *parent)
-    : QGraphicsView(parent), p_max(maxsize) {
+    : QGraphicsView(parent), p_max(maxsize), p_format("jpeg") {
   setObjectName("ImagePreview");
   setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
   setBackgroundRole(QPalette::Base);
@@ -130,6 +133,34 @@ void ImageView::clear() {
   m_pixmap = m_scene->addPixmap(QPixmap(0, 0));
 }
 
+bool ImageView::saveImageTo(const SourceInfo &info) {
+  if (!info.dir().exists())
+    return false;
+
+  if (p_pixmap.isNull())
+    return false;
+
+  QPixmap p = p_pixmap.scaled(screenSize(), Qt::KeepAspectRatio,
+                              Qt::SmoothTransformation);
+  QImage img = p.toImage();
+  if (img.isNull())
+    return false;
+
+  SourceInfo dest(info);
+  if (!dest.isValidSource())
+    return false;
+
+  QFile fp(dest.getFileTarget());
+  if (fp.open(QIODevice::WriteOnly)) {
+    img.save(&fp, p_format.data());
+    fp.close();
+    return true;
+  }
+  qDebug() << Q_FUNC_INFO << "Failed" << info.filePath()
+           << dest.getFileTarget();
+  return false;
+}
+
 bool ImageView::readFromDatabase(int articleId) {
   if (articleId < 1)
     return false;
@@ -177,7 +208,7 @@ bool ImageView::storeInDatabase(int articleId) {
   QByteArray rawimg;
   QBuffer buffer(&rawimg);
   buffer.open(QIODevice::WriteOnly);
-  img.save(&buffer, "jpeg");
+  img.save(&buffer, p_format.data());
   buffer.close();
 
   QByteArray base64 = rawimg.toBase64();

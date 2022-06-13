@@ -131,6 +131,21 @@ void DeliveryNote::insertArticle(const QString &articleid,
   body->document()->setModified(true);
 }
 
+bool DeliveryNote::createPDF() {
+  QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
+  QString dest = outputDirectory("deliverynotes");
+  dest.append(QDir::separator());
+  dest.append(p_deliveryId);
+  dest.append(".pdf");
+  printer->setOutputFileName(dest);
+  printer->setOutputFormat(QPrinter::PdfFormat);
+  printer->setPageLayout(pageLayout());
+  printer->setColorMode(QPrinter::GrayScale);
+  printer->setPaperSource(QPrinter::FormSource);
+  printer->setPageMargins(page_margins);
+  return generateDocument(printer);
+}
+
 bool DeliveryNote::generateDocument(QPrinter *printer) {
   QRectF pageRect = printer->pageRect(QPrinter::Point);
   int documentWidth = pageRect.size().width();
@@ -176,32 +191,35 @@ bool DeliveryNote::generateDocument(QPrinter *printer) {
 }
 
 void DeliveryNote::openPrintDialog() {
+  if (createPDF()) {
+    emit statusMessage(tr("PDF File written."));
+  } else {
+    emit statusMessage(tr("PDF not generated"));
+  }
+
+  if (p_printerName.isEmpty()) {
+    emit statusMessage(tr("No Printer found"));
+    return;
+  }
+
   QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
-  QString dest = outputDirectory("deliverynotes");
-  dest.append(QDir::separator());
-  dest.append(p_deliveryId);
-  dest.append(".pdf");
-  printer->setOutputFileName(dest);
-  printer->setOutputFormat(QPrinter::PdfFormat);
   printer->setPageLayout(pageLayout());
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPaperSource(QPrinter::FormSource);
   printer->setPageMargins(page_margins);
-  if (generateDocument(printer)) {
-    emit statusMessage(tr("PDF File written."));
-  }
-  if (!p_printerName.isEmpty()) {
-    printer->setPrinterName(p_printerName);
+  printer->setPageOrientation(QPageLayout::Portrait);
+  printer->setPrinterName(p_printerName);
 #ifndef Q_OS_WIN
-    printer->setOutputFormat(QPrinter::NativeFormat);
+  printer->setOutputFormat(QPrinter::NativeFormat);
 #endif
-    printer->setPageOrientation(QPageLayout::Portrait);
-    QPrintDialog *dialog = new QPrintDialog(printer, this);
-    connect(dialog, SIGNAL(accepted(QPrinter *)), this,
-            SLOT(generateDocument(QPrinter *)));
-    if (dialog->exec() == QDialog::Accepted) {
-      done(QDialog::Accepted);
-    }
+
+  QPrintDialog *dialog = new QPrintDialog(printer, this);
+  dialog->setOptions(QAbstractPrintDialog::PrintShowPageSize);
+  dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);
+  connect(dialog, SIGNAL(accepted(QPrinter *)), this,
+          SLOT(generateDocument(QPrinter *)));
+  if (dialog->exec() == QDialog::Accepted) {
+    done(QDialog::Accepted);
   }
 }
 

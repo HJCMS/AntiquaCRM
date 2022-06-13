@@ -229,6 +229,8 @@ protected:
    */
   void addPrinters();
 
+  virtual bool createPDF() = 0;
+
 protected Q_SLOTS:
   /**
    * @brief Ein Drucker wurde ausgewählt.
