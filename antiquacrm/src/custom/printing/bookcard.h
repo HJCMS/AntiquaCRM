@@ -74,6 +74,8 @@ private:
 
   const QPageLayout pageLayout();
 
+  bool createPDF();
+
 private Q_SLOTS:
   bool printDocument(QPrinter *printer);
   void openPrintDialog();

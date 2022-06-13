@@ -128,7 +128,7 @@ void BookCard::readConfiguration() {
   if (font.fromString(config->value("normal_font").toString())) {
     m_card->setFont(font);
   }
-  p_printerName = config->value("DIN_A6_Printer","").toString();
+  p_printerName = config->value("DIN_A6_Printer").toString();
   config->endGroup();
   p_destination = config->value("dirs/cards").toString();
 }
@@ -156,6 +156,18 @@ const QPageLayout BookCard::pageLayout() {
   return pageLayout;
 }
 
+bool BookCard::createPDF() {
+  QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
+  QString dest = p_destination;
+  dest.append(QDir::separator());
+  dest.append(p_filename);
+  dest.append(".pdf");
+  printer->setOutputFileName(dest);
+  printer->setOutputFormat(QPrinter::PdfFormat);
+  printer->setPageLayout(pageLayout());
+  return printDocument(printer);
+}
+
 bool BookCard::printDocument(QPrinter *printer) {
   QPageLayout layout = pageLayout();
   printer->setPageLayout(layout);
@@ -166,32 +178,28 @@ bool BookCard::printDocument(QPrinter *printer) {
 }
 
 void BookCard::openPrintDialog() {
+  if (createPDF()) {
+    qInfo("PDF File written.");
+  } else {
+    qWarning("PDF not generated");
+  }
+
+  if (p_printerName.isEmpty()) {
+    qWarning("No Printer found");
+    return;
+  }
+
   QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
-  QString dest = p_destination;
-  dest.append(QDir::separator());
-  dest.append(p_filename);
-  dest.append(".pdf");
-  printer->setOutputFileName(dest);
-  printer->setOutputFormat(QPrinter::PdfFormat);
   printer->setPageLayout(pageLayout());
   printer->setColorMode(QPrinter::GrayScale);
-  printer->setFullPage(true);
-  if (printDocument(printer)) {
-    qInfo("PDF File written.");
-  }
-  if (!p_printerName.isEmpty()) {
-    printer->setPrinterName(p_printerName);
-#ifndef Q_OS_WIN
-    printer->setOutputFormat(QPrinter::NativeFormat);
-#endif
-    QPrintDialog *dialog = new QPrintDialog(printer, this);
-    dialog->setOptions(QAbstractPrintDialog::PrintShowPageSize);
-    dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);
-    connect(dialog, SIGNAL(accepted(QPrinter *)), this,
-            SLOT(printDocument(QPrinter *)));
-    if (dialog->exec() == QDialog::Accepted) {
-      done(QDialog::Accepted);
-    }
+  printer->setPrinterName(p_printerName);
+
+  QPrintDialog *dialog = new QPrintDialog(printer, this);
+  dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);
+  connect(dialog, SIGNAL(accepted(QPrinter *)), this,
+          SLOT(printDocument(QPrinter *)));
+  if (dialog->exec() == QDialog::Accepted) {
+    done(QDialog::Accepted);
   }
 }
 

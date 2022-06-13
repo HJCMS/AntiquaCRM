@@ -276,6 +276,11 @@ public:
   const QPageLayout pageLayout();
 
   /**
+   * @brief PDF File Layout
+   */
+  const QPageLayout pdfLayout();
+
+  /**
    * @brief Suche Schrift in der Datenbank
    */
   static bool fontFamilyExists(const QString &family);

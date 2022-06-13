@@ -1280,7 +1280,7 @@
         <translation>Menge</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+95"/>
         <source>PDF File written.</source>
         <translation>PDF Datei wurde erstellt.</translation>
     </message>
@@ -1295,7 +1295,7 @@
         <translation>Kein Drucker gefunden</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+21"/>
         <source>There is no Order-Id to generate this delivery!</source>
         <translation>Es gibt keine Bestellnummer für die Erstellung!</translation>
     </message>
@@ -1974,7 +1974,7 @@
         <translation>Gesamt:</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+83"/>
         <source>PDF File written.</source>
         <translation>PDF Datei wurde erstellt.</translation>
     </message>
@@ -1989,7 +1989,7 @@
         <translation>Kein Drucker gefunden</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+23"/>
         <source>There is no Order-Id to generate this invoice!</source>
         <translation></translation>
     </message>
@@ -3047,7 +3047,7 @@
         <translation>Drucker</translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+92"/>
         <source>Delivery note</source>
         <translation>Lieferschein</translation>
     </message>
@@ -3841,7 +3841,7 @@
         <translation>Lagerort</translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+70"/>
         <source>Storage location is required and must set.</source>
         <translation>Eine Lagerangabe ist Erforderlich.</translation>
     </message>

@@ -173,10 +173,11 @@ void Invoice::finalizeBillings() {
   cursor.setCharFormat(normalFormat());
   QString str = QString::number(p_fullPrice, 'f', 2);
   cursor.insertText(str + " " + p_currency);
+
+  body->document()->setModified(true);
 }
 
-bool Invoice::createPDF()
-{
+bool Invoice::createPDF() {
   QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
   QString dest = outputDirectory("invoices");
   dest.append(QDir::separator());
@@ -184,34 +185,40 @@ bool Invoice::createPDF()
   dest.append(".pdf");
   printer->setOutputFileName(dest);
   printer->setOutputFormat(QPrinter::PdfFormat);
-  printer->setPageLayout(pageLayout());
-  printer->setColorMode(QPrinter::GrayScale);
-  printer->setPaperSource(QPrinter::FormSource);
-  printer->setPageMargins(page_margins);
+  printer->setPageLayout(pdfLayout());
   return generateDocument(printer);
 }
 
 bool Invoice::generateDocument(QPrinter *printer) {
   QRectF pageRect = printer->pageRect(QPrinter::Point);
-  int documentWidth = pageRect.size().width();
+  int border = printer->pageLayout().margins().left();
+  int documentWidth = qRound(pageRect.size().width() - (border * 2));
 
   QTextDocument *htmlHead = header->document();
   htmlHead->setHtml(getHeaderHTML());
-  htmlHead->setPageSize(QSizeF(documentWidth, htmlHead->size().height()));
+  htmlHead->setPageSize(QSizeF(documentWidth, header->size().height()));
   htmlHead->setModified(true);
-  QRect headerRect = QRect(QPoint(0, 0), header->size());
+  QRectF headerRect = QRectF(QPoint(0, 0), htmlHead->pageSize());
 
   QTextDocument *htmlBody = body->document();
   htmlBody->setHtml(getBodyHTML());
+  htmlBody->setPageSize(QSizeF(documentWidth, body->size().height()));
   htmlBody->setModified(true);
-  QRect bodyRect = QRect(QPoint(0, 0), body->size());
+  QRectF bodyRect = QRectF(QPoint(0, 0), htmlBody->pageSize());
 
   QTextDocument *htmlFooter = footer->document();
   htmlFooter->setHtml(getFooterHTML());
-  htmlFooter->setPageSize(QSizeF(documentWidth, htmlFooter->size().height()));
+  htmlFooter->setPageSize(QSizeF(documentWidth, footer->size().height()));
   htmlFooter->setModified(true);
   QRectF footerRect = QRectF(QPoint(0, 0), htmlFooter->pageSize());
   int yPosFooter = (pageRect.height() - (footerRect.height() * 2));
+
+  /*
+  qDebug() << Q_FUNC_INFO  << printer->printerName() << Qt::endl
+           << "Head:" << headerRect << Qt::endl
+           << "Body:" << bodyRect << Qt::endl
+           << "Footer." << footerRect;
+  */
 
   QImage image = getWatermark();
   QPainter painter;
@@ -224,11 +231,11 @@ bool Invoice::generateDocument(QPrinter *printer) {
   }
 
   int pY = 0;
-  painter.translate(0, 0);
+  painter.translate(border, 0);
   htmlHead->drawContents(&painter, headerRect);
-  painter.translate(0, headerRect.height());
+  painter.translate(border, headerRect.height());
   htmlBody->drawContents(&painter, bodyRect);
-  painter.translate(0, yPosFooter);
+  painter.translate(border, yPosFooter);
   htmlFooter->drawContents(&painter, footerRect);
   painter.end();
   return true;
@@ -247,18 +254,11 @@ void Invoice::openPrintDialog() {
   }
 
   QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
-  printer->setPageLayout(pageLayout());
   printer->setColorMode(QPrinter::GrayScale);
-  printer->setPaperSource(QPrinter::FormSource);
-  printer->setPageMargins(page_margins);
-  printer->setPageOrientation(QPageLayout::Portrait);
+  printer->setPageLayout(pageLayout());
   printer->setPrinterName(p_printerName);
-#ifndef Q_OS_WIN
-  printer->setOutputFormat(QPrinter::NativeFormat);
-#endif
 
   QPrintDialog *dialog = new QPrintDialog(printer, this);
-  dialog->setOptions(QAbstractPrintDialog::PrintShowPageSize);
   dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);
   connect(dialog, SIGNAL(accepted(QPrinter *)), this,
           SLOT(generateDocument(QPrinter *)));

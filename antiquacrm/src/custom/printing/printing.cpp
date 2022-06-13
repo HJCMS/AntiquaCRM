@@ -30,8 +30,8 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
   footerFont = QFont("Tahoma", 10);
   smallFont = QFont("Tahoma", 8);
   // 210 x 297 mm, 8.26 x 11.69 inches
-  page_margins = QMarginsF(10, 1, 1, 1);
-  page_size = QPageSize(QPageSize::A4Plus);
+  page_margins = QMarginsF(10, 0, 10, 0);
+  page_size = QPageSize(QPageSize::A4);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("printing_layout");
@@ -107,7 +107,7 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
 void Printing::readConfiguration() {
   config->beginGroup("company");
   QStringList keys = config->childKeys();
-  if (keys.count() < 1) {
+  if (keys.count() < 2) {
     QString warn("<p>");
     warn.append(tr("Your Company configuration is incomplete!"));
     warn.append("</p>");
@@ -162,11 +162,12 @@ const QTextCharFormat Printing::smallFormat() {
 
 const QTextTableFormat Printing::tableFormat() {
   QTextTableFormat f;
-  f.setWidth(QTextLength(QTextLength().PercentageLength, 100));
-  f.setCellPadding(5);
+  f.setWidth(QTextLength(QTextLength().PercentageLength, 98));
+  f.setCellPadding(2);
   f.setCellSpacing(0);
+  f.setTopMargin(0);
   f.setBorderStyle(QTextFrameFormat::BorderStyle_Solid);
-  f.setTopMargin(5);
+  f.setAlignment(Qt::AlignCenter);
   return f;
 }
 
@@ -200,7 +201,6 @@ void Printing::constructFooter() {
   // FOOTER
   QTextTableFormat format = tableFormat();
   format.setBorderStyle(QTextFrameFormat::BorderStyle_None);
-  format.setTopMargin(0);
   QTextTable *table = cursor.insertTable(1, 2, format);
   table->setObjectName("footer_table");
 
@@ -319,8 +319,18 @@ const QPageLayout Printing::pageLayout() {
   QPageLayout pageLayout;
   pageLayout.setOrientation(QPageLayout::Portrait);
   pageLayout.setPageSize(page_size, page_margins);
-  pageLayout.setMode(QPageLayout::FullPageMode);
+  pageLayout.setMode(QPageLayout::StandardMode);
   pageLayout.setUnits(QPageLayout::Millimeter);
+  return pageLayout;
+}
+
+const QPageLayout Printing::pdfLayout() {
+  QMarginsF pdfMargins(1, 1, 1, 1);
+  QPageLayout pageLayout;
+  pageLayout.setOrientation(QPageLayout::Portrait);
+  pageLayout.setPageSize(page_size, pdfMargins);
+  pageLayout.setMode(QPageLayout::FullPageMode);
+  // pageLayout.setUnits(QPageLayout::Millimeter);
   return pageLayout;
 }
 
