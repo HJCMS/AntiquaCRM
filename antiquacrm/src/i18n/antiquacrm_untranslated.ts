@@ -407,12 +407,12 @@
 <context>
     <name>BooksTable</name>
     <message>
-        <location filename="../inventory/books/bookstable.cpp" line="+97"/>
+        <location filename="../inventory/books/bookstable.cpp" line="+95"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+62"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -427,7 +427,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>add Article to opened Order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1280,12 +1280,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+90"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+2"/>
+        <source>PDF not generated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>No Printer found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+28"/>
         <source>There is no Order-Id to generate this delivery!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1494,7 +1504,7 @@
 <context>
     <name>FileBrowser</name>
     <message>
-        <location filename="../custom/imaging/imagedialog.cpp" line="+40"/>
+        <location filename="../custom/imaging/imagedialog.cpp" line="+29"/>
         <source>Image jpeg files (*.jpg *.JPG *.jpeg *.JPEG)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1739,7 +1749,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <source>&lt;p&gt;Do you want to copy this Image into the Picture Archiv?&lt;/p&gt;&lt;b&gt;Note:&lt;/b&gt; This will replace Images with identical Article Filename!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1754,12 +1764,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+12"/>
         <source>copy image in progress ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>successfully - image to archive copied</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1769,7 +1779,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+10"/>
         <source>image saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1865,7 +1875,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+60"/>
         <source>exists with count</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1964,12 +1974,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+76"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+2"/>
+        <source>PDF not generated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>No Printer found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+30"/>
         <source>There is no Order-Id to generate this invoice!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3611,37 +3631,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+61"/>
+        <location line="+48"/>
         <source>Search for</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-54"/>
-        <source>order by</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Author</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Keywords</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location line="-43"/>
         <location line="+2"/>
         <source>Start search</source>
         <translation type="unfinished"></translation>

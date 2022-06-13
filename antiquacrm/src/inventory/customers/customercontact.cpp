@@ -232,45 +232,47 @@ void CustomerContact::fetchCountryFromPostal() {
 void CustomerContact::postalCodeComplite() { fetchCountryFromPostal(); }
 
 void CustomerContact::generateAddressBody() {
-  QStringList name;
-  QStringList address;
-  /**< Titelanrede */
-  if (!c_title->value().toString().isEmpty()) {
-    name.append(c_title->value().toString());
-  }
-  /**< Vorname */
-  if (!c_firstname->value().toString().isEmpty()) {
-    name.append(c_firstname->value().toString());
-  }
-  /**< Nachname */
-  if (!c_lastname->value().toString().isEmpty()) {
-    name.append(c_lastname->value().toString());
-  }
-  /**< Postleitzahl */
-  if (!c_postalcode->value().toString().isEmpty()) {
-    address.append(c_postalcode->value().toString());
-  }
-  /**< Wohnort */
-  if (!c_location->value().toString().isEmpty()) {
-    address.append(c_location->value().toString());
-  }
   QString body;
-  /**< Company */
+  QStringList buffer;
+  /* Company */
   if (c_company->value().toBool()) {
     if (!c_company_name->value().toString().isEmpty()) {
       body.append(c_company_name->value().toString());
       body.append("\n");
     }
   }
-  body.append(name.join(" "));
-  body.append("\n");
-  body.append(address.join(" "));
+  /* Titelanrede */
+  if (!c_title->value().toString().isEmpty()) {
+    buffer.append(c_title->value().toString());
+  }
+  /* Vorname */
+  if (!c_firstname->value().toString().isEmpty()) {
+    buffer.append(c_firstname->value().toString());
+  }
+  /* Nachname */
+  if (!c_lastname->value().toString().isEmpty()) {
+    buffer.append(c_lastname->value().toString());
+  }
+  body.append(buffer.join(" "));
   body.append("\n");
 
-  /**< Straße */
-  if (!c_street->value().toString().isEmpty()) {
+  /* Straße */
+    if (!c_street->value().toString().isEmpty()) {
     body.append(c_street->value().toString());
+    body.append("\n");
   }
+
+  buffer.clear();
+  /* Postleitzahl */
+  if (!c_postalcode->value().toString().isEmpty()) {
+    buffer.append(c_postalcode->value().toString());
+  }
+  /* Wohnort */
+  if (!c_location->value().toString().isEmpty()) {
+    buffer.append(c_location->value().toString());
+  }
+  body.append(buffer.join(" "));
+  body.append("\n");
 
   if (!body.trimmed().isEmpty())
     c_postal_address->setValue(body);

@@ -116,7 +116,8 @@ const QString StorageEdit::description() {
 }
 
 const QVariant StorageEdit::value() {
-  return QVariant(m_storage->currentIndex());
+  int i = m_storage->currentIndex();
+  return m_storage->itemData(i, Qt::UserRole);
 }
 
 bool StorageEdit::isValid() {

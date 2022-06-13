@@ -328,8 +328,11 @@ void EditCustomer::updateCustomer(const QString &id) {
 void EditCustomer::createCustomer() {
   setInputList();
   sqlQueryResult.clear();             /**< SQL History leeren */
+  infoLabel->clear();                 /**< Muss Leer sein */
+  c_id->reset();                      /**< CustomerId Leeren */
   clearDataFields(p_objPattern);      /**< Alle Datenfelder leeren */
   m_actionBar->setRestoreable(false); /**< ResetButton off */
   m_dataBox->setCurrentWidget(m_contact);
+  c_id->setRequired(false); /**< CustomerId Nicht erforderlich */
   resetModified(inputList);
 }
