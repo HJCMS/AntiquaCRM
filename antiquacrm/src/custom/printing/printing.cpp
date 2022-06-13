@@ -162,7 +162,7 @@ const QTextCharFormat Printing::smallFormat() {
 
 const QTextTableFormat Printing::tableFormat() {
   QTextTableFormat f;
-  f.setWidth(QTextLength(QTextLength().PercentageLength, 98));
+  f.setWidth(QTextLength(QTextLength().PercentageLength, 95));
   f.setCellPadding(2);
   f.setCellSpacing(0);
   f.setTopMargin(0);

@@ -126,7 +126,7 @@
 <context>
     <name>BookCard</name>
     <message>
-        <location filename="../custom/printing/bookcard.cpp" line="+94"/>
+        <location filename="../custom/printing/bookcard.cpp" line="+95"/>
         <source>Printing book card</source>
         <translation>Drucke Buchkarte</translation>
     </message>
@@ -1240,7 +1240,7 @@
 <context>
     <name>DeliveryNote</name>
     <message>
-        <location filename="../custom/printing/deliverynote.cpp" line="+16"/>
+        <location filename="../custom/printing/deliverynote.cpp" line="+17"/>
         <source>Delivery note</source>
         <translation>Lieferschein</translation>
     </message>
@@ -1280,7 +1280,7 @@
         <translation>Menge</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+97"/>
         <source>PDF File written.</source>
         <translation>PDF Datei wurde erstellt.</translation>
     </message>
@@ -1295,7 +1295,7 @@
         <translation>Kein Drucker gefunden</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+24"/>
         <source>There is no Order-Id to generate this delivery!</source>
         <translation>Es gibt keine Bestellnummer für die Erstellung!</translation>
     </message>
@@ -1924,7 +1924,7 @@
 <context>
     <name>Invoice</name>
     <message>
-        <location filename="../custom/printing/invoice.cpp" line="+49"/>
+        <location filename="../custom/printing/invoice.cpp" line="+50"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
@@ -1974,7 +1974,7 @@
         <translation>Gesamt:</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+78"/>
         <source>PDF File written.</source>
         <translation>PDF Datei wurde erstellt.</translation>
     </message>
@@ -1989,7 +1989,7 @@
         <translation>Kein Drucker gefunden</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+26"/>
         <source>There is no Order-Id to generate this invoice!</source>
         <translation></translation>
     </message>

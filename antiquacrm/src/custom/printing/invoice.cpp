@@ -9,6 +9,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QPainter>
+#include <QPrinterInfo>
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
 
@@ -178,13 +179,14 @@ void Invoice::finalizeBillings() {
 }
 
 bool Invoice::createPDF() {
-  QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
+  QPrinter *printer = new QPrinter(QPrinter::ScreenResolution);
   QString dest = outputDirectory("invoices");
   dest.append(QDir::separator());
   dest.append(p_invoiceId);
   dest.append(".pdf");
   printer->setOutputFileName(dest);
   printer->setOutputFormat(QPrinter::PdfFormat);
+  printer->setCreator("AntiquaCRM");
   printer->setPageLayout(pdfLayout());
   return generateDocument(printer);
 }
@@ -196,36 +198,30 @@ bool Invoice::generateDocument(QPrinter *printer) {
 
   QTextDocument *htmlHead = header->document();
   htmlHead->setHtml(getHeaderHTML());
-  htmlHead->setPageSize(QSizeF(documentWidth, header->size().height()));
+  htmlHead->setPageSize(QSizeF(documentWidth, htmlHead->size().height()));
   htmlHead->setModified(true);
-  QRectF headerRect = QRectF(QPoint(0, 0), htmlHead->pageSize());
+  QRectF headerRect = QRectF(QPointF(0, 0), htmlHead->pageSize());
 
   QTextDocument *htmlBody = body->document();
   htmlBody->setHtml(getBodyHTML());
   htmlBody->setPageSize(QSizeF(documentWidth, body->size().height()));
   htmlBody->setModified(true);
-  QRectF bodyRect = QRectF(QPoint(0, 0), htmlBody->pageSize());
+  QRectF bodyRect = QRectF(QPointF(0, 0), htmlBody->pageSize());
 
   QTextDocument *htmlFooter = footer->document();
   htmlFooter->setHtml(getFooterHTML());
   htmlFooter->setPageSize(QSizeF(documentWidth, footer->size().height()));
   htmlFooter->setModified(true);
-  QRectF footerRect = QRectF(QPoint(0, 0), htmlFooter->pageSize());
+  QRectF footerRect = QRectF(QPointF(0, 0), htmlFooter->pageSize());
   int yPosFooter = (pageRect.height() - (footerRect.height() * 2));
-
-  /*
-  qDebug() << Q_FUNC_INFO  << printer->printerName() << Qt::endl
-           << "Head:" << headerRect << Qt::endl
-           << "Body:" << bodyRect << Qt::endl
-           << "Footer." << footerRect;
-  */
 
   QImage image = getWatermark();
   QPainter painter;
+  painter.setViewport(pageRect.toRect());
   painter.begin(printer);
   if (!image.isNull()) {
     painter.translate(0, 0);
-    painter.setOpacity(0.3);
+    painter.setOpacity(0.5);
     painter.drawImage(QPoint(0, 0), image);
     painter.setOpacity(1.0);
   }
@@ -253,9 +249,12 @@ void Invoice::openPrintDialog() {
     return;
   }
 
-  QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
+  QPrinterInfo p_info = QPrinterInfo::printerInfo(p_printerName);
+  QPrinter *printer = new QPrinter(p_info, QPrinter::PrinterResolution);
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPageLayout(pageLayout());
+  printer->setFullPage(true);
+  printer->setDocName("Invoice");
   printer->setPrinterName(p_printerName);
 
   QPrintDialog *dialog = new QPrintDialog(printer, this);

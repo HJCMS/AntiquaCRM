@@ -8,6 +8,7 @@
 
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
+#include <QPrinterInfo>
 #include <QStyle>
 #include <QtWidgets>
 
@@ -157,13 +158,14 @@ const QPageLayout BookCard::pageLayout() {
 }
 
 bool BookCard::createPDF() {
-  QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
+  QPrinter *printer = new QPrinter(QPrinter::ScreenResolution);
   QString dest = p_destination;
   dest.append(QDir::separator());
   dest.append(p_filename);
   dest.append(".pdf");
   printer->setOutputFileName(dest);
   printer->setOutputFormat(QPrinter::PdfFormat);
+  printer->setCreator("AntiquaCRM");
   printer->setPageLayout(pageLayout());
   return printDocument(printer);
 }
@@ -189,7 +191,8 @@ void BookCard::openPrintDialog() {
     return;
   }
 
-  QPrinter *printer = new QPrinter(QPrinter::PrinterResolution);
+  QPrinterInfo p_info = QPrinterInfo::printerInfo(p_printerName);
+  QPrinter *printer = new QPrinter(p_info, QPrinter::PrinterResolution);
   printer->setPageLayout(pageLayout());
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPrinterName(p_printerName);
