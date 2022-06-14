@@ -1,14 +1,21 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#ifndef SOURCEINFO_IMAGING_H
-# include "sourceinfo.h"
+/**
+ * @defgroup Imaging
+ * @{
+ */
+
+#ifndef IMAGEDIALOG_IMAGING_H
+# include "imagedialog.h"
 #endif
 
 #ifndef IMAGEVIEW_IMAGING_H
 # include "imageview.h"
 #endif
 
-#ifndef IMAGEDIALOG_IMAGING_H
-# include "imagedialog.h"
+#ifndef SOURCEINFO_IMAGING_H
+# include "sourceinfo.h"
 #endif
+
+/** @} */

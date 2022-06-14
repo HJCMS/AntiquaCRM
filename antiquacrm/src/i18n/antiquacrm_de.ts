@@ -1280,7 +1280,7 @@
         <translation>Menge</translation>
     </message>
     <message>
-        <location line="+97"/>
+        <location line="+77"/>
         <source>PDF File written.</source>
         <translation>PDF Datei wurde erstellt.</translation>
     </message>
@@ -1295,7 +1295,7 @@
         <translation>Kein Drucker gefunden</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+25"/>
         <source>There is no Order-Id to generate this delivery!</source>
         <translation>Es gibt keine Bestellnummer für die Erstellung!</translation>
     </message>
@@ -1974,7 +1974,7 @@
         <translation>Gesamt:</translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="+64"/>
         <source>PDF File written.</source>
         <translation>PDF Datei wurde erstellt.</translation>
     </message>
@@ -2012,7 +2012,7 @@
 <context>
     <name>IsbnEdit</name>
     <message>
-        <location filename="../custom/utils/isbnedit.cpp" line="+41"/>
+        <location filename="../custom/utils/isbnedit.cpp" line="+26"/>
         <source>ISBN/EAN 10/13 (ISO 2108)</source>
         <translation>ISBN/EAN 10/13 (ISO 2108)</translation>
     </message>
@@ -2027,12 +2027,12 @@
         <translation>Erstelle ISBN Anfrage an OpenLibrary.org</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+70"/>
         <source>Required</source>
         <translation>Erforderlich</translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+98"/>
         <source>ISBN is set to required and must be a valid 10 or 13 digit number.</source>
         <translation>Die ISBN ist auf erforderlich gesetzt und muss eine gültige 10- oder 13-stellige Nummer sein.</translation>
     </message>
@@ -3022,7 +3022,7 @@
         <translation>Bitte erst die Konfiguration abschließen!</translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="+100"/>
         <source>email</source>
         <translation>E-Mail</translation>
     </message>
@@ -3047,7 +3047,7 @@
         <translation>Drucker</translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+109"/>
         <source>Delivery note</source>
         <translation>Lieferschein</translation>
     </message>
