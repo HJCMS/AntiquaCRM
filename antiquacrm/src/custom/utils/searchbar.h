@@ -78,6 +78,11 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   /**
+   * @brief Focus auf die Sucheinegabe setzen
+   */
+  void setFilterFocus();
+
+  /**
    * @brief leeren und Fokus auf Sucheingabe
    */
   void clearAndFocus();

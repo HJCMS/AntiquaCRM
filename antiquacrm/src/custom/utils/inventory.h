@@ -7,6 +7,7 @@
 
 #include <QObject>
 #include <QVariant>
+//#include <QKeyEvent>
 #include <QWidget>
 
 /**
@@ -83,9 +84,28 @@ protected Q_SLOTS:
   */
   virtual void openTableView() = 0;
 
+  /**
+   * @brief Sucht nach UtilsMain::hasModified()
+   * und registriert die Signale
+   */
   void findModifySignals();
 
 Q_SIGNALS:
+  /**
+   * @brief Signal setze Focus auf Sucheingabe
+   */
+  void s_setSearchFocus();
+
+  /**
+   * @brief Signal setze Focus auf Suchfilter
+   */
+  void s_setSearchFilter();
+
+  /**
+   * @brief Signal Eintrag erstellen
+   */
+  void s_createNewEntry();
+
   /**
    * @brief Änderungen aufzeichnen
    */

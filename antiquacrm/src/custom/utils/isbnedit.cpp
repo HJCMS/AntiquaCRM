@@ -68,35 +68,8 @@ const bool IsbnEdit::isISBN10(const QString &isbn) const {
 }
 
 const bool IsbnEdit::isISBN13(const QString &isbn) const {
-  calculate(isbn);
   QRegularExpressionMatch c = p13.match(isbn);
   return c.hasMatch();
-}
-
-bool IsbnEdit::calculate(const QString &isbn) const {
-  qint64 calc = 0;
-  QList<int> _a;
-  foreach (QString n, isbn.trimmed().split("")) {
-    if (!n.isEmpty())
-      _a.append(n.toInt());
-  }
-  if (_a.count() != 13)
-    return false;
-
-  // GS1-Element
-  calc += ((_a[0] * 1) + (_a[1] * 3) + (_a[2] * 1));
-  // Gruppennummer 1-5 Stellig
-  calc += (_a[3] * 3);
-  // Verlagsnummer 1-7 Stellig
-  calc += ((_a[4] * 1) + (_a[5] * 3));
-  // Titelnummer
-
-  // Prüfziffer 1 Stellig
-
-#ifdef ISBN_EDITOR_DEBUG
-  qDebug() << Q_FUNC_INFO << calc;
-#endif
-  return false;
 }
 
 void IsbnEdit::setButtonText(int i) {

@@ -33,7 +33,7 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("printing_layout");
 
-  QRectF pageRect = pageLayout().fullRect(QPageLayout::Point);
+  QRectF pageRect = QPageSize(QPageSize::A4).rect(QPageSize::Point);
   int pageWidth = pageRect.width();
 
   QScrollArea *scrollAera = new QScrollArea(this);
@@ -321,24 +321,24 @@ const QPageSize Printing::pageSize() const {
 const QPageLayout Printing::pageLayout() const {
   QPageLayout pageLayout;
   pageLayout.setOrientation(QPageLayout::Portrait);
-  pageLayout.setPageSize(QPageSize(QPageSize::A4), QMarginsF(20, 0, 0, 0));
-  pageLayout.setMode(QPageLayout::FullPageMode);
-  pageLayout.setUnits(QPageLayout::Point);
+  pageLayout.setPageSize(QPageSize(QPageSize::A4), QMarginsF(10, 0, 0, 0));
+  pageLayout.setMode(QPageLayout::StandardMode);
+  pageLayout.setUnits(QPageLayout::Millimeter);
   return pageLayout;
 }
 
 const QPageLayout Printing::pdfLayout() const {
   QPageLayout pageLayout;
   pageLayout.setOrientation(QPageLayout::Portrait);
-  pageLayout.setPageSize(QPageSize(QPageSize::A4), QMarginsF(1, 1, 1, 1));
-  pageLayout.setMode(QPageLayout::FullPageMode);
-  pageLayout.setUnits(QPageLayout::Point);
+  pageLayout.setPageSize(QPageSize(QPageSize::A4), QMarginsF(5, 0, 0, 0));
+  pageLayout.setMode(QPageLayout::StandardMode);
+  pageLayout.setUnits(QPageLayout::Millimeter);
   return pageLayout;
 }
 
 bool Printing::createPDF(const QString &section) {
-  QPrinter *printer = new QPrinter(QPrinter::ScreenResolution);
-  printer->setResolution(72);
+  QPrinter *printer = new QPrinter(QPrinter::HighResolution);
+  // printer->setResolution(72);
   printer->setPageLayout(pdfLayout());
   printer->setOutputFormat(QPrinter::PdfFormat);
   printer->setCreator("AntiquaCRM");

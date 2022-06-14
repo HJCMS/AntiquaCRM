@@ -179,10 +179,9 @@ void Invoice::finalizeBillings() {
 }
 
 bool Invoice::generateDocument(QPrinter *printer) {
-  QImage image = getWatermark();
-  QRectF pageRect = printer->pageLayout().paintRect(QPageLayout::Point);
+  QRectF pageRect(printArea->geometry());
   int border = printer->pageLayout().margins().left();
-  int documentWidth = qRound(pageRect.size().width() - border);
+  int documentWidth = (printArea->geometry().width() - border);
 
   QTextDocument *htmlHead = header->document();
   htmlHead->setHtml(getHeaderHTML());
@@ -203,8 +202,11 @@ bool Invoice::generateDocument(QPrinter *printer) {
   QRectF footerRect = QRectF(QPointF(0, 0), htmlFooter->pageSize());
   int yPosFooter = (pageRect.height() - (footerRect.height() * 2));
 
+  QImage image = getWatermark();
   QPainter painter;
   painter.begin(printer);
+  painter.setWindow(printArea->rect());
+
   if (!image.isNull()) {
     painter.translate(0, 0);
     painter.setOpacity(0.5);

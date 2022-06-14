@@ -407,27 +407,27 @@
 <context>
     <name>BooksTable</name>
     <message>
-        <location filename="../inventory/books/bookstable.cpp" line="+95"/>
+        <location filename="../inventory/books/bookstable.cpp" line="+96"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+69"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Copy Article Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-6"/>
+        <location line="-7"/>
         <source>Create entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>add Article to opened Order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1280,7 +1280,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+79"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1821,6 +1821,27 @@
     </message>
 </context>
 <context>
+    <name>Inventory</name>
+    <message>
+        <location filename="../custom/utils/inventory.cpp" line="+17"/>
+        <source>Ctrl+S</source>
+        <comment>Search</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Ctrl+F</source>
+        <comment>Filter</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Ctrl+N</source>
+        <comment>New Entry</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>InventoryBooks</name>
     <message>
         <location filename="../inventory/books/inventorybooks.cpp" line="+60"/>
@@ -1828,7 +1849,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+99"/>
         <source>Automatic search disabled in this mode. Press enter to start the search!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1974,7 +1995,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+66"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2027,7 +2048,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+43"/>
         <source>Required</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2452,7 +2473,7 @@
 <context>
     <name>OrdersItemList</name>
     <message>
-        <location filename="../inventory/orders/ordersitemlist.cpp" line="+33"/>
+        <location filename="../inventory/orders/ordersitemlist.cpp" line="+37"/>
         <source>Info about Article found by input ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2472,7 +2493,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+95"/>
         <source>Inserting an empty entry is cowardly denied.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3450,7 +3471,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="-122"/>
+        <location filename="../inventory/books/inventorybooks.cpp" line="-131"/>
         <source>Book Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3625,18 +3646,28 @@
 <context>
     <name>SearchBar</name>
     <message>
-        <location filename="../custom/utils/searchbar.cpp" line="+43"/>
+        <location filename="../custom/utils/searchbar.cpp" line="+36"/>
+        <source>Press CTRL+F, to quickly open this Menu.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Press CTRL+S, it clears the input for a new search.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>You can use a wildcard * to broaden the search.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+48"/>
+        <location line="+53"/>
         <source>Search for</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-43"/>
+        <location line="-48"/>
         <location line="+2"/>
         <source>Start search</source>
         <translation type="unfinished"></translation>

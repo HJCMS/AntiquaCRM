@@ -10,6 +10,7 @@
 #include <QDebug>
 #include <QHeaderView>
 #include <QItemSelectionModel>
+#include <QKeySequence>
 #include <QMenu>
 #include <QMutex>
 #include <QPoint>
@@ -149,8 +150,15 @@ void BooksTable::createByContext() { emit s_newEntryPlease(); }
 
 void BooksTable::contextMenuEvent(QContextMenuEvent *ev) {
   p_modelIndex = indexAt(ev->pos());
-  // Aktiviere/Deaktivieren der Einträge
+  /**
+   * Aktiviere/Deaktivieren der Einträge, wenn das Model gültig ist!
+   */
   bool b = p_modelIndex.isValid();
+
+  /**
+   * Eintrag erstellen erst freischalten wenn Tabelle nicht leer ist!
+   */
+  bool bn = (m_queryModel->rowCount() > 0);
 
   QMenu *m = new QMenu("Actions", this);
   // Eintrag öffnen  Bestellung anlegen
@@ -161,7 +169,8 @@ void BooksTable::contextMenuEvent(QContextMenuEvent *ev) {
 
   QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create entry"));
   ac_create->setObjectName("ac_context_create_book");
-  ac_create->setEnabled(b);
+  ac_create->setShortcut(QKeySequence(Qt::ControlModifier + Qt::Key_N));
+  ac_create->setEnabled(bn);
   connect(ac_create, SIGNAL(triggered()), this, SLOT(createByContext()));
 
   // BEGIN Einträge für Auftrag

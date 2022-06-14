@@ -24,7 +24,7 @@ SearchBar::SearchBar(QWidget *parent) : QToolBar(parent) {
   m_textValidator = new QRegExpValidator(reg, this);
 
   m_numValidator = new QDoubleValidator(this);
-  m_numValidator->setRange(0, 9999999999999);
+  m_numValidator->setRange(0, 9999999999999, 0);
 
   QToolButton *m_tb = new QToolButton(this);
   m_tb->setEnabled(false);
@@ -33,12 +33,16 @@ SearchBar::SearchBar(QWidget *parent) : QToolBar(parent) {
   addSeparator();
 
   m_filterSection = new QComboBox(this);
+  QString filterTip = tr("Press CTRL+F, to quickly open this Menu.");
+  m_filterSection->setToolTip(filterTip);
   addWidget(m_filterSection);
   addSeparator();
 
   m_searchLineEdit = new QLineEdit(this);
   m_searchLineEdit->setObjectName("sql_search_statement");
   m_searchLineEdit->setClearButtonEnabled(true);
+  QString searchTip = tr("Press CTRL+S, it clears the input for a new search.");
+  m_searchLineEdit->setToolTip(searchTip);
   m_searchLineEdit->setStatusTip(
       tr("You can use a wildcard * to broaden the search."));
   m_searchLineEdit->setPlaceholderText(tr("Search for"));
@@ -64,6 +68,11 @@ SearchBar::SearchBar(QWidget *parent) : QToolBar(parent) {
 
   connect(m_filterSection, SIGNAL(currentIndexChanged(int)), this,
           SLOT(searchFilterChanged(int)));
+}
+
+void SearchBar::setFilterFocus() {
+  m_filterSection->setFocus();
+  m_filterSection->showPopup();
 }
 
 void SearchBar::clearAndFocus() {

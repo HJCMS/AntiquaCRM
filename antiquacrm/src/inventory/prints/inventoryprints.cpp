@@ -89,6 +89,12 @@ InventoryPrints::InventoryPrints(QWidget *parent) : Inventory{parent} {
   setLayout(layout);
 
   // Signals
+  connect(this, SIGNAL(s_setSearchFocus()), m_searchBar,
+          SLOT(clearAndFocus()));
+  connect(this, SIGNAL(s_setSearchFilter()), m_searchBar,
+          SLOT(setFilterFocus()));
+  connect(this, SIGNAL(s_createNewEntry()), this,
+          SLOT(createPrintsEntry()));
   connect(m_searchBar, SIGNAL(searchTextChanged(const QString &)), this,
           SLOT(searchConvert(const QString &)));
   connect(m_searchBar, SIGNAL(searchClicked()), this, SLOT(searchConvert()));

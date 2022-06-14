@@ -71,14 +71,6 @@ private:
   const bool isISBN13(const QString &isbn) const;
 
   /**
-   * @brief Berechnen Prüfen
-   * @param isbn Nummer
-   * @return Validierung
-   * @note Nur @b ISBN-13 wird hier berechnet!
-   */
-  bool calculate(const QString &isbn) const;
-
-  /**
    * @brief Visueller Hinweis für den Anwender erstellen!
    */
   void setButtonText(int);
