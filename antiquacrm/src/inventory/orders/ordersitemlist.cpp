@@ -23,6 +23,10 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
 
   m_cfg = new ApplSettings(this);
 
+  minPrice = m_cfg->value("payment/min_price", 5.00).toDouble();
+  maxPrice = m_cfg->value("payment/max_price", 999999.00).toDouble();
+  currency = m_cfg->value("payment/currency", "€").toByteArray();
+
   QSizePolicy policy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
   m_table = new OrderPaymentsTable(this);
@@ -70,9 +74,11 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
 QDoubleSpinBox *OrdersItemList::addPrice(double val, int row) {
   QDoubleSpinBox *p = new QDoubleSpinBox(m_table);
   p->setObjectName("a_price#" + QString::number(row));
+  p->setButtonSymbols(QAbstractSpinBox::NoButtons);
   p->setReadOnly(true);
+  p->setSuffix(currency);
+  p->setRange(minPrice, maxPrice);
   p->setValue(val);
-  p->setSuffix(m_cfg->value("payment/currency", "€").toString());
   return p;
 }
 
@@ -89,10 +95,9 @@ double OrdersItemList::getPrice(int row) {
 QDoubleSpinBox *OrdersItemList::addSellPrice(double val, int row) {
   QDoubleSpinBox *p = new QDoubleSpinBox(m_table);
   p->setObjectName("a_sell_price#" + QString::number(row));
+  p->setSuffix(currency);
+  p->setRange(minPrice, maxPrice);
   p->setValue(val);
-  p->setSuffix(m_cfg->value("payment/currency", "€").toString());
-  p->setMinimum(m_cfg->value("payment/min_price", 5).toDouble());
-  p->setMaximum(999999.00);
   return p;
 }
 

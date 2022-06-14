@@ -29,6 +29,9 @@ class OrdersItemList : public QWidget {
 
 private:
   bool modified;
+  qreal minPrice;
+  qreal maxPrice;
+  QByteArray currency;
 
   ApplSettings *m_cfg;
 
