@@ -6,30 +6,15 @@
 #include "myicontheme.h"
 
 #include <QDebug>
-#include <QRegularExpression>
-#include <QRegularExpressionMatch>
-#include <QStringList>
 #include <QHBoxLayout>
+#include <QMetaType>
+#include <QRegularExpressionMatch>
 #include <QSizePolicy>
+#include <QStringList>
 
-/*
-#include <QDir>
-#include <QFile>
-static QStringList isbn_patterns() {
-  QStringList l;
-  QFile fp(QDir::homePath() + "/.cache/isbn.log");
-  if (!fp.open(QIODevice::ReadOnly | QIODevice::Text))
-    return l;
-
-  while (!fp.atEnd()) {
-    l.append(fp.readLine());
-  }
-  fp.close();
-
-  return l;
-}
-// foreach (QString isbn, isbn_patterns()) { patternMatching(isbn.trimmed()); }
-*/
+#ifndef ISBN_EDITOR_DEBUG
+#define ISBN_EDITOR_DEBUG 1
+#endif
 
 IsbnEdit::IsbnEdit(QWidget *parent) : UtilsMain{parent} {
   setObjectName("IsbnEdit");
@@ -60,15 +45,12 @@ IsbnEdit::IsbnEdit(QWidget *parent) : UtilsMain{parent} {
   m_info->setToolTip(toolTip);
   layout->addWidget(m_info);
 
-  QRegExp pattern("^([\\d]{10,13})$");
-  m_validator = new QRegExpValidator(pattern, m_isbn);
+  m_validator = new QRegExpValidator(simplePattern, m_isbn);
   m_isbn->setValidator(m_validator);
 
-  QStringList list("978");
-  list << "979";
-
-  m_completer = new QCompleter(list, m_isbn);
-  m_completer->setCaseSensitivity(Qt::CaseInsensitive);
+  m_completer = new QCompleter(prefix, m_isbn);
+  m_completer->setCompletionMode(QCompleter::PopupCompletion);
+  m_completer->setFilterMode(Qt::MatchStartsWith);
   m_isbn->setCompleter(m_completer);
 
   layout->addStretch(1);
@@ -80,6 +62,43 @@ IsbnEdit::IsbnEdit(QWidget *parent) : UtilsMain{parent} {
   connect(this, SIGNAL(isbnIsValid(bool)), this, SLOT(feedbackIcon(bool)));
 }
 
+const bool IsbnEdit::isISBN10(const QString &isbn) const {
+  QRegularExpressionMatch c = p10.match(isbn);
+  return c.hasMatch();
+}
+
+const bool IsbnEdit::isISBN13(const QString &isbn) const {
+  calculate(isbn);
+  QRegularExpressionMatch c = p13.match(isbn);
+  return c.hasMatch();
+}
+
+bool IsbnEdit::calculate(const QString &isbn) const {
+  qint64 calc = 0;
+  QList<int> _a;
+  foreach (QString n, isbn.trimmed().split("")) {
+    if (!n.isEmpty())
+      _a.append(n.toInt());
+  }
+  if (_a.count() != 13)
+    return false;
+
+  // GS1-Element
+  calc += ((_a[0] * 1) + (_a[1] * 3) + (_a[2] * 1));
+  // Gruppennummer 1-5 Stellig
+  calc += (_a[3] * 3);
+  // Verlagsnummer 1-7 Stellig
+  calc += ((_a[4] * 1) + (_a[5] * 3));
+  // Titelnummer
+
+  // Prüfziffer 1 Stellig
+
+#ifdef ISBN_EDITOR_DEBUG
+  qDebug() << Q_FUNC_INFO << calc;
+#endif
+  return false;
+}
+
 void IsbnEdit::setButtonText(int i) {
   QString p("ISBN/EAN");
   if (i == 10 || i == 13) {
@@ -88,22 +107,6 @@ void IsbnEdit::setButtonText(int i) {
   } else {
     m_info->setText(p + " " + tr("Required"));
   }
-}
-
-bool IsbnEdit::patternMatching(const QString &isbn) {
-  /** ISBN/EAN 13 */
-  QRegularExpression re("^(97[89]{1})([\\d]{10})$");
-  QRegularExpressionMatch check13 = re.match(isbn);
-  if (check13.hasMatch()) {
-    return true;
-  }
-  /** ISBN 10 */
-  re.setPattern("^(?!97[89])([\\d]{10})$");
-  QRegularExpressionMatch check10 = re.match(isbn);
-  if (check10.hasMatch()) {
-    return true;
-  }
-  return false;
 }
 
 void IsbnEdit::feedbackIcon(bool b) {
@@ -117,42 +120,39 @@ void IsbnEdit::feedbackIcon(bool b) {
 }
 
 void IsbnEdit::isbnChanged(const QString &s) {
-  int len = s.length();
+  int len = s.trimmed().length();
   setButtonText(len);
 
-  switch (len) {
-  case 0: {
-    emit isbnIsValid(false);
-    break;
+  if (len == 10 && isISBN10(s)) {
+    emit isbnIsValid(true);
+    setModified(true);
+    return;
   }
 
-  case 10: {
-    if (patternMatching(s))
-      emit isbnIsValid(true);
-
-    break;
+  if (len == 13 && isISBN13(s)) {
+    emit isbnIsValid(true);
+    setModified(true);
+    return;
   }
 
-  case 13: {
-    if (patternMatching(s))
-      emit isbnIsValid(true);
-
-    break;
-  }
-
-  default:
-    emit isbnIsValid(false);
-    break;
-  }
-  setModified(true);
+  emit isbnIsValid(false);
 }
 
 void IsbnEdit::setValue(const QVariant &val) {
-  qulonglong i = val.toLongLong();
-  if (i == 0)
+  QString isbn = val.toString().trimmed();
+  int len = isbn.length();
+  if (len < 10 && len > 13)
     return;
 
-  m_isbn->setText(QString::number(i));
+  if (len == 13 && isISBN13(isbn)) {
+    m_isbn->setText(isbn);
+    setModified(true);
+  }
+
+  if (len == 10 && isISBN10(isbn)) {
+    m_isbn->setText(isbn);
+    setModified(true);
+  }
 }
 
 void IsbnEdit::reset() {
@@ -163,30 +163,42 @@ void IsbnEdit::reset() {
 void IsbnEdit::setFocus() { m_isbn->setFocus(); }
 
 bool IsbnEdit::isValid() {
-  int len = m_isbn->text().trimmed().length();
-  if ((len == 10) || (len == 13)) {
+  QString isbn = m_isbn->text().trimmed();
+  int len = isbn.length();
+  if (len == 10 && isISBN10(isbn)) {
     return true;
   }
+
+  if (len == 13 && isISBN13(isbn)) {
+    return true;
+  }
+
   return false;
 }
 
-const QVariant IsbnEdit::value() {
+qint64 IsbnEdit::number() {
   QString txt = m_isbn->text().trimmed();
-  int len = txt.length();
-  if ((len == 10) || (len == 13)) {
-    // qInfo("ISBN:%s Lenght:%s", qPrintable(txt),
-    // qPrintable(QString::number(len)));
-    bool b;
-    qulonglong isbn = txt.toULong(&b);
-    if (b)
-      return isbn;
+  bool b = true;
+  qint64 isbn = 0;
+  isbn = txt.toLongLong(&b);
+  if (!b) {
+    qWarning("Current ISBN:'%s' convert failed.", qPrintable(txt));
+  }
+  return isbn;
+}
+
+const QVariant IsbnEdit::value() {
+  if (isValid()) {
+    QVariant ret(number());
+    if (!ret.convert(QMetaType::LongLong))
+      qWarning("No ISBN retrieved.");
+
+    return ret;
   }
   return 0;
 }
 
-void IsbnEdit::setInfo(const QString &info) {
-  m_isbn->setToolTip(info);
-}
+void IsbnEdit::setInfo(const QString &info) { m_isbn->setToolTip(info); }
 
 const QString IsbnEdit::info() { return m_isbn->toolTip(); }
 
