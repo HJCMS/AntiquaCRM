@@ -1095,7 +1095,7 @@
 <context>
     <name>CustomerOverview</name>
     <message>
-        <location filename="../inventory/customers/customeroverview.cpp" line="+153"/>
+        <location filename="../inventory/customers/customeroverview.cpp" line="+152"/>
         <source>Locked</source>
         <translation>Gesperrt</translation>
     </message>
@@ -1110,7 +1110,7 @@
         <translation>E-Mail</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+32"/>
         <source>Additional</source>
         <translation>Erweitert</translation>
     </message>
@@ -1784,7 +1784,7 @@
         <translation>Bild wurde Erfolgreich gespeichert!</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+61"/>
         <source>image from database!</source>
         <translation>Nehme Bild aus der Datenbank!</translation>
     </message>
@@ -4037,24 +4037,64 @@
 <context>
     <name>ViewsTableModel</name>
     <message>
-        <location filename="../inventory/views/viewstable.cpp" line="+23"/>
-        <source>Article</source>
-        <translation>Artikel</translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location filename="../inventory/views/viewstable.cpp" line="+21"/>
+        <location line="+2"/>
+        <location line="+1"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
+        <location line="-4"/>
+        <source>Identity</source>
+        <translation>Identität</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Categorie</source>
+        <translation>Kategorie</translation>
+    </message>
+    <message>
         <location line="+3"/>
+        <location line="+1"/>
+        <source>Price</source>
+        <translation>Preis</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Count</source>
+        <translation>Anzahl</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>total price</source>
+        <translation>Gesamtpreis</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Author</source>
         <translation>Autor</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
+        <location line="+1"/>
         <source>Storage</source>
         <translation>Lager</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Double Keywords</source>
+        <translation>Doppelte Schlüsselwörter</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+1"/>
+        <source>Article Id</source>
+        <translation>Artikel Id</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Archive Id</source>
+        <translation>Archiv Id</translation>
     </message>
 </context>
 <context>
@@ -4073,6 +4113,16 @@
         <location line="+3"/>
         <source>Show me all Prints and Stitches without Pictures</source>
         <translation>Zeige mir alle Drucke und Stiche ohne Bild</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>All categories grouped by keyword plus total price of these categories.</source>
+        <translation>Alle Kategorien gruppiert mit Schlüsselwort, zusätzlich Gesamtpreis dieser Kategorien.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Show Total Book Price and counts.</source>
+        <translation>Zeige Gesamtpreis im Buchbestand</translation>
     </message>
     <message>
         <location line="+7"/>

@@ -190,6 +190,13 @@ void ImageDialog::save() {
   if (m_view->storeInDatabase(p_articleId))
     notifyStatus(tr("image saved successfully!"));
 
+  config->beginGroup("bookmarks");
+  QListIterator<QUrl> it(browser->sidebarUrls());
+  int i = 0;
+  while (it.hasNext()) {
+    config->setValue(QString::number(i++), it.next());
+  }
+  config->endGroup();
   // Aufräumen
   files.clear();
 }
@@ -230,6 +237,15 @@ int ImageDialog::exec() {
 
     config->endGroup();
   }
+
+  config->beginGroup("bookmarks");
+  QList<QUrl> bookmarks;
+  foreach (QString key, config->allKeys()) {
+    bookmarks.append(config->value(key).toUrl());
+  }
+  config->endGroup();
+  if(bookmarks.count() > 1)
+    browser->setSidebarUrls(bookmarks);
 
   if (!findSourceImage()) {
     if (m_view->readFromDatabase(p_articleId))

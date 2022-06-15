@@ -2,40 +2,66 @@
 // vim: set fileencoding=utf-8
 
 #include "viewstable.h"
+#include "applsettings.h"
 
 #include <QDebug>
 #include <QHeaderView>
+#include <QModelIndex>
 #include <QSqlQuery>
 
 ViewsTableModel::ViewsTableModel(const QSqlDatabase &db, QWidget *parent)
-    : QSqlTableModel{parent, db} {
+    : QSqlTableModel{parent, db},
+      currency(ApplSettings().value("payment/currency").toByteArray()) {
   setObjectName("views_table_model");
+}
+
+const QHash<QString, QString> ViewsTableModel::translations() {
+  QHash<QString, QString> l;
+  l.insert("sl_identifier", tr("Identity"));
+  l.insert("title", tr("Title"));
+  l.insert("categorie", tr("Categorie"));
+  l.insert("ib_title", tr("Title"));
+  l.insert("ip_title", tr("Title"));
+  l.insert("ib_price", tr("Price"));
+  l.insert("price", tr("Price"));
+  l.insert("counts", tr("Count"));
+  l.insert("total_price", tr("total price"));
+  l.insert("ib_author", tr("Author"));
+  l.insert("sl_storage", tr("Storage"));
+  l.insert("storages", tr("Storage"));
+  l.insert("twofold_keywords", tr("Double Keywords"));
+  l.insert("ib_id", tr("Article Id"));
+  l.insert("ip_id", tr("Article Id"));
+  l.insert("sl_id", tr("Archive Id"));
+  // l.insert("",tr(""));
+  return l;
 }
 
 QVariant ViewsTableModel::headerData(int section, Qt::Orientation orientation,
                                      int role) const {
-  if (role != Qt::DisplayRole)
+  if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
     return QVariant();
 
-  if (orientation == Qt::Horizontal) {
-    switch (section) {
-    case 0: // articleid
-      return QString(" %1 ").arg(tr("Article"));
+  QString key = record().field(section).name();
+  QHash<QString, QString> list = translations();
+  return (list.contains(key)) ? " " + list.value(key) + " " : key;
+}
 
-    case 1: // title
-      return QString(" %1 ").arg(tr("Title"));
+QVariant ViewsTableModel::data(const QModelIndex &index, int role) const {
+  const QVariant val;
+  if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole &&
+                           role == Qt::DecorationRole))
+    return val;
 
-    case 2: // author
-      return QString(" %1 ").arg(tr("Author"));
-
-    case 3: // lager
-      return QString(" %1 ").arg(tr("Storage"));
-
-    default:
-      return QString(" %1 ").arg(section);
-    }
+  QVariant item = QSqlTableModel::data(index, role);
+  if (item.type() == QVariant::Double) {
+    QString price = QString::number(item.toDouble(), '0', 2);
+    price.append(" ");
+    price.append(currency);
+    return price;
   }
-  return QString("%1").arg(section);
+
+  return item;
 }
 
 ViewsTable::ViewsTable(QWidget *parent) : QTableView{parent} {

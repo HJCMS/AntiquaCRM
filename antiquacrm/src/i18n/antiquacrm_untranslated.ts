@@ -1095,7 +1095,7 @@
 <context>
     <name>CustomerOverview</name>
     <message>
-        <location filename="../inventory/customers/customeroverview.cpp" line="+153"/>
+        <location filename="../inventory/customers/customeroverview.cpp" line="+152"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1110,7 +1110,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+32"/>
         <source>Additional</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1784,7 +1784,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+61"/>
         <source>image from database!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4037,23 +4037,63 @@
 <context>
     <name>ViewsTableModel</name>
     <message>
-        <location filename="../inventory/views/viewstable.cpp" line="+23"/>
-        <source>Article</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location filename="../inventory/views/viewstable.cpp" line="+21"/>
+        <location line="+2"/>
+        <location line="+1"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Author</source>
+        <location line="-4"/>
+        <source>Identity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Categorie</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
+        <location line="+1"/>
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>total price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+1"/>
         <source>Storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Double Keywords</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+1"/>
+        <source>Article Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Archive Id</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4072,6 +4112,16 @@
     <message>
         <location line="+3"/>
         <source>Show me all Prints and Stitches without Pictures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>All categories grouped by keyword plus total price of these categories.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Show Total Book Price and counts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
