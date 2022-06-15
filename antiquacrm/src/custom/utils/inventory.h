@@ -7,7 +7,6 @@
 
 #include <QObject>
 #include <QVariant>
-//#include <QKeyEvent>
 #include <QWidget>
 
 /**
@@ -152,6 +151,7 @@ public Q_SLOTS:
    * @brief Wenn das Tab im Vordergund geht, dann eine Aktionen ausführen.
    * @warning Wird immer aufgerufen wenn ein Tab nach vorne geklickt wird!
    * Behandle diese Funktion mit Vorsicht, denn sie kann Eingaben verwerfen!
+   * @note Wird von Workspace ausgelöst!
    */
   virtual void onEnterChanged() = 0;
 

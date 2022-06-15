@@ -1066,7 +1066,7 @@
         <translation>Firma, Institut oder Organsisation</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>Employer</source>
         <translation>Arbeitgeber*in</translation>
     </message>
@@ -1095,12 +1095,12 @@
 <context>
     <name>CustomerOverview</name>
     <message>
-        <location filename="../inventory/customers/customeroverview.cpp" line="+117"/>
+        <location filename="../inventory/customers/customeroverview.cpp" line="+153"/>
         <source>Locked</source>
         <translation>Gesperrt</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+21"/>
         <source>Phone</source>
         <translation>Telefon</translation>
     </message>
@@ -1117,7 +1117,7 @@
     <message>
         <location line="+5"/>
         <source>Transactions</source>
-        <translation>Transaktionen</translation>
+        <translation>Bestellungen</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -1395,7 +1395,7 @@
         <translation>Speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+132"/>
+        <location line="+135"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
@@ -2061,7 +2061,12 @@
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../custom/utils/lineedit.cpp" line="+110"/>
+        <location filename="../custom/utils/lineedit.cpp" line="+92"/>
+        <source>Suggestions available</source>
+        <translation>Vorschläge verfügbar</translation>
+    </message>
+    <message>
+        <location line="+43"/>
         <source>is required and can&apos;t empty.</source>
         <translation>ist Erforderlich und darf nicht Leer sein.</translation>
     </message>
@@ -2898,7 +2903,7 @@
         <translation>Helfer auswählen</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+99"/>
         <source>a valid Postalcode is required!</source>
         <translation>eine gültige Postleitzahl ist erforderlich!</translation>
     </message>

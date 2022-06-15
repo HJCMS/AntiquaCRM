@@ -3,14 +3,31 @@
 
 #include "lineedit.h"
 
+#include <QDebug>
 #include <QHBoxLayout>
+#include <QModelIndex>
+
+CustomLineEdit::CustomLineEdit(QWidget *parent) : QLineEdit{parent} {
+  QSizePolicy sp(QSizePolicy::MinimumExpanding, /* klein halten */
+                 QSizePolicy::Fixed, QSizePolicy::LineEdit);
+  setMaxLength(80);
+  setMinimumWidth(30);
+  setSizePolicy(sp);
+}
+
+void CustomLineEdit::focusInEvent(QFocusEvent *event) {
+  if (event->type() == QEvent::FocusIn) {
+    if (completer() != nullptr && text().isEmpty() &&
+        completer()->completionCount() > 1) {
+      completer()->complete();
+    }
+  }
+  QLineEdit::focusInEvent(event);
+}
 
 LineEdit::LineEdit(QWidget *parent, bool enableStretch) : UtilsMain{parent} {
   if (objectName().isEmpty())
     setObjectName("LineEdit");
-
-  QSizePolicy sp(QSizePolicy::MinimumExpanding, /* klein halten */
-                 QSizePolicy::Fixed, QSizePolicy::LineEdit);
 
   QHBoxLayout *layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
@@ -19,10 +36,7 @@ LineEdit::LineEdit(QWidget *parent, bool enableStretch) : UtilsMain{parent} {
   m_label->setAlignment(labelAlignment());
   layout->addWidget(m_label);
 
-  m_edit = new QLineEdit(this);
-  m_edit->setMaxLength(80);
-  m_edit->setMinimumWidth(30);
-  m_edit->setSizePolicy(sp);
+  m_edit = new CustomLineEdit(this);
   layout->addWidget(m_edit);
 
   if (enableStretch) {
@@ -74,7 +88,18 @@ void LineEdit::addCompleter(const QStringList &list) {
   m_completer = new QCompleter(list, m_edit);
   m_completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
   m_edit->setCompleter(m_completer);
-  emit m_completer->activated(list.last());
+  QString counts = QString::number(list.count());
+  QString info(tr("Suggestions available"));
+  QString pltext = m_edit->placeholderText();
+  if (pltext.isEmpty()) {
+    pltext = counts + " " + info;
+  } else if (!m_edit->property("prop_suggestions").isNull()) {
+    pltext = counts + " " + info;
+  } else {
+    pltext.append(" " + counts + " " + info);
+  }
+  m_edit->setProperty("prop_suggestions", 1);
+  m_edit->setPlaceholderText(pltext);
 }
 
 void LineEdit::setInfo(const QString &info) {
@@ -94,7 +119,7 @@ const QVariant LineEdit::value() {
   if (p_passwordInput)
     return m_edit->text().toLocal8Bit();
 
-  return m_edit->text();
+  return m_edit->text().trimmed();
 }
 
 bool LineEdit::isValid() {

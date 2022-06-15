@@ -38,6 +38,9 @@ private:
 private Q_SLOTS:
   void loadDataset(int);
 
+Q_SIGNALS:
+  void postalCountryChanged();
+
 public Q_SLOTS:
   void setValue(const QVariant &);
   Q_INVOKABLE void reset();

@@ -46,13 +46,6 @@ void Inventory::setIsModified(bool b) {
 
 bool Inventory::isClosable() { return closable; }
 
-// void Inventory::keyPressEvent(QKeyEvent *event)
-//{
-//   // QKeySequence search(Qt::ControlModifier ^ Qt::Key_S);
-//   //   if(event->matches(search))
-//   QWidget::keyPressEvent(event);
-// }
-
 void Inventory::findModifySignals() {
   QList<UtilsMain *> l =
       findChildren<UtilsMain *>(QString(), Qt::FindChildrenRecursively);

@@ -188,7 +188,10 @@ void EditCustomer::createSqlUpdate() {
   sql.append(cid);
   sql.append(";");
 
-  sendSqlQuery(sql);
+  if (sendSqlQuery(sql)) {
+    qInfo("Update Customer Interfaces");
+    updateCustomer("c_id=" + cid);
+  }
 }
 
 void EditCustomer::createSqlInsert() {
@@ -272,6 +275,7 @@ void EditCustomer::finalLeaveEditor() {
   sqlQueryResult.clear();             /**< SQL History leeren */
   clearDataFields(p_objPattern);      /**< Alle Datenfelder leeren */
   m_actionBar->setRestoreable(false); /**< ResetButton off */
+  m_dataBox->setCurrentIndex(0);      /**< Auf Vorschau stellen */
   emit s_leaveEditor();               /**< Zurück */
 }
 

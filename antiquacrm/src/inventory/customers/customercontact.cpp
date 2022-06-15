@@ -152,7 +152,6 @@ CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
   groupBoxLayout->setContentsMargins(1, 1, 1, 1);
   c_company_name = new StrLineEdit(this);
   c_company_name->setObjectName("c_company_name");
-  // c_company_name->setInfo(tr("Company Name"));
   groupBoxLayout->addWidget(c_company_name);
   c_company_employer = new LineEdit(this);
   c_company_employer->setObjectName("c_company_employer");
@@ -221,11 +220,16 @@ void CustomerContact::fetchCountryFromPostal() {
       country.append(q.value("st").toString());
       c_country->setValue(country);
     }
-    if (!list.isEmpty())
+    if (!list.isEmpty()) {
       c_location->addCompleter(list);
-
+      if (list.count() == 1) {
+        QString str = list.first();
+        if (str.length() > 1)
+          c_location->setValue(str);
+      }
+    }
   } else {
-    qDebug() << m_sql->lastError();
+    qDebug() << Q_FUNC_INFO << m_sql->lastError();
   }
 }
 
@@ -257,7 +261,7 @@ void CustomerContact::generateAddressBody() {
   body.append("\n");
 
   /* Straße */
-    if (!c_street->value().toString().isEmpty()) {
+  if (!c_street->value().toString().isEmpty()) {
     body.append(c_street->value().toString());
     body.append("\n");
   }

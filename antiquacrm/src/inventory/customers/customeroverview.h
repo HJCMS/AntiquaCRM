@@ -37,12 +37,17 @@ private:
   bool check(const QString &key);
   const QString convertDate(const QString &value);
   void addLineBreak();
+  const QDomElement iconStarElement(const QString &n = QString("star"));
+  const QDomElement createPopularity();
   void createCompanySection();
   void createTitleSection();
   void createPhoneSection();
   void createEMailSection();
   void createAddressSection();
   void createAdditionalSection();
+
+public Q_SLOTS:
+  void clearDocument();
 
 public:
   explicit CustomerOverview(QWidget *parent = nullptr);

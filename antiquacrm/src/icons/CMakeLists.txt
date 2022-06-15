@@ -1,82 +1,20 @@
-SET (ICON_FILES 
-add_user.png
-autostart.png
-button_cancel.png
-button_ok.png
-clear_left.png
-close_mini.png
-configure.png
-database.png
-db_add.png
-db_comit.png
-db_remove.png
-db_status.png
-db_update.png
-delete_group.png
-delete_table_col.png
-delete_table_row.png
-delete_user.png
-edit_add.png
-editclear.png
-edit_group.png
-edit.png
-edit_remove.png
-exit.png
-filesaveas.png
-filesave.png
-filetypes.png
-find.png
-folder_blue.png
-folder_green.png
-folder_public.png
-folder_red.png
-folder_txt.png
-group.png
-hexe.png
-html.png
-identity.png
-image.png
-info.png
-list.png
-man.png
-messagebox_warning.png
-mime.png
-note.png
-print.png
-rebuild.png
-redo.png
-reload.png
-search.png
-spreadsheet.png
-tab_new.png
-tab.png
-tab_remove.png
-toggle_log.png
-undo.png
-user_female.png
-user_male.png
-video.png
-view_bottom.png
-view_choose.png
-view_detailed.png
-view_icon.png
-view_left_right.png
-viewmag1.png
-viewmagfit.png
-viewmag+.png
-viewmag-.png
-viewmag.png
-view_multicolumn.png
-view_remove 2.png
-view_remove.png
-view_right.png
-view_sidetree.png
-view_text.png
-view_top_bottom.png
-view_tree.png
-window_fullscreen.png
-windowlist.png
-window_new.png
-window_nofullscreen.png
-xcalc.png
+SET (ICON_FILES
+ info.png
+ warn.png
+ antiqua.png
+ star.png
 )
+
+FILE (COPY ${ICON_FILES} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+IF (ANTIQUA_LSB_INSTALL)
+  INSTALL (FILES ${ICON_FILES}
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECTNAME}/icons
+    COMPONENT data
+  )
+ELSE (ANTIQUA_LSB_INSTALL)
+  INSTALL (FILES ${ICON_FILES}
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/icons
+    COMPONENT data
+  )
+ENDIF (ANTIQUA_LSB_INSTALL)

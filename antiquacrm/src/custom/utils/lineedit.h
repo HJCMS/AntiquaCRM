@@ -5,13 +5,26 @@
 #ifndef LINEEDIT_UTILS_H
 #define LINEEDIT_UTILS_H
 
-#include <QObject>
 #include <QByteArray>
 #include <QCompleter>
+#include <QFocusEvent>
 #include <QLabel>
 #include <QLineEdit>
+#include <QObject>
 #include <QWidget>
 #include <UtilsMain>
+
+class CustomLineEdit final : public QLineEdit {
+  Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
+
+protected:
+  void focusInEvent(QFocusEvent *event);
+
+public:
+  CustomLineEdit(QWidget *parent = nullptr);
+};
 
 class LineEdit final : public UtilsMain {
   Q_OBJECT
@@ -20,7 +33,7 @@ class LineEdit final : public UtilsMain {
 
 private:
   QLabel *m_label;
-  QLineEdit *m_edit;
+  CustomLineEdit *m_edit;
   QCompleter *m_completer;
   bool p_passwordInput = false;
 

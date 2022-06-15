@@ -95,16 +95,22 @@ void PostalCode::loadDataset(int) {
 
   if (setCompleterModel(table)) {
     setModified(true);
+    emit postalCountryChanged();
+    setFocus();
   }
 }
 
 void PostalCode::setValue(const QVariant &val) {
   m_plz->setText(val.toString());
-  loadDataset(0);
+  if (m_country->currentIndex() != 0)
+    m_country->setCurrentIndex(0);
 }
 
 void PostalCode::reset() {
   m_plz->clear();
+  if (m_country->currentIndex() != 0)
+    m_country->setCurrentIndex(0);
+
   setModified(false);
 }
 

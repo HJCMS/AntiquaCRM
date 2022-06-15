@@ -84,5 +84,6 @@
         <file>icons/scale.png</file>
         <file>icons/rotate-left.png</file>
         <file>icons/rotate-right.png</file>
+        <file>icons/star.png</file>
     </qresource>
 </RCC>

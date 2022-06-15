@@ -6,6 +6,7 @@
 
 #include <QDateTime>
 #include <QDebug>
+#include <QDir>
 #include <QLocale>
 
 DomDocument::DomDocument(const QString &name) {
@@ -27,8 +28,8 @@ DomDocument::DomDocument(const QString &name) {
   QDomElement body = createElement("body");
   body.setAttribute("class", "body");
   html.appendChild(body);
-  div = createElement("div");
   body.setAttribute("class", "container");
+  div = createElement("div");
   body.appendChild(div);
 }
 
@@ -60,7 +61,6 @@ QDomElement DomDocument::createLinkNode(const QString &set,
 
 QDomElement DomDocument::createAddressNode(const QString &data) {
   QDomElement address = createElement("dt");
-  address.appendChild(createComment(" Address "));
   QRegExp reg("[\\n\\r]");
   foreach (QString n, data.split(reg)) {
     QDomElement p = createElement("dd");
@@ -76,6 +76,9 @@ CustomerOverview::CustomerOverview(QWidget *parent) : QTextBrowser{parent} {
   setReadOnly(true);
   setOpenExternalLinks(true);
   setTextInteractionFlags(Qt::TextBrowserInteraction);
+  // Icon search Paths
+  QStringList icons(QDir::currentPath() + "/icons");
+  setSearchPaths(icons);
 
   doc = new QTextDocument(this);
   doc->setDocumentMargin(25);
@@ -94,6 +97,38 @@ const QString CustomerOverview::convertDate(const QString &value) {
 
 void CustomerOverview::addLineBreak() {
   dom->div.appendChild(dom->createElement("br"));
+}
+
+const QDomElement CustomerOverview::iconStarElement(const QString &n) {
+  QDomElement e = dom->createElement("img");
+  e.setAttribute("src", "icons/" + n + ".png");
+  e.setAttribute("width", "16");
+  e.setAttribute("height", "16");
+  e.setAttribute("style", "padding-left:5px;");
+  return e;
+}
+
+const QDomElement CustomerOverview::createPopularity() {
+  int level = items.value("c_trusted").toInt();
+  QDomElement e = dom->createElement("tt");
+  e.setAttribute("style", "margin-right:5px;");
+  if (level > 3) {
+    e.appendChild(iconStarElement("warn"));
+  }
+  if (level == 3) {
+    e.appendChild(iconStarElement());
+  }
+  if (level == 2) {
+    e.appendChild(iconStarElement());
+    e.appendChild(iconStarElement());
+  }
+  if (level == 1) {
+    e.appendChild(iconStarElement());
+    e.appendChild(iconStarElement());
+    e.appendChild(iconStarElement());
+  }
+  e.appendChild(dom->createTextNode(" "));
+  return e;
 }
 
 void CustomerOverview::createCompanySection() {
@@ -116,6 +151,9 @@ void CustomerOverview::createTitleSection() {
     b.setAttribute("style", "color:red");
     b.appendChild(dom->createTextNode(tr("Locked")));
     person.appendChild(b);
+  }
+  if (check("c_trusted")) {
+    person.appendChild(createPopularity());
   }
   if (check("c_title")) {
     buffer = items.value("c_title");
@@ -187,9 +225,7 @@ void CustomerOverview::createAddressSection() {
 }
 
 void CustomerOverview::createAdditionalSection() {
-
-  QDomElement additional =
-      dom->createElementNode("dt", tr("Additional") + ": ");
+  QDomElement additional = dom->createElementNode("dt", tr("Additional") + ": ");
   dom->div.appendChild(additional);
 
   if (check("c_transactions")) {
@@ -221,6 +257,11 @@ void CustomerOverview::createAdditionalSection() {
   }
 }
 
+void CustomerOverview::clearDocument() {
+  clearHistory();
+  clear();
+}
+
 void CustomerOverview::createDocument(const DataFields &data) {
   for (int i = 0; i < data.count(); i++) {
     DataField df = data.at(i);
@@ -234,9 +275,17 @@ void CustomerOverview::createDocument(const DataFields &data) {
   createPhoneSection();
   createEMailSection();
   createAdditionalSection();
+
   QString xhtml(dom->toString(-1));
-  // qDebug() << Q_FUNC_INFO << xhtml;
+  QFile fp("/home/heinemann/Downloads/tmp.html");
+  if(fp.open(QIODevice::WriteOnly)) {
+    QTextStream html(&fp);
+    html << xhtml;
+    fp.close();
+  }
   doc->setHtml(xhtml);
   doc->setModified(true);
+  reload();
   items.clear();
+  scrollToAnchor("container");
 }
