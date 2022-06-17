@@ -7,6 +7,7 @@
 #include "printseditor.h"
 #include "printstable.h"
 #include "searchbar.h"
+#include "searchfilter.h"
 #include "statsactionbar.h"
 
 #include <QDebug>
@@ -16,29 +17,29 @@
 #include <QVBoxLayout>
 
 /**
-   @brief bookSearchFilter
+   @brief printsSearchFilter
    Muss für jedes Suchtab einzeln definiert sein.
    @ref SearchBar::addSearchFilters
    @return const QList<SearchFilter>
 */
-static const QList<SearchBar::SearchFilter> bookSearchFilter() {
-  SearchBar::SearchFilter a;
-  QList<SearchBar::SearchFilter> filter;
-  a.index = 0;
-  a.title = QObject::tr("Title");
-  a.filter = QString("");
+static const QList<SearchFilter> printsSearchFilter() {
+  QList<SearchFilter> filter;
+  SearchFilter a;
+  a.setTitle(QObject::tr("Title or Author"));
+  a.setFields("ip_title,ip_title_extended,ip_author");
+  a.setType(SearchFilter::STRINGS);
   filter.append(a);
-  a.index = 1;
-  a.title = QObject::tr("Title (starts with)");
-  a.filter = QString("title_first");
+  a.setTitle(QObject::tr("Article ID"));
+  a.setFields("ip_id");
+  a.setType(SearchFilter::NUMERIC);
   filter.append(a);
-  a.index = 2;
-  a.title = QObject::tr("Article ID");
-  a.filter = QString("id");
+  a.setTitle(QObject::tr("Author"));
+  a.setFields("ip_author");
+  a.setType(SearchFilter::STRINGS);
   filter.append(a);
-  a.index = 3;
-  a.title = QObject::tr("Author");
-  a.filter = QString("author");
+  a.setTitle(QObject::tr("Technique"));
+  a.setFields("ip_technique");
+  a.setType(SearchFilter::STRINGS);
   filter.append(a);
   return filter;
 }
@@ -65,7 +66,7 @@ InventoryPrints::InventoryPrints(QWidget *parent) : Inventory{parent} {
 
   m_searchBar = new SearchBar(this);
   m_searchBar->setValidation(SearchBar::Pattern);
-  m_searchBar->addSearchFilters(bookSearchFilter());
+  m_searchBar->addSearchFilters(printsSearchFilter());
   siteOneLayout->addWidget(m_searchBar);
 
   m_tableView = new PrintsTable(this);
@@ -89,12 +90,10 @@ InventoryPrints::InventoryPrints(QWidget *parent) : Inventory{parent} {
   setLayout(layout);
 
   // Signals
-  connect(this, SIGNAL(s_setSearchFocus()), m_searchBar,
-          SLOT(clearAndFocus()));
+  connect(this, SIGNAL(s_setSearchFocus()), m_searchBar, SLOT(clearAndFocus()));
   connect(this, SIGNAL(s_setSearchFilter()), m_searchBar,
           SLOT(setFilterFocus()));
-  connect(this, SIGNAL(s_createNewEntry()), this,
-          SLOT(createPrintsEntry()));
+  connect(this, SIGNAL(s_createNewEntry()), this, SLOT(createPrintsEntry()));
   connect(m_searchBar, SIGNAL(searchTextChanged(const QString &)), this,
           SLOT(searchConvert(const QString &)));
   connect(m_searchBar, SIGNAL(searchClicked()), this, SLOT(searchConvert()));
@@ -110,8 +109,6 @@ InventoryPrints::InventoryPrints(QWidget *parent) : Inventory{parent} {
           SLOT(createPrintsEntry()));
   connect(m_tableView, SIGNAL(s_toClibboard(const QVariant &)), this,
           SLOT(copyIntoClipboard(const QVariant &)));
-  connect(m_searchBar, SIGNAL(currentFilterChanged(int)), this,
-          SLOT(updateValidator(int)));
   connect(m_printsEditor, SIGNAL(s_postMessage(const QString &)), this,
           SLOT(displayMessageBox(const QString &)));
   connect(m_printsEditor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
@@ -133,11 +130,15 @@ void InventoryPrints::searchConvert() {
     return;
 
   QString buf = m_searchBar->currentSearchText();
+  int index = m_searchBar->currentFilterIndex();
   if (buf.length() >= 2) {
-    SearchStatement s;
-    s.SearchField =
-        m_searchBar->getSearchFilter(m_searchBar->currentFilterIndex());
-    s.SearchString = buf;
+    SearchFilter s;
+    s.setSearch(buf);
+    QJsonObject js = m_searchBar->getSearchFilter(index);
+    s.setFields(js.value("filter").toString().split(","));
+    int i = js.value("type").toInt();
+    s.setType((SearchFilter::SearchType)i);
+    s.setTitle(js.value("title").toString());
     if (m_tableView != nullptr)
       m_tableView->queryStatement(s);
   }
@@ -178,17 +179,4 @@ void InventoryPrints::articleSelected(int id) {
   QString s("ip_id=");
   s.append(QString::number(id));
   openEditor(s);
-}
-
-void InventoryPrints::updateValidator(int id) {
-  switch (id) {
-  case 2: /**< Artikel ID */
-  case 4: /**< Im Bestand */
-    m_searchBar->setValidation(SearchBar::Number);
-    break;
-
-  default: /**< Zeichenketten */
-    m_searchBar->setValidation(SearchBar::Pattern);
-    break;
-  };
 }

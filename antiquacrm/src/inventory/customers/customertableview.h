@@ -14,7 +14,7 @@
 #include <SqlCore>
 
 class CustomersTableModel;
-class SearchStatement;
+class SearchFilter;
 
 class CustomerTableView : public QTableView {
   Q_OBJECT
@@ -67,7 +67,7 @@ public Q_SLOTS:
   /**
    * Starte Abfrage ausgehend von Text/Sucheingabe
    */
-  void queryStatement(const SearchStatement &search);
+  void queryStatement(const SearchFilter &search);
 
 public:
   explicit CustomerTableView(QWidget *parent = nullptr);

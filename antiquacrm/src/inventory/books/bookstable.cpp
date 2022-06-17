@@ -1,13 +1,20 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
+//#ifndef BOOK_INVENTORY_DEBUG
+//#define BOOK_INVENTORY_DEBUG
+//#endif
+
 #include "bookstable.h"
 #include "bookstablemodel.h"
 #include "myicontheme.h"
 #include "searchbar.h"
+#include "searchfilter.h"
 
-#include <QAction>
+#ifdef BOOK_INVENTORY_DEBUG
 #include <QDebug>
+#endif
+#include <QAction>
 #include <QHeaderView>
 #include <QItemSelectionModel>
 #include <QKeySequence>
@@ -78,7 +85,9 @@ bool BooksTable::sqlExecQuery(const QString &statement) {
   if (!statement.contains("SELECT"))
     return false;
 
-  // qDebug() << Q_FUNC_INFO << statement;
+#ifdef BOOK_INVENTORY_DEBUG
+  qDebug() << Q_FUNC_INFO << statement;
+#endif
 
   QSqlDatabase db(m_sql->db());
   if (db.open()) {
@@ -243,68 +252,64 @@ void BooksTable::queryHistory(const QString &str) {
   }
 }
 
-void BooksTable::queryStatement(const SearchStatement &cl) {
-  /**
-     @brief exact_match
-      false = irgendwo im feld
-      true = genau ab Anfang
-  */
-  bool exact_match = false;
-
+void BooksTable::queryStatement(const SearchFilter &cl) {
+  SearchFilter scl(cl);
   QRegExp reg("^(\\s+)");
-  QString field = cl.SearchField;
-  if (field.contains("title_first")) {
-    field = QString("title");
-    exact_match = true;
-  }
-
-  QString str = cl.SearchString;
-  if (reg.exactMatch(str)) {
-    qWarning("Rejected:%s\n", qPrintable(str));
+  QStringList fields = scl.getFields();
+  QString search = scl.getSearch();
+  bool revert_match = false;
+  search = search.trimmed();
+  if (reg.exactMatch(search)) {
+    qWarning("Rejected invalid input");
+    emit s_reportQuery(tr("Rejected invalid input"));
     return;
   }
+  search.replace("*", "%");
 
-  str.replace("*", "%");
+  if (scl.getType() == SearchFilter::STRINGS && fields.count() == 1) {
+    revert_match = true;
+  }
+
   QString q("SELECT DISTINCT ");
   q.append(querySelect());
   q.append(queryTables());
-  if (field.contains("id")) {
-    // Artikel ID Suche
-    q.append(" WHERE (ib_id=");
-    q.append(str);
-  } else if (field.contains("isbn")) {
-    // ISBN Suche
-    q.append(" WHERE (ib_isbn=");
-    q.append(str);
-  } else if (field.contains("author")) {
-    // Autoren suche
-    q.append(" WHERE (");
-    q.append(prepareSearch("ib_author", str));
-  } else if (field.contains("publisher")) {
-    // Herausgeber
-    q.append(" WHERE (ib_publisher ILIKE '");
-    q.append(str.replace(" ", "%"));
-    q.append("%'");
-  } else if (field.contains("storage")) {
-    // mit Lager Kategorie
-    q.append(" WHERE (ib_count>0 AND sl_identifier ILIKE '");
-    q.append(str.replace("%", "")); /**< @note Wegen Performance */
-    q.append("%'");
+
+  QStringList clauses;
+  QSqlRecord r = m_sql->record("inventory_books");
+  if (scl.getType() == SearchFilter::REFERENCES) {
+    if(fields.first() == "storage_id") {
+      QString sub;
+      sub.append("(ib_count>0 AND sl_identifier ILIKE '");
+      sub.append(search.replace("%", ""));
+      sub.append("%')");
+      clauses.append(sub);
+      sub.clear();
+      sub.append("(ib_keyword ILIKE '");
+      sub.append(search.replace("%", ""));
+      sub.append("%')");
+      clauses.append(sub);
+    }
   } else {
-    // Titelsuche
-    q.append(" WHERE (ib_title ILIKE '");
-    if (!exact_match) {
-      q.append("%");
+    foreach (QString f, fields) {
+      QVariant::Type vt = r.field(f).type();
+      if (vt == QVariant::LongLong || vt == QVariant::Int ||
+          vt == QVariant::Double) {
+        clauses.append(f + "=" + search);
+      } else if (scl.getType() == SearchFilter::NUMERIC) {
+        clauses.append(f + "=" + search);
+      } else {
+        if (revert_match) {
+          clauses.append(prepareSearch(f, search));
+        } else {
+          QString str_search = search.replace(" ", "%");
+          clauses.append(f + " ILIKE '" + "%" + str_search + "%'");
+        }
+      }
     }
-    q.append(str);
-    q.append("%') OR (ib_title_extended ILIKE '");
-    if (!exact_match) {
-      q.append("%");
-    }
-    q.append(str);
-    q.append("%'");
   }
-  q.append(") ORDER BY ib_count DESC LIMIT ");
+  q.append(" WHERE ");
+  q.append(clauses.join(" OR "));
+  q.append(" ORDER BY ib_count DESC LIMIT ");
   q.append(QString::number(maxRowCount));
   q.append(";");
 

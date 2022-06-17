@@ -6,11 +6,16 @@
 
 #include <QByteArray>
 #include <QDebug>
+#include <QDir>
 #include <QFileInfo>
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QLocale>
 #include <iostream>
+
+#ifdef Q_OS_WIN
+#include <QMessageBox>
+#endif
 
 #ifndef ENABLE_DEBUG
 #define ENABLE_DEBUG false
@@ -21,12 +26,20 @@
 namespace Antiqua {
 
 static const QByteArray caBundleConfigPath() {
+#ifdef Q_OS_WIN
+  // Ist Normalerweise im Paket enthalten!
+  QFileInfo info(QDir::current(), "curl-ca-bundle.crt");
+  if (info.isReadable()) {
+    return info.filePath().toLocal8Bit();
+  }
+  // Wenn sie fehlt, dann die SQL Konfiguration heranziehen!
   ApplSettings cfg;
   QString ca = cfg.value("ssloptions/ssl_bundle").toString();
-  QFileInfo info(ca);
+  info.setFile(ca);
   if (info.isReadable()) {
     return ca.toLocal8Bit();
   }
+#endif
   return QByteArray();
 }
 
@@ -392,8 +405,14 @@ const QJsonDocument Provider::getDocument() { return p_json; }
 void Provider::run() {
   p_mutex.lock();
   ProviderRequest *req = new ProviderRequest(verbose);
-#ifdef Q_OS_WINDOWS
-  req->setCaBundlePath(caBundleConfigPath());
+#ifdef Q_OS_WIN
+  QByteArray caBundle = caBundleConfigPath();
+  if (caBundle.isNull()) {
+    QMessageBox::critical(nullptr, tr("CA-Bundle"),
+                          tr("Missing CA-Bundle for Connections!"));
+    return;
+  }
+  req->setCaBundlePath(caBundle);
 #endif
   bool status = false;
   switch (p_type) {

@@ -20,6 +20,19 @@
     </message>
 </context>
 <context>
+    <name>Antiqua::Provider</name>
+    <message>
+        <location filename="../core/antiquacore/provider.cpp" line="+411"/>
+        <source>CA-Bundle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Missing CA-Bundle for Connections!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Antiqua::PurchaserOrderTable</name>
     <message>
         <location filename="../core/antiquacore/interface.cpp" line="+17"/>
@@ -407,7 +420,7 @@
 <context>
     <name>BooksTable</name>
     <message>
-        <location filename="../inventory/books/bookstable.cpp" line="+96"/>
+        <location filename="../inventory/books/bookstable.cpp" line="+105"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -422,7 +435,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-7"/>
+        <location line="+78"/>
+        <source>Rejected invalid input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-85"/>
         <source>Create entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1138,7 +1156,7 @@
 <context>
     <name>CustomerTableView</name>
     <message>
-        <location filename="../inventory/customers/customertableview.cpp" line="+68"/>
+        <location filename="../inventory/customers/customertableview.cpp" line="+69"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1849,7 +1867,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+94"/>
         <source>Automatic search disabled in this mode. Press enter to start the search!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1857,7 +1875,7 @@
 <context>
     <name>InventoryCustomers</name>
     <message>
-        <location filename="../inventory/customers/inventorycustomers.cpp" line="+41"/>
+        <location filename="../inventory/customers/inventorycustomers.cpp" line="+38"/>
         <source>Customers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1883,7 +1901,7 @@
 <context>
     <name>InventoryPrints</name>
     <message>
-        <location filename="../inventory/prints/inventoryprints.cpp" line="+48"/>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="+49"/>
         <source>Prints</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3286,7 +3304,7 @@
 <context>
     <name>PrintsTable</name>
     <message>
-        <location filename="../inventory/prints/printstable.cpp" line="+122"/>
+        <location filename="../inventory/prints/printstable.cpp" line="+123"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3301,7 +3319,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>add Article to opened Order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3476,18 +3494,18 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="-131"/>
-        <source>Book Title</source>
+        <location filename="../inventory/books/inventorybooks.cpp" line="-127"/>
+        <source>Book Title or Author</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Book Title (starts with)</source>
+        <source>Book Title only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../inventory/prints/inventoryprints.cpp" line="-12"/>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="-17"/>
         <source>Article ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3510,16 +3528,6 @@
     <message>
         <location line="+4"/>
         <source>Duration by Keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../inventory/prints/inventoryprints.cpp" line="-12"/>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Title (starts with)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3552,21 +3560,6 @@
     <message>
         <location line="+3"/>
         <source>Mrs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../inventory/customers/inventorycustomers.cpp" line="-16"/>
-        <source>Sort by Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Sort by ID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Sort by Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3629,6 +3622,26 @@
         <source>delivery completed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../inventory/customers/inventorycustomers.cpp" line="-13"/>
+        <source>Company and Names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Costumer Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="-8"/>
+        <source>Title or Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Technique</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SalutationBox</name>
@@ -3651,7 +3664,7 @@
 <context>
     <name>SearchBar</name>
     <message>
-        <location filename="../custom/utils/searchbar.cpp" line="+36"/>
+        <location filename="../custom/utils/searchbar.cpp" line="+38"/>
         <source>Press CTRL+F, to quickly open this Menu.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3667,12 +3680,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+53"/>
+        <location line="+52"/>
         <source>Search for</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-48"/>
+        <location line="-47"/>
         <location line="+2"/>
         <source>Start search</source>
         <translation type="unfinished"></translation>
@@ -4038,13 +4051,11 @@
     <name>ViewsTableModel</name>
     <message>
         <location filename="../inventory/views/viewstable.cpp" line="+21"/>
-        <location line="+2"/>
-        <location line="+1"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-4"/>
+        <location line="-1"/>
         <source>Identity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4054,7 +4065,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
         <location line="+1"/>
         <source>Price</source>
         <translation type="unfinished"></translation>
@@ -4071,13 +4082,22 @@
     </message>
     <message>
         <location line="+1"/>
+        <source>price average</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Author</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+1"/>
         <source>Storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Keyword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4087,13 +4107,7 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+1"/>
         <source>Article Id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Archive Id</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4121,7 +4135,7 @@
     </message>
     <message>
         <location line="+4"/>
-        <source>Show Total Book Price and counts.</source>
+        <source>Book count, total price and price average.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

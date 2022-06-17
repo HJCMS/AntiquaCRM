@@ -22,13 +22,13 @@ binmode STDOUT, ":utf8";
 
 my $HOMEDIR = $ENV{"HOME"};
 
-my $IMAGE_LOCATION = "$HOMEDIR/Developement/antiqua/database/tmp/BildDaten";
+my $IMAGE_LOCATION = "$HOMEDIR/Developement/antiqua/database/tmp/BildDaten/2022-05-24";
 
-my $IMAGE_SOURCE_TARGET = "$HOMEDIR/Developement/antiqua/database/tmp/BilderArchiv/Converted";
-my $IMAGE_ZIP_TARGET = "$HOMEDIR/Developement/antiqua/database/tmp/BilderArchiv/zip_export";
+my $IMAGE_SOURCE_TARGET = "$HOMEDIR/Developement/antiqua/database/tmp/Archiv/Bilder/Import";
+my $IMAGE_ZIP_TARGET = "$HOMEDIR/Developement/antiqua/database/tmp/Archiv/Zipped/2022-05-24";
 
 ## Valid Values zip | source
-my $OPERATION = "source";
+my $OPERATION = "zip";
 
 system("mkdir -p $IMAGE_SOURCE_TARGET");
 

@@ -31,6 +31,7 @@ SET (subproject_SOURCES
   imagetoolbar.cpp
   intspinbox.cpp
   inventory.cpp
+  searchfilter.cpp
   isbnedit.cpp
   lineedit.cpp
   messagebox.cpp
@@ -71,6 +72,7 @@ SET (subproject_HEADERS
   imagetoolbar.h
   intspinbox.h
   inventory.h
+  searchfilter.h
   isbnedit.h
   lineedit.h
   messagebox.h

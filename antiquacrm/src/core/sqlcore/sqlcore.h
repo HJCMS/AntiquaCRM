@@ -11,6 +11,7 @@
 #include <QSqlField>
 #include <QSqlQuery>
 #include <QSqlRecord>
+#include <QSqlRelation>
 #include <QString>
 #include <QStringList>
 #include <QTimerEvent>
@@ -169,6 +170,13 @@ public:
    * @param Tabelle
    */
   const QSqlRecord record(const QString &table);
+
+  /**
+   * @brief Fremdschlüssel Constraint zu Tabelle auflösen
+   * @param Von Tabelle
+   * @param Mit Constraint Schlüsslename
+   */
+  const QString foreignTable(const QString &table, const QString &name);
 
   /**
    * @brief Alle Feldnamen von Tabelle

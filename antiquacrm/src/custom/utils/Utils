@@ -66,6 +66,10 @@
 # include "inventory.h"
 #endif
 
+#ifndef SEARCHFILTER_UTILS_H
+# include "searchfilter.h"
+#endif
+
 #ifndef ISBNEDIT_UTILS_H
 # include "isbnedit.h"
 #endif

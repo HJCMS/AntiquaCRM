@@ -98,13 +98,6 @@ private Q_SLOTS:
   */
   void articleSelected(int id);
 
-  /**
-     @brief Setze den Validator für die Ausgewählte suche.
-     Wird der Suchfilter geändert dann wird hier an
-     @ref SearchBar::setValidation ein update gesendet.
-   */
-  void updateValidator(int);
-
 protected:
   /**
     @brief Öffne mit der SQL-Abfrage den Bucheditor

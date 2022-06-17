@@ -21,36 +21,36 @@
    @ref SearchBar::addSearchFilters
    @return const QList<SearchFilter>
 */
-static const QList<SearchBar::SearchFilter> bookSearchFilter() {
-  SearchBar::SearchFilter a;
-  QList<SearchBar::SearchFilter> filter;
-  a.index = 0;
-  a.title = QObject::tr("Book Title");
-  a.filter = QString("");
+static const QList<SearchFilter> bookSearchFilter() {
+  SearchFilter a;
+  QList<SearchFilter> filter;
+  a.setTitle(QObject::tr("Book Title or Author"));
+  a.setFields("ib_title,ib_title_extended,ib_author");
+  a.setType(SearchFilter::STRINGS);
   filter.append(a);
-  a.index = 1;
-  a.title = QObject::tr("Book Title (starts with)");
-  a.filter = QString("title_first");
+  a.setTitle(QObject::tr("Book Title only"));
+  a.setFields("ib_title,ib_title_extended");
+  a.setType(SearchFilter::STRINGS);
   filter.append(a);
-  a.index = 2;
-  a.title = QObject::tr("Article ID");
-  a.filter = QString("id");
+  a.setTitle(QObject::tr("Article ID"));
+  a.setFields("ib_id");
+  a.setType(SearchFilter::NUMERIC);
   filter.append(a);
-  a.index = 3;
-  a.title = QObject::tr("ISBN");
-  a.filter = QString("isbn");
+  a.setTitle(QObject::tr("ISBN"));
+  a.setFields("ib_isbn");
+  a.setType(SearchFilter::NUMERIC);
   filter.append(a);
-  a.index = 4;
-  a.title = QObject::tr("Author");
-  a.filter = QString("author");
+  a.setTitle(QObject::tr("Author"));
+  a.setFields("ib_author");
+  a.setType(SearchFilter::STRINGS);
   filter.append(a);
-  a.index = 5;
-  a.title = QObject::tr("Publisher");
-  a.filter = QString("publisher");
+  a.setTitle(QObject::tr("Publisher"));
+  a.setFields("ib_publisher");
+  a.setType(SearchFilter::STRINGS);
   filter.append(a);
-  a.index = 6;
-  a.title = QObject::tr("Duration by Keyword");
-  a.filter = QString("storage");
+  a.setTitle(QObject::tr("Duration by Keyword"));
+  a.setFields("storage_id");
+  a.setType(SearchFilter::REFERENCES);
   filter.append(a);
   return filter;
 }
@@ -104,22 +104,17 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   setLayout(layout);
 
   // Signals
-  connect(this, SIGNAL(s_setSearchFocus()), m_searchBar,
-          SLOT(clearAndFocus()));
+  connect(this, SIGNAL(s_setSearchFocus()), m_searchBar, SLOT(clearAndFocus()));
 
   connect(this, SIGNAL(s_setSearchFilter()), m_searchBar,
           SLOT(setFilterFocus()));
 
-  connect(this, SIGNAL(s_createNewEntry()), this,
-          SLOT(createBookEntry()));
+  connect(this, SIGNAL(s_createNewEntry()), this, SLOT(createBookEntry()));
 
   connect(m_searchBar, SIGNAL(searchTextChanged(const QString &)), this,
           SLOT(searchConvert(const QString &)));
 
   connect(m_searchBar, SIGNAL(searchClicked()), this, SLOT(searchConvert()));
-
-  connect(m_searchBar, SIGNAL(currentFilterChanged(int)), this,
-          SLOT(updateValidator(int)));
 
   connect(m_statsBookBar, SIGNAL(s_queryHistory(const QString &)), m_tableView,
           SLOT(queryHistory(const QString &)));
@@ -181,13 +176,15 @@ void InventoryBooks::searchConvert() {
     return;
 
   QString buf = m_searchBar->currentSearchText();
+  int index = m_searchBar->currentFilterIndex();
   if (buf.length() > 1) {
-    SearchStatement s;
-    s.SearchField =
-        m_searchBar->getSearchFilter(m_searchBar->currentFilterIndex());
-    s.SearchString = buf;
-    // qDebug("'%s':'%s'", qPrintable(s.SearchField),
-    // qPrintable(s.SearchString));
+    SearchFilter s;
+    s.setSearch(buf);
+    QJsonObject js = m_searchBar->getSearchFilter(index);
+    s.setFields(js.value("filter").toString().split(","));
+    int i = js.value("type").toInt();
+    s.setType((SearchFilter::SearchType)i);
+    s.setTitle(js.value("title").toString());
     if (m_tableView != nullptr)
       m_tableView->queryStatement(s);
   }
@@ -227,17 +224,4 @@ void InventoryBooks::articleSelected(int id) {
   QString s("ib_id=");
   s.append(QString::number(id));
   openEditor(s);
-}
-
-void InventoryBooks::updateValidator(int id) {
-  switch (id) {
-  case 2: /**< Artikel ID */
-  case 3: /**< ISBN */
-    m_searchBar->setValidation(SearchBar::Number);
-    break;
-
-  default: /**< Zeichenketten */
-    m_searchBar->setValidation(SearchBar::Pattern);
-    break;
-  };
 }

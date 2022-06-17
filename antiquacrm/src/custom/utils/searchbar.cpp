@@ -4,6 +4,7 @@
 #include "searchbar.h"
 #include "antiqua_global.h"
 #include "myicontheme.h"
+#include "searchfilter.h"
 
 #include <QAction>
 #include <QDebug>
@@ -11,6 +12,7 @@
 #include <QLayout>
 #include <QPushButton>
 #include <QRegExp>
+#include <QRegularExpressionMatch>
 #include <QToolButton>
 #include <QWidget>
 
@@ -95,9 +97,8 @@ void SearchBar::beforeTextChanged(const QString &str) {
   }
 }
 
-void SearchBar::updateEditPlaceHolder() {
+void SearchBar::updateEditPlaceHolder(int i) {
   if (m_filterSection->count() > 0) {
-    int i = currentFilterIndex();
     QString p(tr("Search for"));
     p.append(" ");
     p.append(m_filterSection->itemText(i));
@@ -106,17 +107,32 @@ void SearchBar::updateEditPlaceHolder() {
   }
 }
 
-void SearchBar::searchFilterChanged(int) { updateEditPlaceHolder(); }
+void SearchBar::searchFilterChanged(int i) {
+  QJsonObject js = getSearchFilter(i);
+  SearchFilter::SearchType f =
+      static_cast<SearchFilter::SearchType>(js.value("type").toInt());
+  switch (f) {
+  case SearchFilter::NUMERIC:
+    setValidation(SearchBar::Number);
+    break;
+
+  default:
+    setValidation(SearchBar::Pattern);
+    break;
+  };
+
+  updateEditPlaceHolder(i);
+}
 
 void SearchBar::addSearchFilters(const QList<SearchFilter> &list) {
   if (list.isEmpty())
     return;
 
   m_filterSection->clear();
-  QListIterator<SearchFilter> i(list);
-  while (i.hasNext()) {
-    SearchFilter f = i.next();
-    m_filterSection->insertItem(f.index, f.title, f.filter);
+  int index = 0;
+  for (int i = 0; i < list.size(); i++) {
+    SearchFilter l = list.at(i);
+    m_filterSection->insertItem(index++, l.getTitle(), l.getFilter());
   }
 }
 
@@ -126,8 +142,8 @@ void SearchBar::setSearchFilter(int index) {
   }
 }
 
-const QString SearchBar::getSearchFilter(int index) {
-  return m_filterSection->itemData(index, Qt::UserRole).toString();
+const QJsonObject SearchBar::getSearchFilter(int index) {
+  return m_filterSection->itemData(index, Qt::UserRole).toJsonObject();
 }
 
 void SearchBar::setValidation(SearchBar::Validation v) {

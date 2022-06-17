@@ -111,13 +111,6 @@ private Q_SLOTS:
   */
   void articleSelected(int id);
 
-  /**
-     @brief Setze den Validator für die Ausgewählte suche.
-     Wird der Suchfilter geändert dann wird hier an
-     @ref SearchBar::setValidation ein update gesendet.
-   */
-  void updateValidator(int);
-
 public Q_SLOTS:
   /**
     @brief Aktiviert das PrintsEditor Fenster

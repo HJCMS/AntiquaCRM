@@ -6,6 +6,7 @@
 #include "myicontheme.h"
 #include "printstablemodel.h"
 #include "searchbar.h"
+#include "searchfilter.h"
 
 #include <QAction>
 #include <QDebug>
@@ -135,7 +136,8 @@ void PrintsTable::contextMenuEvent(QContextMenuEvent *ev) {
   ac_copy->setEnabled(b);
   connect(ac_copy, SIGNAL(triggered()), this, SLOT(copyToClipboard()));
 
-  QAction *ac_order = m->addAction(myIcon("autostart"), tr("add Article to opened Order"));
+  QAction *ac_order =
+      m->addAction(myIcon("autostart"), tr("add Article to opened Order"));
   ac_order->setObjectName("ac_context_book_to_order");
   ac_order->setEnabled(b);
   connect(ac_order, SIGNAL(triggered()), this, SLOT(createOrderSignal()));
@@ -201,59 +203,50 @@ void PrintsTable::queryHistory(const QString &str) {
   }
 }
 
-void PrintsTable::queryStatement(const SearchStatement &cl) {
-  /**
-     @brief exact_match
-      false = irgendwo im feld
-      true = genau ab Anfang
-  */
-  bool exact_match = false;
-
+void PrintsTable::queryStatement(const SearchFilter &cl) {
+  SearchFilter scl(cl);
   QRegExp reg("^(\\s+)");
-  QString field = cl.SearchField;
-  if (field.contains("title_first")) {
-    field = QString("title");
-    exact_match = true;
+  QStringList fields = scl.getFields();
+  QString search = scl.getSearch();
+  bool revert_match = false;
+  search = search.trimmed();
+  if (reg.exactMatch(search)) {
+    qWarning("Rejected invalid input");
+    return;
+  }
+  search.replace("*", "%");
+
+  if (scl.getType() == SearchFilter::STRINGS && fields.count() == 1) {
+    revert_match = true;
   }
 
-  QString str = cl.SearchString;
-  if (reg.exactMatch(str)) {
-    qDebug() << "Rejected:" << str;
+  QString q("SELECT DISTINCT ");
+  q.append(querySelect());
+  q.append(queryTables());
+
+  QStringList clauses;
+  QSqlRecord r = m_sql->record("inventory_books");
+  if (scl.getType() == SearchFilter::REFERENCES) {
+    qWarning("Not supported request type");
     return;
   }
 
-  str.replace("*", "%");
-  QString q("SELECT ");
-  q.append(querySelect());
-  q.append(queryTables());
-  if (field == "id") {
-    // Numeric Search
-    q.append(" WHERE (b.ip_id=");
-    q.append(str);
-  } else if (field == "author") {
-    // String Search
-    q.append(" WHERE (b.ip_author ILIKE '%");
-    q.append(str.replace(" ", "%"));
-    q.append("%'");
-  } else {
-    // String Search
-    if (exact_match) {
-      q.append(" WHERE (b.ip_title ILIKE '");
+  foreach (QString f, fields) {
+    QVariant::Type vt = r.field(f).type();
+    if (vt == QVariant::LongLong || vt == QVariant::Int ||
+        vt == QVariant::Double) {
+      clauses.append(f + "=" + search);
+    } else if (scl.getType() == SearchFilter::NUMERIC) {
+      clauses.append(f + "=" + search);
     } else {
-      q.append(" WHERE (b.ip_title ILIKE '%");
+      QString str_search = search.replace(" ", "%");
+      clauses.append(f + " ILIKE '" + "%" + str_search + "%'");
     }
-    q.append(str);
-    q.append("%')");
-    if (exact_match) {
-      q.append(" OR (b.ip_title_extended ILIKE '");
-      q.append(str);
-    } else {
-      q.append(" OR (b.ip_title_extended ILIKE '%");
-      q.append(str.replace(" ", "%"));
-    }
-    q.append("%'");
   }
-  q.append(") ORDER BY b.ip_count DESC LIMIT ");
+
+  q.append(" WHERE ");
+  q.append(clauses.join(" OR "));
+  q.append(" ORDER BY ip_count DESC LIMIT ");
   q.append(QString::number(maxRowCount));
   q.append(";");
 

@@ -17,22 +17,19 @@ ViewsTableModel::ViewsTableModel(const QSqlDatabase &db, QWidget *parent)
 
 const QHash<QString, QString> ViewsTableModel::translations() {
   QHash<QString, QString> l;
-  l.insert("sl_identifier", tr("Identity"));
+  l.insert("identifier", tr("Identity"));
   l.insert("title", tr("Title"));
   l.insert("categorie", tr("Categorie"));
-  l.insert("ib_title", tr("Title"));
-  l.insert("ip_title", tr("Title"));
-  l.insert("ib_price", tr("Price"));
+  l.insert("price", tr("Price"));
   l.insert("price", tr("Price"));
   l.insert("counts", tr("Count"));
   l.insert("total_price", tr("total price"));
-  l.insert("ib_author", tr("Author"));
-  l.insert("sl_storage", tr("Storage"));
+  l.insert("avg_price", tr("price average"));
+  l.insert("author", tr("Author"));
   l.insert("storages", tr("Storage"));
+  l.insert("keyword", tr("Keyword"));
   l.insert("twofold_keywords", tr("Double Keywords"));
-  l.insert("ib_id", tr("Article Id"));
-  l.insert("ip_id", tr("Article Id"));
-  l.insert("sl_id", tr("Archive Id"));
+  l.insert("articleid", tr("Article Id"));
   // l.insert("",tr(""));
   return l;
 }
@@ -104,8 +101,8 @@ void ViewsTable::articleClicked(const QModelIndex &index) {
     else if (id > 0 && m_model->tableName().contains("_customer_"))
       emit s_articleSelected(id, "customereditor");
     else
-      qWarning("Unused Id: %s in Views Table.",
-               qPrintable(QString::number(id)));
+      qInfo("No action defined for this '%s' View.",
+            qPrintable(m_model->tableName()));
   }
 }
 

@@ -21,12 +21,6 @@ use Image::Magick;
 # use open ':utf8';
 binmode STDOUT, ":utf8";
 
-# rpm -qa perl-* | grep -ie DBD-Pg -ie DBD-mysql
-# man 3 DBD::mysql
-# https://metacpan.org/pod/DBD::mysql
-my $dsn = "DBI:mysql:database=hai;host=localhost;port=3306;mysql_read_default_file=~/.my.cnf;mysql_read_default_group=client";
-my $dbc = DBI->connect("$dsn", "heinemann", "MariaDB2022Access",{RaiseError => 1, PrintError => 1, mysql_enable_utf8 => 1});
-
 =begin $PGCMD
   PostgreSQL CMD for Import-Helper command!
 =cut
@@ -60,13 +54,16 @@ sub scale_image {
   my $exifTool = new Image::ExifTool;
   my $info = $exifTool->ImageInfo("/tmp/import.jpg");
   my $rotate = $exifTool->GetValue('Orientation');
-  $rotate =~ s/\D+//ig;
+  if($rotate eq 'Horizontal (normal)') {
+    $rotate = 90;
+  } else {
+    $rotate =~ s/\D+//ig;
+  }
   $exifTool->ClearOptions();
   $rotate = (($rotate) && ($rotate >= 90)) ? $rotate : 0;
   ## Convert
   my @args = ("convert","-resize","320x","-rotate",$rotate,"-quality",80,"/tmp/import.jpg","/tmp/out.jpg");
-  system(@args) == 0
-  or system("rm -f /tmp/out.jpg");
+  system(@args);
 
   ## base64 convert
   if (-s "/tmp/out.jpg")
@@ -112,11 +109,6 @@ sub createImageIndex {
   Erstelle abfragen
 =cut
 createImageIndex();
-
-=begin disconnect
-  Aufräumen und SQL Verbindungen schliessen.
-=cut
-$dbc->disconnect();
 
 # print "-- script finished\n";
 ##EOF

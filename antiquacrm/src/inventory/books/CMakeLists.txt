@@ -35,6 +35,8 @@ SET (subproject_HEADERS
   inventorybooks.h
 )
 
+## TODO ADD_DEFINITION(BOOK_INVENTORY_DEBUG);
+
 ADD_LIBRARY (${_subproject} STATIC
   ${subproject_HEADERS}
   ${subproject_SOURCES}

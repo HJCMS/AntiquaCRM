@@ -20,6 +20,19 @@
     </message>
 </context>
 <context>
+    <name>Antiqua::Provider</name>
+    <message>
+        <location filename="../core/antiquacore/provider.cpp" line="+411"/>
+        <source>CA-Bundle</source>
+        <translation>CA Paket</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Missing CA-Bundle for Connections!</source>
+        <translation>Kann CA Paket für sichere Verbindung nicht finden!</translation>
+    </message>
+</context>
+<context>
     <name>Antiqua::PurchaserOrderTable</name>
     <message>
         <location filename="../core/antiquacore/interface.cpp" line="+17"/>
@@ -407,7 +420,7 @@
 <context>
     <name>BooksTable</name>
     <message>
-        <location filename="../inventory/books/bookstable.cpp" line="+96"/>
+        <location filename="../inventory/books/bookstable.cpp" line="+105"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
@@ -422,7 +435,12 @@
         <translation>Kopiere Artikel Nummer</translation>
     </message>
     <message>
-        <location line="-7"/>
+        <location line="+78"/>
+        <source>Rejected invalid input</source>
+        <translation>Ungültige EIngabe verweigert</translation>
+    </message>
+    <message>
+        <location line="-85"/>
         <source>Create entry</source>
         <translation>Eintrag erstellen</translation>
     </message>
@@ -1138,7 +1156,7 @@
 <context>
     <name>CustomerTableView</name>
     <message>
-        <location filename="../inventory/customers/customertableview.cpp" line="+68"/>
+        <location filename="../inventory/customers/customertableview.cpp" line="+69"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
@@ -1849,7 +1867,7 @@
         <translation>Bücher</translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+94"/>
         <source>Automatic search disabled in this mode. Press enter to start the search!</source>
         <translation>Automatische Suche in diesem Modus deaktiviert. Drücken Sie die Eingabetaste, um die Suche zu starten!</translation>
     </message>
@@ -1857,7 +1875,7 @@
 <context>
     <name>InventoryCustomers</name>
     <message>
-        <location filename="../inventory/customers/inventorycustomers.cpp" line="+41"/>
+        <location filename="../inventory/customers/inventorycustomers.cpp" line="+38"/>
         <source>Customers</source>
         <translation>Kunden</translation>
     </message>
@@ -1883,7 +1901,7 @@
 <context>
     <name>InventoryPrints</name>
     <message>
-        <location filename="../inventory/prints/inventoryprints.cpp" line="+48"/>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="+49"/>
         <source>Prints</source>
         <translation>Drucke</translation>
     </message>
@@ -3286,7 +3304,7 @@
 <context>
     <name>PrintsTable</name>
     <message>
-        <location filename="../inventory/prints/printstable.cpp" line="+122"/>
+        <location filename="../inventory/prints/printstable.cpp" line="+123"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
@@ -3301,7 +3319,7 @@
         <translation>Eintrag erstellen</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>add Article to opened Order</source>
         <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
     </message>
@@ -3476,18 +3494,18 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="-131"/>
-        <source>Book Title</source>
-        <translation>Buchtitel</translation>
+        <location filename="../inventory/books/inventorybooks.cpp" line="-127"/>
+        <source>Book Title or Author</source>
+        <translation>Buch nach Titel und Autor</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Book Title (starts with)</source>
-        <translation>Buchtitel (Startet mit)</translation>
+        <source>Book Title only</source>
+        <translation>Suche nach Buchtitel</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../inventory/prints/inventoryprints.cpp" line="-12"/>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="-17"/>
         <source>Article ID</source>
         <translation>Artikel Nr</translation>
     </message>
@@ -3511,16 +3529,6 @@
         <location line="+4"/>
         <source>Duration by Keyword</source>
         <translation>Bestand mit Lagerkategorie</translation>
-    </message>
-    <message>
-        <location filename="../inventory/prints/inventoryprints.cpp" line="-12"/>
-        <source>Title</source>
-        <translation>Titel</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Title (starts with)</source>
-        <translation>Titel (Startet mit)</translation>
     </message>
     <message>
         <location filename="../custom/utils/genderbox.cpp" line="+12"/>
@@ -3553,21 +3561,6 @@
         <location line="+3"/>
         <source>Mrs</source>
         <translation>Frau</translation>
-    </message>
-    <message>
-        <location filename="../inventory/customers/inventorycustomers.cpp" line="-16"/>
-        <source>Sort by Name</source>
-        <translation>Sortiert mit Name</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Sort by ID</source>
-        <translation>Sortiert mit ID</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Sort by Date</source>
-        <translation>Sortiert mit Datum</translation>
     </message>
     <message>
         <location filename="../core/antiquacore/trustlist.cpp" line="+25"/>
@@ -3629,6 +3622,26 @@
         <source>delivery completed</source>
         <translation>Lieferung abgeschlossen</translation>
     </message>
+    <message>
+        <location filename="../inventory/customers/inventorycustomers.cpp" line="-13"/>
+        <source>Company and Names</source>
+        <translation>Firma oder Person</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Costumer Id</source>
+        <translation>Kunden Nummer</translation>
+    </message>
+    <message>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="-8"/>
+        <source>Title or Author</source>
+        <translation>Titel oder Autor</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Technique</source>
+        <translation>Technik</translation>
+    </message>
 </context>
 <context>
     <name>SalutationBox</name>
@@ -3651,7 +3664,7 @@
 <context>
     <name>SearchBar</name>
     <message>
-        <location filename="../custom/utils/searchbar.cpp" line="+36"/>
+        <location filename="../custom/utils/searchbar.cpp" line="+38"/>
         <source>Press CTRL+F, to quickly open this Menu.</source>
         <translation>Drücken Sie STRG+F, um dieses Menü schnell zu öffnen.</translation>
     </message>
@@ -3667,12 +3680,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+53"/>
+        <location line="+52"/>
         <source>Search for</source>
         <translation>Suche nach</translation>
     </message>
     <message>
-        <location line="-48"/>
+        <location line="-47"/>
         <location line="+2"/>
         <source>Start search</source>
         <translation>Suche starten</translation>
@@ -4038,13 +4051,11 @@
     <name>ViewsTableModel</name>
     <message>
         <location filename="../inventory/views/viewstable.cpp" line="+21"/>
-        <location line="+2"/>
-        <location line="+1"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location line="-4"/>
+        <location line="-1"/>
         <source>Identity</source>
         <translation>Identität</translation>
     </message>
@@ -4054,7 +4065,7 @@
         <translation>Kategorie</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
         <location line="+1"/>
         <source>Price</source>
         <translation>Preis</translation>
@@ -4071,14 +4082,23 @@
     </message>
     <message>
         <location line="+1"/>
+        <source>price average</source>
+        <translation>Preis Durchschnitt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Author</source>
         <translation>Autor</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+1"/>
         <source>Storage</source>
         <translation>Lager</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Keyword</source>
+        <translation>Schlüsselwort</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4087,14 +4107,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <location line="+1"/>
         <source>Article Id</source>
         <translation>Artikel Id</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Archive Id</source>
-        <translation>Archiv Id</translation>
     </message>
 </context>
 <context>
@@ -4121,8 +4135,8 @@
     </message>
     <message>
         <location line="+4"/>
-        <source>Show Total Book Price and counts.</source>
-        <translation>Zeige Gesamtpreis im Buchbestand</translation>
+        <source>Book count, total price and price average.</source>
+        <translation>Buch Anzahl, Gesamtpreis und Preis Durchschnitt.</translation>
     </message>
     <message>
         <location line="+7"/>

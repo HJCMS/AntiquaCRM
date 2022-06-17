@@ -6,6 +6,7 @@
 #include "customerstatements.h"
 #include "myicontheme.h"
 #include "searchbar.h"
+#include "searchfilter.h"
 #include "sqlcore.h"
 
 #include <QAction>
@@ -168,9 +169,6 @@ void CustomerTableView::queryHistory(const QString &history) {
   q.append(QString::number(maxRowCount));
   q.append(";");
 
-  if (SHOW_SQL_QUERIES)
-    qDebug() << Q_FUNC_INFO << q;
-
   if (sqlExecQuery(q)) {
     resizeRowsToContents();
     resizeColumnsToContents();
@@ -178,23 +176,27 @@ void CustomerTableView::queryHistory(const QString &history) {
   }
 }
 
-void CustomerTableView::queryStatement(const SearchStatement &search) {
-  QString str(search.SearchString);
+void CustomerTableView::queryStatement(const SearchFilter &cl) {
+  SearchFilter search(cl);
+  QString orderBy = search.getFields().join("").trimmed();
+  QString str(search.getSearch());
   QRegExp reg("\\s+");
   QStringList list = str.split(reg);
   QStringList clause;
-  foreach (QString s, list) {
-    QString buffer;
-    buffer.append("(c_firstname ILIKE '" + s + "%' ");
-    buffer.append("OR c_lastname ILIKE '" + s + "%')");
-    clause.append(buffer);
-    clause.append("(c_company_name ILIKE '%" + s + "%')");
+  if (search.getType() == SearchFilter::NUMERIC) {
+    clause.append(orderBy + "=" + str);
+  } else {
+    foreach (QString s, list) {
+      QString buffer;
+      buffer.append("(c_firstname ILIKE '" + s + "%' ");
+      buffer.append("OR c_lastname ILIKE '" + s + "%')");
+      clause.append(buffer);
+      clause.append("(c_company_name ILIKE '%" + s + "%')");
+    }
   }
-
   QString q = c_sqlTableQueryBody();
   q.append(clause.join(" OR "));
-  q.append(" ORDER BY " + search.SearchField);
-  q.append(" ASC;");
+  q.append(" ORDER BY c_since DESC;");
 
   if (sqlExecQuery(q)) {
     resizeRowsToContents();

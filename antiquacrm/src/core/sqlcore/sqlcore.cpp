@@ -221,6 +221,27 @@ const QSqlRecord SqlCore::record(const QString &table) {
   return database->record(table);
 }
 
+const QString SqlCore::foreignTable(const QString &table, const QString &name) {
+  if (!database->isOpen())
+    database->open();
+
+  QString sql("SELECT DISTINCT b.table_name AS toTable");
+  sql.append(" FROM information_schema.key_column_usage AS a");
+  sql.append(" LEFT JOIN information_schema.constraint_column_usage AS b");
+  sql.append(" ON b.constraint_name = a.constraint_name");
+  sql.append(" WHERE (a.constraint_name LIKE '");
+  sql.append(name);
+  sql.append("' AND a.table_name LIKE '");
+  sql.append(table);
+  sql.append("');");
+
+  QSqlQuery q = query(sql);
+  if (q.next()) {
+    return q.value("toTable").toString();
+  }
+  return QString();
+}
+
 const QStringList SqlCore::fields(const QString &table) {
   QStringList l;
   QSqlRecord r = record(table);

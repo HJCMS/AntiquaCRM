@@ -14,7 +14,7 @@
 #include <SqlCore>
 
 class BooksTableModel;
-class SearchStatement; /**< @ref SearchBar */
+class SearchFilter;
 
 class BooksTable : public QTableView {
   Q_OBJECT
@@ -100,7 +100,7 @@ public Q_SLOTS:
   /**
    * Startet Abfrage ausgehend von Text/Sucheingabe
    */
-  void queryStatement(const SearchStatement &);
+  void queryStatement(const SearchFilter &);
 
 public:
   explicit BooksTable(QWidget *parent = nullptr);

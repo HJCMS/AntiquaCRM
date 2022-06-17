@@ -6,6 +6,7 @@
 #include "editcustomer.h"
 #include "myicontheme.h"
 #include "searchbar.h"
+#include "searchfilter.h"
 #include "statsactionbar.h"
 
 #include <QDebug>
@@ -16,22 +17,18 @@
 #include <QVBoxLayout>
 
 /**
-   @ref SearchBar::addSearchFilters
-*/
-static const QList<SearchBar::SearchFilter> bookSearchFilter() {
-  SearchBar::SearchFilter a;
-  QList<SearchBar::SearchFilter> filter;
-  a.index = 0;
-  a.title = QObject::tr("Sort by Name");
-  a.filter = QString("shurename");
+ * @ref SearchBar::addSearchFilters
+ */
+static const QList<SearchFilter> customerSearchFilter() {
+  SearchFilter a;
+  QList<SearchFilter> filter;
+  a.setTitle(QObject::tr("Company and Names"));
+  a.setFields("shurename");
+  a.setType(SearchFilter::STRINGS);
   filter.append(a);
-  a.index = 1;
-  a.title = QObject::tr("Sort by ID");
-  a.filter = QString("id");
-  filter.append(a);
-  a.index = 2;
-  a.title = QObject::tr("Sort by Date");
-  a.filter = QString("since");
+  a.setTitle(QObject::tr("Costumer Id"));
+  a.setFields("c_id");
+  a.setType(SearchFilter::NUMERIC);
   filter.append(a);
   return filter;
 }
@@ -59,7 +56,7 @@ InventoryCustomers::InventoryCustomers(QWidget *parent) : Inventory{parent} {
 
   m_searchBar = new SearchBar(this);
   m_searchBar->setObjectName("customers_searchbar");
-  m_searchBar->addSearchFilters(bookSearchFilter());
+  m_searchBar->addSearchFilters(customerSearchFilter());
   siteOneLayout->addWidget(m_searchBar);
 
   m_tableView = new CustomerTableView(this);
@@ -81,14 +78,12 @@ InventoryCustomers::InventoryCustomers(QWidget *parent) : Inventory{parent} {
 
   setLayout(layout);
 
-  connect(this, SIGNAL(s_setSearchFocus()), m_searchBar,
-          SLOT(clearAndFocus()));
+  connect(this, SIGNAL(s_setSearchFocus()), m_searchBar, SLOT(clearAndFocus()));
 
   connect(this, SIGNAL(s_setSearchFilter()), m_searchBar,
           SLOT(setFilterFocus()));
 
-  connect(this, SIGNAL(s_createNewEntry()), this,
-          SLOT(createCustomer()));
+  connect(this, SIGNAL(s_createNewEntry()), this, SLOT(createCustomer()));
 
   connect(m_searchBar, SIGNAL(searchTextChanged(const QString &)), this,
           SLOT(searchConvert(const QString &)));
@@ -157,13 +152,15 @@ void InventoryCustomers::searchConvert() {
     return;
 
   QString buf = m_searchBar->currentSearchText();
+  int index = m_searchBar->currentFilterIndex();
   if (buf.length() >= 2) {
-    SearchStatement s;
-    s.SearchField =
-        m_searchBar->getSearchFilter(m_searchBar->currentFilterIndex());
-    s.SearchString = buf;
-    // qDebug("'%s':'%s'", qPrintable(s.SearchField),
-    // qPrintable(s.SearchString));
+    SearchFilter s;
+    s.setSearch(buf);
+    QJsonObject js = m_searchBar->getSearchFilter(index);
+    s.setFields(js.value("filter").toString().split(","));
+    int i = js.value("type").toInt();
+    s.setType((SearchFilter::SearchType)i);
+    s.setTitle(js.value("title").toString());
     if (m_tableView != nullptr)
       m_tableView->queryStatement(s);
   }

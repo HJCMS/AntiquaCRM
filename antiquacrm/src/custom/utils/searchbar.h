@@ -10,19 +10,22 @@
 #include <QLineEdit>
 #include <QList>
 #include <QObject>
-#include <QPair>
+#include <QJsonObject>
+#include <QRegularExpression>
 #include <QRegExpValidator>
 #include <QToolBar>
 #include <QWidget>
 
+class SearchFilter;
+
 /**
  * @brief Suchabfrage
+ * Q_DECL_DEPRECATED
  */
-struct SearchStatement {
-  QString SearchField;
-  QString SearchString;
+struct Q_DECL_DEPRECATED SearchStatement {
+  QString SearchField;  /**< Feldname */
+  QString SearchString; /**< Suchtext */
 };
-Q_DECLARE_METATYPE(SearchStatement)
 
 /**
  * @class SearchBar
@@ -57,8 +60,8 @@ private:
 private Q_SLOTS:
   void beforeTextChanged();
   void beforeTextChanged(const QString &);
-  void updateEditPlaceHolder();
-  void searchFilterChanged(int);
+  void updateEditPlaceHolder(int i);
+  void searchFilterChanged(int i);
 
 Q_SIGNALS:
   /**
@@ -93,16 +96,9 @@ public Q_SLOTS:
   void setSearchFilter(int index);
 
 public:
-  struct SearchFilter {
-    int index;      /**< @brief Index der Auswahl */
-    QString title;  /**< @brief Anzeige Text */
-    QString filter; /**< @brief Suchfilter */
-  };
-  typedef QList<SearchFilter> SearchFilters;
-
   enum Validation {
-    Pattern, /**< Texteingabe */
-    Number   /**< Nummernsuche */
+    Pattern = 0, /**< Texteingabe */
+    Number = 1   /**< Nummernsuche */
   };
   Q_ENUM(Validation)
 
@@ -131,9 +127,8 @@ public:
 
   /**
    * @brief Gibt den Suchfilter mit dem Index zurück.
-   * @return Suchfilter \b Wert, nicht den Anzeigetext!
    */
-  const QString getSearchFilter(int index);
+  const QJsonObject getSearchFilter(int index);
 
   /**
    * @brief currentFilterIndex

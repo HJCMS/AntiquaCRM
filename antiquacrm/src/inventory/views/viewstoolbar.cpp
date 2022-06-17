@@ -25,7 +25,7 @@ ViewsToolBar::ViewsToolBar(QWidget *parent) : QToolBar{parent} {
                             "price of these categories."),
                          QString("view_group_by_keywords"));
   m_comboBox->insertItem(i++,
-                         tr("Show Total Book Price and counts."),
+                         tr("Book count, total price and price average."),
                          QString("view_all_with_duration"));
   m_comboBox->setSizePolicy(sp);
   addWidget(m_comboBox);

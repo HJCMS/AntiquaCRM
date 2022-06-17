@@ -14,7 +14,7 @@
 #include <SqlCore>
 
 class PrintsTableModel;
-class SearchStatement; /**< @ref SearchBar */
+class SearchFilter;
 
 class PrintsTable : public QTableView {
   Q_OBJECT
@@ -92,7 +92,7 @@ public Q_SLOTS:
   /**
     Startet Abfrage ausgehend von Text/Sucheingabe
   */
-  void queryStatement(const SearchStatement &);
+  void queryStatement(const SearchFilter &);
 
 public:
   explicit PrintsTable(QWidget *parent = nullptr);
