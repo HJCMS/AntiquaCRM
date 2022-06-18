@@ -1,3 +1,6 @@
 *.conf
 *.iss
 *.desktop
+certdata.txt
+ca-bundle.crt
+

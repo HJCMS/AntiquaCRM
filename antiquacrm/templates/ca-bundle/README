@@ -1,0 +1,8 @@
+Original Scripts from ...
+cURL Project "mk-ca-bundle.pl":
+	 https://github.com/curl/curl/tree/master/scripts
+
+Multiple Certificates In One File "cert-split.pl":
+	http://gagravarr.org/writing/openssl-certs/general.shtml#multi
+	http://gagravarr.org/code/cert-split.pl
+
