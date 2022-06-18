@@ -49,6 +49,11 @@ private:
    */
   OrderEditor *m_editor;
 
+  /**
+   * @brief Standard Suchfilter für Kunden
+   */
+  const QList<SearchFilter> commonSearchFilter() const;
+
 private Q_SLOTS:
   /**
    * @brief Reagiert auf LineEdit

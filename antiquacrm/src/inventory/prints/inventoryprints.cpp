@@ -6,9 +6,6 @@
 #include "myicontheme.h"
 #include "printseditor.h"
 #include "printstable.h"
-#include "searchbar.h"
-#include "searchfilter.h"
-#include "statsactionbar.h"
 
 #include <QDebug>
 #include <QLabel>
@@ -16,28 +13,28 @@
 #include <QList>
 #include <QVBoxLayout>
 
-/**
-   @brief printsSearchFilter
-   Muss für jedes Suchtab einzeln definiert sein.
-   @ref SearchBar::addSearchFilters
-   @return const QList<SearchFilter>
-*/
-static const QList<SearchFilter> printsSearchFilter() {
+PrintsSearchBar::PrintsSearchBar(QWidget *parent) : SearchBar{parent} {
+  setObjectName("prints_search_bar");
+  setValidation(SearchBar::Pattern);
+  addSearchFilters(commonSearchFilter());
+}
+
+const QList<SearchFilter> PrintsSearchBar::commonSearchFilter() const {
   QList<SearchFilter> filter;
   SearchFilter a;
-  a.setTitle(QObject::tr("Title or Author"));
+  a.setTitle(tr("Title or Author"));
   a.setFields("ip_title,ip_title_extended,ip_author");
   a.setType(SearchFilter::STRINGS);
   filter.append(a);
-  a.setTitle(QObject::tr("Article ID"));
+  a.setTitle(tr("Article ID"));
   a.setFields("ip_id");
   a.setType(SearchFilter::NUMERIC);
   filter.append(a);
-  a.setTitle(QObject::tr("Author"));
+  a.setTitle(tr("Author"));
   a.setFields("ip_author");
   a.setType(SearchFilter::STRINGS);
   filter.append(a);
-  a.setTitle(QObject::tr("Technique"));
+  a.setTitle(tr("Technique"));
   a.setFields("ip_technique");
   a.setType(SearchFilter::STRINGS);
   filter.append(a);
@@ -64,9 +61,7 @@ InventoryPrints::InventoryPrints(QWidget *parent) : Inventory{parent} {
   QVBoxLayout *siteOneLayout = new QVBoxLayout(siteOneWidget);
   siteOneLayout->setObjectName("prints_site_one_layout");
 
-  m_searchBar = new SearchBar(this);
-  m_searchBar->setValidation(SearchBar::Pattern);
-  m_searchBar->addSearchFilters(printsSearchFilter());
+  m_searchBar = new PrintsSearchBar(this);
   siteOneLayout->addWidget(m_searchBar);
 
   m_tableView = new PrintsTable(this);

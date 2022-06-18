@@ -4,6 +4,7 @@
 #include "inventory.h"
 #include "messagebox.h"
 #include "utilsmain.h"
+#include "searchfilter.h"
 
 #include <QApplication>
 #include <QClipboard>

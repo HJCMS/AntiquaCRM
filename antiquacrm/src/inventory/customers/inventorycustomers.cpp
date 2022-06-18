@@ -5,9 +5,6 @@
 #include "customertableview.h"
 #include "editcustomer.h"
 #include "myicontheme.h"
-#include "searchbar.h"
-#include "searchfilter.h"
-#include "statsactionbar.h"
 
 #include <QDebug>
 #include <QHBoxLayout>
@@ -16,17 +13,20 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
-/**
- * @ref SearchBar::addSearchFilters
- */
-static const QList<SearchFilter> customerSearchFilter() {
+CustomerSearchBar::CustomerSearchBar(QWidget *parent) : SearchBar{parent} {
+  setObjectName("customer_search_bar");
+  setValidation(SearchBar::Pattern);
+  addSearchFilters(commonSearchFilter());
+}
+
+const QList<SearchFilter> CustomerSearchBar::commonSearchFilter() const {
   SearchFilter a;
   QList<SearchFilter> filter;
-  a.setTitle(QObject::tr("Company and Names"));
+  a.setTitle(tr("Company and Names"));
   a.setFields("shurename");
   a.setType(SearchFilter::STRINGS);
   filter.append(a);
-  a.setTitle(QObject::tr("Costumer Id"));
+  a.setTitle(tr("Costumer Id"));
   a.setFields("c_id");
   a.setType(SearchFilter::NUMERIC);
   filter.append(a);
@@ -54,9 +54,7 @@ InventoryCustomers::InventoryCustomers(QWidget *parent) : Inventory{parent} {
   QVBoxLayout *siteOneLayout = new QVBoxLayout(siteOneWidget);
   siteOneLayout->setObjectName("customer_site_one_layout");
 
-  m_searchBar = new SearchBar(this);
-  m_searchBar->setObjectName("customers_searchbar");
-  m_searchBar->addSearchFilters(customerSearchFilter());
+  m_searchBar = new CustomerSearchBar(this);
   siteOneLayout->addWidget(m_searchBar);
 
   m_tableView = new CustomerTableView(this);

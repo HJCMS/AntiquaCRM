@@ -5,6 +5,7 @@
 #include "myicontheme.h"
 #include "ordereditor.h"
 #include "orderstable.h"
+#include "searchfilter.h"
 #include <AntiquaCRM>
 
 #include <QDebug>
@@ -71,6 +72,11 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
   connect(btn_refresh, SIGNAL(clicked()), m_tableView, SLOT(refreshView()));
 
   m_tableView->initOrders();
+}
+
+const QList<SearchFilter> InventoryOrders::commonSearchFilter() const {
+  QList<SearchFilter> l;
+  return l;
 }
 
 void InventoryOrders::searchConvert(const QString &query) {}

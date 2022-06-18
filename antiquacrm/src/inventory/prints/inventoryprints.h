@@ -5,8 +5,6 @@
 #ifndef INVENTORYPRINTS_H
 #define INVENTORYPRINTS_H
 
-#include "inventory.h"
-
 #include <QList>
 #include <QObject>
 #include <QPushButton>
@@ -14,13 +12,33 @@
 #include <QTabWidget>
 #include <QWidget>
 
-class SearchBar;
+#include <Utils>
+
 class PrintsTable;
 class PrintsEditor;
-class StatsActionBar;
+
+/**
+ * @brief Sucheingabe für Drucke und Stiche
+ * @ingroup Inventory
+ */
+class PrintsSearchBar final : public SearchBar {
+  Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
+
+private:
+  /**
+   * @brief Standard Suchfilter für Bücher
+   */
+  const QList<SearchFilter> commonSearchFilter() const;
+
+public:
+  PrintsSearchBar(QWidget *parent);
+};
 
 /**
  * @brief The InventoryPrints class
+ * @ingroup Inventory
  */
 class InventoryPrints final : public Inventory {
   Q_OBJECT
@@ -36,7 +54,7 @@ private:
   /**
    * @brief Sucheingabe für Bücher
    */
-  SearchBar *m_searchBar;
+  PrintsSearchBar *m_searchBar;
 
   /**
    * @brief Zeige alles was im bestand ist!

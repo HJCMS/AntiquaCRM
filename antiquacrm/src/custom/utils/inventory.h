@@ -8,6 +8,9 @@
 #include <QObject>
 #include <QVariant>
 #include <QWidget>
+#include <QList>
+
+class SearchFilter;
 
 /**
  * @class Inventory inventory.h Utils

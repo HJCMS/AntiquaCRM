@@ -5,30 +5,47 @@
 #ifndef INVENTORYBOOKS_H
 #define INVENTORYBOOKS_H
 
-#include "inventory.h"
-
 #include <QList>
 #include <QObject>
 #include <QStackedWidget>
 #include <QTabWidget>
 #include <QWidget>
 
-class SearchBar;
+#include <Utils>
+
 class BooksTable;
-class StatsActionBar;
 class BookEditor;
 
 /**
- @class InventoryBooks
- Primäre Klasse für das Bücherarchiv
- Die Fenster werden mit einem StackedWidget gruppiert.
- Es sind enthalten:
-  @li Suchbeingabe
-  @li Tabellenansicht
-  @li Statusbalken und Historienauswahl
-  @li Bucheditor
- @note Im ladezustand ist das BuchEditor Fenster deaktiviert.
-*/
+ * @brief The BookSearchBar class
+ * @ingroup Inventory
+ */
+class BookSearchBar final : public SearchBar {
+  Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
+
+private:
+  /**
+   * @brief Standard Suchfilter für Bücher
+   */
+  const QList<SearchFilter> commonSearchFilter() const;
+
+public:
+  BookSearchBar(QWidget *parent);
+};
+
+/**
+ * @class Bücher Inventar
+ * @ingroup Inventory
+ * Primäre Klasse für das Bücherarchiv Die Fenster werden mit einem
+ * StackedWidget gruppiert. Es sind enthalten:
+ * @li Suchbeingabe
+ * @li Tabellenansicht
+ * @li Statusbalken und Historienauswahl
+ * @li Bucheditor
+ * @note Im ladezustand ist das BuchEditor Fenster deaktiviert.
+ */
 class InventoryBooks final : public Inventory {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -43,7 +60,7 @@ private:
   /**
    * @brief Sucheingabe für Bücher
    */
-  SearchBar *m_searchBar;
+  BookSearchBar *m_searchBar;
 
   /**
    * @brief Tabellenansicht

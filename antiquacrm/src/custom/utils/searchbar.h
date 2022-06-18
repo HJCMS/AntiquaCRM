@@ -19,19 +19,11 @@
 class SearchFilter;
 
 /**
- * @brief Suchabfrage
- * Q_DECL_DEPRECATED
- */
-struct Q_DECL_DEPRECATED SearchStatement {
-  QString SearchField;  /**< Feldname */
-  QString SearchString; /**< Suchtext */
-};
-
-/**
  * @class SearchBar
+ * @ingroup Inventory
  * @brief Primäre Suchbalkenklasse.
  */
-class SearchBar final : public QToolBar {
+class SearchBar : public QToolBar {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -62,6 +54,13 @@ private Q_SLOTS:
   void beforeTextChanged(const QString &);
   void updateEditPlaceHolder(int i);
   void searchFilterChanged(int i);
+
+protected:
+  /**
+   * @brief Standard Suchfilter
+   * @note Muss für jeden Aufruf definiert werden.
+   */
+  virtual const QList<SearchFilter> commonSearchFilter() const = 0;
 
 Q_SIGNALS:
   /**

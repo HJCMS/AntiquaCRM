@@ -10,7 +10,7 @@
 #include <QRegExp>
 #include <QRegularExpression>
 #include <QString>
-#include <QStringList>
+#include <QList>
 
 class SearchFilter {
 private:

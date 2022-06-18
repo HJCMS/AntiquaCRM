@@ -5,20 +5,35 @@
 #ifndef INVENTORYCOSTUMERS_H
 #define INVENTORYCOSTUMERS_H
 
-#include "inventory.h"
-
 #include <QObject>
 #include <QStackedWidget>
 #include <QWidget>
 
-class SearchBar;
-class StatsActionBar;
+#include <Utils>
+
 class EditCustomer;
 class CustomerTableView;
 
 /**
- * @brief The InventoryCustomers class
+ * @brief Sucheingabe für Kunden Adressbuch
+ * @ingroup Inventory
+ */
+class CustomerSearchBar final : public SearchBar {
+  Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
+
+private:
+  const QList<SearchFilter> commonSearchFilter() const;
+
+public:
+  CustomerSearchBar(QWidget *parent);
+};
+
+/**
+ * @brief Kundenadressbuch Seiten
  * @class InventoryCustomers
+ * @ingroup Inventory
  */
 class InventoryCustomers final : public Inventory {
   Q_OBJECT
@@ -36,7 +51,7 @@ private:
   /**
    * @brief Sucheingabe für Bücher
    */
-  SearchBar *m_searchBar;
+  CustomerSearchBar *m_searchBar;
 
   /**
    * @brief Tabellenansicht
@@ -53,6 +68,7 @@ private:
    */
   EditCustomer *m_editCustomer;
 
+protected:
   void openEditor(const QString &);
 
 private Q_SLOTS:

@@ -5,8 +5,6 @@
 #include "bookeditor.h"
 #include "bookstable.h"
 #include "myicontheme.h"
-#include "searchbar.h"
-#include "statsactionbar.h"
 #include <AntiquaCRM>
 
 #include <QDebug>
@@ -15,40 +13,40 @@
 #include <QLayout>
 #include <QVBoxLayout>
 
-/**
-   @brief bookSearchFilter
-   Muss für jedes Suchtab einzeln definiert sein.
-   @ref SearchBar::addSearchFilters
-   @return const QList<SearchFilter>
-*/
-static const QList<SearchFilter> bookSearchFilter() {
+BookSearchBar::BookSearchBar(QWidget *parent) : SearchBar{parent} {
+  setObjectName("book_search_bar");
+  setValidation(SearchBar::Pattern);
+  addSearchFilters(commonSearchFilter());
+}
+
+const QList<SearchFilter> BookSearchBar::commonSearchFilter() const {
   SearchFilter a;
   QList<SearchFilter> filter;
-  a.setTitle(QObject::tr("Book Title or Author"));
+  a.setTitle(tr("Book Title or Author"));
   a.setFields("ib_title,ib_title_extended,ib_author");
   a.setType(SearchFilter::STRINGS);
   filter.append(a);
-  a.setTitle(QObject::tr("Book Title only"));
+  a.setTitle(tr("Book Title only"));
   a.setFields("ib_title,ib_title_extended");
   a.setType(SearchFilter::STRINGS);
   filter.append(a);
-  a.setTitle(QObject::tr("Article ID"));
+  a.setTitle(tr("Article ID"));
   a.setFields("ib_id");
   a.setType(SearchFilter::NUMERIC);
   filter.append(a);
-  a.setTitle(QObject::tr("ISBN"));
+  a.setTitle(tr("ISBN"));
   a.setFields("ib_isbn");
   a.setType(SearchFilter::NUMERIC);
   filter.append(a);
-  a.setTitle(QObject::tr("Author"));
+  a.setTitle(tr("Author"));
   a.setFields("ib_author");
   a.setType(SearchFilter::STRINGS);
   filter.append(a);
-  a.setTitle(QObject::tr("Publisher"));
+  a.setTitle(tr("Publisher"));
   a.setFields("ib_publisher");
   a.setType(SearchFilter::STRINGS);
   filter.append(a);
-  a.setTitle(QObject::tr("Duration by Keyword"));
+  a.setTitle(tr("Duration by Keyword"));
   a.setFields("storage_id");
   a.setType(SearchFilter::REFERENCES);
   filter.append(a);
@@ -79,9 +77,7 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
     @brief m_searchBar
     Siehe auch @ref updateValidator(int)!
   */
-  m_searchBar = new SearchBar(this);
-  m_searchBar->setValidation(SearchBar::Pattern);
-  m_searchBar->addSearchFilters(bookSearchFilter());
+  m_searchBar = new BookSearchBar(this);
   siteOneLayout->addWidget(m_searchBar);
 
   m_tableView = new BooksTable(this);

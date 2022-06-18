@@ -418,6 +418,44 @@
     </message>
 </context>
 <context>
+    <name>BookSearchBar</name>
+    <message>
+        <location filename="../inventory/books/inventorybooks.cpp" line="+25"/>
+        <source>Book Title or Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Book Title only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Article ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>ISBN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Duration by Keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BooksTable</name>
     <message>
         <location filename="../inventory/books/bookstable.cpp" line="+105"/>
@@ -1154,6 +1192,19 @@
     </message>
 </context>
 <context>
+    <name>CustomerSearchBar</name>
+    <message>
+        <location filename="../inventory/customers/inventorycustomers.cpp" line="+25"/>
+        <source>Company and Names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Costumer Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CustomerTableView</name>
     <message>
         <location filename="../inventory/customers/customertableview.cpp" line="+69"/>
@@ -1841,7 +1892,7 @@
 <context>
     <name>Inventory</name>
     <message>
-        <location filename="../custom/utils/inventory.cpp" line="+17"/>
+        <location filename="../custom/utils/inventory.cpp" line="+18"/>
         <source>Ctrl+S</source>
         <comment>Search</comment>
         <translation type="unfinished"></translation>
@@ -1862,12 +1913,12 @@
 <context>
     <name>InventoryBooks</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="+60"/>
+        <location filename="../inventory/books/inventorybooks.cpp" line="+9"/>
         <source>Books</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+92"/>
         <source>Automatic search disabled in this mode. Press enter to start the search!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1875,7 +1926,7 @@
 <context>
     <name>InventoryCustomers</name>
     <message>
-        <location filename="../inventory/customers/inventorycustomers.cpp" line="+38"/>
+        <location filename="../inventory/customers/inventorycustomers.cpp" line="+9"/>
         <source>Customers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1883,7 +1934,7 @@
 <context>
     <name>InventoryOrders</name>
     <message>
-        <location filename="../inventory/orders/inventoryorders.cpp" line="+18"/>
+        <location filename="../inventory/orders/inventoryorders.cpp" line="+19"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1893,7 +1944,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+80"/>
         <source>There is no Order open!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1901,7 +1952,7 @@
 <context>
     <name>InventoryPrints</name>
     <message>
-        <location filename="../inventory/prints/inventoryprints.cpp" line="+49"/>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="+46"/>
         <source>Prints</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3302,6 +3353,29 @@
     </message>
 </context>
 <context>
+    <name>PrintsSearchBar</name>
+    <message>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="-21"/>
+        <source>Title or Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Article ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Technique</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PrintsTable</name>
     <message>
         <location filename="../inventory/prints/printstable.cpp" line="+123"/>
@@ -3494,43 +3568,6 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="-127"/>
-        <source>Book Title or Author</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Book Title only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <location filename="../inventory/prints/inventoryprints.cpp" line="-17"/>
-        <source>Article ID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>ISBN</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <location filename="../inventory/prints/inventoryprints.cpp" line="+4"/>
-        <source>Author</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Publisher</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Duration by Keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../custom/utils/genderbox.cpp" line="+12"/>
         <source>Without disclosures</source>
         <translation type="unfinished"></translation>
@@ -3620,26 +3657,6 @@
     <message>
         <location line="+1"/>
         <source>delivery completed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../inventory/customers/inventorycustomers.cpp" line="-13"/>
-        <source>Company and Names</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Costumer Id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../inventory/prints/inventoryprints.cpp" line="-8"/>
-        <source>Title or Author</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Technique</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
