@@ -66,10 +66,6 @@
 # include "inventory.h"
 #endif
 
-#ifndef SEARCHFILTER_UTILS_H
-# include "searchfilter.h"
-#endif
-
 #ifndef ISBNEDIT_UTILS_H
 # include "isbnedit.h"
 #endif
@@ -118,6 +114,10 @@
 # include "searchbar.h"
 #endif
 
+#ifndef SEARCHFILTER_UTILS_H
+# include "searchfilter.h"
+#endif
+
 #ifndef SERIALID_UTILS_H
 # include "serialid.h"
 #endif
@@ -152,10 +152,6 @@
 
 #ifndef TRUSTBOX_UTILS_H
 # include "trustbox.h"
-#endif
-
-#ifndef UTILSMAIN_UTILS_H
-# include "utilsmain.h"
 #endif
 
 #ifndef YEAREDIT_UTILS_H

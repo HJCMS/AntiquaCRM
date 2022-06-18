@@ -58,7 +58,7 @@ FILESUBTYPE     VFT2_UNKNOWN
         */
       VALUE "OriginalFilename",  VER_ORIGINALFILENAME_STR
       // Name of the product with which the file is distributed (Required).
-      VALUE "ProductName",      "@PROJECTNAME@"
+      VALUE "ProductName",      "@DISPLAYNAME@"
       // Version of the product with which the file is distributed (Required).
       VALUE "ProductVersion",   "@ANTIQUACRM_VERSION_STRING@\0"
       //  Copyright notices that apply to the file (Optional).

@@ -70,6 +70,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Dirs]
 Name: "{app}\i18n"; Attribs: system;
 Name: "{app}\xml"; Attribs: system;
+Name: "{app}\icons"; Attribs: system;
 Name: "{app}\company"; Attribs: system;
 Name: "{app}\plugins"; Attribs: system;
 Name: "{app}\plugins\antiqua"; Attribs: system;
@@ -92,6 +93,7 @@ Source: "{#TPL_DIR}\qt.conf"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BUID_DIR}\src\i18n\antiquacrm.qm"; DestDir: "{app}\i18n"; Flags: ignoreversion
 Source: "{#BUID_DIR}\src\xml\*.xml"; DestDir: "{app}\xml"; Flags: ignoreversion
 Source: "{#BUID_DIR}\src\plugins\antiqua\lib*.dll"; DestDir: "{app}\plugins\antiqua"; Flags: ignoreversion
+Source: "{#BUID_DIR}\src\icons\*.png"; DestDir: "{app}\icons"; Flags: ignoreversion
 ;; MinGW
 Source: "{#QT5_PATH}\bin\libEGL.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#QT5_PATH}\bin\libgcc_s_seh-1.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -110,6 +112,8 @@ Source: "{#PgSQL_PATH}\libssl-1_1-x64.dll"; DestDir: "{app}"; Flags: ignoreversi
 Source: "{#PgSQL_PATH}\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#PgSQL_PATH}\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
 ;; QREncode
+Source: "{#QRENCODE_PATH}\bin\libzlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#QRENCODE_PATH}\bin\libpng16.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#QRENCODE_PATH}\lib\libqrencode.dll"; DestDir: "{app}"; Flags: ignoreversion
 ;; Qt5
 Source: "{#QT5_PATH}\bin\Qt5Core.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -135,9 +139,9 @@ Source: "{#COPY_DIR}\druck_header.png"; DestDir: "{app}\company"; Flags: ignorev
 Source: "{#COPY_DIR}\HJCMS-Personal-CA.crt"; DestDir: "{app}\"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{group}\{#MyAppDisplayName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{commondesktop}\{#MyAppDisplayName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Registry]
 ;; HKEY_LOCAL_MACHINE
