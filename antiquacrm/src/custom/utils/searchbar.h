@@ -6,7 +6,6 @@
 #define SEARCHBAR_UTILS_H
 
 #include <QComboBox>
-#include <QDoubleValidator>
 #include <QLineEdit>
 #include <QList>
 #include <QObject>
@@ -42,12 +41,14 @@ private:
   /**
    * @brief Zeichenketten Validierung
    */
+  const QRegExp strPattern = QRegExp("^\\S{2}.+");
   QRegExpValidator *m_textValidator;
 
   /**
-   * @brief Nummern Validierung
+   * @brief Numeric Validation
    */
-  QDoubleValidator *m_numValidator;
+  const QRegExp numPattern = QRegExp("^[0-9]+$");
+  QRegExpValidator *m_numValidator;
 
 private Q_SLOTS:
   void beforeTextChanged();
@@ -148,6 +149,8 @@ public:
    * @brief Rückgabewert von Sucheingabe
    */
   const QString currentSearchText();
+
+  ~SearchBar();
 };
 
 #endif // SEARCHBAR_UTILS_H

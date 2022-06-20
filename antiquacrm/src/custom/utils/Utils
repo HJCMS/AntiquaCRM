@@ -154,6 +154,10 @@
 # include "trustbox.h"
 #endif
 
+#ifndef UTILSMAIN_UTILS_H
+# include "utilsmain.h"
+#endif
+
 #ifndef YEAREDIT_UTILS_H
 # include "yearedit.h"
 #endif

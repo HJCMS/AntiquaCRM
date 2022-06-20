@@ -622,7 +622,7 @@ void OrderEditor::openPrinterDeliveryDialog() {
   dialog->setDelivery(oid, cid, did);
   // Address
   QString c_add;
-  QString sql = queryCustomerShippingAddress(cid);
+  QString sql = queryCustomerDeliveryAddress(cid);
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
     q.next();
@@ -684,7 +684,7 @@ void OrderEditor::openPrinterInvoiceDialog() {
   dialog->setObjectName("print_invoice_dialog");
   // Address
   QString c_add;
-  QString sql = queryCustomerShippingAddress(cid);
+  QString sql = queryCustomerInvoiceAddress(cid);
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
     q.next();
@@ -846,7 +846,7 @@ bool OrderEditor::getCustomerAddress(int cid) {
   if (cid < 1)
     return false;
 
-  QString select = queryCustomerAddress(cid);
+  QString select = queryCustomerInfoAddress(cid);
   if (SHOW_ORDER_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << select << Qt::endl;
   }

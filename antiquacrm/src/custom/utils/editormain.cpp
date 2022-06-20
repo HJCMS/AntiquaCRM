@@ -12,8 +12,8 @@
 #include <QDebug>
 
 EditorMain::EditorMain(QWidget *parent) : QWidget{parent} {
-  setMinimumSize(800, 600);
   setContentsMargins(5, 5, 5, 5);
+  setMinimumSize(800, 550);
 
   m_sql = new HJCMS::SqlCore(this);
 

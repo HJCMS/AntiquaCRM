@@ -3,12 +3,10 @@
 
 SET(_subproject "Printing")
 
-ADD_SUBDIRECTORY (qrcode)
-
 SET (subproject_LINKER
  AntiquaCore
  Settings
- QTQRCode
+ ${QRENCODE_LIBRARY}
 )
 
 SET (subproject_SOURCES

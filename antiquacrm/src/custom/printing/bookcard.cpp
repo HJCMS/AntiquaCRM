@@ -12,18 +12,48 @@
 #include <QStyle>
 #include <QtWidgets>
 
-BookCardPaintWidget::BookCardPaintWidget(QWidget *parent)
-    : QWidget{parent}, m_qrCode(QtQrCode::StringMode),
-      m_qrCodePainter(1, QBrush(Qt::white, Qt::SolidPattern),
-                      QBrush(Qt::black, Qt::SolidPattern)) {
+BookCardQrCode::BookCardQrCode(const QUrl &url, int size)
+    : p_url(url), p_size(size) {}
+
+const QImage BookCardQrCode::image() {
+  QImage image = QImage();
+  if (!p_url.isValid())
+    return image;
+
+  QByteArray array = p_url.toEncoded(QUrl::None);
+  std::string str = array.toStdString();
+
+  QRcode *code =
+      QRcode_encodeString(str.c_str(),  /**< must be NUL terminated. */
+                          0,            /**< version */
+                          QR_ECLEVEL_L, /**< error correction level */
+                          QR_MODE_8,    /**< If you want to embed UTF-8 */
+                          1             /**< case-sensitive */
+      );
+
+  image = QImage(code->width + 8, code->width + 8, QImage::Format_RGB32);
+  image.fill(0xffffff);
+  unsigned char *px = code->data;
+  for (int y = 0; y < code->width; y++) {
+    for (int x = 0; x < code->width; x++) {
+      image.setPixel(x, y, ((*px & 0x1) ? 0x000000 : 0xffffff));
+      px++;
+    }
+  }
+  QRcode_free(code);
+
+  return image.scaled(p_size, p_size);
+}
+
+BookCardPaintWidget::BookCardPaintWidget(QWidget *parent) : QWidget{parent} {
   setAttribute(Qt::WA_NoSystemBackground, true);
   setAttribute(Qt::WA_OpaquePaintEvent, true);
 }
 
 void BookCardPaintWidget::paintEvent(QPaintEvent *p) {
-  QRect r = p->rect();
-  int w = p->rect().width();
-  int h = p->rect().height();
+  QRect r = rect();
+  int w = r.width();
+  int h = r.height();
   int margin = 5;
   QFontMetricsF fm(font());
   qreal fontHeight = fm.height();
@@ -63,13 +93,16 @@ void BookCardPaintWidget::paintEvent(QPaintEvent *p) {
 
   painter.drawLine(0, yPos, w, yPos);
 
-  m_qrCode.setData(p_queryUrl.toEncoded(QUrl::None));
-  QImage image = m_qrCodePainter.toImage(m_qrCode, qr_size.height());
+  yPos += 20;
+  int _size = qMin(qRound((h - yPos) - (margin * 2.0)), /* resthöhe */
+                   qRound(w - (margin * 2.0)));
 
-  int _x = (w - qr_size.height()) / 2;
-  int _y = yPos + (((h - yPos) / 2) - (qr_size.height() / 2));
-  painter.drawImage(QPointF(_x, _y), image);
-
+  int _x = ((w / 2) - (_size / 2));
+  BookCardQrCode bcCode(p_queryUrl, _size);
+  QImage image = bcCode.image();
+  if (!image.isNull()) {
+    painter.drawImage(QPoint(_x, yPos), image);
+  }
   painter.end();
 }
 
@@ -97,14 +130,10 @@ BookCard::BookCard(QWidget *parent) : QDialog{parent} {
 
   config = new ApplSettings(this);
 
-  page_size = QPageSize(QPageSize::A6);
-
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("printing_card_layout");
 
   QRect pageRect = pageLayout().fullRectPoints();
-  int maxWidth = pageRect.width();
-
   m_card = new BookCardPaintWidget(this);
   m_card->setObjectName("printing_header");
   m_card->setStyleSheet("border:none;color:black;");
@@ -151,7 +180,7 @@ const QUrl BookCard::generateQRCodeUrl() {
 const QPageLayout BookCard::pageLayout() {
   QPageLayout pageLayout;
   pageLayout.setOrientation(QPageLayout::Portrait);
-  pageLayout.setPageSize(page_size, QMarginsF(2, 2, 2, 2));
+  pageLayout.setPageSize(QPageSize(QPageSize::A6), QMarginsF(2, 2, 2, 2));
   pageLayout.setMode(QPageLayout::FullPageMode);
   pageLayout.setUnits(QPageLayout::Millimeter);
   return pageLayout;
@@ -160,7 +189,6 @@ const QPageLayout BookCard::pageLayout() {
 bool BookCard::createPDF() {
   QPrinter *printer = new QPrinter(QPrinter::ScreenResolution);
   printer->setPageLayout(pageLayout());
-  printer->setResolution(72);
   printer->setOutputFormat(QPrinter::PdfFormat);
   QString dest = p_destination;
   dest.append(QDir::separator());
@@ -194,7 +222,6 @@ void BookCard::openPrintDialog() {
 
   QPrinterInfo p_info = QPrinterInfo::printerInfo(p_printerName);
   QPrinter *printer = new QPrinter(p_info, QPrinter::ScreenResolution);
-  printer->setResolution(72);
   printer->setPageLayout(pageLayout());
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPrinterName(p_printerName);

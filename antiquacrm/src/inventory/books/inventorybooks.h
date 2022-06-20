@@ -7,6 +7,7 @@
 
 #include <QList>
 #include <QObject>
+#include <QScrollArea>
 #include <QStackedWidget>
 #include <QTabWidget>
 #include <QWidget>
@@ -75,6 +76,7 @@ private:
   /**
    * @brief BuchEditor Fenster
    */
+  QScrollArea *m_editorWidget;
   BookEditor *m_bookEditor;
 
 private Q_SLOTS:

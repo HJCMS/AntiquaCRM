@@ -20,20 +20,22 @@
 #include <QKeySequence>
 #include <QMenu>
 #include <QMutex>
+#include <QPainter>
 #include <QPoint>
 #include <QRegExp>
 #include <QSignalMapper>
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlTableModel>
+#include <QStatusTipEvent>
 #include <QTime>
 
 /**
-    @brief querySelect
-    Die Feldabfragen für die Suche sind immer gleich!
-    Wenn sich etwas ändern sollte, dann muss in Klasse
-    \ref BooksTableModel die Feld Definition geändert werden!
-*/
+ * @brief querySelect
+ * Die Feldabfragen für die Suche sind immer gleich!
+ * Wenn sich etwas ändern sollte, dann muss in Klasse
+ * \ref BooksTableModel die Feld Definition geändert werden!
+ */
 static const QString querySelect() {
   QString s("ib_id,ib_count,ib_title,ib_author,");
   s.append("ib_publisher,ib_year,ib_price,sl_storage,ib_isbn,ib_changed");
@@ -43,9 +45,9 @@ static const QString querySelect() {
 }
 
 /**
-   @brief queryTables
-   Tabellen Definition
-*/
+ * @brief queryTables
+ * Tabellen Definition
+ */
 static const QString queryTables() {
   QString s(" FROM inventory_books");
   s.append(" LEFT JOIN ref_storage_location ON sl_id=ib_storage");
@@ -65,6 +67,8 @@ BooksTable::BooksTable(QWidget *parent) : QTableView{parent} {
   setAlternatingRowColors(true);
   setSelectionBehavior(QAbstractItemView::SelectRows);
   setSelectionMode(QAbstractItemView::SingleSelection);
+  setStatusTip(
+      tr("A table row must be selected in order to perform an action."));
 
   m_sql = new HJCMS::SqlCore(this);
 
@@ -169,7 +173,8 @@ void BooksTable::contextMenuEvent(QContextMenuEvent *ev) {
    */
   bool bn = (m_queryModel->rowCount() > 0);
 
-  QMenu *m = new QMenu("Actions", this);
+  QMenu *m = new QMenu(this);
+
   // Eintrag öffnen  Bestellung anlegen
   QAction *ac_open = m->addAction(myIcon("spreadsheet"), tr("Open entry"));
   ac_open->setObjectName("ac_context_open_book");
@@ -277,7 +282,7 @@ void BooksTable::queryStatement(const SearchFilter &cl) {
   QStringList clauses;
   QSqlRecord r = m_sql->record("inventory_books");
   if (scl.getType() == SearchFilter::REFERENCES) {
-    if(fields.first() == "storage_id") {
+    if (fields.first() == "storage_id") {
       QString sub;
       sub.append("(ib_count>0 AND sl_identifier ILIKE '");
       sub.append(search.replace("%", ""));

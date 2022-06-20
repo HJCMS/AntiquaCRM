@@ -76,9 +76,13 @@ InventoryPrints::InventoryPrints(QWidget *parent) : Inventory{parent} {
   // END Page#0
 
   // BEGIN Page#1
-  m_printsEditor = new PrintsEditor(m_stackedWidget);
+  m_editorWidget = new QScrollArea(m_stackedWidget);
+  m_editorWidget->setObjectName("editor_scroll_area");
+  m_editorWidget->setWidgetResizable(true);
+  m_printsEditor = new PrintsEditor(m_editorWidget);
   m_printsEditor->setEnabled(false);
-  m_stackedWidget->insertWidget(1, m_printsEditor);
+  m_editorWidget->setWidget(m_printsEditor);
+  m_stackedWidget->insertWidget(1, m_editorWidget);
   // END Page#1
 
   layout->addWidget(m_stackedWidget);
@@ -148,13 +152,13 @@ void InventoryPrints::openEditor(const QString &condition) {
   if (!condition.isEmpty()) {
     m_printsEditor->setEnabled(true);
     m_printsEditor->editPrintsEntry(condition);
-    m_stackedWidget->setCurrentWidget(m_printsEditor);
+    m_stackedWidget->setCurrentWidget(m_editorWidget);
   }
 }
 
 void InventoryPrints::createPrintsEntry() {
   m_printsEditor->createPrintsEntry();
-  m_stackedWidget->setCurrentWidget(m_printsEditor);
+  m_stackedWidget->setCurrentWidget(m_editorWidget);
 }
 
 void InventoryPrints::editPrintsEntry(int id) {

@@ -321,7 +321,7 @@ const QPageSize Printing::pageSize() const {
 const QPageLayout Printing::pageLayout() const {
   QPageLayout pageLayout;
   pageLayout.setOrientation(QPageLayout::Portrait);
-  pageLayout.setPageSize(QPageSize(QPageSize::A4), QMarginsF(10, 0, 0, 0));
+  pageLayout.setPageSize(QPageSize(QPageSize::A4), QMarginsF(0, 0, 0, 0));
   pageLayout.setMode(QPageLayout::StandardMode);
   pageLayout.setUnits(QPageLayout::Millimeter);
   return pageLayout;
@@ -330,7 +330,7 @@ const QPageLayout Printing::pageLayout() const {
 const QPageLayout Printing::pdfLayout() const {
   QPageLayout pageLayout;
   pageLayout.setOrientation(QPageLayout::Portrait);
-  pageLayout.setPageSize(QPageSize(QPageSize::A4), QMarginsF(5, 0, 0, 0));
+  pageLayout.setPageSize(QPageSize(QPageSize::A4), QMarginsF(0, 0, 0, 0));
   pageLayout.setMode(QPageLayout::StandardMode);
   pageLayout.setUnits(QPageLayout::Millimeter);
   return pageLayout;

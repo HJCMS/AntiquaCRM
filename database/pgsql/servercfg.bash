@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 ##############################################
 ## Arbeitsverzeichnis
+_scripting="$HOME/Developement/antiqua/database/pgsql"
 _dest="$HOME/Developement/antiqua/database/pgsql/Database"
 ## (Jahr/Tag von Jahr)
 _date="$(date +"%Y%j")"

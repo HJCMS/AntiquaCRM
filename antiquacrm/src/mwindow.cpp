@@ -24,7 +24,7 @@
 MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
   setObjectName("MainWindow");
   setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
-  setMinimumSize(QSize(1024, 660));
+  setMinimumSize(QSize(1024, 650));
   setWindowIcon(myIcon("database"));
 
   // Settings

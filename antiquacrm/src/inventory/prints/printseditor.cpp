@@ -10,6 +10,7 @@
 
 PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
   setObjectName("PrintEditor");
+  setMinimumHeight(640);
 
   ApplSettings config;
 
@@ -234,7 +235,7 @@ PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
   QSize maxImageSize = config.value("image/max_size", QSize(320, 320)).toSize();
   m_imageView = new ImageView(maxImageSize, this);
   m_imageView->setObjectName("prints_image_view");
-  m_imageView->setMinimumWidth(200);
+  m_imageView->setMaximumWidth(maxImageSize.width());
   horizontalLayout->addWidget(m_imageView);
   // END Horizontal:Row(0)
 

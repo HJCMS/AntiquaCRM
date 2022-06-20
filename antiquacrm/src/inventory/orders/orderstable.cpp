@@ -130,7 +130,9 @@ void OrdersTable::contextMenuEvent(QContextMenuEvent *ev) {
 
 void OrdersTable::refreshView() { initOrders(); }
 
-void OrdersTable::initOrders() { sqlExecQuery(defaultOrdersQuery()); }
+void OrdersTable::initOrders() {
+  sqlExecQuery(defaultOrdersQuery());
+}
 
 void OrdersTable::updateOrderStatus() {
   QModelIndexList list = selectedIndexes();

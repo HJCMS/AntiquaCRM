@@ -9,6 +9,7 @@
 #include <QObject>
 #include <QPushButton>
 #include <QStackedWidget>
+#include <QScrollArea>
 #include <QTabWidget>
 #include <QWidget>
 
@@ -69,6 +70,7 @@ private:
   /**
    * @brief Editor Fenster
    */
+  QScrollArea *m_editorWidget;
   PrintsEditor *m_printsEditor;
 
 protected:

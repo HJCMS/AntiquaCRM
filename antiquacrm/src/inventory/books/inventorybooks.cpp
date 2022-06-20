@@ -89,8 +89,12 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   // END Page#0
 
   // BEGIN Page#1
-  m_bookEditor = new BookEditor(m_stackedWidget);
-  m_stackedWidget->insertWidget(1, m_bookEditor);
+  m_editorWidget = new QScrollArea(m_stackedWidget);
+  m_editorWidget->setObjectName("editor_scroll_area");
+  m_editorWidget->setWidgetResizable(true);
+  m_bookEditor = new BookEditor(m_editorWidget);
+  m_editorWidget->setWidget(m_bookEditor);
+  m_stackedWidget->insertWidget(1, m_editorWidget);
   m_bookEditor->setEnabled(false);
   // END Page#1
 
@@ -195,13 +199,13 @@ void InventoryBooks::openEditor(const QString &condition) {
   if (!condition.isEmpty()) {
     m_bookEditor->setEnabled(true);
     m_bookEditor->editBookEntry(condition);
-    m_stackedWidget->setCurrentWidget(m_bookEditor);
+    m_stackedWidget->setCurrentWidget(m_editorWidget);
   }
 }
 
 void InventoryBooks::createBookEntry() {
   m_bookEditor->createBookEntry();
-  m_stackedWidget->setCurrentWidget(m_bookEditor);
+  m_stackedWidget->setCurrentWidget(m_editorWidget);
 }
 
 void InventoryBooks::editBookEntry(int id) {

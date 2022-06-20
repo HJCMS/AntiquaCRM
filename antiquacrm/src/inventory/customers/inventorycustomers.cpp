@@ -69,9 +69,13 @@ InventoryCustomers::InventoryCustomers(QWidget *parent) : Inventory{parent} {
   // END Page#0
 
   // BEGIN Page#1
+  m_editorWidget = new QScrollArea(m_stackedWidget);
+  m_editorWidget->setObjectName("editor_scroll_area");
+  m_editorWidget->setWidgetResizable(true);
   m_editCustomer = new EditCustomer(m_stackedWidget);
   m_editCustomer->setEnabled(false);
-  m_stackedWidget->insertWidget(1, m_editCustomer);
+  m_editorWidget->setWidget(m_editCustomer);
+  m_stackedWidget->insertWidget(1, m_editorWidget);
   // END Page#1
 
   setLayout(layout);
@@ -118,7 +122,7 @@ void InventoryCustomers::openEditor(const QString &customer) {
   if (customer.contains(primaryIndex)) {
     m_editCustomer->setEnabled(true);
     m_editCustomer->updateCustomer(customer);
-    m_stackedWidget->setCurrentWidget(m_editCustomer);
+    m_stackedWidget->setCurrentWidget(m_editorWidget);
   }
 }
 
@@ -135,7 +139,7 @@ void InventoryCustomers::editCustomer(int id) {
 void InventoryCustomers::createCustomer() {
   m_editCustomer->setEnabled(true);
   m_editCustomer->createCustomer();
-  m_stackedWidget->setCurrentWidget(m_editCustomer);
+  m_stackedWidget->setCurrentWidget(m_editorWidget);
 }
 
 void InventoryCustomers::searchConvert(const QString &search) {

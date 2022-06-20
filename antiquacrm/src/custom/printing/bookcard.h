@@ -7,21 +7,37 @@
 
 #include <QDialog>
 #include <QFont>
+#include <QImage>
 #include <QMarginsF>
 #include <QObject>
 #include <QPageLayout>
 #include <QPageSize>
 #include <QPrinter>
+#include <QRunnable>
 #include <QUrl>
 #include <QWidget>
 
-// libQTQRcode
-#include "qtqrcode.h"
-#include "qtqrcodepainter.h"
+extern "C" {
+#include "qrencode.h"
+};
 
 class ApplSettings;
 class TextEditor;
 
+class BookCardQrCode final {
+
+private:
+  const int p_size;
+  const QUrl p_url;
+
+public:
+  explicit BookCardQrCode(const QUrl &url, int size = 128);
+  const QImage image();
+};
+
+/**
+ * @brief Datenfelder einfügen
+ */
 class BookCardPaintWidget final : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -34,9 +50,6 @@ private:
   QString p_year;
   QString p_storage;
   QUrl p_queryUrl;
-  const QSize qr_size = QSize(200, 200);
-  QtQrCode m_qrCode;
-  QtQrCodePainter m_qrCodePainter;
 
 protected:
   void paintEvent(QPaintEvent *);
@@ -50,7 +63,7 @@ public:
 };
 
 /**
- * @brief Buchkarte Erstellung
+ * @brief Buchkarten Erstellung
  * @ingroup Printing
  * @class BookCard
  */
@@ -63,7 +76,6 @@ private:
   QString p_printerName = QString();
   int p_articleId = -1;
   ApplSettings *config;
-  QPageSize page_size;
   BookCardPaintWidget *m_card;
   QString p_filename;
   QString p_destination;

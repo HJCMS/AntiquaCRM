@@ -67,12 +67,14 @@ static const QString defaultOrdersQuery(int id = 0) {
 }
 
 /**
- * @brief Kunden Addressen finden
- * @param customerId
+ * @brief Kunden Adressen Darstellen
+ * @code
+ *  SELECT c_postal_address,c_shipping_address FROM customers WHERE c_id=1;
+ * @endcode
  * @return SQL Query
  */
-static const QString queryCustomerAddress(int customerId) {
-  QString sql("SELECT c_postal_address,c_shipping_address ");
+static const QString queryCustomerInfoAddress(int customerId) {
+  QString sql("SELECT c_postal_address, c_shipping_address ");
   sql.append("FROM customers WHERE c_id=");
   sql.append(QString::number(customerId));
   sql.append(";");
@@ -80,13 +82,30 @@ static const QString queryCustomerAddress(int customerId) {
 }
 
 /**
- * @brief queryCustomerShippingAddress
+ * @brief Kunden Rechnungsadresse auslesen
+ * @param customerId
+ * @code
+ *  SELECT c_postal_address FROM customers WHERE c_id=1;
+ * @endcode
+ * @return SQL Query
+ */
+static const QString queryCustomerInvoiceAddress(int customerId) {
+  QString sql("SELECT c_postal_address ");
+  sql.append("FROM customers WHERE c_id=");
+  sql.append(QString::number(customerId));
+  sql.append(";");
+  return sql;
+}
+
+/**
+ * @brief Kunden Lieferadresse auslesen
  * @param customerId
  * @code
  * SELECT func_shipping_address AS address FROM func_shipping_address(3);
  * @endcode
+ * @return SQL Query
  */
-static const QString queryCustomerShippingAddress(int customerId) {
+static const QString queryCustomerDeliveryAddress(int customerId) {
   QString sql("SELECT func_shipping_address AS address");
   sql.append(" FROM func_shipping_address(");
   sql.append(QString::number(customerId));

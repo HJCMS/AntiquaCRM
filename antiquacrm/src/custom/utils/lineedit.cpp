@@ -117,7 +117,7 @@ void LineEdit::setPlaceholderText(const QString &txt) {
 
 const QVariant LineEdit::value() {
   if (p_passwordInput)
-    return m_edit->text().toLocal8Bit();
+    return m_edit->text().trimmed().toLocal8Bit();
 
   return m_edit->text().trimmed();
 }

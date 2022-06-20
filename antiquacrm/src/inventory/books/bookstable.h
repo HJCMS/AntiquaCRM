@@ -41,8 +41,12 @@ private:
 
   /**
    * @brief Positions tausch der Suchworte
-   * Wenn die Suche zwei Zeichenketten besitzt dann eine
-   * Klausel wie folgt erstellen.
+   * Wenn die Suche zwei Zeichenketten besitzt dann eine klausel wie folgt
+   * erstellen.
+   * @code
+   *  // @b A/B ist das Ergebnis von search.split(" ");
+   *  WHERE (fieldname ILIKE 'A%B%' OR fieldname ILIKE 'B%A%')
+   * @endcode
    */
   const QString prepareSearch(const QString &fieldname,
                               const QString &search) const;

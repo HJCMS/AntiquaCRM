@@ -175,7 +175,7 @@
         <translation>Editiere Buchtitel</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+35"/>
         <source>Signed Version</source>
         <translation>Signierte Version</translation>
     </message>
@@ -210,7 +210,7 @@
         <translation>Band</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+14"/>
         <source>Book &amp;Title:</source>
         <translation>Buch &amp;Titel:</translation>
     </message>
@@ -236,6 +236,11 @@
     </message>
     <message>
         <location line="+13"/>
+        <source>Storage:</source>
+        <translation>Lager:</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Keyword:</source>
         <translation>Schlüsselwort:</translation>
     </message>
@@ -265,7 +270,7 @@
         <translation>Sprache:</translation>
     </message>
     <message>
-        <location line="-182"/>
+        <location line="-191"/>
         <source>Article ID</source>
         <translation>Artikel ID</translation>
     </message>
@@ -280,12 +285,12 @@
         <translation>Buchseiten</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+98"/>
         <source>Storage</source>
         <translation>Lagerort</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="-55"/>
         <source>Required input field. Limited to 80 characters, Webshop Systems require this.</source>
         <translation>Erforderliches Eingabefeld. Begrenzt auf 80 Zeichen. Für Webshop-Systeme erforderlich.</translation>
     </message>
@@ -300,7 +305,7 @@
         <translation>Geben Sie hier den Buchverlag ein.</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+29"/>
         <source>Category Keywords for Shopsystems.</source>
         <translation>Kategorie Schlüsselwörter für Shopsysteme.</translation>
     </message>
@@ -315,7 +320,7 @@
         <translation>Umschreibung</translation>
     </message>
     <message>
-        <location line="+120"/>
+        <location line="+123"/>
         <source>Remove Image from Database</source>
         <translation>Entferne Bild aus der Datenbank</translation>
     </message>
@@ -345,7 +350,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-426"/>
+        <location line="-440"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -360,7 +365,7 @@
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
     <message>
-        <location line="+192"/>
+        <location line="+206"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
@@ -392,22 +397,22 @@
         <translation>Dieser Text dient internen Zwecken</translation>
     </message>
     <message>
-        <location line="-165"/>
+        <location line="-177"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+72"/>
         <source>Publisher</source>
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="+187"/>
+        <location line="+201"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-298"/>
+        <location line="-310"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -458,12 +463,12 @@
 <context>
     <name>BooksTable</name>
     <message>
-        <location filename="../inventory/books/bookstable.cpp" line="+105"/>
+        <location filename="../inventory/books/bookstable.cpp" line="+107"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+70"/>
         <source>Open entry</source>
         <translation>Öffne Eintrag</translation>
     </message>
@@ -483,7 +488,12 @@
         <translation>Eintrag erstellen</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="-113"/>
+        <source>A table row must be selected in order to perform an action.</source>
+        <translation>Eine Tabellenreihe muss ausgewählt sein, um eine Aktion ausführen zu können.</translation>
+    </message>
+    <message>
+        <location line="+126"/>
         <source>add Article to opened Order</source>
         <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
     </message>
@@ -1349,7 +1359,7 @@
         <translation>Menge</translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+78"/>
         <source>PDF File written.</source>
         <translation>PDF Datei wurde erstellt.</translation>
     </message>
@@ -1918,7 +1928,7 @@
         <translation>Bücher</translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+96"/>
         <source>Automatic search disabled in this mode. Press enter to start the search!</source>
         <translation>Automatische Suche in diesem Modus deaktiviert. Drücken Sie die Eingabetaste, um die Suche zu starten!</translation>
     </message>
@@ -2064,7 +2074,7 @@
         <translation>Gesamt:</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+65"/>
         <source>PDF File written.</source>
         <translation>PDF Datei wurde erstellt.</translation>
     </message>
@@ -3150,7 +3160,7 @@
 <context>
     <name>PrintsEditor</name>
     <message>
-        <location filename="../inventory/prints/printseditor.cpp" line="+44"/>
+        <location filename="../inventory/prints/printseditor.cpp" line="+45"/>
         <source>Count</source>
         <translation>Anzahl</translation>
     </message>
@@ -3681,7 +3691,7 @@
 <context>
     <name>SearchBar</name>
     <message>
-        <location filename="../custom/utils/searchbar.cpp" line="+38"/>
+        <location filename="../custom/utils/searchbar.cpp" line="+34"/>
         <source>Press CTRL+F, to quickly open this Menu.</source>
         <translation>Drücken Sie STRG+F, um dieses Menü schnell zu öffnen.</translation>
     </message>

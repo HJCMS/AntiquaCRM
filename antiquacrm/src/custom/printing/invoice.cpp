@@ -180,8 +180,7 @@ void Invoice::finalizeBillings() {
 
 bool Invoice::generateDocument(QPrinter *printer) {
   QRectF pageRect(printArea->geometry());
-  int border = printer->pageLayout().margins().left();
-  int documentWidth = (printArea->geometry().width() - border);
+  int documentWidth = pageRect.width();
 
   QTextDocument *htmlHead = header->document();
   htmlHead->setHtml(getHeaderHTML());
@@ -215,11 +214,11 @@ bool Invoice::generateDocument(QPrinter *printer) {
   }
 
   int pY = 0;
-  painter.translate(border, 0);
+  painter.translate(0, 0);
   htmlHead->drawContents(&painter, headerRect);
-  painter.translate(border, headerRect.height());
+  painter.translate(0, headerRect.height());
   htmlBody->drawContents(&painter, bodyRect);
-  painter.translate(border, yPosFooter);
+  painter.translate(0, yPosFooter);
   htmlFooter->drawContents(&painter, footerRect);
   painter.end();
   return true;

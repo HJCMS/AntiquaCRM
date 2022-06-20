@@ -21,12 +21,8 @@ SearchBar::SearchBar(QWidget *parent) : QToolBar(parent) {
   setOrientation(Qt::Horizontal);
   setFloatable(false);
 
-  QRegExp reg;
-  reg.setPattern("^\\S{2}.+");
-  m_textValidator = new QRegExpValidator(reg, this);
-
-  m_numValidator = new QDoubleValidator(this);
-  m_numValidator->setRange(0, 9999999999999, 0);
+  m_textValidator = new QRegExpValidator(strPattern, this);
+  m_numValidator = new QRegExpValidator(numPattern, this);
 
   QToolButton *m_tb = new QToolButton(this);
   m_tb->setEnabled(false);
@@ -147,9 +143,7 @@ const QJsonObject SearchBar::getSearchFilter(int index) {
 }
 
 void SearchBar::setValidation(SearchBar::Validation v) {
-  if (v == SearchBar::Pattern) {
-    m_searchLineEdit->setValidator(m_textValidator);
-  } else if (v == SearchBar::Number) {
+  if (v == SearchBar::Number) {
     m_searchLineEdit->setValidator(m_numValidator);
   } else {
     m_searchLineEdit->setValidator(m_textValidator);
@@ -173,4 +167,12 @@ const QString SearchBar::currentSearchText() {
   buffer = buffer.replace(reg, " ");
 
   return buffer.trimmed();
+}
+
+SearchBar::~SearchBar() {
+  if (m_textValidator != nullptr)
+    m_textValidator->deleteLater();
+
+  if (m_numValidator != nullptr)
+    m_numValidator->deleteLater();
 }

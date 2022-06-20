@@ -20,6 +20,7 @@
 BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   setObjectName("BookEditor");
   setWindowTitle(tr("Edit Book Title"));
+  setMinimumSize(800, 750);
 
   count_temp = -1; /**< Initialisieren */
 
@@ -28,7 +29,8 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   Qt::Alignment defaultAlignment = (Qt::AlignRight | Qt::AlignVCenter);
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
-  mainLayout->setObjectName("mainLayout");
+  mainLayout->setObjectName("bookeditor_main_layout");
+  mainLayout->setSizeConstraint(QLayout::SetMaximumSize);
 
   QHBoxLayout *row0 = new QHBoxLayout();
   ib_id = new SerialID(this);
@@ -105,19 +107,17 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   row1->addStretch(1);
   mainLayout->addLayout(row1);
 
-  QGridLayout *row2 = new QGridLayout();
+  QWidget *row2Widget = new QWidget(this);
+  row2Widget->setMinimumHeight(380);
+  int row2c = 0;
+  QGridLayout *row2 = new QGridLayout(row2Widget);
   row2->setContentsMargins(2, 2, 2, 2);
-
-  ib_storage = new StorageEdit(this);
-  ib_storage->setObjectName("ib_storage");
-  ib_storage->setInfo(tr("Storage"));
-  row2->addWidget(ib_storage, 0, 0, 1, 2, Qt::AlignRight);
 
   QLabel *titleLabel = new QLabel(this);
   titleLabel->setObjectName("titleLabel");
   titleLabel->setAlignment(defaultAlignment);
   titleLabel->setText(tr("Book &Title:"));
-  row2->addWidget(titleLabel, 1, 0, 1, 1);
+  row2->addWidget(titleLabel, row2c, 0, 1, 1);
 
   ib_title = new StrLineEdit(this);
   ib_title->setObjectName("ib_title");
@@ -127,26 +127,26 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   ib_title->setToolTip(tr("Required input field. Limited to 80 characters, "
                           "Webshop Systems require this."));
   titleLabel->setBuddy(ib_title);
-  row2->addWidget(ib_title, 1, 1, 1, 1);
+  row2->addWidget(ib_title, row2c++, 1, 1, 1);
 
   QLabel *extendedLabel = new QLabel(this);
   extendedLabel->setObjectName("extendedLabel");
   extendedLabel->setAlignment(defaultAlignment);
   extendedLabel->setText(tr("Booktitle Extended:"));
-  row2->addWidget(extendedLabel, 2, 0, 1, 1);
+  row2->addWidget(extendedLabel, row2c, 0, 1, 1);
 
   ib_title_extended = new StrLineEdit(this);
   ib_title_extended->setObjectName("ib_title_extended");
   ib_title_extended->setMaxAllowedLength(148);
   ib_title_extended->setToolTip(tr("Extended Title or Subtitle."));
   ib_title_extended->setWindowTitle(tr("Extended Title"));
-  row2->addWidget(ib_title_extended, 2, 1, 1, 1);
+  row2->addWidget(ib_title_extended, row2c++, 1, 1, 1);
 
   QLabel *authorLabel = new QLabel(this);
   authorLabel->setObjectName("authorLabel");
   authorLabel->setAlignment(defaultAlignment);
   authorLabel->setText(tr("&Author:"));
-  row2->addWidget(authorLabel, 3, 0, 1, 1);
+  row2->addWidget(authorLabel, row2c, 0, 1, 1);
 
   ib_author = new StrLineEdit(this);
   ib_author->setObjectName("ib_author");
@@ -156,39 +156,50 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   ib_author->setToolTip(
       tr("Format: Firstname lastname (Different Authors separated by comma)."));
   authorLabel->setBuddy(ib_author);
-  row2->addWidget(ib_author, 3, 1, 1, 1);
+  row2->addWidget(ib_author, row2c++, 1, 1, 1);
 
   QLabel *publisherLabel = new QLabel(this);
   publisherLabel->setObjectName("publisherLabel");
   publisherLabel->setAlignment(defaultAlignment);
   publisherLabel->setText(tr("Publisher:"));
   publisherLabel->setToolTip(tr("Enter hier the Book Publisher."));
-  row2->addWidget(publisherLabel, 4, 0, 1, 1);
+  row2->addWidget(publisherLabel, row2c, 0, 1, 1);
 
   ib_publisher = new StrLineEdit(this);
   ib_publisher->setObjectName("ib_publisher");
   ib_publisher->setMaxAllowedLength(128);
   ib_publisher->setWindowTitle(tr("Publisher"));
-  row2->addWidget(ib_publisher, 4, 1, 1, 1);
+  row2->addWidget(ib_publisher, row2c++, 1, 1, 1);
+
+  QLabel *storageLabel = new QLabel(this);
+  storageLabel->setObjectName("storageLabel");
+  storageLabel->setAlignment(defaultAlignment);
+  storageLabel->setText(tr("Storage:"));
+  row2->addWidget(storageLabel, row2c, 0, 1, 1);
+
+  ib_storage = new StorageEdit(this);
+  ib_storage->setObjectName("ib_storage");
+  ib_storage->setInfo(tr("Storage"));
+  row2->addWidget(ib_storage, row2c++, 1, 1, 1);
 
   QLabel *keywordLabel = new QLabel(this);
   keywordLabel->setObjectName("keywordLabel");
   keywordLabel->setAlignment(defaultAlignment);
   keywordLabel->setText(tr("Keyword:"));
-  row2->addWidget(keywordLabel, 5, 0, 1, 1);
+  row2->addWidget(keywordLabel, row2c, 0, 1, 1);
 
   ib_keyword = new StrLineEdit(this);
   ib_keyword->setObjectName("ib_keyword");
   ib_keyword->setMaxAllowedLength(60);
   ib_keyword->setToolTip(tr("Category Keywords for Shopsystems."));
   ib_keyword->setWindowTitle(tr("Chop Keyword"));
-  row2->addWidget(ib_keyword, 5, 1, 1, 1);
+  row2->addWidget(ib_keyword, row2c++, 1, 1, 1);
 
   QLabel *conditionLabel = new QLabel(this);
   conditionLabel->setObjectName("conditionLabel");
   conditionLabel->setAlignment(defaultAlignment);
   conditionLabel->setText(tr("Condition:"));
-  row2->addWidget(conditionLabel, 6, 0, 1, 1);
+  row2->addWidget(conditionLabel, row2c, 0, 1, 1);
 
   ib_condition = new StrLineEdit(this);
   ib_condition->setObjectName("ib_condition");
@@ -197,53 +208,56 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   ib_condition->setWindowTitle(tr("Condition"));
   ib_condition->setToolTip(
       tr("Condition of this Book. See also Configuration conditions Table."));
-  row2->addWidget(ib_condition, 6, 1, 1, 1);
+  row2->addWidget(ib_condition, row2c++, 1, 1, 1);
 
   QLabel *designationLabel = new QLabel(this);
   designationLabel->setObjectName("designationLabel");
   designationLabel->setAlignment(defaultAlignment);
   designationLabel->setText(tr("Designation:"));
-  row2->addWidget(designationLabel, 7, 0, 1, 1);
+  row2->addWidget(designationLabel, row2c, 0, 1, 1);
 
   ib_designation = new StrLineEdit(this);
   ib_designation->setObjectName("ib_designation");
   ib_designation->setMaxAllowedLength(128);
   ib_designation->setRequired(true);
   ib_designation->setWindowTitle(tr("Designation"));
-  row2->addWidget(ib_designation, 7, 1, 1, 1);
+  row2->addWidget(ib_designation, row2c++, 1, 1, 1);
 
   QLabel *languageLabel = new QLabel(this);
   languageLabel->setObjectName("languageLabel");
   languageLabel->setAlignment(defaultAlignment);
   languageLabel->setText(tr("Language:"));
-  row2->addWidget(languageLabel, 8, 0, 1, 1);
+  row2->addWidget(languageLabel, row2c, 0, 1, 1);
 
   ib_language = new SetLanguage(this);
   ib_language->setObjectName("ib_language");
-  row2->addWidget(ib_language, 8, 1, 1, 1);
+  row2->addWidget(ib_language, row2c++, 1, 1, 1);
 
   QLabel *isbnLabel = new QLabel(this);
   isbnLabel->setText("ISBN:");
   isbnLabel->setAlignment(defaultAlignment);
-  row2->addWidget(isbnLabel, 9, 0, 1, 1);
+  row2->addWidget(isbnLabel, row2c, 0, 1, 1);
 
   ib_isbn = new IsbnEdit(this);
   ib_isbn->setObjectName("ib_isbn");
-  row2->addWidget(ib_isbn, 9, 1, 1, 1);
+  row2->addWidget(ib_isbn, row2c++, 1, 1, 1);
 
   m_imageToolBar = new ImageToolBar(this);
   m_imageToolBar->setObjectName("books_image_actions_bar");
-  row2->addWidget(m_imageToolBar, 10, 0, 1, 2, Qt::AlignRight);
+  row2->addWidget(m_imageToolBar, row2c++, 0, 1, 2, Qt::AlignRight);
 
   QSize maximageSize = config.value("image/max_size", QSize(320, 320)).toSize();
   m_imageView = new ImageView(maximageSize, this);
-  row2->addWidget(m_imageView, 0, 2, 11, 1);
+  m_imageView->setMinimumHeight(maximageSize.height());
+  m_imageView->setMaximumWidth(maximageSize.width());
+  row2->addWidget(m_imageView, 0, 2, (row2c + 1), 1);
 
-  mainLayout->addLayout(row2);
+  row2Widget->setLayout(row2);
+  mainLayout->addWidget(row2Widget);
 
   m_tabWidget = new QTabWidget(this);
   m_tabWidget->setObjectName("tab_widget");
-  m_tabWidget->setMinimumHeight(100);
+  m_tabWidget->setMinimumHeight(180);
   m_tabWidget->setContentsMargins(1, 1, 1, 1);
 
   ib_description = new TextField(this);
