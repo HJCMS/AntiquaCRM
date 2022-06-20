@@ -137,8 +137,8 @@ BookCard::BookCard(QWidget *parent) : QDialog{parent} {
   m_card = new BookCardPaintWidget(this);
   m_card->setObjectName("printing_header");
   m_card->setStyleSheet("border:none;color:black;");
-  m_card->setFixedSize(pageRect.size());
   m_card->setContentsMargins(0, 0, 0, 0);
+  m_card->setFixedSize(pageRect.size());
   m_card->setWindowModified(true);
   layout->addWidget(m_card);
 
@@ -188,6 +188,7 @@ const QPageLayout BookCard::pageLayout() {
 
 bool BookCard::createPDF() {
   QPrinter *printer = new QPrinter(QPrinter::ScreenResolution);
+  printer->setColorMode(QPrinter::GrayScale);
   printer->setPageLayout(pageLayout());
   printer->setOutputFormat(QPrinter::PdfFormat);
   QString dest = p_destination;
@@ -200,11 +201,12 @@ bool BookCard::createPDF() {
 }
 
 bool BookCard::printDocument(QPrinter *printer) {
-  QPageLayout layout = pageLayout();
-  printer->setPageLayout(layout);
+  printer->setPageLayout(pageLayout());
   QPainter painter(printer);
+  painter.setWindow(m_card->rect());
   painter.translate(0, 0);
   m_card->render(&painter);
+  painter.end();
   return true;
 }
 
@@ -253,12 +255,10 @@ int BookCard::exec(const QHash<QString, QVariant> &data) {
 
   QString id = QString::number(p_articleId);
   m_card->setArticleId(id);
-
   m_card->setQrUrl(generateQRCodeUrl());
 
   p_filename = id;
   m_card->setBookDescription(data);
-
   m_card->setStorage(data.value("storage").toString());
 
   return QDialog::exec();
