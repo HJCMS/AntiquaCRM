@@ -158,10 +158,8 @@ BookCardConfig::BookCardConfig(QWidget *parent) : QWidget{parent} {
   m_printerPaperFeed->addItem(tr("Tractor"), QPrinter::Tractor);
   m_printerPaperFeed->addItem(tr("Small Format"), QPrinter::SmallFormat);
   m_printerPaperFeed->addItem(tr("Custom Source"), QPrinter::CustomSource);
-  layout->addWidget(m_printerPaperFeed, row++, 1, 1, 1);
-#ifndef Q_WS_WIN
   m_printerPaperFeed->setEnabled(false);
-#endif
+  layout->addWidget(m_printerPaperFeed, row++, 1, 1, 1);
 
   m_info = new QLabel(this);
   layout->addWidget(m_info, row++, 0, 1, 2);
@@ -173,10 +171,7 @@ BookCardConfig::BookCardConfig(QWidget *parent) : QWidget{parent} {
 void BookCardConfig::printerChanged(QPrinter *printer) {
 #ifdef Q_WS_WIN
   QList<QPrinter::PaperSource> psl = printer->supportedPaperSources();
-  if (psl.count() < 1) {
-    m_printerPaperFeed->setEnabled(false);
-    return;
-  }
+  m_printerPaperFeed->setEnabled((psl.count() > 1));
 #endif
   for (int i = 0; i < m_printerPaperFeed->count(); i++) {
     int ps = m_printerPaperFeed->itemData(i, Qt::UserRole).toInt();
