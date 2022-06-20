@@ -139,15 +139,103 @@
 <context>
     <name>BookCard</name>
     <message>
-        <location filename="../custom/printing/bookcard.cpp" line="+95"/>
+        <location filename="../custom/printing/bookcard.cpp" line="+191"/>
         <source>Printing book card</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BookCardConfig</name>
+    <message>
+        <location line="-62"/>
+        <source>Printer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Paper Feed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Change Paper Feed not supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Cassette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Envelope</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Envelope Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Large Capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Large Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Lower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Middle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Only one</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Tractor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Small Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Custom Source</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>BookCardPaintWidget</name>
     <message>
-        <location line="-16"/>
+        <location line="-49"/>
         <source>Book Nr.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -463,7 +551,7 @@
 <context>
     <name>BooksTable</name>
     <message>
-        <location filename="../inventory/books/bookstable.cpp" line="+107"/>
+        <location filename="../inventory/books/bookstable.cpp" line="+109"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -23,13 +23,12 @@ const QImage BookCardQrCode::image() {
   QByteArray array = p_url.toEncoded(QUrl::None);
   std::string str = array.toStdString();
 
-  QRcode *code =
-      QRcode_encodeString(str.c_str(),  /**< must be NUL terminated. */
-                          0,            /**< version */
-                          QR_ECLEVEL_L, /**< error correction level */
-                          QR_MODE_8,    /**< If you want to embed UTF-8 */
-                          1             /**< case-sensitive */
-      );
+  QRcode *code = QRcode_encodeString(str.c_str(),  /**< data. */
+                                     0,            /**< version */
+                                     QR_ECLEVEL_L, /**< level */
+                                     QR_MODE_8,    /**< UTF-8 */
+                                     1             /**< sensitive */
+  );
 
   image = QImage(code->width + 8, code->width + 8, QImage::Format_RGB32);
   image.fill(0xffffff);
@@ -123,6 +122,70 @@ void BookCardPaintWidget::setBookDescription(
   p_year = tr("Year") + ": " + list.value("year").toString();
 }
 
+BookCardConfig::BookCardConfig(QWidget *parent) : QWidget{parent} {
+  QGridLayout *layout = new QGridLayout(this);
+  int row = 0;
+
+  layout->addWidget(new QLabel(tr("Printer"), this), row, 0, 1, 1,
+                    Qt::AlignRight);
+
+  m_printer = new QComboBox(this);
+  QList<QPrinterInfo> pList = QPrinterInfo::availablePrinters();
+  int index = 0;
+  for (int i = 0; i < pList.count(); i++) {
+    QPrinterInfo pi = pList.at(i);
+    m_printer->insertItem(index, pi.printerName(), Qt::DisplayRole);
+    m_printer->insertItem(index, pi.description(), Qt::UserRole);
+    index++;
+  }
+  layout->addWidget(m_printer, row++, 1, 1, 1);
+
+  layout->addWidget(new QLabel(tr("Paper Feed"), this), row, 0, 1, 1,
+                    Qt::AlignRight);
+  m_printerPaperFeed = new QComboBox(this);
+  m_printerPaperFeed->addItem(tr("Change Paper Feed not supported"), -1);
+  m_printerPaperFeed->addItem(tr("Auto"), QPrinter::Auto);
+  m_printerPaperFeed->addItem(tr("Cassette"), QPrinter::Cassette);
+  m_printerPaperFeed->addItem(tr("Envelope"), QPrinter::Envelope);
+  m_printerPaperFeed->addItem(tr("Envelope Manual"), QPrinter::EnvelopeManual);
+  m_printerPaperFeed->addItem(tr("Source"), QPrinter::FormSource);
+  m_printerPaperFeed->addItem(tr("Large Capacity"), QPrinter::LargeCapacity);
+  m_printerPaperFeed->addItem(tr("Large Format"), QPrinter::LargeFormat);
+  m_printerPaperFeed->addItem(tr("Lower"), QPrinter::Lower);
+  m_printerPaperFeed->addItem(tr("Middle"), QPrinter::Middle);
+  m_printerPaperFeed->addItem(tr("Manual"), QPrinter::Manual);
+  m_printerPaperFeed->addItem(tr("Only one"), QPrinter::OnlyOne);
+  m_printerPaperFeed->addItem(tr("Tractor"), QPrinter::Tractor);
+  m_printerPaperFeed->addItem(tr("Small Format"), QPrinter::SmallFormat);
+  m_printerPaperFeed->addItem(tr("Custom Source"), QPrinter::CustomSource);
+  layout->addWidget(m_printerPaperFeed, row++, 1, 1, 1);
+#ifndef Q_WS_WIN
+  m_printerPaperFeed->setEnabled(false);
+#endif
+
+  m_info = new QLabel(this);
+  layout->addWidget(m_info, row++, 0, 1, 2);
+
+  layout->setRowStretch(row, 1);
+  setLayout(layout);
+}
+
+void BookCardConfig::printerChanged(QPrinter *printer) {
+#ifdef Q_WS_WIN
+  QList<QPrinter::PaperSource> psl = printer->supportedPaperSources();
+  if (psl.count() < 1) {
+    m_printerPaperFeed->setEnabled(false);
+    return;
+  }
+#endif
+  for (int i = 0; i < m_printerPaperFeed->count(); i++) {
+    int ps = m_printerPaperFeed->itemData(i, Qt::UserRole).toInt();
+    if (printer->paperSource() == static_cast<QPrinter::PaperSource>(ps)) {
+      m_printerPaperFeed->setCurrentIndex(i);
+    }
+  }
+}
+
 BookCard::BookCard(QWidget *parent) : QDialog{parent} {
   setObjectName("printing_book_card");
   setWindowTitle(tr("Printing book card"));
@@ -130,23 +193,27 @@ BookCard::BookCard(QWidget *parent) : QDialog{parent} {
 
   config = new ApplSettings(this);
 
-  QVBoxLayout *layout = new QVBoxLayout(this);
+  QGridLayout *layout = new QGridLayout(this);
   layout->setObjectName("printing_card_layout");
+  layout->setSizeConstraint(QLayout::SetFixedSize);
 
   QRect pageRect = pageLayout().fullRectPoints();
   m_card = new BookCardPaintWidget(this);
-  m_card->setObjectName("printing_header");
+  m_card->setObjectName("print_card_render");
   m_card->setStyleSheet("border:none;color:black;");
   m_card->setContentsMargins(0, 0, 0, 0);
   m_card->setFixedSize(pageRect.size());
   m_card->setWindowModified(true);
-  layout->addWidget(m_card);
+  layout->addWidget(m_card, 0, 0, 1, 1);
+
+  m_cardConfig = new BookCardConfig(this);
+  m_cardConfig->setObjectName("print_card_config");
+  layout->addWidget(m_cardConfig, 0, 1, 1, 1);
 
   QDialogButtonBox *btn_box = new QDialogButtonBox(this);
   btn_box->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Close);
-  layout->addWidget(btn_box);
+  layout->addWidget(btn_box, 1, 0, 1, 2);
 
-  layout->setSizeConstraint(QLayout::SetFixedSize);
   setLayout(layout);
   connect(btn_box, SIGNAL(accepted()), this, SLOT(openPrintDialog()));
   connect(btn_box, SIGNAL(rejected()), this, SLOT(reject()));
@@ -202,6 +269,7 @@ bool BookCard::createPDF() {
 
 bool BookCard::printDocument(QPrinter *printer) {
   printer->setPageLayout(pageLayout());
+  m_cardConfig->printerChanged(printer);
   QPainter painter(printer);
   painter.setWindow(m_card->rect());
   painter.translate(0, 0);
@@ -229,6 +297,7 @@ void BookCard::openPrintDialog() {
   printer->setPrinterName(p_printerName);
   printer->setDocName(p_filename);
   printer->setCreator("AntiquaCRM");
+  m_cardConfig->printerChanged(printer);
 
   QPrintDialog *dialog = new QPrintDialog(printer, this);
   dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);

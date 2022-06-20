@@ -5,9 +5,11 @@
 #ifndef PRINTING_BOOKCARD_H
 #define PRINTING_BOOKCARD_H
 
+#include <QComboBox>
 #include <QDialog>
 #include <QFont>
 #include <QImage>
+#include <QLabel>
 #include <QMarginsF>
 #include <QObject>
 #include <QPageLayout>
@@ -24,6 +26,9 @@ extern "C" {
 class ApplSettings;
 class TextEditor;
 
+/**
+ * @brief QRCode erstellen
+ */
 class BookCardQrCode final {
 
 private:
@@ -36,7 +41,7 @@ public:
 };
 
 /**
- * @brief Datenfelder einfügen
+ * @brief Datenfelder erstellen
  */
 class BookCardPaintWidget final : public QWidget {
   Q_OBJECT
@@ -63,6 +68,26 @@ public:
 };
 
 /**
+ * @brief Buchkarten Konfiguration
+ */
+class BookCardConfig final : public QWidget {
+  Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
+
+private:
+  QLabel *m_info;
+  QComboBox *m_printer;
+  QComboBox *m_printerPaperFeed;
+
+public Q_SLOTS:
+  void printerChanged(QPrinter *);
+
+public:
+  BookCardConfig(QWidget *parent = nullptr);
+};
+
+/**
  * @brief Buchkarten Erstellung
  * @ingroup Printing
  * @class BookCard
@@ -77,6 +102,7 @@ private:
   int p_articleId = -1;
   ApplSettings *config;
   BookCardPaintWidget *m_card;
+  BookCardConfig *m_cardConfig;
   QString p_filename;
   QString p_destination;
 

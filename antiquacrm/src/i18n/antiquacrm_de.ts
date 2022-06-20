@@ -139,15 +139,103 @@
 <context>
     <name>BookCard</name>
     <message>
-        <location filename="../custom/printing/bookcard.cpp" line="+95"/>
+        <location filename="../custom/printing/bookcard.cpp" line="+191"/>
         <source>Printing book card</source>
         <translation>Drucke Buchkarte</translation>
     </message>
 </context>
 <context>
+    <name>BookCardConfig</name>
+    <message>
+        <location line="-62"/>
+        <source>Printer</source>
+        <translation>Drucker</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Paper Feed</source>
+        <translation>Papiereinzug</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Change Paper Feed not supported</source>
+        <translation>Papiereinzug ändern wird nicht unterstützt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Auto</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Cassette</source>
+        <translation>Kasette</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Envelope</source>
+        <translation>Umschlag</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Envelope Manual</source>
+        <translation>Umschlag Manuel</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Source</source>
+        <translation>Quelle</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Large Capacity</source>
+        <translation>Grosse Kapazität</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Large Format</source>
+        <translation>Grossformat</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Lower</source>
+        <translation>Tiefer</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Middle</source>
+        <translation>Mitte</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Manual</source>
+        <translation>Manuell</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Only one</source>
+        <translation>Nur ein Einzug</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Tractor</source>
+        <translation>Einzug</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Small Format</source>
+        <translation>Kleinformat</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Custom Source</source>
+        <translation>Spezielle Konfiguration</translation>
+    </message>
+</context>
+<context>
     <name>BookCardPaintWidget</name>
     <message>
-        <location line="-16"/>
+        <location line="-49"/>
         <source>Book Nr.</source>
         <translation>Buch Nr.</translation>
     </message>
@@ -463,7 +551,7 @@
 <context>
     <name>BooksTable</name>
     <message>
-        <location filename="../inventory/books/bookstable.cpp" line="+107"/>
+        <location filename="../inventory/books/bookstable.cpp" line="+109"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
