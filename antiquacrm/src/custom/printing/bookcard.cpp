@@ -169,16 +169,17 @@ BookCardConfig::BookCardConfig(QWidget *parent) : QWidget{parent} {
 }
 
 void BookCardConfig::printerChanged(QPrinter *printer) {
-#ifdef Q_WS_WIN
-  QList<QPrinter::PaperSource> psl = printer->supportedPaperSources();
-  m_printerPaperFeed->setEnabled((psl.count() > 1));
-#endif
   for (int i = 0; i < m_printerPaperFeed->count(); i++) {
     int ps = m_printerPaperFeed->itemData(i, Qt::UserRole).toInt();
     if (printer->paperSource() == static_cast<QPrinter::PaperSource>(ps)) {
       m_printerPaperFeed->setCurrentIndex(i);
+      m_printerPaperFeed->setEnabled(true);
     }
   }
+#ifdef Q_WS_WIN
+  QList<QPrinter::PaperSource> psl = printer->supportedPaperSources();
+  m_printerPaperFeed->setEnabled((psl.count() > 1));
+#endif
 }
 
 BookCard::BookCard(QWidget *parent) : QDialog{parent} {
