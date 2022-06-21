@@ -181,6 +181,11 @@ void DateTimeDisplay::reset() {
 
 void DateTimeDisplay::setFocus() { m_edit->setFocus(); }
 
+const QDate DateTimeDisplay::getDate()
+{
+  return m_edit->date();
+}
+
 const QVariant DateTimeDisplay::value() {
   QDateTime dt(QDateTime::currentDateTime());
   dt.setDate(m_edit->dateTime().date());

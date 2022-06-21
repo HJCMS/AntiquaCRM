@@ -139,7 +139,7 @@
 <context>
     <name>BookCard</name>
     <message>
-        <location filename="../custom/printing/bookcard.cpp" line="+210"/>
+        <location filename="../custom/printing/bookcard.cpp" line="+218"/>
         <source>Printing book card</source>
         <translation>Drucke Buchkarte</translation>
     </message>
@@ -235,7 +235,7 @@
 <context>
     <name>BookCardPaintWidget</name>
     <message>
-        <location line="-49"/>
+        <location line="-51"/>
         <source>Book Nr.</source>
         <translation>Buch Nr.</translation>
     </message>
@@ -253,6 +253,11 @@
         <location line="+1"/>
         <source>Year</source>
         <translation>Jahr</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Registered</source>
+        <translation>Erstellt</translation>
     </message>
 </context>
 <context>
@@ -308,7 +313,12 @@
         <translation>Band</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+6"/>
+        <source>book entry created at</source>
+        <translation>Bucheintrag wurde erstellt am</translation>
+    </message>
+    <message>
+        <location line="+15"/>
         <source>Book &amp;Title:</source>
         <translation>Buch &amp;Titel:</translation>
     </message>
@@ -368,7 +378,7 @@
         <translation>Sprache:</translation>
     </message>
     <message>
-        <location line="-198"/>
+        <location line="-205"/>
         <source>Article ID</source>
         <translation>Artikel ID</translation>
     </message>
@@ -383,7 +393,7 @@
         <translation>Buchseiten</translation>
     </message>
     <message>
-        <location line="+98"/>
+        <location line="+105"/>
         <source>Storage</source>
         <translation>Lagerort</translation>
     </message>
@@ -495,12 +505,12 @@
         <translation>Dieser Text dient internen Zwecken</translation>
     </message>
     <message>
-        <location line="-177"/>
+        <location line="-184"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+79"/>
         <source>Publisher</source>
         <translation>Herausgeber</translation>
     </message>
@@ -510,7 +520,7 @@
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-310"/>
+        <location line="-317"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -1407,9 +1417,17 @@
     </message>
 </context>
 <context>
+    <name>DateTimeDisplay</name>
+    <message>
+        <location filename="../custom/utils/datetimeedit.cpp" line="+202"/>
+        <source>a valid Datetime is needed.</source>
+        <translation>Ein gültiges Datum ist erforderlich.</translation>
+    </message>
+</context>
+<context>
     <name>DateTimeEdit</name>
     <message>
-        <location filename="../custom/utils/datetimeedit.cpp" line="+146"/>
+        <location line="-56"/>
         <source>a valid Datetime is needed.</source>
         <translation>Ein gültiges Datum ist erforderlich.</translation>
     </message>
@@ -2182,7 +2200,7 @@
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+58"/>
         <source>Summary</source>
         <translation>Gesamt</translation>
     </message>
@@ -2192,7 +2210,7 @@
         <translation>inkl. MwSt</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+67"/>
         <source>PDF File written.</source>
         <translation>PDF Datei wurde erstellt.</translation>
     </message>
@@ -3245,7 +3263,7 @@
         <translation>Bitte erst die Konfiguration abschließen!</translation>
     </message>
     <message>
-        <location line="+100"/>
+        <location line="+112"/>
         <source>email</source>
         <translation>E-Mail</translation>
     </message>
@@ -3438,7 +3456,12 @@
         <translation>Äußere Beschreibung</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+10"/>
+        <source>entry was created at</source>
+        <translation>Eintrag wurde erstellt am</translation>
+    </message>
+    <message>
+        <location line="+27"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -3857,7 +3880,7 @@
 <context>
     <name>SetLanguage</name>
     <message>
-        <location filename="../custom/utils/setlanguage.cpp" line="+16"/>
+        <location filename="../custom/utils/setlanguage.cpp" line="+18"/>
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
@@ -4035,7 +4058,7 @@
 <context>
     <name>StorageEdit</name>
     <message>
-        <location filename="../custom/utils/storageedit.cpp" line="+25"/>
+        <location filename="../custom/utils/storageedit.cpp" line="+28"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>

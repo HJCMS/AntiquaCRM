@@ -54,6 +54,7 @@ private:
   QString p_title;
   QString p_year;
   QString p_storage;
+  QString p_since;
   QUrl p_queryUrl;
 
 protected:
