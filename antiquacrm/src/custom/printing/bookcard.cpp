@@ -166,6 +166,29 @@ BookCardConfig::BookCardConfig(QWidget *parent) : QWidget{parent} {
 
   layout->setRowStretch(row, 1);
   setLayout(layout);
+
+  connect(m_printer, SIGNAL(currentIndexChanged(int)), this,
+          SLOT(infoPrinterChanged(int)));
+  connect(m_printerPaperFeed, SIGNAL(currentIndexChanged(int)), this,
+          SLOT(paperSourceChanged(int)));
+}
+
+void BookCardConfig::infoPrinterChanged(int index) {
+  QString name = m_printer->itemData(index, Qt::DisplayRole).toString();
+  if (name.isEmpty())
+    emit s_printerChanged(name);
+}
+
+void BookCardConfig::paperSourceChanged(int index) {
+  int s = m_printerPaperFeed->itemData(index, Qt::UserRole).toInt();
+  QPrinter::PaperSource ps = static_cast<QPrinter::PaperSource>(s);
+  emit s_paperSourceChanged(ps);
+}
+
+void BookCardConfig::setPrinterByName(const QString &name) {
+  int index = m_printer->findData(name, Qt::DisplayRole);
+  if (index != m_printer->currentIndex())
+    m_printer->setCurrentIndex(index);
 }
 
 void BookCardConfig::printerChanged(QPrinter *printer) {
@@ -178,7 +201,7 @@ void BookCardConfig::printerChanged(QPrinter *printer) {
   }
 #ifdef Q_WS_WIN
   QList<QPrinter::PaperSource> psl = printer->supportedPaperSources();
-  m_printerPaperFeed->setEnabled((psl.count() > 1));
+  m_printerPaperFeed->setEnabled((psl.count() >= 1));
 #endif
 }
 
@@ -186,6 +209,8 @@ BookCard::BookCard(QWidget *parent) : QDialog{parent} {
   setObjectName("printing_book_card");
   setWindowTitle(tr("Printing book card"));
   setSizeGripEnabled(false);
+
+  p_paperSource = QPrinter::OnlyOne;
 
   config = new ApplSettings(this);
 
@@ -213,6 +238,10 @@ BookCard::BookCard(QWidget *parent) : QDialog{parent} {
   setLayout(layout);
   connect(btn_box, SIGNAL(accepted()), this, SLOT(openPrintDialog()));
   connect(btn_box, SIGNAL(rejected()), this, SLOT(reject()));
+  connect(m_cardConfig, SIGNAL(s_printerChanged(const QString &)), this,
+          SLOT(updatePrinterByName(const QString &)));
+  connect(m_cardConfig, SIGNAL(s_paperSourceChanged(QPrinter::PaperSource)),
+          this, SLOT(updatePaperSource(QPrinter::PaperSource)));
 }
 
 void BookCard::readConfiguration() {
@@ -263,6 +292,14 @@ bool BookCard::createPDF() {
   return printDocument(printer);
 }
 
+void BookCard::updatePrinterByName(const QString &name) {
+  p_printerName = name;
+}
+
+void BookCard::updatePaperSource(QPrinter::PaperSource ps) {
+  p_paperSource = ps;
+}
+
 bool BookCard::printDocument(QPrinter *printer) {
   printer->setPageLayout(pageLayout());
   m_cardConfig->printerChanged(printer);
@@ -294,6 +331,9 @@ void BookCard::openPrintDialog() {
   printer->setDocName(p_filename);
   printer->setCreator("AntiquaCRM");
   m_cardConfig->printerChanged(printer);
+#ifdef Q_WS_WIN
+  printer->setPaperSource(p_paperSource);
+#endif
 
   QPrintDialog *dialog = new QPrintDialog(printer, this);
   dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);

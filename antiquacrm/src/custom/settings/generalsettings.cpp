@@ -92,22 +92,45 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   m_currency->setObjectName("payment/currency");
   m_currency->setInfo(tr("currency for price calculation."));
   lt_groupBox2->addWidget(m_currency);
+  // Mehwertsteuer
+  QFrame *vat_frame = new QFrame(m_grouBox2);
+  QGridLayout *vat_layout = new QGridLayout(vat_frame);
+  m_vat1 = new LineEdit(vat_frame);
+  m_vat1->setObjectName("payment/vat1");
+  m_vat1->setInfo(tr("value added tax 1"));
+  m_vat1->restrictDisplay(10, 100);
+  m_vat1->setValue("19%");
+  vat_layout->addWidget(m_vat1, 0, 1, 1, 1, Qt::AlignLeft);
+  m_vat2 = new LineEdit(vat_frame);
+  m_vat2->setObjectName("payment/vat2");
+  m_vat2->setInfo(tr("value added tax 2"));
+  m_vat2->restrictDisplay(10, 100);
+  m_vat2->setValue("7%");
+  vat_layout->addWidget(m_vat2, 1, 1, 1, 1, Qt::AlignLeft);
+  vat_frame->setLayout(vat_layout);
+  lt_groupBox2->addWidget(vat_frame, Qt::AlignLeft);
   // Minimum Image Size
-  m_minSize = new SizeEdit(this);
+  QFrame *imageSizeFrame = new QFrame(m_grouBox2);
+  QVBoxLayout *image_layout = new QVBoxLayout(imageSizeFrame);
+  QString sizeinfo = tr("Set size range for Imagepreviews.");
+  image_layout->addWidget(new QLabel(sizeinfo,imageSizeFrame));
+  m_minSize = new SizeEdit(imageSizeFrame);
   m_minSize->setObjectName("image/min_size");
   m_minSize->setMinimum(80, 80);
   m_minSize->setMaximum(800, 800);
   m_minSize->setValue(QSize(125, 125));
   m_minSize->setInfo(tr("Minimum Image size"));
-  lt_groupBox2->addWidget(m_minSize);
+  image_layout->addWidget(m_minSize);
   // Maximum Image Size
-  m_maxSize = new SizeEdit(this);
+  m_maxSize = new SizeEdit(imageSizeFrame);
   m_maxSize->setObjectName("image/max_size");
   m_maxSize->setMinimum(80, 80);
   m_maxSize->setMaximum(800, 800);
   m_maxSize->setValue(QSize(320, 320));
   m_maxSize->setInfo(tr("Maximum Image size"));
-  lt_groupBox2->addWidget(m_maxSize);
+  image_layout->addWidget(m_maxSize);
+  imageSizeFrame->setLayout(image_layout);
+  lt_groupBox2->addWidget(imageSizeFrame);
 
   m_grouBox2->setLayout(lt_groupBox2);
   layout->addWidget(m_grouBox2);
@@ -245,7 +268,4 @@ void GeneralSettings::saveSectionConfig() {
       }
     }
   }
-  // config->setValue("image/max_size", QSize(320, 320));
-  // config->setValue("payment/min_price", m_minPrice->value());
-  // config->setValue("payment/currency", "€"); // TODO
 }

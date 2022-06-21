@@ -653,6 +653,7 @@ void OrderEditor::openPrinterDeliveryDialog() {
   if (dialog->exec(deliveries)) {
     /* Unused */
   }
+  deliveries.clear();
 }
 
 void OrderEditor::openPrinterInvoiceDialog() {
@@ -718,6 +719,7 @@ void OrderEditor::openPrinterInvoiceDialog() {
   if (!dialog->exec(list)) {
     /* Unused */
   }
+  list.clear();
 }
 
 void OrderEditor::createNotifyOrder(bool b) {

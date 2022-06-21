@@ -22,6 +22,8 @@ private:
   LineEdit *m_invoice_path;    /**< Rechnungen */
   LineEdit *m_cards_path;      /**< Buchkarten */
   Ecurrency *m_currency;       /**< Währung */
+  LineEdit *m_vat1;            /**< Mehrwertsteuer A */
+  LineEdit *m_vat2;            /**< Mehrwertsteuer B */
   IntSpinBox *m_searchStart;   /**< Start Zeichen suche */
   IntSpinBox *m_minPrice;      /**< Kleinster Verkaufspreis */
   SizeEdit *m_minSize;         /**< Minimale Bildgröße */

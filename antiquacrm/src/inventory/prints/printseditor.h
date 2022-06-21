@@ -29,6 +29,7 @@ private:
   BoolBox *ip_landscape;              /**< @brief Ansicht */
   BoolBox *ip_views;                  /**< @brief koloriert */
   BoolBox *ip_restricted;             /**< @brief Zensiert */
+  BoolBox *ip_including_vat;          /**< @brief inkl. Mehwertsteuer */
   StorageEdit *ip_storage;            /**< @brief Lager bestimmung */
   YearEdit *ip_year;                  /**< @brief Jahr */
   PriceEdit *ip_price;                /**< @brief Preis */

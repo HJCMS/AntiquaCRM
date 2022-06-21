@@ -2,10 +2,10 @@
 // vim: set fileencoding=utf-8
 
 #include "bookeditor.h"
+#include "bookcard.h"
 #include "isbnrequest.h"
 #include "isbnresults.h"
 #include "myicontheme.h"
-#include "bookcard.h"
 #include <AntiquaCRM>
 
 #include <QDebug>
@@ -51,6 +51,13 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   ib_price->setInfo(tr("Price"));
   ib_price->setMinimum(minPrice);
   row0->addWidget(ib_price);
+
+  ib_including_vat = new BoolBox(this);
+  ib_including_vat->setObjectName("ib_including_vat");
+  ib_including_vat->setInfo(tr("incl. vat"));
+  ib_including_vat->setRequired(false);
+  ib_including_vat->setToolTip(tr("VAT Settings must be set."));
+  row0->addWidget(ib_including_vat);
 
   ib_signed = new BoolBox(this);
   ib_signed->setObjectName("ib_signed");
@@ -629,20 +636,17 @@ void BookEditor::infoISBNDoubleClicked(QListWidgetItem *item) {
   }
 }
 
-void BookEditor::printingBookCard()
-{
+void BookEditor::printingBookCard() {
   BookCard *dialog = new BookCard(this);
   dialog->setObjectName("book_card_printing");
 
   QHash<QString, QVariant> data;
-  data.insert("id",ib_id->value());
-  data.insert("title",ib_title->value());
-  data.insert("author",ib_author->value());
-  data.insert("year",ib_year->value());
-  data.insert("storage",ib_storage->description());
-
-  if(dialog->exec(data) == QDialog::Accepted) {
-    qDebug() << Q_FUNC_INFO << "TODO";
+  data.insert("id", ib_id->value());
+  data.insert("title", ib_title->value());
+  data.insert("author", ib_author->value());
+  data.insert("year", ib_year->value());
+  data.insert("storage", ib_storage->description());
+  if (dialog->exec(data) == QDialog::Accepted) { /* TODO */
   }
 }
 

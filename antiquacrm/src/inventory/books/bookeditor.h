@@ -33,6 +33,7 @@ class BookEditor final : public EditorMain {
 private:
   BoolBox *ib_signed;             /**< @brief Signiert? */
   BoolBox *ib_restricted;         /**< @brief Zensiert? */
+  BoolBox *ib_including_vat;      /**< @brief inkl. Mehwertsteuer */
   SetLanguage *ib_language;       /**< @brief Sprache */
   StorageEdit *ib_storage;        /**< @brief Lager bestimmung */
   YearEdit *ib_year;              /**< @brief Jahr */

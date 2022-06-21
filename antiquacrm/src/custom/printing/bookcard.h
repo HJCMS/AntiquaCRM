@@ -80,7 +80,16 @@ private:
   QComboBox *m_printer;
   QComboBox *m_printerPaperFeed;
 
+private Q_SLOTS:
+  void infoPrinterChanged(int);
+  void paperSourceChanged(int);
+
+Q_SIGNALS:
+  void s_printerChanged(const QString &);
+  void s_paperSourceChanged(QPrinter::PaperSource);
+
 public Q_SLOTS:
+  void setPrinterByName(const QString &);
   void printerChanged(QPrinter *);
 
 public:
@@ -105,6 +114,7 @@ private:
   BookCardConfig *m_cardConfig;
   QString p_filename;
   QString p_destination;
+  QPrinter::PaperSource p_paperSource;
 
   void readConfiguration();
 
@@ -115,6 +125,8 @@ private:
   bool createPDF();
 
 private Q_SLOTS:
+  void updatePrinterByName(const QString &);
+  void updatePaperSource(QPrinter::PaperSource);
   bool printDocument(QPrinter *printer);
   void openPrintDialog();
 

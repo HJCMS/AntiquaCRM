@@ -139,7 +139,7 @@
 <context>
     <name>BookCard</name>
     <message>
-        <location filename="../custom/printing/bookcard.cpp" line="+191"/>
+        <location filename="../custom/printing/bookcard.cpp" line="+210"/>
         <source>Printing book card</source>
         <translation>Drucke Buchkarte</translation>
     </message>
@@ -147,7 +147,7 @@
 <context>
     <name>BookCardConfig</name>
     <message>
-        <location line="-62"/>
+        <location line="-81"/>
         <source>Printer</source>
         <translation>Drucker</translation>
     </message>
@@ -263,17 +263,17 @@
         <translation>Editiere Buchtitel</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+42"/>
         <source>Signed Version</source>
         <translation>Signierte Version</translation>
     </message>
     <message>
-        <location line="-13"/>
+        <location line="-20"/>
         <source>Count</source>
         <translation>Bestand</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+54"/>
         <source>g</source>
         <translation></translation>
     </message>
@@ -288,7 +288,17 @@
         <translation>Ausgabe</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="-26"/>
+        <source>incl. vat</source>
+        <translation>inkl. MwSt</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>VAT Settings must be set.</source>
+        <translation>Mehrwertsteuereinstellungen müssen festgelegt werden.</translation>
+    </message>
+    <message>
+        <location line="+52"/>
         <source>Bd.</source>
         <translation>Bd.</translation>
     </message>
@@ -358,7 +368,7 @@
         <translation>Sprache:</translation>
     </message>
     <message>
-        <location line="-191"/>
+        <location line="-198"/>
         <source>Article ID</source>
         <translation>Artikel ID</translation>
     </message>
@@ -368,7 +378,7 @@
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+40"/>
         <source>Page count</source>
         <translation>Buchseiten</translation>
     </message>
@@ -667,7 +677,7 @@
         <translation>Auswahlbox</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+67"/>
         <source>is required must selected.</source>
         <translation>ist Erforderlich und mus gesetzt werden.</translation>
     </message>
@@ -1762,7 +1772,22 @@
         <translation>Währung für die Preisberechnung.</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
+        <source>value added tax 1</source>
+        <translation>Mehrwertsteuer 1</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>value added tax 2</source>
+        <translation>Mehrwertsteuer 2</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Set size range for Imagepreviews.</source>
+        <translation>Größenangaben für die Bildvorschau.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Minimum Image size</source>
         <translation>Minimale Bildgröße</translation>
     </message>
@@ -1772,7 +1797,7 @@
         <translation>Maximale Bildgröße</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+13"/>
         <source>Font Settings</source>
         <translation>Schriften Einstellung</translation>
     </message>
@@ -2425,13 +2450,13 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+667"/>
+        <location line="+669"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-637"/>
+        <location line="-639"/>
         <source>close</source>
         <translation>Schließen</translation>
     </message>
@@ -2452,12 +2477,12 @@
     </message>
     <message>
         <location line="+257"/>
-        <location line="+444"/>
+        <location line="+446"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="-429"/>
+        <location line="-431"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
     </message>
@@ -2478,29 +2503,29 @@
     </message>
     <message>
         <location line="+23"/>
-        <location line="+57"/>
+        <location line="+58"/>
         <source>Missing Order-Id</source>
         <translation>Fehlende Bestellnummer</translation>
     </message>
     <message>
-        <location line="-51"/>
-        <location line="+57"/>
+        <location line="-52"/>
+        <location line="+58"/>
         <source>Missing Customer-Id</source>
         <translation>Fehlende Kundennummer</translation>
     </message>
     <message>
-        <location line="-35"/>
-        <location line="+62"/>
+        <location line="-36"/>
+        <location line="+63"/>
         <source>No Customer Address found</source>
         <translation>Konnte keine Kundenadresse finden</translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-46"/>
         <source>no deliveries found</source>
         <translation>Keine Bestellungen gefunden</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+25"/>
         <source>Missing Invoice-Id</source>
         <translation>Kein Rechnungs-Nr</translation>
     </message>
@@ -2510,7 +2535,7 @@
         <translation>Kein Verkaufsinformationen gefunden</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>First add a valid Parcel Shipment ID from your delivery service.</source>
         <translation>Fügen Sie zunächst eine gültige Paketsende-ID von Ihrem Zustelldienst hinzu.</translation>
     </message>
@@ -2540,18 +2565,18 @@
         <translation>Bestellung</translation>
     </message>
     <message>
-        <location line="-442"/>
-        <location line="+196"/>
+        <location line="-444"/>
+        <location line="+198"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
     <message>
-        <location line="-647"/>
+        <location line="-649"/>
         <source>Service</source>
         <translation>Sender</translation>
     </message>
     <message>
-        <location line="+626"/>
+        <location line="+628"/>
         <source>The notification system requires a valid Parcel Shipment ID to send customer emails.</source>
         <translation>Das Benachrichtigungssystem erfordert eine gültige Paketsendungs-ID, um Kunden-E-Mails zu senden.</translation>
     </message>
@@ -3253,7 +3278,7 @@
         <translation>Anzahl</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+43"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -3263,12 +3288,12 @@
         <translation>Ist der Titel national unverkäuflich oder steht er auf einer Zensurliste? Dies ist für das Shopsystem relevant.</translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-52"/>
         <source>Article ID:</source>
         <translation>Artikel Nr.:</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+28"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
@@ -3288,12 +3313,12 @@
         <translation>Ansichten</translation>
     </message>
     <message>
-        <location line="-19"/>
+        <location line="-26"/>
         <source>Price</source>
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+62"/>
         <source>Book &amp;Title:</source>
         <translation>Buch &amp;Titel:</translation>
     </message>
@@ -3368,7 +3393,17 @@
         <translation>Zustand:</translation>
     </message>
     <message>
-        <location line="-27"/>
+        <location line="-142"/>
+        <source>incl. vat</source>
+        <translation>inkl. MwSt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>VAT Settings must be set.</source>
+        <translation>Mehrwertsteuereinstellungen müssen festgelegt werden.</translation>
+    </message>
+    <message>
+        <location line="+114"/>
         <source>Technique</source>
         <translation>Technik</translation>
     </message>

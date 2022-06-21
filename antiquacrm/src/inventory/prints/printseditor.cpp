@@ -54,6 +54,13 @@ PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
   ip_price->setMinimum(minPrice);
   row1->addWidget(ip_price);
 
+  ip_including_vat = new BoolBox(this);
+  ip_including_vat->setObjectName("ip_including_vat");
+  ip_including_vat->setInfo(tr("incl. vat"));
+  ip_including_vat->setToolTip(tr("VAT Settings must be set."));
+  ip_including_vat->setRequired(false);
+  row1->addWidget(ip_including_vat);
+
   ip_year = new YearEdit(this);
   ip_year->setObjectName("ip_year");
   ip_year->setInfo(tr("Year"));
