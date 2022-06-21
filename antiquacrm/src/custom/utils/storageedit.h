@@ -5,13 +5,28 @@
 #ifndef STORAGEEDIT_UTILS_H
 #define STORAGEEDIT_UTILS_H
 
-#include <QObject>
-#include <QFocusEvent>
 #include <QComboBox>
+#include <QFocusEvent>
 #include <QLineEdit>
+#include <QObject>
+#include <QWheelEvent>
 #include <QWidget>
 
 #include <UtilsMain>
+
+class StorageBox final : public QComboBox {
+  Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
+
+protected:
+  void wheelEvent(QWheelEvent *e) override{
+      /* Disable wheel actions to prevent invalid inputs! */
+  };
+
+public:
+  StorageBox(QWidget *parent = nullptr);
+};
 
 class StorageEdit final : public UtilsMain {
   Q_OBJECT
@@ -19,7 +34,7 @@ class StorageEdit final : public UtilsMain {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  QComboBox *m_storage;
+  StorageBox *m_storage;
   QLineEdit *m_search;
   /**
      @brief Tabellendaten "ref_storage_location"

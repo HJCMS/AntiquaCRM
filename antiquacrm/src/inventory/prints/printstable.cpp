@@ -22,8 +22,8 @@
 
 static const QString querySelect() {
   QString s("b.ip_id,b.ip_count,b.ip_title,b.ip_author,");
-  s.append("t.rpt_type,b.ip_year,b.ip_price,s.sl_storage,b.ip_landscape,b."
-           "ip_changed");
+  s.append("t.rpt_type,b.ip_year,b.ip_price");
+  s.append(",s.sl_storage,b.ip_landscape,b.ip_changed");
   s.append(",(CASE WHEN i.im_id IS NOT NULL THEN true ELSE false END) AS "
            "image_exists ");
   // s.append("");

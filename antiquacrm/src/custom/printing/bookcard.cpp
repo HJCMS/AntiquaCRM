@@ -97,7 +97,7 @@ void BookCardPaintWidget::paintEvent(QPaintEvent *p) {
                    qRound(w - (margin * 2.0)));
 
   int _x = ((w / 2) - (_size / 2));
-  BookCardQrCode bcCode(p_queryUrl, _size);
+  BookCardQrCode bcCode(p_queryUrl, ((_size > 128) ? 128 : _size));
   QImage image = bcCode.image();
   if (!image.isNull()) {
     painter.drawImage(QPoint(_x, yPos), image);

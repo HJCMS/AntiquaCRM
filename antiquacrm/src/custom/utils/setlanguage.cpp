@@ -6,13 +6,15 @@
 #include <QDebug>
 #include <QHBoxLayout>
 
+LanguageBox::LanguageBox(QWidget *parent) : QComboBox{parent} {}
+
 SetLanguage::SetLanguage(QWidget *parent) : UtilsMain{parent} {
   setObjectName("SetLanguage");
 
   QHBoxLayout *layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 
-  m_comboBox = new QComboBox(this);
+  m_comboBox = new LanguageBox(this);
   m_comboBox->setToolTip(tr("Language"));
   m_comboBox->addItem(tr("German"), "de_DE");
   m_comboBox->addItem(tr("Europe"), "eu_EU");

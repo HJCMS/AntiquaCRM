@@ -111,6 +111,13 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   ib_volume->setPrefix(tr("Bd."));
   ib_volume->setInfo(tr("Volume"));
   row1->addWidget(ib_volume);
+
+  ib_since = new DateTimeDisplay(this);
+  ib_since->setObjectName("ib_since");
+  ib_since->setRequired(false);
+  ib_since->setInfo(tr("book entry created at"));
+  row1->addWidget(ib_since);
+
   row1->addStretch(1);
   mainLayout->addLayout(row1);
 
@@ -646,6 +653,7 @@ void BookEditor::printingBookCard() {
   data.insert("author", ib_author->value());
   data.insert("year", ib_year->value());
   data.insert("storage", ib_storage->description());
+
   if (dialog->exec(data) == QDialog::Accepted) { /* TODO */
   }
 }

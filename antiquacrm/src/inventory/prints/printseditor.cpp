@@ -229,6 +229,12 @@ PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
   QHBoxLayout *lay5 = new QHBoxLayout();
   lay5->setObjectName("last_horizontal_layout");
 
+  ip_since = new DateTimeDisplay(this);
+  ip_since->setObjectName("ip_since");
+  ip_since->setRequired(false);
+  ip_since->setInfo(tr("entry was created at"));
+  lay5->addWidget(ip_since);
+
   lay5->addStretch(1);
 
   m_imageToolBar = new ImageToolBar(this);
@@ -494,6 +500,10 @@ void PrintsEditor::setData(const QString &key, const QVariant &value,
   }
   if (key.contains("ip_price")) {
     ip_price->setValue(value);
+    return;
+  }
+  if (key.contains("ip_since")) {
+    ip_since->setValue(value);
     return;
   }
   if (value.type() == QVariant::Bool) {

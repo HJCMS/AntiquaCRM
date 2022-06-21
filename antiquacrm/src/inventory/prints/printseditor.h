@@ -44,6 +44,7 @@ private:
   TextField *ip_internal_description; /**< @brief Interne Beschreibung */
   TextField *ip_description;          /**< @brief Öffentliche Beschreibung */
   TechniqueEdit *ip_technique;        /**< @brief Herausgeber/Verlag */
+  DateTimeDisplay *ip_since;          /**< @brief Erstellt am ... */
   QTabWidget *m_tabWidget; /**< @brief BeschreibungsText und ISBN Info  */
 
   /**

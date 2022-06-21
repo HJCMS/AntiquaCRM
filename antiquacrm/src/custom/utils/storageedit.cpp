@@ -8,6 +8,12 @@
 #include <QHBoxLayout>
 #include <QSizePolicy>
 
+StorageBox::StorageBox(QWidget *parent) : QComboBox{parent} {
+  setInsertPolicy(QComboBox::NoInsert);
+  setSizeAdjustPolicy(QComboBox::AdjustToContentsOnFirstShow);
+  setEditable(false);
+}
+
 StorageEdit::StorageEdit(QWidget *parent) : UtilsMain{parent} {
   if (objectName().isEmpty())
     setObjectName("StorageEdit");
@@ -15,10 +21,7 @@ StorageEdit::StorageEdit(QWidget *parent) : UtilsMain{parent} {
   QHBoxLayout *layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 
-  m_storage = new QComboBox(this);
-  m_storage->setInsertPolicy(QComboBox::NoInsert);
-  m_storage->setSizeAdjustPolicy(QComboBox::AdjustToContentsOnFirstShow);
-  m_storage->setEditable(false);
+  m_storage = new StorageBox(this);
   layout->addWidget(m_storage);
 
   m_search = new QLineEdit(this);

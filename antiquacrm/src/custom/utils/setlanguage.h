@@ -14,8 +14,22 @@
 
 #include <UtilsMain>
 
+class LanguageBox final : public QComboBox {
+  Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
+
+protected:
+  void wheelEvent(QWheelEvent *e) override{
+      /* Disable wheel actions to prevent invalid inputs! */
+  };
+
+public:
+  LanguageBox(QWidget *parent = nullptr);
+};
+
 /**
-   @brief ISO639-1 Language Code
+ * @brief ISO639-1 Language Code
  */
 class SetLanguage final : public UtilsMain {
   Q_OBJECT
@@ -23,7 +37,7 @@ class SetLanguage final : public UtilsMain {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  QComboBox *m_comboBox;
+  LanguageBox *m_comboBox;
 
 private Q_SLOTS:
   void itemChanged(int);

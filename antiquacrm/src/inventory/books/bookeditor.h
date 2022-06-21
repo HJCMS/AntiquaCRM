@@ -34,6 +34,7 @@ private:
   BoolBox *ib_signed;             /**< @brief Signiert? */
   BoolBox *ib_restricted;         /**< @brief Zensiert? */
   BoolBox *ib_including_vat;      /**< @brief inkl. Mehwertsteuer */
+  DateTimeDisplay *ib_since;      /**< @brief Ersteller Datum */
   SetLanguage *ib_language;       /**< @brief Sprache */
   StorageEdit *ib_storage;        /**< @brief Lager bestimmung */
   YearEdit *ib_year;              /**< @brief Jahr */

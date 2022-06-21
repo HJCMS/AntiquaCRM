@@ -145,3 +145,54 @@ const QString DateTimeEdit::info() { return m_edit->toolTip(); }
 const QString DateTimeEdit::notes() {
   return tr("a valid Datetime is needed.");
 }
+
+DateTimeDisplay::DateTimeDisplay(QWidget *parent) : UtilsMain{parent} {
+  QHBoxLayout *layout = new QHBoxLayout(this);
+  layout->setContentsMargins(0, 0, 0, 0);
+
+  curDateTime = QDateTime::currentDateTime();
+
+  m_edit = new QDateTimeEdit(this);
+  m_edit->setDisplayFormat(DISPLAY_FORMAT);
+  m_edit->setMaximumDateTime(curDateTime);
+  m_edit->setButtonSymbols(QAbstractSpinBox::NoButtons);
+  m_edit->setReadOnly(true);
+  m_edit->setInputMethodHints(Qt::ImhNone);
+  layout->addWidget(m_edit);
+
+  setLayout(layout);
+  setRequired(false);
+  setModified(false);
+}
+
+void DateTimeDisplay::setValue(const QVariant &val) {
+  QDateTime dt = val.toDateTime();
+  if (dt.isValid()) {
+    m_edit->setDateTime(dt);
+  } else {
+    m_edit->setDateTime(curDateTime);
+  }
+}
+
+void DateTimeDisplay::reset() {
+  m_edit->clear();
+  setModified(false);
+}
+
+void DateTimeDisplay::setFocus() { m_edit->setFocus(); }
+
+const QVariant DateTimeDisplay::value() {
+  QDateTime dt(QDateTime::currentDateTime());
+  dt.setDate(m_edit->dateTime().date());
+  return dt.toString(OUTPUT_FORMAT);
+}
+
+bool DateTimeDisplay::isValid() { return true; }
+
+void DateTimeDisplay::setInfo(const QString &info) { m_edit->setToolTip(info); }
+
+const QString DateTimeDisplay::info() { return m_edit->toolTip(); }
+
+const QString DateTimeDisplay::notes() {
+  return tr("a valid Datetime is needed.");
+}
