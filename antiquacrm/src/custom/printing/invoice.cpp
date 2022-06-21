@@ -15,7 +15,6 @@
 
 Invoice::Invoice(QWidget *parent) : Printing{parent} {
   setObjectName("printing_invoice");
-
   connect(printButton, SIGNAL(clicked()), this, SLOT(openPrintDialog()));
   readConfiguration();
 }
@@ -78,7 +77,8 @@ void Invoice::constructBody() {
   QTextCursor cursor = body->textCursor();
   QTextTableFormat format = tableFormat();
   format.setBorderStyle(QTextFrameFormat::BorderStyle_None);
-  format.setTopMargin(30);
+  // format.setBorderStyle(QTextFrameFormat::BorderStyle_Solid);
+  format.setTopMargin(20);
   m_billingTable = cursor.insertTable(1, 4, format);
   m_billingTable->setObjectName("billings_table");
 
@@ -94,7 +94,7 @@ void Invoice::constructBody() {
   cursor = ce00.firstCursorPosition();
   ce00.setFormat(cellFormat);
   cursor.setCharFormat(normalFormat());
-  cursor.insertText(tr("Article-ID"));
+  cursor.insertText(tr("Article"));
 
   QTextTableCell ce01 = m_billingTable->cellAt(0, 1);
   ce01.setFormat(cellFormat);
@@ -137,6 +137,8 @@ void Invoice::insertBilling(const QString &articleid,
   QTextTableCell ce02 = m_billingTable->cellAt(row, 2);
   cursor = ce02.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
+  cursor.setBlockFormat(alignCenter());
+  p_quantity_sum += quantity;
   cursor.insertText(QString::number(quantity));
 
   QTextTableCell ce03 = m_billingTable->cellAt(row, 3);
@@ -157,20 +159,29 @@ void Invoice::finalizeBillings() {
   int row = m_billingTable->rows();
   m_billingTable->insertRows(row, 1);
 
-  QTextCursor cursor = body->textCursor();
-  QTextTableCell ce02 = m_billingTable->cellAt(row, 2);
-  cursor = ce02.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  cursor.insertText(tr("Summary:"));
-
   QTextTableCellFormat cellFormat;
   cellFormat.setTopBorder(1);
   cellFormat.setTopBorderBrush(Qt::SolidPattern);
   cellFormat.setTopBorderStyle(QTextFrameFormat::BorderStyle_Solid);
 
+  QTextCursor cursor = body->textCursor();
+  QTextTableCell ce01 = m_billingTable->cellAt(row, 1);
+  ce01.setFormat(cellFormat);
+  cursor = ce01.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.setBlockFormat(alignRight());
+  cursor.insertText(tr("Summary") + " " + tr("incl. vat") + ":");
+
+  QTextTableCell ce02 = m_billingTable->cellAt(row, 2);
+  ce02.setFormat(cellFormat);
+  cursor = ce02.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.setBlockFormat(alignCenter());
+  cursor.insertText(QString::number(p_quantity_sum));
+
   QTextTableCell ce03 = m_billingTable->cellAt(row, 3);
-  cursor = ce03.firstCursorPosition();
   ce03.setFormat(cellFormat);
+  cursor = ce03.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   QString str = QString::number(p_fullPrice, 'f', 2);
   cursor.insertText(str + " " + p_currency);

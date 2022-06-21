@@ -167,6 +167,16 @@ protected:
   const QTextCharFormat smallFormat();
 
   /**
+   * @brief Text Block align right
+   */
+  const QTextBlockFormat alignRight();
+
+  /**
+   * @brief Text Block align Center
+   */
+  const QTextBlockFormat alignCenter();
+
+  /**
    * @brief Tabellen Format
    */
   const QTextTableFormat tableFormat();

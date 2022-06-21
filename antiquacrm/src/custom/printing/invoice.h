@@ -23,6 +23,7 @@ class Invoice : public Printing {
 private:
   QTextTable *m_billingTable;
   QString p_currency;
+  int p_quantity_sum = 0;
   double p_fullPrice = 0.00;
 
   void constructSubject();

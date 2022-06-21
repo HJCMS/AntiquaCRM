@@ -160,6 +160,18 @@ const QTextCharFormat Printing::smallFormat() {
   return f;
 }
 
+const QTextBlockFormat Printing::alignRight() {
+  QTextBlockFormat tbf;
+  tbf.setAlignment(Qt::AlignRight);
+  return tbf;
+}
+
+const QTextBlockFormat Printing::alignCenter() {
+  QTextBlockFormat tbf;
+  tbf.setAlignment(Qt::AlignCenter);
+  return tbf;
+}
+
 const QTextTableFormat Printing::tableFormat() {
   QTextTableFormat f;
   f.setWidth(QTextLength(QTextLength().PercentageLength, 90));

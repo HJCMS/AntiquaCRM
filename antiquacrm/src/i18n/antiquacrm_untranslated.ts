@@ -2137,7 +2137,7 @@
 <context>
     <name>Invoice</name>
     <message>
-        <location filename="../custom/printing/invoice.cpp" line="+50"/>
+        <location filename="../custom/printing/invoice.cpp" line="+49"/>
         <source>Invoice</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2162,8 +2162,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
-        <source>Article-ID</source>
+        <location line="+29"/>
+        <source>Article</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2182,12 +2182,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+49"/>
-        <source>Summary:</source>
+        <location line="+59"/>
+        <source>Summary</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+0"/>
+        <source>incl. vat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+66"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
     </message>

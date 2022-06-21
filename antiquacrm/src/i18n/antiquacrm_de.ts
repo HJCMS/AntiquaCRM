@@ -2137,7 +2137,7 @@
 <context>
     <name>Invoice</name>
     <message>
-        <location filename="../custom/printing/invoice.cpp" line="+50"/>
+        <location filename="../custom/printing/invoice.cpp" line="+49"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
@@ -2162,9 +2162,9 @@
         <translation>Lieferschein Nr.:</translation>
     </message>
     <message>
-        <location line="+28"/>
-        <source>Article-ID</source>
-        <translation>Artikel Nummer</translation>
+        <location line="+29"/>
+        <source>Article</source>
+        <translation>Artikel</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -2182,12 +2182,17 @@
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+49"/>
-        <source>Summary:</source>
-        <translation>Gesamt:</translation>
+        <location line="+59"/>
+        <source>Summary</source>
+        <translation>Gesamt</translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+0"/>
+        <source>incl. vat</source>
+        <translation>inkl. MwSt</translation>
+    </message>
+    <message>
+        <location line="+66"/>
         <source>PDF File written.</source>
         <translation>PDF Datei wurde erstellt.</translation>
     </message>
