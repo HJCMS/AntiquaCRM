@@ -36,6 +36,9 @@ private:
 
   void initSignalChanged();
 
+  void setPassword(LineEdit *e, const QByteArray &data);
+  const QByteArray passwordToBase64(LineEdit *e);
+
 public:
   ProviderSettings(QWidget *parent = nullptr);
   void setPageTitle(const QString &);
