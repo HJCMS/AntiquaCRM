@@ -448,7 +448,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+49"/>
         <source>Are you sure to deactivate this entry?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -458,7 +458,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-440"/>
+        <location line="-439"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -478,12 +478,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+212"/>
+        <location line="+211"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-294"/>
+        <location line="-293"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -3638,22 +3638,40 @@
     <name>ProviderSettings</name>
     <message>
         <location filename="../custom/settings/providersettings.cpp" line="+24"/>
+        <location line="+40"/>
         <source>Protocoll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-35"/>
+        <location line="+40"/>
         <source>Domain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-35"/>
+        <location line="+45"/>
         <source>API Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-41"/>
         <source>API Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Loginname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>API Port</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

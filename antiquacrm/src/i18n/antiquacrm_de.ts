@@ -448,7 +448,7 @@
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+49"/>
         <source>Are you sure to deactivate this entry?</source>
         <translation>Möchten Sie diesen Eintrag wirklich deaktivieren?</translation>
     </message>
@@ -458,7 +458,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-440"/>
+        <location line="-439"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -478,12 +478,12 @@
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
     <message>
-        <location line="+212"/>
+        <location line="+211"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
     <message>
-        <location line="-294"/>
+        <location line="-293"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -3638,23 +3638,41 @@
     <name>ProviderSettings</name>
     <message>
         <location filename="../custom/settings/providersettings.cpp" line="+24"/>
+        <location line="+40"/>
         <source>Protocoll</source>
         <translation>Protokoll</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-35"/>
+        <location line="+40"/>
         <source>Domain</source>
         <translation>Domäne</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-35"/>
+        <location line="+45"/>
         <source>API Key</source>
         <translation>API Schlüssel</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-41"/>
         <source>API Path</source>
         <translation>API Pfad</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Loginname</source>
+        <translation>Benutzername</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Password</source>
+        <translation>Passwort</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>API Port</source>
+        <translation></translation>
     </message>
 </context>
 <context>
