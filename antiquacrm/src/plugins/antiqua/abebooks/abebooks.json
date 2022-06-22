@@ -1,0 +1,7 @@
+{
+  "Keys": [ "libabebooks" ],
+  "Name": "AbeBooks",
+  "Title": "AbeBooks Plugin",
+  "Description": "JSON Integration der AbeBooks Schnittstelle"
+}
+

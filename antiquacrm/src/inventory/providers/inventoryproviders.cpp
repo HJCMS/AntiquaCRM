@@ -130,8 +130,8 @@ bool InventoryProviders::loadInterfaces() {
     connect(iface, SIGNAL(s_queryResponse(bool)), this,
             SLOT(hasResponsed(bool)));
 
-    p_iFaces.append(iface);
     iface->queryMenueEntries();
+    p_iFaces.append(iface);
   }
   return true;
 }

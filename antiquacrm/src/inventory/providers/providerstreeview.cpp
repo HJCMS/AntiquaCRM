@@ -21,7 +21,10 @@ QTreeWidgetItem *ProvidersTreeView::getParent(const QString &name) {
   for (int i = 0; i < topLevelItemCount(); i++) {
     QTreeWidgetItem *parent = topLevelItem(i);
     if (parent != nullptr && parent->type() == QTreeWidgetItem::Type)
-      return parent;
+    {
+      if(parent->text(0) == name)
+        return parent;
+    }
   }
   return nullptr;
 }

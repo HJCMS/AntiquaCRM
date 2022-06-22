@@ -51,6 +51,10 @@ SET (PROJECT_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/plugins
  ${CMAKE_CURRENT_BINARY_DIR}/plugins/antiqua
  ${CMAKE_CURRENT_SOURCE_DIR}/plugins/antiqua
+ ${CMAKE_CURRENT_BINARY_DIR}/plugins/antiqua/abebooks
+ ${CMAKE_CURRENT_SOURCE_DIR}/plugins/antiqua/abebooks
+ ${CMAKE_CURRENT_BINARY_DIR}/plugins/antiqua/whsoft
+ ${CMAKE_CURRENT_SOURCE_DIR}/plugins/antiqua/whsoft
  ${CMAKE_CURRENT_BINARY_DIR}/xml
  ${CMAKE_CURRENT_SOURCE_DIR}/xml
 )

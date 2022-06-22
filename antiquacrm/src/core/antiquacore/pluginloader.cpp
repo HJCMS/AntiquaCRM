@@ -41,7 +41,14 @@ PluginLoader::PluginLoader(QObject *parent) : QPluginLoader{parent} {
   paths << lp;
   paths << QLibraryInfo::location(QLibraryInfo::PluginsPath);
 
-  if(DEBUG_PLUGINLOADER) {
+  QFileInfo test(QDir::currentPath(), "cmake_install.cmake");
+  if (test.exists()) {
+    qInfo("Plugin Build target extras add ...");
+    paths << lp + "/abebooks";
+    paths << lp + "/whsoft";
+  }
+
+  if (DEBUG_PLUGINLOADER) {
     qDebug() << Q_FUNC_INFO << paths;
   }
 
