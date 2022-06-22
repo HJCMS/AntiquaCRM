@@ -550,9 +550,9 @@ void PrintsEditor::saveData() {
 
 void PrintsEditor::changeEvent(QEvent *event) {
   if (event->type() == QEvent::EnabledChange && isEnabled()) {
-    ip_condition->loadDataset("condition");
+    ip_condition->loadDataset("condition", StrLineEdit::OTHER);
     ip_technique->loadDataset();
-    ip_designation->loadDataset("ip_designation");
+    ip_designation->loadDataset("designation", StrLineEdit::OTHER);
     ip_storage->loadDataset();
   }
 }

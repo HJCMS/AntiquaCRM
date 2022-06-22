@@ -23,7 +23,6 @@ class DataTableModel : public QSqlTableModel {
 private:
   QSqlDatabase p_db;
   const QString p_type;
-  const QString p_table = QString("ui_autofill_keywords");
 
 private Q_SLOTS:
   bool updateData(const QModelIndex &index, const QVariant &value);

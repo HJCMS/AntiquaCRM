@@ -16,6 +16,7 @@
 #include <QToolBar>
 
 #include <AntiquaCRM>
+#include "completerdialog.h"
 
 class StatusBar;
 class Workspace;
@@ -38,15 +39,13 @@ private:
   QSignalMapper *m_signalMapper;
   void setupTabMenu(QMenu *parent);
   void setupActions();
-  void openEditCondition();
-  void openEditDesignation(const QString &section);
+  void openEditAutoFill(CompleterDialog::Filter t);
 
 private Q_SLOTS:
   void closeWindow();
   void openStorageLocation(bool);
   void openCondition(bool);
-  void openBookDesignation(bool);
-  void openPrintsDesignation(bool);
+  void openDesignation(bool);
   void openFileDialog(bool);
   void openConfiguration(bool);
   void sqlErrorMessageBox(const QString &);

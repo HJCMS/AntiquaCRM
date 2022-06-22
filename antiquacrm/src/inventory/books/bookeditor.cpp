@@ -183,6 +183,7 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   ib_publisher->setObjectName("ib_publisher");
   ib_publisher->setMaxAllowedLength(128);
   ib_publisher->setWindowTitle(tr("Publisher"));
+  ib_publisher->setToolTip(tr("Publisher or Illustrator"));
   row2->addWidget(ib_publisher, row2c++, 1, 1, 1);
 
   QLabel *storageLabel = new QLabel(this);
@@ -206,7 +207,7 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   ib_keyword->setObjectName("ib_keyword");
   ib_keyword->setMaxAllowedLength(60);
   ib_keyword->setToolTip(tr("Category Keywords for Shopsystems."));
-  ib_keyword->setWindowTitle(tr("Chop Keyword"));
+  ib_keyword->setWindowTitle(tr("Shop Keyword"));
   row2->addWidget(ib_keyword, row2c++, 1, 1, 1);
 
   QLabel *conditionLabel = new QLabel(this);
@@ -677,8 +678,8 @@ void BookEditor::changeEvent(QEvent *event) {
     /**
      * Lese aus SQL Datenbank Autovervollständigungen
      */
-    ib_condition->loadDataset("condition");
-    ib_designation->loadDataset("ib_designation");
+    ib_condition->loadDataset("condition", StrLineEdit::BOOK);
+    ib_designation->loadDataset("designation", StrLineEdit::BOOK);
     ib_keyword->loadStorageKeywords();
   }
 }

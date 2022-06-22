@@ -15,7 +15,7 @@
  * @example SELECT CURRENT_TIMESTAMP;
  */
 #ifndef OUTPUT_FORMAT
-#define OUTPUT_FORMAT "dd.MM.yyyy hh:mm:ss.zzz t"
+#define OUTPUT_FORMAT "dd.MM.yyyy hh:mm:ss.zzz"
 #endif
 
 CalendarViewer::CalendarViewer(QWidget *parent) : QCalendarWidget{parent} {}

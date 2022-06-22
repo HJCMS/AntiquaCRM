@@ -3,18 +3,18 @@
 
 #include "completerview.h"
 #include "addentrydialog.h"
+#include "antiqua_global.h"
 #include "datadelegation.h"
 #include "datatablemodel.h"
 #include "messagebox.h"
-#include "sqlcore.h"
-#include "antiqua_global.h"
 #include "myicontheme.h"
+#include "sqlcore.h"
 
-#include <QDebug>
-#include <QSqlRecord>
-#include <QHeaderView>
 #include <QAction>
+#include <QDebug>
+#include <QHeaderView>
 #include <QMenu>
+#include <QSqlRecord>
 
 CompleterView::CompleterView(const QString &filter, QWidget *parent)
     : QTableView{parent}, p_type(filter) {
@@ -37,8 +37,9 @@ CompleterView::CompleterView(const QString &filter, QWidget *parent)
   /* Kopfzeilen anpassen */
   QHeaderView *tHeader = horizontalHeader();
   tHeader->setSectionHidden(0, true);  /**< k_table_cell */
-  tHeader->setSectionHidden(1, false); /**< k_keyword */
-  tHeader->setSectionHidden(2, false); /**< k_description */
+  tHeader->setSectionHidden(1, true);  /**< k_type */
+  tHeader->setSectionHidden(2, false); /**< k_keyword */
+  tHeader->setSectionHidden(3, false); /**< k_description */
   tHeader->setDefaultAlignment(Qt::AlignCenter);
   tHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
   tHeader->setStretchLastSection(true);

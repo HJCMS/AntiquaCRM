@@ -343,7 +343,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+8"/>
+        <source>Publisher or Illustrator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Storage:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -353,12 +358,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Chop Keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="+13"/>
         <source>Condition:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -378,7 +378,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-205"/>
+        <location line="-206"/>
         <source>Article ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -393,12 +393,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+106"/>
         <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-55"/>
+        <location line="-56"/>
         <source>Required input field. Limited to 80 characters, Webshop Systems require this.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -413,12 +413,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+30"/>
         <source>Category Keywords for Shopsystems.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+1"/>
+        <source>Shop Keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
         <source>Condition of this Book. See also Configuration conditions Table.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -458,7 +463,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-439"/>
+        <location line="-440"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -473,7 +478,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+206"/>
+        <location line="+207"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -505,7 +510,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-184"/>
+        <location line="-185"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
@@ -515,12 +520,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+201"/>
+        <location line="+202"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-317"/>
+        <location line="-318"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -900,17 +905,17 @@
 <context>
     <name>CompleterDialog</name>
     <message>
-        <location filename="../custom/completer/completerdialog.cpp" line="+22"/>
+        <location filename="../custom/completer/completerdialog.cpp" line="+24"/>
         <source>Modify Edition dataset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Modify Designation dateset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <source>Please enter the keywords here that should be suggested in the editor.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -923,7 +928,7 @@
 <context>
     <name>CompleterView</name>
     <message>
-        <location filename="../custom/completer/completerview.cpp" line="+60"/>
+        <location filename="../custom/completer/completerview.cpp" line="+61"/>
         <source>SQL Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1401,8 +1406,13 @@
 <context>
     <name>DataTableModel</name>
     <message>
-        <location filename="../custom/completer/datatablemodel.cpp" line="+116"/>
+        <location filename="../custom/completer/datatablemodel.cpp" line="+127"/>
         <source>Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2289,7 +2299,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+84"/>
+        <location filename="../mwindow.cpp" line="+83"/>
         <source>Application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2325,22 +2335,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Conditions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Book Designations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Prints Designation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
+        <location line="+17"/>
         <source>Save request</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2350,18 +2345,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+55"/>
         <source>SQL Server Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-109"/>
-        <location line="+122"/>
+        <location line="-89"/>
+        <location line="+102"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-178"/>
+        <location line="-158"/>
         <source>Prints</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2386,7 +2381,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+13"/>
+        <source>Condition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Designation and Binding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+81"/>
         <source>Disable Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3638,24 +3643,24 @@
     <name>ProviderSettings</name>
     <message>
         <location filename="../custom/settings/providersettings.cpp" line="+24"/>
-        <location line="+40"/>
+        <location line="+41"/>
         <source>Protocoll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-35"/>
-        <location line="+40"/>
+        <location line="-36"/>
+        <location line="+41"/>
         <source>Domain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-35"/>
-        <location line="+45"/>
+        <location line="-36"/>
+        <location line="+46"/>
         <source>API Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-41"/>
+        <location line="-42"/>
         <source>API Path</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3670,7 +3675,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+15"/>
         <source>API Port</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4163,12 +4168,12 @@
 <context>
     <name>StrLineEdit</name>
     <message>
-        <location filename="../custom/utils/strlineedit.cpp" line="+164"/>
+        <location filename="../custom/utils/strlineedit.cpp" line="+172"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+20"/>
         <source>The field</source>
         <translation type="unfinished"></translation>
     </message>

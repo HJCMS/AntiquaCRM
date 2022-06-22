@@ -5,8 +5,8 @@
 #ifndef COMPLETERDIALOG_H
 #define COMPLETERDIALOG_H
 
-#include <QObject>
 #include <QDialog>
+#include <QObject>
 
 class CompleterView;
 
@@ -19,8 +19,10 @@ private:
   CompleterView *m_tableView;
 
 public:
-  explicit CompleterDialog(QWidget *parent = nullptr,
-                          const QString &filter = QString("IS NOT NULL"));
+  enum Filter { CONDITION, DESIGNATION };
+  explicit CompleterDialog(
+      QWidget *parent = nullptr,
+      CompleterDialog::Filter filter = CompleterDialog::CONDITION);
 };
 
 #endif // COMPLETERDIALOG_H

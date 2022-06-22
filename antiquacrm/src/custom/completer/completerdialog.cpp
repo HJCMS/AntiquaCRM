@@ -12,16 +12,21 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
-CompleterDialog::CompleterDialog(QWidget *parent, const QString &filter)
+CompleterDialog::CompleterDialog(QWidget *parent, CompleterDialog::Filter filter)
     : QDialog{parent} {
   setObjectName("CompleterDialogDialog");
   setSizeGripEnabled(true);
   setMinimumSize(QSize(650, 400));
 
-  if (filter.contains("condition"))
+  QString field;
+  if (filter == Filter::CONDITION)
+  {
     setWindowTitle(tr("Modify Edition dataset"));
-  else
+    field = "condition";
+  } else {
     setWindowTitle(tr("Modify Designation dateset"));
+    field = "designation";
+  }
 
   QVBoxLayout *verticalLayout = new QVBoxLayout(this);
   verticalLayout->setObjectName("compliterlayout");
@@ -32,7 +37,7 @@ CompleterDialog::CompleterDialog(QWidget *parent, const QString &filter)
   info->setWordWrap(true);
   verticalLayout->addWidget(info);
 
-  m_tableView = new CompleterView(filter,this);
+  m_tableView = new CompleterView(field,this);
   verticalLayout->addWidget(m_tableView);
 
   QDialogButtonBox *m_buttonBox = new QDialogButtonBox(Qt::Horizontal, this);

@@ -343,7 +343,12 @@
         <translation>Herausgeber:</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+8"/>
+        <source>Publisher or Illustrator</source>
+        <translation>Verleger oder Illustator</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Storage:</source>
         <translation>Lager:</translation>
     </message>
@@ -353,12 +358,7 @@
         <translation>Schlüsselwort:</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Chop Keyword</source>
-        <translation>Shop Schlüüselwort</translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="+13"/>
         <source>Condition:</source>
         <translation>Zustand:</translation>
     </message>
@@ -378,7 +378,7 @@
         <translation>Sprache:</translation>
     </message>
     <message>
-        <location line="-205"/>
+        <location line="-206"/>
         <source>Article ID</source>
         <translation>Artikel ID</translation>
     </message>
@@ -393,12 +393,12 @@
         <translation>Buchseiten</translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+106"/>
         <source>Storage</source>
         <translation>Lagerort</translation>
     </message>
     <message>
-        <location line="-55"/>
+        <location line="-56"/>
         <source>Required input field. Limited to 80 characters, Webshop Systems require this.</source>
         <translation>Erforderliches Eingabefeld. Begrenzt auf 80 Zeichen. Für Webshop-Systeme erforderlich.</translation>
     </message>
@@ -413,12 +413,17 @@
         <translation>Geben Sie hier den Buchverlag ein.</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+30"/>
         <source>Category Keywords for Shopsystems.</source>
         <translation>Kategorie Schlüsselwörter für Shopsysteme.</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+1"/>
+        <source>Shop Keyword</source>
+        <translation>Schlüsselwort für Shop und Lager</translation>
+    </message>
+    <message>
+        <location line="+15"/>
         <source>Condition of this Book. See also Configuration conditions Table.</source>
         <translation>Zustand dieses Buches. Siehe auch Konfigurations Tabellen.</translation>
     </message>
@@ -458,7 +463,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-439"/>
+        <location line="-440"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -473,7 +478,7 @@
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
     <message>
-        <location line="+206"/>
+        <location line="+207"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
@@ -505,7 +510,7 @@
         <translation>Dieser Text dient internen Zwecken</translation>
     </message>
     <message>
-        <location line="-184"/>
+        <location line="-185"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
@@ -515,12 +520,12 @@
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="+201"/>
+        <location line="+202"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-317"/>
+        <location line="-318"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -900,17 +905,17 @@
 <context>
     <name>CompleterDialog</name>
     <message>
-        <location filename="../custom/completer/completerdialog.cpp" line="+22"/>
+        <location filename="../custom/completer/completerdialog.cpp" line="+24"/>
         <source>Modify Edition dataset</source>
         <translation>Bearbeite Zustandsbeschreibung</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Modify Designation dateset</source>
         <translation>Bearbeite Umschlags Beschreibung</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <source>Please enter the keywords here that should be suggested in the editor.</source>
         <translation>Bitte fügen Sie hier die Schlagworte ein, welche im Editor vorgeschlagen werden sollen.</translation>
     </message>
@@ -923,7 +928,7 @@
 <context>
     <name>CompleterView</name>
     <message>
-        <location filename="../custom/completer/completerview.cpp" line="+60"/>
+        <location filename="../custom/completer/completerview.cpp" line="+61"/>
         <source>SQL Error</source>
         <translation>SQL Fehler</translation>
     </message>
@@ -1401,9 +1406,14 @@
 <context>
     <name>DataTableModel</name>
     <message>
-        <location filename="../custom/completer/datatablemodel.cpp" line="+116"/>
+        <location filename="../custom/completer/datatablemodel.cpp" line="+127"/>
         <source>Group</source>
         <translation>Gruppe</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Type</source>
+        <translation>Type</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -2289,7 +2299,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+84"/>
+        <location filename="../mwindow.cpp" line="+83"/>
         <source>Application</source>
         <translation>Programm</translation>
     </message>
@@ -2325,22 +2335,7 @@
         <translation>Lager Positionen</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Conditions</source>
-        <translation>Zustand</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Book Designations</source>
-        <translation>Buch Umschreibung</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Prints Designation</source>
-        <translation>Umschreibung</translation>
-    </message>
-    <message>
-        <location line="+9"/>
+        <location line="+17"/>
         <source>Save request</source>
         <translation>Speichern</translation>
     </message>
@@ -2350,18 +2345,18 @@
         <translation>&lt;b&gt;Sie haben nicht gespeicherte Änderungen.&lt;/b&gt;&lt;p&gt;Möchten sie wirklich die Anwendung schließen?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+55"/>
         <source>SQL Server Error</source>
         <translation>SQL Serverfehler</translation>
     </message>
     <message>
-        <location line="-109"/>
-        <location line="+122"/>
+        <location line="-89"/>
+        <location line="+102"/>
         <source>Fullscreen</source>
         <translation>Vollansicht</translation>
     </message>
     <message>
-        <location line="-178"/>
+        <location line="-158"/>
         <source>Prints</source>
         <translation>Drucke und Stiche</translation>
     </message>
@@ -2386,7 +2381,17 @@
         <translation>Konfiguration</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+13"/>
+        <source>Condition</source>
+        <translation>Zustand</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Designation and Binding</source>
+        <translation>Umschreibung und Bindung</translation>
+    </message>
+    <message>
+        <location line="+81"/>
         <source>Disable Fullscreen</source>
         <translation>Vollansicht beenden</translation>
     </message>
@@ -3638,24 +3643,24 @@
     <name>ProviderSettings</name>
     <message>
         <location filename="../custom/settings/providersettings.cpp" line="+24"/>
-        <location line="+40"/>
+        <location line="+41"/>
         <source>Protocoll</source>
         <translation>Protokoll</translation>
     </message>
     <message>
-        <location line="-35"/>
-        <location line="+40"/>
+        <location line="-36"/>
+        <location line="+41"/>
         <source>Domain</source>
         <translation>Domäne</translation>
     </message>
     <message>
-        <location line="-35"/>
-        <location line="+45"/>
+        <location line="-36"/>
+        <location line="+46"/>
         <source>API Key</source>
         <translation>API Schlüssel</translation>
     </message>
     <message>
-        <location line="-41"/>
+        <location line="-42"/>
         <source>API Path</source>
         <translation>API Pfad</translation>
     </message>
@@ -3670,7 +3675,7 @@
         <translation>Passwort</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+15"/>
         <source>API Port</source>
         <translation></translation>
     </message>
@@ -4163,12 +4168,12 @@
 <context>
     <name>StrLineEdit</name>
     <message>
-        <location filename="../custom/utils/strlineedit.cpp" line="+164"/>
+        <location filename="../custom/utils/strlineedit.cpp" line="+172"/>
         <source>Max allowed length</source>
         <translation>Maximal erlaubte Zeichenlänge</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+20"/>
         <source>The field</source>
         <translation>Das Feld</translation>
     </message>

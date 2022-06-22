@@ -11,7 +11,7 @@ DataTableModel::DataTableModel(const QString &field, QTableView *parent,
                                QSqlDatabase db)
     : QSqlTableModel{parent, db}, p_db(db), p_type(field) {
   setObjectName("DataTableModel");
-  setTable(p_table);
+  setTable("ui_autofill_keywords");
   setFilter("k_table_cell LIKE '" + p_type + "'");
   setSort(1, Qt::AscendingOrder); /**< ORDER BY */
   setEditStrategy(QSqlTableModel::OnManualSubmit);
@@ -27,17 +27,25 @@ bool DataTableModel::updateData(const QModelIndex &index,
   QSqlRecord rec = record(index.row());
   for (int i = 0; i < rec.count(); i++) {
     if (rec.field(i).name() == rec.field(index.column()).name()) {
-      set = rec.field(i).name() + "='" + value.toString() + "'";
+      if(rec.field(i).type() == QVariant::Int)
+        set = rec.field(i).name() + "=" + value.toString() + "";
+      else
+        set = rec.field(i).name() + "='" + value.toString() + "'";
     } else {
       QString w(rec.field(i).name());
-      w.append(" LIKE '");
-      w.append(rec.value(i).toString());
-      w.append("'");
+      if(rec.field(i).type() == QVariant::Int) {
+        w.append("=");
+        w.append(rec.value(i).toString());
+      } else {
+        w.append(" LIKE '");
+        w.append(rec.value(i).toString());
+        w.append("'");
+      }
       list.append(w);
     }
   }
 
-  QString sql("UPDATE " + p_table + " SET ");
+  QString sql("UPDATE ui_autofill_keywords SET ");
   sql.append(set);
   sql.append(" WHERE ");
   sql.append(list.join(" AND "));
@@ -67,7 +75,7 @@ bool DataTableModel::insertSqlQuery(const QSqlRecord &record) {
     fields.append(record.fieldName(i));
     values.append("'" + record.value(i).toString() + "'");
   }
-  QString sql("INSERT INTO " + p_table + " (");
+  QString sql("INSERT INTO ui_autofill_keywords (");
   sql.append(fields.join(","));
   sql.append(") VALUES (");
   sql.append(values.join(","));
@@ -94,10 +102,13 @@ QVariant DataTableModel::data(const QModelIndex &index, int role) const {
   case 0: // id k_table_cell
     return p_type;
 
-  case 1: // k_keyword
+  case 1: // k_type
+    return item.toInt();
+
+  case 2: // k_keyword
     return item.toString();
 
-  case 2: // location
+  case 3: // k_description
     return item.toString();
 
   default: // Unknown
@@ -115,10 +126,13 @@ QVariant DataTableModel::headerData(int section, Qt::Orientation orientation,
     case 0: // id k_table_cell
       return tr("Group");
 
-    case 1: // k_keyword
+    case 1: // k_type
+      return tr("Type");
+
+    case 2: // k_keyword
       return tr("Keyword");
 
-    case 2: // k_description
+    case 3: // k_description
       return tr("Description");
 
     default: // Unknown
@@ -143,11 +157,15 @@ bool DataTableModel::setData(const QModelIndex &index, const QVariant &value,
     buffer = p_type;
     break;
 
-  case 1: // k_keyword
+  case 1: // k_ktype
+    buffer = value.toInt();
+    break;
+
+  case 2: // k_keyword
     buffer = value.toString();
     break;
 
-  case 2: // k_description
+  case 3: // k_description
     buffer = value.toString();
     break;
 

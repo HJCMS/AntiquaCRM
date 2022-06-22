@@ -3,7 +3,6 @@
 
 /* Project */
 #include "mwindow.h"
-#include "completerdialog.h"
 #include "configdialog.h"
 #include "dockbarwidget.h"
 #include "filedialog.h"
@@ -143,19 +142,13 @@ void MWindow::setupActions() {
   connect(a_bst, SIGNAL(triggered(bool)), this,
           SLOT(openStorageLocation(bool)));
 
-  QAction *a_bct = m_tablesMenu->addAction(tr("Conditions"));
+  QAction *a_bct = m_tablesMenu->addAction(tr("Condition"));
   a_bct->setIcon(myIcon("spreadsheet"));
   connect(a_bct, SIGNAL(triggered(bool)), this, SLOT(openCondition(bool)));
 
-  QAction *a_bdt = m_tablesMenu->addAction(tr("Book Designations"));
+  QAction *a_bdt = m_tablesMenu->addAction(tr("Designation and Binding"));
   a_bdt->setIcon(myIcon("spreadsheet"));
-  connect(a_bdt, SIGNAL(triggered(bool)), this,
-          SLOT(openBookDesignation(bool)));
-
-  QAction *a_pdt = m_tablesMenu->addAction(tr("Prints Designation"));
-  a_pdt->setIcon(myIcon("spreadsheet"));
-  connect(a_pdt, SIGNAL(triggered(bool)), this,
-          SLOT(openPrintsDesignation(bool)));
+  connect(a_bdt, SIGNAL(triggered(bool)), this, SLOT(openDesignation(bool)));
 }
 
 void MWindow::closeWindow() {
@@ -171,25 +164,9 @@ void MWindow::closeWindow() {
   close();
 }
 
-void MWindow::openEditCondition() {
-  CompleterDialog *m_dialog = new CompleterDialog(this, "condition");
-  m_dialog->setObjectName("condition_dialog");
-  if (m_dialog->exec()) {
-    qInfo("Editing finished");
-  }
-}
-
-void MWindow::openEditDesignation(const QString &section) {
-  QString key("designation");
-  if (section.contains("ib_")) {
-    key.prepend("ib_");
-  } else if (section.contains("ip_")) {
-    key.prepend("ip_");
-  } else {
-    return;
-  }
-  CompleterDialog *m_dialog = new CompleterDialog(this, key);
-  m_dialog->setObjectName("designation_dialog");
+void MWindow::openEditAutoFill(CompleterDialog::Filter t) {
+  CompleterDialog *m_dialog = new CompleterDialog(this, t);
+  m_dialog->setObjectName("completer_dialog");
   if (m_dialog->exec()) {
     qInfo("Editing finished");
     m_dialog->deleteLater();
@@ -204,11 +181,13 @@ void MWindow::openStorageLocation(bool) {
   }
 }
 
-void MWindow::openCondition(bool) { openEditCondition(); }
+void MWindow::openCondition(bool) {
+  openEditAutoFill(CompleterDialog::CONDITION);
+}
 
-void MWindow::openBookDesignation(bool) { openEditDesignation("ib_"); }
-
-void MWindow::openPrintsDesignation(bool) { openEditDesignation("ip_"); }
+void MWindow::openDesignation(bool) {
+  openEditAutoFill(CompleterDialog::DESIGNATION);
+}
 
 void MWindow::openFileDialog(bool) {
   FileDialog *m_dialog = new FileDialog(this);

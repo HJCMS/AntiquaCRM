@@ -128,7 +128,7 @@ void StrLineEdit::loadStorageKeywords() {
     setLineEditCompliter(list);
 }
 
-void StrLineEdit::loadDataset(const QString &key) {
+void StrLineEdit::loadDataset(const QString &key, StrLineEdit::QType type) {
   if (key.isEmpty())
     return;
 
@@ -139,7 +139,13 @@ void StrLineEdit::loadDataset(const QString &key) {
   select.append(tableName());
   select.append(" WHERE k_table_cell LIKE '");
   select.append(key);
-  select.append("';");
+  select.append("' ");
+  if (type == QType::BOOK) {
+    select.append("AND k_type=1");
+  } else if (type == QType::OTHER) {
+    select.append("AND k_type=2");
+  }
+  select.append("ORDER BY k_keyword;");
 
   QStringList list;
   QSqlQuery q = m_sql->query(select);
@@ -151,6 +157,8 @@ void StrLineEdit::loadDataset(const QString &key) {
   } else {
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
   }
+
+  // qDebug() << Q_FUNC_INFO << list.count();
 
   if (list.size() > 1)
     setLineEditCompliter(list);
@@ -176,9 +184,7 @@ bool StrLineEdit::isValid() {
   return true;
 }
 
-void StrLineEdit::setInfo(const QString &info) {
-  m_lineEdit->setToolTip(info);
-}
+void StrLineEdit::setInfo(const QString &info) { m_lineEdit->setToolTip(info); }
 
 const QString StrLineEdit::info() { return m_lineEdit->toolTip(); }
 

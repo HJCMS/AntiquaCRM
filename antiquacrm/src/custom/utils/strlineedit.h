@@ -5,11 +5,11 @@
 #ifndef STRLINEEDIT_UTILS_H
 #define STRLINEEDIT_UTILS_H
 
-#include <QObject>
-#include <QStringList>
-#include <QRegExpValidator>
 #include <QCompleter>
 #include <QLineEdit>
+#include <QObject>
+#include <QRegExpValidator>
+#include <QStringList>
 
 #include <SqlCore>
 #include <UtilsMain>
@@ -110,6 +110,8 @@ public Q_SLOTS:
   void setFocus();
 
 public:
+  enum QType { NONE = 0, BOOK = 1, OTHER = 2 };
+
   explicit StrLineEdit(QWidget *parent = nullptr);
 
   /**
@@ -146,7 +148,8 @@ public:
    * Bei Erfolg wird @ref setLineEditCompliter aufgerufen.
    * @param key - column_name Qt::CaseSensitive
    */
-  void loadDataset(const QString &key = QString("condition"));
+  void loadDataset(const QString &key = QString("condition"),
+                   StrLineEdit::QType type = QType::NONE);
 
   /**
    * @brief setMaxAllowedLength
