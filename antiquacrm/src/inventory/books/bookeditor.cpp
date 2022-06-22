@@ -560,8 +560,7 @@ void BookEditor::setData(const QString &key, const QVariant &value,
 
     return;
   }
-  qDebug() << "Missing Key:" << key << " Value" << value
-           << " Required:" << required;
+  qDebug() << "Missing:" << key << "|" << value << "|" << required;
 }
 
 bool BookEditor::realyDeactivateBookEntry() {
@@ -639,7 +638,8 @@ void BookEditor::infoISBNDoubleClicked(QListWidgetItem *item) {
   } else if (data.contains("ib_website:")) {
     regexp.setPattern("^ib_website:\\b");
     QUrl url(data.replace(regexp, ""));
-    QDesktopServices::openUrl(url);
+    if (url.isValid())
+      QDesktopServices::openUrl(url);
   }
 }
 
@@ -655,7 +655,8 @@ void BookEditor::printingBookCard() {
   data.insert("storage", ib_storage->description());
   data.insert("since", ib_since->getDate());
 
-  if (dialog->exec(data) == QDialog::Accepted) { /* TODO */
+  if (dialog->exec(data) == QDialog::Accepted) {
+    /* Im Moment nicht zugewiesen */
   }
 }
 

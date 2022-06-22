@@ -14,11 +14,25 @@ class ProviderSettings : public SettingsWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  /**
+   * @brief W+H Ssoft
+   */
   QGroupBox *m_whsoft;
   LineEdit *m_whsoft_scheme;
   LineEdit *m_whsoft_api_host;
   LineEdit *m_whsoft_api_key;
   LineEdit *m_whsoft_api_basepath;
+
+  /**
+   * @brief AbeBooks
+   */
+  QGroupBox *m_abebooks;
+  LineEdit *m_abebooks_user;
+  LineEdit *m_abebooks_password;
+  LineEdit *m_abebooks_scheme;
+  LineEdit *m_abebooks_api_host;
+  LineEdit *m_abebooks_api_key;
+  LineEdit *m_abebooks_api_port;
 
   void initSignalChanged();
 

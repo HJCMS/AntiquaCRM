@@ -61,7 +61,7 @@ private:
   /**
    * @brief Speichert die Anzahl Temporär
    * Soll verhindern das wenn sich die Menge geändert hat nicht nach jedem
-   * zwischenspeichern die DAten noch mal an den Dienstleister gsendet werden!
+   * zwischenspeichern die Daten noch mal an den Dienstleister gesendet werden!
    * @see EditorMain::s_articleCount
    */
   int count_temp;
@@ -75,7 +75,7 @@ private:
   const QRegularExpression p_objPattern = QRegularExpression("^ib_[a-z_]+\\b$");
 
   /**
-   * @brief Beinhaltet Cancel, Restore, Save und GoBack.
+   * @brief Beinhaltet Cancel, Restore, Save und go-back.
    */
   EditorActionBar *m_actionBar;
 
@@ -90,37 +90,33 @@ private:
   ImageView *m_imageView;
 
   /**
-    @brief Prüft und erstellt die Datensatzfelder.
-
-    In dieser Methode werden alle Datenfelder abgefragt und bei
-    Erfolg in den Hash geschrieben. Je nach Klassenhäufigkeit
-    werden Schleifen verwendet. Jedoch sind auch viele
-    Datenfeldabfragen manuell eingefügt. Die Erstellung ist von
-    mehreren Faktoren abhängig und beinhaltet folgende Vorgangsweise,
-    welche sich für jedes Datenfeld wiederholt.
-
-    1) Suche je nach Klassen-Type mit findChild die Datenfelder.
-    2) Prüfe Datenfeld Klasse auf @b isRequired() @b isValid()
-    3) Wenn die vorherige Abfrage fehlschlägt dann:
-      a) MessageBox aufrufen,
-      b) setFocus auf das Datenfeld,
-      c) den Hash wieder leeren und abbrechen.
-
-    Die Leerung muss zur Fehlervermeidung und für die Abfrage Methoden
-    durchgeführt werden.
-
-    @note Alle @i caller verwenden eine Abfrage auf data.size()
-  */
+   * @brief Prüft und erstellt die Datensatzfelder.
+   *
+   * In dieser Methode werden alle Datenfelder von UtilsMain abgefragt und bei
+   * Erfolg in den Hash geschrieben. Die Erstellung ist von mehreren Faktoren
+   * abhängig und beinhaltet folgende Vorgangsweise, welche sich für jedes
+   * Datenfeld wiederholt.
+   *
+   * @li Prüfe Datenfeld Klasse auf @b isRequired() @b isValid()
+   * @li Wenn die vorherige Abfrage fehlschlägt dann:
+   *  a) MessageBox aufrufen,
+   *  b) setFocus auf das Datenfeld,
+   *  c) den Hash wieder leeren und abbrechen.
+   *
+   * Die Leerung muss zur Fehlervermeidung und für die Abfrage Methoden
+   * durchgeführt werden.
+   *
+   * @warning Alle @i caller verwenden eine Abfrage auf data.size()
+   */
   const QHash<QString, QVariant> createSqlDataset();
 
   /**
-    @brief Alle Eingabefelder in @ref inputList einfügen.
-    Erstellt mit findChildren(p_objPattern, Qt::FindChildrenRecursively)
-    ein Liste aller Eingabe Objekte und schreibt diese in @ref inputList
-    Sie wird am Ende des Konstruktors aufgerufen und dient als Helfer für
-    die QObject::findChild(objectName,*) Methode welche z.B. beim Erstellen
-    der SQL Statements verwendet wird.
-  */
+   * @brief Alle Eingabefelder in @ref inputList einfügen.
+   * Erstellt mit HJCMS::SqlCore::fields("tabelle") ein Liste aller Eingabe
+   * Objekte und schreibt diese in @ref inputList. Sie wird am Ende des
+   * Konstruktors aufgerufen und dient als Helfer für die findChild Methode
+   * welche z.B. beim Erstellen der SQL Statements verwendet wird.
+   */
   void setInputList();
 
   /**
@@ -148,40 +144,22 @@ private:
   void createSqlInsert();
 
   /**
-     @brief Durchläuft @ref sqlQueryResult und ruft @ref setSqlQueryData auf.
-      Die Abfolge ist:
-        @li blockSignals(true);
-        @li Schleife: setSqlQueryData(Feld,Daten);
-        @li blockSignals(false);
-        @li resetModified();
-        @li m_imageView->searchImageById(ArticleID);
+   * @brief Durchläuft @ref sqlQueryResult und ruft @ref setData auf.
+   * Die Abfolge ist:
+   *  @li Lese @ref sqlQueryResult
+   *  @li Setze Datenfelder
+   *  @li Suche Bilddaten
    */
   void importSqlResult();
 
   /**
-     @brief Suche nach Objektnamen mit @i findChild(objectName);
-     @param key - Ist der SQL Datenfeldbezeichner.
-       Dieser muss Identisch mit dem Eingabe Objektnamen sein.
-     @param value - Tabellenspalten Wert
-     @note Es werden die Datenfeldtypen vom SQL Query gelesen!
-           Wenn sich also bei SQL Datenfeldern etwas ändert!
-           Muss die Methode überarbeitet werden.
-
-     Je nach Objekttyp werden die Eingabefelder manuel zugewiesen
-     und dann mit @i findChild(objectName) Identifiziert. Das wird
-     überwiegend bei den (IntSpinBox,StrLineEdit) Klassen eingesetzt.
-     @code
-      // "ib_isbn" QVariant(qulonglong)
-      if (key.contains("ib_isbn")) {
-        ib_isbn->setIsbn(value.toLongLong());
-        return;
-      }
-      // "ib_count" QVariant(int)
-      if (value.type() == QVariant::Int) {
-        IntSpinBox *v = findChild<IntSpinBox *>(key,
-     Qt::FindDirectChildrenOnly); if (v != nullptr) v->setValue(value.toInt());
-      }
-     @endcode
+   * @brief Suche nach Objektnamen mit @i findChild(objectName);
+   * @param key - Ist der SQL Datenfeldbezeichner.
+   *  Dieser muss Identisch mit dem Eingabe Objektnamen sein.
+   * @param value - Tabellenspalten Wert
+   * @note Es werden die Datenfeldtypen vom SQL Query gelesen!
+   *  Wenn sich also bei SQL Datenfeldern etwas ändert!
+   *  Muss die Methode überarbeitet werden.
    */
   void setData(const QString &key, const QVariant &value,
                bool required = false);
@@ -235,43 +213,42 @@ private Q_SLOTS:
   void printingBookCard();
 
   /**
-   @brief Vor dem verlassen nach Änderungen suchen.
-   @note Die Methode verwendet @ref checkIsModified()
-
-   Wenn es keine Daten zu Speichern gibt, gehe weiter zu
-   @ref finalLeaveEditor, wenn doch, an dieser Stelle das
-   verlassen Verweigern und dem Nutzer einen MessageBox
-   Hinweis geben!
- */
+   * @brief Vor dem verlassen nach Änderungen suchen.
+   * @note Die Methode verwendet @ref checkIsModified()
+   *
+   * Wenn es keine Daten zu Speichern gibt, gehe weiter zu @ref
+   * finalLeaveEditor, wenn doch, an dieser Stelle das verlassen Verweigern und
+   * dem Nutzer einen MessageBox Hinweis geben!
+   */
   void checkLeaveEditor();
 
   /**
-    @brief Kommt nach @ref checkLeaveEditor() und beendet den Editor.
-    Wird auch von Signal @ref EditorActionBar::s_cancelClicked() aufgerufen!
-    Die Methode arbeitet folgende Operationen durch und beendet den Editor!
-     @li OpenLibrary.org Ausgabe leeren,
-     @li SQL Ergebnis Historie leeren,
-     @li alle Datenfelder leeren,
-     @li den ResetButton auschalten,
-     @li signal @ref s_leaveEditor an Parent senden!
-  */
+   * @brief Kommt nach @ref checkLeaveEditor() und beendet den Editor.
+   * Wird auch von Signal @ref EditorActionBar::s_cancelClicked() aufgerufen!
+   * Die Methode arbeitet folgende Operationen durch und beendet den Editor!
+   * @li OpenLibrary.org Ausgabe leeren,
+   * @li SQL Ergebnis Historie leeren,
+   * @li alle Datenfelder leeren,
+   * @li den ResetButton auschalten,
+   * @li signal @ref s_leaveEditor an Parent senden!
+   */
   void finalLeaveEditor();
 
 protected:
   /**
-    @brief Fange QEvent::EnabledChange ab!
-    Lade Datenfelder nur wenn das Fenster Aktiviert wurde!
-    Um fehlerhafte Tastenbindungen oder eingaben zu verhindern
-    ist das Fenster im Standard erst mal deaktiviert.
-    Und wird erst Aktiviert, wenn von StackedWidget aufgerufen.
-    @note Für Unterklassen die eine SQL Abfrage erfordern,
-       kann hier die "loadDataset" Methode aufgerufen werden.
-  */
+   * @brief Fange QEvent::EnabledChange ab!
+   * Lade Datenfelder nur wenn das Fenster Aktiviert wurde! Um fehlerhafte
+   * Tastenbindungen oder eingaben zu verhindern ist das Fenster im Standard
+   * erst mal deaktiviert.
+   * Also erst Aktiviert, wenn es von StackedWidget aufgerufen wird.
+   * @note Für Unterklassen die eine SQL Abfrage erfordern, kann hier die
+   * "loadDataset" Methode aufgerufen werden.
+   */
   virtual void changeEvent(QEvent *event);
 
 public Q_SLOTS:
   /**
-     @brief Methode für Zurücksetzen Button
+   * @brief Methode für Zurücksetzen Button
    */
   void restoreDataset();
 
@@ -279,10 +256,14 @@ public:
   BookEditor(QWidget *parent = nullptr);
 
   /**
-    @brief Wenn Bearbeiten darf der Eintrag nicht 0 sein!
-    @param condition Abfragekorpus @i ohne WHERE
-  */
+   * @brief Wenn Bearbeiten darf der Eintrag nicht 0 sein!
+   * @param condition Abfragekorpus @i ohne WHERE
+   */
   void editBookEntry(const QString &condition);
+
+  /**
+   * @brief Neuer Bucheintrag erstellen!
+   */
   void createBookEntry();
 };
 

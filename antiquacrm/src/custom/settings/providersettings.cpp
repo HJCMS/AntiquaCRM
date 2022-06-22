@@ -17,30 +17,71 @@ ProviderSettings::ProviderSettings(QWidget *parent) : SettingsWidget{parent} {
   m_whsoft->setChecked(false);
   m_whsoft->setObjectName("whsoft");
   m_whsoft->setTitle("W+H Software (buchfreund.de)");
-  QVBoxLayout *box1Layout = new QVBoxLayout(m_whsoft);
-  box1Layout->setObjectName("provider_whsoft_layout");
+  QVBoxLayout *whSoftLayout = new QVBoxLayout(m_whsoft);
+  whSoftLayout->setObjectName("provider_whsoft_layout");
   m_whsoft_scheme = new LineEdit(m_whsoft);
   m_whsoft_scheme->setObjectName("api_scheme");
   m_whsoft_scheme->setInfo(tr("Protocoll"));
   m_whsoft_scheme->setValue("https");
-  box1Layout->addWidget(m_whsoft_scheme);
+  whSoftLayout->addWidget(m_whsoft_scheme);
   m_whsoft_api_host = new LineEdit(m_whsoft);
   m_whsoft_api_host->setObjectName("api_host");
   m_whsoft_api_host->setInfo(tr("Domain"));
   m_whsoft_api_host->setValue("www.buchfreund.de");
-  box1Layout->addWidget(m_whsoft_api_host);
+  whSoftLayout->addWidget(m_whsoft_api_host);
   m_whsoft_api_key = new LineEdit(m_whsoft);
   m_whsoft_api_key->setObjectName("api_key");
   m_whsoft_api_key->setInfo(tr("API Key"));
-  box1Layout->addWidget(m_whsoft_api_key);
+  whSoftLayout->addWidget(m_whsoft_api_key);
   m_whsoft_api_basepath = new LineEdit(m_whsoft);
   m_whsoft_api_basepath->setObjectName("api_basepath");
   m_whsoft_api_basepath->setInfo(tr("API Path"));
   m_whsoft_api_basepath->setValue("/verkaeufer/api/");
-  box1Layout->addWidget(m_whsoft_api_basepath);
-  box1Layout->addStretch(1);
-  m_whsoft->setLayout(box1Layout);
+  whSoftLayout->addWidget(m_whsoft_api_basepath);
+  whSoftLayout->addStretch(1);
+  m_whsoft->setLayout(whSoftLayout);
   layout->addWidget(m_whsoft);
+  // END
+
+  // BEGIN AbeBooks
+  m_abebooks = new QGroupBox(this);
+  m_abebooks->setCheckable(true);
+  m_abebooks->setChecked(false);
+  m_abebooks->setObjectName("whsoft");
+  m_abebooks->setTitle("AbeBooks & ZVAB (abebooks.de)");
+  QVBoxLayout *abeBooksLayout = new QVBoxLayout(m_abebooks);
+  abeBooksLayout->setObjectName("provider_abebooks_layout");
+  m_abebooks_user = new LineEdit(m_abebooks);
+  m_abebooks_user->setObjectName("api_user");
+  m_abebooks_user->setInfo(tr("Loginname"));
+  abeBooksLayout->addWidget(m_abebooks_user);
+  m_abebooks_password = new LineEdit(m_abebooks);
+  m_abebooks_password->setObjectName("api_password");
+  m_abebooks_password->setInfo(tr("Password"));
+  abeBooksLayout->addWidget(m_abebooks_password);
+  m_abebooks_scheme = new LineEdit(m_abebooks);
+  m_abebooks_scheme->setObjectName("api_scheme");
+  m_abebooks_scheme->setInfo(tr("Protocoll"));
+  m_abebooks_scheme->setValue("https");
+  abeBooksLayout->addWidget(m_abebooks_scheme);
+  m_abebooks_api_host = new LineEdit(m_abebooks);
+  m_abebooks_api_host->setObjectName("api_host");
+  m_abebooks_api_host->setInfo(tr("Domain"));
+  m_abebooks_api_host->setValue("orderupdate.abebooks.com");
+  abeBooksLayout->addWidget(m_abebooks_api_host);
+  m_abebooks_api_port = new LineEdit(m_abebooks);
+  m_abebooks_api_port->setObjectName("api_key");
+  m_abebooks_api_port->setInfo(tr("API Port"));
+  m_abebooks_api_port->setValue(10003);
+  abeBooksLayout->addWidget(m_abebooks_api_port);
+  m_abebooks_api_key = new LineEdit(m_abebooks);
+  m_abebooks_api_key->setObjectName("api_key");
+  m_abebooks_api_key->setInfo(tr("API Key"));
+  abeBooksLayout->addWidget(m_abebooks_api_key);
+
+  abeBooksLayout->addStretch(1);
+  m_abebooks->setLayout(abeBooksLayout);
+  layout->addWidget(m_abebooks);
   // END
 
   layout->addStretch(1);
@@ -75,18 +116,29 @@ void ProviderSettings::setPageIcon(const QIcon &icon) {
 const QIcon ProviderSettings::getPageIcon() { return pageIcon; }
 
 void ProviderSettings::loadSectionConfig() {
+  // W+H Soft
   config->beginGroup("provider/whsoft");
-  // NOTE Alle müssen gesetzt sein!
   m_whsoft->setChecked((config->allKeys().count() == 4));
-  QStringList keys = config->allKeys();
-  foreach (QString s, keys) {
-    LineEdit *e =
-        m_whsoft->findChild<LineEdit *>(s, Qt::FindDirectChildrenOnly);
+  QStringList whSoftKeys = config->allKeys();
+  foreach (QString s, whSoftKeys) {
+    LineEdit *e = m_whsoft->findChild<LineEdit *>(s, Qt::FindDirectChildrenOnly);
     if (e != nullptr) {
       e->setValue(config->value(s));
     }
   }
   config->endGroup();
+  // AbeBooks
+  config->beginGroup("provider/abebooks");
+  m_abebooks->setChecked((config->allKeys().count() == 4));
+  QStringList abeBookKeys = config->allKeys();
+  foreach (QString s, abeBookKeys) {
+    LineEdit *e = m_abebooks->findChild<LineEdit *>(s, Qt::FindDirectChildrenOnly);
+    if (e != nullptr) {
+      e->setValue(config->value(s));
+    }
+  }
+  config->endGroup();
+
   initSignalChanged();
 }
 
@@ -95,8 +147,22 @@ void ProviderSettings::saveSectionConfig() {
     config->remove("provider/whsoft");
   } else {
     config->beginGroup("provider/whsoft");
-    QList<LineEdit *> l = m_whsoft->findChildren<LineEdit *>(
-        QString(), Qt::FindDirectChildrenOnly);
+    QList<LineEdit *> l = m_whsoft->findChildren<LineEdit *>(QString(), Qt::FindDirectChildrenOnly);
+    if (l.count() > 0) {
+      for (int i = 0; i < l.count(); i++) {
+        LineEdit *e = l.at(i);
+        if (e != nullptr) {
+          config->setValue(e->objectName(), e->value());
+        }
+      }
+    }
+    config->endGroup();
+  }
+  if (!m_abebooks->isChecked()) {
+    config->remove("provider/abebooks");
+  } else {
+    config->beginGroup("provider/abebooks");
+    QList<LineEdit *> l = m_abebooks->findChildren<LineEdit *>(QString(), Qt::FindDirectChildrenOnly);
     if (l.count() > 0) {
       for (int i = 0; i < l.count(); i++) {
         LineEdit *e = l.at(i);
