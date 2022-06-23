@@ -7,20 +7,31 @@ INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-SET (antiquacrm_LINKER
- AntiquaCore
+SET (abebooks_SOURCES
+ abebooks.json
+ abebooks.cpp
+ abebooksdocument.cpp
+ abebooksifacewidget.cpp
+ abebooksproviderwidget.cpp
+ abebookspurchaser.cpp
+ abebooksrequester.cpp
 )
 
-SET (abebooks_SOURCES
-  abebooks.cpp
-  abebooks.h
-  abebooks.json
+SET (abebooks_HEADERS
+ abebooksconfig.h
+ abebooks.h
+ abebooksdocument.h
+ abebooksifacewidget.h
+ abebooksproviderwidget.h
+ abebookspurchaser.h
+ abebooksrequester.h
 )
 
 ADD_DEFINITIONS (-DANTIQUACORE_LIBRARAY)
 
 ADD_LIBRARY (abebooks MODULE
   ${abebooks_SOURCES}
+  ${abebooks_HEADERS}
 )
 
 SET_TARGET_PROPERTIES (abebooks PROPERTIES
@@ -32,7 +43,7 @@ TARGET_LINK_LIBRARIES (abebooks PUBLIC
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
   Qt${QT_VERSION_MAJOR}::Xml
-  ${antiquacrm_LINKER}
+  AntiquaCore
 )
 
 IF (ANTIQUA_LSB_INSTALL)
