@@ -110,9 +110,6 @@ bool AbeBooksRequester::createRequest(const QDomDocument &document) {
   QByteArray size = QString::number(query.size()).toLocal8Bit();
   request.setRawHeader(QByteArray("Content-Length"), size);
 
-  qDebug() << query << Qt::endl;
-  return false;
-
   m_reply = post(request, query);
   connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));

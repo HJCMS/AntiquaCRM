@@ -306,7 +306,7 @@ const QMap<QString, QString> AbeBooksIfaceWidget::fieldTranslate() const {
   // public.customers @{
   map.insert("gender", "c_gender");
   map.insert("name0", "c_firstname");
-  map.insert("name1", "c_lastname");
+  map.insert("name", "c_lastname");
   map.insert("street", "c_street");
   map.insert("code", "c_postalcode");
   map.insert("city", "c_location");
