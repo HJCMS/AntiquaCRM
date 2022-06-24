@@ -5,6 +5,10 @@
 #ifndef ABEBOOKS_PLUGIN_CONFIG_H
 #define ABEBOOKS_PLUGIN_CONFIG_H
 
+#include <QString>
+#include <QMetaType>
+#include <AntiquaInterface>
+
 /**
  * @def DATE_FORMAT
  * @ingroup Providers SQL Statements
@@ -23,8 +27,18 @@
 #define CONFIG_PROVIDER "AbeBooks"
 #endif
 
+#ifndef PLUGIN_ID_PREFIX
+#define PLUGIN_ID_PREFIX "AB-"
+#endif
+
 #ifndef PLUGIN_ABEBOOKS_DEBUG
 #define PLUGIN_ABEBOOKS_DEBUG true
 #endif
+
+struct ANTIQUACORE_EXPORT AbeBooksAccess {
+  QString user;
+  QString key;
+};
+Q_DECLARE_METATYPE(AbeBooksAccess);
 
 #endif // ABEBOOKS_PLUGIN_CONFIG_H

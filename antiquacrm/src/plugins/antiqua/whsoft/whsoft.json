@@ -2,5 +2,5 @@
   "Keys": [ "libwhsoft" ],
   "Name": "Buchfreund",
   "Title": "W+H Software Plugin",
-  "Description": "JSON Integration der W+H Software Schnittstelle"
+  "Description": "Provider Integration for W+H Software buchfreund.de"
 }

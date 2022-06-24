@@ -203,6 +203,8 @@ void InventoryProviders::createNewCustomer(const QJsonDocument &doc) {
   QStringList params;
   QStringList values;
 
+  // qDebug() << Q_FUNC_INFO << doc;
+
   QJsonObject obj = doc.object();
   QSqlRecord rec = m_sql->record("customers");
   QJsonObject::iterator it; // Iterator

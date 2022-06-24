@@ -9,6 +9,7 @@ INCLUDE_DIRECTORIES (
 
 SET (abebooks_SOURCES
  abebooks.json
+ config.xml
  abebooks.cpp
  abebooksdocument.cpp
  abebooksifacewidget.cpp

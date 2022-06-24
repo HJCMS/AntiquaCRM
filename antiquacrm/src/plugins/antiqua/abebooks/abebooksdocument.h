@@ -5,28 +5,57 @@
 #ifndef ABEBOOKSDOCUMENT_PLUGIN_H
 #define ABEBOOKSDOCUMENT_PLUGIN_H
 
+#include <QDateTime>
 #include <QDomDocument>
 #include <QDomElement>
-#include <QMetaType>
+#include <QPair>
 #include <QString>
 
 #include <AntiquaCRM>
 #include <AntiquaInterface>
 
-struct ANTIQUACORE_EXPORT AbeBooksAccess {
-  QString user;
-  QString key;
-};
-Q_DECLARE_METATYPE(AbeBooksAccess);
+class AbeBooksAccess;
 
+/**
+ * @class AbeBooksDocument
+ * @ingroup AbeBooks Plugin
+ */
 class ANTIQUACORE_EXPORT AbeBooksDocument : public QDomDocument {
 private:
   QString apiLogin;
   QString apiKey;
 
 public:
-  explicit AbeBooksDocument( const AbeBooksAccess &config,
+  explicit AbeBooksDocument(
+      const AbeBooksAccess &config,
       const QString &element = QString("orderUpdateRequest"));
+
+  AbeBooksDocument(const QDomDocument &other);
+
+  /**
+   * @brief notExists
+   * @return true - if Tag by Name not exists!
+   */
+  const bool notExists(const QString &tag) const;
+
+  /**
+   * @brief fetchNodes
+   * @return DomNodeList
+   */
+  const QDomNodeList fetchNodes(const QString &tag) const;
+
+  /**
+   * @brief firstChildNode
+   * @return DomNode
+   */
+  const QDomNode firstChildNode(const QDomElement &parent,
+                                const QString &tag) const;
+
+  /**
+   * @brief nodeIntValue
+   * @return __int64
+   */
+  const qint64 nodeIntValue(const QDomNode &node) const;
 
   /**
    * @brief createAction
@@ -46,6 +75,65 @@ public:
    * @return action Element
    */
   const QDomElement createAction(const QString &tag);
+
+  /**
+   * @brief Reading purchaseMethod Node
+   * Read the purchase method in use for the purchase order.
+   * It may have the following values:
+   *  @li SD - Seller Direct
+   *  @li CC - AbeBooks processed credit card
+   * Attribute "type" for Seller Direct orders (SD) only!
+   *  @li Check
+   *  @li PayPal
+   *  @li Direct Debit (Personally Authorized Payment)
+   *  @li Bank/Wire Transfer
+   *  @li Cash on Delivery (COD)
+   *  @li Money Order
+   *  @li Bank Draft
+   *  @li Invoice
+   *  @li Cash
+   * @code
+   *  <purchaseMethod type="Invoice">SD</purchaseMethod>
+   * @endcode
+   * @return QPair<"TEXTNODE","TYPE">
+   */
+  const QPair<QString, QString> getPurchaseMethod();
+
+  /**
+   * @brief getPurchaseOrderList
+   * The Purchase Order List Response (getAllNewOrders Request)
+   * @return DomNodeList "purchaseOrder"
+   */
+  const QDomNodeList getPurchaseOrderList();
+
+  /**
+   * @brief getPurchaseOrder
+   */
+  const QDomElement getPurchaseOrder();
+
+  /**
+   * @brief getOrderDate
+   * The order date of the purchase order item.
+   * @param parent
+   * @return DateTime
+   */
+  const QDateTime getOrderDate(const QDomElement &parent);
+
+  /**
+   * @brief The Purchase Order Items list
+   * @return DomElement
+   */
+  const QDomElement getOrderItemList();
+
+  /**
+   * @brief getNodeValue
+   */
+  const QVariant getNodeValue(const QDomNode &parent);
+
+  /**
+   * @brief getAddressValue
+   */
+  const QVariant getAddressValue(const QString &tag);
 };
 
 #endif // ABEBOOKSDOCUMENT_PLUGIN_H

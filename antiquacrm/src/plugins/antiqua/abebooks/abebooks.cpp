@@ -17,9 +17,42 @@
 #include <QTime>
 #include <QVBoxLayout>
 
-void AbeBooks::prepareJsonListResponse(const QJsonDocument &doc) {}
+/*
+QFile fp("/tmp/abebooks_response.xml");
+if(fp.open(QIODevice::WriteOnly))
+{
+  QTextStream in(&fp);
+  in << doc.toString(1);
+  fp.close();
+}
+*/
 
-void AbeBooks::responseAnswerCheck(const QJsonDocument &doc) {}
+void AbeBooks::responseImport(const QDomDocument &doc) {
+  AbeBooksDocument xml(doc);
+  QJsonArray senderArray;
+  QDomNodeList n_list = xml.getPurchaseOrderList();
+  for (int i = 0; i < n_list.count(); i++) {
+    QDomNode n = n_list.at(i);
+    if (n.hasAttributes()) {
+      QDomElement e = n.toElement();
+      if (!e.hasAttribute("id"))
+        continue;
+
+      QString id = e.attribute("id", "0");
+      id.prepend(PLUGIN_ID_PREFIX);
+      QJsonObject entry;
+      entry.insert("id", id);
+      QDateTime d = xml.getOrderDate(e);
+      entry.insert("datum", QJsonValue(d.toString(ANTIQUA_DATETIME_FORMAT)));
+      senderArray.append(entry);
+    }
+  }
+  QJsonObject senderObject;
+  senderObject.insert("provider", QJsonValue(CONFIG_PROVIDER));
+  senderObject.insert("items", senderArray);
+  QJsonDocument jsDoc(senderObject);
+  emit listResponse(jsDoc);
+}
 
 bool AbeBooks::createInterface(QObject *parent) {
   if (parent) {
@@ -48,6 +81,13 @@ const QString AbeBooks::provider() const { return QString(CONFIG_PROVIDER); }
 
 const QString AbeBooks::configGroup() const { return QString(CONFIG_GROUP); }
 
-void AbeBooks::queryMenueEntries() { /* TODO */ }
+void AbeBooks::queryMenueEntries() {
+  AbeBooksRequester *req = new AbeBooksRequester(this);
+  req->setObjectName(CONFIG_PROVIDER);
+  connect(req, SIGNAL(response(const QDomDocument &)), this,
+          SLOT(responseImport(const QDomDocument &)));
+
+  req->queryList();
+}
 
 void AbeBooks::updateArticleCount(int articleId, int count) {}

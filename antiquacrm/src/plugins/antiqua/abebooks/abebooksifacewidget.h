@@ -5,6 +5,7 @@
 #ifndef ABEBOOKSIFACEWIDGET_PLUGIN_H
 #define ABEBOOKSIFACEWIDGET_PLUGIN_H
 
+#include <QDomDocument>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMap>
@@ -15,6 +16,9 @@
 #include <AntiquaInterface>
 #include <Networking>
 
+// class AbeBooksRequester;
+class AbeBooksPurchaser;
+
 class ANTIQUACORE_EXPORT AbeBooksIfaceWidget final
     : public Antiqua::InterfaceWidget {
   Q_OBJECT
@@ -23,13 +27,30 @@ class ANTIQUACORE_EXPORT AbeBooksIfaceWidget final
 
 private:
   Antiqua::PurchaserOrderTable *m_orderTable;
+  AbeBooksPurchaser *m_purchaserWidget;
+  QDomDocument p_currentDocument;
+
+  const QString stripString(const QString &str) const;
+
   const QVariant tableData(int row, int column);
+
+  void setTableData(int row, int column, const QVariant &val);
+
+  const QJsonValue getString(const QString &objName);
+  const QJsonValue getNumeric(const QString &objName);
+  const QJsonValue getPrice(const QString &objName);
+
   const QJsonDocument customerRequest(const QJsonObject &object);
-  void parseAddressBody(const QString &section, const QJsonObject &object);
+
+  void parseAddressBody(const QString &, const QJsonObject &);
+
+private Q_SLOTS:
+  void readCurrentArticleIds();
 
 public Q_SLOTS:
   void createCustomerDocument();
-  void setContent(const QJsonDocument &);
+  void setContent(const QJsonDocument &){/* unused */};
+  void setXmlContent(const QDomDocument &);
   void createOrderRequest(const QString &bfId);
 
 public:

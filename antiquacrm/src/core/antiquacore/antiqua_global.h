@@ -51,7 +51,7 @@
  * @brief versioning
  */
 #ifndef ANTIQUACRM_VERSION
-#define ANTIQUACRM_VERSION "0.2.1"
+#define ANTIQUACRM_VERSION "0.2.2"
 #endif
 
 /**
@@ -63,7 +63,7 @@
 #endif
 
 #ifndef ANTIQUACRM_WINDOW_TITLE
-#define ANTIQUACRM_WINDOW_TITLE "AntiquaCRM (v0.2.1)"
+#define ANTIQUACRM_WINDOW_TITLE "AntiquaCRM (v0.2.2)"
 #endif
 
 /**

@@ -2,19 +2,23 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ABEBOOKS_PLUGIN_PURCHASER_H
-#define ABEBOOKS_PLUGIN_PURCHASER_H
+#ifndef WHSOFTPURCHASER_PLUGIN_H
+#define WHSOFTPURCHASER_PLUGIN_H
 
 #include <QObject>
-#include <QVariant>
 #include <QTextEdit>
+#include <QVariant>
 #include <QWidget>
 
 #include <AntiquaCRM>
 #include <AntiquaInterface>
 #include <Networking>
 
-class ANTIQUACORE_EXPORT AbeBooksPurchaser final
+/**
+ * @brief The WHSoftPurchaser class
+ * @ingroup Whsoft Plugin
+ */
+class ANTIQUACORE_EXPORT WHSoftPurchaser final
     : public Antiqua::PurchaserWidget {
   Q_OBJECT
 
@@ -25,8 +29,8 @@ public Q_SLOTS:
 public:
   QTextEdit *rechnungsadresse;
   QTextEdit *lieferadresse;
-  explicit AbeBooksPurchaser(QWidget *parent = nullptr);
+  explicit WHSoftPurchaser(QWidget *parent = nullptr);
   const QVariant getValue(const QString &objName);
 };
 
-#endif // ABEBOOKS_PLUGIN_PURCHASER_H
+#endif // WHSOFTPURCHASER_PLUGIN_H

@@ -7,10 +7,12 @@
 
 #include <QDomDocument>
 #include <QDomElement>
+#include <QList>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QObject>
+#include <QSslError>
 #include <QUrl>
 
 #include <AntiquaCRM>
@@ -18,26 +20,59 @@
 
 #include "abebooksdocument.h"
 
-class ANTIQUACORE_EXPORT AbeBooksRequester final : public QObject {
+class ANTIQUACORE_EXPORT AbeBooksRequester final
+    : public QNetworkAccessManager {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
   ApplSettings *config;
-  QNetworkAccessManager *m_networker;
+  QNetworkReply *m_reply;
 
+  /**
+   * @brief create Default NetworkRequest
+   * @return NetworkRequest
+   */
   const QNetworkRequest initRequest();
 
+  /**
+   * @brief Default Request Document
+   * @return DomDocument
+   */
   AbeBooksDocument createDocument();
 
   /**
    * @brief AbeBooks using ISO-8859-1
    */
-  const QString toISO88591(const QString &key);
+  const QString toISO88591(const QString &str);
+
+  bool createRequest(const QDomDocument &document);
+
+private Q_SLOTS:
+  void slotError(QNetworkReply::NetworkError error);
+  void slotFinished(QNetworkReply *reply);
+  void slotSslErrors(const QList<QSslError> &list);
+  void replyFinished(QNetworkReply *reply);
+  void replyReadyRead();
+
+Q_SIGNALS:
+  /**
+   * @brief requestFinished
+   * @param success - False when errors, otherwise false!
+   */
+  void requestFinished(bool success);
+
+  /**
+   * @brief Query Response Document
+   * @param DomDocument
+   */
+  void response(const QDomDocument &document);
 
 public:
   explicit AbeBooksRequester(QObject *parent = nullptr);
+  void queryList();
+  void queryOrder(const QString &purchaseId);
 };
 
 #endif // ABEBOOKSQUERY_PLUGIN_H

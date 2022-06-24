@@ -5,13 +5,8 @@
 #ifndef ABEBOOKS_PLUGIN_H
 #define ABEBOOKS_PLUGIN_H
 
-#include <QLabel>
-#include <QLineEdit>
+#include <QDomDocument>
 #include <QObject>
-#include <QSpinBox>
-#include <QTableWidget>
-#include <QTableWidgetItem>
-#include <QTextEdit>
 #include <QVariant>
 #include <QWidget>
 
@@ -19,11 +14,14 @@
 #include <AntiquaInterface>
 #include <Networking>
 
-class AbeBooksRequester;
-class AbeBooksPurchaser;
 class AbeBooksProviderWidget;
 class AbeBooksIfaceWidget;
 
+/**
+ * @class AbeBooks
+ * @group AbeBooks Plugin
+ * https://help.abebooks.com/abebooks-apis/
+ */
 class ANTIQUACORE_EXPORT AbeBooks : public Antiqua::Interface {
   Q_OBJECT
   Q_PLUGIN_METADATA(IID "de.hjcms.antiquacrm.AntiquaFactoryInterface" FILE
@@ -46,8 +44,9 @@ private:
   AbeBooksProviderWidget *m_abeBooksProviderWidget;
 
 private Q_SLOTS:
-  void prepareJsonListResponse(const QJsonDocument &);
-  void responseAnswerCheck(const QJsonDocument &);
+  void prepareJsonListResponse(const QJsonDocument &) { /* unused */
+  }
+  void responseImport(const QDomDocument &);
 
 public:
   bool createInterface(QObject *parent);

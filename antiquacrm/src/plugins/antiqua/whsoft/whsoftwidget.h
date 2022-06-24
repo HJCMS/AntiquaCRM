@@ -1,0 +1,82 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+// @COPYRIGHT_HOLDER@
+
+#ifndef WHSOFTWIDGET_PLUGIN_H
+#define WHSOFTWIDGET_PLUGIN_H
+
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QMap>
+#include <QVariant>
+#include <QWidget>
+
+#include <AntiquaCRM>
+#include <AntiquaInterface>
+#include <Networking>
+
+class WHSoftPurchaser;
+
+/**
+ * @brief In dieser Klasse werden die Bestellungen verarbeitet.
+ * @ingroup Whsoft Plugin
+ */
+class ANTIQUACORE_EXPORT WHSoftWidget final : public Antiqua::InterfaceWidget {
+  Q_OBJECT
+
+private:
+  Antiqua::PurchaserOrderTable *m_orderTable;
+  WHSoftPurchaser *m_purchaserWidget;
+  QJsonDocument p_currentDocument;
+
+  const QVariant tableData(int row, int column);
+
+  /**
+   * @brief Erstellt abfrage Datensatz für Kundenabfrage
+   */
+  const QJsonDocument customerRequest(const QJsonObject &object);
+
+  /**
+   * @brief Rechnungs und Lieferadressen einlesen
+   */
+  void parseAddressBody(const QString &section, const QJsonObject &object);
+
+private Q_SLOTS:
+  void readCurrentArticleIds();
+
+public Q_SLOTS:
+  /**
+   * @brief createCustomerDocument
+   */
+  void createCustomerDocument();
+
+  void setContent(const QJsonDocument &);
+
+  /**
+   * @brief Menü Einträge suchen
+   */
+  void createOrderRequest(const QString &bfId);
+
+public:
+  WHSoftWidget(const QString &widgetId, QWidget *parent = nullptr);
+
+  /**
+   * @brief Kundennummer eintragen
+   */
+  void setCustomerId(int customerId);
+
+  /**
+   * @brief Übersetzt die Buchfreund.de Json Datenfelder zu SQL Spaltenname.
+   * Wir verwenden andere Datenfeld Bezeichnungen als der Dienstanbieter.
+   * Deshalb müssen die Parameter vor der Weiterleitung an dieser Stelle
+   * übersetzt werden.
+   */
+  const QMap<QString, QString> fieldTranslate() const;
+
+  /**
+   * @brief Komplette Bestellung abfragen.
+   */
+  const ProviderOrder getProviderOrder();
+};
+
+#endif // WHSOFTWIDGET_PLUGIN_H

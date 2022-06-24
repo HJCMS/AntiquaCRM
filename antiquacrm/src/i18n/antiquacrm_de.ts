@@ -2,6 +2,47 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
+    <name>AbeBooksIfaceWidget</name>
+    <message>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+33"/>
+        <source>purchaser</source>
+        <translation>Einkäufer*in</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>article check</source>
+        <translation>Artikel prüfen</translation>
+    </message>
+</context>
+<context>
+    <name>AbeBooksPurchaser</name>
+    <message>
+        <location filename="../plugins/antiqua/abebooks/abebookspurchaser.cpp" line="+36"/>
+        <source>Customer</source>
+        <translation>Kunde</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Not exists</source>
+        <translation>Existiert nicht</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>shipping address</source>
+        <translation>Rechnungsadresse</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>delivery address</source>
+        <translation>Lieferadresse</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Comments</source>
+        <translation>Bemerkungen</translation>
+    </message>
+</context>
+<context>
     <name>AddEntryDialog</name>
     <message>
         <location filename="../custom/completer/addentrydialog.cpp" line="+20"/>
@@ -700,7 +741,7 @@
 <context>
     <name>Buchfreund</name>
     <message>
-        <location filename="../plugins/antiqua/whsoft.cpp" line="+239"/>
+        <location filename="../plugins/antiqua/whsoft/buchfreund.cpp" line="+23"/>
         <source>Modify Item inventory count</source>
         <translation>Artikelbestand ändern</translation>
     </message>
@@ -2126,7 +2167,7 @@
         <translation>ist nicht Verfügbar!</translation>
     </message>
     <message>
-        <location line="+186"/>
+        <location line="+188"/>
         <source>customer found in database!</source>
         <translation>Kundeneintrag gefunden!</translation>
     </message>
@@ -2146,13 +2187,13 @@
         <translation>Erfolgreich</translation>
     </message>
     <message>
-        <location line="-256"/>
+        <location line="-258"/>
         <location line="+12"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
     <message>
-        <location line="+219"/>
+        <location line="+221"/>
         <source>open order editor</source>
         <translation>Öffne Auftragseditor</translation>
     </message>
@@ -3744,7 +3785,7 @@
 <context>
     <name>ProvidersTreeView</name>
     <message>
-        <location filename="../inventory/providers/providerstreeview.cpp" line="+61"/>
+        <location filename="../inventory/providers/providerstreeview.cpp" line="+64"/>
         <source>Orders</source>
         <translation>Aufträge</translation>
     </message>
@@ -4348,7 +4389,7 @@
 <context>
     <name>WHSoftPurchaser</name>
     <message>
-        <location filename="../plugins/antiqua/whsoft.cpp" line="-93"/>
+        <location filename="../plugins/antiqua/whsoft/whsoftpurchaser.cpp" line="+35"/>
         <source>Customer</source>
         <translation>Kunde</translation>
     </message>
@@ -4376,7 +4417,7 @@
 <context>
     <name>WHSoftWidget</name>
     <message>
-        <location line="+118"/>
+        <location filename="../plugins/antiqua/whsoft/whsoftwidget.cpp" line="+32"/>
         <source>purchaser</source>
         <translation>Einkäufer*in</translation>
     </message>

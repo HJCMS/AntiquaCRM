@@ -12,15 +12,29 @@ SET (antiquacrm_LINKER
 )
 
 SET (whsoft_SOURCES
-  whsoft.cpp
-  whsoft.h
-  whsoft.json
+ whsoft.json
+ config.xml
+ buchfreund.cpp
+ whsoft.cpp
+ whsoftjsonquery.cpp
+ whsoftpurchaser.cpp
+ whsoftwidget.cpp
+)
+
+SET (whsoft_HEADERS
+ buchfreund.h
+ whsoft.h
+ whsoftconfig.h
+ whsoftjsonquery.h
+ whsoftpurchaser.h
+ whsoftwidget.h
 )
 
 ADD_DEFINITIONS (-DANTIQUACORE_LIBRARAY)
 
 ADD_LIBRARY (whsoft MODULE
   ${whsoft_SOURCES}
+  ${whsoft_HEADERS}
 )
 
 SET_TARGET_PROPERTIES (whsoft PROPERTIES

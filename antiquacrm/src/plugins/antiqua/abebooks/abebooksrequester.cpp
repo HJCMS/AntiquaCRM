@@ -6,6 +6,7 @@
 #include "abebooksdocument.h"
 #include "applsettings.h"
 
+#include <QDebug>
 #include <QFileInfo>
 #include <QSslConfiguration>
 #include <QTextCodec>
@@ -45,9 +46,12 @@ const QByteArray languageRange() {
   return al.toLocal8Bit();
 }
 
-AbeBooksRequester::AbeBooksRequester(QObject *parent) : QObject{parent} {
+AbeBooksRequester::AbeBooksRequester(QObject *parent)
+    : QNetworkAccessManager{parent} {
   config = new ApplSettings(this);
-  m_networker = new QNetworkAccessManager(this);
+  m_reply = nullptr;
+  connect(this, SIGNAL(finished(QNetworkReply *)), this,
+          SLOT(slotFinished(QNetworkReply *)));
 }
 
 const QNetworkRequest AbeBooksRequester::initRequest() {
@@ -79,8 +83,10 @@ const QNetworkRequest AbeBooksRequester::initRequest() {
 
 AbeBooksDocument AbeBooksRequester::createDocument() {
   AbeBooksAccess ac;
+  config->beginGroup(CONFIG_GROUP);
   ac.user = toISO88591(config->value("api_user").toString());
   ac.key = toISO88591(config->value("api_key").toString());
+  config->endGroup();
   if (ac.user.isEmpty() || ac.key.isEmpty())
     qWarning("Invalid Settings to Access 'ABEPO'!");
 
@@ -91,4 +97,134 @@ const QString AbeBooksRequester::toISO88591(const QString &str) {
   QTextCodec *codec = QTextCodec::codecForLocale();
   QTextEncoder encoder(codec);
   return QString(encoder.fromUnicode(str));
+}
+
+bool AbeBooksRequester::createRequest(const QDomDocument &document) {
+  QByteArray query = document.toByteArray(-1);
+  if (query.length() < 100) {
+    qWarning("Invalid Post data ...");
+    return false;
+  }
+
+  QNetworkRequest request = initRequest();
+  QByteArray size = QString::number(query.size()).toLocal8Bit();
+  request.setRawHeader(QByteArray("Content-Length"), size);
+
+  qDebug() << query << Qt::endl;
+  return false;
+
+  m_reply = post(request, query);
+  connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
+          SLOT(slotError(QNetworkReply::NetworkError)));
+
+  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
+          SLOT(slotSslErrors(QList<QSslError>)));
+
+  connect(m_reply, SIGNAL(readyRead()), this, SLOT(replyReadyRead()));
+
+  return true;
+}
+
+void AbeBooksRequester::slotError(QNetworkReply::NetworkError error) {
+  switch (error) {
+  case QNetworkReply::ConnectionRefusedError:
+    qWarning("Networker: Connection Refused Error");
+    return;
+
+  case QNetworkReply::TimeoutError:
+    qWarning("Networker: Timeout Error");
+    return;
+
+  case QNetworkReply::HostNotFoundError:
+    qWarning("Networker: Host NotFound Error");
+    return;
+
+  case QNetworkReply::RemoteHostClosedError:
+    qWarning("Networker: RemoteHost Closed Error");
+    return;
+
+  case QNetworkReply::OperationCanceledError:
+    qWarning("Networker: Operation Canceled Error");
+    return;
+
+  case QNetworkReply::InsecureRedirectError:
+    qWarning("Networker: Insecure Redirect Error");
+    return;
+
+  default:
+    qWarning("Networker: Unknown Error:%s", qPrintable(QString::number(error)));
+    return;
+  }
+}
+
+void AbeBooksRequester::slotFinished(QNetworkReply *reply) {
+  bool success = true;
+  if (reply->error() != QNetworkReply::NoError) {
+    slotError(reply->error());
+    success = false;
+  }
+  emit requestFinished(success);
+}
+
+void AbeBooksRequester::slotSslErrors(const QList<QSslError> &list) {
+  for (int i = 0; i < list.count(); i++) {
+    QSslError ssl_error = list.at(i);
+    qDebug() << Q_FUNC_INFO << ssl_error.errorString();
+  }
+}
+
+void AbeBooksRequester::replyFinished(QNetworkReply *reply) {
+  if (reply->error() == QNetworkReply::NoError) {
+    m_reply->deleteLater();
+  }
+}
+
+void AbeBooksRequester::replyReadyRead() {
+  QVector<char> buf;
+  QByteArray data;
+  qint64 chunk;
+  while (m_reply->bytesAvailable() > 0) {
+    chunk = m_reply->bytesAvailable();
+    if (chunk > 4096) {
+      chunk = 4096;
+    }
+    buf.resize(chunk + 1);
+    memset(&buf[0], 0, chunk + 1);
+    if (chunk != m_reply->read(&buf[0], chunk)) {
+      qWarning("AbeBooksRequester: buffer read error");
+    }
+    data += &buf[0];
+  }
+  buf.clear();
+
+  QDomDocument doc("response");
+  QString errorMsg = QString();
+  int errorLine = 0;
+  int errorColumn = 0;
+  if (doc.setContent(data, false, &errorMsg, &errorLine, &errorColumn)) {
+    emit response(doc);
+  } else {
+    qDebug() << Q_FUNC_INFO << errorMsg << errorLine << errorColumn;
+  }
+  data.clear();
+}
+
+void AbeBooksRequester::queryList() {
+  AbeBooksDocument doc = createDocument();
+  doc.createAction("getAllNewOrders");
+  if (createRequest(doc)) {
+    qInfo("Request getAllNewOrders created");
+  }
+}
+
+void AbeBooksRequester::queryOrder(const QString &purchaseId) {
+  AbeBooksDocument doc = createDocument();
+  doc.createAction("getOrder");
+  QDomElement e = doc.createElement("purchaseOrder");
+  QString id(purchaseId);
+  e.setAttribute("id", id.replace(PLUGIN_ID_PREFIX,""));
+  doc.appendChild(e);
+  if (createRequest(doc)) {
+    qInfo("Request purchaseOrder created");
+  }
 }
