@@ -3,7 +3,9 @@
 
 #include "interface.h"
 
+#include <QApplication>
 #include <QAction>
+#include <QClipboard>
 #include <QHeaderView>
 #include <QIcon>
 #include <QMenu>
@@ -26,11 +28,22 @@ PurchaserOrderTable::PurchaserOrderTable(QWidget *parent)
 void PurchaserOrderTable::contextMenuEvent(QContextMenuEvent *e) {
   QMenu *m = new QMenu("Actions", this);
   QAction *ac_remove = m->addAction(
-      style()->standardIcon(QStyle::SP_ComputerIcon), tr("inspect article"));
+      style()->standardIcon(QStyle::SP_FileIcon), tr("inspect article"));
   ac_remove->setObjectName("ac_context_search_article");
   connect(ac_remove, SIGNAL(triggered()), this, SIGNAL(findArticleNumbers()));
+  QAction *ac_copy = m->addAction(
+      style()->standardIcon(QStyle::SP_FileIcon), tr("copy article id"));
+  ac_copy->setObjectName("ac_context_ac_copy_article");
+  connect(ac_copy, SIGNAL(triggered()), this, SLOT(copyIdToClipboard()));
+
   m->exec(e->globalPos());
   delete m;
+}
+
+void PurchaserOrderTable::copyIdToClipboard()
+{
+  QString buf = item(currentItem()->row(),1)->text();
+  QApplication::clipboard()->setText(buf, QClipboard::Clipboard);
 }
 
 void PurchaserOrderTable::addHeaderItem(int i, const QString &name) {

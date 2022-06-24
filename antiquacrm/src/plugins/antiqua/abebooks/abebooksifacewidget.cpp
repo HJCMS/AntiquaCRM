@@ -161,7 +161,7 @@ AbeBooksIfaceWidget::customerRequest(const QJsonObject &object) {
   QJsonObject queryObject;
   queryObject.insert("provider", QJsonValue(CONFIG_PROVIDER));
   QString str(objectName());
-  queryObject.insert("orderid", QJsonValue(str.replace(PLUGIN_ID_PREFIX, "")));
+  queryObject.insert("orderid", QJsonValue(str.trimmed()));
   queryObject.insert("type", "customer_request");
   queryObject.insert("c_firstname", object["c_firstname"]);
   queryObject.insert("c_lastname", object["c_lastname"]);
@@ -267,7 +267,7 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
     if (n.nodeName() == "purchaseOrderItem") {
       m_orderTable->setRowCount((m_orderTable->rowCount() + 1));
       QDomNodeList a_list = n.namedItem("book").childNodes();
-      QString id = windowTitle().replace(PLUGIN_ID_PREFIX, "");
+      QString id = windowTitle().trimmed();
       setTableData(row, 0, id);
       setTableData(row, 2, 1); // Menge
       for (int l = 0; l < a_list.count(); l++) {
@@ -286,6 +286,10 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
 }
 
 void AbeBooksIfaceWidget::createOrderRequest(const QString &purchaseId) {
+#ifdef ABEBOOKS_TESTMODE
+  setXmlContent(testSources("abebooks-order-652255901.xml"));
+  return;
+#endif
   AbeBooksRequester *req = new AbeBooksRequester(this);
   req->setObjectName(CONFIG_PROVIDER);
   connect(req, SIGNAL(response(const QDomDocument &)), this,

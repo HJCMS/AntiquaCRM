@@ -17,16 +17,6 @@
 #include <QTime>
 #include <QVBoxLayout>
 
-/*
-QFile fp("/tmp/abebooks_response.xml");
-if(fp.open(QIODevice::WriteOnly))
-{
-  QTextStream in(&fp);
-  in << doc.toString(1);
-  fp.close();
-}
-*/
-
 void AbeBooks::responseImport(const QDomDocument &doc) {
   AbeBooksDocument xml(doc);
   QJsonArray senderArray;
@@ -39,7 +29,6 @@ void AbeBooks::responseImport(const QDomDocument &doc) {
         continue;
 
       QString id = e.attribute("id", "0");
-      id.prepend(PLUGIN_ID_PREFIX);
       QJsonObject entry;
       entry.insert("id", id);
       QDateTime d = xml.getOrderDate(e);
@@ -82,6 +71,10 @@ const QString AbeBooks::provider() const { return QString(CONFIG_PROVIDER); }
 const QString AbeBooks::configGroup() const { return QString(CONFIG_GROUP); }
 
 void AbeBooks::queryMenueEntries() {
+#ifdef ABEBOOKS_TESTMODE
+  responseImport(testSources("abebooks_20220624_0808.xml"));
+  return;
+#endif
   AbeBooksRequester *req = new AbeBooksRequester(this);
   req->setObjectName(CONFIG_PROVIDER);
   connect(req, SIGNAL(response(const QDomDocument &)), this,

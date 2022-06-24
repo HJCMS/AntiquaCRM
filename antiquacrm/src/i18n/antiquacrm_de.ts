@@ -76,7 +76,7 @@
 <context>
     <name>Antiqua::PurchaserOrderTable</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+17"/>
+        <location filename="../core/antiquacore/interface.cpp" line="+19"/>
         <source>Provider</source>
         <translation>Bestell Nr</translation>
     </message>
@@ -105,11 +105,16 @@
         <source>inspect article</source>
         <translation>Untersuche/Prüfe Artikel</translation>
     </message>
+    <message>
+        <location line="+4"/>
+        <source>copy article id</source>
+        <translation>Kopiere Artikelnummer</translation>
+    </message>
 </context>
 <context>
     <name>Antiqua::PurchaserWidget</name>
     <message>
-        <location line="+20"/>
+        <location line="+27"/>
         <source>purchaser</source>
         <translation>Einkäufer*in</translation>
     </message>

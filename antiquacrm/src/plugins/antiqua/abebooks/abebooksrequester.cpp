@@ -219,7 +219,7 @@ void AbeBooksRequester::queryOrder(const QString &purchaseId) {
   doc.createAction("getOrder");
   QDomElement e = doc.createElement("purchaseOrder");
   QString id(purchaseId);
-  e.setAttribute("id", id.replace(PLUGIN_ID_PREFIX,""));
+  e.setAttribute("id", id.trimmed());
   doc.appendChild(e);
   if (createRequest(doc)) {
     qInfo("Request purchaseOrder created");

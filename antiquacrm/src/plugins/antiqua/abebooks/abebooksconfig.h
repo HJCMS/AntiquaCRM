@@ -9,6 +9,32 @@
 #include <QMetaType>
 #include <AntiquaInterface>
 
+#ifndef ABEBOOKS_TESTMODE
+#define ABEBOOKS_TESTMODE true
+#endif
+
+#ifdef ABEBOOKS_TESTMODE
+#include <QDomDocument>
+#include <QFile>
+#include <QDir>
+
+static const QDomDocument testSources(const QString &file) {
+  QDomDocument out;
+  QString xml(QDir::homePath());
+  xml.append("/Developement/antiqua/database/tmp/");
+  xml.append(file);
+  QFile fp(xml);
+  if (fp.open(QIODevice::ReadOnly)) {
+    QDomDocument doc;
+    if (doc.setContent(&fp)) {
+      out = doc;
+    }
+    fp.close();
+  }
+  return out;
+}
+#endif
+
 /**
  * @def DATE_FORMAT
  * @ingroup Providers SQL Statements
@@ -25,10 +51,6 @@
 /** @brief Wird für Menüeintrag und Gruppenzuweisung benötigt! */
 #ifndef CONFIG_PROVIDER
 #define CONFIG_PROVIDER "AbeBooks"
-#endif
-
-#ifndef PLUGIN_ID_PREFIX
-#define PLUGIN_ID_PREFIX "AB-"
 #endif
 
 #ifndef PLUGIN_ABEBOOKS_DEBUG

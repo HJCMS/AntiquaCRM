@@ -71,6 +71,9 @@ namespace Antiqua {
   class ANTIQUACORE_EXPORT PurchaserOrderTable final : public QTableWidget {
     Q_OBJECT
 
+  private Q_SLOTS:
+    void copyIdToClipboard();
+
   protected:
     void addHeaderItem(int, const QString &name);
     void contextMenuEvent(QContextMenuEvent *);
