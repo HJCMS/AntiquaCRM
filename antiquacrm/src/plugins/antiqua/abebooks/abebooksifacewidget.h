@@ -16,9 +16,6 @@
 #include <AntiquaInterface>
 #include <Networking>
 
-// class AbeBooksRequester;
-class AbeBooksPurchaser;
-
 class ANTIQUACORE_EXPORT AbeBooksIfaceWidget final
     : public Antiqua::InterfaceWidget {
   Q_OBJECT
@@ -26,11 +23,9 @@ class ANTIQUACORE_EXPORT AbeBooksIfaceWidget final
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  Antiqua::PurchaserOrderTable *m_orderTable;
-  AbeBooksPurchaser *m_purchaserWidget;
   QDomDocument p_currentDocument;
 
-  const QString stripString(const QString &str) const;
+  const QString stripString(const QVariant &val) const;
 
   const QVariant tableData(int row, int column);
 

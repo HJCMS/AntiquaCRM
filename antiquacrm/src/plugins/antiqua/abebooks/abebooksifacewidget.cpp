@@ -3,7 +3,6 @@
 
 #include "abebooksifacewidget.h"
 #include "abebooksconfig.h"
-#include "abebookspurchaser.h"
 #include "abebooksrequester.h"
 
 #include <QHBoxLayout>
@@ -23,69 +22,44 @@ AbeBooksIfaceWidget::AbeBooksIfaceWidget(const QString &widgetId,
   QWidget *mainWidget = new QWidget(this);
   QVBoxLayout *layout = new QVBoxLayout(mainWidget);
   layout->setContentsMargins(0, 0, 0, 0);
-  // BEGIN Artikelanzeige
-  m_orderTable = new Antiqua::PurchaserOrderTable(mainWidget);
-  layout->addWidget(m_orderTable);
-  // END
-
-  QHBoxLayout *infoLayout = new QHBoxLayout();
-  infoLayout->setContentsMargins(10, 2, 10, 2);
-  QLabel *lbInfo = new QLabel(tr("purchaser"));
-  lbInfo->setIndent(10);
-  infoLayout->addWidget(lbInfo);
-  infoLayout->addStretch(1);
-  QPushButton *btn_check = new QPushButton(this);
-  btn_check->setText(tr("article check"));
-  btn_check->setIcon(style()->standardIcon(QStyle::SP_MessageBoxQuestion));
-  infoLayout->addWidget(btn_check);
-  layout->addLayout(infoLayout);
-
-  // BEGIN Verkäufer
-  m_purchaserWidget = new AbeBooksPurchaser(this);
-  layout->addWidget(m_purchaserWidget);
-  // END
+  m_order = new Antiqua::PurchaseOverview(widgetId, mainWidget);
+  layout->addWidget(m_order);
   layout->addStretch(1);
   mainWidget->setLayout(layout);
   setWidget(mainWidget);
-
-  connect(m_orderTable, SIGNAL(findArticleNumbers()), this,
-          SLOT(readCurrentArticleIds()));
-  connect(btn_check, SIGNAL(clicked()), this, SLOT(readCurrentArticleIds()));
+  // connect(m_order, SIGNAL(findArticleNumbers()), this,
+  // SLOT(readCurrentArticleIds()));
+  connect(m_order, SIGNAL(checkOrders()), this, SLOT(readCurrentArticleIds()));
 }
 
-const QString AbeBooksIfaceWidget::stripString(const QString &str) const {
-  QString buf(str);
+const QString AbeBooksIfaceWidget::stripString(const QVariant &val) const {
+  QString buf(val.toString());
   buf.replace("'", "´");
   buf = buf.trimmed();
   return buf;
 }
 
 const QVariant AbeBooksIfaceWidget::tableData(int row, int column) {
-  QTableWidgetItem *item = m_orderTable->item(row, column);
-  if (item != nullptr)
-    return item->data(Qt::DisplayRole);
-
-  return QVariant();
+  return m_order->getTableData(row, column);
 }
 
 void AbeBooksIfaceWidget::setTableData(int row, int column,
                                        const QVariant &val) {
-  QTableWidgetItem *item = m_orderTable->createItem(val.toString());
-  m_orderTable->setItem(row, column, item);
+  m_order->setTableData(row, column, val);
 }
 
 const QJsonValue AbeBooksIfaceWidget::getString(const QString &objName) {
-  QString data = m_purchaserWidget->getValue(objName).toString();
+  QString data = m_order->getValue(objName).toString();
   return QJsonValue(stripString(data));
 }
 
 const QJsonValue AbeBooksIfaceWidget::getNumeric(const QString &objName) {
-  int data = m_purchaserWidget->getValue(objName).toInt();
+  int data = m_order->getValue(objName).toInt();
   return QJsonValue(data);
 }
 
 const QJsonValue AbeBooksIfaceWidget::getPrice(const QString &objName) {
-  double data = m_purchaserWidget->getValue(objName).toDouble();
+  double data = m_order->getValue(objName).toDouble();
   return QJsonValue(data);
 }
 
@@ -95,7 +69,7 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
     return;
   }
 
-  if (m_purchaserWidget->getValue("costumerId").toInt() > 0) {
+  if (m_order->getCustomerId() > 0) {
     qInfo("CustomerId already exists!");
     return;
   }
@@ -104,13 +78,13 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
   QJsonObject jsObject;
   jsObject.insert("provider", QJsonValue(CONFIG_PROVIDER));
   jsObject.insert("type", "customer_create");
-  QString invoice = m_purchaserWidget->rechnungsadresse->toPlainText();
+  QString invoice = m_order->getValue("c_postal_address").toString();
   invoice = stripString(invoice);
   if (!invoice.isEmpty()) {
     jsObject.insert("c_postal_address", QJsonValue(invoice));
   }
 
-  QString deliveryAddress = m_purchaserWidget->lieferadresse->toPlainText();
+  QString deliveryAddress = m_order->getValue("c_shipping_address").toString();
   deliveryAddress = stripString(deliveryAddress);
   if (!deliveryAddress.isEmpty()) {
     jsObject.insert("c_shipping_address", QJsonValue(deliveryAddress));
@@ -179,6 +153,7 @@ void AbeBooksIfaceWidget::parseAddressBody(const QString &section,
   person.append(" ");
   person.append(obj["c_lastname"].toString().trimmed());
   buffer.append(person);
+  m_order->setValue("person", person);
 
   QString street(obj["c_street"].toString().trimmed());
   buffer.append(street);
@@ -192,18 +167,12 @@ void AbeBooksIfaceWidget::parseAddressBody(const QString &section,
   }
   buffer.append(location);
 
-  m_purchaserWidget->setValue(section, buffer.join("\n"));
+  m_order->setValue(section, buffer.join("\n"));
   buffer.clear();
 }
 
 void AbeBooksIfaceWidget::readCurrentArticleIds() {
-  QList<int> ids;
-  for (int r = 0; r < m_orderTable->rowCount(); r++) {
-    QTableWidgetItem *item = m_orderTable->item(r, 1);
-    if (item != nullptr) {
-      ids.append(item->data(Qt::DisplayRole).toInt());
-    }
-  }
+  QList<int> ids = m_order->getArticleIDs();
   if (ids.count() > 0)
     emit checkArticleIds(ids);
 }
@@ -219,7 +188,7 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
     QDomNode n = n_list.at(i);
     if (n.nodeName() == "buyer") {
       QString email = n.namedItem("email").firstChild().nodeValue();
-      m_purchaserWidget->setValue("c_email_0", email);
+      m_order->setValue("c_email_0", email);
       if (!n.namedItem("mailingAddress").isNull()) {
         QDomNodeList a_list = n.namedItem("mailingAddress").childNodes();
         QJsonObject customerInfo;
@@ -228,57 +197,58 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
           QJsonValue val = QJsonValue(xml.getNodeValue(cn).toString());
           if (cn.nodeName() == "name") {
             QStringList full_name = xml.getNodeValue(cn).toString().split(" ");
-            m_purchaserWidget->setValue("c_firstname", full_name.first());
-            m_purchaserWidget->setValue("c_lastname", full_name.last());
+            m_order->setValue("c_firstname", full_name.first());
+            m_order->setValue("c_lastname", full_name.last());
             customerInfo.insert("c_firstname", QJsonValue(full_name.first()));
             customerInfo.insert("c_lastname", QJsonValue(full_name.last()));
           } else if (cn.nodeName() == "country") {
             customerInfo.insert("c_country", val);
-            m_purchaserWidget->setValue("c_country", val.toString());
+            m_order->setValue("c_country", stripString(val));
           } else if (cn.nodeName() == "city") {
             customerInfo.insert("c_location", val);
-            m_purchaserWidget->setValue("c_location", val.toString());
+            m_order->setValue("c_location", stripString(val));
           } else if (cn.nodeName() == "code") {
             customerInfo.insert("c_postalcode", val);
-            m_purchaserWidget->setValue("c_postalcode", val.toString());
+            m_order->setValue("c_postalcode", stripString(val));
           } else if (cn.nodeName() == "street") {
             customerInfo.insert("c_street", val);
-            m_purchaserWidget->setValue("c_street", val.toString());
+            m_order->setValue("c_street", stripString(val));
           } else if (cn.nodeName() == "phone") {
             customerInfo.insert("c_phone_0", val);
-            m_purchaserWidget->setValue("c_phone_0", val.toString());
+            m_order->setPhone("c_phone_0", stripString(val));
           }
         }
         QJsonDocument cIjs = customerRequest(customerInfo);
         if (!cIjs.isEmpty())
           emit checkCustomer(cIjs);
 
-        parseAddressBody("rechnungsadresse", customerInfo);
+        parseAddressBody("c_postal_address", customerInfo);
+        parseAddressBody("c_shipping_address", customerInfo);
       }
     }
   }
   // Bestellartikel einfügen
-  m_orderTable->setRowCount(0);
+  m_order->setTableCount(0);
   n_list = xml.getOrderItemList().childNodes();
   for (int i = 0; i < n_list.count(); i++) {
     int column = 0;
-    int row = m_orderTable->rowCount();
+    int row = m_order->getTableCount();
     QDomNode n = n_list.at(i);
     if (n.nodeName() == "purchaseOrderItem") {
-      m_orderTable->setRowCount((m_orderTable->rowCount() + 1));
+      m_order->setTableCount((m_order->getTableCount() + 1));
       QDomNodeList a_list = n.namedItem("book").childNodes();
       QString id = windowTitle().trimmed();
-      setTableData(row, 0, id);
-      setTableData(row, 2, 1); // Menge
+      m_order->setTableData(row, 0, id);
+      m_order->setTableData(row, 2, 1); // Menge
       for (int l = 0; l < a_list.count(); l++) {
         QDomNode cn = a_list.at(l);
         QVariant val = cn.firstChild().nodeValue();
         if (cn.nodeName() == "price") {
-          setTableData(row, 3, val);
+          m_order->setTableData(row, 3, val);
         } else if (cn.nodeName() == "title") {
-          setTableData(row, 4, val);
+          m_order->setTableData(row, 4, val);
         } else if (cn.nodeName() == "vendorKey") {
-          setTableData(row, 1, val);
+          m_order->setTableData(row, 1, val);
         }
       }
     }
@@ -301,7 +271,7 @@ void AbeBooksIfaceWidget::createOrderRequest(const QString &purchaseId) {
 void AbeBooksIfaceWidget::setCustomerId(int customerId) {
   if (customerId > 0) {
     currentCustomerId = customerId;
-    m_purchaserWidget->setCustomerId(customerId);
+    m_order->setCustomerId(customerId);
   }
 }
 
@@ -329,14 +299,14 @@ const QMap<QString, QString> AbeBooksIfaceWidget::fieldTranslate() const {
 
 const ProviderOrder AbeBooksIfaceWidget::getProviderOrder() {
   ProviderOrder order;
-  int cid = m_purchaserWidget->getValue("costumerId").toInt();
+  int cid = m_order->getCustomerId();
   order.setProvider(CONFIG_PROVIDER);
   order.setProviderId(objectName());
   order.setCustomerId(cid);
   int col = 1; /**< CustomerId Cell */
   QStringList ids;
-  for (int r = 0; r < m_orderTable->rowCount(); r++) {
-    QString aid = tableData(r, col).toString();
+  for (int r = 0; r < m_order->getTableCount(); r++) {
+    QString aid = m_order->getTableData(r, col).toString();
     if (!aid.isEmpty())
       ids.append(aid);
   }

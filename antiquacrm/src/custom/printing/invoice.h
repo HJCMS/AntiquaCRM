@@ -54,6 +54,8 @@ public:
     QString designation; /**< Designation */
     int quantity;        /**< Quantity */
     double sellPrice;    /**< Preis */
+    bool including_vat;  /**< inkl. MwSt */
+    int tax_value;       /**< Steuerwert */
   };
 
   explicit Invoice(QWidget *parent = nullptr);

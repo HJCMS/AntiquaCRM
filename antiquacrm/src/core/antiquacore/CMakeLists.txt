@@ -31,7 +31,7 @@ SET (subproject_SOURCES
   providerorders.cpp
   pluginloader.cpp
   networker.cpp
-  provider.cpp
+  curljson.cpp
   interface.cpp
 )
 
@@ -43,7 +43,7 @@ SET (subproject_HEADERS
   orderarticle.h
   providerorders.h
   networker.h
-  provider.h
+  curljson.h
   AntiquaCRM
   antiqua_global.h
   pluginloader.h

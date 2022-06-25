@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "provider.h"
+#include "curljson.h"
 #include "applsettings.h"
 
 #include <QByteArray>
@@ -21,7 +21,7 @@
 #define ENABLE_DEBUG false
 #endif
 
-// BEGIN ProviderRequest
+// BEGIN CurlRequest
 
 namespace Antiqua {
 
@@ -131,7 +131,7 @@ static const char *jsonParserError(int err) {
   };
 }
 
-ProviderRequest::ProviderRequest(bool debug) : QRunnable() {
+CurlRequest::CurlRequest(bool debug) : QRunnable() {
   verbose = debug;
   p_ca_bundle = QByteArray();
   m_txtCodec = QTextCodec::codecForLocale();
@@ -144,7 +144,7 @@ ProviderRequest::ProviderRequest(bool debug) : QRunnable() {
   curl_global_init(CURL_GLOBAL_SSL);
 }
 
-const char *ProviderRequest::acceptLanguage() {
+const char *CurlRequest::acceptLanguage() {
   QLocale locale = QLocale::system();
   QString str("Accept-Language: ");
   str.append(locale.bcp47Name());
@@ -161,7 +161,7 @@ const char *ProviderRequest::acceptLanguage() {
   return value;
 }
 
-const char *ProviderRequest::acceptJsonLanguage() {
+const char *CurlRequest::acceptJsonLanguage() {
   QString str("Accept: ");
   str.append("application/ld+json,application/json,text/*;q=0.1");
 
@@ -172,7 +172,7 @@ const char *ProviderRequest::acceptJsonLanguage() {
   return value;
 }
 
-const char *ProviderRequest::contentTypeJson() {
+const char *CurlRequest::contentTypeJson() {
   QString str("Content-Type: application/json");
   if (!p_charset.isEmpty())
     str.append("; charset=" + p_charset);
@@ -184,7 +184,7 @@ const char *ProviderRequest::contentTypeJson() {
   return value;
 }
 
-curl_slist *ProviderRequest::setHeader() {
+curl_slist *CurlRequest::setHeader() {
   curl_slist *list = NULL;
   list = curl_slist_append(list, acceptLanguage());
   list = curl_slist_append(list, acceptJsonLanguage());
@@ -194,7 +194,7 @@ curl_slist *ProviderRequest::setHeader() {
   return list;
 }
 
-int ProviderRequest::writeData(char *data, size_t size, size_t nitems,
+int CurlRequest::writeData(char *data, size_t size, size_t nitems,
                                std::string *buffer) {
   qint64 ret = 0;
   if (buffer != NULL) {
@@ -208,7 +208,7 @@ int ProviderRequest::writeData(char *data, size_t size, size_t nitems,
   return ret;
 }
 
-size_t ProviderRequest::readFile(char *data, size_t size, size_t nmemb,
+size_t CurlRequest::readFile(char *data, size_t size, size_t nmemb,
                                  std::string *buffer) {
   /**
    * @todo FileUpload
@@ -224,7 +224,7 @@ size_t ProviderRequest::readFile(char *data, size_t size, size_t nmemb,
   return retcode;
 }
 
-const QString ProviderRequest::getBuffer() {
+const QString CurlRequest::getBuffer() {
   QByteArray array;
   for (int i = 0; i < dataBuffer.length(); i++) {
     array.append(dataBuffer[i]);
@@ -233,7 +233,7 @@ const QString ProviderRequest::getBuffer() {
   return m_txtCodec->fromUnicode(buf);
 }
 
-bool ProviderRequest::createDocument() {
+bool CurlRequest::createDocument() {
   QString data = getBuffer();
   QJsonParseError parser;
   QJsonDocument doc = QJsonDocument::fromJson(data.toLocal8Bit(), &parser);
@@ -245,14 +245,14 @@ bool ProviderRequest::createDocument() {
   return true;
 }
 
-void ProviderRequest::setRemoteUrl(const QUrl &url) {
+void CurlRequest::setRemoteUrl(const QUrl &url) {
   QByteArray ba = QUrl(url).toEncoded();
   char *_url = reinterpret_cast<char *>(ba.data());
   curl_easy_setopt(m_curl, CURLOPT_URL, _url);
   curl_easy_setopt(m_curl, CURLOPT_PORT, 443L);
 }
 
-bool ProviderRequest::initDefaultOptions() {
+bool CurlRequest::initDefaultOptions() {
   if (m_curl == nullptr)
     return false;
 
@@ -287,11 +287,11 @@ bool ProviderRequest::initDefaultOptions() {
   return true;
 }
 
-void ProviderRequest::setCaBundlePath(const QByteArray &path) {
+void CurlRequest::setCaBundlePath(const QByteArray &path) {
   p_ca_bundle = path;
 }
 
-const QString ProviderRequest::getResponseError() {
+const QString CurlRequest::getResponseError() {
   QString data = QString::fromStdString(errorBuffer);
 #if ENABLE_DEBUG == true
   qDebug() << Q_FUNC_INFO << data;
@@ -299,9 +299,9 @@ const QString ProviderRequest::getResponseError() {
   return data;
 }
 
-const QJsonDocument ProviderRequest::getResponseData() { return p_json; }
+const QJsonDocument CurlRequest::getResponseData() { return p_json; }
 
-bool ProviderRequest::get(const QUrl &url) {
+bool CurlRequest::get(const QUrl &url) {
   m_curl = curl_easy_init();
   if (m_curl == nullptr) {
     qWarning("cUrl initialisation failed!");
@@ -313,7 +313,7 @@ bool ProviderRequest::get(const QUrl &url) {
   return true;
 }
 
-bool ProviderRequest::post(const QUrl &url, const QByteArray &body) {
+bool CurlRequest::post(const QUrl &url, const QByteArray &body) {
   m_curl = curl_easy_init();
   if (m_curl == nullptr) {
     qWarning("cUrl initialisation failed!");
@@ -326,7 +326,7 @@ bool ProviderRequest::post(const QUrl &url, const QByteArray &body) {
   return true;
 }
 
-bool ProviderRequest::postForm(const QUrl &url, const QString &param,
+bool CurlRequest::postForm(const QUrl &url, const QString &param,
                                const QByteArray &body) {
 #if ENABLE_DEBUG == true
   qDebug() << Q_FUNC_INFO << "TODO" << url << body;
@@ -339,7 +339,7 @@ bool ProviderRequest::postForm(const QUrl &url, const QString &param,
   return false; // start();
 }
 
-void ProviderRequest::run() {
+void CurlRequest::run() {
   if (m_curl == nullptr) {
     qFatal("cUrl use (get|post|postForm) first!");
     return;
@@ -365,7 +365,7 @@ void ProviderRequest::run() {
   curl_global_cleanup();
 }
 
-ProviderRequest::~ProviderRequest() {
+CurlRequest::~CurlRequest() {
   if (m_curl != nullptr) {
     curl_easy_cleanup(m_curl);
   }
@@ -373,38 +373,38 @@ ProviderRequest::~ProviderRequest() {
 }
 // END
 
-// BEGIN Provider
-Provider::Provider(QObject *parent, bool debug) : QThread{parent} {
+// BEGIN CurlJson
+CurlJson::CurlJson(QObject *parent, bool debug) : QThread{parent} {
   verbose = debug;
 }
 
-void Provider::sendGet(const QUrl &url) {
-  p_type = Provider::GET;
+void CurlJson::sendGet(const QUrl &url) {
+  p_type = CurlJson::GET;
   p_url = url;
   run();
 }
 
-void Provider::sendPost(const QUrl &url, const QByteArray &body) {
-  p_type = Provider::POST;
+void CurlJson::sendPost(const QUrl &url, const QByteArray &body) {
+  p_type = CurlJson::POST;
   p_url = url;
   p_body = body;
   run();
 }
 
-void Provider::sendPostForm(const QUrl &url, const QString &param,
+void CurlJson::sendPostForm(const QUrl &url, const QString &param,
                             const QByteArray &body) {
-  p_type = Provider::FORM;
+  p_type = CurlJson::FORM;
   p_url = url;
   p_formdata = param;
   p_body = body;
   run();
 }
 
-const QJsonDocument Provider::getDocument() { return p_json; }
+const QJsonDocument CurlJson::getDocument() { return p_json; }
 
-void Provider::run() {
+void CurlJson::run() {
   p_mutex.lock();
-  ProviderRequest *req = new ProviderRequest(verbose);
+  CurlRequest *req = new CurlRequest(verbose);
 #ifdef Q_OS_WIN
   QByteArray caBundle = caBundleConfigPath();
   if (caBundle.isNull()) {
@@ -416,11 +416,11 @@ void Provider::run() {
 #endif
   bool status = false;
   switch (p_type) {
-  case (Provider::POST):
+  case (CurlJson::POST):
     status = req->post(p_url, p_body);
     break;
 
-  case (Provider::FORM):
+  case (CurlJson::FORM):
     status = req->postForm(p_url, p_formdata, p_body);
     break;
 

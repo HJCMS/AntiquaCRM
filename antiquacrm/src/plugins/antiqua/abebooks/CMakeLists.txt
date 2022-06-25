@@ -14,7 +14,6 @@ SET (abebooks_SOURCES
  abebooksdocument.cpp
  abebooksifacewidget.cpp
  abebooksproviderwidget.cpp
- abebookspurchaser.cpp
  abebooksrequester.cpp
 )
 
@@ -24,7 +23,6 @@ SET (abebooks_HEADERS
  abebooksdocument.h
  abebooksifacewidget.h
  abebooksproviderwidget.h
- abebookspurchaser.h
  abebooksrequester.h
 )
 

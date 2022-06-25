@@ -5,7 +5,6 @@
 #include "abebooksconfig.h"
 #include "abebooksifacewidget.h"
 #include "abebooksproviderwidget.h"
-#include "abebookspurchaser.h"
 #include "abebooksrequester.h"
 
 #include <QJsonArray>

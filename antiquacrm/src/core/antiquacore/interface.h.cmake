@@ -5,10 +5,13 @@
 #define ANTIQUA_INTERFACE_H
 
 #include <QContextMenuEvent>
+#include <QDateTime>
 #include <QGroupBox>
+#include <QHash>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLabel>
+#include <QListWidget>
 #include <QMap>
 #include <QMetaObject>
 #include <QMetaType>
@@ -16,9 +19,10 @@
 #include <QScrollArea>
 #include <QTableWidget>
 #include <QTableWidgetItem>
+#include <QTextEdit>
+#include <QToolBar>
 #include <QUrl>
 #include <QWidget>
-#include <QDateTime>
 
 #include "antiqua_global.h"
 #include "providerorders.h"
@@ -125,6 +129,123 @@ namespace Antiqua {
   };
 
   /**
+   * @class Antiqua::PurchaseOverview
+   * @ingroup Antiqua Plugin Interface
+   * @brief Bestellübersicht
+   */
+  class ANTIQUACORE_EXPORT PurchaseOverview final : public QWidget
+  {
+    Q_OBJECT
+
+  private:
+    int c_id = 0;
+    QToolBar *m_toolbar;
+    QAction *ac_check;
+
+    /**
+     * @brief c_id
+     */
+    QLineEdit *m_customerId;
+
+    /**
+     * @brief Full Purchaser Name
+     */
+    QLineEdit *m_customerInfo;
+
+    /**
+     * @brief Tab Section
+     * @{
+     */
+    QTabWidget *m_tabWidget;
+
+    /**
+     * @brief c_postal_address
+     */
+    QTextEdit *m_billingAddress;
+
+    /**
+     * @brief c_shipping_address
+     */
+    QTextEdit *m_shippingAddress;
+
+    /**
+     * @brief Käufer Anmerkungen und/oder Fragen
+     */
+    QTextEdit *m_comments;
+
+    /**
+     * @brief Customer Summary
+     */
+    QListWidget *m_summary;
+
+    /**< @} */
+
+    /**
+     * @brief Article Orders List
+     * @see Antiqua::PurchaserOrderTable
+     */
+    Antiqua::PurchaserOrderTable *m_table;
+
+  public Q_SLOTS:
+    /**
+     * @brief Kundennummer einfügen
+     */
+    void setCustomerId(int id);
+
+  Q_SIGNALS:
+    void customerIdChanged(int);
+    void checkOrders();
+
+  public:
+    explicit PurchaseOverview(const QString &id, QWidget *parent = nullptr);
+
+    int getCustomerId();
+
+    const QList<int> getArticleIDs();
+
+    /**
+     * @brief In Bestelltabelle eine reihe hinzufügen
+     */
+    void setTableCount(int count);
+
+    /**
+     * @brief Anzahl der Bestellartikel
+     */
+    int getTableCount();
+
+    /**
+     * @brief Eine Zelle in reihe Ändern/Einfügen
+     */
+    bool setTableData(int row, int column, const QVariant &value);
+
+    /**
+     * @brief Nehme Datensatz von Reihe/Zelle
+     */
+    const QVariant getTableData(int row, int column);
+
+    /**
+     * @brief Setze Datensatz auf Objektname
+     */
+    void setValue(const QString &objName, const QVariant &value);
+
+    /**
+     * @brief Für Telefon Nummern eine extra Eingabe.
+     * Grund hierfür ist, das die DIenstleister diese nicht Validieren!
+     */
+    void setPhone(const QString &objName, const QVariant &value);
+
+    /**
+     * @brief Nehme Datensatz von Objekt
+     */
+    const QVariant getValue(const QString &objName);
+
+    /**
+     * @brief Käuferinformationen auslesen!
+     */
+    const QHash<QString,QVariant> getCustomerData();
+  };
+
+  /**
    * @class Antiqua::InterfaceWidget
    * @ingroup Antiqua Plugin Interface
    * @brief Hier werden die Bestellungen verarbeitet.
@@ -135,6 +256,12 @@ namespace Antiqua {
 
   protected:
     int currentCustomerId = -1;
+
+    /**
+     * @brief Bestellanzeige
+     */
+    Antiqua::PurchaseOverview *m_order;
+
     virtual const QVariant tableData(int row, int column) = 0;
 
     /**

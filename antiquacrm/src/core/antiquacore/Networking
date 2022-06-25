@@ -5,8 +5,8 @@
 # include "networker.h"
 #endif
 
-#ifndef PROVIDER_NETWORKING_H
-# include "provider.h"
+#ifndef CURLJSON_NETWORKING_H
+# include "curljson.h"
 #endif
 
 // EOF

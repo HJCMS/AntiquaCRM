@@ -2,47 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
-    <name>AbeBooksIfaceWidget</name>
-    <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+33"/>
-        <source>purchaser</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>article check</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AbeBooksPurchaser</name>
-    <message>
-        <location filename="../plugins/antiqua/abebooks/abebookspurchaser.cpp" line="+36"/>
-        <source>Customer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Not exists</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>shipping address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>delivery address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Comments</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AddEntryDialog</name>
     <message>
         <location filename="../custom/completer/addentrydialog.cpp" line="+20"/>
@@ -61,9 +20,9 @@
     </message>
 </context>
 <context>
-    <name>Antiqua::Provider</name>
+    <name>Antiqua::CurlJson</name>
     <message>
-        <location filename="../core/antiquacore/provider.cpp" line="+411"/>
+        <location filename="../core/antiquacore/curljson.cpp" line="+411"/>
         <source>CA-Bundle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -74,9 +33,52 @@
     </message>
 </context>
 <context>
+    <name>Antiqua::PurchaseOverview</name>
+    <message>
+        <location filename="../core/antiquacore/interface.cpp" line="+98"/>
+        <source>Customer ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Purchaser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>check articles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>billing address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>shipping address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>comments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>summary</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Antiqua::PurchaserOrderTable</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+19"/>
+        <location line="-123"/>
         <source>Provider</source>
         <translation type="unfinished"></translation>
     </message>
@@ -114,7 +116,7 @@
 <context>
     <name>Antiqua::PurchaserWidget</name>
     <message>
-        <location line="+27"/>
+        <location line="+26"/>
         <source>purchaser</source>
         <translation type="unfinished"></translation>
     </message>

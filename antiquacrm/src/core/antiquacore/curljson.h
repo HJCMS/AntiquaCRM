@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef PROVIDER_NETWORKING_H
-#define PROVIDER_NETWORKING_H
+#ifndef CURLJSON_NETWORKING_H
+#define CURLJSON_NETWORKING_H
 
 #include <QJsonDocument>
 #include <QMetaType>
@@ -26,13 +26,13 @@
 namespace Antiqua {
   /**
    * @brief Thread Prozess für cUrl anfragen!
-   * @class ProviderRequest
+   * @class CurlRequest
    * @ingroup Networking
    * @warning Nur mit QThread aufrufen!
-   * @see Provider
+   * @see CurlJson
    * <a href="https://everything.curl.dev/">cUrl</a>
    */
-  class ANTIQUACORE_EXPORT ProviderRequest final : public QRunnable {
+  class ANTIQUACORE_EXPORT CurlRequest final : public QRunnable {
 
   private:
     /**
@@ -111,7 +111,7 @@ namespace Antiqua {
     bool initDefaultOptions();
 
   public:
-    explicit ProviderRequest(bool verbose = false);
+    explicit CurlRequest(bool verbose = false);
 
     /**
      * @brief Setze CA-Paketpfad für Windows
@@ -152,18 +152,18 @@ namespace Antiqua {
 
     void run() override;
 
-    virtual ~ProviderRequest();
+    virtual ~CurlRequest();
   };
 
   /**
-   * @class Provider
+   * @class CurlJson
    * @ingroup Networking
    * @brief Alternative Klasse für Json anfragen
    * Ich verwende deshalb an dieser Stelle cUrl weil der QNetworkAccessManager
    * Probleme mit HTTP/2 Redirected hat. Mit cURL habe ich hier bessere
    * Erfahrungen gemacht und setze es deshalb ein.
    */
-  class ANTIQUACORE_EXPORT Provider final : public QThread {
+  class ANTIQUACORE_EXPORT CurlJson final : public QThread {
     Q_OBJECT
     Q_CLASSINFO("Author", "Jürgen Heinemann")
     Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -200,7 +200,7 @@ namespace Antiqua {
     enum Type { GET = 0x000001, POST = 0x000010, FORM = 0x000100 };
     Q_ENUM(Type)
 
-    explicit Provider(QObject *parent = nullptr, bool debug = false);
+    explicit CurlJson(QObject *parent = nullptr, bool debug = false);
 
     /**
      * @brief Einfache GET Anfrage senden
@@ -220,4 +220,4 @@ namespace Antiqua {
     const QJsonDocument getDocument();
   };
 };     // namespace Antiqua
-#endif // PROVIDER_NETWORKING_H
+#endif // CURLJSON_NETWORKING_H
