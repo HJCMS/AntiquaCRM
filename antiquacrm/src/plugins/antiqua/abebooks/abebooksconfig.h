@@ -9,9 +9,9 @@
 #include <QMetaType>
 #include <AntiquaInterface>
 
-#ifndef ABEBOOKS_TESTMODE
-#define ABEBOOKS_TESTMODE true
-#endif
+//#ifndef ABEBOOKS_TESTMODE
+//#define ABEBOOKS_TESTMODE true
+//#endif
 
 #ifdef ABEBOOKS_TESTMODE
 #include <QDomDocument>

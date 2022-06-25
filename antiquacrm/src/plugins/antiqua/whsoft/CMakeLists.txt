@@ -17,7 +17,6 @@ SET (whsoft_SOURCES
  buchfreund.cpp
  whsoft.cpp
  whsoftjsonquery.cpp
- whsoftpurchaser.cpp
  whsoftwidget.cpp
 )
 
@@ -26,7 +25,6 @@ SET (whsoft_HEADERS
  whsoft.h
  whsoftconfig.h
  whsoftjsonquery.h
- whsoftpurchaser.h
  whsoftwidget.h
 )
 

@@ -15,8 +15,6 @@
 #include <AntiquaInterface>
 #include <Networking>
 
-class WHSoftPurchaser;
-
 /**
  * @brief In dieser Klasse werden die Bestellungen verarbeitet.
  * @ingroup Whsoft Plugin
@@ -25,11 +23,7 @@ class ANTIQUACORE_EXPORT WHSoftWidget final : public Antiqua::InterfaceWidget {
   Q_OBJECT
 
 private:
-  Antiqua::PurchaserOrderTable *m_orderTable;
-  WHSoftPurchaser *m_purchaserWidget;
   QJsonDocument p_currentDocument;
-
-  const QVariant tableData(int row, int column);
 
   /**
    * @brief Erstellt abfrage Datensatz für Kundenabfrage

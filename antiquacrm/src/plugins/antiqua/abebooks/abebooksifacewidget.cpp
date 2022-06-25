@@ -27,40 +27,8 @@ AbeBooksIfaceWidget::AbeBooksIfaceWidget(const QString &widgetId,
   layout->addStretch(1);
   mainWidget->setLayout(layout);
   setWidget(mainWidget);
-  // connect(m_order, SIGNAL(findArticleNumbers()), this,
-  // SLOT(readCurrentArticleIds()));
+
   connect(m_order, SIGNAL(checkOrders()), this, SLOT(readCurrentArticleIds()));
-}
-
-const QString AbeBooksIfaceWidget::stripString(const QVariant &val) const {
-  QString buf(val.toString());
-  buf.replace("'", "´");
-  buf = buf.trimmed();
-  return buf;
-}
-
-const QVariant AbeBooksIfaceWidget::tableData(int row, int column) {
-  return m_order->getTableData(row, column);
-}
-
-void AbeBooksIfaceWidget::setTableData(int row, int column,
-                                       const QVariant &val) {
-  m_order->setTableData(row, column, val);
-}
-
-const QJsonValue AbeBooksIfaceWidget::getString(const QString &objName) {
-  QString data = m_order->getValue(objName).toString();
-  return QJsonValue(stripString(data));
-}
-
-const QJsonValue AbeBooksIfaceWidget::getNumeric(const QString &objName) {
-  int data = m_order->getValue(objName).toInt();
-  return QJsonValue(data);
-}
-
-const QJsonValue AbeBooksIfaceWidget::getPrice(const QString &objName) {
-  double data = m_order->getValue(objName).toDouble();
-  return QJsonValue(data);
 }
 
 void AbeBooksIfaceWidget::createCustomerDocument() {
@@ -299,11 +267,16 @@ const QMap<QString, QString> AbeBooksIfaceWidget::fieldTranslate() const {
 
 const ProviderOrder AbeBooksIfaceWidget::getProviderOrder() {
   ProviderOrder order;
-  int cid = m_order->getCustomerId();
   order.setProvider(CONFIG_PROVIDER);
   order.setProviderId(objectName());
+  int cid = m_order->getCustomerId();
+  if(cid < 1) {
+    qWarning("Missing Customer Id");
+    return order;
+  }
   order.setCustomerId(cid);
-  int col = 1; /**< CustomerId Cell */
+
+  int col = 1; /**< ArticleId Cell */
   QStringList ids;
   for (int r = 0; r < m_order->getTableCount(); r++) {
     QString aid = m_order->getTableData(r, col).toString();

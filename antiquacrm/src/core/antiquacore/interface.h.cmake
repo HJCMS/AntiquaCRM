@@ -10,6 +10,7 @@
 #include <QHash>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonValue>
 #include <QLabel>
 #include <QListWidget>
 #include <QMap>
@@ -88,30 +89,6 @@ namespace Antiqua {
   public:
     explicit PurchaserOrderTable(QWidget *parent = nullptr);
     QTableWidgetItem *createItem(const QString &title) const;
-  };
-
-  /**
-   * @class Antiqua::PurchaserWidget
-   * @ingroup Antiqua Plugin Interface
-   * @brief Käufer Informationen anzeigen ...
-   */
-  class ANTIQUACORE_EXPORT PurchaserWidget : public QGroupBox {
-    Q_OBJECT
-
-  protected:
-    int id = 0;
-
-  Q_SIGNALS:
-    void customerIdChanged(int);
-
-  public Q_SLOTS:
-    virtual void setCustomerId(int customerId) = 0;
-    virtual void setValue(const QString &objName, const QVariant &value) = 0;
-
-  public:
-    explicit PurchaserWidget(QWidget *parent = nullptr);
-    int customerId();
-    virtual const QVariant getValue(const QString &objName) = 0;
   };
 
   /**
@@ -262,8 +239,6 @@ namespace Antiqua {
      */
     Antiqua::PurchaseOverview *m_order;
 
-    virtual const QVariant tableData(int row, int column) = 0;
-
     /**
     * @brief Erstellt abfrage Datensatz für Kundenabfrage
     * @code
@@ -284,6 +259,18 @@ namespace Antiqua {
     * @brief Rechnungs und Lieferadressen einlesen
     */
     virtual void parseAddressBody(const QString &section, const QJsonObject &object) = 0;
+
+    /**
+     * @brief Einfache Zeicheketten Bereinigung
+     */
+    const QString stripString(const QVariant &val) const;
+
+    /**
+     * @brief JSonValue Helfer
+     */
+    const QJsonValue getString(const QString &objName);
+    const QJsonValue getNumeric(const QString &objName);
+    const QJsonValue getPrice(const QString &objName);
 
   Q_SIGNALS:
     /**

@@ -63,14 +63,6 @@ QTableWidgetItem *PurchaserOrderTable::createItem(const QString &title) const {
   return item;
 }
 
-PurchaserWidget::PurchaserWidget(QWidget *parent) : QGroupBox{parent} {
-  setToolTip(tr("purchaser"));
-  setFlat(true);
-  setStyleSheet("QGroupBox {border:none;}");
-}
-
-int PurchaserWidget::customerId() { return id; };
-
 ProviderWidget::ProviderWidget(const QString &widgetId, QWidget *parent)
     : QWidget{parent} {}
 
@@ -162,6 +154,7 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
 void PurchaseOverview::setCustomerId(int id) {
   QString num = QString::number(id);
   m_customerId->setText(num);
+  emit customerIdChanged(id);
 }
 
 int PurchaseOverview::getCustomerId() {
@@ -217,6 +210,7 @@ void PurchaseOverview::setValue(const QString &objName, const QVariant &value) {
     return;
   }
 
+  // qDebug() << Q_FUNC_INFO << value << objName;
   QListWidgetItem *item = new QListWidgetItem(m_summary);
   item->setData(Qt::DisplayRole, value);
   item->setData(Qt::UserRole, objName);
@@ -262,7 +256,8 @@ const QHash<QString, QVariant> PurchaseOverview::getCustomerData() {
   for (int r = 0; r < m_summary->count(); r++) {
     QString n = m_summary->item(r)->data(Qt::UserRole).toString();
     QVariant v = m_summary->item(r)->data(Qt::DisplayRole);
-    list.insert(n, v);
+    if (n.startsWith("c_", Qt::CaseSensitive))
+      list.insert(n, v);
   }
 
   QStringList objList({"c_postal_address", "c_shipping_address"});
@@ -298,6 +293,28 @@ const QString InterfaceWidget::apiParam(const QString &key) {
       return fi.key();
   }
   return QString();
+}
+
+const QString InterfaceWidget::stripString(const QVariant &val) const {
+  QString buf(val.toString());
+  buf.replace("'", "´");
+  buf = buf.trimmed();
+  return buf;
+}
+
+const QJsonValue InterfaceWidget::getString(const QString &objName) {
+  QString data = m_order->getValue(objName).toString();
+  return QJsonValue(stripString(data));
+}
+
+const QJsonValue InterfaceWidget::getNumeric(const QString &objName) {
+  int data = m_order->getValue(objName).toInt();
+  return QJsonValue(data);
+}
+
+const QJsonValue InterfaceWidget::getPrice(const QString &objName) {
+  double data = m_order->getValue(objName).toDouble();
+  return QJsonValue(data);
 }
 
 }; // namespace Antiqua

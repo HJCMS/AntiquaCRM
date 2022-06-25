@@ -4,7 +4,6 @@
 #include "whsoftwidget.h"
 #include "whsoftconfig.h"
 #include "whsoftjsonquery.h"
-#include "whsoftpurchaser.h"
 
 #include <QLabel>
 #include <QList>
@@ -22,48 +21,23 @@ WHSoftWidget::WHSoftWidget(const QString &widgetId, QWidget *parent)
   QWidget *mainWidget = new QWidget(this);
   QVBoxLayout *layout = new QVBoxLayout(mainWidget);
   layout->setContentsMargins(0, 0, 0, 0);
-  // BEGIN Artikelanzeige
-  m_orderTable = new Antiqua::PurchaserOrderTable(mainWidget);
-  layout->addWidget(m_orderTable);
-  // END
-
-  QHBoxLayout *infoLayout = new QHBoxLayout();
-  infoLayout->setContentsMargins(10, 2, 10, 2);
-  QLabel *lbInfo = new QLabel(tr("purchaser"));
-  lbInfo->setIndent(10);
-  infoLayout->addWidget(lbInfo);
-  infoLayout->addStretch(1);
-  QPushButton *btn_check = new QPushButton(this);
-  btn_check->setText(tr("article check"));
-  btn_check->setIcon(style()->standardIcon(QStyle::SP_MessageBoxQuestion));
-  infoLayout->addWidget(btn_check);
-  layout->addLayout(infoLayout);
-
-  // BEGIN Verkäufer
-  m_purchaserWidget = new WHSoftPurchaser(this);
-  layout->addWidget(m_purchaserWidget);
-  // END
-
+  m_order = new Antiqua::PurchaseOverview(widgetId, mainWidget);
+  layout->addWidget(m_order);
   layout->addStretch(1);
   mainWidget->setLayout(layout);
   setWidget(mainWidget);
 
-  connect(m_orderTable, SIGNAL(findArticleNumbers()), this,
-          SLOT(readCurrentArticleIds()));
-  connect(btn_check, SIGNAL(clicked()), this, SLOT(readCurrentArticleIds()));
-}
-
-const QVariant WHSoftWidget::tableData(int row, int column) {
-  QTableWidgetItem *item = m_orderTable->item(row, column);
-  if (item != nullptr)
-    return item->data(Qt::DisplayRole);
-
-  return QVariant();
+  connect(m_order, SIGNAL(checkOrders()), this, SLOT(readCurrentArticleIds()));
 }
 
 void WHSoftWidget::createCustomerDocument() {
   if (p_currentDocument.isEmpty()) {
     qWarning("Current Json Document is empty!");
+    return;
+  }
+
+  if (m_order->getCustomerId() > 0) {
+    qInfo("CustomerId already exists!");
     return;
   }
 
@@ -124,6 +98,7 @@ void WHSoftWidget::parseAddressBody(const QString &section,
   person.append(" ");
   person.append(object["name"].toString().trimmed());
   buffer.append(person);
+  m_order->setValue("person", person);
 
   QString street(object["adresse"].toString().trimmed());
   buffer.append(street);
@@ -137,11 +112,11 @@ void WHSoftWidget::parseAddressBody(const QString &section,
   }
   buffer.append(location);
 
-  m_purchaserWidget->setValue(section, buffer.join("\n"));
+  m_order->setValue(section, buffer.join("\n"));
   buffer.clear();
 
   // Sende SQL Abfrage an Hauptfenster!
-  if (section == "rechnungsadresse") {
+  if (section == "c_postal_address") {
     QJsonDocument qDoc = customerRequest(object);
     if (!qDoc.isEmpty())
       emit checkCustomer(qDoc);
@@ -149,13 +124,7 @@ void WHSoftWidget::parseAddressBody(const QString &section,
 }
 
 void WHSoftWidget::readCurrentArticleIds() {
-  QList<int> ids;
-  for (int r = 0; r < m_orderTable->rowCount(); r++) {
-    QTableWidgetItem *item = m_orderTable->item(r, 1);
-    if (item != nullptr) {
-      ids.append(item->data(Qt::DisplayRole).toInt());
-    }
-  }
+  QList<int> ids = m_order->getArticleIDs();
   if (ids.count() > 0)
     emit checkArticleIds(ids);
 }
@@ -179,7 +148,7 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
       QString f = it.key();
       QJsonValue val = it.value();
       if (!f.isEmpty() && !val.toString().isEmpty()) {
-        m_purchaserWidget->setValue(f, val.toVariant());
+        m_order->setValue(sqlParam(f), val.toVariant());
       }
     }
 
@@ -189,19 +158,19 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
         QString f = it.key();
         QJsonValue val = it.value();
         if (!f.isEmpty() && !val.toString().isEmpty()) {
-          m_purchaserWidget->setValue(f, val.toString());
+          m_order->setValue(sqlParam(f), val.toString());
         }
       }
-      parseAddressBody("rechnungsadresse", addr1);
+      parseAddressBody("c_postal_address", addr1);
     }
     QJsonObject addr2 = QJsonValue(doc[mainKey]["lieferadresse"]).toObject();
     if (!addr2.isEmpty()) {
-      parseAddressBody("lieferadresse", addr2);
+      parseAddressBody("c_shipping_address", addr2);
     }
   }
 
   // Bestellartikel einfügen
-  m_orderTable->setRowCount(0);
+  m_order->setTableCount(0);
   QJsonArray positionen = QJsonValue(doc["response"]["positionen"]).toArray();
   if (positionen.count() > 0) {
     QJsonArray::iterator at;
@@ -209,17 +178,15 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
       QJsonObject article = (*at).toObject();
       QJsonObject::iterator it;
       int column = 0;
-      int row = m_orderTable->rowCount();
-      m_orderTable->setRowCount((m_orderTable->rowCount() + 1));
-      QTableWidgetItem *item = m_orderTable->createItem(windowTitle());
-      m_orderTable->setItem(row, column++, item);
+      int row = m_order->getTableCount();
+      m_order->setTableCount((m_order->getTableCount() + 1));
+      m_order->setTableData(row, column++, windowTitle());
       for (it = article.begin(); it != article.end(); ++it) {
         QString f = sqlParam(it.key());
         QVariant curValue = it.value().toVariant();
         if (!f.isEmpty() && !curValue.isNull() && f.contains("a_")) {
           QString txt = curValue.toString().trimmed();
-          QTableWidgetItem *item = m_orderTable->createItem(txt);
-          m_orderTable->setItem(row, column++, item);
+          m_order->setTableData(row, column++, txt);
         }
       }
     }
@@ -238,7 +205,7 @@ void WHSoftWidget::createOrderRequest(const QString &bfId) {
 void WHSoftWidget::setCustomerId(int customerId) {
   if (customerId > 0) {
     currentCustomerId = customerId;
-    m_purchaserWidget->setCustomerId(customerId);
+    m_order->setCustomerId(customerId);
   }
 }
 
@@ -268,14 +235,20 @@ const QMap<QString, QString> WHSoftWidget::fieldTranslate() const {
 
 const ProviderOrder WHSoftWidget::getProviderOrder() {
   ProviderOrder order;
-  int cid = m_purchaserWidget->getValue("costumerId").toInt();
   order.setProvider(CONFIG_PROVIDER);
   order.setProviderId(objectName());
+
+  int cid = m_order->getCustomerId();
+  if(cid < 1) {
+    qWarning("Missing Customer Id");
+    return order;
+  }
   order.setCustomerId(cid);
-  int col = 1; /**< CustomerId Cell */
+
+  int col = 1; /**< ArticleId Cell */
   QStringList ids;
-  for (int r = 0; r < m_orderTable->rowCount(); r++) {
-    QString aid = tableData(r, col).toString();
+  for (int r = 0; r < m_order->getTableCount(); r++) {
+    QString aid = m_order->getTableData(r, col).toString();
     if (!aid.isEmpty())
       ids.append(aid);
   }

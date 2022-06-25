@@ -35,7 +35,7 @@
 <context>
     <name>Antiqua::PurchaseOverview</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+98"/>
+        <location filename="../core/antiquacore/interface.cpp" line="+90"/>
         <source>Customer ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -78,7 +78,7 @@
 <context>
     <name>Antiqua::PurchaserOrderTable</name>
     <message>
-        <location line="-123"/>
+        <location line="-115"/>
         <source>Provider</source>
         <translation type="unfinished"></translation>
     </message>
@@ -110,14 +110,6 @@
     <message>
         <location line="+4"/>
         <source>copy article id</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Antiqua::PurchaserWidget</name>
-    <message>
-        <location line="+26"/>
-        <source>purchaser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4390,47 +4382,6 @@
     <message>
         <location line="+7"/>
         <source>start query</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>WHSoftPurchaser</name>
-    <message>
-        <location filename="../plugins/antiqua/whsoft/whsoftpurchaser.cpp" line="+35"/>
-        <source>Customer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Not exists</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>shipping address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>delivery address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Comments</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>WHSoftWidget</name>
-    <message>
-        <location filename="../plugins/antiqua/whsoft/whsoftwidget.cpp" line="+32"/>
-        <source>purchaser</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>article check</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

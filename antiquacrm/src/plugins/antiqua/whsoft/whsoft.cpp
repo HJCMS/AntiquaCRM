@@ -5,7 +5,6 @@
 #include "buchfreund.h"
 #include "whsoftconfig.h"
 #include "whsoftjsonquery.h"
-#include "whsoftpurchaser.h"
 #include "whsoftwidget.h"
 
 void WHSoft::prepareJsonListResponse(const QJsonDocument &doc) {
@@ -31,7 +30,6 @@ void WHSoft::prepareJsonListResponse(const QJsonDocument &doc) {
 
 void WHSoft::responseAnswerCheck(const QJsonDocument &doc) {
   // qDebug() << Q_FUNC_INFO << doc;
-  // QJsonDocument({"error":false,"response":"ok"})
   bool errors = QJsonValue(doc["error"]).toBool();
   emit s_queryResponse(errors);
 }

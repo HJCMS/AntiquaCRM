@@ -25,16 +25,6 @@ class ANTIQUACORE_EXPORT AbeBooksIfaceWidget final
 private:
   QDomDocument p_currentDocument;
 
-  const QString stripString(const QVariant &val) const;
-
-  const QVariant tableData(int row, int column);
-
-  void setTableData(int row, int column, const QVariant &val);
-
-  const QJsonValue getString(const QString &objName);
-  const QJsonValue getNumeric(const QString &objName);
-  const QJsonValue getPrice(const QString &objName);
-
   const QJsonDocument customerRequest(const QJsonObject &object);
 
   void parseAddressBody(const QString &, const QJsonObject &);
