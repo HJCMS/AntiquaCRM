@@ -267,6 +267,8 @@ namespace Antiqua {
 
     /**
      * @brief JSonValue Helfer
+     * @ref stripString
+     * Verwendet m_order->getValue(objName) und Konvertiert in das passende Format.
      */
     const QJsonValue getString(const QString &objName);
     const QJsonValue getNumeric(const QString &objName);
