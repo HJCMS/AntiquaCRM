@@ -110,6 +110,10 @@ bool AbeBooksRequester::createRequest(const QDomDocument &document) {
   QByteArray size = QString::number(query.size()).toLocal8Bit();
   request.setRawHeader(QByteArray("Content-Length"), size);
 
+#if PLUGIN_ABEBOOKS_DEBUG == true
+  qDebug() << Q_FUNC_INFO << document.toString(-1);
+#endif
+
   m_reply = post(request, query);
   connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));
@@ -119,7 +123,7 @@ bool AbeBooksRequester::createRequest(const QDomDocument &document) {
 
   connect(m_reply, SIGNAL(readyRead()), this, SLOT(replyReadyRead()));
 
-  return true;
+  return true; // m_reply->isRunning();
 }
 
 void AbeBooksRequester::slotError(QNetworkReply::NetworkError error) {
@@ -199,6 +203,7 @@ void AbeBooksRequester::replyReadyRead() {
   int errorLine = 0;
   int errorColumn = 0;
   if (doc.setContent(data, false, &errorMsg, &errorLine, &errorColumn)) {
+    qInfo("AbeBooks answer loaded");
     emit response(doc);
   } else {
     qDebug() << Q_FUNC_INFO << errorMsg << errorLine << errorColumn;
@@ -215,12 +220,17 @@ void AbeBooksRequester::queryList() {
 }
 
 void AbeBooksRequester::queryOrder(const QString &purchaseId) {
+  if (purchaseId.isEmpty()) {
+    qWarning("empty purchase id");
+    return;
+  }
+
   AbeBooksDocument doc = createDocument();
   doc.createAction("getOrder");
   QDomElement e = doc.createElement("purchaseOrder");
   QString id(purchaseId);
   e.setAttribute("id", id.trimmed());
-  doc.appendChild(e);
+  doc.documentElement().appendChild(e);
   if (createRequest(doc)) {
     qInfo("Request purchaseOrder created");
   }

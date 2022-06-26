@@ -9,6 +9,7 @@
 #include "myicontheme.h"
 #include "statusbar.h"
 #include "storagelocation.h"
+#include "deliverservicedialog.h"
 #include "workspace.h"
 
 #include <QJsonDocument>
@@ -142,6 +143,11 @@ void MWindow::setupActions() {
   connect(a_bst, SIGNAL(triggered(bool)), this,
           SLOT(openStorageLocation(bool)));
 
+  QAction *a_dsd = m_tablesMenu->addAction(tr("Delivery Services"));
+  a_dsd->setIcon(myIcon("spreadsheet"));
+  connect(a_dsd, SIGNAL(triggered(bool)), this,
+          SLOT(openDeliveryService(bool)));
+
   QAction *a_bct = m_tablesMenu->addAction(tr("Condition"));
   a_bct->setIcon(myIcon("spreadsheet"));
   connect(a_bct, SIGNAL(triggered(bool)), this, SLOT(openCondition(bool)));
@@ -175,6 +181,14 @@ void MWindow::openEditAutoFill(CompleterDialog::Filter t) {
 
 void MWindow::openStorageLocation(bool) {
   StorageLocation *d = new StorageLocation(this);
+  if (d->exec()) {
+    qInfo("Editing finished");
+    d->deleteLater();
+  }
+}
+
+void MWindow::openDeliveryService(bool) {
+  DeliverServiceDialog *d = new DeliverServiceDialog(this);
   if (d->exec()) {
     qInfo("Editing finished");
     d->deleteLater();

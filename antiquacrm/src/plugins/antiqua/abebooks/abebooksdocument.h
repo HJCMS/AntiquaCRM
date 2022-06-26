@@ -33,6 +33,11 @@ public:
   AbeBooksDocument(const QDomDocument &other);
 
   /**
+   * @brief Error Response Codes
+   */
+  QPair<int,QString> errorResponseCode();
+
+  /**
    * @brief notExists
    * @return true - if Tag by Name not exists!
    */

@@ -33,6 +33,7 @@ static const QDomDocument testSources(const QString &file) {
   }
   return out;
 }
+
 #endif
 
 /**
@@ -53,8 +54,10 @@ static const QDomDocument testSources(const QString &file) {
 #define CONFIG_PROVIDER "AbeBooks"
 #endif
 
+#ifndef Q_WS_WIN
 #ifndef PLUGIN_ABEBOOKS_DEBUG
 #define PLUGIN_ABEBOOKS_DEBUG true
+#endif
 #endif
 
 struct ANTIQUACORE_EXPORT AbeBooksAccess {

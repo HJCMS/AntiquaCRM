@@ -1483,6 +1483,47 @@
     </message>
 </context>
 <context>
+    <name>DeliverServiceDialog</name>
+    <message>
+        <location filename="../custom/deliverservice/deliverservicedialog.cpp" line="+14"/>
+        <source>Deliver Services</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DeliverServiceList</name>
+    <message>
+        <location filename="../custom/deliverservice/deliverservicelist.cpp" line="+21"/>
+        <source>Service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Definition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>International</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>National</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DeliveryNote</name>
     <message>
         <location filename="../custom/printing/deliverynote.cpp" line="+17"/>
@@ -2166,7 +2207,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+188"/>
+        <location line="+190"/>
         <source>customer found in database!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2186,13 +2227,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-258"/>
+        <location line="-260"/>
         <location line="+12"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+221"/>
+        <location line="+223"/>
         <source>open order editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2339,7 +2380,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+83"/>
+        <location filename="../mwindow.cpp" line="+84"/>
         <source>Application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2375,7 +2416,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+22"/>
         <source>Save request</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2385,18 +2426,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+63"/>
         <source>SQL Server Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-89"/>
-        <location line="+102"/>
+        <location line="-102"/>
+        <location line="+115"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-158"/>
+        <location line="-171"/>
         <source>Prints</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2422,6 +2463,11 @@
     </message>
     <message>
         <location line="+13"/>
+        <source>Delivery Services</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Condition</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2431,7 +2477,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+89"/>
         <source>Disable Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>

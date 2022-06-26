@@ -27,6 +27,19 @@ AbeBooksDocument::AbeBooksDocument(const QDomDocument &other)
   apiKey = QString();
 }
 
+QPair<int,QString> AbeBooksDocument::errorResponseCode()
+{
+  QPair<int,QString> qp;
+  if (notExists("requestError")) {
+    qp.first = 104;
+    qp.second = "Unknown XML Error";
+    return qp;
+  }
+  qp.first = nodeIntValue(documentElement().namedItem("code"));
+  qp.second = documentElement().namedItem("message").firstChild().nodeValue();
+  return qp;
+}
+
 const bool AbeBooksDocument::notExists(const QString &tag) const {
   return (documentElement().tagName() != tag);
 }

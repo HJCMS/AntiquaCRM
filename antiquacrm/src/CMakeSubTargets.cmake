@@ -17,6 +17,8 @@ SET (PROJECT_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/autofill
  ${CMAKE_CURRENT_BINARY_DIR}/custom/completer
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/completer
+ ${CMAKE_CURRENT_BINARY_DIR}/custom/deliverservice
+ ${CMAKE_CURRENT_SOURCE_DIR}/custom/deliverservice
  ${CMAKE_CURRENT_BINARY_DIR}/custom/imaging
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/imaging
  ${CMAKE_CURRENT_BINARY_DIR}/custom/networking
@@ -81,6 +83,7 @@ Assistant
 Autofill
 Printing
 StorageLocation
+DeliverService
 InventoryBooks
 InventoryPrints
 InventoryOrders

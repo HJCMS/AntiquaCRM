@@ -160,6 +160,8 @@ void InventoryProviders::queryOrder(const QString &provider,
   if (tabExists(orderId))
     return;
 
+  // qDebug() << Q_FUNC_INFO << provider << orderId;
+
   QListIterator<Antiqua::Interface *> it(p_iFaces);
   while (it.hasNext()) {
     Antiqua::Interface *iFace = it.next();

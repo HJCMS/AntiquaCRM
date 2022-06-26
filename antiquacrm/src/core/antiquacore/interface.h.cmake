@@ -276,6 +276,11 @@ namespace Antiqua {
 
   Q_SIGNALS:
     /**
+     * @brief Generieren eine Fehler Meldung
+     */
+    void errorResponse(int type, const QString &message);
+
+    /**
      * @brief Kundenabfrage an das Hauptsystem
      * Es wird folgendes Format erwartet und jeder Parameter @b muss gesetzt sein!
      * @code

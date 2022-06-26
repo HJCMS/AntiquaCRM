@@ -11,6 +11,21 @@
 #include <QRegExp>
 #include <QTableWidgetItem>
 #include <QVBoxLayout>
+#include <QFile>
+#include <QDir>
+
+#ifdef PLUGIN_ABEBOOKS_DEBUG
+static void writeLogFile(const QDomDocument &doc) {
+  QString xml(QDir::homePath());
+  xml.append("/.cache/AbeBooks_OrderResponse.xml");
+  QFile fp(xml);
+  if (fp.open(QIODevice::WriteOnly)) {
+    QTextStream in(&fp);
+    in << doc.toByteArray(1);
+    fp.close();
+  }
+}
+#endif
 
 AbeBooksIfaceWidget::AbeBooksIfaceWidget(const QString &widgetId,
                                          QWidget *parent)
@@ -149,8 +164,19 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
   if (doc.isNull())
     return;
 
-  p_currentDocument = doc;
   AbeBooksDocument xml(doc);
+  if (doc.documentElement().tagName() == "requestError") {
+    QPair<int, QString> err = xml.errorResponseCode();
+    // qDebug() << Q_FUNC_INFO << err.first << err.second;
+    emit errorResponse(err.first, err.second);
+    return;
+  }
+
+#ifdef PLUGIN_ABEBOOKS_DEBUG
+  writeLogFile(doc);
+#endif
+
+  p_currentDocument = doc;
   QDomNodeList n_list = xml.getPurchaseOrder().childNodes();
   for (int i = 0; i < n_list.count(); i++) {
     QDomNode n = n_list.at(i);
@@ -233,6 +259,7 @@ void AbeBooksIfaceWidget::createOrderRequest(const QString &purchaseId) {
   connect(req, SIGNAL(response(const QDomDocument &)), this,
           SLOT(setXmlContent(const QDomDocument &)));
 
+  // qDebug() << Q_FUNC_INFO << purchaseId;
   req->queryOrder(purchaseId);
 }
 
@@ -270,7 +297,7 @@ const ProviderOrder AbeBooksIfaceWidget::getProviderOrder() {
   order.setProvider(CONFIG_PROVIDER);
   order.setProviderId(objectName());
   int cid = m_order->getCustomerId();
-  if(cid < 1) {
+  if (cid < 1) {
     qWarning("Missing Customer Id");
     return order;
   }
