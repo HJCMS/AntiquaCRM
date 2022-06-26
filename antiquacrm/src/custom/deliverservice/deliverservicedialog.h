@@ -29,7 +29,6 @@ private:
   QDialogButtonBox *m_buttonBox;
   QStatusBar *m_statusBar;
 
-
   void initItemsTreeView();
 
 private Q_SLOTS:
