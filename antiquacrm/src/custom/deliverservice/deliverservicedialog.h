@@ -7,11 +7,12 @@
 
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QJsonObject>
 #include <QSplitter>
 #include <QStatusBar>
 #include <QWidget>
 
-class DeliverService;
+class DeliverServiceEdit;
 class DeliverServiceList;
 
 #include <SqlCore>
@@ -24,7 +25,7 @@ class DeliverServiceDialog : public QDialog {
 private:
   HJCMS::SqlCore *m_sql;
   QSplitter *m_splitter;
-  DeliverService *m_view;
+  DeliverServiceEdit *m_edit;
   DeliverServiceList *m_list;
   QDialogButtonBox *m_buttonBox;
   QStatusBar *m_statusBar;
@@ -32,8 +33,15 @@ private:
   void initItemsTreeView();
 
 private Q_SLOTS:
+  void messanger(const QString &);
+
+protected:
+  bool event(QEvent *) override;
+
+private Q_SLOTS:
+  void saveCurrent();
   void queryDeliverServices(int);
-  void queryServicePackage(int, const QString &);
+  void queryServicePackage(int, const QJsonObject &);
 
 public:
   explicit DeliverServiceDialog(QWidget *parent = nullptr);

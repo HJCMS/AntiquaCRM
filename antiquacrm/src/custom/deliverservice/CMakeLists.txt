@@ -7,20 +7,21 @@ SET (subproject_LINKER
  AntiquaCore
  Settings
  SqlCore
+ Utils
 )
 
 SET (subproject_SOURCES
  deliveritem.cpp
  deliverservicedialog.cpp
  deliverservicelist.cpp
- deliverservice.cpp
+ deliverserviceedit.cpp
 )
 
 SET (subproject_HEADERS
  deliveritem.h
  deliverservicedialog.h
  deliverservicelist.h
- deliverservice.h
+ deliverserviceedit.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

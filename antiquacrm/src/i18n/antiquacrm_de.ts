@@ -1485,15 +1485,108 @@
 <context>
     <name>DeliverServiceDialog</name>
     <message>
-        <location filename="../custom/deliverservice/deliverservicedialog.cpp" line="+14"/>
+        <location filename="../custom/deliverservice/deliverservicedialog.cpp" line="+15"/>
         <source>Deliver Services</source>
         <translation>Lieferdienste</translation>
     </message>
 </context>
 <context>
+    <name>DeliverServiceEdit</name>
+    <message>
+        <location filename="../custom/deliverservice/deliverserviceedit.cpp" line="+21"/>
+        <source>Service</source>
+        <translation>Dienst</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Delivery Service</source>
+        <translation>Lieferdienst</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>International</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>If selected then it is a International Package.</source>
+        <translation>Wenn ausgewählt, handelt es sich um ein internationales Paket.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>costs</source>
+        <translation>Kosten</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location line="+3"/>
+        <source>Package</source>
+        <translation>Paket</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Service Packagename</source>
+        <translation>Paketname</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+3"/>
+        <source>Definition</source>
+        <translation>Definition</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Package Definition</source>
+        <translation>Paket Definition</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+3"/>
+        <source>Description</source>
+        <translation>Beschreibung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Package Description</source>
+        <translation>Paketbeschreibung</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+3"/>
+        <source>Infopage</source>
+        <translation>Infoseiten</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Package Website Infolink</source>
+        <translation>Infoseite der Paketvervollgung</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+3"/>
+        <source>Webseite</source>
+        <translation>Webseite</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Service Website</source>
+        <translation>Dienstleister Webseite</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Modification date</source>
+        <translation>Änderunges-Datum</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>No Dataset present</source>
+        <translation>Kein Datensatz vorhanden</translation>
+    </message>
+</context>
+<context>
     <name>DeliverServiceList</name>
     <message>
-        <location filename="../custom/deliverservice/deliverservicelist.cpp" line="+21"/>
+        <location filename="../custom/deliverservice/deliverservicelist.cpp" line="+22"/>
         <source>Service</source>
         <translation>Anbieter</translation>
     </message>
@@ -1513,7 +1606,7 @@
         <translation>Paket</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+47"/>
         <source>International</source>
         <translation></translation>
     </message>

@@ -7,6 +7,7 @@
 
 #include <QObject>
 #include <QTreeWidget>
+#include <QJsonObject>
 #include <QTreeWidgetItem>
 #include <QWidget>
 
@@ -27,7 +28,7 @@ private Q_SLOTS:
 
 Q_SIGNALS:
   void deliverServiceChanged(int id);
-  void deliverPackageClicked(int id, const QString &name);
+  void deliverPackageClicked(int id, const QJsonObject &name);
 
 public Q_SLOTS:
   void addDeliverService(int id, const QString &name);

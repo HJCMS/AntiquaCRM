@@ -7,6 +7,7 @@
 #include "myicontheme.h"
 
 #include <QDebug>
+#include <QJsonValue>
 #include <QHeaderView>
 
 DeliverServiceList::DeliverServiceList(QWidget *parent) : QTreeWidget{parent} {
@@ -48,8 +49,11 @@ void DeliverServiceList::getDeliverServiceId(QTreeWidgetItem *item,
                                              int column) {
   if (item->childCount() == 0) {
     int id = item->data(0, Qt::UserRole).toInt();
-    QString n = item->data(0, Qt::DisplayRole).toString();
-    emit deliverPackageClicked(id, n);
+    QJsonObject obj;
+    obj.insert("d_class",QJsonValue(item->data(0, Qt::DisplayRole).toString()));
+    obj.insert("d_definition",QJsonValue(item->data(2, Qt::DisplayRole).toString()));
+    obj.insert("d_description",QJsonValue(item->data(3, Qt::DisplayRole).toString()));
+    emit deliverPackageClicked(id, obj);
   }
 }
 

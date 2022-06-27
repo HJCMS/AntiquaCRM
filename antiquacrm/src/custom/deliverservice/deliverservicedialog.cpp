@@ -3,15 +3,16 @@
 
 #include "deliverservicedialog.h"
 #include "deliveritem.h"
+#include "deliverserviceedit.h"
 #include "deliverservicelist.h"
-#include "deliverservice.h"
 
-#include <QtCore>
-#include <QtWidgets>
+#include <QDebug>
+#include <QScrollArea>
+#include <QVBoxLayout>
 
 DeliverServiceDialog::DeliverServiceDialog(QWidget *parent) : QDialog{parent} {
   setObjectName("deliver_service_dialog");
-  setWindowTitle(tr("Deliver Services"));
+  setWindowTitle(tr("Deliver Services") + "[*]");
   setSizeGripEnabled(true);
   setMinimumSize(QSize(600, 400));
 
@@ -26,17 +27,19 @@ DeliverServiceDialog::DeliverServiceDialog(QWidget *parent) : QDialog{parent} {
 
   m_list = new DeliverServiceList(m_splitter);
   m_splitter->insertWidget(0, m_list);
-  m_splitter->setStretchFactor(0, 20);
+  m_splitter->setStretchFactor(0, 40);
 
   QScrollArea *m_srollArea = new QScrollArea(m_splitter);
   m_srollArea->setWidgetResizable(true);
-  m_view = new DeliverService(m_srollArea);
-  m_srollArea->setWidget(m_view);
+  m_edit = new DeliverServiceEdit(m_srollArea);
+  m_srollArea->setWidget(m_edit);
 
   m_splitter->insertWidget(1, m_srollArea);
-  m_splitter->setStretchFactor(1, 80);
+  m_splitter->setStretchFactor(1, 60);
 
   m_buttonBox = new QDialogButtonBox(this);
+  m_buttonBox->setStandardButtons(QDialogButtonBox::Save |
+                                  QDialogButtonBox::Close);
   layout->addWidget(m_buttonBox);
   layout->setStretch(row++, 0);
 
@@ -49,8 +52,15 @@ DeliverServiceDialog::DeliverServiceDialog(QWidget *parent) : QDialog{parent} {
 
   connect(m_list, SIGNAL(deliverServiceChanged(int)), this,
           SLOT(queryDeliverServices(int)));
-  connect(m_list, SIGNAL(deliverPackageClicked(int, const QString &)), this,
-          SLOT(queryServicePackage(int, const QString &)));
+
+  connect(m_list, SIGNAL(deliverPackageClicked(int, const QJsonObject &)), this,
+          SLOT(queryServicePackage(int, const QJsonObject &)));
+
+  connect(m_edit, SIGNAL(message(const QString &)), this,
+          SLOT(messanger(const QString &)));
+
+  connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+  connect(m_buttonBox, SIGNAL(accepted()), this, SLOT(saveCurrent()));
 }
 
 void DeliverServiceDialog::initItemsTreeView() {
@@ -62,6 +72,27 @@ void DeliverServiceDialog::initItemsTreeView() {
       m_list->addDeliverService(id, q.value("d_name").toString());
     }
   }
+}
+
+void DeliverServiceDialog::messanger(const QString &msg) {
+  m_statusBar->showMessage(msg, (1000 * 5));
+}
+
+bool DeliverServiceDialog::event(QEvent *e) {
+  if (e->type() == QEvent::StatusTip) {
+    QStatusTipEvent *t = static_cast<QStatusTipEvent *>(e);
+    if (t->tip().isEmpty())
+      return false;
+
+    m_statusBar->showMessage(t->tip(), 1000);
+    return true;
+  }
+  return QDialog::event(e);
+}
+
+void DeliverServiceDialog::saveCurrent() {
+  DeliverItem data = m_edit->getSaveData();
+  qDebug() << Q_FUNC_INFO << "TODO";
 }
 
 void DeliverServiceDialog::queryDeliverServices(int id) {
@@ -82,30 +113,24 @@ void DeliverServiceDialog::queryDeliverServices(int id) {
   }
 }
 
-void DeliverServiceDialog::queryServicePackage(int id, const QString &name) {
-  qDebug() << Q_FUNC_INFO << id << name;
-  return;
+void DeliverServiceDialog::queryServicePackage(int id, const QJsonObject &obj) {
   QString sql("SELECT * FROM ref_delivery_service");
   sql.append(" LEFT JOIN ref_delivery_cost ON d_srv=d_id");
-  sql.append(" WHERE d_id=" + QString::number(id) + ";");
+  sql.append(" WHERE d_id=" + QString::number(id));
+  sql.append(" AND d_class='" + obj["d_class"].toString() + "'");
+  sql.append(" AND d_definition='" + obj["d_definition"].toString() + "'");
+  sql.append(" AND d_description='" + obj["d_description"].toString() + "';");
+
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
     QSqlRecord r = q.record();
     QMap<QString, QVariant> entry;
-    int test = 0;
     while (q.next()) {
-      if (test > 2)
-        break;
-
       for (int f = 0; f < r.count(); f++) {
         entry.insert(r.fieldName(f), q.value(f));
       }
-
-      test++;
-      m_view->addDeliverServiceEntry(entry);
     }
-  } else {
-    qDebug() << Q_FUNC_INFO << m_sql->lastError();
+    m_edit->addDeliverServiceEntry(entry);
   }
 }
 
