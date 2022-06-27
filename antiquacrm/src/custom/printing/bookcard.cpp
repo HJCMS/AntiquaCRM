@@ -72,6 +72,12 @@ void BookCardPaintWidget::paintEvent(QPaintEvent *p) {
   painter.drawStaticText(margin, yPos, storage);
 
   yPos += (fontHeight + margin);
+  QStaticText txtKeywords(p_keywords);
+  txtKeywords.setTextFormat(Qt::PlainText);
+  txtKeywords.setTextWidth((w - (margin * 2)));
+  painter.drawStaticText(margin, yPos, txtKeywords);
+
+  yPos += (fontHeight + margin);
   QStaticText txtAuthor(p_author);
   txtAuthor.setTextFormat(Qt::PlainText);
   txtAuthor.setTextWidth((w - (margin * 2)));
@@ -125,6 +131,7 @@ void BookCardPaintWidget::setBookDescription(
     const QHash<QString, QVariant> &list) {
   p_title = tr("Title") + ": " + list.value("title").toString();
   p_author = tr("Author") + ": " + list.value("author").toString();
+  p_keywords = tr("Keywords") + ": " + list.value("keywords").toString();
   p_year = tr("Year") + ": " + list.value("year").toString();
   QDate date = list.value("since").toDate();
   p_since = tr("Registered") + ": " + date.toString();

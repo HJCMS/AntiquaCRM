@@ -74,11 +74,6 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
   m_tableView->initOrders();
 }
 
-const QList<SearchFilter> InventoryOrders::commonSearchFilter() const {
-  QList<SearchFilter> l;
-  return l;
-}
-
 void InventoryOrders::searchConvert(const QString &query) {}
 
 void InventoryOrders::searchConvert() {}

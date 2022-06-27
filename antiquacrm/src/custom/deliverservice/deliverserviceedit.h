@@ -6,9 +6,9 @@
 #define DELIVERSERVICEEDIT_H
 
 #include <QComboBox>
-#include <QMap>
-#include <QList>
 #include <QLabel>
+#include <QList>
+#include <QMap>
 #include <QObject>
 #include <QWidget>
 
@@ -22,6 +22,7 @@ class DeliverServiceEdit : public QWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  IntSpinBox *d_cid;
   DeliveryService *d_srv;
   StrLineEdit *d_class;
   StrLineEdit *d_definition;
@@ -34,8 +35,15 @@ private:
 
   QLabel *info(const QString &);
 
+private Q_SLOTS:
+  void clearFields();
+
 Q_SIGNALS:
   void message(const QString &str);
+
+public Q_SLOTS:
+  void createSubEntry(int id);
+  void createNewEntry();
 
 public:
   explicit DeliverServiceEdit(QWidget *parent = nullptr);

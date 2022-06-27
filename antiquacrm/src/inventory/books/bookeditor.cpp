@@ -655,6 +655,7 @@ void BookEditor::printingBookCard() {
   data.insert("year", ib_year->value());
   data.insert("storage", ib_storage->description());
   data.insert("since", ib_since->getDate());
+  data.insert("keywords", ib_keyword->value());
 
   if (dialog->exec(data) == QDialog::Accepted) {
     /* Im Moment nicht zugewiesen */

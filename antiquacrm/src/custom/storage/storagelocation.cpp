@@ -148,7 +148,7 @@ StorageLocation::StorageLocation(QWidget *parent) : QDialog{parent} {
 }
 
 void StorageLocation::keyPressEvent(QKeyEvent *e) {
-  if (e->key() == Qt::Key_Return) {
+  if (e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter) {
     return;
   }
   QDialog::keyPressEvent(e);

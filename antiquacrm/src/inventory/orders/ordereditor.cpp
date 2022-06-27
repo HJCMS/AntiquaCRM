@@ -99,19 +99,20 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   m_deliveryBox = new QGroupBox(this);
   m_deliveryBox->setTitle(tr("Delivery Service"));
   QGridLayout *dsLayout = new QGridLayout(m_deliveryBox);
-  o_delivery_service = new DeliveryService(m_deliveryBox);
+  o_delivery_service = new DeliveryServicePlus(m_deliveryBox);
   o_delivery_service->setObjectName("o_delivery_service");
   o_delivery_service->setInfo(tr("Service"));
-  dsLayout->addWidget(o_delivery_service, 0, 0, 1, 1, Qt::AlignLeft);
-  o_notify = new BoolBox(this);
-  o_notify->setObjectName("o_notify");
-  o_notify->setInfo(tr("Notification"));
-  dsLayout->addWidget(o_notify, 0, 1, 1, 2, Qt::AlignRight);
+  dsLayout->addWidget(o_delivery_service, 0, 0, 1, 2, Qt::AlignLeft);
 
   o_delivery_send_id = new LineEdit(m_deliveryBox);
   o_delivery_send_id->setObjectName("o_delivery_send_id");
   o_delivery_send_id->setInfo(tr("Parcel Shipment Number"));
   dsLayout->addWidget(o_delivery_send_id, 1, 0, 1, 2);
+
+  o_notify = new BoolBox(this);
+  o_notify->setObjectName("o_notify");
+  o_notify->setInfo(tr("Notification"));
+  dsLayout->addWidget(o_notify, 2, 0, 1, 1, Qt::AlignRight);
   o_delivery = new LineEdit(m_deliveryBox);
   o_delivery->setObjectName("o_delivery");
   o_delivery->setInfo(tr("Delivery note number"));

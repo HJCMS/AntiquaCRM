@@ -12,6 +12,7 @@ class DeliverItem : public QSharedData {
 private:
   const int d_srv;
   const QString d_class;
+  int d_cid;
   QString d_definition;
   QString d_description;
   bool d_international;
@@ -22,6 +23,9 @@ public:
   explicit DeliverItem(int index, const QString &name);
   int index() const;
   const QString name() const;
+
+  void setPrimaryKey(int id);
+  int primaryKey();
 
   void setDefinition(const QString &);
   const QString definition();

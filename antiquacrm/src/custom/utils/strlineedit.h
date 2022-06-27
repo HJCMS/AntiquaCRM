@@ -115,6 +115,11 @@ public:
   explicit StrLineEdit(QWidget *parent = nullptr);
 
   /**
+   * @brief Nur Lesen Modus
+   */
+  void setReadOnly(bool m = false);
+
+  /**
    * @brief Aktueller Rückgabewert
    * Gibt den aktuellen Wert als QVariant zurück
    * damit er besser Verarbeitet werden kann.

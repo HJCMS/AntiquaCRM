@@ -40,6 +40,11 @@ DeliverServiceDialog::DeliverServiceDialog(QWidget *parent) : QDialog{parent} {
   m_buttonBox = new QDialogButtonBox(this);
   m_buttonBox->setStandardButtons(QDialogButtonBox::Save |
                                   QDialogButtonBox::Close);
+
+  ac_create =
+      m_buttonBox->addButton(tr("Create"), QDialogButtonBox::ActionRole);
+  ac_create->setIcon(myIcon("edit_add"));
+
   layout->addWidget(m_buttonBox);
   layout->setStretch(row++, 0);
 
@@ -56,14 +61,21 @@ DeliverServiceDialog::DeliverServiceDialog(QWidget *parent) : QDialog{parent} {
   connect(m_list, SIGNAL(deliverPackageClicked(int, const QJsonObject &)), this,
           SLOT(queryServicePackage(int, const QJsonObject &)));
 
+  connect(m_list, SIGNAL(removeDeliveryPackage(const QJsonObject &)), this,
+          SLOT(deleteDeliveryPackage(const QJsonObject &)));
+
   connect(m_edit, SIGNAL(message(const QString &)), this,
           SLOT(messanger(const QString &)));
 
+  connect(m_list, SIGNAL(createDeliveryService(int)), m_edit,
+          SLOT(createSubEntry(int)));
+  connect(ac_create, SIGNAL(clicked()), m_edit, SLOT(createNewEntry()));
   connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
   connect(m_buttonBox, SIGNAL(accepted()), this, SLOT(saveCurrent()));
 }
 
 void DeliverServiceDialog::initItemsTreeView() {
+  m_list->clear();
   QString sql("SELECT d_id,d_name,d_website FROM ref_delivery_service;");
   QSqlQuery q = m_sql->query(sql);
   while (q.next()) {
@@ -76,6 +88,26 @@ void DeliverServiceDialog::initItemsTreeView() {
 
 void DeliverServiceDialog::messanger(const QString &msg) {
   m_statusBar->showMessage(msg, (1000 * 5));
+}
+
+void DeliverServiceDialog::deleteDeliveryPackage(const QJsonObject &obj) {
+  QString sql("DELETE FROM ref_delivery_cost WHERE");
+  sql.append(" d_srv=" + QString::number(obj["d_srv"].toInt()) + "");
+  qreal d_price = obj["d_price"].toDouble();
+  sql.append(" AND d_price=" + QString::number(d_price));
+  QString d_description = obj["d_description"].toString();
+  sql.append(" AND d_description LIKE '" + d_description + "'");
+  QString d_definition = obj["d_definition"].toString();
+  sql.append(" AND d_definition LIKE '" + d_definition + "';");
+  qDebug() << sql;
+}
+
+void DeliverServiceDialog::keyPressEvent(QKeyEvent *e) {
+  if (e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter) {
+    // Key press enter or return will ignored!
+    return;
+  }
+  QDialog::keyPressEvent(e);
 }
 
 bool DeliverServiceDialog::event(QEvent *e) {
@@ -92,12 +124,61 @@ bool DeliverServiceDialog::event(QEvent *e) {
 
 void DeliverServiceDialog::saveCurrent() {
   DeliverItem data = m_edit->getSaveData();
-  qDebug() << Q_FUNC_INFO << "TODO";
+  int d_cid = data.primaryKey();
+  QString d_srv = QString::number(data.index());
+  QString d_class = data.name();
+  QString d_definition = data.definition();
+  QString d_international = (data.international() ? "true" : "false");
+  QString d_description = data.description();
+  QString d_price = QString::number(data.price(), 'f', 2);
+
+  QString sql;
+  if (d_cid > 0) {
+    // SQL UPDATE
+    sql.append("UPDATE ref_delivery_cost SET");
+    sql.append(" d_srv=");
+    sql.append(d_srv);
+    sql.append(", d_class='");
+    sql.append(d_class);
+    sql.append("', d_definition='");
+    sql.append(d_definition);
+    sql.append("', d_international=");
+    sql.append(d_international);
+    sql.append(", d_description='");
+    sql.append(d_description);
+    sql.append("', d_price=");
+    sql.append(d_price);
+    sql.append(" WHERE d_cid=");
+    sql.append(QString::number(d_cid));
+    sql.append(";");
+  } else {
+    // SQL INSERT
+    sql.append("INSERT INTO ref_delivery_cost (");
+    sql.append("d_srv,d_class,d_definition,");
+    sql.append("d_international,d_description,");
+    sql.append("d_price) VALUES (");
+    sql.append(d_srv + ",");
+    sql.append("'" + d_class + "',");
+    sql.append("'" + d_definition + "',");
+    sql.append(d_international + ",");
+    sql.append("'" + d_description + "',");
+    sql.append(d_price);
+    sql.append(");");
+  }
+
+  qDebug() << "SQL:" << sql;
+
+  m_sql->query(sql);
+  if (m_sql->lastError().isEmpty()) {
+    initItemsTreeView();
+  } else {
+    qDebug() << m_sql->lastError();
+  }
 }
 
 void DeliverServiceDialog::queryDeliverServices(int id) {
   QString sql("SELECT * FROM ref_delivery_cost");
-  sql.append(" WHERE d_srv=" + QString::number(id));
+  sql.append(" WHERE d_srv=" + QString::number(id) + ";");
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
     while (q.next()) {

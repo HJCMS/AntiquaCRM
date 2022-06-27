@@ -179,7 +179,7 @@
 <context>
     <name>BookCard</name>
     <message>
-        <location filename="../custom/printing/bookcard.cpp" line="+218"/>
+        <location filename="../custom/printing/bookcard.cpp" line="+225"/>
         <source>Printing book card</source>
         <translation type="unfinished"></translation>
     </message>
@@ -275,7 +275,7 @@
 <context>
     <name>BookCardPaintWidget</name>
     <message>
-        <location line="-51"/>
+        <location line="-52"/>
         <source>Book Nr.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -287,6 +287,11 @@
     <message>
         <location line="+1"/>
         <source>Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Keywords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1489,11 +1494,16 @@
         <source>Deliver Services</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+30"/>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DeliverServiceEdit</name>
     <message>
-        <location filename="../custom/deliverservice/deliverserviceedit.cpp" line="+21"/>
+        <location filename="../custom/deliverservice/deliverserviceedit.cpp" line="+18"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1513,80 +1523,115 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+11"/>
         <source>costs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
-        <location line="+3"/>
+        <location line="+9"/>
         <source>Package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-3"/>
+        <source>Package ²</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Service Packagename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+3"/>
-        <source>Definition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+9"/>
         <source>Package Definition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+3"/>
+        <location line="+8"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Package Description</source>
+        <location line="-3"/>
+        <source>Description ²</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+3"/>
+        <source>Package Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Infopage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-3"/>
+        <source>Infopage ¹</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-18"/>
+        <source>Packageclass ²</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Packageclass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
         <source>Package Website Infolink</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location line="+3"/>
-        <source>Webseite</source>
+        <source>Website ¹</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
+        <source>Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Service Website</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+3"/>
+        <source>Last changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Modification date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
-        <source>No Dataset present</source>
+        <location line="+3"/>
+        <source>¹) Read only fields</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>²) Required fields</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <source>No valid Dataset present</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>DeliverServiceList</name>
     <message>
-        <location filename="../custom/deliverservice/deliverservicelist.cpp" line="+22"/>
+        <location filename="../custom/deliverservice/deliverservicelist.cpp" line="+25"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1597,21 +1642,31 @@
     </message>
     <message>
         <location line="+0"/>
-        <source>Definition</source>
+        <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+0"/>
-        <source>Package</source>
+        <source>Packageclass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+82"/>
+        <source>Create entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Remove entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
         <source>International</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>National</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1697,12 +1752,30 @@
 <context>
     <name>DeliveryService</name>
     <message>
-        <location filename="../custom/utils/deliveryservice.cpp" line="+18"/>
+        <location filename="../custom/utils/deliveryservice.cpp" line="+21"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+72"/>
+        <source>Delevery Service is needet!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DeliveryServicePlus</name>
+    <message>
+        <location filename="../custom/utils/deliveryserviceplus.cpp" line="+26"/>
+        <source>Internal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+128"/>
         <source>Delevery Service is needet!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2269,7 +2342,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+75"/>
         <source>There is no Order open!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2631,18 +2704,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+45"/>
         <location line="+4"/>
         <source>Provider</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-24"/>
+        <location line="-19"/>
         <source>Notification</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+45"/>
         <source>lock</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2668,17 +2741,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-92"/>
+        <location line="-93"/>
         <source>Invoice ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+47"/>
         <source>Parcel Shipment Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+167"/>
+        <location line="+172"/>
         <source>Order saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2778,12 +2851,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-649"/>
+        <location line="-650"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+628"/>
+        <location line="+629"/>
         <source>The notification system requires a valid Parcel Shipment ID to send customer emails.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4347,7 +4420,7 @@
 <context>
     <name>StrLineEdit</name>
     <message>
-        <location filename="../custom/utils/strlineedit.cpp" line="+172"/>
+        <location filename="../custom/utils/strlineedit.cpp" line="+174"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>

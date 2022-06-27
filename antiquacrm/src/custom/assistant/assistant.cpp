@@ -259,8 +259,8 @@ bool Assistant::event(QEvent *e) {
 }
 
 void Assistant::keyPressEvent(QKeyEvent *e) {
-  if (e->key() == Qt::Key_Return) {
-    qInfo("Key press enter or return will ignored!");
+  if (e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter) {
+    // Key press enter or return will ignored!
     return;
   }
   QDialog::keyPressEvent(e);

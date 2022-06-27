@@ -63,7 +63,7 @@ private:
    * @brief Lieferservice
    */
   QGroupBox *m_deliveryBox;
-  DeliveryService *o_delivery_service; /**< @brief Paketdienst */
+  DeliveryServicePlus *o_delivery_service; /**< @brief Paketdienst */
   LineEdit *o_delivery_send_id;        /**< @brief Paket Sende Nummer */
   LineEdit *o_delivery;                /**< @brief Lieferschein Nummer */
 

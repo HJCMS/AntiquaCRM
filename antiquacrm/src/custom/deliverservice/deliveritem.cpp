@@ -5,6 +5,7 @@
 
 DeliverItem::DeliverItem(int index, const QString &name)
     : d_srv{index}, d_class{name} {
+  d_cid = -1;
   d_definition = QString();
   d_description = QString();
   d_international = false;
@@ -15,6 +16,10 @@ DeliverItem::DeliverItem(int index, const QString &name)
 int DeliverItem::index() const { return d_srv; }
 
 const QString DeliverItem::name() const { return d_class; };
+
+void DeliverItem::setPrimaryKey(int id) { d_cid = id; }
+
+int DeliverItem::primaryKey() { return d_cid; }
 
 void DeliverItem::setDefinition(const QString &d) { d_definition = d; }
 

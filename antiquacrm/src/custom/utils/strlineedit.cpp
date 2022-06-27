@@ -63,6 +63,8 @@ void StrLineEdit::reset() {
 
 void StrLineEdit::setFocus() { m_lineEdit->setFocus(); }
 
+void StrLineEdit::setReadOnly(bool m) { m_lineEdit->setReadOnly(m); }
+
 const QVariant StrLineEdit::value() {
   QRegExp reg("[\\n\\r]+");
   QString buffer(m_lineEdit->text().trimmed());

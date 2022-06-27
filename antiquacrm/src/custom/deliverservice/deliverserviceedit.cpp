@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "deliverserviceedit.h"
-#include "applsettings.h"
 #include "deliveritem.h"
 
 #include <QDebug>
@@ -10,8 +9,6 @@
 
 DeliverServiceEdit::DeliverServiceEdit(QWidget *parent) : QWidget{parent} {
   setObjectName("deliver_service_view");
-
-  ApplSettings cfg;
 
   int row = 0;
   QGridLayout *layout = new QGridLayout(this);
@@ -29,57 +26,75 @@ DeliverServiceEdit::DeliverServiceEdit(QWidget *parent) : QWidget{parent} {
       tr("If selected then it is a International Package."));
   layout->addWidget(d_international, row, 1, 1, 1);
 
+  d_cid = new IntSpinBox(this);
+  d_cid->setObjectName("d_cid");
+  d_cid->setRequired(true);
+  d_cid->setEnabled(false);
+  layout->addWidget(d_cid, row, 2, 1, 1);
+
   d_price = new PriceEdit(this);
   d_price->setObjectName("d_price");
-  d_price->setToolTip(cfg.value("payment/currency").toString());
   d_price->setInfo(tr("costs"));
-  d_price->setMinimum(0.10);
+  d_price->setMinimum(0.01);
   d_price->setRequired(true);
-  layout->addWidget(d_price, row++, 2, 1, 1, Qt::AlignLeft);
-  layout->setColumnStretch(2, 1);
+  layout->addWidget(d_price, row++, 3, 1, 1, Qt::AlignLeft);
+  layout->setColumnStretch(3, 1);
 
-  layout->addWidget(info(tr("Package")), row, 0, 1, 1);
+  layout->addWidget(info(tr("Package ²")), row, 0, 1, 1);
   d_class = new StrLineEdit(this);
   d_class->setObjectName("d_class");
   d_class->setInfo(tr("Package"));
   d_class->setToolTip(tr("Service Packagename"));
   d_class->setRequired(true);
-  layout->addWidget(d_class, row++, 1, 1, 2, Qt::AlignLeft);
+  d_class->setMaxAllowedLength(30);
+  layout->addWidget(d_class, row++, 1, 1, 3);
 
-  layout->addWidget(info(tr("Definition")), row, 0, 1, 1);
+  layout->addWidget(info(tr("Packageclass ²")), row, 0, 1, 1);
   d_definition = new StrLineEdit(this);
   d_definition->setObjectName("d_definition");
-  d_definition->setInfo(tr("Definition"));
+  d_definition->setInfo(tr("Packageclass"));
   d_definition->setToolTip(tr("Package Definition"));
   d_definition->setRequired(true);
-  layout->addWidget(d_definition, row++, 1, 1, 2);
+  d_definition->setMaxAllowedLength(50);
+  layout->addWidget(d_definition, row++, 1, 1, 3);
 
-  layout->addWidget(info(tr("Description")), row, 0, 1, 1);
+  layout->addWidget(info(tr("Description ²")), row, 0, 1, 1);
   d_description = new StrLineEdit(this);
   d_description->setObjectName("d_description");
   d_description->setInfo(tr("Description"));
   d_description->setToolTip(tr("Package Description"));
   d_description->setRequired(true);
-  layout->addWidget(d_description, row++, 1, 1, 2);
+  d_description->setMaxAllowedLength(128);
+  layout->addWidget(d_description, row++, 1, 1, 3);
 
-  layout->addWidget(info(tr("Infopage")), row, 0, 1, 1);
+  layout->addWidget(info(tr("Infopage ¹")), row, 0, 1, 1);
   d_infopage = new StrLineEdit(this);
   d_infopage->setObjectName("d_infopage");
   d_infopage->setInfo(tr("Infopage"));
+  d_infopage->setReadOnly(true);
+  d_infopage->setMaxAllowedLength(100);
   d_infopage->setToolTip(tr("Package Website Infolink"));
-  layout->addWidget(d_infopage, row++, 1, 1, 2);
+  layout->addWidget(d_infopage, row++, 1, 1, 3);
 
-  layout->addWidget(info(tr("Webseite")), row, 0, 1, 1);
+  layout->addWidget(info(tr("Website ¹")), row, 0, 1, 1);
   d_website = new StrLineEdit(this);
   d_website->setObjectName("d_website");
-  d_website->setInfo(tr("Webseite"));
+  d_website->setInfo(tr("Website"));
+  d_website->setReadOnly(true);
+  d_website->setMaxAllowedLength(100);
   d_website->setToolTip(tr("Service Website"));
-  layout->addWidget(d_website, row++, 1, 1, 2);
+  layout->addWidget(d_website, row++, 1, 1, 3);
 
+  layout->addWidget(info(tr("Last changed")), row, 0, 1, 1);
   d_changed = new DateTimeDisplay(this);
   d_changed->setObjectName("d_changed");
   d_changed->setToolTip(tr("Modification date"));
-  layout->addWidget(d_changed, row++, 0, 1, 3);
+  layout->addWidget(d_changed, row++, 1, 1, 3);
+
+  layout->addWidget(new QLabel(tr("¹) Read only fields"), this), row++, 0, 1, 3,
+                    Qt::AlignLeft);
+  layout->addWidget(new QLabel(tr("²) Required fields"), this), row++, 0, 1, 3,
+                    Qt::AlignLeft);
 
   layout->setRowStretch(row, 1);
   setLayout(layout);
@@ -89,9 +104,30 @@ DeliverServiceEdit::DeliverServiceEdit(QWidget *parent) : QWidget{parent} {
 
 QLabel *DeliverServiceEdit::info(const QString &str) {
   QLabel *lb = new QLabel(this);
-  lb->setAlignment(Qt::AlignRight);
+  lb->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   lb->setText(str + ":");
   return lb;
+}
+
+void DeliverServiceEdit::clearFields() {
+  foreach (UtilsMain *w, findChildren<UtilsMain *>()) {
+    w->reset();
+  }
+  d_changed->setValue(QDateTime::currentDateTime());
+  d_srv->setValue(1);
+  d_cid->setValue(0);
+}
+
+void DeliverServiceEdit::createSubEntry(int id) {
+  clearFields();
+  d_srv->setValue(id);
+  d_srv->setFocus();
+  d_cid->setValue(0);
+}
+
+void DeliverServiceEdit::createNewEntry() {
+  clearFields();
+  d_srv->setFocus();
 }
 
 const DeliverItem DeliverServiceEdit::getSaveData() {
@@ -99,11 +135,15 @@ const DeliverItem DeliverServiceEdit::getSaveData() {
   QString name = d_class->value().toString();
   DeliverItem info(id, name);
 
-  if(id < 1 && name.isEmpty()) {
-    emit message(tr("No Dataset present"));
+  if (id < 1 && name.isEmpty()) {
+    emit message(tr("No valid Dataset present"));
     return info;
   }
 
+  // Is it an INSERT or Update ?
+  if (d_cid->value().toInt() > 0) {
+    info.setPrimaryKey(d_cid->value().toInt());
+  }
   info.setDefinition(d_definition->value().toString());
   info.setInternational(d_international->value().toBool());
   info.setDescription(d_description->value().toString());

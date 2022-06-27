@@ -7,7 +7,10 @@
 
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QEvent>
 #include <QJsonObject>
+#include <QKeyEvent>
+#include <QPushButton>
 #include <QSplitter>
 #include <QStatusBar>
 #include <QWidget>
@@ -28,14 +31,17 @@ private:
   DeliverServiceEdit *m_edit;
   DeliverServiceList *m_list;
   QDialogButtonBox *m_buttonBox;
+  QPushButton *ac_create;
   QStatusBar *m_statusBar;
 
   void initItemsTreeView();
 
 private Q_SLOTS:
   void messanger(const QString &);
+  void deleteDeliveryPackage(const QJsonObject &obj);
 
 protected:
+  void keyPressEvent(QKeyEvent *) override;
   bool event(QEvent *) override;
 
 private Q_SLOTS:

@@ -5,9 +5,10 @@
 #ifndef DELIVERSERVICELIST_H
 #define DELIVERSERVICELIST_H
 
+#include <QContextMenuEvent>
+#include <QJsonObject>
 #include <QObject>
 #include <QTreeWidget>
-#include <QJsonObject>
 #include <QTreeWidgetItem>
 #include <QWidget>
 
@@ -19,14 +20,23 @@ class DeliverServiceList : public QTreeWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  Qt::ItemFlags p_flags;
   QString currency;
   const QString priceDisplay(qreal price);
   QTreeWidgetItem *getParentDeliverService(int srv);
 
 private Q_SLOTS:
+  void createByContext();
+  void removeByContext();
   void getDeliverServiceId(QTreeWidgetItem *, int column);
 
+protected:
+  void contextMenuEvent(QContextMenuEvent *);
+
 Q_SIGNALS:
+  void message(const QString &);
+  void createDeliveryService(int id);
+  void removeDeliveryPackage(const QJsonObject &relation);
   void deliverServiceChanged(int id);
   void deliverPackageClicked(int id, const QJsonObject &name);
 
