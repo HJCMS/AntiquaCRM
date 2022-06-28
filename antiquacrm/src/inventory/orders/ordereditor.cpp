@@ -712,10 +712,12 @@ void OrderEditor::openPrinterInvoiceDialog() {
   }
 
   ApplSettings cfg;
+  bool setIncludeVat = true;
   int tax = cfg.value("payment/vat2").toInt();
   qreal pkgPrice = o_delivery_service->getPackagePrice();
   if(pkgPrice > 0) {
     tax = cfg.value("payment/vat1").toInt();
+    setIncludeVat = false;
   }
 
   QList<BillingInfo> list;
@@ -728,7 +730,7 @@ void OrderEditor::openPrinterInvoiceDialog() {
       d.designation = q.value("title").toString().replace(strip, "-");
       d.quantity = q.value("quant").toInt();
       d.sellPrice = q.value("sellPrice").toDouble();
-      d.includeVat = false;
+      d.includeVat = setIncludeVat;
       d.taxValue = tax;
       d.packagePrice = pkgPrice;
       list.append(d);
