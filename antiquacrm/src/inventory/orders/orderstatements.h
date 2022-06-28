@@ -28,6 +28,14 @@
 #endif
 
 /**
+ * @brief An welcher Stufe gilt der Eintrag als geschlossen
+ * @note Siehe libAntiquaCRM::OrderStatus Klasse
+ */
+#ifndef STATUS_ORDER_CLOSED
+#define STATUS_ORDER_CLOSED 5
+#endif
+
+/**
  * @ingroup Order SQL Statements
  * @brief Standard Auftrags Tabellenausgabe
  * @param id - Artikel Id
@@ -38,7 +46,7 @@ static const QString defaultOrdersQuery(int id = 0) {
   QString fs("a.o_id,a.o_since,a.o_order_status,a.o_payment_status,");
   fs.append("CASE WHEN c.c_company=true THEN c.c_company_name ELSE ");
   fs.append("concat_ws(' ',c.c_firstname,c.c_lastname) END AS customer,");
-  fs.append("d.d_name,a.o_locked,a.o_closed");
+  fs.append("d.d_name");
   fieldSelect.append(fs);
 
   QString prInfo("CONCAT_WS(': ', o_provider_name, o_provider_order_id)");
@@ -61,7 +69,8 @@ static const QString defaultOrdersQuery(int id = 0) {
     sql.append(QString::number(id));
     sql.append(" ORDER BY a.o_since DESC;");
   } else {
-    sql.append("WHERE a.o_closed=false ORDER BY a.o_since DESC;");
+    sql.append("WHERE a.o_order_status<"+ QString::number(STATUS_ORDER_CLOSED));
+    sql.append(" ORDER BY a.o_since DESC;");
   }
   return sql;
 }
@@ -158,20 +167,6 @@ static const QString paymentUpdate(int id, bool status) {
   QString sql("UPDATE inventory_orders SET o_payment_status=");
   sql.append(((status) ? "true" : "false"));
   sql.append(" WHERE o_id=");
-  sql.append(QString::number(id));
-  sql.append(";");
-  return sql;
-}
-
-/**
- * @ingroup Order SQL Statements
- * @brief Schliest einen Auftrag
- * @param id - Artikel Id
- * @return SQL Update
- */
-static const QString closeOrder(int id) {
-  QString sql("UPDATE inventory_orders SET");
-  sql.append(" o_closed=true WHERE o_id=");
   sql.append(QString::number(id));
   sql.append(";");
   return sql;

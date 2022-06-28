@@ -1652,6 +1652,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+3"/>
+        <source>Note: Only the current Entry will be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+45"/>
         <source>No valid Dataset present</source>
         <translation type="unfinished"></translation>

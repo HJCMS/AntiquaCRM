@@ -104,6 +104,9 @@ DeliverServiceEdit::DeliverServiceEdit(QWidget *parent) : QWidget{parent} {
   layout->addWidget(new QLabel(tr("²) Required fields"), this), row++, 0, 1, 4,
                     Qt::AlignLeft);
 
+  QString info = tr("Note: Only the current Entry will be saved.");
+  layout->addWidget(new QLabel(info, this), row++, 0, 1, 4, Qt::AlignLeft);
+
   layout->setRowStretch(row, 1);
   setLayout(layout);
 

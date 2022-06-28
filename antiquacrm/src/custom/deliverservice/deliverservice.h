@@ -20,6 +20,8 @@ class DeliverService final : public UtilsMain {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  int p_packageid;
+  QString p_currency;
   DeliverServiceBox *m_serviceBox;
   DeliverPackageBox *m_packageBox;
   QLabel *m_priceInfo;
@@ -36,6 +38,8 @@ public:
   explicit DeliverService(QWidget *parent = nullptr);
   void loadSqlDataset();
   const QVariant value();
+  void setServicePackage(int);
+  int getServicePackage();
   bool isValid();
   void setInfo(const QString &);
   const QString info();

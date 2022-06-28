@@ -12,6 +12,9 @@
 DeliverService::DeliverService(QWidget *parent) : UtilsMain{parent} {
   setObjectName("delivery_service_edit");
 
+  ApplSettings cfg;
+  p_currency = cfg.value("payment/currency", "$").toString();
+
   QHBoxLayout *layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 
@@ -41,12 +44,18 @@ DeliverService::DeliverService(QWidget *parent) : UtilsMain{parent} {
 }
 
 void DeliverService::packageChanged(int id) {
-  qDebug() << Q_FUNC_INFO << id;
-  setModified(true);
+  if (id > 0) {
+    p_packageid = id;
+    setModified(true);
+    qreal price = m_packageBox->getPackagePrice(id);
+    QString ptxt = QString::number(price, 'f', 2);
+    m_priceInfo->setText(ptxt + " " + p_currency);
+  }
 }
 
 void DeliverService::setValue(const QVariant &val) {
   int i = -1;
+
   if (val.type() == QVariant::Int) {
     i = val.toInt();
   } else {
@@ -61,14 +70,28 @@ void DeliverService::setValue(const QVariant &val) {
 
 void DeliverService::reset() {
   m_serviceBox->setCurrentIndex(0);
+  m_packageBox->setCurrentIndex(0);
   setModified(false);
 }
 
-void DeliverService::setFocus() { m_serviceBox->setFocus(); }
+void DeliverService::setFocus() { m_packageBox->setFocus(); }
 
-void DeliverService::loadSqlDataset() { m_serviceBox->setDeliverServices(); }
+void DeliverService::loadSqlDataset() {
+  m_serviceBox->setDeliverServices();
+  if (p_packageid > 0) {
+    m_packageBox->setCurrentIndex(p_packageid);
+  }
+}
 
-const QVariant DeliverService::value() { return m_packageBox->currentIndex(); }
+const QVariant DeliverService::value() { return m_serviceBox->currentIndex(); }
+
+void DeliverService::setServicePackage(int id) {
+  p_packageid = id;
+  if (m_serviceBox->count() > 0)
+    m_packageBox->setCurrentIndex(p_packageid);
+}
+
+int DeliverService::getServicePackage() { return m_packageBox->currentIndex(); }
 
 bool DeliverService::isValid() {
   if (isRequired() && m_packageBox->currentIndex() == 0)
@@ -77,9 +100,7 @@ bool DeliverService::isValid() {
   return true;
 }
 
-void DeliverService::setInfo(const QString &info) {
-  setToolTip(info);
-}
+void DeliverService::setInfo(const QString &info) { setToolTip(info); }
 
 const QString DeliverService::info() { return toolTip(); }
 

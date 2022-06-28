@@ -2,13 +2,13 @@
 // vim: set fileencoding=utf-8
 
 #include "ordereditor.h"
+#include "deliverservice.h"
 #include "deliverynote.h"
 #include "editoractionbar.h"
 #include "invoice.h"
 #include "myicontheme.h"
 #include "ordersitemlist.h"
 #include "orderstatements.h"
-#include "deliverservice.h"
 #include <AntiquaCRM>
 
 #include <QDebug>
@@ -149,21 +149,6 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   m_paymentList->setObjectName("m_paymentList");
   mainWidgetLayout->addWidget(m_paymentList);
 
-  m_actionsBox = new QGroupBox(this);
-  QHBoxLayout *actionsLayout = new QHBoxLayout(m_actionsBox);
-  o_closed = new BoolBox(this);
-  o_closed->setObjectName("o_closed");
-  o_closed->setInfo(tr("close"));
-  actionsLayout->addWidget(o_closed);
-  o_locked = new BoolBox(this);
-  o_locked->setObjectName("o_locked");
-  o_locked->setInfo(tr("lock"));
-  actionsLayout->addWidget(o_locked);
-  actionsLayout->addStretch(1);
-  m_actionsBox->setLayout(actionsLayout);
-
-  mainWidgetLayout->addWidget(m_actionsBox, Qt::AlignLeft);
-
   mainWidgetLayout->addStretch(1);
   mainWidget->setLayout(mainWidgetLayout);
   mainLayout->addWidget(m_scroolView);
@@ -204,7 +189,8 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   connect(m_paymentList, SIGNAL(hasModified(bool)), this,
           SLOT(setWindowModified(bool)));
   connect(o_notify, SIGNAL(checked(bool)), this, SLOT(createNotifyOrder(bool)));
-  connect(o_closed, SIGNAL(checked(bool)), this, SLOT(createCloseOrder(bool)));
+  connect(o_order_status, SIGNAL(currentIndexChanged(int)), this,
+          SLOT(setStatusOrder(int)));
   connect(o_customer_id, SIGNAL(s_serialChanged(int)), this,
           SLOT(findCustomer(int)));
   connect(m_paymentList, SIGNAL(askToRemoveRow(int)), this,
@@ -257,6 +243,17 @@ const QHash<QString, QVariant> OrderEditor::createSqlDataset() {
     // qDebug() << "Orders:" << cur->objectName() << cur->value();
     data.insert(cur->objectName(), cur->value());
   }
+
+  /**
+   * Der Eintrag ist in "o_delivery_service" enthalten!
+   * Muss deshalb Explizit abgerufen werden!
+   * Er darf nicht "-1" sein, was bei nicht Initialisierung der fall ist!
+   */
+  int package_id = o_delivery_service->getServicePackage();
+  if (package_id >= 0) {
+    data.insert("o_delivery_package", package_id);
+  }
+
   list.clear();
   return data;
 }
@@ -467,15 +464,14 @@ void OrderEditor::createSqlInsert() {
 
   bool result = sendSqlQuery(sql);
   if (result && !o_id->value().toString().isEmpty()) {
-    /*
-     *  Erstelle Lieferschein Nummer
-     */
+    /**< Erstelle Lieferschein Nummer */
     generateDeliveryNumber();
 
     initInvoiceNumber(o_id->value().toInt());
-    /*
+
+    /**
      * Wenn die Artikel-Bestellisten Tabelle nicht leer ist.
-     * Danach createSqlArticleOrder() aufrufen!
+     * Dann createSqlArticleOrder() aufrufen!
      */
     m_paymentList->setEnabled(true);
     if (m_paymentList->payments() > 0) {
@@ -499,6 +495,15 @@ void OrderEditor::setData(const QString &key, const QVariant &value,
 
     return;
   }
+
+  /**
+   * Wird von "o_delivery_service" zu verfügung gestellt!
+   */
+  if (key == "o_delivery_package") {
+    o_delivery_service->setServicePackage(value.toInt());
+    return;
+  }
+
   qDebug() << "Missing k:" << key << " v:" << value << " r:" << required;
 }
 
@@ -743,8 +748,8 @@ void OrderEditor::createNotifyOrder(bool b) {
   }
 }
 
-void OrderEditor::createCloseOrder(bool b) {
-  if (!b)
+void OrderEditor::setStatusOrder(int status) {
+  if (status < STATUS_ORDER_CLOSED)
     return;
 
   int order_id = o_id->value().toInt();
@@ -756,12 +761,10 @@ void OrderEditor::createCloseOrder(bool b) {
   body.append("</p>");
   int ret = QMessageBox::question(this, tr("Finish order"), body);
   if (ret == QMessageBox::Yes) {
-    if (sendSqlQuery(closeOrder(order_id))) {
+    if (sendSqlQuery(progresUpdate(order_id, status))) {
       emit postMessage(tr("Order deactivated!"));
-      m_paymentList->setModified(true);
+      finalLeaveEditor();
     }
-  } else {
-    o_closed->setChecked(false);
   }
 }
 

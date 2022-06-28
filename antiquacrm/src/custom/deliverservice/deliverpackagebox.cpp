@@ -23,9 +23,21 @@ void DeliverPackageBox::setCurrentService(int id) {
       t.append(" ");
       t.append(q.value("d_definition").toString());
       insertItem(i, t);
-      if(q.value("d_default").toBool())
+      if (q.value("d_default").toBool())
         setCurrentIndex(i);
     }
     emit validServiceChanged((count() > 0));
   }
+}
+
+qreal DeliverPackageBox::getPackagePrice(int index) {
+  QString sql("SELECT DISTINCT d_price ");
+  sql.append("FROM ref_delivery_cost WHERE d_cid=");
+  sql.append(QString::number(index));
+  sql.append(" LIMIt 1;");
+  QSqlQuery q = m_sql->query(sql);
+  if (q.next()) {
+    return q.value("d_price").toDouble();
+  }
+  return 0.00;
 }

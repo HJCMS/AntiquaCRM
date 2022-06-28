@@ -68,16 +68,6 @@ public Q_SLOTS:
 
   void initOrders();
 
-  /**
-   * @brief SQL Spalte "o_order_status" aktualisieren.
-   */
-  void updateOrderStatus();
-
-  /**
-   * @brief SQL Spalte "o_payment_status" aktualisieren.
-   */
-  void updatePaymentStatus();
-
 public:
   explicit OrdersTable(QWidget *parent = nullptr);
 };

@@ -84,16 +84,10 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
       return (item.toBool()) ? tr("received") : tr("waiting");
     }
 
-    case 6: // o_locked
-      return (item.toBool()) ? tr("Yes") : tr("No");
-
-    case 7: // o_closed
-      return (item.toBool()) ? tr("Yes") : tr("No");
-
-    case 8: // o_provider_info
+    case 6: // o_provider_info
       return item;
 
-    case 9: // age Siehe SQL Statement!
+    case 7: // age Siehe SQL Statement!
       return runTimeString(item.toInt());
     }
   }
@@ -133,16 +127,10 @@ QVariant OrdersTableModel::headerData(int section, Qt::Orientation orientation,
     case 5: // d_name
       return setHeaderTitel(tr("Deliver"));
 
-    case 6: // o_locked
-      return setHeaderTitel(tr("Locked"));
-
-    case 7: // o_closed
-      return setHeaderTitel(tr("Closed"));
-
-    case 8: // o_provider_info
+    case 6: // o_provider_info
       return setHeaderTitel(tr("Provider"));
 
-    case 9: // age
+    case 7: // age
       return setHeaderTitel(tr("Runtime"));
 
     default:

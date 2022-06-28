@@ -78,10 +78,7 @@ private:
   /**
    * @brief Aktionen
    */
-  QGroupBox *m_actionsBox;
   BoolBox *o_notify;    /**< @brief Benachrichtigung */
-  BoolBox *o_locked;    /**< @brief Sperren */
-  BoolBox *o_closed;    /**< @brief Abschliessen */
   LineEdit *o_modified; /**< @brief Zeitstempel */
 
   /**
@@ -257,12 +254,9 @@ private Q_SLOTS:
   void createNotifyOrder(bool b = false);
 
   /**
-   * @brief SQL Spalte "o_closed" true setzen.
-   * Wenn diese Aktion ausgeführt wird ist es nur noch
-   * für die Buchhaltung sichtbar und der Editor wird verlassen!
-   * Der Auftrag ist somit abgeschlossen!
+   * @brief Wenn Bestellstatus geändert wird.
    */
-  void createCloseOrder(bool b = false);
+  void setStatusOrder(int);
 
   /**
    * @brief Wird von ToolButton aufgerufen und verwendet

@@ -1594,7 +1594,7 @@
     <message>
         <location line="+1"/>
         <source>Set this Package as default</source>
-        <translation>Setzte diese Paket als Standard</translation>
+        <translation>Setzte dieses Paket als Standard</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1650,6 +1650,11 @@
         <location line="+2"/>
         <source>²) Required fields</source>
         <translation>²) Unbedingt Erforderlich</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Note: Only the current Entry will be saved.</source>
+        <translation>Hinweis: Nur der aktuelle Eintrag wird gespeichert.</translation>
     </message>
     <message>
         <location line="+45"/>

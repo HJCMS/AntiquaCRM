@@ -40,6 +40,7 @@ void OrderStatusBox::indexChanged(int i) {
   p_value = i;
   setValue(i);
   setModified(true);
+  emit currentIndexChanged(i);
 }
 
 void OrderStatusBox::setValue(const QVariant &val) {

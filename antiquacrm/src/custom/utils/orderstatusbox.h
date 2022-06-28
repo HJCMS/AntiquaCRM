@@ -31,6 +31,9 @@ public Q_SLOTS:
   Q_INVOKABLE void reset();
   void setFocus();
 
+Q_SIGNALS:
+  void currentIndexChanged(int);
+
 public:
   OrderStatusBox(QWidget *parent = nullptr);
   int findIndex(const QString &);

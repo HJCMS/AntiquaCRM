@@ -44,6 +44,7 @@ Q_SIGNALS:
 
 public:
   explicit DeliverPackageBox(QWidget *parent = nullptr);
+  qreal getPackagePrice(int);
 };
 
 #endif // DELIVERPACKAGEBOX_H

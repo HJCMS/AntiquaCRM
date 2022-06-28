@@ -3,10 +3,8 @@
 
 #include "orderstable.h"
 #include "myicontheme.h"
-#include "orderspaymentbox.h"
 #include "orderstablemodel.h"
 #include "orderstatements.h"
-#include "orderstatusbox.h"
 
 #include <QAction>
 #include <QDebug>
@@ -112,18 +110,6 @@ void OrdersTable::contextMenuEvent(QContextMenuEvent *ev) {
   ac_open->setEnabled(b);
   connect(ac_open, SIGNAL(triggered()), this, SLOT(openByContext()));
 
-  QAction *ac_status =
-      m->addAction(myIcon("autostart"), tr("Update Progress status"));
-  ac_status->setObjectName("ac_context_status_order");
-  connect(ac_status, SIGNAL(triggered()), this, SLOT(updateOrderStatus()));
-  ac_status->setEnabled(b);
-
-  QAction *ac_payment =
-      m->addAction(myIcon("autostart"), tr("Update Payment status"));
-  ac_payment->setObjectName("ac_context_payment_order");
-  connect(ac_payment, SIGNAL(triggered()), this, SLOT(updatePaymentStatus()));
-  ac_payment->setEnabled(b);
-
   m->exec(ev->globalPos());
   delete m;
 }
@@ -132,51 +118,4 @@ void OrdersTable::refreshView() { initOrders(); }
 
 void OrdersTable::initOrders() {
   sqlExecQuery(defaultOrdersQuery());
-}
-
-void OrdersTable::updateOrderStatus() {
-  QModelIndexList list = selectedIndexes();
-  int article_id = 0;
-  for (int i = 0; i < list.size(); i++) {
-    QModelIndex index = list.at(i);
-    if (index.isValid() && (index.column() == 0))
-      article_id = m_queryModel->data(index, Qt::EditRole).toInt();
-
-    if (index.isValid() && (index.column() == status_column)) {
-      qint64 status = m_queryModel->data(index, Qt::EditRole).toInt();
-      StatusDialog dialog(status, this);
-      int set = dialog.exec();
-      if (set == QDialog::Accepted) {
-        int status = dialog.index();
-        if (sqlExecQuery(progresUpdate(article_id, status)))
-          sqlExecQuery(defaultOrdersQuery());
-
-        return; // end loop
-      }
-    }
-  }
-}
-
-void OrdersTable::updatePaymentStatus() {
-  QModelIndexList list = selectedIndexes();
-  int article_id = 0;
-  for (int i = 0; i < list.size(); i++) {
-    QModelIndex index = list.at(i);
-    if (index.isValid() && (index.column() == 0))
-      article_id = m_queryModel->data(index, Qt::EditRole).toInt();
-
-    if (index.isValid() && (index.column() == payment_column)) {
-      qint64 current = m_queryModel->data(index, Qt::EditRole).toInt();
-      PaymentStatusDialog dialog(current, this);
-      int set = dialog.exec();
-      if (set == QDialog::Accepted) {
-        bool status = dialog.status();
-        // qDebug() << Q_FUNC_INFO << "PaymentStatus::Close" << status;
-        if (sqlExecQuery(paymentUpdate(article_id, status)))
-          sqlExecQuery(defaultOrdersQuery());
-
-        return; // end loop
-      }
-    }
-  }
 }
