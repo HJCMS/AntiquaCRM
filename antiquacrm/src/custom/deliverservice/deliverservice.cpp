@@ -33,37 +33,46 @@ DeliverService::DeliverService(QWidget *parent) : UtilsMain{parent} {
   setLayout(layout);
   setRequired(false);
 
-  connect(m_serviceBox, SIGNAL(currentIndexChanged(int)), m_packageBox,
-          SLOT(setCurrentService(int)));
+  connect(m_serviceBox, SIGNAL(currentIndexChanged(int)), this,
+          SLOT(currentServiceChanged(int)));
 
-  connect(m_packageBox, SIGNAL(validServiceChanged(bool)), m_packageBox,
-          SLOT(setEnabled(bool)));
+  connect(m_packageBox, SIGNAL(validServiceChanged(bool)),
+          this, SLOT(getPriceOnDemand(bool)));
 
   connect(m_packageBox, SIGNAL(currentIndexChanged(int)), this,
           SLOT(packageChanged(int)));
 }
 
-void DeliverService::packageChanged(int id) {
-  if (id > 0) {
-    p_packageid = id;
-    setModified(true);
-    qreal price = m_packageBox->getPackagePrice(id);
+void DeliverService::getPriceOnDemand(bool b)
+{
+  m_packageBox->setEnabled(true);
+  // FIXME if(b) { packageChanged(1); }
+}
+
+void DeliverService::currentServiceChanged(int) {
+  int did = m_serviceBox->getCurrentServiceId();
+  m_packageBox->setCurrentPackages(did);
+}
+
+void DeliverService::packageChanged(int) {
+  int cid = m_packageBox->getCurrentPackageId();
+  if (cid > 0) {
+    qreal price = m_packageBox->getPackagePrice(cid);
     QString ptxt = QString::number(price, 'f', 2);
     m_priceInfo->setText(ptxt + " " + p_currency);
+    setModified(true);
   }
 }
 
 void DeliverService::setValue(const QVariant &val) {
-  int i = -1;
-
+  int index = -1;
   if (val.type() == QVariant::Int) {
-    i = val.toInt();
+    index = m_serviceBox->findData(val.toInt(), Qt::UserRole);
   } else {
-    i = m_serviceBox->findData(val.toString());
+    index = m_serviceBox->findData(val.toString(), Qt::DisplayRole);
   }
-
-  if (i > 0) {
-    m_serviceBox->setCurrentIndex(i);
+  if (index > 0) {
+    m_serviceBox->setCurrentIndex(index);
     setModified(true);
   }
 }
@@ -76,24 +85,23 @@ void DeliverService::reset() {
 
 void DeliverService::setFocus() { m_packageBox->setFocus(); }
 
-void DeliverService::loadSqlDataset() {
-  m_serviceBox->setDeliverServices();
-  if (p_packageid > 0) {
-    m_packageBox->setCurrentIndex(p_packageid);
-  }
+void DeliverService::loadSqlDataset() { m_serviceBox->initDeliverServices(); }
+
+const QVariant DeliverService::value() {
+  return m_serviceBox->getCurrentServiceId();
 }
 
-const QVariant DeliverService::value() { return m_serviceBox->currentIndex(); }
-
-void DeliverService::setServicePackage(int id) {
-  p_packageid = id;
-  if (m_serviceBox->count() > 0)
-    m_packageBox->setCurrentIndex(p_packageid);
+void DeliverService::setDeliveryService(int did) {
+  m_serviceBox->setCurrentServiceId(did);
 }
 
-int DeliverService::getServicePackage() {
+void DeliverService::setDeliveryPackage(int cid) {
+  return m_packageBox->setCurrentPackageId(cid);
+}
+
+int DeliverService::getDeliveryPackage() {
   // Paket Details
-  return m_packageBox->currentIndex();
+  return m_packageBox->getCurrentPackageId();
 }
 
 bool DeliverService::isInternational() {
@@ -106,15 +114,11 @@ qreal DeliverService::getPackagePrice() {
   if (!m_packageBox->isInternational())
     return out;
 
-  return m_packageBox->getPackagePrice(m_packageBox->currentIndex());
+  int cid = m_packageBox->getCurrentPackageId();
+  return m_packageBox->getPackagePrice(cid);
 }
 
-bool DeliverService::isValid() {
-  if (isRequired() && m_packageBox->currentIndex() == 0)
-    return false;
-
-  return true;
-}
+bool DeliverService::isValid() { return true; }
 
 void DeliverService::setInfo(const QString &info) { setToolTip(info); }
 

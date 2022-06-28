@@ -250,7 +250,7 @@ const QHash<QString, QVariant> OrderEditor::createSqlDataset() {
    * Muss deshalb Explizit abgerufen werden!
    * Er darf nicht "-1" sein, was bei nicht Initialisierung der fall ist!
    */
-  int package_id = o_delivery_service->getServicePackage();
+  int package_id = o_delivery_service->getDeliveryPackage();
   if (package_id >= 0) {
     data.insert("o_delivery_package", package_id);
   }
@@ -501,7 +501,7 @@ void OrderEditor::setData(const QString &key, const QVariant &value,
    * Wird von "o_delivery_service" zu verfügung gestellt!
    */
   if (key == "o_delivery_package") {
-    o_delivery_service->setServicePackage(value.toInt());
+    o_delivery_service->setDeliveryPackage(value.toInt());
     return;
   }
 
@@ -600,10 +600,8 @@ void OrderEditor::checkLeaveEditor() {
 }
 
 void OrderEditor::finalLeaveEditor() {
-  sqlQueryResult.clear();        /**< SQL History leeren */
-  clearDataFields(p_objPattern); /**< Alle Datenfelder leeren */
-  m_paymentList->clearTable();   /**< Tabelle leeren */
-  emit s_leaveEditor();          /**< Zurück */
+  clearEditorFields();
+  emit s_leaveEditor();
 }
 
 void OrderEditor::openPrinterDeliveryDialog() {
@@ -793,6 +791,12 @@ void OrderEditor::generateDeliveryNumber() {
   }
 }
 
+void OrderEditor::clearEditorFields() {
+  sqlQueryResult.clear();        /**< SQL History leeren */
+  clearDataFields(p_objPattern); /**< Alle Datenfelder leeren */
+  m_paymentList->clearTable();   /**< Tabelle leeren */
+}
+
 void OrderEditor::restoreDataset() {
   if (sqlQueryResult.isEmpty())
     return;
@@ -973,6 +977,10 @@ void OrderEditor::openCreateOrder(int cid) {
 }
 
 void OrderEditor::openCreateOrder(const ProviderOrder &order) {
+  if(o_customer_id->value().toInt() > 0 || m_paymentList->payments() >  0) {
+    clearEditorFields();
+  }
+
   initDefaults();
   ProviderOrder copy(order);
   int cid = copy.customerId();
@@ -980,6 +988,7 @@ void OrderEditor::openCreateOrder(const ProviderOrder &order) {
     o_customer_id->setValue(cid);
     o_provider_order_id->setValue(copy.providerId());
     o_provider_name->setValue(copy.provider());
+    o_delivery_service->setValue(ORDER_DELIVERY_SERVICE);
     if (getCustomerAddress(cid)) {
       QList<OrderArticle> list;
       foreach (QString said, copy.articleIds()) {

@@ -9,32 +9,50 @@ DeliverPackageBox::DeliverPackageBox(QWidget *parent) : QComboBox{parent} {
   m_sql = new HJCMS::SqlCore(this);
 }
 
-void DeliverPackageBox::setCurrentService(int id) {
+void DeliverPackageBox::setCurrentPackages(int srv) {
   clear();
   QString sql("SELECT d_cid,d_class,d_definition,d_default");
   sql.append(" FROM ref_delivery_cost WHERE d_srv=");
-  sql.append(QString::number(id));
+  sql.append(QString::number(srv));
   sql.append(" ORDER BY d_international ASC;");
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
+    int i = 0;
     while (q.next()) {
-      int i = q.value("d_cid").toInt();
-      QString t = q.value("d_class").toString();
-      t.append(" ");
-      t.append(q.value("d_definition").toString());
-      insertItem(i, t);
+      QString txt = q.value("d_class").toString();
+      txt.append(" ");
+      txt.append(q.value("d_definition").toString());
+      insertItem(i, txt);
+
+      int cid = q.value("d_cid").toInt();
+      setItemData(i, cid, Qt::UserRole);
+
       if (q.value("d_default").toBool())
         setCurrentIndex(i);
+
+      i++;
     }
     emit validServiceChanged((count() > 0));
   }
 }
 
-qreal DeliverPackageBox::getPackagePrice(int index) {
-  QString sql("SELECT DISTINCT d_price ");
-  sql.append("FROM ref_delivery_cost WHERE d_cid=");
-  sql.append(QString::number(index));
-  sql.append(" LIMIt 1;");
+void DeliverPackageBox::setCurrentPackageId(int cid) {
+  for (int i = 0; i < count(); i++) {
+    if (itemData(i, Qt::UserRole).toInt() == cid) {
+      setCurrentIndex(i);
+      break;
+    }
+  }
+}
+
+int DeliverPackageBox::getCurrentPackageId() {
+  return itemData(currentIndex(), Qt::UserRole).toInt();
+}
+
+qreal DeliverPackageBox::getPackagePrice(int cid) {
+  QString sql("SELECT d_price FROM ");
+  sql.append("ref_delivery_cost WHERE d_cid=");
+  sql.append(QString::number(cid) + ";");
   QSqlQuery q = m_sql->query(sql);
   if (q.next()) {
     return q.value("d_price").toDouble();

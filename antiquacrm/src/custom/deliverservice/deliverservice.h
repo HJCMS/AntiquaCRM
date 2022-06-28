@@ -20,26 +20,29 @@ class DeliverService final : public UtilsMain {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  int p_packageid;
   QString p_currency;
   DeliverServiceBox *m_serviceBox;
   DeliverPackageBox *m_packageBox;
   QLabel *m_priceInfo;
 
 private Q_SLOTS:
+  void getPriceOnDemand(bool);
+  void currentServiceChanged(int);
   void packageChanged(int);
 
 public Q_SLOTS:
   void setValue(const QVariant &);
   Q_INVOKABLE void reset();
   void setFocus();
+  void setDeliveryService(int did);
+  void setDeliveryPackage(int cid);
 
 public:
   explicit DeliverService(QWidget *parent = nullptr);
   void loadSqlDataset();
   const QVariant value();
-  void setServicePackage(int);
-  int getServicePackage();
+  int getDeliveryPackage();
+
   bool isInternational();
   qreal getPackagePrice();
   bool isValid();

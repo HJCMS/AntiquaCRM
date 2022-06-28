@@ -36,6 +36,13 @@
 #endif
 
 /**
+ * @brief Standard auf den ersten Externen Paketdienst setzen!
+ */
+#ifndef ORDER_DELIVERY_SERVICE
+#define ORDER_DELIVERY_SERVICE 1
+#endif
+
+/**
  * @ingroup Order SQL Statements
  * @brief Standard Auftrags Tabellenausgabe
  * @param id - Artikel Id
@@ -69,7 +76,8 @@ static const QString defaultOrdersQuery(int id = 0) {
     sql.append(QString::number(id));
     sql.append(" ORDER BY a.o_since DESC;");
   } else {
-    sql.append("WHERE a.o_order_status<"+ QString::number(STATUS_ORDER_CLOSED));
+    sql.append("WHERE a.o_order_status<" +
+               QString::number(STATUS_ORDER_CLOSED));
     sql.append(" ORDER BY a.o_since DESC;");
   }
   return sql;

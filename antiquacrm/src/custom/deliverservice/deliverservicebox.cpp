@@ -11,7 +11,16 @@ DeliverServiceBox::DeliverServiceBox(QWidget *parent) : QComboBox{parent} {
   setObjectName("deliver_service_box");
 }
 
-void DeliverServiceBox::setDeliverServices() {
+void DeliverServiceBox::setCurrentServiceId(int did) {
+  for (int i = 0; i < count(); i++) {
+    if (itemData(i, Qt::UserRole).toInt() == did) {
+      setCurrentIndex(i);
+      break;
+    }
+  }
+}
+
+void DeliverServiceBox::initDeliverServices() {
   HJCMS::SqlCore *m_sql = new HJCMS::SqlCore(this);
   QString sql("SELECT d_id, d_name FROM ref_delivery_service");
   sql.append(" ORDER BY d_id ASC;");
@@ -20,11 +29,15 @@ void DeliverServiceBox::setDeliverServices() {
     if (count() >= 1) {
       clear();
     }
+    int i = 0;
     while (q.next()) {
-      int i = q.value("d_id").toInt();
-      QString t = q.value("d_name").toString();
-      // qDebug() << Q_FUNC_INFO << i << t;
-      insertItem(i, t);
+      insertItem(i, q.value("d_name").toString());
+      setItemData(i, q.value("d_id").toInt(), Qt::UserRole);
+      i++;
     }
   }
+}
+
+int DeliverServiceBox::getCurrentServiceId() {
+  return itemData(currentIndex(), Qt::UserRole).toInt();
 }

@@ -27,12 +27,21 @@ protected:
 
 public Q_SLOTS:
   /**
-   * @brief load Delivery Services from SQL Database
+   * @brief Setze Service mit "d_id"
    */
-  void setDeliverServices();
+  void setCurrentServiceId(int did);
 
 public:
   explicit DeliverServiceBox(QWidget *parent = nullptr);
+  /**
+   * @brief load Delivery Services from SQL Database
+   */
+  void initDeliverServices();
+
+  /**
+   * @brief Aktuelle Datenbank Service Nummer "d_id"
+   */
+  int getCurrentServiceId();
 };
 
 #endif // DELIVERSERVICEBOX_H

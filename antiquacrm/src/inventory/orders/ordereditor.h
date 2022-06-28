@@ -264,6 +264,11 @@ private Q_SLOTS:
    */
   void generateDeliveryNumber();
 
+  /**
+   * @brief Aufräumen
+   */
+  void clearEditorFields();
+
 public Q_SLOTS:
   /**
    * @brief Alle Datenfelder zurück setzen

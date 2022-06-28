@@ -110,7 +110,7 @@ DeliverServiceEdit::DeliverServiceEdit(QWidget *parent) : QWidget{parent} {
   layout->setRowStretch(row, 1);
   setLayout(layout);
 
-  d_srv->setDeliverServices();
+  d_srv->initDeliverServices();
 }
 
 QLabel *DeliverServiceEdit::info(const QString &str) {

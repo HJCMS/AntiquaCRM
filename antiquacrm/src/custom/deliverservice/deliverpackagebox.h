@@ -31,10 +31,10 @@ protected:
 
 public Q_SLOTS:
   /**
-   * @brief setCurrentService
-   * Suche Daten mit FOREIGN KEY ("delivery_id")
+   * @brief Setze Paket Gruppe von Dienstleister
+   * Suche Daten mit FOREIGN KEY ("delivery_id") (d_srv)
    */
-  void setCurrentService(int id);
+  void setCurrentPackages(int srv);
 
 Q_SIGNALS:
   /**
@@ -44,7 +44,25 @@ Q_SIGNALS:
 
 public:
   explicit DeliverPackageBox(QWidget *parent = nullptr);
-  qreal getPackagePrice(int);
+
+  /**
+   * @brief Datenbank Packet Nummer "d_cid" setzen.
+   */
+  void setCurrentPackageId(int cid);
+
+  /**
+   * @brief Aktuelle Datenbank Packet Nummer "d_cid"
+   */
+  int getCurrentPackageId();
+
+  /**
+   * @brief Paket Preis "d_price"
+   */
+  qreal getPackagePrice(int cid);
+
+  /**
+   * @brief International oder National "d_international"
+   */
   bool isInternational();
 };
 
