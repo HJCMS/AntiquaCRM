@@ -710,9 +710,14 @@ void OrderEditor::openPrinterInvoiceDialog() {
   if (o_payment_status->status() == OrdersPaymentBox::Yes) {
     comment = tr("The order has already been paid for.");
   }
-  qreal pkgPrice = o_delivery_service->getPackagePrice();
 
   ApplSettings cfg;
+  int tax = cfg.value("payment/vat2").toInt();
+  qreal pkgPrice = o_delivery_service->getPackagePrice();
+  if(pkgPrice > 0) {
+    tax = cfg.value("payment/vat1").toInt();
+  }
+
   QList<BillingInfo> list;
   q = m_sql->query(queryBillingInfo(oid, cid));
   if (q.size() > 0) {
@@ -724,7 +729,7 @@ void OrderEditor::openPrinterInvoiceDialog() {
       d.quantity = q.value("quant").toInt();
       d.sellPrice = q.value("sellPrice").toDouble();
       d.includeVat = false;
-      d.taxValue = cfg.value("payment/vat2").toInt();
+      d.taxValue = tax;
       d.packagePrice = pkgPrice;
       list.append(d);
     }
