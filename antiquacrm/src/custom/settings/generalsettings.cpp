@@ -115,7 +115,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   QFrame *imageSizeFrame = new QFrame(m_grouBox2);
   QVBoxLayout *image_layout = new QVBoxLayout(imageSizeFrame);
   QString sizeinfo = tr("Set size range for Imagepreviews.");
-  image_layout->addWidget(new QLabel(sizeinfo,imageSizeFrame));
+  image_layout->addWidget(new QLabel(sizeinfo, imageSizeFrame));
   m_minSize = new SizeEdit(imageSizeFrame);
   m_minSize->setObjectName("image/min_size");
   m_minSize->setMinimum(80, 80);

@@ -47,6 +47,9 @@ private Q_SLOTS:
 
 public:
   explicit GeneralSettings(QWidget *parent = nullptr);
+  /**
+   * @brief PageTitle
+   */
   void setPageTitle(const QString &);
   const QString getPageTitle();
   void setPageIcon(const QIcon &);
