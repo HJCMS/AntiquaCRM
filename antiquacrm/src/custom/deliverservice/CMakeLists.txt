@@ -12,16 +12,22 @@ SET (subproject_LINKER
 
 SET (subproject_SOURCES
  deliveritem.cpp
+ deliverpackagebox.cpp
+ deliverservicebox.cpp
+ deliverservice.cpp
  deliverservicedialog.cpp
- deliverservicelist.cpp
  deliverserviceedit.cpp
+ deliverservicelist.cpp
 )
 
 SET (subproject_HEADERS
  deliveritem.h
+ deliverpackagebox.h
+ deliverservicebox.h
  deliverservicedialog.h
- deliverservicelist.h
  deliverserviceedit.h
+ deliverservice.h
+ deliverservicelist.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

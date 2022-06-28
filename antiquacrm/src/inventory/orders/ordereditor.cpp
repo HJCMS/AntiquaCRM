@@ -8,6 +8,7 @@
 #include "myicontheme.h"
 #include "ordersitemlist.h"
 #include "orderstatements.h"
+#include "deliverservice.h"
 #include <AntiquaCRM>
 
 #include <QDebug>
@@ -99,7 +100,7 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   m_deliveryBox = new QGroupBox(this);
   m_deliveryBox->setTitle(tr("Delivery Service"));
   QGridLayout *dsLayout = new QGridLayout(m_deliveryBox);
-  o_delivery_service = new DeliveryServicePlus(m_deliveryBox);
+  o_delivery_service = new DeliverService(m_deliveryBox);
   o_delivery_service->setObjectName("o_delivery_service");
   o_delivery_service->setInfo(tr("Service"));
   dsLayout->addWidget(o_delivery_service, 0, 0, 1, 2, Qt::AlignLeft);

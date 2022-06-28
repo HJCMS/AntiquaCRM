@@ -1488,6 +1488,20 @@
     </message>
 </context>
 <context>
+    <name>DeliverService</name>
+    <message>
+        <location filename="../custom/deliverservice/deliverservice.cpp" line="+19"/>
+        <location line="+4"/>
+        <source>Internal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+64"/>
+        <source>Delevery Service is needet!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DeliverServiceDialog</name>
     <message>
         <location filename="../custom/deliverservice/deliverservicedialog.cpp" line="+15"/>
@@ -1499,16 +1513,16 @@
         <source>Create</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+85"/>
+        <source>Invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DeliverServiceEdit</name>
     <message>
-        <location filename="../custom/deliverservice/deliverserviceedit.cpp" line="+18"/>
-        <source>Service</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location filename="../custom/deliverservice/deliverserviceedit.cpp" line="+19"/>
         <source>Delivery Service</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1523,7 +1537,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+19"/>
         <source>costs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1573,7 +1587,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-47"/>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Set this Package as default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Set default Package in this List. Note: Only one Item kann set as Default.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
         <source>Packageclass ²</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1623,7 +1652,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+45"/>
         <source>No valid Dataset present</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1746,37 +1775,6 @@
     <message>
         <location line="+14"/>
         <source>&lt;p&gt;Customer Address is empty!&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>DeliveryService</name>
-    <message>
-        <location filename="../custom/utils/deliveryservice.cpp" line="+21"/>
-        <source>Internal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+72"/>
-        <source>Delevery Service is needet!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>DeliveryServicePlus</name>
-    <message>
-        <location filename="../custom/utils/deliveryserviceplus.cpp" line="+26"/>
-        <source>Internal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Package</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+128"/>
-        <source>Delevery Service is needet!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2669,7 +2667,7 @@
 <context>
     <name>OrderEditor</name>
     <message>
-        <location filename="../inventory/orders/ordereditor.cpp" line="+19"/>
+        <location filename="../inventory/orders/ordereditor.cpp" line="+20"/>
         <source>Edit Order</source>
         <translation type="unfinished"></translation>
     </message>

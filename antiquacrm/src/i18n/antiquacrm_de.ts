@@ -1488,6 +1488,20 @@
     </message>
 </context>
 <context>
+    <name>DeliverService</name>
+    <message>
+        <location filename="../custom/deliverservice/deliverservice.cpp" line="+19"/>
+        <location line="+4"/>
+        <source>Internal</source>
+        <translation>Intern</translation>
+    </message>
+    <message>
+        <location line="+64"/>
+        <source>Delevery Service is needet!</source>
+        <translation>Ein Lieferservice ist erforderlich!</translation>
+    </message>
+</context>
+<context>
     <name>DeliverServiceDialog</name>
     <message>
         <location filename="../custom/deliverservice/deliverservicedialog.cpp" line="+15"/>
@@ -1499,16 +1513,16 @@
         <source>Create</source>
         <translation>Erstellen</translation>
     </message>
+    <message>
+        <location line="+85"/>
+        <source>Invalid</source>
+        <translation>Ungültig</translation>
+    </message>
 </context>
 <context>
     <name>DeliverServiceEdit</name>
     <message>
-        <location filename="../custom/deliverservice/deliverserviceedit.cpp" line="+18"/>
-        <source>Service</source>
-        <translation>Dienst</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location filename="../custom/deliverservice/deliverserviceedit.cpp" line="+19"/>
         <source>Delivery Service</source>
         <translation>Lieferdienst</translation>
     </message>
@@ -1523,7 +1537,7 @@
         <translation>Wenn ausgewählt, handelt es sich um ein internationales Paket.</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+19"/>
         <source>costs</source>
         <translation>Kosten</translation>
     </message>
@@ -1573,7 +1587,22 @@
         <translation>Infoseiten ¹</translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-47"/>
+        <source>Default</source>
+        <translation>Standard</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Set this Package as default</source>
+        <translation>Setzte diese Paket als Standard</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Set default Package in this List. Note: Only one Item kann set as Default.</source>
+        <translation>Legen Sie das Standardpaket in dieser Liste fest. Hinweis: Es kann nur ein Element als Standard festgelegt werden.</translation>
+    </message>
+    <message>
+        <location line="+27"/>
         <source>Packageclass ²</source>
         <translation>Paketklasse ²</translation>
     </message>
@@ -1623,7 +1652,7 @@
         <translation>²) Unbedingt Erforderlich</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+45"/>
         <source>No valid Dataset present</source>
         <translation>Ungültiger Datensatz</translation>
     </message>
@@ -1747,37 +1776,6 @@
         <location line="+14"/>
         <source>&lt;p&gt;Customer Address is empty!&lt;/p&gt;</source>
         <translation>&lt;p&gt;Kunden Adresse ist leer!&lt;/p&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>DeliveryService</name>
-    <message>
-        <location filename="../custom/utils/deliveryservice.cpp" line="+21"/>
-        <source>Internal</source>
-        <translation>Intern</translation>
-    </message>
-    <message>
-        <location line="+72"/>
-        <source>Delevery Service is needet!</source>
-        <translation>Ein Lieferservice ist erforderlich!</translation>
-    </message>
-</context>
-<context>
-    <name>DeliveryServicePlus</name>
-    <message>
-        <location filename="../custom/utils/deliveryserviceplus.cpp" line="+26"/>
-        <source>Internal</source>
-        <translation>Intern</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Package</source>
-        <translation>Paket</translation>
-    </message>
-    <message>
-        <location line="+128"/>
-        <source>Delevery Service is needet!</source>
-        <translation>Ein Lieferservice ist erforderlich!</translation>
     </message>
 </context>
 <context>
@@ -2669,7 +2667,7 @@
 <context>
     <name>OrderEditor</name>
     <message>
-        <location filename="../inventory/orders/ordereditor.cpp" line="+19"/>
+        <location filename="../inventory/orders/ordereditor.cpp" line="+20"/>
         <source>Edit Order</source>
         <translation>Auftrag bearbeiten</translation>
     </message>

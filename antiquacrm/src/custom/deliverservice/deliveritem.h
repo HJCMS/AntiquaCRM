@@ -16,6 +16,7 @@ private:
   QString d_definition;
   QString d_description;
   bool d_international;
+  bool d_default;
   qreal d_price;
   QDateTime d_changed;
 
@@ -32,6 +33,9 @@ public:
 
   void setInternational(bool t = false);
   bool international();
+
+  void setDefault(bool b = false);
+  bool isDefault();
 
   void setDescription(const QString &);
   const QString description();

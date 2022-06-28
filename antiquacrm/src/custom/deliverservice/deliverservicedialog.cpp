@@ -125,10 +125,17 @@ bool DeliverServiceDialog::event(QEvent *e) {
 void DeliverServiceDialog::saveCurrent() {
   DeliverItem data = m_edit->getSaveData();
   int d_cid = data.primaryKey();
+  // FOREIGN KEY check
+  if (data.index() < 1) {
+    messanger(tr("Invalid") + " SQL:'FOREIGN KEY'");
+    m_edit->setServiceBoxFocus();
+    return;
+  }
   QString d_srv = QString::number(data.index());
   QString d_class = data.name();
   QString d_definition = data.definition();
   QString d_international = (data.international() ? "true" : "false");
+  QString d_default = (data.isDefault() ? "true" : "false");
   QString d_description = data.description();
   QString d_price = QString::number(data.price(), 'f', 2);
 
@@ -148,6 +155,7 @@ void DeliverServiceDialog::saveCurrent() {
     sql.append(d_description);
     sql.append("', d_price=");
     sql.append(d_price);
+    sql.append(", d_default=" + d_default);
     sql.append(" WHERE d_cid=");
     sql.append(QString::number(d_cid));
     sql.append(";");
@@ -165,8 +173,13 @@ void DeliverServiceDialog::saveCurrent() {
     sql.append(d_price);
     sql.append(");");
   }
-
-  qDebug() << "SQL:" << sql;
+  // qDebug() << "SQL:" << sql;
+  if (data.isDefault()) {
+    // Restore before Update for Unique
+    QString u_sql("UPDATE ref_delivery_cost SET d_default=false");
+    u_sql.append(" WHERE d_cid!=" + QString::number(d_cid) + ";");
+    m_sql->query(u_sql);
+  }
 
   m_sql->query(sql);
   if (m_sql->lastError().isEmpty()) {

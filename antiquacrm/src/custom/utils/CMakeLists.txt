@@ -20,8 +20,6 @@ SET (subproject_SOURCES
   boolbox.cpp
   cancellation.cpp
   datetimeedit.cpp
-  deliveryservice.cpp
-  deliveryserviceplus.cpp
   ecurrency.cpp
   editoractionbar.cpp
   editormain.cpp
@@ -62,8 +60,6 @@ SET (subproject_HEADERS
   boolbox.h
   cancellation.h
   datetimeedit.h
-  deliveryservice.h
-  deliveryserviceplus.h
   editoractionbar.h
   emailedit.h
   ecurrency.h

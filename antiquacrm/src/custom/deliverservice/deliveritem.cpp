@@ -9,7 +9,8 @@ DeliverItem::DeliverItem(int index, const QString &name)
   d_definition = QString();
   d_description = QString();
   d_international = false;
-  d_price = 0.0;
+  d_default = false;
+  d_price = 0.01;
   d_changed = QDateTime::currentDateTime();
 }
 
@@ -28,6 +29,10 @@ const QString DeliverItem::definition() { return d_definition; }
 void DeliverItem::setInternational(bool t) { d_international = t; }
 
 bool DeliverItem::international() { return d_international; }
+
+void DeliverItem::setDefault(bool b) { d_default = b; }
+
+bool DeliverItem::isDefault() { return d_default; }
 
 void DeliverItem::setDescription(const QString &d) { d_description = d; }
 

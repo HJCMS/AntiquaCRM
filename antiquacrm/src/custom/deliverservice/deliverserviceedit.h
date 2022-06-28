@@ -15,6 +15,7 @@
 #include <Utils>
 
 class DeliverItem;
+class DeliverServiceBox;
 
 class DeliverServiceEdit : public QWidget {
   Q_OBJECT
@@ -23,13 +24,14 @@ class DeliverServiceEdit : public QWidget {
 
 private:
   IntSpinBox *d_cid;
-  DeliveryService *d_srv;
+  DeliverServiceBox *d_srv;
   StrLineEdit *d_class;
   StrLineEdit *d_definition;
   StrLineEdit *d_description;
   StrLineEdit *d_infopage;
   StrLineEdit *d_website;
   BoolBox *d_international;
+  BoolBox *d_default;
   PriceEdit *d_price;
   DateTimeDisplay *d_changed;
 
@@ -44,6 +46,7 @@ Q_SIGNALS:
 public Q_SLOTS:
   void createSubEntry(int id);
   void createNewEntry();
+  void setServiceBoxFocus();
 
 public:
   explicit DeliverServiceEdit(QWidget *parent = nullptr);

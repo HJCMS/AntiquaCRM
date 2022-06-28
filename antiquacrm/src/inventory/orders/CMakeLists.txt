@@ -17,6 +17,7 @@ SET (subproject_LINKER
  Utils
  Imaging
  Printing
+ DeliverService
 )
 
 SET (subproject_SOURCES

@@ -22,14 +22,6 @@
 # include "datetimeedit.h"
 #endif
 
-#ifndef DELIVERYSERVICE_UTILS_H
-# include "deliveryservice.h"
-#endif
-
-#ifndef DELIVERYSERVICEPLUS_UTILS_H
-# include "deliveryserviceplus.h"
-#endif
-
 #ifndef ECURRENCY_UTILS_H
 # include "ecurrency.h"
 #endif
