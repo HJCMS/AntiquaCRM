@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "ordereditor.h"
+#include "applsettings.h"
 #include "deliverservice.h"
 #include "deliverynote.h"
 #include "editoractionbar.h"
@@ -705,16 +706,26 @@ void OrderEditor::openPrinterInvoiceDialog() {
   dialog->setCustomerAddress(c_add);
   dialog->setInvoice(oid, cid, in_id, did);
 
-  QList<Invoice::BillingInfo> list;
+  QString comment;
+  if (o_payment_status->status() == OrdersPaymentBox::Yes) {
+    comment = tr("The order has already been paid for.");
+  }
+  qreal pkgPrice = o_delivery_service->getPackagePrice();
+
+  ApplSettings cfg;
+  QList<BillingInfo> list;
   q = m_sql->query(queryBillingInfo(oid, cid));
   if (q.size() > 0) {
     QRegExp strip("\\-\\s+\\-");
     while (q.next()) {
-      Invoice::BillingInfo d;
+      BillingInfo d;
       d.articleid = q.value("aid").toString();
       d.designation = q.value("title").toString().replace(strip, "-");
       d.quantity = q.value("quant").toInt();
       d.sellPrice = q.value("sellPrice").toDouble();
+      d.includeVat = false;
+      d.taxValue = cfg.value("payment/vat2").toInt();
+      d.packagePrice = pkgPrice;
       list.append(d);
     }
   } else {
@@ -723,7 +734,7 @@ void OrderEditor::openPrinterInvoiceDialog() {
     emit s_postMessage(tr("No Billing Info found"));
     return;
   }
-  if (!dialog->exec(list)) {
+  if (!dialog->exec(list, comment)) {
     /* Unused */
   }
   list.clear();

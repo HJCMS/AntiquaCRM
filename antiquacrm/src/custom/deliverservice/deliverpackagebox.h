@@ -45,6 +45,7 @@ Q_SIGNALS:
 public:
   explicit DeliverPackageBox(QWidget *parent = nullptr);
   qreal getPackagePrice(int);
+  bool isInternational();
 };
 
 #endif // DELIVERPACKAGEBOX_H

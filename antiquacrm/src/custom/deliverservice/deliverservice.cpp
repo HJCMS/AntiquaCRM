@@ -91,7 +91,23 @@ void DeliverService::setServicePackage(int id) {
     m_packageBox->setCurrentIndex(p_packageid);
 }
 
-int DeliverService::getServicePackage() { return m_packageBox->currentIndex(); }
+int DeliverService::getServicePackage() {
+  // Paket Details
+  return m_packageBox->currentIndex();
+}
+
+bool DeliverService::isInternational() {
+  // Ist es ein Nationales oder Internationales
+  return m_packageBox->isInternational();
+}
+
+qreal DeliverService::getPackagePrice() {
+  qreal out = 0.00;
+  if (!m_packageBox->isInternational())
+    return out;
+
+  return m_packageBox->getPackagePrice(m_packageBox->currentIndex());
+}
 
 bool DeliverService::isValid() {
   if (isRequired() && m_packageBox->currentIndex() == 0)

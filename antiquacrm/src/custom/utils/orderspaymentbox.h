@@ -33,9 +33,11 @@ public Q_SLOTS:
   void setFocus();
 
 public:
+  enum Finished { No = 0, Yes = 1 };
   OrdersPaymentBox(QWidget *parent = nullptr);
   int findIndex(const QString &);
   const QVariant value();
+  OrdersPaymentBox::Finished status();
   bool isValid();
   void setInfo(const QString &);
   const QString info();

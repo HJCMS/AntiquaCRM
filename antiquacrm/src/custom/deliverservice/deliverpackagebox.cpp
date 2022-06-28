@@ -41,3 +41,15 @@ qreal DeliverPackageBox::getPackagePrice(int index) {
   }
   return 0.00;
 }
+
+bool DeliverPackageBox::isInternational() {
+  QString sql("SELECT DISTINCT d_international ");
+  sql.append("FROM ref_delivery_cost WHERE d_cid=");
+  sql.append(QString::number(currentIndex()));
+  sql.append(" LIMIt 1;");
+  QSqlQuery q = m_sql->query(sql);
+  if (q.next()) {
+    return q.value("d_international").toBool();
+  }
+  return false;
+}

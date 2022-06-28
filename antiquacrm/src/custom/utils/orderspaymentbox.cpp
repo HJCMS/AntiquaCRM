@@ -54,6 +54,14 @@ int OrdersPaymentBox::findIndex(const QString &search) {
 
 const QVariant OrdersPaymentBox::value() { return paymentStatus; }
 
+OrdersPaymentBox::Finished OrdersPaymentBox::status()
+{
+  if(paymentStatus >= 1)
+    return Finished::Yes;
+
+  return Finished::No;
+}
+
 bool OrdersPaymentBox::isValid() { return true; }
 
 void OrdersPaymentBox::setInfo(const QString &info) {

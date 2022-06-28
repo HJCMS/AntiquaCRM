@@ -95,17 +95,19 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   // Mehwertsteuer
   QFrame *vat_frame = new QFrame(m_grouBox2);
   QGridLayout *vat_layout = new QGridLayout(vat_frame);
-  m_vat1 = new LineEdit(vat_frame);
+  m_vat1 = new IntSpinBox(vat_frame);
   m_vat1->setObjectName("payment/vat1");
-  m_vat1->setInfo(tr("value added tax 1"));
-  m_vat1->restrictDisplay(10, 100);
-  m_vat1->setValue("19%");
+  m_vat1->setInfo(tr("VAT (normal)"));
+  m_vat1->setRange(1, 50);
+  m_vat1->setValue("19");
+  m_vat1->setSuffix("%");
   vat_layout->addWidget(m_vat1, 0, 1, 1, 1, Qt::AlignLeft);
-  m_vat2 = new LineEdit(vat_frame);
+  m_vat2 = new IntSpinBox(vat_frame);
   m_vat2->setObjectName("payment/vat2");
-  m_vat2->setInfo(tr("value added tax 2"));
-  m_vat2->restrictDisplay(10, 100);
-  m_vat2->setValue("7%");
+  m_vat2->setInfo(tr("VAT (reduced)"));
+  m_vat2->setRange(1, 50);
+  m_vat2->setValue("7");
+  m_vat2->setSuffix("%");
   vat_layout->addWidget(m_vat2, 1, 1, 1, 1, Qt::AlignLeft);
   vat_frame->setLayout(vat_layout);
   lt_groupBox2->addWidget(vat_frame, Qt::AlignLeft);

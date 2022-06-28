@@ -40,6 +40,8 @@ public:
   const QVariant value();
   void setServicePackage(int);
   int getServicePackage();
+  bool isInternational();
+  qreal getPackagePrice();
   bool isValid();
   void setInfo(const QString &);
   const QString info();

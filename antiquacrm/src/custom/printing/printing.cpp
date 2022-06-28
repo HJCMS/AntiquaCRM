@@ -52,6 +52,7 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
 
   header = new TextEditor(printArea);
   header->setObjectName("printing_header");
+  header->setContentsMargins(0, 0, 0, 0);
   header->setMinimumHeight(25);
   header->setMinimumWidth(pageWidth);
   header->setMaximumWidth(pageWidth);
@@ -60,6 +61,7 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
   frame_layout->addWidget(header);
   body = new TextEditor(printArea);
   body->setObjectName("printing_body");
+  body->setContentsMargins(0, 0, 0, 0);
   body->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
   body->setMinimumWidth(pageWidth);
   body->setMaximumWidth(pageWidth);
@@ -67,6 +69,7 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
   frame_layout->addWidget(body);
   footer = new TextEditor(printArea);
   footer->setObjectName("printing_footer");
+  footer->setContentsMargins(0, 0, 0, 0);
   footer->setMinimumHeight(20);
   footer->setMinimumWidth(pageWidth);
   footer->setMaximumWidth(pageWidth);
@@ -105,6 +108,11 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
 }
 
 void Printing::readConfiguration() {
+  config->beginGroup("payment");
+  p_currency = config->value("currency").toByteArray();
+  p_tax_value = config->value("vat1").toInt();
+  config->endGroup();
+
   config->beginGroup("company");
   QStringList keys = config->childKeys();
   if (keys.count() < 2) {
@@ -181,6 +189,10 @@ const QTextTableFormat Printing::tableFormat() {
   f.setBorderStyle(QTextFrameFormat::BorderStyle_Solid);
   f.setAlignment(Qt::AlignCenter);
   return f;
+}
+
+const QBrush Printing::borderBrush() {
+  return QBrush(Qt::darkGray, Qt::SolidPattern);
 }
 
 void Printing::constructHeader() {

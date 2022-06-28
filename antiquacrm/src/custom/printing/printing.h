@@ -95,6 +95,16 @@ protected:
   ApplSettings *config;
 
   /**
+   * @brief Währung
+   */
+  QByteArray p_currency;
+
+  /**
+   * @brief Standard Mehrwertsteuersatz
+   */
+  int p_tax_value;
+
+  /**
    * @brief Wird von @ref readConfiguration() befüllt.
    */
   QHash<QString, QString> companyData;
@@ -180,6 +190,11 @@ protected:
    * @brief Tabellen Format
    */
   const QTextTableFormat tableFormat();
+
+  /**
+   * @brief Tabellenrand Farbe
+   */
+  const QBrush borderBrush();
 
   /**
    * @brief Erstelle Briefkopf

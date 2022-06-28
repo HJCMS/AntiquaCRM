@@ -5,10 +5,26 @@
 #ifndef INVOICE_PRINTING_H
 #define INVOICE_PRINTING_H
 
+#include <QList>
+#include <QMetaType>
 #include <QObject>
 #include <QWidget>
 
 #include "printing.h"
+
+/**
+ * @brief Container für das befüllen der Tabellenzellen.
+ */
+struct BillingInfo {
+  QString articleid;   /**< Article ID */
+  QString designation; /**< Designation */
+  int quantity;        /**< Quantity */
+  double sellPrice;    /**< Preis */
+  bool includeVat;     /**< inkl. MwSt */
+  int taxValue;        /**< Steuerwert */
+  qreal packagePrice;  /**< Paket Extras */
+};
+Q_DECLARE_METATYPE(BillingInfo);
 
 /**
  * @brief Rechnungs Erstellung
@@ -22,9 +38,10 @@ class Invoice : public Printing {
 
 private:
   QTextTable *m_billingTable;
-  QString p_currency;
   int p_quantity_sum = 0;
-  double p_fullPrice = 0.00;
+  bool p_including_VAT;
+  qreal p_fullPrice = 0.00;
+  qreal p_packagePrice = 0.00;
 
   void constructSubject();
   void constructBody();
@@ -36,28 +53,16 @@ private:
    * @param quantity    - Menge
    * @param sellPrice   - Preis
    */
-  void insertBilling(const QString &articleid, const QString &designation,
-                     int quantity, double sellPrice);
-
+  void insertBilling(BillingInfo billing);
+  bool insertSummaryTable();
   void finalizeBillings();
+  void setComment(const QString &);
 
 private Q_SLOTS:
   bool generateDocument(QPrinter *printer);
   void openPrintDialog();
 
 public:
-  /**
-   * @brief Container für das befüllen der Tabellenzellen.
-   */
-  struct BillingInfo {
-    QString articleid;   /**< Article ID */
-    QString designation; /**< Designation */
-    int quantity;        /**< Quantity */
-    double sellPrice;    /**< Preis */
-    bool including_vat;  /**< inkl. MwSt */
-    int tax_value;       /**< Steuerwert */
-  };
-
   explicit Invoice(QWidget *parent = nullptr);
 
   /**
@@ -69,8 +74,7 @@ public:
                   int invoiceId,  /* Rechnungsnummer */
                   const QString &deliverNoteId);
 
-  int exec(const QList<BillingInfo> &);
+  int exec(const QList<BillingInfo> &, const QString &comment = QString());
 };
-Q_DECLARE_METATYPE(Invoice::BillingInfo);
 
 #endif // INVOICE_PRINTING_H
