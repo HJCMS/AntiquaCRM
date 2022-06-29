@@ -444,7 +444,6 @@ void BookEditor::createSqlUpdate() {
       DataField f = sqlQueryResult.at(i);
       /* Wenn sich die Anzahl geändert hat, ein Update senden! */
       if ((f.field() == "ib_count") && (f.value().toInt() != articleCount)) {
-        qInfo("Sending Article count update signal!");
         count_temp = articleCount;
         emit s_articleCount(articleId, articleCount);
         break;

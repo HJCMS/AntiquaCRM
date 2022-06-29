@@ -3,3 +3,4 @@ lupdate
 lrelease
 linquist
 antiqua*.rc
+*.wsdl

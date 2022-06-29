@@ -493,7 +493,7 @@
         <translation>Keine Artikel ID für Update vorhanden.</translation>
     </message>
     <message>
-        <location line="+110"/>
+        <location line="+109"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
@@ -508,7 +508,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-440"/>
+        <location line="-439"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -528,12 +528,12 @@
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
     <message>
-        <location line="+211"/>
+        <location line="+210"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
     <message>
-        <location line="-293"/>
+        <location line="-292"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -1805,6 +1805,19 @@
     </message>
 </context>
 <context>
+    <name>EUCountryBox</name>
+    <message>
+        <location filename="../custom/utils/eucountries.cpp" line="+88"/>
+        <source>No European Country</source>
+        <translation>Kein Europäsches Land</translation>
+    </message>
+    <message>
+        <location line="+62"/>
+        <source>a valid Country selection is required!</source>
+        <translation>Eine gültige EU-Staatenauswahl ist Erforderlich!</translation>
+    </message>
+</context>
+<context>
     <name>Ecurrency</name>
     <message>
         <location filename="../custom/utils/ecurrency.cpp" line="+12"/>
@@ -2461,21 +2474,21 @@
     </message>
     <message>
         <location line="+71"/>
-        <source>Package delivery cost</source>
-        <translation>Paketversandkosten</translation>
+        <source>delivery cost</source>
+        <translation>Versandkosten</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+23"/>
         <source>incl.</source>
         <translation>inkl.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>VAT</source>
         <translation>MwSt</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+36"/>
         <source>invoice amount</source>
         <translation>Rechnungsbetrag</translation>
     </message>
@@ -2687,7 +2700,7 @@
         <translation>Auftrag bearbeiten</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+39"/>
         <source>Order ID</source>
         <translation>Auftrags ID</translation>
     </message>
@@ -2702,28 +2715,28 @@
         <translation>Zahlung</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+23"/>
         <source>Customer Info</source>
         <translation>Kundeninformation</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+18"/>
         <source>Delivery Service</source>
         <translation>Lieferservice</translation>
     </message>
     <message>
-        <location line="-16"/>
+        <location line="-22"/>
         <source>Address for Customer ID</source>
         <translation>Adresse und Kunden Nummer</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+84"/>
         <location line="+4"/>
         <source>Provider</source>
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="-19"/>
+        <location line="-54"/>
         <source>Notification</source>
         <translation>Benachrichtigung</translation>
     </message>
@@ -2738,34 +2751,74 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+682"/>
+        <location line="+736"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-745"/>
+        <location line="-811"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+60"/>
         <source>Parcel Shipment Number</source>
         <translation>Paketsendungsnummer</translation>
     </message>
     <message>
-        <location line="+169"/>
+        <location line="+44"/>
+        <source>add delivery package price</source>
+        <translation>Lieferpaketpreis hinzufügen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>add delivery package price to current shipping.</source>
+        <translation>Lieferpaketpreis zum aktuellen Versand hinzufügen.</translation>
+    </message>
+    <message>
+        <location line="-24"/>
+        <source>Invoice</source>
+        <translation>Rechnung</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>European Countries</source>
+        <translation>Europäische Staaten</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>vat included</source>
+        <translation>inkl. MwSt</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Normally the vat is included in Book articles. Uncheck it to enable add VAT in Printing Invoice.</source>
+        <translation>Üblicherweise ist bei Buchartikeln die Mehrwertsteuer enthalten. Deaktivieren Sie es, um das Hinzufügen von Mehrwertsteuer beim Drucken von Rechnungen zu aktivieren.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Reduced</source>
+        <translation>Reduziert</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Normal</source>
+        <translation>Standard</translation>
+    </message>
+    <message>
+        <location line="+164"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
         <location line="+265"/>
-        <location line="+454"/>
+        <location line="+478"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="-439"/>
+        <location line="-463"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
     </message>
@@ -2785,7 +2838,7 @@
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+21"/>
         <location line="+58"/>
         <source>Missing Order-Id</source>
         <translation>Fehlende Bestellnummer</translation>
@@ -2798,12 +2851,12 @@
     </message>
     <message>
         <location line="-36"/>
-        <location line="+63"/>
+        <location line="+64"/>
         <source>No Customer Address found</source>
         <translation>Konnte keine Kundenadresse finden</translation>
     </message>
     <message>
-        <location line="-46"/>
+        <location line="-47"/>
         <source>no deliveries found</source>
         <translation>Keine Bestellungen gefunden</translation>
     </message>
@@ -2813,12 +2866,12 @@
         <translation>Kein Rechnungs-Nr</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+30"/>
         <source>The order has already been paid for.</source>
         <translation>Die Bestellung wurde bereits bezahlt.</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+37"/>
         <source>No Billing Info found</source>
         <translation>Kein Verkaufsinformationen gefunden</translation>
     </message>
@@ -2838,7 +2891,7 @@
         <translation>Möchten Sie wirklich diesen Auftrag schließen und an die Buchhaltung weiter reichen?</translation>
     </message>
     <message>
-        <location line="+243"/>
+        <location line="+254"/>
         <source>One or more items on the list are not available!</source>
         <translation>Ein oder mehrere Artikel auf der Liste sind nicht Verfügbar!</translation>
     </message>
@@ -2853,18 +2906,18 @@
         <translation>Bestellung</translation>
     </message>
     <message>
-        <location line="-452"/>
-        <location line="+208"/>
+        <location line="-476"/>
+        <location line="+221"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
     <message>
-        <location line="-665"/>
+        <location line="-711"/>
         <source>Service</source>
         <translation>Sender</translation>
     </message>
     <message>
-        <location line="+644"/>
+        <location line="+690"/>
         <source>The notification system requires a valid Parcel Shipment ID to send customer emails.</source>
         <translation>Das Benachrichtigungssystem erfordert eine gültige Paketsendungs-ID, um Kunden-E-Mails zu senden.</translation>
     </message>
@@ -2879,7 +2932,7 @@
         <translation>Auftrag deaktiviert!</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+27"/>
         <source>Notice</source>
         <translation>Hinweis</translation>
     </message>

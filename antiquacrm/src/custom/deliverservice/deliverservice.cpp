@@ -24,27 +24,28 @@ DeliverService::DeliverService(QWidget *parent) : UtilsMain{parent} {
 
   m_packageBox = new DeliverPackageBox(this);
   m_packageBox->insertItem(1, tr("Internal"));
+  m_packageBox->setMinimumWidth(100);
   m_packageBox->setEnabled(false);
   layout->addWidget(m_packageBox);
 
   m_priceInfo = new QLabel(this);
   layout->addWidget(m_priceInfo);
 
+  layout->addStretch(1);
   setLayout(layout);
   setRequired(false);
 
   connect(m_serviceBox, SIGNAL(currentIndexChanged(int)), this,
           SLOT(currentServiceChanged(int)));
 
-  connect(m_packageBox, SIGNAL(validServiceChanged(bool)),
-          this, SLOT(getPriceOnDemand(bool)));
+  connect(m_packageBox, SIGNAL(validServiceChanged(bool)), this,
+          SLOT(getPriceOnDemand(bool)));
 
   connect(m_packageBox, SIGNAL(currentIndexChanged(int)), this,
           SLOT(packageChanged(int)));
 }
 
-void DeliverService::getPriceOnDemand(bool b)
-{
+void DeliverService::getPriceOnDemand(bool b) {
   m_packageBox->setEnabled(true);
   // FIXME if(b) { packageChanged(1); }
 }
@@ -100,7 +101,6 @@ void DeliverService::setDeliveryPackage(int cid) {
 }
 
 int DeliverService::getDeliveryPackage() {
-  // Paket Details
   return m_packageBox->getCurrentPackageId();
 }
 
@@ -110,12 +110,8 @@ bool DeliverService::isInternational() {
 }
 
 qreal DeliverService::getPackagePrice() {
-  qreal out = 0.00;
-  if (!m_packageBox->isInternational())
-    return out;
-
   int cid = m_packageBox->getCurrentPackageId();
-  return m_packageBox->getPackagePrice(cid);
+  return (cid > 0) ? m_packageBox->getPackagePrice(cid) : 0.00;
 }
 
 bool DeliverService::isValid() { return true; }

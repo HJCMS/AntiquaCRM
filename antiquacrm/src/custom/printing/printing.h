@@ -27,6 +27,8 @@
 class TextEditor;
 class ApplSettings;
 
+#include <AntiquaCRM>
+
 /**
  * @brief Drucker Dialog Klasse
  * @class Printing
@@ -248,6 +250,21 @@ protected:
    * @param section - Konfigurations Sektion
    */
   bool createPDF(const QString &section);
+
+  /**
+   * @brief Mehrwertsteuer berechnen
+   * @param price - Basis Preis
+   * @param vat   - Mehrwertsteuer
+   */
+  inline qreal addVat(qreal price, qreal vat) const {
+    Antiqua::TaxCalculator calc(price);
+    return calc.plus_vat(vat);
+  };
+
+  inline qreal inclVat(qreal price, qreal vat) const {
+    Antiqua::TaxCalculator calc(price);
+    return calc.incl_vat(vat);
+  };
 
 protected Q_SLOTS:
   /**

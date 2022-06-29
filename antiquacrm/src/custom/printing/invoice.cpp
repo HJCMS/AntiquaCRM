@@ -185,7 +185,7 @@ void Invoice::insertBilling(BillingInfo billing) {
 bool Invoice::insertSummaryTable() {
   QTextCursor cursor = body->textCursor();
   int row = m_billingTable->rows();
-  int addRows = (p_packagePrice > 0) ? 2 : 1;
+  int addRows = (p_packagePrice > 0.50) ? 2 : 1;
   m_billingTable->insertRows(row, addRows);
 
   QTextTableCellFormat cellFormat;
@@ -199,7 +199,7 @@ bool Invoice::insertSummaryTable() {
     cursor = left.firstCursorPosition();
     cursor.setCharFormat(normalFormat());
     cursor.setBlockFormat(alignRight());
-    QString str(tr("Package delivery cost"));
+    QString str(tr("delivery cost"));
     cursor.insertText(str);
 
     QTextTableCell right = m_billingTable->cellAt(row, 3);
@@ -220,12 +220,12 @@ bool Invoice::insertSummaryTable() {
   cursor = left.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
-  QString tax = QString::number(p_tax_value);
   QString strTax;
   if (p_including_VAT) {
     strTax.append(tr("incl.") + " ");
   }
-  strTax.append(tax + "% " + tr("VAT"));
+  strTax.append(QString::number(p_tax_value));
+  strTax.append("% " + tr("VAT"));
   cursor.insertText(strTax);
 
   QTextTableCell right = m_billingTable->cellAt(row, 3);
@@ -233,11 +233,15 @@ bool Invoice::insertSummaryTable() {
   cursor = right.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
-  if (!p_including_VAT) {
-    qreal vat = ((p_fullPrice / (100 + p_tax_value)) * p_tax_value);
-    QString str = QString::number(vat, 'f', 2);
-    cursor.insertText(str + " " + p_currency);
+  qreal tax;
+  if (p_including_VAT) {
+    tax = inclVat(p_fullPrice, p_tax_value);
+  } else {
+    tax = addVat(p_fullPrice, p_tax_value);
   }
+  QString str = QString::number(tax, 'f', 2);
+  cursor.insertText(str + " " + p_currency);
+
   body->document()->setModified(true);
   return true;
 }
@@ -266,7 +270,7 @@ void Invoice::finalizeBillings() {
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
   if (!p_including_VAT) {
-    p_fullPrice += ((p_fullPrice / (100 + p_tax_value)) * p_tax_value);
+    p_fullPrice += addVat(p_fullPrice, p_tax_value);
   }
   QString str = QString::number(p_fullPrice, 'f', 2);
   str.append(" " + p_currency);

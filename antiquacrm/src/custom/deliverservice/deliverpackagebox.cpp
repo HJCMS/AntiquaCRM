@@ -46,7 +46,8 @@ void DeliverPackageBox::setCurrentPackageId(int cid) {
 }
 
 int DeliverPackageBox::getCurrentPackageId() {
-  return itemData(currentIndex(), Qt::UserRole).toInt();
+  QVariant val = itemData(currentIndex(), Qt::UserRole);
+  return (val.isValid()) ? val.toInt() : -1;
 }
 
 qreal DeliverPackageBox::getPackagePrice(int cid) {
@@ -61,10 +62,9 @@ qreal DeliverPackageBox::getPackagePrice(int cid) {
 }
 
 bool DeliverPackageBox::isInternational() {
-  QString sql("SELECT DISTINCT d_international ");
-  sql.append("FROM ref_delivery_cost WHERE d_cid=");
-  sql.append(QString::number(currentIndex()));
-  sql.append(" LIMIt 1;");
+  QString sql("SELECT d_international FROM ");
+  sql.append("ref_delivery_cost WHERE d_cid=");
+  sql.append(QString::number(getCurrentPackageId()) + ";");
   QSqlQuery q = m_sql->query(sql);
   if (q.next()) {
     return q.value("d_international").toBool();

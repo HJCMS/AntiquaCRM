@@ -33,6 +33,7 @@ SET (subproject_SOURCES
   networker.cpp
   curljson.cpp
   interface.cpp
+  taxcalculator.cpp
 )
 
 SET (subproject_HEADERS
@@ -48,6 +49,7 @@ SET (subproject_HEADERS
   antiqua_global.h
   pluginloader.h
   interface.h
+  taxcalculator.h
   AntiquaInterface
   Networking
 )

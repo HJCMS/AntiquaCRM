@@ -359,7 +359,7 @@ bool InventoryProviders::updateArticleCount(int articleId, int count) {
   while (it.hasNext()) {
     Antiqua::Interface *iface = it.next();
     if (iface != nullptr) {
-      qDebug() << "Update:" << iface->provider() << articleId << count;
+      // qDebug() << "Update:" << iface->provider() << articleId << count;
       iface->updateArticleCount(articleId, count);
     }
   }

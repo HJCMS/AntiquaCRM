@@ -10,6 +10,10 @@
 # include "trustlist.h"
 #endif
 
+#ifndef TAXCALCULATOR_ANTIQUACORE_H
+# include "taxcalculator.h"
+#endif
+
 #ifndef DATAFIELD_ANTIQUACORE_H
 # include "datafield.h"
 #endif

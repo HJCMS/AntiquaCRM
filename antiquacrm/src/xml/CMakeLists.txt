@@ -3,6 +3,7 @@
 
 SET (xml_FILES
   ib_publisher_de.xml
+  eu_countries.xml
 )
 
 file(COPY ${xml_FILES} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

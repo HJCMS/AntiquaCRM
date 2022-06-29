@@ -42,7 +42,6 @@ public:
   void loadSqlDataset();
   const QVariant value();
   int getDeliveryPackage();
-
   bool isInternational();
   qreal getPackagePrice();
   bool isValid();

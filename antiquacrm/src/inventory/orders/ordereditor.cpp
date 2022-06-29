@@ -20,6 +20,8 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   setObjectName("order_editor");
   setWindowTitle(tr("Edit Order"));
 
+  config = new ApplSettings(this);
+
   /**
    * Tabellenfelder welche NICHT bei INSERT/UPDATE
    * benötigt werden aber im Overview enthalten sind.
@@ -46,7 +48,7 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
 
   QWidget *mainWidget = new QWidget(m_scroolView);
   mainWidget->setObjectName("editor_main_widget");
-  mainWidget->setMinimumHeight(680);
+  mainWidget->setMinimumHeight(600);
   m_scroolView->setWidget(mainWidget);
 
   QVBoxLayout *mainWidgetLayout = new QVBoxLayout(mainWidget);
@@ -80,37 +82,49 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   mainWidgetLayout->addLayout(row0);
 
   // Zweite Reihe
-  QGridLayout *row1 = new QGridLayout();
-  o_customer_id = new SerialID(mainWidget);
-  o_customer_id->setObjectName("o_customer_id");
-  o_customer_id->setInfo(tr("Address for Customer ID"));
-  row1->addWidget(o_customer_id, 0, 0, 1, 2, Qt::AlignLeft);
-
-  /*
-   * GridLayout links
+  QHBoxLayout *row1 = new QHBoxLayout();
+  /**
+   * Links
    * Dient nur zur Info die Daten werden mit Tabelle "customers" Verknüpft!
    */
-  m_customer_address = new TextField(mainWidget);
+  QWidget *m_customerInfo = new QWidget(mainWidget);
+  m_customerInfo->setContentsMargins(0, 0, 0, 0);
+  QVBoxLayout *cInfoLayout = new QVBoxLayout(m_customerInfo);
+  cInfoLayout->setContentsMargins(2, 2, 2, 2);
+  o_customer_id = new SerialID(m_customerInfo);
+  o_customer_id->setObjectName("o_customer_id");
+  o_customer_id->setInfo(tr("Address for Customer ID"));
+  cInfoLayout->addWidget(o_customer_id);
+  m_customer_address = new TextField(m_customerInfo);
   m_customer_address->setObjectName("m_customer_address");
   m_customer_address->setToolTip(tr("Customer Info"));
-  row1->addWidget(m_customer_address, 1, 0, 1, 1);
+  cInfoLayout->addWidget(m_customer_address);
+  m_customerInfo->setLayout(cInfoLayout);
+  row1->addWidget(m_customerInfo); // links
 
-  // GridLayout rechts
-  QVBoxLayout *rFrameLayout = new QVBoxLayout();
-  // Lieferdienst
-  m_deliveryBox = new QGroupBox(this);
-  m_deliveryBox->setTitle(tr("Delivery Service"));
+  /**
+   * Rechts
+   * Sektionen:
+   *  Lieferservice
+   *  Dienstleister
+   *  Rechnungs Einstellungen
+   */
+  QTabWidget *tabwidget = new QTabWidget(this);
+  tabwidget->setObjectName("row1_tabwidget_right");
+
+  // BEGIN Lieferdienst
+  m_deliveryBox = new QWidget(tabwidget);
+  tabwidget->addTab(m_deliveryBox, myIcon("spreadsheet"),
+                    tr("Delivery Service"));
   QGridLayout *dsLayout = new QGridLayout(m_deliveryBox);
   o_delivery_service = new DeliverService(m_deliveryBox);
   o_delivery_service->setObjectName("o_delivery_service");
   o_delivery_service->setInfo(tr("Service"));
-  dsLayout->addWidget(o_delivery_service, 0, 0, 1, 2, Qt::AlignLeft);
-
+  dsLayout->addWidget(o_delivery_service, 0, 0, 1, 3, Qt::AlignLeft);
   o_delivery_send_id = new LineEdit(m_deliveryBox);
   o_delivery_send_id->setObjectName("o_delivery_send_id");
   o_delivery_send_id->setInfo(tr("Parcel Shipment Number"));
   dsLayout->addWidget(o_delivery_send_id, 1, 0, 1, 2);
-
   o_notify = new BoolBox(this);
   o_notify->setObjectName("o_notify");
   o_notify->setInfo(tr("Notification"));
@@ -124,11 +138,46 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   btn_gen_deliver->setToolTip(tr("Generate delivery note Number"));
   btn_gen_deliver->setIcon(myIcon("folder_public"));
   dsLayout->addWidget(btn_gen_deliver, 2, 2, 1, 1);
-  rFrameLayout->addWidget(m_deliveryBox);
+  dsLayout->setRowStretch(3, 1);
+  m_deliveryBox->setLayout(dsLayout);
+  // END
 
-  // Dienstleister
-  m_providerBox = new QGroupBox(this);
-  m_providerBox->setTitle(tr("Provider"));
+  // BEGIN Rechnungs Einstellungen
+  m_billingBox = new QWidget(tabwidget);
+  tabwidget->addTab(m_billingBox, myIcon("spreadsheet"), tr("Invoice"));
+  QGridLayout *billingLayout = new QGridLayout(m_billingBox);
+  int brow = 0;
+  o_vat_country = new EUCountryBox(m_billingBox);
+  o_vat_country->setInfo(tr("European Countries"));
+  billingLayout->addWidget(o_vat_country, brow++, 0, 1, 2);
+  o_vat_included = new BoolBox(m_billingBox);
+  o_vat_included->setInfo(tr("vat included"));
+  o_vat_included->setToolTip(
+      tr("Normally the vat is included in Book articles. Uncheck it to enable "
+         "add VAT in Printing Invoice."));
+  o_vat_included->setChecked(true);
+  billingLayout->addWidget(o_vat_included, brow, 0, 1, 1, Qt::AlignRight);
+  o_vat_levels = new QComboBox(m_billingBox);
+  int vat1 = config->value("payment/vat1").toInt();
+  int vat2 = config->value("payment/vat2").toInt();
+  o_vat_levels->insertItem(0, QString::number(vat2) + "% " + tr("Reduced"));
+  o_vat_levels->setItemData(0, vat2, Qt::UserRole);
+  o_vat_levels->insertItem(1, QString::number(vat1) + "% " + tr("Normal"));
+  o_vat_levels->setItemData(1, vat1, Qt::UserRole);
+  o_vat_levels->setCurrentIndex(0);
+  billingLayout->addWidget(o_vat_levels, brow++, 1, 1, 1);
+  o_delivery_add_price = new BoolBox(m_billingBox);
+  o_delivery_add_price->setInfo(tr("add delivery package price"));
+  o_delivery_add_price->setToolTip(tr("add delivery package price to current shipping."));
+  billingLayout->addWidget(o_delivery_add_price, brow++, 0, 1, 2);
+
+  billingLayout->setRowStretch(brow, 1);
+  m_billingBox->setLayout(billingLayout);
+  // END
+
+  // BEGIN Dienstleister
+  m_providerBox = new QWidget(tabwidget);
+  tabwidget->addTab(m_providerBox, myIcon("spreadsheet"), tr("Provider"));
   QVBoxLayout *providerLayout = new QVBoxLayout(m_providerBox);
   o_provider_name = new LineEdit(mainWidget);
   o_provider_name->setObjectName("o_provider_name");
@@ -138,11 +187,11 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   o_provider_order_id->setObjectName("o_provider_order_id");
   o_provider_order_id->setInfo("Id");
   providerLayout->addWidget(o_provider_order_id);
+  providerLayout->addStretch(1);
   m_providerBox->setLayout(providerLayout);
-  rFrameLayout->addWidget(m_providerBox);
+  row1->addWidget(tabwidget);
+  // END
 
-  rFrameLayout->addStretch(1);
-  row1->addLayout(rFrameLayout, 1, 1, 1, 1);
   mainWidgetLayout->addLayout(row1);
 
   // Artikel Einkaufsliste
@@ -687,6 +736,7 @@ void OrderEditor::openPrinterInvoiceDialog() {
     o_delivery->setValue(did);
   }
 
+  ApplSettings cfg;
   Invoice *dialog = new Invoice(this);
   dialog->setObjectName("print_invoice_dialog");
   // Address
@@ -709,14 +759,21 @@ void OrderEditor::openPrinterInvoiceDialog() {
     comment = tr("The order has already been paid for.");
   }
 
-  ApplSettings cfg;
-  bool setIncludeVat = true;
-  int tax = cfg.value("payment/vat2").toInt();
-  qreal pkgPrice = o_delivery_service->getPackagePrice();
-  if(pkgPrice > 0) {
-    tax = cfg.value("payment/vat1").toInt();
-    setIncludeVat = false;
-  }
+  /**
+   * Wenn die Versandkosten mit berechnet werden sollen.
+   * Muss putIntoInvoice() true zurück geben und der Paketpreis
+   * wird von 0.00 auf den Versandwert angehoben!
+   * @note Wenn die Versandkosten nicht '0.00' sind werden sie in
+   * der Rechnung aufgeführt!
+   */
+  bool vat_included = o_vat_included->isChecked();
+  int setTax =
+      o_vat_levels->itemData(o_vat_levels->currentIndex(), Qt::UserRole)
+          .toInt();
+
+  qreal packagePrice = 0;
+  if (o_delivery_add_price->isChecked())
+    packagePrice = o_delivery_service->getPackagePrice();
 
   QList<BillingInfo> list;
   q = m_sql->query(queryBillingInfo(oid, cid));
@@ -728,9 +785,9 @@ void OrderEditor::openPrinterInvoiceDialog() {
       d.designation = q.value("title").toString().replace(strip, "-");
       d.quantity = q.value("quant").toInt();
       d.sellPrice = q.value("sellPrice").toDouble();
-      d.includeVat = setIncludeVat;
-      d.taxValue = tax;
-      d.packagePrice = pkgPrice;
+      d.includeVat = vat_included;
+      d.taxValue = setTax;
+      d.packagePrice = packagePrice;
       list.append(d);
     }
   } else {
@@ -977,7 +1034,7 @@ void OrderEditor::openCreateOrder(int cid) {
 }
 
 void OrderEditor::openCreateOrder(const ProviderOrder &order) {
-  if(o_customer_id->value().toInt() > 0 || m_paymentList->payments() >  0) {
+  if (o_customer_id->value().toInt() > 0 || m_paymentList->payments() > 0) {
     clearEditorFields();
   }
 

@@ -38,6 +38,10 @@
 # include "emailedit.h"
 #endif
 
+#ifndef EUCOUNTRIES_UTILS_H
+# include "eucountries.h"
+#endif
+
 #ifndef FILEDIALOG_UTILS_H
 # include "filedialog.h"
 #endif

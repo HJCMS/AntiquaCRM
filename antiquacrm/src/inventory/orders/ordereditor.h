@@ -32,6 +32,8 @@ private:
    */
   bool showSuccessFully = true;
 
+  ApplSettings *config;
+
   QStringList ignoreOnInsert;
 
   /**
@@ -63,15 +65,24 @@ private:
   /**
    * @brief Lieferservice
    */
-  QGroupBox *m_deliveryBox;
-  DeliverService *o_delivery_service; /**< @brief Paketdienst */
+  QWidget *m_deliveryBox;
+  DeliverService *o_delivery_service;  /**< @brief Paketdienst */
+  BoolBox *o_delivery_add_price;       /**< @brief Pahetkosten dazu */
   LineEdit *o_delivery_send_id;        /**< @brief Paket Sende Nummer */
   LineEdit *o_delivery;                /**< @brief Lieferschein Nummer */
 
   /**
+   * @brief Rechungs Einstellungen
+   */
+  QWidget *m_billingBox;
+  EUCountryBox *o_vat_country;
+  BoolBox *o_vat_included;
+  QComboBox *o_vat_levels;
+
+  /**
    * @brief Dienstleister
    */
-  QGroupBox *m_providerBox;
+  QWidget *m_providerBox;
   LineEdit *o_provider_order_id;
   LineEdit *o_provider_name;
 

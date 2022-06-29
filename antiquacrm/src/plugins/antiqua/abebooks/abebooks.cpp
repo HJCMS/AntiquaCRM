@@ -82,4 +82,6 @@ void AbeBooks::queryMenueEntries() {
   req->queryList();
 }
 
-void AbeBooks::updateArticleCount(int articleId, int count) {}
+void AbeBooks::updateArticleCount(int articleId, int count) {
+  qDebug() << Q_FUNC_INFO << "TODO" << articleId << count;
+}

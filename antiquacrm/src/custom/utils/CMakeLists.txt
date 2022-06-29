@@ -24,6 +24,7 @@ SET (subproject_SOURCES
   editoractionbar.cpp
   editormain.cpp
   emailedit.cpp
+  eucountries.cpp
   filedialog.cpp
   genderbox.cpp
   groupbox.cpp
@@ -64,6 +65,7 @@ SET (subproject_HEADERS
   emailedit.h
   ecurrency.h
   editormain.h
+  eucountries.h
   filedialog.h
   genderbox.h
   groupbox.h
@@ -113,6 +115,7 @@ TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Widgets
   Qt${QT_VERSION_MAJOR}::Network
   Qt${QT_VERSION_MAJOR}::Sql
+  Qt${QT_VERSION_MAJOR}::Xml
   ${subproject_LINKER}
 )
 

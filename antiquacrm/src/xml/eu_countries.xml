@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  https://ec.europa.eu/taxation_customs/vies/vieshome.do?selectedLanguage=DE
+  https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32006L0112&from=DE#d1e1606-1-1
+-->
+<itemlist>
+  <item countryCode="BE">Belgien</item>
+  <item countryCode="BG">Bulgarien</item>
+  <item countryCode="DK">Dänemark</item>
+  <item countryCode="DE">Deutschland</item>
+  <item countryCode="EE">Estland</item>
+  <item countryCode="FI">Finnland</item>
+  <item countryCode="FR">Frankreich</item>
+  <item countryCode="GR">Griechenland</item>
+  <item countryCode="GB">Großbritannien (Vereinigtes Königreich/England)</item>
+  <item countryCode="IE">Irland</item>
+  <item countryCode="IT">Italien</item>
+  <item countryCode="HR">Kroatien</item>
+  <item countryCode="LV">Lettland</item>
+  <item countryCode="LT">Litauen</item>
+  <item countryCode="LU">Luxemburg</item>
+  <item countryCode="MT">Malta</item>
+  <item countryCode="NL">Niederlande (Die Niederlande)</item>
+  <item countryCode="AT">Österreich</item>
+  <item countryCode="PL">Polen</item>
+  <item countryCode="PT">Portugal</item>
+  <item countryCode="RO">Rumänien</item>
+  <item countryCode="SE">Schweden</item>
+  <item countryCode="SK">Slowakei (Slowakische Republik)</item>
+  <item countryCode="SI">Slowenien</item>
+  <item countryCode="ES">Spanien</item>
+  <item countryCode="CZ">Tschechische Republik</item>
+  <item countryCode="HU">Ungarn</item>
+  <item countryCode="CY">Zypern</item>
+</itemlist>
