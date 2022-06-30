@@ -295,7 +295,7 @@ Q_SIGNALS:
   /**
    * @brief Statusbar Nachrichten
    */
-  void postMessage(const QString &);
+  void s_statusMessage(const QString &);
 
   /**
    * @brief Änderungen an Elternfenster

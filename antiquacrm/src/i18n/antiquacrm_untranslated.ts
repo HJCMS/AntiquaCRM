@@ -2043,7 +2043,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+61"/>
         <source>Additional</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2053,17 +2053,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-46"/>
         <source>The lowest permissible selling price.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="-3"/>
+        <source>Payment Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
         <source>currency for price calculation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>VAT (normal)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2073,7 +2078,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+9"/>
+        <source>Payment grace period</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
         <source>Set size range for Imagepreviews.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2358,7 +2373,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+77"/>
         <source>There is no Order open!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2374,7 +2389,7 @@
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+25"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+26"/>
         <source>Providers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2389,17 +2404,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+190"/>
+        <location line="+226"/>
         <source>customer found in database!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="-27"/>
         <source>customer not exits!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+76"/>
         <source>an error occurred</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2409,13 +2424,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-260"/>
+        <location line="-288"/>
         <location line="+12"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+223"/>
+        <location line="+251"/>
         <source>open order editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2473,12 +2488,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+102"/>
+        <source>Subtotal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
         <source>delivery cost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="-48"/>
         <source>incl.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2488,12 +2508,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+78"/>
         <source>invoice amount</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+28"/>
+        <source>The order has already been paid for.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Payable within %1 days after the service has been rendered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Thank you for your order!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Kind regards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+53"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2730,13 +2770,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+85"/>
         <location line="+4"/>
         <source>Provider</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-54"/>
+        <location line="-55"/>
         <source>Notification</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2751,13 +2791,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+736"/>
+        <location line="+734"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-811"/>
+        <location line="-809"/>
         <source>Invoice ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2772,17 +2812,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>add delivery package price to current shipping.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-24"/>
-        <source>Invoice</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
+        <location line="-21"/>
         <source>European Countries</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2807,18 +2842,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+164"/>
+        <location line="+165"/>
         <source>Order saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+265"/>
-        <location line="+478"/>
+        <location line="+475"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-463"/>
+        <location line="-460"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2866,12 +2901,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+30"/>
-        <source>The order has already been paid for.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+37"/>
+        <location line="+64"/>
         <source>No Billing Info found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2906,18 +2936,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-476"/>
-        <location line="+221"/>
+        <location line="-473"/>
+        <location line="+218"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-711"/>
+        <location line="-709"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+690"/>
+        <location line="+25"/>
+        <source>Invoice options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+651"/>
+        <source>Printing canceled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
         <source>The notification system requires a valid Parcel Shipment ID to send customer emails.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3539,7 +3579,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+29"/>
         <source>Your Company configuration is incomplete!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3549,7 +3589,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+116"/>
+        <location line="+122"/>
         <source>email</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3917,6 +3957,19 @@
     <message>
         <location line="+3"/>
         <source>Image exits</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProviderSelectCustomer</name>
+    <message>
+        <location filename="../inventory/providers/providerselectcustomer.cpp" line="+16"/>
+        <source>Customer selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Several customers were found in the address database that could apply to this order.&lt;br/&gt;Please select a customer.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

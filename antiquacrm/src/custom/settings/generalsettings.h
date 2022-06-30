@@ -26,6 +26,7 @@ private:
   IntSpinBox *m_vat2;          /**< Mehrwertsteuer Reduziert */
   IntSpinBox *m_searchStart;   /**< Start Zeichen suche */
   IntSpinBox *m_minPrice;      /**< Kleinster Verkaufspreis */
+  IntSpinBox *m_payWaitDays;   /**< Zahlungsfrist */
   SizeEdit *m_minSize;         /**< Minimale Bildgröße */
   SizeEdit *m_maxSize;         /**< Maximale Bildgröße */
   QLabel *view_font_config;    /**< Schriftdarstellung */

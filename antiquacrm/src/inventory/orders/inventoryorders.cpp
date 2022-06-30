@@ -66,6 +66,8 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
   connect(m_tableView, SIGNAL(s_editOrder(int)), this, SLOT(updateOrder(int)));
   connect(m_editor, SIGNAL(s_postMessage(const QString &)), this,
           SLOT(displayMessageBox(const QString &)));
+  connect(m_editor, SIGNAL(s_statusMessage(const QString &)),
+          this, SIGNAL(s_postMessage(const QString &)));
   connect(m_editor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
   connect(m_editor, SIGNAL(s_isModified(bool)), this,
           SLOT(setIsModified(bool)));

@@ -14,15 +14,47 @@
 
 /**
  * @brief Container für das befüllen der Tabellenzellen.
+ * @class BillingInfo
+ * @ingroup Printing
  */
 struct BillingInfo {
-  QString articleid;   /**< Article ID */
-  QString designation; /**< Designation */
-  int quantity;        /**< Quantity */
-  double sellPrice;    /**< Preis */
-  bool includeVat;     /**< inkl. MwSt */
-  int taxValue;        /**< Steuerwert */
-  qreal packagePrice;  /**< Paket Extras */
+  /**
+   * @brief Artikel Nummer
+   */
+  QString articleid;
+
+  /**
+   * @brief Artikel Beschreibung
+   */
+  QString designation;
+
+  /**
+   * @brief Artikel Menge/Anzahl
+   */
+  int quantity;
+
+  /**
+   * @brief Artikel Preis
+   */
+  double sellPrice;
+
+  /**
+   * @brief Mehwertsteuerangabe
+   * @li true  = "inkl. MwSt"
+   * @li false = "+ MwSt"
+   */
+  bool includeVat;
+
+  /**
+   * @brief Mehwertsteuersatz
+   * @note Wird Gesamt behandelt!
+   */
+  int taxValue;
+
+  /**
+   * @brief Versankosten hinzufügen
+   */
+  qreal packagePrice;
 };
 Q_DECLARE_METATYPE(BillingInfo);
 
@@ -37,13 +69,44 @@ class Invoice : public Printing {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  /**
+   * @brief Artikelliste
+   */
   QTextTable *m_billingTable;
+
+  /**
+   * @brief Gesamtmenge
+   */
   int p_quantity_sum = 0;
+
+  /**
+   * @brief Mehwertsteuer (inkl oder plus)
+   */
   bool p_including_VAT;
+
+  /**
+   * @brief Bereits beszahlt
+   */
+  bool already_paid = false;
+
+  /**
+   * @brief Gesamtpreis
+   */
   qreal p_fullPrice = 0.00;
+
+  /**
+   * @brief Versankosten
+   */
   qreal p_packagePrice = 0.00;
 
+  /**
+   * @brief Standard Druckkopfbreich
+   */
   void constructSubject();
+
+  /**
+   * @brief Anschrifft und Dokument Definition
+   */
   void constructBody();
 
   /**
@@ -54,12 +117,41 @@ private:
    * @param sellPrice   - Preis
    */
   void insertBilling(BillingInfo billing);
+
+  /**
+   * @brief Versandkosten und Mehwertsteuer Anzeige
+   */
   bool insertSummaryTable();
+
+  /**
+   * @brief Gesamtkosten
+   */
   void finalizeBillings();
-  void setComment(const QString &);
+
+  /**
+   * @brief Zahlungsbedingungen
+   */
+  void setPaymentTerms();
+
+  /**
+   * @brief Zusätzliche Texte einfügen
+   */
+  void setAdditionalInfo();
+
+  /**
+   * @brief mfg
+   */
+  void setRegards();
 
 private Q_SLOTS:
+  /**
+   * @brief Drucker ausgabe generieren
+   */
   bool generateDocument(QPrinter *printer);
+
+  /**
+   * @brief Öffne Drucker Dialog
+   */
   void openPrintDialog();
 
 public:
@@ -74,7 +166,7 @@ public:
                   int invoiceId,  /* Rechnungsnummer */
                   const QString &deliverNoteId);
 
-  int exec(const QList<BillingInfo> &, const QString &comment = QString());
+  int exec(const QList<BillingInfo> &, bool paid = false);
 };
 
 #endif // INVOICE_PRINTING_H

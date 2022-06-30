@@ -183,54 +183,34 @@ void Invoice::insertBilling(BillingInfo billing) {
 }
 
 bool Invoice::insertSummaryTable() {
+  QString text;
   QTextCursor cursor = body->textCursor();
   int row = m_billingTable->rows();
-  int addRows = (p_packagePrice > 0.50) ? 2 : 1;
-  m_billingTable->insertRows(row, addRows);
+  m_billingTable->insertRows(row, 3);
 
   QTextTableCellFormat cellFormat;
   cellFormat.setBorderBrush(borderBrush());
   cellFormat.setTopBorder(1);
   cellFormat.setTopBorderStyle(QTextFrameFormat::BorderStyle_Solid);
 
+  // BEGIN Mehwertsteuer
   m_billingTable->mergeCells(row, 0, 1, 3);
-  if (addRows > 1) {
-    QTextTableCell left = m_billingTable->cellAt(row, 0);
-    cursor = left.firstCursorPosition();
-    cursor.setCharFormat(normalFormat());
-    cursor.setBlockFormat(alignRight());
-    QString str(tr("delivery cost"));
-    cursor.insertText(str);
-
-    QTextTableCell right = m_billingTable->cellAt(row, 3);
-    right.setFormat(cellFormat);
-    cursor = right.firstCursorPosition();
-    cursor.setCharFormat(normalFormat());
-    cursor.setBlockFormat(alignRight());
-    QString cost(QString::number(p_packagePrice, 'f', 2));
-    cost.append(" " + p_currency);
-    cursor.insertText(cost);
-
-    p_fullPrice += p_packagePrice;
-    row++;
-    m_billingTable->mergeCells(row, 0, 1, 3);
-  }
-
-  QTextTableCell left = m_billingTable->cellAt(row, 0);
-  cursor = left.firstCursorPosition();
+  QTextTableCell tc0 = m_billingTable->cellAt(row, 0);
+  tc0.setFormat(cellFormat);
+  cursor = tc0.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
-  QString strTax;
+  text = QString();
   if (p_including_VAT) {
-    strTax.append(tr("incl.") + " ");
+    text.append(tr("incl.") + " ");
   }
-  strTax.append(QString::number(p_tax_value));
-  strTax.append("% " + tr("VAT"));
-  cursor.insertText(strTax);
+  text.append(QString::number(p_tax_value));
+  text.append("% " + tr("VAT"));
+  cursor.insertText(text);
 
-  QTextTableCell right = m_billingTable->cellAt(row, 3);
-  right.setFormat(cellFormat);
-  cursor = right.firstCursorPosition();
+  QTextTableCell tc1 = m_billingTable->cellAt(row, 3);
+  tc1.setFormat(cellFormat);
+  cursor = tc1.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
   qreal tax;
@@ -239,10 +219,52 @@ bool Invoice::insertSummaryTable() {
   } else {
     tax = addVat(p_fullPrice, p_tax_value);
   }
-  QString str = QString::number(tax, 'f', 2);
-  cursor.insertText(str + " " + p_currency);
+  text = QString::number(tax, 'f', 2);
+  cursor.insertText(text + " " + p_currency);
+  // END
 
-  body->document()->setModified(true);
+  // BEGIN Zwischensumme
+  row++;
+  m_billingTable->mergeCells(row, 0, 1, 3);
+  QTextTableCell zc0 = m_billingTable->cellAt(row, 0);
+  cursor = zc0.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.setBlockFormat(alignRight());
+  text = tr("Subtotal");
+  cursor.insertText(text);
+
+  QTextTableCell zc1 = m_billingTable->cellAt(row, 3);
+  zc1.setFormat(cellFormat);
+  cursor = zc1.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.setBlockFormat(alignRight());
+  text = QString::number(p_fullPrice, 'f', 2);
+  text.append(" " + p_currency);
+  cursor.insertText(text);
+  // END
+
+  // BEGIN Versandkosten
+  row++;
+  m_billingTable->mergeCells(row, 0, 1, 3);
+  QTextTableCell vc0 = m_billingTable->cellAt(row, 0);
+  cursor = vc0.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.setBlockFormat(alignRight());
+  text = tr("delivery cost");
+  cursor.insertText(text);
+
+  QTextTableCell vc1 = m_billingTable->cellAt(row, 3);
+  vc1.setFormat(cellFormat);
+  cursor = vc1.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.setBlockFormat(alignRight());
+  text = QString::number(p_packagePrice, 'f', 2);
+  text.append(" " + p_currency);
+  cursor.insertText(text);
+  if (p_packagePrice > 0.01) {
+    p_fullPrice += p_packagePrice;
+  }
+  // END
   return true;
 }
 
@@ -275,23 +297,53 @@ void Invoice::finalizeBillings() {
   QString str = QString::number(p_fullPrice, 'f', 2);
   str.append(" " + p_currency);
   cursor.insertText(str);
-
-  body->document()->setModified(true);
 }
 
-void Invoice::setComment(const QString &msg) {
+void Invoice::setPaymentTerms() {
+  int row = m_billingTable->rows();
+  m_billingTable->insertRows(row, 1);
+  m_billingTable->mergeCells(row, 0, 1, 3);
+
+  QString text;
+  QTextCursor cursor = body->textCursor();
+  QTextTableCell ptCell = m_billingTable->cellAt(row, 0);
+  cursor = ptCell.firstCursorPosition();
+  cursor.setCharFormat(footerFormat());
+  cursor.setBlockFormat(alignRight());
+  if (already_paid)
+    text = tr("The order has already been paid for.");
+  else
+    text = tr("Payable within %1 days after the service has been rendered.")
+               .arg(p_grace_period);
+
+  cursor.insertText(text);
+}
+
+void Invoice::setAdditionalInfo() {
   QTextCursor cursor = body->textCursor();
   qreal blockMargin = 30.0;
   QTextBlockFormat bf;
-  bf.setTopMargin(blockMargin);
   bf.setLeftMargin(blockMargin);
-  bf.setRightMargin(blockMargin);
   bf.setAlignment(Qt::AlignLeft);
   cursor.setCharFormat(smallFormat());
   cursor.setBlockFormat(bf);
+  cursor.insertText("\n\n");
+  cursor.insertText(tr("Thank you for your order!"));
   cursor.insertText("\n");
-  cursor.insertText(msg);
-  body->document()->setModified(true);
+}
+
+void Invoice::setRegards() {
+  QTextCursor cursor = body->textCursor();
+  qreal blockMargin = 30.0;
+  QTextBlockFormat bf;
+  bf.setLeftMargin(blockMargin);
+  bf.setAlignment(Qt::AlignLeft);
+  cursor.setCharFormat(footerFormat());
+  cursor.setBlockFormat(bf);
+  cursor.insertText("\n");
+  cursor.insertText(tr("Kind regards"));
+  cursor.insertText("\n  ");
+  cursor.insertText(companyData.value("shortname"));
 }
 
 bool Invoice::generateDocument(QPrinter *printer) {
@@ -398,7 +450,8 @@ void Invoice::setInvoice(int orderId,    /* Bestellnummer */
   p_deliveryId = deliverNoteId;
 }
 
-int Invoice::exec(const QList<BillingInfo> &list, const QString &comment) {
+int Invoice::exec(const QList<BillingInfo> &list, bool paid) {
+  already_paid = paid;
   if (p_orderId.isEmpty()) {
     qFatal("you must call setInvoice() before exec!");
     return QDialog::Rejected;
@@ -425,8 +478,11 @@ int Invoice::exec(const QList<BillingInfo> &list, const QString &comment) {
   if (insertSummaryTable())
     finalizeBillings();
 
-  if (!comment.isEmpty())
-    setComment(comment);
+  setPaymentTerms();
+  setAdditionalInfo();
+  setRegards();
+
+  body->document()->setModified(true);
 
   addPrinters();
 

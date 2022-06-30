@@ -3,6 +3,7 @@
 
 #include "inventoryproviders.h"
 #include "myicontheme.h"
+#include "providerselectcustomer.h"
 #include "providerspageview.h"
 #include "providersstatements.h"
 #include "providerstoolbar.h"
@@ -190,10 +191,10 @@ void InventoryProviders::queryOrder(const QString &provider,
 
 void InventoryProviders::createEditCustomer(int cid) {
   if (cid > 0) {
-    customerId = cid;
-    emit openEditCustomer(customerId);
+    current_cid = cid;
+    emit openEditCustomer(current_cid);
   } else {
-    customerId = -1;
+    current_cid = -1;
     m_toolBar->enableOrderButton(false);
   }
 }
@@ -205,7 +206,9 @@ void InventoryProviders::createNewCustomer(const QJsonDocument &doc) {
   QStringList params;
   QStringList values;
 
-  // qDebug() << Q_FUNC_INFO << doc;
+  if (SHOW_SQL_QUERIES) {
+    qDebug() << Q_FUNC_INFO << doc;
+  }
 
   QJsonObject obj = doc.object();
   QSqlRecord rec = m_sql->record("customers");
@@ -237,11 +240,11 @@ void InventoryProviders::createNewCustomer(const QJsonDocument &doc) {
   if (q.size() > 0) {
     q.next();
     if (q.value("c_id").toInt() > 0) {
-      customerId = q.value("c_id").toInt();
+      current_cid = q.value("c_id").toInt();
       Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
       if (tab != nullptr) {
-        tab->setCustomerId(customerId);
-        emit openEditCustomer(customerId);
+        tab->setCustomerId(current_cid);
+        emit openEditCustomer(current_cid);
       }
     }
   } else {
@@ -256,6 +259,7 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
   if (doc.isEmpty())
     return;
 
+  int selected_cid = -1;
   QString sql = queryCustomerExists(QJsonValue(doc["c_firstname"]).toString(),
                                     QJsonValue(doc["c_lastname"]).toString(),
                                     QJsonValue(doc["c_postalcode"]).toString(),
@@ -269,16 +273,13 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
   if (!tabExists(orderid))
     return;
 
+  QList<int> cidList;
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
-    q.next();
-    if (q.value("c_id").toInt() > 0) {
-      customerId = q.value("c_id").toInt();
-      Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
-      if (tab != nullptr) {
-        qDebug() << "Customer Found:" << customerId << tab->objectName();
-        tab->setCustomerId(customerId);
-        m_toolBar->statusMessage(tr("customer found in database!"));
+    while (q.next()) {
+      int id = q.value("c_id").toInt();
+      if (id > 0) {
+        cidList.append(id);
       }
     }
   } else {
@@ -288,6 +289,34 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
     }
     m_toolBar->enableOrderButton(false);
     m_toolBar->statusMessage(tr("customer not exits!"));
+  }
+
+  /**
+   * Wenn mehr als ein Kunde gefunden wurde, eine Auswahlmöglichkeit anbieten!
+   */
+  if (cidList.size() > 1) {
+    ProviderSelectCustomer *dialog = new ProviderSelectCustomer(this);
+    if (dialog->exec(cidList) == QDialog::Accepted) {
+      QPair<int, QString> pair = dialog->getSelectedCustomer();
+      selected_cid = pair.first;
+    } else {
+      qInfo("aboart costumer selection");
+      return;
+    }
+    dialog->deleteLater();
+  } else {
+    selected_cid = cidList.first();
+  }
+  cidList.clear();
+
+  /** Die Id des ausgewählten Kunden einfügen! */
+  if (selected_cid > 0) {
+    Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
+    if (tab != nullptr) {
+      current_cid = selected_cid;
+      tab->setCustomerId(selected_cid);
+      m_toolBar->statusMessage(tr("customer found in database!"));
+    }
   }
 }
 
@@ -307,11 +336,11 @@ void InventoryProviders::checkArticleExists(QList<int> &list) {
 }
 
 void InventoryProviders::createEditOrders() {
-  if (customerId < 1)
+  if (current_cid < 1)
     return;
 
   Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
-  if (tab != nullptr && tab->getCustomerId() == customerId) {
+  if (tab != nullptr && tab->getCustomerId() == current_cid) {
     m_toolBar->statusMessage(tr("open order editor"));
     emit createOrder(tab->getProviderOrder());
   } else {

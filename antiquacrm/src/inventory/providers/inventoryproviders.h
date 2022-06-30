@@ -36,7 +36,7 @@ private:
   /**
    * @brief Kundennummer des Aktuellen Fensters
    */
-  int customerId = -1;
+  int current_cid = -1;
 
   /**
    * @brief SQL Abfragen

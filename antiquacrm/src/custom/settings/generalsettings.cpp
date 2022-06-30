@@ -68,7 +68,52 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   buffer.clear();
   // END
 
-  // BEGIN
+  // BEGIN Payment
+  QGroupBox *m_paymentGroup = new QGroupBox(this);
+  m_paymentGroup->setObjectName("groupbox_payment");
+  m_paymentGroup->setTitle(tr("Payment Settings"));
+  QVBoxLayout *lt_payment = new QVBoxLayout(m_paymentGroup);
+  // Preis
+  buffer = tr("The lowest permissible selling price.");
+  m_minPrice = new IntSpinBox(5, 100, m_paymentGroup);
+  m_minPrice->setObjectName("payment/min_price");
+  m_minPrice->setInfo(buffer);
+  lt_payment->addWidget(m_minPrice);
+  buffer.clear();
+  // Währung
+  m_currency = new Ecurrency(m_paymentGroup);
+  m_currency->setObjectName("payment/currency");
+  m_currency->setInfo(tr("currency for price calculation."));
+  lt_payment->addWidget(m_currency);
+  // Mehwertsteuer
+  QHBoxLayout *vat_layout = new QHBoxLayout();
+  m_vat1 = new IntSpinBox(m_paymentGroup);
+  m_vat1->setObjectName("payment/vat1");
+  m_vat1->setInfo(tr("VAT (normal)"));
+  m_vat1->setRange(1, 50);
+  m_vat1->setValue("19");
+  m_vat1->setSuffix("%");
+  vat_layout->addWidget(m_vat1);
+  m_vat2 = new IntSpinBox(m_paymentGroup);
+  m_vat2->setObjectName("payment/vat2");
+  m_vat2->setInfo(tr("VAT (reduced)"));
+  m_vat2->setRange(1, 50);
+  m_vat2->setValue("7");
+  m_vat2->setSuffix("%");
+  vat_layout->addWidget(m_vat2);
+  lt_payment->addLayout(vat_layout);
+  // Zahlbar bis Tage
+  m_payWaitDays = new IntSpinBox(m_paymentGroup);
+  m_payWaitDays->setObjectName("payment/grace_period");
+  m_payWaitDays->setInfo(tr("Payment grace period"));
+  m_payWaitDays->setRange(10, 60);
+  m_payWaitDays->setSuffix(" " + tr("Days"));
+  lt_payment->addWidget(m_payWaitDays);
+  m_paymentGroup->setLayout(lt_payment);
+  layout->addWidget(m_paymentGroup);
+  // END
+
+  // BEGIN Extras
   row = 0; /**< Counter zurücksetzen */
   QGroupBox *m_grouBox2 = new QGroupBox(this);
   m_grouBox2->setObjectName("groupbox_additional");
@@ -80,37 +125,6 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   m_searchStart->setObjectName("search/startlength");
   m_searchStart->setInfo(buffer);
   lt_groupBox2->addWidget(m_searchStart);
-  // Preis
-  buffer = tr("The lowest permissible selling price.");
-  m_minPrice = new IntSpinBox(5, 100, m_grouBox2);
-  m_minPrice->setObjectName("payment/min_price");
-  m_minPrice->setInfo(buffer);
-  lt_groupBox2->addWidget(m_minPrice);
-  buffer.clear();
-  // Währung
-  m_currency = new Ecurrency(m_grouBox2);
-  m_currency->setObjectName("payment/currency");
-  m_currency->setInfo(tr("currency for price calculation."));
-  lt_groupBox2->addWidget(m_currency);
-  // Mehwertsteuer
-  QFrame *vat_frame = new QFrame(m_grouBox2);
-  QGridLayout *vat_layout = new QGridLayout(vat_frame);
-  m_vat1 = new IntSpinBox(vat_frame);
-  m_vat1->setObjectName("payment/vat1");
-  m_vat1->setInfo(tr("VAT (normal)"));
-  m_vat1->setRange(1, 50);
-  m_vat1->setValue("19");
-  m_vat1->setSuffix("%");
-  vat_layout->addWidget(m_vat1, 0, 1, 1, 1, Qt::AlignLeft);
-  m_vat2 = new IntSpinBox(vat_frame);
-  m_vat2->setObjectName("payment/vat2");
-  m_vat2->setInfo(tr("VAT (reduced)"));
-  m_vat2->setRange(1, 50);
-  m_vat2->setValue("7");
-  m_vat2->setSuffix("%");
-  vat_layout->addWidget(m_vat2, 1, 1, 1, 1, Qt::AlignLeft);
-  vat_frame->setLayout(vat_layout);
-  lt_groupBox2->addWidget(vat_frame, Qt::AlignLeft);
   // Minimum Image Size
   QFrame *imageSizeFrame = new QFrame(m_grouBox2);
   QVBoxLayout *image_layout = new QVBoxLayout(imageSizeFrame);

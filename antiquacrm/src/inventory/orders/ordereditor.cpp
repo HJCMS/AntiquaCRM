@@ -144,7 +144,7 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
 
   // BEGIN Rechnungs Einstellungen
   m_billingBox = new QWidget(tabwidget);
-  tabwidget->addTab(m_billingBox, myIcon("spreadsheet"), tr("Invoice"));
+  tabwidget->addTab(m_billingBox, myIcon("spreadsheet"), tr("Invoice options"));
   QGridLayout *billingLayout = new QGridLayout(m_billingBox);
   int brow = 0;
   o_vat_country = new EUCountryBox(m_billingBox);
@@ -168,7 +168,8 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   billingLayout->addWidget(o_vat_levels, brow++, 1, 1, 1);
   o_delivery_add_price = new BoolBox(m_billingBox);
   o_delivery_add_price->setInfo(tr("add delivery package price"));
-  o_delivery_add_price->setToolTip(tr("add delivery package price to current shipping."));
+  o_delivery_add_price->setToolTip(
+      tr("add delivery package price to current shipping."));
   billingLayout->addWidget(o_delivery_add_price, brow++, 0, 1, 2);
 
   billingLayout->setRowStretch(brow, 1);
@@ -616,7 +617,7 @@ void OrderEditor::findRemoveTableRow(int row) {
     m_paymentList->removeTableRow(row);
     showSuccessFully = false;
     if (sendSqlQuery(paymentRemove(pId, aId))) {
-      emit postMessage(tr("Item removed!"));
+      emit s_statusMessage(tr("Item removed!"));
       m_paymentList->setModified(true);
     }
     showSuccessFully = true;
@@ -754,10 +755,7 @@ void OrderEditor::openPrinterInvoiceDialog() {
   dialog->setCustomerAddress(c_add);
   dialog->setInvoice(oid, cid, in_id, did);
 
-  QString comment;
-  if (o_payment_status->status() == OrdersPaymentBox::Yes) {
-    comment = tr("The order has already been paid for.");
-  }
+  bool paid = (o_payment_status->status() == OrdersPaymentBox::Yes);
 
   /**
    * Wenn die Versandkosten mit berechnet werden sollen.
@@ -796,8 +794,8 @@ void OrderEditor::openPrinterInvoiceDialog() {
     emit s_postMessage(tr("No Billing Info found"));
     return;
   }
-  if (!dialog->exec(list, comment)) {
-    /* Unused */
+  if (dialog->exec(list, paid) == QDialog::Rejected) {
+    emit s_statusMessage(tr("Printing canceled."));
   }
   list.clear();
 }
@@ -835,7 +833,7 @@ void OrderEditor::setStatusOrder(int status) {
   int ret = QMessageBox::question(this, tr("Finish order"), body);
   if (ret == QMessageBox::Yes) {
     if (sendSqlQuery(progresUpdate(order_id, status))) {
-      emit postMessage(tr("Order deactivated!"));
+      emit s_statusMessage(tr("Order deactivated!"));
       finalLeaveEditor();
     }
   }

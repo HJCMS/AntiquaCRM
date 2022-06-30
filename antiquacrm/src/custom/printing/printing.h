@@ -102,6 +102,11 @@ protected:
   QByteArray p_currency;
 
   /**
+   * @brief Zahlungsfrist
+   */
+  QString p_grace_period;
+
+  /**
    * @brief Standard Mehrwertsteuersatz
    */
   int p_tax_value;
@@ -197,6 +202,11 @@ protected:
    * @brief Tabellenrand Farbe
    */
   const QBrush borderBrush();
+
+  /**
+   * @brief Body Rahmen.
+   */
+  QTextFrame *bodyFrame();
 
   /**
    * @brief Erstelle Briefkopf

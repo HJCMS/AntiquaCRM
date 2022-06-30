@@ -111,6 +111,7 @@ void Printing::readConfiguration() {
   config->beginGroup("payment");
   p_currency = config->value("currency").toByteArray();
   p_tax_value = config->value("vat1").toInt();
+  p_grace_period = config->value("grace_period").toString();
   config->endGroup();
 
   config->beginGroup("company");
@@ -193,6 +194,12 @@ const QTextTableFormat Printing::tableFormat() {
 
 const QBrush Printing::borderBrush() {
   return QBrush(Qt::darkGray, Qt::SolidPattern);
+}
+
+QTextFrame *Printing::bodyFrame()
+{
+  QTextFrame *frame = new QTextFrame(body->document());
+  return frame;
 }
 
 void Printing::constructHeader() {
