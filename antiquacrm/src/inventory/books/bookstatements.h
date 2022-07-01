@@ -5,9 +5,9 @@
 #ifndef BOOKSTATEMENTS_H
 #define BOOKSTATEMENTS_H
 
-#ifndef BOOK_INVENTORY_DEBUG
-#define BOOK_INVENTORY_DEBUG
-#endif
+//#ifndef BOOK_INVENTORY_DEBUG
+//#define BOOK_INVENTORY_DEBUG
+//#endif
 
 #include <QString>
 
