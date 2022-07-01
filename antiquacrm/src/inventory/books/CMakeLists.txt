@@ -20,21 +20,22 @@ SET (subproject_LINKER
 )
 
 SET (subproject_SOURCES
-  bookeditor.cpp
-  bookstable.cpp
-  bookstablemodel.cpp
-  isbnresults.cpp
-  booksearchbar.cpp
-  inventorybooks.cpp
+ bookeditor.cpp
+ bookstable.cpp
+ bookstablemodel.cpp
+ isbnresults.cpp
+ booksearchbar.cpp
+ inventorybooks.cpp
 )
 
 SET (subproject_HEADERS
-  bookeditor.h
-  bookstable.h
-  bookstablemodel.h
-  isbnresults.h
-  booksearchbar.h
-  inventorybooks.h
+ bookstatements.h
+ bookeditor.h
+ bookstable.h
+ bookstablemodel.h
+ isbnresults.h
+ booksearchbar.h
+ inventorybooks.h
 )
 
 ## TODO ADD_DEFINITION(BOOK_INVENTORY_DEBUG);

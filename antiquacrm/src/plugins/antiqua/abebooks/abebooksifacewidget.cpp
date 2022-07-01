@@ -14,19 +14,6 @@
 #include <QTableWidgetItem>
 #include <QVBoxLayout>
 
-#ifdef PLUGIN_ABEBOOKS_DEBUG
-static void writeLogFile(const QDomDocument &doc) {
-  QString xml(QDir::homePath());
-  xml.append("/.cache/AbeBooks_OrderResponse.xml");
-  QFile fp(xml);
-  if (fp.open(QIODevice::WriteOnly)) {
-    QTextStream in(&fp);
-    in << doc.toByteArray(1);
-    fp.close();
-  }
-}
-#endif
-
 AbeBooksIfaceWidget::AbeBooksIfaceWidget(const QString &widgetId,
                                          QWidget *parent)
     : Antiqua::InterfaceWidget{widgetId, parent} {
@@ -171,10 +158,6 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
     return;
   }
 
-#ifdef PLUGIN_ABEBOOKS_DEBUG
-  writeLogFile(doc);
-#endif
-
   p_currentDocument = doc;
   QDomNodeList n_list = xml.getPurchaseOrder().childNodes();
   for (int i = 0; i < n_list.count(); i++) {
@@ -220,6 +203,7 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
       }
     }
   }
+
   // Bestellartikel einfügen
   m_order->setTableCount(0);
   n_list = xml.getOrderItemList().childNodes();
@@ -258,7 +242,7 @@ void AbeBooksIfaceWidget::createOrderRequest(const QString &purchaseId) {
   connect(req, SIGNAL(response(const QDomDocument &)), this,
           SLOT(setXmlContent(const QDomDocument &)));
 
-  // qDebug() << Q_FUNC_INFO << purchaseId;
+  qDebug() << Q_FUNC_INFO << purchaseId;
   req->queryOrder(purchaseId);
 }
 

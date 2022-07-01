@@ -42,6 +42,12 @@ public:
   /**
    * @brief Nehme aktuellen Suchfilter
    * @note Wenn -1 dann wird currentIndex() verwendet!
+   * @code
+   *  QJsonObject(
+   *    "search" => QJSonValue().toString()
+   *    "fields" => QJSonValue().toString(),
+   *  );
+   * @endcode
    */
   const QJsonObject getFilter(int index = -1);
 };
@@ -72,7 +78,7 @@ private:
   /**
    * @brief Article Validation
    */
-  const QRegExp articlePattern = QRegExp("^[0-9\\,]+$");
+  const QRegExp articlePattern = QRegExp("^([0-9]{1,9}[\\,]?)+$");
   QRegExpValidator *m_article_validator;
 
 public:
@@ -92,8 +98,14 @@ class BookSearchBar : public QToolBar {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  QString p_currentSearch;
-  SearchFilterBox::Filter p_currentFilter;
+  int minLength = 2;
+  QString p_currentLeft;
+  QString p_currentRight;
+  const QRegExp stripJokers = QRegExp("[%*]+");
+  const QRegExp stripPattern = QRegExp("[\\'\\\"]+");
+  const QRegExp trimPattern = QRegExp("[\\s\\t\\n\\r]+");
+  const QRegExp articlePattern = QRegExp("[^0-9\\,]+");
+  const QRegExp isbnPattern = QRegExp("[^0-9]+");
 
   /**
    * @brief Suchfilter
@@ -110,6 +122,21 @@ private:
    * @brief Start Manuelle Suche
    */
   QAction *ac_search;
+
+  /**
+   * @brief Positions tausch der Suchworte
+   * Wenn die Suche zwei Zeichenketten besitzt dann eine klausel wie folgt
+   * erstellen.
+   * @code
+   *  // @b A/B ist das Ergebnis von search.split(" ");
+   *  (fieldname ILIKE 'A%B%' OR fieldname ILIKE 'B%A%')
+   * @endcode
+   */
+  const QString prepareFieldSet(const QString &fieldname,
+                                const QString &search) const;
+
+
+  const QString getTitleSearch(const QStringList &fields);
 
 private Q_SLOTS:
   /**
@@ -146,20 +173,14 @@ public:
   explicit BookSearchBar(QWidget *parent = nullptr);
 
   /**
-   * @brief Gibt den Suchfilter mit dem Index zurück.
+   * @brief Zwichenketten länge zurück geben!
    */
-  const QJsonObject getSearchFilter(int index);
-
-  /**
-   * @brief currentFilterIndex
-   * @return QComboBox::currentIndex();
-   */
-  SearchFilterBox::Filter currentFilterIndex();
+  int searchLength();
 
   /**
    * @brief Rückgabewert von Sucheingabe
    */
-  const QString currentSearchText();
+  const QString getSearchStatement();
 };
 
 #endif // INVENTORY_BOOKS_SEARCHBAR_H

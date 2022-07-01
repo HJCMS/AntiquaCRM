@@ -1,12 +1,9 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-//#ifndef BOOK_INVENTORY_DEBUG
-//#define BOOK_INVENTORY_DEBUG
-//#endif
-
 #include "bookstable.h"
 #include "bookstablemodel.h"
+#include "bookstatements.h"
 #include "myicontheme.h"
 #include "searchbar.h"
 #include "searchfilter.h"
@@ -29,32 +26,6 @@
 #include <QSqlTableModel>
 #include <QStatusTipEvent>
 #include <QTime>
-
-/**
- * @brief querySelect
- * Die Feldabfragen für die Suche sind immer gleich!
- * Wenn sich etwas ändern sollte, dann muss in Klasse
- * \ref BooksTableModel die Feld Definition geändert werden!
- */
-static const QString querySelect() {
-  QString s("ib_id,ib_count,ib_title,ib_author,");
-  s.append("ib_publisher,ib_year,ib_price,sl_storage,ib_isbn,ib_changed");
-  s.append(",(CASE WHEN im_id IS NOT NULL THEN true ELSE false END)");
-  s.append(" AS image_exists ");
-  return s;
-}
-
-/**
- * @brief queryTables
- * Tabellen Definition
- */
-static const QString queryTables() {
-  QString s(" FROM inventory_books");
-  s.append(" LEFT JOIN ref_storage_location ON sl_id=ib_storage");
-  s.append(" LEFT JOIN inventory_images ON im_id=ib_id ");
-  // s.append(" ");
-  return s;
-}
 
 BooksTable::BooksTable(QWidget *parent) : QTableView{parent} {
   setObjectName("BooksTable");
@@ -123,28 +94,6 @@ int BooksTable::queryArticleID(const QModelIndex &index) {
     return m_queryModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
   }
   return -1;
-}
-
-const QString BooksTable::prepareSearch(const QString &fieldname,
-                                        const QString &search) const {
-  QStringList words = search.split(" ");
-  QString sql(fieldname);
-  sql.append(" ILIKE '");
-  if (words.count() == 2) {
-    sql.append(words.first());
-    sql.append("%");
-    sql.append(words.last());
-    sql.append("%' OR ");
-    sql.append(fieldname);
-    sql.append(" ILIKE '");
-    sql.append(words.last());
-    sql.append("%");
-    sql.append(words.first());
-  } else {
-    sql.append(search);
-  }
-  sql.append("%'");
-  return sql;
 }
 
 void BooksTable::articleClicked(const QModelIndex &index) {
@@ -226,21 +175,21 @@ void BooksTable::refreshView() {
   }
 }
 
-void BooksTable::queryHistory(const QString &str) {
+void BooksTable::queryHistory(const QString &query) {
   QString q("SELECT ");
-  q.append(querySelect());
-  q.append(queryTables());
+  q.append(InventoryBooksSelect());
+  q.append(InventoryBooksTables());
   q.append(" WHERE ");
-  if (str.contains("#today")) {
+  if (query.contains("#today")) {
     q.append("DATE(ib_changed)=(DATE(now()))");
-  } else if (str.contains("#yesterday")) {
+  } else if (query.contains("#yesterday")) {
     q.append("DATE(ib_changed)=(DATE(now() - INTERVAL '1 day'))");
-  } else if (str.contains("#last7days")) {
+  } else if (query.contains("#last7days")) {
     q.append("DATE(ib_changed)>=(DATE(now() - INTERVAL '7 days'))");
-  } else if (str.contains("#thismonth")) {
+  } else if (query.contains("#thismonth")) {
     q.append("EXTRACT(MONTH FROM ib_changed)=(EXTRACT(MONTH FROM now()))");
     q.append(" AND ib_count>0");
-  } else if (str.contains("#thisyear")) {
+  } else if (query.contains("#thisyear")) {
     q.append("EXTRACT(ISOYEAR FROM ib_changed)=(EXTRACT(YEAR FROM now()))");
     q.append(" AND ib_count>0");
   } else {
@@ -257,63 +206,12 @@ void BooksTable::queryHistory(const QString &str) {
   }
 }
 
-void BooksTable::queryStatement(const SearchFilter &cl) {
-  SearchFilter scl(cl);
-  QRegExp reg("^(\\s+)");
-  QStringList fields = scl.getFields();
-  QString search = scl.getSearch();
-  bool revert_match = false;
-  search = search.trimmed();
-  if (reg.exactMatch(search)) {
-    qWarning("Rejected invalid input");
-    emit s_reportQuery(tr("Rejected invalid input"));
-    return;
-  }
-  search.replace("*", "%");
-
-  if (scl.getType() == SearchFilter::STRINGS && fields.count() == 1) {
-    revert_match = true;
-  }
-
+void BooksTable::queryStatement(const QString &statement) {
   QString q("SELECT DISTINCT ");
-  q.append(querySelect());
-  q.append(queryTables());
-
-  QStringList clauses;
-  QSqlRecord r = m_sql->record("inventory_books");
-  if (scl.getType() == SearchFilter::REFERENCES) {
-    if (fields.first() == "storage_id") {
-      QString sub;
-      sub.append("(ib_count>0 AND sl_identifier ILIKE '");
-      sub.append(search.replace("%", ""));
-      sub.append("%')");
-      clauses.append(sub);
-      sub.clear();
-      sub.append("(ib_keyword ILIKE '");
-      sub.append(search.replace("%", ""));
-      sub.append("%')");
-      clauses.append(sub);
-    }
-  } else {
-    foreach (QString f, fields) {
-      QVariant::Type vt = r.field(f).type();
-      if (vt == QVariant::LongLong || vt == QVariant::Int ||
-          vt == QVariant::Double) {
-        clauses.append(f + "=" + search);
-      } else if (scl.getType() == SearchFilter::NUMERIC) {
-        clauses.append(f + "=" + search);
-      } else {
-        if (revert_match) {
-          clauses.append(prepareSearch(f, search));
-        } else {
-          QString str_search = search.replace(" ", "%");
-          clauses.append(f + " ILIKE '%" + str_search + "%'");
-        }
-      }
-    }
-  }
+  q.append(InventoryBooksSelect());
+  q.append(InventoryBooksTables());
   q.append(" WHERE ");
-  q.append(clauses.join(" OR "));
+  q.append(statement);
   q.append(" ORDER BY ib_count DESC LIMIT ");
   q.append(QString::number(maxRowCount));
   q.append(";");

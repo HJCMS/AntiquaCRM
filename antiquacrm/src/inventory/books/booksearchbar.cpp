@@ -3,6 +3,7 @@
 
 #include "booksearchbar.h"
 #include "antiqua_global.h"
+#include "bookstatements.h"
 #include "myicontheme.h"
 
 #include <QDebug>
@@ -43,7 +44,7 @@ const QJsonObject SearchFilterBox::getFilter(int index) {
   switch (f) {
   case (Filter::BookAuthor): {
     obj.insert("search", QJsonValue("title_and_author"));
-    obj.insert("fields", QJsonValue("ib_storage,ib_title_extended,ib_author"));
+    obj.insert("fields", QJsonValue("ib_title,ib_title_extended,ib_author"));
     break;
   }
 
@@ -157,10 +158,64 @@ BookSearchBar::BookSearchBar(QWidget *parent) : QToolBar{parent} {
   connect(ac_search, SIGNAL(triggered()), this, SIGNAL(searchClicked()));
 }
 
+const QString BookSearchBar::prepareFieldSet(const QString &fieldname,
+                                             const QString &search) const {
+  QString sf(search);
+  sf = sf.replace(stripJokers, "%");
+  QStringList words = search.split(" ");
+  QString sql(fieldname);
+  sql.append(" ILIKE '%");
+  if (words.count() == 2) {
+    sql.append(words.first());
+    sql.append("%");
+    sql.append(words.last());
+    sql.append("%' OR ");
+    sql.append(fieldname);
+    sql.append(" ILIKE '");
+    sql.append(words.last());
+    sql.append("%");
+    sql.append(words.first());
+  } else {
+    sql.append(sf);
+  }
+  sql.append("%'");
+  return sql;
+}
+
+const QString BookSearchBar::getTitleSearch(const QStringList &fields) {
+  QString query;
+  // Standard Suchfeld
+  if (m_searchLeft->text().length() >= 2) {
+    QStringList bufferLeft;
+    foreach (QString f, fields) {
+      if (f != "ib_author")
+        bufferLeft << prepareFieldSet(f, p_currentLeft);
+    }
+    query.append("(");
+    query.append(bufferLeft.join(" OR "));
+    query.append(")");
+  }
+  // Autoren Suchfeld
+  if (m_searchRight->isEnabled() && m_searchRight->text().length() >= 2) {
+    QStringList bufferRight;
+    bufferRight << prepareFieldSet("ib_author", p_currentRight);
+    if (query.isEmpty())
+      query.append("(");
+    else
+      query.append(" AND (");
+
+    query.append(bufferRight.join(" OR "));
+    query.append(")");
+  }
+  return query;
+}
+
 void BookSearchBar::filterChanged(int index) {
   QVariant val = m_filterSection->itemData(index, Qt::UserRole);
   SearchFilterBox::Filter f = qvariant_cast<SearchFilterBox::Filter>(val);
   m_searchLeft->setEnabled(true);
+  m_searchLeft->clear();
+  m_searchRight->clear();
 
   switch (f) {
   case (SearchFilterBox::ArticleId): {
@@ -201,26 +256,24 @@ void BookSearchBar::filterChanged(int index) {
 }
 
 void BookSearchBar::prepareSearchQuery() {
-  QRegExp pattern("[\\'\\\"]+");
-  QString left = m_searchLeft->text();
-  QString right = m_searchRight->text();
-
-  left = left.replace(pattern, "");
-  right = right.replace(pattern, "");
-
-  pattern.setPattern("[\\s\\t\\n\\r]+");
-  right = left.replace(pattern, " ");
-  right = right.replace(pattern, " ");
-
-  QString buffer(left.trimmed());
-  if (!right.isEmpty()) {
-    buffer.append(" ");
-    buffer.append(right);
+  if (m_searchLeft->isEnabled() && m_searchLeft->text().length() > minLength) {
+    QString left = m_searchLeft->text();
+    left = left.replace(stripPattern, "");
+    left = left.replace(trimPattern, " ");
+    p_currentLeft = left.trimmed();
+  } else {
+    p_currentLeft = QString();
   }
 
-  p_currentSearch = buffer;
-
-  qDebug() << Q_FUNC_INFO << p_currentSearch;
+  if (m_searchRight->isEnabled() &&
+      m_searchRight->text().length() > minLength) {
+    QString right = m_searchRight->text();
+    right = right.replace(stripPattern, "");
+    right = right.replace(trimPattern, " ");
+    p_currentRight = right.trimmed();
+  } else {
+    p_currentRight = QString();
+  }
   emit searchClicked();
 }
 
@@ -232,14 +285,63 @@ void BookSearchBar::clearAndFocus() {
   m_searchLeft->setFocus();
 }
 
-const QJsonObject BookSearchBar::getSearchFilter(int index) {
-  return m_filterSection->getFilter(index);
+int BookSearchBar::searchLength() {
+  if (m_searchLeft->isEnabled())
+    return m_searchLeft->text().length();
+  else
+    return m_searchRight->text().length();
 }
 
-SearchFilterBox::Filter BookSearchBar::currentFilterIndex() {
-  return p_currentFilter;
-}
-
-const QString BookSearchBar::currentSearchText() {
-  return p_currentSearch.trimmed();
+const QString BookSearchBar::getSearchStatement() {
+  QJsonObject js = m_filterSection->getFilter(m_filterSection->currentIndex());
+  QStringList fields = js.value("fields").toString().split(",");
+  QString query;
+  // Title und Autorensuche
+  if (js.value("search").toString() == "title_and_author") {
+    query = getTitleSearch(fields);
+    return query;
+  }
+  // Buch Titlesuche
+  if (js.value("search").toString() == "title") {
+    query = getTitleSearch(fields);
+    return query;
+  }
+  // Buch Autorensuche
+  if (js.value("search").toString() == "author") {
+    query = getTitleSearch(fields);
+    return query;
+  }
+  // Artikel Nummersuche (107368,115110)
+  if (js.value("search").toString() == "articleId") {
+    QString s = m_searchLeft->text().trimmed();
+    s.replace(articlePattern, "");
+    query = "ib_id IN (" + s + ")";
+    return query;
+  }
+  // ISBN Suche
+  if (js.value("search").toString() == "isbn") {
+    QString s = m_searchLeft->text().trimmed();
+    s.replace(isbnPattern, "");
+    query = "ib_isbn=" + s;
+    return query;
+  }
+  // Publisher
+  if (js.value("search").toString() == "publisher") {
+    QString s = m_searchLeft->text().trimmed();
+    s.replace(stripJokers, "%");
+    query = "ib_publisher ILIKE '" + s + "%'";
+    return query;
+  }
+  // Lager & Stichwortsuche
+  if (js.value("search").toString() == "storage") {
+    QString s = m_searchLeft->text().trimmed();
+    s.replace(stripJokers, "%");
+    query = ("ib_count>0 AND (sl_storage ILIKE '");
+    query.append(s + "' OR sl_identifier ILIKE '" + s + "%')");
+    query.append(" OR (ib_keyword ILIKE '" + s + "%')");
+    return query;
+  }
+  qWarning("Not Defined Search (%s)",
+           qPrintable(js.value("search").toString()));
+  return QString();
 }

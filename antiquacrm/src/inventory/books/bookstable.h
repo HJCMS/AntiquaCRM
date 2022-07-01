@@ -39,18 +39,6 @@ private:
    */
   int queryArticleID(const QModelIndex &);
 
-  /**
-   * @brief Positions tausch der Suchworte
-   * Wenn die Suche zwei Zeichenketten besitzt dann eine klausel wie folgt
-   * erstellen.
-   * @code
-   *  // @b A/B ist das Ergebnis von search.split(" ");
-   *  WHERE (fieldname ILIKE 'A%B%' OR fieldname ILIKE 'B%A%')
-   * @endcode
-   */
-  const QString prepareSearch(const QString &fieldname,
-                              const QString &search) const;
-
 private Q_SLOTS:
   /**
    * @brief Wird von Tablemodel ausgelöst
@@ -99,12 +87,12 @@ public Q_SLOTS:
    * Wird von @ref StatsBookBar::m_showHistory()
    * aufgerufen und fragt den Verlauf ab.
    */
-  void queryHistory(const QString &);
+  void queryHistory(const QString &query);
 
   /**
    * Startet Abfrage ausgehend von Text/Sucheingabe
    */
-  void queryStatement(const SearchFilter &);
+  void queryStatement(const QString &statement);
 
 public:
   explicit BooksTable(QWidget *parent = nullptr);

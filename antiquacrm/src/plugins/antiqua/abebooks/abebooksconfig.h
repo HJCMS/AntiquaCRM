@@ -6,6 +6,9 @@
 #define ABEBOOKS_PLUGIN_CONFIG_H
 
 #include <QString>
+#include <QByteArray>
+#include <QDomDocument>
+#include <QTextStream>
 #include <QMetaType>
 #include <AntiquaInterface>
 
@@ -34,6 +37,19 @@ static const QDomDocument testSources(const QString &file) {
   return out;
 }
 
+#endif
+
+#ifndef Q_WS_WIN
+static void writeLogFile(const QDomDocument &doc) {
+  QString xml(QDir::homePath());
+  xml.append("/.cache/AbeBooks_OrderResponse.xml");
+  QFile fp(xml);
+  if (fp.open(QIODevice::WriteOnly)) {
+    QTextStream in(&fp);
+    in << doc.toByteArray(1);
+    fp.close();
+  }
+}
 #endif
 
 /**

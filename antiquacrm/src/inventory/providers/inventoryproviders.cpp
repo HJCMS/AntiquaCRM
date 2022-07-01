@@ -155,13 +155,13 @@ void InventoryProviders::queryProviderPage(const QString &provider) {
 
 void InventoryProviders::queryOrder(const QString &provider,
                                     const QString &orderId) {
-  if (!p_providerList.contains(provider))
-    return;
-
-  if (tabExists(orderId))
+  if (p_providerList.count() > 0 && !p_providerList.contains(provider))
     return;
 
   qDebug() << Q_FUNC_INFO << provider << orderId;
+
+  if (tabExists(orderId))
+    return;
 
   QListIterator<Antiqua::Interface *> it(p_iFaces);
   while (it.hasNext()) {
@@ -271,8 +271,10 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
   }
 
   QString orderid = doc.object().value("orderid").toString();
-  if (!tabExists(orderid))
+  if (!tabExists(orderid)) {
+    qWarning("Missing OrderId");
     return;
+  }
 
   QList<int> cidList;
   QSqlQuery q = m_sql->query(sql);
@@ -290,6 +292,7 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
     }
     m_toolBar->enableOrderButton(false);
     m_toolBar->statusMessage(tr("customer not exits!"));
+    return;
   }
 
   /**
@@ -393,7 +396,7 @@ bool InventoryProviders::updateArticleCount(int articleId, int count) {
   while (it.hasNext()) {
     Antiqua::Interface *iface = it.next();
     if (iface != nullptr) {
-      // qDebug() << "Update:" << iface->provider() << articleId << count;
+      qDebug() << "Update:" << iface->provider() << articleId << count;
       iface->updateArticleCount(articleId, count);
     }
   }

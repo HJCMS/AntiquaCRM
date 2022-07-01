@@ -3,8 +3,8 @@
 
 #include "inventorybooks.h"
 #include "bookeditor.h"
-#include "bookstable.h"
 #include "booksearchbar.h"
+#include "bookstable.h"
 #include "myicontheme.h"
 #include <AntiquaCRM>
 
@@ -34,10 +34,6 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   QVBoxLayout *siteOneLayout = new QVBoxLayout(siteOneWidget);
   siteOneLayout->setObjectName("books_site_one_layout");
 
-  /**
-    @brief m_searchBar
-    Siehe auch @ref updateValidator(int)!
-  */
   m_searchBar = new BookSearchBar(this);
   siteOneLayout->addWidget(m_searchBar);
 
@@ -108,46 +104,19 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
 }
 
 void InventoryBooks::searchConvert(const QString &query) {
-  if (query.length() <= minLength)
+  if (m_searchBar->searchLength() <= minLength)
     return;
-
-  QString info(tr("Automatic search disabled in this mode. Press enter to "
-                  "start the search!"));
-
-  int filter = m_searchBar->currentFilterIndex();
-  switch (filter) {
-  case 0: {
-    m_statsBookBar->showMessage(info);
-    return;
-  }
-  case 6: {
-    m_statsBookBar->showMessage(info);
-    return;
-  }
-  default:
-    break;
-  };
 
   searchConvert();
 }
 
 void InventoryBooks::searchConvert() {
-  if (m_searchBar->currentSearchText().length() < 2)
+  QString query = m_searchBar->getSearchStatement();
+  if (query.length() < 1)
     return;
 
-  QString buf = m_searchBar->currentSearchText();
-  int index = m_searchBar->currentFilterIndex();
-  if (buf.length() > 1) {
-    SearchFilter s;
-    s.setSearch(buf);
-    QJsonObject js = m_searchBar->getSearchFilter(index);
-    s.setFields(js.value("filter").toString().split(","));
-    int i = js.value("type").toInt();
-    s.setType((SearchFilter::SearchType)i);
-    s.setTitle(js.value("title").toString());
-    if (m_tableView != nullptr)
-      m_tableView->queryStatement(s);
-  }
+  if (m_tableView != nullptr)
+    m_tableView->queryStatement(query);
 }
 
 void InventoryBooks::openTableView() {
