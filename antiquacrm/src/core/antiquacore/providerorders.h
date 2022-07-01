@@ -34,7 +34,7 @@ public:
   void setProviderId(const QString id);
   const QString providerId();
 
-  void setCustomerId(int &id);
+  void setCustomerId(int id);
   int customerId();
 
   void setArticleIds(const QStringList &ids);

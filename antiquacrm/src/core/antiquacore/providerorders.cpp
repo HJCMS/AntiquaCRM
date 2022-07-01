@@ -18,7 +18,7 @@ void ProviderOrder::setProviderId(const QString id) { p_providerId = id; }
 
 const QString ProviderOrder::providerId() { return p_providerId; }
 
-void ProviderOrder::setCustomerId(int &id) {
+void ProviderOrder::setCustomerId(int id) {
   if (id > 0)
     p_customerId = id;
 }
