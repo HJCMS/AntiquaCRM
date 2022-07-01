@@ -342,7 +342,12 @@ void InventoryProviders::createEditOrders() {
   Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
   if (tab != nullptr && tab->getCustomerId() == current_cid) {
     m_toolBar->statusMessage(tr("open order editor"));
-    emit createOrder(tab->getProviderOrder());
+    ProviderOrder order = tab->getProviderOrder();
+    if (order.customerId() > 1) {
+      emit createOrder(order);
+    } else {
+      m_toolBar->statusMessage(tr("invalid customer id"));
+    }
   } else {
     m_toolBar->statusMessage(tr("current tab and customer id not equal"));
   }
