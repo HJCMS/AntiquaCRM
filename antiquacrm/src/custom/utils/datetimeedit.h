@@ -112,6 +112,7 @@ public Q_SLOTS:
 public:
   explicit DateTimeDisplay(QWidget *parent = nullptr);
   const QDate getDate();
+  const QDate currentDate();
   const QVariant value();
   bool isValid();
   void setInfo(const QString &);

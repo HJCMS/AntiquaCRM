@@ -307,7 +307,7 @@ void BooksTable::queryStatement(const SearchFilter &cl) {
           clauses.append(prepareSearch(f, search));
         } else {
           QString str_search = search.replace(" ", "%");
-          clauses.append(f + " ILIKE '" + "%" + str_search + "%'");
+          clauses.append(f + " ILIKE '%" + str_search + "%'");
         }
       }
     }

@@ -128,6 +128,8 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   o_notify = new BoolBox(this);
   o_notify->setObjectName("o_notify");
   o_notify->setInfo(tr("Notification"));
+  o_notify->setChecked(false);
+  o_notify->setRequired(false);
   dsLayout->addWidget(o_notify, 2, 0, 1, 1, Qt::AlignRight);
   o_delivery = new LineEdit(m_deliveryBox);
   o_delivery->setObjectName("o_delivery");
@@ -170,6 +172,8 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   o_delivery_add_price->setInfo(tr("add delivery package price"));
   o_delivery_add_price->setToolTip(
       tr("add delivery package price to current shipping."));
+  o_delivery_add_price->setChecked(false);
+  o_delivery_add_price->setRequired(false);
   billingLayout->addWidget(o_delivery_add_price, brow++, 0, 1, 2);
 
   billingLayout->setRowStretch(brow, 1);
@@ -649,6 +653,20 @@ void OrderEditor::checkLeaveEditor() {
   finalLeaveEditor();
 }
 
+void OrderEditor::clearEditorFields() {
+  // SQL History leeren
+  sqlQueryResult.clear();
+  // Alle Datenfelder leeren
+  clearDataFields(p_objPattern);
+  // Bool Werte zurücksetzen
+  o_notify->setChecked(false);
+  o_delivery_add_price->setChecked(false);
+  // FIXME Sollte hier nicht stehen!
+  o_vat_levels->setCurrentIndex(0);
+  // Tabelle leeren
+  m_paymentList->clearTable();
+}
+
 void OrderEditor::finalLeaveEditor() {
   clearEditorFields();
   emit s_leaveEditor();
@@ -846,12 +864,6 @@ void OrderEditor::generateDeliveryNumber() {
   }
 }
 
-void OrderEditor::clearEditorFields() {
-  sqlQueryResult.clear();        /**< SQL History leeren */
-  clearDataFields(p_objPattern); /**< Alle Datenfelder leeren */
-  m_paymentList->clearTable();   /**< Tabelle leeren */
-}
-
 void OrderEditor::restoreDataset() {
   if (sqlQueryResult.isEmpty())
     return;
@@ -1032,68 +1044,71 @@ void OrderEditor::openCreateOrder(int cid) {
 }
 
 void OrderEditor::openCreateOrder(const ProviderOrder &order) {
+  ProviderOrder copy(order);
+  int cid = copy.customerId();
+  if (cid < 1) {
+    emit s_postMessage(tr("can't create order without costumer Id."));
+    return;
+  }
+  // Aufräumen
   if (o_customer_id->value().toInt() > 0 || m_paymentList->payments() > 0) {
     clearEditorFields();
   }
 
   initDefaults();
-  ProviderOrder copy(order);
-  int cid = copy.customerId();
-  if (cid > 0) {
-    o_customer_id->setValue(cid);
-    o_provider_order_id->setValue(copy.providerId());
-    o_provider_name->setValue(copy.provider());
-    o_delivery_service->setValue(ORDER_DELIVERY_SERVICE);
-    if (getCustomerAddress(cid)) {
-      QList<OrderArticle> list;
-      foreach (QString said, copy.articleIds()) {
-        int aid = said.toInt();
-        QString sql = inventoryArticle(aid);
-        QSqlQuery q = m_sql->query(sql);
-        if (q.size() > 0) {
-          // QSqlRecord r = q.record();
-          while (q.next()) {
-            OrderArticle d;
-            d.setPayment(-1);
-            d.setArticle(q.value("aid").toInt());
-            d.setOrder(-1);
-            d.setCustomer(cid);
-            int count = q.value("counts").toInt();
-            if (count > 0) {
-              // Wir fügen immer nur ein Artikel ein!
-              count = 1;
-            }
-            d.setCount(count);
-            d.setPrice(q.value("price").toDouble());
-            d.setSellPrice(q.value("price").toDouble());
-            d.setTitle(q.value("title").toString());
-            d.setSummary(tr("Article %1, Price %2, Count: %3, Title: %4")
-                             .arg(q.value("aid").toString(),
-                                  q.value("price").toString(),
-                                  q.value("counts").toString(),
-                                  q.value("title").toString()));
+  o_customer_id->setValue(cid);
+  o_provider_order_id->setValue(copy.providerId());
+  o_provider_name->setValue(copy.provider());
+  o_delivery_service->setValue(ORDER_DELIVERY_SERVICE);
+  if (getCustomerAddress(cid)) {
+    QList<OrderArticle> list;
+    foreach (QString said, copy.articleIds()) {
+      int aid = said.toInt();
+      QString sql = inventoryArticle(aid);
+      QSqlQuery q = m_sql->query(sql);
+      if (q.size() > 0) {
+        // QSqlRecord r = q.record();
+        while (q.next()) {
+          OrderArticle d;
+          d.setPayment(-1);
+          d.setArticle(q.value("aid").toInt());
+          d.setOrder(-1);
+          d.setCustomer(cid);
+          int count = q.value("counts").toInt();
+          if (count > 0) {
+            // Wir fügen immer nur ein Artikel ein!
+            count = 1;
+          }
+          d.setCount(count);
+          d.setPrice(q.value("price").toDouble());
+          d.setSellPrice(q.value("price").toDouble());
+          d.setTitle(q.value("title").toString());
+          d.setSummary(tr("Article %1, Price %2, Count: %3, Title: %4")
+                           .arg(q.value("aid").toString(),
+                                q.value("price").toString(),
+                                q.value("counts").toString(),
+                                q.value("title").toString()));
 
-            list.append(d);
-          }
-        } else {
-          QString sqlError = m_sql->lastError();
-          if (sqlError.isEmpty()) {
-            QString info("<p>");
-            info.append(tr("One or more items on the list are not available!"));
-            info.append("</p><p>");
-            info.append(tr("Therefore, they cannot be added"));
-            info.append("</p>");
-            QMessageBox::warning(this, tr("Order"), info, QMessageBox::Ok);
-          } else {
-            sqlErrnoMessage(sqlError, sql);
-          }
-          m_paymentList->setEnabled(false);
-          return;
+          list.append(d);
         }
+      } else {
+        QString sqlError = m_sql->lastError();
+        if (sqlError.isEmpty()) {
+          QString info("<p>");
+          info.append(tr("One or more items on the list are not available!"));
+          info.append("</p><p>");
+          info.append(tr("Therefore, they cannot be added"));
+          info.append("</p>");
+          QMessageBox::warning(this, tr("Order"), info, QMessageBox::Ok);
+        } else {
+          sqlErrnoMessage(sqlError, sql);
+        }
+        m_paymentList->setEnabled(false);
+        return;
       }
-      m_paymentList->importPayments(list);
-      m_paymentList->setEnabled(false);
-      emit isModified(true);
     }
+    m_paymentList->importPayments(list);
+    m_paymentList->setEnabled(false);
+    emit isModified(true);
   }
 }

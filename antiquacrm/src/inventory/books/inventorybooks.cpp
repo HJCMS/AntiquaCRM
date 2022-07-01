@@ -4,6 +4,7 @@
 #include "inventorybooks.h"
 #include "bookeditor.h"
 #include "bookstable.h"
+#include "booksearchbar.h"
 #include "myicontheme.h"
 #include <AntiquaCRM>
 
@@ -12,46 +13,6 @@
 #include <QLabel>
 #include <QLayout>
 #include <QVBoxLayout>
-
-BookSearchBar::BookSearchBar(QWidget *parent) : SearchBar{parent} {
-  setObjectName("book_search_bar");
-  setValidation(SearchBar::Pattern);
-  addSearchFilters(commonSearchFilter());
-}
-
-const QList<SearchFilter> BookSearchBar::commonSearchFilter() const {
-  SearchFilter a;
-  QList<SearchFilter> filter;
-  a.setTitle(tr("Book Title or Author"));
-  a.setFields("ib_title,ib_title_extended,ib_author");
-  a.setType(SearchFilter::STRINGS);
-  filter.append(a);
-  a.setTitle(tr("Book Title only"));
-  a.setFields("ib_title,ib_title_extended");
-  a.setType(SearchFilter::STRINGS);
-  filter.append(a);
-  a.setTitle(tr("Article ID"));
-  a.setFields("ib_id");
-  a.setType(SearchFilter::NUMERIC);
-  filter.append(a);
-  a.setTitle(tr("ISBN"));
-  a.setFields("ib_isbn");
-  a.setType(SearchFilter::NUMERIC);
-  filter.append(a);
-  a.setTitle(tr("Author"));
-  a.setFields("ib_author");
-  a.setType(SearchFilter::STRINGS);
-  filter.append(a);
-  a.setTitle(tr("Publisher"));
-  a.setFields("ib_publisher");
-  a.setType(SearchFilter::STRINGS);
-  filter.append(a);
-  a.setTitle(tr("Duration by Keyword"));
-  a.setFields("storage_id");
-  a.setType(SearchFilter::REFERENCES);
-  filter.append(a);
-  return filter;
-}
 
 InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   setObjectName("InventoryBooks");
@@ -106,8 +67,7 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   // Signals
   connect(this, SIGNAL(s_setSearchFocus()), m_searchBar, SLOT(clearAndFocus()));
 
-  connect(this, SIGNAL(s_setSearchFilter()), m_searchBar,
-          SLOT(setFilterFocus()));
+  connect(this, SIGNAL(s_setSearchFilter()), m_searchBar, SLOT(setFocus()));
 
   connect(this, SIGNAL(s_createNewEntry()), this, SLOT(createBookEntry()));
 

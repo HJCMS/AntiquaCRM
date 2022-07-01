@@ -415,7 +415,8 @@
     <message>
         <location line="+8"/>
         <source>Designation:</source>
-        <translation>Umschreibung:</translation>
+        <translatorcomment>Umschreibung</translatorcomment>
+        <translation>Buchumchlag:</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -498,7 +499,7 @@
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+50"/>
         <source>Are you sure to deactivate this entry?</source>
         <translation>Möchten Sie diesen Eintrag wirklich deaktivieren?</translation>
     </message>
@@ -508,7 +509,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-439"/>
+        <location line="-440"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -528,12 +529,12 @@
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
     <message>
-        <location line="+210"/>
+        <location line="+211"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
     <message>
-        <location line="-292"/>
+        <location line="-293"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -583,39 +584,35 @@
 <context>
     <name>BookSearchBar</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="+25"/>
-        <source>Book Title or Author</source>
-        <translation>Buch nach Titel und Autor</translation>
+        <location filename="../inventory/books/booksearchbar.cpp" line="+121"/>
+        <source>Press CTRL+F, to quickly open this Menu.</source>
+        <translation>Drücken Sie STRG+F, um dieses Menü schnell zu öffnen.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Press CTRL+S, it clears the input for a new search.</source>
+        <translation>Drücken Sie STRG+S, es löscht die Eingabe für eine neue Suche.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>You can use a wildcard * to broaden the search.</source>
+        <translation>Sie können einen Platzhalter * verwenden, um die Suche zu erweitern.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search Title</source>
+        <translation>Suche Buchtitel</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Search Authors</source>
+        <translation>Suche Autor</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Book Title only</source>
-        <translation>Suche nach Buchtitel</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Article ID</source>
-        <translation>Artikel Nummer</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>ISBN</source>
-        <translation>ISBN</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Author</source>
-        <translation>Autor</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Publisher</source>
-        <translation>Herausgeber</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Duration by Keyword</source>
-        <translation>Bestand mit Lagerkategorie</translation>
+        <location line="+1"/>
+        <source>Start search</source>
+        <translation>Suche starten</translation>
     </message>
 </context>
 <context>
@@ -1474,7 +1471,7 @@
 <context>
     <name>DateTimeDisplay</name>
     <message>
-        <location filename="../custom/utils/datetimeedit.cpp" line="+202"/>
+        <location filename="../custom/utils/datetimeedit.cpp" line="+203"/>
         <source>a valid Datetime is needed.</source>
         <translation>Ein gültiges Datum ist erforderlich.</translation>
     </message>
@@ -1482,7 +1479,7 @@
 <context>
     <name>DateTimeEdit</name>
     <message>
-        <location line="-56"/>
+        <location line="-57"/>
         <source>a valid Datetime is needed.</source>
         <translation>Ein gültiges Datum ist erforderlich.</translation>
     </message>
@@ -2342,12 +2339,12 @@
 <context>
     <name>InventoryBooks</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="+9"/>
+        <location filename="../inventory/books/inventorybooks.cpp" line="+19"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+95"/>
         <source>Automatic search disabled in this mode. Press enter to start the search!</source>
         <translation>Automatische Suche in diesem Modus deaktiviert. Drücken Sie die Eingabetaste, um die Suche zu starten!</translation>
     </message>
@@ -2373,7 +2370,12 @@
         <translation>Aktualisieren</translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+68"/>
+        <source>Missing a valid costumer Id!</source>
+        <translation>Keine gültige Kunden Nummer!</translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>There is no Order open!</source>
         <translation>Es ist keine Bestellung geöffnet!</translation>
     </message>
@@ -2404,7 +2406,7 @@
         <translation>ist nicht Verfügbar!</translation>
     </message>
     <message>
-        <location line="+226"/>
+        <location line="+227"/>
         <source>customer found in database!</source>
         <translation>Kundeneintrag gefunden!</translation>
     </message>
@@ -2414,7 +2416,12 @@
         <translation>Kunde existiert nicht!</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+57"/>
+        <source>Missing valid Customer Id</source>
+        <translation>Keine gültige Kunden Nummer</translation>
+    </message>
+    <message>
+        <location line="+23"/>
         <source>an error occurred</source>
         <translation>ein Fehler ist aufgetreten</translation>
     </message>
@@ -2424,18 +2431,13 @@
         <translation>Erfolgreich</translation>
     </message>
     <message>
-        <location line="-288"/>
+        <location line="-293"/>
         <location line="+12"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
     <message>
-        <location line="+251"/>
-        <source>open order editor</source>
-        <translation>Öffne Auftragseditor</translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+259"/>
         <source>current tab and customer id not equal</source>
         <translation>Aktuelles Fenster und Kundennummer sind nicht Identisch</translation>
     </message>
@@ -2770,18 +2772,18 @@
         <translation>Adresse und Kunden Nummer</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+89"/>
         <location line="+4"/>
         <source>Provider</source>
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="-55"/>
+        <location line="-59"/>
         <source>Notification</source>
         <translation>Benachrichtigung</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Delivery note number</source>
         <translation>Lieferschein Nummer</translation>
     </message>
@@ -2791,13 +2793,13 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+734"/>
+        <location line="+744"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-809"/>
+        <location line="-821"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
@@ -2807,7 +2809,7 @@
         <translation>Paketsendungsnummer</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+46"/>
         <source>add delivery package price</source>
         <translation>Lieferpaketpreis hinzufügen</translation>
     </message>
@@ -2842,18 +2844,18 @@
         <translation>Standard</translation>
     </message>
     <message>
-        <location line="+165"/>
+        <location line="+167"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
         <location line="+265"/>
-        <location line="+475"/>
+        <location line="+487"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="-460"/>
+        <location line="-472"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
     </message>
@@ -2873,7 +2875,7 @@
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+35"/>
         <location line="+58"/>
         <source>Missing Order-Id</source>
         <translation>Fehlende Bestellnummer</translation>
@@ -2921,7 +2923,12 @@
         <translation>Möchten Sie wirklich diesen Auftrag schließen und an die Buchhaltung weiter reichen?</translation>
     </message>
     <message>
-        <location line="+254"/>
+        <location line="+204"/>
+        <source>can&apos;t create order without costumer Id.</source>
+        <translation>Kann keinen Auftrag ohne Kundennummer generieren.</translation>
+    </message>
+    <message>
+        <location line="+48"/>
         <source>One or more items on the list are not available!</source>
         <translation>Ein oder mehrere Artikel auf der Liste sind nicht Verfügbar!</translation>
     </message>
@@ -2936,23 +2943,23 @@
         <translation>Bestellung</translation>
     </message>
     <message>
-        <location line="-473"/>
-        <location line="+218"/>
+        <location line="-485"/>
+        <location line="+232"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
     <message>
-        <location line="-709"/>
+        <location line="-727"/>
         <source>Service</source>
         <translation>Sender</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+27"/>
         <source>Invoice options</source>
         <translation>Rechnungs Optionen</translation>
     </message>
     <message>
-        <location line="+651"/>
+        <location line="+667"/>
         <source>Printing canceled.</source>
         <translation>Druckevorgang abgebrochen.</translation>
     </message>
@@ -2972,7 +2979,7 @@
         <translation>Auftrag deaktiviert!</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+21"/>
         <source>Notice</source>
         <translation>Hinweis</translation>
     </message>
@@ -4224,6 +4231,87 @@
         <location line="+2"/>
         <source>Start search</source>
         <translation>Suche starten</translation>
+    </message>
+</context>
+<context>
+    <name>SearchFilterBox</name>
+    <message>
+        <location filename="../inventory/books/booksearchbar.cpp" line="-130"/>
+        <source>Book Title and Author</source>
+        <translation>Buchtitel und Autor</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search in Book titles and authors</source>
+        <translation>Suche nach Buchtiteln und Autoren</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Book Title</source>
+        <translation>Buchtitel</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search in Book titles</source>
+        <translation>Suche nach Buchtiteln</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Article Id</source>
+        <translation>Artikel Nummer</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Multiple searches separated by commas</source>
+        <translation>Eine Mehrfachsuche kann mit Kommatrennung ausgeführt werden</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>ISBN</source>
+        <translation>ISBN</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Only Numbers are allowed for input</source>
+        <translation>Nur Zahleneingabe ist erlaubt</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Author</source>
+        <translation>Autor</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search for Book authors</source>
+        <translation>Such Buch mit Autoren</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Book Publisher</source>
+        <translation>Buch Verlag</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search Book Publishers</source>
+        <translation>Suche Buch Verlag/Herausgeber</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Duration by Keyword</source>
+        <translation>Bestand mit Lagerkategorie</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search by keyword and storage location</source>
+        <translation>Suche mit Schlüsselwort und Lagerkategorie</translation>
+    </message>
+</context>
+<context>
+    <name>SearchLineEdit</name>
+    <message>
+        <location line="+62"/>
+        <source>Search for</source>
+        <translation>Suche nach</translation>
     </message>
 </context>
 <context>

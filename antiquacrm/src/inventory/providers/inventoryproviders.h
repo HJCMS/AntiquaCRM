@@ -229,12 +229,6 @@ Q_SIGNALS:
   void openEditCustomer(int cid);
 
   /**
-   * @brief Sende SIGNAL an Auftrag erstellen.
-   * @see InventoryOrders::createOrder
-   */
-  QT_DEPRECATED void openEditOrder(int cid);
-
-  /**
    * @brief Signal - Auftrag erstellen und an Elternfenster senden.
    * @see InventoryOrders::createOrder
    */

@@ -531,6 +531,7 @@ void BookEditor::checkLeaveEditor() {
 }
 
 void BookEditor::finalLeaveEditor() {
+  count_temp = -1;
   m_isbnWidget->clear();              /**< OpenLibrary.org Anzeige leeren */
   sqlQueryResult.clear();             /**< SQL History leeren */
   clearDataFields(p_objPattern);      /**< Alle Datenfelder leeren */
@@ -653,7 +654,7 @@ void BookEditor::printingBookCard() {
   data.insert("author", ib_author->value());
   data.insert("year", ib_year->value());
   data.insert("storage", ib_storage->description());
-  data.insert("since", ib_since->getDate());
+  data.insert("since", ib_since->currentDate());
   data.insert("keywords", ib_keyword->value());
 
   if (dialog->exec(data) == QDialog::Accepted) {

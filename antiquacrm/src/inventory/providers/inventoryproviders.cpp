@@ -161,7 +161,7 @@ void InventoryProviders::queryOrder(const QString &provider,
   if (tabExists(orderId))
     return;
 
-  // qDebug() << Q_FUNC_INFO << provider << orderId;
+  qDebug() << Q_FUNC_INFO << provider << orderId;
 
   QListIterator<Antiqua::Interface *> it(p_iFaces);
   while (it.hasNext()) {
@@ -176,6 +176,7 @@ void InventoryProviders::queryOrder(const QString &provider,
               SLOT(checkArticleExists(QList<int> &)));
 
       m_pageView->addPage(w, orderId);
+
       /**
        * @warning tabExists() @b MUSS UNBEDINGT vor createOrderRequest()
        * aufgerufen werden! Ansonsten wird die Antwort an den Slot
@@ -341,8 +342,12 @@ void InventoryProviders::createEditOrders() {
 
   Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
   if (tab != nullptr && tab->getCustomerId() == current_cid) {
-    m_toolBar->statusMessage(tr("open order editor"));
-    emit createOrder(tab->getProviderOrder());
+    ProviderOrder pData = tab->getProviderOrder();
+    if (pData.customerId() > 0 && pData.customerId() == current_cid) {
+      emit createOrder(pData);
+    } else {
+      m_toolBar->statusMessage(tr("Missing valid Customer Id"));
+    }
   } else {
     m_toolBar->statusMessage(tr("current tab and customer id not equal"));
   }

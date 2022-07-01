@@ -16,25 +16,7 @@
 
 class BooksTable;
 class BookEditor;
-
-/**
- * @brief The BookSearchBar class
- * @ingroup Inventory
- */
-class BookSearchBar final : public SearchBar {
-  Q_OBJECT
-  Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "https://www.hjcms.de")
-
-private:
-  /**
-   * @brief Standard Suchfilter für Bücher
-   */
-  const QList<SearchFilter> commonSearchFilter() const;
-
-public:
-  BookSearchBar(QWidget *parent);
-};
+class BookSearchBar;
 
 /**
  * @class Bücher Inventar

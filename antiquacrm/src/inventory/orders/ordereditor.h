@@ -253,6 +253,11 @@ private Q_SLOTS:
   void finalLeaveEditor();
 
   /**
+   * @brief Aufräumen
+   */
+  void clearEditorFields();
+
+  /**
    * @brief Drucker Dialog öffnen
    */
   void openPrinterDeliveryDialog();
@@ -274,11 +279,6 @@ private Q_SLOTS:
    * @ref deliveryNumber zum erstellen der LieferscheinNummer.
    */
   void generateDeliveryNumber();
-
-  /**
-   * @brief Aufräumen
-   */
-  void clearEditorFields();
 
 public Q_SLOTS:
   /**

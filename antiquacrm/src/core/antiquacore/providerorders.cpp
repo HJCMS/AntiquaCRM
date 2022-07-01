@@ -18,12 +18,12 @@ void ProviderOrder::setProviderId(const QString &id) { p_providerId = id; }
 
 const QString ProviderOrder::providerId() { return p_providerId; }
 
-void ProviderOrder::setCustomerId(int &id) {
+void ProviderOrder::setCustomerId(int id) {
   if (id > 0)
     p_customerId = id;
 }
 
-int ProviderOrder::customerId() { return p_customerId; }
+const int ProviderOrder::customerId() { return p_customerId; }
 
 void ProviderOrder::setArticleIds(const QStringList &ids) {
   if (ids.size() > 0)

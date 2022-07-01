@@ -5,14 +5,14 @@
 #include "abebooksconfig.h"
 #include "abebooksrequester.h"
 
+#include <QDir>
+#include <QFile>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QRegExp>
 #include <QTableWidgetItem>
 #include <QVBoxLayout>
-#include <QFile>
-#include <QDir>
 
 #ifdef PLUGIN_ABEBOOKS_DEBUG
 static void writeLogFile(const QDomDocument &doc) {
@@ -124,7 +124,6 @@ AbeBooksIfaceWidget::customerRequest(const QJsonObject &object) {
   queryObject.insert("c_lastname", object["c_lastname"]);
   queryObject.insert("c_postalcode", object["c_postalcode"]);
   queryObject.insert("c_location", object["c_location"]);
-  queryObject.insert("c_country", object["c_country"]);
   return QJsonDocument(queryObject);
 }
 
@@ -167,7 +166,7 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
   AbeBooksDocument xml(doc);
   if (doc.documentElement().tagName() == "requestError") {
     QPair<int, QString> err = xml.errorResponseCode();
-    // qDebug() << Q_FUNC_INFO << err.first << err.second;
+    qDebug() << Q_FUNC_INFO << err.first << err.second;
     emit errorResponse(err.first, err.second);
     return;
   }
@@ -212,12 +211,12 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
             m_order->setPhone("c_phone_0", stripString(val));
           }
         }
+        parseAddressBody("c_postal_address", customerInfo);
+        parseAddressBody("c_shipping_address", customerInfo);
+        // Sende SQL Abfrage an Hauptfenster!
         QJsonDocument cIjs = customerRequest(customerInfo);
         if (!cIjs.isEmpty())
           emit checkCustomer(cIjs);
-
-        parseAddressBody("c_postal_address", customerInfo);
-        parseAddressBody("c_shipping_address", customerInfo);
       }
     }
   }
@@ -298,6 +297,7 @@ const ProviderOrder AbeBooksIfaceWidget::getProviderOrder() {
   order.setProviderId(objectName());
   int cid = m_order->getCustomerId();
   if (cid < 1) {
+    order.setCustomerId(-1);
     qWarning("Missing Customer Id");
     return order;
   }

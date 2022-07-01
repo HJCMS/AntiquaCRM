@@ -110,6 +110,11 @@ void InventoryOrders::createOrder(int customerId) {
 }
 
 void InventoryOrders::createOrder(const ProviderOrder &order) {
+  if(ProviderOrder(order).customerId() < 1) {
+    emit s_postMessage(tr("Missing a valid costumer Id!"));
+    return;
+  }
+
   m_editor->setEnabled(true);
   m_editor->openCreateOrder(order);
   m_stackedWidget->setCurrentWidget(m_editor);
