@@ -677,6 +677,25 @@ FROM xgr WHERE art LIKE 'bu' AND technik LIKE '%Bd.%' OR technik LIKE '%Auflage'
   Drucke, Bilder, Stiche und Fotos sind jetzt
   in Tabelle public.inventory_prints enthalten.
   - Suche mit art=
+  +-----+--------------------------------+
+  | art | bezeichnung                    |
+  +-----+--------------------------------+
+  | an  | Stadtansichten/Ortsansichten   |
+  | ax  | ArtikelartTest                 |
+  | be  | Berufe                         |
+  | bu  | Bücher                         |
+  | ka  | Landkarten                     |
+  | ku  | Kunst                          |
+  | va  | Varia                          |
+  | xa  | Openstore, Autor und Titel     |
+  | xb  | Openstore, Artikelbeschreibung |
+  | fa  | Familie                        |
+  | in  | Insekten                       |
+  | ti  | Tiere                          |
+  | po  | Porträts                       |
+  | bo  | Botanik                        |
+  | de  | Dekorative Grafik              |
+  +-----+--------------------------------+
 =cut
 sub create_inventory_prints {
   my $table = "public.inventory_prints";
@@ -700,7 +719,7 @@ sub create_inventory_prints {
   info,
   xgr.zeitstempel AS ip_changed
 FROM hai.xgr
-WHERE xgr.art LIKE 'po' OR xgr.art LIKE 'an' OR xgr.art LIKE 'ka' AND artnr>0
+WHERE xgr.art='po' OR xgr.art='an' OR xgr.art='ka' OR xgr.art='ti' OR xgr.art='bo' AND artnr>0
 ORDER BY artnr ASC;");
   my $rows = $query->execute();
   if($rows)

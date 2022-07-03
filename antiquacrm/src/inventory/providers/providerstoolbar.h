@@ -37,7 +37,7 @@ public Q_SLOTS:
   /**
    * @brief Erstellen Knopf Ein/Ausschalten
    */
-  void enableOrderButton(bool);
+  void enableOrderButton(bool b = false);
 
 public:
   explicit ProvidersToolBar(QWidget *parent = nullptr);

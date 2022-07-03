@@ -14,10 +14,10 @@
 SearchFilterBox::SearchFilterBox(QWidget *parent) : QComboBox{parent} {
   setSizeAdjustPolicy(QComboBox::AdjustToContents);
   QIcon icon(myIcon("search"));
-  insertItem(0, icon, tr("Book Title and Author"), Filter::BookAuthor);
+  insertItem(0, icon, tr("Book Title and Author"), Filter::BooksAuthor);
   setItemData(0, tr("Search in Book titles and authors"), Qt::ToolTipRole);
 
-  insertItem(1, icon, tr("Book Title"), Filter::Books);
+  insertItem(1, icon, tr("Book Title and Keyword"), Filter::BooksKeyword);
   setItemData(1, tr("Search in Book titles"), Qt::ToolTipRole);
 
   insertItem(2, icon, tr("Article Id"), Filter::ArticleId);
@@ -42,15 +42,15 @@ const QJsonObject SearchFilterBox::getFilter(int index) {
   SearchFilterBox::Filter f = qvariant_cast<SearchFilterBox::Filter>(val);
   QJsonObject obj;
   switch (f) {
-  case (Filter::BookAuthor): {
+  case (Filter::BooksAuthor): {
     obj.insert("search", QJsonValue("title_and_author"));
     obj.insert("fields", QJsonValue("ib_title,ib_title_extended,ib_author"));
     break;
   }
 
-  case (Filter::Books): {
+  case (Filter::BooksKeyword): {
     obj.insert("search", QJsonValue("title"));
-    obj.insert("fields", QJsonValue("ib_title,ib_title_extended"));
+    obj.insert("fields", QJsonValue("ib_title,ib_title_extended,ib_keyword"));
     break;
   }
 
@@ -230,7 +230,7 @@ void BookSearchBar::filterChanged(int index) {
     break;
   }
 
-  case (SearchFilterBox::BookAuthor): {
+  case (SearchFilterBox::BooksAuthor): {
     m_searchLeft->setValidation(SearchLineEdit::Strings);
     m_searchRight->setValidation(SearchLineEdit::Strings);
     m_searchRight->setEnabled(true);
@@ -277,12 +277,17 @@ void BookSearchBar::prepareSearchQuery() {
   emit searchClicked();
 }
 
-void BookSearchBar::setFocus() { m_searchLeft->setFocus(); }
-
 void BookSearchBar::clearAndFocus() {
   m_searchLeft->clear();
   m_searchRight->clear();
   m_searchLeft->setFocus();
+}
+
+void BookSearchBar::setSearchFocus() { clearAndFocus(); }
+
+void BookSearchBar::setFilterFocus() {
+  m_filterSection->setFocus();
+  m_filterSection->showPopup();
 }
 
 int BookSearchBar::searchLength() {

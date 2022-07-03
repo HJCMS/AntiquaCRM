@@ -71,7 +71,7 @@ private:
    * @warning Zeichen wie "'<> dürfen hier nicht vorkommen!
    * @note Wir Escapen wegen der Datenbanksuche nicht!
    */
-  const QString regPattern = QString("([\\w\\d\\s\\-\\+,\\.\\?\\!\\/`´:;&#]+)");
+  const QString regPattern = QString("([\\w\\d\\s\\-\\+,\\.\\?\\!\\/`:;&#]+)");
 
 private Q_SLOTS:
   /**

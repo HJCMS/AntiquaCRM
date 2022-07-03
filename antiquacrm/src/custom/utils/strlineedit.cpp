@@ -44,7 +44,7 @@ void StrLineEdit::setValue(const QVariant &str) {
   QString data = str.toString().trimmed();
   data = data.replace(reg, "");
   reg.setPattern("\\'");
-  data = data.replace(reg, "´");
+  data = data.replace(reg, "`");
 
   QRegularExpression regexp(regPattern);
   QRegularExpressionMatch match = regexp.match(data);

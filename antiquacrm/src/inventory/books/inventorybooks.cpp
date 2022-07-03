@@ -61,9 +61,9 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   setLayout(layout);
 
   // Signals
-  connect(this, SIGNAL(s_setSearchFocus()), m_searchBar, SLOT(clearAndFocus()));
+  connect(this, SIGNAL(s_setSearchFocus()), m_searchBar, SLOT(setSearchFocus()));
 
-  connect(this, SIGNAL(s_setSearchFilter()), m_searchBar, SLOT(setFocus()));
+  connect(this, SIGNAL(s_setSearchFilter()), m_searchBar, SLOT(setFilterFocus()));
 
   connect(this, SIGNAL(s_createNewEntry()), this, SLOT(createBookEntry()));
 

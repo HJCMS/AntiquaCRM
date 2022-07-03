@@ -10,7 +10,7 @@
 #include <QtWidgets>
 
 #ifndef SQL_FIELD_PATTERN
-#define SQL_FIELD_PATTERN "^([\\w\\d]+)([\\w\\d\\s\\.\\/\\´\\-]+)$"
+#define SQL_FIELD_PATTERN "^([\\w\\d]+)([\\w\\d\\s\\.\\/\\`\\-]+)$"
 #endif
 
 EditorWidget::EditorWidget(QWidget *parent)

@@ -27,13 +27,13 @@ class SearchFilterBox final : public QComboBox {
 
 public:
   enum Filter {
-    BookAuthor = 0x000000, /**< @brief Büchersuche */
-    Books = 0x000001,      /**< @brief Büchersuche */
-    Authors = 0x000010,    /**< @brief Autorensuche */
-    ISBN = 0x000100,       /**< @brief ISBN Suche */
-    ArticleId = 0x001000,  /**< @brief Artikel Nummernsuche */
-    Storage = 0x010000,    /**< @brief Lager Suche */
-    Publisher = 0x100000   /**< @brief Verlag/Hersteller Suche */
+    BooksAuthor = 0x000000,  /**< @brief Büchersuche */
+    BooksKeyword = 0x000001, /**< @brief Bucher + Schlüsselwortsuche */
+    Authors = 0x000010,      /**< @brief Autorensuche */
+    ISBN = 0x000100,         /**< @brief ISBN Suche */
+    ArticleId = 0x001000,    /**< @brief Artikel Nummernsuche */
+    Storage = 0x010000,      /**< @brief Lager Suche */
+    Publisher = 0x100000     /**< @brief Verlag/Hersteller Suche */
   };
   Q_DECLARE_FLAGS(Filters, Filter)
 
@@ -135,7 +135,6 @@ private:
   const QString prepareFieldSet(const QString &fieldname,
                                 const QString &search) const;
 
-
   const QString getTitleSearch(const QStringList &fields);
 
 private Q_SLOTS:
@@ -166,7 +165,8 @@ Q_SIGNALS:
   void currentFilterChanged(int);
 
 public Q_SLOTS:
-  void setFocus();
+  void setSearchFocus();
+  void setFilterFocus();
   void clearAndFocus();
 
 public:

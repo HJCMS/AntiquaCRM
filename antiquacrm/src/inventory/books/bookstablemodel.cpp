@@ -48,6 +48,9 @@ QVariant BooksTableModel::data(const QModelIndex &index, int role) const {
     return val;
   }
 
+  if (item.toString().trimmed().contains("NOT_SET"))
+    return QVariant();
+
   switch (index.column()) {
   case 0: // ib_id
     return item.toUInt();
@@ -59,14 +62,7 @@ QVariant BooksTableModel::data(const QModelIndex &index, int role) const {
     return item.toString();
 
   case 3: // ib_author
-  {
-    QString buf = item.toString();
-    if (buf.contains("NOT_SET")) {
-      return QString();
-    } else {
-      return buf;
-    }
-  }
+    return item.toString();
 
   case 4: // ib_publisher
     return item.toString();

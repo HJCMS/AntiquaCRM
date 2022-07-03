@@ -297,7 +297,7 @@ const QString InterfaceWidget::apiParam(const QString &key) {
 
 const QString InterfaceWidget::stripString(const QVariant &val) const {
   QString buf(val.toString());
-  buf.replace("'", "´");
+  buf.replace("'", "`");
   buf = buf.trimmed();
   return buf;
 }

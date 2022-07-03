@@ -416,7 +416,7 @@
         <location line="+8"/>
         <source>Designation:</source>
         <translatorcomment>Umschreibung</translatorcomment>
-        <translation>Buchumchlag:</translation>
+        <translation>Buchumschlag:</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -584,7 +584,7 @@
 <context>
     <name>BookSearchBar</name>
     <message>
-        <location filename="../inventory/books/booksearchbar.cpp" line="+121"/>
+        <location filename="../inventory/books/booksearchbar.cpp" line="+122"/>
         <source>Press CTRL+F, to quickly open this Menu.</source>
         <translation>Drücken Sie STRG+F, um dieses Menü schnell zu öffnen.</translation>
     </message>
@@ -618,12 +618,12 @@
 <context>
     <name>BooksTable</name>
     <message>
-        <location filename="../inventory/books/bookstable.cpp" line="+109"/>
+        <location filename="../inventory/books/bookstable.cpp" line="+80"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+48"/>
         <source>Open entry</source>
         <translation>Öffne Eintrag</translation>
     </message>
@@ -633,22 +633,17 @@
         <translation>Kopiere Artikel Nummer</translation>
     </message>
     <message>
-        <location line="+78"/>
-        <source>Rejected invalid input</source>
-        <translation>Ungültige EIngabe verweigert</translation>
-    </message>
-    <message>
-        <location line="-85"/>
+        <location line="-7"/>
         <source>Create entry</source>
         <translation>Eintrag erstellen</translation>
     </message>
     <message>
-        <location line="-113"/>
+        <location line="-91"/>
         <source>A table row must be selected in order to perform an action.</source>
         <translation>Eine Tabellenreihe muss ausgewählt sein, um eine Aktion ausführen zu können.</translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+104"/>
         <source>add Article to opened Order</source>
         <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
     </message>
@@ -661,7 +656,7 @@
 <context>
     <name>BooksTableModel</name>
     <message>
-        <location filename="../inventory/books/bookstablemodel.cpp" line="+111"/>
+        <location filename="../inventory/books/bookstablemodel.cpp" line="+107"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
@@ -2343,11 +2338,6 @@
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
-    <message>
-        <location line="+95"/>
-        <source>Automatic search disabled in this mode. Press enter to start the search!</source>
-        <translation>Automatische Suche in diesem Modus deaktiviert. Drücken Sie die Eingabetaste, um die Suche zu starten!</translation>
-    </message>
 </context>
 <context>
     <name>InventoryCustomers</name>
@@ -2406,17 +2396,17 @@
         <translation>ist nicht Verfügbar!</translation>
     </message>
     <message>
-        <location line="+227"/>
+        <location line="+230"/>
         <source>customer found in database!</source>
         <translation>Kundeneintrag gefunden!</translation>
     </message>
     <message>
-        <location line="-27"/>
+        <location line="-28"/>
         <source>customer not exits!</source>
         <translation>Kunde existiert nicht!</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+58"/>
         <source>Missing valid Customer Id</source>
         <translation>Keine gültige Kunden Nummer</translation>
     </message>
@@ -2431,13 +2421,13 @@
         <translation>Erfolgreich</translation>
     </message>
     <message>
-        <location line="-293"/>
+        <location line="-296"/>
         <location line="+12"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
     <message>
-        <location line="+259"/>
+        <location line="+262"/>
         <source>current tab and customer id not equal</source>
         <translation>Aktuelles Fenster und Kundennummer sind nicht Identisch</translation>
     </message>
@@ -4247,8 +4237,8 @@
     </message>
     <message>
         <location line="+2"/>
-        <source>Book Title</source>
-        <translation>Buchtitel</translation>
+        <source>Book Title and Keyword</source>
+        <translation>Buchtitel und Schlüsselwort</translation>
     </message>
     <message>
         <location line="+1"/>
