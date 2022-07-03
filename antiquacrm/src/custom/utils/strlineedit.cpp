@@ -33,6 +33,9 @@ StrLineEdit::StrLineEdit(QWidget *parent)
   connect(m_lineEdit, SIGNAL(textChanged(const QString &)), this,
           SLOT(inputChanged(const QString &)));
 
+  connect(m_lineEdit, SIGNAL(textEdited(const QString &)), this,
+          SIGNAL(textEdited(const QString &)));
+
   connect(m_lineEdit, SIGNAL(returnPressed()), this, SLOT(skipReturnPressed()));
 }
 

@@ -198,7 +198,11 @@ const QString BookSearchBar::getTitleSearch(const QStringList &fields) {
   // Autoren Suchfeld
   if (m_searchRight->isEnabled() && m_searchRight->text().length() >= 2) {
     QStringList bufferRight;
-    bufferRight << prepareFieldSet("ib_author", p_currentRight);
+    if(m_searchRight->placeholderText().contains(tr("Keyword")))
+      bufferRight << prepareFieldSet("ib_keyword", p_currentRight);
+    else
+      bufferRight << prepareFieldSet("ib_author", p_currentRight);
+
     if (query.isEmpty())
       query.append("(");
     else
@@ -217,41 +221,63 @@ void BookSearchBar::filterChanged(int index) {
   m_searchLeft->clear();
   m_searchRight->clear();
 
+  QString leftTr = tr("Search Booktitle");
+  QString rightTr = tr("Authors search");
+
   switch (f) {
   case (SearchFilterBox::ArticleId): {
     m_searchLeft->setValidation(SearchLineEdit::Article);
+    m_searchLeft->setPlaceholderText(
+        tr("Single Article number or multiple separated by comma."));
     m_searchRight->setEnabled(false);
+    m_searchRight->setPlaceholderText(rightTr);
     break;
   }
 
   case (SearchFilterBox::ISBN): {
     m_searchLeft->setValidation(SearchLineEdit::Numeric);
+    m_searchLeft->setPlaceholderText(tr("Search by ISBN number"));
     m_searchRight->setEnabled(false);
+    m_searchRight->setPlaceholderText(rightTr);
     break;
   }
 
   case (SearchFilterBox::BooksAuthor): {
     m_searchLeft->setValidation(SearchLineEdit::Strings);
+    m_searchLeft->setPlaceholderText(leftTr);
     m_searchRight->setValidation(SearchLineEdit::Strings);
     m_searchRight->setEnabled(true);
+    m_searchRight->setPlaceholderText(tr("and Authors"));
+    break;
+  }
+
+  case (SearchFilterBox::BooksKeyword): {
+    m_searchLeft->setValidation(SearchLineEdit::Strings);
+    m_searchLeft->setPlaceholderText(leftTr);
+    m_searchRight->setValidation(SearchLineEdit::Strings);
+    m_searchRight->setEnabled(true);
+    m_searchRight->setPlaceholderText(tr("Keyword"));
     break;
   }
 
   case (SearchFilterBox::Authors): {
     m_searchLeft->setValidation(SearchLineEdit::Strings);
     m_searchLeft->setEnabled(false);
+    m_searchLeft->setPlaceholderText(leftTr);
     m_searchRight->setValidation(SearchLineEdit::Strings);
     m_searchRight->setEnabled(true);
+    m_searchRight->setPlaceholderText(rightTr);
     break;
   }
 
   default: {
     m_searchLeft->setValidation(SearchLineEdit::Strings);
     m_searchRight->setEnabled(false);
+    m_searchLeft->setPlaceholderText(leftTr);
+    m_searchRight->setPlaceholderText(rightTr);
     break;
   }
   };
-  m_searchLeft->setPlaceholderText(m_filterSection->itemText(index));
   emit currentFilterChanged(index);
 }
 

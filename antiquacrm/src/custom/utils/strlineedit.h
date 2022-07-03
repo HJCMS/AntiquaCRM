@@ -88,6 +88,9 @@ private Q_SLOTS:
    */
   void skipReturnPressed();
 
+Q_SIGNALS:
+  void textEdited(const QString &);
+
 public Q_SLOTS:
   /**
     @brief setValue

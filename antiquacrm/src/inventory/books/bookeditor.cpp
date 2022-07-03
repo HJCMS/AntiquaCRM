@@ -186,6 +186,32 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   ib_publisher->setToolTip(tr("Publisher or Illustrator"));
   row2->addWidget(ib_publisher, row2c++, 1, 1, 1);
 
+  QLabel *conditionLabel = new QLabel(this);
+  conditionLabel->setObjectName("conditionLabel");
+  conditionLabel->setAlignment(defaultAlignment);
+  conditionLabel->setText(tr("Condition:"));
+  row2->addWidget(conditionLabel, row2c, 0, 1, 1);
+
+  ib_condition = new StrLineEdit(this);
+  ib_condition->setObjectName("ib_condition");
+  ib_condition->setMaxAllowedLength(128);
+  ib_condition->setRequired(true);
+  ib_condition->setToolTip(
+      tr("Condition of this Book. See also Configuration conditions Table."));
+  row2->addWidget(ib_condition, row2c++, 1, 1, 1);
+
+  QLabel *designationLabel = new QLabel(this);
+  designationLabel->setObjectName("designationLabel");
+  designationLabel->setAlignment(defaultAlignment);
+  designationLabel->setText(tr("Designation:"));
+  row2->addWidget(designationLabel, row2c, 0, 1, 1);
+
+  ib_designation = new StrLineEdit(this);
+  ib_designation->setObjectName("ib_designation");
+  ib_designation->setMaxAllowedLength(128);
+  ib_designation->setRequired(true);
+  row2->addWidget(ib_designation, row2c++, 1, 1, 1);
+
   QLabel *storageLabel = new QLabel(this);
   storageLabel->setObjectName("storageLabel");
   storageLabel->setAlignment(defaultAlignment);
@@ -207,36 +233,18 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   ib_keyword->setObjectName("ib_keyword");
   ib_keyword->setMaxAllowedLength(60);
   ib_keyword->setToolTip(tr("Category Keywords for Shopsystems."));
-  ib_keyword->setWindowTitle(tr("Shop Keyword"));
   row2->addWidget(ib_keyword, row2c++, 1, 1, 1);
 
-  QLabel *conditionLabel = new QLabel(this);
-  conditionLabel->setObjectName("conditionLabel");
-  conditionLabel->setAlignment(defaultAlignment);
-  conditionLabel->setText(tr("Condition:"));
-  row2->addWidget(conditionLabel, row2c, 0, 1, 1);
+  QLabel *subjectLabel = new QLabel(this);
+  subjectLabel->setObjectName("subjectLabel");
+  subjectLabel->setAlignment(defaultAlignment);
+  subjectLabel->setText(tr("Provider Subject:"));
+  row2->addWidget(subjectLabel, row2c, 0, 1, 1);
 
-  ib_condition = new StrLineEdit(this);
-  ib_condition->setObjectName("ib_condition");
-  ib_condition->setMaxAllowedLength(128);
-  ib_condition->setRequired(true);
-  ib_condition->setWindowTitle(tr("Condition"));
-  ib_condition->setToolTip(
-      tr("Condition of this Book. See also Configuration conditions Table."));
-  row2->addWidget(ib_condition, row2c++, 1, 1, 1);
-
-  QLabel *designationLabel = new QLabel(this);
-  designationLabel->setObjectName("designationLabel");
-  designationLabel->setAlignment(defaultAlignment);
-  designationLabel->setText(tr("Designation:"));
-  row2->addWidget(designationLabel, row2c, 0, 1, 1);
-
-  ib_designation = new StrLineEdit(this);
-  ib_designation->setObjectName("ib_designation");
-  ib_designation->setMaxAllowedLength(128);
-  ib_designation->setRequired(true);
-  ib_designation->setWindowTitle(tr("Designation"));
-  row2->addWidget(ib_designation, row2c++, 1, 1, 1);
+  ib_category_subject = new CategorySubject(this);
+  ib_category_subject->setObjectName("ib_category_subject");
+  ib_category_subject->setInfo(tr("Shop Category Keywords"));
+  row2->addWidget(ib_category_subject, row2c++, 1, 1, 1);
 
   QLabel *languageLabel = new QLabel(this);
   languageLabel->setObjectName("languageLabel");
@@ -313,6 +321,9 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   }
 
   connect(ib_isbn, SIGNAL(clicked()), this, SLOT(createIsbnQuery()));
+
+  connect(ib_keyword, SIGNAL(textEdited(const QString &)), ib_category_subject,
+          SLOT(findIndex(const QString &)));
 
   connect(m_imageToolBar, SIGNAL(s_openImage()), this, SLOT(openImageDialog()));
   connect(m_imageToolBar, SIGNAL(s_deleteImage(int)), this,
@@ -670,6 +681,11 @@ void BookEditor::changeEvent(QEvent *event) {
      */
     ib_storage->reset();
     ib_storage->loadDataset();
+
+    /**
+     * Dienstleister daten laden
+     */
+    ib_category_subject->loadDataset();
 
     /**
      * Lade Herausgeber XML

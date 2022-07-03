@@ -404,27 +404,42 @@
     </message>
     <message>
         <location line="+13"/>
+        <source>Provider Subject:</source>
+        <translation>Dienstleister Thema:</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Shop Category Keywords</source>
+        <translation>Shopsystem Kategorien Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Websearch:</source>
+        <translation>Websuche:</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>User websearch keywords</source>
+        <translation>Schlüsselwörter mit denen Kunden suchen würden</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Condition:</source>
         <translation>Zustand:</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Condition</source>
-        <translation>Zustand</translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="+14"/>
         <source>Designation:</source>
         <translatorcomment>Umschreibung</translatorcomment>
         <translation>Buchumschlag:</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+12"/>
         <source>Language:</source>
         <translation>Sprache:</translation>
     </message>
     <message>
-        <location line="-206"/>
+        <location line="-228"/>
         <source>Article ID</source>
         <translation>Artikel ID</translation>
     </message>
@@ -464,22 +479,12 @@
         <translation>Kategorie Schlüsselwörter für Shopsysteme.</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Shop Keyword</source>
-        <translation>Schlüsselwort für Shop und Lager</translation>
-    </message>
-    <message>
-        <location line="+15"/>
+        <location line="+39"/>
         <source>Condition of this Book. See also Configuration conditions Table.</source>
         <translation>Zustand dieses Buches. Siehe auch Konfigurations Tabellen.</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <source>Designation</source>
-        <translation>Umschreibung</translation>
-    </message>
-    <message>
-        <location line="+123"/>
+        <location line="+135"/>
         <source>Remove Image from Database</source>
         <translation>Entferne Bild aus der Datenbank</translation>
     </message>
@@ -509,7 +514,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-440"/>
+        <location line="-462"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -524,7 +529,7 @@
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
     <message>
-        <location line="+207"/>
+        <location line="+229"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
@@ -556,7 +561,7 @@
         <translation>Dieser Text dient internen Zwecken</translation>
     </message>
     <message>
-        <location line="-185"/>
+        <location line="-207"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
@@ -566,12 +571,12 @@
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="+224"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-318"/>
+        <location line="-340"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -613,6 +618,37 @@
         <location line="+1"/>
         <source>Start search</source>
         <translation>Suche starten</translation>
+    </message>
+    <message>
+        <location line="+54"/>
+        <location line="+58"/>
+        <source>Keyword</source>
+        <translation>Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="-35"/>
+        <source>Search Booktitle</source>
+        <translation>Suche Buchtitel</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Authors search</source>
+        <translation>Autorensuche</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Single Article number or multiple separated by comma.</source>
+        <translation>Einzelne Artikelnummer oder mehrere durch Komma getrennt.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Search by ISBN number</source>
+        <translation>Suche mit ISBN Nummer</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>and Authors</source>
+        <translation>und Autoren</translation>
     </message>
 </context>
 <context>
@@ -798,6 +834,19 @@
         <location line="+53"/>
         <source>a cancellation is required</source>
         <translation>Eine Begründung ist erforderlich</translation>
+    </message>
+</context>
+<context>
+    <name>CategorySubject</name>
+    <message>
+        <location filename="../custom/utils/categorysubject.cpp" line="+26"/>
+        <source>Search</source>
+        <translation>Suche</translation>
+    </message>
+    <message>
+        <location line="+80"/>
+        <source>a valid Provider Category is required!</source>
+        <translation>Eine gültige Dienstleister Kategorie muss angegeben werden!</translation>
     </message>
 </context>
 <context>
@@ -4226,7 +4275,7 @@
 <context>
     <name>SearchFilterBox</name>
     <message>
-        <location filename="../inventory/books/booksearchbar.cpp" line="-130"/>
+        <location filename="../inventory/books/booksearchbar.cpp" line="-233"/>
         <source>Book Title and Author</source>
         <translation>Buchtitel und Autor</translation>
     </message>

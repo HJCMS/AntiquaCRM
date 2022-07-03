@@ -404,26 +404,41 @@
     </message>
     <message>
         <location line="+13"/>
-        <source>Condition:</source>
+        <source>Provider Subject:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Shop Category Keywords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Condition</source>
+        <source>Websearch:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+6"/>
+        <source>User websearch keywords</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Condition:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Designation:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+12"/>
         <source>Language:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-206"/>
+        <location line="-228"/>
         <source>Article ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -463,22 +478,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Shop Keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
+        <location line="+39"/>
         <source>Condition of this Book. See also Configuration conditions Table.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
-        <source>Designation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+123"/>
+        <location line="+135"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -508,7 +513,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-440"/>
+        <location line="-462"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -523,7 +528,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+207"/>
+        <location line="+229"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -555,7 +560,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-185"/>
+        <location line="-207"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
@@ -565,12 +570,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="+224"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-318"/>
+        <location line="-340"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -611,6 +616,37 @@
         <location line="+4"/>
         <location line="+1"/>
         <source>Start search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+54"/>
+        <location line="+58"/>
+        <source>Keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-35"/>
+        <source>Search Booktitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Authors search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Single Article number or multiple separated by comma.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Search by ISBN number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>and Authors</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -796,6 +832,19 @@
     <message>
         <location line="+53"/>
         <source>a cancellation is required</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CategorySubject</name>
+    <message>
+        <location filename="../custom/utils/categorysubject.cpp" line="+26"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+80"/>
+        <source>a valid Provider Category is required!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4225,7 +4274,7 @@
 <context>
     <name>SearchFilterBox</name>
     <message>
-        <location filename="../inventory/books/booksearchbar.cpp" line="-130"/>
+        <location filename="../inventory/books/booksearchbar.cpp" line="-233"/>
         <source>Book Title and Author</source>
         <translation type="unfinished"></translation>
     </message>

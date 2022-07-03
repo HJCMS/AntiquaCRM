@@ -31,28 +31,29 @@ class BookEditor final : public EditorMain {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  BoolBox *ib_signed;             /**< @brief Signiert? */
-  BoolBox *ib_restricted;         /**< @brief Zensiert? */
-  BoolBox *ib_including_vat;      /**< @brief inkl. Mehwertsteuer */
-  DateTimeDisplay *ib_since;      /**< @brief Ersteller Datum */
-  SetLanguage *ib_language;       /**< @brief Sprache */
-  StorageEdit *ib_storage;        /**< @brief Lager bestimmung */
-  YearEdit *ib_year;              /**< @brief Jahr */
-  PriceEdit *ib_price;            /**< @brief Preis */
-  IntSpinBox *ib_count;           /**< @brief Bestandsangabe */
-  IntSpinBox *ib_pagecount;       /**< @brief Seitenanzahl */
-  IntSpinBox *ib_weight;          /**< @brief Gewicht */
-  IntSpinBox *ib_volume;          /**< @brief Band ? */
-  IntSpinBox *ib_edition;         /**< @brief Ausgabe */
-  SerialID *ib_id;                /**< @brief ReadOnly:ArticleID */
-  IsbnEdit *ib_isbn;              /**< @brief ISBN */
-  StrLineEdit *ib_author;         /**< @brief Buchautor */
-  StrLineEdit *ib_condition;      /**< @brief Zustands beschreibung */
-  StrLineEdit *ib_designation;    /**< @brief Umschreibung */
-  StrLineEdit *ib_keyword;        /**< @brief Schlüsselwort */
-  StrLineEdit *ib_publisher;      /**< @brief Herausgeber/Verlag */
-  StrLineEdit *ib_title;          /**< @brief Buch Titel */
-  StrLineEdit *ib_title_extended; /**< @brief Ereiterte Titel  */
+  BoolBox *ib_signed;                   /**< @brief Signiert? */
+  BoolBox *ib_restricted;               /**< @brief Zensiert? */
+  BoolBox *ib_including_vat;            /**< @brief inkl. Mehwertsteuer */
+  DateTimeDisplay *ib_since;            /**< @brief Ersteller Datum */
+  SetLanguage *ib_language;             /**< @brief Sprache */
+  StorageEdit *ib_storage;              /**< @brief Lager bestimmung */
+  YearEdit *ib_year;                    /**< @brief Jahr */
+  PriceEdit *ib_price;                  /**< @brief Preis */
+  IntSpinBox *ib_count;                 /**< @brief Bestandsangabe */
+  IntSpinBox *ib_pagecount;             /**< @brief Seitenanzahl */
+  IntSpinBox *ib_weight;                /**< @brief Gewicht */
+  IntSpinBox *ib_volume;                /**< @brief Band ? */
+  IntSpinBox *ib_edition;               /**< @brief Ausgabe */
+  SerialID *ib_id;                      /**< @brief ReadOnly:ArticleID */
+  IsbnEdit *ib_isbn;                    /**< @brief ISBN */
+  StrLineEdit *ib_author;               /**< @brief Buchautor */
+  StrLineEdit *ib_condition;            /**< @brief Zustands beschreibung */
+  StrLineEdit *ib_designation;          /**< @brief Umschreibung */
+  StrLineEdit *ib_keyword;              /**< @brief Schlüsselwort */
+  CategorySubject *ib_category_subject; /**< @brief Dienstleister Kategorie */
+  StrLineEdit *ib_publisher;            /**< @brief Herausgeber/Verlag */
+  StrLineEdit *ib_title;                /**< @brief Buch Titel */
+  StrLineEdit *ib_title_extended;       /**< @brief Ereiterte Titel  */
   QTabWidget *m_tabWidget;   /**< @brief BeschreibungsText und ISBN Info  */
   TextField *ib_description; /**< @brief Öffentliche Beschreibung */
   TextField *ib_internal_description; /**< @brief Interne Beschreibung */
