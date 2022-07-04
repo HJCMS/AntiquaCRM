@@ -33,7 +33,7 @@ test -e ${_sourcepath}/servercfg.bash || {
 
 . ${_sourcepath}/servercfg.bash
 
-_sqlfile=${_scripting}/abebooks-export/abe-export.sql
+_sqlfile=${_scripting}/abebooks-export/bf-export.sql
 
 ## Ausgabe Verzeichnis
 _output_target=${_dest}/catalog
@@ -61,9 +61,6 @@ __init_sql_enviroment
 
 cd ${_output_target}
 
-## WARNNIG - Keine Leerzeichen verwenden!
-_header=""
-
 psql \
   --csv \
   --no-align \
@@ -74,7 +71,7 @@ psql \
   --output=${_tempdir}/catalog-export.temp < ${_sqlfile}
 
 if test -s ${_tempdir}/catalog-export.temp ; then
-  psql < ${_sqlfile} | head -n 1 | sed 's, ,,g' | awk '{print toupper($1)}' | sed 's/,/\t/g' > ${_tempdir}/catalog-export-utf8.csv
+  psql < ${_sqlfile} | head -n 1 | sed 's, ,,g' | awk '{print toupper($1)}' | sed 's/|/\t/g' > ${_tempdir}/catalog-export-utf8.csv
   sed 's,NOT_SET,,g' ${_tempdir}/catalog-export.temp >> ${_tempdir}/catalog-export-utf8.csv
   iconv -f UTF8 -t LATIN9 --output=${_tempdir}/${_output} ${_tempdir}/catalog-export-utf8.csv
   mv -b ${_tempdir}/${_output} ${_output_target}/

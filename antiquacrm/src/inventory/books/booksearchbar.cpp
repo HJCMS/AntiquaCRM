@@ -155,7 +155,7 @@ BookSearchBar::BookSearchBar(QWidget *parent) : QToolBar{parent} {
   connect(m_searchRight, SIGNAL(returnPressed()), this,
           SLOT(prepareSearchQuery()));
 
-  connect(ac_search, SIGNAL(triggered()), this, SIGNAL(searchClicked()));
+  connect(ac_search, SIGNAL(triggered()), this, SLOT(prepareSearchQuery()));
 }
 
 const QString BookSearchBar::prepareFieldSet(const QString &fieldname,
@@ -198,7 +198,7 @@ const QString BookSearchBar::getTitleSearch(const QStringList &fields) {
   // Autoren Suchfeld
   if (m_searchRight->isEnabled() && m_searchRight->text().length() >= 2) {
     QStringList bufferRight;
-    if(m_searchRight->placeholderText().contains(tr("Keyword")))
+    if (m_searchRight->placeholderText().contains(tr("Keyword")))
       bufferRight << prepareFieldSet("ib_keyword", p_currentRight);
     else
       bufferRight << prepareFieldSet("ib_author", p_currentRight);

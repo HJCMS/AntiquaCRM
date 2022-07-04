@@ -107,11 +107,13 @@ void InventoryBooks::searchConvert(const QString &query) {
   if (m_searchBar->searchLength() <= minLength)
     return;
 
+  qDebug() << Q_FUNC_INFO << "SIMPLE";
   searchConvert();
 }
 
 void InventoryBooks::searchConvert() {
   QString query = m_searchBar->getSearchStatement();
+  qDebug() << Q_FUNC_INFO << query;
   if (query.length() < 1)
     return;
 

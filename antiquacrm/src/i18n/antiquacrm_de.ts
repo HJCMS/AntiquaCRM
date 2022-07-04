@@ -393,7 +393,7 @@
         <translation>Verleger oder Illustator</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+32"/>
         <source>Storage:</source>
         <translation>Lager:</translation>
     </message>
@@ -403,7 +403,7 @@
         <translation>Schlüsselwort:</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+12"/>
         <source>Provider Subject:</source>
         <translation>Dienstleister Thema:</translation>
     </message>
@@ -413,17 +413,7 @@
         <translation>Shopsystem Kategorien Schlüsselwort</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Websearch:</source>
-        <translation>Websuche:</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>User websearch keywords</source>
-        <translation>Schlüsselwörter mit denen Kunden suchen würden</translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="-54"/>
         <source>Condition:</source>
         <translation>Zustand:</translation>
     </message>
@@ -434,12 +424,12 @@
         <translation>Buchumschlag:</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+46"/>
         <source>Language:</source>
         <translation>Sprache:</translation>
     </message>
     <message>
-        <location line="-228"/>
+        <location line="-214"/>
         <source>Article ID</source>
         <translation>Artikel ID</translation>
     </message>
@@ -454,12 +444,12 @@
         <translation>Buchseiten</translation>
     </message>
     <message>
-        <location line="+106"/>
+        <location line="+132"/>
         <source>Storage</source>
         <translation>Lagerort</translation>
     </message>
     <message>
-        <location line="-56"/>
+        <location line="-82"/>
         <source>Required input field. Limited to 80 characters, Webshop Systems require this.</source>
         <translation>Erforderliches Eingabefeld. Begrenzt auf 80 Zeichen. Für Webshop-Systeme erforderlich.</translation>
     </message>
@@ -474,17 +464,17 @@
         <translation>Geben Sie hier den Buchverlag ein.</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+56"/>
         <source>Category Keywords for Shopsystems.</source>
         <translation>Kategorie Schlüsselwörter für Shopsysteme.</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="-35"/>
         <source>Condition of this Book. See also Configuration conditions Table.</source>
         <translation>Zustand dieses Buches. Siehe auch Konfigurations Tabellen.</translation>
     </message>
     <message>
-        <location line="+135"/>
+        <location line="+172"/>
         <source>Remove Image from Database</source>
         <translation>Entferne Bild aus der Datenbank</translation>
     </message>
@@ -514,7 +504,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-462"/>
+        <location line="-451"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -529,7 +519,7 @@
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
     <message>
-        <location line="+229"/>
+        <location line="+218"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
@@ -539,7 +529,7 @@
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
     <message>
-        <location line="-293"/>
+        <location line="-296"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -561,7 +551,7 @@
         <translation>Dieser Text dient internen Zwecken</translation>
     </message>
     <message>
-        <location line="-207"/>
+        <location line="-193"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
@@ -571,12 +561,12 @@
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="+224"/>
+        <location line="+213"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-340"/>
+        <location line="-329"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -839,12 +829,17 @@
 <context>
     <name>CategorySubject</name>
     <message>
-        <location filename="../custom/utils/categorysubject.cpp" line="+26"/>
+        <location filename="../custom/utils/categorysubject.cpp" line="+35"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+6"/>
+        <source>Open Helper Dialog</source>
+        <translation>Hilfefenster öffnen</translation>
+    </message>
+    <message>
+        <location line="+92"/>
         <source>a valid Provider Category is required!</source>
         <translation>Eine gültige Dienstleister Kategorie muss angegeben werden!</translation>
     </message>
@@ -4629,7 +4624,7 @@
 <context>
     <name>StrLineEdit</name>
     <message>
-        <location filename="../custom/utils/strlineedit.cpp" line="+174"/>
+        <location filename="../custom/utils/strlineedit.cpp" line="+177"/>
         <source>Max allowed length</source>
         <translation>Maximal erlaubte Zeichenlänge</translation>
     </message>

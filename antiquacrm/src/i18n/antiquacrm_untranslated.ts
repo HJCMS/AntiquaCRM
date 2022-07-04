@@ -393,7 +393,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+32"/>
         <source>Storage:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -403,7 +403,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+12"/>
         <source>Provider Subject:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -413,17 +413,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Websearch:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>User websearch keywords</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="-54"/>
         <source>Condition:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -433,12 +423,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+46"/>
         <source>Language:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-228"/>
+        <location line="-214"/>
         <source>Article ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -453,12 +443,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+106"/>
+        <location line="+132"/>
         <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-56"/>
+        <location line="-82"/>
         <source>Required input field. Limited to 80 characters, Webshop Systems require this.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -473,17 +463,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+56"/>
         <source>Category Keywords for Shopsystems.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="-35"/>
         <source>Condition of this Book. See also Configuration conditions Table.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+135"/>
+        <location line="+172"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -513,7 +503,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-462"/>
+        <location line="-451"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -528,7 +518,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+229"/>
+        <location line="+218"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -538,7 +528,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-293"/>
+        <location line="-296"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -560,7 +550,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-207"/>
+        <location line="-193"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
@@ -570,12 +560,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+224"/>
+        <location line="+213"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-340"/>
+        <location line="-329"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -838,12 +828,17 @@
 <context>
     <name>CategorySubject</name>
     <message>
-        <location filename="../custom/utils/categorysubject.cpp" line="+26"/>
+        <location filename="../custom/utils/categorysubject.cpp" line="+35"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+6"/>
+        <source>Open Helper Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+92"/>
         <source>a valid Provider Category is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4628,7 +4623,7 @@
 <context>
     <name>StrLineEdit</name>
     <message>
-        <location filename="../custom/utils/strlineedit.cpp" line="+174"/>
+        <location filename="../custom/utils/strlineedit.cpp" line="+177"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>
