@@ -839,7 +839,12 @@
         <translation>Hilfefenster öffnen</translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+33"/>
+        <source>In this area, the categories are defined which are permanently assigned by your service provider. Ultimately, it is decided here in which category your book is for sale.</source>
+        <translation>In Diesem Bereich werden die Kategorien definiert welche von ihrem Dienstleister fest vergeben sind. Letztentlich wird hier entschieden in welcher Kategorie ihr Buch zum Verkauf steht.</translation>
+    </message>
+    <message>
+        <location line="+62"/>
         <source>a valid Provider Category is required!</source>
         <translation>Eine gültige Dienstleister Kategorie muss angegeben werden!</translation>
     </message>

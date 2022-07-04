@@ -71,7 +71,10 @@ void CategorySubject::searchChanged(const QString &search) {
 }
 
 void CategorySubject::openHelperDialog() {
-  QString helpText("TODO");
+  QString helpText = tr(
+      "In this area, the categories are defined which are permanently assigned "
+      "by your service provider. Ultimately, it is decided here in which "
+      "category your book is for sale.");
   QMessageBox::information(this, info(), helpText);
 }
 
