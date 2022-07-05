@@ -1,15 +1,15 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "abebooksproviderwidget.h"
-#include "abebooksconfig.h"
+#include "booklookerproviderwidget.h"
+#include "booklookerconfig.h"
 
-#include <QtWidgets>
+#include <QVBoxLayout>
 
-AbeBooksProviderWidget::AbeBooksProviderWidget(const QString &widgetId,
+BooklookerProviderWidget::BooklookerProviderWidget(const QString &widgetId,
                                                QWidget *parent)
     : Antiqua::ProviderWidget{widgetId, parent} {
-  setObjectName("abebooks_main");
+  setObjectName("booklooker_main");
   QVBoxLayout *layout = new QVBoxLayout(this);
 
   layout->addStretch(1);

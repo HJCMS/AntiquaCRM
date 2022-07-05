@@ -35,7 +35,7 @@
 <context>
     <name>Antiqua::PurchaseOverview</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+90"/>
+        <location filename="../core/antiquacore/interface.cpp" line="+92"/>
         <source>Customer ID</source>
         <translation>Kunden Nr.</translation>
     </message>
@@ -78,7 +78,7 @@
 <context>
     <name>Antiqua::PurchaserOrderTable</name>
     <message>
-        <location line="-115"/>
+        <location line="-117"/>
         <source>Provider</source>
         <translation>Bestell Nr</translation>
     </message>
@@ -758,34 +758,6 @@
         <location line="+67"/>
         <source>is required must selected.</source>
         <translation>ist Erforderlich und mus gesetzt werden.</translation>
-    </message>
-</context>
-<context>
-    <name>Buchfreund</name>
-    <message>
-        <location filename="../plugins/antiqua/whsoft/buchfreund.cpp" line="+23"/>
-        <source>Modify Item inventory count</source>
-        <translation>Artikelbestand ändern</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Article Id</source>
-        <translation>Artikel Nummer</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>itemcount</source>
-        <translation>Artikelanzahl</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Update</source>
-        <translation>Ändern</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Response Information</source>
-        <translation>Antwortinformationen</translation>
     </message>
 </context>
 <context>
@@ -1545,7 +1517,7 @@
 <context>
     <name>DeliverServiceDialog</name>
     <message>
-        <location filename="../custom/deliverservice/deliverservicedialog.cpp" line="+15"/>
+        <location filename="../custom/deliverservice/deliverservicedialog.cpp" line="+16"/>
         <source>Deliver Services</source>
         <translation>Lieferdienste</translation>
     </message>
@@ -1558,6 +1530,11 @@
         <location line="+85"/>
         <source>Invalid</source>
         <translation>Ungültig</translation>
+    </message>
+    <message>
+        <location line="+60"/>
+        <source>Database Error</source>
+        <translation>Datnebank Fehler</translation>
     </message>
 </context>
 <context>
@@ -2832,13 +2809,13 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+744"/>
+        <location line="+747"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-821"/>
+        <location line="-824"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
@@ -2883,7 +2860,12 @@
         <translation>Standard</translation>
     </message>
     <message>
-        <location line="+167"/>
+        <location line="+37"/>
+        <source>Current shopping items</source>
+        <translation>Aktuelle Bestellungen</translation>
+    </message>
+    <message>
+        <location line="+133"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
@@ -2988,7 +2970,7 @@
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
     <message>
-        <location line="-727"/>
+        <location line="-730"/>
         <source>Service</source>
         <translation>Sender</translation>
     </message>
@@ -2998,7 +2980,7 @@
         <translation>Rechnungs Optionen</translation>
     </message>
     <message>
-        <location line="+667"/>
+        <location line="+670"/>
         <source>Printing canceled.</source>
         <translation>Druckevorgang abgebrochen.</translation>
     </message>
@@ -3097,7 +3079,12 @@
 <context>
     <name>OrdersItemList</name>
     <message>
-        <location filename="../inventory/orders/ordersitemlist.cpp" line="+37"/>
+        <location filename="../inventory/orders/ordersitemlist.cpp" line="+35"/>
+        <source>Add Article orders</source>
+        <translation>Bestellungen einfügen</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Info about Article found by input ...</source>
         <translation>Info zur Artikelsuche wird hier Angezeigt ...</translation>
     </message>
@@ -3109,7 +3096,7 @@
     <message>
         <location line="+8"/>
         <source>Add here the article Ids for this order:</source>
-        <translation>Stellen Sie hier die Auftrags Artikel ID&apos;s ein:</translation>
+        <translation>Stellen Sie hier die Auftrags Artikelnummer ein:</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -3117,7 +3104,7 @@
         <translation>Prüfen</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+99"/>
         <source>Inserting an empty entry is cowardly denied.</source>
         <translation>Das einfügen eines leeren Eintrags wird feige verweigert.</translation>
     </message>
@@ -4776,32 +4763,12 @@
 <context>
     <name>ViewsToolBar</name>
     <message>
-        <location filename="../inventory/views/viewstoolbar.cpp" line="+17"/>
+        <location filename="../inventory/views/viewstoolbar.cpp" line="+20"/>
         <source>select your operation</source>
         <translation>Wähle deine Aktion</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Show me all Bookentries without Pictures</source>
-        <translation>Zeige mir alle Bucheinträge ohne Bild</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Show me all Prints and Stitches without Pictures</source>
-        <translation>Zeige mir alle Drucke und Stiche ohne Bild</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>All categories grouped by keyword plus total price of these categories.</source>
-        <translation>Alle Kategorien gruppiert mit Schlüsselwort, zusätzlich Gesamtpreis dieser Kategorien.</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Book count, total price and price average.</source>
-        <translation>Buch Anzahl, Gesamtpreis und Preis Durchschnitt.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>start query</source>
         <translation>Starte abfrage</translation>
     </message>

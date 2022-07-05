@@ -72,7 +72,7 @@ static void writeLogFile(const QDomDocument &doc) {
 
 #ifndef Q_WS_WIN
 #ifndef PLUGIN_ABEBOOKS_DEBUG
-#define PLUGIN_ABEBOOKS_DEBUG true
+#define PLUGIN_ABEBOOKS_DEBUG false
 #endif
 #endif
 

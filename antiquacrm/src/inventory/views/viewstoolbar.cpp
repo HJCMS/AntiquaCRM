@@ -4,30 +4,23 @@
 #include "viewstoolbar.h"
 #include "myicontheme.h"
 
+#include <QDebug>
 #include <QSizePolicy>
 
 ViewsToolBar::ViewsToolBar(QWidget *parent) : QToolBar{parent} {
   setObjectName("inventory_views_toolbar");
   setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 
+  m_sql = new HJCMS::SqlCore(this);
+
   QSizePolicy sp(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
 
   m_comboBox = new QComboBox(this);
   int i = 0;
   m_comboBox->insertItem(i++, tr("select your operation"), QVariant());
-  m_comboBox->insertItem(i++, tr("Show me all Bookentries without Pictures"),
-                         QString("view_no_book_picture"));
-  m_comboBox->insertItem(i++,
-                         tr("Show me all Prints and Stitches without Pictures"),
-                         QString("view_no_print_picture"));
-  m_comboBox->insertItem(i++,
-                         tr("All categories grouped by keyword plus total "
-                            "price of these categories."),
-                         QString("view_group_by_keywords"));
-  m_comboBox->insertItem(i++,
-                         tr("Book count, total price and price average."),
-                         QString("view_all_with_duration"));
-  m_comboBox->setSizePolicy(sp);
+  if (initViews())
+    m_comboBox->setSizePolicy(sp);
+
   addWidget(m_comboBox);
 
   addSeparator();
@@ -38,6 +31,26 @@ ViewsToolBar::ViewsToolBar(QWidget *parent) : QToolBar{parent} {
   connect(m_comboBox, SIGNAL(currentIndexChanged(int)), this,
           SLOT(operationChanged(int)));
   connect(m_query, SIGNAL(triggered()), this, SLOT(refresh()));
+}
+
+bool ViewsToolBar::initViews() {
+  QString sql("SELECT table_name,");
+  sql.append(" obj_description(table_name::regclass) AS comment");
+  sql.append(" FROM information_schema.tables");
+  sql.append(" WHERE table_schema = current_schema AND table_type='VIEW';");
+
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    while (q.next()) {
+      if (q.value("comment").toString().isEmpty())
+        continue;
+
+      m_comboBox->addItem(q.value("comment").toString(),
+                          q.value("table_name").toString());
+    }
+    return true;
+  }
+  return false;
 }
 
 void ViewsToolBar::refresh() {

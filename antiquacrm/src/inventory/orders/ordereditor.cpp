@@ -200,6 +200,9 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   mainWidgetLayout->addLayout(row1);
 
   // Artikel Einkaufsliste
+  mainWidgetLayout->addWidget(
+      new QLabel(tr("Current shopping items") + ":", mainWidget));
+
   m_paymentList = new OrdersItemList(mainWidget);
   m_paymentList->setObjectName("m_paymentList");
   mainWidgetLayout->addWidget(m_paymentList);

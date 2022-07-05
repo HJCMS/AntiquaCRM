@@ -46,6 +46,7 @@ PluginLoader::PluginLoader(QObject *parent) : QPluginLoader{parent} {
     qInfo("Plugin Build target extras add ...");
     paths << lp + "/abebooks";
     paths << lp + "/whsoft";
+    paths << lp + "/booklooker";
   }
 
   if (DEBUG_PLUGINLOADER) {

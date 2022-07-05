@@ -53,6 +53,7 @@ public:
    * @note Wenn gesetzt gibt @ref value() ein ByteArray zurück!
    */
   void setPasswordInput(bool);
+  bool isPasswordInput();
 
   /**
    * @brief Erscheinungsbild einschränken

@@ -282,6 +282,9 @@ namespace Antiqua {
     const QJsonValue getNumeric(const QString &objName);
     const QJsonValue getPrice(const QString &objName);
 
+  protected Q_SLOTS:
+    virtual void readCurrentArticleIds() = 0;
+
   Q_SIGNALS:
     /**
      * @brief Generieren eine Fehler Meldung

@@ -183,7 +183,8 @@ int PurchaseOverview::getTableCount() { return m_table->rowCount(); }
 
 bool PurchaseOverview::setTableData(int row, int column,
                                     const QVariant &value) {
-  QTableWidgetItem *item = m_table->createItem(value.toString());
+  QString title = value.toString();
+  QTableWidgetItem *item = m_table->createItem(title);
   m_table->setItem(row, column, item);
   return true;
 }

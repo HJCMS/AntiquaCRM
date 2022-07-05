@@ -47,7 +47,7 @@ ProviderSettings::ProviderSettings(QWidget *parent) : SettingsWidget{parent} {
   m_abebooks = new QGroupBox(this);
   m_abebooks->setCheckable(true);
   m_abebooks->setChecked(false);
-  m_abebooks->setObjectName("whsoft");
+  m_abebooks->setObjectName("abebooks");
   m_abebooks->setTitle("AbeBooks & ZVAB (abebooks.de)");
   QVBoxLayout *abeBooksLayout = new QVBoxLayout(m_abebooks);
   abeBooksLayout->setObjectName("provider_abebooks_layout");
@@ -82,6 +82,40 @@ ProviderSettings::ProviderSettings(QWidget *parent) : SettingsWidget{parent} {
   abeBooksLayout->addStretch(1);
   m_abebooks->setLayout(abeBooksLayout);
   layout->addWidget(m_abebooks);
+  // END
+
+  // BEGIN Booklooker
+  m_booklooker = new QGroupBox(this);
+  m_booklooker->setCheckable(true);
+  m_booklooker->setChecked(false);
+  m_booklooker->setObjectName("booklooker");
+  m_booklooker->setTitle("Booklooker (booklooker.de)");
+  QVBoxLayout *blookerLayout = new QVBoxLayout(m_booklooker);
+  m_booklooker_user = new LineEdit(m_booklooker);
+  m_booklooker_user->setObjectName("api_user");
+  m_booklooker_user->setInfo(tr("Loginname"));
+  blookerLayout->addWidget(m_booklooker_user);
+  m_booklooker_scheme = new LineEdit(m_booklooker);
+  m_booklooker_scheme->setObjectName("api_scheme");
+  m_booklooker_scheme->setInfo(tr("Protocoll"));
+  m_booklooker_scheme->setValue("https");
+  blookerLayout->addWidget(m_booklooker_scheme);
+  m_booklooker_api_host = new LineEdit(m_booklooker);
+  m_booklooker_api_host->setObjectName("api_host");
+  m_booklooker_api_host->setInfo(tr("Domain"));
+  m_booklooker_api_host->setValue("api.booklooker.de");
+  blookerLayout->addWidget(m_booklooker_api_host);
+  m_booklooker_api_key = new LineEdit(m_booklooker);
+  m_booklooker_api_key->setObjectName("api_key");
+  m_booklooker_api_key->setInfo(tr("API Key"));
+  blookerLayout->addWidget(m_booklooker_api_key);
+  m_booklooker_api_port = new LineEdit(m_booklooker);
+  m_booklooker_api_port->setObjectName("api_port");
+  m_booklooker_api_port->setInfo(tr("API Port"));
+  m_booklooker_api_port->setValue(443);
+  blookerLayout->addWidget(m_booklooker_api_port);
+  m_booklooker->setLayout(blookerLayout);
+  layout->addWidget(m_booklooker);
   // END
 
   layout->addStretch(1);
@@ -125,71 +159,74 @@ void ProviderSettings::setPageIcon(const QIcon &icon) {
 const QIcon ProviderSettings::getPageIcon() { return pageIcon; }
 
 void ProviderSettings::loadSectionConfig() {
-  // W+H Soft
-  config->beginGroup("provider/whsoft");
-  QStringList whSoftKeys = config->allKeys();
-  m_whsoft->setChecked((whSoftKeys.count() == 4));
-  foreach (QString s, whSoftKeys) {
-    LineEdit *e =
-        m_whsoft->findChild<LineEdit *>(s, Qt::FindDirectChildrenOnly);
-    if (e != nullptr) {
-      e->setValue(config->value(s));
+  QList<QGroupBox *> groups =
+      findChildren<QGroupBox *>(QString(), Qt::FindDirectChildrenOnly);
+  if (groups.size() > 0) {
+    QListIterator<QGroupBox *> it(groups);
+    while (it.hasNext()) {
+      QGroupBox *box = it.next();
+      if (box == nullptr)
+        continue;
+
+      QString section(box->objectName());
+      if (section.isEmpty())
+        continue;
+
+      config->beginGroup("provider/" + section);
+      QStringList keys = config->allKeys();
+      box->setChecked((keys.count() >= 4));
+      foreach (QString s, keys) {
+        LineEdit *e = box->findChild<LineEdit *>(s, Qt::FindDirectChildrenOnly);
+        if (e != nullptr) {
+          if (e->isPasswordInput()) {
+            setPassword(e, config->value(s).toByteArray());
+          } else {
+            e->setValue(config->value(s));
+          }
+        }
+      }
+      config->endGroup();
     }
   }
-  config->endGroup();
-  // AbeBooks
-  config->beginGroup("provider/abebooks");
-  QStringList abeBookKeys = config->allKeys();
-  m_abebooks->setChecked((abeBookKeys.count() >= 4));
-  foreach (QString s, abeBookKeys) {
-    LineEdit *e =
-        m_abebooks->findChild<LineEdit *>(s, Qt::FindDirectChildrenOnly);
-    if (e != nullptr) {
-      if (s.contains("api_pass"))
-        setPassword(e, config->value(s).toByteArray());
-      else
-        e->setValue(config->value(s));
-    }
-  }
-  config->endGroup();
 
   initSignalChanged();
 }
 
 void ProviderSettings::saveSectionConfig() {
-  if (!m_whsoft->isChecked()) {
-    config->remove("provider/whsoft");
-  } else {
-    config->beginGroup("provider/whsoft");
-    QList<LineEdit *> l = m_whsoft->findChildren<LineEdit *>(
-        QString(), Qt::FindDirectChildrenOnly);
-    if (l.count() > 0) {
-      for (int i = 0; i < l.count(); i++) {
-        LineEdit *e = l.at(i);
-        if (e != nullptr) {
-          config->setValue(e->objectName(), e->value());
+  QList<QGroupBox *> groups =
+      findChildren<QGroupBox *>(QString(), Qt::FindDirectChildrenOnly);
+  if (groups.size() > 0) {
+    QListIterator<QGroupBox *> it(groups);
+    while (it.hasNext()) {
+      QGroupBox *box = it.next();
+      if (box == nullptr)
+        continue;
+
+      QString section(box->objectName());
+      if (section.isEmpty())
+        continue;
+
+      if (!box->isChecked()) {
+        config->remove("provider/" + section);
+        continue;
+      }
+
+      config->beginGroup("provider/" + section);
+      QList<LineEdit *> l =
+          box->findChildren<LineEdit *>(QString(), Qt::FindDirectChildrenOnly);
+      if (l.count() > 0) {
+        for (int i = 0; i < l.count(); i++) {
+          LineEdit *e = l.at(i);
+          if (e != nullptr) {
+            if (e->isPasswordInput()) {
+              config->setValue(e->objectName(), passwordToBase64(e));
+            } else {
+              config->setValue(e->objectName(), e->value());
+            }
+          }
         }
       }
+      config->endGroup();
     }
-    config->endGroup();
-  }
-  if (!m_abebooks->isChecked()) {
-    config->remove("provider/abebooks");
-  } else {
-    config->beginGroup("provider/abebooks");
-    QList<LineEdit *> l = m_abebooks->findChildren<LineEdit *>(
-        QString(), Qt::FindDirectChildrenOnly);
-    if (l.count() > 0) {
-      for (int i = 0; i < l.count(); i++) {
-        LineEdit *e = l.at(i);
-        if (e != nullptr) {
-          if (e->objectName().contains("api_pass"))
-            config->setValue(e->objectName(), passwordToBase64(e));
-          else
-            config->setValue(e->objectName(), e->value().toString());
-        }
-      }
-    }
-    config->endGroup();
   }
 }

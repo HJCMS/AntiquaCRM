@@ -35,7 +35,7 @@
 <context>
     <name>Antiqua::PurchaseOverview</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+90"/>
+        <location filename="../core/antiquacore/interface.cpp" line="+92"/>
         <source>Customer ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -78,7 +78,7 @@
 <context>
     <name>Antiqua::PurchaserOrderTable</name>
     <message>
-        <location line="-115"/>
+        <location line="-117"/>
         <source>Provider</source>
         <translation type="unfinished"></translation>
     </message>
@@ -756,34 +756,6 @@
     <message>
         <location line="+67"/>
         <source>is required must selected.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Buchfreund</name>
-    <message>
-        <location filename="../plugins/antiqua/whsoft/buchfreund.cpp" line="+23"/>
-        <source>Modify Item inventory count</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Article Id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>itemcount</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Update</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Response Information</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1544,7 +1516,7 @@
 <context>
     <name>DeliverServiceDialog</name>
     <message>
-        <location filename="../custom/deliverservice/deliverservicedialog.cpp" line="+15"/>
+        <location filename="../custom/deliverservice/deliverservicedialog.cpp" line="+16"/>
         <source>Deliver Services</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1556,6 +1528,11 @@
     <message>
         <location line="+85"/>
         <source>Invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+60"/>
+        <source>Database Error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2831,13 +2808,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+744"/>
+        <location line="+747"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-821"/>
+        <location line="-824"/>
         <source>Invoice ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2882,7 +2859,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+167"/>
+        <location line="+37"/>
+        <source>Current shopping items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+133"/>
         <source>Order saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2987,7 +2969,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-727"/>
+        <location line="-730"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2997,7 +2979,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+667"/>
+        <location line="+670"/>
         <source>Printing canceled.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3096,7 +3078,12 @@
 <context>
     <name>OrdersItemList</name>
     <message>
-        <location filename="../inventory/orders/ordersitemlist.cpp" line="+37"/>
+        <location filename="../inventory/orders/ordersitemlist.cpp" line="+35"/>
+        <source>Add Article orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Info about Article found by input ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3116,7 +3103,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+99"/>
         <source>Inserting an empty entry is cowardly denied.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4775,32 +4762,12 @@
 <context>
     <name>ViewsToolBar</name>
     <message>
-        <location filename="../inventory/views/viewstoolbar.cpp" line="+17"/>
+        <location filename="../inventory/views/viewstoolbar.cpp" line="+20"/>
         <source>select your operation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Show me all Bookentries without Pictures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Show me all Prints and Stitches without Pictures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>All categories grouped by keyword plus total price of these categories.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Book count, total price and price average.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>start query</source>
         <translation type="unfinished"></translation>
     </message>

@@ -34,6 +34,16 @@ private:
   LineEdit *m_abebooks_api_key;
   LineEdit *m_abebooks_api_port;
 
+  /**
+   * @brief Booklooker
+   */
+  QGroupBox *m_booklooker;
+  LineEdit *m_booklooker_user;
+  LineEdit *m_booklooker_scheme;
+  LineEdit *m_booklooker_api_host;
+  LineEdit *m_booklooker_api_key;
+  LineEdit *m_booklooker_api_port;
+
   void initSignalChanged();
 
   void setPassword(LineEdit *e, const QByteArray &data);

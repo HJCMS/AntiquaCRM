@@ -10,14 +10,19 @@
 #include <QToolBar>
 #include <QWidget>
 
+#include <SqlCore>
+
 class ViewsToolBar : public QToolBar {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  HJCMS::SqlCore *m_sql;
   QComboBox *m_comboBox;
   QAction *m_query;
+
+  bool initViews();
 
 Q_SIGNALS:
   void s_queryTableView(const QString &tableView);
