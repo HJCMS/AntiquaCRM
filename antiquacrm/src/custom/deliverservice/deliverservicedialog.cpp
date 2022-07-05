@@ -7,6 +7,7 @@
 #include "deliverservicelist.h"
 
 #include <QDebug>
+#include <QMessageBox>
 #include <QScrollArea>
 #include <QVBoxLayout>
 
@@ -185,7 +186,12 @@ void DeliverServiceDialog::saveCurrent() {
   if (m_sql->lastError().isEmpty()) {
     initItemsTreeView();
   } else {
-    qDebug() << m_sql->lastError();
+    QString info = m_sql->lastError();
+    QMessageBox *errDialog =
+        new QMessageBox(QMessageBox::Critical, tr("Database Error"), info,
+                        QMessageBox::Ok, this);
+    errDialog->setInformativeText(sql);
+    errDialog->exec();
   }
 }
 

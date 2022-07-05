@@ -64,7 +64,9 @@ QTableWidgetItem *PurchaserOrderTable::createItem(const QString &title) const {
 }
 
 ProviderWidget::ProviderWidget(const QString &widgetId, QWidget *parent)
-    : QWidget{parent} {}
+    : QScrollArea{parent} {
+  setWidgetResizable(true);
+}
 
 PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
     : QWidget{parent} {
@@ -273,23 +275,32 @@ const QHash<QString, QVariant> PurchaseOverview::getCustomerData() {
 }
 
 InterfaceWidget::InterfaceWidget(const QString &widgetId, QWidget *parent)
-    : QScrollArea{parent} {}
+    : QScrollArea{parent}, p_widgetId(widgetId) {
+  setWidgetResizable(true);
+  setObjectName(widgetId);
+  setWindowTitle(widgetId);
 
-const QString InterfaceWidget::sqlParam(const QString &key) {
+  m_order = new Antiqua::PurchaseOverview(widgetId, this);
+  setWidget(m_order);
+
+  connect(m_order, SIGNAL(checkOrders()), this, SLOT(readCurrentArticleIds()));
+}
+
+const QString InterfaceWidget::sqlParam(const QString &attribute) {
   QMap<QString, QString> map = fieldTranslate();
   QMap<QString, QString>::iterator fi;
   for (fi = map.begin(); fi != map.end(); ++fi) {
-    if (fi.key() == key)
+    if (fi.key() == attribute)
       return fi.value();
   }
   return QString();
 }
 
-const QString InterfaceWidget::apiParam(const QString &key) {
+const QString InterfaceWidget::apiParam(const QString &value) {
   QMap<QString, QString> map = fieldTranslate();
   QMap<QString, QString>::iterator fi;
   for (fi = map.begin(); fi != map.end(); ++fi) {
-    if (fi.value() == key)
+    if (fi.value() == value)
       return fi.key();
   }
   return QString();

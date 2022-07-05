@@ -17,20 +17,6 @@
 AbeBooksIfaceWidget::AbeBooksIfaceWidget(const QString &widgetId,
                                          QWidget *parent)
     : Antiqua::InterfaceWidget{widgetId, parent} {
-  setWidgetResizable(true);
-  setObjectName(widgetId);
-  setWindowTitle(widgetId);
-
-  QWidget *mainWidget = new QWidget(this);
-  QVBoxLayout *layout = new QVBoxLayout(mainWidget);
-  layout->setContentsMargins(0, 0, 0, 0);
-  m_order = new Antiqua::PurchaseOverview(widgetId, mainWidget);
-  layout->addWidget(m_order);
-  layout->addStretch(1);
-  mainWidget->setLayout(layout);
-  setWidget(mainWidget);
-
-  connect(m_order, SIGNAL(checkOrders()), this, SLOT(readCurrentArticleIds()));
 }
 
 void AbeBooksIfaceWidget::createCustomerDocument() {

@@ -96,7 +96,7 @@ namespace Antiqua {
    * @ingroup Antiqua Plugin Interface
    * @brief Haupseite des Dienstleisters
    */
-  class ANTIQUACORE_EXPORT ProviderWidget : public QWidget
+  class ANTIQUACORE_EXPORT ProviderWidget : public QScrollArea
   {
     Q_OBJECT
 
@@ -232,6 +232,14 @@ namespace Antiqua {
     Q_OBJECT
 
   protected:
+    /**
+     * @brief Ist für die Objekt-Initialisierung Notwendig.
+     */
+    const QString p_widgetId;
+
+    /**
+     * @brief Aktuelle Kunden Nummer
+     */
     int currentCustomerId = -1;
 
     /**
@@ -256,8 +264,8 @@ namespace Antiqua {
     virtual const QJsonDocument customerRequest(const QJsonObject &object) = 0;
 
     /**
-    * @brief Rechnungs und Lieferadressen einlesen
-    */
+     * @brief Rechnungs und Lieferadressen einlesen
+     */
     virtual void parseAddressBody(const QString &section, const QJsonObject &object) = 0;
 
     /**
@@ -349,17 +357,17 @@ namespace Antiqua {
 
     /**
      * @brief SQL Datenfeld zurück geben
-     * @param key - Json Parameter
+     * @param attribute - Json Parameter
      * @return SQL Column | QString()
      */
-    const QString sqlParam(const QString &key);
+    const QString sqlParam(const QString &attribute);
 
     /**
      * @brief Suche mit SQL Feldname nach API Parameter
-     * @param key - SQL Tabellen Feldname
+     * @param value - SQL Tabellen Feldname
      * @return Json Parameter | QString()
      */
-    const QString apiParam(const QString &key);
+    const QString apiParam(const QString &value);
 
     /**
      * @brief Artikel Nummer für Auftragserstellung zurück geben!

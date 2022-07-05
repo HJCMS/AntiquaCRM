@@ -6,16 +6,25 @@ SET (xml_FILES
   eu_countries.xml
 )
 
+SET (homebase_FILES
+  BookInventory.xsd
+  BookListingXml.tpl
+)
+
+SET (source_FILES
+  ${xml_FILES}
+  ${homebase_FILES}
+)
+
 file(COPY ${xml_FILES} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-
 IF (ANTIQUA_LSB_INSTALL)
-  INSTALL (FILES ${xml_FILES}
+  INSTALL (FILES ${source_FILES}
     DESTINATION share/${PROJECTNAME}/xml
     COMPONENT data
   )
 ELSE (ANTIQUA_LSB_INSTALL)
-  INSTALL (FILES ${xml_FILES}
+  INSTALL (FILES ${source_FILES}
     DESTINATION ${CMAKE_INSTALL_PREFIX}/xml
     COMPONENT data
   )

@@ -110,7 +110,7 @@ bool AbeBooksRequester::createRequest(const QDomDocument &document) {
   QByteArray size = QString::number(query.size()).toLocal8Bit();
   request.setRawHeader(QByteArray("Content-Length"), size);
 
-#if PLUGIN_ABEBOOKS_DEBUG == true
+#if PLUGIN_ABEBOOKS_DEBUG
   qDebug() << Q_FUNC_INFO << document.toString(-1);
 #endif
 
@@ -203,10 +203,16 @@ void AbeBooksRequester::replyReadyRead() {
   int errorLine = 0;
   int errorColumn = 0;
   if (doc.setContent(data, false, &errorMsg, &errorLine, &errorColumn)) {
+#if PLUGIN_ABEBOOKS_DEBUG
     qInfo("AbeBooks answer loaded");
+#endif
     emit response(doc);
   } else {
+#if PLUGIN_ABEBOOKS_DEBUG
     qDebug() << Q_FUNC_INFO << errorMsg << errorLine << errorColumn;
+#else
+    qWarning("Returned XML is not well formatted!");
+#endif
   }
   data.clear();
 }

@@ -5,11 +5,7 @@
 #ifndef BUCHFREUND_PLUGIN_H
 #define BUCHFREUND_PLUGIN_H
 
-#include <QJsonDocument>
-#include <QLineEdit>
 #include <QObject>
-#include <QSpinBox>
-#include <QTextEdit>
 #include <QWidget>
 
 #include <AntiquaCRM>
@@ -22,17 +18,6 @@
  */
 class ANTIQUACORE_EXPORT Buchfreund final : public Antiqua::ProviderWidget {
   Q_OBJECT
-
-private:
-  QLineEdit *m_articleId;
-  QSpinBox *m_count;
-  QTextEdit *m_response;
-
-  void jsonQuery(const QString &operation, const QJsonDocument &doc);
-
-private Q_SLOTS:
-  void updateArticleCount();
-  void queryResponse(const QJsonDocument &);
 
 public:
   explicit Buchfreund(const QString &widgetId, QWidget *parent = nullptr);
