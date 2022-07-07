@@ -45,7 +45,6 @@ private:
   BooklookerProviderWidget *m_blProviderWidget;
 
 private Q_SLOTS:
-  void authenticResponse(const QJsonDocument &);
   void prepareJsonListResponse(const QJsonDocument &);
 
 public:
