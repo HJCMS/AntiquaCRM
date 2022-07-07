@@ -60,15 +60,15 @@ void WHSoftWidget::createCustomerDocument() {
 }
 
 const QJsonDocument WHSoftWidget::customerRequest(const QJsonObject &object) {
-  QJsonObject queryObject;
-  queryObject.insert("provider", QJsonValue(CONFIG_PROVIDER));
-  queryObject.insert("orderid", QJsonValue(objectName()));
-  queryObject.insert("type", "customer_request");
-  queryObject.insert("c_firstname", object["vorname"]);
-  queryObject.insert("c_lastname", object["name"]);
-  queryObject.insert("c_postalcode", object["plz"]);
-  queryObject.insert("c_location", object["ort"]);
-  return QJsonDocument(queryObject);
+  Q_UNUSED(object);
+  QJsonObject customer;
+  customer.insert("provider", QJsonValue(CONFIG_PROVIDER));
+  customer.insert("orderid", QJsonValue(objectName()));
+  customer.insert("type", "customer_request");
+  foreach (QString f, m_order->customerSearchFields()) {
+    customer.insert(f, p_customer.value(f));
+  }
+  return QJsonDocument(customer);
 }
 
 void WHSoftWidget::parseAddressBody(const QString &section,
@@ -99,6 +99,7 @@ void WHSoftWidget::parseAddressBody(const QString &section,
   buffer.append(location);
 
   m_order->setValue(section, buffer.join("\n"));
+  p_customer.insert(section, buffer.join("\n"));
   buffer.clear();
 
   // Sende SQL Abfrage an Hauptfenster!
@@ -107,6 +108,12 @@ void WHSoftWidget::parseAddressBody(const QString &section,
     if (!qDoc.isEmpty())
       emit checkCustomer(qDoc);
   }
+}
+
+void WHSoftWidget::checkCustomerClicked() {
+  QJsonDocument qDoc = customerRequest(QJsonObject());
+  if (!qDoc.isEmpty())
+    emit checkCustomer(qDoc);
 }
 
 void WHSoftWidget::readCurrentArticleIds() {
@@ -135,6 +142,7 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
       QJsonValue val = it.value();
       if (!f.isEmpty() && !val.toString().isEmpty()) {
         m_order->setValue(sqlParam(f), val.toVariant());
+        p_customer.insert(sqlParam(f), stripString(val));
       }
     }
 
@@ -145,6 +153,7 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
         QJsonValue val = it.value();
         if (!f.isEmpty() && !val.toString().isEmpty()) {
           m_order->setValue(sqlParam(f), val.toString());
+          p_customer.insert(sqlParam(f), stripString(val));
         }
       }
       parseAddressBody("c_postal_address", addr1);

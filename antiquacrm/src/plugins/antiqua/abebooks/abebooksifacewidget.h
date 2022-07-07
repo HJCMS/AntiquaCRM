@@ -23,6 +23,7 @@ class ANTIQUACORE_EXPORT AbeBooksIfaceWidget final
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  QHash<QString, QString> p_customer;
   QDomDocument p_currentDocument;
 
   const QJsonDocument customerRequest(const QJsonObject &object);
@@ -30,7 +31,7 @@ private:
   void parseAddressBody(const QString &, const QJsonObject &);
 
 private Q_SLOTS:
-  void checkCustomerClicked(){/* TODO */};
+  void checkCustomerClicked();
   void readCurrentArticleIds();
 
 public Q_SLOTS:

@@ -153,7 +153,6 @@ void InventoryProviders::queryProviderPage(const QString &provider) {
       return;
     }
   }
-  qDebug() << Q_FUNC_INFO << "TODO" << provider;
 }
 
 void InventoryProviders::queryOrder(const QString &provider,
@@ -363,7 +362,10 @@ void InventoryProviders::checkArticleExists(QList<int> &list) {
       exists = (count > 0 && exists) ? true : false;
     }
   }
-  m_toolBar->enableOrderButton(exists);
+  if (current_cid > 0)
+    m_toolBar->enableOrderButton(exists);
+  else
+    m_toolBar->statusMessage(tr("Missing valid Customer Id"));
 }
 
 void InventoryProviders::checkOpenEditArticle(int aid) {

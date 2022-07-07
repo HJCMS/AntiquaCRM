@@ -4,7 +4,7 @@
 <context>
     <name>AbeBooksIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+258"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+268"/>
         <source>Check</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2556,7 +2556,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+140"/>
+        <location line="+139"/>
         <location line="+2"/>
         <source>Europe</source>
         <translation type="unfinished"></translation>
@@ -2572,7 +2572,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+48"/>
+        <location line="+32"/>
         <source>Missing valid Customer Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2587,13 +2588,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-339"/>
+        <location line="-341"/>
         <location line="+12"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+305"/>
+        <location line="+307"/>
         <source>current tab and customer id not equal</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2606,22 +2607,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Invoice-ID:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Order-ID:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Customer-ID:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+39"/>
+        <location line="+55"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2656,8 +2642,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-136"/>
-        <source>Date:</source>
+        <location line="-145"/>
+        <source>Invoice-ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Order-ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Customer-ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

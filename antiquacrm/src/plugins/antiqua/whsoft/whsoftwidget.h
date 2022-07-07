@@ -23,6 +23,7 @@ class ANTIQUACORE_EXPORT WHSoftWidget final : public Antiqua::InterfaceWidget {
   Q_OBJECT
 
 private:
+  QHash<QString, QString> p_customer;
   QJsonDocument p_currentDocument;
 
   /**
@@ -36,7 +37,7 @@ private:
   void parseAddressBody(const QString &section, const QJsonObject &object);
 
 private Q_SLOTS:
-  void checkCustomerClicked() { /* TODO */ };
+  void checkCustomerClicked();
   void readCurrentArticleIds();
 
 public Q_SLOTS:

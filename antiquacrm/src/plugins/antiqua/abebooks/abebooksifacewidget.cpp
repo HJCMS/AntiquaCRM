@@ -87,16 +87,17 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
 
 const QJsonDocument
 AbeBooksIfaceWidget::customerRequest(const QJsonObject &object) {
-  QJsonObject queryObject;
-  queryObject.insert("provider", QJsonValue(CONFIG_PROVIDER));
+  Q_UNUSED(object);
+  QJsonObject customer;
+  customer.insert("provider", QJsonValue(CONFIG_PROVIDER));
   QString str(objectName());
-  queryObject.insert("orderid", QJsonValue(str.trimmed()));
-  queryObject.insert("type", "customer_request");
-  queryObject.insert("c_firstname", object["c_firstname"]);
-  queryObject.insert("c_lastname", object["c_lastname"]);
-  queryObject.insert("c_postalcode", object["c_postalcode"]);
-  queryObject.insert("c_location", object["c_location"]);
-  return QJsonDocument(queryObject);
+  customer.insert("orderid", QJsonValue(str.trimmed()));
+  customer.insert("type", "customer_request");
+  foreach (QString f, m_order->customerSearchFields()) {
+    // qDebug() << Q_FUNC_INFO << f << p_customer.value(f);
+    customer.insert(f, p_customer.value(f));
+  }
+  return QJsonDocument(customer);
 }
 
 void AbeBooksIfaceWidget::parseAddressBody(const QString &section,
@@ -121,8 +122,16 @@ void AbeBooksIfaceWidget::parseAddressBody(const QString &section,
   }
   buffer.append(location);
 
+  p_customer.insert(section, buffer.join("\n"));
   m_order->setValue(section, buffer.join("\n"));
   buffer.clear();
+}
+
+void AbeBooksIfaceWidget::checkCustomerClicked()
+{
+  QJsonDocument cIjs = customerRequest(QJsonObject());
+  if (!cIjs.isEmpty())
+    emit checkCustomer(cIjs);
 }
 
 void AbeBooksIfaceWidget::readCurrentArticleIds() {
@@ -163,32 +172,37 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
           if (cn.nodeName() == "name") {
             QStringList full_name = xml.getNodeValue(cn).toString().split(" ");
             m_order->setValue("c_firstname", full_name.first());
+            p_customer.insert("c_firstname", full_name.first());
             m_order->setValue("c_lastname", full_name.last());
+            p_customer.insert("c_lastname", full_name.last());
             customerInfo.insert("c_firstname", QJsonValue(full_name.first()));
             customerInfo.insert("c_lastname", QJsonValue(full_name.last()));
           } else if (cn.nodeName() == "country") {
             customerInfo.insert("c_country", val);
             m_order->setValue("c_country", stripString(val));
+            p_customer.insert("c_country", stripString(val));
           } else if (cn.nodeName() == "city") {
             customerInfo.insert("c_location", val);
             m_order->setValue("c_location", stripString(val));
+            p_customer.insert("c_location", stripString(val));
           } else if (cn.nodeName() == "code") {
             customerInfo.insert("c_postalcode", val);
             m_order->setValue("c_postalcode", stripString(val));
+            p_customer.insert("c_postalcode", stripString(val));
           } else if (cn.nodeName() == "street") {
             customerInfo.insert("c_street", val);
             m_order->setValue("c_street", stripString(val));
+            p_customer.insert("c_street", stripString(val));
           } else if (cn.nodeName() == "phone") {
             customerInfo.insert("c_phone_0", val);
             m_order->setPhone("c_phone_0", stripString(val));
+            p_customer.insert("c_phone_0", stripString(val));
           }
         }
         parseAddressBody("c_postal_address", customerInfo);
         parseAddressBody("c_shipping_address", customerInfo);
         // Sende SQL Abfrage an Hauptfenster!
-        QJsonDocument cIjs = customerRequest(customerInfo);
-        if (!cIjs.isEmpty())
-          emit checkCustomer(cIjs);
+        checkCustomerClicked();
       }
       QDomElement pd = n.toElement();
       if (pd.firstChild().nodeValue() == "SD") {
