@@ -600,7 +600,7 @@
 <context>
     <name>BookSearchBar</name>
     <message>
-        <location filename="../inventory/books/booksearchbar.cpp" line="+122"/>
+        <location filename="../inventory/books/booksearchbar.cpp" line="+128"/>
         <source>Press CTRL+F, to quickly open this Menu.</source>
         <translation>Drücken Sie STRG+F, um dieses Menü schnell zu öffnen.</translation>
     </message>
@@ -2412,7 +2412,7 @@
         <translation>Bücher</translation>
     </message>
     <message>
-        <location line="+131"/>
+        <location line="+129"/>
         <source>Editor</source>
         <translation></translation>
     </message>
@@ -4341,7 +4341,7 @@
 <context>
     <name>SearchFilterBox</name>
     <message>
-        <location filename="../inventory/books/booksearchbar.cpp" line="-233"/>
+        <location filename="../inventory/books/booksearchbar.cpp" line="-239"/>
         <source>Book Title and Author</source>
         <translation>Buchtitel und Autor</translation>
     </message>
