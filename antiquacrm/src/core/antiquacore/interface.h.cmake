@@ -22,6 +22,7 @@
 #include <QTableWidgetItem>
 #include <QTextEdit>
 #include <QToolBar>
+#include <QPushButton>
 #include <QUrl>
 #include <QWidget>
 
@@ -77,6 +78,7 @@ namespace Antiqua {
     Q_OBJECT
 
   private Q_SLOTS:
+    void findSelectedArticleId();
     void copyIdToClipboard();
 
   protected:
@@ -84,6 +86,7 @@ namespace Antiqua {
     void contextMenuEvent(QContextMenuEvent *);
 
   Q_SIGNALS:
+    void inspectArticle(int);
     void findArticleNumbers();
 
   public:
@@ -117,7 +120,8 @@ namespace Antiqua {
   private:
     int c_id = 0;
     QToolBar *m_toolbar;
-    QAction *ac_check;
+    QPushButton *btn_checkArticle;
+    QPushButton *btn_checkCustomer;
 
     /**
      * @brief c_id
@@ -170,14 +174,29 @@ namespace Antiqua {
     void setCustomerId(int id);
 
   Q_SIGNALS:
+    void inspectArticle(int);
     void customerIdChanged(int);
     void checkOrders();
+    void checkCustomer();
 
   public:
     explicit PurchaseOverview(const QString &id, QWidget *parent = nullptr);
 
     int getCustomerId();
 
+    /**
+     * @brief Suchfelder für die Kundenabfrage
+     * Die Kundenabfrage erfolgt über diese Tabellenfelder!
+     * @code
+     *  {"c_firstname","c_lastname","c_postalcode","c_location"}
+     * @endcode
+     */
+    const QStringList customerSearchFields() const;
+
+    /**
+     * @brief Alle internen Artikel Nummern aus der Bestelltabelle ziehen.
+     * @note Das sind nicht die Artikel Nummern des Dienstleisters!
+     */
     const QList<int> getArticleIDs();
 
     /**
@@ -230,6 +249,12 @@ namespace Antiqua {
   class ANTIQUACORE_EXPORT InterfaceWidget : public QScrollArea
   {
     Q_OBJECT
+    Q_PROPERTY(QString providerName WRITE setProviderName READ getProviderName NOTIFY providerChanged)
+    Q_PROPERTY(QString orderId WRITE setOrderId READ getOrderId NOTIFY orderIdChanged)
+
+  private:
+    QString providerName;
+    QString orderId;
 
   protected:
     /**
@@ -283,9 +308,20 @@ namespace Antiqua {
     const QJsonValue getPrice(const QString &objName);
 
   protected Q_SLOTS:
+    virtual void checkCustomerClicked() = 0;
     virtual void readCurrentArticleIds() = 0;
 
   Q_SIGNALS:
+    /**
+     * @brief Wenn der Dienstleistername gesetzt wurde!
+     */
+    void providerChanged();
+
+    /**
+     * @brief Wenn der Beststellnummer gesetzt wurde!
+     */
+    void orderIdChanged();
+
     /**
      * @brief Generieren eine Fehler Meldung
      */
@@ -318,6 +354,11 @@ namespace Antiqua {
      */
     void checkArticleIds(QList<int> &);
 
+    /**
+     * @brief Weiterleitung von Kontextmenü Tabellenansicht öffne Artikel.
+     */
+    void openArticle(int);
+
   public Q_SLOTS:
     /**
      * @brief Erstelle Kundendatensatz für SIGNAL:createCustomer
@@ -337,6 +378,18 @@ namespace Antiqua {
 
   public:
     explicit InterfaceWidget(const QString &widgetId, QWidget *parent = nullptr);
+
+    /**
+     * @brief Dienstleister angaben setzen/lesen.
+     */
+    void setProviderName(const QString &name);
+    const QString getProviderName();
+
+    /**
+     * @brief Bestellnumer setzen/lesen.
+     */
+    void setOrderId(const QString &id);
+    const QString getOrderId();
 
     /**
      * @brief Kundennummer setzen!
@@ -373,9 +426,11 @@ namespace Antiqua {
     const QString apiParam(const QString &value);
 
     /**
-     * @brief Artikel Nummer für Auftragserstellung zurück geben!
+     * @brief Artikel Nummern aus der Bestelltabelle lesen!
+     * @param provider Dienstleister
+     * @param orderId  Bestellnummer
      */
-    virtual const ProviderOrder getProviderOrder() = 0;
+    const ProviderOrder getProviderOrder(const QString &provider, const QString &orderId);
   };
 
   /**

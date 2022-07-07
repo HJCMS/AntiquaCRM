@@ -62,6 +62,8 @@ Antiqua::InterfaceWidget *AbeBooks::addWidget(const QString &widgetId,
                                               QWidget *parent) {
   m_abeBooksIfaceWidget = new AbeBooksIfaceWidget(widgetId, parent);
   m_abeBooksIfaceWidget->setObjectName(widgetId);
+  m_abeBooksIfaceWidget->setProviderName(provider());
+  m_abeBooksIfaceWidget->setOrderId(widgetId);
   return m_abeBooksIfaceWidget;
 }
 

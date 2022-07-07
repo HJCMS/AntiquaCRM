@@ -37,13 +37,27 @@ void PurchaserOrderTable::contextMenuEvent(QContextMenuEvent *e) {
                                     tr("inspect article"));
   ac_remove->setObjectName("ac_context_search_article");
   connect(ac_remove, SIGNAL(triggered()), this, SIGNAL(findArticleNumbers()));
+
   QAction *ac_copy = m->addAction(style()->standardIcon(QStyle::SP_FileIcon),
                                   tr("copy article id"));
   ac_copy->setObjectName("ac_context_ac_copy_article");
   connect(ac_copy, SIGNAL(triggered()), this, SLOT(copyIdToClipboard()));
 
+  QAction *ac_open = m->addAction(style()->standardIcon(QStyle::SP_FileIcon),
+                                  tr("open article id"));
+  ac_open->setObjectName("ac_context_ac_open_article");
+  connect(ac_open, SIGNAL(triggered()), this, SLOT(findSelectedArticleId()));
+
   m->exec(e->globalPos());
   delete m;
+}
+
+void PurchaserOrderTable::findSelectedArticleId() {
+  QString buf = item(currentItem()->row(), 1)->text();
+  bool b = true;
+  int id = buf.toInt(&b);
+  if (b && id > 0)
+    emit inspectArticle(id);
 }
 
 void PurchaserOrderTable::copyIdToClipboard() {
@@ -89,7 +103,7 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
   m_toolbar->setMovable(false);
   m_toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 
-  m_toolbar->addWidget(new QLabel(tr("Customer ID") + ":"));
+  m_toolbar->addWidget(new QLabel(tr("Customer") + ": "));
 
   m_customerId = new QLineEdit(m_toolbar);
   m_customerId->setReadOnly(true);
@@ -97,17 +111,25 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
   m_customerId->setMaximumWidth(mWidth);
   m_toolbar->addWidget(m_customerId);
 
-  m_toolbar->addSeparator();
-  m_toolbar->addWidget(new QLabel(tr("Purchaser") + ":"));
-
   m_customerInfo = new QLineEdit(m_toolbar);
   m_customerInfo->setObjectName("person");
   m_customerInfo->setReadOnly(true);
   m_toolbar->addWidget(m_customerInfo);
 
   m_toolbar->addSeparator();
+  QString str_customer_info = tr("Purchaser") + ": ";
+  m_toolbar->addWidget(new QLabel(str_customer_info, m_toolbar));
+  btn_checkCustomer = new QPushButton(qi1, tr("execute check"), m_toolbar);
+  btn_checkCustomer->setToolTip(tr("Send query if this customer exists."));
+  m_toolbar->addWidget(btn_checkCustomer);
 
-  ac_check = m_toolbar->addAction(qi1, tr("check articles"));
+  m_toolbar->addSeparator();
+  QString str_article_info = tr("Check Orders") + ": ";
+  m_toolbar->addWidget(new QLabel(str_article_info, m_toolbar));
+  btn_checkArticle = new QPushButton(qi1, tr("execute check"), m_toolbar);
+  btn_checkArticle->setToolTip(
+      tr("Create a search query to see if all items are available."));
+  m_toolbar->addWidget(btn_checkArticle);
   layout->addWidget(m_toolbar);
   // END
 
@@ -149,8 +171,13 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
   layout->addStretch(1);
   setLayout(layout);
 
+  // Weiterleitung Artikel mit Nummer öffnen.
+  connect(m_table, SIGNAL(inspectArticle(int)), this, SIGNAL(inspectArticle(int)));
+  // Weiterleitung Artikel Nummern prüfen
   connect(m_table, SIGNAL(findArticleNumbers()), this, SIGNAL(checkOrders()));
-  connect(ac_check, SIGNAL(triggered()), this, SIGNAL(checkOrders()));
+  connect(btn_checkArticle, SIGNAL(clicked()), this, SIGNAL(checkOrders()));
+  // Kunde auf existenz prüfen
+  connect(btn_checkCustomer, SIGNAL(clicked()), this, SIGNAL(checkCustomer()));
 }
 
 void PurchaseOverview::setCustomerId(int id) {
@@ -164,6 +191,11 @@ int PurchaseOverview::getCustomerId() {
   QString num = m_customerId->text();
   int id = num.toInt(&b);
   return (b) ? id : 0;
+}
+
+const QStringList PurchaseOverview::customerSearchFields() const {
+  QStringList l({"c_firstname", "c_lastname", "c_postalcode", "c_location"});
+  return l;
 }
 
 const QList<int> PurchaseOverview::getArticleIDs() {
@@ -284,8 +316,26 @@ InterfaceWidget::InterfaceWidget(const QString &widgetId, QWidget *parent)
   m_order = new Antiqua::PurchaseOverview(widgetId, this);
   setWidget(m_order);
 
+  // Weiterleitung Artikel öffnen
+  connect(m_order, SIGNAL(inspectArticle(int)), this, SIGNAL(openArticle(int)));
+  // Weiterleitung Artikelnummern prüfen
   connect(m_order, SIGNAL(checkOrders()), this, SLOT(readCurrentArticleIds()));
+  connect(m_order, SIGNAL(checkCustomer()), this, SLOT(checkCustomerClicked()));
 }
+
+void InterfaceWidget::setProviderName(const QString &name) {
+  providerName = name;
+  emit providerChanged();
+}
+
+const QString InterfaceWidget::getProviderName() { return providerName; }
+
+void InterfaceWidget::setOrderId(const QString &id) {
+  orderId = id;
+  emit providerChanged();
+}
+
+const QString InterfaceWidget::getOrderId() { return orderId; }
 
 const QString InterfaceWidget::sqlParam(const QString &attribute) {
   QMap<QString, QString> map = fieldTranslate();
@@ -327,6 +377,29 @@ const QJsonValue InterfaceWidget::getNumeric(const QString &objName) {
 const QJsonValue InterfaceWidget::getPrice(const QString &objName) {
   double data = m_order->getValue(objName).toDouble();
   return QJsonValue(data);
+}
+
+const ProviderOrder InterfaceWidget::getProviderOrder(const QString &provider,
+                                                      const QString &orderId) {
+  ProviderOrder order;
+  order.setProvider(provider);
+  order.setProviderId(orderId);
+  int cid = m_order->getCustomerId();
+  if (cid < 1) {
+    order.setCustomerId(-1);
+    qWarning("Missing Customer Id");
+    return order;
+  }
+  order.setCustomerId(cid);
+  int col = 1; /**< ArticleId Cell */
+  QStringList ids;
+  for (int r = 0; r < m_order->getTableCount(); r++) {
+    QString aid = m_order->getTableData(r, col).toString();
+    if (!aid.isEmpty())
+      ids.append(aid);
+  }
+  order.setArticleIds(ids);
+  return order;
 }
 
 }; // namespace Antiqua

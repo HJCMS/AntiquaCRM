@@ -11,6 +11,7 @@
 #include <QHttpMultiPart>
 #include <QHttpPart>
 #include <QJsonParseError>
+#include <QMutex>
 #include <QUrlQuery>
 
 static const QByteArray applCaBundlePath() {
@@ -99,11 +100,11 @@ static const char *jsonParserError(int err) {
 BooklookerRequester::BooklookerRequester(QObject *parent)
     : QNetworkAccessManager{parent} {
   config = new ApplSettings(this);
+  initConfigurations();
   m_reply = nullptr;
+
   connect(this, SIGNAL(finished(QNetworkReply *)), this,
           SLOT(slotFinished(QNetworkReply *)));
-
-  initConfigurations();
 }
 
 void BooklookerRequester::initConfigurations() {
@@ -136,15 +137,29 @@ const QNetworkRequest BooklookerRequester::newRequest(const QUrl &url) {
 }
 
 void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
-  if (QJsonValue(doc["status"]).toString() == "OK") {
-    QString key = QJsonValue(doc["returnValue"]).toString();
-    if (key.isEmpty())
-      return;
-
-    config->beginGroup(CONFIG_GROUP);
-    config->setValue("api_token", key);
-    config->endGroup();
-    emit authenticSuccess();
+  QString status = QJsonValue(doc["status"]).toString();
+  QString value = QJsonValue(doc["returnValue"]).toString();
+  if (status == "OK" && !value.isEmpty()) {
+    if (!qputenv(BOOKLOOKER_TOKEN_ENV, value.toLocal8Bit())) {
+      qInfo("Booklooker : write token in config.");
+      config->beginGroup(CONFIG_GROUP);
+      config->setValue("api_token", value);
+      config->endGroup();
+    }
+    qInfo("Authenticated: %s", qPrintable(value));
+    emit authenticFinished();
+  } else if (status == "NOK" && !value.isEmpty()) {
+    qWarning("Authentication Error: %s", qPrintable(value));
+    // Authentic Response Status
+    if (value == "API_KEY_MISSING") {
+      emit errorMessage(1, tr("Missing API Key"));
+    } else if (value == "AUTHENTICATION_FAILED") {
+      emit errorMessage(1, tr("Authentication failure"));
+    } else if (value == "SERVER_DOWN") {
+      emit errorMessage(1, tr("Server down"));
+    }
+  } else {
+    qWarning("registerAuthentic: Unknown error!");
   }
 }
 
@@ -185,11 +200,6 @@ void BooklookerRequester::slotFinished(QNetworkReply *reply) {
   if (reply->error() != QNetworkReply::NoError) {
     slotError(reply->error());
     success = false;
-  } else {
-    QUrl url(reply->url());
-    if (url.path().contains("/authenticate")) {
-      qDebug() << Q_FUNC_INFO << getToken();
-    }
   }
   emit requestFinished(success);
 }
@@ -208,6 +218,8 @@ void BooklookerRequester::replyFinished(QNetworkReply *reply) {
 }
 
 void BooklookerRequester::replyReadyRead() {
+  QMutex mutex(QMutex::NonRecursive);
+  mutex.tryLock((1000 * 3));
   QVector<char> buf;
   QByteArray data;
   qint64 chunk;
@@ -224,12 +236,26 @@ void BooklookerRequester::replyReadyRead() {
     data += &buf[0];
   }
   buf.clear();
+  mutex.unlock();
 
   QJsonParseError parser;
   QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
   if (parser.error != QJsonParseError::NoError) {
     qWarning("Json Parse Error:(%s)!", jsonParserError(parser.error));
-    qDebug() << Q_FUNC_INFO << data;
+#ifdef PLUGIN_BOOKLOOKER_DEBUG
+    QFileInfo logfile(QDir(QDir::currentPath()), "error-file.json");
+    QFile fp(logfile.filePath());
+    if (fp.open(QIODevice::WriteOnly)) {
+      QTextStream in(&fp);
+      in << data;
+      fp.close();
+    }
+#endif
+    return;
+  }
+
+  if (m_reply->url().path() == BOOKLOOKER_AUTH_PATH) {
+    emit authenticResponse(doc);
     return;
   }
 
@@ -240,27 +266,15 @@ void BooklookerRequester::replyReadyRead() {
     QTextStream in(&fp);
     in << doc.toJson(QJsonDocument::Indented);
     fp.close();
-    qDebug() << logfile.filePath();
   }
 #endif
 
   emit response(doc);
 }
 
-const QString BooklookerRequester::getToken() {
-  QString token;
-  config->beginGroup(CONFIG_GROUP);
-  token = config->value("api_token").toString();
-  config->endGroup();
-  return token;
-}
-
 void BooklookerRequester::authentication() {
   QUrl url(p_baseUrl);
-  QString p("/");
-  p.append(BOOKLOOKER_API_VERSION);
-  p.append("/authenticate");
-  url.setPath(p);
+  url.setPath(BOOKLOOKER_AUTH_PATH);
 
   QString pd("apiKey=");
   pd.append(p_apiKey);
@@ -277,7 +291,7 @@ void BooklookerRequester::authentication() {
 
   connect(m_reply, SIGNAL(readyRead()), this, SLOT(replyReadyRead()));
 
-  connect(this, SIGNAL(response(const QJsonDocument &)), this,
+  connect(this, SIGNAL(authenticResponse(const QJsonDocument &)), this,
           SLOT(registerAuthentic(const QJsonDocument &)));
 }
 
@@ -293,14 +307,13 @@ bool BooklookerRequester::getRequest(const QUrl &url) {
 
   connect(m_reply, SIGNAL(readyRead()), this, SLOT(replyReadyRead()));
 
-  qDebug() << Q_FUNC_INFO << url;
   return true;
 }
 
 void BooklookerRequester::queryList() {
   if (getToken().isEmpty()) {
     authentication();
-    connect(this, SIGNAL(authenticSuccess()), this, SLOT(queryList()));
+    // connect(m_reply, SIGNAL(authenticFinished()), this, SLOT(queryList()));
     return;
   }
 
@@ -316,6 +329,7 @@ void BooklookerRequester::queryList() {
   q.addQueryItem("dateFrom", past.toString(DATE_FORMAT));
   q.addQueryItem("dateTo", QDate(QDate::currentDate()).toString(DATE_FORMAT));
   url.setQuery(q);
+  // qDebug() << Q_FUNC_INFO << url;
   getRequest(url);
 }
 
@@ -335,5 +349,16 @@ void BooklookerRequester::queryOrder(const QString &orderId) {
   q.addQueryItem("token", getToken());
   q.addQueryItem("orderId", orderId);
   url.setQuery(q);
+  // qDebug() << Q_FUNC_INFO << url;
   getRequest(url);
+}
+
+void BooklookerRequester::authenticationRefresh() { authentication(); }
+
+const QString BooklookerRequester::getToken() {
+  QString token = qEnvironmentVariable(BOOKLOOKER_TOKEN_ENV);
+  if (token.isEmpty()) {
+    qInfo("Booklooker: no token in Environment");
+  }
+  return token;
 }

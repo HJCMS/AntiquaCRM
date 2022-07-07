@@ -260,26 +260,3 @@ const QMap<QString, QString> AbeBooksIfaceWidget::fieldTranslate() const {
   // @}
   return map;
 }
-
-const ProviderOrder AbeBooksIfaceWidget::getProviderOrder() {
-  ProviderOrder order;
-  order.setProvider(CONFIG_PROVIDER);
-  order.setProviderId(objectName());
-  int cid = m_order->getCustomerId();
-  if (cid < 1) {
-    order.setCustomerId(-1);
-    qWarning("Missing Customer Id");
-    return order;
-  }
-  order.setCustomerId(cid);
-
-  int col = 1; /**< ArticleId Cell */
-  QStringList ids;
-  for (int r = 0; r < m_order->getTableCount(); r++) {
-    QString aid = m_order->getTableData(r, col).toString();
-    if (!aid.isEmpty())
-      ids.append(aid);
-  }
-  order.setArticleIds(ids);
-  return order;
-}

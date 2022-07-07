@@ -165,6 +165,14 @@ void InventoryPrints::editPrintsEntry(int id) {
   if (id < 1)
     return;
 
+  if (m_stackedWidget->currentIndex() != 0) {
+    QMessageBox::information(
+        this, tr("Editor"),
+        tr("Cannot open the article because the tab is not in overview mode.<p>Please "
+           "close all open prints, photo and stitches first.</p>"));
+    return;
+  }
+
   QString aid = QString::number(id);
   QString condition("ip_id=");
   condition.append(aid);

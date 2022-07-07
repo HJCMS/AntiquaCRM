@@ -65,4 +65,22 @@ static const QString queryCustomerExists(const QString &c_firstname,
   return sql;
 }
 
+/**
+ * @brief Suche Tab Zurordnung für Artikelnummer
+ * Rückgabe Werte sind: 'BOOKS'|'PRINTS'|''
+ * @param aid - Article Id
+ * @return SqlQuery
+ */
+static const QString queryFindArticleSection(int aid) {
+  QString sql("SELECT (CASE WHEN ib_id>0 THEN");
+  sql.append(" 'BOOKS' ELSE 'PRINTS' END) AS section");
+  sql.append(" FROM inventory");
+  sql.append(" LEFT JOIN inventory_books ON ib_id=i_id");
+  sql.append(" LEFT JOIN inventory_prints ON ip_id=i_id");
+  sql.append(" WHERE i_id=");
+  sql.append(QString::number(aid));
+  sql.append(";");
+  return sql;
+}
+
 #endif // INVENTORY_PROVIDERSSTATEMENTS_H

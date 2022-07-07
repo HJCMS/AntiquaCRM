@@ -9,6 +9,7 @@
 #include <QMenu>
 #include <QStringList>
 #include <QStyle>
+#include <QTime>
 #include <QTimer>
 #include <QVBoxLayout>
 
@@ -47,6 +48,21 @@ ProvidersToolBar::ProvidersToolBar(QWidget *parent) : QFrame{parent} {
   connect(btn_customer, SIGNAL(clicked()), this, SIGNAL(s_customerAction()));
   connect(btn_order, SIGNAL(clicked()), this, SIGNAL(s_createOrder()));
   connect(btn_refresh, SIGNAL(clicked()), this, SIGNAL(s_refresh()));
+
+  timerId = startTimer(1000, Qt::PreciseTimer);
+}
+
+void ProvidersToolBar::timerEvent(QTimerEvent *event) {
+  --counter;
+  if (counter <= 0) {
+    counter = 300;
+    emit s_refresh();
+    return;
+  }
+  QTime t(0, 0, 0);
+  QString btn_text(tr("Refresh") + " ");
+  btn_text.append(t.addSecs(counter).toString("m:ss"));
+  btn_refresh->setText(btn_text);
 }
 
 void ProvidersToolBar::statusMessage(const QString &msg) {

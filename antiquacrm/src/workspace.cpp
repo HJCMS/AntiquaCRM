@@ -147,6 +147,9 @@ int Workspace::addInventoryProviders(int index) {
   // Auftrag/Bestellung erstellen
   connect(m_tabProviders, SIGNAL(createOrder(const ProviderOrder &)), this,
           SLOT(createOrder(const ProviderOrder &)));
+  // Einen Artikel öffnen
+  connect(m_tabProviders, SIGNAL(openEditArticle(int, const QString &)), this,
+          SLOT(editArticleEntry(int, const QString &)));
   int i = insertTab(index, m_tabProviders, tr("Providers"));
   m_tabBar->setTabData(i, m_tabProviders->isClosable());
   setTabToolTip(i, tr("Providers Inventory"));
@@ -193,6 +196,15 @@ void Workspace::editPrintsEntry(int articleId) {
     setCurrentWidget(m_tabPrints);
   } else {
     emit s_postMessage(tr("Prints tab isn't open!"));
+  }
+}
+
+void Workspace::editArticleEntry(int articleId, const QString &section) {
+  qDebug() << Q_FUNC_INFO << articleId << section;
+  if (section == "PRINTS") {
+    editPrintsEntry(articleId);
+  } else if (section == "BOOKS") {
+    editBookEntry(articleId);
   }
 }
 

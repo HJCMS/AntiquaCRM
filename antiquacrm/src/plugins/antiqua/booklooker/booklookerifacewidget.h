@@ -15,6 +15,8 @@
 #include <AntiquaInterface>
 #include <Networking>
 
+class BooklookerRequester;
+
 class ANTIQUACORE_EXPORT BooklookerIfaceWidget final
     : public Antiqua::InterfaceWidget {
   Q_OBJECT
@@ -22,13 +24,15 @@ class ANTIQUACORE_EXPORT BooklookerIfaceWidget final
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  QHash<QString, QVariant> orderData;
+  QHash<QString, QString> p_customer;
   QJsonDocument p_currentDocument;
+  BooklookerRequester *m_requester;
   const QJsonDocument customerRequest(const QJsonObject &object);
   void createOrderDataSet(const QJsonArray &array);
   void parseAddressBody(const QString &, const QJsonObject &);
 
 private Q_SLOTS:
+  void checkCustomerClicked();
   void readCurrentArticleIds();
 
 public Q_SLOTS:
@@ -40,7 +44,6 @@ public:
   BooklookerIfaceWidget(const QString &widgetId, QWidget *parent = nullptr);
   void setCustomerId(int customerId);
   const QMap<QString, QString> fieldTranslate() const;
-  const ProviderOrder getProviderOrder();
 };
 
 #endif // BOOKLOOKERIFACEWIDGET_PLUGIN_H

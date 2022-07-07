@@ -61,9 +61,11 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   setLayout(layout);
 
   // Signals
-  connect(this, SIGNAL(s_setSearchFocus()), m_searchBar, SLOT(setSearchFocus()));
+  connect(this, SIGNAL(s_setSearchFocus()), m_searchBar,
+          SLOT(setSearchFocus()));
 
-  connect(this, SIGNAL(s_setSearchFilter()), m_searchBar, SLOT(setFilterFocus()));
+  connect(this, SIGNAL(s_setSearchFilter()), m_searchBar,
+          SLOT(setFilterFocus()));
 
   connect(this, SIGNAL(s_createNewEntry()), this, SLOT(createBookEntry()));
 
@@ -107,13 +109,11 @@ void InventoryBooks::searchConvert(const QString &query) {
   if (m_searchBar->searchLength() <= minLength)
     return;
 
-  qDebug() << Q_FUNC_INFO << "SIMPLE";
   searchConvert();
 }
 
 void InventoryBooks::searchConvert() {
   QString query = m_searchBar->getSearchStatement();
-  qDebug() << Q_FUNC_INFO << query;
   if (query.length() < 1)
     return;
 
@@ -140,6 +140,17 @@ void InventoryBooks::createBookEntry() {
 }
 
 void InventoryBooks::editBookEntry(int id) {
+  if (id < 1)
+    return;
+
+  if (m_stackedWidget->currentIndex() != 0) {
+    QMessageBox::information(
+        this, tr("Editor"),
+        tr("Cannot open the article because the tab is not in overview "
+           "mode.<p>Please close all open book entries first.</p>"));
+    return;
+  }
+
   QString condition("ib_id=");
   QString ib_id = QString::number(id);
   if (!ib_id.isEmpty()) {

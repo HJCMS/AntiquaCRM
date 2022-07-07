@@ -30,6 +30,7 @@ private:
   void parseAddressBody(const QString &, const QJsonObject &);
 
 private Q_SLOTS:
+  void checkCustomerClicked() { /* TODO */ };
   void readCurrentArticleIds();
 
 public Q_SLOTS:
@@ -42,7 +43,6 @@ public:
   AbeBooksIfaceWidget(const QString &widgetId, QWidget *parent = nullptr);
   void setCustomerId(int customerId);
   const QMap<QString, QString> fieldTranslate() const;
-  const ProviderOrder getProviderOrder();
 };
 
 #endif // ABEBOOKSIFACEWIDGET_PLUGIN_H

@@ -54,6 +54,8 @@ Antiqua::InterfaceWidget *WHSoft::addWidget(const QString &widgetId,
                                             QWidget *parent) {
   m_whsoftWidget = new WHSoftWidget(widgetId, parent);
   m_whsoftWidget->setObjectName(widgetId);
+  m_whsoftWidget->setProviderName(provider());
+  m_whsoftWidget->setOrderId(widgetId);
   return m_whsoftWidget;
 }
 

@@ -96,7 +96,7 @@ const QJsonObject SearchFilterBox::getFilter(int index) {
 SearchLineEdit::SearchLineEdit(QWidget *parent) : QLineEdit{parent} {
   setClearButtonEnabled(true);
   setPlaceholderText(tr("Search for"));
-
+  m_textCodec = QTextCodec::codecForName("UTF-8");
   m_text_validator = new QRegExpValidator(strPattern, this);
   m_num_validator = new QRegExpValidator(numPattern, this);
   m_article_validator = new QRegExpValidator(articlePattern, this);
@@ -110,6 +110,12 @@ void SearchLineEdit::setValidation(SearchLineEdit::Validator v) {
     setValidator(m_num_validator);
   else
     setValidator(m_text_validator);
+}
+
+const QString SearchLineEdit::utf8() {
+  // TODO
+  QString txt = text().trimmed();
+  return txt.replace("'","");
 }
 
 BookSearchBar::BookSearchBar(QWidget *parent) : QToolBar{parent} {
@@ -185,7 +191,7 @@ const QString BookSearchBar::prepareFieldSet(const QString &fieldname,
 const QString BookSearchBar::getTitleSearch(const QStringList &fields) {
   QString query;
   // Standard Suchfeld
-  if (m_searchLeft->text().length() >= 2) {
+  if (m_searchLeft->utf8().length() >= 2) {
     QStringList bufferLeft;
     foreach (QString f, fields) {
       if (f != "ib_author")
@@ -196,7 +202,7 @@ const QString BookSearchBar::getTitleSearch(const QStringList &fields) {
     query.append(")");
   }
   // Autoren Suchfeld
-  if (m_searchRight->isEnabled() && m_searchRight->text().length() >= 2) {
+  if (m_searchRight->isEnabled() && m_searchRight->utf8().length() >= 2) {
     QStringList bufferRight;
     if (m_searchRight->placeholderText().contains(tr("Keyword")))
       bufferRight << prepareFieldSet("ib_keyword", p_currentRight);
@@ -282,8 +288,8 @@ void BookSearchBar::filterChanged(int index) {
 }
 
 void BookSearchBar::prepareSearchQuery() {
-  if (m_searchLeft->isEnabled() && m_searchLeft->text().length() > minLength) {
-    QString left = m_searchLeft->text();
+  if (m_searchLeft->isEnabled() && m_searchLeft->utf8().length() > minLength) {
+    QString left = m_searchLeft->utf8();
     left = left.replace(stripPattern, "");
     left = left.replace(trimPattern, " ");
     p_currentLeft = left.trimmed();
@@ -292,8 +298,8 @@ void BookSearchBar::prepareSearchQuery() {
   }
 
   if (m_searchRight->isEnabled() &&
-      m_searchRight->text().length() > minLength) {
-    QString right = m_searchRight->text();
+      m_searchRight->utf8().length() > minLength) {
+    QString right = m_searchRight->utf8();
     right = right.replace(stripPattern, "");
     right = right.replace(trimPattern, " ");
     p_currentRight = right.trimmed();
@@ -318,9 +324,9 @@ void BookSearchBar::setFilterFocus() {
 
 int BookSearchBar::searchLength() {
   if (m_searchLeft->isEnabled())
-    return m_searchLeft->text().length();
+    return m_searchLeft->utf8().length();
   else
-    return m_searchRight->text().length();
+    return m_searchRight->utf8().length();
 }
 
 const QString BookSearchBar::getSearchStatement() {
@@ -344,28 +350,28 @@ const QString BookSearchBar::getSearchStatement() {
   }
   // Artikel Nummersuche (107368,115110)
   if (js.value("search").toString() == "articleId") {
-    QString s = m_searchLeft->text().trimmed();
+    QString s = m_searchLeft->utf8();
     s.replace(articlePattern, "");
     query = "ib_id IN (" + s + ")";
     return query;
   }
   // ISBN Suche
   if (js.value("search").toString() == "isbn") {
-    QString s = m_searchLeft->text().trimmed();
+    QString s = m_searchLeft->utf8();
     s.replace(isbnPattern, "");
     query = "ib_isbn=" + s;
     return query;
   }
   // Publisher
   if (js.value("search").toString() == "publisher") {
-    QString s = m_searchLeft->text().trimmed();
+    QString s = m_searchLeft->utf8();
     s.replace(stripJokers, "%");
     query = "ib_publisher ILIKE '" + s + "%'";
     return query;
   }
   // Lager & Stichwortsuche
   if (js.value("search").toString() == "storage") {
-    QString s = m_searchLeft->text().trimmed();
+    QString s = m_searchLeft->utf8();
     s.replace(stripJokers, "%");
     query = ("ib_count>0 AND (sl_storage ILIKE '");
     query.append(s + "' OR sl_identifier ILIKE '" + s + "%')");

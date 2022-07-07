@@ -57,6 +57,8 @@ Antiqua::InterfaceWidget *Booklooker::addWidget(const QString &widgetId,
                                                 QWidget *parent) {
   m_blIfaceWidget = new BooklookerIfaceWidget(widgetId, parent);
   m_blIfaceWidget->setObjectName(widgetId);
+  m_blIfaceWidget->setProviderName(provider());
+  m_blIfaceWidget->setOrderId(widgetId);
   return m_blIfaceWidget;
 }
 
@@ -64,13 +66,11 @@ const QString Booklooker::provider() const { return QString(CONFIG_PROVIDER); }
 
 const QString Booklooker::configGroup() const { return QString(CONFIG_GROUP); }
 
+//#if PLUGIN_BOOKLOOKER_DEBUG
+//  prepareJsonListResponse(testFile());
+//  return;
+//#endif
 void Booklooker::queryMenueEntries() {
-
-#if PLUGIN_BOOKLOOKER_DEBUG
-  prepareJsonListResponse(testFile());
-  return;
-#endif
-
   BooklookerRequester *req = new BooklookerRequester(this);
   req->setObjectName(CONFIG_PROVIDER);
   connect(req, SIGNAL(response(const QJsonDocument &)), this,

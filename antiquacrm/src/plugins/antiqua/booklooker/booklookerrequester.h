@@ -5,15 +5,15 @@
 #ifndef BOOKLOOKERQUERY_PLUGIN_H
 #define BOOKLOOKERQUERY_PLUGIN_H
 
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValue>
 #include <QList>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QObject>
 #include <QSslError>
-#include <QJsonArray>
-#include <QJsonObject>
-#include <QJsonValue>
 #include <QUrl>
 
 #include <AntiquaCRM>
@@ -69,9 +69,14 @@ private Q_SLOTS:
 
 Q_SIGNALS:
   /**
-   * @brief Authentic Proccess Finished
+   * @brief Authentic Process is Required
    */
-  void authenticSuccess();
+  void authenticFinished();
+
+  /**
+   * @brief Error Messages
+   */
+  void errorMessage(int code, const QString &msg);
 
   /**
    * @brief requestFinished
@@ -83,10 +88,12 @@ Q_SIGNALS:
    * @brief responsed data
    */
   void response(const QJsonDocument &doc);
+  void authenticResponse(const QJsonDocument &doc);
 
 public Q_SLOTS:
   void queryList();
   void queryOrder(const QString &purchaseId);
+  void authenticationRefresh();
 
 public:
   explicit BooklookerRequester(QObject *parent = nullptr);

@@ -8,6 +8,9 @@
 #include "providersstatements.h"
 #include "providerstoolbar.h"
 #include "providerstreeview.h"
+// Utils
+#include "eucountries.h"
+#include "genderbox.h"
 
 #include <QDebug>
 #include <QMessageBox>
@@ -158,7 +161,7 @@ void InventoryProviders::queryOrder(const QString &provider,
   if (p_providerList.count() > 0 && !p_providerList.contains(provider))
     return;
 
-  qDebug() << Q_FUNC_INFO << provider << orderId;
+  // qDebug() << Q_FUNC_INFO << provider << orderId;
 
   if (tabExists(orderId))
     return;
@@ -174,6 +177,10 @@ void InventoryProviders::queryOrder(const QString &provider,
               SLOT(createNewCustomer(const QJsonDocument &)));
       connect(w, SIGNAL(checkArticleIds(QList<int> &)), this,
               SLOT(checkArticleExists(QList<int> &)));
+      connect(w, SIGNAL(errorResponse(int, const QString &)), this,
+              SLOT(pluginError(int, const QString &)));
+      connect(w, SIGNAL(openArticle(int)), this,
+              SLOT(checkOpenEditArticle(int)));
 
       m_pageView->addPage(w, orderId);
 
@@ -211,6 +218,7 @@ void InventoryProviders::createNewCustomer(const QJsonDocument &doc) {
     qDebug() << Q_FUNC_INFO << doc;
   }
 
+  EUCountries countries;
   QJsonObject obj = doc.object();
   QSqlRecord rec = m_sql->record("customers");
   QJsonObject::iterator it; // Iterator
@@ -218,6 +226,25 @@ void InventoryProviders::createNewCustomer(const QJsonDocument &doc) {
     QJsonValue val = it.value();
     if (rec.contains(it.key()) && !val.toString().isEmpty()) {
       QSqlField field = rec.field(it.key());
+      // Ein Land ist zwingend erforderlich!
+      if (field.name() == "c_country") {
+        params.append(field.name());
+        QString cc(val.toString().trimmed());
+        if (cc.length() == 2) {
+          QString cName = countries.name(cc);
+          values.append("'" + (cName.isEmpty() ? tr("Europe") : cName) + "'");
+        } else {
+          values.append("'" + tr("Europe") + "'");
+        }
+        continue;
+      }
+      // Suche Geschlecht
+      if (field.name() == "c_gender") {
+        params.append(field.name());
+        int i = Gender::indexByString(val.toString());
+        values.append(QString::number(i));
+        continue;
+      }
       params.append(field.name());
       if (field.type() == QVariant::Int) {
         values.append(val.toString());
@@ -339,13 +366,32 @@ void InventoryProviders::checkArticleExists(QList<int> &list) {
   m_toolBar->enableOrderButton(exists);
 }
 
+void InventoryProviders::checkOpenEditArticle(int aid) {
+  if (aid < 1)
+    return;
+
+  QSqlQuery q = m_sql->query(queryFindArticleSection(aid));
+  if (q.size() > 0) {
+    q.next();
+    QString section = q.value("section").toString();
+    if (!section.isEmpty())
+      emit openEditArticle(aid, section);
+  }
+}
+
 void InventoryProviders::createEditOrders() {
   if (current_cid < 1)
     return;
 
   Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
   if (tab != nullptr && tab->getCustomerId() == current_cid) {
-    ProviderOrder pData = tab->getProviderOrder();
+    QString id = tab->getOrderId();
+    QString provider = tab->getProviderName();
+    if (id.isEmpty() || provider.isEmpty()) {
+      qWarning("Missing valid Interface Properties!");
+      return;
+    }
+    ProviderOrder pData = tab->getProviderOrder(provider, id);
     if (pData.customerId() > 0 && pData.customerId() == current_cid) {
       emit createOrder(pData);
     } else {
@@ -376,6 +422,13 @@ void InventoryProviders::hasResponsed(bool errors) {
   } else {
     m_toolBar->statusMessage(tr("successfully"));
   }
+}
+
+void InventoryProviders::pluginError(int code, const QString &msg) {
+  if (code == 0)
+    m_toolBar->statusMessage(msg);
+
+  qDebug() << Q_FUNC_INFO << code << msg;
 }
 
 void InventoryProviders::onEnterChanged() {

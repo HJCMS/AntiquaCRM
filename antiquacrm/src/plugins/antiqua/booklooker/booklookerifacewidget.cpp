@@ -10,22 +10,26 @@
 
 BooklookerIfaceWidget::BooklookerIfaceWidget(const QString &widgetId,
                                              QWidget *parent)
-    : Antiqua::InterfaceWidget{widgetId, parent} {}
+    : Antiqua::InterfaceWidget{widgetId, parent} {
+  m_requester = new BooklookerRequester(this);
+  m_requester->setObjectName("requester_" + objectName());
+  connect(m_requester, SIGNAL(errorMessage(int, const QString &)), this,
+          SIGNAL(errorResponse(int, const QString &)));
+
+  connect(m_requester, SIGNAL(response(const QJsonDocument &)), this,
+          SLOT(setContent(const QJsonDocument &)));
+}
 
 const QJsonDocument
-BooklookerIfaceWidget::customerRequest(const QJsonObject &obj) {
+BooklookerIfaceWidget::customerRequest(const QJsonObject &object) {
+  Q_UNUSED(object);
   QJsonObject customer;
   customer.insert("provider", CONFIG_PROVIDER);
   customer.insert("orderid", objectName().trimmed());
   customer.insert("type", "customer_request");
-  customer.insert("c_firstname", obj["firstName"]);
-  orderData.insert("c_firstname", obj["firstName"]);
-  customer.insert("c_lastname", obj["name"]);
-  orderData.insert("c_lastname", obj["name"]);
-  customer.insert("c_postalcode", obj["zip"]);
-  orderData.insert("c_postalcode", obj["zip"]);
-  customer.insert("c_location", obj["city"]);
-  orderData.insert("c_location", obj["city"]);
+  foreach (QString f, m_order->customerSearchFields()) {
+    customer.insert(f, p_customer.value(f));
+  }
   return QJsonDocument(customer);
 }
 
@@ -39,7 +43,8 @@ void BooklookerIfaceWidget::createOrderDataSet(const QJsonArray &array) {
       QJsonObject article = (*at).toObject();
       int row = m_order->getTableCount();
       m_order->setTableCount((m_order->getTableCount() + 1));
-      m_order->setTableData(row, 0, windowTitle());
+      qint64 order_id = article.value("orderItemId").toInt();
+      m_order->setTableData(row, 0, QString::number(order_id));
       m_order->setTableData(row, 1, article.value("orderNo"));
       qint64 mount = article.value("amount").toInt();
       m_order->setTableData(row, 2, QString::number(mount));
@@ -51,28 +56,56 @@ void BooklookerIfaceWidget::createOrderDataSet(const QJsonArray &array) {
 
 void BooklookerIfaceWidget::parseAddressBody(const QString &key,
                                              const QJsonObject &obj) {
-  QStringList buffer;
+  QStringList addressBody;
+  QJsonObject customerData;
+  // Käufer*in anzeigefeld
   QString person;
-  QString gender(obj.value("title").toString().trimmed());
-  if (!gender.isEmpty()) {
-    person.append(gender);
+  QString c_gender = obj.value("title").toString().trimmed();
+  if (!c_gender.isEmpty()) {
+    person.append(c_gender);
     person.append(" ");
+    m_order->setValue("c_gender", c_gender);
+    p_customer.insert("c_gender", c_gender);
   }
-  person.append(obj.value("firstName").toString().trimmed());
+  QString c_firstname = obj.value("firstName").toString().trimmed();
+  m_order->setValue("c_firstname", c_firstname);
+  p_customer.insert("c_firstname", c_firstname);
+  customerData.insert("c_firstname", c_firstname);
+
+  person.append(c_firstname);
   person.append(" ");
-  person.append(obj.value("name").toString().trimmed());
-  buffer.append(person);
+  QString c_lastname = obj.value("name").toString().trimmed();
+  m_order->setValue("c_lastname", c_lastname);
+  p_customer.insert("c_lastname", c_lastname);
+  customerData.insert("c_lastname", c_lastname);
+  person.append(c_lastname);
+  addressBody << QString(c_firstname + " " + c_lastname);
   m_order->setValue("person", person);
 
-  QString street(obj.value("street").toString().trimmed());
-  buffer.append(street);
+  QString c_street = obj.value("street").toString().trimmed();
+  m_order->setValue("c_street", c_street);
+  p_customer.insert("c_street", c_street);
+  addressBody << c_street;
 
-  QString location(obj.value("zip").toString().trimmed());
-  location.append(" ");
-  location.append(obj.value("city").toString().trimmed());
-  buffer.append(location);
-  m_order->setValue(key, buffer.join("\n"));
-  buffer.clear();
+  QString c_postalcode = obj.value("zip").toString().trimmed();
+  m_order->setValue("c_postalcode", c_postalcode);
+  p_customer.insert("c_postalcode", c_postalcode);
+
+  QString c_location = obj.value("city").toString().trimmed();
+  m_order->setValue("c_location", c_location);
+  p_customer.insert("c_location", c_location);
+  addressBody << QString(c_postalcode + " " + c_location);
+
+  QString c_country = obj.value("country").toString().trimmed();
+  if (c_country.isEmpty())
+    c_country = tr("Germany");
+
+  m_order->setValue("c_country", c_country);
+  p_customer.insert("c_country", c_country);
+
+  // Adresse einfügen
+  m_order->setValue(key, addressBody.join("\n"));
+  addressBody.clear();
 
   // Sende SQL Abfrage an Hauptfenster!
   if (key == "c_postal_address") {
@@ -80,6 +113,12 @@ void BooklookerIfaceWidget::parseAddressBody(const QString &key,
     if (!qDoc.isEmpty())
       emit checkCustomer(qDoc);
   }
+}
+
+void BooklookerIfaceWidget::checkCustomerClicked() {
+  QJsonDocument qDoc = customerRequest(QJsonObject());
+  if (!qDoc.isEmpty())
+    emit checkCustomer(qDoc);
 }
 
 void BooklookerIfaceWidget::readCurrentArticleIds() {
@@ -90,7 +129,7 @@ void BooklookerIfaceWidget::readCurrentArticleIds() {
 
 void BooklookerIfaceWidget::createCustomerDocument() {
   if (p_currentDocument.isEmpty()) {
-    qWarning("Current Json Document is empty!");
+    qDebug() << Q_FUNC_INFO << "Current Json Document is empty!";
     return;
   }
 
@@ -104,69 +143,86 @@ void BooklookerIfaceWidget::createCustomerDocument() {
   QJsonObject customer;
   customer.insert("provider", QJsonValue(CONFIG_PROVIDER));
   customer.insert("type", "customer_create");
-  QHashIterator<QString, QVariant> it(orderData);
+  QHashIterator<QString, QString> it(p_customer);
   while (it.hasNext()) {
     it.next();
-    customer.insert(it.key(), it.value().toString());
+    customer.insert(it.key(), it.value());
   }
-  customer.insert("c_email", obj.value("email").toString());
+
+  if (obj.contains("email")) {
+    QString mail = obj.value("email").toString().trimmed();
+    customer.insert("c_email_0", mail);
+    m_order->setValue("c_email_0", mail);
+  }
+
+  if (obj.contains("phone")) {
+    QString phone = obj.value("phone").toString().trimmed();
+    customer.insert("c_phone_0", phone);
+    m_order->setPhone("c_phone_0", phone);
+  }
 
   QString pAddress = m_order->getValue("c_postal_address").toString();
   if (!pAddress.isEmpty())
     customer.insert("c_postal_address", pAddress);
 
-  // emit createCustomer(QJsonDocument(customer));
+  emit createCustomer(QJsonDocument(customer));
 }
 
 void BooklookerIfaceWidget::setContent(const QJsonDocument &doc) {
-  if (QJsonValue(doc["status"]).toString() == "OK") {
-    // Speichern
-    p_currentDocument = doc;
-    QJsonArray array = QJsonValue(doc["returnValue"]).toArray();
-    for (int i = 0; i < array.size(); i++) {
-      if (array[i].isObject()) {
-        QJsonObject obj = array[i].toObject();
-        QJsonObject::iterator it;
-        for (it = obj.begin(); it != obj.end(); ++it) {
-          QString f = it.key();
-          QJsonValue val = it.value();
-          if (f == "invoiceAddress") {
-            parseAddressBody("c_postal_address", it->toObject());
-            continue;
-          } else if (f == "orderItems") {
-            createOrderDataSet(val.toArray());
-          }
-          if (!f.isEmpty() && !val.toString().isEmpty()) {
-            m_order->setValue(sqlParam(f), val.toVariant());
-          }
+  if (QJsonValue(doc["status"]).toString() == "NOK") {
+    QString value = QJsonValue(doc["returnValue"]).toString();
+    if (value == "INVALID_ORDERID") {
+      qDebug() << Q_FUNC_INFO << "INVALID_ORDERID";
+    } else if (value == "TOKEN_EXPIRED") {
+      qDebug() << Q_FUNC_INFO << "TOKEN_EXPIRED";
+      m_requester->authenticationRefresh();
+    } else {
+      qWarning("Booklooker setContent Error: %s", qPrintable(value));
+    }
+    return;
+  }
+  // Speichern
+  p_currentDocument = doc;
+  QJsonArray array = QJsonValue(doc["returnValue"]).toArray();
+  for (int i = 0; i < array.size(); i++) {
+    if (array[i].isObject()) {
+      QJsonObject obj = array[i].toObject();
+      QJsonObject::iterator it;
+      for (it = obj.begin(); it != obj.end(); ++it) {
+        QString f = it.key();
+        QJsonValue val = it.value();
+        if (f == "invoiceAddress") {
+          parseAddressBody("c_postal_address", it->toObject());
+          continue;
+        } else if (f == "orderItems") {
+          createOrderDataSet(val.toArray());
+          continue;
         }
+        // qDebug() << f << sqlParam(f) << val.toVariant();
+        m_order->setValue(sqlParam(f), val.toVariant());
       }
     }
   }
 }
 
+//#if PLUGIN_BOOKLOOKER_DEBUG
+//  setContent(testFile());
+//  return;
+//#endif
 void BooklookerIfaceWidget::createOrderRequest(const QString &orderId) {
-#if PLUGIN_BOOKLOOKER_DEBUG
-  setContent(testFile());
-  return;
-#endif
-
-  BooklookerRequester *req = new BooklookerRequester(this);
-  req->setObjectName(CONFIG_PROVIDER);
-  connect(req, SIGNAL(response(const QJsonDocument &)), this,
-          SLOT(setContent(const QJsonDocument &)));
-
-  req->queryList();
+  m_requester->queryOrder(orderId);
 }
 
 void BooklookerIfaceWidget::setCustomerId(int customerId) {
-  qDebug() << Q_FUNC_INFO << "TODO" << customerId;
+  if (customerId > 0) {
+    currentCustomerId = customerId;
+    m_order->setCustomerId(customerId);
+  }
 }
 
 const QMap<QString, QString> BooklookerIfaceWidget::fieldTranslate() const {
   QMap<QString, QString> map;
   // public.customers @{
-  map.insert("buyerUsername", "a_customer_id");
   map.insert("title", "c_gender");
   map.insert("firstName", "c_firstname");
   map.insert("name", "c_lastname");
@@ -176,21 +232,29 @@ const QMap<QString, QString> BooklookerIfaceWidget::fieldTranslate() const {
   map.insert("country", "c_country");
   map.insert("phone", "c_phone_0");
   map.insert("email", "c_email_0");
+  map.insert("orderId", "o_provider_order_id");
+  map.insert("orderDate", "o_since");
   // @}
+
+  /** Unused
+   * @{
+    map.insert("buyerPositiveRatingPercentage", "");
+    map.insert("buyerTotalRatingNumber", "");
+    map.insert("buyerUsername", "");
+    map.insert("calculatedShippingCost", "");
+    map.insert("currentProvisionNet", "");
+    map.insert("originalProvisionNet", "");
+    map.insert("paymentId", "");
+    map.insert("status", "");
+   * @}
+   */
 
   // public.article_orders @{
   map.insert("orderNo", "a_article_id");
+  map.insert("orderItemId", "o_provider_purchase_id");
   map.insert("amount", "a_count");
   map.insert("singlePrice", "a_sell_price");
   map.insert("orderTitle", "a_title");
   // @}
   return map;
-}
-
-const ProviderOrder BooklookerIfaceWidget::getProviderOrder() {
-  ProviderOrder order;
-  order.setProvider(CONFIG_PROVIDER);
-  order.setProviderId(objectName());
-  qDebug() << Q_FUNC_INFO << "TODO";
-  return order;
 }

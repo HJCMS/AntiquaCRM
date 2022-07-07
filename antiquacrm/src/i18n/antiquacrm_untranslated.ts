@@ -35,22 +35,38 @@
 <context>
     <name>Antiqua::PurchaseOverview</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+92"/>
-        <source>Customer ID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
+        <location filename="../core/antiquacore/interface.cpp" line="+120"/>
         <source>Purchaser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>check articles</source>
+        <location line="+2"/>
+        <location line="+7"/>
+        <source>execute check</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="-6"/>
+        <source>Send query if this customer exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-17"/>
+        <source>Customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>Check Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Create a search query to see if all items are available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
         <source>billing address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -78,7 +94,7 @@
 <context>
     <name>Antiqua::PurchaserOrderTable</name>
     <message>
-        <location line="-117"/>
+        <location line="-139"/>
         <source>Provider</source>
         <translation type="unfinished"></translation>
     </message>
@@ -108,8 +124,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>copy article id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>open article id</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -637,6 +658,32 @@
     <message>
         <location line="+11"/>
         <source>and Authors</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BooklookerIfaceWidget</name>
+    <message>
+        <location filename="../plugins/antiqua/booklooker/booklookerifacewidget.cpp" line="+101"/>
+        <source>Germany</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BooklookerRequester</name>
+    <message>
+        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+155"/>
+        <source>Missing API Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Authentication failure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Server down</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2363,6 +2410,16 @@
         <source>Books</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+131"/>
+        <source>Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Cannot open the article because the tab is not in overview mode.&lt;p&gt;Please close all open book entries first.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>InventoryCustomers</name>
@@ -2402,11 +2459,21 @@
         <source>Prints</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+124"/>
+        <source>Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Cannot open the article because the tab is not in overview mode.&lt;p&gt;Please close all open prints, photo and stitches first.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+26"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+29"/>
         <source>Providers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2421,7 +2488,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+230"/>
+        <location line="+140"/>
+        <location line="+2"/>
+        <source>Europe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+112"/>
         <source>customer found in database!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2431,7 +2504,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+77"/>
         <source>Missing valid Customer Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2446,13 +2519,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-296"/>
+        <location line="-339"/>
         <location line="+12"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+262"/>
+        <location line="+305"/>
         <source>current tab and customer id not equal</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2616,7 +2689,7 @@
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../custom/utils/lineedit.cpp" line="+92"/>
+        <location filename="../custom/utils/lineedit.cpp" line="+94"/>
         <source>Suggestions available</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3874,7 +3947,7 @@
 <context>
     <name>PrintsSearchBar</name>
     <message>
-        <location filename="../inventory/prints/inventoryprints.cpp" line="-21"/>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="-146"/>
         <source>Title or Author</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4010,38 +4083,43 @@
     <message>
         <location filename="../custom/settings/providersettings.cpp" line="+24"/>
         <location line="+41"/>
+        <location line="+35"/>
         <source>Protocoll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-36"/>
+        <location line="-71"/>
         <location line="+41"/>
+        <location line="+35"/>
         <source>Domain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-36"/>
+        <location line="-71"/>
         <location line="+46"/>
+        <location line="+30"/>
         <source>API Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-42"/>
+        <location line="-72"/>
         <source>API Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+18"/>
+        <location line="+40"/>
         <source>Loginname</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-36"/>
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+15"/>
+        <location line="+39"/>
         <source>API Port</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4077,7 +4155,7 @@
 <context>
     <name>ProvidersToolBar</name>
     <message>
-        <location filename="../inventory/providers/providerstoolbar.cpp" line="+25"/>
+        <location filename="../inventory/providers/providerstoolbar.cpp" line="+26"/>
         <source>Open view/edit Customer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4098,11 +4176,12 @@
     </message>
     <message>
         <location line="+5"/>
+        <location line="+22"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-21"/>
         <source>refreshing orders list</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4118,29 +4197,29 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../custom/utils/genderbox.cpp" line="+12"/>
+        <location filename="../custom/utils/genderbox.cpp" line="+38"/>
         <source>Without disclosures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <location line="+19"/>
+        <location line="-11"/>
+        <location line="+12"/>
         <source>Male</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-18"/>
-        <location line="+21"/>
+        <location line="-9"/>
+        <location line="+10"/>
         <source>Female</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-20"/>
+        <location line="+1"/>
         <source>Various</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="-13"/>
         <source>Mr.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4820,7 +4899,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+22"/>
         <source>Providers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4846,7 +4925,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+71"/>
         <source>Cant close this tab, unsafed changes!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4877,7 +4956,7 @@
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-206"/>
+        <location line="-218"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>

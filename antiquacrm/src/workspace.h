@@ -105,6 +105,15 @@ private Q_SLOTS:
   void editPrintsEntry(int articleId);
 
   /**
+   * @brief Wird von InventoryProvider ausgelöst
+   * Suche mit Artikel Nummer und "section" nach dem Tab das geöffnet werden
+   * soll.
+   * @param articleId
+   * @param section    'BOOKS'|'PRINTS'|''
+   */
+  void editArticleEntry(int articleId, const QString &section);
+
+  /**
    * @brief Auftrag von Kunden ID erstellen
    */
   void editCustomerEntry(int customerId);

@@ -11,6 +11,7 @@
 #include <QJsonObject>
 #include <QLineEdit>
 #include <QObject>
+#include <QTextCodec>
 #include <QRegExpValidator>
 #include <QRegularExpression>
 #include <QToolBar>
@@ -64,6 +65,11 @@ class SearchLineEdit final : public QLineEdit {
 
 private:
   /**
+   * @brief System TextCodec
+   */
+  QTextCodec *m_textCodec;
+
+  /**
    * @brief Zeichenketten Validierung
    */
   const QRegExp strPattern = QRegExp("^\\S{2}.+");
@@ -85,6 +91,13 @@ public:
   enum Validator { Strings = 0, Numeric = 1, Article = 2 };
   explicit SearchLineEdit(QWidget *parent = nullptr);
   void setValidation(SearchLineEdit::Validator);
+
+  /**
+   * @brief Die Datenbankeinträge sind in UTF-8
+   * @return utf8::String
+   */
+  const QString utf8();
+
 };
 Q_DECLARE_METATYPE(SearchLineEdit::Validator)
 

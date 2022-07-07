@@ -34,6 +34,10 @@
 #define BOOKLOOKER_API_VERSION "2.0"
 #endif
 
+#ifndef BOOKLOOKER_AUTH_PATH
+#define BOOKLOOKER_AUTH_PATH "/2.0/authenticate"
+#endif
+
 #ifndef BOOKLOOKER_TOKEN_ENV
 #define BOOKLOOKER_TOKEN_ENV "BOOKLOOKER_TOKEN"
 #endif

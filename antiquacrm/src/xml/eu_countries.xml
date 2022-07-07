@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   https://ec.europa.eu/taxation_customs/vies/vieshome.do?selectedLanguage=DE
-  https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32006L0112&from=DE#d1e1606-1-1
+  https://de.wikipedia.org/wiki/Listen_der_ISO-639-3-Codes
+  https://www.loc.gov/standards/iso639-2/ascii_8bits.html
+  countryCode = ISO 3166-1 Alpha-2
 -->
-<itemlist>
+<itemlist iso="3166-1">
   <item countryCode="BE">Belgien</item>
   <item countryCode="BG">Bulgarien</item>
   <item countryCode="DK">Dänemark</item>

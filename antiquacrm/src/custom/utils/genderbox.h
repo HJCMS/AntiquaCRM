@@ -23,6 +23,8 @@ public:
   const QString value(int);
   const QStringList all();
   const QString formOfAddress(const QString &search);
+  static const QHash<int, QString> genderData();
+  static int indexByString(const QString &search);
 };
 
 class GenderBox final : public UtilsMain {

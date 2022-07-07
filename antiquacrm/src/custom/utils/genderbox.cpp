@@ -8,12 +8,7 @@
 #include <QDebug>
 #include <QHBoxLayout>
 
-Gender::Gender() {
-  p_data.insert(0, QObject::tr("Without disclosures")); /**< Ohne Angabe */
-  p_data.insert(1, QObject::tr("Male"));                /**< Männlich */
-  p_data.insert(2, QObject::tr("Female"));              /**< Weiblich */
-  p_data.insert(3, QObject::tr("Various"));             /**< Diverse */
-}
+Gender::Gender() { p_data = genderData(); }
 
 int Gender::size() { return p_data.size(); }
 
@@ -36,6 +31,40 @@ const QString Gender::formOfAddress(const QString &search) {
     return QObject::tr("Mrs");
 
   return QString();
+}
+
+const QHash<int, QString> Gender::genderData() {
+  QHash<int, QString> h;
+  h.insert(0, QObject::tr("Without disclosures")); /**< Ohne Angabe */
+  h.insert(1, QObject::tr("Male"));                /**< Männlich */
+  h.insert(2, QObject::tr("Female"));              /**< Weiblich */
+  h.insert(3, QObject::tr("Various"));             /**< Diverse */
+  return h;
+}
+
+int Gender::indexByString(const QString &search) {
+  if (search.contains("Mrs", Qt::CaseInsensitive))
+    return 2;
+  else if (search.contains("Mr", Qt::CaseInsensitive))
+    return 1;
+  else if (search.contains("herr", Qt::CaseInsensitive))
+    return 1;
+  else if (search.contains("frau", Qt::CaseInsensitive))
+    return 2;
+  else if (search.contains("fräulein", Qt::CaseInsensitive))
+    return 2;
+  else if (search.contains("diverse", Qt::CaseInsensitive))
+    return 3;
+
+  QString buf = search.trimmed();
+  QHashIterator<int, QString> it(genderData());
+  while (it.hasNext()) {
+    it.next();
+    if (it.value().contains(buf, Qt::CaseInsensitive))
+      return it.key();
+  }
+  buf.clear();
+  return 0;
 }
 
 GenderBox::GenderBox(QWidget *parent) : UtilsMain{parent} {

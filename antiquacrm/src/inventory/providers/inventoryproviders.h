@@ -183,6 +183,14 @@ private Q_SLOTS:
   void checkArticleExists(QList<int> &);
 
   /**
+   * @brief Suche zugehörigkeit der Artikel Nummer
+   * Sucht die Atrikel Nummer in den Inventory Tabellen und zeigt je nach
+   * Tabelle da dazu gehörige Tab mit dem Eintrag an.
+   * @param aid Artikel Nummer
+   */
+  void checkOpenEditArticle(int aid);
+
+  /**
    * @brief Knopf Auftrag erstellen verarbeiten.
    * Wird von Signal @ref ProvidersToolBar::s_createOrder aufgerufen und sucht
    * zuerst nach @ref customerId, prüft ob diese Gesetzt ist. Danach wird die Id
@@ -219,7 +227,14 @@ private Q_SLOTS:
    * @brief Anfrage Antwort Status
    * @param errors  true = Antwortete mit fehlern!
    */
-  void hasResponsed(bool errors);
+  Q_DECL_DEPRECATED void hasResponsed(bool errors);
+
+  /**
+   * @brief Plugin Fehlermeldungen
+   * @param code  Status Code
+   * @param msg   Nachricht
+   */
+  void pluginError(int code, const QString &msg);
 
 Q_SIGNALS:
   /**
@@ -227,6 +242,12 @@ Q_SIGNALS:
    * @see InventoryCustomers::editCustomer
    */
   void openEditCustomer(int cid);
+
+  /**
+   * @brief Einen Artikel öffnen
+   * @param aid
+   */
+  void openEditArticle(int aid, const QString &section);
 
   /**
    * @brief Signal - Auftrag erstellen und an Elternfenster senden.
@@ -255,7 +276,6 @@ public:
    * @param count     - Aktuelle Anzahl im Bestand
    */
   bool updateArticleCount(int articleId, int count);
-
 };
 
 #endif // INVENTORY_PROVIDERS_H

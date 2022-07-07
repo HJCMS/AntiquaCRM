@@ -36,6 +36,7 @@ private:
   void parseAddressBody(const QString &section, const QJsonObject &object);
 
 private Q_SLOTS:
+  void checkCustomerClicked() { /* TODO */ };
   void readCurrentArticleIds();
 
 public Q_SLOTS:
@@ -66,11 +67,6 @@ public:
    * übersetzt werden.
    */
   const QMap<QString, QString> fieldTranslate() const;
-
-  /**
-   * @brief Komplette Bestellung abfragen.
-   */
-  const ProviderOrder getProviderOrder();
 };
 
 #endif // WHSOFTWIDGET_PLUGIN_H
