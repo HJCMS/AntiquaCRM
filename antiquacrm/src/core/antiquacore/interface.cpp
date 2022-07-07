@@ -161,7 +161,7 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
   m_summary = new QListWidget(m_tabWidget);
   m_summary->setEditTriggers(QAbstractItemView::NoEditTriggers);
   m_summary->setTabKeyNavigation(false);
-  m_tabWidget->insertTab(2, m_summary, qi1, tr("summary"));
+  m_tabWidget->insertTab(2, m_summary, qi1, tr("Additional Information"));
 
   m_tabWidget->setCurrentIndex(0);
   m_overview->setLayout(viewLayout);

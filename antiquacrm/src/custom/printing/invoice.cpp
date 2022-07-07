@@ -67,8 +67,9 @@ void Invoice::constructSubject() {
   cursor.insertText(tr("Customer-ID:") + " ");
   cursor.insertText(p_customerId);
   cursor.insertText("\n");
-  cursor.insertText(tr("Delivery-ID:") + " ");
-  cursor.insertText(p_deliveryId);
+  cursor.insertText(tr("Date:") + " ");
+  QDate d = QDate::currentDate();
+  cursor.insertText(d.toString("dd.MM.yyyy"));
   cursor.insertText("\n");
   body->document()->setModified(true);
 }

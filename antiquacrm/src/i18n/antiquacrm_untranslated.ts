@@ -2,6 +2,74 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>AbeBooksIfaceWidget</name>
+    <message>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+258"/>
+        <source>Check</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Bank/Wire Transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Money Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Bank Draft</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Invoice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Buyer Cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Expired</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Ordered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Previously Sold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Rejected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Shipped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Availability confirmed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AddEntryDialog</name>
     <message>
         <location filename="../custom/completer/addentrydialog.cpp" line="+20"/>
@@ -87,7 +155,7 @@
     </message>
     <message>
         <location line="+5"/>
-        <source>summary</source>
+        <source>Additional Information</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2553,12 +2621,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Delivery-ID:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+35"/>
+        <location line="+39"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2593,7 +2656,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-136"/>
+        <source>Date:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+139"/>
         <source>VAT</source>
         <translation type="unfinished"></translation>
     </message>

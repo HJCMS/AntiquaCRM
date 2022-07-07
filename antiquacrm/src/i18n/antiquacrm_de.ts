@@ -2,6 +2,74 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
+    <name>AbeBooksIfaceWidget</name>
+    <message>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+258"/>
+        <source>Check</source>
+        <translation>Scheck</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Bank/Wire Transfer</source>
+        <translation>Banküberweisung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Money Order</source>
+        <translation>Geldbestellung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Bank Draft</source>
+        <translation>Bankscheck</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Invoice</source>
+        <translation>Rechnung</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Buyer Cancelled</source>
+        <translation>Käufer stornierte</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Cancelled</source>
+        <translation>Abgebrochen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Expired</source>
+        <translation>Abgelaufen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Ordered</source>
+        <translation>Bestellt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Previously Sold</source>
+        <translation>Zuvor verkauft</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Rejected</source>
+        <translation>Abgelehnt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Shipped</source>
+        <translation>Versendet</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Availability confirmed</source>
+        <translation>Verfügbarkeit bestätigt</translation>
+    </message>
+</context>
+<context>
     <name>AddEntryDialog</name>
     <message>
         <location filename="../custom/completer/addentrydialog.cpp" line="+20"/>
@@ -87,8 +155,8 @@
     </message>
     <message>
         <location line="+5"/>
-        <source>summary</source>
-        <translation>Zusammenfassung</translation>
+        <source>Additional Information</source>
+        <translation>Zusätzliche Informationen</translation>
     </message>
 </context>
 <context>
@@ -2554,12 +2622,7 @@
         <translation>Kundennummer:</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Delivery-ID:</source>
-        <translation>Lieferschein Nr.:</translation>
-    </message>
-    <message>
-        <location line="+35"/>
+        <location line="+39"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
@@ -2594,7 +2657,12 @@
         <translation>inkl.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-136"/>
+        <source>Date:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+139"/>
         <source>VAT</source>
         <translation>MwSt</translation>
     </message>

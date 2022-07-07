@@ -16,8 +16,7 @@
 
 AbeBooksIfaceWidget::AbeBooksIfaceWidget(const QString &widgetId,
                                          QWidget *parent)
-    : Antiqua::InterfaceWidget{widgetId, parent} {
-}
+    : Antiqua::InterfaceWidget{widgetId, parent} {}
 
 void AbeBooksIfaceWidget::createCustomerDocument() {
   if (p_currentDocument.isNull()) {
@@ -144,6 +143,10 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
     return;
   }
 
+#ifdef ABEBOOKS_TESTMODE
+  saveSources(doc, objectName());
+#endif
+
   p_currentDocument = doc;
   QDomNodeList n_list = xml.getPurchaseOrder().childNodes();
   for (int i = 0; i < n_list.count(); i++) {
@@ -187,6 +190,11 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
         if (!cIjs.isEmpty())
           emit checkCustomer(cIjs);
       }
+      QDomElement pd = n.toElement();
+      if (pd.firstChild().nodeValue() == "SD") {
+        QString pt = pd.attribute("type", "Invoice");
+        m_order->setValue("payment_method", purchaseType(pt));
+      }
     }
   }
 
@@ -214,21 +222,22 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
           m_order->setTableData(row, 1, val);
         }
       }
+      QDomElement status = n.namedItem("status").toElement();
+      if (status.hasChildNodes()) {
+        QString statusText = status.firstChild().nodeValue();
+        m_order->setValue("payment_method", purchaseType(statusText));
+      }
     }
   }
 }
 
 void AbeBooksIfaceWidget::createOrderRequest(const QString &purchaseId) {
-#ifdef ABEBOOKS_TESTMODE
-  setXmlContent(testSources("abebooks-order-652255901.xml"));
-  return;
-#endif
   AbeBooksRequester *req = new AbeBooksRequester(this);
   req->setObjectName(CONFIG_PROVIDER);
   connect(req, SIGNAL(response(const QDomDocument &)), this,
           SLOT(setXmlContent(const QDomDocument &)));
 
-  qDebug() << Q_FUNC_INFO << purchaseId;
+  // qDebug() << Q_FUNC_INFO << purchaseId;
   req->queryOrder(purchaseId);
 }
 
@@ -237,6 +246,29 @@ void AbeBooksIfaceWidget::setCustomerId(int customerId) {
     currentCustomerId = customerId;
     m_order->setCustomerId(customerId);
   }
+}
+
+const QString AbeBooksIfaceWidget::purchaseType(const QString &key) const {
+  QMap<QString, QString> map;
+  // BEGIN purchaseMethod Tag
+  map.insert("Check", tr("Check"));
+  map.insert("PayPal", "PayPal");
+  map.insert("Bank/Wire Transfer", tr("Bank/Wire Transfer"));
+  map.insert("Money Order", tr("Money Order"));
+  map.insert("Bank Draft", tr("Bank Draft"));
+  map.insert("Invoice", tr("Invoice"));
+  // END
+  // BEGIN status Tag
+  map.insert("Buyer Cancelled", tr("Buyer Cancelled"));
+  map.insert("Cancelled", tr("Cancelled"));
+  map.insert("Expired", tr("Expired"));
+  map.insert("Ordered", tr("Ordered"));
+  map.insert("Previously Sold", tr("Previously Sold"));
+  map.insert("Rejected", tr("Rejected"));
+  map.insert("Shipped", tr("Shipped"));
+  map.insert("Availability confirmed", tr("Availability confirmed"));
+  // END
+  return map.value(key);
 }
 
 const QMap<QString, QString> AbeBooksIfaceWidget::fieldTranslate() const {

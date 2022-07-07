@@ -72,10 +72,6 @@ const QString AbeBooks::provider() const { return QString(CONFIG_PROVIDER); }
 const QString AbeBooks::configGroup() const { return QString(CONFIG_GROUP); }
 
 void AbeBooks::queryMenueEntries() {
-#ifdef ABEBOOKS_TESTMODE
-  responseImport(testSources("abebooks_20220624_0808.xml"));
-  return;
-#endif
   AbeBooksRequester *req = new AbeBooksRequester(this);
   req->setObjectName(CONFIG_PROVIDER);
   connect(req, SIGNAL(response(const QDomDocument &)), this,

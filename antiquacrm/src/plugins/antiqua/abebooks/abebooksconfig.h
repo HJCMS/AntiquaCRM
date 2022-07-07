@@ -12,19 +12,21 @@
 #include <QMetaType>
 #include <AntiquaInterface>
 
-//#ifndef ABEBOOKS_TESTMODE
-//#define ABEBOOKS_TESTMODE true
-//#endif
+#ifndef Q_WS_WIN
+#ifndef ABEBOOKS_TESTMODE
+#define ABEBOOKS_TESTMODE true
+#endif
 
 #ifdef ABEBOOKS_TESTMODE
 #include <QDomDocument>
 #include <QFile>
 #include <QDir>
+#include <QTextCodec>
 
-static const QDomDocument testSources(const QString &file) {
+static const QDomDocument readSources(const QString &file) {
   QDomDocument out;
   QString xml(QDir::homePath());
-  xml.append("/Developement/antiqua/database/tmp/");
+  xml.append("/.cache/");
   xml.append(file);
   QFile fp(xml);
   if (fp.open(QIODevice::ReadOnly)) {
@@ -37,9 +39,20 @@ static const QDomDocument testSources(const QString &file) {
   return out;
 }
 
-#endif
+static void saveSources(const QDomDocument &doc, const QString id = "0") {
+  QString file("abebooks_"+id+".xml");
+  QString xml(QDir::homePath());
+  xml.append("/.cache/");
+  xml.append(file);
+  QFile fp(xml);
+  if (fp.open(QIODevice::WriteOnly)) {
+    QTextStream in(&fp);
+    in.setCodec(QTextCodec::codecForName("ISO 8859-1"));
+    in << doc.toString(1);
+    fp.close();
+  };
+}
 
-#ifndef Q_WS_WIN
 static void writeLogFile(const QDomDocument &doc) {
   QString xml(QDir::homePath());
   xml.append("/.cache/AbeBooks_OrderResponse.xml");
@@ -50,6 +63,7 @@ static void writeLogFile(const QDomDocument &doc) {
     fp.close();
   }
 }
+#endif
 #endif
 
 /**
