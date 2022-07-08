@@ -80,5 +80,6 @@ void Booklooker::queryMenueEntries() {
 }
 
 void Booklooker::updateArticleCount(int articleId, int count) {
-  qDebug() << Q_FUNC_INFO << "TODO" << articleId << count;
+  // https://api.booklooker.de/2.0/article_status?token=REST_API_TOKEN
+  qDebug() << Q_FUNC_INFO << "orderNo=" << articleId << count;
 }
