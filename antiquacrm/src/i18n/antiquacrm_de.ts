@@ -4276,7 +4276,7 @@
     <message>
         <location filename="../inventory/providers/providerstreeview.cpp" line="+64"/>
         <source>Orders</source>
-        <translation>Aufträge</translation>
+        <translation>Bestellungen</translation>
     </message>
 </context>
 <context>
