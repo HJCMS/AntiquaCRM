@@ -401,17 +401,23 @@ void InventoryProviders::checkArticleExists(QList<int> &list) {
     return;
   }
 
+  bool oidExists = false;
   QString sql = queryFindExistingOrders(pd.provider(), pd.providerId(), c_id);
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
     while (q.next()) {
       if (q.value("id").toInt() > 0) {
-        m_toolBar->warningMessage(tr("Order already exists!"));
-        m_toolBar->enableOrderButton(false);
-        return;
+        oidExists = true;
+        break;
       }
     }
   }
+  if(oidExists) {
+    QMessageBox::warning(this, tr("Notice"),tr("Order already exists!"));
+    m_toolBar->enableOrderButton(false);
+    return;
+  }
+  // Alles ok noch nicht vorhanden!
   m_toolBar->enableOrderButton(true);
 }
 
@@ -438,8 +444,8 @@ void InventoryProviders::createEditOrders() {
 
   // Besitzt dieser Auftrag schon eine "inventory_orders:o_id" ?
   if (tab->getOrderExists() > 0) {
-    qDebug() << Q_FUNC_INFO << "An Order with this Entries already exists!";
-    m_toolBar->statusMessage(tr("An Order with this Entries already exists!"));
+    QMessageBox::warning(this, tr("Notice"),
+                         tr("An Order with this Entries already exists!"));
     return;
   }
 
@@ -471,8 +477,8 @@ void InventoryProviders::readOrderList(const QJsonDocument &doc) {
 
 void InventoryProviders::hasResponsed(bool errors) {
   if (errors) {
-    qWarning("InventoryProviders - plugin answered with an error!");
-    m_toolBar->statusMessage(tr("an error occurred"));
+    qDebug() << "InventoryProviders - plugin answered with an error!";
+    m_toolBar->warningMessage(tr("an error occurred"));
   } else {
     m_toolBar->statusMessage(tr("successfully"));
   }
@@ -503,7 +509,7 @@ bool InventoryProviders::updateArticleCount(int articleId, int count) {
   while (it.hasNext()) {
     Antiqua::Interface *iface = it.next();
     if (iface != nullptr) {
-      qDebug() << "Update:" << iface->provider() << articleId << count;
+      // qDebug() << "Update:" << iface->provider() << articleId << count;
       iface->updateArticleCount(articleId, count);
     }
   }
