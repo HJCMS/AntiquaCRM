@@ -73,6 +73,7 @@ void DeliverService::setValue(const QVariant &val) {
     index = m_serviceBox->findData(val.toString(), Qt::DisplayRole);
   }
   if (index > 0) {
+    m_priceInfo->clear();
     m_serviceBox->setCurrentIndex(index);
     setModified(true);
   }
@@ -81,6 +82,7 @@ void DeliverService::setValue(const QVariant &val) {
 void DeliverService::reset() {
   m_serviceBox->setCurrentIndex(0);
   m_packageBox->setCurrentIndex(0);
+  m_priceInfo->clear();
   setModified(false);
 }
 

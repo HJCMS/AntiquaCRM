@@ -24,13 +24,13 @@ ProvidersToolBar::ProvidersToolBar(QWidget *parent) : QFrame{parent} {
   layout->addWidget(m_status);
   layout->addStretch(1);
 
-  QString btnInfo = tr("Open view/edit Customer");
+  QString btnInfo = tr("Open/Edit Customer entry");
   btn_customer = new QPushButton(this);
   btn_customer->setObjectName("btn_customer");
   btn_customer->setToolTip(btnInfo);
   btn_customer->setStatusTip(btnInfo);
   btn_customer->setIcon(myIcon("group"));
-  btn_customer->setText(tr("Customer context"));
+  btn_customer->setText(tr("Customer open/edit"));
   layout->addWidget(btn_customer);
 
   btn_order = new QPushButton(myIcon("db_add"), tr("Create Order"), this);

@@ -13,7 +13,9 @@
 #include "providerorders.h"
 
 #include <QAction>
+#include <QApplication>
 #include <QDebug>
+#include <QLinearGradient>
 #include <QMenu>
 #include <QMetaObject>
 #include <QTabBar>
@@ -150,9 +152,9 @@ int Workspace::addInventoryProviders(int index) {
   // Einen Artikel öffnen
   connect(m_tabProviders, SIGNAL(openEditArticle(int, const QString &)), this,
           SLOT(editArticleEntry(int, const QString &)));
-  int i = insertTab(index, m_tabProviders, tr("Providers"));
+  int i = insertTab(index, m_tabProviders, tr("Ordering"));
   m_tabBar->setTabData(i, m_tabProviders->isClosable());
-  setTabToolTip(i, tr("Providers Inventory"));
+  setTabToolTip(i, tr("Providers ordering"));
   setTabIcon(i, myIcon("autostart"));
   return i;
 }

@@ -108,12 +108,6 @@ ProviderSettings::ProviderSettings(QWidget *parent) : SettingsWidget{parent} {
   m_booklooker_api_key = new LineEdit(m_booklooker);
   m_booklooker_api_key->setObjectName("api_key");
   m_booklooker_api_key->setInfo(tr("API Key"));
-  blookerLayout->addWidget(m_booklooker_api_key);
-  m_booklooker_api_port = new LineEdit(m_booklooker);
-  m_booklooker_api_port->setObjectName("api_port");
-  m_booklooker_api_port->setInfo(tr("API Port"));
-  m_booklooker_api_port->setValue(443);
-  blookerLayout->addWidget(m_booklooker_api_port);
   m_booklooker->setLayout(blookerLayout);
   layout->addWidget(m_booklooker);
   // END

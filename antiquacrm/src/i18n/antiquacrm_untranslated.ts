@@ -101,35 +101,52 @@
     </message>
 </context>
 <context>
+    <name>Antiqua::PurchaseDebugTable</name>
+    <message>
+        <location filename="../core/antiquacore/interface.cpp" line="+25"/>
+        <source>Parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Antiqua::PurchaseOverview</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+120"/>
+        <location line="+108"/>
         <source>Purchaser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+0"/>
+        <source>check</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+2"/>
-        <location line="+7"/>
         <source>execute check</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-6"/>
+        <location line="-12"/>
         <source>Send query if this customer exists.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-17"/>
+        <location line="-11"/>
         <source>Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
-        <source>Check Orders</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
+        <location line="+25"/>
         <source>Create a search query to see if all items are available.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -153,16 +170,11 @@
         <source>comments</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location line="+5"/>
-        <source>Additional Information</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Antiqua::PurchaserOrderTable</name>
     <message>
-        <location line="-139"/>
+        <location line="-134"/>
         <source>Provider</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1623,7 +1635,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+98"/>
+        <location line="+100"/>
         <source>Delevery Service is needet!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2583,12 +2595,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+16"/>
         <source>Order already exists!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+0"/>
+        <location line="+31"/>
+        <source>Notice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>An Order with this Entries already exists!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2608,7 +2626,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-393"/>
+        <location line="-399"/>
         <location line="+12"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
@@ -2786,7 +2804,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+84"/>
+        <location filename="../mwindow.cpp" line="+82"/>
         <source>Application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4203,7 +4221,6 @@
     </message>
     <message>
         <location line="+15"/>
-        <location line="+39"/>
         <source>API Port</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4240,12 +4257,12 @@
     <name>ProvidersToolBar</name>
     <message>
         <location filename="../inventory/providers/providerstoolbar.cpp" line="+27"/>
-        <source>Open view/edit Customer</source>
+        <source>Open/Edit Customer entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Customer context</source>
+        <source>Customer open/edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4938,7 +4955,7 @@
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../workspace.cpp" line="+49"/>
+        <location filename="../workspace.cpp" line="+51"/>
         <source>Workspace</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4983,17 +5000,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
-        <source>Providers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Providers Inventory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+22"/>
+        <location line="+46"/>
         <location line="+2"/>
         <source>Views</source>
         <translation type="unfinished"></translation>
@@ -5022,7 +5029,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-92"/>
+        <source>Ordering</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Providers ordering</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+98"/>
         <source>successfully</source>
         <translation type="unfinished"></translation>
     </message>

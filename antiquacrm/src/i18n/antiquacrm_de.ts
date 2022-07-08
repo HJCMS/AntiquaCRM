@@ -101,35 +101,52 @@
     </message>
 </context>
 <context>
+    <name>Antiqua::PurchaseDebugTable</name>
+    <message>
+        <location filename="../core/antiquacore/interface.cpp" line="+25"/>
+        <source>Parameter</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Value</source>
+        <translation>Wert</translation>
+    </message>
+</context>
+<context>
     <name>Antiqua::PurchaseOverview</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+120"/>
+        <location line="+108"/>
         <source>Purchaser</source>
         <translation>Einkäufer*in</translation>
     </message>
     <message>
+        <location line="+0"/>
+        <source>check</source>
+        <translation>Prüfen</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Orders</source>
+        <translation>Bestellungen</translation>
+    </message>
+    <message>
         <location line="+2"/>
-        <location line="+7"/>
         <source>execute check</source>
         <translation>Prüfung ausführen</translation>
     </message>
     <message>
-        <location line="-6"/>
+        <location line="-12"/>
         <source>Send query if this customer exists.</source>
         <translation>Sende Anfrage, ob dieser Kunde existiert.</translation>
     </message>
     <message>
-        <location line="-17"/>
+        <location line="-11"/>
         <source>Customer</source>
         <translation>Kunde</translation>
     </message>
     <message>
-        <location line="+21"/>
-        <source>Check Orders</source>
-        <translation>Bestellungen prüfen</translation>
-    </message>
-    <message>
-        <location line="+4"/>
+        <location line="+25"/>
         <source>Create a search query to see if all items are available.</source>
         <translation>Erstelle Suchanfrage, ob alle Artikel verfügbar sind.</translation>
     </message>
@@ -153,16 +170,11 @@
         <source>comments</source>
         <translation>Bemerkungen</translation>
     </message>
-    <message>
-        <location line="+5"/>
-        <source>Additional Information</source>
-        <translation>Zusätzliche Informationen</translation>
-    </message>
 </context>
 <context>
     <name>Antiqua::PurchaserOrderTable</name>
     <message>
-        <location line="-139"/>
+        <location line="-134"/>
         <source>Provider</source>
         <translation>Bestell Nr</translation>
     </message>
@@ -1624,7 +1636,7 @@
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="+98"/>
+        <location line="+100"/>
         <source>Delevery Service is needet!</source>
         <translation>Ein Lieferservice ist erforderlich!</translation>
     </message>
@@ -2584,12 +2596,18 @@
         <translation>Keine gültige Kunden Nummer</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+16"/>
         <source>Order already exists!</source>
         <translation>Bestellauftrag besteht bereits!</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+0"/>
+        <location line="+31"/>
+        <source>Notice</source>
+        <translation>Hinweis</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>An Order with this Entries already exists!</source>
         <translation>Eine Bestellung mit diesen Einträgen existiert bereits!</translation>
     </message>
@@ -2609,7 +2627,7 @@
         <translation>Erfolgreich</translation>
     </message>
     <message>
-        <location line="-393"/>
+        <location line="-399"/>
         <location line="+12"/>
         <source>Article</source>
         <translation>Artikel</translation>
@@ -2787,7 +2805,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+84"/>
+        <location filename="../mwindow.cpp" line="+82"/>
         <source>Application</source>
         <translation>Programm</translation>
     </message>
@@ -4204,7 +4222,6 @@
     </message>
     <message>
         <location line="+15"/>
-        <location line="+39"/>
         <source>API Port</source>
         <translation></translation>
     </message>
@@ -4241,13 +4258,13 @@
     <name>ProvidersToolBar</name>
     <message>
         <location filename="../inventory/providers/providerstoolbar.cpp" line="+27"/>
-        <source>Open view/edit Customer</source>
-        <translation>Kundenansicht öffnen/editieren</translation>
+        <source>Open/Edit Customer entry</source>
+        <translation>Öffne/Bearbeite Kundeneintrag</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Customer context</source>
-        <translation>Kundenkontext</translation>
+        <source>Customer open/edit</source>
+        <translation>Kunde öffnen/bearbeiten</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -4939,7 +4956,7 @@
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../workspace.cpp" line="+49"/>
+        <location filename="../workspace.cpp" line="+51"/>
         <source>Workspace</source>
         <translation>Arbeitsbereich</translation>
     </message>
@@ -4984,17 +5001,7 @@
         <translation>Auftrags Inventar</translation>
     </message>
     <message>
-        <location line="+22"/>
-        <source>Providers</source>
-        <translation>Dienstleister</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Providers Inventory</source>
-        <translation>Dienstleister Inventar</translation>
-    </message>
-    <message>
-        <location line="+22"/>
+        <location line="+46"/>
         <location line="+2"/>
         <source>Views</source>
         <translation>Ansichten</translation>
@@ -5023,7 +5030,17 @@
         <translation>Das Auftrags Tab ist nicht geöffnet!</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-92"/>
+        <source>Ordering</source>
+        <translation>Bestellungen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Providers ordering</source>
+        <translation>Dienstleister Bestellung</translation>
+    </message>
+    <message>
+        <location line="+98"/>
         <source>successfully</source>
         <translation>Erfolgreich</translation>
     </message>

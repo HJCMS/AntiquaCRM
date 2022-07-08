@@ -53,10 +53,8 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
   */
   m_statusBar = new StatusBar(statusBar());
   setStatusBar(m_statusBar);
-
   connect(m_signalMapper, SIGNAL(mappedInt(int)), m_workSpace,
           SLOT(openTab(int)));
-
   connect(m_workSpace, SIGNAL(s_postMessage(const QString &)), this,
           SLOT(statusMessage(const QString &)));
   connect(m_workSpace, SIGNAL(s_windowModified(bool)), this,

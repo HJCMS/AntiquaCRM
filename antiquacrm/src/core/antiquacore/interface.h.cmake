@@ -58,6 +58,14 @@
  */
 namespace Antiqua {
 
+  class ANTIQUACORE_EXPORT PurchaseDebugTable final : public QTableWidget {
+    Q_OBJECT
+
+  public:
+    explicit PurchaseDebugTable(QWidget *parent = nullptr);
+    QTableWidgetItem *createItem(const QVariant &value) const;
+  };
+
   /**
    * @class Antiqua::PurchaserOrderTable
    * @ingroup Antiqua Plugin Interface
@@ -157,7 +165,7 @@ namespace Antiqua {
     /**
      * @brief Customer Summary
      */
-    QListWidget *m_summary;
+    PurchaseDebugTable *m_debugTable;
 
     /**< @} */
 

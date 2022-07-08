@@ -14,10 +14,28 @@
 #include <QMenu>
 #include <QStyle>
 #include <QTabWidget>
+#include <QTableWidgetItem>
 #include <QTextEdit>
 #include <QVBoxLayout>
 
 namespace Antiqua {
+
+PurchaseDebugTable::PurchaseDebugTable(QWidget *parent) : QTableWidget{parent} {
+  setColumnCount(2);
+  QStringList headers({tr("Parameter"), tr("Value")});
+  setHorizontalHeaderLabels(headers);
+  QHeaderView *header = horizontalHeader();
+  header->setDefaultAlignment(Qt::AlignCenter);
+  header->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+  header->setSectionResizeMode(1, QHeaderView::Stretch);
+}
+
+QTableWidgetItem *PurchaseDebugTable::createItem(const QVariant &value) const {
+  QString txt = value.toString();
+  QTableWidgetItem *item = new QTableWidgetItem(txt);
+  item->setFlags(Qt::ItemIsEnabled);
+  return item;
+}
 
 PurchaserOrderTable::PurchaserOrderTable(QWidget *parent)
     : QTableWidget{parent} {
@@ -111,20 +129,20 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
   m_customerId->setMaximumWidth(mWidth);
   m_toolbar->addWidget(m_customerId);
 
+  m_toolbar->addSeparator();
+  QString str_customer_info = tr("Purchaser") + " " + tr("check");
+  btn_checkCustomer = new QPushButton(qi1, str_customer_info, m_toolbar);
+  btn_checkCustomer->setToolTip(tr("Send query if this customer exists."));
+  m_toolbar->addWidget(btn_checkCustomer);
+
+  m_toolbar->addSeparator();
   m_customerInfo = new QLineEdit(m_toolbar);
   m_customerInfo->setObjectName("person");
   m_customerInfo->setReadOnly(true);
   m_toolbar->addWidget(m_customerInfo);
 
   m_toolbar->addSeparator();
-  QString str_customer_info = tr("Purchaser") + ": ";
-  m_toolbar->addWidget(new QLabel(str_customer_info, m_toolbar));
-  btn_checkCustomer = new QPushButton(qi1, tr("execute check"), m_toolbar);
-  btn_checkCustomer->setToolTip(tr("Send query if this customer exists."));
-  m_toolbar->addWidget(btn_checkCustomer);
-
-  m_toolbar->addSeparator();
-  QString str_article_info = tr("Check Orders") + ": ";
+  QString str_article_info = tr("Orders") + " ";
   m_toolbar->addWidget(new QLabel(str_article_info, m_toolbar));
   btn_checkArticle = new QPushButton(qi1, tr("execute check"), m_toolbar);
   btn_checkArticle->setToolTip(
@@ -158,10 +176,9 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
   m_comments = new QTextEdit(m_tabWidget);
   m_tabWidget->insertTab(1, m_comments, qi1, tr("comments"));
   // Informationen
-  m_summary = new QListWidget(m_tabWidget);
-  m_summary->setEditTriggers(QAbstractItemView::NoEditTriggers);
-  m_summary->setTabKeyNavigation(false);
-  m_tabWidget->insertTab(2, m_summary, qi1, tr("Additional Information"));
+  m_debugTable = new PurchaseDebugTable(m_tabWidget);
+  m_debugTable->setObjectName("debugging_data");
+  m_tabWidget->insertTab(2, m_debugTable, qi1, "Debugging");
 
   m_tabWidget->setCurrentIndex(0);
   m_overview->setLayout(viewLayout);
@@ -246,11 +263,10 @@ void PurchaseOverview::setValue(const QString &objName, const QVariant &value) {
     return;
   }
 
-  // qDebug() << Q_FUNC_INFO << value << objName;
-  QListWidgetItem *item = new QListWidgetItem(m_summary);
-  item->setData(Qt::DisplayRole, value);
-  item->setData(Qt::UserRole, objName);
-  m_summary->addItem(item);
+  int row = m_debugTable->rowCount();
+  m_debugTable->setRowCount(row + 1);
+  m_debugTable->setItem(row, 0, m_debugTable->createItem(objName));
+  m_debugTable->setItem(row, 1, m_debugTable->createItem(value));
 }
 
 void PurchaseOverview::setPhone(const QString &objName, const QVariant &value) {
@@ -263,10 +279,10 @@ void PurchaseOverview::setPhone(const QString &objName, const QVariant &value) {
     return;
   }
 
-  QListWidgetItem *item = new QListWidgetItem(m_summary);
-  item->setData(Qt::DisplayRole, phone);
-  item->setData(Qt::UserRole, objName);
-  m_summary->addItem(item);
+  int row = m_debugTable->rowCount();
+  m_debugTable->setRowCount(row + 1);
+  m_debugTable->setItem(row, 0, m_debugTable->createItem(objName));
+  m_debugTable->setItem(row, 1, m_debugTable->createItem(value));
 }
 
 const QVariant PurchaseOverview::getValue(const QString &objName) {
@@ -275,9 +291,11 @@ const QVariant PurchaseOverview::getValue(const QString &objName) {
     return tx->toPlainText().trimmed();
   }
 
-  for (int r = 0; r < m_summary->count(); r++) {
-    if (m_summary->item(r)->data(Qt::UserRole).toString() == objName)
-      return m_summary->item(r)->data(Qt::DisplayRole);
+  for (int r = 0; r < m_debugTable->rowCount(); r++) {
+    QTableWidgetItem *item = m_debugTable->item(r, 0);
+    if (item->text() == objName) {
+      return m_debugTable->item(r, 1)->text();
+    }
   }
 
   return QVariant();
@@ -289,9 +307,9 @@ const QHash<QString, QVariant> PurchaseOverview::getCustomerData() {
   if (c_id > 0)
     list.insert("c_id", c_id);
 
-  for (int r = 0; r < m_summary->count(); r++) {
-    QString n = m_summary->item(r)->data(Qt::UserRole).toString();
-    QVariant v = m_summary->item(r)->data(Qt::DisplayRole);
+  for (int r = 0; r < m_debugTable->rowCount(); r++) {
+    QString n = m_debugTable->item(r, 0)->text();
+    QString v = m_debugTable->item(r, 1)->text();
     if (n.startsWith("c_", Qt::CaseSensitive))
       list.insert(n, v);
   }
@@ -394,7 +412,7 @@ const ProviderOrder InterfaceWidget::getProviderOrder() {
   order.setProvider(providerName);
   order.setProviderId(orderId);
   int cid = m_order->getCustomerId();
-  qDebug() << Q_FUNC_INFO << providerName << orderId << cid;
+  // qDebug() << Q_FUNC_INFO << providerName << orderId << cid;
   if (cid < 1) {
     order.setCustomerId(-1);
     qWarning("Missing Customer Id");
