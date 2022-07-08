@@ -2557,7 +2557,12 @@
         <translation>ist nicht Verfügbar!</translation>
     </message>
     <message>
-        <location line="+139"/>
+        <location line="+11"/>
+        <source>Missing required Shipping Properties!</source>
+        <translation>Erforderliche Versandeigenschaften fehlen!</translation>
+    </message>
+    <message>
+        <location line="+140"/>
         <location line="+2"/>
         <source>Europe</source>
         <translation>Europa</translation>
@@ -2573,13 +2578,28 @@
         <translation>Kunde existiert nicht!</translation>
     </message>
     <message>
-        <location line="+48"/>
-        <location line="+32"/>
+        <location line="+54"/>
+        <location line="+14"/>
         <source>Missing valid Customer Id</source>
         <translation>Keine gültige Kunden Nummer</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+9"/>
+        <source>Order already exists!</source>
+        <translation>Bestellauftrag besteht bereits!</translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>An Order with this Entries already exists!</source>
+        <translation>Eine Bestellung mit diesen Einträgen existiert bereits!</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Invalid Shipping Properties!</source>
+        <translation>Ungültige Versandeigenschaften!</translation>
+    </message>
+    <message>
+        <location line="+20"/>
         <source>an error occurred</source>
         <translation>ein Fehler ist aufgetreten</translation>
     </message>
@@ -2589,15 +2609,10 @@
         <translation>Erfolgreich</translation>
     </message>
     <message>
-        <location line="-341"/>
+        <location line="-393"/>
         <location line="+12"/>
         <source>Article</source>
         <translation>Artikel</translation>
-    </message>
-    <message>
-        <location line="+307"/>
-        <source>current tab and customer id not equal</source>
-        <translation>Aktuelles Fenster und Kundennummer sind nicht Identisch</translation>
     </message>
 </context>
 <context>
@@ -4225,7 +4240,7 @@
 <context>
     <name>ProvidersToolBar</name>
     <message>
-        <location filename="../inventory/providers/providerstoolbar.cpp" line="+26"/>
+        <location filename="../inventory/providers/providerstoolbar.cpp" line="+27"/>
         <source>Open view/edit Customer</source>
         <translation>Kundenansicht öffnen/editieren</translation>
     </message>
@@ -4246,12 +4261,12 @@
     </message>
     <message>
         <location line="+5"/>
-        <location line="+22"/>
+        <location line="+27"/>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
     </message>
     <message>
-        <location line="-21"/>
+        <location line="-26"/>
         <source>refreshing orders list</source>
         <translation>Bestellliste aktualisieren</translation>
     </message>
