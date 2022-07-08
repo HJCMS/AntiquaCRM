@@ -83,4 +83,24 @@ static const QString queryFindArticleSection(int aid) {
   return sql;
 }
 
+/**
+ * @brief Suche nach Bereits erstellten Auftrag
+ * @param pName - Dienstleister
+ * @param pId   - Auftrags Nummer
+ * @param cId   - Kunden Nummer
+ * @return SqlQuery
+ */
+static const QString queryFindExistingOrders(const QString &pName,
+                                             const QString &pId, int cId) {
+  QString sql("SELECT o_id AS id FROM public.inventory_orders");
+  sql.append(" WHERE o_provider_name ILIKE '");
+  sql.append(pName);
+  sql.append("' AND o_provider_order_id ILIKE '");
+  sql.append(pId);
+  sql.append("' AND o_customer_id=");
+  sql.append(QString::number(cId));
+  sql.append(";");
+  return sql;
+}
+
 #endif // INVENTORY_PROVIDERSSTATEMENTS_H

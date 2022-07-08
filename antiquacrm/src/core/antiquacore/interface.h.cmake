@@ -251,9 +251,23 @@ namespace Antiqua {
     Q_OBJECT
     Q_PROPERTY(QString providerName WRITE setProviderName READ getProviderName NOTIFY providerChanged)
     Q_PROPERTY(QString orderId WRITE setOrderId READ getOrderId NOTIFY orderIdChanged)
+    Q_PROPERTY(int orderExists WRITE setOrderExists READ getOrderExists NOTIFY orderExistsChanged)
 
   private:
+    /**
+     * @brief Bestehende Auftrags Nummer
+     * Wenn 0 existiert keine Bestellung.
+     */
+    int orderExists = 0;
+
+    /**
+     * @brief Name des Dienstleisters
+     */
     QString providerName;
+
+    /**
+     * @brief Auftragsnummer des Dienstleisters
+     */
     QString orderId;
 
   protected:
@@ -323,6 +337,11 @@ namespace Antiqua {
     void orderIdChanged();
 
     /**
+     * @brief Änderungen bei der Prüfung ob Bestellung existiert.
+     */
+    void orderExistsChanged();
+
+    /**
      * @brief Generieren eine Fehler Meldung
      */
     void errorResponse(int type, const QString &message);
@@ -362,7 +381,6 @@ namespace Antiqua {
   public Q_SLOTS:
     /**
      * @brief Erstelle Kundendatensatz für SIGNAL:createCustomer
-     *
      */
     virtual void createCustomerDocument() = 0;
 
@@ -390,6 +408,13 @@ namespace Antiqua {
      */
     void setOrderId(const QString &id);
     const QString getOrderId();
+
+    /**
+     * @brief Id eines bestehenden Auftrags setzen/lesen.
+     * Setzt "SQL::inventory_orders:o_id"
+     */
+    void setOrderExists(int oId);
+    int getOrderExists();
 
     /**
      * @brief Kundennummer setzen!
@@ -427,10 +452,8 @@ namespace Antiqua {
 
     /**
      * @brief Artikel Nummern aus der Bestelltabelle lesen!
-     * @param provider Dienstleister
-     * @param orderId  Bestellnummer
      */
-    const ProviderOrder getProviderOrder(const QString &provider, const QString &orderId);
+    const ProviderOrder getProviderOrder();
   };
 
   /**

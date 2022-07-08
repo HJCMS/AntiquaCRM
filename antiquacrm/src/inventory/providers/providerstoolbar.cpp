@@ -20,6 +20,7 @@ ProvidersToolBar::ProvidersToolBar(QWidget *parent) : QFrame{parent} {
   layout->setObjectName("providers_statusbar_layout");
 
   m_status = new QLabel(this);
+  m_status->setTextFormat(Qt::RichText);
   layout->addWidget(m_status);
   layout->addStretch(1);
 
@@ -52,6 +53,11 @@ ProvidersToolBar::ProvidersToolBar(QWidget *parent) : QFrame{parent} {
   timerId = startTimer(1000, Qt::PreciseTimer);
 }
 
+const QString ProvidersToolBar::timeString() const {
+  QTime t = QTime::currentTime();
+  return t.toString("hh:mm");
+}
+
 void ProvidersToolBar::timerEvent(QTimerEvent *event) {
   --counter;
   if (counter <= 0) {
@@ -66,8 +72,19 @@ void ProvidersToolBar::timerEvent(QTimerEvent *event) {
 }
 
 void ProvidersToolBar::statusMessage(const QString &msg) {
-  m_status->setText(msg);
-  QTimer::singleShot((15 * 1000), m_status, SLOT(clear()));
+  QString txt("<i>");
+  txt.append(timeString() + " ");
+  txt.append(msg.trimmed());
+  txt.append("</i>");
+  m_status->setText(txt);
+}
+
+void ProvidersToolBar::warningMessage(const QString &msg) {
+  QString txt("<i style='color:darkRed;'>");
+  txt.append(timeString() + " ");
+  txt.append(msg.trimmed());
+  txt.append("</i>");
+  m_status->setText(txt);
 }
 
 void ProvidersToolBar::enableOrderButton(bool b) { btn_order->setEnabled(b); }

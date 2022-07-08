@@ -172,7 +172,8 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
   setLayout(layout);
 
   // Weiterleitung Artikel mit Nummer öffnen.
-  connect(m_table, SIGNAL(inspectArticle(int)), this, SIGNAL(inspectArticle(int)));
+  connect(m_table, SIGNAL(inspectArticle(int)), this,
+          SIGNAL(inspectArticle(int)));
   // Weiterleitung Artikel Nummern prüfen
   connect(m_table, SIGNAL(findArticleNumbers()), this, SIGNAL(checkOrders()));
   connect(btn_checkArticle, SIGNAL(clicked()), this, SIGNAL(checkOrders()));
@@ -337,6 +338,15 @@ void InterfaceWidget::setOrderId(const QString &id) {
 
 const QString InterfaceWidget::getOrderId() { return orderId; }
 
+void InterfaceWidget::setOrderExists(int oId) {
+  if (oId > 0) {
+    orderExists = oId;
+    emit orderExistsChanged();
+  }
+}
+
+int InterfaceWidget::getOrderExists() { return orderExists; }
+
 const QString InterfaceWidget::sqlParam(const QString &attribute) {
   QMap<QString, QString> map = fieldTranslate();
   QMap<QString, QString>::iterator fi;
@@ -379,12 +389,12 @@ const QJsonValue InterfaceWidget::getPrice(const QString &objName) {
   return QJsonValue(data);
 }
 
-const ProviderOrder InterfaceWidget::getProviderOrder(const QString &provider,
-                                                      const QString &orderId) {
+const ProviderOrder InterfaceWidget::getProviderOrder() {
   ProviderOrder order;
-  order.setProvider(provider);
+  order.setProvider(providerName);
   order.setProviderId(orderId);
   int cid = m_order->getCustomerId();
+  qDebug() << Q_FUNC_INFO << providerName << orderId << cid;
   if (cid < 1) {
     order.setCustomerId(-1);
     qWarning("Missing Customer Id");

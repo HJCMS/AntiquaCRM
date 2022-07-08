@@ -97,6 +97,18 @@ void InventoryProviders::statusMessageArticle(int articleId, int count) {
   }
 }
 
+bool InventoryProviders::validInterfaceProperties(
+    Antiqua::InterfaceWidget *ifw) {
+  if (ifw == nullptr)
+    return false;
+
+  if (ifw->getOrderId().isEmpty() || ifw->getProviderName().isEmpty()) {
+    m_toolBar->statusMessage(tr("Missing required Shipping Properties!"));
+    return false;
+  }
+  return true;
+}
+
 void InventoryProviders::searchConvert() {
   if (p_iFaces.count() > 0) {
     QListIterator<Antiqua::Interface *> it(p_iFaces);
@@ -352,6 +364,7 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
 
 void InventoryProviders::checkArticleExists(QList<int> &list) {
   bool exists = true;
+  // Artikel Liste prüfen
   for (int i = 0; i < list.size(); i++) {
     int aid = list[i];
     QSqlQuery q = m_sql->query(queryArticleCount(aid));
@@ -362,10 +375,44 @@ void InventoryProviders::checkArticleExists(QList<int> &list) {
       exists = (count > 0 && exists) ? true : false;
     }
   }
-  if (current_cid > 0)
-    m_toolBar->enableOrderButton(exists);
-  else
+  // Wenn nicht verfügbar kann hier schon ausgestiegen werden!
+  if (!exists) {
+    m_toolBar->enableOrderButton(false);
+    return;
+  }
+
+  // Wenn die Kunden Nummer nicht gesetzt ist hier abbrechen!
+  if (current_cid < 1) {
     m_toolBar->statusMessage(tr("Missing valid Customer Id"));
+    return;
+  }
+
+  /* Versuche heraus zu finden ob eine Bestellung mit diesen Daten bereits
+   * existiert! Wenn ja, dann mit setOrderExists(o_id) die inventory_orders Id
+   * setzen. */
+  Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
+  if (!validInterfaceProperties(tab))
+    return;
+
+  ProviderOrder pd = tab->getProviderOrder();
+  int c_id = pd.customerId();
+  if (c_id < 1) {
+    m_toolBar->warningMessage(tr("Missing valid Customer Id"));
+    return;
+  }
+
+  QString sql = queryFindExistingOrders(pd.provider(), pd.providerId(), c_id);
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    while (q.next()) {
+      if (q.value("id").toInt() > 0) {
+        m_toolBar->warningMessage(tr("Order already exists!"));
+        m_toolBar->enableOrderButton(false);
+        return;
+      }
+    }
+  }
+  m_toolBar->enableOrderButton(true);
 }
 
 void InventoryProviders::checkOpenEditArticle(int aid) {
@@ -386,21 +433,26 @@ void InventoryProviders::createEditOrders() {
     return;
 
   Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
-  if (tab != nullptr && tab->getCustomerId() == current_cid) {
-    QString id = tab->getOrderId();
-    QString provider = tab->getProviderName();
-    if (id.isEmpty() || provider.isEmpty()) {
-      qWarning("Missing valid Interface Properties!");
-      return;
-    }
-    ProviderOrder pData = tab->getProviderOrder(provider, id);
-    if (pData.customerId() > 0 && pData.customerId() == current_cid) {
-      emit createOrder(pData);
-    } else {
-      m_toolBar->statusMessage(tr("Missing valid Customer Id"));
-    }
+  if (!validInterfaceProperties(tab))
+    return;
+
+  // Besitzt dieser Auftrag schon eine "inventory_orders:o_id" ?
+  if (tab->getOrderExists() > 0) {
+    qDebug() << Q_FUNC_INFO << "An Order with this Entries already exists!";
+    m_toolBar->statusMessage(tr("An Order with this Entries already exists!"));
+    return;
+  }
+
+  if (tab->getCustomerId() != current_cid) {
+    qDebug() << Q_FUNC_INFO << "Invalid CustomerID";
+    return;
+  }
+
+  ProviderOrder pData = tab->getProviderOrder();
+  if (pData.customerId() > 0 && pData.customerId() == current_cid) {
+    emit createOrder(pData);
   } else {
-    m_toolBar->statusMessage(tr("current tab and customer id not equal"));
+    m_toolBar->statusMessage(tr("Invalid Shipping Properties!"));
   }
 }
 

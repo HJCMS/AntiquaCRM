@@ -89,6 +89,12 @@ private:
    */
   void statusMessageArticle(int articleId, int count = 0);
 
+  /**
+   * @brief Standard Parameter prüfen
+   * Kommt mehrfach vor!
+   */
+  bool validInterfaceProperties(Antiqua::InterfaceWidget *ifw);
+
 private Q_SLOTS:
   /**
    * @brief Wird hier nicht eingesetzt ...

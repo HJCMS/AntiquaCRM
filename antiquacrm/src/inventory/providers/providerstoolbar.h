@@ -30,6 +30,8 @@ private:
   QPushButton *btn_order;
   QPushButton *btn_refresh;
 
+  const QString timeString() const;
+
 protected:
   void timerEvent(QTimerEvent *event);
 
@@ -40,6 +42,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   void statusMessage(const QString &);
+  void warningMessage(const QString &);
   /**
    * @brief Erstellen Knopf Ein/Ausschalten
    */
