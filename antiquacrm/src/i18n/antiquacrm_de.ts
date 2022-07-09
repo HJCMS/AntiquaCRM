@@ -2933,7 +2933,7 @@
         <translation>Auftrag bearbeiten</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+40"/>
         <source>Order ID</source>
         <translation>Auftrags ID</translation>
     </message>
@@ -2953,23 +2953,18 @@
         <translation>Kundeninformation</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+19"/>
         <source>Delivery Service</source>
         <translation>Lieferservice</translation>
     </message>
     <message>
-        <location line="-22"/>
-        <source>Address for Customer ID</source>
-        <translation>Adresse und Kunden Nummer</translation>
-    </message>
-    <message>
-        <location line="+89"/>
-        <location line="+4"/>
+        <location line="+67"/>
+        <location line="+5"/>
         <source>Provider</source>
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="-59"/>
+        <location line="-60"/>
         <source>Notification</source>
         <translation>Benachrichtigung</translation>
     </message>
@@ -2984,18 +2979,18 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+747"/>
+        <location line="+748"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-824"/>
+        <location line="-826"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+61"/>
         <source>Parcel Shipment Number</source>
         <translation>Paketsendungsnummer</translation>
     </message>
@@ -3015,7 +3010,12 @@
         <translation>Europäische Staaten</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-58"/>
+        <source>Customer Number</source>
+        <translation>Kundennummer</translation>
+    </message>
+    <message>
+        <location line="+61"/>
         <source>vat included</source>
         <translation>inkl. MwSt</translation>
     </message>
@@ -3035,7 +3035,12 @@
         <translation>Standard</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+28"/>
+        <source>settlement number</source>
+        <translation>Abwicklungsnummer</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Current shopping items</source>
         <translation>Aktuelle Bestellungen</translation>
     </message>
@@ -3045,13 +3050,13 @@
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
-        <location line="+265"/>
-        <location line="+487"/>
+        <location line="+264"/>
+        <location line="+481"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="-472"/>
+        <location line="-466"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
     </message>
@@ -3119,7 +3124,7 @@
         <translation>Möchten Sie wirklich diesen Auftrag schließen und an die Buchhaltung weiter reichen?</translation>
     </message>
     <message>
-        <location line="+204"/>
+        <location line="+198"/>
         <source>can&apos;t create order without costumer Id.</source>
         <translation>Kann keinen Auftrag ohne Kundennummer generieren.</translation>
     </message>
@@ -3139,13 +3144,13 @@
         <translation>Bestellung</translation>
     </message>
     <message>
-        <location line="-485"/>
+        <location line="-479"/>
         <location line="+232"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
     <message>
-        <location line="-730"/>
+        <location line="-731"/>
         <source>Service</source>
         <translation>Sender</translation>
     </message>
@@ -3155,7 +3160,7 @@
         <translation>Rechnungs Optionen</translation>
     </message>
     <message>
-        <location line="+670"/>
+        <location line="+671"/>
         <source>Printing canceled.</source>
         <translation>Druckevorgang abgebrochen.</translation>
     </message>
@@ -3178,11 +3183,6 @@
         <location line="+21"/>
         <source>Notice</source>
         <translation>Hinweis</translation>
-    </message>
-    <message>
-        <location line="+82"/>
-        <source>Shipping Address</source>
-        <translation>Lieferadresse</translation>
     </message>
 </context>
 <context>

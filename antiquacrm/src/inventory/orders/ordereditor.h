@@ -60,7 +60,7 @@ private:
   /**
    * @brief Kundenandresse
    */
-  TextField *m_customer_address;
+  QLabel *m_customer_address;
 
   /**
    * @brief Lieferservice

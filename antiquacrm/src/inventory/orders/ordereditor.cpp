@@ -19,6 +19,7 @@
 OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   setObjectName("order_editor");
   setWindowTitle(tr("Edit Order"));
+  setMinimumHeight(500);
 
   config = new ApplSettings(this);
 
@@ -93,11 +94,12 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   cInfoLayout->setContentsMargins(2, 2, 2, 2);
   o_customer_id = new SerialID(m_customerInfo);
   o_customer_id->setObjectName("o_customer_id");
-  o_customer_id->setInfo(tr("Address for Customer ID"));
+  o_customer_id->setInfo(tr("Customer Number") + ":");
   cInfoLayout->addWidget(o_customer_id);
-  m_customer_address = new TextField(m_customerInfo);
+  m_customer_address = new QLabel(m_customerInfo);
   m_customer_address->setObjectName("m_customer_address");
   m_customer_address->setToolTip(tr("Customer Info"));
+  m_customer_address->setIndent(10);
   cInfoLayout->addWidget(m_customer_address);
   m_customerInfo->setLayout(cInfoLayout);
   row1->addWidget(m_customerInfo); // links
@@ -183,16 +185,18 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   // BEGIN Dienstleister
   m_providerBox = new QWidget(tabwidget);
   tabwidget->addTab(m_providerBox, myIcon("spreadsheet"), tr("Provider"));
-  QVBoxLayout *providerLayout = new QVBoxLayout(m_providerBox);
-  o_provider_name = new LineEdit(mainWidget);
+  QGridLayout *providerLayout = new QGridLayout(m_providerBox);
+  providerLayout->setColumnStretch(1, 1);
+  o_provider_name = new LineEdit(m_providerBox);
   o_provider_name->setObjectName("o_provider_name");
   o_provider_name->setInfo(tr("Provider"));
-  providerLayout->addWidget(o_provider_name);
-  o_provider_order_id = new LineEdit(mainWidget);
+  providerLayout->addWidget(o_provider_name, 0, 0, 1, 1);
+  providerLayout->addWidget(new QLabel(m_providerBox), 0, 1, 1, 1);
+  o_provider_order_id = new LineEdit(m_providerBox);
   o_provider_order_id->setObjectName("o_provider_order_id");
-  o_provider_order_id->setInfo("Id");
-  providerLayout->addWidget(o_provider_order_id);
-  providerLayout->addStretch(1);
+  o_provider_order_id->setInfo(tr("settlement number"));
+  providerLayout->addWidget(o_provider_order_id, 1, 0, 1, 1);
+  providerLayout->setRowStretch(2, 1);
   m_providerBox->setLayout(providerLayout);
   row1->addWidget(tabwidget);
   // END
@@ -561,7 +565,6 @@ void OrderEditor::setData(const QString &key, const QVariant &value,
     o_delivery_service->setDeliveryPackage(value.toInt());
     return;
   }
-
   qDebug() << "Missing k:" << key << " v:" << value << " r:" << required;
 }
 
@@ -955,14 +958,8 @@ bool OrderEditor::getCustomerAddress(int cid) {
   if (q.size() > 0) {
     while (q.next()) {
       buffer.append(q.value("c_postal_address").toString());
-      QVariant val = q.value("c_shipping_address");
-      if (!val.toString().isEmpty()) {
-        buffer.append("\n\n" + tr("Shipping Address") + ":\n");
-        buffer.append(val.toString());
-        break;
-      }
     }
-    m_customer_address->setValue(buffer);
+    m_customer_address->setText(buffer + "\n");
   } else {
     qWarning("SQL ERROR: %s", qPrintable(m_sql->lastError()));
   }

@@ -12,9 +12,24 @@
 #include <QTableWidgetItem>
 #include <QVBoxLayout>
 
-WHSoftWidget::WHSoftWidget(const QString &widgetId, QWidget *parent)
-    : Antiqua::InterfaceWidget{widgetId, parent} {
+#ifndef Q_WS_WIN
+static void saveSources(const QJsonDocument &doc, const QString &id) {
+  QString file("whsoft_" + id + ".json");
+  QString xml(QDir::homePath());
+  xml.append("/.cache/");
+  xml.append(file);
+  QFile fp(xml);
+  if (fp.open(QIODevice::WriteOnly)) {
+    QTextStream in(&fp);
+    in.setCodec(QTextCodec::codecForName("ISO 8859-1"));
+    in << doc.toJson(QJsonDocument::Indented);
+    fp.close();
+  };
 }
+#endif
+
+WHSoftWidget::WHSoftWidget(const QString &widgetId, QWidget *parent)
+    : Antiqua::InterfaceWidget{widgetId, parent} {}
 
 void WHSoftWidget::createCustomerDocument() {
   if (p_currentDocument.isEmpty()) {
@@ -132,6 +147,9 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
 
   // Speichern
   p_currentDocument = doc;
+#ifndef Q_WS_WIN
+  saveSources(doc, getOrderId());
+#endif
 
   QString mainKey("response");
   QJsonObject response = QJsonValue(doc[mainKey]).toObject();
@@ -143,6 +161,18 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
       if (!f.isEmpty() && !val.toString().isEmpty()) {
         m_order->setValue(sqlParam(f), val.toVariant());
         p_customer.insert(sqlParam(f), stripString(val));
+      }
+    }
+
+    QJsonObject deliver = QJsonValue(response["versand"]).toObject();
+    if (!deliver.isEmpty()) {
+      for (it = deliver.begin(); it != deliver.end(); ++it) {
+        QString f = it.key();
+        QJsonValue val = it.value();
+        if (!sqlParam(f).isEmpty()) {
+          QVariant dval = val.isNull() ? "" : val.toString();
+          m_order->setValue(sqlParam(f), dval);
+        }
       }
     }
 
@@ -206,9 +236,10 @@ void WHSoftWidget::setCustomerId(int customerId) {
 
 const QMap<QString, QString> WHSoftWidget::fieldTranslate() const {
   QMap<QString, QString> map;
-  // public.customers @{
+  // customer @{
   map.insert("person", "a_customer_id");
   map.insert("anrede", "c_gender");
+  map.insert("zusatz", "c_title");
   map.insert("vorname", "c_firstname");
   map.insert("name", "c_lastname");
   map.insert("adresse", "c_street");
@@ -219,11 +250,22 @@ const QMap<QString, QString> WHSoftWidget::fieldTranslate() const {
   map.insert("email", "c_email_0");
   // @}
 
-  // public.article_orders @{
+  // versand @{
+  map.insert("waehrung", "o_payment_currency");
+  map.insert("versandkosten", "o_delivery_cost");
+  map.insert("versender", "o_delivery_name");
+  map.insert("sendungsnummer", "o_delivery_send_id");
+  map.insert("versandart", "o_delivery_type");
+  map.insert("einlieferungsdatum", "o_delivery_fullfill");
+  // @}
+
+  // article_orders @{
   map.insert("bestellnr", "a_article_id");
+  map.insert("lagerfach", "sl_storage");
   map.insert("menge_bestellt", "a_count");
   map.insert("preis_pro_einheit", "a_sell_price");
   map.insert("titel", "a_title");
+  map.insert("bezahlart", "o_payment_method");
   // @}
   return map;
 }
