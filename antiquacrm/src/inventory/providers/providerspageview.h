@@ -42,6 +42,10 @@ private:
 
 private Q_SLOTS:
   void closeTabClicked(int);
+  void pageEntered(int);
+
+Q_SIGNALS:
+  void orderPageChanged();
 
 public:
   explicit ProvidersPageView(QWidget *parent);

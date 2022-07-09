@@ -414,7 +414,7 @@
         <translation>Editiere Buchtitel</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+40"/>
         <source>Signed Version</source>
         <translation>Signierte Version</translation>
     </message>
@@ -464,73 +464,34 @@
         <translation>Bucheintrag wurde erstellt am</translation>
     </message>
     <message>
-        <location line="+15"/>
-        <source>Book &amp;Title:</source>
-        <translation>Buch &amp;Titel:</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Extended Title</source>
-        <translation>Untertitel</translation>
+        <location line="+31"/>
+        <location line="+7"/>
+        <source>Book Subtitle</source>
+        <translation>Buch Untertitel</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>&amp;Author:</source>
-        <translation>&amp;Autor:</translation>
-    </message>
-    <message>
         <location line="+7"/>
         <source>Author</source>
         <translation>Autor</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Publisher:</source>
-        <translation>Herausgeber:</translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="+17"/>
         <source>Publisher or Illustrator</source>
         <translation>Verleger oder Illustator</translation>
     </message>
     <message>
-        <location line="+32"/>
-        <source>Storage:</source>
-        <translation>Lager:</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Keyword:</source>
-        <translation>Schlüsselwort:</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Provider Subject:</source>
-        <translation>Dienstleister Thema:</translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+63"/>
         <source>Shop Category Keywords</source>
         <translation>Shopsystem Kategorien Schlüsselwort</translation>
     </message>
     <message>
-        <location line="-54"/>
-        <source>Condition:</source>
-        <translation>Zustand:</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Designation:</source>
-        <translatorcomment>Umschreibung</translatorcomment>
-        <translation>Buchumschlag:</translation>
-    </message>
-    <message>
-        <location line="+46"/>
+        <location line="+6"/>
         <source>Language:</source>
         <translation>Sprache:</translation>
     </message>
     <message>
-        <location line="-214"/>
+        <location line="-217"/>
         <source>Article ID</source>
         <translation>Artikel ID</translation>
     </message>
@@ -545,12 +506,13 @@
         <translation>Buchseiten</translation>
     </message>
     <message>
-        <location line="+132"/>
+        <location line="+129"/>
+        <location line="+5"/>
         <source>Storage</source>
         <translation>Lagerort</translation>
     </message>
     <message>
-        <location line="-82"/>
+        <location line="-84"/>
         <source>Required input field. Limited to 80 characters, Webshop Systems require this.</source>
         <translation>Erforderliches Eingabefeld. Begrenzt auf 80 Zeichen. Für Webshop-Systeme erforderlich.</translation>
     </message>
@@ -565,17 +527,46 @@
         <translation>Geben Sie hier den Buchverlag ein.</translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+59"/>
         <source>Category Keywords for Shopsystems.</source>
         <translation>Kategorie Schlüsselwörter für Shopsysteme.</translation>
     </message>
     <message>
-        <location line="-35"/>
+        <location line="-37"/>
         <source>Condition of this Book. See also Configuration conditions Table.</source>
         <translation>Zustand dieses Buches. Siehe auch Konfigurations Tabellen.</translation>
     </message>
     <message>
-        <location line="+172"/>
+        <location line="-68"/>
+        <location line="+7"/>
+        <source>Booktitle</source>
+        <translation>Buchtitel</translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <location line="+7"/>
+        <source>Condition</source>
+        <translation>Zustand</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <location line="+7"/>
+        <source>Designation</source>
+        <translation>Bucheinband</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <location line="+6"/>
+        <source>Keyword</source>
+        <translation>Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Provider Subject</source>
+        <translation>Shop Kategorie</translation>
+    </message>
+    <message>
+        <location line="+131"/>
         <source>Remove Image from Database</source>
         <translation>Entferne Bild aus der Datenbank</translation>
     </message>
@@ -605,22 +596,12 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-451"/>
-        <source>Title</source>
-        <translation>Titel</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Booktitle Extended:</source>
-        <translation>Untertitel:</translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="-439"/>
         <source>Extended Title or Subtitle.</source>
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
     <message>
-        <location line="+218"/>
+        <location line="+221"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
@@ -652,22 +633,23 @@
         <translation>Dieser Text dient internen Zwecken</translation>
     </message>
     <message>
-        <location line="-193"/>
+        <location line="-196"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+72"/>
+        <location line="+7"/>
         <source>Publisher</source>
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="+213"/>
+        <location line="+216"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-329"/>
+        <location line="-332"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -2559,7 +2541,7 @@
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+64"/>
         <source>exists with count</source>
         <translation>ist Verfügbar mit der Anzahl</translation>
     </message>
@@ -2774,7 +2756,12 @@
         <translation>Die ISBN Nummer muss eine 10 oder 13 Stellige Zahl sein.</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
+        <source>Query</source>
+        <translation>Abfrage</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>ISBN request to openlibrary.org</source>
         <translation>Erstelle ISBN Anfrage an OpenLibrary.org</translation>
     </message>
@@ -3310,6 +3297,14 @@
         <location line="+54"/>
         <source>Payment Status is required</source>
         <translation>Ein Zahlungstatus ist erforderlich</translation>
+    </message>
+</context>
+<context>
+    <name>OrdersPaymentType</name>
+    <message>
+        <location filename="../custom/utils/orderspaymenttype.cpp" line="+101"/>
+        <source>a Valid Payment type is required!</source>
+        <translation>Eine gültige Zahlungsart ist erforderlich!</translation>
     </message>
 </context>
 <context>
@@ -4229,7 +4224,7 @@
 <context>
     <name>ProvidersPageView</name>
     <message>
-        <location filename="../inventory/providers/providerspageview.cpp" line="+69"/>
+        <location filename="../inventory/providers/providerspageview.cpp" line="+72"/>
         <location line="+1"/>
         <source>Provider:</source>
         <translation>Dienstleister:</translation>
@@ -4244,7 +4239,7 @@
 <context>
     <name>ProvidersTabBar</name>
     <message>
-        <location line="-61"/>
+        <location line="-64"/>
         <source>Order Actions</source>
         <translation>Bestellaktionen</translation>
     </message>
@@ -4300,6 +4295,7 @@
     <name>QObject</name>
     <message>
         <location filename="../custom/utils/genderbox.cpp" line="+38"/>
+        <location filename="../custom/utils/orderspaymenttype.cpp" line="-91"/>
         <source>Without disclosures</source>
         <translation>Keine Angaben</translation>
     </message>
@@ -4389,6 +4385,61 @@
         <location line="+1"/>
         <source>delivery completed</source>
         <translation>Lieferung abgeschlossen</translation>
+    </message>
+    <message>
+        <location filename="../custom/utils/orderspaymenttype.cpp" line="+2"/>
+        <source>Bank transfer (prepayment)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>open account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>direct debit (prepayment)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Credit card (prepayment)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>cash on delivery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>PayPal (prepayment)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Skrill (prepayment)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Pickup - cash payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Instant bank transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Invoice (prepayment reserved)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4806,7 +4857,7 @@
         <translation>Das Feld</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>is required and can not empty.</source>
         <translation>ist erforderlich und darf nicht Leer sein.</translation>
     </message>

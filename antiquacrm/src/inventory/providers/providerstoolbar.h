@@ -41,12 +41,26 @@ Q_SIGNALS:
   void s_refresh();
 
 public Q_SLOTS:
+  /**
+   * @brief Status Meldungen
+   */
   void statusMessage(const QString &);
+
+  /**
+   * @brief Warnmeldungen
+   */
   void warningMessage(const QString &);
+
   /**
    * @brief Erstellen Knopf Ein/Ausschalten
    */
   void enableOrderButton(bool b = false);
+
+  /**
+   * @brief Bestehende Status Meldungen leeren.
+   * Verhindern das Nachrichten beim Tabwechsel vom alten Tab stehen!
+   */
+  inline void clearStatusMessage() { m_status->clear(); };
 
 public:
   explicit ProvidersToolBar(QWidget *parent = nullptr);

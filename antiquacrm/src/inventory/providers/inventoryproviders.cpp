@@ -61,13 +61,17 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   connect(m_toolBar, SIGNAL(s_customerAction()), this, SLOT(openTableView()));
   connect(m_toolBar, SIGNAL(s_refresh()), this, SLOT(searchConvert()));
   connect(m_toolBar, SIGNAL(s_createOrder()), this, SLOT(createEditOrders()));
-#ifndef Q_OS_WIN
-  // Developement
-  connect(m_listView, SIGNAL(s_queryProvider(const QString &)), this,
-          SLOT(queryProviderPage(const QString &)));
-#endif
+
+  // Development
+//  connect(m_listView, SIGNAL(s_queryProvider(const QString &)), this,
+//          SLOT(queryProviderPage(const QString &)));
+
   connect(m_listView, SIGNAL(s_queryOrder(const QString &, const QString &)),
           this, SLOT(queryOrder(const QString &, const QString &)));
+
+  // Alte Nachrichten vor dem Wechsel entfernen.
+  connect(m_pageView, SIGNAL(orderPageChanged()), m_toolBar,
+          SLOT(clearStatusMessage()));
 }
 
 bool InventoryProviders::tabExists(const QString &id) {
@@ -412,8 +416,8 @@ void InventoryProviders::checkArticleExists(QList<int> &list) {
       }
     }
   }
-  if(oidExists) {
-    QMessageBox::warning(this, tr("Notice"),tr("Order already exists!"));
+  if (oidExists) {
+    QMessageBox::warning(this, tr("Notice"), tr("Order already exists!"));
     m_toolBar->enableOrderButton(false);
     return;
   }

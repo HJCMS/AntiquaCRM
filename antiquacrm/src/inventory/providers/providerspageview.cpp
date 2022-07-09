@@ -41,6 +41,7 @@ ProvidersPageView::ProvidersPageView(QWidget *parent) : QTabWidget{parent} {
 
   connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeTabClicked(int)));
   connect(m_tabBar, SIGNAL(s_closeTab(int)), SLOT(closeTabClicked(int)));
+  connect(this, SIGNAL(currentChanged(int)), this, SLOT(pageEntered(int)));
 }
 
 void ProvidersPageView::closeTabClicked(int index) {
@@ -52,6 +53,8 @@ void ProvidersPageView::closeTabClicked(int index) {
     return;
   }
 }
+
+void ProvidersPageView::pageEntered(int) { emit orderPageChanged(); }
 
 Antiqua::ProviderWidget *ProvidersPageView::currentMainPage() {
   return reinterpret_cast<Antiqua::ProviderWidget *>(currentWidget());

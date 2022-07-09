@@ -60,6 +60,21 @@ static QJsonDocument testFile() {
   }
   return QJsonDocument();
 }
+
+static void saveSources(const QJsonDocument &doc, const QString &id) {
+  QString file("booklooker_" + id + ".json");
+  QString xml(QDir::homePath());
+  xml.append("/.cache/");
+  xml.append(file);
+  QFile fp(xml);
+  if (fp.open(QIODevice::WriteOnly)) {
+    QTextStream in(&fp);
+    // in.setCodec(QTextCodec::codecForName("ISO 8859-1"));
+    in << doc.toJson(QJsonDocument::Indented);
+    fp.close();
+  };
+}
+
 #endif
 
 struct ANTIQUACORE_EXPORT BooklookerAccess {

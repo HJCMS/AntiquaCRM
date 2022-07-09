@@ -76,6 +76,10 @@ protected:
 private Q_SLOTS:
   void searchConvert(const QString &);
   void searchConvert();
+
+  /**
+   * @brief Tabellenlisten Übersicht öffnen und Editor deaktivieren.
+   */
   void openTableView();
 
 public Q_SLOTS:
@@ -85,7 +89,7 @@ public Q_SLOTS:
   /**
    * @brief Wenn das Tab im Vordergund geht, dann eine Aktionen starten
    */
-  void onEnterChanged(){/* TODO */};
+  void onEnterChanged();
 
 public:
   explicit InventoryCustomers(QWidget *parent = nullptr);

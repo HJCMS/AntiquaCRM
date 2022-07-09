@@ -195,11 +195,8 @@ const QString StrLineEdit::info() { return m_lineEdit->toolTip(); }
 
 const QString StrLineEdit::notes() {
   QString msg(tr("The field"));
-  if (windowTitle().isEmpty()) {
-    msg.append(" " + objectName() + " ");
-  } else {
-    msg.append(" " + windowTitle() + " ");
-  }
+  msg.append(" " + info() + " ");
+
   if (m_lineEdit->text().isEmpty()) {
     msg.append(tr("is required and can not empty."));
     return msg;

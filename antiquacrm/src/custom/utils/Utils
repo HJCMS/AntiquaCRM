@@ -90,6 +90,10 @@
 # include "orderspaymentbox.h"
 #endif
 
+#ifndef ORDERSPAYMENTTYPE_UTILS_H
+# include "orderspaymenttype.h"
+#endif
+
 #ifndef ORDERSTATUSBOX_UTILS_H
 # include "orderstatusbox.h"
 #endif

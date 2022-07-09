@@ -181,8 +181,15 @@ void BooklookerIfaceWidget::setContent(const QJsonDocument &doc) {
     }
     return;
   }
+
+#ifdef PLUGIN_BOOKLOOKER_DEBUG
+  if (PLUGIN_BOOKLOOKER_DEBUG)
+    saveSources(doc, getOrderId());
+#endif
+
   // Speichern
   p_currentDocument = doc;
+
   QJsonArray array = QJsonValue(doc["returnValue"]).toArray();
   for (int i = 0; i < array.size(); i++) {
     if (array[i].isObject()) {
@@ -234,26 +241,59 @@ const QMap<QString, QString> BooklookerIfaceWidget::fieldTranslate() const {
   map.insert("email", "c_email_0");
   map.insert("orderId", "o_provider_order_id");
   map.insert("orderDate", "o_since");
+  // Konto Inhaber
+  // map.insert("accountHolder","");
+  map.insert("accountIban", "c_iban");
+  map.insert("accountBic", "c_swift_bic");
   // @}
 
-  /** Unused
-   * @{
-    map.insert("buyerPositiveRatingPercentage", "");
-    map.insert("buyerTotalRatingNumber", "");
-    map.insert("buyerUsername", "");
-    map.insert("calculatedShippingCost", "");
-    map.insert("currentProvisionNet", "");
-    map.insert("originalProvisionNet", "");
-    map.insert("paymentId", "");
-    map.insert("status", "");
-   * @}
+  /**
+   * Dieses Element wird nur übergeben, wenn die Versandkosten berechnet werden
+   * konnten, bspw. bei vorhandener Gewichtsangabe und Nutzung der
+   * Gewichts-Staffel-Tabelle zur Portoberechnung, oder bei Nutzung von
+   * Pauschalpreisen
    */
+  map.insert("calculatedShippingCost", "");
+  map.insert("currentProvisionNet", "");
+  map.insert("originalProvisionNet", "");
+
+  /**
+   * Aktuell nur für Zahlungsart PayPal: Falls uns der Zeitpunkt der
+   * erfolgreichen Bezahlung vom Zahlungsdienstleister gemeldet wurde, steht
+   * hier der Zeitpunkt im Format YYYY-MM-DD HH:MM:SS
+   */
+  map.insert("paymentConfirmed", "o_payment_confirmed");
+
+  /**
+   * Aktuell nur für Zahlungsart PayPal: Die von PayPal übermittelte txn_id der
+   * zugehörigen Bezahlung
+   */
+  map.insert("transactionId", "o_payment_paypal_txn_id");
+
+  /**
+   * @brief Die vom Besteller gewählte Zahlungsart.
+   * Folgende Werte sind möglich:
+   * @li  1 : Banküberweisung (Vorkasse)
+   * @li  2 : Offene Rechnung
+   * @li  3 : Lastschrift (Vorkasse)
+   * @li  4 : Kreditkarte (Vorkasse)
+   * @li  5 : Nachnahme
+   * @li  6 : PayPal (Vorkasse)
+   * @li  8 : Skrill (Vorkasse)
+   * @li  9 : Selbstabholung - Barzahlung
+   * @li 10 : Sofortüberweisung
+   * @li 11 : Offene Rechnung (Vorkasse vorbehalten)
+   */
+  map.insert("paymentId", "o_payment_method");
 
   // public.article_orders @{
+  map.insert("mediaType", "i_inventory_type");
   map.insert("orderNo", "a_article_id");
+  map.insert("author", "ib_author");
+  map.insert("singlePrice", "ib_price");
+  map.insert("totalPriceRebated", "a_sell_price");
   map.insert("orderItemId", "o_provider_purchase_id");
   map.insert("amount", "a_count");
-  map.insert("singlePrice", "a_sell_price");
   map.insert("orderTitle", "a_title");
   // @}
   return map;

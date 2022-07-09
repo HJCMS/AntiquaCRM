@@ -126,22 +126,6 @@ void InventoryCustomers::openEditor(const QString &customer) {
   }
 }
 
-void InventoryCustomers::editCustomer(int id) {
-  if (id < 1)
-    return;
-
-  QString s(primaryIndex);
-  s.append("=");
-  s.append(QString::number(id));
-  openEditor(s);
-}
-
-void InventoryCustomers::createCustomer() {
-  m_editCustomer->setEnabled(true);
-  m_editCustomer->createCustomer();
-  m_stackedWidget->setCurrentWidget(m_editorWidget);
-}
-
 void InventoryCustomers::searchConvert(const QString &search) {
   if (search.length() <= minLength)
     return;
@@ -172,3 +156,22 @@ void InventoryCustomers::openTableView() {
   m_stackedWidget->setCurrentIndex(0);
   m_editCustomer->setEnabled(false);
 }
+
+void InventoryCustomers::editCustomer(int id) {
+  if (id < 1)
+    return;
+
+  QString s(primaryIndex);
+  s.append("=");
+  s.append(QString::number(id));
+  openEditor(s);
+}
+
+void InventoryCustomers::createCustomer() {
+  m_editCustomer->setEnabled(true);
+  m_editCustomer->createCustomer();
+  m_stackedWidget->setCurrentWidget(m_editorWidget);
+}
+
+void InventoryCustomers::onEnterChanged()
+{}

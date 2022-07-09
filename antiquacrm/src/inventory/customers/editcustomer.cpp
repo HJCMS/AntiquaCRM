@@ -286,11 +286,11 @@ void EditCustomer::restoreDataset() {
   importSqlResult();
 }
 
-void EditCustomer::updateCustomer(const QString &id) {
+void EditCustomer::updateCustomer(const QString &statement) {
   setInputList();
   QString sql("SELECT *, concat_ws(' ',c_firstname,c_lastname) AS fullname ");
   sql.append(" FROM customers");
-  sql.append(" WHERE " + id);
+  sql.append(" WHERE " + statement);
   sql.append(" ORDER BY c_id LIMIT 1;");
 
   QSqlQuery q = m_sql->query(sql);
@@ -331,12 +331,12 @@ void EditCustomer::updateCustomer(const QString &id) {
 
 void EditCustomer::createCustomer() {
   setInputList();
-  sqlQueryResult.clear();             /**< SQL History leeren */
   infoLabel->clear();                 /**< Muss Leer sein */
-  c_id->reset();                      /**< CustomerId Leeren */
+  sqlQueryResult.clear();             /**< SQL History leeren */
   clearDataFields(p_objPattern);      /**< Alle Datenfelder leeren */
+  c_id->reset();                      /**< CustomerId Leeren */
+  c_id->setRequired(false);           /**< CustomerId Nicht erforderlich */
   m_actionBar->setRestoreable(false); /**< ResetButton off */
   m_dataBox->setCurrentWidget(m_contact);
-  c_id->setRequired(false); /**< CustomerId Nicht erforderlich */
   resetModified(inputList);
 }

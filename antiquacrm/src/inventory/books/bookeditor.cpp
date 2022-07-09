@@ -22,8 +22,6 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   setWindowTitle(tr("Edit Book Title"));
   setMinimumSize(800, 750);
 
-  count_temp = -1; /**< Initialisieren */
-
   ApplSettings config;
 
   Qt::Alignment defaultAlignment = (Qt::AlignRight | Qt::AlignVCenter);
@@ -130,14 +128,14 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   QLabel *titleLabel = new QLabel(this);
   titleLabel->setObjectName("titleLabel");
   titleLabel->setAlignment(defaultAlignment);
-  titleLabel->setText(tr("Book &Title:"));
+  titleLabel->setText(tr("Booktitle") + ":");
   row2->addWidget(titleLabel, row2c, 0, 1, 1);
 
   ib_title = new StrLineEdit(this);
   ib_title->setObjectName("ib_title");
   ib_title->setMaxAllowedLength(80);
   ib_title->setRequired(true);
-  ib_title->setWindowTitle(tr("Title"));
+  ib_title->setInfo(tr("Booktitle"));
   ib_title->setToolTip(tr("Required input field. Limited to 80 characters, "
                           "Webshop Systems require this."));
   titleLabel->setBuddy(ib_title);
@@ -146,27 +144,27 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   QLabel *extendedLabel = new QLabel(this);
   extendedLabel->setObjectName("extendedLabel");
   extendedLabel->setAlignment(defaultAlignment);
-  extendedLabel->setText(tr("Booktitle Extended:"));
+  extendedLabel->setText(tr("Book Subtitle") + ":");
   row2->addWidget(extendedLabel, row2c, 0, 1, 1);
 
   ib_title_extended = new StrLineEdit(this);
   ib_title_extended->setObjectName("ib_title_extended");
   ib_title_extended->setMaxAllowedLength(148);
   ib_title_extended->setToolTip(tr("Extended Title or Subtitle."));
-  ib_title_extended->setWindowTitle(tr("Extended Title"));
+  ib_title_extended->setInfo(tr("Book Subtitle"));
   row2->addWidget(ib_title_extended, row2c++, 1, 1, 1);
 
   QLabel *authorLabel = new QLabel(this);
   authorLabel->setObjectName("authorLabel");
   authorLabel->setAlignment(defaultAlignment);
-  authorLabel->setText(tr("&Author:"));
+  authorLabel->setText(tr("Author") + ":");
   row2->addWidget(authorLabel, row2c, 0, 1, 1);
 
   ib_author = new StrLineEdit(this);
   ib_author->setObjectName("ib_author");
   ib_author->setMaxAllowedLength(128);
   ib_author->setRequired(true);
-  ib_author->setWindowTitle(tr("Author"));
+  ib_author->setInfo(tr("Author"));
   ib_author->setToolTip(
       tr("Format: Firstname lastname (Different Authors separated by comma)."));
   authorLabel->setBuddy(ib_author);
@@ -175,27 +173,28 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   QLabel *publisherLabel = new QLabel(this);
   publisherLabel->setObjectName("publisherLabel");
   publisherLabel->setAlignment(defaultAlignment);
-  publisherLabel->setText(tr("Publisher:"));
+  publisherLabel->setText(tr("Publisher") + ":");
   publisherLabel->setToolTip(tr("Enter hier the Book Publisher."));
   row2->addWidget(publisherLabel, row2c, 0, 1, 1);
 
   ib_publisher = new StrLineEdit(this);
   ib_publisher->setObjectName("ib_publisher");
   ib_publisher->setMaxAllowedLength(128);
-  ib_publisher->setWindowTitle(tr("Publisher"));
+  ib_publisher->setInfo(tr("Publisher"));
   ib_publisher->setToolTip(tr("Publisher or Illustrator"));
   row2->addWidget(ib_publisher, row2c++, 1, 1, 1);
 
   QLabel *conditionLabel = new QLabel(this);
   conditionLabel->setObjectName("conditionLabel");
   conditionLabel->setAlignment(defaultAlignment);
-  conditionLabel->setText(tr("Condition:"));
+  conditionLabel->setText(tr("Condition") + ":");
   row2->addWidget(conditionLabel, row2c, 0, 1, 1);
 
   ib_condition = new StrLineEdit(this);
   ib_condition->setObjectName("ib_condition");
   ib_condition->setMaxAllowedLength(128);
   ib_condition->setRequired(true);
+  ib_condition->setInfo(tr("Condition"));
   ib_condition->setToolTip(
       tr("Condition of this Book. See also Configuration conditions Table."));
   row2->addWidget(ib_condition, row2c++, 1, 1, 1);
@@ -203,19 +202,20 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   QLabel *designationLabel = new QLabel(this);
   designationLabel->setObjectName("designationLabel");
   designationLabel->setAlignment(defaultAlignment);
-  designationLabel->setText(tr("Designation:"));
+  designationLabel->setText(tr("Designation") + ":");
   row2->addWidget(designationLabel, row2c, 0, 1, 1);
 
   ib_designation = new StrLineEdit(this);
   ib_designation->setObjectName("ib_designation");
   ib_designation->setMaxAllowedLength(128);
   ib_designation->setRequired(true);
+  ib_designation->setInfo(tr("Designation"));
   row2->addWidget(ib_designation, row2c++, 1, 1, 1);
 
   QLabel *storageLabel = new QLabel(this);
   storageLabel->setObjectName("storageLabel");
   storageLabel->setAlignment(defaultAlignment);
-  storageLabel->setText(tr("Storage:"));
+  storageLabel->setText(tr("Storage") + ":");
   row2->addWidget(storageLabel, row2c, 0, 1, 1);
 
   ib_storage = new StorageEdit(this);
@@ -226,19 +226,20 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   QLabel *keywordLabel = new QLabel(this);
   keywordLabel->setObjectName("keywordLabel");
   keywordLabel->setAlignment(defaultAlignment);
-  keywordLabel->setText(tr("Keyword:"));
+  keywordLabel->setText(tr("Keyword") + ":");
   row2->addWidget(keywordLabel, row2c, 0, 1, 1);
 
   ib_keyword = new StrLineEdit(this);
   ib_keyword->setObjectName("ib_keyword");
   ib_keyword->setMaxAllowedLength(60);
+  ib_keyword->setInfo(tr("Keyword"));
   ib_keyword->setToolTip(tr("Category Keywords for Shopsystems."));
   row2->addWidget(ib_keyword, row2c++, 1, 1, 1);
 
   QLabel *subjectLabel = new QLabel(this);
   subjectLabel->setObjectName("subjectLabel");
   subjectLabel->setAlignment(defaultAlignment);
-  subjectLabel->setText(tr("Provider Subject:"));
+  subjectLabel->setText(tr("Provider Subject") + ":");
   row2->addWidget(subjectLabel, row2c, 0, 1, 1);
 
   ib_category_subject = new CategorySubject(this);
@@ -449,7 +450,7 @@ void BookEditor::createSqlUpdate() {
 
   /** Auf Aktivierung prüfen */
   int articleId = ib_id->value().toInt();
-  int articleCount = ib_count->value().toInt();
+  qint8 articleCount = ib_count->value().toInt();
   if (articleCount != 0 && (count_temp != articleCount)) {
     for (int i = 0; i < sqlQueryResult.size(); ++i) {
       DataField f = sqlQueryResult.at(i);
@@ -542,14 +543,14 @@ void BookEditor::checkLeaveEditor() {
 }
 
 void BookEditor::finalLeaveEditor() {
-  count_temp = -1;
+  count_temp = -1;                    /**< Zähler wieder zurücksetzen */
   m_isbnWidget->clear();              /**< OpenLibrary.org Anzeige leeren */
   sqlQueryResult.clear();             /**< SQL History leeren */
   clearDataFields(p_objPattern);      /**< Alle Datenfelder leeren */
   m_actionBar->setRestoreable(false); /**< ResetButton off */
   m_imageView->clear();               /**< Imaging clear */
   m_imageToolBar->setActive(false);   /**< Bilder Aktionsleiste zurücksetzen */
-  emit s_leaveEditor();               /**< Zurück */
+  emit s_leaveEditor();               /**< Zurück zur Hauptsansicht */
 }
 
 void BookEditor::restoreDataset() {
@@ -628,8 +629,15 @@ void BookEditor::infoISBNDoubleClicked(QListWidgetItem *item) {
     data = data.replace(regexp, "");
     // Überlange Einträge von externen Quelle unterbinden! Wenn der
     // Vorschlag zu lang ist dann in "ib_title_extended" einfügen!
-    if (data.length() > 79) {
+    // Falls noch größer als bei "ib_title_extended" erlaubt, dann unter
+    // "ib_internal_description" anhängen.
+    if (data.length() > 79 && data.length() < 149) {
       ib_title_extended->setValue(data);
+    } else if (data.length() > 148) {
+      QString buffer = ib_internal_description->value().toString();
+      buffer.append("\n" + data);
+      ib_internal_description->setValue(buffer);
+      buffer.clear();
     } else {
       ib_title->setValue(data);
     }
@@ -675,6 +683,11 @@ void BookEditor::printingBookCard() {
 
 void BookEditor::changeEvent(QEvent *event) {
   if (event->type() == QEvent::EnabledChange && isEnabled()) {
+    /**
+     * Bei einem erneuten Aufruf wieder zurück setzen!
+     */
+    count_temp = -1;
+
     /**
      * @warning Die Suche muss bei einem Öffnen Leer sein!
      * Danach kann loadDatset ausgeführt werden!

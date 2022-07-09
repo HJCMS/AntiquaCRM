@@ -62,7 +62,7 @@ private Q_SLOTS:
 
 public Q_SLOTS:
   void restoreDataset();
-  void updateCustomer(const QString &);
+  void updateCustomer(const QString &statement);
   void createCustomer();
 
 public:

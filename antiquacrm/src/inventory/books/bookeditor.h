@@ -65,7 +65,7 @@ private:
    * zwischenspeichern die Daten noch mal an den Dienstleister gesendet werden!
    * @see EditorMain::s_articleCount
    */
-  int count_temp;
+  qint8 count_temp = -1;
 
   /**
    * @brief Wird für QObject::findchild benötigt!
