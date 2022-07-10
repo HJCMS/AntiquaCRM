@@ -5,8 +5,9 @@
 #include "abebooksconfig.h"
 #include "abebooksrequester.h"
 
-#include <QDir>
-#include <QFile>
+//#include <QDir>
+//#include <QFile>
+#include <QDateTime>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
@@ -85,6 +86,12 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
   emit createCustomer(QJsonDocument(jsObject));
 }
 
+const QString AbeBooksIfaceWidget::getTagText(const QDomNode &node,
+                                              const QString &tag) const {
+  QString o = node.namedItem(tag).firstChild().nodeValue();
+  return o.trimmed();
+}
+
 const QJsonDocument
 AbeBooksIfaceWidget::customerRequest(const QJsonObject &object) {
   Q_UNUSED(object);
@@ -98,6 +105,26 @@ AbeBooksIfaceWidget::customerRequest(const QJsonObject &object) {
     customer.insert(f, p_customer.value(f));
   }
   return QJsonDocument(customer);
+}
+
+void AbeBooksIfaceWidget::parseOrderDate(const QDomNode &node) {
+  QString dt_str;
+  QDomNode dateNode = node.namedItem("date");
+  dt_str.append(getTagText(dateNode, "day") + ".");
+  dt_str.append(getTagText(dateNode, "month") + ".");
+  dt_str.append(getTagText(dateNode, "year"));
+  dt_str.append(" ");
+  QDomNode timeNode = node.namedItem("time");
+  dt_str.append(getTagText(timeNode, "hour") + ":");
+  dt_str.append(getTagText(timeNode, "minute") + ":");
+  dt_str.append(getTagText(timeNode, "second"));
+
+  QDateTime dt = QDateTime::fromString(dt_str, "d.M.yyyy h:m:ss");
+  if (dt.isValid()) {
+    QString dt_out = dt.toString(ANTIQUA_DATETIME_FORMAT);
+    p_customer.insert("o_since", dt_out);
+    m_order->setValue("o_since", dt_out);
+  }
 }
 
 void AbeBooksIfaceWidget::parseAddressBody(const QString &section,
@@ -127,8 +154,7 @@ void AbeBooksIfaceWidget::parseAddressBody(const QString &section,
   buffer.clear();
 }
 
-void AbeBooksIfaceWidget::checkCustomerClicked()
-{
+void AbeBooksIfaceWidget::checkCustomerClicked() {
   QJsonDocument cIjs = customerRequest(QJsonObject());
   if (!cIjs.isEmpty())
     emit checkCustomer(cIjs);
@@ -204,11 +230,15 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
         // Sende SQL Abfrage an Hauptfenster!
         checkCustomerClicked();
       }
-      QDomElement pd = n.toElement();
-      if (pd.firstChild().nodeValue() == "SD") {
-        QString pt = pd.attribute("type", "Invoice");
-        m_order->setValue("payment_method", purchaseType(pt));
-      }
+    }
+    // Datum
+    if (n.nodeName() == "orderDate") {
+      parseOrderDate(n);
+    } else if (n.hasChildNodes()) {
+      QString param = sqlParam(n.nodeName());
+      QString value = stripString(n.firstChild().nodeValue());
+      if (!param.isEmpty() && !value.isEmpty())
+        m_order->setValue(param, value);
     }
   }
 
@@ -239,7 +269,8 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
       QDomElement status = n.namedItem("status").toElement();
       if (status.hasChildNodes()) {
         QString statusText = status.firstChild().nodeValue();
-        m_order->setValue("payment_method", purchaseType(statusText));
+        m_order->setValue("o_payment_status", purchaseType(statusText));
+        p_customer.insert("o_payment_status", purchaseType(statusText));
       }
     }
   }
@@ -264,14 +295,19 @@ void AbeBooksIfaceWidget::setCustomerId(int customerId) {
 
 const QString AbeBooksIfaceWidget::purchaseType(const QString &key) const {
   QMap<QString, QString> map;
+  /**
+   * @brief Die vom Besteller gewählte Zahlungsart.
+   * @class OrdersPaymentTypes
+   */
   // BEGIN purchaseMethod Tag
-  map.insert("Check", tr("Check"));
-  map.insert("PayPal", "PayPal");
-  map.insert("Bank/Wire Transfer", tr("Bank/Wire Transfer"));
-  map.insert("Money Order", tr("Money Order"));
-  map.insert("Bank Draft", tr("Bank Draft"));
-  map.insert("Invoice", tr("Invoice"));
+  map.insert("Check", "12");
+  map.insert("PayPal", "6");
+  map.insert("Bank/Wire Transfer", "10");
+  map.insert("Money Order", "13");
+  map.insert("Bank Draft", "12");
+  map.insert("Invoice", "11");
   // END
+
   // BEGIN status Tag
   map.insert("Buyer Cancelled", tr("Buyer Cancelled"));
   map.insert("Cancelled", tr("Cancelled"));
@@ -299,9 +335,13 @@ const QMap<QString, QString> AbeBooksIfaceWidget::fieldTranslate() const {
   map.insert("email", "c_email_0");
   // @}
 
+  map.insert("purchaseMethod", "o_payment_method");
+  map.insert("reseller", "o_provider_name");
+
   // public.article_orders @{
   map.insert("vendorKey", "a_article_id");
-  map.insert("price", "a_sell_price");
+  map.insert("price", "a_price");
+  map.insert("total", "a_sell_price");
   map.insert("title", "a_title");
   // @}
   return map;

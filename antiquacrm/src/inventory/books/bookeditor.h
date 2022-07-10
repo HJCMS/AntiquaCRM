@@ -204,11 +204,6 @@ private Q_SLOTS:
   void viewIsbnTab();
 
   /**
-   * @brief Öffne die Url aus der Ergebnisanzeige.
-   */
-  void infoISBNDoubleClicked(QListWidgetItem *);
-
-  /**
    * @brief Eine Buchkarte drucken
    */
   void printingBookCard();

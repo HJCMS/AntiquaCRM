@@ -33,7 +33,7 @@ test -e ${_sourcepath}/servercfg.bash || {
 
 . ${_sourcepath}/servercfg.bash
 
-_sqlfile=${_scripting}/abebooks-export/bf-export.sql
+_sqlfile=${_scripting}/catalog/bf-export.sql
 
 ## Ausgabe Verzeichnis
 _output_target=${_dest}/catalog
@@ -43,6 +43,16 @@ _tempdir=$HOME/.cache
 _output="catalog-${_date}-ISO-8859-15.csv"
 
 #####################################################################
+
+if test ! -x /usr/bin/curl ; then
+  echo "cUrl application is not installed!"
+  exit 1
+fi
+
+if test ! -x /usr/bin/zip ; then
+  echo "zip compression application is not installed!"
+  exit 1
+fi
 
 if test ! -e ${_sqlfile} ; then
   echo "SQL File not found!"
@@ -77,13 +87,30 @@ if test -s ${_tempdir}/catalog-export.temp ; then
   mv -b ${_tempdir}/${_output} ${_output_target}/
   mv -b ${_tempdir}/catalog-export-utf8.csv ${_output_target}/
   _lines="$(wc -l ${_output_target}/${_output} 2>/dev/null | cut -d' ' -f1)"
-  echo "Katalog Ertellung am '`date`' mit '`echo "${_lines} - 1" | bc`' einträgen erneuert." >> ${_output_target}/catalog.log
+  echo "Katalog Ertellt am '`date`' mit '`echo "${_lines} - 1" | bc`' einträgen." >> ${_output_target}/catalog.log
   rm -f ${_output_target}/catalog.csv
   ln -sf ${_output} ${_output_target}/catalog.csv
   rm -f ${_tempdir}/catalog-export.temp
 fi
 
-exit $?
+_status=$?
+if test ${_status} -gt 0 ; then
+  echo "Script ending with errors"
+  exit 1
+fi
+
+pushd ${_output_target}
+  cp $(readlink catalog.csv) katalog.txt
+  chmod 0644 katalog.txt
+  rm -f *.zip
+  zip -9 -o katalog.zip katalog.txt 1> /dev/null
+  chmod 0644 katalog.zip
+  rm -f katalog.txt
+popd
+
+if test -e ${_output_target}/katalog.zip ; then
+
+fi
 
 ##
 ## EOF

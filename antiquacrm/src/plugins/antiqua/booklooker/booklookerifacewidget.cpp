@@ -272,6 +272,7 @@ const QMap<QString, QString> BooklookerIfaceWidget::fieldTranslate() const {
 
   /**
    * @brief Die vom Besteller gewählte Zahlungsart.
+   * @class OrdersPaymentTypes
    * Folgende Werte sind möglich:
    * @li  1 : Banküberweisung (Vorkasse)
    * @li  2 : Offene Rechnung

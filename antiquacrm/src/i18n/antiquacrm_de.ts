@@ -566,7 +566,7 @@
         <translation>Shop Kategorie</translation>
     </message>
     <message>
-        <location line="+131"/>
+        <location line="+129"/>
         <source>Remove Image from Database</source>
         <translation>Entferne Bild aus der Datenbank</translation>
     </message>
@@ -596,12 +596,12 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-439"/>
+        <location line="-437"/>
         <source>Extended Title or Subtitle.</source>
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
     <message>
-        <location line="+221"/>
+        <location line="+219"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
@@ -611,7 +611,7 @@
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
     <message>
-        <location line="-296"/>
+        <location line="-294"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -644,12 +644,12 @@
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="+216"/>
+        <location line="+214"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-332"/>
+        <location line="-330"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -2275,65 +2275,44 @@
 <context>
     <name>ISBNResults</name>
     <message>
-        <location filename="../inventory/books/isbnresults.cpp" line="+46"/>
-        <location line="+12"/>
-        <source>No Result: Search with %1</source>
-        <translation>Kein Ergebnis, suche mit %1</translation>
+        <location filename="../inventory/books/isbnresults.cpp" line="+48"/>
+        <source>No Result</source>
+        <translation>Kein Eintrag gefunden</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+17"/>
         <source>Booktitle</source>
         <translation>Buchtitel</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+7"/>
         <source>Subtitle</source>
         <translation>Untertitel</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <source>Authors</source>
         <translation>Autoren</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <source>Publisher</source>
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Open Webpage in Browser for full Description.</source>
-        <translation>Öffnen Sie die Webseite im Browser für eine vollständige Beschreibung.</translation>
+        <location line="+32"/>
+        <source>Copy selected item row</source>
+        <translation>Ausgewählte Zeile kopieren</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>External Book Description</source>
-        <translation>Öffne externe Buch Beschreibung</translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="-24"/>
         <source>Pages</source>
         <translation>Seitenanzahl</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>An image exists on OpenLibrary.org</source>
-        <translation>Ein Bild existiert auf OpenLibrary.org</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>OpenLibrary is free to use, but we need your Help!</source>
-        <translation>OpenLibrary kann kostenlos verwendet werden, aber wir brauchen Ihre Hilfe!</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Copy Article Id</source>
-        <translation>Kopiere Artikel Nummer</translation>
     </message>
 </context>
 <context>
@@ -4389,57 +4368,57 @@
     <message>
         <location filename="../custom/utils/orderspaymenttype.cpp" line="+2"/>
         <source>Bank transfer (prepayment)</source>
-        <translation type="unfinished"></translation>
+        <translation>Banküberweisung (Vorkasse)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>open account</source>
-        <translation type="unfinished"></translation>
+        <translation>Offene Rechnung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>direct debit (prepayment)</source>
-        <translation type="unfinished"></translation>
+        <translation>Lastschrift (Vorkasse)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Credit card (prepayment)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kreditkarte (Vorkasse)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>cash on delivery</source>
-        <translation type="unfinished"></translation>
+        <translation>Nachnahme</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>PayPal (prepayment)</source>
-        <translation type="unfinished"></translation>
+        <translation>PayPal (Vorkasse)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbekannt</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Skrill (prepayment)</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrill (Vorkasse)</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Pickup - cash payment</source>
-        <translation type="unfinished"></translation>
+        <translation>Selbstabholung - Barzahlung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Instant bank transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Sofortüberweisung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Invoice (prepayment reserved)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechnung (Vorkasse vorbehalten)</translation>
     </message>
 </context>
 <context>

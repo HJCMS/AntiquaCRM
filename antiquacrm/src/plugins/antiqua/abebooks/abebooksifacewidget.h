@@ -26,7 +26,11 @@ private:
   QHash<QString, QString> p_customer;
   QDomDocument p_currentDocument;
 
+  const QString getTagText(const QDomNode &node, const QString &tag) const;
+
   const QJsonDocument customerRequest(const QJsonObject &object);
+
+  void parseOrderDate(const QDomNode &node);
 
   void parseAddressBody(const QString &, const QJsonObject &);
 

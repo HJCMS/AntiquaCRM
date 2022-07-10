@@ -566,7 +566,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+131"/>
+        <location line="+129"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -596,12 +596,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-439"/>
+        <location line="-437"/>
         <source>Extended Title or Subtitle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+221"/>
+        <location line="+219"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -611,7 +611,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-296"/>
+        <location line="-294"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -644,12 +644,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+216"/>
+        <location line="+214"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-332"/>
+        <location line="-330"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2275,64 +2275,43 @@
 <context>
     <name>ISBNResults</name>
     <message>
-        <location filename="../inventory/books/isbnresults.cpp" line="+46"/>
-        <location line="+12"/>
-        <source>No Result: Search with %1</source>
+        <location filename="../inventory/books/isbnresults.cpp" line="+48"/>
+        <source>No Result</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+17"/>
         <source>Booktitle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+7"/>
         <source>Subtitle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <source>Authors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <source>Publisher</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Open Webpage in Browser for full Description.</source>
+        <location line="+32"/>
+        <source>Copy selected item row</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>External Book Description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="-24"/>
         <source>Pages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>An image exists on OpenLibrary.org</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>OpenLibrary is free to use, but we need your Help!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Copy Article Id</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

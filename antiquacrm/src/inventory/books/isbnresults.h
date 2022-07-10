@@ -27,6 +27,9 @@ private:
    */
   IsbnRequest *m_isbnRequest;
 
+  QListWidgetItem *createItem(QListWidget *parent) const;
+
+
 private Q_SLOTS:
   /**
      @brief Konvertiert das ISBN ergebnis.

@@ -331,8 +331,6 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
           SLOT(removeImageDialog(int)));
 
   connect(m_isbnWidget, SIGNAL(requestFinished()), this, SLOT(viewIsbnTab()));
-  connect(m_isbnWidget, SIGNAL(itemDoubleClicked(QListWidgetItem *)), this,
-          SLOT(infoISBNDoubleClicked(QListWidgetItem *)));
 
   connect(m_actionBar, SIGNAL(s_cancelClicked()), this,
           SLOT(finalLeaveEditor()));
@@ -617,49 +615,6 @@ void BookEditor::saveData() {
       createSqlUpdate();
   } else {
     createSqlUpdate();
-  }
-}
-
-void BookEditor::infoISBNDoubleClicked(QListWidgetItem *item) {
-  QRegExp regexp;
-  QString data = item->data(Qt::UserRole).toString();
-  // qDebug() << Q_FUNC_INFO << data;
-  if (data.contains("ib_title:")) {
-    regexp.setPattern("^ib_title:\\b");
-    data = data.replace(regexp, "");
-    // Überlange Einträge von externen Quelle unterbinden! Wenn der
-    // Vorschlag zu lang ist dann in "ib_title_extended" einfügen!
-    // Falls noch größer als bei "ib_title_extended" erlaubt, dann unter
-    // "ib_internal_description" anhängen.
-    if (data.length() > 79 && data.length() < 149) {
-      ib_title_extended->setValue(data);
-    } else if (data.length() > 148) {
-      QString buffer = ib_internal_description->value().toString();
-      buffer.append("\n" + data);
-      ib_internal_description->setValue(buffer);
-      buffer.clear();
-    } else {
-      ib_title->setValue(data);
-    }
-  } else if (data.contains("ib_title_extended:")) {
-    regexp.setPattern("^ib_title_extended:\\b");
-    ib_title_extended->setValue(data.replace(regexp, ""));
-  } else if (data.contains("ib_author:")) {
-    regexp.setPattern("^ib_author:\\b");
-    ib_author->setValue(data.replace(regexp, ""));
-  } else if (data.contains("ib_year:")) {
-    regexp.setPattern("^ib_year:");
-    QString buffer = data.replace(regexp, "");
-    bool b = true;
-    ib_year->setValue(buffer.toDouble(&b));
-  } else if (data.contains("ib_publisher:")) {
-    regexp.setPattern("^ib_publisher:\\b");
-    ib_publisher->setValue(data.replace(regexp, ""));
-  } else if (data.contains("ib_website:")) {
-    regexp.setPattern("^ib_website:\\b");
-    QUrl url(data.replace(regexp, ""));
-    if (url.isValid())
-      QDesktopServices::openUrl(url);
   }
 }
 
