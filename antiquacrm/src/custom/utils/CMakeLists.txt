@@ -38,7 +38,6 @@ SET (subproject_SOURCES
   messagebox.cpp
   orderstatusbox.cpp
   orderspaymentbox.cpp
-  orderspaymenttype.cpp
   phoneedit.cpp
   postalcode.cpp
   priceedit.cpp
@@ -81,7 +80,6 @@ SET (subproject_HEADERS
   messagebox.h
   orderstatusbox.h
   orderspaymentbox.h
-  orderspaymenttype.h
   phoneedit.h
   postalcode.h
   priceedit.h

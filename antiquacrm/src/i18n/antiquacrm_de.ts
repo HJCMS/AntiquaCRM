@@ -3278,7 +3278,7 @@
 <context>
     <name>OrdersPaymentType</name>
     <message>
-        <location filename="../custom/utils/orderspaymenttype.cpp" line="+103"/>
+        <location filename="../custom/utils/orderspaymenttype.cpp" line="+77"/>
         <source>a Valid Payment type is required!</source>
         <translation>Eine gültige Zahlungsart ist erforderlich!</translation>
     </message>
@@ -4270,13 +4270,13 @@
 <context>
     <name>QObject</name>
     <message>
+        <location filename="../core/antiquacore/paymenttypeset.cpp" line="+10"/>
         <location filename="../custom/utils/genderbox.cpp" line="+38"/>
-        <location filename="../custom/utils/orderspaymenttype.cpp" line="-93"/>
         <source>Without disclosures</source>
         <translation>Keine Angaben</translation>
     </message>
     <message>
-        <location line="-11"/>
+        <location filename="../custom/utils/genderbox.cpp" line="-11"/>
         <location line="+12"/>
         <source>Male</source>
         <translation>Männlich</translation>
@@ -4363,7 +4363,7 @@
         <translation>Lieferung abgeschlossen</translation>
     </message>
     <message>
-        <location filename="../custom/utils/orderspaymenttype.cpp" line="+2"/>
+        <location filename="../core/antiquacore/paymenttypeset.cpp" line="+2"/>
         <source>Bank transfer (prepayment)</source>
         <translation>Banküberweisung (Vorkasse)</translation>
     </message>
@@ -4420,7 +4420,7 @@
     <message>
         <location line="+2"/>
         <source>Check</source>
-        <translation type="unfinished">Prüfen</translation>
+        <translation>Scheck</translation>
     </message>
 </context>
 <context>

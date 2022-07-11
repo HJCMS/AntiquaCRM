@@ -8,3 +8,15 @@
 #ifndef ANTIQUA_PLUGINLOADER_H
 # include "pluginloader.h"
 #endif
+
+#ifndef ANTIQUA_PURCHASEDEBUGTABLE_H
+# include "purchasedebugtable.h"
+#endif
+
+#ifndef ANTIQUA_PURCHASEPAYMENTINFO_H
+# include "purchasepaymentinfo.h"
+#endif
+
+#ifndef ANTIQUA_PURCHASERORDERTABLE_H
+# include "purchaserordertable.h"
+#endif

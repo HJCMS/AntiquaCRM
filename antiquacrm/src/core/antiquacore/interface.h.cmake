@@ -4,22 +4,19 @@
 #ifndef ANTIQUA_INTERFACE_H
 #define ANTIQUA_INTERFACE_H
 
-#include <QContextMenuEvent>
 #include <QDateTime>
-#include <QGroupBox>
 #include <QHash>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QLabel>
-#include <QListWidget>
+#include <QTabWidget>
 #include <QMap>
+#include <QLineEdit>
 #include <QMetaObject>
 #include <QMetaType>
 #include <QObject>
 #include <QScrollArea>
-#include <QTableWidget>
-#include <QTableWidgetItem>
 #include <QTextEdit>
 #include <QToolBar>
 #include <QPushButton>
@@ -58,49 +55,9 @@
  */
 namespace Antiqua {
 
-  class ANTIQUACORE_EXPORT PurchaseDebugTable final : public QTableWidget {
-    Q_OBJECT
-
-  public:
-    explicit PurchaseDebugTable(QWidget *parent = nullptr);
-    QTableWidgetItem *createItem(const QVariant &value) const;
-  };
-
-  /**
-   * @class Antiqua::PurchaserOrderTable
-   * @ingroup Antiqua Plugin Interface
-   * @brief Tabelle für die Bestellartikel anzeigen
-   * Die Standardformatierung der Zellen ist Text und alle Zellen sind
-   * auf nur lesen gestellt. Die Tabelle dient Primär zur Bestellungsanzeige.
-   * Es werden die Artikel Nr. mit Antiqua::InterfaceWidget::getArticleIds(column) ausgelesen.
-   * Sie besteht aus 5 Spalten welche wie folgt vergeben sind:
-   * @code
-   *  --------------------------------------------------------
-   *  |        0         |      1     |   2   |   3   |   4  |
-   *  --------------------------------------------------------
-   *  | Dienstleister ID | Artikel ID | Menge | Preis | Info |
-   *  --------------------------------------------------------
-   * @endcode
-   */
-  class ANTIQUACORE_EXPORT PurchaserOrderTable final : public QTableWidget {
-    Q_OBJECT
-
-  private Q_SLOTS:
-    void findSelectedArticleId();
-    void copyIdToClipboard();
-
-  protected:
-    void addHeaderItem(int, const QString &name);
-    void contextMenuEvent(QContextMenuEvent *);
-
-  Q_SIGNALS:
-    void inspectArticle(int);
-    void findArticleNumbers();
-
-  public:
-    explicit PurchaserOrderTable(QWidget *parent = nullptr);
-    QTableWidgetItem *createItem(const QString &title) const;
-  };
+  class PurchasePaymentInfo;
+  class PurchaseDebugTable;
+  class PurchaserOrderTable;
 
   /**
    * @class Antiqua::ProviderWidget
@@ -174,6 +131,11 @@ namespace Antiqua {
      * @see Antiqua::PurchaserOrderTable
      */
     Antiqua::PurchaserOrderTable *m_table;
+
+    /**
+     * @brief Zahlungs Informationen
+     */
+    Antiqua::PurchasePaymentInfo *m_paymentInfo;
 
   public Q_SLOTS:
     /**

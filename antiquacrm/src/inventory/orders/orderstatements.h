@@ -52,7 +52,8 @@ static const QString defaultOrdersQuery(int id = 0) {
   QString fieldSelect;
   QString fs("a.o_id,a.o_since,a.o_order_status,a.o_payment_status,");
   fs.append("CASE WHEN c.c_company=true THEN c.c_company_name ELSE ");
-  fs.append("concat_ws(' ',c.c_firstname,c.c_lastname) END AS customer,");
+  fs.append("CONCAT(c.c_firstname,' ',c.c_lastname,' (',c.c_country,')') ");
+  fs.append("END AS customer,");
   fs.append("d.d_name");
   fieldSelect.append(fs);
 

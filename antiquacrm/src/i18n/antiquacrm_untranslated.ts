@@ -3278,7 +3278,7 @@
 <context>
     <name>OrdersPaymentType</name>
     <message>
-        <location filename="../custom/utils/orderspaymenttype.cpp" line="+103"/>
+        <location filename="../custom/utils/orderspaymenttype.cpp" line="+77"/>
         <source>a Valid Payment type is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4270,13 +4270,13 @@
 <context>
     <name>QObject</name>
     <message>
+        <location filename="../core/antiquacore/paymenttypeset.cpp" line="+10"/>
         <location filename="../custom/utils/genderbox.cpp" line="+38"/>
-        <location filename="../custom/utils/orderspaymenttype.cpp" line="-93"/>
         <source>Without disclosures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-11"/>
+        <location filename="../custom/utils/genderbox.cpp" line="-11"/>
         <location line="+12"/>
         <source>Male</source>
         <translation type="unfinished"></translation>
@@ -4363,7 +4363,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../custom/utils/orderspaymenttype.cpp" line="+2"/>
+        <location filename="../core/antiquacore/paymenttypeset.cpp" line="+2"/>
         <source>Bank transfer (prepayment)</source>
         <translation type="unfinished"></translation>
     </message>

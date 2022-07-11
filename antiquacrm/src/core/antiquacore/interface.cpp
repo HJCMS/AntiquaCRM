@@ -2,98 +2,16 @@
 // vim: set fileencoding=utf-8
 
 #include "interface.h"
+#include "purchasedebugtable.h"
+#include "purchasepaymentinfo.h"
+#include "purchaserordertable.h"
 
-#include <QAction>
-#include <QApplication>
-#include <QClipboard>
+#include <QFontMetricsF>
 #include <QGridLayout>
-#include <QHeaderView>
 #include <QIcon>
-#include <QLabel>
-#include <QLineEdit>
-#include <QMenu>
-#include <QStyle>
-#include <QTabWidget>
-#include <QTableWidgetItem>
-#include <QTextEdit>
 #include <QVBoxLayout>
 
 namespace Antiqua {
-
-PurchaseDebugTable::PurchaseDebugTable(QWidget *parent) : QTableWidget{parent} {
-  setColumnCount(2);
-  QStringList headers({tr("Parameter"), tr("Value")});
-  setHorizontalHeaderLabels(headers);
-  QHeaderView *header = horizontalHeader();
-  header->setDefaultAlignment(Qt::AlignCenter);
-  header->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-  header->setSectionResizeMode(1, QHeaderView::Stretch);
-}
-
-QTableWidgetItem *PurchaseDebugTable::createItem(const QVariant &value) const {
-  QString txt = value.toString();
-  QTableWidgetItem *item = new QTableWidgetItem(txt);
-  item->setFlags(Qt::ItemIsEnabled);
-  return item;
-}
-
-PurchaserOrderTable::PurchaserOrderTable(QWidget *parent)
-    : QTableWidget{parent} {
-  setColumnCount(5);
-  addHeaderItem(0, tr("Provider"));
-  addHeaderItem(1, tr("Article"));
-  addHeaderItem(2, tr("Count"));
-  addHeaderItem(3, tr("Price"));
-  addHeaderItem(4, tr("Summary"));
-  horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
-  horizontalHeader()->setStretchLastSection(true);
-}
-
-void PurchaserOrderTable::contextMenuEvent(QContextMenuEvent *e) {
-  QMenu *m = new QMenu("Actions", this);
-  QAction *ac_remove = m->addAction(style()->standardIcon(QStyle::SP_FileIcon),
-                                    tr("inspect article"));
-  ac_remove->setObjectName("ac_context_search_article");
-  connect(ac_remove, SIGNAL(triggered()), this, SIGNAL(findArticleNumbers()));
-
-  QAction *ac_copy = m->addAction(style()->standardIcon(QStyle::SP_FileIcon),
-                                  tr("copy article id"));
-  ac_copy->setObjectName("ac_context_ac_copy_article");
-  connect(ac_copy, SIGNAL(triggered()), this, SLOT(copyIdToClipboard()));
-
-  QAction *ac_open = m->addAction(style()->standardIcon(QStyle::SP_FileIcon),
-                                  tr("open article id"));
-  ac_open->setObjectName("ac_context_ac_open_article");
-  connect(ac_open, SIGNAL(triggered()), this, SLOT(findSelectedArticleId()));
-
-  m->exec(e->globalPos());
-  delete m;
-}
-
-void PurchaserOrderTable::findSelectedArticleId() {
-  QString buf = item(currentItem()->row(), 1)->text();
-  bool b = true;
-  int id = buf.toInt(&b);
-  if (b && id > 0)
-    emit inspectArticle(id);
-}
-
-void PurchaserOrderTable::copyIdToClipboard() {
-  QString buf = item(currentItem()->row(), 1)->text();
-  QApplication::clipboard()->setText(buf, QClipboard::Clipboard);
-}
-
-void PurchaserOrderTable::addHeaderItem(int i, const QString &name) {
-  QTableWidgetItem *item = new QTableWidgetItem(name, QTableWidgetItem::Type);
-  item->setIcon(style()->standardIcon(QStyle::SP_FileIcon));
-  setHorizontalHeaderItem(i, item);
-}
-
-QTableWidgetItem *PurchaserOrderTable::createItem(const QString &title) const {
-  QTableWidgetItem *item = new QTableWidgetItem(title);
-  item->setFlags(Qt::ItemIsEnabled);
-  return item;
-}
 
 ProviderWidget::ProviderWidget(const QString &widgetId, QWidget *parent)
     : QScrollArea{parent} {
@@ -159,6 +77,7 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
   m_tabWidget = new QTabWidget(m_overview);
   viewLayout->addWidget(m_tabWidget);
   // Addresses
+  int tabIndex = 0;
   QWidget *addressTab = new QWidget(m_tabWidget);
   QGridLayout *gridLayout = new QGridLayout(addressTab);
   QLabel *bainfo = new QLabel(tr("billing address"), addressTab);
@@ -171,14 +90,19 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
   m_shippingAddress = new QTextEdit(addressTab);
   m_shippingAddress->setObjectName("c_shipping_address");
   gridLayout->addWidget(m_shippingAddress, 1, 1, 1, 1);
-  m_tabWidget->insertTab(0, addressTab, qi2, tr("addresses"));
+  m_tabWidget->insertTab(tabIndex++, addressTab, qi2, tr("addresses"));
   // Kunden Kommentar
   m_comments = new QTextEdit(m_tabWidget);
   m_comments->setObjectName("o_delivery_comment");
-  m_tabWidget->insertTab(1, m_comments, qi1, tr("customer comment"));
+  m_tabWidget->insertTab(tabIndex++, m_comments, qi1, tr("customer comment"));
+  // Zahlungs Informationen
+  m_paymentInfo = new Antiqua::PurchasePaymentInfo(this);
+  m_paymentInfo->setObjectName("m_paymentInfo");
+  m_tabWidget->insertTab(tabIndex++, m_paymentInfo, qi1,
+                         tr("Payment Information"));
   // Informationen
   m_debugTable = new PurchaseDebugTable(m_tabWidget);
-  m_tabWidget->insertTab(2, m_debugTable, qi1, tr("Developement"));
+  m_tabWidget->insertTab(tabIndex++, m_debugTable, qi1, tr("Developement"));
 
   m_tabWidget->setCurrentIndex(0);
   m_overview->setLayout(viewLayout);
@@ -262,6 +186,9 @@ void PurchaseOverview::setValue(const QString &objName, const QVariant &value) {
     tx->setPlainText(value.toString().trimmed());
     return;
   }
+
+  // Zahlungs Informationen
+  m_paymentInfo->setData(objName, value);
 
   int row = m_debugTable->rowCount();
   m_debugTable->setRowCount(row + 1);
@@ -389,8 +316,7 @@ const QString InterfaceWidget::stripString(const QVariant &val) const {
   QString buf(val.toString());
   buf.replace("'", "`");
   buf = buf.trimmed();
-  if(buf == tr("Please select"))
-  {
+  if (buf == tr("Please select") || buf == "Please select") {
     qInfo("Discarded invalid input");
     return QString();
   }

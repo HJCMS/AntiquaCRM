@@ -1,0 +1,105 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+
+#include "purchasepaymentinfo.h"
+#include <QDebug>
+#include <QtWidgets>
+
+namespace Antiqua {
+
+PaymentMethodSelect::PaymentMethodSelect(QWidget *parent)
+    : QComboBox{parent}, p_typeSet(PaymentTypeSet()) {
+  setInsertPolicy(QComboBox::NoInsert);
+  setSizeAdjustPolicy(QComboBox::AdjustToContents);
+
+  QMapIterator<int, QString> it(p_typeSet);
+  while (it.hasNext()) {
+    it.next();
+    addItem(it.value(), it.key());
+  }
+}
+
+int PaymentMethodSelect::findIndex(int id) {
+  return findData(id, Qt::UserRole, Qt::MatchExactly);
+}
+
+int PaymentMethodSelect::findIndex(const QString &name) {
+  return findData(name, Qt::DisplayRole, Qt::MatchStartsWith);
+}
+
+int PaymentMethodSelect::getPaymentMethod(const QString &name) {
+  int index = findData(name, Qt::DisplayRole, Qt::MatchStartsWith);
+  return itemData(index, Qt::UserRole).toInt();
+}
+
+const QString PaymentMethodSelect::getPaymentMethod(int id) {
+  QMapIterator<int, QString> it(p_typeSet);
+  while (it.hasNext()) {
+    it.next();
+    if (it.key() == id)
+      return it.value();
+  }
+  return QString();
+}
+
+PurchasePaymentInfo::PurchasePaymentInfo(QWidget *parent) : QWidget{parent} {
+  // TODO
+  int row = 0;
+  QGridLayout *layout = new QGridLayout(this);
+  layout->setObjectName("payment_info_layout");
+  layout->setColumnStretch(3, 1);
+
+  QLabel *info_type = new QLabel(tr("Payment method") + ":", this);
+  layout->addWidget(info_type, row, 0, 1, 1);
+
+  o_payment_method = new PaymentMethodSelect(this);
+  layout->addWidget(o_payment_method, row, 1, 1, 1, Qt::AlignRight);
+
+  m_paymentTransactionId = new QLineEdit(this);
+  m_paymentTransactionId->setObjectName("o_payment_paypal_txn_id");
+  QString txn_info = tr("PayPal Transaktion Id");
+  m_paymentTransactionId->setPlaceholderText(txn_info);
+  m_paymentTransactionId->setToolTip(txn_info);
+  m_paymentTransactionId->setReadOnly(true);
+  m_paymentTransactionId->setMinimumWidth(180);
+  layout->addWidget(m_paymentTransactionId, row++, 2, 1, 1);
+
+  QLabel *info_shipping = new QLabel(tr("Shipping") + ":", this);
+  layout->addWidget(info_shipping, row, 0, 1, 1, Qt::AlignRight);
+
+  m_deliveryCost = new QLineEdit(this);
+  m_deliveryCost->setObjectName("o_delivery_cost");
+  m_deliveryCost->setPlaceholderText(tr("Shipping"));
+  m_deliveryCost->setToolTip(tr("transportation costs"));
+  m_paymentTransactionId->setMinimumWidth(30);
+  layout->addWidget(m_deliveryCost, row++, 1, 1, 1, Qt::AlignLeft);
+
+  layout->setRowStretch(row, 1);
+  setLayout(layout);
+}
+
+void PurchasePaymentInfo::setData(const QString &objName,
+                                  const QVariant &value) {
+  if (objName == "o_payment_method") {
+    int index = -1;
+    if (value.type() != QVariant::String) {
+      QString name = o_payment_method->getPaymentMethod(value.toInt());
+      index = o_payment_method->findIndex(name);
+    } else {
+      int id = o_payment_method->getPaymentMethod(value.toString());
+      index = o_payment_method->findIndex(id);
+    }
+    if (index > 0)
+      o_payment_method->setCurrentIndex(index);
+
+    return;
+  }
+  qDebug() << "???" << objName << value;
+}
+
+QMap<QString, QVariant> PurchasePaymentInfo::getAll() {
+  QMap<QString, QVariant> map;
+  return map;
+}
+
+}; // namespace Antiqua

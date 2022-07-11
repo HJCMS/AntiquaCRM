@@ -26,6 +26,10 @@
 # include "orderarticle.h"
 #endif
 
+#ifndef PAYMENTTYPESET_ANTIQUACORE_H
+# include "paymenttypeset.h"
+#endif
+
 #ifndef PROVIDERORDERS_ANTIQUACORE_H
 # include "providerorders.h"
 #endif
