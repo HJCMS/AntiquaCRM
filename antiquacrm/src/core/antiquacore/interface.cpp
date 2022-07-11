@@ -389,6 +389,9 @@ const QString InterfaceWidget::stripString(const QVariant &val) const {
   QString buf(val.toString());
   buf.replace("'", "`");
   buf = buf.trimmed();
+  if(buf == tr("Please select"))
+    return QString();
+
   return buf;
 }
 

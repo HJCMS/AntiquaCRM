@@ -76,9 +76,17 @@
     </message>
 </context>
 <context>
+    <name>Antiqua::InterfaceWidget</name>
+    <message>
+        <location filename="../core/antiquacore/interface.cpp" line="+392"/>
+        <source>Please select</source>
+        <translation>Bitte auswählen</translation>
+    </message>
+</context>
+<context>
     <name>Antiqua::PurchaseDebugTable</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+25"/>
+        <location line="-367"/>
         <source>Parameter</source>
         <translation></translation>
     </message>
@@ -2552,7 +2560,7 @@
         <translation>Einkäufer*in wurde nicht im Kundenregister gefunden oder die aktuelle Kundenummer stimmt nicht überein. Das System benötigt für einen Reibungslosen ablauf eine gültige Kundennummer.</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+34"/>
         <source>Notice</source>
         <translation>Hinweis</translation>
     </message>
@@ -2577,7 +2585,7 @@
         <translation>Erfolgreich</translation>
     </message>
     <message>
-        <location line="-427"/>
+        <location line="-426"/>
         <location line="+14"/>
         <source>Article</source>
         <translation>Artikel</translation>

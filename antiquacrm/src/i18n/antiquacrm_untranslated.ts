@@ -76,9 +76,17 @@
     </message>
 </context>
 <context>
+    <name>Antiqua::InterfaceWidget</name>
+    <message>
+        <location filename="../core/antiquacore/interface.cpp" line="+392"/>
+        <source>Please select</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Antiqua::PurchaseDebugTable</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+25"/>
+        <location line="-367"/>
         <source>Parameter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2552,7 +2560,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+34"/>
         <source>Notice</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2577,7 +2585,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-427"/>
+        <location line="-426"/>
         <location line="+14"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
