@@ -390,8 +390,10 @@ const QString InterfaceWidget::stripString(const QVariant &val) const {
   buf.replace("'", "`");
   buf = buf.trimmed();
   if(buf == tr("Please select"))
+  {
+    qInfo("Discarded invalid input");
     return QString();
-
+  }
   return buf;
 }
 
