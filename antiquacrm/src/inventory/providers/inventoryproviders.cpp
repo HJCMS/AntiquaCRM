@@ -443,7 +443,6 @@ void InventoryProviders::checkArticleExists(QList<int> &list) {
                       "current customer number does not match. The system "
                       "requires a valid customer number for a smooth process.");
     QMessageBox::warning(this, tr("Customer"), info);
-    m_toolBar->statusMessage(info);
     return;
   }
 

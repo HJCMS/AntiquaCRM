@@ -148,9 +148,6 @@ void CustomerTableView::refreshView() {
 }
 
 void CustomerTableView::queryHistory(const QString &history) {
-  if (!isVisible())
-    return;
-
   QString q = c_sqlTableQueryBody();
   if (history.contains("#today")) {
     q.append("DATE(c_changed)=(DATE(now()))");
@@ -204,3 +201,5 @@ void CustomerTableView::queryStatement(const SearchFilter &cl) {
     p_historyQuery = q;
   }
 }
+
+int CustomerTableView::rowCount() { return m_tableModel->rowCount(); }

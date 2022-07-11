@@ -71,6 +71,7 @@ public Q_SLOTS:
 
 public:
   explicit CustomerTableView(QWidget *parent = nullptr);
+  int rowCount();
 };
 
 #endif // COSTUMERTABLEVIEW_H
