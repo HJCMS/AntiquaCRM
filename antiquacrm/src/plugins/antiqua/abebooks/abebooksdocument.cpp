@@ -27,9 +27,8 @@ AbeBooksDocument::AbeBooksDocument(const QDomDocument &other)
   apiKey = QString();
 }
 
-QPair<int,QString> AbeBooksDocument::errorResponseCode()
-{
-  QPair<int,QString> qp;
+QPair<int, QString> AbeBooksDocument::errorResponseCode() {
+  QPair<int, QString> qp;
   if (notExists("requestError")) {
     qp.first = 104;
     qp.second = "Unknown XML Error";
@@ -190,11 +189,16 @@ const QVariant AbeBooksDocument::getNodeValue(const QDomNode &parent) {
   return out;
 }
 
-const QVariant AbeBooksDocument::getAddressValue(const QString &tag)
-{
+const QString AbeBooksDocument::getTagText(const QDomNode &parent,
+                                           const QString &tag) const {
+  QString o = parent.namedItem(tag).firstChild().nodeValue();
+  return o.trimmed();
+}
+
+const QVariant AbeBooksDocument::getAddressValue(const QString &tag) {
   QVariant out;
   QDomNodeList n_list = fetchNodes("mailingAddress");
-  if(n_list.count() != 1)
+  if (n_list.count() != 1)
     return out;
 
   return n_list.at(0).namedItem(tag).firstChild().nodeValue();

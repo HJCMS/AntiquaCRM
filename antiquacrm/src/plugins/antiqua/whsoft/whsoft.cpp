@@ -73,6 +73,10 @@ void WHSoft::queryMenueEntries() {
 }
 
 void WHSoft::updateArticleCount(int articleId, int count) {
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << "DISABLED" << articleId << count;
+  return;
+#endif
   QJsonDocument doc = createUpdateArtcileCount(articleId, count);
   if (doc.isEmpty()) {
     emit s_queryResponse(false);

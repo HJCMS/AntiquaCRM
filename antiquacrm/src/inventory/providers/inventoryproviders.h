@@ -83,11 +83,11 @@ private:
   bool tabExists(const QString &id);
 
   /**
-   * @brief Nachricht über Verfügbarkeit
+   * @brief Nachricht über Verfügbarkeit erstellen
    * @param articleId - Artikel Nummer
    * @param count     - Verfügbarer Bestand
    */
-  void statusMessageArticle(int articleId, int count = 0);
+  bool createStatusArticle(int articleId, int count = 0);
 
   /**
    * @brief Standard Parameter prüfen

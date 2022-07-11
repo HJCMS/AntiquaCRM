@@ -81,5 +81,8 @@ void AbeBooks::queryMenueEntries() {
 }
 
 void AbeBooks::updateArticleCount(int articleId, int count) {
-  qDebug() << Q_FUNC_INFO << "TODO" << articleId << count;
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << "DISABLED" << articleId << count;
+  return;
+#endif
 }

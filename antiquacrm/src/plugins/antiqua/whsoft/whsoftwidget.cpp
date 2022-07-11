@@ -12,22 +12,6 @@
 #include <QTableWidgetItem>
 #include <QVBoxLayout>
 
-#ifndef Q_WS_WIN
-static void saveSources(const QJsonDocument &doc, const QString &id) {
-  QString file("whsoft_" + id + ".json");
-  QString xml(QDir::homePath());
-  xml.append("/.cache/");
-  xml.append(file);
-  QFile fp(xml);
-  if (fp.open(QIODevice::WriteOnly)) {
-    QTextStream in(&fp);
-    in.setCodec(QTextCodec::codecForName("ISO 8859-1"));
-    in << doc.toJson(QJsonDocument::Indented);
-    fp.close();
-  };
-}
-#endif
-
 WHSoftWidget::WHSoftWidget(const QString &widgetId, QWidget *parent)
     : Antiqua::InterfaceWidget{widgetId, parent} {}
 
@@ -46,32 +30,23 @@ void WHSoftWidget::createCustomerDocument() {
   QJsonDocument doc = p_currentDocument;
   QJsonObject obj = QJsonValue(doc[mainKey]).toObject();
 
-  QJsonObject queryObject;
-  queryObject.insert("provider", QJsonValue(CONFIG_PROVIDER));
-  queryObject.insert("type", "customer_create");
-
-  QJsonObject::iterator it; // Iterator
-  for (it = obj.begin(); it != obj.end(); ++it) {
-    QString f = sqlParam(it.key());
-    QString v = it.value().toString();
-    if (!v.isEmpty())
-      queryObject.insert(f, v);
+  QJsonObject customer;
+  customer.insert("provider", QJsonValue(CONFIG_PROVIDER));
+  customer.insert("type", "customer_create");
+  QHashIterator<QString, QString> hash_it(p_customer);
+  while (hash_it.hasNext()) {
+    hash_it.next();
+    if(!hash_it.value().isEmpty())
+      customer.insert(hash_it.key(), hash_it.value());
   }
 
-  QJsonObject addr = QJsonValue(doc[mainKey]["rechnungsadresse"]).toObject();
-  if (!addr.isEmpty()) {
-    for (it = addr.begin(); it != addr.end(); ++it) {
-      QString f = sqlParam(it.key());
-      QString v = it.value().toString();
-      if ((f == "c_gender" || f == "anrede") && !v.isEmpty()) {
-        queryObject.insert(f, QString::number(genderFromString(v)));
-      } else if (!f.isEmpty() && !v.isEmpty()) {
-        queryObject.insert(f, v);
-      }
-    }
+  if(!customer.contains("c_postal_address")) {
+    QString pAddress = m_order->getValue("c_postal_address").toString();
+    if (!pAddress.isEmpty())
+      customer.insert("c_postal_address", pAddress);
   }
 
-  emit createCustomer(QJsonDocument(queryObject));
+  emit createCustomer(QJsonDocument(customer));
 }
 
 const QJsonDocument WHSoftWidget::customerRequest(const QJsonObject &object) {
@@ -147,7 +122,7 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
 
   // Speichern
   p_currentDocument = doc;
-#ifndef Q_WS_WIN
+#ifdef ANTIQUA_DEVELOPEMENT
   saveSources(doc, getOrderId());
 #endif
 
@@ -236,7 +211,6 @@ void WHSoftWidget::setCustomerId(int customerId) {
 
 const QMap<QString, QString> WHSoftWidget::fieldTranslate() const {
   QMap<QString, QString> map;
-  // customer @{
   map.insert("person", "a_customer_id");
   map.insert("anrede", "c_gender");
   map.insert("zusatz", "c_title");
@@ -245,27 +219,28 @@ const QMap<QString, QString> WHSoftWidget::fieldTranslate() const {
   map.insert("adresse", "c_street");
   map.insert("plz", "c_postalcode");
   map.insert("ort", "c_location");
-  map.insert("land", "c_country");
   map.insert("telefon", "c_phone_0");
   map.insert("email", "c_email_0");
-  // @}
-
-  // versand @{
+  map.insert("land_iso2", "c_country");
+  map.insert("land", "c_country_name");
   map.insert("waehrung", "o_payment_currency");
   map.insert("versandkosten", "o_delivery_cost");
   map.insert("versender", "o_delivery_name");
   map.insert("sendungsnummer", "o_delivery_send_id");
-  map.insert("versandart", "o_delivery_type");
+  map.insert("versandart", "o_delivery_service");
   map.insert("einlieferungsdatum", "o_delivery_fullfill");
-  // @}
-
-  // article_orders @{
+  map.insert("kundenkommentar", "o_delivery_comment");
+//  map.insert("menge_storniert", "");
+//  map.insert("storniert_am", "");
+//  map.insert("stornogrund", "");
+  map.insert("id", "o_provider_order_id");
+  map.insert("datum", "o_provider_order_date");
   map.insert("bestellnr", "a_article_id");
   map.insert("lagerfach", "sl_storage");
   map.insert("menge_bestellt", "a_count");
-  map.insert("preis_pro_einheit", "a_sell_price");
+  map.insert("bestellwert", "a_sell_price");
+  map.insert("preis_pro_einheit", "a_price");
   map.insert("titel", "a_title");
   map.insert("bezahlart", "o_payment_method");
-  // @}
   return map;
 }

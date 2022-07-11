@@ -5,46 +5,41 @@
 #ifndef ABEBOOKS_PLUGIN_CONFIG_H
 #define ABEBOOKS_PLUGIN_CONFIG_H
 
-#include <QString>
+#include <AntiquaInterface>
 #include <QByteArray>
 #include <QDomDocument>
-#include <QTextStream>
 #include <QMetaType>
-#include <AntiquaInterface>
+#include <QString>
+#include <QTextStream>
 
-#ifndef Q_WS_WIN
-#ifndef ABEBOOKS_TESTMODE
-#define ABEBOOKS_TESTMODE true
-#endif
-
-#ifdef ABEBOOKS_TESTMODE
+#ifdef ANTIQUA_DEVELOPEMENT
+#include <QDir>
 #include <QDomDocument>
 #include <QFile>
-#include <QDir>
 #include <QTextCodec>
 
-static const QDomDocument readSources(const QString &file) {
-  QDomDocument out;
-  QString xml(QDir::homePath());
-  xml.append("/.cache/");
-  xml.append(file);
-  QFile fp(xml);
+static const QDomDocument readSources(const QString &id) {
+  QString file(QDir::homePath());
+  file.append("/.cache/");
+  file.append("abebooks_" + id + ".xml");
+
+  QFile fp(file);
+  QDomDocument doc;
   if (fp.open(QIODevice::ReadOnly)) {
-    QDomDocument doc;
-    if (doc.setContent(&fp)) {
-      out = doc;
-    }
+    if (!doc.setContent(&fp))
+      qWarning("Can't open XMLDocument %s", qPrintable(file));
+
     fp.close();
   }
-  return out;
+  return doc;
 }
 
 static void saveSources(const QDomDocument &doc, const QString id = "0") {
-  QString file("abebooks_"+id+".xml");
-  QString xml(QDir::homePath());
-  xml.append("/.cache/");
-  xml.append(file);
-  QFile fp(xml);
+  QString file(QDir::homePath());
+  file.append("/.cache/");
+  file.append("abebooks_" + id + ".xml");
+
+  QFile fp(file);
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream in(&fp);
     in.setCodec(QTextCodec::codecForName("ISO 8859-1"));
@@ -53,17 +48,6 @@ static void saveSources(const QDomDocument &doc, const QString id = "0") {
   };
 }
 
-static void writeLogFile(const QDomDocument &doc) {
-  QString xml(QDir::homePath());
-  xml.append("/.cache/AbeBooks_OrderResponse.xml");
-  QFile fp(xml);
-  if (fp.open(QIODevice::WriteOnly)) {
-    QTextStream in(&fp);
-    in << doc.toByteArray(1);
-    fp.close();
-  }
-}
-#endif
 #endif
 
 /**

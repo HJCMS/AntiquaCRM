@@ -66,10 +66,6 @@ const QString Booklooker::provider() const { return QString(CONFIG_PROVIDER); }
 
 const QString Booklooker::configGroup() const { return QString(CONFIG_GROUP); }
 
-//#if PLUGIN_BOOKLOOKER_DEBUG
-//  prepareJsonListResponse(testFile());
-//  return;
-//#endif
 void Booklooker::queryMenueEntries() {
   BooklookerRequester *req = new BooklookerRequester(this);
   req->setObjectName(CONFIG_PROVIDER);
@@ -80,6 +76,9 @@ void Booklooker::queryMenueEntries() {
 }
 
 void Booklooker::updateArticleCount(int articleId, int count) {
+#ifdef ANTIQUA_DEVELOPEMENT
   // https://api.booklooker.de/2.0/article_status?token=REST_API_TOKEN
-  qDebug() << Q_FUNC_INFO << "orderNo=" << articleId << count;
+  qDebug() << Q_FUNC_INFO << "DISABLED" << articleId << count;
+  return;
+#endif
 }

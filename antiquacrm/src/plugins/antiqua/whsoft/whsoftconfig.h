@@ -78,4 +78,25 @@ static QJsonDocument createUpdateArtcileCount(int id, int count) {
   return doc;
 }
 
+#ifdef ANTIQUA_DEVELOPEMENT
+#include <QFile>
+#include <QDir>
+#include <QTextCodec>
+#include <QJsonDocument>
+
+static void saveSources(const QJsonDocument &doc, const QString &id) {
+  QString file(QDir::homePath());
+  file.append("/.cache/");
+  file.append("whsoft_" + id + ".json");
+
+  QFile fp(file);
+  if (fp.open(QIODevice::WriteOnly)) {
+    QTextStream in(&fp);
+    in.setCodec(QTextCodec::codecForName("ISO 8859-1"));
+    in << doc.toJson(QJsonDocument::Indented);
+    fp.close();
+  };
+}
+#endif
+
 #endif // WHSOFTCONFIG_PLUGIN_H

@@ -182,9 +182,8 @@ void BooklookerIfaceWidget::setContent(const QJsonDocument &doc) {
     return;
   }
 
-#ifdef PLUGIN_BOOKLOOKER_DEBUG
-  if (PLUGIN_BOOKLOOKER_DEBUG)
-    saveSources(doc, getOrderId());
+#ifdef ANTIQUA_DEVELOPEMENT
+  saveSources(doc, getOrderId());
 #endif
 
   // Speichern
@@ -212,10 +211,6 @@ void BooklookerIfaceWidget::setContent(const QJsonDocument &doc) {
   }
 }
 
-//#if PLUGIN_BOOKLOOKER_DEBUG
-//  setContent(testFile());
-//  return;
-//#endif
 void BooklookerIfaceWidget::createOrderRequest(const QString &orderId) {
   m_requester->queryOrder(orderId);
 }
@@ -242,7 +237,7 @@ const QMap<QString, QString> BooklookerIfaceWidget::fieldTranslate() const {
   map.insert("orderId", "o_provider_order_id");
   map.insert("orderDate", "o_since");
   // Konto Inhaber
-  // map.insert("accountHolder","");
+  map.insert("accountHolder","c_comments");
   map.insert("accountIban", "c_iban");
   map.insert("accountBic", "c_swift_bic");
   // @}
@@ -253,9 +248,9 @@ const QMap<QString, QString> BooklookerIfaceWidget::fieldTranslate() const {
    * Gewichts-Staffel-Tabelle zur Portoberechnung, oder bei Nutzung von
    * Pauschalpreisen
    */
-  map.insert("calculatedShippingCost", "");
-  map.insert("currentProvisionNet", "");
-  map.insert("originalProvisionNet", "");
+//  map.insert("calculatedShippingCost", "");
+//  map.insert("currentProvisionNet", "");
+//  map.insert("originalProvisionNet", "");
 
   /**
    * Aktuell nur für Zahlungsart PayPal: Falls uns der Zeitpunkt der

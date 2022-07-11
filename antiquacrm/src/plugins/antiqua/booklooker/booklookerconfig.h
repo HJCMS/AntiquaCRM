@@ -42,13 +42,19 @@
 #define BOOKLOOKER_TOKEN_ENV "BOOKLOOKER_TOKEN"
 #endif
 
-#ifndef Q_WS_WIN
-#ifndef PLUGIN_BOOKLOOKER_DEBUG
-#define PLUGIN_BOOKLOOKER_DEBUG true
-#endif
+#ifdef ANTIQUA_DEVELOPEMENT
+#include <QJsonDocument>
+#include <QDir>
+#include <QFile>
+#include <QTextStream>
+#include <QTextCodec>
 
-static QJsonDocument testFile() {
-  QFile fp("2022-07-04.json");
+static QJsonDocument getSource(const QString &id) {
+  QString file(QDir::homePath());
+  file.append("/.cache/");
+  file.append("booklooker_" + id + ".json");
+
+  QFile fp(file);
   if (fp.open(QIODevice::ReadOnly)) {
     QString buffer;
     QTextStream js(&fp);
@@ -62,11 +68,11 @@ static QJsonDocument testFile() {
 }
 
 static void saveSources(const QJsonDocument &doc, const QString &id) {
-  QString file("booklooker_" + id + ".json");
-  QString xml(QDir::homePath());
-  xml.append("/.cache/");
-  xml.append(file);
-  QFile fp(xml);
+  QString file(QDir::homePath());
+  file.append("/.cache/");
+  file.append("booklooker_" + id + ".json");
+
+  QFile fp(file);
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream in(&fp);
     // in.setCodec(QTextCodec::codecForName("ISO 8859-1"));

@@ -4,32 +4,7 @@
 <context>
     <name>AbeBooksIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+268"/>
-        <source>Check</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Bank/Wire Transfer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Money Order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Bank Draft</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Invoice</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+292"/>
         <source>Buyer Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -166,15 +141,20 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+4"/>
+        <source>customer comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+3"/>
-        <source>comments</source>
+        <source>Developement</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Antiqua::PurchaserOrderTable</name>
     <message>
-        <location line="-134"/>
+        <location line="-138"/>
         <source>Provider</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2525,45 +2505,54 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <source>is not available!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+13"/>
         <source>Missing required Shipping Properties!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+140"/>
+        <location line="+141"/>
         <location line="+2"/>
+        <location line="+12"/>
         <source>Europe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+113"/>
         <source>customer found in database!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-28"/>
+        <location line="+36"/>
+        <source>Article Check</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Order witdh Id: %1 already exists!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-91"/>
         <source>customer not exits!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+54"/>
-        <location line="+14"/>
-        <source>Missing valid Customer Id</source>
+        <location line="+88"/>
+        <source>Buyer was not found in the customer register or the current customer number does not match. The system requires a valid customer number for a smooth process.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
-        <source>Order already exists!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <location line="+31"/>
+        <location line="+35"/>
         <source>Notice</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2578,7 +2567,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+22"/>
         <source>an error occurred</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2588,8 +2577,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-399"/>
-        <location line="+12"/>
+        <location line="-427"/>
+        <location line="+14"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3281,7 +3270,7 @@
 <context>
     <name>OrdersPaymentType</name>
     <message>
-        <location filename="../custom/utils/orderspaymenttype.cpp" line="+101"/>
+        <location filename="../custom/utils/orderspaymenttype.cpp" line="+103"/>
         <source>a Valid Payment type is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4274,7 +4263,7 @@
     <name>QObject</name>
     <message>
         <location filename="../custom/utils/genderbox.cpp" line="+38"/>
-        <location filename="../custom/utils/orderspaymenttype.cpp" line="-91"/>
+        <location filename="../custom/utils/orderspaymenttype.cpp" line="-93"/>
         <source>Without disclosures</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4418,6 +4407,11 @@
     <message>
         <location line="+2"/>
         <source>Invoice (prepayment reserved)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Check</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

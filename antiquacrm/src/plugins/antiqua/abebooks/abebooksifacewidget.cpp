@@ -86,12 +86,6 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
   emit createCustomer(QJsonDocument(jsObject));
 }
 
-const QString AbeBooksIfaceWidget::getTagText(const QDomNode &node,
-                                              const QString &tag) const {
-  QString o = node.namedItem(tag).firstChild().nodeValue();
-  return o.trimmed();
-}
-
 const QJsonDocument
 AbeBooksIfaceWidget::customerRequest(const QJsonObject &object) {
   Q_UNUSED(object);
@@ -105,26 +99,6 @@ AbeBooksIfaceWidget::customerRequest(const QJsonObject &object) {
     customer.insert(f, p_customer.value(f));
   }
   return QJsonDocument(customer);
-}
-
-void AbeBooksIfaceWidget::parseOrderDate(const QDomNode &node) {
-  QString dt_str;
-  QDomNode dateNode = node.namedItem("date");
-  dt_str.append(getTagText(dateNode, "day") + ".");
-  dt_str.append(getTagText(dateNode, "month") + ".");
-  dt_str.append(getTagText(dateNode, "year"));
-  dt_str.append(" ");
-  QDomNode timeNode = node.namedItem("time");
-  dt_str.append(getTagText(timeNode, "hour") + ":");
-  dt_str.append(getTagText(timeNode, "minute") + ":");
-  dt_str.append(getTagText(timeNode, "second"));
-
-  QDateTime dt = QDateTime::fromString(dt_str, "d.M.yyyy h:m:ss");
-  if (dt.isValid()) {
-    QString dt_out = dt.toString(ANTIQUA_DATETIME_FORMAT);
-    p_customer.insert("o_since", dt_out);
-    m_order->setValue("o_since", dt_out);
-  }
 }
 
 void AbeBooksIfaceWidget::parseAddressBody(const QString &section,
@@ -170,6 +144,12 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
   if (doc.isNull())
     return;
 
+#ifdef ANTIQUA_DEVELOPEMENT
+  saveSources(doc, objectName());
+#endif
+
+  p_currentDocument = doc;
+
   AbeBooksDocument xml(doc);
   if (doc.documentElement().tagName() == "requestError") {
     QPair<int, QString> err = xml.errorResponseCode();
@@ -178,11 +158,6 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
     return;
   }
 
-#ifdef ABEBOOKS_TESTMODE
-  saveSources(doc, objectName());
-#endif
-
-  p_currentDocument = doc;
   QDomNodeList n_list = xml.getPurchaseOrder().childNodes();
   for (int i = 0; i < n_list.count(); i++) {
     QDomNode n = n_list.at(i);
@@ -233,7 +208,12 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
     }
     // Datum
     if (n.nodeName() == "orderDate") {
-      parseOrderDate(n);
+      QDateTime dt = xml.getOrderDate(n.toElement());
+      if (dt.isValid()) {
+        QString dt_out = dt.toString(ANTIQUA_DATETIME_FORMAT);
+        p_customer.insert("o_since", dt_out);
+        m_order->setValue("o_since", dt_out);
+      }
     } else if (n.hasChildNodes()) {
       QString param = sqlParam(n.nodeName());
       QString value = stripString(n.firstChild().nodeValue());

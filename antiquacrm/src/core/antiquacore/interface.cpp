@@ -172,13 +172,13 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
   m_shippingAddress->setObjectName("c_shipping_address");
   gridLayout->addWidget(m_shippingAddress, 1, 1, 1, 1);
   m_tabWidget->insertTab(0, addressTab, qi2, tr("addresses"));
-  // Kommentare
+  // Kunden Kommentar
   m_comments = new QTextEdit(m_tabWidget);
-  m_tabWidget->insertTab(1, m_comments, qi1, tr("comments"));
+  m_comments->setObjectName("o_delivery_comment");
+  m_tabWidget->insertTab(1, m_comments, qi1, tr("customer comment"));
   // Informationen
   m_debugTable = new PurchaseDebugTable(m_tabWidget);
-  m_debugTable->setObjectName("debugging_data");
-  m_tabWidget->insertTab(2, m_debugTable, qi1, "Debugging");
+  m_tabWidget->insertTab(2, m_debugTable, qi1, tr("Developement"));
 
   m_tabWidget->setCurrentIndex(0);
   m_overview->setLayout(viewLayout);

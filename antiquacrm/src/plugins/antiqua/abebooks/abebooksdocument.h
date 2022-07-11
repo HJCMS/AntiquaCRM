@@ -131,6 +131,13 @@ public:
   const QDomElement getOrderItemList();
 
   /**
+   * @brief Get TextNode::value() from Node
+   * @param parent  Parent Node
+   * @param tag   node Name
+   */
+  const QString getTagText(const QDomNode &parent, const QString &tag) const;
+
+  /**
    * @brief getNodeValue
    */
   const QVariant getNodeValue(const QDomNode &parent);

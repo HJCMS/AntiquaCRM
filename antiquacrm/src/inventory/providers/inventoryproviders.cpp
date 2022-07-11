@@ -63,8 +63,8 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   connect(m_toolBar, SIGNAL(s_createOrder()), this, SLOT(createEditOrders()));
 
   // Development
-//  connect(m_listView, SIGNAL(s_queryProvider(const QString &)), this,
-//          SLOT(queryProviderPage(const QString &)));
+  //  connect(m_listView, SIGNAL(s_queryProvider(const QString &)), this,
+  //          SLOT(queryProviderPage(const QString &)));
 
   connect(m_listView, SIGNAL(s_queryOrder(const QString &, const QString &)),
           this, SLOT(queryOrder(const QString &, const QString &)));
@@ -84,7 +84,7 @@ bool InventoryProviders::tabExists(const QString &id) {
   return false;
 }
 
-void InventoryProviders::statusMessageArticle(int articleId, int count) {
+bool InventoryProviders::createStatusArticle(int articleId, int count) {
   QString info(tr("Article"));
   info.append(" '");
   info.append(QString::number(articleId));
@@ -95,10 +95,14 @@ void InventoryProviders::statusMessageArticle(int articleId, int count) {
     info.append(QString::number(count));
     info.append("'.");
     m_toolBar->statusMessage(info);
+    return true;
   } else {
+    m_toolBar->enableOrderButton(false);
     info.append(tr("is not available!"));
     QMessageBox::warning(this, tr("Article"), info);
+    return false;
   }
+  return false;
 }
 
 bool InventoryProviders::validInterfaceProperties(
@@ -244,12 +248,26 @@ void InventoryProviders::createNewCustomer(const QJsonDocument &doc) {
       // Ein Land ist zwingend erforderlich!
       if (field.name() == "c_country") {
         params.append(field.name());
+        // ISO-2 Country Code
         QString cc(val.toString().trimmed());
         if (cc.length() == 2) {
           QString cName = countries.name(cc);
           values.append("'" + (cName.isEmpty() ? tr("Europe") : cName) + "'");
         } else {
           values.append("'" + tr("Europe") + "'");
+        }
+        continue;
+      } else if (field.name() == "c_country_name" &&
+                 !params.contains("c_country")) {
+        QString cName(val.toString().trimmed());
+        if (!cName.isEmpty()) {
+          QString cc = countries.countryCode(cName);
+          params.append("c_country");
+          if (!cc.isEmpty()) {
+            values.append("'" + cName + "'");
+          } else {
+            values.append("'" + tr("Europe") + "'");
+          }
         }
         continue;
       }
@@ -367,61 +385,69 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
 }
 
 void InventoryProviders::checkArticleExists(QList<int> &list) {
-  bool exists = true;
-  // Artikel Liste prüfen
+  /**
+   * Versuche heraus zu finden ob eine Bestellung mit diesen Daten bereits
+   * existiert!
+   * Wenn ja, dann mit setOrderExists(o_id) die inventory_orders Id setzen.
+   */
+  Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
+  if (!validInterfaceProperties(tab))
+    return;
+
+  // Nehme aktuelle Provider Daten
+  ProviderOrder pd = tab->getProviderOrder();
+  // Ist eine Kundennummer vorhanden, dann sofort auf eine Prüfung auf
+  // bestehende Aufträge erstellen.
+  int c_id = pd.customerId();
+  if (c_id > 0) {
+    QString sql = queryFindExistingOrders(pd.provider(), pd.providerId(), c_id);
+    QSqlQuery q = m_sql->query(sql);
+    int o_check_id = 0;
+    if (q.size() > 0) {
+      while (q.next()) {
+        o_check_id = 0;
+        if (q.value("id").toInt() > 0) {
+          o_check_id = q.value("id").toInt();
+          break;
+        }
+      }
+    }
+    if (o_check_id > 0) {
+      QString info_id = QString::number(o_check_id);
+      QMessageBox::warning(
+          this, tr("Article Check"),
+          tr("Order witdh Id: %1 already exists!").arg(info_id));
+      m_toolBar->enableOrderButton(false);
+      return;
+    }
+  }
+
+  // Jetzt die Artikel Liste prüfen
   for (int i = 0; i < list.size(); i++) {
     int aid = list[i];
     QSqlQuery q = m_sql->query(queryArticleCount(aid));
     if (q.size() > 0) {
       q.next();
       int count = q.value("count").toInt();
-      statusMessageArticle(aid, count);
-      exists = (count > 0 && exists) ? true : false;
-    }
-  }
-  // Wenn nicht verfügbar kann hier schon ausgestiegen werden!
-  if (!exists) {
-    m_toolBar->enableOrderButton(false);
-    return;
-  }
-
-  // Wenn die Kunden Nummer nicht gesetzt ist hier abbrechen!
-  if (current_cid < 1) {
-    m_toolBar->statusMessage(tr("Missing valid Customer Id"));
-    return;
-  }
-
-  /* Versuche heraus zu finden ob eine Bestellung mit diesen Daten bereits
-   * existiert! Wenn ja, dann mit setOrderExists(o_id) die inventory_orders Id
-   * setzen. */
-  Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
-  if (!validInterfaceProperties(tab))
-    return;
-
-  ProviderOrder pd = tab->getProviderOrder();
-  int c_id = pd.customerId();
-  if (c_id < 1) {
-    m_toolBar->warningMessage(tr("Missing valid Customer Id"));
-    return;
-  }
-
-  bool oidExists = false;
-  QString sql = queryFindExistingOrders(pd.provider(), pd.providerId(), c_id);
-  QSqlQuery q = m_sql->query(sql);
-  if (q.size() > 0) {
-    while (q.next()) {
-      if (q.value("id").toInt() > 0) {
-        oidExists = true;
-        break;
+      if (!createStatusArticle(aid, count)) {
+        // Wenn nicht verfügbar kann hier ausgestiegen werden!
+        return;
       }
     }
   }
-  if (oidExists) {
-    QMessageBox::warning(this, tr("Notice"), tr("Order already exists!"));
-    m_toolBar->enableOrderButton(false);
+
+  // Wenn die Kunden Nummer nicht gesetzt oder nicht Identisch ist,
+  // hier abbrechen!
+  if (c_id < 1 || c_id != current_cid) {
+    QString info = tr("Buyer was not found in the customer register or the "
+                      "current customer number does not match. The system "
+                      "requires a valid customer number for a smooth process.");
+    QMessageBox::warning(this, tr("Customer"), info);
+    m_toolBar->statusMessage(info);
     return;
   }
-  // Alles ok noch nicht vorhanden!
+
+  // Alles ok ...
   m_toolBar->enableOrderButton(true);
 }
 
@@ -481,7 +507,9 @@ void InventoryProviders::readOrderList(const QJsonDocument &doc) {
 
 void InventoryProviders::hasResponsed(bool errors) {
   if (errors) {
+#ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << "InventoryProviders - plugin answered with an error!";
+#endif
     m_toolBar->warningMessage(tr("an error occurred"));
   } else {
     m_toolBar->statusMessage(tr("successfully"));
@@ -492,7 +520,9 @@ void InventoryProviders::pluginError(int code, const QString &msg) {
   if (code == 0)
     m_toolBar->statusMessage(msg);
 
+#ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << code << msg;
+#endif
 }
 
 void InventoryProviders::onEnterChanged() {
@@ -513,7 +543,6 @@ bool InventoryProviders::updateArticleCount(int articleId, int count) {
   while (it.hasNext()) {
     Antiqua::Interface *iface = it.next();
     if (iface != nullptr) {
-      // qDebug() << "Update:" << iface->provider() << articleId << count;
       iface->updateArticleCount(articleId, count);
     }
   }
