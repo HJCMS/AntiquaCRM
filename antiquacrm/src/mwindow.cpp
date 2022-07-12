@@ -4,12 +4,12 @@
 /* Project */
 #include "mwindow.h"
 #include "configdialog.h"
+#include "deliverservicedialog.h"
 #include "dockbarwidget.h"
 #include "filedialog.h"
 #include "myicontheme.h"
 #include "statusbar.h"
 #include "storagelocation.h"
-#include "deliverservicedialog.h"
 #include "workspace.h"
 
 #include <QJsonDocument>
@@ -122,6 +122,7 @@ void MWindow::setupActions() {
   m_viewsMenu->addSeparator();
   m_toggleFullScreen = m_viewsMenu->addAction(tr("Fullscreen"));
   m_toggleFullScreen->setIcon(myIcon("window_fullscreen"));
+  m_toggleFullScreen->setShortcut(QKeySequence::FullScreen);
   connect(m_toggleFullScreen, SIGNAL(triggered(bool)), this,
           SLOT(toggleFullScreen(bool)));
 
@@ -130,6 +131,7 @@ void MWindow::setupActions() {
 
   QAction *a_cfg = m_settingsMenu->addAction(tr("Configuration"));
   a_cfg->setIcon(myIcon("configure"));
+  a_cfg->setShortcut(QKeySequence::Preferences);
   connect(a_cfg, SIGNAL(triggered(bool)), this, SLOT(openConfiguration(bool)));
 
   QMenu *m_tablesMenu = m_settingsMenu->addMenu(tr("Edit tables"));

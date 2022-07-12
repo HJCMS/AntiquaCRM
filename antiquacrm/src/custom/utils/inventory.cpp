@@ -9,22 +9,21 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QDebug>
-#include <QShortcut>
 
 Inventory::Inventory(QWidget *parent) : QWidget{parent} {
   if (objectName().isEmpty())
     setObjectName("Inventory");
 
-  QShortcut *focusSearch = new QShortcut(tr("Ctrl+S", "Search"), this);
-  focusSearch->setKey(Qt::ControlModifier + Qt::Key_S);
+  focusSearch = new QShortcut(tr("Ctrl+Shift+S", "Search"), this);
+  focusSearch->setKey(Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_S);
   connect(focusSearch, SIGNAL(activated()), this, SIGNAL(s_setSearchFocus()));
 
-  QShortcut *focusFilter = new QShortcut(tr("Ctrl+F", "Filter"), this);
-  focusFilter->setKey(Qt::ControlModifier + Qt::Key_F);
+  focusFilter = new QShortcut(tr("Ctrl+Shift+F", "Filter"), this);
+  focusFilter->setKey(Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_F);
   connect(focusFilter, SIGNAL(activated()), this, SIGNAL(s_setSearchFilter()));
 
-  QShortcut *createEntry = new QShortcut(tr("Ctrl+N", "New Entry"), this);
-  createEntry->setKey(Qt::ControlModifier + Qt::Key_N);
+  createEntry = new QShortcut(tr("Ctrl+Shift+N", "New Entry"), this);
+  createEntry->setKey(Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_N);
   connect(createEntry, SIGNAL(activated()), this, SIGNAL(s_createNewEntry()));
 }
 

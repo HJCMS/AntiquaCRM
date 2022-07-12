@@ -99,8 +99,10 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
           SLOT(displayMessageBox(const QString &)));
 
   connect(m_bookEditor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
+
   connect(m_bookEditor, SIGNAL(s_isModified(bool)), this,
           SLOT(setIsModified(bool)));
+
   connect(m_bookEditor, SIGNAL(s_articleCount(int, int)), this,
           SIGNAL(s_articleCount(int, int)));
 }

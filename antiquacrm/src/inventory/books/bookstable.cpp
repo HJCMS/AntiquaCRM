@@ -132,7 +132,6 @@ void BooksTable::contextMenuEvent(QContextMenuEvent *ev) {
 
   QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create entry"));
   ac_create->setObjectName("ac_context_create_book");
-  ac_create->setShortcut(QKeySequence(Qt::ControlModifier + Qt::Key_N));
   ac_create->setEnabled(bn);
   connect(ac_create, SIGNAL(triggered()), this, SLOT(createByContext()));
 

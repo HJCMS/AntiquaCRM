@@ -5,10 +5,11 @@
 #ifndef INVENTORY_UTILS_H
 #define INVENTORY_UTILS_H
 
+#include <QList>
 #include <QObject>
+#include <QShortcut>
 #include <QVariant>
 #include <QWidget>
-#include <QList>
 
 class SearchFilter;
 
@@ -23,6 +24,11 @@ class Inventory : public QWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
   Q_PROPERTY(
       bool closable READ isClosable WRITE setClosable NOTIFY closeableChanged)
+
+private:
+  QShortcut *focusSearch; /**< @brief Ctrl+Shift+S */
+  QShortcut *focusFilter; /**< @brief Ctrl+Shift+F */
+  QShortcut *createEntry; /**< @brief Ctrl+Shift+N */
 
 protected:
   /**

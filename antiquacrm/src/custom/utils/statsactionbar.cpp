@@ -43,6 +43,7 @@ StatsActionBar::StatsActionBar(QWidget *parent) : QToolBar{parent} {
   QPushButton *refresh = new QPushButton(tr("Refresh"), this);
   refresh->setObjectName("refresh_button");
   refresh->setIcon(myIcon("reload"));
+  refresh->setShortcut(QKeySequence::Refresh);
   addWidget(refresh);
 
   connect(refresh, SIGNAL(clicked()), this, SIGNAL(s_refreshView()));
