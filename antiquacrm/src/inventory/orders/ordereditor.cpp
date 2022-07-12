@@ -169,6 +169,8 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   o_vat_levels->setItemData(0, vat2, Qt::UserRole);
   o_vat_levels->insertItem(1, QString::number(vat1) + "% " + tr("Normal"));
   o_vat_levels->setItemData(1, vat1, Qt::UserRole);
+  o_vat_levels->insertItem(2, tr("No VAT"));
+  o_vat_levels->setItemData(2, 0, Qt::UserRole);
   o_vat_levels->setCurrentIndex(0);
   billingLayout->addWidget(o_vat_levels, brow++, 1, 1, 1);
   o_delivery_add_price = new BoolBox(m_billingBox);
@@ -784,22 +786,27 @@ void OrderEditor::openPrinterInvoiceDialog() {
   bool paid = (o_payment_status->status() == OrdersPaymentBox::Yes);
 
   /**
+   * Wenn es kein Europaland ist, dann fällt auch keine Mehrwertsteuer an!
+   * Die Zeile MwST dann in der Rechnung ausblenden!
+   */
+  bool disable_vat = (o_vat_country->value().toString().isEmpty());
+
+  /**
    * Wenn die Versandkosten mit berechnet werden sollen.
    * Muss putIntoInvoice() true zurück geben und der Paketpreis
    * wird von 0.00 auf den Versandwert angehoben!
    * @note Wenn die Versandkosten nicht '0.00' sind werden sie in
    * der Rechnung aufgeführt!
    */
-  bool vat_included = o_vat_included->isChecked();
   int setTax =
       o_vat_levels->itemData(o_vat_levels->currentIndex(), Qt::UserRole)
           .toInt();
-
-  /**
-   * Wenn es kein Europaland ist, dann fällt auch keine Mehrwertsteuer an!
-   * Die Zeile MwST dann in der Rechnung ausblenden!
-   */
-  bool disable_vat = (o_vat_country->value().toString().isEmpty());
+  if(setTax == 0)
+  {
+    o_vat_included->setChecked(false);
+    disable_vat = true;
+  }
+  bool vat_included = o_vat_included->isChecked();
 
   qreal packagePrice = 0;
   if (o_delivery_add_price->isChecked())

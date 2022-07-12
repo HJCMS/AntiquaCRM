@@ -150,8 +150,7 @@ void Invoice::insertBilling(BillingInfo billing) {
   if (billing.taxValue != p_tax_value)
     p_tax_value = billing.taxValue;
 
-  if (billing.disableVat != p_disable_VAT)
-    p_disable_VAT = billing.disableVat;
+  p_disable_VAT = billing.disableVat;
 
   QTextCursor cursor = body->textCursor();
   QTextTableCell ce00 = m_billingTable->cellAt(row, 0);

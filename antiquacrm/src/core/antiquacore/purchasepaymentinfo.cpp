@@ -105,11 +105,20 @@ void PurchasePaymentInfo::setData(const QString &objName,
 
     return;
   }
-  qDebug() << "???" << objName << value;
+  // qDebug() << "PayInfo:" << objName << value;
 }
 
 QMap<QString, QVariant> PurchasePaymentInfo::getAll() {
   QMap<QString, QVariant> map;
+  QList<PLineRead *> list = findChildren<PLineRead *>(QString());
+  for (int i = 0; i < list.count(); i++) {
+    PLineRead *r = list[i];
+    if (!r->text().isEmpty())
+      map.insert(r->objectName(), r->text());
+  }
+  int index = o_payment_method->currentIndex();
+  map.insert("o_payment_method",
+             o_payment_method->itemData(index, Qt::UserRole));
   return map;
 }
 
