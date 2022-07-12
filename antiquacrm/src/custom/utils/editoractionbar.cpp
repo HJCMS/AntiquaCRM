@@ -70,7 +70,7 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
   connect(m_saveBtn, SIGNAL(clicked()), this, SIGNAL(s_saveClicked()));
   layout->addWidget(m_saveBtn);
 
-  m_readyBtn = new QPushButton(tr("Back"), this);
+  m_readyBtn = new QPushButton(tr("Back to Mainview"), this);
   m_readyBtn->setObjectName("editor_action_button_back");
   m_readyBtn->setToolTip(tr("Go back to Mainview"));
   m_readyBtn->setIcon(myIcon("button_ok"));

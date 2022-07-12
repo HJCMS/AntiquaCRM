@@ -588,7 +588,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+126"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -618,12 +618,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-437"/>
+        <location line="-434"/>
         <source>Extended Title or Subtitle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+219"/>
+        <location line="+216"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -633,7 +633,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-294"/>
+        <location line="-291"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -666,12 +666,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+214"/>
+        <location line="+211"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-330"/>
+        <location line="-327"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -937,7 +937,7 @@
 <context>
     <name>CategorySubject</name>
     <message>
-        <location filename="../custom/utils/categorysubject.cpp" line="+35"/>
+        <location filename="../custom/utils/categorysubject.cpp" line="+34"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1663,12 +1663,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+100"/>
         <source>Invalid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="-32"/>
+        <location line="+92"/>
         <source>Database Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2086,7 +2087,7 @@
     </message>
     <message>
         <location line="+6"/>
-        <source>Back</source>
+        <source>Back to Mainview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2658,7 +2659,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+114"/>
+        <location line="+113"/>
         <source>Subtotal</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2673,7 +2674,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-151"/>
+        <location line="-150"/>
         <source>Invoice-ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2693,7 +2694,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+139"/>
+        <location line="+138"/>
         <location line="+6"/>
         <source>VAT</source>
         <translation type="unfinished"></translation>
@@ -2961,13 +2962,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+70"/>
         <location line="+5"/>
         <source>Provider</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-61"/>
+        <location line="-63"/>
         <source>Notification</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2982,13 +2983,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+756"/>
+        <location line="+763"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-835"/>
+        <location line="-842"/>
         <source>Invoice ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2998,7 +2999,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+49"/>
         <source>add delivery package price</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3008,7 +3009,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-21"/>
+        <location line="-23"/>
         <source>European Countries</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3038,6 +3039,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+2"/>
+        <source>No VAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+28"/>
         <source>settlement number</source>
         <translation type="unfinished"></translation>
@@ -3054,12 +3060,12 @@
     </message>
     <message>
         <location line="+264"/>
-        <location line="+489"/>
+        <location line="+494"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-474"/>
+        <location line="-479"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3107,7 +3113,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+76"/>
         <source>No Billing Info found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3147,13 +3153,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-487"/>
-        <location line="+240"/>
+        <location line="-492"/>
+        <location line="+245"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-740"/>
+        <location line="-747"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3163,7 +3169,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+679"/>
+        <location line="+686"/>
         <source>Printing canceled.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4860,12 +4866,17 @@
 <context>
     <name>StrLineEdit</name>
     <message>
-        <location filename="../custom/utils/strlineedit.cpp" line="+177"/>
+        <location filename="../custom/utils/strlineedit.cpp" line="+18"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+161"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+22"/>
         <source>The field</source>
         <translation type="unfinished"></translation>
     </message>

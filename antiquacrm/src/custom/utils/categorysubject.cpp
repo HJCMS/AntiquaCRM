@@ -8,7 +8,6 @@
 #include <QHBoxLayout>
 #include <QMessageBox>
 #include <QToolButton>
-
 #include <SqlCore>
 
 CategorySubjectBox::CategorySubjectBox(QWidget *parent) : QComboBox{parent} {
