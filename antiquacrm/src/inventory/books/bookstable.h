@@ -94,6 +94,11 @@ public Q_SLOTS:
    */
   void queryStatement(const QString &statement);
 
+  /**
+   * @brief Alle Bücher aus offenen Aufträgen anzeigen.
+   */
+  void queryViewOpenOrders();
+
 public:
   explicit BooksTable(QWidget *parent = nullptr);
 };

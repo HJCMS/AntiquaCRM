@@ -24,7 +24,7 @@ ProvidersToolBar::ProvidersToolBar(QWidget *parent) : QFrame{parent} {
   layout->addWidget(m_status);
   layout->addStretch(1);
 
-  QString btnInfo = tr("Open/Edit Customer entry");
+  QString btnInfo = tr("Open/Edit/Create Customer entry");
   btn_customer = new QPushButton(this);
   btn_customer->setObjectName("btn_customer");
   btn_customer->setToolTip(btnInfo);

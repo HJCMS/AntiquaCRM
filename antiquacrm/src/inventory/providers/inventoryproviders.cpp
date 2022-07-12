@@ -485,6 +485,8 @@ void InventoryProviders::createEditOrders() {
 
   ProviderOrder pData = tab->getProviderOrder();
   if (pData.customerId() > 0 && pData.customerId() == current_cid) {
+    // Um Doppelte Einträge zu vermeiden, abschalten!
+    m_toolBar->enableOrderButton(false);
     emit createOrder(pData);
   } else {
     m_toolBar->statusMessage(tr("Invalid Shipping Properties!"));

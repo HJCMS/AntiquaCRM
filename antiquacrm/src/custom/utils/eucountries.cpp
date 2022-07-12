@@ -93,11 +93,11 @@ EUCountryBox::EUCountryBox(QWidget *parent)
   QDomNodeList list = p_xml.items();
   for (int i = 0; i < list.count(); i++) {
     QDomElement e = list.at(i).toElement();
-    QString attr = e.attribute("countryCode");
+    QString attr = e.attribute("countryCode").toLower();
     QString info = e.firstChild().nodeValue();
     m_box->insertItem(c, info);
     m_box->setItemData(c, attr, Qt::UserRole);
-    if (attr.toLower() == lc.bcp47Name())
+    if (attr == lc.bcp47Name())
       m_box->setCurrentIndex(c);
 
     c++;
@@ -121,13 +121,19 @@ void EUCountryBox::reset() {
 void EUCountryBox::setFocus() { m_box->setFocus(); }
 
 void EUCountryBox::setValue(const QVariant &val) {
-  QString value = val.toString();
-  for (int i = 0; i < m_box->count(); i++) {
-    if (m_box->itemData(i, Qt::UserRole).toString() == value) {
-      m_box->setCurrentIndex(i);
-      setModified(true);
-      break;
-    }
+  QString search = val.toString().toLower();
+  // Schritt: 1 nach IETF BCP 47 suchen.
+  int index = m_box->findData(search, Qt::UserRole, Qt::MatchExactly);
+  if(index > 0) {
+    m_box->setCurrentIndex(index);
+    setModified(true);
+    return;
+  }
+  // Schritt: 2 Volltextsuche
+  index = m_box->findData(search, Qt::DisplayRole, Qt::MatchStartsWith);
+  if(index > 0) {
+    m_box->setCurrentIndex(index);
+    setModified(true);
   }
 }
 

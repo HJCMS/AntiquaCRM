@@ -18,7 +18,7 @@
 
 namespace Antiqua {
 
-class PaymentMethodSelect : public QComboBox {
+class PaymentMethodSelect final : public QComboBox {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -39,6 +39,12 @@ public:
   const QString getPaymentMethod(int id);
 };
 
+class PLineRead final : public QLineEdit {
+public:
+  explicit PLineRead(QWidget *parent = nullptr);
+};
+
+
 /**
  * @brief Zahlungsinformationen
  * @class PurchasePaymentInfo
@@ -51,8 +57,9 @@ class ANTIQUACORE_EXPORT PurchasePaymentInfo : public QWidget {
 
 private:
   PaymentMethodSelect *o_payment_method;
-  QLineEdit *m_paymentTransactionId;
-  QLineEdit *m_deliveryCost;
+  PLineRead *m_paymentTransactionId;
+  PLineRead *m_paymentConfirmed;
+  PLineRead *m_deliveryCost;
 
 public:
   explicit PurchasePaymentInfo(QWidget *parent = nullptr);

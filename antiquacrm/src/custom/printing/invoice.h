@@ -46,6 +46,11 @@ struct BillingInfo {
   bool includeVat;
 
   /**
+   * @brief Es fällt keine Mehwertsteuer an!
+   */
+  bool disableVat;
+
+  /**
    * @brief Mehwertsteuersatz
    * @note Wird Gesamt behandelt!
    */
@@ -83,6 +88,7 @@ private:
    * @brief Mehwertsteuer (inkl oder plus)
    */
   bool p_including_VAT;
+  bool p_disable_VAT = false;
 
   /**
    * @brief Bereits beszahlt

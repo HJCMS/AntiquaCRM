@@ -91,15 +91,17 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
   m_shippingAddress->setObjectName("c_shipping_address");
   gridLayout->addWidget(m_shippingAddress, 1, 1, 1, 1);
   m_tabWidget->insertTab(tabIndex++, addressTab, qi2, tr("addresses"));
-  // Kunden Kommentar
-  m_comments = new QTextEdit(m_tabWidget);
-  m_comments->setObjectName("o_delivery_comment");
-  m_tabWidget->insertTab(tabIndex++, m_comments, qi1, tr("customer comment"));
   // Zahlungs Informationen
   m_paymentInfo = new Antiqua::PurchasePaymentInfo(this);
   m_paymentInfo->setObjectName("m_paymentInfo");
   m_tabWidget->insertTab(tabIndex++, m_paymentInfo, qi1,
                          tr("Payment Information"));
+
+  // Kunden Kommentar
+  m_comments = new QTextEdit(m_tabWidget);
+  m_comments->setObjectName("o_delivery_comment");
+  m_tabWidget->insertTab(tabIndex++, m_comments, qi1, tr("customer comment"));
+
   // Informationen
   m_debugTable = new PurchaseDebugTable(m_tabWidget);
   m_tabWidget->insertTab(tabIndex++, m_debugTable, qi1, tr("Developement"));

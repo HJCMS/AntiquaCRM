@@ -150,6 +150,9 @@ void Invoice::insertBilling(BillingInfo billing) {
   if (billing.taxValue != p_tax_value)
     p_tax_value = billing.taxValue;
 
+  if (billing.disableVat != p_disable_VAT)
+    p_disable_VAT = billing.disableVat;
+
   QTextCursor cursor = body->textCursor();
   QTextTableCell ce00 = m_billingTable->cellAt(row, 0);
   cursor = ce00.firstCursorPosition();
@@ -202,26 +205,35 @@ bool Invoice::insertSummaryTable() {
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
   text = QString();
-  if (p_including_VAT) {
-    text.append(tr("incl.") + " ");
+  if (p_disable_VAT) {
+    cursor.insertText(tr("VAT"));
+  } else {
+    if (p_including_VAT) {
+      text.append(tr("incl.") + " ");
+    }
+    text.append(QString::number(p_tax_value));
+    text.append("% " + tr("VAT"));
+    cursor.insertText(text);
   }
-  text.append(QString::number(p_tax_value));
-  text.append("% " + tr("VAT"));
-  cursor.insertText(text);
 
   QTextTableCell tc1 = m_billingTable->cellAt(row, 3);
   tc1.setFormat(cellFormat);
   cursor = tc1.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
-  cursor.setBlockFormat(alignRight());
-  qreal tax;
-  if (p_including_VAT) {
-    tax = inclVat(p_fullPrice, p_tax_value);
+  if (p_disable_VAT) {
+    cursor.setBlockFormat(alignCenter());
+    cursor.insertText("-");
   } else {
-    tax = addVat(p_fullPrice, p_tax_value);
+    cursor.setBlockFormat(alignRight());
+    qreal tax;
+    if (p_including_VAT) {
+      tax = inclVat(p_fullPrice, p_tax_value);
+    } else {
+      tax = addVat(p_fullPrice, p_tax_value);
+    }
+    text = QString::number(tax, 'f', 2);
+    cursor.insertText(text + " " + p_currency);
   }
-  text = QString::number(tax, 'f', 2);
-  cursor.insertText(text + " " + p_currency);
   // END
 
   // BEGIN Zwischensumme

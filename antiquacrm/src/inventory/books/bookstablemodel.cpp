@@ -113,47 +113,45 @@ QVariant BooksTableModel::data(const QModelIndex &index, int role) const {
 
 QVariant BooksTableModel::headerData(int section, Qt::Orientation orientation,
                                      int role) const {
-  if (role != Qt::DisplayRole)
+  if (orientation != Qt::Horizontal || role != Qt::DisplayRole)
     return QVariant();
 
-  if (orientation == Qt::Horizontal) {
-    switch (section) {
-    case 0: // ib_id
-      return setHeaderTitel(tr("Article"));
+  switch (section) {
+  case 0: // ib_id
+    return setHeaderTitel(tr("Article"));
 
-    case 1: // ib_count
-      return setHeaderTitel(tr("Count"));
+  case 1: // ib_count
+    return setHeaderTitel(tr("Count"));
 
-    case 2: // ib_title
-      return setHeaderTitel(tr("Title"));
+  case 2: // ib_title
+    return setHeaderTitel(tr("Title"));
 
-    case 3: // ib_author
-      return setHeaderTitel(tr("Author"));
+  case 3: // ib_author
+    return setHeaderTitel(tr("Author"));
 
-    case 4: // ib_publisher
-      return setHeaderTitel(tr("Publisher"));
+  case 4: // ib_publisher
+    return setHeaderTitel(tr("Publisher"));
 
-    case 5: // ib_year
-      return setHeaderTitel(tr("Year"));
+  case 5: // ib_year
+    return setHeaderTitel(tr("Year"));
 
-    case 6: // ib_price
-      return setHeaderTitel(tr("Price"));
+  case 6: // ib_price
+    return setHeaderTitel(tr("Price"));
 
-    case 7: // ib_storage
-      return setHeaderTitel(tr("Storage Location"));
+  case 7: // ib_storage
+    return setHeaderTitel(tr("Storage Location"));
 
-    case 8: // ib_isbn
-      return setHeaderTitel(tr("ISBN"));
+  case 8: // ib_isbn
+    return setHeaderTitel(tr("ISBN"));
 
-    case 9: // ib_changed
-      return setHeaderTitel(tr("Last change"));
+  case 9: // ib_changed
+    return setHeaderTitel(tr("Last change"));
 
-    case 10: // image_exists
-      return setHeaderTitel(tr("Image exits"));
+  case 10: // image_exists
+    return setHeaderTitel(tr("Image exits"));
 
-    default:
-      return QString("%1").arg(section);
-    }
+  default:
+    return QString("%1").arg(section);
   }
   return QString("%1").arg(section);
 }

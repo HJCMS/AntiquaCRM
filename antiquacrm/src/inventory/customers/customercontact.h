@@ -26,6 +26,7 @@ public:
   LineEdit *c_lastname;     /**< Nachname */
   PostalCode *c_postalcode; /**< Postleitzahl */
   LineEdit *c_country;      /**< Land */
+  EUCountryBox *c_country_bcp47; /**< IETF BCP 47 */
   LineEdit *c_location;     /**< Wohnort */
   LineEdit *c_street;       /**< Straße */
   PhoneEdit *c_phone_0;     /**< Telefon Nummer 1 */

@@ -149,6 +149,11 @@ void BooksTable::contextMenuEvent(QContextMenuEvent *ev) {
   connect(ac_order, SIGNAL(triggered()), this, SLOT(createOrderSignal()));
   // END
 
+  // Zeige alle Offenen Auftrags Artikel
+  QAction *ac_orders = m->addAction(myIcon("edit"), tr("Open Orders"));
+  ac_orders->setObjectName("ac_context_open_orders");
+  connect(ac_orders, SIGNAL(triggered()), this, SLOT(queryViewOpenOrders()));
+
   QAction *ac_refresh = m->addAction(myIcon("reload"), tr("Refresh"));
   ac_refresh->setObjectName("ac_context_refresh_books");
   connect(ac_refresh, SIGNAL(triggered()), this, SLOT(refreshView()));
@@ -213,6 +218,19 @@ void BooksTable::queryStatement(const QString &statement) {
   q.append(" WHERE ");
   q.append(statement);
   q.append(" ORDER BY ib_count DESC LIMIT ");
+  q.append(QString::number(maxRowCount));
+  q.append(";");
+
+  if (sqlExecQuery(q)) {
+    resizeRowsToContents();
+    resizeColumnsToContents();
+    p_historyQuery = q;
+  }
+}
+
+void BooksTable::queryViewOpenOrders() {
+  QString q("SELECT * FROM view_books_from_open_orders");
+  q.append(" LIMIT ");
   q.append(QString::number(maxRowCount));
   q.append(";");
 

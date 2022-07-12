@@ -78,7 +78,7 @@
 <context>
     <name>Antiqua::InterfaceWidget</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+392"/>
+        <location filename="../core/antiquacore/interface.cpp" line="+321"/>
         <source>Please select</source>
         <translation>Bitte auswählen</translation>
     </message>
@@ -86,7 +86,7 @@
 <context>
     <name>Antiqua::PurchaseDebugTable</name>
     <message>
-        <location line="-367"/>
+        <location filename="../core/antiquacore/purchasedebugtable.cpp" line="+13"/>
         <source>Parameter</source>
         <translation></translation>
     </message>
@@ -99,7 +99,7 @@
 <context>
     <name>Antiqua::PurchaseOverview</name>
     <message>
-        <location line="+108"/>
+        <location filename="../core/antiquacore/interface.cpp" line="-270"/>
         <source>Purchaser</source>
         <translation>Einkäufer*in</translation>
     </message>
@@ -134,7 +134,7 @@
         <translation>Erstelle Suchanfrage, ob alle Artikel verfügbar sind.</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+16"/>
         <source>billing address</source>
         <translation>Rechnungs Adresse</translation>
     </message>
@@ -149,20 +149,54 @@
         <translation>Anschriften</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+10"/>
         <source>customer comment</source>
         <translation>Kunden Kommentar</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-5"/>
+        <source>Payment Information</source>
+        <translation>Zahlungs Informationen</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>Developement</source>
         <translation></translation>
     </message>
 </context>
 <context>
+    <name>Antiqua::PurchasePaymentInfo</name>
+    <message>
+        <location filename="../core/antiquacore/purchasepaymentinfo.cpp" line="+57"/>
+        <source>Payment method</source>
+        <translation>Zahlungsmethode</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>PayPal Transaction Id</source>
+        <translation>PayPal Transaktions Id</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Payment Confirmed</source>
+        <translation>Bezahlung bestätigt</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+5"/>
+        <source>Shipping costs</source>
+        <translation>Versandkosten</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>transportation costs</source>
+        <translation>Transportkosten</translation>
+    </message>
+</context>
+<context>
     <name>Antiqua::PurchaserOrderTable</name>
     <message>
-        <location line="-138"/>
+        <location filename="../core/antiquacore/purchaserordertable.cpp" line="+17"/>
         <source>Provider</source>
         <translation>Bestell Nr</translation>
     </message>
@@ -771,7 +805,12 @@
         <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
+        <source>Open Orders</source>
+        <translation>Artikelliste aktueller Aufträge anzeigen</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -789,7 +828,7 @@
         <translation>Nein</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+14"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
@@ -1335,7 +1374,7 @@
         <translation>Postleitzahl</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Country</source>
         <translation>Land</translation>
     </message>
@@ -1345,7 +1384,7 @@
         <translation>Land/Bundesland oder Kanton</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+13"/>
         <source>Location</source>
         <translation>Wohnort</translation>
     </message>
@@ -1927,7 +1966,7 @@
         <translation>Kein Europäsches Land</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+68"/>
         <source>a valid Country selection is required!</source>
         <translation>Eine gültige EU-Staatenauswahl ist Erforderlich!</translation>
     </message>
@@ -2570,7 +2609,7 @@
         <translation>Eine Bestellung mit diesen Einträgen existiert bereits!</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>Invalid Shipping Properties!</source>
         <translation>Ungültige Versandeigenschaften!</translation>
     </message>
@@ -2585,7 +2624,7 @@
         <translation>Erfolgreich</translation>
     </message>
     <message>
-        <location line="-426"/>
+        <location line="-428"/>
         <location line="+14"/>
         <source>Article</source>
         <translation>Artikel</translation>
@@ -2619,7 +2658,7 @@
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+114"/>
         <source>Subtotal</source>
         <translation>Zwischensumme</translation>
     </message>
@@ -2629,12 +2668,12 @@
         <translation>Versandkosten</translation>
     </message>
     <message>
-        <location line="-48"/>
+        <location line="-54"/>
         <source>incl.</source>
         <translation>inkl.</translation>
     </message>
     <message>
-        <location line="-145"/>
+        <location line="-151"/>
         <source>Invoice-ID</source>
         <translation>Rechnungsnummer</translation>
     </message>
@@ -2655,11 +2694,12 @@
     </message>
     <message>
         <location line="+139"/>
+        <location line="+6"/>
         <source>VAT</source>
         <translation>MwSt</translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="+84"/>
         <source>invoice amount</source>
         <translation>Rechnungsbetrag</translation>
     </message>
@@ -2921,18 +2961,18 @@
         <translation>Lieferservice</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+68"/>
         <location line="+5"/>
         <source>Provider</source>
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="-60"/>
+        <location line="-61"/>
         <source>Notification</source>
         <translation>Benachrichtigung</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Delivery note number</source>
         <translation>Lieferschein Nummer</translation>
     </message>
@@ -2942,13 +2982,13 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+748"/>
+        <location line="+756"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-826"/>
+        <location line="-835"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
@@ -2958,7 +2998,7 @@
         <translation>Paketsendungsnummer</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+47"/>
         <source>add delivery package price</source>
         <translation>Lieferpaketpreis hinzufügen</translation>
     </message>
@@ -2973,12 +3013,12 @@
         <translation>Europäische Staaten</translation>
     </message>
     <message>
-        <location line="-58"/>
+        <location line="-59"/>
         <source>Customer Number</source>
         <translation>Kundennummer</translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+62"/>
         <source>vat included</source>
         <translation>inkl. MwSt</translation>
     </message>
@@ -3014,12 +3054,12 @@
     </message>
     <message>
         <location line="+264"/>
-        <location line="+481"/>
+        <location line="+489"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="-466"/>
+        <location line="-474"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
     </message>
@@ -3039,7 +3079,7 @@
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+36"/>
         <location line="+58"/>
         <source>Missing Order-Id</source>
         <translation>Fehlende Bestellnummer</translation>
@@ -3067,7 +3107,7 @@
         <translation>Kein Rechnungs-Nr</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+71"/>
         <source>No Billing Info found</source>
         <translation>Kein Verkaufsinformationen gefunden</translation>
     </message>
@@ -3107,23 +3147,23 @@
         <translation>Bestellung</translation>
     </message>
     <message>
-        <location line="-479"/>
-        <location line="+232"/>
+        <location line="-487"/>
+        <location line="+240"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
     <message>
-        <location line="-731"/>
+        <location line="-740"/>
         <source>Service</source>
         <translation>Sender</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+28"/>
         <source>Invoice options</source>
         <translation>Rechnungs Optionen</translation>
     </message>
     <message>
-        <location line="+671"/>
+        <location line="+679"/>
         <source>Printing canceled.</source>
         <translation>Druckevorgang abgebrochen.</translation>
     </message>
@@ -3273,14 +3313,6 @@
         <location line="+54"/>
         <source>Payment Status is required</source>
         <translation>Ein Zahlungstatus ist erforderlich</translation>
-    </message>
-</context>
-<context>
-    <name>OrdersPaymentType</name>
-    <message>
-        <location filename="../custom/utils/orderspaymenttype.cpp" line="+77"/>
-        <source>a Valid Payment type is required!</source>
-        <translation>Eine gültige Zahlungsart ist erforderlich!</translation>
     </message>
 </context>
 <context>
@@ -4229,8 +4261,8 @@
     <name>ProvidersToolBar</name>
     <message>
         <location filename="../inventory/providers/providerstoolbar.cpp" line="+27"/>
-        <source>Open/Edit Customer entry</source>
-        <translation>Öffne/Bearbeite Kundeneintrag</translation>
+        <source>Open/Edit/Create Customer entry</source>
+        <translation>Kunden Öffnen/bearbeiten/erstellen</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -4270,7 +4302,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../core/antiquacore/paymenttypeset.cpp" line="+10"/>
+        <location filename="../core/antiquacore/paymenttypeset.cpp" line="+11"/>
         <location filename="../custom/utils/genderbox.cpp" line="+38"/>
         <source>Without disclosures</source>
         <translation>Keine Angaben</translation>

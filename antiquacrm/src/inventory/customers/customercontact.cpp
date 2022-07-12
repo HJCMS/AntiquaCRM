@@ -69,12 +69,19 @@ CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
   row2->addWidget(c_postalcode, gridRow, 0, 1, 1);
 
   /** Land */
+  QHBoxLayout *countryLayout = new QHBoxLayout();
   c_country = new LineEdit(this);
   c_country->setObjectName("c_country");
   c_country->setInfo(tr("Country"));
   c_country->setToolTip(tr("Country/State or Canton"));
   c_country->setRequired(true);
-  row2->addWidget(c_country, gridRow++, 1, 1, 1);
+  countryLayout->addWidget(c_country);
+
+  c_country_bcp47 = new EUCountryBox(this);
+  c_country_bcp47->setObjectName("c_country_bcp47");
+  countryLayout->addWidget(c_country_bcp47);
+
+  row2->addLayout(countryLayout, gridRow++, 1, 1, 1);
 
   /** Wohnort */
   c_location = new LineEdit(this);
@@ -210,14 +217,21 @@ void CustomerContact::fetchCountryFromPostal() {
   sql.append(" ON b.p_table='" + table + "'");
   sql.append(" WHERE a.p_plz=" + plz + ";");
 
+  qDebug() << Q_FUNC_INFO << sql;
+
   QStringList list;
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
     while (q.next()) {
       list.append(q.value("lo").toString());
-      QString country("/");
+      QString country;
       country.prepend(q.value("co").toString());
-      country.append(q.value("st").toString());
+      // Suche EU Land
+      c_country_bcp47->setValue(q.value("co").toString());
+      if (!q.value("st").toString().isEmpty()) {
+        country.append("/");
+        country.append(q.value("st").toString());
+      }
       c_country->setValue(country);
     }
     if (!list.isEmpty()) {

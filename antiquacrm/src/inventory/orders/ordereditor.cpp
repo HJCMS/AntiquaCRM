@@ -132,6 +132,7 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   o_notify->setInfo(tr("Notification"));
   o_notify->setChecked(false);
   o_notify->setRequired(false);
+  o_notify->setEnabled(false); // TODO NOTIFY E-MAIL
   dsLayout->addWidget(o_notify, 2, 0, 1, 1, Qt::AlignRight);
   o_delivery = new LineEdit(m_deliveryBox);
   o_delivery->setObjectName("o_delivery");
@@ -669,6 +670,7 @@ void OrderEditor::clearEditorFields() {
   o_delivery_add_price->setChecked(false);
   // FIXME Sollte hier nicht stehen!
   o_vat_levels->setCurrentIndex(0);
+  o_vat_country->setValue(QLocale::system().bcp47Name());
   // Tabelle leeren
   m_paymentList->clearTable();
 }
@@ -793,6 +795,12 @@ void OrderEditor::openPrinterInvoiceDialog() {
       o_vat_levels->itemData(o_vat_levels->currentIndex(), Qt::UserRole)
           .toInt();
 
+  /**
+   * Wenn es kein Europaland ist, dann fällt auch keine Mehrwertsteuer an!
+   * Die Zeile MwST dann in der Rechnung ausblenden!
+   */
+  bool disable_vat = (o_vat_country->value().toString().isEmpty());
+
   qreal packagePrice = 0;
   if (o_delivery_add_price->isChecked())
     packagePrice = o_delivery_service->getPackagePrice();
@@ -808,6 +816,7 @@ void OrderEditor::openPrinterInvoiceDialog() {
       d.quantity = q.value("quant").toInt();
       d.sellPrice = q.value("sellPrice").toDouble();
       d.includeVat = vat_included;
+      d.disableVat = disable_vat;
       d.taxValue = setTax;
       d.packagePrice = packagePrice;
       list.append(d);

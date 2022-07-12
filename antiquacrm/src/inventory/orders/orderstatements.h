@@ -43,12 +43,10 @@
 #endif
 
 /**
- * @ingroup Order SQL Statements
- * @brief Standard Auftrags Tabellenausgabe
- * @param id - Artikel Id
- * @return SQL Query
+ * @brief InventoryOrdersSelect
+ * @return QUERY_FIELD_SET
  */
-static const QString defaultOrdersQuery(int id = 0) {
+static const QString InventoryOrdersSelect() {
   QString fieldSelect;
   QString fs("a.o_id,a.o_since,a.o_order_status,a.o_payment_status,");
   fs.append("CASE WHEN c.c_company=true THEN c.c_company_name ELSE ");
@@ -68,7 +66,19 @@ static const QString defaultOrdersQuery(int id = 0) {
   fieldSelect.append(",");
   fieldSelect.append(age);
 
-  QString sql("SELECT " + fieldSelect + " ");
+  return fieldSelect;
+}
+
+/**
+ * @ingroup Order SQL Statements
+ * @brief Standard Auftrags Tabellenausgabe
+ * @param id - Artikel Id
+ * @return SQL Query
+ */
+static const QString defaultOrdersQuery(int id = 0) {
+  QString fields = InventoryOrdersSelect();
+
+  QString sql("SELECT " + fields + " ");
   sql.append("FROM inventory_orders AS a ");
   sql.append("LEFT JOIN customers AS c ON c.c_id=a.o_customer_id LEFT JOIN ");
   sql.append("ref_delivery_service AS d ON d.d_id=a.o_delivery_service ");
