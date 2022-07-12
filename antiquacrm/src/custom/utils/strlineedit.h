@@ -30,6 +30,8 @@ class StrLineEdit final : public UtilsMain {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  QString p_info;
+
   /**
    * @brief Datenbank abfragen
    */

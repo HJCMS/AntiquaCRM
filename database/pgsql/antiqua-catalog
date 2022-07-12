@@ -109,6 +109,14 @@ pushd ${_output_target}
 popd
 
 if test -e ${_output_target}/katalog.zip ; then
+  whsoft_url=https://www.buchfreund.de/verkaeufer/api/3fbe2f84-1ae2-419e-b5c4-fecabd6bac6c/upload-daten
+  header_file=$HOME/.config/HJCMS/curl-upload-catalog.header
+  curl --verbose -X POST ${whsoft_url} \
+  --header $HOME/.config/HJCMS/curl-upload-catalog.header \
+  --header 'Content-Type: multipart/form-data; boundary="upload"' \
+  --header 'Content-Disposition: name=file; file=katalog.zip' \
+  --output $HOME/.cache/catalog_ulpoad.json \
+  --upload-file katalog.zip
 
 fi
 

@@ -15,6 +15,7 @@ StrLineEdit::StrLineEdit(QWidget *parent)
     setObjectName("StrLineEdit");
 
   m_sql = new HJCMS::SqlCore(this);
+  p_info = tr("Unknown");
 
   QHBoxLayout *layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
@@ -150,8 +151,9 @@ void StrLineEdit::loadDataset(const QString &key, StrLineEdit::QType type) {
   } else if (type == QType::OTHER) {
     select.append("AND k_type=2");
   }
-  select.append("ORDER BY k_keyword;");
+  select.append(" ORDER BY k_keyword;");
 
+  // qDebug() << select;
   QStringList list;
   QSqlQuery q = m_sql->query(select);
   if (q.size() > 0) {
@@ -189,9 +191,11 @@ bool StrLineEdit::isValid() {
   return true;
 }
 
-void StrLineEdit::setInfo(const QString &info) { m_lineEdit->setToolTip(info); }
+void StrLineEdit::setInfo(const QString &info) {
+  p_info = info;
+}
 
-const QString StrLineEdit::info() { return m_lineEdit->toolTip(); }
+const QString StrLineEdit::info() { return p_info; }
 
 const QString StrLineEdit::notes() {
   QString msg(tr("The field"));

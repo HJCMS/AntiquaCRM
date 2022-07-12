@@ -85,6 +85,7 @@ void DeliverServiceDialog::initItemsTreeView() {
       m_list->addDeliverService(id, q.value("d_name").toString());
     }
   }
+  m_list->expandAll();
 }
 
 void DeliverServiceDialog::messanger(const QString &msg) {
@@ -92,15 +93,29 @@ void DeliverServiceDialog::messanger(const QString &msg) {
 }
 
 void DeliverServiceDialog::deleteDeliveryPackage(const QJsonObject &obj) {
+  // Referenze mit: uniq_delivery_cost
   QString sql("DELETE FROM ref_delivery_cost WHERE");
   sql.append(" d_srv=" + QString::number(obj["d_srv"].toInt()) + "");
-  qreal d_price = obj["d_price"].toDouble();
-  sql.append(" AND d_price=" + QString::number(d_price));
+  QString d_class = obj["d_class"].toString();
+  sql.append(" AND d_class='" + d_class + "'");
   QString d_description = obj["d_description"].toString();
-  sql.append(" AND d_description LIKE '" + d_description + "'");
+  sql.append(" AND d_description='" + d_description + "'");
   QString d_definition = obj["d_definition"].toString();
-  sql.append(" AND d_definition LIKE '" + d_definition + "';");
-  qDebug() << sql;
+  sql.append(" AND d_definition='" + d_definition + "'");
+  qreal d_price = obj["d_price"].toDouble();
+  sql.append(" AND d_price=" + QString::number(d_price) + ";");
+  // qDebug() << Q_FUNC_INFO << sql;
+  m_sql->query(sql);
+  if (m_sql->lastError().isEmpty()) {
+    initItemsTreeView();
+  } else {
+    QString info = m_sql->lastError();
+    QMessageBox *errDialog =
+        new QMessageBox(QMessageBox::Critical, tr("Database Error"), info,
+                        QMessageBox::Ok, this);
+    errDialog->setInformativeText(sql);
+    errDialog->exec();
+  }
 }
 
 void DeliverServiceDialog::keyPressEvent(QKeyEvent *e) {

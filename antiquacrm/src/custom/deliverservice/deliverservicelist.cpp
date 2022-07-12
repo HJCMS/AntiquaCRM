@@ -57,10 +57,10 @@ void DeliverServiceList::createByContext() {
 }
 
 void DeliverServiceList::removeByContext() {
-  QTreeWidgetItem *it = currentItem();
-  int id = it->data(0, Qt::UserRole).toInt();
   QJsonObject obj;
+  QTreeWidgetItem *it = currentItem();
   obj.insert("d_srv", QJsonValue(it->data(0, Qt::UserRole).toInt()));
+  obj.insert("d_class", QJsonValue(it->data(0, Qt::DisplayRole).toString()));
   obj.insert("d_price", QJsonValue(it->data(1, Qt::UserRole).toDouble()));
   obj.insert("d_definition", QJsonValue(it->data(2, Qt::UserRole).toString()));
   obj.insert("d_description", QJsonValue(it->data(3, Qt::UserRole).toString()));

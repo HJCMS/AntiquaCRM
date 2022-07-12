@@ -62,10 +62,10 @@ void CategorySubject::subjectChanged(int index) {
 }
 
 void CategorySubject::searchChanged(const QString &search) {
-  if (search.length() < 6)
+  if (search.length() < 3)
     return;
 
-  int index = m_box->findText(search, Qt::MatchExactly);
+  int index = m_box->findText(search, Qt::MatchContains);
   if (index > 0)
     m_box->setCurrentIndex(index);
 }

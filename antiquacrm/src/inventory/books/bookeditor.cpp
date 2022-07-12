@@ -323,9 +323,6 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
 
   connect(ib_isbn, SIGNAL(clicked()), this, SLOT(createIsbnQuery()));
 
-  connect(ib_keyword, SIGNAL(textEdited(const QString &)), ib_category_subject,
-          SLOT(findIndex(const QString &)));
-
   connect(m_imageToolBar, SIGNAL(s_openImage()), this, SLOT(openImageDialog()));
   connect(m_imageToolBar, SIGNAL(s_deleteImage(int)), this,
           SLOT(removeImageDialog(int)));
