@@ -785,12 +785,12 @@
         <translation>Öffne Eintrag</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+11"/>
         <source>Copy Article Id</source>
         <translation>Kopiere Artikel Nummer</translation>
     </message>
     <message>
-        <location line="-7"/>
+        <location line="-6"/>
         <source>Create entry</source>
         <translation>Eintrag erstellen</translation>
     </message>
@@ -800,7 +800,7 @@
         <translation>Eine Tabellenreihe muss ausgewählt sein, um eine Aktion ausführen zu können.</translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+103"/>
         <source>add Article to opened Order</source>
         <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
     </message>
@@ -937,22 +937,47 @@
 <context>
     <name>CategorySubject</name>
     <message>
-        <location filename="../custom/utils/categorysubject.cpp" line="+34"/>
+        <location filename="../custom/utils/categorysubject.cpp" line="+56"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Open Helper Dialog</source>
-        <translation>Hilfefenster öffnen</translation>
+        <location line="-13"/>
+        <source>Main Category</source>
+        <translation>Hauptkategorie</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+4"/>
+        <source>Sub Category</source>
+        <translation>Unterkategorie</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>sync</source>
+        <translation>Update</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>synchronize categories</source>
+        <translation>Kategorien synchronisieren</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Open Information Dialog</source>
+        <translation>Informationsdialog öffnen</translation>
+    </message>
+    <message>
+        <location line="+77"/>
+        <source>A database error has occurred.</source>
+        <translation>Ein Datenbankfehler ist aufgetreten.</translation>
+    </message>
+    <message>
+        <location line="+69"/>
         <source>In this area, the categories are defined which are permanently assigned by your service provider. Ultimately, it is decided here in which category your book is for sale.</source>
         <translation>In Diesem Bereich werden die Kategorien definiert welche von ihrem Dienstleister fest vergeben sind. Letztentlich wird hier entschieden in welcher Kategorie ihr Buch zum Verkauf steht.</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+71"/>
         <source>a valid Provider Category is required!</source>
         <translation>Eine gültige Dienstleister Kategorie muss angegeben werden!</translation>
     </message>
@@ -2031,17 +2056,17 @@
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Exit without saving.</source>
         <translation>Beende ohne Speichern.</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Restore</source>
         <translation>Zurücksetzen</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>Restore dataset to last save operation.</source>
         <translation>Setzt die Daten zum letzten Speicherpunkt zurück.</translation>
     </message>
@@ -2056,17 +2081,17 @@
         <translation>Öffne Lieferschein drucken</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+8"/>
         <source>Print Invoice</source>
         <translation>Drucke Rechnung</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Open Print Invoice</source>
         <translation>Öffne Rechnung drucken</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+5"/>
         <source>Print book card</source>
         <translation>Drucke Buchkarte</translation>
     </message>
@@ -2081,17 +2106,17 @@
         <translation>Speichern</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Save current dataset</source>
         <translation>Speichert den aktuellen Datensatz</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+4"/>
         <source>Back to Mainview</source>
         <translation>Zurück zur Hauptansicht</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Go back to Mainview</source>
         <translation>Gehe zurück zur Hauptansicht</translation>
     </message>
@@ -2455,22 +2480,22 @@
 <context>
     <name>Inventory</name>
     <message>
-        <location filename="../custom/utils/inventory.cpp" line="+18"/>
-        <source>Ctrl+S</source>
+        <location filename="../custom/utils/inventory.cpp" line="+17"/>
+        <source>Ctrl+Shift+S</source>
         <comment>Search</comment>
-        <translation>Suche</translation>
+        <translation>Strg+Shift+S</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Ctrl+F</source>
+        <source>Ctrl+Shift+F</source>
         <comment>Filter</comment>
-        <translation>Filtern</translation>
+        <translation>Strg+Shift+F</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Ctrl+N</source>
+        <source>Ctrl+Shift+N</source>
         <comment>New Entry</comment>
-        <translation>Erstellen</translation>
+        <translation>Strg+Shift+N</translation>
     </message>
 </context>
 <context>
@@ -2481,7 +2506,7 @@
         <translation>Bücher</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+131"/>
         <source>Editor</source>
         <translation></translation>
     </message>
@@ -2835,7 +2860,7 @@
         <translation>Ansichten</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+23"/>
         <source>Edit tables</source>
         <translation>Bearbeite Tabellen</translation>
     </message>
@@ -2860,13 +2885,13 @@
         <translation>SQL Serverfehler</translation>
     </message>
     <message>
-        <location line="-102"/>
-        <location line="+115"/>
+        <location line="-104"/>
+        <location line="+117"/>
         <source>Fullscreen</source>
         <translation>Vollansicht</translation>
     </message>
     <message>
-        <location line="-171"/>
+        <location line="-173"/>
         <source>Prints</source>
         <translation>Drucke und Stiche</translation>
     </message>
@@ -2881,7 +2906,7 @@
         <translation>Verbinden</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+40"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
@@ -2891,7 +2916,7 @@
         <translation>Konfiguration</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Delivery Services</source>
         <translation>Lieferdienste</translation>
     </message>
@@ -4715,7 +4740,7 @@
         <translation>Aktualisieren</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Show data history from ...</source>
         <translation>Anzeigen der Datenhistorie ...</translation>
     </message>

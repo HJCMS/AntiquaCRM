@@ -785,12 +785,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+11"/>
         <source>Copy Article Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-7"/>
+        <location line="-6"/>
         <source>Create entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -800,7 +800,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+103"/>
         <source>add Article to opened Order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -937,22 +937,47 @@
 <context>
     <name>CategorySubject</name>
     <message>
-        <location filename="../custom/utils/categorysubject.cpp" line="+34"/>
+        <location filename="../custom/utils/categorysubject.cpp" line="+56"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Open Helper Dialog</source>
+        <location line="-13"/>
+        <source>Main Category</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+4"/>
+        <source>Sub Category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>synchronize categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Open Information Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+77"/>
+        <source>A database error has occurred.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+69"/>
         <source>In this area, the categories are defined which are permanently assigned by your service provider. Ultimately, it is decided here in which category your book is for sale.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+71"/>
         <source>a valid Provider Category is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2031,17 +2056,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Exit without saving.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Restore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>Restore dataset to last save operation.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2056,17 +2081,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+8"/>
         <source>Print Invoice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Open Print Invoice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+5"/>
         <source>Print book card</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2081,17 +2106,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Save current dataset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+4"/>
         <source>Back to Mainview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Go back to Mainview</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2455,20 +2480,20 @@
 <context>
     <name>Inventory</name>
     <message>
-        <location filename="../custom/utils/inventory.cpp" line="+18"/>
-        <source>Ctrl+S</source>
+        <location filename="../custom/utils/inventory.cpp" line="+17"/>
+        <source>Ctrl+Shift+S</source>
         <comment>Search</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Ctrl+F</source>
+        <source>Ctrl+Shift+F</source>
         <comment>Filter</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Ctrl+N</source>
+        <source>Ctrl+Shift+N</source>
         <comment>New Entry</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -2481,7 +2506,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+131"/>
         <source>Editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2835,7 +2860,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+23"/>
         <source>Edit tables</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2860,13 +2885,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-102"/>
-        <location line="+115"/>
+        <location line="-104"/>
+        <location line="+117"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-171"/>
+        <location line="-173"/>
         <source>Prints</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2881,7 +2906,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+40"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2891,7 +2916,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Delivery Services</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4715,7 +4740,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Show data history from ...</source>
         <translation type="unfinished"></translation>
     </message>
