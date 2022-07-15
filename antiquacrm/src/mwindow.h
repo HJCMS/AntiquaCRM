@@ -48,6 +48,7 @@ private Q_SLOTS:
   void openCondition(bool);
   void openDesignation(bool);
   void openFileDialog(bool);
+  void openCategoryEdit(bool);
   void openConfiguration(bool);
   void sqlErrorMessageBox(const QString &);
   void toggleFullScreen(bool);

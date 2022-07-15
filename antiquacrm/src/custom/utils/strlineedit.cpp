@@ -70,9 +70,10 @@ void StrLineEdit::setFocus() { m_lineEdit->setFocus(); }
 void StrLineEdit::setReadOnly(bool m) { m_lineEdit->setReadOnly(m); }
 
 const QVariant StrLineEdit::value() {
-  QRegExp reg("[\\n\\r]+");
+  QRegExp reg("[\\n\\r\\t\\']+");
   QString buffer(m_lineEdit->text().trimmed());
   buffer = buffer.replace(reg, "");
+  buffer = buffer.trimmed();
   return QVariant(buffer);
 }
 
@@ -116,8 +117,8 @@ void StrLineEdit::loadStorageKeywords() {
   // Nur wenn Autovervollständigen an ist, einschalten!
   m_lineEdit->setClearButtonEnabled(true);
 
-  QString select("SELECT DISTINCT c_name FROM extern_categories");
-  select.append(" WHERE c_name IS NOT NULL ORDER BY c_name ASC;");
+  QString select("SELECT ci_name FROM categories_intern");
+  select.append(" WHERE ci_name IS NOT NULL ORDER BY ci_name ASC;");
 
   QStringList list;
   QSqlQuery q = m_sql->query(select);
@@ -162,7 +163,10 @@ void StrLineEdit::loadDataset(const QString &key, StrLineEdit::QType type) {
         list << q.value(0).toString();
     }
   } else {
-    qDebug() << Q_FUNC_INFO << m_sql->lastError();
+    if (!m_sql->lastError().isEmpty())
+      qDebug() << Q_FUNC_INFO << m_sql->lastError();
+
+    return;
   }
 
   // qDebug() << Q_FUNC_INFO << list.count();
@@ -191,9 +195,7 @@ bool StrLineEdit::isValid() {
   return true;
 }
 
-void StrLineEdit::setInfo(const QString &info) {
-  p_info = info;
-}
+void StrLineEdit::setInfo(const QString &info) { p_info = info; }
 
 const QString StrLineEdit::info() { return p_info; }
 

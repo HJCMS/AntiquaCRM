@@ -935,6 +935,29 @@
     </message>
 </context>
 <context>
+    <name>CategoryEdit</name>
+    <message>
+        <location filename="../custom/categoryedit/categoryedit.cpp" line="+13"/>
+        <source>Edit Category Views</source>
+        <translation>Bearbeite Kategorie Ansichten</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>You can use the mouse to drag and drop keywords and categories into this area.</source>
+        <translation>In diesem Bereich können sie Stichworte und Kategorien mit der Maus per Drag und Drop hineinziehen.</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Storage Categories</source>
+        <translation>Lager Kategorien</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Company Keywords</source>
+        <translation>Unternehmens Schlüsselwörter</translation>
+    </message>
+</context>
+<context>
     <name>CategorySubject</name>
     <message>
         <location filename="../custom/utils/categorysubject.cpp" line="+56"/>
@@ -972,14 +995,59 @@
         <translation>Ein Datenbankfehler ist aufgetreten.</translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+70"/>
         <source>In this area, the categories are defined which are permanently assigned by your service provider. Ultimately, it is decided here in which category your book is for sale.</source>
         <translation>In Diesem Bereich werden die Kategorien definiert welche von ihrem Dienstleister fest vergeben sind. Letztentlich wird hier entschieden in welcher Kategorie ihr Buch zum Verkauf steht.</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+67"/>
         <source>a valid Provider Category is required!</source>
         <translation>Eine gültige Dienstleister Kategorie muss angegeben werden!</translation>
+    </message>
+</context>
+<context>
+    <name>CategoryTree</name>
+    <message>
+        <location filename="../custom/categoryedit/categorytree.cpp" line="+18"/>
+        <source>Provider Categories</source>
+        <translation>Dienstleister Kategorien</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Display</source>
+        <translation>Anzeigen</translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>Keyword</source>
+        <translation>Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Toggle Display</source>
+        <translation>Anzeigen/Ausblenden</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Remove keyword</source>
+        <translation>Schlüsselwörter entfernen</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>Main category</source>
+        <translation>Hauptkategorie</translation>
+    </message>
+    <message>
+        <location line="-91"/>
+        <location line="+106"/>
+        <source>Yes</source>
+        <translation>Ja</translation>
+    </message>
+    <message>
+        <location line="-106"/>
+        <location line="+106"/>
+        <source>No</source>
+        <translation>Nein</translation>
     </message>
 </context>
 <context>
@@ -2834,7 +2902,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+82"/>
+        <location filename="../mwindow.cpp" line="+83"/>
         <source>Application</source>
         <translation>Programm</translation>
     </message>
@@ -2870,7 +2938,7 @@
         <translation>Lager Positionen</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+26"/>
         <source>Save request</source>
         <translation>Speichern</translation>
     </message>
@@ -2880,18 +2948,18 @@
         <translation>&lt;b&gt;Sie haben nicht gespeicherte Änderungen.&lt;/b&gt;&lt;p&gt;Möchten sie wirklich die Anwendung schließen?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+70"/>
         <source>SQL Server Error</source>
         <translation>SQL Serverfehler</translation>
     </message>
     <message>
-        <location line="-104"/>
-        <location line="+117"/>
+        <location line="-115"/>
+        <location line="+128"/>
         <source>Fullscreen</source>
         <translation>Vollansicht</translation>
     </message>
     <message>
-        <location line="-173"/>
+        <location line="-184"/>
         <source>Prints</source>
         <translation>Drucke und Stiche</translation>
     </message>
@@ -2931,7 +2999,12 @@
         <translation>Umschreibung und Bindung</translation>
     </message>
     <message>
-        <location line="+89"/>
+        <location line="+4"/>
+        <source>Edit Catgerories</source>
+        <translation>Bearbeite Kategorien</translation>
+    </message>
+    <message>
+        <location line="+96"/>
         <source>Disable Fullscreen</source>
         <translation>Vollansicht beenden</translation>
     </message>
@@ -4896,12 +4969,12 @@
         <translation>Unbekannt</translation>
     </message>
     <message>
-        <location line="+161"/>
+        <location line="+165"/>
         <source>Max allowed length</source>
         <translation>Maximal erlaubte Zeichenlänge</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+20"/>
         <source>The field</source>
         <translation>Das Feld</translation>
     </message>

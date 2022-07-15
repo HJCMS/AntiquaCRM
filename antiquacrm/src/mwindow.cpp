@@ -3,6 +3,7 @@
 
 /* Project */
 #include "mwindow.h"
+#include "categoryedit.h"
 #include "configdialog.h"
 #include "deliverservicedialog.h"
 #include "dockbarwidget.h"
@@ -155,6 +156,10 @@ void MWindow::setupActions() {
   QAction *a_bdt = m_tablesMenu->addAction(tr("Designation and Binding"));
   a_bdt->setIcon(myIcon("spreadsheet"));
   connect(a_bdt, SIGNAL(triggered(bool)), this, SLOT(openDesignation(bool)));
+
+  QAction *a_ecs = m_tablesMenu->addAction(tr("Edit Catgerories"));
+  a_ecs->setIcon(myIcon("spreadsheet"));
+  connect(a_ecs, SIGNAL(triggered(bool)), this, SLOT(openCategoryEdit(bool)));
 }
 
 void MWindow::closeWindow() {
@@ -174,7 +179,6 @@ void MWindow::openEditAutoFill(CompleterDialog::Filter t) {
   CompleterDialog *m_dialog = new CompleterDialog(this, t);
   m_dialog->setObjectName("completer_dialog");
   if (m_dialog->exec()) {
-    qInfo("Editing finished");
     m_dialog->deleteLater();
   }
 }
@@ -182,7 +186,6 @@ void MWindow::openEditAutoFill(CompleterDialog::Filter t) {
 void MWindow::openStorageLocation(bool) {
   StorageLocation *d = new StorageLocation(this);
   if (d->exec()) {
-    qInfo("Editing finished");
     d->deleteLater();
   }
 }
@@ -190,7 +193,6 @@ void MWindow::openStorageLocation(bool) {
 void MWindow::openDeliveryService(bool) {
   DeliverServiceDialog *d = new DeliverServiceDialog(this);
   if (d->exec()) {
-    qInfo("Editing finished");
     d->deleteLater();
   }
 }
@@ -204,11 +206,18 @@ void MWindow::openDesignation(bool) {
 }
 
 void MWindow::openFileDialog(bool) {
-  FileDialog *m_dialog = new FileDialog(this);
-  m_dialog->setObjectName("m_file_dialog");
-  if (m_dialog->exec()) {
-    qInfo("Filedialog finished");
-    // m_dialog->selectedFiles();
+  FileDialog *d = new FileDialog(this);
+  d->setObjectName("m_file_dialog");
+  if (d->exec()) {
+    d->deleteLater();
+  }
+}
+
+void MWindow::openCategoryEdit(bool) {
+  CategoryEdit *d = new CategoryEdit(this);
+  d->setObjectName("category_edit");
+  if (d->exec()) {
+    d->deleteLater();
   }
 }
 
@@ -216,8 +225,11 @@ void MWindow::openFileDialog(bool) {
  * @brief Öffne das Konfigurationen Dialog Fenster
  */
 void MWindow::openConfiguration(bool) {
-  ConfigDialog *m_dialog = new ConfigDialog(this);
-  m_dialog->exec();
+  ConfigDialog *d = new ConfigDialog(this);
+  d->setObjectName("configuration_dialog");
+  if (d->exec()) {
+    d->deleteLater();
+  }
 }
 
 void MWindow::sqlErrorMessageBox(const QString &err) {

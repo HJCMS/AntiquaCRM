@@ -2,11 +2,158 @@
 // vim: set fileencoding=utf-8
 
 #include "categorytree.h"
+#include "myicontheme.h"
 
-#include <QtCore>
-#include <QtWidgets>
+#include <QAction>
+#include <QDebug>
+#include <QDrag>
+#include <QHeaderView>
+#include <QMenu>
+#include <QMimeData>
 
-CategoryTree::CategoryTree(QWidget *parent) : QTreeWidget{parent}
-{
+CategoryTree::CategoryTree(QWidget *parent) : QTreeWidget{parent} {
   setObjectName("category_tree");
+  setAcceptDrops(true);
+  setColumnCount(2);
+  QStringList titles(tr("Provider Categories"));
+  titles << tr("Display");
+  setHeaderLabels(titles);
+
+  setAlternatingRowColors(true);
+  setExpandsOnDoubleClick(true);
+
+  QHeaderView *m_header = header();
+  m_header->setSectionResizeMode(QHeaderView::ResizeToContents);
+  setHeader(m_header);
+}
+
+QTreeWidgetItem *CategoryTree::findParent(int id) {
+  for (int i = 0; i < topLevelItemCount(); i++) {
+    QTreeWidgetItem *twi = topLevelItem(i);
+    if (twi->data(0, Qt::UserRole).toInt() == id)
+      return twi;
+  }
+  return nullptr;
+}
+
+const QIcon CategoryTree::setIcon(bool b) const {
+  return (b) ? myIcon("button_ok") : myIcon("button_cancel");
+}
+
+void CategoryTree::toggleActivation(bool) {
+  QTreeWidgetItem *item = currentItem();
+  bool current = item->data(1, Qt::UserRole).toBool();
+  bool active = (current) ? false : true;
+  item->setData(0, Qt::DecorationRole, setIcon(active));
+  item->setData(1, Qt::DisplayRole, (active) ? tr("Yes") : tr("No"));
+  item->setData(1, Qt::UserRole, active);
+  update();
+}
+
+void CategoryTree::removeKeyword(bool) {
+  QTreeWidgetItem *item = currentItem();
+  QTreeWidgetItem *parent = item->parent();
+  if (item != nullptr && parent != nullptr)
+    parent->removeChild(item);
+}
+
+bool CategoryTree::addKeywordItem(QTreeWidgetItem *parent,
+                                  const QString &name) {
+  if (parent == nullptr)
+    return false;
+
+  QTreeWidgetItem *item =
+      new QTreeWidgetItem(parent, QTreeWidgetItem::UserType);
+  item->setChildIndicatorPolicy(QTreeWidgetItem::DontShowIndicator);
+  item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+  item->setText(0, name);
+  item->setData(0, Qt::DecorationRole, myIcon("group"));
+  item->setData(1, Qt::DisplayRole, tr("Keyword"));
+  item->setData(1, Qt::UserRole, "keyword");
+  return true;
+}
+
+void CategoryTree::contextMenuEvent(QContextMenuEvent *event) {
+  QModelIndex index = indexAt(event->pos());
+  if (index.isValid() && (index.flags() & Qt::ItemIsSelectable)) {
+    QMenu *m = new QMenu(this);
+
+    bool keyword = (index.parent().flags() & Qt::ItemIsDropEnabled);
+
+    QAction *ac_toggle = m->addAction(tr("Toggle Display"));
+    ac_toggle->setEnabled((!keyword));
+    connect(ac_toggle, SIGNAL(triggered(bool)), this,
+            SLOT(toggleActivation(bool)));
+
+    QAction *ac_remove = m->addAction(tr("Remove keyword"));
+    ac_remove->setEnabled(keyword);
+    connect(ac_remove, SIGNAL(triggered(bool)), this,
+            SLOT(removeKeyword(bool)));
+
+    m->exec(event->globalPos());
+    delete m;
+  }
+}
+
+void CategoryTree::dragEnterEvent(QDragEnterEvent *event) {
+  if (event->mimeData()->hasText()) {
+    event->setAccepted(true);
+  } else {
+    event->setAccepted(false);
+  }
+}
+
+void CategoryTree::dragMoveEvent(QDragMoveEvent *event) {
+  if (event->mimeData()->hasText()) {
+    event->setAccepted(true);
+  } else {
+    event->setAccepted(false);
+  }
+}
+
+void CategoryTree::dropEvent(QDropEvent *event) {
+  if (event->mimeData()->hasText()) {
+    const QMimeData *mime = event->mimeData();
+    QPoint position = event->pos();
+    QModelIndex index = indexAt(position);
+    if (index.isValid() && (index.flags() & Qt::ItemIsDropEnabled)) {
+      QTreeWidgetItem *item = itemAt(position);
+      if (addKeywordItem(item, mime->text())) {
+        item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
+        expandItem(item);
+        update();
+      }
+    } else {
+      event->setAccepted(false);
+    }
+  } else {
+    event->setAccepted(false);
+  }
+}
+
+QTreeWidgetItem *CategoryTree::addTopLevel(const QString &name) {
+  QTreeWidgetItem *item = new QTreeWidgetItem(this);
+  item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
+  item->setFlags(Qt::ItemIsEnabled);
+  item->setText(0, name);
+  item->setData(1, Qt::DisplayRole, tr("Main category"));
+  item->setData(1, Qt::UserRole, true);
+  return item;
+}
+
+QTreeWidgetItem *CategoryTree::addSubLevel(const QString &name, int bind,
+                                           bool active) {
+  QTreeWidgetItem *parent = findParent(bind);
+  if (parent != nullptr) {
+    QTreeWidgetItem *item = new QTreeWidgetItem(parent);
+    item->setChildIndicatorPolicy(QTreeWidgetItem::DontShowIndicator);
+    item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsDropEnabled |
+                   Qt::ItemIsSelectable);
+    item->setText(0, name);
+    item->setData(0, Qt::DecorationRole, setIcon(active));
+    item->setData(1, Qt::DisplayRole, (active) ? tr("Yes") : tr("No"));
+    item->setData(1, Qt::UserRole, active);
+    return item;
+  }
+  return nullptr;
 }

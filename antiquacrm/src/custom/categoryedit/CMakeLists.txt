@@ -18,11 +18,13 @@ SET (subproject_LINKER
 SET (subproject_SOURCES
   categoryedit.cpp
   categorytree.cpp
+  draglistwidget.cpp
 )
 
 SET (subproject_HEADERS
   categoryedit.h
   categorytree.h
+  draglistwidget.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC
