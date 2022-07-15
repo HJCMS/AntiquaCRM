@@ -4,6 +4,7 @@
 SET (xml_FILES
   ib_publisher_de.xml
   eu_countries.xml
+  categories_abebooks.xml
 )
 
 SET (homebase_FILES
