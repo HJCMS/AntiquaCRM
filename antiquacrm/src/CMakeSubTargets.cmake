@@ -15,6 +15,8 @@ SET (PROJECT_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/assistant
  ${CMAKE_CURRENT_BINARY_DIR}/custom/autofill
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/autofill
+ ${CMAKE_CURRENT_BINARY_DIR}/custom/categoryedit
+ ${CMAKE_CURRENT_SOURCE_DIR}/custom/categoryedit
  ${CMAKE_CURRENT_BINARY_DIR}/custom/completer
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/completer
  ${CMAKE_CURRENT_BINARY_DIR}/custom/deliverservice
@@ -86,6 +88,7 @@ Autofill
 Printing
 StorageLocation
 DeliverService
+CategoryEdit
 InventoryBooks
 InventoryPrints
 InventoryOrders
