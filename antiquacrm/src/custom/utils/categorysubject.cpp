@@ -189,8 +189,9 @@ void CategorySubject::syncronizeClicked() {
   int found = -1;
   if (q.size() > 0) {
     while (q.next()) {
+      qDebug() << Q_FUNC_INFO << q.value("binding") <<  q.value("category");
       found = q.value("binding").toInt();
-      break;
+      // break;
     }
   } else {
     if (!m_sql->lastError().isEmpty()) {
@@ -243,23 +244,19 @@ void CategorySubject::loadDataset() { setMainCategories(); }
 const QVariant CategorySubject::value() {
   QJsonObject obj;
   int mIndex = m_boxMain->currentIndex();
-  QString main = m_boxMain->itemData(mIndex, Qt::DisplayRole).toString();
-  int mId = m_boxMain->itemData(mIndex, Qt::UserRole).toInt();
-  obj.insert("main", QJsonValue(main));
-  obj.insert("main_id", QJsonValue(mId));
+  QString mainCategory = m_boxMain->currentText().trimmed();
+  obj.insert("main", QJsonValue(mainCategory));
   int sIndex = m_boxMain->currentIndex();
   if (sIndex == -1) {
     obj.insert("sub", QJsonValue(QString()));
-    obj.insert("id", 0);
   } else {
-    QString sub = m_boxSub->currentText().trimmed();
-    obj.insert("sub", QJsonValue(sub));
-    int id = m_boxSub->itemData(sIndex, Qt::UserRole).toInt();
-    obj.insert("id", id);
+    QString subCategory = m_boxSub->currentText().trimmed();
+    obj.insert("sub", QJsonValue(subCategory));
   }
   qDebug() << Q_FUNC_INFO << obj;
 
-  return m_boxMain->itemData(m_boxMain->currentIndex(), Qt::UserRole);
+  int mainId = m_boxMain->itemData(mIndex, Qt::UserRole).toInt();
+  return mainId;
 }
 
 bool CategorySubject::isValid() {
