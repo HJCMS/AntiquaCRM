@@ -956,6 +956,18 @@
         <source>Company Keywords</source>
         <translation>Unternehmens Schlüsselwörter</translation>
     </message>
+    <message>
+        <location line="+115"/>
+        <location line="+13"/>
+        <source>An error has occurred!</source>
+        <translation>Ein Fehler ist aufgetreten!</translation>
+    </message>
+    <message>
+        <location line="-11"/>
+        <location line="+13"/>
+        <source>Database Update successfully!</source>
+        <translation>Datanbank-Update erfolgreich!</translation>
+    </message>
 </context>
 <context>
     <name>CategorySubject</name>
@@ -1018,12 +1030,12 @@
         <translation>Anzeigen</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+73"/>
         <source>Keyword</source>
         <translation>Schlüsselwort</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+10"/>
         <source>Toggle Display</source>
         <translation>Anzeigen/Ausblenden</translation>
     </message>
@@ -1033,19 +1045,25 @@
         <translation>Schlüsselwörter entfernen</translation>
     </message>
     <message>
+        <location line="+6"/>
+        <source>Disable all in this Section</source>
+        <translation>Deaktiviere diesen Bereich</translation>
+    </message>
+    <message>
         <location line="+51"/>
         <source>Main category</source>
         <translation>Hauptkategorie</translation>
     </message>
     <message>
-        <location line="-91"/>
-        <location line="+106"/>
+        <location line="-98"/>
+        <location line="+113"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
     <message>
-        <location line="-106"/>
-        <location line="+106"/>
+        <location line="-129"/>
+        <location line="+16"/>
+        <location line="+113"/>
         <source>No</source>
         <translation>Nein</translation>
     </message>

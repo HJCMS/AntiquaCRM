@@ -40,6 +40,24 @@ const QIcon CategoryTree::setIcon(bool b) const {
   return (b) ? myIcon("button_ok") : myIcon("button_cancel");
 }
 
+void CategoryTree::toggleSubTree(bool) {
+  QTreeWidgetItem *parent = currentItem()->parent();
+  QStringList list;
+  if (parent != nullptr) {
+    for (int i = 0; i < parent->childCount(); i++) {
+      QTreeWidgetItem *item = parent->child(i);
+      item->setData(0, Qt::DecorationRole, setIcon(false));
+      item->setData(1, Qt::DisplayRole, tr("No"));
+      item->setData(1, Qt::UserRole, false);
+      qint64 id = item->data(0, Qt::UserRole).toInt();
+      list.append(QString::number(id));
+    }
+  }
+  update();
+  if (list.count() > 0)
+    emit sendDisableUsageList(list);
+}
+
 void CategoryTree::toggleActivation(bool) {
   QTreeWidgetItem *item = currentItem();
   bool current = item->data(1, Qt::UserRole).toBool();
@@ -48,6 +66,9 @@ void CategoryTree::toggleActivation(bool) {
   item->setData(1, Qt::DisplayRole, (active) ? tr("Yes") : tr("No"));
   item->setData(1, Qt::UserRole, active);
   update();
+  qint64 ce_id = item->data(0, Qt::UserRole).toInt();
+  if (ce_id > 0)
+    emit sendCompanyUsage(ce_id, active);
 }
 
 void CategoryTree::removeKeyword(bool) {
@@ -77,18 +98,22 @@ void CategoryTree::contextMenuEvent(QContextMenuEvent *event) {
   QModelIndex index = indexAt(event->pos());
   if (index.isValid() && (index.flags() & Qt::ItemIsSelectable)) {
     QMenu *m = new QMenu(this);
-
     bool keyword = (index.parent().flags() & Qt::ItemIsDropEnabled);
-
     QAction *ac_toggle = m->addAction(tr("Toggle Display"));
     ac_toggle->setEnabled((!keyword));
+    ac_toggle->setIcon(myIcon("db_update"));
     connect(ac_toggle, SIGNAL(triggered(bool)), this,
             SLOT(toggleActivation(bool)));
-
     QAction *ac_remove = m->addAction(tr("Remove keyword"));
     ac_remove->setEnabled(keyword);
+    ac_remove->setIcon(myIcon("db_remove"));
     connect(ac_remove, SIGNAL(triggered(bool)), this,
             SLOT(removeKeyword(bool)));
+
+    QAction *ac_toggleAll = m->addAction(tr("Disable all in this Section"));
+    ac_toggleAll->setIcon(myIcon("db_comit"));
+    connect(ac_toggleAll, SIGNAL(triggered(bool)), this,
+            SLOT(toggleSubTree(bool)));
 
     m->exec(event->globalPos());
     delete m;

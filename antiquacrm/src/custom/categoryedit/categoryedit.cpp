@@ -53,6 +53,10 @@ CategoryEdit::CategoryEdit(QWidget *parent) : QDialog{parent} {
 
   connect(m_btnBox, SIGNAL(accepted()), this, SLOT(accept()));
   connect(m_btnBox, SIGNAL(rejected()), this, SLOT(reject()));
+  connect(m_tree, SIGNAL(sendCompanyUsage(int, bool)), this,
+          SLOT(updateCompanyUsage(int, bool)));
+  connect(m_tree, SIGNAL(sendDisableUsageList(const QStringList &)), this,
+          SLOT(disableCompanyUsageList(const QStringList &)));
 }
 
 void CategoryEdit::initCategories() {
@@ -75,7 +79,7 @@ void CategoryEdit::initCategories() {
    */
   sql = QString("SELECT * FROM categories_extern WHERE");
   sql.append(" ce_depth='1' AND ");
-  sql.append("ce_provider_name!='Internal' ORDER BY ce_id;");
+  sql.append("ce_provider_name!='Internal' ORDER BY ce_name;");
   q = m_sql->query(sql);
   if (q.size() > 0) {
     while (q.next()) {
@@ -132,6 +136,32 @@ void CategoryEdit::initKeywords() {
   if (words.size() > 1) {
     words.sort(Qt::CaseSensitive);
     m_storageList->addItems(words);
+  }
+}
+
+void CategoryEdit::updateCompanyUsage(int categoryId, bool usage) {
+  QString sql("UPDATE categories_extern SET ce_company_usage=");
+  sql.append((usage) ? "true" : "false");
+  sql.append(" WHERE ce_id=" + QString::number(categoryId) + ";");
+  m_sql->query(sql);
+  if (!m_sql->lastError().isEmpty()) {
+    qDebug() << m_sql->lastError() << sql;
+    m_statusBar->showMessage(tr("An error has occurred!"), 6000);
+  } else {
+    m_statusBar->showMessage(tr("Database Update successfully!"), 6000);
+  }
+}
+
+void CategoryEdit::disableCompanyUsageList(const QStringList &ids) {
+  QString idList = ids.join(",");
+  QString sql("UPDATE categories_extern SET ce_company_usage=");
+  sql.append("false WHERE ce_id IN (" + idList + ");");
+  m_sql->query(sql);
+  if (!m_sql->lastError().isEmpty()) {
+    qDebug() << m_sql->lastError() << sql;
+    m_statusBar->showMessage(tr("An error has occurred!"), 6000);
+  } else {
+    m_statusBar->showMessage(tr("Database Update successfully!"), 6000);
   }
 }
 

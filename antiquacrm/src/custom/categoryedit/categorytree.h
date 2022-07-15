@@ -23,6 +23,7 @@ private:
   const QIcon setIcon(bool b = true) const;
 
 private Q_SLOTS:
+  void toggleSubTree(bool);
   void toggleActivation(bool);
   void removeKeyword(bool);
   bool addKeywordItem(QTreeWidgetItem *parent, const QString &name);
@@ -32,6 +33,10 @@ protected:
   void dragEnterEvent(QDragEnterEvent *event) override;
   void dragMoveEvent(QDragMoveEvent *event) override;
   void dropEvent(QDropEvent *event) override;
+
+Q_SIGNALS:
+  void sendCompanyUsage(int categoryId, bool active);
+  void sendDisableUsageList(const QStringList &ids);
 
 public:
   explicit CategoryTree(QWidget *parent = nullptr);

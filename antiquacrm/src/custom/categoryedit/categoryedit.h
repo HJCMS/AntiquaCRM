@@ -35,6 +35,10 @@ private:
   void initCategories();
   void initKeywords();
 
+private Q_SLOTS:
+  void updateCompanyUsage(int categoryId, bool usage);
+  void disableCompanyUsageList(const QStringList &ids);
+
 public:
   explicit CategoryEdit(QWidget *parent = nullptr);
   int exec() override;

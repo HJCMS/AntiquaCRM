@@ -956,6 +956,18 @@
         <source>Company Keywords</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+115"/>
+        <location line="+13"/>
+        <source>An error has occurred!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-11"/>
+        <location line="+13"/>
+        <source>Database Update successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CategorySubject</name>
@@ -1018,12 +1030,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+73"/>
         <source>Keyword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+10"/>
         <source>Toggle Display</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1033,19 +1045,25 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+6"/>
+        <source>Disable all in this Section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+51"/>
         <source>Main category</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-91"/>
-        <location line="+106"/>
+        <location line="-98"/>
+        <location line="+113"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-106"/>
-        <location line="+106"/>
+        <location line="-129"/>
+        <location line="+16"/>
+        <location line="+113"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
