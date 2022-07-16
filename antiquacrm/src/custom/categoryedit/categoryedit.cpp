@@ -43,7 +43,7 @@ CategoryEdit::CategoryEdit(QWidget *parent) : QDialog{parent} {
   layout->addWidget(m_splitter);
 
   m_btnBox = new QDialogButtonBox(this);
-  m_btnBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+  m_btnBox->setStandardButtons(QDialogButtonBox::Close);
   QPushButton *m_toggleBtn = new QPushButton(m_btnBox);
   m_toggleBtn->setText(tr("Treeview"));
   m_toggleBtn->setToolTip(tr("Open/close Treeview"));
@@ -61,7 +61,6 @@ CategoryEdit::CategoryEdit(QWidget *parent) : QDialog{parent} {
   layout->setStretch(1, 1); // Splitter row
   setLayout(layout);
 
-  connect(m_btnBox, SIGNAL(accepted()), this, SLOT(accept()));
   connect(m_btnBox, SIGNAL(rejected()), this, SLOT(reject()));
   connect(m_saveBtn, SIGNAL(clicked()), this, SLOT(saveCompanyTreeUsage()));
   connect(m_toggleBtn, SIGNAL(clicked()), m_tree, SLOT(toggleTreeView()));

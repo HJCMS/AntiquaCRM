@@ -2,7 +2,9 @@
 // vim: set fileencoding=utf-8
 
 #include "categorytree.h"
+#include "draglabel.h"
 #include "myicontheme.h"
+#include "treekeyworditem.h"
 
 #include <QAction>
 #include <QDebug>
@@ -10,18 +12,21 @@
 #include <QHeaderView>
 #include <QMenu>
 #include <QMimeData>
+#include <QMimeType>
 
 CategoryTree::CategoryTree(QWidget *parent) : QTreeWidget{parent} {
   setObjectName("category_tree");
-  setAcceptDrops(true);
   setColumnCount(2);
   QStringList titles(tr("Provider Categories"));
   titles << tr("Display");
   setHeaderLabels(titles);
-
+  setSelectionMode(QAbstractItemView::SingleSelection);
   setAlternatingRowColors(true);
   setExpandsOnDoubleClick(true);
-
+  setAcceptDrops(true);
+  setDragEnabled(true);
+  setDropIndicatorShown(true);
+  setDragDropMode(QAbstractItemView::InternalMove);
   QHeaderView *m_header = header();
   m_header->setSectionResizeMode(QHeaderView::ResizeToContents);
   setHeader(m_header);
@@ -85,14 +90,8 @@ bool CategoryTree::addKeywordItem(QTreeWidgetItem *parent,
   if (parent == nullptr)
     return false;
 
-  QTreeWidgetItem *item =
-      new QTreeWidgetItem(parent, QTreeWidgetItem::UserType);
-  item->setChildIndicatorPolicy(QTreeWidgetItem::DontShowIndicator);
-  item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+  TreeKeywordItem *item = new TreeKeywordItem(parent);
   item->setText(0, name);
-  item->setData(0, Qt::DecorationRole, myIcon("group"));
-  item->setData(1, Qt::DisplayRole, tr("Keyword"));
-  item->setData(1, Qt::UserRole, "keyword");
   return true;
 }
 
@@ -123,7 +122,9 @@ void CategoryTree::contextMenuEvent(QContextMenuEvent *event) {
 }
 
 void CategoryTree::dragEnterEvent(QDragEnterEvent *event) {
-  if (event->mimeData()->hasText()) {
+  if (event->mimeData()->hasFormat(itemMime)) {
+    event->setAccepted(true);
+  } else if (event->mimeData()->hasText()) {
     event->setAccepted(true);
   } else {
     event->setAccepted(false);
@@ -131,7 +132,9 @@ void CategoryTree::dragEnterEvent(QDragEnterEvent *event) {
 }
 
 void CategoryTree::dragMoveEvent(QDragMoveEvent *event) {
-  if (event->mimeData()->hasText()) {
+  if (event->mimeData()->hasFormat(itemMime)) {
+    event->setAccepted(true);
+  } else if (event->mimeData()->hasText()) {
     event->setAccepted(true);
   } else {
     event->setAccepted(false);
@@ -139,11 +142,14 @@ void CategoryTree::dragMoveEvent(QDragMoveEvent *event) {
 }
 
 void CategoryTree::dropEvent(QDropEvent *event) {
-  if (event->mimeData()->hasText()) {
+  if (event->mimeData()->hasFormat(itemMime)) {
+    event->setAccepted(true);
+  } else if (event->mimeData()->hasText()) {
     const QMimeData *mime = event->mimeData();
     QPoint position = event->pos();
     QModelIndex index = indexAt(position);
     if (index.isValid() && (index.flags() & Qt::ItemIsDropEnabled)) {
+      setDropIndicatorShown(true);
       QTreeWidgetItem *item = itemAt(position);
       QString text = mime->text();
       if (addKeywordItem(item, text)) {
@@ -154,6 +160,54 @@ void CategoryTree::dropEvent(QDropEvent *event) {
       }
     } else {
       event->setAccepted(false);
+    }
+  } else {
+    event->setAccepted(false);
+  }
+}
+
+void CategoryTree::mousePressEvent(QMouseEvent *event) {
+  QTreeWidget::mousePressEvent(event);
+  QModelIndex index = indexAt(event->pos());
+  if (!index.isValid()) {
+    event->setAccepted(false);
+    return;
+  }
+
+  if (index.flags() & Qt::ItemIsDragEnabled) {
+    event->setAccepted(true);
+    QTreeWidgetItem *item = itemAt(event->pos());
+    if (item == nullptr)
+      return;
+
+    QPoint itemView = event->pos() - visualItemRect(item).topLeft();
+
+    setDragEnabled(true);
+
+    QByteArray itemData;
+    QDataStream dataStream(&itemData, QIODevice::WriteOnly);
+    dataStream << item;
+
+    QMimeData *m_mimeData = new QMimeData;
+    m_mimeData->setData(itemMime, itemData);
+    m_mimeData->setText(item->text(0));
+
+    m_dragLabel = new DragLabel(m_mimeData->text(), this);
+
+    QDrag *m_drag = new QDrag(this);
+    m_drag->setMimeData(m_mimeData);
+    m_drag->setPixmap(m_dragLabel->pixmap(Qt::ReturnByValue));
+    m_drag->setHotSpot(itemView);
+    m_dragLabel->hide();
+
+    Qt::DropActions da =
+        m_drag->exec(Qt::MoveAction | Qt::CopyAction, Qt::MoveAction);
+    if (da == Qt::MoveAction) {
+      m_dragLabel->hide();
+      qDebug() << da;
+    } else {
+      m_dragLabel->show();
+      qDebug() << da;
     }
   } else {
     event->setAccepted(false);

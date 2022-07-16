@@ -9,9 +9,13 @@
 #include <QIcon>
 #include <QMouseEvent>
 #include <QObject>
+#include <QLabel>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QWidget>
+
+class DragLabel;
+class TreeKeywordItem;
 
 class CategoryTree : public QTreeWidget {
   Q_OBJECT
@@ -20,6 +24,8 @@ class CategoryTree : public QTreeWidget {
 
 private:
   bool p_expandet = false;
+  DragLabel *m_dragLabel;
+  QByteArray itemMime = QByteArray("application/x-qabstractitemmodeldatalist");
   QTreeWidgetItem *findParent(int id);
   const QIcon setIcon(bool b = true) const;
 
@@ -34,6 +40,7 @@ protected:
   void dragEnterEvent(QDragEnterEvent *event) override;
   void dragMoveEvent(QDragMoveEvent *event) override;
   void dropEvent(QDropEvent *event) override;
+  void mousePressEvent(QMouseEvent *event) override;
 
 Q_SIGNALS:
   void sendListItemHidden(const QString &name);
