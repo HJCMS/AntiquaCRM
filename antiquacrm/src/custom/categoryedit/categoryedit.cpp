@@ -4,9 +4,11 @@
 #include "categoryedit.h"
 #include "categorytree.h"
 #include "draglistwidget.h"
+#include "myicontheme.h"
 
-#include <QtCore>
-#include <QtWidgets>
+#include <QDebug>
+#include <QLabel>
+#include <QVBoxLayout>
 
 CategoryEdit::CategoryEdit(QWidget *parent) : QDialog{parent} {
   setObjectName("category_edit");
@@ -42,6 +44,14 @@ CategoryEdit::CategoryEdit(QWidget *parent) : QDialog{parent} {
 
   m_btnBox = new QDialogButtonBox(this);
   m_btnBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+  QPushButton *m_toggleBtn = new QPushButton(m_btnBox);
+  m_toggleBtn->setText(tr("Treeview"));
+  m_toggleBtn->setToolTip(tr("Open/close Treeview"));
+  m_toggleBtn->setIcon(myIcon("view_choose"));
+  m_btnBox->addButton(m_toggleBtn, QDialogButtonBox::ActionRole);
+  m_saveBtn = m_btnBox->addButton(QDialogButtonBox::Apply);
+  m_saveBtn->setText(tr("Save"));
+  m_saveBtn->setIcon(myIcon("filesave"));
   layout->addWidget(m_btnBox);
 
   m_statusBar = new QStatusBar(this);
@@ -53,13 +63,23 @@ CategoryEdit::CategoryEdit(QWidget *parent) : QDialog{parent} {
 
   connect(m_btnBox, SIGNAL(accepted()), this, SLOT(accept()));
   connect(m_btnBox, SIGNAL(rejected()), this, SLOT(reject()));
+  connect(m_saveBtn, SIGNAL(clicked()), this, SLOT(saveCompanyTreeUsage()));
+  connect(m_toggleBtn, SIGNAL(clicked()), m_tree, SLOT(toggleTreeView()));
   connect(m_tree, SIGNAL(sendCompanyUsage(int, bool)), this,
           SLOT(updateCompanyUsage(int, bool)));
   connect(m_tree, SIGNAL(sendDisableUsageList(const QStringList &)), this,
           SLOT(disableCompanyUsageList(const QStringList &)));
+  connect(m_tree, SIGNAL(sendListItemHidden(const QString &)), m_storageList,
+          SLOT(setItemHidden(const QString &)));
+  connect(m_tree, SIGNAL(sendListItemHidden(const QString &)), m_keywordsList,
+          SLOT(setItemHidden(const QString &)));
+  connect(m_tree, SIGNAL(sendListItemVisible(const QString &)), m_storageList,
+          SLOT(setItemVisible(const QString &)));
+  connect(m_tree, SIGNAL(sendListItemVisible(const QString &)), m_keywordsList,
+          SLOT(setItemVisible(const QString &)));
 }
 
-void CategoryEdit::initCategories() {
+bool CategoryEdit::initCategories() {
   // Main Categories
   QString sql("SELECT ce_id, ce_name FROM categories_extern");
   sql.append(" WHERE ce_depth='0' AND ");
@@ -72,7 +92,10 @@ void CategoryEdit::initCategories() {
       parent->setData(0, Qt::UserRole, q.value("ce_id").toInt());
     }
   } else {
-    qDebug() << m_sql->lastError();
+    if (!m_sql->lastError().isEmpty()) {
+      qDebug() << m_sql->lastError();
+      return false;
+    }
   }
   /* Sub Categories
    * ce_id ce_depth ce_binding ce_name ce_provider_name ce_company_usage
@@ -95,49 +118,63 @@ void CategoryEdit::initCategories() {
       }
     }
   } else {
-    qDebug() << m_sql->lastError();
+    if (!m_sql->lastError().isEmpty()) {
+      qDebug() << m_sql->lastError();
+      return false;
+    }
   }
+  return true;
 }
 
-void CategoryEdit::initKeywords() {
-  QStringList words;
-  QString sql("SELECT ci_name AS n FROM categories_intern");
-  sql.append(" ORDER BY ci_id;");
+bool CategoryEdit::initKeywords() {
+  QStringList storageKeys;
+  // Storage
+  QString sql("SELECT sl_identifier AS n FROM ref_storage_location");
+  sql.append(" WHERE sl_id>0;");
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
     while (q.next()) {
       QString w = q.value("n").toString();
-      if (!words.contains(w))
-        words.append(w);
+      if (!storageKeys.contains(w))
+        storageKeys.append(w);
     }
   } else {
-    if (!m_sql->lastError().isEmpty())
+    if (!m_sql->lastError().isEmpty()) {
       qDebug() << m_sql->lastError();
+      return false;
+    }
   }
-  if (words.size() > 1) {
-    words.sort(Qt::CaseSensitive);
-    m_keywordsList->addItems(words);
+  if (storageKeys.size() > 1) {
+    storageKeys.sort(Qt::CaseSensitive);
+    m_storageList->addItems(storageKeys);
   }
-  // Storage
-  words.clear();
-  sql = QString("SELECT sl_identifier AS n FROM ref_storage_location");
-  sql.append(" WHERE sl_id>0;");
+
+  QStringList keywordKeys;
+  sql = QString("SELECT ci_name AS n FROM categories_intern");
+  sql.append(" ORDER BY ci_id;");
   q = m_sql->query(sql);
   if (q.size() > 0) {
     while (q.next()) {
       QString w = q.value("n").toString();
-      if (!words.contains(w))
-        words.append(w);
+      if (!keywordKeys.contains(w) && !storageKeys.contains(w))
+        keywordKeys.append(w);
     }
   } else {
-    if (!m_sql->lastError().isEmpty())
+    if (!m_sql->lastError().isEmpty()) {
       qDebug() << m_sql->lastError();
+      return false;
+    }
   }
-  if (words.size() > 1) {
-    words.sort(Qt::CaseSensitive);
-    m_storageList->addItems(words);
+  if (keywordKeys.size() > 1) {
+    keywordKeys.sort(Qt::CaseSensitive);
+    m_keywordsList->addItems(keywordKeys);
   }
+  keywordKeys.clear();
+  storageKeys.clear();
+  return true;
 }
+
+void CategoryEdit::saveCompanyTreeUsage() { qDebug() << Q_FUNC_INFO << "TODO"; }
 
 void CategoryEdit::updateCompanyUsage(int categoryId, bool usage) {
   QString sql("UPDATE categories_extern SET ce_company_usage=");
@@ -146,9 +183,9 @@ void CategoryEdit::updateCompanyUsage(int categoryId, bool usage) {
   m_sql->query(sql);
   if (!m_sql->lastError().isEmpty()) {
     qDebug() << m_sql->lastError() << sql;
-    m_statusBar->showMessage(tr("An error has occurred!"), 6000);
+    m_statusBar->showMessage(tr("An error has occurred!"), timeout);
   } else {
-    m_statusBar->showMessage(tr("Database Update successfully!"), 6000);
+    m_statusBar->showMessage(tr("Database Update successfully!"), timeout);
   }
 }
 
@@ -159,15 +196,15 @@ void CategoryEdit::disableCompanyUsageList(const QStringList &ids) {
   m_sql->query(sql);
   if (!m_sql->lastError().isEmpty()) {
     qDebug() << m_sql->lastError() << sql;
-    m_statusBar->showMessage(tr("An error has occurred!"), 6000);
+    m_statusBar->showMessage(tr("An error has occurred!"), timeout);
   } else {
-    m_statusBar->showMessage(tr("Database Update successfully!"), 6000);
+    m_statusBar->showMessage(tr("Database Update successfully!"), timeout);
   }
 }
 
 int CategoryEdit::exec() {
-  initCategories();
-  initKeywords();
+  if (initCategories())
+    initKeywords();
 
   return QDialog::exec();
 }

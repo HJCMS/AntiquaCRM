@@ -32,10 +32,28 @@ void DragListWidget::mousePressEvent(QMouseEvent *event) {
     QMimeData *m_mimeData = new QMimeData;
     m_mimeData->setText(text);
 
-    QDrag *drag = new QDrag(this);
-    drag->setMimeData(m_mimeData);
-    drag->exec(Qt::MoveAction | Qt::CopyAction, Qt::CopyAction);
+    QDrag *m_drag = new QDrag(this);
+    m_drag->setMimeData(m_mimeData);
+    m_drag->exec(Qt::CopyAction);
   } else {
     event->setAccepted(false);
+  }
+}
+
+void DragListWidget::setItemHidden(const QString &name) {
+  for(int r = 0; r < count(); r++) {
+    if(item(r)->text() == name) {
+      item(r)->setHidden(true);
+      break;
+    }
+  }
+}
+
+void DragListWidget::setItemVisible(const QString &name) {
+  for(int r = 0; r < count(); r++) {
+    if(item(r)->text() == name) {
+      item(r)->setHidden(false);
+      break;
+    }
   }
 }

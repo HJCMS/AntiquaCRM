@@ -19,6 +19,10 @@ class DragListWidget : public QListWidget {
 protected:
   void mousePressEvent(QMouseEvent *event) override;
 
+public Q_SLOTS:
+  void setItemHidden(const QString &name);
+  void setItemVisible(const QString &name);
+
 public:
   explicit DragListWidget(QWidget *parent = nullptr);
 };

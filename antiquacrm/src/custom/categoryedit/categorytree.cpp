@@ -74,8 +74,10 @@ void CategoryTree::toggleActivation(bool) {
 void CategoryTree::removeKeyword(bool) {
   QTreeWidgetItem *item = currentItem();
   QTreeWidgetItem *parent = item->parent();
-  if (item != nullptr && parent != nullptr)
+  if (item != nullptr && parent != nullptr) {
+    emit sendListItemVisible(item->text(0));
     parent->removeChild(item);
+  }
 }
 
 bool CategoryTree::addKeywordItem(QTreeWidgetItem *parent,
@@ -143,16 +145,28 @@ void CategoryTree::dropEvent(QDropEvent *event) {
     QModelIndex index = indexAt(position);
     if (index.isValid() && (index.flags() & Qt::ItemIsDropEnabled)) {
       QTreeWidgetItem *item = itemAt(position);
-      if (addKeywordItem(item, mime->text())) {
+      QString text = mime->text();
+      if (addKeywordItem(item, text)) {
         item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
         expandItem(item);
         update();
+        emit sendListItemHidden(text);
       }
     } else {
       event->setAccepted(false);
     }
   } else {
     event->setAccepted(false);
+  }
+}
+
+void CategoryTree::toggleTreeView() {
+  if (p_expandet) {
+    collapseAll();
+    p_expandet = false;
+  } else {
+    expandAll();
+    p_expandet = true;
   }
 }
 

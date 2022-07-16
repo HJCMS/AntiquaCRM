@@ -937,7 +937,7 @@
 <context>
     <name>CategoryEdit</name>
     <message>
-        <location filename="../custom/categoryedit/categoryedit.cpp" line="+13"/>
+        <location filename="../custom/categoryedit/categoryedit.cpp" line="+15"/>
         <source>Edit Category Views</source>
         <translation>Bearbeite Kategorie Ansichten</translation>
     </message>
@@ -957,7 +957,22 @@
         <translation>Unternehmens Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+12"/>
+        <source>Treeview</source>
+        <translation>Baumansicht</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Open/close Treeview</source>
+        <translation>Öffne/Schließe Baumansicht</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
+        <location line="+135"/>
         <location line="+13"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
@@ -1035,7 +1050,7 @@
         <translation>Anzeigen</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+75"/>
         <source>Keyword</source>
         <translation>Schlüsselwort</translation>
     </message>
@@ -1055,20 +1070,20 @@
         <translation>Deaktiviere diesen Bereich</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+53"/>
         <source>Main category</source>
         <translation>Hauptkategorie</translation>
     </message>
     <message>
-        <location line="-98"/>
-        <location line="+113"/>
+        <location line="-102"/>
+        <location line="+117"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
     <message>
-        <location line="-129"/>
+        <location line="-133"/>
         <location line="+16"/>
-        <location line="+113"/>
+        <location line="+117"/>
         <source>No</source>
         <translation>Nein</translation>
     </message>

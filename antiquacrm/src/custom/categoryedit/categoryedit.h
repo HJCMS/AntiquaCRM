@@ -9,6 +9,7 @@
 #include <QDialogButtonBox>
 #include <QListWidget>
 #include <QObject>
+#include <QPushButton>
 #include <QSplitter>
 #include <QStatusBar>
 #include <QWidget>
@@ -30,10 +31,15 @@ private:
   DragListWidget *m_storageList;
   DragListWidget *m_keywordsList;
   QDialogButtonBox *m_btnBox;
+  QPushButton *m_saveBtn;
   QStatusBar *m_statusBar;
+  const int timeout = 6000;
 
-  void initCategories();
-  void initKeywords();
+  bool initCategories();
+  bool initKeywords();
+
+private Q_SLOTS:
+  void saveCompanyTreeUsage();
 
 private Q_SLOTS:
   void updateCompanyUsage(int categoryId, bool usage);

@@ -19,6 +19,7 @@ class CategoryTree : public QTreeWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  bool p_expandet = false;
   QTreeWidgetItem *findParent(int id);
   const QIcon setIcon(bool b = true) const;
 
@@ -35,8 +36,13 @@ protected:
   void dropEvent(QDropEvent *event) override;
 
 Q_SIGNALS:
+  void sendListItemHidden(const QString &name);
+  void sendListItemVisible(const QString &name);
   void sendCompanyUsage(int categoryId, bool active);
   void sendDisableUsageList(const QStringList &ids);
+
+public Q_SLOTS:
+  void toggleTreeView();
 
 public:
   explicit CategoryTree(QWidget *parent = nullptr);
