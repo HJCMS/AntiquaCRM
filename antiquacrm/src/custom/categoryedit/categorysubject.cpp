@@ -83,7 +83,7 @@ void CategorySubject::setMainCategories() {
   if (q.size() > 1) {
     m_boxMain->clear();
     while (q.next()) {
-      m_boxMain->addItem(q.value("category").toString(), q.value("id"));
+      m_boxMain->addItem(q.value("category").toString(), q.value("id").toInt());
     }
   } else {
     if (!m_sql->lastError().isEmpty()) {
@@ -117,7 +117,7 @@ void CategorySubject::setSubCategories(int ceId) {
   if (q.size() > 0) {
     m_boxSub->clear();
     while (q.next()) {
-      m_boxSub->addItem(q.value("category").toString(), q.value("binding"));
+      m_boxSub->addItem(q.value("category").toString(), q.value("binding").toInt());
     }
   } else {
     if (!m_sql->lastError().isEmpty()) {
@@ -159,6 +159,7 @@ void CategorySubject::searchChanged(const QString &search) {
     sql.append(" WHERE ce_depth='1' AND ce_name ILIKE '%");
     sql.append(search);
     sql.append("%' AND ce_company_usage=true;");
+    // qDebug() << Q_FUNC_INFO << sql;
     QSqlQuery q = m_sql->query(sql);
     if (q.size() > 0) {
       while (q.next()) {
@@ -170,6 +171,7 @@ void CategorySubject::searchChanged(const QString &search) {
         return;
       }
     }
+    list.removeDuplicates();
     if (list.count() > 1)
       setCompleter(list);
 
@@ -189,9 +191,10 @@ void CategorySubject::syncronizeClicked() {
   int found = -1;
   if (q.size() > 0) {
     while (q.next()) {
-      qDebug() << Q_FUNC_INFO << q.value("binding") <<  q.value("category");
+      // qDebug() << q.value("id") << q.value("binding") << q.value("category");
       found = q.value("binding").toInt();
-      // break;
+      if (found > 0)
+        break;
     }
   } else {
     if (!m_sql->lastError().isEmpty()) {
@@ -199,10 +202,8 @@ void CategorySubject::syncronizeClicked() {
       return;
     }
   }
-  if (found > 0) {
-    int index = m_boxMain->itemData(found, Qt::UserRole).toInt();
-    m_boxMain->setCurrentIndex(index);
-  }
+  int index = m_boxMain->findData(found, Qt::UserRole);
+  m_boxMain->setCurrentIndex(index);
 }
 
 void CategorySubject::openHelperDialog() {
@@ -241,6 +242,27 @@ void CategorySubject::findIndex(const QString &match) {
 
 void CategorySubject::loadDataset() { setMainCategories(); }
 
+void CategorySubject::setCategoryMain(const QVariant &val) {
+  QString category = val.toString().trimmed();
+  if (category.isEmpty() || category.length() < 3)
+    return;
+
+  int index = m_boxMain->findText(category, Qt::MatchExactly);
+  if (index > 0)
+    m_boxMain->setCurrentIndex(index);
+}
+
+void CategorySubject::setCategorySub(const QVariant &val) {
+  QString category = val.toString().trimmed();
+  if (category.isEmpty() || category.length() < 3)
+    return;
+
+  int index = m_boxSub->findText(category, Qt::MatchExactly);
+  if (index != -1) {
+    m_boxSub->setCurrentIndex(index);
+  }
+}
+
 const QVariant CategorySubject::value() {
   QJsonObject obj;
   int mIndex = m_boxMain->currentIndex();
@@ -248,15 +270,12 @@ const QVariant CategorySubject::value() {
   obj.insert("main", QJsonValue(mainCategory));
   int sIndex = m_boxMain->currentIndex();
   if (sIndex == -1) {
-    obj.insert("sub", QJsonValue(QString()));
+    obj.insert("sub", QJsonValue(tr("General")));
   } else {
     QString subCategory = m_boxSub->currentText().trimmed();
     obj.insert("sub", QJsonValue(subCategory));
   }
-  qDebug() << Q_FUNC_INFO << obj;
-
-  int mainId = m_boxMain->itemData(mIndex, Qt::UserRole).toInt();
-  return mainId;
+  return obj;
 }
 
 bool CategorySubject::isValid() {

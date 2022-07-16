@@ -431,7 +431,7 @@
 <context>
     <name>BookEditor</name>
     <message>
-        <location filename="../inventory/books/bookeditor.cpp" line="+22"/>
+        <location filename="../inventory/books/bookeditor.cpp" line="+25"/>
         <source>Edit Book Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -503,7 +503,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+69"/>
         <source>Shop Category Keywords</source>
         <translation type="unfinished"></translation>
     </message>
@@ -513,7 +513,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-217"/>
+        <location line="-223"/>
         <source>Article ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -588,7 +588,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+134"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -598,7 +598,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+55"/>
         <source>Missing Article ID for Update.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -608,7 +608,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+65"/>
         <source>Are you sure to deactivate this entry?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -618,22 +618,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-434"/>
+        <location line="-462"/>
         <source>Extended Title or Subtitle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+216"/>
+        <location line="+224"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+211"/>
+        <location line="+231"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-291"/>
+        <location line="-313"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -655,7 +655,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-196"/>
+        <location line="-202"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
@@ -666,12 +666,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+211"/>
+        <location line="+219"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-327"/>
+        <location line="-335"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -972,7 +972,7 @@
 <context>
     <name>CategorySubject</name>
     <message>
-        <location filename="../custom/utils/categorysubject.cpp" line="+56"/>
+        <location filename="../custom/categoryedit/categorysubject.cpp" line="+56"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1007,12 +1007,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+71"/>
         <source>In this area, the categories are defined which are permanently assigned by your service provider. Ultimately, it is decided here in which category your book is for sale.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+63"/>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>a valid Provider Category is required!</source>
         <translation type="unfinished"></translation>
     </message>

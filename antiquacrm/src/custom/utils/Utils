@@ -18,10 +18,6 @@
 # include "cancellation.h"
 #endif
 
-#ifndef CATEGORYSUBJECT_UTILS_H
-# include "categorysubject.h"
-#endif
-
 #ifndef DATETIMEEDIT_UTILS_H
 # include "datetimeedit.h"
 #endif

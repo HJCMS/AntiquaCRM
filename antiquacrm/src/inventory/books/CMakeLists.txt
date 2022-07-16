@@ -17,6 +17,7 @@ SET (subproject_LINKER
  Utils
  Printing
  Imaging
+ CategoryEdit
 )
 
 SET (subproject_SOURCES

@@ -18,12 +18,14 @@ SET (subproject_LINKER
 SET (subproject_SOURCES
   categoryedit.cpp
   categorytree.cpp
+  categorysubject.cpp
   draglistwidget.cpp
 )
 
 SET (subproject_HEADERS
   categoryedit.h
   categorytree.h
+  categorysubject.h
   draglistwidget.h
 )
 

@@ -81,18 +81,22 @@ public:
   explicit CategorySubject(QWidget *parent = nullptr);
   void loadDataset();
 
+  void setCategoryMain(const QVariant &val);
+
+  void setCategorySub(const QVariant &val);
+
   /**
    * @brief Alle aktuell ausgewählten Kategorien
    * @code
    *  QJsonObject {
    *    "main" = QJsonValue(QString),
-   *    "sub" = QJsonValue(QString),
-   *    "id" = QJsonValue(qint64)
+   *    "sub" = QJsonValue(QString)
    *  }
    * @endcode
    * @return
    */
   const QVariant value();
+
   bool isValid();
   void setInfo(const QString &);
   const QString info();

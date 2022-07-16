@@ -3,6 +3,7 @@
 
 #include "bookeditor.h"
 #include "bookcard.h"
+#include "categorysubject.h"
 #include "isbnrequest.h"
 #include "isbnresults.h"
 #include "myicontheme.h"
@@ -10,6 +11,8 @@
 
 #include <QDebug>
 #include <QDesktopServices>
+#include <QJsonObject>
+#include <QJsonValue>
 #include <QtWidgets>
 
 // Schalte SQL ausgaben ein
@@ -242,10 +245,16 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   subjectLabel->setText(tr("Provider Subject") + ":");
   row2->addWidget(subjectLabel, row2c, 0, 1, 1);
 
-  ib_category_subject = new CategorySubject(this);
-  ib_category_subject->setObjectName("ib_category_subject");
-  ib_category_subject->setInfo(tr("Shop Category Keywords"));
-  row2->addWidget(ib_category_subject, row2c++, 1, 1, 1);
+  /**
+   * @brief json_category
+   * @warning Beinhaltet
+   * @li ib_category_main
+   * @li ib_category_sub
+   */
+  m_json_category = new CategorySubject(this);
+  m_json_category->setObjectName("json_category");
+  m_json_category->setInfo(tr("Shop Category Keywords"));
+  row2->addWidget(m_json_category, row2c++, 1, 1, 1);
 
   QLabel *languageLabel = new QLabel(this);
   languageLabel->setObjectName("languageLabel");
@@ -345,8 +354,10 @@ void BookEditor::setInputList() {
   if (inputList.isEmpty()) {
     qWarning("Books InputList is Empty!");
   }
-  // Wird Manuel gesetzt!
+  // Werden Manuel gesetzt!
   inputList.removeOne("ib_changed");
+  // Deprecated
+  inputList.removeOne("ib_category_subject");
 }
 
 void BookEditor::openImageDialog() {
@@ -414,6 +425,11 @@ const QHash<QString, QVariant> BookEditor::createSqlDataset() {
     data.insert(cur->objectName(), cur->value());
   }
   list.clear();
+  // Kategorien
+  QJsonObject sections = m_json_category->value().toJsonObject();
+  data.insert("ib_category_main", sections.value("main").toString());
+  data.insert("ib_category_sub", sections.value("sub").toString());
+
   return data;
 }
 
@@ -560,6 +576,20 @@ void BookEditor::setData(const QString &key, const QVariant &value,
   if (key.isEmpty())
     return;
 
+  /**
+   * @short json_category
+   * @note m_json_category ist hierfür Zuständig
+   * @li ib_category_main
+   * @li ib_category_sub
+   */
+  if (key == "ib_category_main") {
+    m_json_category->setCategoryMain(value);
+    return;
+  } else if (key == "ib_category_sub") {
+    m_json_category->setCategorySub(value);
+    return;
+  }
+
   UtilsMain *inp = findChild<UtilsMain *>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
     inp->setValue(value);
@@ -568,6 +598,7 @@ void BookEditor::setData(const QString &key, const QVariant &value,
 
     return;
   }
+
   qDebug() << "Missing:" << key << "|" << value << "|" << required;
 }
 
@@ -648,9 +679,9 @@ void BookEditor::changeEvent(QEvent *event) {
     ib_storage->loadDataset();
 
     /**
-     * Dienstleister daten laden
+     * Dienstleister Kategorien laden
      */
-    ib_category_subject->loadDataset();
+    m_json_category->loadDataset();
 
     /**
      * Lade Herausgeber XML
