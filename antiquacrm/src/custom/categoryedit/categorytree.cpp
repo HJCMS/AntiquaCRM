@@ -247,31 +247,26 @@ void CategoryTree::mousePressEvent(QMouseEvent *event) {
   }
 
   if (index.flags() & Qt::ItemIsDragEnabled) {
-    TreeKeywordItem *item =
-        reinterpret_cast<TreeKeywordItem *>(itemAt(event->pos()));
+    QTreeWidgetItem *item = itemAt(event->pos());
     if (item == nullptr)
       return;
 
-    QTreeWidgetItem *parent = item->parent();
-    if (parent == nullptr)
+    QTreeWidgetItem *fromTarget = item->parent();
+    if (fromTarget == nullptr)
       return;
 
-    p_sDrag.first = parent;
+    p_sDrag.first = fromTarget;
     p_sDrag.second = item;
 
     event->setAccepted(true);
 
     QPoint itemView = event->pos() - visualItemRect(item).topLeft();
-    QByteArray itemData;
-    QDataStream dataStream(&itemData, QIODevice::WriteOnly);
-    dataStream << item;
-
+    // NOTE Wir benötigen nur Datentype und Text!
     QMimeData *m_mimeData = new QMimeData;
-    m_mimeData->setData(itemMime, itemData);
     m_mimeData->setText(item->text(0));
+    m_mimeData->setData(itemMime, itemMime);
 
     DragLabel *m_label = new DragLabel(m_mimeData->text(), this);
-
     QDrag *m_drag = new QDrag(this);
     m_drag->setMimeData(m_mimeData);
     m_drag->setPixmap(m_label->pixmap(Qt::ReturnByValue));
@@ -298,6 +293,22 @@ void CategoryTree::toggleTreeView() {
   }
 }
 
+void CategoryTree::toggleVisible() {
+  bool action = (p_hide) ? false : true;
+  // QTreeWidgetItemIterator::Hidden
+  // QTreeWidgetItemIterator::NotHidden
+  for (int t = 0; t < topLevelItemCount(); t++) {
+    QTreeWidgetItem *main = topLevelItem(t);
+    for (int s = 0; s < main->childCount(); s++) {
+      QTreeWidgetItem *sub = main->child(s);
+      if (!sub->data(1, Qt::UserRole).toBool()) {
+        sub->setHidden(action);
+      }
+    }
+  }
+  p_hide = action;
+}
+
 QTreeWidgetItem *CategoryTree::addTopLevel(const QString &name) {
   QTreeWidgetItem *item = new QTreeWidgetItem(this);
   item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
@@ -318,9 +329,38 @@ QTreeWidgetItem *CategoryTree::addSubLevel(const QString &name, int bind,
                    Qt::ItemIsSelectable);
     item->setText(0, name);
     item->setData(0, Qt::DecorationRole, setIcon(active));
+    item->setData(0, Qt::UserRole, bind);
     item->setData(1, Qt::DisplayRole, (active) ? tr("Yes") : tr("No"));
     item->setData(1, Qt::UserRole, active);
     return item;
   }
   return nullptr;
+}
+
+const CategoryMappingList CategoryTree::getMapppings() {
+  CategoryMappingList list;
+  for (int t = 0; t < topLevelItemCount(); t++) {
+    QTreeWidgetItem *main = topLevelItem(t);
+    if (main != nullptr) {
+      if (main->childCount() > 0) {
+        for (int s = 0; s < main->childCount(); s++) {
+          QTreeWidgetItem *sub = main->child(s);
+          if (sub != nullptr) {
+            if (sub->childCount() > 0) {
+              CategoryMapping mapping;
+              mapping.setSubId(sub->data(0, Qt::UserRole).toInt());
+              mapping.setSub(sub->text(0));
+              QStringList keys;
+              for (int k = 0; k < sub->childCount(); k++) {
+                keys.append(sub->child(k)->text(0));
+              }
+              mapping.setKeywords(keys);
+              list.append(mapping);
+            }
+          }
+        }
+      }
+    }
+  }
+  return list;
 }

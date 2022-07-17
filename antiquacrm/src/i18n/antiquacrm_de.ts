@@ -935,9 +935,37 @@
     </message>
 </context>
 <context>
+    <name>CategoryActions</name>
+    <message>
+        <location filename="../custom/categoryedit/categoryactions.cpp" line="+14"/>
+        <source>Treeview</source>
+        <translation>Baumansicht</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Open/close Treeview</source>
+        <translation>Öffne/Schließe Baumansicht</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Hide/Show Unused</source>
+        <translation>Deaktivierte Anzeigen/Ausblenden</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Close</source>
+        <translation>Beenden</translation>
+    </message>
+</context>
+<context>
     <name>CategoryEdit</name>
     <message>
-        <location filename="../custom/categoryedit/categoryedit.cpp" line="+15"/>
+        <location filename="../custom/categoryedit/categoryedit.cpp" line="+16"/>
         <source>Edit Category Views</source>
         <translation>Bearbeite Kategorie Ansichten</translation>
     </message>
@@ -957,28 +985,15 @@
         <translation>Unternehmens Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+12"/>
-        <source>Treeview</source>
-        <translation>Baumansicht</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Open/close Treeview</source>
-        <translation>Öffne/Schließe Baumansicht</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Save</source>
-        <translation>Speichern</translation>
-    </message>
-    <message>
-        <location line="+135"/>
+        <location line="+149"/>
+        <location line="+14"/>
         <location line="+13"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
     <message>
-        <location line="-11"/>
+        <location line="-25"/>
+        <location line="+14"/>
         <location line="+13"/>
         <source>Database Update successfully!</source>
         <translation>Datanbank-Update erfolgreich!</translation>
@@ -1040,7 +1055,7 @@
 <context>
     <name>CategoryTree</name>
     <message>
-        <location filename="../custom/categoryedit/categorytree.cpp" line="+18"/>
+        <location filename="../custom/categoryedit/categorytree.cpp" line="+22"/>
         <source>Provider Categories</source>
         <translation>Dienstleister Kategorien</translation>
     </message>
@@ -1050,12 +1065,7 @@
         <translation>Anzeigen</translation>
     </message>
     <message>
-        <location line="+75"/>
-        <source>Keyword</source>
-        <translation>Schlüsselwort</translation>
-    </message>
-    <message>
-        <location line="+10"/>
+        <location line="+95"/>
         <source>Toggle Display</source>
         <translation>Anzeigen/Ausblenden</translation>
     </message>
@@ -1070,20 +1080,20 @@
         <translation>Deaktiviere diesen Bereich</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+188"/>
         <source>Main category</source>
         <translation>Hauptkategorie</translation>
     </message>
     <message>
-        <location line="-102"/>
-        <location line="+117"/>
+        <location line="-231"/>
+        <location line="+247"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
     <message>
-        <location line="-133"/>
+        <location line="-263"/>
         <location line="+16"/>
-        <location line="+117"/>
+        <location line="+247"/>
         <source>No</source>
         <translation>Nein</translation>
     </message>
@@ -4595,6 +4605,11 @@
         <location line="+2"/>
         <source>Check</source>
         <translation>Scheck</translation>
+    </message>
+    <message>
+        <location filename="../custom/categoryedit/treekeyworditem.cpp" line="+14"/>
+        <source>Keyword</source>
+        <translation>Schlüsselwort</translation>
     </message>
 </context>
 <context>

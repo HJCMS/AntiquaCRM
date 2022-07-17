@@ -11,6 +11,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief The DragListWidget class
+ * @ingroup CategoryEdit
+ */
 class DragListWidget : public QListWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -20,7 +24,14 @@ protected:
   void mousePressEvent(QMouseEvent *event) override;
 
 public Q_SLOTS:
+  /**
+   * @brief Element Ausblenden
+   */
   void setItemHidden(const QString &name);
+
+  /**
+   * @brief Element Einblenden
+   */
   void setItemVisible(const QString &name);
 
 public:

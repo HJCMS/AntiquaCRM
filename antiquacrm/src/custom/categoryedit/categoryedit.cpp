@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "categoryedit.h"
+#include "categoryactions.h"
 #include "categorytree.h"
 #include "draglistwidget.h"
 #include "myicontheme.h"
@@ -42,17 +43,8 @@ CategoryEdit::CategoryEdit(QWidget *parent) : QDialog{parent} {
   m_splitter->setStretchFactor(1, 40);
   layout->addWidget(m_splitter);
 
-  m_btnBox = new QDialogButtonBox(this);
-  m_btnBox->setStandardButtons(QDialogButtonBox::Close);
-  QPushButton *m_toggleBtn = new QPushButton(m_btnBox);
-  m_toggleBtn->setText(tr("Treeview"));
-  m_toggleBtn->setToolTip(tr("Open/close Treeview"));
-  m_toggleBtn->setIcon(myIcon("view_choose"));
-  m_btnBox->addButton(m_toggleBtn, QDialogButtonBox::ResetRole);
-  m_saveBtn = m_btnBox->addButton(QDialogButtonBox::Apply);
-  m_saveBtn->setText(tr("Save"));
-  m_saveBtn->setIcon(myIcon("filesave"));
-  layout->addWidget(m_btnBox);
+  m_btnFrame = new CategoryActions(this);
+  layout->addWidget(m_btnFrame);
 
   m_statusBar = new QStatusBar(this);
   m_statusBar->setSizeGripEnabled(false);
@@ -61,9 +53,12 @@ CategoryEdit::CategoryEdit(QWidget *parent) : QDialog{parent} {
   layout->setStretch(1, 1); // Splitter row
   setLayout(layout);
 
-  connect(m_btnBox, SIGNAL(rejected()), this, SLOT(reject()));
-  connect(m_saveBtn, SIGNAL(clicked()), this, SLOT(saveCompanyTreeUsage()));
-  connect(m_toggleBtn, SIGNAL(clicked()), m_tree, SLOT(toggleTreeView()));
+  connect(m_btnFrame, SIGNAL(sendViewTree()), m_tree, SLOT(toggleTreeView()));
+  connect(m_btnFrame, SIGNAL(sendVisible()), m_tree, SLOT(toggleVisible()));
+  connect(m_btnFrame, SIGNAL(sendSaveDialog()), this,
+          SLOT(saveCompanyTreeUsage()));
+  connect(m_btnFrame, SIGNAL(sendQuitDialog()), this, SLOT(reject()));
+
   connect(m_tree, SIGNAL(sendCompanyUsage(int, bool)), this,
           SLOT(updateCompanyUsage(int, bool)));
   connect(m_tree, SIGNAL(sendDisableUsageList(const QStringList &)), this,
@@ -173,7 +168,27 @@ bool CategoryEdit::initKeywords() {
   return true;
 }
 
-void CategoryEdit::saveCompanyTreeUsage() { qDebug() << Q_FUNC_INFO << "TODO"; }
+void CategoryEdit::saveCompanyTreeUsage() {
+  QStringList statements;
+  foreach (CategoryMapping m, m_tree->getMapppings()) {
+    QString ce_id = QString::number(m.getSubId());
+    QString sql("UPDATE categories_extern SET ce_company_keywords='");
+    sql.append(m.getKeywords().join(","));
+    sql.append("' WHERE ce_depth='1' AND ce_id=" + ce_id);
+    sql.append(" AND ce_name='" + m.getSub() + "';");
+    statements << sql;
+  }
+  if (statements.size() > 0) {
+    m_sql->query("UPDATE categories_extern SET ce_company_keywords='';");
+    m_sql->query(statements.join("\n"));
+    if (!m_sql->lastError().isEmpty()) {
+      qDebug() << m_sql->lastError();
+      m_statusBar->showMessage(tr("An error has occurred!"), timeout);
+    } else {
+      m_statusBar->showMessage(tr("Database Update successfully!"), timeout);
+    }
+  }
+}
 
 void CategoryEdit::updateCompanyUsage(int categoryId, bool usage) {
   QString sql("UPDATE categories_extern SET ce_company_usage=");

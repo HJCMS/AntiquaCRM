@@ -14,6 +14,8 @@
 #include <QTreeWidgetItem>
 #include <QWidget>
 
+#include "categorymapping.h"
+
 class TreeKeywordItem;
 
 /**
@@ -27,9 +29,14 @@ class CategoryTree : public QTreeWidget {
 
 private:
   /**
-   * @brief Temporäre Status Variable für Baum öffnen/schließen.
+   * @brief Temporärer Status Variable für Baum öffnen/schließen.
    */
   bool p_expandet = false;
+
+  /**
+   * @brief Temporärer Status Deaktivierte ausblenden!
+   */
+  bool p_hide = false;
 
   /**
    * @brief Wartezeit bis ein Element beim Drüberschieben aufgeklappt wird.
@@ -53,7 +60,7 @@ private:
   /**
    * @brief Liste der Element die gerade verschoben werden!
    */
-  QPair<QTreeWidgetItem *,TreeKeywordItem *> p_sDrag;
+  QPair<QTreeWidgetItem *, QTreeWidgetItem *> p_sDrag;
 
   /**
    * @brief Beim verschieben das Baumelement prüfen.
@@ -135,8 +142,14 @@ public Q_SLOTS:
    */
   void toggleTreeView();
 
+  /**
+   * @brief Deaktivierte Ein/Ausblenden.
+   */
+  void toggleVisible();
+
 public:
   explicit CategoryTree(QWidget *parent = nullptr);
+
   /**
    * @brief Hauptkategorien einfügen
    */
@@ -147,6 +160,11 @@ public:
    */
   QTreeWidgetItem *addSubLevel(const QString &name, int bind,
                                bool active = true);
+
+  /**
+   * @brief Liste für Speicherfunktione ziehen
+   */
+  const CategoryMappingList getMapppings();
 };
 
 #endif // CATEGORYEDIT_TREE_H

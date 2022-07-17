@@ -9,6 +9,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief Anzeige beim verschieben
+ * @ingroup CategoryEdit
+ */
 class DragLabel : public QLabel {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
