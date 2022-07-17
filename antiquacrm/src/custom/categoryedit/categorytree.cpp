@@ -13,7 +13,7 @@
 #include <QMenu>
 #include <QMimeData>
 #include <QMimeType>
-#include <QTime>
+#include <QThread>
 #include <QTimer>
 
 CategoryTree::CategoryTree(QWidget *parent) : QTreeWidget{parent} {
@@ -153,54 +153,80 @@ void CategoryTree::dragMoveEvent(QDragMoveEvent *event) {
     event->setAccepted(true);
   } else {
     event->setAccepted(false);
-  }
-  if (!event->isAccepted())
     return;
+  }
 
   /**
    * Wenn beim verschieben über ein Elternelement gefahren wird.
    * Eine Prüfung durchführen ...
    * Dann currentItem setzen und einen Timer auf expandOnDragHover starten.
    */
-  QPoint position = event->pos();
-  QModelIndex index = indexAt(position);
-  if (index.isValid() && index.flags() ^ Qt::ItemIsDropEnabled) {
-    QTreeWidgetItem *item = itemAt(position);
-    if (item != nullptr && isExpandable(item)) {
-      if (!item->isExpanded()) {
-        setCurrentItem(item);
-        p_timerId = startTimer(p_waitExpand);
-      }
+  QModelIndex index = indexAt(event->pos());
+  if (!index.isValid())
+    return;
+
+  QTreeWidgetItem *item = itemAt(event->pos());
+  if (item == nullptr)
+    return;
+
+  setCurrentItem(item);
+  if (index.flags() ^ Qt::ItemIsDropEnabled && isExpandable(item)) {
+    if (!item->isExpanded()) {
+      p_expandTimerId = startTimer(p_timerWait);
+      return;
     }
   }
 }
 
 void CategoryTree::timerEvent(QTimerEvent *event) {
-  if (p_timerId == event->timerId()) {
-    killTimer(p_timerId);
-    p_timerId = -1;
+  if (p_expandTimerId == event->timerId()) {
+    killTimer(p_expandTimerId);
+    p_expandTimerId = -1;
     expandOnDragHover();
   }
   QTreeWidget::timerEvent(event);
 }
 
 void CategoryTree::dropEvent(QDropEvent *event) {
-  if (event->mimeData()->hasFormat(itemMime)) {
-    event->setAccepted(true);
+  const QMimeData *mime = event->mimeData();
+  if (event->source() == this && mime->hasFormat(itemMime)) {
+    QModelIndex index = indexAt(event->pos());
+    if (index.isValid() && (index.flags() & Qt::ItemIsDropEnabled)) {
+      if (p_sDrag.first == nullptr || p_sDrag.second == nullptr) {
+        event->setAccepted(false);
+        return;
+      }
+
+      setDropIndicatorShown(true);
+      QTreeWidgetItem *target = itemAt(event->pos());
+      QString text = mime->text();
+      if (addKeywordItem(target, text)) {
+        target->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
+        expandItem(target);
+        p_sDrag.first->removeChild(p_sDrag.second);
+        update();
+      }
+      event->setDropAction(Qt::MoveAction);
+      event->setAccepted(true);
+
+      p_sDrag.first = nullptr;
+      p_sDrag.second = nullptr;
+    } else {
+      event->setAccepted(false);
+    }
   } else if (event->mimeData()->hasText()) {
-    const QMimeData *mime = event->mimeData();
-    QPoint position = event->pos();
-    QModelIndex index = indexAt(position);
+    QModelIndex index = indexAt(event->pos());
     if (index.isValid() && (index.flags() & Qt::ItemIsDropEnabled)) {
       setDropIndicatorShown(true);
-      QTreeWidgetItem *item = itemAt(position);
+      QTreeWidgetItem *target = itemAt(event->pos());
       QString text = mime->text();
-      if (addKeywordItem(item, text)) {
-        item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
-        expandItem(item);
+      if (addKeywordItem(target, text)) {
+        target->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
+        expandItem(target);
         update();
         emit sendListItemHidden(text);
       }
+      event->setAccepted(true);
     } else {
       event->setAccepted(false);
     }
@@ -221,15 +247,21 @@ void CategoryTree::mousePressEvent(QMouseEvent *event) {
   }
 
   if (index.flags() & Qt::ItemIsDragEnabled) {
-    event->setAccepted(true);
-    QTreeWidgetItem *item = itemAt(event->pos());
+    TreeKeywordItem *item =
+        reinterpret_cast<TreeKeywordItem *>(itemAt(event->pos()));
     if (item == nullptr)
       return;
 
+    QTreeWidgetItem *parent = item->parent();
+    if (parent == nullptr)
+      return;
+
+    p_sDrag.first = parent;
+    p_sDrag.second = item;
+
+    event->setAccepted(true);
+
     QPoint itemView = event->pos() - visualItemRect(item).topLeft();
-
-    setDragEnabled(true);
-
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
     dataStream << item;
@@ -238,20 +270,18 @@ void CategoryTree::mousePressEvent(QMouseEvent *event) {
     m_mimeData->setData(itemMime, itemData);
     m_mimeData->setText(item->text(0));
 
-    m_dragLabel = new DragLabel(m_mimeData->text(), this);
+    DragLabel *m_label = new DragLabel(m_mimeData->text(), this);
 
     QDrag *m_drag = new QDrag(this);
     m_drag->setMimeData(m_mimeData);
-    m_drag->setPixmap(m_dragLabel->pixmap(Qt::ReturnByValue));
+    m_drag->setPixmap(m_label->pixmap(Qt::ReturnByValue));
     m_drag->setHotSpot(itemView);
-    m_dragLabel->hide();
+    m_label->hide();
 
     Qt::DropActions da = m_drag->exec(Qt::MoveAction, Qt::MoveAction);
     if (da == Qt::MoveAction) {
-      m_dragLabel->hide();
-      qDebug() << da;
-    } else {
-      m_dragLabel->show();
+      m_label->hide();
+      m_label->deleteLater();
     }
   } else {
     event->setAccepted(false);

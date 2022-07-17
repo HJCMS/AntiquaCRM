@@ -14,7 +14,6 @@
 #include <QTreeWidgetItem>
 #include <QWidget>
 
-class DragLabel;
 class TreeKeywordItem;
 
 /**
@@ -35,7 +34,7 @@ private:
   /**
    * @brief Wartezeit bis ein Element beim Drüberschieben aufgeklappt wird.
    */
-  int p_waitExpand = 1000;
+  int p_timerWait = 1000;
 
   /**
    * @brief Temporäre Timer ID
@@ -44,17 +43,17 @@ private:
    * Soll verhindern das die Methode expandOnDragHover einen Overload
    * verursacht!
    */
-  int p_timerId = -1;
-
-  /**
-   * @brief Text beim verschieben in einem Label anzeigen.
-   */
-  DragLabel *m_dragLabel;
+  int p_expandTimerId = -1;
 
   /**
    * @brief Datentype der für das interne Verschieben gültig ist.
    */
   QByteArray itemMime = QByteArray("application/x-qabstractitemmodeldatalist");
+
+  /**
+   * @brief Liste der Element die gerade verschoben werden!
+   */
+  QPair<QTreeWidgetItem *,TreeKeywordItem *> p_sDrag;
 
   /**
    * @brief Beim verschieben das Baumelement prüfen.
