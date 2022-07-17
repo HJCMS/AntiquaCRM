@@ -158,8 +158,13 @@ public:
   /**
    * @brief Unterkategorien einfügen
    */
-  QTreeWidgetItem *addSubLevel(const QString &name, int bind,
-                               bool active = true);
+  QTreeWidgetItem *addSubLevel(const QString &name, int bind, int ceId,
+                               const QStringList &keywords, bool active = true);
+
+  /**
+   * @brief Alle Schlüsselwort vom Baum auslesen.
+   */
+  const QStringList getCurrentKeywords();
 
   /**
    * @brief Liste für Speicherfunktione ziehen

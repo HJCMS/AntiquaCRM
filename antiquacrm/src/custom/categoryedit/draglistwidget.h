@@ -36,6 +36,7 @@ public Q_SLOTS:
 
 public:
   explicit DragListWidget(QWidget *parent = nullptr);
+  void setItemsHidden(const QStringList &list);
 };
 
 #endif // CATEGORYEDIT_LIST_H

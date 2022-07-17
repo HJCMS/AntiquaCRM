@@ -295,13 +295,15 @@ void CategoryTree::toggleTreeView() {
 
 void CategoryTree::toggleVisible() {
   bool action = (p_hide) ? false : true;
-  // QTreeWidgetItemIterator::Hidden
-  // QTreeWidgetItemIterator::NotHidden
   for (int t = 0; t < topLevelItemCount(); t++) {
     QTreeWidgetItem *main = topLevelItem(t);
     for (int s = 0; s < main->childCount(); s++) {
       QTreeWidgetItem *sub = main->child(s);
       if (!sub->data(1, Qt::UserRole).toBool()) {
+        // FIXME Leere ausblenden
+        //        if (sub->childCount() > 0)
+        //          continue;
+
         sub->setHidden(action);
       }
     }
@@ -320,21 +322,49 @@ QTreeWidgetItem *CategoryTree::addTopLevel(const QString &name) {
 }
 
 QTreeWidgetItem *CategoryTree::addSubLevel(const QString &name, int bind,
+                                           int ceId,
+                                           const QStringList &keywords,
                                            bool active) {
   QTreeWidgetItem *parent = findParent(bind);
   if (parent != nullptr) {
     QTreeWidgetItem *item = new QTreeWidgetItem(parent);
-    item->setChildIndicatorPolicy(QTreeWidgetItem::DontShowIndicator);
+    if (keywords.count() > 0) {
+      item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
+    } else {
+      item->setChildIndicatorPolicy(QTreeWidgetItem::DontShowIndicator);
+    }
     item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsDropEnabled |
                    Qt::ItemIsSelectable);
     item->setText(0, name);
     item->setData(0, Qt::DecorationRole, setIcon(active));
-    item->setData(0, Qt::UserRole, bind);
+    item->setData(0, Qt::UserRole, ceId);
     item->setData(1, Qt::DisplayRole, (active) ? tr("Yes") : tr("No"));
     item->setData(1, Qt::UserRole, active);
+    if (keywords.count() > 0) {
+      foreach (QString n, keywords) {
+        addKeywordItem(item, n);
+      }
+      expandItem(item);
+    }
     return item;
   }
   return nullptr;
+}
+
+const QStringList CategoryTree::getCurrentKeywords() {
+  QStringList list;
+  for (int t = 0; t < topLevelItemCount(); t++) {
+    QTreeWidgetItem *main = topLevelItem(t);
+    for (int s = 0; s < main->childCount(); s++) {
+      QTreeWidgetItem *sub = main->child(s);
+      if (sub->childCount() > 0) {
+        for (int k = 0; k < sub->childCount(); k++) {
+          list.append(sub->child(k)->text(0));
+        }
+      }
+    }
+  }
+  return list;
 }
 
 const CategoryMappingList CategoryTree::getMapppings() {

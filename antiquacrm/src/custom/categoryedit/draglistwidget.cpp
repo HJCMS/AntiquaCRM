@@ -70,3 +70,14 @@ void DragListWidget::setItemVisible(const QString &name) {
     }
   }
 }
+
+void DragListWidget::setItemsHidden(const QStringList &list)
+{
+  foreach(QString name, list) {
+    for (int r = 0; r < count(); r++) {
+      if (item(r)->text() == name) {
+        item(r)->setHidden(true);
+      }
+    }
+  }
+}

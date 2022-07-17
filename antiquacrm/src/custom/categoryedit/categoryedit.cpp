@@ -53,12 +53,6 @@ CategoryEdit::CategoryEdit(QWidget *parent) : QDialog{parent} {
   layout->setStretch(1, 1); // Splitter row
   setLayout(layout);
 
-  connect(m_btnFrame, SIGNAL(sendViewTree()), m_tree, SLOT(toggleTreeView()));
-  connect(m_btnFrame, SIGNAL(sendVisible()), m_tree, SLOT(toggleVisible()));
-  connect(m_btnFrame, SIGNAL(sendSaveDialog()), this,
-          SLOT(saveCompanyTreeUsage()));
-  connect(m_btnFrame, SIGNAL(sendQuitDialog()), this, SLOT(reject()));
-
   connect(m_tree, SIGNAL(sendCompanyUsage(int, bool)), this,
           SLOT(updateCompanyUsage(int, bool)));
   connect(m_tree, SIGNAL(sendDisableUsageList(const QStringList &)), this,
@@ -71,6 +65,12 @@ CategoryEdit::CategoryEdit(QWidget *parent) : QDialog{parent} {
           SLOT(setItemVisible(const QString &)));
   connect(m_tree, SIGNAL(sendListItemVisible(const QString &)), m_keywordsList,
           SLOT(setItemVisible(const QString &)));
+  // Main Actions
+  connect(m_btnFrame, SIGNAL(sendViewTree()), m_tree, SLOT(toggleTreeView()));
+  connect(m_btnFrame, SIGNAL(sendVisible()), m_tree, SLOT(toggleVisible()));
+  connect(m_btnFrame, SIGNAL(sendSaveDialog()), this,
+          SLOT(saveCompanyTreeUsage()));
+  connect(m_btnFrame, SIGNAL(sendQuitDialog()), this, SLOT(reject()));
 }
 
 bool CategoryEdit::initCategories() {
@@ -91,9 +91,7 @@ bool CategoryEdit::initCategories() {
       return false;
     }
   }
-  /* Sub Categories
-   * ce_id ce_depth ce_binding ce_name ce_provider_name ce_company_usage
-   */
+  // Sub Categories
   sql = QString("SELECT * FROM categories_extern WHERE");
   sql.append(" ce_depth='1' AND ");
   sql.append("ce_provider_name!='Internal' ORDER BY ce_name;");
@@ -106,10 +104,14 @@ bool CategoryEdit::initCategories() {
 
       QString title = q.value("ce_name").toString();
       bool status = q.value("ce_company_usage").toBool();
-      QTreeWidgetItem *subItem = m_tree->addSubLevel(title, bindId, status);
-      if (subItem != nullptr) {
-        subItem->setData(0, Qt::UserRole, q.value("ce_id").toInt());
+      // WARNING Zeichenkette nicht direkt konvertieren!
+      QStringList keys;
+      QString keywords = q.value("ce_company_keywords").toString();
+      if (keywords.length() > 0) {
+        keys = keywords.trimmed().split(",");
       }
+      int ce_id = q.value("ce_id").toInt();
+      m_tree->addSubLevel(title, bindId, ce_id, keys, status);
     }
   } else {
     if (!m_sql->lastError().isEmpty()) {
@@ -217,8 +219,18 @@ void CategoryEdit::disableCompanyUsageList(const QStringList &ids) {
 }
 
 int CategoryEdit::exec() {
-  if (initCategories())
-    initKeywords();
+  if (!initCategories()) {
+    qWarning("An error has occurred!");
+    return QDialog::Rejected;
+  }
+
+  if (initKeywords()) {
+    QStringList keys = m_tree->getCurrentKeywords();
+    if (keys.count() > 0) {
+      m_storageList->setItemsHidden(keys);
+      m_keywordsList->setItemsHidden(keys);
+    }
+  }
 
   return QDialog::exec();
 }
