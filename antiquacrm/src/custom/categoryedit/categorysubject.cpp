@@ -21,7 +21,8 @@ static const QString querySelect() {
   QString sql("SELECT DISTINCT");
   sql.append(" ce_id AS id,");
   sql.append(" ce_name AS category,");
-  sql.append(" ce_binding AS binding");
+  sql.append(" ce_binding AS binding,");
+  sql.append(" ce_company_keywords AS keywords");
   sql.append(" FROM categories_extern");
   return sql;
 }
@@ -117,7 +118,8 @@ void CategorySubject::setSubCategories(int ceId) {
   if (q.size() > 0) {
     m_boxSub->clear();
     while (q.next()) {
-      m_boxSub->addItem(q.value("category").toString(), q.value("binding").toInt());
+      m_boxSub->addItem(q.value("category").toString(),
+                        q.value("binding").toInt());
     }
   } else {
     if (!m_sql->lastError().isEmpty()) {
@@ -127,7 +129,10 @@ void CategorySubject::setSubCategories(int ceId) {
   }
   // Wenn nicht Leer dann auswahl suchen
   QString searchText = m_search->text().trimmed();
-  if (searchText.length() > 3) {
+  if (!p_subSearchKeyword.isEmpty()) {
+    int index = m_boxSub->findData(p_subSearchKeyword, Qt::DisplayRole);
+    m_boxSub->setCurrentIndex(index);
+  } else if (searchText.length() > 3) {
     int index = m_boxSub->findData(searchText, Qt::DisplayRole);
     m_boxSub->setCurrentIndex(index);
   }
@@ -156,13 +161,17 @@ void CategorySubject::searchChanged(const QString &search) {
   if (search.length() > 3) {
     QStringList list;
     QString sql(querySelect());
-    sql.append(" WHERE ce_depth='1' AND ce_name ILIKE '%");
-    sql.append(search);
-    sql.append("%' AND ce_company_usage=true;");
+    sql.append(" WHERE ce_depth='1' AND ce_company_usage=true");
+    sql.append(" AND (ce_name ILIKE '%" + search + "%'");
+    sql.append(" OR ce_company_keywords ILIKE '%" + search + "%');");
     // qDebug() << Q_FUNC_INFO << sql;
     QSqlQuery q = m_sql->query(sql);
     if (q.size() > 0) {
       while (q.next()) {
+        QString keys = q.value("keywords").toString().trimmed();
+        if (!keys.isEmpty())
+          list.append(keys.split(","));
+
         list.append(q.value("category").toString());
       }
     } else {
@@ -186,24 +195,21 @@ void CategorySubject::syncronizeClicked() {
 
   QString sql(querySelect());
   sql.append(" WHERE ce_company_usage=true AND ce_depth='1'");
-  sql.append(" AND ce_name='" + search + "';");
+  sql.append(" AND (ce_name  ILIKE '" + search + "%'");
+  sql.append(" OR ce_company_keywords ILIKE '%" + search + "%');");
+  // qDebug() << Q_FUNC_INFO << sql;
   QSqlQuery q = m_sql->query(sql);
-  int found = -1;
   if (q.size() > 0) {
-    while (q.next()) {
-      // qDebug() << q.value("id") << q.value("binding") << q.value("category");
-      found = q.value("binding").toInt();
-      if (found > 0)
-        break;
-    }
+    q.next();
+    int ceId = q.value("binding").toInt();
+    p_subSearchKeyword = q.value("category").toString();
+    m_boxMain->setCurrentIndex(m_boxMain->findData(ceId, Qt::UserRole));
   } else {
     if (!m_sql->lastError().isEmpty()) {
       sqlErrorPopUp(m_sql->lastError());
       return;
     }
   }
-  int index = m_boxMain->findData(found, Qt::UserRole);
-  m_boxMain->setCurrentIndex(index);
 }
 
 void CategorySubject::openHelperDialog() {

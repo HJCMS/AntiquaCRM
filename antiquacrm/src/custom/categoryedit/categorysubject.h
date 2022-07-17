@@ -45,6 +45,11 @@ private:
   QToolButton *m_helpBtn;
 
   /**
+   * @brief Tempräres Ergebnis der Stichwortsuche.
+   */
+  QString p_subSearchKeyword;
+
+  /**
    * @brief Hauptkategorien
    * @note Wird nur beim start geladen!
    */
