@@ -7,6 +7,10 @@
 
 #include <QTreeWidgetItem>
 
+/**
+ * @brief Baumelement für Schlüsselwörter
+ * @ingroup CategoryEdit
+ */
 class TreeKeywordItem : public QTreeWidgetItem {
 public:
   explicit TreeKeywordItem(QTreeWidgetItem *parent);

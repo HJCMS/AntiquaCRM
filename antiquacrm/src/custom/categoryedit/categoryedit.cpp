@@ -48,7 +48,7 @@ CategoryEdit::CategoryEdit(QWidget *parent) : QDialog{parent} {
   m_toggleBtn->setText(tr("Treeview"));
   m_toggleBtn->setToolTip(tr("Open/close Treeview"));
   m_toggleBtn->setIcon(myIcon("view_choose"));
-  m_btnBox->addButton(m_toggleBtn, QDialogButtonBox::ActionRole);
+  m_btnBox->addButton(m_toggleBtn, QDialogButtonBox::ResetRole);
   m_saveBtn = m_btnBox->addButton(QDialogButtonBox::Apply);
   m_saveBtn->setText(tr("Save"));
   m_saveBtn->setIcon(myIcon("filesave"));

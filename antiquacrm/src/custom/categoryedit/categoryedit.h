@@ -19,6 +19,10 @@
 class CategoryTree;
 class DragListWidget;
 
+/**
+ * @brief Kategorien bearbeiten Dialog
+ * @group CategoryEdit
+ */
 class CategoryEdit : public QDialog {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")

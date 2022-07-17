@@ -13,6 +13,8 @@
 #include <QMenu>
 #include <QMimeData>
 #include <QMimeType>
+#include <QTime>
+#include <QTimer>
 
 CategoryTree::CategoryTree(QWidget *parent) : QTreeWidget{parent} {
   setObjectName("category_tree");
@@ -32,6 +34,13 @@ CategoryTree::CategoryTree(QWidget *parent) : QTreeWidget{parent} {
   setHeader(m_header);
 }
 
+bool CategoryTree::isExpandable(QTreeWidgetItem *item) const {
+  if (item->childIndicatorPolicy() == QTreeWidgetItem::ShowIndicator)
+    return (item->childCount() > 0);
+
+  return false;
+}
+
 QTreeWidgetItem *CategoryTree::findParent(int id) {
   for (int i = 0; i < topLevelItemCount(); i++) {
     QTreeWidgetItem *twi = topLevelItem(i);
@@ -45,7 +54,13 @@ const QIcon CategoryTree::setIcon(bool b) const {
   return (b) ? myIcon("button_ok") : myIcon("button_cancel");
 }
 
-void CategoryTree::toggleSubTree(bool) {
+void CategoryTree::expandOnDragHover() {
+  QTreeWidgetItem *parent = currentItem();
+  if (isExpandable(parent))
+    expandItem(parent);
+}
+
+void CategoryTree::toggleParentsTree(bool) {
   QTreeWidgetItem *parent = currentItem()->parent();
   QStringList list;
   if (parent != nullptr) {
@@ -114,7 +129,7 @@ void CategoryTree::contextMenuEvent(QContextMenuEvent *event) {
     QAction *ac_toggleAll = m->addAction(tr("Disable all in this Section"));
     ac_toggleAll->setIcon(myIcon("db_comit"));
     connect(ac_toggleAll, SIGNAL(triggered(bool)), this,
-            SLOT(toggleSubTree(bool)));
+            SLOT(toggleParentsTree(bool)));
 
     m->exec(event->globalPos());
     delete m;
@@ -139,6 +154,34 @@ void CategoryTree::dragMoveEvent(QDragMoveEvent *event) {
   } else {
     event->setAccepted(false);
   }
+  if (!event->isAccepted())
+    return;
+
+  /**
+   * Wenn beim verschieben über ein Elternelement gefahren wird.
+   * Eine Prüfung durchführen ...
+   * Dann currentItem setzen und einen Timer auf expandOnDragHover starten.
+   */
+  QPoint position = event->pos();
+  QModelIndex index = indexAt(position);
+  if (index.isValid() && index.flags() ^ Qt::ItemIsDropEnabled) {
+    QTreeWidgetItem *item = itemAt(position);
+    if (item != nullptr && isExpandable(item)) {
+      if (!item->isExpanded()) {
+        setCurrentItem(item);
+        p_timerId = startTimer(p_waitExpand);
+      }
+    }
+  }
+}
+
+void CategoryTree::timerEvent(QTimerEvent *event) {
+  if (p_timerId == event->timerId()) {
+    killTimer(p_timerId);
+    p_timerId = -1;
+    expandOnDragHover();
+  }
+  QTreeWidget::timerEvent(event);
 }
 
 void CategoryTree::dropEvent(QDropEvent *event) {
@@ -168,6 +211,9 @@ void CategoryTree::dropEvent(QDropEvent *event) {
 
 void CategoryTree::mousePressEvent(QMouseEvent *event) {
   QTreeWidget::mousePressEvent(event);
+  if (event->button() != Qt::LeftButton)
+    return;
+
   QModelIndex index = indexAt(event->pos());
   if (!index.isValid()) {
     event->setAccepted(false);
@@ -200,14 +246,12 @@ void CategoryTree::mousePressEvent(QMouseEvent *event) {
     m_drag->setHotSpot(itemView);
     m_dragLabel->hide();
 
-    Qt::DropActions da =
-        m_drag->exec(Qt::MoveAction | Qt::CopyAction, Qt::MoveAction);
+    Qt::DropActions da = m_drag->exec(Qt::MoveAction, Qt::MoveAction);
     if (da == Qt::MoveAction) {
       m_dragLabel->hide();
       qDebug() << da;
     } else {
       m_dragLabel->show();
-      qDebug() << da;
     }
   } else {
     event->setAccepted(false);
