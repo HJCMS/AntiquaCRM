@@ -192,6 +192,31 @@
         <source>transportation costs</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+3"/>
+        <location line="+5"/>
+        <location line="+1"/>
+        <source>IBAN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+5"/>
+        <location line="+1"/>
+        <source>SWIFT/BIC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>TAX Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+1"/>
+        <source>Tax Id</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Antiqua::PurchaserOrderTable</name>
@@ -749,7 +774,7 @@
 <context>
     <name>BooklookerIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerifacewidget.cpp" line="+101"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerifacewidget.cpp" line="+105"/>
         <source>Germany</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1095,20 +1120,20 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+201"/>
+        <location line="+214"/>
         <source>Main category</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-244"/>
-        <location line="+266"/>
+        <location line="-257"/>
+        <location line="+279"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-282"/>
+        <location line="-295"/>
         <location line="+16"/>
-        <location line="+266"/>
+        <location line="+279"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>

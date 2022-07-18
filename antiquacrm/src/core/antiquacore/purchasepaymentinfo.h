@@ -60,6 +60,9 @@ private:
   PLineRead *m_paymentTransactionId;
   PLineRead *m_paymentConfirmed;
   PLineRead *m_deliveryCost;
+  PLineRead *c_iban;
+  PLineRead *c_swift_bic;
+  PLineRead *c_tax_id;
 
 public:
   explicit PurchasePaymentInfo(QWidget *parent = nullptr);

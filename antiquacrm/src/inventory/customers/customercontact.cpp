@@ -217,8 +217,7 @@ void CustomerContact::fetchCountryFromPostal() {
   sql.append(" ON b.p_table='" + table + "'");
   sql.append(" WHERE a.p_plz=" + plz + ";");
 
-  qDebug() << Q_FUNC_INFO << sql;
-
+  // qDebug() << Q_FUNC_INFO << sql;
   QStringList list;
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {

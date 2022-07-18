@@ -85,6 +85,33 @@ PurchasePaymentInfo::PurchasePaymentInfo(QWidget *parent) : QWidget{parent} {
   m_deliveryCost->setToolTip(tr("transportation costs"));
   layout->addWidget(m_deliveryCost, row++, 1, 1, 1, Qt::AlignLeft);
 
+  QLabel *info_iban = new QLabel(tr("IBAN") + ":", this);
+  layout->addWidget(info_iban, row, 0, 1, 1, Qt::AlignRight);
+
+  c_iban = new PLineRead(this);
+  c_iban->setObjectName("c_iban");
+  c_iban->setPlaceholderText(tr("IBAN"));
+  c_iban->setToolTip(tr("IBAN"));
+  layout->addWidget(c_iban, row++, 1, 1, 1);
+
+  QLabel *info_swift = new QLabel(tr("SWIFT/BIC") + ":", this);
+  layout->addWidget(info_swift, row, 0, 1, 1);
+
+  c_swift_bic = new PLineRead(this);
+  c_swift_bic->setObjectName("c_swift_bic");
+  c_swift_bic->setPlaceholderText(tr("SWIFT/BIC"));
+  c_swift_bic->setToolTip(tr("SWIFT/BIC"));
+  layout->addWidget(c_swift_bic, row++, 1, 1, 1);
+
+  QLabel *info_tax = new QLabel(tr("TAX Id") + ":", this);
+  layout->addWidget(info_tax, row, 0, 1, 1, Qt::AlignRight);
+
+  c_tax_id = new PLineRead(this);
+  c_tax_id->setObjectName("c_tax_id");
+  c_tax_id->setPlaceholderText(tr("Tax Id"));
+  c_tax_id->setToolTip(tr("Tax Id"));
+  layout->addWidget(c_tax_id, row++, 1, 1, 1);
+
   layout->setRowStretch(row, 1);
   setLayout(layout);
 }

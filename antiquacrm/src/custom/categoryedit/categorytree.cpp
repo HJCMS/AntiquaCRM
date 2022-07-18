@@ -311,14 +311,27 @@ void CategoryTree::toggleVisible() {
   p_hide = action;
 }
 
-void CategoryTree::findKeyword(const QString &key)
-{
-  QList<QTreeWidgetItem *> list = findItems(key,Qt::MatchContains,0);
-  qDebug() << Q_FUNC_INFO << key << list.count();
-  for(int i = 0; i < list.count(); i++) {
-    QTreeWidgetItem *item = list.at(i);
-    setCurrentItem(item);
-    qDebug() << item->text(0);
+void CategoryTree::findKeyword(const QString &key) {
+  QStringList list;
+  for (int t = 0; t < topLevelItemCount(); t++) {
+    QTreeWidgetItem *main = topLevelItem(t);
+    for (int s = 0; s < main->childCount(); s++) {
+      QTreeWidgetItem *sub = main->child(s);
+      if (sub->isHidden())
+        continue;
+
+      if (sub->text(0) == key)
+        setCurrentItem(sub);
+
+      if (sub->childCount() > 0) {
+        for (int k = 0; k < sub->childCount(); k++) {
+          if (sub->child(k)->text(0) == key) {
+            setCurrentItem(sub);
+            return;
+          }
+        }
+      }
+    }
   }
 }
 

@@ -57,7 +57,6 @@ void BooklookerIfaceWidget::createOrderDataSet(const QJsonArray &array) {
 void BooklookerIfaceWidget::parseAddressBody(const QString &key,
                                              const QJsonObject &obj) {
   QStringList addressBody;
-  QJsonObject customerData;
   // Käufer*in anzeigefeld
   QString person;
   QString c_gender = obj.value("title").toString().trimmed();
@@ -67,17 +66,22 @@ void BooklookerIfaceWidget::parseAddressBody(const QString &key,
     m_order->setValue("c_gender", c_gender);
     p_customer.insert("c_gender", c_gender);
   }
+
+  if (obj.contains("company")) {
+    QString company = obj.value("company").toString().trimmed();
+    p_customer.insert("c_company_name", company);
+    m_order->setValue("c_company_name", company);
+  }
+
   QString c_firstname = obj.value("firstName").toString().trimmed();
   m_order->setValue("c_firstname", c_firstname);
   p_customer.insert("c_firstname", c_firstname);
-  customerData.insert("c_firstname", c_firstname);
 
   person.append(c_firstname);
   person.append(" ");
   QString c_lastname = obj.value("name").toString().trimmed();
   m_order->setValue("c_lastname", c_lastname);
   p_customer.insert("c_lastname", c_lastname);
-  customerData.insert("c_lastname", c_lastname);
   person.append(c_lastname);
   addressBody << QString(c_firstname + " " + c_lastname);
   m_order->setValue("person", person);
@@ -165,6 +169,10 @@ void BooklookerIfaceWidget::createCustomerDocument() {
   if (!pAddress.isEmpty())
     customer.insert("c_postal_address", pAddress);
 
+  QString dAddress = m_order->getValue("c_shipping_address").toString();
+  if (!dAddress.isEmpty())
+    customer.insert("c_shipping_address", dAddress);
+
   emit createCustomer(QJsonDocument(customer));
 }
 
@@ -196,6 +204,7 @@ void BooklookerIfaceWidget::setContent(const QJsonDocument &doc) {
       QJsonObject::iterator it;
       for (it = obj.begin(); it != obj.end(); ++it) {
         QString f = it.key();
+        QString sf = sqlParam(f);
         QJsonValue val = it.value();
         if (f == "invoiceAddress") {
           parseAddressBody("c_postal_address", it->toObject());
@@ -208,7 +217,12 @@ void BooklookerIfaceWidget::setContent(const QJsonDocument &doc) {
           continue;
         }
         // qDebug() << f << sqlParam(f) << val.toVariant();
-        m_order->setValue(sqlParam(f), val.toVariant());
+        if (!sf.isEmpty() && sf.contains("c_")) {
+          if ((val.toVariant().type() == QVariant::String) &&
+              !p_customer.contains(sf))
+            p_customer.insert(sf, val.toVariant().toString());
+        }
+        m_order->setValue(sf, val.toVariant());
       }
     }
   }
@@ -239,10 +253,13 @@ const QMap<QString, QString> BooklookerIfaceWidget::fieldTranslate() const {
   map.insert("email", "c_email_0");
   map.insert("orderId", "o_provider_order_id");
   map.insert("orderDate", "o_since");
+  map.insert("company", "c_company_name");
+  // map.insert("", "c_company_employer");
   // Konto Inhaber
-  map.insert("accountHolder","c_comments");
+  map.insert("accountHolder", "c_comments");
   map.insert("accountIban", "c_iban");
   map.insert("accountBic", "c_swift_bic");
+  map.insert("ustIdNr", "c_tax_id");
   // @}
 
   /**
@@ -251,9 +268,10 @@ const QMap<QString, QString> BooklookerIfaceWidget::fieldTranslate() const {
    * Gewichts-Staffel-Tabelle zur Portoberechnung, oder bei Nutzung von
    * Pauschalpreisen
    */
-//  map.insert("calculatedShippingCost", "");
-//  map.insert("currentProvisionNet", "");
-//  map.insert("originalProvisionNet", "");
+  //  map.insert("calculatedShippingCost", "");
+  map.insert("comments", "o_delivery_comment");
+  //  map.insert("currentProvisionNet", "");
+  //  map.insert("originalProvisionNet", "");
 
   /**
    * Aktuell nur für Zahlungsart PayPal: Falls uns der Zeitpunkt der
