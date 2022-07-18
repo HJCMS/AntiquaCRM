@@ -71,6 +71,8 @@ CategoryEdit::CategoryEdit(QWidget *parent) : QDialog{parent} {
   connect(m_btnFrame, SIGNAL(sendSaveDialog()), this,
           SLOT(saveCompanyTreeUsage()));
   connect(m_btnFrame, SIGNAL(sendQuitDialog()), this, SLOT(reject()));
+  connect(m_btnFrame, SIGNAL(sendSearch(const QString &)), m_tree,
+          SLOT(findKeyword(const QString &)));
 }
 
 bool CategoryEdit::initCategories() {
@@ -216,6 +218,13 @@ void CategoryEdit::disableCompanyUsageList(const QStringList &ids) {
   } else {
     m_statusBar->showMessage(tr("Database Update successfully!"), timeout);
   }
+}
+
+void CategoryEdit::keyPressEvent(QKeyEvent *e) {
+  if (e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter) {
+    return;
+  }
+  QDialog::keyPressEvent(e);
 }
 
 int CategoryEdit::exec() {

@@ -311,6 +311,17 @@ void CategoryTree::toggleVisible() {
   p_hide = action;
 }
 
+void CategoryTree::findKeyword(const QString &key)
+{
+  QList<QTreeWidgetItem *> list = findItems(key,Qt::MatchContains,0);
+  qDebug() << Q_FUNC_INFO << key << list.count();
+  for(int i = 0; i < list.count(); i++) {
+    QTreeWidgetItem *item = list.at(i);
+    setCurrentItem(item);
+    qDebug() << item->text(0);
+  }
+}
+
 QTreeWidgetItem *CategoryTree::addTopLevel(const QString &name) {
   QTreeWidgetItem *item = new QTreeWidgetItem(this);
   item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);

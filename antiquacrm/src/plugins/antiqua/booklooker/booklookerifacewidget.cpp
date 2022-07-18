@@ -200,6 +200,9 @@ void BooklookerIfaceWidget::setContent(const QJsonDocument &doc) {
         if (f == "invoiceAddress") {
           parseAddressBody("c_postal_address", it->toObject());
           continue;
+        } else if (f == "deliveryAddress") {
+          parseAddressBody("c_shipping_address", it->toObject());
+          continue;
         } else if (f == "orderItems") {
           createOrderDataSet(val.toArray());
           continue;

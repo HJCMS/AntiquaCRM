@@ -948,7 +948,22 @@
     </message>
     <message>
         <location line="+5"/>
-        <source>Hide/Show Unused</source>
+        <source>Switch view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hide and Show unused categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Search Keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Add Keyword and Press Enter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -957,7 +972,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -985,7 +1000,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+153"/>
         <location line="+14"/>
         <location line="+13"/>
         <source>An error has occurred!</source>
@@ -1002,7 +1017,7 @@
 <context>
     <name>CategorySubject</name>
     <message>
-        <location filename="../custom/categoryedit/categorysubject.cpp" line="+56"/>
+        <location filename="../custom/categoryedit/categorysubject.cpp" line="+57"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1032,12 +1047,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+81"/>
         <source>A database error has occurred.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>In this area, the categories are defined which are permanently assigned by your service provider. Ultimately, it is decided here in which category your book is for sale.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1080,20 +1095,20 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+188"/>
+        <location line="+201"/>
         <source>Main category</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-231"/>
-        <location line="+247"/>
+        <location line="-244"/>
+        <location line="+266"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-263"/>
+        <location line="-282"/>
         <location line="+16"/>
-        <location line="+247"/>
+        <location line="+266"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>

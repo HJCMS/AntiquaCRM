@@ -39,8 +39,9 @@ _sqlfile=${_scripting}/catalog/bf-export.sql
 _output_target=${_dest}/catalog
 
 # Standard Ausgabename für Temporäre Daten in ~/.cache erstellen!
-_tempdir=$HOME/.cache
+_tempdir=$HOME/.cache/antiqua_catalog
 _output="catalog-${_date}-ISO-8859-15.csv"
+_export="catalog_${_date}_UTF8.csv"
 
 #####################################################################
 
@@ -65,6 +66,8 @@ if test ! -d ${_output_target} ; then
   exit 1
 fi
 
+mkdir -p ${_tempdir}
+
 __init_tempfile
 
 __init_sql_enviroment
@@ -77,19 +80,25 @@ psql \
   --echo-hidden \
   --tuples-only \
   --field-separator="`printf '\t'`" \
-  --log-file=${_tempdir}/catalog-error.log \
+  --log-file=${_tempdir}/catalog-trace.log \
   --output=${_tempdir}/catalog-export.temp < ${_sqlfile}
 
 if test -s ${_tempdir}/catalog-export.temp ; then
   psql < ${_sqlfile} | head -n 1 | sed 's, ,,g' | awk '{print toupper($1)}' | sed 's/|/\t/g' > ${_tempdir}/catalog-export-utf8.csv
   sed 's,NOT_SET,,g' ${_tempdir}/catalog-export.temp >> ${_tempdir}/catalog-export-utf8.csv
   iconv -f UTF8 -t LATIN9 --output=${_tempdir}/${_output} ${_tempdir}/catalog-export-utf8.csv
-  mv -b ${_tempdir}/${_output} ${_output_target}/
-  mv -b ${_tempdir}/catalog-export-utf8.csv ${_output_target}/
-  _lines="$(wc -l ${_output_target}/${_output} 2>/dev/null | cut -d' ' -f1)"
+  _status=$?
+  if test ${_status} -gt 0 ; then
+    echo "Script ENCODING TEST with errors"
+    exit 1
+  else
+    rm -f ${_tempdir}/${_output}
+  fi
+  mv -b ${_tempdir}/catalog-export-utf8.csv ${_output_target}/${_export}
+  _lines="$(wc -l ${_output_target}/${_export} 2>/dev/null | cut -d' ' -f1)"
   echo "Katalog Ertellt am '`date`' mit '`echo "${_lines} - 1" | bc`' einträgen." >> ${_output_target}/catalog.log
   rm -f ${_output_target}/catalog.csv
-  ln -sf ${_output} ${_output_target}/catalog.csv
+  ln -sf ${_export} ${_output_target}/catalog.csv
   rm -f ${_tempdir}/catalog-export.temp
 fi
 
@@ -100,24 +109,24 @@ if test ${_status} -gt 0 ; then
 fi
 
 pushd ${_output_target}
-  cp $(readlink catalog.csv) katalog.txt
-  chmod 0644 katalog.txt
+  cp $(readlink catalog.csv) catalog_utf8.csv
+  chmod 0644 catalog_utf8.csv
   rm -f *.zip
-  zip -9 -o katalog.zip katalog.txt 1> /dev/null
-  chmod 0644 katalog.zip
-  rm -f katalog.txt
+  zip -9 -o catalog.zip catalog_utf8.csv 1> /dev/null
+  chmod 0644 catalog.zip
+  rm -f catalog_utf8.csv
 popd
 
-if test -e ${_output_target}/katalog.zip ; then
-  whsoft_url=https://www.buchfreund.de/verkaeufer/api/3fbe2f84-1ae2-419e-b5c4-fecabd6bac6c/upload-daten
-  header_file=$HOME/.config/HJCMS/curl-upload-catalog.header
-  curl --verbose -X POST ${whsoft_url} \
-  --header 'Content-Type: multipart/form-data; boundary="upload"' \
-  --header 'Content-Disposition: name=file; file=katalog.zip' \
-  --output $HOME/.cache/catalog_ulpoad.json \
-  --upload-file katalog.zip
-
-fi
+# if test -e ${_output_target}/katalog.zip ; then
+#   whsoft_url=https://www.buchfreund.de/verkaeufer/api/3fbe2f84-1ae2-419e-b5c4-fecabd6bac6c/upload-daten
+#   header_file=$HOME/.config/HJCMS/curl-upload-catalog.header
+#   curl --verbose -X POST ${whsoft_url} \
+#   --header 'Content-Type: multipart/form-data; boundary="upload"' \
+#   --header 'Content-Disposition: name=file; file=katalog.zip' \
+#   --output $HOME/.cache/catalog_ulpoad.json \
+#   --upload-file katalog.zip
+#
+# fi
 
 ##
 ## EOF

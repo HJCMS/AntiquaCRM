@@ -948,8 +948,23 @@
     </message>
     <message>
         <location line="+5"/>
-        <source>Hide/Show Unused</source>
-        <translation>Deaktivierte Anzeigen/Ausblenden</translation>
+        <source>Switch view</source>
+        <translation>Anzeige umschalten</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hide and Show unused categories</source>
+        <translation>Anzeigen oder Verbergen der Deaktivierten Elemente</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Search Keyword</source>
+        <translation>Suche Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Add Keyword and Press Enter</source>
+        <translation>Schlüsselwort einfügen und Enter drücken um die Suche zu starten</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -957,7 +972,7 @@
         <translation>Speichern</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Close</source>
         <translation>Beenden</translation>
     </message>
@@ -985,7 +1000,7 @@
         <translation>Unternehmens Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+149"/>
+        <location line="+153"/>
         <location line="+14"/>
         <location line="+13"/>
         <source>An error has occurred!</source>
@@ -1002,7 +1017,7 @@
 <context>
     <name>CategorySubject</name>
     <message>
-        <location filename="../custom/categoryedit/categorysubject.cpp" line="+56"/>
+        <location filename="../custom/categoryedit/categorysubject.cpp" line="+57"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
@@ -1032,12 +1047,12 @@
         <translation>Informationsdialog öffnen</translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+81"/>
         <source>A database error has occurred.</source>
         <translation>Ein Datenbankfehler ist aufgetreten.</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>In this area, the categories are defined which are permanently assigned by your service provider. Ultimately, it is decided here in which category your book is for sale.</source>
         <translation>In Diesem Bereich werden die Kategorien definiert welche von ihrem Dienstleister fest vergeben sind. Letztentlich wird hier entschieden in welcher Kategorie ihr Buch zum Verkauf steht.</translation>
     </message>
@@ -1080,20 +1095,20 @@
         <translation>Deaktiviere diesen Bereich</translation>
     </message>
     <message>
-        <location line="+188"/>
+        <location line="+201"/>
         <source>Main category</source>
         <translation>Hauptkategorie</translation>
     </message>
     <message>
-        <location line="-231"/>
-        <location line="+247"/>
+        <location line="-244"/>
+        <location line="+266"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
     <message>
-        <location line="-263"/>
+        <location line="-282"/>
         <location line="+16"/>
-        <location line="+247"/>
+        <location line="+266"/>
         <source>No</source>
         <translation>Nein</translation>
     </message>

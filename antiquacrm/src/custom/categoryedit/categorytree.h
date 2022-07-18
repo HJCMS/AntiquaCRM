@@ -147,6 +147,11 @@ public Q_SLOTS:
    */
   void toggleVisible();
 
+  /**
+   * @brief Schlüsselwort hervorheben
+   */
+  void findKeyword(const QString &);
+
 public:
   explicit CategoryTree(QWidget *parent = nullptr);
 

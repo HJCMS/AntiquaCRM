@@ -92,6 +92,9 @@ private Q_SLOTS:
    */
   void disableCompanyUsageList(const QStringList &ids);
 
+protected:
+  void keyPressEvent(QKeyEvent *);
+
 public:
   explicit CategoryEdit(QWidget *parent = nullptr);
 
