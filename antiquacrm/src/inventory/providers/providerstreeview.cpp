@@ -7,11 +7,18 @@
 #include <QDebug>
 
 ProvidersTreeView::ProvidersTreeView(QWidget *parent) : QTreeWidget{parent} {
-  setColumnCount(1);
+  setColumnCount(2);
   setItemsExpandable(true);
   setSortingEnabled(false);
   setWordWrap(false);
-  setMaximumWidth(250);
+  setMaximumWidth(265);
+
+  QTreeWidgetItem *aItem = headerItem();
+  aItem->setText(0, tr("Orders"));
+  aItem->setIcon(0, myIcon("autostart"));
+  QTreeWidgetItem *bItem = headerItem();
+  bItem->setText(1, tr("Date"));
+  bItem->setIcon(1, myIcon("autostart"));
 
   connect(this, SIGNAL(itemClicked(QTreeWidgetItem *, int)), this,
           SLOT(itemSelected(QTreeWidgetItem *, int)));
@@ -59,12 +66,6 @@ bool ProvidersTreeView::exists(const QString &provider, const QString &id) {
   return (getChild(provider, id) != nullptr);
 }
 
-void ProvidersTreeView::setTreeViewHeaders() {
-  QTreeWidgetItem *hItem = headerItem();
-  hItem->setText(0, tr("Orders"));
-  hItem->setIcon(0, myIcon("autostart"));
-}
-
 void ProvidersTreeView::addOrder(const QString &provider, const QString &id,
                                  const QDateTime &dt) {
   if (exists(provider, id))
@@ -82,6 +83,8 @@ void ProvidersTreeView::addOrder(const QString &provider, const QString &id,
       item->setFont(0, font);
       item->setIcon(0, myIcon("group"));
       item->setToolTip(0, dt.toString("ddd dd. MMMM yyyy"));
+      item->setText(1, dt.toString("dd.MM.yyyy"));
+      item->setToolTip(1, dt.toString("ddd dd. MMMM yyyy"));
       p->addChild(item);
     }
   }

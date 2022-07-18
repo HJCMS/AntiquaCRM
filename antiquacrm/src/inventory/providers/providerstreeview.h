@@ -6,6 +6,7 @@
 #define INVENTORY_PROVIDERS_TREEVIEW_H
 
 #include <QDateTime>
+#include <QLabel>
 #include <QObject>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
@@ -68,11 +69,6 @@ public:
    * @param id       - Bestellnummer
    */
   bool exists(const QString &provider, const QString &id);
-
-  /**
-   * @brief Kopfdaten initialisieren
-   */
-  void setTreeViewHeaders();
 
   /**
    * @brief Dienstleister hinzufügen

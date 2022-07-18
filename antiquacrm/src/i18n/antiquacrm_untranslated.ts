@@ -2729,7 +2729,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+63"/>
         <source>exists with count</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3169,13 +3169,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+763"/>
+        <location line="+765"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-842"/>
+        <location line="-844"/>
         <source>Invoice ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3230,12 +3230,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+29"/>
         <source>settlement number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Current shopping items</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3345,7 +3345,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-747"/>
+        <location line="-749"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3355,7 +3355,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+686"/>
+        <location line="+688"/>
         <source>Printing canceled.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4486,8 +4486,13 @@
 <context>
     <name>ProvidersTreeView</name>
     <message>
-        <location filename="../inventory/providers/providerstreeview.cpp" line="+64"/>
+        <location filename="../inventory/providers/providerstreeview.cpp" line="+17"/>
         <source>Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

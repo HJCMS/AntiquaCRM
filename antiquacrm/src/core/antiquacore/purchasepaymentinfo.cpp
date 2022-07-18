@@ -95,7 +95,7 @@ PurchasePaymentInfo::PurchasePaymentInfo(QWidget *parent) : QWidget{parent} {
   layout->addWidget(c_iban, row++, 1, 1, 1);
 
   QLabel *info_swift = new QLabel(tr("SWIFT/BIC") + ":", this);
-  layout->addWidget(info_swift, row, 0, 1, 1);
+  layout->addWidget(info_swift, row, 0, 1, 1, Qt::AlignRight);
 
   c_swift_bic = new PLineRead(this);
   c_swift_bic->setObjectName("c_swift_bic");

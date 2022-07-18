@@ -47,14 +47,13 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
 
   m_listView = new ProvidersTreeView(m_splitter);
   m_listView->setObjectName("providers_payments_list");
-  m_listView->setTreeViewHeaders();
   m_splitter->insertWidget(1, m_listView);
 
   m_toolBar = new ProvidersToolBar(this);
   layout->addWidget(m_toolBar);
 
-  m_splitter->setStretchFactor(0, 70);
-  m_splitter->setStretchFactor(1, 30);
+  m_splitter->setStretchFactor(0, 65);
+  m_splitter->setStretchFactor(1, 35);
   layout->setStretch(0, 1);
   setLayout(layout);
 

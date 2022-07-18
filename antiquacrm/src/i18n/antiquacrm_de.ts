@@ -209,13 +209,13 @@
     <message>
         <location line="+3"/>
         <source>TAX Id</source>
-        <translation>Struer Id</translation>
+        <translation>Steuernummer</translation>
     </message>
     <message>
         <location line="+5"/>
         <location line="+1"/>
         <source>Tax Id</source>
-        <translation>Steuer Id</translation>
+        <translation>Steuernummer</translation>
     </message>
 </context>
 <context>
@@ -2729,7 +2729,7 @@
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+63"/>
         <source>exists with count</source>
         <translation>ist Verfügbar mit der Anzahl</translation>
     </message>
@@ -3169,13 +3169,13 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+763"/>
+        <location line="+765"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-842"/>
+        <location line="-844"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
@@ -3230,12 +3230,12 @@
         <translation>Kein MwST hinzufügen</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+29"/>
         <source>settlement number</source>
         <translation>Abwicklungsnummer</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Current shopping items</source>
         <translation>Aktuelle Bestellungen</translation>
     </message>
@@ -3345,7 +3345,7 @@
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
     <message>
-        <location line="-747"/>
+        <location line="-749"/>
         <source>Service</source>
         <translation>Sender</translation>
     </message>
@@ -3355,7 +3355,7 @@
         <translation>Rechnungs Optionen</translation>
     </message>
     <message>
-        <location line="+686"/>
+        <location line="+688"/>
         <source>Printing canceled.</source>
         <translation>Druckevorgang abgebrochen.</translation>
     </message>
@@ -4486,9 +4486,14 @@
 <context>
     <name>ProvidersTreeView</name>
     <message>
-        <location filename="../inventory/providers/providerstreeview.cpp" line="+64"/>
+        <location filename="../inventory/providers/providerstreeview.cpp" line="+17"/>
         <source>Orders</source>
         <translation>Bestellungen</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Date</source>
+        <translation>Datum</translation>
     </message>
 </context>
 <context>
