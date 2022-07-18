@@ -193,11 +193,13 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   o_provider_name = new LineEdit(m_providerBox);
   o_provider_name->setObjectName("o_provider_name");
   o_provider_name->setInfo(tr("Provider"));
+  o_provider_name->setRequired("true");
   providerLayout->addWidget(o_provider_name, 0, 0, 1, 1);
   providerLayout->addWidget(new QLabel(m_providerBox), 0, 1, 1, 1);
   o_provider_order_id = new LineEdit(m_providerBox);
   o_provider_order_id->setObjectName("o_provider_order_id");
   o_provider_order_id->setInfo(tr("settlement number"));
+  o_provider_order_id->setRequired("true");
   providerLayout->addWidget(o_provider_order_id, 1, 0, 1, 1);
   providerLayout->setRowStretch(2, 1);
   m_providerBox->setLayout(providerLayout);
