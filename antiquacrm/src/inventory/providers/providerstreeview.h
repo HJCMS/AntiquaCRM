@@ -23,6 +23,7 @@ class ProvidersTreeView : public QTreeWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  const QString setDateString(const QDateTime &dt) const;
   QTreeWidgetItem *getParent(const QString &name);
   QTreeWidgetItem *getChild(const QString &provider, const QString &id);
 
@@ -73,7 +74,9 @@ public:
   /**
    * @brief Dienstleister hinzufügen
    */
-  void addProvider(const QString &);
+  void addProvider(const QString &provider);
+
+  int ordersCount();
 };
 
 #endif // INVENTORY_PROVIDERS_TREEVIEW_H

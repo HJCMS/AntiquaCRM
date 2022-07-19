@@ -12,6 +12,7 @@
 #include <QHttpPart>
 #include <QJsonParseError>
 #include <QMutex>
+#include <QTimer>
 #include <QUrlQuery>
 
 static const QByteArray applCaBundlePath() {
@@ -146,8 +147,16 @@ void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
       config->setValue("api_token", value);
       config->endGroup();
     }
+#ifdef ANTIQUA_DEVELOPEMENT
     qInfo("Authenticated: %s", qPrintable(value));
-    emit authenticFinished();
+#endif
+    /**
+     * !!! WARNING !!!
+     * Booklooker Anfragen auf Windows machen Probleme wenn zu schnell
+     * hintereinander mehrere Anfragen ausgeführt werden.
+     * Aus diesem Grund hier eine Zeitverzögerung!
+     */
+    QTimer::singleShot(2000, this, SIGNAL(authenticFinished()));
   } else if (status == "NOK" && !value.isEmpty()) {
     qWarning("Authentication Error: %s", qPrintable(value));
     // Authentic Response Status
@@ -207,7 +216,9 @@ void BooklookerRequester::slotFinished(QNetworkReply *reply) {
 void BooklookerRequester::slotSslErrors(const QList<QSslError> &list) {
   for (int i = 0; i < list.count(); i++) {
     QSslError ssl_error = list.at(i);
+#ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << ssl_error.errorString();
+#endif
   }
 }
 
@@ -304,7 +315,7 @@ void BooklookerRequester::queryList() {
   p.append("/order");
   url.setPath(p);
 
-  QDate past = QDate::currentDate().addDays(-5);
+  QDate past = QDate::currentDate().addDays(ANTIQUA_QUERY_PASTDAYS);
   QUrlQuery q;
   q.addQueryItem("token", getToken());
   q.addQueryItem("dateFrom", past.toString(DATE_FORMAT));
@@ -339,7 +350,7 @@ void BooklookerRequester::authenticationRefresh() { authentication(); }
 const QString BooklookerRequester::getToken() {
   QString token = qEnvironmentVariable(BOOKLOOKER_TOKEN_ENV);
   if (token.isEmpty()) {
-    qInfo("Booklooker: no token");
+    qInfo("Booklooker - token expired");
   }
   return token;
 }

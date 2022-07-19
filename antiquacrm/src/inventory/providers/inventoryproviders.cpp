@@ -61,7 +61,7 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   connect(m_toolBar, SIGNAL(s_refresh()), this, SLOT(searchConvert()));
   connect(m_toolBar, SIGNAL(s_createOrder()), this, SLOT(createEditOrders()));
 
-  // Development
+  // TODO - Aktuell keinerlei Funktionen
   //  connect(m_listView, SIGNAL(s_queryProvider(const QString &)), this,
   //          SLOT(queryProviderPage(const QString &)));
 
@@ -395,8 +395,8 @@ void InventoryProviders::checkArticleExists(QList<int> &list) {
 
   // Nehme aktuelle Provider Daten
   ProviderOrder pd = tab->getProviderOrder();
-  // Ist eine Kundennummer vorhanden, dann sofort auf eine Prüfung auf
-  // bestehende Aufträge erstellen.
+  // Ist eine Kundennummer vorhanden, dann sofort eine Prüfung auf bestehende
+  // Aufträge erstellen.
   int c_id = pd.customerId();
   if (c_id > 0) {
     QString sql = queryFindExistingOrders(pd.provider(), pd.providerId(), c_id);
@@ -478,7 +478,8 @@ void InventoryProviders::createEditOrders() {
   }
 
   if (tab->getCustomerId() != current_cid) {
-    qDebug() << Q_FUNC_INFO << "Invalid CustomerID";
+    m_toolBar->statusMessage(tr("Invalid Customer Id!"));
+    m_toolBar->enableOrderButton(false);
     return;
   }
 
@@ -502,6 +503,13 @@ void InventoryProviders::readOrderList(const QJsonDocument &doc) {
     QJsonObject obj = array[i].toObject();
     QDateTime dt = QDateTime::fromString(obj["datum"].toString(), Qt::ISODate);
     m_listView->addOrder(provider, obj["id"].toString(), dt);
+  }
+
+  int count = m_listView->ordersCount();
+  if (count > 0) {
+    QString info(tr("Current order count ") + ": ");
+    info.append(QString::number(count));
+    m_toolBar->statusMessage(info);
   }
 }
 

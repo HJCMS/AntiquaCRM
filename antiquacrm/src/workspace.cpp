@@ -202,7 +202,7 @@ void Workspace::editPrintsEntry(int articleId) {
 }
 
 void Workspace::editArticleEntry(int articleId, const QString &section) {
-  qDebug() << Q_FUNC_INFO << articleId << section;
+  // qDebug() << Q_FUNC_INFO << articleId << section;
   if (section == "PRINTS") {
     editPrintsEntry(articleId);
   } else if (section == "BOOKS") {

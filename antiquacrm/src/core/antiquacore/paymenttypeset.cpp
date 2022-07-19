@@ -38,7 +38,7 @@ PaymentTypeSet::PaymentTypeSet() : QMap<int, QString>{} {
 int PaymentTypeSet::findKey(const QString &name) {
   QMap<int, QString>::const_iterator i = constBegin();
   while (i != constEnd()) {
-    qDebug() << i.key() << ": " << i.value() << Qt::endl;
+    // qDebug() << i.key() << ": " << i.value() << Qt::endl;
     if (i.value() == name)
       return i.key();
 

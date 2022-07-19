@@ -50,6 +50,10 @@
 #define ANTIQUA_DATETIME_FORMAT Qt::ISODate
 #endif
 
+#ifndef ANTIQUA_QUERY_PASTDAYS
+#define ANTIQUA_QUERY_PASTDAYS -4
+#endif
+
 /**
  * @group Antiqua Plugin Interface
  */

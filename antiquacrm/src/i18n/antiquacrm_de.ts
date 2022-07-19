@@ -4,7 +4,7 @@
 <context>
     <name>AbeBooksIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+292"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+307"/>
         <source>Buyer Cancelled</source>
         <translation>Käufer stornierte</translation>
     </message>
@@ -78,7 +78,7 @@
 <context>
     <name>Antiqua::InterfaceWidget</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+321"/>
+        <location filename="../core/antiquacore/interface.cpp" line="+326"/>
         <source>Please select</source>
         <translation>Bitte auswählen</translation>
     </message>
@@ -99,7 +99,7 @@
 <context>
     <name>Antiqua::PurchaseOverview</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="-270"/>
+        <location filename="../core/antiquacore/interface.cpp" line="-275"/>
         <source>Purchaser</source>
         <translation>Einkäufer*in</translation>
     </message>
@@ -782,7 +782,7 @@
 <context>
     <name>BooklookerRequester</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+155"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+164"/>
         <source>Missing API Key</source>
         <translation>Kein API Schlüssel gefunden</translation>
     </message>
@@ -1005,7 +1005,7 @@
 <context>
     <name>CategoryEdit</name>
     <message>
-        <location filename="../custom/categoryedit/categoryedit.cpp" line="+16"/>
+        <location filename="../custom/categoryedit/categoryedit.cpp" line="+24"/>
         <source>Edit Category Views</source>
         <translation>Bearbeite Kategorie Ansichten</translation>
     </message>
@@ -1025,8 +1025,8 @@
         <translation>Unternehmens Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+153"/>
-        <location line="+14"/>
+        <location line="+169"/>
+        <location line="+15"/>
         <location line="+13"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
@@ -1120,20 +1120,20 @@
         <translation>Deaktiviere diesen Bereich</translation>
     </message>
     <message>
-        <location line="+214"/>
+        <location line="+215"/>
         <source>Main category</source>
         <translation>Hauptkategorie</translation>
     </message>
     <message>
-        <location line="-257"/>
-        <location line="+279"/>
+        <location line="-258"/>
+        <location line="+280"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
     <message>
-        <location line="-295"/>
+        <location line="-296"/>
         <location line="+16"/>
-        <location line="+279"/>
+        <location line="+280"/>
         <source>No</source>
         <translation>Nein</translation>
     </message>
@@ -2791,12 +2791,22 @@
         <translation>Eine Bestellung mit diesen Einträgen existiert bereits!</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+5"/>
+        <source>Invalid Customer Id!</source>
+        <translation>Fehlerhafte Kundennummer!</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Invalid Shipping Properties!</source>
         <translation>Ungültige Versandeigenschaften!</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+18"/>
+        <source>Current order count </source>
+        <translation>Anzahl der Bestellungen</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>an error occurred</source>
         <translation>ein Fehler ist aufgetreten</translation>
     </message>
@@ -2806,7 +2816,7 @@
         <translation>Erfolgreich</translation>
     </message>
     <message>
-        <location line="-428"/>
+        <location line="-436"/>
         <location line="+14"/>
         <source>Article</source>
         <translation>Artikel</translation>
@@ -4486,7 +4496,7 @@
 <context>
     <name>ProvidersTreeView</name>
     <message>
-        <location filename="../inventory/providers/providerstreeview.cpp" line="+17"/>
+        <location filename="../inventory/providers/providerstreeview.cpp" line="+18"/>
         <source>Orders</source>
         <translation>Bestellungen</translation>
     </message>
@@ -4494,6 +4504,11 @@
         <location line="+3"/>
         <source>Date</source>
         <translation>Datum</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Today</source>
+        <translation>Heute</translation>
     </message>
 </context>
 <context>

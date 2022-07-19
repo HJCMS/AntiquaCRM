@@ -312,6 +312,7 @@ void CategoryTree::toggleVisible() {
 }
 
 void CategoryTree::findKeyword(const QString &key) {
+  QString search = key.toLower().trimmed();
   QStringList list;
   for (int t = 0; t < topLevelItemCount(); t++) {
     QTreeWidgetItem *main = topLevelItem(t);
@@ -320,12 +321,12 @@ void CategoryTree::findKeyword(const QString &key) {
       if (sub->isHidden())
         continue;
 
-      if (sub->text(0) == key)
+      if (sub->text(0).toLower() == search)
         setCurrentItem(sub);
 
       if (sub->childCount() > 0) {
         for (int k = 0; k < sub->childCount(); k++) {
-          if (sub->child(k)->text(0) == key) {
+          if (sub->child(k)->text(0).toLower() == search) {
             setCurrentItem(sub);
             return;
           }

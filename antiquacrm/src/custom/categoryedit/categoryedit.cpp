@@ -7,7 +7,15 @@
 #include "draglistwidget.h"
 #include "myicontheme.h"
 
+#ifdef ANTIQUA_DEVELOPEMENT
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QTextStream>
+#include <QTextCodec>
+#endif
 #include <QDebug>
+#include <QMutex>
 #include <QLabel>
 #include <QVBoxLayout>
 
@@ -182,16 +190,33 @@ void CategoryEdit::saveCompanyTreeUsage() {
     sql.append(" AND ce_name='" + m.getSub() + "';");
     statements << sql;
   }
-  if (statements.size() > 0) {
-    m_sql->query("UPDATE categories_extern SET ce_company_keywords='';");
-    m_sql->query(statements.join("\n"));
-    if (!m_sql->lastError().isEmpty()) {
-      qDebug() << m_sql->lastError();
-      m_statusBar->showMessage(tr("An error has occurred!"), timeout);
-    } else {
-      m_statusBar->showMessage(tr("Database Update successfully!"), timeout);
-    }
+
+  if (statements.count() < 1)
+    return;
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  QFileInfo file(QDir::temp(),"current_categories_update.sql");
+  QFile fp(file.filePath());
+  if(fp.open(QIODevice::WriteOnly)) {
+    QTextStream out(&fp);
+    out.setCodec(QTextCodec::codecForName("UTF-8"));
+    out << statements.join("\n");
+    fp.close();
   }
+  qDebug() << "Written:" << file.filePath();
+#endif
+
+  QMutex mutex(QMutex::Recursive);
+  mutex.lock();
+  m_sql->query("UPDATE categories_extern SET ce_company_keywords='';");
+  m_sql->query(statements.join("\n"));
+  if (!m_sql->lastError().isEmpty()) {
+    m_statusBar->showMessage(tr("An error has occurred!"), timeout);
+    qDebug() << m_sql->lastError();
+  } else {
+    m_statusBar->showMessage(tr("Database Update successfully!"), timeout);
+  }
+  mutex.unlock();
 }
 
 void CategoryEdit::updateCompanyUsage(int categoryId, bool usage) {

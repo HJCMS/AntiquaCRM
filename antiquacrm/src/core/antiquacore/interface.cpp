@@ -177,6 +177,11 @@ void PurchaseOverview::setValue(const QString &objName, const QVariant &value) {
   if (objName.isEmpty() || value.isNull())
     return;
 
+  if (objName.contains("_phone_") || objName.contains("_mobil_")) {
+    setPhone(objName, value);
+    return;
+  }
+
   QLineEdit *le = findChild<QLineEdit *>(objName, Qt::FindChildrenRecursively);
   if (le != nullptr) {
     le->setText(value.toString().trimmed());
@@ -211,7 +216,7 @@ void PurchaseOverview::setPhone(const QString &objName, const QVariant &value) {
   int row = m_debugTable->rowCount();
   m_debugTable->setRowCount(row + 1);
   m_debugTable->setItem(row, 0, m_debugTable->createItem(objName));
-  m_debugTable->setItem(row, 1, m_debugTable->createItem(value));
+  m_debugTable->setItem(row, 1, m_debugTable->createItem(phone));
 }
 
 const QVariant PurchaseOverview::getValue(const QString &objName) {

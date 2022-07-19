@@ -4,6 +4,7 @@
 #include "providerstreeview.h"
 #include "myicontheme.h"
 
+#include <QDate>
 #include <QDebug>
 
 ProvidersTreeView::ProvidersTreeView(QWidget *parent) : QTreeWidget{parent} {
@@ -24,12 +25,19 @@ ProvidersTreeView::ProvidersTreeView(QWidget *parent) : QTreeWidget{parent} {
           SLOT(itemSelected(QTreeWidgetItem *, int)));
 }
 
+const QString ProvidersTreeView::setDateString(const QDateTime &dt) const {
+  QString str = tr("Today");
+  if (dt.date() != QDate::currentDate()) {
+    str = dt.toString("dd.MM.yyyy");
+  }
+  return str;
+}
+
 QTreeWidgetItem *ProvidersTreeView::getParent(const QString &name) {
   for (int i = 0; i < topLevelItemCount(); i++) {
     QTreeWidgetItem *parent = topLevelItem(i);
-    if (parent != nullptr && parent->type() == QTreeWidgetItem::Type)
-    {
-      if(parent->text(0) == name)
+    if (parent != nullptr && parent->type() == QTreeWidgetItem::Type) {
+      if (parent->text(0) == name)
         return parent;
     }
   }
@@ -78,12 +86,13 @@ void ProvidersTreeView::addOrder(const QString &provider, const QString &id,
     QTreeWidgetItem *p = l.at(i);
     if (p != nullptr) {
       QTreeWidgetItem *item = new QTreeWidgetItem(p, QTreeWidgetItem::UserType);
-      item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+      item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled |
+                     Qt::ItemNeverHasChildren);
       item->setText(0, id);
       item->setFont(0, font);
       item->setIcon(0, myIcon("group"));
       item->setToolTip(0, dt.toString("ddd dd. MMMM yyyy"));
-      item->setText(1, dt.toString("dd.MM.yyyy"));
+      item->setText(1, setDateString(dt));
       item->setToolTip(1, dt.toString("ddd dd. MMMM yyyy"));
       p->addChild(item);
     }
@@ -113,10 +122,19 @@ void ProvidersTreeView::addProvider(const QString &provider) {
   }
 
   QTreeWidgetItem *item = new QTreeWidgetItem(this, QTreeWidgetItem::Type);
+  item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
+  item->setFlags(Qt::ItemIsEnabled);
   item->setText(0, provider);
   item->setIcon(0, myIcon("autostart"));
-  item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
   item->setExpanded(true);
   addTopLevelItem(item);
   resizeColumnToContents(0);
+}
+
+int ProvidersTreeView::ordersCount() {
+  int c = 0;
+  for (int t = 0; t < topLevelItemCount(); t++) {
+    c += topLevelItem(t)->childCount();
+  }
+  return c;
 }

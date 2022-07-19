@@ -35,7 +35,7 @@ void WHSoftJSonQuery::queryList() {
   QDateTime curDt = QDateTime::currentDateTime();
   QTime t(curDt.time().hour(), curDt.time().minute(), 0);
   curDt.setTime(t);
-  QDateTime from = curDt.addDays(-7);
+  QDateTime from = curDt.addDays(ANTIQUA_QUERY_PASTDAYS);
   QJsonObject obj;
   obj.insert("datum_von", QJsonValue::fromVariant(from.toString(DATE_FORMAT)));
   obj.insert("datum_bis", QJsonValue::fromVariant(curDt.toString(DATE_FORMAT)));

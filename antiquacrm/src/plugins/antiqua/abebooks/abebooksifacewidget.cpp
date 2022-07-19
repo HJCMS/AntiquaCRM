@@ -50,11 +50,11 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
   jsObject.insert("c_lastname", getString("c_lastname"));
   jsObject.insert("c_email_0", getString("c_email_0"));
 
-  QRegExp phonePattern("\\d+");
+  QRegExp phoneReplace("[^\\d]+");
   QString phone = xml.getAddressValue("phone").toString();
-  phone.replace("-", "");
+  phone.replace(phoneReplace, "");
   phone = stripString(phone);
-  if (!phone.isEmpty() && phonePattern.exactMatch(phone)) {
+  if (!phone.isEmpty() && phone.length() > 7) {
     qint64 phoneNumber = phone.toInt();
     jsObject.insert("c_phone_0", QJsonValue(phoneNumber));
   }
@@ -74,6 +74,11 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
   QString street = xml.getAddressValue("street").toString();
   street = stripString(street);
   if (!street.isEmpty()) {
+    QString street2 = xml.getAddressValue("street2").toString();
+    street2 = stripString(street2);
+    if (!street2.isEmpty()) {
+      street.append(" " + street2);
+    }
     jsObject.insert("c_street", QJsonValue(street));
   }
 
@@ -83,6 +88,7 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
     jsObject.insert("c_postalcode", QJsonValue(postal));
   }
 
+  // qDebug() << Q_FUNC_INFO << jsObject;
   emit createCustomer(QJsonDocument(jsObject));
 }
 
@@ -214,6 +220,20 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
         p_customer.insert("o_since", dt_out);
         m_order->setValue("o_since", dt_out);
       }
+    } else if (n.nodeName() == "purchaseMethod") {
+      QString method = n.toElement().firstChild().nodeValue();
+      if (method == "SD") {
+        QString purchaseMethod = n.toElement().attribute("type", "Invoice");
+        if (!purchaseMethod.isEmpty()) {
+          QString pType = purchaseType(purchaseMethod);
+          m_order->setValue(sqlParam("purchaseMethod"), pType.toInt());
+          p_customer.insert(sqlParam("purchaseMethod"), pType);
+        }
+      } else if (method == "CC") {
+        // "Credit card (prepayment)"
+        m_order->setValue(sqlParam("purchaseMethod"), 4);
+        p_customer.insert(sqlParam("purchaseMethod"), "4");
+      }
     } else if (n.hasChildNodes()) {
       QString param = sqlParam(n.nodeName());
       QString value = stripString(n.firstChild().nodeValue());
@@ -315,7 +335,11 @@ const QMap<QString, QString> AbeBooksIfaceWidget::fieldTranslate() const {
   map.insert("email", "c_email_0");
   // @}
 
+  // Zahlung Informationen
   map.insert("purchaseMethod", "o_payment_method");
+  // Kommentare
+  map.insert("specialInstructions","o_delivery_comment");
+
   map.insert("reseller", "o_provider_name");
 
   // public.article_orders @{

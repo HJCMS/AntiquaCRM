@@ -251,7 +251,6 @@ int DeliveryNote::exec(const QList<Delivery> &list) {
     Delivery d = it.next();
     insertArticle(d.articleid, d.designation, d.quantity);
   }
-  body->setReadOnly(true);
 
   addPrinters();
 
