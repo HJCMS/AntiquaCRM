@@ -49,6 +49,10 @@ void StrLineEdit::setValue(const QVariant &str) {
   data = data.replace(reg, "");
   reg.setPattern("\\'");
   data = data.replace(reg, "`");
+  data = data.replace("NOT_SET", "");
+  data = data.trimmed();
+  if (data.isEmpty())
+    return;
 
   QRegularExpression regexp(regPattern);
   QRegularExpressionMatch match = regexp.match(data);
