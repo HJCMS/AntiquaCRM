@@ -45,7 +45,6 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
   if (!deliveryAddress.isEmpty()) {
     jsObject.insert("c_shipping_address", QJsonValue(deliveryAddress));
   }
-
   jsObject.insert("c_firstname", getString("c_firstname"));
   jsObject.insert("c_lastname", getString("c_lastname"));
   jsObject.insert("c_email_0", getString("c_email_0"));

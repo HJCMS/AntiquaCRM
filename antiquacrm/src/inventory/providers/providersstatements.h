@@ -54,13 +54,18 @@ static const QString queryCustomerExists(const QString &c_firstname,
                                          const QString &c_postalcode,
                                          const QString &c_location) {
   QString sql("SELECT c_id FROM customers WHERE ");
+  // Wegen AbeBooks und doppelten einträgen erst Firma prüfen!
+  QString company(c_firstname);
+  company.append(" " + c_lastname);
+  sql.append("c_company_name ILIKE '" + company + "'");
+  sql.append(" OR (");
   sql.append("c_firstname ILIKE '" + c_firstname + "'");
   sql.append(" AND ");
   sql.append("c_lastname ILIKE '" + c_lastname + "'");
   sql.append(" AND ");
   sql.append("c_postalcode ILIKE '" + c_postalcode + "'");
   sql.append(" AND ");
-  sql.append("c_location ILIKE '" + c_location + "'");
+  sql.append("c_location ILIKE '" + c_location + "')");
   sql.append(" ORDER BY c_id;");
   return sql;
 }

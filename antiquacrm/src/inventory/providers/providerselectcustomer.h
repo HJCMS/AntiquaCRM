@@ -34,7 +34,7 @@ private Q_SLOTS:
 
 public:
   explicit ProviderSelectCustomer(QWidget *parent = nullptr);
-  QPair<int,QString> getSelectedCustomer();
+  int getSelectedCustomer();
   int exec(const QList<int> &cids);
 };
 

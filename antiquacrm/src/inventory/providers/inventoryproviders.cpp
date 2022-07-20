@@ -360,8 +360,7 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
   if (cidList.size() > 1) {
     ProviderSelectCustomer *dialog = new ProviderSelectCustomer(this);
     if (dialog->exec(cidList) == QDialog::Accepted) {
-      QPair<int, QString> pair = dialog->getSelectedCustomer();
-      selected_cid = pair.first;
+      selected_cid = dialog->getSelectedCustomer();
     } else {
       qInfo("aboart costumer selection");
       return;
@@ -372,7 +371,7 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
   }
   cidList.clear();
 
-  /** Die Id des ausgewählten Kunden einfügen! */
+  // Die Id des ausgewählten Kunden einfügen!
   if (selected_cid > 0) {
     Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
     if (tab != nullptr) {

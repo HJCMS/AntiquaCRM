@@ -50,7 +50,7 @@ void StrLineEdit::setValue(const QVariant &str) {
   reg.setPattern("\\'");
   data = data.replace(reg, "`");
   /**
-   * @bug Von SQL Migration gesetzte Flagsdürfen hier nicht erscheinen!
+   * @bug Von SQL Migration gesetzte Flags dürfen hier nicht erscheinen!
    */
   data = data.replace("NOT_SET", "");
   data = data.trimmed();
