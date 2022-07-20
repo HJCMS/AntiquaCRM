@@ -50,10 +50,13 @@ QVariant CustomersTableModel::data(const QModelIndex &index, int role) const {
     return item.toInt();
 
   case 2: // company
-    return (item.toString().trimmed() == "C") ? tr("Company") : tr("Personal");
+    if (item.toString().trimmed() == "#PR")
+      return tr("Personal");
+    else
+      return item.toString().trimmed();
 
-  case 3:                     // since
-    return displayDate(item); //.toDateTime().date().toString(Qt::RFC2822Date);
+  case 3: // since
+    return displayDate(item);
 
   case 4: // shurename
   case 5: // phone

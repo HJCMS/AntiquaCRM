@@ -34,7 +34,7 @@
  */
 static const QString c_sqlTableQueryBody() {
   QString q("SELECT c_id AS id, c_purchases,");
-  q.append("(CASE WHEN c_company IS TRUE THEN 'C' ELSE 'P' END) AS company,");
+  q.append("(CASE WHEN c_company IS TRUE THEN c_company_name ELSE '#PR' END) AS company,");
   q.append("c_since AS since,");
   q.append("concat_ws(' ',c_title,c_firstname,c_lastname) AS shurename,");
   q.append("(CASE WHEN c_phone_0 IS NULL THEN c_phone_1 ELSE c_phone_0 END) AS phone,");

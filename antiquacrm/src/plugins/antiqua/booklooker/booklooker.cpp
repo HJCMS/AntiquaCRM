@@ -75,10 +75,4 @@ void Booklooker::queryMenueEntries() {
   req->queryList();
 }
 
-void Booklooker::updateArticleCount(int articleId, int count) {
-#ifdef ANTIQUA_DEVELOPEMENT
-  // https://api.booklooker.de/2.0/article_status?token=REST_API_TOKEN
-  qDebug() << Q_FUNC_INFO << "DISABLED" << articleId << count;
-  return;
-#endif
-}
+void Booklooker::updateArticleCount(int articleId, int count) {}

@@ -544,6 +544,13 @@ bool InventoryProviders::updateArticleCount(int articleId, int count) {
   if (p_iFaces.count() < 1)
     return false;
 
+#ifdef ANTIQUA_DEVELOPEMENT
+  qInfo("Currently Disabled updateArticleCount(%s,%s)",
+        qPrintable(QString::number(articleId).toLocal8Bit()),
+        qPrintable(QString::number(count).toLocal8Bit()));
+  return false;
+#endif
+
   QListIterator<Antiqua::Interface *> it(p_iFaces);
   while (it.hasNext()) {
     Antiqua::Interface *iface = it.next();

@@ -80,9 +80,4 @@ void AbeBooks::queryMenueEntries() {
   req->queryList();
 }
 
-void AbeBooks::updateArticleCount(int articleId, int count) {
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << "DISABLED" << articleId << count;
-  return;
-#endif
-}
+void AbeBooks::updateArticleCount(int articleId, int count) {}

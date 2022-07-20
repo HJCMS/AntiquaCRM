@@ -4,7 +4,7 @@
 <context>
     <name>AbeBooksIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+312"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+311"/>
         <source>Buyer Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1728,17 +1728,12 @@
 <context>
     <name>CustomersTableModel</name>
     <message>
-        <location filename="../inventory/customers/customerstablemodel.cpp" line="+53"/>
-        <source>Company</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
+        <location filename="../inventory/customers/customerstablemodel.cpp" line="+54"/>
         <source>Personal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+27"/>
         <source>ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2744,14 +2739,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+141"/>
+        <location line="+139"/>
         <location line="+2"/>
         <location line="+12"/>
         <source>Europe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+113"/>
+        <location line="+112"/>
         <source>customer found in database!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2771,12 +2766,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-91"/>
+        <location line="-90"/>
         <source>customer not exits!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+87"/>
         <source>Buyer was not found in the customer register or the current customer number does not match. The system requires a valid customer number for a smooth process.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2816,7 +2811,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-436"/>
+        <location line="-433"/>
         <location line="+14"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
