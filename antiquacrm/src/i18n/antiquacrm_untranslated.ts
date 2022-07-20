@@ -4,7 +4,7 @@
 <context>
     <name>AbeBooksIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+307"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+312"/>
         <source>Buyer Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5082,7 +5082,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+165"/>
+        <location line="+172"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>
