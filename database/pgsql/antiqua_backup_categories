@@ -33,6 +33,8 @@ test -e $HOME/.config/postgres/servercfg.bash || {
 
 source $HOME/.config/postgres/servercfg.bash
 
+__init_sql_enviroment
+
 ## "SELECT pg_catalog.setval('public.categories_extern_id_seq', (SELECT MAX(ce_id) FROM public.categories_extern), true);"
 
 echo "-- pgdump > categories_extern.backup.sql"
@@ -48,19 +50,26 @@ pg_dump \
   --clean \
   --inserts  \
   --attribute-inserts \
-  --file=categories_extern.backup.sql
+  --file=$HOME/.cache/categories_extern.backup.sql
 
 cat > $HOME/.cache/categories_extern_query.sql <<EOF
-SELECT s.ce_id,
-  m.ce_name AS main_category,
-  s.ce_name AS sub_category,
-  s.ce_company_keywords AS keywords
+SELECT CONCAT('UPDATE inventory_books SET ib_category_main="', m.ce_name ,'", ib_category_sub="', s.ce_name ,'" WHERE ib_keyword ILIKE "%', s.ce_company_keywords ,'%";')
+FROM categories_extern AS m LEFT JOIN categories_extern AS s ON s.ce_binding=m.ce_id
+WHERE length(s.ce_company_keywords)>0 ORDER BY m.ce_name;
+
+SELECT  s.ce_id, m.ce_name AS main_category,
+  s.ce_name AS sub_category, s.ce_company_keywords AS keywords
 FROM categories_extern AS m
 LEFT JOIN categories_extern AS s ON s.ce_binding=m.ce_id
 WHERE length(s.ce_company_keywords)>0 ORDER BY main_category;
+
 
 EOF
 
 PGSERVICE=$USER psql < $HOME/.cache/categories_extern_query.sql
 
 rm -f $HOME/.cache/categories_extern_query.sql
+
+ls -alh $HOME/.cache/categories_extern.backup.sql
+
+##EOF
