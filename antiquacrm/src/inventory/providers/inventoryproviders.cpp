@@ -179,8 +179,6 @@ void InventoryProviders::queryOrder(const QString &provider,
   if (p_providerList.count() > 0 && !p_providerList.contains(provider))
     return;
 
-  // qDebug() << Q_FUNC_INFO << provider << orderId;
-
   if (tabExists(orderId))
     return;
 
