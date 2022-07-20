@@ -26,12 +26,12 @@ set +x
 
 _sourcepath="$(dirname "$(readlink -f $0)")"
 
-test -e ${_sourcepath}/servercfg.bash || {
+test -e $HOME/.config/postgres/servercfg.bash || {
   echo "FATAL: Can not read Configuration"
   exit 1
 }
 
-. ${_sourcepath}/servercfg.bash
+. $HOME/.config/postgres/servercfg.bash
 
 _sqlfile=${_scripting}/catalog/bf-export.sql
 

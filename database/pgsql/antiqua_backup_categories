@@ -26,12 +26,14 @@ set +x
 
 _sourcepath="$(dirname "$(readlink -f $0)")"
 
-test -e ${_sourcepath}/servercfg.bash || {
+test -e $HOME/.config/postgres/servercfg.bash || {
   echo "FATAL: Can not read Configuration"
   exit 1
 }
 
-source ${_sourcepath}/servercfg.bash
+source $HOME/.config/postgres/servercfg.bash
+
+## "SELECT pg_catalog.setval('public.categories_extern_id_seq', (SELECT MAX(ce_id) FROM public.categories_extern), true);"
 
 echo "-- pgdump > categories_extern.backup.sql"
 pg_dump \
@@ -39,7 +41,7 @@ pg_dump \
   --port=${_config[1]} \
   --dbname=${_config[2]} \
   --username=${_config[3]} \
-  --table=categories_extern \
+  --table=public.categories_extern \
   --no-password \
   --no-owner \
   --if-exists \
@@ -47,15 +49,6 @@ pg_dump \
   --inserts  \
   --attribute-inserts \
   --file=categories_extern.backup.sql
-
-cat >> categories_extern.backup.sql <<EOF
-
-SELECT pg_catalog.setval('public.categories_extern_id_seq', (SELECT MAX(ce_id) FROM categories_extern), true);
-
---
--- DONE
---
-EOF
 
 cat > $HOME/.cache/categories_extern_query.sql <<EOF
 SELECT s.ce_id,
@@ -69,3 +62,5 @@ WHERE length(s.ce_company_keywords)>0 ORDER BY main_category;
 EOF
 
 PGSERVICE=$USER psql < $HOME/.cache/categories_extern_query.sql
+
+rm -f $HOME/.cache/categories_extern_query.sql

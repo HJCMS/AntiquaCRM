@@ -26,14 +26,14 @@ set +x
 
 _sourcepath="$(dirname "$(readlink -f $0)")"
 
-test -e ${_sourcepath}/servercfg.bash || {
+test -e $HOME/.config/postgres/servercfg.bash || {
   echo "FATAL: Can not read Configuration"
   exit 1
 }
 
-chmod -c 0600 ${_sourcepath}/servercfg.bash
+chmod -c 0600 $HOME/.config/postgres/servercfg.bash
 
-source ${_sourcepath}/servercfg.bash
+source $HOME/.config/postgres/servercfg.bash
 
 __create_targets
 
