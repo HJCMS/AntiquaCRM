@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
 
-SET(_subproject "InventoryBooks")
+SET(_subproject "KeywordEdit")
 
 INCLUDE_DIRECTORIES (
   ${PROJECT_INCLUDE_DIRS}
@@ -10,37 +10,28 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (subproject_LINKER
- SqlCore
  AntiquaCore
- Settings
- Networking
+ SqlCore
  Utils
- Printing
- Imaging
- CategoryEdit
- KeywordEdit
 )
 
 SET (subproject_SOURCES
- bookeditor.cpp
- bookstable.cpp
- bookstablemodel.cpp
- isbnresults.cpp
- booksearchbar.cpp
- inventorybooks.cpp
+ keywordactions.cpp
+ keywordedit.cpp
+ keywordeditor.cpp
+ keywordlineedit.cpp
+ keywordtable.cpp
+ keywordtablemodel.cpp
 )
 
 SET (subproject_HEADERS
- bookstatements.h
- bookeditor.h
- bookstable.h
- bookstablemodel.h
- isbnresults.h
- booksearchbar.h
- inventorybooks.h
+ keywordactions.h
+ keywordedit.h
+ keywordeditor.h
+ keywordlineedit.h
+ keywordtable.h
+ keywordtablemodel.h
 )
-
-## TODO ADD_DEFINITION(BOOK_INVENTORY_DEBUG);
 
 ADD_LIBRARY (${_subproject} STATIC
   ${subproject_HEADERS}
@@ -53,9 +44,8 @@ SET_TARGET_PROPERTIES (${_subproject} PROPERTIES
 )
 
 TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
-  Qt${QT_VERSION_MAJOR}::Core
-  Qt${QT_VERSION_MAJOR}::Gui
-  Qt${QT_VERSION_MAJOR}::Widgets
-  ${subproject_LINKER}
+ Qt${QT_VERSION_MAJOR}::Core
+ Qt${QT_VERSION_MAJOR}::Widgets
+ Qt${QT_VERSION_MAJOR}::Sql
+ ${subproject_LINKER}
 )
-

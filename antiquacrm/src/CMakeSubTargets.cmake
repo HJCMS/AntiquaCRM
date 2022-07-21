@@ -23,6 +23,8 @@ SET (PROJECT_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/deliverservice
  ${CMAKE_CURRENT_BINARY_DIR}/custom/imaging
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/imaging
+ ${CMAKE_CURRENT_BINARY_DIR}/custom/keywordedit
+ ${CMAKE_CURRENT_SOURCE_DIR}/custom/keywordedit
  ${CMAKE_CURRENT_BINARY_DIR}/custom/networking
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/networking
  ${CMAKE_CURRENT_BINARY_DIR}/custom/printing
@@ -89,6 +91,7 @@ Printing
 StorageLocation
 DeliverService
 CategoryEdit
+KeywordEdit
 InventoryBooks
 InventoryPrints
 InventoryOrders

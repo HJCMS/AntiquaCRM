@@ -6,8 +6,9 @@
 #include "categoryedit.h"
 #include "configdialog.h"
 #include "deliverservicedialog.h"
-#include "dockbarwidget.h"
+// #include "dockbarwidget.h"
 #include "filedialog.h"
+#include "keywordedit.h"
 #include "myicontheme.h"
 #include "statusbar.h"
 #include "storagelocation.h"
@@ -144,6 +145,10 @@ void MWindow::setupActions() {
   connect(a_bst, SIGNAL(triggered(bool)), this,
           SLOT(openStorageLocation(bool)));
 
+  QAction *a_ekw = m_tablesMenu->addAction(tr("Edit Keywords"));
+  a_ekw->setIcon(myIcon("spreadsheet"));
+  connect(a_ekw, SIGNAL(triggered(bool)), this, SLOT(openKeywordEdit(bool)));
+
   QAction *a_dsd = m_tablesMenu->addAction(tr("Delivery Services"));
   a_dsd->setIcon(myIcon("spreadsheet"));
   connect(a_dsd, SIGNAL(triggered(bool)), this,
@@ -216,6 +221,14 @@ void MWindow::openFileDialog(bool) {
 void MWindow::openCategoryEdit(bool) {
   CategoryEdit *d = new CategoryEdit(this);
   d->setObjectName("category_edit");
+  if (d->exec()) {
+    d->deleteLater();
+  }
+}
+
+void MWindow::openKeywordEdit(bool) {
+  KeywordEdit *d = new KeywordEdit(this);
+  d->setObjectName("keyword_edit");
   if (d->exec()) {
     d->deleteLater();
   }

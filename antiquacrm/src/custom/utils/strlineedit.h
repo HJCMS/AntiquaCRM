@@ -14,10 +14,6 @@
 #include <SqlCore>
 #include <UtilsMain>
 
-namespace HJCMS {
-class SqlCore;
-};
-
 /**
  @class StrLineEdit
  @brief Standard Zeileneingabe für SQL Tabellenspalten

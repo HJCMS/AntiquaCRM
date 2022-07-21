@@ -6,6 +6,7 @@
 #include "categorysubject.h"
 #include "isbnrequest.h"
 #include "isbnresults.h"
+#include "keywordlineedit.h"
 #include "myicontheme.h"
 #include <AntiquaCRM>
 
@@ -232,9 +233,8 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   keywordLabel->setText(tr("Keyword") + ":");
   row2->addWidget(keywordLabel, row2c, 0, 1, 1);
 
-  ib_keyword = new StrLineEdit(this);
+  ib_keyword = new KeywordLineEdit(this);
   ib_keyword->setObjectName("ib_keyword");
-  ib_keyword->setMaxAllowedLength(60);
   ib_keyword->setInfo(tr("Keyword"));
   ib_keyword->setToolTip(tr("Category Keywords for Shopsystems."));
   row2->addWidget(ib_keyword, row2c++, 1, 1, 1);
@@ -693,7 +693,7 @@ void BookEditor::changeEvent(QEvent *event) {
      */
     ib_condition->loadDataset("condition", StrLineEdit::BOOK);
     ib_designation->loadDataset("designation", StrLineEdit::BOOK);
-    ib_keyword->loadStorageKeywords();
+    ib_keyword->loadKeywords();
   }
 }
 

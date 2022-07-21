@@ -31,23 +31,23 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
   }
 
   AbeBooksDocument xml(p_currentDocument);
-  QJsonObject jsObject;
-  jsObject.insert("provider", QJsonValue(CONFIG_PROVIDER));
-  jsObject.insert("type", "customer_create");
+  QJsonObject customerCreate;
+  customerCreate.insert("provider", QJsonValue(CONFIG_PROVIDER));
+  customerCreate.insert("type", "customer_create");
   QString invoice = m_order->getValue("c_postal_address").toString();
   invoice = stripString(invoice);
   if (!invoice.isEmpty()) {
-    jsObject.insert("c_postal_address", QJsonValue(invoice));
+    customerCreate.insert("c_postal_address", QJsonValue(invoice));
   }
 
   QString deliveryAddress = m_order->getValue("c_shipping_address").toString();
   deliveryAddress = stripString(deliveryAddress);
   if (!deliveryAddress.isEmpty()) {
-    jsObject.insert("c_shipping_address", QJsonValue(deliveryAddress));
+    customerCreate.insert("c_shipping_address", QJsonValue(deliveryAddress));
   }
-  jsObject.insert("c_firstname", getString("c_firstname"));
-  jsObject.insert("c_lastname", getString("c_lastname"));
-  jsObject.insert("c_email_0", getString("c_email_0"));
+  customerCreate.insert("c_firstname", getString("c_firstname"));
+  customerCreate.insert("c_lastname", getString("c_lastname"));
+  customerCreate.insert("c_email_0", getString("c_email_0"));
 
   QRegExp phoneReplace("[^\\d]+");
   QString phone = xml.getAddressValue("phone").toString();
@@ -55,19 +55,19 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
   phone = stripString(phone);
   if (!phone.isEmpty() && phone.length() > 7) {
     qint64 phoneNumber = phone.toInt();
-    jsObject.insert("c_phone_0", QJsonValue(phoneNumber));
+    customerCreate.insert("c_phone_0", QJsonValue(phoneNumber));
   }
 
   QString country = xml.getAddressValue("country").toString();
   country = stripString(country);
   if (!country.isEmpty()) {
-    jsObject.insert("c_country", QJsonValue(country));
+    customerCreate.insert("c_country", QJsonValue(country));
   }
 
   QString location = xml.getAddressValue("city").toString();
   location = stripString(location);
   if (!location.isEmpty()) {
-    jsObject.insert("c_location", QJsonValue(location));
+    customerCreate.insert("c_location", QJsonValue(location));
   }
 
   QString street = xml.getAddressValue("street").toString();
@@ -78,17 +78,17 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
     if (!street2.isEmpty()) {
       street.append(" " + street2);
     }
-    jsObject.insert("c_street", QJsonValue(street));
+    customerCreate.insert("c_street", QJsonValue(street));
   }
 
   QString postal = xml.getAddressValue("code").toString();
   postal = stripString(postal);
   if (!postal.isEmpty()) {
-    jsObject.insert("c_postalcode", QJsonValue(postal));
+    customerCreate.insert("c_postalcode", QJsonValue(postal));
   }
 
   // qDebug() << Q_FUNC_INFO << jsObject;
-  emit createCustomer(QJsonDocument(jsObject));
+  emit createCustomer(QJsonDocument(customerCreate));
 }
 
 const QJsonDocument

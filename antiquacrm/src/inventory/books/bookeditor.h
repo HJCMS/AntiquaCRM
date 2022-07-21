@@ -21,6 +21,7 @@
 
 class ISBNResults;
 class CategorySubject;
+class KeywordLineEdit;
 
 /**
    @brief BookEditor
@@ -50,7 +51,7 @@ private:
   StrLineEdit *ib_author;           /**< @brief Buchautor */
   StrLineEdit *ib_condition;        /**< @brief Zustands beschreibung */
   StrLineEdit *ib_designation;      /**< @brief Umschreibung */
-  StrLineEdit *ib_keyword;          /**< @brief Schlüsselwort */
+  KeywordLineEdit *ib_keyword;      /**< @brief Schlüsselwort */
   CategorySubject *m_json_category; /**< @brief Dienstleister Kategorie */
   StrLineEdit *ib_publisher;        /**< @brief Herausgeber/Verlag */
   StrLineEdit *ib_title;            /**< @brief Buch Titel */

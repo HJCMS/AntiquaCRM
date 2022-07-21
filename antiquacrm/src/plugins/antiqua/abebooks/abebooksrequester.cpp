@@ -217,8 +217,8 @@ void AbeBooksRequester::replyReadyRead() {
 void AbeBooksRequester::queryList() {
   AbeBooksDocument doc = createDocument();
   doc.createAction("getAllNewOrders");
-  if (createRequest(doc)) {
-    qInfo("Request getAllNewOrders created");
+  if (!createRequest(doc)) {
+    qInfo("AbeBooks getAllNewOrders failed");
   }
 }
 
@@ -234,7 +234,7 @@ void AbeBooksRequester::queryOrder(const QString &purchaseId) {
   QString id(purchaseId);
   e.setAttribute("id", id.trimmed());
   doc.documentElement().appendChild(e);
-  if (createRequest(doc)) {
-    qInfo("Request purchaseOrder created");
+  if (!createRequest(doc)) {
+    qInfo("AbeBooks purchaseOrder failed");
   }
 }

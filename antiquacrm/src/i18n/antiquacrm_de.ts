@@ -2719,7 +2719,7 @@
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+29"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+28"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
@@ -2980,6 +2980,104 @@
     </message>
 </context>
 <context>
+    <name>KeywordActions</name>
+    <message>
+        <location filename="../custom/keywordedit/keywordactions.cpp" line="+16"/>
+        <source>Restore</source>
+        <translation>Zurücksetzen</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Quit</source>
+        <translation>Schließen</translation>
+    </message>
+</context>
+<context>
+    <name>KeywordEditor</name>
+    <message>
+        <location filename="../custom/keywordedit/keywordeditor.cpp" line="+13"/>
+        <source>Create/Edit Keyword</source>
+        <translation>Erstelle/Bearbeite Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Keyword</source>
+        <translation>Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Single Keyword</source>
+        <translation>Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Books Keyword</source>
+        <translation>Bücher Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Use this entry for book keywords</source>
+        <translation>Verwende dieses Schlüsselwort nur für Büchereinträge</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Database Id</source>
+        <translation>Datenbank Id</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Clear</source>
+        <translation>Leeren</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Clear all fields, to create a new Keyword.</source>
+        <translation>Für das erstellen eines Neuen Schlüsselwortes, leere alle Felder.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+</context>
+<context>
+    <name>KeywordLineEdit</name>
+    <message>
+        <location filename="../custom/keywordedit/keywordlineedit.cpp" line="+33"/>
+        <location line="+2"/>
+        <source>TODO</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>KeywordTableModel</name>
+    <message>
+        <location filename="../custom/keywordedit/keywordtablemodel.cpp" line="+23"/>
+        <source>Book Keyword</source>
+        <translation>Bücher Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Not set</source>
+        <translation>Nicht gesetzt</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Id</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Keyword</source>
+        <translation>Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Books keyword</source>
+        <translation>Bücher Schlüsselwort</translation>
+    </message>
+</context>
+<context>
     <name>LineEdit</name>
     <message>
         <location filename="../custom/utils/lineedit.cpp" line="+94"/>
@@ -2995,7 +3093,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+83"/>
+        <location filename="../mwindow.cpp" line="+84"/>
         <source>Application</source>
         <translation>Programm</translation>
     </message>
@@ -3031,7 +3129,7 @@
         <translation>Lager Positionen</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+30"/>
         <source>Save request</source>
         <translation>Speichern</translation>
     </message>
@@ -3041,18 +3139,18 @@
         <translation>&lt;b&gt;Sie haben nicht gespeicherte Änderungen.&lt;/b&gt;&lt;p&gt;Möchten sie wirklich die Anwendung schließen?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+78"/>
         <source>SQL Server Error</source>
         <translation>SQL Serverfehler</translation>
     </message>
     <message>
-        <location line="-115"/>
-        <location line="+128"/>
+        <location line="-127"/>
+        <location line="+140"/>
         <source>Fullscreen</source>
         <translation>Vollansicht</translation>
     </message>
     <message>
-        <location line="-184"/>
+        <location line="-196"/>
         <source>Prints</source>
         <translation>Drucke und Stiche</translation>
     </message>
@@ -3078,6 +3176,11 @@
     </message>
     <message>
         <location line="+14"/>
+        <source>Edit Keywords</source>
+        <translation>Schlüsselwörter bearbeiten</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Delivery Services</source>
         <translation>Lieferdienste</translation>
     </message>
@@ -3097,7 +3200,7 @@
         <translation>Bearbeite Kategorien</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+104"/>
         <source>Disable Fullscreen</source>
         <translation>Vollansicht beenden</translation>
     </message>
