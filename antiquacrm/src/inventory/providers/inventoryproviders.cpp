@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "inventoryproviders.h"
-#include "myicontheme.h"
 #include "providerselectcustomer.h"
 #include "providerspageview.h"
 #include "providersstatements.h"
