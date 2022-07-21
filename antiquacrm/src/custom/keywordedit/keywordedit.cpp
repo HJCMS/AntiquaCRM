@@ -40,7 +40,6 @@ KeywordEdit::KeywordEdit(QWidget *parent) : QDialog{parent} {
 
   connect(ac_search, SIGNAL(triggered()), this, SLOT(searchKeyword()));
   connect(m_searchLine, SIGNAL(returnPressed()), this, SLOT(searchKeyword()));
-  connect(m_actionsBar, SIGNAL(sendReload()), m_table, SLOT(refresh()));
   connect(m_table, SIGNAL(sendEditKeyword(int)), this,
           SLOT(queryKeywordEntry(int)));
   connect(m_actionsBar, SIGNAL(sendQuit()), this, SLOT(reject()));
@@ -72,6 +71,7 @@ void KeywordEdit::queryKeywordEntry(int id) {
         break;
       }
     }
+    m_actionsBar->statusMessage(tr("Database query success!"));
   } else {
     qDebug() << m_sql->lastError();
   }
@@ -82,35 +82,40 @@ void KeywordEdit::updateKeywordEntry(const QJsonObject &obj) {
   if (id < 1)
     return;
 
-  QString sql("UPDATE categories_intern SET ci_name=");
-  sql.append("'" + obj.value("ci_name").toString() + "'");
+  QString usage = obj.value("ci_company_usage").toBool() ? "true" : "false";
+  QString sql("UPDATE categories_intern SET ");
+  sql.append("ci_name='" + obj.value("ci_name").toString() + "'");
+  sql.append(",ci_company_usage=" + usage);
   sql.append(" WHERE ci_id=" + QString::number(id));
   sql.append(";");
   m_sql->query(sql);
   if (m_sql->lastError().isEmpty()) {
     m_editor->clear();
     m_table->refresh();
+    m_actionsBar->statusMessage(tr("Database query success!"));
   } else {
     qDebug() << m_sql->lastError();
   }
 }
 
 void KeywordEdit::insertKeywordEntry(const QJsonObject &obj) {
-  QString sql("INSERT INTO categories_intern (ci_name, ci_company_usage)");
-  sql.append(" VALUES ('" + obj.value("ci_name").toString() + "'");
-  if (obj.value("ci_company_usage").toBool())
-    sql.append(",true");
-  else
-    sql.append(",false");
-
+  QString sql("INSERT INTO categories_intern (ci_name,ci_company_usage)");
+  sql.append(" VALUES ('" + obj.value("ci_name").toString() + "',");
+  sql.append(obj.value("ci_company_usage").toBool() ? "true" : "false");
   sql.append(") RETURNING ci_id;");
   m_sql->query(sql);
   if (m_sql->lastError().isEmpty()) {
     m_editor->clear();
     m_table->refresh();
+    m_actionsBar->statusMessage(tr("Database query success!"));
   } else {
     qDebug() << m_sql->lastError();
   }
 }
 
-int KeywordEdit::exec() { return QDialog::exec(); }
+int KeywordEdit::exec() {
+  if (m_table != nullptr)
+    m_table->refresh();
+
+  return QDialog::exec();
+}

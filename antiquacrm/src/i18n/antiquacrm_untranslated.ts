@@ -456,7 +456,7 @@
 <context>
     <name>BookEditor</name>
     <message>
-        <location filename="../inventory/books/bookeditor.cpp" line="+25"/>
+        <location filename="../inventory/books/bookeditor.cpp" line="+26"/>
         <source>Edit Book Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -528,7 +528,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+68"/>
         <source>Shop Category Keywords</source>
         <translation type="unfinished"></translation>
     </message>
@@ -538,7 +538,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-223"/>
+        <location line="-222"/>
         <source>Article ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -574,12 +574,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+58"/>
         <source>Category Keywords for Shopsystems.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-37"/>
+        <location line="-36"/>
         <source>Condition of this Book. See also Configuration conditions Table.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -603,7 +603,7 @@
     </message>
     <message>
         <location line="+17"/>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Keyword</source>
         <translation type="unfinished"></translation>
     </message>
@@ -643,12 +643,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-462"/>
+        <location line="-461"/>
         <source>Extended Title or Subtitle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+224"/>
+        <location line="+223"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -680,7 +680,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-202"/>
+        <location line="-201"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
@@ -691,12 +691,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+219"/>
+        <location line="+218"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-335"/>
+        <location line="-334"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2982,13 +2982,23 @@
 <context>
     <name>KeywordActions</name>
     <message>
-        <location filename="../custom/keywordedit/keywordactions.cpp" line="+16"/>
-        <source>Restore</source>
+        <location filename="../custom/keywordedit/keywordactions.cpp" line="+22"/>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>KeywordEdit</name>
+    <message>
+        <location filename="../custom/keywordedit/keywordedit.cpp" line="+26"/>
+        <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Quit</source>
+        <location line="+48"/>
+        <location line="+21"/>
+        <location line="+19"/>
+        <source>Database query success!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3020,7 +3030,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Database Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3043,9 +3053,8 @@
 <context>
     <name>KeywordLineEdit</name>
     <message>
-        <location filename="../custom/keywordedit/keywordlineedit.cpp" line="+33"/>
-        <location line="+2"/>
-        <source>TODO</source>
+        <location filename="../custom/keywordedit/keywordlineedit.cpp" line="+84"/>
+        <source>Keywords: Requires minimum one Keyword!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

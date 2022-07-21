@@ -7,6 +7,7 @@
 
 #include <QFrame>
 #include <QObject>
+#include <QLabel>
 #include <QPushButton>
 #include <QWidget>
 
@@ -16,12 +17,14 @@ class KeywordActions : public QFrame {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  QPushButton *m_btnReload;
+  QLabel *m_messages;
   QPushButton *m_btnQuit;
 
 Q_SIGNALS:
-  void sendReload();
   void sendQuit();
+
+public Q_SLOTS:
+  void statusMessage(const QString &);
 
 public:
   explicit KeywordActions(QWidget *parent = nullptr);

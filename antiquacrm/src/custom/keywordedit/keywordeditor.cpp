@@ -27,6 +27,7 @@ KeywordEditor::KeywordEditor(QWidget *parent) : QGroupBox{parent} {
 
   m_booksUsage = new QCheckBox(tr("Books Keyword"), this);
   m_booksUsage->setToolTip(tr("Use this entry for book keywords"));
+  m_booksUsage->setChecked(true);
   layout->addWidget(m_booksUsage, 1, 0, 1, 1);
 
   m_id = new QSpinBox(this);

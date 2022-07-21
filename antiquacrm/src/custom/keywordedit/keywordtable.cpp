@@ -13,7 +13,7 @@ KeywordTable::KeywordTable(const QSqlDatabase &db, QWidget *parent)
   setObjectName("keyword_table");
   setEditTriggers(QAbstractItemView::NoEditTriggers);
   setCornerButtonEnabled(false);
-  setSortingEnabled(false);
+  setSortingEnabled(true);
   setDragEnabled(false);
   setDragDropOverwriteMode(false);
   setWordWrap(false);
@@ -28,8 +28,6 @@ KeywordTable::KeywordTable(const QSqlDatabase &db, QWidget *parent)
 
   connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
           SLOT(keywordEditClicked(const QModelIndex &)));
-
-  refresh();
 }
 
 void KeywordTable::keywordEditClicked(const QModelIndex &index) {

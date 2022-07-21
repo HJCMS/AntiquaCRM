@@ -6,16 +6,15 @@
 
 #include <QHBoxLayout>
 #include <QStyle>
+#include <QTimer>
 
 KeywordActions::KeywordActions(QWidget *parent) : QFrame{parent} {
   QHBoxLayout *layout = new QHBoxLayout(this);
 
   QStyle *m_style = style();
 
-  m_btnReload = new QPushButton(this);
-  m_btnReload->setText(tr("Restore"));
-  m_btnReload->setIcon(myIcon("reload"));
-  layout->addWidget(m_btnReload);
+  m_messages = new QLabel(this);
+  layout->addWidget(m_messages);
 
   layout->addStretch(1);
 
@@ -26,6 +25,10 @@ KeywordActions::KeywordActions(QWidget *parent) : QFrame{parent} {
 
   setLayout(layout);
 
-  connect(m_btnReload, SIGNAL(clicked()), this, SIGNAL(sendReload()));
   connect(m_btnQuit, SIGNAL(clicked()), this, SIGNAL(sendQuit()));
+}
+
+void KeywordActions::statusMessage(const QString &msg) {
+  m_messages->setText(msg);
+  QTimer::singleShot(6000, m_messages, SLOT(clear()));
 }
