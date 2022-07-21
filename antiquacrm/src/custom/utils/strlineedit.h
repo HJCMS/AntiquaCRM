@@ -145,7 +145,7 @@ public:
    * @brief Zusatz für Schlüsselwörter
    * @note Wird nur von ib_keyword benötigt!
    */
-  void loadStorageKeywords();
+  Q_DECL_DEPRECATED void loadStorageKeywords();
 
   /**
    * @brief loadDataset
