@@ -2997,7 +2997,7 @@
     <message>
         <location line="+48"/>
         <location line="+21"/>
-        <location line="+19"/>
+        <location line="+15"/>
         <source>Database query success!</source>
         <translation>Datenbankabfrage erfolgreich!</translation>
     </message>
@@ -3053,7 +3053,17 @@
 <context>
     <name>KeywordLineEdit</name>
     <message>
-        <location filename="../custom/keywordedit/keywordlineedit.cpp" line="+84"/>
+        <location filename="../custom/keywordedit/keywordlineedit.cpp" line="+18"/>
+        <source>Category keywords</source>
+        <translation>Schlüsselwörter für Kategorien</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>In this area, enter the keywords separated by commas.</source>
+        <translation>Geben Sie in diesem Bereich die Schlüsselwörter durch Kommas getrennt ein.</translation>
+    </message>
+    <message>
+        <location line="+122"/>
         <source>Keywords: Requires minimum one Keyword!</source>
         <translation>Das Feld Schlüsselwörter benötigt mindestens ein gültiges Wort!</translation>
     </message>
