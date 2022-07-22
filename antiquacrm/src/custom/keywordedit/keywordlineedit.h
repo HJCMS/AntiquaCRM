@@ -71,6 +71,8 @@ private:
   const QRegExp stripPattern = QRegExp("([^\\w\\d]+)");
 
 private Q_SLOTS:
+  void clearKeywords();
+
   /**
    * @brief Text vom Completer Signal aufarbeiten
    * An dieser Stelle mit dem Puffer von @ref p_keywords das ganze wieder

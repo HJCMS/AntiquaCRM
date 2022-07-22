@@ -3058,17 +3058,22 @@
         <translation>Schlüsselwörter für Kategorien</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
+        <source>This button reset the Keyword field.</source>
+        <translation>Diese Schaltfläche setzt das Schlüsselwortfeld zurück.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Search, add to</source>
         <translation>Suchen, hinzufügen</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>In this area, enter the keywords.</source>
-        <translation>Geben Sie in diesem Bereich die Schlüsselwörter ein.</translation>
+        <source>To add keywords, paste them here and press Enter.</source>
+        <translation>Für das hinzufügen der Schlüsselwörter, diese hier einfügen und Enter drücken.</translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+101"/>
         <source>Keywords: Requires minimum one Keyword!</source>
         <translation>Das Feld Schlüsselwörter benötigt mindestens ein gültiges Wort!</translation>
     </message>

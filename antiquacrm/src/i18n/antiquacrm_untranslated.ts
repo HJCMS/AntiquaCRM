@@ -3058,17 +3058,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
+        <source>This button reset the Keyword field.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Search, add to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>In this area, enter the keywords.</source>
+        <source>To add keywords, paste them here and press Enter.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+101"/>
         <source>Keywords: Requires minimum one Keyword!</source>
         <translation type="unfinished"></translation>
     </message>

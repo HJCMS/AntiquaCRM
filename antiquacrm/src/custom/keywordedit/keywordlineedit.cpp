@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "keywordlineedit.h"
+#include "myicontheme.h"
 
 #include <QtCore>
 #include <QtWidgets>
@@ -12,19 +13,24 @@ KeywordLineEdit::KeywordLineEdit(QWidget *parent) : UtilsMain{parent} {
   layout->setContentsMargins(0, 0, 0, 0);
 
   p_keywords = QString();
-  m_completer = nullptr;
 
   m_keywordList = new QLineEdit(this);
   m_keywordList->setPlaceholderText(tr("Category keywords"));
-  m_keywordList->setClearButtonEnabled(true);
   m_keywordList->setDragEnabled(false);
-  layout->addWidget(m_keywordList);
+  m_keywordList->setReadOnly(true);
+  layout->addWidget(m_keywordList); // 0
+
+  QToolButton *ac_clear = new QToolButton(this);
+  ac_clear->setIcon(myIcon("clear_left"));
+  ac_clear->setToolTip(tr("This button reset the Keyword field."));
+  layout->addWidget(ac_clear); // 1
 
   m_lineEdit = new QLineEdit(this);
   m_lineEdit->setPlaceholderText(tr("Search, add to"));
-  m_lineEdit->setToolTip(tr("In this area, enter the keywords."));
+  m_lineEdit->setToolTip(tr("To add keywords, paste them here and press Enter."));
   m_lineEdit->setDragEnabled(false);
-  layout->addWidget(m_lineEdit);
+  m_lineEdit->setClearButtonEnabled(true);
+  layout->addWidget(m_lineEdit); // 2
 
   m_validator = new QRegExpValidator(validatePattern, m_lineEdit);
   m_lineEdit->setValidator(m_validator);
@@ -32,24 +38,30 @@ KeywordLineEdit::KeywordLineEdit(QWidget *parent) : UtilsMain{parent} {
   setRequired(true);
   setModified(false);
   layout->setStretch(0, 70);
-  layout->setStretch(1, 30);
+  layout->setStretch(2, 25);
   setLayout(layout);
 
   connect(m_lineEdit, SIGNAL(editingFinished()), this, SLOT(finalize()));
   connect(m_lineEdit, SIGNAL(returnPressed()), this, SLOT(finalize()));
+  connect(ac_clear, SIGNAL(clicked()), this, SLOT(clearKeywords()));
+}
+
+void KeywordLineEdit::clearKeywords() {
+  p_keywords.clear();
+  m_keywordList->clear();
 }
 
 void KeywordLineEdit::finalize() {
   if (m_lineEdit->text().length() < minLength)
     return;
 
-  if (p_keywords.length() < minLength)
-    return;
-
   QString buffer = m_lineEdit->text().trimmed();
   buffer.replace(stripPattern, "");
 
-  QStringList list = p_keywords.split(p_delimiter);
+  QStringList list;
+  if (!p_keywords.isEmpty())
+    list = p_keywords.split(p_delimiter);
+
   list << buffer;
   list.sort();
   list.removeDuplicates();
