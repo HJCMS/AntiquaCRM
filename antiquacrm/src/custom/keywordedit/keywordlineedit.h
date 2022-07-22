@@ -40,6 +40,11 @@ private:
   const int minLength = 3;
 
   /**
+   * @brief Schlüüselwortliste
+   */
+  QLineEdit *m_keywordList;
+
+  /**
    * @brief Eingabefeld
    */
   QLineEdit *m_lineEdit;
@@ -58,34 +63,22 @@ private:
   /**
    * @brief Regulärer Ausdruck für die Standardeingabe
    */
-  const QRegExp validatePattern = QRegExp("([\\w\\d\\,\\s]+)");
+  const QRegExp validatePattern = QRegExp("([\\w\\d]+)");
 
   /**
    * @brief Regulärer Ausdruck zum bereinigen
    */
-  const QRegExp stripPattern = QRegExp("([\\s]+)");
+  const QRegExp stripPattern = QRegExp("([^\\w\\d]+)");
 
 private Q_SLOTS:
   /**
    * @brief Text vom Completer Signal aufarbeiten
-   * Weil Completer setText verwendet, an dieser Stelle mit dem Puffer von @ref
-   * p_keywords das ganze wieder zusammenfügen.
+   * An dieser Stelle mit dem Puffer von @ref p_keywords das ganze wieder
+   * zusammenfügen.
    */
   void finalize();
 
 public Q_SLOTS:
-  /**
-   * @brief Weiterleitung von QLineEdit::textChanged
-   * Wird verwendet um die aktuelle Eingabe mit Trennzeichen @ref p_delimiter in
-   * den Puffer @ref p_keywords zu schreiben. Dieser wird Später bei @ref
-   * completerText benötigt. Er soll verhindern, das bestehende Schlüsselwörter
-   * Überschrieben werden.
-   * Die Methode trennt die Zeichkette von Start bis letztes Trennzeichen.
-   * Alle was danach kommt wird erneut mit dem QCompleter Signal highlighted
-   * hervorgehoben.
-   */
-  void keywordChanged(const QString &);
-
   /**
    * @brief Datenbankwerte in Puffer und Eingabefeld setzen.
    */

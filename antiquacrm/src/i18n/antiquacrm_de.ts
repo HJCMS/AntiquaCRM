@@ -3058,12 +3058,17 @@
         <translation>Schlüsselwörter für Kategorien</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>In this area, enter the keywords separated by commas.</source>
-        <translation>Geben Sie in diesem Bereich die Schlüsselwörter durch Kommas getrennt ein.</translation>
+        <location line="+6"/>
+        <source>Search, add to</source>
+        <translation>Suchen, hinzufügen</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+1"/>
+        <source>In this area, enter the keywords.</source>
+        <translation>Geben Sie in diesem Bereich die Schlüsselwörter ein.</translation>
+    </message>
+    <message>
+        <location line="+94"/>
         <source>Keywords: Requires minimum one Keyword!</source>
         <translation>Das Feld Schlüsselwörter benötigt mindestens ein gültiges Wort!</translation>
     </message>

@@ -14,9 +14,16 @@ KeywordLineEdit::KeywordLineEdit(QWidget *parent) : UtilsMain{parent} {
   p_keywords = QString();
   m_completer = nullptr;
 
+  m_keywordList = new QLineEdit(this);
+  m_keywordList->setPlaceholderText(tr("Category keywords"));
+  m_keywordList->setClearButtonEnabled(true);
+  m_keywordList->setDragEnabled(false);
+  layout->addWidget(m_keywordList);
+
   m_lineEdit = new QLineEdit(this);
-  m_lineEdit->setPlaceholderText(tr("Category keywords"));
-  m_lineEdit->setToolTip(tr("In this area, enter the keywords separated by commas."));
+  m_lineEdit->setPlaceholderText(tr("Search, add to"));
+  m_lineEdit->setToolTip(tr("In this area, enter the keywords."));
+  m_lineEdit->setDragEnabled(false);
   layout->addWidget(m_lineEdit);
 
   m_validator = new QRegExpValidator(validatePattern, m_lineEdit);
@@ -24,12 +31,12 @@ KeywordLineEdit::KeywordLineEdit(QWidget *parent) : UtilsMain{parent} {
 
   setRequired(true);
   setModified(false);
+  layout->setStretch(0, 70);
+  layout->setStretch(1, 30);
   setLayout(layout);
 
   connect(m_lineEdit, SIGNAL(editingFinished()), this, SLOT(finalize()));
   connect(m_lineEdit, SIGNAL(returnPressed()), this, SLOT(finalize()));
-  connect(m_lineEdit, SIGNAL(textChanged(QString)), this,
-          SLOT(keywordChanged(QString)));
 }
 
 void KeywordLineEdit::finalize() {
@@ -39,46 +46,18 @@ void KeywordLineEdit::finalize() {
   if (p_keywords.length() < minLength)
     return;
 
-  m_completer->blockSignals(true);
-  QString buffer(p_keywords);
-  buffer.append(p_delimiter);
-  if(p_keywords != m_lineEdit->text())
-    buffer.append(m_lineEdit->text());
-
-  buffer = buffer.trimmed();
-  if(buffer != p_keywords)
-    p_keywords = buffer;
-
-  setModified(true);
-  m_lineEdit->setText(p_keywords);
-  m_completer->blockSignals(false);
-  buffer.clear();
-}
-
-void KeywordLineEdit::keywordChanged(const QString &str) {
-  if (!str.contains(p_delimiter))
-    return; // keine Aktion notwendig
-
-  if (m_completer == nullptr) {
-    qWarning("No Completer for KeywordLineEdit loaded!");
-    return;
-  }
-
-  int to = str.lastIndexOf(p_delimiter);
-  if (to < minLength)
-    return; // Zeichenlänge zu niedrig
-
-  QString buffer(str); // bereinigen
+  QString buffer = m_lineEdit->text().trimmed();
   buffer.replace(stripPattern, "");
 
-  // puffer Aktualisieren
-  p_keywords = buffer.left(to);
-  // Neue Suchzeichenkette senden
-  QString search = buffer.section(p_delimiter, -1, to).trimmed();
-  if (search.length() > minLength) {
-    m_completer->setCompletionPrefix(p_keywords);
-    emit m_completer->highlighted(search);
-  }
+  QStringList list = p_keywords.split(p_delimiter);
+  list << buffer;
+  list.sort();
+  list.removeDuplicates();
+  p_keywords = list.join(p_delimiter);
+  // qDebug() << Q_FUNC_INFO << p_keywords;
+  m_keywordList->setText(p_keywords);
+  setModified(true);
+  list.clear();
 }
 
 void KeywordLineEdit::setValue(const QVariant &str) {
@@ -89,7 +68,7 @@ void KeywordLineEdit::setValue(const QVariant &str) {
 
   setModified(true);
   p_keywords = keywords;
-  m_lineEdit->setText(keywords);
+  m_keywordList->setText(keywords);
 }
 
 void KeywordLineEdit::loadKeywords() {
@@ -113,27 +92,26 @@ void KeywordLineEdit::loadKeywords() {
 }
 
 const QVariant KeywordLineEdit::value() {
-  QString text = m_lineEdit->text().trimmed();
+  QString text = m_keywordList->text().trimmed();
   return text;
 }
 
 bool KeywordLineEdit::isValid() {
-  if (isRequired() && m_lineEdit->text().length() < 1)
+  if (isRequired() && m_keywordList->text().length() < 1)
     return false;
 
   return true;
 }
 
 void KeywordLineEdit::reset() {
+  m_keywordList->clear();
   m_lineEdit->clear();
   setModified(false);
 }
 
 void KeywordLineEdit::setFocus() { m_lineEdit->setFocus(); }
 
-void KeywordLineEdit::setInfo(const QString &info) {
-  setToolTip(info);
-}
+void KeywordLineEdit::setInfo(const QString &info) { setToolTip(info); }
 
 const QString KeywordLineEdit::info() { return toolTip(); }
 
