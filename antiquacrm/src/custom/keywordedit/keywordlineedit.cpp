@@ -14,10 +14,7 @@ KeywordLineEdit::KeywordLineEdit(QWidget *parent) : UtilsMain{parent} {
 
   p_keywords = QString();
 
-  m_keywordList = new QLineEdit(this);
-  m_keywordList->setPlaceholderText(tr("Category keywords"));
-  m_keywordList->setDragEnabled(false);
-  m_keywordList->setReadOnly(true);
+  m_keywordList = new QLabel(this);
   layout->addWidget(m_keywordList); // 0
 
   QToolButton *ac_clear = new QToolButton(this);

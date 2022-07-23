@@ -3053,12 +3053,7 @@
 <context>
     <name>KeywordLineEdit</name>
     <message>
-        <location filename="../custom/keywordedit/keywordlineedit.cpp" line="+18"/>
-        <source>Category keywords</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location filename="../custom/keywordedit/keywordlineedit.cpp" line="+22"/>
         <source>This button reset the Keyword field.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4704,36 +4699,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../core/antiquacore/orderstatus.cpp" line="+25"/>
-        <source>open order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>order start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>package picked up</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>package delivery</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>package delivered</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>delivery completed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../core/antiquacore/paymenttypeset.cpp" line="+2"/>
         <source>Bank transfer (prepayment)</source>
         <translation type="unfinished"></translation>
@@ -4796,6 +4761,36 @@
     <message>
         <location filename="../custom/categoryedit/treekeyworditem.cpp" line="+14"/>
         <source>Keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../core/antiquacore/orderstatus.cpp" line="+26"/>
+        <source>Open order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Order start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Package picked up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Package delivered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Outstanding payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Order completed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -3053,12 +3053,7 @@
 <context>
     <name>KeywordLineEdit</name>
     <message>
-        <location filename="../custom/keywordedit/keywordlineedit.cpp" line="+18"/>
-        <source>Category keywords</source>
-        <translation>Schlüsselwörter für Kategorien</translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location filename="../custom/keywordedit/keywordlineedit.cpp" line="+22"/>
         <source>This button reset the Keyword field.</source>
         <translation>Diese Schaltfläche setzt das Schlüsselwortfeld zurück.</translation>
     </message>
@@ -4704,36 +4699,6 @@
         <translation>Kein Auslieferung oder Bestellung</translation>
     </message>
     <message>
-        <location filename="../core/antiquacore/orderstatus.cpp" line="+25"/>
-        <source>open order</source>
-        <translation>offene Bestellung</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>order start</source>
-        <translation>Auftragsbeginn</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>package picked up</source>
-        <translation>Paket abgeholt</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>package delivery</source>
-        <translation>Paketzustellung</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>package delivered</source>
-        <translation>Paket geliefert</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>delivery completed</source>
-        <translation>Lieferung abgeschlossen</translation>
-    </message>
-    <message>
         <location filename="../core/antiquacore/paymenttypeset.cpp" line="+2"/>
         <source>Bank transfer (prepayment)</source>
         <translation>Banküberweisung (Vorkasse)</translation>
@@ -4797,6 +4762,36 @@
         <location filename="../custom/categoryedit/treekeyworditem.cpp" line="+14"/>
         <source>Keyword</source>
         <translation>Schlüsselwort</translation>
+    </message>
+    <message>
+        <location filename="../core/antiquacore/orderstatus.cpp" line="+26"/>
+        <source>Open order</source>
+        <translation>Offene Bestellung</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Order start</source>
+        <translation>Auftrags begin</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Package picked up</source>
+        <translation>Paket wurde abgeholt</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Package delivered</source>
+        <translation>Paket wurde ausgeliefert</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Outstanding payment</source>
+        <translation>Zahlung ausstehend</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Order completed</source>
+        <translation>Auftrag abgeschlossen</translation>
     </message>
 </context>
 <context>

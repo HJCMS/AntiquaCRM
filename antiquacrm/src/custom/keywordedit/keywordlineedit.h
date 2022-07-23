@@ -6,6 +6,7 @@
 #define KEYWORD_LINEDIT_H
 
 #include <QCompleter>
+#include <QLabel>
 #include <QLineEdit>
 #include <QObject>
 #include <QRegExp>
@@ -42,7 +43,7 @@ private:
   /**
    * @brief Schlüüselwortliste
    */
-  QLineEdit *m_keywordList;
+  QLabel *m_keywordList;
 
   /**
    * @brief Eingabefeld

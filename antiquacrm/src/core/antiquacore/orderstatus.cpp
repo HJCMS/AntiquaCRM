@@ -22,12 +22,18 @@ const QString OrderStatus::title() { return p_title; }
 
 OrderStatusList::OrderStatusList() : p_list() {
   p_list.clear();
-  p_list.append(OrderStatus(0, QObject::tr("open order")));  /**< offene Bestellung */
-  p_list.append(OrderStatus(1, QObject::tr("order start"))); /**< Auftragsbeginn */
-  p_list.append(OrderStatus(2, QObject::tr("package picked up"))); /**< Paket abgeholt */
-  p_list.append(OrderStatus(3, QObject::tr("package delivery"))); /**< Paketzustellung */
-  p_list.append(OrderStatus(4, QObject::tr("package delivered"))); /**< Paket geliefert */
-  p_list.append(OrderStatus(5, QObject::tr("delivery completed"))); /**< Lieferung abgeschlossen */
+  /** offene Bestellung */
+  p_list.append(OrderStatus(0, QObject::tr("Open order")));
+  /** Auftragsbeginn */
+  p_list.append(OrderStatus(1, QObject::tr("Order start")));
+  /** Paket abgeholt */
+  p_list.append(OrderStatus(2, QObject::tr("Package picked up")));
+  /** Paket geliefert */
+  p_list.append(OrderStatus(3, QObject::tr("Package delivered")));
+  /** Zahlung austehend */
+  p_list.append(OrderStatus(4, QObject::tr("Outstanding payment")));
+  /** Lieferung abgeschlossen */
+  p_list.append(OrderStatus(5, QObject::tr("Order completed")));
 }
 
 int OrderStatusList::size() { return p_list.size(); };
