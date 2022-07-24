@@ -16,8 +16,6 @@
 #include <QPoint>
 #include <QRegExp>
 #include <QSignalMapper>
-#include <QSqlError>
-#include <QSqlQuery>
 #include <QSqlTableModel>
 #include <QTime>
 

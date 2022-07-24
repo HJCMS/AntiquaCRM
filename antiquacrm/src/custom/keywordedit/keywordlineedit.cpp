@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "keywordlineedit.h"
+#include "keywordlabellist.h"
 #include "myicontheme.h"
 
 #include <QtCore>
@@ -12,40 +13,39 @@ KeywordLineEdit::KeywordLineEdit(QWidget *parent) : UtilsMain{parent} {
   QHBoxLayout *layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 
-  p_keywords = QString();
-
-  m_keywordList = new QLabel(this);
-  layout->addWidget(m_keywordList); // 0
+  m_keywordList = new KeywordLabelList(this);
+  m_keywordList->setToolTip(tr("add 3 Keywords for a better search!"));
+  layout->addWidget(m_keywordList);
+  layout->addStretch(1);
 
   QToolButton *ac_clear = new QToolButton(this);
   ac_clear->setIcon(myIcon("clear_left"));
   ac_clear->setToolTip(tr("This button reset the Keyword field."));
-  layout->addWidget(ac_clear); // 1
+  layout->addWidget(ac_clear);
 
   m_lineEdit = new QLineEdit(this);
   m_lineEdit->setPlaceholderText(tr("Search, add to"));
-  m_lineEdit->setToolTip(tr("To add keywords, paste them here and press Enter."));
+  m_lineEdit->setToolTip(
+      tr("To add keywords, paste them here and press Enter."));
   m_lineEdit->setDragEnabled(false);
   m_lineEdit->setClearButtonEnabled(true);
-  layout->addWidget(m_lineEdit); // 2
+  m_lineEdit->setMinimumWidth(200);
+  layout->addWidget(m_lineEdit);
 
   m_validator = new QRegExpValidator(validatePattern, m_lineEdit);
   m_lineEdit->setValidator(m_validator);
 
   setRequired(true);
   setModified(false);
-  layout->setStretch(0, 70);
-  layout->setStretch(2, 25);
   setLayout(layout);
 
-  connect(m_lineEdit, SIGNAL(editingFinished()), this, SLOT(finalize()));
   connect(m_lineEdit, SIGNAL(returnPressed()), this, SLOT(finalize()));
   connect(ac_clear, SIGNAL(clicked()), this, SLOT(clearKeywords()));
 }
 
 void KeywordLineEdit::clearKeywords() {
-  p_keywords.clear();
   m_keywordList->clear();
+  setModified(true);
 }
 
 void KeywordLineEdit::finalize() {
@@ -54,19 +54,9 @@ void KeywordLineEdit::finalize() {
 
   QString buffer = m_lineEdit->text().trimmed();
   buffer.replace(stripPattern, "");
+  m_keywordList->addKeyword(buffer);
 
-  QStringList list;
-  if (!p_keywords.isEmpty())
-    list = p_keywords.split(p_delimiter);
-
-  list << buffer;
-  list.sort();
-  list.removeDuplicates();
-  p_keywords = list.join(p_delimiter);
-  // qDebug() << Q_FUNC_INFO << p_keywords;
-  m_keywordList->setText(p_keywords);
   setModified(true);
-  list.clear();
 }
 
 void KeywordLineEdit::setValue(const QVariant &str) {
@@ -76,8 +66,7 @@ void KeywordLineEdit::setValue(const QVariant &str) {
     return;
 
   setModified(true);
-  p_keywords = keywords;
-  m_keywordList->setText(keywords);
+  m_keywordList->addKeywords(keywords.split(p_delimiter));
 }
 
 void KeywordLineEdit::loadKeywords() {
@@ -101,12 +90,18 @@ void KeywordLineEdit::loadKeywords() {
 }
 
 const QVariant KeywordLineEdit::value() {
-  QString text = m_keywordList->text().trimmed();
-  return text;
+  QStringList list = m_keywordList->keywords();
+  if (list.count() < 1) {
+    qWarning("Empty Keywords list!");
+    return QString();
+  }
+
+  return list.join(p_delimiter);
 }
 
 bool KeywordLineEdit::isValid() {
-  if (isRequired() && m_keywordList->text().length() < 1)
+  QStringList list = m_keywordList->keywords();
+  if (isRequired() && list.count() < 1)
     return false;
 
   return true;

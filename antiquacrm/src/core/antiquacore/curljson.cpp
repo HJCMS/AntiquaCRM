@@ -18,7 +18,11 @@
 #endif
 
 #ifndef ENABLE_DEBUG
+#ifdef ANTIQUA_DEVELOPEMENT
+#define ENABLE_DEBUG true
+#else
 #define ENABLE_DEBUG false
+#endif
 #endif
 
 // BEGIN CurlRequest
@@ -195,7 +199,7 @@ curl_slist *CurlRequest::setHeader() {
 }
 
 int CurlRequest::writeData(char *data, size_t size, size_t nitems,
-                               std::string *buffer) {
+                           std::string *buffer) {
   qint64 ret = 0;
   if (buffer != NULL) {
     std::string str(data);
@@ -209,7 +213,7 @@ int CurlRequest::writeData(char *data, size_t size, size_t nitems,
 }
 
 size_t CurlRequest::readFile(char *data, size_t size, size_t nmemb,
-                                 std::string *buffer) {
+                             std::string *buffer) {
   /**
    * @todo FileUpload
    *  https://curl.se/libcurl/c/CURLOPT_READFUNCTION.html
@@ -327,7 +331,7 @@ bool CurlRequest::post(const QUrl &url, const QByteArray &body) {
 }
 
 bool CurlRequest::postForm(const QUrl &url, const QString &param,
-                               const QByteArray &body) {
+                           const QByteArray &body) {
 #if ENABLE_DEBUG == true
   qDebug() << Q_FUNC_INFO << "TODO" << url << body;
 #endif

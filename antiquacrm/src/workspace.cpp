@@ -128,6 +128,9 @@ int Workspace::addInventoryOrders(int index) {
   // Nachrichten an Hauptfenster
   connect(m_tabOrders, SIGNAL(s_postMessage(const QString &)), this,
           SIGNAL(s_postMessage(const QString &)));
+  // Artikel Bestandsänderung an Providers senden
+  connect(m_tabOrders, SIGNAL(s_articleCount(int, int)), this,
+          SLOT(updateArticleCount(int, int)));
   int i = insertTab(index, m_tabOrders, tr("Orders"));
   m_tabBar->setTabData(i, m_tabOrders->isClosable());
   setTabToolTip(i, tr("Order Inventory"));

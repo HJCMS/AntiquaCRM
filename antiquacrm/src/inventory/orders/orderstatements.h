@@ -293,4 +293,20 @@ static const QString inventoryArticle(int id) {
   return s;
 }
 
+/**
+ * @brief Artikelbestands abfrage
+ * @param oid - Order ID
+ * @return SQL QUERY
+ */
+static const QString inventoryArticleCounts(int oid) {
+  QString sql("SELECT COALESCE(ib_count,ip_count) AS count");
+  sql.append(", a_article_id");
+  sql.append(" FROM article_orders");
+  sql.append(" LEFT JOIN inventory_books ON ib_id=a_article_id");
+  sql.append(" LEFT JOIN inventory_prints ON ip_id=a_article_id");
+  sql.append(" WHERE a_order_id=" + QString::number(oid));
+  sql.append(";");
+  return sql;
+}
+
 #endif // INVENTORY_ORDERSTATEMENTS_H

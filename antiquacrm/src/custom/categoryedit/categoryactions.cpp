@@ -5,10 +5,12 @@
 #include "myicontheme.h"
 
 #include <QHBoxLayout>
+#include <QToolButton>
 
 CategoryActions::CategoryActions(QWidget *parent) : QFrame{parent} {
 
   QHBoxLayout *layout = new QHBoxLayout(this);
+  layout->setContentsMargins(2, 2, 2, 2);
 
   m_btnToggle = new QPushButton(this);
   m_btnToggle->setText(tr("Treeview"));
@@ -25,8 +27,14 @@ CategoryActions::CategoryActions(QWidget *parent) : QFrame{parent} {
   m_search = new QLineEdit(this);
   m_search->setPlaceholderText(tr("Search Keyword"));
   m_search->setToolTip(tr("Add Keyword and Press Enter"));
-  m_search->setMinimumWidth(150);
+  m_search->setClearButtonEnabled(true);
+  m_search->setMinimumWidth(180);
   layout->addWidget(m_search, Qt::AlignLeft);
+
+  QToolButton *ac_search = new QToolButton(this);
+  ac_search->setIcon(myIcon("search"));
+  ac_search->setToolTip(tr("Start search"));
+  layout->addWidget(ac_search, Qt::AlignLeft);
 
   layout->addStretch(1);
 
@@ -48,6 +56,7 @@ CategoryActions::CategoryActions(QWidget *parent) : QFrame{parent} {
   connect(m_btnSave, SIGNAL(clicked()), this, SIGNAL(sendSaveDialog()));
   connect(m_btnQuit, SIGNAL(clicked()), this, SIGNAL(sendQuitDialog()));
   connect(m_search, SIGNAL(returnPressed()), this, SLOT(searchEnterPressed()));
+  connect(ac_search, SIGNAL(clicked()), this, SLOT(searchEnterPressed()));
 }
 
 void CategoryActions::searchEnterPressed() {

@@ -152,6 +152,11 @@ private:
   void createSqlInsert();
 
   /**
+   * @brief Artikel Bestand für Signal::s_articleCount prüfen.
+   */
+  void articleCountUpdate(int oid);
+
+  /**
    * @brief Füge Daten in Datenfeld ein
    * Sucht mit Objektname nach dem Eingabeobjekt und
    * fügt die Daten ein.

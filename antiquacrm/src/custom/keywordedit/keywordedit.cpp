@@ -99,10 +99,15 @@ void KeywordEdit::updateKeywordEntry(const QJsonObject &obj) {
 }
 
 void KeywordEdit::insertKeywordEntry(const QJsonObject &obj) {
-  QString sql("INSERT INTO categories_intern (ci_name,ci_company_usage)");
-  sql.append(" VALUES ('" + obj.value("ci_name").toString() + "',");
-  sql.append(obj.value("ci_company_usage").toBool() ? "true" : "false");
-  sql.append(") RETURNING ci_id;");
+  QString ci_name = obj.value("ci_name").toString().trimmed();
+  if (ci_name.isEmpty()) {
+    m_actionsBar->statusMessage(tr("Missing Keyword!"));
+    return;
+  }
+  QString bcu = obj.value("ci_company_usage").toBool() ? "true" : "false";
+  QString sql("INSERT INTO categories_intern");
+  sql.append(" (ci_name,ci_company_usage)");
+  sql.append(" VALUES ('" + ci_name + "'," + bcu + ");");
   m_sql->query(sql);
   if (m_sql->lastError().isEmpty()) {
     m_editor->clear();

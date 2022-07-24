@@ -66,12 +66,14 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
   connect(m_tableView, SIGNAL(s_editOrder(int)), this, SLOT(updateOrder(int)));
   connect(m_editor, SIGNAL(s_postMessage(const QString &)), this,
           SLOT(displayMessageBox(const QString &)));
-  connect(m_editor, SIGNAL(s_statusMessage(const QString &)),
-          this, SIGNAL(s_postMessage(const QString &)));
+  connect(m_editor, SIGNAL(s_statusMessage(const QString &)), this,
+          SIGNAL(s_postMessage(const QString &)));
   connect(m_editor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
   connect(m_editor, SIGNAL(s_isModified(bool)), this,
           SLOT(setIsModified(bool)));
   connect(btn_refresh, SIGNAL(clicked()), m_tableView, SLOT(refreshView()));
+  connect(m_editor, SIGNAL(s_articleCount(int, int)), this,
+          SIGNAL(s_articleCount(int, int)));
 
   m_tableView->initOrders();
 }
@@ -110,7 +112,7 @@ void InventoryOrders::createOrder(int customerId) {
 }
 
 void InventoryOrders::createOrder(const ProviderOrder &order) {
-  if(ProviderOrder(order).customerId() < 1) {
+  if (ProviderOrder(order).customerId() < 1) {
     emit s_postMessage(tr("Missing a valid costumer Id!"));
     return;
   }

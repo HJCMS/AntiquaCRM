@@ -544,6 +544,25 @@ void OrderEditor::createSqlInsert() {
     if (m_paymentList->payments() > 0) {
       createSqlArticleOrder();
     }
+    articleCountUpdate(o_id->value().toInt());
+  }
+}
+
+void OrderEditor::articleCountUpdate(int oid) {
+  QString sql = inventoryArticleCounts(oid);
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    while (q.next()) {
+      if (q.value("count").toInt() >= 0) {
+        emit s_articleCount(q.value("a_article_id").toInt(),
+                            q.value("count").toInt());
+      }
+    }
+  } else {
+    if (q.lastError().type() != QSqlError::NoError) {
+      qDebug() << Q_FUNC_INFO << m_sql->lastError();
+      sqlErrnoMessage(sql, m_sql->fetchErrors());
+    }
   }
 }
 
@@ -803,8 +822,7 @@ void OrderEditor::openPrinterInvoiceDialog() {
   int setTax =
       o_vat_levels->itemData(o_vat_levels->currentIndex(), Qt::UserRole)
           .toInt();
-  if(setTax == 0)
-  {
+  if (setTax == 0) {
     o_vat_included->setChecked(false);
     disable_vat = true;
   }

@@ -544,7 +544,8 @@ bool InventoryProviders::updateArticleCount(int articleId, int count) {
     return false;
 
 #ifdef ANTIQUA_DEVELOPEMENT
-  qInfo("Currently Disabled updateArticleCount(%s,%s)",
+  qInfo("Update Article Count disabled in Developement:\n"
+        " InventoryProviders::updateArticleCount(%s,%s)",
         qPrintable(QString::number(articleId).toLocal8Bit()),
         qPrintable(QString::number(count).toLocal8Bit()));
   return false;

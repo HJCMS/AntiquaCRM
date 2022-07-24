@@ -16,6 +16,8 @@
 
 #include <UtilsMain>
 
+class KeywordLabelList;
+
 /**
  * @brief Texteingabefeld für Kategorie- Schlüsselwörter
  */
@@ -25,11 +27,6 @@ class KeywordLineEdit : public UtilsMain {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  /**
-   * @brief Aktueller Schlüsselwort Inhalt
-   */
-  QString p_keywords;
-
   /**
    * @brief Trennzeichen
    */
@@ -43,7 +40,7 @@ private:
   /**
    * @brief Schlüüselwortliste
    */
-  QLabel *m_keywordList;
+  KeywordLabelList *m_keywordList;
 
   /**
    * @brief Eingabefeld
