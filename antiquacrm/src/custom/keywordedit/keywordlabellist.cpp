@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "keywordlabellist.h"
+#include "keywordlabel.h"
 
 #include <QDebug>
 #include <QPainter>
@@ -11,15 +12,8 @@
 
 static const QString lableStyle() {
   QStringList css;
-  css << "font-weight:bold;";
+  css << "padding-left:5px;padding-right:5px;";
   return "KeywordLabel {" + css.join(" ") + "}";
-}
-
-KeywordLabel::KeywordLabel(const QString &txt, QWidget *parent)
-    : QLabel{txt, parent} {
-  setObjectName(txt);
-  setContentsMargins(0, 0, 0, 0);
-  setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
 }
 
 KeywordLabelList::KeywordLabelList(QWidget *parent) : QFrame{parent} {

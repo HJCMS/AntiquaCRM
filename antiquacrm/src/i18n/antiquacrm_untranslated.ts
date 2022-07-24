@@ -65,7 +65,7 @@
 <context>
     <name>Antiqua::CurlJson</name>
     <message>
-        <location filename="../core/antiquacore/curljson.cpp" line="+411"/>
+        <location filename="../core/antiquacore/curljson.cpp" line="+415"/>
         <source>CA-Bundle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -962,7 +962,7 @@
 <context>
     <name>CategoryActions</name>
     <message>
-        <location filename="../custom/categoryedit/categoryactions.cpp" line="+14"/>
+        <location filename="../custom/categoryedit/categoryactions.cpp" line="+16"/>
         <source>Treeview</source>
         <translation type="unfinished"></translation>
     </message>
@@ -993,6 +993,11 @@
     </message>
     <message>
         <location line="+7"/>
+        <source>Start search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2688,7 +2693,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+70"/>
         <source>Missing a valid costumer Id!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2997,8 +3002,13 @@
     <message>
         <location line="+48"/>
         <location line="+21"/>
-        <location line="+15"/>
+        <location line="+20"/>
         <source>Database query success!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-11"/>
+        <source>Missing Keyword!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3053,7 +3063,12 @@
 <context>
     <name>KeywordLineEdit</name>
     <message>
-        <location filename="../custom/keywordedit/keywordlineedit.cpp" line="+22"/>
+        <location filename="../custom/keywordedit/keywordlineedit.cpp" line="+17"/>
+        <source>add 3 Keywords for a better search!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>This button reset the Keyword field.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3063,12 +3078,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>To add keywords, paste them here and press Enter.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="+94"/>
         <source>Keywords: Requires minimum one Keyword!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3301,13 +3316,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+765"/>
+        <location line="+783"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-844"/>
+        <location line="-862"/>
         <source>Invoice ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3377,13 +3392,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+264"/>
-        <location line="+494"/>
+        <location line="+283"/>
+        <location line="+493"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-479"/>
+        <location line="-478"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3431,7 +3446,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+75"/>
         <source>No Billing Info found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3471,13 +3486,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-492"/>
-        <location line="+245"/>
+        <location line="-491"/>
+        <location line="+244"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-749"/>
+        <location line="-767"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3487,7 +3502,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+688"/>
+        <location line="+706"/>
         <source>Printing canceled.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3642,7 +3657,7 @@
 <context>
     <name>OrdersTable</name>
     <message>
-        <location filename="../inventory/orders/orderstable.cpp" line="+72"/>
+        <location filename="../inventory/orders/orderstable.cpp" line="+70"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3655,7 +3670,7 @@
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../inventory/orders/orderstablemodel.cpp" line="+116"/>
+        <location filename="../inventory/orders/orderstablemodel.cpp" line="+115"/>
         <source>Since</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5399,7 +5414,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+16"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5466,7 +5481,7 @@
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-218"/>
+        <location line="-221"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>

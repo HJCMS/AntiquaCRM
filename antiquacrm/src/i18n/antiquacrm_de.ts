@@ -65,7 +65,7 @@
 <context>
     <name>Antiqua::CurlJson</name>
     <message>
-        <location filename="../core/antiquacore/curljson.cpp" line="+411"/>
+        <location filename="../core/antiquacore/curljson.cpp" line="+415"/>
         <source>CA-Bundle</source>
         <translation>CA Paket</translation>
     </message>
@@ -962,7 +962,7 @@
 <context>
     <name>CategoryActions</name>
     <message>
-        <location filename="../custom/categoryedit/categoryactions.cpp" line="+14"/>
+        <location filename="../custom/categoryedit/categoryactions.cpp" line="+16"/>
         <source>Treeview</source>
         <translation>Baumansicht</translation>
     </message>
@@ -993,6 +993,11 @@
     </message>
     <message>
         <location line="+7"/>
+        <source>Start search</source>
+        <translation>Suche starten</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
@@ -2688,7 +2693,7 @@
         <translation>Aktualisieren</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+70"/>
         <source>Missing a valid costumer Id!</source>
         <translation>Keine gültige Kunden Nummer!</translation>
     </message>
@@ -2997,9 +3002,14 @@
     <message>
         <location line="+48"/>
         <location line="+21"/>
-        <location line="+15"/>
+        <location line="+20"/>
         <source>Database query success!</source>
         <translation>Datenbankabfrage erfolgreich!</translation>
+    </message>
+    <message>
+        <location line="-11"/>
+        <source>Missing Keyword!</source>
+        <translation>Kein Schlüsselwort gefunden!</translation>
     </message>
 </context>
 <context>
@@ -3053,7 +3063,12 @@
 <context>
     <name>KeywordLineEdit</name>
     <message>
-        <location filename="../custom/keywordedit/keywordlineedit.cpp" line="+22"/>
+        <location filename="../custom/keywordedit/keywordlineedit.cpp" line="+17"/>
+        <source>add 3 Keywords for a better search!</source>
+        <translation>Für eine bessere Suche, fügen sie hier bis zu 3 Schlüsselwörter ein!</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>This button reset the Keyword field.</source>
         <translation>Diese Schaltfläche setzt das Schlüsselwortfeld zurück.</translation>
     </message>
@@ -3063,12 +3078,12 @@
         <translation>Suchen, hinzufügen</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>To add keywords, paste them here and press Enter.</source>
         <translation>Für das hinzufügen der Schlüsselwörter, diese hier einfügen und Enter drücken.</translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="+94"/>
         <source>Keywords: Requires minimum one Keyword!</source>
         <translation>Das Feld Schlüsselwörter benötigt mindestens ein gültiges Wort!</translation>
     </message>
@@ -3301,13 +3316,13 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+765"/>
+        <location line="+783"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-844"/>
+        <location line="-862"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
@@ -3377,13 +3392,13 @@
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
-        <location line="+264"/>
-        <location line="+494"/>
+        <location line="+283"/>
+        <location line="+493"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="-479"/>
+        <location line="-478"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
     </message>
@@ -3431,7 +3446,7 @@
         <translation>Kein Rechnungs-Nr</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+75"/>
         <source>No Billing Info found</source>
         <translation>Kein Verkaufsinformationen gefunden</translation>
     </message>
@@ -3471,13 +3486,13 @@
         <translation>Bestellung</translation>
     </message>
     <message>
-        <location line="-492"/>
-        <location line="+245"/>
+        <location line="-491"/>
+        <location line="+244"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
     <message>
-        <location line="-749"/>
+        <location line="-767"/>
         <source>Service</source>
         <translation>Sender</translation>
     </message>
@@ -3487,7 +3502,7 @@
         <translation>Rechnungs Optionen</translation>
     </message>
     <message>
-        <location line="+688"/>
+        <location line="+706"/>
         <source>Printing canceled.</source>
         <translation>Druckevorgang abgebrochen.</translation>
     </message>
@@ -3642,7 +3657,7 @@
 <context>
     <name>OrdersTable</name>
     <message>
-        <location filename="../inventory/orders/orderstable.cpp" line="+72"/>
+        <location filename="../inventory/orders/orderstable.cpp" line="+70"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
@@ -3655,7 +3670,7 @@
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../inventory/orders/orderstablemodel.cpp" line="+116"/>
+        <location filename="../inventory/orders/orderstablemodel.cpp" line="+115"/>
         <source>Since</source>
         <translation>Erstellt</translation>
     </message>
@@ -5399,7 +5414,7 @@
         <translation>Kunden Inventar</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+16"/>
         <source>Orders</source>
         <translation>Aufträge</translation>
     </message>
@@ -5466,7 +5481,7 @@
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-218"/>
+        <location line="-221"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
