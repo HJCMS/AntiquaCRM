@@ -3,33 +3,24 @@
 
 #include "keywordlabel.h"
 
-#include <QDebug>
-#include <QPainter>
 #include <QPalette>
 #include <QSizePolicy>
-#include <QStyleOptionFrame>
 
 KeywordLabel::KeywordLabel(const QString &txt, QWidget *parent)
     : QLabel{txt, parent} {
   setObjectName(txt);
   setContentsMargins(0, 0, 0, 0);
   setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
-  setFrameShape(QFrame::Box);
-  setFrameShadow(QFrame::Raised);
-  // setFrameStyle(QFrame::Shape_Mask);
-  setLineWidth(1);
+  setFrameShape(QFrame::StyledPanel);
+  setFrameShadow(QFrame::Plain);
+  setStyleSheet(lableStyleSheet());
 }
 
-/*
-void KeywordLabel::paintEvent(QPaintEvent *e) {
-  QRect r = frameRect();
-
-  // QStyleOption::SO_Frame
-  QStyleOptionFrame option;
-  option.initFrom(this);
-
-  QPainter painter(this);
-  painter.end();
-  QLabel::paintEvent(e);
+const QString KeywordLabel::lableStyleSheet() const {
+  QString color = palette().color(QPalette::Text).name();
+  QStringList css;
+  css << "padding-left:5px;padding-right:5px;";
+  css << "padding-top:1px;padding-bottom:1px;";
+  css << "border:1px solid " + color + ";border-radius:10px;";
+  return "KeywordLabel {" + css.join("") + "}";
 }
-*/

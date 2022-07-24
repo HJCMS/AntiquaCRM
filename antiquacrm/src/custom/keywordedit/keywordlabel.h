@@ -7,7 +7,6 @@
 
 #include <QLabel>
 #include <QObject>
-#include <QPaintEvent>
 #include <QWidget>
 
 class KeywordLabel final : public QLabel {
@@ -15,11 +14,9 @@ class KeywordLabel final : public QLabel {
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
-protected:
-  // void paintEvent(QPaintEvent *) override;
-
 public:
   explicit KeywordLabel(const QString &txt, QWidget *parent = nullptr);
+  const QString lableStyleSheet() const;
 };
 
 #endif // KEYWORD_LABEL_H

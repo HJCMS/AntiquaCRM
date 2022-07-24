@@ -10,15 +10,8 @@
 #include <QPen>
 #include <QSizePolicy>
 
-static const QString lableStyle() {
-  QStringList css;
-  css << "padding-left:5px;padding-right:5px;";
-  return "KeywordLabel {" + css.join(" ") + "}";
-}
-
 KeywordLabelList::KeywordLabelList(QWidget *parent) : QFrame{parent} {
   setContentsMargins(0, 0, 0, 0);
-  setStyleSheet(lableStyle());
   m_layout = new QHBoxLayout(this);
   m_layout->setContentsMargins(2, 2, 2, 2);
   setLayout(m_layout);
