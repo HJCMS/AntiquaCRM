@@ -18,12 +18,14 @@ SET (subproject_SOURCES
   imagedialog.cpp
   imageview.cpp
   sourceinfo.cpp
+  imagetoolbar.cpp
 )
 
 SET (subproject_HEADERS
   imagedialog.h
   imageview.h
   sourceinfo.h
+  imagetoolbar.h
   Imaging
 )
 

@@ -26,7 +26,7 @@ static const QString setHeaderTitel(const QString &t) {
 }
 
 OrdersTableModel::OrdersTableModel(QObject *parent) : QSqlQueryModel{parent} {
-  setObjectName("OrderTableModel");
+  setObjectName("orders_table_model");
 
   connect(this, SIGNAL(dataChanged(const QModelIndex &, const QModelIndex &)),
           this, SLOT(update(const QModelIndex &, const QModelIndex &)));

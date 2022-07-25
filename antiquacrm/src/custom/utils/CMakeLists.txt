@@ -28,7 +28,6 @@ SET (subproject_SOURCES
   filedialog.cpp
   genderbox.cpp
   groupbox.cpp
-  imagetoolbar.cpp
   intspinbox.cpp
   inventory.cpp
   searchfilter.cpp
@@ -69,7 +68,6 @@ SET (subproject_HEADERS
   filedialog.h
   genderbox.h
   groupbox.h
-  imagetoolbar.h
   intspinbox.h
   inventory.h
   searchfilter.h

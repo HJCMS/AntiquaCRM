@@ -15,23 +15,37 @@ ViewsTableModel::ViewsTableModel(const QSqlDatabase &db, QWidget *parent)
   setObjectName("views_table_model");
 }
 
-const QHash<QString, QString> ViewsTableModel::translations() {
-  QHash<QString, QString> l;
+const QString ViewsTableModel::translations(const QString &key) const {
+  QMap<QString, QString> l;
+  l.insert("id", "Id");
+  l.insert("articleid", tr("Article Id"));
   l.insert("identifier", tr("Identity"));
   l.insert("title", tr("Title"));
   l.insert("categorie", tr("Categorie"));
+  l.insert("year", tr("Year"));
   l.insert("price", tr("Price"));
-  l.insert("price", tr("Price"));
+  l.insert("fullprice", tr("Full Price"));
+  l.insert("count", tr("Count"));
   l.insert("counts", tr("Count"));
-  l.insert("total_price", tr("total price"));
-  l.insert("avg_price", tr("price average"));
   l.insert("author", tr("Author"));
-  l.insert("storages", tr("Storage"));
   l.insert("keyword", tr("Keyword"));
-  l.insert("twofold_keywords", tr("Double Keywords"));
-  l.insert("articleid", tr("Article Id"));
+  l.insert("keywords", tr("Keywords"));
+  l.insert("publisher", tr("Pusblisher"));
+  l.insert("storage", tr("Storage"));
+  l.insert("storages", tr("Storage"));
+  l.insert("changed", tr("Changed"));
+  l.insert("exists", tr("Exists"));
   // l.insert("",tr(""));
-  return l;
+
+  return (l.contains(key)) ? " " + l.value(key) + " " : key.toUpper();
+}
+
+const QString ViewsTableModel::getFieldName(const QModelIndex &index) const {
+  int c = index.column();
+  if (c == 0)
+    return QString();
+
+  return record().fieldName(c);
 }
 
 QVariant ViewsTableModel::headerData(int section, Qt::Orientation orientation,
@@ -39,9 +53,8 @@ QVariant ViewsTableModel::headerData(int section, Qt::Orientation orientation,
   if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
     return QVariant();
 
-  QString key = record().field(section).name();
-  QHash<QString, QString> list = translations();
-  return (list.contains(key)) ? " " + list.value(key) + " " : key;
+  QString fn = record().fieldName(section).split("_").last();
+  return translations(fn);
 }
 
 QVariant ViewsTableModel::data(const QModelIndex &index, int role) const {
@@ -50,8 +63,18 @@ QVariant ViewsTableModel::data(const QModelIndex &index, int role) const {
                            role == Qt::DecorationRole))
     return val;
 
+  QString fn;
+  if (index.isValid()) {
+    fn = getFieldName(index);
+  }
+
   QVariant item = QSqlTableModel::data(index, role);
-  if (item.type() == QVariant::Double) {
+  if (item.type() == QVariant::Bool) {
+    return item.toBool() ? tr("Yes") : tr("No");
+  } else if (item.type() == QVariant::Double) {
+    if (!fn.contains("price", Qt::CaseInsensitive))
+      return item;
+
     QString price = QString::number(item.toDouble(), '0', 2);
     price.append(" ");
     price.append(currency);

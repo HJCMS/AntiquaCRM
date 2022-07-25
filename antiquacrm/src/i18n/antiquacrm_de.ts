@@ -456,7 +456,7 @@
 <context>
     <name>BookEditor</name>
     <message>
-        <location filename="../inventory/books/bookeditor.cpp" line="+26"/>
+        <location filename="../inventory/books/bookeditor.cpp" line="+25"/>
         <source>Edit Book Title</source>
         <translation>Editiere Buchtitel</translation>
     </message>
@@ -533,12 +533,12 @@
         <translation>Shopsystem Kategorien Schlüsselwort</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+17"/>
         <source>Language:</source>
         <translation>Sprache:</translation>
     </message>
     <message>
-        <location line="-222"/>
+        <location line="-233"/>
         <source>Article ID</source>
         <translation>Artikel ID</translation>
     </message>
@@ -604,8 +604,8 @@
     <message>
         <location line="+17"/>
         <location line="+5"/>
-        <source>Keyword</source>
-        <translation>Schlüsselwort</translation>
+        <source>Keywords</source>
+        <translation>Schlüsselwörter</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -613,7 +613,7 @@
         <translation>Shop Kategorie</translation>
     </message>
     <message>
-        <location line="+134"/>
+        <location line="+138"/>
         <source>Remove Image from Database</source>
         <translation>Entferne Bild aus der Datenbank</translation>
     </message>
@@ -643,12 +643,12 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-461"/>
+        <location line="-465"/>
         <source>Extended Title or Subtitle.</source>
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
     <message>
-        <location line="+223"/>
+        <location line="+227"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
@@ -680,7 +680,7 @@
         <translation>Dieser Text dient internen Zwecken</translation>
     </message>
     <message>
-        <location line="-201"/>
+        <location line="-205"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
@@ -691,12 +691,12 @@
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="+218"/>
+        <location line="+222"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten wurden gespeichert!</translation>
     </message>
     <message>
-        <location line="-334"/>
+        <location line="-338"/>
         <source>Restricted Sale</source>
         <translation>Eingeschränkter verkauf</translation>
     </message>
@@ -710,13 +710,13 @@
     <name>BookSearchBar</name>
     <message>
         <location filename="../inventory/books/booksearchbar.cpp" line="+128"/>
-        <source>Press CTRL+F, to quickly open this Menu.</source>
-        <translation>Drücken Sie STRG+F, um dieses Menü schnell zu öffnen.</translation>
+        <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
+        <translation>Drücken Sie Strg+Shift+F, um dieses Menü schnell zu öffnen.</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Press CTRL+S, it clears the input for a new search.</source>
-        <translation>Drücken Sie STRG+S, es löscht die Eingabe für eine neue Suche.</translation>
+        <source>Press CTRL+Shift+S, it clears the input for a new search.</source>
+        <translation>Drücken Sie Strg+Shift+S, es löscht die Eingabe für eine neue Suche.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -2605,9 +2605,9 @@
 <context>
     <name>ImageToolBar</name>
     <message>
-        <location filename="../custom/utils/imagetoolbar.cpp" line="+18"/>
-        <source>Import</source>
-        <translation>Einfügen</translation>
+        <location filename="../custom/imaging/imagetoolbar.cpp" line="+18"/>
+        <source>Import Image</source>
+        <translation>Bild einfügen</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -2616,8 +2616,8 @@
     </message>
     <message>
         <location line="+3"/>
-        <source>Remove</source>
-        <translation>Entfernen</translation>
+        <source>Remove Image</source>
+        <translation>Bild entfernen</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -5302,7 +5302,7 @@
 <context>
     <name>ViewsTableModel</name>
     <message>
-        <location filename="../inventory/views/viewstable.cpp" line="+21"/>
+        <location filename="../inventory/views/viewstable.cpp" line="+23"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -5318,47 +5318,73 @@
     </message>
     <message>
         <location line="+1"/>
+        <source>Year</source>
+        <translation>Jahr</translation>
+    </message>
+    <message>
         <location line="+1"/>
         <source>Price</source>
         <translation>Preis</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Count</source>
-        <translation>Anzahl</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>total price</source>
+        <source>Full Price</source>
         <translation>Gesamtpreis</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>price average</source>
-        <translation>Preis Durchschnitt</translation>
+        <location line="+1"/>
+        <source>Count</source>
+        <translation>Anzahl</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Changed</source>
+        <translation>Geändert</translation>
     </message>
     <message>
         <location line="+1"/>
+        <source>Exists</source>
+        <translation>Verfügbar</translation>
+    </message>
+    <message>
+        <location line="+36"/>
+        <source>Yes</source>
+        <translation>Ja</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>No</source>
+        <translation>Nein</translation>
+    </message>
+    <message>
+        <location line="-43"/>
         <source>Author</source>
         <translation>Autor</translation>
     </message>
     <message>
+        <location line="+2"/>
+        <source>Keywords</source>
+        <translation>Schlüsselwörter</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Pusblisher</source>
+        <translation>Herausgeber</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <location line="+1"/>
         <source>Storage</source>
         <translation>Lager</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-4"/>
         <source>Keyword</source>
         <translation>Schlüsselwort</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Double Keywords</source>
-        <translation>Doppelte Schlüsselwörter</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="-10"/>
         <source>Article Id</source>
         <translation>Artikel Id</translation>
     </message>

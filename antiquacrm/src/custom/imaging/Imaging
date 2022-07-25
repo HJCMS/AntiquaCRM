@@ -10,6 +10,10 @@
 # include "imagedialog.h"
 #endif
 
+#ifndef IMAGETOOLBAR_IMAGING_H
+# include "imagetoolbar.h"
+#endif
+
 #ifndef IMAGEVIEW_IMAGING_H
 # include "imageview.h"
 #endif

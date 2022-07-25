@@ -4,7 +4,6 @@
 #include "bookeditor.h"
 #include "bookcard.h"
 #include "categorysubject.h"
-#include "isbnrequest.h"
 #include "isbnresults.h"
 #include "keywordlineedit.h"
 #include "myicontheme.h"
@@ -230,12 +229,12 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   QLabel *keywordLabel = new QLabel(this);
   keywordLabel->setObjectName("keywordLabel");
   keywordLabel->setAlignment(defaultAlignment);
-  keywordLabel->setText(tr("Keyword") + ":");
+  keywordLabel->setText(tr("Keywords") + ":");
   row2->addWidget(keywordLabel, row2c, 0, 1, 1);
 
   ib_keyword = new KeywordLineEdit(this);
   ib_keyword->setObjectName("ib_keyword");
-  ib_keyword->setInfo(tr("Keyword"));
+  ib_keyword->setInfo(tr("Keywords"));
   ib_keyword->setToolTip(tr("Category Keywords for Shopsystems."));
   row2->addWidget(ib_keyword, row2c++, 1, 1, 1);
 
@@ -256,24 +255,28 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   m_json_category->setInfo(tr("Shop Category Keywords"));
   row2->addWidget(m_json_category, row2c++, 1, 1, 1);
 
-  QLabel *languageLabel = new QLabel(this);
-  languageLabel->setObjectName("languageLabel");
-  languageLabel->setAlignment(defaultAlignment);
-  languageLabel->setText(tr("Language:"));
-  row2->addWidget(languageLabel, row2c, 0, 1, 1);
-
-  ib_language = new SetLanguage(this);
-  ib_language->setObjectName("ib_language");
-  row2->addWidget(ib_language, row2c++, 1, 1, 1);
-
+  // ISBN
   QLabel *isbnLabel = new QLabel(this);
   isbnLabel->setText("ISBN:");
   isbnLabel->setAlignment(defaultAlignment);
   row2->addWidget(isbnLabel, row2c, 0, 1, 1);
 
+  QHBoxLayout *layoutISBNLang = new QHBoxLayout();
   ib_isbn = new IsbnEdit(this);
   ib_isbn->setObjectName("ib_isbn");
-  row2->addWidget(ib_isbn, row2c++, 1, 1, 1);
+  layoutISBNLang->addWidget(ib_isbn, Qt::AlignLeft);
+
+  QLabel *languageLabel = new QLabel(this);
+  languageLabel->setObjectName("languageLabel");
+  languageLabel->setAlignment(defaultAlignment);
+  languageLabel->setText(tr("Language:"));
+  layoutISBNLang->addWidget(languageLabel, Qt::AlignRight);
+
+  ib_language = new SetLanguage(this);
+  ib_language->setObjectName("ib_language");
+  layoutISBNLang->addWidget(ib_language, Qt::AlignRight);
+
+  row2->addLayout(layoutISBNLang, row2c++, 1, 1, 1);
 
   m_imageToolBar = new ImageToolBar(this);
   m_imageToolBar->setObjectName("books_image_actions_bar");

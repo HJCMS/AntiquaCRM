@@ -125,13 +125,13 @@ BookSearchBar::BookSearchBar(QWidget *parent) : QToolBar{parent} {
   setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 
   m_filterSection = new SearchFilterBox(this);
-  QString filterTip = tr("Press CTRL+F, to quickly open this Menu.");
+  QString filterTip = tr("Press CTRL+Shift+F, to quickly open this Menu.");
   m_filterSection->setToolTip(filterTip);
   addWidget(m_filterSection);
   addSeparator();
 
   m_searchLeft = new SearchLineEdit(this);
-  QString searchTip = tr("Press CTRL+S, it clears the input for a new search.");
+  QString searchTip = tr("Press CTRL+Shift+S, it clears the input for a new search.");
   m_searchLeft->setToolTip(searchTip);
   m_searchLeft->setStatusTip(
       tr("You can use a wildcard * to broaden the search."));

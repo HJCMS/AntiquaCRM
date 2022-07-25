@@ -21,7 +21,8 @@ class ViewsTableModel : public QSqlTableModel {
 
 private:
   const QByteArray currency;
-  static const QHash<QString, QString> translations();
+  const QString translations(const QString &key) const;
+  const QString getFieldName(const QModelIndex &index) const;
 
 public:
   ViewsTableModel(const QSqlDatabase &db, QWidget *parent = nullptr);

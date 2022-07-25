@@ -54,10 +54,6 @@
 # include "groupbox.h"
 #endif
 
-#ifndef IMAGETOOLBAR_UTILS_H
-# include "imagetoolbar.h"
-#endif
-
 #ifndef INTSPINBOX_UTILS_H
 # include "intspinbox.h"
 #endif
