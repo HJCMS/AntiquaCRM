@@ -613,7 +613,12 @@
         <translation>Shop Kategorie</translation>
     </message>
     <message>
-        <location line="+138"/>
+        <location line="+72"/>
+        <source>ISBN Response</source>
+        <translation>ISBN Rückantwort</translation>
+    </message>
+    <message>
+        <location line="+66"/>
         <source>Remove Image from Database</source>
         <translation>Entferne Bild aus der Datenbank</translation>
     </message>
@@ -2605,7 +2610,7 @@
 <context>
     <name>ImageToolBar</name>
     <message>
-        <location filename="../custom/imaging/imagetoolbar.cpp" line="+18"/>
+        <location filename="../custom/imaging/imagetoolbar.cpp" line="+17"/>
         <source>Import Image</source>
         <translation>Bild einfügen</translation>
     </message>
@@ -2623,6 +2628,16 @@
         <location line="+1"/>
         <source>Remove image from Database.</source>
         <translation>Entferne Bild aus der Datenbank.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Upload Image</source>
+        <translation>Bild hochladen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Upload image to Providers.</source>
+        <translation>Bild zum Dienstleister hochladen.</translation>
     </message>
 </context>
 <context>

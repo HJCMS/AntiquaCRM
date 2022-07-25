@@ -313,7 +313,7 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
 
   m_isbnWidget = new ISBNResults(this); // ISBNResults
   m_isbnWidget->setObjectName("isbnqueryresult");
-  m_tabWidget->insertTab(2, m_isbnWidget, "OpenLibrary.org");
+  m_tabWidget->insertTab(2, m_isbnWidget, tr("ISBN Response"));
   m_tabWidget->setTabIcon(2, myIcon("folder_txt"));
 
   mainLayout->addWidget(m_tabWidget);
