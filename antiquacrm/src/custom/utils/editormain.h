@@ -219,6 +219,12 @@ Q_SIGNALS:
    */
   void s_articleCount(int articleId, int count);
 
+  /**
+   * @brief Datenbank Bild zu einem Dienstleister hochladen!
+   * @param articleId
+   */
+  void s_uploadImage(int articleId);
+
 public Q_SLOTS:
   /**
    * @brief Zurücksetzen der Daten

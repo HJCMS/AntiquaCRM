@@ -135,6 +135,12 @@ private Q_SLOTS:
   void updateArticleCount(int articleId, int count);
 
   /**
+   * @brief Bild mit Artikel Nummer zu einem Dienstleister hochladen
+   * @param articleId
+   */
+  void updateProviderImage(int articleId);
+
+  /**
    * @brief Wenn der Tab schließen Knopf betätigt wurde.
    */
   void closeTabClicked(int);

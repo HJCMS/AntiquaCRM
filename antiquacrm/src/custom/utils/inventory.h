@@ -149,6 +149,12 @@ Q_SIGNALS:
    */
   void s_articleCount(int articleId, int count);
 
+  /**
+   * @brief Bild zu einem Dienstleister hochladen.
+   * @param articleId
+   */
+  void s_uploadImage(int articleId);
+
 public Q_SLOTS:
   /**
     @brief Öffnet das Nachrichtenfenster

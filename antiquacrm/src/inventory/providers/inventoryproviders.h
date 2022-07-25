@@ -282,6 +282,8 @@ public:
    * @param count     - Aktuelle Anzahl im Bestand
    */
   bool updateArticleCount(int articleId, int count);
+
+  bool updateProviderImage(int articleId);
 };
 
 #endif // INVENTORY_PROVIDERS_H

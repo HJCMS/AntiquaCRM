@@ -105,6 +105,9 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
 
   connect(m_bookEditor, SIGNAL(s_articleCount(int, int)), this,
           SIGNAL(s_articleCount(int, int)));
+
+  connect(m_bookEditor, SIGNAL(s_uploadImage(int)), this,
+          SIGNAL(s_uploadImage(int)));
 }
 
 void InventoryBooks::searchConvert(const QString &query) {

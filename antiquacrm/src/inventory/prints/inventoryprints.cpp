@@ -115,6 +115,8 @@ InventoryPrints::InventoryPrints(QWidget *parent) : Inventory{parent} {
           SLOT(setIsModified(bool)));
   connect(m_printsEditor, SIGNAL(s_articleCount(int, int)), this,
           SIGNAL(s_articleCount(int, int)));
+  connect(m_printsEditor, SIGNAL(s_uploadImage(int)), this,
+          SIGNAL(s_uploadImage(int)));
 }
 
 void InventoryPrints::searchConvert(const QString &query) {

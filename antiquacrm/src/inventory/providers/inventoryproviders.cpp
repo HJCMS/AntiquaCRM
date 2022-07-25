@@ -560,3 +560,13 @@ bool InventoryProviders::updateArticleCount(int articleId, int count) {
   }
   return true;
 }
+
+bool InventoryProviders::updateProviderImage(int articleId) {
+#ifdef ANTIQUA_DEVELOPEMENT
+  qInfo("Update Article Count disabled in Developement:\n"
+        " InventoryProviders::updateProviderImage(%s)",
+        qPrintable(QString::number(articleId).toLocal8Bit()));
+  return false;
+#endif
+  return false;
+}
