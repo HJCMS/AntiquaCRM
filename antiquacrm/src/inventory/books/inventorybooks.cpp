@@ -129,6 +129,7 @@ void InventoryBooks::searchConvert() {
 void InventoryBooks::openTableView() {
   m_stackedWidget->setCurrentIndex(0);
   m_bookEditor->setEnabled(false);
+  emit s_windowModified(false);
 }
 
 void InventoryBooks::openEditor(const QString &condition) {

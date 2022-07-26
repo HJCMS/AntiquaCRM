@@ -35,6 +35,8 @@ Q_SIGNALS:
 public Q_SLOTS:
   void setArticleId(int);
   void setActive(bool b = false);
+  void enableActions(bool b = false);
+  void restoreState();
 
 public:
   explicit ImageToolBar(QWidget *parent = nullptr);

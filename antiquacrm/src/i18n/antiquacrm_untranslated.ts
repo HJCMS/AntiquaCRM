@@ -78,7 +78,7 @@
 <context>
     <name>Antiqua::InterfaceWidget</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+326"/>
+        <location filename="../core/antiquacore/interface.cpp" line="+338"/>
         <source>Please select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -99,17 +99,12 @@
 <context>
     <name>Antiqua::PurchaseOverview</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="-275"/>
+        <location filename="../core/antiquacore/interface.cpp" line="-290"/>
         <source>Purchaser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>check</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
+        <location line="+11"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -119,17 +114,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-12"/>
-        <source>Send query if this customer exists.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-11"/>
+        <location line="-20"/>
         <source>Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+7"/>
+        <source>create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>if customer not exists, create it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>Create a search query to see if all items are available.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -618,7 +618,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+72"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -648,12 +648,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-465"/>
+        <location line="-471"/>
         <source>Extended Title or Subtitle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+227"/>
+        <location line="+233"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -663,7 +663,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-313"/>
+        <location line="-319"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -696,12 +696,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+228"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-338"/>
+        <location line="-344"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2610,7 +2610,7 @@
 <context>
     <name>ImageToolBar</name>
     <message>
-        <location filename="../custom/imaging/imagetoolbar.cpp" line="+17"/>
+        <location filename="../custom/imaging/imagetoolbar.cpp" line="+19"/>
         <source>Import Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2637,6 +2637,26 @@
     <message>
         <location line="+1"/>
         <source>Upload image to Providers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>This will upload the current image to the service provider.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>The image data will be updated by the service provider within the next 24 hours.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Are you sure that you want to upload the image data now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Image Upload</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2677,7 +2697,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+131"/>
+        <location line="+135"/>
         <source>Editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2726,7 +2746,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+124"/>
+        <location line="+126"/>
         <source>Editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2744,7 +2764,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+62"/>
         <source>exists with count</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2759,19 +2779,24 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+139"/>
+        <location line="+138"/>
         <location line="+2"/>
         <location line="+12"/>
         <source>Europe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+112"/>
+        <location line="+39"/>
+        <source>new customer created!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+77"/>
         <source>customer found in database!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+38"/>
         <source>Article Check</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2786,12 +2811,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-90"/>
+        <location line="-96"/>
         <source>customer not exits!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+87"/>
+        <location line="+93"/>
         <source>Buyer was not found in the customer register or the current customer number does not match. The system requires a valid customer number for a smooth process.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2831,7 +2856,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-433"/>
+        <location line="-438"/>
         <location line="+14"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
@@ -3076,6 +3101,14 @@
     </message>
 </context>
 <context>
+    <name>KeywordLabel</name>
+    <message>
+        <location filename="../custom/keywordedit/keywordlabel.cpp" line="+34"/>
+        <source>Remove this keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>KeywordLineEdit</name>
     <message>
         <location filename="../custom/keywordedit/keywordlineedit.cpp" line="+17"/>
@@ -3085,6 +3118,11 @@
     <message>
         <location line="+6"/>
         <source>This button reset the Keyword field.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Keyword add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3098,7 +3136,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+96"/>
         <source>Keywords: Requires minimum one Keyword!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3285,7 +3323,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+42"/>
         <source>Order ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3331,13 +3369,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+783"/>
+        <location line="+786"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-862"/>
+        <location line="-865"/>
         <source>Invoice ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3407,7 +3445,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+283"/>
+        <location line="+286"/>
         <location line="+493"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation type="unfinished"></translation>
@@ -3507,7 +3545,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-767"/>
+        <location line="-770"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3517,7 +3555,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+706"/>
+        <location line="+709"/>
         <source>Printing canceled.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3685,7 +3723,7 @@
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../inventory/orders/orderstablemodel.cpp" line="+115"/>
+        <location filename="../inventory/orders/orderstablemodel.cpp" line="+118"/>
         <source>Since</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3695,7 +3733,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-35"/>
+        <location line="-38"/>
         <source>received</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3725,7 +3763,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+41"/>
         <source>Payment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3747,6 +3785,11 @@
     <message>
         <location line="+3"/>
         <source>Runtime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Delivered</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4374,7 +4417,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+60"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4407,7 +4450,7 @@
 <context>
     <name>PrintsSearchBar</name>
     <message>
-        <location filename="../inventory/prints/inventoryprints.cpp" line="-146"/>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="-148"/>
         <source>Title or Author</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4615,16 +4658,6 @@
     <name>ProvidersToolBar</name>
     <message>
         <location filename="../inventory/providers/providerstoolbar.cpp" line="+27"/>
-        <source>Open/Edit/Create Customer entry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Customer open/edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
         <source>Create Order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4635,12 +4668,12 @@
     </message>
     <message>
         <location line="+5"/>
-        <location line="+27"/>
+        <location line="+26"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-26"/>
+        <location line="-25"/>
         <source>refreshing orders list</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5425,7 +5458,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+29"/>
         <source>Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5435,7 +5468,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+21"/>
         <source>Prints</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5481,12 +5514,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+83"/>
         <source>Cant close this tab, unsafed changes!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-53"/>
+        <location line="-65"/>
         <location line="+9"/>
         <location line="+9"/>
         <location line="+11"/>
@@ -5505,16 +5538,19 @@
     </message>
     <message>
         <location line="+98"/>
+        <location line="+12"/>
         <source>successfully</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-10"/>
+        <location line="+12"/>
         <source>an error occurred</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-9"/>
+        <location line="+12"/>
         <source>Provider tab isn&apos;t open!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5522,7 +5558,7 @@
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-221"/>
+        <location line="-238"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>

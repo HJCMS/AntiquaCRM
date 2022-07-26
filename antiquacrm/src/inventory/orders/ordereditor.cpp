@@ -28,14 +28,16 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
    * benötigt werden aber im Overview enthalten sind.
    */
   ignoreList.clear();
+  ignoreList.append("a_modified");
   ignoreList.append("o_since");
   ignoreList.append("o_modified");
-  ignoreList.append("a_modified");
+  ignoreList.append("o_delivered");
   ignoreList.append("o_provider_order");
 
   ignoreOnInsert.clear();
   ignoreOnInsert.append("o_invoice_id");
   ignoreOnInsert.append("o_delivery");
+  ignoreOnInsert.append("o_delivered");
 
   Qt::Alignment defaultAlignment = (Qt::AlignRight | Qt::AlignVCenter);
 
@@ -489,6 +491,9 @@ void OrderEditor::createSqlUpdate() {
   QString sql("UPDATE inventory_orders SET ");
   sql.append(set.join(","));
   sql.append(",o_modified=CURRENT_TIMESTAMP");
+  if(o_id->value().toInt() == STATUS_ORDER_DELIVERED) {
+    sql.append(",o_delivered=CURRENT_TIMESTAMP");
+  }
   sql.append(" WHERE o_id=");
   sql.append(oid);
   sql.append(";");

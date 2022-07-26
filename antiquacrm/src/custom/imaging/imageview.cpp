@@ -6,7 +6,7 @@
 #include "sqlcore.h"
 
 #ifndef DEBUG_IMAGE_VIEW
-#define DEBUG_IMAGE_VIEW true
+#define DEBUG_IMAGE_VIEW false
 #endif
 
 #if DEBUG_IMAGE_VIEW
@@ -267,6 +267,7 @@ bool ImageView::removeFromDatabase(int articleId) {
     qDebug() << m_sql->lastError();
     return false;
   }
+  emit s_imageLoadSuccess(false);
   return true;
 }
 

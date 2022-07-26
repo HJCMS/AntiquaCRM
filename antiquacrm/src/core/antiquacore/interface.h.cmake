@@ -90,7 +90,7 @@ namespace Antiqua {
     int c_id = 0;
     QToolBar *m_toolbar;
     QPushButton *btn_checkArticle;
-    QPushButton *btn_checkCustomer;
+    QPushButton *btn_createCustomer;
 
     /**
      * @brief c_id
@@ -140,6 +140,9 @@ namespace Antiqua {
      * @brief Zahlungs Informationen
      */
     Antiqua::PurchasePaymentInfo *m_paymentInfo;
+
+  private Q_SLOTS:
+    void customerChanged(const QString &);
 
   public Q_SLOTS:
     /**
@@ -501,6 +504,13 @@ namespace Antiqua {
      * @brief Artikelbestands Änderungen senden.
      */
     virtual void updateArticleCount(int articleId, int count) = 0;
+
+    /**
+     * @brief Bild für Artikelnummer hochladen.
+     * @param articleId - Artikelnummer
+     * @param data  - Base64 kodierte Zeichenkette
+     */
+    virtual void uploadArticleImage(int articleId, const QString &base64) = 0;
   };
 };
 

@@ -80,4 +80,10 @@ void AbeBooks::queryMenueEntries() {
   req->queryList();
 }
 
-void AbeBooks::updateArticleCount(int articleId, int count) {}
+void AbeBooks::updateArticleCount(int articleId, int count) {
+  qDebug() << Q_FUNC_INFO << articleId << count;
+}
+
+void AbeBooks::uploadArticleImage(int articleId, const QString &base64) {
+  qDebug() << Q_FUNC_INFO << articleId << base64.length();
+}

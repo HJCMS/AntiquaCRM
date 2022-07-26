@@ -75,4 +75,10 @@ void Booklooker::queryMenueEntries() {
   req->queryList();
 }
 
-void Booklooker::updateArticleCount(int articleId, int count) {}
+void Booklooker::updateArticleCount(int articleId, int count) {
+  qDebug() << Q_FUNC_INFO << articleId << count;
+}
+
+void Booklooker::uploadArticleImage(int articleId, const QString &base64) {
+  qDebug() << Q_FUNC_INFO << articleId << base64.length();
+}

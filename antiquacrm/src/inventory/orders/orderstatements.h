@@ -36,6 +36,14 @@
 #endif
 
 /**
+ * @brief Paket wurde ausgeliefert
+ * @note Siehe libAntiquaCRM::OrderStatus Klasse
+ */
+#ifndef STATUS_ORDER_DELIVERED
+#define STATUS_ORDER_DELIVERED 3
+#endif
+
+/**
  * @brief Standard auf den ersten Externen Paketdienst setzen!
  */
 #ifndef ORDER_DELIVERY_SERVICE
@@ -60,11 +68,17 @@ static const QString InventoryOrdersSelect() {
   fieldSelect.append(",");
   fieldSelect.append(prInfo);
 
-  QString age("(EXTRACT(EPOCH FROM timestamptz (CURRENT_TIMESTAMP))");
-  age.append(" - ");
+  QString epoch("(EXTRACT(EPOCH FROM timestamptz (CURRENT_TIMESTAMP))");
+
+  QString age(epoch + " - ");
   age.append("EXTRACT(EPOCH FROM timestamptz (a.o_since))) AS age");
   fieldSelect.append(",");
   fieldSelect.append(age);
+
+  QString delivered(epoch + " - ");
+  delivered.append("EXTRACT(EPOCH FROM timestamptz (a.o_delivered))) AS fin");
+  fieldSelect.append(",");
+  fieldSelect.append(delivered);
 
   return fieldSelect;
 }
@@ -168,6 +182,9 @@ static const QString setOrderDeliveryId(int oId, const QString &dId) {
 static const QString progresUpdate(int id, int status) {
   QString sql("UPDATE inventory_orders SET o_order_status=");
   sql.append(QString::number(status));
+  if (status == STATUS_ORDER_DELIVERED) {
+    sql.append(",o_since=CURRENT_TIMESTAMP");
+  }
   sql.append(" WHERE o_id=");
   sql.append(QString::number(id));
   sql.append(";");

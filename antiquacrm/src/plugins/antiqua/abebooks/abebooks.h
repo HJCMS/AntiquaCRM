@@ -80,6 +80,11 @@ public:
    * @param count
    */
   void updateArticleCount(int articleId, int count);
+
+  /**
+   * @brief Bild Hochladen
+   */
+  void uploadArticleImage(int articleId, const QString &base64);
 };
 
 #endif // ABEBOOKS_PLUGIN_H

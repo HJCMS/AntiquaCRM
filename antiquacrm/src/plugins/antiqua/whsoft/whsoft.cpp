@@ -85,3 +85,22 @@ void WHSoft::updateArticleCount(int articleId, int count) {
 
   jq->customQuery("bestand", doc);
 }
+
+void WHSoft::uploadArticleImage(int articleId, const QString &base64) {
+  QJsonObject jo;
+  jo.insert("bestellnr", QJsonValue(QString::number(articleId)));
+  jo.insert("bildnummer", QJsonValue(articleId));
+  jo.insert("content", QJsonValue(base64));
+  QJsonDocument jdoc(jo);
+  if (jdoc.isNull()) {
+    emit s_queryResponse(false);
+    return;
+  }
+
+  WHSoftJSonQuery *jq = new WHSoftJSonQuery(this);
+  jq->setObjectName("json_uload_image_data");
+  connect(jq, SIGNAL(orderResponsed(const QJsonDocument &)), this,
+          SLOT(responseAnswerCheck(const QJsonDocument &)));
+
+  jq->customQuery("bild", jdoc);
+}

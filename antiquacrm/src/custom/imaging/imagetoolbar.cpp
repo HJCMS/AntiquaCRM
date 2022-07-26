@@ -4,7 +4,9 @@
 #include "imagetoolbar.h"
 #include "myicontheme.h"
 
+#include <QDebug>
 #include <QHBoxLayout>
+#include <QMessageBox>
 
 ImageToolBar::ImageToolBar(QWidget *parent) : QWidget{parent} {
   setObjectName("ImageActionToolBar");
@@ -44,16 +46,34 @@ void ImageToolBar::checkRemove() {
 }
 
 void ImageToolBar::checkUpload() {
-  if (aId > 0)
-    emit s_uploadImage(aId);
+  if (aId > 0) {
+    QString info(
+        tr("This will upload the current image to the service provider."));
+    info.append("<p>");
+    info.append(tr("The image data will be updated by the service provider "
+                   "within the next 24 hours."));
+    info.append("</p><p>");
+    info.append(tr("Are you sure that you want to upload the image data now?"));
+    info.append("</p>");
+    int ret = QMessageBox::question(this, tr("Image Upload"), info);
+    if (ret == QMessageBox::Yes) {
+      emit s_uploadImage(aId);
+    }
+  }
 }
 
-void ImageToolBar::setArticleId(int id) {
-  aId = id;
-  m_delbtn->setEnabled((aId > 1));
-#ifdef ANTIQUA_DEVELOPEMENT
-  m_uplbtn->setEnabled((aId > 1));
-#endif
-}
+void ImageToolBar::setArticleId(int id) { aId = id; }
 
 void ImageToolBar::setActive(bool b) { m_openbtn->setEnabled(b); }
+
+void ImageToolBar::enableActions(bool b) {
+  m_delbtn->setEnabled(b);
+  m_uplbtn->setEnabled(b);
+}
+
+void ImageToolBar::restoreState() {
+  aId = 0;
+  m_openbtn->setEnabled(false);
+  m_delbtn->setEnabled(false);
+  m_uplbtn->setEnabled(false);
+}

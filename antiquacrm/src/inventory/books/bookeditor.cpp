@@ -333,16 +333,20 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
     connect(e, SIGNAL(hasModified(bool)), this, SLOT(setWindowModified(bool)));
   }
 
-  connect(ib_isbn, SIGNAL(clicked()), this, SLOT(createIsbnQuery()));
-
+  // imaging
+  connect(m_imageView, SIGNAL(s_imageLoadSuccess(bool)), m_imageToolBar,
+          SLOT(enableActions(bool)));
   connect(m_imageToolBar, SIGNAL(s_openImage()), this, SLOT(openImageDialog()));
   connect(m_imageToolBar, SIGNAL(s_deleteImage(int)), this,
           SLOT(removeImageDialog(int)));
   connect(m_imageToolBar, SIGNAL(s_uploadImage(int)), this,
           SIGNAL(s_uploadImage(int)));
 
+  // isbn
   connect(m_isbnWidget, SIGNAL(requestFinished()), this, SLOT(viewIsbnTab()));
+  connect(ib_isbn, SIGNAL(clicked()), this, SLOT(createIsbnQuery()));
 
+  // actions
   connect(m_actionBar, SIGNAL(s_cancelClicked()), this,
           SLOT(finalLeaveEditor()));
   connect(m_actionBar, SIGNAL(s_restoreClicked()), this,
@@ -565,7 +569,7 @@ void BookEditor::finalLeaveEditor() {
   clearDataFields(p_objPattern);      /**< Alle Datenfelder leeren */
   m_actionBar->setRestoreable(false); /**< ResetButton off */
   m_imageView->clear();               /**< Imaging clear */
-  m_imageToolBar->setActive(false);   /**< Bilder Aktionsleiste zurücksetzen */
+  m_imageToolBar->restoreState();     /**< Bilder Aktionsleiste zurücksetzen */
   emit s_leaveEditor();               /**< Zurück zur Hauptsansicht */
 }
 

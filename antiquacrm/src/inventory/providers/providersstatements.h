@@ -97,7 +97,7 @@ static const QString queryFindArticleSection(int aid) {
  */
 static const QString queryFindExistingOrders(const QString &pName,
                                              const QString &pId, int cId) {
-  QString sql("SELECT o_id AS id FROM public.inventory_orders");
+  QString sql("SELECT o_id AS id FROM inventory_orders");
   sql.append(" WHERE o_provider_name ILIKE '");
   sql.append(pName);
   sql.append("' AND o_provider_order_id ILIKE '");
@@ -105,6 +105,18 @@ static const QString queryFindExistingOrders(const QString &pName,
   sql.append("' AND o_customer_id=");
   sql.append(QString::number(cId));
   sql.append(";");
+  return sql;
+}
+
+/**
+ * @brief SQL Abfrage für Bilderdaten
+ * @return  SqlQuery
+ */
+static const QString queryUploadImageData(int articleId) {
+  QString im_id = QString::number(articleId);
+  QString sql("SELECT im_id AS id, im_imgdata AS data");
+  sql.append(" FROM inventory_images");
+  sql.append(" WHERE im_id=" + im_id + ";");
   return sql;
 }
 

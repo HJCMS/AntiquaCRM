@@ -301,11 +301,12 @@ void MWindow::initDefaults() {
     restoreState(m_Settings->value("window/windowState").toByteArray());
 
   m_workSpace->openTab(Workspace::Orders);
-  m_workSpace->openTab(Workspace::Books);
   m_workSpace->openTab(Workspace::Providers);
   m_workSpace->openTab(Workspace::Customers);
+  m_workSpace->openTab(Workspace::Books);
   // Nach Vorne holen
   m_workSpace->openTab(Workspace::Orders);
+
 }
 
 MWindow::~MWindow() { /* TODO */

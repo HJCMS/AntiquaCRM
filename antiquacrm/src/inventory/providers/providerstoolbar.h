@@ -26,7 +26,6 @@ private:
   int timerId;
   int counter = 300;
   QLabel *m_status;
-  QPushButton *btn_customer;
   QPushButton *btn_order;
   QPushButton *btn_refresh;
 
@@ -36,7 +35,6 @@ protected:
   void timerEvent(QTimerEvent *event);
 
 Q_SIGNALS:
-  void s_customerAction();
   void s_createOrder();
   void s_refresh();
 

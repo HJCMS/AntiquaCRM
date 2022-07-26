@@ -88,6 +88,9 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
 
     case 7: // age Siehe SQL Statement!
       return runTimeString(item.toInt());
+
+    case 8: // Ausgeliefert am!
+      return runTimeString(item.toInt());
     }
   }
   return item;
@@ -131,6 +134,9 @@ QVariant OrdersTableModel::headerData(int section, Qt::Orientation orientation,
 
     case 7: // age
       return setHeaderTitel(tr("Runtime"));
+
+    case 8: // Ausgeliefert am!
+      return setHeaderTitel(tr("Delivered"));
 
     default:
       return QString("%1").arg(section);

@@ -112,7 +112,7 @@ private Q_SLOTS:
 
   /**
    * @brief Beim Aktuellen Tab den Kunden ermitteln!
-   * @note Zweckentfremdung damit nicht ungenutzt!
+   * @note Zweckentfremdung der vituellen Methode, damit nicht ungenutzt!
    * Wird von Signal @ref ProvidersToolBar::s_customerAction aufgerufen.
    * @li Es wird vom aktuell aktivierten Tab das InterfaceWidget ermittelt.
    * @li Im nächsten Schritt wird mit @ref InterfaceWidget::getCustomerId nach

@@ -56,7 +56,6 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   layout->setStretch(0, 1);
   setLayout(layout);
 
-  connect(m_toolBar, SIGNAL(s_customerAction()), this, SLOT(openTableView()));
   connect(m_toolBar, SIGNAL(s_refresh()), this, SLOT(searchConvert()));
   connect(m_toolBar, SIGNAL(s_createOrder()), this, SLOT(createEditOrders()));
 
@@ -215,7 +214,6 @@ void InventoryProviders::queryOrder(const QString &provider,
 void InventoryProviders::createEditCustomer(int cid) {
   if (cid > 0) {
     current_cid = cid;
-    emit openEditCustomer(current_cid);
   } else {
     current_cid = -1;
     m_toolBar->enableOrderButton(false);
@@ -301,7 +299,7 @@ void InventoryProviders::createNewCustomer(const QJsonDocument &doc) {
       Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
       if (tab != nullptr) {
         tab->setCustomerId(current_cid);
-        emit openEditCustomer(current_cid);
+        m_toolBar->statusMessage(tr("new customer created!"));
       }
     }
   } else {
@@ -348,6 +346,8 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
     }
     m_toolBar->enableOrderButton(false);
     m_toolBar->statusMessage(tr("customer not exits!"));
+    // Es wurde kein Kunde gefunden, dann jetzt anlegen ...
+    openTableView();
     return;
   }
 
@@ -368,7 +368,9 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
   }
   cidList.clear();
 
-  // Die Id des ausgewählten Kunden einfügen!
+  /**
+   * Die Id des ausgewählten Kunden einfügen!
+   */
   if (selected_cid > 0) {
     Antiqua::InterfaceWidget *tab = m_pageView->currentPage();
     if (tab != nullptr) {
@@ -376,6 +378,8 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
       tab->setCustomerId(selected_cid);
       m_toolBar->statusMessage(tr("customer found in database!"));
     }
+    // aussteigen
+    return;
   }
 }
 
@@ -537,12 +541,6 @@ void InventoryProviders::onEnterChanged() {
 }
 
 bool InventoryProviders::updateArticleCount(int articleId, int count) {
-  if (!firstStart)
-    onEnterChanged();
-
-  if (p_iFaces.count() < 1)
-    return false;
-
 #ifdef ANTIQUA_DEVELOPEMENT
   qInfo("Update Article Count disabled in Developement:\n"
         " InventoryProviders::updateArticleCount(%s,%s)",
@@ -550,6 +548,12 @@ bool InventoryProviders::updateArticleCount(int articleId, int count) {
         qPrintable(QString::number(count).toLocal8Bit()));
   return false;
 #endif
+
+  if (!firstStart)
+    onEnterChanged();
+
+  if (p_iFaces.count() < 1)
+    return false;
 
   QListIterator<Antiqua::Interface *> it(p_iFaces);
   while (it.hasNext()) {
@@ -563,10 +567,45 @@ bool InventoryProviders::updateArticleCount(int articleId, int count) {
 
 bool InventoryProviders::updateProviderImage(int articleId) {
 #ifdef ANTIQUA_DEVELOPEMENT
-  qInfo("Update Article Count disabled in Developement:\n"
+  qInfo("Update Provider Image disabled in Developement:\n"
         " InventoryProviders::updateProviderImage(%s)",
         qPrintable(QString::number(articleId).toLocal8Bit()));
   return false;
 #endif
-  return false;
+
+  if (!firstStart)
+    onEnterChanged();
+
+  if (p_iFaces.count() < 1)
+    return false;
+
+  QString imgData;
+  QString sql = queryUploadImageData(articleId);
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    q.next();
+    if (q.value("id").toInt() == articleId) {
+      imgData = q.value("data").toString();
+    }
+  } else {
+    if (!m_sql->lastError().isEmpty())
+      qDebug() << Q_FUNC_INFO << m_sql->lastError();
+
+    imgData.clear();
+    return false;
+  }
+
+  if (imgData.isEmpty())
+    return false;
+
+  int count = 0;
+  QListIterator<Antiqua::Interface *> it(p_iFaces);
+  while (it.hasNext()) {
+    Antiqua::Interface *iface = it.next();
+    if (iface != nullptr) {
+      iface->uploadArticleImage(articleId, imgData);
+      count++;
+    }
+  }
+  return (count > 0);
 }

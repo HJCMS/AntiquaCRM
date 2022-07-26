@@ -24,15 +24,6 @@ ProvidersToolBar::ProvidersToolBar(QWidget *parent) : QFrame{parent} {
   layout->addWidget(m_status);
   layout->addStretch(1);
 
-  QString btnInfo = tr("Open/Edit/Create Customer entry");
-  btn_customer = new QPushButton(this);
-  btn_customer->setObjectName("btn_customer");
-  btn_customer->setToolTip(btnInfo);
-  btn_customer->setStatusTip(btnInfo);
-  btn_customer->setIcon(myIcon("group"));
-  btn_customer->setText(tr("Customer open/edit"));
-  layout->addWidget(btn_customer);
-
   btn_order = new QPushButton(myIcon("db_add"), tr("Create Order"), this);
   QString oInfo = tr("first open the customer before an order can be placed.");
   btn_order->setToolTip(oInfo);
@@ -46,7 +37,6 @@ ProvidersToolBar::ProvidersToolBar(QWidget *parent) : QFrame{parent} {
   layout->addWidget(btn_refresh);
   setLayout(layout);
 
-  connect(btn_customer, SIGNAL(clicked()), this, SIGNAL(s_customerAction()));
   connect(btn_order, SIGNAL(clicked()), this, SIGNAL(s_createOrder()));
   connect(btn_refresh, SIGNAL(clicked()), this, SIGNAL(s_refresh()));
 

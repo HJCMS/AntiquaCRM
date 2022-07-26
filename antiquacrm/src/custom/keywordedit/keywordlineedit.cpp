@@ -19,9 +19,14 @@ KeywordLineEdit::KeywordLineEdit(QWidget *parent) : UtilsMain{parent} {
   layout->addStretch(1);
 
   QToolButton *ac_clear = new QToolButton(this);
-  ac_clear->setIcon(myIcon("clear_left"));
+  ac_clear->setIcon(myIcon("edit_remove"));
   ac_clear->setToolTip(tr("This button reset the Keyword field."));
   layout->addWidget(ac_clear);
+
+  QToolButton *ac_add = new QToolButton(this);
+  ac_add->setIcon(myIcon("edit_add"));
+  ac_add->setToolTip(tr("Keyword add"));
+  layout->addWidget(ac_add);
 
   m_lineEdit = new QLineEdit(this);
   m_lineEdit->setPlaceholderText(tr("Search, add to"));
@@ -39,8 +44,11 @@ KeywordLineEdit::KeywordLineEdit(QWidget *parent) : UtilsMain{parent} {
   setModified(false);
   setLayout(layout);
 
+  connect(m_keywordList, SIGNAL(sendModified(bool)), this,
+          SLOT(setModified(bool)));
   connect(m_lineEdit, SIGNAL(returnPressed()), this, SLOT(finalize()));
   connect(ac_clear, SIGNAL(clicked()), this, SLOT(clearKeywords()));
+  connect(ac_add, SIGNAL(clicked()), this, SLOT(finalize()));
 }
 
 void KeywordLineEdit::clearKeywords() {
@@ -100,8 +108,7 @@ const QVariant KeywordLineEdit::value() {
 }
 
 bool KeywordLineEdit::isValid() {
-  QStringList list = m_keywordList->keywords();
-  if (isRequired() && list.count() < 1)
+  if (isRequired() && m_keywordList->keywords().count() < 1)
     return false;
 
   return true;

@@ -23,6 +23,12 @@ private:
   QHBoxLayout *m_layout;
   QStringList p_uniqList;
 
+private Q_SLOTS:
+  void removeKeyword(QWidget *);
+
+Q_SIGNALS:
+  void sendModified(bool);
+
 public Q_SLOTS:
   void clear();
   void addKeyword(const QString &keyword);

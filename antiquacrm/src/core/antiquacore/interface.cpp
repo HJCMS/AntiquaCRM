@@ -38,27 +38,23 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
   m_toolbar = new QToolBar(this);
   m_toolbar->setMovable(false);
   m_toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-
   m_toolbar->addWidget(new QLabel(tr("Customer") + ": "));
-
   m_customerId = new QLineEdit(m_toolbar);
   m_customerId->setReadOnly(true);
   m_customerId->setMaxLength(20);
   m_customerId->setMaximumWidth(mWidth);
   m_toolbar->addWidget(m_customerId);
-
   m_toolbar->addSeparator();
-  QString str_customer_info = tr("Purchaser") + " " + tr("check");
-  btn_checkCustomer = new QPushButton(qi1, str_customer_info, m_toolbar);
-  btn_checkCustomer->setToolTip(tr("Send query if this customer exists."));
-  m_toolbar->addWidget(btn_checkCustomer);
-
+  QString str_customer_info = tr("create") + " " + tr("Purchaser");
+  btn_createCustomer = new QPushButton(qi1, str_customer_info, m_toolbar);
+  btn_createCustomer->setToolTip(tr("if customer not exists, create it."));
+  btn_createCustomer->setEnabled(true);
+  m_toolbar->addWidget(btn_createCustomer);
   m_toolbar->addSeparator();
   m_customerInfo = new QLineEdit(m_toolbar);
   m_customerInfo->setObjectName("person");
   m_customerInfo->setReadOnly(true);
   m_toolbar->addWidget(m_customerInfo);
-
   m_toolbar->addSeparator();
   QString str_article_info = tr("Orders") + " ";
   m_toolbar->addWidget(new QLabel(str_article_info, m_toolbar));
@@ -117,24 +113,40 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
   // Weiterleitung Artikel mit Nummer öffnen.
   connect(m_table, SIGNAL(inspectArticle(int)), this,
           SIGNAL(inspectArticle(int)));
+
   // Weiterleitung Artikel Nummern prüfen
   connect(m_table, SIGNAL(findArticleNumbers()), this, SIGNAL(checkOrders()));
   connect(btn_checkArticle, SIGNAL(clicked()), this, SIGNAL(checkOrders()));
-  // Kunde auf existenz prüfen
-  connect(btn_checkCustomer, SIGNAL(clicked()), this, SIGNAL(checkCustomer()));
+
+  // Kunde prüfen/anlegen
+  connect(m_customerId, SIGNAL(textChanged(const QString &)), this,
+          SLOT(customerChanged(const QString &)));
+  connect(btn_createCustomer, SIGNAL(clicked()), this, SIGNAL(checkCustomer()));
+}
+
+void PurchaseOverview::customerChanged(const QString &id) {
+  if (id.trimmed().length() < 1)
+    return;
+
+  int cid = getCustomerId();
+  if (cid > 0) {
+    btn_createCustomer->setEnabled(false);
+    emit customerIdChanged(cid);
+  }
 }
 
 void PurchaseOverview::setCustomerId(int id) {
-  QString num = QString::number(id);
-  m_customerId->setText(num);
-  emit customerIdChanged(id);
+  m_customerId->setText(QString::number(id));
 }
 
 int PurchaseOverview::getCustomerId() {
   bool b = false;
   QString num = m_customerId->text();
   int id = num.toInt(&b);
-  return (b) ? id : 0;
+  if (!b || id < 1)
+    return 0;
+
+  return id;
 }
 
 const QStringList PurchaseOverview::customerSearchFields() const {
