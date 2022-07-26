@@ -30,6 +30,7 @@ Q_SIGNALS:
 
 public:
   explicit KeywordLabel(const QString &txt, QWidget *parent = nullptr);
+  const QString text();
 };
 
 #endif // KEYWORD_LABEL_H

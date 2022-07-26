@@ -20,8 +20,13 @@ KeywordLabelList::KeywordLabelList(QWidget *parent) : QFrame{parent} {
 void KeywordLabelList::removeKeyword(QWidget *w) {
   KeywordLabel *lb = reinterpret_cast<KeywordLabel *>(w);
   if (lb != nullptr) {
+    QString key = lb->text();
     m_layout->removeWidget(lb);
     lb->deleteLater();
+    for (int i = 0; i < p_uniqList.count(); i++) {
+      if (p_uniqList.at(i) == key)
+        p_uniqList.removeAt(i);
+    }
     emit sendModified(true);
   }
 }

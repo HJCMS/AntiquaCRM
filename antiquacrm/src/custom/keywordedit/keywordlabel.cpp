@@ -48,3 +48,5 @@ const QString KeywordLabel::lableStyleSheet() const {
 }
 
 void KeywordLabel::removeClicked() { emit sendPleaseRemove(this); }
+
+const QString KeywordLabel::text() { return m_text->text(); }
