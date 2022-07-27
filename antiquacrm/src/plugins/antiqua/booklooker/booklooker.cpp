@@ -4,7 +4,6 @@
 #include "booklooker.h"
 #include "booklookerconfig.h"
 #include "booklookerifacewidget.h"
-#include "booklookerproviderwidget.h"
 #include "booklookerrequester.h"
 
 #include <QDebug>
@@ -46,13 +45,6 @@ bool Booklooker::createInterface(QObject *parent) {
   return false;
 }
 
-Antiqua::ProviderWidget *Booklooker::providerWidget(const QString &widgetId,
-                                                    QWidget *parent) {
-  m_blProviderWidget = new BooklookerProviderWidget(widgetId, parent);
-  m_blProviderWidget->setObjectName(widgetId);
-  return m_blProviderWidget;
-}
-
 Antiqua::InterfaceWidget *Booklooker::addWidget(const QString &widgetId,
                                                 QWidget *parent) {
   m_blIfaceWidget = new BooklookerIfaceWidget(widgetId, parent);
@@ -73,6 +65,10 @@ void Booklooker::queryMenueEntries() {
           SLOT(prepareJsonListResponse(const QJsonDocument &)));
 
   req->queryList();
+}
+
+void Booklooker::updateOrderDelivery(const QJsonObject &jso) {
+  qDebug() << Q_FUNC_INFO << jso;
 }
 
 void Booklooker::updateArticleCount(int articleId, int count) {

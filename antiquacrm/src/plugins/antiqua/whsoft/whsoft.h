@@ -21,7 +21,6 @@
 
 class WHSoftJSonQuery;
 class WHSoftPurchaser;
-class Buchfreund;
 class WHSoftWidget;
 
 class ANTIQUACORE_EXPORT WHSoft : public Antiqua::Interface {
@@ -33,7 +32,6 @@ class ANTIQUACORE_EXPORT WHSoft : public Antiqua::Interface {
 private:
   QObject *m_whsoft;
   WHSoftWidget *m_whsoftWidget;   /**< Antiqua::InterfaceWidget */
-  Buchfreund *m_buchfreundWidget; /**< Antiqua::ProviderWidget */
 
 private Q_SLOTS:
   void prepareJsonListResponse(const QJsonDocument &);
@@ -41,12 +39,6 @@ private Q_SLOTS:
 
 public:
   bool createInterface(QObject *parent);
-
-  /**
-   * @brief Hauptseite
-   */
-  Antiqua::ProviderWidget *providerWidget(const QString &widgetId,
-                                          QWidget *parent);
 
   /**
    * @brief Bestellungen
@@ -64,6 +56,11 @@ public:
    * @brief Menü Einträge suchen
    */
   void queryMenueEntries();
+
+  /**
+   * @brief Versandbestätigung
+   */
+  void updateOrderDelivery(const QJsonObject &jso);
 
   /**
    * @brief Artikelbestand ändern!

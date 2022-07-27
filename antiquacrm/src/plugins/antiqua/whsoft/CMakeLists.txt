@@ -14,14 +14,12 @@ SET (antiquacrm_LINKER
 SET (whsoft_SOURCES
  whsoft.json
  config.xml
- buchfreund.cpp
  whsoft.cpp
  whsoftjsonquery.cpp
  whsoftwidget.cpp
 )
 
 SET (whsoft_HEADERS
- buchfreund.h
  whsoft.h
  whsoftconfig.h
  whsoftjsonquery.h

@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "whsoft.h"
-#include "buchfreund.h"
 #include "whsoftconfig.h"
 #include "whsoftjsonquery.h"
 #include "whsoftwidget.h"
@@ -43,13 +42,6 @@ bool WHSoft::createInterface(QObject *parent) {
   return false;
 }
 
-Antiqua::ProviderWidget *WHSoft::providerWidget(const QString &widgetId,
-                                                QWidget *parent) {
-  m_buchfreundWidget = new Buchfreund(widgetId, parent);
-  m_buchfreundWidget->setObjectName(widgetId);
-  return m_buchfreundWidget;
-}
-
 Antiqua::InterfaceWidget *WHSoft::addWidget(const QString &widgetId,
                                             QWidget *parent) {
   m_whsoftWidget = new WHSoftWidget(widgetId, parent);
@@ -72,6 +64,34 @@ void WHSoft::queryMenueEntries() {
   mjs->queryList();
 }
 
+void WHSoft::updateOrderDelivery(const QJsonObject &jso) {
+/*
+ * w+hbook Erwartet
+  {
+   "id":"BF-2013249",
+   "versender" : "Hermes",
+   "sendungsart" : "Paket",
+   "sendungsnummer" : "32002348230409824",
+   "einlieferungsdatum" : "2019-09-11 11:52:47"
+  }
+*/
+  qDebug() << Q_FUNC_INFO << jso;
+  return;
+
+  QJsonDocument doc;
+  if (doc.isEmpty()) {
+    emit s_queryResponse(false);
+    return;
+  }
+
+  WHSoftJSonQuery *jq = new WHSoftJSonQuery(this);
+  jq->setObjectName("json_update_article_counts");
+  connect(jq, SIGNAL(orderResponsed(const QJsonDocument &)), this,
+          SLOT(responseAnswerCheck(const QJsonDocument &)));
+
+  jq->customQuery("versandbestaetigung", doc);
+}
+
 void WHSoft::updateArticleCount(int articleId, int count) {
   QJsonDocument doc = createUpdateArtcileCount(articleId, count);
   if (doc.isEmpty()) {
@@ -89,7 +109,7 @@ void WHSoft::updateArticleCount(int articleId, int count) {
 void WHSoft::uploadArticleImage(int articleId, const QString &base64) {
   QJsonObject jo;
   jo.insert("bestellnr", QJsonValue(QString::number(articleId)));
-  jo.insert("bildnummer", QJsonValue(articleId));
+  jo.insert("bildnummer", QJsonValue(1));
   jo.insert("content", QJsonValue(base64));
   QJsonDocument jdoc(jo);
   if (jdoc.isNull()) {

@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "customeroverview.h"
-#include "myicontheme.h"
 
 #include <QDateTime>
 #include <QDebug>

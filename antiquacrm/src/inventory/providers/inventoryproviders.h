@@ -133,11 +133,6 @@ private Q_SLOTS:
   bool loadInterfaces();
 
   /**
-   * @brief Dienstleister Seite aufrufen
-   */
-  void queryProviderPage(const QString &provider);
-
-  /**
    * @brief Verarbeitet das Signal @ref ProvidersTreeView::s_queryOrder
    * Primärer Slot in dem Dienstleister Name und Bestellnummer zum erstellen
    * eines Neunen Interface Fensters verwendet wird.
@@ -283,6 +278,10 @@ public:
    */
   bool updateArticleCount(int articleId, int count);
 
+  /**
+   * @brief Bilder Hochladen
+   * @param articleId
+   */
   bool updateProviderImage(int articleId);
 };
 

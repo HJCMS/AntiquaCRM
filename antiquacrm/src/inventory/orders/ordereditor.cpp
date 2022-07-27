@@ -69,17 +69,17 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   o_invoice_id->setInfo(tr("Invoice ID"));
   row0->addWidget(o_invoice_id);
 
-  o_order_status = new OrderStatusBox(mainWidget);
-  o_order_status->setObjectName("o_order_status");
-  o_order_status->setInfo(tr("Status"));
-  o_order_status->setValue(1);
-  row0->addWidget(o_order_status);
-
   o_payment_status = new OrdersPaymentBox(mainWidget);
   o_payment_status->setObjectName("o_payment_status");
   o_payment_status->setInfo(tr("Payment"));
   o_payment_status->setValue(0);
   row0->addWidget(o_payment_status);
+
+  o_order_status = new OrderStatusBox(mainWidget);
+  o_order_status->setObjectName("o_order_status");
+  o_order_status->setInfo(tr("Status"));
+  o_order_status->setValue(1);
+  row0->addWidget(o_order_status);
 
   row0->addStretch(1);
   mainWidgetLayout->addLayout(row0);

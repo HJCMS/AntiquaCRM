@@ -64,20 +64,6 @@ namespace Antiqua {
   class PurchaserOrderTable;
 
   /**
-   * @class Antiqua::ProviderWidget
-   * @ingroup Antiqua Plugin Interface
-   * @brief Haupseite des Dienstleisters
-   */
-  class ANTIQUACORE_EXPORT ProviderWidget : public QScrollArea
-  {
-    Q_OBJECT
-
-  public:
-    explicit ProviderWidget(const QString &widgetId, QWidget *parent = nullptr);
-
-  };
-
-  /**
    * @class Antiqua::PurchaseOverview
    * @ingroup Antiqua Plugin Interface
    * @brief Bestellübersicht
@@ -472,12 +458,6 @@ namespace Antiqua {
     virtual bool createInterface(QObject * parent) = 0;
 
     /**
-     * @brief Hauptseite des Dienstanbieters
-     * Auf dieser Seite können zusätzliche Operationen zum Provider eingefügt werden.
-     */
-    virtual Antiqua::ProviderWidget *providerWidget(const QString &widgetId, QWidget * parent) = 0;
-
-    /**
      * @brief Tab das eingefügt wird wenn Daten empfangen werden!
      * Die einzelnen Tabs werden über den Objektnamen Identifiziert und sind deshalb Unique.
      * @note widgetId muss Identisch mit "objectName" und "tabTitle" sein!
@@ -499,6 +479,11 @@ namespace Antiqua {
      * @brief Abfrage ob Daten vorhanden sind.
      */
     virtual void queryMenueEntries() = 0;
+
+    /**
+     * @brief Bestellungen beantworten
+     */
+    virtual void updateOrderDelivery(const QJsonObject &jso) = 0;
 
     /**
      * @brief Artikelbestands Änderungen senden.

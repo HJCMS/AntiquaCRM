@@ -56,25 +56,6 @@ void ProvidersPageView::closeTabClicked(int index) {
 
 void ProvidersPageView::pageEntered(int) { emit orderPageChanged(); }
 
-Antiqua::ProviderWidget *ProvidersPageView::currentMainPage() {
-  return reinterpret_cast<Antiqua::ProviderWidget *>(currentWidget());
-}
-
-int ProvidersPageView::addMainPage(Antiqua::ProviderWidget *aiw,
-                                   const QString &id) {
-  if (aiw == nullptr || id.isEmpty())
-    return -1;
-
-  if (aiw->objectName().isEmpty())
-    aiw->setObjectName(id);
-
-  int index = addTab(aiw, myIcon("autostart"), id);
-  setTabToolTip(index, tr("Provider:") + " " + id);
-  setTabWhatsThis(index, tr("Provider:") + " " + id);
-
-  return index;
-}
-
 Antiqua::InterfaceWidget *ProvidersPageView::currentPage() {
   return reinterpret_cast<Antiqua::InterfaceWidget *>(currentWidget());
 }

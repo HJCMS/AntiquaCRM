@@ -24,8 +24,8 @@ class CategorySubject;
 class KeywordLineEdit;
 
 /**
-   @brief BookEditor
-   Primäre Klasse zum erstellen/bearbeiten von Bucheinträgen.
+ * @brief BookEditor
+ * Primäre Klasse zum erstellen/bearbeiten von Bucheinträgen.
  */
 class BookEditor final : public EditorMain {
   Q_OBJECT
@@ -49,7 +49,7 @@ private:
   SerialID *ib_id;                  /**< @brief ReadOnly:ArticleID */
   IsbnEdit *ib_isbn;                /**< @brief ISBN */
   StrLineEdit *ib_author;           /**< @brief Buchautor */
-  StrLineEdit *ib_condition;        /**< @brief Zustands beschreibung */
+  ConditionField *ib_condition;     /**< @brief Zustands beschreibung */
   StrLineEdit *ib_designation;      /**< @brief Umschreibung */
   KeywordLineEdit *ib_keyword;      /**< @brief Schlüsselwort */
   CategorySubject *m_json_category; /**< @brief Dienstleister Kategorie */

@@ -12,7 +12,6 @@ SET (booklooker_SOURCES
  config.xml
  booklooker.cpp
  booklookerifacewidget.cpp
- booklookerproviderwidget.cpp
  booklookerrequester.cpp
 )
 
@@ -20,7 +19,6 @@ SET (booklooker_HEADERS
  booklookerconfig.h
  booklooker.h
  booklookerifacewidget.h
- booklookerproviderwidget.h
  booklookerrequester.h
 )
 

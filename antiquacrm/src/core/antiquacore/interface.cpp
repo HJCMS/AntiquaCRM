@@ -13,11 +13,6 @@
 
 namespace Antiqua {
 
-ProviderWidget::ProviderWidget(const QString &widgetId, QWidget *parent)
-    : QScrollArea{parent} {
-  setWidgetResizable(true);
-}
-
 PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
     : QWidget{parent} {
   setObjectName("purchase_overview_" + id);

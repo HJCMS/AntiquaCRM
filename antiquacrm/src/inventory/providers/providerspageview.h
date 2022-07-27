@@ -53,18 +53,6 @@ public:
   /**
    * @brief Aktuelles Tab Fenster ermitteln.
    * Ableitung von QTabWidget::currentWidget()
-   * Ermittelt das aktuelles Antiqua::ProviderWidget
-   */
-  Antiqua::ProviderWidget *currentMainPage();
-
-  /**
-   * @brief Dienstleisterseite
-   */
-  int addMainPage(Antiqua::ProviderWidget *aiw, const QString &id);
-
-  /**
-   * @brief Aktuelles Tab Fenster ermitteln.
-   * Ableitung von QTabWidget::currentWidget()
    * Ermittelt das aktuelles Antiqua::InterfaceWidget
    */
   Antiqua::InterfaceWidget *currentPage();

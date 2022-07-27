@@ -5,3 +5,4 @@ Database
 temp
 *.txt
 *.sql
+*.csv

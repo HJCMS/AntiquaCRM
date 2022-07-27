@@ -14,7 +14,6 @@
 #include <AntiquaInterface>
 #include <Networking>
 
-class BooklookerProviderWidget;
 class BooklookerIfaceWidget;
 
 /**
@@ -38,23 +37,11 @@ private:
    */
   BooklookerIfaceWidget *m_blIfaceWidget;
 
-  /**
-   * @brief BooklookerProviderWidget
-   * Antiqua::ProviderWidget
-   */
-  BooklookerProviderWidget *m_blProviderWidget;
-
 private Q_SLOTS:
   void prepareJsonListResponse(const QJsonDocument &);
 
 public:
   bool createInterface(QObject *parent);
-
-  /**
-   * @brief Hauptseite
-   */
-  Antiqua::ProviderWidget *providerWidget(const QString &widgetId,
-                                          QWidget *parent);
 
   /**
    * @brief Bestellungen
@@ -72,6 +59,11 @@ public:
    * @brief Menü Einträge suchen
    */
   void queryMenueEntries();
+
+  /**
+   * @brief Versandbestätigung
+   */
+  void updateOrderDelivery(const QJsonObject &jso);
 
   /**
    * @brief Artikelbestand ändern!

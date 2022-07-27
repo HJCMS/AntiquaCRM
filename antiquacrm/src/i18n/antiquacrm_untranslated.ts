@@ -78,7 +78,7 @@
 <context>
     <name>Antiqua::InterfaceWidget</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+338"/>
+        <location filename="../core/antiquacore/interface.cpp" line="+333"/>
         <source>Please select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -327,7 +327,7 @@
 <context>
     <name>BookCard</name>
     <message>
-        <location filename="../custom/printing/bookcard.cpp" line="+225"/>
+        <location filename="../custom/printing/bookcard.cpp" line="+230"/>
         <source>Printing book card</source>
         <translation type="unfinished"></translation>
     </message>
@@ -528,17 +528,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+80"/>
         <source>Shop Category Keywords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="-59"/>
         <source>Language:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-233"/>
+        <location line="-169"/>
         <source>Article ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -553,13 +553,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+141"/>
         <location line="+5"/>
         <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-84"/>
+        <location line="-96"/>
         <source>Required input field. Limited to 80 characters, Webshop Systems require this.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -574,12 +574,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+70"/>
         <source>Category Keywords for Shopsystems.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-36"/>
+        <location line="-48"/>
         <source>Condition of this Book. See also Configuration conditions Table.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -591,12 +591,11 @@
     </message>
     <message>
         <location line="+52"/>
-        <location line="+7"/>
         <source>Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+27"/>
         <location line="+7"/>
         <source>Designation</source>
         <translation type="unfinished"></translation>
@@ -613,7 +612,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+59"/>
         <source>ISBN Response</source>
         <translation type="unfinished"></translation>
     </message>
@@ -648,12 +647,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-471"/>
+        <location line="-470"/>
         <source>Extended Title or Subtitle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+233"/>
+        <location line="+232"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -685,7 +684,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-205"/>
+        <location line="-204"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
@@ -696,12 +695,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+228"/>
+        <location line="+227"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-344"/>
+        <location line="-343"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1344,6 +1343,47 @@
     </message>
 </context>
 <context>
+    <name>ConditionBox</name>
+    <message>
+        <location filename="../custom/utils/conditionfield.cpp" line="+12"/>
+        <source>Without disclosures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Very good, almost new!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Slight signs of use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Clear signs of use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Heavily worn</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ConditionField</name>
+    <message>
+        <location line="+8"/>
+        <source>Book Condition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Condition must set!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConfigDialog</name>
     <message>
         <location filename="../custom/settings/configdialog.cpp" line="+14"/>
@@ -1659,7 +1699,7 @@
 <context>
     <name>CustomerOverview</name>
     <message>
-        <location filename="../inventory/customers/customeroverview.cpp" line="+152"/>
+        <location filename="../inventory/customers/customeroverview.cpp" line="+151"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2764,7 +2804,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+58"/>
         <source>exists with count</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2779,7 +2819,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+138"/>
+        <location line="+123"/>
         <location line="+2"/>
         <location line="+12"/>
         <source>Europe</source>
@@ -2856,7 +2896,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-438"/>
+        <location line="-423"/>
         <location line="+14"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
@@ -3328,17 +3368,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+17"/>
         <source>Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-6"/>
         <source>Payment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+29"/>
         <source>Customer Info</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4222,7 +4262,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+109"/>
+        <location line="+113"/>
         <source>Delivery note</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4631,12 +4671,6 @@
     <message>
         <location filename="../inventory/providers/providerspageview.cpp" line="+72"/>
         <location line="+1"/>
-        <source>Provider:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <location line="+1"/>
         <source>Order:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4644,7 +4678,7 @@
 <context>
     <name>ProvidersTabBar</name>
     <message>
-        <location line="-64"/>
+        <location line="-45"/>
         <source>Order Actions</source>
         <translation type="unfinished"></translation>
     </message>

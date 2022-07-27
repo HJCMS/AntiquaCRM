@@ -4,7 +4,6 @@
 #include "abebooks.h"
 #include "abebooksconfig.h"
 #include "abebooksifacewidget.h"
-#include "abebooksproviderwidget.h"
 #include "abebooksrequester.h"
 
 #include <QJsonArray>
@@ -51,13 +50,6 @@ bool AbeBooks::createInterface(QObject *parent) {
   return false;
 }
 
-Antiqua::ProviderWidget *AbeBooks::providerWidget(const QString &widgetId,
-                                                  QWidget *parent) {
-  m_abeBooksProviderWidget = new AbeBooksProviderWidget(widgetId, parent);
-  m_abeBooksProviderWidget->setObjectName(widgetId);
-  return m_abeBooksProviderWidget;
-}
-
 Antiqua::InterfaceWidget *AbeBooks::addWidget(const QString &widgetId,
                                               QWidget *parent) {
   m_abeBooksIfaceWidget = new AbeBooksIfaceWidget(widgetId, parent);
@@ -78,6 +70,10 @@ void AbeBooks::queryMenueEntries() {
           SLOT(responseImport(const QDomDocument &)));
 
   req->queryList();
+}
+
+void AbeBooks::updateOrderDelivery(const QJsonObject &jso) {
+  qDebug() << Q_FUNC_INFO << jso;
 }
 
 void AbeBooks::updateArticleCount(int articleId, int count) {

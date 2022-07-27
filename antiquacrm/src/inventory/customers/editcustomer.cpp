@@ -327,6 +327,7 @@ void EditCustomer::updateCustomer(const QString &statement) {
     m_actionBar->setRestoreable(true);
 
   importSqlResult();
+  m_dataBox->setCurrentWidget(m_contact);
 }
 
 void EditCustomer::createCustomer() {

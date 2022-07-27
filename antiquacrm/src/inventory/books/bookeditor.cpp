@@ -193,14 +193,26 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   conditionLabel->setText(tr("Condition") + ":");
   row2->addWidget(conditionLabel, row2c, 0, 1, 1);
 
-  ib_condition = new StrLineEdit(this);
+  QHBoxLayout *conditionlayout = new QHBoxLayout();
+
+  ib_condition = new ConditionField(this);
   ib_condition->setObjectName("ib_condition");
-  ib_condition->setMaxAllowedLength(128);
   ib_condition->setRequired(true);
-  ib_condition->setInfo(tr("Condition"));
   ib_condition->setToolTip(
       tr("Condition of this Book. See also Configuration conditions Table."));
-  row2->addWidget(ib_condition, row2c++, 1, 1, 1);
+  conditionlayout->addWidget(ib_condition, Qt::AlignLeft);
+
+  QLabel *languageLabel = new QLabel(this);
+  languageLabel->setObjectName("languageLabel");
+  languageLabel->setAlignment(defaultAlignment);
+  languageLabel->setText(tr("Language:"));
+  conditionlayout->addWidget(languageLabel, Qt::AlignRight);
+
+  ib_language = new SetLanguage(this);
+  ib_language->setObjectName("ib_language");
+  conditionlayout->addWidget(ib_language);
+
+  row2->addLayout(conditionlayout, row2c++, 1, 1, 1);
 
   QLabel *designationLabel = new QLabel(this);
   designationLabel->setObjectName("designationLabel");
@@ -261,22 +273,9 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   isbnLabel->setAlignment(defaultAlignment);
   row2->addWidget(isbnLabel, row2c, 0, 1, 1);
 
-  QHBoxLayout *layoutISBNLang = new QHBoxLayout();
   ib_isbn = new IsbnEdit(this);
   ib_isbn->setObjectName("ib_isbn");
-  layoutISBNLang->addWidget(ib_isbn, Qt::AlignLeft);
-
-  QLabel *languageLabel = new QLabel(this);
-  languageLabel->setObjectName("languageLabel");
-  languageLabel->setAlignment(defaultAlignment);
-  languageLabel->setText(tr("Language:"));
-  layoutISBNLang->addWidget(languageLabel, Qt::AlignRight);
-
-  ib_language = new SetLanguage(this);
-  ib_language->setObjectName("ib_language");
-  layoutISBNLang->addWidget(ib_language, Qt::AlignRight);
-
-  row2->addLayout(layoutISBNLang, row2c++, 1, 1, 1);
+  row2->addWidget(ib_isbn, row2c++, 1, 1, 1);
 
   m_imageToolBar = new ImageToolBar(this);
   m_imageToolBar->setObjectName("books_image_actions_bar");
@@ -700,7 +699,6 @@ void BookEditor::changeEvent(QEvent *event) {
     /**
      * Lese aus SQL Datenbank Autovervollständigungen
      */
-    ib_condition->loadDataset("condition", StrLineEdit::BOOK);
     ib_designation->loadDataset("designation", StrLineEdit::BOOK);
     ib_keyword->loadKeywords();
   }

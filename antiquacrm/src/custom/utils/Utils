@@ -18,6 +18,10 @@
 # include "cancellation.h"
 #endif
 
+#ifndef CONDITIONFIELD_UTILS_H
+# include "conditionfield.h"
+#endif
+
 #ifndef DATETIMEEDIT_UTILS_H
 # include "datetimeedit.h"
 #endif

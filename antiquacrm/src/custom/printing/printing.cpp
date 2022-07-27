@@ -375,7 +375,11 @@ bool Printing::createPDF(const QString &section) {
   printer->setCreator("AntiquaCRM");
   QString dest = outputDirectory(section);
   dest.append(QDir::separator());
-  dest.append(p_deliveryId);
+  if(section == "invoices") {
+    dest.append(p_invoiceId);
+  } else {
+    dest.append(p_deliveryId);
+  }
   dest.append(".pdf");
   printer->setOutputFileName(dest);
   return generateDocument(printer);
