@@ -76,6 +76,7 @@ protected:
 private Q_SLOTS:
   void searchConvert(const QString &);
   void searchConvert();
+  void deleteCustomer(int customerId);
 
   /**
    * @brief Tabellenlisten Übersicht öffnen und Editor deaktivieren.

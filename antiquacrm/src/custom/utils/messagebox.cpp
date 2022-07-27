@@ -9,10 +9,9 @@ MessageBox::MessageBox(QWidget *parent) : QMessageBox{parent} {
   setDefaultButton(QMessageBox::Ok);
   // Warning !!! Kein RichText wegen tr().arg() verwenden!!!
   setTextFormat(Qt::PlainText);
-  setTextInteractionFlags(Qt::TextSelectableByMouse |
-                          Qt::TextSelectableByKeyboard);
+  setTextInteractionFlags(Qt::TextSelectableByMouse);
   setSizeGripEnabled(true);
-  setMinimumSize(300, 200);
+  setMinimumSize(400, 200);
 }
 
 void MessageBox::buildTimerMessage() {

@@ -2,9 +2,10 @@
 // vim: set fileencoding=utf-8
 
 #include "inventorycustomers.h"
+#include "customerstatements.h"
 #include "customertableview.h"
 #include "editcustomer.h"
-#include "myicontheme.h"
+#include "messagebox.h"
 
 #include <QDebug>
 #include <QHBoxLayout>
@@ -12,6 +13,7 @@
 #include <QLayout>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <SqlCore>
 
 CustomerSearchBar::CustomerSearchBar(QWidget *parent) : SearchBar{parent} {
   setObjectName("customer_search_bar");
@@ -101,6 +103,9 @@ InventoryCustomers::InventoryCustomers(QWidget *parent) : Inventory{parent} {
   connect(m_tableView, SIGNAL(s_createOrder(int)), this,
           SIGNAL(s_createOrder(int)));
 
+  connect(m_tableView, SIGNAL(s_deleteCustomer(int)), this,
+          SLOT(deleteCustomer(int)));
+
   connect(m_tableView, SIGNAL(s_reportQuery(const QString &)), m_statsActionBar,
           SLOT(showMessage(const QString &)));
 
@@ -152,6 +157,29 @@ void InventoryCustomers::searchConvert() {
   }
 }
 
+void InventoryCustomers::deleteCustomer(int customerId) {
+  QString info = tr("Do you really want to delete this customer?");
+  info.append("<p>" + tr("This process is irreversible!") + "</p>");
+  info.append(tr("In addition, the system will refuse to delete if an order "
+                 "exists for this customer!"));
+
+  int ret = QMessageBox::question(this, tr("Delete Customer"), info);
+  if (ret == QMessageBox::No)
+    return;
+
+  HJCMS::SqlCore *m_sql = new HJCMS::SqlCore(this);
+  QString sql = c_sqlDeleteCustomer(customerId);
+  m_sql->query(sql);
+  if (m_sql->lastError().isEmpty()) {
+    m_tableView->queryHistory("#last7days");
+    return;
+  }
+
+  MessageBox *box = new MessageBox(this);
+  box->failed(tr("There are relationships from purchase orders."),
+              m_sql->lastError());
+}
+
 void InventoryCustomers::openTableView() {
   m_stackedWidget->setCurrentIndex(0);
   m_editCustomer->setEnabled(false);
@@ -173,8 +201,7 @@ void InventoryCustomers::createCustomer() {
   m_stackedWidget->setCurrentWidget(m_editorWidget);
 }
 
-void InventoryCustomers::onEnterChanged()
-{
-  if(m_tableView->rowCount() < 1)
+void InventoryCustomers::onEnterChanged() {
+  if (m_tableView->rowCount() < 1)
     m_tableView->queryHistory("#last7days");
 }

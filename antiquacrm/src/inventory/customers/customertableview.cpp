@@ -5,7 +5,6 @@
 #include "customerstablemodel.h"
 #include "customerstatements.h"
 #include "myicontheme.h"
-#include "searchbar.h"
 #include "searchfilter.h"
 #include "sqlcore.h"
 
@@ -77,7 +76,7 @@ bool CustomerTableView::sqlExecQuery(const QString &statement) {
   return false;
 }
 
-bool CustomerTableView::queryCustomerID(const QModelIndex &index,
+bool CustomerTableView::queryCustomerAction(const QModelIndex &index,
                                         QueryType type) {
   QModelIndex id(index);
   if (m_tableModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
@@ -93,25 +92,33 @@ bool CustomerTableView::queryCustomerID(const QModelIndex &index,
       emit s_createOrder(i);
       return true;
     }
+    if (type == Delete) {
+      emit s_deleteCustomer(i);
+      return true;
+    }
   }
   return false;
 }
 
 void CustomerTableView::queryCustomerID(const QModelIndex &index) {
-  queryCustomerID(index, QueryType::Update);
+  queryCustomerAction(index, QueryType::Update);
 }
 
 void CustomerTableView::openByContext() {
-  queryCustomerID(p_modelIndex, QueryType::Update);
+  queryCustomerAction(p_modelIndex, QueryType::Update);
 }
 
 void CustomerTableView::createByContext() {
-  // queryCustomerID(p_modelIndex, QueryType::Create);
   emit s_insertCustomer();
 }
 
 void CustomerTableView::orderByContext() {
-  queryCustomerID(p_modelIndex, QueryType::Order);
+  queryCustomerAction(p_modelIndex, QueryType::Order);
+}
+
+void CustomerTableView::deleteUserContext()
+{
+  queryCustomerAction(p_modelIndex, QueryType::Delete);
 }
 
 void CustomerTableView::contextMenuEvent(QContextMenuEvent *ev) {
@@ -135,6 +142,10 @@ void CustomerTableView::contextMenuEvent(QContextMenuEvent *ev) {
   ac_order->setObjectName("ac_context_order_customer");
   connect(ac_order, SIGNAL(triggered()), this, SLOT(orderByContext()));
   ac_order->setEnabled(b);
+
+  QAction *ac_delete = m->addAction(myIcon("delete_user"), tr("Delete customer"));
+  ac_delete->setObjectName("ac_context_delete_customer");
+  connect(ac_delete, SIGNAL(triggered()), this, SLOT(deleteUserContext()));
 
   m->exec(ev->globalPos());
   delete m;

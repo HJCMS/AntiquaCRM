@@ -2,12 +2,10 @@
 // vim: set fileencoding=utf-8
 
 #include "editcustomer.h"
-#include "antiqua_global.h"
 #include "customerbillinginfo.h"
 #include "customercontact.h"
 #include "customeroverview.h"
 #include "editoractionbar.h"
-#include "genderbox.h"
 #include "myicontheme.h"
 #include "serialid.h"
 

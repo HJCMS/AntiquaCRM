@@ -1578,7 +1578,7 @@
 <context>
     <name>CustomerContact</name>
     <message>
-        <location filename="../inventory/customers/customercontact.cpp" line="+28"/>
+        <location filename="../inventory/customers/customercontact.cpp" line="+27"/>
         <source>Gender</source>
         <translation>Geschlecht</translation>
     </message>
@@ -1742,7 +1742,7 @@
 <context>
     <name>CustomerSearchBar</name>
     <message>
-        <location filename="../inventory/customers/inventorycustomers.cpp" line="+25"/>
+        <location filename="../inventory/customers/inventorycustomers.cpp" line="+27"/>
         <source>Company and Names</source>
         <translation>Firma oder Person</translation>
     </message>
@@ -1755,12 +1755,12 @@
 <context>
     <name>CustomerTableView</name>
     <message>
-        <location filename="../inventory/customers/customertableview.cpp" line="+69"/>
+        <location filename="../inventory/customers/customertableview.cpp" line="+68"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+63"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
@@ -1773,6 +1773,11 @@
         <location line="+5"/>
         <source>Create order</source>
         <translation>Bestellung anlegen</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Delete customer</source>
+        <translation>Kunde löschen</translation>
     </message>
 </context>
 <context>
@@ -2219,7 +2224,7 @@
 <context>
     <name>EditCustomer</name>
     <message>
-        <location filename="../inventory/customers/editcustomer.cpp" line="+47"/>
+        <location filename="../inventory/customers/editcustomer.cpp" line="+45"/>
         <source>Customers ID</source>
         <translation>Kunden Nr</translation>
     </message>
@@ -2753,6 +2758,31 @@
         <location filename="../inventory/customers/inventorycustomers.cpp" line="+9"/>
         <source>Customers</source>
         <translation>Kunden</translation>
+    </message>
+    <message>
+        <location line="+121"/>
+        <source>Do you really want to delete this customer?</source>
+        <translation>Möchten Sie diesen Kunden wirklich löschen?</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>This process is irreversible!</source>
+        <translation>Dieser Vorgang ist nicht umkehrbar!</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>In addition, the system will refuse to delete if an order exists for this customer!</source>
+        <translation>Außerdem wird das System das löschen verweigern, wenn für diesen Kunden eine Bestellung existiert!</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Delete Customer</source>
+        <translation>Lösche Kunde</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>There are relationships from purchase orders.</source>
+        <translation>Es bestehen beziehungen aus Bestellaufträgen.</translation>
     </message>
 </context>
 <context>
@@ -3340,7 +3370,7 @@
 <context>
     <name>MessageBox</name>
     <message>
-        <location filename="../custom/utils/messagebox.cpp" line="+21"/>
+        <location filename="../custom/utils/messagebox.cpp" line="+20"/>
         <source>Message closed in </source>
         <translation>Nachricht schließt sich in </translation>
     </message>
