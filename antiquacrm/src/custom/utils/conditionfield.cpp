@@ -14,22 +14,22 @@ ConditionBox::ConditionBox(QWidget *parent) : QComboBox{parent} {
    * ABEBOOKS: FINE BOOK CONDITION
    * BOOKLOOKER: Sehr gut, fast neuwertig!
    */
-  insertItem(1, "1) " + tr("Very good, almost new!"));
+  insertItem(1, "1) " + tr("Very good, almost new!") + " (" + tr("Very good") + ")");
   /**
    * ABEBOOKS: VERY GOOD BOOK CONDITION
    * BOOKLOOKER: Leichte Gebrauchsspuren
    */
-  insertItem(2, "2) " + tr("Slight signs of use"));
+  insertItem(2, "2) " + tr("Slight signs of use") + " (" + tr("Good") + ")");
   /**
    * ABEBOOKS: GOOD BOOK CONDITION
    * BOOKLOOKER: Deutliche Gebrauchsspuren
    */
-  insertItem(3, "3) " + tr("Clear signs of use"));
+  insertItem(3, "3) " + tr("Clear signs of use") + " (" + tr("Satisfying") + ")");
   /**
    * ABEBOOKS: FAIR BOOK CONDITION
    * BOOKLOOKER: Stark abgenutzt
    */
-  insertItem(4, "4) " + tr("Heavily worn"));
+  insertItem(4, "4) " + tr("Heavily worn") + " (" + tr("Sufficient") + ")");
 }
 
 ConditionField::ConditionField(QWidget *parent) : UtilsMain{parent} {

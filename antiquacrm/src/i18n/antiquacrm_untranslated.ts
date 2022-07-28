@@ -4,7 +4,7 @@
 <context>
     <name>AbeBooksIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+311"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+316"/>
         <source>Buyer Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -778,7 +778,7 @@
 <context>
     <name>BooklookerIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerifacewidget.cpp" line="+105"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerifacewidget.cpp" line="+108"/>
         <source>Germany</source>
         <translation type="unfinished"></translation>
     </message>
@@ -786,7 +786,7 @@
 <context>
     <name>BooklookerRequester</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+168"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+169"/>
         <source>Missing API Key</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1355,8 +1355,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+0"/>
+        <source>Very good</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+5"/>
         <source>Slight signs of use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Good</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1365,8 +1375,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+0"/>
+        <source>Satisfying</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+5"/>
         <source>Heavily worn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Sufficient</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2876,7 +2896,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+78"/>
         <source>customer found in database!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2947,7 +2967,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-431"/>
+        <location line="-432"/>
         <location line="+14"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
@@ -3126,19 +3146,19 @@
 <context>
     <name>KeywordEdit</name>
     <message>
-        <location filename="../custom/keywordedit/keywordedit.cpp" line="+26"/>
+        <location filename="../custom/keywordedit/keywordedit.cpp" line="+27"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+48"/>
-        <location line="+21"/>
-        <location line="+20"/>
+        <location line="+63"/>
+        <location line="+23"/>
+        <location line="+22"/>
         <source>Database query success!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-11"/>
+        <location line="-13"/>
         <source>Missing Keyword!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3176,7 +3196,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3186,7 +3206,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+3"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3312,7 +3332,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+26"/>
         <source>Save request</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3322,18 +3342,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="+74"/>
         <source>SQL Server Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-127"/>
-        <location line="+140"/>
+        <location line="-119"/>
+        <location line="+132"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-196"/>
+        <location line="-188"/>
         <source>Prints</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3369,11 +3389,6 @@
     </message>
     <message>
         <location line="+5"/>
-        <source>Condition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
         <source>Designation and Binding</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3383,7 +3398,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+100"/>
         <source>Disable Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
