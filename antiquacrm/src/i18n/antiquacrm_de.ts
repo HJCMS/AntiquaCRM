@@ -2790,9 +2790,9 @@
         <translation>Lösche Kunde</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <source>There are relationships from purchase orders.</source>
-        <translation>Es bestehen beziehungen aus Bestellaufträgen.</translation>
+        <location line="+14"/>
+        <source>There are purchase order relationships that cannot be resolved.</source>
+        <translation>Es gibt Bestellbeziehungen, die nicht aufgelöst werden können.</translation>
     </message>
 </context>
 <context>
@@ -3391,7 +3391,7 @@
 <context>
     <name>MessageBox</name>
     <message>
-        <location filename="../custom/utils/messagebox.cpp" line="+20"/>
+        <location filename="../custom/utils/messagebox.cpp" line="+23"/>
         <source>Message closed in </source>
         <translation>Nachricht schließt sich in </translation>
     </message>
@@ -3402,8 +3402,8 @@
     </message>
     <message>
         <location line="+21"/>
-        <source>SQL Syntaxerror</source>
-        <translation></translation>
+        <source>The last Operation answered with an Error!</source>
+        <translation>Die letzte Operation hat mit einem Fehler geantwortet!</translation>
     </message>
 </context>
 <context>

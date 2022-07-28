@@ -13,7 +13,10 @@
 #include <QVBoxLayout>
 
 WHSoftWidget::WHSoftWidget(const QString &widgetId, QWidget *parent)
-    : Antiqua::InterfaceWidget{widgetId, parent} {}
+    : Antiqua::InterfaceWidget{widgetId, parent} {
+  // Wegen langen Abfragewartezeiten den Zugriff unterdrücken!
+  setEnabled(false);
+}
 
 void WHSoftWidget::createCustomerDocument() {
   if (p_currentDocument.isEmpty()) {
@@ -36,11 +39,11 @@ void WHSoftWidget::createCustomerDocument() {
   QHashIterator<QString, QString> hash_it(p_customer);
   while (hash_it.hasNext()) {
     hash_it.next();
-    if(!hash_it.value().isEmpty())
+    if (!hash_it.value().isEmpty())
       customer.insert(hash_it.key(), hash_it.value());
   }
 
-  if(!customer.contains("c_postal_address")) {
+  if (!customer.contains("c_postal_address")) {
     QString pAddress = m_order->getValue("c_postal_address").toString();
     if (!pAddress.isEmpty())
       customer.insert("c_postal_address", pAddress);
@@ -191,6 +194,8 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
       }
     }
   }
+  // jetzt aktivieren
+  setEnabled(true);
 }
 
 void WHSoftWidget::createOrderRequest(const QString &bfId) {
@@ -230,9 +235,9 @@ const QMap<QString, QString> WHSoftWidget::fieldTranslate() const {
   map.insert("versandart", "o_delivery_service");
   map.insert("einlieferungsdatum", "o_delivery_fullfill");
   map.insert("kundenkommentar", "o_delivery_comment");
-//  map.insert("menge_storniert", "");
-//  map.insert("storniert_am", "");
-//  map.insert("stornogrund", "");
+  //  map.insert("menge_storniert", "");
+  //  map.insert("storniert_am", "");
+  //  map.insert("stornogrund", "");
   map.insert("id", "o_provider_order_id");
   map.insert("datum", "o_provider_order_date");
   map.insert("bestellnr", "a_article_id");

@@ -11,6 +11,9 @@
 BooklookerIfaceWidget::BooklookerIfaceWidget(const QString &widgetId,
                                              QWidget *parent)
     : Antiqua::InterfaceWidget{widgetId, parent} {
+  // Wegen langen Abfragewartezeiten den Zugriff unterdrücken!
+  setEnabled(false);
+
   m_requester = new BooklookerRequester(this);
   m_requester->setObjectName("requester_" + objectName());
   connect(m_requester, SIGNAL(errorMessage(int, const QString &)), this,
@@ -226,10 +229,13 @@ void BooklookerIfaceWidget::setContent(const QJsonDocument &doc) {
       }
     }
   }
+  // jetzt aktivieren
+  setEnabled(true);
 }
 
 void BooklookerIfaceWidget::createOrderRequest(const QString &orderId) {
-  m_requester->queryOrder(orderId);
+  if (orderId > 0)
+    m_requester->queryOrder(orderId);
 }
 
 void BooklookerIfaceWidget::setCustomerId(int customerId) {

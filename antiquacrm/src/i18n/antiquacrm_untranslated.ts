@@ -2790,8 +2790,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
-        <source>There are relationships from purchase orders.</source>
+        <location line="+14"/>
+        <source>There are purchase order relationships that cannot be resolved.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3391,7 +3391,7 @@
 <context>
     <name>MessageBox</name>
     <message>
-        <location filename="../custom/utils/messagebox.cpp" line="+20"/>
+        <location filename="../custom/utils/messagebox.cpp" line="+23"/>
         <source>Message closed in </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3402,7 +3402,7 @@
     </message>
     <message>
         <location line="+21"/>
-        <source>SQL Syntaxerror</source>
+        <source>The last Operation answered with an Error!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -148,6 +148,7 @@ void CustomerTableView::contextMenuEvent(QContextMenuEvent *ev) {
   QAction *ac_delete =
       m->addAction(myIcon("delete_user"), tr("Delete customer"));
   ac_delete->setObjectName("ac_context_delete_customer");
+  ac_delete->setEnabled(b);
   connect(ac_delete, SIGNAL(triggered()), this, SLOT(deleteUserContext()));
 
   m->exec(ev->globalPos());

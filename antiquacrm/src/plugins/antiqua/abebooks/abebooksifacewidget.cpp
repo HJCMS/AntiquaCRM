@@ -17,7 +17,10 @@
 
 AbeBooksIfaceWidget::AbeBooksIfaceWidget(const QString &widgetId,
                                          QWidget *parent)
-    : Antiqua::InterfaceWidget{widgetId, parent} {}
+    : Antiqua::InterfaceWidget{widgetId, parent} {
+  // Wegen langen Abfragewartezeiten den Zugriff unterdrücken!
+  setEnabled(false);
+}
 
 void AbeBooksIfaceWidget::createCustomerDocument() {
   if (p_currentDocument.isNull()) {
@@ -273,6 +276,8 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
       }
     }
   }
+  // jetzt aktivieren
+  setEnabled(true);
 }
 
 void AbeBooksIfaceWidget::createOrderRequest(const QString &purchaseId) {
@@ -337,7 +342,7 @@ const QMap<QString, QString> AbeBooksIfaceWidget::fieldTranslate() const {
   // Zahlung Informationen
   map.insert("purchaseMethod", "o_payment_method");
   // Kommentare
-  map.insert("specialInstructions","o_delivery_comment");
+  map.insert("specialInstructions", "o_delivery_comment");
 
   map.insert("reseller", "o_provider_name");
 

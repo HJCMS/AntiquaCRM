@@ -171,13 +171,16 @@ void InventoryCustomers::deleteCustomer(int customerId) {
   QString sql = c_sqlDeleteCustomer(customerId);
   m_sql->query(sql);
   if (m_sql->lastError().isEmpty()) {
-    m_tableView->queryHistory("#last7days");
+    m_tableView->queryHistory("#today");
     return;
   }
 
   MessageBox *box = new MessageBox(this);
-  box->failed(tr("There are relationships from purchase orders."),
-              m_sql->lastError());
+  box->failed(
+      tr("There are purchase order relationships that cannot be resolved."),
+      m_sql->lastError());
+
+  box->deleteLater();
 }
 
 void InventoryCustomers::openTableView() {

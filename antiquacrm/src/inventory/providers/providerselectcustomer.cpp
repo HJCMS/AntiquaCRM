@@ -12,7 +12,7 @@
 ProviderSelectCustomer::ProviderSelectCustomer(QWidget *parent)
     : QDialog{parent} {
   setSizeGripEnabled(true);
-  setMinimumSize(QSize(600, 300));
+  setMinimumSize(QSize(500, 250));
   setWindowTitle(tr("Customer selection"));
 
   QString uniqFields("c_firstname,c_lastname,c_postalcode,c_location");

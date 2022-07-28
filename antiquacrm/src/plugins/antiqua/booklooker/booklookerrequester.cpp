@@ -4,6 +4,7 @@
 #include "booklookerrequester.h"
 #include "booklookerconfig.h"
 
+#include <QBuffer>
 #include <QDate>
 #include <QDebug>
 #include <QDir>
@@ -248,7 +249,7 @@ void BooklookerRequester::replyReadyRead() {
     buf.resize(chunk + 1);
     memset(&buf[0], 0, chunk + 1);
     if (chunk != m_reply->read(&buf[0], chunk)) {
-      qWarning("BooklookerRequester: buffer read error");
+      qWarning("Booklooker: buffer read error");
     }
     data += &buf[0];
   }

@@ -5,7 +5,10 @@
 
 MessageBox::MessageBox(QWidget *parent) : QMessageBox{parent} {
   setObjectName("antiqua_message_box");
+  setWindowFlag(Qt::Dialog, true);
+#ifdef Q_WS_WIN
   setWindowFlag(Qt::MSWindowsFixedSizeDialogHint, false);
+#endif
   setDefaultButton(QMessageBox::Ok);
   // Warning !!! Kein RichText wegen tr().arg() verwenden!!!
   setTextFormat(Qt::PlainText);
@@ -41,11 +44,11 @@ int MessageBox::notice(const QString &msg) {
 
 int MessageBox::failed(const QString &err, const QString &details) {
   setIcon(QMessageBox::Critical);
-  setText(tr("SQL Syntaxerror"));
-  setInformativeText(err);
+  setText(tr("The last Operation answered with an Error!"));
   if (!details.isEmpty())
     setDetailedText(details);
 
+  setInformativeText(err);
   return exec();
 }
 

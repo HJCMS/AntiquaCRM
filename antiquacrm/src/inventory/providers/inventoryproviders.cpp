@@ -296,10 +296,11 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
     return;
 
   int selected_cid = -1;
-  QString sql = queryCustomerExists(QJsonValue(doc["c_firstname"]).toString(),
-                                    QJsonValue(doc["c_lastname"]).toString(),
-                                    QJsonValue(doc["c_postalcode"]).toString(),
-                                    QJsonValue(doc["c_location"]).toString());
+  QString sql =
+      queryCustomerExists(QJsonValue(doc["c_firstname"]).toString(),
+                          QJsonValue(doc["c_lastname"]).toString(),
+                          QJsonValue(doc["c_postalcode"]).toString(),
+                          QJsonValue(doc["c_location"]).toString() + "%");
 
   if (SHOW_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << sql << doc;
