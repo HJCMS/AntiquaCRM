@@ -7,11 +7,13 @@
 #include <QDate>
 #include <QDebug>
 #include <QDir>
+#include <QFile>
 #include <QFileInfo>
 #include <QHttpMultiPart>
 #include <QHttpPart>
 #include <QJsonParseError>
 #include <QMutex>
+#include <QTextStream>
 #include <QTimer>
 #include <QUrlQuery>
 
@@ -148,7 +150,7 @@ void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
       config->endGroup();
     }
 #ifdef ANTIQUA_DEVELOPEMENT
-    qInfo("Authenticated: %s", qPrintable(value));
+    qInfo("New token Authentication: %s", qPrintable(value));
 #endif
     /**
      * !!! WARNING !!!
@@ -158,7 +160,9 @@ void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
      */
     QTimer::singleShot(2000, this, SIGNAL(authenticFinished()));
   } else if (status == "NOK" && !value.isEmpty()) {
+#ifdef ANTIQUA_DEVELOPEMENT
     qWarning("Authentication Error: %s", qPrintable(value));
+#endif
     // Authentic Response Status
     if (value == "API_KEY_MISSING") {
       emit errorMessage(1, tr("Missing API Key"));
@@ -168,7 +172,9 @@ void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
       emit errorMessage(1, tr("Server down"));
     }
   } else {
+#ifdef ANTIQUA_DEVELOPEMENT
     qWarning("registerAuthentic: Unknown error!");
+#endif
   }
 }
 
@@ -253,6 +259,7 @@ void BooklookerRequester::replyReadyRead() {
   QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
   if (parser.error != QJsonParseError::NoError) {
     qWarning("Json Parse Error:(%s)!", jsonParserError(parser.error));
+    writeErrorLog(data);
     return;
   }
 
@@ -285,6 +292,18 @@ void BooklookerRequester::authentication() {
 
   connect(this, SIGNAL(authenticResponse(const QJsonDocument &)), this,
           SLOT(registerAuthentic(const QJsonDocument &)));
+}
+
+void BooklookerRequester::writeErrorLog(const QByteArray &data) {
+  QString logFileName("antiqua_booklooker_errors.log");
+  QFileInfo logFilePath(QDir::temp(), logFileName);
+  QFile fp(logFilePath.filePath());
+  if (fp.open(QIODevice::WriteOnly)) {
+    QTextStream stream(&fp);
+    stream << QString::fromLocal8Bit(data);
+    fp.close();
+    qInfo("Booklooker '%s'.", qPrintable(logFilePath.filePath()));
+  }
 }
 
 bool BooklookerRequester::getRequest(const QUrl &url) {
@@ -321,7 +340,6 @@ void BooklookerRequester::queryList() {
   q.addQueryItem("dateFrom", past.toString(DATE_FORMAT));
   q.addQueryItem("dateTo", QDate(QDate::currentDate()).toString(DATE_FORMAT));
   url.setQuery(q);
-  // qDebug() << Q_FUNC_INFO << url;
   getRequest(url);
 }
 
@@ -341,16 +359,11 @@ void BooklookerRequester::queryOrder(const QString &orderId) {
   q.addQueryItem("token", getToken());
   q.addQueryItem("orderId", orderId);
   url.setQuery(q);
-  // qDebug() << Q_FUNC_INFO << url;
   getRequest(url);
 }
 
 void BooklookerRequester::authenticationRefresh() { authentication(); }
 
 const QString BooklookerRequester::getToken() {
-  QString token = qEnvironmentVariable(BOOKLOOKER_TOKEN_ENV);
-  if (token.isEmpty()) {
-    qInfo("Booklooker - token expired");
-  }
-  return token;
+  return qEnvironmentVariable(BOOKLOOKER_TOKEN_ENV);
 }

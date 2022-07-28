@@ -5,10 +5,10 @@
 #ifndef ORDERSTABLE_H
 #define ORDERSTABLE_H
 
+#include <QContextMenuEvent>
 #include <QHash>
 #include <QObject>
 #include <QString>
-#include <QContextMenuEvent>
 #include <QTableView>
 
 #include <SqlCore>
@@ -35,28 +35,34 @@ private:
   QString p_historyQuery;
 
   /**
-   @brief SQL Query Database
-  */
+   * @brief SQL Query Database
+   */
   bool sqlExecQuery(const QString &statement);
 
 private Q_SLOTS:
   /**
-   @brief Suche Datensatz mit Index
-   Wenn vorhanden Sende Signal @ref s_articleSelected
-  */
+   * @brief Suche Datensatz mit Index
+   * Wenn vorhanden Sende Signal @ref s_articleSelected
+   */
   void queryOrder(const QModelIndex &);
 
   /**
-   @brief Ableitung für @ref clickedGetArticleID
-  */
+   * @brief Ableitung für @ref clickedGetArticleID
+   */
   void openByContext();
+
+  /**
+   * @brief Kundendaten öffnen/einsehen
+   */
+  void openCustomer();
 
 protected:
   void contextMenuEvent(QContextMenuEvent *);
 
 Q_SIGNALS:
   void s_reportQuery(const QString &);
-  void s_editOrder(int id);
+  void s_editOrder(int orderId);
+  void s_openCustomer(int cutomerId);
 
 public Q_SLOTS:
   /**

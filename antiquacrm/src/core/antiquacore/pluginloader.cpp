@@ -43,15 +43,19 @@ PluginLoader::PluginLoader(QObject *parent) : QPluginLoader{parent} {
 
   QFileInfo test(QDir::currentPath(), "cmake_install.cmake");
   if (test.exists()) {
-    qInfo("Plugin Build target extras add ...");
     paths << lp + "/abebooks";
     paths << lp + "/whsoft";
     paths << lp + "/booklooker";
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << "Developement Plugin build path add...";
+#endif
   }
 
+#ifdef ANTIQUA_DEVELOPEMENT
   if (DEBUG_PLUGINLOADER) {
     qDebug() << Q_FUNC_INFO << paths;
   }
+#endif
 
   p_dir.setSearchPaths("plugins", paths);
   p_dir.setNameFilters(filter());
@@ -110,10 +114,11 @@ const QList<Interface *> PluginLoader::pluginInterfaces(QObject *parent) {
       }
       Interface *m_Iface = qobject_cast<Interface *>(plug);
       if (m_Iface != nullptr && m_Iface->createInterface(parent)) {
-        qInfo("Loading '%s' success",
-              qPrintable(info.value("Title").toString()));
         m_Iface->setObjectName(objName);
         list << m_Iface;
+      } else {
+        qWarning("Loading '%s' failed.",
+                 qPrintable(info.value("Title").toString()));
       }
     } else
       qWarning("(Antiqua) Pluginloader: %s", qPrintable(errorString()));

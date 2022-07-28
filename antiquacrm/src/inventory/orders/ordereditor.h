@@ -132,6 +132,11 @@ private:
   const QHash<QString, QVariant> createSqlDataset();
 
   /**
+   * @brief Nachricht über Fehlerhafte beziehung beim Status ausgeben!
+   */
+  void invalidRelationship();
+
+  /**
    * @brief SQL and die Datenbank senden ...
    */
   bool sendSqlQuery(const QString &);
@@ -323,7 +328,7 @@ public:
    * an Datenbank, bei erfold werden die Daten eingefügt.
    * @param oid Auftrags ID
    */
-  void openUpdateOrder(int oid = -1);
+  bool openUpdateOrder(int oid = -1);
 
   /**
    * @brief Einen Auftrag mit Kundennummer erstellen!

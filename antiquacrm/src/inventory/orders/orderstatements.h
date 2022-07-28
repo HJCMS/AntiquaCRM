@@ -156,6 +156,19 @@ static const QString queryCustomerDeliveryAddress(int customerId) {
 }
 
 /**
+ * @brief Kundennummer aus Auftrag ermitteln
+ * @param orderId
+ * @return SQL-Query
+ */
+static const QString queryCustomerByOrderId(int orderId) {
+  QString o_id = QString::number(orderId);
+  QString sql("SELECT o_customer_id AS c_id");
+  sql.append(" FROM inventory_orders");
+  sql.append(" WHERE o_id=" + o_id + ";");
+  return sql;
+}
+
+/**
  * @brief Füge die Lieferscheinnummer ein!
  * @param oId
  * @param dId
@@ -205,6 +218,18 @@ static const QString paymentUpdate(int id, bool status) {
   sql.append(" WHERE o_id=");
   sql.append(QString::number(id));
   sql.append(";");
+  return sql;
+}
+
+static const QString finalizeTransaction(int customerId) {
+  QString status = QString::number(STATUS_ORDER_CLOSED);
+  QString c_id = QString::number(customerId);
+  QString sql("UPDATE ONLY customers SET");
+  sql.append(" c_purchases=+1, c_transactions=+1");
+  sql.append(" FROM inventory_orders WHERE c_id=" + c_id);
+  sql.append(" AND o_customer_id=c_id");
+  sql.append(" AND o_payment_status=true");
+  sql.append(" AND o_order_status=" + status + ";");
   return sql;
 }
 

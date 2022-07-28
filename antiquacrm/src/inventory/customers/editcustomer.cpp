@@ -187,7 +187,9 @@ void EditCustomer::createSqlUpdate() {
   sql.append(";");
 
   if (sendSqlQuery(sql)) {
+#ifdef ANTIQUA_DEVELOPEMENT
     qInfo("Update Customer Interfaces");
+#endif
     updateCustomer("c_id=" + cid);
   }
 }

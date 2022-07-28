@@ -65,7 +65,7 @@
 <context>
     <name>Antiqua::CurlJson</name>
     <message>
-        <location filename="../core/antiquacore/curljson.cpp" line="+415"/>
+        <location filename="../core/antiquacore/curljson.cpp" line="+439"/>
         <source>CA-Bundle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -78,7 +78,7 @@
 <context>
     <name>Antiqua::InterfaceWidget</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+333"/>
+        <location filename="../core/antiquacore/interface.cpp" line="+360"/>
         <source>Please select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -99,7 +99,7 @@
 <context>
     <name>Antiqua::PurchaseOverview</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="-290"/>
+        <location filename="../core/antiquacore/interface.cpp" line="-317"/>
         <source>Purchaser</source>
         <translation type="unfinished"></translation>
     </message>
@@ -159,7 +159,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Developement</source>
         <translation type="unfinished"></translation>
     </message>
@@ -786,7 +786,7 @@
 <context>
     <name>BooklookerRequester</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+164"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+168"/>
         <source>Missing API Key</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1755,27 +1755,37 @@
 <context>
     <name>CustomerTableView</name>
     <message>
-        <location filename="../inventory/customers/customertableview.cpp" line="+68"/>
+        <location filename="../inventory/customers/customertableview.cpp" line="+67"/>
+        <source>Broken Database query for Customers table.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
-        <source>Open entry</source>
+        <location line="+6"/>
+        <source>Missing Database connection for Customers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+54"/>
+        <source>Edit customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Create entry</source>
+        <source>Create customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Create order</source>
+        <location line="+6"/>
+        <source>Create order from customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source>Delete customer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2249,7 +2259,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+135"/>
+        <location line="+137"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2798,12 +2808,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+73"/>
         <source>Missing a valid costumer Id!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+17"/>
+        <source>This Order has been completed and is no longer available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>There is no Order open!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2866,42 +2881,48 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+39"/>
+        <location line="+62"/>
+        <source>Would you like to open the order now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-61"/>
         <source>Article Check</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-2"/>
         <source>Order witdh Id: %1 already exists!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+30"/>
         <source>Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-96"/>
+        <location line="-99"/>
         <source>customer not exits!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+96"/>
         <source>Buyer was not found in the customer register or the current customer number does not match. The system requires a valid customer number for a smooth process.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+37"/>
         <source>Notice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-2"/>
         <source>An Order with this Entries already exists!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+10"/>
         <source>Invalid Customer Id!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2926,7 +2947,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-423"/>
+        <location line="-431"/>
         <location line="+14"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
@@ -3439,13 +3460,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+786"/>
+        <location line="+815"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-865"/>
+        <location line="-894"/>
         <source>Invoice ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3510,18 +3531,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+133"/>
+        <location line="+142"/>
         <source>Order saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+286"/>
-        <location line="+493"/>
+        <location line="+292"/>
+        <location line="+514"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-478"/>
+        <location line="-499"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3584,12 +3605,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="-564"/>
+        <source>Failed relationship to complete this quest!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>No payment has been registered for this order!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Invalid relationship</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+577"/>
         <source>Do you really want to close this order and pass it on to accounting?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+198"/>
+        <location line="+214"/>
         <source>can&apos;t create order without costumer Id.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3609,13 +3645,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-491"/>
-        <location line="+244"/>
+        <location line="-512"/>
+        <location line="+249"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-770"/>
+        <location line="-790"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3625,7 +3661,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+709"/>
+        <location line="+724"/>
         <source>Printing canceled.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3635,7 +3671,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+28"/>
         <source>Finish order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3645,7 +3681,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+30"/>
         <source>Notice</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3780,13 +3816,18 @@
 <context>
     <name>OrdersTable</name>
     <message>
-        <location filename="../inventory/orders/orderstable.cpp" line="+70"/>
+        <location filename="../inventory/orders/orderstable.cpp" line="+72"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+36"/>
         <source>Open entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>View Customer data</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5552,7 +5593,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+19"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5562,7 +5603,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+49"/>
         <location line="+2"/>
         <source>Views</source>
         <translation type="unfinished"></translation>
@@ -5578,20 +5619,21 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+92"/>
         <source>Cant close this tab, unsafed changes!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-65"/>
+        <location line="-74"/>
         <location line="+9"/>
         <location line="+9"/>
         <location line="+11"/>
+        <location line="+9"/>
         <source>Order tab isn&apos;t open!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-92"/>
+        <location line="-101"/>
         <source>Ordering</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5601,7 +5643,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+98"/>
+        <location line="+107"/>
         <location line="+12"/>
         <source>successfully</source>
         <translation type="unfinished"></translation>
@@ -5622,7 +5664,7 @@
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-238"/>
+        <location line="-253"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>

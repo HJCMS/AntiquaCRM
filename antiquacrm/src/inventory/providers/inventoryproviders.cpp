@@ -393,11 +393,14 @@ void InventoryProviders::checkArticleExists(QList<int> &list) {
       }
     }
     if (o_check_id > 0) {
-      QString info_id = QString::number(o_check_id);
-      QMessageBox::warning(
-          this, tr("Article Check"),
-          tr("Order witdh Id: %1 already exists!").arg(info_id));
       m_toolBar->enableOrderButton(false);
+      QString info_id = QString::number(o_check_id);
+      QString ask(tr("Order witdh Id: %1 already exists!").arg(info_id));
+      ask.append("<p>" + tr("Would you like to open the order now?") + "</p>");
+      int ret = QMessageBox::question(this, tr("Article Check"), ask);
+      if (ret == QMessageBox::Yes) {
+        emit s_viewOrder(o_check_id);
+      }
       return;
     }
   }
@@ -452,9 +455,14 @@ void InventoryProviders::createEditOrders() {
     return;
 
   // Besitzt dieser Auftrag schon eine "inventory_orders:o_id" ?
-  if (tab->getOrderExists() > 0) {
-    QMessageBox::warning(this, tr("Notice"),
-                         tr("An Order with this Entries already exists!"));
+  int current_order_id = tab->getOrderExists();
+  if (current_order_id > 0) {
+    QString ask(tr("An Order with this Entries already exists!"));
+    ask.append("<p>" + tr("Would you like to open the order now?") + "</p>");
+    int ret = QMessageBox::question(this, tr("Notice"), ask);
+    if (ret == QMessageBox::Yes) {
+      emit s_viewOrder(current_order_id);
+    }
     return;
   }
 

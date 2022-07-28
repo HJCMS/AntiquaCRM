@@ -93,9 +93,11 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
   m_comments->setObjectName("o_delivery_comment");
   m_tabWidget->insertTab(tabIndex++, m_comments, qi1, tr("customer comment"));
 
+#ifdef ANTIQUA_DEVELOPEMENT
   // Informationen
   m_debugTable = new PurchaseDebugTable(m_tabWidget);
   m_tabWidget->insertTab(tabIndex++, m_debugTable, qi1, tr("Developement"));
+#endif
 
   m_tabWidget->setCurrentIndex(0);
   m_overview->setLayout(viewLayout);
@@ -204,10 +206,14 @@ void PurchaseOverview::setValue(const QString &objName, const QVariant &value) {
   // Zahlungs Informationen
   m_paymentInfo->setData(objName, value);
 
+#ifdef ANTIQUA_DEVELOPEMENT
   int row = m_debugTable->rowCount();
   m_debugTable->setRowCount(row + 1);
   m_debugTable->setItem(row, 0, m_debugTable->createItem(objName));
   m_debugTable->setItem(row, 1, m_debugTable->createItem(value));
+#else
+  m_purchaseData.insert(objName, value);
+#endif
 }
 
 void PurchaseOverview::setPhone(const QString &objName, const QVariant &value) {
@@ -220,10 +226,14 @@ void PurchaseOverview::setPhone(const QString &objName, const QVariant &value) {
     return;
   }
 
+#ifdef ANTIQUA_DEVELOPEMENT
   int row = m_debugTable->rowCount();
   m_debugTable->setRowCount(row + 1);
   m_debugTable->setItem(row, 0, m_debugTable->createItem(objName));
   m_debugTable->setItem(row, 1, m_debugTable->createItem(phone));
+#else
+  m_purchaseData.insert(objName, phone);
+#endif
 }
 
 const QVariant PurchaseOverview::getValue(const QString &objName) {
@@ -232,13 +242,21 @@ const QVariant PurchaseOverview::getValue(const QString &objName) {
     return tx->toPlainText().trimmed();
   }
 
+#ifdef ANTIQUA_DEVELOPEMENT
   for (int r = 0; r < m_debugTable->rowCount(); r++) {
     QTableWidgetItem *item = m_debugTable->item(r, 0);
     if (item->text() == objName) {
       return m_debugTable->item(r, 1)->text();
     }
   }
-
+#else
+  QMapIterator<QString, QVariant> it(m_purchaseData);
+  while (it.hasNext()) {
+    it.next();
+    if (it.key() == objName)
+      return it.value();
+  }
+#endif
   return QVariant();
 }
 
@@ -248,12 +266,21 @@ const QHash<QString, QVariant> PurchaseOverview::getCustomerData() {
   if (c_id > 0)
     list.insert("c_id", c_id);
 
+#ifdef ANTIQUA_DEVELOPEMENT
   for (int r = 0; r < m_debugTable->rowCount(); r++) {
     QString n = m_debugTable->item(r, 0)->text();
     QString v = m_debugTable->item(r, 1)->text();
     if (n.startsWith("c_", Qt::CaseSensitive))
       list.insert(n, v);
   }
+#else
+  QMapIterator<QString, QVariant> it(m_purchaseData);
+  while (it.hasNext()) {
+    it.next();
+    if (it.key().startsWith("c_", Qt::CaseSensitive))
+      list.insert(it.key(), it.value());
+  }
+#endif
 
   QStringList objList({"c_postal_address", "c_shipping_address"});
   foreach (QString n, objList) {

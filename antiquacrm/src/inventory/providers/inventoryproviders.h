@@ -239,12 +239,6 @@ private Q_SLOTS:
 
 Q_SIGNALS:
   /**
-   * @brief Sende SIGNAL in Kunde im Editor öffnen.
-   * @see InventoryCustomers::editCustomer
-   */
-  void openEditCustomer(int cid);
-
-  /**
    * @brief Einen Artikel öffnen
    * @param aid
    */

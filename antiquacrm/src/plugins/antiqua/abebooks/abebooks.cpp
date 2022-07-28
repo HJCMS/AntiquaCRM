@@ -73,13 +73,19 @@ void AbeBooks::queryMenueEntries() {
 }
 
 void AbeBooks::updateOrderDelivery(const QJsonObject &jso) {
+#ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << jso;
+#endif
 }
 
 void AbeBooks::updateArticleCount(int articleId, int count) {
+#ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << articleId << count;
+#endif
 }
 
 void AbeBooks::uploadArticleImage(int articleId, const QString &base64) {
+#ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << articleId << base64.length();
+#endif
 }

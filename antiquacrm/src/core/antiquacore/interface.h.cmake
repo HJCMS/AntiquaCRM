@@ -60,8 +60,11 @@
 namespace Antiqua {
 
   class PurchasePaymentInfo;
-  class PurchaseDebugTable;
   class PurchaserOrderTable;
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  class PurchaseDebugTable;
+#endif
 
   /**
    * @class Antiqua::PurchaseOverview
@@ -109,10 +112,14 @@ namespace Antiqua {
      */
     QTextEdit *m_comments;
 
+#ifdef ANTIQUA_DEVELOPEMENT
     /**
-     * @brief Customer Summary
+     * @brief Developement Summary TabelView
      */
     PurchaseDebugTable *m_debugTable;
+#endif
+
+    QMap<QString,QVariant> m_purchaseData;
 
     /**< @} */
 

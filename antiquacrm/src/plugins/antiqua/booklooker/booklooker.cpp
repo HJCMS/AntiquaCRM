@@ -68,13 +68,19 @@ void Booklooker::queryMenueEntries() {
 }
 
 void Booklooker::updateOrderDelivery(const QJsonObject &jso) {
+#ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << jso;
+#endif
 }
 
 void Booklooker::updateArticleCount(int articleId, int count) {
+#ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << articleId << count;
+#endif
 }
 
 void Booklooker::uploadArticleImage(int articleId, const QString &base64) {
+#ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << articleId << base64.length();
+#endif
 }

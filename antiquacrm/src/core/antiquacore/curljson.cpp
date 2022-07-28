@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "curljson.h"
-#include "applsettings.h"
 
 #include <QByteArray>
 #include <QDebug>
@@ -11,6 +10,7 @@
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QLocale>
+#include <QTextStream>
 #include <iostream>
 
 #ifdef Q_OS_WIN
@@ -46,6 +46,30 @@ static const QByteArray caBundleConfigPath() {
 #endif
   return QByteArray();
 }
+
+#ifdef ANTIQUA_DEVELOPEMENT
+void writeCurlErrorLog(const QByteArray &data) {
+  QString logFileName("antiqua_curl_error.log");
+  QFileInfo logFilePath(QDir::temp(), logFileName);
+  QFile fp(logFilePath.filePath());
+  if (fp.open(QIODevice::WriteOnly)) {
+    QTextStream stream(&fp);
+    stream << data;
+    fp.close();
+  }
+}
+
+void writeCurlDataLog(const QString &data) {
+  QString logFileName("antiqua_curl_data.log");
+  QFileInfo logFilePath(QDir::temp(), logFileName);
+  QFile fp(logFilePath.filePath());
+  if (fp.open(QIODevice::WriteOnly)) {
+    QTextStream stream(&fp);
+    stream << data;
+    fp.close();
+  }
+}
+#endif
 
 static int cUrlTrace(CURL *handle, curl_infotype type, unsigned char *data,
                      size_t size, void *userp) {
@@ -203,8 +227,8 @@ int CurlRequest::writeData(char *data, size_t size, size_t nitems,
   qint64 ret = 0;
   if (buffer != NULL) {
     std::string str(data);
-#if ENABLE_DEBUG == true
-    qDebug() << Q_FUNC_INFO << data;
+#ifdef ANTIQUA_DEVELOPEMENT
+    writeCurlDataLog(QString::fromStdString(str));
 #endif
     buffer->append(str, 0, (size * nitems));
     ret = (size * nitems);
@@ -296,10 +320,10 @@ void CurlRequest::setCaBundlePath(const QByteArray &path) {
 }
 
 const QString CurlRequest::getResponseError() {
-  QString data = QString::fromStdString(errorBuffer);
-#if ENABLE_DEBUG == true
-  qDebug() << Q_FUNC_INFO << data;
+#ifdef ANTIQUA_DEVELOPEMENT
+  writeCurlErrorLog(QByteArray::fromStdString(errorBuffer));
 #endif
+  QString data = QString::fromStdString(errorBuffer);
   return data;
 }
 
@@ -332,7 +356,7 @@ bool CurlRequest::post(const QUrl &url, const QByteArray &body) {
 
 bool CurlRequest::postForm(const QUrl &url, const QString &param,
                            const QByteArray &body) {
-#if ENABLE_DEBUG == true
+#ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << "TODO" << url << body;
 #endif
   // curl_easy_setopt(m_curl,CURLOPT_HTTPPOST, true);
@@ -437,10 +461,11 @@ void CurlJson::run() {
     p_json = req->getResponseData();
   } else {
     emit errors(req->getResponseError());
-  }
-#if ENABLE_DEBUG == true
-  qDebug() << status << p_url << p_body << p_formdata << p_json;
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << status << p_url << p_body << p_formdata
+             << p_json;
 #endif
+  }
   p_mutex.unlock();
   emit responsed(p_json);
   emit requestFinished(status);

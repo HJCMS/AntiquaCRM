@@ -59,9 +59,12 @@ bool CustomerTableView::sqlExecQuery(const QString &statement) {
     QTime time = QTime::currentTime();
     m_tableModel->setQuery(statement, db);
     if (m_tableModel->lastError().isValid()) {
+#ifdef ANTIQUA_DEVELOPEMENT
       qDebug() << Q_FUNC_INFO << "{SQL Query} " << statement << "{SQL Error} "
                << m_tableModel->lastError() << Qt::endl
                << m_sql->fetchErrors() << Qt::endl;
+#endif
+      emit s_reportQuery(tr("Broken Database query for Customers table."));
       return false;
     }
     mutex.unlock();
@@ -71,13 +74,13 @@ bool CustomerTableView::sqlExecQuery(const QString &statement) {
     emit s_reportQuery(m);
     return true;
   } else {
-    qWarning("No SQL Connection for Customers query.");
+    emit s_reportQuery(tr("Missing Database connection for Customers."));
   }
   return false;
 }
 
 bool CustomerTableView::queryCustomerAction(const QModelIndex &index,
-                                        QueryType type) {
+                                            QueryType type) {
   QModelIndex id(index);
   if (m_tableModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
     int i = m_tableModel->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
@@ -108,16 +111,13 @@ void CustomerTableView::openByContext() {
   queryCustomerAction(p_modelIndex, QueryType::Update);
 }
 
-void CustomerTableView::createByContext() {
-  emit s_insertCustomer();
-}
+void CustomerTableView::createByContext() { emit s_insertCustomer(); }
 
 void CustomerTableView::orderByContext() {
   queryCustomerAction(p_modelIndex, QueryType::Order);
 }
 
-void CustomerTableView::deleteUserContext()
-{
+void CustomerTableView::deleteUserContext() {
   queryCustomerAction(p_modelIndex, QueryType::Delete);
 }
 
@@ -128,22 +128,25 @@ void CustomerTableView::contextMenuEvent(QContextMenuEvent *ev) {
 
   QMenu *m = new QMenu("Actions", this);
   // Eintrag öffnen  Bestellung anlegen
-  QAction *ac_open = m->addAction(myIcon("spreadsheet"), tr("Open entry"));
+  QAction *ac_open = m->addAction(myIcon("edit_group"), tr("Edit customer"));
   ac_open->setObjectName("ac_context_open_customer");
   ac_open->setEnabled(b);
   connect(ac_open, SIGNAL(triggered()), this, SLOT(openByContext()));
 
-  QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create entry"));
+  QAction *ac_create = m->addAction(myIcon("add_user"), tr("Create customer"));
   ac_create->setObjectName("ac_context_create_customer");
   ac_create->setEnabled(true);
   connect(ac_create, SIGNAL(triggered()), this, SLOT(createByContext()));
 
-  QAction *ac_order = m->addAction(myIcon("autostart"), tr("Create order"));
+  QAction *ac_order =
+      m->addAction(myIcon("autostart"), tr("Create order from customer"));
   ac_order->setObjectName("ac_context_order_customer");
   connect(ac_order, SIGNAL(triggered()), this, SLOT(orderByContext()));
   ac_order->setEnabled(b);
+  m->addSeparator();
 
-  QAction *ac_delete = m->addAction(myIcon("delete_user"), tr("Delete customer"));
+  QAction *ac_delete =
+      m->addAction(myIcon("delete_user"), tr("Delete customer"));
   ac_delete->setObjectName("ac_context_delete_customer");
   connect(ac_delete, SIGNAL(triggered()), this, SLOT(deleteUserContext()));
 

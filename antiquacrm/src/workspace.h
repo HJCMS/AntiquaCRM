@@ -130,6 +130,11 @@ private Q_SLOTS:
   void addArticleOrder(int articleId);
 
   /**
+   * @brief Einen vorhandenen Auftrag öffnen!
+   */
+  void openOrderByOrderId(int orderId);
+
+  /**
    * @brief Artikel beim Dienstleister Aktivieren/Deaktivieren
    */
   void updateArticleCount(int articleId, int count);

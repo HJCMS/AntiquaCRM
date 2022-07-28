@@ -136,6 +136,9 @@ int Workspace::addInventoryOrders(int index) {
   // Artikel Bestandsänderung an Providers senden
   connect(m_tabOrders, SIGNAL(s_articleCount(int, int)), this,
           SLOT(updateArticleCount(int, int)));
+  // Kunden Aufrufen
+  connect(m_tabOrders, SIGNAL(s_viewCustomer(int)), this,
+          SLOT(editCustomerEntry(int)));
   int i = insertTab(index, m_tabOrders, tr("Orders"));
   m_tabBar->setTabData(i, m_tabOrders->isClosable());
   setTabToolTip(i, tr("Order Inventory"));
@@ -151,13 +154,16 @@ int Workspace::addInventoryProviders(int index) {
   // Nachrichten an Hauptfenster
   connect(m_tabProviders, SIGNAL(s_postMessage(const QString &)), this,
           SIGNAL(s_postMessage(const QString &)));
-  // Kunden Editieren
-  connect(m_tabProviders, SIGNAL(openEditCustomer(int)), this,
+  // Kunden Aufrufen
+  connect(m_tabProviders, SIGNAL(s_viewCustomer(int)), this,
           SLOT(editCustomerEntry(int)));
   // Auftrag/Bestellung erstellen
   connect(m_tabProviders, SIGNAL(createOrder(const ProviderOrder &)), this,
           SLOT(createOrder(const ProviderOrder &)));
-  // Einen Artikel öffnen
+  // Einen Auftrag mit der Auftragsnummer anzeigen
+  connect(m_tabProviders, SIGNAL(s_viewOrder(int)), this,
+          SLOT(openOrderByOrderId(int)));
+  // Einen Artikel (Buch oder Drucke) öffnen
   connect(m_tabProviders, SIGNAL(openEditArticle(int, const QString &)), this,
           SLOT(editArticleEntry(int, const QString &)));
   int i = insertTab(index, m_tabProviders, tr("Ordering"));
@@ -251,6 +257,15 @@ void Workspace::addArticleOrder(int articleId) {
     if (b) {
       setCurrentWidget(m_tabOrders);
     }
+  } else {
+    emit s_postMessage(tr("Order tab isn't open!"));
+  }
+}
+
+void Workspace::openOrderByOrderId(int orderId) {
+  if (orderId > 0 && indexOf(m_tabOrders) >= 0) {
+    if (m_tabOrders->viewOrderById(orderId))
+      setCurrentWidget(m_tabOrders);
   } else {
     emit s_postMessage(tr("Order tab isn't open!"));
   }

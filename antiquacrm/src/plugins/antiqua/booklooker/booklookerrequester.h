@@ -55,6 +55,12 @@ private:
   void authentication();
 
   /**
+   * @brief Wenn replyReadyRead mit Fehlern behaftet ist.
+   * Den Datenstrom zum Debuggen in ein Logfile schreiben.
+   */
+  void writeErrorLog(const QByteArray &);
+
+  /**
    * @brief Default GET Requests
    */
   bool getRequest(const QUrl &);

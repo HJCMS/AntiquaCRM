@@ -60,9 +60,11 @@ bool OrdersTable::sqlExecQuery(const QString &statement) {
     QTime time = QTime::currentTime();
     m_queryModel->setQuery(statement, db);
     if (m_queryModel->lastError().isValid()) {
+#ifdef ANTIQUA_DEVELOPEMENT
       qDebug() << Q_FUNC_INFO << "{SQL Query} " << statement << "{SQL Error} "
                << m_queryModel->lastError() << Qt::endl
                << m_sql->fetchErrors() << Qt::endl;
+#endif
       return false;
     }
     mutex.unlock();
@@ -108,12 +110,34 @@ void OrdersTable::contextMenuEvent(QContextMenuEvent *ev) {
   ac_open->setEnabled(b);
   connect(ac_open, SIGNAL(triggered()), this, SLOT(openByContext()));
 
+  // Kundendaten aufrufen
+  QAction *ac_customer = m->addAction(myIcon("group"), tr("View Customer data"));
+  ac_customer->setObjectName("ac_context_open_customer");
+  ac_customer->setEnabled(b);
+  connect(ac_customer, SIGNAL(triggered()), this, SLOT(openCustomer()));
+
   m->exec(ev->globalPos());
   delete m;
 }
 
 void OrdersTable::refreshView() { initOrders(); }
 
-void OrdersTable::initOrders() {
-  sqlExecQuery(defaultOrdersQuery());
+void OrdersTable::initOrders() { sqlExecQuery(defaultOrdersQuery()); }
+
+void OrdersTable::openCustomer() {
+  QModelIndex im(p_modelIndex);
+  if (m_queryModel->data(im.sibling(im.row(), 0), Qt::EditRole).toInt() >= 1) {
+    int i = m_queryModel->data(im.sibling(im.row(), 0), Qt::EditRole).toInt();
+    if (i < 1)
+      return;
+
+    QString sql = queryCustomerByOrderId(i);
+    QSqlQuery q = m_sql->query(sql);
+    if (q.size() > 0) {
+      q.next();
+      int c_id = q.value("c_id").toInt();
+      if (c_id > 0)
+        emit s_openCustomer(c_id);
+    }
+  }
 }

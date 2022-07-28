@@ -327,6 +327,15 @@ const QHash<QString, QVariant> OrderEditor::createSqlDataset() {
   return data;
 }
 
+void OrderEditor::invalidRelationship() {
+  QString body("<p>");
+  body.append(tr("Failed relationship to complete this quest!"));
+  body.append("</p><p>");
+  body.append(tr("No payment has been registered for this order!"));
+  body.append("</p>");
+  QMessageBox::warning(this, tr("Invalid relationship"), body);
+}
+
 bool OrderEditor::sendSqlQuery(const QString &sqlStatement) {
   if (SHOW_ORDER_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << sqlStatement;
@@ -456,6 +465,12 @@ void OrderEditor::createSqlUpdate() {
   if (oid.isEmpty())
     return;
 
+  if ((o_payment_status->value().toInt() == 0) &&
+      (o_order_status->value().toInt() == STATUS_ORDER_CLOSED)) {
+    invalidRelationship();
+    return;
+  }
+
   QString did = o_delivery->value().toString();
   if (did.isEmpty()) {
     generateDeliveryNumber();
@@ -491,7 +506,7 @@ void OrderEditor::createSqlUpdate() {
   QString sql("UPDATE inventory_orders SET ");
   sql.append(set.join(","));
   sql.append(",o_modified=CURRENT_TIMESTAMP");
-  if(o_id->value().toInt() == STATUS_ORDER_DELIVERED) {
+  if (o_id->value().toInt() == STATUS_ORDER_DELIVERED) {
     sql.append(",o_delivered=CURRENT_TIMESTAMP");
   }
   sql.append(" WHERE o_id=");
@@ -888,6 +903,11 @@ void OrderEditor::setStatusOrder(int status) {
   if (status < STATUS_ORDER_CLOSED)
     return;
 
+  if (o_payment_status->value().toInt() == 0) {
+    invalidRelationship();
+    return;
+  }
+
   int order_id = o_id->value().toInt();
   QString body("<p>");
   body.append(tr("Do you really want to close this order and pass it on "
@@ -899,6 +919,15 @@ void OrderEditor::setStatusOrder(int status) {
   if (ret == QMessageBox::Yes) {
     if (sendSqlQuery(progresUpdate(order_id, status))) {
       emit s_statusMessage(tr("Order deactivated!"));
+      // Statistiken modifizieren!
+      int c_id = o_customer_id->value().toInt();
+      if (c_id > 0) {
+        m_sql->query(finalizeTransaction(c_id));
+#ifdef ANTIQUA_DEVELOPEMENT
+        if (!m_sql->lastError().isEmpty())
+          qDebug() << Q_FUNC_INFO << m_sql->lastError();
+#endif
+      }
       finalLeaveEditor();
     }
   }
@@ -1021,17 +1050,19 @@ void OrderEditor::addArticleId(int articleId) {
   m_paymentList->insertSearchId(articleId);
 }
 
-void OrderEditor::openUpdateOrder(int oid) {
+bool OrderEditor::openUpdateOrder(int oid) {
   initDefaults();
   if (oid < 1) {
     qWarning("Empty o_id ...");
-    return;
+    return false;
   }
   m_paymentList->setEnabled(true);
 
-  QString select("SELECT * FROM inventory_orders WHERE o_id=");
-  select.append(QString::number(oid));
-  select.append(";");
+  // Hier nur Einträge anzeigen welche nicht geschlossen sind!
+  QString status = QString::number(STATUS_ORDER_CLOSED);
+  QString select("SELECT * FROM inventory_orders WHERE");
+  select.append(" o_order_status!=" + status + " AND");
+  select.append(" o_id=" + QString::number(oid) + ";");
 
   if (SHOW_ORDER_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << select << Qt::endl;
@@ -1059,8 +1090,11 @@ void OrderEditor::openUpdateOrder(int oid) {
       }
     }
   } else {
+    if (m_sql->lastError().isEmpty()) {
+      return false;
+    }
     sqlErrnoMessage(m_sql->fetchErrors(), select);
-    return;
+    return false;
   }
 
   if (cid >= 1) {
@@ -1071,6 +1105,8 @@ void OrderEditor::openUpdateOrder(int oid) {
 
   if (!sqlQueryResult.isEmpty())
     importSqlResult();
+
+  return true;
 }
 
 void OrderEditor::openCreateOrder(int cid) {

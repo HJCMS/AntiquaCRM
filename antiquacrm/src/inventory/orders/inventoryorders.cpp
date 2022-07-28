@@ -64,6 +64,8 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
   setLayout(layout);
 
   connect(m_tableView, SIGNAL(s_editOrder(int)), this, SLOT(updateOrder(int)));
+  connect(m_tableView, SIGNAL(s_openCustomer(int)), this,
+          SIGNAL(s_viewCustomer(int)));
   connect(m_editor, SIGNAL(s_postMessage(const QString &)), this,
           SLOT(displayMessageBox(const QString &)));
   connect(m_editor, SIGNAL(s_statusMessage(const QString &)), this,
@@ -93,13 +95,14 @@ void InventoryOrders::openEditor(const QString &condition) {
   Q_UNUSED(condition)
 }
 
-void InventoryOrders::updateOrder(int customerId) {
-  if (customerId < 1) {
+void InventoryOrders::updateOrder(int orderId) {
+  if (orderId < 1) {
     return;
   }
-  m_editor->setEnabled(true);
-  m_editor->openUpdateOrder(customerId);
-  m_stackedWidget->setCurrentWidget(m_editor);
+  if (m_editor->openUpdateOrder(orderId)) {
+    m_editor->setEnabled(true);
+    m_stackedWidget->setCurrentWidget(m_editor);
+  }
 }
 
 void InventoryOrders::createOrder(int customerId) {
@@ -113,7 +116,7 @@ void InventoryOrders::createOrder(int customerId) {
 
 void InventoryOrders::createOrder(const ProviderOrder &order) {
   if (ProviderOrder(order).customerId() < 1) {
-    emit s_postMessage(tr("Missing a valid costumer Id!"));
+    displayMessageBox(tr("Missing a valid costumer Id!"));
     return;
   }
 
@@ -122,12 +125,24 @@ void InventoryOrders::createOrder(const ProviderOrder &order) {
   m_stackedWidget->setCurrentWidget(m_editor);
 }
 
+bool InventoryOrders::viewOrderById(int orderId) {
+  if (m_editor->openUpdateOrder(orderId)) {
+    m_editor->setEnabled(true);
+    m_stackedWidget->setCurrentWidget(m_editor);
+    return true;
+  }
+
+  displayMessageBox(
+      tr("This Order has been completed and is no longer available."));
+  return false;
+}
+
 bool InventoryOrders::addArticleToOrder(int articleId) {
   if (isEditorActive()) {
     m_editor->addArticleId(articleId);
     return true;
   }
-  emit s_postMessage(tr("There is no Order open!"));
+  displayMessageBox(tr("There is no Order open!"));
   return false;
 }
 

@@ -100,14 +100,9 @@ protected:
 
 public Q_SLOTS:
   /**
-   * @brief Ein Artikel wurd ausgewählt
-   * Wird bei der Tabellen Suchansicht mit einem Doppelklick das Signal @ref
-   * OrdersTable::s_editOrder ausgelöst und an Hand des @b "ib_id" Feldes
-   * eine SQL Abfrage erstellt, jetzt der Editor mit @ref
-   * openEditor("ib_id={$id}") geöffnet!
-   * @param customerId
+   * @brief Ein Artikel mit der Auftragsnummer öffnen.
    */
-  void updateOrder(int customerId);
+  void updateOrder(int orderId);
 
   /**
    * @brief Erstelle einen neuen Auftrag für Kunden Nummer.
@@ -120,11 +115,12 @@ public Q_SLOTS:
   void createOrder(const ProviderOrder &order);
 
 public:
-  /**
-    @param index  Ist der Tab-Index
-    @param parent TabWidget
-  */
   explicit InventoryOrders(QWidget *parent = nullptr);
+
+  /**
+   * @brief Einen Auftrag suchen öffnen
+   */
+  bool viewOrderById(int orderId);
 
   /**
    * @brief Füge einen Artikel zu einem Auftrag hinzu.

@@ -120,21 +120,33 @@ Q_SIGNALS:
   void s_windowModified(bool);
 
   /**
-    @brief Wegen QML hier eingefügt.
-  */
+   * @brief Wegen QML hier eingefügt.
+   */
   void closeableChanged(bool);
 
   /**
-    @brief Sende eine Nachricht an das Elternfenster
-    @param MessageBody
-  */
+   * @brief Sende eine Nachricht an das Elternfenster
+   * @param MessageBody
+   */
   void s_postMessage(const QString &);
+
+  /**
+   * @brief Kundendaten aufrufen
+   * @param customerId
+   */
+  void s_viewCustomer(int customerId);
 
   /**
    * @brief Auftrage erstellen
    * @param customerId
    */
   void s_createOrder(int customerId);
+
+  /**
+   * @brief Einen existierenden Auftrag anzeigen
+   * @param orderId
+   */
+  void s_viewOrder(int orderId);
 
   /**
    * @brief Einen Artikel zu einem Auftrag hinzufügen!
@@ -157,9 +169,9 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   /**
-    @brief Öffnet das Nachrichtenfenster
-    @param MessageBody
-  */
+   * @brief Öffnet das Nachrichtenfenster
+   * @param MessageBody
+   */
   void displayMessageBox(const QString &);
 
   /**
@@ -173,9 +185,9 @@ public Q_SLOTS:
 public:
   explicit Inventory(QWidget *parent = nullptr);
   /**
-     @brief Wird von Workspace::tabRemoved abgefragt!
-     @return bool - (child*)->isModified()
-  */
+   * @brief Wird von Workspace::tabRemoved abgefragt!
+   * @return bool - (child*)->isModified()
+   */
   Q_INVOKABLE bool isClosable();
 };
 
