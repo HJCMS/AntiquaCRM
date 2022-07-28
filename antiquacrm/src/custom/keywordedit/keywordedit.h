@@ -32,6 +32,8 @@ private:
   KeywordEditor *m_editor;
   KeywordActions *m_actionsBar;
 
+  bool initBooklooker();
+
 private Q_SLOTS:
   void searchKeyword();
   void queryKeywordEntry(int id);

@@ -40,6 +40,9 @@ QVariant KeywordTableModel::headerData(int section, Qt::Orientation orientation,
   case 2:
     return " " + tr("Books keyword") + " ";
 
+  case 3:
+    return " Booklooker ";
+
   default:
     return QString(" %1 ").arg(section);
   }

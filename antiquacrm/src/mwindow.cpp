@@ -154,10 +154,6 @@ void MWindow::setupActions() {
   connect(a_dsd, SIGNAL(triggered(bool)), this,
           SLOT(openDeliveryService(bool)));
 
-  QAction *a_bct = m_tablesMenu->addAction(tr("Condition"));
-  a_bct->setIcon(myIcon("spreadsheet"));
-  connect(a_bct, SIGNAL(triggered(bool)), this, SLOT(openCondition(bool)));
-
   QAction *a_bdt = m_tablesMenu->addAction(tr("Designation and Binding"));
   a_bdt->setIcon(myIcon("spreadsheet"));
   connect(a_bdt, SIGNAL(triggered(bool)), this, SLOT(openDesignation(bool)));
@@ -200,10 +196,6 @@ void MWindow::openDeliveryService(bool) {
   if (d->exec()) {
     d->deleteLater();
   }
-}
-
-void MWindow::openCondition(bool) {
-  openEditAutoFill(CompleterDialog::CONDITION);
 }
 
 void MWindow::openDesignation(bool) {

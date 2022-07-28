@@ -45,7 +45,6 @@ private Q_SLOTS:
   void closeWindow();
   void openStorageLocation(bool);
   void openDeliveryService(bool);
-  void openCondition(bool);
   void openDesignation(bool);
   void openFileDialog(bool);
   void openCategoryEdit(bool);
