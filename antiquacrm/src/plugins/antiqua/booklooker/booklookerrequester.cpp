@@ -121,6 +121,16 @@ void BooklookerRequester::initConfigurations() {
   p_baseUrl = url;
 }
 
+const QUrl BooklookerRequester::apiQuery(const QString &section) {
+  QUrl url(p_baseUrl);
+  QString p("/");
+  p.append(BOOKLOOKER_API_VERSION);
+  p.append("/");
+  p.append(section);
+  url.setPath(p);
+  return url;
+}
+
 const QNetworkRequest BooklookerRequester::newRequest(const QUrl &url) {
   QNetworkRequest req(url);
   req.setPeerVerifyName(url.host());
@@ -159,7 +169,7 @@ void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
      * hintereinander mehrere Anfragen ausgeführt werden.
      * Aus diesem Grund hier eine Zeitverzögerung!
      */
-    QTimer::singleShot(2000, this, SIGNAL(authenticFinished()));
+    QTimer::singleShot(1500, this, SIGNAL(authenticFinished()));
   } else if (status == "NOK" && !value.isEmpty()) {
 #ifdef ANTIQUA_DEVELOPEMENT
     qWarning("Authentication Error: %s", qPrintable(value));
@@ -261,6 +271,7 @@ void BooklookerRequester::replyReadyRead() {
   if (parser.error != QJsonParseError::NoError) {
     qWarning("Json Parse Error:(%s)!", jsonParserError(parser.error));
     writeErrorLog(data);
+    emit brokenDataResponsed();
     return;
   }
 
@@ -307,6 +318,36 @@ void BooklookerRequester::writeErrorLog(const QByteArray &data) {
   }
 }
 
+bool BooklookerRequester::deleteRequest(const QUrl &url) {
+  QNetworkRequest req = newRequest(url);
+  m_reply = deleteResource(req);
+
+  connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
+          SLOT(slotError(QNetworkReply::NetworkError)));
+
+  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
+          SLOT(slotSslErrors(QList<QSslError>)));
+
+  connect(m_reply, SIGNAL(readyRead()), this, SLOT(replyReadyRead()));
+
+  return false;
+}
+
+bool BooklookerRequester::putRequest(const QUrl &url, const QByteArray &data) {
+  QNetworkRequest req = newRequest(url);
+  m_reply = put(req, data);
+
+  connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
+          SLOT(slotError(QNetworkReply::NetworkError)));
+
+  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
+          SLOT(slotSslErrors(QList<QSslError>)));
+
+  connect(m_reply, SIGNAL(readyRead()), this, SLOT(replyReadyRead()));
+
+  return true;
+}
+
 bool BooklookerRequester::getRequest(const QUrl &url) {
   QNetworkRequest req = newRequest(url);
   m_reply = get(req);
@@ -322,6 +363,8 @@ bool BooklookerRequester::getRequest(const QUrl &url) {
   return true;
 }
 
+void BooklookerRequester::authenticationRefresh() { authentication(); }
+
 void BooklookerRequester::queryList() {
   if (getToken().isEmpty()) {
     authentication();
@@ -329,12 +372,7 @@ void BooklookerRequester::queryList() {
     return;
   }
 
-  QUrl url(p_baseUrl);
-  QString p("/");
-  p.append(BOOKLOOKER_API_VERSION);
-  p.append("/order");
-  url.setPath(p);
-
+  QUrl url = apiQuery("order");
   QDate past = QDate::currentDate().addDays(ANTIQUA_QUERY_PASTDAYS);
   QUrlQuery q;
   q.addQueryItem("token", getToken());
@@ -349,13 +387,7 @@ void BooklookerRequester::queryOrder(const QString &orderId) {
     authentication();
     return;
   }
-
-  QUrl url(p_baseUrl);
-  QString p("/");
-  p.append(BOOKLOOKER_API_VERSION);
-  p.append("/order");
-  url.setPath(p);
-
+  QUrl url = apiQuery("order");
   QUrlQuery q;
   q.addQueryItem("token", getToken());
   q.addQueryItem("orderId", orderId);
@@ -363,7 +395,18 @@ void BooklookerRequester::queryOrder(const QString &orderId) {
   getRequest(url);
 }
 
-void BooklookerRequester::authenticationRefresh() { authentication(); }
+void BooklookerRequester::queryArticleReset(const QString &orderNo) {
+  if (getToken().isEmpty()) {
+    authentication();
+    return;
+  }
+  QUrl url = apiQuery("article");
+  QUrlQuery q;
+  q.addQueryItem("token", getToken());
+  q.addQueryItem("orderNo", orderNo);
+  url.setQuery(q);
+  deleteRequest(url);
+}
 
 const QString BooklookerRequester::getToken() {
   return qEnvironmentVariable(BOOKLOOKER_TOKEN_ENV);

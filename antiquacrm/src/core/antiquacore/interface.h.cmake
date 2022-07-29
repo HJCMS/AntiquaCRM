@@ -460,6 +460,7 @@ namespace Antiqua {
 
   Q_SIGNALS:
     void s_queryResponse(bool successfull);
+    void s_anErrorOccurred();
 
   public:
     virtual bool createInterface(QObject * parent) = 0;

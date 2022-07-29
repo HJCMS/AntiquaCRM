@@ -19,6 +19,11 @@
 #include <AntiquaCRM>
 #include <AntiquaInterface>
 
+/**
+ * @brief Booklooker Requester
+ * @ingroup Booklooker
+ * https://www.booklooker.de/pages/api_orders.php?version=2.0
+ */
 class ANTIQUACORE_EXPORT BooklookerRequester final
     : public QNetworkAccessManager {
   Q_OBJECT
@@ -45,6 +50,13 @@ private:
   void initConfigurations();
 
   /**
+   * @brief Standard Anfrage Url erstellen
+   * @param section  - Abfrageteil im Url Pfad
+   * @return Rest API URL
+   */
+  const QUrl apiQuery(const QString &section);
+
+  /**
    * @brief create a NetworkRequest
    */
   const QNetworkRequest newRequest(const QUrl &url);
@@ -61,7 +73,17 @@ private:
   void writeErrorLog(const QByteArray &);
 
   /**
-   * @brief Default GET Requests
+   * @brief Standard DELETE Protokoll
+   */
+  bool deleteRequest(const QUrl &);
+
+  /**
+   * @brief Standard PUT Protokoll
+   */
+  bool putRequest(const QUrl &, const QByteArray &data);
+
+  /**
+   * @brief Standard GET Abfrage
    */
   bool getRequest(const QUrl &);
 
@@ -78,6 +100,11 @@ Q_SIGNALS:
    * @brief Authentic Process is Required
    */
   void authenticFinished();
+
+  /**
+   * @brief Wenn die Daten Fehlerhaft ankommen!
+   */
+  void brokenDataResponsed();
 
   /**
    * @brief Error Messages
@@ -97,12 +124,35 @@ Q_SIGNALS:
   void authenticResponse(const QJsonDocument &doc);
 
 public Q_SLOTS:
-  void queryList();
-  void queryOrder(const QString &purchaseId);
+  /**
+   * @brief Methode zum Aktualisieren des Tokens
+   */
   void authenticationRefresh();
+
+  /**
+   * @brief Bestellungen der letzten 4 Tage
+   * @see ANTIQUA_QUERY_PASTDAYS
+   * Download aller Bestellungen eines bestimmten Tages bzw. Zeitintervalls.
+   * https://api.booklooker.de/2.0/order?token=REST_API_TOKEN
+   */
+  void queryList();
 
 public:
   explicit BooklookerRequester(QObject *parent = nullptr);
+
+  /**
+   * @brief Bestellung abfragen
+   * Download aller Bestellungen eines bestimmten Tages bzw. Zeitintervalls.
+   * https://api.booklooker.de/2.0/order?token=REST_API_TOKEN
+   */
+  void queryOrder(const QString &orderId);
+
+  /**
+   * @brief Artikel mit Nummer zurücksetzen
+   * Sofortiges Löschen eines einzelnen Artikels.
+   * https://api.booklooker.de/2.0/article?token=REST_API_TOKEN
+   */
+  void queryArticleReset(const QString &orderNo);
 
   /**
    * @brief get REST_API_TOKEN

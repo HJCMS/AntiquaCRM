@@ -15,6 +15,7 @@
 #include <Networking>
 
 class BooklookerIfaceWidget;
+class BooklookerRequester;
 
 /**
  * @class Booklooker
@@ -36,6 +37,11 @@ private:
    * Antiqua::InterfaceWidget
    */
   BooklookerIfaceWidget *m_blIfaceWidget;
+
+  /**
+   * @brief Booklooker REST API v2.0 Requester
+   */
+  BooklookerRequester *apiRequester();
 
 private Q_SLOTS:
   void prepareJsonListResponse(const QJsonDocument &);
@@ -66,9 +72,8 @@ public:
   void updateOrderDelivery(const QJsonObject &jso);
 
   /**
-   * @brief Artikelbestand ändern!
-   * @param articleId
-   * @param count
+   * @brief Artikel entfernen
+   * @warning Booklooker kennt keine Bestandsänderung
    */
   void updateArticleCount(int articleId, int count);
 

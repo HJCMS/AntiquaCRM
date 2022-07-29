@@ -225,10 +225,9 @@ private Q_SLOTS:
   void readOrderList(const QJsonDocument &doc);
 
   /**
-   * @brief Anfrage Antwort Status
-   * @param errors  true = Antwortete mit fehlern!
+   * @brief Antwortete mit fehlern!
    */
-  Q_DECL_DEPRECATED void hasResponsed(bool errors);
+  void pluginResponseErrors();
 
   /**
    * @brief Plugin Fehlermeldungen

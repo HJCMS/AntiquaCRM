@@ -8,6 +8,16 @@
 
 #include <QDebug>
 
+BooklookerRequester *Booklooker::apiRequester() {
+  BooklookerRequester *req = new BooklookerRequester(this);
+  req->setObjectName(CONFIG_PROVIDER);
+  connect(req, SIGNAL(response(const QJsonDocument &)), this,
+          SLOT(prepareJsonListResponse(const QJsonDocument &)));
+  connect(req, SIGNAL(brokenDataResponsed()), this,
+          SIGNAL(s_anErrorOccurred()));
+  return req;
+}
+
 void Booklooker::prepareJsonListResponse(const QJsonDocument &doc) {
   if (QJsonValue(doc["status"]).toString() != "OK")
     return;
@@ -59,28 +69,35 @@ const QString Booklooker::provider() const { return QString(CONFIG_PROVIDER); }
 const QString Booklooker::configGroup() const { return QString(CONFIG_GROUP); }
 
 void Booklooker::queryMenueEntries() {
-  BooklookerRequester *req = new BooklookerRequester(this);
-  req->setObjectName(CONFIG_PROVIDER);
-  connect(req, SIGNAL(response(const QJsonDocument &)), this,
-          SLOT(prepareJsonListResponse(const QJsonDocument &)));
-
-  req->queryList();
+  BooklookerRequester *req = apiRequester();
+  if (req != nullptr)
+    req->queryList();
 }
 
 void Booklooker::updateOrderDelivery(const QJsonObject &jso) {
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << jso;
+  qDebug() << Q_FUNC_INFO << "TODO" << jso;
 #endif
 }
 
 void Booklooker::updateArticleCount(int articleId, int count) {
+  // NOTE - Es ist nur ein Löschen möglich!
+  if (articleId < 1 || count > 0)
+    return;
+
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << articleId << count;
+  qDebug() << Q_FUNC_INFO << "TODO DELETE" << articleId << count;
 #endif
+  return;
+
+  QString orderNo = QString::number(articleId);
+  BooklookerRequester *req = apiRequester();
+  if (req != nullptr)
+    req->queryArticleReset(orderNo);
 }
 
 void Booklooker::uploadArticleImage(int articleId, const QString &base64) {
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << articleId << base64.length();
+  qDebug() << Q_FUNC_INFO << "TODO" << articleId << base64.length();
 #endif
 }

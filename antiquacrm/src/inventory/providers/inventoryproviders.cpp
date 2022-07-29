@@ -144,8 +144,8 @@ bool InventoryProviders::loadInterfaces() {
     p_providerList.append(iface->objectName());
     connect(iface, SIGNAL(listResponse(const QJsonDocument &)), this,
             SLOT(readOrderList(const QJsonDocument &)));
-    connect(iface, SIGNAL(s_queryResponse(bool)), this,
-            SLOT(hasResponsed(bool)));
+    connect(iface, SIGNAL(s_anErrorOccurred()), this,
+            SLOT(pluginResponseErrors()));
 
     iface->queryMenueEntries();
     p_iFaces.append(iface);
@@ -503,15 +503,11 @@ void InventoryProviders::readOrderList(const QJsonDocument &doc) {
   }
 }
 
-void InventoryProviders::hasResponsed(bool errors) {
-  if (errors) {
+void InventoryProviders::pluginResponseErrors() {
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << "InventoryProviders - plugin answered with an error!";
+  qDebug() << "InventoryProviders - plugin answered with an error!";
 #endif
-    m_toolBar->warningMessage(tr("an error occurred"));
-  } else {
-    m_toolBar->statusMessage(tr("successfully"));
-  }
+  m_toolBar->warningMessage(tr("Error in data transmission with the service provider."));
 }
 
 void InventoryProviders::pluginError(int code, const QString &msg) {

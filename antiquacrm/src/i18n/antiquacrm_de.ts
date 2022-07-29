@@ -786,7 +786,7 @@
 <context>
     <name>BooklookerRequester</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+169"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+179"/>
         <source>Missing API Key</source>
         <translation>Kein API Schlüssel gefunden</translation>
     </message>
@@ -2912,7 +2912,12 @@
         <translation>Artikel Prüfung</translation>
     </message>
     <message>
-        <location line="-2"/>
+        <location line="+109"/>
+        <source>Error in data transmission with the service provider.</source>
+        <translation>Fehler bei der Datenübertragung mit dem Dienstleister.</translation>
+    </message>
+    <message>
+        <location line="-111"/>
         <source>Order witdh Id: %1 already exists!</source>
         <translation>Diese Bestellung wurde bereits mit der Auftrags Id: %1 erstellt!</translation>
     </message>
@@ -2957,17 +2962,7 @@
         <translation>Anzahl der Bestellungen</translation>
     </message>
     <message>
-        <location line="+11"/>
-        <source>an error occurred</source>
-        <translation>ein Fehler ist aufgetreten</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>successfully</source>
-        <translation>Erfolgreich</translation>
-    </message>
-    <message>
-        <location line="-432"/>
+        <location line="-419"/>
         <location line="+14"/>
         <source>Article</source>
         <translation>Artikel</translation>
