@@ -47,7 +47,7 @@ public:
   /**
    * @brief Bestellungen
    */
-  Antiqua::InterfaceWidget *addWidget(const QString &widgetId, QWidget *parent);
+  Antiqua::InterfaceWidget *addWidget(const QString &orderId, QWidget *parent);
 
   const QString provider() const;
 

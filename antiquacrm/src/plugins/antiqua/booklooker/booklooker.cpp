@@ -13,8 +13,8 @@ BooklookerRequester *Booklooker::apiRequester() {
   req->setObjectName(CONFIG_PROVIDER);
   connect(req, SIGNAL(response(const QJsonDocument &)), this,
           SLOT(prepareJsonListResponse(const QJsonDocument &)));
-  connect(req, SIGNAL(brokenDataResponsed()), this,
-          SIGNAL(s_anErrorOccurred()));
+  connect(req, SIGNAL(errorMessage(Antiqua::ErrorStatus, const QString &)), this,
+          SIGNAL(s_errorResponse(Antiqua::ErrorStatus, const QString &)));
   return req;
 }
 
@@ -55,12 +55,12 @@ bool Booklooker::createInterface(QObject *parent) {
   return false;
 }
 
-Antiqua::InterfaceWidget *Booklooker::addWidget(const QString &widgetId,
+Antiqua::InterfaceWidget *Booklooker::addWidget(const QString &orderId,
                                                 QWidget *parent) {
-  m_blIfaceWidget = new BooklookerIfaceWidget(widgetId, parent);
-  m_blIfaceWidget->setObjectName(widgetId);
+  m_blIfaceWidget = new BooklookerIfaceWidget(orderId, parent);
+  m_blIfaceWidget->setObjectName(orderId);
   m_blIfaceWidget->setProviderName(provider());
-  m_blIfaceWidget->setOrderId(widgetId);
+  m_blIfaceWidget->setOrderId(orderId);
   return m_blIfaceWidget;
 }
 

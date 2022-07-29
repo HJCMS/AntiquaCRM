@@ -4,7 +4,7 @@
 <context>
     <name>AbeBooksIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+316"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+320"/>
         <source>Buyer Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -786,17 +786,37 @@
 <context>
     <name>BooklookerRequester</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+179"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+178"/>
         <source>Missing API Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Authentication failure</source>
+        <location line="+3"/>
+        <source>API Key - Authentication failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+6"/>
+        <source>Invalid Interface</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Invalid Request Method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Quota Exceeded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+91"/>
+        <source>Invalid Document response!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-100"/>
         <source>Server down</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2885,13 +2905,18 @@
     </message>
     <message>
         <location line="+123"/>
-        <location line="+2"/>
+        <location line="+5"/>
         <location line="+12"/>
         <source>Europe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="-14"/>
+        <source>Germany</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+53"/>
         <source>new customer created!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2912,12 +2937,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+109"/>
-        <source>Error in data transmission with the service provider.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-111"/>
+        <location line="-2"/>
         <source>Order witdh Id: %1 already exists!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2962,7 +2982,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-419"/>
+        <location line="-422"/>
         <location line="+14"/>
         <source>Article</source>
         <translation type="unfinished"></translation>

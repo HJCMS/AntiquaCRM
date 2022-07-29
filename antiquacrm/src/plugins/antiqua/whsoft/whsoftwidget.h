@@ -51,10 +51,10 @@ public Q_SLOTS:
   /**
    * @brief Menü Einträge suchen
    */
-  void createOrderRequest(const QString &bfId);
+  void createOrderRequest();
 
 public:
-  WHSoftWidget(const QString &widgetId, QWidget *parent = nullptr);
+  WHSoftWidget(const QString &orderId, QWidget *parent = nullptr);
 
   /**
    * @brief Kundennummer eintragen

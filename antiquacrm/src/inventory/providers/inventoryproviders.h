@@ -5,13 +5,14 @@
 #ifndef INVENTORY_PROVIDERS_H
 #define INVENTORY_PROVIDERS_H
 
-#include "inventory.h"
-#include <AntiquaInterface>
-#include <SqlCore>
-
 #include <QObject>
 #include <QTabWidget>
 #include <QWidget>
+
+#include <AntiquaInterface>
+#include <SqlCore>
+
+#include "inventory.h"
 
 class ProvidersToolBar;
 class ProvidersTreeView;
@@ -225,16 +226,11 @@ private Q_SLOTS:
   void readOrderList(const QJsonDocument &doc);
 
   /**
-   * @brief Antwortete mit fehlern!
-   */
-  void pluginResponseErrors();
-
-  /**
    * @brief Plugin Fehlermeldungen
    * @param code  Status Code
    * @param msg   Nachricht
    */
-  void pluginError(int code, const QString &msg);
+  void pluginError(Antiqua::ErrorStatus code, const QString &msg);
 
 Q_SIGNALS:
   /**

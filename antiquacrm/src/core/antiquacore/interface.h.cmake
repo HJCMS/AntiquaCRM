@@ -58,6 +58,7 @@
  * @group Antiqua Plugin Interface
  */
 namespace Antiqua {
+  Q_NAMESPACE
 
   class PurchasePaymentInfo;
   class PurchaserOrderTable;
@@ -65,6 +66,13 @@ namespace Antiqua {
 #ifdef ANTIQUA_DEVELOPEMENT
   class PurchaseDebugTable;
 #endif
+
+  enum ErrorStatus {
+    NOTICE = 0x01,
+    WARNING = 0x02,
+    FATAL = 0x03
+  };
+  Q_ENUM_NS(Antiqua::ErrorStatus);
 
   /**
    * @class Antiqua::PurchaseOverview
@@ -314,7 +322,7 @@ namespace Antiqua {
     /**
      * @brief Generieren eine Fehler Meldung
      */
-    void errorResponse(int type, const QString &message);
+    void errorResponse(Antiqua::ErrorStatus type, const QString &message);
 
     /**
      * @brief Kundenabfrage an das Hauptsystem
@@ -362,10 +370,10 @@ namespace Antiqua {
     /**
      * @brief Datensatzabfrage
      */
-    virtual void createOrderRequest(const QString &) = 0;
+    virtual void createOrderRequest() = 0;
 
   public:
-    explicit InterfaceWidget(const QString &widgetId, QWidget *parent = nullptr);
+    explicit InterfaceWidget(const QString &orderId, QWidget *parent = nullptr);
 
     /**
      * @brief Dienstleister angaben setzen/lesen.
@@ -459,6 +467,7 @@ namespace Antiqua {
     virtual void prepareJsonListResponse(const QJsonDocument &) = 0;
 
   Q_SIGNALS:
+    void s_errorResponse(Antiqua::ErrorStatus, const QString &);
     void s_queryResponse(bool successfull);
     void s_anErrorOccurred();
 
@@ -470,7 +479,7 @@ namespace Antiqua {
      * Die einzelnen Tabs werden über den Objektnamen Identifiziert und sind deshalb Unique.
      * @note widgetId muss Identisch mit "objectName" und "tabTitle" sein!
      */
-    virtual Antiqua::InterfaceWidget *addWidget(const QString &widgetId, QWidget * parent) = 0;
+    virtual Antiqua::InterfaceWidget *addWidget(const QString &orderId, QWidget * parent) = 0;
 
     /**
      * @brief Setzt den Provider Schlüssel für die Identifizierung in Mehrdimensionalen abfragen!

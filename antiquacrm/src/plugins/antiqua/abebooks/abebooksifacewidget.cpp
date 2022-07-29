@@ -15,9 +15,9 @@
 #include <QTableWidgetItem>
 #include <QVBoxLayout>
 
-AbeBooksIfaceWidget::AbeBooksIfaceWidget(const QString &widgetId,
+AbeBooksIfaceWidget::AbeBooksIfaceWidget(const QString &orderId,
                                          QWidget *parent)
-    : Antiqua::InterfaceWidget{widgetId, parent} {
+    : Antiqua::InterfaceWidget{orderId, parent} {
   // Wegen langen Abfragewartezeiten den Zugriff unterdrücken!
   setEnabled(false);
 }
@@ -162,7 +162,7 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
   if (doc.documentElement().tagName() == "requestError") {
     QPair<int, QString> err = xml.errorResponseCode();
     qDebug() << Q_FUNC_INFO << err.first << err.second;
-    emit errorResponse(err.first, err.second);
+    // emit errorResponse(err.first, err.second);
     return;
   }
 
@@ -280,14 +280,18 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
   setEnabled(true);
 }
 
-void AbeBooksIfaceWidget::createOrderRequest(const QString &purchaseId) {
+void AbeBooksIfaceWidget::createOrderRequest() {
+  if (getOrderId().isEmpty()) {
+    qWarning("Invalid AbeBooks OrderId");
+    return;
+  }
+
   AbeBooksRequester *req = new AbeBooksRequester(this);
   req->setObjectName(CONFIG_PROVIDER);
   connect(req, SIGNAL(response(const QDomDocument &)), this,
           SLOT(setXmlContent(const QDomDocument &)));
 
-  // qDebug() << Q_FUNC_INFO << purchaseId;
-  req->queryOrder(purchaseId);
+  req->queryOrder(getOrderId());
 }
 
 void AbeBooksIfaceWidget::setCustomerId(int customerId) {

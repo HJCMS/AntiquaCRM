@@ -12,8 +12,8 @@
 #include <QTableWidgetItem>
 #include <QVBoxLayout>
 
-WHSoftWidget::WHSoftWidget(const QString &widgetId, QWidget *parent)
-    : Antiqua::InterfaceWidget{widgetId, parent} {
+WHSoftWidget::WHSoftWidget(const QString &orderId, QWidget *parent)
+    : Antiqua::InterfaceWidget{orderId, parent} {
   // Wegen langen Abfragewartezeiten den Zugriff unterdrücken!
   setEnabled(false);
 }
@@ -198,13 +198,18 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
   setEnabled(true);
 }
 
-void WHSoftWidget::createOrderRequest(const QString &bfId) {
+void WHSoftWidget::createOrderRequest() {
+  if (getOrderId().isEmpty()) {
+    qWarning("Invalid W+HSoft OrderId");
+    return;
+  }
+
   WHSoftJSonQuery *mq = new WHSoftJSonQuery(this);
   mq->setObjectName("json_query_" + objectName());
   connect(mq, SIGNAL(orderResponsed(const QJsonDocument &)), this,
           SLOT(setContent(const QJsonDocument &)));
 
-  mq->queryOrder(bfId);
+  mq->queryOrder(getOrderId());
 }
 
 void WHSoftWidget::setCustomerId(int customerId) {

@@ -50,12 +50,12 @@ bool AbeBooks::createInterface(QObject *parent) {
   return false;
 }
 
-Antiqua::InterfaceWidget *AbeBooks::addWidget(const QString &widgetId,
+Antiqua::InterfaceWidget *AbeBooks::addWidget(const QString &orderId,
                                               QWidget *parent) {
-  m_abeBooksIfaceWidget = new AbeBooksIfaceWidget(widgetId, parent);
-  m_abeBooksIfaceWidget->setObjectName(widgetId);
+  m_abeBooksIfaceWidget = new AbeBooksIfaceWidget(orderId, parent);
+  m_abeBooksIfaceWidget->setObjectName(orderId);
   m_abeBooksIfaceWidget->setProviderName(provider());
-  m_abeBooksIfaceWidget->setOrderId(widgetId);
+  m_abeBooksIfaceWidget->setOrderId(orderId);
   return m_abeBooksIfaceWidget;
 }
 

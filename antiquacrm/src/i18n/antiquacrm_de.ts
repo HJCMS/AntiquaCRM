@@ -4,7 +4,7 @@
 <context>
     <name>AbeBooksIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+316"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+320"/>
         <source>Buyer Cancelled</source>
         <translation>Käufer stornierte</translation>
     </message>
@@ -786,17 +786,37 @@
 <context>
     <name>BooklookerRequester</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+179"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+178"/>
         <source>Missing API Key</source>
         <translation>Kein API Schlüssel gefunden</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Authentication failure</source>
-        <translation>Authentifizierungsfehler</translation>
+        <location line="+3"/>
+        <source>API Key - Authentication failed</source>
+        <translation>Der API Key ist leer oder nicht vorhanden</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+6"/>
+        <source>Invalid Interface</source>
+        <translation>Es wurde eine ungültige Schnittstelle verwendet</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Invalid Request Method</source>
+        <translation>Die Schnittstelle wurde mit einer ungültigen HTTP-Methode aufgerufen</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Quota Exceeded</source>
+        <translation>Die maximale Anzahl Abfragen/Minute wurde überschritten</translation>
+    </message>
+    <message>
+        <location line="+91"/>
+        <source>Invalid Document response!</source>
+        <translation>Ungültige Dokumentantwort!</translation>
+    </message>
+    <message>
+        <location line="-100"/>
         <source>Server down</source>
         <translation>Server ist nicht vefügbar</translation>
     </message>
@@ -2885,13 +2905,18 @@
     </message>
     <message>
         <location line="+123"/>
-        <location line="+2"/>
+        <location line="+5"/>
         <location line="+12"/>
         <source>Europe</source>
         <translation>Europa</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="-14"/>
+        <source>Germany</source>
+        <translation>Deutschland</translation>
+    </message>
+    <message>
+        <location line="+53"/>
         <source>new customer created!</source>
         <translation>Einkäufer*in wurde neu angelegt!</translation>
     </message>
@@ -2912,12 +2937,7 @@
         <translation>Artikel Prüfung</translation>
     </message>
     <message>
-        <location line="+109"/>
-        <source>Error in data transmission with the service provider.</source>
-        <translation>Fehler bei der Datenübertragung mit dem Dienstleister.</translation>
-    </message>
-    <message>
-        <location line="-111"/>
+        <location line="-2"/>
         <source>Order witdh Id: %1 already exists!</source>
         <translation>Diese Bestellung wurde bereits mit der Auftrags Id: %1 erstellt!</translation>
     </message>
@@ -2962,7 +2982,7 @@
         <translation>Anzahl der Bestellungen</translation>
     </message>
     <message>
-        <location line="-419"/>
+        <location line="-422"/>
         <location line="+14"/>
         <source>Article</source>
         <translation>Artikel</translation>

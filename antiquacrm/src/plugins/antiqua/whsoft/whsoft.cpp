@@ -42,12 +42,12 @@ bool WHSoft::createInterface(QObject *parent) {
   return false;
 }
 
-Antiqua::InterfaceWidget *WHSoft::addWidget(const QString &widgetId,
+Antiqua::InterfaceWidget *WHSoft::addWidget(const QString &orderId,
                                             QWidget *parent) {
-  m_whsoftWidget = new WHSoftWidget(widgetId, parent);
-  m_whsoftWidget->setObjectName(widgetId);
+  m_whsoftWidget = new WHSoftWidget(orderId, parent);
+  m_whsoftWidget->setObjectName(orderId);
   m_whsoftWidget->setProviderName(provider());
-  m_whsoftWidget->setOrderId(widgetId);
+  m_whsoftWidget->setOrderId(orderId);
   return m_whsoftWidget;
 }
 

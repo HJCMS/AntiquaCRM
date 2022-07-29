@@ -63,7 +63,7 @@ const QString EUCountries::name(const QString &countryCode) {
 
   for (int i = 0; i < p_itemsList.count(); i++) {
     QDomElement e = p_itemsList.at(i).toElement();
-    if (e.attribute("countryCode") == countryCode)
+    if (e.attribute("countryCode") == countryCode.toUpper())
       return e.firstChild().nodeValue();
   }
   return QString();

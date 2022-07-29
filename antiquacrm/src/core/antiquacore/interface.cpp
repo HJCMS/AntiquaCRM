@@ -294,13 +294,13 @@ const QHash<QString, QVariant> PurchaseOverview::getCustomerData() {
   return list;
 }
 
-InterfaceWidget::InterfaceWidget(const QString &widgetId, QWidget *parent)
-    : QScrollArea{parent}, p_widgetId(widgetId) {
+InterfaceWidget::InterfaceWidget(const QString &orderId, QWidget *parent)
+    : QScrollArea{parent}, p_widgetId(orderId) {
   setWidgetResizable(true);
-  setObjectName(widgetId);
-  setWindowTitle(widgetId);
+  setObjectName(orderId);
+  setWindowTitle(orderId);
 
-  m_order = new Antiqua::PurchaseOverview(widgetId, this);
+  m_order = new Antiqua::PurchaseOverview(orderId, this);
   setWidget(m_order);
 
   // Weiterleitung Artikel öffnen

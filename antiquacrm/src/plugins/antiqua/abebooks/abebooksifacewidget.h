@@ -38,10 +38,10 @@ public Q_SLOTS:
   void createCustomerDocument();
   void setContent(const QJsonDocument &){/* unused */};
   void setXmlContent(const QDomDocument &);
-  void createOrderRequest(const QString &bfId);
+  void createOrderRequest();
 
 public:
-  AbeBooksIfaceWidget(const QString &widgetId, QWidget *parent = nullptr);
+  AbeBooksIfaceWidget(const QString &orderId, QWidget *parent = nullptr);
   void setCustomerId(int customerId);
   const QString purchaseType(const QString &key) const;
   const QMap<QString, QString> fieldTranslate() const;

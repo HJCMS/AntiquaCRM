@@ -58,7 +58,6 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
 
   connect(m_toolBar, SIGNAL(s_refresh()), this, SLOT(searchConvert()));
   connect(m_toolBar, SIGNAL(s_createOrder()), this, SLOT(createEditOrders()));
-
   connect(m_listView, SIGNAL(s_queryOrder(const QString &, const QString &)),
           this, SLOT(queryOrder(const QString &, const QString &)));
 
@@ -144,8 +143,8 @@ bool InventoryProviders::loadInterfaces() {
     p_providerList.append(iface->objectName());
     connect(iface, SIGNAL(listResponse(const QJsonDocument &)), this,
             SLOT(readOrderList(const QJsonDocument &)));
-    connect(iface, SIGNAL(s_anErrorOccurred()), this,
-            SLOT(pluginResponseErrors()));
+    connect(iface, SIGNAL(s_errorResponse(Antiqua::ErrorStatus, const QString &)), this,
+            SLOT(pluginError(Antiqua::ErrorStatus, const QString &)));
 
     iface->queryMenueEntries();
     p_iFaces.append(iface);
@@ -172,8 +171,8 @@ void InventoryProviders::queryOrder(const QString &provider,
               SLOT(createNewCustomer(const QJsonDocument &)));
       connect(w, SIGNAL(checkArticleIds(QList<int> &)), this,
               SLOT(checkArticleExists(QList<int> &)));
-      connect(w, SIGNAL(errorResponse(int, const QString &)), this,
-              SLOT(pluginError(int, const QString &)));
+      connect(w, SIGNAL(errorResponse(Antiqua::ErrorStatus, const QString &)), this,
+              SLOT(pluginError(Antiqua::ErrorStatus, const QString &)));
       connect(w, SIGNAL(openArticle(int)), this,
               SLOT(checkOpenEditArticle(int)));
 
@@ -186,7 +185,7 @@ void InventoryProviders::queryOrder(const QString &provider,
        * einfügen!
        */
       if (tabExists(orderId)) {
-        w->createOrderRequest(orderId);
+        w->createOrderRequest();
       }
     }
   }
@@ -229,7 +228,10 @@ void InventoryProviders::createNewCustomer(const QJsonDocument &doc) {
           QString cName = countries.name(cc);
           values.append("'" + (cName.isEmpty() ? tr("Europe") : cName) + "'");
         } else {
-          values.append("'" + tr("Europe") + "'");
+          if (cc.contains("german", Qt::CaseInsensitive))
+            values.append("'" + tr("Germany") + "'");
+          else
+            values.append("'" + tr("Europe") + "'");
         }
         continue;
       } else if (field.name() == "c_country_name" &&
@@ -503,16 +505,11 @@ void InventoryProviders::readOrderList(const QJsonDocument &doc) {
   }
 }
 
-void InventoryProviders::pluginResponseErrors() {
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << "InventoryProviders - plugin answered with an error!";
-#endif
-  m_toolBar->warningMessage(tr("Error in data transmission with the service provider."));
-}
-
-void InventoryProviders::pluginError(int code, const QString &msg) {
-  if (code == 0)
+void InventoryProviders::pluginError(Antiqua::ErrorStatus code, const QString &msg) {
+  if (code == 0) {
     m_toolBar->statusMessage(msg);
+    return;
+  }
 
 #ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << code << msg;

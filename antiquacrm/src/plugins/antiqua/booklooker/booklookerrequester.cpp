@@ -106,9 +106,7 @@ BooklookerRequester::BooklookerRequester(QObject *parent)
   config = new ApplSettings(this);
   initConfigurations();
   m_reply = nullptr;
-
-  connect(this, SIGNAL(finished(QNetworkReply *)), this,
-          SLOT(slotFinished(QNetworkReply *)));
+  p_operation = QString();
 }
 
 void BooklookerRequester::initConfigurations() {
@@ -135,10 +133,9 @@ const QNetworkRequest BooklookerRequester::newRequest(const QUrl &url) {
   QNetworkRequest req(url);
   req.setPeerVerifyName(url.host());
   req.setRawHeader("User-Agent", userAgentString());
-  req.setRawHeader("Accept-Language", languageRange());
-  req.setRawHeader("Accept",
-                   "application/ld+json,application/json,text/*;q=0.1");
-  req.setRawHeader("Cache-Control", "no-cache, private");
+  // req.setRawHeader("Accept-Language", languageRange());
+  req.setRawHeader("Accept", "text/*;application/json,q=0.1");
+  // req.setRawHeader("Cache-Control", "no-cache, private");
   QSslConfiguration ssl;
   if (!ssl.addCaCertificates(applCaBundlePath(), QSsl::Pem)) {
     QFileInfo info(config->value("ssloptions/ssl_bundle").toString());
@@ -155,14 +152,13 @@ void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
   QString value = QJsonValue(doc["returnValue"]).toString();
   if (status == "OK" && !value.isEmpty()) {
     if (!qputenv(BOOKLOOKER_TOKEN_ENV, value.toLocal8Bit())) {
-      qInfo("Booklooker : write token in config.");
+      qWarning("Booklooker : write token in config.");
       config->beginGroup(CONFIG_GROUP);
       config->setValue("api_token", value);
       config->endGroup();
+    } else {
+      qInfo("New token Authentication: %s", qPrintable(value));
     }
-#ifdef ANTIQUA_DEVELOPEMENT
-    qInfo("New token Authentication: %s", qPrintable(value));
-#endif
     /**
      * !!! WARNING !!!
      * Booklooker Anfragen auf Windows machen Probleme wenn zu schnell
@@ -176,15 +172,30 @@ void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
 #endif
     // Authentic Response Status
     if (value == "API_KEY_MISSING") {
-      emit errorMessage(1, tr("Missing API Key"));
+      // Der API Key ist leer oder nicht vorhanden.
+      emit errorMessage(Antiqua::ErrorStatus::NOTICE, tr("Missing API Key"));
     } else if (value == "AUTHENTICATION_FAILED") {
-      emit errorMessage(1, tr("Authentication failure"));
+      // Der API Key ist nicht bekannt.
+      emit errorMessage(Antiqua::ErrorStatus::FATAL,
+                        tr("API Key - Authentication failed"));
     } else if (value == "SERVER_DOWN") {
-      emit errorMessage(1, tr("Server down"));
+      // Aufgrund von Wartungsarbeiten ist die REST API momentan nicht
+      // verfügbar.
+      emit errorMessage(Antiqua::ErrorStatus::FATAL, tr("Server down"));
+    } else if (value == "INVALID_INTERFACE") {
+      // Es wurde eine ungültige Schnittstelle verwendet.
+      emit errorMessage(Antiqua::ErrorStatus::FATAL, tr("Invalid Interface"));
+    } else if (value == "INVALID_REQUEST_METHOD") {
+      // Die Schnittstelle wurde mit einer ungültigen HTTP-Methode aufgerufen.
+      emit errorMessage(Antiqua::ErrorStatus::FATAL,
+                        tr("Invalid Request Method"));
+    } else if (value == "QUOTA_EXCEEDED") {
+      // Die maximale Anzahl Abfragen/Minute wurde überschritten.
+      emit errorMessage(Antiqua::ErrorStatus::FATAL, tr("Quota Exceeded"));
     }
   } else {
 #ifdef ANTIQUA_DEVELOPEMENT
-    qWarning("registerAuthentic: Unknown error!");
+    qWarning("Booklooker::registerAuthentic: Unknown error!");
 #endif
   }
 }
@@ -221,15 +232,6 @@ void BooklookerRequester::slotError(QNetworkReply::NetworkError error) {
   }
 }
 
-void BooklookerRequester::slotFinished(QNetworkReply *reply) {
-  bool success = true;
-  if (reply->error() != QNetworkReply::NoError) {
-    slotError(reply->error());
-    success = false;
-  }
-  emit requestFinished(success);
-}
-
 void BooklookerRequester::slotSslErrors(const QList<QSslError> &list) {
   for (int i = 0; i < list.count(); i++) {
     QSslError ssl_error = list.at(i);
@@ -246,15 +248,24 @@ void BooklookerRequester::replyFinished(QNetworkReply *reply) {
 }
 
 void BooklookerRequester::replyReadyRead() {
-  QMutex mutex(QMutex::NonRecursive);
-  mutex.tryLock((1000 * 3));
+  if (m_reply == nullptr)
+    return;
+
+  bool success = true;
+  if (m_reply->error() != QNetworkReply::NoError) {
+    slotError(m_reply->error());
+    success = false;
+  }
+
+  bool check;
   QVector<char> buf;
   QByteArray data;
   qint64 chunk;
+  qint64 bufferSize = replyHeaderLength();
   while (m_reply->bytesAvailable() > 0) {
     chunk = m_reply->bytesAvailable();
-    if (chunk > 4096) {
-      chunk = 4096;
+    if (chunk > bufferSize) {
+      chunk = bufferSize;
     }
     buf.resize(chunk + 1);
     memset(&buf[0], 0, chunk + 1);
@@ -264,14 +275,13 @@ void BooklookerRequester::replyReadyRead() {
     data += &buf[0];
   }
   buf.clear();
-  mutex.unlock();
 
   QJsonParseError parser;
   QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
   if (parser.error != QJsonParseError::NoError) {
     qWarning("Json Parse Error:(%s)!", jsonParserError(parser.error));
+    emit errorMessage(Antiqua::ErrorStatus::FATAL, tr("Invalid Document response!"));
     writeErrorLog(data);
-    emit brokenDataResponsed();
     return;
   }
 
@@ -280,7 +290,9 @@ void BooklookerRequester::replyReadyRead() {
     return;
   }
 
+  writeResponseLog(doc);
   emit response(doc);
+  emit requestFinished(success);
 }
 
 void BooklookerRequester::authentication() {
@@ -295,6 +307,9 @@ void BooklookerRequester::authentication() {
   m_reply = post(req, pd.toLocal8Bit());
 
   connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
+          SLOT(slotError(QNetworkReply::NetworkError)));
+
+  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));
 
   connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
@@ -318,11 +333,36 @@ void BooklookerRequester::writeErrorLog(const QByteArray &data) {
   }
 }
 
+void BooklookerRequester::writeResponseLog(const QJsonDocument &doc) {
+  QString fileName("antiqua_booklooker_" + p_operation + ".json");
+  QFileInfo fileInfo(QDir::temp(), fileName);
+  QFile fp(fileInfo.filePath());
+  if (fp.open(QIODevice::WriteOnly)) {
+    QTextStream stream(&fp);
+    stream << doc.toJson(QJsonDocument::Indented);
+    fp.close();
+    qInfo("Booklooker '%s'.", qPrintable(fileInfo.filePath()));
+  }
+}
+
+qint64 BooklookerRequester::replyHeaderLength() {
+  bool b = false;
+  qint64 length =
+      m_reply->header(QNetworkRequest::ContentLengthHeader).toLongLong(&b);
+  if (b && length > 1024) {
+    return length;
+  }
+  return 1024;
+}
+
 bool BooklookerRequester::deleteRequest(const QUrl &url) {
   QNetworkRequest req = newRequest(url);
   m_reply = deleteResource(req);
 
   connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
+          SLOT(slotError(QNetworkReply::NetworkError)));
+
+  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));
 
   connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
@@ -340,6 +380,9 @@ bool BooklookerRequester::putRequest(const QUrl &url, const QByteArray &data) {
   connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));
 
+  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
+          SLOT(slotError(QNetworkReply::NetworkError)));
+
   connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
           SLOT(slotSslErrors(QList<QSslError>)));
 
@@ -355,6 +398,9 @@ bool BooklookerRequester::getRequest(const QUrl &url) {
   connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));
 
+  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
+          SLOT(slotError(QNetworkReply::NetworkError)));
+
   connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
           SLOT(slotSslErrors(QList<QSslError>)));
 
@@ -367,6 +413,7 @@ void BooklookerRequester::authenticationRefresh() { authentication(); }
 
 void BooklookerRequester::queryList() {
   if (getToken().isEmpty()) {
+    p_operation = "orders_list";
     authentication();
     connect(this, SIGNAL(authenticFinished()), this, SLOT(queryList()));
     return;
@@ -383,10 +430,36 @@ void BooklookerRequester::queryList() {
 }
 
 void BooklookerRequester::queryOrder(const QString &orderId) {
+  QString fileName("antiqua_booklooker_orders_list.json");
+  QFileInfo fileInfo(QDir::temp(), fileName);
+  if (fileInfo.isReadable()) {
+    QString data;
+    QFile fp(fileInfo.filePath());
+    if (fp.open(QIODevice::ReadOnly)) {
+      QTextStream in(&fp);
+      in.setCodec("UTF-8");
+      while (!in.atEnd()) {
+        data.append(in.readLine());
+      }
+      fp.close();
+    }
+    QJsonParseError parser;
+    QJsonDocument doc = QJsonDocument::fromJson(data.toLocal8Bit(), &parser);
+    if (parser.error == QJsonParseError::NoError) {
+      if (doc["status"].toString().toLower() == "ok") {
+        emit response(doc);
+        emit requestFinished(true);
+        return;
+      }
+    }
+  }
+
   if (getToken().isEmpty()) {
     authentication();
+    p_operation = "order";
     return;
   }
+
   QUrl url = apiQuery("order");
   QUrlQuery q;
   q.addQueryItem("token", getToken());
@@ -397,6 +470,7 @@ void BooklookerRequester::queryOrder(const QString &orderId) {
 
 void BooklookerRequester::queryArticleReset(const QString &orderNo) {
   if (getToken().isEmpty()) {
+    p_operation = "article_reset";
     authentication();
     return;
   }

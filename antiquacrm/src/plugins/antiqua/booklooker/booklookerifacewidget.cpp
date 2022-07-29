@@ -8,16 +8,16 @@
 #include <QDebug>
 #include <QHash>
 
-BooklookerIfaceWidget::BooklookerIfaceWidget(const QString &widgetId,
+BooklookerIfaceWidget::BooklookerIfaceWidget(const QString &orderId,
                                              QWidget *parent)
-    : Antiqua::InterfaceWidget{widgetId, parent} {
+    : Antiqua::InterfaceWidget{orderId, parent} {
   // Wegen langen Abfragewartezeiten den Zugriff unterdrücken!
   setEnabled(false);
 
   m_requester = new BooklookerRequester(this);
-  m_requester->setObjectName("requester_" + objectName());
-  connect(m_requester, SIGNAL(errorMessage(int, const QString &)), this,
-          SIGNAL(errorResponse(int, const QString &)));
+  m_requester->setObjectName("requester_" + orderId);
+  connect(m_requester, SIGNAL(errorMessage(Antiqua::ErrorStatus, const QString &)), this,
+          SIGNAL(errorResponse(Antiqua::ErrorStatus, const QString &)));
 
   connect(m_requester, SIGNAL(response(const QJsonDocument &)), this,
           SLOT(setContent(const QJsonDocument &)));
@@ -197,13 +197,17 @@ void BooklookerIfaceWidget::setContent(const QJsonDocument &doc) {
   saveSources(doc, getOrderId());
 #endif
 
-  // Speichern
   p_currentDocument = doc;
 
+  qint64 searchId = getOrderId().toLongLong();
   QJsonArray array = QJsonValue(doc["returnValue"]).toArray();
   for (int i = 0; i < array.size(); i++) {
     if (array[i].isObject()) {
       QJsonObject obj = array[i].toObject();
+      qint64 index = obj.value("orderId").toInt();
+      if(index != searchId)
+        continue;
+
       QJsonObject::iterator it;
       for (it = obj.begin(); it != obj.end(); ++it) {
         QString f = it.key();
@@ -233,9 +237,12 @@ void BooklookerIfaceWidget::setContent(const QJsonDocument &doc) {
   setEnabled(true);
 }
 
-void BooklookerIfaceWidget::createOrderRequest(const QString &orderId) {
-  if (orderId > 0)
-    m_requester->queryOrder(orderId);
+void BooklookerIfaceWidget::createOrderRequest() {
+  if (getOrderId().isEmpty()) {
+    qWarning("Invalid Booklooker OrderId");
+    return;
+  }
+  m_requester->queryOrder(getOrderId());
 }
 
 void BooklookerIfaceWidget::setCustomerId(int customerId) {

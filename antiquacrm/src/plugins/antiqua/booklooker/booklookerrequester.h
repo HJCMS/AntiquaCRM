@@ -45,6 +45,12 @@ private:
   QString p_apiKey;
 
   /**
+   * @brief Letze Anfrage Operation
+   * Wird für das Logfile verwendet.
+   */
+  QString p_operation;
+
+  /**
    * @brief read configuration
    */
   void initConfigurations();
@@ -70,7 +76,17 @@ private:
    * @brief Wenn replyReadyRead mit Fehlern behaftet ist.
    * Den Datenstrom zum Debuggen in ein Logfile schreiben.
    */
-  void writeErrorLog(const QByteArray &);
+  void writeErrorLog(const QByteArray &data);
+
+  /**
+   * @brief Den Datenstrom zum Debuggen in ein Logfile schreiben.
+   */
+  void writeResponseLog(const QJsonDocument &doc);
+
+  /**
+   * @brief Rückgabegröße der Anfrage
+   */
+  qint64 replyHeaderLength();
 
   /**
    * @brief Standard DELETE Protokoll
@@ -90,7 +106,6 @@ private:
 private Q_SLOTS:
   void registerAuthentic(const QJsonDocument &doc);
   void slotError(QNetworkReply::NetworkError error);
-  void slotFinished(QNetworkReply *reply);
   void slotSslErrors(const QList<QSslError> &list);
   void replyFinished(QNetworkReply *reply);
   void replyReadyRead();
@@ -102,14 +117,9 @@ Q_SIGNALS:
   void authenticFinished();
 
   /**
-   * @brief Wenn die Daten Fehlerhaft ankommen!
-   */
-  void brokenDataResponsed();
-
-  /**
    * @brief Error Messages
    */
-  void errorMessage(int code, const QString &msg);
+  void errorMessage(Antiqua::ErrorStatus type, const QString &msg);
 
   /**
    * @brief requestFinished

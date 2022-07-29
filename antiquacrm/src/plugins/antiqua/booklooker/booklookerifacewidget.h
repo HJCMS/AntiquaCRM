@@ -38,7 +38,7 @@ private Q_SLOTS:
 public Q_SLOTS:
   void createCustomerDocument();
   void setContent(const QJsonDocument &);
-  void createOrderRequest(const QString &bfId);
+  void createOrderRequest();
 
 public:
   BooklookerIfaceWidget(const QString &widgetId, QWidget *parent = nullptr);
