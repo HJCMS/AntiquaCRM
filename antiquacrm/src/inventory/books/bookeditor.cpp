@@ -263,7 +263,7 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
    * @li ib_category_sub
    */
   m_json_category = new CategorySubject(this);
-  m_json_category->setObjectName("json_category");
+  m_json_category->setObjectName("ib_json_category");
   m_json_category->setInfo(tr("Shop Category Keywords"));
   row2->addWidget(m_json_category, row2c++, 1, 1, 1);
 
@@ -551,6 +551,7 @@ void BookEditor::importSqlResult() {
   }
   // Nach Ersteintrag zurück setzen!
   resetModified(inputList);
+  m_json_category->setModified(false);
 }
 
 void BookEditor::checkLeaveEditor() {

@@ -11,6 +11,7 @@
 #include <QJsonValue>
 #include <QMessageBox>
 #include <QMutex>
+#include <QTimer>
 
 /**
  * @brief Standard Feldauswahl
@@ -242,8 +243,6 @@ void CategorySubject::setValue(const QVariant &val) {
   int index = m_boxMain->findData(mainId, Qt::UserRole);
   if (index >= 0)
     m_boxMain->setCurrentIndex(index);
-
-  setModified(false);
 }
 
 void CategorySubject::findIndex(const QString &match) {
@@ -251,6 +250,7 @@ void CategorySubject::findIndex(const QString &match) {
   if (index > 0) {
     m_boxMain->setCurrentIndex(index);
   }
+  setModified(true);
 }
 
 void CategorySubject::loadDataset() { setMainCategories(); }

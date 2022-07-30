@@ -14,6 +14,7 @@
 #include <QHttpPart>
 #include <QJsonParseError>
 #include <QMutex>
+#include <QTextCodec>
 #include <QTextStream>
 #include <QTimer>
 #include <QUrlQuery>
@@ -328,6 +329,7 @@ void BooklookerRequester::writeErrorLog(const QByteArray &data) {
   QFile fp(logFilePath.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream stream(&fp);
+    stream.setCodec(QTextCodec::codecForName("UTF-8"));
     stream << QString::fromLocal8Bit(data);
     fp.close();
 #ifdef ANTIQUA_DEVELOPEMENT
@@ -345,7 +347,8 @@ void BooklookerRequester::writeResponseLog(const QJsonDocument &doc) {
     json.setCodec(QTextCodec::codecForName("UTF-8"));
 #ifdef ANTIQUA_DEVELOPEMENT
     json << doc.toJson(QJsonDocument::Indented);
-    qInfo("Booklooker(%s):'%s'.", qPrintable(p_operation), qPrintable(fileInfo.filePath()));
+    qInfo("Booklooker(%s):'%s'.", qPrintable(p_operation),
+          qPrintable(fileInfo.filePath()));
 #else
     json << doc.toJson(QJsonDocument::Compact);
 #endif
@@ -444,10 +447,10 @@ void BooklookerRequester::queryOrder(const QString &orderId) {
     QString data;
     QFile fp(fileInfo.filePath());
     if (fp.open(QIODevice::ReadOnly)) {
-      QTextStream in(&fp);
-      in.setCodec("UTF-8");
-      while (!in.atEnd()) {
-        data.append(in.readLine());
+      QTextStream json(&fp);
+      json.setCodec(QTextCodec::codecForName("UTF-8"));
+      while (!json.atEnd()) {
+        data.append(json.readLine());
       }
       fp.close();
     }
