@@ -29,6 +29,7 @@ private:
 
 private Q_SLOTS:
   void itemSelected(QTreeWidgetItem *, int);
+  void updateItemStatus(QTreeWidgetItem *item, int status);
 
 public Q_SLOTS:
   /**
@@ -70,6 +71,15 @@ public:
    * @param id       - Bestellnummer
    */
   bool exists(const QString &provider, const QString &id);
+
+  /**
+   * @brief Darstellung der Einträge auf Bestand anpassen!
+   * @param provider
+   * @param orderId
+   * @param status
+   */
+  void updateItemStatus(const QString &provider, const QString &orderId,
+                        int status = 0);
 
   /**
    * @brief Dienstleister hinzufügen

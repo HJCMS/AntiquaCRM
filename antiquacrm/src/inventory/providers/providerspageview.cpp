@@ -33,10 +33,16 @@ void ProvidersTabBar::contextMenuEvent(QContextMenuEvent *ev) {
   delete m;
 }
 
-ProvidersPageView::ProvidersPageView(QWidget *parent) : QTabWidget{parent} {
-  setObjectName("providers_page_view");
+void ProvidersTabBar::setInfo(const QString &txt) {
+  setToolTip(txt);
+  info = txt;
+}
 
+const QString ProvidersTabBar::getInfo() { return info; }
+
+ProvidersPageView::ProvidersPageView(QWidget *parent) : QTabWidget{parent} {
   m_tabBar = new ProvidersTabBar(tabBar());
+  m_tabBar->setInfo(tr("Order tabs"));
   setTabBar(m_tabBar);
 
   connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeTabClicked(int)));
@@ -65,12 +71,12 @@ int ProvidersPageView::addPage(Antiqua::InterfaceWidget *aiw,
   if (aiw == nullptr || id.isEmpty())
     return -1;
 
-  if (aiw->objectName().isEmpty())
-    aiw->setObjectName(id);
-
+  aiw->setObjectName(id);
   int index = addTab(aiw, myIcon("edit_group"), id);
-  setTabToolTip(index, tr("Order:") + " " + id);
-  setTabWhatsThis(index, tr("Order:") + " " + id);
-
   return index;
+}
+
+void ProvidersPageView::setTabDescription(int index, const QString &txt) {
+  setTabToolTip(index, txt);
+  setTabWhatsThis(index, txt);
 }

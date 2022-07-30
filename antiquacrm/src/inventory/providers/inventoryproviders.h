@@ -96,6 +96,12 @@ private:
    */
   bool validInterfaceProperties(Antiqua::InterfaceWidget *ifw);
 
+  /**
+   * @brief Bestellstatus für Baumansicht ermitteln.
+   */
+  void updateTreeViewOrdersStatus(const QString &provider,
+                                  const QStringList &orderIds);
+
 private Q_SLOTS:
   /**
    * @brief Wird hier nicht eingesetzt ...

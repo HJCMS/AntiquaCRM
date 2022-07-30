@@ -78,7 +78,7 @@
 <context>
     <name>Antiqua::InterfaceWidget</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+360"/>
+        <location filename="../core/antiquacore/interface.cpp" line="+357"/>
         <source>Please select</source>
         <translation>Bitte auswählen</translation>
     </message>
@@ -99,37 +99,12 @@
 <context>
     <name>Antiqua::PurchaseOverview</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="-317"/>
+        <location filename="../core/antiquacore/interface.cpp" line="-311"/>
         <source>Purchaser</source>
         <translation>Einkäufer*in</translation>
     </message>
     <message>
-        <location line="+11"/>
-        <source>Orders</source>
-        <translation>Bestellungen</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>execute check</source>
-        <translation>Prüfung ausführen</translation>
-    </message>
-    <message>
-        <location line="-20"/>
-        <source>Customer</source>
-        <translation>Kunde</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>create</source>
-        <translation>erstelle</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>if customer not exists, create it.</source>
-        <translation>Wenn Einkäufer*in nicht existiert, hier anlegen.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
+        <location line="+6"/>
         <source>Create a search query to see if all items are available.</source>
         <translation>Erstelle Suchanfrage, ob alle Artikel verfügbar sind.</translation>
     </message>
@@ -159,7 +134,17 @@
         <translation>Zahlungs Informationen</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="-46"/>
+        <source>Customer Id</source>
+        <translation>Kundennummer</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Check item inventory</source>
+        <translation>Artikelbestand prüfen</translation>
+    </message>
+    <message>
+        <location line="+44"/>
         <source>Developement</source>
         <translation></translation>
     </message>
@@ -627,7 +612,7 @@
         <translation>Das Bild wurde Erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+56"/>
         <source>Missing Article ID for Update.</source>
         <translation>Keine Artikel ID für Update vorhanden.</translation>
     </message>
@@ -637,7 +622,7 @@
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+66"/>
         <source>Are you sure to deactivate this entry?</source>
         <translation>Möchten Sie diesen Eintrag wirklich deaktivieren?</translation>
     </message>
@@ -647,7 +632,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-470"/>
+        <location line="-472"/>
         <source>Extended Title or Subtitle.</source>
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
@@ -657,12 +642,12 @@
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
     <message>
-        <location line="+231"/>
+        <location line="+233"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
     <message>
-        <location line="-319"/>
+        <location line="-321"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -778,7 +763,7 @@
 <context>
     <name>BooklookerIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerifacewidget.cpp" line="+108"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerifacewidget.cpp" line="+121"/>
         <source>Germany</source>
         <translation>Deutschland</translation>
     </message>
@@ -786,22 +771,22 @@
 <context>
     <name>BooklookerRequester</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+178"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+176"/>
         <source>Missing API Key</source>
         <translation>Kein API Schlüssel gefunden</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>API Key - Authentication failed</source>
         <translation>Der API Key ist leer oder nicht vorhanden</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Invalid Interface</source>
         <translation>Es wurde eine ungültige Schnittstelle verwendet</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Invalid Request Method</source>
         <translation>Die Schnittstelle wurde mit einer ungültigen HTTP-Methode aufgerufen</translation>
     </message>
@@ -811,7 +796,7 @@
         <translation>Die maximale Anzahl Abfragen/Minute wurde überschritten</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+90"/>
         <source>Invalid Document response!</source>
         <translation>Ungültige Dokumentantwort!</translation>
     </message>
@@ -1101,17 +1086,17 @@
         <translation>Informationsdialog öffnen</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+83"/>
         <source>A database error has occurred.</source>
         <translation>Ein Datenbankfehler ist aufgetreten.</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+76"/>
         <source>In this area, the categories are defined which are permanently assigned by your service provider. Ultimately, it is decided here in which category your book is for sale.</source>
         <translation>In Diesem Bereich werden die Kategorien definiert welche von ihrem Dienstleister fest vergeben sind. Letztentlich wird hier entschieden in welcher Kategorie ihr Buch zum Verkauf steht.</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+64"/>
         <source>General</source>
         <translation>Allgemein</translation>
     </message>
@@ -2889,7 +2874,7 @@
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+57"/>
         <source>exists with count</source>
         <translation>ist Verfügbar mit der Anzahl</translation>
     </message>
@@ -2904,7 +2889,7 @@
         <translation>Erforderliche Versandeigenschaften fehlen!</translation>
     </message>
     <message>
-        <location line="+123"/>
+        <location line="+143"/>
         <location line="+5"/>
         <location line="+12"/>
         <source>Europe</source>
@@ -2977,12 +2962,12 @@
         <translation>Ungültige Versandeigenschaften!</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+23"/>
         <source>Current order count </source>
         <translation>Anzahl der Bestellungen</translation>
     </message>
     <message>
-        <location line="-422"/>
+        <location line="-447"/>
         <location line="+14"/>
         <source>Article</source>
         <translation>Artikel</translation>
@@ -4770,16 +4755,15 @@
 <context>
     <name>ProvidersPageView</name>
     <message>
-        <location filename="../inventory/providers/providerspageview.cpp" line="+72"/>
-        <location line="+1"/>
-        <source>Order:</source>
-        <translation>Bestellung:</translation>
+        <location filename="../inventory/providers/providerspageview.cpp" line="+45"/>
+        <source>Order tabs</source>
+        <translation>Bestell Registerkarten</translation>
     </message>
 </context>
 <context>
     <name>ProvidersTabBar</name>
     <message>
-        <location line="-45"/>
+        <location line="-17"/>
         <source>Order Actions</source>
         <translation>Bestellaktionen</translation>
     </message>
@@ -4816,7 +4800,7 @@
 <context>
     <name>ProvidersTreeView</name>
     <message>
-        <location filename="../inventory/providers/providerstreeview.cpp" line="+18"/>
+        <location filename="../inventory/providers/providerstreeview.cpp" line="+19"/>
         <source>Orders</source>
         <translation>Bestellungen</translation>
     </message>
@@ -4829,6 +4813,21 @@
         <location line="+8"/>
         <source>Today</source>
         <translation>Heute</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>Created</source>
+        <translation>Erstellt</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Finished</source>
+        <translation>Abgeschlossen</translation>
+    </message>
+    <message>
+        <location line="+82"/>
+        <source>Status</source>
+        <translation>Status</translation>
     </message>
 </context>
 <context>

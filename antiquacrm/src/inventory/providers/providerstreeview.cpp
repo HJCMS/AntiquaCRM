@@ -12,7 +12,8 @@ ProvidersTreeView::ProvidersTreeView(QWidget *parent) : QTreeWidget{parent} {
   setItemsExpandable(true);
   setSortingEnabled(false);
   setWordWrap(false);
-  setMaximumWidth(265);
+  setAlternatingRowColors(true);
+  setMaximumWidth(270);
 
   QTreeWidgetItem *aItem = headerItem();
   aItem->setText(0, tr("Orders"));
@@ -28,7 +29,7 @@ ProvidersTreeView::ProvidersTreeView(QWidget *parent) : QTreeWidget{parent} {
 const QString ProvidersTreeView::setDateString(const QDateTime &dt) const {
   QString str = tr("Today");
   if (dt.date() != QDate::currentDate()) {
-    str = dt.toString("dd.MM.yyyy");
+    str = dt.toString("dd.MM.yy");
   }
   return str;
 }
@@ -64,14 +65,58 @@ void ProvidersTreeView::itemSelected(QTreeWidgetItem *item, int) {
     return;
   }
 
+  if (item->flags() == Qt::NoItemFlags)
+    return;
+
   QString provider = item->parent()->text(0);
   if (!item->text(0).isEmpty() && !provider.isEmpty()) {
     emit s_queryOrder(provider, item->text(0));
   }
 }
 
+void ProvidersTreeView::updateItemStatus(QTreeWidgetItem *item, int status) {
+  QString tip = item->toolTip(0);
+  bool modified = item->data(1, Qt::UserRole).toBool();
+  if (status > 0 && status < 4) {
+    QString mTip = tr("Created");
+    if (modified != true || !tip.contains(mTip))
+      item->setToolTip(0, tip + " " + mTip);
+
+    item->setIcon(1, myIcon("button_ok"));
+    item->setData(1, Qt::UserRole, true); // setModified
+    return;
+  }
+  // Abgeschlossen
+  if (status > 4) {
+    item->setSelected(false);
+    item->setFlags(Qt::NoItemFlags);
+    item->setIcon(1, myIcon("button_ok"));
+
+    QString mTip = tr("Finished");
+    if (modified != true || !tip.contains(mTip))
+      item->setToolTip(0, tip + " " + mTip);
+
+    item->setData(1, Qt::UserRole, true); // setModified
+    return;
+  }
+}
+
 bool ProvidersTreeView::exists(const QString &provider, const QString &id) {
   return (getChild(provider, id) != nullptr);
+}
+
+void ProvidersTreeView::updateItemStatus(const QString &provider,
+                                         const QString &orderId, int status) {
+  QTreeWidgetItem *parent = getParent(provider);
+  if (parent == nullptr)
+    return;
+
+  for (int i = 0; i < parent->childCount(); i++) {
+    QTreeWidgetItem *item = parent->child(i);
+    if (item != nullptr && item->text(0) == orderId) {
+      updateItemStatus(item, status);
+    }
+  }
 }
 
 void ProvidersTreeView::addOrder(const QString &provider, const QString &id,
@@ -93,6 +138,7 @@ void ProvidersTreeView::addOrder(const QString &provider, const QString &id,
       item->setIcon(0, myIcon("group"));
       item->setToolTip(0, dt.toString("ddd dd. MMMM yyyy"));
       item->setText(1, setDateString(dt));
+      item->setIcon(1, myIcon("messagebox_warning"));
       item->setToolTip(1, dt.toString("ddd dd. MMMM yyyy"));
       p->addChild(item);
     }
@@ -121,11 +167,15 @@ void ProvidersTreeView::addProvider(const QString &provider) {
     return;
   }
 
+  QFont fi = font();
+  fi.setItalic(true);
+
   QTreeWidgetItem *item = new QTreeWidgetItem(this, QTreeWidgetItem::Type);
   item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
   item->setFlags(Qt::ItemIsEnabled);
   item->setText(0, provider);
-  item->setIcon(0, myIcon("autostart"));
+  item->setText(1, tr("Status"));
+  item->setFont(1, fi);
   item->setExpanded(true);
   addTopLevelItem(item);
   resizeColumnToContents(0);

@@ -87,7 +87,6 @@ namespace Antiqua {
     int c_id = 0;
     QToolBar *m_toolbar;
     QPushButton *btn_checkArticle;
-    QPushButton *btn_createCustomer;
 
     /**
      * @brief c_id
@@ -97,7 +96,7 @@ namespace Antiqua {
     /**
      * @brief Full Purchaser Name
      */
-    QLineEdit *m_customerInfo;
+    QLabel *m_customerInfo;
 
     /**
      * @brief Tab Section

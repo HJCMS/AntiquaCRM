@@ -33,8 +33,8 @@ test -e $HOME/.config/postgres/servercfg.bash || {
 
 . $HOME/.config/postgres/servercfg.bash
 
-_sqlfile=${_scripting}/catalog/booklooker-export.sql
-_header=${_scripting}/catalog/booklooker-export.header
+_sqlfile=${_scripting}/catalog/booklooker-catalog-export.sql
+_header=${_scripting}/catalog/booklooker-catalog-export.txt
 
 ## Ausgabe Verzeichnis
 _output_target=${_dest}/catalog

@@ -412,6 +412,7 @@ bool BookEditor::sendSqlQuery(const QString &sqlStatement) {
     }
     sqlSuccessMessage(tr("Bookdata saved successfully!"));
     resetModified(inputList);
+    m_json_category->setModified(false);
     return true;
   }
 }
@@ -553,7 +554,7 @@ void BookEditor::importSqlResult() {
 }
 
 void BookEditor::checkLeaveEditor() {
-  if (checkIsModified(p_objPattern)) {
+  if (checkIsModified(p_objPattern) || m_json_category->isModified()) {
     emit s_postMessage(
         tr("Unsaved Changes, don't leave this page before saved."));
     return;
@@ -569,6 +570,7 @@ void BookEditor::finalLeaveEditor() {
   m_actionBar->setRestoreable(false); /**< ResetButton off */
   m_imageView->clear();               /**< Imaging clear */
   m_imageToolBar->restoreState();     /**< Bilder Aktionsleiste zurücksetzen */
+  m_json_category->reset();           /**< Kategorien */
   emit s_leaveEditor();               /**< Zurück zur Hauptsansicht */
 }
 

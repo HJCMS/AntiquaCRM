@@ -71,6 +71,8 @@ CategorySubject::CategorySubject(QWidget *parent) : UtilsMain{parent} {
   connect(m_helpBtn, SIGNAL(clicked()), this, SLOT(openHelperDialog()));
   connect(m_boxMain, SIGNAL(currentIndexChanged(int)), this,
           SLOT(mainCategoryChanged(int)));
+  connect(m_boxSub, SIGNAL(currentIndexChanged(int)), this,
+          SLOT(subCategoryChanged(int)));
 
   connect(m_search, SIGNAL(textChanged(const QString &)), this,
           SLOT(searchChanged(const QString &)));
@@ -154,6 +156,10 @@ void CategorySubject::mainCategoryChanged(int index) {
     return;
 
   setSubCategories(ce_id);
+}
+
+void CategorySubject::subCategoryChanged(int index) {
+  Q_UNUSED(index)
   setModified(true);
 }
 
@@ -222,21 +228,22 @@ void CategorySubject::openHelperDialog() {
 
 void CategorySubject::reset() {
   m_boxMain->setCurrentIndex(0);
+  m_boxSub->setCurrentIndex(0);
+  m_search->clear();
   setModified(false);
 }
 
 void CategorySubject::setFocus() {
-  m_boxMain->setFocus();
-  m_boxMain->showPopup();
+  m_search->setFocus();
 }
 
 void CategorySubject::setValue(const QVariant &val) {
   int mainId = val.toInt();
   int index = m_boxMain->findData(mainId, Qt::UserRole);
-  if (index >= 0) {
+  if (index >= 0)
     m_boxMain->setCurrentIndex(index);
-    setModified(true);
-  }
+
+  setModified(false);
 }
 
 void CategorySubject::findIndex(const QString &match) {

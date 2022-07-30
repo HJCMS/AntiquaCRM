@@ -25,8 +25,11 @@ class ANTIQUACORE_EXPORT BooklookerIfaceWidget final
 
 private:
   QHash<QString, QString> p_customer;
-  QJsonDocument p_currentDocument;
   BooklookerRequester *m_requester;
+
+  QJsonDocument p_currentDocument;
+  void setCurrentDocument(const QJsonObject &obj);
+
   const QJsonDocument customerRequest(const QJsonObject &object);
   void createOrderDataSet(const QJsonArray &array);
   void parseAddressBody(const QString &, const QJsonObject &);

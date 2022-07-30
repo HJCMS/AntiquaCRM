@@ -107,6 +107,9 @@ BooklookerRequester::BooklookerRequester(QObject *parent)
   initConfigurations();
   m_reply = nullptr;
   p_operation = QString();
+
+  connect(this, SIGNAL(authenticResponse(const QJsonDocument &)), this,
+          SLOT(registerAuthentic(const QJsonDocument &)));
 }
 
 void BooklookerRequester::initConfigurations() {
@@ -280,7 +283,8 @@ void BooklookerRequester::replyReadyRead() {
   QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
   if (parser.error != QJsonParseError::NoError) {
     qWarning("Json Parse Error:(%s)!", jsonParserError(parser.error));
-    emit errorMessage(Antiqua::ErrorStatus::FATAL, tr("Invalid Document response!"));
+    emit errorMessage(Antiqua::ErrorStatus::FATAL,
+                      tr("Invalid Document response!"));
     writeErrorLog(data);
     return;
   }
@@ -316,9 +320,6 @@ void BooklookerRequester::authentication() {
           SLOT(slotSslErrors(QList<QSslError>)));
 
   connect(m_reply, SIGNAL(readyRead()), this, SLOT(replyReadyRead()));
-
-  connect(this, SIGNAL(authenticResponse(const QJsonDocument &)), this,
-          SLOT(registerAuthentic(const QJsonDocument &)));
 }
 
 void BooklookerRequester::writeErrorLog(const QByteArray &data) {
@@ -329,7 +330,9 @@ void BooklookerRequester::writeErrorLog(const QByteArray &data) {
     QTextStream stream(&fp);
     stream << QString::fromLocal8Bit(data);
     fp.close();
-    qInfo("Booklooker '%s'.", qPrintable(logFilePath.filePath()));
+#ifdef ANTIQUA_DEVELOPEMENT
+    qInfo("Booklooker:'%s'.", qPrintable(logFilePath.filePath()));
+#endif
   }
 }
 
@@ -338,10 +341,15 @@ void BooklookerRequester::writeResponseLog(const QJsonDocument &doc) {
   QFileInfo fileInfo(QDir::temp(), fileName);
   QFile fp(fileInfo.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
-    QTextStream stream(&fp);
-    stream << doc.toJson(QJsonDocument::Indented);
+    QTextStream json(&fp);
+    json.setCodec(QTextCodec::codecForName("UTF-8"));
+#ifdef ANTIQUA_DEVELOPEMENT
+    json << doc.toJson(QJsonDocument::Indented);
+    qInfo("Booklooker(%s):'%s'.", qPrintable(p_operation), qPrintable(fileInfo.filePath()));
+#else
+    json << doc.toJson(QJsonDocument::Compact);
+#endif
     fp.close();
-    qInfo("Booklooker '%s'.", qPrintable(fileInfo.filePath()));
   }
 }
 
@@ -412,8 +420,8 @@ bool BooklookerRequester::getRequest(const QUrl &url) {
 void BooklookerRequester::authenticationRefresh() { authentication(); }
 
 void BooklookerRequester::queryList() {
+  p_operation = "orders_list";
   if (getToken().isEmpty()) {
-    p_operation = "orders_list";
     authentication();
     connect(this, SIGNAL(authenticFinished()), this, SLOT(queryList()));
     return;
@@ -456,10 +464,10 @@ void BooklookerRequester::queryOrder(const QString &orderId) {
 
   if (getToken().isEmpty()) {
     authentication();
-    p_operation = "order";
     return;
   }
 
+  p_operation = "order";
   QUrl url = apiQuery("order");
   QUrlQuery q;
   q.addQueryItem("token", getToken());
@@ -470,10 +478,10 @@ void BooklookerRequester::queryOrder(const QString &orderId) {
 
 void BooklookerRequester::queryArticleReset(const QString &orderNo) {
   if (getToken().isEmpty()) {
-    p_operation = "article_reset";
     authentication();
     return;
   }
+  p_operation = "article_reset";
   QUrl url = apiQuery("article");
   QUrlQuery q;
   q.addQueryItem("token", getToken());

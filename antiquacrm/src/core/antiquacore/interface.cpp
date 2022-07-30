@@ -9,6 +9,7 @@
 #include <QFontMetricsF>
 #include <QGridLayout>
 #include <QIcon>
+#include <QSpacerItem>
 #include <QVBoxLayout>
 
 namespace Antiqua {
@@ -33,27 +34,20 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
   m_toolbar = new QToolBar(this);
   m_toolbar->setMovable(false);
   m_toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-  m_toolbar->addWidget(new QLabel(tr("Customer") + ": "));
+  m_toolbar->addWidget(new QLabel(tr("Customer Id") + ": "));
   m_customerId = new QLineEdit(m_toolbar);
   m_customerId->setReadOnly(true);
   m_customerId->setMaxLength(20);
   m_customerId->setMaximumWidth(mWidth);
   m_toolbar->addWidget(m_customerId);
   m_toolbar->addSeparator();
-  QString str_customer_info = tr("create") + " " + tr("Purchaser");
-  btn_createCustomer = new QPushButton(qi1, str_customer_info, m_toolbar);
-  btn_createCustomer->setToolTip(tr("if customer not exists, create it."));
-  btn_createCustomer->setEnabled(true);
-  m_toolbar->addWidget(btn_createCustomer);
-  m_toolbar->addSeparator();
-  m_customerInfo = new QLineEdit(m_toolbar);
+  m_customerInfo = new QLabel(m_toolbar);
   m_customerInfo->setObjectName("person");
-  m_customerInfo->setReadOnly(true);
+  m_customerInfo->setToolTip(tr("Purchaser"));
+  m_customerInfo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
   m_toolbar->addWidget(m_customerInfo);
-  m_toolbar->addSeparator();
-  QString str_article_info = tr("Orders") + " ";
-  m_toolbar->addWidget(new QLabel(str_article_info, m_toolbar));
-  btn_checkArticle = new QPushButton(qi1, tr("execute check"), m_toolbar);
+  QString btnText = tr("Check item inventory");
+  btn_checkArticle = new QPushButton(qi1, btnText, m_toolbar);
   btn_checkArticle->setToolTip(
       tr("Create a search query to see if all items are available."));
   m_toolbar->addWidget(btn_checkArticle);
@@ -118,7 +112,6 @@ PurchaseOverview::PurchaseOverview(const QString &id, QWidget *parent)
   // Kunde prüfen/anlegen
   connect(m_customerId, SIGNAL(textChanged(const QString &)), this,
           SLOT(customerChanged(const QString &)));
-  connect(btn_createCustomer, SIGNAL(clicked()), this, SIGNAL(checkCustomer()));
 }
 
 void PurchaseOverview::customerChanged(const QString &id) {
@@ -127,7 +120,6 @@ void PurchaseOverview::customerChanged(const QString &id) {
 
   int cid = getCustomerId();
   if (cid > 0) {
-    btn_createCustomer->setEnabled(false);
     emit customerIdChanged(cid);
   }
 }
@@ -188,6 +180,11 @@ void PurchaseOverview::setValue(const QString &objName, const QVariant &value) {
 
   if (objName.contains("_phone_") || objName.contains("_mobil_")) {
     setPhone(objName, value);
+    return;
+  }
+
+  if (objName == "person") {
+    m_customerInfo->setText(value.toString());
     return;
   }
 

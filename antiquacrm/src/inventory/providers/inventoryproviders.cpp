@@ -109,6 +109,20 @@ bool InventoryProviders::validInterfaceProperties(
   return true;
 }
 
+void InventoryProviders::updateTreeViewOrdersStatus(
+    const QString &provider, const QStringList &orderIds) {
+  QString sql = queryOrderStatusList(provider, orderIds);
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    while (q.next()) {
+      QString orderId = q.value("id").toString();
+      int status = q.value("status").toInt();
+      if (status > 0)
+        m_listView->updateItemStatus(provider, orderId, status);
+    }
+  }
+}
+
 void InventoryProviders::searchConvert() {
   if (p_iFaces.count() > 0) {
     QListIterator<Antiqua::Interface *> it(p_iFaces);
@@ -143,8 +157,9 @@ bool InventoryProviders::loadInterfaces() {
     p_providerList.append(iface->objectName());
     connect(iface, SIGNAL(listResponse(const QJsonDocument &)), this,
             SLOT(readOrderList(const QJsonDocument &)));
-    connect(iface, SIGNAL(s_errorResponse(Antiqua::ErrorStatus, const QString &)), this,
-            SLOT(pluginError(Antiqua::ErrorStatus, const QString &)));
+    connect(iface,
+            SIGNAL(s_errorResponse(Antiqua::ErrorStatus, const QString &)),
+            this, SLOT(pluginError(Antiqua::ErrorStatus, const QString &)));
 
     iface->queryMenueEntries();
     p_iFaces.append(iface);
@@ -171,12 +186,17 @@ void InventoryProviders::queryOrder(const QString &provider,
               SLOT(createNewCustomer(const QJsonDocument &)));
       connect(w, SIGNAL(checkArticleIds(QList<int> &)), this,
               SLOT(checkArticleExists(QList<int> &)));
-      connect(w, SIGNAL(errorResponse(Antiqua::ErrorStatus, const QString &)), this,
-              SLOT(pluginError(Antiqua::ErrorStatus, const QString &)));
+      connect(w, SIGNAL(errorResponse(Antiqua::ErrorStatus, const QString &)),
+              this, SLOT(pluginError(Antiqua::ErrorStatus, const QString &)));
       connect(w, SIGNAL(openArticle(int)), this,
               SLOT(checkOpenEditArticle(int)));
 
-      m_pageView->addPage(w, orderId);
+      int index = m_pageView->addPage(w, orderId);
+      if (index < 0)
+        return;
+
+      QString info = provider + ": " + orderId;
+      m_pageView->setTabDescription(index, info);
 
       /**
        * @warning tabExists() @b MUSS UNBEDINGT vor createOrderRequest()
@@ -489,13 +509,18 @@ void InventoryProviders::readOrderList(const QJsonDocument &doc) {
   if (doc.isEmpty())
     return;
 
+  QStringList orderIds;
   QString provider = QJsonValue(doc["provider"]).toString();
   QJsonArray array = QJsonValue(doc["items"]).toArray();
   for (int i = 0; i < array.count(); i++) {
     QJsonObject obj = array[i].toObject();
     QDateTime dt = QDateTime::fromString(obj["datum"].toString(), Qt::ISODate);
+    orderIds << obj["id"].toString();
     m_listView->addOrder(provider, obj["id"].toString(), dt);
   }
+
+  if (orderIds.count() > 0)
+    updateTreeViewOrdersStatus(provider, orderIds);
 
   int count = m_listView->ordersCount();
   if (count > 0) {
@@ -503,9 +528,11 @@ void InventoryProviders::readOrderList(const QJsonDocument &doc) {
     info.append(QString::number(count));
     m_toolBar->statusMessage(info);
   }
+  orderIds.clear();
 }
 
-void InventoryProviders::pluginError(Antiqua::ErrorStatus code, const QString &msg) {
+void InventoryProviders::pluginError(Antiqua::ErrorStatus code,
+                                     const QString &msg) {
   if (code == 0) {
     m_toolBar->statusMessage(msg);
     return;

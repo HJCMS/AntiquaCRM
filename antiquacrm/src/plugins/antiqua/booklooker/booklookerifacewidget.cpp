@@ -16,11 +16,24 @@ BooklookerIfaceWidget::BooklookerIfaceWidget(const QString &orderId,
 
   m_requester = new BooklookerRequester(this);
   m_requester->setObjectName("requester_" + orderId);
-  connect(m_requester, SIGNAL(errorMessage(Antiqua::ErrorStatus, const QString &)), this,
+  connect(m_requester,
+          SIGNAL(errorMessage(Antiqua::ErrorStatus, const QString &)), this,
           SIGNAL(errorResponse(Antiqua::ErrorStatus, const QString &)));
 
   connect(m_requester, SIGNAL(response(const QJsonDocument &)), this,
           SLOT(setContent(const QJsonDocument &)));
+}
+
+void BooklookerIfaceWidget::setCurrentDocument(const QJsonObject &obj) {
+  QJsonArray arr;
+  arr.append(QJsonValue(obj));
+  QJsonObject out;
+  out.insert("returnValue", arr);
+  out.insert("status", "ok");
+  p_currentDocument = QJsonDocument(out);
+#ifdef ANTIQUA_DEVELOPEMENT
+  saveSources(p_currentDocument, getOrderId());
+#endif
 }
 
 const QJsonDocument
@@ -180,6 +193,9 @@ void BooklookerIfaceWidget::createCustomerDocument() {
 }
 
 void BooklookerIfaceWidget::setContent(const QJsonDocument &doc) {
+  // Muss unbedingt an dieser Stelle geleert werden!
+  p_currentDocument = QJsonDocument();
+
   if (QJsonValue(doc["status"]).toString() == "NOK") {
     QString value = QJsonValue(doc["returnValue"]).toString();
     if (value == "INVALID_ORDERID") {
@@ -193,20 +209,17 @@ void BooklookerIfaceWidget::setContent(const QJsonDocument &doc) {
     return;
   }
 
-#ifdef ANTIQUA_DEVELOPEMENT
-  saveSources(doc, getOrderId());
-#endif
-
-  p_currentDocument = doc;
-
   qint64 searchId = getOrderId().toLongLong();
   QJsonArray array = QJsonValue(doc["returnValue"]).toArray();
   for (int i = 0; i < array.size(); i++) {
     if (array[i].isObject()) {
       QJsonObject obj = array[i].toObject();
       qint64 index = obj.value("orderId").toInt();
-      if(index != searchId)
+      if (index != searchId)
         continue;
+
+      // Puffer erstellen
+      setCurrentDocument(obj);
 
       QJsonObject::iterator it;
       for (it = obj.begin(); it != obj.end(); ++it) {

@@ -72,6 +72,7 @@ private:
 
 private Q_SLOTS:
   void mainCategoryChanged(int index);
+  void subCategoryChanged(int index);
   void searchChanged(const QString &);
   void syncronizeClicked();
   void openHelperDialog();
