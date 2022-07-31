@@ -60,6 +60,7 @@ protected:
    * @brief Felder von Standardabfragen ausschließen
    */
   QStringList ignoreList;
+  bool isInIgnoreList(const QString &);
 
   /**
    * @ingroup Feldlisten

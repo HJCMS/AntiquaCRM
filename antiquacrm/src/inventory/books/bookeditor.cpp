@@ -27,6 +27,8 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
 
   ApplSettings config;
 
+  ignoreList << "ib_json_category";
+
   Qt::Alignment defaultAlignment = (Qt::AlignRight | Qt::AlignVCenter);
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -364,7 +366,7 @@ void BookEditor::setInputList() {
   }
   // Werden Manuel gesetzt!
   inputList.removeOne("ib_changed");
-  // Deprecated
+  // Deprecated / Obsolete
   inputList.removeOne("ib_category_subject");
 }
 
@@ -424,6 +426,10 @@ const QHash<QString, QVariant> BookEditor::createSqlDataset() {
   QList<UtilsMain *>::Iterator it;
   for (it = list.begin(); it != list.end(); ++it) {
     UtilsMain *cur = *it;
+    QString objName = cur->objectName();
+    if (isInIgnoreList(objName))
+      continue;
+
     if (cur->isRequired() && !cur->isValid()) {
       sqlNoticeMessage(cur->notes());
       cur->setFocus();
@@ -431,10 +437,13 @@ const QHash<QString, QVariant> BookEditor::createSqlDataset() {
       return data;
     }
     // qDebug() << "Book:" << cur->objectName() << cur->value() << cur->notes();
-    data.insert(cur->objectName(), cur->value());
+    data.insert(objName, cur->value());
   }
   list.clear();
-  // Kategorien
+  /**
+   * @short Kategorien
+   * @see ignoreList
+   */
   QJsonObject sections = m_json_category->value().toJsonObject();
   data.insert("ib_category_main", sections.value("main").toString());
   data.insert("ib_category_sub", sections.value("sub").toString());

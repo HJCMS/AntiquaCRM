@@ -10,6 +10,7 @@
 #endif
 
 #include <QDebug>
+#include <QStringList>
 
 EditorMain::EditorMain(QWidget *parent) : QWidget{parent} {
   setContentsMargins(5, 5, 5, 5);
@@ -18,6 +19,18 @@ EditorMain::EditorMain(QWidget *parent) : QWidget{parent} {
   m_sql = new HJCMS::SqlCore(this);
 
   m_ipc = new ApplicationClient(this);
+}
+
+bool EditorMain::isInIgnoreList(const QString &key) {
+  if (ignoreList.size() < 1 || key.isEmpty())
+    return false;
+
+  QStringListIterator it(ignoreList);
+  while (it.hasNext()) {
+    if (it.next() == key)
+      return true;
+  }
+  return false;
 }
 
 void EditorMain::socketStatusMessage(const QString &message) {
