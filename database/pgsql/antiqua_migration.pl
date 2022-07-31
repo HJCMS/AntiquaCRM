@@ -13,7 +13,6 @@ use DBI;
 use Text::Roman qw(:all);
 use Switch;
 
-
 my $enable_migration = "full";
 
 ## Wird für Umlaute auf dem terminial benötigt
