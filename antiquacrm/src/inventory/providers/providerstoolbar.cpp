@@ -70,7 +70,7 @@ void ProvidersToolBar::statusMessage(const QString &msg) {
 }
 
 void ProvidersToolBar::warningMessage(const QString &msg) {
-  QString txt("<i style='color:darkRed;'>");
+  QString txt("<i style='color:darkYellow;'>");
   txt.append(timeString() + " ");
   txt.append(msg.trimmed());
   txt.append("</i>");

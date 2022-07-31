@@ -10,6 +10,7 @@
 // Utils
 #include "eucountries.h"
 #include "genderbox.h"
+#include "messagebox.h"
 
 #include <QDebug>
 #include <QMessageBox>
@@ -533,14 +534,25 @@ void InventoryProviders::readOrderList(const QJsonDocument &doc) {
 
 void InventoryProviders::pluginError(Antiqua::ErrorStatus code,
                                      const QString &msg) {
-  if (code == 0) {
-    m_toolBar->statusMessage(msg);
-    return;
-  }
-
 #ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << code << msg;
 #endif
+
+  switch (code) {
+  case (Antiqua::ErrorStatus::WARNING): {
+    m_toolBar->warningMessage(msg);
+    return;
+  }
+
+  case (Antiqua::ErrorStatus::FATAL): {
+    (new MessageBox(this))->failed(msg);
+    return;
+  }
+
+  default: // Antiqua::ErrorStatus::NOTICE
+    m_toolBar->statusMessage(msg);
+    return;
+  }
 }
 
 void InventoryProviders::onEnterChanged() {
