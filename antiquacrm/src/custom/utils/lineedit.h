@@ -45,6 +45,9 @@ public Q_SLOTS:
   Q_INVOKABLE void reset();
   void setFocus();
 
+Q_SIGNALS:
+  void textChanged(const QString &);
+
 public:
   explicit LineEdit(QWidget *parent = nullptr, bool enableStretch = false);
 

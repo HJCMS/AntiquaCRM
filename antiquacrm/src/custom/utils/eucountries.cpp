@@ -118,23 +118,36 @@ void EUCountryBox::reset() {
   setModified(false);
 }
 
+void EUCountryBox::findCountry(const QString &country) {
+  QString search = country.trimmed();
+  if (country.contains("/")) {
+    search = search.split("/").first();
+  }
+  // Schritt: Volltextsuche
+  int index = m_box->findData(search, Qt::DisplayRole, Qt::MatchStartsWith);
+  if (index > 0) {
+    m_box->setCurrentIndex(index);
+    setModified(true);
+  }
+  qDebug() << Q_FUNC_INFO << country << index << objectName();
+}
+
 void EUCountryBox::setFocus() { m_box->setFocus(); }
 
 void EUCountryBox::setValue(const QVariant &val) {
   QString search = val.toString().toLower();
   // Schritt: 1 nach IETF BCP 47 suchen.
   int index = m_box->findData(search, Qt::UserRole, Qt::MatchExactly);
-  if(index > 0) {
+  if (index > 0) {
     m_box->setCurrentIndex(index);
-    setModified(true);
-    return;
+  } else {
+    // Schritt: 2 Volltextsuche
+    index = m_box->findData(search, Qt::DisplayRole, Qt::MatchStartsWith);
+    if (index > 0) {
+      m_box->setCurrentIndex(index);
+    }
   }
-  // Schritt: 2 Volltextsuche
-  index = m_box->findData(search, Qt::DisplayRole, Qt::MatchStartsWith);
-  if(index > 0) {
-    m_box->setCurrentIndex(index);
-    setModified(true);
-  }
+  setModified((index > 0));
 }
 
 const QVariant EUCountryBox::value() {

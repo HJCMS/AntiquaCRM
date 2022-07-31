@@ -145,6 +145,7 @@ const QHash<QString, QVariant> EditCustomer::createSqlDataset() {
     if (ignoreList.contains(cur->objectName(), Qt::CaseSensitive))
       continue;
 
+    // qDebug() << Q_FUNC_INFO << cur->objectName();
     if (cur->isRequired() && !cur->isValid()) {
       messanger.notice(cur->notes());
       cur->setFocus();
@@ -188,7 +189,7 @@ void EditCustomer::createSqlUpdate() {
 
   if (sendSqlQuery(sql)) {
 #ifdef ANTIQUA_DEVELOPEMENT
-    qInfo("Update Customer Interfaces");
+    qInfo("SQLQuery:OK - Update Customer Interfaces");
 #endif
     updateCustomer("c_id=" + cid);
   }

@@ -78,6 +78,7 @@ CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
 
   c_country_bcp47 = new EUCountryBox(this);
   c_country_bcp47->setObjectName("c_country_bcp47");
+  c_country_bcp47->setToolTip("RFC 4647/BCP 47 Language selection");
   countryLayout->addWidget(c_country_bcp47);
 
   row2->addLayout(countryLayout, gridRow++, 1, 1, 1);
@@ -196,6 +197,8 @@ CustomerContact::CustomerContact(QWidget *parent) : QWidget{parent} {
   layout->addStretch(1);
   setLayout(layout);
 
+  // connect(c_country, SIGNAL(textChanged(QString)), c_country_bcp47,
+  // SLOT(findCountry(QString)));
   connect(addressGen, SIGNAL(clicked()), this, SLOT(generateAddressBody()));
   connect(c_postalcode, SIGNAL(editingFinished()), this,
           SLOT(postalCodeComplite()));

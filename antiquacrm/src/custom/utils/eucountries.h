@@ -42,6 +42,7 @@ private Q_SLOTS:
 
 public Q_SLOTS:
   Q_INVOKABLE void reset();
+  void findCountry(const QString &);
   void setFocus();
   void setValue(const QVariant &);
 

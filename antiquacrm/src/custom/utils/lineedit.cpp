@@ -56,6 +56,7 @@ LineEdit::LineEdit(QWidget *parent, bool enableStretch) : UtilsMain{parent} {
 void LineEdit::inputChanged(const QString &str) {
   Q_UNUSED(str)
   setModified(true);
+  emit textChanged(str);
 }
 
 void LineEdit::setValue(const QVariant &val) {
