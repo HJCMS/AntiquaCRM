@@ -128,6 +128,15 @@ void ImageView::rotate() {
   update();
 }
 
+void ImageView::setModified(bool b) {
+  if (modified != b) {
+    modified = b;
+    emit hasModified(true);
+  } else {
+    emit hasModified(false);
+  }
+}
+
 void ImageView::clear() {
   m_scene->clear();
   m_pixmap = m_scene->addPixmap(QPixmap(0, 0));
@@ -140,8 +149,8 @@ bool ImageView::saveImageTo(const SourceInfo &info) {
   if (p_pixmap.isNull())
     return false;
 
-  QPixmap p = p_pixmap.scaled(screenSize(), Qt::KeepAspectRatio,
-                              Qt::SmoothTransformation);
+  QPixmap p = p_pixmap.scaled(screenSize(), /* auf Desktopgröße reduzieren */
+                              Qt::KeepAspectRatio, Qt::SmoothTransformation);
   QImage img = p.toImage();
   if (img.isNull())
     return false;
@@ -152,7 +161,7 @@ bool ImageView::saveImageTo(const SourceInfo &info) {
 
   QFile fp(dest.getFileTarget());
   if (fp.open(QIODevice::WriteOnly)) {
-    img.save(&fp, p_format.data());
+    img.save(&fp, p_format.data(), quality());
     fp.close();
     return true;
   }
@@ -208,7 +217,7 @@ bool ImageView::storeInDatabase(int articleId) {
   QByteArray rawimg;
   QBuffer buffer(&rawimg);
   buffer.open(QIODevice::WriteOnly);
-  img.save(&buffer, p_format.data());
+  img.save(&buffer, p_format.data(), quality());
   buffer.close();
 
   QByteArray base64 = rawimg.toBase64();
@@ -280,6 +289,8 @@ const QImage ImageView::getImage() {
 
   return m_pixmap->pixmap().toImage();
 }
+
+bool ImageView::isModified() { return modified; }
 
 ImageView::~ImageView() {
   m_pixmap = m_scene->addPixmap(QPixmap(0, 0));

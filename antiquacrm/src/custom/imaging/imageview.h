@@ -10,7 +10,6 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QImage>
-#include <QFileInfo>
 #include <QObject>
 #include <QPixmap>
 #include <QResizeEvent>
@@ -33,8 +32,11 @@ class ImageView final : public QGraphicsView {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
+  Q_PROPERTY(
+      bool modified READ isModified WRITE setModified NOTIFY modifiedChanged)
 
 private:
+  bool modified;
   HJCMS::SqlCore *m_sql;
   const QSize p_max;
   const QByteArray p_format;
@@ -65,15 +67,23 @@ protected:
   /**
    * @brief Mit Mausrad Zoomen
    */
-  void wheelEvent(QWheelEvent *event);
+  void wheelEvent(QWheelEvent *event) override;
 
   /**
    * @brief Bild auf Rahmen Skalieren
    * @warning Es muss immer ein Pixmap vorhanden sein sonst crasht es hier!
    */
-  void resizeEvent(QResizeEvent *event);
+  void resizeEvent(QResizeEvent *event) override;
 
 Q_SIGNALS:
+  /**
+   * @brief Änderungen aufzeichnen
+   */
+  void hasModified(bool);
+
+  /** Wegen QML eingefügt */
+  void modifiedChanged();
+
   /**
    * @brief Wird von den Bildlade Methoden ausgelöst.
    * Folgenden Methoden können bei Erfolg/Fehlschlag auslösen:
@@ -111,6 +121,11 @@ public Q_SLOTS:
   void rotate();
 
   /**
+   * @brief Setz oder entfernt Modifizierung
+   */
+  Q_INVOKABLE void setModified(bool b);
+
+  /**
    * @brief Szene leeren und ein Leeres Pixmap einfügen!
    * @warning resizeEvent();
    * @note Es gibt keine Möglichkeit einen QGraphicsPixmapItem auf Inhalt zu
@@ -122,6 +137,11 @@ public Q_SLOTS:
 
 public:
   ImageView(QSize maxsize, QWidget *parent = nullptr);
+
+  /**
+   * @brief Standard Bild Qualität beim Speichern.
+   */
+  static inline int quality() { return 90; }
 
   /**
    * @brief Das gedrehte Bild in das Archiv speichern
@@ -151,6 +171,11 @@ public:
    * @brief Ansicht zurückgeben!
    */
   const QImage getImage();
+
+  /**
+   * @brief Datensatz wurde geändert?
+   */
+  Q_INVOKABLE bool isModified();
 
   ~ImageView();
 };

@@ -109,7 +109,7 @@ void WHSoft::updateArticleCount(int articleId, int count) {
 void WHSoft::uploadArticleImage(int articleId, const QString &base64) {
   QJsonObject jo;
   jo.insert("bestellnr", QJsonValue(QString::number(articleId)));
-  jo.insert("bildnummer", QJsonValue(1));
+  jo.insert("bildnummer", QJsonValue(0));
   jo.insert("content", QJsonValue(base64));
   QJsonDocument jdoc(jo);
   if (jdoc.isNull()) {
