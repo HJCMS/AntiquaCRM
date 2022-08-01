@@ -153,6 +153,13 @@ public:
   explicit BooklookerRequester(QObject *parent = nullptr);
 
   /**
+   * @brief Sende Statusänderungen für Bestellung
+   * @param orderId
+   * @param status
+   */
+  void queryUpdateOrderStatus(const QString &orderId, const QString &status);
+
+  /**
    * @brief Bestellung abfragen
    * Download aller Bestellungen eines bestimmten Tages bzw. Zeitintervalls.
    * https://api.booklooker.de/2.0/order?token=REST_API_TOKEN

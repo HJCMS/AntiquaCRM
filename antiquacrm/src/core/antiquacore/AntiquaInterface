@@ -20,3 +20,7 @@
 #ifndef ANTIQUA_PURCHASERORDERTABLE_H
 # include "purchaserordertable.h"
 #endif
+
+#ifndef ANTIQUA_PURCHASEOVERVIEW_H
+# include "purchaseoverview.h"
+#endif

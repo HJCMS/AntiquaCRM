@@ -26,6 +26,8 @@ private:
   QHash<QString, QString> p_customer;
   QJsonDocument p_currentDocument;
 
+  void setOrderUpdateTypes();
+
   /**
    * @brief Erstellt abfrage Datensatz für Kundenabfrage
    */
@@ -39,6 +41,7 @@ private:
 private Q_SLOTS:
   void checkCustomerClicked();
   void readCurrentArticleIds();
+  void providerOrderUpdateStatus(Antiqua::PaymentStatus);
 
 public Q_SLOTS:
   /**

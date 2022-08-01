@@ -4,7 +4,7 @@
 <context>
     <name>AbeBooksIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+320"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+331"/>
         <source>Buyer Cancelled</source>
         <translation>Käufer stornierte</translation>
     </message>
@@ -78,9 +78,42 @@
 <context>
     <name>Antiqua::InterfaceWidget</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+357"/>
+        <location filename="../core/antiquacore/interface.cpp" line="+76"/>
         <source>Please select</source>
         <translation>Bitte auswählen</translation>
+    </message>
+</context>
+<context>
+    <name>Antiqua::PaymentOrderUpdate</name>
+    <message>
+        <location filename="../core/antiquacore/paymentorderupdate.cpp" line="+10"/>
+        <source>Provider Status - no disclosures</source>
+        <translation>Anbieterstatus – keine Angaben</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Wait for Order Payment</source>
+        <translation>Warte auf Zahlung der Bestellung</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Order is ready for Shipment</source>
+        <translation>Bestellung ist versandbereit</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Order shipped, wait for Payment.</source>
+        <translation>Bestellung versandt, warte auf Zahlung.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Order Shipped and Paid</source>
+        <translation>Bestellung versandt und bezahlt</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Order Buyer no reaction.</source>
+        <translation>Keine Käufer Reaktion auf Transaktionen.</translation>
     </message>
 </context>
 <context>
@@ -99,7 +132,7 @@
 <context>
     <name>Antiqua::PurchaseOverview</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="-311"/>
+        <location filename="../core/antiquacore/purchaseoverview.cpp" line="+46"/>
         <source>Purchaser</source>
         <translation>Einkäufer*in</translation>
     </message>
@@ -152,7 +185,7 @@
 <context>
     <name>Antiqua::PurchasePaymentInfo</name>
     <message>
-        <location filename="../core/antiquacore/purchasepaymentinfo.cpp" line="+57"/>
+        <location filename="../core/antiquacore/purchasepaymentinfo.cpp" line="+58"/>
         <source>Payment method</source>
         <translation>Zahlungsmethode</translation>
     </message>
@@ -167,7 +200,12 @@
         <translation>Bezahlung bestätigt</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+9"/>
+        <source>Update Order status</source>
+        <translation>Bestellstatus aktualisieren</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <location line="+5"/>
         <source>Shipping costs</source>
         <translation>Versandkosten</translation>
@@ -446,7 +484,7 @@
         <translation>Editiere Buchtitel</translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+42"/>
         <source>Signed Version</source>
         <translation>Signierte Version</translation>
     </message>
@@ -612,12 +650,12 @@
         <translation>Das Bild wurde Erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+63"/>
         <source>Missing Article ID for Update.</source>
         <translation>Keine Artikel ID für Update vorhanden.</translation>
     </message>
     <message>
-        <location line="+109"/>
+        <location line="+110"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
@@ -632,7 +670,7 @@
         <translation>Buch Deaktivierung</translation>
     </message>
     <message>
-        <location line="-472"/>
+        <location line="-480"/>
         <source>Extended Title or Subtitle.</source>
         <translation>Erweiterter Buchtitel oder Untertitel.</translation>
     </message>
@@ -642,12 +680,12 @@
         <translation>Möchten Sie wirklich dieses Bild entfernen?</translation>
     </message>
     <message>
-        <location line="+233"/>
+        <location line="+241"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation>Beim Setzen des Zählers dieses Buches auf 0 werden alle bestehenden Bestellungen dieses Eintrags ebenfalls deaktiviert und Shopsystem-Einträge zum Löschen markiert.</translation>
     </message>
     <message>
-        <location line="-321"/>
+        <location line="-329"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
@@ -771,7 +809,7 @@
 <context>
     <name>BooklookerRequester</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+176"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+185"/>
         <source>Missing API Key</source>
         <translation>Kein API Schlüssel gefunden</translation>
     </message>
@@ -796,12 +834,13 @@
         <translation>Die maximale Anzahl Abfragen/Minute wurde überschritten</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+91"/>
+        <location line="+3"/>
         <source>Invalid Document response!</source>
         <translation>Ungültige Dokumentantwort!</translation>
     </message>
     <message>
-        <location line="-100"/>
+        <location line="-104"/>
         <source>Server down</source>
         <translation>Server ist nicht vefügbar</translation>
     </message>
@@ -1056,7 +1095,7 @@
 <context>
     <name>CategorySubject</name>
     <message>
-        <location filename="../custom/categoryedit/categorysubject.cpp" line="+57"/>
+        <location filename="../custom/categoryedit/categorysubject.cpp" line="+58"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
@@ -1096,7 +1135,7 @@
         <translation>In Diesem Bereich werden die Kategorien definiert welche von ihrem Dienstleister fest vergeben sind. Letztentlich wird hier entschieden in welcher Kategorie ihr Buch zum Verkauf steht.</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+63"/>
         <source>General</source>
         <translation>Allgemein</translation>
     </message>
@@ -1640,7 +1679,7 @@
         <translation>Land/Bundesland oder Kanton</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Location</source>
         <translation>Wohnort</translation>
     </message>
@@ -2233,7 +2272,7 @@
         <translation>Kein Europäsches Land</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+81"/>
         <source>a valid Country selection is required!</source>
         <translation>Eine gültige EU-Staatenauswahl ist Erforderlich!</translation>
     </message>
@@ -2284,7 +2323,7 @@
         <translation>Speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+137"/>
+        <location line="+138"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
@@ -2869,7 +2908,7 @@
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+28"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+29"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
@@ -2889,7 +2928,7 @@
         <translation>Erforderliche Versandeigenschaften fehlen!</translation>
     </message>
     <message>
-        <location line="+143"/>
+        <location line="+144"/>
         <location line="+5"/>
         <location line="+12"/>
         <source>Europe</source>
@@ -2957,7 +2996,7 @@
         <translation>Fehlerhafte Kundennummer!</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Invalid Shipping Properties!</source>
         <translation>Ungültige Versandeigenschaften!</translation>
     </message>
@@ -2967,7 +3006,7 @@
         <translation>Anzahl der Bestellungen</translation>
     </message>
     <message>
-        <location line="-447"/>
+        <location line="-449"/>
         <location line="+14"/>
         <source>Article</source>
         <translation>Artikel</translation>
@@ -3283,7 +3322,7 @@
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../custom/utils/lineedit.cpp" line="+94"/>
+        <location filename="../custom/utils/lineedit.cpp" line="+95"/>
         <source>Suggestions available</source>
         <translation>Vorschläge verfügbar</translation>
     </message>
@@ -3475,13 +3514,13 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+815"/>
+        <location line="+817"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-894"/>
+        <location line="-896"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
@@ -3552,12 +3591,12 @@
     </message>
     <message>
         <location line="+292"/>
-        <location line="+514"/>
+        <location line="+516"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="-499"/>
+        <location line="-501"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
     </message>
@@ -3640,7 +3679,7 @@
         <translation>Möchten Sie wirklich diesen Auftrag schließen und an die Buchhaltung weiter reichen?</translation>
     </message>
     <message>
-        <location line="+214"/>
+        <location line="+216"/>
         <source>can&apos;t create order without costumer Id.</source>
         <translation>Kann keinen Auftrag ohne Kundennummer generieren.</translation>
     </message>
@@ -3660,7 +3699,7 @@
         <translation>Bestellung</translation>
     </message>
     <message>
-        <location line="-512"/>
+        <location line="-514"/>
         <location line="+249"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
@@ -4989,6 +5028,11 @@
         <location line="+2"/>
         <source>Order completed</source>
         <translation>Auftrag abgeschlossen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Order canceled</source>
+        <translation>Bestellung storniert</translation>
     </message>
 </context>
 <context>

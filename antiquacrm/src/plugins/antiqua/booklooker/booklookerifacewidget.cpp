@@ -147,6 +147,44 @@ void BooklookerIfaceWidget::readCurrentArticleIds() {
     emit checkArticleIds(ids);
 }
 
+void BooklookerIfaceWidget::providerOrderUpdateStatus(
+    Antiqua::PaymentStatus status) {
+  QString order_status;
+  switch (status) {
+  case (Antiqua::PaymentStatus::ORDER_WAIT_FOR_PAYMENT): {
+    order_status = QString("WAITING_FOR_PAYMENT");
+    break;
+  }
+  // fertig zum Versand
+  case (Antiqua::PaymentStatus::ORDER_READY_FOR_SHIPMENT): {
+    order_status = QString("READY_FOR_SHIPMENT");
+    break;
+  }
+  // versendet, warte auf Zahlung
+  case (Antiqua::PaymentStatus::ORDER_SHIPPED_WAIT_FOR_PAYMENT): {
+    order_status = QString("SHIPPED_WAITING_FOR_PAYMENT");
+    break;
+  }
+  // versendet & bezahlt
+  case (Antiqua::PaymentStatus::ORDER_SHIPPED_AND_PAID): {
+    order_status = QString("SHIPPED_AND_PAID");
+    break;
+  }
+  // Kunde reagiert nicht
+  case (Antiqua::PaymentStatus::ORDER_BUYER_NO_REACTION): {
+    order_status = QString("BUYER_NO_REACTION");
+    break;
+  }
+  default:
+    qWarning("Unknown: order_status Action");
+  };
+
+  if (order_status.isEmpty())
+    return;
+
+  m_requester->queryUpdateOrderStatus(getOrderId(), order_status);
+}
+
 void BooklookerIfaceWidget::createCustomerDocument() {
   if (p_currentDocument.isEmpty()) {
     qDebug() << Q_FUNC_INFO << "Current Json Document is empty!";
@@ -256,6 +294,26 @@ void BooklookerIfaceWidget::createOrderRequest() {
     return;
   }
   m_requester->queryOrder(getOrderId());
+}
+
+void BooklookerIfaceWidget::setOrderUpdateTypes() {
+  QMap<Antiqua::PaymentStatus, QString> map;
+  map.insert(Antiqua::PaymentStatus::ORDER_WAIT_FOR_PAYMENT,
+             QString("WAITING_FOR_PAYMENT"));
+  // fertig zum Versand
+  map.insert(Antiqua::PaymentStatus::ORDER_READY_FOR_SHIPMENT,
+             QString("READY_FOR_SHIPMENT"));
+  // versendet, warte auf Zahlung
+  map.insert(Antiqua::PaymentStatus::ORDER_SHIPPED_WAIT_FOR_PAYMENT,
+             QString("SHIPPED_WAITING_FOR_PAYMENT"));
+  // versendet & bezahlt
+  map.insert(Antiqua::PaymentStatus::ORDER_SHIPPED_AND_PAID,
+             QString("SHIPPED_AND_PAID"));
+  // Kunde reagiert nicht
+  map.insert(Antiqua::PaymentStatus::ORDER_BUYER_NO_REACTION,
+             QString("BUYER_NO_REACTION"));
+
+  m_order->setOrderUpdateActions(map);
 }
 
 void BooklookerIfaceWidget::setCustomerId(int customerId) {

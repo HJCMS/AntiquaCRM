@@ -18,6 +18,12 @@ WHSoftWidget::WHSoftWidget(const QString &orderId, QWidget *parent)
   setEnabled(false);
 }
 
+void WHSoftWidget::setOrderUpdateTypes()
+{
+  QMap<Antiqua::PaymentStatus,QString> map;
+  qDebug() << Q_FUNC_INFO << "TODO" << map.size();
+}
+
 void WHSoftWidget::createCustomerDocument() {
   if (p_currentDocument.isEmpty()) {
     qWarning("Current Json Document is empty!");
@@ -113,6 +119,11 @@ void WHSoftWidget::readCurrentArticleIds() {
   QList<int> ids = m_order->getArticleIDs();
   if (ids.count() > 0)
     emit checkArticleIds(ids);
+}
+
+void WHSoftWidget::providerOrderUpdateStatus(Antiqua::PaymentStatus status)
+{
+  qDebug() << Q_FUNC_INFO << "TODO" << status;
 }
 
 void WHSoftWidget::setContent(const QJsonDocument &doc) {

@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "purchasepaymentinfo.h"
+#include "paymentorderupdate.h"
 #include <QDebug>
 #include <QtWidgets>
 
@@ -74,7 +75,12 @@ PurchasePaymentInfo::PurchasePaymentInfo(QWidget *parent) : QWidget{parent} {
 
   m_paymentConfirmed = new PLineRead(this);
   m_paymentConfirmed->setObjectName("o_payment_confirmed");
-  layout->addWidget(m_paymentConfirmed, row++, 1, 1, 1);
+  layout->addWidget(m_paymentConfirmed, row, 1, 1, 1);
+
+  m_updateAction = new PaymentOrderUpdate(this);
+  m_updateAction->setObjectName("o_order_status_update");
+  m_updateAction->setToolTip(tr("Update Order status"));
+  layout->addWidget(m_updateAction, row++, 2, 1, 2);
 
   QLabel *info_shipping = new QLabel(tr("Shipping costs") + ":", this);
   layout->addWidget(info_shipping, row, 0, 1, 1, Qt::AlignRight);
@@ -114,6 +120,43 @@ PurchasePaymentInfo::PurchasePaymentInfo(QWidget *parent) : QWidget{parent} {
 
   layout->setRowStretch(row, 1);
   setLayout(layout);
+
+  connect(m_updateAction, SIGNAL(currentIndexChanged(int)), this,
+          SLOT(updateOrderChanged(int)));
+}
+
+void PurchasePaymentInfo::updateOrderChanged(int index) {
+  switch (index) {
+  case (PaymentStatus::ORDER_WAIT_FOR_PAYMENT): {
+    emit sendUpdateOrderStatus(Antiqua::PaymentStatus::ORDER_WAIT_FOR_PAYMENT);
+    break;
+  }
+  case (PaymentStatus::ORDER_READY_FOR_SHIPMENT): {
+    emit sendUpdateOrderStatus(
+        Antiqua::PaymentStatus::ORDER_READY_FOR_SHIPMENT);
+    break;
+  }
+  case (PaymentStatus::ORDER_SHIPPED_WAIT_FOR_PAYMENT): {
+    emit sendUpdateOrderStatus(
+        Antiqua::PaymentStatus::ORDER_SHIPPED_WAIT_FOR_PAYMENT);
+    break;
+  }
+  case (PaymentStatus::ORDER_SHIPPED_AND_PAID): {
+    emit sendUpdateOrderStatus(Antiqua::PaymentStatus::ORDER_SHIPPED_AND_PAID);
+    break;
+  }
+  case (PaymentStatus::ORDER_BUYER_NO_REACTION): {
+    emit sendUpdateOrderStatus(Antiqua::PaymentStatus::ORDER_BUYER_NO_REACTION);
+    break;
+  }
+  default:
+    qWarning("Unknown Antiqua::PaymentStatus::(%s)", qPrintable(QString::number(index)));
+  }
+}
+
+void PurchasePaymentInfo::setOrderUpdateActions(
+    const QMap<Antiqua::PaymentStatus, QString> &map) {
+  m_updateAction->setParams(map);
 }
 
 void PurchasePaymentInfo::setData(const QString &objName,

@@ -25,14 +25,14 @@ class ANTIQUACORE_EXPORT AbeBooksIfaceWidget final
 private:
   QHash<QString, QString> p_customer;
   QDomDocument p_currentDocument;
-
+  void setOrderUpdateTypes();
   const QJsonDocument customerRequest(const QJsonObject &object);
-
   void parseAddressBody(const QString &, const QJsonObject &);
 
 private Q_SLOTS:
   void checkCustomerClicked();
   void readCurrentArticleIds();
+  void providerOrderUpdateStatus(Antiqua::PaymentStatus);
 
 public Q_SLOTS:
   void createCustomerDocument();

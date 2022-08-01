@@ -181,6 +181,7 @@ void InventoryProviders::queryOrder(const QString &provider,
     Antiqua::Interface *iFace = it.next();
     if (iFace->objectName() == provider) {
       Antiqua::InterfaceWidget *w = iFace->addWidget(orderId, m_pageView);
+      w->setOrderUpdateTypes();
       connect(w, SIGNAL(checkCustomer(const QJsonDocument &)), this,
               SLOT(createQueryCustomer(const QJsonDocument &)));
       connect(w, SIGNAL(createCustomer(const QJsonDocument &)), this,
@@ -500,6 +501,7 @@ void InventoryProviders::createEditOrders() {
   if (pData.customerId() > 0 && pData.customerId() == current_cid) {
     // Um Doppelte Einträge zu vermeiden, abschalten!
     m_toolBar->enableOrderButton(false);
+    // Auftrag erstellen
     emit createOrder(pData);
   } else {
     m_toolBar->statusMessage(tr("Invalid Shipping Properties!"));

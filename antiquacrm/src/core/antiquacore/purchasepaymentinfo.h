@@ -6,9 +6,9 @@
 #define ANTIQUA_PURCHASEPAYMENTINFO_H
 
 #include <QComboBox>
+#include <QLineEdit>
 #include <QMap>
 #include <QObject>
-#include <QLineEdit>
 #include <QString>
 #include <QVariant>
 #include <QWidget>
@@ -17,6 +17,8 @@
 #include "paymenttypeset.h"
 
 namespace Antiqua {
+
+class PaymentOrderUpdate;
 
 class PaymentMethodSelect final : public QComboBox {
   Q_OBJECT
@@ -44,7 +46,6 @@ public:
   explicit PLineRead(QWidget *parent = nullptr);
 };
 
-
 /**
  * @brief Zahlungsinformationen
  * @class PurchasePaymentInfo
@@ -57,6 +58,7 @@ class ANTIQUACORE_EXPORT PurchasePaymentInfo : public QWidget {
 
 private:
   PaymentMethodSelect *o_payment_method;
+  PaymentOrderUpdate *m_updateAction;
   PLineRead *m_paymentTransactionId;
   PLineRead *m_paymentConfirmed;
   PLineRead *m_deliveryCost;
@@ -64,8 +66,15 @@ private:
   PLineRead *c_swift_bic;
   PLineRead *c_tax_id;
 
+private Q_SLOTS:
+  void updateOrderChanged(int);
+
+Q_SIGNALS:
+  void sendUpdateOrderStatus(Antiqua::PaymentStatus status);
+
 public:
   explicit PurchasePaymentInfo(QWidget *parent = nullptr);
+  void setOrderUpdateActions(const QMap<Antiqua::PaymentStatus, QString> &);
   void setData(const QString &objName, const QVariant &value);
   QMap<QString, QVariant> getAll();
 };

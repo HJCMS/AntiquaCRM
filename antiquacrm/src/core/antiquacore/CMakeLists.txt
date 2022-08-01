@@ -30,9 +30,11 @@ SET (subproject_SOURCES
   orderarticle.cpp
   providerorders.cpp
   paymenttypeset.cpp
+  paymentorderupdate.cpp
   purchasepaymentinfo.cpp
   purchasedebugtable.cpp
   purchaserordertable.cpp
+  purchaseoverview.cpp
   pluginloader.cpp
   networker.cpp
   curljson.cpp
@@ -48,9 +50,11 @@ SET (subproject_HEADERS
   orderarticle.h
   providerorders.h
   paymenttypeset.h
+  paymentorderupdate.h
   purchasepaymentinfo.h
   purchasedebugtable.h
   purchaserordertable.h
+  purchaseoverview.h
   networker.h
   curljson.h
   AntiquaCRM

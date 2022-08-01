@@ -4,7 +4,7 @@
 <context>
     <name>AbeBooksIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+320"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+331"/>
         <source>Buyer Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -78,8 +78,41 @@
 <context>
     <name>Antiqua::InterfaceWidget</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+357"/>
+        <location filename="../core/antiquacore/interface.cpp" line="+76"/>
         <source>Please select</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Antiqua::PaymentOrderUpdate</name>
+    <message>
+        <location filename="../core/antiquacore/paymentorderupdate.cpp" line="+10"/>
+        <source>Provider Status - no disclosures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Wait for Order Payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Order is ready for Shipment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Order shipped, wait for Payment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Order Shipped and Paid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Order Buyer no reaction.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -99,7 +132,7 @@
 <context>
     <name>Antiqua::PurchaseOverview</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="-311"/>
+        <location filename="../core/antiquacore/purchaseoverview.cpp" line="+46"/>
         <source>Purchaser</source>
         <translation type="unfinished"></translation>
     </message>
@@ -152,7 +185,7 @@
 <context>
     <name>Antiqua::PurchasePaymentInfo</name>
     <message>
-        <location filename="../core/antiquacore/purchasepaymentinfo.cpp" line="+57"/>
+        <location filename="../core/antiquacore/purchasepaymentinfo.cpp" line="+58"/>
         <source>Payment method</source>
         <translation type="unfinished"></translation>
     </message>
@@ -167,7 +200,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+9"/>
+        <source>Update Order status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <location line="+5"/>
         <source>Shipping costs</source>
         <translation type="unfinished"></translation>
@@ -446,7 +484,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+42"/>
         <source>Signed Version</source>
         <translation type="unfinished"></translation>
     </message>
@@ -612,12 +650,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+63"/>
         <source>Missing Article ID for Update.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+109"/>
+        <location line="+110"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -632,7 +670,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-472"/>
+        <location line="-480"/>
         <source>Extended Title or Subtitle.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -642,12 +680,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+233"/>
+        <location line="+241"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-321"/>
+        <location line="-329"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -771,7 +809,7 @@
 <context>
     <name>BooklookerRequester</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+176"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+185"/>
         <source>Missing API Key</source>
         <translation type="unfinished"></translation>
     </message>
@@ -796,12 +834,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+91"/>
+        <location line="+3"/>
         <source>Invalid Document response!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-100"/>
+        <location line="-104"/>
         <source>Server down</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1056,7 +1095,7 @@
 <context>
     <name>CategorySubject</name>
     <message>
-        <location filename="../custom/categoryedit/categorysubject.cpp" line="+57"/>
+        <location filename="../custom/categoryedit/categorysubject.cpp" line="+58"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1096,7 +1135,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+63"/>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1640,7 +1679,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2233,7 +2272,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+81"/>
         <source>a valid Country selection is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2284,7 +2323,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+137"/>
+        <location line="+138"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2869,7 +2908,7 @@
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+28"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+29"/>
         <source>Providers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2889,7 +2928,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+143"/>
+        <location line="+144"/>
         <location line="+5"/>
         <location line="+12"/>
         <source>Europe</source>
@@ -2957,7 +2996,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Invalid Shipping Properties!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2967,7 +3006,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-447"/>
+        <location line="-449"/>
         <location line="+14"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
@@ -3283,7 +3322,7 @@
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../custom/utils/lineedit.cpp" line="+94"/>
+        <location filename="../custom/utils/lineedit.cpp" line="+95"/>
         <source>Suggestions available</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3475,13 +3514,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+815"/>
+        <location line="+817"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-894"/>
+        <location line="-896"/>
         <source>Invoice ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3552,12 +3591,12 @@
     </message>
     <message>
         <location line="+292"/>
-        <location line="+514"/>
+        <location line="+516"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-499"/>
+        <location line="-501"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3640,7 +3679,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+214"/>
+        <location line="+216"/>
         <source>can&apos;t create order without costumer Id.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3660,7 +3699,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-512"/>
+        <location line="-514"/>
         <location line="+249"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation type="unfinished"></translation>
@@ -4988,6 +5027,11 @@
     <message>
         <location line="+2"/>
         <source>Order completed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Order canceled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

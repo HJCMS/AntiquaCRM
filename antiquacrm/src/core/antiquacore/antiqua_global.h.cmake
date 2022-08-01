@@ -9,6 +9,9 @@
 #ifndef ANTIQUA_GLOBAL_H
 #define ANTIQUA_GLOBAL_H
 
+#include <QtCore/QtGlobal>
+#include <QObject>
+
 /**
  * @def ANTIQUACRM_NAME
  * @brief executable name
@@ -78,12 +81,53 @@
  * @def ANTIQUACORE_EXPORT
  * @brief library export definition
  */
-#include <QtCore/QtGlobal>
 #if defined(ANTIQUACORE_LIBRARAY)
 # define ANTIQUACORE_EXPORT Q_DECL_EXPORT
 #else
 # define ANTIQUACORE_EXPORT Q_DECL_IMPORT
 #endif
+
+/**
+ * @def ANTIQUA_DATETIME_FORMAT
+ * @ingroup Antiqua Plugin Interface
+ * @brief Das vom System vorgegebene Datumsformat ist ISO 8601!
+ * Soll verhindern das bei der Umwandlung von einem String, die Konvertierung nicht fehlschlägt!
+ * @code
+ *  QJsonObject import;
+ *  QJsonObject obj = jsonArray[i].toObject();
+ *  QDateTime d = QDateTime::fromString(obj["datetime"].toString(), "yyyy-MM-dd hh:mm:ss");
+ *  import.insert("datetime", QJsonValue(d.toString(ANTIQUA_DATETIME_FORMAT)));
+ * @endcode
+ */
+#ifndef ANTIQUA_DATETIME_FORMAT
+#define ANTIQUA_DATETIME_FORMAT Qt::ISODate
+#endif
+
+#ifndef ANTIQUA_QUERY_PASTDAYS
+#define ANTIQUA_QUERY_PASTDAYS -4
+#endif
+
+namespace Antiqua {
+  Q_NAMESPACE
+
+  enum ErrorStatus {
+    NOTICE = 1,
+    WARNING = 2,
+    FATAL = 3
+  };
+  Q_ENUM_NS(Antiqua::ErrorStatus);
+
+  enum PaymentStatus {
+    ORDER_STATUS_NOT_SET = 0,
+    ORDER_WAIT_FOR_PAYMENT = 1,
+    ORDER_READY_FOR_SHIPMENT = 2,
+    ORDER_SHIPPED_WAIT_FOR_PAYMENT = 3,
+    ORDER_SHIPPED_AND_PAID = 4,
+    ORDER_BUYER_NO_REACTION = 5
+  };
+  Q_ENUM_NS(Antiqua::PaymentStatus);
+
+};
 
 #endif // ANTIQUA_GLOBAL_H
 

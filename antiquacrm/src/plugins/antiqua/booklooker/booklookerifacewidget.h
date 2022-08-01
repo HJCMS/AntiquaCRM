@@ -29,7 +29,6 @@ private:
 
   QJsonDocument p_currentDocument;
   void setCurrentDocument(const QJsonObject &obj);
-
   const QJsonDocument customerRequest(const QJsonObject &object);
   void createOrderDataSet(const QJsonArray &array);
   void parseAddressBody(const QString &, const QJsonObject &);
@@ -37,6 +36,7 @@ private:
 private Q_SLOTS:
   void checkCustomerClicked();
   void readCurrentArticleIds();
+  void providerOrderUpdateStatus(Antiqua::PaymentStatus);
 
 public Q_SLOTS:
   void createCustomerDocument();
@@ -45,6 +45,7 @@ public Q_SLOTS:
 
 public:
   BooklookerIfaceWidget(const QString &widgetId, QWidget *parent = nullptr);
+  void setOrderUpdateTypes();
   void setCustomerId(int customerId);
   const QMap<QString, QString> fieldTranslate() const;
 };

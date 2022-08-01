@@ -449,6 +449,13 @@ void BooklookerRequester::queryList() {
   getRequest(url);
 }
 
+void BooklookerRequester::queryUpdateOrderStatus(const QString &orderId, const QString &status)
+{
+  // PUT https://api.booklooker.de/2.0/order_status?token=REST_API_TOKEN
+  qInfo("Booklooker::order_status('%s','%s')",
+        qPrintable(orderId), qPrintable(status));
+}
+
 void BooklookerRequester::queryOrder(const QString &orderId) {
   QString fileName("antiqua_booklooker_orders_list.json");
   QFileInfo fileInfo(QDir::temp(), fileName);

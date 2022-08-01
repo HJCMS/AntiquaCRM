@@ -953,8 +953,10 @@ void OrderEditor::showMessagePoUp(const QString &str) {
 
 void OrderEditor::initDefaults() {
   setInputList();
-  setEnabled(true);
+  // Artikelliste leeren
+  m_paymentList->clearTable();
   resetModified(inputList);
+  setEnabled(true);
   o_delivery_service->loadSqlDataset();
   if (o_provider_name->value().toString().isEmpty())
     o_provider_name->setValue(tr("Internal"));
