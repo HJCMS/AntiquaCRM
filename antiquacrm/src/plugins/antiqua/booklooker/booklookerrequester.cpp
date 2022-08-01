@@ -9,7 +9,6 @@
 #include <QDebug>
 #include <QDir>
 #include <QFile>
-#include <QFileInfo>
 #include <QHttpMultiPart>
 #include <QHttpPart>
 #include <QJsonParseError>
@@ -111,6 +110,12 @@ BooklookerRequester::BooklookerRequester(QObject *parent)
 
   connect(this, SIGNAL(authenticResponse(const QJsonDocument &)), this,
           SLOT(registerAuthentic(const QJsonDocument &)));
+}
+
+const QFileInfo BooklookerRequester::operationTempFile(const QString &op) {
+  QString fileName("antiqua_booklooker_" + op + ".json");
+  QFileInfo fileInfo(QDir::temp(), fileName);
+  return fileInfo;
 }
 
 void BooklookerRequester::initConfigurations() {
@@ -284,8 +289,13 @@ void BooklookerRequester::replyReadyRead() {
   QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
   if (parser.error != QJsonParseError::NoError) {
     qWarning("Json Parse Error:(%s)!", jsonParserError(parser.error));
-    emit errorMessage(Antiqua::ErrorStatus::FATAL,
-                      tr("Invalid Document response!"));
+    if (operationTempFile("order_list").isReadable()) {
+      emit errorMessage(Antiqua::ErrorStatus::NOTICE,
+                        tr("Invalid Document response!"));
+    } else {
+      emit errorMessage(Antiqua::ErrorStatus::FATAL,
+                        tr("Invalid Document response!"));
+    }
     writeErrorLog(data);
     return;
   }
@@ -339,8 +349,7 @@ void BooklookerRequester::writeErrorLog(const QByteArray &data) {
 }
 
 void BooklookerRequester::writeResponseLog(const QJsonDocument &doc) {
-  QString fileName("antiqua_booklooker_" + p_operation + ".json");
-  QFileInfo fileInfo(QDir::temp(), fileName);
+  QFileInfo fileInfo = operationTempFile(p_operation);
   QFile fp(fileInfo.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream json(&fp);

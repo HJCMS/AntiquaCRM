@@ -5,6 +5,7 @@
 #ifndef BOOKLOOKERQUERY_PLUGIN_H
 #define BOOKLOOKERQUERY_PLUGIN_H
 
+#include <QFileInfo>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonValue>
@@ -49,6 +50,7 @@ private:
    * Wird für das Logfile verwendet.
    */
   QString p_operation;
+  const QFileInfo operationTempFile(const QString &op = QString("order_list"));
 
   /**
    * @brief read configuration
