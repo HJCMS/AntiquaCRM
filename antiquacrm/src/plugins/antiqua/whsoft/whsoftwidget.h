@@ -39,30 +39,17 @@ private:
   void parseAddressBody(const QString &section, const QJsonObject &object);
 
 private Q_SLOTS:
-  void checkCustomerClicked();
+  void checkCustomerExists();
   void readCurrentArticleIds();
-  void providerOrderUpdateStatus(Antiqua::PaymentStatus);
 
 public Q_SLOTS:
-  /**
-   * @brief createCustomerDocument
-   */
   void createCustomerDocument();
-
   void setContent(const QJsonDocument &);
-
-  /**
-   * @brief Menü Einträge suchen
-   */
   void createOrderRequest();
+  void createProviderOrderUpdate();
 
 public:
   WHSoftWidget(const QString &orderId, QWidget *parent = nullptr);
-
-  /**
-   * @brief Kundennummer eintragen
-   */
-  void setCustomerId(int customerId);
 
   /**
    * @brief Übersetzt die Buchfreund.de Json Datenfelder zu SQL Spaltenname.

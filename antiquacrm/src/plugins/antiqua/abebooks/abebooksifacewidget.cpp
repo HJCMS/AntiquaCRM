@@ -34,7 +34,7 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
     return;
   }
 
-  if (m_order->getCustomerId() > 0) {
+  if (getCustomerId() > 0) {
     qInfo("CustomerId already exists!");
     return;
   }
@@ -43,13 +43,13 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
   QJsonObject customerCreate;
   customerCreate.insert("provider", QJsonValue(CONFIG_PROVIDER));
   customerCreate.insert("type", "customer_create");
-  QString invoice = m_order->getValue("c_postal_address").toString();
+  QString invoice = getValue("c_postal_address").toString();
   invoice = stripString(invoice);
   if (!invoice.isEmpty()) {
     customerCreate.insert("c_postal_address", QJsonValue(invoice));
   }
 
-  QString deliveryAddress = m_order->getValue("c_shipping_address").toString();
+  QString deliveryAddress = getValue("c_shipping_address").toString();
   deliveryAddress = stripString(deliveryAddress);
   if (!deliveryAddress.isEmpty()) {
     customerCreate.insert("c_shipping_address", QJsonValue(deliveryAddress));
@@ -97,7 +97,7 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
   }
 
   // qDebug() << Q_FUNC_INFO << jsObject;
-  emit createCustomer(QJsonDocument(customerCreate));
+  emit sendCreateCustomer(QJsonDocument(customerCreate));
 }
 
 const QJsonDocument
@@ -108,7 +108,7 @@ AbeBooksIfaceWidget::customerRequest(const QJsonObject &object) {
   QString str(objectName());
   customer.insert("orderid", QJsonValue(str.trimmed()));
   customer.insert("type", "customer_request");
-  foreach (QString f, m_order->customerSearchFields()) {
+  foreach (QString f, customerSearchFields()) {
     // qDebug() << Q_FUNC_INFO << f << p_customer.value(f);
     customer.insert(f, p_customer.value(f));
   }
@@ -123,7 +123,7 @@ void AbeBooksIfaceWidget::parseAddressBody(const QString &section,
   person.append(" ");
   person.append(obj["c_lastname"].toString().trimmed());
   buffer.append(person);
-  m_order->setValue("person", person);
+  setValue("person", person);
 
   QString street(obj["c_street"].toString().trimmed());
   buffer.append(street);
@@ -138,25 +138,20 @@ void AbeBooksIfaceWidget::parseAddressBody(const QString &section,
   buffer.append(location);
 
   p_customer.insert(section, buffer.join("\n"));
-  m_order->setValue(section, buffer.join("\n"));
+  setValue(section, buffer.join("\n"));
   buffer.clear();
 }
 
-void AbeBooksIfaceWidget::checkCustomerClicked() {
+void AbeBooksIfaceWidget::checkCustomerExists() {
   QJsonDocument cIjs = customerRequest(QJsonObject());
   if (!cIjs.isEmpty())
-    emit checkCustomer(cIjs);
+    emit sendCheckCustomer(cIjs);
 }
 
 void AbeBooksIfaceWidget::readCurrentArticleIds() {
-  QList<int> ids = m_order->getArticleIDs();
+  QList<int> ids = getArticleIDs();
   if (ids.count() > 0)
-    emit checkArticleIds(ids);
-}
-
-void AbeBooksIfaceWidget::providerOrderUpdateStatus(Antiqua::PaymentStatus)
-{
-  qDebug() << Q_FUNC_INFO << "TODO";
+    emit sendCheckArticleIds(ids);
 }
 
 void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
@@ -172,8 +167,15 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
   AbeBooksDocument xml(doc);
   if (doc.documentElement().tagName() == "requestError") {
     QPair<int, QString> err = xml.errorResponseCode();
+#ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << err.first << err.second;
-    // emit errorResponse(err.first, err.second);
+#else
+    QString xmlErrno(err.second);
+    xmlErrno.prepend(" ");
+    xmlErrno.prepend(QString::number(err.first));
+    xmlErrno.prepend(tr("Document read Error"));
+    emit sendErrorResponse(Antiqua::ErrorStatus::WARNING, xmlErrno);
+#endif
     return;
   }
 
@@ -182,7 +184,7 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
     QDomNode n = n_list.at(i);
     if (n.nodeName() == "buyer") {
       QString email = n.namedItem("email").firstChild().nodeValue();
-      m_order->setValue("c_email_0", email);
+      setValue("c_email_0", email);
       if (!n.namedItem("mailingAddress").isNull()) {
         QDomNodeList a_list = n.namedItem("mailingAddress").childNodes();
         QJsonObject customerInfo;
@@ -191,38 +193,38 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
           QJsonValue val = QJsonValue(xml.getNodeValue(cn).toString());
           if (cn.nodeName() == "name") {
             QStringList full_name = xml.getNodeValue(cn).toString().split(" ");
-            m_order->setValue("c_firstname", full_name.first());
+            setValue("c_firstname", full_name.first());
             p_customer.insert("c_firstname", full_name.first());
-            m_order->setValue("c_lastname", full_name.last());
+            setValue("c_lastname", full_name.last());
             p_customer.insert("c_lastname", full_name.last());
             customerInfo.insert("c_firstname", QJsonValue(full_name.first()));
             customerInfo.insert("c_lastname", QJsonValue(full_name.last()));
           } else if (cn.nodeName() == "country") {
             customerInfo.insert("c_country", val);
-            m_order->setValue("c_country", stripString(val));
+            setValue("c_country", stripString(val));
             p_customer.insert("c_country", stripString(val));
           } else if (cn.nodeName() == "city") {
             customerInfo.insert("c_location", val);
-            m_order->setValue("c_location", stripString(val));
+            setValue("c_location", stripString(val));
             p_customer.insert("c_location", stripString(val));
           } else if (cn.nodeName() == "code") {
             customerInfo.insert("c_postalcode", val);
-            m_order->setValue("c_postalcode", stripString(val));
+            setValue("c_postalcode", stripString(val));
             p_customer.insert("c_postalcode", stripString(val));
           } else if (cn.nodeName() == "street") {
             customerInfo.insert("c_street", val);
-            m_order->setValue("c_street", stripString(val));
+            setValue("c_street", stripString(val));
             p_customer.insert("c_street", stripString(val));
           } else if (cn.nodeName() == "phone") {
             customerInfo.insert("c_phone_0", val);
-            m_order->setPhone("c_phone_0", stripString(val));
+            setPhone("c_phone_0", stripString(val));
             p_customer.insert("c_phone_0", stripString(val));
           }
         }
         parseAddressBody("c_postal_address", customerInfo);
         parseAddressBody("c_shipping_address", customerInfo);
         // Sende SQL Abfrage an Hauptfenster!
-        checkCustomerClicked();
+        checkCustomerExists();
       }
     }
     // Datum
@@ -231,7 +233,7 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
       if (dt.isValid()) {
         QString dt_out = dt.toString(ANTIQUA_DATETIME_FORMAT);
         p_customer.insert("o_since", dt_out);
-        m_order->setValue("o_since", dt_out);
+        setValue("o_since", dt_out);
       }
     } else if (n.nodeName() == "purchaseMethod") {
       QString method = n.toElement().firstChild().nodeValue();
@@ -239,50 +241,50 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
         QString purchaseMethod = n.toElement().attribute("type", "Invoice");
         if (!purchaseMethod.isEmpty()) {
           QString pType = purchaseType(purchaseMethod);
-          m_order->setValue(sqlParam("purchaseMethod"), pType.toInt());
+          setValue(sqlParam("purchaseMethod"), pType.toInt());
           p_customer.insert(sqlParam("purchaseMethod"), pType);
         }
       } else if (method == "CC") {
         // "Credit card (prepayment)"
-        m_order->setValue(sqlParam("purchaseMethod"), 4);
+        setValue(sqlParam("purchaseMethod"), 4);
         p_customer.insert(sqlParam("purchaseMethod"), "4");
       }
     } else if (n.hasChildNodes()) {
       QString param = sqlParam(n.nodeName());
       QString value = stripString(n.firstChild().nodeValue());
       if (!param.isEmpty() && !value.isEmpty())
-        m_order->setValue(param, value);
+        setValue(param, value);
     }
   }
 
   // Bestellartikel einfügen
-  m_order->setTableCount(0);
+  setTableCount(0);
   n_list = xml.getOrderItemList().childNodes();
   for (int i = 0; i < n_list.count(); i++) {
     int column = 0;
-    int row = m_order->getTableCount();
+    int row = getTableCount();
     QDomNode n = n_list.at(i);
     if (n.nodeName() == "purchaseOrderItem") {
-      m_order->setTableCount((m_order->getTableCount() + 1));
+      setTableCount((getTableCount() + 1));
       QDomNodeList a_list = n.namedItem("book").childNodes();
       QString id = windowTitle().trimmed();
-      m_order->setTableData(row, 0, id);
-      m_order->setTableData(row, 2, 1); // Menge
+      setTableData(row, 0, id);
+      setTableData(row, 2, 1); // Menge
       for (int l = 0; l < a_list.count(); l++) {
         QDomNode cn = a_list.at(l);
         QVariant val = cn.firstChild().nodeValue();
         if (cn.nodeName() == "price") {
-          m_order->setTableData(row, 3, val);
+          setTableData(row, 3, val);
         } else if (cn.nodeName() == "title") {
-          m_order->setTableData(row, 4, val);
+          setTableData(row, 4, val);
         } else if (cn.nodeName() == "vendorKey") {
-          m_order->setTableData(row, 1, val);
+          setTableData(row, 1, val);
         }
       }
       QDomElement status = n.namedItem("status").toElement();
       if (status.hasChildNodes()) {
         QString statusText = status.firstChild().nodeValue();
-        m_order->setValue("o_payment_status", purchaseType(statusText));
+        setValue("o_payment_status", purchaseType(statusText));
         p_customer.insert("o_payment_status", purchaseType(statusText));
       }
     }
@@ -305,11 +307,8 @@ void AbeBooksIfaceWidget::createOrderRequest() {
   req->queryOrder(getOrderId());
 }
 
-void AbeBooksIfaceWidget::setCustomerId(int customerId) {
-  if (customerId > 0) {
-    currentCustomerId = customerId;
-    m_order->setCustomerId(customerId);
-  }
+void AbeBooksIfaceWidget::createProviderOrderUpdate() {
+  qDebug() << Q_FUNC_INFO << getOrderId();
 }
 
 const QString AbeBooksIfaceWidget::purchaseType(const QString &key) const {

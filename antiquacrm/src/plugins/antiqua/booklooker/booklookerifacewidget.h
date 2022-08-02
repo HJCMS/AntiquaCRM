@@ -34,19 +34,18 @@ private:
   void parseAddressBody(const QString &, const QJsonObject &);
 
 private Q_SLOTS:
-  void checkCustomerClicked();
+  void checkCustomerExists();
   void readCurrentArticleIds();
-  void providerOrderUpdateStatus(Antiqua::PaymentStatus);
 
 public Q_SLOTS:
   void createCustomerDocument();
   void setContent(const QJsonDocument &);
   void createOrderRequest();
+  void createProviderOrderUpdate();
 
 public:
   BooklookerIfaceWidget(const QString &widgetId, QWidget *parent = nullptr);
   void setOrderUpdateTypes();
-  void setCustomerId(int customerId);
   const QMap<QString, QString> fieldTranslate() const;
 };
 

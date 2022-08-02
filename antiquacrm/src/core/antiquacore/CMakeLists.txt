@@ -34,11 +34,10 @@ SET (subproject_SOURCES
   purchasepaymentinfo.cpp
   purchasedebugtable.cpp
   purchaserordertable.cpp
-  purchaseoverview.cpp
   pluginloader.cpp
   networker.cpp
   curljson.cpp
-  interface.cpp
+  interfacewidget.cpp
   taxcalculator.cpp
 )
 
@@ -54,12 +53,12 @@ SET (subproject_HEADERS
   purchasepaymentinfo.h
   purchasedebugtable.h
   purchaserordertable.h
-  purchaseoverview.h
   networker.h
   curljson.h
   AntiquaCRM
   antiqua_global.h
   pluginloader.h
+  interfacewidget.h
   interface.h
   taxcalculator.h
   AntiquaInterface

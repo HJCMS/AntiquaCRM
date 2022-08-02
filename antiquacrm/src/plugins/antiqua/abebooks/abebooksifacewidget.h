@@ -30,19 +30,20 @@ private:
   void parseAddressBody(const QString &, const QJsonObject &);
 
 private Q_SLOTS:
-  void checkCustomerClicked();
+  void checkCustomerExists();
   void readCurrentArticleIds();
-  void providerOrderUpdateStatus(Antiqua::PaymentStatus);
 
 public Q_SLOTS:
   void createCustomerDocument();
-  void setContent(const QJsonDocument &){/* unused */};
+  void setContent(const QJsonDocument &){
+      /* AbeBooks verwendet keine Json API */
+  };
   void setXmlContent(const QDomDocument &);
   void createOrderRequest();
+  void createProviderOrderUpdate();
 
 public:
   AbeBooksIfaceWidget(const QString &orderId, QWidget *parent = nullptr);
-  void setCustomerId(int customerId);
   const QString purchaseType(const QString &key) const;
   const QMap<QString, QString> fieldTranslate() const;
 };

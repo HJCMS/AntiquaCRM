@@ -5,6 +5,10 @@
 # include "interface.h"
 #endif
 
+#ifndef ANTIQUA_INTERFACEWIDGET_H
+# include "interfacewidget.h"
+#endif
+
 #ifndef ANTIQUA_PLUGINLOADER_H
 # include "pluginloader.h"
 #endif
@@ -19,8 +23,4 @@
 
 #ifndef ANTIQUA_PURCHASERORDERTABLE_H
 # include "purchaserordertable.h"
-#endif
-
-#ifndef ANTIQUA_PURCHASEOVERVIEW_H
-# include "purchaseoverview.h"
 #endif

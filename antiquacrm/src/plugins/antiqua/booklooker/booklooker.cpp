@@ -43,7 +43,7 @@ void Booklooker::prepareJsonListResponse(const QJsonDocument &doc) {
   senderObject.insert("provider", QJsonValue(CONFIG_PROVIDER));
   senderObject.insert("items", senderArray);
   QJsonDocument jsDoc(senderObject);
-  emit listResponse(jsDoc);
+  emit s_listResponse(jsDoc);
 }
 
 bool Booklooker::createInterface(QObject *parent) {

@@ -18,8 +18,11 @@
 
 namespace Antiqua {
 
-class PaymentOrderUpdate;
-
+/**
+ * @brief Zahlungs-Methode anzeigen
+ * @class PaymentMethodSelect
+ * @ingroup Antiqua Plugin Interface
+ */
 class PaymentMethodSelect final : public QComboBox {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -41,7 +44,16 @@ public:
   const QString getPaymentMethod(int id);
 };
 
+/**
+ * @brief Zahlungsdaten Anzeige
+ * @class PLineRead
+ * @ingroup Antiqua Plugin Interface
+ */
 class PLineRead final : public QLineEdit {
+  Q_OBJECT
+  Q_CLASSINFO("Author", "Jürgen Heinemann")
+  Q_CLASSINFO("URL", "https://www.hjcms.de")
+
 public:
   explicit PLineRead(QWidget *parent = nullptr);
 };
@@ -58,7 +70,6 @@ class ANTIQUACORE_EXPORT PurchasePaymentInfo : public QWidget {
 
 private:
   PaymentMethodSelect *o_payment_method;
-  PaymentOrderUpdate *m_updateAction;
   PLineRead *m_paymentTransactionId;
   PLineRead *m_paymentConfirmed;
   PLineRead *m_deliveryCost;
@@ -66,15 +77,8 @@ private:
   PLineRead *c_swift_bic;
   PLineRead *c_tax_id;
 
-private Q_SLOTS:
-  void updateOrderChanged(int);
-
-Q_SIGNALS:
-  void sendUpdateOrderStatus(Antiqua::PaymentStatus status);
-
 public:
   explicit PurchasePaymentInfo(QWidget *parent = nullptr);
-  void setOrderUpdateActions(const QMap<Antiqua::PaymentStatus, QString> &);
   void setData(const QString &objName, const QVariant &value);
   QMap<QString, QVariant> getAll();
 };

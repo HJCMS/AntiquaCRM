@@ -18,9 +18,8 @@ WHSoftWidget::WHSoftWidget(const QString &orderId, QWidget *parent)
   setEnabled(false);
 }
 
-void WHSoftWidget::setOrderUpdateTypes()
-{
-  QMap<Antiqua::PaymentStatus,QString> map;
+void WHSoftWidget::setOrderUpdateTypes() {
+  QMap<Antiqua::PaymentStatus, QString> map;
   qDebug() << Q_FUNC_INFO << "TODO" << map.size();
 }
 
@@ -30,7 +29,7 @@ void WHSoftWidget::createCustomerDocument() {
     return;
   }
 
-  if (m_order->getCustomerId() > 0) {
+  if (getCustomerId() > 0) {
     qInfo("CustomerId already exists!");
     return;
   }
@@ -50,12 +49,12 @@ void WHSoftWidget::createCustomerDocument() {
   }
 
   if (!customer.contains("c_postal_address")) {
-    QString pAddress = m_order->getValue("c_postal_address").toString();
+    QString pAddress = getValue("c_postal_address").toString();
     if (!pAddress.isEmpty())
       customer.insert("c_postal_address", pAddress);
   }
 
-  emit createCustomer(QJsonDocument(customer));
+  emit sendCreateCustomer(QJsonDocument(customer));
 }
 
 const QJsonDocument WHSoftWidget::customerRequest(const QJsonObject &object) {
@@ -64,7 +63,7 @@ const QJsonDocument WHSoftWidget::customerRequest(const QJsonObject &object) {
   customer.insert("provider", QJsonValue(CONFIG_PROVIDER));
   customer.insert("orderid", QJsonValue(objectName()));
   customer.insert("type", "customer_request");
-  foreach (QString f, m_order->customerSearchFields()) {
+  foreach (QString f, customerSearchFields()) {
     customer.insert(f, p_customer.value(f));
   }
   return QJsonDocument(customer);
@@ -83,7 +82,7 @@ void WHSoftWidget::parseAddressBody(const QString &section,
   person.append(" ");
   person.append(object["name"].toString().trimmed());
   buffer.append(person);
-  m_order->setValue("person", person);
+  setValue("person", person);
 
   QString street(object["adresse"].toString().trimmed());
   buffer.append(street);
@@ -97,7 +96,7 @@ void WHSoftWidget::parseAddressBody(const QString &section,
   }
   buffer.append(location);
 
-  m_order->setValue(section, buffer.join("\n"));
+  setValue(section, buffer.join("\n"));
   p_customer.insert(section, buffer.join("\n"));
   buffer.clear();
 
@@ -105,25 +104,20 @@ void WHSoftWidget::parseAddressBody(const QString &section,
   if (section == "c_postal_address") {
     QJsonDocument qDoc = customerRequest(object);
     if (!qDoc.isEmpty())
-      emit checkCustomer(qDoc);
+      emit sendCheckCustomer(qDoc);
   }
 }
 
-void WHSoftWidget::checkCustomerClicked() {
+void WHSoftWidget::checkCustomerExists() {
   QJsonDocument qDoc = customerRequest(QJsonObject());
   if (!qDoc.isEmpty())
-    emit checkCustomer(qDoc);
+    emit sendCheckCustomer(qDoc);
 }
 
 void WHSoftWidget::readCurrentArticleIds() {
-  QList<int> ids = m_order->getArticleIDs();
+  QList<int> ids = getArticleIDs();
   if (ids.count() > 0)
-    emit checkArticleIds(ids);
-}
-
-void WHSoftWidget::providerOrderUpdateStatus(Antiqua::PaymentStatus status)
-{
-  qDebug() << Q_FUNC_INFO << "TODO" << status;
+    emit sendCheckArticleIds(ids);
 }
 
 void WHSoftWidget::setContent(const QJsonDocument &doc) {
@@ -148,7 +142,7 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
       QString f = it.key();
       QJsonValue val = it.value();
       if (!f.isEmpty() && !val.toString().isEmpty()) {
-        m_order->setValue(sqlParam(f), val.toVariant());
+        setValue(sqlParam(f), val.toVariant());
         p_customer.insert(sqlParam(f), stripString(val));
       }
     }
@@ -160,7 +154,7 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
         QJsonValue val = it.value();
         if (!sqlParam(f).isEmpty()) {
           QVariant dval = val.isNull() ? "" : val.toString();
-          m_order->setValue(sqlParam(f), dval);
+          setValue(sqlParam(f), dval);
         }
       }
     }
@@ -171,7 +165,7 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
         QString f = it.key();
         QJsonValue val = it.value();
         if (!f.isEmpty() && !val.toString().isEmpty()) {
-          m_order->setValue(sqlParam(f), val.toString());
+          setValue(sqlParam(f), val.toString());
           p_customer.insert(sqlParam(f), stripString(val));
         }
       }
@@ -184,7 +178,7 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
   }
 
   // Bestellartikel einfügen
-  m_order->setTableCount(0);
+  setTableCount(0);
   QJsonArray positionen = QJsonValue(doc["response"]["positionen"]).toArray();
   if (positionen.count() > 0) {
     QJsonArray::iterator at;
@@ -192,15 +186,15 @@ void WHSoftWidget::setContent(const QJsonDocument &doc) {
       QJsonObject article = (*at).toObject();
       QJsonObject::iterator it;
       int column = 0;
-      int row = m_order->getTableCount();
-      m_order->setTableCount((m_order->getTableCount() + 1));
-      m_order->setTableData(row, column++, windowTitle());
+      int row = getTableCount();
+      setTableCount((getTableCount() + 1));
+      setTableData(row, column++, windowTitle());
       for (it = article.begin(); it != article.end(); ++it) {
         QString f = sqlParam(it.key());
         QVariant curValue = it.value().toVariant();
         if (!f.isEmpty() && !curValue.isNull() && f.contains("a_")) {
           QString txt = curValue.toString().trimmed();
-          m_order->setTableData(row, column++, txt);
+          setTableData(row, column++, txt);
         }
       }
     }
@@ -223,11 +217,8 @@ void WHSoftWidget::createOrderRequest() {
   mq->queryOrder(getOrderId());
 }
 
-void WHSoftWidget::setCustomerId(int customerId) {
-  if (customerId > 0) {
-    currentCustomerId = customerId;
-    m_order->setCustomerId(customerId);
-  }
+void WHSoftWidget::createProviderOrderUpdate() {
+  qDebug() << Q_FUNC_INFO << getOrderId();
 }
 
 const QMap<QString, QString> WHSoftWidget::fieldTranslate() const {

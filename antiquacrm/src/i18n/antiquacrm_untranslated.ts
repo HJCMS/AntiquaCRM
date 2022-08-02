@@ -4,7 +4,7 @@
 <context>
     <name>AbeBooksIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+331"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+330"/>
         <source>Buyer Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -78,8 +78,63 @@
 <context>
     <name>Antiqua::InterfaceWidget</name>
     <message>
-        <location filename="../core/antiquacore/interface.cpp" line="+76"/>
-        <source>Please select</source>
+        <location filename="../core/antiquacore/interfacewidget.cpp" line="+45"/>
+        <source>Customer Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Purchaser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Check item inventory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Create a search query to see if all items are available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>billing address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>shipping address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Payment Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>customer comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Developement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Serviceprovider operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Opens the service provider dialog for editing and confirming an order.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -126,59 +181,6 @@
     <message>
         <location line="+0"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Antiqua::PurchaseOverview</name>
-    <message>
-        <location filename="../core/antiquacore/purchaseoverview.cpp" line="+46"/>
-        <source>Purchaser</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Create a search query to see if all items are available.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>billing address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>shipping address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>addresses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>customer comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-5"/>
-        <source>Payment Information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-46"/>
-        <source>Customer Id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Check item inventory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>Developement</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

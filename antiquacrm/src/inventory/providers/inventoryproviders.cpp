@@ -156,7 +156,7 @@ bool InventoryProviders::loadInterfaces() {
     Antiqua::Interface *iface = it.next();
     m_listView->addProvider(iface->objectName());
     p_providerList.append(iface->objectName());
-    connect(iface, SIGNAL(listResponse(const QJsonDocument &)), this,
+    connect(iface, SIGNAL(s_listResponse(const QJsonDocument &)), this,
             SLOT(readOrderList(const QJsonDocument &)));
     connect(iface,
             SIGNAL(s_errorResponse(Antiqua::ErrorStatus, const QString &)),
@@ -181,16 +181,15 @@ void InventoryProviders::queryOrder(const QString &provider,
     Antiqua::Interface *iFace = it.next();
     if (iFace->objectName() == provider) {
       Antiqua::InterfaceWidget *w = iFace->addWidget(orderId, m_pageView);
-      w->setOrderUpdateTypes();
-      connect(w, SIGNAL(checkCustomer(const QJsonDocument &)), this,
+      connect(w, SIGNAL(sendCheckCustomer(const QJsonDocument &)), this,
               SLOT(createQueryCustomer(const QJsonDocument &)));
-      connect(w, SIGNAL(createCustomer(const QJsonDocument &)), this,
+      connect(w, SIGNAL(sendCreateCustomer(const QJsonDocument &)), this,
               SLOT(createNewCustomer(const QJsonDocument &)));
-      connect(w, SIGNAL(checkArticleIds(QList<int> &)), this,
+      connect(w, SIGNAL(sendCheckArticleIds(QList<int> &)), this,
               SLOT(checkArticleExists(QList<int> &)));
-      connect(w, SIGNAL(errorResponse(Antiqua::ErrorStatus, const QString &)),
+      connect(w, SIGNAL(sendErrorResponse(Antiqua::ErrorStatus, const QString &)),
               this, SLOT(pluginError(Antiqua::ErrorStatus, const QString &)));
-      connect(w, SIGNAL(openArticle(int)), this,
+      connect(w, SIGNAL(sendOpenArticle(int)), this,
               SLOT(checkOpenEditArticle(int)));
 
       int index = m_pageView->addPage(w, orderId);
