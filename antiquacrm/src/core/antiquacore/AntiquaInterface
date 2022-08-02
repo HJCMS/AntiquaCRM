@@ -24,3 +24,7 @@
 #ifndef ANTIQUA_PURCHASERORDERTABLE_H
 # include "purchaserordertable.h"
 #endif
+
+#ifndef ANTIQUA_PAYMENTORDERUPDATE_H
+# include "paymentorderupdate.h"
+#endif

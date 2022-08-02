@@ -5,11 +5,10 @@
 #include "abebooksconfig.h"
 #include "abebooksrequester.h"
 
-//#include <QDir>
-//#include <QFile>
 #include <QDateTime>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QMessageBox>
 #include <QPushButton>
 #include <QRegExp>
 #include <QTableWidgetItem>
@@ -22,9 +21,8 @@ AbeBooksIfaceWidget::AbeBooksIfaceWidget(const QString &orderId,
   setEnabled(false);
 }
 
-void AbeBooksIfaceWidget::setOrderUpdateTypes()
-{
-  QMap<Antiqua::PaymentStatus,QString> map;
+void AbeBooksIfaceWidget::setOrderUpdateTypes() {
+  QMap<Antiqua::PaymentStatus, QString> map;
   qDebug() << Q_FUNC_INFO << "TODO" << map.size();
 }
 
@@ -309,6 +307,9 @@ void AbeBooksIfaceWidget::createOrderRequest() {
 
 void AbeBooksIfaceWidget::createProviderOrderUpdate() {
   qDebug() << Q_FUNC_INFO << getOrderId();
+  QMessageBox::information(this, tr("Note"),
+                           tr("Unsupported feature for this Provider."),
+                           QMessageBox::Ok);
 }
 
 const QString AbeBooksIfaceWidget::purchaseType(const QString &key) const {

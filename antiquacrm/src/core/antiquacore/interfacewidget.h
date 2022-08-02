@@ -76,13 +76,13 @@ private:
   int customerId = -1;
 
   /**
-   * @brief Article Orders List
+   * @brief Liste der Bestellten Artikel
    * @see Antiqua::PurchaserOrderTable
    */
   Antiqua::PurchaserOrderTable *m_table;
 
   /**
-   * @brief Kundendaten anzeigen und Artikel Prüfung
+   * @brief Aktionen für Kundendaten anzeigen und Artikelprüfung
    */
   QToolBar *m_toolbar;
 
@@ -92,7 +92,7 @@ private:
   QLineEdit *m_customerId;
 
   /**
-   * @brief Full Purchaser Name
+   * @brief Vollständiger Käufername
    */
   QLabel *m_customerInfo;
 
@@ -107,12 +107,12 @@ private:
   QTabWidget *m_tabWidget;
 
   /**
-   * @brief c_postal_address
+   * @brief Rechnungsanschrift
    */
   QTextEdit *m_billingAddress;
 
   /**
-   * @brief c_shipping_address
+   * @brief Lieferanschrift
    */
   QTextEdit *m_shippingAddress;
 
@@ -277,8 +277,9 @@ public Q_SLOTS:
   virtual void createOrderRequest() = 0;
 
   /**
-   * @brief Methode zum Bearbeiten einer Dienstleister Bestellung
-   * @note Hier werden die Plugin eigenen Operationen verabeitet!
+   * @brief Methode zum Bearbeiten einer Bestellung.
+   * Hier werden die Plugin eigenen Operationen verabeitet!
+   * Wie das Stornieren einer Bestellung u.s.w.
    */
   virtual void createProviderOrderUpdate() = 0;
 
@@ -305,15 +306,9 @@ public:
   int getOrderExists();
 
   /**
-   * @brief Kundennummer setzen!
-   * @note @ref currentCustomerId muss hier gesetzt werden!
-   * @see getCustomerId()
+   * @brief Kundennummer setzen/lesen!
    */
   void setCustomerId(int cId);
-
-  /**
-   * @brief Kundennummer abfragen!
-   */
   int getCustomerId();
 
   /**
@@ -332,7 +327,7 @@ public:
   int getTableCount();
 
   /**
-   * @brief Eine Zelle in reihe Ändern/Einfügen
+   * @brief Eine Zelle in Tabellenreihe Ändern/Einfügen
    */
   bool setTableData(int row, int column, const QVariant &value);
 
@@ -342,18 +337,18 @@ public:
   const QVariant getTableData(int row, int column);
 
   /**
-   * @brief Setze Datensatz auf Objektname
+   * @brief Füge Datensatz in (QLineEdit|QTextEdit)<ObjectName> ein.
    */
   void setValue(const QString &objName, const QVariant &value);
 
   /**
-   * @brief Nehme Datensatz von Objekt
+   * @brief Nehme Datensatz von (QLineEdit|QTextEdit)<ObjectName>
    */
   const QVariant getValue(const QString &objName);
 
   /**
    * @brief Für Telefon Nummern eine extra Eingabe.
-   * Grund hierfür ist, das die DIenstleister diese nicht Validieren!
+   * Grund hierfür ist, das die Dienstleister diese nicht Validieren!
    */
   void setPhone(const QString &objName, const QVariant &value);
 
@@ -368,14 +363,14 @@ public:
   /**
    * @brief SQL Datenfeld zurück geben
    * @param attribute - Json Parameter
-   * @return SQL Column | QString()
+   * @return SQL Spaltenname
    */
   const QString sqlParam(const QString &attribute);
 
   /**
    * @brief Suche mit SQL Feldname nach API Parameter
    * @param value - SQL Tabellen Feldname
-   * @return Json Parameter | QString()
+   * @return Json Parameter
    */
   const QString apiParam(const QString &value);
 
@@ -385,9 +380,9 @@ public:
   const ProviderOrder getProviderOrder();
 
   /**
-   * @brief Standard Suchfelder für Kundendaten ermittlung
+   * @brief Standard Suchfelder für die Kundendatenermittlung
    */
-  inline const QStringList customerSearchFields() const {
+  static const QStringList customerSearchFields() {
     QStringList l({"c_firstname", "c_lastname", "c_postalcode", "c_location"});
     return l;
   }

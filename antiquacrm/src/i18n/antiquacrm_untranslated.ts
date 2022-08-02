@@ -4,7 +4,22 @@
 <context>
     <name>AbeBooksIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+330"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+174"/>
+        <source>Document read Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+136"/>
+        <source>Note</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Unsupported feature for this Provider.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
         <source>Buyer Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -128,8 +143,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
-        <source>Serviceprovider operations</source>
+        <location line="+14"/>
+        <source>Service provider dialog for editing, confirming orders and eMail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -187,7 +207,7 @@
 <context>
     <name>Antiqua::PurchasePaymentInfo</name>
     <message>
-        <location filename="../core/antiquacore/purchasepaymentinfo.cpp" line="+58"/>
+        <location filename="../core/antiquacore/purchasepaymentinfo.cpp" line="+57"/>
         <source>Payment method</source>
         <translation type="unfinished"></translation>
     </message>
@@ -202,12 +222,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Update Order status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+7"/>
         <location line="+5"/>
         <source>Shipping costs</source>
         <translation type="unfinished"></translation>
@@ -803,8 +818,21 @@
 <context>
     <name>BooklookerIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerifacewidget.cpp" line="+121"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerifacewidget.cpp" line="+123"/>
         <source>Germany</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BooklookerRemoteActions</name>
+    <message>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+25"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2930,7 +2958,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+144"/>
+        <location line="+143"/>
         <location line="+5"/>
         <location line="+12"/>
         <source>Europe</source>
@@ -3008,7 +3036,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-449"/>
+        <location line="-448"/>
         <location line="+14"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
@@ -5627,6 +5655,19 @@
     <message>
         <location line="+8"/>
         <source>start query</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WHSoftWidget</name>
+    <message>
+        <location filename="../plugins/antiqua/whsoft/whsoftwidget.cpp" line="+223"/>
+        <source>Note</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Unsupported feature for this Provider.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

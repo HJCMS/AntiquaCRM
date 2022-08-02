@@ -3,10 +3,12 @@
 
 #include "booklookerifacewidget.h"
 #include "booklookerconfig.h"
+#include "booklookerremoteactions.h"
 #include "booklookerrequester.h"
 
 #include <QDebug>
 #include <QHash>
+#include <QMessageBox>
 
 BooklookerIfaceWidget::BooklookerIfaceWidget(const QString &orderId,
                                              QWidget *parent)
@@ -147,46 +149,6 @@ void BooklookerIfaceWidget::readCurrentArticleIds() {
     emit sendCheckArticleIds(ids);
 }
 
-/* DEPRECATED
-void BooklookerIfaceWidget::providerOrderUpdateStatus(
-    Antiqua::PaymentStatus status) {
-  QString order_status;
-  switch (status) {
-  case (Antiqua::PaymentStatus::ORDER_WAIT_FOR_PAYMENT): {
-    order_status = QString("WAITING_FOR_PAYMENT");
-    break;
-  }
-  // fertig zum Versand
-  case (Antiqua::PaymentStatus::ORDER_READY_FOR_SHIPMENT): {
-    order_status = QString("READY_FOR_SHIPMENT");
-    break;
-  }
-  // versendet, warte auf Zahlung
-  case (Antiqua::PaymentStatus::ORDER_SHIPPED_WAIT_FOR_PAYMENT): {
-    order_status = QString("SHIPPED_WAITING_FOR_PAYMENT");
-    break;
-  }
-  // versendet & bezahlt
-  case (Antiqua::PaymentStatus::ORDER_SHIPPED_AND_PAID): {
-    order_status = QString("SHIPPED_AND_PAID");
-    break;
-  }
-  // Kunde reagiert nicht
-  case (Antiqua::PaymentStatus::ORDER_BUYER_NO_REACTION): {
-    order_status = QString("BUYER_NO_REACTION");
-    break;
-  }
-  default:
-    qWarning("Unknown: order_status Action");
-  };
-
-  if (order_status.isEmpty())
-    return;
-
-  m_requester->queryUpdateOrderStatus(getOrderId(), order_status);
-}
-*/
-
 void BooklookerIfaceWidget::createCustomerDocument() {
   if (p_currentDocument.isEmpty()) {
     qDebug() << Q_FUNC_INFO << "Current Json Document is empty!";
@@ -299,7 +261,13 @@ void BooklookerIfaceWidget::createOrderRequest() {
 }
 
 void BooklookerIfaceWidget::createProviderOrderUpdate() {
-  qDebug() << Q_FUNC_INFO << getOrderId();
+  m_dialog = new BooklookerRemoteActions(this);
+  // connect(m_dialog,SIGNAL(sendUpdateOrderStatus(QString,QString)),
+  //         this, SLOT());
+  if (m_dialog->exec(getOrderId()) == QDialog::Accepted) {
+    qDebug() << Q_FUNC_INFO << "TODO";
+  }
+  m_dialog->deleteLater();
 }
 
 void BooklookerIfaceWidget::setOrderUpdateTypes() {

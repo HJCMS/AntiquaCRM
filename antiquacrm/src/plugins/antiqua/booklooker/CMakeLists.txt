@@ -13,6 +13,7 @@ SET (booklooker_SOURCES
  booklooker.cpp
  booklookerifacewidget.cpp
  booklookerrequester.cpp
+ booklookerremoteactions.cpp
 )
 
 SET (booklooker_HEADERS
@@ -20,6 +21,7 @@ SET (booklooker_HEADERS
  booklooker.h
  booklookerifacewidget.h
  booklookerrequester.h
+ booklookerremoteactions.h
 )
 
 ADD_DEFINITIONS (-DANTIQUACORE_LIBRARAY)

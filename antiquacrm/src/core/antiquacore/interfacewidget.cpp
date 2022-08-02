@@ -111,11 +111,17 @@ InterfaceWidget::InterfaceWidget(const QString &orderId, QWidget *parent)
   m_operationBar->setObjectName("operations_tool_bar");
   QHBoxLayout *operationsLayout = new QHBoxLayout(m_operationBar);
   operationsLayout->addStretch(1);
+  QLabel *m_infoPrAc = new QLabel(m_operationBar);
+  m_infoPrAc->setText(tr("Service provider dialog for editing, confirming orders and eMail") + ":");
+  operationsLayout->addWidget(m_infoPrAc);
   btn_providerActions = new QPushButton(m_operationBar);
   btn_providerActions->setIcon(qi1);
-  btn_providerActions->setText(tr("Serviceprovider operations"));
+  btn_providerActions->setText(tr("Open"));
   btn_providerActions->setToolTip(tr("Opens the service provider dialog for "
                                      "editing and confirming an order."));
+#ifndef ANTIQUA_DEVELOPEMENT
+  btn_providerActions->setEnabled(false);
+#endif
   operationsLayout->addWidget(btn_providerActions);
   m_operationBar->setLayout(operationsLayout);
   layout->addWidget(m_operationBar);

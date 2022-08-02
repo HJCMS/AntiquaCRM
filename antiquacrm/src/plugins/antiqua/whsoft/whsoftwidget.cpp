@@ -7,6 +7,7 @@
 
 #include <QLabel>
 #include <QList>
+#include <QMessageBox>
 #include <QPushButton>
 #include <QTableWidget>
 #include <QTableWidgetItem>
@@ -219,6 +220,9 @@ void WHSoftWidget::createOrderRequest() {
 
 void WHSoftWidget::createProviderOrderUpdate() {
   qDebug() << Q_FUNC_INFO << getOrderId();
+  QMessageBox::information(this, tr("Note"),
+                           tr("Unsupported feature for this Provider."),
+                           QMessageBox::Ok);
 }
 
 const QMap<QString, QString> WHSoftWidget::fieldTranslate() const {

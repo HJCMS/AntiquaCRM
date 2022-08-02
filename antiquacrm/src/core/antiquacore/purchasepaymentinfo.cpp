@@ -74,7 +74,7 @@ PurchasePaymentInfo::PurchasePaymentInfo(QWidget *parent) : QWidget{parent} {
 
   m_paymentConfirmed = new PLineRead(this);
   m_paymentConfirmed->setObjectName("o_payment_confirmed");
-  layout->addWidget(m_paymentConfirmed, row, 1, 1, 1);
+  layout->addWidget(m_paymentConfirmed, row++, 1, 1, 1);
 
   QLabel *info_shipping = new QLabel(tr("Shipping costs") + ":", this);
   layout->addWidget(info_shipping, row, 0, 1, 1, Qt::AlignRight);

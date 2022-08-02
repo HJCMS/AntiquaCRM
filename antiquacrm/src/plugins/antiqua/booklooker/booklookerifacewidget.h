@@ -16,6 +16,7 @@
 #include <Networking>
 
 class BooklookerRequester;
+class BooklookerRemoteActions;
 
 class ANTIQUACORE_EXPORT BooklookerIfaceWidget final
     : public Antiqua::InterfaceWidget {
@@ -26,6 +27,7 @@ class ANTIQUACORE_EXPORT BooklookerIfaceWidget final
 private:
   QHash<QString, QString> p_customer;
   BooklookerRequester *m_requester;
+  BooklookerRemoteActions *m_dialog;
 
   QJsonDocument p_currentDocument;
   void setCurrentDocument(const QJsonObject &obj);
