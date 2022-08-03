@@ -166,27 +166,27 @@
         <translation>Anbieterstatus – keine Angaben</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Wait for Order Payment</source>
         <translation>Warte auf Zahlung der Bestellung</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Order is ready for Shipment</source>
         <translation>Bestellung ist versandbereit</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Order shipped, wait for Payment.</source>
-        <translation>Bestellung versandt, warte auf Zahlung.</translation>
+        <translation>Bestellung versendet, warte auf Zahlung.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Order Shipped and Paid</source>
-        <translation>Bestellung versandt und bezahlt</translation>
+        <translation>Bestellung versendet und bezahlt</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Order Buyer no reaction.</source>
         <translation>Keine Käufer Reaktion auf Transaktionen.</translation>
     </message>
@@ -362,6 +362,151 @@
         <location line="+1"/>
         <source>Do not close the Assistant without saving!</source>
         <translation>Schließen Sie den Assistenten nicht ohne zu Speichern!</translation>
+    </message>
+</context>
+<context>
+    <name>Bl_CancelPage</name>
+    <message>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+141"/>
+        <source>Cancel the currently selected order.</source>
+        <translation>Stornieren der aktuell ausgewählte Bestellung.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>A message to the buyer must be sent separately.</source>
+        <translation>Eine Nachricht an den Käufer muss separat erfolgen.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Apply</source>
+        <translation>Anwenden</translation>
+    </message>
+</context>
+<context>
+    <name>Bl_EMailPage</name>
+    <message>
+        <location line="+12"/>
+        <source>Currently not Supported!</source>
+        <translation>Wird Zurzeit nicht Unterstützt!</translation>
+    </message>
+</context>
+<context>
+    <name>Bl_MessagePage</name>
+    <message>
+        <location line="+15"/>
+        <source>Please select send type first.</source>
+        <translation>Bitte wählen Sie zuerst die Versandart aus.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Send payment information</source>
+        <translation>Zahlungsinformationen senden</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Send payment reminder</source>
+        <translation>Zahlungserinnerung senden</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Send shipping notification</source>
+        <translation>Versandmitteilung senden</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Apply</source>
+        <translation>Anwenden</translation>
+    </message>
+</context>
+<context>
+    <name>Bl_StartPage</name>
+    <message>
+        <location line="-157"/>
+        <source>Status</source>
+        <translation>Status</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Order Status update.</source>
+        <translation>Auftragsstatus aktualisieren.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>eMail</source>
+        <translation>E-Mail</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Currently not Supported!</source>
+        <translation>Wird Zurzeit nicht Unterstützt!</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Sending eMail to Purchaser.</source>
+        <translation>Senden einer E-Mail an den Käufer.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Cancel</source>
+        <translation>Stornieren</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Cancel an entire order.</source>
+        <translation>Stornieren Sie eine gesamte Bestellung.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Message</source>
+        <translation>Nachricht</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Sending a message to the Purchaser.</source>
+        <translation>Senden einer Nachricht an den Käufer.</translation>
+    </message>
+</context>
+<context>
+    <name>Bl_StatusPage</name>
+    <message>
+        <location line="+23"/>
+        <source>Changes the status of the current order.</source>
+        <translation>Ändert den Status der Aktuellen Bestellung.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Provider Status - no disclosures</source>
+        <translation>Anbieterstatus – keine Angaben</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Wait for Order Payment</source>
+        <translation>Warte auf Zahlung der Bestellung</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Order is ready for Shipment</source>
+        <translation>Bestellung ist versandbereit</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Order shipped, wait for Payment.</source>
+        <translation>Bestellung versendet, warte auf Zahlung.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Order Shipped and Paid</source>
+        <translation>Bestellung versendet und bezahlt</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Order Buyer no reaction.</source>
+        <translation>Keine Käufer Reaktion auf Transaktionen.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Apply</source>
+        <translation>Anwenden</translation>
     </message>
 </context>
 <context>
@@ -821,19 +966,6 @@
         <location filename="../plugins/antiqua/booklooker/booklookerifacewidget.cpp" line="+123"/>
         <source>Germany</source>
         <translation>Deutschland</translation>
-    </message>
-</context>
-<context>
-    <name>BooklookerRemoteActions</name>
-    <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+25"/>
-        <source>Close</source>
-        <translation>Beenden</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Apply</source>
-        <translation>Annwenden</translation>
     </message>
 </context>
 <context>
@@ -3544,13 +3676,13 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+817"/>
+        <location line="+832"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-896"/>
+        <location line="-911"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
@@ -3621,12 +3753,12 @@
     </message>
     <message>
         <location line="+292"/>
-        <location line="+516"/>
+        <location line="+531"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="-501"/>
+        <location line="-516"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
     </message>
@@ -3704,12 +3836,17 @@
         <translation>Ungültige Beziehung</translation>
     </message>
     <message>
-        <location line="+577"/>
+        <location line="+571"/>
         <source>Do you really want to close this order and pass it on to accounting?</source>
         <translation>Möchten Sie wirklich diesen Auftrag schließen und an die Buchhaltung weiter reichen?</translation>
     </message>
     <message>
-        <location line="+216"/>
+        <location line="+8"/>
+        <source>Cancel order</source>
+        <translation>Sorniere Auftrag</translation>
+    </message>
+    <message>
+        <location line="+229"/>
         <source>can&apos;t create order without costumer Id.</source>
         <translation>Kann keinen Auftrag ohne Kundennummer generieren.</translation>
     </message>
@@ -3729,13 +3866,13 @@
         <translation>Bestellung</translation>
     </message>
     <message>
-        <location line="-514"/>
-        <location line="+249"/>
+        <location line="-529"/>
+        <location line="+243"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
     <message>
-        <location line="-790"/>
+        <location line="-784"/>
         <source>Service</source>
         <translation>Sender</translation>
     </message>
@@ -3755,17 +3892,18 @@
         <translation>Das Benachrichtigungssystem erfordert eine gültige Paketsendungs-ID, um Kunden-E-Mails zu senden.</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+40"/>
         <source>Finish order</source>
         <translation>Auftrag abschließen</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-12"/>
+        <location line="+15"/>
         <source>Order deactivated!</source>
         <translation>Auftrag deaktiviert!</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+33"/>
         <source>Notice</source>
         <translation>Hinweis</translation>
     </message>
@@ -5663,12 +5801,12 @@
     <message>
         <location filename="../plugins/antiqua/whsoft/whsoftwidget.cpp" line="+223"/>
         <source>Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Hinweis</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Unsupported feature for this Provider.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht unterstützte Funktion für diesen Anbieter.</translation>
     </message>
 </context>
 <context>

@@ -28,11 +28,19 @@
 #endif
 
 /**
- * @brief An welcher Stufe gilt der Eintrag als geschlossen
+ * @brief Der Eintrag wird geschlossen
  * @note Siehe libAntiquaCRM::OrderStatus Klasse
  */
 #ifndef STATUS_ORDER_CLOSED
 #define STATUS_ORDER_CLOSED 5
+#endif
+
+/**
+ * @brief Eintrag wurde Storniert
+ * @note Siehe libAntiquaCRM::OrderStatus Klasse
+ */
+#ifndef STATUS_ORDER_CANCEL
+#define STATUS_ORDER_CANCEL 6
 #endif
 
 /**
@@ -221,15 +229,16 @@ static const QString paymentUpdate(int id, bool status) {
   return sql;
 }
 
-static const QString finalizeTransaction(int customerId) {
-  QString status = QString::number(STATUS_ORDER_CLOSED);
+static const QString finalizeTransaction(int customerId, int status) {
+  QString o_status = QString::number(status);
   QString c_id = QString::number(customerId);
   QString sql("UPDATE ONLY customers SET");
   sql.append(" c_purchases=+1, c_transactions=+1");
+  sql.append(" ,c_changed=CURRENT_TIMESTAMP");
   sql.append(" FROM inventory_orders WHERE c_id=" + c_id);
   sql.append(" AND o_customer_id=c_id");
   sql.append(" AND o_payment_status=true");
-  sql.append(" AND o_order_status=" + status + ";");
+  sql.append(" AND o_order_status=" + o_status + ";");
   return sql;
 }
 

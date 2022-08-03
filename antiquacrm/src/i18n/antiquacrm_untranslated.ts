@@ -166,27 +166,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Wait for Order Payment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Order is ready for Shipment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Order shipped, wait for Payment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Order Shipped and Paid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Order Buyer no reaction.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -361,6 +361,151 @@
     <message>
         <location line="+1"/>
         <source>Do not close the Assistant without saving!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Bl_CancelPage</name>
+    <message>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+141"/>
+        <source>Cancel the currently selected order.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>A message to the buyer must be sent separately.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Bl_EMailPage</name>
+    <message>
+        <location line="+12"/>
+        <source>Currently not Supported!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Bl_MessagePage</name>
+    <message>
+        <location line="+15"/>
+        <source>Please select send type first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Send payment information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Send payment reminder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Send shipping notification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Bl_StartPage</name>
+    <message>
+        <location line="-157"/>
+        <source>Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Order Status update.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>eMail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Currently not Supported!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Sending eMail to Purchaser.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Cancel an entire order.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Sending a message to the Purchaser.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Bl_StatusPage</name>
+    <message>
+        <location line="+23"/>
+        <source>Changes the status of the current order.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Provider Status - no disclosures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Wait for Order Payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Order is ready for Shipment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Order shipped, wait for Payment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Order Shipped and Paid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Order Buyer no reaction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -820,19 +965,6 @@
     <message>
         <location filename="../plugins/antiqua/booklooker/booklookerifacewidget.cpp" line="+123"/>
         <source>Germany</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>BooklookerRemoteActions</name>
-    <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+25"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3544,13 +3676,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+817"/>
+        <location line="+832"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-896"/>
+        <location line="-911"/>
         <source>Invoice ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3621,12 +3753,12 @@
     </message>
     <message>
         <location line="+292"/>
-        <location line="+516"/>
+        <location line="+531"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-501"/>
+        <location line="-516"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3704,12 +3836,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+577"/>
+        <location line="+571"/>
         <source>Do you really want to close this order and pass it on to accounting?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+216"/>
+        <location line="+8"/>
+        <source>Cancel order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+229"/>
         <source>can&apos;t create order without costumer Id.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3729,13 +3866,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-514"/>
-        <location line="+249"/>
+        <location line="-529"/>
+        <location line="+243"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-790"/>
+        <location line="-784"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3755,17 +3892,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+40"/>
         <source>Finish order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-12"/>
+        <location line="+15"/>
         <source>Order deactivated!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+33"/>
         <source>Notice</source>
         <translation type="unfinished"></translation>
     </message>

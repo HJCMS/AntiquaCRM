@@ -903,18 +903,30 @@ void OrderEditor::setStatusOrder(int status) {
   if (status < STATUS_ORDER_CLOSED)
     return;
 
-  if (o_payment_status->value().toInt() == 0) {
-    invalidRelationship();
-    return;
-  }
-
-  int order_id = o_id->value().toInt();
   QString body("<p>");
   body.append(tr("Do you really want to close this order and pass it on "
                  "to accounting?"));
   body.append("</p><p>");
   body.append(tr("If so, the entry will no longer be visible here!"));
   body.append("</p>");
+
+  int order_id = o_id->value().toInt();
+  if (status == STATUS_ORDER_CANCEL) {
+    int ret = QMessageBox::question(this, tr("Cancel order"), body);
+    if (ret == QMessageBox::Yes) {
+      if (sendSqlQuery(progresUpdate(order_id, status))) {
+        emit s_statusMessage(tr("Order deactivated!"));
+        finalLeaveEditor();
+      }
+    }
+    return;
+  }
+
+  if (o_payment_status->value().toInt() == 0) {
+    invalidRelationship();
+    return;
+  }
+
   int ret = QMessageBox::question(this, tr("Finish order"), body);
   if (ret == QMessageBox::Yes) {
     if (sendSqlQuery(progresUpdate(order_id, status))) {
@@ -922,7 +934,10 @@ void OrderEditor::setStatusOrder(int status) {
       // Statistiken modifizieren!
       int c_id = o_customer_id->value().toInt();
       if (c_id > 0) {
-        m_sql->query(finalizeTransaction(c_id));
+#ifdef ANTIQUA_DEVELOPEMENT
+        qDebug() << Q_FUNC_INFO << c_id << status;
+#endif
+        m_sql->query(finalizeTransaction(c_id, status));
 #ifdef ANTIQUA_DEVELOPEMENT
         if (!m_sql->lastError().isEmpty())
           qDebug() << Q_FUNC_INFO << m_sql->lastError();

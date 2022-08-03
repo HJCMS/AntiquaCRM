@@ -27,7 +27,7 @@ protected:
 
 public:
   explicit PaymentOrderUpdate(QWidget *parent = nullptr);
-  void setParams(const QMap<Antiqua::PaymentStatus, QString> &);
+  void overrideUserRoles(const QMap<Antiqua::PaymentStatus, QString> &);
 };
 };     // namespace Antiqua
 #endif // ANTIQUA_PAYMENTORDERUPDATE_H
