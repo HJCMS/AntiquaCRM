@@ -9,6 +9,7 @@
 // #include "dockbarwidget.h"
 #include "filedialog.h"
 #include "keywordedit.h"
+#include "messagetemplates.h"
 #include "myicontheme.h"
 #include "statusbar.h"
 #include "storagelocation.h"
@@ -66,7 +67,7 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
 void MWindow::setupTabMenu(QMenu *parent) {
   const QIcon tabIcon = myIcon("tab_new");
 
-  QAction *ac_Prints = parent->addAction(tabIcon, tr("Prints"));
+  QAction *ac_Prints = parent->addAction(tabIcon, tr("Everything else"));
   ac_Prints->setObjectName("open_prints_tab");
   m_signalMapper->setMapping(ac_Prints, Workspace::Prints);
   connect(ac_Prints, SIGNAL(triggered()), m_signalMapper, SLOT(map()));
@@ -154,6 +155,10 @@ void MWindow::setupActions() {
   connect(a_dsd, SIGNAL(triggered(bool)), this,
           SLOT(openDeliveryService(bool)));
 
+  QAction *a_tpl = m_tablesMenu->addAction(tr("Message Templates"));
+  a_tpl->setIcon(myIcon("spreadsheet"));
+  connect(a_tpl, SIGNAL(triggered(bool)), this, SLOT(openMessagesEdit(bool)));
+
   QAction *a_bdt = m_tablesMenu->addAction(tr("Designation and Binding"));
   a_bdt->setIcon(myIcon("spreadsheet"));
   connect(a_bdt, SIGNAL(triggered(bool)), this, SLOT(openDesignation(bool)));
@@ -221,6 +226,14 @@ void MWindow::openCategoryEdit(bool) {
 void MWindow::openKeywordEdit(bool) {
   KeywordEdit *d = new KeywordEdit(this);
   d->setObjectName("keyword_edit");
+  if (d->exec()) {
+    d->deleteLater();
+  }
+}
+
+void MWindow::openMessagesEdit(bool) {
+  MessageTemplates *d = new MessageTemplates(this);
+  d->setObjectName("message_templates");
   if (d->exec()) {
     d->deleteLater();
   }
@@ -298,7 +311,6 @@ void MWindow::initDefaults() {
   m_workSpace->openTab(Workspace::Books);
   // Nach Vorne holen
   m_workSpace->openTab(Workspace::Orders);
-
 }
 
 MWindow::~MWindow() { /* TODO */

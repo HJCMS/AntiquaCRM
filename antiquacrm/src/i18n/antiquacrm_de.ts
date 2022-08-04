@@ -3053,8 +3053,8 @@
     <name>InventoryPrints</name>
     <message>
         <location filename="../inventory/prints/inventoryprints.cpp" line="+46"/>
-        <source>Prints</source>
-        <translation>Drucke</translation>
+        <source>Everything else</source>
+        <translation>Alles andere</translation>
     </message>
     <message>
         <location line="+126"/>
@@ -3523,7 +3523,12 @@
         <translation>Ansichten</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="-47"/>
+        <source>Everything else</source>
+        <translation>Alles andere</translation>
+    </message>
+    <message>
+        <location line="+70"/>
         <source>Edit tables</source>
         <translation>Bearbeite Tabellen</translation>
     </message>
@@ -3554,12 +3559,7 @@
         <translation>Vollansicht</translation>
     </message>
     <message>
-        <location line="-188"/>
-        <source>Prints</source>
-        <translation>Drucke und Stiche</translation>
-    </message>
-    <message>
-        <location line="+19"/>
+        <location line="-169"/>
         <source>Database</source>
         <translation>Datenbank</translation>
     </message>
@@ -4608,12 +4608,7 @@
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+62"/>
-        <source>Book &amp;Title:</source>
-        <translation>Buch &amp;Titel:</translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="+70"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -4623,17 +4618,7 @@
         <translation>Erforderliches Eingabefeld. Begrenzt auf 80 Zeichen. Für Webshop-Systeme erforderlich.</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Book Title Extended:</source>
-        <translation>Erweiterter Buchtitel:</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Extended Title or Book Subtitle.</source>
-        <translation>Erweiterter Buchtitel oder Untertitel.</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+18"/>
         <source>Extended Title</source>
         <translation>Erweiterter Titel</translation>
     </message>
@@ -4653,17 +4638,7 @@
         <translation>Format: Vorname Nachname (Weitere Autoren durch Komma getrennt).</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Technique:</source>
-        <translation>Technik:</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Representation:</source>
-        <translation>Darstellung:</translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="+33"/>
         <source>Representation format (width)x(height) followed bei format unit.</source>
         <translation>Darstellungsformat (Breite)x(Höhe) gefolgt von Formateinheit.</translation>
     </message>
@@ -4678,12 +4653,7 @@
         <translation>Zustand des Objekts</translation>
     </message>
     <message>
-        <location line="-8"/>
-        <source>Condition:</source>
-        <translation>Zustand:</translation>
-    </message>
-    <message>
-        <location line="-142"/>
+        <location line="-150"/>
         <source>incl. vat</source>
         <translation>inkl. MwSt</translation>
     </message>
@@ -4693,7 +4663,23 @@
         <translation>Mehrwertsteuereinstellungen müssen festgelegt werden.</translation>
     </message>
     <message>
-        <location line="+114"/>
+        <location line="+55"/>
+        <source>Title:</source>
+        <translation>Titel:</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Title Extended:</source>
+        <translation>Erweiterter Titel:</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Extended Title or Subtitle.</source>
+        <translation>Erweiterter Titel oder Untertitel.</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <location line="+6"/>
         <source>Technique</source>
         <translation>Technik</translation>
     </message>
@@ -4703,16 +4689,18 @@
         <translation>Technik auswählen.</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+9"/>
+        <source>Representation</source>
+        <translation>Darstellung</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <location line="+7"/>
         <source>Condition</source>
         <translation>Zustand</translation>
     </message>
     <message>
         <location line="+9"/>
-        <source>Designation:</source>
-        <translation>Umschreibung:</translation>
-    </message>
-    <message>
         <location line="+7"/>
         <source>Designation</source>
         <translation>Umschreibung</translation>
@@ -5827,12 +5815,7 @@
         <translation>Bücher Inventar</translation>
     </message>
     <message>
-        <location line="+21"/>
-        <source>Prints</source>
-        <translation>Drucke</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+23"/>
         <source>Prints, Stitches and Photo inventory</source>
         <translation>Drucke, Stiche und Bilder Inventar</translation>
     </message>
@@ -5868,12 +5851,7 @@
         <translation>Buch tab ist nicht geöffnet!</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Prints tab isn&apos;t open!</source>
-        <translation>Drucke und Stiche tab ist nicht geöffnet!</translation>
-    </message>
-    <message>
-        <location line="+92"/>
+        <location line="+101"/>
         <source>Cant close this tab, unsafed changes!</source>
         <translation>Kann das Tab nicht schliessen, nicht gespeicherte Änderungen!</translation>
     </message>
@@ -5887,7 +5865,12 @@
         <translation>Das Auftrags Tab ist nicht geöffnet!</translation>
     </message>
     <message>
-        <location line="-101"/>
+        <location line="-167"/>
+        <source>Everything else</source>
+        <translation>Alles andere</translation>
+    </message>
+    <message>
+        <location line="+66"/>
         <source>Ordering</source>
         <translation>Bestellungen</translation>
     </message>
@@ -5897,7 +5880,12 @@
         <translation>Dienstleister Bestellung</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+43"/>
+        <source>Everything else tab isn&apos;t open!</source>
+        <translation>Das alles andere Tab ist nicht geöffnet!</translation>
+    </message>
+    <message>
+        <location line="+64"/>
         <location line="+12"/>
         <source>successfully</source>
         <translation>Erfolgreich</translation>

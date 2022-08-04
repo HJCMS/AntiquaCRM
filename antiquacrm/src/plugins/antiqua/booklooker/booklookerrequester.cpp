@@ -449,11 +449,26 @@ void BooklookerRequester::queryList() {
   getRequest(url);
 }
 
-void BooklookerRequester::queryUpdateOrderStatus(const QString &orderId, const QString &status)
-{
+void BooklookerRequester::queryUpdateOrderStatus(const QString &orderId,
+                                                 const QString &status) {
   // PUT https://api.booklooker.de/2.0/order_status?token=REST_API_TOKEN
-  qInfo("Booklooker::order_status('%s','%s')",
-        qPrintable(orderId), qPrintable(status));
+  qInfo("Booklooker::order_status('%s','%s')", qPrintable(orderId),
+        qPrintable(status));
+}
+
+void BooklookerRequester::queryUpdateOrderCancel(const QString &orderId) {
+  // PUT https://api.booklooker.de/2.0/order_cancel?token=REST_API_TOKEN
+  qInfo("Booklooker::order_cancel('%s')", qPrintable(orderId));
+}
+
+void BooklookerRequester::queryPushMessage(const QString &orderId,
+                                           const QString &messageType,
+                                           const QString &additionalText) {
+  // PUT https://api.booklooker.de/2.0/order_message?token=REST_API_TOKEN
+  qInfo("Booklooker::order_message('%s','%s','%s')",
+        qPrintable(orderId),
+        qPrintable(messageType),
+        qPrintable(additionalText));
 }
 
 void BooklookerRequester::queryOrder(const QString &orderId) {

@@ -100,7 +100,7 @@ int Workspace::addInventoryPrints(int index) {
           SLOT(updateArticleCount(int, int)));
   connect(m_tabPrints, SIGNAL(s_uploadImage(int)), this,
           SLOT(updateProviderImage(int)));
-  int i = insertTab(index, m_tabPrints, tr("Prints"));
+  int i = insertTab(index, m_tabPrints, tr("Everything else"));
   m_tabBar->setTabData(i, m_tabPrints->isClosable());
   setTabToolTip(i, tr("Prints, Stitches and Photo inventory"));
   setTabIcon(i, myIcon("image"));
@@ -211,7 +211,7 @@ void Workspace::editPrintsEntry(int articleId) {
     m_tabPrints->editPrintsEntry(articleId);
     setCurrentWidget(m_tabPrints);
   } else {
-    emit s_postMessage(tr("Prints tab isn't open!"));
+    emit s_postMessage(tr("Everything else tab isn't open!"));
   }
 }
 

@@ -11,6 +11,7 @@
 #include <QDialogButtonBox>
 #include <QGroupBox>
 #include <QObject>
+#include <QJsonObject>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QStackedWidget>
@@ -18,6 +19,8 @@
 #include <QTextEdit>
 
 #include <AntiquaInterface>
+
+class BooklookerRequester;
 
 /**
  * @brief Abstrakte Klasse für die Seiten
@@ -30,44 +33,17 @@ private:
   bool modified = false;
 
 protected Q_SLOTS:
-  void setModified(bool b) {
-    modified = b;
-    emit hasModified(b);
-  };
+  void setModified(bool b);
   virtual void prepareAction() = 0;
 
 Q_SIGNALS:
-  void sendAction(const QString &action, const QString &status);
+  void sendNotes(const QString &message);
+  void sendAction(const QJsonObject &status);
   void hasModified(bool);
 
 public:
-  explicit Bl_PageWidget(QWidget *parent = nullptr) : QWidget{parent} {};
-  bool isModified() { return modified; };
-};
-
-/**
- * @brief Startseite
- */
-class ANTIQUACORE_EXPORT Bl_StartPage final : public QWidget {
-  Q_OBJECT
-
-private:
-  QPushButton *btn_status;
-  QPushButton *btn_email;
-  QPushButton *btn_cancel;
-  QPushButton *btn_message;
-
-private Q_SLOTS:
-  void statusClicked();
-  void emailClicked();
-  void cancelClicked();
-  void messageClicked();
-
-Q_SIGNALS:
-  void sendGotoPage(int);
-
-public:
-  explicit Bl_StartPage(QWidget *parent = nullptr);
+  explicit Bl_PageWidget(QWidget *parent = nullptr);
+  bool isModified();
 };
 
 /**
@@ -98,6 +74,9 @@ public:
 class ANTIQUACORE_EXPORT Bl_CancelPage final : public Bl_PageWidget {
   Q_OBJECT
 
+private:
+  QPushButton *m_apply;
+
 private Q_SLOTS:
   void prepareAction();
 
@@ -110,6 +89,9 @@ public:
  */
 class ANTIQUACORE_EXPORT Bl_EMailPage final : public Bl_PageWidget {
   Q_OBJECT
+
+private:
+  QPushButton *m_apply;
 
 private Q_SLOTS:
   void prepareAction();
@@ -126,14 +108,40 @@ class ANTIQUACORE_EXPORT Bl_MessagePage final : public Bl_PageWidget {
 
 private:
   QComboBox *m_type;
-  QComboBox *m_preDefTxt;
   QTextEdit *m_message;
+  QPushButton *m_apply;
 
 private Q_SLOTS:
+  void messageTypeChanged(int);
   void prepareAction();
 
 public:
   explicit Bl_MessagePage(QWidget *parent = nullptr);
+};
+
+/**
+ * @brief Startseite
+ */
+class ANTIQUACORE_EXPORT Bl_StartPage final : public QWidget {
+  Q_OBJECT
+
+private:
+  QPushButton *btn_status;
+  QPushButton *btn_email;
+  QPushButton *btn_cancel;
+  QPushButton *btn_message;
+
+private Q_SLOTS:
+  void statusClicked();
+  void emailClicked();
+  void cancelClicked();
+  void messageClicked();
+
+Q_SIGNALS:
+  void sendGotoPage(int);
+
+public:
+  explicit Bl_StartPage(QWidget *parent = nullptr);
 };
 
 /**
@@ -146,6 +154,7 @@ class ANTIQUACORE_EXPORT BooklookerRemoteActions final : public QDialog {
 
 private:
   QString p_orderId;
+  BooklookerRequester *m_requester;
   QDialogButtonBox *m_buttonBar;
   QPushButton *btn_commit;
   QPushButton *btn_quit;
@@ -158,7 +167,18 @@ private:
   QStatusBar *m_statusBar;
 
 private Q_SLOTS:
-  void prepareAction(const QString &action, const QString &value);
+  /**
+   * @brief prepareAction
+   * @code
+   * {
+   *  "action" : QString,
+   *  "type" : QString,
+   *  "value" : QString
+   * }
+   * @endcode
+   */
+  void prepareAction(const QJsonObject &jsObj);
+  void pushMessage(const QString &msg);
 
 public:
   explicit BooklookerRemoteActions(QWidget *parent = nullptr);

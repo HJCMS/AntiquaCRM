@@ -112,7 +112,7 @@ PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
   QLabel *titleLabel = new QLabel(this);
   titleLabel->setObjectName("titleLabel");
   titleLabel->setAlignment(defaultAlignment);
-  titleLabel->setText(tr("Book &Title:"));
+  titleLabel->setText(tr("Title:"));
 
   gridLayout->addWidget(titleLabel, glc, 0, 1, 1);
 
@@ -131,14 +131,14 @@ PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
   QLabel *extTitleLabel = new QLabel(this);
   extTitleLabel->setObjectName("extTitleLabel");
   extTitleLabel->setAlignment(defaultAlignment);
-  extTitleLabel->setText(tr("Book Title Extended:"));
+  extTitleLabel->setText(tr("Title Extended:"));
 
   gridLayout->addWidget(extTitleLabel, glc, 0, 1, 1);
 
   ip_title_extended = new StrLineEdit(this);
   ip_title_extended->setObjectName("ip_title_extended");
   ip_title_extended->setMaxAllowedLength(148);
-  ip_title_extended->setToolTip(tr("Extended Title or Book Subtitle."));
+  ip_title_extended->setToolTip(tr("Extended Title or Subtitle."));
   ip_title_extended->setWindowTitle(tr("Extended Title"));
 
   gridLayout->addWidget(ip_title_extended, glc++, 1, 1, 1);
@@ -165,7 +165,7 @@ PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
   QLabel *techniqueLabel = new QLabel(this);
   techniqueLabel->setObjectName("techniqueLabel");
   techniqueLabel->setAlignment(defaultAlignment);
-  techniqueLabel->setText(tr("Technique:"));
+  techniqueLabel->setText(tr("Technique") + ":");
 
   gridLayout->addWidget(techniqueLabel, glc, 0, 1, 1);
 
@@ -181,7 +181,7 @@ PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
   QLabel *formatLabel = new QLabel(this);
   formatLabel->setObjectName("formatLabel");
   formatLabel->setAlignment(defaultAlignment);
-  formatLabel->setText(tr("Representation:"));
+  formatLabel->setText(tr("Representation") + ":");
 
   gridLayout->addWidget(formatLabel, glc, 0, 1, 1);
 
@@ -198,7 +198,7 @@ PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
   QLabel *conditionLabel = new QLabel(this);
   conditionLabel->setObjectName("conditionLabel");
   conditionLabel->setAlignment(defaultAlignment);
-  conditionLabel->setText(tr("Condition:"));
+  conditionLabel->setText(tr("Condition") + ":");
 
   gridLayout->addWidget(conditionLabel, glc, 0, 1, 1);
 
@@ -214,7 +214,7 @@ PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
   QLabel *designationLabel = new QLabel(this);
   designationLabel->setObjectName("designationLabel");
   designationLabel->setAlignment(defaultAlignment);
-  designationLabel->setText(tr("Designation:"));
+  designationLabel->setText(tr("Designation") + ":");
 
   gridLayout->addWidget(designationLabel, glc, 0, 1, 1);
 

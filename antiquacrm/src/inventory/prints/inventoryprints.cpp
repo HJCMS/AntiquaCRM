@@ -43,7 +43,7 @@ const QList<SearchFilter> PrintsSearchBar::commonSearchFilter() const {
 
 InventoryPrints::InventoryPrints(QWidget *parent) : Inventory{parent} {
   setObjectName("InventoryPrints");
-  setWindowTitle(tr("Prints") + " [*]");
+  setWindowTitle(tr("Everything else") + " [*]");
   setClosable(true);
 
   ApplSettings cfg;

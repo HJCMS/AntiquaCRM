@@ -3053,7 +3053,7 @@
     <name>InventoryPrints</name>
     <message>
         <location filename="../inventory/prints/inventoryprints.cpp" line="+46"/>
-        <source>Prints</source>
+        <source>Everything else</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3523,7 +3523,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="-47"/>
+        <source>Everything else</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+70"/>
         <source>Edit tables</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3554,12 +3559,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-188"/>
-        <source>Prints</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+19"/>
+        <location line="-169"/>
         <source>Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4608,12 +4608,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+62"/>
-        <source>Book &amp;Title:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="+70"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4623,17 +4618,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Book Title Extended:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Extended Title or Book Subtitle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+18"/>
         <source>Extended Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4653,17 +4638,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Technique:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Representation:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="+33"/>
         <source>Representation format (width)x(height) followed bei format unit.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4678,12 +4653,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-8"/>
-        <source>Condition:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-142"/>
+        <location line="-150"/>
         <source>incl. vat</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4693,7 +4663,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+114"/>
+        <location line="+55"/>
+        <source>Title:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Title Extended:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Extended Title or Subtitle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <location line="+6"/>
         <source>Technique</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4703,16 +4689,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+9"/>
+        <source>Representation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <location line="+7"/>
         <source>Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <source>Designation:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location line="+7"/>
         <source>Designation</source>
         <translation type="unfinished"></translation>
@@ -5827,12 +5815,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
-        <source>Prints</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+23"/>
         <source>Prints, Stitches and Photo inventory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5868,12 +5851,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Prints tab isn&apos;t open!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+92"/>
+        <location line="+101"/>
         <source>Cant close this tab, unsafed changes!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5887,7 +5865,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-101"/>
+        <location line="-167"/>
+        <source>Everything else</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+66"/>
         <source>Ordering</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5897,7 +5880,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+43"/>
+        <source>Everything else tab isn&apos;t open!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+64"/>
         <location line="+12"/>
         <source>successfully</source>
         <translation type="unfinished"></translation>

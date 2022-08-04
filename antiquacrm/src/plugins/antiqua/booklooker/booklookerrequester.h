@@ -156,8 +156,32 @@ public:
    * @brief Sende Statusänderungen für Bestellung
    * @param orderId
    * @param status
+   * @code
+   *  https://api.booklooker.de/2.0/order_status?token=REST_API_TOKEN
+   * @endcode
    */
   void queryUpdateOrderStatus(const QString &orderId, const QString &status);
+
+  /**
+   * @brief Stornieren einer kompletten Bestellung
+   * @param orderId
+   * @code
+   *  https://api.booklooker.de/2.0/order_cancel?token=REST_API_TOKEN
+   * @endcode
+   */
+  void queryUpdateOrderCancel(const QString &orderId);
+
+  /**
+   * @brief Versand einer Nachricht an den Kunden.
+   * @param orderId
+   * @param messageType
+   * @param additionalText
+   * @code
+   *  https://api.booklooker.de/2.0/order_message?token=REST_API_TOKEN
+   * @endcode
+   */
+  void queryPushMessage(const QString &orderId, const QString &messageType,
+                        const QString &additionalText);
 
   /**
    * @brief Bestellung abfragen
