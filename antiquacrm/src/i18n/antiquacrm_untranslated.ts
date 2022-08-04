@@ -367,7 +367,7 @@
 <context>
     <name>Bl_CancelPage</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+141"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+105"/>
         <source>Cancel the currently selected order.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -385,7 +385,7 @@
 <context>
     <name>Bl_EMailPage</name>
     <message>
-        <location line="+12"/>
+        <location line="+18"/>
         <source>Currently not Supported!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -393,7 +393,7 @@
 <context>
     <name>Bl_MessagePage</name>
     <message>
-        <location line="+15"/>
+        <location line="+21"/>
         <source>Please select send type first.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -413,15 +413,25 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+4"/>
         <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>No Database Connection found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>No Message type selected!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Bl_StartPage</name>
     <message>
-        <location line="-157"/>
+        <location line="+19"/>
         <source>Status</source>
         <translation type="unfinished"></translation>
     </message>
@@ -436,17 +446,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Currently not Supported!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Sending eMail to Purchaser.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -469,7 +474,7 @@
 <context>
     <name>Bl_StatusPage</name>
     <message>
-        <location line="+23"/>
+        <location line="-209"/>
         <source>Changes the status of the current order.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3497,7 +3502,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+84"/>
+        <location filename="../mwindow.cpp" line="+85"/>
         <source>Application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3538,7 +3543,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+30"/>
         <source>Save request</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3548,18 +3553,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+82"/>
         <source>SQL Server Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-119"/>
-        <location line="+132"/>
+        <location line="-131"/>
+        <location line="+144"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-169"/>
+        <location line="-181"/>
         <source>Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3590,6 +3595,11 @@
     </message>
     <message>
         <location line="+5"/>
+        <source>Message Templates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Designation and Binding</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3599,7 +3609,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+100"/>
+        <location line="+108"/>
         <source>Disable Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3619,6 +3629,42 @@
     <message>
         <location line="+21"/>
         <source>The last Operation answered with an Error!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MessageKeywordList</name>
+    <message>
+        <location filename="../custom/messagetemplates/messagekeywordlist.cpp" line="+11"/>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Template</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MessageTemplates</name>
+    <message>
+        <location filename="../custom/messagetemplates/messagetemplates.cpp" line="+58"/>
+        <source>Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Patterns</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
