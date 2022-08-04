@@ -69,7 +69,7 @@ Q_DECLARE_TYPEINFO(Trust, Q_PRIMITIVE_TYPE);
   }
  * @endcode
  */
-class ANTIQUACORE_EXPORT TrustList : public QList<Trust> {
+class ANTIQUACORE_EXPORT TrustList final : public QList<Trust> {
 private:
   /**
    * @brief filled by Constructor

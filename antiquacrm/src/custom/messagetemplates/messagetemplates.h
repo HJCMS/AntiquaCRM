@@ -8,9 +8,10 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QObject>
-#include <QWidget>
-#include <QStatusBar>
+#include <QPushButton>
 #include <QSplitter>
+#include <QStatusBar>
+#include <QWidget>
 
 #include <SqlCore>
 
@@ -30,13 +31,16 @@ private:
   MessageEditor *m_editor;
   MessageKeywordList *m_keysList;
   QDialogButtonBox *m_btnBox;
+  QPushButton *btn_save;
   QStatusBar *m_statusBar;
 
-  const QString querySection(const QString &) const;
+  const QString querySection(const QString &name) const;
+  bool createSectionTree();
 
-//private Q_SLOTS:
+  bool createSelecters();
 
-//Q_SIGNALS:
+private Q_SLOTS:
+  void setSqlQuery();
 
 public:
   explicit MessageTemplates(QWidget *parent = nullptr);

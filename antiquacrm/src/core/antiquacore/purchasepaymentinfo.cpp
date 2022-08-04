@@ -2,8 +2,10 @@
 // vim: set fileencoding=utf-8
 
 #include "purchasepaymentinfo.h"
+
 #include <QDebug>
-#include <QtWidgets>
+#include <QGridLayout>
+#include <QLabel>
 
 namespace Antiqua {
 

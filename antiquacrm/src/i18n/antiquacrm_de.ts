@@ -207,7 +207,7 @@
 <context>
     <name>Antiqua::PurchasePaymentInfo</name>
     <message>
-        <location filename="../core/antiquacore/purchasepaymentinfo.cpp" line="+57"/>
+        <location filename="../core/antiquacore/purchasepaymentinfo.cpp" line="+59"/>
         <source>Payment method</source>
         <translation>Zahlungsmethode</translation>
     </message>
@@ -3635,25 +3635,62 @@
 <context>
     <name>MessageKeywordList</name>
     <message>
-        <location filename="../custom/messagetemplates/messagekeywordlist.cpp" line="+11"/>
+        <location filename="../custom/messagetemplates/messagekeywordlist.cpp" line="+14"/>
         <source>Category</source>
         <translation>Kategorie</translation>
     </message>
     <message>
-        <location line="+22"/>
-        <source>Section</source>
-        <translation>Bereich</translation>
-    </message>
-    <message>
-        <location line="+14"/>
+        <location line="+0"/>
         <source>Template</source>
         <translation>Vorlage</translation>
     </message>
 </context>
 <context>
+    <name>MessageSelecter</name>
+    <message>
+        <location filename="../custom/messagetemplates/messageselecter.cpp" line="+34"/>
+        <location line="+37"/>
+        <source>Select your Template to edit.</source>
+        <translation>Bitte wählen Sie hier die Vorlage aus.</translation>
+    </message>
+    <message>
+        <location line="-35"/>
+        <location line="+2"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+</context>
+<context>
     <name>MessageTemplates</name>
     <message>
-        <location filename="../custom/messagetemplates/messagetemplates.cpp" line="+58"/>
+        <location filename="../custom/messagetemplates/messagetemplates.cpp" line="+80"/>
+        <location line="+24"/>
+        <location line="+43"/>
+        <source>an error occurred</source>
+        <translation>ein Fehler ist aufgetreten</translation>
+    </message>
+    <message>
+        <location line="-33"/>
+        <source>The caller field is mandatory!</source>
+        <translation>Das Aufrufer feld ist zwingend Notwendig!</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>The title cannot be empty!</source>
+        <translation>Der Titel darf nicht Leer sein!</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Empty body text is not accepted!</source>
+        <translation>Leerer Textkörper wird nicht akzeptiert!</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>Save data successfully!</source>
+        <translation>Daten erfolgreich speichern!</translation>
+    </message>
+    <message>
+        <location line="-85"/>
         <source>Database</source>
         <translation>Datenbank</translation>
     </message>
@@ -5107,7 +5144,7 @@
         <translation>Frau</translation>
     </message>
     <message>
-        <location filename="../core/antiquacore/trustlist.cpp" line="+25"/>
+        <location filename="../core/antiquacore/trustlist.cpp" line="+24"/>
         <source>Trust Settings</source>
         <translation>Vertrauenseinstellungen</translation>
     </message>

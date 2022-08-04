@@ -5,15 +5,21 @@
 
 MessageEditor::MessageEditor(QWidget *parent) : QTextEdit{parent} {
   setObjectName("messages_editor");
+  setAcceptDrops(true);
   setContentsMargins(0, 0, 0, 0);
+
   QPalette p = palette();
   p.setColor(QPalette::Base,Qt::white);
   p.setColor(QPalette::Text,Qt::black);
   setPalette(p);
-  setWindowModified(true);
 
-  QString css("* { color: black; }");
-  css.append("p, li { white-space: pre-wrap; }");
+  QString css("QTextEdit { color: black; }");
   document()->setDefaultStyleSheet(css);
   document()->setModified(true);
+}
+
+void MessageEditor::setBody(const QString &txt)
+{
+  clear();
+  setPlainText(txt);
 }

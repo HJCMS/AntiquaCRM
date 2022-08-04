@@ -7,6 +7,7 @@
 
 #include <QJsonObject>
 #include <QList>
+#include <QMouseEvent>
 #include <QObject>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
@@ -18,13 +19,14 @@ class MessageKeywordList final : public QTreeWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  QTreeWidgetItem *getSection(const QString &name);
-  bool insertTplKey(QTreeWidgetItem *parent, const QString &key,
-                    const QJsonObject &value);
+  QTreeWidgetItem *getSection(const QString &section);
+  bool insertTplKey(QTreeWidgetItem *parent, const QJsonObject &jsObj);
+
+protected:
+  void mousePressEvent(QMouseEvent *event) override;
 
 public Q_SLOTS:
-  void addKey(const QString &section, const QString &key,
-              const QJsonObject &value);
+  void addKey(const QString &section, const QJsonObject &jsObj);
 
 public:
   explicit MessageKeywordList(QWidget *parent = nullptr);

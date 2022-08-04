@@ -14,6 +14,9 @@ class MessageEditor : public QTextEdit {
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
+public Q_SLOTS:
+   void setBody(const QString &);
+
 public:
   explicit MessageEditor(QWidget *parent = nullptr);
 };

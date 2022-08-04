@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "trustlist.h"
-#include "antiqua_global.h"
 
 #include <QObject>
 
