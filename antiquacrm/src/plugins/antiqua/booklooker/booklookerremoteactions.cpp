@@ -17,8 +17,10 @@
 
 static const QIcon btnIcon() {
 #ifdef ANTIQUA_LSB_DATADIR
+  QString p(ANTIQUA_LSB_DATADIR);
+  p.append("/icons");
   QDir dir;
-  dir.setPath(ANTIQUA_LSB_DATADIR + "/icons");
+  dir.setPath(p);
 #else
   QDir dir = QDir::current();
   dir.setPath("icons");
