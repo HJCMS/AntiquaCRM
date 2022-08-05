@@ -423,12 +423,7 @@ void BooklookerRemoteActions::prepareAction(const QJsonObject &jsObj) {
   QString value = jsObj.value("value").toString();
   if (action == "order_status") {
     m_requester->queryUpdateOrderStatus(p_orderId, value);
-  }
-#ifndef ANTIQUA_DEVELOPEMENT
-  m_statusBar->showMessage(tr("Currently not Supported!"), (1000 * 6));
-  return;
-#endif
-  if (action == "order_cancel") {
+  } else if (action == "order_cancel") {
     m_requester->queryUpdateOrderCancel(p_orderId);
   } else if (action == "email") {
     qInfo("TODO: function eMail to purchaser");
