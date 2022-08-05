@@ -38,6 +38,7 @@ bool MApplication::initTranslations() {
 
   d.append("i18n");
   d.append(QDir::separator());
+  qInfo("Translations:%s", qPrintable(d));
 
   QTranslator *transl = new QTranslator(this);
   if (transl->load(d + "antiquacrm_de")) {
