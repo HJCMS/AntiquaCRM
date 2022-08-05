@@ -29,13 +29,11 @@ bool MApplication::initialSocketServer() {
 }
 
 bool MApplication::initTranslations() {
+#ifdef ANTIQUA_LSB_DATADIR
+  QString d(ANTIQUA_LSB_DATADIR);
+#else
   QString d(applicationDirPath());
   d.append(QDir::separator());
-
-#ifndef ANTIQUA_DEVELOPEMENT
-#ifdef ANTIQUA_LSB_DATADIR
-  d = QString(ANTIQUA_LSB_DATADIR);
-#endif
 #endif
 
   d.append("i18n");
@@ -43,6 +41,9 @@ bool MApplication::initTranslations() {
 
   QTranslator *transl = new QTranslator(this);
   if (transl->load(d + "antiquacrm_de")) {
+    installTranslator(transl);
+    return true;
+  } else if (transl->load(d + "antiquacrm")) {
     installTranslator(transl);
     return true;
   }
