@@ -33,8 +33,8 @@ bool MApplication::initTranslations() {
   d.append(QDir::separator());
 
 #ifndef ANTIQUA_DEVELOPEMENT
-#ifdef ANTIQUA_LSB_TARGETS
-  d.append("../share/antiqua/");
+#ifdef ANTIQUA_LSB_DATADIR
+  d = QString(ANTIQUA_LSB_DATADIR);
 #endif
 #endif
 

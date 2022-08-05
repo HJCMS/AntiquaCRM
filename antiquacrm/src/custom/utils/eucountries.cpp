@@ -20,8 +20,8 @@ const QDir EUCountries::sourcePath() const {
   p.append(QDir::separator());
 
 #ifndef ANTIQUA_DEVELOPEMENT
-#ifdef ANTIQUA_LSB_TARGETS
-  p.append("../share/antiqua/");
+#ifdef ANTIQUA_LSB_DATADIR
+  p = QString(ANTIQUA_LSB_DATADIR);
 #endif
 #endif
 
