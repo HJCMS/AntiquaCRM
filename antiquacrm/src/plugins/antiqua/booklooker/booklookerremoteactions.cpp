@@ -16,8 +16,13 @@
 #include <QtSql>
 
 static const QIcon btnIcon() {
+#ifdef ANTIQUA_LSB_DATADIR
+  QDir dir;
+  dir.setPath(ANTIQUA_LSB_DATADIR + "/icons");
+#else
   QDir dir = QDir::current();
   dir.setPath("icons");
+#endif
   QFileInfo fileInfo(dir, "info.png");
   if (fileInfo.isReadable()) {
     QImageReader reader(fileInfo.filePath());
