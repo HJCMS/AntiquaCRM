@@ -5,7 +5,6 @@
 #include "categoryactions.h"
 #include "categorytree.h"
 #include "draglistwidget.h"
-#include "myicontheme.h"
 
 #ifdef ANTIQUA_DEVELOPEMENT
 #include <QDir>
@@ -15,7 +14,7 @@
 #include <QTextCodec>
 #endif
 #include <QDebug>
-#include <QMutex>
+#include <QRecursiveMutex>
 #include <QLabel>
 #include <QVBoxLayout>
 
@@ -206,7 +205,7 @@ void CategoryEdit::saveCompanyTreeUsage() {
   qDebug() << "Written:" << file.filePath();
 #endif
 
-  QMutex mutex(QMutex::Recursive);
+  QRecursiveMutex mutex;
   mutex.lock();
   m_sql->query("UPDATE categories_extern SET ce_company_keywords='';");
   m_sql->query(statements.join("\n"));

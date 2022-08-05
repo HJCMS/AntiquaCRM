@@ -12,7 +12,6 @@
 #include <QHttpMultiPart>
 #include <QHttpPart>
 #include <QJsonParseError>
-#include <QMutex>
 #include <QTextCodec>
 #include <QTextStream>
 #include <QTimer>

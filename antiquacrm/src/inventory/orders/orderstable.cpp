@@ -12,8 +12,8 @@
 #include <QItemSelectionModel>
 #include <QMenu>
 #include <QMessageBox>
-#include <QMutex>
 #include <QPoint>
+#include <QRecursiveMutex>
 #include <QRegExp>
 #include <QSignalMapper>
 #include <QSqlTableModel>
@@ -55,7 +55,7 @@ bool OrdersTable::sqlExecQuery(const QString &statement) {
 
   QSqlDatabase db(m_sql->db());
   if (db.open()) {
-    QMutex mutex(QMutex::NonRecursive);
+    QRecursiveMutex mutex;
     mutex.lock();
     QTime time = QTime::currentTime();
     m_queryModel->setQuery(statement, db);
@@ -111,7 +111,8 @@ void OrdersTable::contextMenuEvent(QContextMenuEvent *ev) {
   connect(ac_open, SIGNAL(triggered()), this, SLOT(openByContext()));
 
   // Kundendaten aufrufen
-  QAction *ac_customer = m->addAction(myIcon("group"), tr("View Customer data"));
+  QAction *ac_customer =
+      m->addAction(myIcon("group"), tr("View Customer data"));
   ac_customer->setObjectName("ac_context_open_customer");
   ac_customer->setEnabled(b);
   connect(ac_customer, SIGNAL(triggered()), this, SLOT(openCustomer()));

@@ -10,7 +10,7 @@
 #include <QHBoxLayout>
 #include <QJsonValue>
 #include <QMessageBox>
-#include <QMutex>
+#include <QRecursiveMutex>
 #include <QTimer>
 
 /**
@@ -97,7 +97,7 @@ void CategorySubject::setMainCategories() {
 }
 
 void CategorySubject::setCompleter(const QStringList &list) {
-  QMutex mutex(QMutex::Recursive);
+  QRecursiveMutex mutex;
   mutex.lock();
   QCompleter *cpl = new QCompleter(list, this);
   cpl->setCompletionMode(QCompleter::UnfilteredPopupCompletion);

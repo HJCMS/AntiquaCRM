@@ -12,8 +12,8 @@
 #include <QDebug>
 #include <QHeaderView>
 #include <QMenu>
-#include <QMutex>
 #include <QPoint>
+#include <QRecursiveMutex>
 #include <QRegExp>
 #include <QSignalMapper>
 #include <QStringList>
@@ -54,7 +54,7 @@ bool CustomerTableView::sqlExecQuery(const QString &statement) {
     if (SHOW_SQL_QUERIES) {
       qDebug() << Q_FUNC_INFO << statement;
     }
-    QMutex mutex(QMutex::NonRecursive);
+    QRecursiveMutex mutex;
     mutex.lock();
     QTime time = QTime::currentTime();
     m_tableModel->setQuery(statement, db);

@@ -16,9 +16,9 @@
 #include <QItemSelectionModel>
 #include <QKeySequence>
 #include <QMenu>
-#include <QMutex>
 #include <QPainter>
 #include <QPoint>
+#include <QRecursiveMutex>
 #include <QRegExp>
 #include <QSignalMapper>
 #include <QSqlError>
@@ -66,7 +66,7 @@ bool BooksTable::sqlExecQuery(const QString &statement) {
 
   QSqlDatabase db(m_sql->db());
   if (db.open()) {
-    QMutex mutex(QMutex::NonRecursive);
+    QRecursiveMutex mutex;
     mutex.lock();
     QTime time = QTime::currentTime();
     m_queryModel->setQuery(statement, db);
