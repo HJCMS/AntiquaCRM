@@ -21,7 +21,7 @@ const QDir EUCountries::sourcePath() const {
 
 #ifndef ANTIQUA_DEVELOPEMENT
 #ifdef ANTIQUA_LSB_TARGETS
-  p.append("..");
+  p.append("../share/antiqua/");
 #endif
 #endif
 

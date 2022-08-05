@@ -31,6 +31,13 @@ bool MApplication::initialSocketServer() {
 bool MApplication::initTranslations() {
   QString d(applicationDirPath());
   d.append(QDir::separator());
+
+#ifndef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_LSB_TARGETS
+  p.append("../share/antiqua/");
+#endif
+#endif
+
   d.append("i18n");
   d.append(QDir::separator());
 
