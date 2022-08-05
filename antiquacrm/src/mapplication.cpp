@@ -34,7 +34,7 @@ bool MApplication::initTranslations() {
 
 #ifndef ANTIQUA_DEVELOPEMENT
 #ifdef ANTIQUA_LSB_TARGETS
-  p.append("../share/antiqua/");
+  d.append("../share/antiqua/");
 #endif
 #endif
 
