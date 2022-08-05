@@ -10,8 +10,9 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QGroupBox>
-#include <QObject>
 #include <QJsonObject>
+#include <QMap>
+#include <QObject>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QStackedWidget>
@@ -21,6 +22,25 @@
 #include <AntiquaInterface>
 
 class BooklookerRequester;
+
+/**
+ * @brief Nachrichten
+ */
+class ANTIQUACORE_EXPORT BL_Message final {
+private:
+  QString p_type;
+  QString p_title;
+  QString p_body;
+
+public:
+  explicit BL_Message();
+  void setType(const QString &);
+  const QString getType();
+  void setTitle(const QString &);
+  const QString getTitle();
+  void setBody(const QString &);
+  const QString getBody();
+};
 
 /**
  * @brief Abstrakte Klasse für die Seiten
@@ -110,6 +130,9 @@ private:
   QComboBox *m_type;
   QTextEdit *m_message;
   QPushButton *m_apply;
+  QMap<QString, QString> p_replacements;
+  QMap<int, BL_Message> p_messages;
+  const QString convertTemplate(const QString &body);
 
 private Q_SLOTS:
   void messageTypeChanged(int);
@@ -117,6 +140,8 @@ private Q_SLOTS:
 
 public:
   explicit Bl_MessagePage(QWidget *parent = nullptr);
+  void setPurchaser(QString &person, const QString &email);
+  bool initSqlMessages();
 };
 
 /**
@@ -165,6 +190,8 @@ private:
   Bl_EMailPage *m_emailPage;
   Bl_MessagePage *m_messagePage;
   QStatusBar *m_statusBar;
+  QString p_purchaser;
+  QString p_purchaser_mail;
 
 private Q_SLOTS:
   /**
@@ -182,6 +209,8 @@ private Q_SLOTS:
 
 public:
   explicit BooklookerRemoteActions(QWidget *parent = nullptr);
+  void setPurchaser(const QString &person);
+  void setEMail(const QString &email);
   int exec(const QString &orderId);
 };
 

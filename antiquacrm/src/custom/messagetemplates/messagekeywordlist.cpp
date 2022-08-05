@@ -62,21 +62,18 @@ void MessageKeywordList::mousePressEvent(QMouseEvent *event) {
     if (item == nullptr || item->text(1).isEmpty())
       return;
 
+    QString pasteText(delimiter);
+    pasteText.append(item->text(1).trimmed());
+    pasteText.append(delimiter);
+
     QMimeData *m_mimeData = new QMimeData;
-    m_mimeData->setText(item->text(1));
+    m_mimeData->setText(pasteText);
 
     QPoint itemPoint = event->pos() - visualItemRect(item).topLeft();
-    QLabel *m_label = new QLabel(item->text(1), this);
-
     QDrag *m_drag = new QDrag(this);
     m_drag->setMimeData(m_mimeData);
-    m_drag->setPixmap(m_label->pixmap(Qt::ReturnByValue));
     m_drag->setHotSpot(itemPoint);
-    m_label->hide();
-
     m_drag->exec(Qt::CopyAction, Qt::CopyAction);
-    m_label->hide();
-    m_label->deleteLater();
   } else {
     event->setAccepted(false);
   }

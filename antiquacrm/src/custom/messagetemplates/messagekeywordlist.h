@@ -19,6 +19,7 @@ class MessageKeywordList final : public QTreeWidget {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  QString delimiter = QString("@");
   QTreeWidgetItem *getSection(const QString &section);
   bool insertTplKey(QTreeWidgetItem *parent, const QJsonObject &jsObj);
 

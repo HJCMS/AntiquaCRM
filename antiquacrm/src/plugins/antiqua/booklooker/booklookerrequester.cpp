@@ -395,7 +395,12 @@ bool BooklookerRequester::deleteRequest(const QUrl &url) {
 
 bool BooklookerRequester::putRequest(const QUrl &url, const QByteArray &data) {
   QNetworkRequest req = newRequest(url);
+  req.setRawHeader("Content-Type", "text/plain");
   m_reply = put(req, data);
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << m_reply->url() << data;
+#endif
 
   connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));
@@ -451,9 +456,27 @@ void BooklookerRequester::queryList() {
 
 void BooklookerRequester::queryUpdateOrderStatus(const QString &orderId,
                                                  const QString &status) {
-  // PUT https://api.booklooker.de/2.0/order_status?token=REST_API_TOKEN
-  qInfo("Booklooker::order_status('%s','%s')", qPrintable(orderId),
-        qPrintable(status));
+  if (orderId.length() < 4)
+    return;
+
+  if (status.isEmpty())
+    return;
+
+  if (getToken().isEmpty()) {
+    authentication();
+    return;
+  }
+
+  QUrlQuery q;
+  q.addQueryItem("token", getToken());
+  q.addQueryItem("orderId", orderId);
+  q.addQueryItem("status", status);
+
+  p_operation = "order_status";
+  QUrl url = apiQuery(p_operation);
+  url.setQuery(q);
+
+  putRequest(url, QByteArray());
 }
 
 void BooklookerRequester::queryUpdateOrderCancel(const QString &orderId) {
@@ -465,10 +488,8 @@ void BooklookerRequester::queryPushMessage(const QString &orderId,
                                            const QString &messageType,
                                            const QString &additionalText) {
   // PUT https://api.booklooker.de/2.0/order_message?token=REST_API_TOKEN
-  qInfo("Booklooker::order_message('%s','%s','%s')",
-        qPrintable(orderId),
-        qPrintable(messageType),
-        qPrintable(additionalText));
+  qInfo("Booklooker::order_message('%s','%s','%s')", qPrintable(orderId),
+        qPrintable(messageType), qPrintable(additionalText));
 }
 
 void BooklookerRequester::queryOrder(const QString &orderId) {

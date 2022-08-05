@@ -119,9 +119,6 @@ InterfaceWidget::InterfaceWidget(const QString &orderId, QWidget *parent)
   btn_providerActions->setText(tr("Open"));
   btn_providerActions->setToolTip(tr("Opens the service provider dialog for "
                                      "editing and confirming an order."));
-#ifndef ANTIQUA_DEVELOPEMENT
-  btn_providerActions->setEnabled(false);
-#endif
   operationsLayout->addWidget(btn_providerActions);
   m_operationBar->setLayout(operationsLayout);
   layout->addWidget(m_operationBar);

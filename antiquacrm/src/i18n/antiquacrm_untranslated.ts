@@ -367,7 +367,7 @@
 <context>
     <name>Bl_CancelPage</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+105"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+118"/>
         <source>Cancel the currently selected order.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -393,37 +393,27 @@
 <context>
     <name>Bl_MessagePage</name>
     <message>
-        <location line="+21"/>
+        <location line="+112"/>
         <source>Please select send type first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Send payment information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Send payment reminder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Send shipping notification</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
+        <location line="-87"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+65"/>
         <source>No Database Connection found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+6"/>
+        <source>No Database Connection!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-34"/>
         <source>No Message type selected!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -431,12 +421,12 @@
 <context>
     <name>Bl_StartPage</name>
     <message>
-        <location line="+19"/>
+        <location line="+80"/>
         <source>Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Order Status update.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -446,27 +436,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+7"/>
         <source>Currently not Supported!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+3"/>
+        <source>Sending eMail to Purchaser.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Cancel an entire order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+8"/>
         <source>Message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Sending a message to the Purchaser.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -474,7 +469,7 @@
 <context>
     <name>Bl_StatusPage</name>
     <message>
-        <location line="-209"/>
+        <location line="-270"/>
         <source>Changes the status of the current order.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -970,6 +965,14 @@
     <message>
         <location filename="../plugins/antiqua/booklooker/booklookerifacewidget.cpp" line="+123"/>
         <source>Germany</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BooklookerRemoteActions</name>
+    <message>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+344"/>
+        <source>Currently not Supported!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3649,13 +3652,12 @@
     <name>MessageSelecter</name>
     <message>
         <location filename="../custom/messagetemplates/messageselecter.cpp" line="+34"/>
-        <location line="+37"/>
+        <location line="+36"/>
         <source>Select your Template to edit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-35"/>
-        <location line="+2"/>
+        <location line="-33"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3665,32 +3667,32 @@
     <message>
         <location filename="../custom/messagetemplates/messagetemplates.cpp" line="+80"/>
         <location line="+24"/>
-        <location line="+43"/>
+        <location line="+46"/>
         <source>an error occurred</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-33"/>
+        <location line="-36"/>
         <source>The caller field is mandatory!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>The title cannot be empty!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Empty body text is not accepted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+22"/>
         <source>Save data successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-85"/>
+        <location line="-88"/>
         <source>Database</source>
         <translation type="unfinished"></translation>
     </message>

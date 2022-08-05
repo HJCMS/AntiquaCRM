@@ -262,8 +262,15 @@ void BooklookerIfaceWidget::createOrderRequest() {
 
 void BooklookerIfaceWidget::createProviderOrderUpdate() {
   m_dialog = new BooklookerRemoteActions(this);
-  // connect(m_dialog,SIGNAL(sendUpdateOrderStatus(QString,QString)),
-  //         this, SLOT());
+  // Käufername
+  QStringList person;
+  person << getValue("c_gender").toString();
+  person << getValue("c_firstname").toString();
+  person << getValue("c_lastname").toString();
+  m_dialog->setPurchaser(person.join(" "));
+  // E-Mail
+  m_dialog->setEMail(getValue("c_email_0").toString());
+
   if (m_dialog->exec(getOrderId()) == QDialog::Accepted) {
     qDebug() << Q_FUNC_INFO << "TODO";
   }

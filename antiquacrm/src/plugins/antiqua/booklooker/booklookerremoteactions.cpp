@@ -28,6 +28,19 @@ static const QIcon btnIcon() {
   return QIcon();
 }
 
+BL_Message::BL_Message() {
+  p_type = QString();
+  p_title = QString();
+  p_body = QString();
+}
+
+void BL_Message::setType(const QString &str) { p_type = str; }
+const QString BL_Message::getType() { return p_type; }
+void BL_Message::setTitle(const QString &str) { p_title = str; }
+const QString BL_Message::getTitle() { return p_title; }
+void BL_Message::setBody(const QString &str) { p_body = str; }
+const QString BL_Message::getBody() { return p_body; }
+
 Bl_PageWidget::Bl_PageWidget(QWidget *parent) : QWidget{parent} {}
 
 void Bl_PageWidget::setModified(bool b) {
@@ -147,19 +160,14 @@ Bl_MessagePage::Bl_MessagePage(QWidget *parent) : Bl_PageWidget{parent} {
   // order_message
   QVBoxLayout *layout = new QVBoxLayout(this);
   m_type = new QComboBox(this);
-  // Bitte wählen Sie zuerst die Versandart aus.
-  m_type->addItem(tr("Please select send type first."), QString());
-  // PAYMENT_INFORMATION · Zahlungsinformationen senden
-  m_type->addItem(tr("Send payment information"), "PAYMENT_INFORMATION");
-  // PAYMENT_REMINDER · Zahlungserinnerung senden
-  m_type->addItem(tr("Send payment reminder"), "PAYMENT_REMINDER");
-  // SHIPPING_NOTICE · Versandmitteilung senden
-  m_type->addItem(tr("Send shipping notification"), "SHIPPING_NOTICE");
   layout->addWidget(m_type); // #0
+
   m_message = new QTextEdit(this);
   layout->addWidget(m_message); // #1
+
   m_apply = new QPushButton(btnIcon(), tr("Apply"), this);
   layout->addWidget(m_apply); // #2
+
   layout->setStretch(1, 1);
   setLayout(layout);
 
@@ -168,35 +176,27 @@ Bl_MessagePage::Bl_MessagePage(QWidget *parent) : Bl_PageWidget{parent} {
   connect(m_apply, SIGNAL(clicked()), this, SLOT(prepareAction()));
 }
 
+const QString Bl_MessagePage::convertTemplate(const QString &body) {
+  QString buffer = body.trimmed();
+  QMapIterator<QString, QString> it(p_replacements);
+  while (it.hasNext()) {
+    it.next();
+    buffer.replace(it.key(), it.value());
+  }
+  return buffer;
+}
+
 void Bl_MessagePage::messageTypeChanged(int index) {
   if (index == 0)
     return;
 
-  QString dbName;
-  foreach (QString n, QSqlDatabase::connectionNames()) {
-    if (n.contains(qApp->applicationName())) {
-      dbName = n;
-    }
-  }
-  if (dbName.isEmpty()) {
-    emit sendNotes(tr("No Database Connection found!"));
+  BL_Message bl_m = p_messages.value(index);
+  QString body = bl_m.getBody();
+  if (body.isEmpty())
     return;
-  }
-
-  QSqlDatabase db = QSqlDatabase::database(dbName);
-  if (db.isValid()) {
-    qDebug() << Q_FUNC_INFO << dbName;
-  }
 
   m_message->clear();
-  QString type = m_type->itemData(index, Qt::UserRole).toString();
-  if (type == "PAYMENT_INFORMATION") {
-    m_message->setPlainText("@PAYMENT_INFORMATION@");
-  } else if (type == "PAYMENT_REMINDER") {
-    m_message->setPlainText("@PAYMENT_REMINDER@");
-  } else {
-    m_message->setPlainText("@SHIPPING_NOTICE@");
-  }
+  m_message->setPlainText(body);
 }
 
 void Bl_MessagePage::prepareAction() {
@@ -217,40 +217,119 @@ void Bl_MessagePage::prepareAction() {
   emit sendAction(obj);
 }
 
+void Bl_MessagePage::setPurchaser(QString &person, const QString &email) {
+  p_replacements.insert("@PURCHASER@", person);
+  p_replacements.insert("@PURCHASER_EMAIL@", email);
+}
+
+bool Bl_MessagePage::initSqlMessages() {
+  QString dbName;
+  foreach (QString n, QSqlDatabase::connectionNames()) {
+    if (n.contains(qApp->applicationName())) {
+      dbName = n;
+    }
+  }
+  if (dbName.isEmpty()) {
+    emit sendNotes(tr("No Database Connection found!"));
+    return false;
+  }
+
+  QSqlDatabase db = QSqlDatabase::database(dbName);
+  if (!db.isValid()) {
+    emit sendNotes(tr("No Database Connection!"));
+    return false;
+  }
+
+  QStringList sqlFields("PAYMENT_INFORMATION");
+  sqlFields << "PAYMENT_REMINDER";
+  sqlFields << "SHIPPING_NOTICE";
+  sqlFields << "ORDER_CANCELED";
+
+  QString sql("SELECT * FROM ui_template_body WHERE");
+  sql.append(" tb_caller IN ");
+  sql.append("('" + sqlFields.join("','") + "');");
+
+  QSqlQuery q = db.exec(sql);
+  if (q.size() > 0) {
+    p_messages.clear();
+    m_type->addItem(tr("Please select send type first."), QString());
+    int position = 1;
+
+    while (q.next()) {
+      QString body = q.value("tb_message").toString();
+      if (body.isEmpty())
+        continue;
+
+      BL_Message bl_p;
+      bl_p.setType(q.value("tb_caller").toString());
+      bl_p.setTitle(q.value("tb_title").toString());
+      body = convertTemplate(body);
+      bl_p.setBody(body);
+
+      p_messages.insert(position, bl_p);
+      m_type->insertItem(position, bl_p.getTitle(), bl_p.getType());
+      position++;
+    }
+    return true;
+  }
+  return false;
+}
+
 Bl_StartPage::Bl_StartPage(QWidget *parent) : QWidget{parent} {
   setObjectName("booklooker_action_start_page");
   QGridLayout *layout = new QGridLayout(this);
 
-  btn_status = new QPushButton(btnIcon(), tr("Status"), this);
+  QIcon icon = btnIcon();
+  QSize iconSize(24, 24);
+
+  btn_status = new QPushButton(icon, tr("Status"), this);
   btn_status->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  btn_status->setIconSize(iconSize);
   QFont btn_font = btn_status->font();
-  btn_font.setStretch(1);
+  btn_font.setPointSize((btn_font.pointSize() + 2));
   btn_status->setFont(btn_font);
   // Bestellstatus aktualisieren.
   btn_status->setToolTip(tr("Order Status update."));
   layout->addWidget(btn_status, 0, 0, 1, 1);
 
-  btn_email = new QPushButton(btnIcon(), tr("eMail"), this);
+  btn_email = new QPushButton(icon, tr("eMail"), this);
   btn_email->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   btn_email->setFont(btn_font);
+  btn_email->setIconSize(iconSize);
+  // Senden einer E-Mail an den Käufer.
+#ifndef ANTIQUA_DEVELOPEMENT
   btn_email->setEnabled(false);
   btn_email->setToolTip(tr("Currently not Supported!"));
-  // Senden einer E-Mail an den Käufer.
-  // btn_email->setToolTip(tr("Sending eMail to Purchaser."));
+#else
+  btn_email->setEnabled(true);
+  btn_email->setToolTip(tr("Sending eMail to Purchaser."));
+#endif
   layout->addWidget(btn_email, 0, 1, 1, 1);
 
-  btn_cancel = new QPushButton(btnIcon(), tr("Cancel"), this);
+  btn_cancel = new QPushButton(icon, tr("Cancel"), this);
   btn_cancel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   btn_cancel->setFont(btn_font);
+  btn_cancel->setIconSize(iconSize);
   // Stornieren einer kompletten Bestellung.
   btn_cancel->setToolTip(tr("Cancel an entire order."));
+#ifndef ANTIQUA_DEVELOPEMENT
+  btn_cancel->setEnabled(false);
+#else
+  btn_cancel->setEnabled(true);
+#endif
   layout->addWidget(btn_cancel, 1, 0, 1, 1);
 
-  btn_message = new QPushButton(btnIcon(), tr("Message"), this);
+  btn_message = new QPushButton(icon, tr("Message"), this);
   btn_message->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   btn_message->setFont(btn_font);
+  btn_message->setIconSize(iconSize);
   // Versand einer Nachricht an den Käufer.
   btn_message->setToolTip(tr("Sending a message to the Purchaser."));
+#ifndef ANTIQUA_DEVELOPEMENT
+  btn_message->setEnabled(false);
+#else
+  btn_message->setEnabled(true);
+#endif
   layout->addWidget(btn_message, 1, 1, 1, 1);
 
   setLayout(layout);
@@ -277,6 +356,7 @@ BooklookerRemoteActions::BooklookerRemoteActions(QWidget *parent)
   setContentsMargins(5, 0, 5, 10);
 
   m_requester = new BooklookerRequester(this);
+  m_requester->setObjectName("bl_remote_actions");
 
   // BEGIN MainLayout
   QVBoxLayout *layout = new QVBoxLayout(this);
@@ -343,7 +423,12 @@ void BooklookerRemoteActions::prepareAction(const QJsonObject &jsObj) {
   QString value = jsObj.value("value").toString();
   if (action == "order_status") {
     m_requester->queryUpdateOrderStatus(p_orderId, value);
-  } else if (action == "order_cancel") {
+  }
+#ifndef ANTIQUA_DEVELOPEMENT
+  m_statusBar->showMessage(tr("Currently not Supported!"), (1000 * 6));
+  return;
+#endif
+  if (action == "order_cancel") {
     m_requester->queryUpdateOrderCancel(p_orderId);
   } else if (action == "email") {
     qInfo("TODO: function eMail to purchaser");
@@ -358,8 +443,28 @@ void BooklookerRemoteActions::pushMessage(const QString &msg) {
   m_statusBar->showMessage(msg, (1000 * 6));
 }
 
+void BooklookerRemoteActions::setPurchaser(const QString &person) {
+  if (person.isEmpty())
+    return;
+
+  p_purchaser = person;
+}
+
+void BooklookerRemoteActions::setEMail(const QString &email) {
+  if (email.isEmpty())
+    return;
+
+  p_purchaser_mail = email;
+}
+
 int BooklookerRemoteActions::exec(const QString &orderId) {
   if (orderId.length() < 4)
+    return QDialog::Rejected;
+
+  if (!p_purchaser.isEmpty())
+    m_messagePage->setPurchaser(p_purchaser, p_purchaser_mail);
+
+  if (!m_messagePage->initSqlMessages())
     return QDialog::Rejected;
 
   p_orderId = orderId;

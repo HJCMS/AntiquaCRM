@@ -35,7 +35,7 @@ class MessageSelecter final : public QFrame {
 
 private:
   QComboBox *m_selecter;
-  QLineEdit *m_title;
+  QLabel *m_title;
   QLabel *m_caller;
   QMap<int,MessageCaller> p_map;
 

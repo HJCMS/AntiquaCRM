@@ -114,24 +114,27 @@ void MessageTemplates::setSqlQuery() {
     m_statusBar->showMessage(tr("The caller field is mandatory!"));
     return;
   }
+
   QString tb_title = m_toolBar->getTitle();
   if (tb_title.isEmpty()) {
     m_statusBar->showMessage(tr("The title cannot be empty!"));
     return;
   }
+
   QString tb_message = m_editor->toPlainText();
   if (tb_message.isEmpty()) {
     m_statusBar->showMessage(tr("Empty body text is not accepted!"));
     return;
   }
-  QString sql("SELECT * FROM ui_template_body WHERE tb_caller='");
-  sql.append(tb_caller + "';");
+
+  QString sql("SELECT * FROM ui_template_body WHERE tb_title='");
+  sql.append(tb_title + "';");
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
     sql = QString("UPDATE ui_template_body SET");
-    sql.append(" tb_title='" + tb_title + "',");
+    sql.append(" tb_caller='" + tb_caller + "',");
     sql.append(" tb_message='" + tb_message + "'");
-    sql.append(" WHERE tb_caller='" + tb_caller + "';");
+    sql.append(" WHERE tb_title='" + tb_title + "';");
   } else {
     sql = QString("INSERT INTO ui_template_body");
     sql.append(" (tb_caller,tb_title,tb_message) VALUES");

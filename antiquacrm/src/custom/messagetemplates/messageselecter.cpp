@@ -32,14 +32,13 @@ MessageSelecter::MessageSelecter(QWidget *parent) : QFrame{parent} {
   layout->setContentsMargins(2, 1, 2, 1);
   m_selecter = new QComboBox(this);
   m_selecter->addItem(tr("Select your Template to edit."));
-  layout->addWidget(m_selecter, 0, 0, 1, 3);
-  layout->addWidget((new QLabel(tr("Title"), this)), 1, 0, 1, 1);
-  m_title = new QLineEdit(this);
-  m_title->setPlaceholderText(tr("Title"));
-  layout->addWidget(m_title, 1, 1, 1, 1);
+  layout->addWidget(m_selecter, 0, 0, 1, 2);
+  m_title = new QLabel(this);
+  m_title->setToolTip(tr("Title"));
+  layout->addWidget(m_title, 1, 0, 1, 1, Qt::AlignLeft);
   m_caller = new QLabel(this);
   m_caller->setToolTip(tr(""));
-  layout->addWidget(m_caller, 1, 2, 1, 1);
+  layout->addWidget(m_caller, 1, 1, 1, 1, Qt::AlignRight);
   setLayout(layout);
 
   connect(m_selecter, SIGNAL(currentIndexChanged(int)), this,
