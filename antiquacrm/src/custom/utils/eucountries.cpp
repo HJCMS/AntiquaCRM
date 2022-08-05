@@ -16,15 +16,11 @@ EUCountries::EUCountries(const QString &name) : QDomDocument{name} {
 }
 
 const QDir EUCountries::sourcePath() const {
-  QString p = QDir::currentPath();
-  p.append(QDir::separator());
-
-#ifndef ANTIQUA_DEVELOPEMENT
 #ifdef ANTIQUA_LSB_DATADIR
-  p = QString(ANTIQUA_LSB_DATADIR);
+  QString p(ANTIQUA_LSB_DATADIR);
+#else
+  QString p(QDir::currentPath());
 #endif
-#endif
-
   p.append(QDir::separator());
   p.append("xml");
   return QDir(p);

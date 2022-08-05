@@ -33,9 +33,8 @@ bool MApplication::initTranslations() {
   QString d(ANTIQUA_LSB_DATADIR);
 #else
   QString d(applicationDirPath());
-  d.append(QDir::separator());
 #endif
-
+  d.append(QDir::separator());
   d.append("i18n");
   d.append(QDir::separator());
   qInfo("Translations:%s", qPrintable(d));
