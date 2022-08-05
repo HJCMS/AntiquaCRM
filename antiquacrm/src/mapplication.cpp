@@ -43,9 +43,6 @@ bool MApplication::initTranslations() {
   if (transl->load(d + "antiquacrm_de")) {
     installTranslator(transl);
     return true;
-  } else if (transl->load(d + "antiquacrm")) {
-    installTranslator(transl);
-    return true;
   }
   return false;
 }
