@@ -112,7 +112,9 @@ InterfaceWidget::InterfaceWidget(const QString &orderId, QWidget *parent)
   QHBoxLayout *operationsLayout = new QHBoxLayout(m_operationBar);
   operationsLayout->addStretch(1);
   QLabel *m_infoPrAc = new QLabel(m_operationBar);
-  m_infoPrAc->setText(tr("Service provider dialog for editing, confirming orders and eMail") + ":");
+  m_infoPrAc->setText(
+      tr("Service provider dialog for editing, confirming orders and eMail") +
+      ":");
   operationsLayout->addWidget(m_infoPrAc);
   btn_providerActions = new QPushButton(m_operationBar);
   btn_providerActions->setIcon(qi1);
@@ -182,10 +184,10 @@ void InterfaceWidget::setCustomerId(int cId) {
 
 int InterfaceWidget::getCustomerId() {
   bool b = false;
-  QString num = m_customerId->text();
+  QString num = m_customerId->text().trimmed();
   int cId = num.toInt(&b);
   if (!b) {
-    qDebug() << Q_FUNC_INFO << "can not convert customerId";
+    qWarning("can not convert customerId:(%s)", qPrintable(num));
     return customerId;
   }
 

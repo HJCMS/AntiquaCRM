@@ -3,11 +3,9 @@
 
 #include "applsettings.h"
 #include "antiqua_global.h"
-#include "myicontheme.h"
 
 #include <QApplication>
 #include <QDebug>
-#include <QDir>
 
 static const QString config_domain() {
   QString str = QString::fromUtf8(HJCMS_CONFIG_DOMAIN);
@@ -67,6 +65,15 @@ void ApplSettings::writeGroupConfig(const QString &group,
     // qDebug() << __FUNCTION__ << i.key() << ": " << i.value() << Qt::endl;
   }
   endGroup();
+}
+
+const QDir ApplSettings::getDataTarget() {
+#ifdef ANTIQUA_LSB_TARGETS
+  QString p(ANTIQUACRM_DATA_TARGET);
+#else
+  QString p(QDir::currentPath());
+#endif
+  return QDir(p);
 }
 
 ApplSettings::~ApplSettings() {}

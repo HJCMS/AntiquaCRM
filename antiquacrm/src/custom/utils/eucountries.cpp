@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "eucountries.h"
+#include "applsettings.h"
 
 #include <QDebug>
 #include <QDomElement>
@@ -16,14 +17,9 @@ EUCountries::EUCountries(const QString &name) : QDomDocument{name} {
 }
 
 const QDir EUCountries::sourcePath() const {
-#ifdef ANTIQUA_LSB_DATADIR
-  QString p(ANTIQUA_LSB_DATADIR);
-#else
-  QString p(QDir::currentPath());
-#endif
-  p.append(QDir::separator());
-  p.append("xml");
-  return QDir(p);
+  QDir p = ApplSettings::getDataTarget();
+  p.setPath("xml");
+  return p;
 }
 
 bool EUCountries::init() {

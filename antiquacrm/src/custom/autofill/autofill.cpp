@@ -2,23 +2,14 @@
 // vim: set fileencoding=utf-8
 
 #include "autofill.h"
+#include "applsettings.h"
 
+#include <QDebug>
 #include <QDomElement>
 #include <QDomNode>
 #include <QDomNodeList>
 #include <QStandardPaths>
 #include <QtCore>
-
-static const QString dataLocation(const QString &sfile) {
-  QStringList list = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-  QFileInfo fi;
-  foreach (QString l, list) {
-    fi.setFile(l + sfile);
-    if (fi.exists())
-      return l;
-  }
-  return list.first();
-}
 
 AutofillDB::AutofillDB(const QString &name) : QDomDocument{name} {}
 
@@ -35,19 +26,21 @@ QStringList AutofillDB::itemList() {
 
 Autofill::Autofill(QObject *parent) : QObject{parent} {}
 
-const QString Autofill::findFile(const QString &key) const {
-  QString l(QLocale().bcp47Name());
-  QString s(QDir::separator());
-  QString suffix(s + "xml" + s + key + "_" + l + ".xml");
-  QFileInfo info(QDir::currentPath() + suffix);
+const QString Autofill::findXmlDataFile(const QString &key) const {
+  QString lc(QLocale().bcp47Name());
+  QDir p = ApplSettings::getDataTarget();
+  p.setPath("xml");
+  QString file(key + "_" + lc + ".xml");
+  QFileInfo info(p, file);
   if (info.exists())
     return info.filePath();
 
-  return dataLocation(suffix);
+  qWarning("Autofill: no xml data target found!");
+  return QString();
 }
 
 QCompleter *Autofill::loadAutofill(const QString &key) {
-  QString file = findFile(key);
+  QString file = findXmlDataFile(key);
   if (!file.isEmpty()) {
     QStringList list;
     QFile fp(file);

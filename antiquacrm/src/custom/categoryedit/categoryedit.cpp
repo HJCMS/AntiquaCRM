@@ -14,7 +14,7 @@
 #include <QTextCodec>
 #endif
 #include <QDebug>
-#include <QRecursiveMutex>
+#include <QMutex>
 #include <QLabel>
 #include <QVBoxLayout>
 
@@ -205,7 +205,7 @@ void CategoryEdit::saveCompanyTreeUsage() {
   qDebug() << "Written:" << file.filePath();
 #endif
 
-  QRecursiveMutex mutex;
+  QMutex mutex;
   mutex.lock();
   m_sql->query("UPDATE categories_extern SET ce_company_keywords='';");
   m_sql->query(statements.join("\n"));

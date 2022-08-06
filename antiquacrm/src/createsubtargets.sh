@@ -9,6 +9,20 @@ if test -d ~/Developement/antiqua ; then
   find ~/Developement/antiqua -type f -name "*~" -exec rm -v "{}" \;
 fi
 
+function __clean_logs()
+{
+  ## Open Collaboration Service
+  if test -d $HOME/.cache/antiquacrm ; then
+    rm -rf $HOME/.cache/antiquacrm
+    mkdir -p $HOME/.cache/antiquacrm
+  fi
+  ## Plugins
+  rm -f $HOME/.cache/{booklooker,whsoft,abebooks}_*.xml
+  ## Tempfiles
+  rm -f /tmp/antiqua_*.json
+  rm -f /tmp/antiqua_*.log
+}
+
 function __check_sub_project()
 {
   local _f=${1:-"."}/CMakeLists.txt
@@ -131,3 +145,7 @@ cat >> CMakeSubTargets.cmake <<EOF
 
 EOF
 
+__clean_logs
+
+##
+## EOF

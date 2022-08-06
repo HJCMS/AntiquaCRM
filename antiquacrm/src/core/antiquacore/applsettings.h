@@ -8,6 +8,7 @@
 #include "antiqua_global.h"
 
 #include <QHash>
+#include <QDir>
 #include <QObject>
 #include <QSettings>
 #include <QString>
@@ -27,6 +28,7 @@ public:
   bool needAssistant();
   void writeGroupConfig(const QString &, const QHash<QString, QVariant> &);
   const QHash<QString, QVariant> &readGroupConfig(const QString &);
+  static const QDir getDataTarget();
   virtual ~ApplSettings();
 };
 

@@ -46,7 +46,7 @@
  * @warning This fixed string is needet for OAuth
  */
 #ifndef ANTIQUACRM_USERAGENT
-#define ANTIQUACRM_USERAGENT "AntiquaCRM/0.1"
+#define ANTIQUACRM_USERAGENT "AntiquaCRM/0.4"
 #endif
 
 /**
@@ -54,7 +54,7 @@
  * @brief versioning
  */
 #ifndef ANTIQUACRM_VERSION
-#define ANTIQUACRM_VERSION "0.3.10"
+#define ANTIQUACRM_VERSION "0.4.0"
 #endif
 
 /**
@@ -62,11 +62,11 @@
  * @brief Window title
  */
 #ifndef ANTIQUACRM_DISPLAYNAME
-#define ANTIQUACRM_DISPLAYNAME "AntiquaCRM"
+#define ANTIQUACRM_DISPLAYNAME "Antiqua CRM"
 #endif
 
 #ifndef ANTIQUACRM_WINDOW_TITLE
-#define ANTIQUACRM_WINDOW_TITLE "AntiquaCRM (v0.3.10)"
+#define ANTIQUACRM_WINDOW_TITLE "Antiqua CRM (v0.4.0)"
 #endif
 
 /**
@@ -75,6 +75,22 @@
  */
 #ifndef ANTIQUACRM_HOMEPAGE
 #define ANTIQUACRM_HOMEPAGE "https://www.hjcms.de"
+#endif
+
+/**
+ * @def ANTIQUACRM_DATA_TARGET
+ * @brief Shared Data location
+ */
+#ifndef ANTIQUACRM_DATA_TARGET
+#define ANTIQUACRM_DATA_TARGET "/usr/local/antiquacrm"
+#endif
+
+/**
+ * @def ANTIQUACRM_PLUGIN_TARGET
+ * @brief Plugins target
+ */
+#ifndef ANTIQUACRM_PLUGIN_TARGET
+#define ANTIQUACRM_PLUGIN_TARGET "/usr/local/antiquacrm/plugins/antiqua"
 #endif
 
 /**

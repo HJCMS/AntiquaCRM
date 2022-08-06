@@ -46,7 +46,7 @@
  * @warning This fixed string is needet for OAuth
  */
 #ifndef ANTIQUACRM_USERAGENT
-#define ANTIQUACRM_USERAGENT "AntiquaCRM/0.1"
+#define ANTIQUACRM_USERAGENT "AntiquaCRM/@ANTIQUACRM_VERSION_MAJOR@.@ANTIQUACRM_VERSION_MINOR@"
 #endif
 
 /**
@@ -75,6 +75,22 @@
  */
 #ifndef ANTIQUACRM_HOMEPAGE
 #define ANTIQUACRM_HOMEPAGE "@HOMEPAGEURL@"
+#endif
+
+/**
+ * @def ANTIQUACRM_DATA_TARGET
+ * @brief Shared Data location
+ */
+#ifndef ANTIQUACRM_DATA_TARGET
+#define ANTIQUACRM_DATA_TARGET "@ANTIQUA_DATA_TARGET@"
+#endif
+
+/**
+ * @def ANTIQUACRM_PLUGIN_TARGET
+ * @brief Plugins target
+ */
+#ifndef ANTIQUACRM_PLUGIN_TARGET
+#define ANTIQUACRM_PLUGIN_TARGET "@ANTIQUA_PLUGIN_TARGET@"
 #endif
 
 /**

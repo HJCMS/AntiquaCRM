@@ -29,18 +29,11 @@ PluginLoader::PluginLoader(QObject *parent) : QPluginLoader{parent} {
   lp.append("plugins");
   lp.append(QDir::separator());
   lp.append("antiqua");
-  // LSB LIBRARY DESTINATION lib${LIB_SUFFIX}/antiqua/plugins
-  QString gp(QLibraryInfo::location(QLibraryInfo::LibrariesPath));
-  gp.append(QDir::separator());
-  gp.append("antiqua");
-  gp.append(QDir::separator());
-  gp.append("plugins");
 
-  QStringList paths;
-  paths << gp;
-  paths << lp;
-  paths << QLibraryInfo::location(QLibraryInfo::PluginsPath);
+  QStringList paths(lp);
+  paths << QString(ANTIQUACRM_PLUGIN_TARGET);
 
+  // Build target?
   QFileInfo test(QDir::currentPath(), "cmake_install.cmake");
   if (test.exists()) {
     paths << lp + "/abebooks";

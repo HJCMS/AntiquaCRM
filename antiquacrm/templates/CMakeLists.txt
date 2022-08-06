@@ -5,8 +5,7 @@ SET (RESOURCE_FILES
   antiquacrm_utf8.iss.cmake
   application.desktop.cmake
   qt.conf.cmake
-  settings.cpp.tpl
-  settings.h.tpl
+  antiquacrm.png
 )
 
 SET (DOMAIN_SCOPE "de.hjcms.${PROJECTNAME}")
@@ -27,6 +26,10 @@ IF (ANTIQUA_LSB_INSTALL)
   INSTALL (FILES
     ${DOMAIN_SCOPE}.desktop
     DESTINATION share/applications
+    COMPONENT data
+  )
+  INSTALL (FILES antiquacrm.png
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps
     COMPONENT data
   )
 ELSE (ANTIQUA_LSB_INSTALL)

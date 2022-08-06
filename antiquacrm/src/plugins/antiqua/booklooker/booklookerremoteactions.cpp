@@ -3,6 +3,7 @@
 
 #include "booklookerremoteactions.h"
 #include "booklookerrequester.h"
+#include "applsettings.h"
 
 #include <QApplication>
 #include <QDebug>
@@ -16,16 +17,9 @@
 #include <QtSql>
 
 static const QIcon btnIcon() {
-#ifdef ANTIQUA_LSB_DATADIR
-  QString p(ANTIQUA_LSB_DATADIR);
-  p.append("/icons");
-  QDir dir;
-  dir.setPath(p);
-#else
-  QDir dir = QDir::current();
-  dir.setPath("icons");
-#endif
-  QFileInfo fileInfo(dir, "info.png");
+  QDir p = ApplSettings::getDataTarget();
+  p.setPath("icons");
+  QFileInfo fileInfo(p, "info.png");
   if (fileInfo.isReadable()) {
     QImageReader reader(fileInfo.filePath());
     QImage img = reader.read();

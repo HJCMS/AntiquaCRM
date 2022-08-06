@@ -19,7 +19,7 @@ class Autofill : public QObject {
   Q_OBJECT
 
 private:
-  const QString findFile(const QString &key) const;
+  const QString findXmlDataFile(const QString &key) const;
 
 public:
   explicit Autofill(QObject *parent = nullptr);
