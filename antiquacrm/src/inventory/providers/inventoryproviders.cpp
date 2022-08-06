@@ -514,12 +514,14 @@ void InventoryProviders::readOrderList(const QJsonDocument &doc) {
   QStringList orderIds;
   QString provider = QJsonValue(doc["provider"]).toString();
   QJsonArray array = QJsonValue(doc["items"]).toArray();
+  m_listView->clearProvidersList(provider);
   for (int i = 0; i < array.count(); i++) {
     QJsonObject obj = array[i].toObject();
     QDateTime dt = QDateTime::fromString(obj["datum"].toString(), Qt::ISODate);
     orderIds << obj["id"].toString();
     m_listView->addOrder(provider, obj["id"].toString(), dt);
   }
+  m_listView->sortProvidersList(provider);
 
   if (orderIds.count() > 0)
     updateTreeViewOrdersStatus(provider, orderIds);
@@ -559,6 +561,10 @@ void InventoryProviders::pluginError(Antiqua::ErrorStatus code,
 void InventoryProviders::onEnterChanged() {
   if (firstStart)
     return;
+
+#ifndef ANTIQUA_DEVELOPEMENT
+  qunsetenv("QT_DEBUG_PLUGINS");
+#endif
 
   firstStart = loadInterfaces();
 }

@@ -39,9 +39,6 @@ PluginLoader::PluginLoader(QObject *parent) : QPluginLoader{parent} {
     paths << lp + "/abebooks";
     paths << lp + "/whsoft";
     paths << lp + "/booklooker";
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << "Developement Plugin build path add...";
-#endif
   }
 
 #ifdef ANTIQUA_DEVELOPEMENT

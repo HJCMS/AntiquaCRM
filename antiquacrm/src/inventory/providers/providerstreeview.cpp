@@ -74,7 +74,7 @@ void ProvidersTreeView::itemSelected(QTreeWidgetItem *item, int) {
   }
 }
 
-void ProvidersTreeView::updateItemStatus(QTreeWidgetItem *item, int status) {
+void ProvidersTreeView::updateOrderStatus(QTreeWidgetItem *item, int status) {
   QString tip = item->toolTip(0);
   bool modified = item->data(1, Qt::UserRole).toBool();
   if (status > 0 && status < 4) {
@@ -114,9 +114,25 @@ void ProvidersTreeView::updateItemStatus(const QString &provider,
   for (int i = 0; i < parent->childCount(); i++) {
     QTreeWidgetItem *item = parent->child(i);
     if (item != nullptr && item->text(0) == orderId) {
-      updateItemStatus(item, status);
+      updateOrderStatus(item, status);
     }
   }
+}
+
+void ProvidersTreeView::clearProvidersList(const QString &provider) {
+  QTreeWidgetItem *p = getParent(provider);
+  if (p != nullptr) {
+    for (int i = 0; i < p->childCount(); i++) {
+      QTreeWidgetItem *item = p->child(i);
+      p->removeChild(item);
+    }
+  }
+}
+
+void ProvidersTreeView::sortProvidersList(const QString &provider) {
+  QTreeWidgetItem *p = getParent(provider);
+  if (p != nullptr)
+    p->sortChildren(1, Qt::AscendingOrder);
 }
 
 void ProvidersTreeView::addOrder(const QString &provider, const QString &id,
@@ -126,22 +142,20 @@ void ProvidersTreeView::addOrder(const QString &provider, const QString &id,
 
   QFont font(ProvidersTreeView::font());
   font.setItalic(true);
-  QList<QTreeWidgetItem *> l = findItems(provider, Qt::MatchFixedString, 0);
-  for (int i = 0; i < l.count(); i++) {
-    QTreeWidgetItem *p = l.at(i);
-    if (p != nullptr) {
-      QTreeWidgetItem *item = new QTreeWidgetItem(p, QTreeWidgetItem::UserType);
-      item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled |
-                     Qt::ItemNeverHasChildren);
-      item->setText(0, id);
-      item->setFont(0, font);
-      item->setIcon(0, myIcon("group"));
-      item->setToolTip(0, dt.toString("ddd dd. MMMM yyyy"));
-      item->setText(1, setDateString(dt));
-      item->setIcon(1, myIcon("messagebox_warning"));
-      item->setToolTip(1, dt.toString("ddd dd. MMMM yyyy"));
-      p->addChild(item);
-    }
+
+  QTreeWidgetItem *p = getParent(provider);
+  if (p != nullptr) {
+    QTreeWidgetItem *item = new QTreeWidgetItem(p, QTreeWidgetItem::UserType);
+    item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled |
+                   Qt::ItemNeverHasChildren);
+    item->setText(0, id);
+    item->setFont(0, font);
+    item->setIcon(0, myIcon("group"));
+    item->setToolTip(0, dt.toString("ddd dd. MMMM yyyy"));
+    item->setText(1, setDateString(dt));
+    item->setIcon(1, myIcon("messagebox_warning"));
+    item->setToolTip(1, dt.toString("ddd dd. MMMM yyyy"));
+    p->addChild(item);
   }
   resizeColumnToContents(0);
 }

@@ -29,9 +29,19 @@ private:
 
 private Q_SLOTS:
   void itemSelected(QTreeWidgetItem *, int);
-  void updateItemStatus(QTreeWidgetItem *item, int status);
+  void updateOrderStatus(QTreeWidgetItem *item, int status);
 
 public Q_SLOTS:
+  /**
+   * @brief Diensteleister liste leeren!
+   */
+  void clearProvidersList(const QString &provider);
+
+  /**
+   * @brief Sortiere Dienstleister Bestellungen
+   */
+  void sortProvidersList(const QString &provider);
+
   /**
    * @brief Eine Bestellung einfügen
    * @param provider - Zeiger auf Parent
