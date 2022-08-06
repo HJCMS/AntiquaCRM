@@ -17,9 +17,7 @@ EUCountries::EUCountries(const QString &name) : QDomDocument{name} {
 }
 
 const QDir EUCountries::sourcePath() const {
-  QDir p = ApplSettings::getDataTarget();
-  p.setPath("xml");
-  return p;
+  return ApplSettings::getDataTarget("xml");
 }
 
 bool EUCountries::init() {

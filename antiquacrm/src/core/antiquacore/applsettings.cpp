@@ -67,13 +67,14 @@ void ApplSettings::writeGroupConfig(const QString &group,
   endGroup();
 }
 
-const QDir ApplSettings::getDataTarget() {
+const QDir ApplSettings::getDataTarget(const QString &name) {
 #ifdef ANTIQUA_LSB_TARGETS
   QString p(ANTIQUACRM_DATA_TARGET);
 #else
   QString p(QDir::currentPath());
 #endif
-  return QDir(p);
+  QDir t(p);
+  return name.isEmpty() ? t : QDir(t.filePath(name));
 }
 
 ApplSettings::~ApplSettings() {}

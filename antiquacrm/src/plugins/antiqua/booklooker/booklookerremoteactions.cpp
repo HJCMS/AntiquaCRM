@@ -17,8 +17,7 @@
 #include <QtSql>
 
 static const QIcon btnIcon() {
-  QDir p = ApplSettings::getDataTarget();
-  p.setPath("icons");
+  QDir p = ApplSettings::getDataTarget("icons");
   QFileInfo fileInfo(p, "info.png");
   if (fileInfo.isReadable()) {
     QImageReader reader(fileInfo.filePath());

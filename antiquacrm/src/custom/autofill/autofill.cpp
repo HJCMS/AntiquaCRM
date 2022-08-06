@@ -28,10 +28,9 @@ Autofill::Autofill(QObject *parent) : QObject{parent} {}
 
 const QString Autofill::findXmlDataFile(const QString &key) const {
   QString lc(QLocale().bcp47Name());
-  QDir p = ApplSettings::getDataTarget();
-  p.setPath("xml");
+  QDir dest = ApplSettings::getDataTarget("xml");
   QString file(key + "_" + lc + ".xml");
-  QFileInfo info(p, file);
+  QFileInfo info(dest, file);
   if (info.exists())
     return info.filePath();
 

@@ -28,7 +28,7 @@ public:
   bool needAssistant();
   void writeGroupConfig(const QString &, const QHash<QString, QVariant> &);
   const QHash<QString, QVariant> &readGroupConfig(const QString &);
-  static const QDir getDataTarget();
+  static const QDir getDataTarget(const QString &name = QString());
   virtual ~ApplSettings();
 };
 
