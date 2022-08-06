@@ -32,11 +32,11 @@ bool MApplication::initTranslations() {
   QDir p = ApplSettings::getDataTarget();
   p.setPath("i18n");
   QTranslator *transl = new QTranslator(this);
-  if (transl->load(QLocale::system(), "antiquacrm", "_", p.path(), ".qm")) {
+  if (transl->load(QLocale::system(), "antiquacrm", "_", p.absolutePath(), ".qm")) {
     installTranslator(transl);
     return true;
   }
-  qDebug() << Q_FUNC_INFO << p;
+  qDebug() << Q_FUNC_INFO << p.absolutePath();
   return false;
 }
 
