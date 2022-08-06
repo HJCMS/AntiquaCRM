@@ -30,13 +30,12 @@ bool MApplication::initialSocketServer() {
 
 bool MApplication::initTranslations() {
   QDir p = ApplSettings::getDataTarget();
-  p.setPath("i18n");
   QTranslator *transl = new QTranslator(this);
-  if (transl->load(QLocale::system(), "antiquacrm", "_", p.absolutePath(), ".qm")) {
+  if (transl->load(QLocale::system(), "antiquacrm", "_", p.filePath("i18n"), ".qm")) {
     installTranslator(transl);
     return true;
   }
-  qDebug() << Q_FUNC_INFO << p.absolutePath();
+  qDebug() << Q_FUNC_INFO << p.filePath("i18n");
   return false;
 }
 
