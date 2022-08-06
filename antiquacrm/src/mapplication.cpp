@@ -36,6 +36,7 @@ bool MApplication::initTranslations() {
     installTranslator(transl);
     return true;
   }
+  qDebug() << Q_FUNC_INFO << p;
   return false;
 }
 
