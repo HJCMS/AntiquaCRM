@@ -71,7 +71,8 @@ const QDir ApplSettings::getDataTarget(const QString &name) {
 #ifdef ANTIQUA_LSB_TARGETS
   QString p(ANTIQUACRM_DATA_TARGET);
 #else
-  QString p(QDir::currentPath());
+  // None LSB and Windows
+  QString p(qApp->applicationDirPath());
 #endif
   QDir t(p);
   return name.isEmpty() ? t : QDir(t.filePath(name));
