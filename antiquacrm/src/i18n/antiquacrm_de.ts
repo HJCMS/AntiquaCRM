@@ -143,12 +143,12 @@
         <translation>Entwickler</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+15"/>
         <source>Service provider dialog for editing, confirming orders and eMail</source>
         <translation>Dienstleisterdialog für Bearbeitung, Auftragsbestätigung und E-Mail</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Open</source>
         <translation>Öffnen</translation>
     </message>
@@ -437,11 +437,12 @@
     </message>
     <message>
         <location line="+7"/>
+        <location line="+22"/>
         <source>Currently not Supported!</source>
         <translation>Wird Zurzeit nicht Unterstützt!</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-19"/>
         <source>Sending eMail to Purchaser.</source>
         <translation>Sende Nachricht an Besteller.</translation>
     </message>
@@ -456,12 +457,12 @@
         <translation>Stornieren Sie eine gesamte Bestellung.</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+3"/>
         <source>Message</source>
         <translation>Nachricht</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+10"/>
         <source>Sending a message to the Purchaser.</source>
         <translation>Senden einer Nachricht an den Käufer.</translation>
     </message>
@@ -971,15 +972,30 @@
 <context>
     <name>BooklookerRemoteActions</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+344"/>
-        <source>Currently not Supported!</source>
-        <translation>Wird Zurzeit nicht Unterstützt!</translation>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+357"/>
+        <source>Invalid Parameters</source>
+        <translation>Ungültige Parameter</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Token Expired</source>
+        <translation>Token abgelaufen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>This Order no longer exists!</source>
+        <translation>Diese Bestellung existiert nicht mehr!</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Order not found!</source>
+        <translation>Bestellung nicht gefunden!</translation>
     </message>
 </context>
 <context>
     <name>BooklookerRequester</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+185"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerrequester.cpp" line="+184"/>
         <source>Missing API Key</source>
         <translation>Kein API Schlüssel gefunden</translation>
     </message>
@@ -1228,7 +1244,7 @@
 <context>
     <name>CategoryEdit</name>
     <message>
-        <location filename="../custom/categoryedit/categoryedit.cpp" line="+24"/>
+        <location filename="../custom/categoryedit/categoryedit.cpp" line="+23"/>
         <source>Edit Category Views</source>
         <translation>Bearbeite Kategorie Ansichten</translation>
     </message>
@@ -2437,7 +2453,7 @@
 <context>
     <name>EUCountryBox</name>
     <message>
-        <location filename="../custom/utils/eucountries.cpp" line="+88"/>
+        <location filename="../custom/utils/eucountries.cpp" line="+86"/>
         <source>No European Country</source>
         <translation>Kein Europäsches Land</translation>
     </message>
@@ -3171,12 +3187,12 @@
         <translation>Ungültige Versandeigenschaften!</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+25"/>
         <source>Current order count </source>
         <translation>Anzahl der Bestellungen</translation>
     </message>
     <message>
-        <location line="-448"/>
+        <location line="-450"/>
         <location line="+14"/>
         <source>Article</source>
         <translation>Artikel</translation>
@@ -4133,7 +4149,7 @@
         <translation>Öffne Auftrag</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>View Customer data</source>
         <translation>Einkäufer*in anzeigen</translation>
     </message>
@@ -5105,7 +5121,7 @@
         <translation>Abgeschlossen</translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+96"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>

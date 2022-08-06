@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "booklookerremoteactions.h"
-#include "booklookerrequester.h"
 #include "applsettings.h"
+#include "booklookerrequester.h"
 
 #include <QApplication>
 #include <QDebug>
@@ -312,11 +312,6 @@ Bl_StartPage::Bl_StartPage(QWidget *parent) : QWidget{parent} {
   btn_cancel->setIconSize(iconSize);
   // Stornieren einer kompletten Bestellung.
   btn_cancel->setToolTip(tr("Cancel an entire order."));
-#ifndef ANTIQUA_DEVELOPEMENT
-  btn_cancel->setEnabled(false);
-#else
-  btn_cancel->setEnabled(true);
-#endif
   layout->addWidget(btn_cancel, 1, 0, 1, 1);
 
   btn_message = new QPushButton(icon, tr("Message"), this);
@@ -324,11 +319,12 @@ Bl_StartPage::Bl_StartPage(QWidget *parent) : QWidget{parent} {
   btn_message->setFont(btn_font);
   btn_message->setIconSize(iconSize);
   // Versand einer Nachricht an den Käufer.
-  btn_message->setToolTip(tr("Sending a message to the Purchaser."));
 #ifndef ANTIQUA_DEVELOPEMENT
   btn_message->setEnabled(false);
+  btn_message->setToolTip(tr("Currently not Supported!"));
 #else
   btn_message->setEnabled(true);
+  btn_message->setToolTip(tr("Sending a message to the Purchaser."));
 #endif
   layout->addWidget(btn_message, 1, 1, 1, 1);
 
@@ -392,9 +388,10 @@ BooklookerRemoteActions::BooklookerRemoteActions(QWidget *parent)
   // END
 
   // BEGIN SIGNALS
+  connect(m_requester, SIGNAL(response(const QJsonDocument &)), this,
+          SLOT(jsonResponse(const QJsonDocument &)));
   connect(m_startPage, SIGNAL(sendGotoPage(int)), m_stackedWidget,
           SLOT(setCurrentIndex(int)));
-
   connect(m_statusPage, SIGNAL(sendAction(const QJsonObject &)), this,
           SLOT(prepareAction(const QJsonObject &)));
   connect(m_statusPage, SIGNAL(sendNotes(const QString &)), this,
@@ -411,7 +408,6 @@ BooklookerRemoteActions::BooklookerRemoteActions(QWidget *parent)
           SLOT(prepareAction(const QJsonObject &)));
   connect(m_messagePage, SIGNAL(sendNotes(const QString &)), this,
           SLOT(pushMessage(const QString &)));
-
   connect(m_buttonBar, SIGNAL(rejected()), this, SLOT(reject()));
   // END
 }
@@ -436,6 +432,25 @@ void BooklookerRemoteActions::prepareAction(const QJsonObject &jsObj) {
 
 void BooklookerRemoteActions::pushMessage(const QString &msg) {
   m_statusBar->showMessage(msg, (1000 * 6));
+}
+
+void BooklookerRemoteActions::jsonResponse(const QJsonDocument &jdoc) {
+  if (QJsonValue(jdoc["status"]).toString() == "NOK") {
+    QString value = QJsonValue(jdoc["returnValue"]).toString();
+    if (value == "INVALID_PARAMETERS") {
+      pushMessage(tr("Invalid Parameters"));
+    } else if (value == "TOKEN_EXPIRED") {
+      pushMessage(tr("Token Expired"));
+    } else if (value == "SIX_WEEKS_EXCEEDED") {
+      pushMessage(tr("This Order no longer exists!"));
+    } else if (value == "NO_ARTICLES_FOUND") {
+      pushMessage(tr("Order not found!"));
+    }
+    qWarning("Booklooker Error: %s", qPrintable(value));
+    return;
+  }
+  QString value = QJsonValue(jdoc["returnValue"]).toString();
+  pushMessage(value.trimmed());
 }
 
 void BooklookerRemoteActions::setPurchaser(const QString &person) {

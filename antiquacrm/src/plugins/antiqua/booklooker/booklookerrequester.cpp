@@ -479,16 +479,56 @@ void BooklookerRequester::queryUpdateOrderStatus(const QString &orderId,
 }
 
 void BooklookerRequester::queryUpdateOrderCancel(const QString &orderId) {
-  // PUT https://api.booklooker.de/2.0/order_cancel?token=REST_API_TOKEN
-  qInfo("Booklooker::order_cancel('%s')", qPrintable(orderId));
+  if (orderId.length() < 4)
+    return;
+
+  if (getToken().isEmpty()) {
+    authentication();
+    return;
+  }
+
+  QUrlQuery q;
+  q.addQueryItem("token", getToken());
+  q.addQueryItem("orderId", orderId);
+
+  p_operation = "order_cancel";
+  QUrl url = apiQuery(p_operation);
+  url.setQuery(q);
+
+  putRequest(url, QByteArray());
 }
 
 void BooklookerRequester::queryPushMessage(const QString &orderId,
                                            const QString &messageType,
                                            const QString &additionalText) {
-  // PUT https://api.booklooker.de/2.0/order_message?token=REST_API_TOKEN
-  qInfo("Booklooker::order_message('%s','%s','%s')", qPrintable(orderId),
-        qPrintable(messageType), qPrintable(additionalText));
+  if (orderId.length() < 4)
+    return;
+
+  if (messageType.isEmpty())
+    return;
+
+  if (additionalText.isEmpty())
+    return;
+
+  if (getToken().isEmpty()) {
+    authentication();
+    return;
+  }
+
+  QUrlQuery q;
+  q.addQueryItem("order_message", getToken());
+  q.addQueryItem("orderId", orderId);
+  q.addQueryItem("messageType", messageType);
+
+  QUrlQuery body;
+  body.addQueryItem("additionalText", additionalText);
+  QString message = body.toString(QUrl::FullyEncoded);
+
+  p_operation = "order_cancel";
+  QUrl url = apiQuery(p_operation);
+  url.setQuery(q);
+  qDebug() << Q_FUNC_INFO << "TODO" << orderId << messageType << message;
+  // putRequest(url, message.toLocal8Bit());
 }
 
 void BooklookerRequester::queryOrder(const QString &orderId) {
@@ -531,6 +571,9 @@ void BooklookerRequester::queryOrder(const QString &orderId) {
 }
 
 void BooklookerRequester::queryArticleReset(const QString &orderNo) {
+  if (orderNo.length() < 2)
+    return;
+
   if (getToken().isEmpty()) {
     authentication();
     return;

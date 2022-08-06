@@ -10,6 +10,7 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QGroupBox>
+#include <QJsonDocument>
 #include <QJsonObject>
 #include <QMap>
 #include <QObject>
@@ -205,7 +206,16 @@ private Q_SLOTS:
    * @endcode
    */
   void prepareAction(const QJsonObject &jsObj);
+
+  /**
+   * @brief Status Nachrichten
+   */
   void pushMessage(const QString &msg);
+
+  /**
+   * @brief Netzwerk antworten
+   */
+  void jsonResponse(const QJsonDocument &jdoc);
 
 public:
   explicit BooklookerRemoteActions(QWidget *parent = nullptr);
