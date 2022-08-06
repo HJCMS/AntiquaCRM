@@ -4,6 +4,7 @@
 SET (RESOURCE_FILES
   antiquacrm_utf8.iss.cmake
   application.desktop.cmake
+  antiquacrm.spec.cmake
   qt.conf.cmake
   antiquacrm.png
 )
@@ -16,6 +17,10 @@ CONFIGURE_FILE (qt.conf.cmake
 
 CONFIGURE_FILE (antiquacrm_utf8.iss.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECTNAME}.iss
+)
+
+CONFIGURE_FILE (antiquacrm.spec.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECTNAME}.spec
 )
 
 CONFIGURE_FILE (application.desktop.cmake
