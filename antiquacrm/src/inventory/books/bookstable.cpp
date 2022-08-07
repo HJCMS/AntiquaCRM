@@ -5,12 +5,8 @@
 #include "bookstablemodel.h"
 #include "bookstatements.h"
 #include "myicontheme.h"
-#include "searchbar.h"
-#include "searchfilter.h"
 
-#ifdef BOOK_INVENTORY_DEBUG
 #include <QDebug>
-#endif
 #include <QAction>
 #include <QHeaderView>
 #include <QItemSelectionModel>
@@ -18,7 +14,7 @@
 #include <QMenu>
 #include <QPainter>
 #include <QPoint>
-#include <QRecursiveMutex>
+#include <QMutex>
 #include <QRegExp>
 #include <QSignalMapper>
 #include <QSqlError>
@@ -66,7 +62,7 @@ bool BooksTable::sqlExecQuery(const QString &statement) {
 
   QSqlDatabase db(m_sql->db());
   if (db.open()) {
-    QRecursiveMutex mutex;
+    QMutex mutex;
     mutex.lock();
     QTime time = QTime::currentTime();
     m_queryModel->setQuery(statement, db);

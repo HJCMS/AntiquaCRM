@@ -3,8 +3,6 @@
 
 #include "bookcard.h"
 #include "applsettings.h"
-#include "myicontheme.h"
-#include "printing.h"
 
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>

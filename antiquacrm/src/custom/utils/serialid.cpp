@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "serialid.h"
-#include "antiqua_global.h"
 
 #include <QDebug>
 #include <QHBoxLayout>
@@ -69,7 +68,7 @@ bool SerialID::isValid() {
 }
 
 const QString SerialID::notes() {
-  QString msg("'" + toolTip() + "' ");
+  QString msg("'" + info() + "' ");
   msg.append(tr("is required and can not empty."));
   return msg;
 }

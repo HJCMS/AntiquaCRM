@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "customerbillinginfo.h"
-#include "myicontheme.h"
 #include <SqlCore>
 
 #include <QDebug>

@@ -3,14 +3,11 @@
 
 #include "sizeedit.h"
 
-#include <QDebug>
 #include <QHBoxLayout>
 #include <QSize>
 #include <QSizePolicy>
 
 SizeEdit::SizeEdit(QWidget *parent) : UtilsMain{parent} {
-  setWindowTitle(tr("Size Editor"));
-
   QHBoxLayout *layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 
@@ -92,10 +89,10 @@ void SizeEdit::setInfo(const QString &info) {
   setToolTip(info);
 }
 
-const QString SizeEdit::info() { return windowTitle(); }
+const QString SizeEdit::info() { return toolTip(); }
 
 const QString SizeEdit::notes() {
-  QString msg(windowTitle());
+  QString msg = info().isEmpty() ? tr("Sizing") : info();
   msg.append(" ");
   msg.append(tr("is required must selected."));
   return msg;

@@ -6,7 +6,7 @@
 #include <QHBoxLayout>
 
 Cancellation::Cancellation(QWidget *parent, Cancellation::Mode mode)
-    : UtilsMain{parent} {
+    : UtilsMain{parent}, p_mode{mode} {
 
   QHBoxLayout *layout = new QHBoxLayout(this);
 

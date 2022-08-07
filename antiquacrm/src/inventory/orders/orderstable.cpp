@@ -12,8 +12,8 @@
 #include <QItemSelectionModel>
 #include <QMenu>
 #include <QMessageBox>
+#include <QMutex>
 #include <QPoint>
-#include <QRecursiveMutex>
 #include <QRegExp>
 #include <QSignalMapper>
 #include <QSqlTableModel>
@@ -55,7 +55,7 @@ bool OrdersTable::sqlExecQuery(const QString &statement) {
 
   QSqlDatabase db(m_sql->db());
   if (db.open()) {
-    QRecursiveMutex mutex;
+    QMutex mutex;
     mutex.lock();
     QTime time = QTime::currentTime();
     m_queryModel->setQuery(statement, db);
@@ -121,9 +121,8 @@ void OrdersTable::contextMenuEvent(QContextMenuEvent *ev) {
   delete m;
 }
 
-void OrdersTable::setCustomQuery(const QString &from)
-{
-  if(from.isEmpty())
+void OrdersTable::setCustomQuery(const QString &from) {
+  if (from.isEmpty())
     return;
 
   sqlExecQuery(advancedOrdersQuery(from));

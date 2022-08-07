@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "storageedit.h"
-#include "sqlcore.h"
 
+#include <SqlCore>
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QSizePolicy>

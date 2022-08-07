@@ -7,8 +7,6 @@
 #include <QHBoxLayout>
 
 BoolBox::BoolBox(QWidget *parent) : UtilsMain{parent} {
-  setWindowTitle(tr("Checkbox"));
-
   QHBoxLayout *layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 
@@ -67,12 +65,15 @@ const QVariant BoolBox::value() { return m_checkBox->isChecked(); }
 
 bool BoolBox::isValid() { return true; }
 
-void BoolBox::setInfo(const QString &txt) { m_checkBox->setText(txt); }
+void BoolBox::setInfo(const QString &txt) {
+  m_checkBox->setText(txt);
+  setToolTip(txt);
+}
 
 const QString BoolBox::info() { return m_checkBox->text(); }
 
 const QString BoolBox::notes() {
-  QString msg(windowTitle());
+  QString msg(info());
   msg.append(" ");
   msg.append(tr("is required must selected."));
   return msg;

@@ -18,7 +18,6 @@ SET (subproject_SOURCES
   applicationclient.cpp
   serialid.cpp
   boolbox.cpp
-  cancellation.cpp
   conditionfield.cpp
   datetimeedit.cpp
   ecurrency.cpp
@@ -59,7 +58,6 @@ SET (subproject_HEADERS
   applicationclient.h
   serialid.h
   boolbox.h
-  cancellation.h
   conditionfield.h
   datetimeedit.h
   editoractionbar.h

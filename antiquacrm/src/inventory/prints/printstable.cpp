@@ -5,7 +5,6 @@
 #include "messagebox.h"
 #include "myicontheme.h"
 #include "printstablemodel.h"
-#include "searchbar.h"
 #include "searchfilter.h"
 
 #include <QAction>

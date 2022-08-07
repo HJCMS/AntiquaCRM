@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "invoice.h"
-#include "applsettings.h"
 #include "texteditor.h"
 
 #include <QBrush>

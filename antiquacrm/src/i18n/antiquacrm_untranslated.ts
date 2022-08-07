@@ -2,24 +2,37 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>ABE_StartPage</name>
+    <message>
+        <location filename="../plugins/antiqua/abebooks/abebooksremoteactions.cpp" line="+34"/>
+        <source>Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Order Status update.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Cancel an entire order.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AbeBooksIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+174"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+170"/>
         <source>Document read Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+136"/>
-        <source>Note</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Unsupported feature for this Provider.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+20"/>
+        <location line="+170"/>
         <source>Buyer Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -365,6 +378,29 @@
     </message>
 </context>
 <context>
+    <name>BF_StartPage</name>
+    <message>
+        <location filename="../plugins/antiqua/whsoft/whsoftremoteactions.cpp" line="+37"/>
+        <source>Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Order Status update.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Cancel an entire order.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Bl_CancelPage</name>
     <message>
         <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+118"/>
@@ -513,7 +549,7 @@
 <context>
     <name>BookCard</name>
     <message>
-        <location filename="../custom/printing/bookcard.cpp" line="+230"/>
+        <location filename="../custom/printing/bookcard.cpp" line="+228"/>
         <source>Printing book card</source>
         <translation type="unfinished"></translation>
     </message>
@@ -818,7 +854,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+110"/>
+        <location line="+111"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -833,7 +869,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-480"/>
+        <location line="-481"/>
         <source>Extended Title or Subtitle.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -843,12 +879,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+241"/>
+        <location line="+242"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-329"/>
+        <location line="-330"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -1034,7 +1070,7 @@
 <context>
     <name>BooksTable</name>
     <message>
-        <location filename="../inventory/books/bookstable.cpp" line="+80"/>
+        <location filename="../inventory/books/bookstable.cpp" line="+76"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1795,7 +1831,7 @@
 <context>
     <name>CustomerBillingInfo</name>
     <message>
-        <location filename="../inventory/customers/customerbillinginfo.cpp" line="+24"/>
+        <location filename="../inventory/customers/customerbillinginfo.cpp" line="+23"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2043,7 +2079,7 @@
 <context>
     <name>CustomersTableModel</name>
     <message>
-        <location filename="../inventory/customers/customerstablemodel.cpp" line="+54"/>
+        <location filename="../inventory/customers/customerstablemodel.cpp" line="+53"/>
         <source>Personal</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3076,7 +3112,7 @@
 <context>
     <name>InventoryPrints</name>
     <message>
-        <location filename="../inventory/prints/inventoryprints.cpp" line="+46"/>
+        <location filename="../inventory/prints/inventoryprints.cpp" line="+44"/>
         <source>Everything else</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3201,7 +3237,7 @@
 <context>
     <name>Invoice</name>
     <message>
-        <location filename="../custom/printing/invoice.cpp" line="+51"/>
+        <location filename="../custom/printing/invoice.cpp" line="+50"/>
         <source>Invoice</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4892,7 +4928,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+87"/>
+        <location line="+96"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4923,7 +4959,7 @@
 <context>
     <name>PrintsTable</name>
     <message>
-        <location filename="../inventory/prints/printstable.cpp" line="+123"/>
+        <location filename="../inventory/prints/printstable.cpp" line="+125"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5556,12 +5592,12 @@
 <context>
     <name>SizeEdit</name>
     <message>
-        <location filename="../custom/utils/sizeedit.cpp" line="+12"/>
-        <source>Size Editor</source>
+        <location filename="../custom/utils/sizeedit.cpp" line="+95"/>
+        <source>Sizing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+2"/>
         <source>is required must selected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5910,19 +5946,6 @@
     <message>
         <location line="+8"/>
         <source>start query</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>WHSoftWidget</name>
-    <message>
-        <location filename="../plugins/antiqua/whsoft/whsoftwidget.cpp" line="+223"/>
-        <source>Note</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Unsupported feature for this Provider.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
