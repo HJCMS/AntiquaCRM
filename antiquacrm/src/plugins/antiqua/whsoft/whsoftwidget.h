@@ -15,6 +15,8 @@
 #include <AntiquaInterface>
 #include <Networking>
 
+class WHSoftRemoteActions;
+
 /**
  * @brief In dieser Klasse werden die Bestellungen verarbeitet.
  * @ingroup Whsoft Plugin
@@ -25,8 +27,7 @@ class ANTIQUACORE_EXPORT WHSoftWidget final : public Antiqua::InterfaceWidget {
 private:
   QHash<QString, QString> p_customer;
   QJsonDocument p_currentDocument;
-
-  void setOrderUpdateTypes();
+  WHSoftRemoteActions *m_dialog;
 
   /**
    * @brief Erstellt abfrage Datensatz für Kundenabfrage

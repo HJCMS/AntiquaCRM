@@ -156,7 +156,6 @@ void BooksTable::contextMenuEvent(QContextMenuEvent *ev) {
   QAction *ac_refresh = m->addAction(myIcon("reload"), tr("Refresh"));
   ac_refresh->setObjectName("ac_context_refresh_books");
   connect(ac_refresh, SIGNAL(triggered()), this, SLOT(refreshView()));
-  ac_refresh->setEnabled(b);
 
   m->exec(ev->globalPos());
   delete m;

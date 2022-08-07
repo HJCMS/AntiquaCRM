@@ -502,7 +502,7 @@ void BookEditor::createSqlUpdate() {
 
 void BookEditor::createSqlInsert() {
   if (ib_id->value().toInt() >= 1) {
-    qWarning("No Book insert");
+    qInfo("Skip insert, switch to update with existing ID!");
     createSqlUpdate();
     return;
   }
@@ -536,7 +536,8 @@ void BookEditor::createSqlInsert() {
   sql.append(values.join(","));
   sql.append(",CURRENT_TIMESTAMP) RETURNING ib_id;");
   if (sendSqlQuery(sql) && ib_id->value().toInt() >= 1) {
-    m_imageToolBar->setActive(false);
+    m_imageToolBar->setActive(true);
+    ib_id->setRequired(true);
   }
 }
 
@@ -766,6 +767,8 @@ void BookEditor::editBookEntry(const QString &condition) {
 void BookEditor::createBookEntry() {
   setInputList();
   setEnabled(true);
+  // Standard einschalten
+  ib_including_vat->setChecked(true);
   m_imageToolBar->setActive(false);
   resetModified(inputList);
 }

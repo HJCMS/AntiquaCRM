@@ -277,26 +277,6 @@ void BooklookerIfaceWidget::createProviderOrderUpdate() {
   m_dialog->deleteLater();
 }
 
-void BooklookerIfaceWidget::setOrderUpdateTypes() {
-  QMap<Antiqua::PaymentStatus, QString> map;
-  map.insert(Antiqua::PaymentStatus::ORDER_WAIT_FOR_PAYMENT,
-             QString("WAITING_FOR_PAYMENT"));
-  // fertig zum Versand
-  map.insert(Antiqua::PaymentStatus::ORDER_READY_FOR_SHIPMENT,
-             QString("READY_FOR_SHIPMENT"));
-  // versendet, warte auf Zahlung
-  map.insert(Antiqua::PaymentStatus::ORDER_SHIPPED_WAIT_FOR_PAYMENT,
-             QString("SHIPPED_WAITING_FOR_PAYMENT"));
-  // versendet & bezahlt
-  map.insert(Antiqua::PaymentStatus::ORDER_SHIPPED_AND_PAID,
-             QString("SHIPPED_AND_PAID"));
-  // Kunde reagiert nicht
-  map.insert(Antiqua::PaymentStatus::ORDER_BUYER_NO_REACTION,
-             QString("BUYER_NO_REACTION"));
-
-  // setOrderUpdateActions(map);
-}
-
 const QMap<QString, QString> BooklookerIfaceWidget::fieldTranslate() const {
   QMap<QString, QString> map;
   // public.customers @{

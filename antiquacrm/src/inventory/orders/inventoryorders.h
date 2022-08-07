@@ -62,7 +62,7 @@ private Q_SLOTS:
    * überstiegen wurde. Leitet dann weiter an @ref searchConvert()
    * @param Sucheingabe
    */
-  void searchConvert(const QString &);
+  void searchConvert(const QString &) { /* unused */ };
 
   /**
    * @brief Reagiert auf Suchknopf & EnterTaste
@@ -70,7 +70,7 @@ private Q_SLOTS:
    * Zeichen (Performance)!
    * @note In @class SearchBar wird bereits die Zeichenersetzung durchgeführt!
    */
-  void searchConvert();
+  void searchConvert() { /* unused */ };
 
   /**
    * @brief Öffne Tabellenansicht
@@ -82,7 +82,7 @@ private Q_SLOTS:
   /**
    * @brief Wenn das Tab im Vordergund geht, dann eine Aktionen starten
    */
-  void onEnterChanged(){/* TODO */};
+  void onEnterChanged();
 
 protected:
   /**
@@ -105,6 +105,11 @@ protected:
   void openEditor(const QString &condition);
 
 public Q_SLOTS:
+  /**
+   * @brief Standard ansicht öffnen/aktualisieren
+   */
+  void refreshView();
+
   /**
    * @brief Ein Artikel mit der Auftragsnummer öffnen.
    */

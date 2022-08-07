@@ -87,8 +87,6 @@ void PrintsTable::openByContext() {
 }
 
 void PrintsTable::createByContext() {
-  qDebug() << Q_FUNC_INFO << "TODO"
-           << "Check Rowcount before add";
   emit s_newEntryPlease();
 }
 
@@ -118,6 +116,11 @@ void PrintsTable::contextMenuEvent(QContextMenuEvent *ev) {
   // Aktiviere/Deaktivieren der Einträge
   bool b = p_modelIndex.isValid();
 
+  /**
+   * Eintrag erstellen erst freischalten wenn Tabelle nicht leer ist!
+   */
+  bool bn = (m_queryModel->rowCount() > 0);
+
   QMenu *m = new QMenu("Actions", this);
   // Eintrag öffnen  Bestellung anlegen
   QAction *ac_open = m->addAction(myIcon("spreadsheet"), tr("Open entry"));
@@ -127,7 +130,7 @@ void PrintsTable::contextMenuEvent(QContextMenuEvent *ev) {
 
   QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create entry"));
   ac_create->setObjectName("ac_context_create_print");
-  ac_create->setEnabled(b);
+  ac_create->setEnabled(bn);
   connect(ac_create, SIGNAL(triggered()), this, SLOT(createByContext()));
 
   // BEGIN Einträge für Auftrag
@@ -146,7 +149,6 @@ void PrintsTable::contextMenuEvent(QContextMenuEvent *ev) {
   QAction *ac_refresh = m->addAction(myIcon("reload"), tr("Refresh"));
   ac_refresh->setObjectName("ac_context_refresh_view");
   connect(ac_refresh, SIGNAL(triggered()), this, SLOT(refreshView()));
-  ac_refresh->setEnabled(b);
 
   m->exec(ev->globalPos());
   delete m;

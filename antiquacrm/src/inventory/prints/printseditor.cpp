@@ -406,8 +406,15 @@ void PrintsEditor::createSqlUpdate() {
 }
 
 void PrintsEditor::createSqlInsert() {
+  if (ip_id->value().toInt() >= 1) {
+    qInfo("Skip insert, switch to update with existing ID!");
+    createSqlUpdate();
+    return;
+  }
+
   /** Bei neu Einträgen immer erforderlich */
   ip_count->setRequired(true);
+  ip_id->setRequired(false);
 
   QHash<QString, QVariant> data = createSqlDataset();
   if (data.size() < 1)
@@ -432,10 +439,12 @@ void PrintsEditor::createSqlInsert() {
   sql.append(column.join(","));
   sql.append(",ip_changed) VALUES (");
   sql.append(values.join(","));
-  sql.append(",CURRENT_TIMESTAMP);");
+  sql.append(",CURRENT_TIMESTAMP) RETURNING ip_id;");
   // qDebug() << Q_FUNC_INFO << sql << Qt::endl;
-  if (sendSqlQuery(sql))
-    checkLeaveEditor();
+  if (sendSqlQuery(sql) && ip_id->value().toInt() >= 1) {
+    m_imageToolBar->setActive(true);
+    ip_id->setRequired(true);
+  }
 }
 
 void PrintsEditor::importSqlResult() {

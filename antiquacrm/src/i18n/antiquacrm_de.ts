@@ -3058,7 +3058,7 @@
         <translation>Aktualisieren</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+81"/>
         <source>Missing a valid costumer Id!</source>
         <translation>Keine gültige Kunden Nummer!</translation>
     </message>
@@ -3835,7 +3835,7 @@
     <message>
         <location line="+2"/>
         <source>No VAT</source>
-        <translation>Kein MwST hinzufügen</translation>
+        <translation>Keine MwST hinzufügen</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -4121,22 +4121,27 @@
 <context>
     <name>OrdersMenuButton</name>
     <message>
-        <location filename="../inventory/orders/ordersmenubutton.cpp" line="+13"/>
+        <location filename="../inventory/orders/ordersmenubutton.cpp" line="+14"/>
         <source>Advanced Queries</source>
         <translation>Erweiterte abfragen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
+        <source>Default view</source>
+        <translation>Standardansicht</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Show completed orders.</source>
         <translation>Zeige abgeschlossene Bestellungen.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Show orders with missing payment.</source>
         <translation>Zeige Bestellungen mit fehlender Zahlung.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Show orders without delivery.</source>
         <translation>Zeige Bestellungen ohne Lieferung.</translation>
     </message>
@@ -5924,7 +5929,7 @@
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../workspace.cpp" line="+51"/>
+        <location filename="../workspace.cpp" line="+50"/>
         <source>Workspace</source>
         <translation>Arbeitsbereich</translation>
     </message>

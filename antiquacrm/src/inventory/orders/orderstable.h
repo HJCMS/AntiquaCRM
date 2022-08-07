@@ -32,7 +32,6 @@ private:
   HJCMS::SqlCore *m_sql;
   QModelIndex p_modelIndex;
   OrdersTableModel *m_queryModel;
-  QString p_historyQuery;
 
   /**
    * @brief SQL Query Database
@@ -66,12 +65,19 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   /**
-   Anzeige auffrischen in dem der zuletzt
-   in @ref p_historyQuery gespeicherte SQL
-   Befehl noch einmal aufgerufen wird.
-  */
+   * @brief Spezielle abfragen
+   */
+  void setCustomQuery(const QString &from);
+
+  /**
+   * Anzeige auffrischen in dem der zuletzt in @ref p_historyQuery gespeicherte
+   * SQL Befehl noch einmal aufgerufen wird.
+   */
   void refreshView();
 
+  /**
+   * @brief Erstellt sendet die Standard SQL Abfrage
+   */
   void initOrders();
 
 public:

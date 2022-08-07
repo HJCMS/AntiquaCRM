@@ -4,8 +4,8 @@
 #include "inventoryorders.h"
 #include "myicontheme.h"
 #include "ordereditor.h"
-#include "orderstable.h"
 #include "ordersmenubutton.h"
+#include "orderstable.h"
 #include <AntiquaCRM>
 
 #include <QDebug>
@@ -78,15 +78,13 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
   connect(m_editor, SIGNAL(s_isModified(bool)), this,
           SLOT(setIsModified(bool)));
   connect(btn_refresh, SIGNAL(clicked()), m_tableView, SLOT(refreshView()));
+  connect(m_menuButton, SIGNAL(sendDefaultView()), m_tableView,
+          SLOT(initOrders()));
+  connect(m_menuButton, SIGNAL(sendCustomQuery(const QString &)), m_tableView,
+          SLOT(setCustomQuery(const QString &)));
   connect(m_editor, SIGNAL(s_articleCount(int, int)), this,
           SIGNAL(s_articleCount(int, int)));
-
-  m_tableView->initOrders();
 }
-
-void InventoryOrders::searchConvert(const QString &query) {}
-
-void InventoryOrders::searchConvert() {}
 
 void InventoryOrders::openTableView() {
   m_stackedWidget->setCurrentIndex(0);
@@ -95,8 +93,18 @@ void InventoryOrders::openTableView() {
   setIsModified(false);
 }
 
+void InventoryOrders::onEnterChanged() {
+  m_tableView->initOrders();
+}
+
 void InventoryOrders::openEditor(const QString &condition) {
   Q_UNUSED(condition)
+}
+
+void InventoryOrders::refreshView()
+{
+  m_tableView->setFocus();
+  m_tableView->refreshView();
 }
 
 void InventoryOrders::updateOrder(int orderId) {

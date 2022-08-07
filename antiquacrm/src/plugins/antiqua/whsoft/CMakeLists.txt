@@ -16,6 +16,7 @@ SET (whsoft_SOURCES
  config.xml
  whsoft.cpp
  whsoftjsonquery.cpp
+ whsoftremoteactions.cpp
  whsoftwidget.cpp
 )
 
@@ -23,6 +24,7 @@ SET (whsoft_HEADERS
  whsoft.h
  whsoftconfig.h
  whsoftjsonquery.h
+ whsoftremoteactions.h
  whsoftwidget.h
 )
 

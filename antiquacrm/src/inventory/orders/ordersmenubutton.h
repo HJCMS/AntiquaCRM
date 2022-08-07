@@ -10,14 +10,35 @@
 #include <QPushButton>
 #include <QWidget>
 
+/**
+ * @brief Verschiedene abfragen Auswählen
+ * @ingroup InventoryOrders
+ * @class OrdersMenuButton
+ */
 class OrdersMenuButton final : public QPushButton {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  /**
+   * @brief Standard Ansicht
+   */
+  QAction *ac_default;
+
+  /**
+   * @brief Alle geschlossenen Aufträge anzeigen.
+   */
   QAction *ac_hasClosed;
+
+  /**
+   * @brief Aufträge ohne Bezahlung
+   */
   QAction *ac_noPayment;
+
+  /**
+   * @brief Aufträge mit Lieferrung ausstehend.
+   */
   QAction *ac_noDeliver;
 
 private Q_SLOTS:
@@ -26,7 +47,8 @@ private Q_SLOTS:
   void setQueryNoDelivery();
 
 Q_SIGNALS:
-  void sendQueryAction(const QString &query);
+  void sendDefaultView();
+  void sendCustomQuery(const QString &query);
 
 public:
   explicit OrdersMenuButton(QWidget *parent = nullptr);

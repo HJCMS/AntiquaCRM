@@ -47,7 +47,6 @@ public Q_SLOTS:
 
 public:
   BooklookerIfaceWidget(const QString &widgetId, QWidget *parent = nullptr);
-  void setOrderUpdateTypes();
   const QMap<QString, QString> fieldTranslate() const;
 };
 

@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "workspace.h"
-#include "antiqua_global.h"
 #include "inventorybooks.h"
 #include "inventorycustomers.h"
 #include "inventoryorders.h"
@@ -344,6 +343,7 @@ void Workspace::openTab(int index) {
       i = addInventoryOrders(count() + 1);
     } else {
       setCurrentWidget(m_tabOrders);
+      m_tabOrders->refreshView();
       return;
     }
   } else if (index == Tab::Providers) {

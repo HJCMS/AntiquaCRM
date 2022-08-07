@@ -121,6 +121,14 @@ void OrdersTable::contextMenuEvent(QContextMenuEvent *ev) {
   delete m;
 }
 
+void OrdersTable::setCustomQuery(const QString &from)
+{
+  if(from.isEmpty())
+    return;
+
+  sqlExecQuery(advancedOrdersQuery(from));
+}
+
 void OrdersTable::refreshView() { initOrders(); }
 
 void OrdersTable::initOrders() { sqlExecQuery(defaultOrdersQuery()); }

@@ -4,6 +4,7 @@
 #include "whsoftwidget.h"
 #include "whsoftconfig.h"
 #include "whsoftjsonquery.h"
+#include "whsoftremoteactions.h"
 
 #include <QLabel>
 #include <QList>
@@ -17,11 +18,6 @@ WHSoftWidget::WHSoftWidget(const QString &orderId, QWidget *parent)
     : Antiqua::InterfaceWidget{orderId, parent} {
   // Wegen langen Abfragewartezeiten den Zugriff unterdrücken!
   setEnabled(false);
-}
-
-void WHSoftWidget::setOrderUpdateTypes() {
-  QMap<Antiqua::PaymentStatus, QString> map;
-  qDebug() << Q_FUNC_INFO << "TODO" << map.size();
 }
 
 void WHSoftWidget::createCustomerDocument() {
@@ -219,10 +215,23 @@ void WHSoftWidget::createOrderRequest() {
 }
 
 void WHSoftWidget::createProviderOrderUpdate() {
-  qDebug() << Q_FUNC_INFO << getOrderId();
-  QMessageBox::information(this, tr("Note"),
-                           tr("Unsupported feature for this Provider."),
-                           QMessageBox::Ok);
+  if (getOrderId().isEmpty()) {
+    qWarning("Invalid W+HSoft OrderId");
+    return;
+  }
+
+  QStringList person;
+  person << getValue("c_gender").toString();
+  person << getValue("c_firstname").toString();
+  person << getValue("c_lastname").toString();
+
+  m_dialog = new WHSoftRemoteActions(this);
+  m_dialog->setPurchaser(person.join(" "));
+  m_dialog->setEMail(getValue("c_email_0").toString());
+  if (m_dialog->exec(getOrderId()) == QDialog::Accepted) {
+    qDebug() << Q_FUNC_INFO << "TODO";
+  }
+  m_dialog->deleteLater();
 }
 
 const QMap<QString, QString> WHSoftWidget::fieldTranslate() const {

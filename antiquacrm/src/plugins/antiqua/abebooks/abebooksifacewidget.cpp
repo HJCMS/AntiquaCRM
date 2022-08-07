@@ -21,11 +21,6 @@ AbeBooksIfaceWidget::AbeBooksIfaceWidget(const QString &orderId,
   setEnabled(false);
 }
 
-void AbeBooksIfaceWidget::setOrderUpdateTypes() {
-  QMap<Antiqua::PaymentStatus, QString> map;
-  qDebug() << Q_FUNC_INFO << "TODO" << map.size();
-}
-
 void AbeBooksIfaceWidget::createCustomerDocument() {
   if (p_currentDocument.isNull()) {
     qWarning("Current DomDocument is empty!");
