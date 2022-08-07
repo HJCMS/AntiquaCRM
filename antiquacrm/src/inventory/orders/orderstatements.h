@@ -117,6 +117,21 @@ static const QString defaultOrdersQuery(int id = 0) {
 }
 
 /**
+ * @brief Anfrage die von OrdersMenuButton ausgehen.
+ * @param Abfrage Klausel
+ * @return SQL Query
+ */
+static const QString advancedOrdersQuery(const QString &where_clause) {
+  QString fields = InventoryOrdersSelect();
+  QString sql("SELECT " + fields + " ");
+  sql.append("FROM inventory_orders AS a ");
+  sql.append("LEFT JOIN customers AS c ON c.c_id=a.o_customer_id LEFT JOIN ");
+  sql.append("ref_delivery_service AS d ON d.d_id=a.o_delivery_service ");
+  sql.append("WHERE " + where_clause + " ORDER BY a.o_since DESC;");
+  return sql;
+}
+
+/**
  * @brief Kunden Adressen Darstellen
  * @code
  *  SELECT c_postal_address,c_shipping_address FROM customers WHERE c_id=1;

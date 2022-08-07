@@ -1021,12 +1021,12 @@
     </message>
     <message>
         <location line="+91"/>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Invalid Document response!</source>
         <translation>Ungültige Dokumentantwort!</translation>
     </message>
     <message>
-        <location line="-104"/>
+        <location line="-105"/>
         <source>Server down</source>
         <translation>Server ist nicht vefügbar</translation>
     </message>
@@ -3053,7 +3053,7 @@
         <translation>Aufträge</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+31"/>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -4116,6 +4116,29 @@
         <location line="+9"/>
         <source>Duplicate Entry</source>
         <translation>Doppelter Eintrag</translation>
+    </message>
+</context>
+<context>
+    <name>OrdersMenuButton</name>
+    <message>
+        <location filename="../inventory/orders/ordersmenubutton.cpp" line="+13"/>
+        <source>Advanced Queries</source>
+        <translation>Erweiterte abfragen</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Show completed orders.</source>
+        <translation>Zeige abgeschlossene Bestellungen.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Show orders with missing payment.</source>
+        <translation>Zeige Bestellungen mit fehlender Zahlung.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Show orders without delivery.</source>
+        <translation>Zeige Bestellungen ohne Lieferung.</translation>
     </message>
 </context>
 <context>

@@ -1021,12 +1021,12 @@
     </message>
     <message>
         <location line="+91"/>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Invalid Document response!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-104"/>
+        <location line="-105"/>
         <source>Server down</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3053,7 +3053,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+31"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4115,6 +4115,29 @@
     <message>
         <location line="+9"/>
         <source>Duplicate Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OrdersMenuButton</name>
+    <message>
+        <location filename="../inventory/orders/ordersmenubutton.cpp" line="+13"/>
+        <source>Advanced Queries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Show completed orders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Show orders with missing payment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Show orders without delivery.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

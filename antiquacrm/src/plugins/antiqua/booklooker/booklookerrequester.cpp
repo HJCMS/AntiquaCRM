@@ -141,9 +141,9 @@ const QNetworkRequest BooklookerRequester::newRequest(const QUrl &url) {
   QNetworkRequest req(url);
   req.setPeerVerifyName(url.host());
   req.setRawHeader("User-Agent", userAgentString());
-  // req.setRawHeader("Accept-Language", languageRange());
+  req.setRawHeader("Accept-Language", languageRange());
   req.setRawHeader("Accept", "text/*;application/json,q=0.1");
-  // req.setRawHeader("Cache-Control", "no-cache, private");
+  req.setRawHeader("Cache-Control", "private");
   QSslConfiguration ssl;
   if (!ssl.addCaCertificates(applCaBundlePath(), QSsl::Pem)) {
     QFileInfo info(config->value("ssloptions/ssl_bundle").toString());
@@ -288,9 +288,10 @@ void BooklookerRequester::replyReadyRead() {
   QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
   if (parser.error != QJsonParseError::NoError) {
     qWarning("Json Parse Error:(%s)!", jsonParserError(parser.error));
-    if (operationTempFile("order_list").isReadable()) {
+    if (qEnvironmentVariable(BOOKLOOKER_ERROR_ENV).isNull()) {
       emit errorMessage(Antiqua::ErrorStatus::NOTICE,
                         tr("Invalid Document response!"));
+      qputenv(BOOKLOOKER_ERROR_ENV, "1");
     } else {
       emit errorMessage(Antiqua::ErrorStatus::FATAL,
                         tr("Invalid Document response!"));

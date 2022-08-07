@@ -5,7 +5,7 @@
 #include "myicontheme.h"
 #include "ordereditor.h"
 #include "orderstable.h"
-#include "searchfilter.h"
+#include "ordersmenubutton.h"
 #include <AntiquaCRM>
 
 #include <QDebug>
@@ -42,6 +42,10 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
   m_statusInfo = new QLabel(m_statusBar);
   statusLayout->addWidget(m_statusInfo);
   statusLayout->addStretch(1);
+
+  m_menuButton = new OrdersMenuButton(this);
+  statusLayout->addWidget(m_menuButton);
+
   QPushButton *btn_refresh = new QPushButton(m_statusBar);
   btn_refresh->setText(tr("Refresh"));
   btn_refresh->setIcon(myIcon("reload"));

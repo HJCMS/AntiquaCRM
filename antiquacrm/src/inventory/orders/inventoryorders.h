@@ -18,6 +18,7 @@
 class StatsActionBar;
 class OrdersTable;
 class OrderEditor;
+class OrdersMenuButton;
 
 /**
  * @class InventoryOrders
@@ -43,6 +44,11 @@ private:
    * @brief Status Informationen
    */
   QLabel *m_statusInfo;
+
+  /**
+   * @brief Optionale Aktionen öffnen
+   */
+  OrdersMenuButton *m_menuButton;
 
   /**
    *  @brief Editor

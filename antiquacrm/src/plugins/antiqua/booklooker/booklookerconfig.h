@@ -42,6 +42,10 @@
 #define BOOKLOOKER_TOKEN_ENV "BOOKLOOKER_TOKEN"
 #endif
 
+#ifndef BOOKLOOKER_ERROR_ENV
+#define BOOKLOOKER_ERROR_ENV "BOOKLOOKER_ERROR"
+#endif
+
 #ifdef ANTIQUA_DEVELOPEMENT
 #include <QJsonDocument>
 #include <QDir>
