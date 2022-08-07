@@ -2,11 +2,9 @@
 // vim: set fileencoding=utf-8
 
 #include "salutationbox.h"
-#include "antiqua_global.h"
 
 #include <QDebug>
-// #include <QtGui>
-#include <QtWidgets>
+#include <QHBoxLayout>
 
 static const QStringList salutations() {
   QStringList l;

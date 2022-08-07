@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "priceedit.h"
-#include "antiqua_global.h"
 
 #include <QDebug>
 #include <QHBoxLayout>

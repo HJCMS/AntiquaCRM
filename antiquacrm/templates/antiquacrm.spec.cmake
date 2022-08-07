@@ -6,10 +6,10 @@
 %define qtversion 5.15.2
 
 Name:           antiquacrm
-Summary:        a application for managing antiquarian books
+Summary:        a application to manage antiquarian books
 Version:        @ANTIQUACRM_VERSION_STRING@
 Release:        1
-License:        GPLv2 GPLv3
+License:        LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later)
 AutoReqProv:    on
 Source0:        %{_sourcedir}/antiquacrm-%{version}.tar.xz
 Group:          Productivity/Databases
@@ -28,15 +28,15 @@ BuildRequires:  libqt5-linguist-devel >= %{qtversion}
 BuildRequires:  libQt5PrintSupport-devel >= %{qtversion}
 
 %description
-It offers item inventory management and a number of online interfaces for simplified data management for individual service providers.
+It offers item inventory management and a number of online interfaces for simplified data management to individual service providers.
 
 %package devel
-Summary:        Antiquarische Datenbank Verwaltung
+Summary:        a application frontend to manage antiquarian books
 Group:          Development/Languages/C and C++
 Requires:       antiquacrm >= %{version}
 
 %description devel
-It offers item inventory management and a number of online interfaces for simplified data management for individual service providers.
+It offers item inventory management and a number of online interfaces for simplified data management to individual service providers.
 
 %prep
 %setup -q

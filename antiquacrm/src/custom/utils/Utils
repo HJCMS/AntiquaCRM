@@ -14,10 +14,6 @@
 # include "boolbox.h"
 #endif
 
-#ifndef CANCELLATION_UTILS_H
-# include "cancellation.h"
-#endif
-
 #ifndef CONDITIONFIELD_UTILS_H
 # include "conditionfield.h"
 #endif

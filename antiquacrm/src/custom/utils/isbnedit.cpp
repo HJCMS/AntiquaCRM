@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "isbnedit.h"
-#include "antiqua_global.h"
 #include "myicontheme.h"
 
 #include <QDebug>
@@ -11,10 +10,6 @@
 #include <QRegularExpressionMatch>
 #include <QSizePolicy>
 #include <QStringList>
-
-#ifndef ISBN_EDITOR_DEBUG
-#define ISBN_EDITOR_DEBUG 1
-#endif
 
 IsbnEdit::IsbnEdit(QWidget *parent) : UtilsMain{parent} {
   setObjectName("IsbnEdit");
@@ -176,6 +171,5 @@ void IsbnEdit::setInfo(const QString &info) { m_isbn->setToolTip(info); }
 const QString IsbnEdit::info() { return m_isbn->toolTip(); }
 
 const QString IsbnEdit::notes() {
-  return tr(
-      "ISBN is set to required and must be a valid 10 or 13 digit number.");
+  return tr("ISBN is set to required and must be a valid 10 or 13 digit number.");
 }

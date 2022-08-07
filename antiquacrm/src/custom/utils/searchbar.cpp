@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "searchbar.h"
-#include "antiqua_global.h"
 #include "myicontheme.h"
 #include "searchfilter.h"
 

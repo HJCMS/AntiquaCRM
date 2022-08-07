@@ -4,5 +4,4 @@
 #include "myicontheme.h"
 
 MyIconTheme::MyIconTheme() : QIconEngine()
-{
-}
+{}

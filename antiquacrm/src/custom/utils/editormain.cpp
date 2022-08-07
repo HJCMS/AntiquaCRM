@@ -5,9 +5,9 @@
 #include "applicationclient.h"
 #include "messagebox.h"
 
-#ifndef EDITOR_SHOW_DEBUG
-#define EDITOR_SHOW_DEBUG false
-#endif
+//#ifndef EDITORMAIN_VERBOSE
+//#define EDITORMAIN_VERBOSE 1
+//#endif
 
 #include <QDebug>
 #include <QStringList>
@@ -62,6 +62,9 @@ void EditorMain::resetModified(const QStringList &list) {
     if (child != nullptr) {
       QMetaObject::invokeMethod(child, "setModified", Qt::DirectConnection,
                                 Q_ARG(bool, false));
+#ifdef EDITORMAIN_VERBOSE
+      qDebug() << "setModified" << child->objectName();
+#endif
     }
   }
   emit s_isModified(false);
@@ -81,10 +84,9 @@ bool EditorMain::checkIsModified(const QRegularExpression &pattern) {
       if (QMetaObject::invokeMethod(list.at(i), "isModified",
                                     Qt::DirectConnection,
                                     Q_RETURN_ARG(bool, b))) {
-
-        if (EDITOR_SHOW_DEBUG) {
-          qDebug() << "checkIsModified" << list.at(i)->objectName() << b;
-        }
+#ifdef EDITORMAIN_VERBOSE
+        qDebug() << "checkIsModified" << list.at(i)->objectName() << b;
+#endif
         if (b) {
           emit s_isModified(true);
           return true;
@@ -106,6 +108,9 @@ void EditorMain::clearDataFields(const QRegularExpression &pattern) {
   for (int i = 0; i < list.size(); ++i) {
     if (list.at(i) != nullptr) {
       QMetaObject::invokeMethod(list.at(i), "reset", Qt::QueuedConnection);
+#ifdef EDITORMAIN_VERBOSE
+      qDebug() << "reset" << list.at(i);
+#endif
     }
   }
 }
@@ -114,9 +119,9 @@ int EditorMain::sqlErrnoMessage(const QString &code, const QString &error) {
   MessageBox *mbox = new MessageBox(this);
   mbox->setObjectName("sql_errno_message");
   mbox->setMinimumSize(350, 100);
-  if (EDITOR_SHOW_DEBUG) {
-    qDebug() << "PgSQL Error:" << code << error << Qt::endl;
-  }
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << "PgSQL Error:" << code << error << Qt::endl;
+#endif
   return mbox->failed(code, error);
 }
 
