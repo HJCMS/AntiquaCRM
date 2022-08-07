@@ -3,6 +3,7 @@
 
 #include "abebooksifacewidget.h"
 #include "abebooksconfig.h"
+#include "abebooksremoteactions.h"
 #include "abebooksrequester.h"
 
 #include <QDateTime>
@@ -301,10 +302,23 @@ void AbeBooksIfaceWidget::createOrderRequest() {
 }
 
 void AbeBooksIfaceWidget::createProviderOrderUpdate() {
-  qDebug() << Q_FUNC_INFO << getOrderId();
-  QMessageBox::information(this, tr("Note"),
-                           tr("Unsupported feature for this Provider."),
-                           QMessageBox::Ok);
+  if (getOrderId().isEmpty()) {
+    qWarning("Invalid W+HSoft OrderId");
+    return;
+  }
+
+  QStringList person;
+  person << getValue("c_gender").toString();
+  person << getValue("c_firstname").toString();
+  person << getValue("c_lastname").toString();
+
+  m_dialog = new AbeBooksRemoteActions(this);
+  m_dialog->setPurchaser(person.join(" "));
+  m_dialog->setEMail(getValue("c_email_0").toString());
+  if (m_dialog->exec(getOrderId()) == QDialog::Accepted) {
+    qDebug() << Q_FUNC_INFO << "TODO";
+  }
+  m_dialog->deleteLater();
 }
 
 const QString AbeBooksIfaceWidget::purchaseType(const QString &key) const {

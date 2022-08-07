@@ -16,6 +16,8 @@
 #include <AntiquaInterface>
 #include <Networking>
 
+class AbeBooksRemoteActions;
+
 class ANTIQUACORE_EXPORT AbeBooksIfaceWidget final
     : public Antiqua::InterfaceWidget {
   Q_OBJECT
@@ -25,6 +27,7 @@ class ANTIQUACORE_EXPORT AbeBooksIfaceWidget final
 private:
   QHash<QString, QString> p_customer;
   QDomDocument p_currentDocument;
+  AbeBooksRemoteActions *m_dialog;
   const QJsonDocument customerRequest(const QJsonObject &object);
   void parseAddressBody(const QString &, const QJsonObject &);
 

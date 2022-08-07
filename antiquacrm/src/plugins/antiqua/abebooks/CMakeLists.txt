@@ -13,6 +13,7 @@ SET (abebooks_SOURCES
  abebooks.cpp
  abebooksdocument.cpp
  abebooksifacewidget.cpp
+ abebooksremoteactions.cpp
  abebooksrequester.cpp
 )
 
@@ -21,6 +22,7 @@ SET (abebooks_HEADERS
  abebooks.h
  abebooksdocument.h
  abebooksifacewidget.h
+ abebooksremoteactions.h
  abebooksrequester.h
 )
 
