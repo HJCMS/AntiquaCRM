@@ -13,6 +13,7 @@
 #include <QNetworkReply>
 #include <QObject>
 #include <QSslError>
+#include <QTextCodec>
 #include <QUrl>
 #include <QVariant>
 
@@ -31,6 +32,7 @@ private:
   QString p_year;
   bool p_images = false;
   bool compareAuthors(const QString &a);
+  const QString stripData(const QString &) const;
 
 public:
   explicit IsbnData(const QString &isbn);

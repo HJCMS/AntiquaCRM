@@ -114,21 +114,26 @@ void ISBNResults::copySelectedItem() {
   if (item != nullptr) {
     QString out;
     QVariant data = item->data(Qt::UserRole);
-    QByteArray buf = data.toByteArray();
     QTextCodec *codec = QTextCodec::codecForName("UTF-8");
-    out = codec->toUnicode(buf);
+    if(codec->canEncode(data.toString()))
+      out = codec->toUnicode(data.toByteArray());
+    else
+      out = data.toString();
+
     if (!out.isEmpty())
       qApp->clipboard()->setText(out, QClipboard::Clipboard);
   }
 }
 
 void ISBNResults::contextMenuEvent(QContextMenuEvent *ev) {
+  qInfo("Fixme: Bug with Invalid charset in copy/paste from openlibrary.org");
+  return;
+
   QMenu *m = new QMenu("Actions", this);
   // Von Eintrag die ID Kopieren
   QAction *ac_copy = m->addAction(myIcon("edit"), tr("Copy selected item row"));
   ac_copy->setObjectName("ac_context_copy_book");
   connect(ac_copy, SIGNAL(triggered()), this, SLOT(copySelectedItem()));
-
   m->exec(ev->globalPos());
   delete m;
 }

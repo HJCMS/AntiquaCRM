@@ -61,12 +61,18 @@ bool IsbnData::compareAuthors(const QString &a) {
   return true;
 }
 
+const QString IsbnData::stripData(const QString &str) const {
+  QString buffer = str.trimmed();
+  QRegExp nld("\\.$");
+  buffer.replace(nld, "");
+  return buffer.trimmed();
+}
+
 void IsbnData::addValue(const QString &key, const QJsonValue &data) {
   if (key.isEmpty())
     return;
 
   // No Lineend Dots
-  QRegExp nld("\\.$");
   if (data.type() == QJsonValue::Double) {
     if (key == "number_of_pages") {
       // a future year will ignored in BookEditor :)
@@ -85,14 +91,14 @@ void IsbnData::addValue(const QString &key, const QJsonValue &data) {
     }
   } else {
     if (key == "title") {
-      p_title = data.toString().replace(nld, "");
+      p_title = stripData(data.toString());
     } else if (key == "subtitle") {
-      p_subtitle = data.toString().replace(nld, "");
+      p_subtitle = stripData(data.toString());
     } else if (key == "url") {
       p_url = QUrl(data.toString());
     } else if (key == "publish_date") {
       QRegExp reg("(\\d{4})");
-      QStringList list = data.toString().split(" ");
+      QStringList list = stripData(data.toString()).split(" ");
       if (list.size() > 0) {
         foreach (QString l, list) {
           QString buf = l.trimmed();
@@ -103,22 +109,22 @@ void IsbnData::addValue(const QString &key, const QJsonValue &data) {
         }
       }
     } else if (key == "by_statement") {
-      QString list = data.toString().replace(nld, "").trimmed();
+      QString list = stripData(data.toString());
       foreach (QString author, list.split(",")) {
-        QString name = author.trimmed().replace(nld, "");
+        QString name = stripData(author);
         if (!name.isEmpty() && compareAuthors(name)) {
           p_authors.append(name);
         }
       }
     } else if (key == "authors") {
-      QString name = data.toString().replace(nld, "").trimmed();
+      QString name = stripData(data.toString());
       if (!name.isEmpty() && compareAuthors(name)) {
         p_authors.append(name);
       }
     } else if (key == "publishers") {
-      p_publisher.append(data.toString().trimmed());
+      p_publisher.append(stripData(data.toString()));
     } else if (key == "publish_places") {
-      p_publish_places.append(data.toString().trimmed());
+      p_publish_places.append(stripData(data.toString()));
     }
   }
 }
