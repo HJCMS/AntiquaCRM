@@ -32,6 +32,7 @@ private:
 Q_SIGNALS:
   void listResponsed(const QJsonDocument &doc);
   void orderResponsed(const QJsonDocument &doc);
+  void customQueryResponse(const QJsonDocument &doc);
 
 public Q_SLOTS:
   void queryList();

@@ -69,7 +69,7 @@ fi
 
 . ${_bl_config}
 
-function __token_request() {
+function __authentication() {
   test -n "${_bl_api_host}" || {
     echo "\${_bl_api_host} is empty"
     exit 1
@@ -180,7 +180,7 @@ fi
 # Wenn Sie eine andere Kodierung, bspw. UTF-8 verwenden,
 # wenden Sie sich bitte per E-Mail an daten@booklooker.de.
 if test -s ${_output_target}/${_output} ; then
-  _token="$(__token_request)"
+  _token="$(__authentication)"
   sleep 1
   if test -n "${_token}" ; then
     __post_catalog ${_output_target}/${_output}

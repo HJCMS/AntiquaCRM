@@ -71,7 +71,7 @@ void WHSoftJSonQuery::customQuery(const QString &operation,
   Antiqua::CurlJson *prQuery = new Antiqua::CurlJson(this, PLUGIN_WHSOFT_DEBUG);
   prQuery->setObjectName("buchfreund_query_" + operation);
   connect(prQuery, SIGNAL(responsed(const QJsonDocument &)), this,
-          SIGNAL(orderResponsed(const QJsonDocument &)));
+          SIGNAL(customQueryResponse(const QJsonDocument &)));
   connect(prQuery, SIGNAL(finished()), prQuery, SLOT(deleteLater()));
   prQuery->sendPost(url, data);
 }

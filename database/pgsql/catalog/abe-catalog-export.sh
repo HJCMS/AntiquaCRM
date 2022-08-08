@@ -33,7 +33,8 @@ test -e $HOME/.config/postgres/servercfg.bash || {
 
 . $HOME/.config/postgres/servercfg.bash
 
-_sqlfile=${_scripting}/catalog/abe-export.sql
+_sqlfile=$HOME/.config/HJCMS/abebooks-catalog-export.sql
+_csv_header=$HOME/.config/HJCMS/abebooks-catalog-header.csv
 
 ## Ausgabe Verzeichnis
 _output_target=${_dest}/catalog
@@ -74,16 +75,24 @@ psql \
   --output=${_tempdir}/catalog-export.temp < ${_sqlfile}
 
 if test -s ${_tempdir}/catalog-export.temp ; then
-  psql < ${_sqlfile} | head -n 1 | sed 's, ,,g' | awk '{print toupper($1)}' | sed 's/|/\t/g' > ${_tempdir}/catalog-export-utf8.csv
+  cat ${_csv_header} > ${_tempdir}/catalog-export-utf8.csv
   sed 's,NOT_SET,,g' ${_tempdir}/catalog-export.temp >> ${_tempdir}/catalog-export-utf8.csv
-  iconv -f UTF8 -t LATIN9 --output=${_tempdir}/${_output} ${_tempdir}/catalog-export-utf8.csv
+  touch ${_tempdir}/iconv.log
+  iconv -f UTF8//IGNORE -t LATIN9 --output=${_tempdir}/${_output} ${_tempdir}/catalog-export-utf8.csv 2> ${_tempdir}/iconv.log
+  if test $? != 0 ; then
+    echo "ICONV ERRORS: ${_tempdir}/iconv.log"
+    LC_ALL=de_DE@euro tail ${_tempdir}/${_output}
+  fi
+  ## cp ${_tempdir}/catalog-export-utf8.csv ${_tempdir}/${_output}
   mv -b ${_tempdir}/${_output} ${_output_target}/
   mv -b ${_tempdir}/catalog-export-utf8.csv ${_output_target}/
   _lines="$(wc -l ${_output_target}/${_output} 2>/dev/null | cut -d' ' -f1)"
-  echo "Katalog Ertellung am '`date`' mit '`echo "${_lines} - 1" | bc`' einträgen erneuert." >> ${_output_target}/catalog.log
   rm -f ${_output_target}/catalog.csv
   ln -sf ${_output} ${_output_target}/catalog.csv
   rm -f ${_tempdir}/catalog-export.temp
+  echo ""
+  echo "Katalog Ertellt am '`date`' mit '`echo "${_lines} - 1" | bc`' einträgen."
+  ls -lh "${_output_target}/catalog-export-utf8.csv"
 fi
 
 exit $?

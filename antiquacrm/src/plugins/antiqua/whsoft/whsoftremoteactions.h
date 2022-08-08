@@ -5,38 +5,21 @@
 #ifndef WHSOFTREMOTEACTIONS_PLUGIN_H
 #define WHSOFTREMOTEACTIONS_PLUGIN_H
 
+#include <QComboBox>
+#include <QDateTimeEdit>
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QJsonObject>
+#include <QLineEdit>
 #include <QObject>
-#include <QStackedWidget>
 #include <QPushButton>
+#include <QStackedWidget>
 #include <QStatusBar>
 #include <QWidget>
 
 #include <AntiquaInterface>
 
 class WHSoftJSonQuery;
-
-/**
- * @brief Startseite
- */
-class ANTIQUACORE_EXPORT BF_StartPage final : public QWidget {
-  Q_OBJECT
-
-private:
-  QPushButton *btn_status;
-  QPushButton *btn_cancel;
-
-private Q_SLOTS:
-  void statusClicked();
-  void cancelClicked();
-
-Q_SIGNALS:
-  void sendGotoPage(int);
-
-public:
-  explicit BF_StartPage(QWidget *parent = nullptr);
-};
 
 class ANTIQUACORE_EXPORT WHSoftRemoteActions : public QDialog {
   Q_OBJECT
@@ -45,31 +28,35 @@ class ANTIQUACORE_EXPORT WHSoftRemoteActions : public QDialog {
 
 private:
   QString p_orderId;
-  QString p_purchaser;
-  QString p_purchaser_mail;
-
   WHSoftJSonQuery *m_requester;
-
-  QStackedWidget *m_stackedWidget;
-  BF_StartPage *m_startPage;
-
+  QWidget *m_mainWidget;
+  QPushButton *btn_status;
+  QLabel *m_orderId;
+  QComboBox *m_supplier;
+  QLabel *m_shippingMethod;
+  QLineEdit *m_trackingNumber;
+  QDateTimeEdit *m_deliveryDate;
   QDialogButtonBox *m_buttonBar;
   QPushButton *btn_commit;
   QPushButton *btn_quit;
   QStatusBar *m_statusBar;
 
+  bool initDatabaseSetup();
+
 private Q_SLOTS:
   /**
-   * @brief prepareAction
+   * @brief Erstelle Lieferinformationen
    * @code
    * {
-   *  "action" : QString,
-   *  "type" : QString,
-   *  "value" : QString
+   *   "id": string,
+   *   "versender" : string (32),
+   *   "sendungsart" : string (255),
+   *   "sendungsnummer" : string (255)|null,
+   *   "einlieferungsdatum" : string (Format: YYYY-mm-dd HH:ii:ss)
    * }
    * @endcode
    */
-  void prepareAction(const QJsonObject &jsObj);
+  void prepareAction();
 
   /**
    * @brief Status Nachrichten
@@ -81,10 +68,11 @@ private Q_SLOTS:
    */
   void jsonResponse(const QJsonDocument &jdoc);
 
+Q_SIGNALS:
+  void sendUpdateStatus(const QJsonObject &jobj);
+
 public:
   explicit WHSoftRemoteActions(QWidget *parent = nullptr);
-  void setPurchaser(const QString &person);
-  void setEMail(const QString &email);
   int exec(const QString &orderId);
 };
 

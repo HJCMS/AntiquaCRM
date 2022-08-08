@@ -220,14 +220,7 @@ void WHSoftWidget::createProviderOrderUpdate() {
     return;
   }
 
-  QStringList person;
-  person << getValue("c_gender").toString();
-  person << getValue("c_firstname").toString();
-  person << getValue("c_lastname").toString();
-
   m_dialog = new WHSoftRemoteActions(this);
-  m_dialog->setPurchaser(person.join(" "));
-  m_dialog->setEMail(getValue("c_email_0").toString());
   if (m_dialog->exec(getOrderId()) == QDialog::Accepted) {
     qDebug() << Q_FUNC_INFO << "TODO";
   }
