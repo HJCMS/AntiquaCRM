@@ -1033,13 +1033,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+91"/>
-        <location line="+4"/>
+        <location line="+89"/>
         <source>Invalid Document response!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-105"/>
+        <location line="+2"/>
+        <source>Network request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-101"/>
         <source>Server down</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4251,7 +4255,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+63"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
     </message>

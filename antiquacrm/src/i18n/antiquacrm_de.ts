@@ -1033,13 +1033,17 @@
         <translation>Die maximale Anzahl Abfragen/Minute wurde überschritten</translation>
     </message>
     <message>
-        <location line="+91"/>
-        <location line="+4"/>
+        <location line="+89"/>
         <source>Invalid Document response!</source>
         <translation>Ungültige Dokumentantwort!</translation>
     </message>
     <message>
-        <location line="-105"/>
+        <location line="+2"/>
+        <source>Network request</source>
+        <translation>Netzwerkabfrage</translation>
+    </message>
+    <message>
+        <location line="-101"/>
         <source>Server down</source>
         <translation>Server ist nicht vefügbar</translation>
     </message>
@@ -4251,7 +4255,7 @@
         <translation>Kundennummer</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+63"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>

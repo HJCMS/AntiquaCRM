@@ -288,13 +288,13 @@ void BooklookerRequester::replyReadyRead() {
   QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
   if (parser.error != QJsonParseError::NoError) {
     qWarning("Json Parse Error:(%s)!", jsonParserError(parser.error));
+    QStringList message({"Booklooker", tr("Invalid Document response!")});
     if (qEnvironmentVariable(BOOKLOOKER_ERROR_ENV).isNull()) {
-      emit errorMessage(Antiqua::ErrorStatus::NOTICE,
-                        tr("Invalid Document response!"));
+      message << tr("Network request");
+      emit errorMessage(Antiqua::ErrorStatus::FATAL, message.join(" "));
       qputenv(BOOKLOOKER_ERROR_ENV, "1");
     } else {
-      emit errorMessage(Antiqua::ErrorStatus::FATAL,
-                        tr("Invalid Document response!"));
+      emit errorMessage(Antiqua::ErrorStatus::NOTICE, message.join(" "));
     }
     writeErrorLog(data);
     return;

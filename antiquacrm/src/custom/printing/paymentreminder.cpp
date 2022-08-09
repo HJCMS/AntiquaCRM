@@ -82,9 +82,14 @@ void PaymentReminder::constructBody() {
   QVector<QTextLength> constraints;
   QTextLength::Type type(QTextLength::PercentageLength);
 
+  QTextCharFormat titleText = normalFormat();
+  QFont titleFont = titleText.font();
+  titleFont.setBold(true);
+  titleText.setFont(titleFont);
+
   QTextTableCell ce00 = m_headerTable->cellAt(0, 0);
   cursor = ce00.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(titleText);
   cursor.insertText(p_titleText);
   constraints.append(QTextLength(type, 80)); // 80%
 
@@ -102,7 +107,8 @@ void PaymentReminder::constructBody() {
   QTextTableCell noteCell = m_noteTable->cellAt(0, 0);
   cursor = noteCell.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
-  cursor.insertText(p_mainText);
+  QRegExp pattern("\\b\\s{2,}\\b");
+  cursor.insertText(p_mainText.replace(pattern, " "));
   constraints.append(QTextLength(type, 100));
 
   cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
