@@ -12,6 +12,7 @@ SET (subproject_LINKER
 SET (subproject_SOURCES
   printing.cpp
   deliverynote.cpp
+  paymentreminder.cpp
   invoice.cpp
   bookcard.cpp
   texteditor.cpp
@@ -20,6 +21,7 @@ SET (subproject_SOURCES
 SET (subproject_HEADERS
   printing.h
   deliverynote.h
+  paymentreminder.h
   invoice.h
   bookcard.h
   texteditor.h

@@ -32,35 +32,9 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
   connect(m_restoreBtn, SIGNAL(clicked()), this, SIGNAL(s_restoreClicked()));
   layout->addWidget(m_restoreBtn);
 
-  m_printDeliveryBtn = new QPushButton(tr("Print Deliverynote"), this);
-  m_printDeliveryBtn->setObjectName("editor_action_btn_print_delivery");
-  m_printDeliveryBtn->setToolTip(tr("Open Print Deliverynote"));
-  m_printDeliveryBtn->setIcon(myIcon("printer"));
-  m_printDeliveryBtn->setEnabled(false);
-  m_printDeliveryBtn->setVisible(false);
-  connect(m_printDeliveryBtn, SIGNAL(clicked()), this,
-          SIGNAL(s_printDeliveryNote()));
-  layout->addWidget(m_printDeliveryBtn);
-
-  m_printInvoiceBtn = new QPushButton(tr("Print Invoice"), this);
-  m_printInvoiceBtn->setObjectName("editor_action_btn_print_invoice");
-  m_printInvoiceBtn->setIcon(myIcon("printer"));
-  m_printInvoiceBtn->setEnabled(false);
-  m_printInvoiceBtn->setVisible(false);
-  m_printInvoiceBtn->setToolTip(tr("Open Print Invoice"));
-  connect(m_printInvoiceBtn, SIGNAL(clicked()), this,
-          SIGNAL(s_printInvoiceNote()));
-  layout->addWidget(m_printInvoiceBtn);
-
-  m_printBookCardBtn = new QPushButton(tr("Print book card"), this);
-  m_printBookCardBtn->setObjectName("editor_action_btn_print_card");
-  m_printBookCardBtn->setToolTip(tr("Printing a Book card"));
-  m_printBookCardBtn->setIcon(myIcon("printer"));
-  m_printBookCardBtn->setEnabled(false);
-  m_printBookCardBtn->setVisible(false);
-  connect(m_printBookCardBtn, SIGNAL(clicked()), this,
-          SIGNAL(s_printBookCard()));
-  layout->addWidget(m_printBookCardBtn);
+  m_printerButton = new PrinterButton(this);
+  m_printerButton->setObjectName("editor_action_print_button");
+  layout->addWidget(m_printerButton);
 
   layout->addStretch(1);
 
@@ -83,20 +57,21 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
   layout->addWidget(m_readyBtn);
 
   setLayout(layout);
+
+  connect(m_printerButton, SIGNAL(sendPrintDelivery()), this,
+          SIGNAL(s_printDeliveryNote()));
+  connect(m_printerButton, SIGNAL(sendPrintInvoice()), this,
+          SIGNAL(s_printInvoiceNote()));
+  connect(m_printerButton, SIGNAL(sendPaymentReminder()), this,
+          SIGNAL(s_printPaymentReminder()));
+  connect(m_printerButton, SIGNAL(sendPrintBookcard()), this,
+          SIGNAL(s_printBookCard()));
 }
 
 void EditorActionBar::setRestoreable(bool b) { m_restoreBtn->setEnabled(b); }
 
-void EditorActionBar::viewPrintButton(bool b) {
-  m_printDeliveryBtn->setEnabled(b);
-  m_printDeliveryBtn->setVisible(b);
-  m_printInvoiceBtn->setEnabled(b);
-  m_printInvoiceBtn->setVisible(b);
-}
-
-void EditorActionBar::viewPrintBookCardButton(bool b) {
-  m_printBookCardBtn->setEnabled(b);
-  m_printBookCardBtn->setVisible(b);
+void EditorActionBar::setPrinterButtons(PrinterButton::Buttons buttons) {
+  m_printerButton->setButtons(buttons);
 }
 
 bool EditorActionBar::isRestoreable() { return m_restoreBtn->isEnabled(); }

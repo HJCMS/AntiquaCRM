@@ -10,6 +10,8 @@
 #include <QPushButton>
 #include <QWidget>
 
+#include "printerbutton.h"
+
 class EditorActionBar final : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -17,9 +19,7 @@ class EditorActionBar final : public QWidget {
 
 private:
   QPushButton *m_restoreBtn;
-  QPushButton *m_printDeliveryBtn;
-  QPushButton *m_printInvoiceBtn;
-  QPushButton *m_printBookCardBtn;
+  PrinterButton *m_printerButton;
   QPushButton *m_cancelBtn;
   QPushButton *m_saveBtn;
   QPushButton *m_readyBtn;
@@ -28,6 +28,7 @@ Q_SIGNALS:
   void s_restoreClicked();
   void s_printDeliveryNote();
   void s_printInvoiceNote();
+  void s_printPaymentReminder();
   void s_printBookCard();
   void s_cancelClicked();
   void s_saveClicked();
@@ -38,8 +39,7 @@ public Q_SLOTS:
 
 public:
   explicit EditorActionBar(QWidget *parent = nullptr);
-  void viewPrintButton(bool b = false);
-  void viewPrintBookCardButton(bool b = false);
+  void setPrinterButtons(PrinterButton::Buttons buttons);
   bool isRestoreable();
 };
 

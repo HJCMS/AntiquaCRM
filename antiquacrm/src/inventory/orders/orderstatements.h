@@ -163,6 +163,23 @@ static const QString queryCustomerInvoiceAddress(int customerId) {
 }
 
 /**
+ * @brief Nachrichtentext ermitteln
+ * @param customerId
+ * @param call
+ * @return SQL Query
+ */
+static const QString queryCustomerPaymentReminder(int customerId, const QString &call) {
+  QString sql("SELECT tb_message,");
+  sql.append(" CONCAT_WS(' ', c_title, c_firstname, c_lastname) AS person");
+  sql.append(" FROM customers");
+  sql.append(" LEFT JOIN ui_template_body ON tb_gender=c_gender");
+  sql.append(" WHERE c_id=");
+  sql.append(QString::number(customerId));
+  sql.append(" AND tb_caller='" + call + "';");
+  return sql;
+}
+
+/**
  * @brief Kunden Lieferadresse auslesen
  * @param customerId
  * @code

@@ -102,6 +102,10 @@
 # include "priceedit.h"
 #endif
 
+#ifndef PRINTERBUTTON_UTILS_H
+# include "printerbutton.h"
+#endif
+
 #ifndef SALUTATIONBOX_UTILS_H
 # include "salutationbox.h"
 #endif

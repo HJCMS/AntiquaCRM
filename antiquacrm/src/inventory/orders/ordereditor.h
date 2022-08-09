@@ -13,6 +13,8 @@
 #include <EditorMain>
 #include <Utils>
 
+#include "printing.h"
+
 class OrdersItemList;
 class ProviderOrder;
 class DeliverService;
@@ -189,6 +191,11 @@ private:
   void initInvoiceNumber(int orderId);
 
   /**
+   * @brief Artikel Informationen für Rechnung und Mahnung drucken.
+   */
+  const QList<BillingInfo> getBillingInfo(int orderId, int customerId);
+
+  /**
    * @brief Lese Daten aus Tabelle "article_orders"
    * Die Daten werden hier für @class OrdersItemList vorbereitet
    * und an @ref OrdersItemList::importPayments übergeben.
@@ -272,6 +279,7 @@ private Q_SLOTS:
    */
   void openPrinterDeliveryDialog();
   void openPrinterInvoiceDialog();
+  void openPrinterPaymentReminderDialog();
 
   /**
    * @brief Aktiviert das Benachrichtigungs System

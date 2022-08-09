@@ -10,6 +10,7 @@
 #include "myicontheme.h"
 #include "ordersitemlist.h"
 #include "orderstatements.h"
+#include "paymentreminder.h"
 #include <AntiquaCRM>
 
 #include <QDebug>
@@ -224,7 +225,9 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
 
   m_actionBar = new EditorActionBar(this);
   m_actionBar->setObjectName("m_actionBar");
-  m_actionBar->viewPrintButton(true);
+  m_actionBar->setPrinterButtons(PrinterButton::Delivery |
+                                 PrinterButton::Invoice |
+                                 PrinterButton::Reminder);
   mainLayout->addWidget(m_actionBar);
 
   setLayout(mainLayout);
@@ -251,6 +254,8 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
           SLOT(openPrinterDeliveryDialog()));
   connect(m_actionBar, SIGNAL(s_printInvoiceNote()), this,
           SLOT(openPrinterInvoiceDialog()));
+  connect(m_actionBar, SIGNAL(s_printPaymentReminder()), this,
+          SLOT(openPrinterPaymentReminderDialog()));
   connect(m_paymentList, SIGNAL(searchArticle(int)), this,
           SLOT(findArticle(int)));
   connect(m_paymentList, SIGNAL(statusMessage(const QString &)), this,
@@ -743,7 +748,6 @@ void OrderEditor::openPrinterDeliveryDialog() {
   }
 
   DeliveryNote *dialog = new DeliveryNote(this);
-  dialog->setObjectName("print_delivery_note_dialog");
   dialog->setDelivery(oid, cid, did);
   // Address
   QString c_add;
@@ -808,7 +812,56 @@ void OrderEditor::openPrinterInvoiceDialog() {
 
   ApplSettings cfg;
   Invoice *dialog = new Invoice(this);
-  dialog->setObjectName("print_invoice_dialog");
+  dialog->setInvoice(oid, cid, in_id, did);
+  // Address
+  QString c_add;
+  QString sql = queryCustomerInvoiceAddress(cid);
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    q.next();
+    c_add.append(q.value("c_postal_address").toString());
+  } else {
+    qDebug() << Q_FUNC_INFO << m_sql->lastError();
+    emit s_postMessage(tr("No Customer Address found"));
+    return;
+  }
+  dialog->setCustomerAddress(c_add);
+
+  bool paid = (o_payment_status->status() == OrdersPaymentBox::Yes);
+
+  QList<BillingInfo> list = getBillingInfo(oid, cid);
+
+  if (dialog->exec(list, paid) == QDialog::Rejected) {
+    emit s_statusMessage(tr("Printing canceled."));
+  }
+  list.clear();
+}
+
+void OrderEditor::openPrinterPaymentReminderDialog() {
+  int oid = o_id->value().toInt();
+  if (oid < 1) {
+    emit s_postMessage(tr("Missing Order-Id"));
+    return;
+  }
+
+  int cid = o_customer_id->value().toInt();
+  if (cid < 1) {
+    emit s_postMessage(tr("Missing Customer-Id"));
+    return;
+  }
+
+  int in_id = o_invoice_id->value().toInt();
+  if (in_id < 1) {
+    emit s_postMessage(tr("Missing Invoice-Id"));
+    return;
+  }
+
+  QString did = o_delivery->value().toString();
+  if (did.isEmpty()) {
+    emit s_postMessage(tr("Missing Delivery-Id"));
+    return;
+  }
+
   // Address
   QString c_add;
   QString sql = queryCustomerInvoiceAddress(cid);
@@ -821,63 +874,40 @@ void OrderEditor::openPrinterInvoiceDialog() {
     emit s_postMessage(tr("No Customer Address found"));
     return;
   }
-  dialog->setCustomerAddress(c_add);
-  dialog->setInvoice(oid, cid, in_id, did);
 
-  bool paid = (o_payment_status->status() == OrdersPaymentBox::Yes);
-
-  /**
-   * Wenn es kein Europaland ist, dann fällt auch keine Mehrwertsteuer an!
-   * Die Zeile MwST dann in der Rechnung ausblenden!
-   */
-  bool disable_vat = (o_vat_country->value().toString().isEmpty());
-
-  /**
-   * Wenn die Versandkosten mit berechnet werden sollen.
-   * Muss putIntoInvoice() true zurück geben und der Paketpreis
-   * wird von 0.00 auf den Versandwert angehoben!
-   * @note Wenn die Versandkosten nicht '0.00' sind werden sie in
-   * der Rechnung aufgeführt!
-   */
-  int setTax =
-      o_vat_levels->itemData(o_vat_levels->currentIndex(), Qt::UserRole)
-          .toInt();
-  if (setTax == 0) {
-    o_vat_included->setChecked(false);
-    disable_vat = true;
-  }
-  bool vat_included = o_vat_included->isChecked();
-
-  qreal packagePrice = 0;
-  if (o_delivery_add_price->isChecked())
-    packagePrice = o_delivery_service->getPackagePrice();
-
-  QList<BillingInfo> list;
-  q = m_sql->query(queryBillingInfo(oid, cid));
+  QString message;
+  QString person;
+  sql = queryCustomerPaymentReminder(cid, "PAYMENT_REMINDER");
+  q = m_sql->query(sql);
   if (q.size() > 0) {
-    QRegExp strip("\\-\\s+\\-");
-    while (q.next()) {
-      BillingInfo d;
-      d.articleid = q.value("aid").toString();
-      d.designation = q.value("title").toString().replace(strip, "-");
-      d.quantity = q.value("quant").toInt();
-      d.sellPrice = q.value("sellPrice").toDouble();
-      d.includeVat = vat_included;
-      d.disableVat = disable_vat;
-      d.taxValue = setTax;
-      d.packagePrice = packagePrice;
-      list.append(d);
-    }
+    q.next();
+    person = q.value("person").toString();
+    message = q.value("tb_message").toString();
   } else {
-    list.clear();
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
-    emit s_postMessage(tr("No Billing Info found"));
+    emit s_postMessage(tr("No Message available"));
     return;
   }
-  if (dialog->exec(list, paid) == QDialog::Rejected) {
+
+  if (message.isEmpty()) {
+    emit s_postMessage(tr("No Message available"));
+    return;
+  }
+
+  message.replace("@PURCHASER@", person);
+
+  PaymentReminder *dialog = new PaymentReminder(this);
+  dialog->setCustomerAddress(c_add);
+  dialog->setPaymentInfo(oid, cid, in_id, did);
+  dialog->setTitleText(tr("1. Payment Reminder"));
+  dialog->setMainText(message);
+  dialog->setFinalText(tr("If the amount has been paid in the meantime, please "
+                          "send us a short message."));
+
+  QList<BillingInfo> list = getBillingInfo(oid, cid);
+  if (dialog->exec(list) == QDialog::Rejected) {
     emit s_statusMessage(tr("Printing canceled."));
   }
-  list.clear();
 }
 
 void OrderEditor::createNotifyOrder(bool b) {
@@ -993,6 +1023,58 @@ void OrderEditor::initInvoiceNumber(int orderId) {
   } else {
     qWarning("SQL ERROR: %s", qPrintable(m_sql->lastError()));
   }
+}
+
+const QList<BillingInfo> OrderEditor::getBillingInfo(int orderId,
+                                                     int customerId) {
+  /**
+   * Wenn es kein Europaland ist, dann fällt auch keine Mehrwertsteuer an!
+   * Die Zeile MwST dann in der Rechnung ausblenden!
+   */
+  bool disable_vat = (o_vat_country->value().toString().isEmpty());
+
+  /**
+   * Wenn die Versandkosten mit berechnet werden sollen.
+   * Muss putIntoInvoice() true zurück geben und der Paketpreis
+   * wird von 0.00 auf den Versandwert angehoben!
+   * @note Wenn die Versandkosten nicht '0.00' sind werden sie in
+   * der Rechnung aufgeführt!
+   */
+  int vIndex = o_vat_levels->currentIndex();
+  int setTax = o_vat_levels->itemData(vIndex, Qt::UserRole).toInt();
+  if (setTax == 0) {
+    o_vat_included->setChecked(false);
+    disable_vat = true;
+  }
+
+  bool vat_included = o_vat_included->isChecked();
+
+  qreal packagePrice = 0;
+  if (o_delivery_add_price->isChecked())
+    packagePrice = o_delivery_service->getPackagePrice();
+
+  QList<BillingInfo> list;
+  QSqlQuery q = m_sql->query(queryBillingInfo(orderId, customerId));
+  if (q.size() > 0) {
+    QRegExp strip("\\-\\s+\\-");
+    while (q.next()) {
+      BillingInfo d;
+      d.articleid = q.value("aid").toString();
+      d.designation = q.value("title").toString().replace(strip, "-");
+      d.quantity = q.value("quant").toInt();
+      d.sellPrice = q.value("sellPrice").toDouble();
+      d.includeVat = vat_included;
+      d.disableVat = disable_vat;
+      d.taxValue = setTax;
+      d.packagePrice = packagePrice;
+      list.append(d);
+    }
+  } else {
+    list.clear();
+    qDebug() << Q_FUNC_INFO << m_sql->lastError();
+    emit s_postMessage(tr("No Billing Info found"));
+  }
+  return list;
 }
 
 const QList<OrderArticle> OrderEditor::getOrderArticles(int oid, int cid) {

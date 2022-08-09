@@ -2,32 +2,33 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef INVOICE_PRINTING_H
-#define INVOICE_PRINTING_H
+#ifndef PAYMENTREMINDER_PRINTING_H
+#define PAYMENTREMINDER_PRINTING_H
 
-#include <QList>
+#include <QHash>
+#include <QImage>
 #include <QMetaType>
 #include <QObject>
 #include <QWidget>
 
+#include <AntiquaCRM>
+
 #include "printing.h"
 
 /**
- * @brief Rechnungs Erstellung
+ * @brief Zahlungs Erinnerung Erstellung
  * @ingroup Printing
- * @class Invoice
+ * @class PaymentReminder
  */
-class Invoice : public Printing {
+class PaymentReminder : public Printing {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  /**
-   * @brief Artikelliste
-   */
-  QTextTable *m_billingTable;
-
+  QString p_titleText = tr("Payment Reminder");
+  QString p_mainText;
+  QString p_subText;
   /**
    * @brief Gesamtmenge
    */
@@ -40,11 +41,6 @@ private:
   bool p_disable_VAT = false;
 
   /**
-   * @brief Bereits beszahlt
-   */
-  bool already_paid = false;
-
-  /**
    * @brief Gesamtpreis
    */
   qreal p_fullPrice = 0.00;
@@ -55,13 +51,12 @@ private:
   qreal p_packagePrice = 0.00;
 
   /**
-   * @brief Standard Druckkopfbreich
+   * @brief Artikelliste
    */
-  void constructSubject();
+  QTextTable *m_billingTable;
 
-  /**
-   * @brief Anschrifft und Dokument Definition
-   */
+protected:
+  void constructSubject();
   void constructBody();
 
   /**
@@ -84,11 +79,6 @@ private:
   void finalizeBillings();
 
   /**
-   * @brief Zahlungsbedingungen
-   */
-  void setPaymentTerms();
-
-  /**
    * @brief Zusätzliche Texte einfügen
    */
   void setAdditionalInfo();
@@ -98,30 +88,35 @@ private:
    */
   void setRegards();
 
-private Q_SLOTS:
-  /**
-   * @brief Drucker ausgabe generieren
-   */
+protected Q_SLOTS:
   bool generateDocument(QPrinter *printer);
-
-  /**
-   * @brief Öffne Drucker Dialog
-   */
   void openPrintDialog();
 
 public:
-  explicit Invoice(QWidget *parent = nullptr);
+  explicit PaymentReminder(QWidget *parent = nullptr);
+
+  void setTitleText(const QString &);
 
   /**
    * @brief Wichtige Nummern angeben
    * @note Muss vor @ref exec() gesetzt sein!
    */
-  void setInvoice(int orderId,    /* Bestellnummer */
-                  int customerId, /* Kundennummer */
-                  int invoiceId,  /* Rechnungsnummer */
-                  const QString &deliverNoteId);
+  void setPaymentInfo(int orderId,    /* Bestellnummer */
+                      int customerId, /* Kundennummer */
+                      int invoiceId,  /* Rechnungsnummer */
+                      const QString &deliverNoteId);
 
-  int exec(const QList<BillingInfo> &, bool paid = false);
+  /**
+   * @brief Primäre Nachricht an den Kunden
+   */
+  void setMainText(const QString &);
+
+  /**
+   * @brief Abschließender Text
+   */
+  void setFinalText(const QString &);
+
+  int exec(const QList<BillingInfo> &billing);
 };
 
-#endif // INVOICE_PRINTING_H
+#endif // PAYMENTREMINDER_PRINTING_H

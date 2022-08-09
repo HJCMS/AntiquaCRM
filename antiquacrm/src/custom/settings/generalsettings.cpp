@@ -53,6 +53,16 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   btn_invoice->setText(txt_open_dir);
   lt_groupBox1->addWidget(btn_invoice, row++, 1, 1, 1);
   connect(btn_invoice, SIGNAL(clicked()), this, SLOT(setInvoiceArchiv()));
+  // Reminder
+  m_reminder_path = new LineEdit(this);
+  m_reminder_path->setObjectName("dirs/reminder");
+  m_reminder_path->setInfo(tr("Payment Reminder"));
+  lt_groupBox1->addWidget(m_reminder_path, row, 0, 1, 1);
+  btn_reminder = new QToolButton(m_grouBox1);
+  btn_reminder->setIcon(icon_open_btn);
+  btn_reminder->setText(txt_open_dir);
+  lt_groupBox1->addWidget(btn_reminder, row++, 1, 1, 1);
+  connect(btn_reminder, SIGNAL(clicked()), this, SLOT(setReminderArchiv()));
   // Cards
   m_cards_path = new LineEdit(this);
   m_cards_path->setObjectName("dirs/cards");
@@ -219,6 +229,14 @@ void GeneralSettings::setInvoiceArchiv() {
   QString src = getDirectory(spath.toString());
   if (!src.isEmpty()) {
     m_invoice_path->setValue(src);
+  }
+}
+
+void GeneralSettings::setReminderArchiv() {
+  QVariant spath = config->value("dirs/reminder", QDir::homePath());
+  QString src = getDirectory(spath.toString());
+  if (!src.isEmpty()) {
+    m_reminder_path->setValue(src);
   }
 }
 

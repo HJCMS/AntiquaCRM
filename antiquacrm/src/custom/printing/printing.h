@@ -30,6 +30,57 @@ class ApplSettings;
 #include <AntiquaCRM>
 
 /**
+ * @brief Container für das befüllen der Tabellenzellen.
+ * @class BillingInfo
+ * @ingroup Printing
+ */
+struct BillingInfo {
+  /**
+   * @brief Artikel Nummer
+   */
+  QString articleid;
+
+  /**
+   * @brief Artikel Beschreibung
+   */
+  QString designation;
+
+  /**
+   * @brief Artikel Menge/Anzahl
+   */
+  int quantity;
+
+  /**
+   * @brief Artikel Preis
+   */
+  double sellPrice;
+
+  /**
+   * @brief Mehwertsteuerangabe
+   * @li true  = "inkl. MwSt"
+   * @li false = "+ MwSt"
+   */
+  bool includeVat;
+
+  /**
+   * @brief Es fällt keine Mehwertsteuer an!
+   */
+  bool disableVat;
+
+  /**
+   * @brief Mehwertsteuersatz
+   * @note Wird Gesamt behandelt!
+   */
+  int taxValue;
+
+  /**
+   * @brief Versankosten hinzufügen
+   */
+  qreal packagePrice;
+};
+Q_DECLARE_METATYPE(BillingInfo);
+
+/**
  * @brief Drucker Dialog Klasse
  * @class Printing
  * @defgroup Printing Printing

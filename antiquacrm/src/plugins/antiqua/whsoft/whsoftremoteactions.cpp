@@ -41,26 +41,38 @@ WHSoftRemoteActions::WHSoftRemoteActions(QWidget *parent) : QDialog{parent} {
 
   // BEGIN MainLayout
   m_mainWidget = new QWidget(this);
-  QHBoxLayout *m_mainLayout = new QHBoxLayout(this);
+  QVBoxLayout *m_mainLayout = new QVBoxLayout(m_mainWidget);
+  QLabel *m_info = new QLabel(m_mainWidget);
+  m_info->setText(tr("Send delivery status to the purchaser."));
+  m_mainLayout->addWidget(m_info);
+
   m_orderId = new QLabel(m_mainWidget);
   m_mainLayout->addWidget(m_orderId);
+
   m_supplier = new QComboBox(m_mainWidget);
   m_mainLayout->addWidget(m_supplier);
+
   m_shippingMethod = new QLabel(m_mainWidget);
   m_shippingMethod->setText(tr("Package"));
   m_mainLayout->addWidget(m_shippingMethod);
+
   m_trackingNumber = new QLineEdit(m_mainWidget);
+  m_trackingNumber->setPlaceholderText(tr("Tracking Number"));
+  m_trackingNumber->setToolTip(tr("Tracking Number"));
   m_mainLayout->addWidget(m_trackingNumber);
-  m_deliveryDate = new QDateTimeEdit(m_mainWidget);
+
+  QDateTime cdt = QDateTime::currentDateTime();
+  m_deliveryDate = new QDateTimeEdit(cdt, m_mainWidget);
   m_mainLayout->addWidget(m_deliveryDate);
+
   m_mainLayout->addStretch(1);
   btn_status = new QPushButton(btnIcon(), tr("Delivery Status"), m_mainWidget);
   // Bestellstatus aktualisieren.
   btn_status->setToolTip(tr("Order Status update."));
   m_mainLayout->addWidget(btn_status);
+  layout->addWidget(m_mainWidget);
   // END
 
-  layout->addWidget(m_mainWidget);
   layout->setStretch(0, 1);
   m_buttonBar = new QDialogButtonBox(QDialogButtonBox::Close, this);
   layout->addWidget(m_buttonBar);

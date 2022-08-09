@@ -377,6 +377,8 @@ bool Printing::createPDF(const QString &section) {
   dest.append(QDir::separator());
   if(section == "invoices") {
     dest.append(p_invoiceId);
+  } else if (section == "reminder") {
+    dest.append(p_invoiceId);
   } else {
     dest.append(p_deliveryId);
   }
