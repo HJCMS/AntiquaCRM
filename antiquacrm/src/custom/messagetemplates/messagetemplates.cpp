@@ -7,12 +7,13 @@
 #include "messageselecter.h"
 
 #include <QtCore>
-#include <QtWidgets>
+#include <QLayout>
 
 MessageTemplates::MessageTemplates(QWidget *parent) : QDialog{parent} {
   setObjectName("message_templates_dialog");
   setMinimumSize(600, 500);
   setSizeGripEnabled(true);
+  setWhatsThis(tr("in this Area"));
 
   QVBoxLayout *layout = new QVBoxLayout(this);
 
@@ -95,6 +96,7 @@ bool MessageTemplates::createSelecters() {
       cl.setCaller(q.value("tb_caller").toString());
       cl.setTitle(q.value("tb_title").toString());
       cl.setBody(q.value("tb_message").toString());
+      cl.setGender(q.value("tb_gender").toInt());
       list.append(cl);
     }
     if (list.count() > 0)
@@ -127,6 +129,7 @@ void MessageTemplates::setSqlQuery() {
     return;
   }
 
+  QString tb_gender = QString::number(m_toolBar->getGender());
   QString sql("SELECT * FROM ui_template_body WHERE tb_title='");
   sql.append(tb_title + "';");
   QSqlQuery q = m_sql->query(sql);
@@ -134,12 +137,13 @@ void MessageTemplates::setSqlQuery() {
     sql = QString("UPDATE ui_template_body SET");
     sql.append(" tb_caller='" + tb_caller + "',");
     sql.append(" tb_message='" + tb_message + "'");
+    sql.append(" tb_gender='" + tb_gender + "'");
     sql.append(" WHERE tb_title='" + tb_title + "';");
   } else {
     sql = QString("INSERT INTO ui_template_body");
-    sql.append(" (tb_caller,tb_title,tb_message) VALUES");
-    sql.append(" ('" + tb_caller + "',");
-    sql.append(" '" + tb_title + "','" + tb_message + "');");
+    sql.append(" (tb_caller,tb_title,tb_message,tb_gender) VALUES");
+    sql.append(" ('" + tb_caller + "','" + tb_title + "',");
+    sql.append(" '" + tb_message + "','" + tb_gender + "');");
   }
 
   q = m_sql->query(sql);

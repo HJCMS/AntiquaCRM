@@ -1158,9 +1158,9 @@ bool OrderEditor::openUpdateOrder(int oid) {
   m_paymentList->setEnabled(true);
 
   // Hier nur Einträge anzeigen welche nicht geschlossen sind!
-  QString status = QString::number(STATUS_ORDER_CLOSED);
+  // QString status = QString::number(STATUS_ORDER_CLOSED);
   QString select("SELECT * FROM inventory_orders WHERE");
-  select.append(" o_order_status!=" + status + " AND");
+  // select.append(" o_order_status!=" + status + " AND");
   select.append(" o_id=" + QString::number(oid) + ";");
 
   if (SHOW_ORDER_SQL_QUERIES) {
