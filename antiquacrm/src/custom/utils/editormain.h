@@ -14,10 +14,6 @@
 #include <AntiquaCRM>
 #include <SqlCore>
 
-namespace HJCMS {
-class SqlCore;
-};
-
 class ApplicationClient;
 
 /**

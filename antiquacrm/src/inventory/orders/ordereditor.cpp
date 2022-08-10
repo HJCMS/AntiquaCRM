@@ -263,8 +263,8 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   connect(m_paymentList, SIGNAL(hasModified(bool)), this,
           SLOT(setWindowModified(bool)));
   connect(o_notify, SIGNAL(checked(bool)), this, SLOT(createNotifyOrder(bool)));
-  connect(o_order_status, SIGNAL(currentIndexChanged(int)), this,
-          SLOT(setStatusOrder(int)));
+  //  connect(o_order_status, SIGNAL(currentIndexChanged(int)), this,
+  //          SLOT(setStatusOrder(int)));
   connect(o_customer_id, SIGNAL(s_serialChanged(int)), this,
           SLOT(findCustomer(int)));
   connect(m_paymentList, SIGNAL(askToRemoveRow(int)), this,
@@ -341,31 +341,143 @@ void OrderEditor::invalidRelationship() {
   QMessageBox::warning(this, tr("Invalid relationship"), body);
 }
 
+bool OrderEditor::checkOrderStatus() {
+  bool out_status = false;
+  // Nur Ausführen wenn importSqlResult nicht Leer ist.
+  if (sqlQueryResult.size() < 5)
+    return out_status;
+
+  // OrdersPaymentBox
+  int payment_status = o_payment_status->value().toInt();
+  bool payment_status_update = false;
+
+  // OrderStatusBox
+  int order_status = o_order_status->value().toInt();
+  bool order_status_update = false;
+
+  // Suche nach Änderungen
+  QListIterator<DataField> it(sqlQueryResult);
+  while (it.hasNext()) {
+    DataField df = it.next();
+    if (df.field() == o_payment_status->objectName())
+      payment_status_update = (payment_status != df.value().toInt());
+
+    if (df.field() == o_order_status->objectName())
+      order_status_update = (order_status != df.value().toInt());
+  }
+
+  // Abfrage - Update auf Bezahlt?
+  if (payment_status_update) { //  && payment_status == 1
+    out_status = (out_status != true) ? true : out_status;
+  }
+
+  // Abfrage - Update auf Geschlossen?
+  if (order_status_update && order_status == ORDER_STATUS_CLOSED) {
+    out_status = (out_status != true) ? true : out_status;
+  }
+
+  // Abfrage - Update auf Storniert?
+  if (order_status_update && order_status == ORDER_STATUS_CANCEL) {
+    out_status = (out_status != true) ? true : out_status;
+  }
+
+  return out_status;
+}
+
+void OrderEditor::restoreOrderStatus() {
+  QListIterator<DataField> it(sqlQueryResult);
+  while (it.hasNext()) {
+    DataField df = it.next();
+    if (df.field() == o_order_status->objectName()) {
+      o_order_status->setValue(df.value());
+      break;
+    }
+  }
+}
+
+bool OrderEditor::updateOrderStatus(int status) {
+  if (status < ORDER_STATUS_CLOSED)
+    return false;
+
+  qDebug() << Q_FUNC_INFO << status;
+
+  QString body("<p>");
+  body.append(tr("Do you really want to close this order and pass it on "
+                 "to accounting?"));
+  body.append("</p><p>");
+  body.append(tr("If so, the entry will no longer be visible here!"));
+  body.append("</p>");
+
+  int order_id = o_id->value().toInt();
+  if (status == ORDER_STATUS_CANCEL) {
+    int ret = QMessageBox::question(this, tr("Cancel order"), body);
+    if (ret == QMessageBox::Yes) {
+      if (sendSqlQuery(progresUpdate(order_id, status))) {
+        emit s_statusMessage(tr("Order deactivated!"));
+        return true;
+      }
+    } else {
+      restoreOrderStatus();
+      return false;
+    }
+  }
+
+  if (o_payment_status->value().toInt() == 0) {
+    invalidRelationship();
+    return false;
+  }
+
+  int ret = QMessageBox::question(this, tr("Finish order"), body);
+  if (ret == QMessageBox::Yes) {
+    if (sendSqlQuery(progresUpdate(order_id, status))) {
+      emit s_statusMessage(tr("Order deactivated!"));
+      // Statistiken modifizieren!
+      int c_id = o_customer_id->value().toInt();
+      if (c_id > 0) {
+        QString sql = finalizeTransaction(c_id, status);
+        if (SHOW_ORDER_SQL_QUERIES) {
+          qDebug() << Q_FUNC_INFO << sql << c_id << status;
+        }
+        m_sql->query(sql);
+        if (!m_sql->lastError().isEmpty()) {
+          qDebug() << Q_FUNC_INFO << m_sql->lastError();
+          return false;
+        }
+      }
+      return true;
+    }
+  } else {
+    restoreOrderStatus();
+  }
+  return false;
+}
+
 bool OrderEditor::sendSqlQuery(const QString &sqlStatement) {
   if (SHOW_ORDER_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << sqlStatement;
   }
+
   QSqlQuery q = m_sql->query(sqlStatement);
   if (q.lastError().type() != QSqlError::NoError) {
     sqlErrnoMessage(sqlStatement, m_sql->fetchErrors());
     return false;
-  } else {
-    if (q.next()) {
-      if (!q.record().isNull("o_id")) {
-        o_id->setValue(q.value("o_id"));
-      }
-      if (!q.record().isNull("a_payment_id")) {
-        last_payment_id = q.value("a_payment_id").toInt();
-      }
-    }
-    if (showSuccessFully) {
-      sqlSuccessMessage(tr("Order saved successfully!"));
-    }
-    resetModified(inputList);
-    m_paymentList->setModified(false);
-    emit s_isModified(false);
-    return true;
   }
+
+  if (q.next()) {
+    if (!q.record().isNull("o_id")) {
+      o_id->setValue(q.value("o_id"));
+    }
+    if (!q.record().isNull("a_payment_id")) {
+      last_payment_id = q.value("a_payment_id").toInt();
+    }
+  }
+  if (showSuccessFully) {
+    sqlSuccessMessage(tr("Order saved successfully!"));
+  }
+  resetModified(inputList);
+  m_paymentList->setModified(false);
+  emit s_isModified(false);
+  return true;
 }
 
 bool OrderEditor::createSqlArticleOrder() {
@@ -466,15 +578,10 @@ bool OrderEditor::createSqlArticleOrder() {
 }
 
 void OrderEditor::createSqlUpdate() {
+  bool leaveAfterUpdate = false;
   QString oid = o_id->value().toString();
   if (oid.isEmpty())
     return;
-
-  if ((o_payment_status->value().toInt() == 0) &&
-      (o_order_status->value().toInt() == STATUS_ORDER_CLOSED)) {
-    invalidRelationship();
-    return;
-  }
 
   QString did = o_delivery->value().toString();
   if (did.isEmpty()) {
@@ -501,23 +608,51 @@ void OrderEditor::createSqlUpdate() {
   }
 
   // Artikel Bestelliste aktualisieren
+  // PoPup Speichern wieder unterdrücken
   showSuccessFully = false;
   if (!createSqlArticleOrder()) {
     qWarning("UPDATE canceld");
     return;
   }
+
+  // Soll dieser Auftrag geschlossen werden?
+  if (checkOrderStatus()) {
+    bool status = false;
+    int order_status = o_order_status->value().toInt();
+    if (order_status == ORDER_STATUS_CLOSED) {
+      status = updateOrderStatus(order_status);
+    } else if (order_status == ORDER_STATUS_CANCEL) {
+      status = updateOrderStatus(order_status);
+    }
+    if (!status) {
+      restoreOrderStatus();
+      qWarning("Save operation aborted!");
+      return;
+    }
+    leaveAfterUpdate = status;
+  }
+  // PoPup Speichern wieder anzeigen!
   showSuccessFully = true;
 
   QString sql("UPDATE inventory_orders SET ");
   sql.append(set.join(","));
   sql.append(",o_modified=CURRENT_TIMESTAMP");
-  if (o_id->value().toInt() == STATUS_ORDER_DELIVERED) {
+  if (o_id->value().toInt() == ORDER_STATUS_DELIVERED) {
     sql.append(",o_delivered=CURRENT_TIMESTAMP");
   }
   sql.append(" WHERE o_id=");
   sql.append(oid);
   sql.append(";");
-  sendSqlQuery(sql);
+  if (sendSqlQuery(sql) && leaveAfterUpdate) {
+    int c_id = o_customer_id->value().toInt();
+    if (c_id > 0) {
+      m_sql->query(updatePurchases(c_id));
+      if (!m_sql->lastError().isEmpty()) {
+        qDebug() << Q_FUNC_INFO << m_sql->lastError();
+      }
+    }
+    finalLeaveEditor();
+  }
 }
 
 void OrderEditor::createSqlInsert() {
@@ -929,55 +1064,6 @@ void OrderEditor::createNotifyOrder(bool b) {
   }
 }
 
-void OrderEditor::setStatusOrder(int status) {
-  if (status < STATUS_ORDER_CLOSED)
-    return;
-
-  QString body("<p>");
-  body.append(tr("Do you really want to close this order and pass it on "
-                 "to accounting?"));
-  body.append("</p><p>");
-  body.append(tr("If so, the entry will no longer be visible here!"));
-  body.append("</p>");
-
-  int order_id = o_id->value().toInt();
-  if (status == STATUS_ORDER_CANCEL) {
-    int ret = QMessageBox::question(this, tr("Cancel order"), body);
-    if (ret == QMessageBox::Yes) {
-      if (sendSqlQuery(progresUpdate(order_id, status))) {
-        emit s_statusMessage(tr("Order deactivated!"));
-        finalLeaveEditor();
-      }
-    }
-    return;
-  }
-
-  if (o_payment_status->value().toInt() == 0) {
-    invalidRelationship();
-    return;
-  }
-
-  int ret = QMessageBox::question(this, tr("Finish order"), body);
-  if (ret == QMessageBox::Yes) {
-    if (sendSqlQuery(progresUpdate(order_id, status))) {
-      emit s_statusMessage(tr("Order deactivated!"));
-      // Statistiken modifizieren!
-      int c_id = o_customer_id->value().toInt();
-      if (c_id > 0) {
-#ifdef ANTIQUA_DEVELOPEMENT
-        qDebug() << Q_FUNC_INFO << c_id << status;
-#endif
-        m_sql->query(finalizeTransaction(c_id, status));
-#ifdef ANTIQUA_DEVELOPEMENT
-        if (!m_sql->lastError().isEmpty())
-          qDebug() << Q_FUNC_INFO << m_sql->lastError();
-#endif
-      }
-      finalLeaveEditor();
-    }
-  }
-}
-
 void OrderEditor::generateDeliveryNumber() {
   QString did = o_delivery->value().toString();
   if (did.isEmpty()) {
@@ -1157,10 +1243,7 @@ bool OrderEditor::openUpdateOrder(int oid) {
   }
   m_paymentList->setEnabled(true);
 
-  // Hier nur Einträge anzeigen welche nicht geschlossen sind!
-  // QString status = QString::number(STATUS_ORDER_CLOSED);
   QString select("SELECT * FROM inventory_orders WHERE");
-  // select.append(" o_order_status!=" + status + " AND");
   select.append(" o_id=" + QString::number(oid) + ";");
 
   if (SHOW_ORDER_SQL_QUERIES) {

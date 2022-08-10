@@ -31,24 +31,24 @@
  * @brief Der Eintrag wird geschlossen
  * @note Siehe libAntiquaCRM::OrderStatus Klasse
  */
-#ifndef STATUS_ORDER_CLOSED
-#define STATUS_ORDER_CLOSED 5
+#ifndef ORDER_STATUS_CLOSED
+#define ORDER_STATUS_CLOSED 5
 #endif
 
 /**
  * @brief Eintrag wurde Storniert
  * @note Siehe libAntiquaCRM::OrderStatus Klasse
  */
-#ifndef STATUS_ORDER_CANCEL
-#define STATUS_ORDER_CANCEL 6
+#ifndef ORDER_STATUS_CANCEL
+#define ORDER_STATUS_CANCEL 6
 #endif
 
 /**
  * @brief Paket wurde ausgeliefert
  * @note Siehe libAntiquaCRM::OrderStatus Klasse
  */
-#ifndef STATUS_ORDER_DELIVERED
-#define STATUS_ORDER_DELIVERED 3
+#ifndef ORDER_STATUS_DELIVERED
+#define ORDER_STATUS_DELIVERED 3
 #endif
 
 /**
@@ -110,7 +110,7 @@ static const QString defaultOrdersQuery(int id = 0) {
     sql.append(" ORDER BY a.o_since DESC;");
   } else {
     sql.append("WHERE a.o_order_status<" +
-               QString::number(STATUS_ORDER_CLOSED));
+               QString::number(ORDER_STATUS_CLOSED));
     sql.append(" ORDER BY a.o_since DESC;");
   }
   return sql;
@@ -168,7 +168,8 @@ static const QString queryCustomerInvoiceAddress(int customerId) {
  * @param call
  * @return SQL Query
  */
-static const QString queryCustomerPaymentReminder(int customerId, const QString &call) {
+static const QString queryCustomerPaymentReminder(int customerId,
+                                                  const QString &call) {
   QString sql("SELECT tb_message,");
   sql.append(" CONCAT_WS(' ', c_title, c_firstname, c_lastname) AS person");
   sql.append(" FROM customers");
@@ -235,7 +236,7 @@ static const QString setOrderDeliveryId(int oId, const QString &dId) {
 static const QString progresUpdate(int id, int status) {
   QString sql("UPDATE inventory_orders SET o_order_status=");
   sql.append(QString::number(status));
-  if (status == STATUS_ORDER_DELIVERED) {
+  if (status == ORDER_STATUS_DELIVERED) {
     sql.append(",o_since=CURRENT_TIMESTAMP");
   }
   sql.append(" WHERE o_id=");
@@ -258,6 +259,21 @@ static const QString paymentUpdate(int id, bool status) {
   sql.append(" WHERE o_id=");
   sql.append(QString::number(id));
   sql.append(";");
+  return sql;
+}
+
+/**
+ * @brief Update auf Kundeinkäufe
+ * @return SQL QUERY
+ */
+static const QString updatePurchases(int customerId) {
+  QString id = QString::number(customerId);
+  QString sql("UPDATE customers SET c_changed=");
+  sql.append("CURRENT_TIMESTAMP, c_purchases=");
+  sql.append("(SELECT CASE o_payment_status WHEN true ");
+  sql.append("THEN 1 ELSE 0 END FROM inventory_orders ");
+  sql.append("WHERE o_customer_id=" + id + ") WHERE c_id=");
+  sql.append(id + ";");
   return sql;
 }
 

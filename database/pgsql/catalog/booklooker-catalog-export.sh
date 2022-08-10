@@ -80,7 +80,7 @@ function __authentication() {
     exit 1
   }
 
-  curl \
+  curl --silent \
     --ssl-reqd \
     --tlsv1.2 \
     -X POST ${_bl_api_host}/2.0/authenticate \
@@ -132,23 +132,24 @@ function __post_catalog() {
     exit 1
   }
 
-  curl \
+  curl --silent \
     --ssl-reqd \
     --tlsv1.2 \
     -X POST "${_bl_api_host}/2.0/file_import?token=$_token" \
-    -H "Accept: text/*;application/json,q=0.1" \
-    -H "Cache-Control: no-cache, private" \
-    -H "Content-Type: multipart/form-data; boundary='upload'" \
+    -H "Accept: */*" \
+    -H "Cache-Control: no-cache" \
+    -H "Content-Type: multipart/form-data" \
+    -F "file=@${_upload_file}" \
     -F "fileType=article" \
     -F "dataType=1" \
     -F "mediaType=0" \
     -F "formatID=booklooker" \
-    --trace ${_logdir}/booklooker.log \
+    --dump-header ${_tempdir}/booklooker_dump.header \
     --output ${_tempdir}/booklooker.json
-    --upload-file ${_upload_file}
 
   if test $? -ne 0 ; then
     echo "Curl finished with errors!"
+    echo "Check: ${_logdir}/booklooker.log ${_tempdir}/booklooker.json"
     exit 1
   fi
 }
@@ -175,10 +176,6 @@ if test -s ${_tempdir}/catalog-export.temp ; then
   rm -f ${_tempdir}/catalog-export.temp
 fi
 
-# Ihre Angebotsdatei können Sie entweder als Textdatei oder als komprimiertes ZIP-Archiv übergeben.
-# Standardmäßig müssen die Textdateien in der Kodierung "ISO 8859-1" vorliegen.
-# Wenn Sie eine andere Kodierung, bspw. UTF-8 verwenden,
-# wenden Sie sich bitte per E-Mail an daten@booklooker.de.
 if test -s ${_output_target}/${_output} ; then
   _token="$(__authentication)"
   sleep 1
@@ -186,8 +183,6 @@ if test -s ${_output_target}/${_output} ; then
     __post_catalog ${_output_target}/${_output}
   fi
 fi
-
-exit $?
 
 ##
 ## EOF

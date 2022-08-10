@@ -139,6 +139,22 @@ private:
   void invalidRelationship();
 
   /**
+   * @brief Prüfung ob sich bei Auftrags- & Bezahlstatus was geändert hat!
+   * @return bool
+   */
+  bool checkOrderStatus();
+
+  /**
+   * @brief Auftrags Status auf letzten Speicherpunkt zurück setzen!
+   */
+  void restoreOrderStatus();
+
+  /**
+   * @brief Wenn Bestellstatus geändert wurde SQL Update.
+   */
+  bool updateOrderStatus(int status);
+
+  /**
    * @brief SQL and die Datenbank senden ...
    */
   bool sendSqlQuery(const QString &);
@@ -286,11 +302,6 @@ private Q_SLOTS:
    * Es erfordert eine Paketsende Nummer @ref o_delivery_send_id
    */
   void createNotifyOrder(bool b = false);
-
-  /**
-   * @brief Wenn Bestellstatus geändert wird.
-   */
-  void setStatusOrder(int);
 
   /**
    * @brief Wird von ToolButton aufgerufen und verwendet

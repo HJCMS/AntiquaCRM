@@ -29,7 +29,7 @@ OrdersMenuButton::OrdersMenuButton(QWidget *parent) : QPushButton{parent} {
 
 void OrdersMenuButton::setQueryClosedOrders() {
   QString q("a.o_order_status=");
-  q.append(QString::number(STATUS_ORDER_CLOSED));
+  q.append(QString::number(ORDER_STATUS_CLOSED));
   emit sendCustomQuery(q);
 }
 
@@ -40,6 +40,6 @@ void OrdersMenuButton::setQueryNoPayments() {
 
 void OrdersMenuButton::setQueryNoDelivery() {
   QString q("a.o_order_status<");
-  q.append(QString::number(STATUS_ORDER_DELIVERED));
+  q.append(QString::number(ORDER_STATUS_DELIVERED));
   emit sendCustomQuery(q);
 }

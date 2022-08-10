@@ -33,7 +33,7 @@ public:
    * @param notnull - set SQL column "not null"
    * @param data    - set SQL column Value
    */
-  DataField(const QString &field, int type, bool notnull, const QVariant &data);
+  explicit DataField(const QString &field, int type, bool notnull, const QVariant &data);
 
   /**
    * @brief set SQL columns Fieldname
