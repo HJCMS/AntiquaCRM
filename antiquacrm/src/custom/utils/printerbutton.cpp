@@ -13,6 +13,7 @@ PrinterButton::PrinterButton(QWidget *parent, PrinterButton::Buttons flags)
   setIcon(printIcon);
   setText(tr("Printing"));
   setEnabled(false);
+  setToolTip(tr("Selection for different printings."));
 
   QMenu *m_menu = new QMenu(this);
 

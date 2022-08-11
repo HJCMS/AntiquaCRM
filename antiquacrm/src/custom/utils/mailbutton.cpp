@@ -7,48 +7,104 @@
 #include <QDebug>
 #include <QMenu>
 
-MailButton::MailButton(QWidget *parent, MailButton::Buttons flags)
+MailButton::MailButton(QWidget *parent, MailButton::Sections flags)
     : QPushButton{parent} {
   QIcon mailIcon = myIcon("identity");
   setIcon(mailIcon);
-  setText(tr("eMail"));
+  setText(tr("Mail Messages"));
+  setToolTip(tr("Selection for different eMail messages."));
   setEnabled(false);
+  setVisible(false);
 
   QMenu *m_menu = new QMenu(this);
+  // Einfache E-Mail Nachricht an Kunde.
+  QString message_info = tr("Simple eMail message to customer.");
+  ac_message = m_menu->addAction(mailIcon, message_info);
+  ac_message->setWhatsThis(message_info);
+  connect(ac_message, SIGNAL(triggered()), this, SLOT(setSimpleMail()));
 
-  ac_invoice = m_menu->addAction(mailIcon, tr("Invoice"));
-  ac_invoice->setToolTip(tr("Invoice eMail"));
+  // Bestellstatus an den Kunden senden.
+  QString status_info = tr("Send order status to customer.");
+  ac_status = m_menu->addAction(mailIcon, status_info);
+  ac_status->setWhatsThis(status_info);
+  ac_status->setEnabled(false);
+  ac_status->setVisible(false);
+  connect(ac_status, SIGNAL(triggered()), this, SLOT(setStatusMail()));
+
+  // Rechnung an den Käufer erstellen.
+  QString invoice_info = tr("Create invoice to customer.");
+  ac_invoice = m_menu->addAction(mailIcon, invoice_info);
+  ac_invoice->setWhatsThis(invoice_info);
   ac_invoice->setEnabled(false);
   ac_invoice->setVisible(false);
-  connect(ac_invoice, SIGNAL(triggered()), this, SIGNAL(sendMailInvoce()));
+  connect(ac_invoice, SIGNAL(triggered()), this, SLOT(setInvoceMail()));
 
-  ac_simple = m_menu->addAction(mailIcon, tr("eMail"));
-  ac_simple->setEnabled(false);
-  ac_simple->setVisible(false);
-  connect(ac_simple, SIGNAL(triggered()), this, SIGNAL(sendMailSimple()));
+  // Mitteilung Artikel Bestellung Storniert.
+  QString cancel_info = tr("Message Item Order Cancelled.");
+  ac_canceld = m_menu->addAction(mailIcon, cancel_info);
+  ac_canceld->setWhatsThis(cancel_info);
+  ac_canceld->setEnabled(false);
+  ac_canceld->setVisible(false);
+  connect(ac_canceld, SIGNAL(triggered()), this, SLOT(setCancelMail()));
 
   setMenu(m_menu);
-  setButtons(flags);
 }
 
-void MailButton::setButtons(MailButton::Buttons flags) {
-  buttons = flags;
-  if (flags.testFlag(NoButton))
-    return;
+void MailButton::setSimpleMail() {
+  emit sendMailAction("MAIL_ACTION_SIMPLE_MESSAGE");
+}
 
-  if (flags.testFlag(Invoice)) {
+void MailButton::setStatusMail() {
+  emit sendMailAction("MAIL_ACTION_SHIPPING_NOTICE");
+}
+
+void MailButton::setInvoceMail() {
+  emit sendMailAction("MAIL_ACTION_INVOICE_BILLING");
+}
+
+void MailButton::setCancelMail() {
+  emit sendMailAction("MAIL_ACTION_ORDER_CANCELED");
+}
+
+void MailButton::hasMailAddress(bool b) {
+  setEnabled(b);
+  setVisible(b);
+}
+
+void MailButton::setSections(MailButton::Sections flags) {
+  sections = flags;
+  // Alles zurücksetzen
+  QList<QAction *> list = findChildren<QAction *>(QString());
+  for (int c = 0; c < list.count(); c++) {
+    QAction *ac = list.at(c);
+    ac->setEnabled(false);
+    ac->setVisible(false);
+  }
+  list.clear();
+
+  // Wenn gesetzt, hier Aussteigen.
+  if (flags.testFlag(NoButton)) {
+    setEnabled(false);
+    return;
+  }
+
+  // Auftrags-Nachrichten
+  if (flags.testFlag(Orders)) {
     ac_invoice->setEnabled(true);
     ac_invoice->setVisible(true);
-    setEnabled(true);
+    ac_status->setEnabled(true);
+    ac_status->setVisible(true);
+    ac_canceld->setEnabled(true);
+    ac_canceld->setVisible(true);
   }
 
-  if (flags.testFlag(Simple)) {
-    ac_simple->setEnabled(true);
-    ac_simple->setVisible(true);
-    setEnabled(true);
+  // Adressbuch-Nachrichten
+  if (flags.testFlag(Customers)) {
+    ac_message->setEnabled(true);
+    ac_message->setVisible(true);
   }
 
-  emit buttonsChanged();
+  emit sectionChanged();
 }
 
-MailButton::Buttons MailButton::getButtons() { return buttons; }
+MailButton::Sections MailButton::getSections() { return sections; }

@@ -139,7 +139,7 @@ static const QString advancedOrdersQuery(const QString &where_clause) {
  * @return SQL Query
  */
 static const QString queryCustomerInfoAddress(int customerId) {
-  QString sql("SELECT c_postal_address, c_shipping_address ");
+  QString sql("SELECT c_postal_address, c_email_0 ");
   sql.append("FROM customers WHERE c_id=");
   sql.append(QString::number(customerId));
   sql.append(";");

@@ -59,6 +59,10 @@ private Q_SLOTS:
   void saveData();
   void checkLeaveEditor();
   void finalLeaveEditor();
+  /**
+   * @brief Öffnen E-Mail Nachrichten Dialog
+   */
+  void openEMailDialog(const QString &tpl);
 
 public Q_SLOTS:
   void restoreDataset();

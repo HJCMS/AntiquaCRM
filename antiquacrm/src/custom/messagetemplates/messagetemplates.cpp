@@ -6,8 +6,8 @@
 #include "messagekeywordlist.h"
 #include "messageselecter.h"
 
-#include <QtCore>
 #include <QLayout>
+#include <QtCore>
 
 MessageTemplates::MessageTemplates(QWidget *parent) : QDialog{parent} {
   setObjectName("message_templates_dialog");
@@ -17,7 +17,7 @@ MessageTemplates::MessageTemplates(QWidget *parent) : QDialog{parent} {
 
   QVBoxLayout *layout = new QVBoxLayout(this);
 
-  m_toolBar = new MessageSelecter(this);
+  m_toolBar = new MessageSelecter(this, true);
   layout->addWidget(m_toolBar); // #0
 
   m_splitter = new QSplitter(Qt::Horizontal, this);
@@ -49,7 +49,7 @@ MessageTemplates::MessageTemplates(QWidget *parent) : QDialog{parent} {
 }
 
 const QString MessageTemplates::querySection(const QString &name) const {
-  QString sql("SELECT tk_key AS key, tk_title AS title, tk_json AS json");
+  QString sql("SELECT tk_key AS key, tk_title AS title");
   sql.append(" FROM ui_template_keys WHERE tk_type='");
   sql.append(name + "' ORDER BY tk_key;");
   return sql;
@@ -60,7 +60,6 @@ bool MessageTemplates::createSectionTree() {
   QMap<QString, QString> map;
   map.insert("SQL", tr("Database"));
   map.insert("TXT", tr("Text"));
-  map.insert("PATTERN", tr("Patterns"));
   QMapIterator<QString, QString> it(map);
   while (it.hasNext()) {
     it.next();
@@ -69,13 +68,10 @@ bool MessageTemplates::createSectionTree() {
     // qDebug() << sql << q.size();
     if (q.size() > 0) {
       while (q.next()) {
-        QByteArray array = q.value("json").toByteArray();
-        QJsonObject obj = QJsonDocument::fromJson(array).object();
-        if (!obj.isEmpty()) {
-          obj.insert("title", QJsonValue(q.value("title").toString()));
-          obj.insert("key", QJsonValue(q.value("key").toString()));
-          m_keysList->addKey(it.value(), obj);
-        }
+        QJsonObject obj;
+        obj.insert("title", QJsonValue(q.value("title").toString()));
+        obj.insert("key", QJsonValue(q.value("key").toString()));
+        m_keysList->addKey(it.value(), obj);
       }
     } else if (!m_sql->lastError().isEmpty()) {
       m_statusBar->showMessage(tr("an error occurred"));
@@ -95,8 +91,10 @@ bool MessageTemplates::createSelecters() {
       MessageCaller cl;
       cl.setCaller(q.value("tb_caller").toString());
       cl.setTitle(q.value("tb_title").toString());
+      cl.setSubject(q.value("tb_subject").toString());
       cl.setBody(q.value("tb_message").toString());
       cl.setGender(q.value("tb_gender").toInt());
+      cl.setAttachment(q.value("tb_attachment").toBool());
       list.append(cl);
     }
     if (list.count() > 0)
@@ -123,6 +121,12 @@ void MessageTemplates::setSqlQuery() {
     return;
   }
 
+  QString tb_subject = m_toolBar->getSubject();
+  if (tb_subject.isEmpty()) {
+    m_statusBar->showMessage(tr("The Subject cannot be empty!"));
+    return;
+  }
+
   QString tb_message = m_editor->toPlainText();
   if (tb_message.isEmpty()) {
     m_statusBar->showMessage(tr("Empty body text is not accepted!"));
@@ -130,20 +134,26 @@ void MessageTemplates::setSqlQuery() {
   }
 
   QString tb_gender = QString::number(m_toolBar->getGender());
+  QString tb_attachment = "false";
+
   QString sql("SELECT * FROM ui_template_body WHERE tb_title='");
   sql.append(tb_title + "';");
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
     sql = QString("UPDATE ui_template_body SET");
     sql.append(" tb_caller='" + tb_caller + "',");
-    sql.append(" tb_message='" + tb_message + "'");
-    sql.append(" tb_gender='" + tb_gender + "'");
+    sql.append(" tb_message='" + tb_message + "',");
+    sql.append(" tb_subject='" + tb_subject + "',");
+    sql.append(" tb_gender=" + tb_gender + ",");
+    sql.append(" tb_attachment=" + tb_attachment);
     sql.append(" WHERE tb_title='" + tb_title + "';");
   } else {
     sql = QString("INSERT INTO ui_template_body");
-    sql.append(" (tb_caller,tb_title,tb_message,tb_gender) VALUES");
-    sql.append(" ('" + tb_caller + "','" + tb_title + "',");
-    sql.append(" '" + tb_message + "','" + tb_gender + "');");
+    sql.append(" (tb_caller,tb_title,tb_message,tb_gender,tb_subject)");
+    sql.append(" VALUES (");
+    sql.append(" '" + tb_caller + "','" + tb_title + "',");
+    sql.append(" '" + tb_message + "'," + tb_gender + ",");
+    sql.append(" '" + tb_subject + "'," + tb_attachment + ");");
   }
 
   q = m_sql->query(sql);

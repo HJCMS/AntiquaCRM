@@ -32,15 +32,13 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
   connect(m_restoreBtn, SIGNAL(clicked()), this, SIGNAL(s_restoreClicked()));
   layout->addWidget(m_restoreBtn);
 
-  m_printerButton = new PrinterButton(this);
-  m_printerButton->setObjectName("editor_action_print_button");
-  layout->addWidget(m_printerButton);
-
   m_mailButton = new MailButton(this);
   m_mailButton->setObjectName("editor_action_mailer_button");
   layout->addWidget(m_mailButton);
-  // Standard ausblenden
-  setViewMailButton(false);
+
+  m_printerButton = new PrinterButton(this);
+  m_printerButton->setObjectName("editor_action_print_button");
+  layout->addWidget(m_printerButton);
 
   layout->addStretch(1);
 
@@ -56,7 +54,7 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
   m_readyBtn = new QPushButton(tr("Back to Mainview"), this);
   m_readyBtn->setObjectName("editor_action_button_back");
   m_readyBtn->setIcon(myIcon("button_ok"));
-  m_readyBtn->setShortcut(QKeySequence::PreviousChild);
+  m_readyBtn->setShortcut(QKeySequence::Back);
   QString sc_ready = m_readyBtn->shortcut().toString();
   m_readyBtn->setToolTip(tr("Go back to Mainview") + " " + sc_ready);
   connect(m_readyBtn, SIGNAL(clicked()), this, SIGNAL(s_finishClicked()));
@@ -72,11 +70,11 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
           SIGNAL(s_printPaymentReminder()));
   connect(m_printerButton, SIGNAL(sendPrintBookcard()), this,
           SIGNAL(s_printBookCard()));
+  connect(m_mailButton, SIGNAL(sendMailAction(const QString &)), this,
+          SIGNAL(s_createMailMessage(const QString &)));
 }
 
-void EditorActionBar::setRestoreable(bool b) {
-  m_restoreBtn->setEnabled(b);
-}
+void EditorActionBar::setRestoreable(bool b) { m_restoreBtn->setEnabled(b); }
 
 void EditorActionBar::setViewPrintButton(bool b) {
   m_printerButton->setEnabled(b);
@@ -88,11 +86,12 @@ void EditorActionBar::setPrinterMenu(PrinterButton::Buttons buttons) {
 }
 
 void EditorActionBar::setViewMailButton(bool b) {
-  m_mailButton->setEnabled(b);
-  m_mailButton->setVisible(b);
+  m_mailButton->hasMailAddress(b);
 }
 
-void EditorActionBar::setMailMenu(/* TODO */) {}
+void EditorActionBar::setMailMenu(MailButton::Sections sections) {
+  m_mailButton->setSections(sections);
+}
 
 void EditorActionBar::setViewRestoreButton(bool b) {
   m_restoreBtn->setEnabled(b);

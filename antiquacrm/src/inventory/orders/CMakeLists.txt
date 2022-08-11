@@ -18,6 +18,7 @@ SET (subproject_LINKER
  Imaging
  Printing
  DeliverService
+ MailForward
 )
 
 SET (subproject_SOURCES

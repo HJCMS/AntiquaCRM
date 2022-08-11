@@ -19,8 +19,10 @@ class MessageCaller final {
 private:
   QString p_caller;
   QString p_title;
+  QString p_subject;
   QString p_body;
   int p_gender;
+  bool p_attachment;
 
 public:
   explicit MessageCaller();
@@ -29,10 +31,14 @@ public:
   const QString getCaller();
   void setTitle(const QString &);
   const QString getTitle();
+  void setSubject(const QString &);
+  const QString getSubject();
   void setBody(const QString &);
   const QString getBody();
   void setGender(int gender);
   int getGender();
+  void setAttachment(bool b = false);
+  int getAttachment();
   const QJsonObject toJson();
 };
 
@@ -46,6 +52,7 @@ private:
   GenderBox *m_genderBox;
   QLabel *m_title;
   QLabel *m_caller;
+  LineEdit *m_subject;
   QMap<int, MessageCaller> p_map;
 
 private Q_SLOTS:
@@ -55,12 +62,16 @@ Q_SIGNALS:
   void sendBody(const QString &);
   void sendGender(int);
 
+public Q_SLOTS:
+  void setGender(int);
+
 public:
-  explicit MessageSelecter(QWidget *parent = nullptr);
+  explicit MessageSelecter(QWidget *parent = nullptr, bool edit = false);
   void setSelecters(const QList<MessageCaller> &list);
   const QList<MessageCaller> getSelecters();
   const QString getCaller();
   const QString getTitle();
+  const QString getSubject();
   int getGender();
 };
 

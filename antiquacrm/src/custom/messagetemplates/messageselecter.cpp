@@ -10,15 +10,19 @@
 MessageCaller::MessageCaller() {
   p_caller = QString();
   p_title = QString();
+  p_subject = QString();
   p_body = QString();
   p_gender = 0;
+  p_attachment = false;
 }
 
 MessageCaller::MessageCaller(const QJsonObject &jso) {
   p_caller = jso.value("caller").toString();
   p_title = jso.value("title").toString();
+  p_subject = jso.value("subject").toString();
   p_body = jso.value("body").toString();
   p_gender = jso.value("gender").toInt();
+  p_attachment = jso.value("attachment").toBool();
 }
 
 void MessageCaller::setCaller(const QString &txt) { p_caller = txt; }
@@ -29,6 +33,10 @@ void MessageCaller::setTitle(const QString &txt) { p_title = txt; }
 
 const QString MessageCaller::getTitle() { return p_title; }
 
+void MessageCaller::setSubject(const QString &txt) { p_subject = txt; }
+
+const QString MessageCaller::getSubject() { return p_subject; }
+
 void MessageCaller::setBody(const QString &txt) { p_body = txt; }
 
 const QString MessageCaller::getBody() { return p_body; }
@@ -37,16 +45,22 @@ void MessageCaller::setGender(int gender) { p_gender = gender; }
 
 int MessageCaller::getGender() { return p_gender; }
 
+void MessageCaller::setAttachment(bool b) { p_attachment = b; }
+
+int MessageCaller::getAttachment() { return p_attachment; }
+
 const QJsonObject MessageCaller::toJson() {
   QJsonObject jso;
   jso.insert("caller", QJsonValue(p_caller));
   jso.insert("title", QJsonValue(p_title));
+  jso.insert("subject", QJsonValue(p_subject));
   jso.insert("body", QJsonValue(p_body));
   jso.insert("gender", QJsonValue(p_gender));
+  jso.insert("attachment", QJsonValue(p_attachment));
   return jso;
 }
 
-MessageSelecter::MessageSelecter(QWidget *parent) : QFrame{parent} {
+MessageSelecter::MessageSelecter(QWidget *parent, bool edit) : QFrame{parent} {
   setObjectName("message_selecter_bar");
   setContentsMargins(2, 0, 2, 0);
   QGridLayout *layout = new QGridLayout(this);
@@ -61,10 +75,17 @@ MessageSelecter::MessageSelecter(QWidget *parent) : QFrame{parent} {
   layout->addWidget(m_genderBox, 0, 1, 1, 1);
   m_title = new QLabel(this);
   m_title->setToolTip(tr("Title"));
+  m_title->setVisible(edit);
   layout->addWidget(m_title, 1, 0, 1, 1, Qt::AlignLeft);
   m_caller = new QLabel(this);
   m_caller->setToolTip(tr("Constant"));
+  m_caller->setEnabled(false);
+  m_caller->setVisible(edit);
   layout->addWidget(m_caller, 1, 1, 1, 1, Qt::AlignRight);
+  m_subject = new LineEdit(this);
+  m_subject->setObjectName("tb_subject");
+  m_subject->setInfo(tr("Subject"));
+  layout->addWidget(m_subject, 2, 0, 1, 2);
   setLayout(layout);
 
   connect(m_selecter, SIGNAL(currentIndexChanged(int)), this,
@@ -78,9 +99,22 @@ void MessageSelecter::setContent(int index) {
 
   m_caller->setText(obj.value("caller").toString());
   m_title->setText(obj.value("title").toString());
-  qDebug() << obj.value("gender").toInt();
+  m_subject->setValue(obj.value("subject").toString());
   m_genderBox->setValue(obj.value("gender").toInt());
   emit sendBody(obj.value("body").toString());
+}
+
+void MessageSelecter::setGender(int gender) {
+  for (int i = 0; i < m_selecter->count(); i++) {
+    QJsonObject obj = m_selecter->itemData(i, Qt::UserRole).toJsonObject();
+    if (obj.isEmpty())
+      continue;
+
+    if (obj.value("gender").toInt() == gender) {
+      m_selecter->setCurrentIndex(i);
+      break;
+    }
+  }
 }
 
 void MessageSelecter::setSelecters(const QList<MessageCaller> &list) {
@@ -117,5 +151,9 @@ const QString MessageSelecter::getCaller() {
 }
 
 const QString MessageSelecter::getTitle() { return m_title->text().trimmed(); }
+
+const QString MessageSelecter::getSubject() {
+  return m_subject->value().toString().trimmed();
+}
 
 int MessageSelecter::getGender() { return m_genderBox->value().toInt(); }

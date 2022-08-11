@@ -7,6 +7,7 @@
 #include "deliverynote.h"
 #include "editoractionbar.h"
 #include "invoice.h"
+#include "mailforwarddialog.h"
 #include "myicontheme.h"
 #include "ordersitemlist.h"
 #include "orderstatements.h"
@@ -227,8 +228,8 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   m_actionBar->setObjectName("m_actionBar");
   m_actionBar->setPrinterMenu(PrinterButton::Delivery | PrinterButton::Invoice |
                               PrinterButton::Reminder);
+  m_actionBar->setMailMenu(MailButton::Orders);
   m_actionBar->setViewRestoreButton(false);
-  m_actionBar->setViewMailButton(true);
   mainLayout->addWidget(m_actionBar);
 
   setLayout(mainLayout);
@@ -257,6 +258,8 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
           SLOT(openPrinterInvoiceDialog()));
   connect(m_actionBar, SIGNAL(s_printPaymentReminder()), this,
           SLOT(openPrinterPaymentReminderDialog()));
+  connect(m_actionBar, SIGNAL(s_createMailMessage(const QString &)), this,
+          SLOT(openEMailDialog(const QString &)));
   connect(m_paymentList, SIGNAL(searchArticle(int)), this,
           SLOT(findArticle(int)));
   connect(m_paymentList, SIGNAL(statusMessage(const QString &)), this,
@@ -1046,6 +1049,22 @@ void OrderEditor::openPrinterPaymentReminderDialog() {
   }
 }
 
+void OrderEditor::openEMailDialog(const QString &tpl) {
+  int cid = o_customer_id->value().toInt();
+  if(cid < 1)
+    return;
+
+  int oid = o_id->value().toInt();
+  if(oid < 1)
+    return;
+
+  MailForwardDialog *d = new MailForwardDialog(this);
+  d->setOrderId(oid);
+  if (d->exec(cid, tpl) == QDialog::Rejected) {
+    emit s_statusMessage(tr("Mail canceled."));
+  }
+}
+
 void OrderEditor::createNotifyOrder(bool b) {
   o_notify->setModified(true);
   if (!b)
@@ -1211,13 +1230,21 @@ bool OrderEditor::getCustomerAddress(int cid) {
 
   QSqlQuery q = m_sql->query(select);
   QString buffer;
+  QString email;
   if (q.size() > 0) {
     while (q.next()) {
       buffer.append(q.value("c_postal_address").toString());
+      email = q.value("c_email_0").toString();
     }
     m_customer_address->setText(buffer + "\n");
   } else {
     qWarning("SQL ERROR: %s", qPrintable(m_sql->lastError()));
+  }
+
+  if (!email.isEmpty()) {
+    m_actionBar->setViewMailButton(true);
+  } else {
+    qInfo("No Customer eMail Address found.");
   }
   return true;
 }

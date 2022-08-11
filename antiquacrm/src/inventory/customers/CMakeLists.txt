@@ -16,6 +16,7 @@ SET (subproject_LINKER
  Networking
  Utils
  Imaging
+ MailForward
 )
 
 SET (subproject_SOURCES

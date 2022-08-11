@@ -20,10 +20,10 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   // BEGIN Archives
   QGroupBox *m_grouBox1 = new QGroupBox(this);
   m_grouBox1->setObjectName("groupbox_archives");
-  m_grouBox1->setTitle(tr("Archive paths"));
+  m_grouBox1->setTitle(tr("Archive/Applications paths"));
   QGridLayout *lt_groupBox1 = new QGridLayout(m_grouBox1);
   // Images
-  m_img_archiv_path = new LineEdit(this);
+  m_img_archiv_path = new LineEdit(m_grouBox1);
   m_img_archiv_path->setObjectName("dirs/images");
   m_img_archiv_path->setInfo(tr("Images"));
   lt_groupBox1->addWidget(m_img_archiv_path, row, 0, 1, 1);
@@ -33,7 +33,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   lt_groupBox1->addWidget(btn_imgsrc, row++, 1, 1, 1);
   connect(btn_imgsrc, SIGNAL(clicked()), this, SLOT(setImageArchiv()));
   // Delivery Notes
-  m_delivery_path = new LineEdit(this);
+  m_delivery_path = new LineEdit(m_grouBox1);
   m_delivery_path->setObjectName("dirs/deliverynotes");
   m_delivery_path->setInfo(tr("Delivery Notes"));
   lt_groupBox1->addWidget(m_delivery_path, row, 0, 1, 1);
@@ -44,7 +44,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   m_grouBox1->setLayout(lt_groupBox1);
   connect(btn_delivery, SIGNAL(clicked()), this, SLOT(setDeliveryArchiv()));
   // Invoices
-  m_invoice_path = new LineEdit(this);
+  m_invoice_path = new LineEdit(m_grouBox1);
   m_invoice_path->setObjectName("dirs/invoices");
   m_invoice_path->setInfo(tr("Invoices"));
   lt_groupBox1->addWidget(m_invoice_path, row, 0, 1, 1);
@@ -54,7 +54,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   lt_groupBox1->addWidget(btn_invoice, row++, 1, 1, 1);
   connect(btn_invoice, SIGNAL(clicked()), this, SLOT(setInvoiceArchiv()));
   // Reminder
-  m_reminder_path = new LineEdit(this);
+  m_reminder_path = new LineEdit(m_grouBox1);
   m_reminder_path->setObjectName("dirs/reminder");
   m_reminder_path->setInfo(tr("Payment Reminder"));
   lt_groupBox1->addWidget(m_reminder_path, row, 0, 1, 1);
@@ -64,7 +64,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   lt_groupBox1->addWidget(btn_reminder, row++, 1, 1, 1);
   connect(btn_reminder, SIGNAL(clicked()), this, SLOT(setReminderArchiv()));
   // Cards
-  m_cards_path = new LineEdit(this);
+  m_cards_path = new LineEdit(m_grouBox1);
   m_cards_path->setObjectName("dirs/cards");
   m_cards_path->setInfo(tr("Cards"));
   lt_groupBox1->addWidget(m_cards_path, row, 0, 1, 1);
@@ -73,6 +73,17 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   btn_cards->setText(txt_open_dir);
   lt_groupBox1->addWidget(btn_cards, row++, 1, 1, 1);
   connect(btn_cards, SIGNAL(clicked()), this, SLOT(setCardsArchiv()));
+  // Mail
+  m_mailler_path = new LineEdit(m_grouBox1);
+  m_mailler_path->setObjectName("dirs/mailapplication");
+  m_mailler_path->setInfo(tr("E-Mail Application"));
+  lt_groupBox1->addWidget(m_mailler_path, row, 0, 1, 1);
+  btn_mailler = new QToolButton(m_grouBox1);
+  btn_mailler->setIcon(icon_open_btn);
+  btn_mailler->setText(txt_open_dir);
+  lt_groupBox1->addWidget(btn_mailler, row++, 1, 1, 1);
+  connect(btn_mailler, SIGNAL(clicked()), this, SLOT(setMailApplication()));
+
   m_grouBox1->setLayout(lt_groupBox1);
   layout->addWidget(m_grouBox1);
   buffer.clear();
@@ -245,6 +256,17 @@ void GeneralSettings::setCardsArchiv() {
   QString src = getDirectory(spath.toString());
   if (!src.isEmpty()) {
     m_cards_path->setValue(src);
+  }
+}
+
+void GeneralSettings::setMailApplication() {
+  QVariant spath = config->value("dirs/mailapplication", QDir::rootPath());
+  QString src = QFileDialog::getOpenFileName(this,          // Main
+                                             tr("Mailler"), // Caption
+                                             spath.toString());
+  QFileInfo info(src);
+  if (info.isExecutable()) {
+    m_mailler_path->setValue(src);
   }
 }
 

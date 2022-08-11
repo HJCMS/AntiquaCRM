@@ -22,6 +22,7 @@ private:
   LineEdit *m_invoice_path;    /**< Rechnungen */
   LineEdit *m_reminder_path;   /**< Erinnerungen */
   LineEdit *m_cards_path;      /**< Buchkarten */
+  LineEdit *m_mailler_path;    /**< E-Mail Programm */
   Ecurrency *m_currency;       /**< Währung */
   IntSpinBox *m_vat1;          /**< Mehrwertsteuer Normal */
   IntSpinBox *m_vat2;          /**< Mehrwertsteuer Reduziert */
@@ -37,6 +38,7 @@ private:
   QToolButton *btn_invoice;
   QToolButton *btn_reminder;
   QToolButton *btn_cards;
+  QToolButton *btn_mailler;
   QPushButton *btn_fontdialog;
 
   void initSignalChanged();
@@ -48,6 +50,7 @@ private Q_SLOTS:
   void setInvoiceArchiv();
   void setReminderArchiv();
   void setCardsArchiv();
+  void setMailApplication();
 
 public:
   explicit GeneralSettings(QWidget *parent = nullptr);

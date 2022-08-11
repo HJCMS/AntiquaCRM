@@ -21,58 +21,72 @@ class MailButton final : public QPushButton {
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
   Q_PROPERTY(
-      Buttons buttons READ getButtons WRITE setButtons NOTIFY buttonsChanged)
+      Sections sections READ getSections WRITE setSections NOTIFY sectionChanged)
 
 private:
+  QAction *ac_message;
+  QAction *ac_status;
   QAction *ac_invoice;
-  QAction *ac_simple;
+  QAction *ac_canceld;
+
+private Q_SLOTS:
+  void setSimpleMail();
+  void setStatusMail();
+  void setInvoceMail();
+  void setCancelMail();
 
 Q_SIGNALS:
   /**
    * @brief Signal Änderungen bei den Flags
    */
-  void buttonsChanged();
+  void sectionChanged();
 
   /**
-   * @brief Rechnungs E-Mail
+   * @brief E-Mail Nachricht von Konstante senden ...
+   * @list Werte werden aus PgSQL::ui_template_body entnommen:
+   *  @li MAIL_ACTION_SIMPLE_MESSAGE
+   *  @li MAIL_ACTION_SHIPPING_NOTICE
+   *  @li MAIL_ACTION_INVOICE_BILLING
+   *  @li MAIL_ACTION_ORDER_CANCELED
    */
-  void sendMailInvoce();
+  void sendMailAction(const QString &type);
 
+public Q_SLOTS:
   /**
-   * @brief Einfache Nachricht
+   * @brief Nur Anzeigen wenn eine E-Mail existiert!
    */
-  void sendMailSimple();
+  void hasMailAddress(bool b = false);
 
 public:
   /**
    * @brief Knopfanzeige
    */
-  enum ButtonFlag {
-    NoButton = 0x0000, /**< Keine */
-    Invoice = 0x0001,  /**< Rechnung/Vorkasse */
-    Simple = 0x0002    /**< Einfache Nachricht */
+  enum SectionFlag {
+    NoButton = 0x0000,  /**< Keine */
+    Orders = 0x0001,    /**< Bestell/Auftragsnachrichten */
+    Customers = 0x0002  /**< Kunden Nachricht */
   };
-  Q_DECLARE_FLAGS(Buttons, ButtonFlag)
-  Q_FLAG(Buttons)
+  Q_DECLARE_FLAGS(Sections, SectionFlag)
+  Q_FLAG(Sections)
 
   /**
    * @brief PrinterButton
    */
   explicit MailButton(QWidget *parent = nullptr,
-                      MailButton::Buttons flags = NoButton);
+                      MailButton::Sections flags = NoButton);
 
   /**
    * @brief Anzeige Einstellungen
    */
-  void setButtons(MailButton::Buttons flags);
+  void setSections(MailButton::Sections flags);
 
   /**
    * @brief Welche Flags sind gesetzt?
    */
-  MailButton::Buttons getButtons();
+  MailButton::Sections getSections();
 
 private:
-  MailButton::Buttons buttons;
+  MailButton::Sections sections;
 };
 
 #endif // MAILBUTTON_UTILS_H

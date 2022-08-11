@@ -62,6 +62,7 @@ Q_SIGNALS:
   void s_cancelClicked();
   void s_saveClicked();
   void s_finishClicked();
+  void s_createMailMessage(const QString &);
 
 public Q_SLOTS:
   /**
@@ -90,7 +91,7 @@ public:
   /**
    * @brief E-Mail Nachrichten Menü festlegen
    */
-  void setMailMenu(/* TODO */);
+  void setMailMenu(MailButton::Sections sections);
 
   /**
    * @brief Zurücksetzen anzeigen/ausblenden

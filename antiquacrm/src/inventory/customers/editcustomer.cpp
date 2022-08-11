@@ -6,6 +6,7 @@
 #include "customercontact.h"
 #include "customeroverview.h"
 #include "editoractionbar.h"
+#include "mailforwarddialog.h"
 #include "myicontheme.h"
 #include "serialid.h"
 
@@ -72,6 +73,7 @@ EditCustomer::EditCustomer(QWidget *parent) : EditorMain{parent} {
   // BEGIN Actions Bar
   m_actionBar = new EditorActionBar(this);
   m_actionBar->setViewPrintButton(false);
+  m_actionBar->setMailMenu(MailButton::Customers);
   mainLayout->addWidget(m_actionBar);
   // END
 
@@ -93,6 +95,8 @@ EditCustomer::EditCustomer(QWidget *parent) : EditorMain{parent} {
   connect(m_actionBar, SIGNAL(s_saveClicked()), this, SLOT(saveData()));
   connect(m_actionBar, SIGNAL(s_finishClicked()), this,
           SLOT(checkLeaveEditor()));
+  connect(m_actionBar, SIGNAL(s_createMailMessage(const QString &)), this,
+          SLOT(openEMailDialog(const QString &)));
 }
 
 void EditCustomer::setInputList() {
@@ -251,6 +255,10 @@ void EditCustomer::setData(const QString &key, const QVariant &value,
     if (required && !inp->isRequired())
       inp->setRequired(required);
 
+    if (key == "c_email_0" && !value.toString().isEmpty()) {
+      m_actionBar->setViewMailButton(true);
+    }
+
     return;
   }
   qDebug() << "Missing Key:" << key;
@@ -279,6 +287,17 @@ void EditCustomer::finalLeaveEditor() {
   m_actionBar->setRestoreable(false); /**< ResetButton off */
   m_dataBox->setCurrentIndex(0);      /**< Auf Vorschau stellen */
   emit s_leaveEditor();               /**< Zurück */
+}
+
+void EditCustomer::openEMailDialog(const QString &tpl) {
+  int cid = c_id->value().toInt();
+  if(cid < 1)
+    return;
+
+  MailForwardDialog *d = new MailForwardDialog(this);
+  if (d->exec(cid, tpl) == QDialog::Rejected) {
+    qDebug() << "Mail canceled.";
+  }
 }
 
 void EditCustomer::restoreDataset() {

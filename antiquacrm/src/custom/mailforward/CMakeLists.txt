@@ -4,21 +4,32 @@
 SET(_subproject "MailForward")
 
 SET (subproject_LINKER
+ AntiquaCore
  SqlCore
+ MessageTemplates
  Utils
+)
+
+SET (subproject_FILES
+ README.md
 )
 
 SET (subproject_SOURCES
  mailforwarddialog.cpp
+ mailbody.cpp
+ mailtemplatekeys.cpp
 )
 
 SET (subproject_HEADERS
  mailforwarddialog.h
+ mailbody.h
+ mailtemplatekeys.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC
   ${subproject_HEADERS}
   ${subproject_SOURCES}
+  ${subproject_FILES}
 )
 
 SET_TARGET_PROPERTIES (${_subproject} PROPERTIES

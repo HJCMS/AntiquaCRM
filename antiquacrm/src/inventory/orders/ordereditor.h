@@ -68,10 +68,10 @@ private:
    * @brief Lieferservice
    */
   QWidget *m_deliveryBox;
-  DeliverService *o_delivery_service;  /**< @brief Paketdienst */
-  BoolBox *o_delivery_add_price;       /**< @brief Pahetkosten dazu */
-  LineEdit *o_delivery_send_id;        /**< @brief Paket Sende Nummer */
-  LineEdit *o_delivery;                /**< @brief Lieferschein Nummer */
+  DeliverService *o_delivery_service; /**< @brief Paketdienst */
+  BoolBox *o_delivery_add_price;      /**< @brief Pahetkosten dazu */
+  LineEdit *o_delivery_send_id;       /**< @brief Paket Sende Nummer */
+  LineEdit *o_delivery;               /**< @brief Lieferschein Nummer */
 
   /**
    * @brief Rechungs Einstellungen
@@ -296,6 +296,11 @@ private Q_SLOTS:
   void openPrinterDeliveryDialog();
   void openPrinterInvoiceDialog();
   void openPrinterPaymentReminderDialog();
+
+  /**
+   * @brief Öffnen E-Mail Nachrichten Dialog
+   */
+  void openEMailDialog(const QString &tpl);
 
   /**
    * @brief Aktiviert das Benachrichtigungs System

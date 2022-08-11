@@ -10,7 +10,6 @@
 #include <QWidget>
 
 #include "antiqua_global.h"
-#include "providerorders.h"
 
 /**
  * @def ANTIQUA_INTERFACE

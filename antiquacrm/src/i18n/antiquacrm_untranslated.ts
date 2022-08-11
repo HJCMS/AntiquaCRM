@@ -170,6 +170,11 @@
         <source>Opens the service provider dialog for editing and confirming an order.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+68"/>
+        <source>Can not identify a valid customer!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Antiqua::PaymentOrderUpdate</name>
@@ -2458,7 +2463,7 @@
 <context>
     <name>EditCustomer</name>
     <message>
-        <location filename="../inventory/customers/editcustomer.cpp" line="+45"/>
+        <location filename="../inventory/customers/editcustomer.cpp" line="+46"/>
         <source>Customers ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2478,12 +2483,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+67"/>
         <source>Saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+138"/>
+        <location line="+142"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2511,7 +2516,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+17"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2608,12 +2613,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Archive paths</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+11"/>
         <source>Images</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2633,7 +2633,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+72"/>
         <source>Additional</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2648,12 +2648,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-28"/>
+        <location line="-75"/>
+        <source>Archive/Applications paths</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+36"/>
         <source>Payment Reminder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+20"/>
+        <source>E-Mail Application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Payment Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2704,13 +2714,18 @@
     </message>
     <message>
         <location line="+4"/>
-        <location line="+110"/>
+        <location line="+121"/>
         <source>fonts representation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-108"/>
+        <location line="-119"/>
         <source>open font settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+79"/>
+        <source>Mailler</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3583,6 +3598,65 @@
     </message>
 </context>
 <context>
+    <name>MailButton</name>
+    <message>
+        <location filename="../custom/utils/mailbutton.cpp" line="+14"/>
+        <source>Mail Messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Selection for different eMail messages.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Simple eMail message to customer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Send order status to customer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Create invoice to customer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Message Item Order Cancelled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MailForwardDialog</name>
+    <message>
+        <location filename="../custom/mailforward/mailforwarddialog.cpp" line="+16"/>
+        <source>Mail Templates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+53"/>
+        <source>an error occurred</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MailTemplateKeys</name>
+    <message>
+        <location filename="../custom/mailforward/mailtemplatekeys.cpp" line="+22"/>
+        <source>Mr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Mrs</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MessageBox</name>
     <message>
         <location filename="../custom/utils/messagebox.cpp" line="+23"/>
@@ -3616,28 +3690,43 @@
 <context>
     <name>MessageSelecter</name>
     <message>
-        <location filename="../custom/messagetemplates/messageselecter.cpp" line="+34"/>
-        <location line="+36"/>
+        <location filename="../custom/messagetemplates/messageselecter.cpp" line="+70"/>
+        <location line="+56"/>
         <source>Select your Template to edit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-33"/>
+        <location line="-52"/>
+        <source>Gender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Constant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Subject</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MessageTemplates</name>
     <message>
-        <location filename="../custom/messagetemplates/messagetemplates.cpp" line="+80"/>
-        <location line="+24"/>
-        <location line="+46"/>
+        <location filename="../custom/messagetemplates/messagetemplates.cpp" line="+81"/>
+        <location line="+27"/>
+        <location line="+60"/>
         <source>an error occurred</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-36"/>
+        <location line="-50"/>
         <source>The caller field is mandatory!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3648,21 +3737,31 @@
     </message>
     <message>
         <location line="+6"/>
+        <source>The Subject cannot be empty!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Empty body text is not accepted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+30"/>
         <source>Save data successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-88"/>
+        <location line="-105"/>
         <source>Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-45"/>
+        <source>in this Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3675,7 +3774,7 @@
 <context>
     <name>OrderEditor</name>
     <message>
-        <location filename="../inventory/orders/ordereditor.cpp" line="+22"/>
+        <location filename="../inventory/orders/ordereditor.cpp" line="+23"/>
         <source>Edit Order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3726,13 +3825,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+861"/>
+        <location line="+966"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-940"/>
+        <location line="-1045"/>
         <source>Invoice ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3797,18 +3896,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+146"/>
+        <location line="+262"/>
         <source>Order saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+292"/>
-        <location line="+608"/>
+        <location line="+314"/>
+        <location line="+580"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-593"/>
+        <location line="-565"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3871,12 +3970,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+173"/>
+        <location line="+23"/>
+        <source>Mail canceled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+117"/>
         <source>No Billing Info found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-214"/>
+        <location line="-181"/>
         <source>Missing Delivery-Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3886,7 +3990,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+36"/>
         <source>First add a valid Parcel Shipment ID from your delivery service.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3896,7 +4000,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-589"/>
+        <location line="-740"/>
         <source>Failed relationship to complete this quest!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3911,7 +4015,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+596"/>
+        <location line="+64"/>
         <source>Do you really want to close this order and pass it on to accounting?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3921,7 +4025,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+281"/>
+        <location line="+920"/>
         <source>can&apos;t create order without costumer Id.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3941,13 +4045,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-606"/>
-        <location line="+268"/>
+        <location line="-977"/>
+        <location line="+399"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-813"/>
+        <location line="-683"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3957,29 +4061,29 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+680"/>
+        <location line="+818"/>
         <location line="+74"/>
         <source>Printing canceled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+27"/>
         <source>The notification system requires a valid Parcel Shipment ID to send customer emails.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="-641"/>
         <source>Finish order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-12"/>
-        <location line="+15"/>
+        <location line="-14"/>
+        <location line="+17"/>
         <source>Order deactivated!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+665"/>
         <source>Notice</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4730,7 +4834,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+2"/>
+        <source>Selection for different printings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Deliverynote</source>
         <translation type="unfinished"></translation>
     </message>
