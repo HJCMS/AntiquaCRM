@@ -225,9 +225,10 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
 
   m_actionBar = new EditorActionBar(this);
   m_actionBar->setObjectName("m_actionBar");
-  m_actionBar->setPrinterButtons(PrinterButton::Delivery |
-                                 PrinterButton::Invoice |
-                                 PrinterButton::Reminder);
+  m_actionBar->setPrinterMenu(PrinterButton::Delivery | PrinterButton::Invoice |
+                              PrinterButton::Reminder);
+  m_actionBar->setViewRestoreButton(false);
+  m_actionBar->setViewMailButton(true);
   mainLayout->addWidget(m_actionBar);
 
   setLayout(mainLayout);

@@ -70,6 +70,10 @@
 # include "lineedit.h"
 #endif
 
+#ifndef MAILBUTTON_UTILS_H
+# include "mailbutton.h"
+#endif
+
 #ifndef MESSAGEBOX_UTILS_H
 # include "messagebox.h"
 #endif

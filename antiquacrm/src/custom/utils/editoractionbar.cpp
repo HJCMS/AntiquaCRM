@@ -36,6 +36,12 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
   m_printerButton->setObjectName("editor_action_print_button");
   layout->addWidget(m_printerButton);
 
+  m_mailButton = new MailButton(this);
+  m_mailButton->setObjectName("editor_action_mailer_button");
+  layout->addWidget(m_mailButton);
+  // Standard ausblenden
+  setViewMailButton(false);
+
   layout->addStretch(1);
 
   m_saveBtn = new QPushButton(tr("Save"), this);
@@ -68,10 +74,29 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
           SIGNAL(s_printBookCard()));
 }
 
-void EditorActionBar::setRestoreable(bool b) { m_restoreBtn->setEnabled(b); }
+void EditorActionBar::setRestoreable(bool b) {
+  m_restoreBtn->setEnabled(b);
+}
 
-void EditorActionBar::setPrinterButtons(PrinterButton::Buttons buttons) {
+void EditorActionBar::setViewPrintButton(bool b) {
+  m_printerButton->setEnabled(b);
+  m_printerButton->setVisible(b);
+}
+
+void EditorActionBar::setPrinterMenu(PrinterButton::Buttons buttons) {
   m_printerButton->setButtons(buttons);
+}
+
+void EditorActionBar::setViewMailButton(bool b) {
+  m_mailButton->setEnabled(b);
+  m_mailButton->setVisible(b);
+}
+
+void EditorActionBar::setMailMenu(/* TODO */) {}
+
+void EditorActionBar::setViewRestoreButton(bool b) {
+  m_restoreBtn->setEnabled(b);
+  m_restoreBtn->setVisible(b);
 }
 
 bool EditorActionBar::isRestoreable() { return m_restoreBtn->isEnabled(); }

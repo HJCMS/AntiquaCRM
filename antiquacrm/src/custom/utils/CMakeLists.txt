@@ -33,6 +33,7 @@ SET (subproject_SOURCES
   searchfilter.cpp
   isbnedit.cpp
   lineedit.cpp
+  mailbutton.cpp
   messagebox.cpp
   printerbutton.cpp
   orderstatusbox.cpp
@@ -74,6 +75,7 @@ SET (subproject_HEADERS
   searchfilter.h
   isbnedit.h
   lineedit.h
+  mailbutton.h
   messagebox.h
   printerbutton.h
   orderstatusbox.h

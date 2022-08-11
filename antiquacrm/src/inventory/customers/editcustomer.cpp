@@ -71,6 +71,7 @@ EditCustomer::EditCustomer(QWidget *parent) : EditorMain{parent} {
 
   // BEGIN Actions Bar
   m_actionBar = new EditorActionBar(this);
+  m_actionBar->setViewPrintButton(false);
   mainLayout->addWidget(m_actionBar);
   // END
 

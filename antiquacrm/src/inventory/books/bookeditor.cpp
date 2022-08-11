@@ -320,7 +320,7 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   mainLayout->addWidget(m_tabWidget);
 
   m_actionBar = new EditorActionBar(this);
-  m_actionBar->setPrinterButtons(PrinterButton::Bookcard);
+  m_actionBar->setPrinterMenu(PrinterButton::Bookcard);
   mainLayout->addWidget(m_actionBar);
 
   setLayout(mainLayout);
