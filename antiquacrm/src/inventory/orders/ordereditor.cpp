@@ -1016,7 +1016,7 @@ void OrderEditor::openPrinterPaymentReminderDialog() {
 
   QString message;
   QString person;
-  sql = queryCustomerPaymentReminder(cid, "PAYMENT_REMINDER");
+  sql = queryCustomerPaymentReminder(cid, "PDF_PAYMENT_REMINDER");
   q = m_sql->query(sql);
   if (q.size() > 0) {
     q.next();
@@ -1033,7 +1033,7 @@ void OrderEditor::openPrinterPaymentReminderDialog() {
     return;
   }
 
-  message.replace("@PURCHASER@", person);
+  message.replace("@CRM_CUSTOMER_NAME@", person);
 
   PaymentReminder *dialog = new PaymentReminder(this);
   dialog->setCustomerAddress(c_add);
