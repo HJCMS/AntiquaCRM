@@ -131,17 +131,10 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   o_delivery_send_id->setObjectName("o_delivery_send_id");
   o_delivery_send_id->setInfo(tr("Parcel Shipment Number"));
   dsLayout->addWidget(o_delivery_send_id, 1, 0, 1, 2);
-  o_notify = new BoolBox(this);
-  o_notify->setObjectName("o_notify");
-  o_notify->setInfo(tr("Notification"));
-  o_notify->setChecked(false);
-  o_notify->setRequired(false);
-  o_notify->setEnabled(false); // TODO NOTIFY E-MAIL
-  dsLayout->addWidget(o_notify, 2, 0, 1, 1, Qt::AlignRight);
   o_delivery = new LineEdit(m_deliveryBox);
   o_delivery->setObjectName("o_delivery");
   o_delivery->setInfo(tr("Delivery note number"));
-  dsLayout->addWidget(o_delivery, 2, 1, 1, 1);
+  dsLayout->addWidget(o_delivery, 2, 0, 1, 2);
   QToolButton *btn_gen_deliver = new QToolButton(m_deliveryBox);
   btn_gen_deliver->setObjectName("btn_gen_delivernote_id");
   btn_gen_deliver->setToolTip(tr("Generate delivery note Number"));
@@ -266,9 +259,6 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
           SLOT(showMessagePoUp(const QString &)));
   connect(m_paymentList, SIGNAL(hasModified(bool)), this,
           SLOT(setWindowModified(bool)));
-  connect(o_notify, SIGNAL(checked(bool)), this, SLOT(createNotifyOrder(bool)));
-  //  connect(o_order_status, SIGNAL(currentIndexChanged(int)), this,
-  //          SLOT(setStatusOrder(int)));
   connect(o_customer_id, SIGNAL(s_serialChanged(int)), this,
           SLOT(findCustomer(int)));
   connect(m_paymentList, SIGNAL(askToRemoveRow(int)), this,
@@ -852,8 +842,6 @@ void OrderEditor::clearEditorFields() {
   sqlQueryResult.clear();
   // Alle Datenfelder leeren
   clearDataFields(p_objPattern);
-  // Bool Werte zurücksetzen
-  o_notify->setChecked(false);
   o_delivery_add_price->setChecked(false);
   // FIXME Sollte hier nicht stehen!
   o_vat_levels->setCurrentIndex(0);
@@ -1062,25 +1050,6 @@ void OrderEditor::openEMailDialog(const QString &tpl) {
   d->setOrderId(oid);
   if (d->exec(cid, tpl) == QDialog::Rejected) {
     emit s_statusMessage(tr("Mail canceled."));
-  }
-}
-
-void OrderEditor::createNotifyOrder(bool b) {
-  o_notify->setModified(true);
-  if (!b)
-    return;
-
-  if (o_delivery_send_id->value().toString().isEmpty()) {
-    QString body("<p>");
-    body.append(tr("The notification system requires a valid Parcel Shipment "
-                   "ID to send customer emails."));
-    body.append("</p><p>");
-    body.append(
-        tr("First add a valid Parcel Shipment ID from your delivery service."));
-    body.append("</p>");
-    QMessageBox::information(this, tr("Notifications"), body);
-    o_notify->setChecked(false);
-    return;
   }
 }
 

@@ -151,7 +151,7 @@ void BooklookerIfaceWidget::readCurrentArticleIds() {
 
 void BooklookerIfaceWidget::createCustomerDocument() {
   if (p_currentDocument.isEmpty()) {
-    qDebug() << Q_FUNC_INFO << "Current Json Document is empty!";
+    qWarning("Booklooker: Current Json Document is empty!");
     return;
   }
 

@@ -101,7 +101,13 @@ void MessageSelecter::setContent(int index) {
   m_title->setText(obj.value("title").toString());
   m_subject->setValue(obj.value("subject").toString());
   m_genderBox->setValue(obj.value("gender").toInt());
+  setAttachment(obj.value("attachment").toBool());
   emit sendBody(obj.value("body").toString());
+}
+
+void MessageSelecter::setAttachment(bool b) {
+  attachment = b;
+  emit attachmentChanged(b);
 }
 
 void MessageSelecter::setGender(int gender) {
@@ -155,5 +161,7 @@ const QString MessageSelecter::getTitle() { return m_title->text().trimmed(); }
 const QString MessageSelecter::getSubject() {
   return m_subject->value().toString().trimmed();
 }
+
+bool MessageSelecter::hasAttachment() { return attachment; }
 
 int MessageSelecter::getGender() { return m_genderBox->value().toInt(); }

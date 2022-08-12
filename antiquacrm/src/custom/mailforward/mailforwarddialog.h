@@ -18,6 +18,7 @@
 
 class MailBody;
 class MailTemplateKeys;
+class MailAttachments;
 
 /**
  * @brief E-Mail Nachrichten für CLI erstellen.
@@ -37,7 +38,9 @@ private:
   MailTemplateKeys *m_keys;
   MessageSelecter *m_selecter;
   MailBody *m_mailBody;
+  MailAttachments *m_attachmentBar;
   QDialogButtonBox *m_btnBox;
+  QPushButton *m_btnMail;
   QStatusBar *m_statusBar;
   QRegularExpression p_expression = QRegularExpression("(@[A-Z_]+@)+");
 
@@ -45,8 +48,9 @@ private:
   bool queryDataFields(int customerId);
 
 private Q_SLOTS:
-  void setSubject(const QString &subject);
+  void setMailCommand();
   void setBody(const QString &body);
+  void setAttachment(bool);
 
 public:
   explicit MailForwardDialog(QWidget *parent = nullptr);

@@ -15,15 +15,19 @@ SET (subproject_FILES
 )
 
 SET (subproject_SOURCES
+ mailattachments.cpp
  mailforwarddialog.cpp
  mailbody.cpp
  mailtemplatekeys.cpp
+ mailcommand.cpp
 )
 
 SET (subproject_HEADERS
+ mailattachments.h
  mailforwarddialog.h
  mailbody.h
  mailtemplatekeys.h
+ mailcommand.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

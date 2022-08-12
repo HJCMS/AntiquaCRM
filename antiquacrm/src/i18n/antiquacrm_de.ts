@@ -383,6 +383,14 @@
     </message>
 </context>
 <context>
+    <name>AttachmentInfo</name>
+    <message>
+        <location filename="../custom/mailforward/mailattachments.cpp" line="+15"/>
+        <source>Attachment path</source>
+        <translation>Info Dateianhang</translation>
+    </message>
+</context>
+<context>
     <name>Bl_CancelPage</name>
     <message>
         <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+118"/>
@@ -3598,6 +3606,25 @@
     </message>
 </context>
 <context>
+    <name>MailAttachments</name>
+    <message>
+        <location filename="../custom/mailforward/mailattachments.cpp" line="+30"/>
+        <location line="+15"/>
+        <source>Attachment</source>
+        <translation>Dateianhang</translation>
+    </message>
+    <message>
+        <location line="-13"/>
+        <source>Open Filedialog and change attachment path.</source>
+        <translation>Öffnet das Fenster zum setzen des Dateianhangpfad.</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Mail Attachments (*.pdf *.PDF *.gs)</source>
+        <translation>E-Mail Dateianhänge (*.pdf *.PDF *.gs)</translation>
+    </message>
+</context>
+<context>
     <name>MailButton</name>
     <message>
         <location filename="../custom/utils/mailbutton.cpp" line="+14"/>
@@ -3633,14 +3660,29 @@
 <context>
     <name>MailForwardDialog</name>
     <message>
-        <location filename="../custom/mailforward/mailforwarddialog.cpp" line="+16"/>
+        <location filename="../custom/mailforward/mailforwarddialog.cpp" line="+17"/>
         <source>Mail Templates</source>
         <translation>E-Mail Vorlagen</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+21"/>
+        <source>Mail</source>
+        <translation>E-Mail</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Start eMail command</source>
+        <translation>E-Mail Sendebefehl</translation>
+    </message>
+    <message>
+        <location line="+42"/>
         <source>an error occurred</source>
         <translation>ein Fehler ist aufgetreten</translation>
+    </message>
+    <message>
+        <location line="+116"/>
+        <source>Missing Attachment</source>
+        <translation>Kein Dateianhang vorhanden</translation>
     </message>
 </context>
 <context>
@@ -3691,12 +3733,12 @@
     <name>MessageSelecter</name>
     <message>
         <location filename="../custom/messagetemplates/messageselecter.cpp" line="+70"/>
-        <location line="+56"/>
+        <location line="+62"/>
         <source>Select your Template to edit.</source>
         <translation>Bitte wählen Sie hier die Vorlage aus.</translation>
     </message>
     <message>
-        <location line="-52"/>
+        <location line="-58"/>
         <source>Gender</source>
         <translation>Geschlecht</translation>
     </message>
@@ -3719,7 +3761,7 @@
 <context>
     <name>MessageTemplates</name>
     <message>
-        <location filename="../custom/messagetemplates/messagetemplates.cpp" line="+81"/>
+        <location filename="../custom/messagetemplates/messagetemplates.cpp" line="+77"/>
         <location line="+27"/>
         <location line="+60"/>
         <source>an error occurred</source>
@@ -3751,7 +3793,7 @@
         <translation>Daten erfolgreich speichern!</translation>
     </message>
     <message>
-        <location line="-105"/>
+        <location line="-101"/>
         <source>Database</source>
         <translation>Datenbank</translation>
     </message>
@@ -3764,11 +3806,6 @@
         <location line="+46"/>
         <source>Text</source>
         <translation></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Patterns</source>
-        <translation>Muster</translation>
     </message>
 </context>
 <context>
@@ -3804,18 +3841,13 @@
         <translation>Lieferservice</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+63"/>
         <location line="+5"/>
         <source>Provider</source>
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="-63"/>
-        <source>Notification</source>
-        <translation>Benachrichtigung</translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location line="-56"/>
         <source>Delivery note number</source>
         <translation>Lieferschein Nummer</translation>
     </message>
@@ -3825,13 +3857,13 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+966"/>
+        <location line="+942"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-1045"/>
+        <location line="-1014"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
@@ -3841,7 +3873,7 @@
         <translation>Paketsendungsnummer</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+42"/>
         <source>add delivery package price</source>
         <translation>Lieferpaketpreis hinzufügen</translation>
     </message>
@@ -3856,12 +3888,12 @@
         <translation>Europäische Staaten</translation>
     </message>
     <message>
-        <location line="-59"/>
+        <location line="-52"/>
         <source>Customer Number</source>
         <translation>Kundennummer</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+55"/>
         <source>vat included</source>
         <translation>inkl. MwSt</translation>
     </message>
@@ -3896,18 +3928,18 @@
         <translation>Aktuelle Bestellungen</translation>
     </message>
     <message>
-        <location line="+262"/>
+        <location line="+259"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
         <location line="+314"/>
-        <location line="+580"/>
+        <location line="+559"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="-565"/>
+        <location line="-544"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
     </message>
@@ -3927,7 +3959,7 @@
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+34"/>
         <location line="+57"/>
         <location line="+52"/>
         <source>Missing Order-Id</source>
@@ -3975,12 +4007,12 @@
         <translation>E-Mail erstellen abgebrochen.</translation>
     </message>
     <message>
-        <location line="+117"/>
+        <location line="+98"/>
         <source>No Billing Info found</source>
         <translation>Kein Verkaufsinformationen gefunden</translation>
     </message>
     <message>
-        <location line="-181"/>
+        <location line="-162"/>
         <source>Missing Delivery-Id</source>
         <translation>Keine Lieferscheinnummer vorhanden</translation>
     </message>
@@ -3990,17 +4022,7 @@
         <translation>Sollte der Betrag inzwischen bezahlt sein, bitten wir um eine Kurze Nachricht.</translation>
     </message>
     <message>
-        <location line="+36"/>
-        <source>First add a valid Parcel Shipment ID from your delivery service.</source>
-        <translation>Fügen Sie zunächst eine gültige Paketsende-ID von Ihrem Zustelldienst hinzu.</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Notifications</source>
-        <translation>Benachrichtigungen</translation>
-    </message>
-    <message>
-        <location line="-740"/>
+        <location line="-700"/>
         <source>Failed relationship to complete this quest!</source>
         <translation>Fehlerhafte Beziehung zum Abschließen dieses Auftrags!</translation>
     </message>
@@ -4025,7 +4047,7 @@
         <translation>Sorniere Auftrag</translation>
     </message>
     <message>
-        <location line="+920"/>
+        <location line="+899"/>
         <source>can&apos;t create order without costumer Id.</source>
         <translation>Kann keinen Auftrag ohne Kundennummer generieren.</translation>
     </message>
@@ -4045,34 +4067,29 @@
         <translation>Bestellung</translation>
     </message>
     <message>
-        <location line="-977"/>
+        <location line="-956"/>
         <location line="+399"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
     <message>
-        <location line="-683"/>
+        <location line="-673"/>
         <source>Service</source>
         <translation>Sender</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+21"/>
         <source>Invoice options</source>
         <translation>Rechnungs Optionen</translation>
     </message>
     <message>
-        <location line="+818"/>
+        <location line="+813"/>
         <location line="+74"/>
         <source>Printing canceled.</source>
         <translation>Druckevorgang abgebrochen.</translation>
     </message>
     <message>
-        <location line="+27"/>
-        <source>The notification system requires a valid Parcel Shipment ID to send customer emails.</source>
-        <translation>Das Benachrichtigungssystem erfordert eine gültige Paketsendungs-ID, um Kunden-E-Mails zu senden.</translation>
-    </message>
-    <message>
-        <location line="-641"/>
+        <location line="-612"/>
         <source>Finish order</source>
         <translation>Auftrag abschließen</translation>
     </message>
@@ -4083,7 +4100,7 @@
         <translation>Auftrag deaktiviert!</translation>
     </message>
     <message>
-        <location line="+665"/>
+        <location line="+644"/>
         <source>Notice</source>
         <translation>Hinweis</translation>
     </message>

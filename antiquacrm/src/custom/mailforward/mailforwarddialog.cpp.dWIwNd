@@ -4,8 +4,8 @@
 #include "mailforwarddialog.h"
 #include "mailattachments.h"
 #include "mailbody.h"
-#include "mailcommand.h"
 #include "mailtemplatekeys.h"
+#include "mailcommand.h"
 
 #include <QDebug>
 #include <QLayout>
@@ -164,17 +164,14 @@ bool MailForwardDialog::queryDataFields(int customerId) {
 }
 
 void MailForwardDialog::setMailCommand() {
-  MailCommand *cli = new MailCommand(this);
-  cli->setObjectName("start_mail_command");
-
+  MailCommand cli;
   QString eMail = m_keys->getData("c_email_0").toString();
-  cli->setMail(eMail);
-  cli->setSubject(m_selecter->getSubject());
-  cli->setBody(m_mailBody->toPlainText());
+  cli.setMail(eMail);
+  cli.setSubject(m_selecter->getSubject());
+  cli.setBody(m_mailBody->toPlainText());
   if (m_selecter->hasAttachment() && m_attachmentBar->exists()) {
-    cli->setAttachment(m_attachmentBar->attachment().filePath());
+    cli.setAttachment();
   }
-  cli->sendMail();
 }
 
 /**
@@ -211,8 +208,6 @@ void MailForwardDialog::setAttachment(bool b) {
     } else {
       m_statusBar->showMessage(tr("Missing Attachment"), 0);
     }
-  } else if (!m_selecter->hasAttachment()) {
-    m_btnMail->setEnabled(true);
   } else {
     m_attachmentBar->clear();
   }

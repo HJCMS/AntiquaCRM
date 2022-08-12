@@ -183,7 +183,6 @@ void InterfaceWidget::setCustomerId(int cId) {
 }
 
 int InterfaceWidget::getCustomerId() {
-  bool b = false;
   QString num = m_customerId->text().trimmed();
   if (num.isEmpty()) {
     emit sendErrorResponse(Antiqua::ErrorStatus::WARNING,
@@ -191,6 +190,7 @@ int InterfaceWidget::getCustomerId() {
     return -1;
   }
 
+  bool b;
   int cId = num.toInt(&b);
   if (!b) {
     qWarning("can not convert customerId:(%s)", qPrintable(num));

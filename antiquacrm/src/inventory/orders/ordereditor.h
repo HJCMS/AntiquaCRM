@@ -91,7 +91,6 @@ private:
   /**
    * @brief Aktionen
    */
-  BoolBox *o_notify;    /**< @brief Benachrichtigung */
   LineEdit *o_modified; /**< @brief Zeitstempel */
 
   /**
@@ -301,12 +300,6 @@ private Q_SLOTS:
    * @brief Öffnen E-Mail Nachrichten Dialog
    */
   void openEMailDialog(const QString &tpl);
-
-  /**
-   * @brief Aktiviert das Benachrichtigungs System
-   * Es erfordert eine Paketsende Nummer @ref o_delivery_send_id
-   */
-  void createNotifyOrder(bool b = false);
 
   /**
    * @brief Wird von ToolButton aufgerufen und verwendet

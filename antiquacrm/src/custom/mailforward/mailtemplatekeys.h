@@ -12,7 +12,7 @@
 
 #include <SqlCore>
 
-class MailTemplateKeys : public QObject {
+class MailTemplateKeys final : public QObject {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -29,8 +29,22 @@ private:
 
 public:
   explicit MailTemplateKeys(QObject *parent = nullptr);
+
+  /**
+   * @brief Datenpuffer speichern
+   */
   bool setData(QMap<QString, QVariant> &);
-  const QString getKey(const QString &key);
+
+  /**
+   * @brief Datenfeld von QMap lesen
+   * @param key - SQL Feldname
+   */
+  const QVariant getData(const QString &key);
+
+  /**
+   * @brief Template Konstanten Ersetzung
+   */
+  const QString convert(const QString &key);
 };
 
 #endif // MAILTEMPLATEKEYS_UTILS_H

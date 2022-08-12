@@ -46,8 +46,11 @@ class MessageSelecter final : public QFrame {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
+  Q_PROPERTY(bool attachment READ hasAttachment WRITE setAttachment NOTIFY
+                 attachmentChanged)
 
 private:
+  bool attachment;
   QComboBox *m_selecter;
   GenderBox *m_genderBox;
   QLabel *m_title;
@@ -59,10 +62,12 @@ private Q_SLOTS:
   void setContent(int);
 
 Q_SIGNALS:
+  void attachmentChanged(bool);
   void sendBody(const QString &);
   void sendGender(int);
 
 public Q_SLOTS:
+  void setAttachment(bool);
   void setGender(int);
 
 public:
@@ -72,6 +77,7 @@ public:
   const QString getCaller();
   const QString getTitle();
   const QString getSubject();
+  bool hasAttachment();
   int getGender();
 };
 

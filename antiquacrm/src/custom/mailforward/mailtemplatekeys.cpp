@@ -18,9 +18,9 @@ const QString MailTemplateKeys::completeName() {
   QStringList list;
   if (p_data.value("c_gender").toInt() > 0) {
     int g = p_data.value("c_gender").toInt();
-    if(g == 1)
+    if (g == 1)
       list << tr("Mr");
-    else if(g == 2)
+    else if (g == 2)
       list << tr("Mrs");
   }
 
@@ -53,10 +53,9 @@ const QString MailTemplateKeys::customerId() {
   return QString();
 }
 
-const QString MailTemplateKeys::padNumber(const QVariant &v)
-{
+const QString MailTemplateKeys::padNumber(const QVariant &v) {
   int i = v.toInt();
-  if(i < 1)
+  if (i < 1)
     return QString();
 
   QString str = QString::number(i);
@@ -69,9 +68,16 @@ bool MailTemplateKeys::setData(QMap<QString, QVariant> &data) {
   return (p_data.size() > 0);
 }
 
-const QString MailTemplateKeys::getKey(const QString &key) {
+const QVariant MailTemplateKeys::getData(const QString &key) {
+  if (p_data.size() < 1)
+    return QVariant();
+
+  return p_data.value(key);
+}
+
+const QString MailTemplateKeys::convert(const QString &key) {
   QString search(key);
-  search.replace("@","");
+  search.replace("@", "");
 
   if (search.isEmpty())
     return QString();
