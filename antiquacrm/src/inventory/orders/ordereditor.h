@@ -141,7 +141,7 @@ private:
    * @brief Prüfung ob sich bei Auftrags- & Bezahlstatus was geändert hat!
    * @return bool
    */
-  bool checkOrderStatus();
+  bool checkOrderCloseStatus();
 
   /**
    * @brief Auftrags Status auf letzten Speicherpunkt zurück setzen!

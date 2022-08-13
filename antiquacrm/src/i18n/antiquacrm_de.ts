@@ -171,7 +171,7 @@
         <translation>Öffnet den Dienstleister Dialog für die Bearbeitung und bestätigen einer Bestellung.</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+67"/>
         <source>Can not identify a valid customer!</source>
         <translation>Die Kunden Id konnte nicht ermittelt werden!</translation>
     </message>
@@ -3660,7 +3660,7 @@
 <context>
     <name>MailForwardDialog</name>
     <message>
-        <location filename="../custom/mailforward/mailforwarddialog.cpp" line="+17"/>
+        <location filename="../custom/mailforward/mailforwarddialog.cpp" line="+18"/>
         <source>Mail Templates</source>
         <translation>E-Mail Vorlagen</translation>
     </message>
@@ -3680,7 +3680,7 @@
         <translation>ein Fehler ist aufgetreten</translation>
     </message>
     <message>
-        <location line="+116"/>
+        <location line="+128"/>
         <source>Missing Attachment</source>
         <translation>Kein Dateianhang vorhanden</translation>
     </message>
@@ -3857,13 +3857,13 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+942"/>
+        <location line="+945"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-1014"/>
+        <location line="-1017"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
@@ -3933,7 +3933,7 @@
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
-        <location line="+314"/>
+        <location line="+317"/>
         <location line="+559"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
@@ -4022,7 +4022,7 @@
         <translation>Sollte der Betrag inzwischen bezahlt sein, bitten wir um eine Kurze Nachricht.</translation>
     </message>
     <message>
-        <location line="-700"/>
+        <location line="-703"/>
         <source>Failed relationship to complete this quest!</source>
         <translation>Fehlerhafte Beziehung zum Abschließen dieses Auftrags!</translation>
     </message>
@@ -4047,7 +4047,7 @@
         <translation>Sorniere Auftrag</translation>
     </message>
     <message>
-        <location line="+899"/>
+        <location line="+902"/>
         <source>can&apos;t create order without costumer Id.</source>
         <translation>Kann keinen Auftrag ohne Kundennummer generieren.</translation>
     </message>
@@ -4067,13 +4067,13 @@
         <translation>Bestellung</translation>
     </message>
     <message>
-        <location line="-956"/>
-        <location line="+399"/>
+        <location line="-959"/>
+        <location line="+402"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
     <message>
-        <location line="-673"/>
+        <location line="-676"/>
         <source>Service</source>
         <translation>Sender</translation>
     </message>
@@ -4083,13 +4083,13 @@
         <translation>Rechnungs Optionen</translation>
     </message>
     <message>
-        <location line="+813"/>
+        <location line="+816"/>
         <location line="+74"/>
         <source>Printing canceled.</source>
         <translation>Druckevorgang abgebrochen.</translation>
     </message>
     <message>
-        <location line="-612"/>
+        <location line="-615"/>
         <source>Finish order</source>
         <translation>Auftrag abschließen</translation>
     </message>
@@ -4100,7 +4100,7 @@
         <translation>Auftrag deaktiviert!</translation>
     </message>
     <message>
-        <location line="+644"/>
+        <location line="+647"/>
         <source>Notice</source>
         <translation>Hinweis</translation>
     </message>

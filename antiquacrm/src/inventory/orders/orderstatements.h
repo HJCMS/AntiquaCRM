@@ -263,30 +263,34 @@ static const QString paymentUpdate(int id, bool status) {
 }
 
 /**
- * @brief Update auf Kundeinkäufe
+ * @brief Update Anzahl der wirklichen Käufe
  * @return SQL QUERY
  */
-static const QString updatePurchases(int customerId) {
-  QString id = QString::number(customerId);
+static const QString queryUpdatePurchases(int customerId) {
+  QString cId = QString::number(customerId);
   QString sql("UPDATE customers SET c_changed=");
   sql.append("CURRENT_TIMESTAMP, c_purchases=");
-  sql.append("(SELECT CASE o_payment_status WHEN true ");
-  sql.append("THEN 1 ELSE 0 END FROM inventory_orders ");
-  sql.append("WHERE o_customer_id=" + id + ") WHERE c_id=");
-  sql.append(id + ";");
+  sql.append("(SELECT count(o_payment_status)");
+  sql.append(" FROM inventory_orders WHERE");
+  sql.append(" o_payment_status=true AND");
+  sql.append(" o_customer_id=" + cId + ")");
+  sql.append(" WHERE c_id=" + cId + ";");
   return sql;
 }
 
-static const QString finalizeTransaction(int customerId, int status) {
-  QString o_status = QString::number(status);
+/**
+ * @brief Update Anzahl der Bestellungen
+ * @return SQL QUERY
+ */
+static const QString queryUpdateTransaction(int customerId) {
   QString c_id = QString::number(customerId);
-  QString sql("UPDATE ONLY customers SET");
-  sql.append(" c_purchases=+1, c_transactions=+1");
-  sql.append(" ,c_changed=CURRENT_TIMESTAMP");
-  sql.append(" FROM inventory_orders WHERE c_id=" + c_id);
-  sql.append(" AND o_customer_id=c_id");
-  sql.append(" AND o_payment_status=true");
-  sql.append(" AND o_order_status=" + o_status + ";");
+  QString sql("UPDATE customers SET");
+  sql.append(" c_changed=CURRENT_TIMESTAMP,");
+  sql.append(" c_transactions=(SELECT");
+  sql.append(" COUNT(o_customer_id)");
+  sql.append(" FROM inventory_orders");
+  sql.append(" WHERE o_customer_id=" + c_id + ")");
+  sql.append(" WHERE c_id=" + c_id + ";");
   return sql;
 }
 

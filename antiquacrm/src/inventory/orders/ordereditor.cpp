@@ -335,7 +335,7 @@ void OrderEditor::invalidRelationship() {
   QMessageBox::warning(this, tr("Invalid relationship"), body);
 }
 
-bool OrderEditor::checkOrderStatus() {
+bool OrderEditor::checkOrderCloseStatus() {
   bool out_status = false;
   // Nur Ausführen wenn importSqlResult nicht Leer ist.
   if (sqlQueryResult.size() < 5)
@@ -428,7 +428,7 @@ bool OrderEditor::updateOrderStatus(int status) {
       // Statistiken modifizieren!
       int c_id = o_customer_id->value().toInt();
       if (c_id > 0) {
-        QString sql = finalizeTransaction(c_id, status);
+        QString sql = queryUpdateTransaction(c_id);
         if (SHOW_ORDER_SQL_QUERIES) {
           qDebug() << Q_FUNC_INFO << sql << c_id << status;
         }
@@ -601,29 +601,32 @@ void OrderEditor::createSqlUpdate() {
     }
   }
 
-  // Artikel Bestelliste aktualisieren
-  // PoPup Speichern wieder unterdrücken
+  // PoPup Speichern unterdrücken
   showSuccessFully = false;
+
+  // Artikel Bestelliste aktualisieren
   if (!createSqlArticleOrder()) {
     qWarning("UPDATE canceld");
     return;
   }
 
-  // Soll dieser Auftrag geschlossen werden?
-  if (checkOrderStatus()) {
-    bool status = false;
-    int order_status = o_order_status->value().toInt();
-    if (order_status == ORDER_STATUS_CLOSED) {
-      status = updateOrderStatus(order_status);
-    } else if (order_status == ORDER_STATUS_CANCEL) {
-      status = updateOrderStatus(order_status);
+  // Validierung des aktuellen Bestellstatus
+  int order_status = o_order_status->value().toInt();
+  if (order_status >= ORDER_STATUS_CLOSED) {
+    if (checkOrderCloseStatus()) {
+      bool status = false;
+      if (order_status == ORDER_STATUS_CLOSED) {
+        status = updateOrderStatus(order_status);
+      } else if (order_status == ORDER_STATUS_CANCEL) {
+        status = updateOrderStatus(order_status);
+      }
+      if (!status) {
+        restoreOrderStatus();
+        qWarning("Order: Save operation aborted!");
+        return;
+      }
+      leaveAfterUpdate = status;
     }
-    if (!status) {
-      restoreOrderStatus();
-      qWarning("Save operation aborted!");
-      return;
-    }
-    leaveAfterUpdate = status;
   }
   // PoPup Speichern wieder anzeigen!
   showSuccessFully = true;
@@ -640,7 +643,7 @@ void OrderEditor::createSqlUpdate() {
   if (sendSqlQuery(sql) && leaveAfterUpdate) {
     int c_id = o_customer_id->value().toInt();
     if (c_id > 0) {
-      m_sql->query(updatePurchases(c_id));
+      m_sql->query(queryUpdatePurchases(c_id));
       if (!m_sql->lastError().isEmpty()) {
         qDebug() << Q_FUNC_INFO << m_sql->lastError();
       }
@@ -1039,11 +1042,11 @@ void OrderEditor::openPrinterPaymentReminderDialog() {
 
 void OrderEditor::openEMailDialog(const QString &tpl) {
   int cid = o_customer_id->value().toInt();
-  if(cid < 1)
+  if (cid < 1)
     return;
 
   int oid = o_id->value().toInt();
-  if(oid < 1)
+  if (oid < 1)
     return;
 
   MailForwardDialog *d = new MailForwardDialog(this);
