@@ -16,6 +16,8 @@ DeliveryNote::DeliveryNote(QWidget *parent) : Printing{parent} {
   setObjectName("printing_delivery_note");
   setWindowTitle(tr("Delivery note"));
 
+  pdfButton->setEnabled(true);
+  connect(pdfButton, SIGNAL(clicked()), this, SLOT(generatePdf()));
   connect(printButton, SIGNAL(clicked()), this, SLOT(openPrintDialog()));
   readConfiguration();
 }
@@ -177,6 +179,14 @@ bool DeliveryNote::generateDocument(QPrinter *printer) {
   painter.end();
 
   return true;
+}
+
+void DeliveryNote::generatePdf() {
+  if (createPDF("deliverynotes")) {
+    emit statusMessage(tr("PDF File written."));
+  } else {
+    emit statusMessage(tr("PDF not generated"));
+  }
 }
 
 void DeliveryNote::openPrintDialog() {

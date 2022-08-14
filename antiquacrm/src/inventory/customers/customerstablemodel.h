@@ -19,6 +19,7 @@ class CustomersTableModel : public QSqlQueryModel {
 
 private:
   const QString displayDate(const QVariant &value) const;
+  const QIcon getHeaderIcon(int section) const;
 
 public:
   explicit CustomersTableModel(QObject *parent = nullptr);

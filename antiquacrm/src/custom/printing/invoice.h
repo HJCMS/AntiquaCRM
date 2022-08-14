@@ -105,6 +105,11 @@ private Q_SLOTS:
   bool generateDocument(QPrinter *printer);
 
   /**
+   * @brief PDF in Datei schreiben
+   */
+  void generatePdf();
+
+  /**
    * @brief Öffne Drucker Dialog
    */
   void openPrintDialog();

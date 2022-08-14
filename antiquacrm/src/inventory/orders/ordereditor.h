@@ -34,7 +34,7 @@ private:
    */
   bool showSuccessFully = true;
 
-  ApplSettings *config;
+  ApplSettings *m_cfg;
 
   QStringList ignoreOnInsert;
 

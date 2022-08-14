@@ -10,7 +10,6 @@
 
 #include <QAction>
 #include <QDebug>
-#include <QHeaderView>
 #include <QMenu>
 #include <QMutex>
 #include <QPoint>
@@ -23,7 +22,7 @@ CustomerTableView::CustomerTableView(QWidget *parent) : QTableView{parent} {
   setObjectName("CustomerTableView");
   setEditTriggers(QAbstractItemView::NoEditTriggers);
   setCornerButtonEnabled(false);
-  setSortingEnabled(false);
+  setSortingEnabled(true);
   setDragEnabled(false);
   setDragDropOverwriteMode(false);
   setWordWrap(false);
@@ -37,12 +36,15 @@ CustomerTableView::CustomerTableView(QWidget *parent) : QTableView{parent} {
   setModel(m_tableModel);
 
   /* Kopfzeilen anpassen */
-  QHeaderView *tHeader = horizontalHeader();
-  tHeader->setDefaultAlignment(Qt::AlignCenter);
-  tHeader->setStretchLastSection(true);
+  m_headerView = horizontalHeader();
+  m_headerView->setDefaultAlignment(Qt::AlignCenter);
+  m_headerView->setStretchLastSection(true);
 
   connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
           SLOT(queryCustomerID(const QModelIndex &)));
+
+  connect(m_headerView, SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), this,
+          SLOT(sortTableView(int, Qt::SortOrder)));
 }
 
 bool CustomerTableView::sqlExecQuery(const QString &statement) {
@@ -58,7 +60,9 @@ bool CustomerTableView::sqlExecQuery(const QString &statement) {
     mutex.lock();
     QTime time = QTime::currentTime();
     m_tableModel->setQuery(statement, db);
+
     if (m_tableModel->lastError().isValid()) {
+      mutex.unlock();
 #ifdef ANTIQUA_DEVELOPEMENT
       qDebug() << Q_FUNC_INFO << "{SQL Query} " << statement << "{SQL Error} "
                << m_tableModel->lastError() << Qt::endl
@@ -101,6 +105,17 @@ bool CustomerTableView::queryCustomerAction(const QModelIndex &index,
     }
   }
   return false;
+}
+
+void CustomerTableView::sortTableView(int cell, Qt::SortOrder sort) {
+  p_orderBy = QString("c_since DESC");
+  QString fieldName = m_tableModel->record().field(cell).name();
+  if (fieldName.isEmpty())
+    return;
+
+  QString sortOrder = (sort == Qt::AscendingOrder) ? "DESC" : "ASC";
+  p_orderBy = QString(fieldName + " " + sortOrder);
+  refreshView();
 }
 
 void CustomerTableView::queryCustomerID(const QModelIndex &index) {
@@ -156,7 +171,12 @@ void CustomerTableView::contextMenuEvent(QContextMenuEvent *ev) {
 }
 
 void CustomerTableView::refreshView() {
-  if (sqlExecQuery(p_historyQuery)) {
+  if (p_historyQuery.isEmpty())
+    return;
+
+  QString query(p_historyQuery);
+  query.replace("@ORDER_BY@", p_orderBy);
+  if (sqlExecQuery(query)) {
     resizeRowsToContents();
     resizeColumnsToContents();
   }
@@ -177,11 +197,13 @@ void CustomerTableView::queryHistory(const QString &history) {
   } else {
     return;
   }
-  q.append(" ORDER BY c_id DESC LIMIT ");
+  q.append(" ORDER BY @ORDER_BY@ LIMIT ");
   q.append(QString::number(maxRowCount));
-  q.append(";");
 
-  if (sqlExecQuery(q)) {
+  QString query(q);
+  query.replace("@ORDER_BY@", p_orderBy);
+
+  if (sqlExecQuery(query)) {
     resizeRowsToContents();
     resizeColumnsToContents();
     p_historyQuery = q;
@@ -208,11 +230,15 @@ void CustomerTableView::queryStatement(const SearchFilter &cl) {
   }
   QString q = c_sqlTableQueryBody();
   q.append(clause.join(" OR "));
-  q.append(" ORDER BY c_since DESC;");
+  q.append(" ORDER BY @ORDER_BY@;");
 
-  if (sqlExecQuery(q)) {
+  QString query(q);
+  query.replace("@ORDER_BY@", p_orderBy);
+
+  if (sqlExecQuery(query)) {
     resizeRowsToContents();
     resizeColumnsToContents();
+    // qDebug() << q;
     p_historyQuery = q;
   }
 }

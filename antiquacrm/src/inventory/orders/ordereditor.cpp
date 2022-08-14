@@ -23,7 +23,7 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   setWindowTitle(tr("Edit Order"));
   setMinimumHeight(500);
 
-  config = new ApplSettings(this);
+  m_cfg = new ApplSettings(this);
 
   /**
    * Tabellenfelder welche NICHT bei INSERT/UPDATE
@@ -160,8 +160,8 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   o_vat_included->setChecked(true);
   billingLayout->addWidget(o_vat_included, brow, 0, 1, 1, Qt::AlignRight);
   o_vat_levels = new QComboBox(m_billingBox);
-  int vat1 = config->value("payment/vat1").toInt();
-  int vat2 = config->value("payment/vat2").toInt();
+  int vat1 = m_cfg->value("payment/vat1").toInt();
+  int vat2 = m_cfg->value("payment/vat2").toInt();
   o_vat_levels->insertItem(0, QString::number(vat2) + "% " + tr("Reduced"));
   o_vat_levels->setItemData(0, vat2, Qt::UserRole);
   o_vat_levels->insertItem(1, QString::number(vat1) + "% " + tr("Normal"));
@@ -1048,6 +1048,11 @@ void OrderEditor::openEMailDialog(const QString &tpl) {
   int oid = o_id->value().toInt();
   if (oid < 1)
     return;
+
+  if(!m_cfg->contains("dirs/mailapplication")) {
+    emit s_statusMessage(tr("Missing eMail configuration!"));
+    return;
+  }
 
   MailForwardDialog *d = new MailForwardDialog(this);
   d->setOrderId(oid);

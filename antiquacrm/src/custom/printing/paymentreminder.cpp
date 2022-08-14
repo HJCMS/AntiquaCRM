@@ -16,6 +16,8 @@ PaymentReminder::PaymentReminder(QWidget *parent) : Printing{parent} {
   setObjectName("printing_payment_reminder");
   setWindowTitle(tr("Payment Reminder"));
 
+  pdfButton->setEnabled(true);
+  connect(pdfButton, SIGNAL(clicked()), this, SLOT(generatePdf()));
   connect(printButton, SIGNAL(clicked()), this, SLOT(openPrintDialog()));
   readConfiguration();
 }
@@ -405,6 +407,14 @@ bool PaymentReminder::generateDocument(QPrinter *printer) {
   htmlFooter->drawContents(&painter, footerRect);
   painter.end();
   return true;
+}
+
+void PaymentReminder::generatePdf() {
+  if (createPDF("reminder")) {
+    emit statusMessage(tr("PDF File written."));
+  } else {
+    emit statusMessage(tr("PDF not generated"));
+  }
 }
 
 void PaymentReminder::openPrintDialog() {

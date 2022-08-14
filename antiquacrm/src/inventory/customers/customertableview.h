@@ -6,6 +6,7 @@
 #define COSTUMERTABLEVIEW_H
 
 #include <QContextMenuEvent>
+#include <QHeaderView>
 #include <QModelIndex>
 #include <QObject>
 #include <QString>
@@ -28,15 +29,19 @@ public:
 private:
   int maxRowCount = 1000;
   HJCMS::SqlCore *m_sql;
-  QModelIndex p_modelIndex;
   CustomersTableModel *m_tableModel;
+  QHeaderView *m_headerView;
+  QModelIndex p_modelIndex;
   QString p_historyQuery;
+  QString p_orderBy = QString("c_since DESC");
 
   bool sqlExecQuery(const QString &statement);
 
-  bool queryCustomerAction(const QModelIndex &, CustomerTableView::QueryType type);
+  bool queryCustomerAction(const QModelIndex &,
+                           CustomerTableView::QueryType type);
 
 private Q_SLOTS:
+  void sortTableView(int, Qt::SortOrder);
   void queryCustomerID(const QModelIndex &);
   void openByContext();
   void createByContext();

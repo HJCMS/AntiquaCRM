@@ -86,6 +86,10 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
   selectPrinter = new QComboBox(buttonWidget);
   hLayout->addWidget(selectPrinter);
   hLayout->addStretch(1);
+  pdfButton = new QPushButton(tr("Create PDF"), buttonWidget);
+  pdfButton->setIcon(myIcon("printer"));
+  pdfButton->setEnabled(false);
+  hLayout->addWidget(pdfButton);
   printButton = new QPushButton(tr("Printing"), buttonWidget);
   printButton->setIcon(myIcon("printer"));
   hLayout->addWidget(printButton);

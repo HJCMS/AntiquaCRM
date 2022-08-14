@@ -201,6 +201,7 @@ protected:
    * @brief Drucken/PDF Aktionsknöpfe
    */
   QComboBox *selectPrinter;
+  QPushButton *pdfButton;
   QPushButton *printButton;
   QPushButton *quitButton;
 
@@ -337,6 +338,11 @@ protected Q_SLOTS:
    * @brief Ausdruck erstellen
    */
   virtual bool generateDocument(QPrinter *printer) = 0;
+
+  /**
+   * @brief Inhalt erstellen
+   */
+  virtual void generatePdf() = 0;
 
   /**
    * @brief Drucker Dialog öffnen

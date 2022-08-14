@@ -15,6 +15,10 @@
 
 Invoice::Invoice(QWidget *parent) : Printing{parent} {
   setObjectName("printing_invoice");
+  setWindowTitle(tr("Invoice"));
+
+  pdfButton->setEnabled(true);
+  connect(pdfButton, SIGNAL(clicked()), this, SLOT(generatePdf()));
   connect(printButton, SIGNAL(clicked()), this, SLOT(openPrintDialog()));
   readConfiguration();
 }
@@ -401,6 +405,14 @@ bool Invoice::generateDocument(QPrinter *printer) {
   htmlFooter->drawContents(&painter, footerRect);
   painter.end();
   return true;
+}
+
+void Invoice::generatePdf() {
+  if (createPDF("invoices")) {
+    emit statusMessage(tr("PDF File written."));
+  } else {
+    emit statusMessage(tr("PDF not generated"));
+  }
 }
 
 void Invoice::openPrintDialog() {

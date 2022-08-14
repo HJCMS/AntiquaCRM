@@ -1992,7 +1992,7 @@
 <context>
     <name>CustomerTableView</name>
     <message>
-        <location filename="../inventory/customers/customertableview.cpp" line="+67"/>
+        <location filename="../inventory/customers/customertableview.cpp" line="+71"/>
         <source>Broken Database query for Customers table.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2007,7 +2007,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+65"/>
         <source>Edit customer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2030,22 +2030,52 @@
 <context>
     <name>CustomersTableModel</name>
     <message>
-        <location filename="../inventory/customers/customerstablemodel.cpp" line="+53"/>
+        <location filename="../inventory/customers/customerstablemodel.cpp" line="+67"/>
         <source>Personal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+60"/>
         <source>ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-31"/>
         <source>Purchases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="-3"/>
+        <source>Customer ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Company or Person</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+3"/>
+        <source>Customer Since</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Contact name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Phonenumber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Mobilnumber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2065,7 +2095,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-31"/>
+        <location line="+34"/>
         <source>Address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2346,7 +2377,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+35"/>
         <source>Delivey note</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2382,11 +2413,13 @@
     </message>
     <message>
         <location line="+78"/>
+        <location line="+8"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-6"/>
+        <location line="+8"/>
         <source>PDF not generated</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3173,7 +3206,8 @@
 <context>
     <name>Invoice</name>
     <message>
-        <location filename="../custom/printing/invoice.cpp" line="+50"/>
+        <location filename="../custom/printing/invoice.cpp" line="+18"/>
+        <location line="+36"/>
         <source>Invoice</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3265,11 +3299,13 @@
     </message>
     <message>
         <location line="+53"/>
+        <location line="+8"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-6"/>
+        <location line="+8"/>
         <source>PDF not generated</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3857,13 +3893,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+945"/>
+        <location line="+950"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1017"/>
+        <location line="-1022"/>
         <source>Invoice ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3934,12 +3970,12 @@
     </message>
     <message>
         <location line="+317"/>
-        <location line="+559"/>
+        <location line="+564"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-544"/>
+        <location line="-549"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4002,7 +4038,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+21"/>
+        <source>Missing eMail configuration!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Mail canceled.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4012,7 +4053,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-162"/>
+        <location line="-167"/>
         <source>Missing Delivery-Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4047,7 +4088,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+902"/>
+        <location line="+907"/>
         <source>can&apos;t create order without costumer Id.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4067,7 +4108,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-959"/>
+        <location line="-964"/>
         <location line="+402"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation type="unfinished"></translation>
@@ -4100,7 +4141,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+647"/>
+        <location line="+652"/>
         <source>Notice</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4355,7 +4396,7 @@
     <name>PaymentReminder</name>
     <message>
         <location filename="../custom/printing/paymentreminder.cpp" line="+17"/>
-        <location line="+34"/>
+        <location line="+36"/>
         <location filename="../custom/printing/paymentreminder.h" line="+29"/>
         <source>Payment Reminder</source>
         <translation type="unfinished"></translation>
@@ -4428,11 +4469,13 @@
     </message>
     <message>
         <location line="+53"/>
+        <location line="+8"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-6"/>
+        <location line="+8"/>
         <source>PDF not generated</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4896,6 +4939,11 @@
     <name>Printing</name>
     <message>
         <location filename="../custom/printing/printing.cpp" line="+89"/>
+        <source>Create PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Printing</source>
         <translation type="unfinished"></translation>
     </message>

@@ -90,6 +90,7 @@ protected:
 
 protected Q_SLOTS:
   bool generateDocument(QPrinter *printer);
+  void generatePdf();
   void openPrintDialog();
 
 public:
