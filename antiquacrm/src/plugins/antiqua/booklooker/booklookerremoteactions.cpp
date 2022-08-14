@@ -218,8 +218,8 @@ void Bl_MessagePage::prepareAction() {
 }
 
 void Bl_MessagePage::setPurchaser(QString &person, const QString &email) {
-  p_replacements.insert("@PURCHASER@", person);
-  p_replacements.insert("@PURCHASER_EMAIL@", email);
+  p_replacements.insert("@PROVIDER_PURCHASER@", person);
+  p_replacements.insert("@PROVIDER_PURCHASER_EMAIL@", email);
 }
 
 bool Bl_MessagePage::initSqlMessages() {
@@ -230,24 +230,20 @@ bool Bl_MessagePage::initSqlMessages() {
     }
   }
   if (dbName.isEmpty()) {
+    qWarning("No Database Connection found!");
     emit sendNotes(tr("No Database Connection found!"));
     return false;
   }
 
   QSqlDatabase db = QSqlDatabase::database(dbName);
   if (!db.isValid()) {
+    qWarning("No Database Connection found!");
     emit sendNotes(tr("No Database Connection!"));
     return false;
   }
 
-  QStringList sqlFields("PAYMENT_INFORMATION");
-  sqlFields << "PAYMENT_REMINDER";
-  sqlFields << "SHIPPING_NOTICE";
-  sqlFields << "ORDER_CANCELED";
-
   QString sql("SELECT * FROM ui_template_body WHERE");
-  sql.append(" tb_caller IN ");
-  sql.append("('" + sqlFields.join("','") + "');");
+  sql.append(" tb_caller LIKE 'PROVIDER_%';");
 
   QSqlQuery q = db.exec(sql);
   if (q.size() > 0) {
@@ -272,7 +268,7 @@ bool Bl_MessagePage::initSqlMessages() {
     }
     return true;
   }
-  return false;
+  return true;
 }
 
 Bl_StartPage::Bl_StartPage(QWidget *parent) : QWidget{parent} {
@@ -468,8 +464,10 @@ void BooklookerRemoteActions::setEMail(const QString &email) {
 }
 
 int BooklookerRemoteActions::exec(const QString &orderId) {
-  if (orderId.length() < 4)
+  if (orderId.length() < 4) {
+    qWarning("BooklookerRemoteActions: orderID rejected.");
     return QDialog::Rejected;
+  }
 
   if (!p_purchaser.isEmpty())
     m_messagePage->setPurchaser(p_purchaser, p_purchaser_mail);
