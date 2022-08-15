@@ -64,6 +64,8 @@ void MailAttachments::openFileDialog() {
     m_info->setPath(attachFile);
 }
 
+void MailAttachments::setActive(bool b) { m_btn->setEnabled(b); }
+
 void MailAttachments::setAttachment(const QString &name) {
   QDir path(m_cfg->value("dirs/invoices").toString());
   QStringList filter({"*.pdf", "*.PDF"});

@@ -49,6 +49,13 @@ ABE_StartPage::ABE_StartPage(QWidget *parent) : QWidget{parent} {
   btn_cancel->setToolTip(tr("Cancel an entire order."));
   layout->addWidget(btn_cancel);
 
+#ifndef ANTIQUA_DEVELOPEMENT
+  btn_status->setEnabled(false);
+  btn_status->setToolTip(tr("Currently not supported!"));
+  btn_cancel->setEnabled(false);
+  btn_cancel->setToolTip(tr("Currently not supported!"));
+#endif
+
   setLayout(layout);
 
   connect(btn_status, SIGNAL(clicked()), this, SLOT(statusClicked()));

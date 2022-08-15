@@ -46,6 +46,7 @@ private Q_SLOTS:
   void openFileDialog();
 
 public Q_SLOTS:
+  void setActive(bool);
   void setAttachment(const QString &name);
   void clear() { m_info->restore(); }
 

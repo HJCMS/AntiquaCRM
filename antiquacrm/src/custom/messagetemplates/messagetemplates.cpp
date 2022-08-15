@@ -58,8 +58,8 @@ const QString MessageTemplates::querySection(const QString &name) const {
 bool MessageTemplates::createSectionTree() {
   // "SQL"|"TXT"|"PATTERN"
   QMap<QString, QString> map;
-  map.insert("SQL", tr("Database"));
-  map.insert("TXT", tr("Text"));
+  map.insert("SQL", tr("Orders system"));
+  map.insert("TXT", tr("Provider orders"));
   QMapIterator<QString, QString> it(map);
   while (it.hasNext()) {
     it.next();

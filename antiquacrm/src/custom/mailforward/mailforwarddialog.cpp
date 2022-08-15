@@ -200,6 +200,7 @@ void MailForwardDialog::setBody(const QString &body) {
 void MailForwardDialog::setAttachment(bool b) {
   // immer erst deaktivieren!
   m_btnMail->setEnabled(false);
+  m_attachmentBar->setActive(b);
   if (b) {
     int invoice = m_keys->getData("o_invoice_id").toInt();
     if (invoice > 0) {

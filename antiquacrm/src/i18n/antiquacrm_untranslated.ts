@@ -23,6 +23,12 @@
         <source>Cancel an entire order.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+5"/>
+        <location line="+2"/>
+        <source>Currently not supported!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AbeBooksIfaceWidget</name>
@@ -419,27 +425,27 @@
 <context>
     <name>Bl_MessagePage</name>
     <message>
-        <location line="+112"/>
+        <location line="+108"/>
         <source>Please select send type first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-87"/>
+        <location line="-83"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+66"/>
         <source>No Database Connection found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>No Database Connection!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-34"/>
+        <location line="-36"/>
         <source>No Message type selected!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -447,7 +453,7 @@
 <context>
     <name>Bl_StartPage</name>
     <message>
-        <location line="+80"/>
+        <location line="+76"/>
         <source>Status</source>
         <translation type="unfinished"></translation>
     </message>
@@ -496,7 +502,7 @@
 <context>
     <name>Bl_StatusPage</name>
     <message>
-        <location line="-270"/>
+        <location line="-266"/>
         <source>Changes the status of the current order.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -998,7 +1004,7 @@
 <context>
     <name>BooklookerRemoteActions</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+357"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+353"/>
         <source>Invalid Parameters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3797,7 +3803,17 @@
 <context>
     <name>MessageTemplates</name>
     <message>
-        <location filename="../custom/messagetemplates/messagetemplates.cpp" line="+77"/>
+        <location filename="../custom/messagetemplates/messagetemplates.cpp" line="+61"/>
+        <source>Orders system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Provider orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
         <location line="+27"/>
         <location line="+60"/>
         <source>an error occurred</source>
@@ -3829,18 +3845,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-101"/>
-        <source>Database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-45"/>
+        <location line="-146"/>
         <source>in this Area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+46"/>
-        <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
