@@ -151,6 +151,7 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   int brow = 0;
   o_vat_country = new EUCountryBox(m_billingBox);
   o_vat_country->setInfo(tr("European Countries"));
+  o_vat_country->setValue("de");
   o_vat_country->setObjectName("o_vat_country");
   billingLayout->addWidget(o_vat_country, brow++, 0, 1, 2);
   o_vat_included = new BoolBox(m_billingBox);
