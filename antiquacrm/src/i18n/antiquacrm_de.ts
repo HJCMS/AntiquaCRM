@@ -2484,7 +2484,7 @@
         <translation>Kein Europäsches Land</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+82"/>
         <source>a valid Country selection is required!</source>
         <translation>Eine gültige EU-Staatenauswahl ist Erforderlich!</translation>
     </message>
@@ -3883,13 +3883,13 @@
         <translation>Lieferservice</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+58"/>
         <location line="+5"/>
         <source>Provider</source>
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="-56"/>
+        <location line="-51"/>
         <source>Delivery note number</source>
         <translation>Lieferschein Nummer</translation>
     </message>
@@ -3899,13 +3899,13 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+950"/>
+        <location line="+945"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-1022"/>
+        <location line="-1017"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
@@ -3915,7 +3915,7 @@
         <translation>Paketsendungsnummer</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+37"/>
         <source>add delivery package price</source>
         <translation>Lieferpaketpreis hinzufügen</translation>
     </message>
@@ -3925,7 +3925,7 @@
         <translation>Lieferpaketpreis zum aktuellen Versand hinzufügen.</translation>
     </message>
     <message>
-        <location line="-23"/>
+        <location line="-18"/>
         <source>European Countries</source>
         <translation>Europäische Staaten</translation>
     </message>
@@ -3935,32 +3935,17 @@
         <translation>Kundennummer</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+56"/>
         <source>vat included</source>
         <translation>inkl. MwSt</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Normally the vat is included in Book articles. Uncheck it to enable add VAT in Printing Invoice.</source>
         <translation>Üblicherweise ist bei Buchartikeln die Mehrwertsteuer enthalten. Deaktivieren Sie es, um das Hinzufügen von Mehrwertsteuer beim Drucken von Rechnungen zu aktivieren.</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Reduced</source>
-        <translation>Reduziert</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Normal</source>
-        <translation>Standard</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>No VAT</source>
-        <translation>Keine MwST hinzufügen</translation>
-    </message>
-    <message>
-        <location line="+29"/>
+        <location line="+33"/>
         <source>settlement number</source>
         <translation>Abwicklungsnummer</translation>
     </message>
@@ -3976,12 +3961,12 @@
     </message>
     <message>
         <location line="+317"/>
-        <location line="+564"/>
+        <location line="+563"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="-549"/>
+        <location line="-548"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
     </message>
@@ -4054,12 +4039,12 @@
         <translation>E-Mail erstellen abgebrochen.</translation>
     </message>
     <message>
-        <location line="+98"/>
+        <location line="+97"/>
         <source>No Billing Info found</source>
         <translation>Kein Verkaufsinformationen gefunden</translation>
     </message>
     <message>
-        <location line="-167"/>
+        <location line="-166"/>
         <source>Missing Delivery-Id</source>
         <translation>Keine Lieferscheinnummer vorhanden</translation>
     </message>
@@ -4094,7 +4079,7 @@
         <translation>Sorniere Auftrag</translation>
     </message>
     <message>
-        <location line="+907"/>
+        <location line="+906"/>
         <source>can&apos;t create order without costumer Id.</source>
         <translation>Kann keinen Auftrag ohne Kundennummer generieren.</translation>
     </message>
@@ -4114,13 +4099,13 @@
         <translation>Bestellung</translation>
     </message>
     <message>
-        <location line="-964"/>
+        <location line="-963"/>
         <location line="+402"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
     <message>
-        <location line="-676"/>
+        <location line="-671"/>
         <source>Service</source>
         <translation>Sender</translation>
     </message>
@@ -4130,7 +4115,7 @@
         <translation>Rechnungs Optionen</translation>
     </message>
     <message>
-        <location line="+816"/>
+        <location line="+811"/>
         <location line="+74"/>
         <source>Printing canceled.</source>
         <translation>Druckevorgang abgebrochen.</translation>
@@ -4226,7 +4211,7 @@
         <translation>Bestellungen einfügen</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+26"/>
         <source>Info about Article found by input ...</source>
         <translation>Info zur Artikelsuche wird hier Angezeigt ...</translation>
     </message>
@@ -4236,9 +4221,9 @@
         <translation>Artikel einfügen</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-23"/>
         <source>Add here the article Ids for this order:</source>
-        <translation>Stellen Sie hier die Auftrags Artikelnummer ein:</translation>
+        <translation>Fügen Sie hier die Artikelnummer für den Auftrag ein:</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -4246,7 +4231,7 @@
         <translation>Prüfen</translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+114"/>
         <source>Inserting an empty entry is cowardly denied.</source>
         <translation>Das einfügen eines leeren Eintrags wird feige verweigert.</translation>
     </message>
@@ -6105,6 +6090,29 @@
         <location filename="../custom/utils/trustbox.cpp" line="+68"/>
         <source>Trusted Verification is required.</source>
         <translation>Eine vertrauenswürdige Überprüfung ist erforderlich.</translation>
+    </message>
+</context>
+<context>
+    <name>VATSelecter</name>
+    <message>
+        <location filename="../custom/utils/vatselecter.cpp" line="+17"/>
+        <source>Reduced</source>
+        <translation>Reduziert</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Normal</source>
+        <translation>Standard</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>No VAT</source>
+        <translation>Keine MwST hinzufügen</translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <source>A Valid VAT must set.</source>
+        <translation>Eine gültiger Mehrwertsteuerangabe ist erforderlich.</translation>
     </message>
 </context>
 <context>

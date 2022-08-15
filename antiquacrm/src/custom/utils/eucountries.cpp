@@ -101,6 +101,7 @@ EUCountryBox::EUCountryBox(QWidget *parent)
     c++;
   }
 
+  layout->addStretch(1);
   setLayout(layout);
   setModified(false);
   setRequired(false);

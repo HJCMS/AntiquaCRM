@@ -79,7 +79,7 @@ private:
   QWidget *m_billingBox;
   EUCountryBox *o_vat_country;
   BoolBox *o_vat_included;
-  QComboBox *o_vat_levels;
+  VATSelecter *o_vat_levels;
 
   /**
    * @brief Dienstleister

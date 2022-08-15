@@ -54,6 +54,7 @@ SET (subproject_SOURCES
   utilsmain.cpp
   trustbox.cpp
   myicontheme.cpp
+  vatselecter.cpp
 )
 
 SET (subproject_HEADERS
@@ -96,6 +97,7 @@ SET (subproject_HEADERS
   utilsmain.h
   trustbox.h
   myicontheme.h
+  vatselecter.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

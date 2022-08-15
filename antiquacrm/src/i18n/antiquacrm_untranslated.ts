@@ -2484,7 +2484,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+82"/>
         <source>a valid Country selection is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3883,13 +3883,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+58"/>
         <location line="+5"/>
         <source>Provider</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-56"/>
+        <location line="-51"/>
         <source>Delivery note number</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3899,13 +3899,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+950"/>
+        <location line="+945"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1022"/>
+        <location line="-1017"/>
         <source>Invoice ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3915,7 +3915,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+37"/>
         <source>add delivery package price</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3925,7 +3925,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-23"/>
+        <location line="-18"/>
         <source>European Countries</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3935,32 +3935,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+56"/>
         <source>vat included</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Normally the vat is included in Book articles. Uncheck it to enable add VAT in Printing Invoice.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Reduced</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Normal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>No VAT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+29"/>
+        <location line="+33"/>
         <source>settlement number</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3976,12 +3961,12 @@
     </message>
     <message>
         <location line="+317"/>
-        <location line="+564"/>
+        <location line="+563"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-549"/>
+        <location line="-548"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4054,12 +4039,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+98"/>
+        <location line="+97"/>
         <source>No Billing Info found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-167"/>
+        <location line="-166"/>
         <source>Missing Delivery-Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4094,7 +4079,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+907"/>
+        <location line="+906"/>
         <source>can&apos;t create order without costumer Id.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4114,13 +4099,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-964"/>
+        <location line="-963"/>
         <location line="+402"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-676"/>
+        <location line="-671"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4130,7 +4115,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+816"/>
+        <location line="+811"/>
         <location line="+74"/>
         <source>Printing canceled.</source>
         <translation type="unfinished"></translation>
@@ -4226,7 +4211,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+26"/>
         <source>Info about Article found by input ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4236,7 +4221,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="-23"/>
         <source>Add here the article Ids for this order:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4246,7 +4231,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+114"/>
         <source>Inserting an empty entry is cowardly denied.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6104,6 +6089,29 @@
     <message>
         <location filename="../custom/utils/trustbox.cpp" line="+68"/>
         <source>Trusted Verification is required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VATSelecter</name>
+    <message>
+        <location filename="../custom/utils/vatselecter.cpp" line="+17"/>
+        <source>Reduced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>No VAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <source>A Valid VAT must set.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -151,26 +151,21 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   int brow = 0;
   o_vat_country = new EUCountryBox(m_billingBox);
   o_vat_country->setInfo(tr("European Countries"));
+  o_vat_country->setObjectName("o_vat_country");
   billingLayout->addWidget(o_vat_country, brow++, 0, 1, 2);
   o_vat_included = new BoolBox(m_billingBox);
   o_vat_included->setInfo(tr("vat included"));
+  o_vat_included->setObjectName("o_vat_included");
   o_vat_included->setToolTip(
       tr("Normally the vat is included in Book articles. Uncheck it to enable "
          "add VAT in Printing Invoice."));
   o_vat_included->setChecked(true);
   billingLayout->addWidget(o_vat_included, brow, 0, 1, 1, Qt::AlignRight);
-  o_vat_levels = new QComboBox(m_billingBox);
-  int vat1 = m_cfg->value("payment/vat1").toInt();
-  int vat2 = m_cfg->value("payment/vat2").toInt();
-  o_vat_levels->insertItem(0, QString::number(vat2) + "% " + tr("Reduced"));
-  o_vat_levels->setItemData(0, vat2, Qt::UserRole);
-  o_vat_levels->insertItem(1, QString::number(vat1) + "% " + tr("Normal"));
-  o_vat_levels->setItemData(1, vat1, Qt::UserRole);
-  o_vat_levels->insertItem(2, tr("No VAT"));
-  o_vat_levels->setItemData(2, 0, Qt::UserRole);
-  o_vat_levels->setCurrentIndex(0);
+  o_vat_levels = new VATSelecter(m_billingBox);
+  o_vat_levels->setObjectName("o_vat_levels");
   billingLayout->addWidget(o_vat_levels, brow++, 1, 1, 1);
   o_delivery_add_price = new BoolBox(m_billingBox);
+  o_delivery_add_price->setObjectName("o_delivery_add_price");
   o_delivery_add_price->setInfo(tr("add delivery package price"));
   o_delivery_add_price->setToolTip(
       tr("add delivery package price to current shipping."));
@@ -847,7 +842,7 @@ void OrderEditor::clearEditorFields() {
   clearDataFields(p_objPattern);
   o_delivery_add_price->setChecked(false);
   // FIXME Sollte hier nicht stehen!
-  o_vat_levels->setCurrentIndex(0);
+  o_vat_levels->setValue(0);
   o_vat_country->setValue(QLocale::system().bcp47Name());
   // Tabelle leeren
   m_paymentList->clearTable();
@@ -1123,8 +1118,7 @@ const QList<BillingInfo> OrderEditor::getBillingInfo(int orderId,
    * @note Wenn die Versandkosten nicht '0.00' sind werden sie in
    * der Rechnung aufgeführt!
    */
-  int vIndex = o_vat_levels->currentIndex();
-  int setTax = o_vat_levels->itemData(vIndex, Qt::UserRole).toInt();
+  int setTax = o_vat_levels->value().toInt();
   if (setTax == 0) {
     o_vat_included->setChecked(false);
     disable_vat = true;

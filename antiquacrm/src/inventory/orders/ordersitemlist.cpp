@@ -38,19 +38,6 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   groupLayout->setColumnStretch(0, 1);
   groupLayout->setColumnStretch(1, 1);
 
-  m_searchInfo = new QLineEdit(m_groupBox);
-  m_searchInfo->setReadOnly(true);
-  m_searchInfo->setPlaceholderText(tr("Info about Article found by input ..."));
-  m_searchInfo->setSizePolicy(policy);
-  groupLayout->addWidget(m_searchInfo, 0, 0, 1, 2);
-
-  QPushButton *btn_add = new QPushButton(m_groupBox);
-  btn_add->setText(tr("Insert Article"));
-  btn_add->setIcon(myIcon("db_add"));
-  btn_add->setSizePolicy(policy);
-  btn_add->setMinimumWidth(150);
-  groupLayout->addWidget(btn_add, 0, 2, 1, 1);
-
   QHBoxLayout *searchLayout = new QHBoxLayout();
   QLabel *info = new QLabel(this);
   info->setText(tr("Add here the article Ids for this order:"));
@@ -60,14 +47,29 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   m_insertID->setButtonSymbols(QAbstractSpinBox::NoButtons);
   m_insertID->clear();
   searchLayout->addWidget(m_insertID);
-  groupLayout->addLayout(searchLayout, 1, 0, 1, 2, Qt::AlignRight);
+  groupLayout->addLayout(searchLayout, 0, 0, 1, 2, Qt::AlignRight);
 
   QPushButton *btn_check = new QPushButton(m_groupBox);
   btn_check->setText(tr("Check"));
   btn_check->setIcon(myIcon("db_update"));
   btn_check->setSizePolicy(policy);
+  groupLayout->addWidget(btn_check, 0, 2, 1, 1);
 
-  groupLayout->addWidget(btn_check, 1, 2, 1, 1);
+  // INFO
+  m_searchInfo = new QLineEdit(m_groupBox);
+  m_searchInfo->setReadOnly(true);
+  m_searchInfo->setPlaceholderText(tr("Info about Article found by input ..."));
+  m_searchInfo->setSizePolicy(policy);
+  groupLayout->addWidget(m_searchInfo, 1, 0, 1, 2);
+
+  QPushButton *btn_add = new QPushButton(m_groupBox);
+  btn_add->setText(tr("Insert Article"));
+  btn_add->setIcon(myIcon("db_add"));
+  btn_add->setSizePolicy(policy);
+  btn_add->setMinimumWidth(150);
+  groupLayout->addWidget(btn_add, 1, 2, 1, 1);
+  // INFO
+
   m_groupBox->setLayout(groupLayout);
   layout->addWidget(m_groupBox);
 

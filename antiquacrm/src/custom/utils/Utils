@@ -162,6 +162,10 @@
 # include "utilsmain.h"
 #endif
 
+#ifndef VATSELECTER_UTILS_H
+# include "vatselecter.h"
+#endif
+
 #ifndef YEAREDIT_UTILS_H
 # include "yearedit.h"
 #endif
