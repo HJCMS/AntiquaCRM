@@ -30,8 +30,9 @@ MessageTemplates::MessageTemplates(QWidget *parent) : QDialog{parent} {
   m_splitter->insertWidget(1, m_keysList);
 
   m_btnBox = new QDialogButtonBox(
-      (QDialogButtonBox::Close | QDialogButtonBox::Apply), this);
-  btn_save = m_btnBox->button(QDialogButtonBox::Apply);
+      (QDialogButtonBox::Close | QDialogButtonBox::Save), this);
+  btn_save = m_btnBox->button(QDialogButtonBox::Save);
+  btn_save->setIcon(myIcon("filesave"));
   layout->addWidget(m_btnBox); // #2
 
   m_statusBar = new QStatusBar(this);

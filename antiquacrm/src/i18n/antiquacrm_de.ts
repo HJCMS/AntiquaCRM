@@ -1942,7 +1942,7 @@
 <context>
     <name>CustomerOverview</name>
     <message>
-        <location filename="../inventory/customers/customeroverview.cpp" line="+151"/>
+        <location filename="../inventory/customers/customeroverview.cpp" line="+157"/>
         <source>Locked</source>
         <translation>Gesperrt</translation>
     </message>
@@ -3722,7 +3722,7 @@
         <translation>ein Fehler ist aufgetreten</translation>
     </message>
     <message>
-        <location line="+128"/>
+        <location line="+129"/>
         <source>Missing Attachment</source>
         <translation>Kein Dateianhang vorhanden</translation>
     </message>
@@ -3803,7 +3803,7 @@
 <context>
     <name>MessageTemplates</name>
     <message>
-        <location filename="../custom/messagetemplates/messagetemplates.cpp" line="+61"/>
+        <location filename="../custom/messagetemplates/messagetemplates.cpp" line="+62"/>
         <source>Orders system</source>
         <translation>Auftragssystem</translation>
     </message>
@@ -3842,10 +3842,10 @@
     <message>
         <location line="+30"/>
         <source>Save data successfully!</source>
-        <translation>Daten erfolgreich speichern!</translation>
+        <translation>Daten erfolgreich gespeichert!</translation>
     </message>
     <message>
-        <location line="-146"/>
+        <location line="-147"/>
         <source>in this Area</source>
         <translation>in diesem Bereich</translation>
     </message>
@@ -5602,7 +5602,7 @@
     <message>
         <location line="+2"/>
         <source>Order start</source>
-        <translation>Auftrags begin</translation>
+        <translation>Auftragsbeginn</translation>
     </message>
     <message>
         <location line="+2"/>

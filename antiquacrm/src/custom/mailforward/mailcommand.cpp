@@ -91,13 +91,13 @@ const QStringList MailCommand::prepare(MailCommand::Type t) {
   QStringList cmd;
   if (t == OUTLOOK) {
     QStringList params;
-    params << "subject='" + urlEncode(p_subject) + "'";
-    params << "body='" + urlEncode(p_body) + "'";
+    params << "subject=" + urlEncode(p_subject);
+    params << "body=" + urlEncode(p_body);
     cmd.clear();
     cmd << "-c";
     cmd << "IPM.Note";
     cmd << "/m";
-    cmd << "'" + getMail() + "?" + params.join("&") + "'";
+    cmd << getMail() + "?" + params.join("&");
     if (!p_attachment.isEmpty()) {
       cmd << "/a" << p_attachment;
     }

@@ -173,7 +173,7 @@ void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
      * hintereinander mehrere Anfragen ausgeführt werden.
      * Aus diesem Grund hier eine Zeitverzögerung!
      */
-    QTimer::singleShot(1500, this, SIGNAL(authenticFinished()));
+    QTimer::singleShot(1000, this, SIGNAL(authenticFinished()));
   } else if (status == "NOK" && !value.isEmpty()) {
 #ifdef ANTIQUA_DEVELOPEMENT
     qWarning("Authentication Error: %s", qPrintable(value));

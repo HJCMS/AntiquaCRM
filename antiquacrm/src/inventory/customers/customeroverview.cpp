@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "customeroverview.h"
+#include "applsettings.h"
 
 #include <QDateTime>
 #include <QDebug>
@@ -100,7 +101,12 @@ void CustomerOverview::addLineBreak() {
 
 const QDomElement CustomerOverview::iconStarElement(const QString &n) {
   QDomElement e = dom->createElement("img");
-  e.setAttribute("src", "icons/" + n + ".png");
+  ApplSettings cfg(this);
+  QFileInfo info(cfg.getDataTarget("icons"), n + ".png");
+  if(!info.exists())
+    return e;
+
+  e.setAttribute("src", info.filePath());
   e.setAttribute("width", "16");
   e.setAttribute("height", "16");
   e.setAttribute("style", "padding-left:5px;");

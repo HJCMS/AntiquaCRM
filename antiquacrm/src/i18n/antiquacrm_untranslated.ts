@@ -1942,7 +1942,7 @@
 <context>
     <name>CustomerOverview</name>
     <message>
-        <location filename="../inventory/customers/customeroverview.cpp" line="+151"/>
+        <location filename="../inventory/customers/customeroverview.cpp" line="+157"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3722,7 +3722,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+128"/>
+        <location line="+129"/>
         <source>Missing Attachment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3803,7 +3803,7 @@
 <context>
     <name>MessageTemplates</name>
     <message>
-        <location filename="../custom/messagetemplates/messagetemplates.cpp" line="+61"/>
+        <location filename="../custom/messagetemplates/messagetemplates.cpp" line="+62"/>
         <source>Orders system</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3845,7 +3845,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-146"/>
+        <location line="-147"/>
         <source>in this Area</source>
         <translation type="unfinished"></translation>
     </message>
