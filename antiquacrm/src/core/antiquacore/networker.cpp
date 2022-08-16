@@ -97,8 +97,12 @@ void Networker::slotError(QNetworkReply::NetworkError error) {
     qWarning("Networker: Insecure Redirect Error");
     return;
 
+  case QNetworkReply::InternalServerError:
+    qWarning("Networker: Internal Server Error");
+    return;
+
   default:
-    qWarning("Networker: Unknown Error:%s", qPrintable(QString::number(error)));
+    qWarning("Networker: Unknown Error (%s)", qPrintable(QString::number(error)));
     return;
   }
 }

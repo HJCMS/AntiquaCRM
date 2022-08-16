@@ -20,7 +20,12 @@ BooklookerRequester *Booklooker::apiRequester() {
 
 void Booklooker::prepareJsonListResponse(const QJsonDocument &doc) {
   if (QJsonValue(doc["status"]).toString() != "OK")
+  {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << BooklookerRequester::getResponseErrors(doc);
+#endif
     return;
+  }
 
   if (!QJsonValue(doc["returnValue"]).isArray())
     return;

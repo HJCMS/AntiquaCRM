@@ -201,6 +201,12 @@ public:
    * @brief get REST_API_TOKEN
    */
   const QString getToken();
+
+  /**
+   * @brief Bei Status "NOK" die Standard Fehlermeldungen abfangen!
+   * @param doc
+   */
+  static const QString getResponseErrors(const QJsonDocument &doc);
 };
 
 #endif // BOOKLOOKERQUERY_PLUGIN_H

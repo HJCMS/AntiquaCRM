@@ -591,3 +591,48 @@ void BooklookerRequester::queryArticleReset(const QString &orderNo) {
 const QString BooklookerRequester::getToken() {
   return qEnvironmentVariable(BOOKLOOKER_TOKEN_ENV);
 }
+
+const QString BooklookerRequester::getResponseErrors(const QJsonDocument &doc) {
+  QString status = QJsonValue(doc["status"]).toString();
+  if (status == "OK")
+    return QString();
+
+  QString value = QJsonValue(doc["returnValue"]).toString();
+  if (value == "SERVER_DOWN") {
+    // Server vorübergehend ausgefallen!
+    return tr("Server temporarily down!");
+  } else if (value == "INVALID_INTERFACE") {
+    // Es wurde eine ungültige Schnittstelle verwendet.
+    qWarning("Booklooker: INVALID_INTERFACE");
+    return tr("An invalid interface was used.");
+  } else if (value == "INVALID_REQUEST_METHOD") {
+    // Ungültige HTTP-Methode aufgerufen.
+    qWarning("Booklooker: INVALID_REQUEST_METHOD");
+    return tr("Invalid HTTP method called.");
+  } else if (value == "TOKEN_MISSING") {
+    // Der Token ist leer oder nicht vorhanden.
+    qWarning("Booklooker: TOKEN_MISSING");
+    return tr("The token is empty or does not exist.");
+  } else if (value == "TOKEN_UNKNOWN") {
+    // Der Token ist dem System nicht bekannt.
+    qWarning("Booklooker: TOKEN_UNKNOWN");
+    return tr("The token is not known to the system.");
+  } else if (value == "TOKEN_EXPIRED") {
+    // Der Token ist abgelaufen.
+    qWarning("Booklooker: TOKEN_EXPIRED");
+    return tr("The token has expired.");
+  } else if (value == "QUOTA_EXCEEDED") {
+    // Maximale Abfragenanzahl wurde überschritten.
+    qWarning("Booklooker: QUOTA_EXCEEDED");
+    return tr("Maximum number of queries has been exceeded.");
+  } else if (value == "TEMPORARILY_BLOCKED") {
+    // Ihr Zugang wurde vorübergehend gesperrt.
+    qWarning("Booklooker: TEMPORARILY_BLOCKED");
+    return tr("Your access has been temporarily blocked.");
+  } else if (value == "ENCODING_ERROR") {
+    // Die Antwort enthält ungültige Zeichen.
+    qWarning("Booklooker: ENCODING_ERROR");
+    return tr("The response contains invalid characters.");
+  }
+  return QString("UNKNOWN_ERROR");
+}

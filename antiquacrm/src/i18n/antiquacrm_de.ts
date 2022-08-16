@@ -1062,7 +1062,52 @@
         <translation>Netzwerkabfrage</translation>
     </message>
     <message>
-        <location line="-101"/>
+        <location line="+310"/>
+        <source>Server temporarily down!</source>
+        <translation>Server vorübergehend ausgefallen!</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>An invalid interface was used.</source>
+        <translation>Es wurde eine ungültige Schnittstelle verwendet.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Invalid HTTP method called.</source>
+        <translation>Ungültige HTTP-Methode aufgerufen.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>The token is empty or does not exist.</source>
+        <translation>Der Token ist leer oder nicht vorhanden.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>The token is not known to the system.</source>
+        <translation>Der Token ist dem System nicht bekannt.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>The token has expired.</source>
+        <translation>Der Token ist abgelaufen.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Maximum number of queries has been exceeded.</source>
+        <translation>Maximale Abfragenanzahl wurde überschritten.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Your access has been temporarily blocked.</source>
+        <translation>Ihr Zugang wurde vorübergehend gesperrt.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>The response contains invalid characters.</source>
+        <translation>Die Antwort enthält ungültige Zeichen.</translation>
+    </message>
+    <message>
+        <location line="-443"/>
         <source>Server down</source>
         <translation>Server ist nicht vefügbar</translation>
     </message>
@@ -3535,48 +3580,48 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+85"/>
+        <location filename="../mwindow.cpp" line="+74"/>
         <source>Application</source>
         <translation>Programm</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Open</source>
-        <translation>Öffne</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Open file</source>
-        <translation>Öffne Datei</translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="+19"/>
         <source>Quit</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="-37"/>
-        <location line="+42"/>
+        <location line="-29"/>
+        <location line="+34"/>
         <source>Views</source>
         <translation>Ansichten</translation>
     </message>
     <message>
-        <location line="-47"/>
-        <source>Everything else</source>
-        <translation>Alles andere</translation>
+        <location line="-17"/>
+        <source>Reconnect</source>
+        <translation>Neu verbinden</translation>
     </message>
     <message>
-        <location line="+70"/>
-        <source>Edit tables</source>
-        <translation>Bearbeite Tabellen</translation>
+        <location line="+5"/>
+        <source>Reports</source>
+        <translation>Berichte</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+26"/>
+        <source>Various settings</source>
+        <translation>Verschiedene Einstellungen</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Applicationsettings</source>
+        <translation>Programm Konfiguration</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Storage Locations</source>
         <translation>Lager Positionen</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+31"/>
         <source>Save request</source>
         <translation>Speichern</translation>
     </message>
@@ -3591,33 +3636,28 @@
         <translation>SQL Serverfehler</translation>
     </message>
     <message>
-        <location line="-131"/>
-        <location line="+144"/>
+        <location line="-134"/>
+        <location line="+147"/>
         <source>Fullscreen</source>
         <translation>Vollansicht</translation>
     </message>
     <message>
-        <location line="-181"/>
+        <location line="-191"/>
+        <source>Anything but books</source>
+        <translation>Alles außer Bücher</translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Database</source>
         <translation>Datenbank</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Connect</source>
-        <translation>Verbinden</translation>
-    </message>
-    <message>
-        <location line="+40"/>
+        <location line="+31"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Configuration</source>
-        <translation>Konfiguration</translation>
-    </message>
-    <message>
-        <location line="+14"/>
+        <location line="+19"/>
         <source>Edit Keywords</source>
         <translation>Schlüsselwörter bearbeiten</translation>
     </message>
@@ -3642,7 +3682,7 @@
         <translation>Bearbeite Kategorien</translation>
     </message>
     <message>
-        <location line="+108"/>
+        <location line="+109"/>
         <source>Disable Fullscreen</source>
         <translation>Vollansicht beenden</translation>
     </message>
@@ -3883,13 +3923,13 @@
         <translation>Lieferservice</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+59"/>
         <location line="+5"/>
         <source>Provider</source>
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="-51"/>
+        <location line="-52"/>
         <source>Delivery note number</source>
         <translation>Lieferschein Nummer</translation>
     </message>
@@ -3899,13 +3939,13 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+945"/>
+        <location line="+946"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-1017"/>
+        <location line="-1018"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
@@ -3915,7 +3955,7 @@
         <translation>Paketsendungsnummer</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+38"/>
         <source>add delivery package price</source>
         <translation>Lieferpaketpreis hinzufügen</translation>
     </message>
@@ -3925,7 +3965,7 @@
         <translation>Lieferpaketpreis zum aktuellen Versand hinzufügen.</translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-19"/>
         <source>European Countries</source>
         <translation>Europäische Staaten</translation>
     </message>
@@ -3935,7 +3975,7 @@
         <translation>Kundennummer</translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+57"/>
         <source>vat included</source>
         <translation>inkl. MwSt</translation>
     </message>
@@ -4105,7 +4145,7 @@
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
     <message>
-        <location line="-671"/>
+        <location line="-672"/>
         <source>Service</source>
         <translation>Sender</translation>
     </message>
@@ -4115,7 +4155,7 @@
         <translation>Rechnungs Optionen</translation>
     </message>
     <message>
-        <location line="+811"/>
+        <location line="+812"/>
         <location line="+74"/>
         <source>Printing canceled.</source>
         <translation>Druckevorgang abgebrochen.</translation>

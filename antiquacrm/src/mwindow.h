@@ -20,7 +20,6 @@
 
 class StatusBar;
 class Workspace;
-class DockBarWidget;
 
 class MWindow : public QMainWindow {
   Q_OBJECT
@@ -34,7 +33,6 @@ private:
   QAction *m_toggleFullScreen;
   StatusBar *m_statusBar;
   Workspace *m_workSpace;
-  DockBarWidget *m_dockBarWidget;
   ApplSettings *m_Settings;
   QSignalMapper *m_signalMapper;
   void setupTabMenu(QMenu *parent);
@@ -46,7 +44,7 @@ private Q_SLOTS:
   void openStorageLocation(bool);
   void openDeliveryService(bool);
   void openDesignation(bool);
-  void openFileDialog(bool);
+  void openReportDialog(bool);
   void openCategoryEdit(bool);
   void openKeywordEdit(bool);
   void openMessagesEdit(bool);
