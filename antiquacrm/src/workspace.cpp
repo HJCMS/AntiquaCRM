@@ -21,6 +21,7 @@
 
 WorkspaceTabBar::WorkspaceTabBar(QWidget *parent) : QTabBar{parent} {
   setMovable(true);
+  setExpanding(true);
 }
 
 void WorkspaceTabBar::checkToClose() {
@@ -48,6 +49,7 @@ void WorkspaceTabBar::contextMenuEvent(QContextMenuEvent *ev) {
 Workspace::Workspace(QWidget *parent) : QTabWidget{parent} {
   setObjectName("WorkspaceTabWidget");
   setWindowTitle(tr("Workspace") + " [*]");
+  setTabPosition(QTabWidget::North);
   setTabsClosable(false);
   setUsesScrollButtons(false);
 

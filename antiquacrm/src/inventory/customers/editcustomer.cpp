@@ -261,7 +261,7 @@ void EditCustomer::setData(const QString &key, const QVariant &value,
 
     return;
   }
-  qDebug() << "Missing Key:" << key;
+  qWarning("Missing Key: %s", qPrintable(key));
 }
 
 void EditCustomer::saveData() {
@@ -291,12 +291,12 @@ void EditCustomer::finalLeaveEditor() {
 
 void EditCustomer::openEMailDialog(const QString &tpl) {
   int cid = c_id->value().toInt();
-  if(cid < 1)
+  if (cid < 1)
     return;
 
   MailForwardDialog *d = new MailForwardDialog(this);
   if (d->exec(cid, tpl) == QDialog::Rejected) {
-    qDebug() << "Mail canceled.";
+    qInfo("Customer Simple eMail canceled.");
   }
 }
 

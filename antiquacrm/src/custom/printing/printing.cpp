@@ -264,6 +264,7 @@ void Printing::constructFooter() {
   cursor.insertText(companyData.value("iban") + "\n");
   cursor.insertText(tr("tax number") + ": ");
   cursor.insertText(companyData.value("taxnumber") + "\n");
+  cursor.insertText(companyData.value("legality") + "\n");
 
   cursor = footer->textCursor();
   cursor.atEnd();

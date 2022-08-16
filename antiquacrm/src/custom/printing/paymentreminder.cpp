@@ -211,7 +211,7 @@ bool PaymentReminder::insertSummaryTable() {
   cellFormat.setTopBorder(1);
   cellFormat.setTopBorderStyle(QTextFrameFormat::BorderStyle_Solid);
 
-  // BEGIN Mehwertsteuer
+  // BEGIN Mehrwertsteuer
   m_billingTable->mergeCells(row, 0, 1, 3);
   QTextTableCell tc0 = m_billingTable->cellAt(row, 0);
   tc0.setFormat(cellFormat);

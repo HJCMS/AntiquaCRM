@@ -101,6 +101,12 @@ CompanySettings::CompanySettings(QWidget *parent) : SettingsWidget{parent} {
   m_tax_number->setPlaceholderText(tr("Tax number"));
   layout->addWidget(m_tax_number, row++, 1, 1, 1);
 
+  layout->addWidget(infoCell(tr("Legality")), row, 0, 1, 1, Qt::AlignRight);
+  m_legality = new QLineEdit(this);
+  m_legality->setObjectName("legality");
+  m_legality->setPlaceholderText(tr("Legality"));
+  layout->addWidget(m_legality, row++, 1, 1, 1);
+
   layout->setRowStretch(row, 1);
   setLayout(layout);
 }

@@ -1529,7 +1529,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-40"/>
+        <location line="+3"/>
+        <location line="+3"/>
+        <source>Legality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-46"/>
         <source>phone number</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6323,12 +6329,12 @@
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../workspace.cpp" line="+50"/>
+        <location filename="../workspace.cpp" line="+51"/>
         <source>Workspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+30"/>
         <source>Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6429,7 +6435,7 @@
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-253"/>
+        <location line="-254"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>

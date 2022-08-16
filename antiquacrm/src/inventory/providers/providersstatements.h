@@ -100,7 +100,7 @@ static const QString queryOrderStatusList(const QString &provider,
   QString sql("SELECT o_provider_order_id AS id,");
   sql.append(" o_order_status AS status");
   sql.append(" FROM inventory_orders");
-  sql.append(" WHERE o_provider_name='" + provider + "'");
+  sql.append(" WHERE o_provider_name ILIKE '" + provider + "'");
   sql.append(" AND o_provider_order_id IN (" + list + ");");
   return sql;
 }
