@@ -1,6 +1,7 @@
 *~
 *.log
 *.bak
+*.old
 build-*
 build_*
 CMakeLists.txt.user

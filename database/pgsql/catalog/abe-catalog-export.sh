@@ -62,7 +62,7 @@ __init_sql_enviroment
 
 cd ${_output_target}
 
-## WARNNIG - Keine Leerzeichen verwenden!
+## WARNING - Keine Leerzeichen verwenden!
 _header=""
 
 psql \

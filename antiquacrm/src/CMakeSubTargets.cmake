@@ -33,6 +33,8 @@ SET (PROJECT_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/networking
  ${CMAKE_CURRENT_BINARY_DIR}/custom/printing
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/printing
+ ${CMAKE_CURRENT_BINARY_DIR}/custom/reporting
+ ${CMAKE_CURRENT_SOURCE_DIR}/custom/reporting
  ${CMAKE_CURRENT_BINARY_DIR}/custom/settings
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/settings
  ${CMAKE_CURRENT_BINARY_DIR}/custom/storage
@@ -98,6 +100,7 @@ CategoryEdit
 KeywordEdit
 MessageTemplates
 MailForward
+Reporting
 InventoryBooks
 InventoryPrints
 InventoryOrders

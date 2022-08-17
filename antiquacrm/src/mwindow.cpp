@@ -6,10 +6,10 @@
 #include "categoryedit.h"
 #include "configdialog.h"
 #include "deliverservicedialog.h"
-#include "filedialog.h"
 #include "keywordedit.h"
 #include "messagetemplates.h"
 #include "myicontheme.h"
+#include "reportingdialog.h"
 #include "statusbar.h"
 #include "storagelocation.h"
 #include "workspace.h"
@@ -188,8 +188,8 @@ void MWindow::openDesignation(bool) {
 }
 
 void MWindow::openReportDialog(bool) {
-  FileDialog *d = new FileDialog(this);
-  d->setObjectName("m_file_dialog");
+  ReportingDialog *d = new ReportingDialog(this);
+  d->setObjectName("reporting_dialog");
   if (d->exec()) {
     d->deleteLater();
   }
