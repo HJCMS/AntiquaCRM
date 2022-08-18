@@ -36,6 +36,7 @@ private:
   QLineEdit *m_iban;
   QLineEdit *m_tax_number;
   QLineEdit *m_legality;
+  QTextEdit *m_signature;
 
   /**
    * @brief GridLayout Info Labels

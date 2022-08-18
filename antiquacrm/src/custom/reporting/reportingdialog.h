@@ -15,6 +15,9 @@
 #include <QStatusBar>
 #include <QWidget>
 
+class DateRangeWidget;
+class PreviewTable;
+
 /**
  * @brief Erstellt Berichte für den Datenexport
  * @class ReportingDialog
@@ -27,6 +30,8 @@ class ReportingDialog final : public QDialog {
 private:
   QLabel *m_infoLabel;
   QStackedWidget *m_stackedWidget;
+  DateRangeWidget *m_datePicker;
+  PreviewTable *m_previewTable;
   QDialogButtonBox *m_btnBox;
   QPushButton *btn_prev;
   QPushButton *btn_next;
@@ -38,6 +43,18 @@ private:
    * @brief Aktueller Seitenindex
    */
   int pageIndex();
+
+  /**
+   * @brief Erstelle SQL Abfrage aus der Datumsangabe.
+   */
+  void setSqlRangeQuery();
+
+  /**
+   * @brief Daten export erstellen.
+   */
+  bool saveDataExport();
+
+  const QFileInfo getSaveFile();
 
 private Q_SLOTS:
   /**
@@ -56,7 +73,7 @@ private Q_SLOTS:
   void nextPage();
 
   /**
-   * @brief Seite wurde aufgerufen
+   * @brief Umsetzung Knopf/Aktivierung
    */
   void pageEntered(int index);
 
@@ -76,7 +93,6 @@ protected:
 
 public:
   explicit ReportingDialog(QWidget *parent = nullptr);
-  int exec() override;
 };
 
 #endif // REPORTINGDIALOG_H

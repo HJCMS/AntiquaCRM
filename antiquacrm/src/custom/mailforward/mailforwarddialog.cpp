@@ -194,6 +194,7 @@ void MailForwardDialog::setBody(const QString &body) {
         buffer.replace(from, to, Qt::CaseSensitive);
     }
   }
+
   m_mailBody->setPlainText(buffer);
 }
 

@@ -11,10 +11,16 @@ SET (subproject_LINKER
 
 SET (subproject_SOURCES
  reportingdialog.cpp
+ daterangewidget.cpp
+ previewtable.cpp
+ previewtablemodel.cpp
 )
 
 SET (subproject_HEADERS
  reportingdialog.h
+ daterangewidget.h
+ previewtable.h
+ previewtablemodel.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

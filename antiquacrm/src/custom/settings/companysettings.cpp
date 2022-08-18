@@ -107,6 +107,13 @@ CompanySettings::CompanySettings(QWidget *parent) : SettingsWidget{parent} {
   m_legality->setPlaceholderText(tr("Legality"));
   layout->addWidget(m_legality, row++, 1, 1, 1);
 
+  layout->addWidget(infoCell(tr("Mail Signature")), row, 0, 1, 1,
+                    (Qt::AlignTop | Qt::AlignRight));
+  m_signature = new QTextEdit(this);
+  m_signature->setObjectName("signature");
+  m_signature->setPlaceholderText(tr("eMail Signature"));
+  layout->addWidget(m_signature, row++, 1, 1, 1);
+
   layout->setRowStretch(row, 1);
   setLayout(layout);
 }
@@ -142,6 +149,8 @@ void CompanySettings::loadSectionConfig() {
     connect(edit, SIGNAL(textChanged(const QString &)), this,
             SLOT(lineEditChanged(const QString &)));
   }
+  m_signature->setPlainText(
+      config->value(m_signature->objectName()).toString());
   config->endGroup();
 }
 
@@ -153,5 +162,6 @@ void CompanySettings::saveSectionConfig() {
     QLineEdit *edit = edits.at(i);
     config->setValue(edit->objectName(), edit->text());
   }
+  config->setValue(m_signature->objectName(), m_signature->toPlainText());
   config->endGroup();
 }

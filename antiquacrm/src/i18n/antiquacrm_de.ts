@@ -1535,7 +1535,17 @@
         <translation>Rechtmäßigkeit</translation>
     </message>
     <message>
-        <location line="-46"/>
+        <location line="+3"/>
+        <source>Mail Signature</source>
+        <translation>E-Mail Signatur</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>eMail Signature</source>
+        <translation>E-Mail Signatur</translation>
+    </message>
+    <message>
+        <location line="-53"/>
         <source>phone number</source>
         <translation>Telefon Nummer</translation>
     </message>
@@ -2184,6 +2194,19 @@
         <location line="+3"/>
         <source>Description</source>
         <translation>Beschreibung</translation>
+    </message>
+</context>
+<context>
+    <name>DateRangeWidget</name>
+    <message>
+        <location filename="../custom/reporting/daterangewidget.cpp" line="+14"/>
+        <source>From Date</source>
+        <translation>Start Datum</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>To Date</source>
+        <translation>Bis Datum</translation>
     </message>
 </context>
 <context>
@@ -3607,12 +3630,7 @@
         <translation>Neu verbinden</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Reports</source>
-        <translation>Berichte</translation>
-    </message>
-    <message>
-        <location line="+26"/>
+        <location line="+31"/>
         <source>Various settings</source>
         <translation>Verschiedene Einstellungen</translation>
     </message>
@@ -3658,7 +3676,12 @@
         <translation>Datenbank</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+8"/>
+        <source>Monthly Report</source>
+        <translation>Monatsbericht</translation>
+    </message>
+    <message>
+        <location line="+23"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
@@ -3768,7 +3791,7 @@
         <translation>ein Fehler ist aufgetreten</translation>
     </message>
     <message>
-        <location line="+129"/>
+        <location line="+130"/>
         <source>Missing Attachment</source>
         <translation>Kein Dateianhang vorhanden</translation>
     </message>
@@ -4807,6 +4830,39 @@
     </message>
 </context>
 <context>
+    <name>PreviewTableModel</name>
+    <message>
+        <location filename="../custom/reporting/previewtablemodel.cpp" line="+60"/>
+        <source>Invoice</source>
+        <translation>Rechnung</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Article</source>
+        <translation>Artikel</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>VAT</source>
+        <translation>MwSt</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Price</source>
+        <translation>Preis</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Delivered</source>
+        <translation>Ausgeliefert</translation>
+    </message>
+</context>
+<context>
     <name>PriceEdit</name>
     <message>
         <location filename="../custom/utils/priceedit.cpp" line="+22"/>
@@ -5020,7 +5076,7 @@
         <translation>Steuer Nummer</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+61"/>
         <source>Printers</source>
         <translation>Drucker</translation>
     </message>
@@ -5659,6 +5715,49 @@
         <location line="+2"/>
         <source>Order canceled</source>
         <translation>Bestellung storniert</translation>
+    </message>
+</context>
+<context>
+    <name>ReportingDialog</name>
+    <message>
+        <location filename="../custom/reporting/reportingdialog.cpp" line="+18"/>
+        <source>Reports</source>
+        <translation>Berichte</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Export various reports.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Back</source>
+        <translation>Zurück</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Next</source>
+        <translation>Weiter</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Apply</source>
+        <translation>Anwenden</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Quit</source>
+        <translation>Schließen</translation>
+    </message>
+    <message>
+        <location line="+79"/>
+        <source>There are unsaved actions.&lt;br&gt;Do you really want to quit?</source>
+        <translation>Es gibt nicht gespeicherte Aktionen.&lt;br&gt;Wollen Sie wirklich beenden?</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Unsaved Changes</source>
+        <translation>Nicht gespeicherte Änderungen!</translation>
     </message>
 </context>
 <context>

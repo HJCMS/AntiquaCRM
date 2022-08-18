@@ -83,8 +83,8 @@ void MWindow::setupActions() {
   connect(ac_dbConnect, SIGNAL(triggered(bool)), this,
           SLOT(reconnectDatabase(bool)));
 
-  QAction *ac_reports = menu_db->addAction(dbIcon, tr("Reports"));
-  ac_reports->setObjectName("ac_reports");
+  QAction *ac_reports = menu_db->addAction(dbIcon, tr("Monthly Report"));
+  ac_reports->setObjectName("ac_monthly_reports");
   connect(ac_reports, SIGNAL(triggered(bool)), this,
           SLOT(openReportDialog(bool)));
 

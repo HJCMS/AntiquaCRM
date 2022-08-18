@@ -6,8 +6,8 @@
 #define MAILCOMMAND_UTILS_H
 
 #include <QObject>
-#include <QString>
 #include <QProcess>
+#include <QString>
 #include <QUrl>
 #include <QVariant>
 
@@ -15,6 +15,14 @@ class MailCommand final : public QProcess {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
+
+private:
+  QString p_mailler;
+  QUrl p_email;
+  QString p_subject;
+  QString p_body;
+  QString p_attachment;
+  QString p_signature;
 
 public Q_SLOTS:
   void sendMail();
@@ -31,12 +39,8 @@ public:
   void setAttachment(const QString &data);
 
 private:
-  QString p_mailler;
-  QUrl p_email;
-  QString p_subject;
-  QString p_body;
-  QString p_attachment;
   const QStringList prepare(MailCommand::Type t);
+
 };
 
 #endif // MAILCOMMAND_UTILS_H

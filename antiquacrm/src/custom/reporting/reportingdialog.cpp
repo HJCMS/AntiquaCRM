@@ -2,10 +2,14 @@
 // vim: set fileencoding=utf-8
 
 #include "reportingdialog.h"
+#include "daterangewidget.h"
 #include "myicontheme.h"
+#include "previewtable.h"
 
 #include <QDebug>
+#include <QFileDialog>
 #include <QLayout>
+#include <QMessageBox>
 #include <QStatusTipEvent>
 
 ReportingDialog::ReportingDialog(QWidget *parent) : QDialog{parent} {
@@ -22,6 +26,13 @@ ReportingDialog::ReportingDialog(QWidget *parent) : QDialog{parent} {
   layout->addWidget(m_infoLabel);
 
   m_stackedWidget = new QStackedWidget(this);
+
+  m_datePicker = new DateRangeWidget(m_stackedWidget);
+  m_stackedWidget->insertWidget(0, m_datePicker);
+
+  m_previewTable = new PreviewTable(this);
+  m_stackedWidget->insertWidget(1, m_previewTable);
+
   layout->addWidget(m_stackedWidget);
 
   m_btnBox = new QDialogButtonBox(this);
@@ -52,6 +63,8 @@ ReportingDialog::ReportingDialog(QWidget *parent) : QDialog{parent} {
   layout->setStretch(1, 1);
   setLayout(layout);
 
+  connect(m_stackedWidget, SIGNAL(currentChanged(int)), this,
+          SLOT(pageEntered(int)));
   connect(btn_prev, SIGNAL(clicked()), this, SLOT(previousPage()));
   connect(btn_next, SIGNAL(clicked()), this, SLOT(nextPage()));
   connect(btn_apply, SIGNAL(clicked()), this, SLOT(apply()));
@@ -60,8 +73,64 @@ ReportingDialog::ReportingDialog(QWidget *parent) : QDialog{parent} {
 
 int ReportingDialog::pageIndex() { return m_stackedWidget->currentIndex(); }
 
+void ReportingDialog::setSqlRangeQuery() {
+  QStringList fieldset;
+  /** ID */
+  fieldset << "o_id AS invoice_id";
+  /** Artikel */
+  fieldset << "a_article_id AS article";
+  /** Titel */
+  fieldset << "SUBSTRING(a_title FROM 0 FOR 60) AS title";
+  /** Mehrwertsteuer */
+  fieldset << "o_vat_levels AS vat";
+  /** Preis */
+  fieldset << "a_sell_price AS price";
+  /** Abgeschlossen */
+  fieldset << "DATE(o_delivered) AS delivered";
+  /** Auswahl */
+  QString query("SELECT ");
+  query.append(fieldset.join(", "));
+  query.append(" FROM inventory_orders");
+  query.append(" LEFT JOIN article_orders ON a_order_id=o_id");
+  /** Abfrageklausel erstellen */
+  QPair<QString, QString> p = m_datePicker->timestampRange();
+  query.append(" WHERE o_payment_status=true AND");
+  query.append(" o_order_status=5 AND");
+  query.append(" o_delivered BETWEEN");
+  query.append(" '" + p.first + "' AND '" + p.second + "'");
+  query.append(" ORDER BY o_delivered;");
+  m_previewTable->setQuery(query);
+  setWindowModified(true);
+}
+
+bool ReportingDialog::saveDataExport() {
+  QString header = m_previewTable->dataHeader();
+  QStringList rows = m_previewTable->dataRows();
+  if (rows.count() > 0) {
+    QString target = QFileDialog::getSaveFileName(
+        this, tr("Save to ..."), QDir::homePath(), tr("Table (*.csv *.CSV)"));
+    if (target.isEmpty())
+      return false;
+
+    QFile fp(target);
+    if (fp.open(QIODevice::WriteOnly)) {
+      QTextStream out(&fp);
+      out.setCodec("UTF-8");
+      out << header + "\n";
+      out << rows.join("\n");
+      fp.close();
+      return true;
+    }
+  }
+  return false;
+}
+
 void ReportingDialog::setPage(int index) {
   m_stackedWidget->setCurrentIndex(index);
+  // Tabellen Ansichtsseite
+  if (index == 1) {
+    setSqlRangeQuery();
+  }
 }
 
 void ReportingDialog::previousPage() {
@@ -74,21 +143,29 @@ void ReportingDialog::nextPage() {
     setPage((pageIndex() + 1));
 }
 
-void ReportingDialog::pageEntered(int index) {
+void ReportingDialog::pageEntered(int i) {
   int c = m_stackedWidget->count();
-  btn_prev->setEnabled((index == 0) ? false :true);
-  btn_next->setEnabled((index == c) ? false :true);
-  btn_apply->setEnabled((index == c));
+  btn_prev->setEnabled((i > 0));
+  btn_next->setEnabled(((i + 1) < c));
+  btn_apply->setEnabled(((i + 1) == c));
 }
 
 void ReportingDialog::close() {
-  qDebug() << Q_FUNC_INFO << "TODO";
+  if (isWindowModified()) {
+    QString txt =
+        tr("There are unsaved actions.<br>Do you really want to quit?");
+    int ret = QMessageBox::question(this, tr("Unsaved Changes"), txt);
+    if (ret == QMessageBox::No)
+      return;
+  }
   reject();
 }
 
 void ReportingDialog::apply() {
-  qDebug() << Q_FUNC_INFO << "TODO";
-  // accept();
+  if (saveDataExport()) {
+    m_statusBar->showMessage(tr("Saved successfully!"), 1000);
+    setWindowModified(false);
+  }
 }
 
 void ReportingDialog::keyPressEvent(QKeyEvent *e) {
@@ -108,9 +185,4 @@ bool ReportingDialog::event(QEvent *e) {
     return true;
   }
   return QDialog::event(e);
-}
-
-int ReportingDialog::exec() {
-  qDebug() << Q_FUNC_INFO << "TODO";
-  return QDialog::exec();
 }
