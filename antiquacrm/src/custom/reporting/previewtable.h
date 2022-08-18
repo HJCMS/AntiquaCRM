@@ -27,8 +27,8 @@ public Q_SLOTS:
 
 public:
   explicit PreviewTable(QWidget *parent = nullptr);
-  const QString dataHeader(const QString &delimiter = QString("|"));
-  const QStringList dataRows(const QString &delimiter = QString("|"));
+  const QString dataHeader(const QString &delimiter = QString(";"));
+  const QStringList dataRows(const QString &delimiter = QString(";"));
 };
 
 #endif // PREVIEWTABLE_H

@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "reportingdialog.h"
+#include "applsettings.h"
 #include "daterangewidget.h"
 #include "myicontheme.h"
 #include "previewtable.h"
@@ -107,12 +108,16 @@ bool ReportingDialog::saveDataExport() {
   QString header = m_previewTable->dataHeader();
   QStringList rows = m_previewTable->dataRows();
   if (rows.count() > 0) {
-    QString target = QFileDialog::getSaveFileName(
-        this, tr("Save to ..."), QDir::homePath(), tr("Table (*.csv *.CSV)"));
-    if (target.isEmpty())
+
+    QFileInfo target = getSaveFile();
+
+    if (!target.dir().exists())
       return false;
 
-    QFile fp(target);
+    if (target.fileName().isEmpty())
+      return false;
+
+    QFile fp(target.filePath());
     if (fp.open(QIODevice::WriteOnly)) {
       QTextStream out(&fp);
       out.setCodec("UTF-8");
@@ -123,6 +128,29 @@ bool ReportingDialog::saveDataExport() {
     }
   }
   return false;
+}
+
+const QFileInfo ReportingDialog::getSaveFile() {
+  ApplSettings cfg(this);
+  QDir p_dir(cfg.value("dirs/invoices", QDir::homePath()).toString());
+
+  QFileDialog *d = new QFileDialog(this, tr("Save to ..."));
+  d->setViewMode(QFileDialog::Detail);
+  d->setOptions(QFileDialog::ShowDirsOnly);
+  d->setDirectory(p_dir);
+  d->setFileMode(QFileDialog::Directory);
+
+  QString filename = QDate::currentDate().toString("yyyy-MM");
+  filename.prepend(tr("payments_report_"));
+  filename.append(".csv");
+
+  QFileInfo info;
+  if (d->exec() == QDialog::Accepted) {
+    QStringList dirs = d->selectedFiles();
+    info.setFile(dirs.first(),filename);
+  }
+
+  return info;
 }
 
 void ReportingDialog::setPage(int index) {

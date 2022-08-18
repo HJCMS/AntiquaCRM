@@ -8,6 +8,7 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QEvent>
+#include <QFileInfo>
 #include <QLabel>
 #include <QObject>
 #include <QPushButton>
@@ -54,6 +55,9 @@ private:
    */
   bool saveDataExport();
 
+  /**
+   * @brief Speichern unter Dialog
+   */
   const QFileInfo getSaveFile();
 
 private Q_SLOTS:

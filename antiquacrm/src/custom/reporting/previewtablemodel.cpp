@@ -38,12 +38,7 @@ QVariant PreviewTableModel::data(const QModelIndex &index, int role) const {
   }
 
   case 4: // price
-  {
-    QString str = QString::number(item.toInt(), 'f', 2);
-    str.append(" ");
-    str.append(p_currency);
-    return str;
-  }
+    return QString::number(item.toInt(), 'f', 2);
 
   default:
     return item;
@@ -69,7 +64,12 @@ QVariant PreviewTableModel::headerData(int section, Qt::Orientation orientation,
     return tr("VAT");
 
   case 4: // price
-    return tr("Price");
+  {
+    QString str(tr("Price"));
+    str.append(" ");
+    str.append(p_currency);
+    return str;
+  }
 
   case 5: // delivered
     return tr("Delivered");
