@@ -16,6 +16,7 @@ class PreviewTableModel final : public QSqlQueryModel {
 
 private:
   const QString p_currency;
+  const QString currencyString(const QVariant &val) const;
 
 public:
   explicit PreviewTableModel(QObject *parent = nullptr);

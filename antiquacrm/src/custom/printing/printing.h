@@ -106,6 +106,7 @@ private:
    * @brief Schriften
    */
   QFont headerFont;
+  QFont addressFont;
   QFont normalFont;
   QFont footerFont;
   QFont smallFont;
@@ -219,6 +220,11 @@ protected:
    * @brief Textformat für den Briefkopf
    */
   const QTextCharFormat headerFormat();
+
+  /**
+   * @brief Standard Textformat
+   */
+  const QTextCharFormat addressFormat();
 
   /**
    * @brief Standard Textformat

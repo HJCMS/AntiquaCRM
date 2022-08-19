@@ -28,7 +28,7 @@ void Invoice::constructSubject() {
   QTextTableFormat format = tableFormat();
   format.setBorderBrush(borderBrush());
   format.setBorderStyle(QTextFrameFormat::BorderStyle_None);
-  format.setTopMargin(30);
+  format.setBottomMargin(20);
   QTextTable *table = cursor.insertTable(2, 2, format);
   table->setObjectName("address_table");
   // Company Address
@@ -54,7 +54,7 @@ void Invoice::constructSubject() {
   cursor.insertText(tr("Invoice"));
   // Customer Address
   QTextTableCell tc10 = table->cellAt(1, 0);
-  tc10.setFormat(normalFormat());
+  tc10.setFormat(addressFormat());
   cursor = tc10.firstCursorPosition();
   cursor.insertText(p_customerAddress);
   // Delivery Infos

@@ -59,6 +59,13 @@ PrintSettings::PrintSettings(QWidget *parent) : SettingsWidget{parent} {
   QPushButton *btn_normal = setFontButton("normal_font");
   layout->addWidget(btn_normal, row++, 1, 1, 1);
 
+  address_font = new QLabel(tr("Address Text"), this);
+  address_font->setObjectName("address_font");
+  layout->addWidget(address_font, row, 0, 1, 1, grid_label_align);
+
+  QPushButton *btn_address = setFontButton("address_font");
+  layout->addWidget(btn_address, row++, 1, 1, 1);
+
   small_font = new QLabel(tr("Small Text"), this);
   small_font->setObjectName("small_font");
   layout->addWidget(small_font, row, 0, 1, 1, grid_label_align);

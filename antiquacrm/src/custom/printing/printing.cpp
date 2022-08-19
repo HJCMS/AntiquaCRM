@@ -137,6 +137,9 @@ void Printing::readConfiguration() {
   if (font.fromString(config->value("header_font").toString())) {
     headerFont.swap(font);
   }
+  if (font.fromString(config->value("address_font").toString())) {
+    addressFont.swap(font);
+  }
   if (font.fromString(config->value("normal_font").toString())) {
     normalFont.swap(font);
   }
@@ -152,6 +155,12 @@ void Printing::readConfiguration() {
 const QTextCharFormat Printing::headerFormat() {
   QTextCharFormat f;
   f.setFont(headerFont);
+  return f;
+}
+
+const QTextCharFormat Printing::addressFormat() {
+  QTextCharFormat f;
+  f.setFont(addressFont);
   return f;
 }
 

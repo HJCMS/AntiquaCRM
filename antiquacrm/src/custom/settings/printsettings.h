@@ -45,6 +45,11 @@ private:
   /**
    * @brief Schrifft für nicht Tabellen Dokumente
    */
+  QLabel *address_font;
+
+  /**
+   * @brief Schrifft für nicht Tabellen Dokumente
+   */
   QLabel *normal_font;
 
   /**

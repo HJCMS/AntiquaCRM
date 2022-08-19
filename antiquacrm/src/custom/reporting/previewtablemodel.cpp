@@ -4,6 +4,8 @@
 #include "previewtablemodel.h"
 #include "applsettings.h"
 
+#include <QDebug>
+
 static const QString getCurrency() {
   ApplSettings cfg;
   return cfg.value("payment/currency", "€").toString();
@@ -12,6 +14,18 @@ static const QString getCurrency() {
 PreviewTableModel::PreviewTableModel(QObject *parent)
     : QSqlQueryModel{parent}, p_currency(getCurrency()) {
   setObjectName("preview_table_model");
+}
+
+const QString PreviewTableModel::currencyString(const QVariant &val) const {
+  bool b;
+  double d = val.toDouble(&b);
+  if (b && d > 0) {
+    char buffer[10];
+    int len = std::sprintf(buffer, "%0.2f", d);
+    QByteArray array(buffer, len);
+    return QString::fromLocal8Bit(array);
+  }
+  return QString();
 }
 
 QVariant PreviewTableModel::data(const QModelIndex &index, int role) const {
@@ -28,17 +42,22 @@ QVariant PreviewTableModel::data(const QModelIndex &index, int role) const {
     return str.rightJustified(7, '0');
   }
 
-  case 3: // vat
+  case 2: // title
   {
     QString str = item.toString();
-    if (item.toInt() == 0)
-      return QString();
-
-    return str + "%";
+    if (str.length() > 30) {
+      QStringRef ref = str.leftRef(30);
+      str = ref.trimmed().toString();
+      str.append("...");
+    }
+    return str;
   }
 
+  case 3: // vat
+    return item.toInt();
+
   case 4: // price
-    return QString::number(item.toInt(), 'f', 2);
+    return currencyString(item);
 
   default:
     return item;
@@ -61,7 +80,11 @@ QVariant PreviewTableModel::headerData(int section, Qt::Orientation orientation,
     return tr("Title");
 
   case 3: // vat
-    return tr("VAT");
+  {
+    QString str(tr("VAT"));
+    str.append(" %");
+    return str;
+  }
 
   case 4: // price
   {
