@@ -74,6 +74,7 @@ void MailAttachments::setAttachment(const QString &name) {
   while (it.hasNext()) {
     QFileInfo f(it.next());
     if (f.baseName() == name) {
+      qInfo("Mail Attachment (%s)", qPrintable(f.filePath()));
       m_info->setPath(f.filePath());
       break;
     }
