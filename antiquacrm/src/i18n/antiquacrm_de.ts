@@ -4832,7 +4832,7 @@
 <context>
     <name>PreviewTableModel</name>
     <message>
-        <location filename="../custom/reporting/previewtablemodel.cpp" line="+60"/>
+        <location filename="../custom/reporting/previewtablemodel.cpp" line="+74"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
@@ -4847,17 +4847,17 @@
         <translation>Titel</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>VAT</source>
         <translation>MwSt</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+7"/>
         <source>Price</source>
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+7"/>
         <source>Delivered</source>
         <translation>Ausgeliefert</translation>
     </message>
@@ -4901,6 +4901,11 @@
         <location line="+7"/>
         <source>Normal Text</source>
         <translation>Standard Schrift</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Address Text</source>
+        <translation>Anschrift Text</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -5056,7 +5061,7 @@
         <translation>Bitte erst die Konfiguration abschließen!</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+131"/>
         <source>email</source>
         <translation>E-Mail</translation>
     </message>
@@ -5720,7 +5725,7 @@
 <context>
     <name>ReportingDialog</name>
     <message>
-        <location filename="../custom/reporting/reportingdialog.cpp" line="+18"/>
+        <location filename="../custom/reporting/reportingdialog.cpp" line="+20"/>
         <source>Reports</source>
         <translation>Berichte</translation>
     </message>
@@ -5750,7 +5755,17 @@
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+82"/>
+        <source>Save to ...</source>
+        <translation>Speichere in ...</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>payments_report_</source>
+        <translation>umsatz_bericht_</translation>
+    </message>
+    <message>
+        <location line="+40"/>
         <source>There are unsaved actions.&lt;br&gt;Do you really want to quit?</source>
         <translation>Es gibt nicht gespeicherte Aktionen.&lt;br&gt;Wollen Sie wirklich beenden?</translation>
     </message>
@@ -5758,6 +5773,11 @@
         <location line="+1"/>
         <source>Unsaved Changes</source>
         <translation>Nicht gespeicherte Änderungen!</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Saved successfully!</source>
+        <translation>Speichern erfolgreich!</translation>
     </message>
 </context>
 <context>
