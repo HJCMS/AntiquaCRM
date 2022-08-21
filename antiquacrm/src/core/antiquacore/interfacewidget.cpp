@@ -185,8 +185,9 @@ void InterfaceWidget::setCustomerId(int cId) {
 int InterfaceWidget::getCustomerId() {
   QString num = m_customerId->text().trimmed();
   if (num.isEmpty()) {
-    emit sendErrorResponse(Antiqua::ErrorStatus::WARNING,
-                           tr("Can not identify a valid customer!"));
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "not set";
+#endif
     return -1;
   }
 

@@ -10,6 +10,10 @@
 # include "applicationclient.h"
 #endif
 
+#ifndef BOOKBINDINGFIELD_UTILS_H
+# include "bookbindingfield.h"
+#endif
+
 #ifndef BOOLBOX_UTILS_H
 # include "boolbox.h"
 #endif

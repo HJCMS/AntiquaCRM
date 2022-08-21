@@ -170,7 +170,9 @@ void AbeBooksRequester::slotFinished(QNetworkReply *reply) {
 void AbeBooksRequester::slotSslErrors(const QList<QSslError> &list) {
   for (int i = 0; i < list.count(); i++) {
     QSslError ssl_error = list.at(i);
+#ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << ssl_error.errorString();
+#endif
   }
 }
 
@@ -218,13 +220,13 @@ void AbeBooksRequester::queryList() {
   AbeBooksDocument doc = createDocument();
   doc.createAction("getAllNewOrders");
   if (!createRequest(doc)) {
-    qInfo("AbeBooks getAllNewOrders failed");
+    qWarning("AbeBooks: getAllNewOrders failed");
   }
 }
 
 void AbeBooksRequester::queryOrder(const QString &purchaseId) {
   if (purchaseId.isEmpty()) {
-    qWarning("empty purchase id");
+    qWarning("AbeBooks: Missing queryOrder(purchaseId)");
     return;
   }
 
@@ -235,6 +237,6 @@ void AbeBooksRequester::queryOrder(const QString &purchaseId) {
   e.setAttribute("id", id.trimmed());
   doc.documentElement().appendChild(e);
   if (!createRequest(doc)) {
-    qInfo("AbeBooks purchaseOrder failed");
+    qWarning("AbeBooks purchaseOrder failed");
   }
 }

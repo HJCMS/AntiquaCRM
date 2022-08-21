@@ -176,11 +176,6 @@
         <source>Opens the service provider dialog for editing and confirming an order.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location line="+67"/>
-        <source>Can not identify a valid customer!</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Antiqua::PaymentOrderUpdate</name>
@@ -231,7 +226,7 @@
 <context>
     <name>Antiqua::PurchasePaymentInfo</name>
     <message>
-        <location filename="../core/antiquacore/purchasepaymentinfo.cpp" line="+59"/>
+        <location filename="../core/antiquacore/purchasepaymentinfo.cpp" line="+69"/>
         <source>Payment method</source>
         <translation type="unfinished"></translation>
     </message>
@@ -543,6 +538,27 @@
     </message>
 </context>
 <context>
+    <name>BookBindingBox</name>
+    <message>
+        <location filename="../custom/utils/bookbindingfield.cpp" line="+17"/>
+        <source>Without disclosures</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BookBindingField</name>
+    <message>
+        <location line="+15"/>
+        <source>Book Condition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+47"/>
+        <source>Missing required Book Binding!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BookCard</name>
     <message>
         <location filename="../custom/printing/bookcard.cpp" line="+228"/>
@@ -746,12 +762,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+90"/>
         <source>Shop Category Keywords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-59"/>
+        <location line="-69"/>
         <source>Language:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -771,13 +787,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+141"/>
+        <location line="+150"/>
         <location line="+5"/>
         <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-96"/>
+        <location line="-105"/>
         <source>Required input field. Limited to 80 characters, Webshop Systems require this.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -792,12 +808,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+80"/>
         <source>Category Keywords for Shopsystems.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-48"/>
+        <location line="-58"/>
         <source>Condition of this Book. See also Configuration conditions Table.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -814,12 +830,17 @@
     </message>
     <message>
         <location line="+27"/>
-        <location line="+7"/>
+        <location line="+15"/>
         <source>Designation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="-6"/>
+        <source>Cover</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
         <location line="+5"/>
         <source>Keywords</source>
         <translation type="unfinished"></translation>
@@ -865,12 +886,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-481"/>
+        <location line="-491"/>
         <source>Extended Title or Subtitle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+232"/>
+        <location line="+242"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -902,7 +923,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-204"/>
+        <location line="-214"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
@@ -913,12 +934,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+227"/>
+        <location line="+237"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-343"/>
+        <location line="-353"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5672,7 +5693,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Invoice (prepayment reserved)</source>
         <translation type="unfinished"></translation>
     </message>

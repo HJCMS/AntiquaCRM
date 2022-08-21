@@ -89,6 +89,7 @@ void MailCommand::setAttachment(const QString &data) {
 
 const QStringList MailCommand::prepare(MailCommand::Type t) {
   QStringList cmd;
+  // https://docs.microsoft.com/en-US/outlook/troubleshoot/security/information-about-email-security-settings
   if (t == OUTLOOK) {
     QStringList params;
     params << "subject=" + urlEncode(p_subject);

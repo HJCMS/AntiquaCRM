@@ -31,6 +31,16 @@ int PaymentMethodSelect::findIndex(const QString &name) {
 
 int PaymentMethodSelect::getPaymentMethod(const QString &name) {
   int index = findData(name, Qt::DisplayRole, Qt::MatchStartsWith);
+  if (index < 0) {
+    /**
+     * W+HSoft verwendet andere Zeichenketten, deshalb nach dem
+     * ersten Wort alles abschneiden und nach diesem suchen!
+     */
+    QRegExp pattern("\\W+\\(.+$");
+    QString str(name);
+    QString find = str.remove(pattern);
+    index = findData(find, Qt::DisplayRole, Qt::MatchStartsWith);
+  }
   return itemData(index, Qt::UserRole).toInt();
 }
 

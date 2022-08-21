@@ -222,12 +222,21 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   designationLabel->setText(tr("Designation") + ":");
   row2->addWidget(designationLabel, row2c, 0, 1, 1);
 
+  // Bucheinband und Bindungsart
+  QHBoxLayout *binding_layout = new QHBoxLayout();
+  binding_layout->setContentsMargins(0, 0, 0, 0);
+  ib_binding = new BookBindingField(this);
+  ib_binding->setObjectName("ib_binding");
+  ib_binding->setRequired(true);
+  ib_binding->setInfo(tr("Cover"));
+  binding_layout->addWidget(ib_binding);
   ib_designation = new StrLineEdit(this);
   ib_designation->setObjectName("ib_designation");
   ib_designation->setMaxAllowedLength(128);
   ib_designation->setRequired(true);
   ib_designation->setInfo(tr("Designation"));
-  row2->addWidget(ib_designation, row2c++, 1, 1, 1);
+  binding_layout->addWidget(ib_designation);
+  row2->addLayout(binding_layout, row2c++, 1, 1, 1);
 
   QLabel *storageLabel = new QLabel(this);
   storageLabel->setObjectName("storageLabel");
@@ -238,6 +247,7 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   ib_storage = new StorageEdit(this);
   ib_storage->setObjectName("ib_storage");
   ib_storage->setInfo(tr("Storage"));
+  ib_storage->setRequired(true);
   row2->addWidget(ib_storage, row2c++, 1, 1, 1);
 
   QLabel *keywordLabel = new QLabel(this);

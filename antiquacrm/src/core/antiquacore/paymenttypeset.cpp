@@ -29,7 +29,10 @@ PaymentTypeSet::PaymentTypeSet() : QMap<int, QString>{} {
   insert(9, QObject::tr("Pickup - cash payment"));
   /** @brief  10: Sofortüberweisung */
   insert(10, QObject::tr("Instant bank transfer"));
-  /** @brief  11: Offene Rechnung (Vorkasse vorbehalten) */
+  /** @brief 11:
+   *  BookLooker: Offene Rechnung (Vorkasse vorbehalten)
+   *  WHSoft:
+   */
   insert(11, QObject::tr("Invoice (prepayment reserved)"));
   /** @brief  12: Scheck */
   insert(12, QObject::tr("Check"));

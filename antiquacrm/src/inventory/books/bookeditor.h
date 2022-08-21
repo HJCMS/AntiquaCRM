@@ -50,6 +50,7 @@ private:
   IsbnEdit *ib_isbn;                /**< @brief ISBN */
   StrLineEdit *ib_author;           /**< @brief Buchautor */
   ConditionField *ib_condition;     /**< @brief Zustands beschreibung */
+  BookBindingField *ib_binding;     /**< @brief BuchEinband Kategorie */
   StrLineEdit *ib_designation;      /**< @brief Umschreibung */
   KeywordLineEdit *ib_keyword;      /**< @brief Schlüsselwort */
   CategorySubject *m_json_category; /**< @brief Dienstleister Kategorie */

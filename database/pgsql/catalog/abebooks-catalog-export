@@ -1,0 +1,163 @@
+#!/usr/bin/env bash
+# -*- coding: utf-8 -*-
+# vim: set fileencoding=utf-8
+##################################################################################
+# This file is part of the HJCMS Project
+#
+# Copyright (C) Juergen Heinemann http://www.hjcms.de, (C) 2007-2022
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public License
+# along with this library; see the file COPYING.LIB.  If not, write to
+# the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+# Boston, MA 02110-1301, USA.
+##################################################################################
+
+set +x
+
+test -e $HOME/.config/postgres/servercfg.bash || {
+  echo "FATAL: Can not read Configuration"
+  exit 1
+}
+
+chmod -c 0600 $HOME/.config/postgres/servercfg.bash
+
+source $HOME/.config/postgres/servercfg.bash
+
+## Debug mode
+_disable_upload=true
+
+## Ausgabe Verzeichnis
+_output_target=${_dest}/catalogs
+
+# Standard Ausgabename für Temporäre Daten in ~/.cache erstellen!
+_tempdir=$HOME/.cache
+_output="catalog_${_date}_UTF8.csv"
+## override
+_catalog_sqlfile=$HOME/.config/HJCMS/abebooks-catalog-export.sql
+_catalog_header=$HOME/.config/HJCMS/abebooks-catalog-export.header
+
+#####################################################################
+
+if test ! -x /usr/bin/curl ; then
+  echo "cUrl application is not installed!"
+  exit 1
+fi
+
+if test ! -x /usr/bin/zip ; then
+  echo "zip compression application is not installed!"
+  exit 1
+fi
+
+if test ! -e ${_catalog_sqlfile} ; then
+  echo "SQL File not found!"
+  echo "- ${_catalog_sqlfile} "
+  exit 1
+fi
+
+if test ! -e ${_catalog_header} ; then
+  echo "Header File not found!"
+  echo "- ${_catalog_header} "
+  exit 1
+fi
+
+if test ! -d ${_output_target} ; then
+  echo "Invalid output target!"
+  exit 1
+fi
+
+__init_tempfile
+
+__init_sql_enviroment
+
+cd ${_output_target}
+
+rm -f ${_tempdir}/abebooks-trace.log
+touch ${_tempdir}/abebooks-trace.log
+
+psql \
+  --csv \
+  --no-align \
+  --echo-hidden \
+  --tuples-only \
+  --field-separator="`printf '\t'`" \
+  --log-file=${_tempdir}/abebooks-trace.log \
+  --output=${_tempdir}/abebooks-export.sql < ${_catalog_sqlfile}
+
+if test -s ${_tempdir}/abebooks-export.sql ; then
+  head -1 ${_catalog_header}  > ${_tempdir}/catalog-export-utf8.csv
+  sed 's,NOT_SET,,g' ${_tempdir}/abebooks-export.sql >> ${_tempdir}/catalog-export-utf8.csv
+  iconv -f UTF8 -t LATIN1 \
+    --output=${_tempdir}/abebooks-catalog-latin1.csv ${_tempdir}/catalog-export-utf8.csv
+  _status=$?
+  if test ${_status} -gt 0 ; then
+    echo "Script ENCODING Check with errors!"
+    exit 1
+  fi
+  mv -b ${_tempdir}/catalog-export-utf8.csv ${_output_target}/${_output}
+  _lines="$(wc -l ${_output_target}/${_output} 2>/dev/null | cut -d' ' -f1)"
+  echo "Katalog Abebooks am '`date`' mit '`echo "${_lines} - 1" | bc`' einträgen." >> ${_output_target}/catalog.log
+  rm -f ${_output_target}/catalog.csv
+  ln -sf ${_output} ${_output_target}/catalog.csv
+  rm -f ${_tempdir}/abebooks-export.sql
+fi
+
+_status=$?
+if test ${_status} -gt 0 ; then
+  echo "Script ending with errors"
+  exit 1
+fi
+
+if test ${_disable_upload} ; then
+  echo "Done without Upload"
+  ls -l ${_tempdir}/abebooks-catalog-latin1.csv
+  ls -l ${_output_target}/${_output}
+  exit 0
+fi
+
+pushd ${_output_target}
+  ## Aufräumen und zippen
+  cp $(readlink catalog.csv) catalog_utf8.csv
+  chmod 0644 catalog_utf8.csv
+  rm -f *.zip
+  zip -9 -o catalog.zip catalog_utf8.csv 1> /dev/null
+  chmod 0644 catalog.zip
+  rm -f catalog_utf8.csv
+
+  ## Upload
+  if test -e catalog.zip ; then
+    _upload_file=catalog.zip
+    _whsoft_apiKey="3fbe2f84-1ae2-419e-b5c4-fecabd6bac6c"
+    _whsoft_remote=https://www.buchfreund.de/verkaeufer/api/${_whsoft_apiKey}/upload-daten
+    curl --silent \
+      --ssl-reqd \
+      --tlsv1.2 \
+      -X POST "${_whsoft_remote}" \
+      -H "Accept: */*" \
+      -H "Cache-Control: no-cache" \
+      -H "Content-Type: multipart/form-data" \
+      -F "boundary=upload" \
+      -F "file=@${_upload_file}" \
+      --dump-header ${_tempdir}/catalog_dump.header \
+      --output ${_tempdir}/catalog.json
+
+    if test $? -ne 0 ; then
+      echo "Curl finished with errors!"
+      echo "Check: ${_logdir}/catalog.log ${_tempdir}/catalog.json"
+      exit 1
+    fi
+  fi
+popd
+
+##
+## EOF
+##
