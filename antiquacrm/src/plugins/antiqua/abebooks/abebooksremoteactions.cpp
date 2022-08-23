@@ -23,6 +23,55 @@ static const QIcon btnIcon() {
   return QIcon();
 }
 
+ABE_StatusPage::ABE_StatusPage(QWidget *parent) : QWidget{parent} {
+  setObjectName("abebooks_status_page");
+  QVBoxLayout *layout = new QVBoxLayout(this);
+
+  m_rb1 = new QRadioButton(tr("Provider Status - no disclosures"), this);
+  m_rb1->setChecked(true);
+  layout->addWidget(m_rb1);
+
+  m_rb2 = new QRadioButton(tr("Direct order accepted!"), this);
+  m_rb2->setObjectName("availabilityConfirmed");
+  layout->addWidget(m_rb2);
+
+  m_rb3 = new QRadioButton(tr("The item will be shipped!"), this);
+  m_rb3->setObjectName("shipped");
+  layout->addWidget(m_rb3);
+
+  m_rb4 = new QRadioButton(tr("The order is rejected!"), this);
+  m_rb4->setObjectName("rejected");
+  layout->addWidget(m_rb4);
+
+  m_rb5 = new QRadioButton(tr("Article is no longer available!"), this);
+  m_rb5->setObjectName("previouslySold");
+  layout->addWidget(m_rb5);
+
+  m_rb6 = new QRadioButton(tr("The buyer's credit card is declined!"), this);
+  m_rb6->setObjectName("creditCardDeclined");
+  layout->addWidget(m_rb6);
+
+  m_apply = new QPushButton(btnIcon(), tr("Apply"), this);
+  layout->addWidget(m_apply);
+  layout->addStretch(1);
+  setLayout(layout);
+
+  connect(m_apply, SIGNAL(clicked()), this, SLOT(prepareAction()));
+}
+
+void ABE_StatusPage::prepareAction() {
+  QList<QRadioButton *> l = findChildren<QRadioButton *>(QString());
+  for (int i = 0; i < l.count(); i++) {
+    QRadioButton *rb = l.at(i);
+    if (rb != nullptr && !rb->objectName().isEmpty()) {
+      if (rb->isChecked()) {
+        emit sendAction(rb->objectName());
+        break;
+      }
+    }
+  }
+}
+
 ABE_StartPage::ABE_StartPage(QWidget *parent) : QWidget{parent} {
   setObjectName("abebooks_action_start_page");
   setMinimumSize(QSize(300, 150));
@@ -50,8 +99,6 @@ ABE_StartPage::ABE_StartPage(QWidget *parent) : QWidget{parent} {
   layout->addWidget(btn_cancel);
 
 #ifndef ANTIQUA_DEVELOPEMENT
-  btn_status->setEnabled(false);
-  btn_status->setToolTip(tr("Currently not supported!"));
   btn_cancel->setEnabled(false);
   btn_cancel->setToolTip(tr("Currently not supported!"));
 #endif
@@ -62,8 +109,10 @@ ABE_StartPage::ABE_StartPage(QWidget *parent) : QWidget{parent} {
   connect(btn_cancel, SIGNAL(clicked()), this, SLOT(cancelClicked()));
 }
 
-void ABE_StartPage::statusClicked() {}
-void ABE_StartPage::cancelClicked() {}
+void ABE_StartPage::statusClicked() { emit sendGotoPage(1); }
+void ABE_StartPage::cancelClicked() {
+  // emit sendGotoPage(2);
+}
 
 AbeBooksRemoteActions::AbeBooksRemoteActions(QWidget *parent)
     : QDialog{parent} {
@@ -92,19 +141,30 @@ AbeBooksRemoteActions::AbeBooksRemoteActions(QWidget *parent)
   int page = 0;
   m_startPage = new ABE_StartPage(m_stackedWidget);
   m_stackedWidget->insertWidget(page++, m_startPage);
-
+  m_statusPage = new ABE_StatusPage(m_stackedWidget);
+  m_stackedWidget->insertWidget(page++, m_statusPage);
   // END
 
   // SIGNALS
-  // connect(m_startPage, SIGNAL(sendGotoPage(int)), m_stackedWidget,
-  // SLOT(setCurrentIndex(int)));
+  connect(m_startPage, SIGNAL(sendGotoPage(int)), m_stackedWidget,
+          SLOT(setCurrentIndex(int)));
+
+  connect(m_statusPage, SIGNAL(sendAction(const QString &)), this,
+          SLOT(prepareStatusAction(const QString &)));
+  connect(m_statusPage, SIGNAL(sendNotes(const QString &)), this,
+          SLOT(pushMessage(const QString &)));
+
   connect(m_buttonBar, SIGNAL(rejected()), this, SLOT(reject()));
   // END
 }
 
-void AbeBooksRemoteActions::prepareAction(const QJsonObject &jsObj) {}
+void AbeBooksRemoteActions::prepareStatusAction(const QString &cmd) {
+  qDebug() << Q_FUNC_INFO << cmd;
+}
 
-void AbeBooksRemoteActions::pushMessage(const QString &msg) {}
+void AbeBooksRemoteActions::pushMessage(const QString &msg) {
+  qDebug() << Q_FUNC_INFO << msg;
+}
 
 void AbeBooksRemoteActions::setPurchaser(const QString &person) {
   if (person.isEmpty())

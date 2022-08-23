@@ -4,7 +4,7 @@
 <context>
     <name>ABE_StartPage</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksremoteactions.cpp" line="+34"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksremoteactions.cpp" line="+83"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
@@ -25,9 +25,46 @@
     </message>
     <message>
         <location line="+5"/>
-        <location line="+2"/>
         <source>Currently not supported!</source>
         <translation>Wird Zurzeit nicht Unterstützt!</translation>
+    </message>
+</context>
+<context>
+    <name>ABE_StatusPage</name>
+    <message>
+        <location line="-73"/>
+        <source>Provider Status - no disclosures</source>
+        <translation>Anbieterstatus – keine Angaben</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Direct order accepted!</source>
+        <translation>Direktbestellung angenommen!</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>The item will be shipped!</source>
+        <translation>Der Artikel wird versendet!</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>The order is rejected!</source>
+        <translation>Die Bestellung wird abgelehnt!</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Article is no longer available!</source>
+        <translation>Artikel ist nicht mehr verfügbar!</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>The buyer&apos;s credit card is declined!</source>
+        <translation>Die Kreditkarte des Käufers wird abgelehnt!</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Apply</source>
+        <translation>Anwenden</translation>
     </message>
 </context>
 <context>

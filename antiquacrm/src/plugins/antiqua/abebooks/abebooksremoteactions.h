@@ -8,6 +8,7 @@
 #include <QDialog>
 #include <QObject>
 #include <QWidget>
+#include <QRadioButton>
 #include <QStackedWidget>
 #include <QDialogButtonBox>
 #include <QStatusBar>
@@ -15,6 +16,29 @@
 #include <AntiquaInterface>
 
 class AbeBooksRequester;
+
+class ANTIQUACORE_EXPORT ABE_StatusPage final : public QWidget {
+  Q_OBJECT
+
+private:
+  QRadioButton *m_rb1;
+  QRadioButton *m_rb2;
+  QRadioButton *m_rb3;
+  QRadioButton *m_rb4;
+  QRadioButton *m_rb5;
+  QRadioButton *m_rb6;
+  QPushButton *m_apply;
+
+Q_SIGNALS:
+  void sendNotes(const QString &message);
+  void sendAction(const QString &nodeValue);
+
+private Q_SLOTS:
+  void prepareAction();
+
+public:
+  explicit ABE_StatusPage(QWidget *parent = nullptr);
+};
 
 /**
  * @brief Startseite
@@ -52,6 +76,7 @@ private:
 
   QStackedWidget *m_stackedWidget;
   ABE_StartPage *m_startPage;
+  ABE_StatusPage *m_statusPage;
 
   QDialogButtonBox *m_buttonBar;
   QPushButton *btn_commit;
@@ -60,16 +85,9 @@ private:
 
 private Q_SLOTS:
   /**
-   * @brief prepareAction
-   * @code
-   * {
-   *  "action" : QString,
-   *  "type" : QString,
-   *  "value" : QString
-   * }
-   * @endcode
+   * @brief orderUpdateStatus erstellen
    */
-  void prepareAction(const QJsonObject &jsObj);
+  void prepareStatusAction(const QString &cmd);
 
   /**
    * @brief Status Nachrichten
