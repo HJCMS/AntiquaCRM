@@ -176,6 +176,9 @@ if test -s ${_tempdir}/catalog-export.temp ; then
   rm -f ${_tempdir}/catalog-export.temp
 fi
 
+echo "TEST MODE no upload"
+exit 0
+
 if test -s ${_output_target}/${_output} ; then
   _token="$(__authentication)"
   sleep 1

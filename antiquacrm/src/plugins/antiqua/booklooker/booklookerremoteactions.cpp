@@ -35,10 +35,15 @@ BL_Message::BL_Message() {
 }
 
 void BL_Message::setType(const QString &str) { p_type = str; }
+
 const QString BL_Message::getType() { return p_type; }
+
 void BL_Message::setTitle(const QString &str) { p_title = str; }
+
 const QString BL_Message::getTitle() { return p_title; }
+
 void BL_Message::setBody(const QString &str) { p_body = str; }
+
 const QString BL_Message::getBody() { return p_body; }
 
 Bl_PageWidget::Bl_PageWidget(QWidget *parent) : QWidget{parent} {}
@@ -108,53 +113,6 @@ void Bl_StatusPage::prepareAction() {
   }
 }
 
-Bl_CancelPage::Bl_CancelPage(QWidget *parent) : Bl_PageWidget{parent} {
-  setObjectName("booklooker_cancel_order");
-  QVBoxLayout *layout = new QVBoxLayout(this);
-  // order_cancel
-  QLabel *lb = new QLabel(this);
-  lb->setTextFormat(Qt::RichText);
-  QString txt("<b>");
-  txt.append(tr("Cancel the currently selected order."));
-  txt.append("</b><p>");
-  txt.append(tr("A message to the buyer must be sent separately."));
-  txt.append("</p>");
-  lb->setText(txt);
-  layout->addWidget(lb);
-  layout->addStretch(1);
-  m_apply = new QPushButton(btnIcon(), tr("Apply"), this);
-  layout->addWidget(m_apply);
-  setLayout(layout);
-
-  connect(m_apply, SIGNAL(clicked()), this, SLOT(prepareAction()));
-}
-
-void Bl_CancelPage::prepareAction() {
-  QJsonObject obj;
-  obj.insert("action", QJsonValue("order_cancel"));
-  obj.insert("type", QJsonValue());
-  obj.insert("value", QJsonValue());
-  emit sendAction(obj);
-}
-
-Bl_EMailPage::Bl_EMailPage(QWidget *parent) : Bl_PageWidget{parent} {
-  setObjectName("booklooker_create_email");
-  QVBoxLayout *layout = new QVBoxLayout(this);
-  QLabel *lb = new QLabel(tr("Currently not Supported!"), this);
-  layout->addWidget(lb, Qt::AlignCenter);
-  setLayout(layout);
-
-  // connect(m_apply, SIGNAL(clicked()), this, SLOT(prepareAction()));
-}
-
-void Bl_EMailPage::prepareAction() {
-  QJsonObject obj;
-  obj.insert("action", QJsonValue("post_email"));
-  obj.insert("type", QJsonValue());
-  obj.insert("value", QJsonValue());
-  emit sendAction(obj);
-}
-
 Bl_MessagePage::Bl_MessagePage(QWidget *parent) : Bl_PageWidget{parent} {
   setObjectName("booklooker_messanger");
   // order_message
@@ -207,6 +165,7 @@ void Bl_MessagePage::prepareAction() {
     return;
   }
   QString type = m_type->itemData(index, Qt::UserRole).toString();
+  type.replace("PROVIDER_","");
   QJsonObject obj;
   obj.insert("action", QJsonValue("order_message"));
   obj.insert("type", QJsonValue(type));
@@ -217,9 +176,9 @@ void Bl_MessagePage::prepareAction() {
   emit sendAction(obj);
 }
 
-void Bl_MessagePage::setPurchaser(QString &person, const QString &email) {
+void Bl_MessagePage::setPurchaser(QString &person, const QString &orderId) {
   p_replacements.insert("@PROVIDER_PURCHASER@", person);
-  p_replacements.insert("@PROVIDER_PURCHASER_EMAIL@", email);
+  p_replacements.insert("@PROVIDER_ORDER_ID@", orderId);
 }
 
 bool Bl_MessagePage::initSqlMessages() {
@@ -242,8 +201,14 @@ bool Bl_MessagePage::initSqlMessages() {
     return false;
   }
 
+  QStringList where_in;
+  QStringList types = BooklookerRequester::orderMessageTypes();
+  foreach (QString t, types) {
+    where_in << "'PROVIDER_" + t + "'";
+  }
+
   QString sql("SELECT * FROM ui_template_body WHERE");
-  sql.append(" tb_caller LIKE 'PROVIDER_%';");
+  sql.append(" tb_caller IN (" + where_in.join(",") + ");");
 
   QSqlQuery q = db.exec(sql);
   if (q.size() > 0) {
@@ -281,6 +246,7 @@ Bl_StartPage::Bl_StartPage(QWidget *parent) : QWidget{parent} {
   btn_status = new QPushButton(icon, tr("Status"), this);
   btn_status->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   btn_status->setIconSize(iconSize);
+  btn_status->setMinimumHeight(btn_status->width());
   QFont btn_font = btn_status->font();
   btn_font.setPointSize((btn_font.pointSize() + 2));
   btn_status->setFont(btn_font);
@@ -288,62 +254,30 @@ Bl_StartPage::Bl_StartPage(QWidget *parent) : QWidget{parent} {
   btn_status->setToolTip(tr("Order Status update."));
   layout->addWidget(btn_status, 0, 0, 1, 1);
 
-  btn_email = new QPushButton(icon, tr("eMail"), this);
-  btn_email->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  btn_email->setFont(btn_font);
-  btn_email->setIconSize(iconSize);
-  // Senden einer E-Mail an den Käufer.
-#ifndef ANTIQUA_DEVELOPEMENT
-  btn_email->setEnabled(false);
-  btn_email->setToolTip(tr("Currently not Supported!"));
-#else
-  btn_email->setEnabled(true);
-  btn_email->setToolTip(tr("Sending eMail to Purchaser."));
-#endif
-  layout->addWidget(btn_email, 0, 1, 1, 1);
-
-  btn_cancel = new QPushButton(icon, tr("Cancel"), this);
-  btn_cancel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  btn_cancel->setFont(btn_font);
-  btn_cancel->setIconSize(iconSize);
-  // Stornieren einer kompletten Bestellung.
-  btn_cancel->setToolTip(tr("Cancel an entire order."));
-  layout->addWidget(btn_cancel, 1, 0, 1, 1);
-
   btn_message = new QPushButton(icon, tr("Message"), this);
   btn_message->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   btn_message->setFont(btn_font);
   btn_message->setIconSize(iconSize);
+  btn_message->setMinimumHeight(btn_message->width());
   // Versand einer Nachricht an den Käufer.
-#ifndef ANTIQUA_DEVELOPEMENT
-  btn_message->setEnabled(false);
-  btn_message->setToolTip(tr("Currently not Supported!"));
-#else
   btn_message->setEnabled(true);
   btn_message->setToolTip(tr("Sending a message to the Purchaser."));
-#endif
-  layout->addWidget(btn_message, 1, 1, 1, 1);
+  layout->addWidget(btn_message, 0, 1, 1, 1);
 
+  layout->setRowStretch(1, 1);
   setLayout(layout);
 
   connect(btn_status, SIGNAL(clicked()), this, SLOT(statusClicked()));
-  connect(btn_email, SIGNAL(clicked()), this, SLOT(emailClicked()));
-  connect(btn_cancel, SIGNAL(clicked()), this, SLOT(cancelClicked()));
   connect(btn_message, SIGNAL(clicked()), this, SLOT(messageClicked()));
 }
 
 void Bl_StartPage::statusClicked() { emit sendGotoPage(1); }
 
-void Bl_StartPage::emailClicked() { emit sendGotoPage(2); }
-
-void Bl_StartPage::cancelClicked() { emit sendGotoPage(3); }
-
-void Bl_StartPage::messageClicked() { emit sendGotoPage(4); }
+void Bl_StartPage::messageClicked() { emit sendGotoPage(2); }
 
 BooklookerRemoteActions::BooklookerRemoteActions(QWidget *parent)
     : QDialog{parent} {
   setSizeGripEnabled(true);
-  setMinimumSize(QSize(400, 400));
   setWindowTitle("Booklooker [*]");
   setContentsMargins(5, 0, 5, 10);
 
@@ -370,16 +304,12 @@ BooklookerRemoteActions::BooklookerRemoteActions(QWidget *parent)
   m_startPage = new Bl_StartPage(this);
   m_stackedWidget->insertWidget(page++, m_startPage);
 
+  // Bestellstatus
   m_statusPage = new Bl_StatusPage(this); // #1
   m_stackedWidget->insertWidget(page++, m_statusPage);
 
-  m_emailPage = new Bl_EMailPage(this); // #2
-  m_stackedWidget->insertWidget(page++, m_emailPage);
-
-  m_cancelPage = new Bl_CancelPage(this); // #3
-  m_stackedWidget->insertWidget(page++, m_cancelPage);
-
-  m_messagePage = new Bl_MessagePage(this); // #4
+  // Nachricht an
+  m_messagePage = new Bl_MessagePage(this); // #2
   m_stackedWidget->insertWidget(page++, m_messagePage);
   // END
 
@@ -392,14 +322,6 @@ BooklookerRemoteActions::BooklookerRemoteActions(QWidget *parent)
           SLOT(prepareAction(const QJsonObject &)));
   connect(m_statusPage, SIGNAL(sendNotes(const QString &)), this,
           SLOT(pushMessage(const QString &)));
-  connect(m_emailPage, SIGNAL(sendAction(const QJsonObject &)), this,
-          SLOT(prepareAction(const QJsonObject &)));
-  connect(m_emailPage, SIGNAL(sendNotes(const QString &)), this,
-          SLOT(pushMessage(const QString &)));
-  connect(m_cancelPage, SIGNAL(sendAction(const QJsonObject &)), this,
-          SLOT(prepareAction(const QJsonObject &)));
-  connect(m_cancelPage, SIGNAL(sendNotes(const QString &)), this,
-          SLOT(pushMessage(const QString &)));
   connect(m_messagePage, SIGNAL(sendAction(const QJsonObject &)), this,
           SLOT(prepareAction(const QJsonObject &)));
   connect(m_messagePage, SIGNAL(sendNotes(const QString &)), this,
@@ -409,16 +331,11 @@ BooklookerRemoteActions::BooklookerRemoteActions(QWidget *parent)
 }
 
 void BooklookerRemoteActions::prepareAction(const QJsonObject &jsObj) {
-  // qDebug() << Q_FUNC_INFO << p_orderId << jsObj;
   QString action = jsObj.value("action").toString();
   QString type = jsObj.value("type").toString();
   QString value = jsObj.value("value").toString();
   if (action == "order_status") {
     m_requester->queryUpdateOrderStatus(p_orderId, value);
-  } else if (action == "order_cancel") {
-    m_requester->queryUpdateOrderCancel(p_orderId);
-  } else if (action == "email") {
-    qInfo("TODO: function eMail to purchaser");
   } else if (action == "order_message") {
     m_requester->queryPushMessage(p_orderId, type, value);
   } else {
@@ -427,7 +344,7 @@ void BooklookerRemoteActions::prepareAction(const QJsonObject &jsObj) {
 }
 
 void BooklookerRemoteActions::pushMessage(const QString &msg) {
-  m_statusBar->showMessage(msg, (1000 * 6));
+  m_statusBar->showMessage(msg, 6000);
 }
 
 void BooklookerRemoteActions::jsonResponse(const QJsonDocument &jdoc) {
@@ -456,13 +373,6 @@ void BooklookerRemoteActions::setPurchaser(const QString &person) {
   p_purchaser = person;
 }
 
-void BooklookerRemoteActions::setEMail(const QString &email) {
-  if (email.isEmpty())
-    return;
-
-  p_purchaser_mail = email;
-}
-
 int BooklookerRemoteActions::exec(const QString &orderId) {
   if (orderId.length() < 4) {
     qWarning("BooklookerRemoteActions: orderID rejected.");
@@ -470,7 +380,7 @@ int BooklookerRemoteActions::exec(const QString &orderId) {
   }
 
   if (!p_purchaser.isEmpty())
-    m_messagePage->setPurchaser(p_purchaser, p_purchaser_mail);
+    m_messagePage->setPurchaser(p_purchaser, orderId);
 
   if (!m_messagePage->initSqlMessages())
     return QDialog::Rejected;

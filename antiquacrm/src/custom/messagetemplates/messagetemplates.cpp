@@ -135,7 +135,7 @@ void MessageTemplates::setSqlQuery() {
   }
 
   QString tb_gender = QString::number(m_toolBar->getGender());
-  QString tb_attachment = "false";
+  QString tb_attachment = (m_toolBar->hasAttachment()) ? "true" : "false";
 
   QString sql("SELECT * FROM ui_template_body WHERE tb_title='");
   sql.append(tb_title + "';");

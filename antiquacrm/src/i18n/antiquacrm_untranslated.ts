@@ -392,45 +392,19 @@
     </message>
 </context>
 <context>
-    <name>Bl_CancelPage</name>
-    <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+118"/>
-        <source>Cancel the currently selected order.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>A message to the buyer must be sent separately.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Apply</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Bl_EMailPage</name>
-    <message>
-        <location line="+18"/>
-        <source>Currently not Supported!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Bl_MessagePage</name>
     <message>
-        <location line="+108"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+216"/>
         <source>Please select send type first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-83"/>
+        <location line="-90"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+67"/>
         <source>No Database Connection found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -440,7 +414,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-36"/>
+        <location line="-37"/>
         <source>No Message type selected!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -448,39 +422,13 @@
 <context>
     <name>Bl_StartPage</name>
     <message>
-        <location line="+76"/>
+        <location line="+83"/>
         <source>Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Order Status update.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>eMail</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <location line="+22"/>
-        <source>Currently not Supported!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-19"/>
-        <source>Sending eMail to Purchaser.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Cancel an entire order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -489,7 +437,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+7"/>
         <source>Sending a message to the Purchaser.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -497,7 +445,7 @@
 <context>
     <name>Bl_StatusPage</name>
     <message>
-        <location line="-266"/>
+        <location line="-202"/>
         <source>Changes the status of the current order.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1025,7 +973,7 @@
 <context>
     <name>BooklookerRemoteActions</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+353"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+265"/>
         <source>Invalid Parameters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1083,7 +1031,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+310"/>
+        <location line="+239"/>
+        <source>Invalid Messagetype, operation rejected!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+88"/>
         <source>Server temporarily down!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1128,7 +1081,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-443"/>
+        <location line="-460"/>
         <source>Server down</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3851,13 +3804,23 @@
 <context>
     <name>MessageKeywordList</name>
     <message>
-        <location filename="../custom/messagetemplates/messagekeywordlist.cpp" line="+14"/>
+        <location filename="../custom/messagetemplates/messagekeywordlist.cpp" line="+15"/>
         <source>Category</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Template</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>Tab Jobs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Tab Orders</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

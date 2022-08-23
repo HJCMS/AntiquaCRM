@@ -20,7 +20,7 @@ class MessageKeywordList final : public QTreeWidget {
 
 private:
   QString delimiter = QString("@");
-  QTreeWidgetItem *getSection(const QString &section);
+  QTreeWidgetItem *getSection(const QString &section, const QString &type);
   bool insertTplKey(QTreeWidgetItem *parent, const QJsonObject &jsObj);
 
 protected:

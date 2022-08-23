@@ -394,13 +394,15 @@ bool BooklookerRequester::deleteRequest(const QUrl &url) {
 }
 
 bool BooklookerRequester::putRequest(const QUrl &url, const QByteArray &data) {
+#ifdef ANTIQUA_DEVELOPEMENT
+  QUrlQuery dispUrl(url);
+  qDebug() << Q_FUNC_INFO << dispUrl.toString(QUrl::FullyEncoded);
+  return true;
+#endif
+
   QNetworkRequest req = newRequest(url);
   req.setRawHeader("Content-Type", "text/plain");
   m_reply = put(req, data);
-
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << m_reply->url() << data;
-#endif
 
   connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));
@@ -452,6 +454,11 @@ void BooklookerRequester::queryList() {
   q.addQueryItem("dateTo", QDate(QDate::currentDate()).toString(DATE_FORMAT));
   url.setQuery(q);
   getRequest(url);
+}
+
+const QStringList BooklookerRequester::orderMessageTypes() {
+  QStringList l({"PAYMENT_INFORMATION", "PAYMENT_REMINDER", "SHIPPING_NOTICE"});
+  return l;
 }
 
 void BooklookerRequester::queryUpdateOrderStatus(const QString &orderId,
@@ -516,20 +523,30 @@ void BooklookerRequester::queryPushMessage(const QString &orderId,
     return;
   }
 
+  QStringList types = orderMessageTypes();
+  if (!types.contains(messageType)) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "INVALID:" << messageType;
+#endif
+    emit errorMessage(Antiqua::ErrorStatus::NOTICE,
+                      tr("Invalid Messagetype, operation rejected!"));
+    return;
+  }
+
   QUrlQuery q;
   q.addQueryItem("order_message", getToken());
   q.addQueryItem("orderId", orderId);
   q.addQueryItem("messageType", messageType);
+  q.addQueryItem("additionalText", additionalText);
 
   QUrlQuery body;
   body.addQueryItem("additionalText", additionalText);
   QString message = body.toString(QUrl::FullyEncoded);
 
-  p_operation = "order_cancel";
+  p_operation = "order_message";
   QUrl url = apiQuery(p_operation);
   url.setQuery(q);
-  qDebug() << Q_FUNC_INFO << "TODO" << orderId << messageType << message;
-  // putRequest(url, message.toLocal8Bit());
+  putRequest(url, message.toLocal8Bit());
 }
 
 void BooklookerRequester::queryOrder(const QString &orderId) {

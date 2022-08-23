@@ -3,15 +3,16 @@
 
 #include "messagekeywordlist.h"
 
-#include <QHeaderView>
-#include <QMimeData>
+#include <QBrush>
 #include <QDrag>
+#include <QHeaderView>
 #include <QLabel>
+#include <QMimeData>
 
 MessageKeywordList::MessageKeywordList(QWidget *parent) : QTreeWidget{parent} {
   setObjectName("message_keyword_list");
   setColumnCount(2);
-  QStringList titles({tr("Category"),tr("Template")});
+  QStringList titles({tr("Category"), tr("Template")});
   setHeaderLabels(titles);
   setSelectionMode(QAbstractItemView::SingleSelection);
   setAlternatingRowColors(true);
@@ -23,7 +24,8 @@ MessageKeywordList::MessageKeywordList(QWidget *parent) : QTreeWidget{parent} {
   header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
-QTreeWidgetItem *MessageKeywordList::getSection(const QString &section) {
+QTreeWidgetItem *MessageKeywordList::getSection(const QString &section,
+                                                const QString &type) {
   for (int i = 0; i < topLevelItemCount(); i++) {
     QTreeWidgetItem *p = topLevelItem(i);
     if (p->text(0) == section)
@@ -34,6 +36,20 @@ QTreeWidgetItem *MessageKeywordList::getSection(const QString &section) {
   item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
   item->setFlags(Qt::ItemIsEnabled);
   item->setText(0, section);
+
+  if (!type.isEmpty()) {
+    if (type.contains("CRM")) {
+      item->setText(1, tr("Tab Jobs"));
+    } else if (type.contains("PROVIDER")) {
+      item->setText(1, tr("Tab Orders"));
+    }
+
+    QFont f = font();
+    f.setStyleHint(QFont::Serif, QFont::PreferDefault);
+    f.setStyle(QFont::StyleItalic);
+    item->setFont(1, f);
+    item->setForeground(1, QBrush(Qt::gray));
+  }
   return item;
 }
 
@@ -80,8 +96,10 @@ void MessageKeywordList::mousePressEvent(QMouseEvent *event) {
   QTreeWidget::mousePressEvent(event);
 }
 
-void MessageKeywordList::addKey(const QString &section, const QJsonObject &jsObj) {
-  QTreeWidgetItem *parent = getSection(section);
+void MessageKeywordList::addKey(const QString &section,
+                                const QJsonObject &jsObj) {
+  QString key = jsObj.value("key").toString();
+  QTreeWidgetItem *parent = getSection(section, key);
   if (parent != nullptr)
     insertTplKey(parent, jsObj);
 }

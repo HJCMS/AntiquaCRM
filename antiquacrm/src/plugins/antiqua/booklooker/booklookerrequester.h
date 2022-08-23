@@ -153,6 +153,15 @@ public:
   explicit BooklookerRequester(QObject *parent = nullptr);
 
   /**
+   * @brief Zulässige Nachrichten Typen
+   * @code
+   *  https://api.booklooker.de/2.0/order_message?token=REST_API_TOKEN
+   * @endcode
+   * @return QStringList
+   */
+  static const QStringList orderMessageTypes();
+
+  /**
    * @brief Sende Statusänderungen für Bestellung
    * @param orderId
    * @param status

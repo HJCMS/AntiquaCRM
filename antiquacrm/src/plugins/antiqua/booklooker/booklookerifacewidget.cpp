@@ -268,8 +268,6 @@ void BooklookerIfaceWidget::createProviderOrderUpdate() {
   person << getValue("c_firstname").toString();
   person << getValue("c_lastname").toString();
   m_dialog->setPurchaser(person.join(" "));
-  // E-Mail
-  m_dialog->setEMail(getValue("c_email_0").toString());
 
   if (m_dialog->exec(getOrderId()) == QDialog::Accepted) {
     qDebug() << Q_FUNC_INFO << "TODO";

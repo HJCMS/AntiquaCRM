@@ -90,38 +90,6 @@ public:
 };
 
 /**
- * @brief Bestellung Stornieren
- */
-class ANTIQUACORE_EXPORT Bl_CancelPage final : public Bl_PageWidget {
-  Q_OBJECT
-
-private:
-  QPushButton *m_apply;
-
-private Q_SLOTS:
-  void prepareAction();
-
-public:
-  explicit Bl_CancelPage(QWidget *parent = nullptr);
-};
-
-/**
- * @brief E-Mail Körper erstellen
- */
-class ANTIQUACORE_EXPORT Bl_EMailPage final : public Bl_PageWidget {
-  Q_OBJECT
-
-private:
-  QPushButton *m_apply;
-
-private Q_SLOTS:
-  void prepareAction();
-
-public:
-  explicit Bl_EMailPage(QWidget *parent = nullptr);
-};
-
-/**
  * @brief Nachricht an Käufer senden
  */
 class ANTIQUACORE_EXPORT Bl_MessagePage final : public Bl_PageWidget {
@@ -141,7 +109,7 @@ private Q_SLOTS:
 
 public:
   explicit Bl_MessagePage(QWidget *parent = nullptr);
-  void setPurchaser(QString &person, const QString &email);
+  void setPurchaser(QString &person, const QString &orderId);
   bool initSqlMessages();
 };
 
@@ -153,14 +121,10 @@ class ANTIQUACORE_EXPORT Bl_StartPage final : public QWidget {
 
 private:
   QPushButton *btn_status;
-  QPushButton *btn_email;
-  QPushButton *btn_cancel;
   QPushButton *btn_message;
 
 private Q_SLOTS:
   void statusClicked();
-  void emailClicked();
-  void cancelClicked();
   void messageClicked();
 
 Q_SIGNALS:
@@ -180,6 +144,8 @@ class ANTIQUACORE_EXPORT BooklookerRemoteActions final : public QDialog {
 
 private:
   QString p_orderId;
+  QString p_purchaser;
+
   BooklookerRequester *m_requester;
   QDialogButtonBox *m_buttonBar;
   QPushButton *btn_commit;
@@ -187,12 +153,8 @@ private:
   QStackedWidget *m_stackedWidget;
   Bl_StartPage *m_startPage;
   Bl_StatusPage *m_statusPage;
-  Bl_CancelPage *m_cancelPage;
-  Bl_EMailPage *m_emailPage;
   Bl_MessagePage *m_messagePage;
   QStatusBar *m_statusBar;
-  QString p_purchaser;
-  QString p_purchaser_mail;
 
 private Q_SLOTS:
   /**
@@ -220,7 +182,6 @@ private Q_SLOTS:
 public:
   explicit BooklookerRemoteActions(QWidget *parent = nullptr);
   void setPurchaser(const QString &person);
-  void setEMail(const QString &email);
   int exec(const QString &orderId);
 };
 
