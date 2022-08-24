@@ -80,3 +80,18 @@ const QStringList PreviewTable::dataRows(const QString &delimiter) {
   list << summary.join(delimiter);
   return list;
 }
+
+const QString PreviewTable::salesVolume() {
+  double sum_price = 0;
+  int columns = horizontalHeader()->count();
+  QStringList list;
+  for (int r = 0; r < m_model->rowCount(); r++) {
+    QModelIndex index = m_model->index(r, TABLE_PRICE_CELL);
+    QString buffer = m_model->data(index, Qt::DisplayRole).toString();
+    sum_price += std::stod(buffer.toStdString());
+  }
+  char buffer[10];
+  int len = std::sprintf(buffer, "%0.2f", sum_price);
+  QByteArray array(buffer, len);
+  return QString::fromLocal8Bit(array);
+}

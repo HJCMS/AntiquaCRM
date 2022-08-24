@@ -431,17 +431,17 @@
 <context>
     <name>Bl_MessagePage</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+216"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+219"/>
         <source>Please select send type first.</source>
         <translation>Bitte wählen Sie zuerst die Versandart aus.</translation>
     </message>
     <message>
-        <location line="-90"/>
+        <location line="-93"/>
         <source>Apply</source>
         <translation>Anwenden</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+70"/>
         <source>No Database Connection found!</source>
         <translation>Keine Datenbankverbindung gefunden!</translation>
     </message>
@@ -482,7 +482,7 @@
 <context>
     <name>Bl_StatusPage</name>
     <message>
-        <location line="-202"/>
+        <location line="-205"/>
         <source>Changes the status of the current order.</source>
         <translation>Ändert den Status der Aktuellen Bestellung.</translation>
     </message>
@@ -1010,7 +1010,7 @@
 <context>
     <name>BooklookerRemoteActions</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+265"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+268"/>
         <source>Invalid Parameters</source>
         <translation>Ungültige Parameter</translation>
     </message>
@@ -2760,7 +2760,7 @@
         <translation>Rechnungen</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+30"/>
         <source>Cards</source>
         <translation>Buchkarten</translation>
     </message>
@@ -2780,12 +2780,17 @@
         <translation>Der kleinste zulässige Verkaufspreis.</translation>
     </message>
     <message>
-        <location line="-75"/>
+        <location line="-85"/>
         <source>Archive/Applications paths</source>
         <translation>Archiv/Programmpfade</translation>
     </message>
     <message>
         <location line="+36"/>
+        <source>Monthly Reports</source>
+        <translation>Monatsberichte</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Payment Reminder</source>
         <translation>Zahlungserinnerung</translation>
     </message>
@@ -2846,17 +2851,17 @@
     </message>
     <message>
         <location line="+4"/>
-        <location line="+121"/>
+        <location line="+130"/>
         <source>fonts representation</source>
         <translation>Schriften Darstellung</translation>
     </message>
     <message>
-        <location line="-119"/>
+        <location line="-128"/>
         <source>open font settings</source>
         <translation>Schrifteinstellungen</translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+88"/>
         <source>Mailler</source>
         <translation>Mailler</translation>
     </message>
@@ -5746,17 +5751,12 @@
 <context>
     <name>ReportingDialog</name>
     <message>
-        <location filename="../custom/reporting/reportingdialog.cpp" line="+20"/>
+        <location filename="../custom/reporting/reportingdialog.cpp" line="+25"/>
         <source>Reports</source>
         <translation>Berichte</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Export various reports.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
+        <location line="+23"/>
         <source>Back</source>
         <translation>Zurück</translation>
     </message>
@@ -5776,14 +5776,24 @@
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+82"/>
-        <source>Save to ...</source>
-        <translation>Speichere in ...</translation>
+        <location line="-29"/>
+        <source>Create a monthly sales report.</source>
+        <translation>Erstellen Sie einen monatlichen Umsatzbericht.</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>payments_report_</source>
-        <translation>umsatz_bericht_</translation>
+        <location line="+84"/>
+        <source>Sales Volume</source>
+        <translation>Verkaufsvolumen</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Monthly payment report</source>
+        <translation>Monatlicher Kaufsbericht</translation>
+    </message>
+    <message>
+        <location line="+79"/>
+        <source>Save to ...</source>
+        <translation>Speichere in ...</translation>
     </message>
     <message>
         <location line="+40"/>

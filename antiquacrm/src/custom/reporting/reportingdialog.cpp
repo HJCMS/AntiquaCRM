@@ -9,9 +9,14 @@
 
 #include <QDebug>
 #include <QFileDialog>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValue>
 #include <QLayout>
 #include <QMessageBox>
 #include <QStatusTipEvent>
+
+#include <SqlCore>
 
 ReportingDialog::ReportingDialog(QWidget *parent) : QDialog{parent} {
   setMinimumSize(500, 500);
@@ -19,11 +24,13 @@ ReportingDialog::ReportingDialog(QWidget *parent) : QDialog{parent} {
   setContentsMargins(5, 5, 5, 5);
   setWindowTitle("AntiquaCRM " + tr("Reports") + " [*]");
 
+  m_cfg = new ApplSettings(this);
+
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 
   m_infoLabel = new QLabel(this);
-  m_infoLabel->setText(tr("Export various reports."));
+  m_infoLabel->setText(tr("Create a monthly sales report."));
   layout->addWidget(m_infoLabel);
 
   m_stackedWidget = new QStackedWidget(this);
@@ -74,7 +81,7 @@ ReportingDialog::ReportingDialog(QWidget *parent) : QDialog{parent} {
 
 int ReportingDialog::pageIndex() { return m_stackedWidget->currentIndex(); }
 
-void ReportingDialog::setSqlRangeQuery() {
+const QString ReportingDialog::getSqlQueryString() {
   QStringList fieldset;
   /** ID */
   fieldset << "o_id AS invoice_id";
@@ -100,30 +107,91 @@ void ReportingDialog::setSqlRangeQuery() {
   query.append(" o_delivered BETWEEN");
   query.append(" '" + p.first + "' AND '" + p.second + "'");
   query.append(" ORDER BY o_delivered;");
+  return query;
+}
+
+void ReportingDialog::setSqlRangeQuery() {
+  QString query = getSqlQueryString();
   m_previewTable->setQuery(query);
   setWindowModified(true);
+  QString s_vol = tr("Sales Volume");
+  s_vol.append(": ");
+  s_vol.append(m_previewTable->salesVolume());
+  s_vol.append(" ");
+  s_vol.append(m_cfg->value("payment/currency", "€").toString());
+  m_statusBar->showMessage(s_vol, 0);
+}
+
+const QJsonDocument ReportingDialog::getSqlQueryJson() {
+  QJsonDocument doc;
+  QString sql = getSqlQueryString();
+  if (sql.isEmpty())
+    return doc;
+
+  QJsonObject main;
+  main.insert("date", QDateTime::currentDateTime().toString(Qt::ISODate));
+  main.insert("title", tr("Monthly payment report"));
+
+  HJCMS::SqlCore *m_sql = new HJCMS::SqlCore(this);
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    QSqlRecord record = q.record();
+    QJsonArray rows;
+    while (q.next()) {
+      QJsonObject row;
+      for (int r = 0; r < record.count(); r++) {
+        QSqlField field = record.field(r);
+        QString key = field.name();
+        row.insert(key, q.value(key).toJsonValue());
+      }
+      rows.append(QJsonValue(row));
+    }
+    main.insert("payments", QJsonValue(rows));
+  }
+  doc.setObject(main);
+  return doc;
 }
 
 bool ReportingDialog::saveDataExport() {
-  QString header = m_previewTable->dataHeader();
-  QStringList rows = m_previewTable->dataRows();
-  if (rows.count() > 0) {
+  QFileInfo target = getSaveFile();
+  if (!target.dir().exists())
+    return false;
 
-    QFileInfo target = getSaveFile();
+  if (target.fileName().isEmpty())
+    return false;
 
-    if (!target.dir().exists())
-      return false;
+  QString filePath = target.filePath();
 
-    if (target.fileName().isEmpty())
-      return false;
-
-    QFile fp(target.filePath());
+  // JSON
+  QJsonDocument doc = getSqlQueryJson();
+  if (!doc.isNull()) {
+    filePath.append("_UTF-8");
+    filePath.append(".json");
+    QFile fp(filePath);
     if (fp.open(QIODevice::WriteOnly)) {
       QTextStream out(&fp);
       out.setCodec("UTF-8");
+      out << doc.toJson(QJsonDocument::Compact);
+      fp.close();
+      setWindowModified(false);
+      return true;
+    }
+  }
+
+  // CSV
+  filePath.append("_UTF-8");
+  filePath.append(".csv");
+  QString header = m_previewTable->dataHeader();
+  QStringList rows = m_previewTable->dataRows();
+  if (rows.count() > 0) {
+    QFile fp(filePath);
+    if (fp.open(QIODevice::WriteOnly)) {
+      QTextStream out(&fp);
+      out.setCodec("ISO-8859-15");
       out << header + "\n";
       out << rows.join("\n");
       fp.close();
+      setWindowModified(false);
       return true;
     }
   }
@@ -131,25 +199,25 @@ bool ReportingDialog::saveDataExport() {
 }
 
 const QFileInfo ReportingDialog::getSaveFile() {
-  ApplSettings cfg(this);
-  QDir p_dir(cfg.value("dirs/invoices", QDir::homePath()).toString());
+  QDir p_dir(m_cfg->value("dirs/reports", QDir::homePath()).toString());
+
+  QString filename = QDate::currentDate().toString("yyyy-MM");
+
+  QFileInfo info;
+  if (p_dir.exists()) {
+    info.setFile(p_dir, filename);
+    return info;
+  }
 
   QFileDialog *d = new QFileDialog(this, tr("Save to ..."));
   d->setViewMode(QFileDialog::Detail);
   d->setOptions(QFileDialog::ShowDirsOnly);
   d->setDirectory(p_dir);
   d->setFileMode(QFileDialog::Directory);
-
-  QString filename = QDate::currentDate().toString("yyyy-MM");
-  filename.prepend(tr("payments_report_"));
-  filename.append(".csv");
-
-  QFileInfo info;
   if (d->exec() == QDialog::Accepted) {
     QStringList dirs = d->selectedFiles();
-    info.setFile(dirs.first(),filename);
+    info.setFile(dirs.first(), filename);
   }
-
   return info;
 }
 

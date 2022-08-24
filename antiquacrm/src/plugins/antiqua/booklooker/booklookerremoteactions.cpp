@@ -141,6 +141,9 @@ const QString Bl_MessagePage::convertTemplate(const QString &body) {
     it.next();
     buffer.replace(it.key(), it.value());
   }
+  // Remove duplicates
+  buffer.replace(QRegExp("\\bHerr\\s+Herr\\b"),"Herr");
+  buffer.replace(QRegExp("\\bFrau\\s+Frau\\b"),"Frau");
   return buffer;
 }
 

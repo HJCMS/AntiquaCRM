@@ -53,6 +53,16 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   btn_invoice->setText(txt_open_dir);
   lt_groupBox1->addWidget(btn_invoice, row++, 1, 1, 1);
   connect(btn_invoice, SIGNAL(clicked()), this, SLOT(setInvoiceArchiv()));
+  // Berichte
+  m_reports_path = new LineEdit(m_grouBox1);
+  m_reports_path->setObjectName("dirs/reports");
+  m_reports_path->setInfo(tr("Monthly Reports"));
+  lt_groupBox1->addWidget(m_reports_path, row, 0, 1, 1);
+  btn_reports = new QToolButton(m_grouBox1);
+  btn_reports->setIcon(icon_open_btn);
+  btn_reports->setText(txt_open_dir);
+  lt_groupBox1->addWidget(btn_reports, row++, 1, 1, 1);
+  connect(btn_reports, SIGNAL(clicked()), this, SLOT(setReportsArchiv()));
   // Reminder
   m_reminder_path = new LineEdit(m_grouBox1);
   m_reminder_path->setObjectName("dirs/reminder");
@@ -240,6 +250,15 @@ void GeneralSettings::setInvoiceArchiv() {
   QString src = getDirectory(spath.toString());
   if (!src.isEmpty()) {
     m_invoice_path->setValue(src);
+  }
+}
+
+void GeneralSettings::setReportsArchiv()
+{
+  QVariant spath = config->value("dirs/reports", QDir::homePath());
+  QString src = getDirectory(spath.toString());
+  if (!src.isEmpty()) {
+    m_reports_path->setValue(src);
   }
 }
 

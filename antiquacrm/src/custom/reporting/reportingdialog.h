@@ -9,6 +9,7 @@
 #include <QDialogButtonBox>
 #include <QEvent>
 #include <QFileInfo>
+#include <QJsonDocument>
 #include <QLabel>
 #include <QObject>
 #include <QPushButton>
@@ -18,6 +19,7 @@
 
 class DateRangeWidget;
 class PreviewTable;
+class ApplSettings;
 
 /**
  * @brief Erstellt Berichte für den Datenexport
@@ -29,6 +31,7 @@ class ReportingDialog final : public QDialog {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  ApplSettings *m_cfg;
   QLabel *m_infoLabel;
   QStackedWidget *m_stackedWidget;
   DateRangeWidget *m_datePicker;
@@ -46,9 +49,19 @@ private:
   int pageIndex();
 
   /**
+   * @brief SQL Abfrage
+   */
+  const QString getSqlQueryString();
+
+  /**
    * @brief Erstelle SQL Abfrage aus der Datumsangabe.
    */
   void setSqlRangeQuery();
+
+  /**
+   * @brief Json Daten export erstellen.
+   */
+  const QJsonDocument getSqlQueryJson();
 
   /**
    * @brief Daten export erstellen.
