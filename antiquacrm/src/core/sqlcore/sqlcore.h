@@ -185,6 +185,14 @@ public:
   const QStringList fields(const QString &table);
 
   /**
+   * @brief Datums Abfrage von bis ...
+   * @param field - SQL Feldname
+   * @param past  - tage in der Vergangenheit. Siehe QDate::addDays(int);
+   * @return SQL-Clause
+   */
+  const QString whereDate(const QString &field, int past = -1) const;
+
+  /**
    * @brief Schliest die Datenbanken
    * @note Darf nur beim Beenden der Anwendung ausgeführt werden!
    */

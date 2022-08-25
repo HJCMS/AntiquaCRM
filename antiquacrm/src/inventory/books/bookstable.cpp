@@ -6,22 +6,21 @@
 #include "bookstatements.h"
 #include "myicontheme.h"
 
-#include <QDebug>
 #include <QAction>
+#include <QDebug>
 #include <QHeaderView>
 #include <QItemSelectionModel>
 #include <QKeySequence>
 #include <QMenu>
+#include <QMutex>
 #include <QPainter>
 #include <QPoint>
-#include <QMutex>
 #include <QRegExp>
 #include <QSignalMapper>
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlTableModel>
 #include <QStatusTipEvent>
-#include <QTime>
 
 BooksTable::BooksTable(QWidget *parent) : QTableView{parent} {
   setObjectName("BooksTable");
@@ -179,12 +178,13 @@ void BooksTable::queryHistory(const QString &query) {
   q.append(InventoryBooksSelect());
   q.append(InventoryBooksTables());
   q.append(" WHERE ");
+
   if (query.contains("#today")) {
     q.append("DATE(ib_changed)=(DATE(now()))");
   } else if (query.contains("#yesterday")) {
-    q.append("DATE(ib_changed)=(DATE(now() - INTERVAL '1 day'))");
+    q.append(m_sql->whereDate("ib_changed", -1));
   } else if (query.contains("#last7days")) {
-    q.append("DATE(ib_changed)>=(DATE(now() - INTERVAL '7 days'))");
+    q.append(m_sql->whereDate("ib_changed", -7));
   } else if (query.contains("#thismonth")) {
     q.append("EXTRACT(MONTH FROM ib_changed)=(EXTRACT(MONTH FROM now()))");
     q.append(" AND ib_count>0");

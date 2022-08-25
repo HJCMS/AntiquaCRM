@@ -153,18 +153,18 @@ const QJsonDocument ReportingDialog::getSqlQueryJson() {
 }
 
 bool ReportingDialog::saveDataExport() {
+  bool status = false;
   QFileInfo target = getSaveFile();
   if (!target.dir().exists())
-    return false;
+    return status;
 
   if (target.fileName().isEmpty())
-    return false;
-
-  QString filePath = target.filePath();
+    return status;
 
   // JSON
   QJsonDocument doc = getSqlQueryJson();
   if (!doc.isNull()) {
+    QString filePath = target.filePath();
     filePath.append("_UTF-8");
     filePath.append(".json");
     QFile fp(filePath);
@@ -173,29 +173,34 @@ bool ReportingDialog::saveDataExport() {
       out.setCodec("UTF-8");
       out << doc.toJson(QJsonDocument::Compact);
       fp.close();
-      setWindowModified(false);
-      return true;
+      status = true;
     }
   }
 
   // CSV
-  filePath.append("_UTF-8");
-  filePath.append(".csv");
-  QString header = m_previewTable->dataHeader();
-  QStringList rows = m_previewTable->dataRows();
-  if (rows.count() > 0) {
-    QFile fp(filePath);
-    if (fp.open(QIODevice::WriteOnly)) {
-      QTextStream out(&fp);
-      out.setCodec("ISO-8859-15");
-      out << header + "\n";
-      out << rows.join("\n");
-      fp.close();
-      setWindowModified(false);
-      return true;
+  if (status) {
+    QString header = m_previewTable->dataHeader();
+    QStringList rows = m_previewTable->dataRows();
+    if (rows.count() > 0) {
+      QString filePath = target.filePath();
+      filePath.append("_ISO-8859-15");
+      filePath.append(".csv");
+      QFile fp(filePath);
+      if (fp.open(QIODevice::WriteOnly)) {
+        QTextStream out(&fp);
+        out.setCodec("ISO-8859-15");
+        out << header + "\n";
+        out << rows.join("\n");
+        fp.close();
+        status = true;
+      }
     }
   }
-  return false;
+
+  if (status)
+    setWindowModified(false);
+
+  return status;
 }
 
 const QFileInfo ReportingDialog::getSaveFile() {

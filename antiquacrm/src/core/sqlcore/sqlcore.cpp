@@ -4,8 +4,11 @@
 #include "sqlcore.h"
 #include "sqlconfig.h"
 #include "sqlconnection.h"
+// DateTime Macros
+#include "antiqua_global.h"
 
 #include <QCoreApplication>
+#include <QDateTime>
 #include <QDebug>
 #include <QFileInfo>
 #include <QLocale>
@@ -16,7 +19,6 @@
 #include <QSqlQuery>
 #include <QSslConfiguration>
 #include <QTcpSocket>
-#include <QTime>
 #include <QtGlobal>
 
 namespace HJCMS {
@@ -274,6 +276,21 @@ bool SqlCore::sqlDriversExists() {
   } else {
     return false;
   }
+}
+
+const QString SqlCore::whereDate(const QString &field, int past) const {
+  // from Date
+  QDateTime fDt(QDate::currentDate(), QTime(0, 0, 0));
+  fDt = fDt.addDays(past);
+  QString date_from = fDt.toString(ANTIQUA_DATETIME_FORMAT);
+  // to Date
+  QDateTime tDt = QDateTime::currentDateTime();
+  QString date_now = tDt.toString(ANTIQUA_DATETIME_FORMAT);
+  // Query
+  QString clause(field + " BETWEEN '");
+  clause.append(date_from + "' AND '");
+  clause.append(date_now + "'");
+  return clause;
 }
 
 void SqlCore::close() {
