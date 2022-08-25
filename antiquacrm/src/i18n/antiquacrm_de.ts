@@ -5791,7 +5791,32 @@
         <translation>Monatlicher Kaufsbericht</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+3"/>
+        <source>Article</source>
+        <translation>Artikel</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Invoice</source>
+        <translation>Rechnung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Price</source>
+        <translation>Preis</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>VAT</source>
+        <translation>MwSt</translation>
+    </message>
+    <message>
+        <location line="+86"/>
         <source>Save to ...</source>
         <translation>Speichere in ...</translation>
     </message>

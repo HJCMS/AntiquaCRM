@@ -132,6 +132,14 @@ const QJsonDocument ReportingDialog::getSqlQueryJson() {
   main.insert("date", QDateTime::currentDateTime().toString(Qt::ISODate));
   main.insert("title", tr("Monthly payment report"));
 
+  QJsonObject fields;
+  fields.insert("article", tr("Article"));
+  fields.insert("invoice_id", tr("Invoice"));
+  fields.insert("price", tr("Price"));
+  fields.insert("title", tr("Title"));
+  fields.insert("vat", tr("VAT"));
+  main.insert("header", QJsonValue(fields));
+
   HJCMS::SqlCore *m_sql = new HJCMS::SqlCore(this);
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
@@ -172,6 +180,7 @@ bool ReportingDialog::saveDataExport() {
       QTextStream out(&fp);
       out.setCodec("UTF-8");
       out << doc.toJson(QJsonDocument::Compact);
+      out << "\n";
       fp.close();
       status = true;
     }
