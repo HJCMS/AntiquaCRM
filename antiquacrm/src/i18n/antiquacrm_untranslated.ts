@@ -1126,7 +1126,7 @@
 <context>
     <name>BooksTable</name>
     <message>
-        <location filename="../inventory/books/bookstable.cpp" line="+76"/>
+        <location filename="../inventory/books/bookstable.cpp" line="+75"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2882,7 +2882,7 @@
 <context>
     <name>HJCMS::SqlCore</name>
     <message>
-        <location filename="../core/sqlcore/sqlcore.cpp" line="+144"/>
+        <location filename="../core/sqlcore/sqlcore.cpp" line="+146"/>
         <source>SQL Driver initialization error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5791,7 +5791,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+84"/>
         <source>Save to ...</source>
         <translation type="unfinished"></translation>
     </message>
