@@ -82,29 +82,43 @@ ReportingDialog::ReportingDialog(QWidget *parent) : QDialog{parent} {
 int ReportingDialog::pageIndex() { return m_stackedWidget->currentIndex(); }
 
 const QString ReportingDialog::getSqlQueryString() {
-  QStringList fieldset;
-  /** ID */
-  fieldset << "o_id AS invoice_id";
-  /** Artikel */
-  fieldset << "a_article_id AS article";
-  /** Titel */
-  fieldset << "SUBSTRING(a_title FROM 0 FOR 60) AS title";
-  /** Mehrwertsteuer */
-  fieldset << "o_vat_levels AS vat";
-  /** Preis */
-  fieldset << "a_sell_price AS price";
-  /** Abgeschlossen */
-  fieldset << "DATE(o_delivered) AS delivered";
-  /** Auswahl */
+  QStringList fs;
+  // Auftrags Datum
+  fs << "DATE(o_delivered) AS date";
+  // Rechnungs Nummer
+  fs << "lpad(o_id::text, 7, '0') AS invoice";
+  // Artikel Nummer
+  fs << "lpad(a_article_id::text, 7, '0') AS article";
+  // Verkaufs Preis
+  fs << "a_sell_price::MONEY AS price";
+  // Inklusive MwST
+  fs << "(CASE o_vat_included WHEN true THEN 'Ja' ELSE 'Nein' END) AS incl";
+  // Mehwertsteuer
+  fs << "concat(o_vat_levels::text,'%') AS vat";
+  // Mehwertsteuer herausrechnen
+  fs << "(CASE o_vat_included WHEN true THEN ROUND((a_sell_price * "
+        "o_vat_levels) / (100 + o_vat_levels), 2)::MONEY ELSE "
+        "ROUND((a_sell_price / (100 + o_vat_levels) * o_vat_levels), 2)::MONEY "
+        "END) AS ust";
+  // Lieferkosten
+  fs << "(CASE o_delivery_add_price WHEN true THEN d_price::MONEY ELSE "
+        "0::MONEY END) AS porto";
+  // Gesamt Summe in Währung
+  fs << "(CASE o_delivery_add_price WHEN true THEN (a_sell_price + "
+        "d_price)::MONEY ELSE a_sell_price::MONEY END) AS total";
+  // Gesamt Summe in double
+  fs << "(CASE o_delivery_add_price WHEN true THEN (a_sell_price + d_price) "
+        "ELSE a_sell_price END) AS calc";
+
   QString query("SELECT ");
-  query.append(fieldset.join(", "));
+  query.append(fs.join(", "));
   query.append(" FROM inventory_orders");
   query.append(" LEFT JOIN article_orders ON a_order_id=o_id");
+  query.append(" LEFT JOIN ref_delivery_cost ON d_cid=o_delivery_package");
   /** Abfrageklausel erstellen */
   QPair<QString, QString> p = m_datePicker->timestampRange();
-  query.append(" WHERE o_payment_status=true AND");
-  query.append(" o_order_status=5 AND");
-  query.append(" o_delivered BETWEEN");
+  query.append(" WHERE o_payment_status=true AND o_order_status=5");
+  query.append(" AND o_delivered BETWEEN");
   query.append(" '" + p.first + "' AND '" + p.second + "'");
   query.append(" ORDER BY o_delivered;");
   return query;
@@ -132,18 +146,18 @@ const QJsonDocument ReportingDialog::getSqlQueryJson() {
   main.insert("date", QDateTime::currentDateTime().toString(Qt::ISODate));
   main.insert("title", tr("Monthly payment report"));
 
-  QJsonObject fields;
-  fields.insert("article", tr("Article"));
-  fields.insert("invoice_id", tr("Invoice"));
-  fields.insert("price", tr("Price"));
-  fields.insert("title", tr("Title"));
-  fields.insert("vat", tr("VAT"));
-  main.insert("header", QJsonValue(fields));
-
   HJCMS::SqlCore *m_sql = new HJCMS::SqlCore(this);
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
     QSqlRecord record = q.record();
+    // Headerdata
+    QJsonObject fields;
+    for (int r = 0; r < record.count(); r++) {
+      QString f_name = record.field(r).name();
+      fields.insert(f_name, m_previewTable->headerName(f_name));
+    }
+    main.insert("header", QJsonValue(fields));
+    // ItemData
     QJsonArray rows;
     while (q.next()) {
       QJsonObject row;

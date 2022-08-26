@@ -4858,34 +4858,54 @@
 <context>
     <name>PreviewTableModel</name>
     <message>
-        <location filename="../custom/reporting/previewtablemodel.cpp" line="+74"/>
+        <location filename="../custom/reporting/previewtablemodel.cpp" line="+17"/>
+        <source>Date</source>
+        <translation>Datum</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Title</source>
-        <translation>Titel</translation>
+        <location line="+2"/>
+        <source>incl.</source>
+        <translation>inkl.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+2"/>
+        <source>UST</source>
+        <translation>USt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Porto</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Total</source>
+        <translation>Gesamt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Calculate</source>
+        <translation>Berechne</translation>
+    </message>
+    <message>
+        <location line="-4"/>
         <source>VAT</source>
         <translation>MwSt</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-2"/>
         <source>Price</source>
         <translation>Preis</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Delivered</source>
-        <translation>Ausgeliefert</translation>
     </message>
 </context>
 <context>
@@ -5781,9 +5801,9 @@
         <translation>Erstellen Sie einen monatlichen Umsatzbericht.</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+98"/>
         <source>Sales Volume</source>
-        <translation>Verkaufsvolumen</translation>
+        <translation>Gesamtsumme</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -5791,32 +5811,7 @@
         <translation>Monatlicher Kaufsbericht</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Article</source>
-        <translation>Artikel</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Invoice</source>
-        <translation>Rechnung</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Price</source>
-        <translation>Preis</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Title</source>
-        <translation>Titel</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>VAT</source>
-        <translation>MwSt</translation>
-    </message>
-    <message>
-        <location line="+86"/>
+        <location line="+93"/>
         <source>Save to ...</source>
         <translation>Speichere in ...</translation>
     </message>
