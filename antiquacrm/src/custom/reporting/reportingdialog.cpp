@@ -106,9 +106,9 @@ const QString ReportingDialog::getSqlQueryString() {
   // Gesamt Summe in Währung
   fs << "(CASE o_delivery_add_price WHEN true THEN (a_sell_price + "
         "d_price)::MONEY ELSE a_sell_price::MONEY END) AS total";
-  // Gesamt Summe in double
-  fs << "(CASE o_delivery_add_price WHEN true THEN (a_sell_price + d_price) "
-        "ELSE a_sell_price END) AS calc";
+  // !! CSV Calculate Cell !!
+  fs << "(CASE o_delivery_add_price WHEN true THEN (a_sell_price + "
+        "d_price)::NUMERIC ELSE a_sell_price::NUMERIC END) AS calc";
 
   QString query("SELECT ");
   query.append(fs.join(", "));

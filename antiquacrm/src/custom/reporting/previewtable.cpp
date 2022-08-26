@@ -47,9 +47,6 @@ const QString PreviewTable::dataHeader(const QString &delimiter) {
   QStringList list;
   int calcIndex = m_model->record().indexOf("calc");
   for (int i = 0; i < horizontalHeader()->count(); i++) {
-    if (i == calcIndex)
-      continue;
-
     list << m_model->headerData(i, Qt::Horizontal).toString();
   }
   return list.join(delimiter);
@@ -66,7 +63,12 @@ const QStringList PreviewTable::dataRows(const QString &delimiter) {
       QModelIndex index = m_model->index(r, c);
       QString buffer = m_model->data(index, Qt::DisplayRole).toString();
       if (calcIndex == c) {
-        sum_price += std::stod(buffer.toStdString());
+        double calc = std::stod(buffer.toStdString());
+        sum_price += calc;
+        char buffer[10];
+        int len = std::sprintf(buffer, "%0.2f", calc);
+        QByteArray array(buffer, len);
+        cells << QString::fromLocal8Bit(array);
       } else {
         cells << buffer.trimmed();
       }

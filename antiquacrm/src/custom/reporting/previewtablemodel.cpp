@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "previewtablemodel.h"
-#include "applsettings.h"
 
 #include <QDebug>
 #include <QSqlField>
@@ -23,7 +22,12 @@ const QString PreviewTableModel::header(const QString &field) const {
   m.insert("ust", tr("UST"));
   m.insert("porto", tr("Porto"));
   m.insert("total", tr("Total"));
-  m.insert("calc", tr("Calculate"));
+  /**
+   * @short Helferspalte für CSV export => Excel und OpenLibre
+   * @param calc = double
+   * @warning !NICHT Ändern!
+   */
+  m.insert("calc", "calc");
   return m.value(field);
 }
 
