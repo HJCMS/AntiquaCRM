@@ -7,6 +7,8 @@ SET (PROJECT_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/core
  ${CMAKE_CURRENT_BINARY_DIR}/core/antiquacore
  ${CMAKE_CURRENT_SOURCE_DIR}/core/antiquacore
+ ${CMAKE_CURRENT_BINARY_DIR}/core/HomeBase3
+ ${CMAKE_CURRENT_SOURCE_DIR}/core/HomeBase3
  ${CMAKE_CURRENT_BINARY_DIR}/core/sqlcore
  ${CMAKE_CURRENT_SOURCE_DIR}/core/sqlcore
  ${CMAKE_CURRENT_BINARY_DIR}/custom
@@ -86,6 +88,7 @@ ADD_SUBDIRECTORY (icons)
 SET(_link_sub_libs
 SqlCore
 AntiquaCore
+HomeBase3
 Settings
 Completer
 Networking

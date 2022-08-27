@@ -13,6 +13,9 @@
 #include "statusbar.h"
 #include "storagelocation.h"
 #include "workspace.h"
+#ifdef ANTIQUA_DEVELOPEMENT
+#include "homebase3.h"
+#endif
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -87,6 +90,13 @@ void MWindow::setupActions() {
   ac_reports->setObjectName("ac_monthly_reports");
   connect(ac_reports, SIGNAL(triggered(bool)), this,
           SLOT(openReportDialog(bool)));
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  QAction *ac_export = menu_db->addAction(dbIcon, tr("Catalog export"));
+  ac_export->setObjectName("ac_export_catalog");
+  connect(ac_export, SIGNAL(triggered(bool)), this,
+          SLOT(openExportCatalog(bool)));
+#endif
 
   m_applicationMenu->addSeparator();
 
@@ -193,6 +203,15 @@ void MWindow::openReportDialog(bool) {
   if (d->exec()) {
     d->deleteLater();
   }
+}
+
+void MWindow::openExportCatalog(bool) {
+#ifdef ANTIQUA_DEVELOPEMENT
+  QString path(QDir::homePath());
+  path.append(
+      "/Developement/antiqua/database/tmp/AbeBooks/abebooks-report.xml");
+  HomeBase3::testReader(path);
+#endif
 }
 
 void MWindow::openCategoryEdit(bool) {

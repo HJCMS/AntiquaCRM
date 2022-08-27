@@ -45,6 +45,7 @@ private Q_SLOTS:
   void openDeliveryService(bool);
   void openDesignation(bool);
   void openReportDialog(bool);
+  void openExportCatalog(bool);
   void openCategoryEdit(bool);
   void openKeywordEdit(bool);
   void openMessagesEdit(bool);
