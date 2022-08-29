@@ -113,8 +113,8 @@ void AbeBooksRemoteActions::prepareStatusAction(const QString &cmd) {
     return;
   }
 
-  if (p_purchaseId.isEmpty() || p_orderId.isEmpty()) {
-    qWarning("Missing Purchase Ids!");
+  if (p_orderId.isEmpty()) {
+    qWarning("Missing Order Id!");
     return;
   }
 
@@ -123,7 +123,7 @@ void AbeBooksRemoteActions::prepareStatusAction(const QString &cmd) {
   connect(req, SIGNAL(response(const QDomDocument &)), this,
           SLOT(responseUpdate(const QDomDocument &)));
 
-  req->updateOrderStatus(p_orderId, p_purchaseId, cmd, p_articles);
+  req->updateOrderStatus(p_orderId, cmd);
 }
 
 void AbeBooksRemoteActions::pushMessage(const QString &msg) {
@@ -134,17 +134,15 @@ void AbeBooksRemoteActions::pushMessage(const QString &msg) {
 
 void AbeBooksRemoteActions::responseUpdate(const QDomDocument &dom) {
 #ifdef ANTIQUA_DEVELOPEMENT
-  saveSources(dom, "responseUpdate_" + p_orderId);
+  saveSources(dom, "update_" + p_orderId);
 #endif
 }
 
-void AbeBooksRemoteActions::setPurchaser(const QString &person,
-                                         const QString &purchaseId) {
+void AbeBooksRemoteActions::setPurchaser(const QString &person) {
   if (person.isEmpty())
     return;
 
   p_purchaser = person;
-  p_purchaseId = purchaseId;
 }
 
 void AbeBooksRemoteActions::setArticleIds(const QStringList &ids) {

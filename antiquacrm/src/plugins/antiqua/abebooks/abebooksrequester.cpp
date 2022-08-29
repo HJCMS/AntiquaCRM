@@ -242,9 +242,7 @@ void AbeBooksRequester::queryOrder(const QString &purchaseId) {
 }
 
 void AbeBooksRequester::updateOrderStatus(const QString &purchaseId,
-                                          const QString &buyerId,
-                                          const QString &action,
-                                          const QStringList &articles) {
+                                          const QString &action) {
   AbeBooksDocument doc = createDocument();
   doc.createAction("update");
   QDomElement pOrder = doc.createElement("purchaseOrder");

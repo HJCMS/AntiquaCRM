@@ -94,8 +94,7 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
   emit sendCreateCustomer(QJsonDocument(customerCreate));
 }
 
-const QJsonDocument
-AbeBooksIfaceWidget::customerRequest(const QJsonObject &object) {
+const QJsonDocument AbeBooksIfaceWidget::customerRequest(const QJsonObject &object) {
   Q_UNUSED(object);
   QJsonObject customer;
   customer.insert("provider", QJsonValue(CONFIG_PROVIDER));
@@ -318,7 +317,7 @@ void AbeBooksIfaceWidget::createProviderOrderUpdate() {
   person << getValue("c_lastname").toString();
 
   m_dialog = new AbeBooksRemoteActions(this);
-  m_dialog->setPurchaser(person.join(" "), p_buyerPurchaseId);
+  m_dialog->setPurchaser(person.join(" "));
   m_dialog->setArticleIds(p_articleList);
   if (m_dialog->exec(getOrderId()) == QDialog::Accepted) {
     qDebug() << Q_FUNC_INFO << "TODO";
