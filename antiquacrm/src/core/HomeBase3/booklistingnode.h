@@ -12,45 +12,47 @@
 #include <QVariant>
 
 #include "homebaseconfig.h"
+#include "homebaseschema.h"
+#include "booknodetype.h"
 
-class HOMEBASE3_EXPORT BookListingNode : public QDomElement {
+class HOMEBASE3_EXPORT BookListingNode final : public QDomElement {
+
+private:
+  BookNodeType p_type;
+  HomeBaseSchema p_schema;
+
 public:
-  explicit BookListingNode(const QDomElement &parent);
+  explicit BookListingNode(const QDomElement &element);
 
   /**
    * @brief DomElement NodeName
    * @return String
    */
-  virtual const QString name() const = 0;
+  const QString name();
 
   /**
    * @brief Meta Type definition
    * @return MetaType
    */
-  virtual QMetaType::Type type() const = 0;
+  QMetaType::Type type();
 
   /**
    * @brief minimum String Length or Size
    * @return int
    */
-  virtual int minLength() const = 0;
+  int minLength();
 
   /**
    * @brief maxLength
    * @return int
    */
-  virtual int maxLength() const = 0;
-
-  /**
-   * @brief set NodeValue
-   */
-  void setValue(const QVariant &value);
+  int maxLength();
 
   /**
    * @brief nodeValue
    * @return Variant
    */
-  const QVariant value() const;
+  const QVariant value();
 
   /**
    * @brief Convert to JSonObject

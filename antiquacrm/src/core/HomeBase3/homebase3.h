@@ -6,6 +6,7 @@
 #define LIB_HOMEBASE3_H
 
 #include <QString>
+#include <QFileInfo>
 
 /**
  * @brief Testing Class
@@ -13,7 +14,7 @@
 class HomeBase3 final {
 public:
   static void testBuilder();
-  static void testReader(const QString &xmlFile);
+  static void testReader();
 };
 
 #endif // LIB_HOMEBASE3_H

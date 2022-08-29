@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "abebooksremoteactions.h"
+#include "abebooksconfig.h"
 #include "abebooksrequester.h"
 
 #include <QDebug>
@@ -72,48 +73,6 @@ void ABE_StatusPage::prepareAction() {
   }
 }
 
-ABE_StartPage::ABE_StartPage(QWidget *parent) : QWidget{parent} {
-  setObjectName("abebooks_action_start_page");
-  setMinimumSize(QSize(300, 150));
-  QHBoxLayout *layout = new QHBoxLayout(this);
-
-  QIcon icon = btnIcon();
-  QSize iconSize(24, 24);
-
-  btn_status = new QPushButton(icon, tr("Status"), this);
-  btn_status->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  btn_status->setIconSize(iconSize);
-  QFont btn_font = btn_status->font();
-  btn_font.setPointSize((btn_font.pointSize() + 2));
-  btn_status->setFont(btn_font);
-  // Bestellstatus aktualisieren.
-  btn_status->setToolTip(tr("Order Status update."));
-  layout->addWidget(btn_status);
-
-  btn_cancel = new QPushButton(icon, tr("Cancel"), this);
-  btn_cancel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-  btn_cancel->setFont(btn_font);
-  btn_cancel->setIconSize(iconSize);
-  // Stornieren einer kompletten Bestellung.
-  btn_cancel->setToolTip(tr("Cancel an entire order."));
-  layout->addWidget(btn_cancel);
-
-#ifndef ANTIQUA_DEVELOPEMENT
-  btn_cancel->setEnabled(false);
-  btn_cancel->setToolTip(tr("Currently not supported!"));
-#endif
-
-  setLayout(layout);
-
-  connect(btn_status, SIGNAL(clicked()), this, SLOT(statusClicked()));
-  connect(btn_cancel, SIGNAL(clicked()), this, SLOT(cancelClicked()));
-}
-
-void ABE_StartPage::statusClicked() { emit sendGotoPage(1); }
-void ABE_StartPage::cancelClicked() {
-  // emit sendGotoPage(2);
-}
-
 AbeBooksRemoteActions::AbeBooksRemoteActions(QWidget *parent)
     : QDialog{parent} {
   setSizeGripEnabled(true);
@@ -126,8 +85,8 @@ AbeBooksRemoteActions::AbeBooksRemoteActions(QWidget *parent)
   // BEGIN MainLayout
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setContentsMargins(1, 1, 1, 1);
-  m_stackedWidget = new QStackedWidget(this);
-  layout->addWidget(m_stackedWidget);
+  m_statusPage = new ABE_StatusPage(this);
+  layout->addWidget(m_statusPage);
   layout->setStretch(0, 1);
   m_buttonBar = new QDialogButtonBox(QDialogButtonBox::Close, this);
   layout->addWidget(m_buttonBar);
@@ -137,18 +96,7 @@ AbeBooksRemoteActions::AbeBooksRemoteActions(QWidget *parent)
   setLayout(layout);
   // END
 
-  // BEGIN Pages
-  int page = 0;
-  m_startPage = new ABE_StartPage(m_stackedWidget);
-  m_stackedWidget->insertWidget(page++, m_startPage);
-  m_statusPage = new ABE_StatusPage(m_stackedWidget);
-  m_stackedWidget->insertWidget(page++, m_statusPage);
-  // END
-
   // SIGNALS
-  connect(m_startPage, SIGNAL(sendGotoPage(int)), m_stackedWidget,
-          SLOT(setCurrentIndex(int)));
-
   connect(m_statusPage, SIGNAL(sendAction(const QString &)), this,
           SLOT(prepareStatusAction(const QString &)));
   connect(m_statusPage, SIGNAL(sendNotes(const QString &)), this,
@@ -159,11 +107,25 @@ AbeBooksRemoteActions::AbeBooksRemoteActions(QWidget *parent)
 }
 
 void AbeBooksRemoteActions::prepareStatusAction(const QString &cmd) {
-  qDebug() << Q_FUNC_INFO << cmd;
+  if (p_articles.count() < 1) {
+    qWarning("Missing Article Ids!");
+    return;
+  }
+
+  AbeBooksRequester *req = new AbeBooksRequester(this);
+  req->setObjectName(CONFIG_PROVIDER);
+  connect(req, SIGNAL(response(const QDomDocument &)), this,
+          SLOT(responseUpdate(const QDomDocument &)));
+
+  req->updateOrderStatus(p_orderId, cmd, p_articles);
 }
 
 void AbeBooksRemoteActions::pushMessage(const QString &msg) {
   qDebug() << Q_FUNC_INFO << msg;
+}
+
+void AbeBooksRemoteActions::responseUpdate(const QDomDocument &dom) {
+  qDebug() << Q_FUNC_INFO << dom.toString(1);
 }
 
 void AbeBooksRemoteActions::setPurchaser(const QString &person) {
@@ -173,11 +135,11 @@ void AbeBooksRemoteActions::setPurchaser(const QString &person) {
   p_purchaser = person;
 }
 
-void AbeBooksRemoteActions::setEMail(const QString &email) {
-  if (email.isEmpty())
+void AbeBooksRemoteActions::setArticleIds(const QStringList &ids) {
+  if (ids.count() < 1)
     return;
 
-  p_purchaser_mail = email;
+  p_articles = ids;
 }
 
 int AbeBooksRemoteActions::exec(const QString &orderId) {

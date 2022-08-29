@@ -9,10 +9,14 @@
 #include <QDomNodeList>
 #include <QString>
 
-#include "homebaseconfig.h"
 #include "booklisting.h"
+#include "homebaseconfig.h"
+#include "homebaseschema.h"
 
 class HOMEBASE3_EXPORT HomeBaseReader final : public QDomDocument {
+private:
+  HomeBaseSchema p_schema;
+
 public:
   explicit HomeBaseReader();
 

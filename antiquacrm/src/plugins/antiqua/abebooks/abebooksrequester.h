@@ -73,6 +73,9 @@ public:
   explicit AbeBooksRequester(QObject *parent = nullptr);
   void queryList();
   void queryOrder(const QString &purchaseId);
+  void updateOrderStatus(const QString &purchaseId,
+                         const QString &action,
+                         const QStringList &articles);
 };
 
 #endif // ABEBOOKSQUERY_PLUGIN_H

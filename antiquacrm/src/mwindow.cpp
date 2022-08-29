@@ -207,10 +207,7 @@ void MWindow::openReportDialog(bool) {
 
 void MWindow::openExportCatalog(bool) {
 #ifdef ANTIQUA_DEVELOPEMENT
-  QString path(QDir::homePath());
-  path.append(
-      "/Developement/antiqua/database/tmp/AbeBooks/abebooks-report.xml");
-  HomeBase3::testReader(path);
+  HomeBase3::testBuilder();
 #endif
 }
 

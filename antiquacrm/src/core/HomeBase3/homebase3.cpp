@@ -8,23 +8,25 @@
 #include <QtCore>
 #include <QtXml>
 
-// BookListingElement
-
 void HomeBase3::testBuilder() {
-  HomeBaseBuilder xmlBuild;
-  qDebug() << Q_FUNC_INFO << xmlBuild.isNull();
+  HomeBaseBuilder xmlBuilder;
+  QString dest(QDir::homePath() + "/Downloads");
+  if (xmlBuilder.createDocument())
+    xmlBuilder.writeToFile(dest);
 }
 
-void HomeBase3::testReader(const QString &xmlFile) {
+void HomeBase3::testReader() {
+  QString xmlFile(QDir::homePath());
+  xmlFile.append("/Developement/antiqua/database/tmp/AbeBooks/abebooks-report.xml");
   HomeBaseReader xml;
   if (xml.open(xmlFile)) {
     QFile fp(QDir::homePath() + "/Downloads/abebooks_homebase3.xml");
-    if(fp.open(QIODevice::WriteOnly)) {
+    if (fp.open(QIODevice::WriteOnly)) {
       QTextStream out(&fp);
-      out.setCodec("ISO-8859-1");
+      out.setCodec(HOMEBASE3_DEFAULT_CODEC);
       out << xml.toString(1);
       fp.close();
-      qDebug() << fp.fileName();
+      qDebug() << "written to:" << fp.fileName();
     }
   }
 }

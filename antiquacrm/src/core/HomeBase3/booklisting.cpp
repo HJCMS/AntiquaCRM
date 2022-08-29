@@ -3,7 +3,17 @@
 
 #include "booklisting.h"
 
-BookListing::BookListing(const QDomElement &element) : QDomElement{element} {}
+BookListing::BookListing(const QDomElement &e) : QDomElement{e} {
+  setTagName("BookListing");
+  setListingId(0);
+  setTypeCodec(1001);
+  setDeleteStatus();
+  setUpdateDate();
+}
+
+BookListing::BookListing() : QDomElement{} {
+  setTagName("BookListing");
+}
 
 const QStringList BookListing::defaultNodeNames() {
   QStringList nl;

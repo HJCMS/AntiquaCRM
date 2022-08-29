@@ -11,8 +11,10 @@
 #include <QDomElement>
 
 class HOMEBASE3_EXPORT BookListing final : public QDomElement {
+
 public:
-  explicit BookListing(const QDomElement &element);
+  explicit BookListing(const QDomElement &e);
+  explicit BookListing();
 
   static const QStringList defaultNodeNames();
 

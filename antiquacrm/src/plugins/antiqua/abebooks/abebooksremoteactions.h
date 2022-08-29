@@ -6,12 +6,12 @@
 #define ABEBOOKSREMOTEACTIONS_PLUGIN_H
 
 #include <QDialog>
-#include <QObject>
-#include <QWidget>
-#include <QRadioButton>
-#include <QStackedWidget>
 #include <QDialogButtonBox>
+#include <QDomDocument>
+#include <QObject>
+#include <QRadioButton>
 #include <QStatusBar>
+#include <QWidget>
 
 #include <AntiquaInterface>
 
@@ -40,29 +40,7 @@ public:
   explicit ABE_StatusPage(QWidget *parent = nullptr);
 };
 
-/**
- * @brief Startseite
- */
-class ANTIQUACORE_EXPORT ABE_StartPage final : public QWidget {
-  Q_OBJECT
-
-private:
-  QPushButton *btn_status;
-  QPushButton *btn_cancel;
-
-private Q_SLOTS:
-  void statusClicked();
-  void cancelClicked();
-
-Q_SIGNALS:
-  void sendGotoPage(int);
-
-public:
-  explicit ABE_StartPage(QWidget *parent = nullptr);
-};
-
-class ANTIQUACORE_EXPORT AbeBooksRemoteActions : public QDialog
-{
+class ANTIQUACORE_EXPORT AbeBooksRemoteActions : public QDialog {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -70,12 +48,10 @@ class ANTIQUACORE_EXPORT AbeBooksRemoteActions : public QDialog
 private:
   QString p_orderId;
   QString p_purchaser;
-  QString p_purchaser_mail;
+  QStringList p_articles;
 
   AbeBooksRequester *m_requester;
 
-  QStackedWidget *m_stackedWidget;
-  ABE_StartPage *m_startPage;
   ABE_StatusPage *m_statusPage;
 
   QDialogButtonBox *m_buttonBar;
@@ -94,10 +70,15 @@ private Q_SLOTS:
    */
   void pushMessage(const QString &msg);
 
+  /**
+   * @brief responsed Update message
+   */
+  void responseUpdate(const QDomDocument &dom);
+
 public:
-  explicit AbeBooksRemoteActions(QWidget * parent = nullptr);
+  explicit AbeBooksRemoteActions(QWidget *parent = nullptr);
   void setPurchaser(const QString &person);
-  void setEMail(const QString &email);
+  void setArticleIds(const QStringList &ids);
   int exec(const QString &orderId);
 };
 

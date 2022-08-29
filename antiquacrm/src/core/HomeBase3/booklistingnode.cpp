@@ -2,27 +2,26 @@
 // vim: set fileencoding=utf-8
 
 #include "booklistingnode.h"
+#include "booknodetype.h"
 
 #include <QDateTime>
-#include <QDomCDATASection>
+#include <QDomText>
 #include <QJsonValue>
 
-BookListingNode::BookListingNode(const QDomElement &parent)
-    : QDomElement{parent} {}
-
-void BookListingNode::setValue(const QVariant &value) {
-  int id = QMetaType::type(value.typeName());
-  if (id != type())
-    return;
-
-  QString str = value.toString().trimmed();
-  if (str.length() > maxLength() || str.length() < minLength())
-    return;
-
-  setNodeValue(str.toHtmlEscaped());
+BookListingNode::BookListingNode(const QDomElement &element)
+    : QDomElement{element}, p_schema() {
+  p_type = p_schema.getPolicy(element);
 }
 
-const QVariant BookListingNode::value() const {
+const QString BookListingNode::name() { return p_type.name(); }
+
+QMetaType::Type BookListingNode::type() { return p_type.type(); }
+
+int BookListingNode::minLength() { return p_type.minLength(); }
+
+int BookListingNode::maxLength() { return p_type.maxLength(); }
+
+const QVariant BookListingNode::value() {
   QString buffer;
   if (hasChildNodes()) {
     QStringList items;

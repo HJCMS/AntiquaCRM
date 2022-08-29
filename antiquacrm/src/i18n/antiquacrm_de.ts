@@ -2,37 +2,9 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
-    <name>ABE_StartPage</name>
-    <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksremoteactions.cpp" line="+83"/>
-        <source>Status</source>
-        <translation>Status</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Order Status update.</source>
-        <translation>Auftragsstatus aktualisieren.</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Cancel</source>
-        <translation>Stornieren</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Cancel an entire order.</source>
-        <translation>Stornieren Sie eine gesamte Bestellung.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Currently not supported!</source>
-        <translation>Wird Zurzeit nicht Unterstützt!</translation>
-    </message>
-</context>
-<context>
     <name>ABE_StatusPage</name>
     <message>
-        <location line="-73"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksremoteactions.cpp" line="+31"/>
         <source>Provider Status - no disclosures</source>
         <translation>Anbieterstatus – keine Angaben</translation>
     </message>
@@ -75,7 +47,7 @@
         <translation>Lesefehler beim öffnen der Abebooks Schnittstelle</translation>
     </message>
     <message>
-        <location line="+170"/>
+        <location line="+172"/>
         <source>Buyer Cancelled</source>
         <translation>Käufer stornierte</translation>
     </message>
@@ -3625,28 +3597,28 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+74"/>
+        <location filename="../mwindow.cpp" line="+77"/>
         <source>Application</source>
         <translation>Programm</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+26"/>
         <source>Quit</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="-29"/>
-        <location line="+34"/>
+        <location line="-36"/>
+        <location line="+41"/>
         <source>Views</source>
         <translation>Ansichten</translation>
     </message>
     <message>
-        <location line="-17"/>
+        <location line="-24"/>
         <source>Reconnect</source>
         <translation>Neu verbinden</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+38"/>
         <source>Various settings</source>
         <translation>Verschiedene Einstellungen</translation>
     </message>
@@ -3671,18 +3643,18 @@
         <translation>&lt;b&gt;Sie haben nicht gespeicherte Änderungen.&lt;/b&gt;&lt;p&gt;Möchten sie wirklich die Anwendung schließen?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+88"/>
         <source>SQL Server Error</source>
         <translation>SQL Serverfehler</translation>
     </message>
     <message>
-        <location line="-134"/>
-        <location line="+147"/>
+        <location line="-140"/>
+        <location line="+153"/>
         <source>Fullscreen</source>
         <translation>Vollansicht</translation>
     </message>
     <message>
-        <location line="-191"/>
+        <location line="-204"/>
         <source>Anything but books</source>
         <translation>Alles außer Bücher</translation>
     </message>
@@ -3697,7 +3669,12 @@
         <translation>Monatsbericht</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+6"/>
+        <source>Catalog export</source>
+        <translation>Katalog Export</translation>
+    </message>
+    <message>
+        <location line="+24"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
@@ -3727,7 +3704,7 @@
         <translation>Bearbeite Kategorien</translation>
     </message>
     <message>
-        <location line="+109"/>
+        <location line="+115"/>
         <source>Disable Fullscreen</source>
         <translation>Vollansicht beenden</translation>
     </message>
@@ -4858,7 +4835,7 @@
 <context>
     <name>PreviewTableModel</name>
     <message>
-        <location filename="../custom/reporting/previewtablemodel.cpp" line="+17"/>
+        <location filename="../custom/reporting/previewtablemodel.cpp" line="+16"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -4893,12 +4870,7 @@
         <translation>Gesamt</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Calculate</source>
-        <translation>Berechne</translation>
-    </message>
-    <message>
-        <location line="-4"/>
+        <location line="-3"/>
         <source>VAT</source>
         <translation>MwSt</translation>
     </message>

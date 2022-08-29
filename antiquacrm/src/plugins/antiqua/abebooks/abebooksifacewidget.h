@@ -25,6 +25,7 @@ class ANTIQUACORE_EXPORT AbeBooksIfaceWidget final
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  QStringList p_articleList;
   QHash<QString, QString> p_customer;
   QDomDocument p_currentDocument;
   AbeBooksRemoteActions *m_dialog;

@@ -252,6 +252,7 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
   }
 
   // Bestellartikel einfügen
+  p_articleList.clear();
   setTableCount(0);
   n_list = xml.getOrderItemList().childNodes();
   for (int i = 0; i < n_list.count(); i++) {
@@ -272,6 +273,7 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
         } else if (cn.nodeName() == "title") {
           setTableData(row, 4, val);
         } else if (cn.nodeName() == "vendorKey") {
+          p_articleList << val.toString();
           setTableData(row, 1, val);
         }
       }
@@ -314,7 +316,7 @@ void AbeBooksIfaceWidget::createProviderOrderUpdate() {
 
   m_dialog = new AbeBooksRemoteActions(this);
   m_dialog->setPurchaser(person.join(" "));
-  m_dialog->setEMail(getValue("c_email_0").toString());
+  m_dialog->setArticleIds(p_articleList);
   if (m_dialog->exec(getOrderId()) == QDialog::Accepted) {
     qDebug() << Q_FUNC_INFO << "TODO";
   }

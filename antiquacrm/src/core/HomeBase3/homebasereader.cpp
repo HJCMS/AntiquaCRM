@@ -40,9 +40,9 @@ const QDomNodeList HomeBaseReader::bookListingNodes() {
 }
 
 const BookListing HomeBaseReader::bookListing(const QString &articleId) {
-  QDomElement element;
+  BookListing element;
   if (articleId.isEmpty())
-    return BookListing(element);
+    return element;
 
   QDomNodeList nodes = bookListingNodes();
   if (nodes.size() > 0) {
@@ -53,5 +53,5 @@ const BookListing HomeBaseReader::bookListing(const QString &articleId) {
       }
     }
   }
-  return BookListing(element);
+  return element;
 }

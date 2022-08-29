@@ -11,32 +11,34 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (subproject_FILES
- BookInventory.xsd
+ # @moved to ../../xml/BookInventory.xsd
 )
 
 SET (subproject_SOURCES
- homebase3.cpp
- homebasebuilder.cpp
- homebasereader.cpp
- booklisting.cpp
- booklistingnode.cpp
- titlenode.cpp
+  booklisting.cpp
+  booklistingnode.cpp
+  booknodetype.cpp
+  homebase3.cpp
+  homebaseschema.cpp
+  homebasebuilder.cpp
+  homebasereader.cpp
+  ${subproject_FILES}
 )
 
 SET (subproject_HEADERS
- homebaseconfig.h
- homebase3.h
- homebasebuilder.h
- homebasereader.h
- booklisting.h
- booklistingnode.h
- titlenode.h
+  booklisting.h
+  booklistingnode.h
+  booknodetype.h
+  homebase3.h
+  homebaseschema.h
+  homebasebuilder.h
+  homebaseconfig.h
+  homebasereader.h
 )
 
 ADD_LIBRARY (${_subproject} SHARED
   ${subproject_HEADERS}
   ${subproject_SOURCES}
-  ${subproject_FILES}
 )
 
 ADD_DEFINITIONS (-DANTIQUACORE_LIBRARAY)
