@@ -48,6 +48,7 @@ class ANTIQUACORE_EXPORT AbeBooksRemoteActions : public QDialog {
 private:
   QString p_orderId;
   QString p_purchaser;
+  QString p_purchaseId;
   QStringList p_articles;
 
   AbeBooksRequester *m_requester;
@@ -77,7 +78,7 @@ private Q_SLOTS:
 
 public:
   explicit AbeBooksRemoteActions(QWidget *parent = nullptr);
-  void setPurchaser(const QString &person);
+  void setPurchaser(const QString &person, const QString &purchaseId);
   void setArticleIds(const QStringList &ids);
   int exec(const QString &orderId);
 };

@@ -242,24 +242,17 @@ void AbeBooksRequester::queryOrder(const QString &purchaseId) {
 }
 
 void AbeBooksRequester::updateOrderStatus(const QString &purchaseId,
+                                          const QString &buyerId,
                                           const QString &action,
                                           const QStringList &articles) {
   AbeBooksDocument doc = createDocument();
   doc.createAction("update");
-  QString id(purchaseId);
   QDomElement pOrder = doc.createElement("purchaseOrder");
-  pOrder.setAttribute("id", id.trimmed());
+  pOrder.setAttribute("id", purchaseId.trimmed());
   doc.documentElement().appendChild(pOrder);
-  QDomElement itemList = doc.createElement("purchaseOrderItemList");
-  pOrder.appendChild(itemList);
-  foreach (QString id, articles) {
-    QDomElement orderItem = doc.createElement("purchaseOrderItem");
-    orderItem.setAttribute("id", id);
-    itemList.appendChild(orderItem);
-    QDomElement status = doc.createElement("status");
-    status.appendChild(doc.createTextNode(action));
-    orderItem.appendChild(status);
-  }
+  QDomElement status = doc.createElement("status");
+  status.appendChild(doc.createTextNode(action));
+  pOrder.appendChild(status);
 
 #ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << purchaseId << action << doc.toString();

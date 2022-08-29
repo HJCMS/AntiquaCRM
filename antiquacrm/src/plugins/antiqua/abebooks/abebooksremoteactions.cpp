@@ -50,6 +50,7 @@ ABE_StatusPage::ABE_StatusPage(QWidget *parent) : QWidget{parent} {
 
   m_rb6 = new QRadioButton(tr("The buyer's credit card is declined!"), this);
   m_rb6->setObjectName("creditCardDeclined");
+  m_rb6->setEnabled(false);
   layout->addWidget(m_rb6);
 
   m_apply = new QPushButton(btnIcon(), tr("Apply"), this);
@@ -112,27 +113,38 @@ void AbeBooksRemoteActions::prepareStatusAction(const QString &cmd) {
     return;
   }
 
+  if (p_purchaseId.isEmpty() || p_orderId.isEmpty()) {
+    qWarning("Missing Purchase Ids!");
+    return;
+  }
+
   AbeBooksRequester *req = new AbeBooksRequester(this);
   req->setObjectName(CONFIG_PROVIDER);
   connect(req, SIGNAL(response(const QDomDocument &)), this,
           SLOT(responseUpdate(const QDomDocument &)));
 
-  req->updateOrderStatus(p_orderId, cmd, p_articles);
+  req->updateOrderStatus(p_orderId, p_purchaseId, cmd, p_articles);
 }
 
 void AbeBooksRemoteActions::pushMessage(const QString &msg) {
+#ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << msg;
+#endif
 }
 
 void AbeBooksRemoteActions::responseUpdate(const QDomDocument &dom) {
-  qDebug() << Q_FUNC_INFO << dom.toString(1);
+#ifdef ANTIQUA_DEVELOPEMENT
+  saveSources(dom, "responseUpdate_" + p_orderId);
+#endif
 }
 
-void AbeBooksRemoteActions::setPurchaser(const QString &person) {
+void AbeBooksRemoteActions::setPurchaser(const QString &person,
+                                         const QString &purchaseId) {
   if (person.isEmpty())
     return;
 
   p_purchaser = person;
+  p_purchaseId = purchaseId;
 }
 
 void AbeBooksRemoteActions::setArticleIds(const QStringList &ids) {

@@ -26,6 +26,7 @@ class ANTIQUACORE_EXPORT AbeBooksIfaceWidget final
 
 private:
   QStringList p_articleList;
+  QString p_buyerPurchaseId;
   QHash<QString, QString> p_customer;
   QDomDocument p_currentDocument;
   AbeBooksRemoteActions *m_dialog;
