@@ -12,45 +12,44 @@
 #include <QVariant>
 
 #include "homebaseconfig.h"
+#include "booknodetype.h"
 
 class HOMEBASE3_EXPORT BookListingNode final : public QDomElement {
-
 public:
   explicit BookListingNode(const QDomElement &element);
 
   /**
    * @brief DomElement NodeName
-   * @return String
    */
   const QString name();
 
   /**
+   * @brief Properties for this Element
+   */
+  const BookNodeType nodeData();
+
+  /**
    * @brief Meta Type definition
-   * @return MetaType
    */
   QMetaType::Type type();
 
   /**
-   * @brief minimum String Length or Size
-   * @return int
+   * @brief minimum DomTextNode length
    */
   int minLength();
 
   /**
-   * @brief maxLength
-   * @return int
+   * @brief maximum DomTextNode length
    */
   int maxLength();
 
   /**
    * @brief nodeValue
-   * @return Variant
    */
   const QVariant value();
 
   /**
    * @brief Convert to JSonObject
-   * @return JsonObject
    */
   const QJsonObject toJson();
 };
