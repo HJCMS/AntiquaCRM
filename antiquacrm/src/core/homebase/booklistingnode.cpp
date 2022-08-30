@@ -2,24 +2,23 @@
 // vim: set fileencoding=utf-8
 
 #include "booklistingnode.h"
-#include "booknodetype.h"
+// #include "booknodetype.h"
 
 #include <QDateTime>
 #include <QDomText>
 #include <QJsonValue>
 
 BookListingNode::BookListingNode(const QDomElement &element)
-    : QDomElement{element}, p_schema() {
-  p_type = p_schema.getPolicy(element);
+    : QDomElement{element} {
 }
 
-const QString BookListingNode::name() { return p_type.name(); }
+const QString BookListingNode::name() { return QString(); }
 
-QMetaType::Type BookListingNode::type() { return p_type.type(); }
+QMetaType::Type BookListingNode::type() { return QMetaType::UnknownType; }
 
-int BookListingNode::minLength() { return p_type.minLength(); }
+int BookListingNode::minLength() { return 0; }
 
-int BookListingNode::maxLength() { return p_type.maxLength(); }
+int BookListingNode::maxLength() { return 30; }
 
 const QVariant BookListingNode::value() {
   QString buffer;

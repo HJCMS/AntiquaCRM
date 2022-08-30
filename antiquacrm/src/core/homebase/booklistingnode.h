@@ -12,14 +12,8 @@
 #include <QVariant>
 
 #include "homebaseconfig.h"
-#include "homebaseschema.h"
-#include "booknodetype.h"
 
 class HOMEBASE3_EXPORT BookListingNode final : public QDomElement {
-
-private:
-  BookNodeType p_type;
-  HomeBaseSchema p_schema;
 
 public:
   explicit BookListingNode(const QDomElement &element);

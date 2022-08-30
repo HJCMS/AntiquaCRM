@@ -13,7 +13,6 @@ SET (subproject_SOURCES
   booklisting.cpp
   booklistingnode.cpp
   booknodetype.cpp
-  homebaseschema.cpp
   homebasebuilder.cpp
   homebasereader.cpp
   ${subproject_FILES}
@@ -23,7 +22,6 @@ SET (subproject_HEADERS
   booklisting.h
   booklistingnode.h
   booknodetype.h
-  homebaseschema.h
   homebasebuilder.h
   homebaseconfig.h
   homebasereader.h
