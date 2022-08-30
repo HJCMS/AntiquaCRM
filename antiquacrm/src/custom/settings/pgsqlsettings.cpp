@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "pgsqlsettings.h"
-#include "filedialog.h"
 #include "myicontheme.h"
 
 #include <QByteArray>
@@ -126,7 +125,7 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
   QHBoxLayout *gh_sql_alyout = new QHBoxLayout();
   gh_sql_alyout->addStretch(1);
 
-  sql_port = new IntSpinBox(1024, 9999, this);
+  sql_port = new IntSpinBox(1110, 45000, this);
   sql_port->setObjectName("port");
   sql_port->setValue(5432);
   sql_port->setToolTip(tr("The default port address is 5432"));

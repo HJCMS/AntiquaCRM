@@ -111,14 +111,10 @@ INCLUDE_DIRECTORIES (\${PROJECT_INCLUDE_DIRS})
 EOF
 
 for _s in $(find . -mindepth 1 -maxdepth 3 -type f -name CMakeLists.txt -exec dirname "{}" \;) ; do
-if test ! -n "$(grep _subproject ${_s}/CMakeLists.txt 2> /dev/null)" ; then
+if test ! -n "$(grep '_\(sub\|slib\)project' ${_s}/CMakeLists.txt 2> /dev/null)" ; then
   _s=$(echo ${_s} | sed 's,\.\/,,')
   ## Plugins nicht in das Projekt laden
   if [[ "${_s}" = "plugins/antiqua" ]] ; then
-    continue;
-  fi
-  ## Plugins nicht in das Projekt laden
-  if [[ "${_s}" = "custom/libextern" ]] ; then
     continue;
   fi
   if test ${_s} != . ; then

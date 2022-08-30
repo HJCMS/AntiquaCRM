@@ -13,7 +13,9 @@ ProvidersTreeView::ProvidersTreeView(QWidget *parent) : QTreeWidget{parent} {
   setSortingEnabled(false);
   setWordWrap(false);
   setAlternatingRowColors(true);
-  setMaximumWidth(270);
+  setMaximumWidth(300);
+  setMinimumWidth(50);
+  setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
 
   QTreeWidgetItem *aItem = headerItem();
   aItem->setText(0, tr("Orders"));

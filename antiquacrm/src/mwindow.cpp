@@ -14,7 +14,7 @@
 #include "storagelocation.h"
 #include "workspace.h"
 #ifdef ANTIQUA_DEVELOPEMENT
-#include "homebase3.h"
+#include "abecatalog.h"
 #endif
 
 #include <QJsonDocument>
@@ -207,7 +207,11 @@ void MWindow::openReportDialog(bool) {
 
 void MWindow::openExportCatalog(bool) {
 #ifdef ANTIQUA_DEVELOPEMENT
-  HomeBase3::testBuilder();
+  AbeCatalog *d = new AbeCatalog(this);
+  d->setObjectName("reporting_dialog");
+  if (d->exec()) {
+    d->deleteLater();
+  }
 #endif
 }
 

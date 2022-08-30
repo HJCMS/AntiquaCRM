@@ -31,6 +31,8 @@ public:
 
   void setUpdateDate(const QDateTime &dateTime = QDateTime::currentDateTime());
   QDateTime updatedate() const;
+
+
 };
 
 #endif // LIB_BOOKLISTING_H
