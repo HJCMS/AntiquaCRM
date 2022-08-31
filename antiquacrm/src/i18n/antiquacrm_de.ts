@@ -401,60 +401,9 @@
     </message>
 </context>
 <context>
-    <name>Bl_MessagePage</name>
-    <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+219"/>
-        <source>Please select send type first.</source>
-        <translation>Bitte wählen Sie zuerst die Versandart aus.</translation>
-    </message>
-    <message>
-        <location line="-93"/>
-        <source>Apply</source>
-        <translation>Anwenden</translation>
-    </message>
-    <message>
-        <location line="+70"/>
-        <source>No Database Connection found!</source>
-        <translation>Keine Datenbankverbindung gefunden!</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>No Database Connection!</source>
-        <translation>Keine Datenbank verbindung!</translation>
-    </message>
-    <message>
-        <location line="-37"/>
-        <source>No Message type selected!</source>
-        <translation>Kein Nachrichtentyp ausgewählt!</translation>
-    </message>
-</context>
-<context>
-    <name>Bl_StartPage</name>
-    <message>
-        <location line="+83"/>
-        <source>Status</source>
-        <translation>Status</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Order Status update.</source>
-        <translation>Auftragsstatus aktualisieren.</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Message</source>
-        <translation>Nachricht</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Sending a message to the Purchaser.</source>
-        <translation>Senden einer Nachricht an den Käufer.</translation>
-    </message>
-</context>
-<context>
     <name>Bl_StatusPage</name>
     <message>
-        <location line="-205"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+35"/>
         <source>Changes the status of the current order.</source>
         <translation>Ändert den Status der Aktuellen Bestellung.</translation>
     </message>
@@ -982,7 +931,7 @@
 <context>
     <name>BooklookerRemoteActions</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+268"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+91"/>
         <source>Invalid Parameters</source>
         <translation>Ungültige Parameter</translation>
     </message>
