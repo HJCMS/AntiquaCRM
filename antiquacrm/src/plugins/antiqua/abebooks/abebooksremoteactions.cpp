@@ -46,11 +46,16 @@ ABE_StatusPage::ABE_StatusPage(QWidget *parent) : QWidget{parent} {
 
   m_rb5 = new QRadioButton(tr("Article is no longer available!"), this);
   m_rb5->setObjectName("previouslySold");
+#ifndef ANTIQUA_DEVELOPEMENT
+  m_rb5->setEnabled(false);
+#endif
   layout->addWidget(m_rb5);
 
   m_rb6 = new QRadioButton(tr("The buyer's credit card is declined!"), this);
   m_rb6->setObjectName("creditCardDeclined");
+#ifndef ANTIQUA_DEVELOPEMENT
   m_rb6->setEnabled(false);
+#endif
   layout->addWidget(m_rb6);
 
   m_apply = new QPushButton(btnIcon(), tr("Apply"), this);

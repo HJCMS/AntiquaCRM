@@ -29,12 +29,12 @@
         <translation>Artikel ist nicht mehr verfügbar!</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+7"/>
         <source>The buyer&apos;s credit card is declined!</source>
         <translation>Die Kreditkarte des Käufers wird abgelehnt!</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+7"/>
         <source>Apply</source>
         <translation>Anwenden</translation>
     </message>
@@ -42,12 +42,12 @@
 <context>
     <name>AbeBooksIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+170"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+169"/>
         <source>Document read Error</source>
         <translation>Lesefehler beim öffnen der Abebooks Schnittstelle</translation>
     </message>
     <message>
-        <location line="+172"/>
+        <location line="+175"/>
         <source>Buyer Cancelled</source>
         <translation>Käufer stornierte</translation>
     </message>
@@ -172,11 +172,11 @@
     </message>
     <message>
         <location line="+15"/>
-        <source>Service provider dialog for editing, confirming orders and eMail</source>
-        <translation>Dienstleisterdialog für Bearbeitung, Auftragsbestätigung und E-Mail</translation>
+        <source>Service provider dialog for editing, confirming orders.</source>
+        <translation>Dienstleisterdialog zum Bearbeiten, Bestätigen von Bestellungen.</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Open</source>
         <translation>Öffnen</translation>
     </message>
@@ -3597,28 +3597,28 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+77"/>
+        <location filename="../mwindow.cpp" line="+74"/>
         <source>Application</source>
         <translation>Programm</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+19"/>
         <source>Quit</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="-36"/>
-        <location line="+41"/>
+        <location line="-29"/>
+        <location line="+34"/>
         <source>Views</source>
         <translation>Ansichten</translation>
     </message>
     <message>
-        <location line="-24"/>
+        <location line="-17"/>
         <source>Reconnect</source>
         <translation>Neu verbinden</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+31"/>
         <source>Various settings</source>
         <translation>Verschiedene Einstellungen</translation>
     </message>
@@ -3643,18 +3643,18 @@
         <translation>&lt;b&gt;Sie haben nicht gespeicherte Änderungen.&lt;/b&gt;&lt;p&gt;Möchten sie wirklich die Anwendung schließen?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+86"/>
         <source>SQL Server Error</source>
         <translation>SQL Serverfehler</translation>
     </message>
     <message>
-        <location line="-140"/>
-        <location line="+153"/>
+        <location line="-138"/>
+        <location line="+151"/>
         <source>Fullscreen</source>
         <translation>Vollansicht</translation>
     </message>
     <message>
-        <location line="-204"/>
+        <location line="-195"/>
         <source>Anything but books</source>
         <translation>Alles außer Bücher</translation>
     </message>
@@ -3669,12 +3669,7 @@
         <translation>Monatsbericht</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Catalog export</source>
-        <translation>Katalog Export</translation>
-    </message>
-    <message>
-        <location line="+24"/>
+        <location line="+23"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
@@ -3704,7 +3699,7 @@
         <translation>Bearbeite Kategorien</translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+113"/>
         <source>Disable Fullscreen</source>
         <translation>Vollansicht beenden</translation>
     </message>
@@ -4584,7 +4579,7 @@
 <context>
     <name>PgSQLSettings</name>
     <message>
-        <location filename="../custom/settings/pgsqlsettings.cpp" line="+85"/>
+        <location filename="../custom/settings/pgsqlsettings.cpp" line="+84"/>
         <source>Database Connection settings to PostgreSQL server.</source>
         <translation>Datenbank Verbindungs-Einstellungen zum PostgreSQL Server.</translation>
     </message>
@@ -5544,7 +5539,7 @@
 <context>
     <name>ProvidersTreeView</name>
     <message>
-        <location filename="../inventory/providers/providerstreeview.cpp" line="+19"/>
+        <location filename="../inventory/providers/providerstreeview.cpp" line="+21"/>
         <source>Orders</source>
         <translation>Bestellungen</translation>
     </message>

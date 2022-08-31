@@ -113,8 +113,7 @@ InterfaceWidget::InterfaceWidget(const QString &orderId, QWidget *parent)
   operationsLayout->addStretch(1);
   QLabel *m_infoPrAc = new QLabel(m_operationBar);
   m_infoPrAc->setText(
-      tr("Service provider dialog for editing, confirming orders and eMail") +
-      ":");
+      tr("Service provider dialog for editing, confirming orders.") + ":");
   operationsLayout->addWidget(m_infoPrAc);
   btn_providerActions = new QPushButton(m_operationBar);
   btn_providerActions->setIcon(qi1);

@@ -13,9 +13,6 @@
 #include "statusbar.h"
 #include "storagelocation.h"
 #include "workspace.h"
-#ifdef ANTIQUA_DEVELOPEMENT
-#include "abecatalog.h"
-#endif
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -90,13 +87,6 @@ void MWindow::setupActions() {
   ac_reports->setObjectName("ac_monthly_reports");
   connect(ac_reports, SIGNAL(triggered(bool)), this,
           SLOT(openReportDialog(bool)));
-
-#ifdef ANTIQUA_DEVELOPEMENT
-  QAction *ac_export = menu_db->addAction(dbIcon, tr("Catalog export"));
-  ac_export->setObjectName("ac_export_catalog");
-  connect(ac_export, SIGNAL(triggered(bool)), this,
-          SLOT(openExportCatalog(bool)));
-#endif
 
   m_applicationMenu->addSeparator();
 
@@ -206,13 +196,7 @@ void MWindow::openReportDialog(bool) {
 }
 
 void MWindow::openExportCatalog(bool) {
-#ifdef ANTIQUA_DEVELOPEMENT
-  AbeCatalog *d = new AbeCatalog(this);
-  d->setObjectName("reporting_dialog");
-  if (d->exec()) {
-    d->deleteLater();
-  }
-#endif
+  // TODO Export Catalog function
 }
 
 void MWindow::openCategoryEdit(bool) {

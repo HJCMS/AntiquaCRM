@@ -3,4 +3,3 @@
 
 ADD_SUBDIRECTORY (sqlcore)
 ADD_SUBDIRECTORY (antiquacore)
-ADD_SUBDIRECTORY (homebase)

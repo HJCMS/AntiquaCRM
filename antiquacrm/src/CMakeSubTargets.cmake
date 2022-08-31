@@ -7,14 +7,10 @@ SET (PROJECT_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}/core
  ${CMAKE_CURRENT_BINARY_DIR}/core/antiquacore
  ${CMAKE_CURRENT_SOURCE_DIR}/core/antiquacore
- ${CMAKE_CURRENT_BINARY_DIR}/core/homebase
- ${CMAKE_CURRENT_SOURCE_DIR}/core/homebase
  ${CMAKE_CURRENT_BINARY_DIR}/core/sqlcore
  ${CMAKE_CURRENT_SOURCE_DIR}/core/sqlcore
  ${CMAKE_CURRENT_BINARY_DIR}/custom
  ${CMAKE_CURRENT_SOURCE_DIR}/custom
- ${CMAKE_CURRENT_BINARY_DIR}/custom/abecatalog
- ${CMAKE_CURRENT_SOURCE_DIR}/custom/abecatalog
  ${CMAKE_CURRENT_BINARY_DIR}/custom/assistant
  ${CMAKE_CURRENT_SOURCE_DIR}/custom/assistant
  ${CMAKE_CURRENT_BINARY_DIR}/custom/autofill
@@ -105,7 +101,6 @@ KeywordEdit
 MessageTemplates
 MailForward
 Reporting
-AbeCatalog
 InventoryBooks
 InventoryPrints
 InventoryOrders
