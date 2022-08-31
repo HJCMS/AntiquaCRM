@@ -25,55 +25,14 @@
 class BooklookerRequester;
 
 /**
- * @brief Nachrichten
+ * @brief Bestellstatus ändern
  */
-class ANTIQUACORE_EXPORT BL_Message final {
-private:
-  QString p_type;
-  QString p_title;
-  QString p_body;
-
-public:
-  explicit BL_Message();
-  void setType(const QString &);
-  const QString getType();
-  void setTitle(const QString &);
-  const QString getTitle();
-  void setBody(const QString &);
-  const QString getBody();
-};
-
-/**
- * @brief Abstrakte Klasse für die Seiten
- */
-class ANTIQUACORE_EXPORT Bl_PageWidget : public QWidget {
+class ANTIQUACORE_EXPORT Bl_StatusPage final : public QWidget {
   Q_OBJECT
   Q_PROPERTY(bool modified WRITE setModified READ isModified NOTIFY hasModified)
 
 private:
   bool modified = false;
-
-protected Q_SLOTS:
-  void setModified(bool b);
-  virtual void prepareAction() = 0;
-
-Q_SIGNALS:
-  void sendNotes(const QString &message);
-  void sendAction(const QJsonObject &status);
-  void hasModified(bool);
-
-public:
-  explicit Bl_PageWidget(QWidget *parent = nullptr);
-  bool isModified();
-};
-
-/**
- * @brief Bestellstatus ändern
- */
-class ANTIQUACORE_EXPORT Bl_StatusPage final : public Bl_PageWidget {
-  Q_OBJECT
-
-private:
   QRadioButton *m_rb1;
   QRadioButton *m_rb2;
   QRadioButton *m_rb3;
@@ -84,54 +43,16 @@ private:
 
 private Q_SLOTS:
   void prepareAction();
+  void setModified(bool b);
+
+Q_SIGNALS:
+  void sendNotes(const QString &message);
+  void sendAction(const QJsonObject &status);
+  void hasModified(bool);
 
 public:
   explicit Bl_StatusPage(QWidget *parent = nullptr);
-};
-
-/**
- * @brief Nachricht an Käufer senden
- */
-class ANTIQUACORE_EXPORT Bl_MessagePage final : public Bl_PageWidget {
-  Q_OBJECT
-
-private:
-  QComboBox *m_type;
-  QTextEdit *m_message;
-  QPushButton *m_apply;
-  QMap<QString, QString> p_replacements;
-  QMap<int, BL_Message> p_messages;
-  const QString convertTemplate(const QString &body);
-
-private Q_SLOTS:
-  void messageTypeChanged(int);
-  void prepareAction();
-
-public:
-  explicit Bl_MessagePage(QWidget *parent = nullptr);
-  void setPurchaser(QString &person, const QString &orderId);
-  bool initSqlMessages();
-};
-
-/**
- * @brief Startseite
- */
-class ANTIQUACORE_EXPORT Bl_StartPage final : public QWidget {
-  Q_OBJECT
-
-private:
-  QPushButton *btn_status;
-  QPushButton *btn_message;
-
-private Q_SLOTS:
-  void statusClicked();
-  void messageClicked();
-
-Q_SIGNALS:
-  void sendGotoPage(int);
-
-public:
-  explicit Bl_StartPage(QWidget *parent = nullptr);
+  bool isModified();
 };
 
 /**
@@ -150,10 +71,7 @@ private:
   QDialogButtonBox *m_buttonBar;
   QPushButton *btn_commit;
   QPushButton *btn_quit;
-  QStackedWidget *m_stackedWidget;
-  Bl_StartPage *m_startPage;
   Bl_StatusPage *m_statusPage;
-  Bl_MessagePage *m_messagePage;
   QStatusBar *m_statusBar;
 
 private Q_SLOTS:

@@ -382,7 +382,7 @@
         <translation>Verbindung erfolgreich!</translation>
     </message>
     <message>
-        <location line="+135"/>
+        <location line="+140"/>
         <source>Unfinished Assistant</source>
         <translation>Unvollständiger Fortschritt</translation>
     </message>
@@ -1731,7 +1731,7 @@
 <context>
     <name>ConfigPgSQL</name>
     <message>
-        <location filename="../custom/assistant/configpgsql.cpp" line="+14"/>
+        <location filename="../custom/assistant/configpgsql.cpp" line="+15"/>
         <source>Database Configuration</source>
         <translation>Datenbank Konfiguration</translation>
     </message>
@@ -1751,7 +1751,7 @@
         <translation></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+13"/>
         <source>Username:</source>
         <translation>Benutzername:</translation>
     </message>
@@ -3592,6 +3592,24 @@
         <location line="+43"/>
         <source>is required and can&apos;t empty.</source>
         <translation>ist Erforderlich und darf nicht Leer sein.</translation>
+    </message>
+</context>
+<context>
+    <name>MApplication</name>
+    <message>
+        <location filename="../mapplication.cpp" line="+92"/>
+        <source>No valid Network Interfaces found!</source>
+        <translation>Keine gültigen Netzwerkschnittstellen gefunden!</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Please check your Network configuration.</source>
+        <translation>Bitte überprüfen Sie Ihre Netzwerkkonfiguration.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Network</source>
+        <translation>Netzwerk</translation>
     </message>
 </context>
 <context>

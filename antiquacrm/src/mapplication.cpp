@@ -13,6 +13,8 @@
 #include <QFont>
 #include <QLocalSocket>
 #include <QLocale>
+#include <QMessageBox>
+#include <QNetworkInterface>
 #include <QStyleFactory>
 #include <QTranslator>
 
@@ -31,7 +33,8 @@ bool MApplication::initialSocketServer() {
 bool MApplication::initTranslations() {
   QDir p = ApplSettings::getDataTarget();
   QTranslator *transl = new QTranslator(this);
-  if (transl->load(QLocale::system(), "antiquacrm", "_", p.filePath("i18n"), ".qm")) {
+  if (transl->load(QLocale::system(), "antiquacrm", "_", p.filePath("i18n"),
+                   ".qm")) {
     installTranslator(transl);
     return true;
   }
@@ -66,6 +69,30 @@ void MApplication::initThemeStyle() {
 int MApplication::exec() {
   if (!initTranslations()) {
     qWarning("Translation not loaded!");
+  }
+
+  int ipcheck = 0;
+  foreach (QNetworkInterface net, QNetworkInterface::allInterfaces()) {
+    if (net.flags() & !(QNetworkInterface::IsUp | QNetworkInterface::IsRunning))
+      continue;
+
+    if (net.flags() & QNetworkInterface::IsLoopBack)
+      continue;
+
+    if (net.type() & (QNetworkInterface::Ethernet | QNetworkInterface::Wifi)) {
+      foreach (QNetworkAddressEntry a, net.addressEntries()) {
+        if (a.ip().isGlobal() && !a.ip().isLinkLocal())
+          ipcheck++;
+      }
+    }
+  }
+
+  if (ipcheck < 1) {
+    QStringList info;
+    info << tr("No valid Network Interfaces found!");
+    info << tr("Please check your Network configuration.");
+    QMessageBox::critical(nullptr, tr("Network"), info.join("\n"));
+    return 0;
   }
 
   if (m_config->needAssistant()) {

@@ -382,7 +382,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+135"/>
+        <location line="+140"/>
         <source>Unfinished Assistant</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1731,7 +1731,7 @@
 <context>
     <name>ConfigPgSQL</name>
     <message>
-        <location filename="../custom/assistant/configpgsql.cpp" line="+14"/>
+        <location filename="../custom/assistant/configpgsql.cpp" line="+15"/>
         <source>Database Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1751,7 +1751,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+13"/>
         <source>Username:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3591,6 +3591,24 @@
     <message>
         <location line="+43"/>
         <source>is required and can&apos;t empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MApplication</name>
+    <message>
+        <location filename="../mapplication.cpp" line="+92"/>
+        <source>No valid Network Interfaces found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Please check your Network configuration.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Network</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

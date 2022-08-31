@@ -191,7 +191,7 @@ void Assistant::save() {
   cfg->beginGroup("postgresql");
   while (sql.hasNext()) {
     sql.next();
-    if(sql.value().isNull())
+    if (sql.value().isNull())
       continue;
 
     cfg->setValue(sql.key(), sql.value());
@@ -207,7 +207,7 @@ void Assistant::save() {
   cfg->beginGroup("ssloptions");
   while (ssl.hasNext()) {
     ssl.next();
-    if(sql.value().isNull())
+    if (sql.value().isNull())
       continue;
 
     cfg->setValue(ssl.key(), ssl.value());
@@ -232,6 +232,11 @@ void Assistant::pageEntered(int index) {
     }
     cfg->endGroup();
   } else if (m_stackedWidget->widget(index)->objectName() == "page3") {
+    QPair<QString, QVariant> data;
+    data.first = "ssl";
+    data.second = true;
+    m_configSSL->setData(data);
+
     cfg->beginGroup("ssloptions");
     foreach (QString k, cfg->allKeys()) {
       if (k.contains("ssl_peer_pass"))

@@ -4,6 +4,7 @@
 #include "configpgsql.h"
 
 #include <QGridLayout>
+#include <QIntValidator>
 
 ConfigPgSQL::ConfigPgSQL(QWidget *parent) : QWidget{parent} {
 
@@ -40,6 +41,10 @@ ConfigPgSQL::ConfigPgSQL(QWidget *parent) : QWidget{parent} {
   port->setObjectName("port");
   port->setPlaceholderText("5432");
   layout->addWidget(port, row++, 1, 1, 1);
+
+  QIntValidator *validator = new QIntValidator(port);
+  validator->setRange(1024, 49151);
+  port->setValidator(validator);
 
   QLabel *t_username = new QLabel(tr("Username:"), this);
   t_username->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
