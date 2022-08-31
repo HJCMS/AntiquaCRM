@@ -65,7 +65,6 @@ Bl_StatusPage::Bl_StatusPage(QWidget *parent) : QWidget{parent} {
   layout->addStretch(1);
   setLayout(layout);
 
-  connect(m_rb1, SIGNAL(toggled(bool)), this, SIGNAL(sendModified(bool)));
   connect(m_rb2, SIGNAL(toggled(bool)), this, SIGNAL(sendModified(bool)));
   connect(m_rb3, SIGNAL(toggled(bool)), this, SIGNAL(sendModified(bool)));
   connect(m_rb4, SIGNAL(toggled(bool)), this, SIGNAL(sendModified(bool)));
