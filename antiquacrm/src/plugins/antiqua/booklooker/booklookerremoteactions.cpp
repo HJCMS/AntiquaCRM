@@ -65,6 +65,12 @@ Bl_StatusPage::Bl_StatusPage(QWidget *parent) : QWidget{parent} {
   layout->addStretch(1);
   setLayout(layout);
 
+  connect(m_rb1, SIGNAL(toggled(bool)), this, SIGNAL(sendModified(bool)));
+  connect(m_rb2, SIGNAL(toggled(bool)), this, SIGNAL(sendModified(bool)));
+  connect(m_rb3, SIGNAL(toggled(bool)), this, SIGNAL(sendModified(bool)));
+  connect(m_rb4, SIGNAL(toggled(bool)), this, SIGNAL(sendModified(bool)));
+  connect(m_rb5, SIGNAL(toggled(bool)), this, SIGNAL(sendModified(bool)));
+  connect(m_rb6, SIGNAL(toggled(bool)), this, SIGNAL(sendModified(bool)));
   connect(m_apply, SIGNAL(clicked()), this, SLOT(prepareAction()));
 }
 
@@ -79,20 +85,12 @@ void Bl_StatusPage::prepareAction() {
     if (rb != nullptr && !rb->objectName().isEmpty()) {
       if (rb->isChecked()) {
         obj.insert("value", QJsonValue(rb->objectName()));
-        setModified(true);
         emit sendAction(obj);
         break;
       }
     }
   }
 }
-
-void Bl_StatusPage::setModified(bool b) {
-  modified = b;
-  emit hasModified(b);
-}
-
-bool Bl_StatusPage::isModified() { return modified; }
 
 BooklookerRemoteActions::BooklookerRemoteActions(QWidget *parent)
     : QDialog{parent} {
@@ -121,11 +119,13 @@ BooklookerRemoteActions::BooklookerRemoteActions(QWidget *parent)
   // BEGIN SIGNALS
   connect(m_requester, SIGNAL(response(const QJsonDocument &)), this,
           SLOT(jsonResponse(const QJsonDocument &)));
+  connect(m_statusPage, SIGNAL(sendModified(bool)), this,
+          SLOT(setWindowModified(bool)));
   connect(m_statusPage, SIGNAL(sendAction(const QJsonObject &)), this,
           SLOT(prepareAction(const QJsonObject &)));
   connect(m_statusPage, SIGNAL(sendNotes(const QString &)), this,
           SLOT(pushMessage(const QString &)));
-  connect(m_buttonBar, SIGNAL(rejected()), this, SLOT(reject()));
+  connect(m_buttonBar, SIGNAL(rejected()), this, SLOT(closeAction()));
   // END
 }
 
@@ -135,8 +135,6 @@ void BooklookerRemoteActions::prepareAction(const QJsonObject &jsObj) {
   QString value = jsObj.value("value").toString();
   if (action == "order_status") {
     m_requester->queryUpdateOrderStatus(p_orderId, value);
-  } else if (action == "order_message") {
-    m_requester->queryPushMessage(p_orderId, type, value);
   } else {
     qWarning("Unknown action in: %s", Q_FUNC_INFO);
   }
@@ -163,6 +161,15 @@ void BooklookerRemoteActions::jsonResponse(const QJsonDocument &jdoc) {
   }
   QString value = QJsonValue(jdoc["returnValue"]).toString();
   pushMessage(value.trimmed());
+}
+
+void BooklookerRemoteActions::closeAction() {
+  if (isWindowModified()) {
+    pushMessage(tr("Unfinished operations!"));
+    setWindowModified(false);
+    return;
+  }
+  reject();
 }
 
 void BooklookerRemoteActions::setPurchaser(const QString &person) {

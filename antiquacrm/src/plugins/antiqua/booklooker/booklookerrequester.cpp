@@ -506,49 +506,6 @@ void BooklookerRequester::queryUpdateOrderCancel(const QString &orderId) {
   putRequest(url, QByteArray());
 }
 
-void BooklookerRequester::queryPushMessage(const QString &orderId,
-                                           const QString &messageType,
-                                           const QString &additionalText) {
-  if (orderId.length() < 4)
-    return;
-
-  if (messageType.isEmpty())
-    return;
-
-  if (additionalText.isEmpty())
-    return;
-
-  if (getToken().isEmpty()) {
-    authentication();
-    return;
-  }
-
-  QStringList types = orderMessageTypes();
-  if (!types.contains(messageType)) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "INVALID:" << messageType;
-#endif
-    emit errorMessage(Antiqua::ErrorStatus::NOTICE,
-                      tr("Invalid Messagetype, operation rejected!"));
-    return;
-  }
-
-  QUrlQuery q;
-  q.addQueryItem("order_message", getToken());
-  q.addQueryItem("orderId", orderId);
-  q.addQueryItem("messageType", messageType);
-  q.addQueryItem("additionalText", additionalText);
-
-  QUrlQuery body;
-  body.addQueryItem("additionalText", additionalText);
-  QString message = body.toString(QUrl::FullyEncoded);
-
-  p_operation = "order_message";
-  QUrl url = apiQuery(p_operation);
-  url.setQuery(q);
-  putRequest(url, message.toLocal8Bit());
-}
-
 void BooklookerRequester::queryOrder(const QString &orderId) {
   QString fileName("antiqua_booklooker_orders_list.json");
   QFileInfo fileInfo(QDir::temp(), fileName);

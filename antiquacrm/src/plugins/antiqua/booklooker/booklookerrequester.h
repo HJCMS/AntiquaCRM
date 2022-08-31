@@ -181,18 +181,6 @@ public:
   void queryUpdateOrderCancel(const QString &orderId);
 
   /**
-   * @brief Versand einer Nachricht an den Kunden.
-   * @param orderId
-   * @param messageType
-   * @param additionalText
-   * @code
-   *  https://api.booklooker.de/2.0/order_message?token=REST_API_TOKEN
-   * @endcode
-   */
-  void queryPushMessage(const QString &orderId, const QString &messageType,
-                        const QString &additionalText);
-
-  /**
    * @brief Bestellung abfragen
    * Download aller Bestellungen eines bestimmten Tages bzw. Zeitintervalls.
    * https://api.booklooker.de/2.0/order?token=REST_API_TOKEN

@@ -29,10 +29,8 @@ class BooklookerRequester;
  */
 class ANTIQUACORE_EXPORT Bl_StatusPage final : public QWidget {
   Q_OBJECT
-  Q_PROPERTY(bool modified WRITE setModified READ isModified NOTIFY hasModified)
 
 private:
-  bool modified = false;
   QRadioButton *m_rb1;
   QRadioButton *m_rb2;
   QRadioButton *m_rb3;
@@ -43,16 +41,14 @@ private:
 
 private Q_SLOTS:
   void prepareAction();
-  void setModified(bool b);
 
 Q_SIGNALS:
+  void sendModified(bool);
   void sendNotes(const QString &message);
   void sendAction(const QJsonObject &status);
-  void hasModified(bool);
 
 public:
   explicit Bl_StatusPage(QWidget *parent = nullptr);
-  bool isModified();
 };
 
 /**
@@ -96,6 +92,11 @@ private Q_SLOTS:
    * @brief Netzwerk antworten
    */
   void jsonResponse(const QJsonDocument &jdoc);
+
+  /**
+   * @brief Beenden
+   */
+  void closeAction();
 
 public:
   explicit BooklookerRemoteActions(QWidget *parent = nullptr);

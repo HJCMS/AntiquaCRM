@@ -950,6 +950,11 @@
         <source>Order not found!</source>
         <translation>Bestellung nicht gefunden!</translation>
     </message>
+    <message>
+        <location line="+11"/>
+        <source>Unfinished operations!</source>
+        <translation>Unvollendete Operationen!</translation>
+    </message>
 </context>
 <context>
     <name>BooklookerRequester</name>
