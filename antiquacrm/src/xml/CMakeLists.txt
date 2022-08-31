@@ -8,7 +8,6 @@ SET (xml_FILES
 )
 
 SET (homebase_FILES
-  BookInventory.xsd
   BookListingXml.tpl
 )
 

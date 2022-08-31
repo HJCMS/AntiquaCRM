@@ -72,6 +72,8 @@ test -n "$PGSERVICE" || {
 
 PGSERVICE=$PGSERVICE psql --csv -c "${_sql_query_tables}" > .tmp.log
 
+PGSERVICE=$PGSERVICE psql --csv -c "${_sql_query_views}" >> .tmp.log
+
 _pattern="^${_scheme}"
 while read _t; do
   if [[ "${_t}" =~ $_pattern ]] ; then
