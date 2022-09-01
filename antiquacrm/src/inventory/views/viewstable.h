@@ -20,7 +20,6 @@ class ViewsTableModel : public QSqlTableModel {
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
-  const QByteArray currency;
   const QString translations(const QString &key) const;
   const QString getFieldName(const QModelIndex &index) const;
 
@@ -28,9 +27,6 @@ public:
   ViewsTableModel(const QSqlDatabase &db, QWidget *parent = nullptr);
   QVariant headerData(int section, Qt::Orientation orientation,
                       int role = Qt::DisplayRole) const;
-
-  virtual QVariant data(const QModelIndex &index,
-                        int role = Qt::DisplayRole) const;
 };
 
 /**

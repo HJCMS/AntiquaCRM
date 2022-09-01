@@ -931,7 +931,7 @@
 <context>
     <name>BooklookerRemoteActions</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+91"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+88"/>
         <source>Invalid Parameters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -994,12 +994,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+239"/>
-        <source>Invalid Messagetype, operation rejected!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+88"/>
+        <location line="+284"/>
         <source>Server temporarily down!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1044,7 +1039,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-460"/>
+        <location line="-417"/>
         <source>Server down</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6286,7 +6281,7 @@
 <context>
     <name>ViewsTableModel</name>
     <message>
-        <location filename="../inventory/views/viewstable.cpp" line="+23"/>
+        <location filename="../inventory/views/viewstable.cpp" line="+21"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6332,17 +6327,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+36"/>
-        <source>Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-43"/>
+        <location line="-7"/>
         <source>Author</source>
         <translation type="unfinished"></translation>
     </message>

@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "viewstable.h"
-#include "applsettings.h"
 
 #include <QDebug>
 #include <QHeaderView>
@@ -10,8 +9,7 @@
 #include <QSqlQuery>
 
 ViewsTableModel::ViewsTableModel(const QSqlDatabase &db, QWidget *parent)
-    : QSqlTableModel{parent, db},
-      currency(ApplSettings().value("payment/currency").toByteArray()) {
+    : QSqlTableModel{parent, db} {
   setObjectName("views_table_model");
 }
 
@@ -37,7 +35,10 @@ const QString ViewsTableModel::translations(const QString &key) const {
   l.insert("exists", tr("Exists"));
   // l.insert("",tr(""));
 
-  return (l.contains(key)) ? " " + l.value(key) + " " : key.toUpper();
+  if (l.contains(key))
+    return " " + l.value(key) + " ";
+
+  return " " + key.toUpper() + " ";
 }
 
 const QString ViewsTableModel::getFieldName(const QModelIndex &index) const {
@@ -57,33 +58,6 @@ QVariant ViewsTableModel::headerData(int section, Qt::Orientation orientation,
   return translations(fn);
 }
 
-QVariant ViewsTableModel::data(const QModelIndex &index, int role) const {
-  const QVariant val;
-  if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole &&
-                           role == Qt::DecorationRole))
-    return val;
-
-  QString fn;
-  if (index.isValid()) {
-    fn = getFieldName(index);
-  }
-
-  QVariant item = QSqlTableModel::data(index, role);
-  if (item.type() == QVariant::Bool) {
-    return item.toBool() ? tr("Yes") : tr("No");
-  } else if (item.type() == QVariant::Double) {
-    if (!fn.contains("price", Qt::CaseInsensitive))
-      return item;
-
-    QString price = QString::number(item.toDouble(), '0', 2);
-    price.append(" ");
-    price.append(currency);
-    return price;
-  }
-
-  return item;
-}
-
 ViewsTable::ViewsTable(QWidget *parent) : QTableView{parent} {
   setObjectName("views_table");
   setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -91,10 +65,10 @@ ViewsTable::ViewsTable(QWidget *parent) : QTableView{parent} {
   setSortingEnabled(false);
   setDragEnabled(false);
   setDragDropOverwriteMode(false);
-  setWordWrap(true);
+  setWordWrap(false);
   setAlternatingRowColors(true);
   setSelectionBehavior(QAbstractItemView::SelectRows);
-  setSelectionMode(QAbstractItemView::MultiSelection);
+  setSelectionMode(QAbstractItemView::SingleSelection);
 
   m_sql = new HJCMS::SqlCore(this);
 
