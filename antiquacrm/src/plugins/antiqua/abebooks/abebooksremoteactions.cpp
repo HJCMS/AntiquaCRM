@@ -42,6 +42,9 @@ ABE_StatusPage::ABE_StatusPage(QWidget *parent) : QWidget{parent} {
 
   m_rb4 = new QRadioButton(tr("The order is rejected!"), this);
   m_rb4->setObjectName("rejected");
+#ifndef ANTIQUA_DEVELOPEMENT
+  m_rb4->setEnabled(false);
+#endif
   layout->addWidget(m_rb4);
 
   m_rb5 = new QRadioButton(tr("Article is no longer available!"), this);

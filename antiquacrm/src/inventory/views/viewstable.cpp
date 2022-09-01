@@ -54,7 +54,10 @@ QVariant ViewsTableModel::headerData(int section, Qt::Orientation orientation,
   if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
     return QVariant();
 
-  QString fn = record().fieldName(section).split("_").last();
+  QString fn = record().fieldName(section).trimmed();
+  QRegExp pattern("^\\w{2}\\_");
+  fn.replace(pattern, "");
+  fn.replace("_", " ");
   return translations(fn);
 }
 
