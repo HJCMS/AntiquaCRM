@@ -87,8 +87,6 @@ Bl_StatusPage::Bl_StatusPage(QWidget *parent) : QWidget{parent} {
 
 void Bl_StatusPage::prepareAction() {
   QJsonObject obj;
-  obj.insert("type", QJsonValue());
-  emit sendAction(obj);
   QList<QRadioButton *> l = findChildren<QRadioButton *>(QString());
   for (int i = 0; i < l.count(); i++) {
     QRadioButton *rb = l.at(i);
@@ -97,16 +95,16 @@ void Bl_StatusPage::prepareAction() {
         QString name = rb->objectName();
         if (name == "ORDER_CANCEL_ACTION") {
           obj.insert("action", QJsonValue("order_cancel"));
-          obj.insert("orderId", QJsonValue(m_orderId->text()));
         } else {
           obj.insert("action", QJsonValue("order_status"));
-          obj.insert("value", QJsonValue(rb->objectName()));
         }
-        emit sendAction(obj);
+        obj.insert("value", QJsonValue(name));
         break;
       }
     }
   }
+  if (!obj.isEmpty())
+    emit sendAction(obj);
 }
 
 void Bl_StatusPage::setOrderId(const QString &orderId) {
@@ -152,7 +150,6 @@ BooklookerRemoteActions::BooklookerRemoteActions(QWidget *parent)
 
 void BooklookerRemoteActions::prepareAction(const QJsonObject &jsObj) {
   QString action = jsObj.value("action").toString();
-  QString type = jsObj.value("type").toString();
   QString value = jsObj.value("value").toString();
   if (action == "order_status") {
     m_requester->queryUpdateOrderStatus(p_orderId, value);

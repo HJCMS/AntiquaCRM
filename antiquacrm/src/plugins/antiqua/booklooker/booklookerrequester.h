@@ -159,7 +159,7 @@ public:
    * @endcode
    * @return QStringList
    */
-  static const QStringList orderMessageTypes();
+  Q_DECL_DEPRECATED static const QStringList orderMessageTypes();
 
   /**
    * @brief Sende Statusänderungen für Bestellung
