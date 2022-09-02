@@ -1016,7 +1016,10 @@ void OrderEditor::openPrinterPaymentReminderDialog() {
   }
 
   if (message.isEmpty()) {
-    emit s_postMessage(tr("No Message available"));
+    QStringList msgEmpty;
+    msgEmpty << tr("No message text available!");
+    msgEmpty << tr("Please check/edit customerdata, e.g. Gender.");
+    emit s_postMessage(msgEmpty.join("\n"));
     return;
   }
 

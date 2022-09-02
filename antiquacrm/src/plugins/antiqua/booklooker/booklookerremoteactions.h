@@ -37,6 +37,8 @@ private:
   QRadioButton *m_rb4;
   QRadioButton *m_rb5;
   QRadioButton *m_rb6;
+  QRadioButton *m_rb7;
+  QLabel *m_orderId;
   QPushButton *m_apply;
 
 private Q_SLOTS:
@@ -49,6 +51,7 @@ Q_SIGNALS:
 
 public:
   explicit Bl_StatusPage(QWidget *parent = nullptr);
+  void setOrderId(const QString &);
 };
 
 /**

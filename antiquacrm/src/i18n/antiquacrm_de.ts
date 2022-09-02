@@ -24,7 +24,7 @@
         <translation>Die Bestellung wird abgelehnt!</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+7"/>
         <source>Article is no longer available!</source>
         <translation>Artikel ist nicht mehr verfügbar!</translation>
     </message>
@@ -403,12 +403,17 @@
 <context>
     <name>Bl_StatusPage</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+35"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+36"/>
+        <source>Booklooker Order Id:</source>
+        <translation>Booklooker Bestell/Auftrags Id:</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Changes the status of the current order.</source>
         <translation>Ändert den Status der Aktuellen Bestellung.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Provider Status - no disclosures</source>
         <translation>Anbieterstatus – keine Angaben</translation>
     </message>
@@ -436,6 +441,11 @@
         <location line="+4"/>
         <source>Order Buyer no reaction.</source>
         <translation>Keine Käufer Reaktion auf Transaktionen.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Order Cancel action.</source>
+        <translation>Aktuelle Bestellung stornieren.</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -931,7 +941,7 @@
 <context>
     <name>BooklookerRemoteActions</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+88"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+101"/>
         <source>Invalid Parameters</source>
         <translation>Ungültige Parameter</translation>
     </message>
@@ -1234,7 +1244,7 @@
         <translation>Unternehmens Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+169"/>
+        <location line="+170"/>
         <location line="+15"/>
         <location line="+13"/>
         <source>An error has occurred!</source>
@@ -1314,7 +1324,7 @@
         <translation>Anzeigen</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+96"/>
         <source>Toggle Display</source>
         <translation>Anzeigen/Ausblenden</translation>
     </message>
@@ -1335,14 +1345,14 @@
     </message>
     <message>
         <location line="-258"/>
-        <location line="+280"/>
+        <location line="+284"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
     <message>
-        <location line="-296"/>
+        <location line="-300"/>
         <location line="+16"/>
-        <location line="+280"/>
+        <location line="+284"/>
         <source>No</source>
         <translation>Nein</translation>
     </message>
@@ -3933,13 +3943,13 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+946"/>
+        <location line="+949"/>
         <location line="+3"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-1018"/>
+        <location line="-1021"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
@@ -3995,12 +4005,12 @@
     </message>
     <message>
         <location line="+317"/>
-        <location line="+563"/>
+        <location line="+566"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="-548"/>
+        <location line="-551"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
     </message>
@@ -4053,12 +4063,21 @@
     </message>
     <message>
         <location line="+33"/>
-        <location line="+5"/>
         <source>No Message available</source>
         <translation>Kein Nachrichtentext verfügbar</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+6"/>
+        <source>No message text available!</source>
+        <translation>Kein Nachrichtentext verfügbar!</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Please check/edit customerdata, e.g. Gender.</source>
+        <translation>Bitte die Kundendaten prüfen/bearbeiten, z.B. Geschlecht.</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>1. Payment Reminder</source>
         <translation>1. Zahlungserinnerung</translation>
     </message>
@@ -4078,17 +4097,17 @@
         <translation>Kein Verkaufsinformationen gefunden</translation>
     </message>
     <message>
-        <location line="-166"/>
+        <location line="-169"/>
         <source>Missing Delivery-Id</source>
         <translation>Keine Lieferscheinnummer vorhanden</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+46"/>
         <source>If the amount has been paid in the meantime, please send us a short message.</source>
         <translation>Sollte der Betrag inzwischen bezahlt sein, bitten wir um eine Kurze Nachricht.</translation>
     </message>
     <message>
-        <location line="-703"/>
+        <location line="-706"/>
         <source>Failed relationship to complete this quest!</source>
         <translation>Fehlerhafte Beziehung zum Abschließen dieses Auftrags!</translation>
     </message>
@@ -4113,7 +4132,7 @@
         <translation>Sorniere Auftrag</translation>
     </message>
     <message>
-        <location line="+906"/>
+        <location line="+909"/>
         <source>can&apos;t create order without costumer Id.</source>
         <translation>Kann keinen Auftrag ohne Kundennummer generieren.</translation>
     </message>
@@ -4133,7 +4152,7 @@
         <translation>Bestellung</translation>
     </message>
     <message>
-        <location line="-963"/>
+        <location line="-966"/>
         <location line="+402"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
@@ -4150,12 +4169,12 @@
     </message>
     <message>
         <location line="+812"/>
-        <location line="+74"/>
+        <location line="+77"/>
         <source>Printing canceled.</source>
         <translation>Druckevorgang abgebrochen.</translation>
     </message>
     <message>
-        <location line="-615"/>
+        <location line="-618"/>
         <source>Finish order</source>
         <translation>Auftrag abschließen</translation>
     </message>
@@ -4166,7 +4185,7 @@
         <translation>Auftrag deaktiviert!</translation>
     </message>
     <message>
-        <location line="+652"/>
+        <location line="+655"/>
         <source>Notice</source>
         <translation>Hinweis</translation>
     </message>

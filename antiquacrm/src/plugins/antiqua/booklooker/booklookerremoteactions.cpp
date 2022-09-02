@@ -31,9 +31,16 @@ static const QIcon btnIcon() {
 Bl_StatusPage::Bl_StatusPage(QWidget *parent) : QWidget{parent} {
   setObjectName("booklooker_order_status");
   QVBoxLayout *layout = new QVBoxLayout(this);
+  // Info Section
+  QGridLayout *infoLayout = new QGridLayout();
+  QLabel *m_lb1 = new QLabel(tr("Booklooker Order Id:"), this);
+  infoLayout->addWidget(m_lb1, 0, 0, 1, 1);
+  m_orderId = new QLabel(this);
+  infoLayout->addWidget(m_orderId, 0, 1, 1, 1, Qt::AlignLeft);
   QLabel *m_lb = new QLabel(this);
   m_lb->setText(tr("Changes the status of the current order."));
-  layout->addWidget(m_lb);
+  infoLayout->addWidget(m_lb, 1, 0, 1, 2, Qt::AlignLeft);
+  layout->addLayout(infoLayout);
 
   m_rb1 = new QRadioButton(tr("Provider Status - no disclosures"), this);
   m_rb1->setChecked(true);
@@ -59,6 +66,10 @@ Bl_StatusPage::Bl_StatusPage(QWidget *parent) : QWidget{parent} {
   m_rb6->setObjectName("BUYER_NO_REACTION");
   layout->addWidget(m_rb6);
 
+  m_rb7 = new QRadioButton(tr("Order Cancel action."), this);
+  m_rb7->setObjectName("ORDER_CANCEL_ACTION");
+  layout->addWidget(m_rb7);
+
   m_apply = new QPushButton(btnIcon(), tr("Apply"), this);
   layout->addWidget(m_apply);
 
@@ -70,12 +81,12 @@ Bl_StatusPage::Bl_StatusPage(QWidget *parent) : QWidget{parent} {
   connect(m_rb4, SIGNAL(toggled(bool)), this, SIGNAL(sendModified(bool)));
   connect(m_rb5, SIGNAL(toggled(bool)), this, SIGNAL(sendModified(bool)));
   connect(m_rb6, SIGNAL(toggled(bool)), this, SIGNAL(sendModified(bool)));
+  connect(m_rb7, SIGNAL(toggled(bool)), this, SIGNAL(sendModified(bool)));
   connect(m_apply, SIGNAL(clicked()), this, SLOT(prepareAction()));
 }
 
 void Bl_StatusPage::prepareAction() {
   QJsonObject obj;
-  obj.insert("action", QJsonValue("order_status"));
   obj.insert("type", QJsonValue());
   emit sendAction(obj);
   QList<QRadioButton *> l = findChildren<QRadioButton *>(QString());
@@ -83,12 +94,23 @@ void Bl_StatusPage::prepareAction() {
     QRadioButton *rb = l.at(i);
     if (rb != nullptr && !rb->objectName().isEmpty()) {
       if (rb->isChecked()) {
-        obj.insert("value", QJsonValue(rb->objectName()));
+        QString name = rb->objectName();
+        if (name == "ORDER_CANCEL_ACTION") {
+          obj.insert("action", QJsonValue("order_cancel"));
+          obj.insert("orderId", QJsonValue(m_orderId->text()));
+        } else {
+          obj.insert("action", QJsonValue("order_status"));
+          obj.insert("value", QJsonValue(rb->objectName()));
+        }
         emit sendAction(obj);
         break;
       }
     }
   }
+}
+
+void Bl_StatusPage::setOrderId(const QString &orderId) {
+  m_orderId->setText(orderId);
 }
 
 BooklookerRemoteActions::BooklookerRemoteActions(QWidget *parent)
@@ -134,6 +156,8 @@ void BooklookerRemoteActions::prepareAction(const QJsonObject &jsObj) {
   QString value = jsObj.value("value").toString();
   if (action == "order_status") {
     m_requester->queryUpdateOrderStatus(p_orderId, value);
+  } else if (action == "order_cancel") {
+    m_requester->queryUpdateOrderCancel(p_orderId);
   } else {
     qWarning("Unknown action in: %s", Q_FUNC_INFO);
   }
@@ -185,5 +209,6 @@ int BooklookerRemoteActions::exec(const QString &orderId) {
   }
 
   p_orderId = orderId;
+  m_statusPage->setOrderId(p_orderId);
   return QDialog::exec();
 }
