@@ -133,6 +133,8 @@ pushd ${_output_target}
   chmod 0644 catalog.zip
   rm -f catalog_utf8.csv
 
+  exit 0
+
   ## Upload
   if test -e catalog.zip ; then
     _upload_file=catalog.zip

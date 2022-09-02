@@ -158,7 +158,7 @@ public:
   /**
    * @brief Hauptkategorien einfügen
    */
-  QTreeWidgetItem *addTopLevel(const QString &name);
+  QTreeWidgetItem *addTopLevel(const QString &name, int zvab = 0);
 
   /**
    * @brief Unterkategorien einfügen

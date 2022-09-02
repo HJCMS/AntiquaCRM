@@ -84,14 +84,15 @@ CategoryEdit::CategoryEdit(QWidget *parent) : QDialog{parent} {
 
 bool CategoryEdit::initCategories() {
   // Main Categories
-  QString sql("SELECT ce_id, ce_name FROM categories_extern");
+  QString sql("SELECT ce_id, ce_name, ce_zvab_ids FROM categories_extern");
   sql.append(" WHERE ce_depth='0' AND ");
   sql.append("ce_provider_name!='Internal' ORDER BY ce_id;");
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
     while (q.next()) {
       QString topName = q.value("ce_name").toString();
-      QTreeWidgetItem *parent = m_tree->addTopLevel(topName);
+      int zvab = q.value("ce_zvab_ids").toInt();
+      QTreeWidgetItem *parent = m_tree->addTopLevel(topName, zvab);
       parent->setData(0, Qt::UserRole, q.value("ce_id").toInt());
     }
   } else {

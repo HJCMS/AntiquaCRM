@@ -18,9 +18,10 @@
 
 CategoryTree::CategoryTree(QWidget *parent) : QTreeWidget{parent} {
   setObjectName("category_tree");
-  setColumnCount(2);
+  setColumnCount(3);
   QStringList titles(tr("Provider Categories"));
   titles << tr("Display");
+  titles << "ZVAB";
   setHeaderLabels(titles);
   setSelectionMode(QAbstractItemView::SingleSelection);
   setAlternatingRowColors(true);
@@ -336,13 +337,17 @@ void CategoryTree::findKeyword(const QString &key) {
   }
 }
 
-QTreeWidgetItem *CategoryTree::addTopLevel(const QString &name) {
+QTreeWidgetItem *CategoryTree::addTopLevel(const QString &name, int zvab) {
   QTreeWidgetItem *item = new QTreeWidgetItem(this);
   item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
   item->setFlags(Qt::ItemIsEnabled);
   item->setText(0, name);
   item->setData(1, Qt::DisplayRole, tr("Main category"));
   item->setData(1, Qt::UserRole, true);
+  if(zvab>0) {
+    item->setData(2, Qt::DisplayRole, zvab);
+  }
+  item->setData(2, Qt::UserRole, zvab);
   return item;
 }
 
