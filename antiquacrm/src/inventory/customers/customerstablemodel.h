@@ -6,11 +6,12 @@
 #define COSTUMERSTABLEMODEL_H
 
 #include <QDate>
+#include <QLabel>
 #include <QModelIndex>
 #include <QObject>
+#include <QSqlQueryModel>
 #include <QString>
 #include <QVariant>
-#include <QSqlQueryModel>
 
 class CustomersTableModel : public QSqlQueryModel {
   Q_OBJECT
@@ -20,6 +21,7 @@ class CustomersTableModel : public QSqlQueryModel {
 private:
   const QString displayDate(const QVariant &value) const;
   const QIcon getHeaderIcon(int section) const;
+  const QIcon getTrustIcon(int level = 0) const;
 
 public:
   explicit CustomersTableModel(QObject *parent = nullptr);

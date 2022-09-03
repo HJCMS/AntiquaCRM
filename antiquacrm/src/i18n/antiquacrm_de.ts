@@ -941,7 +941,7 @@
 <context>
     <name>BooklookerRemoteActions</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+101"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+98"/>
         <source>Invalid Parameters</source>
         <translation>Ungültige Parameter</translation>
     </message>
@@ -2039,12 +2039,12 @@
 <context>
     <name>CustomersTableModel</name>
     <message>
-        <location filename="../inventory/customers/customerstablemodel.cpp" line="+67"/>
+        <location filename="../inventory/customers/customerstablemodel.cpp" line="+90"/>
         <source>Personal</source>
         <translation>Privatperson</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+62"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -2059,58 +2059,48 @@
         <translation>Kundennummer</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+12"/>
         <source>Company or Person</source>
         <translation>Firma oder Person</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Customer Since</source>
         <translation>Kunden wurde erstellt am</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+28"/>
+        <source>Company/Privat</source>
+        <translation>Firma/Privat</translation>
+    </message>
+    <message>
+        <location line="-31"/>
         <source>Contact name</source>
         <translation>Ansprechpartner</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Phonenumber</source>
-        <translation>Telefon Nummer</translation>
+        <location line="-9"/>
+        <source>Trusted</source>
+        <translation>Vertrauen</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Mobilnumber</source>
-        <translation>Mobil Nummer</translation>
+        <source>Locked</source>
+        <translation>Gesperrt</translation>
     </message>
     <message>
-        <location line="+22"/>
-        <source>Type</source>
-        <translation>Typ</translation>
+        <location line="+12"/>
+        <location line="+34"/>
+        <source>Location</source>
+        <translation>Wohnort</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-6"/>
         <source>Fullname</source>
         <translation>Name</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Phone</source>
-        <translation>Telefon</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Mobil</source>
-        <translation>Handy</translation>
-    </message>
-    <message>
-        <location line="-31"/>
-        <location line="+34"/>
-        <source>Address</source>
-        <translation>Adresse</translation>
-    </message>
-    <message>
-        <location line="-12"/>
         <source>Since</source>
         <translation>Erstellt am</translation>
     </message>

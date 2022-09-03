@@ -33,15 +33,12 @@
  * @return SQL Query
  */
 static const QString c_sqlTableQueryBody() {
- QString q("SELECT c_id AS id, c_purchases,");
- q.append("(CASE WHEN c_company IS TRUE THEN c_company_name ELSE '#PR' END) AS ");
- q.append("company,c_since AS since,");
- q.append("CONCAT_WS(' ',c_title,c_firstname,c_lastname) AS shurename,");
- q.append("(CASE WHEN c_phone_0 IS NULL THEN c_phone_1 ELSE c_phone_0 END) AS phone,");
- q.append("(CASE WHEN c_mobil_0 IS NULL THEN c_mobil_1 ELSE c_mobil_0 END) AS mobil,");
- q.append("concat_ws(' ',c_country,c_postalcode,c_location,c_street) AS address");
- q.append(" FROM customers WHERE ");
- return q;
+  QString q("SELECT c_id AS id, c_purchases, c_trusted, c_locked, ");
+  q.append("(CASE WHEN c_company IS TRUE THEN c_company_name ELSE '#PR' END) AS company,");
+  q.append("TRIM(CONCAT_WS(' ',c_title,c_firstname,c_lastname)) AS shurename, c_since,");
+  q.append("TRIM(CONCAT_WS(' ',c_country,c_postalcode,c_location,c_street)) AS location");
+  q.append(" FROM customers WHERE ");
+  return q;
 }
 
 static const QString c_sqlDeleteCustomer(int costumerId) {

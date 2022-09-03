@@ -37,9 +37,10 @@ const QIcon CustomersTableModel::getHeaderIcon(int section) const {
     return myIcon("toggle_log");
 
   case 2:
-    return myIcon("group");
+  case 3:
+    return myIcon("note");
 
-  case 4:
+  case 5:
     return myIcon("identity");
 
   default:
@@ -47,38 +48,62 @@ const QIcon CustomersTableModel::getHeaderIcon(int section) const {
   };
 }
 
+const QIcon CustomersTableModel::getTrustIcon(int level) const {
+  switch (level) {
+  case 0:
+  case 1:
+  case 2:
+    return myIcon("flag-green");
+
+  case 3:
+    return myIcon("flag-yellow");
+  };
+  return myIcon("flag-red");
+}
+
 QVariant CustomersTableModel::data(const QModelIndex &index, int role) const {
   const QVariant val;
-  if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole))
+  if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole &&
+                           role != Qt::DecorationRole))
     return val;
 
   QVariant item = QSqlQueryModel::data(index, role);
+  if (role == Qt::DecorationRole) {
+    QVariant edit = QSqlQueryModel::data(index, Qt::EditRole);
+    if (index.column() == 2) // c_trusted
+      return getTrustIcon(edit.toInt());
 
-  switch (index.column()) {
-  case 0: // id
-    return item.toInt();
+    if (index.column() == 3) // c_clocked
+      return (edit.toBool()) ? myIcon("flag-red") : myIcon("flag-green");
 
-  case 1: // c_purchases
-    return item.toInt();
+  } else if (role == Qt::DisplayRole) {
+    switch (index.column()) {
+    case 0: // id
+      return item.toInt();
 
-  case 2: // company
-  {
-    QString cpn(item.toString().trimmed());
-    return (cpn == "#PR") ? tr("Personal") : cpn;
+    case 1: // c_purchases
+      return item.toInt();
+
+    case 4: // company
+    {
+      QString cpn(item.toString().trimmed());
+      return (cpn == "#PR") ? tr("Personal") : cpn;
+    }
+
+    case 5: // shurename
+      return item.toString();
+
+    case 6: // since
+      return displayDate(item);
+
+    case 7: // location
+      return item.toString();
+
+    default:
+      return QString();
+    }
   }
-
-  case 3: // since
-    return displayDate(item);
-
-  case 4: // shurename
-  case 5: // phone
-  case 6: // mobil
-  case 7: // address
-    return item.toString().trimmed();
-
-  default:
-    return item.toString();
-  }
+  return item;
 }
 
 QVariant CustomersTableModel::headerData(int section,
@@ -95,23 +120,23 @@ QVariant CustomersTableModel::headerData(int section,
     case 1: // c_purchases
       return tr("Purchases");
 
-    case 2: // company
+    case 2: // c_trusted
+      return tr("Trusted");
+
+    case 3: // c_locked
+      return tr("Locked");
+
+    case 4: // company
       return tr("Company or Person");
 
-    case 3: // since
-      return tr("Customer Since");
-
-    case 4: // shurename
+    case 5: // shurename
       return tr("Contact name");
 
-    case 5: // phone
-      return tr("Phonenumber");
+    case 6: // since
+      return tr("Customer Since");
 
-    case 6: // mobil
-      return tr("Mobilnumber");
-
-    case 7: // address
-      return tr("Address");
+    case 7: // location
+      return tr("Location");
 
     default:
       return QVariant();
@@ -129,23 +154,23 @@ QVariant CustomersTableModel::headerData(int section,
     case 1: // c_purchases
       return QVariant();
 
-    case 2: // company
-      return setHeaderTitel(tr("Type"));
+    case 2: // c_trusted
+      return QVariant();
 
-    case 3: // since
-      return setHeaderTitel(tr("Since"));
+    case 3: // c_locked
+      return QVariant();
 
-    case 4: // shurename
+    case 4: // company
+      return setHeaderTitel(tr("Company/Privat"));
+
+    case 5: // shurename
       return setHeaderTitel(tr("Fullname"));
 
-    case 5: // phone
-      return setHeaderTitel(tr("Phone"));
+    case 6: // since
+      return setHeaderTitel(tr("Since"));
 
-    case 6: // mobil
-      return setHeaderTitel(tr("Mobil"));
-
-    case 7: // address
-      return setHeaderTitel(tr("Address"));
+    case 7: // location
+      return setHeaderTitel(tr("Location"));
 
     default:
       return QString("%1").arg(section);
