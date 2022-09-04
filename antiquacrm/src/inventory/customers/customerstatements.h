@@ -34,8 +34,9 @@
  */
 static const QString c_sqlTableQueryBody() {
   QString q("SELECT c_id AS id, c_purchases, c_trusted, c_locked, ");
+  q.append("TRIM(CONCAT_WS(' ',c_title,c_firstname,c_lastname)) AS shurename,");
   q.append("(CASE WHEN c_company IS TRUE THEN c_company_name ELSE '#PR' END) AS company,");
-  q.append("TRIM(CONCAT_WS(' ',c_title,c_firstname,c_lastname)) AS shurename, c_since,");
+  q.append("c_since,");
   q.append("TRIM(CONCAT_WS(' ',c_country,c_postalcode,c_location,c_street)) AS location");
   q.append(" FROM customers WHERE ");
   return q;

@@ -37,8 +37,10 @@ const QIcon CustomersTableModel::getHeaderIcon(int section) const {
     return myIcon("toggle_log");
 
   case 2:
+    return myIcon("group");
+
   case 3:
-    return myIcon("note");
+    return myIcon("messagebox_warning");
 
   case 5:
     return myIcon("identity");
@@ -49,16 +51,13 @@ const QIcon CustomersTableModel::getHeaderIcon(int section) const {
 }
 
 const QIcon CustomersTableModel::getTrustIcon(int level) const {
-  switch (level) {
-  case 0:
-  case 1:
-  case 2:
+  if (level < 3) {
     return myIcon("flag-green");
-
-  case 3:
+  } else if (level == 3) {
     return myIcon("flag-yellow");
-  };
-  return myIcon("flag-red");
+  } else {
+    return myIcon("flag-red");
+  }
 }
 
 QVariant CustomersTableModel::data(const QModelIndex &index, int role) const {
@@ -84,14 +83,17 @@ QVariant CustomersTableModel::data(const QModelIndex &index, int role) const {
     case 1: // c_purchases
       return item.toInt();
 
-    case 4: // company
+    case 3: // locked
+      return (item.toBool()) ? tr("Yes") : QString();
+
+    case 4: // shurename
+      return item.toString();
+
+    case 5: // company
     {
       QString cpn(item.toString().trimmed());
       return (cpn == "#PR") ? tr("Personal") : cpn;
     }
-
-    case 5: // shurename
-      return item.toString();
 
     case 6: // since
       return displayDate(item);
@@ -117,26 +119,26 @@ QVariant CustomersTableModel::headerData(int section,
     case 0: // id
       return tr("Customer ID");
 
-    case 1: // c_purchases
+    case 1: // Einkäufe
       return tr("Purchases");
 
-    case 2: // c_trusted
-      return tr("Trusted");
+    case 2: // Vertrauenswürdigkeit
+      return tr("Trustworthiness");
 
-    case 3: // c_locked
-      return tr("Locked");
+    case 3: // Kunde gesperrt?
+      return tr("Customer locked?");
 
-    case 4: // company
-      return tr("Company or Person");
+    case 4: // Vollständiger Name des Kunden
+      return tr("Customer's full name");
 
-    case 5: // shurename
-      return tr("Contact name");
+    case 5: // Firma oder Person?
+      return tr("Company or Person?");
 
-    case 6: // since
-      return tr("Customer Since");
+    case 6: // Kundendaten erstellt am...
+      return tr("Customer data created on...");
 
-    case 7: // location
-      return tr("Location");
+    case 7: // Kundenadresse
+      return tr("Customer address");
 
     default:
       return QVariant();
@@ -160,11 +162,11 @@ QVariant CustomersTableModel::headerData(int section,
     case 3: // c_locked
       return QVariant();
 
-    case 4: // company
-      return setHeaderTitel(tr("Company/Privat"));
-
-    case 5: // shurename
+    case 4: // shurename
       return setHeaderTitel(tr("Fullname"));
+
+    case 5: // company
+      return setHeaderTitel(tr("Commercially"));
 
     case 6: // since
       return setHeaderTitel(tr("Since"));

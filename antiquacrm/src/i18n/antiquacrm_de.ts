@@ -2039,12 +2039,42 @@
 <context>
     <name>CustomersTableModel</name>
     <message>
-        <location filename="../inventory/customers/customerstablemodel.cpp" line="+90"/>
+        <location filename="../inventory/customers/customerstablemodel.cpp" line="+95"/>
         <source>Personal</source>
         <translation>Privatperson</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+31"/>
+        <source>Trustworthiness</source>
+        <translation>Vertrauenswürdigkeit</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Customer locked?</source>
+        <translation>Kunde gesperrt?</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Company or Person?</source>
+        <translation>Firma oder Person?</translation>
+    </message>
+    <message>
+        <location line="-3"/>
+        <source>Customer&apos;s full name</source>
+        <translation>Vollständiger Name des Kunden</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Customer data created on...</source>
+        <translation>Kundendaten erstellt am...</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Customer address</source>
+        <translation>Kundenadresse</translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
@@ -2054,53 +2084,32 @@
         <translation>Einkäufe</translation>
     </message>
     <message>
-        <location line="-3"/>
+        <location line="-36"/>
+        <source>Yes</source>
+        <translation>Ja</translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>Customer ID</source>
         <translation>Kundennummer</translation>
     </message>
     <message>
-        <location line="+12"/>
-        <source>Company or Person</source>
-        <translation>Firma oder Person</translation>
+        <location line="+49"/>
+        <source>Commercially</source>
+        <translation>Gewerblich</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Customer Since</source>
-        <translation>Kunden wurde erstellt am</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Company/Privat</source>
-        <translation>Firma/Privat</translation>
-    </message>
-    <message>
-        <location line="-31"/>
-        <source>Contact name</source>
-        <translation>Ansprechpartner</translation>
-    </message>
-    <message>
-        <location line="-9"/>
-        <source>Trusted</source>
-        <translation>Vertrauen</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Locked</source>
-        <translation>Gesperrt</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <location line="+34"/>
         <source>Location</source>
         <translation>Wohnort</translation>
     </message>
     <message>
-        <location line="-6"/>
+        <location line="-9"/>
         <source>Fullname</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Since</source>
         <translation>Erstellt am</translation>
     </message>
