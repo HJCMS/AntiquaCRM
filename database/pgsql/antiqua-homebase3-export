@@ -32,7 +32,7 @@ use strict;
 use warnings;
 use POSIX qw(strftime);
 use DBD::Pg;
-# use FILE;
+use XML::DOM;
 
 ## Wird für Umlaute auf dem terminial benötigt
 # use open ':utf8';
@@ -41,7 +41,8 @@ binmode STDOUT, ":utf8";
 ## User
 my $_PG_USER = "heinemann";
 
-my $dbc = DBI->connect("dbi:Pg:service=$_PG_USER",'', '', {AutoCommit => 0, RaiseError => 1, PrintError => 1});
+my $dbc = DBI->connect("dbi:Pg:service=$_PG_USER",'', '',
+  {AutoCommit => 0, RaiseError => 1, PrintError => 1, ReadOnly => 1});
 
 my $_statement = "";
 open(FH, '<:encoding(UTF-8)', "./catalog.sql") or die $!;
@@ -50,26 +51,64 @@ while(<FH>){
 }
 close(FH);
 
-# print $_statement . "\n";
+my $xmldecl = new XML::DOM::XMLDecl;
+$xmldecl->setVersion("1.0");
+$xmldecl->setEncoding("UTF-8"); ## "ISO-8859-1"
 
-open(FH, '>:encoding(UTF-8)', "./homebase3.xml") or die $!;
-print FH <<"EOT";
-<?xml version='1.0' encoding='ISO-8859-1'?>
-<BookListingInventory xmlns="http://www.abebooks.com/BookListingXml"
-  xsi:schemaLocation="http://www.abebooks.com/BookListingXml http://www.abebooks.com/docs/Schemas/BookInventory.xsd"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-EOT
+my $doc = new XML::DOM::Document;
+$doc->setXMLDecl($xmldecl);
+
+my $root = $doc->createElement("BookListingInventory");
+$root->setAttribute("xmlns","http://www.abebooks.com/BookListingXml");
+$root->setAttribute("xsi:schemaLocation","http://www.abebooks.com/BookListingXml http://www.abebooks.com/docs/Schemas/BookInventory.xsd");
+$root->setAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance");
+$doc->appendChild($root);
 
 my $query = $dbc->prepare($_statement);
+if(!defined $query) {
+  exit(1);
+}
+
 $query->execute();
 my $ref = $query->fetchall_arrayref({});
 print "ROWS: ", 0 + @{$ref}, "\n";
+$query->finish;
+
+sub initBookEntry {
+  my $articleId = shift;
+
+  my $book = $doc->createElement("BookListing");
+  $book->setAttribute("deletestatus","false");
+  $book->setAttribute("typecode","1001");
+
+  my $type = $doc->createElement("productType");
+  $type->appendChild($doc->createTextNode("Buch"));
+  $book->appendChild($type);
+
+  my $id = $doc->createElement("vendorListingid");
+  $id->appendChild($doc->createTextNode($articleId));
+  $book->appendChild($id);
+
+  return $book;
+};
+
+sub simpleNode {
+  my $name = shift;
+  my $value = shift;
+  my $child = $doc->createElement($name);
+  $child->appendChild($doc->createTextNode($value));
+  return $child;
+};
 
 foreach my $row (@{$ref}) {
-  print FH <<"EOT";
-<BookListing xmlns="http://www.abebooks.com/BookListingXml" deletestatus="false" typecode="1001">
-  <productType>Buch</productType>
-  <vendorListingid>$row->{vendorlistingid}</vendorListingid>
+  my $book = initBookEntry($row->{vendorlistingid});
+  $root->appendChild($book);
+
+  if($row->{title}) {
+    $root->appendChild(simpleNode("title",$row->{title}));
+  }
+
+=begin
   <title>$row->{title}</title>
   <author>$row->{author}</author>
   <editor>$row->{author}</editor>
@@ -100,15 +139,15 @@ foreach my $row (@{$ref}) {
   <vendorCatalog id="3" name="$row->{vendorcatalog3}"/>
 </BookListing>
 EOT
+=cut
 }
-$query->finish;
 
-print FH "</BookListingInventory>\n";
-close(FH);
+$doc->printToFile("./homebase3.xml", -1);
+$doc->dispose;
 
 $dbc->disconnect;
 
-print "perl -pi -e 's,\\&,\\&amp;,g' homebase3.xml\n";
+print "cat homebase3.xml\n";
 
 ##
 ## EOF

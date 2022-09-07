@@ -123,7 +123,7 @@ bool AbeBooksRequester::createRequest(const QDomDocument &document) {
 
   connect(m_reply, SIGNAL(readyRead()), this, SLOT(replyReadyRead()));
 
-  return true; // m_reply->isRunning();
+  return true;
 }
 
 void AbeBooksRequester::slotError(QNetworkReply::NetworkError error) {
@@ -206,6 +206,9 @@ void AbeBooksRequester::replyReadyRead() {
   int errorColumn = 0;
   if (doc.setContent(data, false, &errorMsg, &errorLine, &errorColumn)) {
     emit response(doc);
+#if PLUGIN_ABEBOOKS_DEBUG
+  qDebug() << Q_FUNC_INFO << doc.toString(-1);
+#endif
   } else {
 #ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << errorMsg << errorLine << errorColumn;
@@ -254,6 +257,7 @@ void AbeBooksRequester::updateOrderStatus(const QString &purchaseId,
 
 #ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << purchaseId << action << doc.toString();
+  saveSources(doc, "purchaseOrder_" + purchaseId);
   return;
 #endif
 

@@ -1087,9 +1087,6 @@ void OrderEditor::initDefaults() {
   o_delivery_service->loadSqlDataset();
   if (o_provider_name->value().toString().isEmpty())
     o_provider_name->setValue(tr("Internal"));
-
-  if (o_provider_order_id->value().toString().isEmpty())
-    o_provider_order_id->setValue(tr("Internal"));
 }
 
 void OrderEditor::initInvoiceNumber(int orderId) {
@@ -1319,9 +1316,16 @@ void OrderEditor::openCreateOrder(const ProviderOrder &order) {
 
   initDefaults();
   o_customer_id->setValue(cid);
+
+  if(copy.providerId().isEmpty() || copy.provider().isEmpty()) {
+    emit s_postMessage(tr("Broken Provider data import!"));
+    return;
+  }
+
   o_provider_order_id->setValue(copy.providerId());
   o_provider_name->setValue(copy.provider());
   o_delivery_service->setValue(ORDER_DELIVERY_SERVICE);
+
   if (getCustomerAddress(cid)) {
     QList<OrderArticle> list;
     foreach (QString said, copy.articleIds()) {

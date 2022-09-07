@@ -26,6 +26,9 @@ static const QIcon btnIcon() {
 
 ABE_StatusPage::ABE_StatusPage(QWidget *parent) : QWidget{parent} {
   setObjectName("abebooks_status_page");
+#ifndef ANTIQUA_DEVELOPEMENT
+  setEnabled(false);
+#endif
   QVBoxLayout *layout = new QVBoxLayout(this);
 
   m_rb1 = new QRadioButton(tr("Provider Status - no disclosures"), this);
@@ -42,23 +45,14 @@ ABE_StatusPage::ABE_StatusPage(QWidget *parent) : QWidget{parent} {
 
   m_rb4 = new QRadioButton(tr("The order is rejected!"), this);
   m_rb4->setObjectName("rejected");
-#ifndef ANTIQUA_DEVELOPEMENT
-  m_rb4->setEnabled(false);
-#endif
   layout->addWidget(m_rb4);
 
   m_rb5 = new QRadioButton(tr("Article is no longer available!"), this);
   m_rb5->setObjectName("previouslySold");
-#ifndef ANTIQUA_DEVELOPEMENT
-  m_rb5->setEnabled(false);
-#endif
   layout->addWidget(m_rb5);
 
   m_rb6 = new QRadioButton(tr("The buyer's credit card is declined!"), this);
   m_rb6->setObjectName("creditCardDeclined");
-#ifndef ANTIQUA_DEVELOPEMENT
-  m_rb6->setEnabled(false);
-#endif
   layout->addWidget(m_rb6);
 
   m_apply = new QPushButton(btnIcon(), tr("Apply"), this);
@@ -142,6 +136,7 @@ void AbeBooksRemoteActions::pushMessage(const QString &msg) {
 
 void AbeBooksRemoteActions::responseUpdate(const QDomDocument &dom) {
 #ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << Qt::endl;
   saveSources(dom, "update_" + p_orderId);
 #endif
 }
