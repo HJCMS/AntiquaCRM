@@ -119,6 +119,7 @@ pushd ${_output_target}
   chmod 0644 catalog.zip
   rm -f catalog_utf8.csv
 
+  echo "Upload Disabled ..."
   echo "Done"
   exit 0
  

@@ -5706,7 +5706,7 @@
     </message>
     <message>
         <location line="+2"/>
-        <source>Outstanding payment</source>
+        <source>Payment reminder sent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

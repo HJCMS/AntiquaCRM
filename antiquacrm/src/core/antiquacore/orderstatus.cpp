@@ -30,8 +30,8 @@ OrderStatusList::OrderStatusList() : p_list() {
   p_list.append(OrderStatus(2, QObject::tr("Package picked up")));
   /** Paket geliefert */
   p_list.append(OrderStatus(3, QObject::tr("Package delivered")));
-  /** Zahlung austehend */
-  p_list.append(OrderStatus(4, QObject::tr("Outstanding payment")));
+  /** Zahlungserinnerung gesendet */
+  p_list.append(OrderStatus(4, QObject::tr("Payment reminder sent")));
   /** Lieferung abgeschlossen */
   p_list.append(OrderStatus(5, QObject::tr("Order completed")));
   /** Auftrag Storniert */
