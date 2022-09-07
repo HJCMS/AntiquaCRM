@@ -1,0 +1,193 @@
+#!/usr/bin/env perl
+# -*- coding: utf-8 -*-
+# vim: set fileencoding=utf-8
+
+=head1 NAME
+##################################################################################
+# This file is part of the HJCMS Project
+#
+# Copyright (C) Juergen Heinemann http://www.hjcms.de, (C) 2007-2022
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public License
+# along with this library; see the file COPYING.LIB.  If not, write to
+# the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+# Boston, MA 02110-1301, USA.
+##################################################################################
+
+ antiqua-update-abebooks
+
+=cut
+
+use strict;
+use warnings;
+use DBD::Pg;
+use XML::LibXML;
+
+## Configuration
+my $_PG_USER = $ENV{USER};
+my $PICTURE_URL = "https://www.buchfreund.de/covers/9090";
+my $XML_INDENT = 0;
+my $CACHEDIR = $ENV{HOME} . "/.cache";
+my $SQL_QUERY = $ENV{HOME} . "/.config/HJCMS/antiqua-update-abebooks.sql";
+## TEST
+my $_API_USER = "$_PG_USER";
+my $_API_KEY = "ff13b1b4818c7d46e78fd54c491e2bb1";
+
+my $dbc = DBI->connect("dbi:Pg:service=$_PG_USER",'', '',
+  {AutoCommit => 0, RaiseError => 1, PrintError => 1, ReadOnly => 1});
+
+my $_statement = "";
+open(FH, '<:encoding(UTF-8)', $SQL_QUERY) or die $!;
+while(<FH>){
+  $_statement .= $_;
+}
+close(FH);
+
+my $doc = new XML::LibXML->createDocument("1.0","ISO-8859-1");
+my $root = $doc->createElement("inventoryUpdateRequest");
+$root->setAttribute("version","1.0");
+$doc->setDocumentElement($root);
+my $action = $doc->createElement("action");
+$action->setAttribute("name","bookupdate");
+my $username = $doc->createElement("username");
+$username->appendChild($doc->createTextNode($_API_USER));
+$action->appendChild($username);
+my $apikey = $doc->createElement("password");
+$apikey->appendChild($doc->createTextNode($_API_KEY));
+$action->appendChild($apikey);
+$root->appendChild($action);
+
+my $query = $dbc->prepare($_statement);
+if(!defined $query) {
+  print "Connection error!\n";
+  exit(1);
+}
+
+$query->execute();
+my $ref = $query->fetchall_arrayref({});
+$query->finish;
+
+if($query->rows < 1)
+{
+  print "Nothing todo!\n";
+  $dbc->disconnect;
+  exit(0);
+}
+
+sub simpleNode {
+  my $name = shift;
+  my $value = shift;
+  my $child = $doc->createElement($name);
+  $child->appendChild($doc->createTextNode($value));
+  return $child;
+};
+
+sub simpleAttributeNode {
+  my $name = shift;
+  my $value = shift;
+  my $attr = shift;
+  my $avalue = shift;
+  my $child = $doc->createElement($name);
+  $child->setAttribute($attr,$avalue);
+  $child->appendChild($doc->createTextNode($value));
+  return $child;
+};
+
+my $parent = $doc->createElement("AbebookList");
+$root->appendChild($parent);
+
+foreach my $row (@{$ref}) {
+  my $book = $doc->createElement("Abebook");
+  $parent->appendChild($book);
+
+  $book->appendChild(simpleNode("transactionType","UPDATE"));
+  $book->appendChild(simpleNode("vendorBookID",$row->{vendorbookid}));
+  $book->appendChild(simpleNode("quantity",$row->{quantity}));
+
+  if($row->{author}) {
+    $book->appendChild(simpleNode("author",$row->{author}));
+  }
+
+  if($row->{title}) {
+    $book->appendChild(simpleNode("title",$row->{title}));
+  }
+
+  if($row->{publisher}) {
+    $book->appendChild(simpleNode("publisher",$row->{publisher}));
+  }
+
+  if($row->{year}) {
+    $book->appendChild(simpleNode("publishYear",$row->{year}));
+  }
+
+  if($row->{price}) {
+    $book->appendChild(simpleAttributeNode("price",$row->{price},"currency","EUR"));
+  }
+
+  if($row->{edition}) {
+    $book->appendChild(simpleNode("edition","$row->{edition}. Auflage"));
+  }
+
+  if($row->{subject}) {
+    $book->appendChild(simpleNode("subject",$row->{subject}));
+  }
+
+  if($row->{bindingtext}) {
+    $book->appendChild(simpleNode("bindingText",$row->{bindingtext}));
+  }
+
+  if($row->{bookcondition}) {
+    $book->appendChild(simpleNode("bookCondition",$row->{bookcondition}));
+  }
+
+  if($row->{jacketcondition}) {
+    $book->appendChild(simpleNode("jacketCondition",$row->{jacketcondition}));
+  }
+
+  if($row->{bind} && $row->{bind_attr}) {
+    $book->appendChild(simpleAttributeNode(
+        "binding",$row->{bind},
+        "type",$row->{bind_attr})
+    );
+  }
+
+  if($row->{inscriptiontype}) {
+    $book->appendChild(simpleNode("inscriptionType",$row->{inscriptiontype}));
+  }
+
+  if($row->{isbn}) {
+    $book->appendChild(simpleNode("isbn",$row->{isbn}));
+  }
+
+  if($row->{vendorcatalog1}) {
+    $book->appendChild(simpleNode("booksellerCatalogue",$row->{vendorcatalog1}));
+  }
+
+  if($row->{description}) {
+    $book->appendChild(simpleNode("description",$row->{description}));
+  }
+
+  if($row->{picture}) {
+    my $pictures = $doc->createElement("pictureList");
+    $pictures->appendChild(simpleNode("pictureURL","$PICTURE_URL/$row->{picture}"));
+    $book->appendChild($pictures);
+  }
+
+}
+$dbc->disconnect;
+
+$doc->toFile("$CACHEDIR/abebooks_daily_update.xml", $XML_INDENT);
+
+##
+## EOF
+##
