@@ -26,6 +26,15 @@
 
  antiqua-update-abebooks
 
+ ABHÄNGIGKEITEN:
+  perl-DBD-Pg
+  perl-XML-LibXML
+  curl
+
+ WARNUNG
+  Die Datenbank arbeitet mit UTF-8 aber Abebooks erwartet ISO-8859-1.
+  Dehalb muss die Ausgabe in den richtigen Zeichensatz konvertiert werden!
+
 =cut
 
 use strict;
@@ -34,26 +43,53 @@ use DBD::Pg;
 use XML::LibXML;
 
 ## Configuration
+my $_APPL_NAME = "antiqua-update-abebooks";
 my $_PG_USER = $ENV{USER};
-my $PICTURE_URL = "https://www.buchfreund.de/covers/9090";
-my $XML_INDENT = 0;
-my $CACHEDIR = $ENV{HOME} . "/.cache";
-my $SQL_QUERY = $ENV{HOME} . "/.config/HJCMS/antiqua-update-abebooks.sql";
-## TEST
-my $_API_USER = "$_PG_USER";
-my $_API_KEY = "ff13b1b4818c7d46e78fd54c491e2bb1";
+my $_PICTURE_URL = "https://www.buchfreund.de/covers/9090";
+my $_XML_CHARSET = "ISO-8859-1";
+my $_CACHE_DIR = $ENV{HOME} . "/.cache";
+my $_SQL_QUERY = $ENV{HOME} . "/.config/HJCMS/${_APPL_NAME}.sql";
+my $_API_USER = "";
+my $_API_KEY = "";
+print "configure first!\n"
+exit(0);
+
+=begin postUpdate
+  Sende mit Curl die POST Daten an den Abebooks Update Server!
+  URL:  https://orderupdate.abebooks.com
+  Port: 10003
+=cut
+sub postUpdate {
+  my $body = shift;
+  my @args = ("curl", "--silent", "--show-error", "--ipv4", "--ssl-reqd", "--tlsv1.2",
+    "--request", "POST", "https://inventoryupdate.abebooks.com:10027",
+    "--header", "Accept-Language: de;q=0.8, en;q=0.7",
+    "--header", "Accept: application/xml,text/*;q=0.1",
+    "--header", "Content-Type: application/xml; charset=$_XML_CHARSET",
+    "--header", "Cache-Control: no-cache",
+    "--trace", "${_CACHE_DIR}/${_APPL_NAME}.trace",
+    "--dump-header", "${_CACHE_DIR}/${_APPL_NAME}.header",
+    "--output", "${_CACHE_DIR}/${_APPL_NAME}.response",
+    "--data", "$body"
+  );
+  if (system(@args) != 0) {
+    print "Curl finished with errors! ($?)\n";
+    return 1;
+  }
+  return 0;
+};
 
 my $dbc = DBI->connect("dbi:Pg:service=$_PG_USER",'', '',
   {AutoCommit => 0, RaiseError => 1, PrintError => 1, ReadOnly => 1});
 
 my $_statement = "";
-open(FH, '<:encoding(UTF-8)', $SQL_QUERY) or die $!;
+open(FH, '<:encoding(UTF-8)', $_SQL_QUERY) or die $!;
 while(<FH>){
   $_statement .= $_;
 }
 close(FH);
 
-my $doc = new XML::LibXML->createDocument("1.0","ISO-8859-1");
+my $doc = new XML::LibXML->createDocument("1.0",$_XML_CHARSET);
 my $root = $doc->createElement("inventoryUpdateRequest");
 $root->setAttribute("version","1.0");
 $doc->setDocumentElement($root);
@@ -69,7 +105,7 @@ $root->appendChild($action);
 
 my $query = $dbc->prepare($_statement);
 if(!defined $query) {
-  print "Connection error!\n";
+  print "SQL-Connection error!\n";
   exit(1);
 }
 
@@ -79,12 +115,12 @@ $query->finish;
 
 if($query->rows < 1)
 {
-  print "Nothing todo!\n";
+  print "SQL-Query: Nothing todo!\n";
   $dbc->disconnect;
   exit(0);
 }
 
-sub simpleNode {
+sub childNode {
   my $name = shift;
   my $value = shift;
   my $child = $doc->createElement($name);
@@ -92,7 +128,7 @@ sub simpleNode {
   return $child;
 };
 
-sub simpleAttributeNode {
+sub childAttributeNode {
   my $name = shift;
   my $value = shift;
   my $attr = shift;
@@ -110,83 +146,87 @@ foreach my $row (@{$ref}) {
   my $book = $doc->createElement("Abebook");
   $parent->appendChild($book);
 
-  $book->appendChild(simpleNode("transactionType","UPDATE"));
-  $book->appendChild(simpleNode("vendorBookID",$row->{vendorbookid}));
-  $book->appendChild(simpleNode("quantity",$row->{quantity}));
+  $book->appendChild(childNode("transactionType","UPDATE"));
+  $book->appendChild(childNode("vendorBookID",$row->{vendorbookid}));
+  $book->appendChild(childNode("quantity",$row->{quantity}));
 
   if($row->{author}) {
-    $book->appendChild(simpleNode("author",$row->{author}));
+    $book->appendChild(childNode("author",$row->{author}));
   }
 
   if($row->{title}) {
-    $book->appendChild(simpleNode("title",$row->{title}));
+    $book->appendChild(childNode("title",$row->{title}));
   }
 
   if($row->{publisher}) {
-    $book->appendChild(simpleNode("publisher",$row->{publisher}));
+    $book->appendChild(childNode("publisher",$row->{publisher}));
   }
 
   if($row->{year}) {
-    $book->appendChild(simpleNode("publishYear",$row->{year}));
+    $book->appendChild(childNode("publishYear",$row->{year}));
   }
 
   if($row->{price}) {
-    $book->appendChild(simpleAttributeNode("price",$row->{price},"currency","EUR"));
+    $book->appendChild(childAttributeNode("price",$row->{price},"currency","EUR"));
   }
 
   if($row->{edition}) {
-    $book->appendChild(simpleNode("edition","$row->{edition}. Auflage"));
+    $book->appendChild(childNode("edition","$row->{edition}. Auflage"));
   }
 
   if($row->{subject}) {
-    $book->appendChild(simpleNode("subject",$row->{subject}));
+    $book->appendChild(childNode("subject",$row->{subject}));
   }
 
   if($row->{bindingtext}) {
-    $book->appendChild(simpleNode("bindingText",$row->{bindingtext}));
+    $book->appendChild(childNode("bindingText",$row->{bindingtext}));
   }
 
   if($row->{bookcondition}) {
-    $book->appendChild(simpleNode("bookCondition",$row->{bookcondition}));
+    $book->appendChild(childNode("bookCondition",$row->{bookcondition}));
   }
 
   if($row->{jacketcondition}) {
-    $book->appendChild(simpleNode("jacketCondition",$row->{jacketcondition}));
+    $book->appendChild(childNode("jacketCondition",$row->{jacketcondition}));
   }
 
   if($row->{bind} && $row->{bind_attr}) {
-    $book->appendChild(simpleAttributeNode(
+    $book->appendChild(childAttributeNode(
         "binding",$row->{bind},
         "type",$row->{bind_attr})
     );
   }
 
   if($row->{inscriptiontype}) {
-    $book->appendChild(simpleNode("inscriptionType",$row->{inscriptiontype}));
+    $book->appendChild(childNode("inscriptionType",$row->{inscriptiontype}));
   }
 
   if($row->{isbn}) {
-    $book->appendChild(simpleNode("isbn",$row->{isbn}));
+    $book->appendChild(childNode("isbn",$row->{isbn}));
   }
 
   if($row->{vendorcatalog1}) {
-    $book->appendChild(simpleNode("booksellerCatalogue",$row->{vendorcatalog1}));
+    $book->appendChild(childNode("booksellerCatalogue",$row->{vendorcatalog1}));
   }
 
   if($row->{description}) {
-    $book->appendChild(simpleNode("description",$row->{description}));
+    $book->appendChild(childNode("description",$row->{description}));
   }
 
   if($row->{picture}) {
     my $pictures = $doc->createElement("pictureList");
-    $pictures->appendChild(simpleNode("pictureURL","$PICTURE_URL/$row->{picture}"));
+    $pictures->appendChild(childNode("pictureURL","$_PICTURE_URL/$row->{picture}"));
     $book->appendChild($pictures);
   }
 
 }
 $dbc->disconnect;
 
-$doc->toFile("$CACHEDIR/abebooks_daily_update.xml", $XML_INDENT);
+if (postUpdate($doc->toString(0)) == 0) {
+  print "Update successfully.\n";
+  $doc->toFile("${_CACHE_DIR}/abebooks_daily_update.xml", 1);
+  exit(0);
+}
 
 ##
 ## EOF

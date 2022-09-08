@@ -5,7 +5,6 @@
 #include "bookeditor.h"
 #include "booksearchbar.h"
 #include "bookstable.h"
-#include "myicontheme.h"
 #include <AntiquaCRM>
 
 #include <QDebug>
