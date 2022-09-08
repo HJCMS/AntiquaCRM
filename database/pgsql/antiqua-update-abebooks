@@ -1,8 +1,6 @@
 #!/usr/bin/env perl
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
-
-=head1 NAME
 ##################################################################################
 # This file is part of the HJCMS Project
 #
@@ -24,40 +22,74 @@
 # Boston, MA 02110-1301, USA.
 ##################################################################################
 
- antiqua-update-abebooks
-
- ABHÄNGIGKEITEN:
-  perl-DBD-Pg
-  perl-XML-LibXML
-  curl
-
- WARNUNG
-  Die Datenbank arbeitet mit UTF-8 aber Abebooks erwartet ISO-8859-1.
-  Dehalb muss die Ausgabe in den richtigen Zeichensatz konvertiert werden!
-
-=cut
-
 use strict;
 use warnings;
 use DBD::Pg;
 use XML::LibXML;
 
-## Configuration
-my $_APPL_NAME = "antiqua-update-abebooks";
-my $_PG_USER = $ENV{USER};
-my $_PICTURE_URL = "https://www.buchfreund.de/covers/9090";
-my $_XML_CHARSET = "ISO-8859-1";
-my $_CACHE_DIR = $ENV{HOME} . "/.cache";
-my $_SQL_QUERY = $ENV{HOME} . "/.config/HJCMS/${_APPL_NAME}.sql";
-my $_API_USER = "";
-my $_API_KEY = "";
-print "configure first!\n"
-exit(0);
+=encoding utf8
+=begin text
 
-=begin postUpdate
+  antiqua-update-abebooks
+
+  Das Script ist für einen Cronjob gedacht, der täglich die Änderungen and den
+  Abebooks "Inventoryupdate" Server sendet.
+
+  Es wird mit einem SQL abgefragt welche Einträge sich an diesem Tag geändert haben.
+  Diese Datensätze werden gesammelt und an den "Inventoryupdate" Server gesendet.
+
+  Die Datenbank arbeitet mit UTF-8 aber Abebooks erwartet ISO-8859-1.
+  Dehalb muss die Ausgabe in den richtigen Zeichensatz konvertiert werden!
+
+  Die Abhängigkeiten für dieses Script sind:
+    perl-DBD-Pg >= 2.19
+    perl-XML-LibXML >= 2.0018
+    curl >= 7.29.0
+
+=cut text
+
+########################################################################
+## BEGIN configuration
+## Alle Einstellungen für die Server Zugriffe
+## API Benutzer
+my $_API_USER = "";
+
+## API Key
+my $_API_KEY = "";
+
+## Buchfreund Kunden Nummer
+my $_BF_ID = "";
+
+## Standard Ausgabename
+my $_APPL_NAME = "antiqua-update-abebooks";
+
+## PostgreSQL Service/Benutzername
+my $_PG_USER = $ENV{USER};
+
+## XML Ausgabe Zeichensatz
+my $_XML_CHARSET = "ISO-8859-1";
+
+## Schreibe LOGS in ...
+my $_CACHE_DIR = $ENV{HOME} . "/.cache";
+
+## Lese SQL Abfrage aus Datei
+my $_SQL_QUERY = $ENV{HOME} . "/.config/HJCMS/${_APPL_NAME}.sql";
+
+## Standard URL für die Bilder
+my $_PICTURE_URL = "https://www.buchfreund.de/covers/${_BF_ID}";
+
+## END configuration
+########################################################################
+
+if (!$_API_KEY or !$_API_USER) {
+  print "Configure first!\n";
+  exit(0);
+}
+
+=begin postUpdate()
   Sende mit Curl die POST Daten an den Abebooks Update Server!
-  URL:  https://orderupdate.abebooks.com
-  Port: 10003
+  URL:  https://inventoryupdate.abebooks.com
+  Port: 10027
 =cut
 sub postUpdate {
   my $body = shift;
@@ -79,29 +111,17 @@ sub postUpdate {
   return 0;
 };
 
+## Wir verwenden eine PostgreSQL Service konfiguration um sich mit dem Server zu verbinden.
 my $dbc = DBI->connect("dbi:Pg:service=$_PG_USER",'', '',
   {AutoCommit => 0, RaiseError => 1, PrintError => 1, ReadOnly => 1});
 
+## Lese die SQL Abfrage aus Datei ...
 my $_statement = "";
 open(FH, '<:encoding(UTF-8)', $_SQL_QUERY) or die $!;
 while(<FH>){
   $_statement .= $_;
 }
 close(FH);
-
-my $doc = new XML::LibXML->createDocument("1.0",$_XML_CHARSET);
-my $root = $doc->createElement("inventoryUpdateRequest");
-$root->setAttribute("version","1.0");
-$doc->setDocumentElement($root);
-my $action = $doc->createElement("action");
-$action->setAttribute("name","bookupdate");
-my $username = $doc->createElement("username");
-$username->appendChild($doc->createTextNode($_API_USER));
-$action->appendChild($username);
-my $apikey = $doc->createElement("password");
-$apikey->appendChild($doc->createTextNode($_API_KEY));
-$action->appendChild($apikey);
-$root->appendChild($action);
 
 my $query = $dbc->prepare($_statement);
 if(!defined $query) {
@@ -120,6 +140,28 @@ if($query->rows < 1)
   exit(0);
 }
 
+## Erstelle den XML Update Request
+my $doc = new XML::LibXML->createDocument("1.0",$_XML_CHARSET);
+## Wir verwenden version 1.0 beim Update Request!
+my $root = $doc->createElement("inventoryUpdateRequest");
+$root->setAttribute("version","1.0");
+$doc->setDocumentElement($root);
+## Anmeldeknoten
+my $action = $doc->createElement("action");
+$action->setAttribute("name","bookupdate");
+## API Benutzer
+my $username = $doc->createElement("username");
+$username->appendChild($doc->createTextNode($_API_USER));
+$action->appendChild($username);
+## API Key
+my $apikey = $doc->createElement("password");
+$apikey->appendChild($doc->createTextNode($_API_KEY));
+$action->appendChild($apikey);
+$root->appendChild($action);
+
+=begin childNode()
+  Einfacher Knoten nur mit einem TextNode erstellen.
+=cut
 sub childNode {
   my $name = shift;
   my $value = shift;
@@ -128,6 +170,9 @@ sub childNode {
   return $child;
 };
 
+=begin childAttributeNode()
+  Einfacher Konten mit einem TextNode und einem AttributeNode erstellen.
+=cut
 sub childAttributeNode {
   my $name = shift;
   my $value = shift;
@@ -139,57 +184,76 @@ sub childAttributeNode {
   return $child;
 };
 
-my $parent = $doc->createElement("AbebookList");
-$root->appendChild($parent);
+## Erstelle die Updateliste
+my $booklist = $doc->createElement("AbebookList");
+$root->appendChild($booklist);
 
+## Durchlaufe das Abfrageergebnis
 foreach my $row (@{$ref}) {
+  ## Eintrag
   my $book = $doc->createElement("Abebook");
-  $parent->appendChild($book);
+  $booklist->appendChild($book);
 
+  ## Update type
   $book->appendChild(childNode("transactionType","UPDATE"));
+
+  ## Artikel Nummer
   $book->appendChild(childNode("vendorBookID",$row->{vendorbookid}));
+
+  ## Buchbestand Zahl
   $book->appendChild(childNode("quantity",$row->{quantity}));
 
+  ## Autor
   if($row->{author}) {
     $book->appendChild(childNode("author",$row->{author}));
   }
 
+  ## Buchtitel
   if($row->{title}) {
     $book->appendChild(childNode("title",$row->{title}));
   }
 
+  ## Verlag
   if($row->{publisher}) {
     $book->appendChild(childNode("publisher",$row->{publisher}));
   }
 
+  ## Erscheinungsjahr
   if($row->{year}) {
     $book->appendChild(childNode("publishYear",$row->{year}));
   }
 
+  ## Preis im double Format
   if($row->{price}) {
     $book->appendChild(childAttributeNode("price",$row->{price},"currency","EUR"));
   }
 
+  ## Auflage
   if($row->{edition}) {
     $book->appendChild(childNode("edition","$row->{edition}. Auflage"));
   }
 
+  ## Schlüsselwörter
   if($row->{subject}) {
     $book->appendChild(childNode("subject",$row->{subject}));
   }
 
+  ## Umschlags Beschreibung
   if($row->{bindingtext}) {
     $book->appendChild(childNode("bindingText",$row->{bindingtext}));
   }
 
+  ## Buchzustand
   if($row->{bookcondition}) {
     $book->appendChild(childNode("bookCondition",$row->{bookcondition}));
   }
 
+  ## Umschlagszustand
   if($row->{jacketcondition}) {
     $book->appendChild(childNode("jacketCondition",$row->{jacketcondition}));
   }
 
+  ## Bindung {hard,soft} Beschreibung z.B.: Leinen gebunden
   if($row->{bind} && $row->{bind_attr}) {
     $book->appendChild(childAttributeNode(
         "binding",$row->{bind},
@@ -197,22 +261,27 @@ foreach my $row (@{$ref}) {
     );
   }
 
+  ## Signatur
   if($row->{inscriptiontype}) {
     $book->appendChild(childNode("inscriptionType",$row->{inscriptiontype}));
   }
 
+  ## ISBN
   if($row->{isbn}) {
     $book->appendChild(childNode("isbn",$row->{isbn}));
   }
 
+  ## Eigener Katalog
   if($row->{vendorcatalog1}) {
     $book->appendChild(childNode("booksellerCatalogue",$row->{vendorcatalog1}));
   }
 
+  ## Buch Komplettbeschreibung
   if($row->{description}) {
     $book->appendChild(childNode("description",$row->{description}));
   }
 
+  ## Bilder
   if($row->{picture}) {
     my $pictures = $doc->createElement("pictureList");
     $pictures->appendChild(childNode("pictureURL","$_PICTURE_URL/$row->{picture}"));
@@ -220,8 +289,11 @@ foreach my $row (@{$ref}) {
   }
 
 }
+
+## Datenbank verbindung trennen
 $dbc->disconnect;
 
+## Sende den XML Update Katalog an den Updateserver
 if (postUpdate($doc->toString(0)) == 0) {
   print "Update successfully.\n";
   $doc->toFile("${_CACHE_DIR}/abebooks_daily_update.xml", 1);
