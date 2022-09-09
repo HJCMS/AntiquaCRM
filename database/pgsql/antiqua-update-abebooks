@@ -26,6 +26,7 @@ use strict;
 use warnings;
 use DBD::Pg;
 use XML::LibXML;
+use Text::Iconv;
 
 =encoding utf8
 =begin text
@@ -35,7 +36,7 @@ use XML::LibXML;
   Das Script ist für einen Cronjob gedacht, der täglich die Änderungen and den
   Abebooks "Inventoryupdate" Server sendet.
 
-  Es wird mit einem SQL abgefragt welche Einträge sich an diesem Tag geändert haben.
+  Es wird mit PostgreSQL abgefragt welche Einträge sich an diesem Tag geändert haben.
   Diese Datensätze werden gesammelt und an den "Inventoryupdate" Server gesendet.
 
   Die Datenbank arbeitet mit UTF-8 aber Abebooks erwartet ISO-8859-1.
@@ -45,6 +46,7 @@ use XML::LibXML;
     perl-DBD-Pg >= 2.19
     perl-XML-LibXML >= 2.0018
     curl >= 7.29.0
+    perl-Text-Iconv >= 1.7
 
 =cut text
 
@@ -71,6 +73,9 @@ my $_XML_CHARSET = "ISO-8859-1";
 
 ## Schreibe LOGS in ...
 my $_CACHE_DIR = $ENV{HOME} . "/.cache";
+
+## Schreibe Antwort in ...
+my $_OUTPUT_DIR = "";
 
 ## Lese SQL Abfrage aus Datei
 my $_SQL_QUERY = $ENV{HOME} . "/.config/HJCMS/${_APPL_NAME}.sql";
@@ -99,9 +104,9 @@ sub postUpdate {
     "--header", "Accept: application/xml,text/*;q=0.1",
     "--header", "Content-Type: application/xml; charset=$_XML_CHARSET",
     "--header", "Cache-Control: no-cache",
-    "--trace", "${_CACHE_DIR}/${_APPL_NAME}.trace",
-    "--dump-header", "${_CACHE_DIR}/${_APPL_NAME}.header",
-    "--output", "${_CACHE_DIR}/${_APPL_NAME}.response",
+    "--trace", "${_CACHE_DIR}/${_APPL_NAME}_trace.log",
+    "--dump-header", "${_CACHE_DIR}/${_APPL_NAME}_header.log",
+    "--output", "${_OUTPUT_DIR}/${_APPL_NAME}.xml",
     "--data", "$body"
   );
   if (system(@args) != 0) {
@@ -109,6 +114,13 @@ sub postUpdate {
     return 1;
   }
   return 0;
+};
+
+## Iconv
+sub  utf8_to_xml_charset {
+  my $input = shift;
+  my $chv = Text::Iconv->new("UTF8", $_XML_CHARSET);
+  return $chv->convert($input);
 };
 
 ## Wir verwenden eine PostgreSQL Service konfiguration um sich mit dem Server zu verbinden.
@@ -164,7 +176,7 @@ $root->appendChild($action);
 =cut
 sub childNode {
   my $name = shift;
-  my $value = shift;
+  my $value = utf8_to_xml_charset(shift);
   my $child = $doc->createElement($name);
   $child->appendChild($doc->createTextNode($value));
   return $child;
@@ -175,9 +187,9 @@ sub childNode {
 =cut
 sub childAttributeNode {
   my $name = shift;
-  my $value = shift;
+  my $value = utf8_to_xml_charset(shift);
   my $attr = shift;
-  my $avalue = shift;
+  my $avalue = utf8_to_xml_charset(shift);
   my $child = $doc->createElement($name);
   $child->setAttribute($attr,$avalue);
   $child->appendChild($doc->createTextNode($value));
@@ -199,6 +211,9 @@ foreach my $row (@{$ref}) {
 
   ## Artikel Nummer
   $book->appendChild(childNode("vendorBookID",$row->{vendorbookid}));
+
+  ## Buch oder Drucke etc.
+  $book->appendChild(childNode("productType","Buch"));
 
   ## Buchbestand Zahl
   $book->appendChild(childNode("quantity",$row->{quantity}));
@@ -296,7 +311,7 @@ $dbc->disconnect;
 ## Sende den XML Update Katalog an den Updateserver
 if (postUpdate($doc->toString(0)) == 0) {
   print "Update successfully.\n";
-  $doc->toFile("${_CACHE_DIR}/abebooks_daily_update.xml", 1);
+  $doc->toFile("${_OUTPUT_DIR}/abebooks_daily_update.xml", 1);
   exit(0);
 }
 
