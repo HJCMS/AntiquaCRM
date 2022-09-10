@@ -136,7 +136,7 @@ pushd ${_output_target}
   ## Upload
   if test -e catalog.zip ; then
     _upload_file=catalog.zip
-    _whsoft_apiKey="3fbe2f84-1ae2-419e-b5c4-fecabd6bac6c"
+    _whsoft_apiKey=""
     _whsoft_remote=https://www.buchfreund.de/verkaeufer/api/${_whsoft_apiKey}/upload-daten
     curl --silent \
       --ssl-reqd \
