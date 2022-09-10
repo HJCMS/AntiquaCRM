@@ -66,16 +66,16 @@ my $_BF_ID = "";
 my $_APPL_NAME = "antiqua-update-abebooks";
 
 ## PostgreSQL Service/Benutzername
-my $_PG_USER = $ENV{USER};
+my $_PG_USER = "";
 
 ## XML Ausgabe Zeichensatz
 my $_XML_CHARSET = "ISO-8859-1";
 
 ## Schreibe LOGS in ...
-my $_CACHE_DIR = $ENV{HOME} . "/.cache";
+my $_CACHE_DIR = $ENV{HOME} . "/.cache/";
 
 ## Schreibe Antwort in ...
-my $_OUTPUT_DIR = "";
+my $_OUTPUT_DIR = "/home/HJCMS/AntiquaCRM/Archiv/Logging";
 
 ## Lese SQL Abfrage aus Datei
 my $_SQL_QUERY = $ENV{HOME} . "/.config/HJCMS/${_APPL_NAME}.sql";
@@ -119,7 +119,7 @@ sub postUpdate {
 ## Iconv
 sub  utf8_to_xml_charset {
   my $input = shift;
-  my $chv = Text::Iconv->new("UTF8", $_XML_CHARSET);
+  my $chv = Text::Iconv->new("UTF8", "$_XML_CHARSET");
   return $chv->convert($input);
 };
 
@@ -153,7 +153,7 @@ if($query->rows < 1)
 }
 
 ## Erstelle den XML Update Request
-my $doc = new XML::LibXML->createDocument("1.0",$_XML_CHARSET);
+my $doc = new XML::LibXML->createDocument("1.0","$_XML_CHARSET");
 ## Wir verwenden version 1.0 beim Update Request!
 my $root = $doc->createElement("inventoryUpdateRequest");
 $root->setAttribute("version","1.0");

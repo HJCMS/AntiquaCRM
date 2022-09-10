@@ -1,0 +1,159 @@
+#!/usr/bin/env perl
+# -*- coding: utf-8 -*-
+# vim: set fileencoding=utf-8
+##################################################################################
+# This file is part of the HJCMS Project
+#
+# Copyright (C) Juergen Heinemann http://www.hjcms.de, (C) 2007-2022
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public License
+# along with this library; see the file COPYING.LIB.  If not, write to
+# the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+# Boston, MA 02110-1301, USA.
+##################################################################################
+
+=head1 NAME
+  antiqua-zip-img-package - Script zum auffinden und packen der Artikelbilder
+
+  ChangeLog:
+    Thu Sep  1 07:41:57 CEST 2022 - Add Job Files
+
+=cut
+
+use strict;
+use warnings;
+use POSIX qw(strftime);
+use Directory::Iterator;
+use File::Basename;
+use File::Copy;
+use File::Glob qw(:globally :nocase);
+use MIME::Base64 qw(encode_base64);
+
+binmode STDOUT, ":utf8";
+
+my $HOMEDIR = $ENV{"HOME"};
+
+=begin $IMAGES_DIR
+ Standard Bilder Verzeichnis
+=cut
+my $IMAGES_DIR = "/home/HJCMS/AntiquaCRM/Archiv/Bilder";
+
+=begin $IMAGES_SCAN_DIR
+  Lese neue Bilder von Verzeichnis
+  Es wird kein Rekursives lesen verwendet!
+=cut
+my $IMAGES_SCAN_DIR = "$IMAGES_DIR/";
+
+=begin $IMAGES_DEST_DIR
+  Das Ziel Verzeichnis wird mit set_source_target erzeugt!
+=cut
+my $IMAGES_DEST_DIR = "";
+
+=begin $TEMP_DIR
+  Temporäres Zip-Verzeichnis
+=cut
+my $TEMP_DIR = "$HOMEDIR/.cache/antiqua-images";
+## Erstelle Temporären Zip Ordner
+system("mkdir -p $TEMP_DIR");
+
+=begin $ZIP_TARGET
+  Die erstellte Zipdatei wird hierhin abgelegt ...
+=cut
+my $ZIP_TARGET = "/home/HJCMS/AntiquaCRM/Archiv/ZipDateien";
+
+=begin $DATE_STRING
+  Ist der Suffix mit der Datumsangabe für die Ausgabe Datei.
+=cut
+my $DATE_STRING = strftime "%Y%m%d", localtime;
+
+=begin set_source_target
+  Methode zum erstellen des Ablageverzeichnisses für die Quellbilder.
+  Example: $IMAGES_DIR/{yyyy}/{MM}/{bildenummer}.{extension}
+=cut
+sub set_source_target {
+  my $_subdir = strftime "%Y/%m", localtime();
+  my $_destdir = sprintf("%s/%s", $IMAGES_DIR, $_subdir);
+  if (-e $IMAGES_DIR) {
+    mkdir ($_destdir);
+    if(-e $_destdir) {
+      return $_destdir;
+    } else {
+      exit(1);
+    }
+  } else {
+    printf "Fatal: Directory ($IMAGES_DIR) not exists!\n";
+    exit(1);
+  }
+}
+
+=begin create_zip_export
+  Bilddaten für das packen vorbereiten.
+  1) Erstelle ein Temporäres Verzeichnis mit den Bilddateien die gepackt werden sollen.
+  2) Kopiere die Bilder in das Temporäre Verzeichnis.
+  3) Verschiebe die Originale in das Quellenverzeichnis @see set_source_target
+=cut
+sub create_zip_export {
+  my $it = Directory::Iterator->new($IMAGES_SCAN_DIR, show_dotfiles=>0, recursive=>0, show_directories=>0);
+  while (my $file = <$it>) {
+    my $_f = basename($file);
+    if ($_f =~ qr/^\d{1,8}\.jp[e]*g$/i) {
+      $_f =~ s/\.jp[e]*g$//g;
+      my $_t = sprintf ("%d.JPG", int($_f));
+      copy ("${file}", "${TEMP_DIR}/${_t}");
+      move ("${file}", "$IMAGES_DEST_DIR/");
+    }
+  }
+}
+
+=begin create_upload_jobfile
+ Erstelle eine Upload-Job Datei.
+  $HOMEDIR/.cache/UPLOAD-IMAGES_${DATE_STRING}.job
+=cut
+sub create_upload_jobfile {
+  my $_filepath = shift;
+  if(-e $_filepath) {
+    open(FH, '>:encoding(UTF-8)', "$HOMEDIR/.cache/UPLOAD-IMAGES_${DATE_STRING}.job") or die $!;
+    print FH  $_filepath . "\n";
+    close(FH);
+  } else {
+    printf "File $_filepath not exists!\n";
+    exit(1);
+  }
+}
+
+## Alte Export Zipdatei entfernen
+system("rm -f $ZIP_TARGET/bilder-$DATE_STRING.zip");
+
+## Erstelle Quellen Ziel Verzeichnis
+$IMAGES_DEST_DIR = set_source_target();
+if(-e $IMAGES_DEST_DIR) {
+  create_zip_export();
+  chdir (${TEMP_DIR});
+  my @images = glob("*.JPG");
+  if(@images == 0)
+  {
+    printf "Zip target, no Images, nothing todo!\n";
+    exit(0);
+  }
+  chmod (0644, @images);
+  my $_zipfile = "$ZIP_TARGET/bilder-$DATE_STRING.zip";
+  my @zipcmd = ("zip", "-9", "-q", "-o", "$_zipfile", @images);
+  system(@zipcmd) == 0 or die "zip failed: $?\n";
+  unlink (@images);
+  create_upload_jobfile($_zipfile);
+} else {
+  printf "Build bilder-$DATE_STRING.zip failed!\n";
+  exit(1);
+}
+
+##EOF
