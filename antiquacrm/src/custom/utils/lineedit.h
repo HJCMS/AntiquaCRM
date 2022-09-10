@@ -59,6 +59,11 @@ public:
   bool isPasswordInput();
 
   /**
+   * @brief Zeichenketten Begrenzung
+   */
+  void restrictMaxLength(int max = 80);
+
+  /**
    * @brief Erscheinungsbild einschränken
    * @param length Zeichenlänge einschränken
    * @param width  Weite einschränken

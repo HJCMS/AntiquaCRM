@@ -89,9 +89,11 @@ private:
   LineEdit *o_provider_name;
 
   /**
-   * @brief Aktionen
+   * @brief Zeitstempel
    */
-  LineEdit *o_modified; /**< @brief Zeitstempel */
+  DateTimeEdit *o_since;
+  DateTimeEdit *o_modified;
+  DateTimeEdit *o_delivered;
 
   /**
    * @brief Standard ActionsBar
@@ -265,6 +267,12 @@ private Q_SLOTS:
    * @param row
    */
   void findRemoveTableRow(int row);
+
+  /**
+   * @brief Aktuellen Auftragstatus prüfen
+   * Verhalten für die Datums Änderungen je nach Status ändern!
+   */
+  void checkOrderStatus(int status);
 
   /**
    * @brief Daten Speichern

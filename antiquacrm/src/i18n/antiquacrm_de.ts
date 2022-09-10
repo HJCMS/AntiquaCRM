@@ -4,7 +4,7 @@
 <context>
     <name>ABE_StatusPage</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksremoteactions.cpp" line="+31"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksremoteactions.cpp" line="+34"/>
         <source>Provider Status - no disclosures</source>
         <translation>Anbieterstatus – keine Angaben</translation>
     </message>
@@ -24,17 +24,17 @@
         <translation>Die Bestellung wird abgelehnt!</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>Article is no longer available!</source>
         <translation>Artikel ist nicht mehr verfügbar!</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>The buyer&apos;s credit card is declined!</source>
         <translation>Die Kreditkarte des Käufers wird abgelehnt!</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>Apply</source>
         <translation>Anwenden</translation>
     </message>
@@ -2680,22 +2680,22 @@
         <translation>Bilder</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Delivery Notes</source>
         <translation>Lieferscheine</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Invoices</source>
         <translation>Rechnungen</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+33"/>
         <source>Cards</source>
         <translation>Buchkarten</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+74"/>
         <source>Additional</source>
         <translation>Erweitert</translation>
     </message>
@@ -2710,27 +2710,27 @@
         <translation>Der kleinste zulässige Verkaufspreis.</translation>
     </message>
     <message>
-        <location line="-85"/>
+        <location line="-92"/>
         <source>Archive/Applications paths</source>
         <translation>Archiv/Programmpfade</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+39"/>
         <source>Monthly Reports</source>
         <translation>Monatsberichte</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Payment Reminder</source>
         <translation>Zahlungserinnerung</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+22"/>
         <source>E-Mail Application</source>
         <translation>E-Mail Programm</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+17"/>
         <source>Payment Settings</source>
         <translation>Zahlungs Einstellungen</translation>
     </message>
@@ -3028,7 +3028,7 @@
 <context>
     <name>InventoryBooks</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="+19"/>
+        <location filename="../inventory/books/inventorybooks.cpp" line="+18"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
@@ -3542,7 +3542,7 @@
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../custom/utils/lineedit.cpp" line="+95"/>
+        <location filename="../custom/utils/lineedit.cpp" line="+99"/>
         <source>Suggestions available</source>
         <translation>Vorschläge verfügbar</translation>
     </message>
@@ -3901,7 +3901,7 @@
         <translation>Auftrag bearbeiten</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+40"/>
         <source>Order ID</source>
         <translation>Auftrags ID</translation>
     </message>
@@ -3942,13 +3942,12 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+949"/>
-        <location line="+3"/>
+        <location line="+973"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-1021"/>
+        <location line="-1042"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
@@ -3998,18 +3997,38 @@
         <translation>Aktuelle Bestellungen</translation>
     </message>
     <message>
+        <location line="+9"/>
+        <source>Show order date information:</source>
+        <translation>Zeige Auftrags- Datumsinformationen:</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Created</source>
+        <translation>Erstellt</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Modified</source>
+        <translation>Geändert</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Delivered</source>
+        <translation>Ausgeliefert</translation>
+    </message>
+    <message>
         <location line="+259"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag wurde gespeichert!</translation>
     </message>
     <message>
         <location line="+317"/>
-        <location line="+566"/>
+        <location line="+570"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="-551"/>
+        <location line="-555"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
     </message>
@@ -4091,12 +4110,12 @@
         <translation>E-Mail erstellen abgebrochen.</translation>
     </message>
     <message>
-        <location line="+97"/>
+        <location line="+94"/>
         <source>No Billing Info found</source>
         <translation>Kein Verkaufsinformationen gefunden</translation>
     </message>
     <message>
-        <location line="-169"/>
+        <location line="-166"/>
         <source>Missing Delivery-Id</source>
         <translation>Keine Lieferscheinnummer vorhanden</translation>
     </message>
@@ -4131,12 +4150,17 @@
         <translation>Sorniere Auftrag</translation>
     </message>
     <message>
-        <location line="+909"/>
+        <location line="+906"/>
         <source>can&apos;t create order without costumer Id.</source>
         <translation>Kann keinen Auftrag ohne Kundennummer generieren.</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+12"/>
+        <source>Broken Provider data import!</source>
+        <translation>Fehlerhafter Dienstleister Bestellimport!</translation>
+    </message>
+    <message>
+        <location line="+43"/>
         <source>One or more items on the list are not available!</source>
         <translation>Ein oder mehrere Artikel auf der Liste sind nicht Verfügbar!</translation>
     </message>
@@ -4151,13 +4175,13 @@
         <translation>Bestellung</translation>
     </message>
     <message>
-        <location line="-966"/>
+        <location line="-970"/>
         <location line="+402"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
     </message>
     <message>
-        <location line="-672"/>
+        <location line="-696"/>
         <source>Service</source>
         <translation>Sender</translation>
     </message>
@@ -4167,7 +4191,7 @@
         <translation>Rechnungs Optionen</translation>
     </message>
     <message>
-        <location line="+812"/>
+        <location line="+836"/>
         <location line="+77"/>
         <source>Printing canceled.</source>
         <translation>Druckevorgang abgebrochen.</translation>

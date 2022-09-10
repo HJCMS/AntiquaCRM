@@ -31,9 +31,6 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
    */
   ignoreList.clear();
   ignoreList.append("a_modified");
-  ignoreList.append("o_since");
-  ignoreList.append("o_modified");
-  ignoreList.append("o_delivered");
   ignoreList.append("o_provider_order");
 
   ignoreOnInsert.clear();
@@ -209,6 +206,30 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
   m_paymentList->setObjectName("m_paymentList");
   mainWidgetLayout->addWidget(m_paymentList);
 
+  // Datums Informationen
+  QGroupBox *m_dateBox = new QGroupBox(mainWidget);
+  // Zeige Auftrags- Datumsinformationen
+  m_dateBox->setTitle(tr("Show order date information:"));
+  QGridLayout *date_layout = new QGridLayout(m_dateBox);
+  o_since = new DateTimeEdit(m_dateBox);
+  o_since->setObjectName("o_since");
+  o_since->setReadOnly(true);
+  o_since->setInfo(tr("Created"));
+  date_layout->addWidget(o_since, 0, 0, 1, 1);
+  o_modified = new DateTimeEdit(m_dateBox);
+  o_modified->setObjectName("o_modified");
+  o_modified->setReadOnly(true);
+  o_modified->setInfo(tr("Modified"));
+  date_layout->addWidget(o_modified, 1, 0, 1, 1);
+  o_delivered = new DateTimeEdit(m_dateBox);
+  o_delivered->setObjectName("o_delivered");
+  o_delivered->setReadOnly(true);
+  o_delivered->setInfo(tr("Delivered"));
+  date_layout->addWidget(o_delivered, 2, 0, 1, 1);
+  date_layout->setColumnStretch(1, 1);
+  m_dateBox->setLayout(date_layout);
+  mainWidgetLayout->addWidget(m_dateBox, Qt::AlignLeft);
+
   mainWidgetLayout->addStretch(1);
   mainWidget->setLayout(mainWidgetLayout);
   mainLayout->addWidget(m_scroolView);
@@ -231,6 +252,10 @@ OrderEditor::OrderEditor(QWidget *parent) : EditorMain{parent} {
     UtilsMain *e = *it;
     connect(e, SIGNAL(hasModified(bool)), this, SLOT(setWindowModified(bool)));
   }
+
+  // Status Update
+  connect(o_order_status, SIGNAL(currentIndexChanged(int)), this,
+          SLOT(checkOrderStatus(int)));
 
   connect(btn_gen_deliver, SIGNAL(clicked()), this,
           SLOT(generateDeliveryNumber()));
@@ -627,12 +652,11 @@ void OrderEditor::createSqlUpdate() {
   // PoPup Speichern wieder anzeigen!
   showSuccessFully = true;
 
+  // Update
+  o_modified->setValue(o_modified->system());
+
   QString sql("UPDATE inventory_orders SET ");
   sql.append(set.join(","));
-  sql.append(",o_modified=CURRENT_TIMESTAMP");
-  if (o_id->value().toInt() == ORDER_STATUS_DELIVERED) {
-    sql.append(",o_delivered=CURRENT_TIMESTAMP");
-  }
   sql.append(" WHERE o_id=");
   sql.append(oid);
   sql.append(";");
@@ -812,6 +836,15 @@ void OrderEditor::findRemoveTableRow(int row) {
   pId.clear();
   aId.clear();
   items.clear();
+}
+
+void OrderEditor::checkOrderStatus(int status)
+{
+  if(status == ORDER_STATUS_DELIVERED)
+  {
+    o_delivered->setValue(o_delivered->system());
+    // qDebug() << Q_FUNC_INFO << status << o_delivered->value();
+  }
 }
 
 void OrderEditor::saveData() {
@@ -1048,7 +1081,7 @@ void OrderEditor::openEMailDialog(const QString &tpl) {
   if (oid < 1)
     return;
 
-  if(!m_cfg->contains("dirs/mailapplication")) {
+  if (!m_cfg->contains("dirs/mailapplication")) {
     emit s_statusMessage(tr("Missing eMail configuration!"));
     return;
   }
@@ -1317,7 +1350,7 @@ void OrderEditor::openCreateOrder(const ProviderOrder &order) {
   initDefaults();
   o_customer_id->setValue(cid);
 
-  if(copy.providerId().isEmpty() || copy.provider().isEmpty()) {
+  if (copy.providerId().isEmpty() || copy.provider().isEmpty()) {
     emit s_postMessage(tr("Broken Provider data import!"));
     return;
   }

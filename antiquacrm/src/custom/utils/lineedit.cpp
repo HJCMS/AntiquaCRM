@@ -82,6 +82,10 @@ void LineEdit::setPasswordInput(bool b) {
 
 bool LineEdit::isPasswordInput() { return p_passwordInput; }
 
+void LineEdit::restrictMaxLength(int max) {
+  m_edit->setMaxLength(max);
+}
+
 void LineEdit::restrictDisplay(int length, int width) {
   m_edit->setMaxLength(length);
   m_edit->setMaximumWidth(width);

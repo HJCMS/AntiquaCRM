@@ -4,7 +4,7 @@
 <context>
     <name>ABE_StatusPage</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksremoteactions.cpp" line="+31"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksremoteactions.cpp" line="+34"/>
         <source>Provider Status - no disclosures</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24,17 +24,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>Article is no longer available!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>The buyer&apos;s credit card is declined!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2680,22 +2680,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Delivery Notes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Invoices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+33"/>
         <source>Cards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+74"/>
         <source>Additional</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2710,27 +2710,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-85"/>
+        <location line="-92"/>
         <source>Archive/Applications paths</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+39"/>
         <source>Monthly Reports</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Payment Reminder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+22"/>
         <source>E-Mail Application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+17"/>
         <source>Payment Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3028,7 +3028,7 @@
 <context>
     <name>InventoryBooks</name>
     <message>
-        <location filename="../inventory/books/inventorybooks.cpp" line="+19"/>
+        <location filename="../inventory/books/inventorybooks.cpp" line="+18"/>
         <source>Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3542,7 +3542,7 @@
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../custom/utils/lineedit.cpp" line="+95"/>
+        <location filename="../custom/utils/lineedit.cpp" line="+99"/>
         <source>Suggestions available</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3901,7 +3901,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+40"/>
         <source>Order ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3942,13 +3942,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+949"/>
-        <location line="+3"/>
+        <location line="+973"/>
         <source>Internal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1021"/>
+        <location line="-1042"/>
         <source>Invoice ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3998,18 +3997,38 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+9"/>
+        <source>Show order date information:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Created</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Modified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Delivered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+259"/>
         <source>Order saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+317"/>
-        <location line="+566"/>
+        <location line="+570"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-551"/>
+        <location line="-555"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4091,12 +4110,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+97"/>
+        <location line="+94"/>
         <source>No Billing Info found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-169"/>
+        <location line="-166"/>
         <source>Missing Delivery-Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4131,12 +4150,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+909"/>
+        <location line="+906"/>
         <source>can&apos;t create order without costumer Id.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+12"/>
+        <source>Broken Provider data import!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+43"/>
         <source>One or more items on the list are not available!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4151,13 +4175,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-966"/>
+        <location line="-970"/>
         <location line="+402"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-672"/>
+        <location line="-696"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4167,7 +4191,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+812"/>
+        <location line="+836"/>
         <location line="+77"/>
         <source>Printing canceled.</source>
         <translation type="unfinished"></translation>

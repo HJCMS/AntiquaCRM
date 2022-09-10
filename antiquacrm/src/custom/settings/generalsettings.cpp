@@ -26,6 +26,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   m_img_archiv_path = new LineEdit(m_grouBox1);
   m_img_archiv_path->setObjectName("dirs/images");
   m_img_archiv_path->setInfo(tr("Images"));
+  m_img_archiv_path->restrictMaxLength(255);
   lt_groupBox1->addWidget(m_img_archiv_path, row, 0, 1, 1);
   btn_imgsrc = new QToolButton(m_grouBox1);
   btn_imgsrc->setIcon(icon_open_btn);
@@ -36,6 +37,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   m_delivery_path = new LineEdit(m_grouBox1);
   m_delivery_path->setObjectName("dirs/deliverynotes");
   m_delivery_path->setInfo(tr("Delivery Notes"));
+  m_delivery_path->restrictMaxLength(255);
   lt_groupBox1->addWidget(m_delivery_path, row, 0, 1, 1);
   btn_delivery = new QToolButton(m_grouBox1);
   btn_delivery->setIcon(icon_open_btn);
@@ -47,6 +49,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   m_invoice_path = new LineEdit(m_grouBox1);
   m_invoice_path->setObjectName("dirs/invoices");
   m_invoice_path->setInfo(tr("Invoices"));
+  m_invoice_path->restrictMaxLength(255);
   lt_groupBox1->addWidget(m_invoice_path, row, 0, 1, 1);
   btn_invoice = new QToolButton(m_grouBox1);
   btn_invoice->setIcon(icon_open_btn);
@@ -57,6 +60,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   m_reports_path = new LineEdit(m_grouBox1);
   m_reports_path->setObjectName("dirs/reports");
   m_reports_path->setInfo(tr("Monthly Reports"));
+  m_reports_path->restrictMaxLength(255);
   lt_groupBox1->addWidget(m_reports_path, row, 0, 1, 1);
   btn_reports = new QToolButton(m_grouBox1);
   btn_reports->setIcon(icon_open_btn);
@@ -67,6 +71,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   m_reminder_path = new LineEdit(m_grouBox1);
   m_reminder_path->setObjectName("dirs/reminder");
   m_reminder_path->setInfo(tr("Payment Reminder"));
+  m_reminder_path->restrictMaxLength(255);
   lt_groupBox1->addWidget(m_reminder_path, row, 0, 1, 1);
   btn_reminder = new QToolButton(m_grouBox1);
   btn_reminder->setIcon(icon_open_btn);
@@ -77,6 +82,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   m_cards_path = new LineEdit(m_grouBox1);
   m_cards_path->setObjectName("dirs/cards");
   m_cards_path->setInfo(tr("Cards"));
+  m_cards_path->restrictMaxLength(255);
   lt_groupBox1->addWidget(m_cards_path, row, 0, 1, 1);
   btn_cards = new QToolButton(m_grouBox1);
   btn_cards->setIcon(icon_open_btn);
@@ -87,6 +93,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   m_mailler_path = new LineEdit(m_grouBox1);
   m_mailler_path->setObjectName("dirs/mailapplication");
   m_mailler_path->setInfo(tr("E-Mail Application"));
+  m_mailler_path->restrictMaxLength(255);
   lt_groupBox1->addWidget(m_mailler_path, row, 0, 1, 1);
   btn_mailler = new QToolButton(m_grouBox1);
   btn_mailler->setIcon(icon_open_btn);
