@@ -330,6 +330,29 @@
     </message>
 </context>
 <context>
+    <name>AntiquaSystemTray</name>
+    <message>
+        <location filename="../antiquasystemtray.cpp" line="+14"/>
+        <source>AntiquaCRM Application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Show</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Assistant</name>
     <message>
         <location filename="../custom/assistant/assistant.cpp" line="+88"/>
@@ -3555,7 +3578,7 @@
 <context>
     <name>MApplication</name>
     <message>
-        <location filename="../mapplication.cpp" line="+92"/>
+        <location filename="../mapplication.cpp" line="+107"/>
         <source>No valid Network Interfaces found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3573,7 +3596,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+74"/>
+        <location filename="../mwindow.cpp" line="+78"/>
         <source>Application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3619,18 +3642,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+91"/>
         <source>SQL Server Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-138"/>
-        <location line="+151"/>
+        <location line="-143"/>
+        <location line="+156"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-195"/>
+        <location line="-200"/>
         <source>Anything but books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3675,7 +3698,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+113"/>
+        <location line="+118"/>
         <source>Disable Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
