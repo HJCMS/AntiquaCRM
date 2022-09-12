@@ -11,12 +11,14 @@
 #include <QStyle>
 
 class AntiquaWindow;
+class SystemTray;
 
 class AntiquaCRM : public QApplication {
   Q_OBJECT
 
 private:
   AntiquaWindow *m_mainWindow;
+  SystemTray *m_systemTray;
 
 private Q_SLOTS:
   // void showMainWindow();

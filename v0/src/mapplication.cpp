@@ -16,6 +16,7 @@
 #include <QMessageBox>
 #include <QNetworkInterface>
 #include <QStyleFactory>
+#include <QTimer>
 #include <QTranslator>
 
 MApplication::MApplication(int &argc, char **argv) : QApplication(argc, argv) {
@@ -47,10 +48,24 @@ void MApplication::openAssistant() {
   assistant.exec();
 }
 
+void MApplication::shutdown() {
+  if (m_window == nullptr)
+    return;
+
+  m_window->deleteLater();
+  quit();
+}
+
 bool MApplication::isRunning() {
   QLocalSocket socket(this);
   socket.setServerName(SocketServer::name());
-  return socket.open(QLocalSocket::ReadOnly);
+  if (socket.open(QLocalSocket::ReadWrite)) {
+    QByteArray data("showAntiquaWindow");
+    socket.write(data);
+    socket.waitForBytesWritten(2000);
+    return true;
+  }
+  return false;
 }
 
 void MApplication::initThemeStyle() {
@@ -125,6 +140,9 @@ int MApplication::exec() {
           SLOT(openDatabase(bool)));
   connect(m_sql, SIGNAL(s_connectionStatus(bool)), m_window,
           SLOT(connectionStatus(bool)));
+  connect(m_window, SIGNAL(sendShutdown()), this, SLOT(shutdown()));
+  connect(m_socket, SIGNAL(showWindow()), m_window, SLOT(show()));
+
   if (m_window == nullptr) {
     qFatal("Application error");
     return 0;

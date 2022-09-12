@@ -22,12 +22,16 @@ ENDIF (CMAKE_HOST_WIN32)
 SET (PROJECT_HEADERS
   antiquacrm.h
   antiquawindow.h
+  socketnotifier.h
+  systemtray.h
 )
 
 SET (PROJECT_SOURCES
   main.cpp
   antiquacrm.cpp
   antiquawindow.cpp
+  socketnotifier.cpp
+  systemtray.cpp
   ${QRC_FILES}
 )
 

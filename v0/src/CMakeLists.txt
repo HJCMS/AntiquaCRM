@@ -17,6 +17,7 @@ ENDIF (CMAKE_HOST_WIN32)
 
 SET (PROJECT_HEADERS
   mapplication.h
+  antiquasystemtray.h
   mwindow.h
   statusbar.h
   workspace.h
@@ -26,6 +27,7 @@ SET (PROJECT_HEADERS
 SET (PROJECT_SOURCES
   main.cpp
   mapplication.cpp
+  antiquasystemtray.cpp
   mwindow.cpp
   statusbar.cpp
   workspace.cpp

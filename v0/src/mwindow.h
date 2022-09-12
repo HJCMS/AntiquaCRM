@@ -20,6 +20,7 @@
 
 class StatusBar;
 class Workspace;
+class AntiquaSystemTray;
 
 class MWindow : public QMainWindow {
   Q_OBJECT
@@ -35,12 +36,14 @@ private:
   Workspace *m_workSpace;
   ApplSettings *m_Settings;
   QSignalMapper *m_signalMapper;
+  AntiquaSystemTray *m_systemTray;
   void setupTabMenu(QMenu *parent);
   void setupActions();
   void openEditAutoFill(CompleterDialog::Filter t);
 
 private Q_SLOTS:
   void closeWindow();
+  void quitApplication();
   void openStorageLocation(bool);
   void openDeliveryService(bool);
   void openDesignation(bool);
@@ -59,6 +62,7 @@ protected Q_SLOTS:
 
 Q_SIGNALS:
   void setStatusMessage(const QString &);
+  void sendShutdown();
   void s_connectDatabase(bool);
 
 public Q_SLOTS:
@@ -68,6 +72,5 @@ public Q_SLOTS:
 public:
   explicit MWindow(QWidget *parent = nullptr);
   void initDefaults();
-  virtual ~MWindow();
 };
 #endif // ANTIQUACRM_MWINDOW_H

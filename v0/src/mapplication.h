@@ -34,6 +34,9 @@ private:
   bool initTranslations();
   void openAssistant();
 
+private Q_SLOTS:
+  void shutdown();
+
 public:
   explicit MApplication(int &argc, char **argv);
   bool isRunning();

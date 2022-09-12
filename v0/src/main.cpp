@@ -16,6 +16,7 @@ int main(int argc, char *argv[]) {
   antiqua->setApplicationDisplayName(ANTIQUACRM_NAME);
   antiqua->setDesktopFileName(ANTIQUACRM_NAME);
   antiqua->setOrganizationDomain(HJCMS_CONFIG_DOMAIN);
+  antiqua->setQuitOnLastWindowClosed(false);
   antiqua->initThemeStyle();
 
   if (QTextCodec::codecForLocale()->name() != "UTF-8") {
@@ -24,7 +25,6 @@ int main(int argc, char *argv[]) {
   }
 
   if (antiqua->isRunning()) {
-    qWarning("Application is already started!");
     return 0;
   }
 

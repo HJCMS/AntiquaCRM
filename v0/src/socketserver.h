@@ -25,6 +25,7 @@ protected:
   void incomingConnection(quintptr socketDescriptor);
 
 Q_SIGNALS:
+  void showWindow();
   void statusMessage(const QString &);
 
 public:

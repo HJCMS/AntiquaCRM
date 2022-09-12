@@ -21,6 +21,11 @@ void SocketServer::readClientConnection() {
     QByteArray data = m_listener->readAll();
     // qDebug() << Q_FUNC_INFO << "BytesRead:" << data;
     QString msg = QString::fromLocal8Bit(data);
+    if (msg == "showAntiquaWindow") {
+      emit showWindow();
+      return;
+    }
+    // TODO
     emit statusMessage(msg);
   }
 }

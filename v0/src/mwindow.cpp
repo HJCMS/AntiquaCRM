@@ -3,6 +3,7 @@
 
 /* Project */
 #include "mwindow.h"
+#include "antiquasystemtray.h"
 #include "categoryedit.h"
 #include "configdialog.h"
 #include "deliverservicedialog.h"
@@ -45,6 +46,9 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
 
   m_statusBar = new StatusBar(statusBar());
   setStatusBar(m_statusBar);
+
+  m_systemTray = new AntiquaSystemTray(myIcon("database"), this);
+
   connect(m_signalMapper, SIGNAL(mappedInt(int)), m_workSpace,
           SLOT(openTab(int)));
   connect(m_workSpace, SIGNAL(s_postMessage(const QString &)), this,
@@ -93,7 +97,7 @@ void MWindow::setupActions() {
   m_quitAction = m_applicationMenu->addAction(tr("Quit"));
   m_quitAction->setObjectName("ac_closeApp");
   m_quitAction->setIcon(myIcon("close_mini"));
-  connect(m_quitAction, SIGNAL(triggered(bool)), this, SLOT(closeWindow()));
+  connect(m_quitAction, SIGNAL(triggered(bool)), this, SLOT(quitApplication()));
 
   QMenu *m_viewsMenu = m_menuBar->addMenu(tr("Views"));
   m_viewsMenu->setObjectName(QLatin1String("ViewsMenu"));
@@ -159,6 +163,11 @@ void MWindow::closeWindow() {
     }
   }
   close();
+}
+
+void MWindow::quitApplication() {
+  closeWindow();
+  emit sendShutdown();
 }
 
 void MWindow::openEditAutoFill(CompleterDialog::Filter t) {
@@ -260,8 +269,8 @@ void MWindow::toggleFullScreen(bool b) {
 }
 
 /**
-   @brief Neu mit der Datenbank Verbinden
-   @param b UNUSED
+ * @brief Neu mit der Datenbank Verbinden
+ * @param b UNUSED
  */
 void MWindow::reconnectDatabase(bool b) { emit s_connectDatabase(b); }
 
@@ -271,11 +280,15 @@ void MWindow::closeEvent(QCloseEvent *event) {
 
   m_Settings->setValue("window/geometry", saveGeometry());
   m_Settings->setValue("window/windowState", saveState());
+
   QMainWindow::closeEvent(event);
 }
 
 void MWindow::statusMessage(const QString &info) {
-  m_statusBar->sqlStatusMessage(info);
+  if (isVisible())
+    m_statusBar->sqlStatusMessage(info);
+  else
+    m_systemTray->notify(info);
 }
 
 void MWindow::connectionStatus(bool b) {
@@ -295,7 +308,6 @@ void MWindow::initDefaults() {
   m_workSpace->openTab(Workspace::Books);
   // Nach Vorne holen
   m_workSpace->openTab(Workspace::Orders);
-}
-
-MWindow::~MWindow() { /* TODO */
+  // SystemTray anzeigen
+  m_systemTray->show();
 }
