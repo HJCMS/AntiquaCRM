@@ -52,7 +52,7 @@ use File::Glob qw(:globally :nocase);
 my $_HOMEDIR = $ENV{"HOME"};
 
 ## Standard Bilder Verzeichnis
-my $_IMAGE_TARGET = "${_HOMEDIR}/Archiv/Bilder";
+my $_IMAGE_TARGET = "";
 
 ## Temoräres Speicher Verzeichnis
 my $_CACHE_DIR = "${_HOMEDIR}/.cache";
@@ -61,7 +61,7 @@ my $_CACHE_DIR = "${_HOMEDIR}/.cache";
 my $_ZIP_DIR = "${_CACHE_DIR}/antiqua_zip_images";
 
 ## Die erstellte Zipdatei wird hierhin abgelegt ...
-my $_ZIP_TARGET = "${_HOMEDIR}/Archiv/Packete";
+my $_ZIP_TARGET = "";
 
 ## Ist der Suffix mit der Datumsangabe für die Ausgabe Datei.
 my $_DATE_STRING = strftime "%Y%m%d", localtime;
@@ -69,6 +69,7 @@ my $_DATE_STRING = strftime "%Y%m%d", localtime;
 ## API KEY für den Upload
 my $_REMOTE_AKEY = "";
 
+## Upload URL zum Dienstleister
 my $_REMOTE_URL = "https://www.buchfreund.de/verkaeufer/api/${_REMOTE_AKEY}/upload-bilder";
 
 ## END configuration
@@ -80,12 +81,12 @@ if (!$_REMOTE_AKEY) {
 }
 
 ## Prefix für Logdateien
-my $_APPL_NAME = "antiqua-images-upload";
+my $_APPL_PREFIX = "antiqua-images-upload";
 
 ## Zip Dateiname
-my $_ZIP_PACKAGE = "bilder-${_DATE_STRING}.zip";
+my $_PACKAGE_NAME = "bilder-${_DATE_STRING}.zip";
 
-# Methode zum erstellen des Ablageverzeichnisses für die Quellbilder.
+## Methode zum erstellen des Ablageverzeichnisses für die Quellbilder.
 sub create_image_archive {
   my $_target = "";
   if (-e ${_IMAGE_TARGET}) {
@@ -93,19 +94,27 @@ sub create_image_archive {
     $_target = sprintf("%s/%s", ${_IMAGE_TARGET}, $_subdir);
     my @args = ("mkdir", "-p", "$_target");
     if(system (@args) != 0) {
-      print "Fatal: can not set Directory (${_target})!\n";
+      print "Warning: can not create (${_target}) target!\n";
       return "";
     }
   } else {
-    print "Fatal: Directory (${_IMAGE_TARGET}) not exists!\n";
+    print "Warning: (${_IMAGE_TARGET}) Directory not exists!\n";
   }
   return $_target;
 }
+
 ## Archiv Verzeichnis für Bilder die gepackt wurden!
 my $_IMAGES_ARCHIVE = create_image_archive();
 
 ## Bilddaten für das packen Vorbereiten.
+## 1) Erstelle Temporären Zip Ordner
+## 2) Scanne Bilder Hauptverzeichnis
+## 3) Kopiere Bilder in das Temporäre Zipverzeichnis
+## 4) Verschiebe Bilder in das Quellenverzeichnis
 sub create_zip_folder {
+  if(!-e "${_ZIP_DIR}") {
+    mkdir (${_ZIP_DIR});
+  }
   ## Starte Scan
   my $it = Directory::Iterator->new(${_IMAGE_TARGET}, show_dotfiles=>0, recursive=>0, show_directories=>0);
   while (my $file = <$it>) {
@@ -122,24 +131,26 @@ sub create_zip_folder {
 ## Starte curl upload
 sub upload_package {
   chdir(${_ZIP_TARGET});
-
-  if(!-e "${_ZIP_PACKAGE}") {
-    print "FATAL: no ${_ZIP_PACKAGE}\n";
+  ## Kein Zipfile? - Dann abbrechen
+  if(!-e "${_PACKAGE_NAME}") {
+    print "FATAL: no ${_PACKAGE_NAME}\n";
     return 1;
   }
 
-  ## Erstelle curl befehl
+  ## Erstelle Upload Befehl
   my @curlcmd = ("curl", "--silent", "--show-error", "--ipv4", "--ssl-reqd", "--tlsv1.2",
     "--request", "POST", "${_REMOTE_URL}",
     "--header", "Accept: */*",
     "--header", "Content-Type: multipart/form-data",
     "--header", "Cache-Control: no-cache",
-    "--trace", "${_CACHE_DIR}/${_APPL_NAME}_trace.log",
-    "--dump-header", "${_CACHE_DIR}/${_APPL_NAME}_header.log",
-    "--output", "${_CACHE_DIR}/${_APPL_NAME}.json",
-    "--form", "boundary=upload", "--form", "file=\@${_ZIP_PACKAGE}"
+    "--trace", "${_CACHE_DIR}/${_APPL_PREFIX}_trace.log",
+    "--dump-header", "${_CACHE_DIR}/${_APPL_PREFIX}_header.log",
+    "--output", "${_CACHE_DIR}/${_APPL_PREFIX}.json",
+    "--form", "boundary=upload",
+    "--form", "file=\@${_PACKAGE_NAME}"
   );
 
+  ## Starte Prozess
   if (system(@curlcmd) != 0) {
     print "Curl finished with errors! ($?)\n";
     return 1;
@@ -151,12 +162,13 @@ sub upload_package {
 ## Erstelle das Zip Paket
 sub create_zip_package {
   my $status = 1;
-  if(!-e "${_ZIP_DIR}") {
-    mkdir (${_ZIP_DIR});
-  }
+  ## In das Temporäre Bilder Verzeichnis wechseln
   chdir (${_ZIP_DIR}) or return 0;
 
+  ## Nehme alle JPEG Bilder
   my @images = glob("*.JPG");
+
+  ## Ist etwas zu tun?
   if(@images == 0)
   {
     print "No Images, nothing todo!\n";
@@ -166,48 +178,51 @@ sub create_zip_package {
   ## Berichtigungen prüfen/korrigieren
   chmod (0644, @images);
 
-  ## Ist ein altes Zipdpaket vorhanden?
-  if (-e "bilder-${_DATE_STRING}.zip") {
-    move ("bilder-${_DATE_STRING}.zip", "${_CACHE_DIR}/");
+  ## Ist ein altes Zippaket vorhanden?
+  if (-e "${_PACKAGE_NAME}") {
+    move ("${_PACKAGE_NAME}", "${_CACHE_DIR}/");
   }
 
   ## Erstelle neues Paket
-  my @args = ("zip", "-9", "-q", "-o", "$_ZIP_PACKAGE", @images);
+  my @args = ("zip", "-9", "-q", "-o", "${_PACKAGE_NAME}", @images);
   $status = system(@args);
   if ($status == 0) {
-    move ("$_ZIP_PACKAGE", "${_ZIP_TARGET}/");
+    move ("${_PACKAGE_NAME}", "${_ZIP_TARGET}/");
   }
+
+  ## Bilder aus Temp entfernen
   unlink (@images);
+
   return $status;
 };
 
-## Starte main()
+## Wenn das Bilder Archiv vorhanden ist starte den Ablaufprozess.
 if(-e ${_IMAGES_ARCHIVE}) {
   my $step_status = 1;
 
-  ## Erstelle Temporären Zip Ordner
-  system("mkdir -p ${_ZIP_DIR}");
-
-  ## Scanne Bilder
+  ## Scanne und erstelle Bilderquellen
   $step_status = create_zip_folder();
   if ($step_status != 0) {
+    print "Create Image targets failed!\n";
     exit(1);
   }
 
-  ## Erstelle Paket
+  ## Erstelle Zip Paket
   $step_status = create_zip_package();
   if ($step_status != 0) {
+    print "Create Zip package failed!\n";
     exit(1);
   }
 
   ## Starte upload
-#   $step_status = upload_package();
-#   if ($step_status != 0) {
-#     exit(1);
-#   }
+  $step_status = upload_package();
+  if ($step_status != 0) {
+    print "Upload failed!\n";
+    exit(1);
+  }
 
 } else {
-  print "Upload '${_ZIP_PACKAGE}' failed!\n";
+  print "Missing '${_IMAGES_ARCHIVE}'!\n";
   exit(1);
 }
 
