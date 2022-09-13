@@ -8,6 +8,7 @@
 #include "providerstoolbar.h"
 #include "providerstreeview.h"
 // Utils
+#include "applicationclient.h"
 #include "eucountries.h"
 #include "genderbox.h"
 #include "messagebox.h"
@@ -187,7 +188,8 @@ void InventoryProviders::queryOrder(const QString &provider,
               SLOT(createNewCustomer(const QJsonDocument &)));
       connect(w, SIGNAL(sendCheckArticleIds(QList<int> &)), this,
               SLOT(checkArticleExists(QList<int> &)));
-      connect(w, SIGNAL(sendErrorResponse(Antiqua::ErrorStatus, const QString &)),
+      connect(w,
+              SIGNAL(sendErrorResponse(Antiqua::ErrorStatus, const QString &)),
               this, SLOT(pluginError(Antiqua::ErrorStatus, const QString &)));
       connect(w, SIGNAL(sendOpenArticle(int)), this,
               SLOT(checkOpenEditArticle(int)));
@@ -541,20 +543,31 @@ void InventoryProviders::pluginError(Antiqua::ErrorStatus code,
   qDebug() << Q_FUNC_INFO << code << msg;
 #endif
 
+  QJsonObject obj;
+  obj.insert("receiver", QJsonValue("MWindow"));
+
   switch (code) {
   case (Antiqua::ErrorStatus::WARNING): {
-    m_toolBar->warningMessage(msg);
-    return;
+    obj.insert("type", QJsonValue("WARNING"));
+    break;
   }
 
   case (Antiqua::ErrorStatus::FATAL): {
-    (new MessageBox(this))->failed(msg);
-    return;
+    obj.insert("type", QJsonValue("FATAL"));
+    break;
   }
 
   default: // Antiqua::ErrorStatus::NOTICE
-    m_toolBar->statusMessage(msg);
-    return;
+    obj.insert("type", QJsonValue("NOTICE"));
+    break;
+  };
+
+  obj.insert("value", QJsonValue(msg));
+
+  QByteArray json = QJsonDocument(obj).toJson(QJsonDocument::Compact);
+  if (!json.isNull()) {
+    ApplicationClient *m_ipc = new ApplicationClient(this);
+    m_ipc->sendMessage(QString::fromLocal8Bit(json));
   }
 }
 

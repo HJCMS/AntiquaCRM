@@ -106,7 +106,7 @@ InventoryPrints::InventoryPrints(QWidget *parent) : Inventory{parent} {
           SLOT(createPrintsEntry()));
   connect(m_tableView, SIGNAL(s_toClibboard(const QVariant &)), this,
           SLOT(copyIntoClipboard(const QVariant &)));
-  connect(m_printsEditor, SIGNAL(s_postMessage(const QString &)), this,
+  connect(m_printsEditor, SIGNAL(sendStatusMessage(const QString &)), this,
           SLOT(displayMessageBox(const QString &)));
   connect(m_printsEditor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
   connect(m_printsEditor, SIGNAL(s_isModified(bool)), this,

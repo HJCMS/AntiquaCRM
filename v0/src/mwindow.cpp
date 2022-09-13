@@ -51,8 +51,9 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
 
   connect(m_signalMapper, SIGNAL(mappedInt(int)), m_workSpace,
           SLOT(openTab(int)));
-  connect(m_workSpace, SIGNAL(s_postMessage(const QString &)), this,
-          SLOT(statusMessage(const QString &)));
+  connect(m_workSpace,
+          SIGNAL(sendPostMessage(Antiqua::ErrorStatus, const QString &)), this,
+          SLOT(statusMessage(Antiqua::ErrorStatus, const QString &)));
   connect(m_workSpace, SIGNAL(s_windowModified(bool)), this,
           SLOT(setWindowModified(bool)));
 }
@@ -284,11 +285,20 @@ void MWindow::closeEvent(QCloseEvent *event) {
   QMainWindow::closeEvent(event);
 }
 
-void MWindow::statusMessage(const QString &info) {
-  if (isVisible())
+void MWindow::statusMessage(Antiqua::ErrorStatus status, const QString &info) {
+  if (status == Antiqua::ErrorStatus::WARNING) {
+    m_systemTray->warning(info);
+    return;
+  } else if (status == Antiqua::ErrorStatus::FATAL) {
+    m_systemTray->fatal(info);
+    return;
+  }
+
+  if (isVisible()) {
     m_statusBar->sqlStatusMessage(info);
-  else
+  } else {
     m_systemTray->notify(info);
+  }
 }
 
 void MWindow::connectionStatus(bool b) {

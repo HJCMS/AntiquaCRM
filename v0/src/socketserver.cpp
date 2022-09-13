@@ -7,6 +7,9 @@
 #include <QByteArray>
 #include <QDataStream>
 #include <QDebug>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonParseError>
 #include <QSysInfo>
 #include <QVector>
 
@@ -19,14 +22,45 @@ SocketServer::SocketServer(QObject *parent) : QLocalServer{parent} {
 void SocketServer::readClientConnection() {
   if (m_listener->waitForReadyRead(timeout)) {
     QByteArray data = m_listener->readAll();
-    // qDebug() << Q_FUNC_INFO << "BytesRead:" << data;
-    QString msg = QString::fromLocal8Bit(data);
-    if (msg == "showAntiquaWindow") {
-      emit showWindow();
-      return;
+    QJsonParseError parser;
+
+    /**
+     *  @short Erwartet folgende Struktur
+     *  @note Für "type" siehe Antiqua::ErrorStatus
+     *  QJsonObject {
+     *    "receiver":"QString",
+     *    "type":"QString",
+     *    "value":"String"
+     */
+    QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
+    if (parser.error == QJsonParseError::NoError) {
+      QJsonObject obj = doc.object();
+      // SIGNAL => SLOT Verarbeitung
+      if (obj.value("type").toString() == "SLOT") {
+        QString receiver = obj.value("receiver").toString();
+        QString value = obj.value("value").toString();
+        if (receiver.contains("Window") && value == "showAntiquaWindow") {
+          emit showWindow();
+          return;
+        }
+      }
+      // NOTICE, WARNING, FATAL
+      if (obj.value("type").toString() == "NOTICE") {
+        QString value = obj.value("value").toString();
+        if (!value.isEmpty())
+          emit statusMessage(Antiqua::ErrorStatus::NOTICE, value);
+      } else if (obj.value("type").toString() == "WARNING") {
+        QString value = obj.value("value").toString();
+        if (!value.isEmpty())
+          emit statusMessage(Antiqua::ErrorStatus::WARNING, value);
+      } else if (obj.value("type").toString() == "FATAL") {
+        QString value = obj.value("value").toString();
+        if (!value.isEmpty())
+          emit statusMessage(Antiqua::ErrorStatus::FATAL, value);
+      }
+    } else {
+      qWarning("Invalid Socket operation '%s';", qPrintable(data));
     }
-    // TODO
-    emit statusMessage(msg);
   }
 }
 

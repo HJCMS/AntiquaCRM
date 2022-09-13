@@ -466,7 +466,7 @@ void BookEditor::createSqlUpdate() {
   ib_edition->setRequired(false);
 
   if (!ib_id->isValid()) {
-    emit s_postMessage(tr("Missing Article ID for Update."));
+    emit sendStatusMessage(tr("Missing Article ID for Update."));
     return;
   }
 
@@ -576,7 +576,7 @@ void BookEditor::importSqlResult() {
 
 void BookEditor::checkLeaveEditor() {
   if (checkIsModified(p_objPattern) || m_json_category->isModified()) {
-    emit s_postMessage(
+    emit sendStatusMessage(
         tr("Unsaved Changes, don't leave this page before saved."));
     return;
   }

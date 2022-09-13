@@ -9,6 +9,7 @@
 #include <QString>
 #include <QLocalServer>
 #include <QLocalSocket>
+#include <AntiquaCRM>
 
 class SocketServer : public QLocalServer {
   Q_OBJECT
@@ -26,7 +27,7 @@ protected:
 
 Q_SIGNALS:
   void showWindow();
-  void statusMessage(const QString &);
+  void statusMessage(Antiqua::ErrorStatus, const QString &);
 
 public:
   explicit SocketServer(QObject *parent = nullptr);

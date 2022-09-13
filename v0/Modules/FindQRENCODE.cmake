@@ -2,7 +2,7 @@
 # file Copyright.txt or https://cmake.org/licensing for details.
 
 #[=======================================================================[.rst:
-Findqrencode
+FindQREncode
 --------
 
 Find the native libqrencode headers and libraries.
@@ -10,7 +10,7 @@ Find the native libqrencode headers and libraries.
 IMPORTED Targets
 ^^^^^^^^^^^^^^^^
 
-This module defines :prop_tgt:`IMPORTED` target ``qrencode::libqrencode``, if
+This module defines :prop_tgt:`IMPORTED` target ``QRENCODE::libqrencode``, if
 curl has been found.
 
 Result Variables
@@ -62,33 +62,34 @@ endif(NOT QRENCODE_LIBRARY)
 
 find_package_handle_standard_args(QRENCODE
   REQUIRED_VARS QRENCODE_LIBRARY QRENCODE_INCLUDE_DIR
-  HANDLE_COMPONENTS)
+  VERSION_VAR QRENCODE_VERSION)
 
 if(QRENCODE_FOUND)
   set(QRENCODE_LIBRARIES ${QRENCODE_LIBRARY})
   set(QRENCODE_INCLUDE_DIRS ${QRENCODE_INCLUDE_DIR})
+  set(QRENCODE_VERSION ${QRENCODE_VERSION})
 
-  if(NOT TARGET qrencode::libqrencode)
-    add_library(qrencode::libqrencode UNKNOWN IMPORTED)
-    set_target_properties(qrencode::libqrencode PROPERTIES
+  if(NOT TARGET QRENCODE::libqrencode)
+    add_library(QRENCODE::libqrencode UNKNOWN IMPORTED)
+    set_target_properties(QRENCODE::libqrencode PROPERTIES
       INTERFACE_INCLUDE_DIRECTORIES "${QRENCODE_INCLUDE_DIRS}")
 
     if(EXISTS "${QRENCODE_LIBRARY}")
-      set_target_properties(qrencode::libqrencode PROPERTIES
+      set_target_properties(QRENCODE::libqrencode PROPERTIES
         IMPORTED_LINK_INTERFACE_LANGUAGES "C"
         IMPORTED_LOCATION "${QRENCODE_LIBRARY}")
     endif()
     if(QRENCODE_LIBRARY_RELEASE)
-      set_property(TARGET qrencode::libqrencode APPEND PROPERTY
+      set_property(TARGET QRENCODE::libqrencode APPEND PROPERTY
         IMPORTED_CONFIGURATIONS RELEASE)
-      set_target_properties(qrencode::libqrencode PROPERTIES
+      set_target_properties(QRENCODE::libqrencode PROPERTIES
         IMPORTED_LINK_INTERFACE_LANGUAGES "C"
         IMPORTED_LOCATION_RELEASE "${QRENCODE_LIBRARY_RELEASE}")
     endif()
     if(QRENCODE_LIBRARY_DEBUG)
-      set_property(TARGET qrencode::libqrencode APPEND PROPERTY
+      set_property(TARGET QRENCODE::libqrencode APPEND PROPERTY
         IMPORTED_CONFIGURATIONS DEBUG)
-      set_target_properties(qrencode::libqrencode PROPERTIES
+      set_target_properties(QRENCODE::libqrencode PROPERTIES
         IMPORTED_LINK_INTERFACE_LANGUAGES "C"
         IMPORTED_LOCATION_DEBUG "${QRENCODE_LIBRARY_DEBUG}")
     endif()

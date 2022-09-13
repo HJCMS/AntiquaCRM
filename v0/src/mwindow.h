@@ -66,7 +66,7 @@ Q_SIGNALS:
   void s_connectDatabase(bool);
 
 public Q_SLOTS:
-  void statusMessage(const QString &);
+  void statusMessage(Antiqua::ErrorStatus, const QString &);
   void connectionStatus(bool b);
 
 public:

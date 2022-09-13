@@ -28,6 +28,8 @@ private Q_SLOTS:
 
 public Q_SLOTS:
   void notify(const QString &msg);
+  void warning(const QString &msg);
+  void fatal(const QString &msg);
 
 public:
   explicit AntiquaSystemTray(const QIcon &icon, MWindow *parent = nullptr);

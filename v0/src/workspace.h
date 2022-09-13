@@ -5,6 +5,7 @@
 #ifndef WORKSPACE_H
 #define WORKSPACE_H
 
+#include <AntiquaCRM>
 #include <QContextMenuEvent>
 #include <QMetaType>
 #include <QObject>
@@ -158,6 +159,11 @@ private Q_SLOTS:
    */
   void tabViewClicked(int);
 
+  /**
+   * @brief Einfache Nachrichten an das neue System weiterleiten!
+   */
+  void prepareMessanger(const QString &);
+
 protected:
   /**
    * @brief Kann der Tab aus dem Speicher freigegeben werden?
@@ -180,7 +186,7 @@ Q_SIGNALS:
   /**
    * @brief Nachrichten an das Hauptfenster
    */
-  void s_postMessage(const QString &);
+  void sendPostMessage(Antiqua::ErrorStatus, const QString &);
 
 public:
   /**

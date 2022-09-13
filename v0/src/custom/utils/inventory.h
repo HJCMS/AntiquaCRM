@@ -5,6 +5,7 @@
 #ifndef INVENTORY_UTILS_H
 #define INVENTORY_UTILS_H
 
+#include <AntiquaCRM>
 #include <QList>
 #include <QObject>
 #include <QShortcut>
@@ -128,7 +129,12 @@ Q_SIGNALS:
    * @brief Sende eine Nachricht an das Elternfenster
    * @param MessageBody
    */
-  void s_postMessage(const QString &);
+  void sendPostMessage(Antiqua::ErrorStatus, const QString &);
+
+  /**
+   * @brief StatusBar Nachrichten
+   */
+  void sendStatusBarMessage(const QString &);
 
   /**
    * @brief Kundendaten aufrufen

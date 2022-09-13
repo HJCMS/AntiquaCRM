@@ -70,10 +70,10 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
   connect(m_tableView, SIGNAL(s_editOrder(int)), this, SLOT(updateOrder(int)));
   connect(m_tableView, SIGNAL(s_openCustomer(int)), this,
           SIGNAL(s_viewCustomer(int)));
-  connect(m_editor, SIGNAL(s_postMessage(const QString &)), this,
+  connect(m_editor, SIGNAL(sendStatusMessage(const QString &)), this,
           SLOT(displayMessageBox(const QString &)));
-  connect(m_editor, SIGNAL(s_statusMessage(const QString &)), this,
-          SIGNAL(s_postMessage(const QString &)));
+  connect(m_editor, SIGNAL(sendStatusBarMessage(const QString &)), this,
+          SIGNAL(sendStatusBarMessage(const QString &)));
   connect(m_editor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
   connect(m_editor, SIGNAL(s_isModified(bool)), this,
           SLOT(setIsModified(bool)));
@@ -93,16 +93,13 @@ void InventoryOrders::openTableView() {
   setIsModified(false);
 }
 
-void InventoryOrders::onEnterChanged() {
-  m_tableView->initOrders();
-}
+void InventoryOrders::onEnterChanged() { m_tableView->initOrders(); }
 
 void InventoryOrders::openEditor(const QString &condition) {
   Q_UNUSED(condition)
 }
 
-void InventoryOrders::refreshView()
-{
+void InventoryOrders::refreshView() {
   m_tableView->setFocus();
   m_tableView->refreshView();
 }
@@ -127,7 +124,15 @@ void InventoryOrders::createOrder(int customerId) {
 }
 
 void InventoryOrders::createOrder(const ProviderOrder &order) {
-  if (ProviderOrder(order).customerId() < 1) {
+  ProviderOrder copy(order);
+  int cid = copy.customerId();
+  if (cid < 0) {
+    emit sendPostMessage(Antiqua::ErrorStatus::WARNING,
+                         tr("can't create order without costumer Id."));
+    return;
+  }
+  /**< @deprecated mark to removed */
+  if (cid < 1) {
     displayMessageBox(tr("Missing a valid costumer Id!"));
     return;
   }

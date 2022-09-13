@@ -11,6 +11,9 @@
 #include <QDebug>
 #include <QDir>
 #include <QFont>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
 #include <QLocalSocket>
 #include <QLocale>
 #include <QMessageBox>
@@ -52,7 +55,6 @@ void MApplication::shutdown() {
   if (m_window == nullptr)
     return;
 
-  m_window->deleteLater();
   quit();
 }
 
@@ -60,7 +62,11 @@ bool MApplication::isRunning() {
   QLocalSocket socket(this);
   socket.setServerName(SocketServer::name());
   if (socket.open(QLocalSocket::ReadWrite)) {
-    QByteArray data("showAntiquaWindow");
+    QJsonObject obj;
+    obj.insert("receiver", QJsonValue("MainWindow"));
+    obj.insert("type", QJsonValue("SLOT"));
+    obj.insert("value", QJsonValue("showAntiquaWindow"));
+    QByteArray data(QJsonDocument(obj).toJson(QJsonDocument::Compact));
     socket.write(data);
     socket.waitForBytesWritten(2000);
     return true;
@@ -134,14 +140,16 @@ int MApplication::exec() {
   }
 
   m_window = new MWindow();
-  connect(m_socket, SIGNAL(statusMessage(const QString &)), m_window,
-          SLOT(statusMessage(const QString &)));
   connect(m_window, SIGNAL(s_connectDatabase(bool)), m_sql,
           SLOT(openDatabase(bool)));
   connect(m_sql, SIGNAL(s_connectionStatus(bool)), m_window,
           SLOT(connectionStatus(bool)));
   connect(m_window, SIGNAL(sendShutdown()), this, SLOT(shutdown()));
+
   connect(m_socket, SIGNAL(showWindow()), m_window, SLOT(show()));
+  connect(m_socket,
+          SIGNAL(statusMessage(Antiqua::ErrorStatus, const QString &)),
+          m_window, SLOT(statusMessage(Antiqua::ErrorStatus, const QString &)));
 
   if (m_window == nullptr) {
     qFatal("Application error");

@@ -376,7 +376,7 @@ const QHash<QString, QVariant> PrintsEditor::createSqlDataset() {
 
 void PrintsEditor::createSqlUpdate() {
   if (!ip_id->isValid()) {
-    emit s_postMessage(tr("Missing Article ID for Update."));
+    emit sendStatusMessage(tr("Missing Article ID for Update."));
     return;
   }
 
@@ -471,7 +471,7 @@ void PrintsEditor::importSqlResult() {
 
 void PrintsEditor::checkLeaveEditor() {
   if (checkIsModified(p_objPattern)) {
-    emit s_postMessage(
+    emit sendStatusMessage(
         tr("Unsaved Changes, don't leave this page before saved."));
     return;
   }

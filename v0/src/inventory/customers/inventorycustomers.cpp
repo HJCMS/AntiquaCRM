@@ -117,7 +117,7 @@ InventoryCustomers::InventoryCustomers(QWidget *parent) : Inventory{parent} {
   connect(m_statsActionBar, SIGNAL(s_refreshView()), m_tableView,
           SLOT(refreshView()));
 
-  connect(m_editCustomer, SIGNAL(s_postMessage(const QString &)), this,
+  connect(m_editCustomer, SIGNAL(sendStatusMessage(const QString &)), this,
           SLOT(displayMessageBox(const QString &)));
   connect(m_editCustomer, SIGNAL(s_isModified(bool)), this,
           SLOT(setIsModified(bool)));

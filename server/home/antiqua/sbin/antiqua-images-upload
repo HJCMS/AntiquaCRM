@@ -25,10 +25,19 @@
 use strict;
 use warnings;
 use POSIX qw(strftime);
-use Directory::Iterator;
 use File::Basename;
 use File::Copy;
 use File::Glob qw(:globally :nocase);
+
+=begin Info
+Warning:
+  The Directory::Iterator Module is not a Standard Distribution Package!
+  There a two ways to solve this problem.
+  You can add the Enviroment variable "PERL5LIB" in your crontab or
+  using "lib" modul with Path to the CPAN Module directory.
+  Example: use lib "$ENV{HOME}/.local/perl5/lib/perl5/Directory";
+=cut Info
+use Directory::Iterator;
 
 =encoding utf8
 =begin text

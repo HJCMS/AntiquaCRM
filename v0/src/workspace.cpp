@@ -70,8 +70,8 @@ int Workspace::addInventoryBooks(int index) {
   connect(m_tabBooks, SIGNAL(s_windowModified(bool)), this,
           SIGNAL(s_windowModified(bool)));
   // Nachrichten an Hauptfenster
-  connect(m_tabBooks, SIGNAL(s_postMessage(const QString &)), this,
-          SIGNAL(s_postMessage(const QString &)));
+  connect(m_tabBooks, SIGNAL(sendStatusBarMessage(const QString &)), this,
+          SLOT(prepareMessanger(const QString &)));
   // Artikel Bestandsänderung an Providers senden
   connect(m_tabBooks, SIGNAL(s_articleCount(int, int)), this,
           SLOT(updateArticleCount(int, int)));
@@ -94,8 +94,8 @@ int Workspace::addInventoryPrints(int index) {
   connect(m_tabPrints, SIGNAL(s_windowModified(bool)), this,
           SIGNAL(s_windowModified(bool)));
   // Nachrichten an Hauptfenster
-  connect(m_tabPrints, SIGNAL(s_postMessage(const QString &)), this,
-          SIGNAL(s_postMessage(const QString &)));
+  connect(m_tabPrints, SIGNAL(sendStatusBarMessage(const QString &)), this,
+          SLOT(prepareMessanger(const QString &)));
   // Artikel Bestandsänderung an Providers senden
   connect(m_tabPrints, SIGNAL(s_articleCount(int, int)), this,
           SLOT(updateArticleCount(int, int)));
@@ -117,8 +117,8 @@ int Workspace::addInventoryCustomers(int index) {
   connect(m_tabCustomers, SIGNAL(s_windowModified(bool)), this,
           SIGNAL(s_windowModified(bool)));
   // Nachrichten an Hauptfenster
-  connect(m_tabCustomers, SIGNAL(s_postMessage(const QString &)), this,
-          SIGNAL(s_postMessage(const QString &)));
+  connect(m_tabCustomers, SIGNAL(sendStatusBarMessage(const QString &)), this,
+          SLOT(prepareMessanger(const QString &)));
   int i = insertTab(index, m_tabCustomers, tr("Customers"));
   m_tabBar->setTabData(i, m_tabCustomers->isClosable());
   setTabToolTip(i, tr("Customers inventory"));
@@ -132,8 +132,8 @@ int Workspace::addInventoryOrders(int index) {
   connect(m_tabOrders, SIGNAL(s_windowModified(bool)), this,
           SIGNAL(s_windowModified(bool)));
   // Nachrichten an Hauptfenster
-  connect(m_tabOrders, SIGNAL(s_postMessage(const QString &)), this,
-          SIGNAL(s_postMessage(const QString &)));
+  connect(m_tabOrders, SIGNAL(sendStatusBarMessage(const QString &)), this,
+          SLOT(prepareMessanger(const QString &)));
   // Artikel Bestandsänderung an Providers senden
   connect(m_tabOrders, SIGNAL(s_articleCount(int, int)), this,
           SLOT(updateArticleCount(int, int)));
@@ -153,8 +153,8 @@ int Workspace::addInventoryProviders(int index) {
   connect(m_tabProviders, SIGNAL(s_windowModified(bool)), this,
           SIGNAL(s_windowModified(bool)));
   // Nachrichten an Hauptfenster
-  connect(m_tabProviders, SIGNAL(s_postMessage(const QString &)), this,
-          SIGNAL(s_postMessage(const QString &)));
+  connect(m_tabProviders, SIGNAL(sendStatusBarMessage(const QString &)), this,
+          SLOT(prepareMessanger(const QString &)));
   // Kunden Aufrufen
   connect(m_tabProviders, SIGNAL(s_viewCustomer(int)), this,
           SLOT(editCustomerEntry(int)));
@@ -180,8 +180,8 @@ int Workspace::addInventoryViews(int index) {
   connect(m_tabViews, SIGNAL(s_windowModified(bool)), this,
           SIGNAL(s_windowModified(bool)));
   // Nachrichten an Hauptfenster
-  connect(m_tabViews, SIGNAL(s_postMessage(const QString &)), this,
-          SIGNAL(s_postMessage(const QString &)));
+  connect(m_tabViews, SIGNAL(sendStatusBarMessage(const QString &)), this,
+          SLOT(prepareMessanger(const QString &)));
   // Buch editieren
   connect(m_tabViews, SIGNAL(s_editBookEntry(int)), this,
           SLOT(editBookEntry(int)));
@@ -203,7 +203,8 @@ void Workspace::editBookEntry(int articleId) {
     m_tabBooks->editBookEntry(articleId);
     setCurrentWidget(m_tabBooks);
   } else {
-    emit s_postMessage(tr("Books tab isn't open!"));
+    emit sendPostMessage(Antiqua::ErrorStatus::NOTICE,
+                         tr("Books tab isn't open!"));
   }
 }
 
@@ -212,7 +213,8 @@ void Workspace::editPrintsEntry(int articleId) {
     m_tabPrints->editPrintsEntry(articleId);
     setCurrentWidget(m_tabPrints);
   } else {
-    emit s_postMessage(tr("Everything else tab isn't open!"));
+    emit sendPostMessage(Antiqua::ErrorStatus::NOTICE,
+                         tr("Everything else tab isn't open!"));
   }
 }
 
@@ -230,7 +232,8 @@ void Workspace::editCustomerEntry(int customerId) {
     m_tabCustomers->editCustomer(customerId);
     setCurrentWidget(m_tabCustomers);
   } else {
-    emit s_postMessage(tr("Order tab isn't open!"));
+    emit sendPostMessage(Antiqua::ErrorStatus::NOTICE,
+                         tr("Order tab isn't open!"));
   }
 }
 
@@ -239,7 +242,8 @@ void Workspace::createOrder(int customerId) {
     m_tabOrders->createOrder(customerId);
     setCurrentWidget(m_tabOrders);
   } else {
-    emit s_postMessage(tr("Order tab isn't open!"));
+    emit sendPostMessage(Antiqua::ErrorStatus::NOTICE,
+                         tr("Order tab isn't open!"));
   }
 }
 
@@ -248,7 +252,8 @@ void Workspace::createOrder(const ProviderOrder &order) {
     m_tabOrders->createOrder(order);
     setCurrentWidget(m_tabOrders);
   } else {
-    emit s_postMessage(tr("Order tab isn't open!"));
+    emit sendPostMessage(Antiqua::ErrorStatus::NOTICE,
+                         tr("Order tab isn't open!"));
   }
 }
 
@@ -259,7 +264,8 @@ void Workspace::addArticleOrder(int articleId) {
       setCurrentWidget(m_tabOrders);
     }
   } else {
-    emit s_postMessage(tr("Order tab isn't open!"));
+    emit sendPostMessage(Antiqua::ErrorStatus::NOTICE,
+                         tr("Order tab isn't open!"));
   }
 }
 
@@ -268,7 +274,8 @@ void Workspace::openOrderByOrderId(int orderId) {
     if (m_tabOrders->viewOrderById(orderId))
       setCurrentWidget(m_tabOrders);
   } else {
-    emit s_postMessage(tr("Order tab isn't open!"));
+    emit sendPostMessage(Antiqua::ErrorStatus::NOTICE,
+                         tr("Order tab isn't open!"));
   }
 }
 
@@ -276,24 +283,28 @@ void Workspace::updateArticleCount(int articleId, int count) {
   if (indexOf(m_tabProviders) >= 0) {
     // qDebug() << Q_FUNC_INFO << articleId << count;
     if (m_tabProviders->updateArticleCount(articleId, count)) {
-      emit s_postMessage(tr("successfully"));
+      emit sendPostMessage(Antiqua::ErrorStatus::NOTICE, tr("successfully"));
     } else {
-      emit s_postMessage(tr("an error occurred"));
+      emit sendPostMessage(Antiqua::ErrorStatus::NOTICE,
+                           tr("an error occurred"));
     }
   } else {
-    emit s_postMessage(tr("Provider tab isn't open!"));
+    emit sendPostMessage(Antiqua::ErrorStatus::NOTICE,
+                         tr("Provider tab isn't open!"));
   }
 }
 
 void Workspace::updateProviderImage(int articleId) {
   if (indexOf(m_tabProviders) >= 0) {
     if (m_tabProviders->updateProviderImage(articleId)) {
-      emit s_postMessage(tr("successfully"));
+      emit sendPostMessage(Antiqua::ErrorStatus::NOTICE, tr("successfully"));
     } else {
-      emit s_postMessage(tr("an error occurred"));
+      emit sendPostMessage(Antiqua::ErrorStatus::NOTICE,
+                           tr("an error occurred"));
     }
   } else {
-    emit s_postMessage(tr("Provider tab isn't open!"));
+    emit sendPostMessage(Antiqua::ErrorStatus::NOTICE,
+                         tr("Provider tab isn't open!"));
   }
 }
 
@@ -304,12 +315,17 @@ void Workspace::closeTabClicked(int index) {
       removeTab(index);
       return;
     }
-    emit s_postMessage(tr("Cant close this tab, unsafed changes!"));
+    emit sendPostMessage(Antiqua::ErrorStatus::NOTICE,
+                         tr("Cant close this tab, unsafed changes!"));
   }
 }
 
 void Workspace::tabViewClicked(int i) {
   reinterpret_cast<Inventory *>(widget(i))->onEnterChanged();
+}
+
+void Workspace::prepareMessanger(const QString &msg) {
+  emit sendPostMessage(Antiqua::ErrorStatus::NOTICE, msg);
 }
 
 void Workspace::tabRemoved(int index) {

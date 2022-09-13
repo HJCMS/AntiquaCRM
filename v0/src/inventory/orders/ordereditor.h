@@ -261,7 +261,8 @@ private Q_SLOTS:
    *  @li Entferne Zeile aus Bestellliste @ref OrdersItemList::removeTableRow
    *  @li Erstelle mit @ref paymentRemove das SQL Statement.
    *  @li Sende SQL and @ref sendSqlQuery
-   *  @li Bei erfolg Signale @ref postMessage und @ref s_isModified auslösen.
+   *  @li Bei erfolg Signale @ref sendStatusBarMessage und @ref isModified
+   *      auslösen.
    *  @li Final: Speicher freigeben
    *
    * @param row
@@ -330,7 +331,7 @@ Q_SIGNALS:
   /**
    * @brief Statusbar Nachrichten
    */
-  void s_statusMessage(const QString &);
+  void sendStatusBarMessage(const QString &);
 
   /**
    * @brief Änderungen an Elternfenster

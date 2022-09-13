@@ -274,8 +274,8 @@ void EditCustomer::saveData() {
 
 void EditCustomer::checkLeaveEditor() {
   if (checkIsModified(p_objPattern)) {
-    emit s_postMessage(
-        tr("Unsaved Changes, don't leave this page before saved."));
+    QString msg = tr("Unsaved Changes, don't leave this page before saved.");
+    emit sendStatusMessage(msg);
     return;
   }
   finalLeaveEditor();

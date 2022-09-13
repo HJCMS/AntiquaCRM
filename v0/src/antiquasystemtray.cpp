@@ -48,5 +48,19 @@ void AntiquaSystemTray::actionReason(QSystemTrayIcon::ActivationReason r) {
 }
 
 void AntiquaSystemTray::notify(const QString &msg) {
-  showMessage("Antiqua CRM", msg, myIcon("info"));
+  QString title("AntiquaCRM ");
+  title.append(tr("Message"));
+  showMessage(title, msg, QSystemTrayIcon::Information, 10000);
+}
+
+void AntiquaSystemTray::warning(const QString &msg) {
+  QString title("AntiquaCRM ");
+  title.append(tr("Warning"));
+  showMessage(title, msg, QSystemTrayIcon::Warning, 10000);
+}
+
+void AntiquaSystemTray::fatal(const QString &msg) {
+  QString title("AntiquaCRM ");
+  title.append(tr("Fatal"));
+  showMessage(title, msg, QSystemTrayIcon::Critical, 10000);
 }

@@ -10,6 +10,9 @@
 //#endif
 
 #include <QDebug>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
 #include <QStringList>
 
 EditorMain::EditorMain(QWidget *parent) : QWidget{parent} {
@@ -17,8 +20,6 @@ EditorMain::EditorMain(QWidget *parent) : QWidget{parent} {
   setMinimumSize(800, 550);
 
   m_sql = new HJCMS::SqlCore(this);
-
-  m_ipc = new ApplicationClient(this);
 }
 
 bool EditorMain::isInIgnoreList(const QString &key) {
@@ -34,7 +35,15 @@ bool EditorMain::isInIgnoreList(const QString &key) {
 }
 
 void EditorMain::socketStatusMessage(const QString &message) {
-  m_ipc->sendMessage(message);
+  QJsonObject obj;
+  obj.insert("receiver", QJsonValue("MWindow"));
+  obj.insert("type", QJsonValue("NOTICE"));
+  obj.insert("value", QJsonValue(message));
+  QByteArray json = QJsonDocument(obj).toJson(QJsonDocument::Compact);
+  if (!json.isNull()) {
+    ApplicationClient *m_ipc = new ApplicationClient(this);
+    m_ipc->sendMessage(QString::fromLocal8Bit(json));
+  }
 }
 
 const QVariant EditorMain::findResultValue(const QString &key) {
@@ -140,8 +149,4 @@ int EditorMain::sqlNoticeMessage(const QString &info) {
   return mbox->notice(info);
 }
 
-EditorMain::~EditorMain() {
-  sqlQueryResult.clear();
-  if (m_socketClient != nullptr)
-    m_socketClient->deleteLater();
-}
+EditorMain::~EditorMain() { sqlQueryResult.clear(); }

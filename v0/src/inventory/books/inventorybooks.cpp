@@ -94,7 +94,7 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   connect(m_tableView, SIGNAL(s_newEntryPlease()), this,
           SLOT(createBookEntry()));
 
-  connect(m_bookEditor, SIGNAL(s_postMessage(const QString &)), this,
+  connect(m_bookEditor, SIGNAL(sendStatusMessage(const QString &)), this,
           SLOT(displayMessageBox(const QString &)));
 
   connect(m_bookEditor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));

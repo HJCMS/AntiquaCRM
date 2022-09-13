@@ -428,7 +428,7 @@ bool OrderEditor::updateOrderStatus(int status) {
     int ret = QMessageBox::question(this, tr("Cancel order"), body);
     if (ret == QMessageBox::Yes) {
       if (sendSqlQuery(progresUpdate(order_id, status))) {
-        emit s_statusMessage(tr("Order deactivated!"));
+        emit sendStatusBarMessage(tr("Order deactivated!"));
         return true;
       }
     } else {
@@ -445,7 +445,7 @@ bool OrderEditor::updateOrderStatus(int status) {
   int ret = QMessageBox::question(this, tr("Finish order"), body);
   if (ret == QMessageBox::Yes) {
     if (sendSqlQuery(progresUpdate(order_id, status))) {
-      emit s_statusMessage(tr("Order deactivated!"));
+      emit sendStatusBarMessage(tr("Order deactivated!"));
       // Statistiken modifizieren!
       int c_id = o_customer_id->value().toInt();
       if (c_id > 0) {
@@ -828,7 +828,7 @@ void OrderEditor::findRemoveTableRow(int row) {
     m_paymentList->removeTableRow(row);
     showSuccessFully = false;
     if (sendSqlQuery(paymentRemove(pId, aId))) {
-      emit s_statusMessage(tr("Item removed!"));
+      emit sendStatusBarMessage(tr("Item removed!"));
       m_paymentList->setModified(true);
     }
     showSuccessFully = true;
@@ -838,10 +838,8 @@ void OrderEditor::findRemoveTableRow(int row) {
   items.clear();
 }
 
-void OrderEditor::checkOrderStatus(int status)
-{
-  if(status == ORDER_STATUS_DELIVERED)
-  {
+void OrderEditor::checkOrderStatus(int status) {
+  if (status == ORDER_STATUS_DELIVERED) {
     o_delivered->setValue(o_delivered->system());
     // qDebug() << Q_FUNC_INFO << status << o_delivered->value();
   }
@@ -858,12 +856,12 @@ void OrderEditor::saveData() {
 void OrderEditor::checkLeaveEditor() {
   QString notify(tr("Unsaved Changes, don't leave this page before saved."));
   if (checkIsModified(p_objPattern)) {
-    emit s_postMessage(notify);
+    emit sendStatusMessage(notify);
     return;
   }
   /** @note Muss Manuel gesetzt werden */
   if (m_paymentList->isModified()) {
-    emit s_postMessage(notify);
+    emit sendStatusMessage(notify);
     return;
   }
   finalLeaveEditor();
@@ -890,13 +888,13 @@ void OrderEditor::finalLeaveEditor() {
 void OrderEditor::openPrinterDeliveryDialog() {
   int oid = o_id->value().toInt();
   if (oid < 1) {
-    emit s_postMessage(tr("Missing Order-Id"));
+    emit sendStatusMessage(tr("Missing Order-Id"));
     return;
   }
 
   int cid = o_customer_id->value().toInt();
   if (cid < 1) {
-    emit s_postMessage(tr("Missing Customer-Id"));
+    emit sendStatusMessage(tr("Missing Customer-Id"));
     return;
   }
 
@@ -917,7 +915,7 @@ void OrderEditor::openPrinterDeliveryDialog() {
     c_add.append(q.value(0).toString());
   } else {
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
-    emit s_postMessage(tr("No Customer Address found"));
+    emit sendStatusMessage(tr("No Customer Address found"));
     return;
   }
   dialog->setCustomerAddress(c_add);
@@ -934,7 +932,7 @@ void OrderEditor::openPrinterDeliveryDialog() {
   }
   if (deliveries.count() < 1) {
     qDebug() << m_sql->lastError();
-    emit s_postMessage(tr("no deliveries found"));
+    emit sendStatusMessage(tr("no deliveries found"));
     return;
   }
   // Start Dialog
@@ -947,19 +945,19 @@ void OrderEditor::openPrinterDeliveryDialog() {
 void OrderEditor::openPrinterInvoiceDialog() {
   int oid = o_id->value().toInt();
   if (oid < 1) {
-    emit s_postMessage(tr("Missing Order-Id"));
+    emit sendStatusMessage(tr("Missing Order-Id"));
     return;
   }
 
   int cid = o_customer_id->value().toInt();
   if (cid < 1) {
-    emit s_postMessage(tr("Missing Customer-Id"));
+    emit sendStatusMessage(tr("Missing Customer-Id"));
     return;
   }
 
   int in_id = o_invoice_id->value().toInt();
   if (in_id < 1) {
-    emit s_postMessage(tr("Missing Invoice-Id"));
+    emit sendStatusMessage(tr("Missing Invoice-Id"));
     return;
   }
 
@@ -981,7 +979,7 @@ void OrderEditor::openPrinterInvoiceDialog() {
     c_add.append(q.value("c_postal_address").toString());
   } else {
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
-    emit s_postMessage(tr("No Customer Address found"));
+    emit sendStatusMessage(tr("No Customer Address found"));
     return;
   }
   dialog->setCustomerAddress(c_add);
@@ -991,7 +989,7 @@ void OrderEditor::openPrinterInvoiceDialog() {
   QList<BillingInfo> list = getBillingInfo(oid, cid);
 
   if (dialog->exec(list, paid) == QDialog::Rejected) {
-    emit s_statusMessage(tr("Printing canceled."));
+    emit sendStatusBarMessage(tr("Printing canceled."));
   }
   list.clear();
 }
@@ -999,25 +997,25 @@ void OrderEditor::openPrinterInvoiceDialog() {
 void OrderEditor::openPrinterPaymentReminderDialog() {
   int oid = o_id->value().toInt();
   if (oid < 1) {
-    emit s_postMessage(tr("Missing Order-Id"));
+    emit sendStatusMessage(tr("Missing Order-Id"));
     return;
   }
 
   int cid = o_customer_id->value().toInt();
   if (cid < 1) {
-    emit s_postMessage(tr("Missing Customer-Id"));
+    emit sendStatusMessage(tr("Missing Customer-Id"));
     return;
   }
 
   int in_id = o_invoice_id->value().toInt();
   if (in_id < 1) {
-    emit s_postMessage(tr("Missing Invoice-Id"));
+    emit sendStatusMessage(tr("Missing Invoice-Id"));
     return;
   }
 
   QString did = o_delivery->value().toString();
   if (did.isEmpty()) {
-    emit s_postMessage(tr("Missing Delivery-Id"));
+    emit sendStatusMessage(tr("Missing Delivery-Id"));
     return;
   }
 
@@ -1030,7 +1028,7 @@ void OrderEditor::openPrinterPaymentReminderDialog() {
     c_add.append(q.value(0).toString());
   } else {
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
-    emit s_postMessage(tr("No Customer Address found"));
+    emit sendStatusMessage(tr("No Customer Address found"));
     return;
   }
 
@@ -1044,7 +1042,7 @@ void OrderEditor::openPrinterPaymentReminderDialog() {
     message = q.value("tb_message").toString();
   } else {
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
-    emit s_postMessage(tr("No Message available"));
+    emit sendStatusMessage(tr("No Message available"));
     return;
   }
 
@@ -1052,7 +1050,7 @@ void OrderEditor::openPrinterPaymentReminderDialog() {
     QStringList msgEmpty;
     msgEmpty << tr("No message text available!");
     msgEmpty << tr("Please check/edit customerdata, e.g. Gender.");
-    emit s_postMessage(msgEmpty.join("\n"));
+    emit sendStatusMessage(msgEmpty.join("\n"));
     return;
   }
 
@@ -1068,7 +1066,7 @@ void OrderEditor::openPrinterPaymentReminderDialog() {
 
   QList<BillingInfo> list = getBillingInfo(oid, cid);
   if (dialog->exec(list) == QDialog::Rejected) {
-    emit s_statusMessage(tr("Printing canceled."));
+    emit sendStatusBarMessage(tr("Printing canceled."));
   }
 }
 
@@ -1082,14 +1080,14 @@ void OrderEditor::openEMailDialog(const QString &tpl) {
     return;
 
   if (!m_cfg->contains("dirs/mailapplication")) {
-    emit s_statusMessage(tr("Missing eMail configuration!"));
+    emit sendStatusBarMessage(tr("Missing eMail configuration!"));
     return;
   }
 
   MailForwardDialog *d = new MailForwardDialog(this);
   d->setOrderId(oid);
   if (d->exec(cid, tpl) == QDialog::Rejected) {
-    emit s_statusMessage(tr("Mail canceled."));
+    emit sendStatusBarMessage(tr("Mail canceled."));
   }
 }
 
@@ -1183,7 +1181,7 @@ const QList<BillingInfo> OrderEditor::getBillingInfo(int orderId,
   } else {
     list.clear();
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
-    emit s_postMessage(tr("No Billing Info found"));
+    emit sendStatusMessage(tr("No Billing Info found"));
   }
   return list;
 }
@@ -1344,76 +1342,74 @@ void OrderEditor::openCreateOrder(int cid) {
 void OrderEditor::openCreateOrder(const ProviderOrder &order) {
   ProviderOrder copy(order);
   int cid = copy.customerId();
-  if (cid < 1) {
-    emit s_postMessage(tr("can't create order without costumer Id."));
+  if (copy.providerId().isEmpty() || copy.provider().isEmpty()) {
+    emit sendStatusMessage(tr("Broken Provider data import!"));
     return;
   }
+
   // Aufräumen
   if (o_customer_id->value().toInt() > 0 || m_paymentList->payments() > 0) {
     clearEditorFields();
   }
-
   initDefaults();
-  o_customer_id->setValue(cid);
 
-  if (copy.providerId().isEmpty() || copy.provider().isEmpty()) {
-    emit s_postMessage(tr("Broken Provider data import!"));
+  if (!getCustomerAddress(cid)) {
+    emit sendStatusMessage(tr("Broken Provider data import!"));
     return;
   }
 
+  o_customer_id->setValue(cid);
   o_provider_order_id->setValue(copy.providerId());
   o_provider_name->setValue(copy.provider());
   o_delivery_service->setValue(ORDER_DELIVERY_SERVICE);
 
-  if (getCustomerAddress(cid)) {
-    QList<OrderArticle> list;
-    foreach (QString said, copy.articleIds()) {
-      int aid = said.toInt();
-      QString sql = inventoryArticle(aid);
-      QSqlQuery q = m_sql->query(sql);
-      if (q.size() > 0) {
-        // QSqlRecord r = q.record();
-        while (q.next()) {
-          OrderArticle d;
-          d.setPayment(-1);
-          d.setArticle(q.value("aid").toInt());
-          d.setOrder(-1);
-          d.setCustomer(cid);
-          int count = q.value("counts").toInt();
-          if (count > 0) {
-            // Wir fügen immer nur ein Artikel ein!
-            count = 1;
-          }
-          d.setCount(count);
-          d.setPrice(q.value("price").toDouble());
-          d.setSellPrice(q.value("price").toDouble());
-          d.setTitle(q.value("title").toString());
-          d.setSummary(tr("Article %1, Price %2, Count: %3, Title: %4")
-                           .arg(q.value("aid").toString(),
-                                q.value("price").toString(),
-                                q.value("counts").toString(),
-                                q.value("title").toString()));
+  QList<OrderArticle> list;
+  foreach (QString said, copy.articleIds()) {
+    int aid = said.toInt();
+    QString sql = inventoryArticle(aid);
+    QSqlQuery q = m_sql->query(sql);
+    if (q.size() > 0) {
+      // QSqlRecord r = q.record();
+      while (q.next()) {
+        OrderArticle d;
+        d.setPayment(-1);
+        d.setArticle(q.value("aid").toInt());
+        d.setOrder(-1);
+        d.setCustomer(cid);
+        int count = q.value("counts").toInt();
+        if (count > 0) {
+          // Wir fügen immer nur ein Artikel ein!
+          count = 1;
+        }
+        d.setCount(count);
+        d.setPrice(q.value("price").toDouble());
+        d.setSellPrice(q.value("price").toDouble());
+        d.setTitle(q.value("title").toString());
+        d.setSummary(tr("Article %1, Price %2, Count: %3, Title: %4")
+                         .arg(q.value("aid").toString(),
+                              q.value("price").toString(),
+                              q.value("counts").toString(),
+                              q.value("title").toString()));
 
-          list.append(d);
-        }
-      } else {
-        QString sqlError = m_sql->lastError();
-        if (sqlError.isEmpty()) {
-          QString info("<p>");
-          info.append(tr("One or more items on the list are not available!"));
-          info.append("</p><p>");
-          info.append(tr("Therefore, they cannot be added"));
-          info.append("</p>");
-          QMessageBox::warning(this, tr("Order"), info, QMessageBox::Ok);
-        } else {
-          sqlErrnoMessage(sqlError, sql);
-        }
-        m_paymentList->setEnabled(false);
-        return;
+        list.append(d);
       }
+    } else {
+      QString sqlError = m_sql->lastError();
+      if (sqlError.isEmpty()) {
+        QString info("<p>");
+        info.append(tr("One or more items on the list are not available!"));
+        info.append("</p><p>");
+        info.append(tr("Therefore, they cannot be added"));
+        info.append("</p>");
+        QMessageBox::warning(this, tr("Order"), info, QMessageBox::Ok);
+      } else {
+        sqlErrnoMessage(sqlError, sql);
+      }
+      m_paymentList->setEnabled(false);
+      return;
     }
-    m_paymentList->importPayments(list);
-    m_paymentList->setEnabled(false);
-    emit isModified(true);
   }
+  m_paymentList->importPayments(list);
+  m_paymentList->setEnabled(false);
+  emit isModified(true);
 }

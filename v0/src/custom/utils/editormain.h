@@ -14,8 +14,6 @@
 #include <AntiquaCRM>
 #include <SqlCore>
 
-class ApplicationClient;
-
 /**
  * @class EditorMain
  * @abstract
@@ -30,6 +28,8 @@ class EditorMain : public QWidget {
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
+private:
+
 protected:
   /**
    * @brief Datenbank Verbindung
@@ -37,11 +37,6 @@ protected:
    * Unterklassen.
    */
   HJCMS::SqlCore *m_sql;
-
-  /**
-   * @brief Message Client
-   */
-  ApplicationClient *m_ipc;
 
   /**
    * @group Feldlisten
@@ -67,8 +62,12 @@ protected:
 
   /**
    * @brief Nachrichten an Hauptfenster
+   * QJsonObject {
+   *  receiver: ObjectName
+   *  type: "notify|slot"
+   *  value: QString()
+   * }
    */
-  QLocalSocket *m_socketClient;
   void socketStatusMessage(const QString &message);
 
   /**
@@ -199,7 +198,7 @@ Q_SIGNALS:
   /**
    * @brief Meldungen absenden!
    */
-  void s_postMessage(const QString &);
+  void sendStatusMessage(const QString &);
 
   /**
    * @brief Meldung Artikelbestand Remote ändern!
