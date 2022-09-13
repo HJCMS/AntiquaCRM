@@ -282,7 +282,14 @@ void MWindow::closeEvent(QCloseEvent *event) {
   m_Settings->setValue("window/geometry", saveGeometry());
   m_Settings->setValue("window/windowState", saveState());
 
-  QMainWindow::closeEvent(event);
+  /**
+   * @note Damit die Timer weiterlaufen, hier nicht beenden!
+   * Wenn Fensterleiste schließen aufgerufen wurd das Fenster in das Systemtray
+   * verschieben. Beenden erfolgt über das SIGNAL sendShutdown() an MApplication.
+   */
+  QHideEvent hide;
+  hide.setAccepted(true);
+  QMainWindow::hideEvent(&hide);
 }
 
 void MWindow::statusMessage(Antiqua::ErrorStatus status, const QString &info) {

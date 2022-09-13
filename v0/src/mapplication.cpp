@@ -55,6 +55,7 @@ void MApplication::shutdown() {
   if (m_window == nullptr)
     return;
 
+  m_window->close();
   quit();
 }
 
