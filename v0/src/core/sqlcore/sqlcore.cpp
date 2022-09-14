@@ -135,7 +135,7 @@ bool SqlCore::initDatabase() {
 void SqlCore::timerEvent(QTimerEvent *ev) {
   if (ev->timerId() > 0) {
     bool tcp = socketConnectionTest();
-    emit s_connectionStatus(tcp);
+    emit sendConnectionStatus(tcp);
   }
 }
 
@@ -174,9 +174,9 @@ void SqlCore::openDatabase(bool b) {
   Q_UNUSED(b);
   if (initDatabase()) {
     emit s_noticeMessage(tr("Database connected successfully!"));
-    emit s_connectionStatus(true);
+    emit sendConnectionStatus(true);
   } else {
-    emit s_connectionStatus(false);
+    emit sendConnectionStatus(false);
   }
 }
 

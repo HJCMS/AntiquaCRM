@@ -35,9 +35,11 @@ StatusBar::StatusBar(QWidget *parent) : QStatusBar{parent} {
 
   connect(m_sql, SIGNAL(s_noticeMessage(const QString &)), this,
           SLOT(sqlStatusMessage(const QString &)));
+
   connect(m_sql, SIGNAL(s_errorMessage(const QString &)), this,
           SLOT(sqlStatusMessage(const QString &)));
-  connect(m_sql, SIGNAL(s_connectionStatus(bool)), this,
+
+  connect(m_sql, SIGNAL(sendConnectionStatus(bool)), this,
           SLOT(setDatabaseStatusIcon(bool)));
 
   // first shot

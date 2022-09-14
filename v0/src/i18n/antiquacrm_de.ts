@@ -351,6 +351,21 @@
         <source>Quit</source>
         <translation>Schließen</translation>
     </message>
+    <message>
+        <location line="+32"/>
+        <source>Message</source>
+        <translation>Nachricht</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Warning</source>
+        <translation>Warnung</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Fatal</source>
+        <translation>Fehler</translation>
+    </message>
 </context>
 <context>
     <name>Assistant</name>
@@ -2573,7 +2588,7 @@
         <translation>Speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+142"/>
+        <location line="+141"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
@@ -3113,6 +3128,11 @@
     </message>
     <message>
         <location line="+81"/>
+        <source>can&apos;t create order without costumer Id.</source>
+        <translation>Kann keinen Auftrag ohne Kundennummer generieren.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Missing a valid costumer Id!</source>
         <translation>Keine gültige Kunden Nummer!</translation>
     </message>
@@ -3148,7 +3168,7 @@
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+29"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+30"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
@@ -3168,7 +3188,7 @@
         <translation>Erforderliche Versandeigenschaften fehlen!</translation>
     </message>
     <message>
-        <location line="+143"/>
+        <location line="+144"/>
         <location line="+5"/>
         <location line="+12"/>
         <source>Europe</source>
@@ -3246,7 +3266,7 @@
         <translation>Anzahl der Bestellungen</translation>
     </message>
     <message>
-        <location line="-450"/>
+        <location line="-451"/>
         <location line="+14"/>
         <source>Article</source>
         <translation>Artikel</translation>
@@ -3578,7 +3598,7 @@
 <context>
     <name>MApplication</name>
     <message>
-        <location filename="../mapplication.cpp" line="+107"/>
+        <location filename="../mapplication.cpp" line="+114"/>
         <source>No valid Network Interfaces found!</source>
         <translation>Keine gültigen Netzwerkschnittstellen gefunden!</translation>
     </message>
@@ -3596,69 +3616,64 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+78"/>
+        <location filename="../mwindow.cpp" line="+71"/>
         <source>Application</source>
         <translation>Programm</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>Quit</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="-29"/>
-        <location line="+34"/>
+        <location line="+7"/>
+        <location line="+67"/>
         <source>Views</source>
         <translation>Ansichten</translation>
     </message>
     <message>
-        <location line="-17"/>
+        <location line="-86"/>
         <source>Reconnect</source>
         <translation>Neu verbinden</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+35"/>
         <source>Various settings</source>
         <translation>Verschiedene Einstellungen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Applicationsettings</source>
         <translation>Programm Konfiguration</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Storage Locations</source>
         <translation>Lager Positionen</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+46"/>
         <source>Save request</source>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>&lt;b&gt;You have unsaved changes.&lt;/b&gt;&lt;p&gt;Do you really want to close the application?&lt;/p&gt;</source>
-        <translation>&lt;b&gt;Sie haben nicht gespeicherte Änderungen.&lt;/b&gt;&lt;p&gt;Möchten sie wirklich die Anwendung schließen?&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <location line="+91"/>
+        <location line="+80"/>
         <source>SQL Server Error</source>
         <translation>SQL Serverfehler</translation>
     </message>
     <message>
-        <location line="-143"/>
-        <location line="+156"/>
+        <location line="-150"/>
+        <location line="+163"/>
         <source>Fullscreen</source>
         <translation>Vollansicht</translation>
     </message>
     <message>
-        <location line="-200"/>
+        <location line="-107"/>
         <source>Anything but books</source>
         <translation>Alles außer Bücher</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="-83"/>
         <source>Database</source>
         <translation>Datenbank</translation>
     </message>
@@ -3668,12 +3683,12 @@
         <translation>Monatsbericht</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+27"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+21"/>
         <source>Edit Keywords</source>
         <translation>Schlüsselwörter bearbeiten</translation>
     </message>
@@ -3698,7 +3713,12 @@
         <translation>Bearbeite Kategorien</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+26"/>
+        <source>&lt;p&gt;Do you really want to close the application?&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Möchten Sie wirklich das Programm beenden?&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location line="+95"/>
         <source>Disable Fullscreen</source>
         <translation>Vollansicht beenden</translation>
     </message>
@@ -3965,13 +3985,13 @@
         <translation>Generiere Lieferschein Nummer</translation>
     </message>
     <message>
-        <location line="+985"/>
+        <location line="+983"/>
         <location line="+210"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-1264"/>
+        <location line="-1262"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
@@ -4042,12 +4062,12 @@
     </message>
     <message>
         <location line="+316"/>
-        <location line="+585"/>
+        <location line="+582"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="-570"/>
+        <location line="-567"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
     </message>
@@ -4062,7 +4082,7 @@
         <translation>Eintrag entfernt!</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+26"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
@@ -4144,7 +4164,7 @@
         <translation>Sollte der Betrag inzwischen bezahlt sein, bitten wir um eine Kurze Nachricht.</translation>
     </message>
     <message>
-        <location line="-714"/>
+        <location line="-712"/>
         <source>Failed relationship to complete this quest!</source>
         <translation>Fehlerhafte Beziehung zum Abschließen dieses Auftrags!</translation>
     </message>
@@ -4174,12 +4194,8 @@
         <translation>Sorniere Auftrag</translation>
     </message>
     <message>
-        <location line="+920"/>
-        <source>can&apos;t create order without costumer Id.</source>
-        <translation>Kann keinen Auftrag ohne Kundennummer generieren.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
+        <location line="+918"/>
+        <location line="+11"/>
         <source>Broken Provider data import!</source>
         <translation>Fehlerhafter Dienstleister Bestellimport!</translation>
     </message>
@@ -4199,7 +4215,7 @@
         <translation>Bestellung</translation>
     </message>
     <message>
-        <location line="-984"/>
+        <location line="-981"/>
         <location line="+401"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
@@ -4215,13 +4231,13 @@
         <translation>Rechnungs Optionen</translation>
     </message>
     <message>
-        <location line="+848"/>
+        <location line="+846"/>
         <location line="+77"/>
         <source>Printing canceled.</source>
         <translation>Druckevorgang abgebrochen.</translation>
     </message>
     <message>
-        <location line="-626"/>
+        <location line="-624"/>
         <source>Finish order</source>
         <translation>Auftrag abschließen</translation>
     </message>
@@ -4232,7 +4248,7 @@
         <translation>Auftrag deaktiviert!</translation>
     </message>
     <message>
-        <location line="+663"/>
+        <location line="+661"/>
         <source>Notice</source>
         <translation>Hinweis</translation>
     </message>
@@ -6535,26 +6551,26 @@
         <translation>Ansichten</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Books tab isn&apos;t open!</source>
         <translation>Buch tab ist nicht geöffnet!</translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="+112"/>
         <source>Cant close this tab, unsafed changes!</source>
         <translation>Kann das Tab nicht schliessen, nicht gespeicherte Änderungen!</translation>
     </message>
     <message>
-        <location line="-74"/>
-        <location line="+9"/>
-        <location line="+9"/>
-        <location line="+11"/>
-        <location line="+9"/>
+        <location line="-83"/>
+        <location line="+10"/>
+        <location line="+10"/>
+        <location line="+12"/>
+        <location line="+10"/>
         <source>Order tab isn&apos;t open!</source>
         <translation>Das Auftrags Tab ist nicht geöffnet!</translation>
     </message>
     <message>
-        <location line="-167"/>
+        <location line="-174"/>
         <source>Everything else</source>
         <translation>Alles andere</translation>
     </message>
@@ -6569,25 +6585,25 @@
         <translation>Dienstleister Bestellung</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+45"/>
         <source>Everything else tab isn&apos;t open!</source>
         <translation>Das alles andere Tab ist nicht geöffnet!</translation>
     </message>
     <message>
-        <location line="+64"/>
-        <location line="+12"/>
+        <location line="+69"/>
+        <location line="+14"/>
         <source>successfully</source>
         <translation>Erfolgreich</translation>
     </message>
     <message>
-        <location line="-10"/>
-        <location line="+12"/>
+        <location line="-11"/>
+        <location line="+14"/>
         <source>an error occurred</source>
         <translation>ein Fehler ist aufgetreten</translation>
     </message>
     <message>
-        <location line="-9"/>
-        <location line="+12"/>
+        <location line="-10"/>
+        <location line="+14"/>
         <source>Provider tab isn&apos;t open!</source>
         <translation>Dienstleister Tab ist nicht offen!</translation>
     </message>
@@ -6595,7 +6611,7 @@
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-254"/>
+        <location line="-265"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>

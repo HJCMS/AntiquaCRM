@@ -141,13 +141,14 @@ int MApplication::exec() {
   }
 
   m_window = new MWindow();
-  connect(m_window, SIGNAL(s_connectDatabase(bool)), m_sql,
+  // Database reconnect
+  connect(m_window, SIGNAL(sendDatabaseConnect(bool)), m_sql,
           SLOT(openDatabase(bool)));
-  connect(m_sql, SIGNAL(s_connectionStatus(bool)), m_window,
-          SLOT(connectionStatus(bool)));
+
   connect(m_window, SIGNAL(sendShutdown()), this, SLOT(shutdown()));
 
   connect(m_socket, SIGNAL(showWindow()), m_window, SLOT(show()));
+
   connect(m_socket,
           SIGNAL(statusMessage(Antiqua::ErrorStatus, const QString &)),
           m_window, SLOT(statusMessage(Antiqua::ErrorStatus, const QString &)));

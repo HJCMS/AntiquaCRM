@@ -104,7 +104,7 @@ Q_SIGNALS:
    * @brief Status zur TCP:Verbindung
    * @note Nicht die SQL Authentifizierung
    */
-  void s_connectionStatus(bool);
+  void sendConnectionStatus(bool);
 
 public Q_SLOTS:
   /**
