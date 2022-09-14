@@ -137,4 +137,16 @@ static const QString queryUploadImageData(int articleId) {
   return sql;
 }
 
+/**
+ * @brief Abfrage ob es eine Neue Bestellung gibt!
+ * @param provider Dienstleister Name
+ * @param orderIds  Betsellnummern des Dienstleisters
+ * @return SqlQuery
+ */
+static const QString queryOrderHistory(const QString &provider) {
+  QString sql("SELECT pr_order FROM provider_order_history WHERE");
+  sql.append(" pr_name='" + provider + "' ORDER BY pr_order;");
+  return sql;
+}
+
 #endif // INVENTORY_PROVIDERSSTATEMENTS_H

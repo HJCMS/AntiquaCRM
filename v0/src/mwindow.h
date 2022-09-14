@@ -159,7 +159,14 @@ public Q_SLOTS:
    * @param status Siehe Antiqua::ErrorStatus
    * @param info   Nachrichten body
    */
-  void statusMessage(Antiqua::ErrorStatus status, const QString &info);
+  void statusBarMessage(const QString &info);
+
+  /**
+   * @brief Direktnachrichten an das SystemTrayIcon
+   * @param status
+   * @param info
+   */
+  void systemMessage(Antiqua::ErrorStatus status, const QString &info);
 
 public:
   explicit MWindow(QWidget *parent = nullptr);

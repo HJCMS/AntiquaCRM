@@ -10,7 +10,7 @@
 
 AntiquaSystemTray::AntiquaSystemTray(const QIcon &icon, MWindow *parent)
     : QSystemTrayIcon{icon, parent}, m_window(parent) {
-
+  setObjectName("SystemTray");
   setToolTip(tr("AntiquaCRM Application"));
 
   QMenu *m_menu = new QMenu(m_window);

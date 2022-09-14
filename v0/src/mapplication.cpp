@@ -146,12 +146,12 @@ int MApplication::exec() {
           SLOT(openDatabase(bool)));
 
   connect(m_window, SIGNAL(sendShutdown()), this, SLOT(shutdown()));
-
   connect(m_socket, SIGNAL(showWindow()), m_window, SLOT(show()));
-
+  connect(m_socket, SIGNAL(sendStatusMessage(const QString &)), m_window,
+          SLOT(statusBarMessage(const QString &)));
   connect(m_socket,
-          SIGNAL(statusMessage(Antiqua::ErrorStatus, const QString &)),
-          m_window, SLOT(statusMessage(Antiqua::ErrorStatus, const QString &)));
+          SIGNAL(sendSystemMessage(Antiqua::ErrorStatus, const QString &)),
+          m_window, SLOT(systemMessage(Antiqua::ErrorStatus, const QString &)));
 
   if (m_window == nullptr) {
     qFatal("Application error");

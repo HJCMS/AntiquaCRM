@@ -3168,7 +3168,7 @@
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+30"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+29"/>
         <source>Providers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3221,7 +3221,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-2"/>
+        <location line="+136"/>
+        <source>New orders from %1 have arrived.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-138"/>
         <source>Order witdh Id: %1 already exists!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3261,12 +3266,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
-        <source>Current order count </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-451"/>
+        <location line="-426"/>
         <location line="+14"/>
         <source>Article</source>
         <translation type="unfinished"></translation>

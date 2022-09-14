@@ -6,21 +6,22 @@
 #include "booklookerifacewidget.h"
 #include "booklookerrequester.h"
 
+#include <QDate>
 #include <QDebug>
+#include <QTime>
 
 BooklookerRequester *Booklooker::apiRequester() {
   BooklookerRequester *req = new BooklookerRequester(this);
   req->setObjectName(CONFIG_PROVIDER);
   connect(req, SIGNAL(response(const QJsonDocument &)), this,
           SLOT(prepareJsonListResponse(const QJsonDocument &)));
-  connect(req, SIGNAL(errorMessage(Antiqua::ErrorStatus, const QString &)), this,
-          SIGNAL(s_errorResponse(Antiqua::ErrorStatus, const QString &)));
+  connect(req, SIGNAL(errorMessage(Antiqua::ErrorStatus, const QString &)),
+          this, SIGNAL(s_errorResponse(Antiqua::ErrorStatus, const QString &)));
   return req;
 }
 
 void Booklooker::prepareJsonListResponse(const QJsonDocument &doc) {
-  if (QJsonValue(doc["status"]).toString() != "OK")
-  {
+  if (QJsonValue(doc["status"]).toString() != "OK") {
 #ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << BooklookerRequester::getResponseErrors(doc);
 #endif
@@ -38,9 +39,11 @@ void Booklooker::prepareJsonListResponse(const QJsonDocument &doc) {
       QJsonObject obj = array[i].toObject();
       qint64 id = obj.value("orderId").toInt();
       convert.insert("id", QJsonValue(QString::number(id)));
-      QDateTime d =
-          QDateTime::fromString(obj["orderDate"].toString(), DATE_FORMAT);
-      convert.insert("datum", QJsonValue(d.toString(ANTIQUA_DATETIME_FORMAT)));
+      // Eingangs Datum+Zeit
+      QDate d = QDate::fromString(obj["orderDate"].toString(), DATE_FORMAT);
+      QTime t = QTime::fromString(obj["orderTime"].toString());
+      QDateTime dt(d, t);
+      convert.insert("datum", QJsonValue(dt.toString(ANTIQUA_DATETIME_FORMAT)));
       senderArray.append(convert);
     }
   }

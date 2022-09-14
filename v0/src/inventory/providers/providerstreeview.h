@@ -64,7 +64,7 @@ Q_SIGNALS:
    * @param provider  - Dienstleister
    * @param id        - Bestellnummer
    */
-  void s_queryOrder(const QString &provider, const QString &id);
+  void sendQueryOrder(const QString &provider, const QString &id);
 
   /**
    * @brief Dienstleister Seite aufrufen

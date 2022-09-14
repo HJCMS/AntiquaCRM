@@ -97,7 +97,7 @@ private:
   bool validInterfaceProperties(Antiqua::InterfaceWidget *ifw);
 
   /**
-   * @brief Bestellstatus für Baumansicht ermitteln.
+   * @brief Bestellstatus für Baumansicht ermitteln/ändern.
    */
   void updateTreeViewOrdersStatus(const QString &provider,
                                   const QStringList &orderIds);
@@ -236,7 +236,7 @@ private Q_SLOTS:
    * @param code  Status Code
    * @param msg   Nachricht
    */
-  void pluginError(Antiqua::ErrorStatus code, const QString &msg);
+  void pluginMessanger(Antiqua::ErrorStatus code, const QString &msg);
 
 Q_SIGNALS:
   /**

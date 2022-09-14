@@ -72,7 +72,7 @@ void ProvidersTreeView::itemSelected(QTreeWidgetItem *item, int) {
 
   QString provider = item->parent()->text(0);
   if (!item->text(0).isEmpty() && !provider.isEmpty()) {
-    emit s_queryOrder(provider, item->text(0));
+    emit sendQueryOrder(provider, item->text(0));
   }
 }
 
@@ -153,7 +153,7 @@ void ProvidersTreeView::addOrder(const QString &provider, const QString &id,
     item->setText(0, id);
     item->setFont(0, font);
     item->setIcon(0, myIcon("group"));
-    item->setToolTip(0, dt.toString("ddd dd. MMMM yyyy"));
+    item->setToolTip(0, dt.toString("ddd dd. MMMM yyyy hh:mm"));
     item->setText(1, setDateString(dt));
     item->setIcon(1, myIcon("messagebox_warning"));
     item->setToolTip(1, dt.toString("ddd dd. MMMM yyyy"));

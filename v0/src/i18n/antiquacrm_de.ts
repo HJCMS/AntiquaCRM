@@ -3168,7 +3168,7 @@
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+30"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+29"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
@@ -3221,7 +3221,12 @@
         <translation>Artikel Prüfung</translation>
     </message>
     <message>
-        <location line="-2"/>
+        <location line="+136"/>
+        <source>New orders from %1 have arrived.</source>
+        <translation>Neue Bestellungen von %1 sind eingetroffen.</translation>
+    </message>
+    <message>
+        <location line="-138"/>
         <source>Order witdh Id: %1 already exists!</source>
         <translation>Diese Bestellung wurde bereits mit der Auftrags Id: %1 erstellt!</translation>
     </message>
@@ -3261,12 +3266,7 @@
         <translation>Ungültige Versandeigenschaften!</translation>
     </message>
     <message>
-        <location line="+25"/>
-        <source>Current order count </source>
-        <translation>Anzahl der Bestellungen</translation>
-    </message>
-    <message>
-        <location line="-451"/>
+        <location line="-426"/>
         <location line="+14"/>
         <source>Article</source>
         <translation>Artikel</translation>

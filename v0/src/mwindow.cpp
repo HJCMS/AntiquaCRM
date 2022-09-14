@@ -60,7 +60,7 @@ MWindow::MWindow(QWidget *parent) : QMainWindow(parent) {
   // Nachrichten für Benachrichtigungsfeld
   connect(m_workSpace,
           SIGNAL(sendPostMessage(Antiqua::ErrorStatus, const QString &)), this,
-          SLOT(statusMessage(Antiqua::ErrorStatus, const QString &)));
+          SLOT(systemMessage(Antiqua::ErrorStatus, const QString &)));
 
   // Änderungen registrieren
   connect(m_workSpace, SIGNAL(s_windowModified(bool)), this,
@@ -289,7 +289,15 @@ void MWindow::closeEvent(QCloseEvent *event) {
   QMainWindow::hideEvent(&hide);
 }
 
-void MWindow::statusMessage(Antiqua::ErrorStatus status, const QString &info) {
+void MWindow::statusBarMessage(const QString &info) {
+  if (isVisible()) {
+    m_statusBar->sqlStatusMessage(info);
+  } else {
+    m_systemTray->notify(info);
+  }
+}
+
+void MWindow::systemMessage(Antiqua::ErrorStatus status, const QString &info) {
   if (status == Antiqua::ErrorStatus::WARNING) {
     m_systemTray->warning(info);
     return;
@@ -297,12 +305,7 @@ void MWindow::statusMessage(Antiqua::ErrorStatus status, const QString &info) {
     m_systemTray->fatal(info);
     return;
   }
-
-  if (isVisible()) {
-    m_statusBar->sqlStatusMessage(info);
-  } else {
-    m_systemTray->notify(info);
-  }
+  m_systemTray->notify(info);
 }
 
 bool MWindow::initDefaults() {

@@ -11,7 +11,6 @@
 #include "applicationclient.h"
 #include "eucountries.h"
 #include "genderbox.h"
-#include "messagebox.h"
 
 #include <QDebug>
 #include <QMessageBox>
@@ -60,7 +59,7 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
 
   connect(m_toolBar, SIGNAL(s_refresh()), this, SLOT(searchConvert()));
   connect(m_toolBar, SIGNAL(s_createOrder()), this, SLOT(createEditOrders()));
-  connect(m_listView, SIGNAL(s_queryOrder(const QString &, const QString &)),
+  connect(m_listView, SIGNAL(sendQueryOrder(const QString &, const QString &)),
           this, SLOT(queryOrder(const QString &, const QString &)));
 
   // Alte Nachrichten vor dem Wechsel entfernen.
@@ -161,7 +160,7 @@ bool InventoryProviders::loadInterfaces() {
             SLOT(readOrderList(const QJsonDocument &)));
     connect(iface,
             SIGNAL(s_errorResponse(Antiqua::ErrorStatus, const QString &)),
-            this, SLOT(pluginError(Antiqua::ErrorStatus, const QString &)));
+            this, SLOT(pluginMessanger(Antiqua::ErrorStatus, const QString &)));
 
     iface->queryMenueEntries();
     p_iFaces.append(iface);
@@ -188,9 +187,9 @@ void InventoryProviders::queryOrder(const QString &provider,
               SLOT(createNewCustomer(const QJsonDocument &)));
       connect(w, SIGNAL(sendCheckArticleIds(QList<int> &)), this,
               SLOT(checkArticleExists(QList<int> &)));
-      connect(w,
-              SIGNAL(sendErrorResponse(Antiqua::ErrorStatus, const QString &)),
-              this, SLOT(pluginError(Antiqua::ErrorStatus, const QString &)));
+      connect(
+          w, SIGNAL(sendErrorResponse(Antiqua::ErrorStatus, const QString &)),
+          this, SLOT(pluginMessanger(Antiqua::ErrorStatus, const QString &)));
       connect(w, SIGNAL(sendOpenArticle(int)), this,
               SLOT(checkOpenEditArticle(int)));
 
@@ -513,38 +512,73 @@ void InventoryProviders::readOrderList(const QJsonDocument &doc) {
   if (doc.isEmpty())
     return;
 
-  QStringList orderIds;
+  QStringList orderIds; // puffer
   QString provider = QJsonValue(doc["provider"]).toString();
-  QJsonArray array = QJsonValue(doc["items"]).toArray();
+  if (provider.isEmpty())
+    return;
+
+  // Baumansicht zurücksetzen
   m_listView->clearProvidersList(provider);
+
+  // Liste neu erstellen
+  QJsonArray array = QJsonValue(doc["items"]).toArray();
   for (int i = 0; i < array.count(); i++) {
     QJsonObject obj = array[i].toObject();
-    QDateTime dt = QDateTime::fromString(obj["datum"].toString(), Qt::ISODate);
-    orderIds << obj["id"].toString();
-    m_listView->addOrder(provider, obj["id"].toString(), dt);
+    QString id = obj.value("id").toString();
+    QString dt = obj.value("datum").toString();
+    if (!id.isEmpty() && !dt.isEmpty()) {
+      orderIds << id;
+      QDateTime dtime = QDateTime::fromString(dt, Qt::ISODate);
+      m_listView->addOrder(provider, id, dtime);
+    }
   }
   m_listView->sortProvidersList(provider);
 
-  if (orderIds.count() > 0)
+  if (orderIds.count() > 0) {
     updateTreeViewOrdersStatus(provider, orderIds);
+    // History Update
+    QString sql = queryOrderHistory(provider);
+    QSqlQuery q = m_sql->query(sql);
+    QStringList providerIds; // Vorhanden
+    while (q.next()) {
+      providerIds << q.value("pr_order").toString();
+    }
 
-  int count = m_listView->ordersCount();
-  if (count > 0) {
-    QString info(tr("Current order count ") + ": ");
-    info.append(QString::number(count));
-    m_toolBar->statusMessage(info);
+    QStringList insertIds; // Einstellen
+    foreach (QString oid, orderIds) {
+      if (!providerIds.contains(oid)) {
+        QString insert("INSERT INTO provider_order_history");
+        insert.append(" (pr_name,pr_order) VALUES ('" + provider + "'");
+        insert.append(",'" + oid + "') RETURNING pr_order;");
+        insertIds << insert;
+      }
+    }
+
+    // INSERT erstellen
+    if (insertIds.count() > 0) {
+      q = m_sql->query(insertIds.join("\n"));
+      if (q.size() > 0) {
+        QString msg = tr("New orders from %1 have arrived.").arg(provider);
+        pluginMessanger(Antiqua::ErrorStatus::NOTICE, msg);
+#ifdef ANTIQUA_DEVELOPEMENT
+      } else if (!m_sql->lastError().isEmpty()) {
+        qDebug() << Q_FUNC_INFO << m_sql->lastError();
+#endif
+      }
+    }
+    // aufräumen
+    insertIds.clear();
+    providerIds.clear();
   }
+
+  // aufräumen
   orderIds.clear();
 }
 
-void InventoryProviders::pluginError(Antiqua::ErrorStatus code,
-                                     const QString &msg) {
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << code << msg;
-#endif
-
+void InventoryProviders::pluginMessanger(Antiqua::ErrorStatus code,
+                                         const QString &msg) {
   QJsonObject obj;
-  obj.insert("receiver", QJsonValue("MWindow"));
+  obj.insert("receiver", QJsonValue("SYSTEM"));
 
   switch (code) {
   case (Antiqua::ErrorStatus::WARNING): {

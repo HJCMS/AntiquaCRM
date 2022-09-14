@@ -23,40 +23,44 @@ void SocketServer::readClientConnection() {
   if (m_listener->waitForReadyRead(timeout)) {
     QByteArray data = m_listener->readAll();
     QJsonParseError parser;
-
-    /**
-     *  @short Erwartet folgende Struktur
-     *  @note Für "type" siehe Antiqua::ErrorStatus
-     *  QJsonObject {
-     *    "receiver":"QString",
-     *    "type":"QString",
-     *    "value":"String"
-     */
     QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
     if (parser.error == QJsonParseError::NoError) {
       QJsonObject obj = doc.object();
-      // SIGNAL => SLOT Verarbeitung
-      if (obj.value("type").toString() == "SLOT") {
-        QString receiver = obj.value("receiver").toString();
-        QString value = obj.value("value").toString();
-        if (receiver.contains("Window") && value == "showAntiquaWindow") {
+      QString value = obj.value("value").toString();
+      if (value.isEmpty()) {
+        qWarning("Empty client messages to socket!");
+        return;
+      }
+
+      QString receiver = obj.value("receiver").toString();
+      QString type = obj.value("type").toString().toUpper();
+
+#ifdef ANTIQUA_DEVELOPEMENT
+      qDebug() << Q_FUNC_INFO << obj;
+#endif
+
+      if (type == "SLOT" && receiver == "WINDOW") {
+        if (value == "showAntiquaWindow") {
           emit showWindow();
           return;
         }
       }
-      // NOTICE, WARNING, FATAL
-      if (obj.value("type").toString() == "NOTICE") {
-        QString value = obj.value("value").toString();
-        if (!value.isEmpty())
-          emit statusMessage(Antiqua::ErrorStatus::NOTICE, value);
-      } else if (obj.value("type").toString() == "WARNING") {
-        QString value = obj.value("value").toString();
-        if (!value.isEmpty())
-          emit statusMessage(Antiqua::ErrorStatus::WARNING, value);
-      } else if (obj.value("type").toString() == "FATAL") {
-        QString value = obj.value("value").toString();
-        if (!value.isEmpty())
-          emit statusMessage(Antiqua::ErrorStatus::FATAL, value);
+
+      if (type == "NOTICE") {
+        if (receiver.contains("SYSTEM"))
+          emit sendSystemMessage(Antiqua::ErrorStatus::NOTICE, value);
+        else
+          emit sendStatusMessage(value);
+      } else if (type == "WARNING") {
+        if (receiver.contains("SYSTEM"))
+          emit sendSystemMessage(Antiqua::ErrorStatus::WARNING, value);
+        else
+          emit sendStatusMessage(value);
+      } else if (type == "FATAL") {
+        if (receiver.contains("SYSTEM"))
+          emit sendSystemMessage(Antiqua::ErrorStatus::FATAL, value);
+        else
+          emit sendStatusMessage(value);
       }
     } else {
       qWarning("Invalid Socket operation '%s';", qPrintable(data));
@@ -64,10 +68,10 @@ void SocketServer::readClientConnection() {
   }
 }
 
-void SocketServer::incomingConnection(quintptr socketDescriptor) {
+void SocketServer::incomingConnection(quintptr descriptor) {
   m_listener = new QLocalSocket(this);
   m_listener->setObjectName("local_socket_manager");
-  m_listener->setSocketDescriptor(socketDescriptor);
+  m_listener->setSocketDescriptor(descriptor);
   readClientConnection();
 }
 
