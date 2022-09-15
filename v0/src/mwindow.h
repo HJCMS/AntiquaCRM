@@ -104,12 +104,6 @@ private Q_SLOTS:
   void openReportDialog(bool);
 
   /**
-   * @brief Dialog CategoryEdit
-   * @section Ui::Dialogs
-   */
-  void openCategoryEdit(bool);
-
-  /**
    * @brief Dialog KeywordEdit
    * @section Ui::Dialogs
    */

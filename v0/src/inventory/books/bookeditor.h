@@ -20,7 +20,6 @@
 #include <Utils>
 
 class ISBNResults;
-class CategorySubject;
 class KeywordLineEdit;
 
 /**
@@ -53,7 +52,6 @@ private:
   BookBindingField *ib_binding;     /**< @brief BuchEinband Kategorie */
   StrLineEdit *ib_designation;      /**< @brief Umschreibung */
   KeywordLineEdit *ib_keyword;      /**< @brief Schlüsselwort */
-  CategorySubject *m_json_category; /**< @brief Dienstleister Kategorie */
   StrLineEdit *ib_publisher;        /**< @brief Herausgeber/Verlag */
   StrLineEdit *ib_title;            /**< @brief Buch Titel */
   StrLineEdit *ib_title_extended;   /**< @brief Ereiterte Titel  */

@@ -145,10 +145,6 @@ void MWindow::setupActions() {
   QAction *a_bdt = m_tablesMenu->addAction(tr("Designation and Binding"));
   a_bdt->setIcon(myIcon("spreadsheet"));
   connect(a_bdt, SIGNAL(triggered(bool)), this, SLOT(openDesignation(bool)));
-
-  QAction *a_ecs = m_tablesMenu->addAction(tr("Edit Catgerories"));
-  a_ecs->setIcon(myIcon("spreadsheet"));
-  connect(a_ecs, SIGNAL(triggered(bool)), this, SLOT(openCategoryEdit(bool)));
   // END Konfigurations Untermenü Tabellen
 }
 
@@ -206,14 +202,6 @@ void MWindow::openDesignation(bool) {
 void MWindow::openReportDialog(bool) {
   ReportingDialog *d = new ReportingDialog(this);
   d->setObjectName("reporting_dialog");
-  if (d->exec()) {
-    d->deleteLater();
-  }
-}
-
-void MWindow::openCategoryEdit(bool) {
-  CategoryEdit *d = new CategoryEdit(this);
-  d->setObjectName("category_edit");
   if (d->exec()) {
     d->deleteLater();
   }

@@ -36,7 +36,7 @@ bool EditorMain::isInIgnoreList(const QString &key) {
 
 void EditorMain::socketStatusMessage(const QString &message) {
   QJsonObject obj;
-  obj.insert("receiver", QJsonValue("MWindow"));
+  obj.insert("receiver", QJsonValue("WINDOW"));
   obj.insert("type", QJsonValue("NOTICE"));
   obj.insert("value", QJsonValue(message));
   QByteArray json = QJsonDocument(obj).toJson(QJsonDocument::Compact);

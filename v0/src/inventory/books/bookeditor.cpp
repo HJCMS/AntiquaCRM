@@ -3,7 +3,6 @@
 
 #include "bookeditor.h"
 #include "bookcard.h"
-#include "categorysubject.h"
 #include "isbnresults.h"
 #include "keywordlineedit.h"
 #include "myicontheme.h"
@@ -262,23 +261,6 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   ib_keyword->setToolTip(tr("Category Keywords for Shopsystems."));
   row2->addWidget(ib_keyword, row2c++, 1, 1, 1);
 
-  QLabel *subjectLabel = new QLabel(this);
-  subjectLabel->setObjectName("subjectLabel");
-  subjectLabel->setAlignment(defaultAlignment);
-  subjectLabel->setText(tr("Provider Subject") + ":");
-  row2->addWidget(subjectLabel, row2c, 0, 1, 1);
-
-  /**
-   * @brief json_category
-   * @warning Beinhaltet
-   * @li ib_category_main
-   * @li ib_category_sub
-   */
-  m_json_category = new CategorySubject(this);
-  m_json_category->setObjectName("ib_json_category");
-  m_json_category->setInfo(tr("Shop Category Keywords"));
-  row2->addWidget(m_json_category, row2c++, 1, 1, 1);
-
   // ISBN
   QLabel *isbnLabel = new QLabel(this);
   isbnLabel->setText("ISBN:");
@@ -424,7 +406,6 @@ bool BookEditor::sendSqlQuery(const QString &sqlStatement) {
     }
     sqlSuccessMessage(tr("Bookdata saved successfully!"));
     resetModified(inputList);
-    m_json_category->setModified(false);
     return true;
   }
 }
@@ -450,13 +431,6 @@ const QHash<QString, QVariant> BookEditor::createSqlDataset() {
     data.insert(objName, cur->value());
   }
   list.clear();
-  /**
-   * @short Kategorien
-   * @see ignoreList
-   */
-  QJsonObject sections = m_json_category->value().toJsonObject();
-  data.insert("ib_category_main", sections.value("main").toString());
-  data.insert("ib_category_sub", sections.value("sub").toString());
 
   return data;
 }
@@ -571,11 +545,10 @@ void BookEditor::importSqlResult() {
   }
   // Nach Ersteintrag zurück setzen!
   resetModified(inputList);
-  m_json_category->setModified(false);
 }
 
 void BookEditor::checkLeaveEditor() {
-  if (checkIsModified(p_objPattern) || m_json_category->isModified()) {
+  if (checkIsModified(p_objPattern)) {
     emit sendStatusMessage(
         tr("Unsaved Changes, don't leave this page before saved."));
     return;
@@ -591,7 +564,6 @@ void BookEditor::finalLeaveEditor() {
   m_actionBar->setRestoreable(false); /**< ResetButton off */
   m_imageView->clear();               /**< Imaging clear */
   m_imageToolBar->restoreState();     /**< Bilder Aktionsleiste zurücksetzen */
-  m_json_category->reset();           /**< Kategorien */
   emit s_leaveEditor();               /**< Zurück zur Hauptsansicht */
 }
 
@@ -606,20 +578,6 @@ void BookEditor::setData(const QString &key, const QVariant &value,
                          bool required) {
   if (key.isEmpty())
     return;
-
-  /**
-   * @short json_category
-   * @note m_json_category ist hierfür Zuständig
-   * @li ib_category_main
-   * @li ib_category_sub
-   */
-  if (key == "ib_category_main") {
-    m_json_category->setCategoryMain(value);
-    return;
-  } else if (key == "ib_category_sub") {
-    m_json_category->setCategorySub(value);
-    return;
-  }
 
   UtilsMain *inp = findChild<UtilsMain *>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
@@ -708,11 +666,6 @@ void BookEditor::changeEvent(QEvent *event) {
      */
     ib_storage->reset();
     ib_storage->loadDataset();
-
-    /**
-     * Dienstleister Kategorien laden
-     */
-    m_json_category->loadDataset();
 
     /**
      * Lade Herausgeber XML
