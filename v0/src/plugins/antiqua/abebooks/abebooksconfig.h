@@ -68,7 +68,7 @@ static void saveSources(const QDomDocument &doc, const QString id = "0") {
 #define CONFIG_PROVIDER "AbeBooks"
 #endif
 
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
 #ifndef PLUGIN_ABEBOOKS_DEBUG
 #define PLUGIN_ABEBOOKS_DEBUG false
 #endif

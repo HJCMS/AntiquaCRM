@@ -217,7 +217,7 @@ void BookCardConfig::printerChanged(QPrinter *printer) {
       m_printerPaperFeed->setEnabled(true);
     }
   }
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
   QList<QPrinter::PaperSource> psl = printer->supportedPaperSources();
   m_printerPaperFeed->setEnabled((psl.count() >= 1));
 #endif
@@ -349,7 +349,7 @@ void BookCard::openPrintDialog() {
   printer->setDocName(p_filename);
   printer->setCreator("AntiquaCRM");
   m_cardConfig->printerChanged(printer);
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
   printer->setPaperSource(p_paperSource);
 #endif
 

@@ -6,7 +6,7 @@
 MessageBox::MessageBox(QWidget *parent) : QMessageBox{parent} {
   setObjectName("antiqua_message_box");
   setWindowFlag(Qt::Dialog, true);
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
   setWindowFlag(Qt::MSWindowsFixedSizeDialogHint, false);
 #endif
   setDefaultButton(QMessageBox::Ok);

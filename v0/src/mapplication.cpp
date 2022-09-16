@@ -8,6 +8,10 @@
 #include "socketserver.h"
 #include "sqlcore.h"
 
+#ifdef Q_OS_WIN
+#include <QColor>
+#include <QPalette>
+#endif
 #include <QDebug>
 #include <QDir>
 #include <QFont>
@@ -82,6 +86,19 @@ void MApplication::initThemeStyle() {
   if (!fontdef.isEmpty() && font.fromString(fontdef)) {
     qApp->setFont(font);
   }
+#ifdef Q_OS_WIN
+  /**
+   * @short QStyle::Windows::Fusion
+   * Hervorgehobener Inaktiver Hintergrund wird bei der Suche in Tabellen und
+   * Listen nicht richtig dargestellt! Um ihn für den Klienten besser hervor zu
+   * heben und es besser Sichtbar wird. Hier ein Workaround mit Hell-Gelber
+   * Farbe! Die Standard Textfarbe in QStyle::Windows::Fusion ist "Schwarz".
+   */
+  QPalette p = qApp->palette();
+  QColor lightYellow(255, 255, 127);
+  p.setColor(QPalette::Inactive, QPalette::Highlight, lightYellow);
+  qApp->setPalette(p);
+#endif
 }
 
 /**

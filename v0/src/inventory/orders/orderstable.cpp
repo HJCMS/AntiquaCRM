@@ -155,12 +155,12 @@ void OrdersTable::searchHighlight(const QString &txt, int cell) {
   for (int r = 0; r < m_queryModel->rowCount(); r++) {
     QString content;
     QVariant val = m_queryModel->data(im.sibling(r, cell), Qt::DisplayRole);
-    if(val.type() == QVariant::Int) {
+    if (val.type() == QVariant::Int) {
       content = QString::number(val.toInt());
     } else {
       content = val.toString();
     }
-    if(content.contains(txt,Qt::CaseInsensitive)) {
+    if (content.contains(txt, Qt::CaseInsensitive)) {
       selectRow(r);
       return;
     }
