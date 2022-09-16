@@ -22,7 +22,7 @@
 
 FileBrowser::FileBrowser(QWidget *parent) : QFileDialog{parent} {
   setObjectName("file_dialog_widget");
-  setWindowFlags(Qt::Widget);
+  setWindowFlags(Qt::SubWindow); // TODO Windows Testing
   setWindowModality(Qt::NonModal);
   setWindowState(Qt::WindowNoState);
   setSizeGripEnabled(false);
@@ -244,7 +244,7 @@ int ImageDialog::exec() {
     bookmarks.append(config->value(key).toUrl());
   }
   config->endGroup();
-  if(bookmarks.count() > 1)
+  if (bookmarks.count() > 1)
     browser->setSidebarUrls(bookmarks);
 
   if (!findSourceImage()) {
