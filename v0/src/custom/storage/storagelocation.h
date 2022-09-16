@@ -11,6 +11,7 @@
 #include <QEvent>
 #include <QHash>
 #include <QKeyEvent>
+#include <QLabel>
 #include <QLineEdit>
 #include <QRegularExpression>
 #include <QSpinBox>
@@ -30,6 +31,10 @@ private:
   QLineEdit *sl_storage;
   QLineEdit *sl_identifier;
   QLineEdit *sl_location;
+  QSpinBox *sl_zvab_id;
+  QLineEdit *sl_zvab_name;
+
+  QLabel *subTitle(const QString &) const;
 
   bool check(QLineEdit *);
 

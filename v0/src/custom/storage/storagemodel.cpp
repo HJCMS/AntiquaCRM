@@ -40,6 +40,12 @@ QVariant StorageModel::headerData(int section, Qt::Orientation orientation,
     case 3: // sl_location
       return tr("Location");
 
+    case 4: // sl_zvab_id
+      return "ZVAB Id";
+
+    case 5: // sl_zvab_name
+      return "ZVAB " + tr("Category");
+
     default:
       return section;
     }

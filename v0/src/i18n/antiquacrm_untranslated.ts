@@ -644,7 +644,7 @@
 <context>
     <name>BookEditor</name>
     <message>
-        <location filename="../inventory/books/bookeditor.cpp" line="+25"/>
+        <location filename="../inventory/books/bookeditor.cpp" line="+24"/>
         <source>Edit Book Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -716,12 +716,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+90"/>
-        <source>Shop Category Keywords</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-69"/>
+        <location line="+21"/>
         <source>Language:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -800,12 +795,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Provider Subject</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+59"/>
+        <location line="+49"/>
         <source>ISBN Response</source>
         <translation type="unfinished"></translation>
     </message>
@@ -820,17 +810,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+55"/>
         <source>Missing Article ID for Update.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+110"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+51"/>
         <source>Are you sure to deactivate this entry?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -840,22 +830,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-491"/>
+        <location line="-450"/>
         <source>Extended Title or Subtitle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+242"/>
+        <location line="+225"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+242"/>
+        <location line="+218"/>
         <source>When setting the count of this book to 0. All existing orders from this entry are also deactivated and shop system entries are marked for deletion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-330"/>
+        <location line="-306"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -877,7 +867,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-214"/>
+        <location line="-197"/>
         <source>Year</source>
         <translation type="unfinished"></translation>
     </message>
@@ -888,12 +878,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+237"/>
+        <location line="+220"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-353"/>
+        <location line="-336"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2639,28 +2629,38 @@
 <context>
     <name>EditorWidget</name>
     <message>
-        <location filename="../custom/storage/storagelocation.cpp" line="+21"/>
+        <location filename="../custom/storage/storagelocation.cpp" line="+27"/>
         <source>Storage ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-5"/>
         <source>Empty data fields not accepted and reject this operation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+12"/>
         <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Identifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Deprecated AbeBooks (ZVAB) Categories.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Category</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3627,12 +3627,12 @@
     </message>
     <message>
         <location line="+7"/>
-        <location line="+67"/>
+        <location line="+63"/>
         <source>Views</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-86"/>
+        <location line="-82"/>
         <source>Reconnect</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3652,28 +3652,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+42"/>
         <source>Save request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+72"/>
         <source>SQL Server Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-150"/>
-        <location line="+163"/>
+        <location line="-138"/>
+        <location line="+151"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-107"/>
+        <location line="-99"/>
         <source>Anything but books</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-83"/>
+        <location line="-79"/>
         <source>Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3708,17 +3708,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Edit Catgerories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location line="+26"/>
         <source>&lt;p&gt;Do you really want to close the application?&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+87"/>
         <source>Disable Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6183,7 +6178,7 @@
 <context>
     <name>StorageLocation</name>
     <message>
-        <location filename="../custom/storage/storagelocation.cpp" line="+71"/>
+        <location filename="../custom/storage/storagelocation.cpp" line="+94"/>
         <source>new entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6230,11 +6225,16 @@
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+6"/>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>StorageTable</name>
     <message>
-        <location filename="../custom/storage/storagetable.cpp" line="+63"/>
+        <location filename="../custom/storage/storagetable.cpp" line="+67"/>
         <source>an error occurred</source>
         <translation type="unfinished"></translation>
     </message>

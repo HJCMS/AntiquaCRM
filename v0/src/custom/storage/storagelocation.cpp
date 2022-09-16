@@ -16,30 +16,60 @@
 EditorWidget::EditorWidget(QWidget *parent)
     : QWidget{parent}, pattern(SQL_FIELD_PATTERN,
                                QRegularExpression::UseUnicodePropertiesOption) {
-  QGridLayout *layout = new QGridLayout(this);
 
-  layout->addWidget(new QLabel(tr("Storage ID")), 0, 0, 1, 1, Qt::AlignRight);
+  QVBoxLayout *mainlayout = new QVBoxLayout(this);
+
+  QString st = tr("Empty data fields not accepted and reject this operation.");
+  QGroupBox *m_edit = new QGroupBox(this);
+  m_edit->setTitle(st);
+  QGridLayout *edit_layout = new QGridLayout(m_edit);
+
+  edit_layout->addWidget(subTitle(tr("Storage ID")), 0, 0, 1, 1);
   sl_id = new QSpinBox(this);
+  sl_id->setObjectName("sl_id");
   sl_id->setRange(0, 9999);
   sl_id->setReadOnly(true);
-  layout->addWidget(sl_id, 0, 1, 1, 1, Qt::AlignLeft);
+  edit_layout->addWidget(sl_id, 0, 1, 1, 1, Qt::AlignLeft);
 
-  QString inf = tr("Empty data fields not accepted and reject this operation.");
-  layout->addWidget(new QLabel(inf, this), 1, 0, 1, 2, Qt::AlignLeft);
-
-  layout->addWidget(new QLabel(tr("Storage")), 2, 0, 1, 1, Qt::AlignRight);
+  edit_layout->addWidget(subTitle(tr("Storage")), 0, 2, 1, 1);
   sl_storage = new QLineEdit(this);
-  layout->addWidget(sl_storage, 2, 1, 1, 1, Qt::AlignLeft);
+  sl_storage->setObjectName("sl_storage");
+  edit_layout->addWidget(sl_storage, 0, 3, 1, 1, Qt::AlignLeft);
 
-  layout->addWidget(new QLabel(tr("Identifier")), 3, 0, 1, 1, Qt::AlignRight);
+  edit_layout->addWidget(subTitle(tr("Identifier")), 1, 0, 1, 1);
   sl_identifier = new QLineEdit(this);
-  layout->addWidget(sl_identifier, 3, 1, 1, 1);
+  sl_identifier->setObjectName("sl_identifier");
+  edit_layout->addWidget(sl_identifier, 1, 1, 1, 3);
 
-  layout->addWidget(new QLabel(tr("Location")), 4, 0, 1, 1, Qt::AlignRight);
+  edit_layout->addWidget(subTitle(tr("Location")), 2, 0, 1, 1);
   sl_location = new QLineEdit(this);
-  layout->addWidget(sl_location, 4, 1, 1, 1);
+  sl_location->setObjectName("sl_location");
+  edit_layout->addWidget(sl_location, 2, 1, 1, 3);
+  edit_layout->setColumnStretch(2, 1);
+  m_edit->setLayout(edit_layout);
+  mainlayout->addWidget(m_edit);
 
-  setLayout(layout);
+  QGroupBox *m_zvab = new QGroupBox(this);
+  m_zvab->setTitle(tr("Deprecated AbeBooks (ZVAB) Categories."));
+  QHBoxLayout *zvab_layout = new QHBoxLayout(m_zvab);
+  sl_zvab_id = new QSpinBox(m_zvab);
+  sl_zvab_id->setRange(0, 9999);
+  sl_zvab_id->setObjectName("sl_zvab_id");
+  zvab_layout->addWidget(sl_zvab_id);
+  zvab_layout->addWidget(subTitle(tr("Category")));
+  sl_zvab_name = new QLineEdit(m_zvab);
+  sl_zvab_name->setObjectName("sl_zvab_name");
+  zvab_layout->addWidget(sl_zvab_name);
+  m_zvab->setLayout(zvab_layout);
+  mainlayout->addWidget(m_zvab);
+
+  setLayout(mainlayout);
+}
+
+QLabel *EditorWidget::subTitle(const QString &text) const {
+  QLabel *lb = new QLabel(text);
+  lb->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
+  return lb;
 }
 
 bool EditorWidget::check(QLineEdit *w) {
@@ -58,6 +88,8 @@ void EditorWidget::setValue(const StorageTable::RowValues &items) {
   sl_storage->setText(items.sl_storage);
   sl_identifier->setText(items.sl_identifier);
   sl_location->setText(items.sl_location);
+  sl_zvab_id->setValue(items.sl_zvab_id);
+  sl_zvab_name->setText(items.sl_zvab_name);
 }
 
 void EditorWidget::clear() {
@@ -65,6 +97,9 @@ void EditorWidget::clear() {
   sl_storage->clear();
   sl_identifier->clear();
   sl_location->clear();
+  sl_zvab_id->setValue(0);
+  sl_zvab_name->clear();
+
   sl_storage->setFocus();
 }
 
@@ -74,13 +109,18 @@ const QString EditorWidget::sqlQuery() {
     int id = sl_id->value();
     if (id < 1) {
       sql.append("INSERT INTO ref_storage_location ");
-      sql.append("(sl_storage,sl_identifier,sl_location)");
+      sql.append("(sl_storage,sl_identifier,sl_location");
+      sql.append(",sl_zvab_id,sl_zvab_name)");
       sql.append(" VALUES ('");
       sql.append(sl_storage->text().trimmed());
       sql.append("','");
       sql.append(sl_identifier->text().trimmed());
       sql.append("','");
       sql.append(sl_location->text().trimmed());
+      sql.append("',");
+      sql.append(QString::number(sl_zvab_id->value()));
+      sql.append(",'");
+      sql.append(sl_zvab_name->text().trimmed());
       sql.append("') RETURNING sl_id;");
     } else {
       sql.append("UPDATE ref_storage_location SET ");
@@ -90,6 +130,10 @@ const QString EditorWidget::sqlQuery() {
       sql.append(sl_identifier->text().trimmed());
       sql.append("',sl_location='");
       sql.append(sl_location->text().trimmed());
+      sql.append("',sl_zvab_id=");
+      sql.append(QString::number(sl_zvab_id->value()));
+      sql.append(",sl_zvab_name='");
+      sql.append(sl_zvab_name->text().trimmed());
       sql.append("' WHERE sl_id=" + QString::number(id) + ";");
     }
   }

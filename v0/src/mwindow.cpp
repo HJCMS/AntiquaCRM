@@ -4,7 +4,6 @@
 /* Project */
 #include "mwindow.h"
 #include "antiquasystemtray.h"
-#include "categoryedit.h"
 #include "completerdialog.h"
 #include "configdialog.h"
 #include "deliverservicedialog.h"

@@ -35,6 +35,8 @@ StorageTable::StorageTable(QWidget *parent)
   setColumnHidden(m_model->record().indexOf("sl_id"), true);
   m_header->setSectionResizeMode(1, QHeaderView::ResizeToContents);
   m_header->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+  m_header->setSectionResizeMode(3, QHeaderView::ResizeToContents);
+  m_header->setSectionResizeMode(4, QHeaderView::ResizeToContents);
 
   connect(this, SIGNAL(clicked(const QModelIndex &)), this,
           SLOT(itemClicked(const QModelIndex &)));
@@ -49,6 +51,8 @@ void StorageTable::itemClicked(const QModelIndex &index) {
     i.sl_storage = m_model->data(p.sibling(p.row(), 1)).toString();
     i.sl_identifier = m_model->data(p.sibling(p.row(), 2)).toString();
     i.sl_location = m_model->data(p.sibling(p.row(), 3)).toString();
+    i.sl_zvab_id = m_model->data(p.sibling(p.row(), 4)).toInt();
+    i.sl_zvab_name = m_model->data(p.sibling(p.row(), 5)).toString();
     emit itemChanged(i);
   }
 }

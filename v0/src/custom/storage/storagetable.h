@@ -53,6 +53,8 @@ public:
     QString sl_storage;
     QString sl_identifier;
     QString sl_location;
+    qint64 sl_zvab_id;
+    QString sl_zvab_name;
   };
   StorageTable(QWidget *parent = nullptr);
 
