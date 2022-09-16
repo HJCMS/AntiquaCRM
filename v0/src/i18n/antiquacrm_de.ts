@@ -1202,190 +1202,6 @@
     </message>
 </context>
 <context>
-    <name>CategoryActions</name>
-    <message>
-        <location filename="../custom/categoryedit/categoryactions.cpp" line="+16"/>
-        <source>Treeview</source>
-        <translation>Baumansicht</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Open/close Treeview</source>
-        <translation>Öffne/Schließe Baumansicht</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Switch view</source>
-        <translation>Anzeige umschalten</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hide and Show unused categories</source>
-        <translation>Anzeigen oder Verbergen der Deaktivierten Elemente</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Search Keyword</source>
-        <translation>Suche Schlüsselwort</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Add Keyword and Press Enter</source>
-        <translation>Schlüsselwort einfügen und Enter drücken um die Suche zu starten</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Start search</source>
-        <translation>Suche starten</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Save</source>
-        <translation>Speichern</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Close</source>
-        <translation>Beenden</translation>
-    </message>
-</context>
-<context>
-    <name>CategoryEdit</name>
-    <message>
-        <location filename="../custom/categoryedit/categoryedit.cpp" line="+23"/>
-        <source>Edit Category Views</source>
-        <translation>Bearbeite Kategorie Ansichten</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>You can use the mouse to drag and drop keywords and categories into this area.</source>
-        <translation>In diesem Bereich können sie Stichworte und Kategorien mit der Maus per Drag und Drop hineinziehen.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Storage Categories</source>
-        <translation>Lager Kategorien</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Company Keywords</source>
-        <translation>Unternehmens Schlüsselwörter</translation>
-    </message>
-    <message>
-        <location line="+170"/>
-        <location line="+15"/>
-        <location line="+13"/>
-        <source>An error has occurred!</source>
-        <translation>Ein Fehler ist aufgetreten!</translation>
-    </message>
-    <message>
-        <location line="-25"/>
-        <location line="+14"/>
-        <location line="+13"/>
-        <source>Database Update successfully!</source>
-        <translation>Datanbank-Update erfolgreich!</translation>
-    </message>
-</context>
-<context>
-    <name>CategorySubject</name>
-    <message>
-        <location filename="../custom/categoryedit/categorysubject.cpp" line="+58"/>
-        <source>Search</source>
-        <translation>Suche</translation>
-    </message>
-    <message>
-        <location line="-13"/>
-        <source>Main Category</source>
-        <translation>Hauptkategorie</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Sub Category</source>
-        <translation>Unterkategorie</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>sync</source>
-        <translation>Update</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>synchronize categories</source>
-        <translation>Kategorien synchronisieren</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Open Information Dialog</source>
-        <translation>Informationsdialog öffnen</translation>
-    </message>
-    <message>
-        <location line="+83"/>
-        <source>A database error has occurred.</source>
-        <translation>Ein Datenbankfehler ist aufgetreten.</translation>
-    </message>
-    <message>
-        <location line="+76"/>
-        <source>In this area, the categories are defined which are permanently assigned by your service provider. Ultimately, it is decided here in which category your book is for sale.</source>
-        <translation>In Diesem Bereich werden die Kategorien definiert welche von ihrem Dienstleister fest vergeben sind. Letztentlich wird hier entschieden in welcher Kategorie ihr Buch zum Verkauf steht.</translation>
-    </message>
-    <message>
-        <location line="+63"/>
-        <source>General</source>
-        <translation>Allgemein</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>a valid Provider Category is required!</source>
-        <translation>Eine gültige Dienstleister Kategorie muss angegeben werden!</translation>
-    </message>
-</context>
-<context>
-    <name>CategoryTree</name>
-    <message>
-        <location filename="../custom/categoryedit/categorytree.cpp" line="+22"/>
-        <source>Provider Categories</source>
-        <translation>Dienstleister Kategorien</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Display</source>
-        <translation>Anzeigen</translation>
-    </message>
-    <message>
-        <location line="+96"/>
-        <source>Toggle Display</source>
-        <translation>Anzeigen/Ausblenden</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Remove keyword</source>
-        <translation>Schlüsselwörter entfernen</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Disable all in this Section</source>
-        <translation>Deaktiviere diesen Bereich</translation>
-    </message>
-    <message>
-        <location line="+215"/>
-        <source>Main category</source>
-        <translation>Hauptkategorie</translation>
-    </message>
-    <message>
-        <location line="-258"/>
-        <location line="+284"/>
-        <source>Yes</source>
-        <translation>Ja</translation>
-    </message>
-    <message>
-        <location line="-300"/>
-        <location line="+16"/>
-        <location line="+284"/>
-        <source>No</source>
-        <translation>Nein</translation>
-    </message>
-</context>
-<context>
     <name>CompanySettings</name>
     <message>
         <location filename="../custom/settings/companysettings.cpp" line="+20"/>
@@ -3117,17 +2933,12 @@
 <context>
     <name>InventoryOrders</name>
     <message>
-        <location filename="../inventory/orders/inventoryorders.cpp" line="+19"/>
+        <location filename="../inventory/orders/inventoryorders.cpp" line="+18"/>
         <source>Orders</source>
         <translation>Aufträge</translation>
     </message>
     <message>
-        <location line="+31"/>
-        <source>Refresh</source>
-        <translation>Aktualisieren</translation>
-    </message>
-    <message>
-        <location line="+81"/>
+        <location line="+120"/>
         <source>can&apos;t create order without costumer Id.</source>
         <translation>Kann keinen Auftrag ohne Kundennummer generieren.</translation>
     </message>
@@ -3616,7 +3427,7 @@
 <context>
     <name>MWindow</name>
     <message>
-        <location filename="../mwindow.cpp" line="+71"/>
+        <location filename="../mwindow.cpp" line="+70"/>
         <source>Application</source>
         <translation>Programm</translation>
     </message>
@@ -4492,6 +4303,36 @@
         <location line="+3"/>
         <source>Delivered</source>
         <translation>Ausgeliefert</translation>
+    </message>
+</context>
+<context>
+    <name>OrdersToolBar</name>
+    <message>
+        <location filename="../inventory/orders/orderstoolbar.cpp" line="+25"/>
+        <location line="+10"/>
+        <source>Order Id</source>
+        <translation>Auftragsnummer</translation>
+    </message>
+    <message>
+        <location line="-8"/>
+        <source>Customer name</source>
+        <translation>Kundenname</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Provider settlement number</source>
+        <translation>Dienstleister Abwicklungsnummer</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+33"/>
+        <source>Search for %1 in current View.</source>
+        <translation>Suche in der Ansicht nach %1.</translation>
+    </message>
+    <message>
+        <location line="-21"/>
+        <source>Refresh</source>
+        <translation>Aktualisieren</translation>
     </message>
 </context>
 <context>
@@ -5737,11 +5578,6 @@
         <location line="+2"/>
         <source>Check</source>
         <translation>Scheck</translation>
-    </message>
-    <message>
-        <location filename="../custom/categoryedit/treekeyworditem.cpp" line="+14"/>
-        <source>Keyword</source>
-        <translation>Schlüsselwort</translation>
     </message>
     <message>
         <location filename="../core/antiquacore/orderstatus.cpp" line="+26"/>

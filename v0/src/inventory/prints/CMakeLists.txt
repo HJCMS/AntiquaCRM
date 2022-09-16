@@ -16,7 +16,6 @@ SET (subproject_LINKER
  Networking
  Utils
  Imaging
- CategoryEdit
 )
 
 SET (subproject_SOURCES

@@ -15,10 +15,9 @@
 #include <QTabWidget>
 #include <QWidget>
 
-class StatsActionBar;
+class OrdersToolBar;
 class OrdersTable;
 class OrderEditor;
-class OrdersMenuButton;
 
 /**
  * @class InventoryOrders
@@ -46,9 +45,9 @@ private:
   QLabel *m_statusInfo;
 
   /**
-   * @brief Optionale Aktionen öffnen
+   * @brief Main ToolBar
    */
-  OrdersMenuButton *m_menuButton;
+  OrdersToolBar *m_toolBar;
 
   /**
    *  @brief Editor
@@ -57,12 +56,10 @@ private:
 
 private Q_SLOTS:
   /**
-   * @brief Reagiert auf LineEdit
-   * Überwacht QLineEdit::textChanged und startet erst wenn @ref minLength
-   * überstiegen wurde. Leitet dann weiter an @ref searchConvert()
-   * @param Sucheingabe
+   * @brief Suche in der aktuellen Ansicht nach ...
+   * @note Ist Abhängig von den OrdersToolBar Einstellungen!
    */
-  void searchConvert(const QString &) { /* unused */ };
+  void searchConvert(const QString &txt);
 
   /**
    * @brief Reagiert auf Suchknopf & EnterTaste
@@ -70,7 +67,7 @@ private Q_SLOTS:
    * Zeichen (Performance)!
    * @note In @class SearchBar wird bereits die Zeichenersetzung durchgeführt!
    */
-  void searchConvert() { /* unused */ };
+  void searchConvert(){/* unused */};
 
   /**
    * @brief Öffne Tabellenansicht

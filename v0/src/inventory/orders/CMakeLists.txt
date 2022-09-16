@@ -23,8 +23,9 @@ SET (subproject_LINKER
 
 SET (subproject_SOURCES
   inventoryorders.cpp
-  ordersitemlist.cpp
   ordersmenubutton.cpp
+  orderstoolbar.cpp
+  ordersitemlist.cpp
   orderstable.cpp
   orderstablemodel.cpp
   ordereditor.cpp
@@ -36,6 +37,7 @@ SET (subproject_HEADERS
   ordersitemlist.h
   ordersmenubutton.h
   inventoryorders.h
+  orderstoolbar.h
   orderstable.h
   orderstablemodel.h
   ordereditor.h

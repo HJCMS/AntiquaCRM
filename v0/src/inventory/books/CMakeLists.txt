@@ -17,7 +17,6 @@ SET (subproject_LINKER
  Utils
  Printing
  Imaging
- CategoryEdit
  KeywordEdit
 )
 

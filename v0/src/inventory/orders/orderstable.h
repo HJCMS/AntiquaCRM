@@ -82,6 +82,7 @@ public Q_SLOTS:
 
 public:
   explicit OrdersTable(QWidget *parent = nullptr);
+  void searchHighlight(const QString &txt, int cell = 0);
 };
 
 #endif // ORDERSTABLE_H

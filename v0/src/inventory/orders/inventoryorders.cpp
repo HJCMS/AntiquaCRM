@@ -2,10 +2,9 @@
 // vim: set fileencoding=utf-8
 
 #include "inventoryorders.h"
-#include "myicontheme.h"
 #include "ordereditor.h"
-#include "ordersmenubutton.h"
 #include "orderstable.h"
+#include "orderstoolbar.h"
 #include <AntiquaCRM>
 
 #include <QDebug>
@@ -37,21 +36,8 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
   m_tableView = new OrdersTable(this);
   siteOneLayout->addWidget(m_tableView);
 
-  QWidget *m_statusBar = new QWidget(this);
-  QHBoxLayout *statusLayout = new QHBoxLayout(m_statusBar);
-  m_statusInfo = new QLabel(m_statusBar);
-  statusLayout->addWidget(m_statusInfo);
-  statusLayout->addStretch(1);
-
-  m_menuButton = new OrdersMenuButton(this);
-  statusLayout->addWidget(m_menuButton);
-
-  QPushButton *btn_refresh = new QPushButton(m_statusBar);
-  btn_refresh->setText(tr("Refresh"));
-  btn_refresh->setIcon(myIcon("reload"));
-  statusLayout->addWidget(btn_refresh);
-  m_statusBar->setLayout(statusLayout);
-  siteOneLayout->addWidget(m_statusBar);
+  m_toolBar = new OrdersToolBar(this);
+  siteOneLayout->addWidget(m_toolBar);
 
   m_stackedWidget->insertWidget(0, siteOneWidget);
   // END Page#0
@@ -77,13 +63,34 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
   connect(m_editor, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
   connect(m_editor, SIGNAL(s_isModified(bool)), this,
           SLOT(setIsModified(bool)));
-  connect(btn_refresh, SIGNAL(clicked()), m_tableView, SLOT(refreshView()));
-  connect(m_menuButton, SIGNAL(sendDefaultView()), m_tableView,
+  connect(m_toolBar, SIGNAL(sendRefreshView()), m_tableView,
+          SLOT(refreshView()));
+  connect(m_toolBar, SIGNAL(sendDefaultView()), m_tableView,
           SLOT(initOrders()));
-  connect(m_menuButton, SIGNAL(sendCustomQuery(const QString &)), m_tableView,
+  connect(m_toolBar, SIGNAL(sendCustomQuery(const QString &)), m_tableView,
           SLOT(setCustomQuery(const QString &)));
+  connect(m_toolBar, SIGNAL(sendSearchText(const QString &)), this,
+          SLOT(searchConvert(const QString &)));
   connect(m_editor, SIGNAL(s_articleCount(int, int)), this,
           SIGNAL(s_articleCount(int, int)));
+}
+
+void InventoryOrders::searchConvert(const QString &txt) {
+  int searchCell; // Siehe OrdersTableModel::headerData
+  switch (m_toolBar->getSearchSection()) {
+  case (OrdersToolBar::SEARCH_CUSTOMER):
+    searchCell = 4; // customer
+    break;
+
+  case (OrdersToolBar::SEARCH_PROVIDER):
+    searchCell = 6; // o_provider_info
+    break;
+
+  default:          // OrdersToolBar::SEARCH_ORDER_ID
+    searchCell = 0; // o_id
+    break;
+  };
+  m_tableView->searchHighlight(txt, searchCell);
 }
 
 void InventoryOrders::openTableView() {

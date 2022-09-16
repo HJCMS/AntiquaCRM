@@ -111,7 +111,7 @@ QVariant OrdersTableModel::headerData(int section, Qt::Orientation orientation,
 
   if (orientation == Qt::Horizontal) {
     switch (section) {
-    case 0: // ib_id
+    case 0: // o_id
       return setHeaderTitel("ID");
 
     case 1: // o_since
