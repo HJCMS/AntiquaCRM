@@ -21,8 +21,8 @@ SET (subproject_LINKER
 
 SET (subproject_SOURCES
   customerbillinginfo.cpp
+  customerpayments.cpp
   customercontact.cpp
-  customeroverview.cpp
   customertableview.cpp
   customerstablemodel.cpp
   editcustomer.cpp
@@ -32,8 +32,8 @@ SET (subproject_SOURCES
 SET (subproject_HEADERS
   customerstatements.h
   customerbillinginfo.h
+  customerpayments.h
   customercontact.h
-  customeroverview.h
   customertableview.h
   customerstablemodel.h
   editcustomer.h
@@ -54,6 +54,5 @@ TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
   Qt${QT_VERSION_MAJOR}::Sql
-  Qt${QT_VERSION_MAJOR}::Xml
   ${subproject_LINKER}
 )

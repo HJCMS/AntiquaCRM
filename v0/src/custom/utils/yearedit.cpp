@@ -22,7 +22,7 @@ YearEdit::YearEdit(QWidget *parent)
   m_year = new QDateEdit(this);
   m_year->setDisplayFormat("yyyy");
   m_year->setMaximumDate(startDate.addYears(+1));
-  m_year->setDate(startDate);
+  m_year->setDate(startDate.addYears(+1));
   layout->addWidget(m_year);
 
   setLayout(layout);

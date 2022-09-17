@@ -1635,7 +1635,7 @@
 <context>
     <name>CustomerBillingInfo</name>
     <message>
-        <location filename="../inventory/customers/customerbillinginfo.cpp" line="+23"/>
+        <location filename="../inventory/customers/customerbillinginfo.cpp" line="+24"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1668,7 +1668,7 @@
 <context>
     <name>CustomerContact</name>
     <message>
-        <location filename="../inventory/customers/customercontact.cpp" line="+27"/>
+        <location filename="../inventory/customers/customercontact.cpp" line="+26"/>
         <source>Gender</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1787,45 +1787,20 @@
     </message>
 </context>
 <context>
-    <name>CustomerOverview</name>
+    <name>CustomerPayments</name>
     <message>
-        <location filename="../inventory/customers/customeroverview.cpp" line="+157"/>
-        <source>Locked</source>
+        <location filename="../inventory/customers/customerpayments.cpp" line="+14"/>
+        <source>Order Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
-        <source>Phone</source>
+        <location line="+1"/>
+        <source>Created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
-        <source>eMail</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>Additional</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Transactions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Purchases</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>last Modified</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Since</source>
+        <location line="+1"/>
+        <source>Delivered</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2369,27 +2344,27 @@
 <context>
     <name>EditCustomer</name>
     <message>
-        <location filename="../inventory/customers/editcustomer.cpp" line="+46"/>
+        <location filename="../inventory/customers/editcustomer.cpp" line="+45"/>
         <source>Customers ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
-        <source>Overview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
+        <location line="+16"/>
         <source>Edit Contact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+10"/>
+        <source>Payments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>Edit Billing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+103"/>
         <source>Saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>

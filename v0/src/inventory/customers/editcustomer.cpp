@@ -4,15 +4,14 @@
 #include "editcustomer.h"
 #include "customerbillinginfo.h"
 #include "customercontact.h"
-#include "customeroverview.h"
+#include "customerpayments.h"
 #include "editoractionbar.h"
 #include "mailforwarddialog.h"
 #include "myicontheme.h"
 #include "serialid.h"
 
 #include <QDebug>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
+#include <QLayout>
 
 // Schalte SQL ausgaben ein
 #ifndef SHOW_SQL_QUERIES
@@ -52,22 +51,33 @@ EditCustomer::EditCustomer(QWidget *parent) : EditorMain{parent} {
   mainLayout->addLayout(headerLayout);
   // END
 
-  // BEGIN ToolBox
   m_dataBox = new QToolBox(this);
-  m_dataBox->setObjectName("customer_edit_box");
+  m_dataBox->setObjectName("customer_boxes");
+  mainLayout->addWidget(m_dataBox);
 
-  m_overview = new CustomerOverview(m_dataBox);
-  m_overview->setObjectName("overview");
-  m_dataBox->addItem(m_overview, myIcon("edit_group"), tr("Overview"));
-
+  // BEGIN Edit Customer
   m_contact = new CustomerContact(m_dataBox);
   m_contact->setObjectName("contact");
   m_dataBox->addItem(m_contact, myIcon("identity"), tr("Edit Contact"));
+  // END
 
-  m_billing = new CustomerBillingInfo(m_dataBox);
-  m_billing->setObjectName("shipping");
-  m_dataBox->addItem(m_billing, myIcon("list"), tr("Edit Billing"));
-  mainLayout->addWidget(m_dataBox);
+  // BEGIN Billing Info & Payments Table
+  QFrame *m_frame = new QFrame(m_dataBox);
+  QVBoxLayout *frameLayout = new QVBoxLayout(m_frame);
+  m_billing = new CustomerBillingInfo(m_frame);
+  m_billing->setObjectName("billing");
+  frameLayout->addWidget(m_billing);
+
+  QString pinfo = tr("Payments");
+  QLabel *m_lb = new QLabel(pinfo, m_frame);
+  frameLayout->addWidget(m_lb);
+
+  m_payments = new CustomerPayments(m_frame);
+  m_payments->setObjectName("payments");
+  frameLayout->addWidget(m_payments);
+
+  m_frame->setLayout(frameLayout);
+  m_dataBox->addItem(m_frame, myIcon("list"), tr("Edit Billing"));
   // END
 
   // BEGIN Actions Bar
@@ -106,6 +116,44 @@ void EditCustomer::setInputList() {
   }
 }
 
+const QString EditCustomer::dateString(const QDate &date) const {
+  return date.toString(Qt::DefaultLocaleLongDate);
+}
+
+void EditCustomer::createPaymentsTable() {
+  int customerID = c_id->value().toInt();
+  if (customerID < 1)
+    return;
+
+  QString sql("SELECT o_id, o_since, o_delivered");
+  sql.append(" FROM inventory_orders WHERE o_customer_id=");
+  sql.append(QString::number(customerID) + " AND ");
+  sql.append(" o_payment_status=true;");
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    m_payments->restore();
+    m_payments->setRowCount(q.size());
+    int row = 0;
+    while (q.next()) {
+      QTableWidgetItem *id =
+          new QTableWidgetItem(q.value("o_id").toString(), Qt::DisplayRole);
+      m_payments->setItem(row, 0, id);
+      QTableWidgetItem *since = new QTableWidgetItem(
+          dateString(q.value("o_since").toDate()), Qt::DisplayRole);
+      m_payments->setItem(row, 1, since);
+      QTableWidgetItem *delivered = new QTableWidgetItem(
+          dateString(q.value("o_delivered").toDate()), Qt::DisplayRole);
+      m_payments->setItem(row, 2, delivered);
+      row++;
+    }
+  }
+#ifdef ANTIQUA_DEVELOPEMENT
+  else {
+    qDebug() << Q_FUNC_INFO << m_sql->lastError();
+  }
+#endif
+}
+
 void EditCustomer::importSqlResult() {
   if (sqlQueryResult.size() < 15)
     return;
@@ -117,7 +165,7 @@ void EditCustomer::importSqlResult() {
   }
   blockSignals(false);
 
-  m_overview->createDocument(sqlQueryResult);
+  createPaymentsTable();
   resetModified(inputList);
 }
 

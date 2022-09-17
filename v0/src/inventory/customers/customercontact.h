@@ -9,12 +9,9 @@
 #include <QWidget>
 
 #include <Utils>
+#include <SqlCore>
 
-namespace HJCMS {
-class SqlCore;
-};
-
-class CustomerContact : public QWidget {
+class CustomerContact final : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -46,7 +43,10 @@ public:
   explicit CustomerContact(QWidget *parent = nullptr);
 
 private:
-  HJCMS::SqlCore *m_sql;    /**< Wird für einige Unterabfragen benötigt! */
+  /**
+   * Wird für einige Unterabfragen benötigt!
+   */
+  HJCMS::SqlCore *m_sql;
 
   /**
    * Mit Postleitzahl Wohnort und Bundesland ermitteln!
@@ -68,7 +68,6 @@ private Q_SLOTS:
    */
   void generateAddressBody();
 
-  // Q_SIGNALS:
 };
 
 #endif // COSTUMERCONTACT_H

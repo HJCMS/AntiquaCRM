@@ -2,19 +2,15 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef COSTUMERBILLINGINFO_H
-#define COSTUMERBILLINGINFO_H
+#ifndef CUSTOMER_BILLING_INFO_H
+#define CUSTOMER_BILLING_INFO_H
 
 #include <QObject>
 #include <QWidget>
 
 #include <Utils>
 
-namespace HJCMS {
-class SqlCore;
-};
-
-class CustomerBillingInfo : public QWidget {
+class CustomerBillingInfo final : public QWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -31,4 +27,4 @@ public:
   explicit CustomerBillingInfo(QWidget *parent = nullptr);
 };
 
-#endif // COSTUMERBILLINGINFO_H
+#endif // CUSTOMER_BILLING_INFO_H

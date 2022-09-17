@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "customerbillinginfo.h"
-#include <SqlCore>
 
 #include <QDebug>
 #include <QGridLayout>
@@ -11,9 +10,11 @@
 
 CustomerBillingInfo::CustomerBillingInfo(QWidget *parent) : QWidget{parent} {
   setObjectName("CustomerBillingInfo");
+  setContentsMargins(0, 0, 0, 0);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("billing_info_layout");
+  layout->setContentsMargins(0, 2, 0, 2);
 
   QGridLayout *row1 = new QGridLayout();
   row1->setObjectName("billing_info_row1");

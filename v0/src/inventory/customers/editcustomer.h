@@ -5,21 +5,22 @@
 #ifndef EDITCOSTUMER_H
 #define EDITCOSTUMER_H
 
+#include <QLabel>
 #include <QObject>
 #include <QRegularExpression>
-#include <QLabel>
 #include <QToolBox>
 #include <QWidget>
+#include <QDate>
 
 #include <EditorMain>
 
 class SerialID;
 class CustomerContact;
-class CustomerOverview;
 class CustomerBillingInfo;
 class EditorActionBar;
+class CustomerPayments;
 
-class EditCustomer : public EditorMain {
+class EditCustomer final : public EditorMain {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
@@ -28,9 +29,9 @@ private:
   QLabel *infoLabel;
   QToolBox *m_dataBox;
   SerialID *c_id;
-  CustomerOverview *m_overview;
   CustomerContact *m_contact;
   CustomerBillingInfo *m_billing;
+  CustomerPayments *m_payments;
   EditorActionBar *m_actionBar;
 
   /**
@@ -48,12 +49,19 @@ private:
    */
   void setInputList();
 
+  /**
+   * @brief Alle Einkäufe auflisten
+   */
+  const QString dateString(const QDate &date) const;
+  void createPaymentsTable();
+
   void importSqlResult();
   bool sendSqlQuery(const QString &);
   const QHash<QString, QVariant> createSqlDataset();
   void createSqlUpdate();
   void createSqlInsert();
-  void setData(const QString &key, const QVariant &value, bool required = false);
+  void setData(const QString &key, const QVariant &value,
+               bool required = false);
 
 private Q_SLOTS:
   void saveData();

@@ -3,7 +3,6 @@
 
 #include "customercontact.h"
 #include "myicontheme.h"
-#include <SqlCore>
 
 #include <QDebug>
 #include <QHBoxLayout>
