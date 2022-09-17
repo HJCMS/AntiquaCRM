@@ -72,8 +72,7 @@ void YearEdit::setInfo(const QString &info) {
 const QString YearEdit::info() { return m_info->text(); }
 
 const QString YearEdit::notes() {
-  QString note = tr("The Year must contain a valid entry.");
-  note.append("\n");
-  note.append(tr("And can not lie in the future."));
-  return note;
+  QString in =
+      tr("The Year must contain a valid entry, it can not lie in the future.");
+  return in;
 }

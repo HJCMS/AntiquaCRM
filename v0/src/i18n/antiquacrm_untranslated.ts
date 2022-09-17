@@ -3409,7 +3409,7 @@
 <context>
     <name>MApplication</name>
     <message>
-        <location filename="../mapplication.cpp" line="+114"/>
+        <location filename="../mapplication.cpp" line="+131"/>
         <source>No valid Network Interfaces found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6455,8 +6455,8 @@
 <context>
     <name>YearEdit</name>
     <message>
-        <location filename="../custom/utils/yearedit.cpp" line="+75"/>
-        <source>The Year must contain a valid entry.</source>
+        <location filename="../custom/utils/yearedit.cpp" line="+76"/>
+        <source>The Year must contain a valid entry, it can not lie in the future.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
