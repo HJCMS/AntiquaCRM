@@ -21,7 +21,7 @@ YearEdit::YearEdit(QWidget *parent)
 
   m_year = new QDateEdit(this);
   m_year->setDisplayFormat("yyyy");
-  m_year->setMaximumDate(startDate);
+  m_year->setMaximumDate(startDate.addYears(+1));
   m_year->setDate(startDate);
   layout->addWidget(m_year);
 
@@ -56,7 +56,7 @@ void YearEdit::setFocus() { m_year->setFocus(); }
 const QVariant YearEdit::value() { return m_year->date().year(); }
 
 bool YearEdit::isValid() {
-  if (isRequired() && m_year->date() == startDate)
+  if (isRequired() && m_year->date() == m_year->maximumDate())
     return false;
 
   return true;
@@ -72,5 +72,8 @@ void YearEdit::setInfo(const QString &info) {
 const QString YearEdit::info() { return m_info->text(); }
 
 const QString YearEdit::notes() {
-  return tr("The Year must contain a valid entry.");
+  QString note = tr("The Year must contain a valid entry.");
+  note.append("\n");
+  note.append(tr("And can not lie in the future."));
+  return note;
 }
