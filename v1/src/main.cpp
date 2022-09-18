@@ -2,13 +2,13 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#include "antiquacrm.h"
+#include "antiquaappl.h"
 
 #include <QApplication>
 #include <QTextCodec>
 
 int main(int argc, char *argv[]) {
-  AntiquaCRM *antiqua = new AntiquaCRM(argc, argv);
+  AntiquaAppl *antiqua = new AntiquaAppl(argc, argv);
   antiqua->setApplicationName("antiquacrm");
   antiqua->setApplicationVersion("1.0.0");
   antiqua->setOrganizationDomain("de.hjcms.antiquacrm");

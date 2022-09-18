@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#include "antiquacrm.h"
+#include "antiquaappl.h"
 #include "antiquawindow.h"
 #include "systemtray.h"
 
@@ -13,16 +13,22 @@ static const QIcon applIcon() {
   return icon;
 }
 
-AntiquaCRM::AntiquaCRM(int &argc, char **argv) : QApplication{argc, argv} {
+AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
   m_mainWindow = new AntiquaWindow();
   m_systemTray = new SystemTray(applIcon(), this);
 }
 
-void AntiquaCRM::initDefaultTheme() {}
+void AntiquaAppl::initDefaultTheme() {}
 
-bool AntiquaCRM::isRunning() { return false; }
+bool AntiquaAppl::isRunning() { return false; }
 
-int AntiquaCRM::exec() {
+int AntiquaAppl::exec() {
+  m_sql = new AntiquaCRM::ASqlCore(this);
+  if (!m_sql->init()) {
+    qFatal("no database connection");
+    return 0;
+  }
+
   if (m_mainWindow != nullptr) {
     m_mainWindow->show();
     m_systemTray->show();
@@ -30,4 +36,4 @@ int AntiquaCRM::exec() {
   return QCoreApplication::exec();
 }
 
-AntiquaCRM::~AntiquaCRM() {}
+AntiquaAppl::~AntiquaAppl() {}

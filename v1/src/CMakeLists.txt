@@ -7,6 +7,8 @@ ADD_SUBDIRECTORY(icons)
 ADD_SUBDIRECTORY(i18n)
 #ADD_SUBDIRECTORY(utils)
 
+INCLUDE(CMakeSubTargets.cmake)
+
 QT5_ADD_RESOURCES (QRC_FILES resources.qrc)
 
 CONFIGURE_FILE (antiqua.rc.cmake
@@ -19,8 +21,12 @@ ELSE (CMAKE_HOST_WIN32)
 SET (PROJECT_RESOURCE_WINDOWS "")
 ENDIF (CMAKE_HOST_WIN32)
 
+SET (PROJECT_LIBS
+ AntiquaCRM
+)
+
 SET (PROJECT_HEADERS
-  antiquacrm.h
+  antiquaappl.h
   antiquawindow.h
   socketnotifier.h
   systemtray.h
@@ -28,7 +34,7 @@ SET (PROJECT_HEADERS
 
 SET (PROJECT_SOURCES
   main.cpp
-  antiquacrm.cpp
+  antiquaappl.cpp
   antiquawindow.cpp
   socketnotifier.cpp
   systemtray.cpp
@@ -47,7 +53,7 @@ TARGET_LINK_LIBRARIES(${PROJECTNAME} PRIVATE
     Qt${QT_VERSION_MAJOR}::Network
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Sql
-    #${_link_project_libs}
+    ${PROJECT_LIBRARIES}
 )
 
 SET_TARGET_PROPERTIES(${PROJECTNAME} PROPERTIES

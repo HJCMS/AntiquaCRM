@@ -6,8 +6,9 @@
 #include <QByteArray>
 #include <QDataStream>
 #include <QDebug>
+#include <QJsonDocument>
+#include <QJsonParseError>
 #include <QSysInfo>
-//#include <QVector>
 
 SocketNotifier::SocketNotifier(QObject *parent) : QLocalServer{parent} {
   setObjectName("socket_notifier");
@@ -21,9 +22,13 @@ void SocketNotifier::incomingConnection(quintptr socketDescriptor) {
   m_listener->setSocketDescriptor(socketDescriptor);
   if (m_listener->waitForReadyRead(timeout)) {
     QByteArray data = m_listener->readAll();
-    QString msg = QString::fromLocal8Bit(data);
-    qDebug() << Q_FUNC_INFO << data << msg;
-    // emit statusMessage(msg);
+    QJsonParseError parser;
+    QJsonDocument jdoc = QJsonDocument::fromJson(data, &parser);
+    if (parser.error == QJsonParseError::NoError) {
+      qDebug() << Q_FUNC_INFO << jdoc;
+    } else {
+      qDebug() << Q_FUNC_INFO << parser.errorString();
+    }
   }
 }
 
