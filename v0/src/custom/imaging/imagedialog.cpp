@@ -20,7 +20,7 @@
 #include <QMessageBox>
 #include <QVBoxLayout>
 
-FileBrowser::FileBrowser(QWidget *parent) : QFileDialog{parent} {
+FileBrowser::FileBrowser(QWidget *parent) : QFileDialog{parent,Qt::SubWindow} {
   setObjectName("file_dialog_widget");
   setWindowFlags(Qt::SubWindow); // TODO Windows Testing
   setWindowModality(Qt::NonModal);
