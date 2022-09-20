@@ -95,16 +95,16 @@ int BooksTable::queryArticleID(const QModelIndex &index) {
 void BooksTable::articleClicked(const QModelIndex &index) {
   int i = queryArticleID(index);
   if (i >= 1)
-    emit s_articleSelected(i);
+    emit sendArticleSelected(i);
 }
 
 void BooksTable::openByContext() {
   int i = queryArticleID(p_modelIndex);
   if (i >= 1)
-    emit s_articleSelected(i);
+    emit sendArticleSelected(i);
 }
 
-void BooksTable::createByContext() { emit s_newEntryPlease(); }
+void BooksTable::createByContext() { emit sendCreateEntry(); }
 
 void BooksTable::contextMenuEvent(QContextMenuEvent *ev) {
   p_modelIndex = indexAt(ev->pos());
@@ -159,12 +159,12 @@ void BooksTable::contextMenuEvent(QContextMenuEvent *ev) {
 
 void BooksTable::copyToClipboard() {
   QVariant id = queryArticleID(p_modelIndex);
-  emit s_toClibboard(id);
+  emit sendToClibboard(id);
 }
 
 void BooksTable::createOrderSignal() {
   QVariant id = queryArticleID(p_modelIndex);
-  emit s_articleToOrders(id.toInt());
+  emit sendArticleToOrders(id.toInt());
 }
 
 void BooksTable::refreshView() {

@@ -71,11 +71,11 @@ protected:
   void contextMenuEvent(QContextMenuEvent *) override;
 
 Q_SIGNALS:
-  void s_toClibboard(const QVariant &);
+  void sendToClibboard(const QVariant &);
   void sendReportQuery(const QString &, int rows);
-  void s_articleSelected(int articleId);
-  void s_articleToOrders(int articleId);
-  void s_newEntryPlease();
+  void sendArticleSelected(int articleId);
+  void sendArticleToOrders(int articleId);
+  void sendCreateEntry();
 
 public Q_SLOTS:
   /**

@@ -83,19 +83,19 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   connect(m_statsBookBar, SIGNAL(sendCreateEntry()), this,
           SLOT(createBookEntry()));
 
-  connect(m_tableView, SIGNAL(s_articleSelected(int)), this,
+  connect(m_tableView, SIGNAL(sendArticleSelected(int)), this,
           SLOT(articleSelected(int)));
 
-  connect(m_tableView, SIGNAL(s_articleToOrders(int)), this,
+  connect(m_tableView, SIGNAL(sendArticleToOrders(int)), this,
           SIGNAL(s_addArticleOrder(int)));
 
-  connect(m_tableView, SIGNAL(s_toClibboard(const QVariant &)), this,
+  connect(m_tableView, SIGNAL(sendToClibboard(const QVariant &)), this,
           SLOT(copyIntoClipboard(const QVariant &)));
 
   connect(m_tableView, SIGNAL(sendReportQuery(const QString &, int)),
           m_statsBookBar, SLOT(showMessage(const QString &, int)));
 
-  connect(m_tableView, SIGNAL(s_newEntryPlease()), this,
+  connect(m_tableView, SIGNAL(sendCreateEntry()), this,
           SLOT(createBookEntry()));
 
   connect(m_bookEditor, SIGNAL(sendStatusMessage(const QString &)), this,
