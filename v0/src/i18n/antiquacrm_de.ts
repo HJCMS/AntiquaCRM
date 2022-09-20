@@ -1085,7 +1085,7 @@
 <context>
     <name>BooksTable</name>
     <message>
-        <location filename="../inventory/books/bookstable.cpp" line="+75"/>
+        <location filename="../inventory/books/bookstable.cpp" line="+76"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
@@ -1105,12 +1105,12 @@
         <translation>Eintrag erstellen</translation>
     </message>
     <message>
-        <location line="-91"/>
+        <location line="-92"/>
         <source>A table row must be selected in order to perform an action.</source>
         <translation>Eine Tabellenreihe muss ausgewählt sein, um eine Aktion ausführen zu können.</translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+104"/>
         <source>add Article to opened Order</source>
         <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
     </message>
@@ -1128,7 +1128,7 @@
 <context>
     <name>BooksTableModel</name>
     <message>
-        <location filename="../inventory/books/bookstablemodel.cpp" line="+107"/>
+        <location filename="../inventory/books/bookstablemodel.cpp" line="+61"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
@@ -1138,7 +1138,7 @@
         <translation>Nein</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+48"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
@@ -1148,12 +1148,12 @@
         <translation>Anzahl</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Author</source>
         <translation>Autor</translation>
     </message>
@@ -1168,12 +1168,12 @@
         <translation>Jahr</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-9"/>
         <source>Price</source>
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+12"/>
         <source>Storage Location</source>
         <translation>Lagerort</translation>
     </message>
@@ -1188,7 +1188,7 @@
         <translation>Geändert am</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-24"/>
         <source>Image exits</source>
         <translation>Bild</translation>
     </message>
@@ -2364,7 +2364,7 @@
         <translation>Rechnungsinformationen bearbeiten</translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+104"/>
         <source>Saved successfully!</source>
         <translation>Speichern erfolgreich!</translation>
     </message>
@@ -2727,7 +2727,7 @@
         <translation>Archiv ist nicht lesbar!</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+35"/>
         <source>no source image exists!</source>
         <translation>Keine Bildquelle gefunden!</translation>
     </message>
@@ -2862,7 +2862,7 @@
         <translation>Bücher</translation>
     </message>
     <message>
-        <location line="+135"/>
+        <location line="+139"/>
         <source>Editor</source>
         <translation></translation>
     </message>
@@ -5902,7 +5902,22 @@
 <context>
     <name>StatsActionBar</name>
     <message>
-        <location filename="../custom/utils/statsactionbar.cpp" line="+43"/>
+        <location filename="../custom/utils/statsactionbar.cpp" line="+44"/>
+        <source>New Entry</source>
+        <translation>Neuer Eintrag</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Create a new entry.</source>
+        <translation>Erstelle einen neuen Eintrag.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>This button is only activated when a search has been carried out!</source>
+        <translation>Dieser Knopf wird erst aktiviert wenn eine Suche durchgeführt wurde!</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>Refresh</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -5942,7 +5957,7 @@
         <translation>dieses Jahr</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+30"/>
         <source>Rowcounts</source>
         <translation>Zeilenanzahl</translation>
     </message>

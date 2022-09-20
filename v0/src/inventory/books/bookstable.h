@@ -8,6 +8,7 @@
 #include <QContextMenuEvent>
 #include <QHash>
 #include <QObject>
+#include <QEvent>
 #include <QString>
 #include <QTableView>
 
@@ -67,11 +68,11 @@ private Q_SLOTS:
   void createOrderSignal();
 
 protected:
-  void contextMenuEvent(QContextMenuEvent *);
+  void contextMenuEvent(QContextMenuEvent *) override;
 
 Q_SIGNALS:
   void s_toClibboard(const QVariant &);
-  void s_reportQuery(const QString &);
+  void sendReportQuery(const QString &, int rows);
   void s_articleSelected(int articleId);
   void s_articleToOrders(int articleId);
   void s_newEntryPlease();

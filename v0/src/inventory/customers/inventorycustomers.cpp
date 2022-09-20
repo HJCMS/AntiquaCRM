@@ -111,10 +111,10 @@ InventoryCustomers::InventoryCustomers(QWidget *parent) : Inventory{parent} {
 
   connect(m_editCustomer, SIGNAL(s_leaveEditor()), this, SLOT(openTableView()));
 
-  connect(m_statsActionBar, SIGNAL(s_queryHistory(const QString &)),
+  connect(m_statsActionBar, SIGNAL(sendQueryHistory(const QString &)),
           m_tableView, SLOT(queryHistory(const QString &)));
 
-  connect(m_statsActionBar, SIGNAL(s_refreshView()), m_tableView,
+  connect(m_statsActionBar, SIGNAL(sendRefreshView()), m_tableView,
           SLOT(refreshView()));
 
   connect(m_editCustomer, SIGNAL(sendStatusMessage(const QString &)), this,

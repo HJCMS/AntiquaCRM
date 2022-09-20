@@ -18,10 +18,10 @@
  * \ref BooksTableModel die Feld Definition geändert werden!
  */
 static const QString InventoryBooksSelect() {
-  QString s("ib_id,ib_count,ib_title,ib_author,");
-  s.append("ib_publisher,ib_year,ib_price,sl_storage,ib_isbn,ib_changed");
+  QString s("ib_id,ib_count");
   s.append(",(CASE WHEN im_id IS NOT NULL THEN true ELSE false END)");
-  s.append(" AS image_exists ");
+  s.append(" AS image_exists,ib_title,ib_price::MONEY,ib_author,ib_publisher");
+  s.append(",ib_year,sl_storage,ib_isbn,ib_changed");
   return s;
 }
 

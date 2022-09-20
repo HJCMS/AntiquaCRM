@@ -39,8 +39,9 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   m_tableView = new BooksTable(this);
   siteOneLayout->addWidget(m_tableView);
 
-  m_statsBookBar = new StatsActionBar(this);
+  m_statsBookBar = new StatsActionBar(this, true);
   siteOneLayout->addWidget(m_statsBookBar);
+
   m_stackedWidget->insertWidget(0, siteOneWidget);
   // END Page#0
 
@@ -73,11 +74,14 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
 
   connect(m_searchBar, SIGNAL(searchClicked()), this, SLOT(searchConvert()));
 
-  connect(m_statsBookBar, SIGNAL(s_queryHistory(const QString &)), m_tableView,
-          SLOT(queryHistory(const QString &)));
+  connect(m_statsBookBar, SIGNAL(sendQueryHistory(const QString &)),
+          m_tableView, SLOT(queryHistory(const QString &)));
 
-  connect(m_statsBookBar, SIGNAL(s_refreshView()), m_tableView,
+  connect(m_statsBookBar, SIGNAL(sendRefreshView()), m_tableView,
           SLOT(refreshView()));
+
+  connect(m_statsBookBar, SIGNAL(sendCreateEntry()), this,
+          SLOT(createBookEntry()));
 
   connect(m_tableView, SIGNAL(s_articleSelected(int)), this,
           SLOT(articleSelected(int)));
@@ -88,8 +92,8 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   connect(m_tableView, SIGNAL(s_toClibboard(const QVariant &)), this,
           SLOT(copyIntoClipboard(const QVariant &)));
 
-  connect(m_tableView, SIGNAL(s_reportQuery(const QString &)), m_statsBookBar,
-          SLOT(showMessage(const QString &)));
+  connect(m_tableView, SIGNAL(sendReportQuery(const QString &, int)),
+          m_statsBookBar, SLOT(showMessage(const QString &, int)));
 
   connect(m_tableView, SIGNAL(s_newEntryPlease()), this,
           SLOT(createBookEntry()));

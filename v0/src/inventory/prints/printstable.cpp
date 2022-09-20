@@ -102,7 +102,7 @@ bool PrintsTable::sqlExecQuery(const QString &statement) {
       message.failed(statement, m_queryModel->lastError().text());
       return false;
     }
-    emit s_rowsChanged(m_queryModel->rowCount());
+    emit s_rowsChanged(m_queryModel->query().size());
     return true;
   } else {
     qWarning("No SQL Connection in Booktable");

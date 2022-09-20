@@ -22,7 +22,6 @@ private:
 public:
   explicit BooksTableModel(QObject *parent = nullptr);
   QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-
   QVariant headerData(int section, Qt::Orientation orientation,
                       int role = Qt::DisplayRole) const;
 };

@@ -22,7 +22,7 @@
 
 FileBrowser::FileBrowser(QWidget *parent) : QFileDialog{parent,Qt::SubWindow} {
   setObjectName("file_dialog_widget");
-  setWindowFlags(Qt::SubWindow); // TODO Windows Testing
+  setWindowFlags(Qt::SubWindow);
   setWindowModality(Qt::NonModal);
   setWindowState(Qt::WindowNoState);
   setSizeGripEnabled(false);
@@ -102,12 +102,8 @@ bool ImageDialog::findSourceImage() {
   QStringList search;
   search << imageId + ".JPG";
   search << imageId + ".jpg";
-  search << imageId + ".JPEG";
-  search << imageId + ".jpeg";
   search << fullImageId + ".JPG";
   search << fullImageId + ".jpg";
-  search << fullImageId + ".JPEG";
-  search << fullImageId + ".jpeg";
 
   QStringList found;
   QDirIterator it(basePath, search, QDir::NoFilter,

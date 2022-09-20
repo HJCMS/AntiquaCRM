@@ -5,28 +5,28 @@
 #ifndef STATSACTIONBAR_UTILS_H
 #define STATSACTIONBAR_UTILS_H
 
-#include <QObject>
-#include <QTimerEvent>
 #include <QComboBox>
 #include <QLabel>
+#include <QObject>
 #include <QPushButton>
+#include <QTimerEvent>
 #include <QToolBar>
 
 /**
-    @brief StatsActionBar
-    Wird unterhalb der Buchtabelle angezeigt.
-    In diesem Toolbar ist enthalten:
-     @li Text Nachrichten (Label)
-     @li Verlaufsauswahl  (ComboBox)
-     @li Erstellen Knopf  (PushButton)
-
-    Die Verlaufsauswahl löst aus:
-     @li 1: "#today"
-     @li 2: "#yesterday"
-     @li 3: "#last7days"
-     @li 4: "#thismonth"
-     @li 5: "#thisyear"
-*/
+ * @class StatsActionBar
+ * @brief Wird unterhalb der Buchtabelle angezeigt.
+ * In diesem Toolbar ist enthalten:
+ *  @li Text Nachrichten (Label)
+ *  @li Verlaufsauswahl  (ComboBox)
+ *  @li Erstellen Knopf  (PushButton)
+ *
+ * Die Verlaufsauswahl löst aus:
+ *  @li 1: "#today"
+ *  @li 2: "#yesterday"
+ *  @li 3: "#last7days"
+ *  @li 4: "#thismonth"
+ *  @li 5: "#thisyear"
+ */
 class StatsActionBar : public QToolBar {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -34,106 +34,110 @@ class StatsActionBar : public QToolBar {
 
 private:
   /**
-    @brief Timer ID
-    Warte mit timerEvent() auf Datenbank Verbindung
-  */
+   * @brief Timer ID Warte mit timerEvent() auf Datenbank Verbindung
+   */
   int timerID;
 
   /**
-    @brief Zähler für Timer
-    Wenn keine Datenbank vorhanden ist dann
-    nach 30s ein killTimer ausführen.
-  */
+   * @brief Zähler für Timer
+   * Wenn keine Datenbank vorhanden ist dann nach 30s ein killTimer ausführen.
+   */
   int countIDs;
 
   /**
-     @brief timeToLife
-     Zeit bis Timer Zwangsbeendet wird.
-  */
+   * @brief Zeit bis Timer Zwangsbeendet wird.
+   */
   int timeToLife = 30;
 
   /**
-    @brief Info Textfeld
-    Hier werden Nachrichten ausgegeben.
-  */
+   * @brief Info Textfeld
+   * Hier werden Nachrichten ausgegeben.
+   */
   QLabel *m_infoLabel;
 
   /**
-    @brief Auswahl ...
-    um den Datenbankverlauf auf zu rufen.
+   * @brief Neuer Eintrage
+   */
+  QPushButton *btn_new;
+
+  /**
+   * @brief Aktualisieren
+   */
+  QPushButton *btn_refresh;
+
+  /**
+   * @brief Auswahl um den Datenbankverlauf auf zu rufen.
    */
   QComboBox *m_showHistory;
 
   /**
-   @brief Auswahl Verlaufabfrage erstellen
-   @note Die Definition ist abhängig von
-       @ref BooksTableView::queryHistory()
-  */
+   * @brief Auswahl Verlaufabfrage erstellen
+   * @note Die Definition ist abhängig von @ref BooksTableView::queryHistory()
+   */
   void addComboBoxData();
 
 private Q_SLOTS:
   /**
-    @brief Erstellt eine Verlaufsanfrage
-    Löst bei vorhandenen Daten das Signal
-    @ref s_queryHistory aus. Die ComboBox
-    wird danach wieder auf currentIndex(0)
-    gestellt.
-    @note Während des Zurücksetzens sind
-          alle Signale blockiert!
-  */
+   * @brief Erstellt eine Verlaufsanfrage Löst bei vorhandenen Daten das Signal
+   * @ref s_queryHistory aus. Die ComboBox wird danach wieder auf
+   * currentIndex(0) gestellt.
+   * @note Während des Zurücksetzens sind alle Signale blockiert!
+   */
   void historyChanged(int);
 
 protected:
   /**
-   @brief Timer wartet auf db::isOpen
-   Weil zum Zeitpunkt der Klassen
-   Initialisierung noch keine Datenbank
-   Verbindung besteht. Läuft hier der
-   Timer so lange bis er eine findet.
-   @li Wenn Ja - Wird setThisDayHistory
-       ausgelöst und der Timer beendet.
-   @li Wenn Nein - Wird er sich nach 30s
-       beenden und gibt den Speicher frei.
-       Siehe @see timeToLife
-  */
+   * @brief Timer wartet auf db::isOpen Weil zum Zeitpunkt der Klassen
+   * Initialisierung noch keine Datenbank Verbindung besteht. Läuft hier der
+   * Timer so lange bis er eine findet.
+   * @li Wenn Ja - Wird setThisDayHistory ausgelöst und der Timer beendet.
+   * @li Wenn Nein - Wird er sich nach 30s beenden und gibt den Speicher frei.
+   * Siehe @see timeToLife
+   */
   void timerEvent(QTimerEvent *);
 
 Q_SIGNALS:
   /**
-     @brief Knopf auffrischen wurde ausgelöst.
+   * @brief Knopf auffrischen wurde ausgelöst.
    */
-  void s_refreshView();
+  void sendRefreshView();
 
   /**
-     @brief Auswahl Verlauf wurde getätigt
-     Gibt den Benutzerdefiniert zurück.
-     @note Siehe Verlaufsauswahl in der
-           Klassenbeschreibung!
-  */
-  void s_queryHistory(const QString &);
+   * @brief Auswahl Verlauf wurde getätigt Gibt den Benutzerdefiniert zurück.
+   * @note Siehe Verlaufsauswahl in der Klassenbeschreibung!
+   */
+  void sendQueryHistory(const QString &);
+
+  /**
+   * @brief Einen neuen Eintrag erstellen!
+   */
+  void sendCreateEntry();
 
 public Q_SLOTS:
   /**
-     @brief Interne Nachrichten
-     @param QString
-     @see QLabel::m_infoLabel
+   * @brief Interne Nachrichten
+   * @see QLabel::m_infoLabel
    */
-  void showMessage(const QString &);
+  void showMessage(const QString &message, int rows = 0);
 
   /**
-     @brief showRowCount
-     Tabellenzeilenanzahl ausgeben
-     @param count
+   * @brief Tabellenzeilenanzahl ausgeben
    */
   void showRowCount(int count);
 
   /**
-    @brief Wähle DB-Verlauf von @b Heute aus
-  */
+   * @brief Wähle DB-Verlauf von @b Heute aus
+   */
   void setThisDayHistory();
 
+  /**
+   * @brief Erstellen Button aktivieren
+   */
+  void setEnableCreateButton(bool b);
+
 public:
-  explicit StatsActionBar(QWidget *parent = nullptr);
+  explicit StatsActionBar(QWidget *parent = nullptr,
+                          bool showCreateButton = false);
 };
 
 #endif // STATSACTIONBAR_UTILS_H

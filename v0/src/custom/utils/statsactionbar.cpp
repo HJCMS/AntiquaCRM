@@ -6,16 +6,17 @@
 #include <AntiquaCRM>
 
 #include <QDebug>
+#include <QHBoxLayout>
 #include <QList>
 #include <QObject>
-#include <QSqlDatabase>
-#include <QHBoxLayout>
 #include <QSpacerItem>
+#include <QSqlDatabase>
 
 static const QIcon comboBoxIcon() { return myIcon("info"); }
 
-StatsActionBar::StatsActionBar(QWidget *parent) : QToolBar{parent} {
-  if(objectName().isEmpty())
+StatsActionBar::StatsActionBar(QWidget *parent, bool showCreateButton)
+    : QToolBar{parent} {
+  if (objectName().isEmpty())
     setObjectName("StatsActionBar");
 
   setOrientation(Qt::Horizontal);
@@ -40,13 +41,27 @@ StatsActionBar::StatsActionBar(QWidget *parent) : QToolBar{parent} {
   addWidget(m_info);
   // END "Messanger Area"
 
-  QPushButton *refresh = new QPushButton(tr("Refresh"), this);
-  refresh->setObjectName("refresh_button");
-  refresh->setIcon(myIcon("reload"));
-  refresh->setShortcut(QKeySequence::Refresh);
-  addWidget(refresh);
+  btn_new = new QPushButton(tr("New Entry"), this);
+  btn_new->setObjectName("create_button");
+  QString btn_info = tr("Create a new entry.");
+  btn_info.append("\n");
+  btn_info.append(
+      tr("This button is only activated when a search has been carried out!"));
+  btn_new->setToolTip(btn_info);
+  btn_new->setIcon(myIcon("db_add"));
+  btn_new->setEnabled(false);
+  btn_new->setVisible(showCreateButton);
+  addWidget(btn_new);
 
-  connect(refresh, SIGNAL(clicked()), this, SIGNAL(s_refreshView()));
+  connect(btn_new, SIGNAL(clicked()), this, SIGNAL(sendCreateEntry()));
+
+  btn_refresh = new QPushButton(tr("Refresh"), this);
+  btn_refresh->setObjectName("refresh_button");
+  btn_refresh->setIcon(myIcon("reload"));
+  btn_refresh->setShortcut(QKeySequence::Refresh);
+  addWidget(btn_refresh);
+
+  connect(btn_refresh, SIGNAL(clicked()), this, SIGNAL(sendRefreshView()));
 
   addSeparator();
 
@@ -85,7 +100,7 @@ void StatsActionBar::timerEvent(QTimerEvent *t) {
 
 void StatsActionBar::historyChanged(int i) {
   if (i > 0 && !m_showHistory->itemData(i, Qt::UserRole).toString().isEmpty()) {
-    emit s_queryHistory(m_showHistory->itemData(i, Qt::UserRole).toString());
+    emit sendQueryHistory(m_showHistory->itemData(i, Qt::UserRole).toString());
 
     blockSignals(true);
     m_showHistory->setCurrentIndex(0);
@@ -93,8 +108,10 @@ void StatsActionBar::historyChanged(int i) {
   }
 }
 
-void StatsActionBar::showMessage(const QString &str) {
-  m_infoLabel->setText(str);
+void StatsActionBar::showMessage(const QString &message, int rows) {
+  m_infoLabel->setText(message);
+  if (btn_new->isVisible())
+    btn_new->setEnabled(rows > 0);
 }
 
 void StatsActionBar::showRowCount(int count) {
@@ -109,3 +126,5 @@ void StatsActionBar::setThisDayHistory() {
   if (i >= 1)
     m_showHistory->setCurrentIndex(i);
 }
+
+void StatsActionBar::setEnableCreateButton(bool b) { btn_new->setEnabled(b); }

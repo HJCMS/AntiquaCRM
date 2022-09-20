@@ -72,10 +72,11 @@ bool BooksTable::sqlExecQuery(const QString &statement) {
       return false;
     }
     mutex.unlock();
+    int rows = m_queryModel->query().size();
     QString m = QString(tr("Rows: %1, Time: %2 msec."))
-                    .arg(QString::asprintf("%d", m_queryModel->rowCount()),
+                    .arg(QString::asprintf("%d", rows),
                          QString::asprintf("%d", time.msec()));
-    emit s_reportQuery(m);
+    emit sendReportQuery(m, rows);
     return true;
   } else {
     qWarning("No SQL Connection in Booktable");

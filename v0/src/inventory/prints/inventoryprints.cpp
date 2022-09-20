@@ -98,9 +98,9 @@ InventoryPrints::InventoryPrints(QWidget *parent) : Inventory{parent} {
           SLOT(articleSelected(int)));
   connect(m_tableView, SIGNAL(s_articleToOrders(int)), this,
           SIGNAL(s_addArticleOrder(int)));
-  connect(m_statsPrintBar, SIGNAL(s_queryHistory(const QString &)), m_tableView,
+  connect(m_statsPrintBar, SIGNAL(sendQueryHistory(const QString &)), m_tableView,
           SLOT(queryHistory(const QString &)));
-  connect(m_statsPrintBar, SIGNAL(s_refreshView()), m_tableView,
+  connect(m_statsPrintBar, SIGNAL(sendRefreshView()), m_tableView,
           SLOT(refreshView()));
   connect(m_tableView, SIGNAL(s_newEntryPlease()), this,
           SLOT(createPrintsEntry()));
