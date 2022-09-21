@@ -148,7 +148,7 @@ void EditCustomer::createPaymentsTable() {
     }
   }
 #ifdef ANTIQUA_DEVELOPEMENT
-  else {
+  else if(!m_sql->lastError().isNull()) {
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
   }
 #endif
@@ -198,7 +198,6 @@ const QHash<QString, QVariant> EditCustomer::createSqlDataset() {
     if (ignoreList.contains(cur->objectName(), Qt::CaseSensitive))
       continue;
 
-    // qDebug() << Q_FUNC_INFO << cur->objectName();
     if (cur->isRequired() && !cur->isValid()) {
       messanger.notice(cur->notes());
       cur->setFocus();
@@ -241,11 +240,13 @@ void EditCustomer::createSqlUpdate() {
   sql.append(";");
 
   if (sendSqlQuery(sql)) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qInfo("SQLQuery:OK - Update Customer Interfaces");
-#endif
     updateCustomer("c_id=" + cid);
   }
+#ifdef ANTIQUA_DEVELOPEMENT
+  else {
+    qInfo("SQLQuery:NOT OK - Update Customer Interfaces");
+  }
+#endif
 }
 
 void EditCustomer::createSqlInsert() {
