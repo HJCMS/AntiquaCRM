@@ -44,7 +44,6 @@ void KeywordTable::refresh() {
     m_headerView->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     m_headerView->setSectionResizeMode(1, QHeaderView::Stretch);
     m_headerView->setSectionResizeMode(2, QHeaderView::ResizeToContents);
-    m_headerView->setSectionResizeMode(3, QHeaderView::ResizeToContents);
   }
 }
 

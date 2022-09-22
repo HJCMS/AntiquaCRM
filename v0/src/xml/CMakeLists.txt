@@ -5,15 +5,11 @@ SET (xml_FILES
   ib_publisher_de.xml
   eu_countries.xml
   categories_abebooks.xml
-)
-
-SET (homebase_FILES
-  BookListingXml.tpl
+  categories_booklooker.xml
 )
 
 SET (source_FILES
   ${xml_FILES}
-  ${homebase_FILES}
 )
 
 file(COPY ${xml_FILES} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

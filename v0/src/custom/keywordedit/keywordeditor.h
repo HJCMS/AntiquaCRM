@@ -27,7 +27,6 @@ private:
   QSpinBox *m_id;
   QLineEdit *m_keyword;
   QCheckBox *m_booksUsage;
-  QComboBox *m_booklooker;
   QPushButton *m_btnClear;
   QPushButton *m_btnCommit;
   const QRegExp p_validateRegExp = QRegExp("([\\w\\d]+)");
@@ -46,15 +45,12 @@ public Q_SLOTS:
   void setKeyId(int);
   void setKeyword(const QString &);
   void setBookUsage(bool b = true);
-  void setBooklooker(int bl_id);
 
 public:
   explicit KeywordEditor(QWidget *parent = nullptr);
   int getKeyId();
   const QString getKeyword();
   bool getBookUsage();
-  void setBooklookerBox(const QMap<QString,int> &map);
-  int getBooklooker();
 };
 
 #endif // KEYWORD_EDITOR_H

@@ -14,7 +14,7 @@ StorageModel::StorageModel(const QSqlDatabase &db, QObject *parent)
     : QSqlTableModel{parent, db} {
   setTable("ref_storage_location");
   setPrimaryKey(QSqlIndex("ref_storage_location", "storage_location_pkey"));
-  setFilter("sl_id>0");
+  setFilter("sl_id>0 AND sl_identifier IS NOT NULL");
   setSort(fieldIndex("sl_storage"), Qt::AscendingOrder);
 }
 
@@ -41,10 +41,16 @@ QVariant StorageModel::headerData(int section, Qt::Orientation orientation,
       return tr("Location");
 
     case 4: // sl_zvab_id
-      return "ZVAB Id";
+      return "ZVAB";
 
     case 5: // sl_zvab_name
       return "ZVAB " + tr("Category");
+
+    case 6: // sl_booklooker_id
+      return "Booklooker";
+
+    case 7: // sl_booklooker_name
+      return "Booklooker " + tr("Category");
 
     default:
       return section;

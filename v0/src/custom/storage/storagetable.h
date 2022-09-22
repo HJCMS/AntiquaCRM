@@ -55,6 +55,8 @@ public:
     QString sl_location;
     qint64 sl_zvab_id;
     QString sl_zvab_name;
+    qint64 sl_booklooker_id;
+    QString sl_booklooker_name;
   };
   StorageTable(QWidget *parent = nullptr);
 

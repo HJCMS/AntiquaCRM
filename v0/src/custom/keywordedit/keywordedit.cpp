@@ -50,20 +50,6 @@ KeywordEdit::KeywordEdit(QWidget *parent) : QDialog{parent} {
           SLOT(insertKeywordEntry(const QJsonObject &)));
 }
 
-bool KeywordEdit::initBooklooker() {
-  QString sql("SELECT * FROM ref_booklooker ORDER BY bl_section ASC;");
-  QSqlQuery q = m_sql->query(sql);
-  QMap<QString,int> map;
-  if (q.size() > 0) {
-    while (q.next()) {
-      map.insert(q.value("bl_section").toString(),q.value("bl_id").toInt());
-    }
-    m_editor->setBooklookerBox(map);
-    return true;
-  }
-  return false;
-}
-
 void KeywordEdit::searchKeyword() {
   QString search = m_searchLine->text().trimmed();
   if (!search.isEmpty())
@@ -83,7 +69,6 @@ void KeywordEdit::queryKeywordEntry(int id) {
         m_editor->setKeyId(id);
         m_editor->setKeyword(q.value("ci_name").toString());
         m_editor->setBookUsage(q.value("ci_company_usage").toBool());
-        m_editor->setBooklooker(q.value("ci_booklooker_id").toInt());
         break;
       }
     }
@@ -99,11 +84,9 @@ void KeywordEdit::updateKeywordEntry(const QJsonObject &obj) {
     return;
 
   QString usage = obj.value("ci_company_usage").toBool() ? "true" : "false";
-  int bl_id = obj.value("ci_booklooker_id").toInt();
   QString sql("UPDATE categories_intern SET ");
   sql.append("ci_name='" + obj.value("ci_name").toString() + "'");
   sql.append(",ci_company_usage=" + usage);
-  sql.append(",ci_booklooker_id=" + QString::number(bl_id));
   sql.append(" WHERE ci_id=" + QString::number(id));
   sql.append(";");
   m_sql->query(sql);
@@ -123,11 +106,9 @@ void KeywordEdit::insertKeywordEntry(const QJsonObject &obj) {
     return;
   }
   QString bcu = obj.value("ci_company_usage").toBool() ? "true" : "false";
-  int bl_id = obj.value("ci_booklooker_id").toInt();
   QString sql("INSERT INTO categories_intern");
-  sql.append(" (ci_name,ci_company_usage,ci_booklooker_id)");
-  sql.append(" VALUES ('" + ci_name + "'");
-  sql.append("," + bcu + "," + QString::number(bl_id) + ");");
+  sql.append(" (ci_name,ci_company_usage)");
+  sql.append(" VALUES ('" + ci_name + "'," + bcu + ");");
   m_sql->query(sql);
   if (m_sql->lastError().isEmpty()) {
     m_editor->clear();
@@ -141,8 +122,6 @@ void KeywordEdit::insertKeywordEntry(const QJsonObject &obj) {
 int KeywordEdit::exec() {
   if (m_table != nullptr)
     m_table->refresh();
-
-  initBooklooker();
 
   return QDialog::exec();
 }

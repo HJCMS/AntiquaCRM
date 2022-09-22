@@ -12,12 +12,16 @@ SET (subproject_SOURCES
   storagelocation.cpp
   storagetable.cpp
   storagemodel.cpp
+  storagecategory.cpp
+  storageeditor.cpp
 )
 
 SET (subproject_HEADERS
   storagelocation.h
   storagetable.h
   storagemodel.h
+  storagecategory.h
+  storageeditor.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC
@@ -34,5 +38,6 @@ TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
   Qt${QT_VERSION_MAJOR}::Sql
+  Qt${QT_VERSION_MAJOR}::Xml
   ${subproject_LINKER}
 )

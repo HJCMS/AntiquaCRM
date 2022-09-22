@@ -8,44 +8,14 @@
 #include <QAction>
 #include <QDialog>
 #include <QDialogButtonBox>
-#include <QEvent>
-#include <QHash>
 #include <QKeyEvent>
 #include <QLabel>
 #include <QLineEdit>
-#include <QRegularExpression>
-#include <QSpinBox>
 #include <QStatusBar>
 #include <QToolBar>
 
-#include "storagetable.h"
-
-class EditorWidget final : public QWidget {
-  Q_OBJECT
-  Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "https://www.hjcms.de")
-
-private:
-  const QRegularExpression pattern;
-  QSpinBox *sl_id;
-  QLineEdit *sl_storage;
-  QLineEdit *sl_identifier;
-  QLineEdit *sl_location;
-  QSpinBox *sl_zvab_id;
-  QLineEdit *sl_zvab_name;
-
-  QLabel *subTitle(const QString &) const;
-
-  bool check(QLineEdit *);
-
-public Q_SLOTS:
-  void setValue(const StorageTable::RowValues &items);
-  void clear();
-
-public:
-  EditorWidget(QWidget *parent = nullptr);
-  const QString sqlQuery();
-};
+class StorageTable;
+class StorageEditor;
 
 class StorageLocation final : public QDialog {
   Q_OBJECT
@@ -58,9 +28,10 @@ private:
   QLineEdit *m_search;
   QAction *ac_search;
   StorageTable *m_table;
-  EditorWidget *m_editorWidget;
+  StorageEditor *m_editorWidget;
   QDialogButtonBox *m_btnBox;
   QStatusBar *m_statusBar;
+
   void keyPressEvent(QKeyEvent *);
   bool event(QEvent *);
 

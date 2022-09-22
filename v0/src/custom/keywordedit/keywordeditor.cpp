@@ -38,9 +38,6 @@ KeywordEditor::KeywordEditor(QWidget *parent) : QGroupBox{parent} {
   m_id->setReadOnly(true);
   layout->addWidget(m_id, 1, 1, 1, 1, Qt::AlignLeft);
 
-  m_booklooker = new QComboBox(this);
-  layout->addWidget(m_booklooker, 1, 2, 1, 1, Qt::AlignLeft);
-
   m_btnClear = new QPushButton(tr("Clear"), this);
   m_btnClear->setIcon(myIcon("editclear"));
   m_btnClear->setToolTip(tr("Clear all fields, to create a new Keyword."));
@@ -64,7 +61,6 @@ void KeywordEditor::prepareCommit() {
 
   obj.insert("ci_name", QJsonValue(getKeyword()));
   obj.insert("ci_company_usage", QJsonValue(getBookUsage()));
-  obj.insert("ci_booklooker_id", QJsonValue(getBooklooker()));
 
   if (id == 0)
     emit insertKeyword(obj);
@@ -88,32 +84,8 @@ void KeywordEditor::setKeyword(const QString &keyword) {
 
 void KeywordEditor::setBookUsage(bool b) { m_booksUsage->setChecked(b); }
 
-void KeywordEditor::setBooklooker(int bl_id) {
-  for (int i = 0; i < m_booklooker->count(); i++) {
-    if (m_booklooker->itemData(i, Qt::UserRole).toInt() == bl_id) {
-      m_booklooker->setCurrentIndex(i);
-      break;
-    }
-  }
-}
-
 int KeywordEditor::getKeyId() { return m_id->value(); }
 
 const QString KeywordEditor::getKeyword() { return m_keyword->text(); }
 
 bool KeywordEditor::getBookUsage() { return m_booksUsage->isChecked(); }
-
-void KeywordEditor::setBooklookerBox(const QMap<QString,int> &map) {
-  m_booklooker->clear();
-  m_booklooker->addItem("Booklooker", 0);
-  QMapIterator<QString,int> it(map);
-  while (it.hasNext()) {
-    it.next();
-    m_booklooker->addItem(it.key(),it.value());
-  }
-}
-
-int KeywordEditor::getBooklooker() {
-  int i = m_booklooker->currentIndex();
-  return m_booklooker->itemData(i, Qt::UserRole).toInt();
-}

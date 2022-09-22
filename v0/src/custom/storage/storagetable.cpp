@@ -15,13 +15,15 @@ StorageHeader::StorageHeader(QWidget *parent)
 }
 
 StorageTable::StorageTable(QWidget *parent)
-    : QTableView{parent}, whereClause("sl_id>0") {
+    : QTableView{parent}, whereClause("sl_id>0 AND sl_identifier IS NOT NULL") {
   setEditTriggers(QAbstractItemView::NoEditTriggers);
   setCornerButtonEnabled(false);
   setDragEnabled(false);
   setDragDropOverwriteMode(false);
   setAlternatingRowColors(true);
   setSortingEnabled(true);
+  setSelectionBehavior(QAbstractItemView::SelectRows);
+  setSelectionMode(QAbstractItemView::SingleSelection);
 
   m_sql = new HJCMS::SqlCore(this);
 
@@ -53,6 +55,8 @@ void StorageTable::itemClicked(const QModelIndex &index) {
     i.sl_location = m_model->data(p.sibling(p.row(), 3)).toString();
     i.sl_zvab_id = m_model->data(p.sibling(p.row(), 4)).toInt();
     i.sl_zvab_name = m_model->data(p.sibling(p.row(), 5)).toString();
+    i.sl_booklooker_id = m_model->data(p.sibling(p.row(), 6)).toInt();
+    i.sl_booklooker_name = m_model->data(p.sibling(p.row(), 7)).toString();
     emit itemChanged(i);
   }
 }
