@@ -2369,7 +2369,7 @@
         <translation>Speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+141"/>
+        <location line="+142"/>
         <source>Unsaved Changes, don&apos;t leave this page before saved.</source>
         <translation>Nicht gespeicherte Änderungen, verlassen Sie diese Seite nicht, bevor Sie sie gespeichert haben.</translation>
     </message>
@@ -2415,44 +2415,6 @@
         <location line="+5"/>
         <source>Go back to Mainview</source>
         <translation>Gehe zurück zur Hauptansicht</translation>
-    </message>
-</context>
-<context>
-    <name>EditorWidget</name>
-    <message>
-        <location filename="../custom/storage/storagelocation.cpp" line="+27"/>
-        <source>Storage ID</source>
-        <translation>Lager-Id</translation>
-    </message>
-    <message>
-        <location line="-5"/>
-        <source>Empty data fields not accepted and reject this operation.</source>
-        <translation>Leere Datenfelder sind nicht erlaubt und werden abgelehnt.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Storage</source>
-        <translation>Lager</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Identifier</source>
-        <translation>Zuordnung</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Location</source>
-        <translation>Ort</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Deprecated AbeBooks (ZVAB) Categories.</source>
-        <translation>Veraltete AbeBooks (ZVAB) Kategorien.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Category</source>
-        <translation>Kategorie</translation>
     </message>
 </context>
 <context>
@@ -3239,14 +3201,14 @@
         <translation>Suche</translation>
     </message>
     <message>
-        <location line="+63"/>
-        <location line="+23"/>
-        <location line="+22"/>
+        <location line="+48"/>
+        <location line="+21"/>
+        <location line="+20"/>
         <source>Database query success!</source>
         <translation>Datenbankabfrage erfolgreich!</translation>
     </message>
     <message>
-        <location line="-13"/>
+        <location line="-11"/>
         <source>Missing Keyword!</source>
         <translation>Kein Schlüsselwort gefunden!</translation>
     </message>
@@ -3284,7 +3246,7 @@
         <translation>Datenbank Id</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+7"/>
         <source>Clear</source>
         <translation>Leeren</translation>
     </message>
@@ -5984,6 +5946,19 @@
     </message>
 </context>
 <context>
+    <name>StorageCategory</name>
+    <message>
+        <location filename="../custom/storage/storagecategory.cpp" line="+17"/>
+        <source>Search Category</source>
+        <translation>Suche Kategorie</translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <source>Without disclosures</source>
+        <translation>Keine Angaben</translation>
+    </message>
+</context>
+<context>
     <name>StorageEdit</name>
     <message>
         <location filename="../custom/utils/storageedit.cpp" line="+28"/>
@@ -6002,9 +5977,42 @@
     </message>
 </context>
 <context>
+    <name>StorageEditor</name>
+    <message>
+        <location filename="../custom/storage/storageeditor.cpp" line="+25"/>
+        <source>Empty data fields not accepted and reject this operation.</source>
+        <translation>Leere Datenfelder sind nicht erlaubt und werden abgelehnt.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Storage ID</source>
+        <translation>Lager-Id</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Storage</source>
+        <translation>Lager</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Identifier</source>
+        <translation>Zuweisung</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Location</source>
+        <translation>Lagerort</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Deprecated AbeBooks (ZVAB) Categories.</source>
+        <translation>Veraltete AbeBooks (ZVAB) Kategorien.</translation>
+    </message>
+</context>
+<context>
     <name>StorageLocation</name>
     <message>
-        <location filename="../custom/storage/storagelocation.cpp" line="+94"/>
+        <location filename="../custom/storage/storagelocation.cpp" line="+23"/>
         <source>new entry</source>
         <translation>Neuer Eintrag</translation>
     </message>
@@ -6024,7 +6032,7 @@
         <translation>Suche in Tabelle</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+63"/>
         <source>invalid input</source>
         <translation>ungültige Eingabe</translation>
     </message>
@@ -6053,6 +6061,7 @@
     </message>
     <message>
         <location line="+6"/>
+        <location line="+6"/>
         <source>Category</source>
         <translation>Kategorie</translation>
     </message>
@@ -6060,7 +6069,7 @@
 <context>
     <name>StorageTable</name>
     <message>
-        <location filename="../custom/storage/storagetable.cpp" line="+67"/>
+        <location filename="../custom/storage/storagetable.cpp" line="+71"/>
         <source>an error occurred</source>
         <translation>ein Fehler ist aufgetreten</translation>
     </message>
