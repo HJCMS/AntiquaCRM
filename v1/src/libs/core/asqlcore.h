@@ -8,20 +8,33 @@
 #include <QObject>
 #include <QString>
 #include <QtSql>
-#include <AntiquaCRM>
 
 namespace AntiquaCRM {
 
+class ASqlSettings;
+
+/**
+ * @brief core sql functionality
+ * @section sql
+ */
 class ASqlCore : public QObject  {
   Q_OBJECT
 
 private:
   ASqlSettings *m_cfg;
-  QSqlDatabase p_db;
+
+  /**
+   * @brief SQL Database Connection
+   */
+  QSqlDatabase *database;
+  bool initDatabase();
 
 public:
   explicit ASqlCore(QObject *parent = nullptr);
-  bool init();
+  bool open();
+  const QSqlRecord record(const QString &table);
+  const QSqlQuery query(const QString &statement);
+  void close();
 };
 
 }; // namespace AntiquaCRM

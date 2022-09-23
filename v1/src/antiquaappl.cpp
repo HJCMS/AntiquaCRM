@@ -18,15 +18,17 @@ AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
   m_systemTray = new SystemTray(applIcon(), this);
 }
 
-void AntiquaAppl::initDefaultTheme() {}
+void AntiquaAppl::initDefaultTheme() {
+
+}
 
 bool AntiquaAppl::isRunning() { return false; }
 
 int AntiquaAppl::exec() {
   m_sql = new AntiquaCRM::ASqlCore(this);
-  if (!m_sql->init()) {
+  if (!m_sql->open()) {
     qFatal("no database connection");
-    return 0;
+    return 134;
   }
 
   if (m_mainWindow != nullptr) {

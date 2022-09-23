@@ -87,7 +87,7 @@ public Q_SLOTS:
     Wird von @ref StatsBookBar::m_showHistory()
     aufgerufen und fragt den Verlauf ab.
   */
-  void queryHistory(const QString &);
+  void queryHistory(const QString &query);
 
   /**
     Startet Abfrage ausgehend von Text/Sucheingabe

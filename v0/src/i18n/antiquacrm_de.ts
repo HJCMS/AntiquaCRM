@@ -1128,7 +1128,7 @@
 <context>
     <name>BooksTableModel</name>
     <message>
-        <location filename="../inventory/books/bookstablemodel.cpp" line="+61"/>
+        <location filename="../inventory/books/bookstablemodel.cpp" line="+70"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
@@ -1138,7 +1138,7 @@
         <translation>Nein</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+51"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
@@ -1776,12 +1776,12 @@
     </message>
     <message>
         <location line="+5"/>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Shipping Address</source>
         <translation>Lieferadresse</translation>
     </message>
     <message>
-        <location line="-5"/>
+        <location line="-6"/>
         <source>Postal Address</source>
         <translation>Anschrift</translation>
     </message>
@@ -1836,18 +1836,18 @@
     </message>
     <message>
         <location line="+65"/>
-        <source>Edit customer</source>
-        <translation>Bearbeiten</translation>
+        <source>Edit this Customer</source>
+        <translation>Bearbeite diesen Kunden</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Create customer</source>
-        <translation>Erstellen</translation>
+        <source>Create a new Customer</source>
+        <translation>Erstelle einen neuen Kunden</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Create order from customer</source>
-        <translation>Auftrag erstellen</translation>
+        <source>Create a new order for this customer</source>
+        <translation>Erstelle einen neuen Auftrag für diesen Kunden</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -5907,6 +5907,11 @@
         <location line="+1"/>
         <source>Last 7 Days</source>
         <translation>Die letzten 7 Tage</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>This Week</source>
+        <translation>diese Woche</translation>
     </message>
     <message>
         <location line="+1"/>

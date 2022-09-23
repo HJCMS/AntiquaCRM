@@ -24,20 +24,22 @@ SET (projectLibrary_FILES
 
 SET (projectLibrary_SOURCES
  asqlsettings.cpp
+ asqlprofile.cpp
  asqlcore.cpp
 )
 
 SET (projectLibrary_HEADERS
  aglobal.h
  asqlsettings.h
+ asqlprofile.h
  asqlcore.h
  AntiquaCRM
 )
 
 ADD_LIBRARY (${_projectLibrary} SHARED
-  ${projectLibrary_HEADERS}
-  ${projectLibrary_SOURCES}
-  ${projectLibrary_FILES}
+ ${projectLibrary_SOURCES}
+ ${projectLibrary_HEADERS}
+ ${projectLibrary_FILES}
 )
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARAY)

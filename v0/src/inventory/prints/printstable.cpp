@@ -170,7 +170,7 @@ void PrintsTable::refreshView() {
   }
 }
 
-void PrintsTable::queryHistory(const QString &str) {
+void PrintsTable::queryHistory(const QString &query) {
   if (!isVisible())
     return;
 
@@ -178,18 +178,22 @@ void PrintsTable::queryHistory(const QString &str) {
   q.append(querySelect());
   q.append(queryTables());
   q.append(" WHERE ");
-  if (str.contains("#today")) {
-    q.append("DATE(b.ip_changed)=(DATE(now()))");
-  } else if (str.contains("#yesterday")) {
-    q.append("DATE(b.ip_changed)=(DATE(now() - INTERVAL '1 day'))");
-  } else if (str.contains("#last7days")) {
-    q.append("DATE(b.ip_changed)>=(DATE(now() - INTERVAL '7 days'))");
-  } else if (str.contains("#thismonth")) {
-    q.append("EXTRACT(MONTH FROM b.ip_changed)=(EXTRACT(MONTH FROM now()))");
-    q.append(" AND b.ip_count>0");
-  } else if (str.contains("#thisyear")) {
-    q.append("EXTRACT(ISOYEAR FROM b.ip_changed)=(EXTRACT(YEAR FROM now()))");
-    q.append(" AND b.ip_count>0");
+  if (query.contains("#today")) {
+    q.append("DATE(ib_changed)=current_date");
+  } else if (query.contains("#yesterday")) {
+    q.append("DATE(ib_changed)=(current_date -1)");
+  } else if (query.contains("#thisweek")) {
+    q.append("date_part('week',ib_changed)=date_part('week',current_date)");
+    q.append(" AND ");
+    q.append("date_part('year',ib_changed)=date_part('year',current_date)");
+  } else if (query.contains("#last7days")) {
+    q.append("DATE(ib_changed)=(current_date -7)");
+  } else if (query.contains("#thismonth")) {
+    q.append("EXTRACT(MONTH FROM ib_changed)=(EXTRACT(MONTH FROM now()))");
+    q.append(" AND ib_count>0");
+  } else if (query.contains("#thisyear")) {
+    q.append("EXTRACT(ISOYEAR FROM ib_changed)=(EXTRACT(YEAR FROM now()))");
+    q.append(" AND ib_count>0");
   } else {
     return;
   }

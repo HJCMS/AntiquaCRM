@@ -1128,7 +1128,7 @@
 <context>
     <name>BooksTableModel</name>
     <message>
-        <location filename="../inventory/books/bookstablemodel.cpp" line="+61"/>
+        <location filename="../inventory/books/bookstablemodel.cpp" line="+70"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1138,7 +1138,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+51"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1776,12 +1776,12 @@
     </message>
     <message>
         <location line="+5"/>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Shipping Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-5"/>
+        <location line="-6"/>
         <source>Postal Address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1836,17 +1836,17 @@
     </message>
     <message>
         <location line="+65"/>
-        <source>Edit customer</source>
+        <source>Edit this Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Create customer</source>
+        <source>Create a new Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Create order from customer</source>
+        <source>Create a new order for this customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5906,6 +5906,11 @@
     <message>
         <location line="+1"/>
         <source>Last 7 Days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>This Week</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

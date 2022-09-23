@@ -143,18 +143,18 @@ void CustomerTableView::contextMenuEvent(QContextMenuEvent *ev) {
 
   QMenu *m = new QMenu("Actions", this);
   // Eintrag öffnen  Bestellung anlegen
-  QAction *ac_open = m->addAction(myIcon("edit_group"), tr("Edit customer"));
+  QAction *ac_open = m->addAction(myIcon("edit_group"), tr("Edit this Customer"));
   ac_open->setObjectName("ac_context_open_customer");
   ac_open->setEnabled(b);
   connect(ac_open, SIGNAL(triggered()), this, SLOT(openByContext()));
 
-  QAction *ac_create = m->addAction(myIcon("add_user"), tr("Create customer"));
+  QAction *ac_create = m->addAction(myIcon("add_user"), tr("Create a new Customer"));
   ac_create->setObjectName("ac_context_create_customer");
   ac_create->setEnabled(true);
   connect(ac_create, SIGNAL(triggered()), this, SLOT(createByContext()));
 
   QAction *ac_order =
-      m->addAction(myIcon("autostart"), tr("Create order from customer"));
+      m->addAction(myIcon("autostart"), tr("Create a new order for this customer"));
   ac_order->setObjectName("ac_context_order_customer");
   connect(ac_order, SIGNAL(triggered()), this, SLOT(orderByContext()));
   ac_order->setEnabled(b);

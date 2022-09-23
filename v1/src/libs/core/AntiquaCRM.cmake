@@ -1,8 +1,15 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
+#ifndef ANTIQUACRM_CORE_H
+#define ANTIQUACRM_CORE_H
+
 #ifndef ANTIQUACRM_GLOBAL_H
 #include "aglobal.h"
+#endif
+
+#ifndef ANTIQUACRM_SQLPROFILE_H
+#include "asqlprofile.h"
 #endif
 
 #ifndef ANTIQUACRM_SQLSETTINGS_H
@@ -11,4 +18,6 @@
 
 #ifndef ANTIQUACRM_SQLCORE_H
 #include "asqlcore.h"
+#endif
+
 #endif
