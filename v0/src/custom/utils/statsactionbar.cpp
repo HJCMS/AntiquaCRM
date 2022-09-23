@@ -84,6 +84,7 @@ void StatsActionBar::addComboBoxData() {
   m_showHistory->insertItem(i++, sIcon, tr("Today"), "#today");
   m_showHistory->insertItem(i++, sIcon, tr("Yesterday"), "#yesterday");
   m_showHistory->insertItem(i++, sIcon, tr("Last 7 Days"), "#last7days");
+  m_showHistory->insertItem(i++, sIcon, tr("This Week"), "#thisweek");
   m_showHistory->insertItem(i++, sIcon, tr("This Month"), "#thismonth");
   m_showHistory->insertItem(i++, sIcon, tr("This Year"), "#thisyear");
 }

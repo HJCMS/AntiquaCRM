@@ -55,7 +55,7 @@ bool BooksTable::sqlExecQuery(const QString &statement) {
   if (!statement.contains("SELECT"))
     return false;
 
-#ifdef BOOK_INVENTORY_DEBUG
+#ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << statement;
 #endif
 
@@ -181,11 +181,15 @@ void BooksTable::queryHistory(const QString &query) {
   q.append(" WHERE ");
 
   if (query.contains("#today")) {
-    q.append("DATE(ib_changed)=(DATE(now()))");
+    q.append("DATE(ib_changed)=current_date");
   } else if (query.contains("#yesterday")) {
-    q.append(m_sql->whereDate("ib_changed", -1));
+    q.append("DATE(ib_changed)=(current_date -1)");
+  } else if (query.contains("#thisweek")) {
+    q.append("date_part('week',ib_changed)=date_part('week',current_date)");
+    q.append(" AND ");
+    q.append("date_part('year',ib_changed)=date_part('year',current_date)");
   } else if (query.contains("#last7days")) {
-    q.append(m_sql->whereDate("ib_changed", -7));
+    q.append("DATE(ib_changed)=(current_date -7)");
   } else if (query.contains("#thismonth")) {
     q.append("EXTRACT(MONTH FROM ib_changed)=(EXTRACT(MONTH FROM now()))");
     q.append(" AND ib_count>0");
@@ -207,7 +211,7 @@ void BooksTable::queryHistory(const QString &query) {
 }
 
 void BooksTable::queryStatement(const QString &statement) {
-  QString q("SELECT DISTINCT ");
+  QString q("SELECT ");
   q.append(InventoryBooksSelect());
   q.append(InventoryBooksTables());
   q.append(" WHERE ");
