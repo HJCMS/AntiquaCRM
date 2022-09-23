@@ -7,12 +7,14 @@
 /* QtCore */
 #include <QDateTime>
 #include <QDebug>
+#include <QFontMetrics>
 #include <QLocale>
 #include <QString>
 #include <QVariant>
 
 /* QtSql */
 #include <QSqlDatabase>
+#include <QSqlQuery>
 #include <QSqlRecord>
 
 static const QString setHeaderTitel(const QString &t) {
@@ -30,6 +32,13 @@ BooksTableModel::BooksTableModel(QObject *parent) : QSqlQueryModel{parent} {
 const QString BooksTableModel::displayDate(const QVariant &value) const {
   QDateTime dt(value.toDateTime());
   return QLocale::system().toString(dt, "dd MMMM yyyy");
+}
+
+const QString BooksTableModel::verticalHeader(int row, int role) const {
+  Q_UNUSED(role);
+  QString s = QString::number(query().size());
+  QString r = QString::number(row + 1);
+  return (s.length() > 1) ? r.rightJustified(s.length(), ' ') : r;
 }
 
 QVariant BooksTableModel::data(const QModelIndex &index, int role) const {
@@ -101,8 +110,11 @@ QVariant BooksTableModel::data(const QModelIndex &index, int role) const {
 
 QVariant BooksTableModel::headerData(int section, Qt::Orientation orientation,
                                      int role) const {
-  if (orientation != Qt::Horizontal || role != Qt::DisplayRole)
+  if (role != Qt::DisplayRole)
     return QVariant();
+
+  if (orientation == Qt::Vertical)
+    return verticalHeader(section, role);
 
   switch (section) {
   case 0: // ib_id

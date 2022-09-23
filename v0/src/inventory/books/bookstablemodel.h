@@ -18,6 +18,7 @@ class BooksTableModel : public QSqlQueryModel {
 
 private:
   const QString displayDate(const QVariant &value) const;
+  const QString verticalHeader(int row, int role = Qt::DisplayRole) const;
 
 public:
   explicit BooksTableModel(QObject *parent = nullptr);
