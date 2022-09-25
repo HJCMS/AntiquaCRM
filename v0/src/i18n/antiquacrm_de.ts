@@ -4160,13 +4160,13 @@
     </message>
     <message>
         <location line="+36"/>
-        <source>Open entry</source>
-        <translation>Öffne Auftrag</translation>
+        <source>Open this order.</source>
+        <translation>Öffne diesen Auftrag.</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>View Customer data</source>
-        <translation>Einkäufer*in anzeigen</translation>
+        <source>Go to the customer&apos;s tab.</source>
+        <translation>Die Registerkarte des Kunden aufrufen.</translation>
     </message>
 </context>
 <context>

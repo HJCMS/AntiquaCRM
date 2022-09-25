@@ -4160,12 +4160,12 @@
     </message>
     <message>
         <location line="+36"/>
-        <source>Open entry</source>
+        <source>Open this order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>View Customer data</source>
+        <source>Go to the customer&apos;s tab.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

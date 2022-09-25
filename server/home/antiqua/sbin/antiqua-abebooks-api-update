@@ -53,35 +53,34 @@ use Text::Iconv;
 ########################################################################
 ## BEGIN configuration
 ## Alle Einstellungen für die Server Zugriffe
-## API Benutzer
+## API Login/Benutzer
 my $_API_USER = "";
 
-## API Key
+## API Key - Authentifizierung
 my $_API_KEY = "";
 
-## Buchfreund Kunden Nummer
-my $_BF_ID = "";
-
-## Standard Ausgabename
-my $_APPL_NAME = "antiqua-update-abebooks";
+## Standard Ausgabename für Log- und XML-Dateien
+my $_APPL_NAME = "antiqua-abebooks-update";
 
 ## PostgreSQL Service/Benutzername
+## https://www.postgresql.org/docs/current/libpq-pgservice.html
 my $_PG_USER = "";
 
 ## XML Ausgabe Zeichensatz
+## WARNING AbeBooks kann nicht mit UTF-8 umgehen!
 my $_XML_CHARSET = "ISO-8859-1";
 
 ## Schreibe LOGS in ...
 my $_CACHE_DIR = $ENV{HOME} . "/.cache/";
 
-## Schreibe Antwort in ...
-my $_OUTPUT_DIR = "/home/HJCMS/AntiquaCRM/Archiv/Logging";
+## Schreibe Antwort XML in ...
+my $_OUTPUT_DIR = $ENV{HOME} . "/.cache/";
 
-## Lese SQL Abfrage aus Datei
+## Lese PgSQL Abfrage aus Datei
 my $_SQL_QUERY = $ENV{HOME} . "/.config/HJCMS/${_APPL_NAME}.sql";
 
-## Standard URL für die Bilder
-my $_PICTURE_URL = "https://www.buchfreund.de/covers/${_BF_ID}";
+## Standard URL für Bilderupdate
+my $_PICTURE_URL = "https://www.hjcms.de/covers/";
 
 ## END configuration
 ########################################################################
@@ -91,11 +90,7 @@ if (!$_API_KEY or !$_API_USER) {
   exit(0);
 }
 
-=begin postUpdate()
-  Sende mit Curl die POST Daten an den Abebooks Update Server!
-  URL:  https://inventoryupdate.abebooks.com
-  Port: 10027
-=cut
+## Sende die POST Daten an "inventoryupdate.abebooks.com:10027" Server!
 sub postUpdate {
   my $body = shift;
   my @args = ("curl", "--silent", "--show-error", "--ipv4", "--ssl-reqd", "--tlsv1.2",
@@ -106,7 +101,7 @@ sub postUpdate {
     "--header", "Cache-Control: no-cache",
     "--trace", "${_CACHE_DIR}/${_APPL_NAME}_trace.log",
     "--dump-header", "${_CACHE_DIR}/${_APPL_NAME}_header.log",
-    "--output", "${_OUTPUT_DIR}/${_APPL_NAME}.xml",
+    "--output", "${_OUTPUT_DIR}/${_APPL_NAME}_reply.xml",
     "--data", "$body"
   );
   if (system(@args) != 0) {
@@ -311,7 +306,7 @@ $dbc->disconnect;
 ## Sende den XML Update Katalog an den Updateserver
 if (postUpdate($doc->toString(0)) == 0) {
   print "Update successfully.\n";
-  $doc->toFile("${_OUTPUT_DIR}/abebooks_daily_update.xml", 1);
+  $doc->toFile("${_OUTPUT_DIR}/${_APPL_NAME}.xml", 1);
   exit(0);
 }
 

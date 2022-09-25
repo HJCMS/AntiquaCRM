@@ -105,14 +105,14 @@ void OrdersTable::contextMenuEvent(QContextMenuEvent *ev) {
 
   QMenu *m = new QMenu("Actions", this);
   // Eintrag öffnen  Bestellung anlegen
-  QAction *ac_open = m->addAction(myIcon("spreadsheet"), tr("Open entry"));
+  QAction *ac_open = m->addAction(myIcon("spreadsheet"), tr("Open this order."));
   ac_open->setObjectName("ac_context_open_order");
   ac_open->setEnabled(b);
   connect(ac_open, SIGNAL(triggered()), this, SLOT(openByContext()));
 
   // Kundendaten aufrufen
   QAction *ac_customer =
-      m->addAction(myIcon("group"), tr("View Customer data"));
+      m->addAction(myIcon("group"), tr("Go to the customer's tab."));
   ac_customer->setObjectName("ac_context_open_customer");
   ac_customer->setEnabled(b);
   connect(ac_customer, SIGNAL(triggered()), this, SLOT(openCustomer()));
