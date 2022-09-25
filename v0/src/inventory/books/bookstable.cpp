@@ -55,9 +55,9 @@ bool BooksTable::sqlExecQuery(const QString &statement) {
   if (!statement.contains("SELECT"))
     return false;
 
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << statement;
-#endif
+//#ifdef ANTIQUA_DEVELOPEMENT
+//  qDebug() << Q_FUNC_INFO << statement;
+//#endif
 
   QSqlDatabase db(m_sql->db());
   if (db.open()) {

@@ -286,10 +286,16 @@ void InventoryProviders::createNewCustomer(const QJsonDocument &doc) {
     }
   }
 
+  QString prBuyername;
+  prBuyername = obj.value("c_firstname").toString();
+  prBuyername.append(" ");
+  prBuyername.append(obj.value("c_lastname").toString());
+
   QString sql("INSERT INTO customers (");
   sql.append(params.join(","));
-  sql.append(") VALUES (");
+  sql.append(",c_provider_import) VALUES (");
   sql.append(values.join(","));
+  sql.append(",'" + prBuyername + "'");
   sql.append(") RETURNING c_id;");
 
   if (SHOW_SQL_QUERIES) {

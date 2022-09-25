@@ -57,6 +57,7 @@ static const QString queryCustomerExists(const QString &c_firstname,
   // Wegen AbeBooks und doppelten einträgen erst Firma prüfen!
   QString company(c_firstname);
   company.append(" " + c_lastname);
+  sql.append("c_provider_import ILIKE '" + company + "' OR ");
   sql.append("c_company_name ILIKE '" + company + "'");
   sql.append(" OR (");
   sql.append("c_firstname ILIKE '" + c_firstname + "'");

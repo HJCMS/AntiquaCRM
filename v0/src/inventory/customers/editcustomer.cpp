@@ -32,6 +32,7 @@ EditCustomer::EditCustomer(QWidget *parent) : EditorMain{parent} {
   ignoreList.append("c_changed");
   ignoreList.append("c_transactions");
   ignoreList.append("c_purchases");
+  ignoreList.append("c_provider_import");
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setObjectName("customer_edit_layout");

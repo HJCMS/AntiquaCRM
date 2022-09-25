@@ -2344,7 +2344,7 @@
 <context>
     <name>EditCustomer</name>
     <message>
-        <location filename="../inventory/customers/editcustomer.cpp" line="+45"/>
+        <location filename="../inventory/customers/editcustomer.cpp" line="+46"/>
         <source>Customers ID</source>
         <translation>Kunden Nr</translation>
     </message>
@@ -2948,7 +2948,7 @@
         <translation>Deutschland</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+59"/>
         <source>new customer created!</source>
         <translation>Einkäufer*in wurde neu angelegt!</translation>
     </message>
@@ -3014,7 +3014,7 @@
         <translation>Ungültige Versandeigenschaften!</translation>
     </message>
     <message>
-        <location line="-426"/>
+        <location line="-432"/>
         <location line="+14"/>
         <source>Article</source>
         <translation>Artikel</translation>
