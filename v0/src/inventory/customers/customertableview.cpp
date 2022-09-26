@@ -182,28 +182,38 @@ void CustomerTableView::refreshView() {
   }
 }
 
-void CustomerTableView::queryHistory(const QString &history) {
+void CustomerTableView::queryHistory(const QString &query) {
   QString q = c_sqlTableQueryBody();
-  if (history.contains("#today")) {
-    q.append("DATE(c_changed)=(DATE(now()))");
-  } else if (history.contains("#yesterday")) {
-    q.append("DATE(c_changed)=(DATE(now() - INTERVAL '1 day'))");
-  } else if (history.contains("#last7days")) {
-    q.append("DATE(c_changed)>=(DATE(now() - INTERVAL '7 days'))");
-  } else if (history.contains("#thismonth")) {
-    q.append("EXTRACT(MONTH FROM c_changed)=(EXTRACT(MONTH FROM now()))");
-  } else if (history.contains("#thisyear")) {
-    q.append("EXTRACT(ISOYEAR FROM c_changed)=(EXTRACT(YEAR FROM now()))");
+  q.append(" ");
+  QString thisYear("date_part('year',c_since)=date_part('year',CURRENT_DATE)");
+  if (query.contains("#today")) {
+    q.append("DATE(c_since)=CURRENT_DATE");
+  } else if (query.contains("#yesterday")) {
+    q.append("DATE(c_since)=(CURRENT_DATE -1)");
+  } else if (query.contains("#thisweek")) {
+    q.append("date_part('week',c_since)=date_part('week',CURRENT_DATE)");
+    q.append(" AND " + thisYear);
+  } else if (query.contains("#lastweek")) {
+    q.append("date_part('week',c_since)=date_part('week',CURRENT_DATE - 7)");
+    q.append(" AND " + thisYear);
+  } else if (query.contains("#thismonth")) {
+    q.append("date_part('month', c_since)=date_part('month', CURRENT_DATE)");
+    q.append(" AND " + thisYear);
+  } else if(query.contains("#lastmonth")) {
+    q.append("date_part('month', c_since)=date_part('month', CURRENT_DATE - 31)");
+    q.append(" AND " + thisYear);
+  } else if (query.contains("#thisyear")) {
+    q.append(thisYear);
   } else {
-    return;
+    q.append("DATE(c_changed)=CURRENT_DATE");
   }
   q.append(" ORDER BY @ORDER_BY@ LIMIT ");
   q.append(QString::number(maxRowCount));
+  q.append(";");
 
-  QString query(q);
-  query.replace("@ORDER_BY@", p_orderBy);
-
-  if (sqlExecQuery(query)) {
+  QString sql(q);
+  sql.replace("@ORDER_BY@", p_orderBy);
+  if (sqlExecQuery(sql)) {
     resizeRowsToContents();
     resizeColumnsToContents();
     p_historyQuery = q;

@@ -181,10 +181,8 @@ void PrintsTable::queryHistory(const QString &query) {
   QString thisYear("date_part('year',ip_changed)=date_part('year',CURRENT_DATE)");
   if (query.contains("#today")) {
     q.append("DATE(ip_changed)=CURRENT_DATE");
-    q.append(" AND " + thisYear);
   } else if (query.contains("#yesterday")) {
     q.append("DATE(ip_changed)=(CURRENT_DATE -1)");
-    q.append(" AND " + thisYear);
   } else if (query.contains("#thisweek")) {
     q.append("date_part('week',ip_changed)=date_part('week',CURRENT_DATE)");
     q.append(" AND " + thisYear);

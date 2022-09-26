@@ -69,7 +69,7 @@ public Q_SLOTS:
   /**
    * @brief Verlaufsabfrage
    */
-  void queryHistory(const QString &history);
+  void queryHistory(const QString &query);
 
   /**
    * Starte Abfrage ausgehend von Text/Sucheingabe
