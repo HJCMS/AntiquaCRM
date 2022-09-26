@@ -15,15 +15,6 @@ ELSE (CMAKE_HOST_WIN32)
 SET (PROJECT_RESOURCE_WINDOWS "")
 ENDIF (CMAKE_HOST_WIN32)
 
-SET (PROJECT_HEADERS
-  mapplication.h
-  antiquasystemtray.h
-  mwindow.h
-  statusbar.h
-  workspace.h
-  socketserver.h
-)
-
 SET (PROJECT_SOURCES
   main.cpp
   mapplication.cpp
@@ -31,8 +22,19 @@ SET (PROJECT_SOURCES
   mwindow.cpp
   statusbar.cpp
   workspace.cpp
+  workspacetabbar.cpp
   socketserver.cpp
   ${QRC_FILES}
+)
+
+SET (PROJECT_HEADERS
+  mapplication.h
+  antiquasystemtray.h
+  mwindow.h
+  statusbar.h
+  workspace.h
+  workspacetabbar.h
+  socketserver.h
 )
 
 ADD_EXECUTABLE(${PROJECTNAME}

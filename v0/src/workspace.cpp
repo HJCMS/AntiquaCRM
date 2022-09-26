@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "workspace.h"
+#include "workspacetabbar.h"
 #include "inventorybooks.h"
 #include "inventorycustomers.h"
 #include "inventoryorders.h"
@@ -11,40 +12,8 @@
 #include "myicontheme.h"
 #include "providerorders.h"
 
-#include <QAction>
 #include <QApplication>
 #include <QDebug>
-#include <QLinearGradient>
-#include <QMenu>
-#include <QMetaObject>
-#include <QTabBar>
-
-WorkspaceTabBar::WorkspaceTabBar(QWidget *parent) : QTabBar{parent} {
-  setMovable(true);
-  setExpanding(true);
-}
-
-void WorkspaceTabBar::checkToClose() {
-  if (index >= 0)
-    emit s_closeTab(index);
-}
-
-void WorkspaceTabBar::tabInserted(int index) {
-  setTabIcon(index, myIcon("tab"));
-  QTabBar::tabInserted(index);
-}
-
-void WorkspaceTabBar::contextMenuEvent(QContextMenuEvent *ev) {
-  index = tabAt(ev->pos());
-  bool b = tabData(index).toBool();
-  QMenu *m = new QMenu("TabAction", this);
-  m->setEnabled(b);
-  QAction *ac_close = m->addAction(myIcon("tab_remove"), tr("Close"));
-  ac_close->setObjectName("ac_context_close_tab");
-  connect(ac_close, SIGNAL(triggered()), this, SLOT(checkToClose()));
-  m->exec(ev->globalPos());
-  delete m;
-}
 
 Workspace::Workspace(QWidget *parent) : QTabWidget{parent} {
   setObjectName("WorkspaceTabWidget");
@@ -57,7 +26,7 @@ Workspace::Workspace(QWidget *parent) : QTabWidget{parent} {
   setTabBar(m_tabBar);
 
   connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeTabClicked(int)));
-  connect(m_tabBar, SIGNAL(s_closeTab(int)), SLOT(closeTabClicked(int)));
+  connect(m_tabBar, SIGNAL(sendCloseTab(int)), SLOT(closeTabClicked(int)));
   connect(m_tabBar, SIGNAL(tabBarClicked(int)), SLOT(tabViewClicked(int)));
 }
 

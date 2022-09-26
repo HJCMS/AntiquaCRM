@@ -6,12 +6,10 @@
 #define WORKSPACE_H
 
 #include <AntiquaCRM>
-#include <QContextMenuEvent>
 #include <QMetaType>
 #include <QObject>
 #include <QTabBar>
 #include <QTabWidget>
-#include <QWheelEvent>
 #include <QWidget>
 
 class InventoryBooks;
@@ -21,30 +19,7 @@ class InventoryOrders;
 class InventoryProviders;
 class ProviderOrder;
 class InventoryViews;
-
-class WorkspaceTabBar : public QTabBar {
-  Q_OBJECT
-  Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "https://www.hjcms.de")
-
-private:
-  int index = -1;
-
-private Q_SLOTS:
-  void checkToClose();
-
-protected:
-  void tabInserted(int index) override;
-  void contextMenuEvent(QContextMenuEvent *event) override;
-  // Manche Helferfunktionen sind bei Älteren nutzern nicht Hilfreich!
-  void wheelEvent(QWheelEvent *event) override{/* ignore it */};
-
-Q_SIGNALS:
-  void s_closeTab(int index);
-
-public:
-  explicit WorkspaceTabBar(QWidget *parent = nullptr);
-};
+class WorkspaceTabBar;
 
 /**
  * @brief Arbeistbereich
