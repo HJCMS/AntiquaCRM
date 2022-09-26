@@ -5905,7 +5905,12 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Last 7 Days</source>
+        <source>Last Week</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Last Month</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

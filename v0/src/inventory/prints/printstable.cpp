@@ -178,26 +178,31 @@ void PrintsTable::queryHistory(const QString &query) {
   q.append(querySelect());
   q.append(queryTables());
   q.append(" WHERE ");
+  QString thisYear("date_part('year',ip_changed)=date_part('year',CURRENT_DATE)");
   if (query.contains("#today")) {
-    q.append("DATE(ib_changed)=current_date");
+    q.append("DATE(ip_changed)=CURRENT_DATE");
+    q.append(" AND " + thisYear);
   } else if (query.contains("#yesterday")) {
-    q.append("DATE(ib_changed)=(current_date -1)");
+    q.append("DATE(ip_changed)=(CURRENT_DATE -1)");
+    q.append(" AND " + thisYear);
   } else if (query.contains("#thisweek")) {
-    q.append("date_part('week',ib_changed)=date_part('week',current_date)");
-    q.append(" AND ");
-    q.append("date_part('year',ib_changed)=date_part('year',current_date)");
-  } else if (query.contains("#last7days")) {
-    q.append("DATE(ib_changed)=(current_date -7)");
+    q.append("date_part('week',ip_changed)=date_part('week',CURRENT_DATE)");
+    q.append(" AND " + thisYear);
+  } else if (query.contains("#lastweek")) {
+    q.append("date_part('week',ip_changed)=date_part('week',CURRENT_DATE -7)");
+    q.append(" AND " + thisYear);
   } else if (query.contains("#thismonth")) {
-    q.append("EXTRACT(MONTH FROM ib_changed)=(EXTRACT(MONTH FROM now()))");
-    q.append(" AND ib_count>0");
+    q.append("date_part('month', ip_changed)=date_part('month', CURRENT_DATE)");
+    q.append(" AND " + thisYear + " AND ip_count>0");
+  } else if(query.contains("#lastmonth")) {
+    q.append("date_part('month', ip_changed)=date_part('month', CURRENT_DATE - 31)");
+    q.append(" AND " + thisYear + " AND ip_count>0");
   } else if (query.contains("#thisyear")) {
-    q.append("EXTRACT(ISOYEAR FROM ib_changed)=(EXTRACT(YEAR FROM now()))");
-    q.append(" AND ib_count>0");
+    q.append(thisYear + " AND ip_count>0");
   } else {
     return;
   }
-  q.append(" ORDER BY b.ip_count DESC LIMIT ");
+  q.append(" ORDER BY ip_count DESC LIMIT ");
   q.append(QString::number(maxRowCount));
   q.append(";");
 
