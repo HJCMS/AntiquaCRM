@@ -108,39 +108,31 @@ void BooksTable::createByContext() { emit sendCreateEntry(); }
 
 void BooksTable::contextMenuEvent(QContextMenuEvent *ev) {
   p_modelIndex = indexAt(ev->pos());
-  /**
-   * Aktiviere/Deaktivieren der Einträge, wenn das Model gültig ist!
-   */
-  bool b = p_modelIndex.isValid();
-
-  /**
-   * Eintrag erstellen erst freischalten wenn Tabelle nicht leer ist!
-   */
-  bool bn = (m_queryModel->rowCount() > 0);
+  bool enable_action = p_modelIndex.isValid();
+  bool enable_create = (m_queryModel->rowCount() > 0);
 
   QMenu *m = new QMenu(this);
-
   // Eintrag öffnen  Bestellung anlegen
   QAction *ac_open = m->addAction(myIcon("spreadsheet"), tr("Open entry"));
   ac_open->setObjectName("ac_context_open_book");
-  ac_open->setEnabled(b);
+  ac_open->setEnabled(enable_action);
   connect(ac_open, SIGNAL(triggered()), this, SLOT(openByContext()));
 
   QAction *ac_create = m->addAction(myIcon("db_add"), tr("Create entry"));
   ac_create->setObjectName("ac_context_create_book");
-  ac_create->setEnabled(bn);
+  ac_create->setEnabled(enable_create);
   connect(ac_create, SIGNAL(triggered()), this, SLOT(createByContext()));
 
   // BEGIN Einträge für Auftrag
   QAction *ac_copy = m->addAction(myIcon("edit"), tr("Copy Article Id"));
   ac_copy->setObjectName("ac_context_copy_book");
-  ac_copy->setEnabled(b);
+  ac_copy->setEnabled(enable_action);
   connect(ac_copy, SIGNAL(triggered()), this, SLOT(copyToClipboard()));
 
   QAction *ac_order =
       m->addAction(myIcon("autostart"), tr("add Article to opened Order"));
   ac_order->setObjectName("ac_context_book_to_order");
-  ac_order->setEnabled(b);
+  ac_order->setEnabled(enable_action);
   connect(ac_order, SIGNAL(triggered()), this, SLOT(createOrderSignal()));
   // END
 

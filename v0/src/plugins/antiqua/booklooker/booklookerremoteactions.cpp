@@ -103,8 +103,10 @@ void Bl_StatusPage::prepareAction() {
       }
     }
   }
-  if (!obj.isEmpty())
+  if (!obj.isEmpty()) {
+    setWindowModified(false);
     emit sendAction(obj);
+  }
 }
 
 void Bl_StatusPage::setOrderId(const QString &orderId) {

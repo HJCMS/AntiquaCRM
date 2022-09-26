@@ -187,9 +187,9 @@ void CustomerTableView::queryHistory(const QString &query) {
   q.append(" ");
   QString thisYear("date_part('year',c_since)=date_part('year',CURRENT_DATE)");
   if (query.contains("#today")) {
-    q.append("DATE(c_since)=CURRENT_DATE");
+    q.append("DATE(c_changed)=CURRENT_DATE");
   } else if (query.contains("#yesterday")) {
-    q.append("DATE(c_since)=(CURRENT_DATE -1)");
+    q.append("DATE(c_changed)=(CURRENT_DATE -1)");
   } else if (query.contains("#thisweek")) {
     q.append("date_part('week',c_since)=date_part('week',CURRENT_DATE)");
     q.append(" AND " + thisYear);

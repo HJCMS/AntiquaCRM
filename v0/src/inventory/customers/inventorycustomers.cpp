@@ -206,5 +206,5 @@ void InventoryCustomers::createCustomer() {
 
 void InventoryCustomers::onEnterChanged() {
   if (m_tableView->rowCount() < 1)
-    m_tableView->queryHistory("#last7days");
+    m_tableView->queryHistory(QString());
 }
