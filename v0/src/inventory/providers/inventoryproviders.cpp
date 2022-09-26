@@ -286,10 +286,15 @@ void InventoryProviders::createNewCustomer(const QJsonDocument &doc) {
     }
   }
 
-  QString prBuyername;
-  prBuyername = obj.value("c_firstname").toString();
+  /**
+   * Den Import wegen doppelter Einträge in die geschütze Datenbankspalte
+   * "c_provider_import" schreiben. Diese wird bei einem Test Aufruf als
+   * erstes mit der Postleitzahl verglichen.
+   */
+  QString prBuyername(obj.value("c_firstname").toString().trimmed());
   prBuyername.append(" ");
-  prBuyername.append(obj.value("c_lastname").toString());
+  prBuyername.append(obj.value("c_lastname").toString().trimmed());
+  prBuyername.replace(QRegExp("\\s+"), " ");
 
   QString sql("INSERT INTO customers (");
   sql.append(params.join(","));
@@ -326,11 +331,11 @@ void InventoryProviders::createQueryCustomer(const QJsonDocument &doc) {
     return;
 
   int selected_cid = -1;
-  QString sql =
-      queryCustomerExists(QJsonValue(doc["c_firstname"]).toString(),
-                          QJsonValue(doc["c_lastname"]).toString(),
-                          QJsonValue(doc["c_postalcode"]).toString(),
-                          QJsonValue(doc["c_location"]).toString() + "%");
+  QString sql = queryCustomerExists(
+      QJsonValue(doc["c_firstname"]).toString(),  /**< Vorname */
+      QJsonValue(doc["c_lastname"]).toString(),   /**< Nachname */
+      QJsonValue(doc["c_postalcode"]).toString(), /**< PLZ */
+      QJsonValue(doc["c_location"]).toString() + "%");
 
   if (SHOW_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << sql << doc;

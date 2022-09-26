@@ -47,6 +47,15 @@ static const QString queryArticleCount(int aid) {
  * @param c_lastname
  * @param c_postalcode
  * @param c_location
+ *
+ * Suchabfrage nach existierenden Kundeneinträgen
+ * Reihenfolge der Abfrage:
+ *  @li 1 = (c_provider_import AND c_postalcode)
+ *  @li 2 = (c_company_name)
+ *  @li 3 = (c_firstname AND c_lastname AND c_postalcode AND c_location)
+ * @code
+ *  WHERE (#1) OR (#2) OR (#3) ORDER BY c_id;
+ * @endcode
  * @return SqlQuery
  */
 static const QString queryCustomerExists(const QString &c_firstname,
@@ -54,13 +63,23 @@ static const QString queryCustomerExists(const QString &c_firstname,
                                          const QString &c_postalcode,
                                          const QString &c_location) {
   QString sql("SELECT c_id FROM customers WHERE ");
-  // Wegen AbeBooks und doppelten einträgen erst Firma prüfen!
+  // Block 1
+  QString importId(c_firstname);
+  importId.append(" " + c_lastname);
+  importId.replace(QRegExp("\\s+"), " ");
+  importId = importId.trimmed();
+  sql.append("(c_provider_import ILIKE '" + importId + "' AND ");
+  sql.append("c_postalcode='" + c_postalcode + "') OR ");
+
+  // Block 2
   QString company(c_firstname);
   company.append(" " + c_lastname);
-  sql.append("c_provider_import ILIKE '" + company + "' OR ");
-  sql.append("c_company_name ILIKE '" + company + "'");
-  sql.append(" OR (");
-  sql.append("c_firstname ILIKE '" + c_firstname + "'");
+  company = company.trimmed();
+  sql.append("(c_company_name ILIKE '" + company + "')");
+
+  // Block 2
+  sql.append(" OR ");
+  sql.append("(c_firstname ILIKE '" + c_firstname + "'");
   sql.append(" AND ");
   sql.append("c_lastname ILIKE '" + c_lastname + "'");
   sql.append(" AND ");
