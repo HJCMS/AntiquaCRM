@@ -2948,7 +2948,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+64"/>
         <source>new customer created!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3014,7 +3014,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-432"/>
+        <location line="-437"/>
         <location line="+14"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
@@ -6345,7 +6345,7 @@
 <context>
     <name>Workspace</name>
     <message>
-        <location filename="../workspace.cpp" line="+51"/>
+        <location filename="../workspace.cpp" line="+20"/>
         <source>Workspace</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6451,7 +6451,7 @@
 <context>
     <name>WorkspaceTabBar</name>
     <message>
-        <location line="-265"/>
+        <location filename="../workspacetabbar.cpp" line="+32"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
