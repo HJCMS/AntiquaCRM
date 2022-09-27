@@ -1,5 +1,6 @@
 <RCC>
 <qresource prefix="/">
+ <file>icons/splash.png</file>
  <file>icons/action_add.png</file>
  <file>icons/action_cancel.png</file>
  <file>icons/action_clear.png</file>

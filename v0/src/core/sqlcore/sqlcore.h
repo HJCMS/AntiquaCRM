@@ -106,6 +106,11 @@ Q_SIGNALS:
    */
   void sendConnectionStatus(bool);
 
+  /**
+   * @brief Widr nur beim Initialisieren ausgelöst.
+   */
+  void sendConnectionEstablished();
+
 public Q_SLOTS:
   /**
    * @brief Die Datenbank Verbindung erneut herstellen

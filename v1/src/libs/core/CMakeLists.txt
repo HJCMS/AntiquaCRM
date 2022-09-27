@@ -26,6 +26,7 @@ SET (projectLibrary_SOURCES
  asqlsettings.cpp
  asqlprofile.cpp
  asqlcore.cpp
+ asqlquerymodel.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -33,6 +34,7 @@ SET (projectLibrary_HEADERS
  asqlsettings.h
  asqlprofile.h
  asqlcore.h
+ asqlquerymodel.h
  AntiquaCRM
 )
 

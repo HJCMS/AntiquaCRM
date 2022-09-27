@@ -29,7 +29,7 @@ bool ASqlCore::initDatabase() {
 
   // https://www.postgresql.org/docs/current/libpq-connect.html
   QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL", m_cfg->connectionName());
-  m_cfg->setProfile("Wilms");
+  m_cfg->setProfile("Default");
 
   ASqlProfile profile = m_cfg->connectionProfile();
   db.setHostName(profile.getHostname());
@@ -75,10 +75,8 @@ bool ASqlCore::isConnected() {
 
 bool ASqlCore::open() {
   if (initDatabase()) {
-    qInfo("Database connected!");
-    // qDebug() << database->hostName()
-    //  << database->databaseName()
-    //  << database->connectOptions();
+    qInfo("Database connected to Host '%s'.",
+          qPrintable(database->hostName()));
     return true;
   }
   return false;
@@ -89,10 +87,7 @@ const QSqlRecord ASqlCore::record(const QString &table) {
     return QSqlRecord();
 
   QSqlRecord re;
-//  QMutex mutex;
-//  mutex.lock();
   re = database->record(table);
-//  mutex.unlock();
   return re;
 }
 
@@ -101,11 +96,17 @@ const QSqlQuery ASqlCore::query(const QString &statement) {
     return QSqlQuery();
 
   QSqlQuery qr;
-//  QMutex mutex;
-//  mutex.lock();
   qr = database->exec(statement);
-//  mutex.unlock();
   return qr;
+}
+
+const QString ASqlCore::lastError()
+{
+  QSqlError err = database->lastError();
+  if(err.isValid())
+    return err.text();
+
+  return QString();
 }
 
 void ASqlCore::close() {

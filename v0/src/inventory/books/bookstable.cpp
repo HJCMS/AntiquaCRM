@@ -12,7 +12,6 @@
 #include <QItemSelectionModel>
 #include <QKeySequence>
 #include <QMenu>
-#include <QMutex>
 #include <QPainter>
 #include <QPoint>
 #include <QRegExp>
@@ -55,14 +54,10 @@ bool BooksTable::sqlExecQuery(const QString &statement) {
   if (!statement.contains("SELECT"))
     return false;
 
-//#ifdef ANTIQUA_DEVELOPEMENT
 //  qDebug() << Q_FUNC_INFO << statement;
-//#endif
 
   QSqlDatabase db(m_sql->db());
   if (db.open()) {
-    QMutex mutex;
-    mutex.lock();
     QTime time = QTime::currentTime();
     m_queryModel->setQuery(statement, db);
     if (m_queryModel->lastError().isValid()) {
@@ -71,7 +66,6 @@ bool BooksTable::sqlExecQuery(const QString &statement) {
                << m_sql->fetchErrors() << Qt::endl;
       return false;
     }
-    mutex.unlock();
     int rows = m_queryModel->query().size();
     QString m = QString(tr("Rows: %1, Time: %2 msec."))
                     .arg(QString::asprintf("%d", rows),

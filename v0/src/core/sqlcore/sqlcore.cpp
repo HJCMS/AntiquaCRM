@@ -122,6 +122,7 @@ bool SqlCore::initDatabase() {
 
     if (database->isValid()) {
       statusTimerID = startTimer(timerInterval);
+      emit sendConnectionEstablished();
       return true;
     }
   }

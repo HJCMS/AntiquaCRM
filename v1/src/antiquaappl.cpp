@@ -5,6 +5,7 @@
 #include "antiquaappl.h"
 #include "antiquasystemtray.h"
 #include "antiquawindow.h"
+#include "antiquasplashscreen.h"
 
 #include <QDebug>
 #include <QIcon>
@@ -24,6 +25,11 @@ void AntiquaAppl::initDefaultTheme() {}
 bool AntiquaAppl::isRunning() { return false; }
 
 int AntiquaAppl::exec() {
+  AntiquaSplashScreen *m_splash = new AntiquaSplashScreen(m_mainWindow);
+  m_splash->setObjectName("boot_splash");
+  m_splash->show();
+  m_splash->setMessage(tr("Open Database connection."));
+
   QMutex mutex;
   mutex.lock();
   m_sql = new AntiquaCRM::ASqlCore(this);
@@ -33,15 +39,17 @@ int AntiquaAppl::exec() {
     mutex.unlock();
     return 134;
   }
+  m_splash->setMessage(tr("Database connected"));
+
   mutex.unlock();
 
-  // QString test("SELECT count(i_id) FROM inventory;");
-  qDebug() << m_sql->record("inventory");
-
   if (m_mainWindow != nullptr) {
+    m_splash->setMessage("Open Antiqua CRM");
     m_mainWindow->show();
     m_systemTray->show();
   }
+
+  m_splash->finish(m_mainWindow);
 
   return QCoreApplication::exec();
 }

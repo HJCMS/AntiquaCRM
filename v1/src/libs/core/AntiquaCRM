@@ -20,4 +20,8 @@
 #include "asqlcore.h"
 #endif
 
+#ifndef ANTIQUACRM_SQLQUERYMODEL_H
+#include "asqlquerymodel.h"
+#endif
+
 #endif

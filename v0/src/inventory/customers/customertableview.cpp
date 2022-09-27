@@ -11,7 +11,6 @@
 #include <QAction>
 #include <QDebug>
 #include <QMenu>
-#include <QMutex>
 #include <QPoint>
 #include <QRegExp>
 #include <QSignalMapper>
@@ -56,13 +55,10 @@ bool CustomerTableView::sqlExecQuery(const QString &statement) {
     if (SHOW_SQL_QUERIES) {
       qDebug() << Q_FUNC_INFO << statement;
     }
-    QMutex mutex;
-    mutex.lock();
     QTime time = QTime::currentTime();
     m_tableModel->setQuery(statement, db);
 
     if (m_tableModel->lastError().isValid()) {
-      mutex.unlock();
 #ifdef ANTIQUA_DEVELOPEMENT
       qDebug() << Q_FUNC_INFO << "{SQL Query} " << statement << "{SQL Error} "
                << m_tableModel->lastError() << Qt::endl
@@ -71,7 +67,6 @@ bool CustomerTableView::sqlExecQuery(const QString &statement) {
       emit s_reportQuery(tr("Broken Database query for Customers table."));
       return false;
     }
-    mutex.unlock();
     QString m = QString(tr("Rows: %1, Time: %2 msec."))
                     .arg(QString::asprintf("%d", m_tableModel->rowCount()),
                          QString::asprintf("%d", time.msec()));

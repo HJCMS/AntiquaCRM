@@ -12,7 +12,6 @@
 #include <QItemSelectionModel>
 #include <QMenu>
 #include <QMessageBox>
-#include <QMutex>
 #include <QPoint>
 #include <QRegExp>
 #include <QSignalMapper>
@@ -55,8 +54,6 @@ bool OrdersTable::sqlExecQuery(const QString &statement) {
 
   QSqlDatabase db(m_sql->db());
   if (db.open()) {
-    QMutex mutex;
-    mutex.lock();
     QTime time = QTime::currentTime();
     m_queryModel->setQuery(statement, db);
     if (m_queryModel->lastError().isValid()) {
@@ -67,7 +64,6 @@ bool OrdersTable::sqlExecQuery(const QString &statement) {
 #endif
       return false;
     }
-    mutex.unlock();
 
     QString m = QString(tr("Rows: %1, Time: %2 msec."))
                     .arg(QString::asprintf("%d", m_queryModel->rowCount()),

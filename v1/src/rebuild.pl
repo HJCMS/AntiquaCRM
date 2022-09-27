@@ -71,7 +71,6 @@ get_cmakelists();
 open(FH, '>:encoding(UTF-8)', "./CMakeSubTargets.cmake") or die $!;
 print FH <<EOF;
 SET (PROJECT_INCLUDE_DIRS
-\t\${PROJECT_INCLUDE_DIRS}
 EOF
 
 foreach (@SUB_TARGETS) {
@@ -80,6 +79,7 @@ foreach (@SUB_TARGETS) {
 }
 
 print FH <<EOF;
+\t\${PROJECT_INCLUDE_DIRS}
 )
 
 INCLUDE_DIRECTORIES (\${PROJECT_INCLUDE_DIRS})

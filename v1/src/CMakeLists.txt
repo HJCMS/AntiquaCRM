@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
 
+INCLUDE(CMakeSubTargets.cmake)
+
 ADD_SUBDIRECTORY(libs)
 #ADD_SUBDIRECTORY(plugins)
+ADD_SUBDIRECTORY(tabs)
 ADD_SUBDIRECTORY(icons)
 ADD_SUBDIRECTORY(i18n)
-#ADD_SUBDIRECTORY(utils)
-
-INCLUDE(CMakeSubTargets.cmake)
+ADD_SUBDIRECTORY(widgets)
 
 QT5_ADD_RESOURCES (QRC_FILES resources.qrc)
 
@@ -27,6 +28,7 @@ SET (PROJECT_LIBS
 
 SET (PROJECT_HEADERS
   antiquaappl.h
+  antiquasplashscreen.h
   antiquawindow.h
   antiquamenubar.h
   antiquatabwidget.h
@@ -38,6 +40,7 @@ SET (PROJECT_HEADERS
 SET (PROJECT_SOURCES
   main.cpp
   antiquaappl.cpp
+  antiquasplashscreen.cpp
   antiquawindow.cpp
   antiquamenubar.cpp
   antiquatabwidget.cpp

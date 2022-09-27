@@ -36,6 +36,7 @@ public:
   bool open();
   const QSqlRecord record(const QString &table);
   const QSqlQuery query(const QString &statement);
+  const QString lastError();
   void close();
 };
 

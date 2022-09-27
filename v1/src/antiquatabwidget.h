@@ -9,8 +9,13 @@
 #include <QObject>
 #include <QTabWidget>
 
+class TabBooks;
+
 class AntiquaTabWidget final : public QTabWidget {
   Q_OBJECT
+
+private:
+  TabBooks *m_books;
 
 public:
   explicit AntiquaTabWidget(QMainWindow *parent = nullptr);

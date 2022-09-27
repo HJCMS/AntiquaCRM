@@ -352,16 +352,20 @@ const QJsonValue InterfaceWidget::getPrice(const QString &objName) {
 
 const ProviderOrder InterfaceWidget::getProviderOrder() {
   ProviderOrder order;
-  order.setProvider(providerName);
-  order.setProviderId(orderId);
   int cid = getCustomerId();
-  // qDebug() << Q_FUNC_INFO << providerName << orderId << cid;
   if (cid < 1) {
     order.setCustomerId(-1);
     qWarning("Missing Customer Id");
     return order;
   }
+  order.setProvider(providerName);
+  order.setProviderId(orderId);
   order.setCustomerId(cid);
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << providerName << orderId << cid;
+#endif
+
   int col = 1; /**< ArticleId Cell */
   QStringList ids;
   for (int r = 0; r < getTableCount(); r++) {
