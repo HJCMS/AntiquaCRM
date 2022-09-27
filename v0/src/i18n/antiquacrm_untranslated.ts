@@ -800,7 +800,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+70"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -830,12 +830,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-450"/>
+        <location line="-448"/>
         <source>Extended Title or Subtitle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+225"/>
+        <location line="+223"/>
         <source>Do you realy wan&apos;t to delete the Image?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -845,7 +845,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-306"/>
+        <location line="-304"/>
         <location line="+1"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
@@ -878,12 +878,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+220"/>
+        <location line="+218"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-336"/>
+        <location line="-334"/>
         <source>Restricted Sale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -969,7 +969,7 @@
 <context>
     <name>BooklookerRemoteActions</name>
     <message>
-        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+98"/>
+        <location filename="../plugins/antiqua/booklooker/booklookerremoteactions.cpp" line="+100"/>
         <source>Invalid Parameters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1090,7 +1090,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+40"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1105,12 +1105,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-92"/>
+        <location line="-84"/>
         <source>A table row must be selected in order to perform an action.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+96"/>
         <source>add Article to opened Order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2737,17 +2737,7 @@
 <context>
     <name>ImageToolBar</name>
     <message>
-        <location filename="../custom/imaging/imagetoolbar.cpp" line="+19"/>
-        <source>Import Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Open the Imaging Dialog for Import and Edit Pictures.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location filename="../custom/imaging/imagetoolbar.cpp" line="+28"/>
         <source>Remove Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2757,17 +2747,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Upload Image</source>
+        <location line="-10"/>
+        <source>Image Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Upload image to Providers.</source>
+        <source>Dialog to Import/Edit Images.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+3"/>
+        <source>Webcam Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Import Image from a Webcam.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
         <source>This will upload the current image to the service provider.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5104,7 +5104,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+58"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>

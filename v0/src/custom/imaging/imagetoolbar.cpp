@@ -16,26 +16,25 @@ ImageToolBar::ImageToolBar(QWidget *parent) : QWidget{parent} {
   layout->setContentsMargins(0, 1, 0, 1);
   layout->addStretch(1);
 
-  m_openbtn = new QPushButton(myIcon("image"), tr("Import Image"), this);
-  m_openbtn->setToolTip(
-      tr("Open the Imaging Dialog for Import and Edit Pictures."));
+  m_openbtn = new QPushButton(myIcon("image"), tr("Image Dialog"), this);
+  m_openbtn->setToolTip(tr("Dialog to Import/Edit Images."));
   layout->addWidget(m_openbtn);
+
+  m_webcambtn = new QPushButton(myIcon("image"), tr("Webcam Dialog"), this);
+  m_webcambtn->setToolTip(tr("Import Image from a Webcam."));
+  m_webcambtn->setEnabled(false);
+  layout->addWidget(m_webcambtn);
 
   m_delbtn = new QPushButton(myIcon("edit_remove"), tr("Remove Image"), this);
   m_delbtn->setToolTip(tr("Remove image from Database."));
   m_delbtn->setEnabled(false);
   layout->addWidget(m_delbtn);
 
-  m_uplbtn = new QPushButton(myIcon("undo"), tr("Upload Image"), this);
-  m_uplbtn->setToolTip(tr("Upload image to Providers."));
-  m_uplbtn->setEnabled(false);
-  layout->addWidget(m_uplbtn);
-
   setLayout(layout);
 
   connect(m_openbtn, SIGNAL(clicked()), this, SLOT(checkOpen()));
   connect(m_delbtn, SIGNAL(clicked()), this, SLOT(checkRemove()));
-  connect(m_uplbtn, SIGNAL(clicked()), this, SLOT(checkUpload()));
+  // connect(m_webcambtn, SIGNAL(clicked()), this, SLOT(checkUpload()));
 }
 
 void ImageToolBar::checkOpen() { emit s_openImage(); }
@@ -68,12 +67,12 @@ void ImageToolBar::setActive(bool b) { m_openbtn->setEnabled(b); }
 
 void ImageToolBar::enableActions(bool b) {
   m_delbtn->setEnabled(b);
-  m_uplbtn->setEnabled(b);
+  // m_webcambtn->setEnabled(b);
 }
 
 void ImageToolBar::restoreState() {
   aId = 0;
   m_openbtn->setEnabled(false);
   m_delbtn->setEnabled(false);
-  m_uplbtn->setEnabled(false);
+  m_webcambtn->setEnabled(false);
 }

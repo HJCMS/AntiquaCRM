@@ -332,8 +332,6 @@ BookEditor::BookEditor(QWidget *parent) : EditorMain{parent} {
   connect(m_imageToolBar, SIGNAL(s_openImage()), this, SLOT(openImageDialog()));
   connect(m_imageToolBar, SIGNAL(s_deleteImage(int)), this,
           SLOT(removeImageDialog(int)));
-  connect(m_imageToolBar, SIGNAL(s_uploadImage(int)), this,
-          SIGNAL(s_uploadImage(int)));
 
   // isbn
   connect(m_isbnWidget, SIGNAL(requestFinished()), this, SLOT(viewIsbnTab()));

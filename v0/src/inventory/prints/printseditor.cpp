@@ -291,8 +291,6 @@ PrintsEditor::PrintsEditor(QWidget *parent) : EditorMain{parent} {
   connect(m_imageToolBar, SIGNAL(s_openImage()), this, SLOT(openImageDialog()));
   connect(m_imageToolBar, SIGNAL(s_deleteImage(int)), this,
           SLOT(removeImageDialog(int)));
-  connect(m_imageToolBar, SIGNAL(s_uploadImage(int)), this,
-          SIGNAL(s_uploadImage(int)));
 
   connect(m_actionBar, SIGNAL(s_cancelClicked()), this,
           SLOT(finalLeaveEditor()));

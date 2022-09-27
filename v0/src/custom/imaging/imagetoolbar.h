@@ -18,8 +18,8 @@ class ImageToolBar final : public QWidget {
 private:
   int aId = 0;
   QPushButton *m_openbtn;
+  QPushButton *m_webcambtn;
   QPushButton *m_delbtn;
-  QPushButton *m_uplbtn;
 
 private Q_SLOTS:
   void checkOpen();
