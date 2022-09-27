@@ -27,7 +27,9 @@ private:
    * @brief SQL Database Connection
    */
   QSqlDatabase *database;
+
   bool initDatabase();
+  bool isConnected();
 
 public:
   explicit ASqlCore(QObject *parent = nullptr);

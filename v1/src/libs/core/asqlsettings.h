@@ -61,6 +61,11 @@ public:
   const QString getProfile();
 
   /**
+   * @brief the List from all configured Profiles
+   */
+  const QStringList profiles();
+
+  /**
    * @brief set Value with Section-Key to current Profile.
    */
   void setParam(const QString &key, const QVariant &value);

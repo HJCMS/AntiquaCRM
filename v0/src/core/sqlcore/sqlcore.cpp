@@ -12,7 +12,6 @@
 #include <QDebug>
 #include <QFileInfo>
 #include <QLocale>
-#include <QMutex>
 #include <QSettings>
 #include <QSqlDriver>
 #include <QSqlError>
@@ -74,10 +73,7 @@ bool SqlCore::initSQLDriver() {
 
 bool SqlCore::socketConnectionTest() {
   bool b = false;
-  QMutex mutex;
-  mutex.lock();
   b = m_socket->connect();
-  mutex.unlock();
   return b;
 }
 
@@ -208,10 +204,7 @@ const QSqlQuery SqlCore::query(const QString &statement) {
 
   QSqlQuery q;
   QTime t = QTime::currentTime();
-  QMutex mutex;
-  mutex.lock();
   q = database->exec(statement);
-  mutex.unlock();
   queryTimeSpend = t.msec();
   return q;
 }

@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "socketnotifier.h"
+#include "antiquasocketserver.h"
 
 #include <QByteArray>
 #include <QDataStream>
@@ -10,13 +10,13 @@
 #include <QJsonParseError>
 #include <QSysInfo>
 
-SocketNotifier::SocketNotifier(QObject *parent) : QLocalServer{parent} {
+AntiquaSocketServer::AntiquaSocketServer(QObject *parent) : QLocalServer{parent} {
   setObjectName("socket_notifier");
   setSocketOptions(QLocalServer::UserAccessOption);
   setMaxPendingConnections(100);
 }
 
-void SocketNotifier::incomingConnection(quintptr socketDescriptor) {
+void AntiquaSocketServer::incomingConnection(quintptr socketDescriptor) {
   m_listener = new QLocalSocket(this);
   m_listener->setObjectName("local_socket_manager");
   m_listener->setSocketDescriptor(socketDescriptor);
@@ -32,7 +32,7 @@ void SocketNotifier::incomingConnection(quintptr socketDescriptor) {
   }
 }
 
-const QString SocketNotifier::name() {
+const QString AntiquaSocketServer::name() {
   QString name("de.hjcms.antiquacrm");
   name.append(".");
   name.append(QSysInfo::machineHostName());

@@ -28,16 +28,22 @@ SET (PROJECT_LIBS
 SET (PROJECT_HEADERS
   antiquaappl.h
   antiquawindow.h
-  socketnotifier.h
-  systemtray.h
+  antiquamenubar.h
+  antiquatabwidget.h
+  antiquastatusbar.h
+  antiquasocketserver.h
+  antiquasystemtray.h
 )
 
 SET (PROJECT_SOURCES
   main.cpp
   antiquaappl.cpp
   antiquawindow.cpp
-  socketnotifier.cpp
-  systemtray.cpp
+  antiquamenubar.cpp
+  antiquatabwidget.cpp
+  antiquastatusbar.cpp
+  antiquasocketserver.cpp
+  antiquasystemtray.cpp
   ${QRC_FILES}
 )
 

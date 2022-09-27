@@ -21,6 +21,7 @@
 #include <QLocalSocket>
 #include <QLocale>
 #include <QMessageBox>
+#include <QMutex>
 #include <QNetworkInterface>
 #include <QStyleFactory>
 #include <QTimer>
@@ -140,22 +141,28 @@ int MApplication::exec() {
   }
 
   // SQL Database
+  QMutex mutex;
+  mutex.lock();
   m_sql = new HJCMS::SqlCore(this);
   if (!m_sql->sqlDriversExists()) {
     openAssistant();
+    mutex.unlock();
     return 0;
   }
 
   if (!initialSocketServer()) {
     qFatal("socket server is down ...");
+    mutex.unlock();
     return 1;
   }
 
   if (!m_sql->initialDatabase()) {
     qWarning("Database connection failed ...");
     openAssistant();
+    mutex.unlock();
     return 0;
   }
+  mutex.unlock();
 
   m_window = new MWindow();
   // Database reconnect

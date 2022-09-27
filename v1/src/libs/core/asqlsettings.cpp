@@ -76,6 +76,14 @@ const QString ASqlSettings::getProfile() {
   return value("database_profile", "Default").toString();
 }
 
+const QStringList ASqlSettings::profiles() {
+  QStringList l;
+  beginGroup("database");
+  l = allKeys();
+  endGroup();
+  return l;
+}
+
 void ASqlSettings::setParam(const QString &key, const QVariant &value) {
   beginGroup(groupPath());
   if (key.contains("pass", Qt::CaseInsensitive)) {

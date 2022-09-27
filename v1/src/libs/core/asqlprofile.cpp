@@ -42,11 +42,11 @@ void ASqlProfile::setPassword(const QString &pass) { pg_password = pass; }
 
 const QString ASqlProfile::getPassword() { return pg_password; }
 
-void ASqlProfile::setTimeout(int timeout) {}
+void ASqlProfile::setTimeout(int timeout) { pg_timeout = timeout; }
 
 int ASqlProfile::getTimeout() { return pg_timeout; }
 
-void ASqlProfile::setPort(int port) {}
+void ASqlProfile::setPort(int port) { pg_port = port; }
 
 int ASqlProfile::getPort() { return pg_port; }
 

@@ -8,12 +8,12 @@
 #include <QSystemTrayIcon>
 #include <QObject>
 
-class SystemTray : public QSystemTrayIcon
+class AntiquaSystemTray : public QSystemTrayIcon
 {
   Q_OBJECT
 
 public:
-  explicit SystemTray(const QIcon &icon, QObject *parent = nullptr);
+  explicit AntiquaSystemTray(const QIcon &icon, QObject *parent = nullptr);
 };
 
 #endif // ANTIQUACRM_SYSTEMTRAY_H
