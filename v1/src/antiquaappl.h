@@ -11,6 +11,7 @@
 #include <QStyle>
 #include <AntiquaCRM>
 
+class AntiquaSplashScreen;
 class AntiquaWindow;
 class AntiquaSystemTray;
 
@@ -19,6 +20,7 @@ class AntiquaAppl : public QApplication {
 
 private:
   AntiquaCRM::ASqlCore *m_sql;
+  AntiquaSplashScreen *m_splash;
   AntiquaWindow *m_mainWindow;
   AntiquaSystemTray *m_systemTray;
 

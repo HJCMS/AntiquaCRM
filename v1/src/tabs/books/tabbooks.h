@@ -23,6 +23,7 @@ private:
 public Q_SLOTS:
   void createEntry();
   void openEntry(qint64 id);
+  void onEnterChanged();
 
 public:
   explicit TabBooks(QWidget *parent = nullptr);

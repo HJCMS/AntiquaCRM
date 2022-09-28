@@ -18,10 +18,12 @@ SET (projectLibrary_FILES
 
 SET (projectLibrary_SOURCES
  inventory.cpp
+ inventorytable.cpp
 )
 
 SET (projectLibrary_HEADERS
  inventory.h
+ inventorytable.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

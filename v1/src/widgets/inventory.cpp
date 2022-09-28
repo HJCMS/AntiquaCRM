@@ -7,40 +7,39 @@
 #include <QClipboard>
 #include <QMessageBox>
 
-InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
-  setEditTriggers(QAbstractItemView::NoEditTriggers);
-  setCornerButtonEnabled(false);
-  setSortingEnabled(false);
-  setDragEnabled(false);
-  setDragDropOverwriteMode(false);
-  setWordWrap(false);
-  setAlternatingRowColors(true);
-  setSelectionBehavior(QAbstractItemView::SelectRows);
-  setSelectionMode(QAbstractItemView::SingleSelection);
+Inventory::Inventory(QWidget *parent) : QStackedWidget{parent} {
+  setContentsMargins(0, 0, 0, 0);
+  setWindowIcon(defaultIcon());
+  addShortCutsAndSignals();
 }
 
-Inventory::Inventory(QWidget *parent) : QWidget{parent} {
-  setContentsMargins(0, 0, 0, 0);
-
-  m_sql = new AntiquaCRM::ASqlCore(this);
+void Inventory::addShortCutsAndSignals() {
+  Qt::KeyboardModifiers km(Qt::ControlModifier + Qt::ShiftModifier);
 
   m_focusSearch = new QShortcut(tr("Ctrl+Shift+S", "Search"), this);
-  m_focusSearch->setKey(Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_S);
+  m_focusSearch->setKey(km + Qt::Key_S);
   connect(m_focusSearch, SIGNAL(activated()), this,
           SIGNAL(sendSetSearchFocus()));
 
   m_focusFilter = new QShortcut(tr("Ctrl+Shift+F", "Filter"), this);
-  m_focusFilter->setKey(Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_F);
+  m_focusFilter->setKey(km + Qt::Key_F);
   connect(m_focusFilter, SIGNAL(activated()), this,
           SIGNAL(sendSetSearchFilter()));
 
-  m_createEntry = new QShortcut(tr("Ctrl+Shift+N", "New Entry"), this);
-  m_createEntry->setKey(Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_N);
+  m_createEntry = new QShortcut(tr("Ctrl+Shift+N", "New"), this);
+  m_createEntry->setKey(km + Qt::Key_N);
   connect(m_createEntry, SIGNAL(activated()), this,
           SIGNAL(sendCreateNewEntry()));
 }
 
 void Inventory::setClosable(bool b) { closable = b; }
+
+void Inventory::changeEvent(QEvent *event) {
+  if (event->type() == QEvent::EnabledChange)
+    emit sendEnabledStatus(isEnabled());
+
+  QStackedWidget::changeEvent(event);
+}
 
 void Inventory::copyToClipboard(const QString &data) {
   QString buf = data.trimmed();
@@ -73,3 +72,7 @@ void Inventory::warnPoUp(const QString &title, const QString &message) {
 bool Inventory::isClosable() { return closable; }
 
 bool Inventory::isModified() { return isWindowModified(); }
+
+const QIcon Inventory::defaultIcon() {
+  return QIcon(QString(":icons/antiqua.png"));
+}

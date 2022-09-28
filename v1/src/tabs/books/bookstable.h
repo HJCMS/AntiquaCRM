@@ -8,8 +8,8 @@
 #include <QObject>
 #include <QWidget>
 
-#ifndef ANTIQUACRM_INVENTORY_H
-#include "inventory.h"
+#ifndef ANTIQUACRM_INVENTORYTABLE_H
+#include "inventorytable.h"
 #endif
 
 class BooksTableModel;
@@ -23,6 +23,7 @@ public Q_SLOTS:
 
 public:
   explicit BooksTable(QWidget *parent = nullptr);
+  bool initTable();
 };
 
 #endif // ANTIQUACRM_BOOKSTABLE_H

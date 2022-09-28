@@ -9,15 +9,20 @@
 
 TabBooks::TabBooks(QWidget *parent) : Inventory{parent} {
   setObjectName("inventory_books");
-  QVBoxLayout *layout = new QVBoxLayout(this);
-  layout->setContentsMargins(0, 0, 0, 0);
+  setWindowTitle(tr("Books"));
 
   m_table = new BooksTable(this);
-  layout->addWidget(m_table);
-
-  setLayout(layout);
+  insertWidget(0, m_table);
 }
 
 void TabBooks::createEntry() { qDebug() << Q_FUNC_INFO << "TODO"; }
 
 void TabBooks::openEntry(qint64 id) { qDebug() << Q_FUNC_INFO; }
+
+void TabBooks::onEnterChanged() {
+  if(!initialed) {
+    initialed = m_table->initTable();
+  } else {
+    qDebug() << Q_FUNC_INFO << "Nothing TODO";
+  }
+}

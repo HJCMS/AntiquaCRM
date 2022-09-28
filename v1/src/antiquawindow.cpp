@@ -15,6 +15,7 @@ AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
   setMenuBar(m_menuBar);
 
   m_centralWidget = new AntiquaTabWidget(this);
+  m_centralWidget->setEnabled(false);
   setCentralWidget(m_centralWidget);
 
   m_statusBar = new AntiquaStatusBar(this);
@@ -27,4 +28,11 @@ void AntiquaWindow::closeEvent(QCloseEvent *event) {
   // TODO Save operations
 
   QMainWindow::closeEvent(event);
+}
+
+void AntiquaWindow::openWindow() {
+  show();
+  activateWindow();
+  m_centralWidget->setEnabled(true);
+  m_centralWidget->loadDefaultTabs();
 }

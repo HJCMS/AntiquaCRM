@@ -12,6 +12,7 @@ int main(int argc, char *argv[]) {
   antiqua->setApplicationName("antiquacrm");
   antiqua->setApplicationVersion("1.0.0");
   antiqua->setOrganizationDomain("de.hjcms.antiquacrm");
+  antiqua->setQuitOnLastWindowClosed(true);
   antiqua->initDefaultTheme();
 
   if (QTextCodec::codecForLocale()->name() != "UTF-8") {

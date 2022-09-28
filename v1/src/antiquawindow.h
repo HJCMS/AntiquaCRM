@@ -28,6 +28,7 @@ protected:
 
 public:
   explicit AntiquaWindow(QWidget *parent = nullptr);
+  void openWindow();
 };
 
 #endif // ANTIQUACRM_MAINWINDOW_H

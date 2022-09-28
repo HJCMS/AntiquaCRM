@@ -3,6 +3,7 @@
 
 INCLUDE(CMakeSubTargets.cmake)
 
+ADD_SUBDIRECTORY(data)
 ADD_SUBDIRECTORY(libs)
 #ADD_SUBDIRECTORY(plugins)
 ADD_SUBDIRECTORY(tabs)

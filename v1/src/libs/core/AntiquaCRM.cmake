@@ -24,4 +24,8 @@
 #include "asqlquerymodel.h"
 #endif
 
+#ifndef ANTIQUACRM_SQLQUERYFILE_H
+#include "asqlqueryfile.h"
+#endif
+
 #endif

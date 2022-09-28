@@ -17,8 +17,12 @@ class AntiquaTabWidget final : public QTabWidget {
 private:
   TabBooks *m_books;
 
+private Q_SLOTS:
+  void tabChanged(int index);
+
 public:
   explicit AntiquaTabWidget(QMainWindow *parent = nullptr);
+  bool loadDefaultTabs();
 };
 
 #endif // ANTIQUACRM_TABWIDGET_H
