@@ -14,12 +14,16 @@
 
 class BooksTableModel;
 class BooksTable final : public InventoryTable {
+  Q_OBJECT
 
 private:
   BooksTableModel *m_model;
+  bool sqlQueryTable(const QString &query);
 
-public Q_SLOTS:
-  void refreshTable();
+private Q_SLOTS:
+  void setSortByColumn(int column, Qt::SortOrder order);
+
+// public Q_SLOTS:
 
 public:
   explicit BooksTable(QWidget *parent = nullptr);

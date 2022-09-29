@@ -6,7 +6,6 @@
 InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
   setEditTriggers(QAbstractItemView::NoEditTriggers);
   setCornerButtonEnabled(false);
-  setSortingEnabled(false);
   setDragEnabled(false);
   setDragDropOverwriteMode(false);
   setWordWrap(false);
@@ -15,8 +14,32 @@ InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
   setSelectionMode(QAbstractItemView::SingleSelection);
 
   /* Kopfzeilen anpassen */
-  QHeaderView *tHeader = horizontalHeader();
-  tHeader->setDefaultAlignment(Qt::AlignCenter);
-  tHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
-  tHeader->setStretchLastSection(true);
+  m_header = horizontalHeader();
+  m_header->setDefaultAlignment(Qt::AlignCenter);
+  m_header->setSectionResizeMode(QHeaderView::ResizeToContents);
+  m_header->setStretchLastSection(true);
+  setEnableTableViewSorting(false);
+
+  connect(m_header, SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), this,
+          SLOT(setSortByColumn(int, Qt::SortOrder)));
 }
+
+void InventoryTable::setEnableTableViewSorting(bool b)
+{
+  setSortingEnabled(b);
+  m_header->setSectionsClickable(b);
+}
+
+void InventoryTable::makeHistoryQuery() {
+  if (QueryHistory.contains("SELECT ", Qt::CaseInsensitive))
+    sqlQueryTable(QueryHistory);
+}
+
+void InventoryTable::setQueryLimit(int limit) {
+  if (limit < 1)
+    return;
+
+  QueryLimit = limit;
+}
+
+int InventoryTable::getQueryLimit() { return QueryLimit; }

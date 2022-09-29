@@ -18,6 +18,10 @@ namespace AntiquaCRM {
 
 class ASqlCore;
 
+/**
+ * @brief SqlQueryModel for TableViews
+ * @section sql
+ */
 class ASqlQueryModel : public QSqlQueryModel {
   Q_OBJECT
 
@@ -32,7 +36,6 @@ protected:
   const QIcon setHeaderIcon(int column) const;
   const QString displayDate(const QVariant &value) const;
   const QString verticalHeader(int row, int role = Qt::DisplayRole) const;
-  const QString fieldName(int column);
 
 Q_SIGNALS:
   void sqlErrorMessage(const QString &table, const QString &message);
@@ -41,6 +44,7 @@ public:
   explicit ASqlQueryModel(const QString &table, QObject *parent = nullptr);
   bool querySelect(const QString &sql);
   const QString tableName() const;
+  const QString fieldName(int column = 0);
   QVariant data(const QModelIndex &item, int role = Qt::DisplayRole) const;
 };
 

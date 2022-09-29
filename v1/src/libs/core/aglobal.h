@@ -23,13 +23,19 @@
 
 /**
  * @def HJCMS_CONFIG_DOMAIN
- * @brief OrganizationDomain is required by QSettings
- * @note All Configurations stored in:
- *  @li Linux/User:  ~/.config/de.hjcms/antiquacrm/
- *  @li Windows: C:/Users/<USER>/AppData/Local/de.hjcms/antiquacrm/
+ * @brief Required by ASettings
+ * @example ~/.config/{HJCMS_CONFIG_DOMAIN}/{HJCMS_CONFIG_NAME}/{HJCMS_CONFIG_VERSION}
  */
 #ifndef HJCMS_CONFIG_DOMAIN
 #define HJCMS_CONFIG_DOMAIN "de.hjcms"
+#endif
+
+#ifndef HJCMS_CONFIG_NAME
+#define HJCMS_CONFIG_NAME "antiquacrm"
+#endif
+
+#ifndef HJCMS_CONFIG_VERSION
+#define HJCMS_CONFIG_VERSION "1.0"
 #endif
 
 /**
@@ -42,7 +48,7 @@
 
 /**
  * @def ANTIQUACRM_USERAGENT
- * @brief required by QNetworkAccessManager and cUrl
+ * @brief required by NetworkAccessManager
  * @warning This fixed string is needet for OAuth
  */
 #ifndef ANTIQUACRM_USERAGENT
@@ -82,7 +88,7 @@
  * @brief Shared Data location
  */
 #ifndef ANTIQUACRM_DATA_TARGET
-#define ANTIQUACRM_DATA_TARGET ""
+#define ANTIQUACRM_DATA_TARGET "/home/heinemann/Developement/antiqua/v1/src/data"
 #endif
 
 /**
@@ -90,7 +96,7 @@
  * @brief Plugins target
  */
 #ifndef ANTIQUACRM_PLUGIN_TARGET
-#define ANTIQUACRM_PLUGIN_TARGET ""
+#define ANTIQUACRM_PLUGIN_TARGET "/home/heinemann/Developement/antiqua/build-v1-Desktop_Qt_5_15_2_GCC_64bit-Debug/src/plugins"
 #endif
 
 /**
@@ -126,20 +132,32 @@
 namespace AntiquaCRM {
   Q_NAMESPACE
 
-  enum Notify {
-    NOTICE = 1,
-    WARNING = 2,
-    FATAL = 3
+  enum Message {
+   NOTICE = 1,
+   WARNING = 2,
+   FATAL = 3
   };
-  Q_ENUM_NS(AntiquaCRM::Notify);
+  Q_ENUM_NS(AntiquaCRM::Message);
+
+  enum OrderStatus {
+   ORDER_OPEN = 0x0,
+   ORDER_STARTED = 0x1,
+   ORDER_FETCHET = 0x2,
+   ORDER_DELIVERED = 0x3,
+   ORDER_REMINDET = 0x4,
+   ORDER_COMPLETED = 0x5,
+   ORDER_CANCELED = 0x6,
+   ORDER_RETURNING = 0x7
+  };
+  Q_ENUM_NS(AntiquaCRM::OrderStatus);
 
   enum PaymentStatus {
-    ORDER_STATUS_NOT_SET = 0,
-    ORDER_WAIT_FOR_PAYMENT = 1,
-    ORDER_READY_FOR_SHIPMENT = 2,
-    ORDER_SHIPPED_WAIT_FOR_PAYMENT = 3,
-    ORDER_SHIPPED_AND_PAID = 4,
-    ORDER_BUYER_NO_REACTION = 5
+   ORDER_STATUS_NOT_SET = 0x0,
+   ORDER_WAIT_FOR_PAYMENT = 0x1,
+   ORDER_READY_FOR_SHIPMENT = 0x2,
+   ORDER_SHIPPED_WAIT_FOR_PAYMENT = 0x3,
+   ORDER_SHIPPED_AND_PAID = 0x4,
+   ORDER_BUYER_NO_REACTION = 0x5
   };
   Q_ENUM_NS(AntiquaCRM::PaymentStatus);
 

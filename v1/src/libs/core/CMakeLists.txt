@@ -23,8 +23,9 @@ SET (projectLibrary_FILES
 )
 
 SET (projectLibrary_SOURCES
- asqlqueryfile.cpp
+ asettings.cpp
  asqlsettings.cpp
+ asqlqueryfile.cpp
  asqlprofile.cpp
  asqlcore.cpp
  asqlquerymodel.cpp
@@ -32,8 +33,9 @@ SET (projectLibrary_SOURCES
 
 SET (projectLibrary_HEADERS
  aglobal.h
- asqlqueryfile.h
+ asettings.h
  asqlsettings.h
+ asqlqueryfile.h
  asqlprofile.h
  asqlcore.h
  asqlquerymodel.h

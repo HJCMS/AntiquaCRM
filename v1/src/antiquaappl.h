@@ -11,18 +11,19 @@
 #include <QStyle>
 #include <AntiquaCRM>
 
-class AntiquaSplashScreen;
 class AntiquaWindow;
+class AntiquaSplashScreen;
 class AntiquaSystemTray;
 
 class AntiquaAppl : public QApplication {
   Q_OBJECT
 
 private:
-  AntiquaCRM::ASqlCore *m_sql;
-  AntiquaSplashScreen *m_splash;
+  AntiquaCRM::ASettings *m_cfg;
   AntiquaWindow *m_mainWindow;
+  AntiquaSplashScreen *m_splash;
   AntiquaSystemTray *m_systemTray;
+  AntiquaCRM::ASqlCore *m_sql;
 
 public:
   explicit AntiquaAppl(int &argc, char **argv);

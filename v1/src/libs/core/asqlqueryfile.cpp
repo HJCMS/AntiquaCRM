@@ -51,7 +51,6 @@ bool ASqlQueryFile::openTemplate() {
     qWarning("Permission Denied!");
     return false;
   }
-
   QFile fp(filePath());
   if (fp.open(QIODevice::ReadOnly)) {
     p_content = QString();

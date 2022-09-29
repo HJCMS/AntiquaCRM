@@ -10,9 +10,7 @@
 
 namespace AntiquaCRM {
 
-ASqlSettings::ASqlSettings(QObject *parent)
-    : QSettings(QSettings::NativeFormat, QSettings::UserScope, configDomain(),
-                ANTIQUACRM_NAME, parent) {
+ASqlSettings::ASqlSettings(QObject *parent) : ASettings(parent) {
   setObjectName("antiquacrm_sqlsettings");
 }
 
@@ -35,15 +33,6 @@ const QString ASqlSettings::fromRealm(const QByteArray &array) {
   QString out;
   QByteArray buf = QByteArray::fromBase64(array, QByteArray::Base64UrlEncoding);
   return out.fromLocal8Bit(buf);
-}
-
-const QString ASqlSettings::configDomain() {
-  QString str = QString::fromUtf8(HJCMS_CONFIG_DOMAIN);
-  str.append(QDir::separator());
-  str.append(QString::fromUtf8(ANTIQUACRM_NAME));
-  str.append(QDir::separator());
-  str.append(QString::fromUtf8(ANTIQUACRM_VERSION));
-  return str;
 }
 
 const QString ASqlSettings::connectionName() {

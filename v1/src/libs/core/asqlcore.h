@@ -22,10 +22,6 @@ class ASqlCore : public QObject  {
 
 private:
   ASqlSettings *m_cfg;
-
-  /**
-   * @brief SQL Database Connection
-   */
   QSqlDatabase *database;
 
   bool initDatabase();

@@ -10,6 +10,8 @@
 #include <QSettings>
 #include <QString>
 
+#include "asettings.h"
+
 namespace AntiquaCRM {
 
 class ASqlProfile;
@@ -18,7 +20,7 @@ class ASqlProfile;
  * @brief This class provides sql settings functions
  * @section sql
  */
-class ASqlSettings final : public QSettings {
+class ASqlSettings final : public ASettings {
   Q_OBJECT
   Q_PROPERTY(QString profile READ getProfile WRITE setProfile NOTIFY
                  sendProfileChanged)
@@ -34,11 +36,6 @@ Q_SIGNALS:
 
 public:
   explicit ASqlSettings(QObject *parent = nullptr);
-
-  /**
-   * @brief Settings Config Domain.
-   */
-  static const QString configDomain();
 
   /**
    * @brief Global Connectionname.

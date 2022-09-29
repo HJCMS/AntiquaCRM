@@ -42,10 +42,6 @@ const QString ASqlQueryModel::verticalHeader(int row, int role) const {
   return (s.length() > 1) ? r.rightJustified(s.length(), ' ') : r;
 }
 
-const QString ASqlQueryModel::fieldName(int column) {
-  return fieldName(column);
-}
-
 bool ASqlQueryModel::querySelect(const QString &sql) {
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
@@ -61,6 +57,13 @@ bool ASqlQueryModel::querySelect(const QString &sql) {
 }
 
 const QString ASqlQueryModel::tableName() const { return p_table; }
+
+const QString ASqlQueryModel::fieldName(int column) {
+  if (p_record.isEmpty())
+    return QString();
+
+  return p_record.fieldName(column);
+}
 
 QVariant ASqlQueryModel::data(const QModelIndex &item, int role) const {
   if (!item.isValid())
