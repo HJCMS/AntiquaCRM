@@ -1116,8 +1116,13 @@ void OrderEditor::initDefaults() {
   resetModified(inputList);
   setEnabled(true);
   o_delivery_service->loadSqlDataset();
-  if (o_provider_name->value().toString().isEmpty())
+  if (o_provider_name->value().toString().isEmpty()) {
     o_provider_name->setValue(tr("Internal"));
+  }
+  if (!o_vat_included->isChecked()) {
+    o_vat_country->setValue("de");
+    o_vat_included->setChecked(true);
+  }
 }
 
 void OrderEditor::initInvoiceNumber(int orderId) {
