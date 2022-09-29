@@ -45,27 +45,32 @@ public:
   void writeGroupConfig(const QString &, const QHash<QString, QVariant> &);
 
   /**
+   * @brief Default Filter for all Dir requests!
+   */
+  static QDir::Filters directoryFilter();
+
+  /**
    * @brief Application Data Directory
    * @li Linux ${install_prefix}/share/antiquacrm
    * @li Windows ${binary_target}/data
    * @see aglobal.h
    */
-  static const QDir getDataTarget(const QString &name = QString());
+  static const QDir getDataDir(const QString &name = QString());
 
   /**
    * @brief Application Plugin Directory
    */
-  static const QDir getPluginTarget();
+  static const QDir getPluginDir();
 
   /**
-   * @brief Users Data Directory
+   * @brief get/create Users Data Directory
    */
-  static const QDir getLocalDataDir();
+  static const QDir getUserDataDir();
 
   /**
-   * @brief Users Temporary Directory
+   * @brief get Users Temporary Directory
    */
-  static const QDir getLocalTempDir();
+  static const QDir getUserTempDir();
 };
 
 }; // namespace AntiquaCRM

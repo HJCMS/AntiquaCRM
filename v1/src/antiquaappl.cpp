@@ -55,21 +55,48 @@ bool AntiquaAppl::isRunning() { return false; }
 
 int AntiquaAppl::exec() {
   QMutex mutex;
+  m_splash->setMessage(tr("Search Networkconnection!"));
+  mutex.lock();
+  AntiquaCRM::ANetworkIface iface;
+  if (iface.connectedIfaceExists()) {
+    m_splash->setMessage(tr("Valid Networkconnection found!"));
+    qInfo("Networkconnection found!");
+  } else {
+    m_splash->setMessage(tr("No Networkconnection found!"));
+    qWarning("No Network connection found!");
+    mutex.unlock();
+    return 1;
+  }
+  mutex.unlock();
+  m_splash->setMessage(tr("Check Server Networkconnection!"));
+  mutex.lock();
+  AntiquaCRM::ASqlSettings sqlConfig(this);
+  QString host = sqlConfig.getParam("pg_hostname").toString();
+  int port = sqlConfig.getParam("pg_port").toInt();
+  if (!iface.checkSqlPort(host, port)) {
+    m_splash->setMessage(tr("Sql Server unreachable!"));
+    qWarning("Sql Server unreachable!");
+    mutex.unlock();
+    return 1;
+  }
+  m_splash->setMessage(tr("Sql Server found!"));
+  mutex.unlock();
+
+  m_splash->setMessage(tr("Test Database connection!"));
   mutex.lock();
   m_sql = new AntiquaCRM::ASqlCore(this);
-  qInfo("Open Database connection");
   if (!m_sql->open()) {
-    qFatal("no database connection");
+    qWarning("No Database connected!");
     mutex.unlock();
-    return 134;
+    return 1;
   }
-  m_splash->setMessage(tr("Database connected"));
+  m_splash->setMessage(tr("Database connected!"));
   mutex.unlock();
 
   // TODO Templates and Pluginloader
-  // m_cfg->getDataTarget();
-  // m_cfg->getPluginTarget();
-  qDebug() << m_cfg->getLocalTempDir();
+  // m_cfg->getDataDir();
+  // m_cfg->getPluginDir();
+  // m_cfg->getTempDir();
 
   m_splash->finish(m_mainWindow);
 

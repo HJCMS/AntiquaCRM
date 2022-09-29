@@ -8,6 +8,14 @@
 #include "aglobal.h"
 #endif
 
+#ifndef ANTIQUACRM_SETTINGS_H
+#include "asettings.h"
+#endif
+
+#ifndef ANTIQUACRM_NETWORKIFACE_H
+#include "anetworkiface.h"
+#endif
+
 #ifndef ANTIQUACRM_SQLPROFILE_H
 #include "asqlprofile.h"
 #endif

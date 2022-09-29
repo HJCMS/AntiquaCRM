@@ -9,10 +9,6 @@
 
 namespace AntiquaCRM {
 
-static QDir::Filters antiqua_dir_flags() {
-  return (QDir::Dirs | QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
-}
-
 ASettings::ASettings(QObject *parent)
     : QSettings(QSettings::NativeFormat, QSettings::UserScope, configDomain(),
                 ANTIQUACRM_NAME, parent) {
@@ -56,21 +52,25 @@ void ASettings::writeGroupConfig(const QString &group,
   endGroup();
 }
 
-const QDir ASettings::getDataTarget(const QString &name) {
+QDir::Filters ASettings::directoryFilter() {
+  return (QDir::Dirs | QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
+}
+
+const QDir ASettings::getDataDir(const QString &name) {
   QString p(ANTIQUACRM_DATA_TARGET);
   p.append(QDir::separator());
   p.append(name);
   QDir t(p);
   QStringList filters({"*.xml", "*.sql", "*.json"});
   t.setNameFilters(filters);
-  t.setFilter(antiqua_dir_flags());
+  t.setFilter(directoryFilter());
   t.setSorting(QDir::Name);
   return t.isReadable() ? t : QDir(ANTIQUACRM_DATA_TARGET);
 }
 
-const QDir ASettings::getPluginTarget() {
+const QDir ASettings::getPluginDir() {
   QDir t(ANTIQUACRM_PLUGIN_TARGET);
-  t.setFilter(antiqua_dir_flags());
+  t.setFilter(directoryFilter());
   t.setSorting(QDir::Name);
 #ifdef Q_OS_LINUX
   t.setNameFilters(QStringList("*.so"));
@@ -80,24 +80,21 @@ const QDir ASettings::getPluginTarget() {
   return t;
 }
 
-const QDir ASettings::getLocalDataDir() {
+const QDir ASettings::getUserDataDir() {
   QString data = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
   QDir d(data);
   if (!d.mkpath(d.path())) {
     qWarning("Permission denied!");
   }
-  d.setFilter(QDir::Dirs | QDir::Files);
+  d.setFilter(directoryFilter());
   d.setSorting(QDir::Name);
   return d;
 }
 
-const QDir ASettings::getLocalTempDir() {
+const QDir ASettings::getUserTempDir() {
   QString data = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
   QDir d(data);
-  if (!d.mkpath(d.path())) {
-    qWarning("Permission denied!");
-  }
-  d.setFilter(QDir::Dirs | QDir::Files);
+  d.setFilter(directoryFilter());
   d.setSorting(QDir::Name);
   return d;
 }
