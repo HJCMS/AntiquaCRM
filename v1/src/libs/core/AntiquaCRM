@@ -16,6 +16,10 @@
 #include "anetworkiface.h"
 #endif
 
+#ifndef ANTIQUACRM_NETWORKER_H
+#include "anetworker.h"
+#endif
+
 #ifndef ANTIQUACRM_SQLPROFILE_H
 #include "asqlprofile.h"
 #endif

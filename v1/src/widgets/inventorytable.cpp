@@ -13,6 +13,9 @@ InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
   setSelectionBehavior(QAbstractItemView::SelectRows);
   setSelectionMode(QAbstractItemView::SingleSelection);
 
+  m_cfg = new AntiquaCRM::ASettings(this);
+  QueryLimit = m_cfg->defaultValue("SqlQueryLimit", 2500).toInt();
+
   /* Kopfzeilen anpassen */
   m_header = horizontalHeader();
   m_header->setDefaultAlignment(Qt::AlignCenter);
@@ -24,8 +27,7 @@ InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
           SLOT(setSortByColumn(int, Qt::SortOrder)));
 }
 
-void InventoryTable::setEnableTableViewSorting(bool b)
-{
+void InventoryTable::setEnableTableViewSorting(bool b) {
   setSortingEnabled(b);
   m_header->setSectionsClickable(b);
 }

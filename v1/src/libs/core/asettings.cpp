@@ -27,6 +27,12 @@ const QString ASettings::configDomain() {
   return str;
 }
 
+const QVariant ASettings::defaultValue(const QString &key,
+                                       const QVariant &val) {
+  setValue(key, val);
+  return value(key, val);
+}
+
 const QHash<QString, QVariant> &
 ASettings::readGroupConfig(const QString &group) {
   p_hash.clear();
@@ -92,7 +98,8 @@ const QDir ASettings::getUserDataDir() {
 }
 
 const QDir ASettings::getUserTempDir() {
-  QString data = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+  QString data =
+      QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
   QDir d(data);
   d.setFilter(directoryFilter());
   d.setSorting(QDir::Name);

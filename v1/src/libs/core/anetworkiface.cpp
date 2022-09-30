@@ -4,6 +4,8 @@
 #include "anetworkiface.h"
 
 #include <QDebug>
+#include <QHostAddress>
+#include <QNetworkAddressEntry>
 #include <QTcpSocket>
 
 namespace AntiquaCRM {
@@ -29,7 +31,7 @@ ANetworkIface::ANetworkIface() : QNetworkInterface{} {
 
 bool ANetworkIface::connectedIfaceExists() { return (p_adresses.count() > 0); }
 
-bool ANetworkIface::checkSqlPort(const QString &host, int port, int wait) {
+bool ANetworkIface::checkRemotePort(const QString &host, int port, int wait) {
   bool b = false;
   QTcpSocket sock;
   sock.connectToHost(host, port, QIODevice::ReadOnly);

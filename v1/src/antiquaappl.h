@@ -5,11 +5,11 @@
 #ifndef ANTIQUACRM_APPLICATION_H
 #define ANTIQUACRM_APPLICATION_H
 
+#include <AntiquaCRM>
 #include <QApplication>
 #include <QObject>
 #include <QScreen>
 #include <QStyle>
-#include <AntiquaCRM>
 
 class AntiquaWindow;
 class AntiquaSplashScreen;
@@ -24,6 +24,12 @@ private:
   AntiquaSplashScreen *m_splash;
   AntiquaSystemTray *m_systemTray;
   AntiquaCRM::ASqlCore *m_sql;
+
+  bool checkInterfaces();
+  bool checkRemotePort();
+  bool checkDatabase();
+  bool createCacheFiles();
+  bool initialPlugins();
 
 public:
   explicit AntiquaAppl(int &argc, char **argv);

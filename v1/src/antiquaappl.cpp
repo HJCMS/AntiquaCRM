@@ -29,6 +29,63 @@ AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
   m_splash->setMessage(tr("Open Database connection."));
 }
 
+bool AntiquaAppl::checkInterfaces() {
+  m_splash->setMessage(tr("Search Networkconnection!"));
+  AntiquaCRM::ANetworkIface iface;
+  if (iface.connectedIfaceExists()) {
+    m_splash->setMessage(tr("Valid Networkconnection found!"));
+    qInfo("Networkconnection found!");
+    return true;
+  }
+  m_splash->setMessage(tr("No Networkconnection found!"));
+  qWarning("No Network connection found!");
+  return false;
+}
+
+bool AntiquaAppl::checkRemotePort() {
+  m_splash->setMessage(tr("Check Server Networkconnection!"));
+  AntiquaCRM::ASqlSettings sqlConfig(this);
+  QString host = sqlConfig.getParam("pg_hostname").toString();
+  int port = sqlConfig.getParam("pg_port").toInt();
+  AntiquaCRM::ANetworkIface iface;
+  if (!iface.checkRemotePort(host, port)) {
+    m_splash->setMessage(tr("Sql Server unreachable!"));
+    qWarning("Sql Server unreachable!");
+    return false;
+  }
+  m_splash->setMessage(tr("Remoteserver found!"));
+  return true;
+}
+
+bool AntiquaAppl::checkDatabase() {
+  m_splash->setMessage(tr("Test Database connection!"));
+  m_sql = new AntiquaCRM::ASqlCore(this);
+  if (m_sql->open()) {
+    m_splash->setMessage(tr("Database connected!"));
+    return true;
+  }
+  qWarning("No Database connected!");
+  return false;
+}
+
+bool AntiquaAppl::createCacheFiles() {
+  if (m_sql == nullptr)
+    return false;
+
+  m_splash->setMessage(tr("Creating Cachefiles!"));
+  // m_cfg->getTempDir();
+  // m_cfg->getDataDir();
+  m_splash->setMessage(tr("Completed..."));
+  return true;
+}
+
+bool AntiquaAppl::initialPlugins() {
+  m_splash->setMessage(tr("Loading plugins!"));
+  // m_cfg->getPluginDir();
+  m_splash->setMessage(tr("Completed..."));
+  return true;
+}
+
 void AntiquaAppl::initDefaultTheme() {
   setStyle(QStyleFactory::create("Fusion"));
   QFont font = qApp->font();
@@ -51,60 +108,55 @@ void AntiquaAppl::initDefaultTheme() {
 #endif
 }
 
-bool AntiquaAppl::isRunning() { return false; }
+bool AntiquaAppl::isRunning() {
+  // TODO LocalSocketServer
+  return false;
+}
 
 int AntiquaAppl::exec() {
   QMutex mutex;
-  m_splash->setMessage(tr("Search Networkconnection!"));
+  // Step 1 - Netzwerkschnittstelln finden
   mutex.lock();
-  AntiquaCRM::ANetworkIface iface;
-  if (iface.connectedIfaceExists()) {
-    m_splash->setMessage(tr("Valid Networkconnection found!"));
-    qInfo("Networkconnection found!");
-  } else {
-    m_splash->setMessage(tr("No Networkconnection found!"));
-    qWarning("No Network connection found!");
+  if (!checkInterfaces()) {
     mutex.unlock();
     return 1;
   }
   mutex.unlock();
-  m_splash->setMessage(tr("Check Server Networkconnection!"));
+
+  // Step 2 - SQL Port Testen
   mutex.lock();
-  AntiquaCRM::ASqlSettings sqlConfig(this);
-  QString host = sqlConfig.getParam("pg_hostname").toString();
-  int port = sqlConfig.getParam("pg_port").toInt();
-  if (!iface.checkSqlPort(host, port)) {
-    m_splash->setMessage(tr("Sql Server unreachable!"));
-    qWarning("Sql Server unreachable!");
+  if (!checkRemotePort()) {
     mutex.unlock();
     return 1;
   }
-  m_splash->setMessage(tr("Sql Server found!"));
   mutex.unlock();
 
-  m_splash->setMessage(tr("Test Database connection!"));
+  // Step 3 - Datenbanktest durchführen
   mutex.lock();
-  m_sql = new AntiquaCRM::ASqlCore(this);
-  if (!m_sql->open()) {
-    qWarning("No Database connected!");
+  if (!checkDatabase()) {
     mutex.unlock();
     return 1;
   }
-  m_splash->setMessage(tr("Database connected!"));
   mutex.unlock();
 
-  // TODO Templates and Pluginloader
-  // m_cfg->getDataDir();
-  // m_cfg->getPluginDir();
-  // m_cfg->getTempDir();
+  // Step 4 - Temporäre Dateien erstellen.
+  mutex.lock();
+  createCacheFiles();
+  mutex.unlock();
 
-  m_splash->finish(m_mainWindow);
+  // Step 5 - Plugins suchen und laden
+  mutex.lock();
+  initialPlugins();
+  mutex.unlock();
 
-  m_splash->setMessage("Open Antiqua CRM");
-  m_mainWindow->openWindow();
-
-  m_splash->setMessage("Add Systemtray Icon");
+  // Step 6 - Systemtray anzeigen
+  m_splash->setMessage("Initial Systemtray.");
   m_systemTray->show();
+
+  // Step 7 - Hauptfenster öffnen
+  m_splash->setMessage("Start Antiqua CRM");
+  m_splash->finish(m_mainWindow);
+  m_mainWindow->openWindow();
 
   return QCoreApplication::exec();
 }

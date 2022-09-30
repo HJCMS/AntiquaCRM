@@ -58,6 +58,7 @@ InventoryProviders::InventoryProviders(QWidget *parent) : Inventory{parent} {
   setLayout(layout);
 
   connect(m_toolBar, SIGNAL(s_refresh()), this, SLOT(searchConvert()));
+  connect(m_toolBar, SIGNAL(sendQueryProviders()), this, SLOT(searchConvert()));
   connect(m_toolBar, SIGNAL(s_createOrder()), this, SLOT(createEditOrders()));
   connect(m_listView, SIGNAL(sendQueryOrder(const QString &, const QString &)),
           this, SLOT(queryOrder(const QString &, const QString &)));
@@ -128,9 +129,8 @@ void InventoryProviders::searchConvert() {
   if (p_iFaces.count() > 0) {
     QListIterator<Antiqua::Interface *> it(p_iFaces);
     while (it.hasNext()) {
-      Antiqua::Interface *iface = it.next();
-      if (iface != nullptr)
-        iface->queryMenueEntries();
+      qDebug() << Q_FUNC_INFO << it.next()->objectName();
+      it.next()->queryMenueEntries();
     }
   }
 }

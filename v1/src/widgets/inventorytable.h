@@ -10,14 +10,16 @@
 #include <QObject>
 #include <QTableView>
 #include <QWidget>
+#include <AntiquaCRM>
 
 class InventoryTable : public QTableView {
   Q_OBJECT
 
 private:
-  int QueryLimit = 2500;
+  int QueryLimit;
 
 protected:
+  AntiquaCRM::ASettings *m_cfg;
   QHeaderView *m_header;
   QString QueryHistory = QString();
 

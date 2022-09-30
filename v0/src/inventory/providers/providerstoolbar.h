@@ -37,6 +37,7 @@ protected:
 Q_SIGNALS:
   void s_createOrder();
   void s_refresh();
+  void sendQueryProviders();
 
 public Q_SLOTS:
   /**

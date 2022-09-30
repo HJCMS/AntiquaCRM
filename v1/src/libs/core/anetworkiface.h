@@ -5,12 +5,15 @@
 #ifndef ANTIQUACRM_NETWORKIFACE_H
 #define ANTIQUACRM_NETWORKIFACE_H
 
-#include <QHostAddress>
-#include <QNetworkAddressEntry>
 #include <QNetworkInterface>
+#include <QStringList>
 
 namespace AntiquaCRM {
 
+/**
+ * @brief Testclass for Network Interfaces
+ * @ingroup Network
+ */
 class ANetworkIface : public QNetworkInterface {
 private:
   QStringList p_adresses;
@@ -18,7 +21,7 @@ private:
 public:
   explicit ANetworkIface();
   bool connectedIfaceExists();
-  bool checkSqlPort(const QString &host, int port = 5432, int wait = 5);
+  bool checkRemotePort(const QString &host, int port = 5432, int wait = 5);
 };
 
 }; // namespace AntiquaCRM

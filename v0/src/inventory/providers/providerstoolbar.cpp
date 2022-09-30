@@ -52,7 +52,7 @@ void ProvidersToolBar::timerEvent(QTimerEvent *event) {
   --counter;
   if (counter <= 0) {
     counter = 300;
-    emit s_refresh();
+    emit sendQueryProviders();
     return;
   }
   QTime t(0, 0, 0);
