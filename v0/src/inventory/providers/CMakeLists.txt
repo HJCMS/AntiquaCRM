@@ -21,6 +21,7 @@ SET (subproject_LINKER
 
 SET (subproject_SOURCES
   inventoryproviders.cpp
+  providerupdatetask.cpp
   providerselectcustomer.cpp
   providerstoolbar.cpp
   providerstreeview.cpp
@@ -29,6 +30,7 @@ SET (subproject_SOURCES
 
 SET (subproject_HEADERS
   providersstatements.h
+  providerupdatetask.h
   providerselectcustomer.h
   providerstoolbar.h
   providerstreeview.h

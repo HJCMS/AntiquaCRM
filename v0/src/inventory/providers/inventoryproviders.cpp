@@ -7,6 +7,7 @@
 #include "providersstatements.h"
 #include "providerstoolbar.h"
 #include "providerstreeview.h"
+#include "providerupdatetask.h"
 // Utils
 #include "applicationclient.h"
 #include "eucountries.h"
@@ -129,8 +130,14 @@ void InventoryProviders::searchConvert() {
   if (p_iFaces.count() > 0) {
     QListIterator<Antiqua::Interface *> it(p_iFaces);
     while (it.hasNext()) {
-      qDebug() << Q_FUNC_INFO << it.next()->objectName();
-      it.next()->queryMenueEntries();
+      Antiqua::Interface *iface = it.next();
+      if(iface == nullptr)
+        continue;
+
+      ProviderUpdateTask *task = new ProviderUpdateTask();
+      task->setHandle(iface);
+      task->setAutoDelete(true);
+      task->run();
     }
   }
 }
@@ -162,8 +169,10 @@ bool InventoryProviders::loadInterfaces() {
             SIGNAL(s_errorResponse(Antiqua::ErrorStatus, const QString &)),
             this, SLOT(pluginMessanger(Antiqua::ErrorStatus, const QString &)));
 
-    iface->queryMenueEntries();
     p_iFaces.append(iface);
+  }
+  if (p_iFaces.size() > 0) {
+    searchConvert();
   }
   return true;
 }
