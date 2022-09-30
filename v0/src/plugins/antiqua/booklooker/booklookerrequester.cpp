@@ -8,6 +8,7 @@
 #include <QDate>
 #include <QDebug>
 #include <QDir>
+#include <QEventLoop>
 #include <QFile>
 #include <QHttpMultiPart>
 #include <QHttpPart>
@@ -106,9 +107,6 @@ BooklookerRequester::BooklookerRequester(QObject *parent)
   initConfigurations();
   m_reply = nullptr;
   p_operation = QString();
-
-  connect(this, SIGNAL(authenticResponse(const QJsonDocument &)), this,
-          SLOT(registerAuthentic(const QJsonDocument &)));
 }
 
 const QFileInfo BooklookerRequester::operationTempFile(const QString &op) {
@@ -156,6 +154,9 @@ const QNetworkRequest BooklookerRequester::newRequest(const QUrl &url) {
 }
 
 void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
+//#ifdef ANTIQUA_DEVELOPEMENT
+//  qDebug() << Q_FUNC_INFO << doc;
+//#endif
   QString status = QJsonValue(doc["status"]).toString();
   QString value = QJsonValue(doc["returnValue"]).toString();
   if (status == "OK" && !value.isEmpty()) {
@@ -167,13 +168,10 @@ void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
     } else {
       qInfo("New token Authentication: %s", qPrintable(value));
     }
-    /**
-     * !!! WARNING !!!
-     * Booklooker Anfragen auf Windows machen Probleme wenn zu schnell
-     * hintereinander mehrere Anfragen ausgeführt werden.
-     * Aus diesem Grund hier eine Zeitverzögerung!
-     */
-    QTimer::singleShot(1000, this, SIGNAL(authenticFinished()));
+    emit authenticFinished();
+    if (p_operation == "orders_list") {
+      QTimer::singleShot(2000, this, SLOT(queryList()));
+    }
   } else if (status == "NOK" && !value.isEmpty()) {
 #ifdef ANTIQUA_DEVELOPEMENT
     qWarning("Authentication Error: %s", qPrintable(value));
@@ -184,22 +182,22 @@ void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
       emit errorMessage(Antiqua::ErrorStatus::NOTICE, tr("Missing API Key"));
     } else if (value == "AUTHENTICATION_FAILED") {
       // Der API Key ist nicht bekannt.
-      emit errorMessage(Antiqua::ErrorStatus::FATAL,
+      emit errorMessage(Antiqua::ErrorStatus::NOTICE,
                         tr("API Key - Authentication failed"));
     } else if (value == "SERVER_DOWN") {
       // Aufgrund von Wartungsarbeiten ist die REST API momentan nicht
       // verfügbar.
-      emit errorMessage(Antiqua::ErrorStatus::FATAL, tr("Server down"));
+      emit errorMessage(Antiqua::ErrorStatus::NOTICE, tr("Server down"));
     } else if (value == "INVALID_INTERFACE") {
       // Es wurde eine ungültige Schnittstelle verwendet.
-      emit errorMessage(Antiqua::ErrorStatus::FATAL, tr("Invalid Interface"));
+      emit errorMessage(Antiqua::ErrorStatus::NOTICE, tr("Invalid Interface"));
     } else if (value == "INVALID_REQUEST_METHOD") {
       // Die Schnittstelle wurde mit einer ungültigen HTTP-Methode aufgerufen.
-      emit errorMessage(Antiqua::ErrorStatus::FATAL,
+      emit errorMessage(Antiqua::ErrorStatus::NOTICE,
                         tr("Invalid Request Method"));
     } else if (value == "QUOTA_EXCEEDED") {
       // Die maximale Anzahl Abfragen/Minute wurde überschritten.
-      emit errorMessage(Antiqua::ErrorStatus::FATAL, tr("Quota Exceeded"));
+      emit errorMessage(Antiqua::ErrorStatus::NOTICE, tr("Quota Exceeded"));
     }
   } else {
 #ifdef ANTIQUA_DEVELOPEMENT
@@ -288,20 +286,12 @@ void BooklookerRequester::replyReadyRead() {
   QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
   if (parser.error != QJsonParseError::NoError) {
     qWarning("Json Parse Error:(%s)!", jsonParserError(parser.error));
-    QStringList message({"Booklooker", tr("Invalid Document response!")});
-    if (qEnvironmentVariable(BOOKLOOKER_ERROR_ENV).isNull()) {
-      message << tr("Network request");
-      emit errorMessage(Antiqua::ErrorStatus::FATAL, message.join(" "));
-      qputenv(BOOKLOOKER_ERROR_ENV, "1");
-    } else {
-      emit errorMessage(Antiqua::ErrorStatus::NOTICE, message.join(" "));
-    }
     writeErrorLog(data);
     return;
   }
 
   if (m_reply->url().path() == BOOKLOOKER_AUTH_PATH) {
-    emit authenticResponse(doc);
+    registerAuthentic(doc);
     return;
   }
 
@@ -442,7 +432,6 @@ void BooklookerRequester::queryList() {
   p_operation = "orders_list";
   if (getToken().isEmpty()) {
     authentication();
-    connect(this, SIGNAL(authenticFinished()), this, SLOT(queryList()));
     return;
   }
 

@@ -133,7 +133,6 @@ Q_SIGNALS:
    * @brief responsed data
    */
   void response(const QJsonDocument &doc);
-  void authenticResponse(const QJsonDocument &doc);
 
 public Q_SLOTS:
   /**
