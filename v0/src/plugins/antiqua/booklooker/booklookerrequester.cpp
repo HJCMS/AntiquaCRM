@@ -168,10 +168,10 @@ void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
     } else {
       qInfo("New token Authentication: %s", qPrintable(value));
     }
-    emit authenticFinished();
     if (p_operation == "orders_list") {
-      QTimer::singleShot(2000, this, SLOT(queryList()));
+      QTimer::singleShot(wait_after_auth, this, SLOT(queryList()));
     }
+    emit authenticSuccess(true);
   } else if (status == "NOK" && !value.isEmpty()) {
 #ifdef ANTIQUA_DEVELOPEMENT
     qWarning("Authentication Error: %s", qPrintable(value));
@@ -199,6 +199,7 @@ void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
       // Die maximale Anzahl Abfragen/Minute wurde überschritten.
       emit errorMessage(Antiqua::ErrorStatus::NOTICE, tr("Quota Exceeded"));
     }
+    emit authenticSuccess(false);
   } else {
 #ifdef ANTIQUA_DEVELOPEMENT
     qWarning("Booklooker::registerAuthentic: Unknown error!");
@@ -458,6 +459,7 @@ void BooklookerRequester::queryUpdateOrderStatus(const QString &orderId,
   if (status.isEmpty())
     return;
 
+  p_operation = "order_status";
   if (getToken().isEmpty()) {
     authentication();
     return;
@@ -468,7 +470,6 @@ void BooklookerRequester::queryUpdateOrderStatus(const QString &orderId,
   q.addQueryItem("orderId", orderId);
   q.addQueryItem("status", status);
 
-  p_operation = "order_status";
   QUrl url = apiQuery(p_operation);
   url.setQuery(q);
 
@@ -479,6 +480,7 @@ void BooklookerRequester::queryUpdateOrderCancel(const QString &orderId) {
   if (orderId.length() < 4)
     return;
 
+  p_operation = "order_cancel";
   if (getToken().isEmpty()) {
     authentication();
     return;
@@ -488,7 +490,6 @@ void BooklookerRequester::queryUpdateOrderCancel(const QString &orderId) {
   q.addQueryItem("token", getToken());
   q.addQueryItem("orderId", orderId);
 
-  p_operation = "order_cancel";
   QUrl url = apiQuery(p_operation);
   url.setQuery(q);
 
@@ -520,12 +521,12 @@ void BooklookerRequester::queryOrder(const QString &orderId) {
     }
   }
 
+  p_operation = "order";
   if (getToken().isEmpty()) {
     authentication();
     return;
   }
 
-  p_operation = "order";
   QUrl url = apiQuery("order");
   QUrlQuery q;
   q.addQueryItem("token", getToken());
@@ -538,11 +539,12 @@ void BooklookerRequester::queryArticleReset(const QString &orderNo) {
   if (orderNo.length() < 2)
     return;
 
+  p_operation = "article_reset";
   if (getToken().isEmpty()) {
     authentication();
     return;
   }
-  p_operation = "article_reset";
+
   QUrl url = apiQuery("article");
   QUrlQuery q;
   q.addQueryItem("token", getToken());

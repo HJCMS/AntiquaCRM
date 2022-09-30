@@ -32,7 +32,16 @@ class ANTIQUACORE_EXPORT BooklookerRequester final
   Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
+  /**
+   * @brief Wartezeit
+   * Nach dem Erfolgreichen erstellen des API-Keys einen Moment warten bis der
+   * nächste Befehl aufgerufen werden kann. Dies ist Hauptsächlich wegen Windows
+   * unter Linux entstehen hier keine Probleme.
+   */
+  int wait_after_auth = 2500;
+
   ApplSettings *config;
+
   QNetworkReply *m_reply;
 
   /**
@@ -114,9 +123,9 @@ private Q_SLOTS:
 
 Q_SIGNALS:
   /**
-   * @brief Authentic Process is Required
+   * @brief Authentic Process is Finished with
    */
-  void authenticFinished();
+  void authenticSuccess(bool);
 
   /**
    * @brief Error Messages
