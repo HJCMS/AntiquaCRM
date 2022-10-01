@@ -264,25 +264,12 @@ void BooklookerRequester::replyReadyRead() {
     success = false;
   }
 
-  bool check;
-  QVector<char> buf;
-  QByteArray data;
-  qint64 chunk;
-  qint64 bufferSize = replyHeaderLength();
-  while (m_reply->bytesAvailable() > 0) {
-    chunk = m_reply->bytesAvailable();
-    if (chunk > bufferSize) {
-      chunk = bufferSize;
-    }
-    buf.resize(chunk + 1);
-    memset(&buf[0], 0, chunk + 1);
-    if (chunk != m_reply->read(&buf[0], chunk)) {
-      qWarning("Booklooker: buffer read error");
-    }
-    data += &buf[0];
+  if(m_reply->bytesAvailable() < 1) {
+    qWarning("Booklooker - No Data responsed!");
+    return;
   }
-  buf.clear();
 
+  QByteArray data = m_reply->readAll();
   QJsonParseError parser;
   QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
   if (parser.error != QJsonParseError::NoError) {
@@ -354,16 +341,6 @@ void BooklookerRequester::writeResponseLog(const QJsonDocument &doc) {
 #endif
     fp.close();
   }
-}
-
-qint64 BooklookerRequester::replyHeaderLength() {
-  bool b = false;
-  qint64 length =
-      m_reply->header(QNetworkRequest::ContentLengthHeader).toLongLong(&b);
-  if (b && length > 1024) {
-    return length;
-  }
-  return 1024;
 }
 
 bool BooklookerRequester::deleteRequest(const QUrl &url) {

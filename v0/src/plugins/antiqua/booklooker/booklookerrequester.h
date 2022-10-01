@@ -95,11 +95,6 @@ private:
   void writeResponseLog(const QJsonDocument &doc);
 
   /**
-   * @brief Rückgabegröße der Anfrage
-   */
-  qint64 replyHeaderLength();
-
-  /**
    * @brief Standard DELETE Protokoll
    */
   bool deleteRequest(const QUrl &);

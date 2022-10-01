@@ -183,23 +183,12 @@ void AbeBooksRequester::replyFinished(QNetworkReply *reply) {
 }
 
 void AbeBooksRequester::replyReadyRead() {
-  QVector<char> buf;
-  QByteArray data;
-  qint64 chunk;
-  while (m_reply->bytesAvailable() > 0) {
-    chunk = m_reply->bytesAvailable();
-    if (chunk > 4096) {
-      chunk = 4096;
-    }
-    buf.resize(chunk + 1);
-    memset(&buf[0], 0, chunk + 1);
-    if (chunk != m_reply->read(&buf[0], chunk)) {
-      qWarning("AbeBooksRequester: buffer read error");
-    }
-    data += &buf[0];
+  if(m_reply->bytesAvailable() < 1) {
+    qWarning("AbeBooks - No Data responsed!");
+    return;
   }
-  buf.clear();
 
+  QByteArray data = m_reply->readAll();
   QDomDocument doc("response");
   QString errorMsg = QString();
   int errorLine = 0;
