@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_SQLQUERYFILE_H
-#define ANTIQUACRM_SQLQUERYFILE_H
+#ifndef ANTIQUACRM_SQLFILES_H
+#define ANTIQUACRM_SQLFILES_H
 
 #include <QByteArray>
 #include <QDir>
@@ -22,22 +22,24 @@ namespace AntiquaCRM {
  * @li @SQL_SORTING@
  * @li @SQL_LIMIT@
  */
-class ASqlQueryFile : public QFileInfo {
+class ASqlFiles : public QFileInfo {
 
 private:
   QDir p_dataDir;
   QString p_content;
 
 public:
-  explicit ASqlQueryFile(const QString &file);
+  explicit ASqlFiles(const QString &file);
   bool openTemplate();
   void setWhereClause(const QString &replacement);
   void setOrderBy(const QString &replacement);
   void setSorting(Qt::SortOrder order);
   void setLimits(int limit);
   const QString getQueryContent();
+  static const QString selectStatement(const QString &name);
+  static const QString queryStatement(const QString &name);
 };
 
 }; // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_SQLQUERYFILE_H
+#endif // ANTIQUACRM_SQLFILES_H

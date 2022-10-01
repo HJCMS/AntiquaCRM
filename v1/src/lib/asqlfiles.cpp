@@ -1,7 +1,9 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "asqlqueryfile.h"
+#include "asqlfiles.h"
+#include "aglobal.h"
+#include "asettings.h"
 
 #include <QDebug>
 #include <QFile>
@@ -11,42 +13,12 @@
 
 namespace AntiquaCRM {
 
-static const QString subDirs() {
-  QString p;
-  p.append(QDir::separator());
-  p.append("data");
-  p.append(QDir::separator());
-  p.append("pgsql");
-  return p;
-}
-
-static const QDir templatesDir() {
-  // Windows and Developement
-  QDir sourceDir(QDir::currentPath() + subDirs());
-  if (sourceDir.isReadable())
-    return sourceDir;
-
-  // Unix
-  QStringList list =
-      QStandardPaths::standardLocations(QStandardPaths::DataLocation);
-  foreach (QString d, list) {
-    qDebug() << Q_FUNC_INFO << d << subDirs();
-    QDir test(d + subDirs());
-    if (test.isReadable()) {
-      sourceDir.setPath(d + subDirs());
-      if (sourceDir.isReadable())
-        break;
-    }
-  }
-  return sourceDir;
-}
-
-ASqlQueryFile::ASqlQueryFile(const QString &file)
-    : QFileInfo{templatesDir(), file + ".sql"} {
+ASqlFiles::ASqlFiles(const QString &file)
+    : QFileInfo{ASettings::getDataDir("pgsql"), file + ".sql"} {
   p_content = QString();
 }
 
-bool ASqlQueryFile::openTemplate() {
+bool ASqlFiles::openTemplate() {
   if (!isReadable()) {
     qWarning("Permission Denied!");
     return false;
@@ -55,7 +27,7 @@ bool ASqlQueryFile::openTemplate() {
   if (fp.open(QIODevice::ReadOnly)) {
     p_content = QString();
     QTextStream stream(&fp);
-    stream.setCodec("UTF8");
+    stream.setCodec(ANTIQUACRM_TEXTCODEC);
     p_content = stream.readAll();
     fp.close();
     return true;
@@ -63,7 +35,7 @@ bool ASqlQueryFile::openTemplate() {
   return false;
 }
 
-void ASqlQueryFile::setWhereClause(const QString &replacement) {
+void ASqlFiles::setWhereClause(const QString &replacement) {
   if (p_content.isEmpty()) {
     qWarning("No Content: Did you forget to call openTemplate?");
     return;
@@ -74,7 +46,7 @@ void ASqlQueryFile::setWhereClause(const QString &replacement) {
   buf.clear();
 }
 
-void ASqlQueryFile::setOrderBy(const QString &replacement) {
+void ASqlFiles::setOrderBy(const QString &replacement) {
   if (p_content.isEmpty()) {
     qWarning("No Content: Did you forget to call openTemplate?");
     return;
@@ -85,7 +57,7 @@ void ASqlQueryFile::setOrderBy(const QString &replacement) {
   buf.clear();
 }
 
-void ASqlQueryFile::setSorting(Qt::SortOrder order) {
+void ASqlFiles::setSorting(Qt::SortOrder order) {
   if (p_content.isEmpty()) {
     qWarning("No Content: Did you forget to call openTemplate?");
     return;
@@ -98,7 +70,7 @@ void ASqlQueryFile::setSorting(Qt::SortOrder order) {
   buf.clear();
 }
 
-void ASqlQueryFile::setLimits(int limit) {
+void ASqlFiles::setLimits(int limit) {
   if (p_content.isEmpty()) {
     qWarning("No Content: Did you forget to call openTemplate?");
     return;
@@ -111,12 +83,46 @@ void ASqlQueryFile::setLimits(int limit) {
   buf.clear();
 }
 
-const QString ASqlQueryFile::getQueryContent() {
+const QString ASqlFiles::getQueryContent() {
   QRegExp check("@([A-Z_]+)@");
   if (p_content.contains(check)) {
     qWarning("Unused template replacements!");
   }
   return p_content.trimmed();
+}
+
+const QString ASqlFiles::selectStatement(const QString &name) {
+  QFileInfo info(ASettings::getDataDir("pgsql"), name + ".sql");
+  QString out;
+  if (!info.isReadable()) {
+    qWarning("Permission Denied!");
+    return out;
+  }
+  QFile fp(info.filePath());
+  if (fp.open(QIODevice::ReadOnly)) {
+    QTextStream stream(&fp);
+    stream.setCodec(ANTIQUACRM_TEXTCODEC);
+    out = stream.readAll();
+    fp.close();
+  }
+  return out.trimmed();
+}
+
+const QString ASqlFiles::queryStatement(const QString &name) {
+  QFileInfo info(ASettings::getDataDir("pgsql"), name + ".sql");
+  QString out;
+  if (!info.isReadable()) {
+    qWarning("Permission Denied!");
+    return out;
+  }
+  QFile fp(info.filePath());
+  if (fp.open(QIODevice::ReadOnly)) {
+    QTextStream stream(&fp);
+    stream.setCodec(ANTIQUACRM_TEXTCODEC);
+    out = stream.readAll();
+    fp.close();
+  }
+  return out.trimmed();
 }
 
 }; // namespace AntiquaCRM

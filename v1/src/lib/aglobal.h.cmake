@@ -125,8 +125,21 @@
 #define ANTIQUACRM_DATETIME_FORMAT Qt::ISODate
 #endif
 
+/**
+ * @def ANTIQUACRM_QUERY_PASTDAYS
+ * @ingroup Antiqua Plugin Interface
+ * @brief Dienstleisteranfragen der letzten ... Tage anzeigen.
+ */
 #ifndef ANTIQUACRM_QUERY_PASTDAYS
 #define ANTIQUACRM_QUERY_PASTDAYS -4
+#endif
+
+/**
+ * @def ANTIQUACRM_TEXTCODEC
+ * @brief Default Charset for Database Connections, Application files, is utf8!
+ */
+#ifndef ANTIQUACRM_TEXTCODEC
+#define ANTIQUACRM_TEXTCODEC "UTF8"
 #endif
 
 namespace AntiquaCRM {

@@ -3,6 +3,7 @@
 // @COPYRIGHT_HOLDER@
 
 #include "antiquaappl.h"
+#include "antiquasocketserver.h"
 #include "antiquasplashscreen.h"
 #include "antiquasystemtray.h"
 #include "antiquawindow.h"
@@ -13,6 +14,7 @@
 #include <QPalette>
 #endif
 #include <QIcon>
+#include <QLocalSocket>
 #include <QStyleFactory>
 
 static const QIcon applIcon() {
@@ -22,11 +24,18 @@ static const QIcon applIcon() {
 
 AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
   m_cfg = new AntiquaCRM::ASettings(this);
+  m_cfg->setObjectName("MainSettings");
+
   m_mainWindow = new AntiquaWindow();
+  m_mainWindow->setObjectName("MainWindow");
+
   m_systemTray = new AntiquaSystemTray(applIcon(), this);
+  m_systemTray->setObjectName("SystemTray");
+
   m_splash = new AntiquaSplashScreen(m_mainWindow);
-  m_splash->show();
-  m_splash->setMessage(tr("Open Database connection."));
+
+  connect(m_mainWindow, SIGNAL(sendApplicationQuit()), this,
+          SLOT(applicationQuit()));
 }
 
 bool AntiquaAppl::checkInterfaces() {
@@ -58,7 +67,7 @@ bool AntiquaAppl::checkRemotePort() {
 }
 
 bool AntiquaAppl::checkDatabase() {
-  m_splash->setMessage(tr("Test Database connection!"));
+  m_splash->setMessage(tr("Open Database connection."));
   m_sql = new AntiquaCRM::ASqlCore(this);
   if (m_sql->open()) {
     m_splash->setMessage(tr("Database connected!"));
@@ -72,11 +81,23 @@ bool AntiquaAppl::createCacheFiles() {
   if (m_sql == nullptr)
     return false;
 
-  m_splash->setMessage(tr("Creating Cachefiles!"));
+  // ASharedCacheFiles
+  m_splash->setMessage(tr("Creating Cachefiles."));
   // m_cfg->getTempDir();
-  // m_cfg->getDataDir();
+  //QString sql = AntiquaCRM::ASqlFiles::queryStatement("query_postal_codes");
+  //qDebug() << Q_FUNC_INFO << sql;
+
   m_splash->setMessage(tr("Completed..."));
   return true;
+}
+
+bool AntiquaAppl::createSocket() {
+  bool out = false;
+  m_splash->setMessage(tr("Create Socket."));
+  m_socket = new AntiquaSocketServer(this);
+  out = m_socket->listen(m_socket->name());
+  m_splash->setMessage(out ? tr("done") : tr("failed"));
+  return out;
 }
 
 bool AntiquaAppl::initialPlugins() {
@@ -84,6 +105,20 @@ bool AntiquaAppl::initialPlugins() {
   // m_cfg->getPluginDir();
   m_splash->setMessage(tr("Completed..."));
   return true;
+}
+
+void AntiquaAppl::applicationQuit() {
+  // Systemtray
+  m_systemTray->setVisible(false);
+  // Windows
+  m_mainWindow->close();
+  // SQL
+  m_sql->close();
+  // Socket
+  m_socket->close();
+  // Todo: remove tempfiles
+
+  quit();
 }
 
 void AntiquaAppl::initDefaultTheme() {
@@ -109,13 +144,31 @@ void AntiquaAppl::initDefaultTheme() {
 }
 
 bool AntiquaAppl::isRunning() {
-  // TODO LocalSocketServer
+  QLocalSocket socket(this);
+  socket.setServerName(AntiquaSocketServer::name());
+  if (socket.open(QLocalSocket::ReadWrite)) {
+    QJsonObject obj;
+    obj.insert("receiver", QJsonValue("MainWindow"));
+    obj.insert("type", QJsonValue("SLOT"));
+    obj.insert("value", QJsonValue("showAntiquaWindow"));
+    QByteArray data(QJsonDocument(obj).toJson(QJsonDocument::Compact));
+    socket.write(data);
+    socket.waitForBytesWritten(2000);
+    return true;
+  }
   return false;
 }
 
 int AntiquaAppl::exec() {
+  m_splash->show();
+
   QMutex mutex;
-  // Step 1 - Netzwerkschnittstelln finden
+  // Step 1 - Socket erstellen
+  mutex.lock();
+  createSocket();
+  mutex.unlock();
+
+  // Step 2 - Netzwerkschnittstelln finden
   mutex.lock();
   if (!checkInterfaces()) {
     mutex.unlock();
@@ -123,7 +176,7 @@ int AntiquaAppl::exec() {
   }
   mutex.unlock();
 
-  // Step 2 - SQL Port Testen
+  // Step 3 - SQL Port Testen
   mutex.lock();
   if (!checkRemotePort()) {
     mutex.unlock();
@@ -131,7 +184,7 @@ int AntiquaAppl::exec() {
   }
   mutex.unlock();
 
-  // Step 3 - Datenbanktest durchführen
+  // Step 4 - Datenbanktest durchführen
   mutex.lock();
   if (!checkDatabase()) {
     mutex.unlock();
@@ -139,21 +192,21 @@ int AntiquaAppl::exec() {
   }
   mutex.unlock();
 
-  // Step 4 - Temporäre Dateien erstellen.
+  // Step 5 - Temporäre Dateien erstellen.
   mutex.lock();
   createCacheFiles();
   mutex.unlock();
 
-  // Step 5 - Plugins suchen und laden
+  // Step 6 - Plugins suchen und laden
   mutex.lock();
   initialPlugins();
   mutex.unlock();
 
-  // Step 6 - Systemtray anzeigen
+  // Step 7 - Systemtray anzeigen
   m_splash->setMessage("Initial Systemtray.");
   m_systemTray->show();
 
-  // Step 7 - Hauptfenster öffnen
+  // Step 8 - Hauptfenster öffnen
   m_splash->setMessage("Start Antiqua CRM");
   m_splash->finish(m_mainWindow);
   m_mainWindow->openWindow();
@@ -164,7 +217,4 @@ int AntiquaAppl::exec() {
 AntiquaAppl::~AntiquaAppl() {
   if (m_splash != nullptr)
     m_splash->deleteLater();
-
-  if (m_sql != nullptr)
-    m_sql->close();
 }

@@ -23,8 +23,14 @@ private:
   AntiquaStatusBar *m_statusBar;
   AntiquaTabWidget *m_centralWidget;
 
+private Q_SLOTS:
+  void closeWindow();
+
 protected:
   void closeEvent(QCloseEvent *) override;
+
+Q_SIGNALS:
+  void sendApplicationQuit();
 
 public:
   explicit AntiquaWindow(QWidget *parent = nullptr);

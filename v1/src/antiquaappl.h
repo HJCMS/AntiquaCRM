@@ -14,6 +14,7 @@
 class AntiquaWindow;
 class AntiquaSplashScreen;
 class AntiquaSystemTray;
+class AntiquaSocketServer;
 
 class AntiquaAppl : public QApplication {
   Q_OBJECT
@@ -24,12 +25,17 @@ private:
   AntiquaSplashScreen *m_splash;
   AntiquaSystemTray *m_systemTray;
   AntiquaCRM::ASqlCore *m_sql;
+  AntiquaSocketServer *m_socket;
 
   bool checkInterfaces();
   bool checkRemotePort();
   bool checkDatabase();
   bool createCacheFiles();
+  bool createSocket();
   bool initialPlugins();
+
+public Q_SLOTS:
+  void applicationQuit();
 
 public:
   explicit AntiquaAppl(int &argc, char **argv);

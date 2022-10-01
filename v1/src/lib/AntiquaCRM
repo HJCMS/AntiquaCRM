@@ -12,6 +12,10 @@
 #include "asettings.h"
 #endif
 
+#ifndef ANTIQUACRM_SHAREDDATAFILES_H
+#include "ashareddatafiles.h"
+#endif
+
 #ifndef ANTIQUACRM_NETWORKIFACE_H
 #include "anetworkiface.h"
 #endif
@@ -20,24 +24,24 @@
 #include "anetworker.h"
 #endif
 
-#ifndef ANTIQUACRM_SQLPROFILE_H
-#include "asqlprofile.h"
-#endif
-
 #ifndef ANTIQUACRM_SQLSETTINGS_H
 #include "asqlsettings.h"
+#endif
+
+#ifndef ANTIQUACRM_SQLPROFILE_H
+#include "asqlprofile.h"
 #endif
 
 #ifndef ANTIQUACRM_SQLCORE_H
 #include "asqlcore.h"
 #endif
 
-#ifndef ANTIQUACRM_SQLQUERYMODEL_H
-#include "asqlquerymodel.h"
+#ifndef ANTIQUACRM_SQLFILES_H
+#include "asqlfiles.h"
 #endif
 
-#ifndef ANTIQUACRM_SQLQUERYFILE_H
-#include "asqlqueryfile.h"
+#ifndef ANTIQUACRM_SQLQUERYMODEL_H
+#include "asqlquerymodel.h"
 #endif
 
 #endif

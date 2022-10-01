@@ -25,7 +25,8 @@ SET (projectLibrary_FILES
 SET (projectLibrary_SOURCES
  asettings.cpp
  asqlsettings.cpp
- asqlqueryfile.cpp
+ asqlfiles.cpp
+ ashareddatafiles.cpp
  asqlprofile.cpp
  asqlcore.cpp
  asqlquerymodel.cpp
@@ -37,7 +38,8 @@ SET (projectLibrary_HEADERS
  aglobal.h
  asettings.h
  asqlsettings.h
- asqlqueryfile.h
+ asqlfiles.h
+ ashareddatafiles.h
  asqlprofile.h
  asqlcore.h
  asqlquerymodel.h
@@ -65,6 +67,7 @@ TARGET_LINK_LIBRARIES (${_projectLibrary} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Network
   Qt${QT_VERSION_MAJOR}::Sql
+  Qt${QT_VERSION_MAJOR}::Xml
 )
 
 INSTALL (TARGETS ${_projectLibrary}

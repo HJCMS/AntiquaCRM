@@ -4,25 +4,42 @@
 
 #include "antiquamenubar.h"
 
-AntiquaMenuBar::AntiquaMenuBar(QMainWindow *parent) : QMenuBar{parent}
-{
+AntiquaMenuBar::AntiquaMenuBar(QMainWindow *parent)
+    : QMenuBar{parent}, defaultIcon(QString(":icons/antiqua.png")) {
   setNativeMenuBar(true);
   setStyleSheet("");
 
-  QIcon defaultIcon(QString(":icons/antiqua.png"));
   m_applMenu = addMenu("Antiqua CRM");
-  QAction *ac_quit = m_applMenu->addAction("TEST");
-  ac_quit->setIcon(defaultIcon);
+  addApplMenu();
 
   m_viewsMenu = addMenu(tr("Views"));
-  QAction *ac_views = m_viewsMenu->addAction("TEST");
-  ac_views->setIcon(defaultIcon);
+  addViewsMenu();
 
   m_configMenu = addMenu(tr("Configuration"));
-  QAction *ac_config = m_configMenu->addAction("TEST");
-  ac_config->setIcon(defaultIcon);
+  addConfigMenu();
 
   m_aboutMenu = addMenu(tr("About"));
-  QAction *ac_about = m_aboutMenu->addAction("TEST");
+  addAboutMenu();
+}
+
+void AntiquaMenuBar::addApplMenu() {
+  QAction *ac_quit = m_applMenu->addAction(tr("Quit"));
+  ac_quit->setIcon(QIcon(":icons/action_quit.png"));
+  ac_quit->setShortcut(QKeySequence::Quit);
+  connect(ac_quit, SIGNAL(triggered()), this, SIGNAL(sendApplicationQuit()));
+}
+
+void AntiquaMenuBar::addViewsMenu() {
+  QAction *ac_views = m_viewsMenu->addAction("TODO");
+  ac_views->setIcon(defaultIcon);
+}
+
+void AntiquaMenuBar::addConfigMenu() {
+  QAction *ac_config = m_configMenu->addAction("TODO");
+  ac_config->setIcon(defaultIcon);
+}
+
+void AntiquaMenuBar::addAboutMenu() {
+  QAction *ac_about = m_aboutMenu->addAction("TODO");
   ac_about->setIcon(defaultIcon);
 }

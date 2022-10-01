@@ -6,6 +6,8 @@
 #include "antiquastatusbar.h"
 #include "antiquatabwidget.h"
 
+#include <QMessageBox>
+
 AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
   setMinimumSize(QSize(500, 450));
   setWindowTitle("Antiqua CRM [*]");
@@ -20,6 +22,8 @@ AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
 
   m_statusBar = new AntiquaStatusBar(this);
   setStatusBar(m_statusBar);
+
+  connect(m_menuBar, SIGNAL(sendApplicationQuit()), this, SLOT(closeWindow()));
 }
 
 void AntiquaWindow::closeEvent(QCloseEvent *event) {
@@ -28,6 +32,19 @@ void AntiquaWindow::closeEvent(QCloseEvent *event) {
   // TODO Save operations
 
   QMainWindow::closeEvent(event);
+}
+
+void AntiquaWindow::closeWindow() {
+  if (isWindowModified()) {
+    QString t = tr("Save request");
+    QStringList b("<b>You have unsaved changes.</b>");
+    b << tr("<p>Do you really want to close the application?</p>");
+    int ret = QMessageBox::question(this, t, b.join("<br/>"));
+    if (ret == QMessageBox::No) {
+      return;
+    }
+  }
+  emit sendApplicationQuit();
 }
 
 void AntiquaWindow::openWindow() {

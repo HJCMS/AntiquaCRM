@@ -33,7 +33,7 @@ void BooksTable::setSortByColumn(int column, Qt::SortOrder order) {
   if (order == Qt::AscendingOrder)
     sort = Qt::DescendingOrder;
 
-  AntiquaCRM::ASqlQueryFile query("query_tab_books_main");
+  AntiquaCRM::ASqlFiles query("query_tab_books_main");
   if (query.openTemplate()) {
     query.setWhereClause("ib_count>0");
     query.setOrderBy(order_by);
@@ -44,7 +44,7 @@ void BooksTable::setSortByColumn(int column, Qt::SortOrder order) {
 }
 
 bool BooksTable::initTable() {
-  AntiquaCRM::ASqlQueryFile query("query_tab_books_main");
+  AntiquaCRM::ASqlFiles query("query_tab_books_main");
   if (query.openTemplate()) {
     query.setWhereClause("ib_count>0");
     query.setOrderBy("ib_id");
