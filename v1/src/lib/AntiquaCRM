@@ -20,6 +20,10 @@
 #include "anetworkiface.h"
 #endif
 
+#ifndef ANTIQUACRM_NETWORKREQUEST_H
+#include "anetworkrequest.h"
+#endif
+
 #ifndef ANTIQUACRM_NETWORKER_H
 #include "anetworker.h"
 #endif

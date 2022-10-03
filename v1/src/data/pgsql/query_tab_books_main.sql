@@ -4,9 +4,9 @@
 --
 SELECT ib_id,
   ib_count,
-  (CASE WHEN im_id IS NOT NULL THEN true ELSE false END),
+  (CASE WHEN im_id IS NOT NULL THEN true ELSE false END) AS im_id,
   ib_title,
-  ib_price::MONEY,
+  ib_price::MONEY AS ib_price,
   ib_author,
   ib_publisher,
   ib_year,

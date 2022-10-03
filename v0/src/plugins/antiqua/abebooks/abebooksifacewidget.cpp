@@ -94,7 +94,8 @@ void AbeBooksIfaceWidget::createCustomerDocument() {
   emit sendCreateCustomer(QJsonDocument(customerCreate));
 }
 
-const QJsonDocument AbeBooksIfaceWidget::customerRequest(const QJsonObject &object) {
+const QJsonDocument
+AbeBooksIfaceWidget::customerRequest(const QJsonObject &object) {
   Q_UNUSED(object);
   QJsonObject customer;
   customer.insert("provider", QJsonValue(CONFIG_PROVIDER));
@@ -189,12 +190,23 @@ void AbeBooksIfaceWidget::setXmlContent(const QDomDocument &doc) {
           QJsonValue val = QJsonValue(xml.getNodeValue(cn).toString());
           if (cn.nodeName() == "name") {
             QStringList full_name = xml.getNodeValue(cn).toString().split(" ");
-            setValue("c_firstname", full_name.first());
-            p_customer.insert("c_firstname", full_name.first());
-            setValue("c_lastname", full_name.last());
-            p_customer.insert("c_lastname", full_name.last());
-            customerInfo.insert("c_firstname", QJsonValue(full_name.first()));
-            customerInfo.insert("c_lastname", QJsonValue(full_name.last()));
+            if (full_name.size() > 1) {
+              QString lastname = full_name.takeLast();
+              setValue("c_lastname", lastname);
+              p_customer.insert("c_lastname", lastname);
+              customerInfo.insert("c_lastname", QJsonValue(lastname));
+              QString frontName = full_name.join(" ");
+              setValue("c_firstname", frontName);
+              p_customer.insert("c_firstname", frontName);
+              customerInfo.insert("c_firstname", QJsonValue(frontName));
+            } else {
+              QString buyerName = xml.getNodeValue(cn).toString();
+              setValue("c_firstname", "");
+              p_customer.insert("c_firstname", "");
+              setValue("c_lastname", buyerName);
+              p_customer.insert("c_lastname", buyerName);
+            }
+            full_name.clear();
           } else if (cn.nodeName() == "country") {
             customerInfo.insert("c_country", val);
             setValue("c_country", stripString(val));

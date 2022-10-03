@@ -8,15 +8,11 @@
 #include <QJsonDocument>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QNetworkRequest>
 #include <QObject>
-#include <QSslConfiguration>
 #include <QSslError>
-#include <QTextCodec>
+#include <QUrl>
 
 namespace AntiquaCRM {
-
-class ASettings;
 
 /**
  * @brief Standard Klasse für Netzwerkabfragen.
@@ -30,47 +26,8 @@ class ANetworker final : public QNetworkAccessManager {
   Q_OBJECT
 
 private:
-  int tranfer_timeout = 15;
-  /**
-   * @brief Einstellungen lesen
-   */
-  ASettings *m_cfg;
-
-  /**
-   * @brief TextCodec für Read/Write Operationen
-   */
-  QTextCodec *m_codec;
-
-  /**
-   * @brief Standard Zeichensatz der verwendet wird.
-   */
-  QString p_charset = QString("utf8");
-
-  /**
-   * @brief Registriere Reply für die Fehlerbehandlung
-   * @see jsonPostRequest und jsonGetRequest
-   */
-  QNetworkReply *reply;
-
-  /**
-   * @brief Setze CA-Bundle und SSL-Protokoll
-   */
-  const QSslConfiguration sslConfigguration();
-
-  /**
-   * @brief HTTP-Accept-Language (RFC2616)
-   */
-  const QByteArray languageRange();
-
-  /**
-   * @brief HTTP-Accept (RFC2616) Json
-   */
-  const QByteArray acceptJson();
-
-  /**
-   * @brief HTTP-Header Content-Type Json deklaration.
-   */
-  const QByteArray headerJson();
+  int tranfer_timeout = 20;
+  QNetworkReply *m_reply;
 
 private Q_SLOTS:
   /**
@@ -78,15 +35,13 @@ private Q_SLOTS:
    */
   void slotFinished(QNetworkReply *reply);
 
-public Q_SLOTS:
   /**
-   * @brief Übertragungsfehler verarbeiten
+   * @brief readyRead() => readResponse()
    */
-  void slotError(QNetworkReply::NetworkError error);
+  void readResponse();
 
-  /**
-   * @brief SSL Fehlerverarbeitung
-   */
+public Q_SLOTS:
+  void slotError(QNetworkReply::NetworkError error);
   void slotSslErrors(const QList<QSslError> &list);
 
 Q_SIGNALS:
@@ -96,10 +51,10 @@ Q_SIGNALS:
    */
   void requestFinished(bool errors);
 
+  void jsonResponse(const QJsonDocument &json);
+
 public:
   explicit ANetworker(QObject *parent = nullptr);
-
-  static const QByteArray AntiquaUserAgent();
 
   /**
    * @brief Erstelle eine Json HTTP_POST Anfrage

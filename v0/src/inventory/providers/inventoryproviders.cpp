@@ -131,7 +131,7 @@ void InventoryProviders::searchConvert() {
     QListIterator<Antiqua::Interface *> it(p_iFaces);
     while (it.hasNext()) {
       Antiqua::Interface *iface = it.next();
-      if(iface == nullptr)
+      if (iface == nullptr)
         continue;
 
       ProviderUpdateTask *task = new ProviderUpdateTask();
@@ -240,6 +240,7 @@ void InventoryProviders::createNewCustomer(const QJsonDocument &doc) {
 
   if (SHOW_SQL_QUERIES) {
     qDebug() << Q_FUNC_INFO << doc;
+    return;
   }
 
   EUCountries countries;
@@ -260,6 +261,8 @@ void InventoryProviders::createNewCustomer(const QJsonDocument &doc) {
           values.append("'" + (cName.isEmpty() ? tr("Europe") : cName) + "'");
         } else {
           if (cc.contains("german", Qt::CaseInsensitive))
+            values.append("'" + tr("Germany") + "'");
+          else if (cc.contains("deutsch", Qt::CaseInsensitive))
             values.append("'" + tr("Germany") + "'");
           else
             values.append("'" + tr("Europe") + "'");
@@ -309,7 +312,7 @@ void InventoryProviders::createNewCustomer(const QJsonDocument &doc) {
   sql.append(params.join(","));
   sql.append(",c_provider_import) VALUES (");
   sql.append(values.join(","));
-  sql.append(",'" + prBuyername + "'");
+  sql.append(",'" + prBuyername.toLower() + "'");
   sql.append(") RETURNING c_id;");
 
   if (SHOW_SQL_QUERIES) {
@@ -628,10 +631,6 @@ void InventoryProviders::pluginMessanger(Antiqua::ErrorStatus code,
 void InventoryProviders::onEnterChanged() {
   if (firstStart)
     return;
-
-#ifndef ANTIQUA_DEVELOPEMENT
-  qunsetenv("QT_DEBUG_PLUGINS");
-#endif
 
   firstStart = loadInterfaces();
 }

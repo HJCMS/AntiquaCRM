@@ -31,6 +31,7 @@ SET (projectLibrary_SOURCES
  asqlcore.cpp
  asqlquerymodel.cpp
  anetworkiface.cpp
+ anetworkrequest.cpp
  anetworker.cpp
 )
 
@@ -44,6 +45,7 @@ SET (projectLibrary_HEADERS
  asqlcore.h
  asqlquerymodel.h
  anetworkiface.h
+ anetworkrequest.h
  anetworker.h
  AntiquaCRM
 )

@@ -146,31 +146,32 @@ namespace AntiquaCRM {
   Q_NAMESPACE
 
   enum Message {
-   NOTICE = 1,
-   WARNING = 2,
-   FATAL = 3
+   NORMAL = 0x0,
+   WARNING = 0x1,
+   FATAL = 0x2,
+   LOGGING = 0x3
   };
   Q_ENUM_NS(AntiquaCRM::Message);
 
   enum OrderStatus {
-   ORDER_OPEN = 0x0,
-   ORDER_STARTED = 0x1,
-   ORDER_FETCHET = 0x2,
-   ORDER_DELIVERED = 0x3,
-   ORDER_REMINDET = 0x4,
-   ORDER_COMPLETED = 0x5,
-   ORDER_CANCELED = 0x6,
-   ORDER_RETURNING = 0x7
+   OPEN = 0x0,
+   STARTED = 0x1,
+   FETCHET = 0x2,
+   DELIVERED = 0x3,
+   REMINDET = 0x4,
+   COMPLETED = 0x5,
+   CANCELED = 0x6,
+   RETURNING = 0x7
   };
   Q_ENUM_NS(AntiquaCRM::OrderStatus);
 
   enum PaymentStatus {
-   ORDER_STATUS_NOT_SET = 0x0,
-   ORDER_WAIT_FOR_PAYMENT = 0x1,
-   ORDER_READY_FOR_SHIPMENT = 0x2,
-   ORDER_SHIPPED_WAIT_FOR_PAYMENT = 0x3,
-   ORDER_SHIPPED_AND_PAID = 0x4,
-   ORDER_BUYER_NO_REACTION = 0x5
+   STATUS_NOT_SET = 0x0,
+   WAIT_FOR_PAYMENT = 0x1,
+   READY_FOR_SHIPMENT = 0x2,
+   SHIPPED_WAIT_FOR_PAYMENT = 0x3,
+   SHIPPED_AND_PAID = 0x4,
+   BUYER_NO_REACTION = 0x5
   };
   Q_ENUM_NS(AntiquaCRM::PaymentStatus);
 

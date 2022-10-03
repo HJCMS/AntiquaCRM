@@ -6,8 +6,8 @@
 #include "mapplication.h"
 
 #include <QApplication>
-#include <QDebug>
 #include <QTextCodec>
+#include <QtGlobal>
 
 int main(int argc, char *argv[]) {
   MApplication *antiqua = new MApplication(argc, argv);
@@ -18,6 +18,10 @@ int main(int argc, char *argv[]) {
   antiqua->setOrganizationDomain(HJCMS_CONFIG_DOMAIN);
   antiqua->setQuitOnLastWindowClosed(false);
   antiqua->initThemeStyle();
+
+#ifndef ANTIQUA_DEVELOPEMENT
+  qunsetenv("QT_DEBUG_PLUGINS");
+#endif
 
   if (QTextCodec::codecForLocale()->name() != "UTF-8") {
     qInfo("Setting utf8 for Textcodec ...");
