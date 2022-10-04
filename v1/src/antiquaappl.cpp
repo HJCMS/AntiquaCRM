@@ -7,6 +7,8 @@
 #include "antiquasplashscreen.h"
 #include "antiquasystemtray.h"
 #include "antiquawindow.h"
+// AntiquaPreloader
+#include "preloader.h"
 
 #include <QDebug>
 #ifdef Q_OS_WIN
@@ -83,10 +85,13 @@ bool AntiquaAppl::createCacheFiles() {
 
   // ASharedCacheFiles
   m_splash->setMessage(tr("Creating Cachefiles."));
-  // m_cfg->getTempDir();
-  //QString sql = AntiquaCRM::ASqlFiles::queryStatement("query_postal_codes");
-  //qDebug() << Q_FUNC_INFO << sql;
-
+  AntiquaPreloader *m_preload = new AntiquaPreloader(this);
+  connect(m_preload, SIGNAL(statusMessage(const QString &)), m_splash,
+          SLOT(setMessage(const QString &)));
+  foreach(QRunnable *pr, m_preload->getThreads()) {
+    // m_splash->setMessage(tr("Start ").arg(pr->name()));
+    m_preload->start(pr);
+  }
   m_splash->setMessage(tr("Completed..."));
   return true;
 }

@@ -50,7 +50,7 @@ bool ASharedDataFiles::storeJson(const QString &basename,
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream data(&fp);
     data.setCodec(ANTIQUACRM_TEXTCODEC);
-    data << doc.toJson(QJsonDocument::Compact);
+    data << doc.toJson(QJsonDocument::Compact); //Indented
     fp.close();
     return true;
   }

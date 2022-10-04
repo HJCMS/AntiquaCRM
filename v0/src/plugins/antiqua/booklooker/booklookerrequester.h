@@ -55,6 +55,11 @@ private:
   QString p_apiKey;
 
   /**
+   * @brief Wird in der Konfiguration gesetzt!
+   */
+  int p_queryPastDays = -4;
+
+  /**
    * @brief Letze Anfrage Operation
    * Wird für das Logfile verwendet.
    */

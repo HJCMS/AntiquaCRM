@@ -7,6 +7,8 @@
 
 #include "settingswidget.h"
 #include <QObject>
+#include <QRegularExpression>
+#include <QSpinBox>
 
 class ProviderSettings : public SettingsWidget {
   Q_OBJECT
@@ -19,6 +21,7 @@ private:
    */
   QGroupBox *m_whsoft;
   LineEdit *m_whsoft_scheme;
+  QSpinBox *m_whsoft_history;
   LineEdit *m_whsoft_api_host;
   LineEdit *m_whsoft_api_key;
   LineEdit *m_whsoft_api_basepath;
@@ -40,9 +43,16 @@ private:
   QGroupBox *m_booklooker;
   LineEdit *m_booklooker_user;
   LineEdit *m_booklooker_scheme;
+  QSpinBox *m_booklooker_history;
   LineEdit *m_booklooker_api_host;
   LineEdit *m_booklooker_api_key;
   LineEdit *m_booklooker_api_port;
+
+  /**
+   * @brief findChildren Options
+   */
+  const QString p_fs = QString();
+  Qt::FindChildOptions p_fo = Qt::FindDirectChildrenOnly;
 
   void initSignalChanged();
 

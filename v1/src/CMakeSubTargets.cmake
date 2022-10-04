@@ -5,6 +5,8 @@ SET (PROJECT_INCLUDE_DIRS
 	${CMAKE_CURRENT_SOURCE_DIR}/widgets
 	${CMAKE_CURRENT_BINARY_DIR}/lib
 	${CMAKE_CURRENT_SOURCE_DIR}/lib
+	${CMAKE_CURRENT_BINARY_DIR}/utils/preloader
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/preloader
 	${PROJECT_INCLUDE_DIRS}
 )
 
@@ -14,5 +16,6 @@ SET(PROJECT_LIBRARIES
 	AntiquaBooks
 	AntiquaWidgets
 	AntiquaCRM
+	AntiquaPreloader
 )
 

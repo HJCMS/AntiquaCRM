@@ -38,6 +38,14 @@ ProviderSettings::ProviderSettings(QWidget *parent) : SettingsWidget{parent} {
   m_whsoft_api_basepath->setInfo(tr("API Path"));
   m_whsoft_api_basepath->setValue("/verkaeufer/api/");
   m_whsoft_layout->addWidget(m_whsoft_api_basepath);
+  m_whsoft_history = new QSpinBox(m_whsoft);
+  m_whsoft_history->setObjectName("api_history_call");
+  m_whsoft_history->setToolTip(tr("History"));
+  m_whsoft_history->setRange(-14, 0);
+  m_whsoft_history->setPrefix(tr("Query history") + ": ");
+  m_whsoft_history->setSuffix(" " + tr("days"));
+  m_whsoft_history->setValue(ANTIQUA_QUERY_PASTDAYS);
+  m_whsoft_layout->addWidget(m_whsoft_history);
   m_whsoft_layout->addStretch(1);
   m_whsoft->setLayout(m_whsoft_layout);
   layout->addWidget(m_whsoft);
@@ -55,11 +63,6 @@ ProviderSettings::ProviderSettings(QWidget *parent) : SettingsWidget{parent} {
   m_abebooks_user->setObjectName("api_user");
   m_abebooks_user->setInfo(tr("Loginname"));
   m_abe_layout->addWidget(m_abebooks_user);
-  m_abebooks_password = new LineEdit(m_abebooks);
-  m_abebooks_password->setObjectName("api_password");
-  m_abebooks_password->setInfo(tr("Password"));
-  m_abebooks_password->setPasswordInput(true);
-  m_abe_layout->addWidget(m_abebooks_password);
   m_abebooks_scheme = new LineEdit(m_abebooks);
   m_abebooks_scheme->setObjectName("api_scheme");
   m_abebooks_scheme->setInfo(tr("Protocoll"));
@@ -109,6 +112,14 @@ ProviderSettings::ProviderSettings(QWidget *parent) : SettingsWidget{parent} {
   m_booklooker_api_key->setObjectName("api_key");
   m_booklooker_api_key->setInfo(tr("API Key"));
   m_bl_layout->addWidget(m_booklooker_api_key);
+  m_booklooker_history = new QSpinBox(m_booklooker);
+  m_booklooker_history->setObjectName("api_history_call");
+  m_booklooker_history->setToolTip(tr("History"));
+  m_booklooker_history->setRange(-30, 0);
+  m_booklooker_history->setPrefix(tr("Query history") + ": ");
+  m_booklooker_history->setSuffix(" " + tr("days"));
+  m_booklooker_history->setValue(ANTIQUA_QUERY_PASTDAYS);
+  m_bl_layout->addWidget(m_booklooker_history);
   m_booklooker->setLayout(m_bl_layout);
   layout->addWidget(m_booklooker);
   // END
@@ -154,8 +165,7 @@ void ProviderSettings::setPageIcon(const QIcon &icon) {
 const QIcon ProviderSettings::getPageIcon() { return pageIcon; }
 
 void ProviderSettings::loadSectionConfig() {
-  QList<QGroupBox *> groups =
-      findChildren<QGroupBox *>(QString(), Qt::FindDirectChildrenOnly);
+  QList<QGroupBox *> groups = findChildren<QGroupBox *>(p_fs, p_fo);
   if (groups.size() > 0) {
     QListIterator<QGroupBox *> it(groups);
     while (it.hasNext()) {
@@ -171,13 +181,17 @@ void ProviderSettings::loadSectionConfig() {
       QStringList keys = config->allKeys();
       box->setChecked((keys.count() >= 4));
       foreach (QString s, keys) {
-        LineEdit *e = box->findChild<LineEdit *>(s, Qt::FindDirectChildrenOnly);
-        if (e != nullptr) {
-          if (e->isPasswordInput()) {
-            setPassword(e, config->value(s).toByteArray());
+        LineEdit *le = box->findChild<LineEdit *>(s, p_fo);
+        if (le != nullptr) {
+          if (le->isPasswordInput()) {
+            setPassword(le, config->value(s).toByteArray());
           } else {
-            e->setValue(config->value(s));
+            le->setValue(config->value(s));
           }
+        } else {
+          QSpinBox *sp = box->findChild<QSpinBox *>(s, p_fo);
+          if (sp != nullptr)
+            sp->setValue(config->value(s).toInt());
         }
       }
       config->endGroup();
@@ -188,8 +202,7 @@ void ProviderSettings::loadSectionConfig() {
 }
 
 void ProviderSettings::saveSectionConfig() {
-  QList<QGroupBox *> groups =
-      findChildren<QGroupBox *>(QString(), Qt::FindDirectChildrenOnly);
+  QList<QGroupBox *> groups = findChildren<QGroupBox *>(p_fs, p_fo);
   if (groups.size() > 0) {
     QListIterator<QGroupBox *> it(groups);
     while (it.hasNext()) {
@@ -207,18 +220,25 @@ void ProviderSettings::saveSectionConfig() {
       }
 
       config->beginGroup("provider/" + section);
-      QList<LineEdit *> l =
-          box->findChildren<LineEdit *>(QString(), Qt::FindDirectChildrenOnly);
-      if (l.count() > 0) {
-        for (int i = 0; i < l.count(); i++) {
-          LineEdit *e = l.at(i);
-          if (e != nullptr) {
-            if (e->isPasswordInput()) {
-              config->setValue(e->objectName(), passwordToBase64(e));
+      QList<LineEdit *> lel = box->findChildren<LineEdit *>(p_fs, p_fo);
+      if (lel.count() > 0) {
+        for (int i = 0; i < lel.count(); i++) {
+          LineEdit *le = lel.at(i);
+          if (le != nullptr) {
+            if (le->isPasswordInput()) {
+              config->setValue(le->objectName(), passwordToBase64(le));
             } else {
-              config->setValue(e->objectName(), e->value());
+              config->setValue(le->objectName(), le->value());
             }
           }
+        }
+      }
+      QList<QSpinBox *> sbl = box->findChildren<QSpinBox *>(p_fs, p_fo);
+      if (sbl.count() > 0) {
+        for (int i = 0; i < sbl.count(); i++) {
+          QSpinBox *sb = sbl.at(i);
+          if (sb != nullptr)
+            config->setValue(sb->objectName(), sb->value());
         }
       }
       config->endGroup();

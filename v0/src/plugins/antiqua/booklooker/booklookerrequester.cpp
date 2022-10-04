@@ -120,7 +120,9 @@ void BooklookerRequester::initConfigurations() {
   config->beginGroup(CONFIG_GROUP);
   url.setScheme(config->value("api_scheme", "https").toString());
   url.setHost(config->value("api_host", "api.booklooker.de").toString());
-  p_apiKey = config->value("api_key", "fuck").toString();
+  p_apiKey = config->value("api_key", "007").toString();
+  p_queryPastDays =
+      config->value("api_history_call", ANTIQUA_QUERY_PASTDAYS).toInt();
   config->endGroup();
   p_baseUrl = url;
 }
@@ -154,9 +156,9 @@ const QNetworkRequest BooklookerRequester::newRequest(const QUrl &url) {
 }
 
 void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
-//#ifdef ANTIQUA_DEVELOPEMENT
-//  qDebug() << Q_FUNC_INFO << doc;
-//#endif
+  //#ifdef ANTIQUA_DEVELOPEMENT
+  //  qDebug() << Q_FUNC_INFO << doc;
+  //#endif
   QString status = QJsonValue(doc["status"]).toString();
   QString value = QJsonValue(doc["returnValue"]).toString();
   if (status == "OK" && !value.isEmpty()) {
@@ -264,7 +266,7 @@ void BooklookerRequester::replyReadyRead() {
     success = false;
   }
 
-  if(m_reply->bytesAvailable() < 1) {
+  if (m_reply->bytesAvailable() < 1) {
     qWarning("Booklooker - No Data responsed!");
     return;
   }
@@ -414,7 +416,7 @@ void BooklookerRequester::queryList() {
   }
 
   QUrl url = apiQuery("order");
-  QDate past = QDate::currentDate().addDays(ANTIQUA_QUERY_PASTDAYS);
+  QDate past = QDate::currentDate().addDays(p_queryPastDays);
   QUrlQuery q;
   q.addQueryItem("token", getToken());
   q.addQueryItem("dateFrom", past.toString(DATE_FORMAT));
