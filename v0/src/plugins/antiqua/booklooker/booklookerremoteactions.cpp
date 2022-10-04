@@ -104,7 +104,7 @@ void Bl_StatusPage::prepareAction() {
     }
   }
   if (!obj.isEmpty()) {
-    setWindowModified(false);
+    emit sendModified(false);
     emit sendAction(obj);
   }
 }

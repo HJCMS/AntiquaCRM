@@ -7,6 +7,7 @@
 #include "myicontheme.h"
 #include "previewtable.h"
 
+#include <QDateTime>
 #include <QDebug>
 #include <QFileDialog>
 #include <QJsonArray>
@@ -175,61 +176,39 @@ const QJsonDocument ReportingDialog::getSqlQueryJson() {
 }
 
 bool ReportingDialog::saveDataExport() {
-  bool status = false;
   QFileInfo target = getSaveFile();
   if (!target.dir().exists())
-    return status;
+    return false;
 
   if (target.fileName().isEmpty())
-    return status;
+    return false;
 
-  // JSON
-  QJsonDocument doc = getSqlQueryJson();
-  if (!doc.isNull()) {
+  // CSV
+  QString header = m_previewTable->dataHeader();
+  QStringList rows = m_previewTable->dataRows();
+  if (rows.count() > 0) {
     QString filePath = target.filePath();
-    filePath.append("_UTF-8");
-    filePath.append(".json");
+    filePath.append("_UTF8");
+    filePath.append(".csv");
     QFile fp(filePath);
     if (fp.open(QIODevice::WriteOnly)) {
       QTextStream out(&fp);
-      out.setCodec("UTF-8");
-      out << doc.toJson(QJsonDocument::Compact);
-      out << "\n";
+      out.setCodec("UTF8");
+      out << header + "\n";
+      out << rows.join("\n");
       fp.close();
-      status = true;
+      setWindowModified(false);
+      return true;
     }
   }
-
-  // CSV
-  if (status) {
-    QString header = m_previewTable->dataHeader();
-    QStringList rows = m_previewTable->dataRows();
-    if (rows.count() > 0) {
-      QString filePath = target.filePath();
-      filePath.append("_ISO-8859-15");
-      filePath.append(".csv");
-      QFile fp(filePath);
-      if (fp.open(QIODevice::WriteOnly)) {
-        QTextStream out(&fp);
-        out.setCodec("ISO-8859-15");
-        out << header + "\n";
-        out << rows.join("\n");
-        fp.close();
-        status = true;
-      }
-    }
-  }
-
-  if (status)
-    setWindowModified(false);
-
-  return status;
+  return false;
 }
 
 const QFileInfo ReportingDialog::getSaveFile() {
   QDir p_dir(m_cfg->value("dirs/reports", QDir::homePath()).toString());
 
-  QString filename = QDate::currentDate().toString("yyyy-MM");
+  QDateTime dt = QDateTime::currentDateTime();
+  QString filename = dt.toString("yyyy-MM-dd_hhmm");
 
   QFileInfo info;
   if (p_dir.exists()) {
