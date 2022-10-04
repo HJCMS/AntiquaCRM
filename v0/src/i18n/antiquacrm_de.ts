@@ -42,12 +42,12 @@
 <context>
     <name>AbeBooksIfaceWidget</name>
     <message>
-        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+169"/>
+        <location filename="../plugins/antiqua/abebooks/abebooksifacewidget.cpp" line="+170"/>
         <source>Document read Error</source>
         <translation>Lesefehler beim öffnen der Abebooks Schnittstelle</translation>
     </message>
     <message>
-        <location line="+175"/>
+        <location line="+186"/>
         <source>Buyer Cancelled</source>
         <translation>Käufer stornierte</translation>
     </message>
@@ -1022,17 +1022,7 @@
         <translation>Die maximale Anzahl Abfragen/Minute wurde überschritten</translation>
     </message>
     <message>
-        <location line="+89"/>
-        <source>Invalid Document response!</source>
-        <translation>Ungültige Dokumentantwort!</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Network request</source>
-        <translation>Netzwerkabfrage</translation>
-    </message>
-    <message>
-        <location line="+284"/>
+        <location line="+345"/>
         <source>Server temporarily down!</source>
         <translation>Server vorübergehend ausgefallen!</translation>
     </message>
@@ -1077,7 +1067,7 @@
         <translation>Die Antwort enthält ungültige Zeichen.</translation>
     </message>
     <message>
-        <location line="-417"/>
+        <location line="-387"/>
         <source>Server down</source>
         <translation>Server ist nicht vefügbar</translation>
     </message>
@@ -1085,7 +1075,7 @@
 <context>
     <name>BooksTable</name>
     <message>
-        <location filename="../inventory/books/bookstable.cpp" line="+76"/>
+        <location filename="../inventory/books/bookstable.cpp" line="+70"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
@@ -1105,12 +1095,12 @@
         <translation>Eintrag erstellen</translation>
     </message>
     <message>
-        <location line="-84"/>
+        <location line="-79"/>
         <source>A table row must be selected in order to perform an action.</source>
         <translation>Eine Tabellenreihe muss ausgewählt sein, um eine Aktion ausführen zu können.</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+91"/>
         <source>add Article to opened Order</source>
         <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
     </message>
@@ -1820,12 +1810,12 @@
 <context>
     <name>CustomerTableView</name>
     <message>
-        <location filename="../inventory/customers/customertableview.cpp" line="+71"/>
+        <location filename="../inventory/customers/customertableview.cpp" line="+67"/>
         <source>Broken Database query for Customers table.</source>
         <translation>Defekte Datenbankabfrage für die Kundentabelle.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
@@ -2603,7 +2593,7 @@
 <context>
     <name>HJCMS::SqlCore</name>
     <message>
-        <location filename="../core/sqlcore/sqlcore.cpp" line="+146"/>
+        <location filename="../core/sqlcore/sqlcore.cpp" line="+143"/>
         <source>SQL Driver initialization error</source>
         <translation>Fehler beim laden des SQL Treibers</translation>
     </message>
@@ -2916,12 +2906,12 @@
 <context>
     <name>InventoryProviders</name>
     <message>
-        <location filename="../inventory/providers/inventoryproviders.cpp" line="+29"/>
+        <location filename="../inventory/providers/inventoryproviders.cpp" line="+30"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+58"/>
         <source>exists with count</source>
         <translation>ist Verfügbar mit der Anzahl</translation>
     </message>
@@ -2936,14 +2926,15 @@
         <translation>Erforderliche Versandeigenschaften fehlen!</translation>
     </message>
     <message>
-        <location line="+144"/>
-        <location line="+5"/>
+        <location line="+152"/>
+        <location line="+7"/>
         <location line="+12"/>
         <source>Europe</source>
         <translation>Europa</translation>
     </message>
     <message>
-        <location line="-14"/>
+        <location line="-16"/>
+        <location line="+2"/>
         <source>Germany</source>
         <translation>Deutschland</translation>
     </message>
@@ -3014,7 +3005,7 @@
         <translation>Ungültige Versandeigenschaften!</translation>
     </message>
     <message>
-        <location line="-437"/>
+        <location line="-447"/>
         <location line="+14"/>
         <source>Article</source>
         <translation>Artikel</translation>
@@ -3346,7 +3337,7 @@
 <context>
     <name>MApplication</name>
     <message>
-        <location filename="../mapplication.cpp" line="+131"/>
+        <location filename="../mapplication.cpp" line="+132"/>
         <source>No valid Network Interfaces found!</source>
         <translation>Keine gültigen Netzwerkschnittstellen gefunden!</translation>
     </message>
@@ -3729,12 +3720,12 @@
     </message>
     <message>
         <location line="+983"/>
-        <location line="+210"/>
+        <location line="+215"/>
         <source>Internal</source>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="-1262"/>
+        <location line="-1267"/>
         <source>Invoice ID</source>
         <translation>Rechnungs Nr</translation>
     </message>
@@ -3805,12 +3796,12 @@
     </message>
     <message>
         <location line="+316"/>
-        <location line="+582"/>
+        <location line="+587"/>
         <source>Article %1, Price %2, Count: %3, Title: %4</source>
         <translation>Artikel %1, Preis %2, Bestand: %3, Titel: %4</translation>
     </message>
     <message>
-        <location line="-567"/>
+        <location line="-572"/>
         <source>Do you really want to remove this Article from the list?</source>
         <translation>Möchten Sie wirklich den Artikel aus der Liste entfernen?</translation>
     </message>
@@ -3892,12 +3883,12 @@
         <translation>E-Mail erstellen abgebrochen.</translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+99"/>
         <source>No Billing Info found</source>
         <translation>Kein Verkaufsinformationen gefunden</translation>
     </message>
     <message>
-        <location line="-166"/>
+        <location line="-171"/>
         <source>Missing Delivery-Id</source>
         <translation>Keine Lieferscheinnummer vorhanden</translation>
     </message>
@@ -3937,7 +3928,7 @@
         <translation>Sorniere Auftrag</translation>
     </message>
     <message>
-        <location line="+918"/>
+        <location line="+923"/>
         <location line="+11"/>
         <source>Broken Provider data import!</source>
         <translation>Fehlerhafter Dienstleister Bestellimport!</translation>
@@ -3958,7 +3949,7 @@
         <translation>Bestellung</translation>
     </message>
     <message>
-        <location line="-981"/>
+        <location line="-986"/>
         <location line="+401"/>
         <source>If so, the entry will no longer be visible here!</source>
         <translation>Dann ist der Eintrag hier nicht mehr sichtbar!</translation>
@@ -4154,7 +4145,7 @@
 <context>
     <name>OrdersTable</name>
     <message>
-        <location filename="../inventory/orders/orderstable.cpp" line="+72"/>
+        <location filename="../inventory/orders/orderstable.cpp" line="+68"/>
         <source>Rows: %1, Time: %2 msec.</source>
         <translation>Einträge: %1, Empfangen in: %2 msek.</translation>
     </message>
@@ -5272,43 +5263,56 @@
     <name>ProviderSettings</name>
     <message>
         <location filename="../custom/settings/providersettings.cpp" line="+24"/>
-        <location line="+41"/>
+        <location line="+44"/>
         <location line="+35"/>
         <source>Protocoll</source>
         <translation>Protokoll</translation>
     </message>
     <message>
-        <location line="-71"/>
-        <location line="+41"/>
+        <location line="-74"/>
+        <location line="+44"/>
         <location line="+35"/>
         <source>Domain</source>
         <translation>Domäne</translation>
     </message>
     <message>
-        <location line="-71"/>
-        <location line="+46"/>
+        <location line="-74"/>
+        <location line="+49"/>
         <location line="+30"/>
         <source>API Key</source>
         <translation>API Schlüssel</translation>
     </message>
     <message>
-        <location line="-72"/>
+        <location line="-75"/>
         <source>API Path</source>
         <translation>API Pfad</translation>
     </message>
     <message>
-        <location line="+18"/>
-        <location line="+40"/>
+        <location line="+5"/>
+        <location line="+74"/>
+        <source>History</source>
+        <translation>Verlauf</translation>
+    </message>
+    <message>
+        <location line="-72"/>
+        <location line="+74"/>
+        <source>Query history</source>
+        <translation>Abfrageverlauf</translation>
+    </message>
+    <message>
+        <location line="-73"/>
+        <location line="+74"/>
+        <source>days</source>
+        <translation>Tage</translation>
+    </message>
+    <message>
+        <location line="-56"/>
+        <location line="+35"/>
         <source>Loginname</source>
         <translation>Benutzername</translation>
     </message>
     <message>
-        <location line="-36"/>
-        <source>Password</source>
-        <translation>Passwort</translation>
-    </message>
-    <message>
-        <location line="+15"/>
+        <location line="-21"/>
         <source>API Port</source>
         <translation></translation>
     </message>
