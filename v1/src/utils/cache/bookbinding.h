@@ -1,0 +1,22 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+// @COPYRIGHT_HOLDER@
+
+#ifndef ANTIQUA_BOOKBINDING_H
+#define ANTIQUA_BOOKBINDING_H
+
+#include "workload.h"
+
+class BookBinding final : public Workload {
+protected:
+  const QList<QPair<QString, QString>> tableList() override;
+  const QJsonArray createTable(const QString &query) override;
+
+public Q_SLOTS:
+  void run() override;
+
+public:
+  explicit BookBinding(AntiquaCRM::ASqlCore *pgsql);
+};
+
+#endif // ANTIQUA_BOOKBINDING_H

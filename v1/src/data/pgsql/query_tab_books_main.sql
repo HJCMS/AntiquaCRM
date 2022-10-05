@@ -1,7 +1,5 @@
---
 -- @brief Default Query for Tab Books
 -- @file query_tab_books_main.sql
---
 SELECT ib_id,
   ib_count,
   (CASE WHEN im_id IS NOT NULL THEN true ELSE false END) AS im_id,

@@ -5,7 +5,10 @@
 #include "aglobal.h"
 #include "asettings.h"
 
+#ifdef ANTIQUA_DEVELOPEMENT
 #include <QDebug>
+#endif
+
 #include <QFile>
 #include <QRegExp>
 #include <QStandardPaths>
@@ -20,7 +23,11 @@ ASqlFiles::ASqlFiles(const QString &file)
 
 bool ASqlFiles::openTemplate() {
   if (!isReadable()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "Permission Denied!";
+#else
     qWarning("Permission Denied!");
+#endif
     return false;
   }
   QFile fp(filePath());
@@ -95,7 +102,11 @@ const QString ASqlFiles::selectStatement(const QString &name) {
   QFileInfo info(ASettings::getDataDir("pgsql"), name + ".sql");
   QString out;
   if (!info.isReadable()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "Permission Denied!";
+#else
     qWarning("Permission Denied!");
+#endif
     return out;
   }
   QFile fp(info.filePath());
@@ -112,7 +123,11 @@ const QString ASqlFiles::queryStatement(const QString &name) {
   QFileInfo info(ASettings::getDataDir("pgsql"), name + ".sql");
   QString out;
   if (!info.isReadable()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "Permission Denied!";
+#else
     qWarning("Permission Denied!");
+#endif
     return out;
   }
   QFile fp(info.filePath());

@@ -7,8 +7,7 @@
 #include "antiquasplashscreen.h"
 #include "antiquasystemtray.h"
 #include "antiquawindow.h"
-// AntiquaPreloader
-#include "preloader.h"
+#include "cachefiles.h"
 
 #include <QDebug>
 #ifdef Q_OS_WIN
@@ -83,15 +82,11 @@ bool AntiquaAppl::createCacheFiles() {
   if (m_sql == nullptr)
     return false;
 
-  // ASharedCacheFiles
   m_splash->setMessage(tr("Creating Cachefiles."));
-  AntiquaPreloader *m_preload = new AntiquaPreloader(this);
-  connect(m_preload, SIGNAL(statusMessage(const QString &)), m_splash,
+  AntiquaCacheFiles *m_cache = new AntiquaCacheFiles(this);
+  connect(m_cache, SIGNAL(statusMessage(const QString &)), m_splash,
           SLOT(setMessage(const QString &)));
-  foreach(QRunnable *pr, m_preload->getThreads()) {
-    // m_splash->setMessage(tr("Start ").arg(pr->name()));
-    m_preload->start(pr);
-  }
+  m_cache->createCaches();
   m_splash->setMessage(tr("Completed..."));
   return true;
 }

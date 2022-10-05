@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
 
-SET(_projectLibrary "AntiquaPreloader")
+SET(_projectLibrary "Booklooker")
 
 INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_BINARY_DIR}
@@ -17,13 +17,11 @@ SET (projectLibrary_FILES
 )
 
 SET (projectLibrary_SOURCES
- preloader.cpp
- postalcodetables.cpp
+ booklooker.cpp
 )
 
 SET (projectLibrary_HEADERS
- preloader.h
- postalcodetables.h
+ booklooker.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

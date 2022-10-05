@@ -50,11 +50,11 @@ bool ASharedDataFiles::storeJson(const QString &basename,
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream data(&fp);
     data.setCodec(ANTIQUACRM_TEXTCODEC);
-    data << doc.toJson(QJsonDocument::Compact); //Indented
+    data << doc.toJson(QJsonDocument::Compact); // Indented
     fp.close();
     return true;
   }
-  qWarning("Permission Denied!");
+  qDebug() << Q_FUNC_INFO << "Permissions:" << info;
   return false;
 }
 
@@ -63,7 +63,7 @@ const QJsonDocument ASharedDataFiles::getJson(const QString &basename) {
   QJsonParseError parseHandle;
   QFileInfo info(path(), basename + ".json");
   if (!info.isReadable()) {
-    qWarning("Permission Denied!");
+    qDebug() << Q_FUNC_INFO << "Permissions:" << info;
     return doc;
   }
   QFile fp(info.filePath());
@@ -94,7 +94,7 @@ bool ASharedDataFiles::storeXml(const QString &basename,
     fp.close();
     return true;
   }
-  qWarning("Permission Denied!");
+  qDebug() << Q_FUNC_INFO << "Permissions:" << info;
   return false;
 }
 
@@ -102,7 +102,7 @@ const QDomDocument ASharedDataFiles::getXML(const QString &basename) {
   QDomDocument doc;
   QFileInfo info(path(), basename + ".xml");
   if (!info.isReadable()) {
-    qWarning("Permission Denied!");
+    qDebug() << Q_FUNC_INFO << "Permissions:" << info;
     return doc;
   }
   QFile fp(info.filePath());
@@ -132,7 +132,7 @@ bool ASharedCacheFiles::storeTempFile(const QString &filename,
     fp.close();
     return true;
   }
-  qWarning("Permission Denied!");
+  qDebug() << Q_FUNC_INFO << "Permissions:" << info;
   return false;
 }
 
@@ -147,14 +147,14 @@ bool ASharedCacheFiles::storeTempFile(const QString &filename,
     fp.close();
     return true;
   }
-  qWarning("Permission Denied!");
+  qDebug() << Q_FUNC_INFO << "Permissions:" << info;
   return false;
 }
 
 const QString ASharedCacheFiles::getTempFile(const QString &filename) {
   QFileInfo info(path(), filename);
   if (!info.isReadable()) {
-    qWarning("Permission Denied!");
+    qDebug() << Q_FUNC_INFO << "Permissions:" << info;
     return QString();
   }
   QString buffer;
