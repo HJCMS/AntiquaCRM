@@ -2,12 +2,12 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUA_BOOKBINDING_H
-#define ANTIQUA_BOOKBINDING_H
+#ifndef ANTIQUA_STORAGELOCATIONCACHE_H
+#define ANTIQUA_STORAGELOCATIONCACHE_H
 
 #include "workload.h"
 
-class BookBinding final : public Workload {
+class StorageLocationCache final : public Workload {
 protected:
   const QList<QPair<QString, QString>> tableList() override;
   const QJsonArray createTable(const QString &query) override;
@@ -16,7 +16,7 @@ public Q_SLOTS:
   void run() override;
 
 public:
-  explicit BookBinding(AntiquaCRM::ASqlCore *pgsql);
+  explicit StorageLocationCache(AntiquaCRM::ASqlCore *pgsql);
 };
 
-#endif // ANTIQUA_BOOKBINDING_H
+#endif // ANTIQUA_STORAGELOCATIONCACHE_H

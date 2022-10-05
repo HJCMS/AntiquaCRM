@@ -14,16 +14,22 @@ SET (projectLibrary_LINKER
 )
 
 SET (projectLibrary_FILES
+  cpp.tpl
+  h.tpl
 )
 
 SET (projectLibrary_SOURCES
  inventory.cpp
  inventorytable.cpp
+ inputedit.cpp
+ bookbinding.cpp
 )
 
 SET (projectLibrary_HEADERS
  inventory.h
  inventorytable.h
+ inputedit.h
+ bookbinding.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

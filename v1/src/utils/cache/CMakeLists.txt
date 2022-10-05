@@ -19,15 +19,17 @@ SET (projectLibrary_FILES
 SET (projectLibrary_SOURCES
  cachefiles.cpp
  workload.cpp
- bookbinding.cpp
- postalcodetables.cpp
+ bookbindingcache.cpp
+ postalcodecache.cpp
+ storagelocationcache.cpp
 )
 
 SET (projectLibrary_HEADERS
  cachefiles.h
  workload.h
- bookbinding.h
- postalcodetables.h
+ bookbindingcache.h
+ postalcodecache.h
+ storagelocationcache.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

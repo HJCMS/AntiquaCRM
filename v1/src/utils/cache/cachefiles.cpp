@@ -2,8 +2,9 @@
 // vim: set fileencoding=utf-8
 
 #include "cachefiles.h"
-#include "postalcodetables.h"
-#include "bookbinding.h"
+#include "postalcodecache.h"
+#include "bookbindingcache.h"
+#include "storagelocationcache.h"
 
 #include <AntiquaCRM>
 
@@ -14,8 +15,9 @@ AntiquaCacheFiles::AntiquaCacheFiles(QObject *parent) : QObject{parent} {
 const QList<Workload *> AntiquaCacheFiles::getTasks() {
   AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
   QList<Workload *> list;
-  list.append(new PostalcodeTables(m_sql));
-  list.append(new BookBinding(m_sql));
+  list.append(new PostalcodeCache(m_sql));
+  list.append(new BookBindingCache(m_sql));
+  list.append(new StorageLocationCache(m_sql));
   return list;
 }
 

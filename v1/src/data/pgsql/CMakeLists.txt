@@ -4,6 +4,8 @@
 SET (query_tables_FILES
  query_tab_books_main.sql
  query_postal_codes.sql
+ query_book_binding.sql
+ query_storage_location.sql
 )
 
 SET (select_statement_FILES

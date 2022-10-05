@@ -63,7 +63,7 @@ const QJsonDocument ASharedDataFiles::getJson(const QString &basename) {
   QJsonParseError parseHandle;
   QFileInfo info(path(), basename + ".json");
   if (!info.isReadable()) {
-    qDebug() << Q_FUNC_INFO << "Permissions:" << info;
+    qWarning("No File or Permission denied (%s).", qPrintable(info.filePath()));
     return doc;
   }
   QFile fp(info.filePath());
@@ -71,14 +71,14 @@ const QJsonDocument ASharedDataFiles::getJson(const QString &basename) {
     QTextStream data(&fp);
     data.setCodec(ANTIQUACRM_TEXTCODEC);
     QByteArray buffer = data.readAll().toLocal8Bit();
-    doc.fromJson(buffer, &parseHandle);
+    doc = QJsonDocument::fromJson(buffer, &parseHandle);
     if (parseHandle.error != QJsonParseError::NoError) {
       qWarning("Json Document Error: '%s'.",
                qPrintable(parseHandle.errorString()));
       doc = QJsonDocument();
     }
-    buffer.clear();
     fp.close();
+    buffer.clear();
   }
   return doc;
 }

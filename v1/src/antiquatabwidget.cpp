@@ -4,6 +4,8 @@
 #include "antiquatabwidget.h"
 #include "tabbooks.h"
 
+#include "bookbinding.h"
+
 AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
   setObjectName("tab_widgets_main");
 
@@ -17,5 +19,9 @@ void AntiquaTabWidget::tabChanged(int index) {
 bool AntiquaTabWidget::loadDefaultTabs() {
   m_books = new TabBooks(this);
   insertTab(0, m_books, m_books->windowIcon(), m_books->windowTitle());
+
+  BookBinding *binding = new BookBinding(this);
+  insertTab(1, binding, m_books->windowIcon(), m_books->windowTitle());
+
   return true;
 }

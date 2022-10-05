@@ -1,19 +1,19 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "postalcodetables.h"
+#include "postalcodecache.h"
 #include <AntiquaCRM>
 
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QString>
 
-PostalcodeTables::PostalcodeTables(AntiquaCRM::ASqlCore *pgsql)
+PostalcodeCache::PostalcodeCache(AntiquaCRM::ASqlCore *pgsql)
     : Workload{pgsql} {
   setObjectName("Postcalcodes");
 }
 
-const QList<QPair<QString, QString>> PostalcodeTables::tableList() {
+const QList<QPair<QString, QString>> PostalcodeCache::tableList() {
   QList<QPair<QString, QString>> list;
   QString sql = AntiquaCRM::ASqlFiles::queryStatement("query_postal_codes");
   QSqlQuery q = m_sql->query(sql);
@@ -28,7 +28,7 @@ const QList<QPair<QString, QString>> PostalcodeTables::tableList() {
   return list;
 }
 
-const QJsonArray PostalcodeTables::createTable(const QString &query) {
+const QJsonArray PostalcodeCache::createTable(const QString &query) {
   QJsonArray array;
   QSqlQuery q = m_sql->query(query);
   if (q.size() > 0) {
@@ -42,7 +42,7 @@ const QJsonArray PostalcodeTables::createTable(const QString &query) {
   return array;
 }
 
-void PostalcodeTables::run() {
+void PostalcodeCache::run() {
   emit statusNotify(tr("Build Postalcodes") + " ...");
   QJsonObject main;
   QString file("select_statement_postalcode_tables");

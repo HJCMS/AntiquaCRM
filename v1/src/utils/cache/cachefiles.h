@@ -6,6 +6,7 @@
 #define ANTIQUA_ANTIQUACACHEFILES
 
 #include <QObject>
+#include <QString>
 #include <QThread>
 
 #include "workload.h"

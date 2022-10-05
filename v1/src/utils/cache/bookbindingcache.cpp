@@ -1,23 +1,23 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "bookbinding.h"
+#include "bookbindingcache.h"
 
 #include <AntiquaCRM>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QString>
 
-BookBinding::BookBinding(AntiquaCRM::ASqlCore *pgsql) : Workload{pgsql} {
+BookBindingCache::BookBindingCache(AntiquaCRM::ASqlCore *pgsql) : Workload{pgsql} {
   setObjectName("BookBinding");
 }
 
-const QList<QPair<QString, QString>> BookBinding::tableList() {
+const QList<QPair<QString, QString>> BookBindingCache::tableList() {
   QList<QPair<QString, QString>> list;
   return list;
 }
 
-const QJsonArray BookBinding::createTable(const QString &query) {
+const QJsonArray BookBindingCache::createTable(const QString &query) {
   QJsonArray array;
   QSqlQuery q = m_sql->query(query);
   if (q.size() > 0) {
@@ -31,7 +31,7 @@ const QJsonArray BookBinding::createTable(const QString &query) {
   return array;
 }
 
-void BookBinding::run() {
+void BookBindingCache::run() {
   emit statusNotify(tr("Build Book binding") + " ...");
   QJsonObject main;
   QString file("query_book_binding");
