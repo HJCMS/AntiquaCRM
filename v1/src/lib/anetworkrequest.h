@@ -10,10 +10,11 @@
 #include <QSslConfiguration>
 #include <QString>
 #include <QUrl>
+#include <AGlobal>
 
 namespace AntiquaCRM {
 
-class ANetworkRequest final : public QNetworkRequest {
+class ANTIQUACRM_LIBRARAY ANetworkRequest final : public QNetworkRequest {
 private:
   const QSslConfiguration sslConfigguration();
 

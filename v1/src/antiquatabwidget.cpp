@@ -4,7 +4,10 @@
 #include "antiquatabwidget.h"
 #include "tabbooks.h"
 
+/** TESTINGS */
 #include "bookbinding.h"
+#include "postalcodeedit.h"
+#include <QVBoxLayout>
 
 AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
   setObjectName("tab_widgets_main");
@@ -13,15 +16,25 @@ AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
 }
 
 void AntiquaTabWidget::tabChanged(int index) {
-  reinterpret_cast<Inventory *>(widget(index))->onEnterChanged();
+  Inventory *m_tab = qobject_cast<Inventory *>(widget(index));
+  if (m_tab != nullptr)
+    m_tab->onEnterChanged();
 }
 
 bool AntiquaTabWidget::loadDefaultTabs() {
   m_books = new TabBooks(this);
-  insertTab(0, m_books, m_books->windowIcon(), m_books->windowTitle());
+  QIcon icon = m_books->windowIcon();
+  insertTab(0, m_books, icon, m_books->windowTitle());
 
-  BookBinding *binding = new BookBinding(this);
-  insertTab(1, binding, m_books->windowIcon(), m_books->windowTitle());
+  // TESTS
+  m_testing = new QWidget(this);
+  QVBoxLayout *testLayout = new QVBoxLayout(m_testing);
+  BookBinding *m_binding = new BookBinding(m_testing);
+  testLayout->addWidget(m_binding);
+  PostalCodeEdit *m_plz = new PostalCodeEdit(m_testing);
+  testLayout->addWidget(m_plz);
+  m_testing->setLayout(testLayout);
+  insertTab(1, m_testing, icon, "Test Widgets");
 
   return true;
 }

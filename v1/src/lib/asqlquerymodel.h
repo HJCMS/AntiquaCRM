@@ -5,6 +5,7 @@
 #ifndef ANTIQUACRM_SQLQUERYMODEL_H
 #define ANTIQUACRM_SQLQUERYMODEL_H
 
+#include <AGlobal>
 #include <QIcon>
 #include <QMap>
 #include <QModelIndex>
@@ -22,7 +23,7 @@ class ASqlCore;
  * @brief SqlQueryModel for TableViews
  * @section sql
  */
-class ASqlQueryModel : public QSqlQueryModel {
+class ANTIQUACRM_LIBRARAY ASqlQueryModel : public QSqlQueryModel {
   Q_OBJECT
 
 private:

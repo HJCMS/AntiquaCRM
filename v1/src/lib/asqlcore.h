@@ -5,6 +5,7 @@
 #ifndef ANTIQUACRM_SQLCORE_H
 #define ANTIQUACRM_SQLCORE_H
 
+#include <AGlobal>
 #include <QObject>
 #include <QString>
 #include <QtSql>
@@ -17,7 +18,7 @@ class ASqlSettings;
  * @brief core sql functionality
  * @section sql
  */
-class ASqlCore : public QObject  {
+class ANTIQUACRM_LIBRARAY ASqlCore : public QObject {
   Q_OBJECT
 
 private:

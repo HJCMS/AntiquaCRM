@@ -10,10 +10,11 @@
 #include <QJsonDocument>
 #include <QString>
 #include <QStringList>
+#include <AGlobal>
 
 namespace AntiquaCRM {
 
-class ASharedDataFiles : public QDir {
+class ANTIQUACRM_LIBRARAY ASharedDataFiles : public QDir {
 public:
   explicit ASharedDataFiles();
   const QStringList dataFiles();
@@ -26,7 +27,7 @@ public:
   const QDomDocument getXML(const QString &basename);
 };
 
-class ASharedCacheFiles : public QDir {
+class ANTIQUACRM_LIBRARAY ASharedCacheFiles : public QDir {
 public:
   explicit ASharedCacheFiles();
   static const QString cacheDir();

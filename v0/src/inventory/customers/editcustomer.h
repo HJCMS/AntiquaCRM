@@ -8,7 +8,7 @@
 #include <QLabel>
 #include <QObject>
 #include <QRegularExpression>
-#include <QToolBox>
+#include <QTabWidget>
 #include <QWidget>
 #include <QDate>
 
@@ -27,7 +27,7 @@ class EditCustomer final : public EditorMain {
 
 private:
   QLabel *infoLabel;
-  QToolBox *m_dataBox;
+  QTabWidget *m_tabWidget;
   SerialID *c_id;
   CustomerContact *m_contact;
   CustomerBillingInfo *m_billing;

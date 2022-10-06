@@ -2339,19 +2339,19 @@
         <translation>Kunden Nr</translation>
     </message>
     <message>
-        <location line="+16"/>
-        <source>Edit Contact</source>
-        <translation>Kontakt bearbeiten</translation>
-    </message>
-    <message>
-        <location line="+10"/>
+        <location line="+29"/>
         <source>Payments</source>
         <translation>Einkäufe</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Edit Billing</source>
-        <translation>Rechnungsinformationen bearbeiten</translation>
+        <location line="-11"/>
+        <source>Contact data</source>
+        <translation>Kontaktdaten</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Payment information</source>
+        <translation>Zahlungs Informationen</translation>
     </message>
     <message>
         <location line="+104"/>
@@ -5559,7 +5559,7 @@
 <context>
     <name>ReportingDialog</name>
     <message>
-        <location filename="../custom/reporting/reportingdialog.cpp" line="+25"/>
+        <location filename="../custom/reporting/reportingdialog.cpp" line="+26"/>
         <source>Reports</source>
         <translation>Berichte</translation>
     </message>
@@ -5599,7 +5599,7 @@
         <translation>Monatlicher Kaufsbericht</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+71"/>
         <source>Save to ...</source>
         <translation>Speichere in ...</translation>
     </message>

@@ -8,6 +8,7 @@
 #include <QMainWindow>
 #include <QObject>
 #include <QTabWidget>
+#include <QWidget>
 
 class TabBooks;
 
@@ -16,6 +17,7 @@ class AntiquaTabWidget final : public QTabWidget {
 
 private:
   TabBooks *m_books;
+  QWidget *m_testing;
 
 private Q_SLOTS:
   void tabChanged(int index);

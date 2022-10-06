@@ -6,6 +6,9 @@
 @CLASSNAME@::@CLASSNAME@(QWidget *parent) : InputEdit{parent} {
 }
 
+void @CLASSNAME@::loadDataset() {
+}
+
 void @CLASSNAME@::reset() {
 }
 

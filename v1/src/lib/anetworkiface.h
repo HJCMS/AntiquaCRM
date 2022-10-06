@@ -7,6 +7,7 @@
 
 #include <QNetworkInterface>
 #include <QStringList>
+#include <AGlobal>
 
 namespace AntiquaCRM {
 
@@ -14,7 +15,7 @@ namespace AntiquaCRM {
  * @brief Testclass for Network Interfaces
  * @ingroup Network
  */
-class ANetworkIface : public QNetworkInterface {
+class ANTIQUACRM_LIBRARAY ANetworkIface : public QNetworkInterface {
 private:
   QStringList p_adresses;
 

@@ -11,6 +11,7 @@
 #include <QSettings>
 #include <QString>
 #include <QVariant>
+#include <AGlobal>
 
 namespace AntiquaCRM {
 
@@ -18,7 +19,7 @@ namespace AntiquaCRM {
  * @brief AntiquaCRM Configuration Class
  * @ingroup core
  */
-class ASettings : public QSettings {
+class ANTIQUACRM_LIBRARAY ASettings : public QSettings {
   Q_OBJECT
 
 private:

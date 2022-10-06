@@ -5,12 +5,12 @@
 #ifndef ANTIQUACRM_SQLSETTINGS_H
 #define ANTIQUACRM_SQLSETTINGS_H
 
+#include <AGlobal>
+#include <ASettings>
 #include <QByteArray>
 #include <QObject>
 #include <QSettings>
 #include <QString>
-
-#include "asettings.h"
 
 namespace AntiquaCRM {
 
@@ -20,7 +20,7 @@ class ASqlProfile;
  * @brief This class provides sql settings functions
  * @section sql
  */
-class ASqlSettings final : public ASettings {
+class ANTIQUACRM_LIBRARAY ASqlSettings final : public ASettings {
   Q_OBJECT
   Q_PROPERTY(QString profile READ getProfile WRITE setProfile NOTIFY
                  sendProfileChanged)

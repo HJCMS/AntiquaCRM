@@ -48,6 +48,8 @@ SET (projectLibrary_HEADERS
  anetworkrequest.h
  anetworker.h
  AntiquaCRM
+ AGlobal
+ ASettings
 )
 
 ADD_LIBRARY (${_projectLibrary} SHARED
@@ -56,7 +58,7 @@ ADD_LIBRARY (${_projectLibrary} SHARED
  ${projectLibrary_FILES}
 )
 
-ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARAY)
+ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
 
 SET_TARGET_PROPERTIES (${_projectLibrary} PROPERTIES
   VERSION ${ANTIQUACRM_VERSION_STRING}
@@ -67,6 +69,7 @@ SET_TARGET_PROPERTIES (${_projectLibrary} PROPERTIES
 
 TARGET_LINK_LIBRARIES (${_projectLibrary} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
+  Qt${QT_VERSION_MAJOR}::Gui
   Qt${QT_VERSION_MAJOR}::Network
   Qt${QT_VERSION_MAJOR}::Sql
   Qt${QT_VERSION_MAJOR}::Xml

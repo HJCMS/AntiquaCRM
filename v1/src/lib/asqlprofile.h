@@ -5,6 +5,7 @@
 #ifndef ANTIQUACRM_SQLPROFILE_H
 #define ANTIQUACRM_SQLPROFILE_H
 
+#include <AGlobal>
 #include <QMetaType>
 #include <QString>
 #include <QStringList>
@@ -15,7 +16,7 @@ namespace AntiquaCRM {
  * @brief it provides a temporary data profile to connect the database
  * @section sql
  */
-class ASqlProfile {
+class ANTIQUACRM_LIBRARAY ASqlProfile {
 
 private:
   const QString p_profile;

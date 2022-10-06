@@ -5,6 +5,7 @@
 #ifndef ANTIQUACRM_SQLFILES_H
 #define ANTIQUACRM_SQLFILES_H
 
+#include <AGlobal>
 #include <QByteArray>
 #include <QDir>
 #include <QFileInfo>
@@ -22,7 +23,7 @@ namespace AntiquaCRM {
  * @li @SQL_SORTING@
  * @li @SQL_LIMIT@
  */
-class ASqlFiles : public QFileInfo {
+class ANTIQUACRM_LIBRARAY ASqlFiles : public QFileInfo {
 
 private:
   QDir p_dataDir;

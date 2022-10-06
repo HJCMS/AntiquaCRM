@@ -2339,18 +2339,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
-        <source>Edit Contact</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
+        <location line="+29"/>
         <source>Payments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Edit Billing</source>
+        <location line="-11"/>
+        <source>Contact data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Payment information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5559,7 +5559,7 @@
 <context>
     <name>ReportingDialog</name>
     <message>
-        <location filename="../custom/reporting/reportingdialog.cpp" line="+25"/>
+        <location filename="../custom/reporting/reportingdialog.cpp" line="+26"/>
         <source>Reports</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5599,7 +5599,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+71"/>
         <source>Save to ...</source>
         <translation type="unfinished"></translation>
     </message>

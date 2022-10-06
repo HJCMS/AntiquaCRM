@@ -23,6 +23,8 @@ SET (projectLibrary_SOURCES
  inventorytable.cpp
  inputedit.cpp
  bookbinding.cpp
+ postalcodeedit.cpp
+ postalcodemodel.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -30,6 +32,8 @@ SET (projectLibrary_HEADERS
  inventorytable.h
  inputedit.h
  bookbinding.h
+ postalcodeedit.h
+ postalcodemodel.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

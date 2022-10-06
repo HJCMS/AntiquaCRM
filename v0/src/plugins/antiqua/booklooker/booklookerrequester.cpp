@@ -17,6 +17,7 @@
 #include <QTextStream>
 #include <QTimer>
 #include <QUrlQuery>
+#include <QVector>
 
 static const QByteArray applCaBundlePath() {
 #ifdef Q_OS_WIN
@@ -107,6 +108,9 @@ BooklookerRequester::BooklookerRequester(QObject *parent)
   initConfigurations();
   m_reply = nullptr;
   p_operation = QString();
+
+  connect(this, SIGNAL(finished(QNetworkReply *)), this,
+          SLOT(replyFinished(QNetworkReply *)));
 }
 
 const QFileInfo BooklookerRequester::operationTempFile(const QString &op) {
@@ -139,17 +143,18 @@ const QUrl BooklookerRequester::apiQuery(const QString &section) {
 
 const QNetworkRequest BooklookerRequester::newRequest(const QUrl &url) {
   QNetworkRequest req(url);
+  req.setAttribute(QNetworkRequest::FollowRedirectsAttribute, false);
   req.setPeerVerifyName(url.host());
   req.setRawHeader("User-Agent", userAgentString());
   req.setRawHeader("Accept-Language", languageRange());
-  req.setRawHeader("Accept", "text/*;application/json,q=0.1");
-  req.setRawHeader("Cache-Control", "private");
+  req.setRawHeader("Accept", "text/*; charset=UTF-8");
+  req.setRawHeader("Cache-Control", "no-cache; no-store");
   QSslConfiguration ssl;
+  ssl.setProtocol(QSsl::TlsV1_2OrLater);
   if (!ssl.addCaCertificates(applCaBundlePath(), QSsl::Pem)) {
     QFileInfo info(config->value("ssloptions/ssl_bundle").toString());
-    if (info.isReadable()) {
+    if (info.isReadable())
       ssl.addCaCertificates(info.filePath().toLocal8Bit(), QSsl::Pem);
-    }
   }
   req.setSslConfiguration(ssl);
   return req;
@@ -260,23 +265,43 @@ void BooklookerRequester::replyReadyRead() {
   if (m_reply == nullptr)
     return;
 
-  bool success = true;
   if (m_reply->error() != QNetworkReply::NoError) {
     slotError(m_reply->error());
-    success = false;
-  }
-
-  if (m_reply->bytesAvailable() < 1) {
-    qWarning("Booklooker - No Data responsed!");
     return;
   }
 
-  QByteArray data = m_reply->readAll();
+  if (m_reply->header(QNetworkRequest::ContentLengthHeader).toULongLong() !=
+      m_reply->bytesAvailable()) {
+    qWarning("Booklooker: Received bytes not equal to Content-Length Header!");
+    return;
+  }
+
+  QVector<char> buf;
+  QByteArray data;
+  qint64 chunk;
+  qint64 bufferSize = 4048;
+  while (m_reply->bytesAvailable() > 0) {
+    chunk = m_reply->bytesAvailable();
+    if (chunk > bufferSize)
+      chunk = bufferSize;
+
+    buf.resize(chunk + 1);
+    memset(&buf[0], 0, chunk + 1);
+
+    if (chunk != m_reply->read(&buf[0], chunk)) {
+      qWarning("Booklooker: buffer read error");
+    }
+    data += &buf[0];
+  }
+
   QJsonParseError parser;
   QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
-  if (parser.error != QJsonParseError::NoError) {
+  if (parser.error == QJsonParseError::NoError) {
+    writeResponseLog(doc);
+  } else {
     qWarning("Json Parse Error:(%s)!", jsonParserError(parser.error));
     writeErrorLog(data);
+    emit requestFinished(false);
     return;
   }
 
@@ -285,9 +310,8 @@ void BooklookerRequester::replyReadyRead() {
     return;
   }
 
-  writeResponseLog(doc);
   emit response(doc);
-  emit requestFinished(success);
+  emit requestFinished(true);
 }
 
 void BooklookerRequester::authentication() {

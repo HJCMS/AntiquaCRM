@@ -20,6 +20,7 @@
 
 EditCustomer::EditCustomer(QWidget *parent) : EditorMain{parent} {
   setObjectName("EditCustomer");
+  setMinimumHeight(620);
 
   m_sql = new HJCMS::SqlCore(this);
 
@@ -36,6 +37,7 @@ EditCustomer::EditCustomer(QWidget *parent) : EditorMain{parent} {
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setObjectName("customer_edit_layout");
+  mainLayout->setContentsMargins(0, 0, 0, 0);
 
   // BEGIN Info Header
   QHBoxLayout *headerLayout = new QHBoxLayout();
@@ -52,33 +54,27 @@ EditCustomer::EditCustomer(QWidget *parent) : EditorMain{parent} {
   mainLayout->addLayout(headerLayout);
   // END
 
-  m_dataBox = new QToolBox(this);
-  m_dataBox->setObjectName("customer_boxes");
-  mainLayout->addWidget(m_dataBox);
+  m_tabWidget = new QTabWidget(this);
+  m_tabWidget->setObjectName("customer_boxes");
+  mainLayout->addWidget(m_tabWidget);
 
   // BEGIN Edit Customer
-  m_contact = new CustomerContact(m_dataBox);
+  m_contact = new CustomerContact(m_tabWidget);
   m_contact->setObjectName("contact");
-  m_dataBox->addItem(m_contact, myIcon("identity"), tr("Edit Contact"));
+  m_contact->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+  m_tabWidget->addTab(m_contact, myIcon("identity"), tr("Contact data"));
   // END
 
-  // BEGIN Billing Info & Payments Table
-  QFrame *m_frame = new QFrame(m_dataBox);
-  QVBoxLayout *frameLayout = new QVBoxLayout(m_frame);
-  m_billing = new CustomerBillingInfo(m_frame);
+  // BEGIN Billing Info
+  m_billing = new CustomerBillingInfo(m_tabWidget);
   m_billing->setObjectName("billing");
-  frameLayout->addWidget(m_billing);
+  m_tabWidget->addTab(m_billing, myIcon("list"), tr("Payment information"));
+  // END
 
-  QString pinfo = tr("Payments");
-  QLabel *m_lb = new QLabel(pinfo, m_frame);
-  frameLayout->addWidget(m_lb);
-
-  m_payments = new CustomerPayments(m_frame);
+  // BEGIN Payments Table
+  m_payments = new CustomerPayments(m_tabWidget);
   m_payments->setObjectName("payments");
-  frameLayout->addWidget(m_payments);
-
-  m_frame->setLayout(frameLayout);
-  m_dataBox->addItem(m_frame, myIcon("list"), tr("Edit Billing"));
+  m_tabWidget->addTab(m_payments, myIcon("autostart"), tr("Payments"));
   // END
 
   // BEGIN Actions Bar
@@ -149,7 +145,7 @@ void EditCustomer::createPaymentsTable() {
     }
   }
 #ifdef ANTIQUA_DEVELOPEMENT
-  else if(!m_sql->lastError().isNull()) {
+  else if (!m_sql->lastError().isNull()) {
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
   }
 #endif
@@ -335,7 +331,7 @@ void EditCustomer::finalLeaveEditor() {
   sqlQueryResult.clear();             /**< SQL History leeren */
   clearDataFields(p_objPattern);      /**< Alle Datenfelder leeren */
   m_actionBar->setRestoreable(false); /**< ResetButton off */
-  m_dataBox->setCurrentIndex(0);      /**< Auf Vorschau stellen */
+  m_tabWidget->setCurrentIndex(0);    /**< Auf Vorschau stellen */
   emit s_leaveEditor();               /**< Zurück */
 }
 
@@ -398,7 +394,7 @@ void EditCustomer::updateCustomer(const QString &statement) {
     m_actionBar->setRestoreable(true);
 
   importSqlResult();
-  m_dataBox->setCurrentWidget(m_contact);
+  m_tabWidget->setCurrentIndex(0);
 }
 
 void EditCustomer::createCustomer() {
@@ -409,6 +405,6 @@ void EditCustomer::createCustomer() {
   c_id->reset();                      /**< CustomerId Leeren */
   c_id->setRequired(false);           /**< CustomerId Nicht erforderlich */
   m_actionBar->setRestoreable(false); /**< ResetButton off */
-  m_dataBox->setCurrentWidget(m_contact);
+  m_tabWidget->setCurrentIndex(0);
   resetModified(inputList);
 }
