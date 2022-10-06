@@ -55,6 +55,7 @@ InventoryCustomers::InventoryCustomers(QWidget *parent) : Inventory{parent} {
   siteOneWidget->setObjectName("customer_site_one_widget");
   QVBoxLayout *siteOneLayout = new QVBoxLayout(siteOneWidget);
   siteOneLayout->setObjectName("customer_site_one_layout");
+  siteOneLayout->setContentsMargins(0, 0, 0, 0);
 
   m_searchBar = new CustomerSearchBar(this);
   siteOneLayout->addWidget(m_searchBar);

@@ -32,6 +32,7 @@ InventoryOrders::InventoryOrders(QWidget *parent) : Inventory{parent} {
   siteOneWidget->setObjectName("assignments_site_one_widget");
   QVBoxLayout *siteOneLayout = new QVBoxLayout(siteOneWidget);
   siteOneLayout->setObjectName("assignments_site_one_layout");
+  siteOneLayout->setContentsMargins(0, 0, 0, 0);
 
   m_tableView = new OrdersTable(this);
   siteOneLayout->addWidget(m_tableView);

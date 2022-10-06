@@ -14,7 +14,6 @@ CustomerBillingInfo::CustomerBillingInfo(QWidget *parent) : QWidget{parent} {
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("billing_info_layout");
-  layout->setContentsMargins(0, 2, 0, 2);
 
   QGridLayout *row1 = new QGridLayout();
   row1->setObjectName("billing_info_row1");

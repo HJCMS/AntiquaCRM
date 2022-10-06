@@ -32,6 +32,7 @@ InventoryBooks::InventoryBooks(QWidget *parent) : Inventory{parent} {
   siteOneWidget->setObjectName("books_site_one_widget");
   QVBoxLayout *siteOneLayout = new QVBoxLayout(siteOneWidget);
   siteOneLayout->setObjectName("books_site_one_layout");
+  siteOneLayout->setContentsMargins(0, 0, 0, 0);
 
   m_searchBar = new BookSearchBar(this);
   siteOneLayout->addWidget(m_searchBar);

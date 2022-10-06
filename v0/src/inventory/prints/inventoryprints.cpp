@@ -58,6 +58,7 @@ InventoryPrints::InventoryPrints(QWidget *parent) : Inventory{parent} {
   siteOneWidget->setObjectName("prints_site_one_widget");
   QVBoxLayout *siteOneLayout = new QVBoxLayout(siteOneWidget);
   siteOneLayout->setObjectName("prints_site_one_layout");
+  siteOneLayout->setContentsMargins(0, 0, 0, 0);
 
   m_searchBar = new PrintsSearchBar(this);
   siteOneLayout->addWidget(m_searchBar);
