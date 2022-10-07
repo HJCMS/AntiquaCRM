@@ -1,0 +1,98 @@
+#!/usr/bin/env perl
+# -*- coding: utf-8 -*-
+# vim: set fileencoding=utf-8
+##################################################################################
+# This file is part of the HJCMS Project
+#
+# Copyright (C) Juergen Heinemann http://www.hjcms.de, (C) 2007-2022
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public License
+# along with this library; see the file COPYING.LIB.  If not, write to
+# the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+# Boston, MA 02110-1301, USA.
+##################################################################################
+
+use strict;
+use warnings;
+use DBD::Pg;
+use XML::LibXML;
+
+=encoding utf8
+=begin text
+
+  antiqua-publisher-build
+
+  Script zum erstellen des Herausgeber Templates
+
+  <?xml version="1.0" encoding="utf-8"?>
+  <itemlist lang="de" locale="de_DE.utf8">
+    <item location="...">...</item>
+    ...
+  </itemlist>
+
+=cut text
+
+########################################################################
+## BEGIN configuration
+my $_LANG = "de";
+
+my $_LOCALE = "de_DE.utf8";
+
+## Standard Ausgabename für Log- und XML-Dateien
+my $_APPL_NAME = "ib_publisher_${_LANG}";
+
+## Schreibe Ausgabe XML in ...
+my $_OUTPUT_DIR = $ENV{HOME} . "/.cache/";
+
+## Lese Datei
+my $_INPUT_FILE = $ENV{HOME} . "/Downloads/ib_publisher_${_LANG}.txt";
+
+## END configuration
+########################################################################
+
+if (!$_INPUT_FILE) {
+  print "Configure first!\n";
+  exit(0);
+}
+
+sub trim {
+  my $_s = shift;
+  $_s =~ s/^\s+|\s+$//g;
+  $_s =~ s/(\t|\s)+/ /ig;
+  return $_s;
+};
+
+my $doc = new XML::LibXML->createDocument("1.0","utf-8");
+my $root = $doc->createElement("itemlist");
+$root->setAttribute("lang","${_LANG}");
+$root->setAttribute("locale","${_LOCALE}");
+$doc->setDocumentElement($root);
+
+## Lese die SQL Abfrage aus Datei ...
+my $_statement = "";
+open(FH, '<:encoding(UTF-8)', $_INPUT_FILE) or die $!;
+while(<FH>){
+  my $item = $doc->createElement("item");
+  $item->setAttribute("location","");
+  $item->appendChild($doc->createTextNode(trim($_)));
+  $root->appendChild($item);
+}
+close(FH);
+
+print "Save to: ${_OUTPUT_DIR}/${_APPL_NAME}.xml\n";
+$doc->toFile("${_OUTPUT_DIR}/${_APPL_NAME}.xml", 1);
+exit(0);
+
+##
+## EOF
+##
