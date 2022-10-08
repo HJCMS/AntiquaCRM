@@ -59,8 +59,30 @@ private:
   QString p_country_bcp47 = QString();
   QString p_uniq_import_key = QString();
 
+  /**
+   * @brief prepare and normalize single strings
+   * This is called in some methods!
+   */
+  const QString burnish(const QString &str) const;
+
+  /**
+   * @brief Remove none Numbers from Mobile/Phone input
+   */
+  const QString stripPhone(const QString &phone) const;
+
 public:
   explicit ACustomer(qint64 customerId = 0);
+
+  /**
+   * @brief Regular Expression for eMail
+   */
+  static const QRegExp mailRegExp();
+
+  /**
+   * @brief Regular Expression for Phonenumbers
+   * @note No url.scheme() supported!
+   */
+  static const QRegExp phoneRegExp();
 
   /**
    * @brief set/get Customer Id
@@ -93,8 +115,8 @@ public:
    * @brief set/query is Company
    * @param company
    */
-  void setCompany(bool company = false);
-  bool isCompany();
+  void enableCompany(bool company = false);
+  bool isCompanyEnabled();
 
   /**
    * @brief set/get Companyname
