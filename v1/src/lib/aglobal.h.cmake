@@ -9,7 +9,7 @@
 #ifndef ANTIQUACRM_GLOBAL_H
 #define ANTIQUACRM_GLOBAL_H
 
-#include <QtCore/QtGlobal>
+#include <QtGlobal>
 #include <QObject>
 
 /**
@@ -126,6 +126,14 @@
 #endif
 
 /**
+ * @brief Import Format for PGSQL::CURRENT_TIMESTAMP
+ * @note AntiquaCRM didn't use Time Zones in SQL tables!
+ */
+#ifndef ANTIQUACRM_DATETIME_IMPORT
+#define ANTIQUACRM_DATETIME_IMPORT "dd.MM.yyyy hh:mm:ss.zzz"
+#endif
+
+/**
  * @def ANTIQUACRM_QUERY_PASTDAYS
  * @ingroup Antiqua Plugin Interface
  * @brief Dienstleisteranfragen der letzten ... Tage anzeigen.
@@ -143,38 +151,115 @@
 #endif
 
 namespace AntiquaCRM {
-  Q_NAMESPACE
+ Q_NAMESPACE
 
-  enum Message {
-   NORMAL = 0x0,
-   WARNING = 0x1,
-   FATAL = 0x2,
-   LOGGING = 0x3
-  };
-  Q_ENUM_NS(AntiquaCRM::Message);
+ /**
+  * @brief Nachrichtentyp
+  * Definiert die Dringlichkeit einer Nachricht an das Meldungssystem!
+  */
+ enum Message {
+  NORMAL = 0,  /**< Standard Info */
+  WARNING = 1, /**< Warnung wird ausgegeben! */
+  FATAL = 2,   /**< Schwehrwiegender Fehler ist aufgetreten! */
+  LOGGING = 3  /**< Nur für das Protokollieren vorgesehen! */
+ };
+ Q_ENUM_NS(AntiquaCRM::Message)
 
-  enum OrderStatus {
-   OPEN = 0x0,
-   STARTED = 0x1,
-   FETCHET = 0x2,
-   DELIVERED = 0x3,
-   REMINDET = 0x4,
-   COMPLETED = 0x5,
-   CANCELED = 0x6,
-   RETURNING = 0x7
-  };
-  Q_ENUM_NS(AntiquaCRM::OrderStatus);
+ /**
+  * @brief Auftrags Status
+  * @section orders
+  * Wird im Auftragssystem verwendet!
+  */
+ enum OrderStatus {
+   OPEN = 0,      /**< Offen */
+   STARTED = 1,   /**< Auftrag angenommen */
+   FETCHET = 2,   /**< Bereit zur Abholung */
+   DELIVERED = 3, /**< Ausgeliefert */
+   REMINDET = 4,  /**< Erinnerung */
+   COMPLETED = 5, /**< Abgeschlossen */
+   CANCELED = 6,  /**< Storniert */
+   RETURNING = 7  /**< Retour */
+ };
+ Q_ENUM_NS(AntiquaCRM::OrderStatus)
 
-  enum PaymentStatus {
-   STATUS_NOT_SET = 0x0,
-   WAIT_FOR_PAYMENT = 0x1,
-   READY_FOR_SHIPMENT = 0x2,
-   SHIPPED_WAIT_FOR_PAYMENT = 0x3,
-   SHIPPED_AND_PAID = 0x4,
-   BUYER_NO_REACTION = 0x5
-  };
-  Q_ENUM_NS(AntiquaCRM::PaymentStatus);
+ /**
+  * @brief Bestellstatus des Dienstleisters
+  * @section orders
+  * Wird im Auftragssystem verwendet!
+  */
+ enum PaymentStatus {
+   STATUS_NOT_SET = 0,           /**< Kein Status fesgelegt */
+   WAIT_FOR_PAYMENT = 1,         /**< Warte auf Zahlung */
+   SHIPMENT_CREATED = 2,         /**< Fertig zum Versand */
+   SHIPPED_WAIT_FOR_PAYMENT = 3, /**< Geliefert warte auf Zahlung */
+   SHIPPED_AND_PAID = 4,         /**< Bezahlt und versendet */
+   BUYER_NO_REACTION = 5         /**< Keine Reaktion des Käufers */
+ };
+ Q_ENUM_NS(AntiquaCRM::PaymentStatus)
 
+ /**
+  * @brief Zahlungsart der Bestellung
+  * @section orders
+  * Wird im Auftragssystem verwendet um die Zahlungsart zu Zeigen.
+  * Die Umsetzung dieser Vorgabe liegt bei der Plugin Integration!
+  */
+ enum PaymentMethod {
+   PAYMENT_NOT_SET = 0,              /**< Keine Auswahl vorhanden */
+   BANK_PREPAYMENT = 1,              /**< Banküberweisung Vorkasse */
+   DELIVER_WITH_INVOICE = 2,         /**< Lieferung mit offener Rechnung */
+   DIRECT_DEBIT_PREPAYMENT = 3,      /**< Lastschrift Vorkasse */
+   CREDIT_CARD_PREPAYMENT = 4,       /**< Kreditkarte Vorkasse */
+   CASH_ON_DELIVERY = 5,             /**< Zahlung mit Nachnahme */
+   PAYPAL_PREPAYMENT = 6,            /**< PayPal Vorkasse */
+   SKRILL_PREPAYMENT = 7,            /**< Skrill Vorkasse */
+   GIROPAY_PREPAYMENT = 8,           /**< GiroPay Vorkasse */
+   GOOGLEPAY_PREPAYMENT = 9,         /**< GooglePay Vorkasse */
+   UNKNOWN_PREPAYMENT = 10,          /**< Vorkasse unbekannter Anbieter */
+   LOCAL_PICKUP_CASH_PAYMENT = 11,   /**< Selbstabholung - Barzahlung */
+   INSTANT_BANK_TRANSFER = 12,       /**< Sofortüberweisung */
+   INVOICE_PREPAYMENT_RESERVED = 13, /**< Offene Rechnung - Vorkasse vorbehalten */
+   CHECK_PREPAYMENT = 14,            /**< Scheck - Vorkasse */
+ };
+ Q_ENUM_NS(AntiquaCRM::PaymentMethod)
+
+ /**
+  * @brief Kunden Vertrauensebene festlegen!
+  * @section customers
+  */
+ enum CustomerTrustLevel {
+   NO_TRUST_LEVEL = 0, /**< Keine Vertrauensebene festgelegt */
+   ON_TIME = 1,        /**< Zahlt Pünktlich */
+   RELIABLE = 2,       /**< Zahlt Zuverlässig */
+   WITH_DELAY = 3,     /**< Zahlt mit Verspätung */
+   PREPAYMENT = 4,     /**< Nur mit Vorauszahlung */
+   NO_DELIVERY = 5     /**< Keine Lieferung */
+ };
+ Q_ENUM_NS(AntiquaCRM::CustomerTrustLevel)
+
+ /**
+  * @brief Geschlechter Definition
+  * @section customers
+  */
+ enum Gender {
+  NO_GENDER = 0, /**< Ohne Angabe */
+  MALE = 1,      /**< Männlich */
+  FEMALE = 2,    /**< Weiblich */
+  VARIOUS = 3    /**< Diverse */
+ };
+ Q_ENUM_NS(AntiquaCRM::Gender)
+
+ /**
+  * @brief Zustandsbeschreibung für Artikel
+  * @section inventory
+  */
+ enum Condition {
+  NO_CONDITION = 0, /**< Ohne Angabe */
+  FINE = 1,         /**< Sehr gut, fast neuwertig! */
+  GOOD = 2,         /**< Leichte Gebrauchsspuren */
+  SATISFYING = 3,   /**< Deutliche Gebrauchsspuren */
+  SUFFICIENT = 4    /**< Stark abgenutzt */
+ };
+ Q_ENUM_NS(AntiquaCRM::Condition)
 };
 
 #endif // ANTIQUACRM_GLOBAL_H
