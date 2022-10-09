@@ -23,11 +23,11 @@ SET (projectLibrary_FILES
 )
 
 SET (projectLibrary_SOURCES
- acustomerdata.cpp
  asettings.cpp
  asqlsettings.cpp
  asqlfiles.cpp
  ashareddatafiles.cpp
+ asqlcustomers.cpp
  asqlprofile.cpp
  asqlcore.cpp
  asqlquerymodel.cpp
@@ -38,11 +38,11 @@ SET (projectLibrary_SOURCES
 
 SET (projectLibrary_HEADERS
  aglobal.h
- acustomerdata.h
  asettings.h
  asqlsettings.h
  asqlfiles.h
  ashareddatafiles.h
+ asqlcustomers.h
  asqlprofile.h
  asqlcore.h
  asqlquerymodel.h

@@ -18,7 +18,7 @@ class ASqlSettings;
  * @brief core sql functionality
  * @section sql
  */
-class ANTIQUACRM_LIBRARAY ASqlCore : public QObject {
+class ANTIQUACRM_LIBRARAY ASqlCore final : public QObject {
   Q_OBJECT
 
 private:

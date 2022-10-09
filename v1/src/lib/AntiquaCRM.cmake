@@ -44,6 +44,10 @@
 #include "asqlfiles.h"
 #endif
 
+#ifndef ANTIQUACRM_SQLCUSTOMERS_H
+#include "asqlcustomers.h"
+#endif
+
 #ifndef ANTIQUACRM_SQLQUERYMODEL_H
 #include "asqlquerymodel.h"
 #endif

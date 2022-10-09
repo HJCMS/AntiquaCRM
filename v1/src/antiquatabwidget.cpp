@@ -7,6 +7,7 @@
 /** TESTINGS */
 #include "bookbinding.h"
 #include "postalcodeedit.h"
+#include <AntiquaCRM>
 #include <QVBoxLayout>
 
 AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
@@ -29,10 +30,18 @@ bool AntiquaTabWidget::loadDefaultTabs() {
   // TESTS
   m_testing = new QWidget(this);
   QVBoxLayout *testLayout = new QVBoxLayout(m_testing);
+  // Buchbindungen
   BookBinding *m_binding = new BookBinding(m_testing);
   testLayout->addWidget(m_binding);
+  // Postleitzahlen
   PostalCodeEdit *m_plz = new PostalCodeEdit(m_testing);
   testLayout->addWidget(m_plz);
+  // Kunden Tabelle
+  AntiquaCRM::ASqlCustomers *m_kunde = new AntiquaCRM::ASqlCustomers(this);
+  m_kunde->setValue("c_since", QDateTime::currentDateTime());
+  m_kunde->setValue("c_phone_0", QString());
+  qDebug() << m_kunde->getType("c_since").name();
+
   m_testing->setLayout(testLayout);
   insertTab(1, m_testing, icon, "Test Widgets");
 
