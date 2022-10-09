@@ -270,10 +270,11 @@ void BooklookerRequester::replyReadyRead() {
     return;
   }
 
-  if (m_reply->header(QNetworkRequest::ContentLengthHeader).toULongLong() !=
+  if (m_reply->header(QNetworkRequest::ContentLengthHeader).toLongLong() !=
       m_reply->bytesAvailable()) {
     qWarning("Booklooker: Received bytes not equal to Content-Length Header!");
-    return;
+    // TODO Windows check
+    // return;
   }
 
   QVector<char> buf;
