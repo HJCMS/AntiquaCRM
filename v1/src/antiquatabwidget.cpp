@@ -37,7 +37,7 @@ bool AntiquaTabWidget::loadDefaultTabs() {
   PostalCodeEdit *m_plz = new PostalCodeEdit(m_testing);
   testLayout->addWidget(m_plz);
   // Kunden Tabelle
-  AntiquaCRM::ASqlCustomers *m_kunde = new AntiquaCRM::ASqlCustomers(this);
+  AntiquaCRM::ASqlTable *m_kunde = new AntiquaCRM::ASqlTable("customers");
   m_kunde->setValue("c_since", QDateTime::currentDateTime());
   m_kunde->setValue("c_phone_0", QString());
   qDebug() << m_kunde->getType("c_since").name();

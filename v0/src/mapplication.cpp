@@ -87,6 +87,8 @@ void MApplication::initThemeStyle() {
   if (!fontdef.isEmpty() && font.fromString(fontdef)) {
     qApp->setFont(font);
   }
+  QPalette p = qApp->palette();
+  QColor hc = p.color(QPalette::Highlight);
 #ifdef Q_OS_WIN
   /**
    * @short QStyle::Windows::Fusion
@@ -95,11 +97,12 @@ void MApplication::initThemeStyle() {
    * heben und es besser Sichtbar wird. Hier ein Workaround mit Hell-Gelber
    * Farbe! Die Standard Textfarbe in QStyle::Windows::Fusion ist "Schwarz".
    */
-  QPalette p = qApp->palette();
-  QColor lightYellow(255, 255, 127);
-  p.setColor(QPalette::Inactive, QPalette::Highlight, lightYellow);
+  p.setColor(QPalette::Inactive, QPalette::Highlight, hc);
   qApp->setPalette(p);
 #endif
+  QString css("QTabBar::tab:top:selected,QTabBar::tab:bottom:selected");
+  css.append(" { color: " + hc.name() + " }");
+  setStyleSheet(css);
 }
 
 /**

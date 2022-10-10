@@ -6,8 +6,7 @@
 #define ANTIQUACRM_BOOKBINDING_H
 
 #include <QWidget>
-
-#include "inputedit.h"
+#include <AntiquaInputEdit>
 
 class BookBinding : public InputEdit {
   Q_OBJECT

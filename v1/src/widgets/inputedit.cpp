@@ -3,21 +3,6 @@
 
 #include "inputedit.h"
 
-AntiquaComboBox::AntiquaComboBox(QWidget *parent) : QComboBox{parent} {}
-
-void AntiquaComboBox::wheelEvent(QWheelEvent *e) {
-  if (mouseWheel) {
-    QComboBox::wheelEvent(e);
-  }
-}
-
-void AntiquaComboBox::setMouseWheelEnabled(bool b) {
-  mouseWheel = b;
-  emit sendMouseWheelChanged();
-}
-
-bool AntiquaComboBox::isMouseWheelEnabled() { return mouseWheel; }
-
 InputEdit::InputEdit(QWidget *parent)
     : QFrame{parent},
       labelAlign(Qt::AlignRight | Qt::AlignTrailing | Qt::AlignVCenter) {

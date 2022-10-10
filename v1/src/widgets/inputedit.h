@@ -2,10 +2,9 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_INPUTEDIT_H
-#define ANTIQUACRM_INPUTEDIT_H
+#ifndef ANTIQUA_INPUT_EDIT_H
+#define ANTIQUA_INPUT_EDIT_H
 
-#include <QComboBox>
 #include <QFocusEvent>
 #include <QFrame>
 #include <QHBoxLayout>
@@ -14,26 +13,6 @@
 #include <QVariant>
 #include <QWheelEvent>
 #include <QWidget>
-
-class AntiquaComboBox final : public QComboBox {
-  Q_OBJECT
-  Q_PROPERTY(bool mouseWheel READ isMouseWheelEnabled WRITE setMouseWheelEnabled
-                 NOTIFY sendMouseWheelChanged)
-
-private:
-  bool mouseWheel = false;
-
-protected:
-  void wheelEvent(QWheelEvent *e) override;
-  void setMouseWheelEnabled(bool);
-
-Q_SIGNALS:
-  void sendMouseWheelChanged();
-
-public:
-  explicit AntiquaComboBox(QWidget *parent = nullptr);
-  bool isMouseWheelEnabled();
-};
 
 class InputEdit : public QFrame {
   Q_OBJECT
@@ -82,4 +61,4 @@ public:
 typedef QList<InputEdit *> InputEditList;
 Q_DECLARE_METATYPE(InputEditList)
 
-#endif // ANTIQUACRM_INPUTEDIT_H
+#endif // ANTIQUA_INPUT_EDIT_H

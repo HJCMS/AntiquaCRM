@@ -51,7 +51,7 @@ void PostalcodeCache::run() {
   for (int i = 0; i < list.count(); i++) {
     QPair<QString, QString> plz = list.at(i);
     QString sql(select + " FROM " + plz.second + " ORDER BY p_plz ASC;");
-    main.insert(plz.first, createTable(sql));
+    main.insert(plz.second, createTable(sql));
   }
   AntiquaCRM::ASharedDataFiles p_store;
   if (p_store.storeJson("postalcodes", QJsonDocument(main))) {

@@ -5,7 +5,6 @@
 #ifndef WORKSPACE_TABBAR_H
 #define WORKSPACE_TABBAR_H
 
-#include <QColor>
 #include <QContextMenuEvent>
 #include <QEvent>
 #include <QObject>
@@ -25,8 +24,6 @@ class WorkspaceTabBar final : public QTabBar {
 
 private:
   int index = -1;
-  QColor fontColorActive;
-  QColor fontColorNormal;
 
 protected:
   /**

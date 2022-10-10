@@ -27,7 +27,7 @@ SET (projectLibrary_SOURCES
  asqlsettings.cpp
  asqlfiles.cpp
  ashareddatafiles.cpp
- asqlcustomers.cpp
+ asqltable.cpp
  asqlprofile.cpp
  asqlcore.cpp
  asqlquerymodel.cpp
@@ -42,7 +42,7 @@ SET (projectLibrary_HEADERS
  asqlsettings.h
  asqlfiles.h
  ashareddatafiles.h
- asqlcustomers.h
+ asqltable.h
  asqlprofile.h
  asqlcore.h
  asqlquerymodel.h

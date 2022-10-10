@@ -8,14 +8,10 @@
 #include <QBrush>
 #include <QDebug>
 #include <QMenu>
-#include <QPalette>
-#include <QStyleOption>
 
 WorkspaceTabBar::WorkspaceTabBar(QWidget *parent) : QTabBar{parent} {
   setMovable(true);
   setExpanding(true);
-  fontColorNormal = palette().text().color();
-  fontColorActive = QColor(0, 170, 0);
   connect(this, SIGNAL(currentChanged(int)), SLOT(tabIndexChanged(int)));
 }
 
@@ -40,15 +36,7 @@ void WorkspaceTabBar::wheelEvent(QWheelEvent *event) {
   // wird hier ignoriert!
 }
 
-void WorkspaceTabBar::tabIndexChanged(int index) {
-  for (int i = 0; i < count(); i++) {
-    if (i == index) {
-      setTabTextColor(i, fontColorActive);
-    } else {
-      setTabTextColor(i, fontColorNormal);
-    }
-  }
-}
+void WorkspaceTabBar::tabIndexChanged(int) {}
 
 void WorkspaceTabBar::checkToClose() {
   if (index >= 0)

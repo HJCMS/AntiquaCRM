@@ -9,6 +9,14 @@ INCLUDE_DIRECTORIES (
   ${PROJECT_INCLUDE_DIRS}
 )
 
+CONFIGURE_FILE (AntiquaWidgets.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaWidgets
+)
+
+CONFIGURE_FILE (AntiquaInputEdit.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaInputEdit
+)
+
 SET (projectLibrary_LINKER
  AntiquaCRM
 )
@@ -16,24 +24,32 @@ SET (projectLibrary_LINKER
 SET (projectLibrary_FILES
   cpp.tpl
   h.tpl
+  build_include.sh
+  AntiquaWidgets.cmake
 )
 
 SET (projectLibrary_SOURCES
+ antiquacombobox.cpp
+ antiquadoublebox.cpp
+ antiquaspinbox.cpp
  inventory.cpp
  inventorytable.cpp
  inputedit.cpp
  bookbinding.cpp
  postalcodeedit.cpp
- postalcodemodel.cpp
 )
 
 SET (projectLibrary_HEADERS
+ AntiquaInputEdit
+ AntiquaWidgets
+ antiquacombobox.h
+ antiquadoublebox.h
+ antiquaspinbox.h
  inventory.h
  inventorytable.h
  inputedit.h
  bookbinding.h
  postalcodeedit.h
- postalcodemodel.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

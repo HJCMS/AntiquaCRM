@@ -20,7 +20,7 @@ public:
   const QStringList dataFiles();
   static const QStringList defaultFilter();
   bool fileExists(const QString &basename,
-                  const QStringList &ext = QStringList());
+                  const QStringList &ext = defaultFilter());
   bool storeJson(const QString &basename, const QJsonDocument &doc);
   const QJsonDocument getJson(const QString &basename);
   bool storeXml(const QString &basename, const QDomDocument &xml);

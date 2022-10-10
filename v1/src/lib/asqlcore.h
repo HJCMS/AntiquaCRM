@@ -31,6 +31,7 @@ private:
 public:
   explicit ASqlCore(QObject *parent = nullptr);
   bool open();
+  const QSqlDatabase db();
   const QSqlRecord record(const QString &table);
   const QSqlQuery query(const QString &statement);
   const QString lastError();

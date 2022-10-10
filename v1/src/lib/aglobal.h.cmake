@@ -11,6 +11,8 @@
 
 #include <QtGlobal>
 #include <QObject>
+#include <QRegExp>
+#include <QString>
 
 /**
  * @def ANTIQUACRM_NAME
@@ -154,6 +156,44 @@ namespace AntiquaCRM {
  Q_NAMESPACE
 
  /**
+  * @brief prepare and normalize single strings
+  */
+ static const QString trim(const QString &str) {
+  QString out = str;
+  out.replace(QRegExp("\\s+"), " ");
+  return out.trimmed();
+ }
+
+ /**
+  * @brief Regular Expression for eMail
+  */
+ static const QRegExp mailRegExp() {
+  QRegExp reg;
+  reg.setCaseSensitivity(Qt::CaseInsensitive);
+  reg.setPattern("^([\\d\\w\\-\\.]{3,})@([\\d\\w\\-\\.]{3,})\\.([a-z]{2,6})$");
+  return reg;
+ }
+
+ /**
+  * @brief Remove none Numbers from Mobile/Phone input
+  */
+ static const QString stripPhone(const QString &phone) {
+  QString out = phone.trimmed();
+  out.replace(QRegExp("\\D+"), "");
+  return out.trimmed();
+ }
+
+ /**
+  * @brief Regular Expression for Phonenumbers
+  * @note No url.scheme() supported!
+  */
+ static const QRegExp phoneRegExp() {
+  QRegExp reg;
+  reg.setPattern("^([\\d]{6}[\\d]+)$");
+  return reg;
+ }
+
+ /**
   * @brief Nachrichtentyp
   * Definiert die Dringlichkeit einer Nachricht an das Meldungssystem!
   */
@@ -260,7 +300,20 @@ namespace AntiquaCRM {
   SUFFICIENT = 4    /**< Stark abgenutzt */
  };
  Q_ENUM_NS(AntiquaCRM::Condition)
+
+ /**
+  * @brief Postleitzahlen Eintrag
+  * @section widgets
+  */
+ struct PostalCode {
+   QString plz;
+   QString location;
+   QString state;
+ };
+
 };
+
+Q_DECLARE_METATYPE(AntiquaCRM::PostalCode)
 
 #endif // ANTIQUACRM_GLOBAL_H
 

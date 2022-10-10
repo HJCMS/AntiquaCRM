@@ -75,11 +75,14 @@ bool ASqlCore::isConnected() {
 
 bool ASqlCore::open() {
   if (initDatabase()) {
-    qInfo("Database connected to Host '%s'.",
-          qPrintable(database->hostName()));
+    qInfo("Database connected to Host '%s'.", qPrintable(database->hostName()));
     return true;
   }
   return false;
+}
+
+const QSqlDatabase ASqlCore::db() {
+  return QSqlDatabase::database(m_cfg->connectionName(), isConnected());
 }
 
 const QSqlRecord ASqlCore::record(const QString &table) {
@@ -100,10 +103,9 @@ const QSqlQuery ASqlCore::query(const QString &statement) {
   return qr;
 }
 
-const QString ASqlCore::lastError()
-{
+const QString ASqlCore::lastError() {
   QSqlError err = database->lastError();
-  if(err.isValid())
+  if (err.isValid())
     return err.text();
 
   return QString();
