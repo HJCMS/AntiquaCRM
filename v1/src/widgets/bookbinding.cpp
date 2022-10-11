@@ -20,7 +20,7 @@ void BookBinding::loadDataset() {
   AntiquaCRM::ASharedDataFiles dataFiles;
   QJsonDocument doc = dataFiles.getJson("bookbindings");
   if (doc.isEmpty()) {
-    qWarning("Bookbinding: JsonDocument is Empty!");
+    qWarning("Bookbinding: bookbindings.json not found!");
     return;
   }
 

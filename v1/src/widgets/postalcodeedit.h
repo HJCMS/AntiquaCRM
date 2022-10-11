@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_POSTALCODEEDIT_H
-#define ANTIQUACRM_POSTALCODEEDIT_H
+#ifndef ANTIQUACRM_POSTALCODE_EDIT_H
+#define ANTIQUACRM_POSTALCODE_EDIT_H
 
 #include <AGlobal>
 #include <AntiquaInputEdit>
@@ -14,6 +14,10 @@
 #include <QWidget>
 #include <QAbstractListModel>
 
+/**
+ * @brief Postalcode Completer Model
+ * @section widgets
+ */
 class PostalCodeModel final : public QAbstractListModel {
   Q_OBJECT
 
@@ -29,6 +33,10 @@ public:
   void initModel(const QString &country);
 };
 
+/**
+ * @brief Postalcode selection Widget
+ * @section widgets
+ */
 class PostalCodeEdit final : public InputEdit {
   Q_OBJECT
 
@@ -79,4 +87,4 @@ public:
   const QString notes();
 };
 
-#endif // ANTIQUACRM_POSTALCODEEDIT_H
+#endif // ANTIQUACRM_POSTALCODE_EDIT_H

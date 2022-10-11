@@ -85,7 +85,20 @@ void PostalCodeModel::initModel(const QString &country) {
       }
     }
   } else {
-    qWarning("PostalCodeModel missing postalcodes.json!");
+    qWarning("PostalCodeEdit:No postalcodes.json - fallback to SQL query!");
+    AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
+    QString fields("p_plz,p_location,p_state");
+    QSqlQuery q = m_sql->query("SELECT " + fields + " FROM " + country + ";");
+    if (q.size() > 0) {
+      p_codes.clear();
+      while (q.next()) {
+        AntiquaCRM::PostalCode code;
+        code.plz = QString::number(q.value("p_plz").toInt());
+        code.location = q.value("p_location").toString();
+        code.state = q.value("p_state").toString();
+        p_codes.append(code);
+      }
+    }
   }
   endResetModel();
 }

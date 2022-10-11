@@ -2,14 +2,13 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_BOOKBINDING_H
-#define ANTIQUACRM_BOOKBINDING_H
+#ifndef ANTIQUACRM_@CPPNAME@_H
+#define ANTIQUACRM_@CPPNAME@_H
 
-#include <QWidget>
+#include <AGlobal>
+#include <AntiquaInputEdit>
 
-#include "inputedit.h"
-
-class @CLASSNAME@ : public InputEdit {
+class @CLASSNAME@ final : public InputEdit {
   Q_OBJECT
 
 private:
@@ -33,4 +32,4 @@ public:
   const QString notes();
 };
 
-#endif // ANTIQUACRM_BOOKBINDING_H
+#endif // ANTIQUACRM_@CPPNAME@_H

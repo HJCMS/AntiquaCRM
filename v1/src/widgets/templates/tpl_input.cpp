@@ -1,12 +1,15 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "@CLASSNAME@.h"
+#include "@INCLUDE@.h"
 
 @CLASSNAME@::@CLASSNAME@(QWidget *parent) : InputEdit{parent} {
 }
 
 void @CLASSNAME@::loadDataset() {
+}
+
+void @CLASSNAME@::dataChanged(int) {
 }
 
 void @CLASSNAME@::reset() {

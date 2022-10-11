@@ -33,7 +33,11 @@
 #include "inventorytable.h"
 #endif
 
-#ifndef ANTIQUACRM_POSTALCODEEDIT_H
+#ifndef ANTIQUACRM_POSTALCODE_EDIT_H
 #include "postalcodeedit.h"
+#endif
+
+#ifndef ANTIQUACRM_STORAGELOCATION_H
+#include "storagelocation.h"
 #endif
 
