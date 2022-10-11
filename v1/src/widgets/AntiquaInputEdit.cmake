@@ -29,6 +29,10 @@
 #include "antiquadoublebox.h"
 #endif
 
+#ifndef ANTIQUA_INPUT_ILABEL_H
+#include "antiquailabel.h"
+#endif
+
 #ifndef ANTIQUA_INPUT_SPINBOX_H
 #include "antiquaspinbox.h"
 #endif

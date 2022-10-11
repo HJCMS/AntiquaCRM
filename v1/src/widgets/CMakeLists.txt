@@ -29,8 +29,11 @@ SET (projectLibrary_FILES
 
 SET (projectLibrary_SOURCES
  antiquacombobox.cpp
+ antiquadateinfo.cpp
  antiquadoublebox.cpp
  antiquaspinbox.cpp
+ antiquailabel.cpp
+ conditionedit.cpp
  inventory.cpp
  inventorytable.cpp
  inputedit.cpp
@@ -43,8 +46,11 @@ SET (projectLibrary_HEADERS
  AntiquaInputEdit
  AntiquaWidgets
  antiquacombobox.h
+ antiquadateinfo.h
  antiquadoublebox.h
  antiquaspinbox.h
+ antiquailabel.h
+ conditionedit.h
  inventory.h
  inventorytable.h
  inputedit.h

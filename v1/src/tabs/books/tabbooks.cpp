@@ -17,12 +17,12 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{parent} {
 
 void TabBooks::createEntry() { qDebug() << Q_FUNC_INFO << "TODO"; }
 
-void TabBooks::openEntry(qint64 id) { qDebug() << Q_FUNC_INFO; }
+void TabBooks::openEntry(qint64 id) { qDebug() << Q_FUNC_INFO << id; }
 
 void TabBooks::onEnterChanged() {
   if(!initialed) {
     initialed = m_table->initTable();
   } else {
-    qDebug() << Q_FUNC_INFO << "Nothing TODO";
+    qDebug() << Q_FUNC_INFO << "always initialed";
   }
 }

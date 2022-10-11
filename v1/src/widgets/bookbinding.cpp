@@ -4,14 +4,17 @@
 #include "bookbinding.h"
 
 #include <AntiquaCRM>
-#include <QDebug>
 #include <QJsonObject>
 
 BookBinding::BookBinding(QWidget *parent) : InputEdit{parent} {
+
   m_box = new AntiquaComboBox(this);
   m_box->setToolTip(tr("Book binding"));
   m_layout->addWidget(m_box);
+
   loadDataset();
+  setRequired(true);
+
   connect(m_box, SIGNAL(currentIndexChanged(int)), this,
           SLOT(dataChanged(int)));
 }
@@ -64,7 +67,13 @@ bool BookBinding::isValid() {
   return true;
 }
 
-void BookBinding::setInfo(const QString &info) { m_box->setToolTip(info); }
+void BookBinding::setInfo(const QString &info) {
+  m_box->setToolTip(info);
+  if (info.length() > 2) {
+    m_label->setVisible(true);
+    m_label->setText(info + ":");
+  }
+}
 
 const QString BookBinding::info() { return toolTip(); }
 

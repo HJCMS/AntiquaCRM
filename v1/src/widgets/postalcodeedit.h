@@ -7,11 +7,8 @@
 
 #include <AGlobal>
 #include <AntiquaInputEdit>
-#include <QComboBox>
 #include <QCompleter>
-#include <QLabel>
 #include <QLineEdit>
-#include <QWidget>
 #include <QAbstractListModel>
 
 /**
@@ -42,14 +39,9 @@ class PostalCodeEdit final : public InputEdit {
 
 private:
   /**
-   * @brief info label
-   */
-  QLabel *m_label;
-
-  /**
    * @brief Available country postalcode sets
    */
-  QComboBox *m_countries;
+  AntiquaComboBox *m_countries;
 
   /**
    * @brief Search edit postalcode for selected country

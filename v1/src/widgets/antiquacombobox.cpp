@@ -3,17 +3,10 @@
 
 #include "antiquacombobox.h"
 
-/*
-#include <QDebug>
-#include <QApplication>
-#include <QAbstractItemView>
-*/
-
 AntiquaComboBox::AntiquaComboBox(QWidget *parent) : QComboBox{parent} {
   setSizeAdjustPolicy(QComboBox::AdjustToContentsOnFirstShow);
-//  QColor col = qApp->palette().color(QPalette::AlternateBase);
-//  setStyleSheet("* {alternate-background-color: " + col.name() + ";}");
-//  view()->setAlternatingRowColors(true);
+  setInsertPolicy(QComboBox::NoInsert);
+  setEditable(false);
 }
 
 void AntiquaComboBox::wheelEvent(QWheelEvent *e) {

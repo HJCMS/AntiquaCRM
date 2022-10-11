@@ -104,10 +104,8 @@ void PostalCodeModel::initModel(const QString &country) {
 }
 
 PostalCodeEdit::PostalCodeEdit(QWidget *parent) : InputEdit{parent} {
-  m_label = new QLabel(this);
-  m_layout->addWidget(m_label);
 
-  m_countries = new QComboBox(this);
+  m_countries = new AntiquaComboBox(this);
   m_countries->setToolTip(tr("Supported countries"));
   m_countries->insertItem(0, tr("Without disclosures"), QString());
   m_layout->addWidget(m_countries);
@@ -163,6 +161,7 @@ void PostalCodeEdit::dataChanged(int index) {
     model->initModel(table);
     m_postalcode->setCompleter(m_completer);
   }
+  // setModified(true);
 }
 
 void PostalCodeEdit::postalReadyToLeave() {
@@ -196,9 +195,7 @@ void PostalCodeEdit::postalReadyToLeave() {
 
 void PostalCodeEdit::reset() {
   m_postalcode->clear();
-  if (m_countries->currentIndex() != 0)
-    m_countries->setCurrentIndex(0);
-
+  m_countries->setCurrentIndex(0);
   setModified(false);
 }
 
@@ -227,7 +224,10 @@ bool PostalCodeEdit::isValid() {
 
 void PostalCodeEdit::setInfo(const QString &info) {
   m_postalcode->setToolTip(info);
-  m_label->setText(info + ":");
+  if (info.length() > 2) {
+    m_label->setVisible(true);
+    m_label->setText(info + ":");
+  }
 }
 
 const QString PostalCodeEdit::info() { return toolTip(); }

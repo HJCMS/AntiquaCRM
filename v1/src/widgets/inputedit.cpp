@@ -2,12 +2,14 @@
 // vim: set fileencoding=utf-8
 
 #include "inputedit.h"
+#include "antiquailabel.h"
 
-InputEdit::InputEdit(QWidget *parent)
-    : QFrame{parent},
-      labelAlign(Qt::AlignRight | Qt::AlignTrailing | Qt::AlignVCenter) {
+InputEdit::InputEdit(QWidget *parent) : QFrame{parent} {
   setContentsMargins(0, 0, 0, 0);
   m_layout = new QHBoxLayout(this);
+
+  m_label = new AntiquaILabel(this);
+  m_layout->addWidget(m_label);
 
   setLayout(m_layout);
   setRequired(false);

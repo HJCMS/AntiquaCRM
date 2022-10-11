@@ -112,6 +112,14 @@
 #endif
 
 /**
+ * @brief Import Format for PGSQL::CURRENT_TIMESTAMP
+ * @note AntiquaCRM didn't use Time Zones in SQL tables!
+ */
+#ifndef ANTIQUACRM_TIMESTAMP_IMPORT
+#define ANTIQUACRM_TIMESTAMP_IMPORT "dd.MM.yyyy hh:mm:ss.zzz"
+#endif
+
+/**
  * @def ANTIQUACRM_DATETIME_FORMAT
  * @ingroup Antiqua Plugin Interface
  * @brief Das vom System vorgegebene Datumsformat ist ISO 8601!
@@ -120,19 +128,22 @@
  *  QJsonObject import;
  *  QJsonObject obj = jsonArray[i].toObject();
  *  QDateTime d = QDateTime::fromString(obj["datetime"].toString(), "yyyy-MM-dd hh:mm:ss");
- *  import.insert("datetime", QJsonValue(d.toString(ANTIQUACRM_DATETIME_FORMAT)));
+ *  import.insert("datetime", QJsonValue(d.toString(ANTIQUACRM_DATETIME_EXPORT)));
  * @endcode
  */
-#ifndef ANTIQUACRM_DATETIME_FORMAT
-#define ANTIQUACRM_DATETIME_FORMAT Qt::ISODate
+#ifndef ANTIQUACRM_DATETIME_EXPORT
+#define ANTIQUACRM_DATETIME_EXPORT Qt::ISODate
 #endif
 
 /**
- * @brief Import Format for PGSQL::CURRENT_TIMESTAMP
- * @note AntiquaCRM didn't use Time Zones in SQL tables!
+ * @brief Datums und Zeitangaben für die UI Anzeige
  */
-#ifndef ANTIQUACRM_DATETIME_IMPORT
-#define ANTIQUACRM_DATETIME_IMPORT "dd.MM.yyyy hh:mm:ss.zzz"
+#ifndef ANTIQUACRM_DATETIME_TOOLTIP
+#define ANTIQUACRM_DATETIME_TOOLTIP "dd.MM.yyyy hh:mm:ss"
+#endif
+
+#ifndef ANTIQUACRM_DATETIME_DISPLAY
+#define ANTIQUACRM_DATETIME_DISPLAY "dddd dd. MMMM yyyy hh:mm"
 #endif
 
 /**

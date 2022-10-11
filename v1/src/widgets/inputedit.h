@@ -14,6 +14,12 @@
 #include <QWheelEvent>
 #include <QWidget>
 
+class AntiquaILabel;
+
+/**
+ * @brief Abstract Input Edit class
+ * @section widgets
+ */
 class InputEdit : public QFrame {
   Q_OBJECT
   Q_PROPERTY(bool required /* Equivalent zu QSqlRecord:required */
@@ -26,7 +32,7 @@ private:
   bool modified = false;
 
 protected:
-  const Qt::Alignment labelAlign;
+  AntiquaILabel *m_label;
   QHBoxLayout *m_layout;
   virtual void loadDataset() = 0;
 
