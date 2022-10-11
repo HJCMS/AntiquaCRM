@@ -83,12 +83,11 @@ bool MApplication::isRunning() {
 void MApplication::initThemeStyle() {
   setStyle(QStyleFactory::create("Fusion"));
   QFont font = qApp->font();
-  QString fontdef = m_config->value("application/font", QString()).toString();
-  if (!fontdef.isEmpty() && font.fromString(fontdef)) {
-    qApp->setFont(font);
-  }
   QPalette p = qApp->palette();
   QColor hc = p.color(QPalette::Highlight);
+  QString css("QTabBar::tab:top:selected,QTabBar::tab:bottom:selected");
+  css.append(" { color: " + hc.name() + " }");
+  setStyleSheet(css);
 #ifdef Q_OS_WIN
   /**
    * @short QStyle::Windows::Fusion
@@ -100,9 +99,10 @@ void MApplication::initThemeStyle() {
   p.setColor(QPalette::Inactive, QPalette::Highlight, hc);
   qApp->setPalette(p);
 #endif
-  QString css("QTabBar::tab:top:selected,QTabBar::tab:bottom:selected");
-  css.append(" { color: " + hc.name() + " }");
-  setStyleSheet(css);
+  QString fontdef = m_config->value("application/font", QString()).toString();
+  if (!fontdef.isEmpty() && font.fromString(fontdef)) {
+    qApp->setFont(font);
+  }
 }
 
 /**
