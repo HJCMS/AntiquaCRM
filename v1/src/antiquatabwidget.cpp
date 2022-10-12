@@ -54,9 +54,9 @@ bool AntiquaTabWidget::loadDefaultTabs() {
   ConditionEdit *m_condition = new ConditionEdit(this);
   m_condition->setInfo(tr("Condition"));
   testLayout->addWidget(m_condition);
-  // Länder
+  // EU-Länder
   SelectEuCountry *m_countries = new SelectEuCountry(this);
-  m_countries->setInfo(tr("Countries"));
+  m_countries->setInfo(tr("EU Countries"));
   testLayout->addWidget(m_countries);
 
   testLayout->addStretch(1);

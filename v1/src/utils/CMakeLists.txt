@@ -2,5 +2,6 @@
 # vim: set fileencoding=utf-8
 
 ADD_SUBDIRECTORY(cache)
-ADD_SUBDIRECTORY(booklooker)
-ADD_SUBDIRECTORY(abebooks)
+##ADD_SUBDIRECTORY()
+##ADD_SUBDIRECTORY()
+

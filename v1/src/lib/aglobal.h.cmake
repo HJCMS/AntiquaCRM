@@ -86,6 +86,14 @@
 #endif
 
 /**
+ * @def ANTIQUACRM_INTERFACE
+ * @brief Plugin Interface Description
+ */
+#ifndef ANTIQUACRM_INTERFACE
+#define ANTIQUACRM_INTERFACE "de.hjcms.antiquacrm.FactoryInterface"
+#endif
+
+/**
  * @def ANTIQUACRM_DATA_TARGET
  * @brief Shared Data location
  */

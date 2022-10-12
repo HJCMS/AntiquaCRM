@@ -3,10 +3,6 @@ SET (PROJECT_INCLUDE_DIRS
 	${CMAKE_CURRENT_SOURCE_DIR}/widgets
 	${CMAKE_CURRENT_BINARY_DIR}/utils/cache
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/cache
-	${CMAKE_CURRENT_BINARY_DIR}/utils/abebooks
-	${CMAKE_CURRENT_SOURCE_DIR}/utils/abebooks
-	${CMAKE_CURRENT_BINARY_DIR}/utils/booklooker
-	${CMAKE_CURRENT_SOURCE_DIR}/utils/booklooker
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/books
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/books
 	${CMAKE_CURRENT_BINARY_DIR}/lib
@@ -19,8 +15,6 @@ INCLUDE_DIRECTORIES (${PROJECT_INCLUDE_DIRS})
 SET(PROJECT_LIBRARIES
 	AntiquaWidgets
 	AntiquaCache
-	AbeBooks
-	Booklooker
 	AntiquaBooks
 	AntiquaCRM
 )

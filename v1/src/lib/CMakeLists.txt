@@ -17,9 +17,14 @@ CONFIGURE_FILE (AntiquaCRM.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaCRM
 )
 
+CONFIGURE_FILE (AntiquaCRMPlugin.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaCRMPlugin
+)
+
 SET (projectLibrary_FILES
  aglobal.h.cmake
  AntiquaCRM.cmake
+ AntiquaCRMPlugin.cmake
 )
 
 SET (projectLibrary_SOURCES
@@ -35,6 +40,8 @@ SET (projectLibrary_SOURCES
  anetworkrequest.cpp
  anetworker.cpp
  aeuropeancountries.cpp
+ apluginloader.cpp
+ aplugininterface.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -51,6 +58,8 @@ SET (projectLibrary_HEADERS
  anetworkrequest.h
  anetworker.h
  aeuropeancountries.h
+ apluginloader.h
+ aplugininterface.h
  AntiquaCRM
  AGlobal
  ASettings
