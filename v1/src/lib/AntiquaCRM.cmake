@@ -1,8 +1,8 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#ifndef ANTIQUACRM_CORE_H
-#define ANTIQUACRM_CORE_H
+#ifndef ANTIQUACRM_LIB_H
+#define ANTIQUACRM_LIB_H
 
 #ifndef ANTIQUACRM_GLOBAL_H
 #include "aglobal.h"
@@ -50,6 +50,11 @@
 
 #ifndef ANTIQUACRM_SQLQUERYMODEL_H
 #include "asqlquerymodel.h"
+#endif
+
+// AntiquaCRM::AEuropeanCountries
+#ifndef ANTIQUACRM_EUROPEAN_COUNTRIES_H
+#include "aeuropeancountries.h"
 #endif
 
 #endif

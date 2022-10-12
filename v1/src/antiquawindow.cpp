@@ -23,7 +23,7 @@ AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
   m_statusBar = new AntiquaStatusBar(this);
   setStatusBar(m_statusBar);
 
-  connect(m_menuBar, SIGNAL(sendApplicationQuit()), this, SLOT(closeWindow()));
+  connect(m_menuBar, SIGNAL(sendApplQuit()), this, SLOT(closeWindow()));
 }
 
 void AntiquaWindow::closeEvent(QCloseEvent *event) {
@@ -44,8 +44,10 @@ void AntiquaWindow::closeWindow() {
       return;
     }
   }
-  emit sendApplicationQuit();
+  emit sendApplQuit();
 }
+
+void AntiquaWindow::toggle() { isVisible() ? hide() : show(); }
 
 void AntiquaWindow::openWindow() {
   show();

@@ -45,6 +45,10 @@
 #include "postalcodeedit.h"
 #endif
 
+#ifndef ANTIQUACRM_SELECTEUCOUNTRY_H
+#include "selecteucountry.h"
+#endif
+
 #ifndef ANTIQUACRM_STORAGELOCATION_H
 #include "storagelocation.h"
 #endif

@@ -26,7 +26,7 @@ void AntiquaMenuBar::addApplMenu() {
   QAction *ac_quit = m_applMenu->addAction(tr("Quit"));
   ac_quit->setIcon(QIcon(":icons/action_quit.png"));
   ac_quit->setShortcut(QKeySequence::Quit);
-  connect(ac_quit, SIGNAL(triggered()), this, SIGNAL(sendApplicationQuit()));
+  connect(ac_quit, SIGNAL(triggered()), this, SIGNAL(sendApplQuit()));
 }
 
 void AntiquaMenuBar::addViewsMenu() {

@@ -40,6 +40,7 @@ SET (projectLibrary_SOURCES
  bookbinding.cpp
  postalcodeedit.cpp
  storagelocation.cpp
+ selecteucountry.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -57,6 +58,7 @@ SET (projectLibrary_HEADERS
  bookbinding.h
  postalcodeedit.h
  storagelocation.h
+ selecteucountry.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

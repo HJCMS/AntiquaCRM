@@ -30,7 +30,10 @@ protected:
   void closeEvent(QCloseEvent *) override;
 
 Q_SIGNALS:
-  void sendApplicationQuit();
+  void sendApplQuit();
+
+public Q_SLOTS:
+  void toggle();
 
 public:
   explicit AntiquaWindow(QWidget *parent = nullptr);

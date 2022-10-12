@@ -117,7 +117,7 @@ const QVariant StorageLocation::value() {
 }
 
 bool StorageLocation::isValid() {
-  if (isRequired() && (m_box->currentIndex() == 0))
+  if (isRequired() && value().isNull())
     return false;
 
   return (m_box->currentIndex() > 0);

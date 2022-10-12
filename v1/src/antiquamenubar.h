@@ -26,7 +26,7 @@ private:
   void addAboutMenu();
 
 Q_SIGNALS:
-  void sendApplicationQuit();
+  void sendApplQuit();
 
 public:
   explicit AntiquaMenuBar(QMainWindow *parent = nullptr);

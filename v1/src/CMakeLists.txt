@@ -27,6 +27,7 @@ ENDIF (CMAKE_HOST_WIN32)
 SET (PROJECT_HEADERS
   antiquaappl.h
   antiquasplashscreen.h
+  antiquatimer.h
   antiquawindow.h
   antiquamenubar.h
   antiquatabwidget.h
@@ -39,6 +40,7 @@ SET (PROJECT_SOURCES
   main.cpp
   antiquaappl.cpp
   antiquasplashscreen.cpp
+  antiquatimer.cpp
   antiquawindow.cpp
   antiquamenubar.cpp
   antiquatabwidget.cpp

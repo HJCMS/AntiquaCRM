@@ -34,6 +34,7 @@ SET (projectLibrary_SOURCES
  anetworkiface.cpp
  anetworkrequest.cpp
  anetworker.cpp
+ aeuropeancountries.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -49,6 +50,7 @@ SET (projectLibrary_HEADERS
  anetworkiface.h
  anetworkrequest.h
  anetworker.h
+ aeuropeancountries.h
  AntiquaCRM
  AGlobal
  ASettings

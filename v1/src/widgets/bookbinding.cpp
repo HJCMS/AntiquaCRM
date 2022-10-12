@@ -10,6 +10,7 @@ BookBinding::BookBinding(QWidget *parent) : InputEdit{parent} {
 
   m_box = new AntiquaComboBox(this);
   m_box->setToolTip(tr("Book binding"));
+  m_box->addItem(tr("Without disclosures"), QString());
   m_layout->addWidget(m_box);
 
   loadDataset();
@@ -30,8 +31,8 @@ void BookBinding::loadDataset() {
   QJsonArray arr = doc.object().value("bookbindings").toArray();
   for (int i = 0; i < arr.count(); i++) {
     QJsonObject obj = arr[i].toObject();
-    QString text = (i == 0) ? "name" : "description";
-    m_box->insertItem(i, obj.value(text).toString(), obj.value("id").toInt());
+    m_box->addItem(obj.value("description").toString(),
+                   obj.value("id").toInt());
   }
 }
 
