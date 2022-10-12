@@ -330,6 +330,15 @@ namespace AntiquaCRM {
    QString state;
  };
 
+ struct ANTIQUACRM_LIBRARAY APluginConfig {
+   QString hostname = QString();
+   QString querypath = QString();
+   QString username = QString();
+   QString apiKey = QString();
+   int port = 443;
+   int history = -7;
+ };
+
 };
 
 Q_DECLARE_METATYPE(AntiquaCRM::PostalCode)

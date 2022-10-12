@@ -33,7 +33,7 @@ public Q_SLOTS:
 public:
   explicit APluginInterface(QObject *parent = nullptr);
 
-  static const QString configPrefix();
+  const APluginConfig getConfig(const QString &providerName);
 
   virtual const QString configProvider() const = 0;
 
