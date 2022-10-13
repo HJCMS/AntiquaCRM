@@ -6,7 +6,9 @@
 #define ANTIQUACRM_APPLICATION_H
 
 #include <AntiquaCRM>
+#include <AntiquaCRMPlugin>
 #include <QApplication>
+#include <QList>
 #include <QObject>
 #include <QScreen>
 #include <QStyle>
@@ -28,6 +30,8 @@ private:
   AntiquaCRM::ASqlCore *m_sql;
   AntiquaSocketServer *m_socket;
   AntiquaTimer *m_timer;
+
+  QList<AntiquaCRM::APluginInterface *> p_interfaces;
 
   bool checkInterfaces();
   bool checkRemotePort();

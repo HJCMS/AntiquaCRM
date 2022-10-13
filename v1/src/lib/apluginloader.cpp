@@ -3,6 +3,7 @@
 
 #include "apluginloader.h"
 #include "aplugininterface.h"
+#include "asettings.h"
 
 #include <QCoreApplication>
 #include <QFileInfo>
@@ -14,47 +15,37 @@
 
 namespace AntiquaCRM {
 
-static const QStringList filter() {
-#ifdef Q_OS_LINUX
-  return QStringList("*.so");
-#else
-  return QStringList("*.dll");
-#endif
-}
-
 APluginLoader::APluginLoader(QObject *parent) : QPluginLoader{parent} {
-  setTarget(QDir(ANTIQUACRM_PLUGIN_TARGET));
+  p_dir = ASettings::getPluginDir();
+  p_filter = ASettings::pluginSearchFilter();
 }
 
 const QStringList APluginLoader::findPlugins() {
-  QStringList unique;
   QStringList plugins;
-  foreach (QString p, p_dir.entryList(QDir::Files, QDir::Name)) {
-    QFileInfo info(p);
-    if (QLibrary::isLibrary(p) && !unique.contains(info.baseName())) {
-      unique << info.baseName();
-      plugins << QString("%1%2%3").arg(p_dir.path(), p_dir.separator(), p);
+  QDir::Filters sFilter(QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
+  foreach (QString p, p_dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot)) {
+    if (p_dir.cd(p)) {
+      foreach (QFileInfo info, p_dir.entryInfoList(p_filter, sFilter)) {
+        QString plugFile = info.filePath();
+        if (QLibrary::isLibrary(plugFile)) {
+          plugins << plugFile;
+        }
+      }
+      p_dir.cdUp();
     }
   }
 #ifdef ANTIQUA_DEBUG_PLUGINS
-  qDebug() << Q_FUNC_INFO << unique << plugins;
+  if (plugins.isEmpty()) {
+    qDebug() << Q_FUNC_INFO << "Missing Plugins:" << p_dir.path();
+  }
 #endif
-  unique.clear();
   return plugins;
-}
-
-void APluginLoader::setTarget(const QDir &dir) {
-  p_dir = dir;
-  p_dir.setNameFilters(filter());
-  emit targetChanged(p_dir);
 }
 
 void APluginLoader::setFileName(const QString &name) {
   QString f = findPlugin(name);
   QPluginLoader::setFileName(f);
 }
-
-const QDir APluginLoader::getTarget() { return p_dir; }
 
 const QString APluginLoader::findPlugin(const QString &name) {
   foreach (QString plugin, findPlugins()) {
@@ -69,24 +60,26 @@ APluginLoader::pluginInterfaces(QObject *parent) {
   QList<APluginInterface *> list;
   foreach (QString file, findPlugins()) {
     setFileName(file);
-    QObject *plug = instance();
-    if (plug) {
+    QObject *m_plugin = instance();
+    if (m_plugin) {
       QJsonObject info = metaData().value("MetaData").toObject();
       QString objName = info.value("Name").toString();
       if (objName.isEmpty()) {
-        qWarning("Missing Metadata: %s", qPrintable(file));
+        qWarning("PluginLoader missing Metadata: %s", qPrintable(file));
         continue;
       }
-      APluginInterface *m_Iface = qobject_cast<APluginInterface *>(plug);
-      if (m_Iface != nullptr && m_Iface->createInterface(parent)) {
-        m_Iface->setObjectName(objName);
-        list << m_Iface;
+
+      APluginInterface *m_iface = qobject_cast<APluginInterface *>(m_plugin);
+      if (m_iface != nullptr && m_iface->createInterface(parent)) {
+        m_iface->setObjectName(objName);
+        list << m_iface;
       } else {
-        qWarning("Loading '%s' failed.",
-                 qPrintable(info.value("Title").toString()));
+        qWarning("Plugin loading for '%s' failed.",
+                 qPrintable(info.value("Name").toString()));
       }
-    } else
-      qWarning("(Antiqua) Pluginloader: %s", qPrintable(errorString()));
+    } else {
+      qWarning("AntiquaCRM::APluginLoader: %s", qPrintable(errorString()));
+    }
   }
   return list;
 }

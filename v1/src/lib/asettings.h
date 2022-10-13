@@ -56,17 +56,22 @@ public:
   static QDir::Filters directoryFilter();
 
   /**
+   * @brief Default Plugin Namefilters
+   */
+  static const QStringList pluginSearchFilter();
+
+  /**
+   * @brief Application Plugin Directory
+   */
+  static const QDir getPluginDir(const QString &subTarget = QString());
+
+  /**
    * @brief Application Data Directory
    * @li Linux ${install_prefix}/share/antiquacrm
    * @li Windows ${binary_target}/data
    * @see aglobal.h
    */
   static const QDir getDataDir(const QString &name = QString());
-
-  /**
-   * @brief Application Plugin Directory
-   */
-  static const QDir getPluginDir();
 
   /**
    * @brief get/create Users Data Directory

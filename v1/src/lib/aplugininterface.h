@@ -19,13 +19,15 @@ class ANTIQUACRM_LIBRARAY APluginInterface : public QObject {
   Q_CLASSINFO("Version", ANTIQUACRM_VERSION)
   Q_CLASSINFO("Url", ANTIQUACRM_HOMEPAGE)
 
+protected:
+  QJsonDocument p_json;
+
 protected Q_SLOTS:
   virtual void prepareJsonResponse(const QJsonDocument &) = 0;
 
 Q_SIGNALS:
-  void sendJsonResponse(const QJsonDocument &);
   void sendErrorResponse(AntiquaCRM::Message, const QString &);
-  void sendQueryFinished(bool successfull = false);
+  void sendQuerySuccess(bool success = false);
 
 public Q_SLOTS:
   virtual void queryOrders() = 0;
@@ -38,6 +40,8 @@ public:
   virtual const QString configProvider() const = 0;
 
   virtual const QString displayName() const = 0;
+
+  virtual const QJsonDocument getResponse() const = 0;
 
   virtual bool createInterface(QObject *parent) = 0;
 };

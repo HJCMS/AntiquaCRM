@@ -62,6 +62,14 @@ QDir::Filters ASettings::directoryFilter() {
   return (QDir::Dirs | QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
 }
 
+const QStringList ASettings::pluginSearchFilter() {
+#ifdef Q_OS_LINUX
+  return QStringList("*.so");
+#else
+  return QStringList("*.dll");
+#endif
+}
+
 const QDir ASettings::getDataDir(const QString &name) {
   QString p(ANTIQUACRM_DATA_TARGET);
   p.append(QDir::separator());
@@ -74,15 +82,17 @@ const QDir ASettings::getDataDir(const QString &name) {
   return t.isReadable() ? t : QDir(ANTIQUACRM_DATA_TARGET);
 }
 
-const QDir ASettings::getPluginDir() {
-  QDir t(ANTIQUACRM_PLUGIN_TARGET);
+const QDir ASettings::getPluginDir(const QString &subTarget) {
+  QString pluginDir(ANTIQUACRM_PLUGIN_TARGET);
+  if (!subTarget.isEmpty()) {
+    pluginDir.append(QDir::separator());
+    pluginDir.append(subTarget);
+  }
+
+  QDir t(pluginDir);
   t.setFilter(directoryFilter());
   t.setSorting(QDir::Name);
-#ifdef Q_OS_LINUX
-  t.setNameFilters(QStringList("*.so"));
-#else
-  t.setNameFilters(QStringList("*.dll"));
-#endif
+  t.setNameFilters(pluginSearchFilter());
   return t;
 }
 

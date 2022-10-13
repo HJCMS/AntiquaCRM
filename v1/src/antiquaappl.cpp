@@ -75,12 +75,10 @@ bool AntiquaAppl::createCacheFiles() {
   if (m_sql == nullptr)
     return false;
 
-  m_splash->setMessage(tr("Creating Cachefiles."));
   AntiquaCacheFiles *m_cache = new AntiquaCacheFiles(this);
   connect(m_cache, SIGNAL(statusMessage(const QString &)), m_splash,
           SLOT(setMessage(const QString &)));
   m_cache->createCaches();
-  m_splash->setMessage(tr("Completed..."));
   return true;
 }
 
@@ -94,31 +92,48 @@ bool AntiquaAppl::createSocket() {
 }
 
 bool AntiquaAppl::initialPlugins() {
-  m_splash->setMessage(tr("Loading plugins!"));
-  // m_cfg->getPluginDir();
-  m_splash->setMessage(tr("Completed..."));
-  return true;
+  p_interfaces.clear();
+  AntiquaCRM::APluginLoader *m_pl = new AntiquaCRM::APluginLoader(this);
+  QListIterator<AntiquaCRM::APluginInterface *> i(m_pl->pluginInterfaces(this));
+  while (i.hasNext()) {
+    AntiquaCRM::APluginInterface *m_iface = i.next();
+    if (m_iface != nullptr) {
+      QString name(m_iface->displayName());
+      QString msg = tr("Plugin %1 found, loading ...").arg(qPrintable(name));
+      m_splash->setMessage(msg);
+      p_interfaces.append(m_iface);
+#ifdef ANTIQUA_DEVELOPEMENT
+      qDebug() << "AntiquaAppl:" << msg;
+#endif
+    }
+  }
+  return (p_interfaces.size() > 0);
 }
 
 void AntiquaAppl::startTriggerProcess() {
   bool connection = checkRemotePort();
   m_systemTray->setConnectionStatus(connection);
-  if (connection) {
-    qInfo("AntiquaAppl: TODO(Network requests)");
+  if (connection && p_interfaces.size() > 0) {
+    QListIterator<AntiquaCRM::APluginInterface *> i(p_interfaces);
+    while (i.hasNext()) {
+      AntiquaCRM::APluginInterface *m_iface = i.next();
+      if (m_iface != nullptr) {
+        m_iface->queryOrders();
+      }
+    }
   }
 }
 
 void AntiquaAppl::applicationQuit() {
   // Systemtray
   m_systemTray->setVisible(false);
-  // Windows
+  // Window
   m_mainWindow->close();
   // SQL
   m_sql->close();
   // Socket
   m_socket->close();
-  // Todo: remove tempfiles
-
+  // finaly
   quit();
 }
 
@@ -166,7 +181,12 @@ int AntiquaAppl::exec() {
   QMutex mutex;
   // Step 1 - Socket erstellen
   mutex.lock();
-  createSocket();
+  m_splash->setMessage(tr("Creating Cachefiles."));
+  if (createSocket()) {
+    m_splash->setMessage(tr("Cachefiles completed ..."));
+  } else {
+    m_splash->setMessage(tr("Create Cachefile failed ..."));
+  }
   mutex.unlock();
 
   // Step 2 - Netzwerkschnittstelln finden
@@ -209,7 +229,12 @@ int AntiquaAppl::exec() {
 
   // Step 6 - Plugins suchen und laden
   mutex.lock();
-  initialPlugins();
+  m_splash->setMessage(tr("Loading plugins!"));
+  if (initialPlugins()) {
+    m_splash->setMessage(tr("Start Providers requests ..."));
+    startTriggerProcess();
+  }
+  m_splash->setMessage(tr("Completed..."));
   mutex.unlock();
 
   // Step 7 - Systemtray anzeigen

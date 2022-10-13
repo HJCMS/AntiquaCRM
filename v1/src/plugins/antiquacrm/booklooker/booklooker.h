@@ -23,6 +23,7 @@ public:
   explicit Booklooker(QObject *parent = nullptr);
   const QString configProvider() const;
   const QString displayName() const;
+  const QJsonDocument getResponse() const;
   bool createInterface(QObject *parent);
 };
 

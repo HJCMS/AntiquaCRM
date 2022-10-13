@@ -17,22 +17,15 @@ class APluginInterface;
 
 class ANTIQUACRM_LIBRARAY APluginLoader : public QPluginLoader {
   Q_OBJECT
-  Q_PROPERTY(QDir target READ getTarget WRITE setTarget NOTIFY targetChanged)
 
 private:
   QDir p_dir;
+  QStringList p_filter;
   const QStringList findPlugins();
-
-Q_SIGNALS:
-  void targetChanged(const QDir &dir);
-
-public Q_SLOTS:
-  void setTarget(const QDir &dir);
 
 public:
   explicit APluginLoader(QObject *parent = nullptr);
   void setFileName(const QString &name);
-  const QDir getTarget();
   const QString findPlugin(const QString &name);
   const QList<APluginInterface *> pluginInterfaces(QObject *parent);
 };
