@@ -42,6 +42,7 @@ SET (projectLibrary_SOURCES
  aeuropeancountries.cpp
  apluginloader.cpp
  aplugininterface.cpp
+ aproviderorders.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -60,6 +61,7 @@ SET (projectLibrary_HEADERS
  aeuropeancountries.h
  apluginloader.h
  aplugininterface.h
+ aproviderorders.h
  AntiquaCRM
  AGlobal
  ASettings

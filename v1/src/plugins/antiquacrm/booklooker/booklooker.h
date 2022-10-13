@@ -24,6 +24,7 @@ public:
   const QString configProvider() const;
   const QString displayName() const;
   const QJsonDocument getResponse() const;
+  const AntiquaCRM::AProviderOrders getOrders() const;
   bool createInterface(QObject *parent);
 };
 

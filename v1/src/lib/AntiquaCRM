@@ -68,6 +68,11 @@
 #include "apluginloader.h"
 #endif
 
+// AntiquaCRM::AProviderOrders
+#ifndef ANTIQUACRM_PLUGIN_ORDERS_H
+#include "aproviderorders.h"
+#endif
+
 // AntiquaCRM::AEuropeanCountries
 #ifndef ANTIQUACRM_EUROPEAN_COUNTRIES_H
 #include "aeuropeancountries.h"

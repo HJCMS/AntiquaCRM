@@ -8,8 +8,14 @@
 #include "aglobal.h"
 #endif
 
+// AntiquaCRM::APluginInterface
 #ifndef ANTIQUACRM_PLUGIN_INTERFACE_H
 #include "aplugininterface.h"
+#endif
+
+// AntiquaCRM::AProviderOrders
+#ifndef ANTIQUACRM_PLUGIN_ORDERS_H
+#include "aproviderorders.h"
 #endif
 
 #endif

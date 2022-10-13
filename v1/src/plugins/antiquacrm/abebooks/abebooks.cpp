@@ -8,6 +8,7 @@
 #endif
 
 #include <QDebug>
+#include <QTimer>
 
 Abebooks::Abebooks(QObject *parent) : AntiquaCRM::APluginInterface{parent} {
   setObjectName(PLUGIN_NAME);
@@ -16,7 +17,7 @@ Abebooks::Abebooks(QObject *parent) : AntiquaCRM::APluginInterface{parent} {
 void Abebooks::prepareJsonResponse(const QJsonDocument &) {}
 
 void Abebooks::queryOrders() {
-  qDebug() << Q_FUNC_INFO << "TODO";
+  QTimer::singleShot(2000, this, SIGNAL(sendQueryFinished()));
 }
 
 const QString Abebooks::configProvider() const {
@@ -32,6 +33,12 @@ const QJsonDocument Abebooks::getResponse() const {
     return QJsonDocument();
 
   return p_json;
+}
+
+const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
+  AntiquaCRM::AProviderOrders booking;
+  // AProviderOrder order(orderId);
+  return booking;
 }
 
 bool Abebooks::createInterface(QObject *parent) { return true; }

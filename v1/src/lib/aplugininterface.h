@@ -10,6 +10,8 @@
 #include <QObject>
 #include <QString>
 
+#include "aproviderorders.h"
+
 namespace AntiquaCRM {
 
 class ANTIQUACRM_LIBRARAY APluginInterface : public QObject {
@@ -27,7 +29,7 @@ protected Q_SLOTS:
 
 Q_SIGNALS:
   void sendErrorResponse(AntiquaCRM::Message, const QString &);
-  void sendQuerySuccess(bool success = false);
+  void sendQueryFinished();
 
 public Q_SLOTS:
   virtual void queryOrders() = 0;
@@ -42,6 +44,8 @@ public:
   virtual const QString displayName() const = 0;
 
   virtual const QJsonDocument getResponse() const = 0;
+
+  virtual const AntiquaCRM::AProviderOrders getOrders() const = 0;
 
   virtual bool createInterface(QObject *parent) = 0;
 };

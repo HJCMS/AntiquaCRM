@@ -118,9 +118,20 @@ void AntiquaAppl::startTriggerProcess() {
     while (i.hasNext()) {
       AntiquaCRM::APluginInterface *m_iface = i.next();
       if (m_iface != nullptr) {
+        connect(m_iface, SIGNAL(sendQueryFinished()), this,
+                SLOT(setPluginQueryFinished()));
         m_iface->queryOrders();
       }
     }
+  }
+}
+
+void AntiquaAppl::setPluginQueryFinished() {
+  AntiquaCRM::APluginInterface *m_iface =
+      qobject_cast<AntiquaCRM::APluginInterface *>(sender());
+  if (m_iface != nullptr) {
+    // AntiquaCRM::AProviderOrders
+    qDebug() << m_iface->displayName() << m_iface->getResponse();
   }
 }
 

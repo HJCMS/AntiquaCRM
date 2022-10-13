@@ -8,6 +8,7 @@
 #endif
 
 #include <QDebug>
+#include <QTimer>
 
 Booklooker::Booklooker(QObject *parent) : AntiquaCRM::APluginInterface{parent} {
   setObjectName(PLUGIN_NAME);
@@ -15,7 +16,9 @@ Booklooker::Booklooker(QObject *parent) : AntiquaCRM::APluginInterface{parent} {
 
 void Booklooker::prepareJsonResponse(const QJsonDocument &) {}
 
-void Booklooker::queryOrders() { qDebug() << Q_FUNC_INFO << "TODO"; }
+void Booklooker::queryOrders() {
+  QTimer::singleShot(1000, this, SIGNAL(sendQueryFinished()));
+}
 
 const QString Booklooker::configProvider() const {
   return QString(PLUGIN_NAME).toLower();
@@ -30,6 +33,12 @@ const QJsonDocument Booklooker::getResponse() const {
     return QJsonDocument();
 
   return p_json;
+}
+
+const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
+  AntiquaCRM::AProviderOrders booking;
+  // AProviderOrder order(orderId);
+  return booking;
 }
 
 bool Booklooker::createInterface(QObject *parent) { return true; }

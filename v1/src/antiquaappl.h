@@ -42,6 +42,7 @@ private:
 
 private Q_SLOTS:
   void startTriggerProcess();
+  void setPluginQueryFinished();
 
 public Q_SLOTS:
   void applicationQuit();

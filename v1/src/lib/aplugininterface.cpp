@@ -12,7 +12,7 @@ APluginInterface::APluginInterface(QObject *parent) : QObject{parent} {}
 
 const APluginConfig APluginInterface::getConfig(const QString &providerName) {
   APluginConfig config;
-  if(providerName.isEmpty())
+  if (providerName.isEmpty())
     return config;
 
   ASettings cfg(this);
