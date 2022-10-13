@@ -14,7 +14,6 @@
 #include <QStyle>
 
 class AntiquaWindow;
-class AntiquaSplashScreen;
 class AntiquaSystemTray;
 class AntiquaSocketServer;
 class AntiquaTimer;
@@ -25,7 +24,6 @@ class AntiquaAppl : public QApplication {
 private:
   AntiquaCRM::ASettings *m_cfg;
   AntiquaWindow *m_mainWindow;
-  AntiquaSplashScreen *m_splash;
   AntiquaSystemTray *m_systemTray;
   AntiquaCRM::ASqlCore *m_sql;
   AntiquaSocketServer *m_socket;
@@ -38,11 +36,14 @@ private:
   bool checkDatabase();
   bool createCacheFiles();
   bool createSocket();
-  bool initialPlugins();
+  bool initialPlugins(QObject *receiver = nullptr);
 
 private Q_SLOTS:
   void startTriggerProcess();
   void setPluginQueryFinished();
+
+Q_SIGNALS:
+  void sendStatusMessage(const QString &msg);
 
 public Q_SLOTS:
   void applicationQuit();

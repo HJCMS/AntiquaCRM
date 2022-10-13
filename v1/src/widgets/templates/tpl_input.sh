@@ -55,11 +55,11 @@ if [[ -e ${_filename}.h ]] || [[ -e ${_filename}.cpp ]]  ; then
   exit 1
 fi
 
-cat ./templates/tpl_input.h | \
+cat ./templates/input.h.tpl | \
   sed "s,@CPPNAME@,${_proc_h},m" | \
   sed "s,@CLASSNAME@,${_class},m" > ${_filename}.h
 
-cat ./templates/tpl_input.cpp | \
+cat ./templates/input.cpp.tpl | \
   sed "s,@CLASSNAME@,${_class},gm" | \
   sed "s,@INCLUDE@,${_filename},m" > ${_filename}.cpp
 

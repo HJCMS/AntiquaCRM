@@ -2,7 +2,7 @@
 # vim: set fileencoding=utf-8
 
 SET (FILES
-  tpl_input.cpp
-  tpl_input.h
+  input.cpp.tpl
+  input.h.tpl
   tpl_input.sh
 )

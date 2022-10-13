@@ -8,6 +8,8 @@
 #include "workload.h"
 
 class PostalcodeCache final : public Workload {
+  Q_OBJECT
+
 protected:
   const QList<QPair<QString, QString>> tableList() override;
   const QJsonArray createTable(const QString &query) override;

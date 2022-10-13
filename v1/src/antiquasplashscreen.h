@@ -13,7 +13,7 @@ class AntiquaSplashScreen : public QSplashScreen {
   Q_OBJECT
 
 public Q_SLOTS:
-  void setMessage(const QString &);
+  Q_INVOKABLE void setMessage(const QString &);
 
 public:
   explicit AntiquaSplashScreen(QMainWindow *parent = nullptr);

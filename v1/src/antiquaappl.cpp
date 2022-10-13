@@ -17,6 +17,7 @@
 #endif
 #include <QIcon>
 #include <QLocalSocket>
+#include <QMetaObject>
 #include <QStyleFactory>
 
 static const QIcon applIcon() {
@@ -31,7 +32,6 @@ AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
   m_mainWindow->setObjectName("MainWindow");
   m_systemTray = new AntiquaSystemTray(applIcon(), this);
   m_systemTray->setObjectName("SystemTray");
-  m_splash = new AntiquaSplashScreen(m_mainWindow);
   m_timer = new AntiquaTimer(this);
 
   connect(m_systemTray, SIGNAL(sendShowWindow()), m_mainWindow, SLOT(show()));
@@ -76,22 +76,18 @@ bool AntiquaAppl::createCacheFiles() {
     return false;
 
   AntiquaCacheFiles *m_cache = new AntiquaCacheFiles(this);
-  connect(m_cache, SIGNAL(statusMessage(const QString &)), m_splash,
-          SLOT(setMessage(const QString &)));
   m_cache->createCaches();
   return true;
 }
 
 bool AntiquaAppl::createSocket() {
   bool out = false;
-  m_splash->setMessage(tr("Create Socket."));
   m_socket = new AntiquaSocketServer(this);
   out = m_socket->listen(m_socket->name());
-  m_splash->setMessage(out ? tr("done") : tr("failed"));
   return out;
 }
 
-bool AntiquaAppl::initialPlugins() {
+bool AntiquaAppl::initialPlugins(QObject *receiver) {
   p_interfaces.clear();
   AntiquaCRM::APluginLoader *m_pl = new AntiquaCRM::APluginLoader(this);
   QListIterator<AntiquaCRM::APluginInterface *> i(m_pl->pluginInterfaces(this));
@@ -99,12 +95,14 @@ bool AntiquaAppl::initialPlugins() {
     AntiquaCRM::APluginInterface *m_iface = i.next();
     if (m_iface != nullptr) {
       QString name(m_iface->displayName());
-      QString msg = tr("Plugin %1 found, loading ...").arg(qPrintable(name));
-      m_splash->setMessage(msg);
+      QString msg = tr("Plugin %1 found and loading ...").arg(qPrintable(name));
+      if (receiver != nullptr) {
+        QMetaObject::invokeMethod(receiver, "setMessage", Qt::DirectConnection,
+                                  Q_ARG(QString, msg));
+      } else {
+        emit sendStatusMessage(msg);
+      }
       p_interfaces.append(m_iface);
-#ifdef ANTIQUA_DEVELOPEMENT
-      qDebug() << "AntiquaAppl:" << msg;
-#endif
     }
   }
   return (p_interfaces.size() > 0);
@@ -187,81 +185,90 @@ bool AntiquaAppl::isRunning() {
 }
 
 int AntiquaAppl::exec() {
-  m_splash->show();
+  AntiquaSplashScreen p_splashScreen(m_mainWindow);
+  p_splashScreen.show();
 
   QMutex mutex;
   // Step 1 - Socket erstellen
   mutex.lock();
-  m_splash->setMessage(tr("Creating Cachefiles."));
+  p_splashScreen.setMessage(tr("Create Socket ..."));
   if (createSocket()) {
-    m_splash->setMessage(tr("Cachefiles completed ..."));
+    p_splashScreen.setMessage(tr("Socket created"));
   } else {
-    m_splash->setMessage(tr("Create Cachefile failed ..."));
+    p_splashScreen.setMessage(tr("Socket failed!"));
   }
   mutex.unlock();
 
   // Step 2 - Netzwerkschnittstelln finden
-  m_splash->setMessage(tr("Search Networkconnection!"));
+  p_splashScreen.setMessage(tr("Search Networkconnection!"));
   mutex.lock();
   if (!checkInterfaces()) {
-    m_splash->setMessage(tr("No Networkconnection found!"));
+    p_splashScreen.setMessage(tr("No Networkconnection found!"));
     mutex.unlock();
     return 1;
   }
-  m_splash->setMessage(tr("Valid Networkconnection found!"));
+  p_splashScreen.setMessage(tr("Valid Networkconnection found!"));
   mutex.unlock();
 
   // Step 3 - SQL Port Testen
   mutex.lock();
-  m_splash->setMessage(tr("Check SQL Server connection!"));
+  p_splashScreen.setMessage(tr("Check SQL Server connection!"));
   if (!checkRemotePort()) {
-    m_splash->setMessage(tr("SQL Server unreachable!"));
+    p_splashScreen.setMessage(tr("SQL Server unreachable!"));
     mutex.unlock();
     return 1;
   }
-  m_splash->setMessage(tr("SQL Server found!"));
+  p_splashScreen.setMessage(tr("SQL Server found!"));
   mutex.unlock();
 
   // Step 4 - Datenbanktest durchführen
   mutex.lock();
-  m_splash->setMessage(tr("Open Database connection."));
+  p_splashScreen.setMessage(tr("Open Database connection."));
   if (!checkDatabase()) {
     qFatal("No Database connected!");
     mutex.unlock();
     return 1;
   }
-  m_splash->setMessage(tr("Database connected!"));
+  p_splashScreen.setMessage(tr("Database connected!"));
   mutex.unlock();
 
   // Step 5 - Temporäre Dateien erstellen.
   mutex.lock();
-  createCacheFiles();
+  p_splashScreen.setMessage(tr("Creating Cachefiles."));
+  if (createCacheFiles()) {
+    p_splashScreen.setMessage(tr("Cachefiles completed ..."));
+  } else {
+    p_splashScreen.setMessage(tr("Create Cachefile failed ..."));
+  }
   mutex.unlock();
 
   // Step 6 - Plugins suchen und laden
   mutex.lock();
-  m_splash->setMessage(tr("Loading plugins!"));
-  if (initialPlugins()) {
-    m_splash->setMessage(tr("Start Providers requests ..."));
+  p_splashScreen.setMessage(tr("Loading plugins!"));
+  if (initialPlugins(&p_splashScreen)) {
+    p_splashScreen.setMessage(tr("Start Providers requests ..."));
     startTriggerProcess();
   }
-  m_splash->setMessage(tr("Completed..."));
+  p_splashScreen.setMessage(tr("Completed..."));
   mutex.unlock();
 
   // Step 7 - Systemtray anzeigen
-  m_splash->setMessage("Initial Systemtray.");
+  p_splashScreen.setMessage("Initial Systemtray.");
   m_systemTray->show();
 
   // Step 8 - Hauptfenster öffnen
-  m_splash->setMessage("Start Antiqua CRM");
-  m_splash->finish(m_mainWindow);
-  m_mainWindow->openWindow();
+  p_splashScreen.setMessage("Start Antiqua CRM");
+  // Der Startbildschirm sperrt weitere SQL Anfragen.
+  // Muss deshalb an dieser Stelle beendet werden!
+  p_splashScreen.finish(m_mainWindow);
+
+  // Step 9 - Timer starten
   m_timer->restart();
+
+  // Step 10 - Fenster öffnen
+  m_mainWindow->openWindow();
 
   return QCoreApplication::exec();
 }
 
-AntiquaAppl::~AntiquaAppl() {
-  if (m_splash != nullptr)
-    m_splash->deleteLater();
-}
+AntiquaAppl::~AntiquaAppl() {}

@@ -19,7 +19,7 @@ const APluginConfig APluginInterface::getConfig(const QString &providerName) {
   cfg.beginGroup("provider/" + providerName);
   config.hostname = cfg.value("api_host", QString()).toString();
   config.querypath = cfg.value("api_path", QString()).toString();
-  config.username = cfg.value("api_use", QString()).toString();
+  config.username = cfg.value("api_user", QString()).toString();
   config.apiKey = cfg.value("api_key", QString()).toString();
   config.port = cfg.value("api_port", 443).toInt();
   config.history = cfg.value("api_history_call", -7).toInt();
