@@ -18,12 +18,18 @@ SET (projectLibrary_SOURCES
  tabbooks.cpp
  bookstable.cpp
  bookstablemodel.cpp
+ booksearchbar.cpp
+ bookselectfilter.cpp
+ booksearchline.cpp
 )
 
 SET (projectLibrary_HEADERS
  tabbooks.h
  bookstable.h
  bookstablemodel.h
+ booksearchbar.h
+ bookselectfilter.h
+ booksearchline.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

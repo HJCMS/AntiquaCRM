@@ -41,6 +41,9 @@ SET (projectLibrary_SOURCES
  postalcodeedit.cpp
  storagelocation.cpp
  selecteucountry.cpp
+ searchfilter.cpp
+ searchbar.cpp
+ searchlineedit.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -59,6 +62,9 @@ SET (projectLibrary_HEADERS
  postalcodeedit.h
  storagelocation.h
  selecteucountry.h
+ searchfilter.h
+ searchbar.h
+ searchlineedit.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

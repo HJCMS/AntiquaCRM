@@ -2,99 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
-    <name>AntiquaAppl</name>
-    <message>
-        <location filename="../antiquaappl.cpp" line="+98"/>
-        <source>Plugin %1 found and loading ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+96"/>
-        <source>Create Socket ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Socket created</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Socket failed!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Search Networkconnection!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>No Networkconnection found!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Valid Networkconnection found!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Check SQL Server connection!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>SQL Server unreachable!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>SQL Server found!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Open Database connection.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Database connected!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Creating Cachefiles.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Cachefiles completed ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Create Cachefile failed ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Loading plugins!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Start Providers requests ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Completed...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
         <location filename="../lib/asqlquerymodel.cpp" line="+81"/>
@@ -112,104 +19,6 @@
     <message>
         <location filename="../widgets/antiquadateinfo.cpp" line="+67"/>
         <source>A Valid Date is required!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AntiquaMenuBar</name>
-    <message>
-        <location filename="../antiquamenubar.cpp" line="+15"/>
-        <source>Views</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Quit</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AntiquaSystemTray</name>
-    <message>
-        <location filename="../antiquasystemtray.cpp" line="+11"/>
-        <location line="+31"/>
-        <source>Database connected.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-28"/>
-        <source>Window show</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Window hide</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Application Quit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>No Database conenction!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AntiquaTabWidget</name>
-    <message>
-        <location filename="../antiquatabwidget.cpp" line="+34"/>
-        <source>Book binding</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Postalcode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Storage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Last changed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Condition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>EU Countries</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AntiquaWindow</name>
-    <message>
-        <location filename="../antiquawindow.cpp" line="+39"/>
-        <source>Save request</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>&lt;p&gt;Do you really want to close the application?&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -564,7 +373,7 @@
     <name>SelectEuCountry</name>
     <message>
         <location filename="../widgets/selecteucountry.cpp" line="+9"/>
-        <source>European Countires</source>
+        <source>European Countries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -574,7 +383,7 @@
     </message>
     <message>
         <location line="+61"/>
-        <source>A valid country selection is required.</source>
+        <source>A valid European Country selection is required.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

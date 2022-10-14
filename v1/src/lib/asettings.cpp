@@ -70,6 +70,14 @@ const QStringList ASettings::pluginSearchFilter() {
 #endif
 }
 
+const QDir ASettings::getTranslationDir() {
+  QDir t(ANTIQUACRM_TRANSLATION_TARGET);
+  t.setFilter(QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
+  t.setNameFilters(QStringList("*.qm"));
+  t.setSorting(QDir::Name);
+  return t;
+}
+
 const QDir ASettings::getDataDir(const QString &name) {
   QString p(ANTIQUACRM_DATA_TARGET);
   p.append(QDir::separator());

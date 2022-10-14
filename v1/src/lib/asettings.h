@@ -66,6 +66,11 @@ public:
   static const QDir getPluginDir(const QString &subTarget = QString());
 
   /**
+   * @brief Translations Target
+   */
+  static const QDir getTranslationDir();
+
+  /**
    * @brief Application Data Directory
    * @li Linux ${install_prefix}/share/antiquacrm
    * @li Windows ${binary_target}/data

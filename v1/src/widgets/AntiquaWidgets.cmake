@@ -41,6 +41,18 @@
 #include "inventorytable.h"
 #endif
 
+#ifndef ANTIQUACRM_SEARCHFILTER_H
+#include "searchfilter.h"
+#endif
+
+#ifndef ANTIQUACRM_SEARCH_LINEEDIT_H
+#include "searchlineedit.h"
+#endif
+
+#ifndef ANTIQUACRM_SEARCHBAR_H
+#include "searchbar.h"
+#endif
+
 #ifndef ANTIQUACRM_POSTALCODE_EDIT_H
 #include "postalcodeedit.h"
 #endif

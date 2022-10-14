@@ -36,6 +36,8 @@ private:
   bool checkDatabase();
   bool createCacheFiles();
   bool createSocket();
+
+  bool initTranslations();
   bool initialPlugins(QObject *receiver = nullptr);
 
 private Q_SLOTS:

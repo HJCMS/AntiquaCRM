@@ -16,7 +16,6 @@ int main(int argc, char *argv[]) {
   antiqua->initDefaultTheme();
 
   if (QTextCodec::codecForLocale()->name() != "UTF-8") {
-    qInfo("Setting utf8 for Textcodec ...");
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
   }
 

@@ -19,6 +19,7 @@
 #include <QLocalSocket>
 #include <QMetaObject>
 #include <QStyleFactory>
+#include <QTranslator>
 
 static const QIcon applIcon() {
   QIcon icon(QString(":icons/antiqua.png"));
@@ -85,6 +86,16 @@ bool AntiquaAppl::createSocket() {
   m_socket = new AntiquaSocketServer(this);
   out = m_socket->listen(m_socket->name());
   return out;
+}
+
+bool AntiquaAppl::initTranslations() {
+  QString path = m_cfg->getTranslationDir().path();
+  QTranslator *transl = new QTranslator(this);
+  if (transl->load(QLocale::system(), "antiquacrm", "_", path, ".qm")) {
+    installTranslator(transl);
+    return true;
+  }
+  return false;
 }
 
 bool AntiquaAppl::initialPlugins(QObject *receiver) {
@@ -189,7 +200,15 @@ int AntiquaAppl::exec() {
   p_splashScreen.show();
 
   QMutex mutex;
-  // Step 1 - Socket erstellen
+  // Translation
+  mutex.lock();
+  p_splashScreen.setMessage(tr("Initial Translation ..."));
+  if (initTranslations()) {
+    p_splashScreen.setMessage(tr("done."));
+  }
+  mutex.unlock();
+
+  // Step 1. Socket
   mutex.lock();
   p_splashScreen.setMessage(tr("Create Socket ..."));
   if (createSocket()) {

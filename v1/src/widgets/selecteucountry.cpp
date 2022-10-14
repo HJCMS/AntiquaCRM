@@ -6,7 +6,7 @@
 
 SelectEuCountry::SelectEuCountry(QWidget *parent) : InputEdit{parent} {
   m_box = new AntiquaComboBox(this);
-  m_box->setToolTip(tr("European Countires"));
+  m_box->setToolTip(tr("European Countries"));
   m_box->addItem(tr("Without disclosures"), QString());
   m_layout->addWidget(m_box);
   loadDataset();
@@ -68,5 +68,5 @@ void SelectEuCountry::setInfo(const QString &info) {
 const QString SelectEuCountry::info() { return toolTip(); }
 
 const QString SelectEuCountry::notes() {
-  return tr("A valid country selection is required.");
+  return tr("A valid European Country selection is required.");
 }

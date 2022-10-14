@@ -2,109 +2,16 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
-    <name>AntiquaAppl</name>
-    <message>
-        <location filename="../antiquaappl.cpp" line="+98"/>
-        <source>Plugin %1 found and loading ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+96"/>
-        <source>Create Socket ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Socket created</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Socket failed!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Search Networkconnection!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>No Networkconnection found!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Valid Networkconnection found!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Check SQL Server connection!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>SQL Server unreachable!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>SQL Server found!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Open Database connection.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Database connected!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Creating Cachefiles.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Cachefiles completed ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Create Cachefile failed ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Loading plugins!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Start Providers requests ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Completed...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
         <location filename="../lib/asqlquerymodel.cpp" line="+81"/>
         <source>Yes</source>
-        <translation type="unfinished">Ja</translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>No</source>
-        <translation type="unfinished">Nein</translation>
+        <translation>Nein</translation>
     </message>
 </context>
 <context>
@@ -112,105 +19,7 @@
     <message>
         <location filename="../widgets/antiquadateinfo.cpp" line="+67"/>
         <source>A Valid Date is required!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AntiquaMenuBar</name>
-    <message>
-        <location filename="../antiquamenubar.cpp" line="+15"/>
-        <source>Views</source>
-        <translation type="unfinished">Ansichten</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Configuration</source>
-        <translation type="unfinished">Konfiguration</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Quit</source>
-        <translation type="unfinished">Schließen</translation>
-    </message>
-</context>
-<context>
-    <name>AntiquaSystemTray</name>
-    <message>
-        <location filename="../antiquasystemtray.cpp" line="+11"/>
-        <location line="+31"/>
-        <source>Database connected.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-28"/>
-        <source>Window show</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Window hide</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Application Quit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>No Database conenction!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AntiquaTabWidget</name>
-    <message>
-        <location filename="../antiquatabwidget.cpp" line="+34"/>
-        <source>Book binding</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Postalcode</source>
-        <translation type="unfinished">Postleitzahl</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Storage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Last changed</source>
-        <translation type="unfinished">Letze Änderung</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Condition</source>
-        <translation type="unfinished">Zustand</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>EU Countries</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AntiquaWindow</name>
-    <message>
-        <location filename="../antiquawindow.cpp" line="+39"/>
-        <source>Save request</source>
-        <translation type="unfinished">Speichern</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>&lt;p&gt;Do you really want to close the application?&lt;/p&gt;</source>
-        <translation type="unfinished">&lt;p&gt;Möchten Sie wirklich das Programm beenden?&lt;/p&gt;</translation>
+        <translation>Ein gültigesDatum ist erforderlich!</translation>
     </message>
 </context>
 <context>
@@ -218,17 +27,17 @@
     <message>
         <location filename="../widgets/bookbinding.cpp" line="+12"/>
         <source>Book binding</source>
-        <translation type="unfinished"></translation>
+        <translation>Buchbindung</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Without disclosures</source>
-        <translation type="unfinished">Keine Angaben</translation>
+        <translation>Keine Angaben</translation>
     </message>
     <message>
         <location line="+69"/>
         <source>Missing required Book binding!</source>
-        <translation type="unfinished"></translation>
+        <translation>Die erfoderliche Buchbindung ist nicht vorhanden!</translation>
     </message>
 </context>
 <context>
@@ -236,17 +45,17 @@
     <message>
         <location filename="../utils/cache/bookbindingcache.cpp" line="+35"/>
         <source>Build Book binding</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstelle Buchbindung</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Book binding created.</source>
-        <translation type="unfinished"></translation>
+        <translation>Buchbindung erstellt.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Book binding failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bucheinaband erstellung fehlgeschlagen!</translation>
     </message>
 </context>
 <context>
@@ -254,17 +63,17 @@
     <message>
         <location filename="../tabs/books/bookstablemodel.cpp" line="+19"/>
         <source>Article Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikel Nr</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Image</source>
-        <translation type="unfinished">Bild</translation>
+        <translation>Bild</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -289,17 +98,17 @@
     <message>
         <location line="+1"/>
         <source>Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Lager</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Changed</source>
-        <translation type="unfinished">Geändert</translation>
+        <translation>Geändert</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Unknown</source>
-        <translation type="unfinished">Unbekannt</translation>
+        <translation>Unbekannt</translation>
     </message>
     <message>
         <location line="-23"/>
@@ -317,37 +126,37 @@
     <message>
         <location filename="../widgets/conditionedit.cpp" line="+12"/>
         <source>Condition</source>
-        <translation type="unfinished">Zustand</translation>
+        <translation>Zustand</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Without disclosures</source>
-        <translation type="unfinished">Keine Angaben</translation>
+        <translation>Keine Angaben</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Very good, almost new!</source>
-        <translation type="unfinished">Sehr gut, fast neuwertig!</translation>
+        <translation>Sehr gut, fast neuwertig!</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Slight signs of wear.</source>
-        <translation type="unfinished"></translation>
+        <translation>Leichte Gebrauchsspuren.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Significant signs of use.</source>
-        <translation type="unfinished"></translation>
+        <translation>Deutliche Gebrauchsspuren.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Heavily worn!</source>
-        <translation type="unfinished"></translation>
+        <translation>Stark abgenutzt!</translation>
     </message>
     <message>
         <location line="+58"/>
         <source>a valid Condition is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine gültiger Artikel Zustand ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -368,17 +177,17 @@
         <location line="+5"/>
         <source>Ctrl+Shift+N</source>
         <comment>New</comment>
-        <translation type="unfinished">Strg+Shift+N</translation>
+        <translation>Strg+Shift+N</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informationen</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Warning</source>
-        <translation type="unfinished">Warnung</translation>
+        <translation>Warnung</translation>
     </message>
 </context>
 <context>
@@ -386,22 +195,22 @@
     <message>
         <location filename="../widgets/postalcodeedit.cpp" line="+109"/>
         <source>Supported countries</source>
-        <translation type="unfinished"></translation>
+        <translation>Unterstützte Länder</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Without disclosures</source>
-        <translation type="unfinished">Keine Angaben</translation>
+        <translation>Keine Angaben</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Postalcode</source>
-        <translation type="unfinished">Postleitzahl</translation>
+        <translation>Postleitzahl</translation>
     </message>
     <message>
         <location line="+120"/>
         <source>a valid Postalcode is required!</source>
-        <translation type="unfinished">eine gültige Postleitzahl ist erforderlich!</translation>
+        <translation>Eine gültige Postleitzahl ist erforderlich!</translation>
     </message>
 </context>
 <context>
@@ -409,17 +218,17 @@
     <message>
         <location filename="../utils/cache/postalcodecache.cpp" line="+46"/>
         <source>Build Postalcodes</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstelle Postleitzahlen</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Postalcode created.</source>
-        <translation type="unfinished"></translation>
+        <translation>Postleitzahlen erstellt.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Postalcode build failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>erstellen der Postleitzahlen fehlgeschlagen!</translation>
     </message>
 </context>
 <context>
@@ -427,155 +236,155 @@
     <message>
         <location filename="../lib/aeuropeancountries.cpp" line="+11"/>
         <source>Belgium</source>
-        <translation type="unfinished"></translation>
+        <translation>Belgien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Bulgaria</source>
-        <translation type="unfinished"></translation>
+        <translation>Bulgarien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Denmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Dänemark</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Germany</source>
-        <translation type="unfinished">Deutschland</translation>
+        <translation>Deutschland</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Estonia</source>
-        <translation type="unfinished"></translation>
+        <translation>Estland</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Finland</source>
-        <translation type="unfinished"></translation>
+        <translation>Finnland</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>France</source>
-        <translation type="unfinished"></translation>
+        <translation>Frankreich</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Greece</source>
-        <translation type="unfinished"></translation>
+        <translation>Griechenland</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Ireland</source>
-        <translation type="unfinished"></translation>
+        <translation>Irland</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Italy</source>
-        <translation type="unfinished"></translation>
+        <translation>Italien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Croatia</source>
-        <translation type="unfinished"></translation>
+        <translation>Kroatien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Latvia</source>
-        <translation type="unfinished"></translation>
+        <translation>Lettland</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Lithuania</source>
-        <translation type="unfinished"></translation>
+        <translation>Litauen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Luxembourg</source>
-        <translation type="unfinished"></translation>
+        <translation>Luxemburg</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Malta</source>
-        <translation type="unfinished"></translation>
+        <translation>Malta</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Netherlands</source>
-        <translation type="unfinished"></translation>
+        <translation>Niederlande</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Austria</source>
-        <translation type="unfinished"></translation>
+        <translation>Österreich</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Poland</source>
-        <translation type="unfinished"></translation>
+        <translation>Polen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Portugal</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugal</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Romania</source>
-        <translation type="unfinished"></translation>
+        <translation>Rumänien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Sweden</source>
-        <translation type="unfinished"></translation>
+        <translation>Schweden</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Slovakia</source>
-        <translation type="unfinished"></translation>
+        <translation>Slowakei</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Slovenia</source>
-        <translation type="unfinished"></translation>
+        <translation>Slowenien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Spain</source>
-        <translation type="unfinished"></translation>
+        <translation>Spanien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Czech</source>
-        <translation type="unfinished">Tschechisch</translation>
+        <translation>Tschechien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Hungary</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungarn</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Cyprus</source>
-        <translation type="unfinished"></translation>
+        <translation>Zypern</translation>
     </message>
 </context>
 <context>
     <name>SelectEuCountry</name>
     <message>
         <location filename="../widgets/selecteucountry.cpp" line="+9"/>
-        <source>European Countires</source>
-        <translation type="unfinished"></translation>
+        <source>European Countries</source>
+        <translation>Europäische Länder</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Without disclosures</source>
-        <translation type="unfinished">Keine Angaben</translation>
+        <translation>Keine Angaben</translation>
     </message>
     <message>
         <location line="+61"/>
-        <source>A valid country selection is required.</source>
-        <translation type="unfinished"></translation>
+        <source>A valid European Country selection is required.</source>
+        <translation>Eine gültige europäische Länderauswahl ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -584,17 +393,17 @@
         <location filename="../widgets/storagelocation.cpp" line="+14"/>
         <location line="+6"/>
         <source>Storage Location</source>
-        <translation type="unfinished">Lagerort</translation>
+        <translation>Lagerort</translation>
     </message>
     <message>
         <location line="-5"/>
         <source>Without disclosures</source>
-        <translation type="unfinished">Keine Angaben</translation>
+        <translation>Keine Angaben</translation>
     </message>
     <message>
         <location line="+122"/>
         <source>Storage location is required and must set.</source>
-        <translation type="unfinished">Eine Lagerangabe ist Erforderlich.</translation>
+        <translation>Der Lagerort ist Erforderlich und muss gesetzt sein.</translation>
     </message>
 </context>
 <context>
@@ -602,17 +411,17 @@
     <message>
         <location filename="../utils/cache/storagelocationcache.cpp" line="+36"/>
         <source>Build Storage locations</source>
-        <translation type="unfinished"></translation>
+        <translation>Ertelle Lagerpositionen</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Storage locations created.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagerpositionen erstellt.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Storage locations failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagererstellung fehlgeschlagen!</translation>
     </message>
 </context>
 <context>
@@ -620,7 +429,7 @@
     <message>
         <location filename="../tabs/books/tabbooks.cpp" line="+12"/>
         <source>Books</source>
-        <translation type="unfinished">Bücher</translation>
+        <translation>Bücher</translation>
     </message>
 </context>
 </TS>

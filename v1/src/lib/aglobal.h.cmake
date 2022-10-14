@@ -110,6 +110,14 @@
 #endif
 
 /**
+ * @def ANTIQUACRM_TRANSLATION_TARGET
+ * @brief Translations target
+ */
+#ifndef ANTIQUACRM_TRANSLATION_TARGET
+#define ANTIQUACRM_TRANSLATION_TARGET "@ANTIQUACRM_TRANSLATION_TARGET@"
+#endif
+
+/**
  * @def ANTIQUACRM_EXPORT
  * @brief library export definition
  */

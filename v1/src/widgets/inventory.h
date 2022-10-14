@@ -42,7 +42,8 @@ Q_SIGNALS:
   void sendEnabledStatus(bool);
 
 public Q_SLOTS:
-  virtual void createEntry() = 0;
+  virtual void createSearchQuery() = 0;
+  virtual void createNewEntry() = 0;
   virtual void openEntry(qint64 id) = 0;
   virtual void onEnterChanged() = 0;
 
