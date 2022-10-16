@@ -2,7 +2,7 @@
 -- @file query_tab_books_main.sql
 SELECT ib_id,
   ib_count,
-  (CASE WHEN im_id IS NOT NULL THEN true ELSE false END) AS im_id,
+  (CASE WHEN im_id IS NOT NULL THEN true ELSE false END)::BOOLEAN AS ib_image,
   ib_title,
   ib_price::MONEY AS ib_price,
   ib_author,

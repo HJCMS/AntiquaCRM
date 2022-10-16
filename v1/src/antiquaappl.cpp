@@ -107,6 +107,8 @@ bool AntiquaAppl::initialPlugins(QObject *receiver) {
     if (m_iface != nullptr) {
       QString name(m_iface->displayName());
       QString msg = tr("Plugin %1 found and loading ...").arg(qPrintable(name));
+      connect(m_iface, SIGNAL(sendQueryFinished()), this,
+              SLOT(setPluginQueryFinished()));
       if (receiver != nullptr) {
         QMetaObject::invokeMethod(receiver, "setMessage", Qt::DirectConnection,
                                   Q_ARG(QString, msg));
@@ -120,6 +122,7 @@ bool AntiquaAppl::initialPlugins(QObject *receiver) {
 }
 
 void AntiquaAppl::startTriggerProcess() {
+  int secs = 1;
   bool connection = checkRemotePort();
   m_systemTray->setConnectionStatus(connection);
   if (connection && p_interfaces.size() > 0) {
@@ -127,9 +130,7 @@ void AntiquaAppl::startTriggerProcess() {
     while (i.hasNext()) {
       AntiquaCRM::APluginInterface *m_iface = i.next();
       if (m_iface != nullptr) {
-        connect(m_iface, SIGNAL(sendQueryFinished()), this,
-                SLOT(setPluginQueryFinished()));
-        m_iface->queryOrders();
+        m_iface->queryOrders(secs++);
       }
     }
   }
@@ -139,7 +140,6 @@ void AntiquaAppl::setPluginQueryFinished() {
   AntiquaCRM::APluginInterface *m_iface =
       qobject_cast<AntiquaCRM::APluginInterface *>(sender());
   if (m_iface != nullptr) {
-    // AntiquaCRM::AProviderOrders
     qDebug() << m_iface->displayName() << m_iface->getResponse();
   }
 }

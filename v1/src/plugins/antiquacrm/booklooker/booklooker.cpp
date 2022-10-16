@@ -16,8 +16,9 @@ Booklooker::Booklooker(QObject *parent) : AntiquaCRM::APluginInterface{parent} {
 
 void Booklooker::prepareJsonResponse(const QJsonDocument &) {}
 
-void Booklooker::queryOrders() {
-  QTimer::singleShot(1000, this, SIGNAL(sendQueryFinished()));
+void Booklooker::queryOrders(int waitSecs) {
+  // TODO
+  QTimer::singleShot((waitSecs * 1000), this, SIGNAL(sendQueryFinished()));
 }
 
 const QString Booklooker::configProvider() const {

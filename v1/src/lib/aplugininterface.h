@@ -32,7 +32,7 @@ Q_SIGNALS:
   void sendQueryFinished();
 
 public Q_SLOTS:
-  virtual void queryOrders() = 0;
+  virtual void queryOrders(int waitSecs = 1) = 0;
 
 public:
   explicit APluginInterface(QObject *parent = nullptr);

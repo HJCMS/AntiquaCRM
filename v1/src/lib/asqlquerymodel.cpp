@@ -58,7 +58,7 @@ bool ASqlQueryModel::querySelect(const QString &sql) {
 
 const QString ASqlQueryModel::tableName() const { return p_table; }
 
-const QString ASqlQueryModel::fieldName(int column) {
+const QString ASqlQueryModel::fieldName(int column) const {
   if (p_record.isEmpty())
     return QString();
 

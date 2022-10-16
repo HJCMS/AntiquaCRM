@@ -17,7 +17,7 @@ protected Q_SLOTS:
   void prepareJsonResponse(const QJsonDocument &);
 
 public Q_SLOTS:
-  void queryOrders();
+  void queryOrders(int waitSecs = 1);
 
 public:
   explicit Booklooker(QObject *parent = nullptr);

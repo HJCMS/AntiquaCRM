@@ -23,8 +23,7 @@ void AntiquaTabWidget::tabChanged(int index) {
 
 bool AntiquaTabWidget::loadDefaultTabs() {
   m_books = new TabBooks(this);
-  QIcon icon = m_books->windowIcon();
-  insertTab(0, m_books, icon, m_books->windowTitle());
+  insertTab(0, m_books, m_books->windowIcon(), m_books->windowTitle());
 
   // TESTS
   m_testing = new QWidget(this);
@@ -61,7 +60,7 @@ bool AntiquaTabWidget::loadDefaultTabs() {
 
   testLayout->addStretch(1);
   m_testing->setLayout(testLayout);
-  insertTab(1, m_testing, icon, "Test Widgets");
+  insertTab(1, m_testing, Inventory::getTabIcon(), "Test Widgets");
 
   return true;
 }

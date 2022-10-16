@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_SEARCHBAR_H
-#define ANTIQUACRM_SEARCHBAR_H
+#ifndef ANTIQUACRM_TABSEARCHBAR_H
+#define ANTIQUACRM_TABSEARCHBAR_H
 
 #include <QObject>
 #include <QPushButton>
@@ -13,7 +13,7 @@
 #include <QToolBar>
 #include <QWidget>
 
-class SearchBar : public QToolBar {
+class TabSearchBar : public QToolBar {
   Q_OBJECT
 
 protected:
@@ -21,7 +21,7 @@ protected:
   const QRegExp quotePattern = QRegExp("[\\'\\\"]+");
   const QRegExp trimPattern = QRegExp("[\\s\\t\\n\\r]+");
   const QRegExp isbnPattern = QRegExp("[^0-9]+");
-  const QRegExp articlePattern = QRegExp("^([0-9]{1,9}[\\,]?)+$");
+  const QRegExp articlePattern = QRegExp("^([0-9]+[\\,]?)+$");
 
   /**
    * @brief Predefined Search Button
@@ -44,7 +44,7 @@ Q_SIGNALS:
   void sendSearchClicked();
 
 public:
-  explicit SearchBar(QWidget *parent = nullptr);
+  explicit TabSearchBar(QWidget *parent = nullptr);
 
   /**
    * @brief String length from current search input
@@ -57,4 +57,4 @@ public:
   virtual const QString getSearchStatement() = 0;
 };
 
-#endif // ANTIQUACRM_SEARCHBAR_H
+#endif // ANTIQUACRM_TABSEARCHBAR_H

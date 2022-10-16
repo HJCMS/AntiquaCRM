@@ -9,7 +9,7 @@
 
 Inventory::Inventory(QWidget *parent) : QStackedWidget{parent} {
   setContentsMargins(0, 0, 0, 0);
-  setWindowIcon(defaultIcon());
+  setWindowIcon(getTabIcon());
   addShortCutsAndSignals();
 }
 
@@ -28,11 +28,13 @@ void Inventory::addShortCutsAndSignals() {
 
   m_createEntry = new QShortcut(tr("Ctrl+Shift+N", "New"), this);
   m_createEntry->setKey(km + Qt::Key_N);
-  connect(m_createEntry, SIGNAL(activated()), this,
-          SIGNAL(sendCreateNewEntry()));
+  connect(m_createEntry, SIGNAL(activated()), this, SLOT(createNewEntry()));
 }
 
-void Inventory::setClosable(bool b) { closable = b; }
+void Inventory::setClosable(bool b) {
+  closable = b;
+  emit sendClosableChanged();
+}
 
 void Inventory::changeEvent(QEvent *event) {
   if (event->type() == QEvent::EnabledChange)
@@ -73,6 +75,6 @@ bool Inventory::isClosable() { return closable; }
 
 bool Inventory::isModified() { return isWindowModified(); }
 
-const QIcon Inventory::defaultIcon() {
-  return QIcon(QString(":icons/antiqua.png"));
+const QIcon Inventory::getTabIcon(const QString &name) {
+  return QIcon(QString(":icons/" + name + ".png"));
 }

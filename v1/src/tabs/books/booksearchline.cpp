@@ -5,6 +5,7 @@
 
 BookSearchLine::BookSearchLine(QWidget *parent) : SearchLineEdit{parent} {
   setObjectName("book_search_line");
+  // Default on load
   setValidation(SearchLineEdit::Strings);
 }
 

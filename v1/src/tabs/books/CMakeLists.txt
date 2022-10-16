@@ -16,18 +16,20 @@ SET (projectLibrary_LINKER
 
 SET (projectLibrary_SOURCES
  tabbooks.cpp
- bookstable.cpp
+ booktableview.cpp
  bookstablemodel.cpp
  booksearchbar.cpp
+ bookstatusbar.cpp
  bookselectfilter.cpp
  booksearchline.cpp
 )
 
 SET (projectLibrary_HEADERS
  tabbooks.h
- bookstable.h
+ booktableview.h
  bookstablemodel.h
  booksearchbar.h
+ bookstatusbar.h
  bookselectfilter.h
  booksearchline.h
 )

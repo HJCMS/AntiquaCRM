@@ -45,7 +45,7 @@ public:
   explicit ASqlQueryModel(const QString &table, QObject *parent = nullptr);
   bool querySelect(const QString &sql);
   const QString tableName() const;
-  const QString fieldName(int column = 0);
+  const QString fieldName(int column = 0) const;
   QVariant data(const QModelIndex &item, int role = Qt::DisplayRole) const;
 };
 

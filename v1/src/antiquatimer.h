@@ -27,7 +27,7 @@ private:
   int interval;
 
   /**
-   * @brief Counter base
+   * @brief Counter base in secs
    */
   int countBase;
 
@@ -36,7 +36,7 @@ private:
    */
   int countDown;
 
-  void timerEvent(QTimerEvent *event);
+  void timerEvent(QTimerEvent *event) override;
 
 Q_SIGNALS:
   void sendTrigger();
@@ -47,7 +47,7 @@ public Q_SLOTS:
 
 public:
   explicit AntiquaTimer(QObject *parent = nullptr);
-  ~AntiquaTimer();
+  virtual ~AntiquaTimer();
 };
 
 #endif // ANTIQUACRM_TIMER_H

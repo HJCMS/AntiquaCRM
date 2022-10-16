@@ -12,7 +12,7 @@
 class BookSelectFilter;
 class BookSearchLine;
 
-class BookSearchBar final : public SearchBar {
+class BookSearchBar final : public TabSearchBar {
   Q_OBJECT
 
 private:

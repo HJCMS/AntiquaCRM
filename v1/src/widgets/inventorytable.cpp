@@ -14,7 +14,7 @@ InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
   setSelectionMode(QAbstractItemView::SingleSelection);
 
   m_cfg = new AntiquaCRM::ASettings(this);
-  QueryLimit = m_cfg->defaultValue("SqlQueryLimit", 2500).toInt();
+  QueryLimit = m_cfg->defaultValue("SqlQueryLimit", 0).toInt();
 
   /* Kopfzeilen anpassen */
   m_header = horizontalHeader();
@@ -30,11 +30,6 @@ InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
 void InventoryTable::setEnableTableViewSorting(bool b) {
   setSortingEnabled(b);
   m_header->setSectionsClickable(b);
-}
-
-void InventoryTable::makeHistoryQuery() {
-  if (QueryHistory.contains("SELECT ", Qt::CaseInsensitive))
-    sqlQueryTable(QueryHistory);
 }
 
 void InventoryTable::setQueryLimit(int limit) {

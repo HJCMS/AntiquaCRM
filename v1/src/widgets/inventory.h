@@ -5,17 +5,17 @@
 #ifndef ANTIQUACRM_INVENTORY_H
 #define ANTIQUACRM_INVENTORY_H
 
-#include <QObject>
-#include <QIcon>
-#include <QShortcut>
-#include <QTableView>
 #include <QHeaderView>
+#include <QIcon>
+#include <QObject>
+#include <QShortcut>
 #include <QStackedWidget>
+#include <QTableView>
 
 class Inventory : public QStackedWidget {
   Q_OBJECT
   Q_PROPERTY(bool closable READ isClosable WRITE setClosable NOTIFY
-                 sendCloseableChanged)
+                 sendClosableChanged)
 
 private:
   QShortcut *m_focusSearch; /**< @brief Ctrl+Shift+S */
@@ -24,32 +24,100 @@ private:
   void addShortCutsAndSignals();
 
 protected:
+  /**
+   * @brief is this tab already loaded and initialed?
+   */
   bool initialed = false;
-  bool closable = true;
+
+  /**
+   * @brief is this tab closeable?
+   */
+  bool closable = false;
+
+  /**
+   * @brief Set it Closable.
+   * @default false
+   * @ref closable
+   */
   void setClosable(bool b = false);
 
 protected Q_SLOTS:
   void changeEvent(QEvent *event) override;
+
+  /**
+   * @brief Copy String to System Clipboard
+   */
   void copyToClipboard(const QString &data);
+
+  /**
+   * @brief Info MessageBox
+   */
   void infoPoUp(const QString &title, const QString &message);
+
+  /**
+   * @brief Info WarningBox
+   */
   void warnPoUp(const QString &title, const QString &message);
 
 Q_SIGNALS:
-  void sendCloseableChanged(bool);
+  /**
+   * @brief Send Tab closeable changed
+   */
+  void sendClosableChanged();
+
+  /**
+   * @brief signal from Shortcut @ref m_focusSearch
+   */
   void sendSetSearchFocus();
+
+  /**
+   * @brief signal from Shortcut @ref m_focusFilter
+   */
   void sendSetSearchFilter();
-  void sendCreateNewEntry();
+
+  /**
+   * @brief Article Id
+   */
+  void sendArticleId(qint64 articleId);
+
+  /**
+   * @brief Add Article to current opened Order!
+   * @param articleId
+   */
+  void sendArticle2Order(qint64 articleId);
+
+  /**
+   * @brief Emitted when Tab change to active!
+   * @code
+   *  (event->type() == QEvent::EnabledChange)
+   * @endcode
+   */
   void sendEnabledStatus(bool);
 
 public Q_SLOTS:
-  virtual void createSearchQuery() = 0;
+  /**
+   * @brief prepare SQL Queries
+   */
+  virtual void createSearchQuery(const QString &query = QString()) = 0;
+
+  /**
+   * @brief create a new entry in this section
+   */
   virtual void createNewEntry() = 0;
-  virtual void openEntry(qint64 id) = 0;
+
+  /**
+   * @brief open Entry with Article ID
+   */
+  virtual void openEntry(qint64 articleId) = 0;
+
+  /**
+   * @brief caller for tab has changed to visible
+   */
   virtual void onEnterChanged() = 0;
 
 public:
   explicit Inventory(QWidget *parent = nullptr);
-  static const QIcon defaultIcon();
+  static const QIcon getTabIcon(const QString &name = QString("antiqua"));
   Q_INVOKABLE bool isClosable();
   Q_INVOKABLE bool isModified();
 };

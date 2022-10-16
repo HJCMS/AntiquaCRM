@@ -8,7 +8,7 @@
 #include <QIcon>
 #include <QToolButton>
 
-BookSearchBar::BookSearchBar(QWidget *parent) : SearchBar{parent} {
+BookSearchBar::BookSearchBar(QWidget *parent) : TabSearchBar{parent} {
   setObjectName("book_search_bar");
 
   m_selectFilter = new BookSelectFilter(this);
@@ -59,7 +59,7 @@ const QString BookSearchBar::prepareFieldSet(const QString &fieldname,
     sql.append("%");
     sql.append(words.first());
   } else {
-    if(sf.length() > minLength)
+    if (sf.length() > minLength)
       sql.append("%");
 
     sql.append(sf);
@@ -218,54 +218,56 @@ int BookSearchBar::searchLength() {
 const QString BookSearchBar::getSearchStatement() {
   QJsonObject js = m_selectFilter->getFilter(m_selectFilter->currentIndex());
   QStringList fields = js.value("fields").toString().split(",");
-  QString query;
   // Title und Autorensuche
   if (js.value("search").toString() == "title_and_author") {
-    query = getTitleSearch(fields);
-    return query;
+    return getTitleSearch(fields);
   }
+
   // Buch Titlesuche
   if (js.value("search").toString() == "title") {
-    query = getTitleSearch(fields);
-    return query;
+    return getTitleSearch(fields);
   }
+
   // Buch Autorensuche
   if (js.value("search").toString() == "author") {
-    query = getTitleSearch(fields);
-    return query;
+    return getTitleSearch(fields);
   }
+
   // Artikel Nummersuche (107368,115110)
   if (js.value("search").toString() == "articleId") {
     QString s = m_searchLeft->getSearch();
-    s.replace(articlePattern, "");
-    query = "ib_id IN (" + s + ")";
-    return query;
+    s.replace(QRegExp("\\,\\s?$"), "");
+    return "ib_id IN (" + s + ")";
   }
+
   // ISBN Suche
   if (js.value("search").toString() == "isbn") {
     QString s = m_searchLeft->getSearch();
-    s.replace(isbnPattern, "");
-    query = "ib_isbn=" + s;
-    return query;
+    s.replace(QRegExp("\\D+"), "");
+    if (s.length() == 10 || s.length() == 13)
+      return "ib_isbn=" + s;
   }
+
   // Publisher
   if (js.value("search").toString() == "publisher") {
     QString s = m_searchLeft->getSearch();
     s.replace(jokerPattern, "%");
-    query = "ib_publisher ILIKE '" + s + "%'";
-    return query;
+    return "ib_publisher ILIKE '" + s + "%'";
   }
+
   // Lager & Stichwortsuche
   if (js.value("search").toString() == "storage") {
     QString s = m_searchLeft->getSearch();
     s.replace(jokerPattern, "%");
-    query = ("ib_count>0 AND (sl_storage ILIKE '");
-    query.append(s + "' OR sl_identifier ILIKE '" + s + "%')");
-    query.append(" OR (ib_keyword ILIKE '" + s + "%')");
-    return query;
+    QString sql;
+    sql = ("ib_count>0 AND (sl_storage ILIKE '");
+    sql.append(s + "' OR sl_identifier ILIKE '" + s + "%')");
+    sql.append(" OR (ib_keyword ILIKE '" + s + "%')");
+    return sql;
   }
 
   qWarning("Not Defined Search (%s)",
            qPrintable(js.value("search").toString()));
+
   return QString();
 }

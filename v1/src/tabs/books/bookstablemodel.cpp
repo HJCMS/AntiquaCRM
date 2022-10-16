@@ -4,6 +4,7 @@
 #include "bookstablemodel.h"
 
 #include <QDebug>
+#include <QSqlQueryModel>
 
 #ifndef BOOKS_TABLENAME
 #define BOOKS_TABLENAME "inventory_books"
@@ -36,7 +37,7 @@ QVariant BooksTableModel::headerData(int section, Qt::Orientation orientation,
     return verticalHeader(section, role);
 
   if (orientation == Qt::Horizontal && role == Qt::DecorationRole)
-    return setHeaderIcon(section);
+    return QVariant();
 
   if (role != Qt::DisplayRole)
     return QSqlQueryModel::headerData(section, orientation, role);
@@ -46,4 +47,16 @@ QVariant BooksTableModel::headerData(int section, Qt::Orientation orientation,
     return tr("Unknown");
 
   return map.value(section) + " ";
+}
+
+QVariant BooksTableModel::data(const QModelIndex &item, int role) const {
+  if (!item.isValid())
+    return QVariant();
+
+  if (role == Qt::DecorationRole &&
+      fieldName(item.column()).contains("image")) {
+    return QIcon(":icons/view_image.png");
+  }
+
+  return AntiquaCRM::ASqlQueryModel::data(item, role);
 }

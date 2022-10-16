@@ -42,7 +42,8 @@ SET (projectLibrary_SOURCES
  storagelocation.cpp
  selecteucountry.cpp
  searchfilter.cpp
- searchbar.cpp
+ tabsearchbar.cpp
+ tabstatusbar.cpp
  searchlineedit.cpp
 )
 
@@ -63,7 +64,8 @@ SET (projectLibrary_HEADERS
  storagelocation.h
  selecteucountry.h
  searchfilter.h
- searchbar.h
+ tabsearchbar.h
+ tabstatusbar.h
  searchlineedit.h
 )
 
