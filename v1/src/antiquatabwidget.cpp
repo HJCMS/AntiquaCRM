@@ -11,7 +11,6 @@
 
 AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
   setObjectName("window_tabwidget");
-  setMinimumSize(800, 550);
 
   AntiquaCRM::ASettings cfg(this);
   cfg.setObjectName("tabwidget_settings");

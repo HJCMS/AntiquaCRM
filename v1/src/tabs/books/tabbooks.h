@@ -7,7 +7,7 @@
 
 #include <AntiquaWidgets>
 #include <QObject>
-#include <QWidget>
+#include <QScrollArea>
 
 class BookSearchBar;
 class BookTableView;
@@ -22,7 +22,8 @@ private:
   BookSearchBar *m_searchBar;
   BookTableView *m_table;
   BookStatusBar *m_statusBar;
-  BookEditor *m_editorPage;
+  QScrollArea *m_editorPage;
+  BookEditor *m_editorWidget;
 
 public Q_SLOTS:
   void createSearchQuery(const QString &query = QString());

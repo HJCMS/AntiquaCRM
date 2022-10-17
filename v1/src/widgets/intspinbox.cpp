@@ -53,7 +53,8 @@ void IntSpinBox::reset() {
 void IntSpinBox::setFocus() { m_spinBox->setFocus(); }
 
 void IntSpinBox::setProperties(const QSqlField &field) {
-  qInfo("TODO IntSpinBox::setProperties");
+  if (field.requiredStatus() == QSqlField::Required)
+    setRequired(true);
 }
 
 const QVariant IntSpinBox::value() { return m_spinBox->value(); }

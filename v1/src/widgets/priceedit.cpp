@@ -31,7 +31,8 @@ void PriceEdit::reset() {
 void PriceEdit::setFocus() { m_box->setFocus(); }
 
 void PriceEdit::setProperties(const QSqlField &field) {
-  qInfo("TODO PriceEdit::setProperties");
+  if (field.requiredStatus() == QSqlField::Required)
+    setRequired(true);
 }
 
 const QVariant PriceEdit::value() { return QVariant(m_box->value()); }

@@ -57,7 +57,8 @@ void BookBinding::setFocus() {
 }
 
 void BookBinding::setProperties(const QSqlField &field) {
-  qInfo("TODO BookBinding::setProperties");
+  if (field.requiredStatus() == QSqlField::Required)
+    setRequired(true);
 }
 
 const QVariant BookBinding::value() {

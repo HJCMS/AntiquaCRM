@@ -4,9 +4,6 @@
 #include "storagelocation.h"
 
 #include <AntiquaCRM>
-#ifdef ANTIQUA_DEVELOPEMENT
-#include <QDebug>
-#endif
 
 StorageLocation::StorageLocation(QWidget *parent) : InputEdit{parent} {
 
@@ -71,12 +68,7 @@ void StorageLocation::loadDataset() {
 }
 
 void StorageLocation::dataChanged(int index) {
-#ifndef ANTIQUA_DEVELOPEMENT
   Q_UNUSED(index);
-#else
-  qDebug() << Q_FUNC_INFO << index << m_box->itemData(index, Qt::UserRole)
-           << m_box->itemData(index, Qt::EditRole);
-#endif
   setModified(true);
 }
 

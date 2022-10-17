@@ -52,7 +52,8 @@ void BoolBox::setChecked(bool b) {
 }
 
 void BoolBox::setProperties(const QSqlField &field) {
-  qInfo("TODO BoolBox::setProperties");
+  if (field.requiredStatus() == QSqlField::Required)
+    setRequired(true);
 }
 
 bool BoolBox::isChecked() { return m_checkBox->isChecked(); }

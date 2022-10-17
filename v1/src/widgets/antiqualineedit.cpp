@@ -6,7 +6,7 @@
 AntiquaLineEdit::AntiquaLineEdit(QWidget *parent) : QLineEdit{parent} {
   QSizePolicy sp(QSizePolicy::MinimumExpanding, /* klein halten */
                  QSizePolicy::Fixed, QSizePolicy::LineEdit);
-  setMaxLength(80);
+  setClearButtonEnabled(true);
   setMinimumWidth(30);
   setSizePolicy(sp);
 }

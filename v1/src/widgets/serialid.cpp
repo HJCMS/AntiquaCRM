@@ -45,7 +45,8 @@ void SerialID::setInfo(const QString &info) {
 const QString SerialID::info() { return m_label->text(); }
 
 void SerialID::setProperties(const QSqlField &field) {
-  qInfo("TODO SerialID::setProperties");
+  if (field.requiredStatus() == QSqlField::Required)
+    setRequired(true);
 }
 
 const QVariant SerialID::value() {

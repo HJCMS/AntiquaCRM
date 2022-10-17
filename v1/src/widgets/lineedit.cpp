@@ -51,8 +51,10 @@ void LineEdit::setProperties(const QSqlField &field) {
     m_edit->setPlaceholderText(txt);
   }
 
-  if (field.requiredStatus() == QSqlField::Required)
+  if (field.requiredStatus() == QSqlField::Required) {
     setRequired(true);
+    m_edit->setClearButtonEnabled(false);
+  }
 }
 
 void LineEdit::setPasswordInput(bool b) {

@@ -13,7 +13,7 @@ InventoryEditor::InventoryEditor(const QString &pattern, QWidget *parent)
     : QWidget{parent}, fieldPattern{pattern} {
   setContentsMargins(0, 0, 0, 0);
   m_sql = new AntiquaCRM::ASqlCore(this);
-  m_bookTable = nullptr;
+  m_bookData = nullptr;
 }
 
 bool InventoryEditor::isInputField(const QString &fieldName) {

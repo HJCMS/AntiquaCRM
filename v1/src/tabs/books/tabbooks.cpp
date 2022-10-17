@@ -31,7 +31,11 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{parent} {
   // End
 
   // Begin Editor
-  m_editorPage = new BookEditor(this);
+  m_editorPage = new QScrollArea(this);
+  m_editorPage->setObjectName("book_editor_scrollarea");
+  m_editorPage->setWidgetResizable(true);
+  m_editorWidget = new BookEditor(m_editorPage);
+  m_editorPage->setWidget(m_editorWidget);
   insertWidget(1, m_editorPage);
   // End
 
@@ -79,13 +83,13 @@ void TabBooks::createSearchQuery(const QString &query) {
 }
 
 void TabBooks::createNewEntry() {
-  if (m_editorPage->createNewEntry()) {
+  if (m_editorWidget->createNewEntry()) {
     setCurrentWidget(m_editorPage);
   }
 }
 
 void TabBooks::openEntry(qint64 articleId) {
-  if (m_editorPage->openEditEntry(articleId)) {
+  if (m_editorWidget->openEditEntry(articleId)) {
     setCurrentWidget(m_editorPage);
   }
 }

@@ -13,10 +13,6 @@ BookEditor::BookEditor(QWidget *parent)
 
   AntiquaCRM::ASettings config(this);
 
-  ignoreList << "ib_json_category";
-
-  Qt::Alignment defaultAlignment = (Qt::AlignRight | Qt::AlignVCenter);
-
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setObjectName("bookeditor_main_layout");
   mainLayout->setSizeConstraint(QLayout::SetMaximumSize);
@@ -111,7 +107,6 @@ BookEditor::BookEditor(QWidget *parent)
   row2Widget->setMinimumHeight(380);
   int row2c = 0;
   QGridLayout *row2 = new QGridLayout(row2Widget);
-  row2->setContentsMargins(2, 2, 2, 2);
 
   AntiquaILabel *lb_title = new AntiquaILabel(tr("Booktitle"), row2Widget);
   row2->addWidget(lb_title, row2c, 0, 1, 1);
@@ -198,21 +193,25 @@ BookEditor::BookEditor(QWidget *parent)
   row2Widget->setLayout(row2);
   mainLayout->addWidget(row2Widget);
 
-  mainLayout->addStretch(1);
+  m_tabWidget = new QTabWidget(this);
+  m_tabWidget->setObjectName("tab_widget");
+  m_tabWidget->setMinimumHeight(180);
+  m_tabWidget->setContentsMargins(1, 1, 1, 1);
+  // TODO
+  mainLayout->addWidget(m_tabWidget);
   setLayout(mainLayout);
   setEnabled(false);
 }
 
 void BookEditor::setInputList() {
-  m_bookTable = new AntiquaCRM::ASqlTable("inventory_books");
-  inputList = m_bookTable->columnNames();
+  m_bookData = new AntiquaCRM::ASqlTable("inventory_books");
+  ignoreList << "ib_json_category";
+  inputList = m_bookData->columnNames();
   if (inputList.isEmpty()) {
     qWarning("Books InputList is Empty!");
   }
   // Werden Manuel gesetzt!
   inputList.removeOne("ib_changed");
-  // Deprecated / Obsolete
-  inputList.removeOne("ib_category_subject");
 }
 
 bool BookEditor::setDataField(const QSqlField &field, const QVariant &value) {
@@ -234,13 +233,13 @@ bool BookEditor::setDataField(const QSqlField &field, const QVariant &value) {
 }
 
 void BookEditor::importSqlResult() {
-  if (m_bookTable == nullptr)
+  if (m_bookData == nullptr)
     return;
 
-  QHashIterator<QString, QVariant> it(m_bookTable->getDataset());
+  QHashIterator<QString, QVariant> it(m_bookData->getDataset());
   while (it.hasNext()) {
     it.next();
-    QSqlField field = m_bookTable->getProperties(it.key());
+    QSqlField field = m_bookData->getProperties(it.key());
     setDataField(field, it.value());
   }
   setResetModified(inputList);
@@ -279,14 +278,14 @@ bool BookEditor::openEditEntry(qint64 articleId) {
     return status;
 
   setInputList();
-  QString table = m_bookTable->tableName();
+  QString table = m_bookData->tableName();
   QString query("SELECT * FROM " + table + " WHERE ib_id=" + ib_id + ";");
   QSqlQuery q = m_sql->query(query);
   if (q.size() != 0) {
-    QSqlRecord r = m_bookTable->record();
+    QSqlRecord r = m_bookData->record();
     while (q.next()) {
       foreach (QString key, inputList) {
-        m_bookTable->setValue(key, q.value(r.indexOf(key)));
+        m_bookData->setValue(key, q.value(r.indexOf(key)));
       }
     }
     status = true;

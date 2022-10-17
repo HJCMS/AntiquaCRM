@@ -38,6 +38,9 @@ private:
   LineEdit *ib_designation;     /**< @brief Umschreibung */
   StorageLocation *ib_storage;          /**< @brief Lager bestimmung */
 
+  // Row 3
+  QTabWidget *m_tabWidget;
+
   /*
    TODO info section
     AntiquaDateInfo *ib_since; @brief Ersteller Datum

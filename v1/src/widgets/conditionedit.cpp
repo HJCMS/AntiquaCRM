@@ -3,10 +3,6 @@
 
 #include "conditionedit.h"
 
-#ifdef ANTIQUA_DEVELOPEMENT
-#include <QDebug>
-#endif
-
 ConditionEdit::ConditionEdit(QWidget *parent) : InputEdit{parent} {
   m_box = new AntiquaComboBox(this);
   m_box->setToolTip(tr("Condition"));
@@ -27,12 +23,7 @@ void ConditionEdit::loadDataset() {
 }
 
 void ConditionEdit::dataChanged(int index) {
-#ifndef ANTIQUA_DEVELOPEMENT
   Q_UNUSED(index);
-#else
-  qDebug() << Q_FUNC_INFO << index << m_box->itemData(index, Qt::UserRole)
-           << m_box->itemData(index, Qt::EditRole);
-#endif
   setModified(true);
 }
 
@@ -60,7 +51,8 @@ void ConditionEdit::setFocus() {
 }
 
 void ConditionEdit::setProperties(const QSqlField &field) {
-  qInfo("TODO ConditionEdit::setProperties");
+  if (field.requiredStatus() == QSqlField::Required)
+    setRequired(true);
 }
 
 const QVariant ConditionEdit::value() {

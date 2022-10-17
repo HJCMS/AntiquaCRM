@@ -7,10 +7,9 @@
 InputEdit::InputEdit(QWidget *parent) : QFrame{parent} {
   setContentsMargins(0, 0, 0, 0);
   m_layout = new QHBoxLayout(this);
-
+  m_layout->setContentsMargins(0, 0, 0, 0);
   m_label = new AntiquaILabel(this);
   m_layout->addWidget(m_label);
-
   setLayout(m_layout);
   setRequired(false);
   setModified(false);
