@@ -56,6 +56,10 @@ void BookBinding::setFocus() {
   m_box->showPopup();
 }
 
+void BookBinding::setProperties(const QSqlField &field) {
+  qInfo("TODO BookBinding::setProperties");
+}
+
 const QVariant BookBinding::value() {
   int index = m_box->currentIndex();
   return m_box->itemData(index, Qt::UserRole).toInt();

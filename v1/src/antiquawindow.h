@@ -5,10 +5,12 @@
 #ifndef ANTIQUACRM_MAINWINDOW_H
 #define ANTIQUACRM_MAINWINDOW_H
 
+#include <AntiquaCRM>
+#include <QCloseEvent>
+#include <QHideEvent>
 #include <QMainWindow>
-#include <QObject>
 #include <QMenuBar>
-#include <QEvent>
+#include <QObject>
 #include <QWidget>
 
 class AntiquaMenuBar;
@@ -19,6 +21,7 @@ class AntiquaWindow : public QMainWindow {
   Q_OBJECT
 
 private:
+  AntiquaCRM::ASettings *m_cfg;
   AntiquaMenuBar *m_menuBar;
   AntiquaStatusBar *m_statusBar;
   AntiquaTabWidget *m_centralWidget;
@@ -27,13 +30,15 @@ private Q_SLOTS:
   void closeWindow();
 
 protected:
+  void hideEvent(QHideEvent *) override;
   void closeEvent(QCloseEvent *) override;
 
 Q_SIGNALS:
   void sendApplQuit();
 
 public Q_SLOTS:
-  void toggle();
+  void setToggleView();
+  void setToggleFullScreen(bool);
 
 public:
   explicit AntiquaWindow(QWidget *parent = nullptr);

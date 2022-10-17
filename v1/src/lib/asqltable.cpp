@@ -45,6 +45,15 @@ ASqlTable::ASqlTable(const QSqlRecord &record) : tableRecord{record}, p_data{} {
   }
 }
 
+const QSqlRecord ASqlTable::record() const { return tableRecord; }
+
+const QString ASqlTable::tableName() const {
+  if (isValid()) {
+    return tableRecord.field(0).tableName();
+  }
+  return QString();
+}
+
 bool ASqlTable::isValid() const {
   return (tableRecord.isEmpty() ? false : true);
 }
@@ -93,15 +102,19 @@ void ASqlTable::setValue(const QString &column, const QVariant &value) {
     return;
 
   if (field.type() != value.type()) {
-    qWarning("Invalid type rejected! Field:'%s' Require: %s",
-             qPrintable(column), QVariant(field.type()).typeName());
-    return;
+    int metaCheck;
+    QVariant from(field.defaultValue());
+    if (!QMetaType::compare(&from, &value, getType(column).id(), &metaCheck)) {
+      qWarning("Warning MetaType for '%s' require '%s' but get '%s'!",
+               qPrintable(column), QVariant(field.type()).typeName(),
+               QVariant(value.type()).typeName());
+    }
   }
 
   if (field.requiredStatus() == QSqlField::Required && value.isNull()) {
     if (field.defaultValue().isNull()) {
-      qWarning("Invalid value! Field:'%s' is required and can't null.",
-               qPrintable(column));
+      qFatal("Invalid value! Field:'%s' is required and can't null.",
+             qPrintable(column));
       return;
     }
     p_data.insert(field.name(), field.defaultValue());
@@ -110,8 +123,8 @@ void ASqlTable::setValue(const QString &column, const QVariant &value) {
 
   if (field.type() == QVariant::String && field.length() > 0) {
     if (value.toString().length() > field.length()) {
-      qWarning("Invalid datasize! '%s' max length is '%d'", qPrintable(column),
-               field.length());
+      qFatal("Invalid datasize! '%s' max length is '%d'", qPrintable(column),
+             field.length());
       return;
     }
   }

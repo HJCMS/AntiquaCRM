@@ -33,6 +33,7 @@ public:
   bool open();
   const QSqlDatabase db();
   const QSqlRecord record(const QString &table);
+  const QStringList fieldNames(const QString &table);
   const QSqlQuery query(const QString &statement);
   const QString lastError();
   void close();

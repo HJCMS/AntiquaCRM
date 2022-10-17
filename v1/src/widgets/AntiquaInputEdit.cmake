@@ -33,6 +33,10 @@
 #include "antiquailabel.h"
 #endif
 
+#ifndef ANTIQUA_INPUT_LINEEDIT_H
+#include "antiqualineedit.h"
+#endif
+
 #ifndef ANTIQUA_INPUT_SPINBOX_H
 #include "antiquaspinbox.h"
 #endif

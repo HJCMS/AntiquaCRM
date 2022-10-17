@@ -25,6 +25,8 @@ namespace AntiquaCRM {
 class ANTIQUACRM_LIBRARAY ASqlTable final {
 
 private:
+  const QSqlRecord tableRecord;
+
   /**
    * @brief temporary dataset
    */
@@ -38,7 +40,12 @@ public:
   /**
    * @brief Current SQL Table Record
    */
-  const QSqlRecord tableRecord;
+  const QSqlRecord record() const;
+
+  /**
+   * @brief Current Tablename
+   */
+  const QString tableName() const;
 
   /**
    * @brief Does the SQL Record contain a field set?

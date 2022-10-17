@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "tabbooks.h"
+#include "bookeditor.h"
 #include "booksearchbar.h"
 #include "bookstatusbar.h"
 #include "booktableview.h"
@@ -21,11 +22,17 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{parent} {
   m_searchBar = new BookSearchBar(m_mainPage);
   m_p1Layout->addWidget(m_searchBar);
   m_table = new BookTableView(m_mainPage);
+  m_table->setObjectName("books_table");
   m_p1Layout->addWidget(m_table);
   m_statusBar = new BookStatusBar(m_mainPage);
   m_p1Layout->addWidget(m_statusBar);
   m_mainPage->setLayout(m_p1Layout);
   insertWidget(0, m_mainPage);
+  // End
+
+  // Begin Editor
+  m_editorPage = new BookEditor(this);
+  insertWidget(1, m_editorPage);
   // End
 
   // Signals
@@ -71,15 +78,22 @@ void TabBooks::createSearchQuery(const QString &query) {
   }
 }
 
-void TabBooks::createNewEntry() { qDebug() << Q_FUNC_INFO << "TODO"; }
+void TabBooks::createNewEntry() {
+  if (m_editorPage->createNewEntry()) {
+    setCurrentWidget(m_editorPage);
+  }
+}
 
 void TabBooks::openEntry(qint64 articleId) {
-  qDebug() << Q_FUNC_INFO << articleId;
+  if (m_editorPage->openEditEntry(articleId)) {
+    setCurrentWidget(m_editorPage);
+  }
 }
 
 void TabBooks::onEnterChanged() {
   if (!initialed) {
     initialed = m_table->setQuery();
     m_searchBar->setFilter(0);
+    setCurrentWidget(m_mainPage);
   }
 }

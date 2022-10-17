@@ -29,8 +29,20 @@
 #include "bookbinding.h"
 #endif
 
+#ifndef ANTIQUACRM_BOOLBOX_H
+#include "boolbox.h"
+#endif
+
 #ifndef ANTIQUACRM_CONDITION_EDIT_H
 #include "conditionedit.h"
+#endif
+
+#ifndef ANTIQUACRM_INTSPINBOX_H
+#include "intspinbox.h"
+#endif
+
+#ifndef ANTIQUACRM_INVENTORY_EDITOR_H
+#include "inventoryeditor.h"
 #endif
 
 #ifndef ANTIQUACRM_INVENTORY_H
@@ -41,8 +53,20 @@
 #include "inventorytable.h"
 #endif
 
+#ifndef ANTIQUACRM_LANGUAGE_H
+#include "language.h"
+#endif
+
+#ifndef ANTIQUACRM_LINEEDIT_H
+#include "lineedit.h"
+#endif
+
 #ifndef ANTIQUACRM_POSTALCODE_EDIT_H
 #include "postalcodeedit.h"
+#endif
+
+#ifndef ANTIQUACRM_PRICEEDIT_H
+#include "priceedit.h"
 #endif
 
 #ifndef ANTIQUACRM_SEARCHFILTER_H
@@ -57,6 +81,10 @@
 #include "selecteucountry.h"
 #endif
 
+#ifndef ANTIQUACRM_SERIALID_H
+#include "serialid.h"
+#endif
+
 #ifndef ANTIQUACRM_STORAGELOCATION_H
 #include "storagelocation.h"
 #endif
@@ -67,5 +95,9 @@
 
 #ifndef ANTIQUACRM_TABSTATUSBAR_H
 #include "tabstatusbar.h"
+#endif
+
+#ifndef ANTIQUACRM_YEAREDIT_H
+#include "yearedit.h"
 #endif
 

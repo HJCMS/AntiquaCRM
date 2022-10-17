@@ -32,7 +32,6 @@ private:
 
 protected:
   AntiquaCRM::ASqlCore *m_sql;
-  virtual const QMap<int, QString> headerList() const = 0;
   const QString setHeaderTitel(const QString &text) const;
   const QIcon setHeaderIcon(int column) const;
   const QString displayDate(const QVariant &value) const;
@@ -43,6 +42,7 @@ Q_SIGNALS:
 
 public:
   explicit ASqlQueryModel(const QString &table, QObject *parent = nullptr);
+  virtual const QMap<int, QString> headerList() const = 0;
   bool querySelect(const QString &sql);
   const QString tableName() const;
   const QString fieldName(int column = 0) const;

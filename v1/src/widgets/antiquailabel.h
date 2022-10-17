@@ -7,6 +7,7 @@
 
 #include <QLabel>
 #include <QObject>
+#include <QVariant>
 #include <QWidget>
 
 class AntiquaILabel final : public QLabel {
@@ -14,6 +15,8 @@ class AntiquaILabel final : public QLabel {
 
 public:
   explicit AntiquaILabel(QWidget *parent = nullptr);
+  explicit AntiquaILabel(const QString &text, QWidget *parent = nullptr);
+  void setValue(const QVariant &value);
 };
 
 #endif // ANTIQUA_INPUT_ILABEL_H

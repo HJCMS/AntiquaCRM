@@ -26,6 +26,7 @@ public Q_SLOTS:
 
 public:
   explicit AntiquaDateInfo(QWidget *parent = nullptr);
+  void setProperties(const QSqlField &field);
   const QVariant value();
   bool isValid();
   void setInfo(const QString &);

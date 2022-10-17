@@ -46,6 +46,11 @@ void SelectEuCountry::setFocus() {
   m_box->showPopup();
 }
 
+void SelectEuCountry::setProperties(const QSqlField &field) {
+  if (field.requiredStatus() == QSqlField::Required)
+    setRequired(true);
+}
+
 const QVariant SelectEuCountry::value() {
   return m_box->itemData(m_box->currentIndex(), Qt::UserRole);
 }

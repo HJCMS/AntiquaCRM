@@ -112,6 +112,11 @@ void StorageLocation::setValue(const QVariant &val) {
 
 void StorageLocation::setFocus() { m_box->setFocus(); }
 
+void StorageLocation::setProperties(const QSqlField &field) {
+  if (field.requiredStatus() == QSqlField::Required)
+    setRequired(true);
+}
+
 const QVariant StorageLocation::value() {
   return m_box->itemData(m_box->currentIndex(), Qt::UserRole);
 }

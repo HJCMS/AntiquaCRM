@@ -44,6 +44,10 @@ void AntiquaDateInfo::setValue(const QVariant &val) {
 
 void AntiquaDateInfo::setFocus() {}
 
+void AntiquaDateInfo::setProperties(const QSqlField &field) {
+  qInfo("TODO AntiquaDateInfo::setProperties");
+}
+
 const QVariant AntiquaDateInfo::value() { return m_edit->dateTime(); }
 
 bool AntiquaDateInfo::isValid() {

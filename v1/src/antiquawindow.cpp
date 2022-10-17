@@ -10,8 +10,11 @@
 
 AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
   setMinimumSize(QSize(500, 450));
-  setWindowTitle("Antiqua CRM [*]");
+  setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
   setWindowIcon(QIcon(":icons/antiqua.png"));
+
+  m_cfg = new AntiquaCRM::ASettings(this);
+  m_cfg->setObjectName("window_settings");
 
   m_menuBar = new AntiquaMenuBar(this);
   setMenuBar(m_menuBar);
@@ -26,12 +29,23 @@ AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
   connect(m_menuBar, SIGNAL(sendApplQuit()), this, SLOT(closeWindow()));
 }
 
-void AntiquaWindow::closeEvent(QCloseEvent *event) {
-  if (isFullScreen()) // Keine Vollansicht Speichern!
-    setWindowState(windowState() & ~Qt::WindowFullScreen);
-  // TODO Save operations
+void AntiquaWindow::hideEvent(QHideEvent *event) {
+  if (isVisible() && event->isAccepted()) {
+    m_cfg->setValue("window/geometry", saveGeometry());
 
-  QMainWindow::closeEvent(event);
+    if (isFullScreen()) // Keine Vollansicht Speichern!
+      setWindowState(windowState() & ~Qt::WindowFullScreen);
+
+    m_cfg->setValue("window/windowState", saveState());
+  }
+  QMainWindow::hideEvent(event);
+}
+
+void AntiquaWindow::closeEvent(QCloseEvent *event) {
+  // Beendet wird über das SIGNAL sendApplQuit() zur parent Klasse.
+  QHideEvent hide;
+  hide.setAccepted(true);
+  hideEvent(&hide);
 }
 
 void AntiquaWindow::closeWindow() {
@@ -44,14 +58,35 @@ void AntiquaWindow::closeWindow() {
       return;
     }
   }
+
+  QByteArray ba = saveGeometry();
+  if (!ba.isNull())
+    m_cfg->setValue("window/geometry", ba);
+
+  ba.clear();
   emit sendApplQuit();
 }
 
-void AntiquaWindow::toggle() { isVisible() ? hide() : show(); }
+void AntiquaWindow::setToggleView() { (isVisible()) ? hide() : show(); }
+
+void AntiquaWindow::setToggleFullScreen(bool b) {
+  Q_UNUSED(b);
+  if (isFullScreen()) {
+    setWindowState(windowState() & ~Qt::WindowFullScreen);
+  } else {
+    setWindowState(windowState() ^ Qt::WindowFullScreen);
+  }
+}
 
 void AntiquaWindow::openWindow() {
+  if (m_cfg->contains("window/geometry"))
+    restoreGeometry(m_cfg->value("window/geometry").toByteArray());
+
   show();
-  activateWindow();
+
+  if (m_cfg->contains("window/windowState"))
+    restoreState(m_cfg->value("window/windowState").toByteArray());
+
   m_centralWidget->setEnabled(true);
   m_centralWidget->loadDefaultTabs();
 }

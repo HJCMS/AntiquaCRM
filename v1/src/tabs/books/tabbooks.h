@@ -12,16 +12,17 @@
 class BookSearchBar;
 class BookTableView;
 class BookStatusBar;
+class BookEditor;
 
 class TabBooks final : public Inventory {
   Q_OBJECT
 
 private:
   QWidget *m_mainPage;
-  QWidget *m_pageEdit;
   BookSearchBar *m_searchBar;
   BookTableView *m_table;
   BookStatusBar *m_statusBar;
+  BookEditor *m_editorPage;
 
 public Q_SLOTS:
   void createSearchQuery(const QString &query = QString());

@@ -2,30 +2,37 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_CONDITION_EDIT_H
-#define ANTIQUACRM_CONDITION_EDIT_H
+#ifndef ANTIQUACRM_BOOLBOX_H
+#define ANTIQUACRM_BOOLBOX_H
 
-#include <AGlobal>
 #include <AntiquaInputEdit>
+#include <QCheckBox>
+#include <QObject>
+#include <QWidget>
 
-class ConditionEdit final : public InputEdit {
+class BoolBox final : public InputEdit {
   Q_OBJECT
 
 private:
-  AntiquaComboBox *m_box;
+  QCheckBox *m_checkBox;
   void loadDataset();
 
 private Q_SLOTS:
-  void dataChanged(int);
+  void itemChanged(int);
+
+Q_SIGNALS:
+  void checked(bool);
 
 public Q_SLOTS:
   Q_INVOKABLE void reset();
-  void setValue(const QVariant &);
   void setFocus();
+  void setChecked(bool);
+  void setValue(const QVariant &);
 
 public:
-  explicit ConditionEdit(QWidget *parent = nullptr);
+  explicit BoolBox(QWidget *parent = nullptr);
   void setProperties(const QSqlField &field);
+  bool isChecked();
   const QVariant value();
   bool isValid();
   void setInfo(const QString &);
@@ -33,4 +40,4 @@ public:
   const QString notes();
 };
 
-#endif // ANTIQUACRM_CONDITION_EDIT_H
+#endif // ANTIQUACRM_BOOLBOX_H

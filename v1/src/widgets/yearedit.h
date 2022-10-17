@@ -2,29 +2,32 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_CONDITION_EDIT_H
-#define ANTIQUACRM_CONDITION_EDIT_H
+#ifndef ANTIQUACRM_YEAREDIT_H
+#define ANTIQUACRM_YEAREDIT_H
 
-#include <AGlobal>
 #include <AntiquaInputEdit>
+#include <QDateEdit>
+#include <QObject>
+#include <QWidget>
 
-class ConditionEdit final : public InputEdit {
+class YearEdit final : public InputEdit {
   Q_OBJECT
 
 private:
-  AntiquaComboBox *m_box;
+  QDateEdit *m_year;
+  const QDate startDate;
   void loadDataset();
 
 private Q_SLOTS:
-  void dataChanged(int);
+  void dataChanged(const QDate &);
 
 public Q_SLOTS:
-  Q_INVOKABLE void reset();
   void setValue(const QVariant &);
+  Q_INVOKABLE void reset();
   void setFocus();
 
 public:
-  explicit ConditionEdit(QWidget *parent = nullptr);
+  explicit YearEdit(QWidget *parent = nullptr);
   void setProperties(const QSqlField &field);
   const QVariant value();
   bool isValid();
@@ -33,4 +36,4 @@ public:
   const QString notes();
 };
 
-#endif // ANTIQUACRM_CONDITION_EDIT_H
+#endif // ANTIQUACRM_YEAREDIT_H

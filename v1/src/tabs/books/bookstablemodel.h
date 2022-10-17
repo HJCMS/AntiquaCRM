@@ -15,10 +15,10 @@ class BooksTableModel : public AntiquaCRM::ASqlQueryModel
 
 private:
   QSqlRecord queryRecord;
-  const QMap<int,QString> headerList() const override;
 
 public:
   explicit BooksTableModel(QObject *parent = nullptr);
+  const QMap<int,QString> headerList() const override;
   QVariant headerData(int section, Qt::Orientation orientation,
                       int role = Qt::DisplayRole) const override;
   QVariant data(const QModelIndex &item, int role = Qt::DisplayRole) const override;

@@ -2,30 +2,33 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_CONDITION_EDIT_H
-#define ANTIQUACRM_CONDITION_EDIT_H
+#ifndef ANTIQUACRM_PRICEEDIT_H
+#define ANTIQUACRM_PRICEEDIT_H
 
-#include <AGlobal>
 #include <AntiquaInputEdit>
+#include <QLabel>
+#include <QObject>
+#include <QWidget>
 
-class ConditionEdit final : public InputEdit {
+class PriceEdit final : public InputEdit {
   Q_OBJECT
 
 private:
-  AntiquaComboBox *m_box;
+  AntiquaDoubleBox *m_box;
   void loadDataset();
 
 private Q_SLOTS:
-  void dataChanged(int);
+  void itemChanged(double);
 
 public Q_SLOTS:
   Q_INVOKABLE void reset();
-  void setValue(const QVariant &);
   void setFocus();
 
 public:
-  explicit ConditionEdit(QWidget *parent = nullptr);
+  explicit PriceEdit(QWidget *parent = nullptr);
   void setProperties(const QSqlField &field);
+  void setMinimum(double);
+  void setValue(const QVariant &);
   const QVariant value();
   bool isValid();
   void setInfo(const QString &);
@@ -33,4 +36,4 @@ public:
   const QString notes();
 };
 
-#endif // ANTIQUACRM_CONDITION_EDIT_H
+#endif // ANTIQUACRM_PRICEEDIT_H

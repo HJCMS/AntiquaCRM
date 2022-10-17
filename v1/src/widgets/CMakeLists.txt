@@ -31,20 +31,29 @@ SET (projectLibrary_SOURCES
  antiquacombobox.cpp
  antiquadateinfo.cpp
  antiquadoublebox.cpp
- antiquaspinbox.cpp
  antiquailabel.cpp
- conditionedit.cpp
- inventory.cpp
- inventorytable.cpp
- inputedit.cpp
+ antiqualineedit.cpp
+ antiquaspinbox.cpp
  bookbinding.cpp
+ boolbox.cpp
+ conditionedit.cpp
+ inputedit.cpp
+ intspinbox.cpp
+ inventory.cpp
+ inventoryeditor.cpp
+ inventorytable.cpp
+ language.cpp
+ lineedit.cpp
  postalcodeedit.cpp
- storagelocation.cpp
- selecteucountry.cpp
+ priceedit.cpp
  searchfilter.cpp
+ searchlineedit.cpp
+ selecteucountry.cpp
+ serialid.cpp
+ storagelocation.cpp
  tabsearchbar.cpp
  tabstatusbar.cpp
- searchlineedit.cpp
+ yearedit.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -53,20 +62,29 @@ SET (projectLibrary_HEADERS
  antiquacombobox.h
  antiquadateinfo.h
  antiquadoublebox.h
- antiquaspinbox.h
  antiquailabel.h
+ antiqualineedit.h
+ antiquaspinbox.h
+ bookbinding.h
+ boolbox.h
  conditionedit.h
+ inputedit.h
+ intspinbox.h
+ inventoryeditor.h
  inventory.h
  inventorytable.h
- inputedit.h
- bookbinding.h
+ language.h
+ lineedit.h
  postalcodeedit.h
- storagelocation.h
- selecteucountry.h
+ priceedit.h
  searchfilter.h
+ searchlineedit.h
+ selecteucountry.h
+ serialid.h
+ storagelocation.h
  tabsearchbar.h
  tabstatusbar.h
- searchlineedit.h
+ yearedit.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

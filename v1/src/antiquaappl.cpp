@@ -28,7 +28,8 @@ static const QIcon applIcon() {
 
 AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
   m_cfg = new AntiquaCRM::ASettings(this);
-  m_cfg->setObjectName("MainSettings");
+  m_cfg->setObjectName("application_sttings");
+
   m_mainWindow = new AntiquaWindow();
   m_mainWindow->setObjectName("MainWindow");
   m_systemTray = new AntiquaSystemTray(applIcon(), this);
@@ -37,7 +38,8 @@ AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
 
   connect(m_systemTray, SIGNAL(sendShowWindow()), m_mainWindow, SLOT(show()));
   connect(m_systemTray, SIGNAL(sendHideWindow()), m_mainWindow, SLOT(hide()));
-  connect(m_systemTray, SIGNAL(sendToggleView()), m_mainWindow, SLOT(toggle()));
+  connect(m_systemTray, SIGNAL(sendToggleView()), m_mainWindow,
+          SLOT(setToggleView()));
   connect(m_systemTray, SIGNAL(sendApplQuit()), this, SLOT(applicationQuit()));
   connect(m_mainWindow, SIGNAL(sendApplQuit()), this, SLOT(applicationQuit()));
   connect(m_timer, SIGNAL(sendTrigger()), this, SLOT(startTriggerProcess()));

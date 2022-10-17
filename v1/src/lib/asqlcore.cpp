@@ -94,6 +94,21 @@ const QSqlRecord ASqlCore::record(const QString &table) {
   return re;
 }
 
+const QStringList ASqlCore::fieldNames(const QString &table) {
+  if (!isConnected())
+    return QStringList();
+
+  QStringList l;
+  QSqlRecord re = database->record(table);
+  if (!re.isEmpty()) {
+    for (int i = 0; i < re.count(); i++) {
+      if (re.field(i).isValid())
+        l.append(re.field(i).name());
+    }
+  }
+  return l;
+}
+
 const QSqlQuery ASqlCore::query(const QString &statement) {
   if (!isConnected())
     return QSqlQuery();

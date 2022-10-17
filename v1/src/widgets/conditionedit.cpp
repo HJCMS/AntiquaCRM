@@ -59,6 +59,10 @@ void ConditionEdit::setFocus() {
   m_box->showPopup();
 }
 
+void ConditionEdit::setProperties(const QSqlField &field) {
+  qInfo("TODO ConditionEdit::setProperties");
+}
+
 const QVariant ConditionEdit::value() {
   return m_box->itemData(m_box->currentIndex(), Qt::UserRole);
 }

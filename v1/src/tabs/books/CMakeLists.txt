@@ -22,6 +22,7 @@ SET (projectLibrary_SOURCES
  bookstatusbar.cpp
  bookselectfilter.cpp
  booksearchline.cpp
+ bookeditor.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -32,6 +33,7 @@ SET (projectLibrary_HEADERS
  bookstatusbar.h
  bookselectfilter.h
  booksearchline.h
+ bookeditor.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

@@ -30,6 +30,7 @@ SET (PROJECT_HEADERS
   antiquatimer.h
   antiquawindow.h
   antiquamenubar.h
+  antiquatabbar.h
   antiquatabwidget.h
   antiquastatusbar.h
   antiquasocketserver.h
@@ -43,6 +44,7 @@ SET (PROJECT_SOURCES
   antiquatimer.cpp
   antiquawindow.cpp
   antiquamenubar.cpp
+  antiquatabbar.cpp
   antiquatabwidget.cpp
   antiquastatusbar.cpp
   antiquasocketserver.cpp

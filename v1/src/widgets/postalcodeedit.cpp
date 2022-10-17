@@ -222,6 +222,10 @@ bool PostalCodeEdit::isValid() {
   return true;
 }
 
+void PostalCodeEdit::setProperties(const QSqlField &field) {
+  qInfo("TODO PostalCodeEdit::setProperties");
+}
+
 void PostalCodeEdit::setInfo(const QString &info) {
   m_postalcode->setToolTip(info);
   if (info.length() > 2) {

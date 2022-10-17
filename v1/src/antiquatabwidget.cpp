@@ -2,21 +2,53 @@
 // vim: set fileencoding=utf-8
 
 #include "antiquatabwidget.h"
+#include "antiquatabbar.h"
 #include "tabbooks.h"
 
 /** TESTINGS */
-#include <AntiquaWidgets>
 #include <AntiquaCRM>
 #include <QVBoxLayout>
 
 AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
-  setObjectName("tab_widgets_main");
+  setObjectName("window_tabwidget");
+  setMinimumSize(800, 550);
 
-  connect(tabBar(), SIGNAL(currentChanged(int)), SLOT(tabChanged(int)));
+  AntiquaCRM::ASettings cfg(this);
+  cfg.setObjectName("tabwidget_settings");
+
+  bool mouseWheel = cfg.value("window/MouseWheelActions", false).toBool();
+  m_tabBar = new AntiquaTabBar(this, mouseWheel);
+  setTabBar(m_tabBar);
+
+  connect(m_tabBar, SIGNAL(sendTabChanged(int)), SLOT(setTabChanged(int)));
+  connect(m_tabBar, SIGNAL(sendCloseTab(int)), SLOT(setTabToClose(int)));
+  connect(m_tabBar, SIGNAL(tabBarClicked(int)), SLOT(setTabToVisit(int)));
+  connect(this, SIGNAL(tabCloseRequested(int)), SLOT(setTabToClose(int)));
 }
 
-void AntiquaTabWidget::tabChanged(int index) {
-  Inventory *m_tab = qobject_cast<Inventory *>(widget(index));
+Inventory *AntiquaTabWidget::tabWidget(int index) const {
+  return qobject_cast<Inventory *>(widget(index));
+}
+
+void AntiquaTabWidget::setTabChanged(int index) {
+  Inventory *m_tab = tabWidget(index);
+  if (m_tab != nullptr)
+    m_tab->onEnterChanged();
+}
+
+void AntiquaTabWidget::setTabToClose(int index) {
+  Inventory *m_tab = tabWidget(index);
+  if (m_tab != nullptr && m_tab->isClosable()) {
+    if (!m_tab->isWindowModified()) {
+      removeTab(index);
+      return;
+    }
+    qDebug() << tr("Cant close this tab, unsafed changes!");
+  }
+}
+
+void AntiquaTabWidget::setTabToVisit(int index) {
+  Inventory *m_tab = tabWidget(index);
   if (m_tab != nullptr)
     m_tab->onEnterChanged();
 }

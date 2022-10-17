@@ -2,29 +2,36 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_CONDITION_EDIT_H
-#define ANTIQUACRM_CONDITION_EDIT_H
+#ifndef ANTIQUACRM_LANGUAGE_H
+#define ANTIQUACRM_LANGUAGE_H
 
-#include <AGlobal>
 #include <AntiquaInputEdit>
+#include <QHash>
+#include <QList>
+#include <QObject>
+#include <QVariant>
+#include <QWidget>
 
-class ConditionEdit final : public InputEdit {
+/**
+ * @brief ISO639-1 Language Code
+ */
+class Language final : public InputEdit {
   Q_OBJECT
 
 private:
-  AntiquaComboBox *m_box;
+  AntiquaComboBox *m_comboBox;
   void loadDataset();
 
 private Q_SLOTS:
-  void dataChanged(int);
+  void itemChanged(int);
 
 public Q_SLOTS:
-  Q_INVOKABLE void reset();
   void setValue(const QVariant &);
+  Q_INVOKABLE void reset();
   void setFocus();
 
 public:
-  explicit ConditionEdit(QWidget *parent = nullptr);
+  explicit Language(QWidget *parent = nullptr);
   void setProperties(const QSqlField &field);
   const QVariant value();
   bool isValid();
@@ -33,4 +40,4 @@ public:
   const QString notes();
 };
 
-#endif // ANTIQUACRM_CONDITION_EDIT_H
+#endif // ANTIQUACRM_LANGUAGE_H

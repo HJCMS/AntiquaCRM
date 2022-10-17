@@ -10,8 +10,8 @@
 #include <QHBoxLayout>
 #include <QMetaType>
 #include <QObject>
+#include <QSqlField>
 #include <QVariant>
-#include <QWheelEvent>
 #include <QWidget>
 
 class AntiquaILabel;
@@ -57,6 +57,7 @@ public:
   explicit InputEdit(QWidget *parent = nullptr);
   Q_INVOKABLE bool isRequired();
   Q_INVOKABLE bool isModified();
+  virtual void setProperties(const QSqlField &field) = 0;
   virtual const QVariant value() = 0;
   virtual bool isValid() = 0;
   virtual void setInfo(const QString &) = 0;
