@@ -5,6 +5,8 @@
 #include "antiquamenubar.h"
 // Dialogs
 #include "configdialog.h"
+#include "keywordedit.h"
+#include "storageeditdialog.h"
 
 AntiquaMenuBar::AntiquaMenuBar(QMainWindow *parent)
     : QMenuBar{parent}, defaultIcon(QString(":icons/antiqua.png")) {
@@ -37,8 +39,21 @@ void AntiquaMenuBar::addViewsMenu() {
 }
 
 void AntiquaMenuBar::addConfigMenu() {
+  QIcon configIcon(":/icons/configure.png");
+
+  QMenu *m_tables = m_configMenu->addMenu(tr("Tables"));
+  m_tables->setIcon(configIcon);
+
+  QAction *ac_keywords = m_tables->addAction(tr("Keywords Editor"));
+  ac_keywords->setIcon(configIcon);
+  connect(ac_keywords, SIGNAL(triggered()), SLOT(openKeywordsDialog()));
+
+  QAction *ac_storage = m_tables->addAction(tr("Storage Editor"));
+  ac_storage->setIcon(configIcon);
+  connect(ac_storage, SIGNAL(triggered()), SLOT(openStorageDialog()));
+
   QAction *ac_config = m_configMenu->addAction(tr("Application Settings"));
-  ac_config->setIcon(QIcon(":/icons/configure.png"));
+  ac_config->setIcon(configIcon);
   connect(ac_config, SIGNAL(triggered()), SLOT(openConfigDialog()));
 }
 
@@ -51,6 +66,22 @@ void AntiquaMenuBar::openConfigDialog() {
   ConfigDialog *d = new ConfigDialog(this);
   if (d->exec()) {
     qInfo("Configuration done...");
+  }
+  d->deleteLater();
+}
+
+void AntiquaMenuBar::openKeywordsDialog() {
+  KeywordEdit *d = new KeywordEdit(this);
+  if (d->exec()) {
+    qInfo("Keyword edit done...");
+  }
+  d->deleteLater();
+}
+
+void AntiquaMenuBar::openStorageDialog() {
+  StorageEditDialog *d = new StorageEditDialog(this);
+  if (d->exec()) {
+    qInfo("Storage edit done...");
   }
   d->deleteLater();
 }

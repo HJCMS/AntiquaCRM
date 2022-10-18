@@ -10,6 +10,8 @@
 #include <QObject>
 #include <QWidget>
 
+class KeywordLineEdit;
+
 class BookEditor final : public InventoryEditor {
   Q_OBJECT
 
@@ -28,23 +30,24 @@ private:
   YearEdit *ib_year;        /**< @brief Jahr */
   IntSpinBox *ib_volume;    /**< @brief Band ? */
   // Row 2
-  LineEdit *ib_title;           /**< @brief Buch Titel */
-  LineEdit *ib_title_extended;  /**< @brief Ereiterte Titel  */
-  LineEdit *ib_author;          /**< @brief Buchautor */
-  LineEdit *ib_publisher;       /**< @brief Herausgeber/Verlag */
-  ConditionEdit *ib_condition;  /**< @brief Zustands beschreibung */
-  Language *ib_language; /**< @brief Sprache */
-  BookBinding *ib_binding;      /**< @brief BuchEinband Kategorie */
-  LineEdit *ib_designation;     /**< @brief Umschreibung */
-  StorageLocation *ib_storage;          /**< @brief Lager bestimmung */
+  LineEdit *ib_title;          /**< @brief Buch Titel */
+  LineEdit *ib_title_extended; /**< @brief Ereiterte Titel  */
+  LineEdit *ib_author;         /**< @brief Buchautor */
+  LineEdit *ib_publisher;      /**< @brief Herausgeber/Verlag */
+  ConditionEdit *ib_condition; /**< @brief Zustands beschreibung */
+  Language *ib_language;       /**< @brief Sprache */
+  BookBinding *ib_binding;     /**< @brief BuchEinband Kategorie */
+  LineEdit *ib_designation;    /**< @brief Umschreibung */
+  StorageLocation *ib_storage; /**< @brief Lager bestimmung */
+  KeywordLineEdit *ib_keyword; /**< @brief Schlüsselwort */
+  IsbnEdit *ib_isbn;           /**< @brief ISBN */
 
   // Row 3
   QTabWidget *m_tabWidget;
-
-  /*
-   TODO info section
-    AntiquaDateInfo *ib_since; @brief Ersteller Datum
-  */
+  TextField *ib_description;          /**< @brief Öffentliche Beschreibung */
+  TextField *ib_internal_description; /**< @brief Interne Beschreibung */
+  AntiquaDateInfo *ib_since;          /**< @brief Ersteller-Datum */
+  AntiquaDateInfo *ib_changed;        /**< @brief Änderungs-Datum */
 
   const QRegularExpression fieldPattern;
   void setInputList();

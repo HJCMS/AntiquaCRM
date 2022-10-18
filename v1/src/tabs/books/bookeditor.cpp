@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "bookeditor.h"
+#include "keywordlineedit.h"
 
 #include <AntiquaCRM>
 #include <QDebug>
@@ -174,17 +175,22 @@ BookEditor::BookEditor(QWidget *parent)
 
   AntiquaILabel *lb_keywords = new AntiquaILabel(tr("Keywords"), this);
   row2->addWidget(lb_keywords, row2c, 0, 1, 1);
-  // TODO KeywordLineEdit
-  row2c++;
+  ib_keyword = new KeywordLineEdit(this);
+  ib_keyword->setObjectName("ib_keyword");
+  ib_keyword->setToolTip(lb_keywords->text());
+  row2->addWidget(ib_keyword, row2c++, 1, 1, 1);
 
-  AntiquaILabel *lb_isbn = new AntiquaILabel(tr("ISBN"),this);
+  AntiquaILabel *lb_isbn = new AntiquaILabel(tr("ISBN"), this);
   row2->addWidget(lb_isbn, row2c, 0, 1, 1);
-  // TODO ISBN Edit
-  row2c++;
+  ib_isbn = new IsbnEdit(this);
+  ib_isbn->setObjectName("ib_isbn");
+  ib_isbn->setToolTip(lb_isbn->text());
+  row2->addWidget(ib_isbn, row2c++, 1, 1, 1);
 
   // TODO Image Toolbar
-  row2c++;
+  row2->addWidget(new QLabel(tr("TODO Image Toolbar"),this), row2c++, 0, 1, 2);
 
+  // TODO Image Viewer
   QSize maxSize = config.value("image/max_size", QSize(320, 320)).toSize();
   QWidget *m_imageView = new QWidget(this);
   m_imageView->setFixedSize(maxSize);
@@ -193,12 +199,33 @@ BookEditor::BookEditor(QWidget *parent)
   row2Widget->setLayout(row2);
   mainLayout->addWidget(row2Widget);
 
+  QIcon tabIcons(":icons/edit.png");
   m_tabWidget = new QTabWidget(this);
   m_tabWidget->setObjectName("tab_widget");
   m_tabWidget->setMinimumHeight(180);
   m_tabWidget->setContentsMargins(1, 1, 1, 1);
-  // TODO
+  ib_description = new TextField(m_tabWidget);
+  ib_description->setObjectName("ib_description");
+  m_tabWidget->insertTab(0, ib_description, tabIcons, tr("Public Description"));
+  ib_internal_description = new TextField(m_tabWidget);
+  ib_internal_description->setObjectName("ib_internal_description");
+  m_tabWidget->insertTab(1, ib_internal_description, tabIcons,
+                         tr("Internal Description"));
+  QWidget *m_infos = new QWidget(this);
+  QVBoxLayout *m_infoLayout = new QVBoxLayout(m_infos);
+  ib_since = new AntiquaDateInfo(this);
+  ib_since->setObjectName("ib_since");
+  ib_since->setInfo(tr("Created at"));
+  m_infoLayout->addWidget(ib_since);
+  ib_changed = new AntiquaDateInfo(this);
+  ib_changed->setObjectName("ib_changed");
+  ib_changed->setInfo(tr("Last changed"));
+  m_infoLayout->addWidget(ib_changed);
+  m_infoLayout->addStretch(1);
+  m_infos->setLayout(m_infoLayout);
+  m_tabWidget->insertTab(2, m_infos, tabIcons, tr("Information"));
   mainLayout->addWidget(m_tabWidget);
+
   setLayout(mainLayout);
   setEnabled(false);
 }
@@ -210,8 +237,6 @@ void BookEditor::setInputList() {
   if (inputList.isEmpty()) {
     qWarning("Books InputList is Empty!");
   }
-  // Werden Manuel gesetzt!
-  inputList.removeOne("ib_changed");
 }
 
 bool BookEditor::setDataField(const QSqlField &field, const QVariant &value) {

@@ -27,6 +27,8 @@ private:
 
 private Q_SLOTS:
   void openConfigDialog();
+  void openKeywordsDialog();
+  void openStorageDialog();
 
 Q_SIGNALS:
   void sendApplQuit();

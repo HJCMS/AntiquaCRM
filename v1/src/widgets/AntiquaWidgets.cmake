@@ -57,6 +57,10 @@
 #include "inventorytable.h"
 #endif
 
+#ifndef ANTIQUACRM_ISBNEDIT_H
+#include "isbnedit.h"
+#endif
+
 #ifndef ANTIQUACRM_LANGUAGE_H
 #include "language.h"
 #endif
@@ -103,6 +107,10 @@
 
 #ifndef ANTIQUACRM_TABSTATUSBAR_H
 #include "tabstatusbar.h"
+#endif
+
+#ifndef ANTIQUACRM_TEXTFIELD_H
+#include "textfield.h"
 #endif
 
 #ifndef ANTIQUACRM_YEAREDIT_H

@@ -4,7 +4,6 @@
 #include "antiquadateinfo.h"
 
 #include <QDateTime>
-#include <QDebug>
 
 AntiquaDateInfo::AntiquaDateInfo(QWidget *parent) : InputEdit{parent} {
   m_edit = new QDateTimeEdit(this);
@@ -16,6 +15,7 @@ AntiquaDateInfo::AntiquaDateInfo(QWidget *parent) : InputEdit{parent} {
   QString tip(m_edit->dateTime().toString(ANTIQUACRM_DATETIME_TOOLTIP));
   m_edit->setToolTip(tip);
   m_layout->addWidget(m_edit);
+  m_layout->addStretch(1);
   setRequired(false);
   setStyleSheet("QDateTimeEdit {border:none;background:transparent;}");
 }
@@ -45,7 +45,8 @@ void AntiquaDateInfo::setValue(const QVariant &val) {
 void AntiquaDateInfo::setFocus() {}
 
 void AntiquaDateInfo::setProperties(const QSqlField &field) {
-  qInfo("TODO AntiquaDateInfo::setProperties");
+  if (field.requiredStatus() == QSqlField::Required)
+    setRequired(true);
 }
 
 const QVariant AntiquaDateInfo::value() { return m_edit->dateTime(); }

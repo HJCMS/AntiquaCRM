@@ -43,6 +43,7 @@ SET (projectLibrary_SOURCES
  inventory.cpp
  inventoryeditor.cpp
  inventorytable.cpp
+ isbnedit.cpp
  language.cpp
  lineedit.cpp
  postalcodeedit.cpp
@@ -55,6 +56,7 @@ SET (projectLibrary_SOURCES
  storagelocation.cpp
  tabsearchbar.cpp
  tabstatusbar.cpp
+ textfield.cpp
  yearedit.cpp
 )
 
@@ -76,6 +78,7 @@ SET (projectLibrary_HEADERS
  inventoryeditor.h
  inventory.h
  inventorytable.h
+ isbnedit.h
  language.h
  lineedit.h
  postalcodeedit.h
@@ -88,6 +91,7 @@ SET (projectLibrary_HEADERS
  storagelocation.h
  tabsearchbar.h
  tabstatusbar.h
+ textfield.h
  yearedit.h
 )
 
