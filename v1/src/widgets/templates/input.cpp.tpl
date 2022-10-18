@@ -38,6 +38,11 @@ void @CLASSNAME@::setFocus() {
   qDebug() << Q_FUNC_INFO << "TODO";
 }
 
+void @CLASSNAME@::setProperties(const QSqlField &field) {
+  if (field.requiredStatus() == QSqlField::Required)
+    setRequired(true);
+}
+
 const QVariant @CLASSNAME@::value() {
   qDebug() << Q_FUNC_INFO << "TODO";
   return QVariant();

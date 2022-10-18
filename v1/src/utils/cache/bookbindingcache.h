@@ -15,10 +15,11 @@ protected:
   const QJsonArray createTable(const QString &query) override;
 
 public Q_SLOTS:
-  void run() override;
+  bool run() override;
 
 public:
   explicit BookBindingCache(AntiquaCRM::ASqlCore *pgsql);
+  const QString info() const;
 };
 
 #endif // ANTIQUA_BOOKBINDINGCACHE_H

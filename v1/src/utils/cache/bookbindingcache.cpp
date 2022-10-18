@@ -31,17 +31,19 @@ const QJsonArray BookBindingCache::createTable(const QString &query) {
   return array;
 }
 
-void BookBindingCache::run() {
-  emit statusNotify(tr("Build Book binding") + " ...");
+bool BookBindingCache::run() {
   QJsonObject main;
   QString file("query_book_binding");
   QString sql = AntiquaCRM::ASqlFiles::queryStatement(file);
   QJsonArray array = createTable(sql);
   main.insert("bookbindings", array);
   AntiquaCRM::ASharedDataFiles p_store;
-  if (p_store.storeJson("bookbindings", QJsonDocument(main))) {
-    emit statusNotify(tr("Book binding created."));
-  } else {
-    emit statusNotify(tr("Book binding failed!"));
-  }
+  if (p_store.storeJson("bookbindings", QJsonDocument(main)))
+    return true;
+
+  return false;
+}
+
+const QString BookBindingCache::info() const {
+  return tr("Build Book bindings") + " ...";
 }

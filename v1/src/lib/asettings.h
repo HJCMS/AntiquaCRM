@@ -5,13 +5,13 @@
 #ifndef ANTIQUACRM_SETTINGS_H
 #define ANTIQUACRM_SETTINGS_H
 
+#include <AGlobal>
 #include <QDir>
 #include <QHash>
 #include <QObject>
 #include <QSettings>
 #include <QString>
 #include <QVariant>
-#include <AGlobal>
 
 namespace AntiquaCRM {
 
@@ -43,7 +43,13 @@ public:
   /**
    * @brief Read all Keys from Group
    */
-  const QHash<QString, QVariant> &readGroupConfig(const QString &);
+  const QHash<QString, QVariant> &readGroupConfig(const QString &group);
+
+  /**
+   * @brief Read all Keys from Section in Group
+   */
+  const QHash<QString, QVariant> &readGroupSection(const QString &group,
+                                                   const QString &section);
 
   /**
    * @brief Write all Keys in Group

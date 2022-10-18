@@ -37,6 +37,10 @@
 #include "conditionedit.h"
 #endif
 
+#ifndef ANTIQUACRM_ECURRENCY_H
+#include "ecurrency.h"
+#endif
+
 #ifndef ANTIQUACRM_INTSPINBOX_H
 #include "intspinbox.h"
 #endif
@@ -83,6 +87,10 @@
 
 #ifndef ANTIQUACRM_SERIALID_H
 #include "serialid.h"
+#endif
+
+#ifndef ANTIQUACRM_SIZEEDIT_H
+#include "sizeedit.h"
 #endif
 
 #ifndef ANTIQUACRM_STORAGELOCATION_H

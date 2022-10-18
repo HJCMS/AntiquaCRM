@@ -15,10 +15,11 @@ protected:
   const QJsonArray createTable(const QString &query) override;
 
 public Q_SLOTS:
-  void run() override;
+  bool run() override;
 
 public:
   explicit PostalcodeCache(AntiquaCRM::ASqlCore *pgsql);
+  const QString info() const;
 };
 
 #endif // ANTIQUA_POSTALCODECACHE_H

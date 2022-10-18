@@ -28,40 +28,40 @@ SET (projectLibrary_FILES
 )
 
 SET (projectLibrary_SOURCES
- asettings.cpp
- asqlsettings.cpp
- asqlfiles.cpp
- ashareddatafiles.cpp
- asqltable.cpp
- asqlprofile.cpp
- asqlcore.cpp
- asqlquerymodel.cpp
+ aeuropeancountries.cpp
+ anetworker.cpp
  anetworkiface.cpp
  anetworkrequest.cpp
- anetworker.cpp
- aeuropeancountries.cpp
- apluginloader.cpp
  aplugininterface.cpp
+ apluginloader.cpp
  aproviderorders.cpp
+ asettings.cpp
+ ashareddatafiles.cpp
+ asqlcore.cpp
+ asqldataquery.cpp
+ asqlfiles.cpp
+ asqlprofile.cpp
+ asqlquerymodel.cpp
+ asqlsettings.cpp
 )
 
 SET (projectLibrary_HEADERS
+ aeuropeancountries.h
  aglobal.h
- asettings.h
- asqlsettings.h
- asqlfiles.h
- ashareddatafiles.h
- asqltable.h
- asqlprofile.h
- asqlcore.h
- asqlquerymodel.h
+ anetworker.h
  anetworkiface.h
  anetworkrequest.h
- anetworker.h
- aeuropeancountries.h
- apluginloader.h
  aplugininterface.h
+ apluginloader.h
  aproviderorders.h
+ asettings.h
+ ashareddatafiles.h
+ asqlcore.h
+ asqldataquery.h
+ asqlfiles.h
+ asqlprofile.h
+ asqlquerymodel.h
+ asqlsettings.h
  AntiquaCRM
  AGlobal
  ASettings

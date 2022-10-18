@@ -223,7 +223,8 @@ bool PostalCodeEdit::isValid() {
 }
 
 void PostalCodeEdit::setProperties(const QSqlField &field) {
-  qInfo("TODO PostalCodeEdit::setProperties");
+  if (field.requiredStatus() == QSqlField::Required)
+    setRequired(true);
 }
 
 void PostalCodeEdit::setInfo(const QString &info) {

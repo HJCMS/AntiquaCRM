@@ -29,8 +29,6 @@ bool ASqlCore::initDatabase() {
 
   // https://www.postgresql.org/docs/current/libpq-connect.html
   QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL", m_cfg->connectionName());
-  m_cfg->setProfile("Default");
-
   ASqlProfile profile = m_cfg->connectionProfile();
   db.setHostName(profile.getHostname());
   db.setPort(profile.getPort());

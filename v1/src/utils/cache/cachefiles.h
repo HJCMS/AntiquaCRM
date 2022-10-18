@@ -7,7 +7,6 @@
 
 #include <QObject>
 #include <QString>
-#include <QThread>
 
 #include "workload.h"
 
@@ -15,7 +14,6 @@ class AntiquaCacheFiles : public QObject {
   Q_OBJECT
 
 private:
-  QThread p_thread;
   const QList<Workload*> getTasks();
 
 Q_SIGNALS:
@@ -23,7 +21,7 @@ Q_SIGNALS:
 
 public:
   explicit AntiquaCacheFiles(QObject *parent = nullptr);
-  void createCaches();
+  bool createCaches();
 };
 
 #endif // ANTIQUA_ANTIQUACACHEFILES

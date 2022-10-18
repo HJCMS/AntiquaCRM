@@ -3,6 +3,8 @@
 // @COPYRIGHT_HOLDER@
 
 #include "antiquamenubar.h"
+// Dialogs
+#include "configdialog.h"
 
 AntiquaMenuBar::AntiquaMenuBar(QMainWindow *parent)
     : QMenuBar{parent}, defaultIcon(QString(":icons/antiqua.png")) {
@@ -35,11 +37,20 @@ void AntiquaMenuBar::addViewsMenu() {
 }
 
 void AntiquaMenuBar::addConfigMenu() {
-  QAction *ac_config = m_configMenu->addAction("TODO");
-  ac_config->setIcon(defaultIcon);
+  QAction *ac_config = m_configMenu->addAction(tr("Application Settings"));
+  ac_config->setIcon(QIcon(":/icons/configure.png"));
+  connect(ac_config, SIGNAL(triggered()), SLOT(openConfigDialog()));
 }
 
 void AntiquaMenuBar::addAboutMenu() {
   QAction *ac_about = m_aboutMenu->addAction("TODO");
   ac_about->setIcon(defaultIcon);
+}
+
+void AntiquaMenuBar::openConfigDialog() {
+  ConfigDialog *d = new ConfigDialog(this);
+  if (d->exec()) {
+    qInfo("Configuration done...");
+  }
+  d->deleteLater();
 }

@@ -53,9 +53,9 @@
 #include "asqlfiles.h"
 #endif
 
-// AntiquaCRM::ASqlTable
-#ifndef ANTIQUACRM_SQLTABLE_H
-#include "asqltable.h"
+// AntiquaCRM::ASqlDataQuery
+#ifndef ANTIQUACRM_SQLDATAQUERY_H
+#include "asqldataquery.h"
 #endif
 
 // AntiquaCRM::ASqlQueryModel

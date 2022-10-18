@@ -34,7 +34,6 @@ private:
   bool checkInterfaces();
   bool checkRemotePort();
   bool checkDatabase();
-  bool createCacheFiles();
   bool createSocket();
 
   bool initTranslations();

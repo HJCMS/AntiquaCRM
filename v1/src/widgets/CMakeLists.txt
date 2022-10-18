@@ -37,6 +37,7 @@ SET (projectLibrary_SOURCES
  bookbinding.cpp
  boolbox.cpp
  conditionedit.cpp
+ ecurrency.cpp
  inputedit.cpp
  intspinbox.cpp
  inventory.cpp
@@ -50,6 +51,7 @@ SET (projectLibrary_SOURCES
  searchlineedit.cpp
  selecteucountry.cpp
  serialid.cpp
+ sizeedit.cpp
  storagelocation.cpp
  tabsearchbar.cpp
  tabstatusbar.cpp
@@ -68,6 +70,7 @@ SET (projectLibrary_HEADERS
  bookbinding.h
  boolbox.h
  conditionedit.h
+ ecurrency.h
  inputedit.h
  intspinbox.h
  inventoryeditor.h
@@ -81,6 +84,7 @@ SET (projectLibrary_HEADERS
  searchlineedit.h
  selecteucountry.h
  serialid.h
+ sizeedit.h
  storagelocation.h
  tabsearchbar.h
  tabstatusbar.h

@@ -2,35 +2,39 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_@CPPNAME@_H
-#define ANTIQUACRM_@CPPNAME@_H
+#ifndef ANTIQUACRM_SIZEEDIT_H
+#define ANTIQUACRM_SIZEEDIT_H
 
-#include <AGlobal>
 #include <AntiquaInputEdit>
+#include <QObject>
+#include <QSpinBox>
 
-class @CLASSNAME@ final : public InputEdit {
+class SizeEdit final : public InputEdit {
   Q_OBJECT
 
 private:
-  // Qt classes
+  QSpinBox *m_width;
+  QSpinBox *m_height;
   void loadDataset();
 
 private Q_SLOTS:
-  void dataChanged(int);
+  void sizeChanged(int);
 
 public Q_SLOTS:
   Q_INVOKABLE void reset();
-  void setValue(const QVariant &);
   void setFocus();
+  void setValue(const QVariant &);
 
 public:
-  explicit @CLASSNAME@(QWidget *parent = nullptr);
+  SizeEdit(QWidget *parent = nullptr);
   void setProperties(const QSqlField &field);
   const QVariant value();
+  void setMinimum(int width, int height);
+  void setMaximum(int width, int height);
   bool isValid();
   void setInfo(const QString &);
   const QString info();
   const QString notes();
 };
 
-#endif // ANTIQUACRM_@CPPNAME@_H
+#endif // ANTIQUACRM_SIZEEDIT_H

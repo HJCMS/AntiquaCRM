@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "asqltable.h"
+#include "asqldataquery.h"
 
 #include <QSqlDatabase>
 #include <QVariant>
@@ -13,7 +13,7 @@ namespace AntiquaCRM {
 
 static const QSqlRecord asql_table_record(const QString &name) {
   if (name.isEmpty()) {
-    qWarning("AntiquaCRM::ASqlTable 'Missing SQL table name'!");
+    qWarning("AntiquaCRM::ASqlDataQuery 'Missing SQL table name'!");
 #ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << "QString::isEmpty" << name.isEmpty();
 #endif
@@ -23,68 +23,62 @@ static const QSqlRecord asql_table_record(const QString &name) {
   return (db.isValid() ? db.record(name) : QSqlRecord());
 }
 
-ASqlTable::ASqlTable(const QString &tableName)
-    : tableRecord{asql_table_record(tableName)} {}
+ASqlDataQuery::ASqlDataQuery(const QString &tableName)
+    : p_record{asql_table_record(tableName)} {}
 
-ASqlTable::ASqlTable(const ASqlTable &other)
-    : tableRecord{other.tableRecord}, p_data{other.p_data} {
-  if (!isValid()) {
-    qWarning("AntiquaCRM::ASqlTable Invalid class Initialisation!");
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "isValid" << isValid();
-#endif
+ASqlDataQuery::ASqlDataQuery(const QSqlRecord &record) : p_record{record}, p_data{} {
+  if (p_record.isEmpty()) {
+    qWarning("AntiquaCRM::ASqlDataQuery Invalid class Initialisation!");
   }
 }
 
-ASqlTable::ASqlTable(const QSqlRecord &record) : tableRecord{record}, p_data{} {
-  if (!isValid()) {
-    qWarning("AntiquaCRM::ASqlTable Invalid class Initialisation!");
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "isValid" << isValid();
-#endif
+ASqlDataQuery::ASqlDataQuery(const ASqlDataQuery &other)
+    : p_record{other.p_record}, p_data{other.p_data} {
+  if (p_record.isEmpty()) {
+    qWarning("AntiquaCRM::ASqlDataQuery Invalid class Initialisation!");
   }
 }
 
-const QSqlRecord ASqlTable::record() const { return tableRecord; }
+const QSqlRecord ASqlDataQuery::record() const { return p_record; }
 
-const QString ASqlTable::tableName() const {
+const QString ASqlDataQuery::tableName() const {
   if (isValid()) {
-    return tableRecord.field(0).tableName();
+    return p_record.field(0).tableName();
   }
   return QString();
 }
 
-bool ASqlTable::isValid() const {
-  return (tableRecord.isEmpty() ? false : true);
+bool ASqlDataQuery::isValid() const {
+  return (p_record.isEmpty() ? false : true);
 }
 
-const QStringList ASqlTable::columnNames() const {
+const QStringList ASqlDataQuery::columnNames() const {
   QStringList fields;
   if (!isValid())
     return fields;
 
-  for (int i = 0; i < tableRecord.count(); i++) {
-    fields << tableRecord.fieldName(i);
+  for (int i = 0; i < p_record.count(); i++) {
+    fields << p_record.fieldName(i);
   }
 
   return fields;
 }
 
-const QSqlField ASqlTable::getProperties(const QString &column) const {
+const QSqlField ASqlDataQuery::getProperties(const QString &column) const {
   QSqlField field;
   if (!isValid())
     return field;
 
-  for (int i = 0; i < tableRecord.count(); i++) {
-    if (tableRecord.fieldName(i) == column) {
-      field = tableRecord.field(i);
+  for (int i = 0; i < p_record.count(); i++) {
+    if (p_record.fieldName(i) == column) {
+      field = p_record.field(i);
       break;
     }
   }
   return field;
 }
 
-const QMetaType ASqlTable::getType(const QString &column) const {
+const QMetaType ASqlDataQuery::getType(const QString &column) const {
   QSqlField field = getProperties(column);
   if (field.isValid()) {
     QVariant::Type _t = field.type();
@@ -93,7 +87,7 @@ const QMetaType ASqlTable::getType(const QString &column) const {
   return QMetaType();
 }
 
-void ASqlTable::setValue(const QString &column, const QVariant &value) {
+void ASqlDataQuery::setValue(const QString &column, const QVariant &value) {
   if (!isValid())
     return;
 
@@ -137,7 +131,7 @@ void ASqlTable::setValue(const QString &column, const QVariant &value) {
   p_data.insert(field.name(), value);
 }
 
-const QVariant ASqlTable::getValue(const QString &column) {
+const QVariant ASqlDataQuery::getValue(const QString &column) {
   if (!isValid())
     return QVariant();
 
@@ -150,6 +144,6 @@ const QVariant ASqlTable::getValue(const QString &column) {
   return QVariant();
 }
 
-const QHash<QString, QVariant> ASqlTable::getDataset() { return p_data; }
+const QHash<QString, QVariant> ASqlDataQuery::getDataset() { return p_data; }
 
 }; // namespace AntiquaCRM

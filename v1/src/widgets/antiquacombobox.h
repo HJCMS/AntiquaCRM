@@ -9,7 +9,6 @@
 #include <QObject>
 #include <QWidget>
 
-
 class AntiquaComboBox final : public QComboBox {
   Q_OBJECT
   Q_PROPERTY(bool mouseWheel READ isMouseWheelEnabled WRITE setMouseWheelEnabled

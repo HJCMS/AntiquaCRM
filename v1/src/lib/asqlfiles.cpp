@@ -16,8 +16,11 @@
 
 namespace AntiquaCRM {
 
+static const QRegExp comment_pattern() { return QRegExp("(^|\\s)--.+$"); }
+
 ASqlFiles::ASqlFiles(const QString &file)
-    : QFileInfo{ASettings::getDataDir("pgsql"), file + ".sql"} {
+    : QFileInfo{ASettings::getDataDir("pgsql"), file + ".sql"},
+      comments{comment_pattern()} {
   p_content = QString();
 }
 
@@ -35,7 +38,11 @@ bool ASqlFiles::openTemplate() {
     p_content = QString();
     QTextStream stream(&fp);
     stream.setCodec(ANTIQUACRM_TEXTCODEC);
-    p_content = stream.readAll();
+    while (!stream.atEnd()) {
+      QString buf = stream.readLine();
+      if (!buf.contains(comments))
+        p_content += " " + buf.trimmed();
+    }
     fp.close();
     return true;
   }
@@ -113,7 +120,11 @@ const QString ASqlFiles::selectStatement(const QString &name) {
   if (fp.open(QIODevice::ReadOnly)) {
     QTextStream stream(&fp);
     stream.setCodec(ANTIQUACRM_TEXTCODEC);
-    out = stream.readAll();
+    while (!stream.atEnd()) {
+      QString buf = stream.readLine();
+      if (!buf.contains(comment_pattern()))
+        out += " " + buf.trimmed();
+    }
     fp.close();
   }
   return out.trimmed();
@@ -134,7 +145,11 @@ const QString ASqlFiles::queryStatement(const QString &name) {
   if (fp.open(QIODevice::ReadOnly)) {
     QTextStream stream(&fp);
     stream.setCodec(ANTIQUACRM_TEXTCODEC);
-    out = stream.readAll();
+    while (!stream.atEnd()) {
+      QString buf = stream.readLine();
+      if (!buf.contains(comment_pattern()))
+        out += " " + buf.trimmed();
+    }
     fp.close();
   }
   return out.trimmed();

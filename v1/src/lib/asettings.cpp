@@ -44,6 +44,17 @@ ASettings::readGroupConfig(const QString &group) {
   return p_hash;
 }
 
+const QHash<QString, QVariant> &
+ASettings::readGroupSection(const QString &group, const QString &section) {
+  p_hash.clear();
+  beginGroup(group + "/" + section);
+  foreach (QString key, allKeys()) {
+    p_hash.insert(key, value(key));
+  }
+  endGroup();
+  return p_hash;
+}
+
 void ASettings::writeGroupConfig(const QString &group,
                                  const QHash<QString, QVariant> &dataset) {
   if (group.isEmpty())

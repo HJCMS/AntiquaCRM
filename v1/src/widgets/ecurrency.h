@@ -2,29 +2,33 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_@CPPNAME@_H
-#define ANTIQUACRM_@CPPNAME@_H
+#ifndef ANTIQUACRM_ECURRENCY_H
+#define ANTIQUACRM_ECURRENCY_H
 
-#include <AGlobal>
 #include <AntiquaInputEdit>
+#include <QComboBox>
+#include <QLabel>
+#include <QLineEdit>
+#include <QObject>
 
-class @CLASSNAME@ final : public InputEdit {
+class Ecurrency final : public InputEdit {
   Q_OBJECT
 
 private:
-  // Qt classes
+  QLineEdit *m_lineEdit;
+  QComboBox *m_comboBox;
   void loadDataset();
 
 private Q_SLOTS:
-  void dataChanged(int);
+  void itemChanged(int);
 
 public Q_SLOTS:
   Q_INVOKABLE void reset();
-  void setValue(const QVariant &);
   void setFocus();
+  void setValue(const QVariant &);
 
 public:
-  explicit @CLASSNAME@(QWidget *parent = nullptr);
+  explicit Ecurrency(QWidget *parent = nullptr);
   void setProperties(const QSqlField &field);
   const QVariant value();
   bool isValid();
@@ -33,4 +37,4 @@ public:
   const QString notes();
 };
 
-#endif // ANTIQUACRM_@CPPNAME@_H
+#endif // ECURRENCY_UTILS_H

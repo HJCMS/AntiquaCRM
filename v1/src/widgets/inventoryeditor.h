@@ -32,7 +32,7 @@ protected:
   QStringList ignoreList;
   bool isIgnoredField(const QString &fieldName);
 
-  AntiquaCRM::ASqlTable *m_bookData;
+  AntiquaCRM::ASqlDataQuery *m_bookData;
 
   virtual bool setDataField(const QSqlField &field, const QVariant &value) = 0;
   virtual void importSqlResult() = 0;

@@ -87,6 +87,6 @@ void AntiquaWindow::openWindow() {
   if (m_cfg->contains("window/windowState"))
     restoreState(m_cfg->value("window/windowState").toByteArray());
 
-  m_centralWidget->setEnabled(true);
-  m_centralWidget->loadDefaultTabs();
+  if (m_centralWidget->loadDefaultTabs())
+    m_centralWidget->setEnabled(true);
 }

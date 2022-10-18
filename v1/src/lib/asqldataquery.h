@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_SQLTABLE_H
-#define ANTIQUACRM_SQLTABLE_H
+#ifndef ANTIQUACRM_SQLDATAQUERY_H
+#define ANTIQUACRM_SQLDATAQUERY_H
 
 #include <AGlobal>
 #include <QHash>
@@ -15,27 +15,23 @@
 namespace AntiquaCRM {
 
 /**
- * @brief SQL Table Query Container Class
+ * @brief SQL Data Query Container Class
  * @section sql
- * This class is used to import and export Table Data to different class
+ * This class is used to import and export Single Query to different class
  * structures, it is mostly used by the Plugin Interface.
  * This is a final class, because it depends on the PgSQL Database.
  * @note It's a pure Container Class without Database write operations!
  */
-class ANTIQUACRM_LIBRARAY ASqlTable final {
+class ANTIQUACRM_LIBRARAY ASqlDataQuery final {
 
 private:
-  const QSqlRecord tableRecord;
-
-  /**
-   * @brief temporary dataset
-   */
+  const QSqlRecord p_record;
   QHash<QString, QVariant> p_data;
 
 public:
-  explicit ASqlTable(const QString &tableName);
-  explicit ASqlTable(const ASqlTable &other);
-  explicit ASqlTable(const QSqlRecord &record);
+  explicit ASqlDataQuery(const QString &tableName);
+  explicit ASqlDataQuery(const QSqlRecord &record);
+  explicit ASqlDataQuery(const ASqlDataQuery &other);
 
   /**
    * @brief Current SQL Table Record
@@ -92,4 +88,4 @@ public:
 
 }; // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_SQLTABLE_H
+#endif // ANTIQUACRM_SQLDATAQUERY_H

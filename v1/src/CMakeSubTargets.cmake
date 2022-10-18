@@ -1,6 +1,8 @@
 SET (PROJECT_INCLUDE_DIRS
 	${CMAKE_CURRENT_BINARY_DIR}/widgets
 	${CMAKE_CURRENT_SOURCE_DIR}/widgets
+	${CMAKE_CURRENT_BINARY_DIR}/utils/settings
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/settings
 	${CMAKE_CURRENT_BINARY_DIR}/utils/cache
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/cache
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/books
@@ -14,6 +16,7 @@ INCLUDE_DIRECTORIES (${PROJECT_INCLUDE_DIRS})
 
 SET(PROJECT_LIBRARIES
 	AntiquaWidgets
+	AntiquaSettings
 	AntiquaCache
 	AntiquaBooks
 	AntiquaCRM

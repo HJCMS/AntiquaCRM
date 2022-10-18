@@ -42,8 +42,7 @@ const QJsonArray PostalcodeCache::createTable(const QString &query) {
   return array;
 }
 
-void PostalcodeCache::run() {
-  emit statusNotify(tr("Build Postalcodes") + " ...");
+bool PostalcodeCache::run() {
   QJsonObject main;
   QString file("select_statement_postalcode_tables");
   QString select = AntiquaCRM::ASqlFiles::selectStatement(file);
@@ -54,9 +53,12 @@ void PostalcodeCache::run() {
     main.insert(plz.second, createTable(sql));
   }
   AntiquaCRM::ASharedDataFiles p_store;
-  if (p_store.storeJson("postalcodes", QJsonDocument(main))) {
-    emit statusNotify(tr("Postalcode created."));
-  } else {
-    emit statusNotify(tr("Postalcode build failed!"));
-  }
+  if (p_store.storeJson("postalcodes", QJsonDocument(main)))
+    return true;
+
+  return false;
+}
+
+const QString PostalcodeCache::info() const {
+  return tr("Build Postalcodes") + " ...";
 }

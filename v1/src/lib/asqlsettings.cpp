@@ -12,12 +12,13 @@ namespace AntiquaCRM {
 
 ASqlSettings::ASqlSettings(QObject *parent) : ASettings(parent) {
   setObjectName("antiquacrm_sqlsettings");
+  profile = getProfile();
 }
 
 const QString ASqlSettings::groupPath() {
   QString group("database");
   group.append("/");
-  group.append(getProfile());
+  group.append(profile);
   return group;
 }
 
@@ -68,14 +69,14 @@ const QString ASqlSettings::getProfile() {
 const QStringList ASqlSettings::profiles() {
   QStringList l;
   beginGroup("database");
-  l = allKeys();
+  l = childGroups();
   endGroup();
   return l;
 }
 
 void ASqlSettings::setParam(const QString &key, const QVariant &value) {
   beginGroup(groupPath());
-  if (key.contains("pass", Qt::CaseInsensitive)) {
+  if (key.contains("password", Qt::CaseInsensitive)) {
     QByteArray buffer = toRealm(value.toString());
     if (!buffer.isNull())
       setValue(key, buffer);
@@ -87,7 +88,7 @@ void ASqlSettings::setParam(const QString &key, const QVariant &value) {
 const QVariant ASqlSettings::getParam(const QString &key) {
   QVariant out;
   beginGroup(groupPath());
-  if (key.contains("pass", Qt::CaseInsensitive))
+  if (key.contains("password", Qt::CaseInsensitive))
     out = fromRealm(value(key).toByteArray());
   else
     out = value(key);

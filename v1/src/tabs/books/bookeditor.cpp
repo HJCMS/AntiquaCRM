@@ -204,7 +204,7 @@ BookEditor::BookEditor(QWidget *parent)
 }
 
 void BookEditor::setInputList() {
-  m_bookData = new AntiquaCRM::ASqlTable("inventory_books");
+  m_bookData = new AntiquaCRM::ASqlDataQuery("inventory_books");
   ignoreList << "ib_json_category";
   inputList = m_bookData->columnNames();
   if (inputList.isEmpty()) {

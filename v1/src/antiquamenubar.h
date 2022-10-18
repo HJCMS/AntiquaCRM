@@ -25,6 +25,9 @@ private:
   void addConfigMenu();
   void addAboutMenu();
 
+private Q_SLOTS:
+  void openConfigDialog();
+
 Q_SIGNALS:
   void sendApplQuit();
 

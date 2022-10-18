@@ -32,17 +32,19 @@ const QJsonArray StorageLocationCache::createTable(const QString &query) {
   return array;
 }
 
-void StorageLocationCache::run() {
-  emit statusNotify(tr("Build Storage locations") + " ...");
+bool StorageLocationCache::run() {
   QJsonObject main;
   QString file("query_storage_location");
   QString sql = AntiquaCRM::ASqlFiles::queryStatement(file);
   QJsonArray array = createTable(sql);
   main.insert("storagelocations", array);
   AntiquaCRM::ASharedDataFiles p_store;
-  if (p_store.storeJson("storagelocations", QJsonDocument(main))) {
-    emit statusNotify(tr("Storage locations created."));
-  } else {
-    emit statusNotify(tr("Storage locations failed!"));
-  }
+  if (p_store.storeJson("storagelocations", QJsonDocument(main)))
+    return true;
+
+  return false;
+}
+
+const QString StorageLocationCache::info() const {
+  return tr("Build Storage locations") + " ...";
 }
