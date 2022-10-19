@@ -5,6 +5,7 @@
 #include "bookbindingcache.h"
 #include "postalcodecache.h"
 #include "storagelocationcache.h"
+#include "publishercache.h"
 
 #include <AntiquaCRM>
 
@@ -18,6 +19,7 @@ const QList<Workload *> AntiquaCacheFiles::getTasks() {
   list.append(new BookBindingCache(m_sql));
   list.append(new StorageLocationCache(m_sql));
   list.append(new PostalcodeCache(m_sql));
+  list.append(new PublisherCache(m_sql));
   return list;
 }
 

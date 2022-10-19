@@ -6,6 +6,7 @@ SET (query_tables_FILES
  query_postal_codes.sql
  query_book_binding.sql
  query_storage_location.sql
+ query_book_publisher_de.sql
 )
 
 SET (select_statement_FILES

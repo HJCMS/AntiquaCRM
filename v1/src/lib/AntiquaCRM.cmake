@@ -58,6 +58,11 @@
 #include "asqldataquery.h"
 #endif
 
+// AntiquaCRM::ACompleterData
+#ifndef ANTIQUACRM_ACOMPLETERDATA_H
+#include "acompleterdata.h"
+#endif
+
 // AntiquaCRM::ASqlQueryModel
 #ifndef ANTIQUACRM_SQLQUERYMODEL_H
 #include "asqlquerymodel.h"

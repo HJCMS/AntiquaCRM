@@ -7,33 +7,12 @@
 #include <QJsonObject>
 
 BookBinding::BookBinding(QWidget *parent) : InputEdit{parent} {
-
   m_box = new AntiquaComboBox(this);
   m_box->setToolTip(tr("Book binding"));
-  m_box->addItem(tr("Without disclosures"), QString());
   m_layout->addWidget(m_box);
-
-  loadDataset();
   setRequired(true);
-
   connect(m_box, SIGNAL(currentIndexChanged(int)), this,
           SLOT(dataChanged(int)));
-}
-
-void BookBinding::loadDataset() {
-  AntiquaCRM::ASharedDataFiles dataFiles;
-  QJsonDocument doc = dataFiles.getJson("bookbindings");
-  if (doc.isEmpty()) {
-    qWarning("Bookbinding: bookbindings.json not found!");
-    return;
-  }
-
-  QJsonArray arr = doc.object().value("bookbindings").toArray();
-  for (int i = 0; i < arr.count(); i++) {
-    QJsonObject obj = arr[i].toObject();
-    m_box->addItem(obj.value("description").toString(),
-                   obj.value("id").toInt());
-  }
 }
 
 void BookBinding::dataChanged(int) { setModified(true); }
@@ -54,6 +33,24 @@ void BookBinding::setValue(const QVariant &val) {
 void BookBinding::setFocus() {
   m_box->setFocus();
   m_box->showPopup();
+}
+
+void BookBinding::loadDataset() {
+  AntiquaCRM::ASharedDataFiles dataFiles;
+  QJsonDocument doc = dataFiles.getJson("bookbindings");
+  if (doc.isEmpty()) {
+    qWarning("Bookbinding: bookbindings.json not found!");
+    return;
+  }
+
+  m_box->clear();
+  m_box->addItem(tr("Without disclosures"), QString());
+  QJsonArray arr = doc.object().value("bookbindings").toArray();
+  for (int i = 0; i < arr.count(); i++) {
+    QJsonObject obj = arr[i].toObject();
+    m_box->addItem(obj.value("description").toString(),
+                   obj.value("id").toInt());
+  }
 }
 
 void BookBinding::setProperties(const QSqlField &field) {

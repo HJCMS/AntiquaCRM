@@ -2,12 +2,12 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUA_BOOKBINDINGCACHE_H
-#define ANTIQUA_BOOKBINDINGCACHE_H
+#ifndef ANTIQUA_PUBLISHERCACHE_H
+#define ANTIQUA_PUBLISHERCACHE_H
 
 #include "workload.h"
 
-class BookBindingCache final : public Workload {
+class PublisherCache final : public Workload {
   Q_OBJECT
 
 protected:
@@ -18,8 +18,8 @@ public Q_SLOTS:
   bool run() override;
 
 public:
-  explicit BookBindingCache(AntiquaCRM::ASqlCore *pgsql);
+  explicit PublisherCache(AntiquaCRM::ASqlCore *pgsql);
   const QString info() const override;
 };
 
-#endif // ANTIQUA_BOOKBINDINGCACHE_H
+#endif // ANTIQUA_PUBLISHERCACHE_H

@@ -188,7 +188,7 @@ BookEditor::BookEditor(QWidget *parent)
   row2->addWidget(ib_isbn, row2c++, 1, 1, 1);
 
   // TODO Image Toolbar
-  row2->addWidget(new QLabel(tr("TODO Image Toolbar"),this), row2c++, 0, 1, 2);
+  row2->addWidget(new QLabel(tr("TODO Image Toolbar"), this), row2c++, 0, 1, 2);
 
   // TODO Image Viewer
   QSize maxSize = config.value("image/max_size", QSize(320, 320)).toSize();
@@ -237,6 +237,25 @@ void BookEditor::setInputList() {
   if (inputList.isEmpty()) {
     qWarning("Books InputList is Empty!");
   }
+  // Autoren
+  QStringList authors({tr("Authors group"), tr("Authors team")});
+  ib_author->setCompleter(authors);
+
+  // Herausgeber
+  AntiquaCRM::ACompleterData publisher("publisher");
+  ib_publisher->setCompleter(publisher.completition("name"));
+
+  // Lager
+  ib_storage->reset();
+  ib_storage->loadDataset();
+
+  // Buch Zustand
+  ib_binding->loadDataset();
+  AntiquaCRM::ACompleterData designation("bookbindings");
+  ib_designation->setCompleter(designation.completition("name"));
+
+  // Schlüsselwörter
+  // ib_keyword->setCompleter();
 }
 
 bool BookEditor::setDataField(const QSqlField &field, const QVariant &value) {

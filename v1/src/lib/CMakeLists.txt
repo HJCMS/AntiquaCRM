@@ -37,6 +37,7 @@ SET (projectLibrary_SOURCES
  aproviderorders.cpp
  asettings.cpp
  ashareddatafiles.cpp
+ acompleterdata.cpp
  asqlcore.cpp
  asqldataquery.cpp
  asqlfiles.cpp
@@ -56,6 +57,7 @@ SET (projectLibrary_HEADERS
  aproviderorders.h
  asettings.h
  ashareddatafiles.h
+ acompleterdata.h
  asqlcore.h
  asqldataquery.h
  asqlfiles.h

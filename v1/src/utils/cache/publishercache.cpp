@@ -1,24 +1,23 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "storagelocationcache.h"
+#include "publishercache.h"
 
 #include <AntiquaCRM>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QString>
 
-StorageLocationCache::StorageLocationCache(AntiquaCRM::ASqlCore *pgsql)
-    : Workload{pgsql} {
-  setObjectName("storage_location_cache");
+PublisherCache::PublisherCache(AntiquaCRM::ASqlCore *pgsql) : Workload{pgsql} {
+  setObjectName("book_publisher_de");
 }
 
-const QList<QPair<QString, QString>> StorageLocationCache::tableList() {
+const QList<QPair<QString, QString>> PublisherCache::tableList() {
   QList<QPair<QString, QString>> list;
   return list;
 }
 
-const QJsonArray StorageLocationCache::createTable(const QString &query) {
+const QJsonArray PublisherCache::createTable(const QString &query) {
   QJsonArray array;
   QSqlQuery q = m_sql->query(query);
   if (q.size() > 0) {
@@ -32,19 +31,19 @@ const QJsonArray StorageLocationCache::createTable(const QString &query) {
   return array;
 }
 
-bool StorageLocationCache::run() {
+bool PublisherCache::run() {
   QJsonObject main;
-  QString file("query_storage_location");
+  QString file("query_book_publisher_de");
   QString sql = AntiquaCRM::ASqlFiles::queryStatement(file);
   QJsonArray array = createTable(sql);
-  main.insert("storagelocations", array);
+  main.insert("publisher", array);
   AntiquaCRM::ASharedDataFiles p_store;
-  if (p_store.storeJson("storagelocations", QJsonDocument(main)))
+  if (p_store.storeJson("publisher", QJsonDocument(main)))
     return true;
 
   return false;
 }
 
-const QString StorageLocationCache::info() const {
-  return tr("Build Storage locations") + " ...";
+const QString PublisherCache::info() const {
+  return tr("Publishers") + " ...";
 }

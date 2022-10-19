@@ -15,7 +15,6 @@ class StorageLocation final : public InputEdit {
 private:
   AntiquaComboBox *m_box;
   QLineEdit *m_search;
-  void loadDataset();
 
 private Q_SLOTS:
   void dataChanged(int);
@@ -28,6 +27,7 @@ public Q_SLOTS:
 
 public:
   explicit StorageLocation(QWidget *parent = nullptr);
+  void loadDataset();
   void setProperties(const QSqlField &field);
   const QVariant value();
   bool isValid();

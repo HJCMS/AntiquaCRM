@@ -67,7 +67,10 @@ void LineEdit::setPasswordInput(bool b) {
 
 bool LineEdit::isPasswordInput() { return p_passwordInput; }
 
-void LineEdit::addCompleter(const QStringList &list) {
+void LineEdit::setCompleter(const QStringList &list) {
+  if(list.size() < 1)
+    return;
+
   m_completer = new QCompleter(list, m_edit);
   m_completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
   m_edit->setCompleter(m_completer);

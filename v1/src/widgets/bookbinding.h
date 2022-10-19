@@ -13,7 +13,6 @@ class BookBinding : public InputEdit {
 
 private:
   AntiquaComboBox *m_box;
-  void loadDataset();
 
 private Q_SLOTS:
   void dataChanged(int);
@@ -25,6 +24,7 @@ public Q_SLOTS:
 
 public:
   explicit BookBinding(QWidget *parent = nullptr);
+  void loadDataset();
   void setProperties(const QSqlField &field);
   const QVariant value();
   bool isValid();

@@ -6,21 +6,16 @@
 #include <AntiquaCRM>
 
 StorageLocation::StorageLocation(QWidget *parent) : InputEdit{parent} {
-
   m_box = new AntiquaComboBox(this);
   m_box->setToolTip(tr("Storage Location"));
   m_box->insertItem(0, tr("Without disclosures"), QString());
   m_box->setMaxVisibleItems(20);
   m_layout->addWidget(m_box);
-
   m_search = new QLineEdit(this);
   m_search->setPlaceholderText(tr("Storage Location"));
   m_search->setMinimumWidth(130);
   m_layout->addWidget(m_search);
-
-  loadDataset();
   setRequired(true);
-
   connect(m_box, SIGNAL(currentIndexChanged(int)), this,
           SLOT(dataChanged(int)));
 

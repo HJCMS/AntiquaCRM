@@ -36,7 +36,7 @@ public:
   void setProperties(const QSqlField &field);
   void setPasswordInput(bool);
   bool isPasswordInput();
-  void addCompleter(const QStringList &);
+  void setCompleter(const QStringList &);
   void setInfo(const QString &);
   const QString info();
   const QVariant value();

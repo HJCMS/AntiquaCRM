@@ -22,6 +22,7 @@ SET (projectLibrary_SOURCES
  bookbindingcache.cpp
  postalcodecache.cpp
  storagelocationcache.cpp
+ publishercache.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -30,6 +31,7 @@ SET (projectLibrary_HEADERS
  bookbindingcache.h
  postalcodecache.h
  storagelocationcache.h
+ publishercache.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC
