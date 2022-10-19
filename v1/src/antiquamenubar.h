@@ -11,6 +11,8 @@
 #include <QObject>
 #include <QKeySequence>
 
+class AntiquaConfigMenues;
+
 class AntiquaMenuBar final : public QMenuBar {
   Q_OBJECT
 
@@ -18,17 +20,11 @@ private:
   const QIcon defaultIcon;
   QMenu *m_applMenu;
   QMenu *m_viewsMenu;
-  QMenu *m_configMenu;
+  AntiquaConfigMenues *m_configMenu;
   QMenu *m_aboutMenu;
   void addApplMenu();
   void addViewsMenu();
-  void addConfigMenu();
   void addAboutMenu();
-
-private Q_SLOTS:
-  void openConfigDialog();
-  void openKeywordsDialog();
-  void openStorageDialog();
 
 Q_SIGNALS:
   void sendApplQuit();

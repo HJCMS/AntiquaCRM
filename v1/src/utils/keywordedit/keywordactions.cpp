@@ -18,8 +18,8 @@ KeywordActions::KeywordActions(QWidget *parent) : QFrame{parent} {
   layout->addStretch(1);
 
   m_btnQuit = new QPushButton(this);
-  m_btnQuit->setText(tr("Quit"));
-  m_btnQuit->setIcon(QIcon(":/icons/action_exit.png"));
+  m_btnQuit->setText(tr("Close"));
+  m_btnQuit->setIcon(QIcon(":/icons/action_quit.png"));
   layout->addWidget(m_btnQuit);
 
   setLayout(layout);

@@ -41,6 +41,10 @@
 #include "ecurrency.h"
 #endif
 
+#ifndef ANTIQUACRM_EDITINFOLABEL_H
+#include "editinfolabel.h"
+#endif
+
 #ifndef ANTIQUACRM_INTSPINBOX_H
 #include "intspinbox.h"
 #endif

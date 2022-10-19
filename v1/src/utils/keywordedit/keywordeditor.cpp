@@ -38,12 +38,12 @@ KeywordEditor::KeywordEditor(QWidget *parent) : QGroupBox{parent} {
   layout->addWidget(m_id, 1, 1, 1, 1, Qt::AlignLeft);
 
   m_btnClear = new QPushButton(tr("Clear"), this);
-  m_btnClear->setIcon(QIcon(":icons/action_clear.png"));
+  m_btnClear->setIcon(QIcon(":icons/editclear.png"));
   m_btnClear->setToolTip(tr("Clear all fields, to create a new Keyword."));
   layout->addWidget(m_btnClear, 2, 0, 1, 1, Qt::AlignLeft);
 
   m_btnCommit = new QPushButton(tr("Save"), this);
-  m_btnCommit->setIcon(QIcon(":icons/db_comit.png"));
+  m_btnCommit->setIcon(QIcon(":icons/action_save.png"));
   layout->addWidget(m_btnCommit, 2, 1, 1, 2, Qt::AlignRight);
 
   setLayout(layout);
