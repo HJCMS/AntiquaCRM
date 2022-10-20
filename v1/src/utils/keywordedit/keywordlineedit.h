@@ -65,8 +65,6 @@ private:
    */
   const QRegExp stripPattern = QRegExp("([^\\w\\d]+)");
 
-  void loadDataset();
-
 private Q_SLOTS:
   void clearKeywords();
 
@@ -88,13 +86,8 @@ public Q_SLOTS:
 
 public:
   explicit KeywordLineEdit(QWidget *parent = nullptr);
-
   void setProperties(const QSqlField &field);
-
-  /**
-   * @brief Initialisiere Datenbank und setze QCompleter
-   */
-  void loadKeywords();
+  void loadDataset();
   const QVariant value();
   bool isValid();
   void setInfo(const QString &);

@@ -8,7 +8,7 @@
 #include "antiquasystemtray.h"
 #include "antiquatimer.h"
 #include "antiquawindow.h"
-#include "cachefiles.h"
+#include "cachebuilder.h"
 
 #include <QDebug>
 #ifdef Q_OS_WIN
@@ -251,7 +251,7 @@ int AntiquaAppl::exec() {
   // Step 7 - create cache files
   mutex.lock();
   p_splashScreen.setMessage(tr("Creating Cachefiles."));
-  AntiquaCacheFiles *m_cache = new AntiquaCacheFiles(this);
+  CacheBuilder *m_cache = new CacheBuilder(this);
   connect(m_cache, SIGNAL(statusMessage(const QString &)), &p_splashScreen,
           SLOT(setMessage(const QString &)));
   if (m_cache->createCaches()) {

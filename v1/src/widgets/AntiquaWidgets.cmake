@@ -45,6 +45,10 @@
 #include "editinfolabel.h"
 #endif
 
+#ifndef ANTIQUACRM_EDITORTAB_H
+#include "editortab.h"
+#endif
+
 #ifndef ANTIQUACRM_INTSPINBOX_H
 #include "intspinbox.h"
 #endif

@@ -128,7 +128,6 @@ PostalCodeEdit::PostalCodeEdit(QWidget *parent) : InputEdit{parent} {
   m_view->setMinimumWidth(200);
 
   setTabOrder(m_countries, m_postalcode);
-  loadDataset();
   setRequired(true);
 
   connect(m_countries, SIGNAL(currentIndexChanged(int)), this,
@@ -139,6 +138,17 @@ PostalCodeEdit::PostalCodeEdit(QWidget *parent) : InputEdit{parent} {
 }
 
 void PostalCodeEdit::loadDataset() {
+  // Cache
+  AntiquaCRM::ASharedDataFiles dataFile;
+  if (dataFile.fileExists(QString("postalcodes"))) {
+    QJsonDocument jdoc = dataFile.getJson("postalcodes");
+    QJsonObject tables = jdoc.object().value("tables").toObject();
+    foreach (QString t, tables.keys()) {
+      m_countries->addItem(tables[t].toString(), t);
+    }
+    return;
+  }
+  // SQL
   AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
   QString field("p_country,p_table");
   QSqlQuery q = m_sql->query("SELECT " + field + " FROM ui_postalcodes;");

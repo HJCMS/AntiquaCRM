@@ -68,11 +68,15 @@ void LineEdit::setPasswordInput(bool b) {
 bool LineEdit::isPasswordInput() { return p_passwordInput; }
 
 void LineEdit::setCompleter(const QStringList &list) {
-  if(list.size() < 1)
+  if (list.size() < 1)
     return;
 
   m_completer = new QCompleter(list, m_edit);
   m_completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
+  m_completer->setCaseSensitivity(Qt::CaseInsensitive);
+  if (list.size() < 50)
+    m_completer->setFilterMode(Qt::MatchContains);
+
   m_edit->setCompleter(m_completer);
 }
 

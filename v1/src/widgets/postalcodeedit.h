@@ -53,11 +53,6 @@ private:
    */
   QCompleter *m_completer;
 
-  /**
-   * @brief load countries in to m_countries
-   */
-  void loadDataset();
-
 private Q_SLOTS:
   void dataChanged(int);
   void postalReadyToLeave();
@@ -72,6 +67,7 @@ Q_SIGNALS:
 
 public:
   explicit PostalCodeEdit(QWidget *parent = nullptr);
+  void loadDataset();
   void setProperties(const QSqlField &field);
   const QVariant value();
   bool isValid();

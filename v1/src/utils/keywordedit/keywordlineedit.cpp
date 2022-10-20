@@ -4,9 +4,9 @@
 #include "keywordlineedit.h"
 #include "keywordlabellist.h"
 
+#include <AntiquaCRM>
 #include <QtCore>
 #include <QtWidgets>
-#include <AntiquaCRM>
 
 KeywordLineEdit::KeywordLineEdit(QWidget *parent) : InputEdit{parent} {
   m_keywordList = new KeywordLabelList(this);
@@ -42,21 +42,28 @@ KeywordLineEdit::KeywordLineEdit(QWidget *parent) : InputEdit{parent} {
 
 void KeywordLineEdit::loadDataset() {
   QStringList list;
-  AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
-  QString sql("SELECT ci_name FROM categories_intern;");
-  QSqlQuery q = m_sql->query(sql);
-  if (q.size() > 0) {
-    while (q.next()) {
-      list << q.value("ci_name").toString().trimmed();
+  AntiquaCRM::ACompleterData keywords("keywords");
+  list << keywords.completition("name");
+
+  if (list.size() < 1) {
+    qWarning("Keyword editor: fallback to SQL query!");
+    AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
+    QString sql("SELECT ci_name FROM categories_intern;");
+    QSqlQuery q = m_sql->query(sql);
+    if (q.size() > 0) {
+      while (q.next()) {
+        list << q.value("ci_name").toString().trimmed();
+      }
+    } else {
+      qDebug() << Q_FUNC_INFO << m_sql->lastError();
+      return;
     }
-  } else {
-    qDebug() << Q_FUNC_INFO << m_sql->lastError();
-    return;
   }
+
   m_completer = new QCompleter(list, m_lineEdit);
   m_completer->setCompletionMode(QCompleter::PopupCompletion);
-  m_completer->setCaseSensitivity(Qt::CaseInsensitive);
   m_completer->setFilterMode(Qt::MatchContains);
+  m_completer->setCaseSensitivity(Qt::CaseInsensitive);
   m_lineEdit->setCompleter(m_completer);
 }
 
@@ -90,8 +97,6 @@ void KeywordLineEdit::setProperties(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 }
-
-void KeywordLineEdit::loadKeywords() { loadDataset(); }
 
 const QVariant KeywordLineEdit::value() {
   QStringList list = m_keywordList->keywords();

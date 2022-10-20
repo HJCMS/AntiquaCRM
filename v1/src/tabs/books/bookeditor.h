@@ -43,7 +43,7 @@ private:
   IsbnEdit *ib_isbn;           /**< @brief ISBN */
 
   // Row 3
-  QTabWidget *m_tabWidget;
+  EditorTab *m_tabWidget;
   TextField *ib_description;          /**< @brief Öffentliche Beschreibung */
   TextField *ib_internal_description; /**< @brief Interne Beschreibung */
   AntiquaDateInfo *ib_since;          /**< @brief Ersteller-Datum */

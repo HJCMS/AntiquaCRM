@@ -39,6 +39,7 @@ SET (projectLibrary_SOURCES
  conditionedit.cpp
  ecurrency.cpp
  editinfolabel.cpp
+ editortab.cpp
  inputedit.cpp
  intspinbox.cpp
  inventory.cpp
@@ -75,6 +76,7 @@ SET (projectLibrary_HEADERS
  conditionedit.h
  ecurrency.h
  editinfolabel.h
+ editortab.h
  inputedit.h
  intspinbox.h
  inventoryeditor.h

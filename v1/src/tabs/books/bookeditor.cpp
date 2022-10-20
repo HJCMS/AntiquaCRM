@@ -189,6 +189,12 @@ BookEditor::BookEditor(QWidget *parent)
 
   // TODO Image Toolbar
   row2->addWidget(new QLabel(tr("TODO Image Toolbar"), this), row2c++, 0, 1, 2);
+  /*
+   * TEST
+  PostalCodeEdit* plz = new PostalCodeEdit(this);
+  plz->loadDataset();
+  row2->addWidget(plz, row2c++, 0, 1, 2);
+  */
 
   // TODO Image Viewer
   QSize maxSize = config.value("image/max_size", QSize(320, 320)).toSize();
@@ -199,18 +205,19 @@ BookEditor::BookEditor(QWidget *parent)
   row2Widget->setLayout(row2);
   mainLayout->addWidget(row2Widget);
 
-  QIcon tabIcons(":icons/edit.png");
-  m_tabWidget = new QTabWidget(this);
+  m_tabWidget = new EditorTab(this);
   m_tabWidget->setObjectName("tab_widget");
-  m_tabWidget->setMinimumHeight(180);
-  m_tabWidget->setContentsMargins(1, 1, 1, 1);
+  QIcon tabIcons = m_tabWidget->defaultIcon();
+  // Description
   ib_description = new TextField(m_tabWidget);
   ib_description->setObjectName("ib_description");
   m_tabWidget->insertTab(0, ib_description, tabIcons, tr("Public Description"));
+  // Internal Description
   ib_internal_description = new TextField(m_tabWidget);
   ib_internal_description->setObjectName("ib_internal_description");
   m_tabWidget->insertTab(1, ib_internal_description, tabIcons,
                          tr("Internal Description"));
+  // Info Tab
   QWidget *m_infos = new QWidget(this);
   QVBoxLayout *m_infoLayout = new QVBoxLayout(m_infos);
   ib_since = new AntiquaDateInfo(this);
@@ -237,13 +244,14 @@ void BookEditor::setInputList() {
   if (inputList.isEmpty()) {
     qWarning("Books InputList is Empty!");
   }
+
   // Autoren
   QStringList authors({tr("Authors group"), tr("Authors team")});
   ib_author->setCompleter(authors);
 
   // Herausgeber
-  AntiquaCRM::ACompleterData publisher("publisher");
-  ib_publisher->setCompleter(publisher.completition("name"));
+  AntiquaCRM::ACompleterData publishers("publishers");
+  ib_publisher->setCompleter(publishers.completition("name"));
 
   // Lager
   ib_storage->reset();
@@ -251,11 +259,11 @@ void BookEditor::setInputList() {
 
   // Buch Zustand
   ib_binding->loadDataset();
-  AntiquaCRM::ACompleterData designation("bookbindings");
-  ib_designation->setCompleter(designation.completition("name"));
+  AntiquaCRM::ACompleterData designations("designations");
+  ib_designation->setCompleter(designations.completition("name"));
 
   // Schlüsselwörter
-  // ib_keyword->setCompleter();
+  ib_keyword->loadDataset();
 }
 
 bool BookEditor::setDataField(const QSqlField &field, const QVariant &value) {
