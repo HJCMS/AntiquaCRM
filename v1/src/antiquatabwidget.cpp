@@ -4,6 +4,7 @@
 #include "antiquatabwidget.h"
 #include "antiquatabbar.h"
 #include "tabbooks.h"
+#include "tabviews.h"
 
 /** TESTINGS */
 #include <AntiquaCRM>
@@ -27,6 +28,15 @@ AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
 
 Inventory *AntiquaTabWidget::tabWidget(int index) const {
   return qobject_cast<Inventory *>(widget(index));
+}
+
+void AntiquaTabWidget::addViewsTab(const QString &name) {
+  m_views = new TabViews(this);
+  m_views->createSearchQuery(name);
+  int c = (m_tabBar->count() + 1);
+  int i = insertTab(c, m_views, m_views->windowIcon(), m_views->windowTitle());
+  m_tabBar->setTabData(i, m_views->isClosable());
+  setCurrentIndex(i);
 }
 
 void AntiquaTabWidget::setTabChanged(int index) {
@@ -54,7 +64,8 @@ void AntiquaTabWidget::setTabToVisit(int index) {
 
 bool AntiquaTabWidget::loadDefaultTabs() {
   m_books = new TabBooks(this);
-  insertTab(0, m_books, m_books->windowIcon(), m_books->windowTitle());
+  int i = insertTab(0, m_books, m_books->windowIcon(), m_books->windowTitle());
+  m_tabBar->setTabData(i, m_books->isClosable());
 
   return true;
 }

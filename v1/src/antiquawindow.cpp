@@ -26,7 +26,11 @@ AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
   m_statusBar = new AntiquaStatusBar(this);
   setStatusBar(m_statusBar);
 
-  connect(m_menuBar, SIGNAL(sendApplQuit()), this, SLOT(closeWindow()));
+  connect(m_menuBar, SIGNAL(sendApplQuit()), SLOT(closeWindow()));
+  connect(m_menuBar, SIGNAL(sendOpenTabViews(const QString &)), m_centralWidget,
+          SLOT(addViewsTab(const QString &)));
+  connect(m_menuBar, SIGNAL(sendToggleFullscreen()),
+          SLOT(setToggleFullScreen()));
 }
 
 void AntiquaWindow::hideEvent(QHideEvent *event) {
@@ -67,10 +71,9 @@ void AntiquaWindow::closeWindow() {
   emit sendApplQuit();
 }
 
-void AntiquaWindow::setToggleView() { (isVisible()) ? hide() : show(); }
+void AntiquaWindow::setToggleWindow() { (isVisible()) ? hide() : show(); }
 
-void AntiquaWindow::setToggleFullScreen(bool b) {
-  Q_UNUSED(b);
+void AntiquaWindow::setToggleFullScreen() {
   if (isFullScreen()) {
     setWindowState(windowState() & ~Qt::WindowFullScreen);
   } else {

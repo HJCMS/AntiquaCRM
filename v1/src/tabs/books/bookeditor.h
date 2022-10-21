@@ -5,12 +5,12 @@
 #ifndef ANTIQUACRM_BOOKEDITOR_H
 #define ANTIQUACRM_BOOKEDITOR_H
 
-#include <AntiquaInputEdit>
 #include <AntiquaWidgets>
 #include <QObject>
 #include <QWidget>
 
 class KeywordLineEdit;
+class EditorActionBar;
 
 class BookEditor final : public InventoryEditor {
   Q_OBJECT
@@ -41,13 +41,15 @@ private:
   StorageLocation *ib_storage; /**< @brief Lager bestimmung */
   KeywordLineEdit *ib_keyword; /**< @brief Schlüsselwort */
   IsbnEdit *ib_isbn;           /**< @brief ISBN */
-
   // Row 3
   EditorTab *m_tabWidget;
   TextField *ib_description;          /**< @brief Öffentliche Beschreibung */
   TextField *ib_internal_description; /**< @brief Interne Beschreibung */
   AntiquaDateInfo *ib_since;          /**< @brief Ersteller-Datum */
   AntiquaDateInfo *ib_changed;        /**< @brief Änderungs-Datum */
+
+  // Row 4
+  EditorActionBar *m_actionBar;
 
   const QRegularExpression fieldPattern;
   void setInputList();
@@ -62,6 +64,7 @@ private Q_SLOTS:
   void setSaveData();
   void setCheckLeaveEditor();
   void setFinalLeaveEditor();
+  void setPrintBookCard();
 
 public Q_SLOTS:
   void setRestore();

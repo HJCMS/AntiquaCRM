@@ -1,13 +1,13 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "antiquaconfigmenues.h"
+#include "antiquaconfigmenus.h"
 #include "configdialog.h"
 #include "deliverservicedialog.h"
 #include "keywordedit.h"
 #include "storageeditdialog.h"
 
-AntiquaConfigMenues::AntiquaConfigMenues(QWidget *parent) : QMenu{parent} {
+AntiquaConfigMenus::AntiquaConfigMenus(QWidget *parent) : QMenu{parent} {
   setObjectName("configurations_menue");
   setTitle(tr("Configuration"));
   QIcon configIcon(":/icons/configure.png");
@@ -32,25 +32,25 @@ AntiquaConfigMenues::AntiquaConfigMenues(QWidget *parent) : QMenu{parent} {
   connect(ac_system, SIGNAL(triggered()), SLOT(openConfigDialog()));
 }
 
-void AntiquaConfigMenues::openConfigDialog() {
+void AntiquaConfigMenus::openConfigDialog() {
   ConfigDialog *d = new ConfigDialog(this);
   d->exec();
   d->deleteLater();
 }
 
-void AntiquaConfigMenues::openKeywordsDialog() {
+void AntiquaConfigMenus::openKeywordsDialog() {
   KeywordEdit *d = new KeywordEdit(this);
   d->exec();
   d->deleteLater();
 }
 
-void AntiquaConfigMenues::openStorageDialog() {
+void AntiquaConfigMenus::openStorageDialog() {
   StorageEditDialog *d = new StorageEditDialog(this);
   d->exec();
   d->deleteLater();
 }
 
-void AntiquaConfigMenues::openDeliveryDialog() {
+void AntiquaConfigMenus::openDeliveryDialog() {
   DeliverServiceDialog *d = new DeliverServiceDialog(this);
   d->exec();
   d->deleteLater();

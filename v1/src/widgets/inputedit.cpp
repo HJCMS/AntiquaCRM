@@ -4,6 +4,8 @@
 #include "inputedit.h"
 #include "antiquailabel.h"
 
+#include <QDebug>
+
 InputEdit::InputEdit(QWidget *parent) : QFrame{parent} {
   setContentsMargins(0, 0, 0, 0);
   m_layout = new QHBoxLayout(this);

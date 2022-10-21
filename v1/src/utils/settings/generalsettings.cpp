@@ -187,6 +187,10 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   QGroupBox *m_grouBox3 = new QGroupBox(this);
   m_grouBox3->setObjectName("groupbox_additional");
   m_grouBox3->setTitle(tr("Font Settings"));
+#ifdef Q_OS_LINUX
+  m_grouBox3->setToolTip(tr("On GNU/Linux use the System Settings!"));
+  m_grouBox3->setEnabled(false);
+#endif
   QGridLayout *lt_groupBox3 = new QGridLayout(m_grouBox3);
   // Font Settings
   view_font_config = new QLabel(this);

@@ -26,6 +26,7 @@ private:
   BookEditor *m_editorWidget;
 
 public Q_SLOTS:
+  void openStartPage();
   void createSearchQuery(const QString &query = QString());
   void createNewEntry();
   void openEntry(qint64 articleId);
@@ -35,4 +36,4 @@ public:
   explicit TabBooks(QWidget *parent = nullptr);
 };
 
-#endif // TABBOOKS_H
+#endif // ANTIQUACRM_TABBOOKS_H

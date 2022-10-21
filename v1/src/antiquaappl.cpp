@@ -27,6 +27,10 @@ static const QIcon applIcon() {
 }
 
 AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
+  setApplicationName(ANTIQUACRM_NAME);
+  setApplicationVersion(ANTIQUACRM_VERSION);
+  setOrganizationDomain(ANTIQUACRM_CONNECTION_DOMAIN);
+
   m_cfg = new AntiquaCRM::ASettings(this);
   m_cfg->setObjectName("application_sttings");
 
@@ -39,10 +43,10 @@ AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
   connect(m_systemTray, SIGNAL(sendShowWindow()), m_mainWindow, SLOT(show()));
   connect(m_systemTray, SIGNAL(sendHideWindow()), m_mainWindow, SLOT(hide()));
   connect(m_systemTray, SIGNAL(sendToggleView()), m_mainWindow,
-          SLOT(setToggleView()));
-  connect(m_systemTray, SIGNAL(sendApplQuit()), this, SLOT(applicationQuit()));
-  connect(m_mainWindow, SIGNAL(sendApplQuit()), this, SLOT(applicationQuit()));
-  connect(m_timer, SIGNAL(sendTrigger()), this, SLOT(startTriggerProcess()));
+          SLOT(setToggleWindow()));
+  connect(m_systemTray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
+  connect(m_mainWindow, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
+  connect(m_timer, SIGNAL(sendTrigger()), SLOT(startTriggerProcess()));
 }
 
 bool AntiquaAppl::checkInterfaces() {
@@ -151,13 +155,15 @@ void AntiquaAppl::applicationQuit() {
 }
 
 void AntiquaAppl::initDefaultTheme() {
+#ifdef Q_OS_WIN
+  // qDebug() << QStyleFactory::keys();
   setStyle(QStyleFactory::create("Fusion"));
   QFont font = qApp->font();
-  QString fontdef = m_cfg->value("application/font", QString()).toString();
+  qDebug() << font.toString();
+  QString fontdef = m_cfg->value("application/font", font.toString()).toString();
   if (!fontdef.isEmpty() && font.fromString(fontdef)) {
     qApp->setFont(font);
   }
-#ifdef Q_OS_WIN
   /**
    * @short QStyle::Windows::Fusion
    * Hervorgehobener Inaktiver Hintergrund wird bei der Suche in Tabellen und

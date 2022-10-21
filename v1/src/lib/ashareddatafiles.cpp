@@ -54,7 +54,7 @@ bool ASharedDataFiles::storeJson(const QString &basename,
     fp.close();
     return true;
   }
-  qDebug() << Q_FUNC_INFO << "Permissions:" << info;
+  // qDebug() << Q_FUNC_INFO << "Permissions:" << info;
   return false;
 }
 

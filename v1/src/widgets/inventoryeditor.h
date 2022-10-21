@@ -6,6 +6,7 @@
 #define ANTIQUACRM_INVENTORY_EDITOR_H
 
 #include <AntiquaCRM>
+#include <AntiquaInputEdit>
 #include <QHash>
 #include <QObject>
 #include <QRegularExpression>
@@ -46,6 +47,9 @@ protected:
   bool checkIsModified(const QRegularExpression &pattern);
 
 protected Q_SLOTS:
+  void openErrnoMessage(const QString &code, const QString &error);
+  void openSuccessMessage(const QString &info, int timeoutSecs = 2);
+  void openNoticeMessage(const QString &info);
   void setClearInputs(const QRegularExpression &pattern);
   virtual void setSaveData() = 0;
   virtual void setCheckLeaveEditor() = 0;

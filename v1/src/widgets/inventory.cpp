@@ -51,26 +51,6 @@ void Inventory::copyToClipboard(const QString &data) {
   QApplication::clipboard()->setText(buf, QClipboard::Clipboard);
 }
 
-void Inventory::infoPoUp(const QString &title, const QString &message) {
-  QString t = title.isEmpty() ? tr("Information") : title;
-  if (message.isEmpty())
-    return;
-
-  QMessageBox *m_box = new QMessageBox(QMessageBox::Information, t, message,
-                                       QMessageBox::Ok, this, Qt::Popup);
-  m_box->exec();
-}
-
-void Inventory::warnPoUp(const QString &title, const QString &message) {
-  QString t = title.isEmpty() ? tr("Warning") : title;
-  if (message.isEmpty())
-    return;
-
-  QMessageBox *m_box = new QMessageBox(QMessageBox::Warning, t, message,
-                                       QMessageBox::Ok, this, Qt::Popup);
-  m_box->exec();
-}
-
 bool Inventory::isClosable() { return closable; }
 
 bool Inventory::isModified() { return isWindowModified(); }

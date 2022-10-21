@@ -9,6 +9,7 @@
 
 #include <QDebug>
 #include <QLayout>
+#include <QMessageBox>
 
 TabBooks::TabBooks(QWidget *parent) : Inventory{parent} {
   setObjectName("inventory_books");
@@ -49,26 +50,28 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{parent} {
   connect(m_table, SIGNAL(sendQueryReport(const QString &)), m_statusBar,
           SLOT(showMessage(const QString &)));
 
-  connect(m_table, SIGNAL(sendCopyToClibboard(const QString &)), this,
+  connect(m_table, SIGNAL(sendCopyToClibboard(const QString &)),
           SLOT(copyToClipboard(const QString &)));
 
-  connect(m_table, SIGNAL(sendOpenEntry(qint64)), this,
-          SLOT(openEntry(qint64)));
+  connect(m_table, SIGNAL(sendOpenEntry(qint64)), SLOT(openEntry(qint64)));
 
-  connect(m_table, SIGNAL(sendArticleId(qint64)), this,
+  connect(m_table, SIGNAL(sendArticleId(qint64)),
           SIGNAL(sendArticle2Order(qint64)));
 
-  connect(m_table, SIGNAL(sendCreateNewEntry()), this, SLOT(createNewEntry()));
+  connect(m_table, SIGNAL(sendCreateNewEntry()), SLOT(createNewEntry()));
 
-  connect(m_searchBar, SIGNAL(sendSearchClicked()), this,
-          SLOT(createSearchQuery()));
+  connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));
 
-  connect(m_statusBar, SIGNAL(sendHistoryQuery(const QString &)), this,
+  connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
+
+  connect(m_statusBar, SIGNAL(sendHistoryQuery(const QString &)),
           SLOT(createSearchQuery(const QString &)));
 
   connect(m_statusBar, SIGNAL(sendReloadView()), m_table,
           SLOT(setReloadView()));
 }
+
+void TabBooks::openStartPage() { setCurrentIndex(0); }
 
 void TabBooks::createSearchQuery(const QString &query) {
   if (!query.isEmpty()) {
@@ -89,6 +92,19 @@ void TabBooks::createNewEntry() {
 }
 
 void TabBooks::openEntry(qint64 articleId) {
+  if (articleId < 1)
+    return;
+
+  if (currentIndex() != 0) {
+    QString info(tr("Cannot open this article.") + "<br>");
+    info.append(tr("Because the book tab is not in overview mode."));
+    info.append("<p>");
+    info.append(tr("Please save and close all open book entries first."));
+    info.append("</p>");
+    QMessageBox::information(this, tr("Bookeditor"), info);
+    return;
+  }
+
   if (m_editorWidget->openEditEntry(articleId)) {
     setCurrentWidget(m_editorPage);
   }

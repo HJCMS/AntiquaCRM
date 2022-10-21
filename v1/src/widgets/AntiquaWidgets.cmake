@@ -45,6 +45,10 @@
 #include "editinfolabel.h"
 #endif
 
+#ifndef ANTIQUACRM_EDITORACTIONBAR_H
+#include "editoractionbar.h"
+#endif
+
 #ifndef ANTIQUACRM_EDITORTAB_H
 #include "editortab.h"
 #endif

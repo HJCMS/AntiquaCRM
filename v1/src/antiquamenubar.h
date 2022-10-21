@@ -5,13 +5,14 @@
 #ifndef ANTIQUACRM_MENUBAR_H
 #define ANTIQUACRM_MENUBAR_H
 
+#include <QKeySequence>
 #include <QMainWindow>
 #include <QMenu>
 #include <QMenuBar>
 #include <QObject>
-#include <QKeySequence>
 
-class AntiquaConfigMenues;
+class AntiquaViewsMenus;
+class AntiquaConfigMenus;
 
 class AntiquaMenuBar final : public QMenuBar {
   Q_OBJECT
@@ -19,14 +20,15 @@ class AntiquaMenuBar final : public QMenuBar {
 private:
   const QIcon defaultIcon;
   QMenu *m_applMenu;
-  QMenu *m_viewsMenu;
-  AntiquaConfigMenues *m_configMenu;
+  AntiquaViewsMenus *m_viewsMenu;
+  AntiquaConfigMenus *m_configMenu;
   QMenu *m_aboutMenu;
   void addApplMenu();
-  void addViewsMenu();
   void addAboutMenu();
 
 Q_SIGNALS:
+  void sendToggleFullscreen();
+  void sendOpenTabViews(const QString &);
   void sendApplQuit();
 
 public:

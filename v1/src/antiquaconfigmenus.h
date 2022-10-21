@@ -2,15 +2,15 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_CONFIGMENUES_H
-#define ANTIQUACRM_CONFIGMENUES_H
+#ifndef ANTIQUACRM_CONFIGMENUS_H
+#define ANTIQUACRM_CONFIGMENUS_H
 
 #include <QAction>
 #include <QMenu>
 #include <QObject>
 #include <QWidget>
 
-class AntiquaConfigMenues final : public QMenu {
+class AntiquaConfigMenus final : public QMenu {
   Q_OBJECT
 
 private:
@@ -27,7 +27,7 @@ private Q_SLOTS:
   void openDeliveryDialog();
 
 public:
-  explicit AntiquaConfigMenues(QWidget *parent);
+  explicit AntiquaConfigMenus(QWidget *parent);
 };
 
-#endif // ANTIQUACRM_CONFIGMENUES_H
+#endif // ANTIQUACRM_CONFIGMENUS_H

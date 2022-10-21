@@ -49,16 +49,6 @@ protected Q_SLOTS:
    */
   void copyToClipboard(const QString &data);
 
-  /**
-   * @brief Info MessageBox
-   */
-  void infoPoUp(const QString &title, const QString &message);
-
-  /**
-   * @brief Info WarningBox
-   */
-  void warnPoUp(const QString &title, const QString &message);
-
 Q_SIGNALS:
   /**
    * @brief Send Tab closeable changed
@@ -95,6 +85,11 @@ Q_SIGNALS:
   void sendEnabledStatus(bool);
 
 public Q_SLOTS:
+  /**
+   * @brief open start page
+   */
+  virtual void openStartPage() = 0;
+
   /**
    * @brief prepare SQL Queries
    */

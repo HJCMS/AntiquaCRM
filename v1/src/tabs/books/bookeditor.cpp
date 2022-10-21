@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "bookeditor.h"
+#include "editoractionbar.h"
 #include "keywordlineedit.h"
 
 #include <AntiquaCRM>
@@ -233,8 +234,21 @@ BookEditor::BookEditor(QWidget *parent)
   m_tabWidget->insertTab(2, m_infos, tabIcons, tr("Information"));
   mainLayout->addWidget(m_tabWidget);
 
+  m_actionBar = new EditorActionBar(this);
+  m_actionBar->setPrinterMenu(PrinterButton::Bookcard);
+  mainLayout->addWidget(m_actionBar);
+
   setLayout(mainLayout);
   setEnabled(false);
+
+  // SIGNALS
+  connect(m_actionBar, SIGNAL(sendCancelClicked()),
+          SLOT(setFinalLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
+  connect(m_actionBar, SIGNAL(sendSaveClicked()), SLOT(setSaveData()));
+  connect(m_actionBar, SIGNAL(sendFinishClicked()),
+          SLOT(setCheckLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendPrintBookCard()), SLOT(setPrintBookCard()));
 }
 
 void BookEditor::setInputList() {
@@ -294,6 +308,7 @@ void BookEditor::importSqlResult() {
     QSqlField field = m_bookData->getProperties(it.key());
     setDataField(field, it.value());
   }
+  m_actionBar->setRestoreable(m_bookData->isValid());
   setResetModified(inputList);
 }
 
@@ -308,17 +323,49 @@ const QHash<QString, QVariant> BookEditor::createSqlDataset() {
   return list;
 }
 
-void BookEditor::createSqlUpdate() { qDebug() << Q_FUNC_INFO << "TODO"; }
+void BookEditor::createSqlUpdate() {
+  // TODO
+  qDebug() << Q_FUNC_INFO << "TODO";
+}
 
-void BookEditor::createSqlInsert() { qDebug() << Q_FUNC_INFO << "TODO"; }
+void BookEditor::createSqlInsert() {
+  // TODO
+  qDebug() << Q_FUNC_INFO << "TODO";
+}
 
-void BookEditor::setSaveData() { qDebug() << Q_FUNC_INFO << "TODO"; }
+void BookEditor::setSaveData() {
+  // TODO
+  qDebug() << Q_FUNC_INFO << "TODO";
+  setResetModified(inputList);
+  openSuccessMessage(tr("Bookdata saved successfully!"));
+}
 
-void BookEditor::setCheckLeaveEditor() { qDebug() << Q_FUNC_INFO << "TODO"; }
+void BookEditor::setCheckLeaveEditor() {
+  if (checkIsModified(fieldPattern)) {
+    QStringList info(tr("Unsaved Changes"));
+    info << tr("Don't leave this page before save your changes!");
+    openNoticeMessage(info.join("\n"));
+    return;
+  }
+  setFinalLeaveEditor();
+}
 
-void BookEditor::setFinalLeaveEditor() { qDebug() << Q_FUNC_INFO << "TODO"; }
+void BookEditor::setFinalLeaveEditor() {
+  setClearInputs(fieldPattern);
+  setResetModified(inputList);
+  m_actionBar->setRestoreable(false); /**< ResetButton off */
+  emit sendLeaveEditor();             /**< Zurück zur Hauptsansicht */
+}
 
-void BookEditor::setRestore() { qDebug() << Q_FUNC_INFO << "TODO"; }
+void BookEditor::setPrintBookCard() {
+  // TODO
+  qDebug() << Q_FUNC_INFO << "TODO";
+}
+
+void BookEditor::setRestore() {
+  importSqlResult();
+  setEnabled(true);
+}
 
 bool BookEditor::openEditEntry(qint64 articleId) {
   bool status = false;
@@ -356,8 +403,7 @@ bool BookEditor::openEditEntry(qint64 articleId) {
 
 bool BookEditor::createNewEntry() {
   setInputList();
-  setEnabled(true);
   qDebug() << Q_FUNC_INFO << "TODO";
-  // setResetModified(inputList);
+  setEnabled(true);
   return true;
 }

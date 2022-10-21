@@ -13,6 +13,7 @@
 
 class AntiquaTabBar;
 class TabBooks;
+class TabViews;
 
 class AntiquaTabWidget final : public QTabWidget {
   Q_OBJECT
@@ -20,10 +21,12 @@ class AntiquaTabWidget final : public QTabWidget {
 private:
   AntiquaTabBar *m_tabBar;
   TabBooks *m_books;
+  TabViews *m_views;
   QWidget *m_testing;
   inline Inventory *tabWidget(int index) const;
 
 private Q_SLOTS:
+  void addViewsTab(const QString &name);
   void setTabChanged(int index);
   void setTabToClose(int index);
   void setTabToVisit(int index);

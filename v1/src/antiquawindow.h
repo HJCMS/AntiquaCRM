@@ -37,8 +37,8 @@ Q_SIGNALS:
   void sendApplQuit();
 
 public Q_SLOTS:
-  void setToggleView();
-  void setToggleFullScreen(bool);
+  void setToggleWindow();
+  void setToggleFullScreen();
 
 public:
   explicit AntiquaWindow(QWidget *parent = nullptr);

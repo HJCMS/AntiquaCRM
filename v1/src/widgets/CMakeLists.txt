@@ -38,6 +38,7 @@ SET (projectLibrary_SOURCES
  boolbox.cpp
  conditionedit.cpp
  ecurrency.cpp
+ editoractionbar.cpp
  editinfolabel.cpp
  editortab.cpp
  inputedit.cpp
@@ -48,8 +49,10 @@ SET (projectLibrary_SOURCES
  isbnedit.cpp
  language.cpp
  lineedit.cpp
+ mailbutton.cpp
  postalcodeedit.cpp
  priceedit.cpp
+ printerbutton.cpp
  searchfilter.cpp
  searchlineedit.cpp
  selecteucountry.cpp
@@ -75,6 +78,7 @@ SET (projectLibrary_HEADERS
  boolbox.h
  conditionedit.h
  ecurrency.h
+ editoractionbar.h
  editinfolabel.h
  editortab.h
  inputedit.h
@@ -85,8 +89,10 @@ SET (projectLibrary_HEADERS
  isbnedit.h
  language.h
  lineedit.h
+ mailbutton.h
  postalcodeedit.h
  priceedit.h
+ printerbutton.h
  searchfilter.h
  searchlineedit.h
  selecteucountry.h

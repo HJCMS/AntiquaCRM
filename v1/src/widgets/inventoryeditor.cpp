@@ -4,6 +4,8 @@
 #include "inventoryeditor.h"
 
 #include <QDebug>
+#include <QMessageBox>
+#include <QTimer>
 //#include <QJsonDocument>
 //#include <QJsonObject>
 //#include <QJsonValue>
@@ -46,7 +48,8 @@ void InventoryEditor::setResetModified(const QStringList &list) {
     return;
   }
   foreach (QString name, list) {
-    QObject *child = findChild<QObject *>(name, Qt::FindChildrenRecursively);
+    InputEdit *child =
+        findChild<InputEdit *>(name, Qt::FindChildrenRecursively);
     if (child != nullptr) {
       QMetaObject::invokeMethod(child, "setModified", Qt::DirectConnection,
                                 Q_ARG(bool, false));
@@ -60,7 +63,7 @@ void InventoryEditor::setProperties(const QString &name, QSqlField &field) {
   if (!field.isValid())
     return;
 
-  QObject *obj = findChild<QObject *>(name, Qt::FindChildrenRecursively);
+  InputEdit *obj = findChild<InputEdit *>(name, Qt::FindChildrenRecursively);
   if (obj != nullptr) {
     QMetaObject::invokeMethod(obj, "setProperties", Qt::DirectConnection,
                               Q_ARG(QSqlField, field));
@@ -73,8 +76,8 @@ bool InventoryEditor::checkIsModified(const QRegularExpression &pattern) {
     return false;
   }
 
-  QList<QObject *> list =
-      findChildren<QObject *>(pattern, Qt::FindChildrenRecursively);
+  QList<InputEdit *> list =
+      findChildren<InputEdit *>(pattern, Qt::FindChildrenRecursively);
   for (int i = 0; i < list.size(); ++i) {
     if (list.at(i) != nullptr) {
       bool b = false;
@@ -93,17 +96,55 @@ bool InventoryEditor::checkIsModified(const QRegularExpression &pattern) {
   return false;
 }
 
+void InventoryEditor::openErrnoMessage(const QString &code,
+                                       const QString &error) {
+  QMessageBox *d = new QMessageBox(this);
+  d->setIcon(QMessageBox::Critical);
+  d->setDefaultButton(QMessageBox::Ok);
+  d->setTextFormat(Qt::PlainText);
+  d->setTextInteractionFlags(Qt::TextSelectableByMouse);
+  d->setSizeGripEnabled(true);
+  d->setWindowTitle(tr("Error"));
+  d->setDetailedText(code);
+  d->setInformativeText(error);
+  d->exec();
+}
+
+void InventoryEditor::openSuccessMessage(const QString &info, int timeoutSecs) {
+  QMessageBox *d = new QMessageBox(this);
+  d->setIcon(QMessageBox::Information);
+  d->setDefaultButton(QMessageBox::Ok);
+  d->setTextFormat(Qt::PlainText);
+  d->setTextInteractionFlags(Qt::TextSelectableByMouse);
+  d->setSizeGripEnabled(true);
+  d->setWindowTitle(tr("Success"));
+  d->setText(info);
+
+  QTimer *m_t = new QTimer(d);
+  m_t->setInterval((timeoutSecs * 1000));
+  connect(m_t, SIGNAL(timeout()), d, SLOT(close()));
+  m_t->start();
+  d->exec();
+}
+
+void InventoryEditor::openNoticeMessage(const QString &info) {
+  QString t = tr("Notice");
+  QMessageBox *d = new QMessageBox(QMessageBox::Warning, t, info,
+                                   QMessageBox::Ok, this, Qt::Popup);
+  d->exec();
+}
+
 void InventoryEditor::setClearInputs(const QRegularExpression &pattern) {
   if (!pattern.isValid()) {
     qWarning("Invalid QRegularExpression::objPattern");
     return;
   }
-  QList<QObject *> list =
-      findChildren<QObject *>(pattern, Qt::FindChildrenRecursively);
+  QList<InputEdit *> list =
+      findChildren<InputEdit *>(pattern, Qt::FindChildrenRecursively);
   for (int i = 0; i < list.size(); ++i) {
     if (list.at(i) != nullptr) {
       QMetaObject::invokeMethod(list.at(i), "reset", Qt::QueuedConnection);
-      qDebug() << "reset" << list.at(i);
+      // qDebug() << "reset" << list.at(i);
     }
   }
 }

@@ -45,3 +45,11 @@
 #include "inputedit.h"
 #endif
 
+#ifndef ANTIQUA_INPUT_MAILBUTTON_H
+#include "mailbutton.h"
+#endif
+
+#ifndef ANTIQUA_INPUT_PRINTERBUTTON_H
+#include "printerbutton.h"
+#endif
+
