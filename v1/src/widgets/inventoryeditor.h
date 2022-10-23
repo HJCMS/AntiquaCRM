@@ -24,6 +24,9 @@
 class InventoryEditor : public QWidget {
   Q_OBJECT
 
+private:
+  int timeoutPopUp = 2;
+
 protected:
   /**
    * @brief PostgreSQL Datenbank Verbindung.
@@ -149,7 +152,7 @@ protected:
 
 protected Q_SLOTS:
   void openErrnoMessage(const QString &code, const QString &error);
-  void openSuccessMessage(const QString &info, int timeoutSecs = 2);
+  void openSuccessMessage(const QString &info);
   void openNoticeMessage(const QString &info);
 
   /**
@@ -212,6 +215,7 @@ public:
 
   /**
    * @brief Einen Artikel zum bearbeiten öffnen.
+   * @note Hier wird AntiquaCRM::ASqlDataQuery befüllt!
    */
   virtual bool openEditEntry(qint64 articleId) = 0;
 

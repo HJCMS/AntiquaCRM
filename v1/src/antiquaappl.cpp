@@ -160,7 +160,7 @@ void AntiquaAppl::initDefaultTheme() {
   setStyle(QStyleFactory::create("Fusion"));
   QFont font = qApp->font();
   qDebug() << font.toString();
-  QString fontdef = m_cfg->value("application/font", font.toString()).toString();
+  QString fontdef = m_cfg->value("font", font.toString()).toString();
   if (!fontdef.isEmpty() && font.fromString(fontdef)) {
     qApp->setFont(font);
   }

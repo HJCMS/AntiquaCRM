@@ -14,7 +14,7 @@ InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
   setSelectionMode(QAbstractItemView::SingleSelection);
 
   m_cfg = new AntiquaCRM::ASettings(this);
-  QueryLimit = m_cfg->defaultValue("SqlQueryLimit", 0).toInt();
+  QueryLimit = m_cfg->value("SqlQueryLimit", 0).toInt();
 
   /* Kopfzeilen anpassen */
   m_header = horizontalHeader();

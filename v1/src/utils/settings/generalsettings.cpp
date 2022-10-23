@@ -317,7 +317,6 @@ void GeneralSettings::loadSectionConfig() {
       }
     }
   }
-  config->beginGroup("application");
   QFont font = qApp->font();
   if (!font.fromString(config->value("font", font.toString()).toString())) {
     font.setFamily(config->value("font_family").toString());
@@ -325,16 +324,21 @@ void GeneralSettings::loadSectionConfig() {
   }
   view_font_config->setFont(font);
   view_font_config->setText(tr("fonts representation"));
-  config->endGroup();
 }
 
 void GeneralSettings::saveSectionConfig() {
+  /**
+   * @list Müssen noch eingfügt werden!
+   * @li PopUp-Fenster-Timeout in Sekunden "popup_timeout" Standard: 2
+   * @{
+   */
+  config->setValue("popup_timeout", 2);
+  /**< @} */
+
   QFont font = view_font_config->font();
-  config->beginGroup("application");
   config->setValue("font", font.toString());
   config->setValue("font_size", font.pointSize());
   config->setValue("font_family", font.family());
-  config->endGroup();
 
   QList<InputEdit *> l =
       findChildren<InputEdit *>(QString(), Qt::FindChildrenRecursively);

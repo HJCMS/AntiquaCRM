@@ -36,11 +36,6 @@ public:
   static const QString configDomain();
 
   /**
-   * @brief get/set Default Values - if value is not set - create it.
-   */
-  const QVariant defaultValue(const QString &key, const QVariant &val);
-
-  /**
    * @brief Read all Keys from Group
    */
   const QHash<QString, QVariant> &readGroupConfig(const QString &group);

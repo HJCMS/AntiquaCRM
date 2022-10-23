@@ -315,8 +315,8 @@ void BookEditor::importSqlResult() {
 }
 
 bool BookEditor::sendSqlQuery(const QString &query) {
-//  qDebug() << Q_FUNC_INFO << query;
-//  return true;
+  //  qDebug() << Q_FUNC_INFO << query;
+  //  return true;
   QSqlQuery q = m_sql->query(query);
   if (q.lastError().type() != QSqlError::NoError) {
     qDebug() << Q_FUNC_INFO << query << m_sql->lastError();
@@ -374,6 +374,7 @@ void BookEditor::createSqlUpdate() {
 
   QStringList set;
   QHash<QString, QVariant>::iterator it;
+  int changes = 0;
   for (it = data.begin(); it != data.end(); ++it) {
     if (it.key() == "ib_id")
       continue;
@@ -382,20 +383,37 @@ void BookEditor::createSqlUpdate() {
     if (it.value() == m_bookData->getValue(it.key()))
       continue;
 
-    if (it.value().type() == QVariant::String) {
+    if (m_bookData->getType(it.key()).id() == QMetaType::QString) {
       set.append(it.key() + "='" + it.value().toString() + "'");
+      changes++;
     } else {
       set.append(it.key() + "=" + it.value().toString());
+      changes++;
     }
   }
 
-  // Auf Aktivierung prüfen
+  if(changes == 0) {
+    openNoticeMessage(tr("No Modifications found, Update aborted!"));
+    return;
+  }
+
+  /*
+   * Artikel auf Deaktivierung prüfen!
+   * Wenn sich die Anzahl geändert hat, ein Update senden!
+   */
   int _curCount = ib_count->value().toInt();
   int _oldcount = m_bookData->getValue("ib_count").toInt();
-  // Wenn sich die Anzahl geändert hat, ein Update senden!
-  if (_oldcount != _curCount && _curCount < 1) {
-    m_bookData->setValue("ib_count", ib_count->value());
+  if (_oldcount != _curCount && _curCount == 0) {
+    /*
+     * Den Buchdaten Zwischenspeicher anpassen damit das Signal
+     * an die Dienstleister nur einmal Aufgerufen wird!
+     */
+    m_bookData->setValue("ib_count", _curCount);
+
+    // Ab diesen Zeitpunkt ist das Zurücksetzen erst mal nicht mehr gültig!
     m_actionBar->setRestoreable(false);
+
+    // Senden Bestands Mitteilung an das Elternfenster
     emit sendArticleChanged(articleId, _curCount);
   }
 
@@ -405,7 +423,7 @@ void BookEditor::createSqlUpdate() {
   sql.append(ib_id->value().toString());
   sql.append(";");
   if (sendSqlQuery(sql)) {
-    qInfo("Book UPDATE success!");
+    qInfo("SQL UPDATE Inventory Books success!");
   }
 }
 
@@ -416,9 +434,21 @@ void BookEditor::createSqlInsert() {
     createSqlUpdate();
     return;
   }
-  // INSERT Anforderungen
+  /*
+   * Bei einem INSERT die Anforderungen anpassen.
+   */
   ib_count->setRequired(true);
   ib_id->setRequired(false);
+
+  /*
+   * Prüfung der Buchdaten Klasse
+   * Die Initialisierung erfolgt in setInputFields!
+   * Bei einem INSERT wir diese hier befüllt!
+   */
+  if (m_bookData == nullptr || !m_bookData->isValid()) {
+    qWarning("Invalid AntiquaCRM::ASqlDataQuery detected!");
+    return;
+  }
 
   QHash<QString, QVariant> data = createSqlDataset();
   if (data.size() < 1)
@@ -428,11 +458,15 @@ void BookEditor::createSqlInsert() {
   QStringList values; // SQL Values
   QHash<QString, QVariant>::iterator it;
   for (it = data.begin(); it != data.end(); ++it) {
-    if (it.value().toString().isEmpty())
+    if (it.value().isNull())
       continue;
 
-    column.append(it.key());
-    if (it.value().type() == QVariant::String) {
+    QString field = it.key();
+    // Buchdaten einfügen
+    m_bookData->setValue(field, it.value());
+
+    column.append(field);
+    if (m_bookData->getType(field).id() == QMetaType::QString) {
       values.append("'" + it.value().toString() + "'");
     } else {
       values.append(it.value().toString());
@@ -445,7 +479,10 @@ void BookEditor::createSqlInsert() {
   sql.append(values.join(","));
   sql.append(",CURRENT_TIMESTAMP) RETURNING ib_id;");
   if (sendSqlQuery(sql) && ib_id->value().toInt() >= 1) {
-    qInfo("Book INSERT success!");
+    qInfo("SQL INSERT Inventory Books success!");
+    // Zurücksetzen Knopf Aktivieren?
+    m_actionBar->setRestoreable(m_bookData->isValid());
+    // Bildaktionen erst bei vorhandener Artikel Nummer freischalten!
     // m_imageToolBar->setActive(true);
     ib_id->setRequired(true);
   }

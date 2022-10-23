@@ -12,10 +12,8 @@ namespace AntiquaCRM {
 ASettings::ASettings(QObject *parent)
     : QSettings(QSettings::NativeFormat, QSettings::UserScope, configDomain(),
                 ANTIQUACRM_NAME, parent) {
-  beginGroup("application");
   setValue("name", ANTIQUACRM_NAME);
   setValue("version", ANTIQUACRM_VERSION);
-  endGroup();
 }
 
 const QString ASettings::configDomain() {
@@ -25,12 +23,6 @@ const QString ASettings::configDomain() {
   str.append(QDir::separator());
   str.append(QString::fromUtf8(HJCMS_CONFIG_VERSION));
   return str;
-}
-
-const QVariant ASettings::defaultValue(const QString &key,
-                                       const QVariant &val) {
-  setValue(key, val);
-  return value(key, val);
 }
 
 const QHash<QString, QVariant> &

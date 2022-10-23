@@ -20,6 +20,7 @@ InventoryEditor::InventoryEditor(const QString &pattern, QWidget *parent)
   setContentsMargins(0, 0, 0, 0);
   m_sql = new AntiquaCRM::ASqlCore(this);
   m_cfg = new AntiquaCRM::ASettings(this);
+  timeoutPopUp = m_cfg->value("popup_timeout", 2).toInt();
   m_bookData = nullptr;
 }
 
@@ -114,7 +115,7 @@ void InventoryEditor::openErrnoMessage(const QString &code,
   d->exec();
 }
 
-void InventoryEditor::openSuccessMessage(const QString &info, int timeoutSecs) {
+void InventoryEditor::openSuccessMessage(const QString &info) {
   QMessageBox *d = new QMessageBox(this);
   d->setIcon(QMessageBox::Information);
   d->setDefaultButton(QMessageBox::Ok);
@@ -125,7 +126,7 @@ void InventoryEditor::openSuccessMessage(const QString &info, int timeoutSecs) {
   d->setText(info);
 
   QTimer *m_t = new QTimer(d);
-  m_t->setInterval((timeoutSecs * 1000));
+  m_t->setInterval((timeoutPopUp * 1000));
   connect(m_t, SIGNAL(timeout()), d, SLOT(close()));
   m_t->start();
   d->exec();
@@ -135,6 +136,11 @@ void InventoryEditor::openNoticeMessage(const QString &info) {
   QString t = tr("Notice");
   QMessageBox *d = new QMessageBox(QMessageBox::Warning, t, info,
                                    QMessageBox::Ok, this, Qt::Popup);
+
+  QTimer *m_t = new QTimer(d);
+  m_t->setInterval((timeoutPopUp * 1000));
+  connect(m_t, SIGNAL(timeout()), d, SLOT(close()));
+  m_t->start();
   d->exec();
 }
 
