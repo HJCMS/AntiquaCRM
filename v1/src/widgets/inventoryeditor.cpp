@@ -11,18 +11,23 @@
 //#include <QJsonValue>
 #include <QStringList>
 
+#ifndef INPUT_FIND_OPTS
+#define INPUT_FIND_OPTS Qt::FindChildrenRecursively
+#endif
+
 InventoryEditor::InventoryEditor(const QString &pattern, QWidget *parent)
     : QWidget{parent}, fieldPattern{pattern} {
   setContentsMargins(0, 0, 0, 0);
   m_sql = new AntiquaCRM::ASqlCore(this);
+  m_cfg = new AntiquaCRM::ASettings(this);
   m_bookData = nullptr;
 }
 
 bool InventoryEditor::isInputField(const QString &fieldName) {
-  if (inputList.size() < 1 || fieldName.isEmpty())
+  if (inputFields.size() < 1 || fieldName.isEmpty())
     return false;
 
-  QStringListIterator it(inputList);
+  QStringListIterator it(inputFields);
   while (it.hasNext()) {
     if (it.next() == fieldName)
       return true;
@@ -31,10 +36,10 @@ bool InventoryEditor::isInputField(const QString &fieldName) {
 }
 
 bool InventoryEditor::isIgnoredField(const QString &fieldName) {
-  if (ignoreList.size() < 1 || fieldName.isEmpty())
+  if (ignoreFields.size() < 1 || fieldName.isEmpty())
     return false;
 
-  QStringListIterator it(ignoreList);
+  QStringListIterator it(ignoreFields);
   while (it.hasNext()) {
     if (it.next() == fieldName)
       return true;
@@ -42,14 +47,13 @@ bool InventoryEditor::isIgnoredField(const QString &fieldName) {
   return false;
 }
 
-void InventoryEditor::setResetModified(const QStringList &list) {
-  if (list.isEmpty()) {
+void InventoryEditor::setResetModified(const QStringList &objectList) {
+  if (objectList.isEmpty()) {
     qWarning("Empty list");
     return;
   }
-  foreach (QString name, list) {
-    InputEdit *child =
-        findChild<InputEdit *>(name, Qt::FindChildrenRecursively);
+  foreach (QString name, objectList) {
+    InputEdit *child = findChild<InputEdit *>(name, INPUT_FIND_OPTS);
     if (child != nullptr) {
       QMetaObject::invokeMethod(child, "setModified", Qt::DirectConnection,
                                 Q_ARG(bool, false));
@@ -59,25 +63,25 @@ void InventoryEditor::setResetModified(const QStringList &list) {
   setWindowModified(false);
 }
 
-void InventoryEditor::setProperties(const QString &name, QSqlField &field) {
-  if (!field.isValid())
+void InventoryEditor::setProperties(const QString &objectName,
+                                    QSqlField &field) {
+  if (objectName.isEmpty() || !field.isValid())
     return;
 
-  InputEdit *obj = findChild<InputEdit *>(name, Qt::FindChildrenRecursively);
+  InputEdit *obj = findChild<InputEdit *>(objectName, INPUT_FIND_OPTS);
   if (obj != nullptr) {
-    QMetaObject::invokeMethod(obj, "setProperties", Qt::DirectConnection,
-                              Q_ARG(QSqlField, field));
+    obj->setProperties(field);
   }
 }
 
-bool InventoryEditor::checkIsModified(const QRegularExpression &pattern) {
-  if (!pattern.isValid()) {
+bool InventoryEditor::checkIsModified() {
+  if (!fieldPattern.isValid()) {
     qWarning("Invalid QRegularExpression::objPattern");
     return false;
   }
 
   QList<InputEdit *> list =
-      findChildren<InputEdit *>(pattern, Qt::FindChildrenRecursively);
+      findChildren<InputEdit *>(fieldPattern, INPUT_FIND_OPTS);
   for (int i = 0; i < list.size(); ++i) {
     if (list.at(i) != nullptr) {
       bool b = false;
@@ -134,19 +138,28 @@ void InventoryEditor::openNoticeMessage(const QString &info) {
   d->exec();
 }
 
-void InventoryEditor::setClearInputs(const QRegularExpression &pattern) {
-  if (!pattern.isValid()) {
+void InventoryEditor::setResetInputFields() {
+  if (!fieldPattern.isValid()) {
     qWarning("Invalid QRegularExpression::objPattern");
     return;
   }
+
   QList<InputEdit *> list =
-      findChildren<InputEdit *>(pattern, Qt::FindChildrenRecursively);
+      findChildren<InputEdit *>(fieldPattern, INPUT_FIND_OPTS);
   for (int i = 0; i < list.size(); ++i) {
-    if (list.at(i) != nullptr) {
-      QMetaObject::invokeMethod(list.at(i), "reset", Qt::QueuedConnection);
-      // qDebug() << "reset" << list.at(i);
-    }
+    InputEdit *obj = list.at(i);
+    if (obj != nullptr)
+      obj->reset();
   }
 }
 
-InventoryEditor::~InventoryEditor() {}
+InventoryEditor::~InventoryEditor() {
+  if (inputFields.size() > 0)
+    inputFields.clear();
+
+  if (ignoreFields.size() > 0)
+    ignoreFields.clear();
+
+  if (m_bookData != nullptr)
+    delete m_bookData;
+}

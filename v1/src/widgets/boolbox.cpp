@@ -52,15 +52,17 @@ void BoolBox::setChecked(bool b) {
 }
 
 void BoolBox::setProperties(const QSqlField &field) {
-  if (field.requiredStatus() == QSqlField::Required)
-    setRequired(true);
+  Q_UNUSED(field);
+  setRequired(false);
 }
 
 bool BoolBox::isChecked() { return m_checkBox->isChecked(); }
 
 const QVariant BoolBox::value() { return m_checkBox->isChecked(); }
 
-bool BoolBox::isValid() { return true; }
+bool BoolBox::isValid() {
+  return true;
+}
 
 void BoolBox::setInfo(const QString &txt) {
   m_checkBox->setText(txt);

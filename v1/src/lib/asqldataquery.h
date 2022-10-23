@@ -39,6 +39,11 @@ public:
   const QSqlRecord record() const;
 
   /**
+   * @brief Current SQL Table Record
+   */
+  int size() const;
+
+  /**
    * @brief Current Tablename
    */
   const QString tableName() const;

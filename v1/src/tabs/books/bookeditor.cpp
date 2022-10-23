@@ -7,13 +7,12 @@
 
 #include <AntiquaCRM>
 #include <QDebug>
+#include <QMessageBox>
 
 BookEditor::BookEditor(QWidget *parent)
     : InventoryEditor{"^ib_[a-z_]+\\b$", parent} {
   setObjectName("book_editor");
   setWindowTitle(tr("Edit Book"));
-
-  AntiquaCRM::ASettings config(this);
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setObjectName("bookeditor_main_layout");
@@ -32,7 +31,7 @@ BookEditor::BookEditor(QWidget *parent)
   ib_count->setInfo(tr("Count"));
   row0->addWidget(ib_count);
 
-  double minPrice = config.value("payment/min_price", 5.00).toDouble();
+  double minPrice = m_cfg->value("payment/min_price", 5.00).toDouble();
   ib_price = new PriceEdit(this);
   ib_price->setObjectName("ib_price");
   ib_price->setRequired(true);
@@ -68,7 +67,6 @@ BookEditor::BookEditor(QWidget *parent)
 
   ib_edition = new IntSpinBox(this);
   ib_edition->setObjectName("ib_edition");
-  ib_edition->setRequired(true);
   ib_edition->setInfo(tr("Edition"));
   row1->addWidget(ib_edition);
 
@@ -198,7 +196,7 @@ BookEditor::BookEditor(QWidget *parent)
   */
 
   // TODO Image Viewer
-  QSize maxSize = config.value("image/max_size", QSize(320, 320)).toSize();
+  QSize maxSize = m_cfg->value("image/max_size", QSize(320, 320)).toSize();
   QWidget *m_imageView = new QWidget(this);
   m_imageView->setFixedSize(maxSize);
   row2->addWidget(m_imageView, 0, 2, (row2c + 1), 1);
@@ -251,11 +249,15 @@ BookEditor::BookEditor(QWidget *parent)
   connect(m_actionBar, SIGNAL(sendPrintBookCard()), SLOT(setPrintBookCard()));
 }
 
-void BookEditor::setInputList() {
+void BookEditor::setInputFields() {
+  // Bei UPDATE/INSERT Ignorieren
+  ignoreFields << "ib_json_category";
+  ignoreFields << "ib_since";
+  ignoreFields << "ib_changed";
+
   m_bookData = new AntiquaCRM::ASqlDataQuery("inventory_books");
-  ignoreList << "ib_json_category";
-  inputList = m_bookData->columnNames();
-  if (inputList.isEmpty()) {
+  inputFields = m_bookData->columnNames();
+  if (inputFields.isEmpty()) {
     qWarning("Books InputList is Empty!");
   }
 
@@ -309,39 +311,186 @@ void BookEditor::importSqlResult() {
     setDataField(field, it.value());
   }
   m_actionBar->setRestoreable(m_bookData->isValid());
-  setResetModified(inputList);
+  setResetModified(inputFields);
 }
 
 bool BookEditor::sendSqlQuery(const QString &query) {
-  qDebug() << Q_FUNC_INFO << "TODO";
-  return false;
+//  qDebug() << Q_FUNC_INFO << query;
+//  return true;
+  QSqlQuery q = m_sql->query(query);
+  if (q.lastError().type() != QSqlError::NoError) {
+    qDebug() << Q_FUNC_INFO << query << m_sql->lastError();
+    return false;
+  } else {
+    if (q.next()) {
+      if (!q.isNull("ib_id")) {
+        ib_id->setValue(q.value("ib_id"));
+      }
+    }
+    openSuccessMessage(tr("Bookdata saved successfully!"));
+    setResetModified(inputFields);
+    return true;
+  }
 }
 
 const QHash<QString, QVariant> BookEditor::createSqlDataset() {
-  QHash<QString, QVariant> list;
-  qDebug() << Q_FUNC_INFO << "TODO";
-  return list;
+  QHash<QString, QVariant> data;
+  QList<InputEdit *> list =
+      findChildren<InputEdit *>(fieldPattern, Qt::FindChildrenRecursively);
+  QList<InputEdit *>::Iterator it;
+  for (it = list.begin(); it != list.end(); ++it) {
+    InputEdit *cur = *it;
+    QString objName = cur->objectName();
+    if (ignoreFields.contains(objName))
+      continue;
+
+    // qDebug() << objName << cur->isRequired() << cur->isValid() <<
+    // cur->value();
+    if (cur->isRequired() && !cur->isValid()) {
+      openNoticeMessage(cur->notes());
+      cur->setFocus();
+      data.clear();
+      return data;
+    }
+    data.insert(objName, cur->value());
+  }
+  list.clear();
+
+  return data;
 }
 
 void BookEditor::createSqlUpdate() {
-  // TODO
-  qDebug() << Q_FUNC_INFO << "TODO";
+  int articleId = ib_id->value().toInt();
+  if (articleId < 0) {
+    openNoticeMessage(tr("Missing Article ID for Update."));
+    return;
+  }
+  // UPDATE Anforderungen
+  ib_id->setRequired(true);
+
+  QHash<QString, QVariant> data = createSqlDataset();
+  if (data.size() < 1)
+    return;
+
+  QStringList set;
+  QHash<QString, QVariant>::iterator it;
+  for (it = data.begin(); it != data.end(); ++it) {
+    if (it.key() == "ib_id")
+      continue;
+
+    // Nur geänderte Felder in das Update aufnehmen!
+    if (it.value() == m_bookData->getValue(it.key()))
+      continue;
+
+    if (it.value().type() == QVariant::String) {
+      set.append(it.key() + "='" + it.value().toString() + "'");
+    } else {
+      set.append(it.key() + "=" + it.value().toString());
+    }
+  }
+
+  // Auf Aktivierung prüfen
+  int _curCount = ib_count->value().toInt();
+  int _oldcount = m_bookData->getValue("ib_count").toInt();
+  // Wenn sich die Anzahl geändert hat, ein Update senden!
+  if (_oldcount != _curCount && _curCount < 1) {
+    m_bookData->setValue("ib_count", ib_count->value());
+    m_actionBar->setRestoreable(false);
+    emit sendArticleChanged(articleId, _curCount);
+  }
+
+  QString sql("UPDATE inventory_books SET ");
+  sql.append(set.join(","));
+  sql.append(",ib_changed=CURRENT_TIMESTAMP WHERE ib_id=");
+  sql.append(ib_id->value().toString());
+  sql.append(";");
+  if (sendSqlQuery(sql)) {
+    qInfo("Book UPDATE success!");
+  }
 }
 
 void BookEditor::createSqlInsert() {
-  // TODO
-  qDebug() << Q_FUNC_INFO << "TODO";
+  int articleId = ib_id->value().toInt();
+  if (articleId >= 1) {
+    qWarning("Skip INSERT, switch to UPDATE with (ArticleID > 0)!");
+    createSqlUpdate();
+    return;
+  }
+  // INSERT Anforderungen
+  ib_count->setRequired(true);
+  ib_id->setRequired(false);
+
+  QHash<QString, QVariant> data = createSqlDataset();
+  if (data.size() < 1)
+    return;
+
+  QStringList column; // SQL Columns
+  QStringList values; // SQL Values
+  QHash<QString, QVariant>::iterator it;
+  for (it = data.begin(); it != data.end(); ++it) {
+    if (it.value().toString().isEmpty())
+      continue;
+
+    column.append(it.key());
+    if (it.value().type() == QVariant::String) {
+      values.append("'" + it.value().toString() + "'");
+    } else {
+      values.append(it.value().toString());
+    }
+  }
+
+  QString sql("INSERT INTO inventory_books (");
+  sql.append(column.join(","));
+  sql.append(",ib_changed) VALUES (");
+  sql.append(values.join(","));
+  sql.append(",CURRENT_TIMESTAMP) RETURNING ib_id;");
+  if (sendSqlQuery(sql) && ib_id->value().toInt() >= 1) {
+    qInfo("Book INSERT success!");
+    // m_imageToolBar->setActive(true);
+    ib_id->setRequired(true);
+  }
+}
+
+bool BookEditor::realyDeactivateEntry() {
+  qint8 _curCount = ib_count->value().toInt();
+  qint8 _oldcount = m_bookData->getValue("ib_count").toInt();
+  if (_curCount == _oldcount)
+    return true; // alles ok
+
+  QStringList body;
+  body << QString("<b>");
+  body << tr("When setting the Article Count to 0.");
+  body << QString("</b><p>");
+  body << tr("This marked the Article in all Shopsystem for deletion!");
+  body << QString("</p><p>");
+  body << tr("Are you sure to finish this operation?");
+  body << QString("</p>");
+
+  int ret = QMessageBox::question(this, tr("Book deactivation"), body.join(""));
+  if (ret == QMessageBox::No) {
+    ib_count->setValue(m_bookData->getValue("ib_count"));
+    ib_count->setRequired(true);
+    return false;
+  }
+
+  ib_count->setRequired(false);
+  return true;
 }
 
 void BookEditor::setSaveData() {
-  // TODO
-  qDebug() << Q_FUNC_INFO << "TODO";
-  setResetModified(inputList);
-  openSuccessMessage(tr("Bookdata saved successfully!"));
+  if (ib_id->value().toString().isEmpty()) {
+    createSqlInsert();
+    return;
+  }
+
+  if (ib_count->value().toInt() == 0 && !realyDeactivateEntry())
+    return;
+
+  createSqlUpdate();
 }
 
 void BookEditor::setCheckLeaveEditor() {
-  if (checkIsModified(fieldPattern)) {
+  if (checkIsModified()) {
     QStringList info(tr("Unsaved Changes"));
     info << tr("Don't leave this page before save your changes!");
     openNoticeMessage(info.join("\n"));
@@ -351,8 +500,7 @@ void BookEditor::setCheckLeaveEditor() {
 }
 
 void BookEditor::setFinalLeaveEditor() {
-  setClearInputs(fieldPattern);
-  setResetModified(inputList);
+  setResetInputFields();
   m_actionBar->setRestoreable(false); /**< ResetButton off */
   emit sendLeaveEditor();             /**< Zurück zur Hauptsansicht */
 }
@@ -376,14 +524,14 @@ bool BookEditor::openEditEntry(qint64 articleId) {
   if (ib_id.isEmpty())
     return status;
 
-  setInputList();
+  setInputFields();
   QString table = m_bookData->tableName();
   QString query("SELECT * FROM " + table + " WHERE ib_id=" + ib_id + ";");
   QSqlQuery q = m_sql->query(query);
   if (q.size() != 0) {
     QSqlRecord r = m_bookData->record();
     while (q.next()) {
-      foreach (QString key, inputList) {
+      foreach (QString key, inputFields) {
         m_bookData->setValue(key, q.value(r.indexOf(key)));
       }
     }
@@ -402,7 +550,7 @@ bool BookEditor::openEditEntry(qint64 articleId) {
 }
 
 bool BookEditor::createNewEntry() {
-  setInputList();
+  setInputFields();
   qDebug() << Q_FUNC_INFO << "TODO";
   setEnabled(true);
   return true;

@@ -55,6 +55,27 @@ void IntSpinBox::setFocus() { m_spinBox->setFocus(); }
 void IntSpinBox::setProperties(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
+
+  switch (field.length()) {
+  case 1:
+    setRange(0, 9);
+    break;
+
+  case 2:
+    setRange(0, 99);
+    break;
+
+  case 3:
+    setRange(0, 999);
+    break;
+
+  case 4:
+    setRange(0, 9999);
+    break;
+
+  default:
+    setRange(0, 99999);
+  }
 }
 
 const QVariant IntSpinBox::value() { return m_spinBox->value(); }

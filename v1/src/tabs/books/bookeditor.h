@@ -48,31 +48,57 @@ private:
   AntiquaDateInfo *ib_since;          /**< @brief Ersteller-Datum */
   AntiquaDateInfo *ib_changed;        /**< @brief Änderungs-Datum */
 
-  // Row 4
+  /**
+   * @brief Beinhaltet Cancel, Restore, Save und go-back.
+   */
   EditorActionBar *m_actionBar;
 
-  const QRegularExpression fieldPattern;
-  void setInputList();
-  bool setDataField(const QSqlField &field, const QVariant &value);
-  void importSqlResult();
-  bool sendSqlQuery(const QString &query);
-  const QHash<QString, QVariant> createSqlDataset();
-  void createSqlUpdate();
-  void createSqlInsert();
+  /**
+   * @brief Bilder operations Knopfleiste
+   */
+  // ImageToolBar *m_imageToolBar;
+
+  /**
+   * @brief Eingebettete Bildansicht
+   */
+  // ImageView *m_imageView;
+
+  void setInputFields() override;
+
+  bool setDataField(const QSqlField &field, const QVariant &value) override;
+
+  void importSqlResult() override;
+
+  bool sendSqlQuery(const QString &query) override;
+
+  const QHash<QString, QVariant> createSqlDataset() override;
+
+  void createSqlUpdate() override;
+
+  void createSqlInsert() override;
+
+  /**
+   * Wenn der Benutzer den Artikel Bestand auf 0 setzt!
+   * Einen Hinweis ausgeben das der Artikel gleichzeitig
+   * auch aus dem Auftrags-System geworfen wird und die
+   * Online Shops auf einen Löschenauftrag erhalten!
+   * @note Die Meldung wird in @ref saveData ausgelöst!
+   */
+  bool realyDeactivateEntry();
 
 private Q_SLOTS:
-  void setSaveData();
-  void setCheckLeaveEditor();
-  void setFinalLeaveEditor();
+  void setSaveData() override;
+  void setCheckLeaveEditor() override;
+  void setFinalLeaveEditor() override;
   void setPrintBookCard();
 
 public Q_SLOTS:
-  void setRestore();
+  void setRestore() override;
 
 public:
   explicit BookEditor(QWidget *parent = nullptr);
-  bool openEditEntry(qint64 articleId);
-  bool createNewEntry();
+  bool openEditEntry(qint64 articleId) override;
+  bool createNewEntry() override;
 };
 
 #endif // ANTIQUACRM_BOOKEDITOR_H

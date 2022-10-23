@@ -41,6 +41,8 @@ ASqlDataQuery::ASqlDataQuery(const ASqlDataQuery &other)
 
 const QSqlRecord ASqlDataQuery::record() const { return p_record; }
 
+int ASqlDataQuery::size() const { return p_data.size(); }
+
 const QString ASqlDataQuery::tableName() const {
   if (isValid()) {
     return p_record.field(0).tableName();
