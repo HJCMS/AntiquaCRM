@@ -32,6 +32,7 @@ SET(CMAKE_AUTORCC ON)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
+SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/Modules")
 
 ## Enables some Development options and tracing
 OPTION (ANTIQUA_DEVELOPEMENT "Enable development macro code" OFF)
@@ -53,9 +54,13 @@ ELSE(ANTIQUA_DEVELOPEMENT)
  ENDIF (CMAKE_HOST_WIN32)
 ENDIF (ANTIQUA_DEVELOPEMENT)
 
+## cUrl
+## https://curl.se/
+FIND_PACKAGE(CURL REQUIRED libcurl)
+
 ## libqrencode
 ## https://github.com/fukuchi/libqrencode
-#FIND_PACKAGE(qrencode REQUIRED libqrencode)
+FIND_PACKAGE(QRENCODE REQUIRED libqrencode)
 
 SET(PROJECT_BINDINGS
  Core

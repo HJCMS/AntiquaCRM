@@ -9,6 +9,16 @@
 
 namespace AntiquaCRM {
 
+#ifdef Q_OS_WIN
+static const QString applCaBundlePath() {
+  QFileInfo info(QDir::current(), "curl-ca-bundle.crt");
+  if (info.isReadable()) {
+    return info.filePath();
+  }
+  return QString();
+}
+#endif
+
 ANetworkRequest::ANetworkRequest(const QUrl &remoteUrl)
     : QNetworkRequest{remoteUrl} {
 
@@ -30,7 +40,12 @@ const QByteArray ANetworkRequest::antiquaCharset() {
 const QSslConfiguration ANetworkRequest::sslConfigguration() {
   ASettings config;
   QSslConfiguration cfg;
-  QString ca_bundle = config.value("ssl/ca_bundle").toString();
+  QString ca_bundle;
+#ifdef Q_OS_WIN
+  ca_bundle = config.value("ssl/ca_bundle", applCaBundlePath()).toString();
+#else
+  ca_bundle = config.value("ssl/ca_bundle").toString();
+#endif
   if (!cfg.addCaCertificates(ca_bundle, QSsl::Pem)) {
     qWarning("ANetworkRequest: Missing ssl/ca_bundle PEM to import!");
   }

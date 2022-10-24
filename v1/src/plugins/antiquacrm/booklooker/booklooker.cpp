@@ -3,6 +3,8 @@
 
 #include "booklooker.h"
 
+// BooklookerRequester
+
 #ifndef PLUGIN_NAME
 #define PLUGIN_NAME "Booklooker"
 #endif
@@ -14,11 +16,13 @@ Booklooker::Booklooker(QObject *parent) : AntiquaCRM::APluginInterface{parent} {
   setObjectName(PLUGIN_NAME);
 }
 
-void Booklooker::prepareJsonResponse(const QJsonDocument &) {}
+void Booklooker::prepareJsonResponse(const QJsonDocument &jdoc) {
+  qDebug() << Q_FUNC_INFO << jdoc;
+}
 
 void Booklooker::queryOrders(int waitSecs) {
-  // TODO
-  QTimer::singleShot((waitSecs * 1000), this, SIGNAL(sendQueryFinished()));
+  Q_UNUSED(waitSecs);
+  emit sendQueryFinished();
 }
 
 const QString Booklooker::configProvider() const {
@@ -39,6 +43,7 @@ const QJsonDocument Booklooker::getResponse() const {
 const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
   AntiquaCRM::AProviderOrders booking;
   // AProviderOrder order(orderId);
+
   return booking;
 }
 

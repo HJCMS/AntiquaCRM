@@ -81,6 +81,10 @@ void AntiquaWindow::setToggleFullScreen() {
   }
 }
 
+void AntiquaWindow::setStatusMessage(const QString &message) {
+  m_statusBar->showMessage(message);
+}
+
 void AntiquaWindow::openWindow() {
   if (m_cfg->contains("window/geometry"))
     restoreGeometry(m_cfg->value("window/geometry").toByteArray());

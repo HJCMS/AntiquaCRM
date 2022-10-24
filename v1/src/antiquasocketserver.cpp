@@ -3,17 +3,41 @@
 
 #include "antiquasocketserver.h"
 
+#include <AntiquaCRM>
 #include <QByteArray>
-#include <QDataStream>
 #include <QDebug>
 #include <QJsonDocument>
 #include <QJsonParseError>
-#include <QSysInfo>
 
-AntiquaSocketServer::AntiquaSocketServer(QObject *parent) : QLocalServer{parent} {
+AntiquaSocketServer::AntiquaSocketServer(QObject *parent)
+    : QLocalServer{parent} {
   setObjectName("socket_notifier");
   setSocketOptions(QLocalServer::UserAccessOption);
   setMaxPendingConnections(100);
+}
+
+void AntiquaSocketServer::createAction(const QJsonObject &obj) {
+  if (obj.contains("window_status_message")) {
+    QString message = obj.value("window_status_message").toString();
+    message = message.trimmed();
+    if (message.isEmpty() || message.length() > 256) {
+      qWarning("Socket abort by policy rules!");
+      return;
+    }
+    emit sendStatusMessage(message);
+    return;
+  } else if (obj.contains("plugin_article_update")) {
+    QJsonObject action = obj.value("plugin_article_update").toObject();
+    if (action.isEmpty()) {
+      qWarning("Socket abort by policy rules!");
+      return;
+    }
+    emit sendOperation(obj);
+    return;
+  }
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << "Unknown Socket Operation:" << obj;
+#endif
 }
 
 void AntiquaSocketServer::incomingConnection(quintptr socketDescriptor) {
@@ -25,21 +49,19 @@ void AntiquaSocketServer::incomingConnection(quintptr socketDescriptor) {
     QJsonParseError parser;
     QJsonDocument jdoc = QJsonDocument::fromJson(data, &parser);
     if (parser.error == QJsonParseError::NoError) {
-      qDebug() << Q_FUNC_INFO << jdoc;
+      QJsonObject jobj = jdoc.object();
+      if (jobj.isEmpty()) {
+        qWarning("Socket abort by policy rules!");
+        return;
+      }
+      createAction(jobj);
     } else {
-      qDebug() << Q_FUNC_INFO << parser.errorString();
+      qWarning("Socketserver parse error: '%s'",
+               qPrintable(parser.errorString()));
     }
   }
 }
 
-const QString AntiquaSocketServer::name() {
-  QString name("de.hjcms.antiquacrm");
-  name.append(".");
-  name.append(QSysInfo::machineHostName());
-  QString userName = qEnvironmentVariable("USER");
-  if (!userName.isEmpty()) {
-    name.append(".");
-    name.append(userName);
-  }
-  return name;
+const QString AntiquaSocketServer::socketPath() {
+  return AntiquaCRM::AStatusMessanger::antiquaServerName();
 }

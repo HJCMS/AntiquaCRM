@@ -6,6 +6,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QMessageBox>
+#include <AntiquaCRM>
 
 Inventory::Inventory(QWidget *parent) : QStackedWidget{parent} {
   setContentsMargins(0, 0, 0, 0);
@@ -49,6 +50,15 @@ void Inventory::copyToClipboard(const QString &data) {
     return;
 
   QApplication::clipboard()->setText(buf, QClipboard::Clipboard);
+}
+
+void Inventory::sendStatusMessage(const QString &message) {
+  AntiquaCRM::AStatusMessanger messanger(this);
+  messanger.setObjectName("tab_status_message");
+  QJsonObject obj;
+  obj.insert("window_status_message",message);
+  messanger.pushMessage(obj);
+  messanger.close();
 }
 
 bool Inventory::isClosable() { return closable; }

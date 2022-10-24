@@ -49,6 +49,11 @@ protected Q_SLOTS:
    */
   void copyToClipboard(const QString &data);
 
+  /**
+   * @brief Statusnachricht senden.
+   */
+  void sendStatusMessage(const QString &message);
+
 Q_SIGNALS:
   /**
    * @brief Send Tab closeable changed

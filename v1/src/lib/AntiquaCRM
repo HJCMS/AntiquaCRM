@@ -33,9 +33,19 @@
 #include "anetworker.h"
 #endif
 
+// AntiquaCRM::ACurl
+#ifndef ANTIQUACRM_ACURL_H
+#include "acurl.h"
+#endif
+
 // AntiquaCRM::ASqlSettings
 #ifndef ANTIQUACRM_SQLSETTINGS_H
 #include "asqlsettings.h"
+#endif
+
+// AntiquaCRM::AStatusMessanger
+#ifndef ANTIQUACRM_STATUSMESSANGER_H
+#include "astatusmessanger.h"
 #endif
 
 // AntiquaCRM::ASqlProfile

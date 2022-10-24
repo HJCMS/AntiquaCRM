@@ -1,0 +1,25 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+
+/**
+ * @defgroup Imaging
+ * @{
+ */
+
+#ifndef ANTIQUA_IMAGEDIALOG_H
+#include "imagedialog.h"
+#endif
+
+#ifndef ANTIQUA_IMAGETOOLBAR_H
+#include "imagetoolbar.h"
+#endif
+
+#ifndef ANTIQUA_IMAGEVIEW_H
+#include "imageview.h"
+#endif
+
+#ifndef ANTIQUA_SOURCEINFO_H
+#include "sourceinfo.h"
+#endif
+
+/** @} */

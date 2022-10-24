@@ -8,6 +8,7 @@
 #include <AntiquaCRM>
 #include <AntiquaCRMPlugin>
 #include <QApplication>
+#include <QJsonObject>
 #include <QList>
 #include <QObject>
 #include <QScreen>
@@ -40,6 +41,7 @@ private:
   bool initialPlugins(QObject *receiver = nullptr);
 
 private Q_SLOTS:
+  void getSocketOperation(const QJsonObject &);
   void startTriggerProcess();
   void setPluginQueryFinished();
 

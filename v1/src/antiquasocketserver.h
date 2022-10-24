@@ -5,6 +5,7 @@
 #ifndef ANTIQUACRM_SOCKETSERVER_H
 #define ANTIQUACRM_SOCKETSERVER_H
 
+#include <QJsonObject>
 #include <QLocalServer>
 #include <QLocalSocket>
 #include <QObject>
@@ -16,13 +17,18 @@ class AntiquaSocketServer : public QLocalServer {
 private:
   int timeout = 5000;
   QLocalSocket *m_listener;
+  void createAction(const QJsonObject &obj);
 
 protected:
   void incomingConnection(quintptr socketDescriptor);
 
+Q_SIGNALS:
+  void sendStatusMessage(const QString &message);
+  void sendOperation(const QJsonObject &obj);
+
 public:
   explicit AntiquaSocketServer(QObject *parent = nullptr);
-  static const QString name();
+  static const QString socketPath();
 };
 
 #endif // ANTIQUACRM_SOCKETSERVER_H

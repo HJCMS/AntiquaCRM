@@ -1,6 +1,8 @@
 SET (PROJECT_INCLUDE_DIRS
 	${CMAKE_CURRENT_BINARY_DIR}/widgets
 	${CMAKE_CURRENT_SOURCE_DIR}/widgets
+	${CMAKE_CURRENT_BINARY_DIR}/utils/imgedit
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/imgedit
 	${CMAKE_CURRENT_BINARY_DIR}/utils/deliveryservice
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/deliveryservice
 	${CMAKE_CURRENT_BINARY_DIR}/utils/storage
@@ -24,6 +26,7 @@ INCLUDE_DIRECTORIES (${PROJECT_INCLUDE_DIRS})
 
 SET(PROJECT_LIBRARIES
 	AntiquaWidgets
+	AntiquaImgEdit
 	DeliveryService
 	AntiquaStorage
 	AntiquaKeywords

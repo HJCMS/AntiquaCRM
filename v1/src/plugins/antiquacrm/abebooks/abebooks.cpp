@@ -17,7 +17,8 @@ Abebooks::Abebooks(QObject *parent) : AntiquaCRM::APluginInterface{parent} {
 void Abebooks::prepareJsonResponse(const QJsonDocument &) {}
 
 void Abebooks::queryOrders(int waitSecs) {
-  QTimer::singleShot((waitSecs * 1000), this, SIGNAL(sendQueryFinished()));
+  Q_UNUSED(waitSecs);
+  emit sendQueryFinished();
 }
 
 const QString Abebooks::configProvider() const {

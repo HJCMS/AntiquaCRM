@@ -7,6 +7,7 @@ INCLUDE_DIRECTORIES (
   ${PROJECT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CURL_INCLUDE_DIRS}
 )
 
 CONFIGURE_FILE (aglobal.h.cmake
@@ -44,6 +45,8 @@ SET (projectLibrary_SOURCES
  asqlprofile.cpp
  asqlquerymodel.cpp
  asqlsettings.cpp
+ astatusmessanger.cpp
+ acurl.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -64,6 +67,8 @@ SET (projectLibrary_HEADERS
  asqlprofile.h
  asqlquerymodel.h
  asqlsettings.h
+ astatusmessanger.h
+ acurl.h
  AntiquaCRM
  AGlobal
  ASettings
@@ -90,6 +95,7 @@ TARGET_LINK_LIBRARIES (${_projectLibrary} PRIVATE
   Qt${QT_VERSION_MAJOR}::Network
   Qt${QT_VERSION_MAJOR}::Sql
   Qt${QT_VERSION_MAJOR}::Xml
+  ${CURL_LIBRARIES}
 )
 
 INSTALL (TARGETS ${_projectLibrary}

@@ -156,6 +156,16 @@ protected Q_SLOTS:
   void openNoticeMessage(const QString &info);
 
   /**
+   * @brief Statusnachricht senden.
+   */
+  void sendStatusMessage(const QString &message);
+
+  /**
+   * @brief Article Status an Dienstleister senden.
+   */
+  void sendArticleStatus(qint64 articleId, qint8 count = 0);
+
+  /**
    * @brief Ruft die reset() Methode Eingabefelder auf!
    * @note Die "reset" Funktion der Eingabefelder verwendet auch
    * setModified(false)!
@@ -190,11 +200,6 @@ Q_SIGNALS:
    * @brief Sende Artikel Nummer für Bilder hochladen.
    */
   void sendUploadImage(qint64 articleId);
-
-  /**
-   * @brief Artikel Bestandsanzahl mitteilen
-   */
-  void sendArticleChanged(qint64 articleId, int count);
 
   /**
    * @brief Editor Beenden

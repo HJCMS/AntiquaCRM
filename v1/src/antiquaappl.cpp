@@ -81,7 +81,11 @@ bool AntiquaAppl::checkDatabase() {
 bool AntiquaAppl::createSocket() {
   bool out = false;
   m_socket = new AntiquaSocketServer(this);
-  out = m_socket->listen(m_socket->name());
+  connect(m_socket, SIGNAL(sendOperation(const QJsonObject &)),
+          SLOT(getSocketOperation(const QJsonObject &)));
+  connect(m_socket, SIGNAL(sendStatusMessage(const QString &)), m_mainWindow,
+          SLOT(setStatusMessage(const QString &)));
+  out = m_socket->listen(m_socket->socketPath());
   return out;
 }
 
@@ -116,6 +120,15 @@ bool AntiquaAppl::initialPlugins(QObject *receiver) {
     }
   }
   return (p_interfaces.size() > 0);
+}
+
+void AntiquaAppl::getSocketOperation(const QJsonObject &obj) {
+  if (obj.contains("plugin_article_update")) {
+    qDebug() << "TODO plugin_article_update:"
+             << obj.value("plugin_article_update").toObject();
+    return;
+  }
+  qDebug() << Q_FUNC_INFO << "TODO" << obj;
 }
 
 void AntiquaAppl::startTriggerProcess() {
@@ -180,12 +193,11 @@ void AntiquaAppl::initDefaultTheme() {
 
 bool AntiquaAppl::isRunning() {
   QLocalSocket socket(this);
-  socket.setServerName(AntiquaSocketServer::name());
+  socket.setServerName(AntiquaSocketServer::socketPath());
   if (socket.open(QLocalSocket::ReadWrite)) {
     QJsonObject obj;
-    obj.insert("receiver", QJsonValue("MainWindow"));
-    obj.insert("type", QJsonValue("SLOT"));
-    obj.insert("value", QJsonValue("showAntiquaWindow"));
+    obj.insert("window_status_message",
+               QJsonValue(tr("Application already started.")));
     QByteArray data(QJsonDocument(obj).toJson(QJsonDocument::Compact));
     socket.write(data);
     socket.waitForBytesWritten(2000);

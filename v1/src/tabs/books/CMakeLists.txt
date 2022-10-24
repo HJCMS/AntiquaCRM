@@ -13,6 +13,7 @@ SET (projectLibrary_LINKER
  AntiquaCRM
  AntiquaWidgets
  AntiquaKeywords
+ AntiquaImgEdit
 )
 
 SET (projectLibrary_SOURCES

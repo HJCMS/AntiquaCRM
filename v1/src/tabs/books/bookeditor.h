@@ -5,6 +5,7 @@
 #ifndef ANTIQUACRM_BOOKEDITOR_H
 #define ANTIQUACRM_BOOKEDITOR_H
 
+#include <AntiquaImgEdit>
 #include <AntiquaWidgets>
 #include <QObject>
 #include <QWidget>
@@ -56,12 +57,12 @@ private:
   /**
    * @brief Bilder operations Knopfleiste
    */
-  // ImageToolBar *m_imageToolBar;
+  ImageToolBar *m_imageToolBar;
 
   /**
    * @brief Eingebettete Bildansicht
    */
-  // ImageView *m_imageView;
+  ImageView *m_imageView;
 
   void setInputFields() override;
 
@@ -91,6 +92,8 @@ private Q_SLOTS:
   void setCheckLeaveEditor() override;
   void setFinalLeaveEditor() override;
   void setPrintBookCard();
+  void actionRemoveImage(qint64 articleId);
+  void actionEditImages();
 
 public Q_SLOTS:
   void setRestore() override;

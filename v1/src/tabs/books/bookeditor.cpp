@@ -186,19 +186,17 @@ BookEditor::BookEditor(QWidget *parent)
   ib_isbn->setToolTip(lb_isbn->text());
   row2->addWidget(ib_isbn, row2c++, 1, 1, 1);
 
-  // TODO Image Toolbar
-  row2->addWidget(new QLabel(tr("TODO Image Toolbar"), this), row2c++, 0, 1, 2);
-  /*
-   * TEST
-  PostalCodeEdit* plz = new PostalCodeEdit(this);
-  plz->loadDataset();
-  row2->addWidget(plz, row2c++, 0, 1, 2);
-  */
+  // Image Toolbar
+  m_imageToolBar = new ImageToolBar(this);
+  row2->addWidget(m_imageToolBar, row2c++, 0, 1, 2);
 
-  // TODO Image Viewer
+  // add Stretch
+  row2->setRowStretch(row2c++, 1);
+
+  // Image Viewer
   QSize maxSize = m_cfg->value("image/max_size", QSize(320, 320)).toSize();
-  QWidget *m_imageView = new QWidget(this);
-  m_imageView->setFixedSize(maxSize);
+  m_imageView = new ImageView(maxSize, this);
+  m_imageView->setMaximumWidth(maxSize.width());
   row2->addWidget(m_imageView, 0, 2, (row2c + 1), 1);
 
   row2Widget->setLayout(row2);
@@ -239,7 +237,16 @@ BookEditor::BookEditor(QWidget *parent)
   setLayout(mainLayout);
   setEnabled(false);
 
-  // SIGNALS
+  // Signals:ImageToolBar
+  connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)),
+          SLOT(actionRemoveImage(qint64)));
+  connect(m_imageToolBar, SIGNAL(sendOpenImage()), SLOT(actionEditImages()));
+
+  // Signals:ImageViewer
+  connect(m_imageView, SIGNAL(sendImageLoadSuccess(bool)), m_imageToolBar,
+          SLOT(enableActions(bool)));
+
+  // Signals:ActionBar
   connect(m_actionBar, SIGNAL(sendCancelClicked()),
           SLOT(setFinalLeaveEditor()));
   connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
@@ -251,14 +258,17 @@ BookEditor::BookEditor(QWidget *parent)
 
 void BookEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
-  ignoreFields << "ib_json_category";
   ignoreFields << "ib_since";
   ignoreFields << "ib_changed";
 
   m_bookData = new AntiquaCRM::ASqlDataQuery("inventory_books");
   inputFields = m_bookData->columnNames();
   if (inputFields.isEmpty()) {
-    qWarning("Books InputList is Empty!");
+    QStringList warn(tr("An error has occurred!"));
+    warn << tr("Can't load input datafields!");
+    warn << tr("When getting this Message, please check your Network and "
+               "Database connection!");
+    openNoticeMessage(warn.join("\n"));
   }
 
   // Autoren
@@ -305,11 +315,22 @@ void BookEditor::importSqlResult() {
     return;
 
   QHashIterator<QString, QVariant> it(m_bookData->getDataset());
+  blockSignals(true);
   while (it.hasNext()) {
     it.next();
     QSqlField field = m_bookData->getProperties(it.key());
     setDataField(field, it.value());
   }
+  blockSignals(false);
+
+  // Suche Bilddaten
+  qint64 id = ib_id->value().toLongLong();
+  if (id > 0) {
+    m_imageToolBar->setArticleId(id);
+    m_imageToolBar->setActive(true);
+    m_imageView->readFromDatabase(id);
+  }
+
   m_actionBar->setRestoreable(m_bookData->isValid());
   setResetModified(inputFields);
 }
@@ -392,8 +413,9 @@ void BookEditor::createSqlUpdate() {
     }
   }
 
-  if(changes == 0) {
-    openNoticeMessage(tr("No Modifications found, Update aborted!"));
+  if (changes == 0) {
+    sendStatusMessage(tr("No Modifications found, Update aborted!"));
+    setWindowModified(false);
     return;
   }
 
@@ -406,15 +428,15 @@ void BookEditor::createSqlUpdate() {
   if (_oldcount != _curCount && _curCount == 0) {
     /*
      * Den Buchdaten Zwischenspeicher anpassen damit das Signal
-     * an die Dienstleister nur einmal Aufgerufen wird!
+     * an die Dienstleister nur einmal gesendet wird!
      */
     m_bookData->setValue("ib_count", _curCount);
 
     // Ab diesen Zeitpunkt ist das Zurücksetzen erst mal nicht mehr gültig!
     m_actionBar->setRestoreable(false);
 
-    // Senden Bestands Mitteilung an das Elternfenster
-    emit sendArticleChanged(articleId, _curCount);
+    // Senden Bestands Mitteilung an den Socket
+    sendArticleStatus(articleId, _curCount);
   }
 
   QString sql("UPDATE inventory_books SET ");
@@ -545,6 +567,32 @@ void BookEditor::setFinalLeaveEditor() {
 void BookEditor::setPrintBookCard() {
   // TODO
   qDebug() << Q_FUNC_INFO << "TODO";
+}
+
+void BookEditor::actionRemoveImage(qint64 articleId) {
+  qint64 id = ib_id->value().toLongLong();
+  if (articleId != id)
+    return;
+
+  QString image_id = QString::number(id);
+  QString t(tr("Remove Image from Database"));
+  QString ask(tr("Do you realy wan't to delete the Image?"));
+  QString m = QString("%1\n\nImage - Article ID: %2").arg(ask, image_id);
+  QMessageBox::StandardButton set = QMessageBox::question(this, t, m);
+  if (set == QMessageBox::Yes) {
+    if (m_imageView->removeFromDatabase(id)) {
+      m_imageView->clear();
+      sendStatusMessage(tr("Image delete successfully!"));
+    }
+  }
+}
+
+void BookEditor::actionEditImages() {
+  qint64 id = ib_id->value().toLongLong();
+  ImageDialog *d = new ImageDialog(id, this);
+  if (d->exec()) {
+    m_imageView->readFromDatabase(id);
+  }
 }
 
 void BookEditor::setRestore() {

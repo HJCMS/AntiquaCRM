@@ -5,11 +5,8 @@
 
 #include <QDebug>
 #include <QMessageBox>
-#include <QTimer>
-//#include <QJsonDocument>
-//#include <QJsonObject>
-//#include <QJsonValue>
 #include <QStringList>
+#include <QTimer>
 
 #ifndef INPUT_FIND_OPTS
 #define INPUT_FIND_OPTS Qt::FindChildrenRecursively
@@ -142,6 +139,30 @@ void InventoryEditor::openNoticeMessage(const QString &info) {
   connect(m_t, SIGNAL(timeout()), d, SLOT(close()));
   m_t->start();
   d->exec();
+}
+
+void InventoryEditor::sendStatusMessage(const QString &message) {
+  AntiquaCRM::AStatusMessanger messanger(this);
+  messanger.setObjectName("editor_status_message");
+  QJsonObject obj;
+  obj.insert("window_status_message", message);
+  messanger.pushMessage(obj);
+  messanger.close();
+}
+
+void InventoryEditor::sendArticleStatus(qint64 articleId, qint8 count) {
+  if (articleId < 1)
+    return;
+
+  AntiquaCRM::AStatusMessanger messanger(this);
+  messanger.setObjectName("plugin_article_update");
+  QJsonObject obj;
+  QJsonObject action;
+  action.insert("articleId", QJsonValue(articleId));
+  action.insert("count", QJsonValue(count));
+  obj.insert("plugin_article_update", QJsonValue(action));
+  messanger.pushMessage(obj);
+  messanger.close();
 }
 
 void InventoryEditor::setResetInputFields() {

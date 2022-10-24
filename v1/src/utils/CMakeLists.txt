@@ -3,6 +3,7 @@
 
 ADD_SUBDIRECTORY(cache)
 ADD_SUBDIRECTORY(settings)
+ADD_SUBDIRECTORY(imgedit)
 ADD_SUBDIRECTORY(keywordedit)
 ADD_SUBDIRECTORY(storage)
 ADD_SUBDIRECTORY(deliveryservice)
