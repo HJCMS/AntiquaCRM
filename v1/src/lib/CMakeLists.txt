@@ -70,6 +70,7 @@ SET (projectLibrary_HEADERS
  astatusmessanger.h
  acurl.h
  AntiquaCRM
+ AntiquaCRMPlugin
  AGlobal
  ASettings
 )

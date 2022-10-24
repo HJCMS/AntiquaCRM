@@ -6,7 +6,6 @@
 #define ANTIQUACRM_ACURL_H
 
 #include <AGlobal>
-#include <AntiquaCRM>
 #include <QJsonDocument>
 #include <QMetaType>
 #include <QMutex>
@@ -217,5 +216,7 @@ public:
 
   const QJsonDocument getDocument();
 };
+
 };     // namespace AntiquaCRM
+
 #endif // ANTIQUACRM_ACURL_H
