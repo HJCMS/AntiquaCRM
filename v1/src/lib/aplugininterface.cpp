@@ -27,4 +27,16 @@ const APluginConfig APluginInterface::getConfig(const QString &providerName) {
   return config;
 }
 
+const QDateTime APluginInterface::getDateTime(const QString &date,
+                                              const QString &time,
+                                              Qt::TimeSpec spec) const {
+  QDateTime dateTime;
+  QDate d = QDate::fromString(date, "yyyy-MM-dd");
+  dateTime.setDate(d);
+  QTime t = QTime::fromString(time);
+  dateTime.setTime(t);
+  dateTime.setTimeSpec(spec);
+  return dateTime;
+}
+
 }; // namespace AntiquaCRM

@@ -42,9 +42,9 @@ const QSslConfiguration ANetworkRequest::sslConfigguration() {
   QSslConfiguration cfg;
   QString ca_bundle;
 #ifdef Q_OS_WIN
-  ca_bundle = config.value("ssl/ca_bundle", applCaBundlePath()).toString();
+  ca_bundle = config.value("ca_bundle", applCaBundlePath()).toString();
 #else
-  ca_bundle = config.value("ssl/ca_bundle").toString();
+  ca_bundle = config.value("ca_bundle", "/var/lib/ca-certificates/ca-bundle.pem").toString();
 #endif
   if (!cfg.addCaCertificates(ca_bundle, QSsl::Pem)) {
     qWarning("ANetworkRequest: Missing ssl/ca_bundle PEM to import!");

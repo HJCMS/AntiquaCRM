@@ -3,47 +3,333 @@
 
 #include "booklooker.h"
 
-// BooklookerRequester
-
-#ifndef PLUGIN_NAME
-#define PLUGIN_NAME "Booklooker"
+/**
+ * @def DATE_FORMAT
+ * @ingroup Providers SQL Statements
+ */
+#ifndef BOOKLOOKER_DATE_FORMAT
+#define BOOKLOOKER_DATE_FORMAT "yyyy-MM-dd"
 #endif
 
+/** @brief Konfigurationsgruppe */
+#ifndef BOOKLOOKER_CONFIG_GROUP
+#define BOOKLOOKER_CONFIG_GROUP "provider/booklooker"
+#endif
+
+/** @brief Wird für Menüeintrag und Gruppenzuweisung benötigt! */
+#ifndef CONFIG_PROVIDER
+#define CONFIG_PROVIDER "Booklooker"
+#endif
+
+#ifndef BOOKLOOKER_API_VERSION
+#define BOOKLOOKER_API_VERSION "2.0"
+#endif
+
+#ifndef BOOKLOOKER_AUTH_PATH
+#define BOOKLOOKER_AUTH_PATH "/2.0/authenticate"
+#endif
+
+// Headers
+#include <AntiquaCRM>
+#include <QDateTime>
 #include <QDebug>
-#include <QTimer>
+#include <QTimeZone>
+#include <QUrlQuery>
 
 Booklooker::Booklooker(QObject *parent) : AntiquaCRM::APluginInterface{parent} {
-  setObjectName(PLUGIN_NAME);
+  setObjectName(CONFIG_PROVIDER);
+  m_network = new AntiquaCRM::ANetworker(this);
+  initConfigurations();
+
+  connect(m_network, SIGNAL(jsonResponse(const QJsonDocument &)),
+          SLOT(prepareJsonResponse(const QJsonDocument &)));
+  connect(m_network, SIGNAL(finished(QNetworkReply *)),
+          SLOT(queryFinished(QNetworkReply *)));
+}
+
+void Booklooker::initConfigurations() {
+  QUrl url;
+  AntiquaCRM::ASettings cfg(this);
+  cfg.beginGroup(BOOKLOOKER_CONFIG_GROUP);
+  url.setScheme("https");
+  url.setHost(cfg.value("api_host", "api.booklooker.de").toString());
+  apiKey = cfg.value("api_key", "007").toString();
+  historyCall = cfg.value("api_history_call", -7).toInt();
+  cfg.endGroup();
+  apiUrl = url;
+}
+
+const QUrl Booklooker::apiQuery(const QString &section) {
+  QString p("/");
+  p.append(BOOKLOOKER_API_VERSION);
+  p.append("/");
+  p.append(section);
+
+  QUrl url(apiUrl);
+  url.setPath(p);
+
+  QString value = configProvider();
+  value.append("_");
+  value.append(section);
+  value.append(".json");
+
+  actionsCookie = QNetworkCookie("action", value.toLocal8Bit());
+  actionsCookie.setDomain(url.host());
+  actionsCookie.setSecure(true);
+
+  return url;
+}
+
+void Booklooker::setTokenCookie(const QString &token) {
+  QDateTime dt = QDateTime::currentDateTime();
+  dt.setTimeSpec(Qt::UTC);
+  qint64 cookie_lifetime = (9 * 60);
+  authenticCookie = QNetworkCookie("token", token.toLocal8Bit());
+  authenticCookie.setDomain(apiUrl.host());
+  authenticCookie.setSecure(true);
+  authenticCookie.setExpirationDate(dt.addSecs(cookie_lifetime));
+  if (!authenticCookie.value().isNull()) {
+    queryOrders();
+  }
+}
+
+bool Booklooker::isCookieExpired() {
+  if (authenticCookie.value().isNull())
+    return true;
+
+  QDateTime dt = QDateTime::currentDateTime();
+  dt.setTimeSpec(Qt::UTC);
+  return (authenticCookie.expirationDate() <= dt);
+}
+
+void Booklooker::authenticate() {
+  QUrl url(apiUrl);
+  url.setPath(BOOKLOOKER_AUTH_PATH);
+
+  QString pd("apiKey=");
+  pd.append(apiKey);
+
+  actionsCookie = QNetworkCookie("action", BOOKLOOKER_AUTH_PATH);
+  actionsCookie.setDomain(url.host());
+  actionsCookie.setSecure(true);
+
+  m_network->loginRequest(url, pd.toLocal8Bit());
+}
+
+void Booklooker::queryFinished(QNetworkReply *reply) {
+  if (reply->error() != QNetworkReply::NoError) {
+    emit sendErrorResponse(AntiquaCRM::WARNING,
+                           tr("Booklooker response with errors!"));
+  }
 }
 
 void Booklooker::prepareJsonResponse(const QJsonDocument &jdoc) {
-  qDebug() << Q_FUNC_INFO << jdoc;
+  if (actionsCookie.value().contains(BOOKLOOKER_AUTH_PATH)) {
+    QJsonObject obj = jdoc.object();
+    if (obj.value("status").toString().toLower() == "ok") {
+      QString token = obj.value("returnValue").toString();
+      setTokenCookie(token);
+    }
+    return;
+  }
+
+  QString fileName = configProvider();
+  if (!actionsCookie.name().isNull()) {
+    fileName = QString(actionsCookie.value());
+  }
+
+  AntiquaCRM::ASharedCacheFiles cacheFile;
+  QString jsonData = jdoc.toJson(QJsonDocument::Indented);
+  cacheFile.storeTempFile(fileName.toLower(), jsonData);
+
+  emit sendQueryFinished();
 }
 
 void Booklooker::queryOrders(int waitSecs) {
   Q_UNUSED(waitSecs);
-  emit sendQueryFinished();
+  if (isCookieExpired()) {
+    authenticate();
+    return;
+  }
+
+  QUrl url = apiQuery("order");
+  QDate past = QDate::currentDate().addDays(historyCall);
+  QUrlQuery q;
+  q.addQueryItem("token", QString(authenticCookie.value()));
+  q.addQueryItem("dateFrom", past.toString(BOOKLOOKER_DATE_FORMAT));
+  q.addQueryItem("dateTo",
+                 QDate(QDate::currentDate()).toString(BOOKLOOKER_DATE_FORMAT));
+  url.setQuery(q);
+  m_network->jsonGetRequest(url);
 }
 
 const QString Booklooker::configProvider() const {
-  return QString(PLUGIN_NAME).toLower();
+  return QString(CONFIG_PROVIDER).toLower();
 }
 
 const QString Booklooker::displayName() const {
-  return QString(PLUGIN_NAME).trimmed();
-}
-
-const QJsonDocument Booklooker::getResponse() const {
-  if (p_json.isEmpty())
-    return QJsonDocument();
-
-  return p_json;
+  return QString(CONFIG_PROVIDER).trimmed();
 }
 
 const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
   AntiquaCRM::AProviderOrders booking;
-  // AProviderOrder order(orderId);
 
+  QString fileName = configProvider();
+  if (!actionsCookie.name().isNull()) {
+    fileName = QString(actionsCookie.value());
+  }
+
+  if (fileName.isEmpty())
+    return booking;
+
+  AntiquaCRM::ASharedCacheFiles cacheFile;
+  QString data = cacheFile.getTempFile(fileName.toLower());
+  if (data.isEmpty())
+    return booking;
+
+  QJsonDocument doc = QJsonDocument::fromJson(data.toLocal8Bit());
+  QJsonArray orders = doc.object().value("returnValue").toArray();
+  if (orders.size() > 0) {
+    for (int i = 0; i < orders.size(); i++) {
+      QJsonObject order = orders.at(i).toObject();
+      qint64 orderId = order.value("orderId").toInt();
+      QString strOrderId = QString::number(orderId);
+      QDateTime dateTime = getDateTime(order.value("orderDate").toString(),
+                                       order.value("orderTime").toString());
+      // start fill
+      AntiquaCRM::AProviderOrder item(strOrderId);
+      item.setValue("o_provider_order_id", strOrderId);
+      item.setValue("o_since", dateTime);
+      item.setValue("o_media_type", AntiquaCRM::BOOK);
+      // AntiquaCRM::PaymentStatus
+      QString orderStatus = order.value("status").toString();
+      if (orderStatus == "READY_FOR_SHIPMENT") {
+        item.setValue("o_provider_order_status", AntiquaCRM::SHIPMENT_CREATED);
+      } else if (orderStatus == "WAITING_FOR_PAYMENT") {
+        item.setValue("o_provider_order_status", AntiquaCRM::WAIT_FOR_PAYMENT);
+      } else if (orderStatus == "ORDER_CANCEL_ACTION") {
+        item.setValue("o_provider_order_status", AntiquaCRM::ORDER_CANCELED);
+      } else {
+        item.setValue("o_provider_order_status", AntiquaCRM::STATUS_NOT_SET);
+      }
+      // AntiquaCRM::PaymentMethod
+      AntiquaCRM::PaymentMethod payment_method;
+      switch (order.value("paymentId").toInt()) {
+      case 1: // Banküberweisung (Vorkasse)
+        payment_method = AntiquaCRM::BANK_PREPAYMENT;
+        break;
+
+      case 2: // Offene Rechnung
+        payment_method = AntiquaCRM::DELIVER_WITH_INVOICE;
+        break;
+
+      case 3: // Lastschrift (Vorkasse)
+        payment_method = AntiquaCRM::DIRECT_DEBIT_PREPAYMENT;
+        break;
+
+      case 4: // Kreditkarte (Vorkasse)
+        payment_method = AntiquaCRM::CREDIT_CARD_PREPAYMENT;
+        break;
+
+      case 5: // Nachnahme
+        payment_method = AntiquaCRM::PAYMENT_NOT_SET;
+        break;
+
+      case 6: // PayPal (Vorkasse)
+        payment_method = AntiquaCRM::PAYPAL_PREPAYMENT;
+        break;
+
+      case 8: // Skrill (Vorkasse)
+        payment_method = AntiquaCRM::SKRILL_PREPAYMENT;
+        break;
+
+      case 9: // Selbstabholung und Barzahlung
+        payment_method = AntiquaCRM::PAYMENT_NOT_SET;
+        break;
+
+      case 10: // Sofortüberweisung
+        payment_method = AntiquaCRM::PAYMENT_NOT_SET;
+        break;
+
+      case 11: // Offene Rechnung (Vorkasse vorbehalten)
+        payment_method = AntiquaCRM::INVOICE_PREPAYMENT_RESERVED;
+        break;
+
+      default:
+        payment_method = AntiquaCRM::PAYMENT_NOT_SET;
+      }
+      item.setValue("o_payment_method", payment_method);
+
+      // Invoice Address
+      if (!order.value("invoiceAddress").toObject().isEmpty()) {
+        QJsonObject address = order.value("invoiceAddress").toObject();
+        item.setValue("c_location", address.value("city").toString());
+        item.setValue("c_country", address.value("country").toString());
+        item.setValue("c_firstname", address.value("firstName").toString());
+        item.setValue("c_lastname", address.value("name").toString());
+        item.setValue("c_street", address.value("street").toString());
+        item.setValue("c_gender", address.value("title").toString());
+        item.setValue("c_postalcode", address.value("zip").toString());
+      }
+      if (order.contains("email"))
+        item.setValue("c_email_0", order.value("email").toString());
+
+      if (order.contains("tel"))
+        item.setValue("c_phone_0", order.value("tel").toString());
+
+      if (order.contains("company"))
+        item.setValue("c_company_name", order.value("company").toString());
+
+      if (order.contains("accountHolder"))
+        item.setValue("c_comments", order.value("accountHolder").toString());
+
+      if (order.contains("accountIban"))
+        item.setValue("c_iban", order.value("accountIban").toString());
+
+      if (order.contains("accountBic"))
+        item.setValue("c_swift_bic", order.value("accountBic").toString());
+
+      if (order.contains("ustIdNr"))
+        item.setValue("c_tax_id", order.value("ustIdNr").toString());
+
+      // Delivery Address Body
+      if (!order.value("deliveryAddress").toObject().isEmpty()) {
+        QJsonObject address = order.value("deliveryAddress").toObject();
+        QString firstname = address.value("firstName").toString();
+        QString lastname = address.value("name").toString();
+        QString postalcode = address.value("zip").toString();
+        QString location = address.value("city").toString();
+        QString country = address.value("country").toString();
+        QString state =
+            AntiquaCRM::AEuropeanCountries().value(country.toUpper());
+        if (!state.isEmpty())
+          location.append("/" + state);
+
+        QString street = address.value("street").toString();
+        if (address.contains("addressSupplement")) {
+          QString pkgNumber = address.value("addressSupplement").toString();
+          street.prepend(pkgNumber + " ");
+        }
+        QStringList buffer(firstname + " " + lastname);
+        buffer << street << postalcode + " " + location;
+        item.setValue("c_shipping_address", buffer.join("\n"));
+      }
+      booking.append(item);
+    }
+  }
+  /*
+  #ifdef ANTIQUA_DEVELOPEMENT
+    QListIterator<AntiquaCRM::AProviderOrder> get_orders(booking);
+    while (get_orders.hasNext()) {
+      AntiquaCRM::AProviderOrder data = get_orders.next();
+      foreach (QString k, data.currentKeys()) {
+        QVariant val = data.getValue(k);
+        if (!val.isNull())
+          qDebug() << data.id() << k << val;
+      }
+    }
+  #endif
+  */
   return booking;
 }
 

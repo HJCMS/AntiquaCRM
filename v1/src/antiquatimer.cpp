@@ -9,8 +9,8 @@
 AntiquaTimer::AntiquaTimer(QObject *parent) : QObject{parent} {
   setObjectName("antiquacrm_timer");
   AntiquaCRM::ASettings cfg(this);
-  interval = (cfg.value("timeout",1).toInt() * 1000);
-  countBase = cfg.value("counter", 60).toInt();
+  interval = (cfg.value("timeout", 1).toInt() * 1000);
+  countBase = cfg.value("counter", (6 * 60)).toInt();
   countDown = countBase;
 }
 

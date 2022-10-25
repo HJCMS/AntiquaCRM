@@ -104,7 +104,29 @@ void ANetworker::slotSslErrors(const QList<QSslError> &list) {
   }
 }
 
-QNetworkReply *ANetworker::jsonPostRequest(const QUrl &url, /* Response URL */
+QNetworkReply *ANetworker::loginRequest(const QUrl &url,
+                                        const QByteArray &data) {
+  ANetworkRequest request(url);
+  request.setHeaderUserAgent();
+  request.setHeaderCacheControl();
+  request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
+  m_reply = post(request, data);
+
+  connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
+          SLOT(slotError(QNetworkReply::NetworkError)));
+
+  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
+          SLOT(slotError(QNetworkReply::NetworkError)));
+
+  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
+          SLOT(slotSslErrors(QList<QSslError>)));
+
+  connect(m_reply, SIGNAL(readyRead()), this, SLOT(readResponse()));
+
+  return m_reply;
+}
+
+QNetworkReply *ANetworker::jsonPostRequest(const QUrl &url,
                                            const QJsonDocument &body) {
   ANetworkRequest request(url);
   request.setHeaderUserAgent();

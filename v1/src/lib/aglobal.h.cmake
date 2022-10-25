@@ -260,7 +260,8 @@ namespace AntiquaCRM {
    SHIPMENT_CREATED = 2,         /**< Fertig zum Versand */
    SHIPPED_WAIT_FOR_PAYMENT = 3, /**< Geliefert warte auf Zahlung */
    SHIPPED_AND_PAID = 4,         /**< Bezahlt und versendet */
-   BUYER_NO_REACTION = 5         /**< Keine Reaktion des Käufers */
+   BUYER_NO_REACTION = 5,        /**< Keine Reaktion des Käufers */
+   ORDER_CANCELED = 6            /**< Käufer hat die Bestellung storniert */
  };
  Q_ENUM_NS(AntiquaCRM::PaymentStatus)
 
@@ -314,6 +315,20 @@ namespace AntiquaCRM {
   VARIOUS = 3    /**< Diverse */
  };
  Q_ENUM_NS(AntiquaCRM::Gender)
+
+ /**
+  * @brief Inventory Gruppen
+  * Umsetzung für Dienstleister kategorien.
+  * @section inventory
+  */
+ enum Tabs {
+  UNKNOWN = 0,   /**< nicht festgelegt */
+  BOOK = 1,      /**< Bücher */
+  MEDIA = 2,     /**< Film & Tonträger */
+  PRINTS = 3,    /**< Drucke & Stiche */
+  OTHER = 4      /**< Diverse */
+ };
+ Q_ENUM_NS(AntiquaCRM::Tabs)
 
  /**
   * @brief Zustandsbeschreibung für Artikel

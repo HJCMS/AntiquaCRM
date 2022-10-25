@@ -5,13 +5,13 @@
 #ifndef ANTIQUACRM_NETWORKER_H
 #define ANTIQUACRM_NETWORKER_H
 
+#include <AGlobal>
 #include <QJsonDocument>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QObject>
 #include <QSslError>
 #include <QUrl>
-#include <AGlobal>
 
 namespace AntiquaCRM {
 
@@ -56,6 +56,8 @@ Q_SIGNALS:
 
 public:
   explicit ANetworker(QObject *parent = nullptr);
+
+  QNetworkReply *loginRequest(const QUrl &url, const QByteArray &data);
 
   /**
    * @brief Erstelle eine Json HTTP_POST Anfrage

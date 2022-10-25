@@ -32,7 +32,7 @@ AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
   setOrganizationDomain(ANTIQUACRM_CONNECTION_DOMAIN);
 
   m_cfg = new AntiquaCRM::ASettings(this);
-  m_cfg->setObjectName("application_sttings");
+  m_cfg->setObjectName("application_settings");
 
   m_mainWindow = new AntiquaWindow();
   m_mainWindow->setObjectName("MainWindow");
@@ -150,7 +150,9 @@ void AntiquaAppl::setPluginQueryFinished() {
   AntiquaCRM::APluginInterface *m_iface =
       qobject_cast<AntiquaCRM::APluginInterface *>(sender());
   if (m_iface != nullptr) {
-    qDebug() << m_iface->displayName() << m_iface->getResponse();
+    AntiquaCRM::AProviderOrders orders = m_iface->getOrders();
+    if (orders.size() > 0)
+      qDebug() << m_iface->displayName() << "Orders:" << orders.size();
   }
 }
 
