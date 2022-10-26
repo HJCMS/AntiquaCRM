@@ -134,7 +134,7 @@ void EUCountryBox::findCountry(const QString &country) {
 void EUCountryBox::setFocus() { m_box->setFocus(); }
 
 void EUCountryBox::setValue(const QVariant &val) {
-  QString search = val.toString().toLower();
+  QString search = val.toString().toLower().trimmed();
   // Schritt: 1 nach IETF BCP 47 suchen.
   int index = m_box->findData(search, Qt::UserRole, Qt::MatchExactly);
   if (index > 0) {
@@ -142,10 +142,12 @@ void EUCountryBox::setValue(const QVariant &val) {
   } else {
     // Schritt: 2 Volltextsuche
     index = m_box->findData(search, Qt::DisplayRole, Qt::MatchStartsWith);
-    if (index > 0) {
+    if (index > 0)
       m_box->setCurrentIndex(index);
-    }
   }
+  if (index < 1)
+    m_box->setCurrentIndex(0);
+
   setModified((index > 0));
 }
 
