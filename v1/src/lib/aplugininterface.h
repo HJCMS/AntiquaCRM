@@ -11,6 +11,7 @@
 #include <QDomDocument>
 #include <QJsonDocument>
 #include <QNetworkCookie>
+#include <QTextCodec>
 #include <QObject>
 #include <QString>
 #include <QUrl>
@@ -28,6 +29,7 @@ class ANTIQUACRM_LIBRARAY APluginInterface : public QObject {
 
 protected:
   AntiquaCRM::ANetworker *m_network;
+  QTextCodec *m_decodeFrom;
 
   /**
    * @brief API access Remote URL
@@ -89,6 +91,7 @@ protected:
   virtual const QUrl apiQuery(const QString &section) = 0;
 
 protected Q_SLOTS:
+  void setContentDecoder(QTextCodec *);
   virtual void prepareResponse(const QJsonDocument &js) = 0;
   virtual void prepareResponse(const QDomDocument &xml) = 0;
   virtual void queryFinished(QNetworkReply *reply) = 0;

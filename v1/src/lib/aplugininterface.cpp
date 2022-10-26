@@ -8,7 +8,9 @@
 
 namespace AntiquaCRM {
 
-APluginInterface::APluginInterface(QObject *parent) : QObject{parent} {}
+APluginInterface::APluginInterface(QObject *parent) : QObject{parent} {
+  setContentDecoder(QTextCodec::codecForLocale());
+}
 
 const APluginConfig APluginInterface::getConfig(const QString &providerName) {
   APluginConfig config;
@@ -44,6 +46,11 @@ const QDateTime APluginInterface::timeSpecDate(const QDateTime &dateTime,
   QDateTime dt(dateTime);
   dt.setTimeSpec(fromSpec);
   return dt;
+}
+
+void APluginInterface::setContentDecoder(QTextCodec *codec) {
+  if (codec != nullptr)
+    m_decodeFrom = codec;
 }
 
 }; // namespace AntiquaCRM

@@ -11,6 +11,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QObject>
+#include <QTextCodec>
 #include <QSslError>
 #include <QUrl>
 
@@ -28,29 +29,22 @@ class ANTIQUACRM_LIBRARAY ANetworker final : public QNetworkAccessManager {
   Q_OBJECT
 
 private:
-  int tranfer_timeout = 20;
+  int tranfer_timeout = 5;
   const AntiquaCRM::PluginQueryType queryType;
   QNetworkReply *m_reply;
+  QTextCodec *m_textCodec;
 
 private Q_SLOTS:
-  /**
-   * @brief Wenn die Anfrage beendet wurde.
-   */
   void slotFinished(QNetworkReply *reply);
   void slotReadResponse();
-
-public Q_SLOTS:
   void slotError(QNetworkReply::NetworkError error);
   void slotSslErrors(const QList<QSslError> &list);
 
 Q_SIGNALS:
-  /**
-   * @brief Anfrage abgeschlossen
-   * @param errors - Wenn ja true
-   */
-  void sendFinishedWithErrors(bool);
+  void sendFinishedWithErrors();
   void sendJsonResponse(const QJsonDocument &);
   void sendXmlResponse(const QDomDocument &);
+  void sendContentCodec(QTextCodec *);
 
 public:
   explicit ANetworker(AntiquaCRM::PluginQueryType type,
@@ -82,7 +76,7 @@ public:
    * @param url
    * @return
    */
-  QNetworkReply *jsonGetRequest(const QUrl &url);
+  QNetworkReply *getRequest(const QUrl &url);
 
   /**
    * @brief Aufräumen

@@ -11,12 +11,14 @@
 #include <QHttpMultiPart>
 #include <QHttpPart>
 #include <QJsonParseError>
+#include <QTextCodec>
 
 namespace AntiquaCRM {
 
 ANetworker::ANetworker(AntiquaCRM::PluginQueryType type, QObject *parent)
     : QNetworkAccessManager{parent}, queryType{type} {
   setObjectName("antiquacrm_networker");
+  m_textCodec = QTextCodec::codecForLocale();
   connect(this, SIGNAL(finished(QNetworkReply *)), this,
           SLOT(slotFinished(QNetworkReply *)));
 }
@@ -58,12 +60,10 @@ void ANetworker::slotError(QNetworkReply::NetworkError error) {
 }
 
 void ANetworker::slotFinished(QNetworkReply *reply) {
-  bool errors = false;
   if (reply->error() != QNetworkReply::NoError) {
     slotError(reply->error());
-    errors = true;
+    emit sendFinishedWithErrors();
   }
-  emit sendFinishedWithErrors(errors);
 }
 
 void ANetworker::slotReadResponse() {
@@ -81,11 +81,26 @@ void ANetworker::slotReadResponse() {
     return;
   }
 
-#if ANTIQUACRM_NETWORK_DEBUG
+#ifdef ANTIQUA_DEVELOPEMENT
+#if (ANTIQUACRM_NETWORK_DEBUG == true)
+  qInfo("-- %s Headers:", qPrintable(m_reply->url().host()));
   foreach (QByteArray a, m_reply->rawHeaderList()) {
     qInfo("%s: %s", a.constData(), m_reply->rawHeader(a).constData());
   }
+  qInfo("--");
 #endif
+#endif
+
+  if (m_reply->hasRawHeader("Content-Type")) {
+    QString ct(m_reply->rawHeader("Content-Type"));
+    if (ct.contains("charset=")) {
+      QRegExp pattern("^.+\\bcharset=\\b", Qt::CaseInsensitive);
+      QString charset = ct.replace(pattern, "");
+      QTextCodec *c = QTextCodec::codecForName(charset.toUpper().toLocal8Bit());
+      if (m_textCodec->name() != c->name())
+        emit sendContentCodec(c);
+    }
+  }
 
   QByteArray data = m_reply->readAll();
   if (data.isNull()) {
@@ -99,15 +114,14 @@ void ANetworker::slotReadResponse() {
     QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
     if (parser.error != QJsonParseError::NoError) {
       qWarning("Json Parse Error:(%s)!", qPrintable(parser.errorString()));
-#ifdef ANTIQUA_DEVELOPEMENT
-      qDebug() << Q_FUNC_INFO << QString::fromLocal8Bit(data);
-#endif
+      emit sendFinishedWithErrors();
       return;
     }
     data.clear();
     emit sendJsonResponse(doc);
     return;
   }
+
   // XML/SOAP Request
   if (queryType == AntiquaCRM::XML_QUERY) {
     QDomDocument xml("response");
@@ -115,12 +129,8 @@ void ANetworker::slotReadResponse() {
     int errorLine = 0;
     int errorColumn = 0;
     if (!xml.setContent(data, false, &errorMsg, &errorLine, &errorColumn)) {
-#ifdef ANTIQUA_DEVELOPEMENT
-      qDebug() << Q_FUNC_INFO << errorMsg << errorLine << errorColumn;
-#else
       qWarning("Returned XML is not well formatted!");
-#endif
-      emit sendFinishedWithErrors(true);
+      emit sendFinishedWithErrors();
       return;
     }
     data.clear();
@@ -134,7 +144,8 @@ void ANetworker::slotReadResponse() {
 void ANetworker::slotSslErrors(const QList<QSslError> &list) {
   for (int i = 0; i < list.count(); i++) {
     QSslError ssl_error = list.at(i);
-    qDebug() << Q_FUNC_INFO << ssl_error.errorString();
+    QString ssl_error_str = ssl_error.errorString();
+    qWarning("SSL-Errors:(%s)!", qPrintable(ssl_error_str));
   }
 }
 
@@ -143,7 +154,9 @@ QNetworkReply *ANetworker::loginRequest(const QUrl &url,
   ANetworkRequest request(url);
   request.setHeaderUserAgent();
   request.setHeaderCacheControl();
+  request.setRawHeader("Accept", "text/*");
   request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
+  request.setTransferTimeout((tranfer_timeout * 1000));
   m_reply = post(request, data);
 
   connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
@@ -168,6 +181,7 @@ QNetworkReply *ANetworker::jsonPostRequest(const QUrl &url,
   request.setHeaderAcceptJson();
   request.setHeaderCacheControl();
   request.setHeaderContentTypeJson();
+  request.setTransferTimeout((tranfer_timeout * 1000));
 
   QByteArray data = body.toJson(QJsonDocument::Compact);
   request.setHeaderContentLength(data.size());
@@ -196,6 +210,7 @@ QNetworkReply *ANetworker::xmlPostRequest(const QUrl &url,
   request.setHeaderAcceptXml();
   request.setHeaderCacheControl();
   request.setHeaderContentTypeXml();
+  request.setTransferTimeout((tranfer_timeout * 1000));
 
   QByteArray data = body.toByteArray(-1);
   request.setHeaderContentLength(data.size());
@@ -227,20 +242,19 @@ QNetworkReply *ANetworker::jsonMultiPartRequest(const QUrl &url,
   request.setTransferTimeout((tranfer_timeout * 1000));
 
   QByteArray data = body.toJson(QJsonDocument::Compact);
-  QHttpMultiPart *formData = new QHttpMultiPart(QHttpMultiPart::FormDataType);
   QHttpPart json_part;
-  json_part.setHeader(QNetworkRequest::ContentTypeHeader,
-                      "application/json; charset=" +
-                          ANetworkRequest::antiquaCharset());
-  json_part.setHeader(QNetworkRequest::ContentDispositionHeader,
-                      "form-data; name=\"" + name + "\"");
+  QString _t("application/json; charset=" + ANetworkRequest::antiquaCharset());
+  json_part.setRawHeader("ContentTypeHeader", _t.toLocal8Bit());
+  QString _n("form-data; name=\"" + name + "\"");
+  json_part.setRawHeader("ContentDispositionHeader", _n.toLocal8Bit());
   json_part.setHeader(QNetworkRequest::ContentLengthHeader, data.size());
   json_part.setBody(data);
-  formData->append(json_part);
 
-  m_reply = post(request, formData);
-  // move to parent
-  formData->setParent(m_reply);
+  QHttpMultiPart *m_form = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+  m_form->append(json_part);
+
+  m_reply = post(request, m_form);
+  m_form->setParent(m_reply);
 
   connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));
@@ -256,12 +270,12 @@ QNetworkReply *ANetworker::jsonMultiPartRequest(const QUrl &url,
   return m_reply;
 }
 
-QNetworkReply *ANetworker::jsonGetRequest(const QUrl &url) {
+QNetworkReply *ANetworker::getRequest(const QUrl &url) {
   ANetworkRequest request(url);
   request.setHeaderUserAgent();
   request.setHeaderAcceptLanguage();
-  request.setHeaderAcceptJson();
   request.setHeaderCacheControl();
+  request.setRawHeader("Accept", "text/*");
   request.setTransferTimeout((tranfer_timeout * 1000));
 
   m_reply = get(request);

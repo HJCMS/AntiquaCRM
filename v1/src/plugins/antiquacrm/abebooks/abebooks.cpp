@@ -33,6 +33,8 @@ Abebooks::Abebooks(QObject *parent) : AntiquaCRM::APluginInterface{parent} {
 
   connect(m_network, SIGNAL(sendXmlResponse(const QDomDocument &)),
           SLOT(prepareResponse(const QDomDocument &)));
+  connect(m_network, SIGNAL(sendContentCodec(QTextCodec *)),
+          SLOT(setContentDecoder(QTextCodec *)));
   connect(m_network, SIGNAL(finished(QNetworkReply *)),
           SLOT(queryFinished(QNetworkReply *)));
 }

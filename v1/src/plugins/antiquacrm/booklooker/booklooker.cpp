@@ -39,6 +39,8 @@ Booklooker::Booklooker(QObject *parent) : AntiquaCRM::APluginInterface{parent} {
 
   connect(m_network, SIGNAL(sendJsonResponse(const QJsonDocument &)),
           SLOT(prepareResponse(const QJsonDocument &)));
+  connect(m_network, SIGNAL(sendContentCodec(QTextCodec *)),
+          SLOT(setContentDecoder(QTextCodec *)));
   connect(m_network, SIGNAL(finished(QNetworkReply *)),
           SLOT(queryFinished(QNetworkReply *)));
 }
@@ -161,7 +163,7 @@ void Booklooker::queryNewOrders(int waitSecs) {
   q.addQueryItem("dateFrom", dateString(past));
   q.addQueryItem("dateTo", dateString());
   url.setQuery(q);
-  m_network->jsonGetRequest(url);
+  m_network->getRequest(url);
 }
 
 void Booklooker::queryOrder(const QString &orderId) {
@@ -176,7 +178,7 @@ void Booklooker::queryOrder(const QString &orderId) {
   q.addQueryItem("token", QString(authenticCookie.value()));
   q.addQueryItem("orderId", orderId);
   url.setQuery(q);
-  m_network->jsonGetRequest(url);
+  m_network->getRequest(url);
 }
 
 const QString Booklooker::configProvider() const {

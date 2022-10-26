@@ -77,7 +77,7 @@ void ANetworkRequest::setHeaderUserAgent() {
 }
 
 void ANetworkRequest::setHeaderAcceptJson() {
-  QByteArray accept("application/ld+json,application/json,text/*;q=0.1");
+  QByteArray accept("application/json,text/*");
   setRawHeader(QByteArray("Accept"), accept);
 }
 
@@ -88,12 +88,12 @@ void ANetworkRequest::setHeaderContentTypeJson() {
 }
 
 void ANetworkRequest::setHeaderAcceptXml() {
-  QByteArray accept("application/xml,text/xml,text/*;q=0.1");
+  QByteArray accept("application/xml,text/xml,text/pain");
   setRawHeader(QByteArray("Accept"), accept);
 }
 
 void ANetworkRequest::setHeaderContentTypeXml(const QByteArray &charset) {
-  QByteArray contentType("application/xml;text/xml charset=");
+  QByteArray contentType("application/xml charset=");
   contentType.append(charset);
   setRawHeader(QByteArray("Content-Type"), contentType);
 }

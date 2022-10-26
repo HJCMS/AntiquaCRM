@@ -160,6 +160,28 @@ const QNetworkRequest BooklookerRequester::newRequest(const QUrl &url) {
   return req;
 }
 
+void BooklookerRequester::setTokenCookie(const QString &token) {
+  QDateTime dt = QDateTime::currentDateTime();
+  dt.setTimeSpec(Qt::UTC);
+  qint64 cookie_lifetime = (9 * 60);
+  authenticCookie = QNetworkCookie("token", token.toLocal8Bit());
+  authenticCookie.setDomain(p_baseUrl.host());
+  authenticCookie.setSecure(true);
+  authenticCookie.setExpirationDate(dt.addSecs(cookie_lifetime));
+  if (!authenticCookie.value().isNull()) {
+    qInfo("New Token add (%s)", qPrintable(authenticCookie.value()));
+  }
+}
+
+bool BooklookerRequester::isCookieExpired() {
+  if (authenticCookie.value().isNull())
+    return true;
+
+  QDateTime dt = QDateTime::currentDateTime();
+  dt.setTimeSpec(Qt::UTC);
+  return (authenticCookie.expirationDate() <= dt);
+}
+
 void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
   //#ifdef ANTIQUA_DEVELOPEMENT
   //  qDebug() << Q_FUNC_INFO << doc;
@@ -167,14 +189,7 @@ void BooklookerRequester::registerAuthentic(const QJsonDocument &doc) {
   QString status = QJsonValue(doc["status"]).toString();
   QString value = QJsonValue(doc["returnValue"]).toString();
   if (status == "OK" && !value.isEmpty()) {
-    if (!qputenv(BOOKLOOKER_TOKEN_ENV, value.toLocal8Bit())) {
-      qWarning("Booklooker : write token in config.");
-      config->beginGroup(CONFIG_GROUP);
-      config->setValue("api_token", value);
-      config->endGroup();
-    } else {
-      qInfo("New token Authentication: %s", qPrintable(value));
-    }
+    setTokenCookie(value);
     if (p_operation == "orders_list") {
       QTimer::singleShot(wait_after_auth, this, SLOT(queryList()));
     }
@@ -270,13 +285,6 @@ void BooklookerRequester::replyReadyRead() {
     return;
   }
 
-  if (m_reply->header(QNetworkRequest::ContentLengthHeader).toLongLong() !=
-      m_reply->bytesAvailable()) {
-    qWarning("Booklooker: Received bytes not equal to Content-Length Header!");
-    // TODO Windows check
-    // return;
-  }
-
   QVector<char> buf;
   QByteArray data;
   qint64 chunk;
@@ -301,7 +309,6 @@ void BooklookerRequester::replyReadyRead() {
     writeResponseLog(doc);
   } else {
     qWarning("Json Parse Error:(%s)!", jsonParserError(parser.error));
-    writeErrorLog(data);
     emit requestFinished(false);
     return;
   }
@@ -435,7 +442,7 @@ void BooklookerRequester::authenticationRefresh() { authentication(); }
 
 void BooklookerRequester::queryList() {
   p_operation = "orders_list";
-  if (getToken().isEmpty()) {
+  if (isCookieExpired()) {
     authentication();
     return;
   }
@@ -443,7 +450,7 @@ void BooklookerRequester::queryList() {
   QUrl url = apiQuery("order");
   QDate past = QDate::currentDate().addDays(p_queryPastDays);
   QUrlQuery q;
-  q.addQueryItem("token", getToken());
+  q.addQueryItem("token", QString(authenticCookie.value()));
   q.addQueryItem("dateFrom", past.toString(DATE_FORMAT));
   q.addQueryItem("dateTo", QDate(QDate::currentDate()).toString(DATE_FORMAT));
   url.setQuery(q);
@@ -464,13 +471,13 @@ void BooklookerRequester::queryUpdateOrderStatus(const QString &orderId,
     return;
 
   p_operation = "order_status";
-  if (getToken().isEmpty()) {
+  if (isCookieExpired()) {
     authentication();
     return;
   }
 
   QUrlQuery q;
-  q.addQueryItem("token", getToken());
+  q.addQueryItem("token", QString(authenticCookie.value()));
   q.addQueryItem("orderId", orderId);
   q.addQueryItem("status", status);
 
@@ -485,13 +492,13 @@ void BooklookerRequester::queryUpdateOrderCancel(const QString &orderId) {
     return;
 
   p_operation = "order_cancel";
-  if (getToken().isEmpty()) {
+  if (isCookieExpired()) {
     authentication();
     return;
   }
 
   QUrlQuery q;
-  q.addQueryItem("token", getToken());
+  q.addQueryItem("token", QString(authenticCookie.value()));
   q.addQueryItem("orderId", orderId);
 
   QUrl url = apiQuery(p_operation);
@@ -526,14 +533,14 @@ void BooklookerRequester::queryOrder(const QString &orderId) {
   }
 
   p_operation = "order";
-  if (getToken().isEmpty()) {
+  if (isCookieExpired()) {
     authentication();
     return;
   }
 
   QUrl url = apiQuery("order");
   QUrlQuery q;
-  q.addQueryItem("token", getToken());
+  q.addQueryItem("token", QString(authenticCookie.value()));
   q.addQueryItem("orderId", orderId);
   url.setQuery(q);
   getRequest(url);
@@ -544,21 +551,17 @@ void BooklookerRequester::queryArticleReset(const QString &orderNo) {
     return;
 
   p_operation = "article_reset";
-  if (getToken().isEmpty()) {
+  if (isCookieExpired()) {
     authentication();
     return;
   }
 
   QUrl url = apiQuery("article");
   QUrlQuery q;
-  q.addQueryItem("token", getToken());
+  q.addQueryItem("token", QString(authenticCookie.value()));
   q.addQueryItem("orderNo", orderNo);
   url.setQuery(q);
   deleteRequest(url);
-}
-
-const QString BooklookerRequester::getToken() {
-  return qEnvironmentVariable(BOOKLOOKER_TOKEN_ENV);
 }
 
 const QString BooklookerRequester::getResponseErrors(const QJsonDocument &doc) {

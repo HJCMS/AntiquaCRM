@@ -12,6 +12,7 @@
 #include <QList>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QNetworkCookie>
 #include <QNetworkRequest>
 #include <QObject>
 #include <QSslError>
@@ -43,6 +44,8 @@ private:
   ApplSettings *config;
 
   QNetworkReply *m_reply;
+
+  QNetworkCookie authenticCookie;
 
   /**
    * @brief Default API Url
@@ -82,6 +85,9 @@ private:
    * @brief create a NetworkRequest
    */
   const QNetworkRequest newRequest(const QUrl &url);
+
+  void setTokenCookie(const QString &token);
+  bool isCookieExpired();
 
   /**
    * @brief Authentication with REST_API_KEY
@@ -201,11 +207,6 @@ public:
    * https://api.booklooker.de/2.0/article?token=REST_API_TOKEN
    */
   void queryArticleReset(const QString &orderNo);
-
-  /**
-   * @brief get REST_API_TOKEN
-   */
-  const QString getToken();
 
   /**
    * @brief Bei Status "NOK" die Standard Fehlermeldungen abfangen!
