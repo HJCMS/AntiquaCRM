@@ -28,18 +28,20 @@ private:
    */
   const QUrl apiQuery(const QString &section);
 
+  const QString dateString(const QDate &date = QDate::currentDate()) const;
+
   void setTokenCookie(const QString &token);
   bool isCookieExpired();
 
 private Q_SLOTS:
   void authenticate();
-  void queryFinished(QNetworkReply *);
-
-protected Q_SLOTS:
-  void prepareJsonResponse(const QJsonDocument &);
+  void prepareResponse(const QJsonDocument &js);
+  void prepareResponse(const QDomDocument &xml);
+  void queryFinished(QNetworkReply *reply);
 
 public Q_SLOTS:
-  void queryOrders(int waitSecs = 1);
+  void queryNewOrders(int waitSecs = 1);
+  void queryOrder(const QString &orderId);
 
 public:
   explicit Booklooker(QObject *parent = nullptr);

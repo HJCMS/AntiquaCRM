@@ -5,12 +5,12 @@
 #ifndef ANTIQUACRM_NETWORKREQUEST_H
 #define ANTIQUACRM_NETWORKREQUEST_H
 
+#include <AGlobal>
 #include <QByteArray>
 #include <QNetworkRequest>
 #include <QSslConfiguration>
 #include <QString>
 #include <QUrl>
-#include <AGlobal>
 
 namespace AntiquaCRM {
 
@@ -21,10 +21,16 @@ private:
 public:
   explicit ANetworkRequest(const QUrl &remoteUrl);
   static const QByteArray antiquaCharset();
+
   void setHeaderAcceptLanguage();
   void setHeaderUserAgent();
+
   void setHeaderAcceptJson();
   void setHeaderContentTypeJson();
+
+  void setHeaderAcceptXml();
+  void setHeaderContentTypeXml(const QByteArray &charset = antiquaCharset());
+
   void setHeaderCacheControl(const QByteArray &cache = QByteArray("no-cache,private"));
   void setHeaderContentLength(qint64 size);
 };

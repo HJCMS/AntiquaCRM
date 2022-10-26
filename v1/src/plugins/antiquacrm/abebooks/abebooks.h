@@ -5,24 +5,30 @@
 #ifndef ABEBOOKS_LIBRARY_H
 #define ABEBOOKS_LIBRARY_H
 
-#include <QObject>
 #include <AntiquaCRMPlugin>
+#include <QObject>
+
+class AbeBooksDocument;
 
 class ANTIQUACRM_LIBRARAY Abebooks final : public AntiquaCRM::APluginInterface {
   Q_OBJECT
   Q_PLUGIN_METADATA(IID ANTIQUACRM_INTERFACE FILE "abebooks.json")
   Q_INTERFACES(AntiquaCRM::APluginInterface)
 
-protected:
+private:
   void initConfigurations();
+  AbeBooksDocument initDocument();
   const QUrl apiQuery(const QString &section);
+  const QString dateString(const QDate &date = QDate::currentDate()) const;
 
-protected Q_SLOTS:
-  void prepareJsonResponse(const QJsonDocument &);
-  void queryFinished(QNetworkReply *);
+private Q_SLOTS:
+  void prepareResponse(const QJsonDocument &js);
+  void prepareResponse(const QDomDocument &xml);
+  void queryFinished(QNetworkReply *reply);
 
 public Q_SLOTS:
-  void queryOrders(int waitSecs = 1);
+  void queryNewOrders(int waitSecs = 1);
+  void queryOrder(const QString &orderId);
 
 public:
   explicit Abebooks(QObject *parent = nullptr);

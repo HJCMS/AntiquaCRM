@@ -13,10 +13,12 @@ SET (plugin_FILES
 
 SET (plugin_SOURCES
  abebooks.cpp
+ abebooksdocument.cpp
 )
 
 SET (plugin_HEADERS
  abebooks.h
+ abebooksdocument.h
 )
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
@@ -36,7 +38,6 @@ TARGET_LINK_LIBRARIES (AbeBooks PUBLIC
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Network
   Qt${QT_VERSION_MAJOR}::Xml
-  Qt${QT_VERSION_MAJOR}::Sql
   AntiquaCRM
 )
 

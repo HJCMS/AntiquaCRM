@@ -233,6 +233,12 @@ namespace AntiquaCRM {
  Q_ENUM_NS(AntiquaCRM::Message)
 
  /**
+  * @brief Typenangabe für die Netzwerkanfragen Schnittstelle!
+  */
+ enum PluginQueryType { JSON_QUERY = 0, XML_QUERY = 1 };
+ Q_ENUM_NS(AntiquaCRM::PluginQueryType)
+
+ /**
   * @brief Auftrags Status
   * @section orders
   * Wird im Auftragssystem verwendet!

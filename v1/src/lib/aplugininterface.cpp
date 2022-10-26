@@ -27,16 +27,23 @@ const APluginConfig APluginInterface::getConfig(const QString &providerName) {
   return config;
 }
 
-const QDateTime APluginInterface::getDateTime(const QString &date,
-                                              const QString &time,
+const QDateTime APluginInterface::getDateTime(const QString &dateString,
+                                              const QString &timeString,
                                               Qt::TimeSpec spec) const {
   QDateTime dateTime;
-  QDate d = QDate::fromString(date, "yyyy-MM-dd");
+  QDate d = QDate::fromString(dateString, "yyyy-MM-dd");
   dateTime.setDate(d);
-  QTime t = QTime::fromString(time);
+  QTime t = QTime::fromString(timeString, "HH:mm:00");
   dateTime.setTime(t);
   dateTime.setTimeSpec(spec);
   return dateTime;
+}
+
+const QDateTime APluginInterface::timeSpecDate(const QDateTime &dateTime,
+                                               Qt::TimeSpec fromSpec) const {
+  QDateTime dt(dateTime);
+  dt.setTimeSpec(fromSpec);
+  return dt;
 }
 
 }; // namespace AntiquaCRM

@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "abebooks.h"
+#include "abebooksdocument.h"
 
 /** @brief Konfigurationsgruppe */
 #ifndef ABEBOOKS_CONFIG_GROUP
@@ -15,12 +16,25 @@
 
 #include <AntiquaCRM>
 #include <QDebug>
+#include <QTextCodec>
+#include <QTextEncoder>
 #include <QTimer>
+
+static const QString to_iso8859_1(const QString &str) {
+  QTextCodec *codec = QTextCodec::codecForLocale();
+  QTextEncoder encoder(codec);
+  return QString(encoder.fromUnicode(str));
+}
 
 Abebooks::Abebooks(QObject *parent) : AntiquaCRM::APluginInterface{parent} {
   setObjectName(ABEBOOKS_CONFIG_PROVIDER);
-  m_network = new AntiquaCRM::ANetworker(this);
+  m_network = new AntiquaCRM::ANetworker(AntiquaCRM::XML_QUERY, this);
   initConfigurations();
+
+  connect(m_network, SIGNAL(sendXmlResponse(const QDomDocument &)),
+          SLOT(prepareResponse(const QDomDocument &)));
+  connect(m_network, SIGNAL(finished(QNetworkReply *)),
+          SLOT(queryFinished(QNetworkReply *)));
 }
 
 void Abebooks::initConfigurations() {
@@ -37,24 +51,70 @@ void Abebooks::initConfigurations() {
   apiUrl = url;
 }
 
+AbeBooksDocument Abebooks::initDocument() {
+  AbeBooksAccess ac;
+  ac.user = apiUser;
+  ac.key = apiKey;
+  return AbeBooksDocument(ac);
+}
+
 const QUrl Abebooks::apiQuery(const QString &section) {
-  Q_UNUSED(section);
-  QUrl url(apiUrl);
-  actionsCookie = QNetworkCookie("action", "TODO");
-  actionsCookie.setDomain(url.host());
+  QString action(section.toLower());
+  action.prepend("_");
+  action.prepend(configProvider());
+
+  actionsCookie = QNetworkCookie("action", action.toLocal8Bit());
+  actionsCookie.setDomain(apiUrl.host());
   actionsCookie.setSecure(true);
-  return url;
+
+  return apiUrl;
 }
 
-void Abebooks::prepareJsonResponse(const QJsonDocument &jdoc) {
-  Q_UNUSED(jdoc);
+const QString Abebooks::dateString(const QDate &date) const {
+  return date.toString(Qt::ISODate);
 }
 
-void Abebooks::queryFinished(QNetworkReply *reply) { Q_UNUSED(reply); }
+void Abebooks::prepareResponse(const QJsonDocument &js) { Q_UNUSED(js); }
 
-void Abebooks::queryOrders(int waitSecs) {
-  Q_UNUSED(waitSecs);
+void Abebooks::prepareResponse(const QDomDocument &xml) {
+  QString fileName = configProvider();
+  if (!actionsCookie.name().isNull()) {
+    fileName = QString(actionsCookie.value());
+  }
+  fileName.append(".xml");
+  AntiquaCRM::ASharedCacheFiles cacheFile;
+  cacheFile.storeTempFile(fileName.toLower(), xml.toString(1));
+
   emit sendQueryFinished();
+}
+
+void Abebooks::queryFinished(QNetworkReply *reply) {
+  if (reply->error() != QNetworkReply::NoError) {
+    emit sendErrorResponse(AntiquaCRM::WARNING,
+                           tr("AbeBooks response with errors!"));
+  }
+}
+
+void Abebooks::queryNewOrders(int waitSecs) {
+  Q_UNUSED(waitSecs);
+  QString operation("getAllNewOrders");
+  AbeBooksDocument doc = initDocument();
+  doc.createAction(operation);
+
+  QUrl url(apiQuery(operation));
+  m_network->xmlPostRequest(url, doc);
+}
+
+void Abebooks::queryOrder(const QString &orderId) {
+  QString operation("getOrder");
+  AbeBooksDocument doc = initDocument();
+  doc.createAction(operation);
+  QDomElement e = doc.createElement("purchaseOrder");
+  e.setAttribute("id", orderId.trimmed());
+  doc.documentElement().appendChild(e);
+
+  QUrl url(apiQuery(operation));
+  m_network->xmlPostRequest(url, doc);
 }
 
 const QString Abebooks::configProvider() const {
@@ -67,6 +127,20 @@ const QString Abebooks::displayName() const {
 
 const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
   AntiquaCRM::AProviderOrders booking;
+  QString fileName = configProvider();
+  if (!actionsCookie.name().isNull()) {
+    fileName = QString(actionsCookie.value());
+  }
+
+  if (fileName.isEmpty())
+    return booking;
+
+  fileName.append(".xml");
+  AntiquaCRM::ASharedCacheFiles cacheFile;
+  QString data = cacheFile.getTempFile(fileName.toLower());
+  if (data.isEmpty())
+    return booking;
+
   return booking;
 }
 

@@ -6,7 +6,9 @@
 #define ANTIQUACRM_PLUGIN_INTERFACE_H
 
 #include <AntiquaCRM>
+#include <QDate>
 #include <QDateTime>
+#include <QDomDocument>
 #include <QJsonDocument>
 #include <QNetworkCookie>
 #include <QObject>
@@ -26,30 +28,78 @@ class ANTIQUACRM_LIBRARAY APluginInterface : public QObject {
 
 protected:
   AntiquaCRM::ANetworker *m_network;
+
+  /**
+   * @brief API access Remote URL
+   */
   QUrl apiUrl;
+
+  /**
+   * @brief API access Loginname
+   */
   QString apiUser;
+
+  /**
+   * @brief API access Key
+   */
   QString apiKey;
+
+  /**
+   * @brief Some providers needs a history request
+   */
   qint8 historyCall;
+
+  /**
+   * @brief Actions Session Cookie
+   */
   QNetworkCookie actionsCookie;
+
+  /**
+   * @brief Authentication Cookie
+   */
   QNetworkCookie authenticCookie = QNetworkCookie();
 
-  const QDateTime getDateTime(const QString &date, const QString &time,
+  /**
+   * @brief Vendors respond with different date and time formats.
+   */
+  const QDateTime getDateTime(const QString &dateString,
+                              const QString &timeString,
                               Qt::TimeSpec spec = Qt::LocalTime) const;
 
+  /**
+   * @brief Convert Datetime to TimeSpec
+   */
+  const QDateTime timeSpecDate(const QDateTime &dateTime,
+                               Qt::TimeSpec fromSpec = Qt::LocalTime) const;
+
+  /**
+   * @brief Vendors using different Date time formats!
+   */
+  virtual const QString
+  dateString(const QDate &date = QDate::currentDate()) const = 0;
+
+  /**
+   * @brief load API access configuration
+   */
   virtual void initConfigurations() = 0;
 
+  /**
+   * @brief create a custom API access
+   */
   virtual const QUrl apiQuery(const QString &section) = 0;
 
 protected Q_SLOTS:
-  virtual void prepareJsonResponse(const QJsonDocument &) = 0;
-  virtual void queryFinished(QNetworkReply *) = 0;
+  virtual void prepareResponse(const QJsonDocument &js) = 0;
+  virtual void prepareResponse(const QDomDocument &xml) = 0;
+  virtual void queryFinished(QNetworkReply *reply) = 0;
 
 Q_SIGNALS:
   void sendErrorResponse(AntiquaCRM::Message, const QString &);
   void sendQueryFinished();
 
 public Q_SLOTS:
-  virtual void queryOrders(int waitSecs = 1) = 0;
+  virtual void queryNewOrders(int waitSecs = 1) = 0;
+  virtual void queryOrder(const QString &orderId) = 0;
 
 public:
   explicit APluginInterface(QObject *parent = nullptr);

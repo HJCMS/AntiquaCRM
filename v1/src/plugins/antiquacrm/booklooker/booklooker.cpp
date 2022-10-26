@@ -17,16 +17,12 @@
 #endif
 
 /** @brief Wird für Menüeintrag und Gruppenzuweisung benötigt! */
-#ifndef CONFIG_PROVIDER
-#define CONFIG_PROVIDER "Booklooker"
+#ifndef BOOKLOOKER_CONFIG_PROVIDER
+#define BOOKLOOKER_CONFIG_PROVIDER "Booklooker"
 #endif
 
 #ifndef BOOKLOOKER_API_VERSION
 #define BOOKLOOKER_API_VERSION "2.0"
-#endif
-
-#ifndef BOOKLOOKER_AUTH_PATH
-#define BOOKLOOKER_AUTH_PATH "/2.0/authenticate"
 #endif
 
 // Headers
@@ -37,12 +33,12 @@
 #include <QUrlQuery>
 
 Booklooker::Booklooker(QObject *parent) : AntiquaCRM::APluginInterface{parent} {
-  setObjectName(CONFIG_PROVIDER);
-  m_network = new AntiquaCRM::ANetworker(this);
+  setObjectName(BOOKLOOKER_CONFIG_PROVIDER);
+  m_network = new AntiquaCRM::ANetworker(AntiquaCRM::JSON_QUERY, this);
   initConfigurations();
 
-  connect(m_network, SIGNAL(jsonResponse(const QJsonDocument &)),
-          SLOT(prepareJsonResponse(const QJsonDocument &)));
+  connect(m_network, SIGNAL(sendJsonResponse(const QJsonDocument &)),
+          SLOT(prepareResponse(const QJsonDocument &)));
   connect(m_network, SIGNAL(finished(QNetworkReply *)),
           SLOT(queryFinished(QNetworkReply *)));
 }
@@ -53,7 +49,7 @@ void Booklooker::initConfigurations() {
   cfg.beginGroup(BOOKLOOKER_CONFIG_GROUP);
   url.setScheme("https");
   url.setHost(cfg.value("api_host", "api.booklooker.de").toString());
-  apiKey = cfg.value("api_key", "007").toString();
+  apiKey = cfg.value("api_key", QString()).toString();
   historyCall = cfg.value("api_history_call", -7).toInt();
   cfg.endGroup();
   apiUrl = url;
@@ -80,6 +76,10 @@ const QUrl Booklooker::apiQuery(const QString &section) {
   return url;
 }
 
+const QString Booklooker::dateString(const QDate &date) const {
+  return date.toString(BOOKLOOKER_DATE_FORMAT);
+}
+
 void Booklooker::setTokenCookie(const QString &token) {
   QDateTime dt = QDateTime::currentDateTime();
   dt.setTimeSpec(Qt::UTC);
@@ -89,7 +89,8 @@ void Booklooker::setTokenCookie(const QString &token) {
   authenticCookie.setSecure(true);
   authenticCookie.setExpirationDate(dt.addSecs(cookie_lifetime));
   if (!authenticCookie.value().isNull()) {
-    queryOrders();
+    qInfo("New Token add (%s)", qPrintable(authenticCookie.value()));
+    queryNewOrders();
   }
 }
 
@@ -103,29 +104,21 @@ bool Booklooker::isCookieExpired() {
 }
 
 void Booklooker::authenticate() {
-  QUrl url(apiUrl);
-  url.setPath(BOOKLOOKER_AUTH_PATH);
+  QUrl url = apiQuery("authenticate");
 
   QString pd("apiKey=");
   pd.append(apiKey);
 
-  actionsCookie = QNetworkCookie("action", BOOKLOOKER_AUTH_PATH);
+  actionsCookie = QNetworkCookie("action", "authenticate");
   actionsCookie.setDomain(url.host());
   actionsCookie.setSecure(true);
 
   m_network->loginRequest(url, pd.toLocal8Bit());
 }
 
-void Booklooker::queryFinished(QNetworkReply *reply) {
-  if (reply->error() != QNetworkReply::NoError) {
-    emit sendErrorResponse(AntiquaCRM::WARNING,
-                           tr("Booklooker response with errors!"));
-  }
-}
-
-void Booklooker::prepareJsonResponse(const QJsonDocument &jdoc) {
-  if (actionsCookie.value().contains(BOOKLOOKER_AUTH_PATH)) {
-    QJsonObject obj = jdoc.object();
+void Booklooker::prepareResponse(const QJsonDocument &js) {
+  if (actionsCookie.value().contains("authenticate")) {
+    QJsonObject obj = js.object();
     if (obj.value("status").toString().toLower() == "ok") {
       QString token = obj.value("returnValue").toString();
       setTokenCookie(token);
@@ -139,13 +132,22 @@ void Booklooker::prepareJsonResponse(const QJsonDocument &jdoc) {
   }
 
   AntiquaCRM::ASharedCacheFiles cacheFile;
-  QString jsonData = jdoc.toJson(QJsonDocument::Indented);
+  QString jsonData = js.toJson(QJsonDocument::Indented);
   cacheFile.storeTempFile(fileName.toLower(), jsonData);
 
   emit sendQueryFinished();
 }
 
-void Booklooker::queryOrders(int waitSecs) {
+void Booklooker::prepareResponse(const QDomDocument &xml) { Q_UNUSED(xml); }
+
+void Booklooker::queryFinished(QNetworkReply *reply) {
+  if (reply->error() != QNetworkReply::NoError) {
+    emit sendErrorResponse(AntiquaCRM::WARNING,
+                           tr("Booklooker response with errors!"));
+  }
+}
+
+void Booklooker::queryNewOrders(int waitSecs) {
   Q_UNUSED(waitSecs);
   if (isCookieExpired()) {
     authenticate();
@@ -156,19 +158,33 @@ void Booklooker::queryOrders(int waitSecs) {
   QDate past = QDate::currentDate().addDays(historyCall);
   QUrlQuery q;
   q.addQueryItem("token", QString(authenticCookie.value()));
-  q.addQueryItem("dateFrom", past.toString(BOOKLOOKER_DATE_FORMAT));
-  q.addQueryItem("dateTo",
-                 QDate(QDate::currentDate()).toString(BOOKLOOKER_DATE_FORMAT));
+  q.addQueryItem("dateFrom", dateString(past));
+  q.addQueryItem("dateTo", dateString());
+  url.setQuery(q);
+  m_network->jsonGetRequest(url);
+}
+
+void Booklooker::queryOrder(const QString &orderId) {
+  if (isCookieExpired()) {
+    authenticate();
+    return;
+  }
+
+  QUrl url = apiQuery("order");
+  QDate past = QDate::currentDate().addDays(historyCall);
+  QUrlQuery q;
+  q.addQueryItem("token", QString(authenticCookie.value()));
+  q.addQueryItem("orderId", orderId);
   url.setQuery(q);
   m_network->jsonGetRequest(url);
 }
 
 const QString Booklooker::configProvider() const {
-  return QString(CONFIG_PROVIDER).toLower();
+  return QString(BOOKLOOKER_CONFIG_PROVIDER).toLower();
 }
 
 const QString Booklooker::displayName() const {
-  return QString(CONFIG_PROVIDER).trimmed();
+  return QString(BOOKLOOKER_CONFIG_PROVIDER).trimmed();
 }
 
 const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {

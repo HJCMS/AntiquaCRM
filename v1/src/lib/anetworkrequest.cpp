@@ -44,7 +44,9 @@ const QSslConfiguration ANetworkRequest::sslConfigguration() {
 #ifdef Q_OS_WIN
   ca_bundle = config.value("ca_bundle", applCaBundlePath()).toString();
 #else
-  ca_bundle = config.value("ca_bundle", "/var/lib/ca-certificates/ca-bundle.pem").toString();
+  ca_bundle =
+      config.value("ca_bundle", "/var/lib/ca-certificates/ca-bundle.pem")
+          .toString();
 #endif
   if (!cfg.addCaCertificates(ca_bundle, QSsl::Pem)) {
     qWarning("ANetworkRequest: Missing ssl/ca_bundle PEM to import!");
@@ -82,6 +84,17 @@ void ANetworkRequest::setHeaderAcceptJson() {
 void ANetworkRequest::setHeaderContentTypeJson() {
   QByteArray contentType("application/json; charset=");
   contentType.append(antiquaCharset());
+  setRawHeader(QByteArray("Content-Type"), contentType);
+}
+
+void ANetworkRequest::setHeaderAcceptXml() {
+  QByteArray accept("application/xml,text/xml,text/*;q=0.1");
+  setRawHeader(QByteArray("Accept"), accept);
+}
+
+void ANetworkRequest::setHeaderContentTypeXml(const QByteArray &charset) {
+  QByteArray contentType("application/xml;text/xml charset=");
+  contentType.append(charset);
   setRawHeader(QByteArray("Content-Type"), contentType);
 }
 

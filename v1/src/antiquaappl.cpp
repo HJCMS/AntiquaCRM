@@ -140,7 +140,7 @@ void AntiquaAppl::startTriggerProcess() {
     while (i.hasNext()) {
       AntiquaCRM::APluginInterface *m_iface = i.next();
       if (m_iface != nullptr) {
-        m_iface->queryOrders(secs++);
+        m_iface->queryNewOrders(secs++);
       }
     }
   }

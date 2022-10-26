@@ -4,15 +4,19 @@
 #include "anetworker.h"
 #include "anetworkrequest.h"
 
+#ifndef ANTIQUACRM_NETWORK_DEBUG
+#define ANTIQUACRM_NETWORK_DEBUG false
+#endif
+
 #include <QHttpMultiPart>
 #include <QHttpPart>
 #include <QJsonParseError>
 
 namespace AntiquaCRM {
 
-ANetworker::ANetworker(QObject *parent) : QNetworkAccessManager{parent} {
+ANetworker::ANetworker(AntiquaCRM::PluginQueryType type, QObject *parent)
+    : QNetworkAccessManager{parent}, queryType{type} {
   setObjectName("antiquacrm_networker");
-
   connect(this, SIGNAL(finished(QNetworkReply *)), this,
           SLOT(slotFinished(QNetworkReply *)));
 }
@@ -59,10 +63,10 @@ void ANetworker::slotFinished(QNetworkReply *reply) {
     slotError(reply->error());
     errors = true;
   }
-  emit requestFinished(errors);
+  emit sendFinishedWithErrors(errors);
 }
 
-void ANetworker::readResponse() {
+void ANetworker::slotReadResponse() {
   if (m_reply == nullptr)
     return;
 
@@ -77,24 +81,54 @@ void ANetworker::readResponse() {
     return;
   }
 
+#if ANTIQUACRM_NETWORK_DEBUG
+  foreach (QByteArray a, m_reply->rawHeaderList()) {
+    qInfo("%s: %s", a.constData(), m_reply->rawHeader(a).constData());
+  }
+#endif
+
   QByteArray data = m_reply->readAll();
   if (data.isNull()) {
     qWarning("ANetorker: No Data responsed!");
     return;
   }
 
-  QJsonParseError parser;
-  QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
-  if (parser.error != QJsonParseError::NoError) {
-    qWarning("Json Parse Error:(%s)!", qPrintable(parser.errorString()));
+  // JSON Request
+  if (queryType == AntiquaCRM::JSON_QUERY) {
+    QJsonParseError parser;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
+    if (parser.error != QJsonParseError::NoError) {
+      qWarning("Json Parse Error:(%s)!", qPrintable(parser.errorString()));
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << QString::fromLocal8Bit(data);
+      qDebug() << Q_FUNC_INFO << QString::fromLocal8Bit(data);
 #endif
+      return;
+    }
+    data.clear();
+    emit sendJsonResponse(doc);
     return;
   }
-  data.clear();
+  // XML/SOAP Request
+  if (queryType == AntiquaCRM::XML_QUERY) {
+    QDomDocument xml("response");
+    QString errorMsg = QString();
+    int errorLine = 0;
+    int errorColumn = 0;
+    if (!xml.setContent(data, false, &errorMsg, &errorLine, &errorColumn)) {
+#ifdef ANTIQUA_DEVELOPEMENT
+      qDebug() << Q_FUNC_INFO << errorMsg << errorLine << errorColumn;
+#else
+      qWarning("Returned XML is not well formatted!");
+#endif
+      emit sendFinishedWithErrors(true);
+      return;
+    }
+    data.clear();
+    emit sendXmlResponse(xml);
+    return;
+  }
 
-  emit jsonResponse(doc);
+  qWarning("Unknown Response type!");
 }
 
 void ANetworker::slotSslErrors(const QList<QSslError> &list) {
@@ -121,7 +155,7 @@ QNetworkReply *ANetworker::loginRequest(const QUrl &url,
   connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
           SLOT(slotSslErrors(QList<QSslError>)));
 
-  connect(m_reply, SIGNAL(readyRead()), this, SLOT(readResponse()));
+  connect(m_reply, SIGNAL(readyRead()), this, SLOT(slotReadResponse()));
 
   return m_reply;
 }
@@ -149,13 +183,40 @@ QNetworkReply *ANetworker::jsonPostRequest(const QUrl &url,
   connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
           SLOT(slotSslErrors(QList<QSslError>)));
 
-  connect(m_reply, SIGNAL(readyRead()), this, SLOT(readResponse()));
+  connect(m_reply, SIGNAL(readyRead()), this, SLOT(slotReadResponse()));
 
   return m_reply;
 }
 
-QNetworkReply *ANetworker::jsonMultiPartRequest(/* Multipart */
-                                                const QUrl &url,
+QNetworkReply *ANetworker::xmlPostRequest(const QUrl &url,
+                                          const QDomDocument &body) {
+  ANetworkRequest request(url);
+  request.setHeaderUserAgent();
+  request.setHeaderAcceptLanguage();
+  request.setHeaderAcceptXml();
+  request.setHeaderCacheControl();
+  request.setHeaderContentTypeXml();
+
+  QByteArray data = body.toByteArray(-1);
+  request.setHeaderContentLength(data.size());
+
+  m_reply = post(request, data);
+
+  connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
+          SLOT(slotError(QNetworkReply::NetworkError)));
+
+  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
+          SLOT(slotError(QNetworkReply::NetworkError)));
+
+  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
+          SLOT(slotSslErrors(QList<QSslError>)));
+
+  connect(m_reply, SIGNAL(readyRead()), this, SLOT(slotReadResponse()));
+
+  return m_reply;
+}
+
+QNetworkReply *ANetworker::jsonMultiPartRequest(const QUrl &url,
                                                 const QString &name,
                                                 const QJsonDocument &body) {
   ANetworkRequest request(url);
@@ -190,7 +251,7 @@ QNetworkReply *ANetworker::jsonMultiPartRequest(/* Multipart */
   connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
           SLOT(slotSslErrors(QList<QSslError>)));
 
-  connect(m_reply, SIGNAL(readyRead()), this, SLOT(readResponse()));
+  connect(m_reply, SIGNAL(readyRead()), this, SLOT(slotReadResponse()));
 
   return m_reply;
 }
@@ -213,7 +274,7 @@ QNetworkReply *ANetworker::jsonGetRequest(const QUrl &url) {
   connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
           SLOT(slotSslErrors(QList<QSslError>)));
 
-  connect(m_reply, SIGNAL(readyRead()), this, SLOT(readResponse()));
+  connect(m_reply, SIGNAL(readyRead()), this, SLOT(slotReadResponse()));
 
   return m_reply;
 }

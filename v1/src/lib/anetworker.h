@@ -6,6 +6,7 @@
 #define ANTIQUACRM_NETWORKER_H
 
 #include <AGlobal>
+#include <QDomDocument>
 #include <QJsonDocument>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -28,6 +29,7 @@ class ANTIQUACRM_LIBRARAY ANetworker final : public QNetworkAccessManager {
 
 private:
   int tranfer_timeout = 20;
+  const AntiquaCRM::PluginQueryType queryType;
   QNetworkReply *m_reply;
 
 private Q_SLOTS:
@@ -35,11 +37,7 @@ private Q_SLOTS:
    * @brief Wenn die Anfrage beendet wurde.
    */
   void slotFinished(QNetworkReply *reply);
-
-  /**
-   * @brief readyRead() => readResponse()
-   */
-  void readResponse();
+  void slotReadResponse();
 
 public Q_SLOTS:
   void slotError(QNetworkReply::NetworkError error);
@@ -50,17 +48,18 @@ Q_SIGNALS:
    * @brief Anfrage abgeschlossen
    * @param errors - Wenn ja true
    */
-  void requestFinished(bool errors);
-
-  void jsonResponse(const QJsonDocument &json);
+  void sendFinishedWithErrors(bool);
+  void sendJsonResponse(const QJsonDocument &);
+  void sendXmlResponse(const QDomDocument &);
 
 public:
-  explicit ANetworker(QObject *parent = nullptr);
+  explicit ANetworker(AntiquaCRM::PluginQueryType type,
+                      QObject *parent = nullptr);
 
   QNetworkReply *loginRequest(const QUrl &url, const QByteArray &data);
 
   /**
-   * @brief Erstelle eine Json HTTP_POST Anfrage
+   * @brief Erstelle eine HTTP_POST Anfrage
    * @note Wenn es eine https Verbindung ist und der
    *    Host mit QUrl:setHost() in der URL gesetzt ist.
    *    Wird SSL Verschlüsselung verwendet (sonst nicht)!
@@ -70,6 +69,7 @@ public:
    * @return NetworkReply
    */
   QNetworkReply *jsonPostRequest(const QUrl &url, const QJsonDocument &body);
+  QNetworkReply *xmlPostRequest(const QUrl &url, const QDomDocument &body);
 
   QNetworkReply *jsonMultiPartRequest(const QUrl &url, const QString &name,
                                       const QJsonDocument &body);
