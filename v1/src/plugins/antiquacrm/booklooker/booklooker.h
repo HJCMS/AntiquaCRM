@@ -18,24 +18,11 @@ class ANTIQUACRM_LIBRARAY Booklooker final
 
 private:
   const QHash<QString, QString> p_articleTranslate;
-
-  /**
-   * @brief read configuration
-   */
   void initConfigurations();
-
-  /**
-   * @brief Standard Anfrage Url erstellen
-   * @param section  - Abfrageteil im Url Pfad
-   * @return Rest API URL
-   */
   const QUrl apiQuery(const QString &section);
-
   const QString dateString(const QDate &date = QDate::currentDate()) const;
-
   const AntiquaCRM::AProviderOrderItem articleItem(const QString &key,
                                                    const QJsonValue &value) const;
-
   void setTokenCookie(const QString &token);
   bool isCookieExpired();
 

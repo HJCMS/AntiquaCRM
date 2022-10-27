@@ -296,6 +296,7 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
       item.setValue("o_provider_purchase_id", orderId);
       item.setValue("o_since", dateTime);
       item.setValue("o_media_type", AntiquaCRM::BOOK);
+
       // AntiquaCRM::PaymentStatus
       QString orderStatus = order.value("status").toString();
       if (orderStatus == "READY_FOR_SHIPMENT") {
@@ -307,6 +308,7 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
       } else {
         item.setValue("o_provider_order_status", AntiquaCRM::STATUS_NOT_SET);
       }
+
       // AntiquaCRM::PaymentMethod
       AntiquaCRM::PaymentMethod payment_method;
       switch (order.value("paymentId").toInt()) {
