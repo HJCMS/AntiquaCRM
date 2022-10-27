@@ -32,8 +32,45 @@
 #include <QTimeZone>
 #include <QUrlQuery>
 
-Booklooker::Booklooker(QObject *parent) : AntiquaCRM::APluginInterface{parent} {
+/**
+ * @brief Translate Article Ids
+ * @code
+  "orderItems": [{
+    "amount": 1,
+    "author": "James, Henry",
+    "mediaType": 0,
+    "orderItemId": 31453032,
+    "orderNo": "112999",
+    "orderTitle": "Die Flügel der Taube",
+    "singlePrice": "13.00",
+    "status": "Ordered",
+    "totalPriceRebated": "13.00"
+  }], ...
+* @endcode
+*/
+static const QHash<QString, QString> translateIds() {
+  QHash<QString, QString> hash;
+  // AntiquaCRM Article Number
+  hash.insert("orderNo", "a_article_id");
+  // Provider Article Order Id
+  hash.insert("orderItemId", "a_provider_id");
+  // @see AntiquaCRM::ArticleType e.g. Book=1
+  hash.insert("mediaType", "a_type");
+  // Article amount
+  hash.insert("amount", "a_count");
+  // Article basic price
+  hash.insert("singlePrice", "a_price");
+  // Article sell price
+  hash.insert("totalPriceRebated", "a_sell_price");
+  // Article Titel
+  hash.insert("orderTitle", "a_title");
+  return hash;
+}
+
+Booklooker::Booklooker(QObject *parent)
+    : AntiquaCRM::APluginInterface{parent}, p_articleTranslate{translateIds()} {
   setObjectName(BOOKLOOKER_CONFIG_PROVIDER);
+
   m_network = new AntiquaCRM::ANetworker(AntiquaCRM::JSON_QUERY, this);
   initConfigurations();
 
@@ -80,6 +117,42 @@ const QUrl Booklooker::apiQuery(const QString &section) {
 
 const QString Booklooker::dateString(const QDate &date) const {
   return date.toString(BOOKLOOKER_DATE_FORMAT);
+}
+
+const AntiquaCRM::AProviderOrderItem
+Booklooker::articleItem(const QString &key, const QJsonValue &value) const {
+  QString _key = p_articleTranslate.value(key);
+  QHash<QString, QMetaType::Type> keys =
+      AntiquaCRM::AProviderOrder::articleKeys();
+  if (!keys.contains(_key)) {
+    qWarning("Booklooker: Unknown Article Key(%s)!", qPrintable(key));
+    return AntiquaCRM::AProviderOrderItem();
+  }
+
+  QVariant _value;
+  if (_key == "a_article_id") {
+    // Artikel Nummer
+    _value = value.toInt();
+  } else if (_key == "a_provider_id") {
+    // Dienstleister Bestellnummer
+    _value = QString::number(value.toInt());
+  } else if (_key.contains("_price")) {
+    // Preise
+    if (value.type() == QJsonValue::String) {
+      _value = QString(value.toString()).toDouble();
+    } else if (value.type() == QJsonValue::Double) {
+      _value = value.toDouble();
+    }
+  } else if (keys.value(_key) == QMetaType::Int) {
+    _value = value.toInt();
+  } else if (keys.value(_key) == QMetaType::QString) {
+    _value = value.toString();
+  }
+
+  AntiquaCRM::AProviderOrderItem item;
+  item.key = _key;
+  item.value = _value;
+  return item;
 }
 
 void Booklooker::setTokenCookie(const QString &token) {
@@ -190,7 +263,7 @@ const QString Booklooker::displayName() const {
 }
 
 const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
-  AntiquaCRM::AProviderOrders booking;
+  AntiquaCRM::AProviderOrders allOrders;
 
   QString fileName = configProvider();
   if (!actionsCookie.name().isNull()) {
@@ -198,25 +271,29 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
   }
 
   if (fileName.isEmpty())
-    return booking;
+    return allOrders;
 
   AntiquaCRM::ASharedCacheFiles cacheFile;
-  QString data = cacheFile.getTempFile(fileName.toLower());
+  // QString data = cacheFile.getTempFile(fileName.toLower());
+  QString data = cacheFile.getTempFile("booklooker_order_test.json");
   if (data.isEmpty())
-    return booking;
+    return allOrders;
 
+  QString providerName = displayName().toLower();
   QJsonDocument doc = QJsonDocument::fromJson(data.toLocal8Bit());
   QJsonArray orders = doc.object().value("returnValue").toArray();
   if (orders.size() > 0) {
+    // BEGIN INSERT ORDERS
     for (int i = 0; i < orders.size(); i++) {
-      QJsonObject order = orders.at(i).toObject();
+      QJsonObject order = orders[i].toObject();
       qint64 orderId = order.value("orderId").toInt();
       QString strOrderId = QString::number(orderId);
       QDateTime dateTime = getDateTime(order.value("orderDate").toString(),
                                        order.value("orderTime").toString());
-      // start fill
-      AntiquaCRM::AProviderOrder item(strOrderId);
+      // Start fill
+      AntiquaCRM::AProviderOrder item(providerName, strOrderId);
       item.setValue("o_provider_order_id", strOrderId);
+      item.setValue("o_provider_purchase_id", orderId);
       item.setValue("o_since", dateTime);
       item.setValue("o_media_type", AntiquaCRM::BOOK);
       // AntiquaCRM::PaymentStatus
@@ -278,6 +355,27 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
       }
       item.setValue("o_payment_method", payment_method);
 
+      // Delivery Cost
+      if (order.contains("calculatedShippingCost")) {
+        QString d_cost = order.value("calculatedShippingCost").toString();
+        double d_coast_double = d_cost.toDouble();
+        if (d_coast_double > 0) {
+          item.setValue("d_price", d_coast_double);
+        }
+      }
+
+      // Payment Confirmed
+      if (order.contains("paymentConfirmed")) {
+        QString date_time = order.value("paymentConfirmed").toString();
+        item.setValue("o_payment_confirmed", getDateTime(date_time));
+      }
+
+      // PayPal TransactionId
+      if (order.contains("transactionId")) {
+        QString paypal_txn = order.value("transactionId").toString();
+        item.setValue("o_payment_paypal_txn_id", paypal_txn);
+      }
+
       // Invoice Address
       if (!order.value("invoiceAddress").toObject().isEmpty()) {
         QJsonObject address = order.value("invoiceAddress").toObject();
@@ -289,6 +387,7 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
         item.setValue("c_gender", address.value("title").toString());
         item.setValue("c_postalcode", address.value("zip").toString());
       }
+
       if (order.contains("email"))
         item.setValue("c_email_0", order.value("email").toString());
 
@@ -332,23 +431,32 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
         buffer << street << postalcode + " " + location;
         item.setValue("c_shipping_address", buffer.join("\n"));
       }
-      booking.append(item);
-    }
-  }
-  /*
-  #ifdef ANTIQUA_DEVELOPEMENT
-    QListIterator<AntiquaCRM::AProviderOrder> get_orders(booking);
-    while (get_orders.hasNext()) {
-      AntiquaCRM::AProviderOrder data = get_orders.next();
-      foreach (QString k, data.currentKeys()) {
-        QVariant val = data.getValue(k);
-        if (!val.isNull())
-          qDebug() << data.id() << k << val;
+      // Article Orders
+      QJsonArray articles = order.value("orderItems").toArray();
+      for (int a = 0; a < articles.count(); a++) {
+        if (articles[a].type() == QJsonValue::Object) {
+          AntiquaCRM::AProviderOrderItems booking;
+          QJsonObject itemData = articles[a].toObject();
+          foreach (QString k, itemData.keys()) {
+            if (!p_articleTranslate.value(k).isEmpty()) {
+              booking.append(articleItem(k, itemData.value(k)));
+            }
+          }
+          item.insertOrderItems(booking);
+        }
       }
+      allOrders.append(item);
     }
-  #endif
-  */
-  return booking;
+    // END INSERT ORDERS
+  }
+  //#ifdef ANTIQUA_DEVELOPEMENT
+  //  QListIterator<AntiquaCRM::AProviderOrder> get_orders(allOrders);
+  //  while (get_orders.hasNext()) {
+  //    AntiquaCRM::AProviderOrder data = get_orders.next();
+  //    qDebug() << data.provider() << data.id() << data.orders().size();
+  //  }
+  //#endif
+  return allOrders;
 }
 
 bool Booklooker::createInterface(QObject *parent) { return true; }

@@ -9,26 +9,32 @@
 
 namespace AntiquaCRM {
 
-AProviderOrder::AProviderOrder(const QString &uniqId) {
+AProviderOrder::AProviderOrder(const QString &provider, const QString &uniqId) {
+  providerName = provider;
   bookingId = uniqId;
   p_data = QHash<QString, QVariant>();
+  p_orderItems = QList<AProviderOrderItems>();
 }
 
 AProviderOrder::AProviderOrder(const AProviderOrder &other) {
+  providerName = other.providerName;
   bookingId = other.bookingId;
   p_data = other.p_data;
+  p_orderItems = other.p_orderItems;
 }
 
 AProviderOrder &AProviderOrder::operator=(const AProviderOrder &other) {
   if (this == &other)
     return *this;
 
+  providerName = other.providerName;
   bookingId = other.bookingId;
   p_data = other.p_data;
+  p_orderItems = other.p_orderItems;
   return *this;
 }
 
-const QStringList AProviderOrder::currentKeys() const {
+const QStringList AProviderOrder::filledKeys() const {
   QStringList list;
   QHashIterator<QString, QVariant> it(p_data);
   while (it.hasNext()) {
@@ -40,7 +46,7 @@ const QStringList AProviderOrder::currentKeys() const {
 }
 
 bool AProviderOrder::setValue(const QString &key, const QVariant &value) {
-  QHashIterator<QString, QMetaType::Type> it(validKeys());
+  QHashIterator<QString, QMetaType::Type> it(orderKeys());
   while (it.hasNext()) {
     it.next();
     QMetaType type(it.value());
@@ -68,6 +74,40 @@ const QVariant AProviderOrder::getValue(const QString &key) {
     }
   }
   return QVariant();
+}
+
+const QList<AProviderOrderItems> AProviderOrder::orders() {
+  return p_orderItems;
+}
+
+bool AProviderOrder::insertOrderItems(const AProviderOrderItems &article) {
+  p_orderItems.append(article);
+  return true;
+}
+
+bool AProviderOrder::removeOrderItem(const QString &orderItemId) {
+  if (p_orderItems.size() < 1) {
+    qWarning("AProviderOrderItems ist empty, nothing to remove!");
+    return false;
+  }
+
+  QListIterator<AProviderOrderItems> main(p_orderItems);
+  int i = 0;
+  while (main.hasNext()) {
+    QListIterator<AProviderOrderItem> sub(main.next());
+    while (sub.hasNext()) {
+      AProviderOrderItem item = sub.next();
+      if (item.key == orderItemId) {
+#ifdef ANTIQUA_DEVELOPEMENT
+        qDebug() << Q_FUNC_INFO << i << item.key;
+#endif
+        p_orderItems.removeAt(i);
+        return true;
+      }
+    }
+    i++;
+  }
+  return false;
 }
 
 }; // namespace AntiquaCRM

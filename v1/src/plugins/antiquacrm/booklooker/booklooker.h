@@ -7,6 +7,7 @@
 
 #include <AntiquaCRM>
 #include <AntiquaCRMPlugin>
+#include <QJsonValue>
 #include <QObject>
 
 class ANTIQUACRM_LIBRARAY Booklooker final
@@ -16,6 +17,8 @@ class ANTIQUACRM_LIBRARAY Booklooker final
   Q_INTERFACES(AntiquaCRM::APluginInterface)
 
 private:
+  const QHash<QString, QString> p_articleTranslate;
+
   /**
    * @brief read configuration
    */
@@ -29,6 +32,9 @@ private:
   const QUrl apiQuery(const QString &section);
 
   const QString dateString(const QDate &date = QDate::currentDate()) const;
+
+  const AntiquaCRM::AProviderOrderItem articleItem(const QString &key,
+                                                   const QJsonValue &value) const;
 
   void setTokenCookie(const QString &token);
   bool isCookieExpired();

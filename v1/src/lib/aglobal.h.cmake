@@ -327,14 +327,14 @@ namespace AntiquaCRM {
   * Umsetzung für Dienstleister kategorien.
   * @section inventory
   */
- enum Tabs {
+ enum ArticleType {
   UNKNOWN = 0,   /**< nicht festgelegt */
   BOOK = 1,      /**< Bücher */
   MEDIA = 2,     /**< Film & Tonträger */
   PRINTS = 3,    /**< Drucke & Stiche */
   OTHER = 4      /**< Diverse */
  };
- Q_ENUM_NS(AntiquaCRM::Tabs)
+ Q_ENUM_NS(AntiquaCRM::ArticleType)
 
  /**
   * @brief Zustandsbeschreibung für Artikel

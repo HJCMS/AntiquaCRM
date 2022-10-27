@@ -68,6 +68,9 @@ protected:
                               const QString &timeString,
                               Qt::TimeSpec spec = Qt::LocalTime) const;
 
+  const QDateTime getDateTime(const QString &dateTimeString,
+                              Qt::TimeSpec spec = Qt::LocalTime) const;
+
   /**
    * @brief Convert Datetime to TimeSpec
    */

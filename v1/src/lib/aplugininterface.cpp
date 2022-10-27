@@ -35,8 +35,16 @@ const QDateTime APluginInterface::getDateTime(const QString &dateString,
   QDateTime dateTime;
   QDate d = QDate::fromString(dateString, "yyyy-MM-dd");
   dateTime.setDate(d);
-  QTime t = QTime::fromString(timeString, "HH:mm:00");
+  QTime t = QTime::fromString(timeString, "HH:mm:ss");
   dateTime.setTime(t);
+  dateTime.setTimeSpec(spec);
+  return dateTime;
+}
+
+const QDateTime APluginInterface::getDateTime(const QString &dateTimeString,
+                                              Qt::TimeSpec spec) const {
+  QDateTime dateTime;
+  dateTime = QDateTime::fromString(dateTimeString, "yyyy-MM-dd HH:mm:ss");
   dateTime.setTimeSpec(spec);
   return dateTime;
 }
