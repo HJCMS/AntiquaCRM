@@ -274,8 +274,7 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
     return allOrders;
 
   AntiquaCRM::ASharedCacheFiles cacheFile;
-  // QString data = cacheFile.getTempFile(fileName.toLower());
-  QString data = cacheFile.getTempFile("booklooker_order_test.json");
+  QString data = cacheFile.getTempFile(fileName.toLower());
   if (data.isEmpty())
     return allOrders;
 

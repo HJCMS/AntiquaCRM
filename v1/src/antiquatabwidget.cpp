@@ -6,17 +6,13 @@
 #include "tabbooks.h"
 #include "tabviews.h"
 
-/** TESTINGS */
-#include <AntiquaCRM>
-#include <QVBoxLayout>
-
 AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
   setObjectName("window_tabwidget");
 
   AntiquaCRM::ASettings cfg(this);
   cfg.setObjectName("tabwidget_settings");
 
-  bool mouseWheel = cfg.value("window/MouseWheelActions", false).toBool();
+  bool mouseWheel = cfg.value("mouse_wheel_actions", false).toBool();
   m_tabBar = new AntiquaTabBar(this, mouseWheel);
   setTabBar(m_tabBar);
 
@@ -31,12 +27,19 @@ Inventory *AntiquaTabWidget::tabWidget(int index) const {
 }
 
 void AntiquaTabWidget::addViewsTab(const QString &name) {
+  int index = indexOf(m_views);
+  if (index >= 0) {
+    m_views->createSearchQuery(name);
+    setCurrentIndex(index);
+    return;
+  }
+
   m_views = new TabViews(this);
   m_views->createSearchQuery(name);
   int c = (m_tabBar->count() + 1);
-  int i = insertTab(c, m_views, m_views->windowIcon(), m_views->windowTitle());
-  m_tabBar->setTabData(i, m_views->isClosable());
-  setCurrentIndex(i);
+  index = insertTab(c, m_views, m_views->windowIcon(), m_views->windowTitle());
+  m_tabBar->setTabCloseable(index, m_views->isClosable());
+  setCurrentIndex(index);
 }
 
 void AntiquaTabWidget::setTabChanged(int index) {
@@ -65,7 +68,6 @@ void AntiquaTabWidget::setTabToVisit(int index) {
 bool AntiquaTabWidget::loadDefaultTabs() {
   m_books = new TabBooks(this);
   int i = insertTab(0, m_books, m_books->windowIcon(), m_books->windowTitle());
-  m_tabBar->setTabData(i, m_books->isClosable());
-
+  m_tabBar->setTabCloseable(i, m_books->isClosable());
   return true;
 }

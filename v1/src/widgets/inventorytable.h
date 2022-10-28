@@ -41,6 +41,7 @@ public Q_SLOTS:
   void setQueryLimit(int);
 
 Q_SIGNALS:
+  void sendResultExists(bool);
   void sendQueryReport(const QString &report);
   void sendCopyToClibboard(const QString &str);
   void sendOpenEntry(qint64 articleId);

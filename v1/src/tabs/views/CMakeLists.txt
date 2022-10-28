@@ -17,11 +17,13 @@ SET (subproject_LINKER
 SET (subproject_SOURCES
  tabviews.cpp
  viewsactiongroup.cpp
+ viewstablemodel.cpp
 )
 
 SET (subproject_HEADERS
  tabviews.h
  viewsactiongroup.h
+ viewstablemodel.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

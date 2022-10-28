@@ -47,6 +47,7 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{parent} {
   connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
           SLOT(setFilterFocus()));
 
+  // maintable
   connect(m_table, SIGNAL(sendQueryReport(const QString &)), m_statusBar,
           SLOT(showMessage(const QString &)));
 
@@ -60,10 +61,17 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{parent} {
 
   connect(m_table, SIGNAL(sendCreateNewEntry()), SLOT(createNewEntry()));
 
+  connect(m_table, SIGNAL(sendResultExists(bool)), m_statusBar,
+          SLOT(setCreateButtonEnabled(bool)));
+
+  // editor
   connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));
 
+  // searchbar
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
 
+  // statusbar
+  connect(m_statusBar, SIGNAL(sendCreateEntry()), SLOT(createNewEntry()));
   connect(m_statusBar, SIGNAL(sendHistoryQuery(const QString &)),
           SLOT(createSearchQuery(const QString &)));
 

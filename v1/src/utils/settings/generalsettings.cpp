@@ -333,6 +333,7 @@ void GeneralSettings::saveSectionConfig() {
    * @{
    */
   config->setValue("popup_timeout", 2);
+  config->setValue("mouse_wheel_actions", false);
   /**< @} */
 
   QFont font = view_font_config->font();

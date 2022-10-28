@@ -20,7 +20,6 @@ private:
 
 protected:
   void tabInserted(int index) override;
-  void contextMenuEvent(QContextMenuEvent *event) override;
   void wheelEvent(QWheelEvent *event) override;
 
 protected Q_SLOTS:
@@ -33,6 +32,7 @@ Q_SIGNALS:
 
 public:
   explicit AntiquaTabBar(QWidget *parent = nullptr, bool wheelEvents = false);
+  void setTabCloseable(int index, bool closeable = false);
 };
 
 #endif // ANTIQUACRM_TABBAR_H

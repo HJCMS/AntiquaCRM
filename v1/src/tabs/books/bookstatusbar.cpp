@@ -15,6 +15,7 @@ BookStatusBar::BookStatusBar(QWidget *parent) : TabStatusBar{parent} {
   m_newEntry->setText(tr("Create"));
   m_newEntry->setToolTip(tr("Create a new Book entry."));
   m_newEntry->setIcon(getIcon("db_add"));
+  m_newEntry->setEnabled(false);
   layout->addWidget(m_newEntry);
 
   m_selectHistory = new QPushButton(m_frame);
@@ -44,6 +45,12 @@ void BookStatusBar::setHistoryMenu() {
   }
   m_selectHistory->setMenu(m_menu);
 }
+
+void BookStatusBar::setCreateButtonEnabled(bool b) {
+  m_newEntry->setEnabled(b);
+}
+
+bool BookStatusBar::isCreateButtonEnabled() { return m_newEntry->isEnabled(); }
 
 void BookStatusBar::setHistoryAction(int index) {
   TabStatusBar::History hist = static_cast<TabStatusBar::History>(index);
@@ -79,7 +86,8 @@ void BookStatusBar::setHistoryAction(int index) {
   }
 
   case (History::LastMonth): {
-    q.append("date_part('month',ib_changed)=date_part('month',CURRENT_DATE - 31)");
+    q.append(
+        "date_part('month',ib_changed)=date_part('month',CURRENT_DATE - 31)");
     q.append(" AND " + year + " AND ib_count>0");
     break;
   }

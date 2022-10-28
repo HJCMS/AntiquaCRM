@@ -15,7 +15,7 @@ class AntiquaSpinBox final : public QSpinBox {
                  NOTIFY sendMouseWheelChanged)
 
 private:
-  bool mouseWheel = false;
+  bool mouseWheel;
 
 protected:
   void wheelEvent(QWheelEvent *e) override;

@@ -15,7 +15,7 @@ class AntiquaDoubleBox final : public QDoubleSpinBox {
                  NOTIFY sendMouseWheelChanged)
 
 private:
-  bool mouseWheel = false;
+  bool mouseWheel;
 
 protected:
   void wheelEvent(QWheelEvent *e) override;

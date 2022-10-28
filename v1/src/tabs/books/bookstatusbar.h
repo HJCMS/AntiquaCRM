@@ -23,8 +23,12 @@ private:
 private Q_SLOTS:
   void setHistoryAction(int);
 
+public Q_SLOTS:
+  void setCreateButtonEnabled(bool);
+
 public:
   explicit BookStatusBar(QWidget *parent = nullptr);
+  bool isCreateButtonEnabled();
   static const QHash<TabStatusBar::History, QString> historyItems();
 };
 

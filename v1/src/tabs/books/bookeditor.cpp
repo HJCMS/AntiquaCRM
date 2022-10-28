@@ -636,7 +636,7 @@ bool BookEditor::openEditEntry(qint64 articleId) {
 
 bool BookEditor::createNewEntry() {
   setInputFields();
-  qDebug() << Q_FUNC_INFO << "TODO";
+  setResetModified(inputFields);
   setEnabled(true);
   return true;
 }

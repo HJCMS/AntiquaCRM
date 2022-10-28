@@ -2,40 +2,54 @@
 // vim: set fileencoding=utf-8
 
 #include "tabviews.h"
+#include "viewstablemodel.h"
 
 #include <AntiquaCRM>
-#include <QHeaderView>
 #include <QDebug>
+#include <QHeaderView>
+#include <QLayout>
 
 TabViews::TabViews(QWidget *parent) : Inventory{parent} {
   setWindowTitle(tr("Views"));
   setWindowIcon(getTabIcon("view_log"));
+  setObjectName("antiqua_views_tab");
   setClosable(true);
 
   // Begin MainPage layout
-  m_mainPage = new QTableView(this);
-  m_mainPage->setEditTriggers(QAbstractItemView::NoEditTriggers);
-  m_mainPage->setCornerButtonEnabled(false);
-  m_mainPage->setDragEnabled(false);
-  m_mainPage->setDragDropOverwriteMode(false);
-  m_mainPage->setWordWrap(false);
-  m_mainPage->setAlternatingRowColors(true);
-  m_mainPage->setSelectionBehavior(QAbstractItemView::SelectRows);
-  m_mainPage->setSelectionMode(QAbstractItemView::SingleSelection);
-  m_mainPage->setSortingEnabled(true);
+  QWidget *centralWidget = new QWidget(this);
+  QVBoxLayout *m_layout = new QVBoxLayout(centralWidget);
 
-  QHeaderView *header = m_mainPage->horizontalHeader();
+  m_label = new QLabel(centralWidget);
+  m_label->setText(tr("Views"));
+  m_layout->addWidget(m_label);
+
+  m_tableView = new QTableView(centralWidget);
+  m_tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+  m_tableView->setCornerButtonEnabled(false);
+  m_tableView->setDragEnabled(false);
+  m_tableView->setDragDropOverwriteMode(false);
+  m_tableView->setWordWrap(false);
+  m_tableView->setAlternatingRowColors(true);
+  m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+  m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
+  m_tableView->setSortingEnabled(true);
+
+  QHeaderView *header = m_tableView->horizontalHeader();
   header->setDefaultAlignment(Qt::AlignCenter);
   header->setSectionResizeMode(QHeaderView::ResizeToContents);
   header->setStretchLastSection(true);
 
-  insertWidget(0, m_mainPage);
+  m_layout->addWidget(m_tableView);
+  centralWidget->setLayout(m_layout);
+
+  insertWidget(0, centralWidget);
   // End
 
   AntiquaCRM::ASqlSettings sqlconfig(this);
   QSqlDatabase db = QSqlDatabase::database(sqlconfig.connectionName());
-  m_model = new QSqlTableModel(this, db);
-  m_mainPage->setModel(m_model);
+
+  m_model = new ViewsTableModel(db, this);
+  m_tableView->setModel(m_model);
 }
 
 void TabViews::openStartPage() { setCurrentIndex(0); }
@@ -43,6 +57,7 @@ void TabViews::openStartPage() { setCurrentIndex(0); }
 void TabViews::createSearchQuery(const QString &query) {
   m_model->setTable(query);
   m_model->select();
+  m_label->setText(m_model->getLabelText());
 }
 
 void TabViews::onEnterChanged() {}

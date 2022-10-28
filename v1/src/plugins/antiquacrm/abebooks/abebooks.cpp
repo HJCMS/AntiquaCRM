@@ -46,8 +46,8 @@ void Abebooks::initConfigurations() {
   url.setScheme("https");
   url.setHost(cfg.value("api_host", "orderupdate.abebooks.com").toString());
   url.setPort(cfg.value("api_port", 10003).toInt());
-  apiUser = cfg.value("api_user", "UNKNOWN").toString();
-  apiKey = cfg.value("api_key", "007").toString();
+  apiUser = cfg.value("api_user", QString()).toString();
+  apiKey = cfg.value("api_key", QString()).toString();
   historyCall = cfg.value("api_history_call", -7).toInt();
   cfg.endGroup();
   apiUrl = url;
@@ -139,6 +139,7 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
 
   fileName.append(".xml");
   AntiquaCRM::ASharedCacheFiles cacheFile;
+  // QString data = cacheFile.getTempFile(fileName.toLower());
   QString data = cacheFile.getTempFile(fileName.toLower());
   if (data.isEmpty())
     return booking;

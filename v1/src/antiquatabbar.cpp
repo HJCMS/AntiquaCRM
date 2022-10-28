@@ -4,13 +4,16 @@
 #include "antiquatabbar.h"
 
 #include <QAction>
+#include <QDebug>
 #include <QIcon>
+#include <QLabel>
 #include <QMenu>
 
 AntiquaTabBar::AntiquaTabBar(QWidget *parent, bool wheelEvents)
-  : QTabBar{parent}, enableWheel{wheelEvents} {
+    : QTabBar{parent}, enableWheel{wheelEvents} {
   setMovable(true);
   setExpanding(true);
+  setTabsClosable(true);
   connect(this, SIGNAL(currentChanged(int)), SLOT(tabIndexChanged(int)));
 }
 
@@ -21,29 +24,22 @@ void AntiquaTabBar::tabInserted(int index) {
   QTabBar::tabInserted(index);
 }
 
-void AntiquaTabBar::contextMenuEvent(QContextMenuEvent *ev) {
-  index = tabAt(ev->pos());
-  bool b = tabData(index).toBool();
-  QMenu *m = new QMenu("TabAction", this);
-  m->setEnabled(b);
-  QAction *ac_close = m->addAction(QIcon(":icons/tab_remove.png"), tr("Close"));
-  ac_close->setObjectName("ac_context_close_tab");
-  connect(ac_close, SIGNAL(triggered()), this, SLOT(checkToClose()));
-  m->exec(ev->globalPos());
-  delete m;
-}
-
 void AntiquaTabBar::wheelEvent(QWheelEvent *event) {
   if (enableWheel)
     QTabBar::wheelEvent(event);
 }
 
 void AntiquaTabBar::tabIndexChanged(int index) {
-  // TODO
   emit sendTabChanged(index);
 }
 
 void AntiquaTabBar::checkToClose() {
   if (index >= 0)
     emit sendCloseTab(index);
+}
+
+void AntiquaTabBar::setTabCloseable(int index, bool closeable) {
+  setTabData(index, closeable);
+  if (!closeable)
+    setTabButton(index, QTabBar::RightSide, new QLabel(this));
 }

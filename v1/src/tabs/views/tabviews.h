@@ -8,15 +8,19 @@
 #include <AntiquaWidgets>
 #include <QObject>
 #include <QSqlTableModel>
+#include <QLabel>
 #include <QTableView>
 #include <QWidget>
+
+class ViewsTableModel;
 
 class TabViews final : public Inventory {
   Q_OBJECT
 
 private:
-  QTableView *m_mainPage;
-  QSqlTableModel *m_model;
+  QLabel *m_label;
+  QTableView *m_tableView;
+  ViewsTableModel *m_model;
 
 public Q_SLOTS:
   void openStartPage();

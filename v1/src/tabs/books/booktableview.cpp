@@ -42,10 +42,12 @@ bool BookTableView::sqlQueryTable(const QString &query) {
     QString result = tr("Query finished with '%1' Rows.")
                          .arg(QString::number(m_model->rowCount()));
     emit sendQueryReport(result);
+    emit sendResultExists((m_model->rowCount() > 0));
     return true;
-  } else {
-    emit sendQueryReport(tr("Query without result"));
   }
+
+  emit sendQueryReport(tr("Query without result"));
+  emit sendResultExists((m_model->rowCount() > 0));
   return false;
 }
 

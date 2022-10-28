@@ -15,7 +15,7 @@ class AntiquaComboBox final : public QComboBox {
                  NOTIFY sendMouseWheelChanged)
 
 private:
-  bool mouseWheel = false;
+  bool mouseWheel;
 
 protected:
   void wheelEvent(QWheelEvent *e) override;
