@@ -18,32 +18,8 @@
 #include <QWidget>
 
 class ImageView;
+class ImageSelecter;
 class SourceInfo;
-
-/**
- * @brief Ableitung von QFileDialog
- * @class FileBrowser
- * @ingroup Imaging
- */
-class FileBrowser final : public QFileDialog {
-  Q_OBJECT
-
-protected:
-  /**
-   * @brief Automatisches schließen unterdrücken!
-   * Der Dialog soll sich nicht schließen wenn kein explizites Beenden
-   * aufgerufen wird!
-   */
-  void accept() override;
-  void reject() override;
-
-Q_SIGNALS:
-  void sendClose();
-  void sendSave();
-
-public:
-  explicit FileBrowser(QWidget *parent);
-};
 
 /**
  * @brief Primärer Bilddialog
@@ -52,14 +28,12 @@ public:
  */
 class ImageDialog final : public QDialog {
   Q_OBJECT
-  Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
   /**
    * @brief Bild Nummer
    */
-  const int p_articleId;
+  const qint64 p_articleId;
 
   /**
    * @brief Konfigurationen
@@ -77,9 +51,9 @@ private:
   ImageView *m_view;
 
   /**
-   * @brief Filedialog
+   * @brief Ordneransicht
    */
-  FileBrowser *browser;
+  ImageSelecter *m_imageSelecter;
 
   /**
    * @brief Bilder Archiv
@@ -130,7 +104,7 @@ private Q_SLOTS:
   /**
    * @brief Ein bild wurde ausgewählt
    */
-  void fileChanged(const QString &);
+  void fileChanged(const SourceInfo &image);
 
 protected:
   void closeEvent(QCloseEvent *e) override;

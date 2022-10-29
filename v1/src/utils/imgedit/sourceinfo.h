@@ -20,7 +20,7 @@ private:
    * @brief Artikel Nummer angeben.
    * Wird Später für das Speichern benötigt!
    */
-  int fileId;
+  qint64 fileId;
 
   /**
    * @brief Wo das Bild gespeichert werden soll!
@@ -28,22 +28,24 @@ private:
   QString p_target;
 
 public:
-  explicit SourceInfo(const QFileInfo &other);
+  SourceInfo(const QFileInfo &other);
+  SourceInfo(const SourceInfo &other);
+  SourceInfo &operator=(const SourceInfo &other);
 
   /**
    * @brief Stimme alle Parameter
    */
-  bool isValidSource();
+  bool isValidSource() const;
 
   /**
    * @brief Artikel Nummer mit Setzen.
    */
-  void setFileId(int id);
+  void setFileId(qint64 id);
 
   /**
    * @brief Artikel Nummer abfragen.
    */
-  int getFileId();
+  qint64 getFileId();
 
   /**
    * @brief Neuer Bildname

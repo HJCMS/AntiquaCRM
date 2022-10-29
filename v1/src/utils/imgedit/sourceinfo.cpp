@@ -8,17 +8,30 @@ SourceInfo::SourceInfo(const QFileInfo &other) : QFileInfo{other} {
   p_target = QString();
 }
 
-bool SourceInfo::isValidSource() {
+SourceInfo::SourceInfo(const SourceInfo &other) : QFileInfo{other.path()} {
+  fileId = other.fileId;
+  p_target = other.p_target;
+}
+
+SourceInfo &SourceInfo::operator=(const SourceInfo &other) {
+  if (this == &other)
+    return *this;
+
+  fileId = other.fileId;
+  p_target = other.p_target;
+  return *this;
+}
+
+bool SourceInfo::isValidSource() const {
   if (fileId > 0 && isFile() && isReadable()) {
-    QFileInfo t(getFileTarget());
-    return t.dir().exists();
+    return exists();
   }
   return false;
 }
 
-void SourceInfo::setFileId(int id) { fileId = id; }
+void SourceInfo::setFileId(qint64 id) { fileId = id; }
 
-int SourceInfo::getFileId() { return fileId; }
+qint64 SourceInfo::getFileId() { return fileId; }
 
 const QString SourceInfo::imageBaseName(int id) {
   return QString::number(id).rightJustified(8, '0');

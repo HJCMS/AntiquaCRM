@@ -16,6 +16,8 @@ SET (subproject_LINKER
 SET (subproject_SOURCES
   imagedialog.cpp
   imageview.cpp
+  imageselecter.cpp
+  imagelistview.cpp
   sourceinfo.cpp
   imagetoolbar.cpp
 )
@@ -23,6 +25,8 @@ SET (subproject_SOURCES
 SET (subproject_HEADERS
   imagedialog.h
   imageview.h
+  imageselecter.h
+  imagelistview.h
   sourceinfo.h
   imagetoolbar.h
   AntiquaImgEdit
