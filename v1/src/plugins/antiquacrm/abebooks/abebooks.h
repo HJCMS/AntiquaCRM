@@ -6,6 +6,7 @@
 #define ABEBOOKS_LIBRARY_H
 
 #include <AntiquaCRMPlugin>
+#include <QDomElement>
 #include <QObject>
 
 class AbeBooksDocument;

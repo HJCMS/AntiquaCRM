@@ -278,7 +278,7 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
   if (data.isEmpty())
     return allOrders;
 
-  QString providerName = displayName().toLower();
+  QString display_name = displayName().toLower();
   QJsonDocument doc = QJsonDocument::fromJson(data.toLocal8Bit());
   QJsonArray orders = doc.object().value("returnValue").toArray();
   if (orders.size() > 0) {
@@ -290,7 +290,7 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
       QDateTime dateTime = getDateTime(order.value("orderDate").toString(),
                                        order.value("orderTime").toString());
       // Start fill
-      AntiquaCRM::AProviderOrder item(providerName, strOrderId);
+      AntiquaCRM::AProviderOrder item(display_name, strOrderId);
       item.setValue("o_provider_order_id", strOrderId);
       item.setValue("o_provider_purchase_id", orderId);
       item.setValue("o_since", dateTime);
@@ -310,6 +310,7 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
 
       // AntiquaCRM::PaymentMethod
       AntiquaCRM::PaymentMethod payment_method;
+      payment_method = AntiquaCRM::PAYMENT_NOT_SET;
       switch (order.value("paymentId").toInt()) {
       case 1: // Banküberweisung (Vorkasse)
         payment_method = AntiquaCRM::BANK_PREPAYMENT;
@@ -387,6 +388,10 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
         item.setValue("c_street", address.value("street").toString());
         item.setValue("c_gender", address.value("title").toString());
         item.setValue("c_postalcode", address.value("zip").toString());
+        QString uniqName = item.getValue("c_firstname").toString();
+        uniqName.append(" ");
+        uniqName.append(item.getValue("c_lastname").toString());
+        item.setValue("c_provider_import", uniqName);
       }
 
       if (order.contains("email"))

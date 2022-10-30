@@ -62,6 +62,11 @@ public:
   static const QHash<QString, QMetaType::Type> orderKeys() {
     QHash<QString, QMetaType::Type> hash;
     /**
+     * @brief uniq customer Name to prevent duplicate enries!
+     */
+    hash.insert("c_provider_import", QMetaType::QString);
+
+    /**
      * @brief customer gender
      */
     hash.insert("c_gender", QMetaType::QString);

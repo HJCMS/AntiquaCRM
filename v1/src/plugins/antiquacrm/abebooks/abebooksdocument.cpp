@@ -3,11 +3,17 @@
 
 #include "abebooksdocument.h"
 
+#include <AntiquaCRM>
+#include <QDebug>
 #include <QDomAttr>
 #include <QDomNode>
 #include <QDomNodeList>
 #include <QDomProcessingInstruction>
+#include <QFile>
 #include <QList>
+#include <QLocale>
+#include <QRegExp>
+#include <QTextStream>
 #include <QVariant>
 
 AbeBooksDocument::AbeBooksDocument(const AbeBooksAccess &config,
@@ -153,37 +159,68 @@ const QDomElement AbeBooksDocument::getPurchaseOrder() {
   return documentElement().namedItem("purchaseOrder").toElement();
 }
 
-const QDateTime AbeBooksDocument::getOrderDate(const QDomElement &parent) {
-  QDateTime dt = QDateTime::currentDateTime();
-  QDomNode n = firstChildNode(parent, "orderDate");
-  if (!n.isNull()) {
-    QDate date = QDate::currentDate();
-    QDomElement d = n.namedItem("date").toElement();
-    date.setDate(nodeIntValue(d.namedItem("year")),
-                 nodeIntValue(d.namedItem("month")),
-                 nodeIntValue(d.namedItem("day")));
-    dt.setDate(date);
+const QTimeZone AbeBooksDocument::fetchTimeZone(const QDomElement &orderNode) {
+  QDomNode domain = firstChildNode(orderNode, "domain");
+  QByteArray iana;
+  switch (domain.toElement().attribute("id", "0").toInt()) {
+  case 46: // abebooks.co.uk
+    iana = "UTC";
+    break;
 
-    QTime time = QTime::currentTime();
-    QDomElement t = n.namedItem("time").toElement();
-    time.setHMS(nodeIntValue(t.namedItem("hour")),
-                nodeIntValue(t.namedItem("minute")),
-                nodeIntValue(t.namedItem("second")));
-    dt.setTime(time);
-  }
-  return dt;
+  case 47: // abebooks.de
+    iana = "Europe/Berlin";
+    break;
+
+  case 48: // abebooks.fr
+    iana = "Europe/Paris";
+    break;
+
+  case 51: // abebooks.it
+    iana = "Europe/Rome";
+    break;
+
+  default: // iberlibro.com zvab.com abebooks.com
+    iana = "America/Los_Angeles";
+    break;
+  };
+
+  return QTimeZone(iana);
 }
 
-const QDomElement AbeBooksDocument::getOrderItemList() {
+const QDateTime AbeBooksDocument::getOrderDate(const QDomElement &orderNode) {
+  QDomNode odn = firstChildNode(orderNode, "orderDate");
+  if (odn.isNull())
+    return QDateTime::currentDateTime();
+
+  QDate date = QDate::currentDate();
+  QDomElement dn = odn.namedItem("date").toElement();
+  date.setDate(nodeIntValue(dn.namedItem("year")),
+               nodeIntValue(dn.namedItem("month")),
+               nodeIntValue(dn.namedItem("day")));
+
+  QTime time = QTime::currentTime();
+  QDomElement tn = odn.namedItem("time").toElement();
+  time.setHMS(nodeIntValue(tn.namedItem("hour")),
+              nodeIntValue(tn.namedItem("minute")),
+              nodeIntValue(tn.namedItem("second")));
+
+  QDateTime dt = QDateTime::currentDateTime();
+  dt.setTimeZone(fetchTimeZone(orderNode));
+  dt.setDate(date);
+  dt.setTime(time);
+  return dt.toLocalTime();
+}
+
+const QDomNodeList AbeBooksDocument::getOrderItemList() {
   QDomElement out;
   if (notExists("orderUpdateResponse"))
-    return out;
+    return QDomNodeList();
 
   QDomNodeList list = fetchNodes("purchaseOrderItemList");
   if (list.count() != 1)
-    return out;
+    return QDomNodeList();
 
-  return list.at(0).toElement();
+  return list.at(0).toElement().childNodes();
 }
 
 const QVariant AbeBooksDocument::getNodeValue(const QDomNode &parent) {
@@ -198,11 +235,82 @@ const QString AbeBooksDocument::getTagText(const QDomNode &parent,
   return o.trimmed();
 }
 
-const QVariant AbeBooksDocument::getAddressValue(const QString &tag) {
-  QVariant out;
-  QDomNodeList n_list = fetchNodes("mailingAddress");
-  if (n_list.count() != 1)
-    return out;
+const QVariant AbeBooksDocument::getAddressValue(const QDomNode &addressNode,
+                                                 const QString &tag) {
+  return addressNode.namedItem(tag).firstChild().nodeValue();
+}
 
-  return n_list.at(0).namedItem(tag).firstChild().nodeValue();
+const QString AbeBooksDocument::getFullname(const QDomNode &addressNode) {
+  QRegExp strip("[\\s\\t]+");
+  QVariant v = addressNode.namedItem("name").firstChild().nodeValue();
+  QString str = v.toString().trimmed().replace(strip, " ");
+  return str.trimmed();
+}
+
+const QPair<QString, QString>
+AbeBooksDocument::getPerson(const QDomNode &addressNode) {
+  QPair<QString, QString> p;
+  QString str = getFullname(addressNode);
+  QStringList list = str.split(" ");
+  p.second = list.takeLast();
+  p.first = list.join(" ");
+  return p;
+}
+
+const QVariant AbeBooksDocument::getPostalCode(const QDomNode &addressNode) {
+  return addressNode.namedItem("code").firstChild().nodeValue();
+}
+
+const QString AbeBooksDocument::getLocation(const QDomNode &addressNode) {
+  QVariant v = addressNode.namedItem("city").firstChild().nodeValue();
+  return v.toString().trimmed();
+}
+
+const QString AbeBooksDocument::getCountry(const QDomNode &addressNode) {
+  AntiquaCRM::ASettings cfg;
+  QFileInfo info(cfg.getDataDir("json"), "iso_countrycodes.json");
+  if (info.isReadable()) {
+    QVariant v = addressNode.namedItem("country").firstChild().nodeValue();
+    QString code = v.toString().trimmed().toLower();
+
+    QJsonDocument js;
+    QFile fp(info.filePath());
+    if (fp.open(QIODevice::ReadOnly)) {
+      QTextStream data(&fp);
+      data.setCodec(ANTIQUACRM_TEXTCODEC);
+      QByteArray buffer = data.readAll().toLocal8Bit();
+      js = QJsonDocument::fromJson(buffer);
+      fp.close();
+      buffer.clear();
+    }
+
+    if (js.isEmpty())
+      return QString("C");
+
+    QJsonArray countries = js.object().value("countries").toArray();
+    for (int c = 0; c < countries.size(); c++) {
+      QJsonObject o = countries.at(c).toObject();
+      if (o.value("country").toString().contains(code, Qt::CaseInsensitive))
+        return o.value("iso2").toString();
+    }
+  }
+  return QString("C");
+}
+
+const QString AbeBooksDocument::getStreet(const QDomNode &addressNode) {
+  QStringList out;
+  QStringList tags({"region", "street", "street2"});
+  foreach (QString t, tags) {
+    QVariant v = addressNode.namedItem(t).firstChild().nodeValue();
+    QString s = v.toString().trimmed();
+    out << (s.isEmpty() ? "" : s);
+  }
+  return out.join(" ").trimmed();
+}
+
+const QString AbeBooksDocument::getPhone(const QDomNode &addressNode) {
+  QString out;
+  QVariant v = addressNode.namedItem("phone").firstChild().nodeValue();
+  out = v.toString().trimmed();
+  return out;
 }

@@ -7,6 +7,7 @@
 
 #include <AGlobal>
 #include <QDateTime>
+#include <QTimeZone>
 #include <QDomDocument>
 #include <QDomElement>
 #include <QPair>
@@ -120,13 +121,14 @@ public:
    * @param parent
    * @return DateTime
    */
-  const QDateTime getOrderDate(const QDomElement &parent);
+  const QTimeZone fetchTimeZone(const QDomElement &orderNode);
+  const QDateTime getOrderDate(const QDomElement &orderNode);
 
   /**
    * @brief The Purchase Order Items list
    * @return DomElement
    */
-  const QDomElement getOrderItemList();
+  const QDomNodeList getOrderItemList();
 
   /**
    * @brief Get TextNode::value() from Node
@@ -141,9 +143,16 @@ public:
   const QVariant getNodeValue(const QDomNode &parent);
 
   /**
-   * @brief getAddressValue
+   * @brief getAddressValues
    */
-  const QVariant getAddressValue(const QString &tag);
+  const QVariant getAddressValue(const QDomNode &addressNode, const QString &tag);
+  const QString getFullname(const QDomNode &addressNode);
+  const QPair<QString,QString> getPerson(const QDomNode &addressNode);
+  const QVariant getPostalCode(const QDomNode &addressNode);
+  const QString getLocation(const QDomNode &addressNode);
+  const QString getCountry(const QDomNode &addressNode);
+  const QString getStreet(const QDomNode &addressNode);
+  const QString getPhone(const QDomNode &addressNode);
 };
 
 #endif // ABEBOOKS_DOCUMENT_H
