@@ -26,11 +26,11 @@ private:
   BookEditor *m_editorWidget;
 
 public Q_SLOTS:
-  void openStartPage();
-  void createSearchQuery(const QString &query = QString());
-  void createNewEntry();
-  void openEntry(qint64 articleId);
-  void onEnterChanged();
+  void openStartPage() override;
+  void createSearchQuery(const QString &query = QString()) override;
+  void createNewEntry() override;
+  void openEntry(qint64 articleId) override;
+  void onEnterChanged() override;
 
 public:
   explicit TabBooks(QWidget *parent = nullptr);

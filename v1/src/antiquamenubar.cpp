@@ -23,6 +23,9 @@ AntiquaMenuBar::AntiquaMenuBar(QMainWindow *parent)
   m_aboutMenu = addMenu(tr("About"));
   addAboutMenu();
 
+  connect(m_viewsMenu, SIGNAL(sendShowTab(const QString &)),
+          SIGNAL(sendViewTab(const QString &)));
+
   connect(m_viewsMenu, SIGNAL(sendOpenView(const QString &)),
           SIGNAL(sendOpenTabViews(const QString &)));
 

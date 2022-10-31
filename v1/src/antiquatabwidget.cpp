@@ -3,8 +3,6 @@
 
 #include "antiquatabwidget.h"
 #include "antiquatabbar.h"
-#include "tabbooks.h"
-#include "tabviews.h"
 
 AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
   setObjectName("window_tabwidget");
@@ -26,20 +24,79 @@ Inventory *AntiquaTabWidget::tabWidget(int index) const {
   return qobject_cast<Inventory *>(widget(index));
 }
 
-void AntiquaTabWidget::addViewsTab(const QString &name) {
-  int index = indexOf(m_views);
+int AntiquaTabWidget::indexByName(const QString &name) const {
+  for (int i = 0; i < count(); i++) {
+    Inventory *m_tab = tabWidget(i);
+    if (m_tab != nullptr && m_tab->tabIndexId() == name) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+bool AntiquaTabWidget::addInventoryTab(const QString &name) {
+  QString iName = name.trimmed().toLower();
+  iName.append("_tab");
+  // Check
+  int index = indexByName(iName);
   if (index >= 0) {
-    m_views->createSearchQuery(name);
+    setCurrentIndex(index);
+    return true;
+  }
+
+  // Books
+  if (iName == "books_tab") {
+    TabBooks *m_tab = new TabBooks(this);
+    int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
+    m_tabBar->setTabCloseable(i, m_tab->isClosable());
+    return true;
+  }
+
+  // Customers
+  if (iName == "customers_tab") {
+    TabCustomers *m_tab = new TabCustomers(this);
+    int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
+    m_tabBar->setTabCloseable(i, m_tab->isClosable());
+    return true;
+  }
+
+  // Providers
+  if (iName == "providers_tab") {
+    TabProviders *m_tab = new TabProviders(this);
+    int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
+    m_tabBar->setTabCloseable(i, m_tab->isClosable());
+    return true;
+  }
+
+  // Orders
+  if (iName == "orders_tab") {
+    TabOrders *m_tab = new TabOrders(this);
+    int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
+    m_tabBar->setTabCloseable(i, m_tab->isClosable());
+    return true;
+  }
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << "Not in set" << iName;
+#endif
+
+  // Not in set
+  return false;
+}
+
+void AntiquaTabWidget::addViewsTab(const QString &query) {
+  int index = indexByName("views_tab");
+  if (index >= 0) {
+    m_views->createSearchQuery(query);
     setCurrentIndex(index);
     return;
   }
 
   m_views = new TabViews(this);
-  m_views->createSearchQuery(name);
-  int c = (m_tabBar->count() + 1);
-  index = insertTab(c, m_views, m_views->windowIcon(), m_views->windowTitle());
-  m_tabBar->setTabCloseable(index, m_views->isClosable());
-  setCurrentIndex(index);
+  m_views->createSearchQuery(query);
+  int i = addTab(m_views, m_views->windowIcon(), m_views->windowTitle());
+  m_tabBar->setTabCloseable(i, m_views->isClosable());
+  setCurrentIndex(i);
 }
 
 void AntiquaTabWidget::setTabChanged(int index) {
@@ -65,9 +122,15 @@ void AntiquaTabWidget::setTabToVisit(int index) {
     m_tab->onEnterChanged();
 }
 
-bool AntiquaTabWidget::loadDefaultTabs() {
-  m_books = new TabBooks(this);
-  int i = insertTab(0, m_books, m_books->windowIcon(), m_books->windowTitle());
-  m_tabBar->setTabCloseable(i, m_books->isClosable());
-  return true;
+void AntiquaTabWidget::setShowTab(const QString &tabId) {
+  addInventoryTab(tabId);
+}
+
+const QStringList AntiquaTabWidget::availableTabs() {
+  QStringList l;
+  l << "books";
+  l << "customers";
+  l << "orders";
+  l << "providers";
+  return l;
 }

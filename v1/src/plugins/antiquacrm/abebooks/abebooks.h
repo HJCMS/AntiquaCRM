@@ -17,7 +17,7 @@ class ANTIQUACRM_LIBRARAY Abebooks final : public AntiquaCRM::APluginInterface {
   Q_INTERFACES(AntiquaCRM::APluginInterface)
 
 private:
-  void initConfigurations();
+  bool initConfigurations();
   AbeBooksDocument initDocument();
   const QUrl apiQuery(const QString &section);
   const QString dateString(const QDate &date = QDate::currentDate()) const;

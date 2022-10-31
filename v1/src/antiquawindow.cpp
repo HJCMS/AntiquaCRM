@@ -29,6 +29,8 @@ AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
   connect(m_menuBar, SIGNAL(sendApplQuit()), SLOT(closeWindow()));
   connect(m_menuBar, SIGNAL(sendOpenTabViews(const QString &)), m_centralWidget,
           SLOT(addViewsTab(const QString &)));
+  connect(m_menuBar, SIGNAL(sendViewTab(const QString &)), m_centralWidget,
+          SLOT(setShowTab(const QString &)));
   connect(m_menuBar, SIGNAL(sendToggleFullscreen()),
           SLOT(setToggleFullScreen()));
 }
@@ -94,6 +96,19 @@ void AntiquaWindow::openWindow() {
   if (m_cfg->contains("window/windowState"))
     restoreState(m_cfg->value("window/windowState").toByteArray());
 
-  if (m_centralWidget->loadDefaultTabs())
-    m_centralWidget->setEnabled(true);
+  // TODO Read from config to add Defaults
+  QStringList tabs = m_centralWidget->availableTabs();
+  if (tabs.contains("providers"))
+    m_centralWidget->setShowTab("providers");
+
+  if (tabs.contains("orders"))
+    m_centralWidget->setShowTab("orders");
+
+  if (tabs.contains("books"))
+    m_centralWidget->setShowTab("books");
+
+  if (tabs.contains("customers"))
+    m_centralWidget->setShowTab("customers");
+
+  m_centralWidget->setEnabled(true);
 }

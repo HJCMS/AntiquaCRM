@@ -4,11 +4,7 @@
 #include "imageview.h"
 #include "sourceinfo.h"
 
-#ifndef DEBUG_IMAGE_VIEW
-#define DEBUG_IMAGE_VIEW true
-#endif
-
-#if DEBUG_IMAGE_VIEW
+#ifdef ANTIQUA_DEVELOPEMENT
 #include <QDebug>
 #endif
 #include <QApplication>
@@ -29,6 +25,7 @@ ImageView::ImageView(QSize maxsize, QWidget *parent)
   setBackgroundRole(QPalette::Base);
   setCacheMode(QGraphicsView::CacheNone);
   setMinimumWidth((p_max.width() / 2));
+  setToolTip(tr("Right mouse button with mouse wheel to zoom the image!"));
   m_sql = new AntiquaCRM::ASqlCore(this);
 
   m_scene = new QGraphicsScene(this);
@@ -56,7 +53,8 @@ const QImage ImageView::toDatabaseSize(const QImage &img) {
 }
 
 void ImageView::wheelEvent(QWheelEvent *event) {
-  zoomWith(qPow(1.2, event->angleDelta().y() / 240.0));
+  if (event->buttons() & Qt::RightButton)
+    zoomWith(qPow(1.2, event->angleDelta().y() / 240.0));
 }
 
 void ImageView::resizeEvent(QResizeEvent *event) {
@@ -164,8 +162,10 @@ bool ImageView::saveImageTo(const SourceInfo &info) {
     fp.close();
     return true;
   }
+#ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << "Failed" << info.filePath()
            << dest.getFileTarget();
+#endif
   return false;
 }
 
@@ -209,8 +209,8 @@ bool ImageView::storeInDatabase(qint64 articleId) {
   if (img.isNull())
     return false;
 
-#if DEBUG_IMAGE_VIEW
-  qDebug() << Q_FUNC_INFO << img.size();
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << "Store Image in Database:" << img.size();
 #endif
 
   QByteArray rawimg;
@@ -244,7 +244,10 @@ bool ImageView::storeInDatabase(qint64 articleId) {
   }
   m_sql->query(sql);
   if (!m_sql->lastError().isEmpty()) {
-    qDebug() << m_sql->lastError();
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << m_sql->lastError() << sql;
+#endif
+    qWarning("Store Image in Database failed.");
     return false;
   }
   // Aufräumen
@@ -266,16 +269,15 @@ bool ImageView::removeFromDatabase(qint64 articleId) {
   sql.append(strArticleId);
   sql.append(";");
 
-#if DEBUG_IMAGE_VIEW
-  qDebug() << Q_FUNC_INFO << sql;
-#endif
-
   m_sql->query(sql);
   if (!m_sql->lastError().isEmpty()) {
-    qDebug() << m_sql->lastError();
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << m_sql->lastError() << sql;
+#endif
+    qWarning("Delete Image from Database failed.");
     return false;
   }
-  emit sendImageLoadSuccess(false);
+  emit sendImageLoadSuccess(true);
   return true;
 }
 

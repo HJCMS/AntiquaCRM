@@ -15,6 +15,12 @@ SET (PROJECT_INCLUDE_DIRS
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/cache
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/views
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/views
+	${CMAKE_CURRENT_BINARY_DIR}/tabs/providers
+	${CMAKE_CURRENT_SOURCE_DIR}/tabs/providers
+	${CMAKE_CURRENT_BINARY_DIR}/tabs/orders
+	${CMAKE_CURRENT_SOURCE_DIR}/tabs/orders
+	${CMAKE_CURRENT_BINARY_DIR}/tabs/customers
+	${CMAKE_CURRENT_SOURCE_DIR}/tabs/customers
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/books
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/books
 	${CMAKE_CURRENT_BINARY_DIR}/lib
@@ -33,6 +39,9 @@ SET(PROJECT_LIBRARIES
 	AntiquaSettings
 	AntiquaCache
 	AntiquaViews
+	AntiquaProviders
+	AntiquaOrders
+	AntiquaCustomers
 	AntiquaBooks
 	AntiquaCRM
 )

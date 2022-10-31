@@ -28,18 +28,10 @@ static const QString to_iso8859_1(const QString &str) {
 
 Abebooks::Abebooks(QObject *parent) : AntiquaCRM::APluginInterface{parent} {
   setObjectName(ABEBOOKS_CONFIG_PROVIDER);
-  m_network = new AntiquaCRM::ANetworker(AntiquaCRM::XML_QUERY, this);
-  initConfigurations();
-
-  connect(m_network, SIGNAL(sendXmlResponse(const QDomDocument &)),
-          SLOT(prepareResponse(const QDomDocument &)));
-  connect(m_network, SIGNAL(sendContentCodec(QTextCodec *)),
-          SLOT(setContentDecoder(QTextCodec *)));
-  connect(m_network, SIGNAL(finished(QNetworkReply *)),
-          SLOT(queryFinished(QNetworkReply *)));
+  m_network = nullptr;
 }
 
-void Abebooks::initConfigurations() {
+bool Abebooks::initConfigurations() {
   QUrl url;
   AntiquaCRM::ASettings cfg(this);
   cfg.beginGroup(ABEBOOKS_CONFIG_GROUP);
@@ -51,6 +43,7 @@ void Abebooks::initConfigurations() {
   historyCall = cfg.value("api_history_call", -7).toInt();
   cfg.endGroup();
   apiUrl = url;
+  return true;
 }
 
 AbeBooksDocument Abebooks::initDocument() {
@@ -214,26 +207,22 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
     item.setValue("o_payment_method", payment_method);
 
     // Buyer info
-    QDomNodeList buyerNodes = orderElement.elementsByTagName("buyer");
-    if (buyerNodes.size() > 0) {
-      QDomElement buyerNode = buyerNodes.at(0).toElement();
-      // eMail
-      QDomNode eMailNode = xml.firstChildNode(buyerNode, "email");
-      if (!eMailNode.isNull()) {
-        QString eMail = xml.getNodeValue(eMailNode).toString();
-        item.setValue("c_email_0", eMail.toLower());
-      }
-      // Postal Address
+    QDomNodeList buyerNodeList = orderElement.elementsByTagName("buyer");
+    if (buyerNodeList.size() > 0) {
+      QDomElement buyerNode = buyerNodeList.at(0).toElement();
+      // Postaldata
       QDomNode addressNode = buyerNode.namedItem("mailingAddress");
       QPair<QString, QString> person = xml.getPerson(addressNode);
       item.setValue("c_provider_import", xml.getFullname(addressNode));
+      item.setValue("c_gender", QString());
       item.setValue("c_firstname", person.first);
       item.setValue("c_lastname", person.second);
+      item.setValue("c_street", xml.getStreet(addressNode));
       item.setValue("c_postalcode", xml.getPostalCode(addressNode).toString());
       item.setValue("c_location", xml.getLocation(addressNode));
       item.setValue("c_country", xml.getCountry(addressNode));
-      item.setValue("c_street", xml.getStreet(addressNode));
       item.setValue("c_phone_0", xml.getPhone(addressNode));
+      item.setValue("c_email_0", xml.getEMail(buyerNode));
       // Address Bodies
       QStringList buffer;
       buffer << xml.getFullname(addressNode);
@@ -269,22 +258,28 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
           a_provider_id.value = bookElement.attribute("id", "");
           orderItem.append(a_provider_id);
           // Article ID
-          QDomNode vendorKey = xml.firstChildNode(bookElement, "vendorKey");
+          QDomNode queryNode = xml.firstChildNode(bookElement, "vendorKey");
           AntiquaCRM::AProviderOrderItem a_article_id;
           a_article_id.key = "a_article_id";
-          a_article_id.value = xml.getNodeValue(vendorKey).toInt();
+          a_article_id.value = xml.getNodeValue(queryNode).toInt();
           orderItem.append(a_article_id);
-          // count
+          // Article Count
           AntiquaCRM::AProviderOrderItem a_count;
           a_count.key = "a_count";
           a_count.value = 1;
           orderItem.append(a_count);
-          // Price
-          QDomNode price = xml.firstChildNode(bookElement, "price");
+          // Article Price
+          queryNode = xml.firstChildNode(bookElement, "price");
           AntiquaCRM::AProviderOrderItem a_price;
           a_price.key = "a_price";
-          a_price.value = xml.getNodeValue(price).toDouble();
+          a_price.value = xml.getNodeValue(queryNode).toDouble();
           orderItem.append(a_price);
+          // Article Sell Price (VK)
+          queryNode = xml.firstChildNode(bookElement, "price");
+          AntiquaCRM::AProviderOrderItem a_sell_price;
+          a_sell_price.key = "a_sell_price";
+          a_sell_price.value = xml.getNodeValue(queryNode).toDouble();
+          orderItem.append(a_sell_price);
           // TODO
         }
         item.insertOrderItems(orderItem);
@@ -294,20 +289,28 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
     allOrders.append(item);
   }
 
-//#ifdef ANTIQUA_DEVELOPEMENT
-//  QListIterator<AntiquaCRM::AProviderOrder> get_orders(allOrders);
-//  while (get_orders.hasNext()) {
-//    AntiquaCRM::AProviderOrder data = get_orders.next();
-//    qDebug() << data.provider() << data.id() << data.orders().size();
-//    foreach (QString k, data.filledKeys()) {
-//      qDebug() << k << data.getValue(k);
-//    }
-//  }
-//#endif
+  //#ifdef ANTIQUA_DEVELOPEMENT
+  //  QListIterator<AntiquaCRM::AProviderOrder> get_orders(allOrders);
+  //  while (get_orders.hasNext()) {
+  //    AntiquaCRM::AProviderOrder data = get_orders.next();
+  //    qDebug() << data.provider() << data.id() << data.orders().size();
+  //    foreach (QString k, data.filledKeys()) {
+  //      qDebug() << k << data.getValue(k);
+  //    }
+  //  }
+  //#endif
   return allOrders;
 }
 
 bool Abebooks::createInterface(QObject *parent) {
   Q_UNUSED(parent);
-  return true;
+  m_network = new AntiquaCRM::ANetworker(AntiquaCRM::XML_QUERY, this);
+  connect(m_network, SIGNAL(sendXmlResponse(const QDomDocument &)),
+          SLOT(prepareResponse(const QDomDocument &)));
+  connect(m_network, SIGNAL(sendContentCodec(QTextCodec *)),
+          SLOT(setContentDecoder(QTextCodec *)));
+  connect(m_network, SIGNAL(finished(QNetworkReply *)),
+          SLOT(queryFinished(QNetworkReply *)));
+
+  return initConfigurations();
 }

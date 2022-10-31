@@ -314,3 +314,12 @@ const QString AbeBooksDocument::getPhone(const QDomNode &addressNode) {
   out = v.toString().trimmed();
   return out;
 }
+
+const QString AbeBooksDocument::getEMail(const QDomNode &addressNode) {
+  QVariant v = addressNode.namedItem("email").firstChild().nodeValue();
+  if (v.isNull())
+    return QString();
+
+  QString email = v.toString().trimmed().toLower();
+  return (email.isEmpty()) ? QString() : email;
+}

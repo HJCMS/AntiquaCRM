@@ -5,6 +5,7 @@
 #ifndef ANTIQUACRM_INVENTORY_H
 #define ANTIQUACRM_INVENTORY_H
 
+#include <AGlobal>
 #include <QHeaderView>
 #include <QIcon>
 #include <QObject>
@@ -14,10 +15,10 @@
 
 class Inventory : public QStackedWidget {
   Q_OBJECT
-  Q_PROPERTY(bool closable READ isClosable WRITE setClosable NOTIFY
-                 sendClosableChanged)
+  Q_PROPERTY(bool closable READ isClosable WRITE setClosable NOTIFY sendClosableChanged)
 
 private:
+  const QString tabIndex;   /**< @brief Uniq Tab Index Name */
   QShortcut *m_focusSearch; /**< @brief Ctrl+Shift+S */
   QShortcut *m_focusFilter; /**< @brief Ctrl+Shift+F */
   QShortcut *m_createEntry; /**< @brief Ctrl+Shift+N */
@@ -116,8 +117,23 @@ public Q_SLOTS:
   virtual void onEnterChanged() = 0;
 
 public:
-  explicit Inventory(QWidget *parent = nullptr);
+  /**
+   * @brief Tabs Inventory
+   * @param index Uniq tab Index Name
+   */
+  explicit Inventory(const char *index, QWidget *parent = nullptr);
+
+  /**
+   * @brief Uniq Tab Index Identifier
+   * @return Identifier
+   */
+  const QString tabIndexId() const;
+
+  /**
+   * @brief get Icon fpr this Tab
+   */
   static const QIcon getTabIcon(const QString &name = QString("antiqua"));
+
   Q_INVOKABLE bool isClosable();
   Q_INVOKABLE bool isModified();
 };

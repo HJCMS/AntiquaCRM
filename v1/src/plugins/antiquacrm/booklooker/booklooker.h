@@ -18,7 +18,7 @@ class ANTIQUACRM_LIBRARAY Booklooker final
 
 private:
   const QHash<QString, QString> p_articleTranslate;
-  void initConfigurations();
+  bool initConfigurations();
   const QUrl apiQuery(const QString &section);
   const QString dateString(const QDate &date = QDate::currentDate()) const;
   const AntiquaCRM::AProviderOrderItem articleItem(const QString &key,

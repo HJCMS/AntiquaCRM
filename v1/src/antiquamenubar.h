@@ -28,6 +28,7 @@ private:
 
 Q_SIGNALS:
   void sendToggleFullscreen();
+  void sendViewTab(const QString &);
   void sendOpenTabViews(const QString &);
   void sendApplQuit();
 

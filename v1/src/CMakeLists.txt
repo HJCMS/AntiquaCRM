@@ -18,6 +18,11 @@ CONFIGURE_FILE (antiqua.rc.cmake
  ${CMAKE_CURRENT_SOURCE_DIR}/antiqua.rc
 )
 
+## AntiquaTabs
+CONFIGURE_FILE (AntiquaTabs.cmake
+ ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaTabs
+)
+
 IF (CMAKE_HOST_WIN32)
 SET (PROJECT_RESOURCE_WINDOWS ${CMAKE_CURRENT_SOURCE_DIR}/antiqua.rc)
 ELSE (CMAKE_HOST_WIN32)
@@ -37,6 +42,7 @@ SET (PROJECT_HEADERS
   antiquastatusbar.h
   antiquasocketserver.h
   antiquasystemtray.h
+  AntiquaTabs
 )
 
 SET (PROJECT_SOURCES

@@ -11,12 +11,15 @@
 #include <QDomDocument>
 #include <QJsonDocument>
 #include <QNetworkCookie>
-#include <QTextCodec>
 #include <QObject>
 #include <QString>
+#include <QTextCodec>
 #include <QUrl>
 
+// AntiquaCRM::AProviderOrders
+#ifndef ANTIQUACRM_PLUGIN_ORDERS_H
 #include "aproviderorders.h"
+#endif
 
 namespace AntiquaCRM {
 
@@ -86,7 +89,7 @@ protected:
   /**
    * @brief load API access configuration
    */
-  virtual void initConfigurations() = 0;
+  virtual bool initConfigurations() = 0;
 
   /**
    * @brief create a custom API access

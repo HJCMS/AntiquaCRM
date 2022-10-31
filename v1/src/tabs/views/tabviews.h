@@ -6,9 +6,9 @@
 #define ANTIQUACRM_TABVIEWS_H
 
 #include <AntiquaWidgets>
+#include <QLabel>
 #include <QObject>
 #include <QSqlTableModel>
-#include <QLabel>
 #include <QTableView>
 #include <QWidget>
 
@@ -23,11 +23,11 @@ private:
   ViewsTableModel *m_model;
 
 public Q_SLOTS:
-  void openStartPage();
-  void createSearchQuery(const QString &query = QString());
-  void createNewEntry(){/* disabled */};
-  void openEntry(qint64 articleId){/* disabled */};
-  void onEnterChanged();
+  void openStartPage() override;
+  void createSearchQuery(const QString &query = QString()) override;
+  void createNewEntry() override {/* disabled */};
+  void openEntry(qint64 articleId) override {/* disabled */};
+  void onEnterChanged() override;
 
 public:
   explicit TabViews(QWidget *parent = nullptr);

@@ -70,19 +70,10 @@ static const QHash<QString, QString> translateIds() {
 Booklooker::Booklooker(QObject *parent)
     : AntiquaCRM::APluginInterface{parent}, p_articleTranslate{translateIds()} {
   setObjectName(BOOKLOOKER_CONFIG_PROVIDER);
-
-  m_network = new AntiquaCRM::ANetworker(AntiquaCRM::JSON_QUERY, this);
-  initConfigurations();
-
-  connect(m_network, SIGNAL(sendJsonResponse(const QJsonDocument &)),
-          SLOT(prepareResponse(const QJsonDocument &)));
-  connect(m_network, SIGNAL(sendContentCodec(QTextCodec *)),
-          SLOT(setContentDecoder(QTextCodec *)));
-  connect(m_network, SIGNAL(finished(QNetworkReply *)),
-          SLOT(queryFinished(QNetworkReply *)));
+  m_network = nullptr;
 }
 
-void Booklooker::initConfigurations() {
+bool Booklooker::initConfigurations() {
   QUrl url;
   AntiquaCRM::ASettings cfg(this);
   cfg.beginGroup(BOOKLOOKER_CONFIG_GROUP);
@@ -92,6 +83,7 @@ void Booklooker::initConfigurations() {
   historyCall = cfg.value("api_history_call", -7).toInt();
   cfg.endGroup();
   apiUrl = url;
+  return true;
 }
 
 const QUrl Booklooker::apiQuery(const QString &section) {
@@ -465,4 +457,16 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
   return allOrders;
 }
 
-bool Booklooker::createInterface(QObject *parent) { return true; }
+bool Booklooker::createInterface(QObject *parent) {
+  Q_UNUSED(parent);
+
+  m_network = new AntiquaCRM::ANetworker(AntiquaCRM::JSON_QUERY, this);
+  connect(m_network, SIGNAL(sendJsonResponse(const QJsonDocument &)),
+          SLOT(prepareResponse(const QJsonDocument &)));
+  connect(m_network, SIGNAL(sendContentCodec(QTextCodec *)),
+          SLOT(setContentDecoder(QTextCodec *)));
+  connect(m_network, SIGNAL(finished(QNetworkReply *)),
+          SLOT(queryFinished(QNetworkReply *)));
+
+  return initConfigurations();
+}

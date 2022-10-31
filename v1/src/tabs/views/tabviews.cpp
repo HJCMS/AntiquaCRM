@@ -9,7 +9,7 @@
 #include <QHeaderView>
 #include <QLayout>
 
-TabViews::TabViews(QWidget *parent) : Inventory{parent} {
+TabViews::TabViews(QWidget *parent) : Inventory{"views_tab",parent} {
   setWindowTitle(tr("Views"));
   setWindowIcon(getTabIcon("view_log"));
   setObjectName("antiqua_views_tab");

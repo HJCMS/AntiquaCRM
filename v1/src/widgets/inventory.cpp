@@ -3,12 +3,13 @@
 
 #include "inventory.h"
 
+#include <AntiquaCRM>
 #include <QApplication>
 #include <QClipboard>
 #include <QMessageBox>
-#include <AntiquaCRM>
 
-Inventory::Inventory(QWidget *parent) : QStackedWidget{parent} {
+Inventory::Inventory(const char *index, QWidget *parent)
+    : QStackedWidget{parent}, tabIndex{index} {
   setContentsMargins(0, 0, 0, 0);
   setWindowIcon(getTabIcon());
   addShortCutsAndSignals();
@@ -56,7 +57,7 @@ void Inventory::sendStatusMessage(const QString &message) {
   AntiquaCRM::AStatusMessanger messanger(this);
   messanger.setObjectName("tab_status_message");
   QJsonObject obj;
-  obj.insert("window_status_message",message);
+  obj.insert("window_status_message", message);
   messanger.pushMessage(obj);
   messanger.close();
 }
@@ -64,6 +65,8 @@ void Inventory::sendStatusMessage(const QString &message) {
 bool Inventory::isClosable() { return closable; }
 
 bool Inventory::isModified() { return isWindowModified(); }
+
+const QString Inventory::tabIndexId() const { return tabIndex; }
 
 const QIcon Inventory::getTabIcon(const QString &name) {
   return QIcon(QString(":icons/" + name + ".png"));

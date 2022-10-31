@@ -153,6 +153,7 @@ public:
   const QString getCountry(const QDomNode &addressNode);
   const QString getStreet(const QDomNode &addressNode);
   const QString getPhone(const QDomNode &addressNode);
+  const QString getEMail(const QDomNode &addressNode);
 };
 
 #endif // ABEBOOKS_DOCUMENT_H

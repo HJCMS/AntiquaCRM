@@ -90,7 +90,7 @@
  * @brief Plugin Interface Description
  */
 #ifndef ANTIQUACRM_INTERFACE
-#define ANTIQUACRM_INTERFACE "de.hjcms.antiquacrm.FactoryInterface"
+#define ANTIQUACRM_INTERFACE "de.hjcms.antiquacrm.ProviderInterface"
 #endif
 
 /**
