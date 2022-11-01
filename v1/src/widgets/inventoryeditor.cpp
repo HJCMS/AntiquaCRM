@@ -18,7 +18,7 @@ InventoryEditor::InventoryEditor(const QString &pattern, QWidget *parent)
   m_sql = new AntiquaCRM::ASqlCore(this);
   m_cfg = new AntiquaCRM::ASettings(this);
   timeoutPopUp = m_cfg->value("popup_timeout", 2).toInt();
-  m_bookData = nullptr;
+  m_tableData = nullptr;
 }
 
 bool InventoryEditor::isInputField(const QString &fieldName) {
@@ -187,6 +187,6 @@ InventoryEditor::~InventoryEditor() {
   if (ignoreFields.size() > 0)
     ignoreFields.clear();
 
-  if (m_bookData != nullptr)
-    delete m_bookData;
+  if (m_tableData != nullptr)
+    delete m_tableData;
 }

@@ -126,11 +126,11 @@ void AntiquaTabWidget::setShowTab(const QString &tabId) {
   addInventoryTab(tabId);
 }
 
-const QStringList AntiquaTabWidget::availableTabs() {
-  QStringList l;
-  l << "books";
-  l << "customers";
-  l << "orders";
-  l << "providers";
-  return l;
+const QMap<QString, QString> AntiquaTabWidget::availableTabs() {
+  QMap<QString, QString> m;
+  m.insert("books", tr("Books"));
+  m.insert("customers", tr("Customers"));
+  m.insert("orders", tr("Orders"));
+  m.insert("providers", tr("Providers"));
+  return m;
 }

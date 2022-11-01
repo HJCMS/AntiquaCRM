@@ -9,12 +9,21 @@
 #include <QObject>
 #include <QScrollArea>
 
+class CustomersSearchBar;
+class CustomersTableView;
+class CustomersStatusBar;
+class CustomersEditor;
+
 class TabCustomers final : public Inventory {
   Q_OBJECT
 
 private:
   QWidget *m_mainPage;
+  CustomersSearchBar *m_searchBar;
+  CustomersTableView *m_table;
+  CustomersStatusBar *m_statusBar;
   QScrollArea *m_editorPage;
+  CustomersEditor *m_editorWidget;
 
 public Q_SLOTS:
   void openStartPage() override;

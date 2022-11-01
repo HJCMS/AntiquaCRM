@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "antiquaviewsmenus.h"
+#include "antiquatabwidget.h"
 #include "viewsactiongroup.h"
 
 #include <QDebug>
@@ -44,26 +45,17 @@ AntiquaViewsMenus::AntiquaViewsMenus(QWidget *parent) : QMenu{parent} {
 void AntiquaViewsMenus::setShowTabActions() {
   QIcon icon(":icons/tab.png");
   m_showTabsMapper = new QSignalMapper(m_tableVisit);
-  m_showTabsMapper->setObjectName("tab_views_actions");
+  m_showTabsMapper->setObjectName("tab_show_actions");
   connect(m_showTabsMapper, SIGNAL(mappedString(const QString &)),
           SIGNAL(sendShowTab(const QString &)));
 
-  // Books
-  QAction *ac_books = m_tableVisit->addAction(icon, tr("Books"));
-  m_showTabsMapper->setMapping(ac_books, "books");
-  connect(ac_books, SIGNAL(triggered()), m_showTabsMapper, SLOT(map()));
-  // Customers
-  QAction *ac_customers = m_tableVisit->addAction(icon, tr("Customers"));
-  m_showTabsMapper->setMapping(ac_customers, "customers");
-  connect(ac_customers, SIGNAL(triggered()), m_showTabsMapper, SLOT(map()));
-  // Orders
-  QAction *ac_orders = m_tableVisit->addAction(icon, tr("Orders"));
-  m_showTabsMapper->setMapping(ac_orders, "orders");
-  connect(ac_orders, SIGNAL(triggered()), m_showTabsMapper, SLOT(map()));
-  // Providers
-  QAction *ac_providers = m_tableVisit->addAction(icon, tr("Providers"));
-  m_showTabsMapper->setMapping(ac_providers, "providers");
-  connect(ac_providers, SIGNAL(triggered()), m_showTabsMapper, SLOT(map()));
+  QMapIterator<QString, QString> it(AntiquaTabWidget::availableTabs());
+  while (it.hasNext()) {
+    it.next();
+    QAction *ac = m_tableVisit->addAction(icon, it.value());
+    m_showTabsMapper->setMapping(ac, it.key());
+    connect(ac, SIGNAL(triggered()), m_showTabsMapper, SLOT(map()));
+  }
 }
 
 void AntiquaViewsMenus::aboutToShowViews() {

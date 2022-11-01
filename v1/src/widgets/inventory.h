@@ -77,10 +77,10 @@ Q_SIGNALS:
   void sendArticleId(qint64 articleId);
 
   /**
-   * @brief Add Article to current opened Order!
-   * @param articleId
+   * @brief Send Article/Customer Ids for Order operations!
+   * @param articleId|customerId
    */
-  void sendArticle2Order(qint64 articleId);
+  void sendIdToOrder(qint64 currentId);
 
   /**
    * @brief Emitted when Tab change to active!

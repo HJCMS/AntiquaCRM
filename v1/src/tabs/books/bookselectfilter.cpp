@@ -32,7 +32,6 @@ BookSelectFilter::BookSelectFilter(QWidget *parent) : QComboBox{parent}
 }
 
 const QJsonObject BookSelectFilter::getFilter(int index) {
-  int i = (index >= 0) ?: currentIndex();
   QVariant val = itemData(index, Qt::UserRole);
   BookSelectFilter::Filter f = qvariant_cast<BookSelectFilter::Filter>(val);
   QJsonObject obj;

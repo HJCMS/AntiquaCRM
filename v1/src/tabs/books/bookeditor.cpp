@@ -261,8 +261,8 @@ void BookEditor::setInputFields() {
   ignoreFields << "ib_since";
   ignoreFields << "ib_changed";
 
-  m_bookData = new AntiquaCRM::ASqlDataQuery("inventory_books");
-  inputFields = m_bookData->columnNames();
+  m_tableData = new AntiquaCRM::ASqlDataQuery("inventory_books");
+  inputFields = m_tableData->columnNames();
   if (inputFields.isEmpty()) {
     QStringList warn(tr("An error has occurred!"));
     warn << tr("Can't load input datafields!");
@@ -311,14 +311,14 @@ bool BookEditor::setDataField(const QSqlField &field, const QVariant &value) {
 }
 
 void BookEditor::importSqlResult() {
-  if (m_bookData == nullptr)
+  if (m_tableData == nullptr)
     return;
 
-  QHashIterator<QString, QVariant> it(m_bookData->getDataset());
+  QHashIterator<QString, QVariant> it(m_tableData->getDataset());
   blockSignals(true);
   while (it.hasNext()) {
     it.next();
-    QSqlField field = m_bookData->getProperties(it.key());
+    QSqlField field = m_tableData->getProperties(it.key());
     setDataField(field, it.value());
   }
   blockSignals(false);
@@ -331,7 +331,7 @@ void BookEditor::importSqlResult() {
     m_imageView->readFromDatabase(id);
   }
 
-  m_actionBar->setRestoreable(m_bookData->isValid());
+  m_actionBar->setRestoreable(m_tableData->isValid());
   setResetModified(inputFields);
 }
 
@@ -401,10 +401,10 @@ void BookEditor::createSqlUpdate() {
       continue;
 
     // Nur geänderte Felder in das Update aufnehmen!
-    if (it.value() == m_bookData->getValue(it.key()))
+    if (it.value() == m_tableData->getValue(it.key()))
       continue;
 
-    if (m_bookData->getType(it.key()).id() == QMetaType::QString) {
+    if (m_tableData->getType(it.key()).id() == QMetaType::QString) {
       set.append(it.key() + "='" + it.value().toString() + "'");
       changes++;
     } else {
@@ -424,13 +424,13 @@ void BookEditor::createSqlUpdate() {
    * Wenn sich die Anzahl geändert hat, ein Update senden!
    */
   int _curCount = ib_count->value().toInt();
-  int _oldcount = m_bookData->getValue("ib_count").toInt();
+  int _oldcount = m_tableData->getValue("ib_count").toInt();
   if (_oldcount != _curCount && _curCount == 0) {
     /*
      * Den Buchdaten Zwischenspeicher anpassen damit das Signal
      * an die Dienstleister nur einmal gesendet wird!
      */
-    m_bookData->setValue("ib_count", _curCount);
+    m_tableData->setValue("ib_count", _curCount);
 
     // Ab diesen Zeitpunkt ist das Zurücksetzen erst mal nicht mehr gültig!
     m_actionBar->setRestoreable(false);
@@ -467,7 +467,7 @@ void BookEditor::createSqlInsert() {
    * Die Initialisierung erfolgt in setInputFields!
    * Bei einem INSERT wir diese hier befüllt!
    */
-  if (m_bookData == nullptr || !m_bookData->isValid()) {
+  if (m_tableData == nullptr || !m_tableData->isValid()) {
     qWarning("Invalid AntiquaCRM::ASqlDataQuery detected!");
     return;
   }
@@ -485,10 +485,10 @@ void BookEditor::createSqlInsert() {
 
     QString field = it.key();
     // Buchdaten einfügen
-    m_bookData->setValue(field, it.value());
+    m_tableData->setValue(field, it.value());
 
     column.append(field);
-    if (m_bookData->getType(field).id() == QMetaType::QString) {
+    if (m_tableData->getType(field).id() == QMetaType::QString) {
       values.append("'" + it.value().toString() + "'");
     } else {
       values.append(it.value().toString());
@@ -503,7 +503,7 @@ void BookEditor::createSqlInsert() {
   if (sendSqlQuery(sql) && ib_id->value().toInt() >= 1) {
     qInfo("SQL INSERT Inventory Books success!");
     // Zurücksetzen Knopf Aktivieren?
-    m_actionBar->setRestoreable(m_bookData->isValid());
+    m_actionBar->setRestoreable(m_tableData->isValid());
     // Bildaktionen erst bei vorhandener Artikel Nummer freischalten!
     // m_imageToolBar->setActive(true);
     ib_id->setRequired(true);
@@ -512,7 +512,7 @@ void BookEditor::createSqlInsert() {
 
 bool BookEditor::realyDeactivateEntry() {
   qint8 _curCount = ib_count->value().toInt();
-  qint8 _oldcount = m_bookData->getValue("ib_count").toInt();
+  qint8 _oldcount = m_tableData->getValue("ib_count").toInt();
   if (_curCount == _oldcount)
     return true; // alles ok
 
@@ -527,7 +527,7 @@ bool BookEditor::realyDeactivateEntry() {
 
   int ret = QMessageBox::question(this, tr("Book deactivation"), body.join(""));
   if (ret == QMessageBox::No) {
-    ib_count->setValue(m_bookData->getValue("ib_count"));
+    ib_count->setValue(m_tableData->getValue("ib_count"));
     ib_count->setRequired(true);
     return false;
   }
@@ -610,14 +610,14 @@ bool BookEditor::openEditEntry(qint64 articleId) {
     return status;
 
   setInputFields();
-  QString table = m_bookData->tableName();
+  QString table = m_tableData->tableName();
   QString query("SELECT * FROM " + table + " WHERE ib_id=" + ib_id + ";");
   QSqlQuery q = m_sql->query(query);
   if (q.size() != 0) {
-    QSqlRecord r = m_bookData->record();
+    QSqlRecord r = m_tableData->record();
     while (q.next()) {
       foreach (QString key, inputFields) {
-        m_bookData->setValue(key, q.value(r.indexOf(key)));
+        m_tableData->setValue(key, q.value(r.indexOf(key)));
       }
     }
     status = true;

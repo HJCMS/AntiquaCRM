@@ -2,15 +2,16 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_BOOKSTATUSBAR_H
-#define ANTIQUACRM_BOOKSTATUSBAR_H
+#ifndef ANTIQUACRM_CUSTOMERSSTATUSBAR_H
+#define ANTIQUACRM_CUSTOMERSSTATUSBAR_H
 
 #include <AntiquaWidgets>
 #include <QHash>
 #include <QObject>
+#include <QSignalMapper>
 #include <QWidget>
 
-class BookStatusBar final : public TabStatusBar {
+class CustomersStatusBar final : public TabStatusBar {
   Q_OBJECT
 
 private:
@@ -24,8 +25,8 @@ public Q_SLOTS:
   void setCreateButtonEnabled(bool);
 
 public:
-  explicit BookStatusBar(QWidget *parent = nullptr);
+  explicit CustomersStatusBar(QWidget *parent = nullptr);
   bool isCreateButtonEnabled();
 };
 
-#endif // ANTIQUACRM_BOOKSTATUSBAR_H
+#endif // ANTIQUACRM_CUSTOMERSSTATUSBAR_H

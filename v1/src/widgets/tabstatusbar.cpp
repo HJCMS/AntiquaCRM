@@ -25,3 +25,15 @@ TabStatusBar::TabStatusBar(QWidget *parent) : QStatusBar{parent} {
 const QIcon TabStatusBar::getIcon(const QString &name) const {
   return QIcon(":icons/" + name + ".png");
 }
+
+const QHash<TabStatusBar::History, QString> TabStatusBar::historyItems() {
+  QHash<TabStatusBar::History, QString> items;
+  items.insert(History::Today, tr("Today"));
+  items.insert(History::Yesterday, tr("Yesterday"));
+  items.insert(History::LastWeek, tr("Last Week"));
+  items.insert(History::LastMonth, tr("Last Month"));
+  items.insert(History::ThisWeek, tr("This Week"));
+  items.insert(History::ThisMonth, tr("This Month"));
+  items.insert(History::ThisYear, tr("This Year"));
+  return items;
+}

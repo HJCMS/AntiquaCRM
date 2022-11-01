@@ -30,18 +30,18 @@ private:
   const QString getTitleSearch(const QStringList &fields);
 
 protected Q_SLOTS:
-  void setSearch();
+  void setSearch() override;
 
 public Q_SLOTS:
-  void setFilter(int index);
-  void setFilterFocus();
-  void setClearAndFocus();
-  void setSearchFocus();
+  void setFilter(int index) override;
+  void setFilterFocus() override;
+  void setClearAndFocus() override;
+  void setSearchFocus() override;
 
 public:
   explicit BookSearchBar(QWidget *parent = nullptr);
-  int searchLength();
-  const QString getSearchStatement();
+  int searchLength() override;
+  const QString getSearchStatement() override;
 };
 
 #endif // ANTIQUACRM_BOOKSEARCHBAR_H

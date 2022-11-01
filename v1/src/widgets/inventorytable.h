@@ -26,7 +26,7 @@ protected:
 
   void setEnableTableViewSorting(bool);
 
-  virtual qint64 getArticleID(const QModelIndex &index) = 0;
+  virtual qint64 getTableID(const QModelIndex &index) = 0;
 
   virtual bool sqlQueryTable(const QString &query) = 0;
 
@@ -35,6 +35,9 @@ protected Q_SLOTS:
   virtual void getSqlModelError(const QString &table,
                                 const QString &message) = 0;
   virtual void getSelectedItem(const QModelIndex &index) = 0;
+  virtual void createOpenEntry() = 0;
+  virtual void createCopyClipboard() = 0;
+  virtual void createOrderSignal() = 0;
 
 public Q_SLOTS:
   virtual void setReloadView() = 0;
@@ -45,11 +48,12 @@ Q_SIGNALS:
   void sendQueryReport(const QString &report);
   void sendCopyToClibboard(const QString &str);
   void sendOpenEntry(qint64 articleId);
-  void sendArticleId(qint64 articleId);
+  void sendCurrentId(qint64 sectionId);
   void sendCreateNewEntry();
 
 public:
   explicit InventoryTable(QWidget *parent = nullptr);
+  static const QIcon cellIcon(const QString &name);
   int getQueryLimit();
   virtual bool setQuery(const QString &clause = QString()) = 0;
 };

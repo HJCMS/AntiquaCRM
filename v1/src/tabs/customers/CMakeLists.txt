@@ -16,10 +16,22 @@ SET (projectLibrary_LINKER
 
 SET (projectLibrary_SOURCES
  tabcustomers.cpp
+ customerstablemodel.cpp
+ customerstableview.cpp
+ customersstatusbar.cpp
+ customersselectfilter.cpp
+ customerssearchbar.cpp
+ customerseditor.cpp
 )
 
 SET (projectLibrary_HEADERS
  tabcustomers.h
+ customerstablemodel.h
+ customerstableview.h
+ customersstatusbar.h
+ customersselectfilter.h
+ customerssearchbar.h
+ customerseditor.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

@@ -31,6 +31,9 @@ protected:
 protected Q_SLOTS:
   virtual void setSearch() = 0;
   virtual void setFilter(int) = 0;
+  virtual void setFilterFocus() = 0;
+  virtual void setClearAndFocus() = 0;
+  virtual void setSearchFocus() = 0;
 
 Q_SIGNALS:
   /**

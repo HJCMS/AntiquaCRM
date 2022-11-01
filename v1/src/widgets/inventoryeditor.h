@@ -85,7 +85,7 @@ protected:
    * Sie werden beim öffnen mit @ref openEditEntry eingelesen.
    * Die Initialisierung erfolgt Typischerweise in @ref setInputFields()
    */
-  AntiquaCRM::ASqlDataQuery *m_bookData;
+  AntiquaCRM::ASqlDataQuery *m_tableData;
 
   /**
    * @brief Mit Zeiger auf Objekt-/Feldnamen Datenfeld befüllen.

@@ -81,7 +81,6 @@ QVariant ASqlQueryModel::data(const QModelIndex &item, int role) const {
     return (value.toBool()) ? tr("Yes") : tr("No");
   }
   if (_type == QVariant::LongLong || _type == QVariant::ULongLong) {
-    // FIXME ISBN
     return (value.toString().length() > 5) ? value : QVariant();
   }
   return value;

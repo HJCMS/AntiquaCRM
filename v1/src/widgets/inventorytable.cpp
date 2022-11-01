@@ -3,6 +3,8 @@
 
 #include "inventorytable.h"
 
+#include <QIcon>
+
 InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
   setEditTriggers(QAbstractItemView::NoEditTriggers);
   setCornerButtonEnabled(false);
@@ -18,13 +20,16 @@ InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
 
   /* Kopfzeilen anpassen */
   m_header = horizontalHeader();
+  m_header->setSectionsMovable(false);
   m_header->setDefaultAlignment(Qt::AlignCenter);
   m_header->setSectionResizeMode(QHeaderView::ResizeToContents);
-  m_header->setStretchLastSection(true);
-  setEnableTableViewSorting(false);
+  setHorizontalHeader(m_header);
 
   connect(m_header, SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), this,
           SLOT(setSortByColumn(int, Qt::SortOrder)));
+
+  // Warning not before HeaderView initialed
+  setEnableTableViewSorting(false);
 }
 
 void InventoryTable::setEnableTableViewSorting(bool b) {
@@ -37,6 +42,10 @@ void InventoryTable::setQueryLimit(int limit) {
     return;
 
   QueryLimit = limit;
+}
+
+const QIcon InventoryTable::cellIcon(const QString &name) {
+  return QIcon(":icons/" + name + ".png");
 }
 
 int InventoryTable::getQueryLimit() { return QueryLimit; }

@@ -1,19 +1,19 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "bookstatusbar.h"
+#include "customersstatusbar.h"
 
 #include <QLayout>
 #include <QMenu>
 
-BookStatusBar::BookStatusBar(QWidget *parent) : TabStatusBar{parent} {
-  setObjectName("book_status_bar");
+CustomersStatusBar::CustomersStatusBar(QWidget *parent) : TabStatusBar{parent} {
+  setObjectName("customer_status_bar");
 
   QHBoxLayout *layout = new QHBoxLayout(m_frame);
   layout->setContentsMargins(0, 0, 0, 0);
   btn_createEntry = new QPushButton(m_frame);
   btn_createEntry->setText(tr("Create"));
-  btn_createEntry->setToolTip(tr("Create a new Book entry."));
+  btn_createEntry->setToolTip(tr("Create a new Customer entry."));
   btn_createEntry->setIcon(getIcon("db_add"));
   btn_createEntry->setEnabled(false);
   layout->addWidget(btn_createEntry);
@@ -31,7 +31,7 @@ BookStatusBar::BookStatusBar(QWidget *parent) : TabStatusBar{parent} {
   connect(m_historyMapper, SIGNAL(mappedInt(int)), SLOT(setHistoryAction(int)));
 }
 
-void BookStatusBar::setHistoryMenu() {
+void CustomersStatusBar::setHistoryMenu() {
   QMenu *m_menu = new QMenu(btn_history);
   QIcon icon = getIcon("view_books");
   QStringList entries;
@@ -45,48 +45,47 @@ void BookStatusBar::setHistoryMenu() {
   btn_history->setMenu(m_menu);
 }
 
-void BookStatusBar::setHistoryAction(int index) {
+void CustomersStatusBar::setHistoryAction(int index) {
   TabStatusBar::History hist = static_cast<TabStatusBar::History>(index);
   QString q;
-  QString year("date_part('year',ib_changed)=date_part('year',CURRENT_DATE)");
+  QString year("date_part('year',c_changed)=date_part('year',CURRENT_DATE)");
   switch (hist) {
   case (History::Today): {
-    q.append("DATE(ib_changed)=CURRENT_DATE");
+    q.append("DATE(c_changed)=CURRENT_DATE");
     break;
   }
 
   case (History::Yesterday): {
-    q.append("DATE(ib_changed)=(CURRENT_DATE -1)");
+    q.append("DATE(c_changed)=(CURRENT_DATE -1)");
     break;
   }
 
   case (History::ThisWeek): {
-    q.append("date_part('week',ib_changed)=date_part('week',CURRENT_DATE)");
+    q.append("date_part('week',c_changed)=date_part('week',CURRENT_DATE)");
     q.append(" AND " + year);
     break;
   }
 
   case (History::LastWeek): {
-    q.append("date_part('week',ib_changed)=date_part('week',CURRENT_DATE -7)");
+    q.append("date_part('week',c_changed)=date_part('week',CURRENT_DATE -7)");
     q.append(" AND " + year);
     break;
   }
 
   case (History::ThisMonth): {
-    q.append("date_part('month',ib_changed)=date_part('month',CURRENT_DATE)");
-    q.append(" AND " + year + " AND ib_count>0");
+    q.append("date_part('month',c_changed)=date_part('month',CURRENT_DATE)");
+    q.append(" AND " + year);
     break;
   }
 
   case (History::LastMonth): {
-    q.append(
-        "date_part('month',ib_changed)=date_part('month',CURRENT_DATE - 31)");
-    q.append(" AND " + year + " AND ib_count>0");
+    q.append("date_part('month',c_changed)=date_part('month',CURRENT_DATE - 31)");
+    q.append(" AND " + year);
     break;
   }
 
   case (History::ThisYear): {
-    q.append(year + " AND ib_count>0");
+    q.append(year);
     break;
   }
 
@@ -98,8 +97,10 @@ void BookStatusBar::setHistoryAction(int index) {
     emit sendHistoryQuery(q);
 }
 
-void BookStatusBar::setCreateButtonEnabled(bool b) {
+void CustomersStatusBar::setCreateButtonEnabled(bool b) {
   btn_createEntry->setEnabled(b);
 }
 
-bool BookStatusBar::isCreateButtonEnabled() { return btn_createEntry->isEnabled(); }
+bool CustomersStatusBar::isCreateButtonEnabled() {
+  return btn_createEntry->isEnabled();
+}

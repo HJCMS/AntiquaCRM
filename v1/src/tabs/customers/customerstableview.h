@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_BOOKTABLEVIEW_H
-#define ANTIQUACRM_BOOKTABLEVIEW_H
+#ifndef ANTIQUACRM_CUSTOMERSTABLEVIEW_H
+#define ANTIQUACRM_CUSTOMERSTABLEVIEW_H
 
 #include <QContextMenuEvent>
 #include <QIcon>
@@ -14,15 +14,16 @@
 #include "inventorytable.h"
 #endif
 
-class BooksTableModel;
+class CustomersTableModel;
 
-class BookTableView final : public InventoryTable {
+class CustomersTableView final : public InventoryTable {
   Q_OBJECT
 
 private:
-  BooksTableModel *m_model;
+  CustomersTableModel *m_model;
   QString where_clause;
   QModelIndex p_modelIndex;
+
   qint64 getTableID(const QModelIndex &index) override;
   bool sqlQueryTable(const QString &query) override;
   void contextMenuEvent(QContextMenuEvent *) override;
@@ -39,8 +40,8 @@ public Q_SLOTS:
   void setReloadView() override;
 
 public:
-  explicit BookTableView(QWidget *parent = nullptr);
+  explicit CustomersTableView(QWidget *parent = nullptr);
   bool setQuery(const QString &clause = QString()) override;
 };
 
-#endif // ANTIQUACRM_BOOKTABLEVIEW_H
+#endif // ANTIQUACRM_CUSTOMERSTABLEVIEW_H

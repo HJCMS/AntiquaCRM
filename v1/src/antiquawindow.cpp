@@ -97,7 +97,7 @@ void AntiquaWindow::openWindow() {
     restoreState(m_cfg->value("window/windowState").toByteArray());
 
   // TODO Read from config to add Defaults
-  QStringList tabs = m_centralWidget->availableTabs();
+  QList<QString> tabs = m_centralWidget->availableTabs().keys();
   if (tabs.contains("providers"))
     m_centralWidget->setShowTab("providers");
 

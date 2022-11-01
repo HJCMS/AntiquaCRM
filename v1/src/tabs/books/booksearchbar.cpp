@@ -30,11 +30,10 @@ BookSearchBar::BookSearchBar(QWidget *parent) : TabSearchBar{parent} {
   m_searchBtn = clickSearchButton(tr("Search book"));
   addWidget(m_searchBtn);
 
-  connect(m_selectFilter, SIGNAL(currentIndexChanged(int)), this,
-          SLOT(setFilter(int)));
-  connect(m_searchLeft, SIGNAL(returnPressed()), this, SLOT(setSearch()));
-  connect(m_searchRight, SIGNAL(returnPressed()), this, SLOT(setSearch()));
-  connect(m_searchBtn, SIGNAL(clicked()), this, SLOT(setSearch()));
+  connect(m_selectFilter, SIGNAL(currentIndexChanged(int)), SLOT(setFilter(int)));
+  connect(m_searchLeft, SIGNAL(returnPressed()), SLOT(setSearch()));
+  connect(m_searchRight, SIGNAL(returnPressed()), SLOT(setSearch()));
+  connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
 }
 
 const QString BookSearchBar::prepareFieldSet(const QString &fieldname,

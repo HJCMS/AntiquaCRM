@@ -8,6 +8,7 @@
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
 #include <QMainWindow>
+#include <QMap>
 #include <QObject>
 #include <QTabWidget>
 #include <QWidget>
@@ -37,7 +38,7 @@ public Q_SLOTS:
 
 public:
   explicit AntiquaTabWidget(QMainWindow *parent = nullptr);
-  static const QStringList availableTabs();
+  static const QMap<QString, QString> availableTabs();
 };
 
 #endif // ANTIQUACRM_TABWIDGET_H

@@ -8,6 +8,7 @@
 #include <QFrame>
 #include <QIcon>
 #include <QPushButton>
+#include <QSignalMapper>
 #include <QStatusBar>
 
 /**
@@ -25,7 +26,14 @@ private:
 
 protected:
   QFrame *m_frame;
+  QPushButton *btn_history;
+  QSignalMapper *m_historyMapper;
+  virtual void setHistoryMenu() = 0;
+
   const QIcon getIcon(const QString &name) const;
+
+protected Q_SLOTS:
+  virtual void setHistoryAction(int) = 0;
 
 Q_SIGNALS:
   void sendHistoryQuery(const QString &query);
@@ -43,6 +51,7 @@ public:
     ThisYear = 7
   };
   explicit TabStatusBar(QWidget *parent = nullptr);
+  static const QHash<TabStatusBar::History, QString> historyItems();
 };
 
 Q_DECLARE_METATYPE(TabStatusBar::History)

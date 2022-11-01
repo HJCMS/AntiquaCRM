@@ -1,8 +1,8 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "booktableview.h"
-#include "bookstablemodel.h"
+#include "customerstableview.h"
+#include "customerstablemodel.h"
 
 #include <AntiquaCRM>
 #include <QAction>
@@ -10,10 +10,11 @@
 #include <QMenu>
 #include <QtSql>
 
-BookTableView::BookTableView(QWidget *parent) : InventoryTable{parent} {
+CustomersTableView::CustomersTableView(QWidget *parent)
+    : InventoryTable{parent} {
   setEnableTableViewSorting(true);
-  m_model = new BooksTableModel(this);
-  where_clause = QString("DATE(ib_changed)=CURRENT_DATE");
+  m_model = new CustomersTableModel(this);
+  where_clause = QString("DATE(c_changed)=CURRENT_DATE");
 
   connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
           this, SLOT(getSqlModelError(const QString &, const QString &)));
@@ -22,7 +23,7 @@ BookTableView::BookTableView(QWidget *parent) : InventoryTable{parent} {
           SLOT(getSelectedItem(const QModelIndex &)));
 }
 
-qint64 BookTableView::getTableID(const QModelIndex &index) {
+qint64 CustomersTableView::getTableID(const QModelIndex &index) {
   QModelIndex id(index);
   if (m_model->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
     return m_model->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
@@ -30,7 +31,7 @@ qint64 BookTableView::getTableID(const QModelIndex &index) {
   return -1;
 }
 
-bool BookTableView::sqlQueryTable(const QString &query) {
+bool CustomersTableView::sqlQueryTable(const QString &query) {
   // qDebug() << Q_FUNC_INFO << query;
   if (m_model->querySelect(query)) {
     QueryHistory = query;
@@ -41,13 +42,12 @@ bool BookTableView::sqlQueryTable(const QString &query) {
     emit sendResultExists((m_model->rowCount() > 0));
     return true;
   }
-
   emit sendQueryReport(tr("Query without result"));
   emit sendResultExists((m_model->rowCount() > 0));
   return false;
 }
 
-void BookTableView::contextMenuEvent(QContextMenuEvent *event) {
+void CustomersTableView::contextMenuEvent(QContextMenuEvent *event) {
   p_modelIndex = indexAt(event->pos());
   bool enable_action = p_modelIndex.isValid();
   bool enable_create = (m_model->rowCount() > 0);
@@ -55,37 +55,37 @@ void BookTableView::contextMenuEvent(QContextMenuEvent *event) {
   QMenu *m = new QMenu(this);
   // Eintrag öffnen  Bestellung anlegen
   QAction *ac_open = m->addAction(cellIcon("database"), tr("Open entry"));
-  ac_open->setObjectName("ac_context_open_book");
+  ac_open->setObjectName("ac_context_open_customer");
   ac_open->setEnabled(enable_action);
   connect(ac_open, SIGNAL(triggered()), this, SLOT(createOpenEntry()));
 
   QAction *ac_create = m->addAction(cellIcon("db_add"), tr("Create entry"));
-  ac_create->setObjectName("ac_context_create_book");
+  ac_create->setObjectName("ac_context_create_customer");
   ac_create->setEnabled(enable_create);
   connect(ac_create, SIGNAL(triggered()), this, SIGNAL(sendCreateNewEntry()));
 
   // BEGIN Einträge für Auftrag
-  QAction *ac_copy = m->addAction(cellIcon("db_comit"), tr("Copy Article Id"));
-  ac_copy->setObjectName("ac_context_copy_book");
+  QAction *ac_copy = m->addAction(cellIcon("db_comit"), tr("Copy Customer Id"));
+  ac_copy->setObjectName("ac_context_copy_customer");
   ac_copy->setEnabled(enable_action);
   connect(ac_copy, SIGNAL(triggered()), this, SLOT(createCopyClipboard()));
 
   QAction *ac_order =
-      m->addAction(cellIcon("view_log"), tr("Add Article to current open Order"));
-  ac_order->setObjectName("ac_context_book_to_order");
+      m->addAction(cellIcon("view_log"), tr("Create new Order"));
+  ac_order->setObjectName("ac_context_customer_to_order");
   ac_order->setEnabled(enable_action);
   connect(ac_order, SIGNAL(triggered()), this, SLOT(createOrderSignal()));
   //  END
 
   QAction *ac_refresh = m->addAction(cellIcon("action_reload"), tr("Update"));
-  ac_refresh->setObjectName("ac_context_refresh_books");
+  ac_refresh->setObjectName("ac_context_refresh_customers");
   connect(ac_refresh, SIGNAL(triggered()), this, SLOT(setReloadView()));
 
   m->exec(event->globalPos());
   delete m;
 }
 
-void BookTableView::setSortByColumn(int column, Qt::SortOrder order) {
+void CustomersTableView::setSortByColumn(int column, Qt::SortOrder order) {
   if (column < 0)
     return;
 
@@ -95,7 +95,7 @@ void BookTableView::setSortByColumn(int column, Qt::SortOrder order) {
   if (order == Qt::AscendingOrder)
     sort = Qt::DescendingOrder;
 
-  AntiquaCRM::ASqlFiles query("query_tab_books_main");
+  AntiquaCRM::ASqlFiles query("query_tab_customers_main");
   if (query.openTemplate()) {
     query.setWhereClause(where_clause);
     query.setOrderBy(order_by);
@@ -105,45 +105,45 @@ void BookTableView::setSortByColumn(int column, Qt::SortOrder order) {
   sqlQueryTable(query.getQueryContent());
 }
 
-void BookTableView::getSqlModelError(const QString &table,
-                                     const QString &message) {
+void CustomersTableView::getSqlModelError(const QString &table,
+                                          const QString &message) {
   qDebug() << Q_FUNC_INFO << "TODO" << table << message;
 }
 
-void BookTableView::getSelectedItem(const QModelIndex &index) {
+void CustomersTableView::getSelectedItem(const QModelIndex &index) {
   qint64 id = getTableID(index);
   if (id >= 1)
     emit sendOpenEntry(id);
 }
 
-void BookTableView::createOpenEntry() {
+void CustomersTableView::createOpenEntry() {
   qint64 id = getTableID(p_modelIndex);
   if (id >= 1)
     emit sendOpenEntry(id);
 }
 
-void BookTableView::createCopyClipboard() {
+void CustomersTableView::createCopyClipboard() {
   qint64 id = getTableID(p_modelIndex);
   if (id >= 1)
     emit sendCopyToClibboard(QString::number(id));
 }
 
-void BookTableView::createOrderSignal() {
+void CustomersTableView::createOrderSignal() {
   qint64 id = getTableID(p_modelIndex);
   if (id >= 1)
     emit sendCurrentId(id);
 }
 
-void BookTableView::setReloadView() {
+void CustomersTableView::setReloadView() {
   sqlQueryTable(m_model->query().lastQuery());
 }
 
-bool BookTableView::setQuery(const QString &clause) {
-  AntiquaCRM::ASqlFiles query("query_tab_books_main");
+bool CustomersTableView::setQuery(const QString &clause) {
+  AntiquaCRM::ASqlFiles query("query_tab_customers_main");
   if (query.openTemplate()) {
     where_clause = (clause.isEmpty() ? where_clause : clause);
     query.setWhereClause(where_clause);
-    query.setOrderBy("ib_id");
+    query.setOrderBy("c_id");
     query.setSorting(Qt::DescendingOrder);
     query.setLimits(getQueryLimit());
   }
