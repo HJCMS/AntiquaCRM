@@ -353,7 +353,7 @@ namespace AntiquaCRM {
   * @brief Postleitzahlen Eintrag
   * @section widgets
   */
- struct PostalCode {
+ struct ANTIQUACRM_LIBRARAY PostalCode {
    QString plz;
    QString location;
    QString state;

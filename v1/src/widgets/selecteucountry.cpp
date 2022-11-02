@@ -27,7 +27,10 @@ void SelectEuCountry::loadDataset() {
 
 void SelectEuCountry::dataChanged(int index) { setModified(true); }
 
-void SelectEuCountry::reset() { setModified(false); }
+void SelectEuCountry::reset() {
+  m_box->setCurrentIndex(0);
+  setModified(false);
+}
 
 void SelectEuCountry::setValue(const QVariant &val) {
   int index = -1;
@@ -35,6 +38,9 @@ void SelectEuCountry::setValue(const QVariant &val) {
     return;
 
   index = m_box->findData(val.toString(), Qt::UserRole);
+  if (index < 1)
+    index = m_box->findData(val.toString(), Qt::DisplayRole);
+
   if (index < 1)
     return;
 

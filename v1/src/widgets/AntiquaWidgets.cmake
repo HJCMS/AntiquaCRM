@@ -53,6 +53,18 @@
 #include "editortab.h"
 #endif
 
+#ifndef ANTIQUACRM_EMAILEDIT_H
+#include "emailedit.h"
+#endif
+
+#ifndef ANTIQUACRM_GENDERBOX_H
+#include "genderbox.h"
+#endif
+
+#ifndef ANTIQUACRM_GROUPBOX_H
+#include "groupbox.h"
+#endif
+
 #ifndef ANTIQUACRM_INTSPINBOX_H
 #include "intspinbox.h"
 #endif
@@ -81,12 +93,20 @@
 #include "lineedit.h"
 #endif
 
+#ifndef ANTIQUACRM_PHONEEDIT_H
+#include "phoneedit.h"
+#endif
+
 #ifndef ANTIQUACRM_POSTALCODE_EDIT_H
 #include "postalcodeedit.h"
 #endif
 
 #ifndef ANTIQUACRM_PRICEEDIT_H
 #include "priceedit.h"
+#endif
+
+#ifndef ANTIQUACRM_SALUTATIONBOX_H
+#include "salutationbox.h"
 #endif
 
 #ifndef ANTIQUACRM_SEARCHFILTER_H

@@ -48,10 +48,6 @@ bool TextField::isValid() {
 
 void TextField::setInfo(const QString &info) {
   m_edit->setToolTip(info);
-  if (info.length() > 2) {
-    m_label->setVisible(true);
-    m_label->setText(info + ":");
-  }
 }
 
 const QString TextField::info() { return m_edit->toolTip(); }

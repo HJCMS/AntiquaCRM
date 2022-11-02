@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "customerseditor.h"
+#include "customersdata.h"
 
 #include <AntiquaCRM>
 #include <QDebug>
@@ -16,6 +17,9 @@ CustomersEditor::CustomersEditor(QWidget *parent)
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setObjectName("bookeditor_main_layout");
   mainLayout->setSizeConstraint(QLayout::SetMaximumSize);
+
+  m_dataWidget = new CustomersData(this);
+  mainLayout->addWidget(m_dataWidget);
 
   setLayout(mainLayout);
   setEnabled(false);
@@ -33,6 +37,7 @@ void CustomersEditor::setInputFields() {
   }
 
   // TODO completers
+  m_dataWidget->c_postalcode->loadDataset();
 }
 
 bool CustomersEditor::setDataField(const QSqlField &field,
@@ -57,6 +62,18 @@ bool CustomersEditor::setDataField(const QSqlField &field,
 void CustomersEditor::importSqlResult() {
   if (m_tableData == nullptr)
     return;
+
+  QHashIterator<QString, QVariant> it(m_tableData->getDataset());
+  blockSignals(true);
+  while (it.hasNext()) {
+    it.next();
+    QSqlField field = m_tableData->getProperties(it.key());
+    setDataField(field, it.value());
+  }
+  blockSignals(false);
+
+  // m_actionBar->setRestoreable(m_tableData->isValid());
+  setResetModified(inputFields);
 }
 
 bool CustomersEditor::sendSqlQuery(const QString &query) {
@@ -146,8 +163,32 @@ bool CustomersEditor::openEditEntry(qint64 cutomerId) {
   if (cutomerId < 1)
     return status;
 
-  qDebug() << Q_FUNC_INFO << "TODO";
-  return false;
+  setInputFields();
+
+  QString cId = QString::number(cutomerId);
+  QString table = m_tableData->tableName();
+  QString sql("SELECT *, concat_ws(' ',c_firstname,c_lastname) AS fullname");
+  sql.append(" FROM " + table + " WHERE c_id=" + cId + " LIMIT 1;");
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() != 0) {
+    QSqlRecord r = m_tableData->record();
+    while (q.next()) {
+      foreach (QString key, inputFields) {
+        m_tableData->setValue(key, q.value(r.indexOf(key)));
+      }
+    }
+    status = true;
+  } else {
+    qDebug() << Q_FUNC_INFO << m_sql->lastError();
+    status = false;
+  }
+
+  if (status) {
+    importSqlResult();
+    setEnabled(true);
+  }
+
+  return status;
 }
 
 bool CustomersEditor::createNewEntry() {

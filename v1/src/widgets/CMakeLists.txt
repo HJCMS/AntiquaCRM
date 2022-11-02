@@ -41,6 +41,9 @@ SET (projectLibrary_SOURCES
  editoractionbar.cpp
  editinfolabel.cpp
  editortab.cpp
+ emailedit.cpp
+ genderbox.cpp
+ groupbox.cpp
  inputedit.cpp
  intspinbox.cpp
  inventory.cpp
@@ -50,9 +53,11 @@ SET (projectLibrary_SOURCES
  language.cpp
  lineedit.cpp
  mailbutton.cpp
+ phoneedit.cpp
  postalcodeedit.cpp
  priceedit.cpp
  printerbutton.cpp
+ salutationbox.cpp
  searchfilter.cpp
  searchlineedit.cpp
  selecteucountry.cpp
@@ -81,6 +86,9 @@ SET (projectLibrary_HEADERS
  editoractionbar.h
  editinfolabel.h
  editortab.h
+ emailedit.h
+ genderbox.h
+ groupbox.h
  inputedit.h
  intspinbox.h
  inventoryeditor.h
@@ -90,9 +98,11 @@ SET (projectLibrary_HEADERS
  language.h
  lineedit.h
  mailbutton.h
+ phoneedit.h
  postalcodeedit.h
  priceedit.h
  printerbutton.h
+ salutationbox.h
  searchfilter.h
  searchlineedit.h
  selecteucountry.h

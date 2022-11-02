@@ -5,14 +5,19 @@
 #ifndef ANTIQUACRM_CUSTOMERSEDITOR_H
 #define ANTIQUACRM_CUSTOMERSEDITOR_H
 
+#include <AntiquaCRM>
+#include <AntiquaWidgets>
 #include <QObject>
 #include <QWidget>
-#include <inventoryeditor.h>
+
+class CustomersData;
 
 class CustomersEditor final : public InventoryEditor {
   Q_OBJECT
 
 private:
+  CustomersData *m_dataWidget;
+
   void setInputFields() override;
   bool setDataField(const QSqlField &field, const QVariant &value) override;
   void importSqlResult() override;

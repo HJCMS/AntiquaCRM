@@ -146,6 +146,7 @@ void PostalCodeEdit::loadDataset() {
     foreach (QString t, tables.keys()) {
       m_countries->addItem(tables[t].toString(), t);
     }
+    qInfo("PostCode from json");
     return;
   }
   // SQL
@@ -157,6 +158,7 @@ void PostalCodeEdit::loadDataset() {
       m_countries->addItem(q.value("p_country").toString(),
                            q.value("p_table").toString());
     }
+    qInfo("PostCode from SQL");
   }
 }
 
@@ -195,7 +197,6 @@ void PostalCodeEdit::postalReadyToLeave() {
         code.location = v_lo.toString();
         QVariant v_st = m->data(m->sibling(r, 2, mIndex), qrole);
         code.state = v_st.toString();
-        // qDebug() << Q_FUNC_INFO << t_plz << v_lo << v_st;
         emit sendOnLeavePostalEdit(code);
         break;
       }
@@ -243,6 +244,13 @@ void PostalCodeEdit::setInfo(const QString &info) {
     m_label->setVisible(true);
     m_label->setText(info + ":");
   }
+}
+
+const QString PostalCodeEdit::country() {
+  if (m_countries->currentIndex() > 0)
+    return m_countries->currentText();
+
+  return QString();
 }
 
 const QString PostalCodeEdit::info() { return toolTip(); }

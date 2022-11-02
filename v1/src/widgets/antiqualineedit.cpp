@@ -3,12 +3,14 @@
 
 #include "antiqualineedit.h"
 
-AntiquaLineEdit::AntiquaLineEdit(QWidget *parent) : QLineEdit{parent} {
+AntiquaLineEdit::AntiquaLineEdit(QWidget *parent)
+    : QLineEdit{parent}, keyEnterEvent{false} {
   QSizePolicy sp(QSizePolicy::MinimumExpanding, /* klein halten */
                  QSizePolicy::Fixed, QSizePolicy::LineEdit);
   setClearButtonEnabled(true);
   setMinimumWidth(30);
   setSizePolicy(sp);
+  connect(this, SIGNAL(returnPressed()), SLOT(checkEnterEventPressed()));
 }
 
 void AntiquaLineEdit::focusInEvent(QFocusEvent *event) {
@@ -20,3 +22,19 @@ void AntiquaLineEdit::focusInEvent(QFocusEvent *event) {
   }
   QLineEdit::focusInEvent(event);
 }
+
+void AntiquaLineEdit::checkEnterEventPressed() {
+  if(keyEnterEvent) {
+    // emit returnPressed();
+    qInfo("Enter key event enabled!");
+    return;
+  }
+  qInfo("Enter key event disabled!");
+}
+
+void AntiquaLineEdit::setEnableKeyEnterEvent(bool b) {
+  keyEnterEvent = b;
+  emit sendKeyEnterEventChanged();
+}
+
+bool AntiquaLineEdit::keyEnterEventEnabled() { return keyEnterEvent; }

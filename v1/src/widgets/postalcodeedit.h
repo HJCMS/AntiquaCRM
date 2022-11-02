@@ -72,6 +72,7 @@ public:
   const QVariant value();
   bool isValid();
   void setInfo(const QString &);
+  const QString country();
   const QString info();
   const QString notes();
 };
