@@ -2,7 +2,9 @@
 // vim: set fileencoding=utf-8
 
 #include "customerseditor.h"
+#include "customersbillings.h"
 #include "customersdata.h"
+#include "customerstabwidget.h"
 
 #include <AntiquaCRM>
 #include <QDebug>
@@ -17,11 +19,34 @@ CustomersEditor::CustomersEditor(QWidget *parent)
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setObjectName("bookeditor_main_layout");
   mainLayout->setSizeConstraint(QLayout::SetMaximumSize);
+  mainLayout->setContentsMargins(2, 0, 2, 0);
 
-  m_dataWidget = new CustomersData(this);
-  mainLayout->addWidget(m_dataWidget);
+  QFrame *m_topFrame = new QFrame(this);
+  QHBoxLayout *r1Layout = new QHBoxLayout(m_topFrame);
+  c_id = new SerialID(this);
+  c_id->setObjectName("c_id");
+  c_id->setInfo("Id");
+  c_id->setToolTip("Customer Id");
+  r1Layout->addWidget(c_id);
+  r1Layout->addWidget(new QLabel(" - ", this));
+  m_displayName = new QLabel(this);
+  m_displayName->setStyleSheet("QLabel {font: bold italic large;}");
+  r1Layout->addWidget(m_displayName);
+  r1Layout->addStretch(1);
+  m_topFrame->setLayout(r1Layout);
+  mainLayout->addWidget(m_topFrame);
+
+  m_tabWidget = new CustomersTabWidget(this);
+  mainLayout->addWidget(m_tabWidget);
 
   setLayout(mainLayout);
+
+  m_dataWidget = new CustomersData(m_tabWidget);
+  m_tabWidget->placeTab(m_dataWidget, tr("Contact data"));
+
+  m_billingWidget = new CustomersBillings(m_tabWidget);
+  m_tabWidget->placeTab(m_billingWidget, tr("Payment details"));
+
   setEnabled(false);
 }
 
@@ -172,11 +197,11 @@ bool CustomersEditor::openEditEntry(qint64 cutomerId) {
   QSqlQuery q = m_sql->query(sql);
   if (q.size() != 0) {
     QSqlRecord r = m_tableData->record();
-    while (q.next()) {
-      foreach (QString key, inputFields) {
-        m_tableData->setValue(key, q.value(r.indexOf(key)));
-      }
+    q.next();
+    foreach (QString key, inputFields) {
+      m_tableData->setValue(key, q.value(r.indexOf(key)));
     }
+    m_displayName->setText(q.value("fullname").toString());
     status = true;
   } else {
     qDebug() << Q_FUNC_INFO << m_sql->lastError();

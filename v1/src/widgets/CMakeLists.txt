@@ -34,6 +34,7 @@ SET (projectLibrary_SOURCES
  antiquailabel.cpp
  antiqualineedit.cpp
  antiquaspinbox.cpp
+ antiquatabbar.cpp
  bookbinding.cpp
  boolbox.cpp
  conditionedit.cpp
@@ -79,6 +80,7 @@ SET (projectLibrary_HEADERS
  antiquailabel.h
  antiqualineedit.h
  antiquaspinbox.h
+ antiquatabbar.h
  bookbinding.h
  boolbox.h
  conditionedit.h

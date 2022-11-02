@@ -25,6 +25,10 @@
 #include "antiquadateinfo.h"
 #endif
 
+#ifndef ANTIQUACRM_TABBAR_H
+#include "antiquatabbar.h"
+#endif
+
 #ifndef ANTIQUACRM_BOOKBINDING_H
 #include "bookbinding.h"
 #endif

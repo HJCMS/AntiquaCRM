@@ -7,7 +7,6 @@
 
 #include <AntiquaCRM>
 #include <AntiquaWidgets>
-#include <QGroupBox>
 #include <QObject>
 #include <QWidget>
 
@@ -38,19 +37,20 @@ public:
   TextField *c_postal_address;      /**< Adresse */
   TextField *c_shipping_address;    /**< Lieferadresse */
 
+  /**
+   * @brief CustomersData
+   */
   explicit CustomersData(QWidget *parent = nullptr);
 
 private Q_SLOTS:
   /**
-   * Wenn @ref c_postalcode das Signal editingFinished
-   * absetzt @ref fetchCountryFromPostal aufrufen!
+   * @brief Wenn von c_postalcode ein editingFinished absetzt wird!
    */
   void postalCodeComplite(const AntiquaCRM::PostalCode &);
 
   /**
-   * Wenn Knopf generieren geklickt wird.
-   * Erstellt wir hier den Adressenkopf für den Kunden.
-   * @note Es müssen alle Adress Datenfelder gesetzt sein.
+   * @brief Wenn Knopf generieren geklickt wird.
+   * Den Rechnungskopf für den Kunden erstellen.
    */
   void generateAddressBody();
 };

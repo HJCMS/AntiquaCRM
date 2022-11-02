@@ -22,7 +22,9 @@ SET (projectLibrary_SOURCES
  customersselectfilter.cpp
  customerssearchbar.cpp
  customerseditor.cpp
+ customerstabwidget.cpp
  customersdata.cpp
+ customersbillings.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -33,7 +35,9 @@ SET (projectLibrary_HEADERS
  customersselectfilter.h
  customerssearchbar.h
  customerseditor.h
+ customerstabwidget.h
  customersdata.h
+ customersbillings.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

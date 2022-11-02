@@ -7,16 +7,23 @@
 
 #include <AntiquaCRM>
 #include <AntiquaWidgets>
+#include <QLabel>
 #include <QObject>
 #include <QWidget>
 
+class CustomersTabWidget;
 class CustomersData;
+class CustomersBillings;
 
 class CustomersEditor final : public InventoryEditor {
   Q_OBJECT
 
 private:
+  SerialID *c_id;
+  QLabel *m_displayName;
+  CustomersTabWidget *m_tabWidget;
   CustomersData *m_dataWidget;
+  CustomersBillings *m_billingWidget;
 
   void setInputFields() override;
   bool setDataField(const QSqlField &field, const QVariant &value) override;

@@ -28,8 +28,20 @@ void PhoneEdit::reset() {
 }
 
 void PhoneEdit::setValue(const QVariant &val) {
-  QString phone = val.toString().trimmed();
-  m_edit->setText(phone);
+  QString tel = val.toString().trimmed();
+  if (tel.length() > 10) {
+    if(tel.startsWith("0"))
+      tel.insert(3, " ");
+    else
+      tel.insert(4, " ");
+
+    if (objectName().contains("c_mobil_")) {
+      tel.insert(7, " ");
+    } else {
+      tel.insert(8, " ");
+    }
+  }
+  m_edit->setText(tel);
 }
 
 void PhoneEdit::setFocus() { m_edit->setFocus(); }
@@ -46,8 +58,6 @@ void PhoneEdit::setProperties(const QSqlField &field) {
 
   if (field.type() == QVariant::String && field.length() > 0) {
     m_edit->setMaxLength(field.length());
-    // m_edit->setMaximumWidth(300);
-
     QString txt(tr("Max allowed length") + " ");
     txt.append(QString::number(field.length()));
     m_edit->setPlaceholderText(txt);
@@ -82,6 +92,11 @@ void PhoneEdit::setInfo(const QString &info) {
   if (info.length() > 2) {
     m_label->setVisible(true);
     m_label->setText(info + ":");
+  }
+  if (objectName().contains("c_mobil_")) {
+    m_edit->setToolTip(tr("Example: %1").arg("049 152 12345678"));
+  } else {
+    m_edit->setToolTip(tr("Example: '%1' for Hamburg.").arg("049 40 1234567"));
   }
 }
 
