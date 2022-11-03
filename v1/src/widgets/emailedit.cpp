@@ -11,13 +11,10 @@ EMailEdit::EMailEdit(QWidget *parent) : InputEdit{parent} {
   m_edit->setToolTip(tr("eMail edit"));
   m_edit->setPlaceholderText(tr("usage.example@example.com"));
   m_layout->addWidget(m_edit);
-
   m_validator = new QRegExpValidator(rePattern(), m_edit);
   m_edit->setValidator(m_validator);
-
-  setRequired(true);
+  setRequired(false);
   setModified(false);
-
   connect(m_edit, SIGNAL(textChanged(const QString &)),
           SLOT(dataChanged(const QString &)));
 }
@@ -31,10 +28,14 @@ void EMailEdit::reset() {
 
 void EMailEdit::setValue(const QVariant &val) {
   QString email = val.toString().trimmed();
-  m_edit->setText(email);
+  m_edit->setText(email.toLower());
 }
 
-void EMailEdit::setFocus() { m_edit->setFocus(); }
+void EMailEdit::setFocus() {
+  if(isVisible()) {
+    m_edit->setFocus();
+  }
+}
 
 const QRegExp EMailEdit::rePattern() {
   QRegExp reg;
@@ -57,7 +58,7 @@ void EMailEdit::setProperties(const QSqlField &field) {
   }
 
   if (field.requiredStatus() == QSqlField::Required) {
-    setRequired(true);
+    setRequired((objectName().contains("mail_0")));
     m_edit->setClearButtonEnabled(false);
   }
 }
@@ -68,12 +69,18 @@ const QVariant EMailEdit::value() {
 }
 
 bool EMailEdit::isValid() {
-  if (isRequired() && m_edit->text().isEmpty())
+  QString email = m_edit->text().trimmed();
+  // Erforderlich und Leer
+  if (isRequired() && email.isEmpty())
     return false;
 
-  QString email = m_edit->text();
+  // Nicht Erforderlich und Leer
+  if (email.isEmpty())
+    return true;
+
+  // Nicht leer, dann test mit Regulären ausdruck!
   QRegularExpression r(rePattern().pattern());
-  QRegularExpressionMatch m = r.match(email.trimmed());
+  QRegularExpressionMatch m = r.match(email);
   return m.hasMatch();
 }
 
@@ -87,4 +94,7 @@ void EMailEdit::setInfo(const QString &info) {
 
 const QString EMailEdit::info() { return m_edit->toolTip(); }
 
-const QString EMailEdit::notes() { return tr("eMail input is required."); }
+const QString EMailEdit::notes() {
+  QString txt = m_edit->toolTip();
+  return tr("a valid input for '%1' is required.").arg(txt);
+}

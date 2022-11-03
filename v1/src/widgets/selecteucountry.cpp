@@ -37,7 +37,7 @@ void SelectEuCountry::setValue(const QVariant &val) {
   if (val.type() != QVariant::String)
     return;
 
-  index = m_box->findData(val.toString(), Qt::UserRole);
+  index = m_box->findData(val.toString().toUpper(), Qt::UserRole);
   if (index < 1)
     index = m_box->findData(val.toString(), Qt::DisplayRole);
 
@@ -49,7 +49,6 @@ void SelectEuCountry::setValue(const QVariant &val) {
 
 void SelectEuCountry::setFocus() {
   m_box->setFocus();
-  m_box->showPopup();
 }
 
 void SelectEuCountry::setProperties(const QSqlField &field) {
@@ -62,10 +61,10 @@ const QVariant SelectEuCountry::value() {
 }
 
 bool SelectEuCountry::isValid() {
-  if (isRequired() && value().isNull())
+  if (isRequired() && m_box->currentIndex() < 1)
     return false;
 
-  return (m_box->currentIndex() > 0);
+  return true;
 }
 
 void SelectEuCountry::setInfo(const QString &info) {

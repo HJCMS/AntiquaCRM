@@ -14,7 +14,7 @@ class CustomersBillings final : public QWidget {
 
 public:
   BoolBox *c_locked;           /**< Gesperrt */
-  QComboBox *c_trusted;         /**< Vetrauenswürdigkeit */
+  TrustedBox *c_trusted;       /**< Vetrauenswürdigkeit */
   LineEdit *c_iban;            /**< IBAN Nummer */
   LineEdit *c_swift_bic;       /**< BIC Swift Code ISO 9362 */
   LineEdit *c_tax_id;          /**< Umsatzsteuer-Identifikationsnummer */

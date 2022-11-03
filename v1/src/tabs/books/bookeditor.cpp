@@ -342,16 +342,18 @@ bool BookEditor::sendSqlQuery(const QString &query) {
   if (q.lastError().type() != QSqlError::NoError) {
     qDebug() << Q_FUNC_INFO << query << m_sql->lastError();
     return false;
-  } else {
-    if (q.next()) {
-      if (!q.isNull("ib_id")) {
-        ib_id->setValue(q.value("ib_id"));
-      }
-    }
-    openSuccessMessage(tr("Bookdata saved successfully!"));
-    setResetModified(inputFields);
-    return true;
   }
+
+  if (q.next()) {
+    if (!q.isNull("ib_id")) {
+      QSqlField field = m_tableData->getProperties("ib_id");
+      setDataField(field, q.value("ib_id"));
+    }
+  }
+
+  openSuccessMessage(tr("Bookdata saved successfully!"));
+  setResetModified(inputFields);
+  return true;
 }
 
 const QHash<QString, QVariant> BookEditor::createSqlDataset() {
@@ -505,7 +507,7 @@ void BookEditor::createSqlInsert() {
     // Zurücksetzen Knopf Aktivieren?
     m_actionBar->setRestoreable(m_tableData->isValid());
     // Bildaktionen erst bei vorhandener Artikel Nummer freischalten!
-    // m_imageToolBar->setActive(true);
+    m_imageToolBar->setActive(true);
     ib_id->setRequired(true);
   }
 }

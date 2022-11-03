@@ -23,6 +23,7 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   c_gender = new GenderBox(this);
   c_gender->setObjectName("c_gender");
   c_gender->setInfo(tr("Gender"));
+  c_gender->setRequired(true);
   row1->addWidget(c_gender);
 
   QLabel *titleLabel = new QLabel(this);
@@ -253,6 +254,8 @@ void CustomersData::generateAddressBody() {
   body.append(buffer.join(" "));
   body.append("\n");
 
-  if (!body.trimmed().isEmpty())
+  if (!body.trimmed().isEmpty()) {
     c_postal_address->setValue(body);
+    c_postal_address->setModified(true);
+  }
 }

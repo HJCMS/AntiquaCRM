@@ -50,11 +50,14 @@ bool ASharedDataFiles::storeJson(const QString &basename,
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream data(&fp);
     data.setCodec(ANTIQUACRM_TEXTCODEC);
-    data << doc.toJson(QJsonDocument::Compact); // Indented | Compact
+    // Usage: Indented | Compact
+    data << doc.toJson(QJsonDocument::Compact);
     fp.close();
     return true;
   }
-  // qDebug() << Q_FUNC_INFO << "Permissions:" << info;
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << "Permissions:" << info;
+#endif
   return false;
 }
 
@@ -90,11 +93,14 @@ bool ASharedDataFiles::storeXml(const QString &basename,
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream data(&fp);
     data.setCodec(ANTIQUACRM_TEXTCODEC);
+    // Usage: 1 | -1
     data << xml.toString(-1);
     fp.close();
     return true;
   }
+#ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << "Permissions:" << info;
+#endif
   return false;
 }
 
@@ -102,7 +108,9 @@ const QDomDocument ASharedDataFiles::getXML(const QString &basename) {
   QDomDocument doc;
   QFileInfo info(path(), basename + ".xml");
   if (!info.isReadable()) {
+#ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << "Permissions:" << info;
+#endif
     return doc;
   }
   QFile fp(info.filePath());
@@ -132,7 +140,9 @@ bool ASharedCacheFiles::storeTempFile(const QString &filename,
     fp.close();
     return true;
   }
+#ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << "Permissions:" << info;
+#endif
   return false;
 }
 
@@ -147,14 +157,18 @@ bool ASharedCacheFiles::storeTempFile(const QString &filename,
     fp.close();
     return true;
   }
+#ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << "Permissions:" << info;
+#endif
   return false;
 }
 
 const QString ASharedCacheFiles::getTempFile(const QString &filename) {
   QFileInfo info(path(), filename);
   if (!info.isReadable()) {
+#ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << "Permissions:" << info;
+#endif
     return QString();
   }
   QString buffer;

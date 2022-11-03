@@ -26,8 +26,7 @@ Ecurrency::Ecurrency(QWidget *parent) : InputEdit{parent} {
   m_layout->addStretch(1);
   setModified(false);
   setRequired(false);
-  connect(m_comboBox, SIGNAL(currentIndexChanged(int)), this,
-          SLOT(itemChanged(int)));
+  connect(m_comboBox, SIGNAL(currentIndexChanged(int)), SLOT(itemChanged(int)));
 }
 
 void Ecurrency::loadDataset() {

@@ -23,9 +23,9 @@ CustomersBillings::CustomersBillings(QWidget *parent) : QWidget{parent} {
   c_locked->setInfo(tr("Locked"));
   row1->addWidget(c_locked, 0, 0, 1, 1);
 
-  c_trusted = new QComboBox(this);
+  c_trusted = new TrustedBox(this);
   c_trusted->setObjectName("c_trusted");
-  // c_trusted->setInfo("Trusted");
+  c_trusted->setInfo("Trusted");
   row1->addWidget(c_trusted, 0, 1, 1, 1);
 
   c_tax_id = new LineEdit(this);

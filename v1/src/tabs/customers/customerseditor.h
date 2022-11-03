@@ -11,19 +11,24 @@
 #include <QObject>
 #include <QWidget>
 
+class CustomersHeaderFrame;
 class CustomersTabWidget;
 class CustomersData;
 class CustomersBillings;
+class CustomersOrders;
 
 class CustomersEditor final : public InventoryEditor {
   Q_OBJECT
 
 private:
-  SerialID *c_id;
-  QLabel *m_displayName;
+  CustomersHeaderFrame *m_headerFrame;
   CustomersTabWidget *m_tabWidget;
   CustomersData *m_dataWidget;
   CustomersBillings *m_billingWidget;
+  CustomersOrders *m_ordersWidget;
+  EditorActionBar *m_actionBar;
+
+  qint64 customerId() const;
 
   void setInputFields() override;
   bool setDataField(const QSqlField &field, const QVariant &value) override;
@@ -33,10 +38,16 @@ private:
   void createSqlUpdate() override;
   void createSqlInsert() override;
 
+  /**
+   * @brief Einkäufe vom Kunden suchen und einfügen!
+   */
+  void findPurchaces();
+
 private Q_SLOTS:
   void setSaveData() override;
   void setCheckLeaveEditor() override;
   void setFinalLeaveEditor() override;
+  void setCreateMailMessage(const QString &action);
 
 public Q_SLOTS:
   void setRestore() override;

@@ -8,6 +8,7 @@
 namespace AntiquaCRM {
 
 AEuropeanCountries::AEuropeanCountries() : QHash<QString, QString>{} {
+  insert("XX", QObject::tr("Non EU Country"));
   insert("BE", QObject::tr("Belgium"));
   insert("BG", QObject::tr("Bulgaria"));
   insert("DK", QObject::tr("Denmark"));

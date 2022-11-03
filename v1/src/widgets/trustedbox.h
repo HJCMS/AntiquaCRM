@@ -2,18 +2,17 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_DATEINFO_H
-#define ANTIQUACRM_DATEINFO_H
+#ifndef ANTIQUACRM_TRUSTEDBOX_H
+#define ANTIQUACRM_TRUSTEDBOX_H
 
 #include <AGlobal>
 #include <AntiquaInputEdit>
-#include <QDateTimeEdit>
 
-class AntiquaDateInfo final : public InputEdit {
+class TrustedBox final : public InputEdit {
   Q_OBJECT
 
 private:
-  QDateTimeEdit *m_edit;
+  AntiquaComboBox *m_box;
   void loadDataset();
 
 private Q_SLOTS:
@@ -25,8 +24,7 @@ public Q_SLOTS:
   void setFocus();
 
 public:
-  explicit AntiquaDateInfo(QWidget *parent = nullptr);
-  void setDisplayFormat(const QString &format);
+  explicit TrustedBox(QWidget *parent = nullptr);
   void setProperties(const QSqlField &field);
   const QVariant value();
   bool isValid();
@@ -35,4 +33,4 @@ public:
   const QString notes();
 };
 
-#endif // ANTIQUACRM_DATEINFO_H
+#endif // ANTIQUACRM_TRUSTEDBOX_H

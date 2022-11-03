@@ -68,6 +68,7 @@ SET (projectLibrary_SOURCES
  tabsearchbar.cpp
  tabstatusbar.cpp
  textfield.cpp
+ trustedbox.cpp
  yearedit.cpp
 )
 
@@ -114,6 +115,7 @@ SET (projectLibrary_HEADERS
  tabsearchbar.h
  tabstatusbar.h
  textfield.h
+ trustedbox.h
  yearedit.h
 )
 

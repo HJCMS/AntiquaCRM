@@ -149,6 +149,10 @@
 #include "textfield.h"
 #endif
 
+#ifndef ANTIQUACRM_TRUSTEDBOX_H
+#include "trustedbox.h"
+#endif
+
 #ifndef ANTIQUACRM_YEAREDIT_H
 #include "yearedit.h"
 #endif

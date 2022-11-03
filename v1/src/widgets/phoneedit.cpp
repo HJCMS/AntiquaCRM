@@ -13,7 +13,7 @@ PhoneEdit::PhoneEdit(QWidget *parent) : InputEdit{parent} {
   m_validator = new QRegExpValidator(rePattern(), m_edit);
   m_edit->setValidator(m_validator);
 
-  setRequired(true);
+  setRequired(false);
   setModified(false);
 
   connect(m_edit, SIGNAL(textChanged(const QString &)),
@@ -30,7 +30,7 @@ void PhoneEdit::reset() {
 void PhoneEdit::setValue(const QVariant &val) {
   QString tel = val.toString().trimmed();
   if (tel.length() > 10) {
-    if(tel.startsWith("0"))
+    if (tel.startsWith("0"))
       tel.insert(3, " ");
     else
       tel.insert(4, " ");
@@ -64,7 +64,10 @@ void PhoneEdit::setProperties(const QSqlField &field) {
   }
 
   if (field.requiredStatus() == QSqlField::Required) {
-    setRequired(true);
+    // Nur bei Primär nummern aktivieren
+    if (objectName().contains("_0"))
+      setRequired(true);
+
     m_edit->setClearButtonEnabled(false);
   }
 }
@@ -78,10 +81,16 @@ const QVariant PhoneEdit::value() {
 }
 
 bool PhoneEdit::isValid() {
-  if (isRequired() && m_edit->text().isEmpty())
+  QString phone = m_edit->text().trimmed();
+  // Erforderlich und Leer
+  if (isRequired() && phone.isEmpty())
     return false;
 
-  QString phone = m_edit->text();
+  // Nicht Erforderlich und Leer
+  if (phone.isEmpty())
+    return true;
+
+  // Nicht leer, dann test mit Regulären ausdruck!
   QRegularExpression r(rePattern().pattern());
   QRegularExpressionMatch m = r.match(phone.trimmed());
   return m.hasMatch();
@@ -102,4 +111,7 @@ void PhoneEdit::setInfo(const QString &info) {
 
 const QString PhoneEdit::info() { return m_edit->toolTip(); }
 
-const QString PhoneEdit::notes() { return tr("phone input is required."); }
+const QString PhoneEdit::notes() {
+  QString txt = m_edit->toolTip();
+  return tr("a phone input for '%1' is required.").arg(txt);
+}

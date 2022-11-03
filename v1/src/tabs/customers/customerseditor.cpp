@@ -4,6 +4,8 @@
 #include "customerseditor.h"
 #include "customersbillings.h"
 #include "customersdata.h"
+#include "customersheaderframe.h"
+#include "customersorders.h"
 #include "customerstabwidget.h"
 
 #include <AntiquaCRM>
@@ -12,7 +14,7 @@
 #include <QMessageBox>
 
 CustomersEditor::CustomersEditor(QWidget *parent)
-    : InventoryEditor{"^c_[a-z_]+\\b$", parent} {
+    : InventoryEditor{"^c_[\\w\\d_]+\\b$", parent} {
   setObjectName("customers_editor");
   setWindowTitle(tr("Customer Book"));
 
@@ -21,23 +23,16 @@ CustomersEditor::CustomersEditor(QWidget *parent)
   mainLayout->setSizeConstraint(QLayout::SetMaximumSize);
   mainLayout->setContentsMargins(2, 0, 2, 0);
 
-  QFrame *m_topFrame = new QFrame(this);
-  QHBoxLayout *r1Layout = new QHBoxLayout(m_topFrame);
-  c_id = new SerialID(this);
-  c_id->setObjectName("c_id");
-  c_id->setInfo("Id");
-  c_id->setToolTip("Customer Id");
-  r1Layout->addWidget(c_id);
-  r1Layout->addWidget(new QLabel(" - ", this));
-  m_displayName = new QLabel(this);
-  m_displayName->setStyleSheet("QLabel {font: bold italic large;}");
-  r1Layout->addWidget(m_displayName);
-  r1Layout->addStretch(1);
-  m_topFrame->setLayout(r1Layout);
-  mainLayout->addWidget(m_topFrame);
+  m_headerFrame = new CustomersHeaderFrame(this);
+  mainLayout->addWidget(m_headerFrame);
 
   m_tabWidget = new CustomersTabWidget(this);
   mainLayout->addWidget(m_tabWidget);
+
+  m_actionBar = new EditorActionBar(this);
+  m_actionBar->setViewPrintButton(false);
+  m_actionBar->setViewMailButton(true);
+  mainLayout->addWidget(m_actionBar);
 
   setLayout(mainLayout);
 
@@ -47,12 +42,38 @@ CustomersEditor::CustomersEditor(QWidget *parent)
   m_billingWidget = new CustomersBillings(m_tabWidget);
   m_tabWidget->placeTab(m_billingWidget, tr("Payment details"));
 
+  m_ordersWidget = new CustomersOrders(m_tabWidget);
+  m_tabWidget->placeTab(m_ordersWidget, tr("Purchases"));
+
   setEnabled(false);
+
+  // Signals:ActionBar
+  connect(m_actionBar, SIGNAL(sendCancelClicked()),
+          SLOT(setFinalLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
+  connect(m_actionBar, SIGNAL(sendSaveClicked()), SLOT(setSaveData()));
+  connect(m_actionBar, SIGNAL(sendFinishClicked()),
+          SLOT(setCheckLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendCreateMailMessage(const QString &)),
+          SLOT(setCreateMailMessage(const QString &)));
+}
+
+qint64 CustomersEditor::customerId() const {
+  return m_headerFrame->c_id->value().toInt();
 }
 
 void CustomersEditor::setInputFields() {
   m_tableData = new AntiquaCRM::ASqlDataQuery("customers");
   inputFields = m_tableData->columnNames();
+  // Dienstleister(Uniq Key) Ist hier nicht erfordelich!
+  inputFields.removeOne("c_provider_import");
+  // Wird Manuell gesetzt!
+  ignoreFields << "c_changed";
+  // Diese Felder bei (INSERT|UPDATE) Ignorieren!
+  ignoreFields << "c_since";
+  ignoreFields << "c_transactions";
+  ignoreFields << "c_purchases";
+
   if (inputFields.isEmpty()) {
     QStringList warn(tr("An error has occurred!"));
     warn << tr("Can't load input datafields!");
@@ -61,7 +82,7 @@ void CustomersEditor::setInputFields() {
     openNoticeMessage(warn.join("\n"));
   }
 
-  // TODO completers
+  // Completers
   m_dataWidget->c_postalcode->loadDataset();
 }
 
@@ -77,10 +98,19 @@ bool CustomersEditor::setDataField(const QSqlField &field,
   if (inp != nullptr) {
     inp->setValue(value);
     inp->setProperties(field);
+    if (key == "c_country") {
+      m_dataWidget->c_postalcode->findCountry(value.toString());
+    }
     return true;
   }
 
-  qDebug() << "Unknown:" << key << "|" << value << "|" << required;
+  if (ignoreFields.contains(key))
+    return true;
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << "Missing:" << key << "=(" << value << ") Required:" << required;
+#endif
+
   return false;
 }
 
@@ -97,29 +127,28 @@ void CustomersEditor::importSqlResult() {
   }
   blockSignals(false);
 
-  // m_actionBar->setRestoreable(m_tableData->isValid());
+  m_actionBar->setRestoreable(m_tableData->isValid());
   setResetModified(inputFields);
 }
 
 bool CustomersEditor::sendSqlQuery(const QString &query) {
-  qDebug() << Q_FUNC_INFO << query;
-  return true;
-  /*
-    QSqlQuery q = m_sql->query(query);
-    if (q.lastError().type() != QSqlError::NoError) {
-      qDebug() << Q_FUNC_INFO << query << m_sql->lastError();
-      return false;
-    } else {
-      if (q.next()) {
-        if (!q.isNull("ib_id")) {
-          ib_id->setValue(q.value("ib_id"));
-        }
-      }
-      openSuccessMessage(tr("Bookdata saved successfully!"));
-      setResetModified(inputFields);
-      return true;
+  QSqlQuery q = m_sql->query(query);
+  if (q.lastError().type() != QSqlError::NoError) {
+    qWarning("Customer SQL Query: %s\nError: %s\n)", qPrintable(query),
+             qPrintable(m_sql->lastError()));
+    return false;
+  }
+
+  if (q.next()) {
+    if (!q.isNull("c_id")) {
+      QSqlField field = m_tableData->getProperties("c_id");
+      setDataField(field, q.value("c_id"));
     }
-  */
+    qDebug() << "SqlQuery.last() = " << q.last();
+  }
+  openSuccessMessage(tr("Customer saved successfully!"));
+  setResetModified(inputFields);
+  return true;
 }
 
 const QHash<QString, QVariant> CustomersEditor::createSqlDataset() {
@@ -133,8 +162,7 @@ const QHash<QString, QVariant> CustomersEditor::createSqlDataset() {
     if (ignoreFields.contains(objName))
       continue;
 
-    // qDebug() << objName << cur->isRequired() << cur->isValid() <<
-    // cur->value();
+    // qDebug() << "Dataset:" << objName << cur->value();
     if (cur->isRequired() && !cur->isValid()) {
       openNoticeMessage(cur->notes());
       cur->setFocus();
@@ -148,19 +176,161 @@ const QHash<QString, QVariant> CustomersEditor::createSqlDataset() {
   return data;
 }
 
-void CustomersEditor::createSqlUpdate() { qDebug() << Q_FUNC_INFO << "TODO"; }
+void CustomersEditor::createSqlUpdate() {
+  qint64 cId = customerId();
+  if (cId < 1) {
+    qWarning("Skip SQL_UPDATE: (cID < 1)!");
+    return;
+  }
+  m_headerFrame->c_id->setRequired(true);
 
-void CustomersEditor::createSqlInsert() { qDebug() << Q_FUNC_INFO << "TODO"; }
+  if (m_tableData == nullptr || !m_tableData->isValid()) {
+    qWarning("Invalid AntiquaCRM::ASqlDataQuery detected!");
+    return;
+  }
+
+  QHash<QString, QVariant> data = createSqlDataset();
+  if (data.size() < 1)
+    return;
+
+  QStringList set;
+  QHash<QString, QVariant>::iterator it;
+  int changes = 0;
+  for (it = data.begin(); it != data.end(); ++it) {
+    if (it.key() == "c_id")
+      continue;
+
+    // Nur geänderte Felder in das Update aufnehmen!
+    if (it.value() == m_tableData->getValue(it.key()))
+      continue;
+
+    if (m_tableData->getType(it.key()).id() == QMetaType::QString) {
+      set.append(it.key() + "='" + it.value().toString() + "'");
+      changes++;
+    } else {
+      set.append(it.key() + "=" + it.value().toString());
+      changes++;
+    }
+  }
+
+  // Ist ein SQL-Update erforderlich?
+  if (changes == 0) {
+    sendStatusMessage(tr("No Modifications found, Update aborted!"));
+    setWindowModified(false);
+    return;
+  }
+
+  QString sql("UPDATE customers SET ");
+  sql.append(set.join(","));
+  sql.append(",c_changed=CURRENT_TIMESTAMP WHERE c_id=");
+  sql.append(QString::number(customerId()));
+  sql.append(";");
+  if (sendSqlQuery(sql)) {
+    qInfo("SQL UPDATE Customers success!");
+    sendStatusMessage(tr("Save Customer data success!"));
+    m_actionBar->setRestoreable(m_tableData->isValid());
+  }
+}
+
+void CustomersEditor::createSqlInsert() {
+  qint64 cId = customerId();
+  if (cId > 0) {
+    qWarning("Skip SQL_INSERT: (cId > 0)!");
+    return;
+  }
+  m_headerFrame->c_id->setRequired(false);
+
+  if (m_tableData == nullptr || !m_tableData->isValid()) {
+    qWarning("Invalid AntiquaCRM::ASqlDataQuery detected!");
+    return;
+  }
+
+  QHash<QString, QVariant> data = createSqlDataset();
+  if (data.size() < 1)
+    return;
+
+  QStringList column; // SQL Columns
+  QStringList values; // SQL Values
+
+  QHash<QString, QVariant>::iterator it;
+  for (it = data.begin(); it != data.end(); ++it) {
+    if (it.value().isNull())
+      continue;
+
+    QString field = it.key();
+    // Buchdaten einfügen
+    m_tableData->setValue(field, it.value());
+
+    column.append(field);
+    if (m_tableData->getType(field).id() == QMetaType::QString) {
+      values.append("'" + it.value().toString() + "'");
+    } else {
+      values.append(it.value().toString());
+    }
+  }
+
+  QString sql("INSERT INTO customers (");
+  sql.append(column.join(","));
+  sql.append(",c_changed) VALUES (");
+  sql.append(values.join(","));
+  sql.append(",CURRENT_TIMESTAMP) RETURNING c_id;");
+  if (sendSqlQuery(sql) && customerId() >= 1) {
+    qInfo("SQL INSERT Customer success!");
+    sendStatusMessage(tr("Save Customer data success!"));
+    m_actionBar->setRestoreable(m_tableData->isValid());
+    m_headerFrame->c_id->setRequired(true);
+  }
+}
+
+void CustomersEditor::findPurchaces() {
+  qint64 c_id = customerId();
+  if (c_id < 1)
+    return;
+
+  AntiquaCRM::ASqlFiles sqlFile("query_customer_orders_status");
+  if (sqlFile.openTemplate()) {
+    sqlFile.setWhereClause("c_id=" + QString::number(c_id));
+    QSqlQuery q = m_sql->query(sqlFile.getQueryContent());
+    if (q.size() > 0) {
+      int row = 0;
+      m_ordersWidget->restore();
+      m_ordersWidget->setRowCount(q.size());
+
+      while (q.next()) {
+        int col = 0;
+        QTableWidgetItem *did = m_ordersWidget->numidItem(q.value("orderid"));
+        m_ordersWidget->setItem(row, col++, did);
+
+        QTableWidgetItem *iid = m_ordersWidget->numidItem(q.value("invoice"));
+        m_ordersWidget->setItem(row, col++, iid);
+
+        QTableWidgetItem *aid = m_ordersWidget->createItem(q.value("article"));
+        m_ordersWidget->setItem(row, col++, aid);
+
+        QTableWidgetItem *prn = m_ordersWidget->createItem(q.value("provider"));
+        m_ordersWidget->setItem(row, col++, prn);
+
+        QTableWidgetItem *prid = m_ordersWidget->createItem(q.value("prorder"));
+        m_ordersWidget->setItem(row, col++, prid);
+
+        QTableWidgetItem *in = m_ordersWidget->createDate(q.value("since"));
+        m_ordersWidget->setItem(row, col++, in);
+
+        QTableWidgetItem *out = m_ordersWidget->createDate(q.value("deliver"));
+        m_ordersWidget->setItem(row, col++, out);
+
+        row++;
+      }
+    }
+  }
+}
 
 void CustomersEditor::setSaveData() {
-  qDebug() << Q_FUNC_INFO << "TODO";
-  /*
-    if (c_id->value().toString().isEmpty()) {
-      createSqlInsert();
-      return;
-    }
+  if (customerId() > 0) {
     createSqlUpdate();
-  */
+  } else {
+    createSqlInsert();
+  }
 }
 
 void CustomersEditor::setCheckLeaveEditor() {
@@ -175,7 +345,13 @@ void CustomersEditor::setCheckLeaveEditor() {
 
 void CustomersEditor::setFinalLeaveEditor() {
   setResetInputFields();
-  emit sendLeaveEditor(); /**< Zurück zur Hauptsansicht */
+  m_ordersWidget->restore();          /**< Einkäufe entfernen */
+  m_actionBar->setRestoreable(false); /**< ResetButton off */
+  emit sendLeaveEditor();             /**< Zurück zur Hauptsansicht */
+}
+
+void CustomersEditor::setCreateMailMessage(const QString &action) {
+  qDebug() << Q_FUNC_INFO << "TEMPLATE:" << action;
 }
 
 void CustomersEditor::setRestore() {
@@ -201,24 +377,27 @@ bool CustomersEditor::openEditEntry(qint64 cutomerId) {
     foreach (QString key, inputFields) {
       m_tableData->setValue(key, q.value(r.indexOf(key)));
     }
-    m_displayName->setText(q.value("fullname").toString());
+    m_headerFrame->setDisplayName(q.value("fullname").toString());
     status = true;
   } else {
-    qDebug() << Q_FUNC_INFO << m_sql->lastError();
+    qWarning("Edit Customer SQL Error (%s)", qPrintable(m_sql->lastError()));
     status = false;
   }
 
   if (status) {
     importSqlResult();
+    findPurchaces();
     setEnabled(true);
   }
 
+  m_tabWidget->setCurrentIndex(0);
   return status;
 }
 
 bool CustomersEditor::createNewEntry() {
   setInputFields();
   setResetModified(inputFields);
+  m_tabWidget->setCurrentIndex(0);
   setEnabled(true);
   return true;
 }

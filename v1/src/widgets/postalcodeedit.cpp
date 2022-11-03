@@ -128,7 +128,8 @@ PostalCodeEdit::PostalCodeEdit(QWidget *parent) : InputEdit{parent} {
   m_view->setMinimumWidth(200);
 
   setTabOrder(m_countries, m_postalcode);
-  setRequired(true);
+  setRequired(false);
+  setModified(false);
 
   connect(m_countries, SIGNAL(currentIndexChanged(int)), this,
           SLOT(dataChanged(int)));
@@ -146,7 +147,6 @@ void PostalCodeEdit::loadDataset() {
     foreach (QString t, tables.keys()) {
       m_countries->addItem(tables[t].toString(), t);
     }
-    qInfo("PostCode from json");
     return;
   }
   // SQL
@@ -158,7 +158,7 @@ void PostalCodeEdit::loadDataset() {
       m_countries->addItem(q.value("p_country").toString(),
                            q.value("p_table").toString());
     }
-    qInfo("PostCode from SQL");
+    qWarning("PostalCode from SQL Database - non cachefile found!");
   }
 }
 
@@ -173,7 +173,6 @@ void PostalCodeEdit::dataChanged(int index) {
     model->initModel(table);
     m_postalcode->setCompleter(m_completer);
   }
-  // setModified(true);
 }
 
 void PostalCodeEdit::postalReadyToLeave() {
@@ -220,6 +219,21 @@ void PostalCodeEdit::setValue(const QVariant &val) {
 }
 
 void PostalCodeEdit::setFocus() { m_postalcode->setFocus(); }
+
+void PostalCodeEdit::findCountry(const QString &name) {
+  QString search(name.trimmed());
+  if (search.isEmpty())
+    return;
+
+  if (name.contains("/")) {
+    QStringList l = name.split("/");
+    search = l.first().trimmed();
+  }
+
+  int index = m_countries->findData(search, Qt::DisplayRole);
+  if (index > 0)
+    m_countries->setCurrentIndex(index);
+}
 
 const QVariant PostalCodeEdit::value() {
   QString buffer = m_postalcode->text();

@@ -42,7 +42,11 @@ void AntiquaDateInfo::setValue(const QVariant &val) {
   }
 }
 
-void AntiquaDateInfo::setFocus() {}
+void AntiquaDateInfo::setFocus() { m_edit->setFocus(); }
+
+void AntiquaDateInfo::setDisplayFormat(const QString &format) {
+  m_edit->setDisplayFormat(format);
+}
 
 void AntiquaDateInfo::setProperties(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)

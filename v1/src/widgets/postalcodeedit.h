@@ -59,8 +59,9 @@ private Q_SLOTS:
 
 public Q_SLOTS:
   Q_INVOKABLE void reset();
-  void setValue(const QVariant &);
+  void setValue(const QVariant &val);
   void setFocus();
+  void findCountry(const QString &name);
 
 Q_SIGNALS:
   void sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &);
