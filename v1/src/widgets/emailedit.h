@@ -18,6 +18,8 @@ private:
   AntiquaLineEdit *m_edit;
   QRegExpValidator *m_validator;
   void loadDataset() {};
+  static const QRegExp mailPattern();
+  bool validate(const QString &mail) const;
 
 private Q_SLOTS:
   void dataChanged(const QString &);
@@ -29,7 +31,6 @@ public Q_SLOTS:
 
 public:
   explicit EMailEdit(QWidget *parent = nullptr);
-  static const QRegExp rePattern();
   void setProperties(const QSqlField &field);
   const QVariant value();
   bool isValid();

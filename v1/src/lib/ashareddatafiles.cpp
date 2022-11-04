@@ -14,7 +14,7 @@
 
 namespace AntiquaCRM {
 
-ASharedDataFiles::ASharedDataFiles() : QDir(ASettings::getUserDataDir()) {
+ASharedDataFiles::ASharedDataFiles(const QDir &d) : QDir{d} {
   setNameFilters(defaultFilter());
 }
 

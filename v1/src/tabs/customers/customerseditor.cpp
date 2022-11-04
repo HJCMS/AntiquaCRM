@@ -84,6 +84,7 @@ void CustomersEditor::setInputFields() {
 
   // Completers
   m_dataWidget->c_postalcode->loadDataset();
+  m_dataWidget->c_phone_0->loadDataset();
 }
 
 bool CustomersEditor::setDataField(const QSqlField &field,

@@ -35,9 +35,13 @@ private Q_SLOTS:
   void createOpenEntry() override;
   void createCopyClipboard() override;
   void createOrderSignal() override;
+  void createDeleteRequest();
 
 public Q_SLOTS:
   void setReloadView() override;
+
+Q_SIGNALS:
+  void sendDeleteEntry(qint64 costumerId);
 
 public:
   explicit CustomersTableView(QWidget *parent = nullptr);

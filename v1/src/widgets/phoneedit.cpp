@@ -3,15 +3,97 @@
 
 #include "phoneedit.h"
 
+#include <QAbstractItemView>
 #include <QDebug>
+
+PhoneCountryCodeModel::PhoneCountryCodeModel(QObject *parent)
+    : QAbstractListModel{parent} {}
+
+int PhoneCountryCodeModel::rowCount(const QModelIndex &parent) const {
+  return p_codes.size();
+}
+
+int PhoneCountryCodeModel::columnCount(const QModelIndex &parent) const {
+  Q_UNUSED(parent);
+  return 2;
+}
+
+QVariant PhoneCountryCodeModel::data(const QModelIndex &index, int role) const {
+  if ((role & ~(Qt::DisplayRole | Qt::EditRole | Qt::ToolTipRole)) ||
+      !index.isValid())
+    return QVariant();
+
+  if (role == Qt::EditRole) {
+    if (index.column() == 1)
+      return p_codes[index.row()].npa;
+    else if (index.column() == 2)
+      return p_codes[index.row()].info;
+    else
+      return p_codes[index.row()].npa;
+  }
+
+  if (role == Qt::DisplayRole) {
+    QString ret(p_codes[index.row()].npa);
+    ret.append(" ");
+    ret.append(p_codes[index.row()].info);
+    return ret;
+  }
+
+  if (role == Qt::ToolTipRole) {
+    QString ret(p_codes[index.row()].npa);
+    ret.append(" (");
+    ret.append(p_codes[index.row()].info);
+    ret.append(")");
+    return ret;
+  }
+
+  return QVariant();
+}
+
+QVariant PhoneCountryCodeModel::headerData(int section,
+                                           Qt::Orientation orientation,
+                                           int role) const {
+  Q_UNUSED(section);
+  Q_UNUSED(orientation);
+  Q_UNUSED(role);
+  return QVariant();
+}
+
+void PhoneCountryCodeModel::initModel() {
+  p_codes.clear();
+  AntiquaCRM::ASharedDataFiles file(AntiquaCRM::ASettings::getDataDir("json"));
+  if (file.fileExists("iso_countrycodes")) {
+    QJsonDocument jdoc = file.getJson("iso_countrycodes");
+    QJsonArray arr = jdoc.object().value("countries").toArray();
+    for (int i = 0; i < arr.size(); i++) {
+      QJsonObject obj = arr[i].toObject();
+      int npa = obj.value("phone").toInt();
+      CountryCode code;
+      code.npa = QString::number(npa).rightJustified(3, '0');
+      code.info = obj.value("country").toString();
+      p_codes.append(code);
+    }
+  }
+}
 
 PhoneEdit::PhoneEdit(QWidget *parent) : InputEdit{parent} {
   m_edit = new AntiquaLineEdit(this);
   m_edit->setToolTip(tr("phone edit"));
   m_layout->addWidget(m_edit);
 
-  m_validator = new QRegExpValidator(rePattern(), m_edit);
+  QRegExp simple("^(\\d+[\\s?\\d]+)$");
+  m_validator = new QRegExpValidator(simple, m_edit);
   m_edit->setValidator(m_validator);
+
+  m_completer = new QCompleter(m_edit);
+  m_completer->setMaxVisibleItems(6);
+  m_completer->setCompletionMode(QCompleter::PopupCompletion);
+  m_completer->setCompletionRole(Qt::EditRole);
+  m_completer->setFilterMode(Qt::MatchStartsWith);
+  QAbstractItemView *m_view = m_completer->popup();
+  m_view->setAlternatingRowColors(true);
+  m_view->setSelectionBehavior(QAbstractItemView::SelectRows);
+  m_view->setSelectionMode(QAbstractItemView::SingleSelection);
 
   setRequired(false);
   setModified(false);
@@ -20,7 +102,27 @@ PhoneEdit::PhoneEdit(QWidget *parent) : InputEdit{parent} {
           SLOT(dataChanged(const QString &)));
 }
 
-void PhoneEdit::dataChanged(const QString &) { setModified(true); }
+const QRegExp PhoneEdit::phonePattern() {
+  QRegExp reg;
+  reg.setPattern("^([\\d]{2,3}\\s?[\\d]{2,4}[\\s?\\d]+)$");
+  return reg;
+}
+
+bool PhoneEdit::validate(const QString &phone) const {
+  QRegularExpression r(phonePattern().pattern());
+  QRegularExpressionMatch m = r.match(phone);
+  if (phone.length() > 4 && m.hasMatch()) {
+    m_edit->setStyleSheet(QString());
+    return true;
+  }
+  m_edit->setStyleSheet("QLineEdit {selection-background-color: red;}");
+  return false;
+}
+
+void PhoneEdit::dataChanged(const QString &phone) {
+  setModified(true);
+  validate(phone);
+}
 
 void PhoneEdit::reset() {
   m_edit->clear();
@@ -46,12 +148,6 @@ void PhoneEdit::setValue(const QVariant &val) {
 
 void PhoneEdit::setFocus() { m_edit->setFocus(); }
 
-const QRegExp PhoneEdit::rePattern() {
-  QRegExp reg;
-  reg.setPattern("^(0[\\d]{2}\\s*[\\d]{2,4}[\\s*\\d]+)$");
-  return reg;
-}
-
 void PhoneEdit::setProperties(const QSqlField &field) {
   if (!field.isValid())
     return;
@@ -69,6 +165,15 @@ void PhoneEdit::setProperties(const QSqlField &field) {
       setRequired(true);
 
     m_edit->setClearButtonEnabled(false);
+  }
+}
+
+void PhoneEdit::loadDataset() {
+  PhoneCountryCodeModel *model = new PhoneCountryCodeModel(m_completer);
+  if (model != nullptr) {
+    m_completer->setModel(model);
+    model->initModel();
+    m_edit->setCompleter(m_completer);
   }
 }
 
@@ -91,9 +196,7 @@ bool PhoneEdit::isValid() {
     return true;
 
   // Nicht leer, dann test mit Regulären ausdruck!
-  QRegularExpression r(rePattern().pattern());
-  QRegularExpressionMatch m = r.match(phone.trimmed());
-  return m.hasMatch();
+  return validate(phone);
 }
 
 void PhoneEdit::setInfo(const QString &info) {

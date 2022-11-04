@@ -54,32 +54,40 @@ void CustomersTableView::contextMenuEvent(QContextMenuEvent *event) {
 
   QMenu *m = new QMenu(this);
   // Eintrag öffnen  Bestellung anlegen
-  QAction *ac_open = m->addAction(cellIcon("database"), tr("Open entry"));
+  QAction *ac_open =
+      m->addAction(cellIcon("database"), tr("Edit selected Customer"));
   ac_open->setObjectName("ac_context_open_customer");
   ac_open->setEnabled(enable_action);
-  connect(ac_open, SIGNAL(triggered()), this, SLOT(createOpenEntry()));
+  connect(ac_open, SIGNAL(triggered()), SLOT(createOpenEntry()));
 
-  QAction *ac_create = m->addAction(cellIcon("db_add"), tr("Create entry"));
+  QAction *ac_create =
+      m->addAction(cellIcon("db_add"), tr("Create new Customer"));
   ac_create->setObjectName("ac_context_create_customer");
   ac_create->setEnabled(enable_create);
-  connect(ac_create, SIGNAL(triggered()), this, SIGNAL(sendCreateNewEntry()));
+  connect(ac_create, SIGNAL(triggered()), SIGNAL(sendCreateNewEntry()));
+
+  QAction *ac_delete =
+      m->addAction(cellIcon("db_remove"), tr("Delete selected Customer"));
+  ac_delete->setObjectName("ac_context_delete_customer");
+  ac_delete->setEnabled(enable_action);
+  connect(ac_delete, SIGNAL(triggered()), SLOT(createDeleteRequest()));
 
   // BEGIN Einträge für Auftrag
   QAction *ac_copy = m->addAction(cellIcon("db_comit"), tr("Copy Customer Id"));
   ac_copy->setObjectName("ac_context_copy_customer");
   ac_copy->setEnabled(enable_action);
-  connect(ac_copy, SIGNAL(triggered()), this, SLOT(createCopyClipboard()));
+  connect(ac_copy, SIGNAL(triggered()), SLOT(createCopyClipboard()));
 
   QAction *ac_order =
-      m->addAction(cellIcon("view_log"), tr("Create new Order"));
+      m->addAction(cellIcon("view_log"), tr("New Order for selected Customer"));
   ac_order->setObjectName("ac_context_customer_to_order");
   ac_order->setEnabled(enable_action);
-  connect(ac_order, SIGNAL(triggered()), this, SLOT(createOrderSignal()));
+  connect(ac_order, SIGNAL(triggered()), SLOT(createOrderSignal()));
   //  END
 
-  QAction *ac_refresh = m->addAction(cellIcon("action_reload"), tr("Update"));
+  QAction *ac_refresh = m->addAction(cellIcon("action_reload"), tr("Reload"));
   ac_refresh->setObjectName("ac_context_refresh_customers");
-  connect(ac_refresh, SIGNAL(triggered()), this, SLOT(setReloadView()));
+  connect(ac_refresh, SIGNAL(triggered()), SLOT(setReloadView()));
 
   m->exec(event->globalPos());
   delete m;
@@ -132,6 +140,12 @@ void CustomersTableView::createOrderSignal() {
   qint64 id = getTableID(p_modelIndex);
   if (id >= 1)
     emit sendCurrentId(id);
+}
+
+void CustomersTableView::createDeleteRequest() {
+  qint64 id = getTableID(p_modelIndex);
+  if (id >= 1)
+    emit sendDeleteEntry(id);
 }
 
 void CustomersTableView::setReloadView() {

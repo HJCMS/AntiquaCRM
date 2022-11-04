@@ -3,7 +3,8 @@
 
 #include "emailedit.h"
 
-#include <QDebug>
+#include <QApplication>
+#include <QPalette>
 #include <QRegularExpressionMatch>
 
 EMailEdit::EMailEdit(QWidget *parent) : InputEdit{parent} {
@@ -11,7 +12,7 @@ EMailEdit::EMailEdit(QWidget *parent) : InputEdit{parent} {
   m_edit->setToolTip(tr("eMail edit"));
   m_edit->setPlaceholderText(tr("usage.example@example.com"));
   m_layout->addWidget(m_edit);
-  m_validator = new QRegExpValidator(rePattern(), m_edit);
+  m_validator = new QRegExpValidator(mailPattern(), m_edit);
   m_edit->setValidator(m_validator);
   setRequired(false);
   setModified(false);
@@ -19,7 +20,28 @@ EMailEdit::EMailEdit(QWidget *parent) : InputEdit{parent} {
           SLOT(dataChanged(const QString &)));
 }
 
-void EMailEdit::dataChanged(const QString &) { setModified(true); }
+const QRegExp EMailEdit::mailPattern() {
+  QRegExp reg;
+  reg.setCaseSensitivity(Qt::CaseInsensitive);
+  reg.setPattern("^([\\d\\w\\-\\.]{3,})@([\\d\\w\\-\\.]{3,})\\.([a-z]{2,6})$");
+  return reg;
+}
+
+bool EMailEdit::validate(const QString &mail) const {
+  QRegularExpression r(mailPattern().pattern());
+  QRegularExpressionMatch m = r.match(mail);
+  if (mail.contains("@") && m.hasMatch()) {
+    m_edit->setStyleSheet(QString());
+    return true;
+  }
+  m_edit->setStyleSheet("QLineEdit {selection-background-color: red;}");
+  return false;
+}
+
+void EMailEdit::dataChanged(const QString &email) {
+  setModified(true);
+  validate(email);
+}
 
 void EMailEdit::reset() {
   m_edit->clear();
@@ -32,16 +54,9 @@ void EMailEdit::setValue(const QVariant &val) {
 }
 
 void EMailEdit::setFocus() {
-  if(isVisible()) {
+  if (isVisible()) {
     m_edit->setFocus();
   }
-}
-
-const QRegExp EMailEdit::rePattern() {
-  QRegExp reg;
-  reg.setCaseSensitivity(Qt::CaseInsensitive);
-  reg.setPattern("^([\\d\\w\\-\\.]{3,})@([\\d\\w\\-\\.]{3,})\\.([a-z]{2,6})$");
-  return reg;
 }
 
 void EMailEdit::setProperties(const QSqlField &field) {
@@ -50,8 +65,6 @@ void EMailEdit::setProperties(const QSqlField &field) {
 
   if (field.type() == QVariant::String && field.length() > 0) {
     m_edit->setMaxLength(field.length());
-    // m_edit->setMaximumWidth(300);
-
     QString txt(tr("Max allowed length") + " ");
     txt.append(QString::number(field.length()));
     m_edit->setPlaceholderText(txt);
@@ -79,9 +92,7 @@ bool EMailEdit::isValid() {
     return true;
 
   // Nicht leer, dann test mit Regulären ausdruck!
-  QRegularExpression r(rePattern().pattern());
-  QRegularExpressionMatch m = r.match(email);
-  return m.hasMatch();
+  return validate(email);
 }
 
 void EMailEdit::setInfo(const QString &info) {

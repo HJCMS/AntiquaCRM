@@ -11,12 +11,13 @@
 #include <QString>
 #include <QStringList>
 #include <AGlobal>
+#include <ASettings>
 
 namespace AntiquaCRM {
 
 class ANTIQUACRM_LIBRARAY ASharedDataFiles : public QDir {
 public:
-  explicit ASharedDataFiles();
+  explicit ASharedDataFiles(const QDir &d = ASettings::getUserDataDir());
   const QStringList dataFiles();
   static const QStringList defaultFilter();
   bool fileExists(const QString &basename,

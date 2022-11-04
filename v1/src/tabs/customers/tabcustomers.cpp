@@ -58,6 +58,9 @@ TabCustomers::TabCustomers(QWidget *parent)
   connect(m_table, SIGNAL(sendResultExists(bool)), m_statusBar,
           SLOT(setCreateButtonEnabled(bool)));
 
+  connect(m_table, SIGNAL(sendDeleteEntry(qint64)),
+          SLOT(setDeleteCustomer(qint64)));
+
   // editor
   connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));
 
@@ -78,7 +81,43 @@ TabCustomers::TabCustomers(QWidget *parent)
           SLOT(setReloadView()));
 }
 
-void TabCustomers::openStartPage() { setCurrentIndex(0); }
+void TabCustomers::setDeleteCustomer(qint64 customerId) {
+  QString info = tr("Do you really want to delete this customer?");
+  info.append("<p>");
+  info.append(tr("This process is irreversible!"));
+  info.append("</p><p>");
+  info.append(tr("In addition, the system will refuse to delete if an order "
+                 "exists for this customer!"));
+  info.append("</p>");
+
+  QString title = tr("Delete Customer");
+  int ret = QMessageBox::question(this, title, info);
+  if (ret == QMessageBox::No)
+    return;
+
+  QString c_id = QString::number(customerId);
+  AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
+  QString sql("DELETE FROM customers WHERE c_id=" + c_id + ";");
+  m_sql->query(sql);
+  if (m_sql->lastError().isEmpty()) {
+    m_table->setReloadView();
+    return;
+  }
+
+  QMessageBox *d = new QMessageBox(this);
+  d->setWindowTitle(title);
+  d->setIcon(QMessageBox::Critical);
+  d->setText(
+      tr("There are purchase order relationships that cannot be resolved."));
+  d->setDetailedText(m_sql->lastError());
+  d->setDefaultButton(QMessageBox::Ok);
+  d->exec();
+}
+
+void TabCustomers::openStartPage() {
+  m_editorPage->setEnabled(false);
+  setCurrentIndex(0);
+}
 
 void TabCustomers::createSearchQuery(const QString &query) {
   if (!query.isEmpty()) {
@@ -94,6 +133,7 @@ void TabCustomers::createSearchQuery(const QString &query) {
 
 void TabCustomers::createNewEntry() {
   if (m_editorWidget->createNewEntry()) {
+    m_editorPage->setEnabled(true);
     setCurrentWidget(m_editorPage);
   }
 }
@@ -113,6 +153,7 @@ void TabCustomers::openEntry(qint64 customerId) {
   }
 
   if (m_editorWidget->openEditEntry(customerId)) {
+    m_editorPage->setEnabled(true);
     setCurrentWidget(m_editorPage);
   }
 }
