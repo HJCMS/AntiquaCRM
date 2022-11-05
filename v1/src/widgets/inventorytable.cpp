@@ -4,6 +4,7 @@
 #include "inventorytable.h"
 
 #include <QIcon>
+#include <QDebug>
 
 InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
   setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -35,6 +36,11 @@ InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
 void InventoryTable::setEnableTableViewSorting(bool b) {
   setSortingEnabled(b);
   m_header->setSectionsClickable(b);
+}
+
+void InventoryTable::getSqlModelError(const QString &table,
+                                      const QString &message) {
+  qDebug() << Q_FUNC_INFO << "TODO" << table << message;
 }
 
 void InventoryTable::setQueryLimit(int limit) {

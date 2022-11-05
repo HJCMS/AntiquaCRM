@@ -2,25 +2,20 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_CUSTOMERSTABLEVIEW_H
-#define ANTIQUACRM_CUSTOMERSTABLEVIEW_H
+#ifndef ANTIQUACRM_ORDERSTABLEVIEW_H
+#define ANTIQUACRM_ORDERSTABLEVIEW_H
 
-#include <QContextMenuEvent>
-#include <QIcon>
+#include <AntiquaWidgets>
 #include <QObject>
 #include <QWidget>
 
-#ifndef ANTIQUACRM_INVENTORYTABLE_H
-#include "inventorytable.h"
-#endif
+class OrdersTableModel;
 
-class CustomersTableModel;
-
-class CustomersTableView final : public InventoryTable {
+class OrdersTableView final : public InventoryTable {
   Q_OBJECT
 
 private:
-  CustomersTableModel *m_model;
+  OrdersTableModel *m_model;
   QString where_clause;
   QModelIndex p_modelIndex;
 
@@ -34,18 +29,14 @@ private Q_SLOTS:
   void createOpenEntry() override;
   void createCopyClipboard() override;
   void createOrderSignal() override;
-  void createDeleteRequest();
 
 public Q_SLOTS:
   void setReloadView() override;
 
-Q_SIGNALS:
-  void sendDeleteEntry(qint64 costumerId);
-
 public:
-  explicit CustomersTableView(QWidget *parent = nullptr);
+  explicit OrdersTableView(QWidget *parent = nullptr);
   int rowCount() override;
   bool setQuery(const QString &clause = QString()) override;
 };
 
-#endif // ANTIQUACRM_CUSTOMERSTABLEVIEW_H
+#endif // ANTIQUACRM_ORDERSTABLEVIEW_H

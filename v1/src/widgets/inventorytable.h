@@ -31,9 +31,9 @@ protected:
   virtual bool sqlQueryTable(const QString &query) = 0;
 
 protected Q_SLOTS:
+  void getSqlModelError(const QString &table, const QString &message);
+
   virtual void setSortByColumn(int column, Qt::SortOrder order) = 0;
-  virtual void getSqlModelError(const QString &table,
-                                const QString &message) = 0;
   virtual void getSelectedItem(const QModelIndex &index) = 0;
   virtual void createOpenEntry() = 0;
   virtual void createCopyClipboard() = 0;

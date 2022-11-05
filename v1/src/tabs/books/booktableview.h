@@ -29,7 +29,6 @@ private:
 
 private Q_SLOTS:
   void setSortByColumn(int column, Qt::SortOrder order) override;
-  void getSqlModelError(const QString &table, const QString &message) override;
   void getSelectedItem(const QModelIndex &index) override;
   void createOpenEntry() override;
   void createCopyClipboard() override;

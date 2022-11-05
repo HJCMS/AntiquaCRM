@@ -113,11 +113,6 @@ void CustomersTableView::setSortByColumn(int column, Qt::SortOrder order) {
   sqlQueryTable(query.getQueryContent());
 }
 
-void CustomersTableView::getSqlModelError(const QString &table,
-                                          const QString &message) {
-  qDebug() << Q_FUNC_INFO << "TODO" << table << message;
-}
-
 void CustomersTableView::getSelectedItem(const QModelIndex &index) {
   qint64 id = getTableID(index);
   if (id >= 1)

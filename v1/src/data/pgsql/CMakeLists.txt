@@ -11,6 +11,7 @@ SET (query_tables_FILES
  query_storage_location.sql
  query_tab_books_main.sql
  query_tab_customers_main.sql
+ query_tab_orders_main.sql
  query_union_postal_codes.sql
  query_views.sql
 )

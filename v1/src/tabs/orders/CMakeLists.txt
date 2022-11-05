@@ -16,10 +16,16 @@ SET (projectLibrary_LINKER
 
 SET (projectLibrary_SOURCES
  taborders.cpp
+ ordersstatusbar.cpp
+ orderstablemodel.cpp
+ orderstableview.cpp
 )
 
 SET (projectLibrary_HEADERS
  taborders.h
+ ordersstatusbar.h
+ orderstablemodel.h
+ orderstableview.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

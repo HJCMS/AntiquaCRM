@@ -74,6 +74,8 @@ QVariant ASqlQueryModel::data(const QModelIndex &item, int role) const {
     return value;
 
   QVariant::Type _type = p_record.field(item.column()).type();
+  // QString _name = p_record.field(item.column()).name();
+  // qDebug() << _name << _type << value;
   if (_type == QVariant::DateTime) {
     return displayDate(value);
   }

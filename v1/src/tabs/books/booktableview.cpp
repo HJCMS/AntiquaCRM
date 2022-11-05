@@ -105,11 +105,6 @@ void BookTableView::setSortByColumn(int column, Qt::SortOrder order) {
   sqlQueryTable(query.getQueryContent());
 }
 
-void BookTableView::getSqlModelError(const QString &table,
-                                     const QString &message) {
-  qDebug() << Q_FUNC_INFO << "TODO" << table << message;
-}
-
 void BookTableView::getSelectedItem(const QModelIndex &index) {
   qint64 id = getTableID(index);
   if (id >= 1)

@@ -2,6 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "taborders.h"
+#include "ordersstatusbar.h"
+#include "orderstableview.h"
 
 #include <QIcon>
 #include <QLayout>
@@ -15,8 +17,12 @@ TabOrders::TabOrders(QWidget *parent) : Inventory{"orders_tab", parent} {
   m_mainPage = new QWidget(this);
   QVBoxLayout *m_p1Layout = new QVBoxLayout(m_mainPage);
   m_p1Layout->setContentsMargins(0, 0, 0, 0);
-
-  // m_p1Layout->addWidget();
+  //  m_searchBar = new OrdersSearchBar(m_mainPage);
+  //  m_p1Layout->addWidget(m_searchBar);
+  m_table = new OrdersTableView(m_mainPage);
+  m_p1Layout->addWidget(m_table);
+  m_statusBar = new OrdersStatusBar(m_mainPage);
+  m_p1Layout->addWidget(m_statusBar);
   m_mainPage->setLayout(m_p1Layout);
   insertWidget(0, m_mainPage);
   // End
@@ -31,9 +37,26 @@ TabOrders::TabOrders(QWidget *parent) : Inventory{"orders_tab", parent} {
   // End
 }
 
-void TabOrders::openStartPage() { setCurrentIndex(0); }
+void TabOrders::openStartPage() {
+  // m_editorPage->setEnabled(false);
+  if (m_table->rowCount() > 0 && m_table->rowCount() < 20)
+    m_table->setReloadView();
 
-void TabOrders::createSearchQuery(const QString &query) {}
+  setCurrentIndex(0);
+}
+
+void TabOrders::createSearchQuery(const QString &query) {
+  if (!query.isEmpty()) {
+    m_table->setQuery(query);
+    return;
+  }
+  /*
+    QString w_sql = m_searchBar->getSearchStatement();
+    if (m_searchBar->searchLength() > 1 && w_sql.length() > 1) {
+      m_table->setQuery(w_sql);
+    }
+  */
+}
 
 void TabOrders::createNewEntry() {
   //  if (m_editorWidget->createNewEntry()) {
@@ -62,8 +85,8 @@ void TabOrders::openEntry(qint64 customerId) {
 
 void TabOrders::onEnterChanged() {
   if (!initialed) {
-    // initialed = m_table->setQuery();
+    initialed = m_table->setQuery();
     // m_searchBar->setFilter(0);
-    setCurrentWidget(m_mainPage);
+    setCurrentIndex(0);
   }
 }

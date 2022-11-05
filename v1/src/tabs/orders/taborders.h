@@ -9,11 +9,16 @@
 #include <QObject>
 #include <QScrollArea>
 
+class OrdersTableView;
+class OrdersStatusBar;
+
 class TabOrders final : public Inventory {
   Q_OBJECT
 
 private:
   QWidget *m_mainPage;
+  OrdersTableView *m_table;
+  OrdersStatusBar *m_statusBar;
   QScrollArea *m_editorPage;
 
 public Q_SLOTS:
