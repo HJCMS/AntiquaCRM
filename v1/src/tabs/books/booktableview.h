@@ -40,6 +40,7 @@ public Q_SLOTS:
 
 public:
   explicit BookTableView(QWidget *parent = nullptr);
+  int rowCount() override;
   bool setQuery(const QString &clause = QString()) override;
 };
 

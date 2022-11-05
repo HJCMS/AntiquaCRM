@@ -116,6 +116,9 @@ void TabCustomers::setDeleteCustomer(qint64 customerId) {
 
 void TabCustomers::openStartPage() {
   m_editorPage->setEnabled(false);
+  if (m_table->rowCount() > 0 && m_table->rowCount() < 20)
+    m_table->setReloadView();
+
   setCurrentIndex(0);
 }
 

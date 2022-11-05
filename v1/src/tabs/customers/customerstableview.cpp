@@ -152,6 +152,10 @@ void CustomersTableView::setReloadView() {
   sqlQueryTable(m_model->query().lastQuery());
 }
 
+int CustomersTableView::rowCount() {
+  return m_model->rowCount();
+}
+
 bool CustomersTableView::setQuery(const QString &clause) {
   AntiquaCRM::ASqlFiles query("query_tab_customers_main");
   if (query.openTemplate()) {

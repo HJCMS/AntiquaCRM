@@ -12,6 +12,7 @@ INCLUDE_DIRECTORIES (
 SET (projectLibrary_LINKER
  AntiquaCRM
  AntiquaWidgets
+ AntiquaMailing
 )
 
 SET (projectLibrary_SOURCES

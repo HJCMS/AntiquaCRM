@@ -138,6 +138,10 @@ void BookTableView::setReloadView() {
   sqlQueryTable(m_model->query().lastQuery());
 }
 
+int BookTableView::rowCount() {
+  return m_model->rowCount();
+}
+
 bool BookTableView::setQuery(const QString &clause) {
   AntiquaCRM::ASqlFiles query("query_tab_books_main");
   if (query.openTemplate()) {

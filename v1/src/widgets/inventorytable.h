@@ -55,6 +55,7 @@ public:
   explicit InventoryTable(QWidget *parent = nullptr);
   static const QIcon cellIcon(const QString &name);
   int getQueryLimit();
+  virtual int rowCount() = 0;
   virtual bool setQuery(const QString &clause = QString()) = 0;
 };
 

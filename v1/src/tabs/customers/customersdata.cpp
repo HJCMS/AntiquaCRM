@@ -184,7 +184,7 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
 
   c_shipping_address = new TextField(this);
   c_shipping_address->setObjectName("c_shipping_address");
-  c_shipping_address->setInfo(tr("Shipping Address"));
+  c_shipping_address->setInfo(tr("Delivery Address"));
   c_shipping_address->setFixedHeight(120);
   row4->addWidget(c_shipping_address, 1, 1, 1, 1);
 

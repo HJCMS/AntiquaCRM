@@ -7,6 +7,7 @@
 #include "customersheaderframe.h"
 #include "customersorders.h"
 #include "customerstabwidget.h"
+#include "mailforwarddialog.h"
 
 #include <AntiquaCRM>
 #include <QDebug>
@@ -352,7 +353,12 @@ void CustomersEditor::setFinalLeaveEditor() {
 }
 
 void CustomersEditor::setCreateMailMessage(const QString &action) {
-  qDebug() << Q_FUNC_INFO << "TEMPLATE:" << action;
+  if (customerId() < 1)
+    return;
+
+  MailForwardDialog *d = new MailForwardDialog(this);
+  d->exec(customerId(), action);
+  sendStatusMessage(tr("Send eMail finished!"));
 }
 
 void CustomersEditor::setRestore() {

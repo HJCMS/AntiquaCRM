@@ -18,6 +18,7 @@ private:
   QAction *ac_keywords;
   QAction *ac_storage;
   QAction *ac_delivery;
+  QAction *ac_templates;
   QAction *ac_system;
 
 private Q_SLOTS:
@@ -25,6 +26,7 @@ private Q_SLOTS:
   void openKeywordsDialog();
   void openStorageDialog();
   void openDeliveryDialog();
+  void openTemplatesDialog();
 
 public:
   explicit AntiquaConfigMenus(QWidget *parent);

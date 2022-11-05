@@ -79,7 +79,13 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{"books_tab", parent} {
           SLOT(setReloadView()));
 }
 
-void TabBooks::openStartPage() { setCurrentIndex(0); }
+void TabBooks::openStartPage() {
+  m_editorPage->setEnabled(false);
+  if (m_table->rowCount() > 0 && m_table->rowCount() < 20)
+    m_table->setReloadView();
+
+  setCurrentIndex(0);
+}
 
 void TabBooks::createSearchQuery(const QString &query) {
   if (!query.isEmpty()) {
@@ -95,6 +101,7 @@ void TabBooks::createSearchQuery(const QString &query) {
 
 void TabBooks::createNewEntry() {
   if (m_editorWidget->createNewEntry()) {
+    m_editorPage->setEnabled(true);
     setCurrentWidget(m_editorPage);
   }
 }
@@ -114,6 +121,7 @@ void TabBooks::openEntry(qint64 articleId) {
   }
 
   if (m_editorWidget->openEditEntry(articleId)) {
+    m_editorPage->setEnabled(true);
     setCurrentWidget(m_editorPage);
   }
 }

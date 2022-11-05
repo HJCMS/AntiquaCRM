@@ -84,7 +84,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   connect(btn_cards, SIGNAL(clicked()), this, SLOT(setCardsArchiv()));
   // Mail
   m_mailler_path = new LineEdit(m_grouBox1);
-  m_mailler_path->setObjectName("dirs/mailapplication");
+  m_mailler_path->setObjectName("dirs/mailappl");
   m_mailler_path->setInfo(tr("E-Mail Application"));
   lt_groupBox1->addWidget(m_mailler_path, row, 0, 1, 1);
   btn_mailler = new QToolButton(m_grouBox1);
@@ -282,7 +282,7 @@ void GeneralSettings::setCardsArchiv() {
 }
 
 void GeneralSettings::setMailApplication() {
-  QVariant spath = config->value("dirs/mailapplication", QDir::rootPath());
+  QVariant spath = config->value("dir/mailappl", QDir::rootPath());
   QString src = QFileDialog::getOpenFileName(this,          // Main
                                              tr("Mailler"), // Caption
                                              spath.toString());

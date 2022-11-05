@@ -5,6 +5,7 @@
 #include "configdialog.h"
 #include "deliverservicedialog.h"
 #include "keywordedit.h"
+#include "messagetemplates.h"
 #include "storageeditdialog.h"
 
 AntiquaConfigMenus::AntiquaConfigMenus(QWidget *parent) : QMenu{parent} {
@@ -22,6 +23,10 @@ AntiquaConfigMenus::AntiquaConfigMenus(QWidget *parent) : QMenu{parent} {
   ac_storage = m_tables->addAction(tr("Storage Editor"));
   ac_storage->setIcon(configIcon);
   connect(ac_storage, SIGNAL(triggered()), SLOT(openStorageDialog()));
+
+  ac_templates = m_tables->addAction(tr("Templates Editor"));
+  ac_templates->setIcon(configIcon);
+  connect(ac_templates, SIGNAL(triggered()), SLOT(openTemplatesDialog()));
 
   ac_delivery = m_tables->addAction(tr("Delivery services"));
   ac_delivery->setIcon(configIcon);
@@ -52,6 +57,12 @@ void AntiquaConfigMenus::openStorageDialog() {
 
 void AntiquaConfigMenus::openDeliveryDialog() {
   DeliverServiceDialog *d = new DeliverServiceDialog(this);
+  d->exec();
+  d->deleteLater();
+}
+
+void AntiquaConfigMenus::openTemplatesDialog() {
+  MessageTemplates *d = new MessageTemplates(this);
   d->exec();
   d->deleteLater();
 }
