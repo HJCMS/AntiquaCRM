@@ -28,6 +28,10 @@ private Q_SLOTS:
   void currentServiceChanged(int);
   void packageChanged(int);
 
+Q_SIGNALS:
+  void sendDeliveryService(int did);
+  void sendDeliveryPackage(int cid);
+
 public Q_SLOTS:
   void setValue(const QVariant &);
   Q_INVOKABLE void reset();

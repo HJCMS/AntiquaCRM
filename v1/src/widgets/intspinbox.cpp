@@ -52,6 +52,8 @@ void IntSpinBox::reset() {
 
 void IntSpinBox::setFocus() { m_spinBox->setFocus(); }
 
+void IntSpinBox::setValue(int i) { m_spinBox->setValue(i); }
+
 void IntSpinBox::setProperties(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
@@ -102,5 +104,3 @@ const QString IntSpinBox::notes() {
   msg.append(tr("is required and can not empty."));
   return msg;
 }
-
-IntSpinBox::~IntSpinBox() {}

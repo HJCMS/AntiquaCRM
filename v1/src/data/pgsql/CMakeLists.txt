@@ -7,6 +7,7 @@ SET (query_tables_FILES
  query_customer_orders_status.sql
  query_designation.sql
  query_keywords.sql
+ query_order_by_oid.sql
  query_postal_codes.sql
  query_storage_location.sql
  query_tab_books_main.sql

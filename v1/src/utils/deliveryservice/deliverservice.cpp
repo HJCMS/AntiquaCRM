@@ -42,6 +42,7 @@ void DeliverService::getPriceOnDemand(bool b) {
 void DeliverService::currentServiceChanged(int) {
   int did = m_serviceBox->getCurrentServiceId();
   m_packageBox->setCurrentPackages(did);
+  emit sendDeliveryService(did);
 }
 
 void DeliverService::packageChanged(int) {
@@ -51,6 +52,7 @@ void DeliverService::packageChanged(int) {
     QString ptxt = QString::number(price, 'f', 2);
     m_priceInfo->setText(ptxt + " " + p_currency);
     setModified(true);
+    emit sendDeliveryPackage(cid);
   }
 }
 

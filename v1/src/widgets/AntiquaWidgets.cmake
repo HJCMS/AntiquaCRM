@@ -97,6 +97,18 @@
 #include "lineedit.h"
 #endif
 
+#ifndef ANTIQUACRM_ORDERSTATUSSELECTER_H
+#include "orderstatusselecter.h"
+#endif
+
+#ifndef ANTIQUACRM_PAYMENTMETHODSELECTER_H
+#include "paymentmethodselecter.h"
+#endif
+
+#ifndef ANTIQUACRM_PAYMENTSTATUSSELECTER_H
+#include "paymentstatusselecter.h"
+#endif
+
 #ifndef ANTIQUACRM_PHONEEDIT_H
 #include "phoneedit.h"
 #endif
@@ -143,6 +155,10 @@
 
 #ifndef ANTIQUACRM_TABSTATUSBAR_H
 #include "tabstatusbar.h"
+#endif
+
+#ifndef ANTIQUACRM_TAXLEVELBOX_H
+#include "taxlevelbox.h"
 #endif
 
 #ifndef ANTIQUACRM_TEXTFIELD_H

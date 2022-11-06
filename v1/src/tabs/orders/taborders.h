@@ -9,19 +9,24 @@
 #include <QObject>
 #include <QScrollArea>
 
+class OrdersSearchBar;
 class OrdersTableView;
 class OrdersStatusBar;
+class OrdersEditor;
 
 class TabOrders final : public Inventory {
   Q_OBJECT
 
 private:
   QWidget *m_mainPage;
+  OrdersSearchBar *m_searchBar;
   OrdersTableView *m_table;
   OrdersStatusBar *m_statusBar;
   QScrollArea *m_editorPage;
+  OrdersEditor *m_editorWidget;
 
 public Q_SLOTS:
+  void setDefaultTableView();
   void openStartPage() override;
   void createSearchQuery(const QString &query = QString()) override;
   void createNewEntry() override;

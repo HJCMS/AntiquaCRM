@@ -37,6 +37,7 @@ public:
   explicit OrdersTableView(QWidget *parent = nullptr);
   int rowCount() override;
   bool setQuery(const QString &clause = QString()) override;
+  static const QString defaultWClause();
 };
 
 #endif // ANTIQUACRM_ORDERSTABLEVIEW_H

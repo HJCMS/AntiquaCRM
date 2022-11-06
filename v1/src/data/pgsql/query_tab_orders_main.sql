@@ -9,7 +9,7 @@ SELECT o_id AS oid,
   ELSE CONCAT(c_firstname,' ',c_lastname,' (',c_country,')')
  END AS customer,
  d_name AS delivery_service,
- CONCAT_WS(': ', o_provider_name, o_provider_order_id) AS o_provider_info,
+ CONCAT_WS(': ', o_provider_name, o_provider_order_id) AS provider_info,
  (EXTRACT(EPOCH FROM timestamptz (CURRENT_TIMESTAMP)) - EXTRACT(EPOCH FROM timestamptz (o_since))) AS order_age,
  (EXTRACT(EPOCH FROM timestamptz (CURRENT_TIMESTAMP)) - EXTRACT(EPOCH FROM timestamptz (o_delivered))) AS order_finish
 FROM inventory_orders

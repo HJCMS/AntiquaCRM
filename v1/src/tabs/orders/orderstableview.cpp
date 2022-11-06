@@ -10,8 +10,7 @@ OrdersTableView::OrdersTableView(QWidget *parent) : InventoryTable{parent} {
   setEnableTableViewSorting(true);
   m_model = new OrdersTableModel(this);
 
-  QString status = QString::number(AntiquaCRM::COMPLETED);
-  where_clause = QString("o_order_status<" + status);
+  where_clause = defaultWClause();
 
   connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
           this, SLOT(getSqlModelError(const QString &, const QString &)));
@@ -126,4 +125,9 @@ bool OrdersTableView::setQuery(const QString &clause) {
     return sqlQueryTable(query.getQueryContent());
   }
   return false;
+}
+
+const QString OrdersTableView::defaultWClause() {
+  QString status = QString::number(AntiquaCRM::COMPLETED);
+  return QString("o_order_status<" + status);
 }

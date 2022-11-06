@@ -54,6 +54,9 @@ SET (projectLibrary_SOURCES
  language.cpp
  lineedit.cpp
  mailbutton.cpp
+ orderstatusselecter.cpp
+ paymentmethodselecter.cpp
+ paymentstatusselecter.cpp
  phoneedit.cpp
  postalcodeedit.cpp
  priceedit.cpp
@@ -67,6 +70,7 @@ SET (projectLibrary_SOURCES
  storagelocation.cpp
  tabsearchbar.cpp
  tabstatusbar.cpp
+ taxlevelbox.cpp
  textfield.cpp
  trustedbox.cpp
  yearedit.cpp
@@ -101,6 +105,9 @@ SET (projectLibrary_HEADERS
  language.h
  lineedit.h
  mailbutton.h
+ orderstatusselecter.h
+ paymentmethodselecter.h
+ paymentstatusselecter.h
  phoneedit.h
  postalcodeedit.h
  priceedit.h
@@ -114,6 +121,7 @@ SET (projectLibrary_HEADERS
  storagelocation.h
  tabsearchbar.h
  tabstatusbar.h
+ taxlevelbox.h
  textfield.h
  trustedbox.h
  yearedit.h

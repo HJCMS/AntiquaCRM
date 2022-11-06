@@ -40,14 +40,16 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{"books_tab", parent} {
   insertWidget(1, m_editorPage);
   // End
 
-  // Signals
+  // Signals::BookSearchBar
   connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar,
           SLOT(setSearchFocus()));
 
   connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
           SLOT(setFilterFocus()));
 
-  // maintable
+  connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
+
+  // Signals::BookTableView
   connect(m_table, SIGNAL(sendQueryReport(const QString &)), m_statusBar,
           SLOT(showMessage(const QString &)));
 
@@ -64,13 +66,10 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{"books_tab", parent} {
   connect(m_table, SIGNAL(sendResultExists(bool)), m_statusBar,
           SLOT(setCreateButtonEnabled(bool)));
 
-  // editor
+  // Signals::BookEditor
   connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));
 
-  // searchbar
-  connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
-
-  // statusbar
+  // Signals::BookStatusBar
   connect(m_statusBar, SIGNAL(sendCreateEntry()), SLOT(createNewEntry()));
   connect(m_statusBar, SIGNAL(sendHistoryQuery(const QString &)),
           SLOT(createSearchQuery(const QString &)));

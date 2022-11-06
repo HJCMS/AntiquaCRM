@@ -46,6 +46,11 @@ Q_SIGNALS:
    */
   void sendSearchClicked();
 
+  /**
+   * @brief Send restore to Default View!
+   */
+  void sendRestoreView();
+
 public:
   explicit TabSearchBar(QWidget *parent = nullptr);
 

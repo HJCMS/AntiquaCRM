@@ -25,12 +25,11 @@ private Q_SLOTS:
 public Q_SLOTS:
   Q_INVOKABLE void reset();
   void setFocus();
+  void setValue(int);
 
 public:
   explicit IntSpinBox(QWidget *parent = nullptr);
   IntSpinBox(int minimum, int maximum, QWidget *parent = nullptr);
-  ~IntSpinBox();
-
   void setProperties(const QSqlField &field);
   void setRange(int minimum, int maximum);
   void setSingleStep(int);
