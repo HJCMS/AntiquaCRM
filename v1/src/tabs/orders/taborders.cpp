@@ -14,7 +14,7 @@
 TabOrders::TabOrders(QWidget *parent) : Inventory{"orders_tab", parent} {
   setObjectName("inventory_orders");
   setWindowTitle(tr("Orders"));
-  setWindowIcon(getTabIcon("edit"));
+  setWindowIcon(getTabIcon("spreadsheet"));
   // Begin MainPage layout
   m_mainPage = new QWidget(this);
   QVBoxLayout *m_p1Layout = new QVBoxLayout(m_mainPage);

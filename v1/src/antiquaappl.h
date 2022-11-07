@@ -7,6 +7,7 @@
 
 #include <AntiquaCRM>
 #include <AntiquaCRMPlugin>
+#include <OrderSystem>
 #include <QApplication>
 #include <QJsonObject>
 #include <QList>
@@ -29,6 +30,7 @@ private:
   AntiquaCRM::ASqlCore *m_sql;
   AntiquaSocketServer *m_socket;
   AntiquaTimer *m_timer;
+  OrderSystem *m_orderSystem;
 
   QList<AntiquaCRM::APluginInterface *> p_interfaces;
 

@@ -13,11 +13,11 @@
 
 namespace AntiquaCRM {
 
-struct ANTIQUACRM_LIBRARAY AProviderOrderItem {
+struct ANTIQUACRM_LIBRARAY ArticleOrderItem {
   QString key;
   QVariant value;
 };
-typedef QList<AProviderOrderItem> AProviderOrderItems;
+typedef QList<ArticleOrderItem> OrderArticleItems;
 
 /**
  * @brief Provider Order class
@@ -27,7 +27,7 @@ private:
   QString providerName;
   QString bookingId;
   QHash<QString, QVariant> p_data;
-  QList<AProviderOrderItems> p_orderItems;
+  QList<OrderArticleItems> p_orderItems;
 
 public:
   /**
@@ -69,7 +69,7 @@ public:
     /**
      * @brief customer gender
      */
-    hash.insert("c_gender", QMetaType::QString);
+    hash.insert("c_gender", QMetaType::Int);
 
     /**
      * @brief customer firstname
@@ -100,6 +100,11 @@ public:
      * @brief customer country (Fullname)
      */
     hash.insert("c_country", QMetaType::QString);
+
+    /**
+     * @brief customer country ISO2
+     */
+    hash.insert("c_country_bcp47", QMetaType::QString);
 
     /**
      * @brief customer phone number
@@ -202,10 +207,18 @@ public:
     return hash;
   };
 
+  /**
+   * @brief returning Customer keys from orderKeys()
+   */
+  static const QHash<QString, QMetaType::Type> customerKeys();
+
+  /**
+   * @brief All valid Payment "Article" Keys.
+   */
   static const QHash<QString, QMetaType::Type> articleKeys() {
     QHash<QString, QMetaType::Type> hash;
     /**
-     * @brief AntiquaCRM Article Number
+     * @brief AntiquaCRM Article Id
      */
     hash.insert("a_article_id", QMetaType::Int);
 
@@ -221,17 +234,17 @@ public:
     hash.insert("a_type", QMetaType::Int);
 
     /**
-     * @brief Article amount
+     * @brief Article Quantity
      */
     hash.insert("a_count", QMetaType::Int);
 
     /**
-     * @brief Article basic price
+     * @brief Article "inventory price"
      */
     hash.insert("a_price", QMetaType::Double);
 
     /**
-     * @brief Article sell price
+     * @brief Article "selling price"
      */
     hash.insert("a_sell_price", QMetaType::Double);
 
@@ -244,34 +257,39 @@ public:
   }
 
   /**
-   * @brief return all keys where a value is set
+   * @brief returning all orderKeys() where a value is set
    */
   const QStringList filledKeys() const;
 
   /**
-   * @brief set/update value with key
+   * @brief set/update value with orderKey
    */
   bool setValue(const QString &key, const QVariant &value);
 
   /**
-   * @brief get value with key
+   * @brief get value from orderKey
    */
   const QVariant getValue(const QString &key);
 
   /**
-   * @brief Ordered Items
+   * @brief Current Article Ordered Items
    */
-  const QList<AProviderOrderItems> orders();
+  const QList<OrderArticleItems> orders();
 
   /**
-   * @brief Insert Order Item
+   * @brief Insert Article into Order Item list
    */
-  bool insertOrderItems(const AProviderOrderItems &article);
+  bool insertOrderItems(const OrderArticleItems &article);
 
   /**
-   * @brief Remove Order Item from list.
+   * @brief Remove Article from Order Item list.
    */
   bool removeOrderItem(const QString &orderItemId);
+
+  /**
+   * @brief Current Order Item Size
+   */
+  inline int orderItemCount() const { return p_orderItems.size(); };
 };
 
 /**
@@ -281,7 +299,7 @@ typedef QList<AProviderOrder> AProviderOrders;
 
 }; // namespace AntiquaCRM
 
-Q_DECLARE_METATYPE(AntiquaCRM::AProviderOrderItems)
+Q_DECLARE_METATYPE(AntiquaCRM::OrderArticleItems)
 Q_DECLARE_METATYPE(AntiquaCRM::AProviderOrders)
 
 #endif // ANTIQUACRM_PLUGIN_ORDERS_H

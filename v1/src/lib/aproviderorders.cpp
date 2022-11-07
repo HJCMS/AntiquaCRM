@@ -13,7 +13,7 @@ AProviderOrder::AProviderOrder(const QString &provider, const QString &uniqId) {
   providerName = provider;
   bookingId = uniqId;
   p_data = QHash<QString, QVariant>();
-  p_orderItems = QList<AProviderOrderItems>();
+  p_orderItems = QList<OrderArticleItems>();
 }
 
 AProviderOrder::AProviderOrder(const AProviderOrder &other) {
@@ -32,6 +32,18 @@ AProviderOrder &AProviderOrder::operator=(const AProviderOrder &other) {
   p_data = other.p_data;
   p_orderItems = other.p_orderItems;
   return *this;
+}
+
+const QHash<QString, QMetaType::Type> AProviderOrder::customerKeys() {
+  QRegExp pattern("^c_[a-z0-9_]+$");
+  QHash<QString, QMetaType::Type> list;
+  QHashIterator<QString, QMetaType::Type> it(orderKeys());
+  while (it.hasNext()) {
+    it.next();
+    if (it.key().contains(pattern))
+      list.insert(it.key(),it.value());
+  }
+  return list;
 }
 
 const QStringList AProviderOrder::filledKeys() const {
@@ -76,11 +88,11 @@ const QVariant AProviderOrder::getValue(const QString &key) {
   return QVariant();
 }
 
-const QList<AProviderOrderItems> AProviderOrder::orders() {
+const QList<OrderArticleItems> AProviderOrder::orders() {
   return p_orderItems;
 }
 
-bool AProviderOrder::insertOrderItems(const AProviderOrderItems &article) {
+bool AProviderOrder::insertOrderItems(const OrderArticleItems &article) {
   p_orderItems.append(article);
   return true;
 }
@@ -91,12 +103,12 @@ bool AProviderOrder::removeOrderItem(const QString &orderItemId) {
     return false;
   }
 
-  QListIterator<AProviderOrderItems> main(p_orderItems);
+  QListIterator<OrderArticleItems> main(p_orderItems);
   int i = 0;
   while (main.hasNext()) {
-    QListIterator<AProviderOrderItem> sub(main.next());
+    QListIterator<ArticleOrderItem> sub(main.next());
     while (sub.hasNext()) {
-      AProviderOrderItem item = sub.next();
+      ArticleOrderItem item = sub.next();
       if (item.key == orderItemId) {
 #ifdef ANTIQUA_DEVELOPEMENT
         qDebug() << Q_FUNC_INFO << i << item.key;

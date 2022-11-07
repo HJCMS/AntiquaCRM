@@ -205,10 +205,17 @@ void CustomersData::postalCodeComplite(const AntiquaCRM::PostalCode &code) {
     return;
 
   QString country(c);
-  country.append("/");
-  country.append(code.state);
+  if (!code.state.isEmpty()) {
+    country.append("/");
+    country.append(code.state);
+  }
   c_country->setValue(country);
   c_country_bcp47->setValue(c);
+
+  if (code.plz.length() > 0) {
+    QStringList list = c_postalcode->locations(code.plz);
+    c_location->setCompleter(list);
+  }
 }
 
 void CustomersData::generateAddressBody() {

@@ -2,9 +2,22 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>AntiquaCRM::ACurl</name>
+    <message>
+        <location filename="../lib/acurl.cpp" line="+439"/>
+        <source>CA-Bundle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Missing CA-Bundle for Connections!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
-        <location filename="../lib/asqlquerymodel.cpp" line="+81"/>
+        <location filename="../lib/asqlquerymodel.cpp" line="+83"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17,46 +30,46 @@
 <context>
     <name>AntiquaDateInfo</name>
     <message>
-        <location filename="../widgets/antiquadateinfo.cpp" line="+72"/>
+        <location filename="../widgets/antiquadateinfo.cpp" line="+76"/>
         <source>A Valid Date is required!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentInfo</name>
+    <message>
+        <location filename="../utils/mailing/mailattachments.cpp" line="+13"/>
+        <source>Attachment path</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>BookBinding</name>
     <message>
-        <location filename="../widgets/bookbinding.cpp" line="+12"/>
+        <location filename="../widgets/bookbinding.cpp" line="+11"/>
         <source>Book binding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+36"/>
         <source>Without disclosures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+37"/>
         <source>Missing required Book binding!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>BookBindingCache</name>
-    <message>
-        <location filename="../utils/cache/bookbindingcache.cpp" line="+48"/>
-        <source>Build Book bindings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>BookEditor</name>
     <message>
-        <location filename="../tabs/books/bookeditor.cpp" line="+13"/>
+        <location filename="../tabs/books/bookeditor.cpp" line="+15"/>
         <source>Edit Book</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+10"/>
         <source>Article ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -96,7 +109,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+12"/>
         <source>Edition</source>
         <translation type="unfinished"></translation>
     </message>
@@ -191,22 +204,102 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>TODO Image Toolbar</source>
+        <location line="+85"/>
+        <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+1"/>
+        <source>Can&apos;t load input datafields!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>When getting this Message, please check your Network and Database connection!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Authors group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Authors team</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+79"/>
+        <source>Bookdata saved successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <source>Missing Article ID for Update.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>No Modifications found, Update aborted!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+104"/>
+        <source>When setting the Article Count to 0.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>This marked the Article in all Shopsystem for deletion!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Are you sure to finish this operation?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Book deactivation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>Unsaved Changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Don&apos;t leave this page before save your changes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Remove Image from Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do you realy wan&apos;t to delete the Image?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Image delete successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-376"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Internal Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Created at</source>
         <translation type="unfinished"></translation>
     </message>
@@ -234,7 +327,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+64"/>
         <location line="+80"/>
         <source>Keyword</source>
         <translation type="unfinished"></translation>
@@ -351,55 +444,20 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+81"/>
-        <source>Today</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Yesterday</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Last Week</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Last Month</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>This Week</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>This Month</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>This Year</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>BookTableView</name>
     <message>
-        <location filename="../tabs/books/booktableview.cpp" line="+42"/>
+        <location filename="../tabs/books/booktableview.cpp" line="+38"/>
         <source>Query finished with &apos;%1&apos; Rows.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source>Query without result</source>
         <translation type="unfinished"></translation>
     </message>
@@ -495,8 +553,46 @@
 <context>
     <name>BoolBox</name>
     <message>
-        <location filename="../widgets/boolbox.cpp" line="+75"/>
+        <location filename="../widgets/boolbox.cpp" line="+77"/>
         <source>is required must selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CacheBuilder</name>
+    <message>
+        <location filename="../utils/cache/cachebuilder.cpp" line="+18"/>
+        <source>Storage locations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Book bindings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Book designation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Keywordslist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Create Postalcode cache</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -752,15 +848,781 @@
     </message>
 </context>
 <context>
+    <name>CustomersBillings</name>
+    <message>
+        <location filename="../tabs/customers/customersbillings.cpp" line="+23"/>
+        <source>Locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Tax Id.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>IBAN Ident</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>BIC Swift Code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Comments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Billing E-Mail</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CustomersData</name>
+    <message>
+        <location filename="../tabs/customers/customersdata.cpp" line="+25"/>
+        <source>Gender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Title:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Firstname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Lastname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Postalcode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Country</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Country/State or Canton</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Street</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Primary phone number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Secundary phone number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Primary mobile number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Secundary mobile number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>fax number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Primary E-Mail Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Secundary E-Mail Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Company, Institute or Organisation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Employer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Generate Address with given Dataset.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Generate Invoice address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Shipping Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Postal Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Delivery Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CustomersEditor</name>
+    <message>
+        <location filename="../tabs/customers/customerseditor.cpp" line="+20"/>
+        <source>Customer Book</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>Contact data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Payment details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Purchases</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <source>An error has occurred!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Can&apos;t load input datafields!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>When getting this Message, please check your Network and Database connection!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+70"/>
+        <source>Customer saved successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+69"/>
+        <source>No Modifications found, Update aborted!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <location line="+49"/>
+        <source>Save Customer data success!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+59"/>
+        <source>Unsaved Changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Don&apos;t leave this page before save your changes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Send eMail finished!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CustomersOrders</name>
+    <message>
+        <location filename="../tabs/customers/customersorders.cpp" line="+16"/>
+        <source>Delivery Note</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Invoice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Article</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Provider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Provider Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Created</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Delivered</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CustomersSearchBar</name>
+    <message>
+        <location filename="../tabs/customers/customerssearchbar.cpp" line="+11"/>
+        <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Search customers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Press CTRL+Shift+S to focus in.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+34"/>
+        <source>Search customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-12"/>
+        <source>Search with customer id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Search company</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CustomersSelectFilter</name>
+    <message>
+        <location filename="../tabs/customers/customersselectfilter.cpp" line="+13"/>
+        <source>Customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search Customer by name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Customer Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search customer with id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Company</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search only companies</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CustomersStatusBar</name>
+    <message>
+        <location filename="../tabs/customers/customersstatusbar.cpp" line="+15"/>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Create a new Customer entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>History</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CustomersTableModel</name>
+    <message>
+        <location filename="../tabs/customers/customerstablemodel.cpp" line="+38"/>
+        <source>Customer Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Purchases</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Trustworthiness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Customer locked?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Customer&apos;s full name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Company or Person?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Customer data created on...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Customer address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Fullname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Commercially</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Since</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Personal</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CustomersTableView</name>
+    <message>
+        <location filename="../tabs/customers/customerstableview.cpp" line="+39"/>
+        <source>Query finished with &apos;%1&apos; Rows.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Query without result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Edit selected Customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Create new Customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Delete selected Customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Copy Customer Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>New Order for selected Customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Reload</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DeliverService</name>
+    <message>
+        <location filename="../utils/deliveryservice/deliverservice.cpp" line="+15"/>
+        <location line="+3"/>
+        <source>Internal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+104"/>
+        <source>Delevery Service is needet!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DeliverServiceDialog</name>
+    <message>
+        <location filename="../utils/deliveryservice/deliverservicedialog.cpp" line="+16"/>
+        <source>Deliver Services</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <location line="+92"/>
+        <source>Database Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-60"/>
+        <source>Invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DeliverServiceEdit</name>
+    <message>
+        <location filename="../utils/deliveryservice/deliverserviceedit.cpp" line="+20"/>
+        <source>Delivery Service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>International</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>If selected then it is a International Package.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Set this Package as default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Set default Package in this List.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Service Packagename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Packageclass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Package Definition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Package Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Infopage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Package Website Infolink</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Service Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Last changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Modification date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>The entry currently being edited can be saved!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>All text entries must be set and can&apos;t empty!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Only one Item can set as Default!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+50"/>
+        <source>No valid Dataset present</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DeliverServiceList</name>
+    <message>
+        <location filename="../utils/deliveryservice/deliverservicelist.cpp" line="+25"/>
+        <source>Service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Packageclass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+95"/>
+        <source>Create entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Remove entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>International</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>National</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EMailEdit</name>
+    <message>
+        <location filename="../widgets/emailedit.cpp" line="+12"/>
+        <source>eMail edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>usage.example@example.com</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+55"/>
+        <source>Max allowed length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <source>a valid input for &apos;%1&apos; is required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Ecurrency</name>
     <message>
-        <location filename="../widgets/ecurrency.cpp" line="+35"/>
+        <location filename="../widgets/ecurrency.cpp" line="+34"/>
         <source>Without disclosures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+75"/>
         <source>Ecurrency is requierd!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EditorActionBar</name>
+    <message>
+        <location filename="../widgets/editoractionbar.cpp" line="+15"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Exit without saving.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Restore dataset to last save operation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Save current dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Back to Mainview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Go back to Mainview</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GenderBox</name>
+    <message>
+        <location filename="../widgets/genderbox.cpp" line="+10"/>
+        <source>Gender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+48"/>
+        <source>Without disclosures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-47"/>
+        <location line="+48"/>
+        <source>Male</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-47"/>
+        <location line="+48"/>
+        <source>Female</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-47"/>
+        <location line="+48"/>
+        <source>Various</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>This Input is required.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -877,13 +1739,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+130"/>
+        <location line="+2"/>
+        <source>On GNU/Linux use the System Settings!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location line="+129"/>
         <source>fonts representation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-128"/>
+        <location line="-127"/>
         <source>open font settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -894,9 +1761,154 @@
     </message>
 </context>
 <context>
+    <name>GroupBox</name>
+    <message>
+        <location filename="../widgets/groupbox.cpp" line="+50"/>
+        <source>This GroupBox is required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ImageDialog</name>
+    <message>
+        <location filename="../utils/imgedit/imagedialog.cpp" line="+27"/>
+        <source>Picture Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Scale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Finish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>archiv isn&apos;t readable!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+36"/>
+        <source>no source image exists!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>&lt;p&gt;Do you want to copy this Image into the Picture Archiv?&lt;/p&gt;&lt;b&gt;Note:&lt;/b&gt; This will replace Images with identical Article Filename!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Copy image?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>no valid image found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>copy image in progress ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>successfully - image to archive copied</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>warning - image not copied</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Image saved successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>image from database!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ImageSelecter</name>
+    <message>
+        <location filename="../utils/imgedit/imageselecter.cpp" line="+24"/>
+        <source>Image Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Setting Imagelibrary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Open Image Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ImageToolBar</name>
+    <message>
+        <location filename="../utils/imgedit/imagetoolbar.cpp" line="+21"/>
+        <source>Image Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Dialog to Import/Edit Images.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Webcam Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Import Image from a Webcam.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Remove Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Remove image from Database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ImageView</name>
+    <message>
+        <location filename="../utils/imgedit/imageview.cpp" line="+28"/>
+        <source>Right mouse button with mouse wheel to zoom the image!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>IntSpinBox</name>
     <message>
-        <location filename="../widgets/intspinbox.cpp" line="+81"/>
+        <location filename="../widgets/intspinbox.cpp" line="+104"/>
         <source>is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -904,7 +1916,7 @@
 <context>
     <name>Inventory</name>
     <message>
-        <location filename="../widgets/inventory.cpp" line="+19"/>
+        <location filename="../widgets/inventory.cpp" line="+21"/>
         <source>Ctrl+Shift+S</source>
         <comment>Search</comment>
         <translation type="unfinished"></translation>
@@ -921,14 +1933,22 @@
         <comment>New</comment>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>InventoryEditor</name>
     <message>
-        <location line="+26"/>
-        <source>Information</source>
+        <location filename="../widgets/inventoryeditor.cpp" line="+109"/>
+        <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Warning</source>
+        <location line="+13"/>
+        <source>Success</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Notice</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -954,7 +1974,7 @@
     <name>KeywordActions</name>
     <message>
         <location filename="../utils/keywordedit/keywordactions.cpp" line="+21"/>
-        <source>Quit</source>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1062,7 +2082,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+104"/>
         <source>Keywords: Requires minimum one Keyword!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1191,8 +2211,867 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+68"/>
         <source>is required and can&apos;t empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MailAttachments</name>
+    <message>
+        <location filename="../utils/mailing/mailattachments.cpp" line="+30"/>
+        <location line="+15"/>
+        <source>Attachment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-13"/>
+        <source>Open Filedialog and change attachment path.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Mail Attachments (*.pdf *.PDF *.gs)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MailButton</name>
+    <message>
+        <location filename="../widgets/mailbutton.cpp" line="+14"/>
+        <source>Mail Messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Selection for different eMail messages.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Simple eMail message to customer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Send order status to customer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Create invoice to customer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Message Item Order Cancelled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MailCommand</name>
+    <message>
+        <location filename="../utils/mailing/mailcommand.cpp" line="+34"/>
+        <source>Missing mail application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>please check your configuration!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MailForwardDialog</name>
+    <message>
+        <location filename="../utils/mailing/mailforwarddialog.cpp" line="+19"/>
+        <source>Mail Templates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Mail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Start eMail command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <source>an error occurred</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+137"/>
+        <source>Missing Attachment</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MailTemplateKeys</name>
+    <message>
+        <location filename="../utils/mailing/mailtemplatekeys.cpp" line="+20"/>
+        <source>Mr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Mrs</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MessageKeywordList</name>
+    <message>
+        <location filename="../utils/templates/messagekeywordlist.cpp" line="+14"/>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Template</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Company</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MessageSelecter</name>
+    <message>
+        <location filename="../utils/templates/messageselecter.cpp" line="+16"/>
+        <location line="+62"/>
+        <source>Select your Template to edit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-58"/>
+        <source>Gender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Constant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Subject</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MessageTemplates</name>
+    <message>
+        <location filename="../utils/templates/messagetemplates.cpp" line="+16"/>
+        <source>in this Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>Orders system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Static text blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <location line="+29"/>
+        <location line="+62"/>
+        <source>an error occurred</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-50"/>
+        <source>The caller field is mandatory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>The title cannot be empty!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>The Subject cannot be empty!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Empty body text is not accepted!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>Save data successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OrderStatusSelecter</name>
+    <message>
+        <location filename="../widgets/orderstatusselecter.cpp" line="+20"/>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Order accepted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Ready for pickup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Delivered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Reminder sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+62"/>
+        <source>a valid Order status is required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OrdersCostSettings</name>
+    <message>
+        <location filename="../tabs/orders/orderscostsettings.cpp" line="+16"/>
+        <source>Service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Parcel Shipment Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Delivery note number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Delivery Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>European Countries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>vat included</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Normally the vat is included in Book articles. Uncheck it to enable add VAT in Printing Invoice.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>add delivery package price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>add delivery package price to current shipping.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Invoice Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Provider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Provider settlement number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Provider Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Created at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Last modified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Deliverd at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>History info</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OrdersCustomerInfo</name>
+    <message>
+        <location filename="../tabs/orders/orderscustomerinfo.cpp" line="+15"/>
+        <source>Customer Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Invoice Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Delivery Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OrdersEditor</name>
+    <message>
+        <location filename="../tabs/orders/orderseditor.cpp" line="+16"/>
+        <source>Edit Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Order ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Invoice ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Payment status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Current Payment status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Current order status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>An error has occurred!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Can&apos;t load input datafields!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>When getting this Message, please check your Network and Database connection!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+62"/>
+        <source>Order saved successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>Unsaved Changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Don&apos;t leave this page before save your changes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OrdersItemList</name>
+    <message>
+        <location filename="../tabs/orders/ordersitemlist.cpp" line="+34"/>
+        <source>Add Article orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Add here the article Ids for this order:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Check</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Info about Article found by input ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Insert Article</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OrdersPaymentTable</name>
+    <message>
+        <location filename="../tabs/orders/orderspaymenttable.cpp" line="+18"/>
+        <source>payment id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Article</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>article id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>selling price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Retail Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Article count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Summary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Article Summary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>delete selected article</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OrdersSearchBar</name>
+    <message>
+        <location filename="../tabs/orders/orderssearchbar.cpp" line="+15"/>
+        <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Order Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Customer or Company</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Delivery Service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Provider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Input search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Default view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Load the Standard table view.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <source>Search for %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OrdersTableModel</name>
+    <message>
+        <location filename="../tabs/orders/orderstablemodel.cpp" line="+33"/>
+        <location line="+32"/>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-28"/>
+        <source>Order accepted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Ready for pickup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Delivered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Reminded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>no time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>%1 days, %2 hours, %3 minutes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>%1 hours, %2 minutes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>%1 minutes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Order Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+14"/>
+        <source>Since</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-13"/>
+        <source>Order status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Payment status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+14"/>
+        <source>Customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-13"/>
+        <source>Delivery Service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Provider info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Order lifetime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Order finished at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Payed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Provider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Order age</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OrdersTableView</name>
+    <message>
+        <location filename="../tabs/orders/orderstableview.cpp" line="+35"/>
+        <source>Query finished with &apos;%1&apos; Rows.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Query without result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Copy Order Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Reload</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PaymentMethodSelecter</name>
+    <message>
+        <location filename="../widgets/paymentmethodselecter.cpp" line="+20"/>
+        <source>No selection available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Bank transfer in advance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Delivery with open invoice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Direct debit payment in advance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Credit card in advance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Cash on delivery payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>PayPal prepayment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Skrill prepayment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>GiroPay prepayment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>GooglePay prepayment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Payment in advance from an unknown provider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Pickup - cash payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Instant bank transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Open account - advance payment reserved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Check - payment in advance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+63"/>
+        <source>a Valid payment method is required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PaymentStatusSelecter</name>
+    <message>
+        <location filename="../widgets/paymentstatusselecter.cpp" line="+21"/>
+        <source>No status set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Waiting for payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Ready for shipping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Delivered waiting for payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Paid and shipped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>No reaction from buyer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>order canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+64"/>
+        <source>a valid Payment status is required.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1391,6 +3270,34 @@
     </message>
 </context>
 <context>
+    <name>PhoneEdit</name>
+    <message>
+        <location filename="../widgets/phoneedit.cpp" line="+81"/>
+        <source>phone edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+76"/>
+        <source>Max allowed length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>Example: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Example: &apos;%1&apos; for Hamburg.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>a phone input for &apos;%1&apos; is required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PostalCodeEdit</name>
     <message>
         <location filename="../widgets/postalcodeedit.cpp" line="+109"/>
@@ -1398,26 +3305,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+33"/>
         <source>Without disclosures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-27"/>
         <source>Postalcode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+125"/>
+        <location line="+159"/>
         <source>a valid Postalcode is required!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PostalcodeCache</name>
-    <message>
-        <location filename="../utils/cache/postalcodecache.cpp" line="+63"/>
-        <source>Build Postalcodes</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1544,6 +3443,55 @@
     </message>
 </context>
 <context>
+    <name>PrinterButton</name>
+    <message>
+        <location filename="../widgets/printerbutton.cpp" line="+14"/>
+        <source>Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Selection for different printings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Deliverynote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Open Print Deliverynote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Invoice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+6"/>
+        <source>Open Print Invoice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <source>Payment Reminder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Book card</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Printing a Book card</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProviderSettings</name>
     <message>
         <location filename="../utils/settings/providersettings.cpp" line="+24"/>
@@ -1605,6 +3553,11 @@
     <name>QObject</name>
     <message>
         <location filename="../lib/aeuropeancountries.cpp" line="+11"/>
+        <source>Non EU Country</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Belgium</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1740,6 +3693,24 @@
     </message>
 </context>
 <context>
+    <name>SalutationBox</name>
+    <message>
+        <location filename="../widgets/salutationbox.cpp" line="+8"/>
+        <source>Salutation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+70"/>
+        <source>Without disclosures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>a Title is required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SearchLineEdit</name>
     <message>
         <location filename="../widgets/searchlineedit.cpp" line="+8"/>
@@ -1760,7 +3731,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+71"/>
         <source>A valid European Country selection is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1808,9 +3779,37 @@
     </message>
 </context>
 <context>
+    <name>StorageEditDialog</name>
+    <message>
+        <location filename="../utils/storage/storageeditdialog.cpp" line="+22"/>
+        <source>new entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>insert a new storage location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>search in table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+63"/>
+        <source>invalid input</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>StorageEditor</name>
     <message>
-        <location filename="../utils/storage/storageeditor.cpp" line="+24"/>
+        <location filename="../utils/storage/storageeditor.cpp" line="+25"/>
         <source>Empty data fields not accepted and reject this operation.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1843,52 +3842,19 @@
 <context>
     <name>StorageLocation</name>
     <message>
-        <location filename="../widgets/storagelocation.cpp" line="+11"/>
-        <location line="+6"/>
+        <location filename="../widgets/storagelocation.cpp" line="+10"/>
+        <location line="+5"/>
         <source>Storage Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-5"/>
+        <location line="-4"/>
         <source>Without disclosures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+118"/>
         <source>Storage location is required and must set.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../utils/storage/storagelocation.cpp" line="+22"/>
-        <source>new entry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>insert a new storage location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>search in table</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+63"/>
-        <source>invalid input</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>StorageLocationCache</name>
-    <message>
-        <location filename="../utils/cache/storagelocationcache.cpp" line="+49"/>
-        <source>Build Storage locations</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1942,8 +3908,137 @@
 <context>
     <name>TabBooks</name>
     <message>
-        <location filename="../tabs/books/tabbooks.cpp" line="+15"/>
+        <location filename="../tabs/books/tabbooks.cpp" line="+16"/>
         <source>Books</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+97"/>
+        <source>Cannot open this article.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Because the book tab is not in overview mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Please save and close all open book entries first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Bookeditor</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TabCustomers</name>
+    <message>
+        <location filename="../tabs/customers/tabcustomers.cpp" line="+17"/>
+        <source>Customers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <source>Do you really want to delete this customer?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>This process is irreversible!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>In addition, the system will refuse to delete if an order exists for this customer!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Delete Customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>There are purchase order relationships that cannot be resolved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Cannot open this customer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Because the customer tab is not in overview mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Please save and close all open customers first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Customereditor</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TabOrders</name>
+    <message>
+        <location filename="../tabs/orders/taborders.cpp" line="+16"/>
+        <source>Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+99"/>
+        <source>Cannot open this order.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Because the order tab is not in overview mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Please save and close all open order first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Ordereditor</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TabProviders</name>
+    <message>
+        <location filename="../tabs/providers/tabproviders.cpp" line="+12"/>
+        <source>Providers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>Cannot open this provider.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Because the provider tab is not in overview mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Please save and close all open provider first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Providereditor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1967,25 +4062,127 @@
         <source>Update current View</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+12"/>
+        <source>Today</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Yesterday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Last Week</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Last Month</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>This Week</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>This Month</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>This Year</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TabViews</name>
+    <message>
+        <location filename="../tabs/views/tabviews.cpp" line="+13"/>
+        <location line="+10"/>
+        <source>Views</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TaxLevelBox</name>
+    <message>
+        <location filename="../widgets/taxlevelbox.cpp" line="+15"/>
+        <source>Tax</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Reduced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>No VAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+54"/>
+        <source>a Valid tay level is required.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TextField</name>
     <message>
-        <location filename="../widgets/textfield.cpp" line="+61"/>
+        <location filename="../widgets/textfield.cpp" line="+57"/>
         <source>requires a valid input.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>ViewSettings</name>
+    <name>TrustedBox</name>
     <message>
-        <location filename="../utils/settings/viewsettings.cpp" line="+21"/>
-        <source>fonts representation</source>
+        <location filename="../widgets/trustedbox.cpp" line="+8"/>
+        <source>Trust</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Open</source>
+        <location line="+10"/>
+        <source>No trust level set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Pays on time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Pays reliably</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Pay late</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Only with prepayment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>No delivery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>a Trustlevel is required.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -107,7 +107,6 @@ PostalCodeEdit::PostalCodeEdit(QWidget *parent) : InputEdit{parent} {
 
   m_countries = new AntiquaComboBox(this);
   m_countries->setToolTip(tr("Supported countries"));
-  m_countries->insertItem(0, tr("Without disclosures"), QString());
   m_layout->addWidget(m_countries);
 
   m_postalcode = new QLineEdit(this);
@@ -139,7 +138,9 @@ PostalCodeEdit::PostalCodeEdit(QWidget *parent) : InputEdit{parent} {
 }
 
 void PostalCodeEdit::loadDataset() {
-  // Cache
+  m_countries->clear();
+  m_countries->insertItem(0, tr("Without disclosures"), QString());
+
   AntiquaCRM::ASharedDataFiles dataFile;
   if (dataFile.fileExists(QString("postalcodes"))) {
     QJsonDocument jdoc = dataFile.getJson("postalcodes");
@@ -160,6 +161,30 @@ void PostalCodeEdit::loadDataset() {
     }
     qWarning("PostalCode from SQL Database - non cachefile found!");
   }
+}
+
+const QStringList PostalCodeEdit::locations(const QString &fromCode) {
+  QStringList locations;
+  QString t_plz = fromCode.trimmed();
+  if (t_plz.isEmpty() || t_plz.length() < 4)
+    return locations;
+
+  PostalCodeModel *m = qobject_cast<PostalCodeModel *>(m_completer->model());
+  if (m != nullptr) {
+    Qt::ItemDataRole qrole = Qt::EditRole;
+    for (int r = 0; r < m->rowCount(); r++) {
+      QModelIndex mIndex = m->sibling(r, 0, QModelIndex());
+      QVariant var = m->data(mIndex, qrole);
+      if (!var.isValid())
+        continue;
+
+      if (var.toString() == t_plz) {
+        QVariant v_lo = m->data(m->sibling(r, 1, mIndex), qrole);
+        locations << v_lo.toString();
+      }
+    }
+  }
+  return locations;
 }
 
 void PostalCodeEdit::dataChanged(int index) {

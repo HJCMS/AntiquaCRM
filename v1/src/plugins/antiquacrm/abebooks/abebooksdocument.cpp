@@ -267,34 +267,11 @@ const QString AbeBooksDocument::getLocation(const QDomNode &addressNode) {
 }
 
 const QString AbeBooksDocument::getCountry(const QDomNode &addressNode) {
-  AntiquaCRM::ASettings cfg;
-  QFileInfo info(cfg.getDataDir("json"), "iso_countrycodes.json");
-  if (info.isReadable()) {
-    QVariant v = addressNode.namedItem("country").firstChild().nodeValue();
-    QString code = v.toString().trimmed().toLower();
+  QVariant v = addressNode.namedItem("country").firstChild().nodeValue();
+  if (v.isNull())
+    return QString();
 
-    QJsonDocument js;
-    QFile fp(info.filePath());
-    if (fp.open(QIODevice::ReadOnly)) {
-      QTextStream data(&fp);
-      data.setCodec(ANTIQUACRM_TEXTCODEC);
-      QByteArray buffer = data.readAll().toLocal8Bit();
-      js = QJsonDocument::fromJson(buffer);
-      fp.close();
-      buffer.clear();
-    }
-
-    if (js.isEmpty())
-      return QString("C");
-
-    QJsonArray countries = js.object().value("countries").toArray();
-    for (int c = 0; c < countries.size(); c++) {
-      QJsonObject o = countries.at(c).toObject();
-      if (o.value("country").toString().contains(code, Qt::CaseInsensitive))
-        return o.value("iso2").toString();
-    }
-  }
-  return QString("C");
+  return v.toString().trimmed();
 }
 
 const QString AbeBooksDocument::getStreet(const QDomNode &addressNode) {

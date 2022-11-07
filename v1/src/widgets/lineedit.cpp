@@ -68,8 +68,13 @@ void LineEdit::setPasswordInput(bool b) {
 bool LineEdit::isPasswordInput() { return p_passwordInput; }
 
 void LineEdit::setCompleter(const QStringList &list) {
-  if (list.size() < 1)
+  if (list.size() < 1) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "Remove Completer";
+#endif
+    m_edit->setCompleter(nullptr);
     return;
+  }
 
   m_completer = new QCompleter(list, m_edit);
   m_completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);

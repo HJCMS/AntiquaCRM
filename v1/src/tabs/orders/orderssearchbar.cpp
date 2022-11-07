@@ -4,6 +4,7 @@
 #include "orderssearchbar.h"
 
 #include <AGlobal>
+#include <QIcon>
 
 OrdersSearchBar::OrdersSearchBar(QWidget *parent) : TabSearchBar{parent} {
   setObjectName("orders_search_bar");
@@ -23,10 +24,15 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent) : TabSearchBar{parent} {
   m_lineEdit->setValidation(SearchLineEdit::Strings);
   addWidget(m_lineEdit);
 
-  m_searchBtn = clickSearchButton(tr("Search Order"));
+  m_searchBtn = clickSearchButton(tr("Search"));
+  m_searchBtn->setToolTip(tr("Input search"));
   addWidget(m_searchBtn);
 
-  m_restoreView = new QPushButton(tr("Reset view"));
+  addSeparator();
+
+  m_restoreView = new QPushButton(tr("Default view"));
+  m_restoreView->setIcon(QIcon("://icons/spreadsheet.png"));
+  m_restoreView->setToolTip(tr("Load the Standard table view."));
   addWidget(m_restoreView);
 
   connect(m_selectFilter, SIGNAL(currentIndexChanged(int)),

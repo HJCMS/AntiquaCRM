@@ -29,6 +29,79 @@ const APluginConfig APluginInterface::getConfig(const QString &providerName) {
   return config;
 }
 
+AntiquaCRM::Gender APluginInterface::convertGender(const QString &from) const {
+  QStringList male({"mr", "mister", "sir", "herr", "herrn", "freiherr"});
+  QStringList female({"ms.", "mss", "mses", "madam", "frau", "freifrau"});
+  if (female.contains(from, Qt::CaseInsensitive))
+    return AntiquaCRM::Gender::MALE;
+  else if (male.contains(from, Qt::CaseInsensitive))
+    return AntiquaCRM::Gender::MALE;
+  else if (from.contains("diverse", Qt::CaseInsensitive))
+    return AntiquaCRM::Gender::VARIOUS;
+  else
+    return AntiquaCRM::Gender::NO_GENDER;
+}
+
+const QString APluginInterface::bcp47Country(const QString &country) const {
+  AntiquaCRM::ASettings cfg;
+  QFileInfo info(cfg.getDataDir("json"), "iso_countrycodes.json");
+  if (info.isReadable()) {
+    QString code = country.trimmed().toLower();
+    QJsonDocument js;
+    QFile fp(info.filePath());
+    if (fp.open(QIODevice::ReadOnly)) {
+      QTextStream data(&fp);
+      data.setCodec(ANTIQUACRM_TEXTCODEC);
+      QByteArray buffer = data.readAll().toLocal8Bit();
+      js = QJsonDocument::fromJson(buffer);
+      fp.close();
+      buffer.clear();
+    }
+
+    if (js.isEmpty())
+      return QString("C");
+
+    QJsonArray countries = js.object().value("countries").toArray();
+    for (int c = 0; c < countries.size(); c++) {
+      QJsonObject o = countries.at(c).toObject();
+      if (o.value("country").toString().contains(code, Qt::CaseInsensitive))
+        return o.value("iso2").toString();
+    }
+  }
+
+  return QString("C");
+}
+
+const QString APluginInterface::getCountry(const QString &bcp47) const {
+  AntiquaCRM::ASettings cfg;
+  QFileInfo info(cfg.getDataDir("json"), "iso_countrycodes.json");
+  if (info.isReadable()) {
+    QString code = bcp47.trimmed().toLower();
+    QJsonDocument js;
+    QFile fp(info.filePath());
+    if (fp.open(QIODevice::ReadOnly)) {
+      QTextStream data(&fp);
+      data.setCodec(ANTIQUACRM_TEXTCODEC);
+      QByteArray buffer = data.readAll().toLocal8Bit();
+      js = QJsonDocument::fromJson(buffer);
+      fp.close();
+      buffer.clear();
+    }
+
+    if (js.isEmpty())
+      return QString("C");
+
+    QJsonArray countries = js.object().value("countries").toArray();
+    for (int c = 0; c < countries.size(); c++) {
+      QJsonObject o = countries.at(c).toObject();
+      if (o.value("iso2").toString().contains(code, Qt::CaseInsensitive))
+        return o.value("country").toString();
+    }
+  }
+
+  return QString("C");
+}
+
 const QDateTime APluginInterface::getDateTime(const QString &dateString,
                                               const QString &timeString,
                                               Qt::TimeSpec spec) const {

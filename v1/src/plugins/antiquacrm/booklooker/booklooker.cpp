@@ -111,14 +111,14 @@ const QString Booklooker::dateString(const QDate &date) const {
   return date.toString(BOOKLOOKER_DATE_FORMAT);
 }
 
-const AntiquaCRM::AProviderOrderItem
+const AntiquaCRM::ArticleOrderItem
 Booklooker::articleItem(const QString &key, const QJsonValue &value) const {
   QString _key = p_articleTranslate.value(key);
   QHash<QString, QMetaType::Type> keys =
       AntiquaCRM::AProviderOrder::articleKeys();
   if (!keys.contains(_key)) {
     qWarning("Booklooker: Unknown Article Key(%s)!", qPrintable(key));
-    return AntiquaCRM::AProviderOrderItem();
+    return AntiquaCRM::ArticleOrderItem();
   }
 
   QVariant _value;
@@ -141,7 +141,7 @@ Booklooker::articleItem(const QString &key, const QJsonValue &value) const {
     _value = value.toString();
   }
 
-  AntiquaCRM::AProviderOrderItem item;
+  AntiquaCRM::ArticleOrderItem item;
   item.key = _key;
   item.value = _value;
   return item;
@@ -373,17 +373,29 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
       // Invoice Address
       if (!order.value("invoiceAddress").toObject().isEmpty()) {
         QJsonObject address = order.value("invoiceAddress").toObject();
-        item.setValue("c_location", address.value("city").toString());
-        item.setValue("c_country", address.value("country").toString());
-        item.setValue("c_firstname", address.value("firstName").toString());
-        item.setValue("c_lastname", address.value("name").toString());
-        item.setValue("c_street", address.value("street").toString());
-        item.setValue("c_gender", address.value("title").toString());
-        item.setValue("c_postalcode", address.value("zip").toString());
-        QString uniqName = item.getValue("c_firstname").toString();
-        uniqName.append(" ");
-        uniqName.append(item.getValue("c_lastname").toString());
-        item.setValue("c_provider_import", uniqName);
+        QString firstname = address.value("firstName").toString();
+        QString lastname = address.value("name").toString();
+        QString street = address.value("street").toString();
+        QString postalcode = address.value("zip").toString();
+        QString location = address.value("city").toString();
+        QString bcp47 = address.value("country").toString();
+        QString gender = address.value("title").toString();
+        item.setValue("c_gender", convertGender(gender));
+        item.setValue("c_firstname", firstname);
+        item.setValue("c_lastname", lastname);
+        item.setValue("c_street", street);
+        item.setValue("c_postalcode", postalcode);
+        item.setValue("c_location", location);
+        QString state = AntiquaCRM::AEuropeanCountries().value(bcp47.toUpper());
+        if (!state.isEmpty()) {
+          item.setValue("c_country", state);
+        }
+        item.setValue("c_provider_import", (firstname + " " + lastname));
+        QStringList postalAddress;
+        postalAddress << firstname + " " + lastname;
+        postalAddress << street;
+        postalAddress << postalcode + " " + location;
+        item.setValue("c_postal_address", postalAddress.join("\n"));
       }
 
       if (order.contains("email"))
@@ -433,7 +445,7 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
       QJsonArray articles = order.value("orderItems").toArray();
       for (int a = 0; a < articles.count(); a++) {
         if (articles[a].type() == QJsonValue::Object) {
-          AntiquaCRM::AProviderOrderItems booking;
+          AntiquaCRM::OrderArticleItems booking;
           QJsonObject itemData = articles[a].toObject();
           foreach (QString k, itemData.keys()) {
             if (!p_articleTranslate.value(k).isEmpty()) {

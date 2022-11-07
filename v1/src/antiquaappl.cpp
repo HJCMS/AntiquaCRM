@@ -34,6 +34,8 @@ AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
   m_cfg = new AntiquaCRM::ASettings(this);
   m_cfg->setObjectName("application_settings");
 
+  m_orderSystem = new OrderSystem(this);
+
   m_mainWindow = new AntiquaWindow();
   m_mainWindow->setObjectName("MainWindow");
   m_systemTray = new AntiquaSystemTray(applIcon(), this);
@@ -47,6 +49,7 @@ AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
   connect(m_systemTray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
   connect(m_mainWindow, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
   connect(m_timer, SIGNAL(sendTrigger()), SLOT(startTriggerProcess()));
+  // TODO connect(m_orderSystem,SIGNAL(sendNewOrdersArrived()),);
 }
 
 bool AntiquaAppl::checkInterfaces() {
@@ -146,13 +149,20 @@ void AntiquaAppl::startTriggerProcess() {
   }
 }
 
+/**
+ * @brief Pluginabfrage auf neue Bestellungen
+ * Nehme von QList<AProviderOrder> die Anzahl neuer Bestellungen.
+ * Sind neue Bestellungen vorhanden speichere Sie in die Datenbank.
+ * OrderSystem ordersystem
+ */
 void AntiquaAppl::setPluginQueryFinished() {
   AntiquaCRM::APluginInterface *m_iface =
       qobject_cast<AntiquaCRM::APluginInterface *>(sender());
   if (m_iface != nullptr) {
     AntiquaCRM::AProviderOrders orders = m_iface->getOrders();
-    if (orders.size() > 0)
-      qDebug() << m_iface->displayName() << "Orders:" << orders.size();
+    if (orders.size() > 0) {
+      m_orderSystem->updateOrders(m_iface->displayName(), orders);
+    }
   }
 }
 

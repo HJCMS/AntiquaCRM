@@ -84,6 +84,7 @@
 #endif
 
 // AntiquaCRM::AProviderOrders
+// AntiquaCRM::ArticleOrderItem
 #ifndef ANTIQUACRM_PLUGIN_ORDERS_H
 #include "aproviderorders.h"
 #endif

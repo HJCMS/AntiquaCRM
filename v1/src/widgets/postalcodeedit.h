@@ -69,6 +69,7 @@ Q_SIGNALS:
 public:
   explicit PostalCodeEdit(QWidget *parent = nullptr);
   void loadDataset();
+  const QStringList locations(const QString &fromCode);
   void setProperties(const QSqlField &field);
   const QVariant value();
   bool isValid();

@@ -10,16 +10,12 @@
 #include <QDateTime>
 #include <QDomDocument>
 #include <QJsonDocument>
+#include <QJsonValue>
 #include <QNetworkCookie>
 #include <QObject>
 #include <QString>
 #include <QTextCodec>
 #include <QUrl>
-
-// AntiquaCRM::AProviderOrders
-#ifndef ANTIQUACRM_PLUGIN_ORDERS_H
-#include "aproviderorders.h"
-#endif
 
 namespace AntiquaCRM {
 
@@ -64,6 +60,12 @@ protected:
    */
   QNetworkCookie authenticCookie = QNetworkCookie();
 
+  AntiquaCRM::Gender convertGender(const QString &from) const;
+
+  const QString bcp47Country(const QString &country) const;
+
+  const QString getCountry(const QString &bcp47) const;
+
   /**
    * @brief Vendors respond with different date and time formats.
    */
@@ -95,6 +97,9 @@ protected:
    * @brief create a custom API access
    */
   virtual const QUrl apiQuery(const QString &section) = 0;
+
+  virtual const ArticleOrderItem articleItem(const QString &key,
+                                             const QJsonValue &value) const = 0;
 
 protected Q_SLOTS:
   void setContentDecoder(QTextCodec *);

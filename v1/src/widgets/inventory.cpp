@@ -69,5 +69,5 @@ bool Inventory::isModified() { return isWindowModified(); }
 const QString Inventory::tabIndexId() const { return tabIndex; }
 
 const QIcon Inventory::getTabIcon(const QString &name) {
-  return QIcon(QString(":icons/" + name + ".png"));
+  return QIcon(QString("://icons/" + name + ".png"));
 }

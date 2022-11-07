@@ -21,6 +21,8 @@ private:
   AbeBooksDocument initDocument();
   const QUrl apiQuery(const QString &section);
   const QString dateString(const QDate &date = QDate::currentDate()) const;
+  const AntiquaCRM::ArticleOrderItem articleItem(const QString &key,
+                                                 const QJsonValue &value) const;
 
 private Q_SLOTS:
   void prepareResponse(const QJsonDocument &js);
