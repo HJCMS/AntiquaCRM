@@ -34,14 +34,28 @@ AProviderOrder &AProviderOrder::operator=(const AProviderOrder &other) {
   return *this;
 }
 
+const QRegExp AProviderOrder::keysPattern() {
+  return QRegExp("^c_[a-z0-9_]+$");
+}
+
 const QHash<QString, QMetaType::Type> AProviderOrder::customerKeys() {
-  QRegExp pattern("^c_[a-z0-9_]+$");
   QHash<QString, QMetaType::Type> list;
-  QHashIterator<QString, QMetaType::Type> it(orderKeys());
+  QHashIterator<QString, QMetaType::Type> it(orderEditKeys());
   while (it.hasNext()) {
     it.next();
-    if (it.key().contains(pattern))
-      list.insert(it.key(),it.value());
+    if (it.key().contains(keysPattern()))
+      list.insert(it.key(), it.value());
+  }
+  return list;
+}
+
+const QHash<QString, QMetaType::Type> AProviderOrder::orderKeys() {
+  QHash<QString, QMetaType::Type> list;
+  QHashIterator<QString, QMetaType::Type> it(orderEditKeys());
+  while (it.hasNext()) {
+    it.next();
+    if (!it.key().contains(keysPattern()))
+      list.insert(it.key(), it.value());
   }
   return list;
 }
@@ -58,7 +72,7 @@ const QStringList AProviderOrder::filledKeys() const {
 }
 
 bool AProviderOrder::setValue(const QString &key, const QVariant &value) {
-  QHashIterator<QString, QMetaType::Type> it(orderKeys());
+  QHashIterator<QString, QMetaType::Type> it(orderEditKeys());
   while (it.hasNext()) {
     it.next();
     QMetaType type(it.value());
@@ -88,9 +102,7 @@ const QVariant AProviderOrder::getValue(const QString &key) {
   return QVariant();
 }
 
-const QList<OrderArticleItems> AProviderOrder::orders() {
-  return p_orderItems;
-}
+const QList<OrderArticleItems> AProviderOrder::orders() { return p_orderItems; }
 
 bool AProviderOrder::insertOrderItems(const OrderArticleItems &article) {
   p_orderItems.append(article);

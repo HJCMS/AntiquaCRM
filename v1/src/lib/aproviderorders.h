@@ -9,10 +9,15 @@
 #include <QHash>
 #include <QList>
 #include <QMetaType>
+#include <QRegExp>
 #include <QVariant>
 
 namespace AntiquaCRM {
 
+/**
+ * @brief Article Order Item Class
+ * @ingroup OrderSystem
+ */
 struct ANTIQUACRM_LIBRARAY ArticleOrderItem {
   QString key;
   QVariant value;
@@ -20,7 +25,17 @@ struct ANTIQUACRM_LIBRARAY ArticleOrderItem {
 typedef QList<ArticleOrderItem> OrderArticleItems;
 
 /**
- * @brief Provider Order class
+ * @brief Primary Provider Orders Class
+ * @ingroup OrderSystem
+ * @section Containers
+ *
+ * It Contains a Overview from current Buyer Ordering.
+ *
+ * This class is used to import Orders from Different Providers.
+ * All valid registered Keywords from Antigua CRM are inherit.
+ *
+ * If you create a new Plugin, it is important to use this Class to convert your
+ * data for the main Application.
  */
 class ANTIQUACRM_LIBRARAY AProviderOrder final {
 private:
@@ -29,22 +44,28 @@ private:
   QHash<QString, QVariant> p_data;
   QList<OrderArticleItems> p_orderItems;
 
+  /**
+   * @brief Regular Expression pattern for Key finding.
+   */
+  static const QRegExp keysPattern();
+
 public:
   /**
-   * @brief Provider Order
-   * @param uniqId Order Id
+   * @brief Provider Order constructor
+   * @param provider  Provider name.
+   * @param uniqId    Booking or Order Id.
    */
-  AProviderOrder(const QString &provider, const QString &uniqId);
+  explicit AProviderOrder(const QString &provider, const QString &uniqId);
   AProviderOrder(const AProviderOrder &other);
   AProviderOrder &operator=(const AProviderOrder &other);
 
   /**
-   * @brief Provider name
+   * @brief Current Provider name for this Object.
    */
   inline const QString provider() const { return providerName; };
 
   /**
-   * @brief Booking Id
+   * @brief Imported Provider - Booking or Order Id.
    */
   inline const QString id() const { return bookingId; };
 
@@ -54,60 +75,66 @@ public:
   inline int count() const { return p_data.size(); };
 
   /**
-   * @brief valid configuration keys
+   * @brief Contains all valid Configuration-keys for Ordering entries.
    * @code
-   *  QHash<"registered key","data type">
+   *  QHash<"registered keyword","required data type">
    * @endcode
+   * For keyword descriptions see inside this function.
    */
-  static const QHash<QString, QMetaType::Type> orderKeys() {
+  static const QHash<QString, QMetaType::Type> orderEditKeys() {
     QHash<QString, QMetaType::Type> hash;
+
     /**
-     * @brief uniq customer Name to prevent duplicate enries!
+     * @brief Customer Provider \b Unique Import key.
+     * Some Providers didn't support separate Name Fields for Firstname and
+     * Surname. To prevent duplicate Entries in the Database System, this value
+     * can help.
      */
     hash.insert("c_provider_import", QMetaType::QString);
 
     /**
-     * @brief customer gender
+     * @brief Customer Gender
+     * @see AntiquaCRM::Gender
      */
     hash.insert("c_gender", QMetaType::Int);
 
     /**
-     * @brief customer firstname
+     * @brief Customer Firstname
      */
     hash.insert("c_firstname", QMetaType::QString);
 
     /**
-     * @brief customer surname
+     * @brief Customer Surname
      */
     hash.insert("c_lastname", QMetaType::QString);
 
     /**
-     * @brief customer street
+     * @brief Customer Street
      */
     hash.insert("c_street", QMetaType::QString);
 
     /**
-     * @brief customer postalcode
+     * @brief Customer Postalcode
      */
     hash.insert("c_postalcode", QMetaType::QString);
 
     /**
-     * @brief customer location
+     * @brief Customer Location
      */
     hash.insert("c_location", QMetaType::QString);
 
     /**
-     * @brief customer country (Fullname)
+     * @brief Customer Country (Fullname)
      */
     hash.insert("c_country", QMetaType::QString);
 
     /**
-     * @brief customer country ISO2
+     * @brief Customer Country IETF BCP 47 language tag
      */
     hash.insert("c_country_bcp47", QMetaType::QString);
 
     /**
-     * @brief customer phone number
+     * @brief Customer Primary Phone number
      */
     hash.insert("c_phone_0", QMetaType::QString);
 
@@ -117,90 +144,90 @@ public:
     hash.insert("c_email_0", QMetaType::QString);
 
     /**
-     * @brief company name
+     * @brief Customer - Company name
      */
     hash.insert("c_company_name", QMetaType::QString);
 
     /**
-     * @brief banking IBAN
+     * @brief Customer Banking IBAN
      */
     hash.insert("c_iban", QMetaType::QString);
 
     /**
-     * @brief banking SWIFT BIC
+     * @brief Customer Banking SWIFT BIC
      */
     hash.insert("c_swift_bic", QMetaType::QString);
 
     /**
-     * @brief company TAX Id
+     * @brief Customer - Company TAX Id
      */
     hash.insert("c_tax_id", QMetaType::QString);
 
     /**
-     * @brief complete Postal Address
+     * @brief Customer Postal Address (Invoice Address)
      */
     hash.insert("c_postal_address", QMetaType::QString);
 
     /**
-     * @brief complete Delivery Address
+     * @brief Customer Delivery Address
      */
     hash.insert("c_shipping_address", QMetaType::QString);
 
     /**
-     * @brief customer Comments
+     * @brief Customer Comments (Optional)
      */
     hash.insert("c_comments", QMetaType::QString);
 
     /**
-     * @brief Provider Order Id String
+     * @brief Order Provider - Order Id (String)
      */
     hash.insert("o_provider_order_id", QMetaType::QString);
 
     /**
-     * @brief Provider Order Id Numeric
+     * @brief Order Provider Purchase Id (Numeric)
      */
     hash.insert("o_provider_purchase_id", QMetaType::Int);
 
     /**
-     * @brief Delivery Comment
+     * @brief Order Delivery Comment from Buyer
      */
     hash.insert("o_delivery_comment", QMetaType::QString);
 
     /**
-     * @brief Payment Confirmed
+     * @brief Order Payment Confirmed
      */
     hash.insert("o_payment_confirmed", QMetaType::QDateTime);
 
     /**
-     * @brief PayPal TransactionId
+     * @brief Order Payment PayPal TransactionId
      */
     hash.insert("o_payment_paypal_txn_id", QMetaType::QString);
 
     /**
-     * @brief Payment Method
+     * @brief Provider Order Payment Method
      * @see AntiquaCRM::PaymentMethod
      */
     hash.insert("o_payment_method", QMetaType::Int);
 
     /**
-     * @brief Provider Order Status
+     * @brief Current Provider Order Status
      * @see AntiquaCRM::PaymentStatus
      */
     hash.insert("o_provider_order_status", QMetaType::Int);
 
     /**
-     * @brief Order Date & Time
+     * @brief Order add/since DateTime
      */
     hash.insert("o_since", QMetaType::QDateTime);
 
     /**
-     * @brief Media type
+     * @brief Ordered Media type
      * @see AntiquaCRM::ArticleType
      */
     hash.insert("o_media_type", QMetaType::Int);
 
     /**
-     * @brief Delivery cost: "postage"
+     * @brief Delivery cost: \b postage
      */
     hash.insert("d_price", QMetaType::Double);
 
@@ -208,9 +235,14 @@ public:
   };
 
   /**
-   * @brief returning Customer keys from orderKeys()
+   * @brief Returning all Customer keys from orderEditKeys()
    */
   static const QHash<QString, QMetaType::Type> customerKeys();
+
+  /**
+   * @brief Returning all Provider Order-Keys from orderEditKeys()
+   */
+  static const QHash<QString, QMetaType::Type> orderKeys();
 
   /**
    * @brief All valid Payment "Article" Keys.
@@ -287,7 +319,7 @@ public:
   bool removeOrderItem(const QString &orderItemId);
 
   /**
-   * @brief Current Order Item Size
+   * @brief Current Order Article Items Size
    */
   inline int orderItemCount() const { return p_orderItems.size(); };
 };

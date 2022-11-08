@@ -19,6 +19,11 @@
 
 namespace AntiquaCRM {
 
+/**
+ * @brief Primary Plugin Interface class
+ * @ingroup OrderSystem
+ * @section PluginInterface
+ */
 class ANTIQUACRM_LIBRARAY APluginInterface : public QObject {
   Q_OBJECT
   Q_CLASSINFO("Interface", ANTIQUACRM_INTERFACE)
@@ -60,14 +65,24 @@ protected:
    */
   QNetworkCookie authenticCookie = QNetworkCookie();
 
+  /**
+   * @brief Convert Gender from String to AntiquaCRM::Gender
+   */
   AntiquaCRM::Gender convertGender(const QString &from) const;
 
+  /**
+   * @brief Search for IETF BCP 47 Language tag with Country name
+   * @return "IETF BCP 47 language tag"
+   */
   const QString bcp47Country(const QString &country) const;
 
+  /**
+   * @brief Search for Country name with IETF BCP 47 language tag
+   */
   const QString getCountry(const QString &bcp47) const;
 
   /**
-   * @brief Vendors respond with different date and time formats.
+   * @brief Vendors respond - with different date/time and zone formats.
    */
   const QDateTime getDateTime(const QString &dateString,
                               const QString &timeString,
@@ -98,34 +113,91 @@ protected:
    */
   virtual const QUrl apiQuery(const QString &section) = 0;
 
+  /**
+   * @brief create a Article Order Item
+   * @see AntiquaCRM::AProviderOrder
+   * @param key
+   * @param value
+   */
   virtual const ArticleOrderItem articleItem(const QString &key,
                                              const QJsonValue &value) const = 0;
 
 protected Q_SLOTS:
+  /**
+   * @brief Changes the primary Text Codec.
+   * @ref m_decodeFrom
+   */
   void setContentDecoder(QTextCodec *);
+
+  /**
+   * @brief This functions are called to preparing Response Data from given
+   * Vendors.
+   */
   virtual void prepareResponse(const QJsonDocument &js) = 0;
   virtual void prepareResponse(const QDomDocument &xml) = 0;
+
+  /**
+   * @brief This function is called when Network request has been finished.
+   */
   virtual void queryFinished(QNetworkReply *reply) = 0;
 
 Q_SIGNALS:
+  /**
+   * @brief This Signal is reserved to emitted when a Network or Parser error
+   * has occurred.
+   */
   void sendErrorResponse(AntiquaCRM::Message, const QString &);
+
+  /**
+   * @brief This Signal is reserved to emitted when all operations has been
+   * finished.
+   */
   void sendQueryFinished();
 
 public Q_SLOTS:
+  /**
+   * @brief This Method is reserved to Query New Orders.
+   */
   virtual void queryNewOrders(int waitSecs = 1) = 0;
+
+  /**
+   * @brief This Method is reserved to Query with a given Provider Order Id.
+   */
   virtual void queryOrder(const QString &orderId) = 0;
 
 public:
   explicit APluginInterface(QObject *parent = nullptr);
 
+  /**
+   * @brief This function read the Remote access configuration from the
+   * Application. The Description can be found in APluginConfig Class.
+   * @ref AntiquaCRM::APluginConfig
+   */
   const AntiquaCRM::APluginConfig getConfig(const QString &providerName);
 
+  /**
+   * @brief Returning the Provider Configuration section.
+   * @note It is important, that the Group Key 'provider' is followed by a
+   * Slash, before add the Vendor name.
+   * @example "provider/my_vendor_name"
+   */
   virtual const QString configProvider() const = 0;
 
+  /**
+   * @brief Returning the Provider Registry and Displayname.
+   */
   virtual const QString displayName() const = 0;
 
+  /**
+   * @brief Returns all new Orders from finished network query.
+   * @note Read the restriction in the AntiquaCRM::AProviderOrders Class!
+   * @ref AntiquaCRM::AProviderOrders
+   */
   virtual const AntiquaCRM::AProviderOrders getOrders() const = 0;
 
+  /**
+   * @brief Initial this Interface
+   */
   virtual bool createInterface(QObject *parent) = 0;
 };
 

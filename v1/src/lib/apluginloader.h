@@ -15,6 +15,10 @@ namespace AntiquaCRM {
 
 class APluginInterface;
 
+/**
+ * @brief APlugin locader class
+ * @ingroup plugins
+ */
 class ANTIQUACRM_LIBRARAY APluginLoader : public QPluginLoader {
   Q_OBJECT
 
