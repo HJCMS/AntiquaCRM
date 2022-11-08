@@ -15,9 +15,13 @@ AntiquaTimer::AntiquaTimer(QObject *parent) : QObject{parent} {
 }
 
 void AntiquaTimer::timerEvent(QTimerEvent *event) {
+  // @note prevent multible global TimerIds
+  if (event->timerId() != timerId)
+    return;
+
   --countDown;
   if (countDown <= 0) {
-    qDebug() << Q_FUNC_INFO << countDown;
+    // qDebug() << Q_FUNC_INFO << countDown;
     countDown = countBase;
     emit sendTrigger();
     return;

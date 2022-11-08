@@ -3,6 +3,7 @@
 
 #include "aproviderorders.h"
 
+#include <QCryptographicHash>
 #include <QDate>
 #include <QDateTime>
 #include <QDebug>
@@ -32,6 +33,11 @@ AProviderOrder &AProviderOrder::operator=(const AProviderOrder &other) {
   p_data = other.p_data;
   p_orderItems = other.p_orderItems;
   return *this;
+}
+
+const QString AProviderOrder::md5sum() const {
+  QByteArray buf = QString(provider().toLower() + "_" + id()).toLocal8Bit();
+  return QCryptographicHash::hash(buf, QCryptographicHash::Md5).toHex();
 }
 
 const QRegExp AProviderOrder::keysPattern() {

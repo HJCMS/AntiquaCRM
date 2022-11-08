@@ -114,8 +114,7 @@ const QString Booklooker::dateString(const QDate &date) const {
 const AntiquaCRM::ArticleOrderItem
 Booklooker::articleItem(const QString &key, const QJsonValue &value) const {
   QString _key = p_articleTranslate.value(key);
-  QHash<QString, QMetaType::Type> keys =
-      AntiquaCRM::AProviderOrder::articleKeys();
+  QHash<QString, QMetaType::Type> keys = AntiquaCRM::AProviderOrder::articleKeys();
   if (!keys.contains(_key)) {
     qWarning("Booklooker: Unknown Article Key(%s)!", qPrintable(key));
     return AntiquaCRM::ArticleOrderItem();
@@ -124,10 +123,24 @@ Booklooker::articleItem(const QString &key, const QJsonValue &value) const {
   QVariant _value;
   if (_key == "a_article_id") {
     // Artikel Nummer
-    _value = value.toInt();
+    QString buffer = value.toString();
+    bool b;
+    qint64 id =  buffer.toInt(&b);
+    if(!b) {
+      qWarning("Can't convert Article Id from Booklooker order!");
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << _key << value << id;
+#endif
+    }
+    _value = id;
   } else if (_key == "a_provider_id") {
     // Dienstleister Bestellnummer
-    _value = QString::number(value.toInt());
+    if(value.type() == QJsonValue::Double) {
+      qint64 d = value.toInt();
+      _value = QString::number(d);
+    } else {
+      _value = value.toString();
+    }
   } else if (_key.contains("_price")) {
     // Preise
     if (value.type() == QJsonValue::String) {
@@ -266,7 +279,8 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
     return allOrders;
 
   AntiquaCRM::ASharedCacheFiles cacheFile;
-  QString data = cacheFile.getTempFile(fileName.toLower());
+  // QString data = cacheFile.getTempFile(fileName.toLower());
+  QString data = cacheFile.getTempFile("booklooker_order_test.json");
   if (data.isEmpty())
     return allOrders;
 
@@ -401,8 +415,10 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
       if (order.contains("email"))
         item.setValue("c_email_0", order.value("email").toString());
 
-      if (order.contains("tel"))
-        item.setValue("c_phone_0", order.value("tel").toString());
+      if (order.contains("tel")) {
+        QString phone = order.value("tel").toString();
+        item.setValue("c_phone_0", phone.replace("+", "0"));
+      }
 
       if (order.contains("company"))
         item.setValue("c_company_name", order.value("company").toString());

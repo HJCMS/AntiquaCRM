@@ -135,8 +135,9 @@ bool ASharedCacheFiles::storeTempFile(const QString &filename,
   QFileInfo info(path(), filename);
   QFile fp(info.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
-    QDataStream stream(&fp);
-    stream << data;
+    QTextStream stream(&fp);
+    stream.setCodec(ANTIQUACRM_TEXTCODEC);
+    stream << QString::fromLocal8Bit(data);
     fp.close();
     return true;
   }
@@ -180,6 +181,34 @@ const QString ASharedCacheFiles::getTempFile(const QString &filename) {
     fp.close();
   }
   return buffer;
+}
+
+const QJsonObject ASharedCacheFiles::getTempJson(const QString &md5sum) {
+  QFileInfo info(path(), md5sum + ".json");
+  if (!info.isReadable()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "Permissions:" << info;
+#endif
+    return QJsonObject();
+  }
+
+  QJsonDocument doc;
+  QJsonParseError parseHandle;
+  QFile fp(info.filePath());
+  if (fp.open(QIODevice::ReadOnly)) {
+    QTextStream data(&fp);
+    data.setCodec(ANTIQUACRM_TEXTCODEC);
+    QByteArray buffer = data.readAll().toLocal8Bit();
+    doc = QJsonDocument::fromJson(buffer, &parseHandle);
+    if (parseHandle.error != QJsonParseError::NoError) {
+      qWarning("Json Document Error: '%s'.",
+               qPrintable(parseHandle.errorString()));
+      doc = QJsonDocument();
+    }
+    fp.close();
+    buffer.clear();
+  }
+  return doc.object();
 }
 
 }; // namespace AntiquaCRM

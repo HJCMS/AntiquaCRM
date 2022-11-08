@@ -16,10 +16,20 @@ SET (projectLibrary_LINKER
 
 SET (projectLibrary_SOURCES
  tabproviders.cpp
+ providerspageview.cpp
+ providerstreeview.cpp
+ providersorderpage.cpp
+ providerpurchasetable.cpp
+ providerpurchaseactionbar.cpp
 )
 
 SET (projectLibrary_HEADERS
  tabproviders.h
+ providerspageview.h
+ providerstreeview.h
+ providersorderpage.h
+ providerpurchasetable.h
+ providerpurchaseactionbar.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

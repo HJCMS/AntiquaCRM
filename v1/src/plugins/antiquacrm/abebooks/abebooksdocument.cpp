@@ -286,10 +286,8 @@ const QString AbeBooksDocument::getStreet(const QDomNode &addressNode) {
 }
 
 const QString AbeBooksDocument::getPhone(const QDomNode &addressNode) {
-  QString out;
   QVariant v = addressNode.namedItem("phone").firstChild().nodeValue();
-  out = v.toString().trimmed();
-  return out;
+  return v.toString().trimmed().replace("+", "0");
 }
 
 const QString AbeBooksDocument::getEMail(const QDomNode &addressNode) {

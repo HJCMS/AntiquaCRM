@@ -75,6 +75,11 @@ public:
   inline int count() const { return p_data.size(); };
 
   /**
+   * @brief Uniq md5sum for store cache files
+   */
+  const QString md5sum() const;
+
+  /**
    * @brief Contains all valid Configuration-keys for Ordering entries.
    * @code
    *  QHash<"registered keyword","required data type">
@@ -306,12 +311,12 @@ public:
   /**
    * @brief Current Article Ordered Items
    */
-  const QList<OrderArticleItems> orders();
+  const QList<AntiquaCRM::OrderArticleItems> orders();
 
   /**
    * @brief Insert Article into Order Item list
    */
-  bool insertOrderItems(const OrderArticleItems &article);
+  bool insertOrderItems(const AntiquaCRM::OrderArticleItems &article);
 
   /**
    * @brief Remove Article from Order Item list.

@@ -8,6 +8,7 @@
 #include <QDir>
 #include <QDomDocument>
 #include <QJsonDocument>
+#include <QJsonObject>
 #include <QString>
 #include <QStringList>
 #include <AGlobal>
@@ -35,6 +36,7 @@ public:
   bool storeTempFile(const QString &filename, const QByteArray &data);
   bool storeTempFile(const QString &filename, const QString &data);
   const QString getTempFile(const QString &filename);
+  const QJsonObject getTempJson(const QString &md5sum);
 };
 
 }; // namespace AntiquaCRM

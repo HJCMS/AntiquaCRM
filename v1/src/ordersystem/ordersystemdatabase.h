@@ -27,16 +27,21 @@ private:
   const AntiquaCRM::AProviderOrders p_orders;
 
   /**
+   * @brief Save Order in to cache file
+   */
+  bool saveCacheFile(AntiquaCRM::AProviderOrder &data);
+
+  /**
    * @brief Create Customer with dataset.
    * @return customerId
    */
-  qint64 createCustomers(AntiquaCRM::AProviderOrder &order) const;
+  const QString createCustomerInsert(AntiquaCRM::AProviderOrder &order) const;
 
   /**
    * @brief find Customer in Database witdh Current Dataset
    * If not exists create it ...
    */
-  void findCustomers(const QString &orderId) const;
+  void findCreateCustomer(const QString &orderId) const;
 
   /**
    * @brief Create a list with all new Orders
@@ -48,6 +53,11 @@ private:
    * @param orderIds
    */
   bool insertNewOrders(const QStringList &orderIds);
+
+  /**
+   * @brief Create Cache Files
+   */
+  bool createCacheFiles(const QStringList &orderIds);
 
 Q_SIGNALS:
   void sendNewOrdersFound();
