@@ -17,7 +17,6 @@
 
 class AntiquaWindow;
 class AntiquaSystemTray;
-class AntiquaSocketServer;
 class AntiquaTimer;
 
 class AntiquaAppl : public QApplication {
@@ -28,22 +27,21 @@ private:
   AntiquaWindow *m_mainWindow;
   AntiquaSystemTray *m_systemTray;
   AntiquaCRM::ASqlCore *m_sql;
-  AntiquaSocketServer *m_socket;
   AntiquaTimer *m_timer;
   OrderSystem *m_orderSystem;
 
   QList<AntiquaCRM::APluginInterface *> p_interfaces;
 
+  void initGui();
+
   bool checkInterfaces();
   bool checkRemotePort();
   bool checkDatabase();
-  bool createSocket();
 
   bool initTranslations();
   bool initialPlugins(QObject *receiver = nullptr);
 
 private Q_SLOTS:
-  void getSocketOperation(const QJsonObject &);
   void startTriggerProcess();
   void setPluginQueryFinished();
 

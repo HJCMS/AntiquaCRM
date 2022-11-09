@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "antiquatabwidget.h"
+#include "antiquasocketserver.h"
 #include "antiquatabbar.h"
 
 AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
@@ -18,6 +19,18 @@ AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
   connect(m_tabBar, SIGNAL(sendCloseTab(int)), SLOT(setTabToClose(int)));
   connect(m_tabBar, SIGNAL(tabBarClicked(int)), SLOT(setTabToVisit(int)));
   connect(this, SIGNAL(tabCloseRequested(int)), SLOT(setTabToClose(int)));
+
+  createSocketListener();
+}
+
+bool AntiquaTabWidget::createSocketListener() {
+  m_socket = new AntiquaSocketServer(this);
+  connect(m_socket, SIGNAL(sendAction(const QJsonObject &)),
+          SLOT(setAction(const QJsonObject &)));
+  connect(m_socket, SIGNAL(sendStatusMessage(const QString &)),
+          SIGNAL(sendStatusMessage(const QString &)));
+
+  return m_socket->listen(m_socket->socketPath());
 }
 
 Inventory *AntiquaTabWidget::tabWidget(int index) const {
@@ -84,6 +97,37 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
   return false;
 }
 
+void AntiquaTabWidget::setAction(const QJsonObject &obj) {
+  if (obj.contains("window_operation")) {
+    QString op = obj.value("window_operation").toString();
+    QString win = obj.value("window").toString();
+    if (op == "open_article") {
+      qint64 id = obj.value("open_article").toInt();
+      int index = indexByName(win + "_tab");
+      if (index > 0 && id > 0) {
+        Inventory *m_tab = tabWidget(index);
+        qDebug() << Q_FUNC_INFO << m_tab->objectName() << id;
+        setCurrentIndex(index);
+        m_tab->openEntry(id);
+      }
+    }
+    if (op == "create_order") {
+      QString oid = obj.value("create_order").toString();
+      int index = indexByName(win + "_tab");
+      if (index > 0 && !oid.isEmpty()) {
+        Inventory *m_tab = tabWidget(index);
+        qDebug() << Q_FUNC_INFO << m_tab->objectName() << oid;
+        setCurrentIndex(index);
+        qDebug() << Q_FUNC_INFO << "TODO";
+      }
+    }
+    return;
+  }
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << "Not in set" << obj;
+#endif
+}
+
 void AntiquaTabWidget::addViewsTab(const QString &query) {
   int index = indexByName("views_tab");
   if (index >= 0) {
@@ -133,4 +177,9 @@ const QMap<QString, QString> AntiquaTabWidget::availableTabs() {
   m.insert("orders", tr("Orders"));
   m.insert("providers", tr("Providers"));
   return m;
+}
+
+AntiquaTabWidget::~AntiquaTabWidget() {
+  if (m_socket != nullptr)
+    m_socket->close();
 }

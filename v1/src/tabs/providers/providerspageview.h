@@ -14,7 +14,7 @@
 
 class ProvidersOrderPage;
 
-class ProvidersPageView : public QTabWidget {
+class ProvidersPageView final : public QTabWidget {
   Q_OBJECT
 
 private:
@@ -44,6 +44,8 @@ public:
    * @brief Bestellerseite
    */
   int addPage(ProvidersOrderPage *aiw, const QString &id);
+
+  void addFixedTab(QWidget *tab, const QString &title);
 
   /**
    * @brief Beschreibung für Tooltip ändern!

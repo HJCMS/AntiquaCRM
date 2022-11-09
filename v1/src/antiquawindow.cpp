@@ -33,6 +33,8 @@ AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
           SLOT(setShowTab(const QString &)));
   connect(m_menuBar, SIGNAL(sendToggleFullscreen()),
           SLOT(setToggleFullScreen()));
+  connect(m_centralWidget, SIGNAL(sendStatusMessage(const QString &)),
+          m_statusBar, SLOT(showMessage(const QString &)));
 }
 
 void AntiquaWindow::hideEvent(QHideEvent *event) {

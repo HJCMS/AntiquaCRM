@@ -27,9 +27,9 @@ private:
   const AntiquaCRM::AProviderOrders p_orders;
 
   /**
-   * @brief Save Order in to cache file
+   * @brief Create Order data for Database
    */
-  bool saveCacheFile(AntiquaCRM::AProviderOrder &data);
+  const QString createOrderData(AntiquaCRM::AProviderOrder &data);
 
   /**
    * @brief Create Customer with dataset.
@@ -54,13 +54,8 @@ private:
    */
   bool insertNewOrders(const QStringList &orderIds);
 
-  /**
-   * @brief Create Cache Files
-   */
-  bool createCacheFiles(const QStringList &orderIds);
-
 Q_SIGNALS:
-  void sendNewOrdersFound();
+  void sendNewOrdersFound(const QString &provider);
 
 public:
   explicit OrderSystemDatabase(const QString &provider,

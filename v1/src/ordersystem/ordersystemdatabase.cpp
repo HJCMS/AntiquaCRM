@@ -15,13 +15,14 @@ OrderSystemDatabase::OrderSystemDatabase(
   m_sql = new AntiquaCRM::ASqlCore(this);
 }
 
-bool OrderSystemDatabase::saveCacheFile(AntiquaCRM::AProviderOrder &data) {
+const QString
+OrderSystemDatabase::createOrderData(AntiquaCRM::AProviderOrder &data) {
   QJsonObject jObj;
   jObj.insert("provider", data.provider());
   jObj.insert("orderid", data.id());
   QJsonObject customerData;
   QHashIterator<QString, QMetaType::Type> cit(data.customerKeys());
-  while(cit.hasNext()) {
+  while (cit.hasNext()) {
     cit.next();
     QString key = cit.key();
     QVariant val = data.getValue(key);
@@ -34,7 +35,7 @@ bool OrderSystemDatabase::saveCacheFile(AntiquaCRM::AProviderOrder &data) {
 
   QJsonObject orderInfo;
   QHashIterator<QString, QMetaType::Type> pit(data.orderKeys());
-  while(pit.hasNext()) {
+  while (pit.hasNext()) {
     pit.next();
     QString key = pit.key();
     QVariant val = data.getValue(key);
@@ -47,10 +48,10 @@ bool OrderSystemDatabase::saveCacheFile(AntiquaCRM::AProviderOrder &data) {
 
   QJsonArray articleArray;
   QListIterator<AntiquaCRM::OrderArticleItems> articles(data.orders());
-  while(articles.hasNext()) {
+  while (articles.hasNext()) {
     QJsonObject articleData;
     QListIterator<AntiquaCRM::ArticleOrderItem> ait(articles.next());
-    while(ait.hasNext()) {
+    while (ait.hasNext()) {
       AntiquaCRM::ArticleOrderItem item = ait.next();
       articleData.insert(item.key, QJsonValue::fromVariant(item.value));
     }
@@ -59,10 +60,14 @@ bool OrderSystemDatabase::saveCacheFile(AntiquaCRM::AProviderOrder &data) {
   jObj.insert("articles", articleArray);
 
   QJsonDocument jDoc(jObj);
+
+#ifdef ANTIQUA_DEVELOPEMENT
   AntiquaCRM::ASharedCacheFiles file;
-  // Usage: Indented | Compact
-  QByteArray stream = jDoc.toJson(QJsonDocument::Indented);
-  return file.storeTempFile(data.md5sum() + ".json", stream);
+  file.storeTempFile(data.md5sum() + ".json",
+                     jDoc.toJson(QJsonDocument::Indented));
+#endif
+
+  return QString::fromLocal8Bit(jDoc.toJson(QJsonDocument::Compact));
 }
 
 const QString OrderSystemDatabase::createCustomerInsert(
@@ -145,8 +150,8 @@ const QStringList OrderSystemDatabase::findNewOrders() const {
   }
 
   foreach (QString pr_id, querylist) {
-    QString sql("SELECT pr_order FROM provider_order_history WHERE");
-    sql.append(" pr_name='" + p_provider + "' ");
+    QString sql("SELECT pr_order FROM provider_order_history");
+    sql.append(" WHERE pr_name='" + p_provider + "'");
     sql.append(" AND pr_order IN ('" + pr_id + "') LIMIT 1;");
     if (m_sql->query(sql).size() == 0) {
       findCreateCustomer(pr_id);
@@ -172,7 +177,7 @@ bool OrderSystemDatabase::insertNewOrders(const QStringList &orderIds) {
       if (id == data.id()) {
         QString sql("INSERT INTO provider_order_history (");
         sql.append("pr_name,pr_order,pr_buyer,pr_datetime,pr_key");
-        sql.append(") VALUES (");
+        sql.append(",pr_order_data) VALUES (");
         sql.append("'" + p_provider + "','" + id + "','");
         sql.append(data.getValue("c_provider_import").toString());
         sql.append("','");
@@ -180,6 +185,8 @@ bool OrderSystemDatabase::insertNewOrders(const QStringList &orderIds) {
         sql.append(dt.toString(ANTIQUACRM_TIMESTAMP_IMPORT));
         sql.append("','");
         sql.append(data.md5sum());
+        sql.append("','");
+        sql.append(createOrderData(data));
         sql.append("');");
         queryList << sql;
       }
@@ -199,27 +206,13 @@ bool OrderSystemDatabase::insertNewOrders(const QStringList &orderIds) {
   return true;
 }
 
-bool OrderSystemDatabase::createCacheFiles(const QStringList &orderIds) {
-  QListIterator<AntiquaCRM::AProviderOrder> get_orders(p_orders);
-  while (get_orders.hasNext()) {
-    AntiquaCRM::AProviderOrder data = get_orders.next();
-    if (!orderIds.contains(data.id()))
-      continue;
-
-    if (!saveCacheFile(data))
-      break;
-  }
-  return true;
-}
-
 void OrderSystemDatabase::run() {
   QStringList newOrders = findNewOrders();
-  createCacheFiles(QStringList("28049149"));
   if (newOrders.size() > 0) {
-    emit sendNewOrdersFound();
+    qInfo("Import Provider new Orders from: %s.", qPrintable(p_provider));
     if (insertNewOrders(newOrders)) {
-      if (createCacheFiles(newOrders))
-        quit();
+      emit sendNewOrdersFound(p_provider);
+      quit();
     }
   }
 }

@@ -35,7 +35,9 @@ AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
   m_cfg->setObjectName("application_settings");
 
   m_orderSystem = new OrderSystem(this);
+}
 
+void AntiquaAppl::initGui() {
   m_mainWindow = new AntiquaWindow();
   m_mainWindow->setObjectName("MainWindow");
   m_systemTray = new AntiquaSystemTray(applIcon(), this);
@@ -49,7 +51,8 @@ AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
   connect(m_systemTray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
   connect(m_mainWindow, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
   connect(m_timer, SIGNAL(sendTrigger()), SLOT(startTriggerProcess()));
-  // TODO connect(m_orderSystem,SIGNAL(sendNewOrdersArrived()),);
+  connect(m_orderSystem, SIGNAL(sendNewOrdersArrived(const QString &)),
+          m_systemTray, SLOT(setOrdersMessage(const QString &)));
 }
 
 bool AntiquaAppl::checkInterfaces() {
@@ -79,17 +82,6 @@ bool AntiquaAppl::checkDatabase() {
     return true;
   }
   return false;
-}
-
-bool AntiquaAppl::createSocket() {
-  bool out = false;
-  m_socket = new AntiquaSocketServer(this);
-  connect(m_socket, SIGNAL(sendOperation(const QJsonObject &)),
-          SLOT(getSocketOperation(const QJsonObject &)));
-  connect(m_socket, SIGNAL(sendStatusMessage(const QString &)), m_mainWindow,
-          SLOT(setStatusMessage(const QString &)));
-  out = m_socket->listen(m_socket->socketPath());
-  return out;
 }
 
 bool AntiquaAppl::initTranslations() {
@@ -123,15 +115,6 @@ bool AntiquaAppl::initialPlugins(QObject *receiver) {
     }
   }
   return (p_interfaces.size() > 0);
-}
-
-void AntiquaAppl::getSocketOperation(const QJsonObject &obj) {
-  if (obj.contains("plugin_article_update")) {
-    qDebug() << "TODO plugin_article_update:"
-             << obj.value("plugin_article_update").toObject();
-    return;
-  }
-  qDebug() << Q_FUNC_INFO << "TODO" << obj;
 }
 
 void AntiquaAppl::startTriggerProcess() {
@@ -173,8 +156,6 @@ void AntiquaAppl::applicationQuit() {
   m_mainWindow->close();
   // SQL
   m_sql->close();
-  // Socket
-  m_socket->close();
   // finaly
   quit();
 }
@@ -207,18 +188,16 @@ bool AntiquaAppl::isRunning() {
   QLocalSocket socket(this);
   socket.setServerName(AntiquaSocketServer::socketPath());
   if (socket.open(QLocalSocket::ReadWrite)) {
-    QJsonObject obj;
-    obj.insert("window_status_message",
-               QJsonValue(tr("Application already started.")));
-    QByteArray data(QJsonDocument(obj).toJson(QJsonDocument::Compact));
-    socket.write(data);
-    socket.waitForBytesWritten(2000);
+    qInfo("Application already started.");
+    socket.close();
     return true;
   }
   return false;
 }
 
 int AntiquaAppl::exec() {
+  initGui();
+
   AntiquaSplashScreen p_splashScreen(m_mainWindow);
   p_splashScreen.show();
 
@@ -235,17 +214,7 @@ int AntiquaAppl::exec() {
   p_splashScreen.setMessage("Initial Systemtray.");
   m_systemTray->show();
 
-  // Step 3 - open local socket
-  mutex.lock();
-  p_splashScreen.setMessage(tr("Create Socket ..."));
-  if (createSocket()) {
-    p_splashScreen.setMessage(tr("Socket created"));
-  } else {
-    p_splashScreen.setMessage(tr("Socket failed!"));
-  }
-  mutex.unlock();
-
-  // Step 4 - network connection test
+  // Step 3 - network connection test
   p_splashScreen.setMessage(tr("Search Networkconnection!"));
   mutex.lock();
   if (!checkInterfaces()) {
@@ -256,7 +225,7 @@ int AntiquaAppl::exec() {
   p_splashScreen.setMessage(tr("Valid Networkconnection found!"));
   mutex.unlock();
 
-  // Step 5 - sql conenction test
+  // Step 4 - sql conenction test
   mutex.lock();
   p_splashScreen.setMessage(tr("Check SQL Server connection!"));
   if (!checkRemotePort()) {
@@ -267,7 +236,7 @@ int AntiquaAppl::exec() {
   p_splashScreen.setMessage(tr("SQL Server found!"));
   mutex.unlock();
 
-  // Step 6 - test database
+  // Step 5 - test database
   mutex.lock();
   p_splashScreen.setMessage(tr("Open Database connection."));
   if (!checkDatabase()) {
@@ -278,7 +247,7 @@ int AntiquaAppl::exec() {
   p_splashScreen.setMessage(tr("Database connected!"));
   mutex.unlock();
 
-  // Step 7 - create cache files
+  // Step 6 - create cache files
   mutex.lock();
   p_splashScreen.setMessage(tr("Creating Cachefiles."));
   CacheBuilder *m_cache = new CacheBuilder(this);
@@ -292,7 +261,7 @@ int AntiquaAppl::exec() {
   m_cache->deleteLater();
   mutex.unlock();
 
-  // Step 8 - loading plugins
+  // Step 7 - loading plugins
   mutex.lock();
   p_splashScreen.setMessage(tr("Loading plugins!"));
   if (initialPlugins(&p_splashScreen)) {
@@ -302,14 +271,14 @@ int AntiquaAppl::exec() {
   p_splashScreen.setMessage(tr("Completed..."));
   mutex.unlock();
 
-  // Step 9 - finish splash and unlock
+  // Step 8 - finish splash and unlock
   p_splashScreen.setMessage("Start Antiqua CRM");
   p_splashScreen.finish(m_mainWindow);
 
-  // Step 10 - start network listener
+  // Step 9 - start network listener
   m_timer->restart();
 
-  // Step 11 - open application window
+  // Step 10 - open application window
   m_mainWindow->openWindow();
 
   return QCoreApplication::exec();

@@ -279,8 +279,11 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
     return allOrders;
 
   AntiquaCRM::ASharedCacheFiles cacheFile;
-  // QString data = cacheFile.getTempFile(fileName.toLower());
-  QString data = cacheFile.getTempFile("booklooker_order_test.json");
+  QString data = cacheFile.getTempFile(fileName.toLower());
+  /*
+   * QString data = cacheFile.getTempFile("booklooker_order_test.json");
+   * qWarning("Booklooker in Test Mode!");
+   */
   if (data.isEmpty())
     return allOrders;
 
@@ -370,6 +373,11 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
         if (d_coast_double > 0) {
           item.setValue("d_price", d_coast_double);
         }
+      }
+
+      // Buyer payment comment
+      if (order.contains("comments")) {
+        item.setValue("o_delivery_comment", order.value("comments").toString());
       }
 
       // Payment Confirmed

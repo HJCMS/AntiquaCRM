@@ -6,10 +6,10 @@
 #include "providerspageview.h"
 #include "providerstreeview.h"
 
+#include <AntiquaCRM>
 #include <QIcon>
 #include <QLayout>
 #include <QMessageBox>
-#include <QCache>
 
 TabProviders::TabProviders(QWidget *parent)
     : Inventory{"providers_tab", parent} {
@@ -77,37 +77,47 @@ bool TabProviders::findPage(const QString &provider, const QString &orderId) {
 
 void TabProviders::openOrderPage(const QString &provider,
                                  const QString &orderId) {
-  if (provider.isEmpty() || orderId.isEmpty() || findPage(provider, orderId))
+  if (provider.isEmpty() || orderId.isEmpty())
     return;
 
-  AntiquaCRM::AProviderOrder order(provider, "28049149");
-  AntiquaCRM::ASharedCacheFiles cache;
-  QJsonObject jObj = cache.getTempJson(order.md5sum());
-  if(jObj.isEmpty())
+  if (findPage(provider, orderId))
     return;
 
-  ProvidersOrderPage *page = new ProvidersOrderPage(jObj, m_pages);
-  if (page->loadOrderDataset()) {
-    m_pages->addPage(page, order.id());
-    return;
+  QString sql("SELECT pr_order_data FROM provider_order_history");
+  sql.append(" WHERE pr_name='" + provider + "' AND pr_order='");
+  sql.append(orderId + "' AND pr_closed IS NULL;");
+  AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() == 1) {
+    q.next();
+    QByteArray order = q.value("pr_order_data").toString().toLocal8Bit();
+    QJsonDocument doc = QJsonDocument::fromJson(order);
+    if (doc.isEmpty() || doc.object().isEmpty()) {
+      qWarning("Can't load Provider Order data for %s:%s", qPrintable(provider),
+               qPrintable(orderId));
+      return;
+    }
+    QJsonObject jObj = doc.object();
+    ProvidersOrderPage *page = new ProvidersOrderPage(jObj, m_pages);
+    if (page->loadOrderDataset()) {
+      int index = m_pages->addPage(page, orderId);
+      m_pages->setCurrentIndex(index);
+    }
   }
-
-  qWarning("Can't load Provider Order data for %s:%s", qPrintable(provider),
-           qPrintable(orderId));
-
-  page->deleteLater();
 }
 
 void TabProviders::openStartPage() {
-  qDebug() << Q_FUNC_INFO;
+  qDebug() << Q_FUNC_INFO << sender()->objectName();
   setCurrentIndex(0);
 }
 
 void TabProviders::createSearchQuery(const QString &query) {
-  qDebug() << Q_FUNC_INFO;
+  qDebug() << Q_FUNC_INFO << sender()->objectName();
 }
 
-void TabProviders::createNewEntry() { qDebug() << Q_FUNC_INFO; }
+void TabProviders::createNewEntry() {
+  qDebug() << Q_FUNC_INFO << sender()->objectName();
+}
 
 void TabProviders::openEntry(qint64 customerId) {
   if (customerId < 1)

@@ -26,17 +26,13 @@ void AntiquaSocketServer::createAction(const QJsonObject &obj) {
     }
     emit sendStatusMessage(message);
     return;
-  } else if (obj.contains("plugin_article_update")) {
-    QJsonObject action = obj.value("plugin_article_update").toObject();
-    if (action.isEmpty()) {
-      qWarning("Socket abort by policy rules!");
-      return;
-    }
-    emit sendOperation(obj);
+  }
+  if (obj.contains("window_operation")) {
+    emit sendAction(obj);
     return;
   }
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << "Unknown Socket Operation:" << obj;
+  qDebug() << Q_FUNC_INFO << "TODO:" << obj;
 #endif
 }
 

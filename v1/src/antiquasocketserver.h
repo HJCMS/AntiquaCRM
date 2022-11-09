@@ -24,7 +24,7 @@ protected:
 
 Q_SIGNALS:
   void sendStatusMessage(const QString &message);
-  void sendOperation(const QJsonObject &obj);
+  void sendAction(const QJsonObject &obj);
 
 public:
   explicit AntiquaSocketServer(QObject *parent = nullptr);

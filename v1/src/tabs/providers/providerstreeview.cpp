@@ -14,7 +14,7 @@ ProvidersTreeView::ProvidersTreeView(QWidget *parent) : QTreeWidget{parent} {
   setSortingEnabled(false);
   setWordWrap(false);
   setAlternatingRowColors(true);
-  setMaximumWidth(350);
+  setMaximumWidth(360);
   setMinimumWidth(150);
   setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
 
@@ -80,6 +80,27 @@ void ProvidersTreeView::timerEvent(QTimerEvent *event) {
   }
 }
 
+void ProvidersTreeView::addProvider(const QString &provider) {
+  QTreeWidgetItem *parent = getParent(provider);
+  if (parent != nullptr) {
+    parent->setSelected(true);
+    return;
+  }
+
+  QFont fi = font();
+  fi.setItalic(true);
+
+  QTreeWidgetItem *item = new QTreeWidgetItem(this, QTreeWidgetItem::Type);
+  item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
+  item->setFlags(Qt::ItemIsEnabled);
+  item->setText(0, provider);
+  item->setText(1, tr("Status"));
+  item->setFont(1, fi);
+  item->setExpanded(true);
+  addTopLevelItem(item);
+  resizeColumnToContents(0);
+}
+
 void ProvidersTreeView::itemSelected(QTreeWidgetItem *item, int) {
   if (item->type() != QTreeWidgetItem::UserType)
     return;
@@ -131,7 +152,7 @@ void ProvidersTreeView::updateOrderStatus(QTreeWidgetItem *item, int status) {
   };
 }
 
-void ProvidersTreeView::clearProvidersList(const QString &provider) {
+void ProvidersTreeView::clearProvider(const QString &provider) {
   QTreeWidgetItem *p = getParent(provider);
   if (p != nullptr) {
     for (int i = 0; i < p->childCount(); i++) {
@@ -173,7 +194,7 @@ void ProvidersTreeView::addOrder(const QString &pro,
 void ProvidersTreeView::loadUpdate() {
   if (topLevelItemCount() > 0) {
     for (int t = 0; t < topLevelItemCount(); t++) {
-      clearProvidersList(topLevelItem(t)->text(0));
+      clearProvider(topLevelItem(t)->text(0));
     }
   }
 
@@ -202,21 +223,11 @@ void ProvidersTreeView::loadUpdate() {
 #endif
     return;
   }
-
-  // resize
-  for(int i = 0; i < columnCount(); i++) {
-    resizeColumnToContents(i);
-  }
-  // sort
-  if (topLevelItemCount() > 0) {
-    for (int t = 0; t < topLevelItemCount(); t++) {
-      topLevelItem(t)->sortChildren(0, Qt::AscendingOrder);
-    }
-  }
+  sortAndResize();
 }
 
 bool ProvidersTreeView::exists(const QString &provider, const QString &id) {
-  // skip empty Id entries
+  // skip if empty Id entries
   if (id.isEmpty())
     return true;
 
@@ -251,25 +262,16 @@ void ProvidersTreeView::removeOrder(const QString &provider,
   resizeColumnToContents(0);
 }
 
-void ProvidersTreeView::addProvider(const QString &provider) {
-  QTreeWidgetItem *parent = getParent(provider);
-  if (parent != nullptr) {
-    parent->setSelected(true);
-    return;
+void ProvidersTreeView::sortAndResize() {
+  for(int i = 0; i < columnCount(); i++) {
+    resizeColumnToContents(i);
   }
 
-  QFont fi = font();
-  fi.setItalic(true);
-
-  QTreeWidgetItem *item = new QTreeWidgetItem(this, QTreeWidgetItem::Type);
-  item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
-  item->setFlags(Qt::ItemIsEnabled);
-  item->setText(0, provider);
-  item->setText(1, tr("Status"));
-  item->setFont(1, fi);
-  item->setExpanded(true);
-  addTopLevelItem(item);
-  resizeColumnToContents(0);
+  if (topLevelItemCount() > 0) {
+    for (int t = 0; t < topLevelItemCount(); t++) {
+      topLevelItem(t)->sortChildren(0, Qt::AscendingOrder);
+    }
+  }
 }
 
 int ProvidersTreeView::ordersCount() {

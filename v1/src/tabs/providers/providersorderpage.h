@@ -8,10 +8,15 @@
 #include <AntiquaCRM>
 #include <QObject>
 #include <QJsonObject>
+#include <QTextEdit>
 #include <QWidget>
 
+class ProviderPurchaseHeader;
+class ProvidersPageView;
 class ProviderPurchaseTable;
-class ProviderPurchaseActionBar;
+class ProviderPurchaseBar;
+class ProviderBuyerInfo;
+class ProviderOrderInfo;
 
 class ProvidersOrderPage final : public QWidget {
   Q_OBJECT
@@ -20,15 +25,24 @@ private:
   Q_DISABLE_COPY(ProvidersOrderPage);
   AntiquaCRM::ASqlCore *m_sql;
   const QJsonObject p_order;
+  ProviderPurchaseHeader *m_header;
+  ProvidersPageView *m_tab;
   ProviderPurchaseTable *m_table;
-  ProviderPurchaseActionBar *m_actionBar;
+  ProviderPurchaseBar *m_actionBar;
+
+  ProviderBuyerInfo *m_buyerInfo;
+  ProviderOrderInfo *m_orderInfo;
+  QTextEdit *m_buyerComment;
+
+  void sendSocketOperation(const QJsonObject &action);
+
+  bool findCustomer(const QJsonObject &customer);
 
 private Q_SLOTS:
+  void openOrder(qint64 oid);
+  void openArticle(qint64 aid);
   void findArticleIds();
-
-Q_SIGNALS:
-  void sendCheckArticleIds(QList<qint64> &);
-  void sendOpenArticle(qint64);
+  void setCreateOrder();
 
 public:
   explicit ProvidersOrderPage(const QJsonObject &order,

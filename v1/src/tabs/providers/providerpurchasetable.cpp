@@ -15,25 +15,27 @@ ProviderPurchaseTable::ProviderPurchaseTable(QWidget *parent)
   setColumnCount(5);
   addHeaderItem(0, tr("Provider"));
   addHeaderItem(1, tr("Article"));
-  addHeaderItem(2, tr("Count"));
+  addHeaderItem(2, tr("Amount"));
   addHeaderItem(3, tr("Price"));
   addHeaderItem(4, tr("Summary"));
   horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
   horizontalHeader()->setStretchLastSection(true);
 }
 
+const QIcon ProviderPurchaseTable::pic(const QString &name) const {
+  return QIcon("://icons/" + name + ".png");
+}
+
 void ProviderPurchaseTable::contextMenuEvent(QContextMenuEvent *e) {
   QMenu *m = new QMenu("Actions", this);
   QAction *ac_find =
-      m->addAction(QIcon("://icons/action_search.png"), tr("inspect article"));
+      m->addAction(pic("action_search"), tr("check article duration"));
   connect(ac_find, SIGNAL(triggered()), SIGNAL(sendCheckArticles()));
 
-  QAction *ac_copy =
-      m->addAction(QIcon("://icons/edit.png"), tr("copy article id"));
+  QAction *ac_copy = m->addAction(pic("edit"), tr("copy article id"));
   connect(ac_copy, SIGNAL(triggered()), SLOT(copyIdToClipboard()));
 
-  QAction *ac_open =
-      m->addAction(QIcon("://icons/action_add.png"), tr("open article id"));
+  QAction *ac_open = m->addAction(pic("action_add"), tr("open article id"));
   connect(ac_open, SIGNAL(triggered()), SLOT(prepareOpenArticle()));
 
   m->exec(e->globalPos());
@@ -54,6 +56,19 @@ void ProviderPurchaseTable::copyIdToClipboard() {
 void ProviderPurchaseTable::addHeaderItem(int i, const QString &name) {
   QTableWidgetItem *item = new QTableWidgetItem(name, QTableWidgetItem::Type);
   setHorizontalHeaderItem(i, item);
+}
+
+void ProviderPurchaseTable::setArticleStatus(const QString &article,
+                                             bool available) {
+  for (int r = 0; r < rowCount(); r++) {
+    QTableWidgetItem *article = item(r, 1);
+    if (article != nullptr) {
+      if (available)
+        article->setData(Qt::DecorationRole, pic("action_ok"));
+      else
+        article->setData(Qt::DecorationRole, pic("action_cancel"));
+    }
+  }
 }
 
 qint64 ProviderPurchaseTable::getSelectedArticleId() {

@@ -9,7 +9,6 @@
 #include <QObject>
 #include <QSplitter>
 #include <QScrollArea>
-#include <QStatusBar>
 
 class ProvidersPageView;
 class ProvidersOrderPage;
@@ -23,9 +22,7 @@ private:
   QSplitter *m_splitter;
   ProvidersPageView *m_pages;
   ProvidersTreeView *m_treeWidget;
-  // QStatusBar *m_statusBar;
   QScrollArea *m_editorPage;
-
   bool findPage(const QString &provider, const QString &orderId);
 
 private Q_SLOTS:

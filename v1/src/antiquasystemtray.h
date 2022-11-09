@@ -30,6 +30,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   void setConnectionStatus(bool);
+  void setOrdersMessage(const QString &body);
 
 public:
   explicit AntiquaSystemTray(const QIcon &icon, QObject *parent = nullptr);

@@ -109,16 +109,6 @@ void TabBooks::openEntry(qint64 articleId) {
   if (articleId < 1)
     return;
 
-  if (currentIndex() != 0) {
-    QString info(tr("Cannot open this article.") + "<br>");
-    info.append(tr("Because the book tab is not in overview mode."));
-    info.append("<p>");
-    info.append(tr("Please save and close all open book entries first."));
-    info.append("</p>");
-    QMessageBox::information(this, tr("Bookeditor"), info);
-    return;
-  }
-
   if (m_editorWidget->openEditEntry(articleId)) {
     m_editorPage->setEnabled(true);
     setCurrentWidget(m_editorPage);

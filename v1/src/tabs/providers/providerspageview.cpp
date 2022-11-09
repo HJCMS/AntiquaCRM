@@ -42,6 +42,15 @@ int ProvidersPageView::addPage(ProvidersOrderPage *aiw, const QString &id) {
   return index;
 }
 
+void ProvidersPageView::addFixedTab(QWidget *tab, const QString &title) {
+  if (tab == nullptr || title.isEmpty())
+    return;
+
+  tab->setObjectName(title.toLower());
+  int index = addTab(tab, QIcon("://icons/groups.png"), title);
+  m_tabBar->setTabCloseable(index, false);
+}
+
 void ProvidersPageView::setTabDescription(int index, const QString &txt) {
   setTabToolTip(index, txt);
   setTabWhatsThis(index, txt);

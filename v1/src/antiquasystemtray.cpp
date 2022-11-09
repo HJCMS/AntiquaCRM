@@ -46,3 +46,9 @@ void AntiquaSystemTray::setConnectionStatus(bool b) {
     setIcon(getIcon("db_status"));
   }
 }
+
+void AntiquaSystemTray::setOrdersMessage(const QString &body) {
+  QString title = tr("Incoming Orders");
+  QIcon icon("://icons/filetypes.png");
+  showMessage(title, body, icon, (5 * 1000));
+}

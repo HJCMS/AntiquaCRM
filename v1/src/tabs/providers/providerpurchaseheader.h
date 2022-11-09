@@ -1,0 +1,26 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+// @COPYRIGHT_HOLDER@
+
+#ifndef ANTIQUACRM_PROVIDERPURCHASEHEADER_H
+#define ANTIQUACRM_PROVIDERPURCHASEHEADER_H
+
+#include <AntiquaWidgets>
+#include <QFrame>
+#include <QLabel>
+#include <QObject>
+#include <QWidget>
+
+class ProviderPurchaseHeader final : public QFrame {
+  Q_OBJECT
+
+private:
+  QLabel *m_cid;
+  QLabel *m_buyer;
+
+public:
+  explicit ProviderPurchaseHeader(QWidget *parent = nullptr);
+  void setHeader(const QString &name, qint64 customerId = -1);
+};
+
+#endif // ANTIQUACRM_PROVIDERPURCHASEHEADER_H

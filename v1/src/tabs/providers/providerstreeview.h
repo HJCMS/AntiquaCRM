@@ -13,7 +13,7 @@
 #include <QTreeWidgetItem>
 #include <QWidget>
 
-class ProvidersTreeView : public QTreeWidget {
+class ProvidersTreeView final : public QTreeWidget {
   Q_OBJECT
 
 private:
@@ -30,6 +30,7 @@ private:
   QTreeWidgetItem *getParent(const QString &name);
   QTreeWidgetItem *getChild(const QString &provider, const QString &id);
   void timerEvent(QTimerEvent *event) override;
+  void addProvider(const QString &provider);
 
 private Q_SLOTS:
   void itemSelected(QTreeWidgetItem *, int);
@@ -38,7 +39,7 @@ private Q_SLOTS:
   /**
    * @brief Dienstleister liste leeren!
    */
-  void clearProvidersList(const QString &provider);
+  void clearProvider(const QString &provider);
 
   /**
    * @brief Eine Bestellung einfügen
@@ -60,6 +61,11 @@ public Q_SLOTS:
    * @param id       - Bestellung
    */
   void removeOrder(const QString &provider, const QString &id);
+
+  /**
+   * @brief Sort all Items
+   */
+  void sortAndResize();
 
   /**
    * @brief load or Update Tree content
@@ -84,11 +90,6 @@ public:
    */
   void updateItemStatus(const QString &provider, const QString &orderId,
                         int status = 0);
-
-  /**
-   * @brief Dienstleister hinzufügen
-   */
-  void addProvider(const QString &provider);
 
   int ordersCount();
 

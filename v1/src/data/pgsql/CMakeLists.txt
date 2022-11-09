@@ -2,9 +2,11 @@
 # vim: set fileencoding=utf-8
 
 SET (query_tables_FILES
+ query_articles_exists.sql
  query_book_binding.sql
  query_book_publisher_de.sql
  query_customer_orders_status.sql
+ query_customer_exists.sql
  query_designation.sql
  query_keywords.sql
  query_order_by_oid.sql

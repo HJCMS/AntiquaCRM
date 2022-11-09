@@ -6,11 +6,12 @@
 #define ANTIQUACRM_PROVIDERPURCHASETABLE_H
 
 #include <QContextMenuEvent>
+#include <QIcon>
+#include <QJsonValue>
 #include <QObject>
+#include <QStringList>
 #include <QTableWidget>
 #include <QTableWidgetItem>
-#include <QStringList>
-#include <QJsonValue>
 #include <QWidget>
 
 /**
@@ -31,6 +32,9 @@
 class ProviderPurchaseTable final : public QTableWidget {
   Q_OBJECT
 
+private:
+  const QIcon pic(const QString &name) const;
+
 private Q_SLOTS:
   void prepareOpenArticle();
   void copyIdToClipboard();
@@ -42,6 +46,9 @@ protected:
 Q_SIGNALS:
   void sendCheckArticles();
   void sendOpenArticle(qint64);
+
+public Q_SLOTS:
+  void setArticleStatus(const QString &article, bool available = false);
 
 public:
   explicit ProviderPurchaseTable(QWidget *parent = nullptr);

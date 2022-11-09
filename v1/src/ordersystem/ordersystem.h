@@ -16,11 +16,14 @@
 class OrderSystem final : public QObject {
   Q_OBJECT
 
+private Q_SLOTS:
+  void createNewOrdersArrived(const QString &from);
+
 Q_SIGNALS:
   /**
    * @brief This Signal  will emmite when a new Order exists!
    */
-  void sendNewOrdersArrived();
+  void sendNewOrdersArrived(const QString &message);
 
 public:
   explicit OrderSystem(QObject *parent = nullptr);
