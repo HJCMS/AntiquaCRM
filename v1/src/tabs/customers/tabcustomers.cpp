@@ -41,6 +41,11 @@ TabCustomers::TabCustomers(QWidget *parent)
   // End
 
   // Signals
+  // searchbar
+  connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
+  connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar, SLOT(setSearchFocus()));
+  connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar, SLOT(setFilterFocus()));
+
   // maintable
   connect(m_table, SIGNAL(sendQueryReport(const QString &)), m_statusBar,
           SLOT(showMessage(const QString &)));
@@ -50,35 +55,24 @@ TabCustomers::TabCustomers(QWidget *parent)
 
   connect(m_table, SIGNAL(sendOpenEntry(qint64)), SLOT(openEntry(qint64)));
 
-  connect(m_table, SIGNAL(sendCurrentId(qint64)),
-          SIGNAL(sendIdToOrder(qint64)));
+  connect(m_table, SIGNAL(sendCurrentId(qint64)), SIGNAL(sendIdToOrder(qint64)));
 
   connect(m_table, SIGNAL(sendCreateNewEntry()), SLOT(createNewEntry()));
 
-  connect(m_table, SIGNAL(sendResultExists(bool)), m_statusBar,
-          SLOT(setCreateButtonEnabled(bool)));
+  connect(m_table, SIGNAL(sendResultExists(bool)),
+          m_statusBar, SLOT(setCreateButtonEnabled(bool)));
 
-  connect(m_table, SIGNAL(sendDeleteEntry(qint64)),
-          SLOT(setDeleteCustomer(qint64)));
+  connect(m_table, SIGNAL(sendDeleteEntry(qint64)), SLOT(setDeleteCustomer(qint64)));
 
   // editor
   connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));
-
-  // searchbar
-  connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
-  connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar,
-          SLOT(setSearchFocus()));
-
-  connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
-          SLOT(setFilterFocus()));
 
   // statusbar
   connect(m_statusBar, SIGNAL(sendCreateEntry()), SLOT(createNewEntry()));
   connect(m_statusBar, SIGNAL(sendHistoryQuery(const QString &)),
           SLOT(createSearchQuery(const QString &)));
 
-  connect(m_statusBar, SIGNAL(sendReloadView()), m_table,
-          SLOT(setReloadView()));
+  connect(m_statusBar, SIGNAL(sendReloadView()), m_table, SLOT(setReloadView()));
 }
 
 void TabCustomers::setDeleteCustomer(qint64 customerId) {
@@ -115,7 +109,6 @@ void TabCustomers::setDeleteCustomer(qint64 customerId) {
 }
 
 void TabCustomers::openStartPage() {
-  m_editorPage->setEnabled(false);
   if (m_table->rowCount() > 0 && m_table->rowCount() < 20)
     m_table->setReloadView();
 
@@ -136,7 +129,6 @@ void TabCustomers::createSearchQuery(const QString &query) {
 
 void TabCustomers::createNewEntry() {
   if (m_editorWidget->createNewEntry()) {
-    m_editorPage->setEnabled(true);
     setCurrentWidget(m_editorPage);
   }
 }
@@ -156,7 +148,6 @@ void TabCustomers::openEntry(qint64 customerId) {
   }
 
   if (m_editorWidget->openEditEntry(customerId)) {
-    m_editorPage->setEnabled(true);
     setCurrentWidget(m_editorPage);
   }
 }
@@ -167,4 +158,9 @@ void TabCustomers::onEnterChanged() {
     m_searchBar->setFilter(0);
     setCurrentIndex(0);
   }
+}
+
+bool TabCustomers::customAction(const QJsonObject &obj) {
+  qDebug() << Q_FUNC_INFO << "TODO" << obj;
+  return false;
 }

@@ -31,12 +31,13 @@ private Q_SLOTS:
 public Q_SLOTS:
   void openStartPage() override;
   void createSearchQuery(const QString &query = QString()) override;
-  void createNewEntry() override;
+  void createNewEntry() override { /* unused */};
   void openEntry(qint64 customerId) override;
   void onEnterChanged() override;
 
 public:
   explicit TabProviders(QWidget *parent = nullptr);
+  bool customAction(const QJsonObject &obj) override { return false; }
 };
 
 #endif // ANTIQUACRM_TABPROVIDERS_H

@@ -197,6 +197,7 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
     QDateTime dateTime = xml.getOrderDate(orderElement);
     // Start fill
     AntiquaCRM::AProviderOrder item(display_name, strOrderId);
+    item.setValue("o_provider_name", displayName());
     item.setValue("o_provider_order_id", strOrderId);
     item.setValue("o_provider_purchase_id", orderId);
     item.setValue("o_since", dateTime);
@@ -206,13 +207,13 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
     QDomNode statusNode = xml.firstChildNode(orderElement, "status");
     QString orderStatus = xml.getNodeValue(statusNode).toString();
     if (orderStatus.contains("Ordered")) {
-      item.setValue("o_provider_order_status", AntiquaCRM::SHIPMENT_CREATED);
+      item.setValue("o_order_status", AntiquaCRM::SHIPMENT_CREATED);
     } else if (orderStatus.contains("Shipped")) {
-      item.setValue("o_provider_order_status", AntiquaCRM::WAIT_FOR_PAYMENT);
+      item.setValue("o_order_status", AntiquaCRM::WAIT_FOR_PAYMENT);
     } else if (orderStatus.contains("Cancelled")) {
-      item.setValue("o_provider_order_status", AntiquaCRM::ORDER_CANCELED);
+      item.setValue("o_order_status", AntiquaCRM::ORDER_CANCELED);
     } else {
-      item.setValue("o_provider_order_status", AntiquaCRM::STATUS_NOT_SET);
+      item.setValue("o_order_status", AntiquaCRM::STATUS_NOT_SET);
     }
 
     // AntiquaCRM::PaymentMethod
@@ -240,6 +241,8 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
         payment_method = AntiquaCRM::UNKNOWN_PREPAYMENT;
     }
     item.setValue("o_payment_method", payment_method);
+    item.setValue("o_payment_status", false);
+    item.setValue("o_delivery_add_price", false);
 
     // Buyer info
     QDomNodeList buyerNodeList = orderElement.elementsByTagName("buyer");
@@ -258,6 +261,7 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
       QString p_country = xml.getCountry(addressNode);
       if (!p_country.isEmpty()) {
         item.setValue("c_country_bcp47", bcp47Country(p_country));
+        item.setValue("o_vat_country", bcp47Country(p_country));
         AntiquaCRM::AEuropeanCountries EUCountries;
         QString c = EUCountries.value(bcp47Country(p_country).toUpper());
         item.setValue("c_country", (c.isEmpty() ? p_country : c));

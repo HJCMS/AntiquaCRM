@@ -54,12 +54,9 @@ void Inventory::copyToClipboard(const QString &data) {
 }
 
 void Inventory::sendStatusMessage(const QString &message) {
-  AntiquaCRM::AStatusMessanger messanger(this);
-  messanger.setObjectName("tab_status_message");
-  QJsonObject obj;
-  obj.insert("window_status_message", message);
-  messanger.pushMessage(obj);
-  messanger.close();
+  AntiquaCRM::ATxSocket atxs(this);
+  atxs.pushStatusBarMessage(message);
+  atxs.close();
 }
 
 bool Inventory::isClosable() { return closable; }

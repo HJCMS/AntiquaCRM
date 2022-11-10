@@ -151,7 +151,7 @@ protected:
   bool checkIsModified();
 
 protected Q_SLOTS:
-  void openErrnoMessage(const QString &code, const QString &error);
+  void openErrnoMessage(const QString &info, const QString &error);
   void openSuccessMessage(const QString &info);
   void openNoticeMessage(const QString &info);
 

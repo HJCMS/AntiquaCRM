@@ -43,9 +43,9 @@
 #include "asqlsettings.h"
 #endif
 
-// AntiquaCRM::AStatusMessanger
-#ifndef ANTIQUACRM_STATUSMESSANGER_H
-#include "astatusmessanger.h"
+// AntiquaCRM::ATxSocket
+#ifndef ANTIQUACRM_ATXSOCKET_H
+#include "atxsocket.h"
 #endif
 
 // AntiquaCRM::ASqlProfile

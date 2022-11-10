@@ -98,7 +98,7 @@ bool InventoryEditor::checkIsModified() {
   return false;
 }
 
-void InventoryEditor::openErrnoMessage(const QString &code,
+void InventoryEditor::openErrnoMessage(const QString &info,
                                        const QString &error) {
   QMessageBox *d = new QMessageBox(this);
   d->setIcon(QMessageBox::Critical);
@@ -107,7 +107,7 @@ void InventoryEditor::openErrnoMessage(const QString &code,
   d->setTextInteractionFlags(Qt::TextSelectableByMouse);
   d->setSizeGripEnabled(true);
   d->setWindowTitle(tr("Error"));
-  d->setDetailedText(code);
+  d->setDetailedText(info);
   d->setInformativeText(error);
   d->exec();
 }
@@ -142,27 +142,27 @@ void InventoryEditor::openNoticeMessage(const QString &info) {
 }
 
 void InventoryEditor::sendStatusMessage(const QString &message) {
-  AntiquaCRM::AStatusMessanger messanger(this);
-  messanger.setObjectName("editor_status_message");
-  QJsonObject obj;
-  obj.insert("window_status_message", message);
-  messanger.pushMessage(obj);
-  messanger.close();
+  AntiquaCRM::ATxSocket atxs(this);
+  atxs.pushStatusBarMessage(message);
+  atxs.close();
 }
 
 void InventoryEditor::sendArticleStatus(qint64 articleId, qint8 count) {
   if (articleId < 1)
     return;
 
-  AntiquaCRM::AStatusMessanger messanger(this);
-  messanger.setObjectName("plugin_article_update");
+  qDebug() << Q_FUNC_INFO << "TODO" << articleId << count;
+/*
+  AntiquaCRM::ATxSocket atxs(this);
+  atxs.setObjectName("plugin_article_update");
   QJsonObject obj;
   QJsonObject action;
   action.insert("articleId", QJsonValue(articleId));
   action.insert("count", QJsonValue(count));
   obj.insert("plugin_article_update", QJsonValue(action));
-  messanger.pushMessage(obj);
-  messanger.close();
+  atxs.pushMessage(obj);
+  atxs.close();
+*/
 }
 
 void InventoryEditor::setResetInputFields() {

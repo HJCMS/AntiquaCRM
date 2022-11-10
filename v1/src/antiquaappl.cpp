@@ -19,6 +19,8 @@
 #include <QLocalSocket>
 #include <QMetaObject>
 #include <QStyleFactory>
+#include <QMutex>
+#include <QStyleFactory>
 #include <QTranslator>
 
 static const QIcon applIcon() {
@@ -136,16 +138,19 @@ void AntiquaAppl::startTriggerProcess() {
  * @brief Pluginabfrage auf neue Bestellungen
  * Nehme von QList<AProviderOrder> die Anzahl neuer Bestellungen.
  * Sind neue Bestellungen vorhanden speichere Sie in die Datenbank.
- * OrderSystem ordersystem
+ * @note Wir müssen hier wegen den SQL-Queries einen Mutex verwenden.
  */
 void AntiquaAppl::setPluginQueryFinished() {
+  QMutex mutex;
   AntiquaCRM::APluginInterface *m_iface =
       qobject_cast<AntiquaCRM::APluginInterface *>(sender());
   if (m_iface != nullptr) {
+    mutex.lock();
     AntiquaCRM::AProviderOrders orders = m_iface->getOrders();
     if (orders.size() > 0) {
       m_orderSystem->updateOrders(m_iface->displayName(), orders);
     }
+    mutex.unlock();
   }
 }
 

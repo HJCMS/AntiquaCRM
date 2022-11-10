@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "astatusmessanger.h"
+#include "atxsocket.h"
 #include "aglobal.h"
 
 #include <QDebug>
@@ -11,7 +11,7 @@
 
 namespace AntiquaCRM {
 
-AStatusMessanger::AStatusMessanger(QObject *parent)
+ATxSocket::ATxSocket(QObject *parent)
     : QLocalSocket{parent}, connected{false} {
   setServerName(antiquaServerName());
   // setSocketDescriptor
@@ -22,7 +22,7 @@ AStatusMessanger::AStatusMessanger(QObject *parent)
           SLOT(getState(QLocalSocket::LocalSocketState)));
 }
 
-void AStatusMessanger::getErrors(QLocalSocket::LocalSocketError error) {
+void ATxSocket::getErrors(QLocalSocket::LocalSocketError error) {
   switch (error) {
   case QLocalSocket::ConnectionRefusedError:
     qWarning("ConnectionRefusedError");
@@ -69,15 +69,15 @@ void AStatusMessanger::getErrors(QLocalSocket::LocalSocketError error) {
   }
 }
 
-void AStatusMessanger::getState(QLocalSocket::LocalSocketState state) {
+void ATxSocket::getState(QLocalSocket::LocalSocketState state) {
   switch (state) {
   case QLocalSocket::UnconnectedState:
-    // qDebug() << "AStatusMessanger::Disconnected" << fullServerName();
+    // qDebug() << "ATxSocket::Disconnected" << fullServerName();
     connected = false;
     return;
 
   case QLocalSocket::ConnectedState:
-    // qDebug() << "AStatusMessanger::Connected" << fullServerName();
+    // qDebug() << "ATxSocket::Connected" << fullServerName();
     connected = true;
     return;
 
@@ -86,7 +86,7 @@ void AStatusMessanger::getState(QLocalSocket::LocalSocketState state) {
   }
 }
 
-void AStatusMessanger::pushMessage(const QJsonObject &obj) {
+void ATxSocket::pushOperation(const QJsonObject &obj) {
   if (!connected)
     connectToServer(QIODevice::ReadWrite);
 
@@ -95,30 +95,31 @@ void AStatusMessanger::pushMessage(const QJsonObject &obj) {
   waitForBytesWritten((timeout * 1000));
 }
 
-void AStatusMessanger::pushStatusBarMessage(const QString &message) {
+void ATxSocket::pushStatusBarMessage(const QString &message) {
   if (message.isEmpty())
     return;
 
   QJsonObject obj;
   obj.insert("window_status_message", QJsonValue(message));
-  return pushMessage(obj);
+  return pushOperation(obj);
 }
 
-const QStringList AStatusMessanger::pushOperations() const {
+const QStringList ATxSocket::getOperations() const {
   QStringList l;
   l << "window_status_message";
-  // l << "systray_status_message";
+  l << "window_operation";
+  // l << "sql_operation";
   return l;
 }
 
-void AStatusMessanger::close() {
+void ATxSocket::close() {
   disconnectFromServer();
   if (state() == QLocalSocket::UnconnectedState || waitForDisconnected(1000)) {
     connected = false;
   }
 }
 
-const QString AStatusMessanger::antiquaServerName() {
+const QString ATxSocket::antiquaServerName() {
   QString name(ANTIQUACRM_CONNECTION_DOMAIN);
   name.append(".");
   name.append(QSysInfo::machineHostName());

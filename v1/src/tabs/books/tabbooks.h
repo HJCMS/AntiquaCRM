@@ -34,6 +34,7 @@ public Q_SLOTS:
 
 public:
   explicit TabBooks(QWidget *parent = nullptr);
+  bool customAction(const QJsonObject &obj) override;
 };
 
 #endif // ANTIQUACRM_TABBOOKS_H

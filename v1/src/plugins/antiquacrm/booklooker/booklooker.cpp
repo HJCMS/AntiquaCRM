@@ -114,7 +114,8 @@ const QString Booklooker::dateString(const QDate &date) const {
 const AntiquaCRM::ArticleOrderItem
 Booklooker::articleItem(const QString &key, const QJsonValue &value) const {
   QString _key = p_articleTranslate.value(key);
-  QHash<QString, QMetaType::Type> keys = AntiquaCRM::AProviderOrder::articleKeys();
+  QHash<QString, QMetaType::Type> keys =
+      AntiquaCRM::AProviderOrder::articleKeys();
   if (!keys.contains(_key)) {
     qWarning("Booklooker: Unknown Article Key(%s)!", qPrintable(key));
     return AntiquaCRM::ArticleOrderItem();
@@ -125,17 +126,17 @@ Booklooker::articleItem(const QString &key, const QJsonValue &value) const {
     // Artikel Nummer
     QString buffer = value.toString();
     bool b;
-    qint64 id =  buffer.toInt(&b);
-    if(!b) {
+    qint64 id = buffer.toInt(&b);
+    if (!b) {
       qWarning("Can't convert Article Id from Booklooker order!");
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << _key << value << id;
+      qDebug() << Q_FUNC_INFO << _key << value << id;
 #endif
     }
     _value = id;
   } else if (_key == "a_provider_id") {
     // Dienstleister Bestellnummer
-    if(value.type() == QJsonValue::Double) {
+    if (value.type() == QJsonValue::Double) {
       qint64 d = value.toInt();
       _value = QString::number(d);
     } else {
@@ -148,6 +149,14 @@ Booklooker::articleItem(const QString &key, const QJsonValue &value) const {
     } else if (value.type() == QJsonValue::Double) {
       _value = value.toDouble();
     }
+  } else if (_key.contains("type")) {
+    int t = value.toInt();
+    if (t == 0)
+      _value = AntiquaCRM::ArticleType::BOOK;
+    else if (t > 0 && t < 4)
+      _value = AntiquaCRM::ArticleType::MEDIA;
+    else
+      _value = AntiquaCRM::ArticleType::UNKNOWN;
   } else if (keys.value(_key) == QMetaType::Int) {
     _value = value.toInt();
   } else if (keys.value(_key) == QMetaType::QString) {
@@ -300,6 +309,7 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
                                        order.value("orderTime").toString());
       // Start fill
       AntiquaCRM::AProviderOrder item(display_name, strOrderId);
+      item.setValue("o_provider_name", displayName());
       item.setValue("o_provider_order_id", strOrderId);
       item.setValue("o_provider_purchase_id", orderId);
       item.setValue("o_since", dateTime);
@@ -308,13 +318,13 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
       // AntiquaCRM::PaymentStatus
       QString orderStatus = order.value("status").toString();
       if (orderStatus == "READY_FOR_SHIPMENT") {
-        item.setValue("o_provider_order_status", AntiquaCRM::SHIPMENT_CREATED);
+        item.setValue("o_order_status", AntiquaCRM::SHIPMENT_CREATED);
       } else if (orderStatus == "WAITING_FOR_PAYMENT") {
-        item.setValue("o_provider_order_status", AntiquaCRM::WAIT_FOR_PAYMENT);
+        item.setValue("o_order_status", AntiquaCRM::WAIT_FOR_PAYMENT);
       } else if (orderStatus == "ORDER_CANCEL_ACTION") {
-        item.setValue("o_provider_order_status", AntiquaCRM::ORDER_CANCELED);
+        item.setValue("o_order_status", AntiquaCRM::ORDER_CANCELED);
       } else {
-        item.setValue("o_provider_order_status", AntiquaCRM::STATUS_NOT_SET);
+        item.setValue("o_order_status", AntiquaCRM::STATUS_NOT_SET);
       }
 
       // AntiquaCRM::PaymentMethod
@@ -371,8 +381,10 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
         QString d_cost = order.value("calculatedShippingCost").toString();
         double d_coast_double = d_cost.toDouble();
         if (d_coast_double > 0) {
-          item.setValue("d_price", d_coast_double);
+          item.setValue("o_delivery_add_price", true);
         }
+      } else {
+        item.setValue("o_delivery_add_price", false);
       }
 
       // Buyer payment comment
@@ -390,6 +402,9 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
       if (order.contains("transactionId")) {
         QString paypal_txn = order.value("transactionId").toString();
         item.setValue("o_payment_paypal_txn_id", paypal_txn);
+        item.setValue("o_payment_status", true);
+      } else {
+        item.setValue("o_payment_status", false);
       }
 
       // Invoice Address
@@ -408,6 +423,7 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
         item.setValue("c_street", street);
         item.setValue("c_postalcode", postalcode);
         item.setValue("c_location", location);
+        item.setValue("o_vat_country", bcp47);
         QString state = AntiquaCRM::AEuropeanCountries().value(bcp47.toUpper());
         if (!state.isEmpty()) {
           item.setValue("c_country", state);

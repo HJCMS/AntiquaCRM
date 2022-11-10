@@ -28,15 +28,6 @@ CustomersEditor::CustomersEditor(QWidget *parent)
   mainLayout->addWidget(m_headerFrame);
 
   m_tabWidget = new CustomersTabWidget(this);
-  mainLayout->addWidget(m_tabWidget);
-
-  m_actionBar = new EditorActionBar(this);
-  m_actionBar->setViewPrintButton(false);
-  m_actionBar->setViewMailButton(true);
-  mainLayout->addWidget(m_actionBar);
-
-  setLayout(mainLayout);
-
   m_dataWidget = new CustomersData(m_tabWidget);
   m_tabWidget->placeTab(m_dataWidget, tr("Contact data"));
 
@@ -45,7 +36,14 @@ CustomersEditor::CustomersEditor(QWidget *parent)
 
   m_ordersWidget = new CustomersOrders(m_tabWidget);
   m_tabWidget->placeTab(m_ordersWidget, tr("Purchases"));
+  mainLayout->addWidget(m_tabWidget);
 
+  m_actionBar = new EditorActionBar(this);
+  m_actionBar->setViewPrintButton(false);
+  m_actionBar->setViewMailButton(true);
+  mainLayout->addWidget(m_actionBar);
+
+  setLayout(mainLayout);
   setEnabled(false);
 
   // Signals:ActionBar

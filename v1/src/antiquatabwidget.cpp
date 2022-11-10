@@ -99,30 +99,19 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
 
 void AntiquaTabWidget::setAction(const QJsonObject &obj) {
   if (obj.contains("window_operation")) {
-    QString op = obj.value("window_operation").toString();
-    QString win = obj.value("window").toString();
-    if (op == "open_article") {
-      qint64 id = obj.value("open_article").toInt();
-      int index = indexByName(win + "_tab");
-      if (index > 0 && id > 0) {
-        Inventory *m_tab = tabWidget(index);
-        qDebug() << Q_FUNC_INFO << m_tab->objectName() << id;
-        setCurrentIndex(index);
-        m_tab->openEntry(id);
-      }
-    }
-    if (op == "create_order") {
-      QString oid = obj.value("create_order").toString();
-      int index = indexByName(win + "_tab");
-      if (index > 0 && !oid.isEmpty()) {
-        Inventory *m_tab = tabWidget(index);
-        qDebug() << Q_FUNC_INFO << m_tab->objectName() << oid;
-        setCurrentIndex(index);
-        qDebug() << Q_FUNC_INFO << "TODO";
-      }
+    int index = indexByName(obj.value("tab").toString() + "_tab");
+    if (index < 0)
+      return;
+
+    Inventory *m_tab = tabWidget(index);
+    if (m_tab != nullptr && m_tab->customAction(obj)) {
+      setCurrentIndex(index);
+    } else {
+      emit sendStatusMessage(tr("Create Order request rejected!"));
     }
     return;
   }
+
 #ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << "Not in set" << obj;
 #endif

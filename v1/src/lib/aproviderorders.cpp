@@ -85,9 +85,26 @@ bool AProviderOrder::setValue(const QString &key, const QVariant &value) {
     if ((it.key() == key) && (type.name().contains(value.typeName()))) {
       if (type.id() == QMetaType::QString)
         p_data.insert(key, value.toString().trimmed());
+      else if (type.id() == QMetaType::Int)
+        p_data.insert(key, value.toInt());
+      else if (type.id() == QMetaType::Bool)
+        p_data.insert(key, value.toBool());
+      else if (type.id() == QMetaType::QDateTime)
+        p_data.insert(key, value.toDateTime());
+      else if (type.id() == QMetaType::Double)
+        p_data.insert(key, value.toInt());
       else
         p_data.insert(key, value);
 
+      return true;
+    } else if ((it.key() == key) && (value.type() == QVariant::LongLong)) {
+      p_data.insert(key, value.toInt());
+      return true;
+    } else if ((it.key() == key) && (value.type() == QVariant::Double)) {
+      p_data.insert(key, value.toDouble());
+      return true;
+    } else if ((it.key() == key) && (value.type() == QVariant::DateTime)) {
+      p_data.insert(key, value.toDateTime());
       return true;
     }
   }

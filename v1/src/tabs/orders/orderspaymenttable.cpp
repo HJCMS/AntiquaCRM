@@ -14,14 +14,15 @@
 
 OrdersPaymentTable::OrdersPaymentTable(QWidget *parent) : QTableWidget{parent} {
   setObjectName("order_payments_table");
-  setColumnCount(6);
+  setColumnCount(7);
   addHeaderItem(0, "ID", tr("payment id"));
   articleTableCell = 1;
   addHeaderItem(1, tr("Article"), tr("article id"));
   addHeaderItem(2, tr("Price"), tr("selling price"));
   addHeaderItem(3, tr("Retail Price"), tr("Retail Price"));
   addHeaderItem(4, tr("Count"), tr("Article count"));
-  addHeaderItem(5, tr("Summary"), tr("Article Summary"));
+  addHeaderItem(5, tr("Type"), tr("Article Type"));
+  addHeaderItem(6, tr("Summary"), tr("Article Summary"));
   horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
   horizontalHeader()->setStretchLastSection(true);
   horizontalHeader()->setSectionHidden(0, true);

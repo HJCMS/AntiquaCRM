@@ -5,10 +5,10 @@
 #include "orderspaymenttable.h"
 
 #include <QDebug>
-#include <QLayout>
 #include <QGroupBox>
 #include <QIcon>
 #include <QLabel>
+#include <QLayout>
 #include <QListWidgetItem>
 #include <QPushButton>
 #include <QSizePolicy>
@@ -75,7 +75,7 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   layout->addStretch(1);
   setLayout(layout);
 
-  connect(btn_add, SIGNAL(clicked()), this, SLOT(insertArticle()));
+  // connect(btn_add, SIGNAL(clicked()), SLOT(insertArticle()));
   connect(btn_check, SIGNAL(clicked()), this, SLOT(createSearchSignal()));
   connect(m_table, SIGNAL(s_removeTableRow(int)), this,
           SIGNAL(askToRemoveRow(int)));
@@ -148,44 +148,6 @@ QTableWidgetItem *OrdersItemList::createItem(const QVariant &val) {
   return item;
 }
 
-void OrdersItemList::addTableRow() {
-    qDebug() << Q_FUNC_INFO << "TODO";
-//  int r = m_table->rowCount();
-//  m_table->setRowCount((m_table->rowCount() + 1));
-//  m_table->setItem(r, 0, createItem(p_payments.payment()));
-//  m_table->setItem(r, 1, createItem(p_payments.article()));
-//  m_table->setCellWidget(r, 2, addPrice(p_payments.price(), r));
-//  m_table->setCellWidget(r, 3, addSellPrice(p_payments.sellPrice(), r));
-//  m_table->setCellWidget(r, 4, addCount(p_payments.count(), r));
-//  m_table->setItem(r, 5, createItem(p_payments.title()));
-//  clearSearchInput();
-//  setModified(true);
-}
-
-void OrdersItemList::insertArticle() {
-    qDebug() << Q_FUNC_INFO << "TODO";
-//  if (p_payments.article() <= 0) {
-//    QString msg(tr("Inserting an empty entry is cowardly denied."));
-//    msg.append("<p>");
-//    msg.append(tr("Please search for an entry using an item ID first."));
-//    msg.append("</p>");
-//    emit statusMessage(msg);
-//    return;
-//  }
-
-//  for (int r = 0; r < m_table->rowCount(); r++) {
-//    if (m_table->getArticleId(r) == p_payments.article()) {
-//      QString msg("<p>");
-//      msg.append(tr("Duplicate Entry"));
-//      msg.append(": " + QString::number(p_payments.article()));
-//      msg.append("</p>");
-//      emit statusMessage(msg);
-//      return;
-//    }
-//  }
-//  addTableRow();
-}
-
 void OrdersItemList::createSearchSignal() {
   int id = m_insertID->value();
   if (id < 1)
@@ -198,12 +160,59 @@ void OrdersItemList::createSearchSignal() {
 void OrdersItemList::clearSearchInput() {
   m_insertID->clear();
   m_searchInfo->clear();
-  p_payments.clear();
 }
 
 void OrdersItemList::clearTable() {
   m_table->clearContents();
   m_table->setRowCount(0);
+}
+
+void OrdersItemList::insertArticle(const AntiquaCRM::OrderArticleItems &item) {
+  if (item.size() < 1)
+    return;
+
+  int r = m_table->rowCount();
+  m_table->setRowCount((m_table->rowCount() + 1));
+  QListIterator<AntiquaCRM::ArticleOrderItem> it(item);
+  while (it.hasNext()) {
+    AntiquaCRM::ArticleOrderItem article = it.next();
+    if (article.key == "a_provider_id") {
+      m_table->setItem(r, 0, createItem(article.value.toString()));
+    }
+    if (article.key == "a_article_id") {
+      qint64 aId = article.value.toInt();
+      m_table->setItem(r, 1, createItem(QString::number(aId)));
+    }
+    if (article.key == "a_price") {
+      m_table->setCellWidget(r, 2, addPrice(article.value.toDouble(), r));
+    }
+    if (article.key == "a_sell_price") {
+      m_table->setCellWidget(r, 3, addSellPrice(article.value.toDouble(), r));
+    }
+    if (article.key == "a_count") {
+      m_table->setCellWidget(r, 4, addCount(article.value.toInt(), r));
+    }
+    if (article.key == "a_type") {
+      AntiquaCRM::ArticleType t =
+          static_cast<AntiquaCRM::ArticleType>(article.value.toInt());
+      QString txt;
+      if (t == AntiquaCRM::ArticleType::BOOK)
+        txt = tr("Book");
+      else if (t == AntiquaCRM::ArticleType::MEDIA)
+        txt = tr("Media");
+      else if (t == AntiquaCRM::ArticleType::PRINTS)
+        txt = tr("Prints");
+      else
+        txt = tr("Unknown");
+
+      m_table->setItem(r, 5, createItem(txt));
+    }
+    if (article.key == "a_title") {
+      m_table->setItem(r, 6, createItem(article.value.toString()));
+    }
+  }
+  clearSearchInput();
+  setModified(true);
 }
 
 void OrdersItemList::setModified(bool b) {
@@ -224,33 +233,26 @@ void OrdersItemList::removeTableRow(int row) {
 
 int OrdersItemList::payments() { return m_table->rowCount(); }
 
-void OrdersItemList::importPayments(const AntiquaCRM::AProviderOrders &list) {
-  QListIterator<AntiquaCRM::AProviderOrder> it(list);
+bool OrdersItemList::importPayments(
+    const QList<AntiquaCRM::OrderArticleItems> &list) {
+  QListIterator<AntiquaCRM::OrderArticleItems> it(list);
   while (it.hasNext()) {
-    AntiquaCRM::AProviderOrder order = it.next();
-    qDebug() << Q_FUNC_INFO << "TODO";
-    // addTableRow();
+    insertArticle(it.next());
   }
+  return true;
 }
 
 const QHash<QString, QVariant> OrdersItemList::getTableRow(int row) {
   QHash<QString, QVariant> list;
+  qDebug() << Q_FUNC_INFO << "TODO";
   list.insert("a_payment_id", m_table->item(row, 0)->text().toInt());
   list.insert("a_order_id", 0);
   list.insert("a_article_id", m_table->item(row, 1)->text().toInt());
   list.insert("a_customer_id", 0);
-  list.insert("a_count", getCount(row));
-  list.insert("a_title", m_table->item(row, 5)->text());
   list.insert("a_price", getPrice(row));
   list.insert("a_sell_price", getSellPrice(row));
+  list.insert("a_count", getCount(row));
+  list.insert("a_type", m_table->item(row, 5)->text());
+  list.insert("a_title", m_table->item(row, 6)->text());
   return list;
-}
-
-void OrdersItemList::addArticleRow(const AntiquaCRM::AProviderOrder &set) {
-    qDebug() << Q_FUNC_INFO << "TODO";
-//  p_payments = set;
-//  QString buffer(p_payments.summary().trimmed());
-//  if (!buffer.isEmpty()) {
-//    m_searchInfo->setText(buffer);
-//  }
 }

@@ -563,7 +563,8 @@ void BookEditor::setCheckLeaveEditor() {
 void BookEditor::setFinalLeaveEditor() {
   setResetInputFields();
   m_actionBar->setRestoreable(false); /**< ResetButton off */
-  emit sendLeaveEditor();             /**< Zurück zur Hauptsansicht */
+  setEnabled(false);                  /**< prevent Key Bindings */
+  emit sendLeaveEditor();             /**< Back to MainView */
 }
 
 void BookEditor::setPrintBookCard() {
@@ -600,6 +601,7 @@ void BookEditor::actionEditImages() {
 void BookEditor::setRestore() {
   importSqlResult();
   setEnabled(true);
+  ib_count->setFocus();
 }
 
 bool BookEditor::openEditEntry(qint64 articleId) {
@@ -629,8 +631,11 @@ bool BookEditor::openEditEntry(qint64 articleId) {
   }
 
   if (status) {
-    importSqlResult();
-    setEnabled(true);
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << "Edit Book:" << articleId << status;
+#endif
+    // Die Erforderliche abfolge ist Identisch mit setRestore!
+    setRestore();
   }
 
   return status;
@@ -640,5 +645,5 @@ bool BookEditor::createNewEntry() {
   setInputFields();
   setResetModified(inputFields);
   setEnabled(true);
-  return true;
+  return isEnabled();
 }

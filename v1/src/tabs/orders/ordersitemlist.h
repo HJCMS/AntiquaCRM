@@ -17,7 +17,7 @@
 
 class OrdersPaymentTable;
 
-class OrdersItemList : public QWidget {
+class OrdersItemList final : public QWidget {
   Q_OBJECT
   Q_PROPERTY(bool modified READ isModified WRITE setModified NOTIFY hasModified)
 
@@ -45,14 +45,6 @@ private:
   QSpinBox *m_insertID;
 
   /**
-   * @brief Temporärer Artikeldatensatz
-   * Diese Klasse enthält den aktuellen Datensatz der gerade
-   * eingefügt wird. Sie dient zur Vermeidung von doppelten
-   * Einträgen und zur Verteilung der Daten auf mehrere Methoden.
-   */
-  AntiquaCRM::AProviderOrders p_payments;
-
-  /**
    * @brief Standard Preisfeld erstellen
    */
   QDoubleSpinBox *addPrice(double val, int row);
@@ -75,19 +67,7 @@ private:
    */
   QTableWidgetItem *createItem(const QVariant &val);
 
-  /**
-   * @brief Erstellt eine neuen Tabellen Eintrag
-   * Zum erstellen werden die Daten von @ref p_article
-   * verwendet.
-   */
-  void addTableRow();
-
 private Q_SLOTS:
-  /**
-   * @brief Artikel mit den Eingabefeldern zusammenstellen.
-   */
-  void insertArticle();
-
   /**
    * @brief Löst nach einigen Abfragen das Signal @ref searchArticle aus.
    */
@@ -133,12 +113,17 @@ public Q_SLOTS:
   void clearTable();
 
   /**
+   * @brief Erstellt eine neuen Tabellen Eintrag
+   */
+  void insertArticle(const AntiquaCRM::OrderArticleItems &article);
+
+  /**
    * @brief Änderungen
    */
   void setModified(bool);
 
 public:
-  OrdersItemList(QWidget *parent = nullptr);
+  explicit OrdersItemList(QWidget *parent = nullptr);
 
   /**
    * @brief Füge Artikel ID in die Suche ein!
@@ -164,7 +149,7 @@ public:
   /**
    * @brief Bestellartikel aus SQL Abfrage Importieren
    */
-  void importPayments(const AntiquaCRM::AProviderOrders &list);
+  bool importPayments(const QList<AntiquaCRM::OrderArticleItems> &list);
 
   /**
    * @brief Erstellt einen Spaltendatensatz
@@ -176,14 +161,6 @@ public:
    * @return Spaltenliste<QString:Feldname,QVariant:Wert>
    */
   const QHash<QString, QVariant> getTableRow(int row);
-
-  /**
-   * @brief Wenn ein Artikel gefunden wird dieser hier einfügen.
-   * @note Hier wird nur ein Teildatensatz erstellt!
-   *  Datenfelder wie order_id, artikel_id und customer_id sind
-   *  hierin @b nicht enthalten!
-   */
-  void addArticleRow(const AntiquaCRM::AProviderOrder &set);
 };
 
 #endif // ANTIQUACRM_ORDERSITEMLIST_H

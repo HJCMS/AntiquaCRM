@@ -5,23 +5,23 @@
 #include "deliverpackagebox.h"
 #include "deliverservicebox.h"
 
-#include <QDebug>
-
 DeliverService::DeliverService(QWidget *parent) : InputEdit{parent} {
   setObjectName("delivery_service_edit");
+
   AntiquaCRM::ASettings cfg(this);
   p_currency = cfg.value("payment/currency", "$").toString();
   m_serviceBox = new DeliverServiceBox(this);
   m_serviceBox->insertItem(0, tr("Internal"));
-  m_layout->addWidget(m_serviceBox);
+  m_layout->insertWidget(1, m_serviceBox);
   m_packageBox = new DeliverPackageBox(this);
   m_packageBox->insertItem(1, tr("Internal"));
-  m_packageBox->setMinimumWidth(100);
   m_packageBox->setEnabled(false);
-  m_layout->addWidget(m_packageBox);
+  m_layout->insertWidget(2, m_packageBox);
   m_priceInfo = new QLabel(this);
-  m_layout->addWidget(m_priceInfo);
-  m_layout->addStretch(1);
+  m_priceInfo->setMinimumWidth(30);
+  m_priceInfo->setMaximumWidth(50);
+  m_layout->insertWidget(3, m_priceInfo);
+  m_layout->setStretch(2, 1);
   setRequired(false);
 
   connect(m_serviceBox, SIGNAL(currentIndexChanged(int)), this,
@@ -79,12 +79,9 @@ void DeliverService::reset() {
 
 void DeliverService::setFocus() { m_packageBox->setFocus(); }
 
-void DeliverService::setProperties(const QSqlField &field) {
-}
+void DeliverService::setProperties(const QSqlField &field) {}
 
-void DeliverService::loadDataset() {
-  m_serviceBox->initDeliverServices();
-}
+void DeliverService::loadDataset() { m_serviceBox->initDeliverServices(); }
 
 const QVariant DeliverService::value() {
   return m_serviceBox->getCurrentServiceId();
@@ -103,7 +100,6 @@ int DeliverService::getDeliveryPackage() {
 }
 
 bool DeliverService::isInternational() {
-  // Ist es ein Nationales oder Internationales
   return m_packageBox->isInternational();
 }
 
@@ -119,5 +115,5 @@ void DeliverService::setInfo(const QString &info) { setToolTip(info); }
 const QString DeliverService::info() { return toolTip(); }
 
 const QString DeliverService::notes() {
-  return tr("Delevery Service is needet!");
+  return tr("Delivery Service is needed!");
 }

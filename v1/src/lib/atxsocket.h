@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_STATUSMESSANGER_H
-#define ANTIQUACRM_STATUSMESSANGER_H
+#ifndef ANTIQUACRM_ATXSOCKET_H
+#define ANTIQUACRM_ATXSOCKET_H
 
 #include <QJsonObject>
 #include <QLocalSocket>
@@ -13,11 +13,11 @@
 namespace AntiquaCRM {
 
 /**
- * @brief Application System Messanger
+ * @brief Application Socket Transmitter
  * @section application
  * @example send a Window StatusBar Message
  * @code
- *  AntiquaCRM::AStatusMessanger messanger(this);
+ *  AntiquaCRM::ATxSocket messanger(this);
  *  messanger.setObjectName("transmitter_object_name");
  *  QJsonObject obj;
  *  obj.insert("window_status_message",QJsonValue("my Status Message"));
@@ -25,7 +25,7 @@ namespace AntiquaCRM {
  *  messanger.close();
  * @endcode
  */
-class AStatusMessanger final : public QLocalSocket {
+class ATxSocket final : public QLocalSocket {
   Q_OBJECT
 
 private:
@@ -40,7 +40,7 @@ public Q_SLOTS:
   /**
    * @brief push Operation via Json Object
    */
-  void pushMessage(const QJsonObject &obj);
+  void pushOperation(const QJsonObject &obj);
 
   /**
    * @brief Send a Window StatusBar Message
@@ -48,12 +48,12 @@ public Q_SLOTS:
   void pushStatusBarMessage(const QString &message);
 
 public:
-  explicit AStatusMessanger(QObject *parent = nullptr);
+  explicit ATxSocket(QObject *parent = nullptr);
 
   /**
    * @brief list of accepted Json keys
    */
-  const QStringList pushOperations() const;
+  const QStringList getOperations() const;
 
   /**
    * @brief close socket connection
@@ -68,4 +68,4 @@ public:
 
 }; // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_STATUSMESSANGER_H
+#endif // ANTIQUACRM_ATXSOCKET_H

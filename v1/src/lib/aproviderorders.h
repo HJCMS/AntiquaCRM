@@ -184,6 +184,21 @@ public:
     hash.insert("c_comments", QMetaType::QString);
 
     /**
+     * @brief AntiquaCRM - System Order Id
+     */
+    hash.insert("o_id", QMetaType::Int);
+
+    /**
+     * @brief AntiquaCRM - Invoice Id
+     */
+    hash.insert("o_invoice_id", QMetaType::Int);
+
+    /**
+     * @brief e.g. Provider name
+     */
+    hash.insert("o_provider_name", QMetaType::QString);
+
+    /**
      * @brief Order Provider - Order Id (String)
      */
     hash.insert("o_provider_order_id", QMetaType::QString);
@@ -192,6 +207,11 @@ public:
      * @brief Order Provider Purchase Id (Numeric)
      */
     hash.insert("o_provider_purchase_id", QMetaType::Int);
+
+    /**
+     * @brief e.g. Order Customer Id
+     */
+    hash.insert("o_customer_id", QMetaType::Int);
 
     /**
      * @brief Order Delivery Comment from Buyer
@@ -209,6 +229,11 @@ public:
     hash.insert("o_payment_paypal_txn_id", QMetaType::QString);
 
     /**
+     * @brief If already payed?
+     */
+    hash.insert("o_payment_status", QMetaType::Bool);
+
+    /**
      * @brief Provider Order Payment Method
      * @see AntiquaCRM::PaymentMethod
      */
@@ -218,7 +243,7 @@ public:
      * @brief Current Provider Order Status
      * @see AntiquaCRM::PaymentStatus
      */
-    hash.insert("o_provider_order_status", QMetaType::Int);
+    hash.insert("o_order_status", QMetaType::Int);
 
     /**
      * @brief Order add/since DateTime
@@ -232,9 +257,48 @@ public:
     hash.insert("o_media_type", QMetaType::Int);
 
     /**
-     * @brief Delivery cost: \b postage
+     * @brief Country IETF BCP 47 language tag
      */
-    hash.insert("d_price", QMetaType::Double);
+    hash.insert("o_vat_country", QMetaType::QString);
+
+    /**
+     * @brief Delivery Service name
+     * @see Antiqua::DeliveryService
+     */
+    hash.insert("o_delivery_service", QMetaType::Int);
+
+    /**
+     * @brief Delivery Package Send ID
+     * @see Antiqua::DeliveryService
+     */
+    hash.insert("o_delivery_send_id", QMetaType::QString);
+
+    /**
+     * @brief Delivery
+     * @see Antiqua::DeliveryService
+     */
+    hash.insert("o_delivery", QMetaType::QString);
+
+    /**
+     * @brief Delivery Package type
+     * @see Antiqua::DeliveryService
+     */
+    hash.insert("o_delivery_package", QMetaType::Int);
+
+    /**
+     * @brief Delivery is VAT included?
+     */
+    hash.insert("o_vat_included", QMetaType::Bool);
+
+    /**
+     * @brief Delivery VAT Level
+     */
+    hash.insert("o_vat_levels", QMetaType::Int);
+
+    /**
+     * @brief Delivery add cost: \b postage
+     */
+    hash.insert("o_delivery_add_price", QMetaType::Bool);
 
     return hash;
   };

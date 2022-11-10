@@ -35,18 +35,18 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{"books_tab", parent} {
   m_editorPage = new QScrollArea(this);
   m_editorPage->setObjectName("book_editor_scrollarea");
   m_editorPage->setWidgetResizable(true);
-  m_editorWidget = new BookEditor(m_editorPage);
+  m_editorWidget = new BookEditor(this);
   m_editorPage->setWidget(m_editorWidget);
   insertWidget(1, m_editorPage);
   // End
 
+  setCurrentIndex(0);
+
   // Signals::BookSearchBar
   connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar,
           SLOT(setSearchFocus()));
-
   connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
           SLOT(setFilterFocus()));
-
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
 
   // Signals::BookTableView
@@ -79,7 +79,6 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{"books_tab", parent} {
 }
 
 void TabBooks::openStartPage() {
-  m_editorPage->setEnabled(false);
   if (m_table->rowCount() > 0 && m_table->rowCount() < 20)
     m_table->setReloadView();
 
@@ -100,8 +99,7 @@ void TabBooks::createSearchQuery(const QString &query) {
 
 void TabBooks::createNewEntry() {
   if (m_editorWidget->createNewEntry()) {
-    m_editorPage->setEnabled(true);
-    setCurrentWidget(m_editorPage);
+    setCurrentIndex(1);
   }
 }
 
@@ -109,9 +107,20 @@ void TabBooks::openEntry(qint64 articleId) {
   if (articleId < 1)
     return;
 
+  if (currentIndex() != 0) {
+    QString str_id = QString::number(articleId);
+    QString info(tr("Can't open Book with Id:%1").arg(str_id));
+    info.append("<p>");
+    info.append(tr("Because books tab is in edit mode."));
+    info.append("</p><p>");
+    info.append(tr("You need to save and close that open book first."));
+    info.append("</p>");
+    QMessageBox::information(this, windowTitle(), info);
+    return;
+  }
+
   if (m_editorWidget->openEditEntry(articleId)) {
-    m_editorPage->setEnabled(true);
-    setCurrentWidget(m_editorPage);
+    setCurrentIndex(1);
   }
 }
 
@@ -119,6 +128,24 @@ void TabBooks::onEnterChanged() {
   if (!initialed) {
     initialed = m_table->setQuery();
     m_searchBar->setFilter(0);
-    setCurrentWidget(m_mainPage);
   }
+}
+
+bool TabBooks::customAction(const QJsonObject &obj) {
+  if (obj.isEmpty() || !obj.contains("window_operation"))
+    return false;
+
+  if (!initialed) /**< @bug: is't a first call? */
+    onEnterChanged();
+
+  QString op = obj.value("window_operation").toString();
+  if (!obj.contains(op))
+    return false;
+
+  qint64 a_id = obj.value(op).toInt();
+  if (op == "open_article" && a_id > 0) {
+    openEntry(a_id);
+    return true;
+  }
+  return false;
 }

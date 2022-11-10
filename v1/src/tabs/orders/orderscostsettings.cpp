@@ -14,7 +14,7 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
   o_delivery_service = new DeliverService(m_deliveryTab);
   o_delivery_service->setObjectName("o_delivery_service");
   o_delivery_service->setInfo(tr("Service"));
-  dsLayout->addWidget(o_delivery_service, Qt::AlignLeft);
+  dsLayout->addWidget(o_delivery_service);
   o_delivery_send_id = new LineEdit(m_deliveryTab);
   o_delivery_send_id->setObjectName("o_delivery_send_id");
   o_delivery_send_id->setInfo(tr("Parcel Shipment Number"));

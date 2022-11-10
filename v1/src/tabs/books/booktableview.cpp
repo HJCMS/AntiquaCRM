@@ -42,9 +42,10 @@ bool BookTableView::sqlQueryTable(const QString &query) {
     return true;
   }
 
+  bool status = (m_model->rowCount() > 0);
   emit sendQueryReport(tr("Query without result"));
-  emit sendResultExists((m_model->rowCount() > 0));
-  return false;
+  emit sendResultExists(status);
+  return status;
 }
 
 void BookTableView::contextMenuEvent(QContextMenuEvent *event) {

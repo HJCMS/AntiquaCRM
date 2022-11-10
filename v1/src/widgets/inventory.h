@@ -9,6 +9,8 @@
 #include <QHeaderView>
 #include <QIcon>
 #include <QObject>
+#include <QJsonObject>
+#include <QJsonValue>
 #include <QShortcut>
 #include <QStackedWidget>
 #include <QTableView>
@@ -122,6 +124,11 @@ public:
    * @param index Uniq tab Index Name
    */
   explicit Inventory(const char *index, QWidget *parent = nullptr);
+
+  /**
+   * @brief Create Custom Entries
+   */
+  virtual bool customAction(const QJsonObject &obj) = 0;
 
   /**
    * @brief Uniq Tab Index Identifier

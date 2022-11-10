@@ -50,10 +50,14 @@ bool ASqlQueryModel::querySelect(const QString &sql) {
     return true;
   } else if (!m_sql->lastError().isEmpty()) {
     QString erroMessage = m_sql->lastError().trimmed();
+#ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << erroMessage;
+#endif
     emit sqlErrorMessage(p_table, erroMessage);
+    return false;
   }
-  return false;
+  // No errors!
+  return true;
 }
 
 const QString ASqlQueryModel::tableName() const { return p_table; }

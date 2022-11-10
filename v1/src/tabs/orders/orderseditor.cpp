@@ -32,6 +32,7 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   o_invoice_id = new SerialID(this);
   o_invoice_id->setObjectName("o_invoice_id");
   o_invoice_id->setInfo(tr("Invoice ID"));
+  o_invoice_id->setRequired(true);
   row0->addWidget(o_invoice_id);
   row0->addStretch(1);
   // Zahlungsstatus
@@ -107,8 +108,9 @@ bool OrdersEditor::setDataField(const QSqlField &field, const QVariant &value) {
 
   InputEdit *inp = findChild<InputEdit *>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
-    inp->setValue(value);
     inp->setProperties(field);
+    // qDebug() << key << value << required;
+    inp->setValue(value);
     return true;
   }
 
@@ -191,6 +193,42 @@ void OrdersEditor::createSqlInsert() {
   // TODO
 }
 
+qint64 OrdersEditor::searchCustomer(const QJsonObject &obj) {
+  QStringList f("c_firstname");
+  f << "c_lastname";
+  f << "c_postalcode";
+  f << "c_email_0";
+
+  QStringList clause;
+  foreach (QString k, f) {
+    QString v = obj.value(k).toString();
+    if (!v.isEmpty())
+      clause << k + "='" + v + "'";
+  }
+
+  // Search customer
+  QString sql("SELECT c_id FROM customers WHERE (");
+  sql.append(clause.join(" AND "));
+  sql.append(") OR (c_provider_import='");
+  sql.append(obj.value("c_provider_import").toString());
+  sql.append("') ORDER BY c_id;");
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    QList<qint64> cIds;
+    while (q.next()) {
+      cIds << q.value("c_id").toInt();
+    }
+    if (cIds.size() > 1)
+      qWarning("Warning: Found more then one Customer!");
+
+    return cIds.first();
+  } else {
+    qDebug() << Q_FUNC_INFO << sql << m_sql->lastError();
+    return -1;
+  }
+  return -1;
+}
+
 void OrdersEditor::setSaveData() {
   if (o_id->value().toInt() < 1) {
     createSqlInsert();
@@ -241,13 +279,16 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
   if (q.size() != 0) {
     QSqlRecord r = q.record();
     while (q.next()) {
+      // Standard Felder
       foreach (QString key, inputFields) {
         m_tableData->setValue(key, q.value(r.indexOf(key)));
       }
+      // Kunden Daten
       foreach (QString key, customInput) {
         QSqlField f = r.field(key);
         setDataField(f, q.value(f.name()));
       }
+      // Artikel
     }
     status = true;
   } else {
@@ -267,5 +308,120 @@ bool OrdersEditor::createNewEntry() {
   setInputFields();
   setResetModified(inputFields);
   setEnabled(true);
+  return true;
+}
+
+bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
+  if (providerId.isEmpty())
+    return false;
+
+  QString sql("SELECT pr_name,pr_order,pr_order_data");
+  sql.append(" FROM provider_order_history WHERE");
+  sql.append(" pr_order='" + providerId + "' ORDER BY pr_order;");
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() != 1) {
+    openNoticeMessage(tr("No Provider orders data found!"));
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << m_sql->lastError();
+#endif
+    return false;
+  }
+
+  q.next();
+  QString o_provider_name = q.value("pr_name").toString();
+  QString o_provider_order_id = q.value("pr_order").toString();
+  QByteArray data = q.value("pr_order_data").toByteArray();
+  QJsonObject obj = QJsonDocument::fromJson(data).object();
+  if (obj.isEmpty())
+    return false;
+
+  setInputFields();
+  setResetModified(inputFields);
+  setEnabled(true);
+
+  AntiquaCRM::AProviderOrder prOrder(o_provider_name, o_provider_order_id);
+  // Kunden Daten
+  if (obj.contains("customer")) {
+    QJsonObject customer = obj.value("customer").toObject();
+    // NOTE: Wir benötigen bei einem Import eine gültige Kundennummer!
+    qint64 c_id = searchCustomer(customer);
+    if (!prOrder.setValue("o_customer_id", c_id)) {
+      qWarning("OrderEditor: Customer not found or set!");
+      return false;
+    }
+
+    foreach (QString key, customer.keys()) {
+      QVariant val = customer.value(key).toVariant();
+      if (!prOrder.setValue(key, val))
+        qWarning("Customer value '%s' not set!", qPrintable(key));
+    }
+  }
+
+  // Standard Felder
+  if (obj.contains("orderinfo")) {
+    QJsonObject orderinfo = obj.value("orderinfo").toObject();
+    foreach (QString key, orderinfo.keys()) {
+      QVariant val = orderinfo.value(key).toVariant();
+      if (ignoreFields.contains(key))
+        continue;
+
+      if (!prOrder.setValue(key, val)) {
+        qWarning("Order value '%s' not set!", qPrintable(key));
+        // qDebug() << key << val;
+      }
+    }
+  }
+
+  // Artikel
+  if (obj.contains("articles")) {
+    QJsonArray orders = obj.value("articles").toArray();
+    for (int i = 0; i < orders.size(); i++) {
+      QList<AntiquaCRM::ArticleOrderItem> items;
+      QJsonObject article = orders[i].toObject();
+      foreach (QString key, article.keys()) {
+        AntiquaCRM::ArticleOrderItem item;
+        item.key = key;
+        item.value = article.value(key).toVariant();
+        items.append(item);
+      }
+      if (items.size() > 0)
+        prOrder.insertOrderItems(items);
+    }
+  }
+  // TODO
+  prOrder.setValue("o_delivery_service", 0);
+  prOrder.setValue("o_delivery_send_id", "");
+  prOrder.setValue("o_delivery", "");
+  prOrder.setValue("o_delivery_package", 22);
+  prOrder.setValue("o_vat_included", true);
+  prOrder.setValue("o_vat_levels", 7);
+  prOrder.setValue("o_delivery_add_price", false);
+
+  // Ignore it in "New Entries"
+  QStringList ignored({"o_id", "o_invoice_id"});
+
+  // 1) Standard Felder einfügen
+  foreach (QString key, inputFields) {
+    if (ignoreFields.contains(key))
+      continue;
+
+    if (ignored.contains(key))
+      m_tableData->setValue(key, 0);
+    else
+      m_tableData->setValue(key, prOrder.getValue(key));
+  }
+
+  // 2) Kunden Daten
+  QSqlRecord r = AntiquaCRM::ASqlDataQuery("customers").record();
+  foreach (QString key, customInput) {
+    QSqlField f = r.field(key);
+    setDataField(f, prOrder.getValue(key));
+  }
+
+  // 3) Artikel Importieren
+  m_ordersList->importPayments(prOrder.orders());
+
+  importSqlResult();
+  o_payment_status->setFocus();
   return true;
 }

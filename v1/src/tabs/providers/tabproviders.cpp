@@ -115,10 +115,6 @@ void TabProviders::createSearchQuery(const QString &query) {
   qDebug() << Q_FUNC_INFO << sender()->objectName();
 }
 
-void TabProviders::createNewEntry() {
-  qDebug() << Q_FUNC_INFO << sender()->objectName();
-}
-
 void TabProviders::openEntry(qint64 customerId) {
   if (customerId < 1)
     return;

@@ -37,6 +37,7 @@ public Q_SLOTS:
 
 public:
   explicit TabCustomers(QWidget *parent = nullptr);
+  bool customAction(const QJsonObject &obj) override;
 };
 
 #endif // ANTIQUACRM_TABCUSTOMERS_H

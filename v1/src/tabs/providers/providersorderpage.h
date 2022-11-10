@@ -34,7 +34,7 @@ private:
   ProviderOrderInfo *m_orderInfo;
   QTextEdit *m_buyerComment;
 
-  void sendSocketOperation(const QJsonObject &action);
+  inline void pushCmd(const QJsonObject &action);
 
   bool findCustomer(const QJsonObject &customer);
 

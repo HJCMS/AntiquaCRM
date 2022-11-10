@@ -30,11 +30,12 @@ public Q_SLOTS:
   void openStartPage() override;
   void createSearchQuery(const QString &query = QString()) override;
   void createNewEntry() override;
-  void openEntry(qint64 customerId) override;
+  void openEntry(qint64 o_id) override;
   void onEnterChanged() override;
 
 public:
   explicit TabOrders(QWidget *parent = nullptr);
+  bool customAction(const QJsonObject &obj) override;
 };
 
 #endif // ANTIQUACRM_TABORDERS_H

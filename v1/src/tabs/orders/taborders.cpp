@@ -107,8 +107,8 @@ void TabOrders::createNewEntry() {
   }
 }
 
-void TabOrders::openEntry(qint64 customerId) {
-  if (customerId < 1)
+void TabOrders::openEntry(qint64 o_id) {
+  if (o_id < 1)
     return;
 
   if (currentIndex() != 0) {
@@ -121,7 +121,7 @@ void TabOrders::openEntry(qint64 customerId) {
     return;
   }
 
-  if (m_editorWidget->openEditEntry(customerId)) {
+  if (m_editorWidget->openEditEntry(o_id)) {
     m_editorPage->setEnabled(true);
     setCurrentWidget(m_editorPage);
   }
@@ -129,9 +129,63 @@ void TabOrders::openEntry(qint64 customerId) {
 
 void TabOrders::onEnterChanged() {
   if (!initialed) {
+    initialed = m_table->setQuery();
     m_searchBar->setFilter(0);
     m_editorPage->setEnabled(false);
     setCurrentIndex(0);
-    initialed = m_table->setQuery();
   }
+}
+
+bool TabOrders::customAction(const QJsonObject &obj) {
+  if (obj.isEmpty() || !obj.contains("window_operation"))
+    return false;
+
+  if (!initialed) /**< @bug: is't a first call? */
+    onEnterChanged();
+
+  if (currentIndex() != 0) {
+    QString info(tr("Cannot open this order.") + "<br>");
+    info.append(tr("Because the order tab is not in overview mode."));
+    info.append("<p>");
+    info.append(tr("Please save and close all open order first."));
+    info.append("</p>");
+    QMessageBox::information(this, tr("Ordereditor"), info);
+    return false;
+  }
+
+  QString op = obj.value("window_operation").toString();
+  if (!obj.contains(op))
+    return false;
+
+  QJsonValue value = obj.value(op);
+  QJsonValue::Type type = value.type();
+  if (value.isNull()) {
+    sendStatusMessage(tr("Order tab, some arguments are missing!"));
+    return false;
+  }
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << op << value;
+#endif
+
+  if (op == "open_order" && type == QJsonValue::Double) {
+    qint64 o_id = value.toInt();
+    if (o_id > 0) {
+      openEntry(o_id);
+      return true;
+    }
+  } else if (op == "create_order" && type == QJsonValue::String) {
+    QString pr_order = value.toString().trimmed();
+    if (pr_order.isEmpty()) {
+      sendStatusMessage(tr("create a new Order rejected!"));
+      return false;
+    }
+    if (m_editorWidget->createNewProviderOrder(pr_order)) {
+      m_editorPage->setEnabled(true);
+      setCurrentWidget(m_editorPage);
+      return true;
+    }
+  }
+
+  return false;
 }

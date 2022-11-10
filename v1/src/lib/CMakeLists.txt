@@ -28,7 +28,16 @@ SET (projectLibrary_FILES
  AntiquaCRMPlugin.cmake
 )
 
+SET (projectinc_FILES
+ AntiquaCRM
+ AntiquaCRMPlugin
+ AGlobal
+ ASettings
+)
+
 SET (projectLibrary_SOURCES
+ acompleterdata.cpp
+ acurl.cpp
  aeuropeancountries.cpp
  anetworker.cpp
  anetworkiface.cpp
@@ -38,18 +47,18 @@ SET (projectLibrary_SOURCES
  aproviderorders.cpp
  asettings.cpp
  ashareddatafiles.cpp
- acompleterdata.cpp
  asqlcore.cpp
  asqldataquery.cpp
  asqlfiles.cpp
  asqlprofile.cpp
  asqlquerymodel.cpp
  asqlsettings.cpp
- astatusmessanger.cpp
- acurl.cpp
+ atxsocket.cpp
 )
 
 SET (projectLibrary_HEADERS
+ acompleterdata.h
+ acurl.h
  aeuropeancountries.h
  aglobal.h
  anetworker.h
@@ -60,19 +69,14 @@ SET (projectLibrary_HEADERS
  aproviderorders.h
  asettings.h
  ashareddatafiles.h
- acompleterdata.h
  asqlcore.h
  asqldataquery.h
  asqlfiles.h
  asqlprofile.h
  asqlquerymodel.h
  asqlsettings.h
- astatusmessanger.h
- acurl.h
- AntiquaCRM
- AntiquaCRMPlugin
- AGlobal
- ASettings
+ atxsocket.h
+ ${projectinc_FILES}
 )
 
 ADD_LIBRARY (${_projectLibrary} SHARED

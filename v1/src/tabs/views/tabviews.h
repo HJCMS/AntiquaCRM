@@ -31,6 +31,7 @@ public Q_SLOTS:
 
 public:
   explicit TabViews(QWidget *parent = nullptr);
+  bool customAction(const QJsonObject &obj) override { return false; }
 };
 
 #endif // ANTIQUACRM_TABVIEWS_H

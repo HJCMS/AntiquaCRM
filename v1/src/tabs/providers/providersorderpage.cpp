@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "providersorderpage.h"
-#include "antiquasocketserver.h"
 #include "providerbuyerinfo.h"
 #include "providerorderinfo.h"
 #include "providerpurchasebar.h"
@@ -53,16 +52,10 @@ ProvidersOrderPage::ProvidersOrderPage(const QJsonObject &order,
   connect(m_actionBar, SIGNAL(sendCreateOrder()), SLOT(setCreateOrder()));
 }
 
-void ProvidersOrderPage::sendSocketOperation(const QJsonObject &action) {
-  QLocalSocket socket(this);
-  socket.setServerName(AntiquaSocketServer::socketPath());
-  if (socket.open(QLocalSocket::ReadWrite)) {
-    socket.write(QJsonDocument(action).toJson(QJsonDocument::Compact));
-    socket.waitForBytesWritten(2000);
-  }
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << action;
-#endif
+void ProvidersOrderPage::pushCmd(const QJsonObject &action) {
+  AntiquaCRM::ATxSocket atxs(this);
+  atxs.pushOperation(action);
+  atxs.close();
 }
 
 bool ProvidersOrderPage::findCustomer(const QJsonObject &customer) {
@@ -110,17 +103,17 @@ bool ProvidersOrderPage::findCustomer(const QJsonObject &customer) {
 void ProvidersOrderPage::openOrder(qint64 oid) {
   QJsonObject obj;
   obj.insert("window_operation", "open_order");
-  obj.insert("window", "orders");
+  obj.insert("tab", "orders");
   obj.insert("open_order", oid);
-  sendSocketOperation(obj);
+  pushCmd(obj);
 }
 
 void ProvidersOrderPage::openArticle(qint64 aid) {
   QJsonObject obj;
   obj.insert("window_operation", "open_article");
-  obj.insert("window", "books");
+  obj.insert("tab", "books");
   obj.insert("open_article", aid);
-  sendSocketOperation(obj);
+  pushCmd(obj);
 }
 
 void ProvidersOrderPage::findArticleIds() {
@@ -165,9 +158,9 @@ void ProvidersOrderPage::setCreateOrder() {
 
   QJsonObject obj;
   obj.insert("window_operation", "create_order");
-  obj.insert("window", "orders");
+  obj.insert("tab", "orders");
   obj.insert("create_order", orderid);
-  sendSocketOperation(obj);
+  pushCmd(obj);
 }
 
 bool ProvidersOrderPage::loadOrderDataset() {

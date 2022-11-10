@@ -35,6 +35,7 @@ private:
   const QHash<QString, QVariant> createSqlDataset() override;
   void createSqlUpdate() override;
   void createSqlInsert() override;
+  qint64 searchCustomer(const QJsonObject &obj);
 
 private Q_SLOTS:
   void setSaveData() override;
@@ -48,6 +49,7 @@ public:
   explicit OrdersEditor(QWidget *parent = nullptr);
   bool openEditEntry(qint64 orderId) override;
   bool createNewEntry() override;
+  bool createNewProviderOrder(const QString &providerId);
 };
 
 #endif // ANTIQUACRM_ORDERSEDITOR_H

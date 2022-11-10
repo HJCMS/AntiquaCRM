@@ -59,5 +59,5 @@ void AntiquaSocketServer::incomingConnection(quintptr socketDescriptor) {
 }
 
 const QString AntiquaSocketServer::socketPath() {
-  return AntiquaCRM::AStatusMessanger::antiquaServerName();
+  return AntiquaCRM::ATxSocket::antiquaServerName();
 }
