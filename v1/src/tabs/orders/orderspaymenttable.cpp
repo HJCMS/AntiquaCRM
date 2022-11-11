@@ -43,21 +43,20 @@ void OrdersPaymentTable::addHeaderItem(int i, const QString &name,
 void OrdersPaymentTable::removeTableItem() {
   QTableWidgetItem *item = currentItem();
   if (item != nullptr) {
-    emit s_removeTableRow(item->row());
+    emit sendRemoveTableRow(item->row());
   }
 }
 
 void OrdersPaymentTable::checkChanged(QTableWidgetItem *, QTableWidgetItem *) {
-  emit hasModified(true);
+  emit sendModified(true);
 }
 
 void OrdersPaymentTable::contextMenuEvent(QContextMenuEvent *ev) {
   QMenu *m = new QMenu("Actions", this);
-  // Eintrag öffnen  Bestellung anlegen
   QAction *ac_remove = m->addAction(QIcon("://icons/db_remove.png"),
                                     tr("delete selected article"));
   ac_remove->setObjectName("ac_context_remove_row");
-  connect(ac_remove, SIGNAL(triggered()), this, SLOT(removeTableItem()));
+  connect(ac_remove, SIGNAL(triggered()), SLOT(removeTableItem()));
   m->exec(ev->globalPos());
   delete m;
 }

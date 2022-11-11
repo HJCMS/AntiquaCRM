@@ -68,7 +68,41 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   // END:Row2
 
   mainLayout->addStretch(1);
+
+  m_actionBar = new EditorActionBar(this);
+  PrinterButton::Buttons print_buttons(PrinterButton::Delivery |
+                                       PrinterButton::Invoice |
+                                       PrinterButton::Reminder);
+  m_actionBar->setPrinterMenu(print_buttons);
+  m_actionBar->setViewMailButton(true);
+  m_actionBar->setMailMenu(MailButton::Orders);
+  // ResetButton off
+  m_actionBar->setRestoreable(false);
+  m_actionBar->setViewRestoreButton(false);
+  mainLayout->addWidget(m_actionBar);
+
   setLayout(mainLayout);
+
+  // Signals
+  // Order Items
+  connect(m_ordersList, SIGNAL(searchArticleById(qint64)),
+          SLOT(searchInsertArticleId(qint64)));
+
+  // Actionsbar
+  connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
+  connect(m_actionBar, SIGNAL(sendPrintDeliveryNote()),
+          SLOT(createPrintDeliveryNote()));
+  connect(m_actionBar, SIGNAL(sendPrintInvoiceNote()),
+          SLOT(createPrintInvoiceNote()));
+  connect(m_actionBar, SIGNAL(sendPrintPaymentReminder()),
+          SLOT(createPrintPaymentReminder()));
+  connect(m_actionBar, SIGNAL(sendCancelClicked()),
+          SLOT(setFinalLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendSaveClicked()), SLOT(setSaveData()));
+  connect(m_actionBar, SIGNAL(sendFinishClicked()),
+          SLOT(setCheckLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendCreateMailMessage(const QString &)),
+          SLOT(createMailMessage(const QString &)));
 }
 
 void OrdersEditor::setInputFields() {
@@ -133,7 +167,6 @@ void OrdersEditor::importSqlResult() {
   }
   blockSignals(false);
 
-  // m_actionBar->setRestoreable(m_tableData->isValid());
   setResetModified(inputFields);
 }
 
@@ -187,10 +220,12 @@ const QHash<QString, QVariant> OrdersEditor::createSqlDataset() {
 
 void OrdersEditor::createSqlUpdate() {
   // TODO
+  qDebug() << Q_FUNC_INFO << "TODO";
 }
 
 void OrdersEditor::createSqlInsert() {
   // TODO
+  qDebug() << Q_FUNC_INFO << "TODO";
 }
 
 qint64 OrdersEditor::searchCustomer(const QJsonObject &obj) {
@@ -229,6 +264,38 @@ qint64 OrdersEditor::searchCustomer(const QJsonObject &obj) {
   return -1;
 }
 
+void OrdersEditor::getOrderArticles(qint64 oid) {
+  if (oid < 1)
+    return;
+
+  AntiquaCRM::ASqlFiles sqlFile("query_order_articles");
+  if (sqlFile.openTemplate()) {
+    sqlFile.setWhereClause("a_order_id=" + QString::number(oid));
+    // qDebug() << Q_FUNC_INFO << sqlFile.getQueryContent();
+    QSqlQuery q = m_sql->query(sqlFile.getQueryContent());
+    if (q.size() > 0) {
+      QList<AntiquaCRM::OrderArticleItems> articles;
+      while (q.next()) {
+        AntiquaCRM::OrderArticleItems items;
+        QSqlRecord r = q.record();
+        for (int i = 0; i < r.count(); i++) {
+          QSqlField f = r.field(i);
+          AntiquaCRM::ArticleOrderItem item;
+          item.key = f.name();
+          item.value = f.value();
+          items.append(item);
+        }
+        if (items.size() > 0)
+          articles.append(items);
+      }
+      // ready to import
+      m_ordersList->importPayments(articles);
+      return;
+    }
+    sendStatusMessage(tr("Orders for Order %1 not found!").arg(oid));
+  }
+}
+
 void OrdersEditor::setSaveData() {
   if (o_id->value().toInt() < 1) {
     createSqlInsert();
@@ -249,8 +316,51 @@ void OrdersEditor::setCheckLeaveEditor() {
 
 void OrdersEditor::setFinalLeaveEditor() {
   setResetInputFields();
-  // m_actionBar->setRestoreable(false); /**< ResetButton off */
   emit sendLeaveEditor(); /**< Zurück zur Hauptsansicht */
+}
+
+void OrdersEditor::searchInsertArticleId(qint64 aid) {
+  if (aid < 1)
+    return;
+
+  AntiquaCRM::ASqlFiles sqlFile("query_article_order_with_id");
+  if (sqlFile.openTemplate()) {
+    sqlFile.setWhereClause("i_id=" + QString::number(aid));
+    QSqlQuery q = m_sql->query(sqlFile.getQueryContent());
+    if (q.size() > 0) {
+      q.next();
+      QSqlRecord r = q.record();
+      AntiquaCRM::OrderArticleItems items;
+      for (int i = 0; i < r.count(); i++) {
+        QSqlField f = r.field(i);
+        AntiquaCRM::ArticleOrderItem item;
+        item.key = f.name();
+        item.value = f.value();
+        items.append(item);
+      }
+      if (items.size() > 0) {
+        m_ordersList->insertArticle(items);
+        return;
+      }
+    }
+  }
+  m_ordersList->setAlertMessage(tr("Article Id %1 not found!").arg(aid));
+}
+
+void OrdersEditor::createMailMessage(const QString &type) {
+  qDebug() << Q_FUNC_INFO << "TODO" << type;
+}
+
+void OrdersEditor::createPrintDeliveryNote() {
+  qDebug() << Q_FUNC_INFO << "TODO";
+}
+
+void OrdersEditor::createPrintInvoiceNote() {
+  qDebug() << Q_FUNC_INFO << "TODO";
+}
+
+void OrdersEditor::createPrintPaymentReminder() {
+  qDebug() << Q_FUNC_INFO << "TODO";
 }
 
 void OrdersEditor::setRestore() {
@@ -289,7 +399,9 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
         setDataField(f, q.value(f.name()));
       }
       // Artikel
+      getOrderArticles(orderId);
     }
+
     status = true;
   } else {
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
@@ -298,6 +410,7 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
 
   if (status) {
     importSqlResult();
+    setResetModified(inputFields);
     setEnabled(true);
   }
 
@@ -388,16 +501,25 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
         prOrder.insertOrderItems(items);
     }
   }
-  // TODO
-  prOrder.setValue("o_delivery_service", 0);
-  prOrder.setValue("o_delivery_send_id", "");
-  prOrder.setValue("o_delivery", "");
-  prOrder.setValue("o_delivery_package", 22);
-  prOrder.setValue("o_vat_included", true);
-  prOrder.setValue("o_vat_levels", 7);
-  prOrder.setValue("o_delivery_add_price", false);
 
-  // Ignore it in "New Entries"
+  // Die Paket Verfolgungsnummer muss Manuell gesetzt werden!
+  prOrder.setValue("o_delivery_send_id", "");
+  // Die Lieferschein Nummer wird erst nach dem Speichern mit der
+  // Autfrags ID "o_id" generiert!
+  prOrder.setValue("o_delivery", "");
+  // Der Standard bei Büchern ist "reduziert"!
+  int vat = m_cfg->value("payment/vat2", 0).toInt();
+  prOrder.setValue("o_vat_levels", vat);
+  // Standard bei Büchern: Aktiv
+  prOrder.setValue("o_vat_included", (vat != 0));
+  // Wenn Ausland keine Steuern aber dann mit Lieferkosten!
+  prOrder.setValue("o_delivery_add_price", (vat == 0));
+  // Standard Lieferdienst
+  QPair<int, int> deliveryService =
+      m_costSettings->o_delivery_service->defaultDeliveryService();
+  prOrder.setValue("o_delivery_service", deliveryService.first);
+  prOrder.setValue("o_delivery_package", deliveryService.second);
+  // Diese felder bei neuen Einträgen ignorieren!
   QStringList ignored({"o_id", "o_invoice_id"});
 
   // 1) Standard Felder einfügen
@@ -422,6 +544,5 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
   m_ordersList->importPayments(prOrder.orders());
 
   importSqlResult();
-  o_payment_status->setFocus();
   return true;
 }

@@ -17,12 +17,13 @@ private:
   void loadDataset();
 
 private Q_SLOTS:
-  void dataChanged(const QString &);
+  void dataChanged();
 
 public Q_SLOTS:
   Q_INVOKABLE void reset();
   void setValue(const QVariant &);
   void setFocus();
+  void setEditable(bool b = true);
 
 public:
   explicit TextField(QWidget *parent = nullptr);

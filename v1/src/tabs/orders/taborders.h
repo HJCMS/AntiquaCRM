@@ -25,6 +25,8 @@ private:
   QScrollArea *m_editorPage;
   OrdersEditor *m_editorWidget;
 
+  void popupWarningTabInEditMode() override;
+
 public Q_SLOTS:
   void setDefaultTableView();
   void openStartPage() override;

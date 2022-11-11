@@ -35,6 +35,7 @@ public:
   void setSingleStep(int);
   void setSuffix(const QString &);
   void setPrefix(const QString &);
+  void setShowButtons(bool b = true);
   void setValue(const QVariant &);
   const QVariant value();
   bool isValid();

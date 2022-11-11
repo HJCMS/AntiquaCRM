@@ -10,11 +10,13 @@ TextField::TextField(QWidget *parent) : InputEdit{parent} {
   m_layout->addWidget(m_edit);
   loadDataset();
   setRequired(true);
+
+  connect(m_edit, SIGNAL(textChanged()), SLOT(dataChanged()));
 }
 
 void TextField::loadDataset() {}
 
-void TextField::dataChanged(const QString &) { setModified(true); }
+void TextField::dataChanged() { setModified(true); }
 
 void TextField::reset() {
   m_edit->setPlainText(QString());
@@ -28,6 +30,8 @@ void TextField::setValue(const QVariant &val) {
 }
 
 void TextField::setFocus() { m_edit->setFocus(); }
+
+void TextField::setEditable(bool b) { m_edit->setReadOnly(!b); }
 
 void TextField::setProperties(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
@@ -46,9 +50,7 @@ bool TextField::isValid() {
   return true;
 }
 
-void TextField::setInfo(const QString &info) {
-  m_edit->setToolTip(info);
-}
+void TextField::setInfo(const QString &info) { m_edit->setToolTip(info); }
 
 const QString TextField::info() { return m_edit->toolTip(); }
 

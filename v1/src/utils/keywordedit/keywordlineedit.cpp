@@ -96,6 +96,8 @@ void KeywordLineEdit::setValue(const QVariant &str) {
 void KeywordLineEdit::setProperties(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
+
+  maxLength = field.length();
 }
 
 const QVariant KeywordLineEdit::value() {
@@ -112,7 +114,8 @@ bool KeywordLineEdit::isValid() {
   if (isRequired() && m_keywordList->keywords().count() < 1)
     return false;
 
-  return true;
+  int l = m_keywordList->keywords().join(p_delimiter).length();
+  return (l > maxLength) ? false : true;
 }
 
 void KeywordLineEdit::reset() {
@@ -128,5 +131,7 @@ void KeywordLineEdit::setInfo(const QString &info) { setToolTip(info); }
 const QString KeywordLineEdit::info() { return toolTip(); }
 
 const QString KeywordLineEdit::notes() {
-  return tr("Keywords: Requires minimum one Keyword!");
+  QStringList txt(tr("Keywords: Requires minimum one Keyword!"));
+  txt << tr("And Restricted to a maximum %1 Characters length.").arg(maxLength);
+  return txt.join("\n");
 }

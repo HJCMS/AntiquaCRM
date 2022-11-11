@@ -5,11 +5,12 @@
 #ifndef DELIVERSERVICE_H
 #define DELIVERSERVICE_H
 
+#include <AntiquaWidgets>
 #include <QComboBox>
 #include <QLabel>
 #include <QObject>
+#include <QPair>
 #include <QWidget>
-#include <AntiquaWidgets>
 
 class DeliverPackageBox;
 class DeliverServiceBox;
@@ -19,6 +20,7 @@ class DeliverService final : public InputEdit {
 
 private:
   QString p_currency;
+  AntiquaCRM::ASettings *m_cfg;
   DeliverServiceBox *m_serviceBox;
   DeliverPackageBox *m_packageBox;
   QLabel *m_priceInfo;
@@ -51,6 +53,8 @@ public:
   void setInfo(const QString &);
   const QString info();
   const QString notes();
+
+  const QPair<int, int> defaultDeliveryService();
 };
 
 #endif // DELIVERSERVICE_H

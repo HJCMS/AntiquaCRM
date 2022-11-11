@@ -24,6 +24,7 @@ class KeywordLineEdit final : public InputEdit {
   Q_OBJECT
 
 private:
+  int maxLength = 60;
   /**
    * @brief Trennzeichen
    */

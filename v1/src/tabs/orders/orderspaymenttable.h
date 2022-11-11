@@ -27,8 +27,8 @@ protected:
   void contextMenuEvent(QContextMenuEvent *);
 
 Q_SIGNALS:
-  void hasModified(bool);
-  void s_removeTableRow(int row);
+  void sendModified(bool);
+  void sendRemoveTableRow(int row);
 
 public:
   OrdersPaymentTable(QWidget *parent = nullptr);

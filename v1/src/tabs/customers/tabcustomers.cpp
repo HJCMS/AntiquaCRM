@@ -43,8 +43,10 @@ TabCustomers::TabCustomers(QWidget *parent)
   // Signals
   // searchbar
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
-  connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar, SLOT(setSearchFocus()));
-  connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar, SLOT(setFilterFocus()));
+  connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar,
+          SLOT(setSearchFocus()));
+  connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
+          SLOT(setFilterFocus()));
 
   // maintable
   connect(m_table, SIGNAL(sendQueryReport(const QString &)), m_statusBar,
@@ -55,14 +57,16 @@ TabCustomers::TabCustomers(QWidget *parent)
 
   connect(m_table, SIGNAL(sendOpenEntry(qint64)), SLOT(openEntry(qint64)));
 
-  connect(m_table, SIGNAL(sendCurrentId(qint64)), SIGNAL(sendIdToOrder(qint64)));
+  connect(m_table, SIGNAL(sendCurrentId(qint64)),
+          SIGNAL(sendIdToOrder(qint64)));
 
   connect(m_table, SIGNAL(sendCreateNewEntry()), SLOT(createNewEntry()));
 
-  connect(m_table, SIGNAL(sendResultExists(bool)),
-          m_statusBar, SLOT(setCreateButtonEnabled(bool)));
+  connect(m_table, SIGNAL(sendResultExists(bool)), m_statusBar,
+          SLOT(setCreateButtonEnabled(bool)));
 
-  connect(m_table, SIGNAL(sendDeleteEntry(qint64)), SLOT(setDeleteCustomer(qint64)));
+  connect(m_table, SIGNAL(sendDeleteEntry(qint64)),
+          SLOT(setDeleteCustomer(qint64)));
 
   // editor
   connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));
@@ -72,7 +76,18 @@ TabCustomers::TabCustomers(QWidget *parent)
   connect(m_statusBar, SIGNAL(sendHistoryQuery(const QString &)),
           SLOT(createSearchQuery(const QString &)));
 
-  connect(m_statusBar, SIGNAL(sendReloadView()), m_table, SLOT(setReloadView()));
+  connect(m_statusBar, SIGNAL(sendReloadView()), m_table,
+          SLOT(setReloadView()));
+}
+
+void TabCustomers::popupWarningTabInEditMode() {
+  QString info(tr("Cannot open Customers Editor."));
+  info.append("<p>");
+  info.append(tr("Because the customer tab is not in mainview mode."));
+  info.append("</p><p>");
+  info.append(tr("Please save and close the open customer editor first."));
+  info.append("</p>");
+  QMessageBox::information(this, tr("Customereditor"), info);
 }
 
 void TabCustomers::setDeleteCustomer(qint64 customerId) {
@@ -80,8 +95,8 @@ void TabCustomers::setDeleteCustomer(qint64 customerId) {
   info.append("<p>");
   info.append(tr("This process is irreversible!"));
   info.append("</p><p>");
-  info.append(tr("In addition, the system will refuse to delete if an order "
-                 "exists for this customer!"));
+  info.append(tr("In addition, the system will refuse to delete if an order"
+                 " exists for this customer!"));
   info.append("</p>");
 
   QString title = tr("Delete Customer");
@@ -138,12 +153,7 @@ void TabCustomers::openEntry(qint64 customerId) {
     return;
 
   if (currentIndex() != 0) {
-    QString info(tr("Cannot open this customer.") + "<br>");
-    info.append(tr("Because the customer tab is not in overview mode."));
-    info.append("<p>");
-    info.append(tr("Please save and close all open customers first."));
-    info.append("</p>");
-    QMessageBox::information(this, tr("Customereditor"), info);
+    popupWarningTabInEditMode();
     return;
   }
 
@@ -161,6 +171,41 @@ void TabCustomers::onEnterChanged() {
 }
 
 bool TabCustomers::customAction(const QJsonObject &obj) {
-  qDebug() << Q_FUNC_INFO << "TODO" << obj;
+  if (obj.isEmpty() || !obj.contains("window_operation"))
+    return false;
+
+  if (!initialed) /**< first call? */
+    onEnterChanged();
+
+  if (currentIndex() != 0) {
+    popupWarningTabInEditMode();
+    return false;
+  }
+
+  QString op = obj.value("window_operation").toString();
+  if (!obj.contains(op))
+    return false;
+
+  QJsonValue value = obj.value(op);
+  QJsonValue::Type type = value.type();
+  QString failMessage(tr("Invalid arguments to open Customer!"));
+
+  if (value.isNull()) {
+    sendStatusMessage(failMessage);
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << op << value;
+#endif
+    return false;
+  }
+
+  if (op == "open_customers" && type == QJsonValue::Double) {
+    qint64 c_id = value.toInt();
+    if (c_id > 0) {
+      openEntry(c_id);
+      return true;
+    }
+  }
+
+  sendStatusMessage(failMessage);
   return false;
 }

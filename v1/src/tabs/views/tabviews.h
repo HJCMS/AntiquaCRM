@@ -22,6 +22,8 @@ private:
   QTableView *m_tableView;
   ViewsTableModel *m_model;
 
+  void popupWarningTabInEditMode() override {};
+
 public Q_SLOTS:
   void openStartPage() override;
   void createSearchQuery(const QString &query = QString()) override;

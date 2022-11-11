@@ -25,6 +25,8 @@ private:
   QScrollArea *m_editorPage;
   CustomersEditor *m_editorWidget;
 
+  void popupWarningTabInEditMode() override;
+
 private Q_SLOTS:
   void setDeleteCustomer(qint64 customerId);
 

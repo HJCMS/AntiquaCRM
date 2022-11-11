@@ -6,6 +6,7 @@
 #define ANTIQUACRM_PROVIDERSORDERPAGE_H
 
 #include <AntiquaCRM>
+#include <AntiquaWidgets>
 #include <QObject>
 #include <QJsonObject>
 #include <QTextEdit>
@@ -32,9 +33,9 @@ private:
 
   ProviderBuyerInfo *m_buyerInfo;
   ProviderOrderInfo *m_orderInfo;
-  QTextEdit *m_buyerComment;
+  TextField *m_buyerComment;
 
-  inline void pushCmd(const QJsonObject &action);
+  void pushCmd(const QJsonObject &action);
 
   bool findCustomer(const QJsonObject &customer);
 

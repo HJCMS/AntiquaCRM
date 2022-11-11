@@ -5,17 +5,17 @@
 #ifndef ANTIQUACRM_PROVIDERBUYERINFO_H
 #define ANTIQUACRM_PROVIDERBUYERINFO_H
 
+#include <AntiquaWidgets>
 #include <QJsonObject>
 #include <QObject>
-#include <QTextEdit>
 #include <QWidget>
 
 class ProviderBuyerInfo final : public QWidget {
   Q_OBJECT
 
 private:
-  QTextEdit *m_invoice;
-  QTextEdit *m_delivery;
+  TextField *m_invoice;
+  TextField *m_delivery;
 
 public:
   explicit ProviderBuyerInfo(QWidget *parent = nullptr);

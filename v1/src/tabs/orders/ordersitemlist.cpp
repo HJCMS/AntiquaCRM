@@ -5,9 +5,7 @@
 #include "orderspaymenttable.h"
 
 #include <QDebug>
-#include <QGroupBox>
 #include <QIcon>
-#include <QLabel>
 #include <QLayout>
 #include <QListWidgetItem>
 #include <QPushButton>
@@ -26,60 +24,42 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   currency = m_cfg->value("payment/currency", "€").toByteArray();
 
   QSizePolicy policy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+  QString groupInfo = tr("Insert a new Article with Id to this order");
+
+  m_addArticleGroup = new QGroupBox(this);
+  m_addArticleGroup->setTitle(groupInfo + ":  ");
+  QHBoxLayout *groupLayout = new QHBoxLayout(m_addArticleGroup);
+  groupLayout->setContentsMargins(2, 2, 2, 2);
+  groupLayout->addStretch(1);
+  m_notifier = new QLabel(m_addArticleGroup);
+  m_notifier->setStyleSheet("QLabel {color:red;font-weight:bold;}");
+  groupLayout->addWidget(m_notifier, Qt::AlignLeft);
+  m_insertID = new IntSpinBox(m_addArticleGroup);
+  m_insertID->setRange(0, 99999999);
+  m_insertID->setShowButtons(false);
+  m_insertID->setInfo(tr("Insert here the Article ID."));
+  groupLayout->addWidget(m_insertID);
+  QPushButton *btn_add = new QPushButton(m_addArticleGroup);
+  btn_add->setText(tr("Insert Article"));
+  btn_add->setIcon(QIcon("://icons/db_add.png"));
+  btn_add->setSizePolicy(policy);
+  groupLayout->addWidget(btn_add);
+  m_addArticleGroup->setLayout(groupLayout);
+  layout->addWidget(m_addArticleGroup);
+
+  QString tbInfo = tr("Current Article orders");
+  layout->addWidget(new QLabel(tbInfo + ":", this));
 
   m_table = new OrdersPaymentTable(this);
   layout->addWidget(m_table);
 
-  QGroupBox *m_groupBox = new QGroupBox(this);
-  m_groupBox->setTitle(tr("Add Article orders") + ":");
-
-  QGridLayout *groupLayout = new QGridLayout(m_groupBox);
-  groupLayout->setColumnStretch(0, 1);
-  groupLayout->setColumnStretch(1, 1);
-
-  QHBoxLayout *searchLayout = new QHBoxLayout();
-  QLabel *info = new QLabel(this);
-  info->setText(tr("Add here the article Ids for this order:"));
-  searchLayout->addWidget(info);
-  m_insertID = new QSpinBox(this);
-  m_insertID->setRange(1, (qint64)maxPrice);
-  m_insertID->setButtonSymbols(QAbstractSpinBox::NoButtons);
-  m_insertID->clear();
-  searchLayout->addWidget(m_insertID);
-  groupLayout->addLayout(searchLayout, 0, 0, 1, 2, Qt::AlignRight);
-
-  QPushButton *btn_check = new QPushButton(m_groupBox);
-  btn_check->setText(tr("Check"));
-  btn_check->setIcon(QIcon("://icons/db_update.png"));
-  btn_check->setSizePolicy(policy);
-  groupLayout->addWidget(btn_check, 0, 2, 1, 1);
-
-  // INFO
-  m_searchInfo = new QLineEdit(m_groupBox);
-  m_searchInfo->setReadOnly(true);
-  m_searchInfo->setPlaceholderText(tr("Info about Article found by input ..."));
-  m_searchInfo->setSizePolicy(policy);
-  groupLayout->addWidget(m_searchInfo, 1, 0, 1, 2);
-
-  QPushButton *btn_add = new QPushButton(m_groupBox);
-  btn_add->setText(tr("Insert Article"));
-  btn_add->setIcon(QIcon("://icons/db_add.png"));
-  btn_add->setSizePolicy(policy);
-  btn_add->setMinimumWidth(150);
-  groupLayout->addWidget(btn_add, 1, 2, 1, 1);
-  // INFO
-
-  m_groupBox->setLayout(groupLayout);
-  layout->addWidget(m_groupBox);
-
   layout->addStretch(1);
   setLayout(layout);
 
-  // connect(btn_add, SIGNAL(clicked()), SLOT(insertArticle()));
-  connect(btn_check, SIGNAL(clicked()), this, SLOT(createSearchSignal()));
-  connect(m_table, SIGNAL(s_removeTableRow(int)), this,
+  connect(btn_add, SIGNAL(clicked()), SLOT(setSearchArticle()));
+  connect(m_table, SIGNAL(sendRemoveTableRow(int)),
           SIGNAL(askToRemoveRow(int)));
-  connect(m_table, SIGNAL(hasModified(bool)), this, SIGNAL(hasModified(bool)));
+  connect(m_table, SIGNAL(sendModified(bool)), SIGNAL(hasModified(bool)));
 }
 
 QDoubleSpinBox *OrdersItemList::addPrice(double val, int row) {
@@ -148,23 +128,32 @@ QTableWidgetItem *OrdersItemList::createItem(const QVariant &val) {
   return item;
 }
 
-void OrdersItemList::createSearchSignal() {
-  int id = m_insertID->value();
-  if (id < 1)
+void OrdersItemList::setSearchArticle() {
+  qint64 id = m_insertID->value().toInt();
+  if (id < 1) {
+    setAlertMessage(tr("Empty entries are cowardly refused!"));
     return;
-
-  m_searchInfo->clear();
-  emit searchArticle(id);
+  }
+  setAlertMessage();
+  emit searchArticleById(id);
 }
 
 void OrdersItemList::clearSearchInput() {
-  m_insertID->clear();
-  m_searchInfo->clear();
+  m_insertID->reset();
+  m_notifier->clear();
 }
 
 void OrdersItemList::clearTable() {
   m_table->clearContents();
   m_table->setRowCount(0);
+  m_notifier->clear();
+}
+
+void OrdersItemList::setAlertMessage(const QString &message) {
+  if (message.length() > 0)
+    m_notifier->setText(message);
+  else
+    m_notifier->clear();
 }
 
 void OrdersItemList::insertArticle(const AntiquaCRM::OrderArticleItems &item) {
@@ -213,6 +202,7 @@ void OrdersItemList::insertArticle(const AntiquaCRM::OrderArticleItems &item) {
   }
   clearSearchInput();
   setModified(true);
+  m_insertID->setFocus();
 }
 
 void OrdersItemList::setModified(bool b) {

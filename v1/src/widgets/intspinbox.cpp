@@ -39,6 +39,11 @@ void IntSpinBox::setSuffix(const QString &s) { m_spinBox->setSuffix(s); }
 
 void IntSpinBox::setPrefix(const QString &s) { m_spinBox->setPrefix(s); }
 
+void IntSpinBox::setShowButtons(bool b) {
+  if (!b)
+    m_spinBox->setButtonSymbols(QAbstractSpinBox::NoButtons);
+}
+
 void IntSpinBox::setValue(const QVariant &val) {
   int value = val.toInt();
   m_spinBox->setValue(value);

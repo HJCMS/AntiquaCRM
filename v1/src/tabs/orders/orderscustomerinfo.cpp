@@ -18,10 +18,12 @@ OrdersCustomerInfo::OrdersCustomerInfo(QWidget *parent) : QWidget{parent} {
   c_postal_address = new TextField(this);
   c_postal_address->setObjectName("c_postal_address");
   c_postal_address->setToolTip(tr("Invoice Address"));
+  c_postal_address->setEditable(false);
   m_stackedWidget->addWidget(c_postal_address);
   c_shipping_address = new TextField(this);
   c_shipping_address->setObjectName("c_shipping_address");
   c_shipping_address->setToolTip(tr("Delivery Address"));
+  c_shipping_address->setEditable(false);
   m_stackedWidget->addWidget(c_shipping_address);
   layout->addWidget(m_stackedWidget);
   QFrame *frame = new QFrame(this);

@@ -7,9 +7,9 @@
 
 DeliverService::DeliverService(QWidget *parent) : InputEdit{parent} {
   setObjectName("delivery_service_edit");
+  m_cfg = new AntiquaCRM::ASettings(this);
+  p_currency = m_cfg->value("payment/currency", "$").toString();
 
-  AntiquaCRM::ASettings cfg(this);
-  p_currency = cfg.value("payment/currency", "$").toString();
   m_serviceBox = new DeliverServiceBox(this);
   m_serviceBox->insertItem(0, tr("Internal"));
   m_layout->insertWidget(1, m_serviceBox);
@@ -116,4 +116,33 @@ const QString DeliverService::info() { return toolTip(); }
 
 const QString DeliverService::notes() {
   return tr("Delivery Service is needed!");
+}
+
+const QPair<int, int> DeliverService::defaultDeliveryService() {
+  // QPair<Service,Paket>
+  QPair<int, int> service(0, 0);
+  // 1) Sind die Parameter bereits in der Konfiguration vorhanden?
+  if (m_cfg->contains("delivery/service") &&
+      m_cfg->contains("delivery/package")) {
+    service.first = m_cfg->value("delivery/service").toInt();
+    service.second = m_cfg->value("delivery/package").toInt();
+    if (service.first != 0 && service.second != 0)
+      return service;
+  }
+  // 2) Aus Datenbank nehmen und in Konfiguration speichern!
+  AntiquaCRM::ASqlCore querySql(this);
+  QSqlQuery q = querySql.query(
+      AntiquaCRM::ASqlFiles::queryStatement("query_default_delivery_service"));
+  if (q.size() > 0) {
+    q.next();
+    // Service Nummer
+    service.first = q.value("d_srv").toInt();
+    m_cfg->setValue("delivery/service", service.first);
+    // Kosten Nummer
+    service.second = q.value("d_cid").toInt();
+    m_cfg->setValue("delivery/package", service.second);
+  } else {
+    qWarning("Can't not fetch Default Delivery Servive!");
+  }
+  return service;
 }

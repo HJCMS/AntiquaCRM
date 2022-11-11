@@ -3,13 +3,16 @@
 
 SET (query_tables_FILES
  query_articles_exists.sql
+ query_article_order_with_id.sql
  query_book_binding.sql
  query_book_publisher_de.sql
  query_customer_orders_status.sql
  query_customer_exists.sql
+ query_default_delivery_service.sql
  query_designation.sql
  query_keywords.sql
  query_order_by_oid.sql
+ query_order_articles.sql
  query_postal_codes.sql
  query_storage_location.sql
  query_tab_books_main.sql

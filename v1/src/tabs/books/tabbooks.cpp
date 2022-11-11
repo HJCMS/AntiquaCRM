@@ -78,6 +78,16 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{"books_tab", parent} {
           SLOT(setReloadView()));
 }
 
+void TabBooks::popupWarningTabInEditMode() {
+  QString info(tr("Can't open this Article"));
+  info.append("<p>");
+  info.append(tr("Because books tab is in edit mode."));
+  info.append("</p><p>");
+  info.append(tr("You need to save and close that open book first."));
+  info.append("</p>");
+  QMessageBox::information(this, windowTitle(), info);
+}
+
 void TabBooks::openStartPage() {
   if (m_table->rowCount() > 0 && m_table->rowCount() < 20)
     m_table->setReloadView();
@@ -108,14 +118,7 @@ void TabBooks::openEntry(qint64 articleId) {
     return;
 
   if (currentIndex() != 0) {
-    QString str_id = QString::number(articleId);
-    QString info(tr("Can't open Book with Id:%1").arg(str_id));
-    info.append("<p>");
-    info.append(tr("Because books tab is in edit mode."));
-    info.append("</p><p>");
-    info.append(tr("You need to save and close that open book first."));
-    info.append("</p>");
-    QMessageBox::information(this, windowTitle(), info);
+    popupWarningTabInEditMode();
     return;
   }
 
@@ -135,8 +138,13 @@ bool TabBooks::customAction(const QJsonObject &obj) {
   if (obj.isEmpty() || !obj.contains("window_operation"))
     return false;
 
-  if (!initialed) /**< @bug: is't a first call? */
+  if (!initialed) /**< first call? */
     onEnterChanged();
+
+  if (currentIndex() != 0) {
+    popupWarningTabInEditMode();
+    return false;
+  }
 
   QString op = obj.value("window_operation").toString();
   if (!obj.contains(op))
@@ -147,5 +155,6 @@ bool TabBooks::customAction(const QJsonObject &obj) {
     openEntry(a_id);
     return true;
   }
+
   return false;
 }

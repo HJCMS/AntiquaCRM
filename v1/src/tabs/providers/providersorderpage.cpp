@@ -34,7 +34,8 @@ ProvidersOrderPage::ProvidersOrderPage(const QJsonObject &order,
   m_tab->addFixedTab(m_buyerInfo, tr("Address"));
   m_orderInfo = new ProviderOrderInfo(m_tab);
   m_tab->addFixedTab(m_orderInfo, tr("Payment Info"));
-  m_buyerComment = new QTextEdit(m_tab);
+  m_buyerComment = new TextField(m_tab);
+  m_buyerComment->setEditable(false);
   m_tab->addFixedTab(m_buyerComment, tr("Buyer comments"));
   layout->addWidget(m_tab);
 
@@ -100,10 +101,13 @@ bool ProvidersOrderPage::findCustomer(const QJsonObject &customer) {
   return false;
 }
 
+// Must be identical to the "index" call of the tab class!
+// grep -hoe '\<[a-z]\+_tab\>' tabs/*/tab*.cpp
+// books_tab,customers_tab,orders_tab,providers_tab,views_tab
 void ProvidersOrderPage::openOrder(qint64 oid) {
   QJsonObject obj;
   obj.insert("window_operation", "open_order");
-  obj.insert("tab", "orders");
+  obj.insert("tab", "orders_tab");
   obj.insert("open_order", oid);
   pushCmd(obj);
 }
@@ -111,7 +115,7 @@ void ProvidersOrderPage::openOrder(qint64 oid) {
 void ProvidersOrderPage::openArticle(qint64 aid) {
   QJsonObject obj;
   obj.insert("window_operation", "open_article");
-  obj.insert("tab", "books");
+  obj.insert("tab", "books_tab");
   obj.insert("open_article", aid);
   pushCmd(obj);
 }
@@ -158,7 +162,7 @@ void ProvidersOrderPage::setCreateOrder() {
 
   QJsonObject obj;
   obj.insert("window_operation", "create_order");
-  obj.insert("tab", "orders");
+  obj.insert("tab", "orders_tab");
   obj.insert("create_order", orderid);
   pushCmd(obj);
 }
@@ -182,7 +186,7 @@ bool ProvidersOrderPage::loadOrderDataset() {
   // Comments from buyer
   if (orderInfo.contains("o_delivery_comment")) {
     QString comment = orderInfo.value("o_delivery_comment").toString();
-    m_buyerComment->setPlainText(comment.trimmed());
+    m_buyerComment->setValue(comment.trimmed());
   }
 
   // buyed Articles

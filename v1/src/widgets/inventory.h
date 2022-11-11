@@ -57,6 +57,8 @@ protected Q_SLOTS:
    */
   void sendStatusMessage(const QString &message);
 
+  virtual void popupWarningTabInEditMode() = 0;
+
 Q_SIGNALS:
   /**
    * @brief Send Tab closeable changed

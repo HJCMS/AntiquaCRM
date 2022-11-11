@@ -8,7 +8,8 @@
 #include <AntiquaCRM>
 #include <AntiquaWidgets>
 #include <QDoubleSpinBox>
-#include <QLineEdit>
+#include <QGroupBox>
+#include <QLabel>
 #include <QObject>
 #include <QSpinBox>
 #include <QTableWidget>
@@ -35,14 +36,15 @@ private:
   OrdersPaymentTable *m_table;
 
   /**
-   * @brief Kontrollanzeige für das Ergebnis
+   * @brief Notifications
    */
-  QLineEdit *m_searchInfo;
+  QGroupBox *m_addArticleGroup;
+  QLabel *m_notifier;
 
   /**
    * @brief Sucheingabe für Artikel ID
    */
-  QSpinBox *m_insertID;
+  IntSpinBox *m_insertID;
 
   /**
    * @brief Standard Preisfeld erstellen
@@ -68,10 +70,7 @@ private:
   QTableWidgetItem *createItem(const QVariant &val);
 
 private Q_SLOTS:
-  /**
-   * @brief Löst nach einigen Abfragen das Signal @ref searchArticle aus.
-   */
-  void createSearchSignal();
+  void setSearchArticle();
 
 Q_SIGNALS:
   /**
@@ -82,7 +81,7 @@ Q_SIGNALS:
   /**
    * @brief Suche Artikel mit ID
    */
-  void searchArticle(int);
+  void searchArticleById(qint64);
 
   /**
    * @brief Nachricht an Elternfenster
@@ -111,6 +110,12 @@ public Q_SLOTS:
    * @brief Tabellen Zeilen zurücksetzen!
    */
   void clearTable();
+
+  /**
+   * @brief Erstellt einen Roten Text neben dem Article Einfügen!
+   * Wenn der kein Text dann wird die Ausgabe geleert!
+   */
+  void setAlertMessage(const QString &message = QString());
 
   /**
    * @brief Erstellt eine neuen Tabellen Eintrag

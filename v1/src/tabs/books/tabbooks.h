@@ -25,6 +25,8 @@ private:
   QScrollArea *m_editorPage;
   BookEditor *m_editorWidget;
 
+  void popupWarningTabInEditMode() override;
+
 public Q_SLOTS:
   void openStartPage() override;
   void createSearchQuery(const QString &query = QString()) override;

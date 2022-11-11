@@ -73,6 +73,15 @@ TabOrders::TabOrders(QWidget *parent) : Inventory{"orders_tab", parent} {
           SLOT(setReloadView()));
 }
 
+void TabOrders::popupWarningTabInEditMode() {
+  QString info("<p>" + tr("Cannot open Order Editor!"));
+  info.append(tr("Because the order tab is not in mainview mode."));
+  info.append("</p><p>");
+  info.append(tr("Please save and close opened orders first."));
+  info.append("</p>");
+  QMessageBox::information(this, tr("Ordereditor"), info);
+}
+
 void TabOrders::setDefaultTableView() {
   m_editorPage->setEnabled(false);
   m_searchBar->setFilter(0);
@@ -112,12 +121,7 @@ void TabOrders::openEntry(qint64 o_id) {
     return;
 
   if (currentIndex() != 0) {
-    QString info(tr("Cannot open this order.") + "<br>");
-    info.append(tr("Because the order tab is not in overview mode."));
-    info.append("<p>");
-    info.append(tr("Please save and close all open order first."));
-    info.append("</p>");
-    QMessageBox::information(this, tr("Ordereditor"), info);
+    popupWarningTabInEditMode();
     return;
   }
 
@@ -140,16 +144,11 @@ bool TabOrders::customAction(const QJsonObject &obj) {
   if (obj.isEmpty() || !obj.contains("window_operation"))
     return false;
 
-  if (!initialed) /**< @bug: is't a first call? */
+  if (!initialed) /**< first call? */
     onEnterChanged();
 
   if (currentIndex() != 0) {
-    QString info(tr("Cannot open this order.") + "<br>");
-    info.append(tr("Because the order tab is not in overview mode."));
-    info.append("<p>");
-    info.append(tr("Please save and close all open order first."));
-    info.append("</p>");
-    QMessageBox::information(this, tr("Ordereditor"), info);
+    popupWarningTabInEditMode();
     return false;
   }
 
@@ -160,13 +159,12 @@ bool TabOrders::customAction(const QJsonObject &obj) {
   QJsonValue value = obj.value(op);
   QJsonValue::Type type = value.type();
   if (value.isNull()) {
-    sendStatusMessage(tr("Order tab, some arguments are missing!"));
+    sendStatusMessage(tr("Some arguments missing for a new Order!"));
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << op << value;
+#endif
     return false;
   }
-
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << op << value;
-#endif
 
   if (op == "open_order" && type == QJsonValue::Double) {
     qint64 o_id = value.toInt();
@@ -177,7 +175,7 @@ bool TabOrders::customAction(const QJsonObject &obj) {
   } else if (op == "create_order" && type == QJsonValue::String) {
     QString pr_order = value.toString().trimmed();
     if (pr_order.isEmpty()) {
-      sendStatusMessage(tr("create a new Order rejected!"));
+      sendStatusMessage(tr("Some arguments missing for a new Order!"));
       return false;
     }
     if (m_editorWidget->createNewProviderOrder(pr_order)) {

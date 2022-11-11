@@ -11,7 +11,6 @@
 #include <QWidget>
 
 class KeywordLineEdit;
-class EditorActionBar;
 
 class BookEditor final : public InventoryEditor {
   Q_OBJECT

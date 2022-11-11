@@ -99,22 +99,29 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
 
 void AntiquaTabWidget::setAction(const QJsonObject &obj) {
   if (obj.contains("window_operation")) {
-    int index = indexByName(obj.value("tab").toString() + "_tab");
-    if (index < 0)
+    // Must be identical to the "index" call of the tab class!
+    // grep -hoe '\<[a-z]\+_tab\>' tabs/*/tab*.cpp
+    QString tab = obj.value("tab").toString();
+    int index = indexByName(tab);
+    if (index < 0) {
+      qWarning("Invalid Operation call for tab actions!");
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << "Invalid:" << obj;
+#endif
       return;
+    }
 
     Inventory *m_tab = tabWidget(index);
     if (m_tab != nullptr && m_tab->customAction(obj)) {
       setCurrentIndex(index);
     } else {
-      emit sendStatusMessage(tr("Create Order request rejected!"));
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << "Rejected:" << obj;
+#endif
+      emit sendStatusMessage(tr("Request rejected!"));
     }
     return;
   }
-
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << "Not in set" << obj;
-#endif
 }
 
 void AntiquaTabWidget::addViewsTab(const QString &query) {

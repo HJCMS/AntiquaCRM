@@ -25,6 +25,8 @@ private:
   QScrollArea *m_editorPage;
   bool findPage(const QString &provider, const QString &orderId);
 
+  void popupWarningTabInEditMode() override {};
+
 private Q_SLOTS:
   void openOrderPage(const QString &provider, const QString &orderId);
 

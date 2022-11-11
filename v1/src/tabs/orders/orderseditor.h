@@ -28,6 +28,8 @@ private:
 
   OrdersItemList *m_ordersList;
 
+  EditorActionBar *m_actionBar;
+
   void setInputFields() override;
   bool setDataField(const QSqlField &field, const QVariant &value) override;
   void importSqlResult() override;
@@ -36,11 +38,17 @@ private:
   void createSqlUpdate() override;
   void createSqlInsert() override;
   qint64 searchCustomer(const QJsonObject &obj);
+  void getOrderArticles(qint64 oid);
 
 private Q_SLOTS:
   void setSaveData() override;
   void setCheckLeaveEditor() override;
   void setFinalLeaveEditor() override;
+  void searchInsertArticleId(qint64 aid);
+  void createMailMessage(const QString &type);
+  void createPrintDeliveryNote();
+  void createPrintInvoiceNote();
+  void createPrintPaymentReminder();
 
 public Q_SLOTS:
   void setRestore() override;
