@@ -133,6 +133,10 @@
 #include "searchlineedit.h"
 #endif
 
+#ifndef ANTIQUACRM_SELECTARTICLETYPE_H
+#include "selectarticletype.h"
+#endif
+
 #ifndef ANTIQUACRM_SELECTEUCOUNTRY_H
 #include "selecteucountry.h"
 #endif

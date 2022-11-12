@@ -31,6 +31,13 @@ private:
   EditorActionBar *m_actionBar;
 
   void setInputFields() override;
+
+  /**
+   * @brief Lieferschein Nummer generieren
+   * @note Ist Abhängig von OrderId
+   */
+  const QString generateDeliveryNumber();
+
   bool setDataField(const QSqlField &field, const QVariant &value) override;
   void importSqlResult() override;
   bool sendSqlQuery(const QString &query) override;
@@ -39,6 +46,7 @@ private:
   void createSqlInsert() override;
   qint64 searchCustomer(const QJsonObject &obj);
   void getOrderArticles(qint64 oid);
+  bool saveOrderArticles(qint64 oid = -1);
 
 private Q_SLOTS:
   void setSaveData() override;

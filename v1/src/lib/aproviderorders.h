@@ -329,6 +329,11 @@ public:
     hash.insert("a_provider_id", QMetaType::QString);
 
     /**
+     * @brief Payment Article Order Id Default:0
+     */
+    hash.insert("a_payment_id", QMetaType::Int);
+
+    /**
      * @brief Article Type
      * @see AntiquaCRM::ArticleType e.g. Book=1
      */

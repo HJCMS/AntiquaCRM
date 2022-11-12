@@ -112,6 +112,8 @@ void OrdersEditor::setInputFields() {
   ignoreFields << "o_delivered";
   // @deprecated o_provider_order
   ignoreFields << "o_provider_order";
+  // PayPal TaxId
+  ignoreFields << "o_payment_confirmed";
 
   m_tableData = new AntiquaCRM::ASqlDataQuery("inventory_orders");
   inputFields = m_tableData->columnNames();
@@ -131,6 +133,16 @@ void OrdersEditor::setInputFields() {
   }
   // Preloaders
   m_costSettings->o_delivery_service->loadDataset();
+}
+
+const QString OrdersEditor::generateDeliveryNumber() {
+  qint64 order_id = o_id->value().toInt();
+  QString f;
+  QDate date = QDate::currentDate();
+  f.append(QString::number(date.year()));
+  f.append(QString::number(date.dayOfYear()));
+  f.append(QString::number(order_id));
+  return f;
 }
 
 bool OrdersEditor::setDataField(const QSqlField &field, const QVariant &value) {
@@ -200,7 +212,7 @@ const QHash<QString, QVariant> OrdersEditor::createSqlDataset() {
   for (it = list.begin(); it != list.end(); ++it) {
     InputEdit *cur = *it;
     QString objName = cur->objectName();
-    if (ignoreFields.contains(objName))
+    if (ignoreFields.contains(objName) || customInput.contains(objName))
       continue;
 
     // qDebug() << objName << cur->isRequired() << cur->isValid() <<
@@ -219,8 +231,65 @@ const QHash<QString, QVariant> OrdersEditor::createSqlDataset() {
 }
 
 void OrdersEditor::createSqlUpdate() {
-  // TODO
-  qDebug() << Q_FUNC_INFO << "TODO";
+  qint64 oid = o_id->value().toInt();
+  if (oid < 1)
+    return;
+
+  o_id->setRequired(true);
+  o_invoice_id->setRequired(true);
+  QHash<QString, QVariant> data = createSqlDataset();
+  if (data.size() < 1)
+    return;
+
+  int changes = 0;
+  QStringList set;
+  QHashIterator<QString, QVariant> it(data);
+  while (it.hasNext()) {
+    it.next();
+    if (it.key() == "o_id")
+      continue;
+
+    // Nur geänderte Felder in das Update aufnehmen!
+    if (it.value() == m_tableData->getValue(it.key()))
+      continue;
+
+    if (it.value().type() == QVariant::String) {
+      set.append(it.key() + "='" + it.value().toString() + "'");
+    } else {
+      set.append(it.key() + "=" + it.value().toString());
+    }
+    changes++;
+  }
+
+  // Artikel Bestelliste aktualisieren
+  if (!saveOrderArticles(oid)) {
+    sendStatusMessage(tr("Save Article aborted!"));
+    return;
+  }
+
+  if (changes == 0) {
+    sendStatusMessage(tr("No Modifications found, Update aborted!"));
+    setWindowModified(false);
+    return;
+  }
+
+  QString sql("UPDATE inventory_orders SET ");
+  sql.append(set.join(","));
+  sql.append(",o_modified=CURRENT_TIMESTAMP WHERE o_id=");
+  sql.append(QString::number(oid));
+  sql.append(";");
+
+  qDebug() << Q_FUNC_INFO << sql;
+
+  //  if (sendSqlQuery(sql)) {
+  //    int c_id = o_customer_id->value().toInt();
+  //    if (c_id > 0) {
+  //      m_sql->query(queryUpdatePurchases(c_id));
+  //      if (!m_sql->lastError().isEmpty()) {
+  //        qDebug() << Q_FUNC_INFO << m_sql->lastError();
+  //      }
+  //    }
+  //  }
 }
 
 void OrdersEditor::createSqlInsert() {
@@ -289,11 +358,29 @@ void OrdersEditor::getOrderArticles(qint64 oid) {
           articles.append(items);
       }
       // ready to import
-      m_ordersList->importPayments(articles);
+      m_ordersList->importPayments(oid, articles);
       return;
     }
     sendStatusMessage(tr("Orders for Order %1 not found!").arg(oid));
   }
+}
+
+bool OrdersEditor::saveOrderArticles(qint64 oid) {
+  QString operation = (oid < 1) ? "INSERT" : "UPDATE";
+  QList<AntiquaCRM::OrderArticleItems> list = m_ordersList->getTableData();
+  if (list.size() < 1)
+    return false;
+
+  QListIterator<AntiquaCRM::OrderArticleItems> rows(list);
+  while (rows.hasNext()) {
+    QListIterator<AntiquaCRM::ArticleOrderItem> row(rows.next());
+    while (row.hasNext()) {
+      AntiquaCRM::ArticleOrderItem item = row.next();
+      qDebug() << Q_FUNC_INFO << item.key << item.value;
+    }
+  }
+
+  return false;
 }
 
 void OrdersEditor::setSaveData() {
@@ -305,7 +392,7 @@ void OrdersEditor::setSaveData() {
 }
 
 void OrdersEditor::setCheckLeaveEditor() {
-  if (checkIsModified()) {
+  if (checkIsModified() || m_ordersList->isWindowModified()) {
     QStringList info(tr("Unsaved Changes"));
     info << tr("Don't leave this page before save your changes!");
     openNoticeMessage(info.join("\n"));
@@ -316,12 +403,25 @@ void OrdersEditor::setCheckLeaveEditor() {
 
 void OrdersEditor::setFinalLeaveEditor() {
   setResetInputFields();
+  m_ordersList->clearTable();
+  m_ordersList->setWindowModified(false);
   emit sendLeaveEditor(); /**< Zurück zur Hauptsansicht */
 }
 
 void OrdersEditor::searchInsertArticleId(qint64 aid) {
   if (aid < 1)
     return;
+
+  qint64 oid = o_id->value().toInt();
+  if (oid < 1) {
+    QString info("<p>");
+    info.append(tr("A Article can't inserted, if no Order-/Customer Id exists."));
+    info.append("</p><p>");
+    info.append(tr("Please save your your Article first."));
+    info.append("</p>");
+    openNoticeMessage(info);
+    return;
+  }
 
   AntiquaCRM::ASqlFiles sqlFile("query_article_order_with_id");
   if (sqlFile.openTemplate()) {
@@ -339,7 +439,10 @@ void OrdersEditor::searchInsertArticleId(qint64 aid) {
         items.append(item);
       }
       if (items.size() > 0) {
-        m_ordersList->insertArticle(items);
+#ifdef ANTIQUA_DEVELOPEMENT
+        qDebug() << Q_FUNC_INFO << oid << items.size();
+#endif
+        m_ordersList->insertArticle(oid, items);
         return;
       }
     }
@@ -388,19 +491,20 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
   QSqlQuery q = m_sql->query(file.getQueryContent());
   if (q.size() != 0) {
     QSqlRecord r = q.record();
-    while (q.next()) {
-      // Standard Felder
-      foreach (QString key, inputFields) {
-        m_tableData->setValue(key, q.value(r.indexOf(key)));
-      }
-      // Kunden Daten
-      foreach (QString key, customInput) {
-        QSqlField f = r.field(key);
-        setDataField(f, q.value(f.name()));
-      }
-      // Artikel
-      getOrderArticles(orderId);
+    q.next();
+    // Standard Felder
+    foreach (QString key, inputFields) {
+      m_tableData->setValue(key, q.value(r.indexOf(key)));
     }
+    // Kunden Daten
+    foreach (QString key, customInput) {
+      QSqlField f = r.field(key);
+      setDataField(f, q.value(f.name()));
+    }
+    setResetModified(customInput);
+    // Artikel Einkäufe
+    m_ordersList->queryOrderArticles(orderId);
+    // getOrderArticles(orderId);
 
     status = true;
   } else {
@@ -473,6 +577,11 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
   // Standard Felder
   if (obj.contains("orderinfo")) {
     QJsonObject orderinfo = obj.value("orderinfo").toObject();
+    if(orderinfo.contains("o_payment_confirmed")) {
+      bool paypal_status = (!orderinfo.value("o_payment_confirmed").isNull());
+      qDebug() << "TODO PayPal Status" << paypal_status;
+    }
+
     foreach (QString key, orderinfo.keys()) {
       QVariant val = orderinfo.value(key).toVariant();
       if (ignoreFields.contains(key))
@@ -539,9 +648,10 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
     QSqlField f = r.field(key);
     setDataField(f, prOrder.getValue(key));
   }
+  setResetModified(customInput);
 
   // 3) Artikel Importieren
-  m_ordersList->importPayments(prOrder.orders());
+  m_ordersList->importPayments(0, prOrder.orders());
 
   importSqlResult();
   return true;

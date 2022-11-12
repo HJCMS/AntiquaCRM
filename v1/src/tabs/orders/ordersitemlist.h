@@ -17,23 +17,16 @@
 #include <QWidget>
 
 class OrdersPaymentTable;
+class PurchaseTable;
 
 class OrdersItemList final : public QWidget {
   Q_OBJECT
-  Q_PROPERTY(bool modified READ isModified WRITE setModified NOTIFY hasModified)
 
 private:
-  bool modified;
-  qreal minPrice;
-  qreal maxPrice;
-  QByteArray currency;
-
-  AntiquaCRM::ASettings *m_cfg;
-
   /**
    * @brief Tabelle für Artikel einfügen
    */
-  OrdersPaymentTable *m_table;
+  PurchaseTable *m_table;
 
   /**
    * @brief Notifications
@@ -46,58 +39,24 @@ private:
    */
   IntSpinBox *m_insertID;
 
-  /**
-   * @brief Standard Preisfeld erstellen
-   */
-  QDoubleSpinBox *addPrice(double val, int row);
-  double getPrice(int row);
-
-  /**
-   * @brief Verkaufspreis (VK) erstellen
-   */
-  QDoubleSpinBox *addSellPrice(double val, int row);
-  double getSellPrice(int row);
-
-  /**
-   * @brief Artikel Bestandsanzeige
-   */
-  QSpinBox *addCount(const QVariant &val, int row, int max = 1);
-  int getCount(int row);
-
-  /**
-   * @brief Standard Feldzeilen: Artikel ID & Titel
-   */
-  QTableWidgetItem *createItem(const QVariant &val);
-
 private Q_SLOTS:
   void setSearchArticle();
 
 Q_SIGNALS:
-  /**
-   * @brief Signal Änderungen am Objekt
-   */
-  void hasModified(bool);
-
   /**
    * @brief Suche Artikel mit ID
    */
   void searchArticleById(qint64);
 
   /**
-   * @brief Nachricht an Elternfenster
-   */
-  void statusMessage(const QString &);
-
-  /**
-   * @brief Signal Tabellenzeile entfernen
-   * @param row
-   */
-  void askToRemoveRow(int row);
-
-  /**
    * @brief Benachrichtigung Doppelter Eintrag
    */
   void duplicateEntry();
+
+  /**
+   * @brief A new Article was add ...
+   */
+  void articleChanged();
 
 public Q_SLOTS:
   /**
@@ -120,12 +79,10 @@ public Q_SLOTS:
   /**
    * @brief Erstellt eine neuen Tabellen Eintrag
    */
-  void insertArticle(const AntiquaCRM::OrderArticleItems &article);
+  void insertArticle(qint64 orderId,
+                     const AntiquaCRM::OrderArticleItems &article);
 
-  /**
-   * @brief Änderungen
-   */
-  void setModified(bool);
+  void queryOrderArticles(qint64 orderId);
 
 public:
   explicit OrdersItemList(QWidget *parent = nullptr);
@@ -136,17 +93,6 @@ public:
   void insertSearchId(int articleId);
 
   /**
-   * @brief Gibt es Änderungen am Objekt
-   */
-  inline bool isModified() { return modified; }
-
-  /**
-   * @brief Tabellenreihe enfernen!
-   * @param row
-   */
-  void removeTableRow(int row);
-
-  /**
    * @brief Anzahl der Bestellartikel von Tabelle.
    */
   int payments();
@@ -154,18 +100,13 @@ public:
   /**
    * @brief Bestellartikel aus SQL Abfrage Importieren
    */
-  bool importPayments(const QList<AntiquaCRM::OrderArticleItems> &list);
+  bool importPayments(qint64 orderId,
+                      const QList<AntiquaCRM::OrderArticleItems> &list);
 
   /**
-   * @brief Erstellt einen Spaltendatensatz
-   * Es wird ein Spaltendatensatz für @em "article_orders" erstellt.
-   * Der Hashkey enthält die Tabellenfeldnamen der PgSQL Tabelle.
-   * @note Felder, welche hier noch nicht gesetzt werden können,
-   * sind mit dem Wert 0 versehen und müssen Später gesetzt werden!
-   * @warning Wert 0 ist bei den FOREIGN KEYs Feldern "*_id" nicht zulässig!
-   * @return Spaltenliste<QString:Feldname,QVariant:Wert>
+   * @brief Spaltendatensatz
    */
-  const QHash<QString, QVariant> getTableRow(int row);
+  const QList<AntiquaCRM::OrderArticleItems> getTableData();
 };
 
 #endif // ANTIQUACRM_ORDERSITEMLIST_H

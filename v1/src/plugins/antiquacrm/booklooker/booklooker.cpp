@@ -52,7 +52,7 @@ static const QHash<QString, QString> translateIds() {
   QHash<QString, QString> hash;
   // AntiquaCRM Article Number
   hash.insert("orderNo", "a_article_id");
-  // Provider Article Order Id
+  // Provider Article Order Payment Id
   hash.insert("orderItemId", "a_provider_id");
   // @see AntiquaCRM::ArticleType e.g. Book=1
   hash.insert("mediaType", "a_type");
@@ -64,6 +64,8 @@ static const QHash<QString, QString> translateIds() {
   hash.insert("totalPriceRebated", "a_sell_price");
   // Article Titel
   hash.insert("orderTitle", "a_title");
+  // Interanal payments id
+  hash.insert("payment_id", "a_payment_id");
   return hash;
 }
 
@@ -142,6 +144,9 @@ Booklooker::articleItem(const QString &key, const QJsonValue &value) const {
     } else {
       _value = value.toString();
     }
+  } else if (_key == "a_payment_id") {
+    // Interne Bestellnummer kann hier nicht gesetzt werden!
+    _value = value.toInt();
   } else if (_key.contains("_price")) {
     // Preise
     if (value.type() == QJsonValue::String) {
@@ -492,7 +497,10 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
               booking.append(articleItem(k, itemData.value(k)));
             }
           }
-          item.insertOrderItems(booking);
+          if (booking.size() > 0) {
+            booking.append(articleItem("payment_id", 0));
+            item.insertOrderItems(booking);
+          }
         }
       }
       allOrders.append(item);

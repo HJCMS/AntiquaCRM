@@ -32,7 +32,7 @@ private:
 
 protected:
   AntiquaCRM::ASqlCore *m_sql;
-  const QString setHeaderTitel(const QString &text) const;
+  const QString setHeaderTitle(const QString &text) const;
   const QIcon setHeaderIcon(int column) const;
   const QString displayDate(const QVariant &value) const;
   const QString verticalHeader(int row, int role = Qt::DisplayRole) const;
@@ -46,6 +46,7 @@ public:
   bool querySelect(const QString &sql);
   const QString tableName() const;
   const QString fieldName(int column = 0) const;
+  const int column(const QString &fieldName) const;
   QVariant data(const QModelIndex &item, int role = Qt::DisplayRole) const;
 };
 

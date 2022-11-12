@@ -85,7 +85,7 @@ QVariant CustomersTableModel::headerData(int section,
   if (section > map.size())
     return tr("Unknown");
 
-  return map.value(section);
+  return setHeaderTitle(map.value(section));
 }
 
 QVariant CustomersTableModel::data(const QModelIndex &index, int role) const {

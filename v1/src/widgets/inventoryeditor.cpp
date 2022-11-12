@@ -133,11 +133,6 @@ void InventoryEditor::openNoticeMessage(const QString &info) {
   QString t = tr("Notice");
   QMessageBox *d = new QMessageBox(QMessageBox::Warning, t, info,
                                    QMessageBox::Ok, this, Qt::Popup);
-
-  QTimer *m_t = new QTimer(d);
-  m_t->setInterval((timeoutPopUp * 1000));
-  connect(m_t, SIGNAL(timeout()), d, SLOT(close()));
-  m_t->start();
   d->exec();
 }
 

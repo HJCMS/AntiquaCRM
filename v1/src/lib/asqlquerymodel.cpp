@@ -18,7 +18,7 @@ ASqlQueryModel::ASqlQueryModel(const QString &table, QObject *parent)
   p_record = QSqlRecord();
 }
 
-const QString ASqlQueryModel::setHeaderTitel(const QString &text) const {
+const QString ASqlQueryModel::setHeaderTitle(const QString &text) const {
   QString b(text);
   b.prepend(" ");
   b.append(" ");
@@ -67,6 +67,18 @@ const QString ASqlQueryModel::fieldName(int column) const {
     return QString();
 
   return p_record.fieldName(column);
+}
+
+const int ASqlQueryModel::column(const QString &fieldName) const {
+  if (p_record.isEmpty())
+    return -1;
+
+  for (int i = 0; i < p_record.count(); i++) {
+    if (p_record.field(i).name() == fieldName)
+      return i;
+  }
+
+  return -1;
 }
 
 QVariant ASqlQueryModel::data(const QModelIndex &item, int role) const {

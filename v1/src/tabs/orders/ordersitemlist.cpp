@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "ordersitemlist.h"
-#include "orderspaymenttable.h"
+#include "purchasetable.h"
 
 #include <QDebug>
 #include <QIcon>
@@ -16,12 +16,6 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   setContentsMargins(5, 0, 5, 0);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
-
-  m_cfg = new AntiquaCRM::ASettings(this);
-
-  minPrice = m_cfg->value("payment/min_price", 5.00).toDouble();
-  maxPrice = m_cfg->value("payment/max_price", 999999.00).toDouble();
-  currency = m_cfg->value("payment/currency", "€").toByteArray();
 
   QSizePolicy policy(QSizePolicy::Expanding, QSizePolicy::Minimum);
   QString groupInfo = tr("Insert a new Article with Id to this order");
@@ -50,82 +44,15 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   QString tbInfo = tr("Current Article orders");
   layout->addWidget(new QLabel(tbInfo + ":", this));
 
-  m_table = new OrdersPaymentTable(this);
+  m_table = new PurchaseTable(this);
+  m_table->hideColumns(QList<int>({1, 3, 8, 9}));
+  m_table->setEnabled(false);
   layout->addWidget(m_table);
 
   layout->addStretch(1);
   setLayout(layout);
 
   connect(btn_add, SIGNAL(clicked()), SLOT(setSearchArticle()));
-  connect(m_table, SIGNAL(sendRemoveTableRow(int)),
-          SIGNAL(askToRemoveRow(int)));
-  connect(m_table, SIGNAL(sendModified(bool)), SIGNAL(hasModified(bool)));
-}
-
-QDoubleSpinBox *OrdersItemList::addPrice(double val, int row) {
-  QDoubleSpinBox *p = new QDoubleSpinBox(m_table);
-  p->setObjectName("a_price#" + QString::number(row));
-  p->setButtonSymbols(QAbstractSpinBox::NoButtons);
-  p->setReadOnly(true);
-  p->setSuffix(currency);
-  p->setRange(minPrice, maxPrice);
-  p->setValue(val);
-  return p;
-}
-
-double OrdersItemList::getPrice(int row) {
-  double retval = 0.00;
-  QDoubleSpinBox *p =
-      qobject_cast<QDoubleSpinBox *>(m_table->cellWidget(row, 2));
-  if (p != nullptr)
-    retval = p->value();
-
-  return retval;
-}
-
-QDoubleSpinBox *OrdersItemList::addSellPrice(double val, int row) {
-  QDoubleSpinBox *p = new QDoubleSpinBox(m_table);
-  p->setObjectName("a_sell_price#" + QString::number(row));
-  p->setSuffix(currency);
-  p->setRange(minPrice, maxPrice);
-  p->setValue(val);
-  return p;
-}
-
-double OrdersItemList::getSellPrice(int row) {
-  double retval = 0.00;
-  QDoubleSpinBox *p =
-      qobject_cast<QDoubleSpinBox *>(m_table->cellWidget(row, 3));
-  if (p != nullptr)
-    retval = p->value();
-
-  return retval;
-}
-
-QSpinBox *OrdersItemList::addCount(const QVariant &val, int row, int max) {
-  int count = val.toInt();
-  QSpinBox *c = new QSpinBox(m_table);
-  c->setObjectName("a_count#" + QString::number(row));
-  c->setMinimum(1);
-  c->setValue(count);
-  c->setMaximum(max);
-  return c;
-}
-
-int OrdersItemList::getCount(int row) {
-  int retval = -1;
-  QSpinBox *c = qobject_cast<QSpinBox *>(m_table->cellWidget(row, 4));
-  if (c != nullptr)
-    retval = c->value();
-
-  return retval;
-}
-
-QTableWidgetItem *OrdersItemList::createItem(const QVariant &val) {
-  QString str(val.toString());
-  QTableWidgetItem *item = new QTableWidgetItem(str.trimmed());
-  item->setFlags(Qt::ItemIsEnabled); // Kein Editieren zulassen!
-  return item;
 }
 
 void OrdersItemList::setSearchArticle() {
@@ -144,8 +71,8 @@ void OrdersItemList::clearSearchInput() {
 }
 
 void OrdersItemList::clearTable() {
-  m_table->clearContents();
-  m_table->setRowCount(0);
+  //  m_table->clearContents();
+  //  m_table->setRowCount(0);
   m_notifier->clear();
 }
 
@@ -156,58 +83,17 @@ void OrdersItemList::setAlertMessage(const QString &message) {
     m_notifier->clear();
 }
 
-void OrdersItemList::insertArticle(const AntiquaCRM::OrderArticleItems &item) {
+void OrdersItemList::insertArticle(qint64 orderId,
+                                   const AntiquaCRM::OrderArticleItems &item) {
   if (item.size() < 1)
     return;
 
-  int r = m_table->rowCount();
-  m_table->setRowCount((m_table->rowCount() + 1));
-  QListIterator<AntiquaCRM::ArticleOrderItem> it(item);
-  while (it.hasNext()) {
-    AntiquaCRM::ArticleOrderItem article = it.next();
-    if (article.key == "a_provider_id") {
-      m_table->setItem(r, 0, createItem(article.value.toString()));
-    }
-    if (article.key == "a_article_id") {
-      qint64 aId = article.value.toInt();
-      m_table->setItem(r, 1, createItem(QString::number(aId)));
-    }
-    if (article.key == "a_price") {
-      m_table->setCellWidget(r, 2, addPrice(article.value.toDouble(), r));
-    }
-    if (article.key == "a_sell_price") {
-      m_table->setCellWidget(r, 3, addSellPrice(article.value.toDouble(), r));
-    }
-    if (article.key == "a_count") {
-      m_table->setCellWidget(r, 4, addCount(article.value.toInt(), r));
-    }
-    if (article.key == "a_type") {
-      AntiquaCRM::ArticleType t =
-          static_cast<AntiquaCRM::ArticleType>(article.value.toInt());
-      QString txt;
-      if (t == AntiquaCRM::ArticleType::BOOK)
-        txt = tr("Book");
-      else if (t == AntiquaCRM::ArticleType::MEDIA)
-        txt = tr("Media");
-      else if (t == AntiquaCRM::ArticleType::PRINTS)
-        txt = tr("Prints");
-      else
-        txt = tr("Unknown");
-
-      m_table->setItem(r, 5, createItem(txt));
-    }
-    if (article.key == "a_title") {
-      m_table->setItem(r, 6, createItem(article.value.toString()));
-    }
-  }
-  clearSearchInput();
-  setModified(true);
-  m_insertID->setFocus();
+  if(m_table->addRow(orderId, item))
+    emit articleChanged();
 }
 
-void OrdersItemList::setModified(bool b) {
-  modified = b;
-  emit hasModified(modified);
+void OrdersItemList::queryOrderArticles(qint64 orderId) {
+  m_table->setQueryId(orderId, "a_order_id");
 }
 
 void OrdersItemList::insertSearchId(int articleId) {
@@ -215,34 +101,66 @@ void OrdersItemList::insertSearchId(int articleId) {
     m_insertID->setValue(articleId);
 }
 
-void OrdersItemList::removeTableRow(int row) {
-  int c = m_table->rowCount();
-  m_table->removeRow(row);
-  m_table->setRowCount(c - 1);
+int OrdersItemList::payments() {
+  // return m_table->rowCount(QModelIndex());
+  return 0;
 }
 
-int OrdersItemList::payments() { return m_table->rowCount(); }
-
 bool OrdersItemList::importPayments(
-    const QList<AntiquaCRM::OrderArticleItems> &list) {
+    qint64 orderId, const QList<AntiquaCRM::OrderArticleItems> &list) {
   QListIterator<AntiquaCRM::OrderArticleItems> it(list);
   while (it.hasNext()) {
-    insertArticle(it.next());
+    insertArticle(orderId, it.next());
   }
   return true;
 }
 
-const QHash<QString, QVariant> OrdersItemList::getTableRow(int row) {
-  QHash<QString, QVariant> list;
-  qDebug() << Q_FUNC_INFO << "TODO";
-  list.insert("a_payment_id", m_table->item(row, 0)->text().toInt());
-  list.insert("a_order_id", 0);
-  list.insert("a_article_id", m_table->item(row, 1)->text().toInt());
-  list.insert("a_customer_id", 0);
-  list.insert("a_price", getPrice(row));
-  list.insert("a_sell_price", getSellPrice(row));
-  list.insert("a_count", getCount(row));
-  list.insert("a_type", m_table->item(row, 5)->text());
-  list.insert("a_title", m_table->item(row, 6)->text());
+const QList<AntiquaCRM::OrderArticleItems> OrdersItemList::getTableData() {
+  QList<AntiquaCRM::OrderArticleItems> list;
+  //  for (int r = 0; r < m_table->rowCount(); r++) {
+  //    AntiquaCRM::OrderArticleItems row;
+  //    // Verkaufs Nummer
+  //    AntiquaCRM::ArticleOrderItem a_payment_id;
+  //    a_payment_id.key = "a_payment_id";
+  //    a_payment_id.value = getCellValue(r, 0);
+  //    row.append(a_payment_id);
+  //    // Dienstleister Bestellnummer
+  //    AntiquaCRM::ArticleOrderItem a_order_id;
+  //    a_order_id.key = "a_order_id";
+  //    a_order_id.value = getCellValue(r, 1);
+  //    row.append(a_order_id);
+  //    // Artikel Nummer
+  //    AntiquaCRM::ArticleOrderItem a_article_id;
+  //    a_article_id.key = "a_article_id";
+  //    a_article_id.value = getCellValue(r, 2);
+  //    row.append(a_article_id);
+  //    // Artikel Preis
+  //    AntiquaCRM::ArticleOrderItem a_price;
+  //    a_price.key = "a_price";
+  //    a_price.value = getPrice(r);
+  //    row.append(a_price);
+  //    // VK Preis
+  //    AntiquaCRM::ArticleOrderItem a_sell_price;
+  //    a_sell_price.key = "a_sell_price";
+  //    a_sell_price.value = getSellPrice(r);
+  //    row.append(a_sell_price);
+  //    // Menge/Anzahl
+  //    AntiquaCRM::ArticleOrderItem a_count;
+  //    a_count.key = "a_count";
+  //    a_count.value = getCount(r);
+  //    row.append(a_count);
+  //    // Media Type
+  //    AntiquaCRM::ArticleOrderItem a_type;
+  //    a_type.key = "a_type";
+  //    a_type.value = getTypeBox(r);
+  //    row.append(a_type);
+  //    // Media Type
+  //    AntiquaCRM::ArticleOrderItem a_title;
+  //    a_title.key = "a_title";
+  //    a_title.value = getCellValue(r, 7);
+  //    row.append(a_title);
+  //    // final
+  //    list.append(row);
+  //  }
   return list;
 }

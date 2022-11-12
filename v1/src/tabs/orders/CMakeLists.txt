@@ -12,6 +12,7 @@ INCLUDE_DIRECTORIES (
 SET (projectLibrary_LINKER
  AntiquaCRM
  AntiquaWidgets
+ AntiquaPurchaseTable
 )
 
 SET (projectLibrary_SOURCES
@@ -24,7 +25,6 @@ SET (projectLibrary_SOURCES
  orderscustomerinfo.cpp
  orderscostsettings.cpp
  ordersitemlist.cpp
- orderspaymenttable.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -37,7 +37,6 @@ SET (projectLibrary_HEADERS
  orderscustomerinfo.h
  orderscostsettings.h
  ordersitemlist.h
- orderspaymenttable.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

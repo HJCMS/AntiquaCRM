@@ -217,7 +217,7 @@ const QDomNodeList AbeBooksDocument::getOrderItemList() {
     return QDomNodeList();
 
   QDomNodeList list = fetchNodes("purchaseOrderItemList");
-  if (list.count() != 1)
+  if (list.size() == 0)
     return QDomNodeList();
 
   return list.at(0).toElement().childNodes();

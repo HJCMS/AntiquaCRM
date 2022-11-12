@@ -65,6 +65,7 @@ SET (projectLibrary_SOURCES
  searchfilter.cpp
  searchlineedit.cpp
  selecteucountry.cpp
+ selectarticletype.cpp
  serialid.cpp
  sizeedit.cpp
  storagelocation.cpp
@@ -116,6 +117,7 @@ SET (projectLibrary_HEADERS
  searchfilter.h
  searchlineedit.h
  selecteucountry.h
+ selectarticletype.h
  serialid.h
  sizeedit.h
  storagelocation.h

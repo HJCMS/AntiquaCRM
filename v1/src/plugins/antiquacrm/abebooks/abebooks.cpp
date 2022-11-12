@@ -303,6 +303,7 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
           orderItem.append(articleItem("a_article_id", jvalue));
           // Article Count
           orderItem.append(articleItem("a_count", QJsonValue(1)));
+          orderItem.append(articleItem("a_payment_id", 0));
           // Article Price
           queryNode = xml.firstChildNode(bookElement, "price");
           jvalue = QJsonValue(xml.getNodeValue(queryNode).toDouble());
@@ -311,8 +312,6 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
           queryNode = xml.firstChildNode(bookElement, "price");
           jvalue = QJsonValue(xml.getNodeValue(queryNode).toDouble());
           orderItem.append(articleItem("a_sell_price", jvalue));
-          // restore
-          jvalue = QJsonValue();
         }
         item.insertOrderItems(orderItem);
       }
@@ -321,16 +320,16 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
     allOrders.append(item);
   }
 
-  //#ifdef ANTIQUA_DEVELOPEMENT
-  //  QListIterator<AntiquaCRM::AProviderOrder> get_orders(allOrders);
-  //  while (get_orders.hasNext()) {
-  //    AntiquaCRM::AProviderOrder data = get_orders.next();
-  //    qDebug() << data.provider() << data.id() << data.orders().size();
-  //    foreach (QString k, data.filledKeys()) {
-  //      qDebug() << k << data.getValue(k);
-  //    }
-  //  }
-  //#endif
+//#ifdef ANTIQUA_DEVELOPEMENT
+//  QListIterator<AntiquaCRM::AProviderOrder> get_orders(allOrders);
+//  while (get_orders.hasNext()) {
+//    AntiquaCRM::AProviderOrder data = get_orders.next();
+//    qDebug() << data.provider() << data.id() << data.orders().size();
+//    foreach (QString k, data.filledKeys()) {
+//      qDebug() << k << data.getValue(k);
+//    }
+//  }
+//#endif
   return allOrders;
 }
 

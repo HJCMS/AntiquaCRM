@@ -46,7 +46,7 @@ QVariant BooksTableModel::headerData(int section, Qt::Orientation orientation,
   if (section > map.size())
     return tr("Unknown");
 
-  return map.value(section) + " ";
+  return setHeaderTitle(map.value(section));
 }
 
 QVariant BooksTableModel::data(const QModelIndex &item, int role) const {

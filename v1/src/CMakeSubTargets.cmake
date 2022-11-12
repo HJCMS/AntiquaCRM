@@ -3,6 +3,8 @@ SET (PROJECT_INCLUDE_DIRS
 	${CMAKE_CURRENT_SOURCE_DIR}/ordersystem
 	${CMAKE_CURRENT_BINARY_DIR}/widgets
 	${CMAKE_CURRENT_SOURCE_DIR}/widgets
+	${CMAKE_CURRENT_BINARY_DIR}/utils/purchasetable
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/purchasetable
 	${CMAKE_CURRENT_BINARY_DIR}/utils/templates
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/templates
 	${CMAKE_CURRENT_BINARY_DIR}/utils/mailing
@@ -39,6 +41,7 @@ INCLUDE_DIRECTORIES (${PROJECT_INCLUDE_DIRS})
 SET(PROJECT_LIBRARIES
 	AntiquaOrderSystem
 	AntiquaWidgets
+	AntiquaPurchaseTable
 	AntiquaTemplates
 	AntiquaMailing
 	AntiquaImgEdit
