@@ -35,7 +35,7 @@ CustomersEditor::CustomersEditor(QWidget *parent)
   m_tabWidget->placeTab(m_billingWidget, tr("Payment details"));
 
   m_ordersWidget = new CustomersOrders(m_tabWidget);
-  m_tabWidget->placeTab(m_ordersWidget, tr("Purchases"));
+  m_tabWidget->placeTab(m_ordersWidget, tr("Orders"));
   mainLayout->addWidget(m_tabWidget);
 
   m_actionBar = new EditorActionBar(this);
@@ -289,7 +289,7 @@ void CustomersEditor::findPurchaces() {
 
   AntiquaCRM::ASqlFiles sqlFile("query_customer_orders_status");
   if (sqlFile.openTemplate()) {
-    sqlFile.setWhereClause("c_id=" + QString::number(c_id));
+    sqlFile.setWhereClause("o_customer_id=" + QString::number(c_id));
     QSqlQuery q = m_sql->query(sqlFile.getQueryContent());
     if (q.size() > 0) {
       int row = 0;
@@ -298,6 +298,9 @@ void CustomersEditor::findPurchaces() {
 
       while (q.next()) {
         int col = 0;
+        QTableWidgetItem *pid = m_ordersWidget->iconItem(q.value("payed"));
+        m_ordersWidget->setItem(row, col++, pid);
+
         QTableWidgetItem *did = m_ordersWidget->numidItem(q.value("orderid"));
         m_ordersWidget->setItem(row, col++, did);
 

@@ -30,7 +30,7 @@ PurchaseTable::PurchaseTable(QWidget *parent, bool readOnly)
   m_sql = new AntiquaCRM::ASqlCore(this);
 
   m_model = new PurchaseTableModel(m_sql, this);
-  m_model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+  m_model->setEditStrategy(QSqlTableModel::OnRowChange);
   setModel(m_model);
 
   AntiquaCRM::ASettings cfg(this);
@@ -44,7 +44,6 @@ PurchaseTable::PurchaseTable(QWidget *parent, bool readOnly)
 
   m_delegate = new PurchaseTableDelegate(config, this);
   if (!readOnlyMode) {
-    qInfo("init PurchaseTableDelegate");
     setItemDelegate(m_delegate);
   }
 
@@ -79,16 +78,45 @@ void PurchaseTable::removeCurrentRow() {
   info.append(tr("Do you really want to remove this Entry from the list?"));
   info.append("</p><p>");
   info.append(tr("This operation is not reversible!"));
+  info.append("</p><p>");
+  info.append(tr("If no SQL Database Payment Id exists, it will fail!"));
   info.append("</p>");
   int ret = QMessageBox::question(this, tr("Remove Article"), info);
   if (ret == QMessageBox::Yes) {
     if (m_model->removeRow(r, index))
-      m_model->reload();
+      m_model->select();
   }
 }
 
 void PurchaseTable::setQueryId(qint64 id, const QString &field) {
   m_model->setQueryId(field, id);
+}
+
+bool PurchaseTable::save() {
+  if (m_model->submit()) {
+    m_model->select();
+    return true;
+  }
+  return false;
+}
+
+int PurchaseTable::rowCount() const { return verticalHeader()->count(); }
+
+bool PurchaseTable::updateRows(qint64 oId, qint64 cId) {
+  QModelIndex parent = indexAt(QPoint(1, 1));
+  if (!parent.isValid()) {
+    qWarning("PurchaseTable: Invalid ModelIndex");
+    return false;
+  }
+
+  QSqlRecord rec = m_sql->record(m_model->tableName());
+  for (int r = 0; r < rowCount(); r++) {
+    m_model->setData(parent.sibling(r, rec.indexOf("a_order_id")), oId,
+                     Qt::EditRole);
+    m_model->setData(parent.sibling(r, rec.indexOf("a_customer_id")), cId,
+                     Qt::EditRole);
+  }
+  return true;
 }
 
 void PurchaseTable::hideColumns(const QList<int> columns) {
@@ -101,10 +129,9 @@ void PurchaseTable::hideColumns(const QList<int> columns) {
   m_header->setStretchLastSection(true);
 }
 
-bool PurchaseTable::addRow(qint64 orderId,
-                           const AntiquaCRM::OrderArticleItems &items) {
+bool PurchaseTable::addRow(const AntiquaCRM::OrderArticleItems &items) {
   QSqlRecord record = m_sql->record(m_model->tableName());
-  m_model->insertRows(verticalHeader()->count(), 1, QModelIndex());
+  m_model->insertRows(rowCount(), 1, QModelIndex());
   QModelIndex index = indexAt(QPoint(1, 1));
   if (!index.isValid()) {
     qWarning("PurchaseTable:Invalid ModelIndex");
@@ -112,7 +139,7 @@ bool PurchaseTable::addRow(qint64 orderId,
   }
 
   bool ret = false;
-  int row = (verticalHeader()->count() - 1);
+  int row = (rowCount() - 1);
   QListIterator<AntiquaCRM::ArticleOrderItem> it(items);
   int count = 0;
   while (it.hasNext()) {
@@ -121,7 +148,7 @@ bool PurchaseTable::addRow(qint64 orderId,
     QModelIndex sub = index.sibling(row, column);
     if (sub.isValid() && column >= 0) {
       ret = m_model->setData(sub, article.value, Qt::EditRole);
-      if(ret)
+      if (ret)
         count++;
     }
   }

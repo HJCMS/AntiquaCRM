@@ -30,13 +30,19 @@ private:
 private Q_SLOTS:
   void removeCurrentRow();
 
+Q_SIGNALS:
+  void sendEntriesValid(bool);
+
 public Q_SLOTS:
   void setQueryId(qint64 id, const QString &field = QString("a_order_id"));
 
 public:
   explicit PurchaseTable(QWidget *parent = nullptr, bool readOnly = false);
+  bool save();
+  int rowCount() const;
+  bool updateRows(qint64 oId, qint64 cId);
   void hideColumns(const QList<int> columns);
-  bool addRow(qint64 orderId, const AntiquaCRM::OrderArticleItems &items);
+  bool addRow(const AntiquaCRM::OrderArticleItems &items);
   const AntiquaCRM::OrderArticleItems getRow(int row);
 };
 

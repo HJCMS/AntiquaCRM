@@ -113,7 +113,7 @@ void ANetworker::slotReadResponse() {
     QJsonParseError parser;
     QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
     if (parser.error != QJsonParseError::NoError) {
-      qWarning("Json Parse Error:(%s)!", qPrintable(parser.errorString()));
+      qWarning("ANetorker: Json Parse Error:(%s)!", qPrintable(parser.errorString()));
       emit sendFinishedWithErrors();
       return;
     }
@@ -129,7 +129,7 @@ void ANetworker::slotReadResponse() {
     int errorLine = 0;
     int errorColumn = 0;
     if (!xml.setContent(data, false, &errorMsg, &errorLine, &errorColumn)) {
-      qWarning("Returned XML is not well formatted!");
+      qWarning("ANetorker: Returned XML is not well formatted!");
       emit sendFinishedWithErrors();
       return;
     }
@@ -138,7 +138,7 @@ void ANetworker::slotReadResponse() {
     return;
   }
 
-  qWarning("Unknown Response type!");
+  qWarning("ANetorker: Unknown Response type!");
 }
 
 void ANetworker::slotSslErrors(const QList<QSslError> &list) {

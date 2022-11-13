@@ -45,8 +45,9 @@ private:
   void createSqlUpdate() override;
   void createSqlInsert() override;
   qint64 searchCustomer(const QJsonObject &obj);
-  void getOrderArticles(qint64 oid);
-  bool saveOrderArticles(qint64 oid = -1);
+  AntiquaCRM::ArticleOrderItem addArticleItem(const QString &key,
+                                              const QVariant &value) const;
+  bool saveArticleOrders();
 
 private Q_SLOTS:
   void setSaveData() override;

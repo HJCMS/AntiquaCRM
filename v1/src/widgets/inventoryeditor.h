@@ -70,6 +70,11 @@ protected:
   bool isInputField(const QString &fieldName);
 
   /**
+   * @brief Suche @ref SerialID Werte mit Objektname.
+   */
+  qint64 getSerialID(const QString &name);
+
+  /**
    * @brief Liste der Datenfelder welche in @ref inputFields enthalten sind.
    * Jedoch \b nicht in SQL::{UPDATE|INSERT}s aufgenommen werden sollen!
    */

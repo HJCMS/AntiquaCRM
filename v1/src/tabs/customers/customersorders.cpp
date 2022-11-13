@@ -13,6 +13,7 @@ CustomersOrders::CustomersOrders(QWidget *parent) : QTableWidget{parent} {
 
 void CustomersOrders::restore() {
   QStringList headers;
+  headers << " " + tr("Payed") + " ";
   headers << " " + tr("Delivery Note") + " ";
   headers << " " + tr("Invoice") + " ";
   headers << " " + tr("Article") + " ";
@@ -24,6 +25,15 @@ void CustomersOrders::restore() {
   setRowCount(0);
   setHorizontalHeaderLabels(headers);
   horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+}
+
+QTableWidgetItem *CustomersOrders::iconItem(const QVariant &data) {
+  QString link = data.toBool() ? "ok" : "cancel";
+  QString title = data.toBool() ? tr("Yes") : tr("No");
+  QIcon icon = QIcon("://icons/action_" + link + ".png");
+  QTableWidgetItem *item = new QTableWidgetItem(title, Qt::DisplayRole);
+  item->setData(Qt::DecorationRole, icon);
+  return item;
 }
 
 QTableWidgetItem *CustomersOrders::numidItem(const QVariant &data) {

@@ -71,9 +71,8 @@ void OrdersItemList::clearSearchInput() {
 }
 
 void OrdersItemList::clearTable() {
-  //  m_table->clearContents();
-  //  m_table->setRowCount(0);
-  m_notifier->clear();
+  m_table->reset();
+  clearSearchInput();
 }
 
 void OrdersItemList::setAlertMessage(const QString &message) {
@@ -83,17 +82,16 @@ void OrdersItemList::setAlertMessage(const QString &message) {
     m_notifier->clear();
 }
 
-void OrdersItemList::insertArticle(qint64 orderId,
-                                   const AntiquaCRM::OrderArticleItems &item) {
-  if (item.size() < 1)
-    return;
-
-  if(m_table->addRow(orderId, item))
+void OrdersItemList::insertArticle(const AntiquaCRM::OrderArticleItems &item) {
+  if (m_table->addRow(item)) {
+    qInfo("New Articlerow inserted");
     emit articleChanged();
+  }
 }
 
 void OrdersItemList::queryOrderArticles(qint64 orderId) {
   m_table->setQueryId(orderId, "a_order_id");
+  m_table->setEnabled(true);
 }
 
 void OrdersItemList::insertSearchId(int articleId) {
@@ -101,66 +99,23 @@ void OrdersItemList::insertSearchId(int articleId) {
     m_insertID->setValue(articleId);
 }
 
-int OrdersItemList::payments() {
-  // return m_table->rowCount(QModelIndex());
-  return 0;
+bool OrdersItemList::saveTableData(qint64 orderId, qint64 customerId) {
+  if (m_table->updateRows(orderId, customerId)) {
+    if (m_table->save()) {
+      setEnabled(true);
+      return true;
+    }
+  }
+  return false;
 }
 
-bool OrdersItemList::importPayments(
-    qint64 orderId, const QList<AntiquaCRM::OrderArticleItems> &list) {
+int OrdersItemList::payments() { return m_table->rowCount(); }
+
+bool OrdersItemList::addProviderArticles(
+    const QList<AntiquaCRM::OrderArticleItems> &list) {
   QListIterator<AntiquaCRM::OrderArticleItems> it(list);
   while (it.hasNext()) {
-    insertArticle(orderId, it.next());
+    insertArticle(it.next());
   }
   return true;
-}
-
-const QList<AntiquaCRM::OrderArticleItems> OrdersItemList::getTableData() {
-  QList<AntiquaCRM::OrderArticleItems> list;
-  //  for (int r = 0; r < m_table->rowCount(); r++) {
-  //    AntiquaCRM::OrderArticleItems row;
-  //    // Verkaufs Nummer
-  //    AntiquaCRM::ArticleOrderItem a_payment_id;
-  //    a_payment_id.key = "a_payment_id";
-  //    a_payment_id.value = getCellValue(r, 0);
-  //    row.append(a_payment_id);
-  //    // Dienstleister Bestellnummer
-  //    AntiquaCRM::ArticleOrderItem a_order_id;
-  //    a_order_id.key = "a_order_id";
-  //    a_order_id.value = getCellValue(r, 1);
-  //    row.append(a_order_id);
-  //    // Artikel Nummer
-  //    AntiquaCRM::ArticleOrderItem a_article_id;
-  //    a_article_id.key = "a_article_id";
-  //    a_article_id.value = getCellValue(r, 2);
-  //    row.append(a_article_id);
-  //    // Artikel Preis
-  //    AntiquaCRM::ArticleOrderItem a_price;
-  //    a_price.key = "a_price";
-  //    a_price.value = getPrice(r);
-  //    row.append(a_price);
-  //    // VK Preis
-  //    AntiquaCRM::ArticleOrderItem a_sell_price;
-  //    a_sell_price.key = "a_sell_price";
-  //    a_sell_price.value = getSellPrice(r);
-  //    row.append(a_sell_price);
-  //    // Menge/Anzahl
-  //    AntiquaCRM::ArticleOrderItem a_count;
-  //    a_count.key = "a_count";
-  //    a_count.value = getCount(r);
-  //    row.append(a_count);
-  //    // Media Type
-  //    AntiquaCRM::ArticleOrderItem a_type;
-  //    a_type.key = "a_type";
-  //    a_type.value = getTypeBox(r);
-  //    row.append(a_type);
-  //    // Media Type
-  //    AntiquaCRM::ArticleOrderItem a_title;
-  //    a_title.key = "a_title";
-  //    a_title.value = getCellValue(r, 7);
-  //    row.append(a_title);
-  //    // final
-  //    list.append(row);
-  //  }
-  return list;
 }

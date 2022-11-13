@@ -16,13 +16,18 @@ class PurchaseTableModel final : public QSqlTableModel {
   Q_OBJECT
 
 private:
-  QString queryHistory;
   const AntiquaCRM::ASettings p_cfg;
   AntiquaCRM::ASqlCore *m_sql;
+
+  /**
+   * @brief Statische Kopfdaten Übersetzung!
+   */
   const QMap<int, QString> headerList() const;
 
 public Q_SLOTS:
-  void reload();
+  /**
+   * @brief Datensatzabfrage mit Spaltenname und ID
+   */
   void setQueryId(const QString &field, qint64 id);
 
 public:
@@ -30,24 +35,34 @@ public:
                               QObject *parent = nullptr);
 
   /**
-   * @brief Insert a new row
+   * @brief SQL (INSERT|UPDATE|DELETE).
    */
-  bool insertRow(qint64 orderId, const AntiquaCRM::OrderArticleItems &items);
+  // bool submit() override;
 
   /**
    * @brief Markiert Editierbare Zellen mit einem Icon!
-   * @warning Wenn in der QHeaderView, Zellen als nicht Sichtbar markiert werden.
-   * Muss mit dieser Liste eine Sicherheitsabfrage gemacht werden!
+   * @warning Wenn in der QHeaderView, Zellen als nicht Sichtbar markiert
+   * werden. Muss mit dieser Liste eine Sicherheitsabfrage gemacht werden!
    * !!! An sonsten wird der komplette Tabellenkopf verschwinden !!!
    * @see PurchaseTable::hideColumns
    */
   static const QList<int> editableColumns();
 
-  bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+  /**
+   * @brief Wird von removeRow erwartet, daher hier Implementiert.
+   */
+  bool removeRows(int row, int count,
+                  const QModelIndex &parent = QModelIndex()) override;
 
+  /**
+   * @brief Übersetzte Darstellung der Tabellenkopfspalten.
+   */
   QVariant headerData(int section, Qt::Orientation orientation,
                       int role = Qt::DisplayRole) const override;
 
+  /**
+   * @brief Datenfeld anpassungen ...
+   */
   QVariant data(const QModelIndex &item,
                 int role = Qt::DisplayRole) const override;
 };

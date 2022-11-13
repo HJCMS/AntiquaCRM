@@ -4,12 +4,14 @@
 #include "purchasetablemodel.h"
 
 #include <ASettings>
+#include <QSqlIndex>
 
 PurchaseTableModel::PurchaseTableModel(AntiquaCRM::ASqlCore *sqlcore,
                                        QObject *parent)
-    : QSqlTableModel{parent, sqlcore->db()}, p_cfg(parent), m_sql{sqlcore} {
+    : QSqlTableModel{parent, sqlcore->db()}, p_cfg{parent}, m_sql{sqlcore} {
   setObjectName("purchase_table_model");
   setTable("article_orders");
+  setPrimaryKey(QSqlIndex("article_orders_pkey", "a_payment_id"));
   setSort(0, Qt::AscendingOrder);
 }
 
@@ -29,70 +31,23 @@ const QMap<int, QString> PurchaseTableModel::headerList() const {
   return m;
 }
 
-void PurchaseTableModel::reload() {
-  if (queryHistory.isEmpty())
-    return;
-
-  setQuery(m_sql->query(queryHistory));
-}
-
 void PurchaseTableModel::setQueryId(const QString &field, qint64 id) {
   if (id < 1 || field.length() < 2)
     return;
 
-  QString sql("SELECT * FROM " + tableName() + " WHERE ");
-  sql.append(field + "=" + QString::number(id));
-  sql.append(" ORDER BY a_payment_id;");
-  QSqlQuery q = m_sql->query(sql);
-  if (q.size() > 0) {
-    queryHistory = sql;
-    setQuery(q);
-  }
+  setFilter(field + "=" + QString::number(id));
+  select();
 }
 
-bool PurchaseTableModel::insertRow(qint64 orderId,
-                                   const AntiquaCRM::OrderArticleItems &items) {
-  QSqlRecord rec = record();
-  QStringList fields;
-  QStringList insert;
-  QListIterator<AntiquaCRM::ArticleOrderItem> it(items);
+//bool PurchaseTableModel::submit() {
+//  qint64 apid = -1;
+//  QSqlRecord rec = m_sql->record(tableName());
+//  QStringList fields;
+//  QStringList insert;
 
-  while (it.hasNext()) {
-    AntiquaCRM::ArticleOrderItem article = it.next();
-    QSqlField f = rec.field(article.key);
-    if (!f.isValid())
-      continue;
-
-    if (f.requiredStatus() == QSqlField::Required && article.value.isNull()) {
-      qWarning("Fatal: Missing value %s.", qPrintable(f.name()));
-      return false;
-    }
-
-    if(f.name() == "a_payment_id")
-      continue;
-
-    fields << article.key;
-    if (f.type() == QVariant::DateTime) {
-      insert << "'" + article.value.toDateTime().toString() + "'";
-    } else if (f.type() == QVariant::Int) {
-      insert << QString::number(article.value.toInt());
-    } else if (f.type() == QVariant::Double) {
-      insert << QString::number(article.value.toDouble());
-    } else {
-      insert << "'" + article.value.toString() + "'";
-    }
-  }
-
-  QString sql("INSERT INTO " + tableName() + " (");
-  sql.append(fields.join(","));
-  sql.append(") VALUES (");
-  sql.append(insert.join(","));
-  sql.append(") RETURNING a_payment_id;");
-
-  qDebug() << orderId << sql;
-
-  return false;
-}
+//  qDebug() << Q_FUNC_INFO << "TODO";
+//  return false;
+//}
 
 const QList<int> PurchaseTableModel::editableColumns() {
   QList<int> l;

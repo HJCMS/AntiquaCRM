@@ -3,6 +3,7 @@
 
 #include "inventoryeditor.h"
 
+#include <AntiquaWidgets>
 #include <QDebug>
 #include <QMessageBox>
 #include <QStringList>
@@ -31,6 +32,14 @@ bool InventoryEditor::isInputField(const QString &fieldName) {
       return true;
   }
   return false;
+}
+
+qint64 InventoryEditor::getSerialID(const QString &name) {
+  SerialID *obj = findChild<SerialID *>(name, INPUT_FIND_OPTS);
+  if (obj != nullptr)
+    return obj->value().toInt();
+
+  return -1;
 }
 
 bool InventoryEditor::isIgnoredField(const QString &fieldName) {
@@ -147,17 +156,17 @@ void InventoryEditor::sendArticleStatus(qint64 articleId, qint8 count) {
     return;
 
   qDebug() << Q_FUNC_INFO << "TODO" << articleId << count;
-/*
-  AntiquaCRM::ATxSocket atxs(this);
-  atxs.setObjectName("plugin_article_update");
-  QJsonObject obj;
-  QJsonObject action;
-  action.insert("articleId", QJsonValue(articleId));
-  action.insert("count", QJsonValue(count));
-  obj.insert("plugin_article_update", QJsonValue(action));
-  atxs.pushMessage(obj);
-  atxs.close();
-*/
+  /*
+    AntiquaCRM::ATxSocket atxs(this);
+    atxs.setObjectName("plugin_article_update");
+    QJsonObject obj;
+    QJsonObject action;
+    action.insert("articleId", QJsonValue(articleId));
+    action.insert("count", QJsonValue(count));
+    obj.insert("plugin_article_update", QJsonValue(action));
+    atxs.pushMessage(obj);
+    atxs.close();
+  */
 }
 
 void InventoryEditor::setResetInputFields() {
