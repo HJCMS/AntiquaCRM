@@ -135,16 +135,6 @@ void OrdersEditor::setInputFields() {
   m_costSettings->o_delivery_service->loadDataset();
 }
 
-const QString OrdersEditor::generateDeliveryNumber() {
-  qint64 order_id = getSerialID("o_id");
-  QString f;
-  QDate date = QDate::currentDate();
-  f.append(QString::number(date.year()));
-  f.append(QString::number(date.dayOfYear()));
-  f.append(QString::number(order_id));
-  return f;
-}
-
 bool OrdersEditor::setDataField(const QSqlField &field, const QVariant &value) {
   if (!field.isValid())
     return false;
@@ -166,6 +156,30 @@ bool OrdersEditor::setDataField(const QSqlField &field, const QVariant &value) {
   return false;
 }
 
+void OrdersEditor::setOrderPaymentNumbers(qint64 orderId) {
+  QString dn;
+  QDate date = QDate::currentDate();
+  dn.append(QString::number(date.year()));
+  dn.append(QString::number(date.dayOfYear()));
+  dn.append(QString::number(orderId));
+  // Das SQL Update erzwingen!
+  m_tableData->setValue("o_delivery", QString());
+  setDataField(m_tableData->getProperties("o_delivery"), dn);
+  // Siehe PostgreSQL::new_invoice_id()
+  QString sql("SELECT o_invoice_id FROM ");
+  sql.append("inventory_orders WHERE o_id=");
+  sql.append(QString::number(orderId) + ";");
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() == 1) {
+    q.next();
+    qint64 id = q.value("o_invoice_id").toInt();
+    m_tableData->setValue("o_invoice_id", id);
+    setDataField(m_tableData->getProperties("o_invoice_id"), id);
+  } else {
+    qWarning("SQL ERROR: %s", qPrintable(m_sql->lastError()));
+  }
+}
+
 void OrdersEditor::importSqlResult() {
   if (m_tableData == nullptr)
     return;
@@ -183,23 +197,35 @@ void OrdersEditor::importSqlResult() {
 }
 
 bool OrdersEditor::sendSqlQuery(const QString &query) {
-  qDebug() << Q_FUNC_INFO << query;
-  return true;
+  //  qDebug() << Q_FUNC_INFO << query;
+  //  return true;
 
   QSqlQuery q = m_sql->query(query);
   if (q.lastError().type() != QSqlError::NoError) {
+#ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << query << m_sql->lastError();
+#else
+    qWarning("OrdersEditor: SQL Error!");
+#endif
     return false;
   }
 
   if (q.next()) {
     if (!q.isNull("o_id")) {
-      QSqlField field = m_tableData->getProperties("o_id");
-      setDataField(field, q.value("o_id"));
+      qint64 oid = q.value("o_id").toInt();
+      if (oid < 1) {
+        qWarning("SQL-Insert: get empty OrderID!");
+        return false;
+      }
+      m_tableData->setValue("o_id", oid);
+      setDataField(m_tableData->getProperties("o_id"), oid);
+      setOrderPaymentNumbers(oid);
     }
   }
 
-  openSuccessMessage(tr("Order saved successfully!"));
+  if (!query.contains("INSERT "))
+    openSuccessMessage(tr("Order saved successfully!"));
+
   setResetModified(inputFields);
   return true;
 }
@@ -235,8 +261,18 @@ void OrdersEditor::createSqlUpdate() {
   if (oid < 1)
     return;
 
-  o_id->setRequired(true);
-  o_invoice_id->setRequired(true);
+  // Auftrags Nummer
+  if (!o_id->isRequired())
+    o_id->setRequired(true);
+
+  // Rechnungs Nummer
+  if (!o_invoice_id->isRequired())
+    o_invoice_id->setRequired(true);
+
+  // Lieferschein Nummer
+  if (!m_costSettings->o_delivery->isRequired())
+    m_costSettings->o_delivery->setRequired(true);
+
   QHash<QString, QVariant> data = createSqlDataset();
   if (data.size() < 1)
     return;
@@ -262,8 +298,9 @@ void OrdersEditor::createSqlUpdate() {
   }
 
   // Artikel Bestelliste aktualisieren
-  if (!saveArticleOrders())
-    return;
+  if (!saveArticleOrders()) {
+    qWarning("No SQL Article Update");
+  }
 
   if (changes == 0) {
     sendStatusMessage(tr("No Modifications found, nothing todo!"));
@@ -280,9 +317,55 @@ void OrdersEditor::createSqlUpdate() {
 }
 
 void OrdersEditor::createSqlInsert() {
-  // TODO
-  qDebug() << Q_FUNC_INFO << "TODO";
-  // TODO saveArticleOrders();
+  // Werden vom INSERT erstellt!
+  QStringList insertIgnore({"o_id", "o_invoice_id", "o_delivery"});
+
+  // Auftrags Nummer
+  if (o_id->isRequired())
+    o_id->setRequired(false);
+
+  // Rechnungs Nummer
+  if (o_invoice_id->isRequired())
+    o_invoice_id->setRequired(false);
+
+  // Lieferschein Nummer
+  if (m_costSettings->o_delivery->isRequired())
+    m_costSettings->o_delivery->setRequired(false);
+
+  QHash<QString, QVariant> data = createSqlDataset();
+  if (data.size() < 1)
+    return;
+
+  QStringList fields;
+  QStringList values;
+  QHashIterator<QString, QVariant> it(data);
+  while (it.hasNext()) {
+    it.next();
+    QString value = it.value().toString();
+    if (insertIgnore.contains(it.key()) || value.isEmpty())
+      continue;
+
+    if (it.value().type() == QVariant::String) {
+      values << "'" + value.trimmed() + "'";
+    } else {
+      values << value;
+    }
+    fields << it.key();
+  }
+
+  QString sql("INSERT INTO inventory_orders (");
+  sql.append(fields.join(","));
+  sql.append(") VALUES (");
+  sql.append(values.join(","));
+  sql.append(") RETURNING o_id;");
+  if (sendSqlQuery(sql)) {
+    qint64 oid = getSerialID("o_id");
+    if (oid < 1) {
+      qWarning("After INSERT now OrdeID!");
+      return;
+    }
+    createSqlUpdate();
+  }
 }
 
 qint64 OrdersEditor::searchCustomer(const QJsonObject &obj) {
@@ -404,7 +487,8 @@ void OrdersEditor::searchInsertArticleId(qint64 aid) {
       }
     }
   }
-  m_ordersList->setAlertMessage(tr("Article: %1 not found or no stock!").arg(aid));
+  m_ordersList->setAlertMessage(
+      tr("Article: %1 not found or no stock!").arg(aid));
 }
 
 void OrdersEditor::createMailMessage(const QString &type) {
@@ -564,7 +648,7 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
       item.value = 0;
       items.append(item);
       // Muss hier eingefügt werden!
-      if(customerId > 0) {
+      if (customerId > 0) {
         AntiquaCRM::ArticleOrderItem item;
         item.key = QString("a_customer_id");
         item.value = customerId;
@@ -586,7 +670,7 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
   prOrder.setValue("o_delivery_send_id", "");
   // Die Lieferschein Nummer wird erst nach dem Speichern mit der
   // Autfrags ID "o_id" generiert!
-  prOrder.setValue("o_delivery", "");
+  prOrder.setValue("o_delivery", QDate().toString("yyyyMMdd"));
   // Der Standard bei Büchern ist "reduziert"!
   int vat = m_cfg->value("payment/vat2", 0).toInt();
   prOrder.setValue("o_vat_levels", vat);
@@ -622,6 +706,7 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
   setResetModified(customInput);
 
   // 3) Artikel Importieren
+  qDebug() << Q_FUNC_INFO << prOrder.orders().size();
   m_ordersList->addProviderArticles(prOrder.orders());
 
   importSqlResult();

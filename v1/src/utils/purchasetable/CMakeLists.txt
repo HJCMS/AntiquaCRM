@@ -10,14 +10,12 @@ SET (subproject_LINKER
 
 SET (subproject_SOURCES
  purchasetable.cpp
- purchasetablemodel.cpp
- purchasetabledelegate.cpp
+ purchasetableheader.cpp
 )
 
 SET (subproject_HEADERS
  purchasetable.h
- purchasetablemodel.h
- purchasetabledelegate.h
+ purchasetableheader.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

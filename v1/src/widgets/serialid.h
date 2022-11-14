@@ -16,6 +16,8 @@ class SerialID final : public InputEdit {
 
 private:
   QLabel *m_serialLabel;
+
+private Q_SLOTS:
   void loadDataset();
 
 Q_SIGNALS:

@@ -177,8 +177,7 @@ const QDomElement AbeBooksDocument::getOrderItemList() {
     return out;
 
   QDomNodeList list = fetchNodes("purchaseOrderItemList");
-  // BUG: Flascher counter
-  if (list.count() == 0)
+  if (list.count() != 1)
     return out;
 
   return list.at(0).toElement();

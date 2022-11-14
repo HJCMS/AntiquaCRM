@@ -17,9 +17,16 @@ SerialID::SerialID(QWidget *parent) : InputEdit{parent} {
   m_layout->addWidget(m_serialLabel);
 
   setModified(false);
+  setRequired(true);
+
+  connect(this, SIGNAL(sendRequireChanged()), SLOT(loadDataset()));
 }
 
-void SerialID::loadDataset() {}
+void SerialID::loadDataset() {
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << "Required Changed:" << objectName() << isRequired();
+#endif
+}
 
 void SerialID::setValue(const QVariant &id) {
   m_serialLabel->setText(id.toString());
@@ -62,10 +69,11 @@ bool SerialID::isValid() {
   if (isRequired() && m_serialLabel->text().isEmpty())
     return false;
 
-  if (QVariant(m_serialLabel->text()).toULongLong() < 1)
-    return false;
+  QVariant data(m_serialLabel->text().trimmed());
+  if (data.toULongLong() >= 0)
+    return true;
 
-  return true;
+  return false;
 }
 
 const QString SerialID::notes() {

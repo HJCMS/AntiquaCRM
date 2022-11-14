@@ -32,19 +32,22 @@ private:
 
   void setInputFields() override;
 
-  /**
-   * @brief Lieferschein Nummer generieren
-   * @note Ist Abhängig von OrderId
-   */
-  const QString generateDeliveryNumber();
-
   bool setDataField(const QSqlField &field, const QVariant &value) override;
+
+  void setOrderPaymentNumbers(qint64 orderId);
+
   void importSqlResult() override;
+
   bool sendSqlQuery(const QString &query) override;
+
   const QHash<QString, QVariant> createSqlDataset() override;
+
   void createSqlUpdate() override;
+
   void createSqlInsert() override;
+
   qint64 searchCustomer(const QJsonObject &obj);
+
   AntiquaCRM::ArticleOrderItem addArticleItem(const QString &key,
                                               const QVariant &value) const;
   bool saveArticleOrders();

@@ -111,11 +111,6 @@ public:
   const QDomNodeList getPurchaseOrderList();
 
   /**
-   * @brief getPurchaseOrder
-   */
-  const QDomElement getPurchaseOrder();
-
-  /**
    * @brief getOrderDate
    * The order date of the purchase order item.
    * @param parent
@@ -125,10 +120,11 @@ public:
   const QDateTime getOrderDate(const QDomElement &orderNode);
 
   /**
-   * @brief The Purchase Order Items list
-   * @return DomElement
+   * @brief purchaseOrderItem list
+   * @param node = purchaseOrderNode
+   * @return <purchaseOrderItem/> List
    */
-  const QDomNodeList getOrderItemList();
+  const QDomNodeList getOrderItemList(const QDomNode &node);
 
   /**
    * @brief Get TextNode::value() from Node

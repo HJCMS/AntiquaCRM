@@ -151,14 +151,6 @@ const QDomNodeList AbeBooksDocument::getPurchaseOrderList() {
   return (count >= 1) ? n_list : empty;
 }
 
-const QDomElement AbeBooksDocument::getPurchaseOrder() {
-  QDomElement empty;
-  if (notExists("orderUpdateResponse"))
-    return empty;
-
-  return documentElement().namedItem("purchaseOrder").toElement();
-}
-
 const QTimeZone AbeBooksDocument::fetchTimeZone(const QDomElement &orderNode) {
   QDomNode domain = firstChildNode(orderNode, "domain");
   QByteArray iana;
@@ -211,16 +203,21 @@ const QDateTime AbeBooksDocument::getOrderDate(const QDomElement &orderNode) {
   return dt.toLocalTime();
 }
 
-const QDomNodeList AbeBooksDocument::getOrderItemList() {
-  QDomElement out;
+const QDomNodeList AbeBooksDocument::getOrderItemList(const QDomNode &node) {
+  QDomNodeList nodeList;
   if (notExists("orderUpdateResponse"))
-    return QDomNodeList();
+    return nodeList;
 
-  QDomNodeList list = fetchNodes("purchaseOrderItemList");
-  if (list.size() == 0)
-    return QDomNodeList();
+  // purchaseOrderNode
+  QDomElement pon = node.toElement();
 
-  return list.at(0).toElement().childNodes();
+  // purchaseOrderItemList
+  QDomNodeList list = pon.elementsByTagName("purchaseOrderItemList");
+  if (list.size() != 1)
+    return nodeList;
+
+  // purchaseOrderItem
+  return list.at(0).toElement().elementsByTagName("purchaseOrderItem");
 }
 
 const QVariant AbeBooksDocument::getNodeValue(const QDomNode &parent) {

@@ -75,6 +75,7 @@ TabOrders::TabOrders(QWidget *parent) : Inventory{"orders_tab", parent} {
 
 void TabOrders::popupWarningTabInEditMode() {
   QString info("<p>" + tr("Cannot open Order Editor!"));
+  info.append("</p><p>");
   info.append(tr("Because the order tab is not in mainview mode."));
   info.append("</p><p>");
   info.append(tr("Please save and close opened orders first."));

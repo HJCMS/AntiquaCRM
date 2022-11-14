@@ -45,7 +45,8 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   layout->addWidget(new QLabel(tbInfo + ":", this));
 
   m_table = new PurchaseTable(this);
-  m_table->hideColumns(QList<int>({1, 3, 8, 9}));
+  // Für den Kunden nicht Sichtbar
+  m_table->hideColumns(QList<int>({0, 1, 3, 8, 9}));
   m_table->setEnabled(false);
   layout->addWidget(m_table);
 
@@ -71,7 +72,8 @@ void OrdersItemList::clearSearchInput() {
 }
 
 void OrdersItemList::clearTable() {
-  m_table->reset();
+  m_table->clearContents();
+  m_table->setRowCount(0);
   clearSearchInput();
 }
 
@@ -100,9 +102,9 @@ void OrdersItemList::insertSearchId(int articleId) {
 }
 
 bool OrdersItemList::saveTableData(qint64 orderId, qint64 customerId) {
-  if (m_table->updateRows(orderId, customerId)) {
+  if (m_table->setRequiredIds(orderId, customerId)) {
     if (m_table->save()) {
-      setEnabled(true);
+      m_table->setEnabled(true);
       return true;
     }
   }
@@ -115,7 +117,7 @@ bool OrdersItemList::addProviderArticles(
     const QList<AntiquaCRM::OrderArticleItems> &list) {
   QListIterator<AntiquaCRM::OrderArticleItems> it(list);
   while (it.hasNext()) {
-    insertArticle(it.next());
+    m_table->addRow(it.next());
   }
   return true;
 }

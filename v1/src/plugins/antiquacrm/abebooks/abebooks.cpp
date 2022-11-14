@@ -188,12 +188,15 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
     return allOrders;
   }
 
+  // purchaseOrderList
   QDomNodeList purchaseOrders = xml.getPurchaseOrderList();
   for (int i = 0; i < purchaseOrders.count(); i++) {
+    // purchaseOrder::Node @{
     QDomNode orderNode = purchaseOrders.at(i);
     QDomElement orderElement = orderNode.toElement();
     QString strOrderId = orderNode.toElement().attribute("id", "0");
     qint64 orderId = strOrderId.toInt();
+    // @}
     QDateTime dateTime = xml.getOrderDate(orderElement);
     // Start fill
     AntiquaCRM::AProviderOrder item(display_name, strOrderId);
@@ -278,7 +281,7 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
       item.setValue("c_shipping_address", buffer.join("\n"));
     }
     // Article Orders
-    QDomNodeList orderItems = xml.getOrderItemList();
+    QDomNodeList orderItems = xml.getOrderItemList(orderElement);
     if (orderItems.size() > 0) {
       for (int i = 0; i < orderItems.size(); i++) {
         QDomElement orderItemNode = orderItems.at(i).toElement();
@@ -295,7 +298,7 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
           jvalue = QJsonValue(xml.getTagText(bookElement, "title"));
           orderItem.append(articleItem("a_title", jvalue));
           // Provider Order ID
-          jvalue = QJsonValue(bookElement.attribute("id", ""));
+          jvalue = QJsonValue(bookElement.attribute("id", strOrderId));
           orderItem.append(articleItem("a_provider_id", jvalue));
           // Article ID
           QDomNode queryNode = xml.firstChildNode(bookElement, "vendorKey");
