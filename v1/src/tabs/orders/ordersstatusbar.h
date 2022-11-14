@@ -5,18 +5,26 @@
 #ifndef ANTIQUACRM_ORDERSSTATUSBAR_H
 #define ANTIQUACRM_ORDERSSTATUSBAR_H
 
+#include <AntiquaCRM>
+#include <AntiquaWidgets>
 #include <QObject>
 #include <QWidget>
-#include <tabstatusbar.h>
+
+class OrdersHistoryButton;
 
 class OrdersStatusBar final : public TabStatusBar {
   Q_OBJECT
 
 private:
-  void setHistoryMenu() override;
+  OrdersHistoryButton *btn_history;
+  void setHistoryMenu() override {};
 
 private Q_SLOTS:
   void setHistoryAction(int) override;
+  void setPaymentAction(int);
+
+Q_SIGNALS:
+  void sendDefaultView();
 
 public:
   explicit OrdersStatusBar(QWidget *parent = nullptr);

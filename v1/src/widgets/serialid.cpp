@@ -19,7 +19,7 @@ SerialID::SerialID(QWidget *parent) : InputEdit{parent} {
   setModified(false);
   setRequired(true);
 
-  connect(this, SIGNAL(sendRequireChanged()), SLOT(loadDataset()));
+  // connect(this, SIGNAL(sendRequireChanged()), SLOT(loadDataset()));
 }
 
 void SerialID::loadDataset() {

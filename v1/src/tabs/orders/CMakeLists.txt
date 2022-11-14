@@ -18,6 +18,7 @@ SET (projectLibrary_LINKER
 SET (projectLibrary_SOURCES
  taborders.cpp
  orderssearchbar.cpp
+ ordershistorybutton.cpp
  ordersstatusbar.cpp
  orderstablemodel.cpp
  orderstableview.cpp
@@ -30,6 +31,7 @@ SET (projectLibrary_SOURCES
 SET (projectLibrary_HEADERS
  taborders.h
  orderssearchbar.h
+ ordershistorybutton.h
  ordersstatusbar.h
  orderstablemodel.h
  orderstableview.h

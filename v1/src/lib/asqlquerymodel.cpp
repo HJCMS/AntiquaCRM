@@ -32,7 +32,7 @@ const QIcon ASqlQueryModel::setHeaderIcon(int column) const {
 
 const QString ASqlQueryModel::displayDate(const QVariant &value) const {
   QDateTime dt(value.toDateTime());
-  return QLocale::system().toString(dt, "dd MMMM yyyy");
+  return QLocale::system().toString(dt, ANTIQUACRM_SHORT_DATE_DISPLAY);
 }
 
 const QString ASqlQueryModel::verticalHeader(int row, int role) const {

@@ -69,6 +69,7 @@ TabOrders::TabOrders(QWidget *parent) : Inventory{"orders_tab", parent} {
   connect(m_statusBar, SIGNAL(sendHistoryQuery(const QString &)),
           SLOT(createSearchQuery(const QString &)));
 
+  connect(m_statusBar, SIGNAL(sendDefaultView()), SLOT(setDefaultTableView()));
   connect(m_statusBar, SIGNAL(sendReloadView()), m_table,
           SLOT(setReloadView()));
 }
@@ -92,7 +93,7 @@ void TabOrders::setDefaultTableView() {
 
 void TabOrders::openStartPage() {
   m_editorPage->setEnabled(false);
-  if (m_table->rowCount() > 0 && m_table->rowCount() < 20)
+  if (m_table->rowCount() > 0 && m_table->rowCount() < 50)
     m_table->setReloadView();
 
   setCurrentIndex(0);

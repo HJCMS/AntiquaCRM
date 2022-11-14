@@ -166,6 +166,10 @@
 #define ANTIQUACRM_DATE_DISPLAY "dddd dd. MMMM yyyy"
 #endif
 
+#ifndef ANTIQUACRM_SHORT_DATE_DISPLAY
+#define ANTIQUACRM_SHORT_DATE_DISPLAY "dd MMM yyyy"
+#endif
+
 /**
  * @def ANTIQUACRM_QUERY_PASTDAYS
  * @ingroup Antiqua Plugin Interface
