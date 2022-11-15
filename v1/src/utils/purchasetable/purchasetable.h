@@ -12,6 +12,7 @@
 #include <QHeaderView>
 #include <QModelIndex>
 #include <QObject>
+#include <QPair>
 #include <QSpinBox>
 #include <QTableWidget>
 #include <QTableWidgetItem>
@@ -32,6 +33,7 @@ class PurchaseTable final : public QTableWidget {
 
 private:
   const QString tableName;
+  QPair<QString, qint64> history;
   EditorProperties config;
 
   AntiquaCRM::ASqlCore *m_sql;
@@ -56,6 +58,8 @@ private:
 
   const QString createSqlInsert(int row);
 
+  qint64 getPaymentId(int row);
+
   bool removeTableRow(int row);
 
 protected:
@@ -65,7 +69,7 @@ private Q_SLOTS:
   void removeCurrentRow();
 
 public Q_SLOTS:
-  void sqlQueryAddRow(qint64 id, const QString &field = QString("a_order_id"));
+  void sqlQueryTable(qint64 id, const QString &field = QString("a_order_id"));
 
 public:
   explicit PurchaseTable(QWidget *parent = nullptr, bool readOnly = false);

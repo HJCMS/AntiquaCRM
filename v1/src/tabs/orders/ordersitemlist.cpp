@@ -92,7 +92,7 @@ void OrdersItemList::importOrder(const AntiquaCRM::OrderArticleItems &item) {
 }
 
 void OrdersItemList::queryOrderArticles(qint64 orderId) {
-  m_table->sqlQueryAddRow(orderId, "a_order_id");
+  m_table->sqlQueryTable(orderId, "a_order_id");
   m_table->setEnabled(true);
 }
 

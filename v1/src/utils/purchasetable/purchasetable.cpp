@@ -194,13 +194,32 @@ const QString PurchaseTable::createSqlInsert(int row) {
   return sql;
 }
 
+qint64 PurchaseTable::getPaymentId(int row) {
+  qint64 out = -1;
+  QSpinBox *m = qobject_cast<QSpinBox *>(cellWidget(row, 0));
+  if (m == nullptr) {
+    out = 0;
+  } else if (m != nullptr && m->value() < 1) {
+    out = 0;
+  } else if (m != nullptr && m->value() > 0) {
+    out = m->value();
+  }
+  return out;
+}
+
 bool PurchaseTable::removeTableRow(int row) {
-  for (int r = 0; r < rowCount(); r++) {
-    if(row == r) {
-      qDebug() << Q_FUNC_INFO << "TODO" << row;
-      break;
-      // return true;
-    }
+  qint64 pid = getPaymentId(row);
+  if (pid > 0) {
+    if (rowCount() == (row + 1))
+      return false;
+
+    QString sql("DELETE FROM " + tableName + " WHERE a_payment_id=");
+    sql.append(QString::number(pid) + ";");
+    m_sql->query(sql);
+    return m_sql->lastError().isEmpty();
+  } else {
+    removeRow(row);
+    return true;
   }
   return false;
 }
@@ -234,13 +253,22 @@ void PurchaseTable::removeCurrentRow() {
   info.append("</p>");
   int ret = QMessageBox::question(this, tr("Remove Article"), info);
   if (ret == QMessageBox::Yes) {
-    removeTableRow(row);
+    if (removeTableRow(row)) {
+      if(save()) {
+        clearContents();
+        setRowCount(0);
+        sqlQueryTable(history.second, history.first);
+      }
+    }
   }
 }
 
-void PurchaseTable::sqlQueryAddRow(qint64 id, const QString &field) {
+void PurchaseTable::sqlQueryTable(qint64 id, const QString &field) {
   if (id < 1 || field.isEmpty())
     return;
+
+  history.first = field;
+  history.second = id;
 
   QString sql("SELECT * FROM " + tableName + " WHERE ");
   sql.append(field + "=" + QString::number(id) + ";");
@@ -269,14 +297,11 @@ void PurchaseTable::sqlQueryAddRow(qint64 id, const QString &field) {
 bool PurchaseTable::save() {
   QStringList sqlQueries;
   for (int r = 0; r < rowCount(); r++) {
-    QSpinBox *m = qobject_cast<QSpinBox *>(cellWidget(r, 0));
-    if (m == nullptr) {
+    qint64 pid = getPaymentId(r);
+    if (pid > 0)
+      sqlQueries << createSqlUpdate(r, pid);
+    else
       sqlQueries << createSqlInsert(r);
-    } else if (m != nullptr && m->value() < 1) {
-      sqlQueries << createSqlInsert(r);
-    } else if (m != nullptr && m->value() > 0) {
-      sqlQueries << createSqlUpdate(r, m->value());
-    }
   }
 
   if (sqlQueries.count() < 1) {

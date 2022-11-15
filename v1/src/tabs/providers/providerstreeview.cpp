@@ -87,8 +87,6 @@ void ProvidersTreeView::itemSelected(QTreeWidgetItem *item, int) {
   if (item->type() != QTreeWidgetItem::UserType)
     return;
 
-  qDebug() << Q_FUNC_INFO << item->text(0) << item->type();
-
   if (item->flags() == Qt::NoItemFlags)
     return;
 
@@ -152,12 +150,11 @@ void ProvidersTreeView::updateOrderStatus(QTreeWidgetItem *item, int status) {
 
   case (AntiquaCRM::OrderStatus::COMPLETED): {
     item->setSelected(false);
-    item->setIcon(1, QIcon("://icons/action_ok.png"));
-
     QString mTip = tr("Finished");
     if (modified != true || !tip.contains(mTip))
       item->setToolTip(0, tip + " " + mTip);
 
+    item->setIcon(1, QIcon("://icons/action_ok.png"));
     item->setData(1, Qt::UserRole, true); // setModified
     return;
   }
@@ -267,9 +264,6 @@ void ProvidersTreeView::loadUpdate() {
 #endif
     return;
   }
-#ifdef ANTIQUA_DEVELOPEMENT
-  qInfo("Providers Tree Refresh with %d entries.", count);
-#endif
 
   if (count > 0)
     sortAndResize();
