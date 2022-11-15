@@ -53,6 +53,7 @@ OrderSystemDatabase::createOrderData(AntiquaCRM::AProviderOrder &data) {
     QListIterator<AntiquaCRM::ArticleOrderItem> ait(articles.next());
     while (ait.hasNext()) {
       AntiquaCRM::ArticleOrderItem item = ait.next();
+      // qDebug() << item.key << QJsonValue::fromVariant(item.value);
       articleData.insert(item.key, QJsonValue::fromVariant(item.value));
     }
     articleArray.append(articleData);

@@ -84,7 +84,7 @@ void OrdersItemList::setAlertMessage(const QString &message) {
     m_notifier->clear();
 }
 
-void OrdersItemList::insertArticle(const AntiquaCRM::OrderArticleItems &item) {
+void OrdersItemList::importOrder(const AntiquaCRM::OrderArticleItems &item) {
   if (m_table->addRow(item)) {
     qInfo("New Articlerow inserted");
     emit articleChanged();
@@ -92,7 +92,7 @@ void OrdersItemList::insertArticle(const AntiquaCRM::OrderArticleItems &item) {
 }
 
 void OrdersItemList::queryOrderArticles(qint64 orderId) {
-  m_table->setQueryId(orderId, "a_order_id");
+  m_table->sqlQueryAddRow(orderId, "a_order_id");
   m_table->setEnabled(true);
 }
 

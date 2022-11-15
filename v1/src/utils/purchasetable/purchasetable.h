@@ -65,7 +65,7 @@ private Q_SLOTS:
   void removeCurrentRow();
 
 public Q_SLOTS:
-  void setQueryId(qint64 id, const QString &field = QString("a_order_id"));
+  void sqlQueryAddRow(qint64 id, const QString &field = QString("a_order_id"));
 
 public:
   explicit PurchaseTable(QWidget *parent = nullptr, bool readOnly = false);

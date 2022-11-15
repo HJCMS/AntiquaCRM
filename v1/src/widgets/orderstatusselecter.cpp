@@ -16,19 +16,31 @@ OrderStatusSelecter::OrderStatusSelecter(QWidget *parent) : InputEdit{parent} {
 
 void OrderStatusSelecter::loadDataset() {
   int c = 0;
-  p_map.clear();
-  p_map.insert(c++, QPair(tr("Open"), AntiquaCRM::OPEN));
-  p_map.insert(c++, QPair(tr("Order accepted"), AntiquaCRM::STARTED));
-  p_map.insert(c++, QPair(tr("Ready for pickup"), AntiquaCRM::FETCHET));
-  p_map.insert(c++, QPair(tr("Delivered"), AntiquaCRM::DELIVERED));
-  p_map.insert(c++, QPair(tr("Reminder sent"), AntiquaCRM::REMINDET));
-  p_map.insert(c++, QPair(tr("Closed"), AntiquaCRM::COMPLETED));
-  p_map.insert(c++, QPair(tr("Canceled"), AntiquaCRM::CANCELED));
-  p_map.insert(c++, QPair(tr("Back"), AntiquaCRM::RETURNING));
-  for (int i = 0; i < p_map.size(); i++) {
-    QPair<QString, AntiquaCRM::OrderStatus> st = p_map[i];
-    m_box->insertItem(i, st.first, st.second);
-  }
+  m_box->clear();
+
+  m_box->insertItem(c, tr("Open"), AntiquaCRM::OPEN);
+  m_box->setItemData(c++, QIcon("://icons/warning.png"), Qt::DecorationRole);
+
+  m_box->insertItem(c, tr("Order accepted"), AntiquaCRM::STARTED);
+  m_box->setItemData(c++, QIcon("://icons/edit.png"), Qt::DecorationRole);
+
+  m_box->insertItem(c, tr("Ready for pickup"), AntiquaCRM::FETCHET);
+  m_box->setItemData(c++, QIcon("://icons/action_delivered.png"), Qt::DecorationRole);
+
+  m_box->insertItem(c, tr("Delivered"), AntiquaCRM::DELIVERED);
+  m_box->setItemData(c++, QIcon("://icons/action_ok.png"), Qt::DecorationRole);
+
+  m_box->insertItem(c, tr("Reminder sent"), AntiquaCRM::REMINDET);
+  m_box->setItemData(c++, QIcon("://icons/action_redo.png"), Qt::DecorationRole);
+
+  m_box->insertItem(c, tr("Completed"), AntiquaCRM::COMPLETED);
+  m_box->setItemData(c++, QIcon("://icons/action_ok.png"), Qt::DecorationRole);
+
+  m_box->insertItem(c, tr("Canceled"), AntiquaCRM::CANCELED);
+  m_box->setItemData(c++, QIcon("://icons/action_cancel.png"), Qt::DecorationRole);
+
+  m_box->insertItem(c, tr("Back"), AntiquaCRM::RETURNING);
+  m_box->setItemData(c++, QIcon("://icons/action_undo.png"), Qt::DecorationRole);
 }
 
 void OrderStatusSelecter::dataChanged(int index) {
@@ -46,7 +58,8 @@ void OrderStatusSelecter::reset() {
 }
 
 void OrderStatusSelecter::setValue(const QVariant &val) {
-  AntiquaCRM::OrderStatus status = static_cast<AntiquaCRM::OrderStatus>(val.toInt());
+  AntiquaCRM::OrderStatus status =
+      static_cast<AntiquaCRM::OrderStatus>(val.toInt());
   int index = m_box->findData(status, Qt::UserRole);
   if (index >= 0)
     m_box->setCurrentIndex(index);

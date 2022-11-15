@@ -195,8 +195,13 @@ const QString PurchaseTable::createSqlInsert(int row) {
 }
 
 bool PurchaseTable::removeTableRow(int row) {
-  qDebug() << Q_FUNC_INFO << "TODO" << row;
-  // UU
+  for (int r = 0; r < rowCount(); r++) {
+    if(row == r) {
+      qDebug() << Q_FUNC_INFO << "TODO" << row;
+      break;
+      // return true;
+    }
+  }
   return false;
 }
 
@@ -233,7 +238,7 @@ void PurchaseTable::removeCurrentRow() {
   }
 }
 
-void PurchaseTable::setQueryId(qint64 id, const QString &field) {
+void PurchaseTable::sqlQueryAddRow(qint64 id, const QString &field) {
   if (id < 1 || field.isEmpty())
     return;
 
@@ -263,22 +268,21 @@ void PurchaseTable::setQueryId(qint64 id, const QString &field) {
 
 bool PurchaseTable::save() {
   QStringList sqlQueries;
-  qDebug() << Q_FUNC_INFO << "ROWS" << rowCount();
   for (int r = 0; r < rowCount(); r++) {
     QSpinBox *m = qobject_cast<QSpinBox *>(cellWidget(r, 0));
     if (m == nullptr) {
-      qDebug() << Q_FUNC_INFO << "INSERT";
       sqlQueries << createSqlInsert(r);
     } else if (m != nullptr && m->value() < 1) {
-      qDebug() << Q_FUNC_INFO << "INSERT";
       sqlQueries << createSqlInsert(r);
     } else if (m != nullptr && m->value() > 0) {
-      qDebug() << Q_FUNC_INFO << "UPDATE";
       sqlQueries << createSqlUpdate(r, m->value());
     }
   }
 
   if (sqlQueries.count() < 1) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "INSERT|UPDATE not created.";
+#endif
     return false;
   }
 
@@ -297,7 +301,7 @@ bool PurchaseTable::save() {
 }
 
 bool PurchaseTable::setRequiredIds(qint64 oId, qint64 cId) {
-  QStringList fields({"a_order_id","a_customer_id"});
+  QStringList fields({"a_order_id", "a_customer_id"});
   for (int r = 0; r < rowCount(); r++) {
     for (int c = 0; c < p_tableRecord.count(); c++) {
       QSqlField f = p_tableRecord.field(c);

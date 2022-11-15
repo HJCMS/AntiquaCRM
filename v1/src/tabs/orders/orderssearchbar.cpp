@@ -11,13 +11,14 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent) : TabSearchBar{parent} {
   searchField = QString();
   searchText = QString();
 
+  QIcon icon(":icons/view_search.png");
   m_selectFilter = new AntiquaComboBox(this);
   QString filterTip = tr("Press CTRL+Shift+F, to quickly open this Menu.");
   m_selectFilter->setToolTip(filterTip);
-  m_selectFilter->addItem(tr("Order Id"), "o_id");
-  m_selectFilter->addItem(tr("Customer or Company"), "customer");
-  m_selectFilter->addItem(tr("Delivery Service"), "d_name");
-  m_selectFilter->addItem(tr("Provider"), "o_provider_name");
+  m_selectFilter->addItem(icon, tr("Order Id"), "o_id");
+  m_selectFilter->addItem(icon, tr("Customer or Company"), "customer");
+  m_selectFilter->addItem(icon, tr("Delivery Service"), "d_name");
+  m_selectFilter->addItem(icon, tr("Provider"), "o_provider_name");
   addWidget(m_selectFilter);
 
   m_lineEdit = new SearchLineEdit(this);
@@ -41,6 +42,8 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent) : TabSearchBar{parent} {
   connect(m_lineEdit, SIGNAL(returnPressed()), SLOT(setSearch()));
   connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
   connect(m_restoreView, SIGNAL(clicked()), SIGNAL(sendRestoreView()));
+
+  m_selectFilter->setCurrentIndex(1);
 }
 
 void OrdersSearchBar::setSearch() {

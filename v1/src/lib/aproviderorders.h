@@ -383,6 +383,12 @@ public:
   const QVariant getValue(const QString &key);
 
   /**
+   * @brief Create an new Article Order Item
+   */
+  static AntiquaCRM::ArticleOrderItem createItem(const QString &key,
+                                                 const QVariant &value);
+
+  /**
    * @brief Current Article Ordered Items
    */
   const QList<AntiquaCRM::OrderArticleItems> orders();

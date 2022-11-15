@@ -3,6 +3,12 @@
 
 #include "antiquastatusbar.h"
 
-AntiquaStatusBar::AntiquaStatusBar(QMainWindow *parent) : QStatusBar{parent}
-{
+#include <QDebug>
+#include <QIcon>
+
+AntiquaStatusBar::AntiquaStatusBar(QMainWindow *parent) : QStatusBar{parent} {
+  setObjectName("antiqua_status_bar");
+  m_dbStatus = new QToolButton(this);
+  m_dbStatus->setIcon(QIcon("://icons/database.png"));
+  addPermanentWidget(m_dbStatus);
 }

@@ -125,6 +125,14 @@ const QVariant AProviderOrder::getValue(const QString &key) {
   return QVariant();
 }
 
+AntiquaCRM::ArticleOrderItem AProviderOrder::createItem(const QString &key,
+                                                        const QVariant &value) {
+  AntiquaCRM::ArticleOrderItem item;
+  item.key = key;
+  item.value = value;
+  return item;
+}
+
 const QList<OrderArticleItems> AProviderOrder::orders() { return p_orderItems; }
 
 bool AProviderOrder::insertOrderItems(const OrderArticleItems &article) {

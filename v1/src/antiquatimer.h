@@ -40,7 +40,6 @@ private:
 
 Q_SIGNALS:
   void sendTrigger();
-  void sendStatus(const QTime &t);
 
 public Q_SLOTS:
   void restart();

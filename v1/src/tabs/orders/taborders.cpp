@@ -41,10 +41,8 @@ TabOrders::TabOrders(QWidget *parent) : Inventory{"orders_tab", parent} {
   // Signals::OrdersSearchBar
   connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar,
           SLOT(setSearchFocus()));
-
   connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
           SLOT(setFilterFocus()));
-
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
   connect(m_searchBar, SIGNAL(sendRestoreView()), SLOT(setDefaultTableView()));
 
@@ -68,7 +66,6 @@ TabOrders::TabOrders(QWidget *parent) : Inventory{"orders_tab", parent} {
   // Signals::OrdersStatusBar
   connect(m_statusBar, SIGNAL(sendHistoryQuery(const QString &)),
           SLOT(createSearchQuery(const QString &)));
-
   connect(m_statusBar, SIGNAL(sendDefaultView()), SLOT(setDefaultTableView()));
   connect(m_statusBar, SIGNAL(sendReloadView()), m_table,
           SLOT(setReloadView()));
@@ -136,7 +133,6 @@ void TabOrders::openEntry(qint64 o_id) {
 void TabOrders::onEnterChanged() {
   if (!initialed) {
     initialed = m_table->setQuery();
-    m_searchBar->setFilter(0);
     m_editorPage->setEnabled(false);
     setCurrentIndex(0);
   }
@@ -154,6 +150,10 @@ bool TabOrders::customAction(const QJsonObject &obj) {
     return false;
   }
 
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << obj;
+#endif
+
   QString op = obj.value("window_operation").toString();
   if (!obj.contains(op))
     return false;
@@ -162,20 +162,19 @@ bool TabOrders::customAction(const QJsonObject &obj) {
   QJsonValue::Type type = value.type();
   if (value.isNull()) {
     sendStatusMessage(tr("Some arguments missing for a new Order!"));
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << op << value;
-#endif
     return false;
   }
 
   if (op == "open_order" && type == QJsonValue::Double) {
     qint64 o_id = value.toInt();
+    qDebug() << Q_FUNC_INFO << "open_order" << o_id;
     if (o_id > 0) {
       openEntry(o_id);
       return true;
     }
   } else if (op == "create_order" && type == QJsonValue::String) {
     QString pr_order = value.toString().trimmed();
+    qDebug() << Q_FUNC_INFO << "create_order" << pr_order;
     if (pr_order.isEmpty()) {
       sendStatusMessage(tr("Some arguments missing for a new Order!"));
       return false;

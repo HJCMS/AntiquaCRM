@@ -85,7 +85,7 @@ Abebooks::articleItem(const QString &key, const QJsonValue &value) const {
     _value = value.toInt();
   } else if (key == "a_provider_id") {
     // Dienstleister Bestellnummer
-    _value = QString::number(value.toInt());
+    _value = value.toString();
   } else if (key.contains("_price")) {
     // Preise
     if (value.type() == QJsonValue::String) {
@@ -280,12 +280,14 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
       item.setValue("c_postal_address", buffer.join("\n"));
       item.setValue("c_shipping_address", buffer.join("\n"));
     }
-    // Article Orders
+    // Article Orders - QDomNode::purchaseOrderItemList
     QDomNodeList orderItems = xml.getOrderItemList(orderElement);
     if (orderItems.size() > 0) {
       for (int i = 0; i < orderItems.size(); i++) {
+        // QDomNode::purchaseOrderItem
         QDomElement orderItemNode = orderItems.at(i).toElement();
         AntiquaCRM::OrderArticleItems orderItem;
+        // QDomNode::book
         QDomNode book = xml.firstChildNode(orderItemNode, "book");
         if (!book.isNull()) {
           QJsonValue jvalue;

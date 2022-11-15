@@ -8,6 +8,8 @@
 
 #include <AntiquaCRM>
 #include <QIcon>
+#include <QChar>
+#include <QDataStream>
 #include <QLayout>
 #include <QMessageBox>
 
@@ -22,7 +24,7 @@ TabProviders::TabProviders(QWidget *parent)
   m_mainPage->setObjectName("providers_start_page");
   // SearchBar
   QVBoxLayout *pageOneLayout = new QVBoxLayout(m_mainPage);
-  pageOneLayout->setContentsMargins(2, 2, 2, 2);
+  pageOneLayout->setContentsMargins(2, 2, 2, 0);
   // Create Splitter
   m_splitter = new QSplitter(m_mainPage);
   m_splitter->setObjectName("inventory_providers_splitter");
@@ -32,8 +34,20 @@ TabProviders::TabProviders(QWidget *parent)
   m_pages->setTabPosition(QTabWidget::South);
   m_splitter->insertWidget(0, m_pages);
   // Provider Orders list
-  m_treeWidget = new ProvidersTreeView(m_mainPage);
-  m_splitter->insertWidget(1, m_treeWidget);
+  QFrame *m_rightFrame = new QFrame(m_mainPage);
+  m_rightFrame->setMaximumWidth(380);
+  m_rightFrame->setMinimumWidth(150);
+  QVBoxLayout *m_rightFrameLayout = new QVBoxLayout(m_rightFrame);
+  m_rightFrameLayout->setContentsMargins(0, 0, 0, 0);
+  m_treeWidget = new ProvidersTreeView(m_rightFrame);
+  m_rightFrameLayout->addWidget(m_treeWidget);
+  m_timerDisplay = new QLabel(m_rightFrame);
+  m_timerDisplay->setAlignment(Qt::AlignRight);
+  m_timerDisplay->setIndent(5);
+  m_rightFrameLayout->addWidget(m_timerDisplay);
+  m_rightFrameLayout->setStretch(0, 1);
+  m_rightFrame->setLayout(m_rightFrameLayout);
+  m_splitter->insertWidget(1, m_rightFrame);
   // Splitter settings
   m_splitter->setCollapsible(0, false);
   m_splitter->setStretchFactor(0, 65);
@@ -49,20 +63,31 @@ TabProviders::TabProviders(QWidget *parent)
   insertWidget(0, m_mainPage);
   // End "MainPage"
 
-  // Begin Editor
-  m_editorPage = new QScrollArea(this);
-  m_editorPage->setObjectName("providers_editor_scrollarea");
-  m_editorPage->setWidgetResizable(true);
-  // m_editorWidget = new ProviderEditor(m_editorPage);
-  // m_editorPage->setWidget(m_editorWidget);
-  insertWidget(1, m_editorPage);
-  // End
-
-  // Tree
+  // Signals:ProvidersTreeView
   connect(m_treeWidget,
           SIGNAL(sendQueryOrder(const QString &, const QString &)),
           SLOT(openOrderPage(const QString &, const QString &)));
-  // Pages
+
+  setCurrentIndex(0);
+  counter = 0;
+  timerId = startTimer(1000, Qt::PreciseTimer);
+}
+
+void TabProviders::timerEvent(QTimerEvent *event) {
+  if (event->timerId() != timerId)
+    return;
+
+  --counter;
+  if (counter <= 0) {
+    m_treeWidget->loadUpdate();
+    counter = resetCounter;
+    return;
+  }
+
+  QTime ct(0, 0, 0);
+  QString t_text =
+      tr("Next update %1").arg(ct.addSecs(counter).toString("m:ss"));
+  m_timerDisplay->setText(t_text);
 }
 
 bool TabProviders::findPage(const QString &provider, const QString &orderId) {
@@ -85,7 +110,7 @@ void TabProviders::openOrderPage(const QString &provider,
 
   QString sql("SELECT pr_order_data FROM provider_order_history");
   sql.append(" WHERE pr_name='" + provider + "' AND pr_order='");
-  sql.append(orderId + "' AND pr_closed IS NULL;");
+  sql.append(orderId + "';");
   AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
   QSqlQuery q = m_sql->query(sql);
   if (q.size() == 1) {
@@ -106,37 +131,14 @@ void TabProviders::openOrderPage(const QString &provider,
   }
 }
 
-void TabProviders::openStartPage() {
-  qDebug() << Q_FUNC_INFO << sender()->objectName();
-  setCurrentIndex(0);
-}
+void TabProviders::openStartPage() { setCurrentIndex(0); }
 
-void TabProviders::createSearchQuery(const QString &query) {
-  qDebug() << Q_FUNC_INFO << sender()->objectName();
-}
+void TabProviders::createSearchQuery(const QString &query) { Q_UNUSED(query); }
 
-void TabProviders::openEntry(qint64 customerId) {
-  if (customerId < 1)
-    return;
+void TabProviders::createNewEntry(){/* unused */};
 
-  if (currentIndex() != 0) {
-    QString info(tr("Cannot open this provider.") + "<br>");
-    info.append(tr("Because the provider tab is not in overview mode."));
-    info.append("<p>");
-    info.append(tr("Please save and close all open provider first."));
-    info.append("</p>");
-    QMessageBox::information(this, tr("Providereditor"), info);
-    return;
-  }
+void TabProviders::openEntry(qint64 customerId) { Q_UNUSED(customerId); };
 
-  //  if (m_editorWidget->openEditEntry(articleId)) {
-  //    setCurrentWidget(m_editorPage);
-  //  }
-  qDebug() << Q_FUNC_INFO << customerId;
-}
+void TabProviders::onEnterChanged() { openStartPage(); }
 
-void TabProviders::onEnterChanged() {
-  if (!initialed) {
-    setCurrentWidget(m_mainPage);
-  }
-}
+TabProviders::~TabProviders() { killTimer(timerId); }

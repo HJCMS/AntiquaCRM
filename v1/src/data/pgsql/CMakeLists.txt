@@ -12,6 +12,7 @@ SET (query_tables_FILES
  query_designation.sql
  query_keywords.sql
  query_order_by_oid.sql
+ query_order_exists.sql
  query_order_articles.sql
  query_postal_codes.sql
  query_storage_location.sql

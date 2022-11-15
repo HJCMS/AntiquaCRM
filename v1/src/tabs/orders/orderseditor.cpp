@@ -404,14 +404,6 @@ qint64 OrdersEditor::searchCustomer(const QJsonObject &obj) {
   return -1;
 }
 
-AntiquaCRM::ArticleOrderItem
-OrdersEditor::addArticleItem(const QString &key, const QVariant &value) const {
-  AntiquaCRM::ArticleOrderItem item;
-  item.key = key;
-  item.value = value;
-  return item;
-}
-
 bool OrdersEditor::saveArticleOrders() {
   qint64 oid = getSerialID("o_id");
   qint64 cid = getSerialID("o_customer_id");
@@ -420,6 +412,11 @@ bool OrdersEditor::saveArticleOrders() {
     return false;
   }
   return m_ordersList->saveTableData(oid, cid);
+}
+
+AntiquaCRM::ArticleOrderItem
+OrdersEditor::addItem(const QString &key, const QVariant &value) const {
+  return AntiquaCRM::AProviderOrder::createItem(key, value);
 }
 
 void OrdersEditor::setSaveData() {
@@ -472,17 +469,17 @@ void OrdersEditor::searchInsertArticleId(qint64 aid) {
       q.next();
       QSqlRecord r = q.record();
       AntiquaCRM::OrderArticleItems items;
-      items.append(addArticleItem("a_order_id", oid));
-      items.append(addArticleItem("a_customer_id", cid));
+      items.append(addItem("a_order_id", oid));
+      items.append(addItem("a_customer_id", cid));
       for (int i = 0; i < r.count(); i++) {
         QSqlField f = r.field(i);
-        items.append(addArticleItem(f.name(), f.value()));
+        items.append(addItem(f.name(), f.value()));
       }
       if (items.size() > 0) {
 #ifdef ANTIQUA_DEVELOPEMENT
         qDebug() << Q_FUNC_INFO << oid << items.size();
 #endif
-        m_ordersList->insertArticle(items);
+        m_ordersList->importOrder(items);
         return;
       }
     }

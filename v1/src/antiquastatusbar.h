@@ -5,12 +5,17 @@
 #ifndef ANTIQUACRM_STATUSBAR_H
 #define ANTIQUACRM_STATUSBAR_H
 
+#include <QLabel>
 #include <QMainWindow>
 #include <QObject>
 #include <QStatusBar>
+#include <QToolButton>
 
 class AntiquaStatusBar final : public QStatusBar {
   Q_OBJECT
+
+private:
+  QToolButton *m_dbStatus;
 
 public:
   explicit AntiquaStatusBar(QMainWindow *parent = nullptr);

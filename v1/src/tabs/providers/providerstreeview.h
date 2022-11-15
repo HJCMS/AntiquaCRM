@@ -6,7 +6,6 @@
 #define ANTIQUACRM_PROVIDERSTREEVIEW_H
 
 #include <QDateTime>
-#include <QTimerEvent>
 #include <QLabel>
 #include <QObject>
 #include <QTreeWidget>
@@ -23,13 +22,9 @@ private:
     QString buyer;
     int status;
   };
-  int timerId;
-  int counter;
-  const int resetCounter = 300; /**< steps in Seconds */
   const QString setDateString(const QDateTime &dt) const;
   QTreeWidgetItem *getParent(const QString &name);
   QTreeWidgetItem *getChild(const QString &provider, const QString &id);
-  void timerEvent(QTimerEvent *event) override;
   void addProvider(const QString &provider);
 
 private Q_SLOTS:
@@ -92,8 +87,6 @@ public:
                         int status = 0);
 
   int ordersCount();
-
-  ~ProvidersTreeView();
 };
 
 #endif // ANTIQUACRM_PROVIDERSTREEVIEW_H

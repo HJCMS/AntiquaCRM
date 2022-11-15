@@ -19,6 +19,7 @@ ProvidersOrderPage::ProvidersOrderPage(const QJsonObject &order,
     : QWidget{parent}, p_order{order} {
   setWindowTitle(p_order.value("orderid").toString());
   setContentsMargins(0, 0, 0, 0);
+  setEnabled(false);
 
   m_sql = new AntiquaCRM::ASqlCore(this);
 
@@ -50,7 +51,7 @@ ProvidersOrderPage::ProvidersOrderPage(const QJsonObject &order,
   connect(m_table, SIGNAL(sendCheckArticles()), SLOT(findArticleIds()));
   connect(m_table, SIGNAL(sendOpenArticle(qint64)), SLOT(openArticle(qint64)));
   connect(m_actionBar, SIGNAL(sendCheckArticles()), SLOT(findArticleIds()));
-  connect(m_actionBar, SIGNAL(sendCreateOrder()), SLOT(setCreateOrder()));
+  connect(m_actionBar, SIGNAL(sendCreateOrder()), SLOT(prepareCreateOrder()));
 }
 
 void ProvidersOrderPage::pushCmd(const QJsonObject &action) {
@@ -112,6 +113,14 @@ void ProvidersOrderPage::openOrder(qint64 oid) {
   pushCmd(obj);
 }
 
+void ProvidersOrderPage::createOrder(const QString &providerId) {
+  QJsonObject obj;
+  obj.insert("window_operation", "create_order");
+  obj.insert("tab", "orders_tab");
+  obj.insert("create_order", providerId);
+  pushCmd(obj);
+}
+
 void ProvidersOrderPage::openArticle(qint64 aid) {
   QJsonObject obj;
   obj.insert("window_operation", "open_article");
@@ -137,34 +146,45 @@ void ProvidersOrderPage::findArticleIds() {
   m_actionBar->enableCreateButton((found > 0));
 }
 
-void ProvidersOrderPage::setCreateOrder() {
+void ProvidersOrderPage::prepareCreateOrder() {
+  QString provider = p_order.value("provider").toString();
   QString orderid = p_order.value("orderid").toString();
-  QString sql("SELECT o_id FROM inventory_orders");
-  sql.append(" WHERE o_provider_order_id='");
-  sql.append(orderid);
-  sql.append("';");
-  QSqlQuery q = m_sql->query(sql);
+
+  if (provider.isEmpty() || orderid.isEmpty()) {
+    qWarning("CreateOrder rejected: missing arguments!");
+    return;
+  }
+
+  AntiquaCRM::ASqlFiles query("query_order_exists");
+  if (query.openTemplate()) {
+    QString clause("o_provider_name ILIKE '" + provider);
+    clause.append("' AND o_provider_order_id='" + orderid + "'");
+    query.setWhereClause(clause);
+  }
+
+  QSqlQuery q = m_sql->query(query.getQueryContent());
   if (q.size() > 0) {
     q.next();
     qint64 o_id = q.value("o_id").toInt();
+    QString prinfo = q.value("prinfo").toString();
+    QString buyer = q.value("buyer").toString();
     QString txt("<p>");
-    txt.append(
-        tr("An order with this order number %d already exists!").arg(o_id));
-    txt.append("</p><p>");
-    txt.append(tr("Would you like to open this now?"));
-    txt.append("</p>");
-    int ret = QMessageBox::information(this, tr("Order status"), txt);
-    if (ret == QMessageBox::Accepted) {
+    txt.append(tr("An order for %1 already exists!").arg(prinfo));
+    txt.append("</p><p>" + tr("Buyer: %1").arg(buyer) + "</p><p>");
+    txt.append(tr("Would you like to open this order?") + "</p>");
+    int ret = QMessageBox::question(this, tr("Order already exists!"), txt);
+    if (ret == QMessageBox::Yes)
       openOrder(o_id);
-      return;
-    }
+
+    return;
+  } else if (!m_sql->lastError().isEmpty()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << query.getQueryContent() << m_sql->lastError();
+#endif
+    return;
   }
 
-  QJsonObject obj;
-  obj.insert("window_operation", "create_order");
-  obj.insert("tab", "orders_tab");
-  obj.insert("create_order", orderid);
-  pushCmd(obj);
+  createOrder(orderid);
 }
 
 bool ProvidersOrderPage::loadOrderDataset() {
@@ -206,5 +226,6 @@ bool ProvidersOrderPage::loadOrderDataset() {
 
   mutex.unlock();
 
+  setEnabled(status);
   return status;
 }

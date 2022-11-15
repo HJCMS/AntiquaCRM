@@ -26,8 +26,6 @@ void AntiquaTimer::timerEvent(QTimerEvent *event) {
     emit sendTrigger();
     return;
   }
-  QTime t(0, 0, 0);
-  emit sendStatus(t.addSecs(countDown));
 }
 
 void AntiquaTimer::restart() {

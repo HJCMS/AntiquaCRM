@@ -18,7 +18,6 @@
 #include <QIcon>
 #include <QLocalSocket>
 #include <QMetaObject>
-#include <QStyleFactory>
 #include <QMutex>
 #include <QStyleFactory>
 #include <QTranslator>
@@ -46,13 +45,17 @@ void AntiquaAppl::initGui() {
   m_systemTray->setObjectName("SystemTray");
   m_timer = new AntiquaTimer(this);
 
+  // SIGNALS:AntiquaSystemTray
   connect(m_systemTray, SIGNAL(sendShowWindow()), m_mainWindow, SLOT(show()));
   connect(m_systemTray, SIGNAL(sendHideWindow()), m_mainWindow, SLOT(hide()));
   connect(m_systemTray, SIGNAL(sendToggleView()), m_mainWindow,
           SLOT(setToggleWindow()));
   connect(m_systemTray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
+  // SIGNALS:AntiquaWindow
   connect(m_mainWindow, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
+  // SIGNALS:AntiquaTimer
   connect(m_timer, SIGNAL(sendTrigger()), SLOT(startTriggerProcess()));
+  // SIGNALS:OrderSystem
   connect(m_orderSystem, SIGNAL(sendNewOrdersArrived(const QString &)),
           m_systemTray, SLOT(setOrdersMessage(const QString &)));
 }

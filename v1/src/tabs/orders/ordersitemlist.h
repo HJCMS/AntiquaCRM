@@ -77,9 +77,9 @@ public Q_SLOTS:
   void setAlertMessage(const QString &message = QString());
 
   /**
-   * @brief Erstellt eine neuen Tabellen Eintrag
+   * @brief Importiert einen neuen Tabellen Eintrag
    */
-  void insertArticle(const AntiquaCRM::OrderArticleItems &article);
+  void importOrder(const AntiquaCRM::OrderArticleItems &article);
 
   /**
    * @brief Bestehende Artikel Einkäufe mit orderId einlesen!

@@ -16,7 +16,6 @@ class OrderStatusSelecter final : public InputEdit {
   Q_OBJECT
 
 private:
-  QMap<int, QPair<QString, AntiquaCRM::OrderStatus>> p_map;
   AntiquaComboBox *m_box;
   void loadDataset();
 

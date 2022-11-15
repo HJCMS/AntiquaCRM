@@ -7,6 +7,7 @@
 
 #include <AntiquaWidgets>
 #include <QObject>
+#include <QTimerEvent>
 #include <QScrollArea>
 
 class OrdersSearchBar;
