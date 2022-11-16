@@ -48,7 +48,7 @@ private:
 
   qint64 searchCustomer(const QJsonObject &obj);
 
-  bool saveArticleOrders();
+  const QString getSqlArticleOrders();
 
   inline AntiquaCRM::ArticleOrderItem addItem(const QString &key,
                                               const QVariant &value) const;

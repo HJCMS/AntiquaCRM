@@ -137,6 +137,15 @@ PostalCodeEdit::PostalCodeEdit(QWidget *parent) : InputEdit{parent} {
           SLOT(postalReadyToLeave()));
 }
 
+bool PostalCodeEdit::comparePostalcode(const QString &source,
+                                       const QString &input) const {
+  QString src(source);
+  if ((input.length() > src.length()) && input.startsWith("0"))
+    src.prepend("0");
+
+  return (src == input);
+}
+
 void PostalCodeEdit::loadDataset() {
   m_countries->clear();
   m_countries->insertItem(0, tr("Without disclosures"), QString());
@@ -178,7 +187,7 @@ const QStringList PostalCodeEdit::locations(const QString &fromCode) {
       if (!var.isValid())
         continue;
 
-      if (var.toString() == t_plz) {
+      if (comparePostalcode(var.toString(), t_plz)) {
         QVariant v_lo = m->data(m->sibling(r, 1, mIndex), qrole);
         locations << v_lo.toString();
       }
@@ -214,7 +223,7 @@ void PostalCodeEdit::postalReadyToLeave() {
       if (!var.isValid())
         continue;
 
-      if (var.toString() == t_plz) {
+      if (comparePostalcode(var.toString(), t_plz)) {
         AntiquaCRM::PostalCode code;
         code.plz = var.toString();
         QVariant v_lo = m->data(m->sibling(r, 1, mIndex), qrole);

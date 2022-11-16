@@ -10,12 +10,16 @@ SET (subproject_LINKER
 
 SET (subproject_SOURCES
  purchasetable.cpp
- purchasetableheader.cpp
+ purchasetablecolumn.cpp
+ purchasetablemodel.cpp
+ purchasetabledelegate.cpp
 )
 
 SET (subproject_HEADERS
  purchasetable.h
- purchasetableheader.h
+ purchasetablecolumn.h
+ purchasetablemodel.h
+ purchasetabledelegate.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC
@@ -31,6 +35,5 @@ SET_TARGET_PROPERTIES (${_subproject} PROPERTIES
 TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
-  Qt${QT_VERSION_MAJOR}::Sql
   ${subproject_LINKER}
 )

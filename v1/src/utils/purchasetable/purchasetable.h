@@ -17,67 +17,44 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 
-struct EditorProperties {
-  qreal minPrice = 3.00;
-  qreal maxPrice = 999999.00;
-  int minCount = 1;
-  int maxCount = 10;
-  int maxInteger = 9999999;
-  QByteArray currency = QString("€").toLocal8Bit();
-};
+class PurchaseTableModel;
+class PurchaseTableDelegate;
 
-class PurchaseTableHeader;
-
-class PurchaseTable final : public QTableWidget {
+class PurchaseTable final : public QTableView {
   Q_OBJECT
 
 private:
-  const QString tableName;
-  QPair<QString, qint64> history;
-  EditorProperties config;
-
-  AntiquaCRM::ASqlCore *m_sql;
-  QSqlRecord p_tableRecord;
-
-  PurchaseTableHeader *m_header;
-  void setHeaders();
-
-  QTableWidgetItem *stringItem(const QSqlField &field) const;
-  const QVariant getStringItem(int row, int column) const;
-
-  QSpinBox *integerItem(const QSqlField &field) const;
-  qint64 getIntegerItem(int row, int column) const;
-
-  QDoubleSpinBox *priceItem(const QSqlField &field) const;
-  double getPriceItem(int row, int column) const;
-
-  SelectArticleType *typeItem(const QSqlField &field) const;
-  int getTypeItem(int row, int column) const;
-
-  const QString createSqlUpdate(int row, qint64 id);
-
-  const QString createSqlInsert(int row);
-
-  qint64 getPaymentId(int row);
-
-  bool removeTableRow(int row);
-
-protected:
-  void contextMenuEvent(QContextMenuEvent *) override;
-
-private Q_SLOTS:
-  void removeCurrentRow();
+  PurchaseTableModel *m_model;
+  PurchaseTableDelegate *m_delegate;
+  QHeaderView *m_headerView;
+  bool removeRow(int row);
 
 public Q_SLOTS:
-  void sqlQueryTable(qint64 id, const QString &field = QString("a_order_id"));
+  void clearTable();
+
+  /**
+   * @brief Add a new Order Article to the Table
+   */
+  void addOrderArticle(const AntiquaCRM::OrderArticleItems &item);
 
 public:
-  explicit PurchaseTable(QWidget *parent = nullptr, bool readOnly = false);
-  bool save();
-  bool setRequiredIds(qint64 oId, qint64 cId);
-  void hideColumns(const QList<int> columns);
-  bool addRow(const AntiquaCRM::OrderArticleItems &items);
-  const AntiquaCRM::OrderArticleItems getRow(int row);
+  explicit PurchaseTable(QWidget *parent = nullptr, bool readOnly = true);
+
+  /**
+   * @brief Set Visibility for Columns
+   */
+  void hideColumns(const QList<int> &list);
+
+  /**
+   * @brief Import OrderArticles
+   * @note Before insert the Table clear the Contents!
+   */
+  bool setOrderArticles(const QList<AntiquaCRM::OrderArticleItems> &items);
+
+  /**
+   * @brief get current Order Articles from table
+   */
+  const QStringList getQueryArticles();
 };
 
 #endif // ANTIQUACRM_PURCHASETABLE_H

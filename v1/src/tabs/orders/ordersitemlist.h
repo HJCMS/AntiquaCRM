@@ -79,12 +79,7 @@ public Q_SLOTS:
   /**
    * @brief Importiert einen neuen Tabellen Eintrag
    */
-  void importOrder(const AntiquaCRM::OrderArticleItems &article);
-
-  /**
-   * @brief Bestehende Artikel Einkäufe mit orderId einlesen!
-   */
-  void queryOrderArticles(qint64 orderId);
+  void insertArticle(const AntiquaCRM::OrderArticleItems &article);
 
 public:
   explicit OrdersItemList(QWidget *parent = nullptr);
@@ -95,23 +90,14 @@ public:
   void insertSearchId(int articleId);
 
   /**
-   * @brief Aktueller Tabelleninhalt speichern!
-   * Bei bedarf werden die fehlenden Nummer eingefügt!
-   */
-  bool saveTableData(qint64 orderId, qint64 customerId);
-
-  /**
-   * @brief Anzahl der Bestellartikel von Tabelle.
-   */
-  int payments();
-
-  /**
    * @brief Bestellartikel aus SQL Abfrage Importieren
    * Weil noch keine Order ID vorhanden ist wird die Zeile nur eingefügt aber
    * noch nicht gespeichert!
    * @see saveTableData
    */
-  bool addProviderArticles(const QList<AntiquaCRM::OrderArticleItems> &list);
+  bool setData(const QList<AntiquaCRM::OrderArticleItems> &list);
+
+  const QStringList getQueryData();
 };
 
 #endif // ANTIQUACRM_ORDERSITEMLIST_H

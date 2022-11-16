@@ -44,8 +44,8 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   QString tbInfo = tr("Current Article orders");
   layout->addWidget(new QLabel(tbInfo + ":", this));
 
-  m_table = new PurchaseTable(this);
-  // Für den Kunden nicht Sichtbar
+  m_table = new PurchaseTable(this, false);
+  // Für den Kunden nicht anzeigen!
   m_table->hideColumns(QList<int>({0, 1, 3, 8, 9}));
   m_table->setEnabled(false);
   layout->addWidget(m_table);
@@ -72,8 +72,7 @@ void OrdersItemList::clearSearchInput() {
 }
 
 void OrdersItemList::clearTable() {
-  m_table->clearContents();
-  m_table->setRowCount(0);
+  m_table->clearTable();
   clearSearchInput();
 }
 
@@ -84,16 +83,8 @@ void OrdersItemList::setAlertMessage(const QString &message) {
     m_notifier->clear();
 }
 
-void OrdersItemList::importOrder(const AntiquaCRM::OrderArticleItems &item) {
-  if (m_table->addRow(item)) {
-    qInfo("New Articlerow inserted");
-    emit articleChanged();
-  }
-}
-
-void OrdersItemList::queryOrderArticles(qint64 orderId) {
-  m_table->sqlQueryTable(orderId, "a_order_id");
-  m_table->setEnabled(true);
+void OrdersItemList::insertArticle(const AntiquaCRM::OrderArticleItems &item) {
+  m_table->addOrderArticle(item);
 }
 
 void OrdersItemList::insertSearchId(int articleId) {
@@ -101,23 +92,12 @@ void OrdersItemList::insertSearchId(int articleId) {
     m_insertID->setValue(articleId);
 }
 
-bool OrdersItemList::saveTableData(qint64 orderId, qint64 customerId) {
-  if (m_table->setRequiredIds(orderId, customerId)) {
-    if (m_table->save()) {
-      m_table->setEnabled(true);
-      return true;
-    }
-  }
-  return false;
+bool OrdersItemList::setData(const QList<AntiquaCRM::OrderArticleItems> &list) {
+  bool status = m_table->setOrderArticles(list);
+  m_table->setEnabled(status);
+  return status;
 }
 
-int OrdersItemList::payments() { return m_table->rowCount(); }
-
-bool OrdersItemList::addProviderArticles(
-    const QList<AntiquaCRM::OrderArticleItems> &list) {
-  QListIterator<AntiquaCRM::OrderArticleItems> it(list);
-  while (it.hasNext()) {
-    m_table->addRow(it.next());
-  }
-  return true;
+const QStringList OrdersItemList::getQueryData() {
+  return m_table->getQueryArticles();
 }

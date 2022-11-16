@@ -293,7 +293,7 @@ void CustomersEditor::findPurchaces() {
     QSqlQuery q = m_sql->query(sqlFile.getQueryContent());
     if (q.size() > 0) {
       int row = 0;
-      m_ordersWidget->restore();
+      m_ordersWidget->clearContents();
       m_ordersWidget->setRowCount(q.size());
 
       while (q.next()) {
@@ -348,7 +348,8 @@ void CustomersEditor::setCheckLeaveEditor() {
 
 void CustomersEditor::setFinalLeaveEditor() {
   setResetInputFields();
-  m_ordersWidget->restore();          /**< Einkäufe entfernen */
+  m_ordersWidget->clearContents();    /**< Einkäufe entfernen */
+  m_ordersWidget->setRowCount(0);     /**< Einkäufe entfernen */
   m_actionBar->setRestoreable(false); /**< ResetButton off */
   emit sendLeaveEditor();             /**< Zurück zur Hauptsansicht */
 }
