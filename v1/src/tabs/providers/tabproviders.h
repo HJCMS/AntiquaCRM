@@ -7,8 +7,8 @@
 
 #include <AntiquaWidgets>
 #include <QFrame>
-#include <QLabel>
 #include <QObject>
+#include <QPushButton>
 #include <QSplitter>
 #include <QTimerEvent>
 
@@ -30,7 +30,7 @@ private:
 
   QFrame *m_rightFrame;
   ProvidersTreeView *m_treeWidget;
-  QLabel *m_timerDisplay;
+  QPushButton *btn_refreshTree;
 
   void timerEvent(QTimerEvent *event) override;
 

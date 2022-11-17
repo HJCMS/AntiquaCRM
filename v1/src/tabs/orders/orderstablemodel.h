@@ -17,6 +17,7 @@ private:
   const QIcon getHeaderIcon(int column) const;
   const QIcon getStatusIcon(bool status = 0) const;
   const QString getOrderStatus(int status) const;
+  const QIcon getOrderStatusIcon(int status) const;
   const QString getRunTime(const qint64 &seconds) const;
   const QString getToolTip(int column) const;
 

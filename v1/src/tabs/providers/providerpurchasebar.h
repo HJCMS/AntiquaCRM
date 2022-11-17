@@ -20,6 +20,9 @@ private:
   QPushButton *btn_create;
   QPushButton *btn_check;
 
+private Q_SLOTS:
+  void createClicked();
+
 Q_SIGNALS:
   void sendCreateOrder();
   void sendCheckArticles();

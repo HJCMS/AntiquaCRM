@@ -48,16 +48,6 @@ Q_SIGNALS:
    */
   void searchArticleById(qint64);
 
-  /**
-   * @brief Benachrichtigung Doppelter Eintrag
-   */
-  void duplicateEntry();
-
-  /**
-   * @brief A new Article was add ...
-   */
-  void articleChanged();
-
 public Q_SLOTS:
   /**
    * @brief Such/Einfügen Felder nach dem einfügen leeren.
@@ -90,12 +80,17 @@ public:
   void insertSearchId(int articleId);
 
   /**
+   * @brief Nach einem insert die Tabelle überarbeiten.
+   */
+  bool setArticleOrderId(qint64 oid);
+
+  /**
    * @brief Bestellartikel aus SQL Abfrage Importieren
    * Weil noch keine Order ID vorhanden ist wird die Zeile nur eingefügt aber
    * noch nicht gespeichert!
    * @see saveTableData
    */
-  bool setData(const QList<AntiquaCRM::OrderArticleItems> &list);
+  bool importArticles(const QList<AntiquaCRM::OrderArticleItems> &list);
 
   const QStringList getQueryData();
 };

@@ -20,8 +20,13 @@ ProviderPurchaseBar::ProviderPurchaseBar(QWidget *parent) : QStatusBar{parent} {
   btn_check->setToolTip(info);
   addPermanentWidget(btn_check);
 
-  connect(btn_create, SIGNAL(clicked()), SIGNAL(sendCreateOrder()));
+  connect(btn_create, SIGNAL(clicked()), SLOT(createClicked()));
   connect(btn_check, SIGNAL(clicked()), SIGNAL(sendCheckArticles()));
+}
+
+void ProviderPurchaseBar::createClicked() {
+  emit sendCreateOrder();
+  enableCreateButton(false);
 }
 
 void ProviderPurchaseBar::enableCreateButton(bool b) {

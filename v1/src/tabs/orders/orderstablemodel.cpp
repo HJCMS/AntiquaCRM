@@ -29,41 +29,57 @@ const QIcon OrdersTableModel::getStatusIcon(bool status) const {
 
 const QString OrdersTableModel::getOrderStatus(int status) const {
   switch (static_cast<AntiquaCRM::OrderStatus>(status)) {
-  case (AntiquaCRM::OPEN): /**< Offen */
-    return tr("Open");
-    break;
-
   case (AntiquaCRM::STARTED): /**< Auftrag angenommen */
     return tr("Order accepted");
-    break;
 
   case (AntiquaCRM::FETCHET): /**< Bereit zur Abholung */
     return tr("Ready for pickup");
-    break;
 
   case (AntiquaCRM::DELIVERED): /**< Ausgeliefert */
     return tr("Delivered");
-    break;
 
   case (AntiquaCRM::REMINDET): /**< Erinnerung */
     return tr("Reminded");
-    break;
 
   case (AntiquaCRM::COMPLETED): /**< Abgeschlossen */
     return tr("Closed");
-    break;
 
   case (AntiquaCRM::CANCELED): /**< Storniert */
     return tr("Canceled");
-    break;
 
   case (AntiquaCRM::RETURNING): /**< Retour */
     return tr("Back");
-    break;
 
   default:
     return tr("Open");
-    break;
+  }
+}
+
+const QIcon OrdersTableModel::getOrderStatusIcon(int status) const {
+  switch (static_cast<AntiquaCRM::OrderStatus>(status)) {
+  case (AntiquaCRM::STARTED): /**< Auftrag angenommen */
+    return QIcon("://icons/edit.png");
+
+  case (AntiquaCRM::FETCHET): /**< Bereit zur Abholung */
+    return QIcon("://icons/action_delivered.png");
+
+  case (AntiquaCRM::DELIVERED): /**< Ausgeliefert */
+    return QIcon("://icons/action_ok.png");
+
+  case (AntiquaCRM::REMINDET): /**< Erinnerung */
+    return QIcon("://icons/action_redo.png");
+
+  case (AntiquaCRM::COMPLETED): /**< Abgeschlossen */
+    return QIcon("://icons/action_ok.png");
+
+  case (AntiquaCRM::CANCELED): /**< Storniert */
+    return QIcon("://icons/action_cancel.png");
+
+  case (AntiquaCRM::RETURNING): /**< Retour */
+    return QIcon("://icons/action_undo.png");
+
+  default:
+    return QIcon("://icons/warning.png");
   }
 }
 
@@ -142,10 +158,9 @@ QVariant OrdersTableModel::headerData(int section, Qt::Orientation orientation,
 }
 
 QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
-  const QVariant val;
   if (!index.isValid() &&
       (role != Qt::DisplayRole || role != Qt::DecorationRole))
-    return val;
+    return AntiquaCRM::ASqlQueryModel::data(index, role);
 
   int column = index.column();
   QVariant item = AntiquaCRM::ASqlQueryModel::data(index, role);
@@ -155,6 +170,11 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
 
   if (role == Qt::DisplayRole && column >= 7) {
     return getRunTime(item.toInt());
+  }
+
+  if (role == Qt::DecorationRole && column == 2) {
+    QVariant status = AntiquaCRM::ASqlQueryModel::data(index, Qt::EditRole);
+    return getOrderStatusIcon(status.toInt());
   }
 
   if (role == Qt::DecorationRole && column == 3) {

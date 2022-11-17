@@ -7,9 +7,9 @@
 #include "providerstreeview.h"
 
 #include <AntiquaCRM>
-#include <QIcon>
 #include <QChar>
 #include <QDataStream>
+#include <QIcon>
 #include <QLayout>
 #include <QMessageBox>
 
@@ -41,10 +41,11 @@ TabProviders::TabProviders(QWidget *parent)
   m_rightFrameLayout->setContentsMargins(0, 0, 0, 0);
   m_treeWidget = new ProvidersTreeView(m_rightFrame);
   m_rightFrameLayout->addWidget(m_treeWidget);
-  m_timerDisplay = new QLabel(m_rightFrame);
-  m_timerDisplay->setAlignment(Qt::AlignRight);
-  m_timerDisplay->setIndent(5);
-  m_rightFrameLayout->addWidget(m_timerDisplay);
+  btn_refreshTree = new QPushButton(m_rightFrame);
+  btn_refreshTree->setText(tr("Update"));
+  btn_refreshTree->setToolTip(tr("Button for update, Provider Tree."));
+  btn_refreshTree->setIcon(QIcon("://icons/action_reload.png"));
+  m_rightFrameLayout->addWidget(btn_refreshTree);
   m_rightFrameLayout->setStretch(0, 1);
   m_rightFrame->setLayout(m_rightFrameLayout);
   m_splitter->insertWidget(1, m_rightFrame);
@@ -68,6 +69,9 @@ TabProviders::TabProviders(QWidget *parent)
           SIGNAL(sendQueryOrder(const QString &, const QString &)),
           SLOT(openOrderPage(const QString &, const QString &)));
 
+  // Signals:RefreshButton
+  connect(btn_refreshTree, SIGNAL(clicked()), m_treeWidget, SLOT(loadUpdate()));
+
   setCurrentIndex(0);
   counter = 0;
   timerId = startTimer(1000, Qt::PreciseTimer);
@@ -85,9 +89,8 @@ void TabProviders::timerEvent(QTimerEvent *event) {
   }
 
   QTime ct(0, 0, 0);
-  QString t_text =
-      tr("Next update %1").arg(ct.addSecs(counter).toString("m:ss"));
-  m_timerDisplay->setText(t_text);
+  QString t_text = tr("Update (%1)").arg(ct.addSecs(counter).toString("m:ss"));
+  btn_refreshTree->setText(t_text);
 }
 
 bool TabProviders::findPage(const QString &provider, const QString &orderId) {

@@ -45,8 +45,10 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   layout->addWidget(new QLabel(tbInfo + ":", this));
 
   m_table = new PurchaseTable(this, false);
+#ifndef ANTIQUA_DEVELOPEMENT
   // Für den Kunden nicht anzeigen!
   m_table->hideColumns(QList<int>({0, 1, 3, 8, 9}));
+#endif
   m_table->setEnabled(false);
   layout->addWidget(m_table);
 
@@ -92,12 +94,20 @@ void OrdersItemList::insertSearchId(int articleId) {
     m_insertID->setValue(articleId);
 }
 
-bool OrdersItemList::setData(const QList<AntiquaCRM::OrderArticleItems> &list) {
+bool OrdersItemList::setArticleOrderId(qint64 oid) {
+  if(oid < 1)
+    return false;
+
+  return m_table->setArticleOrderId(oid);
+}
+
+bool OrdersItemList::importArticles(
+    const QList<AntiquaCRM::OrderArticleItems> &list) {
   bool status = m_table->setOrderArticles(list);
   m_table->setEnabled(status);
   return status;
 }
 
 const QStringList OrdersItemList::getQueryData() {
-  return m_table->getQueryArticles();
+  return m_table->getSqlQuery();
 }

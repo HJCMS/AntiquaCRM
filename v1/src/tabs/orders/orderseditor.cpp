@@ -223,7 +223,8 @@ bool OrdersEditor::sendSqlQuery(const QString &query) {
     }
   }
 
-  if (!query.contains("INSERT "))
+  QRegExp insert("INSERT\\s+INTO\\s+inventory_orders\\s");
+  if (!query.contains(insert)) // Nur bei Update anzeigen!
     openSuccessMessage(tr("Order saved successfully!"));
 
   setResetModified(inputFields);
@@ -378,7 +379,9 @@ void OrdersEditor::createSqlInsert() {
       qWarning("After INSERT now OrdeID!");
       return;
     }
-    createSqlUpdate();
+    // Artikel Id Setzen
+    if(m_ordersList->setArticleOrderId(oid))
+      createSqlUpdate();
   }
 }
 
@@ -425,9 +428,14 @@ const QString OrdersEditor::getSqlArticleOrders() {
   }
 
   QStringList queries = m_ordersList->getQueryData();
-  if (queries.size() > 0)
+  if (queries.size() > 0) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    foreach (QString q, queries) {
+      qDebug() << "OrdersEditor:" << q << Qt::endl;
+    }
+#endif
     return queries.join("\n");
-
+  }
   return QString();
 }
 
@@ -570,7 +578,7 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
         }
         articles.append(article);
       }
-      m_ordersList->setData(articles);
+      m_ordersList->importArticles(articles);
     }
     setResetModified(customInput);
     status = true;
@@ -732,8 +740,7 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
   setResetModified(customInput);
 
   // 3) Artikel Importieren
-  qDebug() << Q_FUNC_INFO << prOrder.orders().size();
-  m_ordersList->setData(prOrder.orders());
+  m_ordersList->importArticles(prOrder.orders());
 
   importSqlResult();
   return true;

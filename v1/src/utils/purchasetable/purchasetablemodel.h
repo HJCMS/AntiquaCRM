@@ -8,6 +8,7 @@
 #include <AntiquaCRM>
 #include <QAbstractTableModel>
 #include <QList>
+#include <QMap>
 #include <QObject>
 #include <QWidget>
 
@@ -20,8 +21,7 @@ private:
   QString currency;
   int p_columns = 11;
 
-  typedef QMap<int, AntiquaCRM::OrderArticleItems> ArticleMap;
-  ArticleMap cache;
+  QMap<int, AntiquaCRM::OrderArticleItems> articleRows;
 
   /**
    * @brief Display Article Media Type
@@ -38,11 +38,13 @@ private:
    */
   const QList<int> editableColumns() const;
 
-public Q_SLOTS:
-  void addModelData(const AntiquaCRM::OrderArticleItems &item);
-
 public:
   explicit PurchaseTableModel(QObject *parent = nullptr);
+
+  /**
+   * @brief add new Model Data
+   */
+  bool addArticle(const AntiquaCRM::OrderArticleItems &item);
 
   /**
    * @brief Clear Table Contents
@@ -50,9 +52,16 @@ public:
   void clear();
 
   /**
+   * @brief removeModelData
+   * @param index - require QModelIndex(Row,FirstColumn)
+   */
+  bool removeRows(int row, int count,
+                  const QModelIndex &parent = QModelIndex()) override;
+
+  /**
    * @brief set Model Data
    */
-  bool setModelData(const QList<AntiquaCRM::OrderArticleItems> &items);
+  bool addArticles(const QList<AntiquaCRM::OrderArticleItems> &items);
 
   /**
    * @brief Current row count
@@ -77,6 +86,8 @@ public:
                int role = Qt::EditRole) override;
 
   QString field(const QModelIndex &index) const;
+
+  int columnIndex(const QString &fieldName) const;
 
   /**
    * @brief Table data

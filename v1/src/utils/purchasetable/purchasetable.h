@@ -6,20 +6,23 @@
 #define ANTIQUACRM_PURCHASETABLE_H
 
 #include <AntiquaCRM>
-#include <AntiquaWidgets>
 #include <QContextMenuEvent>
-#include <QDoubleSpinBox>
 #include <QHeaderView>
 #include <QModelIndex>
 #include <QObject>
-#include <QPair>
-#include <QSpinBox>
-#include <QTableWidget>
-#include <QTableWidgetItem>
+#include <QTableView>
 
 class PurchaseTableModel;
 class PurchaseTableDelegate;
 
+/**
+ * @brief Tabelledarstellung der Artikel einkäufe.
+ * @section widgets
+ * Es werden hier aus Performance gründen keine SQL Abfragen gemacht!
+ * Der Grund hierfür ist, das AntiquaCRM primär für Remote Desktop erstellt
+ * wird. Zu viele Hintergrundabfragen können je nach Netzwerkleistung zu
+ * problemen führen!
+ */
 class PurchaseTable final : public QTableView {
   Q_OBJECT
 
@@ -27,34 +30,62 @@ private:
   PurchaseTableModel *m_model;
   PurchaseTableDelegate *m_delegate;
   QHeaderView *m_headerView;
-  bool removeRow(int row);
+  QModelIndex p_modelIndex;
+  QString sqlToRemoveCache;
+
+  /**
+   * @brief Menü für Zeilen entfernen!
+   */
+  void contextMenuEvent(QContextMenuEvent *event) override;
+
+private Q_SLOTS:
+  /**
+   * @brief Ausgewählte Zeile entfernen!
+   */
+  void removeArticle();
 
 public Q_SLOTS:
+  /**
+   * @brief Tabelleninhalt leeren
+   */
   void clearTable();
 
   /**
-   * @brief Add a new Order Article to the Table
+   * @brief Einen neuen Artikel in die Tabelle aufnehmen!
    */
   void addOrderArticle(const AntiquaCRM::OrderArticleItems &item);
 
 public:
+  /**
+   * @brief Einkaufs Tabelle
+   * @param readOnly - Wenn aktiviert wird PurchaseTableDelegate deaktiviert!
+   */
   explicit PurchaseTable(QWidget *parent = nullptr, bool readOnly = true);
 
   /**
-   * @brief Set Visibility for Columns
+   * @brief Tabellenspalten ausblenden!
+   * @warning Wenn man Tabellenspalten ausblendet, die Editiert werden,
+   * verschwindet der komplette Tabellen Header!
+   * @see PurchaseTableModel::editableColumns
    */
   void hideColumns(const QList<int> &list);
 
   /**
-   * @brief Import OrderArticles
-   * @note Before insert the Table clear the Contents!
+   * @brief Leert die Tabelle und importiert alle Artikel aus der Liste.
    */
   bool setOrderArticles(const QList<AntiquaCRM::OrderArticleItems> &items);
 
   /**
-   * @brief get current Order Articles from table
+   * @brief Fehlende Article Order ID einfügen!
    */
-  const QStringList getQueryArticles();
+  bool setArticleOrderId(qint64 oid);
+
+  /**
+   * @brief Create SQL UPDATE | INSERT Statements.
+   * Diese Funktion erstellt aus den Vorhandenen Tabellen einträgen den SQL Code
+   * für INSERT und UPDATE.
+   */
+  const QStringList getSqlQuery();
 };
 
 #endif // ANTIQUACRM_PURCHASETABLE_H

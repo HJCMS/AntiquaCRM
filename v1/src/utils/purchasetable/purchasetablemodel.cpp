@@ -52,43 +52,63 @@ const QList<int> PurchaseTableModel::editableColumns() const {
   return l;
 }
 
-void PurchaseTableModel::addModelData(
-    const AntiquaCRM::OrderArticleItems &item) {
+bool PurchaseTableModel::addArticle(const AntiquaCRM::OrderArticleItems &item) {
   beginResetModel();
   int old = rowCount();
-  cache.insert(old, item);
+  articleRows.insert(old, item);
   insertRows(rowCount(), 1);
   endResetModel();
+  return (rowCount() > old);
 }
 
 void PurchaseTableModel::clear() {
   beginResetModel();
-  cache.clear();
+  articleRows.clear();
   endResetModel();
 }
 
-bool PurchaseTableModel::setModelData(
+bool PurchaseTableModel::removeRows(int row, int count,
+                                    const QModelIndex &parent) {
+  if (parent.isValid() || row < 0 || count <= 0)
+    return false;
+  else if (row + count > rowCount())
+    return false;
+  else if (!count)
+    return true;
+
+  QList<AntiquaCRM::OrderArticleItems> articles;
+  QMapIterator<int, AntiquaCRM::OrderArticleItems> it(articleRows);
+  while (it.hasNext()) {
+    it.next();
+    if (it.key() != row) {
+      articles.append(it.value());
+    }
+  }
+  return addArticles(articles);
+}
+
+bool PurchaseTableModel::addArticles(
     const QList<AntiquaCRM::OrderArticleItems> &items) {
   if (items.size() < 1)
     return false;
 
   int row = 0;
-  beginResetModel();
-  cache.clear();
+
+  clear();
+
   QListIterator<AntiquaCRM::OrderArticleItems> articles(items);
   beginInsertRows(createIndex(row, 0), 0, items.size());
   while (articles.hasNext()) {
-    cache.insert(row, articles.next());
+    articleRows.insert(row, articles.next());
     row++;
   }
   endInsertRows();
-  endResetModel();
-  return (cache.size() > 0);
+  return (articleRows.size() > 0);
 }
 
 int PurchaseTableModel::rowCount(const QModelIndex &parent) const {
   Q_UNUSED(parent);
-  return cache.size();
+  return articleRows.size();
 }
 
 int PurchaseTableModel::columnCount(const QModelIndex &parent) const {
@@ -100,6 +120,9 @@ QVariant PurchaseTableModel::headerData(int section,
                                         Qt::Orientation orientation,
                                         int role) const {
   if (orientation != Qt::Horizontal) {
+    if (role == Qt::DisplayRole)
+      return section + 1;
+
     return QVariant();
   }
 
@@ -125,7 +148,7 @@ bool PurchaseTableModel::setData(const QModelIndex &index,
   if (!index.isValid())
     return false;
 
-  AntiquaCRM::OrderArticleItems list = cache.value(index.row());
+  AntiquaCRM::OrderArticleItems list = articleRows.value(index.row());
   if (list.size() < 1)
     return false;
 
@@ -141,7 +164,8 @@ bool PurchaseTableModel::setData(const QModelIndex &index,
     }
     row.append(col);
   }
-  cache[index.row()] = row;
+  articleRows[index.row()] = row;
+  emit dataChanged(index, index);
   return true;
 }
 
@@ -153,13 +177,22 @@ QString PurchaseTableModel::field(const QModelIndex &index) const {
   return info.field();
 }
 
+int PurchaseTableModel::columnIndex(const QString &fieldName) const {
+  for (int c = 0; c < columnCount(); c++) {
+    PurchaseTableColumn info = tableColumn(c);
+    if (info.field() == fieldName)
+      return c;
+  }
+  return -1;
+}
+
 QVariant PurchaseTableModel::data(const QModelIndex &index, int role) const {
   if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole))
     return QVariant();
 
   QVariant buffer;
   PurchaseTableColumn info = tableColumn(index.column());
-  AntiquaCRM::OrderArticleItems list = cache.value(index.row());
+  AntiquaCRM::OrderArticleItems list = articleRows.value(index.row());
   for (int c = 0; c < list.size(); c++) {
     if (list.at(c).key == info.field()) {
       buffer = list.at(c).value;
@@ -238,7 +271,7 @@ QVariant PurchaseTableModel::data(const QModelIndex &index, int role) const {
 
 Qt::ItemFlags PurchaseTableModel::flags(const QModelIndex &index) const {
   if (!index.isValid())
-    return Qt::NoItemFlags;
+    return Qt::ItemIsEnabled;
 
   Qt::ItemFlags flags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
   PurchaseTableColumn info = tableColumn(index.column());

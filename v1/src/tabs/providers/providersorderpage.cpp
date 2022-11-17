@@ -138,7 +138,8 @@ void ProvidersOrderPage::findArticleIds() {
       q.next();
       qint64 id = q.value(0).toInt();
       m_table->setArticleStatus(aid, (id > 0));
-      found++;
+      if (id > 0)
+        found++;
     } else {
       m_table->setArticleStatus(aid, false);
     }

@@ -6,19 +6,26 @@
 #include "purchasetablemodel.h"
 
 #include <QAction>
+#include <QIcon>
 #include <QMenu>
 #include <QMessageBox>
-#include <QTableWidgetItem>
 
 PurchaseTable::PurchaseTable(QWidget *parent, bool readOnly)
     : QTableView{parent} {
+  setObjectName("purchase_table_view");
+  // required for modification calls
+  setWindowTitle("Purchases [*]");
+  setToolTip(tr("Current article purchases"));
+  setSortingEnabled(false);
+  setAlternatingRowColors(true);
   setCornerButtonEnabled(false);
   setDragEnabled(false);
   setDragDropOverwriteMode(false);
   setWordWrap(false);
-  setAlternatingRowColors(true);
-  setSortingEnabled(false);
+
+  // Einfaches Auswählen kein Strg+Shift+Mausklick
   setSelectionMode(QAbstractItemView::SingleSelection);
+
   if (readOnly) {
     setSelectionBehavior(QAbstractItemView::SelectRows);
     setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -27,21 +34,19 @@ PurchaseTable::PurchaseTable(QWidget *parent, bool readOnly)
     setEditTriggers(QAbstractItemView::DoubleClicked);
   }
 
-  AntiquaCRM::ASettings cfg(this);
-
   m_model = new PurchaseTableModel(this);
-  // m_model->setEditStrategy(QSqlTableModel::OnRowChange);
   setModel(m_model);
 
   if (!readOnly) {
     EditorProperties config;
+    AntiquaCRM::ASettings cfg(this);
     config.minPrice = cfg.value("payment/min_price", 5.00).toDouble();
     config.maxPrice = cfg.value("payment/max_price", 999999.00).toDouble();
     config.minCount = cfg.value("payment/min_count", 1).toInt();
     config.maxCount = cfg.value("payment/max_count", 10).toInt();
     config.currency = cfg.value("payment/currency", "€").toByteArray();
     config.maxInteger = cfg.value("payment/max_integer", 9999999).toInt();
-
+    // Editoren initialisieren!
     m_delegate = new PurchaseTableDelegate(config, this);
     setItemDelegate(m_delegate);
   }
@@ -50,20 +55,52 @@ PurchaseTable::PurchaseTable(QWidget *parent, bool readOnly)
   m_headerView->setHighlightSections(true);
   m_headerView->setSectionResizeMode(QHeaderView::ResizeToContents);
   setHorizontalHeader(m_headerView);
+
+  // void rowCountChanged(int oldCount, int newCount);
 }
 
-bool PurchaseTable::removeRow(int row) {
-  // TODO
-  return true;
+void PurchaseTable::contextMenuEvent(QContextMenuEvent *event) {
+  p_modelIndex = indexAt(event->pos());
+  if (!p_modelIndex.isValid())
+    return;
+
+  QMenu *m = new QMenu("Actions", this);
+  QAction *ac_del = m->addAction(QIcon("://icons/db_remove.png"),
+                                 tr("delete selected article"));
+  ac_del->setEnabled((m_model->rowCount() > 1));
+  connect(ac_del, SIGNAL(triggered()), SLOT(removeArticle()));
+
+  m->exec(event->globalPos());
+  delete m;
+}
+
+void PurchaseTable::removeArticle() {
+  QModelIndex child = p_modelIndex.sibling(p_modelIndex.row(), 0);
+  if (!child.isValid())
+    return;
+
+  qint64 id = m_model->data(child, Qt::EditRole).toInt();
+  if (m_model->removeRow(child.row())) {
+    setWindowModified(true);
+    if (id > 0) { // SQL DELETE call
+      QString sql("DELETE FROM article_orders WHERE a_payment_id=");
+      sql.append(QString::number(id) + ";");
+      sqlToRemoveCache = sql;
+    }
+  }
 }
 
 void PurchaseTable::clearTable() {
-  if (m_model->rowCount() > 0)
+  if (m_model->rowCount() > 0) {
     m_model->clear();
+    setWindowModified(true);
+  }
 }
 
 void PurchaseTable::addOrderArticle(const AntiquaCRM::OrderArticleItems &item) {
-  m_model->addModelData(item);
+  if (m_model->addArticle(item)) {
+    setWindowModified(true);
+  }
 }
 
 void PurchaseTable::hideColumns(const QList<int> &list) {
@@ -77,10 +114,25 @@ void PurchaseTable::hideColumns(const QList<int> &list) {
 bool PurchaseTable::setOrderArticles(
     const QList<AntiquaCRM::OrderArticleItems> &items) {
   clearTable();
-  return m_model->setModelData(items);
+  sqlToRemoveCache.clear();
+  if (m_model->addArticles(items)) {
+    setWindowModified(false);
+    return true;
+  }
+  return false;
 }
 
-const QStringList PurchaseTable::getQueryArticles() {
+bool PurchaseTable::setArticleOrderId(qint64 oid) {
+  int oid_index = m_model->columnIndex("a_order_id");
+  int counter = 0;
+  for (int r = 0; r < m_model->rowCount(); r++) {
+    if (m_model->setData(m_model->index(r, oid_index), oid, Qt::EditRole))
+      counter++;
+  }
+  return (counter > 0);
+}
+
+const QStringList PurchaseTable::getSqlQuery() {
   // Ausgabe
   QStringList queries;
   // Werden bei INSERT|UPDATE Ignoriert!
@@ -130,6 +182,9 @@ const QStringList PurchaseTable::getQueryArticles() {
       inserts.clear();
     }
   }
+
+  if (!sqlToRemoveCache.isEmpty())
+    queries << sqlToRemoveCache;
 
   return queries;
 }
