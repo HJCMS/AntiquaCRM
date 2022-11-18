@@ -16,7 +16,7 @@ class PurchaseTableModel;
 class PurchaseTableDelegate;
 
 /**
- * @brief Tabelledarstellung der Artikel einkäufe.
+ * @brief Tabelle Artikeleinkäufe
  * @section widgets
  * Es werden hier aus Performance gründen keine SQL Abfragen gemacht!
  * Der Grund hierfür ist, das AntiquaCRM primär für Remote Desktop erstellt
@@ -39,6 +39,12 @@ private:
   void contextMenuEvent(QContextMenuEvent *event) override;
 
 private Q_SLOTS:
+  /**
+   * @brief articleChanged
+   */
+  void articleChanged(const QModelIndex &topLeft,
+                      const QModelIndex &bottomRight);
+
   /**
    * @brief Ausgewählte Zeile entfernen!
    */
@@ -68,7 +74,7 @@ public:
    * verschwindet der komplette Tabellen Header!
    * @see PurchaseTableModel::editableColumns
    */
-  void hideColumns(const QList<int> &list);
+  void hideColumns(const QStringList &list);
 
   /**
    * @brief Leert die Tabelle und importiert alle Artikel aus der Liste.

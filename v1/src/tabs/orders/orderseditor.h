@@ -36,6 +36,8 @@ private:
 
   void setOrderPaymentNumbers(qint64 orderId);
 
+  bool checkEssentialsIds();
+
   void importSqlResult() override;
 
   bool sendSqlQuery(const QString &query) override;
@@ -48,20 +50,22 @@ private:
 
   qint64 searchCustomer(const QJsonObject &obj);
 
+  bool addArticleToOrderTable(qint64 articleId);
+
   const QString getSqlArticleOrders();
 
-  inline AntiquaCRM::ArticleOrderItem addItem(const QString &key,
-                                              const QVariant &value) const;
+  inline AntiquaCRM::ArticleOrderItem
+  addArticleItem(const QString &key, const QVariant &value) const;
 
 private Q_SLOTS:
   void setSaveData() override;
   void setCheckLeaveEditor() override;
   void setFinalLeaveEditor() override;
-  void searchInsertArticleId(qint64 aid);
   void createMailMessage(const QString &type);
   void createPrintDeliveryNote();
   void createPrintInvoiceNote();
   void createPrintPaymentReminder();
+  void openSearchAddArticle();
 
 public Q_SLOTS:
   void setRestore() override;

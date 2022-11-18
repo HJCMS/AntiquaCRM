@@ -14,89 +14,126 @@
 
 class PurchaseTableColumn;
 
+/**
+ * @brief Model Klasse für Artikel Einkaufstabelle
+ * @section widgets
+ */
 class PurchaseTableModel final : public QAbstractTableModel {
   Q_OBJECT
 
 private:
+  /**
+   * @brief Anzeige der Währung bei Preisangaben.
+   * Wird aus der Konfiguration beim Initialisieren eingelesen.
+   */
   QString currency;
+
+  /**
+   * @brief Zellenanzahl
+   */
   int p_columns = 11;
 
+  /**
+   * @brief Tabelleninhalt
+   */
   QMap<int, AntiquaCRM::OrderArticleItems> articleRows;
-
-  /**
-   * @brief Display Article Media Type
-   */
-  const QString displayType(int type) const;
-
-  /**
-   * @brief Fixed Table Header and Column Definition
-   */
-  const PurchaseTableColumn tableColumn(int column) const;
-
-  /**
-   * @brief List of Editable Columns
-   */
-  const QList<int> editableColumns() const;
 
 public:
   explicit PurchaseTableModel(QObject *parent = nullptr);
 
   /**
-   * @brief add new Model Data
+   * @brief Gibt den Typ des aktuellen Artikels als Text zurück.
+   * @see AntiquaCRM::ArticleType
+   */
+  static const QString articleType(int type);
+
+  /**
+   * @brief Beinhaltet die SQL-Tabellen Feldnamen und Kopzeilenübersetzungen!
+   */
+  static const PurchaseTableColumn headerColumn(int column);
+
+  /**
+   * @brief Gibt die Liste der Editierbaren Zellen zurück!
+   */
+  static const QList<int> editableColumns();
+
+  /**
+   * @brief Eine neue Artikelbestellung hinzufügen.
    */
   bool addArticle(const AntiquaCRM::OrderArticleItems &item);
 
   /**
-   * @brief Clear Table Contents
+   * @brief Denn kompletten Tabelleninhalt ohne die Kopfdaten löschen!
    */
   void clear();
 
   /**
-   * @brief removeModelData
-   * @param index - require QModelIndex(Row,FirstColumn)
+   * @brief Einen Eintrag aus @ref articleRows entfernen!
+   * @warning !!! KEIN STANDARD WIE IN DER DOKUMENTATION VORGEGEBEN !!!
+   * @bug Wenn ich hier, wie in der Dokumentation beschrieben mit \i
+   * beginRemoveRows und \i endRemoveRows arbeite! Werden Tabelleninhalte bei
+   * einem QMap \b nicht richtig verarbeitet.
+   * Es wird z.B. bei einem darauf folgenden \i rowCount() der alter Wert zurück
+   * gegeben obwohl sich die Größe von \b articleRows geändert hat.
+   * Weil die Anzahl der Bestellungen kaum die 10 Übersteigt ist es einfacher
+   * die Tabelle zu leeren und alle Daten neu ein zu lesen - das Funkioniert.
    */
   bool removeRows(int row, int count,
                   const QModelIndex &parent = QModelIndex()) override;
 
   /**
-   * @brief set Model Data
+   * @brief Komplette Artikelbestellungs liste einfügen.
    */
   bool addArticles(const QList<AntiquaCRM::OrderArticleItems> &items);
 
   /**
-   * @brief Current row count
+   * @brief Gibt die Größe von @ref articleRows zurück.
    */
   int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
   /**
-   * @brief static column Count
+   * @brief Die Anzahl der Zellen ist immer gleich!
+   * @see p_columns
    */
   int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
   /**
-   * @brief Table Header Data
+   * @brief Tabellenkopfzeilen zurückgeben.
+   * @note Bei den vertikalen Kopfdaten wird die Anzeige der Zeilenzahl auf den
+   * Menschlich logischen Wert korrigiert!
    */
   QVariant headerData(int section, Qt::Orientation orientation,
                       int role = Qt::DisplayRole) const override;
 
   /**
-   * @brief Update Table Cell
+   * @brief Schreibe Daten in Zellen ...
    */
   bool setData(const QModelIndex &index, const QVariant &value,
                int role = Qt::EditRole) override;
 
-  QString field(const QModelIndex &index) const;
+  /**
+   * @brief Gibt den SQL-Tabellen Feldnamen anhand des Zelleindex zurück.
+   */
+  const QString field(const QModelIndex &index) const;
 
+  /**
+   * @brief Gibt den Zellenindex anhand des SQL-Tabellen Feldnamen zurück.
+   */
   int columnIndex(const QString &fieldName) const;
 
   /**
-   * @brief Table data
+   * @brief Zellendaten einer Tabellenreihe
    */
   QVariant data(const QModelIndex &index,
                 int role = Qt::DisplayRole) const override;
 
   /**
-   * @brief Edit Flags
+   * @brief Bearbeitungs Kennzeichen
+   * @default (Qt::ItemIsSelectable | Qt::ItemIsEnabled)
+   * @list Editierbare Zellen @ref editableColumns() besitzen:
+   *  @li Qt::ItemIsSelectable
+   *  @li Qt::ItemIsEnabled
+   *  @li Qt::ItemIsEditable
    */
   Qt::ItemFlags flags(const QModelIndex &index) const override;
 };

@@ -38,16 +38,8 @@ PurchaseTable::PurchaseTable(QWidget *parent, bool readOnly)
   setModel(m_model);
 
   if (!readOnly) {
-    EditorProperties config;
-    AntiquaCRM::ASettings cfg(this);
-    config.minPrice = cfg.value("payment/min_price", 5.00).toDouble();
-    config.maxPrice = cfg.value("payment/max_price", 999999.00).toDouble();
-    config.minCount = cfg.value("payment/min_count", 1).toInt();
-    config.maxCount = cfg.value("payment/max_count", 10).toInt();
-    config.currency = cfg.value("payment/currency", "€").toByteArray();
-    config.maxInteger = cfg.value("payment/max_integer", 9999999).toInt();
     // Editoren initialisieren!
-    m_delegate = new PurchaseTableDelegate(config, this);
+    m_delegate = new PurchaseTableDelegate(this);
     setItemDelegate(m_delegate);
   }
 
@@ -56,7 +48,9 @@ PurchaseTable::PurchaseTable(QWidget *parent, bool readOnly)
   m_headerView->setSectionResizeMode(QHeaderView::ResizeToContents);
   setHorizontalHeader(m_headerView);
 
-  // void rowCountChanged(int oldCount, int newCount);
+  connect(m_model,
+          SIGNAL(dataChanged(const QModelIndex &, const QModelIndex &)),
+          SLOT(articleChanged(const QModelIndex &, const QModelIndex &)));
 }
 
 void PurchaseTable::contextMenuEvent(QContextMenuEvent *event) {
@@ -72,6 +66,13 @@ void PurchaseTable::contextMenuEvent(QContextMenuEvent *event) {
 
   m->exec(event->globalPos());
   delete m;
+}
+
+void PurchaseTable::articleChanged(const QModelIndex &topLeft,
+                                   const QModelIndex &bottomRight) {
+  Q_UNUSED(topLeft);
+  Q_UNUSED(bottomRight);
+  m_headerView->setStretchLastSection(true);
 }
 
 void PurchaseTable::removeArticle() {
@@ -103,12 +104,11 @@ void PurchaseTable::addOrderArticle(const AntiquaCRM::OrderArticleItems &item) {
   }
 }
 
-void PurchaseTable::hideColumns(const QList<int> &list) {
-  QListIterator<int> i(list);
-  while (i.hasNext()) {
-    m_headerView->setSectionHidden(i.next(), true);
+void PurchaseTable::hideColumns(const QStringList &list) {
+  foreach (QString fieldName, list) {
+    int column = m_model->columnIndex(fieldName);
+    m_headerView->setSectionHidden(column, true);
   }
-  m_headerView->setStretchLastSection(true);
 }
 
 bool PurchaseTable::setOrderArticles(
@@ -117,6 +117,7 @@ bool PurchaseTable::setOrderArticles(
   sqlToRemoveCache.clear();
   if (m_model->addArticles(items)) {
     setWindowModified(false);
+    m_headerView->setStretchLastSection(true);
     return true;
   }
   return false;

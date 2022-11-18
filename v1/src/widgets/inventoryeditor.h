@@ -75,6 +75,11 @@ protected:
   qint64 getSerialID(const QString &name);
 
   /**
+   * @brief Nehme Daten von AntiquaWidgets::InputEdit
+   */
+  const QVariant getDataValue(const QString &objectName);
+
+  /**
    * @brief Liste der Datenfelder welche in @ref inputFields enthalten sind.
    * Jedoch \b nicht in SQL::{UPDATE|INSERT}s aufgenommen werden sollen!
    */

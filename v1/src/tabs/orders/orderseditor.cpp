@@ -3,6 +3,7 @@
 
 #include "orderseditor.h"
 #include "deliverservice.h"
+#include "orderaddarticle.h"
 #include "orderscostsettings.h"
 #include "orderscustomerinfo.h"
 #include "ordersitemlist.h"
@@ -73,9 +74,11 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   PrinterButton::Buttons print_buttons(PrinterButton::Delivery |
                                        PrinterButton::Invoice |
                                        PrinterButton::Reminder);
+
   m_actionBar->setPrinterMenu(print_buttons);
   m_actionBar->setViewMailButton(true);
   m_actionBar->setMailMenu(MailButton::Orders);
+  m_actionBar->setViewAddArticleButton(true);
   // ResetButton off
   m_actionBar->setRestoreable(false);
   m_actionBar->setViewRestoreButton(false);
@@ -83,12 +86,7 @@ OrdersEditor::OrdersEditor(QWidget *parent)
 
   setLayout(mainLayout);
 
-  // Signals
-  // Order Items
-  connect(m_ordersList, SIGNAL(searchArticleById(qint64)),
-          SLOT(searchInsertArticleId(qint64)));
-
-  // Actionsbar
+  // Signals:ActionsBar
   connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
   connect(m_actionBar, SIGNAL(sendPrintDeliveryNote()),
           SLOT(createPrintDeliveryNote()));
@@ -98,6 +96,7 @@ OrdersEditor::OrdersEditor(QWidget *parent)
           SLOT(createPrintPaymentReminder()));
   connect(m_actionBar, SIGNAL(sendCancelClicked()),
           SLOT(setFinalLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendAddArticle()), SLOT(openSearchAddArticle()));
   connect(m_actionBar, SIGNAL(sendSaveClicked()), SLOT(setSaveData()));
   connect(m_actionBar, SIGNAL(sendFinishClicked()),
           SLOT(setCheckLeaveEditor()));
@@ -178,6 +177,21 @@ void OrdersEditor::setOrderPaymentNumbers(qint64 orderId) {
   } else {
     qWarning("SQL ERROR: %s", qPrintable(m_sql->lastError()));
   }
+}
+
+bool OrdersEditor::checkEssentialsIds() {
+  qint64 oid = getSerialID("o_id");
+  qint64 cid = getSerialID("o_customer_id");
+  if (oid > 1 && cid > 1)
+    return true;
+
+  QString info("<p>");
+  info.append(tr("A Article can't inserted, if no Order-/Customer Id exists."));
+  info.append("</p><p>");
+  info.append(tr("Please save your your Article first."));
+  info.append("</p>");
+  openNoticeMessage(info);
+  return false;
 }
 
 void OrdersEditor::importSqlResult() {
@@ -380,7 +394,7 @@ void OrdersEditor::createSqlInsert() {
       return;
     }
     // Artikel Id Setzen
-    if(m_ordersList->setArticleOrderId(oid))
+    if (m_ordersList->setArticleOrderId(oid))
       createSqlUpdate();
   }
 }
@@ -421,11 +435,38 @@ qint64 OrdersEditor::searchCustomer(const QJsonObject &obj) {
   return -1;
 }
 
-const QString OrdersEditor::getSqlArticleOrders() {
-  if (getSerialID("o_id") < 1 || getSerialID("o_customer_id") < 1) {
-    sendStatusMessage(tr("Need a Order-ID and Customer-ID, for saveing!"));
-    return QString();
+bool OrdersEditor::addArticleToOrderTable(qint64 articleId) {
+  if (articleId < 1)
+    return false;
+
+  AntiquaCRM::ASqlFiles sqlFile("query_article_order_with_id");
+  if (sqlFile.openTemplate()) {
+    sqlFile.setWhereClause("i_id=" + QString::number(articleId));
+    QSqlQuery q = m_sql->query(sqlFile.getQueryContent());
+    if (q.size() > 0) {
+      q.next();
+      QSqlRecord r = q.record();
+      AntiquaCRM::OrderArticleItems items;
+      items.append(addArticleItem("a_order_id", getSerialID("o_id")));
+      items.append(
+          addArticleItem("a_customer_id", getSerialID("o_customer_id")));
+      for (int i = 0; i < r.count(); i++) {
+        QSqlField f = r.field(i);
+        items.append(addArticleItem(f.name(), f.value()));
+      }
+      if (items.size() > 0) {
+        m_ordersList->insertArticle(items);
+        return true;
+      }
+    }
   }
+  sendStatusMessage(tr("Article: %1 not found or no stock!").arg(articleId));
+  return false;
+}
+
+const QString OrdersEditor::getSqlArticleOrders() {
+  if (!checkEssentialsIds())
+    return QString();
 
   QStringList queries = m_ordersList->getQueryData();
   if (queries.size() > 0) {
@@ -440,7 +481,7 @@ const QString OrdersEditor::getSqlArticleOrders() {
 }
 
 AntiquaCRM::ArticleOrderItem
-OrdersEditor::addItem(const QString &key, const QVariant &value) const {
+OrdersEditor::addArticleItem(const QString &key, const QVariant &value) const {
   return AntiquaCRM::AProviderOrder::createItem(key, value);
 }
 
@@ -469,61 +510,35 @@ void OrdersEditor::setFinalLeaveEditor() {
   emit sendLeaveEditor(); /**< Zurück zur Hauptsansicht */
 }
 
-void OrdersEditor::searchInsertArticleId(qint64 aid) {
-  if (aid < 1)
-    return;
-
-  qint64 oid = getSerialID("o_id");
-  qint64 cid = getSerialID("o_customer_id");
-  if (oid < 1 || cid < 1) {
-    QString info("<p>");
-    info.append(
-        tr("A Article can't inserted, if no Order-/Customer Id exists."));
-    info.append("</p><p>");
-    info.append(tr("Please save your your Article first."));
-    info.append("</p>");
-    openNoticeMessage(info);
-    return;
-  }
-
-  AntiquaCRM::ASqlFiles sqlFile("query_article_order_with_id");
-  if (sqlFile.openTemplate()) {
-    sqlFile.setWhereClause("i_id=" + QString::number(aid));
-    QSqlQuery q = m_sql->query(sqlFile.getQueryContent());
-    if (q.size() > 0) {
-      q.next();
-      QSqlRecord r = q.record();
-      AntiquaCRM::OrderArticleItems items;
-      items.append(addItem("a_order_id", oid));
-      items.append(addItem("a_customer_id", cid));
-      for (int i = 0; i < r.count(); i++) {
-        QSqlField f = r.field(i);
-        items.append(addItem(f.name(), f.value()));
-      }
-      if (items.size() > 0) {
-        m_ordersList->insertArticle(items);
-        return;
-      }
-    }
-  }
-  m_ordersList->setAlertMessage(
-      tr("Article: %1 not found or no stock!").arg(aid));
-}
-
 void OrdersEditor::createMailMessage(const QString &type) {
   qDebug() << Q_FUNC_INFO << "TODO" << type;
 }
 
 void OrdersEditor::createPrintDeliveryNote() {
-  qDebug() << Q_FUNC_INFO << "TODO";
+  qDebug() << Q_FUNC_INFO << "TODO" << getDataValue("o_delivery");
 }
 
 void OrdersEditor::createPrintInvoiceNote() {
-  qDebug() << Q_FUNC_INFO << "TODO";
+  qDebug() << Q_FUNC_INFO << "TODO" << getDataValue("o_invoice_id");
 }
 
 void OrdersEditor::createPrintPaymentReminder() {
-  qDebug() << Q_FUNC_INFO << "TODO";
+  qDebug() << Q_FUNC_INFO << "TODO" << getDataValue("o_customer_id");
+}
+
+void OrdersEditor::openSearchAddArticle() {
+  if (!checkEssentialsIds())
+    return;
+
+  OrderAddArticle *d = new OrderAddArticle(this);
+  if (d->exec() == QDialog::Rejected)
+    return;
+
+  qint64 aid = d->getArticle();
+  if (aid < 1)
+    return;
+
+  addArticleToOrderTable(aid);
 }
 
 void OrdersEditor::setRestore() {
@@ -607,10 +622,13 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
   if (providerId.isEmpty())
     return false;
 
-  QString sql("SELECT pr_name,pr_order,pr_order_data");
-  sql.append(" FROM provider_order_history WHERE");
-  sql.append(" pr_order='" + providerId + "' ORDER BY pr_order;");
-  QSqlQuery q = m_sql->query(sql);
+  AntiquaCRM::ASqlFiles sqlFile("query_provider_order_exists");
+  if (!sqlFile.openTemplate())
+    return false;
+
+  sqlFile.setWhereClause("pr_order='" + providerId + "'");
+
+  QSqlQuery q = m_sql->query(sqlFile.getQueryContent());
   if (q.size() != 1) {
     openNoticeMessage(tr("No Provider orders data found!"));
 #ifdef ANTIQUA_DEVELOPEMENT

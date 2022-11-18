@@ -26,6 +26,7 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
   o_delivery_package = new IntSpinBox(m_deliveryTab);
   o_delivery_package->setObjectName("o_delivery_package");
   o_delivery_package->setInfo("Package Id");
+  o_delivery_package->setVisible(false);
   dsLayout->addWidget(o_delivery_package, Qt::AlignLeft);
   dsLayout->addStretch(1);
   m_deliveryTab->setLayout(dsLayout);

@@ -28,7 +28,9 @@ void SelectArticleType::loadDataset() {
   m_box->insertItem(4, tr("Other"), AntiquaCRM::ArticleType::OTHER);
 }
 
-void SelectArticleType::dataChanged(int) { setModified(true); }
+void SelectArticleType::dataChanged(int) {
+  setModified(true);
+}
 
 void SelectArticleType::reset() { setModified(false); }
 

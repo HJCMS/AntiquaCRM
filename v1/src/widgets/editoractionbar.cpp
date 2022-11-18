@@ -42,6 +42,15 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
 
   layout->addStretch(1);
 
+  m_addArticle = new QPushButton(tr("Add Article"), this);
+  m_addArticle->setObjectName("editor_action_button_article");
+  m_addArticle->setIcon(QIcon("://icons/action_add.png"));
+  m_addArticle->setToolTip(tr("Add Article to Payment list."));
+  m_addArticle->setEnabled(false);
+  m_addArticle->setVisible(false);
+  connect(m_addArticle, SIGNAL(clicked()), SIGNAL(sendAddArticle()));
+  layout->addWidget(m_addArticle);
+
   m_saveBtn = new QPushButton(tr("Save"), this);
   m_saveBtn->setObjectName("editor_action_button_save");
   m_saveBtn->setIcon(QIcon(":icons/action_save.png"));
@@ -62,6 +71,7 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
 
   setLayout(layout);
 
+  // Signals::Printer Button
   connect(m_printerButton, SIGNAL(sendPrintDelivery()),
           SIGNAL(sendPrintDeliveryNote()));
   connect(m_printerButton, SIGNAL(sendPrintInvoice()),
@@ -70,6 +80,7 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
           SIGNAL(sendPrintPaymentReminder()));
   connect(m_printerButton, SIGNAL(sendPrintBookcard()),
           SIGNAL(sendPrintBookCard()));
+  // Signals:Mailer Button
   connect(m_mailButton, SIGNAL(sendMailAction(const QString &)),
           SIGNAL(sendCreateMailMessage(const QString &)));
 }
@@ -91,6 +102,15 @@ void EditorActionBar::setViewMailButton(bool b) {
 
 void EditorActionBar::setMailMenu(MailButton::Sections sections) {
   m_mailButton->setSections(sections);
+}
+
+void EditorActionBar::setViewAddArticleButton(bool b,
+                                              const QString &customTitle) {
+  if (!customTitle.isEmpty())
+    m_addArticle->setText(customTitle);
+
+  m_addArticle->setEnabled(b);
+  m_addArticle->setVisible(b);
 }
 
 void EditorActionBar::setViewRestoreButton(bool b) {

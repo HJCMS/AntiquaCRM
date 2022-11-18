@@ -42,6 +42,15 @@ qint64 InventoryEditor::getSerialID(const QString &name) {
   return -1;
 }
 
+const QVariant InventoryEditor::getDataValue(const QString &objectName) {
+  QVariant retval;
+  InputEdit *obj = findChild<InputEdit *>(objectName, INPUT_FIND_OPTS);
+  if (obj != nullptr)
+    return obj->value();
+
+  return retval;
+}
+
 bool InventoryEditor::isIgnoredField(const QString &fieldName) {
   if (ignoreFields.size() < 1 || fieldName.isEmpty())
     return false;

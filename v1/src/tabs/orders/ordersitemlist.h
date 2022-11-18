@@ -28,43 +28,11 @@ private:
    */
   PurchaseTable *m_table;
 
-  /**
-   * @brief Notifications
-   */
-  QGroupBox *m_addArticleGroup;
-  QLabel *m_notifier;
-
-  /**
-   * @brief Sucheingabe für Artikel ID
-   */
-  IntSpinBox *m_insertID;
-
-private Q_SLOTS:
-  void setSearchArticle();
-
-Q_SIGNALS:
-  /**
-   * @brief Suche Artikel mit ID
-   */
-  void searchArticleById(qint64);
-
 public Q_SLOTS:
-  /**
-   * @brief Such/Einfügen Felder nach dem einfügen leeren.
-   * @note OrderArticle wird auch geleert!
-   */
-  void clearSearchInput();
-
   /**
    * @brief Tabellen Zeilen zurücksetzen!
    */
   void clearTable();
-
-  /**
-   * @brief Erstellt einen Roten Text neben dem Article Einfügen!
-   * Wenn der kein Text dann wird die Ausgabe geleert!
-   */
-  void setAlertMessage(const QString &message = QString());
 
   /**
    * @brief Importiert einen neuen Tabellen Eintrag
@@ -73,11 +41,6 @@ public Q_SLOTS:
 
 public:
   explicit OrdersItemList(QWidget *parent = nullptr);
-
-  /**
-   * @brief Füge Artikel ID in die Suche ein!
-   */
-  void insertSearchId(int articleId);
 
   /**
    * @brief Nach einem insert die Tabelle überarbeiten.

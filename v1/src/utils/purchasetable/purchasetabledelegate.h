@@ -5,35 +5,38 @@
 #ifndef ANTIQUACRM_PURCHASETABLEDELEGATE_H
 #define ANTIQUACRM_PURCHASETABLEDELEGATE_H
 
-#include <AntiquaWidgets>
 #include <QAbstractItemModel>
 #include <QByteArray>
 #include <QItemDelegate>
 #include <QModelIndex>
 #include <QObject>
-#include <QSharedPointer>
 #include <QString>
 #include <QStyleOptionViewItem>
 #include <QWidget>
 
-struct EditorProperties {
-  qreal minPrice = 3.00;
-  qreal maxPrice = 999999.00;
-  int minCount = 1;
-  int maxCount = 10;
-  int maxInteger = 9999999;
-  QByteArray currency = QString("€").toLocal8Bit();
-};
-
+/**
+ * @brief The PurchaseTableDelegate class
+ * @section widgets
+ */
 class PurchaseTableDelegate final : public QItemDelegate {
   Q_OBJECT
 
 private:
-  EditorProperties p_config;
+  /**
+   * @brief Einstellungen für die eingaben.
+   */
+  struct EditorProperties {
+    qreal minPrice;
+    qreal maxPrice;
+    int minCount;
+    int maxCount;
+    int maxInteger;
+    QByteArray currency;
+  };
+  EditorProperties config;
 
 public:
-  explicit PurchaseTableDelegate(const EditorProperties &config,
-                                 QObject *parent = nullptr);
+  explicit PurchaseTableDelegate(QObject *parent = nullptr);
 
   QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                         const QModelIndex &index) const override;

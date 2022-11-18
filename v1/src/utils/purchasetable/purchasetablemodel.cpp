@@ -10,7 +10,7 @@ PurchaseTableModel::PurchaseTableModel(QObject *parent)
   currency = cfg.value("payment/currency", "€").toString();
 }
 
-const QString PurchaseTableModel::displayType(int type) const {
+const QString PurchaseTableModel::articleType(int type) {
   switch (static_cast<AntiquaCRM::ArticleType>(type)) {
   case AntiquaCRM::ArticleType::BOOK:
     return tr("Book");
@@ -25,40 +25,40 @@ const QString PurchaseTableModel::displayType(int type) const {
     return tr("Other");
 
   default:
-    return tr("Not set");
+    return tr("Unknown");
   }
 }
 
-const PurchaseTableColumn PurchaseTableModel::tableColumn(int column) const {
+const PurchaseTableColumn PurchaseTableModel::headerColumn(int column) {
   QMap<int, PurchaseTableColumn> m;
   m.insert(0, PurchaseTableColumn("a_payment_id", tr("Payment Id")));
   m.insert(1, PurchaseTableColumn("a_order_id", tr("Order Id")));
   m.insert(2, PurchaseTableColumn("a_article_id", tr("Article Id")));
   m.insert(3, PurchaseTableColumn("a_customer_id", tr("Customer Id")));
-  m.insert(4, PurchaseTableColumn("a_count", tr("Count")));
-  m.insert(5, PurchaseTableColumn("a_title", tr("Title")));
+  m.insert(4, PurchaseTableColumn("a_type", tr("Type")));
+  m.insert(5, PurchaseTableColumn("a_count", tr("Count")));
   m.insert(6, PurchaseTableColumn("a_price", tr("Price")));
   m.insert(7, PurchaseTableColumn("a_sell_price", tr("Sell Price")));
-  m.insert(8, PurchaseTableColumn("a_modified", tr("Modified")));
+  m.insert(8, PurchaseTableColumn("a_title", tr("Title")));
   m.insert(9, PurchaseTableColumn("a_provider_id", tr("Provider Id")));
-  m.insert(10, PurchaseTableColumn("a_type", tr("Type")));
+  m.insert(10, PurchaseTableColumn("a_modified", tr("Modified")));
   return m.value(column);
 }
 
-const QList<int> PurchaseTableModel::editableColumns() const {
+const QList<int> PurchaseTableModel::editableColumns() {
   QList<int> l;
-  l.append(7);  /**< a_sell_price */
-  l.append(10); /**< a_type */
+  l.append(4); /**< a_type */
+  l.append(7); /**< a_sell_price */
   return l;
 }
 
 bool PurchaseTableModel::addArticle(const AntiquaCRM::OrderArticleItems &item) {
   beginResetModel();
-  int old = rowCount();
-  articleRows.insert(old, item);
+  int pastCount = rowCount();
+  articleRows.insert(rowCount(), item);
   insertRows(rowCount(), 1);
   endResetModel();
-  return (rowCount() > old);
+  return (rowCount() > pastCount);
 }
 
 void PurchaseTableModel::clear() {
@@ -133,7 +133,7 @@ QVariant PurchaseTableModel::headerData(int section,
     return QVariant();
   }
 
-  PurchaseTableColumn info = tableColumn(section);
+  PurchaseTableColumn info = headerColumn(section);
   if (role == Qt::DisplayRole)
     return info.name() + " ";
 
@@ -152,7 +152,7 @@ bool PurchaseTableModel::setData(const QModelIndex &index,
   if (list.size() < 1)
     return false;
 
-  PurchaseTableColumn info = tableColumn(index.column());
+  PurchaseTableColumn info = headerColumn(index.column());
   AntiquaCRM::OrderArticleItems row;
   for (int c = 0; c < list.size(); ++c) {
     AntiquaCRM::ArticleOrderItem col;
@@ -165,21 +165,25 @@ bool PurchaseTableModel::setData(const QModelIndex &index,
     row.append(col);
   }
   articleRows[index.row()] = row;
-  emit dataChanged(index, index);
+
+  QModelIndex topLeft = createIndex(0, 0);
+  QModelIndex bottomRight = createIndex(articleRows.size(), p_columns);
+  emit dataChanged(topLeft, bottomRight);
+
   return true;
 }
 
-QString PurchaseTableModel::field(const QModelIndex &index) const {
+const QString PurchaseTableModel::field(const QModelIndex &index) const {
   if (!index.isValid())
     return QString();
 
-  PurchaseTableColumn info = tableColumn(index.column());
+  PurchaseTableColumn info = headerColumn(index.column());
   return info.field();
 }
 
 int PurchaseTableModel::columnIndex(const QString &fieldName) const {
   for (int c = 0; c < columnCount(); c++) {
-    PurchaseTableColumn info = tableColumn(c);
+    PurchaseTableColumn info = headerColumn(c);
     if (info.field() == fieldName)
       return c;
   }
@@ -191,7 +195,7 @@ QVariant PurchaseTableModel::data(const QModelIndex &index, int role) const {
     return QVariant();
 
   QVariant buffer;
-  PurchaseTableColumn info = tableColumn(index.column());
+  PurchaseTableColumn info = headerColumn(index.column());
   AntiquaCRM::OrderArticleItems list = articleRows.value(index.row());
   for (int c = 0; c < list.size(); c++) {
     if (list.at(c).key == info.field()) {
@@ -242,7 +246,7 @@ QVariant PurchaseTableModel::data(const QModelIndex &index, int role) const {
 
     case QMetaType::Int:
       if (info.field() == "a_type") {
-        return displayType(buffer.toInt());
+        return articleType(buffer.toInt());
       } else {
         return buffer;
       }
@@ -274,7 +278,7 @@ Qt::ItemFlags PurchaseTableModel::flags(const QModelIndex &index) const {
     return Qt::ItemIsEnabled;
 
   Qt::ItemFlags flags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-  PurchaseTableColumn info = tableColumn(index.column());
+  PurchaseTableColumn info = headerColumn(index.column());
   if (editableColumns().contains(index.column())) {
     return flags | Qt::ItemIsEditable;
   }

@@ -5,7 +5,6 @@ SET(_subproject "AntiquaPurchaseTable")
 
 SET (subproject_LINKER
  AntiquaCRM
- AntiquaWidgets
 )
 
 SET (subproject_SOURCES
