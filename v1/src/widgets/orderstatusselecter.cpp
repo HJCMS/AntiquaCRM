@@ -25,10 +25,10 @@ void OrderStatusSelecter::loadDataset() {
   m_box->setItemData(c++, QIcon("://icons/edit.png"), Qt::DecorationRole);
 
   m_box->insertItem(c, tr("Ready for pickup"), AntiquaCRM::FETCHET);
-  m_box->setItemData(c++, QIcon("://icons/action_delivered.png"), Qt::DecorationRole);
+  m_box->setItemData(c++, QIcon("://icons/action_ready_pickup.png"), Qt::DecorationRole);
 
   m_box->insertItem(c, tr("Delivered"), AntiquaCRM::DELIVERED);
-  m_box->setItemData(c++, QIcon("://icons/action_ok.png"), Qt::DecorationRole);
+  m_box->setItemData(c++, QIcon("://icons/action_delivered.png"), Qt::DecorationRole);
 
   m_box->insertItem(c, tr("Reminder sent"), AntiquaCRM::REMINDET);
   m_box->setItemData(c++, QIcon("://icons/action_redo.png"), Qt::DecorationRole);

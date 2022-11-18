@@ -121,7 +121,7 @@ void ProvidersTreeView::updateOrderStatus(QTreeWidgetItem *item, int status) {
     if (modified != true || !tip.contains(mTip))
       item->setToolTip(0, tip + " " + mTip);
 
-    item->setIcon(1, QIcon("://icons/action_delivered.png"));
+    item->setIcon(1, QIcon("://icons/action_ready_pickup.png"));
     item->setData(1, Qt::UserRole, true); // setModified
     return;
   }
@@ -132,7 +132,7 @@ void ProvidersTreeView::updateOrderStatus(QTreeWidgetItem *item, int status) {
     if (modified != true || !tip.contains(mTip))
       item->setToolTip(0, tip + " " + mTip);
 
-    item->setIcon(1, QIcon("://icons/action_ok.png"));
+    item->setIcon(1, QIcon("://icons/action_delivered.png"));
     item->setData(1, Qt::UserRole, true); // setModified
     return;
   }

@@ -1,72 +1,74 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
-
 SET (icons_FILES
-  action_add.png
-  action_cancel.png
-  action_clear.png
-  action_ok.png
-  action_quit.png
-  action_redo.png
-  action_reload.png
-  action_remove.png
-  action_restore.png
-  action_saveas.png
-  action_save.png
-  action_search.png
-  action_undo.png
-  antiqua.png
-  bookmark.png
-  configure.png
-  database.png
-  db_add.png
-  db_comit.png
-  db_remove.png
-  db_status.png
-  db_update.png
-  delete_table_col.png
-  delete_table_row.png
-  editclear.png
-  edit.png
-  filetypes.png
-  flag-green.png
-  flag-red.png
-  flag-yellow.png
-  folder_pictures.png
-  folder_txt.png
-  groups.png
-  network.png
-  printer.png
-  spreadsheet.png
-  star.png
-  tab_new.png
-  tab.png
-  tab_remove.png
-  user_add.png
-  user_delete.png
-  user_female.png
-  user_group.png
-  user_identity.png
-  user_male.png
-  view_books.png
-  view_image.png
-  view_info.png
-  view_list.png
-  view_log.png
-  viewmag1.png
-  viewmagfit.png
-  viewmag+.png
-  viewmag-.png
-  viewmag.png
-  view_rotate_left.png
-  view_rotate_right.png
-  view_scale.png
-  view_search.png
-  view_text.png
-  warning.png
-  window_fullscreen.png
-  windowlist.png
-  window_new.png
-  window_nofullscreen.png
-  xcalc.png
+action_add.png
+action_cancel.png
+action_clear.png
+action_delivered.png
+action_ok.png
+action_quit.png
+action_ready_pickup.png
+action_redo.png
+action_reload.png
+action_remove.png
+action_restore.png
+action_saveas.png
+action_save.png
+action_search.png
+action_undo.png
+antiqua.png
+bookmark.png
+configure.png
+database.png
+db_add.png
+db_comit.png
+db_remove.png
+db_status.png
+db_update.png
+delete_table_col.png
+delete_table_row.png
+editclear.png
+edit.png
+filetypes.png
+flag-green.png
+flag-red.png
+flag-yellow.png
+folder_pictures.png
+folder_txt.png
+groups.png
+network.png
+printer.png
+splash.png
+spreadsheet.png
+star.png
+tab_new.png
+tab.png
+tab_remove.png
+user_add.png
+user_delete.png
+user_female.png
+user_group.png
+user_identity.png
+user_male.png
+view_books.png
+view_image.png
+view_info.png
+view_list.png
+view_log.png
+viewmag1.png
+viewmagfit.png
+viewmag+.png
+viewmag-.png
+viewmag.png
+view_rotate_left.png
+view_rotate_right.png
+view_scale.png
+view_search.png
+view_text.png
+warning.png
+window_fullscreen.png
+windowlist.png
+window_new.png
+window_nofullscreen.png
+xcalc.png
 )

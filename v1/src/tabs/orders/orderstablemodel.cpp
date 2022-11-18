@@ -61,10 +61,10 @@ const QIcon OrdersTableModel::getOrderStatusIcon(int status) const {
     return QIcon("://icons/edit.png");
 
   case (AntiquaCRM::FETCHET): /**< Bereit zur Abholung */
-    return QIcon("://icons/action_delivered.png");
+    return QIcon("://icons/action_ready_pickup.png");
 
   case (AntiquaCRM::DELIVERED): /**< Ausgeliefert */
-    return QIcon("://icons/action_ok.png");
+    return QIcon("://icons/action_delivered.png");
 
   case (AntiquaCRM::REMINDET): /**< Erinnerung */
     return QIcon("://icons/action_redo.png");
