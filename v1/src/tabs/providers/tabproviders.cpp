@@ -132,6 +132,11 @@ void TabProviders::openOrderPage(const QString &provider,
       m_pages->setCurrentIndex(index);
     }
   }
+#ifdef ANTIQUA_DEVELOPEMENT
+  else {
+    qDebug() << Q_FUNC_INFO << m_sql->lastError();
+  }
+#endif
 }
 
 void TabProviders::openStartPage() { setCurrentIndex(0); }
