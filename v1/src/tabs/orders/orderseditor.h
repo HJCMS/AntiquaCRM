@@ -5,8 +5,9 @@
 #ifndef ANTIQUACRM_ORDERSEDITOR_H
 #define ANTIQUACRM_ORDERSEDITOR_H
 
-#include <AntiquaWidgets>
+#include <AntiquaMailing>
 #include <AntiquaPrinting>
+#include <AntiquaWidgets>
 #include <QObject>
 #include <QWidget>
 
@@ -37,7 +38,13 @@ private:
 
   void setOrderPaymentNumbers(qint64 orderId);
 
-  bool checkEssentialsIds();
+  struct IdsCheck {
+    bool isNotValid = true;
+    qint64 or_id; /**< Order Id */
+    qint64 cu_id; /**< Customer Id */
+    qint64 in_id; /**< Invoide Id */
+  };
+  const IdsCheck checkEssentialsIds();
 
   void importSqlResult() override;
 

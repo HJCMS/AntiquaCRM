@@ -66,11 +66,6 @@ public:
   /**
    * @brief Container für das befüllen der Tabellenzellen.
    */
-  struct Delivery {
-    QString articleid;   /**< Article ID */
-    QString designation; /**< Designation */
-    QString quantity;    /**< Quantity */
-  };
   explicit DeliveryNote(QWidget *parent = nullptr);
 
   /**
@@ -82,8 +77,7 @@ public:
   /**
    * @brief Erstelle Inhalt und öffne Dialog.
    */
-  int exec(const QList<Delivery> &);
+  int exec(const QList<BillingInfo> &);
 };
-Q_DECLARE_METATYPE(DeliveryNote::Delivery);
 
 #endif // DELIVERYNOTE_PRINTING_H

@@ -36,6 +36,12 @@ public:
   static const QString configDomain();
 
   /**
+   * @brief Config test for if exists and a value is set!
+   * @param configPath
+   */
+  bool check(const QString &configPath);
+
+  /**
    * @brief Read all Keys from Group
    */
   const QHash<QString, QVariant> &readGroupConfig(const QString &group);

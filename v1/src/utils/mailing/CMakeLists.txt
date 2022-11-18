@@ -10,7 +10,12 @@ SET (subproject_LINKER
 )
 
 SET (subproject_FILES
+ AntiquaMailing.cmake
  README.md
+)
+
+CONFIGURE_FILE (AntiquaMailing.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaMailing
 )
 
 SET (subproject_SOURCES

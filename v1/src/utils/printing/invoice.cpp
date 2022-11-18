@@ -147,9 +147,7 @@ void Invoice::insertBilling(BillingInfo billing) {
   int row = m_billingTable->rows();
   m_billingTable->insertRows(row, 1);
   p_including_VAT = billing.includeVat;
-  if (billing.packagePrice > 0)
-    p_packagePrice = billing.packagePrice;
-
+  p_packagePrice = (billing.packagePrice != 0) ? billing.packagePrice : 0.00;
   if (billing.taxValue != p_tax_value)
     p_tax_value = billing.taxValue;
 

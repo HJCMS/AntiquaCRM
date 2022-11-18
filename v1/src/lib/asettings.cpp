@@ -25,6 +25,13 @@ const QString ASettings::configDomain() {
   return str;
 }
 
+bool ASettings::check(const QString &configPath) {
+  if (contains(configPath)) {
+    return (!value(configPath).isNull());
+  }
+  return false;
+}
+
 const QHash<QString, QVariant> &
 ASettings::readGroupConfig(const QString &group) {
   p_hash.clear();

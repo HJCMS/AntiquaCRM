@@ -23,6 +23,7 @@ SET (query_tables_FILES
   query_tab_orders_main.sql
   query_views.sql
   query_printing_billing_info.sql
+  query_template_body.sql
 )
 
 SET (select_statement_FILES

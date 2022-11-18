@@ -240,7 +240,7 @@ void DeliveryNote::setDelivery(int orderId, int customerId,
   p_deliveryId = deliverNoteId;
 }
 
-int DeliveryNote::exec(const QList<Delivery> &list) {
+int DeliveryNote::exec(const QList<BillingInfo> &list) {
   if (p_orderId < 1) {
     qFatal("you must call setDelivery() before exec!");
     return QDialog::Rejected;
@@ -256,10 +256,10 @@ int DeliveryNote::exec(const QList<Delivery> &list) {
   constructFooter();
   constructBody();
 
-  QListIterator<Delivery> it(list);
+  QListIterator<BillingInfo> it(list);
   while (it.hasNext()) {
-    Delivery d = it.next();
-    insertArticle(d.articleid, d.designation, d.quantity);
+    BillingInfo d = it.next();
+    insertArticle(d.articleid, d.designation, QString::number(d.quantity));
   }
 
   addPrinters();

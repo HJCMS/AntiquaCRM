@@ -179,11 +179,18 @@ void OrdersEditor::setOrderPaymentNumbers(qint64 orderId) {
   }
 }
 
-bool OrdersEditor::checkEssentialsIds() {
+const OrdersEditor::IdsCheck OrdersEditor::checkEssentialsIds() {
+  IdsCheck id_conf;
   qint64 oid = getSerialID("o_id");
   qint64 cid = getSerialID("o_customer_id");
-  if (oid > 1 && cid > 1)
-    return true;
+  qint64 iid = getSerialID("o_invoice_id");
+  if (oid > 1 && cid > 1 && iid > 1) {
+    id_conf.isNotValid = false;
+    id_conf.or_id = oid;
+    id_conf.cu_id = cid;
+    id_conf.in_id = iid;
+    return id_conf;
+  }
 
   QString info("<p>");
   info.append(tr("A Article can't inserted, if no Order-/Customer Id exists."));
@@ -191,7 +198,9 @@ bool OrdersEditor::checkEssentialsIds() {
   info.append(tr("Please save your your Article first."));
   info.append("</p>");
   openNoticeMessage(info);
-  return false;
+
+  id_conf.isNotValid = true;
+  return id_conf;
 }
 
 void OrdersEditor::importSqlResult() {
@@ -465,16 +474,14 @@ bool OrdersEditor::addArticleToOrderTable(qint64 articleId) {
 }
 
 const QString OrdersEditor::getSqlArticleOrders() {
-  if (!checkEssentialsIds())
+  IdsCheck test = checkEssentialsIds();
+  if (test.isNotValid)
     return QString();
 
   QStringList queries = m_ordersList->getQueryData();
   if (queries.size() > 0) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    foreach (QString q, queries) {
-      qDebug() << "OrdersEditor:" << q << Qt::endl;
-    }
-#endif
+    // foreach (QString q, queries)
+    // { qDebug() << "OrdersEditor:" << q << Qt::endl; }
     return queries.join("\n");
   }
   return QString();
@@ -482,12 +489,6 @@ const QString OrdersEditor::getSqlArticleOrders() {
 
 const QList<BillingInfo> OrdersEditor::queryBillingInfo(qint64 oid,
                                                         qint64 cid) {
-  /**
-   * Wenn es kein Europaland ist, dann fällt auch keine Mehrwertsteuer an!
-   * Die Zeile MwST dann in der Rechnung ausblenden!
-   */
-  // bool disable_vat = (getDataValue("o_vat_country").toString().isEmpty());
-
   QString o_id = QString::number(oid);
   QString c_id = QString::number(cid);
   QList<BillingInfo> list;
@@ -506,13 +507,6 @@ const QList<BillingInfo> OrdersEditor::queryBillingInfo(qint64 oid,
         d.sellPrice = q.value("sellprice").toDouble();
         d.includeVat = q.value("o_vat_included").toBool();
         d.taxValue = q.value("o_vat_levels").toInt();
-        /**
-         * Wenn die Versandkosten mit berechnet werden sollen.
-         * Muss putIntoInvoice() true zurück geben und der Paketpreis
-         * wird von 0.00 auf den Versandwert angehoben!
-         * @note Wenn die Versandkosten nicht '0.00' sind werden sie in
-         * der Rechnung aufgeführt!
-         */
         d.disableVat = (d.taxValue == 0);
         d.packagePrice = q.value("packageprice").toDouble();
         list.append(d);
@@ -553,29 +547,29 @@ void OrdersEditor::setFinalLeaveEditor() {
 }
 
 void OrdersEditor::createMailMessage(const QString &type) {
-  qDebug() << Q_FUNC_INFO << "TODO" << type;
+  IdsCheck ids = checkEssentialsIds();
+  if (ids.isNotValid) {
+    sendStatusMessage(tr("Missing essential Ids, save Order first!"));
+    return;
+  }
+
+  if (!m_cfg->check("dirs/mailapplication")) {
+    sendStatusMessage(tr("Incomplete eMail configuration!"));
+    return;
+  }
+
+  MailForwardDialog *m_d = new MailForwardDialog(this);
+  m_d->setOrderId(ids.or_id);
+  if (m_d->exec(ids.cu_id, type) == QDialog::Accepted) {
+    sendStatusMessage(tr("Send eMail Dialog finished!"));
+  }
+  m_d->deleteLater();
 }
 
 void OrdersEditor::createPrintDeliveryNote() {
-  qDebug() << Q_FUNC_INFO << "TODO" << getDataValue("o_delivery");
-}
-
-void OrdersEditor::createPrintInvoiceNote() {
-  int oid = getSerialID("o_id");
-  if (oid < 1) {
-    sendStatusMessage(tr("Missing Order-Id"));
-    return;
-  }
-
-  int cid = getSerialID("o_customer_id");
-  if (cid < 1) {
-    sendStatusMessage(tr("Missing Customer-Id"));
-    return;
-  }
-
-  int in_id = getSerialID("o_invoice_id");
-  if (in_id < 1) {
-    sendStatusMessage(tr("Missing Invoice-Id"));
+  IdsCheck ids = checkEssentialsIds();
+  if (ids.isNotValid) {
+    sendStatusMessage(tr("Missing essential Ids, save Order first!"));
     return;
   }
 
@@ -585,30 +579,115 @@ void OrdersEditor::createPrintInvoiceNote() {
     return;
   }
 
-  QList<BillingInfo> list = queryBillingInfo(oid, cid);
-  if(list.size() < 1) {
-    sendStatusMessage(tr("No Data - Printing canceled."));
+  QString c_add = getDataValue("c_shipping_address").toString();
+  if (c_add.isEmpty()) {
+    c_add = getDataValue("c_postal_address").toString();
   }
 
-  Invoice *dialog = new Invoice(this);
-  dialog->setInvoice(oid, cid, in_id, did);
+  if (c_add.isEmpty()) {
+    sendStatusMessage(tr("Missing Delivery Address!"));
+    return;
+  }
+
+  QList<BillingInfo> list = queryBillingInfo(ids.or_id, ids.cu_id);
+  if (list.size() < 1) {
+    sendStatusMessage(tr("No Data found! - Printing canceled."));
+    return;
+  }
+
+  DeliveryNote *m_d = new DeliveryNote(this);
+  m_d->setDelivery(ids.or_id, ids.cu_id, did);
+  m_d->setCustomerAddress(c_add);
+
+  if (m_d->exec(list) == QDialog::Accepted) {
+    sendStatusMessage(tr("Printdialog closed."));
+  }
+
+  list.clear();
+  m_d->deleteLater();
+}
+
+void OrdersEditor::createPrintInvoiceNote() {
+  IdsCheck ids = checkEssentialsIds();
+  if (ids.isNotValid) {
+    sendStatusMessage(tr("Missing essential Ids, save Order first!"));
+    return;
+  }
+
+  QString did = getDataValue("o_delivery").toString();
+  if (did.isEmpty()) {
+    sendStatusMessage(tr("Missing Deliverynote Number"));
+    return;
+  }
+
+  QList<BillingInfo> list = queryBillingInfo(ids.or_id, ids.cu_id);
+  if (list.size() < 1) {
+    sendStatusMessage(tr("No Data found! - Printing canceled."));
+    return;
+  }
+
+  Invoice *m_d = new Invoice(this);
+  m_d->setInvoice(ids.or_id, ids.cu_id, ids.in_id, did);
   QString c_add = getDataValue("c_postal_address").toString();
-  dialog->setCustomerAddress(c_add);
+  m_d->setCustomerAddress(c_add);
 
   bool paid = getDataValue("o_payment_status").toBool();
-  if (dialog->exec(list, paid) == QDialog::Rejected) {
-    sendStatusMessage(tr("Printing canceled."));
+  if (m_d->exec(list, paid) == QDialog::Accepted) {
+    sendStatusMessage(tr("Printdialog closed."));
   }
   list.clear();
+  m_d->deleteLater();
 }
 
 void OrdersEditor::createPrintPaymentReminder() {
-  qDebug() << Q_FUNC_INFO << "TODO" << getDataValue("o_customer_id");
+  IdsCheck ids = checkEssentialsIds();
+  if (ids.isNotValid) {
+    sendStatusMessage(tr("Missing essential Ids, save Order first!"));
+    return;
+  }
+
+  QString did = getDataValue("o_delivery").toString();
+  QString c_add = getDataValue("c_postal_address").toString();
+  if (did.isEmpty() || c_add.isEmpty()) {
+    sendStatusMessage(tr("Missing Deliverynote data"));
+    return;
+  }
+
+  QList<BillingInfo> list = queryBillingInfo(ids.or_id, ids.cu_id);
+  if (list.size() < 1) {
+    sendStatusMessage(tr("No Data - Printing canceled."));
+    return;
+  }
+
+  QString message_body;
+  AntiquaTemplates body("query_template_body", this);
+  if (body.openTemplate()) {
+    QString sql("o_id=" + QString::number(ids.or_id));
+    sql.append(" AND tb_caller='PDF_PAYMENT_REMINDER'");
+    body.setWhereClause(sql);
+    message_body = body.getTemplate();
+  }
+
+  QString cfg_prefix("company/payment_reminder_");
+  PaymentReminder *m_d = new PaymentReminder(this);
+  m_d->setCustomerAddress(c_add);
+  m_d->setPaymentInfo(ids.or_id, ids.cu_id, ids.in_id, did);
+  m_d->setTitleText(m_cfg->value(cfg_prefix + "title").toString());
+  m_d->setMainText(message_body);
+  m_d->setFinalText(m_cfg->value(cfg_prefix + "additional").toString());
+  if (m_d->exec(list) == QDialog::Accepted) {
+    sendStatusMessage(tr("Printdialog closed."));
+  }
+  list.clear();
+  m_d->deleteLater();
 }
 
 void OrdersEditor::openSearchAddArticle() {
-  if (!checkEssentialsIds())
+  IdsCheck test = checkEssentialsIds();
+  if (test.isNotValid) {
+    sendStatusMessage(tr("Missing essential Ids, save Order first!"));
     return;
+  }
 
   OrderAddArticle *d = new OrderAddArticle(this);
   if (d->exec() == QDialog::Rejected)

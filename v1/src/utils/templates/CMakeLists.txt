@@ -8,12 +8,21 @@ SET (subproject_LINKER
  AntiquaWidgets
 )
 
+SET (subproject_FILES
+ AntiquaTemplates.cmake
+)
+
+CONFIGURE_FILE (AntiquaTemplates.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaTemplates
+)
+
 SET (subproject_SOURCES
  messagetemplates.cpp
  messageeditor.cpp
  messagekeywordlist.cpp
  messagecaller.cpp
  messageselecter.cpp
+ antiquatemplates.cpp
 )
 
 SET (subproject_HEADERS
@@ -22,12 +31,13 @@ SET (subproject_HEADERS
  messagekeywordlist.h
  messagecaller.h
  messageselecter.h
- AntiquaTemplates
+ antiquatemplates.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC
   ${subproject_HEADERS}
   ${subproject_SOURCES}
+  ${subproject_FILES}
 )
 
 SET_TARGET_PROPERTIES (${_subproject} PROPERTIES

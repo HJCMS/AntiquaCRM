@@ -37,6 +37,12 @@ private:
   QTextEdit *m_signature;
 
   /**
+   * @brief Payment Reminder ...
+   */
+  QLineEdit *m_payment_reminder_title;
+  QLineEdit *m_payment_reminder_additional;
+
+  /**
    * @brief GridLayout Info Labels
    */
   QLabel *infoCell(const QString &);

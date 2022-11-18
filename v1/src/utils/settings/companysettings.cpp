@@ -114,6 +114,22 @@ CompanySettings::CompanySettings(QWidget *parent) : SettingsWidget{parent} {
   m_signature->setPlaceholderText(tr("eMail Signature"));
   layout->addWidget(m_signature, row++, 1, 1, 1);
 
+  // Payment Reminder
+  layout->addWidget(infoCell(tr("Payment Reminder")), row, 0, 1, 1,
+                    Qt::AlignRight);
+  m_payment_reminder_title = new QLineEdit(this);
+  m_payment_reminder_title->setObjectName("payment_reminder_title");
+  m_payment_reminder_title->setText(tr("1. Payment Reminder"));
+  layout->addWidget(m_payment_reminder_title, row++, 1, 1, 1);
+  // Additional Payment Reminder Text
+  layout->addWidget(infoCell(tr("Reminder Footnote")), row, 0, 1, 1,
+                    Qt::AlignRight);
+  m_payment_reminder_additional = new QLineEdit(this);
+  m_payment_reminder_additional->setObjectName("payment_reminder_additional");
+  m_payment_reminder_additional->setText(
+      tr("If the amount has been paid in the meantime, please send us a short "
+         "message."));
+  layout->addWidget(m_payment_reminder_additional, row++, 1, 1, 1);
   layout->setRowStretch(row, 1);
   setLayout(layout);
 }
