@@ -52,7 +52,7 @@ const QVariant TaxLevelBox::value() {
 }
 
 bool TaxLevelBox::isValid() {
-  if (isRequired() && value().toInt() == 0)
+  if (isRequired() && value().toInt() == -1)
     return false;
 
   return true;
@@ -69,5 +69,5 @@ void TaxLevelBox::setInfo(const QString &info) {
 const QString TaxLevelBox::info() { return m_box->toolTip(); }
 
 const QString TaxLevelBox::notes() {
-  return tr("a Valid tay level is required.");
+  return tr("a Valid tax level is required.");
 }
