@@ -6,6 +6,7 @@
 #define ANTIQUACRM_ORDERSEDITOR_H
 
 #include <AntiquaWidgets>
+#include <AntiquaPrinting>
 #include <QObject>
 #include <QWidget>
 
@@ -53,6 +54,8 @@ private:
   bool addArticleToOrderTable(qint64 articleId);
 
   const QString getSqlArticleOrders();
+
+  const QList<BillingInfo> queryBillingInfo(qint64 oid, qint64 cid);
 
   inline AntiquaCRM::ArticleOrderItem
   addArticleItem(const QString &key, const QVariant &value) const;

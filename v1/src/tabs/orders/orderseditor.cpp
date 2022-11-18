@@ -480,6 +480,48 @@ const QString OrdersEditor::getSqlArticleOrders() {
   return QString();
 }
 
+const QList<BillingInfo> OrdersEditor::queryBillingInfo(qint64 oid,
+                                                        qint64 cid) {
+  /**
+   * Wenn es kein Europaland ist, dann fällt auch keine Mehrwertsteuer an!
+   * Die Zeile MwST dann in der Rechnung ausblenden!
+   */
+  // bool disable_vat = (getDataValue("o_vat_country").toString().isEmpty());
+
+  QString o_id = QString::number(oid);
+  QString c_id = QString::number(cid);
+  QList<BillingInfo> list;
+  AntiquaCRM::ASqlFiles sqlFile("query_printing_billing_info");
+  if (sqlFile.openTemplate()) {
+    QString wcl("a_order_id=" + o_id + " AND a_customer_id=" + c_id);
+    sqlFile.setWhereClause(wcl);
+    QSqlQuery q = m_sql->query(sqlFile.getQueryContent());
+    if (q.size() > 0) {
+      QRegExp strip("\\-\\s+\\-");
+      while (q.next()) {
+        BillingInfo d;
+        d.articleid = q.value("aid").toString();
+        d.designation = q.value("title").toString().replace(strip, "-");
+        d.quantity = q.value("quant").toInt();
+        d.sellPrice = q.value("sellprice").toDouble();
+        d.includeVat = q.value("o_vat_included").toBool();
+        d.taxValue = q.value("o_vat_levels").toInt();
+        /**
+         * Wenn die Versandkosten mit berechnet werden sollen.
+         * Muss putIntoInvoice() true zurück geben und der Paketpreis
+         * wird von 0.00 auf den Versandwert angehoben!
+         * @note Wenn die Versandkosten nicht '0.00' sind werden sie in
+         * der Rechnung aufgeführt!
+         */
+        d.disableVat = (d.taxValue == 0);
+        d.packagePrice = q.value("packageprice").toDouble();
+        list.append(d);
+      }
+    }
+  }
+  return list;
+}
+
 AntiquaCRM::ArticleOrderItem
 OrdersEditor::addArticleItem(const QString &key, const QVariant &value) const {
   return AntiquaCRM::AProviderOrder::createItem(key, value);
@@ -519,7 +561,45 @@ void OrdersEditor::createPrintDeliveryNote() {
 }
 
 void OrdersEditor::createPrintInvoiceNote() {
-  qDebug() << Q_FUNC_INFO << "TODO" << getDataValue("o_invoice_id");
+  int oid = getSerialID("o_id");
+  if (oid < 1) {
+    sendStatusMessage(tr("Missing Order-Id"));
+    return;
+  }
+
+  int cid = getSerialID("o_customer_id");
+  if (cid < 1) {
+    sendStatusMessage(tr("Missing Customer-Id"));
+    return;
+  }
+
+  int in_id = getSerialID("o_invoice_id");
+  if (in_id < 1) {
+    sendStatusMessage(tr("Missing Invoice-Id"));
+    return;
+  }
+
+  QString did = getDataValue("o_delivery").toString();
+  if (did.isEmpty()) {
+    sendStatusMessage(tr("Missing Deliverynote Number"));
+    return;
+  }
+
+  QList<BillingInfo> list = queryBillingInfo(oid, cid);
+  if(list.size() < 1) {
+    sendStatusMessage(tr("No Data - Printing canceled."));
+  }
+
+  Invoice *dialog = new Invoice(this);
+  dialog->setInvoice(oid, cid, in_id, did);
+  QString c_add = getDataValue("c_postal_address").toString();
+  dialog->setCustomerAddress(c_add);
+
+  bool paid = getDataValue("o_payment_status").toBool();
+  if (dialog->exec(list, paid) == QDialog::Rejected) {
+    sendStatusMessage(tr("Printing canceled."));
+  }
+  list.clear();
 }
 
 void OrdersEditor::createPrintPaymentReminder() {

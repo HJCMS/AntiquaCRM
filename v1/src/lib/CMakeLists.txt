@@ -54,6 +54,7 @@ SET (projectLibrary_SOURCES
  asqlquerymodel.cpp
  asqlsettings.cpp
  atxsocket.cpp
+ ataxcalculator.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -76,6 +77,7 @@ SET (projectLibrary_HEADERS
  asqlquerymodel.h
  asqlsettings.h
  atxsocket.h
+ ataxcalculator.h
  ${projectinc_FILES}
 )
 

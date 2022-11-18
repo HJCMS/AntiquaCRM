@@ -94,4 +94,9 @@
 #include "aeuropeancountries.h"
 #endif
 
+// AntiquaCRM::ATaxCalculator
+#ifndef ANTIQUACRM_ATAXCALCULATOR_H
+#include "ataxcalculator.h"
+#endif
+
 #endif

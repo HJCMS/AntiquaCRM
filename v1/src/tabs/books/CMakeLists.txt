@@ -14,6 +14,7 @@ SET (projectLibrary_LINKER
  AntiquaWidgets
  AntiquaKeywords
  AntiquaImgEdit
+ AntiquaPrinting
 )
 
 SET (projectLibrary_SOURCES

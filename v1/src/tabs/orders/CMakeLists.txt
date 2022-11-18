@@ -13,6 +13,8 @@ SET (projectLibrary_LINKER
  AntiquaCRM
  AntiquaWidgets
  AntiquaPurchaseTable
+ AntiquaMailing
+ AntiquaPrinting
 )
 
 SET (projectLibrary_SOURCES
