@@ -35,14 +35,20 @@ private:
   QAction *ac_noPayment;
 
   /**
-   * @brief Aufträge mit Lieferrung ausstehend.
+   * @brief Aufträge mit Lieferrung
    */
-  QAction *ac_noDeliver;
+  QAction *ac_delivered;
+
+  /**
+   * @brief Aufträge mit Erinnerung gesendet
+   */
+  QAction *ac_remindet;
 
 private Q_SLOTS:
   void setQueryClosedOrders();
   void setQueryNoPayments();
-  void setQueryNoDelivery();
+  void setQueryDelivered();
+  void setQueryRemindet();
 
 Q_SIGNALS:
   void sendDefaultView();
