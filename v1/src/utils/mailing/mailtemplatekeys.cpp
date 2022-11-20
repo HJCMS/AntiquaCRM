@@ -56,8 +56,9 @@ const QString MailTemplateKeys::companySettings(const QString &key) {
   QString buffer;
   AntiquaCRM::ASettings cfg(this);
   cfg.beginGroup("company");
-  if (cfg.allKeys().contains(key)) {
-    buffer = cfg.value(key).toString();
+  QString cfg_key = key.toLower();
+  if (cfg.allKeys().contains(cfg_key)) {
+    buffer = cfg.value(cfg_key).toString();
   }
   cfg.endGroup();
   return buffer;
@@ -73,8 +74,11 @@ const QString MailTemplateKeys::padNumber(const QVariant &v) {
 }
 
 bool MailTemplateKeys::setData(QMap<QString, QVariant> &data) {
-  p_data.clear();
-  p_data = data;
+  QMapIterator<QString, QVariant> it(data);
+  while (it.hasNext()) {
+    it.next();
+    p_data.insert(it.key(), it.value());
+  }
   return (p_data.size() > 0);
 }
 
@@ -110,16 +114,16 @@ const QString MailTemplateKeys::convert(const QString &key) {
   if (search == "CRM_ARTICLE_ID")
     return padNumber(p_data.value("a_article_id"));
 
-  if (search == "COMPANY_SIGNATUR") {
-    QString sig = companySettings("signature");
-    sig.prepend("--\n");
-    return sig;
+  if (search.contains("COMPANY_")) {
+    QString key = search.replace("COMPANY_", "").trimmed();
+    return companySettings(key);
   }
 
   return QString();
 }
 
 void MailTemplateKeys::run() {
+  p_data.clear();
   m_sql = new AntiquaCRM::ASqlCore(this);
-  p_query = m_sql->query("SELECT * FROM ui_template_keys;");
+  p_query = m_sql->query("SELECT * FROM ui_template_keys ORDER BY tk_key;");
 }

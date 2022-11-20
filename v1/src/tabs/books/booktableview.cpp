@@ -35,15 +35,16 @@ bool BookTableView::sqlQueryTable(const QString &query) {
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);
-    QString result = tr("Query finished with '%1' Rows.")
-                         .arg(QString::number(m_model->rowCount()));
-    emit sendQueryReport(result);
+    emit sendQueryReport(m_model->queryResultInfo());
     emit sendResultExists((m_model->rowCount() > 0));
+    // Table Record und NICHT QueryRecord abfragen!
+    // Siehe: setSortByColumn
+    p_tableRecord = m_model->tableRecord();
     return true;
   }
 
+  emit sendQueryReport(m_model->queryResultInfo());
   bool status = (m_model->rowCount() > 0);
-  emit sendQueryReport(tr("Query without result"));
   emit sendResultExists(status);
   return status;
 }
@@ -71,8 +72,8 @@ void BookTableView::contextMenuEvent(QContextMenuEvent *event) {
   ac_copy->setEnabled(enable_action);
   connect(ac_copy, SIGNAL(triggered()), this, SLOT(createCopyClipboard()));
 
-  QAction *ac_order =
-      m->addAction(cellIcon("view_log"), tr("Add Article to current open Order"));
+  QAction *ac_order = m->addAction(cellIcon("view_log"),
+                                   tr("Add Article to current open Order"));
   ac_order->setObjectName("ac_context_book_to_order");
   ac_order->setEnabled(enable_action);
   connect(ac_order, SIGNAL(triggered()), this, SLOT(createOrderSignal()));
@@ -91,6 +92,21 @@ void BookTableView::setSortByColumn(int column, Qt::SortOrder order) {
     return;
 
   QString order_by = m_model->fieldName(column);
+  /**
+   * @warning Bei Alias basierenden SELECT abfragen!
+   * ORDER BY "Multisort" Abfragen können nicht mit Aliases gemischt werden!
+   */
+  if (!p_tableRecord.isEmpty()) {
+    QStringList fieldList;
+    for (int i = 0; i < p_tableRecord.count(); i++) {
+      fieldList << p_tableRecord.field(i).name();
+    }
+    if (fieldList.contains(order_by)) {
+      order_by.prepend("(");
+      order_by.append(",ib_changed)");
+    }
+  }
+
   // NOTE Muss hier umgedreht werden!
   Qt::SortOrder sort = Qt::AscendingOrder;
   if (order == Qt::AscendingOrder)
@@ -134,16 +150,14 @@ void BookTableView::setReloadView() {
   sqlQueryTable(m_model->query().lastQuery());
 }
 
-int BookTableView::rowCount() {
-  return m_model->rowCount();
-}
+int BookTableView::rowCount() { return m_model->rowCount(); }
 
 bool BookTableView::setQuery(const QString &clause) {
   AntiquaCRM::ASqlFiles query("query_tab_books_main");
   if (query.openTemplate()) {
     where_clause = (clause.isEmpty() ? where_clause : clause);
     query.setWhereClause(where_clause);
-    query.setOrderBy("ib_id");
+    query.setOrderBy("(ib_count,ib_changed,ib_id)");
     query.setSorting(Qt::DescendingOrder);
     query.setLimits(getQueryLimit());
   }

@@ -22,6 +22,7 @@ class BookTableView final : public InventoryTable {
 private:
   BooksTableModel *m_model;
   QString where_clause;
+  QSqlRecord p_tableRecord;
   QModelIndex p_modelIndex;
   qint64 getTableID(const QModelIndex &index) override;
   bool sqlQueryTable(const QString &query) override;

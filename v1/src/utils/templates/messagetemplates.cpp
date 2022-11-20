@@ -49,30 +49,42 @@ MessageTemplates::MessageTemplates(QWidget *parent) : QDialog{parent} {
   connect(m_btnBox, SIGNAL(rejected()), this, SLOT(reject()));
 }
 
-const QString MessageTemplates::querySection(const QString &name) const {
-  QString sql("SELECT tk_key AS key, tk_title AS title");
-  sql.append(" FROM ui_template_keys WHERE tk_type='");
-  sql.append(name + "' ORDER BY tk_key;");
-  return sql;
+const QString MessageTemplates::buildTitle(const QString &key) const {
+  QString title = key.trimmed().toLower();
+  title.replace("_"," ");
+  QStringList array = title.split(" ", Qt::SkipEmptyParts);
+  for (int i = 0; i < array.size(); i++) {
+    array[i].replace(0, 1, array[i][0].toUpper());
+  }
+  return array.join(" ");
 }
 
-bool MessageTemplates::createSectionTree() {
-  // "SQL"|"TXT"|"PATTERN"
-  QMap<QString, QString> map;
-  map.insert("SQL", tr("Orders system"));
-  map.insert("TXT", tr("Static text blocks"));
-  QMapIterator<QString, QString> it(map);
-  while (it.hasNext()) {
-    it.next();
-    QString sql = querySection(it.key());
-    QSqlQuery q = m_sql->query(sql);
-    // qDebug() << sql << q.size();
+bool MessageTemplates::createCompanySection() {
+  int count = 0;
+  AntiquaCRM::ASettings cfg(this);
+  cfg.beginGroup("company");
+  foreach (QString k, cfg.allKeys()) {
+    QJsonObject obj;
+    obj.insert("title", buildTitle(k));
+    obj.insert("key", "COMPANY_" + k.toUpper());
+    m_keysList->addKey("COMPANY", obj);
+    count++;
+  }
+  cfg.endGroup();
+  return (count > 0);
+}
+
+bool MessageTemplates::createSqlSection() {
+  AntiquaCRM::ASqlFiles file("query_template_keys");
+  if (file.openTemplate()) {
+    file.setWhereClause("tk_key IS NOT NULL");
+    QSqlQuery q = m_sql->query(file.getQueryContent());
     if (q.size() > 0) {
       while (q.next()) {
         QJsonObject obj;
-        obj.insert("title", QJsonValue(q.value("title").toString()));
-        obj.insert("key", QJsonValue(q.value("key").toString()));
-        m_keysList->addKey(it.value(), obj);
+        obj.insert("title", QJsonValue(q.value("tk_title").toString()));
+        obj.insert("key", QJsonValue(q.value("tk_key").toString()));
+        m_keysList->addKey(q.value("tk_type").toString(), obj);
       }
     } else if (!m_sql->lastError().isEmpty()) {
       m_statusBar->showMessage(tr("an error occurred"));
@@ -178,11 +190,16 @@ int MessageTemplates::exec() {
   if (m_sql == nullptr)
     return QDialog::Rejected;
 
-  if (!createSectionTree())
+  if (!createCompanySection())
+    return QDialog::Rejected;
+
+  if (!createSqlSection())
     return QDialog::Rejected;
 
   if (!createSelecters())
     return QDialog::Rejected;
+
+  m_keysList->expandAll();
 
   return QDialog::exec();
 }

@@ -5,12 +5,12 @@ SELECT ib_id,
   (CASE WHEN im_id IS NOT NULL THEN true ELSE false END)::BOOLEAN AS ib_image,
   ib_title,
   ib_price::MONEY AS ib_price,
+  sl_storage,
+  ib_changed,
   ib_author,
   ib_publisher,
   ib_year,
-  sl_storage,
-  ib_isbn,
-  ib_changed
+  ib_since
 FROM inventory_books
 LEFT JOIN ref_storage_location ON sl_id=ib_storage
 LEFT JOIN inventory_images ON im_id=ib_id

@@ -16,18 +16,19 @@ BooksTableModel::BooksTableModel(QObject *parent)
 }
 
 const QMap<int, QString> BooksTableModel::headerList() const {
+  int i = 0;
   QMap<int, QString> map;
-  map.insert(0, tr("Article Id"));
-  map.insert(1, tr("Duration"));
-  map.insert(2, tr("Image"));
-  map.insert(3, tr("Title"));
-  map.insert(4, tr("Price"));
-  map.insert(5, tr("Author"));
-  map.insert(6, tr("Publisher"));
-  map.insert(7, tr("Year"));
-  map.insert(8, tr("Storage"));
-  map.insert(9, tr("ISBN"));
-  map.insert(10, tr("Changed"));
+  map.insert(i++, tr("Article Id"));
+  map.insert(i++, tr("Duration"));
+  map.insert(i++, tr("Image"));
+  map.insert(i++, tr("Title"));
+  map.insert(i++, tr("Price"));
+  map.insert(i++, tr("Storage"));
+  map.insert(i++, tr("Changed"));
+  map.insert(i++, tr("Author"));
+  map.insert(i++, tr("Publisher"));
+  map.insert(i++, tr("Year"));
+  map.insert(i++, tr("Since"));
   return map;
 }
 
@@ -39,8 +40,11 @@ QVariant BooksTableModel::headerData(int section, Qt::Orientation orientation,
   if (orientation == Qt::Horizontal && role == Qt::DecorationRole)
     return QVariant();
 
-  if (role != Qt::DisplayRole)
+  if (role == Qt::EditRole) {
+    return record().field(section).name();
+  } else if (role != Qt::DisplayRole) {
     return QSqlQueryModel::headerData(section, orientation, role);
+  }
 
   QMap<int, QString> map = headerList();
   if (section > map.size())

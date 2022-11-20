@@ -1,9 +1,6 @@
 -- @brief Default Query for Tab Books
 -- @file query_tab_books_main.sql
-SELECT o_id AS oid,
- o_since AS since,
- o_order_status AS order_status,
- o_payment_status AS payment_status,
+SELECT o_id, o_since, o_order_status, o_payment_status,
  CASE WHEN c_company=true
   THEN c_company_name
   ELSE CONCAT(c_firstname,' ',c_lastname,' (',c_country,')')

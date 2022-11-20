@@ -6,7 +6,9 @@
 #define ANTIQUACRM_ORDERSTABLEVIEW_H
 
 #include <AntiquaWidgets>
+#include <QModelIndex>
 #include <QObject>
+#include <QSqlRecord>
 #include <QWidget>
 
 class OrdersTableModel;
@@ -17,6 +19,7 @@ class OrdersTableView final : public InventoryTable {
 private:
   OrdersTableModel *m_model;
   QString where_clause;
+  QSqlRecord p_tableRecord;
   QModelIndex p_modelIndex;
 
   qint64 getTableID(const QModelIndex &index) override;

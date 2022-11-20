@@ -39,9 +39,9 @@ QTreeWidgetItem *MessageKeywordList::getSection(const QString &section,
 
   if (!type.isEmpty()) {
     if (type.contains("CRM")) {
-      item->setText(1, tr("Orders"));
+      item->setText(1, tr("Database queries"));
     } else if (type.contains("COMPANY")) {
-      item->setText(1, tr("Company"));
+      item->setText(1, tr("Company settings"));
     }
 
     QFont f = font();

@@ -24,6 +24,7 @@ SET (query_tables_FILES
   query_views.sql
   query_printing_billing_info.sql
   query_template_body.sql
+  query_template_keys.sql
 )
 
 SET (select_statement_FILES

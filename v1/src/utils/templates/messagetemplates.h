@@ -31,8 +31,10 @@ private:
   QPushButton *btn_save;
   QStatusBar *m_statusBar;
 
-  const QString querySection(const QString &name) const;
-  bool createSectionTree();
+  const QString buildTitle(const QString &key) const;
+
+  bool createCompanySection();
+  bool createSqlSection();
 
   bool createSelecters();
 

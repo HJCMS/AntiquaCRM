@@ -2,20 +2,21 @@
 // vim: set fileencoding=utf-8
 
 #include "asqlquerymodel.h"
-
 #include "asqlcore.h"
+
 #include <QDateTime>
 #include <QDebug>
 #include <QLocale>
 #include <QSqlField>
 #include <QSqlQuery>
+#include <QTime>
 
 namespace AntiquaCRM {
 
 ASqlQueryModel::ASqlQueryModel(const QString &table, QObject *parent)
     : QSqlQueryModel{parent}, p_table(table) {
   m_sql = new AntiquaCRM::ASqlCore(this);
-  p_record = QSqlRecord();
+  p_queryRecord = QSqlRecord();
 }
 
 const QString ASqlQueryModel::setHeaderTitle(const QString &text) const {
@@ -45,9 +46,9 @@ const QString ASqlQueryModel::verticalHeader(int row, int role) const {
 bool ASqlQueryModel::querySelect(const QString &sql) {
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
-    p_record = q.record();
+    p_queryRecord = q.record();
     setQuery(q);
-    return true;
+    // No errors!
   } else if (!m_sql->lastError().isEmpty()) {
     QString erroMessage = m_sql->lastError().trimmed();
 #ifdef ANTIQUA_DEVELOPEMENT
@@ -56,25 +57,35 @@ bool ASqlQueryModel::querySelect(const QString &sql) {
     emit sqlErrorMessage(p_table, erroMessage);
     return false;
   }
-  // No errors!
   return true;
 }
 
 const QString ASqlQueryModel::tableName() const { return p_table; }
 
+const QSqlRecord ASqlQueryModel::tableRecord() const {
+  return m_sql->record(p_table);
+}
+
+const QSqlRecord ASqlQueryModel::queryRecord() const {
+  if (p_queryRecord.isEmpty())
+    return QSqlRecord();
+
+  return p_queryRecord;
+}
+
 const QString ASqlQueryModel::fieldName(int column) const {
-  if (p_record.isEmpty())
+  if (p_queryRecord.isEmpty())
     return QString();
 
-  return p_record.fieldName(column);
+  return p_queryRecord.fieldName(column);
 }
 
 const int ASqlQueryModel::column(const QString &fieldName) const {
-  if (p_record.isEmpty())
+  if (p_queryRecord.isEmpty())
     return -1;
 
-  for (int i = 0; i < p_record.count(); i++) {
-    if (p_record.field(i).name() == fieldName)
+  for (int i = 0; i < p_queryRecord.count(); i++) {
+    if (p_queryRecord.field(i).name() == fieldName)
       return i;
   }
 
@@ -89,7 +100,7 @@ QVariant ASqlQueryModel::data(const QModelIndex &item, int role) const {
   if (role != Qt::DisplayRole)
     return value;
 
-  QVariant::Type _type = p_record.field(item.column()).type();
+  QVariant::Type _type = p_queryRecord.field(item.column()).type();
   // QString _name = p_record.field(item.column()).name();
   // qDebug() << _name << _type << value;
   if (_type == QVariant::DateTime) {
@@ -102,6 +113,18 @@ QVariant ASqlQueryModel::data(const QModelIndex &item, int role) const {
     return (value.toString().length() > 5) ? value : QVariant();
   }
   return value;
+}
+
+const QString ASqlQueryModel::queryResultInfo() {
+  QString time = QTime::currentTime().toString("HH:mm:ss");
+  QString info;
+  if (rowCount() > 0) {
+    info.append(tr("%1 - Query finished with '%2' Rows.")
+                    .arg(time, QString::number(rowCount())));
+  } else {
+    info.append(tr("%1 - Query without result!").arg(time));
+  }
+  return info;
 }
 
 }; // namespace AntiquaCRM

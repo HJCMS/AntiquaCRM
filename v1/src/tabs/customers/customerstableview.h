@@ -8,6 +8,7 @@
 #include <QContextMenuEvent>
 #include <QIcon>
 #include <QObject>
+#include <QSqlRecord>
 #include <QWidget>
 
 #ifndef ANTIQUACRM_INVENTORYTABLE_H
@@ -22,6 +23,7 @@ class CustomersTableView final : public InventoryTable {
 private:
   CustomersTableModel *m_model;
   QString where_clause;
+  QSqlRecord p_tableRecord;
   QModelIndex p_modelIndex;
 
   qint64 getTableID(const QModelIndex &index) override;
