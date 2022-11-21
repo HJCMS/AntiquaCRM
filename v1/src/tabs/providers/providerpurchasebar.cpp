@@ -9,6 +9,10 @@ ProviderPurchaseBar::ProviderPurchaseBar(QWidget *parent) : QStatusBar{parent} {
   setSizeGripEnabled(false);
   setContentsMargins(5, 0, 5, 0);
 
+  btn_provider = new QPushButton(tr("Provider Actions"), this);
+  btn_provider->setIcon(QIcon("://icons/network.png"));
+  addPermanentWidget(btn_provider);
+
   btn_create = new QPushButton(tr("Create Order"), this);
   btn_create->setIcon(QIcon("://icons/action_add.png"));
   btn_create->setEnabled(false);
@@ -20,6 +24,7 @@ ProviderPurchaseBar::ProviderPurchaseBar(QWidget *parent) : QStatusBar{parent} {
   btn_check->setToolTip(info);
   addPermanentWidget(btn_check);
 
+  connect(btn_provider, SIGNAL(clicked()), SIGNAL(sendProviderAction()));
   connect(btn_create, SIGNAL(clicked()), SLOT(createClicked()));
   connect(btn_check, SIGNAL(clicked()), SIGNAL(sendCheckArticles()));
 }

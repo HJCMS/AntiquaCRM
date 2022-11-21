@@ -25,8 +25,10 @@ AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
 
 bool AntiquaTabWidget::createSocketListener() {
   m_socket = new AntiquaSocketServer(this);
-  connect(m_socket, SIGNAL(sendAction(const QJsonObject &)),
+  connect(m_socket, SIGNAL(sendWindowOperation(const QJsonObject &)),
           SLOT(setAction(const QJsonObject &)));
+  connect(m_socket, SIGNAL(sendPluginOperation(const QJsonObject &)),
+          SIGNAL(sendPluginOperation(const QJsonObject &)));
   connect(m_socket, SIGNAL(sendStatusMessage(const QString &)),
           SIGNAL(sendStatusMessage(const QString &)));
 
@@ -106,7 +108,7 @@ void AntiquaTabWidget::setAction(const QJsonObject &obj) {
     if (index < 0) {
       qWarning("Invalid Operation call for tab actions!");
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << "Invalid:" << obj;
+      qDebug() << Q_FUNC_INFO << "Invalid:" << obj;
 #endif
       return;
     }
@@ -116,7 +118,7 @@ void AntiquaTabWidget::setAction(const QJsonObject &obj) {
       setCurrentIndex(index);
     } else {
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << "Rejected:" << obj;
+      qDebug() << Q_FUNC_INFO << "Rejected:" << obj;
 #endif
       emit sendStatusMessage(tr("Request rejected!"));
     }
@@ -176,6 +178,9 @@ const QMap<QString, QString> AntiquaTabWidget::availableTabs() {
 }
 
 AntiquaTabWidget::~AntiquaTabWidget() {
-  if (m_socket != nullptr)
+  if (m_socket != nullptr) {
+    qInfo("Close Socket ...");
     m_socket->close();
+    m_socket->deleteLater();
+  }
 }

@@ -33,6 +33,9 @@ AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
           SLOT(setShowTab(const QString &)));
   connect(m_menuBar, SIGNAL(sendToggleFullscreen()),
           SLOT(setToggleFullScreen()));
+  // Signals TabWidget
+  connect(m_centralWidget, SIGNAL(sendPluginOperation(const QJsonObject &)),
+          SIGNAL(sendPluginOperation(const QJsonObject &)));
   connect(m_centralWidget, SIGNAL(sendStatusMessage(const QString &)),
           m_statusBar, SLOT(showMessage(const QString &)));
 }

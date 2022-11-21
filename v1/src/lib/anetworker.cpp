@@ -113,7 +113,8 @@ void ANetworker::slotReadResponse() {
     QJsonParseError parser;
     QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
     if (parser.error != QJsonParseError::NoError) {
-      qWarning("ANetorker: Json Parse Error:(%s)!", qPrintable(parser.errorString()));
+      qWarning("ANetorker: Json Parse Error:(%s)!",
+               qPrintable(parser.errorString()));
       emit sendFinishedWithErrors();
       return;
     }
@@ -255,6 +256,30 @@ QNetworkReply *ANetworker::jsonMultiPartRequest(const QUrl &url,
 
   m_reply = post(request, m_form);
   m_form->setParent(m_reply);
+
+  connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
+          SLOT(slotError(QNetworkReply::NetworkError)));
+
+  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
+          SLOT(slotError(QNetworkReply::NetworkError)));
+
+  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
+          SLOT(slotSslErrors(QList<QSslError>)));
+
+  connect(m_reply, SIGNAL(readyRead()), this, SLOT(slotReadResponse()));
+
+  return m_reply;
+}
+
+QNetworkReply *ANetworker::putRequest(const QUrl &url, const QByteArray &data) {
+  ANetworkRequest request(url);
+  request.setHeaderUserAgent();
+  request.setHeaderAcceptLanguage();
+  request.setHeaderCacheControl();
+  request.setRawHeader("Content-Type", "text/plain");
+  request.setTransferTimeout((tranfer_timeout * 1000));
+
+  m_reply = put(request, data);
 
   connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));

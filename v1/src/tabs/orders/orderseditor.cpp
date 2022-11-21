@@ -659,14 +659,10 @@ void OrdersEditor::createPrintPaymentReminder() {
     return;
   }
 
-  QString message_body;
-  AntiquaTemplates body("query_template_body", this);
-  if (body.openTemplate()) {
-    QString sql("o_id=" + QString::number(ids.or_id));
-    sql.append(" AND tb_caller='PDF_PAYMENT_REMINDER'");
-    body.setWhereClause(sql);
-    message_body = body.getTemplate();
-  }
+  AntiquaTemplates body(this);
+  QString sql("o_id=" + QString::number(ids.or_id));
+  sql.append(" AND tb_caller='PDF_PAYMENT_REMINDER'");
+  QString message_body = body.getTemplate(sql);
 
   QString cfg_prefix("company/payment_reminder_");
   PaymentReminder *m_d = new PaymentReminder(this);

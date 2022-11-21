@@ -32,6 +32,7 @@ private Q_SLOTS:
 public Q_SLOTS:
   void queryNewOrders(int waitSecs = 1);
   void queryOrder(const QString &orderId);
+  void postOperation(const QJsonObject &operation);
 
 public:
   explicit Abebooks(QObject *parent = nullptr);

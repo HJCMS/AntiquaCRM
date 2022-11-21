@@ -11,11 +11,13 @@
 #include <QRegularExpression>
 #include <QVariant>
 
-class AntiquaTemplates final : public QObject, public AntiquaCRM::ASqlFiles {
+class AntiquaTemplates final : public QObject {
   Q_OBJECT
 
 private:
   const QRegularExpression pattern = QRegularExpression("^crm_([a-z_]+)$");
+
+  AntiquaCRM::ASqlCore *m_sql;
 
   QString tb_message;
 
@@ -23,13 +25,13 @@ private:
 
   QMap<QString, QString> p_vars;
 
-  void loadDefaults();
+  bool queryCompanyData();
 
-  bool queryContent();
+  bool queryTemplateBody(const QString &sql);
 
 public:
-  explicit AntiquaTemplates(const QString &name, QObject *parent = nullptr);
-  const QString getTemplate();
+  explicit AntiquaTemplates(QObject *parent = nullptr);
+  const QString getTemplate(const QString &whereClause);
 };
 
 #endif // ANTIQUATEMPLATES_H

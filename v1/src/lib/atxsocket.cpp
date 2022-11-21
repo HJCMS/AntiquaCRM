@@ -11,8 +11,7 @@
 
 namespace AntiquaCRM {
 
-ATxSocket::ATxSocket(QObject *parent)
-    : QLocalSocket{parent}, connected{false} {
+ATxSocket::ATxSocket(QObject *parent) : QLocalSocket{parent}, connected{false} {
   setServerName(antiquaServerName());
   // setSocketDescriptor
 
@@ -108,7 +107,7 @@ const QStringList ATxSocket::getOperations() const {
   QStringList l;
   l << "window_status_message";
   l << "window_operation";
-  // l << "sql_operation";
+  l << "plugin_operation";
   return l;
 }
 
@@ -123,7 +122,12 @@ const QString ATxSocket::antiquaServerName() {
   QString name(ANTIQUACRM_CONNECTION_DOMAIN);
   name.append(".");
   name.append(QSysInfo::machineHostName());
-  QString userName = qEnvironmentVariable("USER");
+  QString userName;
+#ifdef Q_OS_LINUX
+  userName = qEnvironmentVariable("USER").trimmed().replace(" ", "");
+#else
+  userName = qEnvironmentVariable("USERNAME").trimmed().replace(" ", "");
+#endif
   if (!userName.isEmpty()) {
     name.append(".");
     name.append(userName);

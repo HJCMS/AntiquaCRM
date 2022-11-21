@@ -22,7 +22,6 @@ private:
   const QString completeName();
   const QString customerMail();
   const QString customerId();
-  const QString companySettings(const QString &key);
   const QString padNumber(const QVariant &);
 
 public:

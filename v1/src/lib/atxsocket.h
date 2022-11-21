@@ -38,7 +38,8 @@ private Q_SLOTS:
 
 public Q_SLOTS:
   /**
-   * @brief push Operation via Json Object
+   * @brief Sende Operationen an Registerkarte
+   * @param obj
    */
   void pushOperation(const QJsonObject &obj);
 

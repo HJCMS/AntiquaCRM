@@ -56,7 +56,6 @@ public:
   void initDefaultTheme();
   bool isRunning();
   int exec();
-  ~AntiquaAppl();
 };
 
 #endif // ANTIQUACRM_APPLICATION_H

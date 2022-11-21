@@ -6,6 +6,7 @@ SET(_subproject "AntiquaPrinting")
 SET (subproject_LINKER
  AntiquaCRM
  AntiquaWidgets
+ AntiquaCache
  ${QRENCODE_LIBRARY}
 )
 

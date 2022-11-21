@@ -106,10 +106,15 @@ bool AntiquaAppl::initialPlugins(QObject *receiver) {
   while (i.hasNext()) {
     AntiquaCRM::APluginInterface *m_iface = i.next();
     if (m_iface != nullptr) {
-      QString name(m_iface->displayName());
-      QString msg = tr("Plugin %1 found and loading ...").arg(qPrintable(name));
+      // Register:Signal:Operations
+      connect(m_mainWindow, SIGNAL(sendPluginOperation(const QJsonObject &)),
+              m_iface, SLOT(postOperation(const QJsonObject &)));
+      // Register:Signal:Network Query Finished
       connect(m_iface, SIGNAL(sendQueryFinished()), this,
               SLOT(setPluginQueryFinished()));
+
+      QString name(m_iface->displayName());
+      QString msg = tr("Plugin %1 found and loading ...").arg(qPrintable(name));
       if (receiver != nullptr) {
         QMetaObject::invokeMethod(receiver, "setMessage", Qt::DirectConnection,
                                   Q_ARG(QString, msg));
@@ -164,6 +169,12 @@ void AntiquaAppl::applicationQuit() {
   m_mainWindow->close();
   // SQL
   m_sql->close();
+  // Force destructers
+  if (m_mainWindow != nullptr)
+    m_mainWindow->deleteLater();
+
+  if (m_systemTray != nullptr)
+    m_systemTray->deleteLater();
   // finaly
   quit();
 }
@@ -291,5 +302,3 @@ int AntiquaAppl::exec() {
 
   return QCoreApplication::exec();
 }
-
-AntiquaAppl::~AntiquaAppl() {}

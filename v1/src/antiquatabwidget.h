@@ -23,7 +23,7 @@ class AntiquaTabWidget final : public QTabWidget {
 private:
   AntiquaSocketServer *m_socket;
   AntiquaTabBar *m_tabBar;
-  TabViews *m_views;
+  TabViews *m_views; /**< Views Menue */
   QWidget *m_testing;
 
   bool createSocketListener();
@@ -41,6 +41,7 @@ private Q_SLOTS:
 
 Q_SIGNALS:
   void sendStatusMessage(const QString &);
+  void sendPluginOperation(const QJsonObject &);
 
 public Q_SLOTS:
   void setShowTab(const QString &tabId);

@@ -62,11 +62,20 @@ private:
    */
   bool findCustomer(const QJsonObject &customer);
 
+Q_SIGNALS:
+  void sendOrderUpdate(const QJsonObject &);
+
 private Q_SLOTS:
   /**
    * @brief Send Action Open Order with Inventory Order ID
    */
   void openOrder(qint64 oid);
+
+  /**
+   * @brief create Provider Action
+   */
+  void createProviderAction(const QJsonObject &action);
+  void providerActionClicked();
 
   /**
    * @brief Send Action Craete Order with Provider Order ID

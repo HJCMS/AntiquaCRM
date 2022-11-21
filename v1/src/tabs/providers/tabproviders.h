@@ -5,6 +5,7 @@
 #ifndef ANTIQUACRM_TABPROVIDERS_H
 #define ANTIQUACRM_TABPROVIDERS_H
 
+#include <AntiquaCRM>
 #include <AntiquaWidgets>
 #include <QFrame>
 #include <QObject>
@@ -24,6 +25,8 @@ private:
   int counter;
   const int resetCounter = 300; /**< steps in Seconds */
 
+  AntiquaCRM::ASqlCore *m_sql;
+
   QWidget *m_mainPage;
   QSplitter *m_splitter;
   ProvidersPageView *m_pages;
@@ -39,6 +42,7 @@ private:
   bool findPage(const QString &provider, const QString &orderId);
 
 private Q_SLOTS:
+  void setOrderStatusUpdate(const QJsonObject &);
   void openOrderPage(const QString &provider, const QString &orderId);
 
 public Q_SLOTS:

@@ -6,7 +6,6 @@
 #include "providerspageview.h"
 #include "providerstreeview.h"
 
-#include <AntiquaCRM>
 #include <QChar>
 #include <QDataStream>
 #include <QIcon>
@@ -103,6 +102,21 @@ bool TabProviders::findPage(const QString &provider, const QString &orderId) {
   return false;
 }
 
+void TabProviders::setOrderStatusUpdate(const QJsonObject &obj) {
+  QString sql("UPDATE provider_order_history SET pr_status=");
+  sql.append(QString::number(obj.value("status").toInt()));
+  sql.append(" WHERE pr_order='");
+  sql.append(obj.value("orderid").toString());
+  sql.append("';");
+  m_sql->query(sql);
+  if (m_sql->lastError().isEmpty())
+    m_treeWidget->loadUpdate();
+#ifdef ANTIQUA_DEVELOPEMENT
+  else
+    qDebug() << m_sql->lastError();
+#endif
+}
+
 void TabProviders::openOrderPage(const QString &provider,
                                  const QString &orderId) {
   if (provider.isEmpty() || orderId.isEmpty())
@@ -114,7 +128,6 @@ void TabProviders::openOrderPage(const QString &provider,
   QString sql("SELECT pr_order_data FROM provider_order_history");
   sql.append(" WHERE pr_name='" + provider + "' AND pr_order='");
   sql.append(orderId + "';");
-  AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
   QSqlQuery q = m_sql->query(sql);
   if (q.size() == 1) {
     q.next();
@@ -127,6 +140,8 @@ void TabProviders::openOrderPage(const QString &provider,
     }
     QJsonObject jObj = doc.object();
     ProvidersOrderPage *page = new ProvidersOrderPage(jObj, m_pages);
+    connect(page, SIGNAL(sendOrderUpdate(const QJsonObject &)),
+            SLOT(setOrderStatusUpdate(const QJsonObject &)));
     if (page->loadOrderDataset()) {
       int index = m_pages->addPage(page, orderId);
       m_pages->setCurrentIndex(index);
@@ -139,7 +154,10 @@ void TabProviders::openOrderPage(const QString &provider,
 #endif
 }
 
-void TabProviders::openStartPage() { setCurrentIndex(0); }
+void TabProviders::openStartPage() {
+  m_sql = new AntiquaCRM::ASqlCore(this);
+  setCurrentIndex(0);
+}
 
 void TabProviders::createSearchQuery(const QString &query) { Q_UNUSED(query); }
 

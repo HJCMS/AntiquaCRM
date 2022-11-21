@@ -127,7 +127,38 @@ void BookCardPaintWidget::setArticleId(const QString &txt) {
   p_id.append(txt);
 }
 
-void BookCardPaintWidget::setStorage(const QString &txt) { p_storage = txt; }
+void BookCardPaintWidget::setStorage(int id) {
+  QString key("storagelocations");
+  AntiquaCRM::ASharedDataFiles dataFile;
+  if (dataFile.fileExists(key)) {
+    QJsonDocument jdoc = dataFile.getJson(key);
+    QJsonArray arr = jdoc.object().value(key).toArray();
+    if (arr.size() > 0) {
+      for (int i = 0; i < arr.size(); i++) {
+        QJsonObject jo = arr[i].toObject();
+        if (jo.value("id").toInt() == id) {
+          p_storage = jo.value("storage").toString();
+          p_storage.append(" - " + jo.value("identifier").toString());
+          break;
+        }
+      }
+    }
+  } else {
+    AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
+    QString sql("SELECT sl_storage,sl_identifier ");
+    sql.append("FROM ref_storage_location ORDER BY sl_id;");
+    QSqlQuery q = m_sql->query(sql);
+    if (q.size() > 0) {
+      while (q.next()) {
+        if (q.value("sl_id").toInt() == id) {
+          p_storage = q.value("sl_storage").toString();
+          p_storage.append(" - " + q.value("sl_identifier").toString());
+          break;
+        }
+      }
+    }
+  }
+}
 
 void BookCardPaintWidget::setBookDescription(
     const QHash<QString, QVariant> &list) {
@@ -381,7 +412,7 @@ int BookCard::exec(const QHash<QString, QVariant> &data) {
 
   p_filename = id;
   m_card->setBookDescription(data);
-  m_card->setStorage(data.value("storage").toString());
+  m_card->setStorage(data.value("storage").toInt());
 
   return QDialog::exec();
 }

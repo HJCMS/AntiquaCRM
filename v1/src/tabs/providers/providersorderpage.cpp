@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "providersorderpage.h"
+#include "provideractiondialog.h"
 #include "providerbuyerinfo.h"
 #include "providerorderinfo.h"
 #include "providerpurchasebar.h"
@@ -10,9 +11,11 @@
 #include "providerspageview.h"
 
 #include <QDebug>
+#include <QDialog>
 #include <QLayout>
 #include <QMessageBox>
 #include <QMutex>
+#include <QRadioButton>
 
 ProvidersOrderPage::ProvidersOrderPage(const QJsonObject &order,
                                        QWidget *parent)
@@ -52,6 +55,8 @@ ProvidersOrderPage::ProvidersOrderPage(const QJsonObject &order,
   connect(m_table, SIGNAL(sendOpenArticle(qint64)), SLOT(openArticle(qint64)));
   connect(m_actionBar, SIGNAL(sendCheckArticles()), SLOT(findArticleIds()));
   connect(m_actionBar, SIGNAL(sendCreateOrder()), SLOT(prepareCreateOrder()));
+  connect(m_actionBar, SIGNAL(sendProviderAction()),
+          SLOT(providerActionClicked()));
 }
 
 void ProvidersOrderPage::pushCmd(const QJsonObject &action) {
@@ -111,6 +116,49 @@ void ProvidersOrderPage::openOrder(qint64 oid) {
   obj.insert("tab", "orders_tab");
   obj.insert("open_order", oid);
   pushCmd(obj);
+}
+
+void ProvidersOrderPage::createProviderAction(const QJsonObject &action) {
+  QString provider = p_order.value("provider").toString();
+  QString orderid = p_order.value("orderid").toString();
+
+  QJsonObject orderUpdate;
+  orderUpdate.insert("orderid", QJsonValue(orderid));
+
+  AntiquaCRM::OrderStatus orderStatus;
+  int payStatus = action.value("paymentstatus").toInt();
+  switch (static_cast<AntiquaCRM::PaymentStatus>(payStatus)) {
+  case AntiquaCRM::PaymentStatus::SHIPMENT_CREATED:
+    orderStatus = AntiquaCRM::OrderStatus::STARTED;
+    orderUpdate.insert("status", QJsonValue(orderStatus));
+    emit sendOrderUpdate(orderUpdate);
+    break;
+
+  case AntiquaCRM::PaymentStatus::SHIPPED_AND_PAID:
+    orderStatus = AntiquaCRM::OrderStatus::DELIVERED;
+    orderUpdate.insert("status", QJsonValue(orderStatus));
+    emit sendOrderUpdate(orderUpdate);
+    break;
+
+  default:
+    break;
+  };
+
+  QJsonObject child(action);
+  child.insert("orderid", QJsonValue(orderid));
+
+  QJsonObject obj;
+  obj.insert("plugin_operation", QJsonValue(child));
+  obj.insert("provider", QJsonValue(provider));
+  pushCmd(obj);
+}
+
+void ProvidersOrderPage::providerActionClicked() {
+  ProviderActionDialog *m_d = new ProviderActionDialog(this);
+  connect(m_d, SIGNAL(sendPluginAction(const QJsonObject &)),
+          SLOT(createProviderAction(const QJsonObject &)));
+  m_d->exec();
+  m_d->deleteLater();
 }
 
 void ProvidersOrderPage::createOrder(const QString &providerId) {

@@ -8,6 +8,7 @@
 #include <AntiquaCRM>
 #include <QCloseEvent>
 #include <QHideEvent>
+#include <QJsonObject>
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QObject>
@@ -34,6 +35,7 @@ protected:
   void closeEvent(QCloseEvent *) override;
 
 Q_SIGNALS:
+  void sendPluginOperation(const QJsonObject &);
   void sendApplQuit();
 
 public Q_SLOTS:

@@ -8,6 +8,7 @@
 #include <AntiquaCRM>
 #include <AntiquaInputEdit>
 #include <QHash>
+#include <QJsonObject>
 #include <QObject>
 #include <QRegularExpression>
 #include <QSqlField>
@@ -78,6 +79,12 @@ protected:
    * @brief Nehme Daten von AntiquaWidgets::InputEdit
    */
   const QVariant getDataValue(const QString &objectName);
+
+  /**
+   * @brief Get InputEdit class
+   * @param objectName
+   */
+  InputEdit *getInputEdit(const QString &objectName);
 
   /**
    * @brief Liste der Datenfelder welche in @ref inputFields enthalten sind.
@@ -160,6 +167,14 @@ protected:
    */
   bool checkIsModified();
 
+  /**
+   * @brief Sucht mit @ref fieldPattern nacht Datenfeld und vergleicht Werte.
+   * @param name   - Objectname
+   * @param origin - Origin (Restore Value)
+   * @return true if modified
+   */
+  bool isModifiedCompare(const QString &name, const QVariant &origin);
+
 protected Q_SLOTS:
   void openErrnoMessage(const QString &info, const QString &error);
   void openSuccessMessage(const QString &info);
@@ -173,7 +188,7 @@ protected Q_SLOTS:
   /**
    * @brief Article Status an Dienstleister senden.
    */
-  void sendArticleStatus(qint64 articleId, qint8 count = 0);
+  void pushPluginOperation(const QJsonObject &obj);
 
   /**
    * @brief Ruft die reset() Methode Eingabefelder auf!

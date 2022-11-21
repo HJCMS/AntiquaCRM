@@ -24,7 +24,7 @@ namespace AntiquaCRM {
  * @li @SQL_SORTING@
  * @li @SQL_LIMIT@
  */
-class ANTIQUACRM_LIBRARAY ASqlFiles : public QFileInfo {
+class ANTIQUACRM_LIBRARAY ASqlFiles final : public QFileInfo {
 
 private:
   QDir p_dataDir;

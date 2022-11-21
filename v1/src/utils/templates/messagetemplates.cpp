@@ -60,18 +60,25 @@ const QString MessageTemplates::buildTitle(const QString &key) const {
 }
 
 bool MessageTemplates::createCompanySection() {
-  int count = 0;
-  AntiquaCRM::ASettings cfg(this);
-  cfg.beginGroup("company");
-  foreach (QString k, cfg.allKeys()) {
-    QJsonObject obj;
-    obj.insert("title", buildTitle(k));
-    obj.insert("key", "COMPANY_" + k.toUpper());
-    m_keysList->addKey("COMPANY", obj);
-    count++;
+  AntiquaCRM::ASqlFiles file("query_company_data");
+  if (file.openTemplate()) {
+    QSqlQuery q = m_sql->query(file.getQueryContent());
+    if (q.size() > 0) {
+      while (q.next()) {
+        QJsonObject obj;
+        obj.insert("title", QJsonValue(q.value("ac_info").toString()));
+        obj.insert("key", QJsonValue(q.value("ac_class").toString()));
+        m_keysList->addKey("COMPANY", obj);
+      }
+    } else if (!m_sql->lastError().isEmpty()) {
+      m_statusBar->showMessage(tr("an error occurred"));
+#ifdef ANTIQUA_DEVELOPEMENT
+      qDebug() << Q_FUNC_INFO << m_sql->lastError();
+#endif
+      return false;
+    }
   }
-  cfg.endGroup();
-  return (count > 0);
+  return true;
 }
 
 bool MessageTemplates::createSqlSection() {

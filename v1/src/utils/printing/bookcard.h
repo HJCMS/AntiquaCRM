@@ -63,7 +63,7 @@ public:
   explicit BookCardPaintWidget(QWidget *parent);
   void setQrUrl(const QUrl &);
   void setArticleId(const QString &);
-  void setStorage(const QString &);
+  void setStorage(int id);
   void setBookDescription(const QHash<QString, QVariant> &);
 };
 

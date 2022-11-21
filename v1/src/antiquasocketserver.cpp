@@ -27,13 +27,19 @@ void AntiquaSocketServer::createAction(const QJsonObject &obj) {
     emit sendStatusMessage(message);
     return;
   }
+
   if (obj.contains("window_operation") && obj.contains("tab")) {
-    emit sendAction(obj);
+    emit sendWindowOperation(obj);
+    return;
+  }
+
+  if (obj.contains("plugin_operation")) {
+    emit sendPluginOperation(obj);
     return;
   }
 
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << "TODO:" << obj;
+  qDebug() << Q_FUNC_INFO << "UNKNOWN OPERATION:" << obj;
 #endif
 }
 

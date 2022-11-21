@@ -57,10 +57,6 @@ CustomersEditor::CustomersEditor(QWidget *parent)
           SLOT(setCreateMailMessage(const QString &)));
 }
 
-qint64 CustomersEditor::customerId() const {
-  return m_headerFrame->c_id->value().toInt();
-}
-
 void CustomersEditor::setInputFields() {
   m_tableData = new AntiquaCRM::ASqlDataQuery("customers");
   inputFields = m_tableData->columnNames();
@@ -177,7 +173,7 @@ const QHash<QString, QVariant> CustomersEditor::createSqlDataset() {
 }
 
 void CustomersEditor::createSqlUpdate() {
-  qint64 cId = customerId();
+  qint64 cId = getSerialID("c_id");
   if (cId < 1) {
     qWarning("Skip SQL_UPDATE: (cID < 1)!");
     return;
@@ -201,7 +197,7 @@ void CustomersEditor::createSqlUpdate() {
       continue;
 
     // Nur geänderte Felder in das Update aufnehmen!
-    if (it.value() == m_tableData->getValue(it.key()))
+    if (!isModifiedCompare(it.key(), m_tableData->getValue(it.key())))
       continue;
 
     if (m_tableData->getType(it.key()).id() == QMetaType::QString) {
@@ -223,7 +219,7 @@ void CustomersEditor::createSqlUpdate() {
   QString sql("UPDATE customers SET ");
   sql.append(set.join(","));
   sql.append(",c_changed=CURRENT_TIMESTAMP WHERE c_id=");
-  sql.append(QString::number(customerId()));
+  sql.append(QString::number(getSerialID("c_id")));
   sql.append(";");
   if (sendSqlQuery(sql)) {
     qInfo("SQL UPDATE Customers success!");
@@ -233,7 +229,7 @@ void CustomersEditor::createSqlUpdate() {
 }
 
 void CustomersEditor::createSqlInsert() {
-  qint64 cId = customerId();
+  qint64 cId = getSerialID("c_id");
   if (cId > 0) {
     qWarning("Skip SQL_INSERT: (cId > 0)!");
     return;
@@ -274,7 +270,7 @@ void CustomersEditor::createSqlInsert() {
   sql.append(",c_changed) VALUES (");
   sql.append(values.join(","));
   sql.append(",CURRENT_TIMESTAMP) RETURNING c_id;");
-  if (sendSqlQuery(sql) && customerId() >= 1) {
+  if (sendSqlQuery(sql) && getSerialID("c_id") >= 1) {
     qInfo("SQL INSERT Customer success!");
     sendStatusMessage(tr("Save Customer data success!"));
     m_actionBar->setRestoreable(m_tableData->isValid());
@@ -282,8 +278,8 @@ void CustomersEditor::createSqlInsert() {
   }
 }
 
-void CustomersEditor::findPurchaces() {
-  qint64 c_id = customerId();
+void CustomersEditor::findPurchases() {
+  qint64 c_id = getSerialID("c_id");
   if (c_id < 1)
     return;
 
@@ -298,29 +294,22 @@ void CustomersEditor::findPurchaces() {
 
       while (q.next()) {
         int col = 0;
-        QTableWidgetItem *pid = m_ordersWidget->iconItem(q.value("payed"));
-        m_ordersWidget->setItem(row, col++, pid);
-
-        QTableWidgetItem *did = m_ordersWidget->numidItem(q.value("orderid"));
-        m_ordersWidget->setItem(row, col++, did);
-
-        QTableWidgetItem *iid = m_ordersWidget->numidItem(q.value("invoice"));
-        m_ordersWidget->setItem(row, col++, iid);
-
-        QTableWidgetItem *aid = m_ordersWidget->createItem(q.value("article"));
-        m_ordersWidget->setItem(row, col++, aid);
-
-        QTableWidgetItem *prn = m_ordersWidget->createItem(q.value("provider"));
-        m_ordersWidget->setItem(row, col++, prn);
-
-        QTableWidgetItem *prid = m_ordersWidget->createItem(q.value("prorder"));
-        m_ordersWidget->setItem(row, col++, prid);
-
-        QTableWidgetItem *in = m_ordersWidget->createDate(q.value("since"));
-        m_ordersWidget->setItem(row, col++, in);
-
-        QTableWidgetItem *out = m_ordersWidget->createDate(q.value("deliver"));
-        m_ordersWidget->setItem(row, col++, out);
+        m_ordersWidget->setItem(row, col++,
+                                m_ordersWidget->iconItem(q.value("payed")));
+        m_ordersWidget->setItem(row, col++,
+                                m_ordersWidget->numidItem(q.value("orderid")));
+        m_ordersWidget->setItem(row, col++,
+                                m_ordersWidget->numidItem(q.value("invoice")));
+        m_ordersWidget->setItem(row, col++,
+                                m_ordersWidget->createItem(q.value("article")));
+        m_ordersWidget->setItem(
+            row, col++, m_ordersWidget->createItem(q.value("provider")));
+        m_ordersWidget->setItem(row, col++,
+                                m_ordersWidget->createItem(q.value("prorder")));
+        m_ordersWidget->setItem(row, col++,
+                                m_ordersWidget->createDate(q.value("since")));
+        m_ordersWidget->setItem(row, col++,
+                                m_ordersWidget->createDate(q.value("deliver")));
 
         row++;
       }
@@ -329,7 +318,7 @@ void CustomersEditor::findPurchaces() {
 }
 
 void CustomersEditor::setSaveData() {
-  if (customerId() > 0) {
+  if (getSerialID("c_id") > 0) {
     createSqlUpdate();
   } else {
     createSqlInsert();
@@ -355,11 +344,12 @@ void CustomersEditor::setFinalLeaveEditor() {
 }
 
 void CustomersEditor::setCreateMailMessage(const QString &action) {
-  if (customerId() < 1)
+  qint64 cid = getSerialID("c_id");
+  if (cid < 1)
     return;
 
   MailForwardDialog *d = new MailForwardDialog(this);
-  d->exec(customerId(), action);
+  d->exec(cid, action);
   sendStatusMessage(tr("Send eMail finished!"));
 }
 
@@ -395,7 +385,7 @@ bool CustomersEditor::openEditEntry(qint64 cutomerId) {
 
   if (status) {
     importSqlResult();
-    findPurchaces();
+    findPurchases();
     setEnabled(true);
   }
 

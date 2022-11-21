@@ -28,8 +28,6 @@ private:
   CustomersOrders *m_ordersWidget;
   EditorActionBar *m_actionBar;
 
-  qint64 customerId() const;
-
   void setInputFields() override;
   bool setDataField(const QSqlField &field, const QVariant &value) override;
   void importSqlResult() override;
@@ -41,7 +39,7 @@ private:
   /**
    * @brief Einkäufe vom Kunden suchen und einfügen!
    */
-  void findPurchaces();
+  void findPurchases();
 
 private Q_SLOTS:
   void setSaveData() override;

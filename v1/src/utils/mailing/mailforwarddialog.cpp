@@ -193,9 +193,7 @@ void MailForwardDialog::setBody(const QString &body) {
     if (m.isValid()) {
       QString from = m.captured(0);
       QString to = m_keys->convert(from);
-#ifdef ANTIQUA_DEVELOPEMENT
-      qDebug() << Q_FUNC_INFO << from << to;
-#endif
+      // qDebug() << Q_FUNC_INFO << from << to;
       if (!to.isEmpty())
         buffer.replace(from, to, Qt::CaseSensitive);
     }

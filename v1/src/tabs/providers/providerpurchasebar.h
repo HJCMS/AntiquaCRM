@@ -5,18 +5,19 @@
 #ifndef ANTIQUACRM_PROVIDERPURCHASEBAR_H
 #define ANTIQUACRM_PROVIDERPURCHASEBAR_H
 
-#include <QStatusBar>
+#include <AntiquaCRM>
 #include <QLabel>
 #include <QLineEdit>
-#include <QPushButton>
 #include <QObject>
+#include <QPushButton>
+#include <QStatusBar>
 #include <QWidget>
 
-class ProviderPurchaseBar : public QStatusBar
-{
+class ProviderPurchaseBar : public QStatusBar {
   Q_OBJECT
 
 private:
+  QPushButton *btn_provider;
   QPushButton *btn_create;
   QPushButton *btn_check;
 
@@ -24,6 +25,7 @@ private Q_SLOTS:
   void createClicked();
 
 Q_SIGNALS:
+  void sendProviderAction();
   void sendCreateOrder();
   void sendCheckArticles();
 

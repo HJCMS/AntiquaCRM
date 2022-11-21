@@ -16,6 +16,7 @@ SET (projectLibrary_LINKER
 )
 
 SET (projectLibrary_SOURCES
+ provideractiondialog.cpp
  providerbuyerinfo.cpp
  providerorderinfo.cpp
  providerpurchasebar.cpp
@@ -28,6 +29,7 @@ SET (projectLibrary_SOURCES
 )
 
 SET (projectLibrary_HEADERS
+ provideractiondialog.h
  providerbuyerinfo.h
  providerorderinfo.h
  providerpurchasebar.h

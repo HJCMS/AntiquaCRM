@@ -51,6 +51,10 @@ const QVariant InventoryEditor::getDataValue(const QString &objectName) {
   return retval;
 }
 
+InputEdit *InventoryEditor::getInputEdit(const QString &objectName) {
+  return findChild<InputEdit *>(objectName, INPUT_FIND_OPTS);
+}
+
 bool InventoryEditor::isIgnoredField(const QString &fieldName) {
   if (ignoreFields.size() < 1 || fieldName.isEmpty())
     return false;
@@ -104,8 +108,11 @@ bool InventoryEditor::checkIsModified() {
       if (QMetaObject::invokeMethod(list.at(i), "isModified",
                                     Qt::DirectConnection,
                                     Q_RETURN_ARG(bool, b))) {
-        // qDebug() << "checkIsModified" << list.at(i)->objectName() << b;
+
         if (b) {
+#ifdef ANTIQUA_DEVELOPEMENT
+          qDebug() << "IsModified" << list.at(i)->objectName() << b;
+#endif
           setWindowModified(true);
           return true;
         }
@@ -114,6 +121,73 @@ bool InventoryEditor::checkIsModified() {
   }
   setWindowModified(false);
   return false;
+}
+
+bool InventoryEditor::isModifiedCompare(const QString &name,
+                                        const QVariant &origin) {
+  InputEdit *obj = findChild<InputEdit *>(name, INPUT_FIND_OPTS);
+  if (obj == nullptr)
+    return false;
+
+  // Der Datensatzwert der vieleicht Neu ist?
+  QVariant n_value = obj->value();
+  // Wenn der Datentype nicht stimmt austeigen!
+  if (origin.type() != n_value.type())
+    return true;
+
+  // Datentype nach QMetaType verschieben.
+  QMetaType metaType(QMetaType::type(origin.typeName()));
+
+  // Jetzt vergleiche anstellen.
+  bool status = false;
+  switch (metaType.id()) {
+  case QMetaType::QString: {
+    QString buffer = origin.toString();
+    int index = buffer.compare(n_value.toString());
+    status = (index != 0);
+    break;
+  }
+
+  case QMetaType::Int:
+  case QMetaType::UInt:
+  case QMetaType::Long:
+  case QMetaType::ULong:
+  case QMetaType::LongLong:
+  case QMetaType::ULongLong:
+    status = (origin.toInt() != n_value.toInt());
+    break;
+
+  case QMetaType::Float:
+    status = (origin.toFloat() != n_value.toFloat());
+    break;
+
+  case QMetaType::Double:
+    status = (origin.toDouble() != n_value.toDouble());
+    break;
+
+  case QMetaType::Bool:
+    status = (origin.toBool() != n_value.toBool());
+    break;
+
+  case QMetaType::QDate:
+    return (origin.toDate() != n_value.toDate());
+    break;
+
+  case QMetaType::QTime:
+    status = (origin.toTime() != n_value.toTime());
+    break;
+
+  case QMetaType::QDateTime:
+    status = (origin.toDateTime() != n_value.toDateTime());
+    break;
+
+  default:
+    status = false;
+    break;
+  };
+
+  obj->setModified(status);
+  return status;
 }
 
 void InventoryEditor::openErrnoMessage(const QString &info,
@@ -160,22 +234,14 @@ void InventoryEditor::sendStatusMessage(const QString &message) {
   atxs.close();
 }
 
-void InventoryEditor::sendArticleStatus(qint64 articleId, qint8 count) {
-  if (articleId < 1)
+void InventoryEditor::pushPluginOperation(const QJsonObject &obj) {
+  if (obj.isEmpty())
     return;
 
-  qDebug() << Q_FUNC_INFO << "TODO" << articleId << count;
-  /*
-    AntiquaCRM::ATxSocket atxs(this);
-    atxs.setObjectName("plugin_article_update");
-    QJsonObject obj;
-    QJsonObject action;
-    action.insert("articleId", QJsonValue(articleId));
-    action.insert("count", QJsonValue(count));
-    obj.insert("plugin_article_update", QJsonValue(action));
-    atxs.pushMessage(obj);
-    atxs.close();
-  */
+  AntiquaCRM::ATxSocket atxs(this);
+  atxs.setObjectName("plugin_operation");
+  atxs.pushOperation(obj);
+  atxs.close();
 }
 
 void InventoryEditor::setResetInputFields() {

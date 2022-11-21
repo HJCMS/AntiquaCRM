@@ -9,6 +9,7 @@
 #include <QDate>
 #include <QDateTime>
 #include <QDomDocument>
+#include <QFlags>
 #include <QJsonDocument>
 #include <QJsonValue>
 #include <QNetworkCookie>
@@ -164,6 +165,13 @@ public Q_SLOTS:
    * @brief This Method is reserved to Query with a given Provider Order Id.
    */
   virtual void queryOrder(const QString &orderId) = 0;
+
+  /**
+   * @brief Send Operation to Provider Interface
+   * @param section  - Operation category
+   * @param operation - JsonObject
+   */
+  virtual void postOperation(const QJsonObject &operation) = 0;
 
 public:
   explicit APluginInterface(QObject *parent = nullptr);

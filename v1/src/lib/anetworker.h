@@ -69,6 +69,14 @@ public:
                                       const QJsonDocument &body);
 
   /**
+   * @brief Standard PUT Senden
+   * @param url
+   * @param data
+   * @return
+   */
+  QNetworkReply *putRequest(const QUrl &url, const QByteArray &data);
+
+  /**
    * @brief Standard GET Anfrage
    * @note Wenn es eine https Verbindung ist und der
    *    Host mit QUrl:setHost() in der URL gesetzt ist.

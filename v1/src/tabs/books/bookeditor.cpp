@@ -6,6 +6,7 @@
 #include "keywordlineedit.h"
 
 #include <AntiquaCRM>
+#include <AntiquaPrinting>
 #include <QDebug>
 #include <QMessageBox>
 
@@ -403,7 +404,7 @@ void BookEditor::createSqlUpdate() {
       continue;
 
     // Nur geänderte Felder in das Update aufnehmen!
-    if (it.value() == m_tableData->getValue(it.key()))
+    if (!isModifiedCompare(it.key(), m_tableData->getValue(it.key())))
       continue;
 
     if (m_tableData->getType(it.key()).id() == QMetaType::QString) {
@@ -421,24 +422,25 @@ void BookEditor::createSqlUpdate() {
     return;
   }
 
-  /*
-   * Artikel auf Deaktivierung prüfen!
-   * Wenn sich die Anzahl geändert hat, ein Update senden!
-   */
-  int _curCount = ib_count->value().toInt();
-  int _oldcount = m_tableData->getValue("ib_count").toInt();
-  if (_oldcount != _curCount && _curCount == 0) {
-    /*
-     * Den Buchdaten Zwischenspeicher anpassen damit das Signal
-     * an die Dienstleister nur einmal gesendet wird!
-     */
-    m_tableData->setValue("ib_count", _curCount);
-
+  // Artikel auf Deaktivierung prüfen!
+  // Wenn sich die Anzahl geändert hat, ein Update senden!
+  // NOTE Die Nutzerabfrage erfolgt vorher in setSaveData()!
+  int cur_count = ib_count->value().toInt();
+  int old_count = m_tableData->getValue("ib_count").toInt();
+  if (old_count != cur_count && cur_count == 0) {
+    // Den Buchdaten Zwischenspeicher anpassen damit das Signal
+    // an die Dienstleister nur einmal gesendet wird!
+    m_tableData->setValue("ib_count", cur_count);
     // Ab diesen Zeitpunkt ist das Zurücksetzen erst mal nicht mehr gültig!
     m_actionBar->setRestoreable(false);
-
-    // Senden Bestands Mitteilung an den Socket
-    sendArticleStatus(articleId, _curCount);
+    // Sende Bestands Mitteilung an den Socket
+    QJsonObject obj;
+    QJsonObject action;
+    action.insert("type", QJsonValue("article_update"));
+    action.insert("articleId", QJsonValue(articleId));
+    action.insert("count", QJsonValue(cur_count));
+    obj.insert("plugin_operation", QJsonValue(action));
+    pushPluginOperation(obj);
   }
 
   QString sql("UPDATE inventory_books SET ");
@@ -458,17 +460,13 @@ void BookEditor::createSqlInsert() {
     createSqlUpdate();
     return;
   }
-  /*
-   * Bei einem INSERT die Anforderungen anpassen.
-   */
+  // Bei einem INSERT die Anforderungen anpassen.
   ib_count->setRequired(true);
   ib_id->setRequired(false);
 
-  /*
-   * Prüfung der Buchdaten Klasse
-   * Die Initialisierung erfolgt in setInputFields!
-   * Bei einem INSERT wir diese hier befüllt!
-   */
+  // Prüfung der Buchdaten Klasse
+  // Die Initialisierung erfolgt in setInputFields!
+  // Bei einem INSERT wir diese hier befüllt!
   if (m_tableData == nullptr || !m_tableData->isValid()) {
     qWarning("Invalid AntiquaCRM::ASqlDataQuery detected!");
     return;
@@ -568,8 +566,17 @@ void BookEditor::setFinalLeaveEditor() {
 }
 
 void BookEditor::setPrintBookCard() {
-  // TODO
-  qDebug() << Q_FUNC_INFO << "TODO";
+  BookCard *m_d = new BookCard(this);
+  m_d->setObjectName("book_card_printing");
+  QHash<QString, QVariant> data;
+  data.insert("id", getDataValue("ib_id"));
+  data.insert("title", getDataValue("ib_title"));
+  data.insert("author", getDataValue("ib_author"));
+  data.insert("year", getDataValue("ib_year"));
+  data.insert("storage", getDataValue("ib_storage"));
+  data.insert("since", getDataValue("ib_since"));
+  data.insert("keywords", getDataValue("ib_keyword"));
+  m_d->exec(data);
 }
 
 void BookEditor::actionRemoveImage(qint64 articleId) {
@@ -631,10 +638,7 @@ bool BookEditor::openEditEntry(qint64 articleId) {
   }
 
   if (status) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << "Edit Book:" << articleId << status;
-#endif
-    // Die Erforderliche abfolge ist Identisch mit setRestore!
+    // Die aktuelle Abfolge ist Identisch mit setRestore!
     setRestore();
   }
 
