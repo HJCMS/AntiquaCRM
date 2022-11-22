@@ -167,4 +167,9 @@ void TabProviders::openEntry(qint64 customerId) { Q_UNUSED(customerId); };
 
 void TabProviders::onEnterChanged() { openStartPage(); }
 
-TabProviders::~TabProviders() { killTimer(timerId); }
+TabProviders::~TabProviders() {
+#ifdef ANTIQUA_DEVELOPEMENT
+  qInfo("Shutdown Providers timer ...");
+#endif
+  killTimer(timerId);
+}

@@ -17,9 +17,8 @@
 #include <QWidget>
 
 /**
- * @class InventoryEditor
- * @brief Abstraktions Klasse für das Editieren von Tabellen
- * @abstract
+ * @brief Hauptklasse für das Editieren
+ * @abstract InventoryEditor
  * @ingroup widgets
  */
 class InventoryEditor : public QWidget {

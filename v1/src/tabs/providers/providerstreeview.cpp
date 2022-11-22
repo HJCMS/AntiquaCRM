@@ -3,7 +3,6 @@
 
 #include "providerstreeview.h"
 
-#include <AntiquaCRM>
 #include <QDate>
 #include <QDebug>
 #include <QIcon>
@@ -96,16 +95,16 @@ void ProvidersTreeView::itemSelected(QTreeWidgetItem *item, int) {
   }
 }
 
-void ProvidersTreeView::updateOrderStatus(QTreeWidgetItem *item, int status) {
+void ProvidersTreeView::updateOrderStatus(QTreeWidgetItem *item,
+                                          AntiquaCRM::OrderStatus status) {
   QString tip = item->toolTip(0);
   bool modified = item->data(1, Qt::UserRole).toBool();
 
-  switch (static_cast<AntiquaCRM::OrderStatus>(status)) {
+  switch (status) {
   case (AntiquaCRM::OrderStatus::OPEN):
     return; /**< Nothing todo */
 
   case (AntiquaCRM::OrderStatus::STARTED): {
-    item->setSelected(false);
     QString mTip = tr("Created");
     if (modified != true || !tip.contains(mTip))
       item->setToolTip(0, tip + " " + mTip);
@@ -116,7 +115,6 @@ void ProvidersTreeView::updateOrderStatus(QTreeWidgetItem *item, int status) {
   }
 
   case (AntiquaCRM::OrderStatus::FETCHET): {
-    item->setSelected(false);
     QString mTip = tr("Fetchet");
     if (modified != true || !tip.contains(mTip))
       item->setToolTip(0, tip + " " + mTip);
@@ -127,7 +125,6 @@ void ProvidersTreeView::updateOrderStatus(QTreeWidgetItem *item, int status) {
   }
 
   case (AntiquaCRM::OrderStatus::DELIVERED): {
-    item->setSelected(false);
     QString mTip = tr("Delivered");
     if (modified != true || !tip.contains(mTip))
       item->setToolTip(0, tip + " " + mTip);
@@ -138,7 +135,6 @@ void ProvidersTreeView::updateOrderStatus(QTreeWidgetItem *item, int status) {
   }
 
   case (AntiquaCRM::OrderStatus::REMINDET): {
-    item->setSelected(false);
     QString mTip = tr("Remindet");
     if (modified != true || !tip.contains(mTip))
       item->setToolTip(0, tip + " " + mTip);
@@ -192,16 +188,32 @@ void ProvidersTreeView::addOrder(const QString &pro,
   }
 }
 
+void ProvidersTreeView::updateItemStatus(const QString &provider,
+                                         const QString &orderId,
+                                         AntiquaCRM::OrderStatus status) {
+  QTreeWidgetItem *parent = getParent(provider);
+  if (parent == nullptr)
+    return;
+
+  for (int i = 0; i < parent->childCount(); i++) {
+    QTreeWidgetItem *item = parent->child(i);
+    if (item != nullptr && item->text(0) == orderId) {
+      updateOrderStatus(item, status);
+    }
+  }
+}
+
 void ProvidersTreeView::loadUpdate() {
+  // Untermenü-Einträge entfernen!
   if (topLevelItemCount() > 0) {
     for (int t = 0; t < topLevelItemCount(); t++) {
       clearProvider(topLevelItem(t)->text(0));
     }
   }
 
+  QString table("query_provider_order_history");
   AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
-  QString sql =
-      AntiquaCRM::ASqlFiles::queryStatement("query_provider_order_history");
+  QString sql = AntiquaCRM::ASqlFiles::queryStatement(table);
   QSqlQuery q = m_sql->query(sql);
   int count = 0;
   if (q.size() > 0) {
@@ -209,7 +221,8 @@ void ProvidersTreeView::loadUpdate() {
       QString provider = q.value("pr_name").toString();
       addProvider(provider);
       QString id = q.value("pr_order").toString();
-      int status = q.value("pr_status").toInt();
+      AntiquaCRM::OrderStatus status =
+          static_cast<AntiquaCRM::OrderStatus>(q.value("pr_status").toInt());
       count++;
 
       if (exists(provider, id)) {
@@ -243,20 +256,6 @@ bool ProvidersTreeView::exists(const QString &provider, const QString &id) {
   return (getChild(provider, id) != nullptr);
 }
 
-void ProvidersTreeView::updateItemStatus(const QString &provider,
-                                         const QString &orderId, int status) {
-  QTreeWidgetItem *parent = getParent(provider);
-  if (parent == nullptr)
-    return;
-
-  for (int i = 0; i < parent->childCount(); i++) {
-    QTreeWidgetItem *item = parent->child(i);
-    if (item != nullptr && item->text(0) == orderId) {
-      updateOrderStatus(item, status);
-    }
-  }
-}
-
 void ProvidersTreeView::removeOrder(const QString &provider,
                                     const QString &id) {
   if (exists(provider, id))
@@ -272,10 +271,20 @@ void ProvidersTreeView::removeOrder(const QString &provider,
 }
 
 void ProvidersTreeView::sortAndResize() {
+  // Erst mal alles Ausgewählte aufheben!
+  if (selectedItems().size() > 0) {
+    QListIterator<QTreeWidgetItem *> selections(selectedItems());
+    while (selections.hasNext()) {
+      selections.next()->setSelected(false);
+    }
+  }
+
+  // Spaltenbreiten anpassen
   for (int i = 0; i < columnCount(); i++) {
     resizeColumnToContents(i);
   }
 
+  // Jetzt nach Bestellnummer sortieren!
   if (topLevelItemCount() > 0) {
     for (int t = 0; t < topLevelItemCount(); t++) {
       topLevelItem(t)->sortChildren(0, Qt::AscendingOrder);

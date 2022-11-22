@@ -5,7 +5,9 @@
 #ifndef COMPANY_SETTINGS_H
 #define COMPANY_SETTINGS_H
 
+#include <QGridLayout>
 #include <QLabel>
+#include <QLayout>
 #include <QLineEdit>
 #include <QObject>
 #include <QTextEdit>
@@ -21,26 +23,8 @@ class CompanySettings : public SettingsWidget {
   Q_OBJECT
 
 private:
-  QLineEdit *m_companyName;
-  QLineEdit *m_companyShortName;
-  QLineEdit *m_companyStreet;
-  QLineEdit *m_companyLocation;
-  QLineEdit *m_employer;
-  QLineEdit *m_phone;
-  QLineEdit *m_fax;
-  QLineEdit *m_email;
-  QLineEdit *m_bankname;
-  QLineEdit *m_bicswift;
-  QLineEdit *m_iban;
-  QLineEdit *m_tax_number;
-  QLineEdit *m_legality;
-  QTextEdit *m_signature;
-
-  /**
-   * @brief Payment Reminder ...
-   */
-  QLineEdit *m_payment_reminder_title;
-  QLineEdit *m_payment_reminder_additional;
+  int layoutRow = 0;
+  QGridLayout *m_layout;
 
   /**
    * @brief GridLayout Info Labels
@@ -51,7 +35,7 @@ private:
    * @note Ist an dieser Stelle nicht Notwendig
    * @see loadSectionConfig
    */
-  void initSignalChanged(){};
+  void initSignalChanged();
 
 private Q_SLOTS:
   /**

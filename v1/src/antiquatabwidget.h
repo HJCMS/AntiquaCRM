@@ -17,6 +17,11 @@
 class AntiquaTabBar;
 class AntiquaSocketServer;
 
+/**
+ * @brief Verwaltungs Klasse Registerkarten
+ * @class AntiquaTabWidget
+ * @section window
+ */
 class AntiquaTabWidget final : public QTabWidget {
   Q_OBJECT
 
@@ -26,10 +31,30 @@ private:
   TabViews *m_views; /**< Views Menue */
   QWidget *m_testing;
 
+  /**
+   * @brief Der lokalen Socketserver starten.
+   */
   bool createSocketListener();
 
+  /**
+   * @brief Primäre Methode zum einfügen von Registerkarten.
+   * @param name - Ist Identisch mit @ref availableTabs().key()
+   * @list Es können nur Karten geöffnet werden die hier Registriert sind!
+   * @li Ist die Karte bereits geöffnet, hole Sie nach vorne.
+   * @li Ist die Karte hier Registriert, Initialisiere Sie und einfügen.
+   */
   bool addInventoryTab(const QString &name);
+
+  /**
+   * @brief qobject_cast auf TabWidget
+   */
   inline Inventory *tabWidget(int index) const;
+
+  /**
+   * @brief Suche TabIndex mit Klassenbezeichner
+   * @note Jede Registerkarte hat einen eindeutigen Index.
+   * @see Konstruktor @ref Inventory
+   */
   int indexByName(const QString &name) const;
 
 private Q_SLOTS:
@@ -40,15 +65,34 @@ private Q_SLOTS:
   void setTabToVisit(int index);
 
 Q_SIGNALS:
+  /**
+   * @brief Nachricht an Hauptfenster
+   */
   void sendStatusMessage(const QString &);
+
+  /**
+   * @brief Sende eine Plugin Aktion
+   */
   void sendPluginOperation(const QJsonObject &);
 
 public Q_SLOTS:
+  /**
+   * @brief Tab suchen und nach vorne holen!
+   */
   void setShowTab(const QString &tabId);
 
 public:
   explicit AntiquaTabWidget(QMainWindow *parent = nullptr);
+
+  /**
+   * @brief Liste der Tabs
+   * @note Wird von Menüklassen verwendet!
+   */
   static const QMap<QString, QString> availableTabs();
+
+  /**
+   * @brief TimerEvents und Sockets sauber runterfahren!
+   */
   ~AntiquaTabWidget();
 };
 

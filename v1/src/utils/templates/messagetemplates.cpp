@@ -13,7 +13,8 @@ MessageTemplates::MessageTemplates(QWidget *parent) : QDialog{parent} {
   setObjectName("message_templates_dialog");
   setMinimumSize(600, 500);
   setSizeGripEnabled(true);
-  setWhatsThis(tr("in this Area"));
+  setWindowTitle(tr("Template Editor") + "[*]");
+  setWhatsThis(tr("Edit Templates"));
 
   QVBoxLayout *layout = new QVBoxLayout(this);
 
@@ -59,39 +60,16 @@ const QString MessageTemplates::buildTitle(const QString &key) const {
   return array.join(" ");
 }
 
-bool MessageTemplates::createCompanySection() {
-  AntiquaCRM::ASqlFiles file("query_company_data");
+bool MessageTemplates::createMacrosTree() {
+  AntiquaCRM::ASqlFiles file("union_template_keys");
   if (file.openTemplate()) {
     QSqlQuery q = m_sql->query(file.getQueryContent());
     if (q.size() > 0) {
       while (q.next()) {
         QJsonObject obj;
-        obj.insert("title", QJsonValue(q.value("ac_info").toString()));
-        obj.insert("key", QJsonValue(q.value("ac_class").toString()));
-        m_keysList->addKey("COMPANY", obj);
-      }
-    } else if (!m_sql->lastError().isEmpty()) {
-      m_statusBar->showMessage(tr("an error occurred"));
-#ifdef ANTIQUA_DEVELOPEMENT
-      qDebug() << Q_FUNC_INFO << m_sql->lastError();
-#endif
-      return false;
-    }
-  }
-  return true;
-}
-
-bool MessageTemplates::createSqlSection() {
-  AntiquaCRM::ASqlFiles file("query_template_keys");
-  if (file.openTemplate()) {
-    file.setWhereClause("tk_key IS NOT NULL");
-    QSqlQuery q = m_sql->query(file.getQueryContent());
-    if (q.size() > 0) {
-      while (q.next()) {
-        QJsonObject obj;
-        obj.insert("title", QJsonValue(q.value("tk_title").toString()));
-        obj.insert("key", QJsonValue(q.value("tk_key").toString()));
-        m_keysList->addKey(q.value("tk_type").toString(), obj);
+        obj.insert("title", QJsonValue(q.value("title").toString()));
+        obj.insert("key", QJsonValue(q.value("macro").toString()));
+        m_keysList->addKey(q.value("category").toString(), obj);
       }
     } else if (!m_sql->lastError().isEmpty()) {
       m_statusBar->showMessage(tr("an error occurred"));
@@ -197,10 +175,7 @@ int MessageTemplates::exec() {
   if (m_sql == nullptr)
     return QDialog::Rejected;
 
-  if (!createCompanySection())
-    return QDialog::Rejected;
-
-  if (!createSqlSection())
+  if (!createMacrosTree())
     return QDialog::Rejected;
 
   if (!createSelecters())

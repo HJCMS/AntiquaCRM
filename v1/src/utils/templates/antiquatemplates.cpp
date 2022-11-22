@@ -13,7 +13,6 @@ AntiquaTemplates::AntiquaTemplates(QObject *parent) : QObject{parent} {
 bool AntiquaTemplates::queryCompanyData() {
   AntiquaCRM::ASqlFiles file("query_company_data");
   if (file.openTemplate()) {
-    // file.setWhereClause(QString());
     QSqlQuery q = m_sql->query(file.getQueryContent());
     if (q.size() > 0) {
       while (q.next()) {

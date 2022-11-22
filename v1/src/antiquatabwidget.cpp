@@ -178,9 +178,15 @@ const QMap<QString, QString> AntiquaTabWidget::availableTabs() {
 }
 
 AntiquaTabWidget::~AntiquaTabWidget() {
+  // disable socket
   if (m_socket != nullptr) {
-    qInfo("Close Socket ...");
     m_socket->close();
     m_socket->deleteLater();
+  }
+  // unload tabs
+  for (int t = 0; t < count(); t++) {
+    Inventory *m_tab = tabWidget(t);
+    removeTab(t);
+    m_tab->deleteLater();
   }
 }

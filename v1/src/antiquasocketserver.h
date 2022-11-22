@@ -30,6 +30,7 @@ Q_SIGNALS:
 public:
   explicit AntiquaSocketServer(QObject *parent = nullptr);
   static const QString socketPath();
+  ~AntiquaSocketServer();
 };
 
 #endif // ANTIQUACRM_SOCKETSERVER_H

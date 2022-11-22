@@ -116,20 +116,17 @@ void Printing::readConfiguration() {
   p_grace_period = config->value("grace_period").toString();
   config->endGroup();
 
-  config->beginGroup("company");
-  QStringList keys = config->childKeys();
-  if (keys.count() < 2) {
-    QString warn("<p>");
-    warn.append(tr("Your Company configuration is incomplete!"));
-    warn.append("</p>");
-    warn.append(tr("Edit Company settings first!"));
-    warningMessageBox(warn);
-    return;
+  AntiquaCRM::ASqlCore sql(this);
+  QSqlQuery q = sql.query("SELECT ac_class,ac_value FROM antiquacrm_company;");
+  if (q.size() > 0) {
+    while (q.next()) {
+      QString key = q.value("ac_class").toString().toUpper();
+      QString value = q.value("ac_value").toString();
+      // qDebug() << key << ":" << value;
+      companyData.insert(key, value);
+    }
   }
-  foreach (QString k, keys) {
-    companyData.insert(k, config->value(k).toString());
-  }
-  config->endGroup();
+
   config->beginGroup("printer");
   QFont font;
   if (font.fromString(config->value("header_font").toString())) {
@@ -217,13 +214,15 @@ void Printing::constructHeader() {
   block.setAlignment(Qt::AlignCenter);
   QTextCursor cursor = header->textCursor();
   cursor.setCharFormat(headerFormat());
-  cursor.insertBlock(block);
-  QString str = companyData.value("name");
-  cursor.insertText(str.replace("#", "\n"));
-  cursor.atEnd();
+  QString title = companyData.value("COMPANY_PRINTING_HEADER");
+  foreach (QString line, title.split("\n")) {
+    cursor.insertBlock(block);
+    cursor.insertText(line);
+    cursor.atEnd();
+  }
   QFontMetricsF fm(headerFont);
   int w = header->size().width();
-  int h = qRound(fm.height() * header->document()->lineCount());
+  int h = qRound(fm.height() * (header->document()->lineCount() + 1));
   header->resize(QSize(w, h));
   header->update();
   header->setMaximumHeight(h);
@@ -248,30 +247,34 @@ void Printing::constructFooter() {
   ce00.setFormat(cellFormat);
   cursor = ce00.firstCursorPosition();
   cursor.setCharFormat(footerFormat());
-  QString name = companyData.value("name");
+  QString name = companyData.value("COMPANY_FULLNAME");
   cursor.insertText(name.replace("#", " ") + "\n");
-  cursor.insertText(companyData.value("street") + " ");
-  cursor.insertText(companyData.value("location") + "\n");
-  cursor.insertText(tr("email") + ": ");
-  cursor.insertText(companyData.value("email") + "\n");
-  cursor.insertText(tr("phone") + ": ");
-  cursor.insertText(companyData.value("phone") + "\n");
-  cursor.insertText(tr("fax") + ": ");
-  cursor.insertText(companyData.value("fax") + "\n");
+  cursor.insertText(companyData.value("COMPANY_STREET") + " ");
+  cursor.insertText(companyData.value("COMPANY_LOCATION") + "\n");
+  cursor.insertText(tr("eMail") + ": ");
+  cursor.insertText(companyData.value("COMPANY_EMAIL") + "\n");
+  cursor.insertText(tr("Phone") + ": ");
+  cursor.insertText(companyData.value("COMPANY_PHONE") + "\n");
+  cursor.insertText(tr("Fax") + ": ");
+  cursor.insertText(companyData.value("COMPANY_FAX") + "\n");
 
   QTextTableCell ce01 = table->cellAt(0, 1);
   ce01.setFormat(cellFormat);
   cursor = ce01.firstCursorPosition();
   cursor.setCharFormat(footerFormat());
-  cursor.insertText(companyData.value("bank") + "\n");
-  cursor.insertText("SWIFT-BIC: ");
-  cursor.insertText(companyData.value("bicswift") + "\n");
+  cursor.insertText(companyData.value("COMPANY_BANK_NAME") + "\n");
+  cursor.insertText("Swift-BIC: ");
+  cursor.insertText(companyData.value("COMPANY_BANK_BICSWIFT") + "\n");
   cursor.insertText("IBAN: ");
-  cursor.insertText(companyData.value("iban") + "\n");
-  cursor.insertText(tr("tax number") + ": ");
-  cursor.insertText(companyData.value("taxnumber") + "\n");
-  cursor.insertText(companyData.value("legality") + "\n");
-
+  cursor.insertText(companyData.value("COMPANY_BANK_IBAN") + "\n");
+  cursor.insertText(tr("Tax Number") + ": ");
+  cursor.insertText(companyData.value("COMPANY_TAX_NUMBER") + "\n");
+  cursor.insertText(tr("VAT Number") + ": ");
+  cursor.insertText(companyData.value("COMPANY_VAT_NUMBER") + "\n");
+  if (!companyData.value("COMPANY_LEGALITY").isEmpty()) {
+    cursor.insertText(tr("Legality") + ": ");
+    cursor.insertText(companyData.value("COMPANY_LEGALITY") + "\n");
+  }
   cursor = footer->textCursor();
   cursor.atEnd();
 

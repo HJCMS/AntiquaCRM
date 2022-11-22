@@ -39,11 +39,11 @@ void DeliveryNote::constructSubject() {
   QTextTableCell tc00 = table->cellAt(0, 0);
   tc00.setFormat(cellFormat);
   cursor = tc00.firstCursorPosition();
-  QString addr(companyData.value("shortname"));
+  QString addr(companyData.value("COMPANY_SHORTNAME"));
   addr.append(" - ");
-  addr.append(companyData.value("street"));
+  addr.append(companyData.value("COMPANY_STREET"));
   addr.append(" - ");
-  addr.append(companyData.value("location"));
+  addr.append(companyData.value("COMPANY_LOCATION"));
   cursor.insertText(addr);
   // Delivey note
   QTextTableCell tc01 = table->cellAt(0, 1);

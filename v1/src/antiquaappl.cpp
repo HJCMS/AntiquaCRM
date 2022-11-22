@@ -106,10 +106,10 @@ bool AntiquaAppl::initialPlugins(QObject *receiver) {
   while (i.hasNext()) {
     AntiquaCRM::APluginInterface *m_iface = i.next();
     if (m_iface != nullptr) {
-      // Register:Signal:Operations
+      // Slot:<APluginInterface>::OrderUpdateAction
       connect(m_mainWindow, SIGNAL(sendPluginOperation(const QJsonObject &)),
-              m_iface, SLOT(postOperation(const QJsonObject &)));
-      // Register:Signal:Network Query Finished
+              m_iface, SLOT(orderUpdateAction(const QJsonObject &)));
+      // Signal:<APluginInterface>::sendQueryFinished
       connect(m_iface, SIGNAL(sendQueryFinished()), this,
               SLOT(setPluginQueryFinished()));
 

@@ -26,6 +26,7 @@ SET (query_tables_FILES
   query_template_body.sql
   query_template_keys.sql
   query_company_data.sql
+  union_template_keys.sql
 )
 
 SET (select_statement_FILES

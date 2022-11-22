@@ -15,6 +15,11 @@
 #include <QStackedWidget>
 #include <QTableView>
 
+/**
+ * @brief Hauptklasse für Registerkarte
+ * @abstract Inventory
+ * @section widgets
+ */
 class Inventory : public QStackedWidget {
   Q_OBJECT
   Q_PROPERTY(bool closable READ isClosable WRITE setClosable NOTIFY sendClosableChanged)

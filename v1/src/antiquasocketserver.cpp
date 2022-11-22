@@ -68,3 +68,9 @@ void AntiquaSocketServer::incomingConnection(quintptr socketDescriptor) {
 const QString AntiquaSocketServer::socketPath() {
   return AntiquaCRM::ATxSocket::antiquaServerName();
 }
+
+AntiquaSocketServer::~AntiquaSocketServer() {
+#ifdef ANTIQUA_DEVELOPEMENT
+  qInfo("Shutdown and Close socket ...");
+#endif
+}

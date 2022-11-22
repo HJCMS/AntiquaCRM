@@ -148,16 +148,16 @@ void Abebooks::queryOrder(const QString &orderId) {
   m_network->xmlPostRequest(url, doc);
 }
 
-void Abebooks::postOperation(const QJsonObject &operation) {
-  if (!operation.contains("provider")) {
+void Abebooks::orderUpdateAction(const QJsonObject &options) {
+  if (!options.contains("provider")) {
     qWarning("Invalid caller for Abebooks::postOperation!");
     return;
   }
   // Prüfen ob es für ihn ist!
-  if (operation.value("provider").toString() != configProvider())
+  if (options.value("provider").toString() != configProvider())
     return;
 
-  qDebug() << Q_FUNC_INFO << operation;
+  qDebug() << Q_FUNC_INFO << options;
 }
 
 const QString Abebooks::configProvider() const {
@@ -218,17 +218,22 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
     item.setValue("o_since", dateTime);
     item.setValue("o_media_type", AntiquaCRM::BOOK);
 
-    // AntiquaCRM::PaymentStatus
+    /*
+     * @brief Konvertiere Provider PaymentStatus => OrderStatus!
+     * Wir verwenden im Auftragssystem nur den OrderStatus!
+     * Der PaymentStatus ist eine reine Dienstleistergeschichte!
+     */
     QDomNode statusNode = xml.firstChildNode(orderElement, "status");
     QString orderStatus = xml.getNodeValue(statusNode).toString();
     if (orderStatus.contains("Ordered")) {
-      item.setValue("o_order_status", AntiquaCRM::SHIPMENT_CREATED);
-    } else if (orderStatus.contains("Shipped")) {
-      item.setValue("o_order_status", AntiquaCRM::WAIT_FOR_PAYMENT);
+      // AntiquaCRM::SHIPMENT_CREATED => AntiquaCRM::STARTED
+      item.setValue("o_order_status", AntiquaCRM::OrderStatus::STARTED);
     } else if (orderStatus.contains("Cancelled")) {
-      item.setValue("o_order_status", AntiquaCRM::ORDER_CANCELED);
+      // AntiquaCRM::ORDER_CANCELED => AntiquaCRM::CANCELED
+      item.setValue("o_order_status", AntiquaCRM::OrderStatus::CANCELED);
     } else {
-      item.setValue("o_order_status", AntiquaCRM::STATUS_NOT_SET);
+      // AntiquaCRM::STATUS_NOT_SET => AntiquaCRM::OPEN
+      item.setValue("o_order_status", AntiquaCRM::OrderStatus::OPEN);
     }
 
     // AntiquaCRM::PaymentMethod

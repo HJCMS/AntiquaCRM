@@ -40,11 +40,11 @@ void PaymentReminder::constructSubject() {
   QTextTableCell tc00 = table->cellAt(0, 0);
   tc00.setFormat(cellFormat);
   cursor = tc00.firstCursorPosition();
-  QString addr(companyData.value("shortname"));
+  QString addr(companyData.value("COMPANY_SHORTNAME"));
   addr.append(" - ");
-  addr.append(companyData.value("street"));
+  addr.append(companyData.value("COMPANY_STREET"));
   addr.append(" - ");
-  addr.append(companyData.value("location"));
+  addr.append(companyData.value("COMPANY_LOCATION"));
   cursor.insertText(addr);
   // Invoice
   QTextTableCell tc01 = table->cellAt(0, 1);
@@ -92,7 +92,7 @@ void PaymentReminder::constructBody() {
   QTextTableCell ce00 = m_headerTable->cellAt(0, 0);
   cursor = ce00.firstCursorPosition();
   cursor.setCharFormat(titleText);
-  cursor.insertText(p_titleText);
+  cursor.insertText(companyData.value("COMPANY_PAYMENT_REMINDER_TITLE"));
   constraints.append(QTextLength(type, 80)); // 80%
 
   QTextTableCell ce01 = m_headerTable->cellAt(0, 1);
@@ -328,7 +328,7 @@ void PaymentReminder::finalizeBillings() {
 
 void PaymentReminder::setAdditionalInfo() {
   if (p_subText.isEmpty())
-    return;
+    p_subText = companyData.value("COMPANY_PAYMENT_REMINDER_ADDITIONAL");
 
   QTextCursor cursor = body->textCursor();
   cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
@@ -356,10 +356,8 @@ void PaymentReminder::setRegards() {
   bf.setAlignment(Qt::AlignLeft);
   cursor.setCharFormat(footerFormat());
   cursor.setBlockFormat(bf);
-  cursor.insertText("\n\n");
-  cursor.insertText(tr("Sincerely"));
-  cursor.insertText("\n   ");
-  cursor.insertText(companyData.value("shortname"));
+  cursor.insertText("\n\n" + tr("Sincerely") + "\n ");
+  cursor.insertText(companyData.value("COMPANY_SHORTNAME"));
 }
 
 bool PaymentReminder::generateDocument(QPrinter *printer) {
@@ -473,8 +471,6 @@ void PaymentReminder::setPaymentInfo(int orderId,    /* Bestellnummer */
   }
   p_deliveryId = deliverNoteId;
 }
-
-void PaymentReminder::setTitleText(const QString &txt) { p_titleText = txt; }
 
 void PaymentReminder::setMainText(const QString &txt) { p_mainText = txt; }
 

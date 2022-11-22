@@ -664,13 +664,10 @@ void OrdersEditor::createPrintPaymentReminder() {
   sql.append(" AND tb_caller='PDF_PAYMENT_REMINDER'");
   QString message_body = body.getTemplate(sql);
 
-  QString cfg_prefix("company/payment_reminder_");
   PaymentReminder *m_d = new PaymentReminder(this);
   m_d->setCustomerAddress(c_add);
   m_d->setPaymentInfo(ids.or_id, ids.cu_id, ids.in_id, did);
-  m_d->setTitleText(m_cfg->value(cfg_prefix + "title").toString());
   m_d->setMainText(message_body);
-  m_d->setFinalText(m_cfg->value(cfg_prefix + "additional").toString());
   if (m_d->exec(list) == QDialog::Accepted) {
     sendStatusMessage(tr("Printdialog closed."));
   }

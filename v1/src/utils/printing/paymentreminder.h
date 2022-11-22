@@ -24,7 +24,6 @@ class PaymentReminder : public Printing {
   Q_OBJECT
 
 private:
-  QString p_titleText = tr("Payment Reminder");
   QString p_mainText;
   QString p_subText;
   /**
@@ -93,8 +92,6 @@ protected Q_SLOTS:
 
 public:
   explicit PaymentReminder(QWidget *parent = nullptr);
-
-  void setTitleText(const QString &);
 
   /**
    * @brief Wichtige Nummern angeben

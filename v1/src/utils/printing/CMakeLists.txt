@@ -50,6 +50,7 @@ SET_TARGET_PROPERTIES (${_subproject} PROPERTIES
 TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
+  Qt${QT_VERSION_MAJOR}::Sql
   Qt${QT_VERSION_MAJOR}::PrintSupport
   ${subproject_LINKER}
 )

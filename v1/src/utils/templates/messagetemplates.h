@@ -33,8 +33,7 @@ private:
 
   const QString buildTitle(const QString &key) const;
 
-  bool createCompanySection();
-  bool createSqlSection();
+  bool createMacrosTree();
 
   bool createSelecters();
 

@@ -171,7 +171,7 @@ public Q_SLOTS:
    * @param section  - Operation category
    * @param operation - JsonObject
    */
-  virtual void postOperation(const QJsonObject &operation) = 0;
+  virtual void orderUpdateAction(const QJsonObject &options) = 0;
 
 public:
   explicit APluginInterface(QObject *parent = nullptr);

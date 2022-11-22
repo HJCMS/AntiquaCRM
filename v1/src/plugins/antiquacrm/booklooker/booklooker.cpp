@@ -274,19 +274,19 @@ void Booklooker::queryOrder(const QString &orderId) {
   m_network->getRequest(url);
 }
 
-void Booklooker::postOperation(const QJsonObject &operation) {
-  if (!operation.contains("provider")) {
+void Booklooker::orderUpdateAction(const QJsonObject &options) {
+  if (!options.contains("provider")) {
     qWarning("Invalid caller for Booklooker::postOperation!");
     return;
   }
   // Prüfen ob es für ihn ist!
-  if (operation.value("provider").toString() != configProvider())
+  if (options.value("provider").toString() != configProvider())
     return;
 
   if (isCookieExpired())
     authenticate();
 
-  QJsonObject action = operation.value("plugin_operation").toObject();
+  QJsonObject action = options.value("plugin_operation").toObject();
   QString orderId = action.value("orderid").toString();
 
   if (action.contains("paymentstatus")) {
@@ -335,8 +335,11 @@ void Booklooker::postOperation(const QJsonObject &operation) {
     if (!query.isEmpty())
       url.setQuery(query);
 
-    qDebug() << Q_FUNC_INFO << "DISABLED" << url.toString();
-    // m_network->putRequest(url, QByteArray());
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << Qt::endl << "Abgeschaltet:" << url.toString();
+#else
+    m_network->putRequest(url, QByteArray());
+#endif
   } // END PaymentStatus
 }
 
@@ -387,16 +390,21 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
       item.setValue("o_since", dateTime);
       item.setValue("o_media_type", AntiquaCRM::BOOK);
 
-      // AntiquaCRM::PaymentStatus
+      /*
+       * @brief Konvertiere Provider PaymentStatus => OrderStatus!
+       * Wir verwenden im Auftragssystem nur den OrderStatus!
+       * Der PaymentStatus ist eine reine Dienstleistergeschichte!
+       */
       QString orderStatus = order.value("status").toString();
       if (orderStatus == "READY_FOR_SHIPMENT") {
-        item.setValue("o_order_status", AntiquaCRM::SHIPMENT_CREATED);
-      } else if (orderStatus == "WAITING_FOR_PAYMENT") {
-        item.setValue("o_order_status", AntiquaCRM::WAIT_FOR_PAYMENT);
+        // AntiquaCRM::SHIPMENT_CREATED => AntiquaCRM::STARTED
+        item.setValue("o_order_status", AntiquaCRM::OrderStatus::STARTED);
       } else if (orderStatus == "ORDER_CANCEL_ACTION") {
-        item.setValue("o_order_status", AntiquaCRM::ORDER_CANCELED);
+        // AntiquaCRM::ORDER_CANCELED => AntiquaCRM::CANCELED
+        item.setValue("o_order_status", AntiquaCRM::OrderStatus::CANCELED);
       } else {
-        item.setValue("o_order_status", AntiquaCRM::STATUS_NOT_SET);
+        // AntiquaCRM::STATUS_NOT_SET => AntiquaCRM::OPEN
+        item.setValue("o_order_status", AntiquaCRM::OrderStatus::OPEN);
       }
 
       // AntiquaCRM::PaymentMethod

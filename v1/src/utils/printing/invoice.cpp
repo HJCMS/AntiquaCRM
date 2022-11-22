@@ -41,11 +41,11 @@ void Invoice::constructSubject() {
   QTextTableCell tc00 = table->cellAt(0, 0);
   tc00.setFormat(cellFormat);
   cursor = tc00.firstCursorPosition();
-  QString addr(companyData.value("shortname"));
+  QString addr(companyData.value("COMPANY_SHORTNAME"));
   addr.append(" - ");
-  addr.append(companyData.value("street"));
+  addr.append(companyData.value("COMPANY_STREET"));
   addr.append(" - ");
-  addr.append(companyData.value("location"));
+  addr.append(companyData.value("COMPANY_LOCATION"));
   cursor.insertText(addr);
   // Invoice
   QTextTableCell tc01 = table->cellAt(0, 1);
@@ -341,7 +341,7 @@ void Invoice::setAdditionalInfo() {
   cursor.setCharFormat(smallFormat());
   cursor.setBlockFormat(bf);
   cursor.insertText("\n\n");
-  cursor.insertText(tr("Thank you for your order!"));
+  cursor.insertText(companyData.value("COMPANY_INVOICE_THANKS"));
   cursor.insertText("\n");
 }
 
@@ -356,7 +356,7 @@ void Invoice::setRegards() {
   cursor.insertText("\n");
   cursor.insertText(tr("Kind regards"));
   cursor.insertText("\n  ");
-  cursor.insertText(companyData.value("shortname"));
+  cursor.insertText(companyData.value("COMPANY_SHORTNAME"));
 }
 
 bool Invoice::generateDocument(QPrinter *printer) {
