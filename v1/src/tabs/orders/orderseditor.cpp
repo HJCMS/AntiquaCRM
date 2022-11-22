@@ -195,7 +195,7 @@ const OrdersEditor::IdsCheck OrdersEditor::checkEssentialsIds() {
   QString info("<p>");
   info.append(tr("A Article can't inserted, if no Order-/Customer Id exists."));
   info.append("</p><p>");
-  info.append(tr("Please save your your Article first."));
+  info.append(tr("Please save your your Order first."));
   info.append("</p>");
   openNoticeMessage(info);
 
@@ -809,14 +809,37 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
     // NOTE: Wir benötigen bei einem Import eine gültige Kundennummer!
     customerId = searchCustomer(customer);
     if (!prOrder.setValue("o_customer_id", customerId)) {
-      qWarning("OrderEditor: Customer not found or set!");
+      openNoticeMessage(tr("Customer not found or set!"));
       return false;
     }
-
-    foreach (QString key, customer.keys()) {
-      QVariant val = customer.value(key).toVariant();
-      if (!prOrder.setValue(key, val))
-        qWarning("Customer value '%s' not set!", qPrintable(key));
+    // NOTE: Wir nehmen die korrigierten Kundendaten!
+    AntiquaCRM::ASqlFiles customerQuery("query_order_import_customer");
+    if (customerQuery.openTemplate()) {
+      customerQuery.setWhereClause("c_id=" + QString::number(customerId));
+      QSqlQuery q = m_sql->query(customerQuery.getQueryContent());
+      if (q.size() > 0) {
+        QSqlRecord rec = q.record();
+        while (q.next()) {
+          for (int c = 0; c < rec.count(); c++) {
+            QSqlField f = rec.field(c);
+            qDebug() << f.name() << q.value(f.name());
+            prOrder.setValue(f.name(), q.value(f.name()));
+          }
+        }
+      } else {
+#ifdef ANTIQUA_DEVELOPEMENT
+        qDebug() << Q_FUNC_INFO << m_sql->lastError();
+#endif
+        qWarning("Using Provider Import!");
+        foreach (QString key, customer.keys()) {
+          QVariant val = customer.value(key).toVariant();
+          if (!prOrder.setValue(key, val))
+            qWarning("Customer value '%s' not set!", qPrintable(key));
+        }
+      }
+    } else {
+      openNoticeMessage("FATAL: Can't open Template file!");
+      return false;
     }
   }
 

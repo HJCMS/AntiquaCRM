@@ -44,7 +44,6 @@ BookEditor::BookEditor(QWidget *parent)
   ib_including_vat->setObjectName("ib_including_vat");
   ib_including_vat->setInfo(tr("incl. vat"));
   ib_including_vat->setRequired(false);
-  ib_including_vat->setToolTip(tr("VAT Settings must be set."));
   row0->addWidget(ib_including_vat);
 
   ib_signed = new BoolBox(this);
@@ -54,10 +53,9 @@ BookEditor::BookEditor(QWidget *parent)
 
   ib_restricted = new BoolBox(this);
   ib_restricted->setObjectName("ib_restricted");
-  ib_restricted->setInfo(tr("Restricted Sale"));
-  ib_restricted->setToolTip(
-      tr("Is the title not for sale nationally or is it on a censorship list. "
-         "This is relevant for the Shopsystem."));
+  ib_restricted->setInfo(tr("Local Usage only"));
+  ib_restricted->setToolTip(tr("When this Options is marked. Then this Article "
+                               "will not exported to your Providers."));
 
   row0->addWidget(ib_restricted);
   row0->addStretch(1);
@@ -586,8 +584,8 @@ void BookEditor::actionRemoveImage(qint64 articleId) {
 
   QString image_id = QString::number(id);
   QString t(tr("Remove Image from Database"));
-  QString ask(tr("Do you realy wan't to delete the Image?"));
-  QString m = QString("%1\n\nImage - Article ID: %2").arg(ask, image_id);
+  QString ask(tr("Do you really want to delete the Image?"));
+  QString m = tr("%1\n\nImage - Article Id: %2").arg(ask, image_id);
   QMessageBox::StandardButton set = QMessageBox::question(this, t, m);
   if (set == QMessageBox::Yes) {
     if (m_imageView->removeFromDatabase(id)) {

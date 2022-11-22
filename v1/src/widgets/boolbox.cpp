@@ -66,10 +66,9 @@ bool BoolBox::isValid() {
 
 void BoolBox::setInfo(const QString &txt) {
   m_checkBox->setText(txt);
-  m_checkBox->setToolTip(txt);
 }
 
-const QString BoolBox::info() { return m_checkBox->toolTip(); }
+const QString BoolBox::info() { return m_checkBox->text(); }
 
 const QString BoolBox::notes() {
   QString msg(info());

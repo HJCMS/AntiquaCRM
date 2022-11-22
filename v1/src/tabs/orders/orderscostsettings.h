@@ -23,7 +23,7 @@ private:
 
 public:
   DeliverService *o_delivery_service;
-  LineEdit *o_delivery;
+  SerialID *o_delivery;
   LineEdit *o_delivery_send_id;
   IntSpinBox *o_delivery_package;
   SelectEuCountry *o_vat_country;

@@ -29,8 +29,8 @@ const QIcon OrdersTableModel::getStatusIcon(bool status) const {
 
 const QString OrdersTableModel::getOrderStatus(int status) const {
   switch (static_cast<AntiquaCRM::OrderStatus>(status)) {
-  case (AntiquaCRM::STARTED): /**< Auftrag angenommen */
-    return tr("Order accepted");
+  case (AntiquaCRM::STARTED): /**< Auftrag erstellt */
+    return tr("Order created");
 
   case (AntiquaCRM::FETCHET): /**< Bereit zur Abholung */
     return tr("Ready for pickup");
@@ -104,7 +104,7 @@ const QString OrdersTableModel::getRunTime(const qint64 &seconds) const {
 const QString OrdersTableModel::getToolTip(int column) const {
   QMap<int, QString> map;
   map.insert(0, tr("Order Id"));
-  map.insert(1, tr("Since"));
+  map.insert(1, tr("Order Since"));
   map.insert(2, tr("Order status"));
   map.insert(3, tr("Payment status"));
   map.insert(4, tr("Customer"));
@@ -124,7 +124,7 @@ const QMap<int, QString> OrdersTableModel::headerList() const {
   map.insert(4, tr("Customer"));
   map.insert(5, tr("Service"));
   map.insert(6, tr("Provider"));
-  map.insert(7, tr("Order age"));
+  map.insert(7, tr("Runtime"));
   map.insert(8, tr("Finished"));
   return map;
 }
@@ -168,7 +168,7 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
     return getOrderStatus(item.toInt());
   }
 
-  if (role == Qt::DisplayRole && column >= 7) {
+  if (role == Qt::DisplayRole && column == 7) {
     return getRunTime(item.toInt());
   }
 

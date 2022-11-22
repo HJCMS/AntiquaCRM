@@ -132,13 +132,13 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   /** E-Mail Primary */
   c_email_0 = new EMailEdit(this);
   c_email_0->setObjectName("c_email_0");
-  c_email_0->setInfo(tr("Primary E-Mail Address"));
+  c_email_0->setInfo(tr("Primary eMail Address"));
   row2->addWidget(c_email_0, gridRow, 0, 1, 1);
 
   /** E-Mail Secundary */
   c_email_1 = new EMailEdit(this);
   c_email_1->setObjectName("c_email_1");
-  c_email_1->setInfo(tr("Secundary E-Mail Address"));
+  c_email_1->setInfo(tr("Secundary eMail Address"));
   row2->addWidget(c_email_1, gridRow++, 1, 1, 1);
   layout->addLayout(row2);
   // END #2

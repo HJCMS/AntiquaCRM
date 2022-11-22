@@ -106,4 +106,6 @@ void Ecurrency::setInfo(const QString &info) {
 
 const QString Ecurrency::info() { return toolTip(); }
 
-const QString Ecurrency::notes() { return tr("Ecurrency is requierd!"); }
+const QString Ecurrency::notes() {
+  return tr("A valid Currency is Required!");
+}

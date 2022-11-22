@@ -17,7 +17,7 @@
 <context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
-        <location filename="../lib/asqlquerymodel.cpp" line="+99"/>
+        <location filename="../lib/asqlquerymodel.cpp" line="+110"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
@@ -25,6 +25,16 @@
         <location line="+0"/>
         <source>No</source>
         <translation>Nein</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>%1 - Query finished with &apos;%2&apos; Rows.</source>
+        <translation>%1 - Abfrage mit &apos;%2&apos; Zeilen beendet.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>%1 - Query without result!</source>
+        <translation>%1 - Abfrage ohne Ergebnis!</translation>
     </message>
 </context>
 <context>
@@ -64,7 +74,7 @@
 <context>
     <name>BookCard</name>
     <message>
-        <location filename="../utils/printing/bookcard.cpp" line="+227"/>
+        <location filename="../utils/printing/bookcard.cpp" line="+258"/>
         <source>Printing book card</source>
         <translation>Buchkarte drucken</translation>
     </message>
@@ -104,7 +114,7 @@
     <message>
         <location line="+1"/>
         <source>Envelope Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Manueller Einzug</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -114,22 +124,22 @@
     <message>
         <location line="+1"/>
         <source>Large Capacity</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Large Format</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Lower</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Middle</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -144,28 +154,28 @@
     <message>
         <location line="+1"/>
         <source>Tractor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Small Format</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Custom Source</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>BookCardPaintWidget</name>
     <message>
-        <location line="-52"/>
+        <location line="-83"/>
         <source>Book Nr.</source>
         <translation>Buch Nr.</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+40"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -193,7 +203,7 @@
 <context>
     <name>BookEditor</name>
     <message>
-        <location filename="../tabs/books/bookeditor.cpp" line="+15"/>
+        <location filename="../tabs/books/bookeditor.cpp" line="+16"/>
         <source>Edit Book</source>
         <translation>Buch bearbeiten</translation>
     </message>
@@ -218,27 +228,12 @@
         <translation>inkl. MwSt</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>VAT Settings must be set.</source>
-        <translation>Mehwertsteuer ist erforderlich.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Signed Version</source>
         <translation>Signierte Version</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Restricted Sale</source>
-        <translation>Eingschränkter Verkauf</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Is the title not for sale nationally or is it on a censorship list. This is relevant for the Shopsystem.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
+        <location line="+18"/>
         <source>Edition</source>
         <translation>Auflage</translation>
     </message>
@@ -373,7 +368,7 @@
         <translation>Keine Änderungen gefunden, speichern Übersprungen!</translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+101"/>
         <source>When setting the Article Count to 0.</source>
         <translation>Wenn Sie die Artikelanzahl auf 0 setzen.</translation>
     </message>
@@ -403,27 +398,46 @@
         <translation>Verlassen Sie diese Seite nicht, bevor Sie Ihre Änderungen gespeichert haben!</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+34"/>
         <source>Remove Image from Database</source>
         <translation>Bild aus Datenbank entfernen</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Do you realy wan&apos;t to delete the Image?</source>
-        <translation type="unfinished"></translation>
+        <source>Do you really want to delete the Image?</source>
+        <translation>Möchten Sie das Bild wirklich löschen?</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+1"/>
+        <source>%1
+
+Image - Article Id: %2</source>
+        <translation>%1
+
+Bild - Artikel Nr: %2</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Image delete successfully!</source>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="-377"/>
+        <location line="-383"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-154"/>
+        <source>Local Usage only</source>
+        <translation>Nur lokale Verwendung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>When this Options is marked. Then this Article will not exported to your Providers.</source>
+        <translation>Wenn diese Option markiert ist. Dann wird dieser Artikel nicht an die Dienstleister exportiert.</translation>
+    </message>
+    <message>
+        <location line="+158"/>
         <source>Internal Description</source>
         <translation>Interne Beschreibung</translation>
     </message>
@@ -581,17 +595,7 @@
 <context>
     <name>BookTableView</name>
     <message>
-        <location filename="../tabs/books/booktableview.cpp" line="+38"/>
-        <source>Query finished with &apos;%1&apos; Rows.</source>
-        <translation>Abfrage mit &apos;%1&apos; Zeilen beendet.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Query without result</source>
-        <translation>Abfrage ohne Ergebnis</translation>
-    </message>
-    <message>
-        <location line="+12"/>
+        <location filename="../tabs/books/booktableview.cpp" line="+59"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
@@ -619,7 +623,7 @@
 <context>
     <name>BooksTableModel</name>
     <message>
-        <location filename="../tabs/books/bookstablemodel.cpp" line="+20"/>
+        <location filename="../tabs/books/bookstablemodel.cpp" line="+21"/>
         <source>Article Id</source>
         <translation>Artikel Nr</translation>
     </message>
@@ -639,7 +643,7 @@
         <translation>Titel</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>Author</source>
         <translation>Autor</translation>
     </message>
@@ -654,35 +658,35 @@
         <translation>Jahr</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-4"/>
         <source>Storage</source>
         <translation>Lager</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Changed</source>
         <translation>Geändert</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+4"/>
+        <source>Since</source>
+        <translation>Seit</translation>
+    </message>
+    <message>
+        <location line="+20"/>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
     <message>
-        <location line="-23"/>
+        <location line="-26"/>
         <source>Price</source>
         <translation>Preis</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>ISBN</source>
-        <translation>ISBN</translation>
     </message>
 </context>
 <context>
     <name>BoolBox</name>
     <message>
-        <location filename="../widgets/boolbox.cpp" line="+77"/>
+        <location filename="../widgets/boolbox.cpp" line="+76"/>
         <source>is required must selected.</source>
         <translation>ist erforderlich muss ausgewählt werden.</translation>
     </message>
@@ -728,176 +732,9 @@
 <context>
     <name>CompanySettings</name>
     <message>
-        <location filename="../utils/settings/companysettings.cpp" line="+16"/>
+        <location filename="../utils/settings/companysettings.cpp" line="+13"/>
         <source>On this page you configure your company&apos;s presentation settings.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Company name displayed in the letterhead.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Company name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Full Company title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Company</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Company short title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Company address for the letterhead.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Street</source>
-        <translation>Straße</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Street Number</source>
-        <translation>Straße Hausnummer</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Location</source>
-        <translation>Wohnort</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Postalcode Location / Country</source>
-        <translation>Postleitzahl Wohnort / Land</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Employer</source>
-        <translation>Arbeitgeber</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>employer</source>
-        <translation>Arbeitgeber</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Phone number</source>
-        <translation>Telefonnummer</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>phone number</source>
-        <translation>Telefonnummer</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Fax Number</source>
-        <translation>FAX Nummer</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>fax number</source>
-        <translation>FAX Nummer</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>eMail</source>
-        <translation>E-Mail</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>email</source>
-        <translation>E-Mail</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Bank details on Document footer bottom right.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Bank</source>
-        <translation>Bank</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>bankname</source>
-        <translation>Bankname</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>BIC Swift</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>BIC Swift Code</source>
-        <translation>BIC Swift Nummer</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>IBAN</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>IBAN number</source>
-        <translation>IBAN Nummer</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location line="+3"/>
-        <source>Tax number</source>
-        <translation>MwSt Identifikation</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <location line="+3"/>
-        <source>Legality</source>
-        <translation>Rechtmäßigkeit</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Mail Signature</source>
-        <translation>E-Mail Signatur</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>eMail Signature</source>
-        <translation>E-Mail SIgnatur</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Payment Reminder</source>
-        <translation>Zahlungserinnerung</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>1. Payment Reminder</source>
-        <translation>1. Zahlungserinnerung</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Reminder Footnote</source>
-        <translation>Erinnerung Fußzeile</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>If the amount has been paid in the meantime, please send us a short message.</source>
-        <translation>Sollte der Betrag zwischenzeitlich bezahlt worden sein, bitten wir um eine kurze Nachricht.</translation>
+        <translation>Auf dieser Seite konfigurieren Sie die Präsentationseinstellungen Ihres Unternehmens.</translation>
     </message>
 </context>
 <context>
@@ -1079,77 +916,77 @@
     <message>
         <location line="+7"/>
         <source>Primary phone number</source>
-        <translation type="unfinished"></translation>
+        <translation>Primäre Telefon Nr</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Secundary phone number</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekundäre Telefon Nr</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Primary mobile number</source>
-        <translation type="unfinished"></translation>
+        <translation>Primäre Mobilruf Nr</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Secundary mobile number</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekundäre Mobilruf Nr</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>fax number</source>
-        <translation type="unfinished"></translation>
+        <translation>FAX Nummer</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Website</source>
-        <translation type="unfinished"></translation>
+        <translation>Webseite</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Primary E-Mail Address</source>
-        <translation type="unfinished"></translation>
+        <source>Primary eMail Address</source>
+        <translation>Primäre E-Mail Adresse</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Secundary E-Mail Address</source>
-        <translation type="unfinished"></translation>
+        <source>Secundary eMail Address</source>
+        <translation>Sekundäre E-Mail Adresse</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Company, Institute or Organisation</source>
-        <translation type="unfinished"></translation>
+        <translation>Unternehmen, Institut oder Organisation</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Employer</source>
-        <translation type="unfinished"></translation>
+        <translation>Arbeitgeber</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Generate Address with given Dataset.</source>
-        <translation type="unfinished"></translation>
+        <translation>Adresse mit gegebenem Datensatz generieren.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Generate Invoice address</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechnungsadresse generieren</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Shipping Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferanschrift</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Postal Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Anschrift</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Delivery Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferanschrift</translation>
     </message>
 </context>
 <context>
@@ -1157,68 +994,68 @@
     <message>
         <location filename="../tabs/customers/customerseditor.cpp" line="+20"/>
         <source>Customer Book</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunden Adressbuch</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Contact data</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktdaten</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Payment details</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlungsdetails</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Orders</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestellungen</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+35"/>
         <source>An error has occurred!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Can&apos;t load input datafields!</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabedatenfelder können nicht geladen werden!</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>When getting this Message, please check your Network and Database connection!</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
         <location line="+70"/>
         <source>Customer saved successfully!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde erfolgreich gespeichert!</translation>
     </message>
     <message>
         <location line="+69"/>
         <source>No Modifications found, Update aborted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Änderungen gefunden, speichern Übersprungen!</translation>
     </message>
     <message>
         <location line="+12"/>
         <location line="+49"/>
-        <source>Save Customer data success!</source>
-        <translation type="unfinished"></translation>
+        <source>Save Customer data successed!</source>
+        <translation>Kundendaten speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+55"/>
         <source>Unsaved Changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Nich gespeicherte Änderungen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Don&apos;t leave this page before save your changes!</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlassen Sie diese Seite nicht, bevor Sie Ihre Änderungen gespeichert haben!</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+22"/>
         <source>Send eMail finished!</source>
-        <translation type="unfinished"></translation>
+        <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
 </context>
 <context>
@@ -1226,52 +1063,52 @@
     <message>
         <location filename="../tabs/customers/customersorders.cpp" line="+16"/>
         <source>Payed</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezahlt</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delivery Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferschein</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Invoice</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechnung</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Article</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikel</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Provider</source>
-        <translation type="unfinished"></translation>
+        <translation>Dienstleister</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Provider Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Dienstleister Id</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Created</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstellt</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delivered</source>
-        <translation type="unfinished"></translation>
+        <translation>Geliefert</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Yes</source>
-        <translation type="unfinished">Ja</translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>No</source>
-        <translation type="unfinished">Nein</translation>
+        <translation>Nein</translation>
     </message>
 </context>
 <context>
@@ -1279,33 +1116,33 @@
     <message>
         <location filename="../tabs/customers/customerssearchbar.cpp" line="+11"/>
         <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
-        <translation type="unfinished"></translation>
+        <translation>Drücken Sie STRG+UMSCHALT+F, um dieses Menü schnell zu öffnen.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Search customers</source>
-        <translation type="unfinished"></translation>
+        <translation>Kundesuche</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Press CTRL+Shift+S to focus in.</source>
-        <translation type="unfinished"></translation>
+        <translation>Drücken Sie STRG+UMSCHALT+S, um zu fokussieren.</translation>
     </message>
     <message>
         <location line="+4"/>
         <location line="+34"/>
         <source>Search customer</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche Kunde</translation>
     </message>
     <message>
         <location line="-12"/>
         <source>Search with customer id</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche mit Kundennummer</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Search company</source>
-        <translation type="unfinished"></translation>
+        <translation>Such mit Firmenname</translation>
     </message>
 </context>
 <context>
@@ -1313,32 +1150,32 @@
     <message>
         <location filename="../tabs/customers/customersselectfilter.cpp" line="+13"/>
         <source>Customer</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Search Customer by name</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche Kunde mit Namen</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Customer Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Kundennummer</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Search customer with id</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche Kunde mit Nummer</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Company</source>
-        <translation type="unfinished"></translation>
+        <translation>Unternehmen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Search only companies</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche nach Unternehmen</translation>
     </message>
 </context>
 <context>
@@ -1346,17 +1183,17 @@
     <message>
         <location filename="../tabs/customers/customersstatusbar.cpp" line="+15"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstellen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Create a new Customer entry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstellen Sie einen neuen Kundeneintrag.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlauf</translation>
     </message>
 </context>
 <context>
@@ -1364,62 +1201,62 @@
     <message>
         <location filename="../tabs/customers/customerstablemodel.cpp" line="+38"/>
         <source>Customer Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunden Id</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Purchases</source>
-        <translation type="unfinished"></translation>
+        <translation>Einkäufe</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Trustworthiness</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertrauenswürdigkeit</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Customer locked?</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde gesperrt?</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Customer&apos;s full name</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollständiger Name des Kunden</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Company or Person?</source>
-        <translation type="unfinished"></translation>
+        <translation>Firma oder Person?</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Customer data created on...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kundendaten erstellt am...</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Customer address</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunden Anschrift</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Fullname</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollständiger Name</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Commercially</source>
-        <translation type="unfinished"></translation>
+        <translation>Kommerziell</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Since</source>
-        <translation type="unfinished"></translation>
+        <translation>Seit</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Wohnort</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -1429,50 +1266,40 @@
     <message>
         <location line="+26"/>
         <source>Personal</source>
-        <translation type="unfinished"></translation>
+        <translation>Persönlich</translation>
     </message>
 </context>
 <context>
     <name>CustomersTableView</name>
     <message>
-        <location filename="../tabs/customers/customerstableview.cpp" line="+39"/>
-        <source>Query finished with &apos;%1&apos; Rows.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Query without result</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
+        <location filename="../tabs/customers/customerstableview.cpp" line="+60"/>
         <source>Edit selected Customer</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählten Kunden bearbeiten</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Create new Customer</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuen Kunden anlegen</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Delete selected Customer</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählten Kunden löschen</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Copy Customer Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Kundennummer kopieren</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>New Order for selected Customer</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestellung für ausgewählten Kunden erstellen</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisieren</translation>
     </message>
 </context>
 <context>
@@ -1481,12 +1308,12 @@
         <location filename="../utils/deliveryservice/deliverservice.cpp" line="+14"/>
         <location line="+3"/>
         <source>Internal</source>
-        <translation type="unfinished"></translation>
+        <translation>Intern</translation>
     </message>
     <message>
         <location line="+101"/>
         <source>Delivery Service is needed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferservice wird benötigt!</translation>
     </message>
 </context>
 <context>
@@ -1494,23 +1321,23 @@
     <message>
         <location filename="../utils/deliveryservice/deliverservicedialog.cpp" line="+16"/>
         <source>Deliver Services</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferservice</translation>
     </message>
     <message>
         <location line="+30"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstellen</translation>
     </message>
     <message>
         <location line="+68"/>
         <location line="+92"/>
         <source>Database Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbankfehler</translation>
     </message>
     <message>
         <location line="-60"/>
         <source>Invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültig</translation>
     </message>
 </context>
 <context>
@@ -1518,32 +1345,32 @@
     <message>
         <location filename="../utils/deliveryservice/deliverserviceedit.cpp" line="+20"/>
         <source>Delivery Service</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferservice</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>International</source>
-        <translation type="unfinished"></translation>
+        <translation>International</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>If selected then it is a International Package.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn ausgewählt, handelt es sich um ein internationales Paket.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Set this Package as default</source>
-        <translation type="unfinished"></translation>
+        <translation>Legen Sie dieses Paket als Standard fest</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Set default Package in this List.</source>
-        <translation type="unfinished"></translation>
+        <translation>Legen Sie das Standardpaket in dieser Liste fest.</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -1553,82 +1380,82 @@
     <message>
         <location line="+6"/>
         <source>Package</source>
-        <translation type="unfinished"></translation>
+        <translation>Paket</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Service Packagename</source>
-        <translation type="unfinished"></translation>
+        <translation>Servicepaketname</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Packageclass</source>
-        <translation type="unfinished"></translation>
+        <translation>Paketklasse</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Package Definition</source>
-        <translation type="unfinished"></translation>
+        <translation>Paket Definition</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschreibung</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Package Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Paket Beschreibung</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Infopage</source>
-        <translation type="unfinished"></translation>
+        <translation>Infoseite</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Package Website Infolink</source>
-        <translation type="unfinished"></translation>
+        <translation>Paket Info Webseiten Verknüpfung</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Website</source>
-        <translation type="unfinished"></translation>
+        <translation>Webseite</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Service Website</source>
-        <translation type="unfinished"></translation>
+        <translation>Service Webseite</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Last changed</source>
-        <translation type="unfinished"></translation>
+        <translation>Zuletzt geändert</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Modification date</source>
-        <translation type="unfinished"></translation>
+        <translation>Änderungsdatum</translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>The entry currently being edited can be saved!</source>
-        <translation type="unfinished"></translation>
+        <source>The entry currently being edited can not be saved!</source>
+        <translation>Der aktuell bearbeitete Eintrag kann nicht gespeichert werden!</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>All text entries must be set and can&apos;t empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Texteinträge müssen gesetzt sein und dürfen nicht leer sein!</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Only one Item can set as Default!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nur ein Element kann als Standard festgelegt werden!</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>No valid Dataset present</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein gültiger Datensatz vorhanden</translation>
     </message>
 </context>
 <context>
@@ -1636,7 +1463,7 @@
     <message>
         <location filename="../utils/deliveryservice/deliverservicelist.cpp" line="+25"/>
         <source>Service</source>
-        <translation type="unfinished"></translation>
+        <translation>Service</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -1646,32 +1473,32 @@
     <message>
         <location line="+0"/>
         <source>Packageclass</source>
-        <translation type="unfinished"></translation>
+        <translation>Paketklasse</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschreibung</translation>
     </message>
     <message>
         <location line="+95"/>
         <source>Create entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Eintrag erstellen</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Remove entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Eintrag entfernen</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>International</source>
-        <translation type="unfinished"></translation>
+        <translation>International</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>National</source>
-        <translation type="unfinished"></translation>
+        <translation>National</translation>
     </message>
 </context>
 <context>
@@ -1679,79 +1506,79 @@
     <message>
         <location filename="../utils/printing/deliverynote.cpp" line="+17"/>
         <source>Delivery note</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferschein</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>Delivey note</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferschein</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Order-ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Auftrags Nr:</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Customer-ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunden Nr:</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Delivery-ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferschein Nr:</translation>
     </message>
     <message>
         <location line="+28"/>
         <source>Article-ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikel Nr</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Designation</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschreibung</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Quantity</source>
-        <translation type="unfinished"></translation>
+        <translation>Menge</translation>
     </message>
     <message>
         <location line="+78"/>
         <location line="+8"/>
         <source>PDF File written.</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF-Datei erstellt.</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+8"/>
         <source>PDF not generated</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF nicht generiert</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>No Printer found</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein Drucker gefunden</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>There is no Order-Id to generate this delivery!</source>
-        <translation type="unfinished"></translation>
+        <translation>Es gibt keine Bestellnummer, um diesen Lieferschein zu generieren!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>There is no Customer Id to generate this delivery!</source>
-        <translation type="unfinished"></translation>
+        <translation>Es gibt keine Kundennummer, um diesen Lieferschein zu generieren!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>delivery note number is empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferscheinnummer fehlt!</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>&lt;p&gt;Customer Address is empty!&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Kundenadresse ist leer!&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -1759,22 +1586,22 @@
     <message>
         <location filename="../widgets/emailedit.cpp" line="+12"/>
         <source>eMail edit</source>
-        <translation type="unfinished"></translation>
+        <translation>E-Mail bearbeiten</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>usage.example@example.com</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+55"/>
         <source>Max allowed length</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximal zulässige Zeichenlänge</translation>
     </message>
     <message>
         <location line="+42"/>
         <source>a valid input for &apos;%1&apos; is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine gültige Eingabe für &apos;%1&apos; ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -1785,9 +1612,9 @@
         <translation>Keine Angaben</translation>
     </message>
     <message>
-        <location line="+75"/>
-        <source>Ecurrency is requierd!</source>
-        <translation type="unfinished"></translation>
+        <location line="+76"/>
+        <source>A valid Currency is Required!</source>
+        <translation>Eine gültige Währung ist erforderlich!</translation>
     </message>
 </context>
 <context>
@@ -1795,52 +1622,52 @@
     <message>
         <location filename="../widgets/editoractionbar.cpp" line="+15"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Exit without saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohne Speichern Beenden.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Restore</source>
-        <translation type="unfinished"></translation>
+        <translation>Zurücksetzen</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Restore dataset to last save operation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Datensatz auf den letzten Speicherpunkt zurücksetzen.</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>Add Article</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikel einfügen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Add Article to Payment list.</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikel zur Zahlungsliste hinzufügen.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Save current dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuellen Datensatz speichern</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Back to Mainview</source>
-        <translation type="unfinished"></translation>
+        <translation>Zurück zur Hauptansicht</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Go back to Mainview</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehe zurück zur Hauptansicht</translation>
     </message>
 </context>
 <context>
@@ -1885,7 +1712,7 @@
     <message>
         <location filename="../utils/settings/generalsettings.cpp" line="+16"/>
         <source>Open Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne Verzeichnis</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -1915,7 +1742,7 @@
     <message>
         <location line="+10"/>
         <source>Payment Reminder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zahlungserinnerung</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1930,7 +1757,7 @@
     <message>
         <location line="+16"/>
         <source>Payment Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlungs Einstellungen</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1945,12 +1772,12 @@
     <message>
         <location line="+6"/>
         <source>VAT (normal)</source>
-        <translation type="unfinished"></translation>
+        <translation>MwSt (Standard)</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>VAT (reduced)</source>
-        <translation type="unfinished"></translation>
+        <translation>MwSt (Reduziert)</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -2019,7 +1846,7 @@
     <message>
         <location filename="../widgets/groupbox.cpp" line="+50"/>
         <source>This GroupBox is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Gruppen Box ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -2027,77 +1854,77 @@
     <message>
         <location filename="../utils/imgedit/imagedialog.cpp" line="+27"/>
         <source>Picture Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild-Editor</translation>
     </message>
     <message>
         <location line="+31"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalieren</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Drehen</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Abschließen</translation>
     </message>
     <message>
         <location line="+17"/>
         <source>archiv isn&apos;t readable!</source>
-        <translation type="unfinished"></translation>
+        <translation>Archiv ist nicht lesbar!</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>no source image exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein Quellbild vorhanden!</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>&lt;p&gt;Do you want to copy this Image into the Picture Archiv?&lt;/p&gt;&lt;b&gt;Note:&lt;/b&gt; This will replace Images with identical Article Filename!</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Möchten Sie dieses Bild in das Bildarchiv kopieren?&lt;/p&gt;&lt;b&gt;Hinweis:&lt;/b&gt; Dadurch werden Bilder mit identischem Artikel-Dateinamen ersetzt!</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Copy image?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild kopieren?</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>no valid image found</source>
-        <translation type="unfinished"></translation>
+        <translation>kein gültiges Bild gefunden</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>copy image in progress ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild kopieren läuft ...</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>successfully - image to archive copied</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild - Erfolgreich in das Archiv kopiert</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>warning - image not copied</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung - Bild nicht kopiert</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Image saved successfully!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild erfolgreich gespeichert!</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>image from database!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild aus Datenbank!</translation>
     </message>
 </context>
 <context>
@@ -2105,17 +1932,17 @@
     <message>
         <location filename="../utils/imgedit/imageselecter.cpp" line="+24"/>
         <source>Image Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildbibliothek</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Setting Imagelibrary</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildbibliothek einstellen</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Open Image Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnen der Bildbibliothek</translation>
     </message>
 </context>
 <context>
@@ -2123,32 +1950,32 @@
     <message>
         <location filename="../utils/imgedit/imagetoolbar.cpp" line="+21"/>
         <source>Image Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilder Dialog</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Dialog to Import/Edit Images.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dialog zum Importieren/Bearbeiten von Bildern.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Webcam Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Import Image from a Webcam.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild von einer Webcam importieren.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Remove Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild entfernen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Remove image from Database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild aus der Datenbank entfernen.</translation>
     </message>
 </context>
 <context>
@@ -2156,7 +1983,7 @@
     <message>
         <location filename="../utils/imgedit/imageview.cpp" line="+28"/>
         <source>Right mouse button with mouse wheel to zoom the image!</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechte Maustaste mit Mausrad zum Zoomen des Bildes verwenden!</translation>
     </message>
 </context>
 <context>
@@ -2191,7 +2018,7 @@
 <context>
     <name>InventoryEditor</name>
     <message>
-        <location filename="../widgets/inventoryeditor.cpp" line="+127"/>
+        <location filename="../widgets/inventoryeditor.cpp" line="+201"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
@@ -2291,12 +2118,7 @@
         <translation>Zahlbar innerhalb von %1 Tagen nach Erbringung der Dienstleistung.</translation>
     </message>
     <message>
-        <location line="+15"/>
-        <source>Thank you for your order!</source>
-        <translation>Vielen Dank für Ihren Auftrag!</translation>
-    </message>
-    <message>
-        <location line="+13"/>
+        <location line="+28"/>
         <source>Kind regards</source>
         <translation>Mit freundlichen Grüßen</translation>
     </message>
@@ -2343,17 +2165,17 @@
     <message>
         <location filename="../widgets/isbnedit.cpp" line="+16"/>
         <source>a ISBN number must consist of 10 or 13 digits.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine ISBN-Nummer muss aus 10 oder 13 Ziffern bestehen.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>ISBN/EAN 10/13 (ISO 2108)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+107"/>
         <source>Invalid ISBN detected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültige ISBN erkannt.</translation>
     </message>
 </context>
 <context>
@@ -2361,7 +2183,7 @@
     <message>
         <location filename="../utils/keywordedit/keywordactions.cpp" line="+21"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
 </context>
 <context>
@@ -2369,19 +2191,19 @@
     <message>
         <location filename="../utils/keywordedit/keywordedit.cpp" line="+27"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche</translation>
     </message>
     <message>
         <location line="+48"/>
         <location line="+21"/>
         <location line="+20"/>
         <source>Database query success!</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbankabfrage erfolgreich!</translation>
     </message>
     <message>
         <location line="-11"/>
         <source>Missing Keyword!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehlendes Schlüsselwort!</translation>
     </message>
 </context>
 <context>
@@ -2389,47 +2211,47 @@
     <message>
         <location filename="../utils/keywordedit/keywordeditor.cpp" line="+12"/>
         <source>Create/Edit Keyword</source>
-        <translation type="unfinished"></translation>
+        <translation>Schlüsselwörter erstellen/bearbeiten</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Keyword</source>
-        <translation type="unfinished"></translation>
+        <translation>Schlüsselwort</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Single Keyword</source>
-        <translation type="unfinished"></translation>
+        <translation>Einzelnes Schlüsselwort</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Books Keyword</source>
-        <translation type="unfinished"></translation>
+        <translation>Bücher-Stichwort</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Use this entry for book keywords</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwenden Sie diesen Eintrag für Buchschlüsselwörter</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Database Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbank Id</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Leeren</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Clear all fields, to create a new Keyword.</source>
-        <translation type="unfinished"></translation>
+        <translation>Löschen Sie alle Felder, um ein neues Schlüsselwort zu erstellen.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
 </context>
 <context>
@@ -2437,7 +2259,7 @@
     <message>
         <location filename="../utils/keywordedit/keywordlabel.cpp" line="+33"/>
         <source>Remove this keyword</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieses Schlüsselwort entfernen</translation>
     </message>
 </context>
 <context>
@@ -2445,37 +2267,37 @@
     <message>
         <location filename="../utils/keywordedit/keywordlineedit.cpp" line="+13"/>
         <source>add 3 Keywords for a better search!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fügen Sie ca. 3 Schlüsselwörter für eine bessere Suche hinzu!</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>This button reset the Keyword field.</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Schaltfläche setzt das Schlüsselwortfeld zurück.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Keyword add</source>
-        <translation type="unfinished"></translation>
+        <translation>Schlüsselwort hinzufügen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Search, add to</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchen, ergänzen</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>To add keywords, paste them here and press Enter.</source>
-        <translation type="unfinished"></translation>
+        <translation>Um Schlüsselwörter hinzuzufügen, fügen Sie sie hier ein und drücken Sie die Eingabetaste.</translation>
     </message>
     <message>
         <location line="+107"/>
         <source>Keywords: Requires minimum one Keyword!</source>
-        <translation type="unfinished"></translation>
+        <translation>Schlüsselwortfeld: Benötigt mindestens ein Schlüsselwort!</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>And Restricted to a maximum %1 Characters length.</source>
-        <translation type="unfinished"></translation>
+        <translation>und ist auf eine maximale Länge von %1 Zeichen beschränkt.</translation>
     </message>
 </context>
 <context>
@@ -2483,27 +2305,27 @@
     <message>
         <location filename="../utils/keywordedit/keywordtablemodel.cpp" line="+23"/>
         <source>Book Keyword</source>
-        <translation type="unfinished"></translation>
+        <translation>Buchschlüsselwort</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Not set</source>
-        <translation type="unfinished"></translation>
+        <translation>Ist nicht gesetzt</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Keyword</source>
-        <translation type="unfinished"></translation>
+        <translation>Schlüsselwort</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Books keyword</source>
-        <translation type="unfinished"></translation>
+        <translation>Bücher-Schlüsselwort</translation>
     </message>
 </context>
 <context>
@@ -2526,12 +2348,12 @@
     <message>
         <location line="+1"/>
         <source>Czech</source>
-        <translation>Tschechien</translation>
+        <translation>Tschechisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Danish</source>
-        <translation type="unfinished"></translation>
+        <translation>Dänisch</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2541,57 +2363,57 @@
     <message>
         <location line="+1"/>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>Spanisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Finnish</source>
-        <translation type="unfinished"></translation>
+        <translation>Finnländisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Französisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Italian</source>
-        <translation type="unfinished"></translation>
+        <translation>Italienisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Dutch</source>
-        <translation type="unfinished"></translation>
+        <translation>Niederländisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Norwegian</source>
-        <translation type="unfinished"></translation>
+        <translation>Norwegisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>Polnisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Portuguese</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugiesisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Slovenian</source>
-        <translation type="unfinished"></translation>
+        <translation>Slowenisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Swedish</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwedisch</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Language field is required and must set.</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Sprachfeld ist erforderlich und muss gesetzt werden.</translation>
     </message>
 </context>
 <context>
@@ -2599,12 +2421,12 @@
     <message>
         <location filename="../widgets/lineedit.cpp" line="+49"/>
         <source>Max allowed length</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximal zulässige Zeichenlänge</translation>
     </message>
     <message>
         <location line="+73"/>
         <source>is required and can&apos;t empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>ist erforderlich und darf nicht leer sein.</translation>
     </message>
 </context>
 <context>
@@ -2613,17 +2435,17 @@
         <location filename="../utils/mailing/mailattachments.cpp" line="+30"/>
         <location line="+15"/>
         <source>Attachment</source>
-        <translation type="unfinished"></translation>
+        <translation>Anhang</translation>
     </message>
     <message>
         <location line="-13"/>
         <source>Open Filedialog and change attachment path.</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnen Sie den Dateidialog und ändern Sie den Anhangspfad.</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>Mail Attachments (*.pdf *.PDF *.gs)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mailanhänge (*.pdf *.PDF *.gs)</translation>
     </message>
 </context>
 <context>
@@ -2631,32 +2453,32 @@
     <message>
         <location filename="../widgets/mailbutton.cpp" line="+14"/>
         <source>Mail Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>E-Mail Nachrichten</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Selection for different eMail messages.</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswahl für verschiedene E-Mail-Nachrichten.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Simple eMail message to customer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Einfache E-Mail-Nachricht an den Kunden.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Send order status to customer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestellstatus an den Kunden senden.</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Create invoice to customer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechnung an Kunden erstellen.</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Message Item Order Cancelled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nachricht Artikelbestellung storniert.</translation>
     </message>
 </context>
 <context>
@@ -2664,12 +2486,12 @@
     <message>
         <location filename="../utils/mailing/mailcommand.cpp" line="+34"/>
         <source>Missing mail application</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehlende E-Mail-Anwendung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>please check your configuration!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte überprüfen Sie Ihre Konfiguration!</translation>
     </message>
 </context>
 <context>
@@ -2677,27 +2499,27 @@
     <message>
         <location filename="../utils/mailing/mailforwarddialog.cpp" line="+19"/>
         <source>Mail Templates</source>
-        <translation type="unfinished"></translation>
+        <translation>E-Mail vorlagen</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>Mail</source>
-        <translation type="unfinished"></translation>
+        <translation>E-Mail</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Start eMail command</source>
-        <translation type="unfinished"></translation>
+        <translation>E-Mail-Befehl starten</translation>
     </message>
     <message>
         <location line="+42"/>
         <source>an error occurred</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Fehler ist aufgetreten</translation>
     </message>
     <message>
-        <location line="+137"/>
+        <location line="+135"/>
         <source>Missing Attachment</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehlender Anhang</translation>
     </message>
 </context>
 <context>
@@ -2718,22 +2540,22 @@
     <message>
         <location filename="../utils/templates/messagekeywordlist.cpp" line="+14"/>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Kategorie</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Template</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorlage</translation>
     </message>
     <message>
         <location line="+28"/>
-        <source>Orders</source>
-        <translation type="unfinished"></translation>
+        <source>Database queries</source>
+        <translation>Datenbank abfragen</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Company</source>
-        <translation type="unfinished"></translation>
+        <source>Company settings</source>
+        <translation>Firmeneinstellungen</translation>
     </message>
 </context>
 <context>
@@ -2742,7 +2564,7 @@
         <location filename="../utils/templates/messageselecter.cpp" line="+16"/>
         <location line="+62"/>
         <source>Select your Template to edit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie die zu bearbeitende Vorlage aus.</translation>
     </message>
     <message>
         <location line="-58"/>
@@ -2757,7 +2579,7 @@
     <message>
         <location line="+4"/>
         <source>Constant</source>
-        <translation type="unfinished"></translation>
+        <translation>Konstante</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -2769,50 +2591,45 @@
     <name>MessageTemplates</name>
     <message>
         <location filename="../utils/templates/messagetemplates.cpp" line="+16"/>
-        <source>in this Area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+46"/>
-        <source>Orders system</source>
-        <translation type="unfinished"></translation>
+        <source>Template Editor</source>
+        <translation>Vorlagen Editor</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Static text blocks</source>
-        <translation type="unfinished"></translation>
+        <source>Edit Templates</source>
+        <translation>Bearbeite Vorlagen</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+58"/>
         <location line="+29"/>
         <location line="+62"/>
         <source>an error occurred</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Fehler ist aufgetreten</translation>
     </message>
     <message>
         <location line="-50"/>
         <source>The caller field is mandatory!</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Aufruferfeld ist Pflicht!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>The title cannot be empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Titel darf nicht leer sein!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>The Subject cannot be empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Betreff darf nicht leer sein!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Empty body text is not accepted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein leeres Textfeld wird nicht akzeptiert!</translation>
     </message>
     <message>
         <location line="+30"/>
         <source>Save data successfully!</source>
-        <translation type="unfinished"></translation>
+        <translation>Daten erfolgreich gespeichert!</translation>
     </message>
 </context>
 <context>
@@ -2820,27 +2637,27 @@
     <message>
         <location filename="../tabs/orders/orderaddarticle.cpp" line="+11"/>
         <source>Search insert Article Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikelnummer suchen/einfügen</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Article Id:</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikelnummer:</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche</translation>
     </message>
     <message>
         <location line="+54"/>
         <source>Empty entries are cowardly refused!</source>
-        <translation type="unfinished"></translation>
+        <translation>Leere Einträge werden feige abgelehnt!</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>No result!</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein Ergebnis!</translation>
     </message>
 </context>
 <context>
@@ -2848,47 +2665,47 @@
     <message>
         <location filename="../widgets/orderstatusselecter.cpp" line="+21"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Offen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Order accepted</source>
-        <translation type="unfinished"></translation>
+        <translation>Auftragsbegin</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Ready for pickup</source>
-        <translation type="unfinished"></translation>
+        <translation>Abholbereit</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Delivered</source>
-        <translation type="unfinished"></translation>
+        <translation>Geliefert</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Reminder sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Erinnerung gesendet</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Completed</source>
-        <translation type="unfinished"></translation>
+        <translation>Abgeschlossen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Storniert</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Retour</translation>
     </message>
     <message>
         <location line="+60"/>
         <source>a valid Order status is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein gültiger Bestellstatus ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -2896,7 +2713,7 @@
     <message>
         <location filename="../ordersystem/ordersystem.cpp" line="+14"/>
         <source>New orders from %1 have arrived.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue Bestellungen von %1 sind eingetroffen.</translation>
     </message>
 </context>
 <context>
@@ -2904,22 +2721,22 @@
     <message>
         <location filename="../tabs/orders/orderscostsettings.cpp" line="+16"/>
         <source>Service</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Parcel Shipment Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Paketsendungsnummer</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Delivery note number</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferscheinnummer</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Delivery Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Liefereinstellungen</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -2929,62 +2746,62 @@
     <message>
         <location line="+4"/>
         <source>vat included</source>
-        <translation type="unfinished"></translation>
+        <translation>inkl. MwSt</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Normally the vat is included in Book articles. Uncheck it to enable add VAT in Printing Invoice.</source>
-        <translation type="unfinished"></translation>
+        <translation>Üblicherweise ist bei Buchartikeln die Mehrwertsteuer enthalten. Deaktivieren Sie es, um das Hinzufügen von Mehrwertsteuer beim Drucken von Rechnungen zu aktivieren.</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>add delivery package price</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferpaketpreis hinzufügen</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>add delivery package price to current shipping.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferpaketpreis zum aktuellen Versand hinzufügen.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Invoice Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechnungseinstellungen</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Provider</source>
-        <translation type="unfinished"></translation>
+        <translation>Dienstleister</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Provider settlement number</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrechnungsnummer des Anbieters</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Provider Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Dienstleistereinstellungen</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Created at</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstellt am</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Last modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Zuletzt geändert</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Deliverd at</source>
-        <translation type="unfinished"></translation>
+        <translation>Geliefert am</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>History info</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlauf</translation>
     </message>
 </context>
 <context>
@@ -2992,17 +2809,17 @@
     <message>
         <location filename="../tabs/orders/orderscustomerinfo.cpp" line="+15"/>
         <source>Customer Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Kundennummer</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Invoice Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechnungsanschrift</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delivery Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferadresse</translation>
     </message>
 </context>
 <context>
@@ -3010,145 +2827,150 @@
     <message>
         <location filename="../tabs/orders/orderseditor.cpp" line="+17"/>
         <source>Edit Orders</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufträge bearbeiten</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Order ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Auftrags Nr</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Invoice ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechnungs Nr</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Payment status</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlungsstatus</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Current Payment status</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn ausgewählt ist eine Zahlung bereits erfolgt</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Current order status</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktueller Auftragsstatus</translation>
     </message>
     <message>
         <location line="+78"/>
         <source>An error has occurred!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Can&apos;t load input datafields!</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabedatenfelder können nicht geladen werden!</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>When getting this Message, please check your Network and Database connection!</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
         <location line="+67"/>
         <source>A Article can&apos;t inserted, if no Order-/Customer Id exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Artikel kann nicht eingefügt werden, wenn keine Bestell-/Kundennummer vorhanden ist.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Please save your your Article first.</source>
-        <translation type="unfinished"></translation>
+        <source>Please save your your Order first.</source>
+        <translation>Bitte speichern Sie zuerst Ihren Auftrag.</translation>
     </message>
     <message>
         <location line="+53"/>
         <source>Order saved successfully!</source>
-        <translation type="unfinished"></translation>
+        <translation>Auftrag erfolgreich gespeichert!</translation>
     </message>
     <message>
         <location line="+76"/>
         <source>No SQL Articles exist!</source>
-        <translation type="unfinished"></translation>
+        <translation>Es sind keine SQL-Artikel vorhanden!</translation>
     </message>
     <message>
         <location line="+22"/>
         <source>No Modifications found, nothing todo!</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Änderungen gefunden, es gibt nichts zu tun!</translation>
     </message>
     <message>
         <location line="+123"/>
         <source>Article: %1 not found or no stock!</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikel: %1 nicht gefunden oder nicht auf Lager!</translation>
     </message>
     <message>
         <location line="+62"/>
         <source>Unsaved Changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Nich gespeicherte Änderungen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Don&apos;t leave this page before save your changes!</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlassen Sie diese Seite nicht, bevor Sie Ihre Änderungen gespeichert haben!</translation>
     </message>
     <message>
         <location line="+17"/>
         <location line="+20"/>
         <location line="+41"/>
         <location line="+32"/>
-        <location line="+43"/>
+        <location line="+36"/>
         <source>Missing essential Ids, save Order first!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehlende wichtige IDs, Bestellung zuerst speichern!</translation>
     </message>
     <message>
-        <location line="-131"/>
+        <location line="-124"/>
         <source>Incomplete eMail configuration!</source>
-        <translation type="unfinished"></translation>
+        <translation>Unvollständige E-Mail-Konfiguration!</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Send eMail Dialog finished!</source>
-        <translation type="unfinished"></translation>
+        <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
     <message>
         <location line="+14"/>
         <location line="+41"/>
         <source>Missing Deliverynote Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehlende Lieferscheinnummer</translation>
     </message>
     <message>
         <location line="-31"/>
         <source>Missing Delivery Address!</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferadresse fehlt!</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+31"/>
         <source>No Data found! - Printing canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Daten gefunden! - Druckvorgang abgebrochen.</translation>
     </message>
     <message>
         <location line="-22"/>
         <location line="+33"/>
-        <location line="+43"/>
+        <location line="+36"/>
         <source>Printdialog closed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucken-Dialog geschlossen.</translation>
     </message>
     <message>
-        <location line="-27"/>
+        <location line="-20"/>
         <source>Missing Deliverynote data</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehlende Lieferscheindaten</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>No Data - Printing canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Daten gefunden! - Druckvorgang abgebrochen.</translation>
     </message>
     <message>
-        <location line="+134"/>
+        <location line="+127"/>
         <source>No Provider orders data found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Dienstleister-Auftragsdaten gefunden!</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>Customer not found or set!</source>
+        <translation>Kunde nicht gefunden oder eingestellt!</translation>
     </message>
 </context>
 <context>
@@ -3156,32 +2978,32 @@
     <message>
         <location filename="../tabs/orders/ordershistorybutton.cpp" line="+14"/>
         <source>Advanced Queries</source>
-        <translation type="unfinished"></translation>
+        <translation>Erweiterte Abfragen</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Default view</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardansicht</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Orders without payment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestellungen ohne Bezahlung.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delivered and not completed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geliefert und nicht Abgeschlossen.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Reminder orders.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufträge mit Zahlungserinnerung.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Completed orders.</source>
-        <translation type="unfinished"></translation>
+        <translation>Abgeschlossene Aufträge.</translation>
     </message>
 </context>
 <context>
@@ -3189,7 +3011,7 @@
     <message>
         <location filename="../tabs/orders/ordersitemlist.cpp" line="+19"/>
         <source>Current Article orders</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuelle Artikelbestellungen</translation>
     </message>
 </context>
 <context>
@@ -3197,52 +3019,52 @@
     <message>
         <location filename="../tabs/orders/orderssearchbar.cpp" line="+16"/>
         <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
-        <translation type="unfinished"></translation>
+        <translation>Drücken Sie STRG+UMSCHALT+F, um dieses Menü schnell zu öffnen.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Order Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Auftrags Nr</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Customer or Company</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde oder Firma</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Delivery Service</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferservice</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Provider</source>
-        <translation type="unfinished"></translation>
+        <translation>Dienstleister</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Input search</source>
-        <translation type="unfinished"></translation>
+        <translation>Sucheingabe</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Default view</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardansicht</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Load the Standard table view.</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden Sie der Standardansicht.</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>Search for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche nach %1</translation>
     </message>
 </context>
 <context>
@@ -3250,167 +3072,161 @@
     <message>
         <location filename="../tabs/orders/orderstablemodel.cpp" line="+54"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Offen</translation>
     </message>
     <message>
-        <location line="-21"/>
-        <source>Order accepted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="-18"/>
         <source>Ready for pickup</source>
-        <translation type="unfinished"></translation>
+        <translation>Abholbereit</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Delivered</source>
-        <translation type="unfinished"></translation>
+        <translation>Geliefert</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Reminded</source>
-        <translation type="unfinished"></translation>
+        <translation>Erinnerung gesendet</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Abgeschlossen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Storniert</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Retour</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>no time</source>
-        <translation type="unfinished"></translation>
+        <translation>ohne Zeitangabe</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>%1 days, %2 hours, %3 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Tage, %2 Stunden, %3 Minuten</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 hours, %2 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Stunden, %2 Minuten</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>%1 minutes</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Minuten</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Order Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Auftrags Nr</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <location line="+14"/>
+        <location line="+15"/>
         <source>Since</source>
-        <translation type="unfinished"></translation>
+        <translation>Seit</translation>
     </message>
     <message>
         <location line="-13"/>
         <source>Order status</source>
-        <translation type="unfinished"></translation>
+        <translation>Status</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-75"/>
+        <source>Order created</source>
+        <translation>Auftragsbegin</translation>
+    </message>
+    <message>
+        <location line="+74"/>
+        <source>Order Since</source>
+        <translation>Seit</translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Payment status</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezahlt</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+14"/>
         <source>Customer</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde</translation>
     </message>
     <message>
         <location line="-13"/>
         <source>Delivery Service</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferservice</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Provider info</source>
-        <translation type="unfinished"></translation>
+        <translation>Dienstleiter</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Order lifetime</source>
-        <translation type="unfinished"></translation>
+        <translation>Auftragslaufzeit</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Order finished at</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestellung abgeschlossen am</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Id</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Payed</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezahlt</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Service</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Provider</source>
-        <translation type="unfinished"></translation>
+        <translation>Dienstleister</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Order age</source>
-        <translation type="unfinished"></translation>
+        <source>Runtime</source>
+        <translation>Laufzeit</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Abgeschlossen</translation>
     </message>
 </context>
 <context>
     <name>OrdersTableView</name>
     <message>
-        <location filename="../tabs/orders/orderstableview.cpp" line="+35"/>
-        <source>Query finished with &apos;%1&apos; Rows.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Query without result</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
+        <location filename="../tabs/orders/orderstableview.cpp" line="+55"/>
         <source>Copy Order Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Auftragnummer kopieren</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisieren</translation>
     </message>
 </context>
 <context>
@@ -3418,82 +3234,82 @@
     <message>
         <location filename="../widgets/paymentmethodselecter.cpp" line="+20"/>
         <source>No selection available</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Auswahl vorhanden</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Bank transfer in advance</source>
-        <translation type="unfinished"></translation>
+        <translation>Banküberweisung im Voraus</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Delivery with open invoice</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferung mit offener Rechnung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Direct debit payment in advance</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlung per Lastschrift im Voraus</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Credit card in advance</source>
-        <translation type="unfinished"></translation>
+        <translation>Kreditkarte im Voraus</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Cash on delivery payment</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlung per Nachnahme</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>PayPal prepayment</source>
-        <translation type="unfinished"></translation>
+        <translation>PayPal-Vorauszahlung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Skrill prepayment</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrill-Vorauszahlung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>GiroPay prepayment</source>
-        <translation type="unfinished"></translation>
+        <translation>GiroPay-Vorauszahlung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>GooglePay prepayment</source>
-        <translation type="unfinished"></translation>
+        <translation>GooglePay-Vorauszahlung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Payment in advance from an unknown provider</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlung per Vorkasse bei einem unbekannten Anbieter</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Pickup - cash payment</source>
-        <translation type="unfinished"></translation>
+        <translation>Abholung - Barzahlung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Instant bank transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Sofortüberweisung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Open account - advance payment reserved</source>
-        <translation type="unfinished"></translation>
+        <translation>Offene Rechnung - Vorauskasse vorbehalten</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Check - payment in advance</source>
-        <translation type="unfinished"></translation>
+        <translation>Scheck - Zahlung im Voraus</translation>
     </message>
     <message>
         <location line="+63"/>
         <source>a Valid payment method is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine gültige Zahlungsmethode ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -3501,112 +3317,111 @@
     <message>
         <location filename="../utils/printing/paymentreminder.cpp" line="+17"/>
         <location line="+36"/>
-        <location filename="../utils/printing/paymentreminder.h" line="+27"/>
         <source>Payment Reminder</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlungserinnerung</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Invoice-ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechnungs-Nr</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Order-ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Auftrags-Nr</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Customer-ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunden-Nr</translation>
     </message>
     <message>
         <location line="+63"/>
         <source>Article</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikel</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Designation</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezeichnung</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Quantity</source>
-        <translation type="unfinished"></translation>
+        <translation>Menge</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Price</source>
-        <translation type="unfinished">Preis</translation>
+        <translation>Preis</translation>
     </message>
     <message>
         <location line="+71"/>
         <location line="+6"/>
         <source>VAT</source>
-        <translation type="unfinished"></translation>
+        <translation>MwSt</translation>
     </message>
     <message>
         <location line="-3"/>
         <source>incl.</source>
-        <translation type="unfinished"></translation>
+        <translation>inkl.</translation>
     </message>
     <message>
         <location line="+34"/>
         <source>Subtotal</source>
-        <translation type="unfinished"></translation>
+        <translation>Zwischensumme</translation>
     </message>
     <message>
         <location line="+20"/>
         <source>delivery cost</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferkosten</translation>
     </message>
     <message>
         <location line="+33"/>
         <source>invoice amount</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechnungsbetrag</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+46"/>
         <source>Sincerely</source>
-        <translation type="unfinished"></translation>
+        <translation>Hochachtungsvoll</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+52"/>
         <location line="+8"/>
         <source>PDF File written.</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF-Datei erstellt.</translation>
     </message>
     <message>
         <location line="-6"/>
         <location line="+8"/>
         <source>PDF not generated</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF nicht generiert</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>No Printer found</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein Drucker gefunden</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>There is no Order-Id to generate this invoice!</source>
-        <translation type="unfinished"></translation>
+        <translation>Es gibt keine Auftragsnummer, um diese Rechnung zu erstellen!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>There is no Customer Id to generate this invoice!</source>
-        <translation type="unfinished"></translation>
+        <translation>Es gibt keine Kundennummer, um diese Rechnung zu erstellen!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>There is no Invoice Id to generate this invoice!</source>
-        <translation type="unfinished"></translation>
+        <translation>Es gibt keine Rechnungsnummer, um diese Rechnung zu erstellen!</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>delivery note number is empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferscheinnummer fehlt!</translation>
     </message>
 </context>
 <context>
@@ -3614,42 +3429,42 @@
     <message>
         <location filename="../widgets/paymentstatusselecter.cpp" line="+21"/>
         <source>No status set</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein Status gesetzt</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Waiting for payment</source>
-        <translation type="unfinished"></translation>
+        <translation>Warten auf Zahlung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Ready for shipping</source>
-        <translation type="unfinished"></translation>
+        <translation>Zum Versenden bereit</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Delivered waiting for payment</source>
-        <translation type="unfinished"></translation>
+        <translation>Geliefert wartet auf Zahlung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Paid and shipped</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezahlt und verschickt</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>No reaction from buyer</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Reaktion des Käufers</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>order canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestellung storniert</translation>
     </message>
     <message>
         <location line="+64"/>
         <source>a valid Payment status is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein gültiger Zahlungsstatus ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -3657,193 +3472,193 @@
     <message>
         <location filename="../utils/settings/pgsqlsettings.cpp" line="+27"/>
         <source>Hostname of the server you want to connect to. If you are not using SSL, the IP address can also be added in this field.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hostname des Servers, mit dem Sie sich verbinden möchten. Wenn Sie SSL nicht verwenden, kann die IP-Adresse auch in diesem Feld hinzugefügt werden.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>The name of the server database to which you want to connect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Name der Serverdatenbank, zu der Sie eine Verbindung herstellen möchten.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The Username from the server database to which you want to connect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Benutzername für den Datenbankzugriff, mit der Sie sich verbinden möchten.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Port number to connect to the server. The default port address to a PostgreSQL server is „5432“. However, if you connect from outside, you need the configured router port. Your administrator can communicate this.</source>
-        <translation type="unfinished"></translation>
+        <translation>Portnummer für die Verbindung zum Server. Die Standardportadresse zu einem PostgreSQL-Server ist „5432“. Wenn Sie sich jedoch von außerhalb verbinden, benötigen Sie den konfigurierten Router-Port. Ihr Administrator kann dies mitteilen.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>CA Bundle is the file that contains root and intermediate certificates. Together with your server certificate (issued specifically for your domain), these files complete the SSL chain of trust. The chain is required to verify the Authentication with the main application.</source>
-        <translation type="unfinished"></translation>
+        <translation>CA-Paket ist die Datei, die Stamm- und Zwischenzertifikate enthält. Zusammen mit Ihrem (speziell für Ihre Domain ausgestellten) Serverzertifikat vervollständigen diese Dateien die SSL-Vertrauenskette. Die Kette wird benötigt, um die Authentifizierung mit der Hauptanwendung zu überprüfen.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>The Common Name (CN), also known as the Fully Qualified Domain Name (FQDN). CN is the machine name of the remote system you want to connect. If the certificate CN is not the same on the connecting machine, the trust relationship between client and server will fail.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Common Name (CN), auch bekannt als Fully Qualified Domain Name (FQDN). CN ist der Computername des Remote-Systems, zu dem Sie eine Verbindung herstellen möchten. Wenn der Zertifikats-CN auf dem verbindenden Computer nicht identisch ist, schlägt die Vertrauensbeziehung zwischen Client und Server fehl.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>The peer authentication method works by obtaining the client&apos;s operating system user name from the system and using it as the allowed database user name. This method is only supported on local-system connections.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bei der Peer-Authentifizierungsmethode wird der Betriebssystem-Benutzername des Clients vom System abgerufen und als zulässiger Datenbank-Benutzername verwendet. Diese Methode wird nur bei lokalen Systemverbindungen unterstützt.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>The certificate of the trusted certificate authority and not the server certificate! The server sends its certificate, which is checked by the issuer and classified as trustworthy.</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Zertifikat der vertrauenswürdigen Zertifizierungsstelle und nicht das Serverzertifikat! Der Server sendet sein Zertifikat, das vom Aussteller geprüft und als vertrauenswürdig eingestuft wird.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>For a connection to be known as SSL-secured, SSL usage must be configured on both the client and server before the connection is established. If it is only configured on the server, the client may send sensitive information (e.g. passwords) before knowing that the server requires high security. In this case, secure connections can be guaranteed by setting the SSL connection to „Required“, „Verify full“ or „Verify-CA“.</source>
-        <translation type="unfinished"></translation>
+        <translation>Damit eine Verbindung als SSL-gesichert bezeichnet wird, muss die SSL-Nutzung sowohl auf dem Client als auch auf dem Server konfiguriert werden, bevor die Verbindung hergestellt wird. Wenn es nur auf dem Server konfiguriert ist, kann der Client sensible Informationen (z. B. Passwörter) senden, bevor er weiß, dass der Server hohe Sicherheit benötigt. Es können nur sichere Verbindungen garantiert werden, indem die SSL-Verbindung auf „Erforderlich“ oder „Zertifizierungsstelle verifizieren“ gesetzt wird.</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Full Information about Secured SQL Connections, you can find at</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollständige Informationen zu sicheren SQL-Verbindungen finden Sie unter</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Database Connection settings to PostgreSQL server.</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbankverbindungseinstellungen zum PostgreSQL-Server.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Database profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbank Profil</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Access Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Zugangskonfiguration</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Hostname/Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechnername/Adresse</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Databasename</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbankname</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Database Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbank Benuztername</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Database Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbank Passwort</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>The default port address is 5432</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Standardportadresse ist 5432</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Portadresse</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Wartezeit</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Timeout in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Wartezeit in Sekunden</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Enable SSL/TLS</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviere SSL/TLS</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Enable SSL/TLS secure Connection configuration.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivieren Sie die sichere SSL/TLS-Verbindungskonfiguration.</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>SSL/TLS Connection</source>
-        <translation type="unfinished"></translation>
+        <translation>SSL/TLS-Verbindung</translation>
     </message>
     <message>
         <location line="+9"/>
         <location line="+8"/>
         <source>CA Bundle</source>
-        <translation type="unfinished"></translation>
+        <translation>CA Paket</translation>
     </message>
     <message>
         <location line="-6"/>
         <source>Open ca-bundle.* in Pem Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne ca-bundle.* im PEM-Format</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Servercertificate (CN)</source>
-        <translation type="unfinished"></translation>
+        <translation>Serverzertifikat (CN)</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Exhibitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Aussteller</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Exhibitor Certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Aussteller Zertifikat</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Open Server Exhibitor Certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne Server Ausstellerzertifikat</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>SSL/TLS Verification priority</source>
-        <translation type="unfinished"></translation>
+        <translation>SSL/TLS-Überprüfungspriorität</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>SSL Protection Provided in Different Modes.</source>
-        <translation type="unfinished"></translation>
+        <translation>SSL-Schutz wird in verschiedenen Modi bereitgestellt.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Prefer</source>
-        <translation type="unfinished"></translation>
+        <translation>Bevorzugen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Required</source>
-        <translation type="unfinished"></translation>
+        <translation>Erforderlich</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Verify CA</source>
-        <translation type="unfinished"></translation>
+        <translation>Zertifizierungsstelle verifizieren</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Verify full</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollständiges Vertrauen</translation>
     </message>
     <message>
         <location line="+78"/>
         <source>Open Certfile</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne Zertifikat</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Certificates</source>
-        <translation type="unfinished"></translation>
+        <translation>Zertifikate</translation>
     </message>
 </context>
 <context>
@@ -3851,27 +3666,27 @@
     <message>
         <location filename="../widgets/phoneedit.cpp" line="+81"/>
         <source>phone edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Telefon bearbeiten</translation>
     </message>
     <message>
         <location line="+76"/>
         <source>Max allowed length</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximal zulässige Zeichenlänge</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>Example: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Beispiel: %1</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Example: &apos;%1&apos; for Hamburg.</source>
-        <translation type="unfinished"></translation>
+        <translation>Beispiel: &apos;%1&apos; for Hamburg.</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>a phone input for &apos;%1&apos; is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine Telefoneingabe für &apos;%1&apos; ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -3902,7 +3717,7 @@
     <message>
         <location filename="../widgets/priceedit.cpp" line="+8"/>
         <source>€</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+53"/>
@@ -3915,108 +3730,108 @@
     <message>
         <location filename="../utils/settings/printsettings.cpp" line="+28"/>
         <source>Printer settings for delivery note and invoicing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Druckereinstellungen für Lieferschein und Rechnungsstellung.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Document Header</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumenten Kopf</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Document Body</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumentkörper</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Document Footer</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokument Fußzeile</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Normal Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard Text</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Address Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Adressen Text</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Small Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Kleiner Text</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Directory specification for the file attachments</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzeichnisangabe für die Dateianhänge</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Attachments</source>
-        <translation type="unfinished"></translation>
+        <translation>Anhänge</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Open Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne Verzeichnis</translation>
     </message>
     <message>
         <location line="+7"/>
         <location line="+129"/>
         <source>Watermark</source>
-        <translation type="unfinished"></translation>
+        <translation>Wasserzeichen</translation>
     </message>
     <message>
         <location line="-125"/>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne Datei</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Settings Default Printers</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen Standarddrucker</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>QR Code Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>QR-Code-Einstellungen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>The settings for the connectivity to the company server are set in this area. These settings will be embedded in the QR image. Note: Please keep in mind that QR images must be recreated if you change something here.</source>
-        <translation type="unfinished"></translation>
+        <translation>In diesem Bereich werden die Einstellungen für die Konnektivität zum Firmenserver vorgenommen. Diese Einstellungen werden in das QR-Bild eingebettet. Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Sie hier etwas ändern.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Url Schema</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Server Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Server Adresse</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Url Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Url Pfad</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Query Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Abfrage Parameter</translation>
     </message>
     <message>
         <location line="+51"/>
         <source>set Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Schrift setzen</translation>
     </message>
     <message>
         <location line="+29"/>
         <source>Image</source>
-        <translation type="unfinished">Bild</translation>
+        <translation>Bild</translation>
     </message>
 </context>
 <context>
@@ -4024,48 +3839,48 @@
     <message>
         <location filename="../widgets/printerbutton.cpp" line="+14"/>
         <source>Printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucken</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Selection for different printings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswahl für verschiedene Drucker.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Deliverynote</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferschein</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Open Print Deliverynote</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucke Lieferschein öffnen</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Invoice</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechnung</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+6"/>
         <source>Open Print Invoice</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucke Rechnung öffnen</translation>
     </message>
     <message>
         <location line="-1"/>
         <source>Payment Reminder</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlungserinnerung</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Book card</source>
-        <translation type="unfinished"></translation>
+        <translation>Buchkarte</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Printing a Book card</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucke Buchkarte</translation>
     </message>
 </context>
 <context>
@@ -4073,57 +3888,105 @@
     <message>
         <location filename="../utils/printing/printing.cpp" line="+87"/>
         <source>Create PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstelle PDF</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucken</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+29"/>
-        <source>Your Company configuration is incomplete!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Edit Company settings first!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+130"/>
-        <source>email</source>
-        <translation type="unfinished"></translation>
+        <location line="+160"/>
+        <source>eMail</source>
+        <translation>E-Mail</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>phone</source>
-        <translation type="unfinished"></translation>
+        <source>Phone</source>
+        <translation>Telefon</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>fax</source>
-        <translation type="unfinished"></translation>
+        <source>Fax</source>
+        <translation>Fax</translation>
     </message>
     <message>
         <location line="+12"/>
-        <source>tax number</source>
-        <translation type="unfinished"></translation>
+        <source>Tax Number</source>
+        <translation>MwSt Nummer</translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+2"/>
+        <source>VAT Number</source>
+        <translation>Steuernummer</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Legality</source>
+        <translation>Rechtmäßigkeit</translation>
+    </message>
+    <message>
+        <location line="+60"/>
         <source>Printers</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucker</translation>
     </message>
     <message>
         <location line="+115"/>
         <source>Delivery note</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferschein</translation>
+    </message>
+</context>
+<context>
+    <name>ProviderActionDialog</name>
+    <message>
+        <location filename="../tabs/providers/provideractiondialog.cpp" line="+14"/>
+        <source>Provider Operations</source>
+        <translation>Dienstleister Operationen</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Changes the status of the current order.</source>
+        <translation>Ändert den Status der aktuellen Bestellung.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Provider Status - no disclosures</source>
+        <translation>Anbieterstatus – keine Angaben</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Wait for Order Payment</source>
+        <translation>Warten auf Zahlung der Bestellung</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Order is ready for Shipment</source>
+        <translation>Die Bestellung ist versandbereit</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Order shipped, wait for Payment.</source>
+        <translation>Bestellung versendet, warte auf Zahlung.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Order Shipped and Paid</source>
+        <translation>Bestellung versendet und bezahlt</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Order Buyer no reaction.</source>
+        <translation>Bestellung keine Käufer Reaktion.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Order Cancel action.</source>
+        <translation>Bestellung stornieren.</translation>
     </message>
 </context>
 <context>
@@ -4131,12 +3994,12 @@
     <message>
         <location filename="../tabs/providers/providerbuyerinfo.cpp" line="+17"/>
         <source>Invoice Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechnungsanschrift</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>Delivery Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferanschrift</translation>
     </message>
 </context>
 <context>
@@ -4144,50 +4007,55 @@
     <message>
         <location filename="../tabs/providers/providerorderinfo.cpp" line="+18"/>
         <source>Displays the current payment information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeigt die aktuellen Zahlungsinformationen an.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Ordered at</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestellt seit</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Payment Method</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlungsmethode</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Payed</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezahlt</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Confirmed</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestätigt</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Order status</source>
-        <translation type="unfinished"></translation>
+        <translation>Auftragsstatus</translation>
     </message>
 </context>
 <context>
     <name>ProviderPurchaseBar</name>
     <message>
         <location filename="../tabs/providers/providerpurchasebar.cpp" line="+12"/>
+        <source>Provider Actions</source>
+        <translation>Dienstleister aktion</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Create Order</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstelle Auftrag</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Check Articles</source>
-        <translation type="unfinished"></translation>
+        <translation>Prüfe Artikel</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Create a search query to see if all items are available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstellen Sie eine Suchanfrage, um zu sehen, ob alle Artikel verfügbar sind.</translation>
     </message>
 </context>
 <context>
@@ -4195,12 +4063,12 @@
     <message>
         <location filename="../tabs/providers/providerpurchaseheader.cpp" line="+15"/>
         <source>Buyer</source>
-        <translation type="unfinished"></translation>
+        <translation>Einkäufer</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Customer Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunden Nr</translation>
     </message>
 </context>
 <context>
@@ -4208,52 +4076,52 @@
     <message>
         <location filename="../tabs/providers/providerpurchasetable.cpp" line="+16"/>
         <source>Provider</source>
-        <translation type="unfinished"></translation>
+        <translation>Dienstleister</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Article</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikel</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Amount</source>
-        <translation type="unfinished"></translation>
+        <translation>Menge</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Price</source>
-        <translation type="unfinished">Preis</translation>
+        <translation>Preis</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Summary</source>
-        <translation type="unfinished"></translation>
+        <translation>Zusammenfassung</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>check article duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Überprüfe den Artikelbestand</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>copy article id</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikelnummer kopieren</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>open article id</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne mit Artikelnummer</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>Yes</source>
-        <translation type="unfinished">Ja</translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>No</source>
-        <translation type="unfinished">Nein</translation>
+        <translation>Nein</translation>
     </message>
 </context>
 <context>
@@ -4263,156 +4131,141 @@
         <location line="+44"/>
         <location line="+35"/>
         <source>Protocoll</source>
-        <translation type="unfinished"></translation>
+        <translation>Protokoll</translation>
     </message>
     <message>
         <location line="-74"/>
         <location line="+44"/>
         <location line="+35"/>
         <source>Domain</source>
-        <translation type="unfinished"></translation>
+        <translation>Domäne</translation>
     </message>
     <message>
         <location line="-74"/>
         <location line="+49"/>
         <location line="+30"/>
         <source>API Key</source>
-        <translation type="unfinished"></translation>
+        <translation>API Schlüssel</translation>
     </message>
     <message>
         <location line="-75"/>
         <source>API Path</source>
-        <translation type="unfinished"></translation>
+        <translation>API Pfad</translation>
     </message>
     <message>
         <location line="+5"/>
         <location line="+74"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlauf</translation>
     </message>
     <message>
         <location line="-72"/>
         <location line="+74"/>
         <source>Query history</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlaufsabfrage</translation>
     </message>
     <message>
         <location line="-73"/>
         <location line="+74"/>
         <source>days</source>
-        <translation type="unfinished"></translation>
+        <translation>Tage</translation>
     </message>
     <message>
         <location line="-56"/>
         <location line="+35"/>
         <source>Loginname</source>
-        <translation type="unfinished"></translation>
+        <translation>Anmeldename</translation>
     </message>
     <message>
         <location line="-21"/>
         <source>API Port</source>
-        <translation type="unfinished"></translation>
+        <translation>API Port</translation>
     </message>
 </context>
 <context>
     <name>ProvidersOrderPage</name>
     <message>
-        <location filename="../tabs/providers/providersorderpage.cpp" line="+35"/>
+        <location filename="../tabs/providers/providersorderpage.cpp" line="+38"/>
         <source>Address</source>
-        <translation type="unfinished"></translation>
+        <translation>Adresse</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Payment Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlungs Informationen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Buyer comments</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunden Bemerkungen</translation>
     </message>
     <message>
-        <location line="+133"/>
+        <location line="+178"/>
         <source>An order for %1 already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Auftrag für %1 existiert bereits!</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Buyer: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Käufer: %1</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Would you like to open this order?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchten Sie den Auftrag öffnen?</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Order already exists!</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Auftrag besteht bereits!</translation>
     </message>
 </context>
 <context>
     <name>ProvidersTreeView</name>
     <message>
-        <location filename="../tabs/providers/providerstreeview.cpp" line="+19"/>
+        <location filename="../tabs/providers/providerstreeview.cpp" line="+18"/>
         <source>Orders</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestellungen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Datum</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Buyer</source>
-        <translation type="unfinished"></translation>
+        <translation>Käufer</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Today</source>
-        <translation type="unfinished"></translation>
+        <translation>Heute</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+30"/>
         <source>Created</source>
-        <translation type="unfinished"></translation>
+        <translation>Ertellt</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+10"/>
         <source>Fetchet</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereit zur Abholung</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+10"/>
         <source>Delivered</source>
-        <translation type="unfinished"></translation>
+        <translation>Geliefert</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+10"/>
         <source>Remindet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Finished</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Canceled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Returning</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlungserinnerung</translation>
     </message>
 </context>
 <context>
@@ -4420,12 +4273,12 @@
     <message>
         <location filename="../utils/purchasetable/purchasetable.cpp" line="+18"/>
         <source>Current article purchases</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuelle Artikelkäufe</translation>
     </message>
     <message>
         <location line="+45"/>
         <source>delete selected article</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählten Artikel löschen</translation>
     </message>
 </context>
 <context>
@@ -4433,27 +4286,27 @@
     <message>
         <location filename="../utils/purchasetable/purchasetabledelegate.cpp" line="+63"/>
         <source>Unknown</source>
-        <translation type="unfinished">Unbekannt</translation>
+        <translation>Unbekannt</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Book</source>
-        <translation type="unfinished"></translation>
+        <translation>Buch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Media</source>
-        <translation type="unfinished"></translation>
+        <translation>Medien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucke</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Weitere</translation>
     </message>
 </context>
 <context>
@@ -4461,92 +4314,92 @@
     <message>
         <location filename="../utils/purchasetable/purchasetablemodel.cpp" line="+16"/>
         <source>Book</source>
-        <translation type="unfinished"></translation>
+        <translation>Buch</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Media</source>
-        <translation type="unfinished"></translation>
+        <translation>Medien</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucke</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Weitere</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Unknown</source>
-        <translation type="unfinished">Unbekannt</translation>
+        <translation>Unbekannt</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Payment Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlungs Nr</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Order Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Auftrags Nr</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Article Id</source>
-        <translation type="unfinished">Artikel Nr</translation>
+        <translation>Artikel Nr</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Customer Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunden Nr</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Price</source>
-        <translation type="unfinished">Preis</translation>
+        <translation>Preis</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Sell Price</source>
-        <translation type="unfinished"></translation>
+        <translation>VK Preis</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Title</source>
-        <translation type="unfinished">Titel</translation>
+        <translation>Titel</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Provider Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Dienstleister</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Letzte Änderung</translation>
     </message>
     <message>
         <location line="+201"/>
         <source>Yes</source>
-        <translation type="unfinished">Ja</translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>No</source>
-        <translation type="unfinished">Nein</translation>
+        <translation>Nein</translation>
     </message>
 </context>
 <context>
@@ -4697,7 +4550,7 @@
     <message>
         <location filename="../widgets/salutationbox.cpp" line="+8"/>
         <source>Salutation</source>
-        <translation type="unfinished"></translation>
+        <translation>Anrede</translation>
     </message>
     <message>
         <location line="+70"/>
@@ -4707,7 +4560,7 @@
     <message>
         <location line="+25"/>
         <source>a Title is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine Titelangabe ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -4715,7 +4568,7 @@
     <message>
         <location filename="../widgets/searchlineedit.cpp" line="+8"/>
         <source>Search for</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche nach</translation>
     </message>
 </context>
 <context>
@@ -4723,37 +4576,37 @@
     <message>
         <location filename="../widgets/selectarticletype.cpp" line="+10"/>
         <source>Article type</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikeltyp</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Not set</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht gesetzt</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Book</source>
-        <translation type="unfinished"></translation>
+        <translation>Buch</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Media</source>
-        <translation type="unfinished"></translation>
+        <translation>Medien</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucke</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Weitere</translation>
     </message>
     <message>
         <location line="+45"/>
         <source>A valid media type is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein gültiger Medientyp ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -4777,9 +4630,9 @@
 <context>
     <name>SerialID</name>
     <message>
-        <location filename="../widgets/serialid.cpp" line="+81"/>
+        <location filename="../widgets/serialid.cpp" line="+82"/>
         <source>is required and can not empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>ist erforderlich und darf nicht leer sein.</translation>
     </message>
 </context>
 <context>
@@ -4787,7 +4640,7 @@
     <message>
         <location filename="../utils/settings/settingswidget.cpp" line="+18"/>
         <source>Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzeichnis</translation>
     </message>
 </context>
 <context>
@@ -4795,12 +4648,12 @@
     <message>
         <location filename="../widgets/sizeedit.cpp" line="+90"/>
         <source>Sizing</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensionierung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>is required must selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>ist erforderlich muss ausgewählt sein.</translation>
     </message>
 </context>
 <context>
@@ -4808,7 +4661,7 @@
     <message>
         <location filename="../utils/storage/storagecategory.cpp" line="+17"/>
         <source>Search Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche Kategorie</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -4821,27 +4674,27 @@
     <message>
         <location filename="../utils/storage/storageeditdialog.cpp" line="+22"/>
         <source>new entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuer Eintrag</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>insert a new storage location</source>
-        <translation type="unfinished"></translation>
+        <translation>neue Lagerposition einfügen</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>search</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>search in table</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche in Tabelle</translation>
     </message>
     <message>
         <location line="+63"/>
         <source>invalid input</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültige Eingabe</translation>
     </message>
 </context>
 <context>
@@ -4849,12 +4702,12 @@
     <message>
         <location filename="../utils/storage/storageeditor.cpp" line="+25"/>
         <source>Empty data fields not accepted and reject this operation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Leere Datenfelder werden nicht akzeptiert, der Vorgang abgelehnt.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Storage ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Lager Nr</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -4864,17 +4717,17 @@
     <message>
         <location line="+5"/>
         <source>Identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Kennzeichnung</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagerort</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Deprecated AbeBooks (ZVAB) Categories.</source>
-        <translation type="unfinished"></translation>
+        <translation>Veraltete Kategorien von AbeBooks (ZVAB).</translation>
     </message>
 </context>
 <context>
@@ -4901,7 +4754,7 @@
     <message>
         <location filename="../utils/storage/storagemodel.cpp" line="+32"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -4911,18 +4764,18 @@
     <message>
         <location line="+3"/>
         <source>Identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Kennzeichnung</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagerort</translation>
     </message>
     <message>
         <location line="+6"/>
         <location line="+6"/>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Kategorie</translation>
     </message>
 </context>
 <context>
@@ -4930,17 +4783,17 @@
     <message>
         <location filename="../utils/storage/storagetable.cpp" line="+70"/>
         <source>an error occurred</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Fehler ist aufgetreten</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>sql error occurred</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein SQL Fehler ist aufgetreten</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>successful saved</source>
-        <translation type="unfinished"></translation>
+        <translation>erfolgreich gespeichert</translation>
     </message>
 </context>
 <context>
@@ -4953,17 +4806,17 @@
     <message>
         <location line="+66"/>
         <source>Can&apos;t open this Article</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Artikel kann nicht geöffnet werden</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Because books tab is in edit mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Weil sich die Registerkarte &quot;Bücher&quot; im Bearbeitungsmodus befindet.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>You need to save and close that open book first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie müssen den geöffneten Bucheintrag zuerst speichern und schließen.</translation>
     </message>
 </context>
 <context>
@@ -4971,57 +4824,57 @@
     <message>
         <location filename="../tabs/customers/tabcustomers.cpp" line="+17"/>
         <source>Customers</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunden</translation>
     </message>
     <message>
         <location line="+67"/>
         <source>Cannot open Customers Editor.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Kundeneditor kann nicht geöffnet werden.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Because the customer tab is not in mainview mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Weil sich die Kundenregisterkarte nicht im Hauptansichtsmodus befindet.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Please save and close the open customer editor first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte speichern und schließen Sie zuerst den geöffneten Kundeneditor.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Do you really want to delete this customer?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchten Sie diesen Kunden wirklich löschen?</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>This process is irreversible!</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Vorgang ist irreversibel!</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>In addition, the system will refuse to delete if an order exists for this customer!</source>
-        <translation type="unfinished"></translation>
+        <translation>Außerdem verweigert das System die Löschung, wenn für diesen Kunden eine Bestellung vorliegt!</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Delete Customer</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde löschen</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>There are purchase order relationships that cannot be resolved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Es gibt Bestellbeziehungen, die nicht aufgelöst werden können.</translation>
     </message>
     <message>
         <location line="+71"/>
         <source>Invalid arguments to open Customer!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültige Argumente zum Öffnen des Kunden!</translation>
     </message>
     <message>
         <location line="-101"/>
         <source>Customereditor</source>
-        <translation type="unfinished"></translation>
+        <translation>Kundeneditor</translation>
     </message>
 </context>
 <context>
@@ -5029,56 +4882,56 @@
     <message>
         <location filename="../tabs/orders/taborders.cpp" line="+16"/>
         <source>Orders</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufträge</translation>
     </message>
     <message>
         <location line="+59"/>
         <source>Cannot open Order Editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestelleditor kann nicht geöffnet werden!</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Because the order tab is not in mainview mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Weil sich die Registerkarte &quot;Aufträge&quot; nicht im Hauptansichtsmodus befindet.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Please save and close opened orders first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte speichern und schließen Sie zuerst den geöffneten Auftrag.</translation>
     </message>
     <message>
         <location line="+85"/>
         <location line="+15"/>
         <source>Some arguments missing for a new Order!</source>
-        <translation type="unfinished"></translation>
+        <translation>Einige Argumente fehlen für einen neuen Auftrag zu erstellen!</translation>
     </message>
     <message>
         <location line="-98"/>
         <source>Ordereditor</source>
-        <translation type="unfinished"></translation>
+        <translation>Auftragseditor</translation>
     </message>
 </context>
 <context>
     <name>TabProviders</name>
     <message>
-        <location filename="../tabs/providers/tabproviders.cpp" line="+19"/>
+        <location filename="../tabs/providers/tabproviders.cpp" line="+18"/>
         <source>Providers</source>
-        <translation type="unfinished"></translation>
+        <translation>Dienstleister</translation>
     </message>
     <message>
         <location line="+26"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisieren</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Button for update, Provider Tree.</source>
-        <translation type="unfinished"></translation>
+        <translation>Knopf für das Aktualisieren der Dienstleisteransicht.</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>Update (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisieren (%1)</translation>
     </message>
 </context>
 <context>
@@ -5086,7 +4939,7 @@
     <message>
         <location filename="../widgets/tabsearchbar.cpp" line="+20"/>
         <source>Start search</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche starten</translation>
     </message>
 </context>
 <context>
@@ -5094,47 +4947,47 @@
     <message>
         <location filename="../widgets/tabstatusbar.cpp" line="+18"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisieren</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Update current View</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Ansicht aktualisieren</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>Today</source>
-        <translation type="unfinished"></translation>
+        <translation>Heute</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Yesterday</source>
-        <translation type="unfinished"></translation>
+        <translation>Gestern</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Last Week</source>
-        <translation type="unfinished"></translation>
+        <translation>Letzte Woche</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Last Month</source>
-        <translation type="unfinished"></translation>
+        <translation>Letzten Monat</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This Week</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Woche</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This Month</source>
-        <translation type="unfinished"></translation>
+        <translation>Diesen Monat</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>This Year</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieses Jahr</translation>
     </message>
 </context>
 <context>
@@ -5143,7 +4996,7 @@
         <location filename="../tabs/views/tabviews.cpp" line="+13"/>
         <location line="+10"/>
         <source>Views</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansichten</translation>
     </message>
 </context>
 <context>
@@ -5151,27 +5004,27 @@
     <message>
         <location filename="../widgets/taxlevelbox.cpp" line="+15"/>
         <source>Tax</source>
-        <translation type="unfinished"></translation>
+        <translation>MwSt</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Reduced</source>
-        <translation type="unfinished"></translation>
+        <translation>Reduziert</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>No VAT</source>
-        <translation type="unfinished"></translation>
+        <translation>keine Mehrwertsteuer</translation>
     </message>
     <message>
         <location line="+54"/>
         <source>a Valid tax level is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein gültiger Steuersatz ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -5179,7 +5032,7 @@
     <message>
         <location filename="../widgets/textfield.cpp" line="+59"/>
         <source>requires a valid input.</source>
-        <translation type="unfinished"></translation>
+        <translation>erfordert eine gültige Eingabe.</translation>
     </message>
 </context>
 <context>
@@ -5187,42 +5040,42 @@
     <message>
         <location filename="../widgets/trustedbox.cpp" line="+8"/>
         <source>Trust</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertrauen</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>No trust level set</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Vertrauensstufe festgelegt</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Pays on time</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlt pünktlich</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Pays reliably</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlt zuverlässig</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Pay late</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlt spät</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Only with prepayment</source>
-        <translation type="unfinished"></translation>
+        <translation>Nur mit Vorauskasse</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>No delivery</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Lieferung</translation>
     </message>
     <message>
         <location line="+52"/>
         <source>a Trustlevel is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine Vertrauensstufe ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -5230,7 +5083,7 @@
     <message>
         <location filename="../widgets/yearedit.cpp" line="+72"/>
         <source>Year must contain a valid entry, it can not lie in the future.</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Jahr muss einen gültigen Eintrag enthalten, es darf nicht in der Zukunft liegen.</translation>
     </message>
 </context>
 </TS>

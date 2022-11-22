@@ -34,8 +34,8 @@ TabProviders::TabProviders(QWidget *parent)
   m_splitter->insertWidget(0, m_pages);
   // Provider Orders list
   QFrame *m_rightFrame = new QFrame(m_mainPage);
-  m_rightFrame->setMaximumWidth(380);
-  m_rightFrame->setMinimumWidth(150);
+  m_rightFrame->setMaximumWidth(420);
+  m_rightFrame->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
   QVBoxLayout *m_rightFrameLayout = new QVBoxLayout(m_rightFrame);
   m_rightFrameLayout->setContentsMargins(0, 0, 0, 0);
   m_treeWidget = new ProvidersTreeView(m_rightFrame);
@@ -50,9 +50,9 @@ TabProviders::TabProviders(QWidget *parent)
   m_splitter->insertWidget(1, m_rightFrame);
   // Splitter settings
   m_splitter->setCollapsible(0, false);
-  m_splitter->setStretchFactor(0, 65);
+  m_splitter->setStretchFactor(0, 80);
   m_splitter->setCollapsible(1, false);
-  m_splitter->setStretchFactor(1, 35);
+  m_splitter->setStretchFactor(1, 20);
   pageOneLayout->addWidget(m_splitter);
   // Actionsbar
   QFrame *m_statusBar = new QFrame(m_mainPage);

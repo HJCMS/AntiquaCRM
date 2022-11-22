@@ -8,7 +8,7 @@ SELECT o_id, o_since, o_order_status, o_payment_status,
  d_name AS delivery_service,
  CONCAT_WS(': ', o_provider_name, o_provider_order_id) AS provider_info,
  (EXTRACT(EPOCH FROM timestamptz (CURRENT_TIMESTAMP)) - EXTRACT(EPOCH FROM timestamptz (o_since))) AS order_age,
- (EXTRACT(EPOCH FROM timestamptz (CURRENT_TIMESTAMP)) - EXTRACT(EPOCH FROM timestamptz (o_delivered))) AS order_finish
+ o_delivered
 FROM inventory_orders
 LEFT JOIN customers ON c_id=o_customer_id
 LEFT JOIN ref_delivery_service ON d_id=o_delivery_service

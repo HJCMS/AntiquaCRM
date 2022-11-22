@@ -27,6 +27,7 @@ SET (query_tables_FILES
   query_template_keys.sql
   query_company_data.sql
   union_template_keys.sql
+  query_order_import_customer.sql
 )
 
 SET (select_statement_FILES

@@ -15,6 +15,7 @@ SerialID::SerialID(QWidget *parent) : InputEdit{parent} {
   m_serialLabel->setTextInteractionFlags(Qt::TextSelectableByKeyboard |
                                          Qt::TextSelectableByMouse);
   m_layout->addWidget(m_serialLabel);
+  m_layout->addStretch(1);
 
   setModified(false);
   setRequired(true);

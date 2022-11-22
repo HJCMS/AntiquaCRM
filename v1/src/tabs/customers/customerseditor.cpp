@@ -223,7 +223,7 @@ void CustomersEditor::createSqlUpdate() {
   sql.append(";");
   if (sendSqlQuery(sql)) {
     qInfo("SQL UPDATE Customers success!");
-    sendStatusMessage(tr("Save Customer data success!"));
+    sendStatusMessage(tr("Save Customer data successed!"));
     m_actionBar->setRestoreable(m_tableData->isValid());
   }
 }
@@ -272,7 +272,7 @@ void CustomersEditor::createSqlInsert() {
   sql.append(",CURRENT_TIMESTAMP) RETURNING c_id;");
   if (sendSqlQuery(sql) && getSerialID("c_id") >= 1) {
     qInfo("SQL INSERT Customer success!");
-    sendStatusMessage(tr("Save Customer data success!"));
+    sendStatusMessage(tr("Save Customer data successed!"));
     m_actionBar->setRestoreable(m_tableData->isValid());
     m_headerFrame->c_id->setRequired(true);
   }
