@@ -390,7 +390,7 @@
     <message>
         <location line="+25"/>
         <source>Unsaved Changes</source>
-        <translation>Nich gespeicherte Änderungen</translation>
+        <translation>Nicht gespeicherte Änderungen</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -830,7 +830,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+6"/>
         <source>Unsafed changes!</source>
-        <translation>Nich gespeicherte Änderungen</translation>
+        <translation>Nicht gespeicherte Änderungen</translation>
     </message>
 </context>
 <context>
@@ -1045,7 +1045,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+55"/>
         <source>Unsaved Changes</source>
-        <translation>Nich gespeicherte Änderungen</translation>
+        <translation>Nicht gespeicherte Änderungen</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2902,7 +2902,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+62"/>
         <source>Unsaved Changes</source>
-        <translation>Nich gespeicherte Änderungen</translation>
+        <translation>Nicht gespeicherte Änderungen</translation>
     </message>
     <message>
         <location line="+1"/>

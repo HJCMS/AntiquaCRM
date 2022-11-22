@@ -6,8 +6,6 @@
 #include "providerspageview.h"
 #include "providerstreeview.h"
 
-#include <QChar>
-#include <QDataStream>
 #include <QIcon>
 #include <QLayout>
 #include <QMessageBox>
