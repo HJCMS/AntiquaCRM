@@ -17,7 +17,6 @@ class ProviderActionDialog final : public QDialog {
   Q_OBJECT
 
 private:
-  QRadioButton *m_rb1;
   QRadioButton *m_rb2;
   QRadioButton *m_rb3;
   QRadioButton *m_rb4;

@@ -5,26 +5,30 @@
 
 #include <QLabel>
 #include <QLayout>
+#include <QSizePolicy>
 
 ProviderTextBlock::ProviderTextBlock(const QString &title, QWidget *parent)
     : QFrame{parent} {
   setContentsMargins(2, 0, 0, 0);
+
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 
   m_info = new QLabel(this);
   m_info->setText(title);
   m_info->setStyleSheet("QLabel {margin-left:2px; font-style:italic;}");
-  layout->addWidget(m_info, Qt::AlignLeft);
+  m_info->setAlignment(Qt::AlignLeft | Qt::AlignBottom);
+  layout->addWidget(m_info);
 
   QStringList css("background: transparent;");
   css << "border-top: 1px solid palette(text);";
 
   m_edit = new QTextEdit(this);
   m_edit->setReadOnly(true);
-  m_edit->setMaximumHeight(150);
   m_edit->setStyleSheet("QTextEdit {" + css.join(" ") + "}");
   layout->addWidget(m_edit);
+
+  layout->addStretch(1);
   setLayout(layout);
 }
 

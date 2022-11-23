@@ -27,13 +27,9 @@ ProviderActionDialog::ProviderActionDialog(QWidget *parent) : QDialog{parent} {
   QStringList notes;
   notes << tr("Not all service providers fully support these features.");
   notes << tr("Please make sure to check it regularly on the service provider side.");
-  m_info->setText(notes.join("\n"));
+  m_info->setText(notes.join(" "));
   m_info->setStyleSheet("QLabel {font-style:italic; font-size:smaller;}");
   layout->addWidget(m_info);
-
-  m_rb1 = new QRadioButton(tr("Without disclosures"), this);
-  m_rb1->setChecked(true);
-  layout->addWidget(m_rb1);
 
   m_rb2 = new QRadioButton(tr("Waiting for Payment"), this);
   m_rb2->setObjectName("WAITING_FOR_PAYMENT");

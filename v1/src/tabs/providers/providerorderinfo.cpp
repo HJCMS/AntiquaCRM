@@ -15,7 +15,8 @@ ProviderOrderInfo::ProviderOrderInfo(QWidget *parent) : QWidget{parent} {
   layout->setContentsMargins(0, 2, 0, 2);
 
   QLabel *lb = new QLabel(this);
-  lb->setText(tr("Displays the current payment information."));
+  lb->setText(tr("Displays the current payment and order status Information."));
+  lb->setStyleSheet("QLabel {font-weight: bold;}");
   layout->addWidget(lb, r++, 0, 1, 2, Qt::AlignLeft);
 
   layout->addWidget(infoCell(tr("Ordered at")), r, 0, 1, 1);
@@ -24,13 +25,15 @@ ProviderOrderInfo::ProviderOrderInfo(QWidget *parent) : QWidget{parent} {
 
   layout->addWidget(infoCell(tr("Payment Method")), r, 0, 1, 1);
   m_paymentMethod = new QLabel(this);
+  m_paymentMethod->setText(tr("Without disclosures"));
   layout->addWidget(m_paymentMethod, r++, 1, 1, 1);
 
-  layout->addWidget(infoCell(tr("Payed")), r, 0, 1, 1);
+  layout->addWidget(infoCell(tr("Paid with PayPal")), r, 0, 1, 1);
   m_orderPayed = new QLabel(this);
+  m_orderPayed->setText(tr("Without disclosures"));
   layout->addWidget(m_orderPayed, r++, 1, 1, 1);
 
-  layout->addWidget(infoCell(tr("Confirmed")), r, 0, 1, 1);
+  layout->addWidget(infoCell(tr("Payment Confirmed")), r, 0, 1, 1);
   m_paymentConfirmed = new AntiquaDateInfo(this);
   m_paymentConfirmed->setObjectName("o_payment_confirmed");
   layout->addWidget(m_paymentConfirmed, r++, 1, 1, 1);

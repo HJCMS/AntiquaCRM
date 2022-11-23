@@ -137,7 +137,7 @@ const QString ASqlFiles::queryStatement(const QString &name) {
 #ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << "Permission Denied!";
 #else
-    qWarning("Permission Denied!");
+    qWarning("SqlFiles not found or Permission Denied!");
 #endif
     return out;
   }

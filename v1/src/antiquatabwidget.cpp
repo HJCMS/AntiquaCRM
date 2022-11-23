@@ -154,7 +154,7 @@ void AntiquaTabWidget::setTabToClose(int index) {
       removeTab(index);
       return;
     }
-    qDebug() << tr("Cant close this tab, unsafed changes!");
+    qDebug() << "Can't close this tab, unsaved changes!";
   }
 }
 

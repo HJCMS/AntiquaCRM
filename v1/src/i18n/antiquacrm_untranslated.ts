@@ -2,6 +2,102 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>Abebooks</name>
+    <message>
+        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+125"/>
+        <source>AbeBooks response with errors!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaAppl</name>
+    <message>
+        <location filename="../antiquaappl.cpp" line="+117"/>
+        <source>Plugin %1 found and loading ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+114"/>
+        <source>Initial Translation ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Search Networkconnection!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>No Networkconnection found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Valid Networkconnection found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Check SQL Server connection!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>SQL Server unreachable!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>SQL Server found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Open Database connection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Database connected!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Creating Cachefiles.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Cachefiles completed ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Create Cachefile failed ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Loading plugins!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Start Providers requests ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Completed...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AntiquaCRM::ACurl</name>
     <message>
         <location filename="../lib/acurl.cpp" line="+439"/>
@@ -38,10 +134,164 @@
     </message>
 </context>
 <context>
+    <name>AntiquaConfigMenus</name>
+    <message>
+        <location filename="../antiquaconfigmenus.cpp" line="+13"/>
+        <source>Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Sections settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Keywords Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Storage Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Templates Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Delivery services</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Application Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AntiquaDateInfo</name>
     <message>
         <location filename="../widgets/antiquadateinfo.cpp" line="+76"/>
         <source>A Valid Date is required!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaMenuBar</name>
+    <message>
+        <location filename="../antiquamenubar.cpp" line="+23"/>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Application Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaSystemTray</name>
+    <message>
+        <location filename="../antiquasystemtray.cpp" line="+11"/>
+        <location line="+31"/>
+        <source>Database connected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-28"/>
+        <source>Window show</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Window hide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Application Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>No Database conenction!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Incoming Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaTabWidget</name>
+    <message>
+        <location filename="../antiquatabwidget.cpp" line="+123"/>
+        <source>Request rejected!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+50"/>
+        <source>Books</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Customers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Providers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaViewsMenus</name>
+    <message>
+        <location filename="../antiquaviewsmenus.cpp" line="+14"/>
+        <source>Views</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Show tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Database Reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Database Views</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Fullscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaWindow</name>
+    <message>
+        <location filename="../antiquawindow.cpp" line="+65"/>
+        <source>Save request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>&lt;p&gt;Do you really want to close the application?&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -615,6 +865,14 @@ Image - Article Id: %2</source>
     <message>
         <location line="+6"/>
         <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Booklooker</name>
+    <message>
+        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+241"/>
+        <source>Booklooker response with errors!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3230,12 +3488,12 @@ Image - Article Id: %2</source>
 <context>
     <name>PaymentMethodSelecter</name>
     <message>
-        <location filename="../widgets/paymentmethodselecter.cpp" line="+20"/>
+        <location filename="../widgets/paymentmethodselecter.cpp" line="+89"/>
         <source>No selection available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Bank transfer in advance</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3250,32 +3508,32 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Credit card in advance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Cash on delivery payment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>PayPal prepayment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Skrill prepayment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>GiroPay prepayment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>GooglePay prepayment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3290,7 +3548,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Instant bank transfer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3300,12 +3558,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Check - payment in advance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="-25"/>
         <source>a Valid payment method is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3425,17 +3683,17 @@ Image - Article Id: %2</source>
 <context>
     <name>PaymentStatusSelecter</name>
     <message>
-        <location filename="../widgets/paymentstatusselecter.cpp" line="+21"/>
+        <location filename="../widgets/paymentstatusselecter.cpp" line="+89"/>
         <source>No status set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Waiting for payment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Ready for shipping</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3445,22 +3703,22 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Paid and shipped</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>No reaction from buyer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>order canceled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="-13"/>
         <source>a valid Payment status is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3963,11 +4221,6 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+5"/>
-        <source>Without disclosures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
         <source>Waiting for Payment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4000,7 +4253,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ProviderBuyerInfo</name>
     <message>
-        <location filename="../tabs/providers/providerbuyerinfo.cpp" line="+39"/>
+        <location filename="../tabs/providers/providerbuyerinfo.cpp" line="+43"/>
         <source>Address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4024,27 +4277,33 @@ Image - Article Id: %2</source>
     <name>ProviderOrderInfo</name>
     <message>
         <location filename="../tabs/providers/providerorderinfo.cpp" line="+18"/>
-        <source>Displays the current payment information.</source>
+        <source>Displays the current payment and order status Information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Ordered at</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Payment Method</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+2"/>
         <location line="+5"/>
-        <source>Payed</source>
+        <source>Without disclosures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-2"/>
+        <source>Paid with PayPal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Confirmed</source>
+        <source>Payment Confirmed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

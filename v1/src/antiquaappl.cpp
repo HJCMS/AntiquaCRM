@@ -220,20 +220,13 @@ bool AntiquaAppl::isRunning() {
 }
 
 int AntiquaAppl::exec() {
+  initTranslations();
   initGui();
 
   AntiquaSplashScreen p_splashScreen(m_mainWindow);
   p_splashScreen.show();
 
   QMutex mutex;
-  // Step 1 - load Translation
-  mutex.lock();
-  p_splashScreen.setMessage(tr("Initial Translation ..."));
-  if (initTranslations()) {
-    p_splashScreen.setMessage(tr("done."));
-  }
-  mutex.unlock();
-
   // Step 2 - show systemtray
   p_splashScreen.setMessage("Initial Systemtray.");
   m_systemTray->show();

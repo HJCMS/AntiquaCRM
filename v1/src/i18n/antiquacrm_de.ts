@@ -2,6 +2,102 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
+    <name>Abebooks</name>
+    <message>
+        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+125"/>
+        <source>AbeBooks response with errors!</source>
+        <translation>AbeBooks-Antwort mit Fehlern!</translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaAppl</name>
+    <message>
+        <location filename="../antiquaappl.cpp" line="+117"/>
+        <source>Plugin %1 found and loading ...</source>
+        <translation>Plugin %1 gefunden und wird geladen ...</translation>
+    </message>
+    <message>
+        <location line="+114"/>
+        <source>Initial Translation ...</source>
+        <translation>Initialisiere Übersetzungen ...</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>done.</source>
+        <translation>fertig.</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Search Networkconnection!</source>
+        <translation>Suche Netzwerkverbindung!</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>No Networkconnection found!</source>
+        <translation>Keine Netzwerkverbindung gefunden!</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Valid Networkconnection found!</source>
+        <translation>Gültige Netzwerkverbindung gefunden!</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Check SQL Server connection!</source>
+        <translation>Überprüfen die SQL Serverberbindung!</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>SQL Server unreachable!</source>
+        <translation>SQL-Server nicht erreichbar!</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>SQL Server found!</source>
+        <translation>SQL-Server gefunden!</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Open Database connection.</source>
+        <translation>Öffnen die Datenbankverbindung.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Database connected!</source>
+        <translation>Datenbankverbindung erstellt!</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Creating Cachefiles.</source>
+        <translation>Erstelle Temporäre Dateien.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Cachefiles completed ...</source>
+        <translation>Temporäre Dateien erstellt ...</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Create Cachefile failed ...</source>
+        <translation>Fehler beim erstellen der Temporären Dateien ...</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Loading plugins!</source>
+        <translation>Plugins werden geladen!</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Start Providers requests ...</source>
+        <translation>Dienstanbieteranfragen starten ...</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Completed...</source>
+        <translation>Abgeschlossen ...</translation>
+    </message>
+</context>
+<context>
     <name>AntiquaCRM::ACurl</name>
     <message>
         <location filename="../lib/acurl.cpp" line="+439"/>
@@ -38,11 +134,165 @@
     </message>
 </context>
 <context>
+    <name>AntiquaConfigMenus</name>
+    <message>
+        <location filename="../antiquaconfigmenus.cpp" line="+13"/>
+        <source>Configuration</source>
+        <translation>Konfiguration</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Sections settings</source>
+        <translation>Abschnitt Einstellungen</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Keywords Editor</source>
+        <translation>Schlüsselwort Editor</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Storage Editor</source>
+        <translation>Lagerort Editor</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Templates Editor</source>
+        <translation>Vorlagen Editor</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Delivery services</source>
+        <translation>Lieferservice</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Application Settings</source>
+        <translation>Programmeinstellungen</translation>
+    </message>
+</context>
+<context>
     <name>AntiquaDateInfo</name>
     <message>
         <location filename="../widgets/antiquadateinfo.cpp" line="+76"/>
         <source>A Valid Date is required!</source>
         <translation>Ein gültigesDatum ist erforderlich!</translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaMenuBar</name>
+    <message>
+        <location filename="../antiquamenubar.cpp" line="+23"/>
+        <source>About</source>
+        <translation>Über</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Application Quit</source>
+        <translation>Programm beenden</translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaSystemTray</name>
+    <message>
+        <location filename="../antiquasystemtray.cpp" line="+11"/>
+        <location line="+31"/>
+        <source>Database connected.</source>
+        <translation>Verbunden mit Datenbank.</translation>
+    </message>
+    <message>
+        <location line="-28"/>
+        <source>Window show</source>
+        <translation>Fenster anzeigen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Window hide</source>
+        <translation>Fenster ausblenden</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Application Quit</source>
+        <translation>Programm beenden</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>No Database conenction!</source>
+        <translation>Nicht mit Datenbank verbunden!</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Incoming Orders</source>
+        <translation>Eingehende Bestellungen</translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaTabWidget</name>
+    <message>
+        <location filename="../antiquatabwidget.cpp" line="+123"/>
+        <source>Request rejected!</source>
+        <translation>Anfrage abgelehnt!</translation>
+    </message>
+    <message>
+        <location line="+50"/>
+        <source>Books</source>
+        <translation>Bücher</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Customers</source>
+        <translation>Kunden</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Orders</source>
+        <translation>Aufträge</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Providers</source>
+        <translation>Dienstleister</translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaViewsMenus</name>
+    <message>
+        <location filename="../antiquaviewsmenus.cpp" line="+14"/>
+        <source>Views</source>
+        <translation>Ansichten</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Show tab</source>
+        <translation>Zeige Registerkarte</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Database Reports</source>
+        <translation>Datenbankberichte</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Database Views</source>
+        <translation>Datenbank ansichten</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Fullscreen</source>
+        <translation>Vollbildansicht</translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaWindow</name>
+    <message>
+        <location filename="../antiquawindow.cpp" line="+65"/>
+        <source>Save request</source>
+        <translation>Speichernanfrage</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>&lt;p&gt;Do you really want to close the application?&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Wollen Sie die Anwendung wirklich schließen?&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -618,6 +868,14 @@ Bild - Artikel Nr: %2</translation>
         <location line="+6"/>
         <source>Update</source>
         <translation>Aktualisieren</translation>
+    </message>
+</context>
+<context>
+    <name>Booklooker</name>
+    <message>
+        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+241"/>
+        <source>Booklooker response with errors!</source>
+        <translation>Booklooker-Antwort mit Fehlern!</translation>
     </message>
 </context>
 <context>
@@ -3232,12 +3490,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PaymentMethodSelecter</name>
     <message>
-        <location filename="../widgets/paymentmethodselecter.cpp" line="+20"/>
+        <location filename="../widgets/paymentmethodselecter.cpp" line="+89"/>
         <source>No selection available</source>
         <translation>Keine Auswahl vorhanden</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Bank transfer in advance</source>
         <translation>Banküberweisung im Voraus</translation>
     </message>
@@ -3252,32 +3510,32 @@ Bild - Artikel Nr: %2</translation>
         <translation>Zahlung per Lastschrift im Voraus</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Credit card in advance</source>
         <translation>Kreditkarte im Voraus</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Cash on delivery payment</source>
         <translation>Zahlung per Nachnahme</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>PayPal prepayment</source>
         <translation>PayPal-Vorauszahlung</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Skrill prepayment</source>
         <translation>Skrill-Vorauszahlung</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>GiroPay prepayment</source>
         <translation>GiroPay-Vorauszahlung</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>GooglePay prepayment</source>
         <translation>GooglePay-Vorauszahlung</translation>
     </message>
@@ -3292,7 +3550,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Abholung - Barzahlung</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Instant bank transfer</source>
         <translation>Sofortüberweisung</translation>
     </message>
@@ -3302,12 +3560,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Offene Rechnung - Vorauskasse vorbehalten</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Check - payment in advance</source>
         <translation>Scheck - Zahlung im Voraus</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="-25"/>
         <source>a Valid payment method is required.</source>
         <translation>Eine gültige Zahlungsmethode ist erforderlich.</translation>
     </message>
@@ -3427,17 +3685,17 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PaymentStatusSelecter</name>
     <message>
-        <location filename="../widgets/paymentstatusselecter.cpp" line="+21"/>
+        <location filename="../widgets/paymentstatusselecter.cpp" line="+89"/>
         <source>No status set</source>
         <translation>Kein Status gesetzt</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Waiting for payment</source>
         <translation>Warten auf Zahlung</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Ready for shipping</source>
         <translation>Zum Versenden bereit</translation>
     </message>
@@ -3447,22 +3705,22 @@ Bild - Artikel Nr: %2</translation>
         <translation>Geliefert wartet auf Zahlung</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Paid and shipped</source>
         <translation>Bezahlt und verschickt</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>No reaction from buyer</source>
         <translation>Keine Reaktion des Käufers</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>order canceled</source>
         <translation>Bestellung storniert</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="-13"/>
         <source>a valid Payment status is required.</source>
         <translation>Ein gültiger Zahlungsstatus ist erforderlich.</translation>
     </message>
@@ -3965,11 +4223,6 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Without disclosures</source>
-        <translation>Keine Angaben</translation>
-    </message>
-    <message>
-        <location line="+4"/>
         <source>Waiting for Payment</source>
         <translation>Warte auf Zahlung</translation>
     </message>
@@ -4002,7 +4255,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ProviderBuyerInfo</name>
     <message>
-        <location filename="../tabs/providers/providerbuyerinfo.cpp" line="+39"/>
+        <location filename="../tabs/providers/providerbuyerinfo.cpp" line="+43"/>
         <source>Address</source>
         <translation>Anschrift</translation>
     </message>
@@ -4026,28 +4279,34 @@ Bild - Artikel Nr: %2</translation>
     <name>ProviderOrderInfo</name>
     <message>
         <location filename="../tabs/providers/providerorderinfo.cpp" line="+18"/>
-        <source>Displays the current payment information.</source>
-        <translation>Zeigt die aktuellen Zahlungsinformationen an.</translation>
+        <source>Displays the current payment and order status Information.</source>
+        <translation>Zeigt die aktuellen Zahlungs- und Bestellstatus-Informationen an.</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Ordered at</source>
         <translation>Bestellt seit</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Payment Method</source>
         <translation>Zahlungsmethode</translation>
     </message>
     <message>
+        <location line="+2"/>
         <location line="+5"/>
-        <source>Payed</source>
-        <translation>Bezahlt</translation>
+        <source>Without disclosures</source>
+        <translation>Keine Angaben</translation>
+    </message>
+    <message>
+        <location line="-2"/>
+        <source>Paid with PayPal</source>
+        <translation>Bezahlt mit PayPal</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Confirmed</source>
-        <translation>Bestätigt</translation>
+        <source>Payment Confirmed</source>
+        <translation>Bezahlung bestätigt</translation>
     </message>
     <message>
         <location line="+5"/>

@@ -8,7 +8,7 @@ _func="${1:-"help"}"
 _build_dir="build-v1-Desktop_Qt_5_15_2_GCC_64bit-Debug"
 _lang="de"
 
-_dirs="`find . -mindepth 1 -maxdepth 1 -type d -not -name plugins -exec basename "{}" \;`"
+_dirs="`find . -maxdepth 1 -type d -not -name plugins -exec basename "{}" \;`"
 
 case "${_func}" in
   *update)
