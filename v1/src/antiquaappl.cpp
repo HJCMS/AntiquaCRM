@@ -180,9 +180,9 @@ void AntiquaAppl::applicationQuit() {
 }
 
 void AntiquaAppl::initDefaultTheme() {
+  setStyle(QStyleFactory::create("Fusion"));
 #ifdef Q_OS_WIN
   // qDebug() << QStyleFactory::keys();
-  setStyle(QStyleFactory::create("Fusion"));
   QFont font = qApp->font();
   qDebug() << font.toString();
   QString fontdef = m_cfg->value("font", font.toString()).toString();
