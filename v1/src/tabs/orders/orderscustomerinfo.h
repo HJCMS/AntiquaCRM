@@ -17,9 +17,10 @@ private:
   QStackedWidget *m_stackedWidget;
   QLabel *m_pageLabel;
 
+  void setInfoText(int);
+
 private Q_SLOTS:
-  void back();
-  void forward();
+  void swapPage();
 
 public:
   SerialID *o_customer_id;
