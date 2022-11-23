@@ -30,7 +30,7 @@ public:
   /**
    * @brief Required Data Type
    */
-  const QMetaType::Type type();
+  QMetaType::Type type();
 };
 
 #endif // ANTIQUACRM_PURCHASETABLECOLUMN_H

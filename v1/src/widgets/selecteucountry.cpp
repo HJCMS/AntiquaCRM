@@ -25,7 +25,7 @@ void SelectEuCountry::loadDataset() {
   }
 }
 
-void SelectEuCountry::dataChanged(int index) { setModified(true); }
+void SelectEuCountry::dataChanged(int) { setModified(true); }
 
 void SelectEuCountry::reset() {
   m_box->setCurrentIndex(0);

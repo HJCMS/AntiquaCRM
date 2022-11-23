@@ -35,8 +35,8 @@ DeliverService::DeliverService(QWidget *parent) : InputEdit{parent} {
 }
 
 void DeliverService::getPriceOnDemand(bool b) {
+  Q_UNUSED(b);
   m_packageBox->setEnabled(true);
-  // FIXME if(b) { packageChanged(1); }
 }
 
 void DeliverService::currentServiceChanged(int) {
@@ -79,7 +79,9 @@ void DeliverService::reset() {
 
 void DeliverService::setFocus() { m_packageBox->setFocus(); }
 
-void DeliverService::setProperties(const QSqlField &field) {}
+void DeliverService::setProperties(const QSqlField &field) {
+  Q_UNUSED(field);
+}
 
 void DeliverService::loadDataset() { m_serviceBox->initDeliverServices(); }
 

@@ -17,8 +17,8 @@ private:
 
 public:
   explicit ATaxCalculator(qreal price);
-  const qreal plus_vat(qreal vat) const;
-  const qreal incl_vat(qreal vat) const;
+  qreal plus_vat(qreal vat) const;
+  qreal incl_vat(qreal vat) const;
 };
 
 };     // namespace AntiquaCRM

@@ -81,6 +81,7 @@ void DeliverServiceList::removeByContext() {
 
 void DeliverServiceList::getDeliverServiceId(QTreeWidgetItem *item,
                                              int column) {
+  qDebug() << Q_FUNC_INFO << "TODO CHECK" << column;
   if (!item->flags().testFlag(Qt::ItemNeverHasChildren))
     return;
 

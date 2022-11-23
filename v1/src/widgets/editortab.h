@@ -15,7 +15,7 @@ class EditorTabBar final : public QTabBar {
   Q_OBJECT
 
 protected:
-  void wheelEvent(QWheelEvent *event){/* disabled */};
+  void wheelEvent(QWheelEvent *){/* disabled */};
 
 public:
   explicit EditorTabBar(QWidget *parent = nullptr) : QTabBar{parent} {};

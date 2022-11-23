@@ -70,10 +70,8 @@ void ANetworker::slotReadResponse() {
   if (m_reply == nullptr)
     return;
 
-  bool success = true;
   if (m_reply->error() != QNetworkReply::NoError) {
     slotError(m_reply->error());
-    success = false;
   }
 
   if (!m_reply->bytesAvailable()) {

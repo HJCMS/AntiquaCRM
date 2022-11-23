@@ -53,7 +53,7 @@ void AntiquaWindow::hideEvent(QHideEvent *event) {
   QMainWindow::hideEvent(event);
 }
 
-void AntiquaWindow::closeEvent(QCloseEvent *event) {
+void AntiquaWindow::closeEvent(QCloseEvent *) {
   // Beendet wird über das SIGNAL sendApplQuit() zur parent Klasse.
   QHideEvent hide;
   hide.setAccepted(true);

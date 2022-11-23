@@ -46,7 +46,7 @@ BookCardPaintWidget::BookCardPaintWidget(QWidget *parent) : QWidget{parent} {
   setAttribute(Qt::WA_OpaquePaintEvent, true);
 }
 
-void BookCardPaintWidget::paintEvent(QPaintEvent *p) {
+void BookCardPaintWidget::paintEvent(QPaintEvent *) {
   QRect r = rect();
   int w = r.width();
   int h = r.height();

@@ -2,18 +2,16 @@
 // vim: set fileencoding=utf-8
 
 #include "atxsocket.h"
-#include "aglobal.h"
 
-#include <QDebug>
+#include <AGlobal>
 #include <QJsonDocument>
 #include <QJsonValue>
-#include <QSysInfo>
+#include <QLocalServer>
 
 namespace AntiquaCRM {
 
 ATxSocket::ATxSocket(QObject *parent) : QLocalSocket{parent}, connected{false} {
-  setServerName(antiquaServerName());
-  // setSocketDescriptor
+  setServerName(antiquaSocketName());
 
   connect(this, SIGNAL(errorOccurred(QLocalSocket::LocalSocketError)),
           SLOT(getErrors(QLocalSocket::LocalSocketError)));
@@ -90,7 +88,7 @@ void ATxSocket::pushOperation(const QJsonObject &obj) {
     connectToServer(QIODevice::ReadWrite);
 
   QByteArray json = QJsonDocument(obj).toJson(QJsonDocument::Compact);
-  qint64 bytes = write(json);
+  write(json);
   waitForBytesWritten((timeout * 1000));
 }
 
@@ -116,23 +114,6 @@ void ATxSocket::close() {
   if (state() == QLocalSocket::UnconnectedState || waitForDisconnected(1000)) {
     connected = false;
   }
-}
-
-const QString ATxSocket::antiquaServerName() {
-  QString name(ANTIQUACRM_CONNECTION_DOMAIN);
-  name.append(".");
-  name.append(QSysInfo::machineHostName());
-  QString userName;
-#ifdef Q_OS_LINUX
-  userName = qEnvironmentVariable("USER").trimmed().replace(" ", "");
-#else
-  userName = qEnvironmentVariable("USERNAME").trimmed().replace(" ", "");
-#endif
-  if (!userName.isEmpty()) {
-    name.append(".");
-    name.append(userName);
-  }
-  return name;
 }
 
 }; // namespace AntiquaCRM

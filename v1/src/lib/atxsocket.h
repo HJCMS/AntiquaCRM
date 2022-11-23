@@ -60,11 +60,6 @@ public:
    * @brief close socket connection
    */
   void close() override;
-
-  /**
-   * @brief Socket serverName
-   */
-  static const QString antiquaServerName();
 };
 
 }; // namespace AntiquaCRM

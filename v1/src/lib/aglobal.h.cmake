@@ -13,6 +13,7 @@
 #include <QObject>
 #include <QRegExp>
 #include <QString>
+#include <QSysInfo>
 
 /**
  * @def ANTIQUACRM_NAME
@@ -226,6 +227,25 @@ namespace AntiquaCRM {
   QRegExp reg;
   reg.setPattern("^([\\d]{6}[\\d]+)$");
   return reg;
+ }
+
+
+ /**
+  * @brief Socket serverName
+  */
+ static const QString antiquaSocketName() {
+   QString name(ANTIQUACRM_CONNECTION_DOMAIN);
+   name.append(".");
+   name.append(QString::fromLocal8Bit(QSysInfo::machineUniqueId()));
+   QString userName;
+#ifdef Q_OS_LINUX
+   userName = qEnvironmentVariable("USER").trimmed().replace(" ", "");
+   if (!userName.isEmpty()) {
+     name.append(".");
+     name.append(userName);
+   }
+#endif
+   return name;
  }
 
  /**

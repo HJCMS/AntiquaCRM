@@ -4,13 +4,10 @@
 #include "keywordactions.h"
 
 #include <QHBoxLayout>
-#include <QStyle>
 #include <QTimer>
 
 KeywordActions::KeywordActions(QWidget *parent) : QFrame{parent} {
   QHBoxLayout *layout = new QHBoxLayout(this);
-
-  QStyle *m_style = style();
 
   m_messages = new QLabel(this);
   layout->addWidget(m_messages);

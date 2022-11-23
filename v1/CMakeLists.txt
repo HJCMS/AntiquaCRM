@@ -56,7 +56,7 @@ ENDIF (ANTIQUA_DEVELOPEMENT)
 
 ## cUrl
 ## https://curl.se/
-FIND_PACKAGE(CURL REQUIRED libcurl)
+## FIND_PACKAGE(CURL REQUIRED libcurl)
 
 ## libqrencode
 ## https://github.com/fukuchi/libqrencode

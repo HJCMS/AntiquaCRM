@@ -49,13 +49,13 @@ private:
    * @brief Regulärer Ausdruck für ISBN 10 (ALT)
    */
   const QRegularExpression p10 = QRegularExpression("^(?!97[89])([\\d]{10})$");
-  const bool isISBN10(const QString &isbn) const;
+  bool isISBN10(const QString &isbn) const;
 
   /**
    * @brief Regulärer Ausdruck für ISBN/EAN 13 (ISO 2108)
    */
   const QRegularExpression p13 = QRegularExpression("^(97[89])([\\d]{10})$");
-  const bool isISBN13(const QString &isbn) const;
+  bool isISBN13(const QString &isbn) const;
 
   void loadDataset();
 

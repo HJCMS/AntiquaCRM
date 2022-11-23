@@ -60,7 +60,7 @@ void SerialID::setProperties(const QSqlField &field) {
 const QVariant SerialID::value() {
   QVariant data = QVariant(m_serialLabel->text()).toULongLong();
   /**< @warning Es darf keine 0 zurück gegeben werden */
-  if (data.toInt() < 1)
+  if (data.toLongLong() < 1)
     return QVariant();
 
   return data;
@@ -71,7 +71,8 @@ bool SerialID::isValid() {
     return false;
 
   QVariant data(m_serialLabel->text().trimmed());
-  if (data.toULongLong() >= 0)
+  qint64 isbn = data.toLongLong();
+  if (isbn >= 0)
     return true;
 
   return false;

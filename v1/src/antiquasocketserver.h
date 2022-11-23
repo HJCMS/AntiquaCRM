@@ -29,7 +29,6 @@ Q_SIGNALS:
 
 public:
   explicit AntiquaSocketServer(QObject *parent = nullptr);
-  static const QString socketPath();
   ~AntiquaSocketServer();
 };
 

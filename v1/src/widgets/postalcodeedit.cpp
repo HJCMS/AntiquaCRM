@@ -12,6 +12,7 @@ PostalCodeModel::PostalCodeModel(QObject *parent)
     : QAbstractListModel{parent} {}
 
 int PostalCodeModel::rowCount(const QModelIndex &parent) const {
+  Q_UNUSED(parent);
   return p_codes.size();
 }
 

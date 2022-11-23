@@ -394,7 +394,6 @@ bool Invoice::generateDocument(QPrinter *printer) {
     painter.setOpacity(1.0);
   }
 
-  int pY = 0;
   painter.translate(0, 0);
   htmlHead->drawContents(&painter, headerRect);
   painter.translate(0, headerRect.height());

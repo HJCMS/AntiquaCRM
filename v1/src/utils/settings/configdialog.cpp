@@ -130,6 +130,7 @@ int ConfigDialog::exec() {
 }
 
 void ConfigDialog::setPage(QListWidgetItem *item) {
+  qDebug() << Q_FUNC_INFO << "TODO" << item->text();
   int i = (m_listWidget->currentRow());
   if (pages->widget(i) != nullptr) {
     pages->setCurrentIndex(i);

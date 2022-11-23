@@ -32,8 +32,8 @@ class TextEditor;
 class BookCardQrCode final {
 
 private:
-  const int p_size;
   const QUrl p_url;
+  const int p_size;
 
 public:
   explicit BookCardQrCode(const QUrl &url, int size = 128);

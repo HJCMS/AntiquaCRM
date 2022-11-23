@@ -40,7 +40,7 @@ public:
    * @brief notExists
    * @return true - if Tag by Name not exists!
    */
-  const bool notExists(const QString &tag) const;
+  bool notExists(const QString &tag) const;
 
   /**
    * @brief fetchNodes
@@ -59,7 +59,7 @@ public:
    * @brief nodeIntValue
    * @return __int64
    */
-  const qint64 nodeIntValue(const QDomNode &node) const;
+  qint64 nodeIntValue(const QDomNode &node) const;
 
   /**
    * @brief createAction

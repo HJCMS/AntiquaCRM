@@ -54,7 +54,7 @@ public Q_SLOTS:
 
 public:
   explicit TabProviders(QWidget *parent = nullptr);
-  bool customAction(const QJsonObject &obj) override { return false; }
+  bool customAction(const QJsonObject &) override { return false; }
   ~TabProviders();
 };
 

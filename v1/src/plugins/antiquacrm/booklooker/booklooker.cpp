@@ -266,7 +266,6 @@ void Booklooker::queryOrder(const QString &orderId) {
   }
 
   QUrl url = apiQuery("order");
-  QDate past = QDate::currentDate().addDays(historyCall);
   QUrlQuery q;
   q.addQueryItem("token", QString(authenticCookie.value()));
   q.addQueryItem("orderId", orderId);

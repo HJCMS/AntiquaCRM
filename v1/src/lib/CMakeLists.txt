@@ -7,7 +7,6 @@ INCLUDE_DIRECTORIES (
   ${PROJECT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CURL_INCLUDE_DIRS}
 )
 
 CONFIGURE_FILE (aglobal.h.cmake
@@ -37,7 +36,6 @@ SET (projectinc_FILES
 
 SET (projectLibrary_SOURCES
  acompleterdata.cpp
- acurl.cpp
  aeuropeancountries.cpp
  anetworker.cpp
  anetworkiface.cpp
@@ -59,7 +57,6 @@ SET (projectLibrary_SOURCES
 
 SET (projectLibrary_HEADERS
  acompleterdata.h
- acurl.h
  aeuropeancountries.h
  aglobal.h
  anetworker.h
@@ -102,7 +99,6 @@ TARGET_LINK_LIBRARIES (${_projectLibrary} PRIVATE
   Qt${QT_VERSION_MAJOR}::Network
   Qt${QT_VERSION_MAJOR}::Sql
   Qt${QT_VERSION_MAJOR}::Xml
-  ${CURL_LIBRARIES}
 )
 
 INSTALL (TARGETS ${_projectLibrary}

@@ -69,8 +69,7 @@ public:
   /**
    * @brief PrinterButton
    */
-  explicit MailButton(QWidget *parent = nullptr,
-                      MailButton::Sections flags = NoButton);
+  explicit MailButton(QWidget *parent = nullptr);
 
   /**
    * @brief Anzeige Einstellungen

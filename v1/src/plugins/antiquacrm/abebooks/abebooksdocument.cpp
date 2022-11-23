@@ -48,7 +48,7 @@ QPair<int, QString> AbeBooksDocument::errorResponseCode() {
   return qp;
 }
 
-const bool AbeBooksDocument::notExists(const QString &tag) const {
+bool AbeBooksDocument::notExists(const QString &tag) const {
   return (documentElement().tagName() != tag);
 }
 
@@ -70,7 +70,7 @@ const QDomNode AbeBooksDocument::firstChildNode(const QDomElement &parent,
   return n;
 }
 
-const qint64 AbeBooksDocument::nodeIntValue(const QDomNode &node) const {
+qint64 AbeBooksDocument::nodeIntValue(const QDomNode &node) const {
   if (node.firstChild().isText()) {
     QVariant val = node.firstChild().nodeValue();
     bool b = false;

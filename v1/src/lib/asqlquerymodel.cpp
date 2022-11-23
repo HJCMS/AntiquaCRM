@@ -80,7 +80,7 @@ const QString ASqlQueryModel::fieldName(int column) const {
   return p_queryRecord.fieldName(column);
 }
 
-const int ASqlQueryModel::column(const QString &fieldName) const {
+int ASqlQueryModel::column(const QString &fieldName) const {
   if (p_queryRecord.isEmpty())
     return -1;
 

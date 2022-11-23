@@ -104,7 +104,7 @@ public:
   /**
    * @brief Spalten Nummer der abfrage!
    */
-  const int column(const QString &fieldName) const;
+  int column(const QString &fieldName) const;
 
   /**
    * @brief Datensatz abfragen

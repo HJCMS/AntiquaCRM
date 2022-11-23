@@ -47,7 +47,7 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   o_order_status = new OrderStatusSelecter(this);
   o_order_status->setObjectName("o_order_status");
   o_order_status->setInfo(tr("Current order status"));
-  o_order_status->setValue(1);
+  o_order_status->setValue(0);
   row0->addWidget(o_order_status);
   mainLayout->addLayout(row0);
   // END:Row0
@@ -438,7 +438,9 @@ qint64 OrdersEditor::searchCustomer(const QJsonObject &obj) {
 
     return cIds.first();
   } else {
+#ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << sql << m_sql->lastError();
+#endif
     return -1;
   }
   return -1;
@@ -715,6 +717,7 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
     return status;
 
   createNewEntry();
+  o_order_status->setValue(AntiquaCRM::OrderStatus::STARTED);
 
   AntiquaCRM::ASqlFiles file("query_order_by_oid");
   if (!file.openTemplate())
@@ -757,7 +760,9 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
     setResetModified(customInput);
     status = true;
   } else {
+#ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
+#endif
     status = false;
   }
 
@@ -864,7 +869,7 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
         while (q.next()) {
           for (int c = 0; c < rec.count(); c++) {
             QSqlField f = rec.field(c);
-            qDebug() << f.name() << q.value(f.name());
+            // qDebug() << f.name() << q.value(f.name());
             prOrder.setValue(f.name(), q.value(f.name()));
           }
         }
@@ -890,7 +895,7 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
     QJsonObject orderinfo = obj.value("orderinfo").toObject();
     if (orderinfo.contains("o_payment_confirmed")) {
       bool paypal_status = (!orderinfo.value("o_payment_confirmed").isNull());
-      qDebug() << "TODO PayPal Status" << paypal_status;
+      o_payment_status->setValue(paypal_status);
     }
 
     foreach (QString key, orderinfo.keys()) {
@@ -934,7 +939,8 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
         prOrder.insertOrderItems(items);
     }
   }
-
+  // Setze auf Auftragsbegin
+  prOrder.setValue("o_order_status", AntiquaCRM::OrderStatus::STARTED);
   // Die Paket Verfolgungsnummer muss Manuell gesetzt werden!
   prOrder.setValue("o_delivery_send_id", "");
   // Die Lieferschein Nummer wird erst nach dem Speichern mit der

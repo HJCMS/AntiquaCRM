@@ -28,12 +28,12 @@ public Q_SLOTS:
   void openStartPage() override;
   void createSearchQuery(const QString &query = QString()) override;
   void createNewEntry() override {/* disabled */};
-  void openEntry(qint64 articleId) override {/* disabled */};
+  void openEntry(qint64) override {/* disabled */};
   void onEnterChanged() override;
 
 public:
   explicit TabViews(QWidget *parent = nullptr);
-  bool customAction(const QJsonObject &obj) override { return false; }
+  bool customAction(const QJsonObject &) override { return false; }
 };
 
 #endif // ANTIQUACRM_TABVIEWS_H

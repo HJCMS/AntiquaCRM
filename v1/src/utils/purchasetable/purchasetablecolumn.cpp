@@ -14,7 +14,7 @@ const QString PurchaseTableColumn::field() { return p_f; }
 
 const QString PurchaseTableColumn::name() { return p_n; }
 
-const QMetaType::Type PurchaseTableColumn::type() {
+QMetaType::Type PurchaseTableColumn::type() {
   if (p_f.contains("a_"))
     return AntiquaCRM::AProviderOrder::articleKeys().value(p_f);
   else

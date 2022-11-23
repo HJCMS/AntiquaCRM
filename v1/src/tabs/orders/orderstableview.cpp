@@ -47,7 +47,6 @@ bool OrdersTableView::sqlQueryTable(const QString &query) {
 void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
   p_modelIndex = indexAt(event->pos());
   bool enable_action = p_modelIndex.isValid();
-  bool enable_create = (m_model->rowCount() > 0);
 
   QMenu *m = new QMenu(this);
   // Eintrag öffnen  Bestellung anlegen

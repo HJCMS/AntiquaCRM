@@ -91,6 +91,7 @@ void TabProviders::timerEvent(QTimerEvent *event) {
 }
 
 bool TabProviders::findPage(const QString &provider, const QString &orderId) {
+  Q_UNUSED(provider);
   for (int p = 0; p < m_pages->count(); p++) {
     if (m_pages->widget(p)->windowTitle() == orderId) {
       m_pages->setCurrentIndex(p);

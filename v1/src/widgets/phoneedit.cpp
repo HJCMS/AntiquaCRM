@@ -10,6 +10,7 @@ PhoneCountryCodeModel::PhoneCountryCodeModel(QObject *parent)
     : QAbstractListModel{parent} {}
 
 int PhoneCountryCodeModel::rowCount(const QModelIndex &parent) const {
+  Q_UNUSED(parent);
   return p_codes.size();
 }
 

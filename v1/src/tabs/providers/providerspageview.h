@@ -25,7 +25,7 @@ private Q_SLOTS:
   void pageEntered(int);
 
 protected:
-  void wheelEvent(QWheelEvent *event) override{/* ignore it */};
+  void wheelEvent(QWheelEvent *) override{/* ignore it */};
 
 Q_SIGNALS:
   void sendCloseTab(int index);

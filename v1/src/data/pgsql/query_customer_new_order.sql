@@ -1,6 +1,6 @@
 -- @brief Query Replace Order Customer Data
 -- @file query_customer_new_order.sql
-SELECT c_id, c_id AS o_customer_id,
+SELECT c_id AS o_customer_id,
   c_postal_address,
   c_shipping_address,
   d_srv AS o_delivery_service,

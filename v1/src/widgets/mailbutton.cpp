@@ -7,8 +7,7 @@
 #include <QIcon>
 #include <QMenu>
 
-MailButton::MailButton(QWidget *parent, MailButton::Sections flags)
-    : QPushButton{parent} {
+MailButton::MailButton(QWidget *parent) : QPushButton{parent} {
   QIcon mailIcon = QIcon(":icons/user_identity.png");
   setIcon(mailIcon);
   setText(tr("Mail Messages"));

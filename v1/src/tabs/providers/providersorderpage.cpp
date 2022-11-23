@@ -266,7 +266,7 @@ bool ProvidersOrderPage::loadOrderDataset() {
   QJsonArray array = p_order.value("articles").toArray();
   if (array.count() > 0) {
     m_table->setRowCount(array.count());
-    int rows = m_table->rowCount();
+    // int rows = m_table->rowCount();
     for (int r = 0; r < array.count(); r++) {
       QJsonObject o = array[r].toObject();
       m_table->setItem(r, 0, m_table->createItem(o.value("a_provider_id")));

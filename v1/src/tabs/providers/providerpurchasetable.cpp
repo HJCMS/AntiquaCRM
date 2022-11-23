@@ -61,12 +61,12 @@ void ProviderPurchaseTable::addHeaderItem(int i, const QString &name) {
 void ProviderPurchaseTable::setArticleStatus(const QString &article,
                                              bool available) {
   for (int r = 0; r < rowCount(); r++) {
-    QTableWidgetItem *article = item(r, 1);
-    if (article != nullptr) {
-      if (available)
-        article->setData(Qt::DecorationRole, pic("action_ok"));
+    QTableWidgetItem *itemArticle = item(r, 1);
+    if (itemArticle != nullptr) {
+      if (itemArticle->text() == article && available)
+        itemArticle->setData(Qt::DecorationRole, pic("action_ok"));
       else
-        article->setData(Qt::DecorationRole, pic("action_cancel"));
+        itemArticle->setData(Qt::DecorationRole, pic("action_cancel"));
     }
   }
 }

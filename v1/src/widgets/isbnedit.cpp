@@ -28,12 +28,12 @@ IsbnEdit::IsbnEdit(QWidget *parent) : InputEdit{parent} {
           SLOT(isbnChanged(const QString &)));
 }
 
-const bool IsbnEdit::isISBN10(const QString &isbn) const {
+bool IsbnEdit::isISBN10(const QString &isbn) const {
   QRegularExpressionMatch c = p10.match(isbn);
   return c.hasMatch();
 }
 
-const bool IsbnEdit::isISBN13(const QString &isbn) const {
+bool IsbnEdit::isISBN13(const QString &isbn) const {
   QRegularExpressionMatch c = p13.match(isbn);
   return c.hasMatch();
 }
