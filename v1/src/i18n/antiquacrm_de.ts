@@ -3950,56 +3950,76 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Changes the status of the current order.</source>
-        <translation>Ändert den Status der aktuellen Bestellung.</translation>
+        <source>Changes the Provider status of the current order.</source>
+        <translation>Ändert den Anbieterstatus der aktuellen Bestellung.</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Provider Status - no disclosures</source>
-        <translation>Anbieterstatus – keine Angaben</translation>
+        <location line="+7"/>
+        <source>Not all service providers fully support these features.</source>
+        <translation>Nicht alle Dienstanbieter unterstützen diese Funktionen im vollen Umfang.</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Wait for Order Payment</source>
-        <translation>Warten auf Zahlung der Bestellung</translation>
+        <location line="+1"/>
+        <source>Please make sure to check it regularly on the service provider side.</source>
+        <translation>Bitte überprüfen Sie dies regelmäßig auf der Dienstanbieterseite.</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Order is ready for Shipment</source>
-        <translation>Die Bestellung ist versandbereit</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Order shipped, wait for Payment.</source>
-        <translation>Bestellung versendet, warte auf Zahlung.</translation>
+        <location line="+5"/>
+        <source>Without disclosures</source>
+        <translation>Keine Angaben</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Order Shipped and Paid</source>
-        <translation>Bestellung versendet und bezahlt</translation>
+        <source>Waiting for Payment</source>
+        <translation>Warte auf Zahlung</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Order Buyer no reaction.</source>
-        <translation>Bestellung keine Käufer Reaktion.</translation>
+        <source>Ready for Shipment</source>
+        <translation>Versandfertig</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Order Cancel action.</source>
-        <translation>Bestellung stornieren.</translation>
+        <source>Shipped, wait for Payment</source>
+        <translation>Versendet, warte auf Zahlung</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Shipped and Paid</source>
+        <translation>Versendet und bezahlt</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Buyer no reaction</source>
+        <translation>Keine reaktion des Käufers</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Cancel action</source>
+        <translation>Stornierung</translation>
     </message>
 </context>
 <context>
     <name>ProviderBuyerInfo</name>
     <message>
-        <location filename="../tabs/providers/providerbuyerinfo.cpp" line="+17"/>
-        <source>Invoice Address</source>
-        <translation>Rechnungsanschrift</translation>
+        <location filename="../tabs/providers/providerbuyerinfo.cpp" line="+39"/>
+        <source>Address</source>
+        <translation>Anschrift</translation>
     </message>
     <message>
-        <location line="+11"/>
-        <source>Delivery Address</source>
-        <translation>Lieferanschrift</translation>
+        <location line="+1"/>
+        <source>Buyer invoice address</source>
+        <translation>Rechnungsadresse des Käufers</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Buyer Comments</source>
+        <translation>Käuferkommentare</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Some Buyer Notification Messages.</source>
+        <translation>Einige Käuferbenachrichtigungen.</translation>
     </message>
 </context>
 <context>
@@ -4063,7 +4083,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location filename="../tabs/providers/providerpurchaseheader.cpp" line="+15"/>
         <source>Buyer</source>
-        <translation>Einkäufer</translation>
+        <translation>Einkäufer*in</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -4186,21 +4206,16 @@ Bild - Artikel Nr: %2</translation>
     <name>ProvidersOrderPage</name>
     <message>
         <location filename="../tabs/providers/providersorderpage.cpp" line="+38"/>
-        <source>Address</source>
-        <translation>Adresse</translation>
+        <source>Buyer</source>
+        <translation>Käufer*in</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Payment Info</source>
-        <translation>Zahlungs Informationen</translation>
+        <source>Paymentinfo</source>
+        <translation>Zahlungsinformationen</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Buyer comments</source>
-        <translation>Kunden Bemerkungen</translation>
-    </message>
-    <message>
-        <location line="+178"/>
+        <location line="+185"/>
         <source>An order for %1 already exists!</source>
         <translation>Ein Auftrag für %1 existiert bereits!</translation>
     </message>
@@ -4914,7 +4929,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TabProviders</name>
     <message>
-        <location filename="../tabs/providers/tabproviders.cpp" line="+18"/>
+        <location filename="../tabs/providers/tabproviders.cpp" line="+16"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>

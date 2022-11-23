@@ -3948,55 +3948,75 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+7"/>
-        <source>Changes the status of the current order.</source>
+        <source>Changes the Provider status of the current order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Provider Status - no disclosures</source>
+        <location line="+7"/>
+        <source>Not all service providers fully support these features.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Wait for Order Payment</source>
+        <location line="+1"/>
+        <source>Please make sure to check it regularly on the service provider side.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Order is ready for Shipment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Order shipped, wait for Payment.</source>
+        <location line="+5"/>
+        <source>Without disclosures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Order Shipped and Paid</source>
+        <source>Waiting for Payment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Order Buyer no reaction.</source>
+        <source>Ready for Shipment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Order Cancel action.</source>
+        <source>Shipped, wait for Payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Shipped and Paid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Buyer no reaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Cancel action</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ProviderBuyerInfo</name>
     <message>
-        <location filename="../tabs/providers/providerbuyerinfo.cpp" line="+17"/>
-        <source>Invoice Address</source>
+        <location filename="../tabs/providers/providerbuyerinfo.cpp" line="+39"/>
+        <source>Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
-        <source>Delivery Address</source>
+        <location line="+1"/>
+        <source>Buyer invoice address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Buyer Comments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Some Buyer Notification Messages.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4184,21 +4204,16 @@ Image - Article Id: %2</source>
     <name>ProvidersOrderPage</name>
     <message>
         <location filename="../tabs/providers/providersorderpage.cpp" line="+38"/>
-        <source>Address</source>
+        <source>Buyer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Payment Info</source>
+        <source>Paymentinfo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Buyer comments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+178"/>
+        <location line="+185"/>
         <source>An order for %1 already exists!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4912,7 +4927,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TabProviders</name>
     <message>
-        <location filename="../tabs/providers/tabproviders.cpp" line="+18"/>
+        <location filename="../tabs/providers/tabproviders.cpp" line="+16"/>
         <source>Providers</source>
         <translation type="unfinished"></translation>
     </message>

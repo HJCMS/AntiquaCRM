@@ -39,6 +39,7 @@ public:
   void setInfo(const QString &);
   const QString info();
   const QString notes();
+  static const QMap<AntiquaCRM::PaymentMethod,QString> getMethodes();
 };
 
 #endif // ANTIQUACRM_PAYMENTMETHODSELECTER_H

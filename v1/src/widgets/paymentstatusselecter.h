@@ -16,7 +16,6 @@ class PaymentStatusSelecter final : public InputEdit {
   Q_OBJECT
 
 private:
-  QMap<int, QPair<QString, AntiquaCRM::PaymentStatus>> p_map;
   AntiquaComboBox *m_box;
   void loadDataset();
 
@@ -39,6 +38,7 @@ public:
   void setInfo(const QString &);
   const QString info();
   const QString notes();
+  static const QMap<AntiquaCRM::PaymentStatus, QString> getStatus();
 };
 
 #endif // ANTIQUACRM_PAYMENTSTATUSSELECTER_H

@@ -6,7 +6,9 @@
 #define ANTIQUACRM_PROVIDERORDERINFO_H
 
 #include <AntiquaWidgets>
+#include <QDateTime>
 #include <QObject>
+#include <QLabel>
 #include <QWidget>
 #include <QJsonObject>
 
@@ -15,10 +17,14 @@ class ProviderOrderInfo : public QWidget {
 
 private:
   AntiquaDateInfo *m_since;
-  PaymentMethodSelecter *m_paymentMethod;
-  LineEdit *m_orderPayed;
-  LineEdit *m_paymentConfirmed;
-  PaymentStatusSelecter *m_orderStatus;
+  QLabel *m_paymentMethod;
+  QLabel *m_orderPayed;
+  AntiquaDateInfo *m_paymentConfirmed;
+  QLabel *m_orderStatus;
+  QLabel *infoCell(const QString &);
+  const QDateTime convertDateTime(const QString &);
+  void setPaymentStatus(int);
+  void setPaymentMethod(int);
 
 public:
   explicit ProviderOrderInfo(QWidget *parent = nullptr);

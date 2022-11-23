@@ -6,44 +6,60 @@
 #include <QLabel>
 #include <QLayout>
 
-ProviderBuyerInfo::ProviderBuyerInfo(QWidget *parent) : QWidget{parent} {
-  setContentsMargins(0, 0, 0, 0);
+ProviderTextBlock::ProviderTextBlock(const QString &title, QWidget *parent)
+    : QFrame{parent} {
+  setContentsMargins(2, 0, 0, 0);
+  QVBoxLayout *layout = new QVBoxLayout(this);
+  layout->setContentsMargins(0, 0, 0, 0);
 
-  QGridLayout *layout = new QGridLayout(this);
-  layout->setContentsMargins(0, 2, 0, 2);
+  m_info = new QLabel(this);
+  m_info->setText(title);
+  m_info->setStyleSheet("QLabel {margin-left:2px; font-style:italic;}");
+  layout->addWidget(m_info, Qt::AlignLeft);
 
-  // Left
-  QLabel *lb_invoice = new QLabel(this);
-  lb_invoice->setText(tr("Invoice Address"));
-  lb_invoice->setIndent(5);
-  layout->addWidget(lb_invoice, 0, 1, 1, 1, Qt::AlignLeft);
+  QStringList css("background: transparent;");
+  css << "border-top: 1px solid palette(text);";
 
-  m_invoice = new TextField(this);
-  m_invoice->setObjectName("c_postal_address");
-  m_invoice->setEditable(false);
-  layout->addWidget(m_invoice, 1, 1, 1, 1);
-
-  // Right
-  QLabel *lb_delivery = new QLabel(this);
-  lb_delivery->setText(tr("Delivery Address"));
-  lb_delivery->setIndent(5);
-  layout->addWidget(lb_delivery, 0, 2, 1, 1, Qt::AlignLeft);
-
-  m_delivery = new TextField(this);
-  m_delivery->setObjectName("c_shipping_address");
-  m_delivery->setEditable(false);
-  layout->addWidget(m_delivery, 1, 2, 1, 1);
-
+  m_edit = new QTextEdit(this);
+  m_edit->setReadOnly(true);
+  m_edit->setMaximumHeight(150);
+  m_edit->setStyleSheet("QTextEdit {" + css.join(" ") + "}");
+  layout->addWidget(m_edit);
   setLayout(layout);
 }
 
-void ProviderBuyerInfo::setAddressData(const QJsonObject &obj) {
-  if (obj.isEmpty())
+void ProviderTextBlock::setContent(const QString &str) {
+  m_edit->setPlainText(str);
+}
+
+ProviderBuyerInfo::ProviderBuyerInfo(QWidget *parent) : QSplitter{parent} {
+  setOrientation(Qt::Horizontal);
+  setHandleWidth(0);
+
+  m_invoice = new ProviderTextBlock(tr("Address"), this);
+  m_invoice->setToolTip(tr("Buyer invoice address"));
+  insertWidget(0, m_invoice);
+
+  m_comment = new ProviderTextBlock(tr("Buyer Comments"), this);
+  m_comment->setToolTip(tr("Some Buyer Notification Messages."));
+  insertWidget(1, m_comment);
+
+  setStretchFactor(0, 30);
+  setCollapsible(0, false);
+  setStretchFactor(1, 70);
+  setCollapsible(1, false);
+}
+
+void ProviderBuyerInfo::setAddress(const QString &str) {
+  if (str.isEmpty())
     return;
 
-  if (obj.contains("c_postal_address"))
-    m_invoice->setValue(obj.value("c_postal_address").toString());
+  m_invoice->setContent(str);
+}
 
-  if (obj.contains("c_shipping_address"))
-    m_delivery->setValue(obj.value("c_shipping_address").toString());
+void ProviderBuyerInfo::setBuyerComment(const QString &str) {
+  if (str.isEmpty())
+    return;
+
+  m_comment->setContent(str);
 }

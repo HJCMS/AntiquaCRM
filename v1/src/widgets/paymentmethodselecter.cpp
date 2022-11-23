@@ -5,7 +5,8 @@
 
 #include <QDebug>
 
-PaymentMethodSelecter::PaymentMethodSelecter(QWidget *parent) : InputEdit{parent} {
+PaymentMethodSelecter::PaymentMethodSelecter(QWidget *parent)
+    : InputEdit{parent} {
   m_box = new AntiquaComboBox(this);
   m_layout->addWidget(m_box);
   loadDataset();
@@ -15,41 +16,11 @@ PaymentMethodSelecter::PaymentMethodSelecter(QWidget *parent) : InputEdit{parent
 }
 
 void PaymentMethodSelecter::loadDataset() {
+  QMapIterator<AntiquaCRM::PaymentMethod, QString> it(getMethodes());
   int c = 0;
-  p_map.clear();
-  p_map.insert(c++, QPair(tr("No selection available"),
-                AntiquaCRM::PAYMENT_NOT_SET));
-  p_map.insert(c++, QPair(tr("Bank transfer in advance"),
-                AntiquaCRM::BANK_PREPAYMENT));
-  p_map.insert(c++, QPair(tr("Delivery with open invoice"),
-                AntiquaCRM::DELIVER_WITH_INVOICE));
-  p_map.insert(c++, QPair(tr("Direct debit payment in advance"),
-                AntiquaCRM::DIRECT_DEBIT_PREPAYMENT));
-  p_map.insert(c++, QPair(tr("Credit card in advance"),
-                AntiquaCRM::CREDIT_CARD_PREPAYMENT));
-  p_map.insert(c++, QPair(tr("Cash on delivery payment"),
-                AntiquaCRM::CASH_ON_DELIVERY));
-  p_map.insert(c++, QPair(tr("PayPal prepayment"),
-                AntiquaCRM::PAYPAL_PREPAYMENT));
-  p_map.insert(c++, QPair(tr("Skrill prepayment"),
-                AntiquaCRM::SKRILL_PREPAYMENT));
-  p_map.insert(c++, QPair(tr("GiroPay prepayment"),
-                AntiquaCRM::GIROPAY_PREPAYMENT));
-  p_map.insert(c++, QPair(tr("GooglePay prepayment"),
-                AntiquaCRM::GOOGLEPAY_PREPAYMENT));
-  p_map.insert(c++, QPair(tr("Payment in advance from an unknown provider"),
-                AntiquaCRM::UNKNOWN_PREPAYMENT));
-  p_map.insert(c++, QPair(tr("Pickup - cash payment"),
-                AntiquaCRM::LOCAL_PICKUP_CASH_PAYMENT));
-  p_map.insert(c++, QPair(tr("Instant bank transfer"),
-                AntiquaCRM::INSTANT_BANK_TRANSFER));
-  p_map.insert(c++, QPair(tr("Open account - advance payment reserved"),
-                AntiquaCRM::INVOICE_PREPAYMENT_RESERVED));
-  p_map.insert(c++, QPair(tr("Check - payment in advance"),
-                AntiquaCRM::CHECK_PREPAYMENT));
-  for (int i = 0; i < p_map.size(); i++) {
-    QPair<QString, AntiquaCRM::PaymentMethod> st = p_map[i];
-    m_box->insertItem(i, st.first, st.second);
+  while (it.hasNext()) {
+    it.next();
+    m_box->insertItem(c++, it.value(), it.key());
   }
 }
 
@@ -68,7 +39,8 @@ void PaymentMethodSelecter::reset() {
 }
 
 void PaymentMethodSelecter::setValue(const QVariant &val) {
-  AntiquaCRM::PaymentMethod status = static_cast<AntiquaCRM::PaymentMethod>(val.toInt());
+  AntiquaCRM::PaymentMethod status =
+      static_cast<AntiquaCRM::PaymentMethod>(val.toInt());
   int index = m_box->findData(status, Qt::UserRole);
   if (index >= 0)
     m_box->setCurrentIndex(index);
@@ -109,4 +81,30 @@ const QString PaymentMethodSelecter::info() { return m_box->toolTip(); }
 
 const QString PaymentMethodSelecter::notes() {
   return tr("a Valid payment method is required.");
+}
+
+const QMap<AntiquaCRM::PaymentMethod, QString>
+PaymentMethodSelecter::getMethodes() {
+  QMap<AntiquaCRM::PaymentMethod, QString> map;
+  map.insert(AntiquaCRM::PAYMENT_NOT_SET, tr("No selection available"));
+  map.insert(AntiquaCRM::BANK_PREPAYMENT, tr("Bank transfer in advance"));
+  map.insert(AntiquaCRM::DELIVER_WITH_INVOICE,
+             tr("Delivery with open invoice"));
+  map.insert(AntiquaCRM::DIRECT_DEBIT_PREPAYMENT,
+             tr("Direct debit payment in advance"));
+  map.insert(AntiquaCRM::CREDIT_CARD_PREPAYMENT, tr("Credit card in advance"));
+  map.insert(AntiquaCRM::CASH_ON_DELIVERY, tr("Cash on delivery payment"));
+  map.insert(AntiquaCRM::PAYPAL_PREPAYMENT, tr("PayPal prepayment"));
+  map.insert(AntiquaCRM::SKRILL_PREPAYMENT, tr("Skrill prepayment"));
+  map.insert(AntiquaCRM::GIROPAY_PREPAYMENT, tr("GiroPay prepayment"));
+  map.insert(AntiquaCRM::GOOGLEPAY_PREPAYMENT, tr("GooglePay prepayment"));
+  map.insert(AntiquaCRM::UNKNOWN_PREPAYMENT,
+             tr("Payment in advance from an unknown provider"));
+  map.insert(AntiquaCRM::LOCAL_PICKUP_CASH_PAYMENT,
+             tr("Pickup - cash payment"));
+  map.insert(AntiquaCRM::INSTANT_BANK_TRANSFER, tr("Instant bank transfer"));
+  map.insert(AntiquaCRM::INVOICE_PREPAYMENT_RESERVED,
+             tr("Open account - advance payment reserved"));
+  map.insert(AntiquaCRM::CHECK_PREPAYMENT, tr("Check - payment in advance"));
+  return map;
 }

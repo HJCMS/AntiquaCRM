@@ -48,11 +48,6 @@ private:
   ProviderOrderInfo *m_orderInfo;
 
   /**
-   * @brief Buyer Comments
-   */
-  TextField *m_buyerComment;
-
-  /**
    * @brief Pushing command line to the Socket server.
    */
   void pushCmd(const QJsonObject &action);

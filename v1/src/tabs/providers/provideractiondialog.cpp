@@ -12,44 +12,52 @@
 
 ProviderActionDialog::ProviderActionDialog(QWidget *parent) : QDialog{parent} {
   setWindowTitle(tr("Provider Operations"));
-  setContentsMargins(5, 0, 5, 0);
+  setContentsMargins(0, 0, 0, 0);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
-  layout->setContentsMargins(0, 0, 0, 0);
 
   QLabel *m_lb = new QLabel(this);
-  m_lb->setText(tr("Changes the status of the current order."));
+  m_lb->setWordWrap(false);
+  m_lb->setText(tr("Changes the Provider status of the current order."));
+  m_lb->setStyleSheet("QLabel {font-weight:bold;}");
   layout->addWidget(m_lb);
 
-  m_rb1 = new QRadioButton(tr("Provider Status - no disclosures"), this);
+  QLabel *m_info = new QLabel(this);
+  m_info->setWordWrap(true);
+  QStringList notes;
+  notes << tr("Not all service providers fully support these features.");
+  notes << tr("Please make sure to check it regularly on the service provider side.");
+  m_info->setText(notes.join("\n"));
+  m_info->setStyleSheet("QLabel {font-style:italic; font-size:smaller;}");
+  layout->addWidget(m_info);
+
+  m_rb1 = new QRadioButton(tr("Without disclosures"), this);
   m_rb1->setChecked(true);
   layout->addWidget(m_rb1);
 
-  m_rb2 = new QRadioButton(tr("Wait for Order Payment"), this);
+  m_rb2 = new QRadioButton(tr("Waiting for Payment"), this);
   m_rb2->setObjectName("WAITING_FOR_PAYMENT");
   layout->addWidget(m_rb2);
 
-  m_rb3 = new QRadioButton(tr("Order is ready for Shipment"), this);
+  m_rb3 = new QRadioButton(tr("Ready for Shipment"), this);
   m_rb3->setObjectName("READY_FOR_SHIPMENT");
   layout->addWidget(m_rb3);
 
-  m_rb4 = new QRadioButton(tr("Order shipped, wait for Payment."), this);
+  m_rb4 = new QRadioButton(tr("Shipped, wait for Payment"), this);
   m_rb4->setObjectName("SHIPPED_WAITING_FOR_PAYMENT");
   layout->addWidget(m_rb4);
 
-  m_rb5 = new QRadioButton(tr("Order Shipped and Paid"), this);
+  m_rb5 = new QRadioButton(tr("Shipped and Paid"), this);
   m_rb5->setObjectName("SHIPPED_AND_PAID");
   layout->addWidget(m_rb5);
 
-  m_rb6 = new QRadioButton(tr("Order Buyer no reaction."), this);
+  m_rb6 = new QRadioButton(tr("Buyer no reaction"), this);
   m_rb6->setObjectName("BUYER_NO_REACTION");
   layout->addWidget(m_rb6);
 
-  m_rb7 = new QRadioButton(tr("Order Cancel action."), this);
+  m_rb7 = new QRadioButton(tr("Cancel action"), this);
   m_rb7->setObjectName("ORDER_CANCEL_ACTION");
   layout->addWidget(m_rb7);
-
-  layout->addStretch(1);
 
   m_buttonBar = new QDialogButtonBox(
       QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);

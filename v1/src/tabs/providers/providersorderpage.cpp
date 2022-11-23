@@ -35,12 +35,9 @@ ProvidersOrderPage::ProvidersOrderPage(const QJsonObject &order,
   m_tab = new ProvidersPageView(this);
   m_tab->setTabPosition(QTabWidget::South);
   m_buyerInfo = new ProviderBuyerInfo(m_tab);
-  m_tab->addFixedTab(m_buyerInfo, tr("Address"));
+  m_tab->addFixedTab(m_buyerInfo, tr("Buyer"));
   m_orderInfo = new ProviderOrderInfo(m_tab);
-  m_tab->addFixedTab(m_orderInfo, tr("Payment Info"));
-  m_buyerComment = new TextField(m_tab);
-  m_buyerComment->setEditable(false);
-  m_tab->addFixedTab(m_buyerComment, tr("Buyer comments"));
+  m_tab->addFixedTab(m_orderInfo, tr("Paymentinfo"));
   layout->addWidget(m_tab);
 
   m_table = new ProviderPurchaseTable(this);
@@ -68,7 +65,14 @@ void ProvidersOrderPage::pushCmd(const QJsonObject &action) {
 bool ProvidersOrderPage::findCustomer(const QJsonObject &customer) {
   QString fullname = customer.value("c_provider_import").toString();
   m_header->setHeader(fullname);
-  m_buyerInfo->setAddressData(customer);
+  if(customer.contains("c_postal_address")) {
+    QString address = customer.value("c_postal_address").toString();
+    if(customer.contains("c_phone_0")) {
+      address.append("\nTel: ");
+      address.append(customer.value("c_phone_0").toString());
+    }
+    m_buyerInfo->setAddress(address);
+  }
 
   AntiquaCRM::ASqlFiles query("query_customer_exists");
   if (query.openTemplate()) {
@@ -255,7 +259,7 @@ bool ProvidersOrderPage::loadOrderDataset() {
   // Comments from buyer
   if (orderInfo.contains("o_delivery_comment")) {
     QString comment = orderInfo.value("o_delivery_comment").toString();
-    m_buyerComment->setValue(comment.trimmed());
+    m_buyerInfo->setBuyerComment(comment.trimmed());
   }
 
   // buyed Articles

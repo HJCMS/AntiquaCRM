@@ -5,21 +5,38 @@
 #ifndef ANTIQUACRM_PROVIDERBUYERINFO_H
 #define ANTIQUACRM_PROVIDERBUYERINFO_H
 
-#include <AntiquaWidgets>
-#include <QJsonObject>
+#include <QFrame>
+#include <QLabel>
 #include <QObject>
+#include <QSplitter>
+#include <QTextEdit>
 #include <QWidget>
 
-class ProviderBuyerInfo final : public QWidget {
+class ProviderTextBlock final : public QFrame {
   Q_OBJECT
 
 private:
-  TextField *m_invoice;
-  TextField *m_delivery;
+  QLabel *m_info;
+  QTextEdit *m_edit;
+
+public Q_SLOTS:
+  void setContent(const QString &str);
+
+public:
+  explicit ProviderTextBlock(const QString &title, QWidget *parent = nullptr);
+};
+
+class ProviderBuyerInfo final : public QSplitter {
+  Q_OBJECT
+
+private:
+  ProviderTextBlock *m_invoice;
+  ProviderTextBlock *m_comment;
 
 public:
   explicit ProviderBuyerInfo(QWidget *parent = nullptr);
-  void setAddressData(const QJsonObject &obj);
+  void setAddress(const QString &str);
+  void setBuyerComment(const QString &str);
 };
 
 #endif // ANTIQUACRM_PROVIDERBUYERINFO_H

@@ -201,6 +201,11 @@ void AntiquaAppl::initDefaultTheme() {
   p.setColor(QPalette::Inactive, QPalette::Highlight, lightYellow);
   qApp->setPalette(p);
 #endif
+  QStringList customCSS;
+  customCSS << "QTabBar::tab:selected {color: palette(highlight);}";
+  customCSS << "QPushButton:hover {color:palette(highlight);}";
+  customCSS << "QRadioButton:checked {color:palette(highlight);}";
+  setStyleSheet(customCSS.join("\n"));
 }
 
 bool AntiquaAppl::isRunning() {

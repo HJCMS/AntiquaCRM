@@ -16,26 +16,11 @@ PaymentStatusSelecter::PaymentStatusSelecter(QWidget *parent)
 }
 
 void PaymentStatusSelecter::loadDataset() {
+  QMapIterator<AntiquaCRM::PaymentStatus, QString> it(getStatus());
   int c = 0;
-  p_map.clear();
-  p_map.insert(c++, QPair(tr("No status set"),
-               AntiquaCRM::STATUS_NOT_SET));
-  p_map.insert(c++, QPair(tr("Waiting for payment"),
-               AntiquaCRM::WAIT_FOR_PAYMENT));
-  p_map.insert(c++, QPair(tr("Ready for shipping"),
-               AntiquaCRM::SHIPMENT_CREATED));
-  p_map.insert(c++, QPair(tr("Delivered waiting for payment"),
-               AntiquaCRM::SHIPPED_WAIT_FOR_PAYMENT));
-  p_map.insert(c++, QPair(tr("Paid and shipped"),
-               AntiquaCRM::SHIPPED_AND_PAID));
-  p_map.insert(c++, QPair(tr("No reaction from buyer"),
-               AntiquaCRM::BUYER_NO_REACTION));
-  p_map.insert(c++, QPair(tr("order canceled"),
-               AntiquaCRM::ORDER_CANCELED));
-
-  for (int i = 0; i < p_map.size(); i++) {
-    QPair<QString, AntiquaCRM::PaymentStatus> st = p_map[i];
-    m_box->insertItem(i, st.first, st.second);
+  while (it.hasNext()) {
+    it.next();
+    m_box->insertItem(c++, it.value(), it.key());
   }
 }
 
@@ -54,7 +39,8 @@ void PaymentStatusSelecter::reset() {
 }
 
 void PaymentStatusSelecter::setValue(const QVariant &val) {
-  AntiquaCRM::PaymentStatus status = static_cast<AntiquaCRM::PaymentStatus>(val.toInt());
+  AntiquaCRM::PaymentStatus status =
+      static_cast<AntiquaCRM::PaymentStatus>(val.toInt());
   int index = m_box->findData(status, Qt::UserRole);
   if (index >= 0)
     m_box->setCurrentIndex(index);
@@ -95,4 +81,18 @@ const QString PaymentStatusSelecter::info() { return m_box->toolTip(); }
 
 const QString PaymentStatusSelecter::notes() {
   return tr("a valid Payment status is required.");
+}
+
+const QMap<AntiquaCRM::PaymentStatus, QString>
+PaymentStatusSelecter::getStatus() {
+  QMap<AntiquaCRM::PaymentStatus, QString> map;
+  map.insert(AntiquaCRM::STATUS_NOT_SET, tr("No status set"));
+  map.insert(AntiquaCRM::WAIT_FOR_PAYMENT, tr("Waiting for payment"));
+  map.insert(AntiquaCRM::SHIPMENT_CREATED, tr("Ready for shipping"));
+  map.insert(AntiquaCRM::SHIPPED_WAIT_FOR_PAYMENT,
+             tr("Delivered waiting for payment"));
+  map.insert(AntiquaCRM::SHIPPED_AND_PAID, tr("Paid and shipped"));
+  map.insert(AntiquaCRM::BUYER_NO_REACTION, tr("No reaction from buyer"));
+  map.insert(AntiquaCRM::ORDER_CANCELED, tr("order canceled"));
+  return map;
 }
