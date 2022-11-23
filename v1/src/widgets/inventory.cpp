@@ -59,6 +59,11 @@ void Inventory::sendStatusMessage(const QString &message) {
   atxs.close();
 }
 
+void Inventory::openWarningPopUp(const QString &title, const QString &message) {
+  QString info("<p>" + title + "</p><p>" + message + "</p>");
+  QMessageBox::warning(this, tr("Warning"), info);
+}
+
 bool Inventory::isClosable() { return closable; }
 
 bool Inventory::isModified() { return isWindowModified(); }

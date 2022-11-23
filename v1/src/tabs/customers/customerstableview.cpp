@@ -150,9 +150,16 @@ void CustomersTableView::createCopyClipboard() {
 }
 
 void CustomersTableView::createOrderSignal() {
-  qint64 id = getTableID(p_modelIndex);
-  if (id >= 1)
-    emit sendCurrentId(id);
+  qint64 cid = getTableID(p_modelIndex);
+  if (cid >= 1) {
+    AntiquaCRM::ATxSocket atxs(this);
+    QJsonObject obj;
+    obj.insert("window_operation", "new_order");
+    obj.insert("tab", "orders_tab");
+    obj.insert("new_order", QJsonValue(cid));
+    atxs.pushOperation(obj);
+    atxs.close();
+  }
 }
 
 void CustomersTableView::createDeleteRequest() {

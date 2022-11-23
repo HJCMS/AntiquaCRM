@@ -30,6 +30,14 @@ qint64 BookTableView::getTableID(const QModelIndex &index) {
   return -1;
 }
 
+int BookTableView::getArticleCount(const QModelIndex &index) {
+  QModelIndex id(index);
+  if (m_model->data(id.sibling(id.row(), 1), Qt::EditRole).toInt() >= 1) {
+    return m_model->data(id.sibling(id.row(), 1), Qt::EditRole).toInt();
+  }
+  return -1;
+}
+
 bool BookTableView::sqlQueryTable(const QString &query) {
   // qDebug() << Q_FUNC_INFO << query;
   if (m_model->querySelect(query)) {
@@ -72,10 +80,10 @@ void BookTableView::contextMenuEvent(QContextMenuEvent *event) {
   ac_copy->setEnabled(enable_action);
   connect(ac_copy, SIGNAL(triggered()), this, SLOT(createCopyClipboard()));
 
-  QAction *ac_order = m->addAction(cellIcon("view_log"),
-                                   tr("Add Article to current open Order"));
+  QAction *ac_order =
+      m->addAction(cellIcon("view_log"), tr("Add Article to opened Order"));
   ac_order->setObjectName("ac_context_book_to_order");
-  ac_order->setEnabled(enable_action);
+  ac_order->setEnabled(getArticleCount(p_modelIndex) > 0);
   connect(ac_order, SIGNAL(triggered()), this, SLOT(createOrderSignal()));
   //  END
 
@@ -123,27 +131,34 @@ void BookTableView::setSortByColumn(int column, Qt::SortOrder order) {
 }
 
 void BookTableView::getSelectedItem(const QModelIndex &index) {
-  qint64 id = getTableID(index);
-  if (id >= 1)
-    emit sendOpenEntry(id);
+  qint64 aid = getTableID(index);
+  if (aid >= 1)
+    emit sendOpenEntry(aid);
 }
 
 void BookTableView::createOpenEntry() {
-  qint64 id = getTableID(p_modelIndex);
-  if (id >= 1)
-    emit sendOpenEntry(id);
+  qint64 aid = getTableID(p_modelIndex);
+  if (aid >= 1)
+    emit sendOpenEntry(aid);
 }
 
 void BookTableView::createCopyClipboard() {
-  qint64 id = getTableID(p_modelIndex);
-  if (id >= 1)
-    emit sendCopyToClibboard(QString::number(id));
+  qint64 aid = getTableID(p_modelIndex);
+  if (aid >= 1)
+    emit sendCopyToClibboard(QString::number(aid));
 }
 
 void BookTableView::createOrderSignal() {
-  qint64 id = getTableID(p_modelIndex);
-  if (id >= 1)
-    emit sendCurrentId(id);
+  qint64 aid = getTableID(p_modelIndex);
+  if (aid >= 1 && getArticleCount(p_modelIndex) > 0) {
+    AntiquaCRM::ATxSocket atxs(this);
+    QJsonObject obj;
+    obj.insert("window_operation", "add_article");
+    obj.insert("tab", "orders_tab");
+    obj.insert("add_article", QJsonValue(aid));
+    atxs.pushOperation(obj);
+    atxs.close();
+  }
 }
 
 void BookTableView::setReloadView() {

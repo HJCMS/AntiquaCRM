@@ -521,6 +521,13 @@ OrdersEditor::addArticleItem(const QString &key, const QVariant &value) const {
   return AntiquaCRM::AProviderOrder::createItem(key, value);
 }
 
+bool OrdersEditor::createNewEntry() {
+  setInputFields();
+  setResetModified(inputFields);
+  setEnabled(true);
+  return true;
+}
+
 void OrdersEditor::setSaveData() {
   if (getSerialID("o_id") < 1) {
     createSqlInsert();
@@ -707,7 +714,7 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
   if (o_id.isEmpty())
     return status;
 
-  setInputFields();
+  createNewEntry();
 
   AntiquaCRM::ASqlFiles file("query_order_by_oid");
   if (!file.openTemplate())
@@ -763,11 +770,48 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
   return status;
 }
 
-bool OrdersEditor::createNewEntry() {
-  setInputFields();
-  setResetModified(inputFields);
-  setEnabled(true);
-  return true;
+bool OrdersEditor::addArticle(qint64 articleId) {
+  if (checkEssentialsIds().isNotValid) {
+    sendStatusMessage(tr("Missing essential Ids, save Order first!"));
+    return false;
+  }
+  if (addArticleToOrderTable(articleId)) {
+    getInputEdit("o_delivery")->setModified(true);
+    return true;
+  }
+  return false;
+}
+
+bool OrdersEditor::createNewOrder(qint64 customerId) {
+  if (customerId < 1)
+    return false;
+
+  createNewEntry();
+
+  // Nehme relevante Kundendaten
+  AntiquaCRM::ASqlFiles customerQuery("query_customer_new_order");
+  if (customerQuery.openTemplate()) {
+    customerQuery.setWhereClause("c_id=" + QString::number(customerId));
+    QSqlQuery q = m_sql->query(customerQuery.getQueryContent());
+    if (q.size() > 0) {
+      QSqlRecord rec = q.record();
+      while (q.next()) {
+        for (int c = 0; c < rec.count(); c++) {
+          QSqlField f = rec.field(c);
+          m_tableData->setValue(f.name(), q.value(f.name()));
+          setDataField(f, q.value(f.name()));
+        }
+      }
+      // Ignore this
+      setResetModified(customInput);
+      return true;
+    } else {
+#ifdef ANTIQUA_DEVELOPEMENT
+      qDebug() << Q_FUNC_INFO << m_sql->lastError();
+#endif
+    }
+  }
+  return false;
 }
 
 bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
@@ -797,9 +841,7 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
   if (obj.isEmpty())
     return false;
 
-  setInputFields();
-  setResetModified(inputFields);
-  setEnabled(true);
+  createNewEntry();
 
   AntiquaCRM::AProviderOrder prOrder(o_provider_name, o_provider_order_id);
   // Kunden Daten

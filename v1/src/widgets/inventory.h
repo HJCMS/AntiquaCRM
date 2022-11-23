@@ -8,9 +8,9 @@
 #include <AGlobal>
 #include <QHeaderView>
 #include <QIcon>
-#include <QObject>
 #include <QJsonObject>
 #include <QJsonValue>
+#include <QObject>
 #include <QShortcut>
 #include <QStackedWidget>
 #include <QTableView>
@@ -22,7 +22,8 @@
  */
 class Inventory : public QStackedWidget {
   Q_OBJECT
-  Q_PROPERTY(bool closable READ isClosable WRITE setClosable NOTIFY sendClosableChanged)
+  Q_PROPERTY(bool closable READ isClosable WRITE setClosable NOTIFY
+                 sendClosableChanged)
 
 private:
   const QString tabIndex;   /**< @brief Uniq Tab Index Name */
@@ -62,6 +63,11 @@ protected Q_SLOTS:
    */
   void sendStatusMessage(const QString &message);
 
+  /**
+   * @brief Hinweisfenster öffnen!
+   */
+  void openWarningPopUp(const QString &title, const QString &message);
+
   virtual void popupWarningTabInEditMode() = 0;
 
 Q_SIGNALS:
@@ -84,12 +90,6 @@ Q_SIGNALS:
    * @brief Article Id
    */
   void sendArticleId(qint64 articleId);
-
-  /**
-   * @brief Send Article/Customer Ids for Order operations!
-   * @param articleId|customerId
-   */
-  void sendIdToOrder(qint64 currentId);
 
   /**
    * @brief Emitted when Tab change to active!

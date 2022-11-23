@@ -20,7 +20,6 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   layout->addWidget(new QLabel(tbInfo + ":", this));
 
   m_table = new PurchaseTable(this, false);
-  m_table->setEnabled(false);
   // Für den Kunden ausblenden.
   // Werden hier nicht benötigt!
   QStringList hideColumn("a_payment_id");
@@ -52,7 +51,6 @@ bool OrdersItemList::setArticleOrderId(qint64 oid) {
 bool OrdersItemList::importArticles(
     const QList<AntiquaCRM::OrderArticleItems> &list) {
   bool status = m_table->setOrderArticles(list);
-  m_table->setEnabled(status);
   return status;
 }
 

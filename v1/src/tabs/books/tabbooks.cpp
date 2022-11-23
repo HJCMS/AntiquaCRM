@@ -58,9 +58,6 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{"books_tab", parent} {
 
   connect(m_table, SIGNAL(sendOpenEntry(qint64)), SLOT(openEntry(qint64)));
 
-  connect(m_table, SIGNAL(sendCurrentId(qint64)),
-          SIGNAL(sendIdToOrder(qint64)));
-
   connect(m_table, SIGNAL(sendCreateNewEntry()), SLOT(createNewEntry()));
 
   connect(m_table, SIGNAL(sendResultExists(bool)), m_statusBar,

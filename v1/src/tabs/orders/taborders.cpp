@@ -11,6 +11,10 @@
 #include <QLayout>
 #include <QMessageBox>
 
+#ifndef ORDERS_EDITOR_INDEX
+#define ORDERS_EDITOR_INDEX 1
+#endif
+
 TabOrders::TabOrders(QWidget *parent) : Inventory{"orders_tab", parent} {
   setObjectName("inventory_orders");
   setWindowTitle(tr("Orders"));
@@ -35,7 +39,7 @@ TabOrders::TabOrders(QWidget *parent) : Inventory{"orders_tab", parent} {
   m_editorPage->setWidgetResizable(true);
   m_editorWidget = new OrdersEditor(m_editorPage);
   m_editorPage->setWidget(m_editorWidget);
-  insertWidget(1, m_editorPage);
+  insertWidget(ORDERS_EDITOR_INDEX, m_editorPage);
   // End
 
   // Signals::OrdersSearchBar
@@ -54,9 +58,6 @@ TabOrders::TabOrders(QWidget *parent) : Inventory{"orders_tab", parent} {
           SLOT(copyToClipboard(const QString &)));
 
   connect(m_table, SIGNAL(sendOpenEntry(qint64)), SLOT(openEntry(qint64)));
-
-  connect(m_table, SIGNAL(sendCurrentId(qint64)),
-          SIGNAL(sendIdToOrder(qint64)));
 
   connect(m_table, SIGNAL(sendCreateNewEntry()), SLOT(createNewEntry()));
 
@@ -108,13 +109,6 @@ void TabOrders::createSearchQuery(const QString &query) {
   }
 }
 
-void TabOrders::createNewEntry() {
-  if (m_editorWidget->createNewEntry()) {
-    m_editorPage->setEnabled(true);
-    setCurrentWidget(m_editorPage);
-  }
-}
-
 void TabOrders::openEntry(qint64 o_id) {
   if (o_id < 1)
     return;
@@ -145,36 +139,42 @@ bool TabOrders::customAction(const QJsonObject &obj) {
   if (!initialed) /**< first call? */
     onEnterChanged();
 
-  if (currentIndex() != 0) {
-    popupWarningTabInEditMode();
-    return false;
-  }
-
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << obj;
-#endif
-
-  QString op = obj.value("window_operation").toString();
-  if (!obj.contains(op))
+  QString operation = obj.value("window_operation").toString();
+  if (!obj.contains(operation))
     return false;
 
-  QJsonValue value = obj.value(op);
+  QJsonValue value = obj.value(operation);
   QJsonValue::Type type = value.type();
   if (value.isNull()) {
     sendStatusMessage(tr("Some arguments missing for a new Order!"));
     return false;
   }
 
-  if (op == "open_order" && type == QJsonValue::Double) {
+  // Aktionen bei geöffneten Editor
+  if (operation == "add_article" && type == QJsonValue::Double) {
+    qint64 aid = value.toInt();
+    if (currentIndex() != ORDERS_EDITOR_INDEX || aid < 1) {
+      openWarningPopUp(tr("Add Article %1 to Order rejected.").arg(aid),
+                       tr("Can't add Article when no Order is opened!"));
+      return false;
+    }
+    return m_editorWidget->addArticle(aid);
+  }
+
+  // Alle weiteren Aktionen benötigen die Startseite
+  if (currentIndex() != 0) {
+    popupWarningTabInEditMode();
+    return false;
+  }
+
+  if (operation == "open_order" && type == QJsonValue::Double) {
     qint64 o_id = value.toInt();
-    qDebug() << Q_FUNC_INFO << "open_order" << o_id;
     if (o_id > 0) {
       openEntry(o_id);
       return true;
     }
-  } else if (op == "create_order" && type == QJsonValue::String) {
+  } else if (operation == "create_order" && type == QJsonValue::String) {
     QString pr_order = value.toString().trimmed();
-    qDebug() << Q_FUNC_INFO << "create_order" << pr_order;
     if (pr_order.isEmpty()) {
       sendStatusMessage(tr("Some arguments missing for a new Order!"));
       return false;
@@ -184,7 +184,23 @@ bool TabOrders::customAction(const QJsonObject &obj) {
       setCurrentWidget(m_editorPage);
       return true;
     }
+  } else if (operation == "new_order" && type == QJsonValue::Double) {
+    qint64 c_id = value.toInt();
+    if (c_id < 1) {
+      sendStatusMessage(tr("Some arguments missing for a new Order!"));
+      return false;
+    }
+    if (m_editorWidget->createNewOrder(c_id)) {
+      m_editorPage->setEnabled(true);
+      setCurrentWidget(m_editorPage);
+      return true;
+    }
+    return false;
   }
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << obj << Qt::endl;
+#endif
 
   return false;
 }

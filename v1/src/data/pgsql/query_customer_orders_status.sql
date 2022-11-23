@@ -8,6 +8,7 @@ SELECT o_id AS orderid,
  o_provider_order_id AS prorder,
  o_since AS since,
  o_delivered AS deliver
-FROM customers LEFT JOIN inventory_orders ON o_customer_id=c_id
-LEFT JOIN article_orders ON a_customer_id=c_id
+FROM customers
+LEFT JOIN inventory_orders ON o_customer_id=c_id
+LEFT JOIN article_orders ON (a_customer_id=c_id AND a_order_id=o_id)
 WHERE @SQL_WHERE_CLAUSE@ AND o_order_status>0 ORDER BY o_id;

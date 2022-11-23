@@ -17,17 +17,7 @@
         <translation>Plugin %1 gefunden und wird geladen ...</translation>
     </message>
     <message>
-        <location line="+114"/>
-        <source>Initial Translation ...</source>
-        <translation>Initialisiere Übersetzungen ...</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>done.</source>
-        <translation>fertig.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
+        <location line="+118"/>
         <source>Search Networkconnection!</source>
         <translation>Suche Netzwerkverbindung!</translation>
     </message>
@@ -861,8 +851,8 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Add Article to current open Order</source>
-        <translation>Artikel zur aktuellen offenen Bestellung hinzufügen</translation>
+        <source>Add Article to opened Order</source>
+        <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -2272,6 +2262,11 @@ Bild - Artikel Nr: %2</translation>
         <comment>New</comment>
         <translation>Strg+Shift+N</translation>
     </message>
+    <message>
+        <location line="+33"/>
+        <source>Warning</source>
+        <translation>Warnung</translation>
+    </message>
 </context>
 <context>
     <name>InventoryEditor</name>
@@ -3173,11 +3168,12 @@ Bild - Artikel Nr: %2</translation>
         <location line="+41"/>
         <location line="+32"/>
         <location line="+36"/>
+        <location line="+87"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation>Fehlende wichtige IDs, Bestellung zuerst speichern!</translation>
     </message>
     <message>
-        <location line="-124"/>
+        <location line="-211"/>
         <source>Incomplete eMail configuration!</source>
         <translation>Unvollständige E-Mail-Konfiguration!</translation>
     </message>
@@ -3221,7 +3217,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Keine Daten gefunden! - Druckvorgang abgebrochen.</translation>
     </message>
     <message>
-        <location line="+127"/>
+        <location line="+135"/>
         <source>No Provider orders data found!</source>
         <translation>Keine Dienstleister-Auftragsdaten gefunden!</translation>
     </message>
@@ -5078,7 +5074,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bücher</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+63"/>
         <source>Can&apos;t open this Article</source>
         <translation>Dieser Artikel kann nicht geöffnet werden</translation>
     </message>
@@ -5101,7 +5097,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kunden</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+64"/>
         <source>Cannot open Customers Editor.</source>
         <translation>Der Kundeneditor kann nicht geöffnet werden.</translation>
     </message>
@@ -5159,7 +5155,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Aufträge</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+56"/>
         <source>Cannot open Order Editor!</source>
         <translation>Bestelleditor kann nicht geöffnet werden!</translation>
     </message>
@@ -5174,13 +5170,23 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bitte speichern und schließen Sie zuerst den geöffneten Auftrag.</translation>
     </message>
     <message>
-        <location line="+85"/>
-        <location line="+15"/>
+        <location line="+81"/>
+        <location line="+19"/>
         <source>Some arguments missing for a new Order!</source>
         <translation>Einige Argumente fehlen für einen neuen Auftrag zu erstellen!</translation>
     </message>
     <message>
-        <location line="-98"/>
+        <location line="+11"/>
+        <source>Add Article %1 to Order rejected.</source>
+        <translation>Artikel %1 zur Bestellung hinzufügen abgelehnt.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Can&apos;t add Article when no Order is opened!</source>
+        <translation>Artikel kann nicht hinzugefügt werden, wenn kein Auftrag geöffnet ist!</translation>
+    </message>
+    <message>
+        <location line="-110"/>
         <source>Ordereditor</source>
         <translation>Auftragseditor</translation>
     </message>

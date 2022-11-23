@@ -67,6 +67,8 @@ private:
   inline AntiquaCRM::ArticleOrderItem
   addArticleItem(const QString &key, const QVariant &value) const;
 
+  bool createNewEntry() override;
+
 private Q_SLOTS:
   void setSaveData() override;
   void setCheckLeaveEditor() override;
@@ -83,7 +85,8 @@ public Q_SLOTS:
 public:
   explicit OrdersEditor(QWidget *parent = nullptr);
   bool openEditEntry(qint64 orderId) override;
-  bool createNewEntry() override;
+  bool addArticle(qint64 articleId);
+  bool createNewOrder(qint64 customerId);
   bool createNewProviderOrder(const QString &providerId);
 };
 

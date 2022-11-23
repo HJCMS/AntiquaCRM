@@ -17,17 +17,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+114"/>
-        <source>Initial Translation ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>done.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
+        <location line="+118"/>
         <source>Search Networkconnection!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -859,7 +849,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+6"/>
-        <source>Add Article to current open Order</source>
+        <source>Add Article to opened Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2270,6 +2260,11 @@ Image - Article Id: %2</source>
         <comment>New</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+33"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>InventoryEditor</name>
@@ -3171,11 +3166,12 @@ Image - Article Id: %2</source>
         <location line="+41"/>
         <location line="+32"/>
         <location line="+36"/>
+        <location line="+87"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-124"/>
+        <location line="-211"/>
         <source>Incomplete eMail configuration!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3219,7 +3215,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+127"/>
+        <location line="+135"/>
         <source>No Provider orders data found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5076,7 +5072,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+63"/>
         <source>Can&apos;t open this Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5099,7 +5095,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+64"/>
         <source>Cannot open Customers Editor.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5157,7 +5153,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+56"/>
         <source>Cannot open Order Editor!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5172,13 +5168,23 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+85"/>
-        <location line="+15"/>
+        <location line="+81"/>
+        <location line="+19"/>
         <source>Some arguments missing for a new Order!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-98"/>
+        <location line="+11"/>
+        <source>Add Article %1 to Order rejected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Can&apos;t add Article when no Order is opened!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-110"/>
         <source>Ordereditor</source>
         <translation type="unfinished"></translation>
     </message>

@@ -32,7 +32,7 @@ public Q_SLOTS:
   void setDefaultTableView();
   void openStartPage() override;
   void createSearchQuery(const QString &query = QString()) override;
-  void createNewEntry() override;
+  void createNewEntry() override  { /* UNUSED */ };
   void openEntry(qint64 o_id) override;
   void onEnterChanged() override;
 
