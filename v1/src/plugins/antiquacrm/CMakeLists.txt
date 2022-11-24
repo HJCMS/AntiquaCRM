@@ -3,3 +3,4 @@
 
 ADD_SUBDIRECTORY(abebooks)
 ADD_SUBDIRECTORY(booklooker)
+ADD_SUBDIRECTORY(buchfreund)

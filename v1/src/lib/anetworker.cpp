@@ -122,16 +122,20 @@ void ANetworker::slotReadResponse() {
   }
 
   // Content-Encoding
+  bool gzip_enabled = false;
   if (m_reply->hasRawHeader("Content-Encoding")) {
     QString ceh(m_reply->rawHeader("Content-Encoding"));
-    qDebug() << Q_FUNC_INFO << ceh;
+    gzip_enabled = (ceh.toLower() == "gzip");
   }
 
   QByteArray data;
   if (textContent) {
     QTextStream stream(&data, QIODevice::WriteOnly);
     stream.setCodec(decodeWith);
-    stream << m_reply->readAll();
+    if (gzip_enabled)
+      stream << qUncompress(m_reply->readAll());
+    else
+      stream << m_reply->readAll();
     stream.flush();
   } else {
     data = m_reply->readAll();

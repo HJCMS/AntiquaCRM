@@ -17,6 +17,7 @@ void CustomersOrders::restore() {
   headers << " " + tr("Delivery Note") + " ";
   headers << " " + tr("Invoice") + " ";
   headers << " " + tr("Article") + " ";
+  headers << " " + tr("Title") + " ";
   headers << " " + tr("Provider") + " ";
   headers << " " + tr("Provider Id") + " ";
   headers << " " + tr("Created") + " ";

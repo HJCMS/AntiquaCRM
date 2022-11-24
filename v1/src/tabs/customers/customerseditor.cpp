@@ -285,13 +285,12 @@ void CustomersEditor::findPurchases() {
 
   AntiquaCRM::ASqlFiles sqlFile("query_customer_orders_status");
   if (sqlFile.openTemplate()) {
-    sqlFile.setWhereClause("o_customer_id=" + QString::number(c_id));
+    sqlFile.setWhereClause("c_id=" + QString::number(c_id));
     QSqlQuery q = m_sql->query(sqlFile.getQueryContent());
     if (q.size() > 0) {
-      int row = 0;
       m_ordersWidget->clearContents();
       m_ordersWidget->setRowCount(q.size());
-
+      int row = 0;
       while (q.next()) {
         int col = 0;
         m_ordersWidget->setItem(row, col++,
@@ -302,6 +301,8 @@ void CustomersEditor::findPurchases() {
                                 m_ordersWidget->numidItem(q.value("invoice")));
         m_ordersWidget->setItem(row, col++,
                                 m_ordersWidget->createItem(q.value("article")));
+        m_ordersWidget->setItem(row, col++,
+                                m_ordersWidget->createItem(q.value("title")));
         m_ordersWidget->setItem(
             row, col++, m_ordersWidget->createItem(q.value("provider")));
         m_ordersWidget->setItem(row, col++,
