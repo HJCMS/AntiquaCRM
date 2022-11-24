@@ -3921,27 +3921,12 @@ Image - Article Id: %2</source>
 <context>
     <name>PhoneEdit</name>
     <message>
-        <location filename="../widgets/phoneedit.cpp" line="+82"/>
-        <source>phone edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+76"/>
+        <location filename="../widgets/phoneedit.cpp" line="+158"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+52"/>
-        <source>Example: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Example: &apos;%1&apos; for Hamburg.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="+67"/>
         <source>a phone input for &apos;%1&apos; is required.</source>
         <translation type="unfinished"></translation>
     </message>

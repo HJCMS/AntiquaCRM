@@ -3923,27 +3923,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PhoneEdit</name>
     <message>
-        <location filename="../widgets/phoneedit.cpp" line="+82"/>
-        <source>phone edit</source>
-        <translation>Telefon bearbeiten</translation>
-    </message>
-    <message>
-        <location line="+76"/>
+        <location filename="../widgets/phoneedit.cpp" line="+158"/>
         <source>Max allowed length</source>
         <translation>Maximal zulässige Zeichenlänge</translation>
     </message>
     <message>
-        <location line="+52"/>
-        <source>Example: %1</source>
-        <translation>Beispiel: %1</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Example: &apos;%1&apos; for Hamburg.</source>
-        <translation>Beispiel: &apos;%1&apos; for Hamburg.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="+67"/>
         <source>a phone input for &apos;%1&apos; is required.</source>
         <translation>Eine Telefoneingabe für &apos;%1&apos; ist erforderlich.</translation>
     </message>

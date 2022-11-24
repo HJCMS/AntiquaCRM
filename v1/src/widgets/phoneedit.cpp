@@ -79,7 +79,7 @@ void PhoneCountryCodeModel::initModel() {
 
 PhoneEdit::PhoneEdit(QWidget *parent) : InputEdit{parent} {
   m_edit = new AntiquaLineEdit(this);
-  m_edit->setToolTip(tr("phone edit"));
+  m_edit->setToolTip("DIN 5008/E.123");
   m_layout->addWidget(m_edit);
 
   QRegExp simple("^(\\d+[\\s?\\d]+)$");
@@ -157,7 +157,8 @@ void PhoneEdit::setProperties(const QSqlField &field) {
     m_edit->setMaxLength(field.length());
     QString txt(tr("Max allowed length") + " ");
     txt.append(QString::number(field.length()));
-    m_edit->setPlaceholderText(txt);
+    if (m_edit->placeholderText().isEmpty())
+      m_edit->setPlaceholderText(txt);
   }
 
   if (field.requiredStatus() == QSqlField::Required) {
@@ -207,9 +208,13 @@ void PhoneEdit::setInfo(const QString &info) {
     m_label->setText(info + ":");
   }
   if (objectName().contains("c_mobil_")) {
-    m_edit->setToolTip(tr("Example: %1").arg("049 152 12345678"));
+    QString info = QString("%1 (DIN 5008/E.123)").arg("049 0152 12345678");
+    m_edit->setToolTip(info);
+    m_edit->setPlaceholderText(info);
   } else {
-    m_edit->setToolTip(tr("Example: '%1' for Hamburg.").arg("049 40 1234567"));
+    QString info = QString("%1 (DIN 5008/E.123)").arg("049 06343 1234567");
+    m_edit->setToolTip(info);
+    m_edit->setPlaceholderText(info);
   }
 }
 
