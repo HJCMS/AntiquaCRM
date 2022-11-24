@@ -13,10 +13,12 @@ SET (plugin_FILES
 
 SET (plugin_SOURCES
  booklooker.cpp
+ booklookerauthenticator.cpp
 )
 
 SET (plugin_HEADERS
  booklooker.h
+ booklookerauthenticator.h
 )
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)

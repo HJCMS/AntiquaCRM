@@ -20,6 +20,7 @@ class PgSQLSettings;
 class CompanySettings;
 class PrintSettings;
 class ProviderSettings;
+class PathSettings;
 
 class ConfigDialog : public QDialog {
   Q_OBJECT
@@ -27,6 +28,7 @@ class ConfigDialog : public QDialog {
 private:
   QListWidget *m_listWidget;
   GeneralSettings *m_pageGeneral;
+  PathSettings *m_pagePaths;
   PgSQLSettings *m_pageDatabase;
   CompanySettings *m_pageCompany;
   PrintSettings *m_pagePrinting;

@@ -16,7 +16,7 @@ namespace AntiquaCRM {
  * @brief it provides a temporary data profile to connect the database
  * @section sql
  */
-class ANTIQUACRM_LIBRARAY ASqlProfile final {
+class ANTIQUACRM_LIBRARY ASqlProfile final {
 
 private:
   const QString p_profile;

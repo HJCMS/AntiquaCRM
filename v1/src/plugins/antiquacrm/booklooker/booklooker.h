@@ -10,7 +10,7 @@
 #include <QJsonValue>
 #include <QObject>
 
-class ANTIQUACRM_LIBRARAY Booklooker final
+class ANTIQUACRM_LIBRARY Booklooker final
     : public AntiquaCRM::APluginInterface {
   Q_OBJECT
   Q_PLUGIN_METADATA(IID ANTIQUACRM_INTERFACE FILE "booklooker.json")
@@ -39,6 +39,7 @@ public Q_SLOTS:
 
 public:
   explicit Booklooker(QObject *parent = nullptr);
+  bool authenticationRequired();
   const QString configProvider() const;
   const QString displayName() const;
   const AntiquaCRM::AProviderOrders getOrders() const;

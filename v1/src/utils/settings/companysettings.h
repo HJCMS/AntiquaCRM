@@ -26,15 +26,8 @@ private:
   int layoutRow = 0;
   QGridLayout *m_layout;
 
-  /**
-   * @brief GridLayout Info Labels
-   */
   QLabel *infoCell(const QString &);
 
-  /**
-   * @note Ist an dieser Stelle nicht Notwendig
-   * @see loadSectionConfig
-   */
   void initSignalChanged();
 
 private Q_SLOTS:

@@ -13,6 +13,7 @@ SET (subproject_FILES
 SET (subproject_SOURCES
  configdialog.cpp
  generalsettings.cpp
+ pathsettings.cpp
  pgsqlsettings.cpp
  settingswidget.cpp
  companysettings.cpp
@@ -23,6 +24,7 @@ SET (subproject_SOURCES
 SET (subproject_HEADERS
  configdialog.h
  generalsettings.h
+ pathsettings.h
  pgsqlsettings.h
  settingswidget.h
  companysettings.h

@@ -209,6 +209,7 @@ void Booklooker::authenticate() {
   actionsCookie.setSecure(true);
 
   m_network->loginRequest(url, pd.toLocal8Bit());
+
 }
 
 void Booklooker::prepareResponse(const QJsonDocument &js) {
@@ -340,6 +341,10 @@ void Booklooker::orderUpdateAction(const QJsonObject &options) {
     m_network->putRequest(url, QByteArray());
 #endif
   } // END PaymentStatus
+}
+
+bool Booklooker::authenticationRequired() {
+  return isCookieExpired();
 }
 
 const QString Booklooker::configProvider() const {

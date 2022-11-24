@@ -19,7 +19,7 @@ namespace AntiquaCRM {
  * @brief AntiquaCRM Configuration Class
  * @ingroup core
  */
-class ANTIQUACRM_LIBRARAY ASettings : public QSettings {
+class ANTIQUACRM_LIBRARY ASettings : public QSettings {
   Q_OBJECT
 
 private:

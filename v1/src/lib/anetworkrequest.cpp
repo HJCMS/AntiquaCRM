@@ -76,20 +76,20 @@ void ANetworkRequest::setHeaderUserAgent() {
   setRawHeader(QByteArray("User-Agent"), str.toLocal8Bit());
 }
 
-void ANetworkRequest::setHeaderAcceptJson() {
-  QByteArray accept("application/json,text/*");
+void ANetworkRequest::setHeaderAcceptText() {
+  QStringList list;
+  list << "text/plain; q=0.1";
+  list << "text/html; q=0.2";
+  list << "text/xml; q=0.3";
+  list << "application/json; q=0.4";
+  QByteArray accept = list.join(", ").toLocal8Bit();
   setRawHeader(QByteArray("Accept"), accept);
 }
 
 void ANetworkRequest::setHeaderContentTypeJson() {
-  QByteArray contentType("application/json; charset=");
+  QByteArray contentType("application/json charset=");
   contentType.append(antiquaCharset());
   setRawHeader(QByteArray("Content-Type"), contentType);
-}
-
-void ANetworkRequest::setHeaderAcceptXml() {
-  QByteArray accept("application/xml,text/xml,text/pain");
-  setRawHeader(QByteArray("Accept"), accept);
 }
 
 void ANetworkRequest::setHeaderContentTypeXml(const QByteArray &charset) {

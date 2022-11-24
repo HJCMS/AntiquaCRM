@@ -14,7 +14,7 @@
 
 namespace AntiquaCRM {
 
-class ANTIQUACRM_LIBRARAY ANetworkRequest final : public QNetworkRequest {
+class ANTIQUACRM_LIBRARY ANetworkRequest final : public QNetworkRequest {
 private:
   const QSslConfiguration sslConfigguration();
 
@@ -24,11 +24,9 @@ public:
 
   void setHeaderAcceptLanguage();
   void setHeaderUserAgent();
+  void setHeaderAcceptText();
 
-  void setHeaderAcceptJson();
   void setHeaderContentTypeJson();
-
-  void setHeaderAcceptXml();
   void setHeaderContentTypeXml(const QByteArray &charset = antiquaCharset());
 
   void setHeaderCacheControl(const QByteArray &cache = QByteArray("no-cache,private"));

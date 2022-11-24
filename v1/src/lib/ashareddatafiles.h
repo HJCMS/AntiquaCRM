@@ -16,7 +16,7 @@
 
 namespace AntiquaCRM {
 
-class ANTIQUACRM_LIBRARAY ASharedDataFiles : public QDir {
+class ANTIQUACRM_LIBRARY ASharedDataFiles : public QDir {
 public:
   explicit ASharedDataFiles(const QDir &d = ASettings::getUserDataDir());
   const QStringList dataFiles();
@@ -29,7 +29,7 @@ public:
   const QDomDocument getXML(const QString &basename);
 };
 
-class ANTIQUACRM_LIBRARAY ASharedCacheFiles : public QDir {
+class ANTIQUACRM_LIBRARY ASharedCacheFiles : public QDir {
 public:
   explicit ASharedCacheFiles();
   static const QString cacheDir();

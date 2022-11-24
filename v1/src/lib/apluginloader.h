@@ -19,7 +19,7 @@ class APluginInterface;
  * @brief APlugin locader class
  * @ingroup plugins
  */
-class ANTIQUACRM_LIBRARAY APluginLoader : public QPluginLoader {
+class ANTIQUACRM_LIBRARY APluginLoader : public QPluginLoader {
   Q_OBJECT
 
 private:

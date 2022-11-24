@@ -15,7 +15,7 @@ namespace AntiquaCRM {
  * @brief Testclass for Network Interfaces
  * @ingroup Network
  */
-class ANTIQUACRM_LIBRARAY ANetworkIface : public QNetworkInterface {
+class ANTIQUACRM_LIBRARY ANetworkIface : public QNetworkInterface {
 private:
   QStringList p_adresses;
 

@@ -11,7 +11,7 @@
 
 class AbeBooksDocument;
 
-class ANTIQUACRM_LIBRARAY Abebooks final : public AntiquaCRM::APluginInterface {
+class ANTIQUACRM_LIBRARY Abebooks final : public AntiquaCRM::APluginInterface {
   Q_OBJECT
   Q_PLUGIN_METADATA(IID ANTIQUACRM_INTERFACE FILE "abebooks.json")
   Q_INTERFACES(AntiquaCRM::APluginInterface)
@@ -25,6 +25,7 @@ private:
                                                  const QJsonValue &value) const;
 
 private Q_SLOTS:
+  void authenticate(){/* unused */};
   void prepareResponse(const QJsonDocument &js);
   void prepareResponse(const QDomDocument &xml);
   void queryFinished(QNetworkReply *reply);
@@ -36,6 +37,7 @@ public Q_SLOTS:
 
 public:
   explicit Abebooks(QObject *parent = nullptr);
+  bool authenticationRequired() { return false; };
   const QString configProvider() const;
   const QString displayName() const;
   const AntiquaCRM::AProviderOrders getOrders() const;

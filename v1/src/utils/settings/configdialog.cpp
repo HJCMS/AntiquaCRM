@@ -4,6 +4,7 @@
 #include "configdialog.h"
 #include "companysettings.h"
 #include "generalsettings.h"
+#include "pathsettings.h"
 #include "pgsqlsettings.h"
 #include "printsettings.h"
 #include "providersettings.h"
@@ -27,6 +28,10 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   QHBoxLayout *horizontal_layout = new QHBoxLayout();
   horizontal_layout->setObjectName("hlayout");
 
+  QString note =
+      tr("All Settings in this Dialog requires a Application restart!");
+  layout->addWidget(new QLabel(note, this));
+
   QScrollArea *m_scrollarea = new QScrollArea(this);
   m_scrollarea->setObjectName("config_dialog_scrollarea");
   m_scrollarea->setWidgetResizable(true);
@@ -39,8 +44,14 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   m_pageGeneral = new GeneralSettings(pages);
   m_pageGeneral->setObjectName("main_settings");
   m_pageGeneral->setPageTitle(tr("Application"));
-  m_pageGeneral->setPageIcon(getIcon("view_list"));
+  m_pageGeneral->setPageIcon(getIcon("view_text"));
   pages->addWidget(m_pageGeneral);
+
+  m_pagePaths = new PathSettings(pages);
+  m_pagePaths->setObjectName("path_settings");
+  m_pagePaths->setPageTitle(tr("Directories"));
+  m_pagePaths->setPageIcon(getIcon("view_list"));
+  pages->addWidget(m_pagePaths);
 
   m_pageCompany = new CompanySettings(pages);
   m_pageCompany->setObjectName("company_settings");
@@ -85,7 +96,7 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   btn_save->setIcon(getIcon("action_save"));
 
   QPushButton *btn_close = m_btnBox->addButton(QDialogButtonBox::Close);
-  btn_close->setText(tr("&Quit"));
+  btn_close->setText(tr("Quit"));
   btn_close->setIcon(getIcon("action_cancel"));
 
   connect(m_btnBox, SIGNAL(accepted()), this, SLOT(saveConfig()));
@@ -130,12 +141,11 @@ int ConfigDialog::exec() {
 }
 
 void ConfigDialog::setPage(QListWidgetItem *item) {
-  qDebug() << Q_FUNC_INFO << "TODO" << item->text();
   int i = (m_listWidget->currentRow());
   if (pages->widget(i) != nullptr) {
     pages->setCurrentIndex(i);
+    statusMessage(tr("Current Page: %1").arg(item->text()));
   }
-  statusMessage(tr("Page %1 entered").arg(i));
 }
 
 void ConfigDialog::statusMessage(const QString &message) {

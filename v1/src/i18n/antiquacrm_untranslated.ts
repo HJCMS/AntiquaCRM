@@ -88,19 +88,6 @@
     </message>
 </context>
 <context>
-    <name>AntiquaCRM::ACurl</name>
-    <message>
-        <location filename="../lib/acurl.cpp" line="+439"/>
-        <source>CA-Bundle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Missing CA-Bundle for Connections!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
         <location filename="../lib/asqlquerymodel.cpp" line="+110"/>
@@ -833,7 +820,7 @@ Image - Article Id: %2</source>
 <context>
     <name>BookTableView</name>
     <message>
-        <location filename="../tabs/books/booktableview.cpp" line="+59"/>
+        <location filename="../tabs/books/booktableview.cpp" line="+67"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -861,7 +848,7 @@ Image - Article Id: %2</source>
 <context>
     <name>Booklooker</name>
     <message>
-        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+241"/>
+        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+242"/>
         <source>Booklooker response with errors!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -978,7 +965,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CompanySettings</name>
     <message>
-        <location filename="../utils/settings/companysettings.cpp" line="+13"/>
+        <location filename="../utils/settings/companysettings.cpp" line="+12"/>
         <source>On this page you configure your company&apos;s presentation settings.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1024,13 +1011,23 @@ Image - Article Id: %2</source>
 <context>
     <name>ConfigDialog</name>
     <message>
-        <location filename="../utils/settings/configdialog.cpp" line="+18"/>
+        <location filename="../utils/settings/configdialog.cpp" line="+19"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+13"/>
+        <source>All Settings in this Dialog requires a Application restart!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Directories</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1060,16 +1057,16 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+4"/>
-        <source>&amp;Quit</source>
+        <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+49"/>
-        <source>Page %1 entered</source>
+        <location line="+48"/>
+        <source>Current Page: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+16"/>
         <source>Configuration saved successfully</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1557,7 +1554,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="+103"/>
         <source>Delivery Service is needed!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1727,7 +1724,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+96"/>
         <source>Create entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1790,7 +1787,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="+77"/>
         <location line="+8"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
@@ -1956,63 +1953,33 @@ Image - Article Id: %2</source>
 <context>
     <name>GeneralSettings</name>
     <message>
-        <location filename="../utils/settings/generalsettings.cpp" line="+16"/>
-        <source>Open Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Archive/Applications paths</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Delivery Notes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Invoices</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Monthly Reports</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Payment Reminder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Cards</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>E-Mail Application</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
+        <location filename="../utils/settings/generalsettings.cpp" line="+40"/>
         <source>Payment Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>The lowest permissible selling price.</source>
+        <location line="-20"/>
+        <source>Applications paths</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>eMail Application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Open target</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>The lowest permissible selling price</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <source>currency for price calculation.</source>
+        <source>Currency for Displaying prices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2061,7 +2028,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+12"/>
         <source>Font Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2072,18 +2039,13 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+129"/>
+        <location line="+82"/>
         <source>fonts representation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-127"/>
+        <location line="-80"/>
         <source>open font settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+88"/>
-        <source>Mailler</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2374,7 +2336,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+52"/>
         <location line="+8"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
@@ -2432,7 +2394,7 @@ Image - Article Id: %2</source>
 <context>
     <name>KeywordActions</name>
     <message>
-        <location filename="../utils/keywordedit/keywordactions.cpp" line="+21"/>
+        <location filename="../utils/keywordedit/keywordactions.cpp" line="+18"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2702,7 +2664,7 @@ Image - Article Id: %2</source>
 <context>
     <name>MailButton</name>
     <message>
-        <location filename="../widgets/mailbutton.cpp" line="+14"/>
+        <location filename="../widgets/mailbutton.cpp" line="+13"/>
         <source>Mail Messages</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3058,7 +3020,7 @@ Image - Article Id: %2</source>
 <context>
     <name>OrdersCustomerInfo</name>
     <message>
-        <location filename="../tabs/orders/orderscustomerinfo.cpp" line="+15"/>
+        <location filename="../tabs/orders/orderscustomerinfo.cpp" line="+19"/>
         <source>Customer Number</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3068,7 +3030,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Delivery Address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3146,12 +3108,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+123"/>
+        <location line="+125"/>
         <source>Article: %1 not found or no stock!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+69"/>
         <source>Unsaved Changes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3166,12 +3128,12 @@ Image - Article Id: %2</source>
         <location line="+41"/>
         <location line="+32"/>
         <location line="+36"/>
-        <location line="+87"/>
+        <location line="+90"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-211"/>
+        <location line="-214"/>
         <source>Incomplete eMail configuration!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3215,12 +3177,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+135"/>
+        <location line="+167"/>
         <source>No Provider orders data found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+25"/>
         <source>Customer not found or set!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3471,13 +3433,56 @@ Image - Article Id: %2</source>
 <context>
     <name>OrdersTableView</name>
     <message>
-        <location filename="../tabs/orders/orderstableview.cpp" line="+55"/>
+        <location filename="../tabs/orders/orderstableview.cpp" line="+54"/>
         <source>Copy Order Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Reload</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PathSettings</name>
+    <message>
+        <location filename="../utils/settings/pathsettings.cpp" line="+15"/>
+        <source>Directory Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Deliverynotes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Invoices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Reminder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Bookcards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>Open Directory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3639,7 +3644,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+51"/>
         <location line="+8"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
@@ -3916,7 +3921,7 @@ Image - Article Id: %2</source>
 <context>
     <name>PhoneEdit</name>
     <message>
-        <location filename="../widgets/phoneedit.cpp" line="+81"/>
+        <location filename="../widgets/phoneedit.cpp" line="+82"/>
         <source>phone edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3944,7 +3949,7 @@ Image - Article Id: %2</source>
 <context>
     <name>PostalCodeEdit</name>
     <message>
-        <location filename="../widgets/postalcodeedit.cpp" line="+109"/>
+        <location filename="../widgets/postalcodeedit.cpp" line="+110"/>
         <source>Supported countries</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4660,7 +4665,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+201"/>
+        <location line="+202"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4898,7 +4903,7 @@ Image - Article Id: %2</source>
 <context>
     <name>SerialID</name>
     <message>
-        <location filename="../widgets/serialid.cpp" line="+82"/>
+        <location filename="../widgets/serialid.cpp" line="+83"/>
         <source>is required and can not empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5148,7 +5153,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TabOrders</name>
     <message>
-        <location filename="../tabs/orders/taborders.cpp" line="+16"/>
+        <location filename="../tabs/orders/taborders.cpp" line="+20"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5168,13 +5173,14 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+81"/>
-        <location line="+19"/>
+        <location line="+69"/>
+        <location line="+30"/>
+        <location line="+11"/>
         <source>Some arguments missing for a new Order!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="-33"/>
         <source>Add Article %1 to Order rejected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5184,7 +5190,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-110"/>
+        <location line="-76"/>
         <source>Ordereditor</source>
         <translation type="unfinished"></translation>
     </message>

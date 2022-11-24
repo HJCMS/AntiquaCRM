@@ -25,7 +25,7 @@ namespace AntiquaCRM {
  * @ingroup OrderSystem
  * @section PluginInterface
  */
-class ANTIQUACRM_LIBRARAY APluginInterface : public QObject {
+class ANTIQUACRM_LIBRARY APluginInterface : public QObject {
   Q_OBJECT
   Q_CLASSINFO("Interface", ANTIQUACRM_INTERFACE)
   Q_CLASSINFO("Description", "AntiquaCRM Plugin Interface")
@@ -125,6 +125,11 @@ protected:
 
 protected Q_SLOTS:
   /**
+   * @brief Authentications if needed
+   */
+  virtual void authenticate() = 0;
+
+  /**
    * @brief Changes the primary Text Codec.
    * @ref m_decodeFrom
    */
@@ -162,7 +167,17 @@ public Q_SLOTS:
   virtual void queryNewOrders(int waitSecs = 1) = 0;
 
   /**
-   * @brief This Method is reserved to Query with a given Provider Order Id.
+   * @brief Authentication is Required?
+   * Returns Information about a required Authentication.
+   * This is not the general login behavior.
+   * It's needed for Session based Connections.
+   * @example expired Tokens
+   */
+  virtual bool authenticationRequired() = 0;
+
+  /**
+   * @brief Order single query
+   * This Method is reserved to Query with a given Provider Order Id.
    */
   virtual void queryOrder(const QString &orderId) = 0;
 

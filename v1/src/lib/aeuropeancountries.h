@@ -14,7 +14,7 @@ namespace AntiquaCRM {
  * @brief European Countries Container
  * EU Countries initialed with ISO 3166-1 Alpha-2 Code.
  */
-class ANTIQUACRM_LIBRARAY AEuropeanCountries final
+class ANTIQUACRM_LIBRARY AEuropeanCountries final
     : public QHash<QString, QString> {
 public:
   explicit AEuropeanCountries();

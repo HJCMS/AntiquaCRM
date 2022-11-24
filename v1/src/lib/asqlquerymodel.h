@@ -23,7 +23,7 @@ class ASqlCore;
  * @brief Standard SqlQueryModel für Tabellenansichten
  * @section sql
  */
-class ANTIQUACRM_LIBRARAY ASqlQueryModel : public QSqlQueryModel {
+class ANTIQUACRM_LIBRARY ASqlQueryModel : public QSqlQueryModel {
   Q_OBJECT
 
 private:

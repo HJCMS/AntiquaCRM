@@ -5,13 +5,15 @@
 #include "anetworkrequest.h"
 
 #ifndef ANTIQUACRM_NETWORK_DEBUG
-#define ANTIQUACRM_NETWORK_DEBUG false
+#define ANTIQUACRM_NETWORK_DEBUG true
 #endif
 
+#include <QBuffer>
 #include <QHttpMultiPart>
 #include <QHttpPart>
 #include <QJsonParseError>
 #include <QTextCodec>
+#include <QTextStream>
 
 namespace AntiquaCRM {
 
@@ -89,22 +91,67 @@ void ANetworker::slotReadResponse() {
 #endif
 #endif
 
+  bool textContent = false;
+  QStringList findText("application/json");
+  findText << "text/plain";
+  findText << "text/html";
+  findText << "text/*";
+  findText << "text/";
+
+  QByteArray decodeWith(m_textCodec->name());
+  // Content-Type
   if (m_reply->hasRawHeader("Content-Type")) {
-    QString ct(m_reply->rawHeader("Content-Type"));
-    if (ct.contains("charset=")) {
-      QRegExp pattern("^.+\\bcharset=\\b", Qt::CaseInsensitive);
-      QString charset = ct.replace(pattern, "");
-      QTextCodec *c = QTextCodec::codecForName(charset.toUpper().toLocal8Bit());
-      if (m_textCodec->name() != c->name())
-        emit sendContentCodec(c);
+    QString cth(m_reply->rawHeader("Content-Type"));
+    QRegExp stripParam("^Content\\-Type\\b\\:\\s+", Qt::CaseInsensitive);
+    cth.replace(stripParam, "");
+    if (cth.contains("charset")) {
+      // Leerzeichen entfernen
+      cth.replace(QRegExp(";\\s*"), " ");
+      cth.replace(QRegExp("\\s*=\\s*"), "=");
+      foreach (QString section, cth.trimmed().split(" ")) {
+        if (section.contains("charset=")) {
+          section.replace("charset=", "");
+          QString charset = section.trimmed().toUpper();
+          QTextCodec *c = QTextCodec::codecForName(charset.toLocal8Bit());
+          decodeWith = c->name();
+        } else if (findText.contains(section) && !textContent) {
+          textContent = true;
+        }
+      }
     }
   }
 
-  QByteArray data = m_reply->readAll();
+  // Content-Encoding
+  if (m_reply->hasRawHeader("Content-Encoding")) {
+    QString ceh(m_reply->rawHeader("Content-Encoding"));
+    qDebug() << Q_FUNC_INFO << ceh;
+  }
+
+  QByteArray data;
+  if (textContent) {
+    QTextStream stream(&data, QIODevice::WriteOnly);
+    stream.setCodec(decodeWith);
+    stream << m_reply->readAll();
+    stream.flush();
+  } else {
+    data = m_reply->readAll();
+  }
+
   if (data.isNull()) {
-    qWarning("ANetorker: No Data responsed!");
+    qWarning("ANetworker: No Data responsed!");
     return;
   }
+
+  // Standard ist UTF-8
+  if (!m_textCodec->name().contains(decodeWith))
+    emit sendContentCodec(QTextCodec::codecForName(decodeWith));
+
+#ifdef ANTIQUA_DEVELOPEMENT
+#if (ANTIQUACRM_NETWORK_DEBUG == true)
+  qInfo("-- %s Codec: %s - Size: %d\n--", qPrintable(m_reply->url().host()),
+        qPrintable(decodeWith), data.size());
+#endif
+#endif
 
   // JSON Request
   if (queryType == AntiquaCRM::JSON_QUERY) {
@@ -177,7 +224,7 @@ QNetworkReply *ANetworker::jsonPostRequest(const QUrl &url,
   ANetworkRequest request(url);
   request.setHeaderUserAgent();
   request.setHeaderAcceptLanguage();
-  request.setHeaderAcceptJson();
+  request.setHeaderAcceptText();
   request.setHeaderCacheControl();
   request.setHeaderContentTypeJson();
   request.setTransferTimeout((tranfer_timeout * 1000));
@@ -206,7 +253,7 @@ QNetworkReply *ANetworker::xmlPostRequest(const QUrl &url,
   ANetworkRequest request(url);
   request.setHeaderUserAgent();
   request.setHeaderAcceptLanguage();
-  request.setHeaderAcceptXml();
+  request.setHeaderAcceptText();
   request.setHeaderCacheControl();
   request.setHeaderContentTypeXml();
   request.setTransferTimeout((tranfer_timeout * 1000));
@@ -236,7 +283,7 @@ QNetworkReply *ANetworker::jsonMultiPartRequest(const QUrl &url,
   ANetworkRequest request(url);
   request.setHeaderUserAgent();
   request.setHeaderAcceptLanguage();
-  request.setHeaderAcceptJson();
+  request.setHeaderAcceptText();
   request.setHeaderCacheControl();
   request.setTransferTimeout((tranfer_timeout * 1000));
 
@@ -272,6 +319,7 @@ QNetworkReply *ANetworker::jsonMultiPartRequest(const QUrl &url,
 QNetworkReply *ANetworker::putRequest(const QUrl &url, const QByteArray &data) {
   ANetworkRequest request(url);
   request.setHeaderUserAgent();
+  request.setHeaderAcceptText();
   request.setHeaderAcceptLanguage();
   request.setHeaderCacheControl();
   request.setRawHeader("Content-Type", "text/plain");
@@ -298,7 +346,7 @@ QNetworkReply *ANetworker::getRequest(const QUrl &url) {
   request.setHeaderUserAgent();
   request.setHeaderAcceptLanguage();
   request.setHeaderCacheControl();
-  request.setRawHeader("Accept", "text/*");
+  request.setHeaderAcceptText();
   request.setTransferTimeout((tranfer_timeout * 1000));
 
   m_reply = get(request);

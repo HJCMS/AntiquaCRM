@@ -18,7 +18,7 @@ namespace AntiquaCRM {
  * @brief Article Order Item Class
  * @ingroup OrderSystem
  */
-struct ANTIQUACRM_LIBRARAY ArticleOrderItem {
+struct ANTIQUACRM_LIBRARY ArticleOrderItem {
   QString key;
   QVariant value;
 };
@@ -37,7 +37,7 @@ typedef QList<ArticleOrderItem> OrderArticleItems;
  * If you create a new Plugin, it is important to use this Class to convert your
  * data for the main Application.
  */
-class ANTIQUACRM_LIBRARAY AProviderOrder final {
+class ANTIQUACRM_LIBRARY AProviderOrder final {
 private:
   QString providerName;
   QString bookingId;

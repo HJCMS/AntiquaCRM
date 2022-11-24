@@ -14,12 +14,6 @@ class GeneralSettings final : public SettingsWidget {
   Q_OBJECT
 
 private:
-  LineEdit *m_img_archiv_path; /**< Bilderarchiv */
-  LineEdit *m_delivery_path;   /**< Lieferscheine */
-  LineEdit *m_invoice_path;    /**< Rechnungen */
-  LineEdit *m_reports_path;    /**< Berichte */
-  LineEdit *m_reminder_path;   /**< Erinnerungen */
-  LineEdit *m_cards_path;      /**< Buchkarten */
   LineEdit *m_mailler_path;    /**< E-Mail Programm */
   Ecurrency *m_currency;       /**< Währung */
   IntSpinBox *m_vat1;          /**< Mehrwertsteuer Normal */
@@ -31,12 +25,6 @@ private:
   SizeEdit *m_maxSize;         /**< Maximale Bildgröße */
   QLabel *view_font_config;    /**< Schriftdarstellung */
 
-  QToolButton *btn_imgsrc;
-  QToolButton *btn_delivery;
-  QToolButton *btn_invoice;
-  QToolButton *btn_reports;
-  QToolButton *btn_reminder;
-  QToolButton *btn_cards;
   QToolButton *btn_mailler;
   QPushButton *btn_fontdialog;
 
@@ -44,12 +32,6 @@ private:
 
 private Q_SLOTS:
   void openFontDialog();
-  void setImageArchiv();
-  void setDeliveryArchiv();
-  void setInvoiceArchiv();
-  void setReportsArchiv();
-  void setReminderArchiv();
-  void setCardsArchiv();
   void setMailApplication();
 
 public:

@@ -22,7 +22,7 @@ namespace AntiquaCRM {
  * This is a final class, because it depends on the PgSQL Database.
  * @note It's a pure Container Class without Database write operations!
  */
-class ANTIQUACRM_LIBRARAY ASqlDataQuery final {
+class ANTIQUACRM_LIBRARY ASqlDataQuery final {
 
 private:
   const QSqlRecord p_record;

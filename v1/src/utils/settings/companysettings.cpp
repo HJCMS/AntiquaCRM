@@ -7,10 +7,9 @@ CompanySettings::CompanySettings(QWidget *parent) : SettingsWidget{parent} {
   setObjectName("company_settings");
 
   m_layout = new QGridLayout(this);
-  m_layout->setObjectName("printer_config_layout");
+  m_layout->setObjectName("company_config_layout");
 
-  QString info_txt =
-      tr("On this page you configure your company's presentation settings.");
+  QString info_txt = tr("On this page you configure your company's presentation settings.");
   QLabel *info_label = new QLabel(info_txt, this);
   m_layout->addWidget(info_label, layoutRow++, 0, 1, 2);
 

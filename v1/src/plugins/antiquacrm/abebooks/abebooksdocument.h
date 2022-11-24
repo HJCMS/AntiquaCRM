@@ -13,13 +13,13 @@
 #include <QPair>
 #include <QString>
 
-struct ANTIQUACRM_LIBRARAY AbeBooksAccess {
+struct ANTIQUACRM_LIBRARY AbeBooksAccess {
   QString user;
   QString key;
 };
 Q_DECLARE_METATYPE(AbeBooksAccess);
 
-class ANTIQUACRM_LIBRARAY AbeBooksDocument final : public QDomDocument {
+class ANTIQUACRM_LIBRARY AbeBooksDocument final : public QDomDocument {
 private:
   QString apiLogin;
   QString apiKey;

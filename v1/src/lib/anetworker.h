@@ -25,7 +25,7 @@ namespace AntiquaCRM {
  * Hier werden Sprache, Zeichensatz und Fehlermeldungen verabeitet.
  * Die Netzwerk antworten müssen in den Abfrage-Klassen verarbeitet werden!
  */
-class ANTIQUACRM_LIBRARAY ANetworker final : public QNetworkAccessManager {
+class ANTIQUACRM_LIBRARY ANetworker final : public QNetworkAccessManager {
   Q_OBJECT
 
 private:

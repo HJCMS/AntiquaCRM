@@ -11,7 +11,7 @@ namespace AntiquaCRM {
 /**
  * @brief Steuerrechner
  */
-class ANTIQUACRM_LIBRARAY ATaxCalculator final {
+class ANTIQUACRM_LIBRARY ATaxCalculator final {
 private:
   const qreal p_basePrice;
 

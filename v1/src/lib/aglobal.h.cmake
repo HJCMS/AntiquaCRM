@@ -122,10 +122,10 @@
  * @def ANTIQUACRM_EXPORT
  * @brief library export definition
  */
-#ifdef ANTIQUACRM_SHARED_LIBRARY
-# define ANTIQUACRM_LIBRARAY Q_DECL_EXPORT
+#ifdef ANTIQUACRM_LIBRARY
+# define ANTIQUACRM_LIBRARY Q_DECL_EXPORT
 #else
-# define ANTIQUACRM_LIBRARAY Q_DECL_IMPORT
+# define ANTIQUACRM_LIBRARY Q_DECL_IMPORT
 #endif
 
 /**
@@ -381,13 +381,13 @@ namespace AntiquaCRM {
   * @brief Postleitzahlen Eintrag
   * @section widgets
   */
- struct ANTIQUACRM_LIBRARAY PostalCode {
+ struct ANTIQUACRM_LIBRARY PostalCode {
    QString plz;
    QString location;
    QString state;
  };
 
- struct ANTIQUACRM_LIBRARAY APluginConfig {
+ struct ANTIQUACRM_LIBRARY APluginConfig {
    QString hostname = QString();
    QString querypath = QString();
    QString username = QString();

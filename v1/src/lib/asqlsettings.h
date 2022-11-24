@@ -20,7 +20,7 @@ class ASqlProfile;
  * @brief This class provides sql settings functions
  * @section sql
  */
-class ANTIQUACRM_LIBRARAY ASqlSettings final : public ASettings {
+class ANTIQUACRM_LIBRARY ASqlSettings final : public ASettings {
   Q_OBJECT
   Q_PROPERTY(QString profile READ getProfile WRITE setProfile NOTIFY
                  sendProfileChanged)
