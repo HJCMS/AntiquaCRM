@@ -16,6 +16,18 @@ int main(int argc, char *argv[]) {
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
   }
 
+  if (argc > 0) {
+    for(int i = 0; i <= argc; i++) {
+      QString argument = QString(argv[i]).toLower();
+      argument.replace("-", "");
+      argument.replace(" ", "");
+      if (argument.trimmed() == "assistant") {
+        antiqua->startAssistant();
+        return 0;
+      }
+    }
+  }
+
   if (antiqua->isRunning()) {
     qWarning("AntiquaCRM is already up!");
     return 0;

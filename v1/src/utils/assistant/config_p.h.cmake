@@ -1,0 +1,27 @@
+// -*- coding: utf-8 -*-
+// vim: set fileencoding=utf-8
+
+#ifndef CONFIG_ASSISTANT_H
+#define CONFIG_ASSISTANT_H
+
+#ifndef HJCMS_PROJECT_NAME
+#define HJCMS_PROJECT_NAME "@PROJECTNAME@"
+#endif
+
+#ifndef HJCMS_ASSISTANT_VERSION
+#define HJCMS_ASSISTANT_VERSION "@ANTIQUACRM_VERSION_STRING@"
+#endif
+
+#ifndef HJCMS_ASSISTANT_DOMAIN
+#define HJCMS_ASSISTANT_DOMAIN "de.hjcms"
+#endif
+
+#ifndef HJCMS_ASSISTANT_SQL
+#define HJCMS_ASSISTANT_SQL "de.hjcms.@PROJECTNAME@"
+#endif
+
+#ifndef HJCMS_HOMEPAGE
+#define HJCMS_HOMEPAGE "@HJCMS_HOMEPAGEURL@"
+#endif
+
+#endif // CONFIG_ASSISTANT_H

@@ -53,6 +53,7 @@ public Q_SLOTS:
 
 public:
   explicit AntiquaAppl(int &argc, char **argv);
+  void startAssistant();
   void initDefaultTheme();
   bool isRunning();
   int exec();

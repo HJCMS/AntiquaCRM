@@ -11,3 +11,5 @@ ADD_SUBDIRECTORY(templates)
 ADD_SUBDIRECTORY(mailing)
 ADD_SUBDIRECTORY(purchasetable)
 ADD_SUBDIRECTORY(printing)
+ADD_SUBDIRECTORY(assistant)
+
