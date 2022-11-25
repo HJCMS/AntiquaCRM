@@ -31,7 +31,7 @@ public:
   explicit APluginLoader(QObject *parent = nullptr);
   void setFileName(const QString &name);
   const QString findPlugin(const QString &name);
-  const QList<APluginInterface *> pluginInterfaces(QObject *parent);
+  const QList<AntiquaCRM::APluginInterface *> pluginInterfaces(QObject *parent);
 };
 
 };     // namespace AntiquaCRM

@@ -5,6 +5,7 @@
 #ifndef ANTIQUACRM_ATXSOCKET_H
 #define ANTIQUACRM_ATXSOCKET_H
 
+#include <AGlobal>
 #include <QJsonObject>
 #include <QLocalSocket>
 #include <QObject>
@@ -25,7 +26,7 @@ namespace AntiquaCRM {
  *  messanger.close();
  * @endcode
  */
-class ATxSocket final : public QLocalSocket {
+class ANTIQUACRM_LIBRARY ATxSocket final : public QLocalSocket {
   Q_OBJECT
 
 private:

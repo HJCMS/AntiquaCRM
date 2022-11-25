@@ -297,6 +297,7 @@ const AntiquaCRM::AProviderOrders Buchfreund::getOrders() const {
     order.setValue("o_media_type", AntiquaCRM::BOOK);
     order.setValue("o_order_status", AntiquaCRM::OrderStatus::STARTED);
     order.setValue("o_payment_status", bf_order.value("bestellzeichen").toBool());
+    order.setValue("o_delivery_add_price", false);
 
     QJsonObject::iterator it;
     for (it = bf_order.begin(); it != bf_order.end(); ++it) {

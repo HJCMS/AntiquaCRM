@@ -122,7 +122,7 @@
  * @def ANTIQUACRM_EXPORT
  * @brief library export definition
  */
-#ifdef ANTIQUACRM_LIBRARY
+#ifdef ANTIQUACRM_SHARED_LIBRARY
 # define ANTIQUACRM_LIBRARY Q_DECL_EXPORT
 #else
 # define ANTIQUACRM_LIBRARY Q_DECL_IMPORT

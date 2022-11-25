@@ -55,7 +55,7 @@ const QString APluginLoader::findPlugin(const QString &name) {
   return QString();
 }
 
-const QList<APluginInterface *>
+const QList<AntiquaCRM::APluginInterface *>
 APluginLoader::pluginInterfaces(QObject *parent) {
   QList<APluginInterface *> list;
   foreach (QString file, findPlugins()) {
