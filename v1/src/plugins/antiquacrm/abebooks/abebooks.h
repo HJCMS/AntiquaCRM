@@ -21,6 +21,15 @@ private:
   AbeBooksDocument initDocument();
   const QUrl apiQuery(const QString &section);
   const QString dateString(const QDate &date = QDate::currentDate()) const;
+
+  const QVariant createValue(QMetaType::Type id, const QJsonValue &value) const;
+
+  void setOrderItem(AntiquaCRM::AProviderOrder *order, const QString &key,
+                    const QJsonValue &value) const;
+
+  const AntiquaCRM::ArticleOrderItem setArticleItem(AntiquaCRM::AProviderOrder *order, const QString &key,
+                      const QJsonValue &value) const;
+
   const AntiquaCRM::ArticleOrderItem articleItem(const QString &key,
                                                  const QJsonValue &value) const;
 

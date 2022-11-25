@@ -129,6 +129,18 @@ const QDateTime APluginInterface::timeSpecDate(const QDateTime &dateTime,
   return dt;
 }
 
+double APluginInterface::getPrice(const QJsonValue &value) const {
+  if (value.type() == QJsonValue::Double)
+    return value.toDouble();
+
+  if (value.type() == QJsonValue::String) {
+    QString str = value.toString();
+    if (!str.isEmpty())
+      return str.toDouble();
+  }
+  return 0.00;
+}
+
 void APluginInterface::setContentDecoder(QTextCodec *codec) {
   if (codec != nullptr)
     m_decodeFrom = codec;

@@ -57,8 +57,7 @@ private:
    */
   bool findCustomer(const QJsonObject &customer);
 
-Q_SIGNALS:
-  void sendOrderUpdate(const QJsonObject &);
+  const QString convertPrice(double) const;
 
 private Q_SLOTS:
   /**
@@ -91,6 +90,9 @@ private Q_SLOTS:
    * @brief Search for Existing Orders, if not exists create it ...
    */
   void prepareCreateOrder();
+
+Q_SIGNALS:
+  void sendOrderUpdate(const QJsonObject &);
 
 public:
   /**

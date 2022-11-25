@@ -70,6 +70,22 @@ const QString Abebooks::dateString(const QDate &date) const {
   return date.toString(Qt::ISODate);
 }
 
+const QVariant Abebooks::createValue(QMetaType::Type id,
+                                     const QJsonValue &value) const {
+  qDebug() << Q_FUNC_INFO << "TODO" << id << value;
+}
+
+void Abebooks::setOrderItem(AntiquaCRM::AProviderOrder *order,
+                            const QString &key, const QJsonValue &value) const {
+  qDebug() << Q_FUNC_INFO << "TODO" << key << value;
+}
+
+const AntiquaCRM::ArticleOrderItem Abebooks::setArticleItem(AntiquaCRM::AProviderOrder *order,
+                              const QString &key,
+                              const QJsonValue &value) const {
+  qDebug() << Q_FUNC_INFO << "TODO" << key << value;
+}
+
 const AntiquaCRM::ArticleOrderItem
 Abebooks::articleItem(const QString &key, const QJsonValue &value) const {
   QHash<QString, QMetaType::Type> keys =

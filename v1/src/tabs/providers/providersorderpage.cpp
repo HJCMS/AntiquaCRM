@@ -10,6 +10,7 @@
 #include "providerpurchasetable.h"
 #include "providerspageview.h"
 
+#include <ASettings>
 #include <QDebug>
 #include <QDialog>
 #include <QLayout>
@@ -65,9 +66,9 @@ void ProvidersOrderPage::pushCmd(const QJsonObject &action) {
 bool ProvidersOrderPage::findCustomer(const QJsonObject &customer) {
   QString fullname = customer.value("c_provider_import").toString();
   m_header->setHeader(fullname);
-  if(customer.contains("c_postal_address")) {
+  if (customer.contains("c_postal_address")) {
     QString address = customer.value("c_postal_address").toString();
-    if(customer.contains("c_phone_0")) {
+    if (customer.contains("c_phone_0")) {
       address.append("\nTel: ");
       address.append(customer.value("c_phone_0").toString());
     }
@@ -109,6 +110,15 @@ bool ProvidersOrderPage::findCustomer(const QJsonObject &customer) {
     }
   }
   return false;
+}
+
+const QString ProvidersOrderPage::convertPrice(double price) const {
+  AntiquaCRM::ASettings cfg;
+  QString currency = cfg.value("payment/currency", "$").toString();
+  QString buffer(QString::number(price, 'd', 2));
+  buffer.append(" ");
+  buffer.append(currency);
+  return buffer;
 }
 
 // Must be identical to the "index" call of the tab class!
@@ -272,7 +282,8 @@ bool ProvidersOrderPage::loadOrderDataset() {
       m_table->setItem(r, 0, m_table->createItem(o.value("a_provider_id")));
       m_table->setItem(r, 1, m_table->createItem(o.value("a_article_id")));
       m_table->setItem(r, 2, m_table->createItem(o.value("a_count")));
-      m_table->setItem(r, 3, m_table->createItem(o.value("a_price")));
+      double price = o.value("a_price").toDouble();
+      m_table->setItem(r, 3, m_table->createItem(convertPrice(price)));
       m_table->setItem(r, 4, m_table->createItem(o.value("a_title")));
     }
   }

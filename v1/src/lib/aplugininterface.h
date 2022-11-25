@@ -12,6 +12,7 @@
 #include <QFlags>
 #include <QJsonDocument>
 #include <QJsonValue>
+#include <QMetaType>
 #include <QNetworkCookie>
 #include <QObject>
 #include <QString>
@@ -99,6 +100,11 @@ protected:
                                Qt::TimeSpec fromSpec = Qt::LocalTime) const;
 
   /**
+   * @brief Convert Invalid Price formats to double
+   */
+  double getPrice(const QJsonValue &value) const;
+
+  /**
    * @brief Vendors using different Date time formats!
    */
   virtual const QString
@@ -115,13 +121,24 @@ protected:
   virtual const QUrl apiQuery(const QString &section) = 0;
 
   /**
-   * @brief create a Article Order Item
-   * @see AntiquaCRM::AProviderOrder
-   * @param key
-   * @param value
+   * @brief create order item value
    */
-  virtual const ArticleOrderItem articleItem(const QString &key,
-                                             const QJsonValue &value) const = 0;
+  virtual const QVariant createValue(QMetaType::Type id,
+                                     const QJsonValue &value) const = 0;
+
+  /**
+   * @brief Set AProviderOrder Item
+   */
+  virtual void setOrderItem(AntiquaCRM::AProviderOrder *order,
+                            const QString &key,
+                            const QJsonValue &value) const = 0;
+
+  /**
+   * @brief Set AProviderOrder Item
+   */
+  virtual const AntiquaCRM::ArticleOrderItem
+  setArticleItem(AntiquaCRM::AProviderOrder *order, const QString &key,
+                 const QJsonValue &value) const = 0;
 
 protected Q_SLOTS:
   /**
