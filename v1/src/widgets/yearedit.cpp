@@ -15,6 +15,7 @@ YearEdit::YearEdit(QWidget *parent)
   m_year->setDisplayFormat("yyyy");
   m_year->setMaximumDate(startDate.addYears(+1));
   m_year->setDate(startDate.addYears(+1));
+  m_year->setWhatsThis(tr("Changes the Year for this Article. It can't set to the future!"));
   m_layout->addWidget(m_year);
   setModified(false);
   setRequired(false);

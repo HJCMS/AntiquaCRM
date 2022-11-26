@@ -8,7 +8,14 @@
 
 #include <QMessageBox>
 
-AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
+static Qt::WindowFlags customFlags() {
+  Qt::WindowFlags flags;
+  flags = Qt::Window;
+  flags |= Qt::WindowContextHelpButtonHint;
+  return flags;
+}
+
+AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent,customFlags()} {
   setMinimumSize(QSize(750, 550));
   setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
   setWindowIcon(QIcon(":icons/antiqua.png"));

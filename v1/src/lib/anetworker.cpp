@@ -90,7 +90,6 @@ void ANetworker::slotReadResponse() {
   foreach (QByteArray a, m_reply->rawHeaderList()) {
     qInfo("%s: %s", a.constData(), m_reply->rawHeader(a).constData());
   }
-  qInfo("--\n");
 #endif
 
   bool textContent = false;
@@ -152,11 +151,10 @@ void ANetworker::slotReadResponse() {
   if (!m_textCodec->name().contains(decodeWith))
     emit sendContentCodec(QTextCodec::codecForName(decodeWith));
 
-#ifdef ANTIQUA_DEVELOPEMENT
 #if (ANTIQUACRM_NETWORK_DEBUG == true)
-  qInfo("-- %s Codec: %s - Size: %d\n--", qPrintable(m_reply->url().host()),
+  qInfo("-- %s Codec: %s - Size: %d",  // Format
+        qPrintable(m_reply->url().host()), // Url
         qPrintable(decodeWith), data.size());
-#endif
 #endif
 
   // JSON Request

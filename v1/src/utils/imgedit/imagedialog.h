@@ -8,6 +8,7 @@
 #include <AntiquaCRM>
 #include <QAction>
 #include <QDir>
+#include <QEvent>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QList>
@@ -107,7 +108,8 @@ private Q_SLOTS:
   void fileChanged(const SourceInfo &image);
 
 protected:
-  void closeEvent(QCloseEvent *e) override;
+  void closeEvent(QCloseEvent *) override;
+  void resizeEvent(QResizeEvent *) override;
 
 public Q_SLOTS:
   /**

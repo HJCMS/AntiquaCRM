@@ -17,7 +17,7 @@ private:
   void loadDataset();
 
 private Q_SLOTS:
-  void dataChanged(int);
+  void dateChanged();
 
 public Q_SLOTS:
   Q_INVOKABLE void reset();

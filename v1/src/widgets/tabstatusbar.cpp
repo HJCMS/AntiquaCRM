@@ -17,6 +17,7 @@ TabStatusBar::TabStatusBar(QWidget *parent) : QStatusBar{parent} {
   btn_refresh->setIcon(getIcon("action_reload"));
   btn_refresh->setText(tr("Update"));
   btn_refresh->setToolTip(tr("Update current View"));
+  btn_refresh->setWhatsThis(tr("When pressed the table query will reloaded."));
   insertPermanentWidget(1, btn_refresh, 0);
 
   connect(btn_refresh, SIGNAL(clicked()), this, SIGNAL(sendReloadView()));

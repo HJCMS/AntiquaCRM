@@ -40,13 +40,15 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   o_payment_status = new BoolBox(this);
   o_payment_status->setObjectName("o_payment_status");
   o_payment_status->setInfo(tr("Payment status"));
-  o_payment_status->setToolTip(tr("Current Payment status"));
+  o_payment_status->setToolTip(tr("Order paid or not?"));
+  o_payment_status->setWhatsThis(tr("Changes the current payment status."));
   o_payment_status->setValue(0);
   row0->addWidget(o_payment_status);
   // Auftragsstatus
   o_order_status = new OrderStatusSelecter(this);
   o_order_status->setObjectName("o_order_status");
   o_order_status->setInfo(tr("Current order status"));
+  o_order_status->setWhatsThis(tr("Changes the current order status."));
   o_order_status->setValue(0);
   row0->addWidget(o_order_status);
   mainLayout->addLayout(row0);

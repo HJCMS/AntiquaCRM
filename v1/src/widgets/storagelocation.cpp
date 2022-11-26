@@ -10,6 +10,7 @@ StorageLocation::StorageLocation(QWidget *parent) : InputEdit{parent} {
   m_box->setToolTip(tr("Storage Location"));
   m_box->insertItem(0, tr("Without disclosures"), QString());
   m_box->setMaxVisibleItems(20);
+  m_box->setWhatsThis(tr("Changes the Storage location of this Article."));
   m_layout->addWidget(m_box);
   m_search = new QLineEdit(this);
   m_search->setPlaceholderText(tr("Storage Location"));

@@ -64,6 +64,7 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
     TabBooks *m_tab = new TabBooks(this);
     int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
     m_tabBar->setTabCloseable(i, m_tab->isClosable());
+    m_tabBar->setTabWhatsThis(i, tr("View and edit Books"));
     return true;
   }
 
@@ -72,6 +73,7 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
     TabCustomers *m_tab = new TabCustomers(this);
     int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
     m_tabBar->setTabCloseable(i, m_tab->isClosable());
+    m_tabBar->setTabWhatsThis(i, tr("View and edit Customers"));
     return true;
   }
 
@@ -80,6 +82,7 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
     TabProviders *m_tab = new TabProviders(this);
     int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
     m_tabBar->setTabCloseable(i, m_tab->isClosable());
+    m_tabBar->setTabWhatsThis(i, tr("View and import Provider orders"));
     return true;
   }
 
@@ -88,6 +91,7 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
     TabOrders *m_tab = new TabOrders(this);
     int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
     m_tabBar->setTabCloseable(i, m_tab->isClosable());
+    m_tabBar->setTabWhatsThis(i, tr("View and edit System orders"));
     return true;
   }
 

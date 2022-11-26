@@ -13,7 +13,7 @@ IsbnEdit::IsbnEdit(QWidget *parent) : InputEdit{parent} {
   m_isbn = new QLineEdit(this);
   m_isbn->setMaxLength(13);
   m_isbn->setMinimumWidth(200);
-  m_isbn->setToolTip(tr("a ISBN number must consist of 10 or 13 digits."));
+  m_isbn->setWhatsThis(tr("a ISBN number must consist of 10 or 13 digits."));
   m_isbn->setPlaceholderText(tr("ISBN/EAN 10/13 (ISO 2108)"));
   m_isbn->setClearButtonEnabled(true);
   m_layout->addWidget(m_isbn);
@@ -58,8 +58,8 @@ void IsbnEdit::isbnChanged(const QString &s) {
 void IsbnEdit::setValue(const QVariant &val) {
   QString isbn = val.toString().trimmed();
   int len = isbn.length();
-  if (len < 10 && len > 13)
-    return;
+  if (len < 10 || len > 13)
+    return; // ignore
 
   if (len == 10 && isISBN10(isbn)) {
     m_isbn->setText(isbn);

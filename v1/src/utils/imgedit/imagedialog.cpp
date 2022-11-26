@@ -63,7 +63,8 @@ ImageDialog::ImageDialog(int articleId, QWidget *parent)
   m_toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
   ac_save = m_toolBar->addAction(QIcon(":icons/action_save.png"), tr("Save"));
   m_toolBar->addSeparator();
-  ac_close = m_toolBar->addAction(QIcon(":icons/action_quit.png"), tr("Finish"));
+  ac_close =
+      m_toolBar->addAction(QIcon(":icons/action_quit.png"), tr("Finish"));
   m_statusBar->addPermanentWidget(m_toolBar);
 
   layout->insertWidget(1, m_statusBar);
@@ -176,18 +177,26 @@ void ImageDialog::save() {
 }
 
 void ImageDialog::fileChanged(const SourceInfo &image) {
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << "ImageDialog::fileChanged => Source:" << image.fileName();
-#endif
   imagePreview(image);
 }
 
 void ImageDialog::closeEvent(QCloseEvent *e) {
-  config->beginGroup("imaging");
-  config->setValue("geometry", saveGeometry());
-  config->setValue("windowState", m_splitter->saveState());
-  config->endGroup();
+  if (e->type() == QEvent::Close) {
+    e->setAccepted(false);
+    notifyStatus(tr("Please use the Finish button!"));
+    return;
+  }
   QDialog::closeEvent(e);
+}
+
+void ImageDialog::resizeEvent(QResizeEvent *e) {
+  if (e->type() == QEvent::Resize) {
+    config->beginGroup("imaging");
+    config->setValue("geometry", saveGeometry());
+    config->setValue("windowState", m_splitter->saveState());
+    config->endGroup();
+  }
+  QDialog::resizeEvent(e);
 }
 
 void ImageDialog::notifyStatus(const QString &str) {

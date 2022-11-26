@@ -5,10 +5,11 @@
 
 #include <QIcon>
 
-BookSelectFilter::BookSelectFilter(QWidget *parent) : QComboBox{parent}
-{
+BookSelectFilter::BookSelectFilter(QWidget *parent) : QComboBox{parent} {
+  setWhatsThis(tr("With this button you can optimize your search with some filters."));
   setSizeAdjustPolicy(QComboBox::AdjustToContents);
   QIcon icon(":icons/view_search.png");
+
   insertItem(0, icon, tr("Book Title and Author"), Filter::BooksAuthor);
   setItemData(0, tr("Search in Book titles and authors"), Qt::ToolTipRole);
 

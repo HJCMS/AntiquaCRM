@@ -6,6 +6,7 @@
 TrustedBox::TrustedBox(QWidget *parent) : InputEdit{parent} {
   m_box = new AntiquaComboBox(this);
   m_box->setToolTip(tr("Trust"));
+  m_box->setWhatsThis(tr("Changes the Trustlevel for this customer."));
   m_layout->addWidget(m_box);
   loadDataset();
   setRequired(true);

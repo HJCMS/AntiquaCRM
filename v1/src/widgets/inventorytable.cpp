@@ -3,8 +3,8 @@
 
 #include "inventorytable.h"
 
-#include <QIcon>
 #include <QDebug>
+#include <QIcon>
 
 InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
   setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -40,7 +40,12 @@ void InventoryTable::setEnableTableViewSorting(bool b) {
 
 void InventoryTable::getSqlModelError(const QString &table,
                                       const QString &message) {
-  qDebug() << Q_FUNC_INFO << "TODO" << table << message;
+#ifndef ANTIQUA_DEVELOPEMENT
+  Q_UNUSED(table);
+  Q_UNUSED(message);
+#else
+  qDebug() << "SqlModelError:" << table << message;
+#endif
 }
 
 void InventoryTable::setQueryLimit(int limit) {

@@ -151,7 +151,7 @@
 <context>
     <name>AntiquaDateInfo</name>
     <message>
-        <location filename="../widgets/antiquadateinfo.cpp" line="+76"/>
+        <location filename="../widgets/antiquadateinfo.cpp" line="+78"/>
         <source>A Valid Date is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -206,7 +206,27 @@
 <context>
     <name>AntiquaTabWidget</name>
     <message>
-        <location filename="../antiquatabwidget.cpp" line="+123"/>
+        <location filename="../antiquatabwidget.cpp" line="+67"/>
+        <source>View and edit Books</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>View and edit Customers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>View and import Provider orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>View and edit System orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>Request rejected!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -262,7 +282,7 @@
 <context>
     <name>AntiquaWindow</name>
     <message>
-        <location filename="../antiquawindow.cpp" line="+65"/>
+        <location filename="../antiquawindow.cpp" line="+72"/>
         <source>Save request</source>
         <translation type="unfinished"></translation>
     </message>
@@ -792,7 +812,12 @@ Image - Article Id: %2</source>
 <context>
     <name>BookSelectFilter</name>
     <message>
-        <location filename="../tabs/books/bookselectfilter.cpp" line="+12"/>
+        <location filename="../tabs/books/bookselectfilter.cpp" line="+9"/>
+        <source>With this button you can optimize your search with some filters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Book Title and Author</source>
         <translation type="unfinished"></translation>
     </message>
@@ -911,7 +936,7 @@ Image - Article Id: %2</source>
 <context>
     <name>Booklooker</name>
     <message>
-        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+266"/>
+        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+270"/>
         <source>Booklooker response with errors!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2243,7 +2268,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Finish</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2293,7 +2318,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+10"/>
+        <source>Please use the Finish button!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+39"/>
         <source>image from database!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3222,12 +3252,22 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Current Payment status</source>
+        <source>Order paid or not?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Changes the current payment status.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Current order status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Changes the current order status.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5155,17 +5195,22 @@ Image - Article Id: %2</source>
     <name>StorageLocation</name>
     <message>
         <location filename="../widgets/storagelocation.cpp" line="+10"/>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Storage Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-4"/>
+        <location line="-5"/>
         <source>Without disclosures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+2"/>
+        <source>Changes the Storage location of this Article.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+117"/>
         <source>Storage location is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5387,6 +5432,11 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>When pressed the table query will reloaded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+12"/>
         <source>Today</source>
         <translation type="unfinished"></translation>
@@ -5493,6 +5543,11 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>Changes the Trustlevel for this customer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+10"/>
         <source>No trust level set</source>
         <translation type="unfinished"></translation>
@@ -5531,7 +5586,12 @@ Image - Article Id: %2</source>
 <context>
     <name>YearEdit</name>
     <message>
-        <location filename="../widgets/yearedit.cpp" line="+72"/>
+        <location filename="../widgets/yearedit.cpp" line="+18"/>
+        <source>Changes the Year for this Article. It can&apos;t set to the future!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+55"/>
         <source>Year must contain a valid entry, it can not lie in the future.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -151,7 +151,7 @@
 <context>
     <name>AntiquaDateInfo</name>
     <message>
-        <location filename="../widgets/antiquadateinfo.cpp" line="+76"/>
+        <location filename="../widgets/antiquadateinfo.cpp" line="+78"/>
         <source>A Valid Date is required!</source>
         <translation>Ein gültigesDatum ist erforderlich!</translation>
     </message>
@@ -206,7 +206,27 @@
 <context>
     <name>AntiquaTabWidget</name>
     <message>
-        <location filename="../antiquatabwidget.cpp" line="+123"/>
+        <location filename="../antiquatabwidget.cpp" line="+67"/>
+        <source>View and edit Books</source>
+        <translation>Bücher anzeigen und bearbeiten</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>View and edit Customers</source>
+        <translation>Kunden anzeigen und bearbeiten</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>View and import Provider orders</source>
+        <translation>Anzeigen und Importieren von Dienstleisterbestellungen</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>View and edit System orders</source>
+        <translation>Anzeigen und Bearbeiten von Systembestellungen</translation>
+    </message>
+    <message>
+        <location line="+33"/>
         <source>Request rejected!</source>
         <translation>Anfrage abgelehnt!</translation>
     </message>
@@ -262,7 +282,7 @@
 <context>
     <name>AntiquaWindow</name>
     <message>
-        <location filename="../antiquawindow.cpp" line="+65"/>
+        <location filename="../antiquawindow.cpp" line="+72"/>
         <source>Save request</source>
         <translation>Speichernanfrage</translation>
     </message>
@@ -794,7 +814,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>BookSelectFilter</name>
     <message>
-        <location filename="../tabs/books/bookselectfilter.cpp" line="+12"/>
+        <location filename="../tabs/books/bookselectfilter.cpp" line="+9"/>
+        <source>With this button you can optimize your search with some filters.</source>
+        <translation>Mit dieser Schaltfläche können Sie Ihre Suche mit einigen Filtern optimieren.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Book Title and Author</source>
         <translation>Buchtitel und Autor</translation>
     </message>
@@ -913,7 +938,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>Booklooker</name>
     <message>
-        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+266"/>
+        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+270"/>
         <source>Booklooker response with errors!</source>
         <translation>Booklooker-Antwort mit Fehlern!</translation>
     </message>
@@ -2245,7 +2270,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Finish</source>
         <translation>Abschließen</translation>
     </message>
@@ -2295,7 +2320,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild erfolgreich gespeichert!</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+10"/>
+        <source>Please use the Finish button!</source>
+        <translation>Bitte benutzen Sie den Beenden knopf!</translation>
+    </message>
+    <message>
+        <location line="+39"/>
         <source>image from database!</source>
         <translation>Bild aus Datenbank!</translation>
     </message>
@@ -3224,13 +3254,23 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Current Payment status</source>
-        <translation>Wenn ausgewählt ist eine Zahlung bereits erfolgt</translation>
+        <source>Order paid or not?</source>
+        <translation>Bestellung bezahlt oder nicht?</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Changes the current payment status.</source>
+        <translation>Ändert den aktuellen Zahlungsstatus.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Current order status</source>
         <translation>Aktueller Auftragsstatus</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Changes the current order status.</source>
+        <translation>Ändert den aktuellen Auftragsstatus.</translation>
     </message>
     <message>
         <location line="+78"/>
@@ -5157,17 +5197,22 @@ Bild - Artikel Nr: %2</translation>
     <name>StorageLocation</name>
     <message>
         <location filename="../widgets/storagelocation.cpp" line="+10"/>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Storage Location</source>
         <translation>Lagerort</translation>
     </message>
     <message>
-        <location line="-4"/>
+        <location line="-5"/>
         <source>Without disclosures</source>
         <translation>Keine Angaben</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+2"/>
+        <source>Changes the Storage location of this Article.</source>
+        <translation>Ändert den Speicherort dieses Artikels.</translation>
+    </message>
+    <message>
+        <location line="+117"/>
         <source>Storage location is required and must set.</source>
         <translation>Der Lagerort ist Erforderlich und muss gesetzt sein.</translation>
     </message>
@@ -5389,6 +5434,11 @@ Bild - Artikel Nr: %2</translation>
         <translation>Diese Ansicht aktualisieren</translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>When pressed the table query will reloaded.</source>
+        <translation>Beim Drücken wird die Tabellenabfrage neu geladen.</translation>
+    </message>
+    <message>
         <location line="+12"/>
         <source>Today</source>
         <translation>Heute</translation>
@@ -5495,6 +5545,11 @@ Bild - Artikel Nr: %2</translation>
         <translation>Vertrauen</translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>Changes the Trustlevel for this customer.</source>
+        <translation>Ändert das Vertrauensstatus des Kunden.</translation>
+    </message>
+    <message>
         <location line="+10"/>
         <source>No trust level set</source>
         <translation>Keine Vertrauensstufe festgelegt</translation>
@@ -5533,7 +5588,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>YearEdit</name>
     <message>
-        <location filename="../widgets/yearedit.cpp" line="+72"/>
+        <location filename="../widgets/yearedit.cpp" line="+18"/>
+        <source>Changes the Year for this Article. It can&apos;t set to the future!</source>
+        <translation>Ändert das Jahr für diesen Artikel. Es kann nicht in die Zukunft gesetzt werden!</translation>
+    </message>
+    <message>
+        <location line="+55"/>
         <source>Year must contain a valid entry, it can not lie in the future.</source>
         <translation>Das Jahr muss einen gültigen Eintrag enthalten, es darf nicht in der Zukunft liegen.</translation>
     </message>

@@ -10,10 +10,7 @@ AntiquaDateInfo::AntiquaDateInfo(QWidget *parent) : InputEdit{parent} {
   m_edit->setButtonSymbols(QAbstractSpinBox::NoButtons);
   m_edit->setDisplayFormat(ANTIQUACRM_DATETIME_DISPLAY);
   m_edit->setInputMethodHints(Qt::ImhNone);
-  m_edit->setDateTime(QDateTime::currentDateTime());
   m_edit->setReadOnly(true);
-  QString tip(m_edit->dateTime().toString(ANTIQUACRM_DATETIME_TOOLTIP));
-  m_edit->setToolTip(tip);
   m_layout->addWidget(m_edit);
   m_layout->addStretch(1);
   setRequired(false);
@@ -22,7 +19,10 @@ AntiquaDateInfo::AntiquaDateInfo(QWidget *parent) : InputEdit{parent} {
 
 void AntiquaDateInfo::loadDataset() {}
 
-void AntiquaDateInfo::dataChanged(int) {}
+void AntiquaDateInfo::dateChanged() {
+  QString tip(m_edit->dateTime().toString(ANTIQUACRM_DATETIME_TOOLTIP));
+  m_edit->setToolTip(tip);
+}
 
 void AntiquaDateInfo::reset() {
   m_edit->setDateTime(QDateTime::currentDateTime());
@@ -37,8 +37,10 @@ void AntiquaDateInfo::setValue(const QVariant &val) {
   } else if (val.type() == QVariant::String) {
     QString str = val.toString().trimmed();
     QDateTime dt = QDateTime::fromString(str, ANTIQUACRM_TIMESTAMP_IMPORT);
-    if (dt.isValid())
+    if (dt.isValid()) {
       m_edit->setDateTime(dt);
+      dateChanged();
+    }
   }
 }
 
