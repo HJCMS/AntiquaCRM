@@ -17,9 +17,8 @@ CustomersTableModel::CustomersTableModel(QObject *parent)
 const QIcon CustomersTableModel::getHeaderIcon(int column) const {
   QMap<int, QIcon> map;
   map.insert(0, QIcon(":icons/user_identity.png"));
-  map.insert(1, QIcon(":icons/view_log.png"));
-  map.insert(2, QIcon(":icons/view_info.png"));
-  map.insert(3, QIcon(":icons/warning.png"));
+  map.insert(1, QIcon(":icons/view_info.png"));
+  map.insert(2, QIcon(":icons/warning.png"));
   return map.value(column);
 }
 
@@ -36,13 +35,12 @@ const QIcon CustomersTableModel::getStatusIcon(int status) const {
 const QString CustomersTableModel::getToolTip(int column) const {
   QMap<int, QString> map;
   map.insert(0, tr("Customer Id"));
-  map.insert(1, tr("Purchases"));
-  map.insert(2, tr("Trustworthiness"));
-  map.insert(3, tr("Customer locked?"));
-  map.insert(4, tr("Customer's full name"));
-  map.insert(5, tr("Company or Person?"));
-  map.insert(6, tr("Customer data created on..."));
-  map.insert(7, tr("Customer address"));
+  map.insert(1, tr("Trustworthiness"));
+  map.insert(2, tr("Customer locked?"));
+  map.insert(3, tr("Customer's full name"));
+  map.insert(4, tr("Company or Person?"));
+  map.insert(5, tr("Customer data created on..."));
+  map.insert(6, tr("Customer address"));
   return map.value(column);
 }
 
@@ -51,11 +49,10 @@ const QMap<int, QString> CustomersTableModel::headerList() const {
   map.insert(0, QString());
   map.insert(1, QString());
   map.insert(2, QString());
-  map.insert(3, QString());
-  map.insert(4, tr("Fullname"));
-  map.insert(5, tr("Commercially"));
-  map.insert(6, tr("Since"));
-  map.insert(7, tr("Location"));
+  map.insert(3, tr("Fullname"));
+  map.insert(4, tr("Commercially"));
+  map.insert(5, tr("Since"));
+  map.insert(6, tr("Location"));
   return map;
 }
 
@@ -90,25 +87,29 @@ QVariant CustomersTableModel::headerData(int section,
 
 QVariant CustomersTableModel::data(const QModelIndex &index, int role) const {
   const QVariant val;
-  if (!index.isValid() &&
-      (role != Qt::DisplayRole || role != Qt::DecorationRole))
+  if (!index.isValid())
     return val;
+
+  if (role == Qt::EditRole)
+    return AntiquaCRM::ASqlQueryModel::data(index, role);
 
   QVariant item = AntiquaCRM::ASqlQueryModel::data(index, role);
   int column = index.column();
-  if (role == Qt::DecorationRole && column > 1 && column < 4) {
+  if (role == Qt::DecorationRole) {
     QVariant sub = AntiquaCRM::ASqlQueryModel::data(index, Qt::EditRole);
-    if (column == 2) // c_trusted
+    if (column == 1) // c_trusted
       return getStatusIcon(sub.toInt());
 
-    if (column == 3) // c_clocked
+    if (column == 2) // c_clocked
       return (sub.toBool()) ? getStatusIcon(6) : getStatusIcon(0);
+
+    return val;
   }
-  if (column == 2 || column == 3)
+  if (column == 1 || column == 2)
     return val; // hidden
 
   // company
-  if (column == 5 && item.toString().trimmed() == "#PR")
+  if (item.toString().trimmed() == "#PR")
     return tr("Personal");
 
   return item;

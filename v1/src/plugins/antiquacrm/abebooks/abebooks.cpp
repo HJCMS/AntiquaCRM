@@ -117,16 +117,8 @@ Abebooks::setArticleItem(AntiquaCRM::AProviderOrder *order, const QString &key,
       item.key = key;
       if (key.contains("price")) {
         item.value = getPrice(value);
-      } else if (key == "a_article_id") {
-        QString str = value.toString();
-        bool b;
-        qint64 aid = str.toLongLong(&b);
-        if (b) {
-          item.value = aid;
-        } else {
-          qWarning("Can't convert Article Id from Buchfreund order!");
-          item.value = 0;
-        }
+      } else if (value.type() == QJsonValue::Double) {
+        item.value = (qint64)value.toDouble();
       } else if (key == "a_provider_id") {
         item.value = value.toString();
       } else {

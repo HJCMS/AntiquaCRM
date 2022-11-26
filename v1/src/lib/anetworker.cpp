@@ -115,6 +115,7 @@ void ANetworker::slotReadResponse() {
           QString charset = section.trimmed().toUpper();
           QTextCodec *c = QTextCodec::codecForName(charset.toLocal8Bit());
           decodeWith = c->name();
+          emit sendContentCodec(c);
         } else if (findText.contains(section) && !textContent) {
           textContent = true;
         }
@@ -122,37 +123,27 @@ void ANetworker::slotReadResponse() {
     }
   }
 
-  // Content-Encoding
   bool gzip_enabled = false;
+  // Content-Encoding
   if (m_reply->hasRawHeader("Content-Encoding")) {
     QString ceh(m_reply->rawHeader("Content-Encoding"));
-    gzip_enabled = (ceh.toLower() == "gzip");
+    gzip_enabled = ceh.contains("gzip", Qt::CaseInsensitive);
+  }
+
+  if (gzip_enabled) {
+    qWarning("GZIP Compression currently not supported!");
+    return;
   }
 
   QByteArray data;
-  if (textContent) {
-    QTextStream stream(&data, QIODevice::WriteOnly);
-    stream.setCodec(decodeWith);
-    if (gzip_enabled)
-      stream << qUncompress(m_reply->readAll());
-    else
-      stream << m_reply->readAll();
-    stream.flush();
-  } else {
-    data = m_reply->readAll();
-  }
-
+  data = m_reply->readAll();
   if (data.isNull()) {
     qWarning("ANetworker: No Data responsed!");
     return;
   }
 
-  // Standard ist UTF-8
-  if (!m_textCodec->name().contains(decodeWith))
-    emit sendContentCodec(QTextCodec::codecForName(decodeWith));
-
 #if (ANTIQUACRM_NETWORK_DEBUG == true)
-  qInfo("-- %s Codec: %s - Size: %d",  // Format
+  qInfo("-- %s Codec: %s - Size: %d",      // Format
         qPrintable(m_reply->url().host()), // Url
         qPrintable(decodeWith), data.size());
 #endif
