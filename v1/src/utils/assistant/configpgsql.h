@@ -18,7 +18,7 @@ class ConfigPgSQL : public QWidget {
   Q_OBJECT
 
 private:
-  QComboBox *m_profile;
+  QLineEdit *m_profile;
   QLineEdit *hostname;
   QLineEdit *database;
   QLineEdit *port;

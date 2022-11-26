@@ -5,7 +5,11 @@
 #include "anetworkrequest.h"
 
 #ifndef ANTIQUACRM_NETWORK_DEBUG
+#ifdef ANTIQUA_DEVELOPEMENT
+#define ANTIQUACRM_NETWORK_DEBUG true
+#else
 #define ANTIQUACRM_NETWORK_DEBUG false
+#endif
 #endif
 
 #include <QBuffer>
@@ -81,14 +85,12 @@ void ANetworker::slotReadResponse() {
     return;
   }
 
-#ifdef ANTIQUA_DEVELOPEMENT
 #if (ANTIQUACRM_NETWORK_DEBUG == true)
   qInfo("-- %s Headers:", qPrintable(m_reply->url().host()));
   foreach (QByteArray a, m_reply->rawHeaderList()) {
     qInfo("%s: %s", a.constData(), m_reply->rawHeader(a).constData());
   }
-  qInfo("--");
-#endif
+  qInfo("--\n");
 #endif
 
   bool textContent = false;

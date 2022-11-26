@@ -4,7 +4,7 @@
 <context>
     <name>Abebooks</name>
     <message>
-        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+125"/>
+        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+158"/>
         <source>AbeBooks response with errors!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12,12 +12,12 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+117"/>
+        <location filename="../antiquaappl.cpp" line="+118"/>
         <source>Plugin %1 found and loading ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+123"/>
         <source>Search Networkconnection!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -269,6 +269,69 @@
     <message>
         <location line="+2"/>
         <source>&lt;p&gt;Do you really want to close the application?&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Assistant</name>
+    <message>
+        <location filename="../utils/assistant/assistant.cpp" line="+78"/>
+        <source>Restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Restart Assistant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Previous page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Next page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Save current changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Finalize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Finishing and close the assistant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>Connection successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+208"/>
+        <source>Unfinished Assistant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do not close the Assistant without saving!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -848,7 +911,7 @@ Image - Article Id: %2</source>
 <context>
     <name>Booklooker</name>
     <message>
-        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+242"/>
+        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+266"/>
         <source>Booklooker response with errors!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -921,6 +984,14 @@ Image - Article Id: %2</source>
     <message>
         <location filename="../widgets/boolbox.cpp" line="+76"/>
         <source>is required must selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Buchfreund</name>
+    <message>
+        <location filename="../plugins/antiquacrm/buchfreund/buchfreund.cpp" line="+193"/>
+        <source>Buchfreund response with errors!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1073,6 +1144,93 @@ Image - Article Id: %2</source>
     <message>
         <location line="+6"/>
         <source>Unsafed changes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ConfigPgSQL</name>
+    <message>
+        <location filename="../utils/assistant/configpgsql.cpp" line="+15"/>
+        <source>Database Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Profile:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Address:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Database:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Port:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Username:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Password:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ConfigSSL</name>
+    <message>
+        <location filename="../utils/assistant/configssl.cpp" line="+18"/>
+        <source>SSL/TLS Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>if not know about this settings, don&apos;t touch it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location line="+13"/>
+        <source>Server Certificate: CommonName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Issuer (CA) from Server Certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>CA Root directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>CA Issuer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>Open CA Bundle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Certificate (*.pem)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1286,7 +1444,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+56"/>
         <source>Unsaved Changes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1321,6 +1479,11 @@ Image - Article Id: %2</source>
     <message>
         <location line="+1"/>
         <source>Article</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4448,7 +4611,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ProvidersOrderPage</name>
     <message>
-        <location filename="../tabs/providers/providersorderpage.cpp" line="+38"/>
+        <location filename="../tabs/providers/providersorderpage.cpp" line="+39"/>
         <source>Buyer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4458,7 +4621,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+185"/>
+        <location line="+194"/>
         <source>An order for %1 already exists!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5293,6 +5456,24 @@ Image - Article Id: %2</source>
     <message>
         <location line="+54"/>
         <source>a Valid tax level is required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TestConfig</name>
+    <message>
+        <location filename="../utils/assistant/testconfig.cpp" line="+14"/>
+        <source>Connection test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>create connection test</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -155,14 +155,18 @@ const AntiquaCRM::ArticleOrderItem
 Booklooker::setArticleItem(AntiquaCRM::AProviderOrder *order,
                            const QString &key, const QJsonValue &value) const {
   AntiquaCRM::ArticleOrderItem item;
+  QString crm_key = p_articleTranslate.value(key);
+  if (crm_key.isEmpty())
+    qWarning("Booklooker - Unknown ArticleKey '%s'!", qPrintable(key));
+
   QHashIterator<QString, QMetaType::Type> it(order->articleKeys());
   while (it.hasNext()) {
     it.next();
-    if (it.key() == key) {
-      item.key = key;
-      if (key.contains("price")) {
+    if (it.key() == crm_key) {
+      item.key = crm_key;
+      if (crm_key.contains("price")) {
         item.value = getPrice(value);
-      } else if (key == "a_article_id") {
+      } else if (crm_key == "a_article_id") {
         QString str = value.toString();
         bool b;
         qint64 aid = str.toLongLong(&b);
@@ -172,7 +176,7 @@ Booklooker::setArticleItem(AntiquaCRM::AProviderOrder *order,
           qWarning("Can't convert Article Id from Booklooker order!");
           item.value = 0;
         }
-      } else if (key == "a_provider_id") {
+      } else if (crm_key == "a_provider_id") {
         // Dienstleister Bestellnummer
         if (value.type() == QJsonValue::Double) {
           qint64 d = value.toInt();
@@ -180,7 +184,7 @@ Booklooker::setArticleItem(AntiquaCRM::AProviderOrder *order,
         } else {
           item.value = value.toString();
         }
-      } else if (key.contains("_type")) {
+      } else if (crm_key.contains("_type")) {
         int t = value.toInt();
         if (t == 0)
           item.value = AntiquaCRM::ArticleType::BOOK;
@@ -188,7 +192,7 @@ Booklooker::setArticleItem(AntiquaCRM::AProviderOrder *order,
           item.value = AntiquaCRM::ArticleType::MEDIA;
         else
           item.value = AntiquaCRM::ArticleType::UNKNOWN;
-      } else if (key == "a_payment_id") {
+      } else if (crm_key == "a_payment_id") {
         // Interne Bestellnummer kann hier nicht gesetzt werden!
         item.value = 0;
       } else {

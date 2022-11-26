@@ -19,8 +19,8 @@ ConfigPgSQL::ConfigPgSQL(QWidget *parent) : QWidget{parent} {
   t_profile->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   layout->addWidget(t_profile, row, 0, 1, 1);
 
-  m_profile = new QComboBox(this);
-  m_profile->addItem("Default");
+  m_profile = new QLineEdit(this);
+  m_profile->setText("Default");
   m_profile->setObjectName("database_profile");
   layout->addWidget(m_profile, row++, 1, 1, 1);
 
@@ -90,7 +90,10 @@ void ConfigPgSQL::setData(const QPair<QString, QVariant> &data) {
 }
 
 const QString ConfigPgSQL::profile() {
-  return m_profile->currentText();
+  if (m_profile->text().isEmpty())
+    return QString("Default");
+  else
+    return m_profile->text();
 }
 
 const QMap<QString, QString> ConfigPgSQL::configuration() {

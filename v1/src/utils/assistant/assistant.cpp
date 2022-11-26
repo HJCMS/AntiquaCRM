@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "assistant.h"
-#include "config_p.h"
 #include "configpgsql.h"
 #include "configssl.h"
 #include "infopage.h"
@@ -19,7 +18,7 @@
 
 Assistant::Assistant(QWidget *parent) : QDialog(parent) {
   setObjectName("assistant_dialog");
-  setWindowTitle(HJCMS_HOMEPAGE);
+  setWindowTitle("Antiqua CRM");
   setSizeGripEnabled(true);
   setMinimumSize(600, 400);
 
@@ -69,7 +68,7 @@ Assistant::Assistant(QWidget *parent) : QDialog(parent) {
           SLOT(pageEntered(int)));
   connect(this, SIGNAL(accepted()), this, SLOT(beforeAccept()));
   connect(this, SIGNAL(rejected()), this, SLOT(beforeClose()));
-  connect(m_lastTest, SIGNAL(startTest()), this, SLOT(test()));
+  connect(m_lastTest, SIGNAL(startTest()), this, SLOT(runTest()));
 }
 
 void Assistant::setButtonBox() {
@@ -103,15 +102,15 @@ void Assistant::setButtonBox() {
   btn_close->setStatusTip(tr("Finishing and close the assistant"));
   btn_close->setObjectName("close_button");
   btn_close->setEnabled(false);
-  connect(btn_close, SIGNAL(clicked()), this, SLOT(beforeClose()));
+  connect(btn_close, SIGNAL(clicked()), this, SLOT(accept()));
 }
 
 bool Assistant::connectionTest() {
   QMap<QString, QString> db = m_configPgSQL->configuration();
   QMap<QString, QString> ssl = m_configSSL->configuration();
-  AntiquaCRM::ASqlSettings sqlCfg(this);
+  AntiquaCRM::ASqlSettings sql_conf(this);
   QSqlDatabase psql =
-      QSqlDatabase::addDatabase("QPSQL", sqlCfg.connectionName());
+      QSqlDatabase::addDatabase("QPSQL", sql_conf.connectionName());
   psql.setHostName(db.value("pg_hostname"));
   psql.setDatabaseName(db.value("pg_database"));
   psql.setPort(db.value("pg_port").toInt());
@@ -119,7 +118,6 @@ bool Assistant::connectionTest() {
   psql.setPassword(db.value("pg_password"));
   bool requiressl = (m_configSSL->getCA().isNull()) ? false : true;
   if (requiressl && ssl.size() >= 3) {
-    qDebug() << Q_FUNC_INFO << "SSL Enabled";
     // https://www.postgresql.org/docs/current/libpq-connect.html
     QSslConfiguration sslconf;
     sslconf.addCaCertificate(m_configSSL->getCA());
@@ -145,6 +143,49 @@ int Assistant::index() { return m_stackedWidget->currentIndex(); }
 
 void Assistant::goTo(int index) { m_stackedWidget->setCurrentIndex(index); }
 
+void Assistant::migrationData(const QString &section) {
+  QString domain("de.hjcms");
+  domain.append(QDir::separator());
+  domain.append("antiquacrm");
+  QSettings cfg(QSettings::NativeFormat, QSettings::UserScope, domain,
+                "antiquacrm", this);
+
+  if (section == "page2") {
+    cfg.beginGroup("postgresql");
+    foreach (QString k, cfg.allKeys()) {
+      if (k.contains("password"))
+        continue;
+
+      if (cfg.contains(k)) {
+        QPair<QString, QVariant> data;
+        data.first = "pg_" + k;
+        data.second = cfg.value(k);
+        m_configPgSQL->setData(data);
+      }
+    }
+    cfg.endGroup();
+  } else if (section == "page3") {
+    QPair<QString, QVariant> data;
+    data.first = "pg_ssl";
+    data.second = true;
+    m_configSSL->setData(data);
+
+    cfg.beginGroup("ssloptions");
+    foreach (QString k, cfg.allKeys()) {
+      if (k.contains("ssl_peer_pass"))
+        continue;
+
+      if (cfg.contains(k)) {
+        QPair<QString, QVariant> data;
+        data.first = k;
+        data.second = cfg.value(k);
+        m_configSSL->setData(data);
+      }
+    }
+    cfg.endGroup();
+  }
+}
+
 void Assistant::restart() {
   if (index() > 0)
     goTo(0);
@@ -166,17 +207,20 @@ void Assistant::nextPage() {
   unsaved = true;
 }
 
-void Assistant::beforeAccept() { save(); }
+void Assistant::beforeAccept() {
+  qInfo("Assistant finished!");
+}
 
 void Assistant::beforeClose() {
   unsaved = true;
-  save();
-  accept();
+  qInfo("Assistant canceled!");
 }
 
-void Assistant::test() {
-  save();
-  connectionTest();
+void Assistant::runTest() {
+  if(connectionTest()) {
+    save();
+    qInfo("Assistant connection success and saved!");
+  }
 }
 
 void Assistant::save() {
@@ -212,12 +256,13 @@ void Assistant::save() {
 }
 
 void Assistant::pageEntered(int index) {
+  int found = 0;
   QString profile = cfg->value("database_profile", "Default").toString();
   // SQL Daten Laden
   if (m_stackedWidget->widget(index)->objectName() == "page2") {
     QPair<QString, QVariant> data;
     data.first = "database_profile";
-    data.second = "profile";
+    data.second = profile;
     m_configPgSQL->setData(data);
 
     cfg->beginGroup("database/" + profile);
@@ -225,11 +270,18 @@ void Assistant::pageEntered(int index) {
       if (k.contains("pg_password"))
         continue;
 
-      QPair<QString, QVariant> data;
-      data.first = k;
-      data.second = cfg->value(k);
-      m_configPgSQL->setData(data);
+      if (cfg->contains(k)) {
+        QPair<QString, QVariant> data;
+        data.first = k;
+        data.second = cfg->value(k);
+        m_configPgSQL->setData(data);
+        found++;
+      }
     }
+
+    if (found < 1)
+      migrationData("page2");
+
     cfg->endGroup();
   } else if (m_stackedWidget->widget(index)->objectName() == "page3") {
     QPair<QString, QVariant> data;
@@ -242,11 +294,18 @@ void Assistant::pageEntered(int index) {
       if (k.contains("ssl_peer_pass"))
         continue;
 
-      QPair<QString, QVariant> data;
-      data.first = k;
-      data.second = cfg->value(k);
-      m_configSSL->setData(data);
+      if (cfg->contains(k)) {
+        QPair<QString, QVariant> data;
+        data.first = k;
+        data.second = cfg->value(k);
+        m_configSSL->setData(data);
+        found++;
+      }
     }
+
+    if (found < 1)
+      migrationData("page3");
+
     cfg->endGroup();
   }
 }

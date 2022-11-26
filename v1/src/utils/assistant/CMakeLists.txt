@@ -9,16 +9,8 @@ INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-SET (subproject_FILES
- config_p.h.cmake
-)
-
 SET (subproject_RESOURCES
  documents.qrc
-)
-
-CONFIGURE_FILE (config_p.h.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/config_p.h
 )
 
 SET (subproject_SOURCES
@@ -30,19 +22,17 @@ SET (subproject_SOURCES
 )
 
 SET (subproject_HEADERS
-  config_p.h
-  configpgsql.h
-  configssl.h
-  assistant.h
-  infopage.h
-  testconfig.h
+ configpgsql.h
+ configssl.h
+ assistant.h
+ infopage.h
+ testconfig.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC
   ${subproject_HEADERS}
   ${subproject_SOURCES}
   ${subproject_RESOURCES}
-  ${subproject_FILES}
 )
 
 SET_TARGET_PROPERTIES (${_subproject} PROPERTIES

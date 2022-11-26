@@ -42,10 +42,10 @@ private:
   void goTo(int index = 0);
   void setButtonBox();
   bool connectionTest();
-
   void keyPressEvent(QKeyEvent *);
   void closeEvent(QCloseEvent *);
   bool event(QEvent *);
+  void migrationData(const QString &section);
 
 private Q_SLOTS:
   void restart();
@@ -53,7 +53,7 @@ private Q_SLOTS:
   void nextPage();
   void beforeAccept();
   void beforeClose();
-  void test();
+  void runTest();
   void save();
   void pageEntered(int);
 

@@ -18,10 +18,10 @@ int main(int argc, char *argv[]) {
 
   if (argc > 0) {
     for(int i = 0; i <= argc; i++) {
-      QString argument = QString(argv[i]).toLower();
-      argument.replace("-", "");
-      argument.replace(" ", "");
-      if (argument.trimmed() == "assistant") {
+      QString arg = QString(argv[i]).toLower();
+      arg.replace("-", "");
+      arg.replace(" ", "");
+      if (arg.trimmed() == "assistant") {
         antiqua->startAssistant();
         return 0;
       }

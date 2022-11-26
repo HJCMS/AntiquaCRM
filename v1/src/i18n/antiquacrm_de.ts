@@ -4,7 +4,7 @@
 <context>
     <name>Abebooks</name>
     <message>
-        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+125"/>
+        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+158"/>
         <source>AbeBooks response with errors!</source>
         <translation>AbeBooks-Antwort mit Fehlern!</translation>
     </message>
@@ -12,12 +12,12 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+117"/>
+        <location filename="../antiquaappl.cpp" line="+118"/>
         <source>Plugin %1 found and loading ...</source>
         <translation>Plugin %1 gefunden und wird geladen ...</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+123"/>
         <source>Search Networkconnection!</source>
         <translation>Suche Netzwerkverbindung!</translation>
     </message>
@@ -270,6 +270,69 @@
         <location line="+2"/>
         <source>&lt;p&gt;Do you really want to close the application?&lt;/p&gt;</source>
         <translation>&lt;p&gt;Wollen Sie die Anwendung wirklich schließen?&lt;/p&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>Assistant</name>
+    <message>
+        <location filename="../utils/assistant/assistant.cpp" line="+78"/>
+        <source>Restart</source>
+        <translation>Neustart</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Restart Assistant</source>
+        <translation>Assistent neustart</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Back</source>
+        <translation>Zurück</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Previous page</source>
+        <translation>Letzte Seite</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Next</source>
+        <translation>Weiter</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Next page</source>
+        <translation>Nächste Seite</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Save current changes</source>
+        <translation>Aktuelle Änderungen speichern</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Finalize</source>
+        <translation>Abschließen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Finishing and close the assistant</source>
+        <translation>Abschließen des Assistenten</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>Connection successfully!</source>
+        <translation>Verbindung erfolgreich!</translation>
+    </message>
+    <message>
+        <location line="+208"/>
+        <source>Unfinished Assistant</source>
+        <translation>Unvollendeter Assistent</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do not close the Assistant without saving!</source>
+        <translation>Schließen Sie den Assistenten nicht ohne zu speichern!</translation>
     </message>
 </context>
 <context>
@@ -850,7 +913,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>Booklooker</name>
     <message>
-        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+242"/>
+        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+266"/>
         <source>Booklooker response with errors!</source>
         <translation>Booklooker-Antwort mit Fehlern!</translation>
     </message>
@@ -924,6 +987,14 @@ Bild - Artikel Nr: %2</translation>
         <location filename="../widgets/boolbox.cpp" line="+76"/>
         <source>is required must selected.</source>
         <translation>ist erforderlich muss ausgewählt werden.</translation>
+    </message>
+</context>
+<context>
+    <name>Buchfreund</name>
+    <message>
+        <location filename="../plugins/antiquacrm/buchfreund/buchfreund.cpp" line="+193"/>
+        <source>Buchfreund response with errors!</source>
+        <translation>Buchfreund-Antwort mit Fehlern!</translation>
     </message>
 </context>
 <context>
@@ -1076,6 +1147,93 @@ Bild - Artikel Nr: %2</translation>
         <location line="+6"/>
         <source>Unsafed changes!</source>
         <translation>Nicht gespeicherte Änderungen!</translation>
+    </message>
+</context>
+<context>
+    <name>ConfigPgSQL</name>
+    <message>
+        <location filename="../utils/assistant/configpgsql.cpp" line="+15"/>
+        <source>Database Configuration</source>
+        <translation>Datenbankkonfiguration</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Profile:</source>
+        <translation>Profil:</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Address:</source>
+        <translation>Adresse:</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Database:</source>
+        <translation>Datenbank:</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Port:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Username:</source>
+        <translation>Benutzername:</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Password:</source>
+        <translation>Passwort:</translation>
+    </message>
+</context>
+<context>
+    <name>ConfigSSL</name>
+    <message>
+        <location filename="../utils/assistant/configssl.cpp" line="+18"/>
+        <source>SSL/TLS Configuration</source>
+        <translation>SSL/TLS-Konfiguration</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>if not know about this settings, don&apos;t touch it.</source>
+        <translation>Wenn Sie diese Einstellungen nicht kennen, berühren Sie sie nicht.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location line="+13"/>
+        <source>Server Certificate: CommonName</source>
+        <translation>Serverzertifikat: CommonName</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Issuer (CA) from Server Certificate</source>
+        <translation>Aussteller (CA) vom Serverzertifikat</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>CA Root directory</source>
+        <translation>CA-Paket-Verzeichnis</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Set</source>
+        <translation>Setze</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>CA Issuer</source>
+        <translation>CA Unterzeichner</translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>Open CA Bundle</source>
+        <translation>Öffne CA Paket</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Certificate (*.pem)</source>
+        <translation>Zertifikat (*.pem)</translation>
     </message>
 </context>
 <context>
@@ -1288,7 +1446,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kundendaten speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+56"/>
         <source>Unsaved Changes</source>
         <translation>Nicht gespeicherte Änderungen</translation>
     </message>
@@ -1324,6 +1482,11 @@ Bild - Artikel Nr: %2</translation>
         <location line="+1"/>
         <source>Article</source>
         <translation>Artikel</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Title</source>
+        <translation>Titel</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4450,7 +4613,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ProvidersOrderPage</name>
     <message>
-        <location filename="../tabs/providers/providersorderpage.cpp" line="+38"/>
+        <location filename="../tabs/providers/providersorderpage.cpp" line="+39"/>
         <source>Buyer</source>
         <translation>Käufer*in</translation>
     </message>
@@ -4460,7 +4623,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Zahlungsinformationen</translation>
     </message>
     <message>
-        <location line="+185"/>
+        <location line="+194"/>
         <source>An order for %1 already exists!</source>
         <translation>Ein Auftrag für %1 existiert bereits!</translation>
     </message>
@@ -5296,6 +5459,24 @@ Bild - Artikel Nr: %2</translation>
         <location line="+54"/>
         <source>a Valid tax level is required.</source>
         <translation>Ein gültiger Steuersatz ist erforderlich.</translation>
+    </message>
+</context>
+<context>
+    <name>TestConfig</name>
+    <message>
+        <location filename="../utils/assistant/testconfig.cpp" line="+14"/>
+        <source>Connection test</source>
+        <translation>Verbindungstest</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Connect</source>
+        <translation>Verbinden</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>create connection test</source>
+        <translation>Erstelle Verbindungstest</translation>
     </message>
 </context>
 <context>

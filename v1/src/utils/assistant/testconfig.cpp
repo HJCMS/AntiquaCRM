@@ -18,7 +18,7 @@ TestConfig::TestConfig(QWidget *parent) : QWidget{parent} {
   layout->addWidget(m_info);
 
   QPushButton *btn = new QPushButton(tr("Connect"), this);
-  btn->setStatusTip(tr("create conenction test"));
+  btn->setStatusTip(tr("create connection test"));
   layout->addWidget(btn);
 
   setLayout(layout);
