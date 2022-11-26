@@ -63,6 +63,9 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{"books_tab", parent} {
   connect(m_table, SIGNAL(sendResultExists(bool)), m_statusBar,
           SLOT(setCreateButtonEnabled(bool)));
 
+  connect(m_table, SIGNAL(sendSocketOperation(const QJsonObject &)),
+          SLOT(sendSocketOperation(const QJsonObject &)));
+
   // Signals::BookEditor
   connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));
 

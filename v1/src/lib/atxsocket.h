@@ -31,26 +31,24 @@ class ANTIQUACRM_LIBRARY ATxSocket final : public QLocalSocket {
 
 private:
   bool connected;
-  qint8 timeout = 5; /**< Timeout in Seconds */
 
 private Q_SLOTS:
   void getErrors(QLocalSocket::LocalSocketError error);
   void getState(QLocalSocket::LocalSocketState state);
 
-public Q_SLOTS:
+public:
+  explicit ATxSocket(QObject *parent = nullptr);
+
   /**
    * @brief Sende Operationen an Registerkarte
    * @param obj
    */
-  void pushOperation(const QJsonObject &obj);
+  bool pushOperation(const QJsonObject &obj);
 
   /**
    * @brief Send a Window StatusBar Message
    */
-  void pushStatusBarMessage(const QString &message);
-
-public:
-  explicit ATxSocket(QObject *parent = nullptr);
+  bool pushStatusBarMessage(const QString &message);
 
   /**
    * @brief list of accepted Json keys

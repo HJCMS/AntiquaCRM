@@ -105,6 +105,11 @@ protected:
   double getPrice(const QJsonValue &value) const;
 
   /**
+   * @brief First letter uppercase
+   */
+  const QString ucFirst(const QString &name) const;
+
+  /**
    * @brief Vendors using different Date time formats!
    */
   virtual const QString

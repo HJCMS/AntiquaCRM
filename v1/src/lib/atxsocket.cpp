@@ -8,6 +8,10 @@
 #include <QJsonValue>
 #include <QLocalServer>
 
+#ifndef ANTIQUA_SOCKET_TIMEOUT
+#define ANTIQUA_SOCKET_TIMEOUT 5000
+#endif
+
 namespace AntiquaCRM {
 
 ATxSocket::ATxSocket(QObject *parent) : QLocalSocket{parent}, connected{false} {
@@ -69,13 +73,17 @@ void ATxSocket::getErrors(QLocalSocket::LocalSocketError error) {
 void ATxSocket::getState(QLocalSocket::LocalSocketState state) {
   switch (state) {
   case QLocalSocket::UnconnectedState:
-    // qDebug() << "ATxSocket::Disconnected" << fullServerName();
+    qInfo("ATxSocket::Disconnected");
     connected = false;
     return;
 
   case QLocalSocket::ConnectedState:
-    // qDebug() << "ATxSocket::Connected" << fullServerName();
+    qInfo("ATxSocket::Connected");
     connected = true;
+    return;
+
+  case QLocalSocket::ClosingState:
+    qInfo("ATxSocket::ClosingState");
     return;
 
   default:
@@ -83,18 +91,25 @@ void ATxSocket::getState(QLocalSocket::LocalSocketState state) {
   }
 }
 
-void ATxSocket::pushOperation(const QJsonObject &obj) {
-  if (!connected)
+bool ATxSocket::pushOperation(const QJsonObject &obj) {
+  if (!connected) {
     connectToServer(QIODevice::ReadWrite);
+    if (waitForConnected(ANTIQUA_SOCKET_TIMEOUT)) {
+      qInfo("Connected to Socket");
+    } else {
+      qWarning("Socket Operation timeout!");
+      return false;
+    }
+  }
 
   QByteArray json = QJsonDocument(obj).toJson(QJsonDocument::Compact);
-  write(json);
-  waitForBytesWritten((timeout * 1000));
+  write(json, qstrlen(json));
+  return waitForBytesWritten(ANTIQUA_SOCKET_TIMEOUT);
 }
 
-void ATxSocket::pushStatusBarMessage(const QString &message) {
+bool ATxSocket::pushStatusBarMessage(const QString &message) {
   if (message.isEmpty())
-    return;
+    return false;
 
   QJsonObject obj;
   obj.insert("window_status_message", QJsonValue(message));
@@ -110,10 +125,12 @@ const QStringList ATxSocket::getOperations() const {
 }
 
 void ATxSocket::close() {
+#ifndef Q_OS_WIN
   disconnectFromServer();
-  if (state() == QLocalSocket::UnconnectedState || waitForDisconnected(1000)) {
+  if (state() == QLocalSocket::UnconnectedState && connected) {
     connected = false;
   }
+#endif
 }
 
 }; // namespace AntiquaCRM

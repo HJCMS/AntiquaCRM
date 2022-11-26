@@ -141,6 +141,15 @@ double APluginInterface::getPrice(const QJsonValue &value) const {
   return 0.00;
 }
 
+const QString APluginInterface::ucFirst(const QString &name) const {
+  QString str = name.trimmed().toLower();
+  QStringList array = str.split(" ", Qt::SkipEmptyParts);
+  for (int i = 0; i < array.size(); i++) {
+    array[i].replace(0, 1, array[i][0].toUpper());
+  }
+  return array.join(" ");
+}
+
 void APluginInterface::setContentDecoder(QTextCodec *codec) {
   if (codec != nullptr)
     m_decodeFrom = codec;

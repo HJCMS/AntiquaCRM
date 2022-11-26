@@ -65,6 +65,9 @@ TabCustomers::TabCustomers(QWidget *parent)
   connect(m_table, SIGNAL(sendDeleteEntry(qint64)),
           SLOT(setDeleteCustomer(qint64)));
 
+  connect(m_table, SIGNAL(sendSocketOperation(const QJsonObject &)),
+          SLOT(sendSocketOperation(const QJsonObject &)));
+
   // editor
   connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));
 

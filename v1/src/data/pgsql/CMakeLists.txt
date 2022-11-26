@@ -32,7 +32,11 @@ SET (query_tables_FILES
   select_statement_postalcode_tables.sql
 )
 
-INSTALL (FILES ${query_tables_FILES}
-  DESTINATION share/${PROJECTNAME}/data/pgsql
-  COMPONENT data
-)
+IF (CMAKE_HOST_WIN32)
+ FILE (COPY ${query_tables_FILES} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+ELSE (CMAKE_HOST_WIN32)
+ INSTALL (FILES ${query_tables_FILES}
+   DESTINATION share/${PROJECTNAME}/data/pgsql
+   COMPONENT data
+ )
+ENDIF (CMAKE_HOST_WIN32)

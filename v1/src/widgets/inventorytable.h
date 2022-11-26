@@ -7,6 +7,7 @@
 
 #include <AntiquaCRM>
 #include <QHeaderView>
+#include <QJsonObject>
 #include <QMetaObject>
 #include <QModelIndex>
 #include <QObject>
@@ -44,6 +45,7 @@ public Q_SLOTS:
   void setQueryLimit(int);
 
 Q_SIGNALS:
+  void sendSocketOperation(const QJsonObject &);
   void sendResultExists(bool);
   void sendQueryReport(const QString &report);
   void sendCopyToClibboard(const QString &str);

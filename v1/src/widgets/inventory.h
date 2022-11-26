@@ -64,6 +64,11 @@ protected Q_SLOTS:
   void sendStatusMessage(const QString &message);
 
   /**
+   * @brief Befehl an den Socket
+   */
+  void sendSocketOperation(const QJsonObject &obj);
+
+  /**
    * @brief Hinweisfenster öffnen!
    */
   void openWarningPopUp(const QString &title, const QString &message);

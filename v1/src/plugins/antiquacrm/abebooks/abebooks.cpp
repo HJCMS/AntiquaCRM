@@ -298,8 +298,8 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
       QPair<QString, QString> person = xml.getPerson(addressNode);
       order.setValue("c_provider_import", xml.getFullname(addressNode));
       order.setValue("c_gender", AntiquaCRM::Gender::NO_GENDER);
-      order.setValue("c_firstname", person.first);
-      order.setValue("c_lastname", person.second);
+      order.setValue("c_firstname", ucFirst(person.first));
+      order.setValue("c_lastname", ucFirst(person.second));
       order.setValue("c_street", xml.getStreet(addressNode));
       order.setValue("c_postalcode", xml.getPostalCode(addressNode).toString());
       order.setValue("c_location", xml.getLocation(addressNode));

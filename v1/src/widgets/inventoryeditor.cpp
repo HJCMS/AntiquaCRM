@@ -229,19 +229,20 @@ void InventoryEditor::openNoticeMessage(const QString &info) {
 }
 
 void InventoryEditor::sendStatusMessage(const QString &message) {
-  AntiquaCRM::ATxSocket atxs(this);
-  atxs.pushStatusBarMessage(message);
-  atxs.close();
+  AntiquaCRM::ATxSocket *m_sock = new AntiquaCRM::ATxSocket(this);
+  connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
+  if (m_sock->pushStatusBarMessage(message))
+    m_sock->close();
 }
 
 void InventoryEditor::pushPluginOperation(const QJsonObject &obj) {
   if (obj.isEmpty())
     return;
 
-  AntiquaCRM::ATxSocket atxs(this);
-  atxs.setObjectName("plugin_operation");
-  atxs.pushOperation(obj);
-  atxs.close();
+  AntiquaCRM::ATxSocket *m_sock = new AntiquaCRM::ATxSocket(this);
+  connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
+  if (m_sock->pushOperation(obj))
+    m_sock->close();
 }
 
 void InventoryEditor::setResetInputFields() {

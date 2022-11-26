@@ -6,7 +6,11 @@ SET (json_data_FILES
  iso_countrycodes.json
 )
 
-INSTALL (FILES ${json_data_FILES}
-  DESTINATION share/${PROJECTNAME}/data/json
-  COMPONENT data
-)
+IF (CMAKE_HOST_WIN32)
+ FILE (COPY ${json_data_FILES} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+ELSE (CMAKE_HOST_WIN32)
+ INSTALL (FILES ${json_data_FILES}
+   DESTINATION share/${PROJECTNAME}/data/json
+   COMPONENT data
+ )
+ENDIF (CMAKE_HOST_WIN32)

@@ -151,13 +151,11 @@ void BookTableView::createCopyClipboard() {
 void BookTableView::createOrderSignal() {
   qint64 aid = getTableID(p_modelIndex);
   if (aid >= 1 && getArticleCount(p_modelIndex) > 0) {
-    AntiquaCRM::ATxSocket atxs(this);
     QJsonObject obj;
     obj.insert("window_operation", "add_article");
     obj.insert("tab", "orders_tab");
     obj.insert("add_article", QJsonValue(aid));
-    atxs.pushOperation(obj);
-    atxs.close();
+    emit sendSocketOperation(obj);
   }
 }
 
