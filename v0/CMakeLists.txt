@@ -71,6 +71,12 @@ FIND_PACKAGE(CURL REQUIRED libcurl)
 ## https://github.com/fukuchi/libqrencode
 FIND_PACKAGE(QRENCODE REQUIRED libqrencode)
 
+## Zlib
+FIND_PACKAGE(ZLIB REQUIRED libzlib)
+IF (NOT ZLIB_FOUND)
+ MESSAGE (FATAL_ERROR "AntiquaCRM: Requires gzip compression for Network connections!")
+ENDIF (NOT ZLIB_FOUND)
+
 SET(PROJECT_BINDINGS
  Core
  Widgets
