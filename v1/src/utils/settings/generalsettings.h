@@ -19,6 +19,9 @@ private:
   IntSpinBox *m_vat1;          /**< Mehrwertsteuer Normal */
   IntSpinBox *m_vat2;          /**< Mehrwertsteuer Reduziert */
   IntSpinBox *m_searchStart;   /**< Start Zeichen suche */
+  IntSpinBox *m_timeOut;       /**< Zeitüberschreitung */
+  BoolBox *m_mouseWheel;       /**< Mausrad Unterstützung */
+  IntSpinBox *m_queryLimit;    /**< Max. Anzeige in Tabellen */
   IntSpinBox *m_minPrice;      /**< Kleinster Verkaufspreis */
   IntSpinBox *m_payWaitDays;   /**< Zahlungsfrist */
   SizeEdit *m_minSize;         /**< Minimale Bildgröße */

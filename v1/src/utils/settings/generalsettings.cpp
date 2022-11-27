@@ -17,12 +17,15 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   // BEGIN Applications
   QGroupBox *m_grouBox1 = new QGroupBox(this);
   m_grouBox1->setObjectName("groupbox_archives");
-  m_grouBox1->setTitle(tr("Applications paths"));
+  m_grouBox1->setTitle(tr("Applications paths") + " ");
   QGridLayout *lt_groupBox1 = new QGridLayout(m_grouBox1);
   // Mail
   m_mailler_path = new LineEdit(m_grouBox1);
   m_mailler_path->setObjectName("dirs/mailappl");
   m_mailler_path->setInfo(tr("eMail Application"));
+  m_mailler_path->setWhatsThis(
+      tr("Setting the Binary path to you favorite Mailler application. "
+         "Currently only Thunderbird and Outlook supported."));
   lt_groupBox1->addWidget(m_mailler_path, row, 0, 1, 1);
   btn_mailler = new QToolButton(m_grouBox1);
   btn_mailler->setIcon(getIcon("view_list"));
@@ -37,13 +40,15 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   // BEGIN Payment
   QGroupBox *m_paymentGroup = new QGroupBox(this);
   m_paymentGroup->setObjectName("groupbox_payment");
-  m_paymentGroup->setTitle(tr("Payment Settings"));
+  m_paymentGroup->setTitle(tr("Payment Settings") + " ");
   QVBoxLayout *lt_payment = new QVBoxLayout(m_paymentGroup);
   // Preis
   buffer = tr("The lowest permissible selling price");
   m_minPrice = new IntSpinBox(5, 100, m_paymentGroup);
   m_minPrice->setObjectName("payment/min_price");
   m_minPrice->setInfo(buffer);
+  m_minPrice->setWhatsThis(
+      tr("Here you can set a minimum price that must not be undercut."));
   lt_payment->addWidget(m_minPrice);
   buffer.clear();
   // Währung
@@ -72,6 +77,8 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   m_payWaitDays = new IntSpinBox(m_paymentGroup);
   m_payWaitDays->setObjectName("payment/grace_period");
   m_payWaitDays->setInfo(tr("Payment grace period"));
+  m_payWaitDays->setWhatsThis(
+      tr("In this Section you can set the the Payment grace period."));
   m_payWaitDays->setRange(10, 60);
   m_payWaitDays->setSuffix(" " + tr("Days"));
   lt_payment->addWidget(m_payWaitDays);
@@ -83,14 +90,44 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   row = 0; /**< Counter zurücksetzen */
   QGroupBox *m_grouBox2 = new QGroupBox(this);
   m_grouBox2->setObjectName("groupbox_additional");
-  m_grouBox2->setTitle(tr("Additional"));
+  m_grouBox2->setTitle(tr("Look and behavior") + " ");
   QVBoxLayout *lt_groupBox2 = new QVBoxLayout(m_grouBox2);
-  // Search
+  // [search] startlength
   buffer = tr("From how many chars does the search start when you type in.");
   m_searchStart = new IntSpinBox(5, 50, this);
   m_searchStart->setObjectName("search/startlength");
+  m_searchStart->setWhatsThis(
+      tr("From how many characters in the search input should the automatic "
+         "search start? Warning - Values that are too low can slow down the "
+         "program!"));
   m_searchStart->setInfo(buffer);
   lt_groupBox2->addWidget(m_searchStart);
+  // [General] popup_timeout
+  buffer = tr("Timeout settings for network connections");
+  m_timeOut = new IntSpinBox(1, 5, this);
+  m_timeOut->setObjectName("popup_timeout");
+  m_timeOut->setValue(2);
+  m_timeOut->setInfo(buffer);
+  lt_groupBox2->addWidget(m_timeOut);
+  // [General] mouse_wheel_actions
+  buffer = tr("enable/disable Mousewheel action for Input edit");
+  m_mouseWheel = new BoolBox(this);
+  m_mouseWheel->setObjectName("mouse_wheel_actions");
+  m_mouseWheel->setValue(false);
+  m_mouseWheel->setWhatsThis(tr("If switched off, unintentional changing of "
+                                "entries while scrolling is prevented."));
+  m_mouseWheel->setInfo(buffer);
+  lt_groupBox2->addWidget(m_mouseWheel);
+  // [General] SqlQueryLimit
+  buffer = tr("Limit Database results in tab main views!");
+  m_queryLimit = new IntSpinBox(10, 15000, this);
+  m_queryLimit->setObjectName("SqlQueryLimit");
+  m_queryLimit->setValue(1500);
+  m_queryLimit->setWhatsThis(
+      tr("Limits the output in the main views tables. Depending on the network "
+         "and computer performance, prevents the application from freezing."));
+  m_queryLimit->setInfo(buffer);
+  lt_groupBox2->addWidget(m_queryLimit);
   // Minimum Image Size
   QFrame *imageSizeFrame = new QFrame(m_grouBox2);
   QVBoxLayout *image_layout = new QVBoxLayout(imageSizeFrame);
@@ -121,7 +158,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   row = 0; /**< Counter zurücksetzen */
   QGroupBox *m_grouBox3 = new QGroupBox(this);
   m_grouBox3->setObjectName("groupbox_additional");
-  m_grouBox3->setTitle(tr("Font Settings"));
+  m_grouBox3->setTitle(tr("Font Settings") + " (Windows) ");
 #ifdef Q_OS_LINUX
   m_grouBox3->setToolTip(tr("On GNU/Linux use the System Settings!"));
   m_grouBox3->setEnabled(false);
@@ -215,15 +252,6 @@ void GeneralSettings::loadSectionConfig() {
 }
 
 void GeneralSettings::saveSectionConfig() {
-  /**
-   * @list Müssen noch eingfügt werden!
-   * @li PopUp-Fenster-Timeout in Sekunden "popup_timeout" Standard: 2
-   * @{
-   */
-  config->setValue("popup_timeout", 2);
-  config->setValue("mouse_wheel_actions", false);
-  /**< @} */
-
   QFont font = view_font_config->font();
   config->setValue("font", font.toString());
   config->setValue("font_size", font.pointSize());

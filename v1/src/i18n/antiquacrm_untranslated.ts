@@ -2146,12 +2146,12 @@ Image - Article Id: %2</source>
 <context>
     <name>GeneralSettings</name>
     <message>
-        <location filename="../utils/settings/generalsettings.cpp" line="+40"/>
+        <location filename="../utils/settings/generalsettings.cpp" line="+43"/>
         <source>Payment Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-20"/>
+        <location line="-23"/>
         <source>Applications paths</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2161,7 +2161,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+2"/>
+        <source>Setting the Binary path to you favorite Mailler application. Currently only Thunderbird and Outlook supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Open target</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2171,7 +2176,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+5"/>
+        <source>Here you can set a minimum price that must not be undercut.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Currency for Displaying prices</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2192,21 +2202,56 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+2"/>
+        <source>In this Section you can set the the Payment grace period.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Days</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Additional</source>
+        <source>Look and behavior</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+7"/>
+        <source>From how many characters in the search input should the automatic search start? Warning - Values that are too low can slow down the program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Timeout settings for network connections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>enable/disable Mousewheel action for Input edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>If switched off, unintentional changing of entries while scrolling is prevented.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-21"/>
         <source>From how many chars does the search start when you type in.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+26"/>
+        <source>Limit Database results in tab main views!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Limits the output in the main views tables. Depending on the network and computer performance, prevents the application from freezing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Set size range for Imagepreviews.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -12,15 +12,18 @@
 class CustomersOrders : public QTableWidget {
   Q_OBJECT
 
+private:
+  Qt::ItemFlags default_flags = (Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+
 public Q_SLOTS:
   void restore();
 
 public:
   explicit CustomersOrders(QWidget *parent = nullptr);
-  QTableWidgetItem* iconItem(const QVariant &data);
-  QTableWidgetItem* numidItem(const QVariant &data);
-  QTableWidgetItem* createItem(const QVariant &data);
-  QTableWidgetItem* createDate(const QVariant &data);
+  QTableWidgetItem *iconItem(const QVariant &data);
+  QTableWidgetItem *numidItem(const QVariant &data);
+  QTableWidgetItem *createItem(const QVariant &data);
+  QTableWidgetItem *createDate(const QVariant &data);
 };
 
 #endif // CUSTOMERSORDERS_H

@@ -32,19 +32,24 @@ QTableWidgetItem *CustomersOrders::iconItem(const QVariant &data) {
   QString link = data.toBool() ? "ok" : "cancel";
   QString title = data.toBool() ? tr("Yes") : tr("No");
   QIcon icon = QIcon("://icons/action_" + link + ".png");
-  QTableWidgetItem *item = new QTableWidgetItem(title, Qt::DisplayRole);
-  item->setData(Qt::DecorationRole, icon);
-  return item;
+  QTableWidgetItem *i = new QTableWidgetItem(title, Qt::DisplayRole);
+  i->setData(Qt::DecorationRole, icon);
+  i->setFlags(default_flags);
+  return i;
 }
 
 QTableWidgetItem *CustomersOrders::numidItem(const QVariant &data) {
   QString str = data.toString().trimmed();
   QString num = str.rightJustified(7, '0');
-  return new QTableWidgetItem(num, Qt::DisplayRole);
+  QTableWidgetItem *i = new QTableWidgetItem(num, Qt::DisplayRole);
+  i->setFlags(default_flags);
+  return i;
 }
 
 QTableWidgetItem *CustomersOrders::createItem(const QVariant &data) {
-  return new QTableWidgetItem(data.toString(), Qt::DisplayRole);
+  QTableWidgetItem *i = new QTableWidgetItem(data.toString(), Qt::DisplayRole);
+  i->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+  return i;
 }
 
 QTableWidgetItem *CustomersOrders::createDate(const QVariant &data) {
@@ -53,6 +58,8 @@ QTableWidgetItem *CustomersOrders::createDate(const QVariant &data) {
   if (dt.isNull())
     dt = QDateTime::fromString(str, Qt::ISODate);
 
-  return new QTableWidgetItem(dt.toString(ANTIQUACRM_DATETIME_DISPLAY),
-                              Qt::DisplayRole);
+  QTableWidgetItem *i = new QTableWidgetItem(
+      dt.toString(ANTIQUACRM_DATETIME_DISPLAY), Qt::DisplayRole);
+  i->setFlags(default_flags);
+  return i;
 }

@@ -2148,12 +2148,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>GeneralSettings</name>
     <message>
-        <location filename="../utils/settings/generalsettings.cpp" line="+40"/>
+        <location filename="../utils/settings/generalsettings.cpp" line="+43"/>
         <source>Payment Settings</source>
         <translation>Zahlungs Einstellungen</translation>
     </message>
     <message>
-        <location line="-20"/>
+        <location line="-23"/>
         <source>Applications paths</source>
         <translation>Programm Pfade</translation>
     </message>
@@ -2163,7 +2163,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>E-Mail Programm</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+2"/>
+        <source>Setting the Binary path to you favorite Mailler application. Currently only Thunderbird and Outlook supported.</source>
+        <translation>Festlegen des Binärpfads zu Ihrer bevorzugten E-Mail-Anwendung. Derzeit werden nur Thunderbird und Outlook unterstützt.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Open target</source>
         <translation>Öffne Ziel</translation>
     </message>
@@ -2173,7 +2178,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Der niedrigste zulässige Verkaufspreis</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+5"/>
+        <source>Here you can set a minimum price that must not be undercut.</source>
+        <translation>Hier können Sie einen Mindestpreis festlegen, der nicht unterschritten werden darf.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Currency for Displaying prices</source>
         <translation>Währung für die Preisanzeige</translation>
     </message>
@@ -2194,21 +2204,56 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+2"/>
+        <source>In this Section you can set the the Payment grace period.</source>
+        <translation>In diesem Abschnitt können Sie die Zahlungsfrist festlegen.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Days</source>
         <translation>Tage</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Additional</source>
-        <translation>Zusätzlich</translation>
+        <source>Look and behavior</source>
+        <translation>Aussehen und verhalten</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+7"/>
+        <source>From how many characters in the search input should the automatic search start? Warning - Values that are too low can slow down the program!</source>
+        <translation>Ab wie vielen Zeichen in der Sucheingabe soll die automatische Suche starten? Achtung - Zu niedrige Werte können das Programm verlangsamen!</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Timeout settings for network connections</source>
+        <translation>Schalter - Zeitüberschreitung bei Netzwerkanfragen in Sekunden</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>enable/disable Mousewheel action for Input edit</source>
+        <translation>Aktiviere / Deaktiviere Mausradunterstützung bei den Eingabefeldern</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>If switched off, unintentional changing of entries while scrolling is prevented.</source>
+        <translation>Wenn ausgeschaltet, wird ein unbeabsichtigtes Ändern von Einträgen beim Scrollen verhindert.</translation>
+    </message>
+    <message>
+        <location line="-21"/>
         <source>From how many chars does the search start when you type in.</source>
         <translation>Ab wie vielen Zeichen beginnt die Suche während der Eingabe.</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+26"/>
+        <source>Limit Database results in tab main views!</source>
+        <translation>Beschränken der Datenbankergebnisse in den Hauptansichten der Registerkarten!</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Limits the output in the main views tables. Depending on the network and computer performance, prevents the application from freezing.</source>
+        <translation>Begrenzt die Ausgabe in den Hauptansichtstabellen. Verhindert je nach Netzwerk- und Computerleistung das Einfrieren der Anwendung.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Set size range for Imagepreviews.</source>
         <translation>Größenbereich für Bildvorschauen festlegen.</translation>
     </message>
