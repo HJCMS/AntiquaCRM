@@ -1,20 +1,19 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "atxsocket.h"
+#include "atransmitter.h"
 
 #include <AGlobal>
+#include <QDataStream>
+#include <QIODevice>
 #include <QJsonDocument>
 #include <QJsonValue>
 #include <QLocalServer>
 
-#ifndef ANTIQUA_SOCKET_TIMEOUT
-#define ANTIQUA_SOCKET_TIMEOUT 5000
-#endif
-
 namespace AntiquaCRM {
 
-ATxSocket::ATxSocket(QObject *parent) : QLocalSocket{parent}, connected{false} {
+ATransmitter::ATransmitter(QObject *parent)
+    : QLocalSocket{parent}, connected{false} {
   setServerName(antiquaSocketName());
 
   connect(this, SIGNAL(errorOccurred(QLocalSocket::LocalSocketError)),
@@ -23,7 +22,7 @@ ATxSocket::ATxSocket(QObject *parent) : QLocalSocket{parent}, connected{false} {
           SLOT(getState(QLocalSocket::LocalSocketState)));
 }
 
-void ATxSocket::getErrors(QLocalSocket::LocalSocketError error) {
+void ATransmitter::getErrors(QLocalSocket::LocalSocketError error) {
   switch (error) {
   case QLocalSocket::ConnectionRefusedError:
     qWarning("ConnectionRefusedError");
@@ -70,44 +69,47 @@ void ATxSocket::getErrors(QLocalSocket::LocalSocketError error) {
   }
 }
 
-void ATxSocket::getState(QLocalSocket::LocalSocketState state) {
+void ATransmitter::getState(QLocalSocket::LocalSocketState state) {
+  QString verbose;
   switch (state) {
   case QLocalSocket::UnconnectedState:
-    qInfo("ATxSocket::Disconnected");
+    verbose = "Disconnected";
     connected = false;
-    return;
+    break;
 
   case QLocalSocket::ConnectedState:
-    qInfo("ATxSocket::Connected");
+    verbose = "Connected";
     connected = true;
-    return;
+    break;
 
   case QLocalSocket::ClosingState:
-    qInfo("ATxSocket::ClosingState");
-    return;
+    verbose = "ClosingState";
+    break;
 
   default:
     return;
   }
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qInfo("Transmitter::%s", qPrintable(verbose));
+#endif
 }
 
-bool ATxSocket::pushOperation(const QJsonObject &obj) {
+bool ATransmitter::pushOperation(const QJsonObject &obj) {
   if (!connected) {
-    connectToServer(QIODevice::ReadWrite);
-    if (waitForConnected(ANTIQUA_SOCKET_TIMEOUT)) {
-      qInfo("Connected to Socket");
-    } else {
+    connectToServer(ANTIQUACRM_TRANSMITTER_MODE);
+    if (!waitForConnected(ANTIQUACRM_SOCKET_TIMEOUT)) {
       qWarning("Socket Operation timeout!");
       return false;
     }
   }
 
-  QByteArray json = QJsonDocument(obj).toJson(QJsonDocument::Compact);
-  write(json, qstrlen(json));
-  return waitForBytesWritten(ANTIQUA_SOCKET_TIMEOUT);
+  QByteArray data = QJsonDocument(obj).toJson(QJsonDocument::Compact);
+  write(data, qstrlen(data));
+  return waitForBytesWritten(ANTIQUACRM_SOCKET_TIMEOUT);
 }
 
-bool ATxSocket::pushStatusBarMessage(const QString &message) {
+bool ATransmitter::pushStatusBarMessage(const QString &message) {
   if (message.isEmpty())
     return false;
 
@@ -116,7 +118,7 @@ bool ATxSocket::pushStatusBarMessage(const QString &message) {
   return pushOperation(obj);
 }
 
-const QStringList ATxSocket::getOperations() const {
+const QStringList ATransmitter::getOperations() const {
   QStringList l;
   l << "window_status_message";
   l << "window_operation";
@@ -124,13 +126,15 @@ const QStringList ATxSocket::getOperations() const {
   return l;
 }
 
-void ATxSocket::close() {
-#ifndef Q_OS_WIN
-  disconnectFromServer();
+void ATransmitter::close() {
+  if (ANTIQUACRM_TRANSMITTER_MODE == QIODevice::ReadWrite)
+    disconnectFromServer();
+
+  QLocalSocket::close();
+
   if (state() == QLocalSocket::UnconnectedState && connected) {
     connected = false;
   }
-#endif
 }
 
 }; // namespace AntiquaCRM

@@ -7,6 +7,7 @@ INCLUDE_DIRECTORIES (
   ${PROJECT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ${ZLIB_INCLUDE_DIRS}
 )
 
 CONFIGURE_FILE (aglobal.h.cmake
@@ -36,6 +37,7 @@ SET (projectinc_FILES
 
 SET (projectLibrary_SOURCES
  acompleterdata.cpp
+ acompressedheader.cpp
  aeuropeancountries.cpp
  anetworker.cpp
  anetworkiface.cpp
@@ -43,6 +45,7 @@ SET (projectLibrary_SOURCES
  aplugininterface.cpp
  apluginloader.cpp
  aproviderorders.cpp
+ areceiver.cpp
  asettings.cpp
  ashareddatafiles.cpp
  asqlcore.cpp
@@ -51,12 +54,13 @@ SET (projectLibrary_SOURCES
  asqlprofile.cpp
  asqlquerymodel.cpp
  asqlsettings.cpp
- atxsocket.cpp
  ataxcalculator.cpp
+ atransmitter.cpp
 )
 
 SET (projectLibrary_HEADERS
  acompleterdata.h
+ acompressedheader.h
  aeuropeancountries.h
  aglobal.h
  anetworker.h
@@ -65,6 +69,7 @@ SET (projectLibrary_HEADERS
  aplugininterface.h
  apluginloader.h
  aproviderorders.h
+ areceiver.h
  asettings.h
  ashareddatafiles.h
  asqlcore.h
@@ -73,8 +78,8 @@ SET (projectLibrary_HEADERS
  asqlprofile.h
  asqlquerymodel.h
  asqlsettings.h
- atxsocket.h
  ataxcalculator.h
+ atransmitter.h
  ${projectinc_FILES}
 )
 
@@ -99,6 +104,7 @@ TARGET_LINK_LIBRARIES (${_projectLibrary} PRIVATE
   Qt${QT_VERSION_MAJOR}::Network
   Qt${QT_VERSION_MAJOR}::Sql
   Qt${QT_VERSION_MAJOR}::Xml
+  ${ZLIB_LIBRARIES}
 )
 
 INSTALL (TARGETS ${_projectLibrary}

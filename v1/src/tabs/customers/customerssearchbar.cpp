@@ -79,23 +79,37 @@ const QString CustomersSearchBar::getSearchStatement() {
   QStringList fields = js.value("fields").toString().split(",");
   QStringList buffer;
 
-  // Unternehmen oder Organisation
-  if (js.value("search").toString() == "customer_company_name") {
-    foreach (QString f, fields) {
-      buffer << f + " ILIKE '%" + searchLine + "%'";
-    }
-    return buffer.join(" OR ");
-  }
-
   // Kunden Nummernsuche
   if (js.value("search").toString() == "customer_id") {
     searchLine.replace(QRegExp("\\,\\s?$"), "");
     return "c_id IN (" + searchLine + ")";
   }
 
+  QStringList words(searchLine);
+  QRegExp spaces("[\\s\\t]+");
+  if (searchLine.contains(spaces)) {
+    words = searchLine.split(spaces);
+  }
+
+  // Unternehmen oder Organisation
+  if (js.value("search").toString() == "customer_company_name") {
+    foreach (QString f, fields) {
+      if(words.size()>1) {
+        foreach (QString s, words) {
+          buffer << f + " ILIKE '" + s + "%'";
+        }
+      } else {
+        buffer << f + " ILIKE '%" + searchLine + "%'";
+      }
+    }
+    return buffer.join(" OR ");
+  }
+
   // Kundensuche
   foreach (QString f, fields) {
-    buffer << f + " ILIKE '" + searchLine + "%'";
+    foreach (QString s, words) {
+      buffer << f + " ILIKE '" + s + "%'";
+    }
   }
   return buffer.join(" OR ");
 }

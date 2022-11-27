@@ -4,7 +4,7 @@
 <context>
     <name>Abebooks</name>
     <message>
-        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+158"/>
+        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+150"/>
         <source>AbeBooks response with errors!</source>
         <translation>AbeBooks-Antwort mit Fehlern!</translation>
     </message>
@@ -12,7 +12,7 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+118"/>
+        <location filename="../antiquaappl.cpp" line="+117"/>
         <source>Plugin %1 found and loading ...</source>
         <translation>Plugin %1 gefunden und wird geladen ...</translation>
     </message>
@@ -206,7 +206,7 @@
 <context>
     <name>AntiquaTabWidget</name>
     <message>
-        <location filename="../antiquatabwidget.cpp" line="+67"/>
+        <location filename="../antiquatabwidget.cpp" line="+68"/>
         <source>View and edit Books</source>
         <translation>Bücher anzeigen und bearbeiten</translation>
     </message>
@@ -1632,14 +1632,9 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CustomersTableModel</name>
     <message>
-        <location filename="../tabs/customers/customerstablemodel.cpp" line="+38"/>
+        <location filename="../tabs/customers/customerstablemodel.cpp" line="+37"/>
         <source>Customer Id</source>
         <translation>Kunden Id</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Purchases</source>
-        <translation>Einkäufe</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1663,16 +1658,21 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Customer data created on...</source>
-        <translation>Kundendaten erstellt am...</translation>
-    </message>
-    <message>
-        <location line="+1"/>
         <source>Customer address</source>
         <translation>Kunden Anschrift</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+1"/>
+        <source>Customer created at</source>
+        <translation>Kunde*in erstellt am</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Customer last changed at</source>
+        <translation>Kunde*in zuletzt geändert</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>Fullname</source>
         <translation>Vollständiger Name</translation>
     </message>
@@ -1683,13 +1683,18 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Since</source>
-        <translation>Seit</translation>
+        <source>Location</source>
+        <translation>Wohnort</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Location</source>
-        <translation>Wohnort</translation>
+        <source>Created</source>
+        <translation>Erstellt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Changed</source>
+        <translation>Geändert</translation>
     </message>
     <message>
         <location line="+28"/>
@@ -1697,7 +1702,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Unbekannt</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+30"/>
         <source>Personal</source>
         <translation>Persönlich</translation>
     </message>
@@ -1705,7 +1710,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CustomersTableView</name>
     <message>
-        <location filename="../tabs/customers/customerstableview.cpp" line="+60"/>
+        <location filename="../tabs/customers/customerstableview.cpp" line="+62"/>
         <source>Edit selected Customer</source>
         <translation>Ausgewählten Kunden bearbeiten</translation>
     </message>
@@ -2418,7 +2423,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Strg+Shift+N</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+41"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -4663,7 +4668,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Zahlungsinformationen</translation>
     </message>
     <message>
-        <location line="+194"/>
+        <location line="+195"/>
         <source>An order for %1 already exists!</source>
         <translation>Ein Auftrag für %1 existiert bereits!</translation>
     </message>
@@ -5272,7 +5277,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bücher</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+66"/>
         <source>Can&apos;t open this Article</source>
         <translation>Dieser Artikel kann nicht geöffnet werden</translation>
     </message>
@@ -5295,7 +5300,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kunden</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+67"/>
         <source>Cannot open Customers Editor.</source>
         <translation>Der Kundeneditor kann nicht geöffnet werden.</translation>
     </message>
@@ -5335,12 +5340,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Es gibt Bestellbeziehungen, die nicht aufgelöst werden können.</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Invalid arguments to open Customer!</source>
         <translation>Ungültige Argumente zum Öffnen des Kunden!</translation>
     </message>
     <message>
-        <location line="-101"/>
+        <location line="-102"/>
         <source>Customereditor</source>
         <translation>Kundeneditor</translation>
     </message>

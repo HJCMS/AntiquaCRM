@@ -137,6 +137,7 @@ void TabCustomers::createSearchQuery(const QString &query) {
   }
 
   QString w_sql = m_searchBar->getSearchStatement();
+  // qDebug() << Q_FUNC_INFO << w_sql;
   if (m_searchBar->searchLength() > 1 && w_sql.length() > 1) {
     m_table->setQuery(w_sql);
   }

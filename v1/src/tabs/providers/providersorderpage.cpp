@@ -58,9 +58,9 @@ ProvidersOrderPage::ProvidersOrderPage(const QJsonObject &order,
 }
 
 void ProvidersOrderPage::pushCmd(const QJsonObject &action) {
-  AntiquaCRM::ATxSocket *m_sock = new AntiquaCRM::ATxSocket(this);
+  AntiquaCRM::ATransmitter *m_sock = new AntiquaCRM::ATransmitter(this);
   connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
-  if(m_sock->pushOperation(action))
+  if (m_sock->pushOperation(action))
     m_sock->close();
 }
 

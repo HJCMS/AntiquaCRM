@@ -14,8 +14,11 @@
 #include <QTabWidget>
 #include <QWidget>
 
+namespace AntiquaCRM {
+class AReceiver;
+};
+
 class AntiquaTabBar;
-class AntiquaSocketServer;
 
 /**
  * @brief Verwaltungs Klasse Registerkarten
@@ -26,7 +29,7 @@ class AntiquaTabWidget final : public QTabWidget {
   Q_OBJECT
 
 private:
-  AntiquaSocketServer *m_socket;
+  AntiquaCRM::AReceiver *m_server;
   AntiquaTabBar *m_tabBar;
   TabViews *m_views; /**< Views Menue */
   QWidget *m_testing;
@@ -93,7 +96,7 @@ public:
   /**
    * @brief TimerEvents und Sockets sauber runterfahren!
    */
-  ~AntiquaTabWidget();
+  virtual ~AntiquaTabWidget();
 };
 
 #endif // ANTIQUACRM_TABWIDGET_H

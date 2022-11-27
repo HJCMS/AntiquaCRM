@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "antiquasocketserver.h"
+#include "areceiver.h"
 
 #include <AntiquaCRM>
 #include <QByteArray>
@@ -9,14 +9,16 @@
 #include <QJsonDocument>
 #include <QJsonParseError>
 
-AntiquaSocketServer::AntiquaSocketServer(QObject *parent)
-    : QLocalServer{parent} {
+namespace AntiquaCRM {
+
+AReceiver::AReceiver(QObject *parent) : QLocalServer{parent} {
   setObjectName("socket_notifier");
   setSocketOptions(QLocalServer::UserAccessOption);
   setMaxPendingConnections(100);
+  connect(this, SIGNAL(newConnection()), SLOT(getTransmitterCaller()));
 }
 
-void AntiquaSocketServer::createAction(const QJsonObject &obj) {
+void AReceiver::createAction(const QJsonObject &obj) {
   if (obj.contains("window_status_message")) {
     QString message = obj.value("window_status_message").toString();
     message = message.trimmed();
@@ -43,12 +45,15 @@ void AntiquaSocketServer::createAction(const QJsonObject &obj) {
 #endif
 }
 
-void AntiquaSocketServer::incomingConnection(quintptr socketDescriptor) {
-  m_listener = new QLocalSocket(this);
-  m_listener->setObjectName("local_socket_manager");
-  m_listener->setSocketDescriptor(socketDescriptor);
-  if (m_listener->waitForReadyRead(timeout)) {
-    QByteArray data = m_listener->readAll();
+void AReceiver::getTransmitterCaller() {
+  QLocalSocket *m_caller = nextPendingConnection();
+  if (m_caller == nullptr)
+    return;
+
+  connect(m_caller, SIGNAL(disconnected()), m_caller, SLOT(deleteLater()));
+
+  if (m_caller->waitForReadyRead(ANTIQUACRM_SOCKET_TIMEOUT)) {
+    QByteArray data = m_caller->readAll();
     QJsonParseError parser;
     QJsonDocument jdoc = QJsonDocument::fromJson(data, &parser);
     if (parser.error == QJsonParseError::NoError) {
@@ -65,8 +70,14 @@ void AntiquaSocketServer::incomingConnection(quintptr socketDescriptor) {
   }
 }
 
-AntiquaSocketServer::~AntiquaSocketServer() {
+AReceiver::~AReceiver() {
+  if(hasPendingConnections()) {
+    qWarning("found pending connections");
+  }
+
 #ifdef ANTIQUA_DEVELOPEMENT
   qInfo("Shutdown and Close socket ...");
 #endif
 }
+
+}; // namespace AntiquaCRM

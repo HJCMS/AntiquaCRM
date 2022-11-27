@@ -4,7 +4,7 @@
 <context>
     <name>Abebooks</name>
     <message>
-        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+158"/>
+        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+150"/>
         <source>AbeBooks response with errors!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12,7 +12,7 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+118"/>
+        <location filename="../antiquaappl.cpp" line="+117"/>
         <source>Plugin %1 found and loading ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -206,7 +206,7 @@
 <context>
     <name>AntiquaTabWidget</name>
     <message>
-        <location filename="../antiquatabwidget.cpp" line="+67"/>
+        <location filename="../antiquatabwidget.cpp" line="+68"/>
         <source>View and edit Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1630,13 +1630,8 @@ Image - Article Id: %2</source>
 <context>
     <name>CustomersTableModel</name>
     <message>
-        <location filename="../tabs/customers/customerstablemodel.cpp" line="+38"/>
+        <location filename="../tabs/customers/customerstablemodel.cpp" line="+37"/>
         <source>Customer Id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Purchases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1661,16 +1656,21 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Customer data created on...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
         <source>Customer address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+1"/>
+        <source>Customer created at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Customer last changed at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>Fullname</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1681,12 +1681,17 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Since</source>
+        <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Location</source>
+        <source>Created</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Changed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1695,7 +1700,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+30"/>
         <source>Personal</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1703,7 +1708,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CustomersTableView</name>
     <message>
-        <location filename="../tabs/customers/customerstableview.cpp" line="+60"/>
+        <location filename="../tabs/customers/customerstableview.cpp" line="+62"/>
         <source>Edit selected Customer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2416,7 +2421,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+41"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4661,7 +4666,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+194"/>
+        <location line="+195"/>
         <source>An order for %1 already exists!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5270,7 +5275,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+66"/>
         <source>Can&apos;t open this Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5293,7 +5298,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+67"/>
         <source>Cannot open Customers Editor.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5333,12 +5338,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Invalid arguments to open Customer!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-101"/>
+        <location line="-102"/>
         <source>Customereditor</source>
         <translation type="unfinished"></translation>
     </message>

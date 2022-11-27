@@ -2,8 +2,9 @@
 // vim: set fileencoding=utf-8
 
 #include "antiquatabwidget.h"
-#include "antiquasocketserver.h"
 #include "antiquatabbar.h"
+
+#include <AntiquaCRM>
 
 AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
   setObjectName("window_tabwidget");
@@ -24,15 +25,15 @@ AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
 }
 
 bool AntiquaTabWidget::createSocketListener() {
-  m_socket = new AntiquaSocketServer(this);
-  connect(m_socket, SIGNAL(sendWindowOperation(const QJsonObject &)),
+  m_server = new AntiquaCRM::AReceiver(this);
+  connect(m_server, SIGNAL(sendWindowOperation(const QJsonObject &)),
           SLOT(setAction(const QJsonObject &)));
-  connect(m_socket, SIGNAL(sendPluginOperation(const QJsonObject &)),
+  connect(m_server, SIGNAL(sendPluginOperation(const QJsonObject &)),
           SIGNAL(sendPluginOperation(const QJsonObject &)));
-  connect(m_socket, SIGNAL(sendStatusMessage(const QString &)),
+  connect(m_server, SIGNAL(sendStatusMessage(const QString &)),
           SIGNAL(sendStatusMessage(const QString &)));
 
-  return m_socket->listen(AntiquaCRM::antiquaSocketName());
+  return m_server->listen(AntiquaCRM::antiquaSocketName());
 }
 
 Inventory *AntiquaTabWidget::tabWidget(int index) const {
@@ -183,9 +184,9 @@ const QMap<QString, QString> AntiquaTabWidget::availableTabs() {
 
 AntiquaTabWidget::~AntiquaTabWidget() {
   // disable socket
-  if (m_socket != nullptr) {
-    m_socket->close();
-    m_socket->deleteLater();
+  if (m_server != nullptr) {
+    m_server->close();
+    m_server->deleteLater();
   }
   // unload tabs
   for (int t = 0; t < count(); t++) {

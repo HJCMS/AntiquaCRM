@@ -39,8 +39,9 @@ const QString CustomersTableModel::getToolTip(int column) const {
   map.insert(2, tr("Customer locked?"));
   map.insert(3, tr("Customer's full name"));
   map.insert(4, tr("Company or Person?"));
-  map.insert(5, tr("Customer data created on..."));
-  map.insert(6, tr("Customer address"));
+  map.insert(5, tr("Customer address"));
+  map.insert(6, tr("Customer created at"));
+  map.insert(7, tr("Customer last changed at"));
   return map.value(column);
 }
 
@@ -51,8 +52,9 @@ const QMap<int, QString> CustomersTableModel::headerList() const {
   map.insert(2, QString());
   map.insert(3, tr("Fullname"));
   map.insert(4, tr("Commercially"));
-  map.insert(5, tr("Since"));
-  map.insert(6, tr("Location"));
+  map.insert(5, tr("Location"));
+  map.insert(6, tr("Created"));
+  map.insert(7, tr("Changed"));
   return map;
 }
 

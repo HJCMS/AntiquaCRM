@@ -2,25 +2,26 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_SOCKETSERVER_H
-#define ANTIQUACRM_SOCKETSERVER_H
+#ifndef ANTIQUACRM_ARECEIVER_H
+#define ANTIQUACRM_ARECEIVER_H
 
+#include <AGlobal>
 #include <QJsonObject>
 #include <QLocalServer>
 #include <QLocalSocket>
 #include <QObject>
 #include <QString>
 
-class AntiquaSocketServer : public QLocalServer {
+namespace AntiquaCRM {
+
+class ANTIQUACRM_LIBRARY AReceiver final : public QLocalServer {
   Q_OBJECT
 
 private:
-  int timeout = 5000;
-  QLocalSocket *m_listener;
   void createAction(const QJsonObject &obj);
 
-protected:
-  void incomingConnection(quintptr socketDescriptor);
+private Q_SLOTS:
+  void getTransmitterCaller();
 
 Q_SIGNALS:
   void sendStatusMessage(const QString &message);
@@ -28,8 +29,10 @@ Q_SIGNALS:
   void sendPluginOperation(const QJsonObject &obj);
 
 public:
-  explicit AntiquaSocketServer(QObject *parent = nullptr);
-  ~AntiquaSocketServer();
+  explicit AReceiver(QObject *parent = nullptr);
+  virtual ~AReceiver();
 };
 
-#endif // ANTIQUACRM_SOCKETSERVER_H
+}; // namespace AntiquaCRM
+
+#endif // ANTIQUACRM_ARECEIVER_H

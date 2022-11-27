@@ -3,7 +3,6 @@
 // @COPYRIGHT_HOLDER@
 
 #include "antiquaappl.h"
-#include "antiquasocketserver.h"
 #include "antiquasplashscreen.h"
 #include "antiquasystemtray.h"
 #include "antiquatimer.h"

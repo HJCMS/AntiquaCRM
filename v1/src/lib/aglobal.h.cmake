@@ -13,6 +13,7 @@
 #include <QObject>
 #include <QRegExp>
 #include <QString>
+#include <QIODevice>
 #include <QSysInfo>
 
 /**
@@ -116,6 +117,26 @@
  */
 #ifndef ANTIQUACRM_TRANSLATION_TARGET
 #define ANTIQUACRM_TRANSLATION_TARGET "@ANTIQUACRM_TRANSLATION_TARGET@"
+#endif
+
+/**
+ * @def ANTIQUACRM_SOCKET_TIMEOUT
+ * @brief Ablaufzeit für die Socketverbindungen
+ */
+#ifndef ANTIQUACRM_SOCKET_TIMEOUT
+#ifdef Q_OS_WIN
+#define ANTIQUACRM_SOCKET_TIMEOUT 3000
+#else
+#define ANTIQUACRM_SOCKET_TIMEOUT 1500
+#endif
+#endif
+
+/**
+ * @def ANTIQUACRM_TRANSMITTER_MODE
+ * @brief Standard Modus für Verbindungen
+ */
+#ifndef ANTIQUACRM_TRANSMITTER_MODE
+#define ANTIQUACRM_TRANSMITTER_MODE QIODevice::WriteOnly
 #endif
 
 /**

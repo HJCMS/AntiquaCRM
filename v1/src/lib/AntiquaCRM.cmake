@@ -13,6 +13,16 @@
 #include "asettings.h"
 #endif
 
+// AntiquaCRM::AReceiver
+#ifndef ANTIQUACRM_ARECEIVER_H
+#include "areceiver.h"
+#endif
+
+// AntiquaCRM::ATransmitter
+#ifndef ANTIQUACRM_ATRANSMITTER_H
+#include "atransmitter.h"
+#endif
+
 // AntiquaCRM::ASharedDataFiles
 #ifndef ANTIQUACRM_SHAREDDATAFILES_H
 #include "ashareddatafiles.h"
@@ -36,11 +46,6 @@
 // AntiquaCRM::ASqlSettings
 #ifndef ANTIQUACRM_SQLSETTINGS_H
 #include "asqlsettings.h"
-#endif
-
-// AntiquaCRM::ATxSocket
-#ifndef ANTIQUACRM_ATXSOCKET_H
-#include "atxsocket.h"
 #endif
 
 // AntiquaCRM::ASqlProfile

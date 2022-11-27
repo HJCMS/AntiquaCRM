@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_ATXSOCKET_H
-#define ANTIQUACRM_ATXSOCKET_H
+#ifndef ANTIQUACRM_ATRANSMITTER_H
+#define ANTIQUACRM_ATRANSMITTER_H
 
 #include <AGlobal>
 #include <QJsonObject>
@@ -18,7 +18,7 @@ namespace AntiquaCRM {
  * @section application
  * @example send a Window StatusBar Message
  * @code
- *  AntiquaCRM::ATxSocket messanger(this);
+ *  AntiquaCRM::ATransmitter messanger(this);
  *  messanger.setObjectName("transmitter_object_name");
  *  QJsonObject obj;
  *  obj.insert("window_status_message",QJsonValue("my Status Message"));
@@ -26,7 +26,7 @@ namespace AntiquaCRM {
  *  messanger.close();
  * @endcode
  */
-class ANTIQUACRM_LIBRARY ATxSocket final : public QLocalSocket {
+class ANTIQUACRM_LIBRARY ATransmitter final : public QLocalSocket {
   Q_OBJECT
 
 private:
@@ -37,7 +37,7 @@ private Q_SLOTS:
   void getState(QLocalSocket::LocalSocketState state);
 
 public:
-  explicit ATxSocket(QObject *parent = nullptr);
+  explicit ATransmitter(QObject *parent = nullptr);
 
   /**
    * @brief Sende Operationen an Registerkarte

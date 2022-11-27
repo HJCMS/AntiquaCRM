@@ -54,14 +54,14 @@ void Inventory::copyToClipboard(const QString &data) {
 }
 
 void Inventory::sendStatusMessage(const QString &message) {
-  AntiquaCRM::ATxSocket *m_sock = new AntiquaCRM::ATxSocket(this);
+  AntiquaCRM::ATransmitter *m_sock = new AntiquaCRM::ATransmitter(this);
   connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
   if (m_sock->pushStatusBarMessage(message))
     m_sock->close();
 }
 
 void Inventory::sendSocketOperation(const QJsonObject &obj) {
-  AntiquaCRM::ATxSocket *m_sock = new AntiquaCRM::ATxSocket(this);
+  AntiquaCRM::ATransmitter *m_sock = new AntiquaCRM::ATransmitter(this);
   connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
   if (m_sock->pushOperation(obj))
     m_sock->close();

@@ -123,18 +123,6 @@ void ANetworker::slotReadResponse() {
     }
   }
 
-  bool gzip_enabled = false;
-  // Content-Encoding
-  if (m_reply->hasRawHeader("Content-Encoding")) {
-    QString ceh(m_reply->rawHeader("Content-Encoding"));
-    gzip_enabled = ceh.contains("gzip", Qt::CaseInsensitive);
-  }
-
-  if (gzip_enabled) {
-    qWarning("GZIP Compression currently not supported!");
-    return;
-  }
-
   QByteArray data;
   data = m_reply->readAll();
   if (data.isNull()) {
@@ -143,9 +131,10 @@ void ANetworker::slotReadResponse() {
   }
 
 #if (ANTIQUACRM_NETWORK_DEBUG == true)
-  qInfo("-- %s Codec: %s - Size: %d",      // Format
+  qInfo("-- %s Codec: %s - Size: %d Content-Encoding: %s",
         qPrintable(m_reply->url().host()), // Url
-        qPrintable(decodeWith), data.size());
+        qPrintable(decodeWith), data.size(),
+        qPrintable(m_reply->rawHeader("Content-Encoding")));
 #endif
 
   // JSON Request
@@ -340,9 +329,9 @@ QNetworkReply *ANetworker::getRequest(const QUrl &url) {
   ANetworkRequest request(url);
   request.setHeaderUserAgent();
   request.setHeaderAcceptLanguage();
-  request.setHeaderCacheControl();
   request.setHeaderAcceptText();
   request.setTransferTimeout((tranfer_timeout * 1000));
+  request.setHeaderCacheControl();
 
   m_reply = get(request);
   connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
