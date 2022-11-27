@@ -292,7 +292,7 @@ const QVariant PgSQLSettings::getComboBoxData(const QString &name) {
 const QString PgSQLSettings::openFileDialog(const QString &dest) {
   QString dir = (dest.isEmpty()) ? QDir::homePath() : dest;
   QString title = tr("Open Certfile");
-  QString type = tr("Certificates") + " (*.pem *.crt *.cert *.key)";
+  QString type = tr("Certificates") + " (*.pem *.ca *.crt *.cert *.key)";
   QString cert = QFileDialog::getOpenFileName(this, title, dir, type);
   return (cert.isEmpty()) ? QString() : cert;
 }

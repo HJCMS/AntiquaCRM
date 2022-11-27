@@ -113,7 +113,8 @@ void ConfigSSL::setCaChanged(int i) {
 
 void ConfigSSL::setCaBundlePath() {
   QString path = QFileDialog::getOpenFileName(
-      this, tr("Open CA Bundle"), QDir::rootPath(), tr("Certificate (*.pem)"));
+      this, tr("Open CA Bundle"), QDir::rootPath(),
+      tr("Certificate (*.pem *.ca *.crt *.cert *.key)"));
   if (!path.isEmpty()) {
     sslCaBundlePath->setText(path);
     initCACertificates(path);

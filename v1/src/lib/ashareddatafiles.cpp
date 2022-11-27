@@ -141,7 +141,11 @@ const QDomDocument ASharedDataFiles::getXML(const QString &basename) {
 ASharedCacheFiles::ASharedCacheFiles() : QDir(cacheDir()) {}
 
 const QString ASharedCacheFiles::cacheDir() {
+#ifdef Q_OS_WIN
+  return QStandardPaths::writableLocation(QStandardPaths::TempLocation);
+#else
   return QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+#endif
 }
 
 bool ASharedCacheFiles::storeTempFile(const QString &filename,
