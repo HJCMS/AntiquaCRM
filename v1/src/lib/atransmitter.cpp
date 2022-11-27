@@ -106,6 +106,8 @@ bool ATransmitter::pushOperation(const QJsonObject &obj) {
 
   QByteArray data = QJsonDocument(obj).toJson(QJsonDocument::Compact);
   write(data, qstrlen(data));
+  // Optional auf Windows testen...
+  // return flush();
   return waitForBytesWritten(ANTIQUACRM_SOCKET_TIMEOUT);
 }
 

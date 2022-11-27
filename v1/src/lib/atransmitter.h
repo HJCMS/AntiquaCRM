@@ -16,15 +16,6 @@ namespace AntiquaCRM {
 /**
  * @brief Application Socket Transmitter
  * @section application
- * @example send a Window StatusBar Message
- * @code
- *  AntiquaCRM::ATransmitter messanger(this);
- *  messanger.setObjectName("transmitter_object_name");
- *  QJsonObject obj;
- *  obj.insert("window_status_message",QJsonValue("my Status Message"));
- *  messanger.pushMessage(obj);
- *  messanger.close();
- * @endcode
  */
 class ANTIQUACRM_LIBRARY ATransmitter final : public QLocalSocket {
   Q_OBJECT

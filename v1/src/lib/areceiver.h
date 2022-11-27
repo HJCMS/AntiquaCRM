@@ -14,18 +14,39 @@
 
 namespace AntiquaCRM {
 
+/**
+ * @brief Application Socket Receiver
+ * @section application
+ */
 class ANTIQUACRM_LIBRARY AReceiver final : public QLocalServer {
   Q_OBJECT
 
 private:
+  /**
+   * @brief Aufarbeitung der Signale
+   */
   void createAction(const QJsonObject &obj);
 
 private Q_SLOTS:
+  /**
+   * @brief Wenn eine Neue Verbindung aufgebaut wird.
+   */
   void getTransmitterCaller();
 
 Q_SIGNALS:
+  /**
+   * @brief Nachricht an Fensterleiste
+   */
   void sendStatusMessage(const QString &message);
+
+  /**
+   * @brief Sende Aktion an Registerkarte ...
+   */
   void sendWindowOperation(const QJsonObject &obj);
+
+  /**
+   * @brief Send Aktion Plugins ...
+   */
   void sendPluginOperation(const QJsonObject &obj);
 
 public:
