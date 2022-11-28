@@ -40,7 +40,6 @@ bool Abebooks::initConfigurations() {
   url.setPort(cfg.value("api_port", 10003).toInt());
   apiUser = cfg.value("api_user", QString()).toString();
   apiKey = cfg.value("api_key", QString()).toString();
-  historyCall = cfg.value("api_history_call", -7).toInt();
   cfg.endGroup();
   apiUrl = url;
   return true;

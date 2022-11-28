@@ -5,11 +5,7 @@
 #include "anetworkrequest.h"
 
 #ifndef ANTIQUACRM_NETWORK_DEBUG
-#ifdef ANTIQUA_DEVELOPEMENT
-#define ANTIQUACRM_NETWORK_DEBUG true
-#else
 #define ANTIQUACRM_NETWORK_DEBUG false
-#endif
 #endif
 
 #include <QBuffer>

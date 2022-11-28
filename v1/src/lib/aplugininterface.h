@@ -53,11 +53,6 @@ protected:
   QString apiKey;
 
   /**
-   * @brief Some providers needs a history request
-   */
-  qint8 historyCall;
-
-  /**
    * @brief Actions Session Cookie
    */
   QNetworkCookie actionsCookie;
@@ -181,6 +176,11 @@ Q_SIGNALS:
    * finished.
    */
   void sendQueryFinished();
+
+  /**
+   * @brief This Signal is reserved to emitted when no data emitted
+   */
+  void sendQueryAborted();
 
 public Q_SLOTS:
   /**

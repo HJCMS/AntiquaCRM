@@ -16,13 +16,18 @@ class ProviderSettings : public SettingsWidget {
 
 private:
   /**
+   * @brief Buchfreund
+   */
+  QGroupBox *m_buchfreund;
+  LineEdit *m_buchfreund_api_url;
+  LineEdit *m_buchfreund_api_key;
+
+  /**
    * @brief AbeBooks
    */
   QGroupBox *m_abebooks;
-  LineEdit *m_abebooks_user;
-  LineEdit *m_abebooks_password;
-  LineEdit *m_abebooks_scheme;
-  LineEdit *m_abebooks_api_host;
+  LineEdit *m_abebooks_api_user;
+  LineEdit *m_abebooks_api_url;
   LineEdit *m_abebooks_api_key;
   LineEdit *m_abebooks_api_port;
 
@@ -30,12 +35,8 @@ private:
    * @brief Booklooker
    */
   QGroupBox *m_booklooker;
-  LineEdit *m_booklooker_user;
-  LineEdit *m_booklooker_scheme;
-  QSpinBox *m_booklooker_history;
-  LineEdit *m_booklooker_api_host;
+  LineEdit *m_booklooker_api_url;
   LineEdit *m_booklooker_api_key;
-  LineEdit *m_booklooker_api_port;
 
   /**
    * @brief findChildren Options

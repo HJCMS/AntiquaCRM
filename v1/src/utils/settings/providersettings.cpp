@@ -11,6 +11,28 @@ ProviderSettings::ProviderSettings(QWidget *parent) : SettingsWidget{parent} {
   setObjectName("provider_settings");
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("provider_config_layout");
+  // BEGIN W+H Software
+  m_buchfreund = new QGroupBox(this);
+  m_buchfreund->setCheckable(true);
+  m_buchfreund->setChecked(false);
+  m_buchfreund->setObjectName("buchfreund");
+  m_buchfreund->setTitle("Buchfreund (W+H Software)");
+  QVBoxLayout *m_buchfreund_layout = new QVBoxLayout(m_buchfreund);
+  m_buchfreund_layout->setObjectName("buchfreund_layout");
+  m_buchfreund_api_url = new LineEdit(m_buchfreund);
+  m_buchfreund_api_url->setObjectName("api_host");
+  m_buchfreund_api_url->setInfo(tr("Domain"));
+  m_buchfreund_api_url->setValue("www.buchfreund.de");
+  m_buchfreund_layout->addWidget(m_buchfreund_api_url);
+  m_buchfreund_api_key = new LineEdit(m_buchfreund);
+  m_buchfreund_api_key->setObjectName("api_key");
+  m_buchfreund_api_key->setInfo(tr("API Key"));
+  m_buchfreund_layout->addWidget(m_buchfreund_api_key);
+  m_buchfreund_layout->addStretch(1);
+  m_buchfreund->setLayout(m_buchfreund_layout);
+  layout->addWidget(m_buchfreund);
+  // END
+
   // BEGIN AbeBooks
   m_abebooks = new QGroupBox(this);
   m_abebooks->setCheckable(true);
@@ -19,20 +41,15 @@ ProviderSettings::ProviderSettings(QWidget *parent) : SettingsWidget{parent} {
   m_abebooks->setTitle("AbeBooks && ZVAB (abebooks.de)");
   QVBoxLayout *m_abe_layout = new QVBoxLayout(m_abebooks);
   m_abe_layout->setObjectName("provider_abebooks_layout");
-  m_abebooks_user = new LineEdit(m_abebooks);
-  m_abebooks_user->setObjectName("api_user");
-  m_abebooks_user->setInfo(tr("Loginname"));
-  m_abe_layout->addWidget(m_abebooks_user);
-  m_abebooks_scheme = new LineEdit(m_abebooks);
-  m_abebooks_scheme->setObjectName("api_scheme");
-  m_abebooks_scheme->setInfo(tr("Protocoll"));
-  m_abebooks_scheme->setValue("https");
-  m_abe_layout->addWidget(m_abebooks_scheme);
-  m_abebooks_api_host = new LineEdit(m_abebooks);
-  m_abebooks_api_host->setObjectName("api_host");
-  m_abebooks_api_host->setInfo(tr("Domain"));
-  m_abebooks_api_host->setValue("orderupdate.abebooks.com");
-  m_abe_layout->addWidget(m_abebooks_api_host);
+  m_abebooks_api_user = new LineEdit(m_abebooks);
+  m_abebooks_api_user->setObjectName("api_user");
+  m_abebooks_api_user->setInfo(tr("Loginname"));
+  m_abe_layout->addWidget(m_abebooks_api_user);
+  m_abebooks_api_url = new LineEdit(m_abebooks);
+  m_abebooks_api_url->setObjectName("api_host");
+  m_abebooks_api_url->setInfo(tr("Domain"));
+  m_abebooks_api_url->setValue("orderupdate.abebooks.com");
+  m_abe_layout->addWidget(m_abebooks_api_url);
   m_abebooks_api_port = new LineEdit(m_abebooks);
   m_abebooks_api_port->setObjectName("api_port");
   m_abebooks_api_port->setInfo(tr("API Port"));
@@ -54,32 +71,15 @@ ProviderSettings::ProviderSettings(QWidget *parent) : SettingsWidget{parent} {
   m_booklooker->setObjectName("booklooker");
   m_booklooker->setTitle("Booklooker (booklooker.de)");
   QVBoxLayout *m_bl_layout = new QVBoxLayout(m_booklooker);
-  m_booklooker_user = new LineEdit(m_booklooker);
-  m_booklooker_user->setObjectName("api_user");
-  m_booklooker_user->setInfo(tr("Loginname"));
-  m_bl_layout->addWidget(m_booklooker_user);
-  m_booklooker_scheme = new LineEdit(m_booklooker);
-  m_booklooker_scheme->setObjectName("api_scheme");
-  m_booklooker_scheme->setInfo(tr("Protocoll"));
-  m_booklooker_scheme->setValue("https");
-  m_bl_layout->addWidget(m_booklooker_scheme);
-  m_booklooker_api_host = new LineEdit(m_booklooker);
-  m_booklooker_api_host->setObjectName("api_host");
-  m_booklooker_api_host->setInfo(tr("Domain"));
-  m_booklooker_api_host->setValue("api.booklooker.de");
-  m_bl_layout->addWidget(m_booklooker_api_host);
+  m_booklooker_api_url = new LineEdit(m_booklooker);
+  m_booklooker_api_url->setObjectName("api_host");
+  m_booklooker_api_url->setInfo(tr("Domain"));
+  m_booklooker_api_url->setValue("api.booklooker.de");
+  m_bl_layout->addWidget(m_booklooker_api_url);
   m_booklooker_api_key = new LineEdit(m_booklooker);
   m_booklooker_api_key->setObjectName("api_key");
   m_booklooker_api_key->setInfo(tr("API Key"));
   m_bl_layout->addWidget(m_booklooker_api_key);
-  m_booklooker_history = new QSpinBox(m_booklooker);
-  m_booklooker_history->setObjectName("api_history_call");
-  m_booklooker_history->setToolTip(tr("History"));
-  m_booklooker_history->setRange(-30, 0);
-  m_booklooker_history->setPrefix(tr("Query history") + ": ");
-  m_booklooker_history->setSuffix(" " + tr("days"));
-  m_booklooker_history->setValue(ANTIQUACRM_QUERY_PASTDAYS);
-  m_bl_layout->addWidget(m_booklooker_history);
   m_booklooker->setLayout(m_bl_layout);
   layout->addWidget(m_booklooker);
   // END
@@ -95,7 +95,8 @@ void ProviderSettings::initSignalChanged() {
     for (int i = 0; i < l.count(); i++) {
       InputEdit *w = l.at(i);
       if (w != nullptr) {
-        connect(w, SIGNAL(sendHasModified(bool)), this, SLOT(chieldModified(bool)));
+        connect(w, SIGNAL(sendHasModified(bool)), this,
+                SLOT(chieldModified(bool)));
       }
     }
   }
@@ -139,7 +140,7 @@ void ProviderSettings::loadSectionConfig() {
 
       config->beginGroup("provider/" + section);
       QStringList keys = config->allKeys();
-      box->setChecked((keys.count() >= 4));
+      box->setChecked((keys.count() >= 2));
       foreach (QString s, keys) {
         LineEdit *le = box->findChild<LineEdit *>(s, p_fo);
         if (le != nullptr) {

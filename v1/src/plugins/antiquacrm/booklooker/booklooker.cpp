@@ -83,7 +83,6 @@ bool Booklooker::initConfigurations() {
   url.setScheme("https");
   url.setHost(cfg.value("api_host", "api.booklooker.de").toString());
   apiKey = cfg.value("api_key", QString()).toString();
-  historyCall = cfg.value("api_history_call", -7).toInt();
   cfg.endGroup();
   apiUrl = url;
   return true;
@@ -97,15 +96,6 @@ const QUrl Booklooker::apiQuery(const QString &section) {
 
   QUrl url(apiUrl);
   url.setPath(p);
-
-  QString value = configProvider();
-  value.append("_");
-  value.append(section);
-  value.append(".json");
-
-  actionsCookie = QNetworkCookie("action", value.toLocal8Bit());
-  actionsCookie.setDomain(url.host());
-  actionsCookie.setSecure(true);
 
   return url;
 }
@@ -279,7 +269,13 @@ void Booklooker::queryNewOrders(int waitSecs) {
   }
 
   QUrl url = apiQuery("order");
-  QDate past = QDate::currentDate().addDays(historyCall);
+  QString value = configProvider();
+  value.append("_orders.json");
+  actionsCookie = QNetworkCookie("action", value.toLocal8Bit());
+  actionsCookie.setDomain(url.host());
+  actionsCookie.setSecure(true);
+
+  QDate past = QDate::currentDate().addDays(ANTIQUACRM_QUERY_PASTDAYS);
   QUrlQuery q;
   q.addQueryItem("token", QString(authenticCookie.value()));
   q.addQueryItem("dateFrom", dateString(past));
@@ -295,6 +291,12 @@ void Booklooker::queryOrder(const QString &orderId) {
   }
 
   QUrl url = apiQuery("order");
+  QString value = configProvider();
+  value.append("_order_" + orderId + ".json");
+  actionsCookie = QNetworkCookie("action", value.toLocal8Bit());
+  actionsCookie.setDomain(url.host());
+  actionsCookie.setSecure(true);
+
   QUrlQuery q;
   q.addQueryItem("token", QString(authenticCookie.value()));
   q.addQueryItem("orderId", orderId);

@@ -109,8 +109,9 @@ bool AntiquaAppl::initialPlugins(QObject *receiver) {
       // Slot:<APluginInterface>::OrderUpdateAction
       connect(m_mainWindow, SIGNAL(sendPluginOperation(const QJsonObject &)),
               m_iface, SLOT(orderUpdateAction(const QJsonObject &)));
+      // Signal:<APluginInterface>::sendQueryAborted TODO
       // Signal:<APluginInterface>::sendQueryFinished
-      connect(m_iface, SIGNAL(sendQueryFinished()), this,
+      connect(m_iface, SIGNAL(sendQueryFinished()),
               SLOT(setPluginQueryFinished()));
 
       QString name(m_iface->displayName());
