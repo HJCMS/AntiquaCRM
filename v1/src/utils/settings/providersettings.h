@@ -16,16 +16,6 @@ class ProviderSettings : public SettingsWidget {
 
 private:
   /**
-   * @brief W+H Ssoft
-   */
-  QGroupBox *m_whsoft;
-  LineEdit *m_whsoft_scheme;
-  QSpinBox *m_whsoft_history;
-  LineEdit *m_whsoft_api_host;
-  LineEdit *m_whsoft_api_key;
-  LineEdit *m_whsoft_api_basepath;
-
-  /**
    * @brief AbeBooks
    */
   QGroupBox *m_abebooks;

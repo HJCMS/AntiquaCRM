@@ -11,46 +11,6 @@ ProviderSettings::ProviderSettings(QWidget *parent) : SettingsWidget{parent} {
   setObjectName("provider_settings");
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("provider_config_layout");
-  // BEGIN W+H Software
-  m_whsoft = new QGroupBox(this);
-  m_whsoft->setCheckable(true);
-  m_whsoft->setChecked(false);
-  m_whsoft->setObjectName("whsoft");
-  m_whsoft->setTitle("W+H Software (buchfreund.de)");
-  QVBoxLayout *m_whsoft_layout = new QVBoxLayout(m_whsoft);
-  m_whsoft_layout->setObjectName("provider_whsoft_layout");
-  m_whsoft_scheme = new LineEdit(m_whsoft);
-  m_whsoft_scheme->setObjectName("api_scheme");
-  m_whsoft_scheme->setInfo(tr("Protocoll"));
-  m_whsoft_scheme->setValue("https");
-  m_whsoft_layout->addWidget(m_whsoft_scheme);
-  m_whsoft_api_host = new LineEdit(m_whsoft);
-  m_whsoft_api_host->setObjectName("api_host");
-  m_whsoft_api_host->setInfo(tr("Domain"));
-  m_whsoft_api_host->setValue("www.buchfreund.de");
-  m_whsoft_layout->addWidget(m_whsoft_api_host);
-  m_whsoft_api_key = new LineEdit(m_whsoft);
-  m_whsoft_api_key->setObjectName("api_key");
-  m_whsoft_api_key->setInfo(tr("API Key"));
-  m_whsoft_layout->addWidget(m_whsoft_api_key);
-  m_whsoft_api_basepath = new LineEdit(m_whsoft);
-  m_whsoft_api_basepath->setObjectName("api_basepath");
-  m_whsoft_api_basepath->setInfo(tr("API Path"));
-  m_whsoft_api_basepath->setValue("/verkaeufer/api/");
-  m_whsoft_layout->addWidget(m_whsoft_api_basepath);
-  m_whsoft_history = new QSpinBox(m_whsoft);
-  m_whsoft_history->setObjectName("api_history_call");
-  m_whsoft_history->setToolTip(tr("History"));
-  m_whsoft_history->setRange(-14, 0);
-  m_whsoft_history->setPrefix(tr("Query history") + ": ");
-  m_whsoft_history->setSuffix(" " + tr("days"));
-  m_whsoft_history->setValue(ANTIQUACRM_QUERY_PASTDAYS);
-  m_whsoft_layout->addWidget(m_whsoft_history);
-  m_whsoft_layout->addStretch(1);
-  m_whsoft->setLayout(m_whsoft_layout);
-  layout->addWidget(m_whsoft);
-  // END
-
   // BEGIN AbeBooks
   m_abebooks = new QGroupBox(this);
   m_abebooks->setCheckable(true);
