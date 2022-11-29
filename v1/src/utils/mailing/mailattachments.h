@@ -7,13 +7,13 @@
 
 #include <QFileInfo>
 #include <QFrame>
-#include <QLabel>
+#include <QLineEdit>
 #include <QObject>
 #include <QPushButton>
 #include <QWidget>
 #include <ASettings>
 
-class AttachmentInfo final : public QLabel {
+class AttachmentInfo final : public QLineEdit {
   Q_OBJECT
 
 private:
@@ -42,11 +42,11 @@ private Q_SLOTS:
 
 public Q_SLOTS:
   void setActive(bool);
-  void setAttachment(const QString &name);
   void clear() { m_info->restore(); }
 
 public:
   explicit MailAttachments(QWidget *parent = nullptr);
+  bool setAttachment(const QString &name);
   bool exists();
   const QFileInfo attachment();
 };

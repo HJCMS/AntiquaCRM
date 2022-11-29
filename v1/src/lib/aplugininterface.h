@@ -186,7 +186,7 @@ public Q_SLOTS:
   /**
    * @brief This Method is reserved to Query New Orders.
    */
-  virtual void queryNewOrders(int waitSecs = 1) = 0;
+  virtual void queryNewOrders() = 0;
 
   /**
    * @brief Authentication is Required?

@@ -150,8 +150,7 @@ void Abebooks::queryFinished(QNetworkReply *reply) {
   }
 }
 
-void Abebooks::queryNewOrders(int waitSecs) {
-  Q_UNUSED(waitSecs);
+void Abebooks::queryNewOrders() {
   QString operation("getAllNewOrders");
   AbeBooksDocument doc = initDocument();
   doc.createAction(operation);

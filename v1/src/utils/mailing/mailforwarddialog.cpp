@@ -8,6 +8,7 @@
 #include "mailtemplatekeys.h"
 
 #include <QDebug>
+#include <QTimer>
 #include <QIcon>
 #include <QLayout>
 #include <QRegularExpressionMatch>
@@ -16,7 +17,7 @@
 
 MailForwardDialog::MailForwardDialog(QWidget *parent) : QDialog{parent} {
   setObjectName("create_mail_forward_dialog");
-  setWindowTitle(tr("Mail Templates") + "[*]");
+  setWindowTitle(tr("Mail Templates"));
   setMinimumSize(QSize(500, 500));
   setSizeGripEnabled(true);
 
@@ -25,15 +26,17 @@ MailForwardDialog::MailForwardDialog(QWidget *parent) : QDialog{parent} {
 
   QVBoxLayout *layout = new QVBoxLayout(this);
 
-  m_selecter = new MessageSelecter(this);
-  layout->addWidget(m_selecter);
+  m_mailSubject = new QLabel(this);
+  m_mailSubject->setObjectName("tb_subject");
+  layout->addWidget(m_mailSubject);
+
+  m_mailBody = new MailBody(this);
+  m_mailBody->setObjectName("tb_message");
+  layout->addWidget(m_mailBody);
 
   m_attachmentBar = new MailAttachments(this);
+  m_attachmentBar->setObjectName("tb_attachment");
   layout->addWidget(m_attachmentBar);
-
-  // Stretch #2
-  m_mailBody = new MailBody(this);
-  layout->addWidget(m_mailBody);
 
   m_btnBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
   m_btnMail = new QPushButton(tr("Mail"), m_btnBox);
@@ -47,14 +50,8 @@ MailForwardDialog::MailForwardDialog(QWidget *parent) : QDialog{parent} {
   m_statusBar->setSizeGripEnabled(false);
   layout->addWidget(m_statusBar);
 
-  layout->setStretch(2, 1);
+  layout->setStretch(1, 1);
   setLayout(layout);
-
-  connect(m_selecter, SIGNAL(sendBody(const QString &)), this,
-          SLOT(setBody(const QString &)));
-
-  connect(m_selecter, SIGNAL(attachmentChanged(bool)), this,
-          SLOT(setAttachment(bool)));
 
   connect(m_btnBox, SIGNAL(rejected()), this, SLOT(reject()));
   connect(m_btnMail, SIGNAL(clicked()), this, SLOT(setMailCommand()));
@@ -62,24 +59,23 @@ MailForwardDialog::MailForwardDialog(QWidget *parent) : QDialog{parent} {
 
 bool MailForwardDialog::createMailSelect(const QString &tpl) {
   QString sql("SELECT * FROM ui_template_body");
-  sql.append(" WHERE tb_caller='" + tpl + "'");
-  sql.append(" ORDER BY tb_title;");
+  sql.append(" WHERE tb_caller='" + tpl + "';");
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
-    QList<MessageCaller> list;
+    tplData = QJsonObject();
+    QSqlRecord r = q.record();
     while (q.next()) {
-      MessageCaller cl;
-      cl.setCaller(q.value("tb_caller").toString());
-      cl.setTitle(q.value("tb_title").toString());
-      cl.setSubject(q.value("tb_subject").toString());
-      cl.setBody(q.value("tb_message").toString());
-      cl.setGender(q.value("tb_gender").toInt());
-      cl.setAttachment(q.value("tb_attachment").toBool());
-      list.append(cl);
+      for (int i = 0; i < r.count(); i++) {
+        QSqlField f = r.field(i);
+        QVariant value = q.value(f.name());
+        tplData.insert(f.name(), QJsonValue::fromVariant(value));
+      }
     }
-    if (list.count() > 0)
-      m_selecter->setSelecters(list);
-
+    setWindowTitle(tplData.value("tb_title").toString());
+    setSubject(tplData.value("tb_subject").toString());
+    setBody(tplData.value("tb_message").toString());
+    setAttachment(tplData.value("tb_attachment").toBool());
+    return true;
   } else if (!m_sql->lastError().isEmpty()) {
     m_statusBar->showMessage(tr("an error occurred"));
 #ifdef ANTIQUA_DEVELOPEMENT
@@ -87,7 +83,7 @@ bool MailForwardDialog::createMailSelect(const QString &tpl) {
 #endif
     return false;
   }
-  return true;
+  return false;
 }
 
 bool MailForwardDialog::queryDataFields(int customerId) {
@@ -103,16 +99,18 @@ bool MailForwardDialog::queryDataFields(int customerId) {
     while (q.next()) {
       for (int r = 0; r < rec.count(); r++) {
         QSqlField sf = rec.field(r);
-        QString fName = sf.name();
+        QString fn = sf.name();
         QVariant v = q.value(sf.name());
         if (v.isValid() && v.type() == QVariant::String &&
             v.toString().isEmpty())
           continue;
 
-        if (fName == "c_gender")
+        if (fn == "c_gender") {
+          // TODO tplData
           p_gender = v.toInt();
+        }
 
-        buffer.insert(fName, v);
+        buffer.insert(fn, v);
       }
     }
   }
@@ -128,13 +126,13 @@ bool MailForwardDialog::queryDataFields(int customerId) {
       while (q.next()) {
         for (int r = 0; r < rec.count(); r++) {
           QSqlField sf = rec.field(r);
-          QString fName = sf.name();
+          QString fn = sf.name();
           QVariant v = q.value(sf.name());
           if (v.isValid() && v.type() == QVariant::String &&
               v.toString().isEmpty())
             continue;
 
-          buffer.insert(fName, v);
+          buffer.insert(fn, v);
         }
       }
     }
@@ -171,14 +169,21 @@ void MailForwardDialog::setMailCommand() {
   connect(cli, SIGNAL(sendMessage(const QString &)), m_statusBar,
           SLOT(showMessage(const QString &)));
 
+  bool attach = tplData.value("tb_attachment").toBool();
   QString eMail = m_keys->getData("c_email_0").toString();
   cli->setMail(eMail);
-  cli->setSubject(m_selecter->getSubject());
+  cli->setSubject(m_mailSubject->text());
   cli->setBody(m_mailBody->toPlainText());
-  if (m_selecter->hasAttachment() && m_attachmentBar->exists()) {
+  if (attach && m_attachmentBar->exists()) {
     cli->setAttachment(m_attachmentBar->attachment().filePath());
   }
   cli->sendMail();
+
+  QTimer::singleShot(2000, this, SLOT(accept()));
+}
+
+void MailForwardDialog::setSubject(const QString &subject) {
+  m_mailSubject->setText(subject);
 }
 
 /**
@@ -204,28 +209,30 @@ void MailForwardDialog::setBody(const QString &body) {
 }
 
 void MailForwardDialog::setAttachment(bool b) {
-  // immer erst deaktivieren!
-  m_btnMail->setEnabled(false);
-  m_attachmentBar->setActive(b);
-  if (b) {
-    int invoice = m_keys->getData("o_invoice_id").toInt();
-    if (invoice > 0) {
-      QString id = QString::number(invoice).rightJustified(7, '0');
-      m_attachmentBar->setAttachment(id);
-    }
-    if (m_selecter->hasAttachment() && m_attachmentBar->exists()) {
+  int invoice = m_keys->getData("o_invoice_id").toInt();
+  if (b && invoice > 0) {
+    m_btnMail->setEnabled(false);
+    m_attachmentBar->clear();
+    m_attachmentBar->setActive(true);
+
+    QString id = QString::number(invoice).rightJustified(7, '0');
+    if (m_attachmentBar->setAttachment(id)) {
       m_btnMail->setEnabled(true);
     } else {
       m_statusBar->showMessage(tr("Missing Attachment"), 0);
     }
-  } else if (!m_selecter->hasAttachment()) {
-    m_btnMail->setEnabled(true);
   } else {
+    m_btnMail->setEnabled(false);
     m_attachmentBar->clear();
   }
 }
 
 void MailForwardDialog::setOrderId(int orderId) { p_orderId = orderId; }
+
+int MailForwardDialog::exec() {
+  qWarning("Please use exec with costumerId and Template");
+  return QDialog::Rejected;
+}
 
 int MailForwardDialog::exec(int customerId, const QString &tpl) {
   m_sql = new AntiquaCRM::ASqlCore(this);
@@ -239,8 +246,6 @@ int MailForwardDialog::exec(int customerId, const QString &tpl) {
 
   if (!createMailSelect(tpl))
     return QDialog::Rejected;
-
-  m_selecter->setGender(p_gender);
 
   return QDialog::exec();
 }

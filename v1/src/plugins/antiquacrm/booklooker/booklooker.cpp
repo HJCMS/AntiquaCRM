@@ -261,8 +261,7 @@ void Booklooker::queryFinished(QNetworkReply *reply) {
   }
 }
 
-void Booklooker::queryNewOrders(int waitSecs) {
-  Q_UNUSED(waitSecs);
+void Booklooker::queryNewOrders() {
   if (isCookieExpired()) {
     authenticate();
     return;

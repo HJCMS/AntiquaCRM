@@ -5,12 +5,6 @@
 #ifndef ANTIQUACRM_TEMPLATES_H
 #define ANTIQUACRM_TEMPLATES_H
 
-// MessageCaller
-#include "messagecaller.h"
-
-// MessageSelecter
-#include "messageselecter.h"
-
 // MessageKeywordList
 #include "messagekeywordlist.h"
 

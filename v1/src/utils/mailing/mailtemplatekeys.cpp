@@ -12,17 +12,22 @@ MailTemplateKeys::MailTemplateKeys(QObject *parent) : QThread{parent} {
   setObjectName("mail_templates");
 }
 
-const QString MailTemplateKeys::completeName() {
-  QStringList list;
+const QString MailTemplateKeys::salutation() {
   if (p_data.value("c_gender").toInt() > 0) {
     int g = p_data.value("c_gender").toInt();
     if (g == 1) {
-      list << tr("Mr");
+      // Männlich
+      return tr("Dear Mr.");
     } else if (g == 2) {
-      list << tr("Mrs");
+      // Weiblich
+      return tr("Dear Mrs.");
     }
   }
+  return tr("Dear Ladies and Gentlemen");
+}
 
+const QString MailTemplateKeys::completeName() {
+  QStringList list;
   if (!p_data.value("c_title").toString().isEmpty())
     list << p_data.value("c_title").toString();
 
@@ -101,6 +106,9 @@ const QString MailTemplateKeys::convert(const QString &key) {
 
   if (search == "CRM_ARTICLE_ID")
     return padNumber(p_data.value("a_article_id"));
+
+  if (search == "CRM_SALUTATION")
+    return salutation();
 
   if (search.contains("COMPANY_")) {
     return p_data.value(search).toString();

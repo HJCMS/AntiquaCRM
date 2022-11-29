@@ -559,6 +559,7 @@ void BookEditor::setCheckLeaveEditor() {
 void BookEditor::setFinalLeaveEditor() {
   setResetInputFields();
   m_actionBar->setRestoreable(false); /**< ResetButton off */
+  m_imageView->clear();               /**< Bildvorschau leeren */
   setEnabled(false);                  /**< prevent Key Bindings */
   emit sendLeaveEditor();             /**< Back to MainView */
 }
@@ -646,6 +647,7 @@ bool BookEditor::openEditEntry(qint64 articleId) {
 bool BookEditor::createNewEntry() {
   setInputFields();
   setResetModified(inputFields);
+  m_imageView->clear();
   setEnabled(true);
   return isEnabled();
 }

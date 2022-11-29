@@ -4,22 +4,22 @@
 #include "messagetemplates.h"
 #include "messageeditor.h"
 #include "messagekeywordlist.h"
-#include "messageselecter.h"
+#include "templatesheader.h"
+#include "templatestree.h"
 
 #include <QIcon>
 #include <QLayout>
 
 MessageTemplates::MessageTemplates(QWidget *parent) : QDialog{parent} {
   setObjectName("message_templates_dialog");
-  setMinimumSize(600, 500);
-  setSizeGripEnabled(true);
   setWindowTitle(tr("Template Editor") + "[*]");
-  setWhatsThis(tr("Edit Templates"));
+  setMinimumSize(780, 550);
+  setSizeGripEnabled(true);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
 
-  m_toolBar = new MessageSelecter(this, true);
-  layout->addWidget(m_toolBar); // #0
+  m_toolBar = new TemplatesHeader(this);
+  layout->addWidget(m_toolBar);
 
   m_splitter = new QSplitter(Qt::Horizontal, this);
   layout->addWidget(m_splitter); // #1
@@ -27,8 +27,19 @@ MessageTemplates::MessageTemplates(QWidget *parent) : QDialog{parent} {
   m_editor = new MessageEditor(m_splitter);
   m_splitter->insertWidget(0, m_editor);
 
-  m_keysList = new MessageKeywordList(m_splitter);
-  m_splitter->insertWidget(1, m_keysList);
+  m_tabWidget = new QTabWidget(this);
+
+  m_tplTree = new TemplatesTree(m_tabWidget);
+  m_tplTree->setWhatsThis(tr("Templates"));
+  m_tabWidget->addTab(m_tplTree, QIcon("://icons/view_list.png"),
+                      tr("Templates"));
+
+  m_keysList = new MessageKeywordList(m_tabWidget);
+  m_keysList->setWhatsThis(tr("Macros"));
+  m_tabWidget->addTab(m_keysList, QIcon("://icons/spreadsheet.png"),
+                      tr("Macros"));
+
+  m_splitter->insertWidget(1, m_tabWidget);
 
   m_btnBox = new QDialogButtonBox(
       (QDialogButtonBox::Close | QDialogButtonBox::Save), this);
@@ -43,16 +54,17 @@ MessageTemplates::MessageTemplates(QWidget *parent) : QDialog{parent} {
   layout->setStretch(1, 1);
   setLayout(layout);
 
-  connect(m_toolBar, SIGNAL(sendBody(const QString &)), m_editor,
-          SLOT(setBody(const QString &)));
-
-  connect(btn_save, SIGNAL(clicked()), this, SLOT(setSqlQuery()));
-  connect(m_btnBox, SIGNAL(rejected()), this, SLOT(reject()));
+  connect(m_tplTree, SIGNAL(templateSelected(const QJsonObject &)),
+          SLOT(setEditTemplate(const QJsonObject &)));
+  connect(m_tplTree, SIGNAL(templateSelected(const QJsonObject &)), m_toolBar,
+          SLOT(setSelection(const QJsonObject &)));
+  connect(btn_save, SIGNAL(clicked()), SLOT(saveCurrentTemplate()));
+  connect(m_btnBox, SIGNAL(rejected()), SLOT(reject()));
 }
 
 const QString MessageTemplates::buildTitle(const QString &key) const {
   QString title = key.trimmed().toLower();
-  title.replace("_"," ");
+  title.replace("_", " ");
   QStringList array = title.split(" ", Qt::SkipEmptyParts);
   for (int i = 0; i < array.size(); i++) {
     array[i].replace(0, 1, array[i][0].toUpper());
@@ -82,24 +94,25 @@ bool MessageTemplates::createMacrosTree() {
   return true;
 }
 
-bool MessageTemplates::createSelecters() {
-  QString sql("SELECT * FROM ui_template_body ORDER BY tb_title;");
+bool MessageTemplates::createTemplateTree() {
+  m_tplData = new AntiquaCRM::ASqlDataQuery("ui_template_body");
+  QString sql("SELECT * FROM ui_template_body");
+  sql.append(" ORDER BY (tb_category, tb_title);");
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
-    QList<MessageCaller> list;
+    QJsonObject objTree;
+    QJsonArray array;
     while (q.next()) {
-      MessageCaller cl;
-      cl.setCaller(q.value("tb_caller").toString());
-      cl.setTitle(q.value("tb_title").toString());
-      cl.setSubject(q.value("tb_subject").toString());
-      cl.setBody(q.value("tb_message").toString());
-      cl.setGender(q.value("tb_gender").toInt());
-      cl.setAttachment(q.value("tb_attachment").toBool());
-      list.append(cl);
+      QJsonObject child;
+      foreach (QString f, m_tplData->columnNames()) {
+        QVariant value = q.value(f);
+        if (!value.isNull())
+          child.insert(f, QJsonValue::fromVariant(value));
+      }
+      array.append(child);
     }
-    if (list.count() > 0)
-      m_toolBar->setSelecters(list);
-
+    objTree.insert("tree", array);
+    m_tplTree->addTemplates(objTree);
   } else if (!m_sql->lastError().isEmpty()) {
     m_statusBar->showMessage(tr("an error occurred"));
 #ifdef ANTIQUA_DEVELOPEMENT
@@ -110,64 +123,70 @@ bool MessageTemplates::createSelecters() {
   return true;
 }
 
-void MessageTemplates::setSqlQuery() {
-  QString tb_caller = m_toolBar->getCaller();
-  if (tb_caller.isEmpty()) {
-    m_statusBar->showMessage(tr("The caller field is mandatory!"));
-    return;
+void MessageTemplates::saveCurrentTemplate() {
+  QJsonObject data = m_toolBar->getHeaderData();
+  data.insert("tb_message", m_editor->toPlainText());
+
+  QString tb_caller = data.value("tb_caller").toString();
+  AntiquaCRM::ASqlDataQuery dataTable("ui_template_body");
+  foreach (QString f, data.keys()) {
+    dataTable.setValue(f, data.value(f).toVariant());
   }
 
-  QString tb_title = m_toolBar->getTitle();
-  if (tb_title.isEmpty()) {
-    m_statusBar->showMessage(tr("The title cannot be empty!"));
-    return;
+  QStringList set;
+  QStringList ignore({"tb_caller", "tb_category"});
+  QHashIterator<QString, QVariant> it(dataTable.getDataset());
+  while (it.hasNext()) {
+    it.next();
+    QString _key = it.key();
+    QVariant _val = it.value();
+    if (ignore.contains(it.key()) || _val.isNull())
+      continue;
+
+    switch (dataTable.getType(_key).id()) {
+    case QMetaType::QString:
+      set.append(_key + "='" + _val.toString() + "'");
+      break;
+
+    case QMetaType::Bool: {
+      QString b = _val.toBool() ? "true" : "false";
+      set.append(_key + "=" + b);
+    } break;
+
+    case QMetaType::Int:
+    case QMetaType::LongLong:
+    case QMetaType::Double:
+      set.append(_key + "=" + QString::number(_val.toInt()));
+      break;
+
+    default:
+      break;
+    };
   }
 
-  QString tb_subject = m_toolBar->getSubject();
-  if (tb_subject.isEmpty()) {
-    m_statusBar->showMessage(tr("The Subject cannot be empty!"));
-    return;
-  }
-
-  QString tb_message = m_editor->toPlainText();
-  if (tb_message.isEmpty()) {
-    m_statusBar->showMessage(tr("Empty body text is not accepted!"));
-    return;
-  }
-
-  QString tb_gender = QString::number(m_toolBar->getGender());
-  QString tb_attachment = (m_toolBar->hasAttachment()) ? "true" : "false";
-
-  QString sql("SELECT * FROM ui_template_body WHERE tb_title='");
-  sql.append(tb_title + "';");
-  QSqlQuery q = m_sql->query(sql);
-  if (q.size() > 0) {
-    sql = QString("UPDATE ui_template_body SET");
-    sql.append(" tb_caller='" + tb_caller + "',");
-    sql.append(" tb_message='" + tb_message + "',");
-    sql.append(" tb_subject='" + tb_subject + "',");
-    sql.append(" tb_gender=" + tb_gender + ",");
-    sql.append(" tb_attachment=" + tb_attachment);
-    sql.append(" WHERE tb_title='" + tb_title + "';");
-  } else {
-    sql = QString("INSERT INTO ui_template_body");
-    sql.append(" (tb_caller,tb_title,tb_message,tb_gender,tb_subject)");
-    sql.append(" VALUES (");
-    sql.append(" '" + tb_caller + "','" + tb_title + "',");
-    sql.append(" '" + tb_message + "'," + tb_gender + ",");
-    sql.append(" '" + tb_subject + "'," + tb_attachment + ");");
-  }
-
-  q = m_sql->query(sql);
+  QString sql("UPDATE ui_template_body SET ");
+  sql.append(set.join(","));
+  sql.append(" WHERE tb_caller='" + tb_caller + "';");
+  m_sql->query(sql);
   if (m_sql->lastError().isEmpty()) {
-    createSelecters();
     m_statusBar->showMessage(tr("Save data successfully!"), (1000 * 6));
   } else {
     m_statusBar->showMessage(tr("an error occurred"));
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << sql << m_sql->lastError();
+    qDebug() << sql << m_sql->lastError();
 #endif
   }
+  m_tplTree->clearTree();
+
+  createTemplateTree();
+}
+
+void MessageTemplates::setEditTemplate(const QJsonObject &obj) {
+  if (obj.isEmpty())
+    return;
+
+  QStringList keys = obj.keys();
+  m_editor->setPlainText(obj.value("tb_message").toString());
 }
 
 int MessageTemplates::exec() {
@@ -178,10 +197,11 @@ int MessageTemplates::exec() {
   if (!createMacrosTree())
     return QDialog::Rejected;
 
-  if (!createSelecters())
+  if (!createTemplateTree())
     return QDialog::Rejected;
 
   m_keysList->expandAll();
+  m_tplTree->expandAll();
 
   return QDialog::exec();
 }

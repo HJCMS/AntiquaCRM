@@ -129,7 +129,6 @@ bool AntiquaAppl::initialPlugins(QObject *receiver) {
 }
 
 void AntiquaAppl::startTriggerProcess() {
-  int secs = 1;
   bool connection = checkRemotePort();
   m_systemTray->setConnectionStatus(connection);
   if (connection && p_interfaces.size() > 0) {
@@ -137,7 +136,7 @@ void AntiquaAppl::startTriggerProcess() {
     while (i.hasNext()) {
       AntiquaCRM::APluginInterface *m_iface = i.next();
       if (m_iface != nullptr) {
-        m_iface->queryNewOrders(secs++);
+        m_iface->queryNewOrders();
       }
     }
   }
@@ -276,6 +275,7 @@ int AntiquaAppl::exec() {
   CacheBuilder *m_cache = new CacheBuilder(this);
   connect(m_cache, SIGNAL(statusMessage(const QString &)), &p_splashScreen,
           SLOT(setMessage(const QString &)));
+
   if (m_cache->createCaches()) {
     p_splashScreen.setMessage(tr("Cachefiles completed ..."));
   } else {

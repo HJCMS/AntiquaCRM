@@ -5,6 +5,9 @@
 #include "cachequery.h"
 
 #include <QDebug>
+#include <QDir>
+#include <QFileInfo>
+#include <QStandardPaths>
 #include <QStringList>
 
 CacheBuilder::CacheBuilder(QObject *parent) : QObject{parent} {
@@ -35,7 +38,17 @@ const QList<CacheConfig> CacheBuilder::configs() {
   return list;
 }
 
+bool CacheBuilder::createCacheTarget() {
+  QFileInfo cti(AntiquaCRM::ASettings::getUserTempDir().path());
+  return cti.isWritable();
+}
+
 bool CacheBuilder::createCaches() {
+  if (!createCacheTarget()) {
+    qWarning("CacheBuilder: Premission denied!");
+    return false;
+  }
+
   CacheQuery *m_cq = new CacheQuery(m_sql);
   QListIterator<CacheConfig> it(configs());
   while (it.hasNext()) {

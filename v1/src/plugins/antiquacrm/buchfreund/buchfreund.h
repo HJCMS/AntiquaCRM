@@ -38,7 +38,7 @@ private Q_SLOTS:
   void queryFinished(QNetworkReply *reply);
 
 public Q_SLOTS:
-  void queryNewOrders(int waitSecs = 1);
+  void queryNewOrders();
   void queryOrder(const QString &orderId);
   void orderUpdateAction(const QJsonObject &options);
 

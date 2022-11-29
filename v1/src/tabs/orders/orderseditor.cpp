@@ -525,6 +525,36 @@ OrdersEditor::addArticleItem(const QString &key, const QVariant &value) const {
   return AntiquaCRM::AProviderOrder::createItem(key, value);
 }
 
+void OrdersEditor::setDefaultValues() {
+  m_tableData->setValue("o_delivery_send_id", "");
+  m_tableData->setValue("o_order_status", AntiquaCRM::OrderStatus::STARTED);
+  setDataField(m_tableData->getProperties("o_order_status"),
+               m_tableData->getValue("o_order_status"));
+  m_tableData->setValue("o_delivery",
+                        QDate::currentDate().toString("yyyyMMdd"));
+  setDataField(m_tableData->getProperties("o_delivery"),
+               m_tableData->getValue("o_delivery"));
+  int vat = m_cfg->value("payment/vat2", 0).toInt();
+  m_tableData->setValue("o_vat_levels", vat);
+  setDataField(m_tableData->getProperties("o_vat_levels"),
+               m_tableData->getValue("o_vat_levels"));
+  m_tableData->setValue("o_vat_included", (vat != 0));
+  setDataField(m_tableData->getProperties("o_vat_included"),
+               m_tableData->getValue("o_vat_included"));
+  m_tableData->setValue("o_delivery_add_price", (vat == 0));
+  setDataField(m_tableData->getProperties("o_delivery_add_price"),
+               m_tableData->getValue("o_delivery_add_price"));
+  // Standard Lieferdienst
+  QPair<int, int> ds =
+      m_costSettings->o_delivery_service->defaultDeliveryService();
+  m_tableData->setValue("o_delivery_service", ds.first);
+  setDataField(m_tableData->getProperties("o_delivery_service"),
+               m_tableData->getValue("o_delivery_service"));
+  m_tableData->setValue("o_delivery_package", ds.second);
+  setDataField(m_tableData->getProperties("o_delivery"),
+               m_tableData->getValue("o_delivery"));
+}
+
 bool OrdersEditor::createNewEntry() {
   setInputFields();
   setResetModified(inputFields);
@@ -794,6 +824,7 @@ bool OrdersEditor::createNewOrder(qint64 customerId) {
     return false;
 
   createNewEntry();
+  setDefaultValues();
 
   // Nehme relevante Kundendaten
   AntiquaCRM::ASqlFiles customerQuery("query_customer_new_order");
@@ -941,6 +972,8 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
         prOrder.insertOrderItems(items);
     }
   }
+
+  // Setze Standard Felder
   // Setze auf Auftragsbegin
   prOrder.setValue("o_order_status", AntiquaCRM::OrderStatus::STARTED);
   // Die Paket Verfolgungsnummer muss Manuell gesetzt werden!
@@ -960,6 +993,7 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
       m_costSettings->o_delivery_service->defaultDeliveryService();
   prOrder.setValue("o_delivery_service", deliveryService.first);
   prOrder.setValue("o_delivery_package", deliveryService.second);
+
   // Diese felder bei neuen Einträgen ignorieren!
   QStringList ignored({"o_id", "o_invoice_id"});
 

@@ -118,7 +118,7 @@ const QDir ASettings::getUserDataDir() {
   QString data = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
   QDir d(data);
   if (!d.mkpath(d.path())) {
-    qWarning("Permission denied!");
+    qWarning("DataLocation: Permission denied!");
   }
   d.setFilter(directoryFilter());
   d.setSorting(QDir::Name);
@@ -126,9 +126,10 @@ const QDir ASettings::getUserDataDir() {
 }
 
 const QDir ASettings::getUserTempDir() {
-  QString data =
-      QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-  QDir d(data);
+  QDir d(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
+  if (!d.mkpath(d.path())) {
+    qWarning("CacheLocation: Permission denied!");
+  }
   d.setFilter(directoryFilter());
   d.setSorting(QDir::Name);
   return d;

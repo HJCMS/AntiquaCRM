@@ -6,6 +6,7 @@
 #include "asettings.h"
 
 #include <QDataStream>
+#include <QDir>
 #include <QFile>
 #include <QFileInfo>
 #include <QJsonParseError>
@@ -138,15 +139,7 @@ const QDomDocument ASharedDataFiles::getXML(const QString &basename) {
   return doc;
 }
 
-ASharedCacheFiles::ASharedCacheFiles() : QDir(cacheDir()) {}
-
-const QString ASharedCacheFiles::cacheDir() {
-#ifdef Q_OS_WIN
-  return QStandardPaths::writableLocation(QStandardPaths::TempLocation);
-#else
-  return QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-#endif
-}
+ASharedCacheFiles::ASharedCacheFiles(const QDir &d) : QDir{d} {}
 
 bool ASharedCacheFiles::storeTempFile(const QString &filename,
                                       const QByteArray &data) {

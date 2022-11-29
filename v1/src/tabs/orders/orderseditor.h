@@ -67,6 +67,8 @@ private:
   inline AntiquaCRM::ArticleOrderItem
   addArticleItem(const QString &key, const QVariant &value) const;
 
+  void setDefaultValues();
+
   bool createNewEntry() override;
 
 private Q_SLOTS:

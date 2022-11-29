@@ -8,37 +8,45 @@
 #include <AntiquaCRM>
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QJsonObject>
 #include <QObject>
 #include <QPushButton>
 #include <QSplitter>
 #include <QStatusBar>
+#include <QTabWidget>
 #include <QWidget>
 
-class MessageSelecter;
+class TemplatesTree;
+class TemplatesHeader;
 class MessageEditor;
 class MessageKeywordList;
 
-class MessageTemplates : public QDialog {
+class MessageTemplates final : public QDialog {
   Q_OBJECT
 
 private:
   AntiquaCRM::ASqlCore *m_sql;
-  MessageSelecter *m_toolBar;
+  TemplatesHeader *m_toolBar;
   QSplitter *m_splitter;
+  QTabWidget *m_tabWidget;
+  TemplatesTree *m_tplTree;
   MessageEditor *m_editor;
   MessageKeywordList *m_keysList;
   QDialogButtonBox *m_btnBox;
   QPushButton *btn_save;
   QStatusBar *m_statusBar;
 
+  AntiquaCRM::ASqlDataQuery *m_tplData;
+
   const QString buildTitle(const QString &key) const;
 
   bool createMacrosTree();
 
-  bool createSelecters();
+  bool createTemplateTree();
 
 private Q_SLOTS:
-  void setSqlQuery();
+  void saveCurrentTemplate();
+  void setEditTemplate(const QJsonObject &);
 
 public:
   explicit MessageTemplates(QWidget *parent = nullptr);

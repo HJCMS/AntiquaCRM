@@ -9,6 +9,8 @@
 #include <AntiquaTemplates>
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QJsonObject>
+#include <QLabel>
 #include <QObject>
 #include <QRegularExpression>
 #include <QStatusBar>
@@ -31,8 +33,9 @@ private:
   int p_gender = -1;
   AntiquaCRM::ASettings *m_cfg;
   AntiquaCRM::ASqlCore *m_sql;
+  QJsonObject tplData;
   MailTemplateKeys *m_keys;
-  MessageSelecter *m_selecter;
+  QLabel *m_mailSubject;
   MailBody *m_mailBody;
   MailAttachments *m_attachmentBar;
   QDialogButtonBox *m_btnBox;
@@ -45,12 +48,14 @@ private:
 
 private Q_SLOTS:
   void setMailCommand();
-  void setBody(const QString &body);
+  void setSubject(const QString &);
+  void setBody(const QString &);
   void setAttachment(bool);
 
 public:
   explicit MailForwardDialog(QWidget *parent = nullptr);
   void setOrderId(int orderId);
+  int exec() override;
   int exec(int customerId, const QString &tpl);
 };
 

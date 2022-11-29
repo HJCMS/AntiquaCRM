@@ -24,6 +24,7 @@ Q_SIGNALS:
 
 public:
   explicit CacheBuilder(QObject *parent = nullptr);
+  bool createCacheTarget();
   bool createCaches();
 };
 

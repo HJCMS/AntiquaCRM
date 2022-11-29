@@ -17,20 +17,20 @@ CONFIGURE_FILE (AntiquaTemplates.cmake
 )
 
 SET (subproject_SOURCES
+ templatestree.cpp
+ templatesheader.cpp
  messagetemplates.cpp
  messageeditor.cpp
  messagekeywordlist.cpp
- messagecaller.cpp
- messageselecter.cpp
  antiquatemplates.cpp
 )
 
 SET (subproject_HEADERS
+ templatestree.h
+ templatesheader.h
  messagetemplates.h
  messageeditor.h
  messagekeywordlist.h
- messagecaller.h
- messageselecter.h
  antiquatemplates.h
 )
 

@@ -6,7 +6,10 @@
 MessageEditor::MessageEditor(QWidget *parent) : QTextEdit{parent} {
   setObjectName("messages_editor");
   setAcceptDrops(true);
+  setAcceptRichText(false);
   setContentsMargins(0, 0, 0, 0);
+  setAutoFormatting(QTextEdit::AutoNone);
+  setTextInteractionFlags(Qt::TextEditorInteraction);
 
   QPalette p = palette();
   p.setColor(QPalette::Base, Qt::white);

@@ -195,8 +195,7 @@ void Buchfreund::queryFinished(QNetworkReply *reply) {
   }
 }
 
-void Buchfreund::queryNewOrders(int waitSecs) {
-  Q_UNUSED(waitSecs);
+void Buchfreund::queryNewOrders() {
   QDateTime curr = QDateTime::currentDateTime();
   QDateTime past = curr.addDays(ANTIQUACRM_QUERY_PASTDAYS);
   QJsonObject obj;

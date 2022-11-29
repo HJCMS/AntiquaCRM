@@ -4,7 +4,7 @@
 <context>
     <name>Abebooks</name>
     <message>
-        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+150"/>
+        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+149"/>
         <source>AbeBooks response with errors!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12,12 +12,12 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+117"/>
+        <location filename="../antiquaappl.cpp" line="+118"/>
         <source>Plugin %1 found and loading ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+123"/>
+        <location line="+122"/>
         <source>Search Networkconnection!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -62,7 +62,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Cachefiles completed ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -360,6 +360,11 @@
     <message>
         <location filename="../utils/mailing/mailattachments.cpp" line="+13"/>
         <source>Attachment path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>No Attachment changed!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -708,7 +713,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+35"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -730,7 +735,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-383"/>
+        <location line="-384"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -936,7 +941,7 @@ Image - Article Id: %2</source>
 <context>
     <name>Booklooker</name>
     <message>
-        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+270"/>
+        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+260"/>
         <source>Booklooker response with errors!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1015,7 +1020,7 @@ Image - Article Id: %2</source>
 <context>
     <name>Buchfreund</name>
     <message>
-        <location filename="../plugins/antiquacrm/buchfreund/buchfreund.cpp" line="+193"/>
+        <location filename="../plugins/antiquacrm/buchfreund/buchfreund.cpp" line="+194"/>
         <source>Buchfreund response with errors!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1023,7 +1028,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CacheBuilder</name>
     <message>
-        <location filename="../utils/cache/cachebuilder.cpp" line="+18"/>
+        <location filename="../utils/cache/cachebuilder.cpp" line="+21"/>
         <source>Storage locations</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1048,7 +1053,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+21"/>
         <source>Create</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1254,8 +1259,8 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Certificate (*.pem)</source>
+        <location line="+1"/>
+        <source>Certificate (*.pem *.ca *.crt *.cert *.key)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1453,7 +1458,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+69"/>
         <source>Customer saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2888,7 +2893,7 @@ Image - Article Id: %2</source>
 <context>
     <name>MailAttachments</name>
     <message>
-        <location filename="../utils/mailing/mailattachments.cpp" line="+30"/>
+        <location filename="../utils/mailing/mailattachments.cpp" line="+29"/>
         <location line="+15"/>
         <source>Attachment</source>
         <translation type="unfinished"></translation>
@@ -2953,12 +2958,12 @@ Image - Article Id: %2</source>
 <context>
     <name>MailForwardDialog</name>
     <message>
-        <location filename="../utils/mailing/mailforwarddialog.cpp" line="+19"/>
+        <location filename="../utils/mailing/mailforwarddialog.cpp" line="+20"/>
         <source>Mail Templates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+22"/>
         <source>Mail</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2968,12 +2973,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+35"/>
         <source>an error occurred</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+135"/>
+        <location line="+142"/>
         <source>Missing Attachment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2982,12 +2987,17 @@ Image - Article Id: %2</source>
     <name>MailTemplateKeys</name>
     <message>
         <location filename="../utils/mailing/mailtemplatekeys.cpp" line="+20"/>
-        <source>Mr</source>
+        <source>Dear Mr.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Mrs</source>
+        <location line="+3"/>
+        <source>Dear Mrs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Dear Ladies and Gentlemen</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3015,75 +3025,33 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
-    <name>MessageSelecter</name>
-    <message>
-        <location filename="../utils/templates/messageselecter.cpp" line="+16"/>
-        <location line="+62"/>
-        <source>Select your Template to edit.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-58"/>
-        <source>Gender</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Constant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Subject</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MessageTemplates</name>
     <message>
-        <location filename="../utils/templates/messagetemplates.cpp" line="+16"/>
+        <location filename="../utils/templates/messagetemplates.cpp" line="+15"/>
         <source>Template Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Edit Templates</source>
+        <location line="+18"/>
+        <location line="+2"/>
+        <source>Templates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+58"/>
-        <location line="+29"/>
-        <location line="+62"/>
+        <location line="+3"/>
+        <location line="+2"/>
+        <source>Macros</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+47"/>
+        <location line="+30"/>
+        <location line="+57"/>
         <source>an error occurred</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-50"/>
-        <source>The caller field is mandatory!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>The title cannot be empty!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>The Subject cannot be empty!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Empty body text is not accepted!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+30"/>
+        <location line="-2"/>
         <source>Save data successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3366,7 +3334,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+99"/>
         <source>Unsaved Changes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3430,7 +3398,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+167"/>
+        <location line="+168"/>
         <source>No Provider orders data found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4644,56 +4612,25 @@ Image - Article Id: %2</source>
     <name>ProviderSettings</name>
     <message>
         <location filename="../utils/settings/providersettings.cpp" line="+24"/>
-        <location line="+44"/>
-        <location line="+35"/>
-        <source>Protocoll</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-74"/>
-        <location line="+44"/>
-        <location line="+35"/>
+        <location line="+26"/>
+        <location line="+26"/>
         <source>Domain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-74"/>
-        <location line="+49"/>
-        <location line="+30"/>
+        <location line="-47"/>
+        <location line="+31"/>
+        <location line="+21"/>
         <source>API Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-75"/>
-        <source>API Path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location line="+74"/>
-        <source>History</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-72"/>
-        <location line="+74"/>
-        <source>Query history</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-73"/>
-        <location line="+74"/>
-        <source>days</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-56"/>
-        <location line="+35"/>
+        <location line="-35"/>
         <source>Loginname</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-21"/>
+        <location line="+9"/>
         <source>API Port</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5560,6 +5497,53 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>TemplatesHeader</name>
+    <message>
+        <location filename="../utils/templates/templatesheader.cpp" line="+13"/>
+        <source>Menue entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+18"/>
+        <source>Max allowed %1 characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <source>Subject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Attachment</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TemplatesTree</name>
+    <message>
+        <location filename="../utils/templates/templatestree.cpp" line="+17"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Template</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>eMail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TestConfig</name>
     <message>
         <location filename="../utils/assistant/testconfig.cpp" line="+14"/>
@@ -5580,7 +5564,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TextField</name>
     <message>
-        <location filename="../widgets/textfield.cpp" line="+59"/>
+        <location filename="../widgets/textfield.cpp" line="+63"/>
         <source>requires a valid input.</source>
         <translation type="unfinished"></translation>
     </message>

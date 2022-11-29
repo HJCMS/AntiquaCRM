@@ -9,9 +9,11 @@
 #include <QFileDialog>
 #include <QLayout>
 
-AttachmentInfo::AttachmentInfo(QWidget *parent) : QLabel{parent} {
+AttachmentInfo::AttachmentInfo(QWidget *parent) : QLineEdit{parent} {
   p_tip = tr("Attachment path");
   setToolTip(p_tip);
+  setStyleSheet("QLineEdit {background:transparent;}");
+  setPlaceholderText(tr("No Attachment changed!"));
 }
 
 void AttachmentInfo::restore() {
@@ -64,11 +66,12 @@ void MailAttachments::openFileDialog() {
 
 void MailAttachments::setActive(bool b) { m_btn->setEnabled(b); }
 
-void MailAttachments::setAttachment(const QString &name) {
+bool MailAttachments::setAttachment(const QString &name) {
   QDir path(m_cfg->value("dirs/invoices").toString());
   QStringList filter({"*.pdf", "*.PDF"});
   QDirIterator it(path.path(), filter, QDir::NoFilter,
                   QDirIterator::Subdirectories);
+
   while (it.hasNext()) {
     QFileInfo f(it.next());
     if (f.baseName() == name) {
@@ -77,6 +80,7 @@ void MailAttachments::setAttachment(const QString &name) {
       break;
     }
   }
+  return exists();
 }
 
 bool MailAttachments::exists() {

@@ -19,6 +19,7 @@ private:
   QSqlQuery p_query;
   QMap<QString, QVariant> p_data;
 
+  const QString salutation();
   const QString completeName();
   const QString customerMail();
   const QString customerId();

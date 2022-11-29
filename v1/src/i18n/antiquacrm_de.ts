@@ -4,7 +4,7 @@
 <context>
     <name>Abebooks</name>
     <message>
-        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+150"/>
+        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+149"/>
         <source>AbeBooks response with errors!</source>
         <translation>AbeBooks-Antwort mit Fehlern!</translation>
     </message>
@@ -12,12 +12,12 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+117"/>
+        <location filename="../antiquaappl.cpp" line="+118"/>
         <source>Plugin %1 found and loading ...</source>
         <translation>Plugin %1 gefunden und wird geladen ...</translation>
     </message>
     <message>
-        <location line="+123"/>
+        <location line="+122"/>
         <source>Search Networkconnection!</source>
         <translation>Suche Netzwerkverbindung!</translation>
     </message>
@@ -62,7 +62,7 @@
         <translation>Erstelle Temporäre Dateien.</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Cachefiles completed ...</source>
         <translation>Temporäre Dateien erstellt ...</translation>
     </message>
@@ -361,6 +361,11 @@
         <location filename="../utils/mailing/mailattachments.cpp" line="+13"/>
         <source>Attachment path</source>
         <translation>Anhangspfad</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>No Attachment changed!</source>
+        <translation>Kein Anhang eingefügt!</translation>
     </message>
 </context>
 <context>
@@ -708,7 +713,7 @@
         <translation>Verlassen Sie diese Seite nicht, bevor Sie Ihre Änderungen gespeichert haben!</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+35"/>
         <source>Remove Image from Database</source>
         <translation>Bild aus Datenbank entfernen</translation>
     </message>
@@ -732,7 +737,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="-383"/>
+        <location line="-384"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
@@ -938,7 +943,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>Booklooker</name>
     <message>
-        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+270"/>
+        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+260"/>
         <source>Booklooker response with errors!</source>
         <translation>Booklooker-Antwort mit Fehlern!</translation>
     </message>
@@ -1017,7 +1022,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>Buchfreund</name>
     <message>
-        <location filename="../plugins/antiquacrm/buchfreund/buchfreund.cpp" line="+193"/>
+        <location filename="../plugins/antiquacrm/buchfreund/buchfreund.cpp" line="+194"/>
         <source>Buchfreund response with errors!</source>
         <translation>Buchfreund-Antwort mit Fehlern!</translation>
     </message>
@@ -1025,7 +1030,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CacheBuilder</name>
     <message>
-        <location filename="../utils/cache/cachebuilder.cpp" line="+18"/>
+        <location filename="../utils/cache/cachebuilder.cpp" line="+21"/>
         <source>Storage locations</source>
         <translation>Lagerposition</translation>
     </message>
@@ -1050,7 +1055,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+21"/>
         <source>Create</source>
         <translation>Erstellen</translation>
     </message>
@@ -1256,9 +1261,9 @@ Bild - Artikel Nr: %2</translation>
         <translation>Öffne CA Paket</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Certificate (*.pem)</source>
-        <translation>Zertifikat (*.pem)</translation>
+        <location line="+1"/>
+        <source>Certificate (*.pem *.ca *.crt *.cert *.key)</source>
+        <translation>Zertifikat (*.pem *.ca *.crt *.cert *.key)</translation>
     </message>
 </context>
 <context>
@@ -1455,7 +1460,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+69"/>
         <source>Customer saved successfully!</source>
         <translation>Kunde erfolgreich gespeichert!</translation>
     </message>
@@ -2890,7 +2895,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>MailAttachments</name>
     <message>
-        <location filename="../utils/mailing/mailattachments.cpp" line="+30"/>
+        <location filename="../utils/mailing/mailattachments.cpp" line="+29"/>
         <location line="+15"/>
         <source>Attachment</source>
         <translation>Anhang</translation>
@@ -2955,12 +2960,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>MailForwardDialog</name>
     <message>
-        <location filename="../utils/mailing/mailforwarddialog.cpp" line="+19"/>
+        <location filename="../utils/mailing/mailforwarddialog.cpp" line="+20"/>
         <source>Mail Templates</source>
         <translation>E-Mail vorlagen</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+22"/>
         <source>Mail</source>
         <translation>E-Mail</translation>
     </message>
@@ -2970,12 +2975,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>E-Mail-Befehl starten</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+35"/>
         <source>an error occurred</source>
         <translation>Ein Fehler ist aufgetreten</translation>
     </message>
     <message>
-        <location line="+135"/>
+        <location line="+142"/>
         <source>Missing Attachment</source>
         <translation>Fehlender Anhang</translation>
     </message>
@@ -2984,13 +2989,18 @@ Bild - Artikel Nr: %2</translation>
     <name>MailTemplateKeys</name>
     <message>
         <location filename="../utils/mailing/mailtemplatekeys.cpp" line="+20"/>
-        <source>Mr</source>
-        <translation>Herr</translation>
+        <source>Dear Mr.</source>
+        <translation>Sehr geehrter Herr</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Mrs</source>
-        <translation>Frau</translation>
+        <location line="+3"/>
+        <source>Dear Mrs.</source>
+        <translation>Sehr geehrte Frau</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Dear Ladies and Gentlemen</source>
+        <translation>Sehr geehrte Damen und Herren</translation>
     </message>
 </context>
 <context>
@@ -3017,75 +3027,33 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
-    <name>MessageSelecter</name>
-    <message>
-        <location filename="../utils/templates/messageselecter.cpp" line="+16"/>
-        <location line="+62"/>
-        <source>Select your Template to edit.</source>
-        <translation>Wählen Sie die zu bearbeitende Vorlage aus.</translation>
-    </message>
-    <message>
-        <location line="-58"/>
-        <source>Gender</source>
-        <translation>Geschlecht</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Title</source>
-        <translation>Titel</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Constant</source>
-        <translation>Konstante</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Subject</source>
-        <translation>Betreff</translation>
-    </message>
-</context>
-<context>
     <name>MessageTemplates</name>
     <message>
-        <location filename="../utils/templates/messagetemplates.cpp" line="+16"/>
+        <location filename="../utils/templates/messagetemplates.cpp" line="+15"/>
         <source>Template Editor</source>
         <translation>Vorlagen Editor</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Edit Templates</source>
-        <translation>Bearbeite Vorlagen</translation>
+        <location line="+18"/>
+        <location line="+2"/>
+        <source>Templates</source>
+        <translation>Vorlagen</translation>
     </message>
     <message>
-        <location line="+58"/>
-        <location line="+29"/>
-        <location line="+62"/>
+        <location line="+3"/>
+        <location line="+2"/>
+        <source>Macros</source>
+        <translation>Makros</translation>
+    </message>
+    <message>
+        <location line="+47"/>
+        <location line="+30"/>
+        <location line="+57"/>
         <source>an error occurred</source>
         <translation>Ein Fehler ist aufgetreten</translation>
     </message>
     <message>
-        <location line="-50"/>
-        <source>The caller field is mandatory!</source>
-        <translation>Das Aufruferfeld ist Pflicht!</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>The title cannot be empty!</source>
-        <translation>Der Titel darf nicht leer sein!</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>The Subject cannot be empty!</source>
-        <translation>Der Betreff darf nicht leer sein!</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Empty body text is not accepted!</source>
-        <translation>Ein leeres Textfeld wird nicht akzeptiert!</translation>
-    </message>
-    <message>
-        <location line="+30"/>
+        <location line="-2"/>
         <source>Save data successfully!</source>
         <translation>Daten erfolgreich gespeichert!</translation>
     </message>
@@ -3368,7 +3336,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Artikel: %1 nicht gefunden oder nicht auf Lager!</translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+99"/>
         <source>Unsaved Changes</source>
         <translation>Nicht gespeicherte Änderungen</translation>
     </message>
@@ -3432,7 +3400,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Keine Daten gefunden! - Druckvorgang abgebrochen.</translation>
     </message>
     <message>
-        <location line="+167"/>
+        <location line="+168"/>
         <source>No Provider orders data found!</source>
         <translation>Keine Dienstleister-Auftragsdaten gefunden!</translation>
     </message>
@@ -4646,56 +4614,25 @@ Bild - Artikel Nr: %2</translation>
     <name>ProviderSettings</name>
     <message>
         <location filename="../utils/settings/providersettings.cpp" line="+24"/>
-        <location line="+44"/>
-        <location line="+35"/>
-        <source>Protocoll</source>
-        <translation>Protokoll</translation>
-    </message>
-    <message>
-        <location line="-74"/>
-        <location line="+44"/>
-        <location line="+35"/>
+        <location line="+26"/>
+        <location line="+26"/>
         <source>Domain</source>
         <translation>Domäne</translation>
     </message>
     <message>
-        <location line="-74"/>
-        <location line="+49"/>
-        <location line="+30"/>
+        <location line="-47"/>
+        <location line="+31"/>
+        <location line="+21"/>
         <source>API Key</source>
         <translation>API Schlüssel</translation>
     </message>
     <message>
-        <location line="-75"/>
-        <source>API Path</source>
-        <translation>API Pfad</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location line="+74"/>
-        <source>History</source>
-        <translation>Verlauf</translation>
-    </message>
-    <message>
-        <location line="-72"/>
-        <location line="+74"/>
-        <source>Query history</source>
-        <translation>Verlaufsabfrage</translation>
-    </message>
-    <message>
-        <location line="-73"/>
-        <location line="+74"/>
-        <source>days</source>
-        <translation>Tage</translation>
-    </message>
-    <message>
-        <location line="-56"/>
-        <location line="+35"/>
+        <location line="-35"/>
         <source>Loginname</source>
         <translation>Anmeldename</translation>
     </message>
     <message>
-        <location line="-21"/>
+        <location line="+9"/>
         <source>API Port</source>
         <translation>API Port</translation>
     </message>
@@ -5562,6 +5499,53 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>TemplatesHeader</name>
+    <message>
+        <location filename="../utils/templates/templatesheader.cpp" line="+13"/>
+        <source>Menue entry</source>
+        <translation>Menüeintrag</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+18"/>
+        <source>Max allowed %1 characters.</source>
+        <translation>Maximal erlaubte Zeichenanzahl ist %1.</translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <source>Subject</source>
+        <translation>Betreff</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Attachment</source>
+        <translation>Anhang</translation>
+    </message>
+</context>
+<context>
+    <name>TemplatesTree</name>
+    <message>
+        <location filename="../utils/templates/templatestree.cpp" line="+17"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Template</source>
+        <translation>Vorlage</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>eMail</source>
+        <translation>E-Mail</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Printing</source>
+        <translation>Drucken</translation>
+    </message>
+</context>
+<context>
     <name>TestConfig</name>
     <message>
         <location filename="../utils/assistant/testconfig.cpp" line="+14"/>
@@ -5582,7 +5566,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TextField</name>
     <message>
-        <location filename="../widgets/textfield.cpp" line="+59"/>
+        <location filename="../widgets/textfield.cpp" line="+63"/>
         <source>requires a valid input.</source>
         <translation>erfordert eine gültige Eingabe.</translation>
     </message>

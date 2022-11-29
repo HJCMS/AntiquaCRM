@@ -4,8 +4,10 @@
 #include "anetworker.h"
 #include "anetworkrequest.h"
 
+#ifdef ANTIQUA_DEVELOPEMENT
 #ifndef ANTIQUACRM_NETWORK_DEBUG
 #define ANTIQUACRM_NETWORK_DEBUG false
+#endif
 #endif
 
 #include <QBuffer>
@@ -77,16 +79,9 @@ void ANetworker::slotReadResponse() {
   }
 
   if (!m_reply->bytesAvailable()) {
-    qWarning("ANetorker: No Data responsed!");
+    qWarning("Network: No Data responsed!");
     return;
   }
-
-#if (ANTIQUACRM_NETWORK_DEBUG == true)
-  qInfo("-- %s Headers:", qPrintable(m_reply->url().host()));
-  foreach (QByteArray a, m_reply->rawHeaderList()) {
-    qInfo("%s: %s", a.constData(), m_reply->rawHeader(a).constData());
-  }
-#endif
 
   bool textContent = false;
   QStringList findText("application/json");
@@ -122,15 +117,15 @@ void ANetworker::slotReadResponse() {
   QByteArray data;
   data = m_reply->readAll();
   if (data.isNull()) {
-    qWarning("ANetworker: No Data responsed!");
+    qWarning("Network: No Data responsed!");
     return;
   }
 
 #if (ANTIQUACRM_NETWORK_DEBUG == true)
-  qInfo("-- %s Codec: %s - Size: %d Content-Encoding: %s",
-        qPrintable(m_reply->url().host()), // Url
-        qPrintable(decodeWith), data.size(),
-        qPrintable(m_reply->rawHeader("Content-Encoding")));
+  qInfo("Host: %s", qPrintable(m_reply->url().host()));
+  foreach (QByteArray a, m_reply->rawHeaderList()) {
+    qInfo("-- %s: %s", a.constData(), m_reply->rawHeader(a).constData());
+  }
 #endif
 
   // JSON Request
@@ -138,7 +133,7 @@ void ANetworker::slotReadResponse() {
     QJsonParseError parser;
     QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
     if (parser.error != QJsonParseError::NoError) {
-      qWarning("ANetorker: Json Parse Error:(%s)!",
+      qWarning("Network: Responsed json is not well format:(%s)!",
                qPrintable(parser.errorString()));
       emit sendFinishedWithErrors();
       return;
@@ -155,7 +150,7 @@ void ANetworker::slotReadResponse() {
     int errorLine = 0;
     int errorColumn = 0;
     if (!xml.setContent(data, false, &errorMsg, &errorLine, &errorColumn)) {
-      qWarning("ANetorker: Returned XML is not well formatted!");
+      qWarning("Network: Responsed XML is not well format!");
       emit sendFinishedWithErrors();
       return;
     }
@@ -164,7 +159,7 @@ void ANetworker::slotReadResponse() {
     return;
   }
 
-  qWarning("ANetorker: Unknown Response type!");
+  qWarning("Network: Unknown response type!");
 }
 
 void ANetworker::slotSslErrors(const QList<QSslError> &list) {

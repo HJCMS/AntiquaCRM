@@ -52,8 +52,10 @@ void MailCommand::sendMail() {
   }
 
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << "Skip CMD in Developement mode!" << Qt::endl;
+  QString info("Send eMail Command in Developement ignored!");
+  qDebug() << info << Qt::endl;
   qDebug() << cmd << Qt::endl;
+  qDebug() << info << Qt::endl;
   return;
 #endif
 

@@ -31,8 +31,7 @@ public:
 
 class ANTIQUACRM_LIBRARY ASharedCacheFiles : public QDir {
 public:
-  explicit ASharedCacheFiles();
-  static const QString cacheDir();
+  explicit ASharedCacheFiles(const QDir &d = ASettings::getUserTempDir());
   bool storeTempFile(const QString &filename, const QByteArray &data);
   bool storeTempFile(const QString &filename, const QString &data);
   const QString getTempFile(const QString &filename);

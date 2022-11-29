@@ -88,8 +88,6 @@ bool CustomersEditor::setDataField(const QSqlField &field,
     return false;
 
   QString key = field.name();
-  bool required = (field.requiredStatus() == QSqlField::Required);
-
   InputEdit *inp = findChild<InputEdit *>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
     inp->setValue(value);
@@ -104,6 +102,7 @@ bool CustomersEditor::setDataField(const QSqlField &field,
     return true;
 
 #ifdef ANTIQUA_DEVELOPEMENT
+  bool required = (field.requiredStatus() == QSqlField::Required);
   qDebug() << "Missing:" << key << "=(" << value << ") Required:" << required;
 #endif
 
