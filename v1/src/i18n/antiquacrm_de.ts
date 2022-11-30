@@ -4,7 +4,7 @@
 <context>
     <name>Abebooks</name>
     <message>
-        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+149"/>
+        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+143"/>
         <source>AbeBooks response with errors!</source>
         <translation>AbeBooks-Antwort mit Fehlern!</translation>
     </message>
@@ -2985,8 +2985,8 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Quit</source>
-        <translation>Abschließen</translation>
+        <source>Close</source>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -2994,7 +2994,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Schließt das Fenster</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+19"/>
+        <source>Please use the Finish button!</source>
+        <translation>Bitte benutzen Sie den Beenden knopf!</translation>
+    </message>
+    <message>
+        <location line="+26"/>
         <source>an error occurred</source>
         <translation>Ein Fehler ist aufgetreten</translation>
     </message>
@@ -3009,12 +3014,12 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location filename="../utils/mailing/mailtemplatekeys.cpp" line="+20"/>
         <source>Dear Mr.</source>
-        <translation>Sehr geehrter Herr</translation>
+        <translation>Sehr geehrter</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Dear Mrs.</source>
-        <translation>Sehr geehrte Frau</translation>
+        <translation>Sehr geehrte</translation>
     </message>
     <message>
         <location line="+3"/>

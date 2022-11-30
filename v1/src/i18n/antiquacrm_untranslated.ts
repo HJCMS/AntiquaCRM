@@ -4,7 +4,7 @@
 <context>
     <name>Abebooks</name>
     <message>
-        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+149"/>
+        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+143"/>
         <source>AbeBooks response with errors!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2983,7 +2983,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+3"/>
-        <source>Quit</source>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2992,7 +2992,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+19"/>
+        <source>Please use the Finish button!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
         <source>an error occurred</source>
         <translation type="unfinished"></translation>
     </message>
