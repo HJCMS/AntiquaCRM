@@ -2894,17 +2894,26 @@ Image - Article Id: %2</source>
     <name>MailAttachments</name>
     <message>
         <location filename="../utils/mailing/mailattachments.cpp" line="+29"/>
-        <location line="+15"/>
+        <source>Attach file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Search file to attach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Open the file dialog and change the attachment path.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>Attachment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-13"/>
-        <source>Open Filedialog and change attachment path.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
+        <location line="+1"/>
         <source>Mail Attachments (*.pdf *.PDF *.gs)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2963,7 +2972,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+23"/>
         <source>Mail</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2973,7 +2982,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+3"/>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Closing this dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+36"/>
         <source>an error occurred</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3044,7 +3063,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+37"/>
         <location line="+30"/>
         <location line="+57"/>
         <source>an error occurred</source>

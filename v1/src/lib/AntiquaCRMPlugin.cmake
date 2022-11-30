@@ -8,6 +8,11 @@
 #include "aglobal.h"
 #endif
 
+// AntiquaCRM::AUtil
+#ifndef ANTIQUACRM_AUTIL_H
+#include "autil.h"
+#endif
+
 // AntiquaCRM::APluginInterface
 #ifndef ANTIQUACRM_PLUGIN_INTERFACE_H
 #include "aplugininterface.h"

@@ -529,11 +529,11 @@ const AntiquaCRM::AProviderOrders Booklooker::getOrders() const {
         QString bcp47 = address.value("country").toString();
         QString gender = address.value("title").toString();
         item.setValue("c_gender", convertGender(gender));
-        item.setValue("c_firstname", ucFirst(firstname));
-        item.setValue("c_lastname", ucFirst(lastname));
+        item.setValue("c_firstname", AntiquaCRM::AUtil::ucFirst(firstname));
+        item.setValue("c_lastname", AntiquaCRM::AUtil::ucFirst(lastname));
         item.setValue("c_street", street);
         item.setValue("c_postalcode", postalcode);
-        item.setValue("c_location", ucFirst(location));
+        item.setValue("c_location", AntiquaCRM::AUtil::ucFirst(location));
         item.setValue("o_vat_country", bcp47);
         QString state = AntiquaCRM::AEuropeanCountries().value(bcp47.toUpper());
         if (!state.isEmpty()) {

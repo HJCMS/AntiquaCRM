@@ -38,8 +38,6 @@ private:
 
   AntiquaCRM::ASqlDataQuery *m_tplData;
 
-  const QString buildTitle(const QString &key) const;
-
   bool createMacrosTree();
 
   bool createTemplateTree();

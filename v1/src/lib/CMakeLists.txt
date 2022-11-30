@@ -37,7 +37,6 @@ SET (projectinc_FILES
 
 SET (projectLibrary_SOURCES
  acompleterdata.cpp
- acompressedheader.cpp
  aeuropeancountries.cpp
  anetworker.cpp
  anetworkiface.cpp
@@ -56,11 +55,11 @@ SET (projectLibrary_SOURCES
  asqlsettings.cpp
  ataxcalculator.cpp
  atransmitter.cpp
+ autil.cpp
 )
 
 SET (projectLibrary_HEADERS
  acompleterdata.h
- acompressedheader.h
  aeuropeancountries.h
  aglobal.h
  anetworker.h
@@ -80,6 +79,7 @@ SET (projectLibrary_HEADERS
  asqlsettings.h
  ataxcalculator.h
  atransmitter.h
+ autil.h
  ${projectinc_FILES}
 )
 

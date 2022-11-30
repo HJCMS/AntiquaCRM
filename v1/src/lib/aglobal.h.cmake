@@ -11,10 +11,8 @@
 
 #include <QtGlobal>
 #include <QObject>
-#include <QRegExp>
 #include <QString>
 #include <QIODevice>
-#include <QSysInfo>
 
 /**
  * @def ANTIQUACRM_NAME
@@ -213,63 +211,6 @@ namespace AntiquaCRM {
  Q_NAMESPACE
 
  /**
-  * @brief prepare and normalize single strings
-  */
- static const QString trim(const QString &str) {
-  QString out = str;
-  out.replace(QRegExp("\\s+"), " ");
-  return out.trimmed();
- }
-
- /**
-  * @brief Regular Expression for eMail
-  */
- static const QRegExp mailRegExp() {
-  QRegExp reg;
-  reg.setCaseSensitivity(Qt::CaseInsensitive);
-  reg.setPattern("^([\\d\\w\\-\\.]{3,})@([\\d\\w\\-\\.]{3,})\\.([a-z]{2,6})$");
-  return reg;
- }
-
- /**
-  * @brief Remove none Numbers from Mobile/Phone input
-  */
- static const QString stripPhone(const QString &phone) {
-  QString out = phone.trimmed();
-  out.replace(QRegExp("\\D+"), "");
-  return out.trimmed();
- }
-
- /**
-  * @brief Regular Expression for Phonenumbers
-  * @note No url.scheme() supported!
-  */
- static const QRegExp phoneRegExp() {
-  QRegExp reg;
-  reg.setPattern("^([\\d]{6}[\\d]+)$");
-  return reg;
- }
-
-
- /**
-  * @brief Socket serverName
-  */
- static const QString antiquaSocketName() {
-   QString name(ANTIQUACRM_CONNECTION_DOMAIN);
-   name.append(".");
-   name.append(QString::fromLocal8Bit(QSysInfo::machineUniqueId()));
-   QString userName;
-#ifdef Q_OS_LINUX
-   userName = qEnvironmentVariable("USER").trimmed().replace(" ", "");
-   if (!userName.isEmpty()) {
-     name.append(".");
-     name.append(userName);
-   }
-#endif
-   return name;
- }
-
- /**
   * @brief Nachrichtentyp
   * Definiert die Dringlichkeit einer Nachricht an das Meldungssystem!
   */
@@ -406,15 +347,6 @@ namespace AntiquaCRM {
    QString plz;
    QString location;
    QString state;
- };
-
- struct ANTIQUACRM_LIBRARY APluginConfig {
-   QString hostname = QString();
-   QString querypath = QString();
-   QString username = QString();
-   QString apiKey = QString();
-   int port = 443;
-   int history = -7;
  };
 
 };

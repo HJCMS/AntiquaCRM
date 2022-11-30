@@ -2896,17 +2896,26 @@ Bild - Artikel Nr: %2</translation>
     <name>MailAttachments</name>
     <message>
         <location filename="../utils/mailing/mailattachments.cpp" line="+29"/>
-        <location line="+15"/>
+        <source>Attach file</source>
+        <translation>Datei anhängen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Search file to attach</source>
+        <translation>Datei zum Anhängen suchen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Open the file dialog and change the attachment path.</source>
+        <translation>Öffnen Sie den Dateidialog und ändern Sie den Anhangspfad.</translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>Attachment</source>
         <translation>Anhang</translation>
     </message>
     <message>
-        <location line="-13"/>
-        <source>Open Filedialog and change attachment path.</source>
-        <translation>Öffnen Sie den Dateidialog und ändern Sie den Anhangspfad.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
+        <location line="+1"/>
         <source>Mail Attachments (*.pdf *.PDF *.gs)</source>
         <translation>Mailanhänge (*.pdf *.PDF *.gs)</translation>
     </message>
@@ -2965,7 +2974,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>E-Mail vorlagen</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+23"/>
         <source>Mail</source>
         <translation>E-Mail</translation>
     </message>
@@ -2975,7 +2984,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>E-Mail-Befehl starten</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+3"/>
+        <source>Quit</source>
+        <translation>Abschließen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Closing this dialog</source>
+        <translation>Schließt das Fenster</translation>
+    </message>
+    <message>
+        <location line="+36"/>
         <source>an error occurred</source>
         <translation>Ein Fehler ist aufgetreten</translation>
     </message>
@@ -3046,7 +3065,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Makros</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+37"/>
         <location line="+30"/>
         <location line="+57"/>
         <source>an error occurred</source>

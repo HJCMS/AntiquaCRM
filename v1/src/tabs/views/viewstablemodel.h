@@ -13,9 +13,6 @@
 class ViewsTableModel : public QSqlTableModel {
   Q_OBJECT
 
-private:
-  const QString ucFirst(const QString &title) const;
-
 public:
   explicit ViewsTableModel(const QSqlDatabase &db, QObject *parent = nullptr);
   QVariant headerData(int section, Qt::Orientation orientation,

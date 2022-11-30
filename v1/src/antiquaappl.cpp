@@ -215,7 +215,7 @@ void AntiquaAppl::initDefaultTheme() {
 
 bool AntiquaAppl::isRunning() {
   QLocalSocket socket(this);
-  socket.setServerName(AntiquaCRM::antiquaSocketName());
+  socket.setServerName(AntiquaCRM::AUtil::socketName());
   if (socket.open(QLocalSocket::ReadWrite)) {
     qInfo("Application already started.");
     socket.close();

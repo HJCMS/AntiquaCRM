@@ -8,17 +8,17 @@
 #include "mailtemplatekeys.h"
 
 #include <QDebug>
-#include <QTimer>
 #include <QIcon>
 #include <QLayout>
 #include <QRegularExpressionMatch>
 #include <QRegularExpressionMatchIterator>
 #include <QTextCursor>
+#include <QTimer>
 
 MailForwardDialog::MailForwardDialog(QWidget *parent) : QDialog{parent} {
   setObjectName("create_mail_forward_dialog");
   setWindowTitle(tr("Mail Templates"));
-  setMinimumSize(QSize(500, 500));
+  setMinimumSize(QSize(650, 450));
   setSizeGripEnabled(true);
 
   m_cfg = new AntiquaCRM::ASettings(this);
@@ -38,12 +38,19 @@ MailForwardDialog::MailForwardDialog(QWidget *parent) : QDialog{parent} {
   m_attachmentBar->setObjectName("tb_attachment");
   layout->addWidget(m_attachmentBar);
 
-  m_btnBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
-  m_btnMail = new QPushButton(tr("Mail"), m_btnBox);
-  m_btnMail->setIcon(QIcon(":icons/user_identity.png"));
-  m_btnMail->setEnabled(false);
-  m_btnMail->setToolTip(tr("Start eMail command"));
-  m_btnBox->addButton(m_btnMail, QDialogButtonBox::ActionRole);
+  m_btnBox = new QDialogButtonBox(this);
+
+  btn_email = new QPushButton(tr("Mail"), m_btnBox);
+  btn_email->setIcon(QIcon(":icons/user_identity.png"));
+  btn_email->setEnabled(false);
+  btn_email->setToolTip(tr("Start eMail command"));
+  m_btnBox->addButton(btn_email, QDialogButtonBox::ActionRole);
+
+  btn_close = new QPushButton(tr("Close"), m_btnBox);
+  btn_close->setIcon(QIcon("://icons/action_quit.png"));
+  btn_close->setToolTip(tr("Closing this dialog"));
+  m_btnBox->addButton(btn_close, QDialogButtonBox::RejectRole);
+
   layout->addWidget(m_btnBox);
 
   m_statusBar = new QStatusBar(this);
@@ -54,7 +61,16 @@ MailForwardDialog::MailForwardDialog(QWidget *parent) : QDialog{parent} {
   setLayout(layout);
 
   connect(m_btnBox, SIGNAL(rejected()), this, SLOT(reject()));
-  connect(m_btnMail, SIGNAL(clicked()), this, SLOT(setMailCommand()));
+  connect(btn_email, SIGNAL(clicked()), this, SLOT(setMailCommand()));
+}
+
+void MailForwardDialog::closeEvent(QCloseEvent *e) {
+  if (e->type() == QEvent::Close) {
+    e->setAccepted(false);
+    m_statusBar->showMessage(tr("Please use the Finish button!"));
+    return;
+  }
+  QDialog::closeEvent(e);
 }
 
 bool MailForwardDialog::createMailSelect(const QString &tpl) {
@@ -211,18 +227,18 @@ void MailForwardDialog::setBody(const QString &body) {
 void MailForwardDialog::setAttachment(bool b) {
   int invoice = m_keys->getData("o_invoice_id").toInt();
   if (b && invoice > 0) {
-    m_btnMail->setEnabled(false);
+    btn_email->setEnabled(false);
     m_attachmentBar->clear();
     m_attachmentBar->setActive(true);
 
     QString id = QString::number(invoice).rightJustified(7, '0');
     if (m_attachmentBar->setAttachment(id)) {
-      m_btnMail->setEnabled(true);
+      btn_email->setEnabled(true);
     } else {
       m_statusBar->showMessage(tr("Missing Attachment"), 0);
     }
   } else {
-    m_btnMail->setEnabled(false);
+    btn_email->setEnabled(false);
     m_attachmentBar->clear();
   }
 }

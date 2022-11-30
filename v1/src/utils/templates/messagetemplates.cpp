@@ -62,16 +62,6 @@ MessageTemplates::MessageTemplates(QWidget *parent) : QDialog{parent} {
   connect(m_btnBox, SIGNAL(rejected()), SLOT(reject()));
 }
 
-const QString MessageTemplates::buildTitle(const QString &key) const {
-  QString title = key.trimmed().toLower();
-  title.replace("_", " ");
-  QStringList array = title.split(" ", Qt::SkipEmptyParts);
-  for (int i = 0; i < array.size(); i++) {
-    array[i].replace(0, 1, array[i][0].toUpper());
-  }
-  return array.join(" ");
-}
-
 bool MessageTemplates::createMacrosTree() {
   AntiquaCRM::ASqlFiles file("union_template_keys");
   if (file.openTemplate()) {

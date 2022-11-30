@@ -38,10 +38,15 @@ private:
   QLabel *m_mailSubject;
   MailBody *m_mailBody;
   MailAttachments *m_attachmentBar;
+
   QDialogButtonBox *m_btnBox;
-  QPushButton *m_btnMail;
+  QPushButton *btn_close;
+  QPushButton *btn_email;
+
   QStatusBar *m_statusBar;
   QRegularExpression p_expression = QRegularExpression("(@[A-Z_]+@)+");
+
+  void closeEvent(QCloseEvent *) override;
 
   bool createMailSelect(const QString &tpl);
   bool queryDataFields(int customerId);

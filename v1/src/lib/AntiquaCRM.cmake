@@ -8,6 +8,11 @@
 #include "aglobal.h"
 #endif
 
+// AntiquaCRM::AUtil
+#ifndef ANTIQUACRM_AUTIL_H
+#include "autil.h"
+#endif
+
 // AntiquaCRM::ASettings
 #ifndef ANTIQUACRM_SETTINGS_H
 #include "asettings.h"

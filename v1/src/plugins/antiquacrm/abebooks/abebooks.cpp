@@ -20,12 +20,6 @@
 #include <QTextEncoder>
 #include <QTimer>
 
-static const QString to_iso8859_1(const QString &str) {
-  QTextCodec *codec = QTextCodec::codecForLocale();
-  QTextEncoder encoder(codec);
-  return QString(encoder.fromUnicode(str));
-}
-
 Abebooks::Abebooks(QObject *parent) : AntiquaCRM::APluginInterface{parent} {
   setObjectName(ABEBOOKS_CONFIG_PROVIDER);
   m_network = nullptr;
@@ -296,8 +290,8 @@ const AntiquaCRM::AProviderOrders Abebooks::getOrders() const {
       QPair<QString, QString> person = xml.getPerson(addressNode);
       order.setValue("c_provider_import", xml.getFullname(addressNode));
       order.setValue("c_gender", AntiquaCRM::Gender::NO_GENDER);
-      order.setValue("c_firstname", ucFirst(person.first));
-      order.setValue("c_lastname", ucFirst(person.second));
+      order.setValue("c_firstname", AntiquaCRM::AUtil::ucFirst(person.first));
+      order.setValue("c_lastname", AntiquaCRM::AUtil::ucFirst(person.second));
       order.setValue("c_street", xml.getStreet(addressNode));
       order.setValue("c_postalcode", xml.getPostalCode(addressNode).toString());
       order.setValue("c_location", xml.getLocation(addressNode));

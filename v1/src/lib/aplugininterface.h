@@ -22,6 +22,20 @@
 namespace AntiquaCRM {
 
 /**
+ * @brief Plugin Configuration params
+ * @ingroup OrderSystem
+ * @section PluginInterface
+ */
+struct ANTIQUACRM_LIBRARY APluginConfig {
+  QString hostname = QString();
+  QString querypath = QString();
+  QString username = QString();
+  QString apiKey = QString();
+  int port = 443;
+  int history = -7;
+};
+
+/**
  * @brief Primary Plugin Interface class
  * @ingroup OrderSystem
  * @section PluginInterface
@@ -98,11 +112,6 @@ protected:
    * @brief Convert Invalid Price formats to double
    */
   double getPrice(const QJsonValue &value) const;
-
-  /**
-   * @brief First letter uppercase
-   */
-  const QString ucFirst(const QString &name) const;
 
   /**
    * @brief Vendors using different Date time formats!
@@ -248,6 +257,7 @@ public:
 
 }; // namespace AntiquaCRM
 
+Q_DECLARE_METATYPE(AntiquaCRM::APluginConfig)
 Q_DECLARE_INTERFACE(AntiquaCRM::APluginInterface, ANTIQUACRM_INTERFACE)
 
 #endif // ANTIQUACRM_PLUGIN_INTERFACE_H

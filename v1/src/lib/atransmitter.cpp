@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "atransmitter.h"
+#include "autil.h"
 
 #include <AGlobal>
 #include <QDataStream>
@@ -14,7 +15,7 @@ namespace AntiquaCRM {
 
 ATransmitter::ATransmitter(QObject *parent)
     : QLocalSocket{parent}, connected{false} {
-  setServerName(antiquaSocketName());
+  setServerName(AntiquaCRM::AUtil::socketName());
 
   connect(this, SIGNAL(errorOccurred(QLocalSocket::LocalSocketError)),
           SLOT(getErrors(QLocalSocket::LocalSocketError)));

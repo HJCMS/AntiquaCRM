@@ -67,7 +67,9 @@ bool ASqlCore::isConnected() {
 
   qWarning("Can't open Database Connection!");
   QSqlError err = database->lastError();
+#ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << err.driverText() << err.databaseText();
+#endif
   return false;
 }
 
@@ -88,7 +90,10 @@ const QSqlRecord ASqlCore::record(const QString &table) {
     return QSqlRecord();
 
   QSqlRecord re;
+  QMutex mutex;
+  mutex.lock();
   re = database->record(table);
+  mutex.unlock();
   return re;
 }
 
@@ -97,7 +102,7 @@ const QStringList ASqlCore::fieldNames(const QString &table) {
     return QStringList();
 
   QStringList l;
-  QSqlRecord re = database->record(table);
+  QSqlRecord re = record(table);
   if (!re.isEmpty()) {
     for (int i = 0; i < re.count(); i++) {
       if (re.field(i).isValid())
@@ -112,7 +117,10 @@ const QSqlQuery ASqlCore::query(const QString &statement) {
     return QSqlQuery();
 
   QSqlQuery qr;
+  QMutex mutex;
+  mutex.lock();
   qr = database->exec(statement);
+  mutex.unlock();
   return qr;
 }
 

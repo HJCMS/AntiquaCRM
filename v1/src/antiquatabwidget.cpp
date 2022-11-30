@@ -33,7 +33,7 @@ bool AntiquaTabWidget::createSocketListener() {
   connect(m_server, SIGNAL(sendStatusMessage(const QString &)),
           SIGNAL(sendStatusMessage(const QString &)));
 
-  return m_server->listen(AntiquaCRM::antiquaSocketName());
+  return m_server->listen(AntiquaCRM::AUtil::socketName());
 }
 
 Inventory *AntiquaTabWidget::tabWidget(int index) const {

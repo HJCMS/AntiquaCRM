@@ -3,7 +3,7 @@
 
 #include "viewstablemodel.h"
 
-#include <QDebug>
+#include <AntiquaCRM>
 #include <QSqlField>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -14,21 +14,13 @@ ViewsTableModel::ViewsTableModel(const QSqlDatabase &db, QObject *parent)
   setEditStrategy(QSqlTableModel::OnRowChange);
 }
 
-const QString ViewsTableModel::ucFirst(const QString &title) const {
-  QStringList array = title.trimmed().split(" ", Qt::SkipEmptyParts);
-  for (int i = 0; i < array.size(); i++) {
-    array[i].replace(0, 1, array[i][0].toUpper());
-  }
-  return array.join(" ");
-}
-
 QVariant ViewsTableModel::headerData(int section, Qt::Orientation orientation,
                                      int role) const {
   if (orientation != Qt::Horizontal || role != Qt::DisplayRole)
     return QVariant();
 
   QSqlField field = record().field(section);
-  return ucFirst(field.name());
+  return AntiquaCRM::AUtil::ucFirst(field.name());
 }
 
 const QString ViewsTableModel::getLabelText() {

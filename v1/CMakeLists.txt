@@ -33,7 +33,7 @@ SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/Modules")
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -W -Wall -Wno-unused-function -Wno-implicit-fallthrough -Werror")
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -W -Wall -Wno-implicit-fallthrough -Werror")
 
 ## Enables some Development options and tracing
 OPTION (ANTIQUA_DEVELOPEMENT "Enable development macro code" OFF)
