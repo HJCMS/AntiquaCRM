@@ -2,9 +2,11 @@
 // vim: set fileencoding=utf-8
 
 #include "phoneedit.h"
+#include "autil.h"
 
 #include <QAbstractItemView>
 #include <QDebug>
+#include <QRegExp>
 
 PhoneCountryCodeModel::PhoneCountryCodeModel(QObject *parent)
     : QAbstractListModel{parent} {}
@@ -68,9 +70,9 @@ void PhoneCountryCodeModel::initModel() {
     QJsonArray arr = jdoc.object().value("countries").toArray();
     for (int i = 0; i < arr.size(); i++) {
       QJsonObject obj = arr[i].toObject();
-      int npa = obj.value("phone").toInt();
+      qint64 npa = obj.value("phone").toInt();
       CountryCode code;
-      code.npa = QString::number(npa).rightJustified(3, '0');
+      code.npa = AntiquaCRM::AUtil::fileNumber(npa, 3);
       code.info = obj.value("country").toString();
       p_codes.append(code);
     }
@@ -103,16 +105,9 @@ PhoneEdit::PhoneEdit(QWidget *parent) : InputEdit{parent} {
           SLOT(dataChanged(const QString &)));
 }
 
-const QRegExp PhoneEdit::phonePattern() {
-  QRegExp reg;
-  reg.setPattern("^([\\d]{2,3}\\s?[\\d]{2,4}[\\s?\\d]+)$");
-  return reg;
-}
-
 bool PhoneEdit::validate(const QString &phone) const {
-  QRegularExpression r(phonePattern().pattern());
-  QRegularExpressionMatch m = r.match(phone);
-  if (phone.length() > 4 && m.hasMatch()) {
+  bool match = AntiquaCRM::AUtil::checkPhone(phone);
+  if (phone.length() > 4 && match) {
     m_edit->setStyleSheet(QString());
     return true;
   }
@@ -132,6 +127,14 @@ void PhoneEdit::reset() {
 
 void PhoneEdit::setValue(const QVariant &val) {
   QString tel = val.toString().trimmed();
+  tel.replace("+", "0");
+
+  QRegExp strip("\\D+");
+  tel.replace(strip, "");
+
+  if (!AntiquaCRM::AUtil::checkPhone(tel))
+    return;
+
   if (tel.length() > 10) {
     if (tel.startsWith("0"))
       tel.insert(3, " ");

@@ -442,27 +442,27 @@ void PaymentReminder::openPrintDialog() {
   }
 }
 
-void PaymentReminder::setPaymentInfo(int orderId,    /* Bestellnummer */
-                                     int customerId, /* Kundennummer */
-                                     int invoiceId,  /* Rechnungsnummer */
+void PaymentReminder::setPaymentInfo(qint64 orderId,    /* Bestellnummer */
+                                     qint64 customerId, /* Kundennummer */
+                                     qint64 invoiceId,  /* Rechnungsnummer */
                                      const QString &deliverNoteId) {
   if (orderId < 1) {
     warningMessageBox(tr("There is no Order-Id to generate this invoice!"));
     return;
   }
-  p_orderId = QString::number(orderId).rightJustified(7, '0');
+  p_orderId = AntiquaCRM::AUtil::fileNumber(orderId);
 
   if (customerId < 1) {
     warningMessageBox(tr("There is no Customer Id to generate this invoice!"));
     return;
   }
-  p_customerId = QString::number(customerId).rightJustified(7, '0');
+  p_customerId = AntiquaCRM::AUtil::fileNumber(customerId);
 
   if (invoiceId < 1) {
     warningMessageBox(tr("There is no Invoice Id to generate this invoice!"));
     return;
   }
-  p_invoiceId = QString::number(invoiceId).rightJustified(7, '0');
+  p_invoiceId = AntiquaCRM::AUtil::fileNumber(invoiceId);
 
   if (deliverNoteId.isEmpty()) {
     warningMessageBox(tr("delivery note number is empty!"));
@@ -474,6 +474,11 @@ void PaymentReminder::setPaymentInfo(int orderId,    /* Bestellnummer */
 void PaymentReminder::setMainText(const QString &txt) { p_mainText = txt; }
 
 void PaymentReminder::setFinalText(const QString &txt) { p_subText = txt; }
+
+int PaymentReminder::exec() {
+  qWarning("you must call exec with params!");
+  return QDialog::Rejected;
+}
 
 int PaymentReminder::exec(const QList<BillingInfo> &billing) {
   if (p_orderId.isEmpty()) {

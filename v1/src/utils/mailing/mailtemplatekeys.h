@@ -23,7 +23,6 @@ private:
   const QString completeName();
   const QString customerMail();
   const QString customerId();
-  const QString padNumber(const QVariant &);
 
 public:
   explicit MailTemplateKeys(QObject *parent = nullptr);

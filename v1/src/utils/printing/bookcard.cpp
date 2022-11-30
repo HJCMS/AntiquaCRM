@@ -392,6 +392,11 @@ void BookCard::openPrintDialog() {
   }
 }
 
+int BookCard::exec() {
+  qWarning("you must call exec with params!");
+  return QDialog::Rejected;
+}
+
 int BookCard::exec(const QHash<QString, QVariant> &data) {
   readConfiguration();
 

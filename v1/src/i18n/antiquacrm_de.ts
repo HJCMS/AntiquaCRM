@@ -3014,17 +3014,17 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location filename="../utils/mailing/mailtemplatekeys.cpp" line="+20"/>
         <source>Dear Mr.</source>
-        <translation>Sehr geehrter</translation>
+        <translation>Sehr geehrter Herr</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Dear Mrs.</source>
-        <translation>Sehr geehrte</translation>
+        <translation>Sehr geehrte Frau</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Dear Ladies and Gentlemen</source>
-        <translation>Sehr geehrte Damen und Herren</translation>
+        <translation>Sehr geehrte(r)*</translation>
     </message>
 </context>
 <context>

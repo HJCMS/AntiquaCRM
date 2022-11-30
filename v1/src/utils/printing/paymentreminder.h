@@ -20,7 +20,7 @@
  * @ingroup Printing
  * @class PaymentReminder
  */
-class PaymentReminder : public Printing {
+class PaymentReminder final : public Printing {
   Q_OBJECT
 
 private:
@@ -53,8 +53,8 @@ private:
   QTextTable *m_billingTable;
 
 protected:
-  void constructSubject();
-  void constructBody();
+  void constructSubject() override;
+  void constructBody() override;
 
   /**
    * @brief Artikel in @ref m_articleTable einfügen.
@@ -86,9 +86,9 @@ protected:
   void setRegards();
 
 protected Q_SLOTS:
-  bool generateDocument(QPrinter *printer);
-  void generatePdf();
-  void openPrintDialog();
+  bool generateDocument(QPrinter *printer) override;
+  void generatePdf() override;
+  void openPrintDialog() override;
 
 public:
   explicit PaymentReminder(QWidget *parent = nullptr);
@@ -97,9 +97,9 @@ public:
    * @brief Wichtige Nummern angeben
    * @note Muss vor @ref exec() gesetzt sein!
    */
-  void setPaymentInfo(int orderId,    /* Bestellnummer */
-                      int customerId, /* Kundennummer */
-                      int invoiceId,  /* Rechnungsnummer */
+  void setPaymentInfo(qint64 orderId,    /* Bestellnummer */
+                      qint64 customerId, /* Kundennummer */
+                      qint64 invoiceId,  /* Rechnungsnummer */
                       const QString &deliverNoteId);
 
   /**
@@ -112,6 +112,7 @@ public:
    */
   void setFinalText(const QString &);
 
+  int exec() override;
   int exec(const QList<BillingInfo> &billing);
 };
 

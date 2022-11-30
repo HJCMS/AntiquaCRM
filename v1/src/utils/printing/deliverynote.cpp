@@ -218,25 +218,30 @@ void DeliveryNote::openPrintDialog() {
   }
 }
 
-void DeliveryNote::setDelivery(int orderId, int customerId,
+void DeliveryNote::setDelivery(qint64 orderId, qint64 customerId,
                                const QString &deliverNoteId) {
   if (orderId < 1) {
     warningMessageBox(tr("There is no Order-Id to generate this delivery!"));
     return;
   }
-  p_orderId = QString::number(orderId).rightJustified(7, '0');
+  p_orderId = AntiquaCRM::AUtil::fileNumber(orderId);
 
   if (customerId < 1) {
     warningMessageBox(tr("There is no Customer Id to generate this delivery!"));
     return;
   }
-  p_customerId = QString::number(customerId).rightJustified(7, '0');
+  p_customerId = AntiquaCRM::AUtil::fileNumber(customerId);
 
   if (deliverNoteId.isEmpty()) {
     warningMessageBox(tr("delivery note number is empty!"));
     return;
   }
   p_deliveryId = deliverNoteId;
+}
+
+int DeliveryNote::exec() {
+  qWarning("you must call exec with params!");
+  return QDialog::Rejected;
 }
 
 int DeliveryNote::exec(const QList<BillingInfo> &list) {

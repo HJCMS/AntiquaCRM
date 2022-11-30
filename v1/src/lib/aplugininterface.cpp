@@ -30,10 +30,10 @@ const APluginConfig APluginInterface::getConfig(const QString &providerName) {
 }
 
 AntiquaCRM::Gender APluginInterface::convertGender(const QString &from) const {
-  QStringList male({"mr", "mister", "sir", "herr", "herrn", "freiherr"});
   QStringList female({"ms.", "mss", "mses", "madam", "frau", "freifrau"});
+  QStringList male({"mr", "mister", "sir", "herr", "herrn", "freiherr"});
   if (female.contains(from, Qt::CaseInsensitive))
-    return AntiquaCRM::Gender::MALE;
+    return AntiquaCRM::Gender::FEMALE;
   else if (male.contains(from, Qt::CaseInsensitive))
     return AntiquaCRM::Gender::MALE;
   else if (from.contains("diverse", Qt::CaseInsensitive))

@@ -441,33 +441,38 @@ void Invoice::openPrintDialog() {
   }
 }
 
-void Invoice::setInvoice(int orderId,    /* Bestellnummer */
-                         int customerId, /* Kundennummer */
-                         int invoiceId,  /* Rechnungsnummer */
+void Invoice::setInvoice(qint64 orderId,    /* Bestellnummer */
+                         qint64 customerId, /* Kundennummer */
+                         qint64 invoiceId,  /* Rechnungsnummer */
                          const QString &deliverNoteId) {
   if (orderId < 1) {
     warningMessageBox(tr("There is no Order-Id to generate this invoice!"));
     return;
   }
-  p_orderId = QString::number(orderId).rightJustified(7, '0');
+  p_orderId = AntiquaCRM::AUtil::fileNumber(orderId);
 
   if (customerId < 1) {
     warningMessageBox(tr("There is no Customer Id to generate this invoice!"));
     return;
   }
-  p_customerId = QString::number(customerId).rightJustified(7, '0');
+  p_customerId = AntiquaCRM::AUtil::fileNumber(customerId);
 
   if (invoiceId < 1) {
     warningMessageBox(tr("There is no Invoice Id to generate this invoice!"));
     return;
   }
-  p_invoiceId = QString::number(invoiceId).rightJustified(7, '0');
+  p_invoiceId = AntiquaCRM::AUtil::fileNumber(invoiceId);
 
   if (deliverNoteId.isEmpty()) {
     warningMessageBox(tr("delivery note number is empty!"));
     return;
   }
   p_deliveryId = deliverNoteId;
+}
+
+int Invoice::exec() {
+  qWarning("you must call exec with params!");
+  return QDialog::Rejected;
 }
 
 int Invoice::exec(const QList<BillingInfo> &list, bool paid) {

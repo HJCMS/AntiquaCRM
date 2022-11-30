@@ -20,7 +20,7 @@
  * @ingroup Printing
  * @class DeliveryNote
  */
-class DeliveryNote : public Printing {
+class DeliveryNote final : public Printing {
   Q_OBJECT
 
 private:
@@ -41,12 +41,12 @@ private:
    * Hier werden Kundenanschrift und Lieferschein
    * Informationen eingefügt.
    */
-  void constructSubject();
+  void constructSubject() override;
 
   /**
    * @brief Artikelliste
    */
-  void constructBody();
+  void constructBody() override;
 
   /**
    * @brief Artikel in @ref m_articleTable einfügen.
@@ -58,9 +58,9 @@ private:
                      const QString &quantity);
 
 private Q_SLOTS:
-  bool generateDocument(QPrinter *printer);
-  void generatePdf();
-  void openPrintDialog();
+  bool generateDocument(QPrinter *printer) override;
+  void generatePdf() override;
+  void openPrintDialog() override;
 
 public:
   /**
@@ -72,11 +72,13 @@ public:
    * @brief Wichtige Nummern angeben
    * @note Muss vor @ref exec() gesetzt sein!
    */
-  void setDelivery(int orderId, int customerId, const QString &deliverNoteId);
+  void setDelivery(qint64 orderId, qint64 customerId,
+                   const QString &deliverNoteId);
 
   /**
    * @brief Erstelle Inhalt und öffne Dialog.
    */
+  int exec() override;
   int exec(const QList<BillingInfo> &);
 };
 

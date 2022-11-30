@@ -7,9 +7,7 @@
 
 #include <AGlobal>
 #include <AntiquaInputEdit>
-#include <QRegExp>
 #include <QRegExpValidator>
-#include <QRegularExpression>
 
 class EMailEdit final : public InputEdit {
   Q_OBJECT
@@ -18,7 +16,6 @@ private:
   AntiquaLineEdit *m_edit;
   QRegExpValidator *m_validator;
   void loadDataset() {};
-  static const QRegExp mailPattern();
   bool validate(const QString &mail) const;
 
 private Q_SLOTS:

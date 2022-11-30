@@ -2,9 +2,11 @@
 // vim: set fileencoding=utf-8
 
 #include "emailedit.h"
+#include "autil.h"
 
 #include <QApplication>
 #include <QPalette>
+#include <QRegExp>
 #include <QRegularExpressionMatch>
 
 EMailEdit::EMailEdit(QWidget *parent) : InputEdit{parent} {
@@ -12,7 +14,8 @@ EMailEdit::EMailEdit(QWidget *parent) : InputEdit{parent} {
   m_edit->setToolTip(tr("eMail edit"));
   m_edit->setPlaceholderText(tr("usage.example@example.com"));
   m_layout->addWidget(m_edit);
-  m_validator = new QRegExpValidator(mailPattern(), m_edit);
+  QRegExp pattern = AntiquaCRM::AUtil::mailPattern();
+  m_validator = new QRegExpValidator(pattern, m_edit);
   m_edit->setValidator(m_validator);
   setRequired(false);
   setModified(false);
@@ -20,17 +23,8 @@ EMailEdit::EMailEdit(QWidget *parent) : InputEdit{parent} {
           SLOT(dataChanged(const QString &)));
 }
 
-const QRegExp EMailEdit::mailPattern() {
-  QRegExp reg;
-  reg.setCaseSensitivity(Qt::CaseInsensitive);
-  reg.setPattern("^([\\d\\w\\-\\.]{3,})@([\\d\\w\\-\\.]{3,})\\.([a-z]{2,6})$");
-  return reg;
-}
-
 bool EMailEdit::validate(const QString &mail) const {
-  QRegularExpression r(mailPattern().pattern());
-  QRegularExpressionMatch m = r.match(mail);
-  if (mail.contains("@") && m.hasMatch()) {
+  if (AntiquaCRM::AUtil::checkMail(mail)) {
     m_edit->setStyleSheet(QString());
     return true;
   }
@@ -49,8 +43,9 @@ void EMailEdit::reset() {
 }
 
 void EMailEdit::setValue(const QVariant &val) {
-  QString email = val.toString().trimmed();
-  m_edit->setText(email.toLower());
+  QString str = val.toString().trimmed().toLower();
+  if (AntiquaCRM::AUtil::checkMail(str))
+    m_edit->setText(str);
 }
 
 void EMailEdit::setFocus() {

@@ -57,15 +57,6 @@ const QString MailTemplateKeys::customerId() {
   return QString();
 }
 
-const QString MailTemplateKeys::padNumber(const QVariant &v) {
-  int i = v.toInt();
-  if (i < 1)
-    return QString();
-
-  QString str = QString::number(i);
-  return str.rightJustified(6, '0');
-}
-
 bool MailTemplateKeys::setData(QMap<QString, QVariant> &data) {
   QMapIterator<QString, QVariant> it(data);
   while (it.hasNext()) {
@@ -96,16 +87,16 @@ const QString MailTemplateKeys::convert(const QString &key) {
     return customerMail();
 
   if (search == "CRM_CUSTOMER_ID")
-    return padNumber(p_data.value("c_id"));
+    return AntiquaCRM::AUtil::fileNumber(p_data.value("c_id").toInt());
 
   if (search == "CRM_ORDER_ID" || search == "CRM_PROVIDER_ORDER_ID")
-    return padNumber(p_data.value("o_id"));
+    return AntiquaCRM::AUtil::fileNumber(p_data.value("o_id").toInt());
 
   if (search == "CRM_INVOICE_ID")
-    return padNumber(p_data.value("o_invoice_id"));
+    return AntiquaCRM::AUtil::fileNumber(p_data.value("o_invoice_id").toInt());
 
   if (search == "CRM_ARTICLE_ID")
-    return padNumber(p_data.value("a_article_id"));
+    return AntiquaCRM::AUtil::fileNumber(p_data.value("a_article_id").toInt());
 
   if (search == "CRM_SALUTATION")
     return salutation();

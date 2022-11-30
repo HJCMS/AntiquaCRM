@@ -51,7 +51,7 @@ public:
    * @brief Neuer Bildname
    * @param id Artikel Nummer
    */
-  static const QString imageBaseName(int id);
+  static const QString imageBaseName(qint64 id);
 
   /**
    * @brief Neues Bild Ziel definieren!

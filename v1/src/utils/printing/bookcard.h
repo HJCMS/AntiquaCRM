@@ -130,6 +130,7 @@ private Q_SLOTS:
 
 public:
   explicit BookCard(QWidget *paren = nullptr);
+  int exec() override;
   int exec(const QHash<QString, QVariant> &data);
 };
 

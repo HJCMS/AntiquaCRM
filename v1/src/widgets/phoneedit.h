@@ -9,9 +9,7 @@
 #include <AntiquaInputEdit>
 #include <QAbstractListModel>
 #include <QCompleter>
-#include <QRegExp>
 #include <QRegExpValidator>
-#include <QRegularExpression>
 
 /**
  * @brief Phone Country Code Completer Model
@@ -44,15 +42,6 @@ private:
   AntiquaLineEdit *m_edit;
   QCompleter *m_completer;
   QRegExpValidator *m_validator;
-
-  /**
-   * @brief Simple Phone Regular expression
-   * Containing "ITU-T E.123", "ITU-T E.164" and EPP definition.
-   * @code
-   *  (Country Code) (NPA Area Code) (Prefix) (Subscriber)
-   * @endcode
-   */
-  static const QRegExp phonePattern();
 
   /**
    * @brief Validate and Highlight tel: input.

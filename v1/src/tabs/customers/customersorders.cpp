@@ -4,6 +4,7 @@
 #include "customersorders.h"
 
 #include <AGlobal>
+#include <AntiquaCRM>
 #include <QDateTime>
 #include <QHeaderView>
 
@@ -39,8 +40,12 @@ QTableWidgetItem *CustomersOrders::iconItem(const QVariant &data) {
 }
 
 QTableWidgetItem *CustomersOrders::numidItem(const QVariant &data) {
-  QString str = data.toString().trimmed();
-  QString num = str.rightJustified(7, '0');
+  QString num;
+  if (data.type() == QVariant::Int) {
+    num = AntiquaCRM::AUtil::fileNumber(data.toInt());
+  } else {
+    num = data.toString().rightJustified(7, '0');
+  }
   QTableWidgetItem *i = new QTableWidgetItem(num, Qt::DisplayRole);
   i->setFlags(default_flags);
   return i;

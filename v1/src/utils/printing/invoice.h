@@ -19,7 +19,7 @@
  * @ingroup Printing
  * @class Invoice
  */
-class Invoice : public Printing {
+class Invoice final : public Printing {
   Q_OBJECT
 
 private:
@@ -57,12 +57,12 @@ private:
   /**
    * @brief Standard Druckkopfbreich
    */
-  void constructSubject();
+  void constructSubject() override;
 
   /**
    * @brief Anschrifft und Dokument Definition
    */
-  void constructBody();
+  void constructBody() override;
 
   /**
    * @brief Artikel in @ref m_articleTable einfügen.
@@ -102,17 +102,17 @@ private Q_SLOTS:
   /**
    * @brief Drucker ausgabe generieren
    */
-  bool generateDocument(QPrinter *printer);
+  bool generateDocument(QPrinter *printer) override;
 
   /**
    * @brief PDF in Datei schreiben
    */
-  void generatePdf();
+  void generatePdf() override;
 
   /**
    * @brief Öffne Drucker Dialog
    */
-  void openPrintDialog();
+  void openPrintDialog() override;
 
 public:
   explicit Invoice(QWidget *parent = nullptr);
@@ -121,11 +121,12 @@ public:
    * @brief Wichtige Nummern angeben
    * @note Muss vor @ref exec() gesetzt sein!
    */
-  void setInvoice(int orderId,    /* Bestellnummer */
-                  int customerId, /* Kundennummer */
-                  int invoiceId,  /* Rechnungsnummer */
+  void setInvoice(qint64 orderId,    /* Bestellnummer */
+                  qint64 customerId, /* Kundennummer */
+                  qint64 invoiceId,  /* Rechnungsnummer */
                   const QString &deliverNoteId);
 
+  int exec() override;
   int exec(const QList<BillingInfo> &, bool paid = false);
 };
 

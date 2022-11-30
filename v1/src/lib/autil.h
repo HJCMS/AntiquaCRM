@@ -39,7 +39,11 @@ public:
   static bool checkMail(const QString &);
 
   /**
-   * @brief Regular Expression for Phone Numbers
+   * @brief Simple Phone Regular expression
+   * Containing "ITU-T E.123", "ITU-T E.164" and EPP definition.
+   * @code
+   *  (Country Code) (NPA Area Code) (Prefix) (Subscriber)
+   * @endcode
    */
   static const QRegExp phonePattern();
 
@@ -52,6 +56,11 @@ public:
    * @brief Convert from System Codec to ISO-8859-1
    */
   static const QString toISO88591(const QString &);
+
+  /**
+   * @brief Convert Number to AntiquaCRM file name with leading zeros
+   */
+  static const QString fileNumber(qint64 number, int length = 7);
 };
 
 }; // namespace AntiquaCRM

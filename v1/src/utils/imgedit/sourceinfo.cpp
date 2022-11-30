@@ -3,6 +3,8 @@
 
 #include "sourceinfo.h"
 
+#include <AntiquaCRM>
+
 SourceInfo::SourceInfo(const QFileInfo &other) : QFileInfo{other} {
   fileId = -1;
   p_target = QString();
@@ -33,8 +35,8 @@ void SourceInfo::setFileId(qint64 id) { fileId = id; }
 
 qint64 SourceInfo::getFileId() { return fileId; }
 
-const QString SourceInfo::imageBaseName(int id) {
-  return QString::number(id).rightJustified(8, '0');
+const QString SourceInfo::imageBaseName(qint64 id) {
+  return AntiquaCRM::AUtil::fileNumber(id, 8);
 }
 
 void SourceInfo::setTarget(const QDir &dest) {
