@@ -348,6 +348,7 @@ void PgSQLSettings::openProfile(const QString &name) {
       } else {
         m_i->setValue(cf.value(name));
       }
+      m_i->setModified(false);
     }
   }
 
@@ -389,6 +390,7 @@ void PgSQLSettings::saveSectionConfig() {
             QByteArray::Base64Encoding);
 
       config->setValue(name, value);
+      m_i->setModified(false);
     }
   }
   QList<QComboBox *> cList = findChildren<QComboBox *>(pattern);

@@ -25,6 +25,7 @@ const QIcon SettingsWidget::getIcon(const QString &name) {
 }
 
 void SettingsWidget::chieldModified(bool b) {
+  // qDebug() << Q_FUNC_INFO << sender()->objectName() << b;
   if (b) {
     emit pageModified(b);
   }

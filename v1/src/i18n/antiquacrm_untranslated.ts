@@ -1162,7 +1162,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+29"/>
+        <source>Unsaved Changes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Please use the quit button!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Current Page: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1492,7 +1502,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CustomersOrders</name>
     <message>
-        <location filename="../tabs/customers/customersorders.cpp" line="+16"/>
+        <location filename="../tabs/customers/customersorders.cpp" line="+17"/>
         <source>Payed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2017,7 +2027,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+19"/>
         <source>&lt;p&gt;Customer Address is empty!&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2025,7 +2035,7 @@ Image - Article Id: %2</source>
 <context>
     <name>EMailEdit</name>
     <message>
-        <location filename="../widgets/emailedit.cpp" line="+12"/>
+        <location filename="../widgets/emailedit.cpp" line="+14"/>
         <source>eMail edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2035,7 +2045,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+48"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3422,7 +3432,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+168"/>
+        <location line="+176"/>
         <source>No Provider orders data found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4166,7 +4176,7 @@ Image - Article Id: %2</source>
 <context>
     <name>PhoneEdit</name>
     <message>
-        <location filename="../widgets/phoneedit.cpp" line="+158"/>
+        <location filename="../widgets/phoneedit.cpp" line="+161"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4622,7 +4632,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+54"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4672,7 +4682,18 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+195"/>
+        <location line="+141"/>
+        <location line="+2"/>
+        <source>No available Articles!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <source>Can not create an Order without them!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+61"/>
         <source>An order for %1 already exists!</source>
         <translation type="unfinished"></translation>
     </message>

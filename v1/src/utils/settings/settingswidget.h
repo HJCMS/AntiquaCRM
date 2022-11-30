@@ -54,7 +54,7 @@ protected:
   static const QIcon getIcon(const QString &name);
 
 protected Q_SLOTS:
-  void chieldModified(bool b = true);
+  void chieldModified(bool b = false);
   void chieldChanged(int);
 
 Q_SIGNALS:

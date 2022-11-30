@@ -179,7 +179,7 @@ bool TabOrders::customAction(const QJsonObject &obj) {
       sendStatusMessage(tr("Some arguments missing for a new Order!"));
       return false;
     }
-    if (m_editorWidget->createNewProviderOrder(pr_order)) {
+    if (m_editorWidget->createNewProviderOrder(obj)) {
       m_editorPage->setEnabled(true);
       setCurrentWidget(m_editorPage);
       return true;

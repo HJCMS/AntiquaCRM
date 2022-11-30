@@ -89,7 +89,7 @@ public:
   bool openEditEntry(qint64 orderId) override;
   bool addArticle(qint64 articleId);
   bool createNewOrder(qint64 customerId);
-  bool createNewProviderOrder(const QString &providerId);
+  bool createNewProviderOrder(const QJsonObject &prObject);
 };
 
 #endif // ANTIQUACRM_ORDERSEDITOR_H

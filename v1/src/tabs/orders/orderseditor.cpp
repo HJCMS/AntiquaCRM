@@ -852,9 +852,17 @@ bool OrdersEditor::createNewOrder(qint64 customerId) {
   return false;
 }
 
-bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
+bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
+  QString providerId = prObject.value("create_order").toString();
   if (providerId.isEmpty())
     return false;
+
+  QString article_numbers = prObject.value("article_numbers").toString();
+  QStringList articleNumberList = article_numbers.split(",");
+  if (articleNumberList.size() < 1) {
+    qWarning("NO Article Numbers exists!");
+    return false;
+  }
 
   AntiquaCRM::ASqlFiles sqlFile("query_provider_order_exists");
   if (!sqlFile.openTemplate())
@@ -949,6 +957,11 @@ bool OrdersEditor::createNewProviderOrder(const QString &providerId) {
     for (int i = 0; i < orders.size(); i++) {
       QList<AntiquaCRM::ArticleOrderItem> items;
       QJsonObject article = orders[i].toObject();
+      qint64 aId = article.value("a_article_id").toInt();
+      // Siehe QJsonValue::article_numbers
+      if (!articleNumberList.contains(QString::number(aId)))
+        continue;
+
       // Ist erst mal 0
       AntiquaCRM::ArticleOrderItem item;
       item.key = QString("a_order_id");

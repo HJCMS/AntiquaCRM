@@ -61,12 +61,16 @@ void ProviderPurchaseTable::addHeaderItem(int i, const QString &name) {
 void ProviderPurchaseTable::setArticleStatus(const QString &article,
                                              bool available) {
   for (int r = 0; r < rowCount(); r++) {
-    QTableWidgetItem *itemArticle = item(r, 1);
-    if (itemArticle != nullptr) {
-      if (itemArticle->text() == article && available)
-        itemArticle->setData(Qt::DecorationRole, pic("action_ok"));
-      else
-        itemArticle->setData(Qt::DecorationRole, pic("action_cancel"));
+    QTableWidgetItem *cellItem = item(r, 1);
+    if (cellItem == nullptr || cellItem->text() != article)
+      continue;
+
+    if (available) {
+      cellItem->setData(Qt::DecorationRole, pic("action_ok"));
+    } else {
+      cellItem->setData(Qt::DecorationRole, pic("action_cancel"));
+      // reset quantity
+      item(r, 2)->setData(Qt::EditRole, 0);
     }
   }
 }
@@ -99,6 +103,12 @@ ProviderPurchaseTable::createItem(const QJsonValue &data) const {
 const QStringList ProviderPurchaseTable::getArticleIds() {
   QStringList l;
   for (int r = 0; r < rowCount(); r++) {
+    QTableWidgetItem *quantity = item(r, 2);
+    if (quantity->data(Qt::DisplayRole).toInt() < 1) {
+      qInfo("Ignore row %d", r);
+      continue;
+    }
+
     QTableWidgetItem *m = item(r, 1);
     if (m != nullptr) {
       l.append(m->data(Qt::DisplayRole).toString());

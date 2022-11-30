@@ -25,7 +25,7 @@ class InputEdit : public QFrame {
   Q_PROPERTY(bool required /* Equivalent zu QSqlRecord:required */
                  READ isRequired WRITE setRequired NOTIFY sendRequireChanged)
   Q_PROPERTY(bool modified /* Ableitung für windowModified */
-                 READ isModified WRITE setModified NOTIFY sendModifiedChanged)
+                 READ isModified WRITE setModified NOTIFY sendHasModified)
 
 private:
   bool required = false;
@@ -43,7 +43,6 @@ protected Q_SLOTS:
 Q_SIGNALS:
   void sendHasModified(bool);
   void sendRequireChanged();
-  void sendModifiedChanged();
   void sendLeaveEditor();
 
 public Q_SLOTS:

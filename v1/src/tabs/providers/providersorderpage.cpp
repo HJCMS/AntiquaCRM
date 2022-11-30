@@ -177,10 +177,18 @@ void ProvidersOrderPage::providerActionClicked() {
 }
 
 void ProvidersOrderPage::createOrder(const QString &providerId) {
+  QStringList list = m_table->getArticleIds();
+  if (list.size() < 1) {
+    QString txt("<p>" + tr("No available Articles!") + "</p><p>");
+    txt.append(tr("Can not create an Order without them!") + "</p>");
+    QMessageBox::warning(this, tr("No available Articles!"), txt);
+    return;
+  }
   QJsonObject obj;
   obj.insert("window_operation", "create_order");
   obj.insert("tab", "orders_tab");
   obj.insert("create_order", providerId);
+  obj.insert("article_numbers", list.join(","));
   pushCmd(obj);
 }
 

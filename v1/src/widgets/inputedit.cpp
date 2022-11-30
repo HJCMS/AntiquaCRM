@@ -33,7 +33,7 @@ void InputEdit::setRequired(bool b) {
 
 void InputEdit::setModified(bool b) {
   modified = b;
-  emit sendModifiedChanged();
+  emit sendHasModified(b);
 }
 
 bool InputEdit::isRequired() { return required; }

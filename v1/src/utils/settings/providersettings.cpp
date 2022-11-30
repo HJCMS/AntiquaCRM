@@ -149,6 +149,7 @@ void ProviderSettings::loadSectionConfig() {
           } else {
             le->setValue(config->value(s));
           }
+          le->setModified(false);
         } else {
           QSpinBox *sp = box->findChild<QSpinBox *>(s, p_fo);
           if (sp != nullptr)
@@ -191,6 +192,7 @@ void ProviderSettings::saveSectionConfig() {
             } else {
               config->setValue(le->objectName(), le->value());
             }
+            le->setModified(false);
           }
         }
       }

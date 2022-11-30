@@ -11,6 +11,7 @@
 
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
+#include <QMessageBox>
 #include <QScrollArea>
 #include <QVBoxLayout>
 
@@ -91,16 +92,13 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   m_btnBox->setObjectName("config_dialog_buttenbox");
   m_btnBox->setOrientation(Qt::Horizontal);
 
-  QPushButton *btn_save = m_btnBox->addButton(QDialogButtonBox::Save);
+  btn_save = m_btnBox->addButton(QDialogButtonBox::Save);
   btn_save->setText(tr("&Save"));
   btn_save->setIcon(getIcon("action_save"));
 
-  QPushButton *btn_close = m_btnBox->addButton(QDialogButtonBox::Close);
+  btn_close = m_btnBox->addButton(QDialogButtonBox::Close);
   btn_close->setText(tr("Quit"));
   btn_close->setIcon(getIcon("action_cancel"));
-
-  connect(m_btnBox, SIGNAL(accepted()), this, SLOT(saveConfig()));
-  connect(m_btnBox, SIGNAL(rejected()), this, SLOT(closeDialog()));
 
   layout->addWidget(m_btnBox);
 
@@ -110,34 +108,32 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   layout->addWidget(m_statusbar);
 
   setLayout(layout);
+
+  // Register Signals
+  for (int p = 0; p < pages->count(); p++) {
+    connect(pages->widget(p), SIGNAL(pageModified(bool)),
+            SLOT(setWindowModified(bool)));
+  }
+  connect(btn_save, SIGNAL(clicked()), this, SLOT(saveConfig()));
+  connect(btn_close, SIGNAL(clicked()), this, SLOT(closeDialog()));
 }
 
 const QIcon ConfigDialog::getIcon(const QString &name) {
   return QIcon(":icons/" + name + ".png");
 }
 
-/**
- * @brief ConfigDialog::createItemSelection
- */
-int ConfigDialog::exec() {
-  for (int i = 0; i < pages->count(); i++) {
-    if (pages->widget(i) != nullptr) {
-      SettingsWidget *w = qobject_cast<SettingsWidget *>(pages->widget(i));
-      if (w != nullptr) {
-        w->loadSectionConfig();
-        QListWidgetItem *lwi = new QListWidgetItem(m_listWidget);
-        lwi->setText(w->getPageTitle());
-        lwi->setIcon(w->getPageIcon());
-        m_listWidget->addItem(lwi);
-        connect(w, SIGNAL(pageModified(bool)), this,
-                SLOT(setWindowModified(bool)));
-      }
+void ConfigDialog::closeEvent(QCloseEvent *e) {
+  if (e->type() == QEvent::Close) {
+    if (isWindowModified()) {
+      e->setAccepted(false);
+      QString info = tr("You have unsafed changes!");
+      info.append("<p>" + tr("Do your really want to close?") + "</p>");
+      int ret = QMessageBox::question(this, tr("Unsaved Changes!"), info);
+      if (ret == QMessageBox::No)
+        return;
     }
   }
-  connect(m_listWidget, SIGNAL(itemClicked(QListWidgetItem *)), this,
-          SLOT(setPage(QListWidgetItem *)));
-
-  return QDialog::exec();
+  QDialog::closeEvent(e);
 }
 
 void ConfigDialog::setPage(QListWidgetItem *item) {
@@ -170,4 +166,28 @@ void ConfigDialog::closeDialog() {
     return;
   }
   accept();
+}
+
+/**
+ * @brief ConfigDialog::createItemSelection
+ */
+int ConfigDialog::exec() {
+  for (int i = 0; i < pages->count(); i++) {
+    if (pages->widget(i) != nullptr) {
+      SettingsWidget *w = qobject_cast<SettingsWidget *>(pages->widget(i));
+      if (w != nullptr) {
+        w->loadSectionConfig();
+        QListWidgetItem *lwi = new QListWidgetItem(m_listWidget);
+        lwi->setText(w->getPageTitle());
+        lwi->setIcon(w->getPageIcon());
+        m_listWidget->addItem(lwi);
+      }
+    }
+  }
+  setWindowModified(false);
+
+  connect(m_listWidget, SIGNAL(itemClicked(QListWidgetItem *)), this,
+          SLOT(setPage(QListWidgetItem *)));
+
+  return QDialog::exec();
 }

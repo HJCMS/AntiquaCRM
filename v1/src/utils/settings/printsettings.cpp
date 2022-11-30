@@ -273,6 +273,7 @@ void PrintSettings::loadSectionConfig() {
     LineEdit *e = qrcodeGroup->findChild<LineEdit *>("qrcode_" + key);
     if (e != nullptr) {
       e->setValue(config->value(key));
+      e->setModified(false);
     }
   }
   config->endGroup();
@@ -307,6 +308,7 @@ void PrintSettings::saveSectionConfig() {
       if (e != nullptr) {
         QStringList section(e->objectName().split("_"));
         config->setValue(section.last(), e->value());
+        e->setModified(false);
       }
     }
   }

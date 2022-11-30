@@ -17,7 +17,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   // BEGIN Applications
   QGroupBox *m_grouBox1 = new QGroupBox(this);
   m_grouBox1->setObjectName("groupbox_archives");
-  m_grouBox1->setTitle(tr("Applications paths") + " ");
+  m_grouBox1->setTitle(tr("Applications paths") + "  ");
   QGridLayout *lt_groupBox1 = new QGridLayout(m_grouBox1);
   // Mail
   m_mailler_path = new LineEdit(m_grouBox1);
@@ -40,7 +40,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   // BEGIN Payment
   QGroupBox *m_paymentGroup = new QGroupBox(this);
   m_paymentGroup->setObjectName("groupbox_payment");
-  m_paymentGroup->setTitle(tr("Payment Settings") + " ");
+  m_paymentGroup->setTitle(tr("Payment Settings") + "  ");
   QVBoxLayout *lt_payment = new QVBoxLayout(m_paymentGroup);
   // Preis
   buffer = tr("The lowest permissible selling price");
@@ -90,7 +90,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   row = 0; /**< Counter zurücksetzen */
   QGroupBox *m_grouBox2 = new QGroupBox(this);
   m_grouBox2->setObjectName("groupbox_additional");
-  m_grouBox2->setTitle(tr("Look and behavior") + " ");
+  m_grouBox2->setTitle(tr("Look and behavior") + "  ");
   QVBoxLayout *lt_groupBox2 = new QVBoxLayout(m_grouBox2);
   // [search] startlength
   buffer = tr("From how many chars does the search start when you type in.");
@@ -239,6 +239,7 @@ void GeneralSettings::loadSectionConfig() {
       InputEdit *w = l.at(i);
       if (w != nullptr && config->contains(w->objectName())) {
         w->setValue(config->value(w->objectName()));
+        w->setModified(false);
       }
     }
   }
@@ -264,6 +265,7 @@ void GeneralSettings::saveSectionConfig() {
       InputEdit *w = l.at(i);
       if (w != nullptr) {
         config->setValue(w->objectName(), w->value());
+        w->setModified(false);
       }
     }
   }
