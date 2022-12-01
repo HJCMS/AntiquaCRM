@@ -157,6 +157,24 @@ bool OrdersEditor::setDataField(const QSqlField &field, const QVariant &value) {
   return false;
 }
 
+void OrdersEditor::generateDeliveryNumber(qint64 orderId) {
+  QDate since;
+  QString sql("SELECT o_since FROM ");
+  sql.append("inventory_orders WHERE o_id=");
+  sql.append(QString::number(orderId) + ";");
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() == 1) {
+    q.next();
+    since = q.value("o_since").toDate();
+  }
+  QString dn;
+  dn.append(QString::number(since.year()));
+  dn.append(QString::number(since.dayOfYear()));
+  dn.append(QString::number(orderId));
+  m_tableData->setValue("o_delivery", QString());
+  setDataField(m_tableData->getProperties("o_delivery"), dn);
+}
+
 void OrdersEditor::setOrderPaymentNumbers(qint64 orderId) {
   QString dn;
   QDate date = QDate::currentDate();
@@ -248,10 +266,6 @@ bool OrdersEditor::sendSqlQuery(const QString &query) {
     }
   }
 
-  QRegExp insert("INSERT\\s+INTO\\s+inventory_orders\\s");
-  if (!query.contains(insert)) // Nur bei Update anzeigen!
-    openSuccessMessage(tr("Order saved successfully!"));
-
   setResetModified(inputFields);
   return true;
 }
@@ -267,8 +281,6 @@ const QHash<QString, QVariant> OrdersEditor::createSqlDataset() {
     if (ignoreFields.contains(objName) || customInput.contains(objName))
       continue;
 
-    // qDebug() << objName << cur->isRequired() << cur->isValid() <<
-    // cur->value();
     if (cur->isRequired() && !cur->isValid()) {
       openNoticeMessage(cur->notes());
       cur->setFocus();
@@ -338,6 +350,9 @@ void OrdersEditor::createSqlUpdate() {
     sql.append(",o_modified=CURRENT_TIMESTAMP WHERE o_id=");
     sql.append(QString::number(oid));
     sql.append(";");
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << sql << Qt::endl;
+#endif
   }
   // Articles
   if (articles_sql.length() > 5) {
@@ -353,7 +368,8 @@ void OrdersEditor::createSqlUpdate() {
     return;
   }
 
-  sendSqlQuery(sql);
+  if (sendSqlQuery(sql))
+    openSuccessMessage(tr("Order saved successfully!"));
 }
 
 void OrdersEditor::createSqlInsert() {
@@ -770,6 +786,10 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
       QSqlField f = r.field(key);
       setDataField(f, q.value(f.name()));
     }
+
+    if (m_costSettings->o_delivery->value().isNull())
+      generateDeliveryNumber(orderId);
+
     // Bestehende Artikel Einkäufe mit orderId einlesen!
     QString sql("SELECT * FROM article_orders WHERE a_order_id=");
     sql.append(QString::number(orderId) + ";");

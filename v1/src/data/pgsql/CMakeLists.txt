@@ -13,6 +13,7 @@ SET (query_tables_FILES
   query_default_delivery_service.sql
   query_designation.sql
   query_keywords.sql
+  query_monthly_report.sql
   query_order_articles.sql
   query_order_by_oid.sql
   query_order_exists.sql

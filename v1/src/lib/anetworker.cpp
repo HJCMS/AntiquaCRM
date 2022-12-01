@@ -65,6 +65,7 @@ void ANetworker::slotError(QNetworkReply::NetworkError error) {
 
 void ANetworker::slotFinished(QNetworkReply *reply) {
   if (reply->error() != QNetworkReply::NoError) {
+    qWarning("Network: %s", qPrintable(reply->url().host()));
     slotError(reply->error());
     emit sendFinishedWithErrors();
   }

@@ -164,7 +164,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+17"/>
         <source>Application Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -231,7 +231,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+65"/>
         <source>Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -254,7 +254,7 @@
 <context>
     <name>AntiquaViewsMenus</name>
     <message>
-        <location filename="../antiquaviewsmenus.cpp" line="+14"/>
+        <location filename="../antiquaviewsmenus.cpp" line="+15"/>
         <source>Views</source>
         <translation type="unfinished"></translation>
     </message>
@@ -269,7 +269,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Database Views</source>
         <translation type="unfinished"></translation>
     </message>
@@ -282,7 +282,7 @@
 <context>
     <name>AntiquaWindow</name>
     <message>
-        <location filename="../antiquawindow.cpp" line="+72"/>
+        <location filename="../antiquawindow.cpp" line="+75"/>
         <source>Save request</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1112,7 +1112,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ConfigDialog</name>
     <message>
-        <location filename="../utils/settings/configdialog.cpp" line="+19"/>
+        <location filename="../utils/settings/configdialog.cpp" line="+20"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1163,16 +1163,21 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+29"/>
+        <source>You have unsafed changes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do your really want to close?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Unsaved Changes!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Please use the quit button!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>Current Page: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2292,12 +2297,12 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+82"/>
+        <location line="+83"/>
         <source>fonts representation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-80"/>
+        <location line="-81"/>
         <source>open font settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2890,7 +2895,7 @@ Image - Article Id: %2</source>
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../widgets/lineedit.cpp" line="+49"/>
+        <location filename="../widgets/lineedit.cpp" line="+48"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3087,6 +3092,95 @@ Image - Article Id: %2</source>
     <message>
         <location line="-2"/>
         <source>Save data successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MonthSelecter</name>
+    <message>
+        <location filename="../tabs/reports/monthselecter.cpp" line="+17"/>
+        <source>No month selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Create report</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MonthlyReportModel</name>
+    <message>
+        <location filename="../tabs/reports/monthlyreportview.cpp" line="+14"/>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Invoice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Article</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>incl.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>VAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>UST</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Porto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MonthlyReports</name>
+    <message>
+        <location filename="../tabs/reports/monthlyreports.cpp" line="+19"/>
+        <source>Monthly Payment reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+73"/>
+        <source>Report saved: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5039,6 +5133,14 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>ReportsActionGroup</name>
+    <message>
+        <location filename="../tabs/reports/reportsactiongroup.cpp" line="+17"/>
+        <source>Monthly report</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SalutationBox</name>
     <message>
         <location filename="../widgets/salutationbox.cpp" line="+8"/>
@@ -5440,6 +5542,14 @@ Image - Article Id: %2</source>
     <message>
         <location line="+46"/>
         <source>Update (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TabReports</name>
+    <message>
+        <location filename="../tabs/reports/tabreports.cpp" line="+10"/>
+        <source>Reports</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -36,6 +36,8 @@ private:
 
   bool setDataField(const QSqlField &field, const QVariant &value) override;
 
+  void generateDeliveryNumber(qint64 orderId);
+
   void setOrderPaymentNumbers(qint64 orderId);
 
   struct IdsCheck {

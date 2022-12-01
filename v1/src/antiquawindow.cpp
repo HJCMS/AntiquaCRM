@@ -15,7 +15,8 @@ static Qt::WindowFlags customFlags() {
   return flags;
 }
 
-AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent,customFlags()} {
+AntiquaWindow::AntiquaWindow(QWidget *parent)
+    : QMainWindow{parent, customFlags()} {
   setMinimumSize(QSize(750, 550));
   setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
   setWindowIcon(QIcon(":icons/antiqua.png"));
@@ -35,6 +36,8 @@ AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent,customFlags()
   setStatusBar(m_statusBar);
 
   connect(m_menuBar, SIGNAL(sendApplQuit()), SLOT(closeWindow()));
+  connect(m_menuBar, SIGNAL(sendOpenTabReports(const QString &)),
+          m_centralWidget, SLOT(addReportsTab(const QString &)));
   connect(m_menuBar, SIGNAL(sendOpenTabViews(const QString &)), m_centralWidget,
           SLOT(addViewsTab(const QString &)));
   connect(m_menuBar, SIGNAL(sendViewTab(const QString &)), m_centralWidget,

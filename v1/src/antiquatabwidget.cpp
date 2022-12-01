@@ -146,6 +146,21 @@ void AntiquaTabWidget::addViewsTab(const QString &query) {
   setCurrentIndex(i);
 }
 
+void AntiquaTabWidget::addReportsTab(const QString &query) {
+  int index = indexByName("reports_tab");
+  if (index >= 0) {
+    m_reports->createSearchQuery(query);
+    setCurrentIndex(index);
+    return;
+  }
+
+  m_reports = new TabReports(this);
+  m_reports->createSearchQuery(query);
+  int i = addTab(m_reports, m_reports->windowIcon(), m_reports->windowTitle());
+  m_tabBar->setTabCloseable(i, m_reports->isClosable());
+  setCurrentIndex(i);
+}
+
 void AntiquaTabWidget::setTabChanged(int index) {
   Inventory *m_tab = tabWidget(index);
   if (m_tab != nullptr)

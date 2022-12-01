@@ -21,10 +21,6 @@ class TabProviders final : public Inventory {
   Q_OBJECT
 
 private:
-  int timerId;
-  int counter;
-  const int resetCounter = 300; /**< steps in Seconds */
-
   AntiquaCRM::ASqlCore *m_sql;
 
   QWidget *m_mainPage;
@@ -34,8 +30,6 @@ private:
   QFrame *m_rightFrame;
   ProvidersTreeView *m_treeWidget;
   QPushButton *btn_refreshTree;
-
-  void timerEvent(QTimerEvent *event) override;
 
   void popupWarningTabInEditMode() override{};
 
@@ -55,7 +49,6 @@ public Q_SLOTS:
 public:
   explicit TabProviders(QWidget *parent = nullptr);
   bool customAction(const QJsonObject &) override { return false; }
-  ~TabProviders();
 };
 
 #endif // ANTIQUACRM_TABPROVIDERS_H

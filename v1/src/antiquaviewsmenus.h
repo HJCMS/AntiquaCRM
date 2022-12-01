@@ -10,6 +10,7 @@
 #include <QSignalMapper>
 #include <QWidget>
 
+class ReportsActionGroup;
 class ViewsActionGroup;
 
 class AntiquaViewsMenus final : public QMenu {
@@ -19,6 +20,7 @@ private:
   QMenu *m_tableVisit;
   QMenu *m_tableReports;
   QMenu *m_tableViews;
+  ReportsActionGroup *m_tabReports;
   ViewsActionGroup *m_tabViews;
   QAction *ac_fullScreen;
 
@@ -26,12 +28,14 @@ private:
   void setShowTabActions();
 
 private Q_SLOTS:
-  void aboutToShowViews();
+  void uniqLoadReports();
+  void uniqLoadViews();
 
 Q_SIGNALS:
   void sendToggleFullscreen();
-  void sendShowTab(const QString &name);
-  void sendOpenView(const QString &view);
+  void sendShowTab(const QString &);
+  void sendOpenView(const QString &);
+  void sendOpenReport(const QString &);
 
 public:
   explicit AntiquaViewsMenus(QWidget *parent);

@@ -31,7 +31,8 @@ class AntiquaTabWidget final : public QTabWidget {
 private:
   AntiquaCRM::AReceiver *m_server;
   AntiquaTabBar *m_tabBar;
-  TabViews *m_views; /**< Views Menue */
+  TabViews *m_views; /**< Views */
+  TabReports *m_reports; /**< Reports */
   QWidget *m_testing;
 
   /**
@@ -63,6 +64,7 @@ private:
 private Q_SLOTS:
   void setAction(const QJsonObject &obj);
   void addViewsTab(const QString &query);
+  void addReportsTab(const QString &query);
   void setTabChanged(int index);
   void setTabToClose(int index);
   void setTabToVisit(int index);

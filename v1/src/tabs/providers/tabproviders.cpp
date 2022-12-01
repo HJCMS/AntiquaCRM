@@ -70,24 +70,6 @@ TabProviders::TabProviders(QWidget *parent)
   connect(btn_refreshTree, SIGNAL(clicked()), m_treeWidget, SLOT(loadUpdate()));
 
   setCurrentIndex(0);
-  counter = 0;
-  timerId = startTimer(1000, Qt::PreciseTimer);
-}
-
-void TabProviders::timerEvent(QTimerEvent *event) {
-  if (event->timerId() != timerId)
-    return;
-
-  --counter;
-  if (counter <= 0) {
-    m_treeWidget->loadUpdate();
-    counter = resetCounter;
-    return;
-  }
-
-  QTime ct(0, 0, 0);
-  QString t_text = tr("Update (%1)").arg(ct.addSecs(counter).toString("m:ss"));
-  btn_refreshTree->setText(t_text);
 }
 
 bool TabProviders::findPage(const QString &provider, const QString &orderId) {
@@ -156,6 +138,7 @@ void TabProviders::openOrderPage(const QString &provider,
 void TabProviders::openStartPage() {
   m_sql = new AntiquaCRM::ASqlCore(this);
   setCurrentIndex(0);
+  m_treeWidget->loadUpdate();
 }
 
 void TabProviders::createSearchQuery(const QString &query) { Q_UNUSED(query); }
@@ -165,10 +148,3 @@ void TabProviders::createNewEntry(){/* unused */};
 void TabProviders::openEntry(qint64 customerId) { Q_UNUSED(customerId); };
 
 void TabProviders::onEnterChanged() { openStartPage(); }
-
-TabProviders::~TabProviders() {
-#ifdef ANTIQUA_DEVELOPEMENT
-  qInfo("Shutdown Providers timer ...");
-#endif
-  killTimer(timerId);
-}

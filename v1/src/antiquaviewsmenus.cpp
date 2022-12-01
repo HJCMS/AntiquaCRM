@@ -3,6 +3,7 @@
 
 #include "antiquaviewsmenus.h"
 #include "antiquatabwidget.h"
+#include "reportsactiongroup.h"
 #include "viewsactiongroup.h"
 
 #include <QDebug>
@@ -21,6 +22,7 @@ AntiquaViewsMenus::AntiquaViewsMenus(QWidget *parent) : QMenu{parent} {
   addSeparator();
 
   m_tableReports = addMenu(icon, tr("Database Reports"));
+  m_tabReports = new ReportsActionGroup(m_tableReports);
   addMenu(m_tableReports);
 
   addSeparator();
@@ -34,9 +36,14 @@ AntiquaViewsMenus::AntiquaViewsMenus(QWidget *parent) : QMenu{parent} {
   ac_fullScreen->setIcon(QIcon(":icons/window_fullscreen.png"));
   ac_fullScreen->setShortcut(QKeySequence::FullScreen);
 
-  connect(m_tableViews, SIGNAL(aboutToShow()), SLOT(aboutToShowViews()));
+  connect(m_tableReports, SIGNAL(aboutToShow()), SLOT(uniqLoadReports()));
+  connect(m_tabReports, SIGNAL(sendSelectView(const QString &)),
+          SIGNAL(sendOpenReport(const QString &)));
+
+  connect(m_tableViews, SIGNAL(aboutToShow()), SLOT(uniqLoadViews()));
   connect(m_tabViews, SIGNAL(sendSelectView(const QString &)),
           SIGNAL(sendOpenView(const QString &)));
+
   connect(ac_fullScreen, SIGNAL(triggered()), SIGNAL(sendToggleFullscreen()));
 
   setShowTabActions();
@@ -58,7 +65,15 @@ void AntiquaViewsMenus::setShowTabActions() {
   }
 }
 
-void AntiquaViewsMenus::aboutToShowViews() {
+void AntiquaViewsMenus::uniqLoadReports() {
+  if (m_tabReports->actions().size() > 0)
+    return;
+
+  if (m_tabReports->loadDataset())
+    m_tableReports->addActions(m_tabReports->actions());
+}
+
+void AntiquaViewsMenus::uniqLoadViews() {
   if (m_tabViews->actions().size() > 0)
     return;
 

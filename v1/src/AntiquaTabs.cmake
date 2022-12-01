@@ -34,4 +34,9 @@
 #include "tabviews.h"
 #endif
 
+// AntiquaReports
+#ifndef ANTIQUACRM_TABREPORTS_H
+#include "tabreports.h"
+#endif
+
 #endif
