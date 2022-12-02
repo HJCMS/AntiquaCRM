@@ -34,8 +34,6 @@ AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
 
   m_cfg = new AntiquaCRM::ASettings(this);
   m_cfg->setObjectName("application_settings");
-
-  m_orderSystem = new OrderSystem(this);
 }
 
 void AntiquaAppl::initGui() {
@@ -53,11 +51,6 @@ void AntiquaAppl::initGui() {
   connect(m_systemTray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
   // SIGNALS:AntiquaWindow
   connect(m_mainWindow, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
-  // SIGNALS:AntiquaTimer
-  connect(m_timer, SIGNAL(sendTrigger()), SLOT(startTriggerProcess()));
-  // SIGNALS:OrderSystem
-  connect(m_orderSystem, SIGNAL(sendNewOrdersArrived(const QString &)),
-          m_systemTray, SLOT(setOrdersMessage(const QString &)));
 }
 
 bool AntiquaAppl::checkInterfaces() {
@@ -97,69 +90,6 @@ bool AntiquaAppl::initTranslations() {
     return true;
   }
   return false;
-}
-
-bool AntiquaAppl::initialPlugins(QObject *receiver) {
-  p_interfaces.clear();
-  AntiquaCRM::APluginLoader *m_pl = new AntiquaCRM::APluginLoader(this);
-  QListIterator<AntiquaCRM::APluginInterface *> i(m_pl->pluginInterfaces(this));
-  while (i.hasNext()) {
-    AntiquaCRM::APluginInterface *m_iface = i.next();
-    if (m_iface != nullptr) {
-      // Slot:<APluginInterface>::OrderUpdateAction
-      connect(m_mainWindow, SIGNAL(sendPluginOperation(const QJsonObject &)),
-              m_iface, SLOT(orderUpdateAction(const QJsonObject &)));
-      // Signal:<APluginInterface>::sendQueryAborted TODO
-      // Signal:<APluginInterface>::sendQueryFinished
-      connect(m_iface, SIGNAL(sendQueryFinished()),
-              SLOT(setPluginQueryFinished()));
-
-      QString name(m_iface->displayName());
-      QString msg = tr("Plugin %1 found and loading ...").arg(qPrintable(name));
-      if (receiver != nullptr) {
-        QMetaObject::invokeMethod(receiver, "setMessage", Qt::DirectConnection,
-                                  Q_ARG(QString, msg));
-      } else {
-        emit sendStatusMessage(msg);
-      }
-      p_interfaces.append(m_iface);
-    }
-  }
-  return (p_interfaces.size() > 0);
-}
-
-void AntiquaAppl::startTriggerProcess() {
-  bool connection = checkRemotePort();
-  m_systemTray->setConnectionStatus(connection);
-  if (connection && p_interfaces.size() > 0) {
-    QListIterator<AntiquaCRM::APluginInterface *> i(p_interfaces);
-    while (i.hasNext()) {
-      AntiquaCRM::APluginInterface *m_iface = i.next();
-      if (m_iface != nullptr) {
-        m_iface->queryNewOrders();
-      }
-    }
-  }
-}
-
-/**
- * @brief Pluginabfrage auf neue Bestellungen
- * Nehme von QList<AProviderOrder> die Anzahl neuer Bestellungen.
- * Sind neue Bestellungen vorhanden speichere Sie in die Datenbank.
- * @note Wir müssen hier wegen den SQL-Queries einen Mutex verwenden.
- */
-void AntiquaAppl::setPluginQueryFinished() {
-  QMutex mutex;
-  AntiquaCRM::APluginInterface *m_iface =
-      qobject_cast<AntiquaCRM::APluginInterface *>(sender());
-  if (m_iface != nullptr) {
-    mutex.lock();
-    AntiquaCRM::AProviderOrders orders = m_iface->getOrders();
-    if (orders.size() > 0) {
-      m_orderSystem->updateOrders(m_iface->displayName(), orders);
-    }
-    mutex.unlock();
-  }
 }
 
 void AntiquaAppl::applicationQuit() {
@@ -284,24 +214,11 @@ int AntiquaAppl::exec() {
   m_cache->deleteLater();
   mutex.unlock();
 
-  // Step 7 - loading plugins
-  mutex.lock();
-  p_splashScreen.setMessage(tr("Loading plugins!"));
-  if (initialPlugins(&p_splashScreen)) {
-    p_splashScreen.setMessage(tr("Start Providers requests ..."));
-    startTriggerProcess();
-  }
-  p_splashScreen.setMessage(tr("Completed..."));
-  mutex.unlock();
-
-  // Step 8 - finish splash and unlock
+  // Step 7 - finish splash and unlock
   p_splashScreen.setMessage("Start Antiqua CRM");
   p_splashScreen.finish(m_mainWindow);
 
-  // Step 9 - start network listener
-  m_timer->restart();
-
-  // Step 10 - open application window
+  // Step 8 - open application window
   m_mainWindow->openWindow();
 
   return QCoreApplication::exec();

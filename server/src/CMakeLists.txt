@@ -1,0 +1,82 @@
+# -*- coding: utf-8 -*-
+# vim: set fileencoding=utf-8
+
+SET (PROJECT_INCLUDE_DIRS
+  ${ANTIQUABUILD_SOURCE_DIR}
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/abebooks
+  ${CMAKE_CURRENT_BINARY_DIR}/abebooks
+  ${CMAKE_CURRENT_SOURCE_DIR}/booklooker
+  ${CMAKE_CURRENT_BINARY_DIR}/booklooker
+  ${CMAKE_CURRENT_SOURCE_DIR}/buchfreund
+  ${CMAKE_CURRENT_BINARY_DIR}/buchfreund
+  ${Qt${QT_VERSION_MAJOR}Network_INCLUDE_DIRS}
+  ${Qt${QT_VERSION_MAJOR}Sql_INCLUDE_DIRS}
+  ${Qt${QT_VERSION_MAJOR}Xml_INCLUDE_DIRS}
+  ${INCLUDE_ANTIQUACRM_DEVEL}
+  ${ZLIB_INCLUDE_DIRS}
+)
+
+SET(PROJECT_LIBRARIES
+  Qt${QT_VERSION_MAJOR}::Core
+  Qt${QT_VERSION_MAJOR}::Network
+  Qt${QT_VERSION_MAJOR}::Sql
+  Qt${QT_VERSION_MAJOR}::Xml
+  ${ZLIB_LIBRARIES}
+)
+
+ADD_SUBDIRECTORY(abebooks)
+ADD_SUBDIRECTORY(booklooker)
+ADD_SUBDIRECTORY(buchfreund)
+
+INCLUDE_DIRECTORIES (${PROJECT_INCLUDE_DIRS})
+
+SET (PROJECT_FILES
+)
+
+SET (PROJECT_HEADERS
+  antiquacmd.h
+  settings.h
+  networkrequest.h
+  networker.h
+  provider.h
+  sqlpsql.h
+)
+
+SET (PROJECT_SOURCES
+  main.cpp
+  settings.cpp
+  antiquacmd.cpp
+  networkrequest.cpp
+  networker.cpp
+  provider.cpp
+  sqlpsql.cpp
+)
+
+ADD_EXECUTABLE(antiquacmd
+  ${PROJECT_HEADERS}
+  ${PROJECT_SOURCES}
+  ${PROJECT_FILES}
+)
+
+TARGET_LINK_LIBRARIES(antiquacmd PRIVATE
+  ${PROJECT_LIBRARIES}
+  AbeBooks
+  Booklooker
+  Buchfreund
+)
+
+SET_TARGET_PROPERTIES(antiquacmd PROPERTIES
+  OUTPUT_NAME antiquacmd
+  LINKER_LANGUAGE CXX
+  WIN32_EXECUTABLE TRUE
+)
+
+INSTALL (TARGETS antiquacmd
+  RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/
+  COMPONENT Core
+)
+
+##EOF
+

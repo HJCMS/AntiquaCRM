@@ -261,15 +261,17 @@ void ProvidersOrderPage::prepareCreateOrder() {
 
 bool ProvidersOrderPage::loadOrderDataset() {
   bool status = false;
+  qDebug() << Q_FUNC_INFO << p_order.count();
   if (p_order.count() == 0)
     return status;
-
-  QMutex mutex;
-  mutex.lock();
 
   // Buyer/Customer Info
   QJsonObject customer = p_order.value("customer").toObject();
   status = findCustomer(customer);
+  if(!status) {
+    qWarning("No Customer found!");
+    return false;
+  }
 
   // Payment Info
   QJsonObject orderInfo = p_order.value("orderinfo").toObject();
@@ -296,8 +298,6 @@ bool ProvidersOrderPage::loadOrderDataset() {
       m_table->setItem(r, 4, m_table->createItem(o.value("a_title")));
     }
   }
-
-  mutex.unlock();
 
   setEnabled(status);
   return status;

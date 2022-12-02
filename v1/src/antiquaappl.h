@@ -6,8 +6,6 @@
 #define ANTIQUACRM_APPLICATION_H
 
 #include <AntiquaCRM>
-#include <AntiquaCRMPlugin>
-#include <OrderSystem>
 #include <QApplication>
 #include <QJsonObject>
 #include <QList>
@@ -28,7 +26,6 @@ private:
   AntiquaSystemTray *m_systemTray;
   AntiquaCRM::ASqlCore *m_sql;
   AntiquaTimer *m_timer;
-  OrderSystem *m_orderSystem;
 
   QList<AntiquaCRM::APluginInterface *> p_interfaces;
 
@@ -37,13 +34,7 @@ private:
   bool checkInterfaces();
   bool checkRemotePort();
   bool checkDatabase();
-
   bool initTranslations();
-  bool initialPlugins(QObject *receiver = nullptr);
-
-private Q_SLOTS:
-  void startTriggerProcess();
-  void setPluginQueryFinished();
 
 Q_SIGNALS:
   void sendStatusMessage(const QString &msg);

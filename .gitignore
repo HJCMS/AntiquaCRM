@@ -2,7 +2,15 @@
 *.log
 *.bak
 *.old
+*.zip
+*.xz
+*.gz
+*.log
+*.job
+*.pdf
+*.csv
 build-*
 build_*
 CMakeLists.txt.user
 database/
+data/
