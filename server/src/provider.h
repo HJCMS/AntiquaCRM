@@ -9,6 +9,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
+#include <QList>
 #include <QNetworkCookie>
 #include <QObject>
 #include <QUrl>
@@ -20,61 +21,39 @@ class Networker;
 class Provider : public QObject {
   Q_OBJECT
 
-protected:
-  Settings *m_config;
+private:
   SqlPsql *m_sql;
 
-  /**
-   * @brief API access Remote URL
-   */
-  QUrl baseUrl;
-
-  /**
-   * @brief API access Path
-   */
-  QString apiPath;
-
-  /**
-   * @brief API access Key
-   */
-  QString apiKey;
-
-  /**
-   * @brief Actions Session Cookie
-   */
-  QNetworkCookie actionsCookie;
-
-  /**
-   * @brief Authentication Cookie
-   */
-  QNetworkCookie authenticCookie = QNetworkCookie();
-
+protected:
+  Settings *m_config;
   Networker *m_networker;
 
-  /**
-   * @brief uppercase first letter
-   */
+  QUrl baseUrl;
+
+  QString apiPath;
+
+  QString apiKey;
+
+  QNetworkCookie actionsCookie;
+
+  QNetworkCookie authenticCookie = QNetworkCookie();
+
+  virtual void initConfiguration() = 0;
+
+  virtual void prepareContent(const QJsonDocument &) = 0;
+
   const QString ucFirst(const QString &);
 
-  /**
-   * @brief Convert Gender from String to AntiquaCRM::Gender
-   */
   AntiquaCRM::Gender convertGender(const QString &from) const;
 
   /**
-   * @brief Search for IETF BCP 47 Language tag with Country name
-   * @return "IETF BCP 47 language tag"
+   * @brief Find IETF BCP 47 language tag
+   * @param country
    */
-  const QString bcp47Country(const QString &country) const;
+  const QString findBCP47(const QString &country) const;
 
-  /**
-   * @brief Search for Country name with IETF BCP 47 language tag
-   */
   const QString getCountry(const QString &bcp47) const;
 
-  /**
-   * @brief Vendors respond - with different date/time and zone formats.
-   */
   const QDateTime getDateTime(const QString &dateString,
                               const QString &timeString,
                               Qt::TimeSpec spec = Qt::LocalTime) const;
@@ -82,29 +61,24 @@ protected:
   const QDateTime getDateTime(const QString &dateTimeString,
                               Qt::TimeSpec spec = Qt::LocalTime) const;
 
-  /**
-   * @brief Convert Datetime to TimeSpec
-   */
   const QDateTime timeSpecDate(const QDateTime &dateTime,
                                Qt::TimeSpec fromSpec = Qt::LocalTime) const;
 
-  /**
-   * @brief Convert Invalid Price formats to double
-   */
-  double getPrice(const QJsonValue &value) const;
+  double getPrice(const QJsonValue &) const;
 
-  qint64 getArticleId(const QJsonValue &value) const;
+  qint64 convertArticleId(const QJsonValue &) const;
 
-  virtual void initConfiguration() = 0;
+  const QStringList currentOrderIds(const QString &provider);
 
-  virtual void prepareContent(const QJsonDocument &) = 0;
+  bool createOrders(const QList<QJsonObject> &);
 
-  virtual void database(const QList<QJsonObject> &) = 0;
+  QPair<qint64, QString> findInsertCustomer(const QJsonObject &);
 
 protected Q_SLOTS:
   virtual void responsed(const QByteArray &) = 0;
 
 Q_SIGNALS:
+  void sendDisjointed();
   void sendFinished();
 
 public Q_SLOTS:

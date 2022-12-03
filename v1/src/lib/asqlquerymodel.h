@@ -6,7 +6,6 @@
 #define ANTIQUACRM_SQLQUERYMODEL_H
 
 #include <AGlobal>
-#include <QIcon>
 #include <QMap>
 #include <QModelIndex>
 #include <QObject>
@@ -45,11 +44,6 @@ protected:
    * @brief Standard Formatierung für die Spaltenköpfe!
    */
   const QString setHeaderTitle(const QString &text) const;
-
-  /**
-   * @brief Optional - Standard Kopfzeilen Icon.
-   */
-  const QIcon setHeaderIcon(int column) const;
 
   /**
    * @brief Datum in ein lesbares Format konvertieren!

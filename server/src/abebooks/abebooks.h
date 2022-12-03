@@ -20,8 +20,6 @@ private:
 
   void prepareContent(const QJsonDocument &) override {};
 
-  void database(const QList<QJsonObject> &) override {};
-
 private Q_SLOTS:
   void responsed(const QByteArray &) override {};
 

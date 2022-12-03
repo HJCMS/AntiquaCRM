@@ -38,6 +38,7 @@ SET (projectLibrary_SOURCES
  bookbinding.cpp
  boolbox.cpp
  conditionedit.cpp
+ deliveryid.cpp
  ecurrency.cpp
  editoractionbar.cpp
  editinfolabel.cpp
@@ -90,6 +91,7 @@ SET (projectLibrary_HEADERS
  bookbinding.h
  boolbox.h
  conditionedit.h
+ deliveryid.h
  ecurrency.h
  editoractionbar.h
  editinfolabel.h

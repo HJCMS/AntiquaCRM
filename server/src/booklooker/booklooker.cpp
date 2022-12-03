@@ -5,7 +5,6 @@
 #include "networker.h"
 #include "networkrequest.h"
 #include "settings.h"
-#include "sqlpsql.h"
 
 #include <QDateTime>
 #include <QDir>
@@ -41,8 +40,7 @@ void BookLooker::prepareContent(const QJsonDocument &doc) {
     return;
   }
 
-  QStringList imported = storedOrderIds();
-
+  QStringList imported = currentOrderIds("Booklooker");
   QJsonArray orders = obj.value("returnValue").toArray();
   // Starte durchlauf Bestellungen
   if (orders.size() > 0) {
@@ -52,8 +50,9 @@ void BookLooker::prepareContent(const QJsonDocument &doc) {
       QJsonObject order = orders[i].toObject();
       qint64 order_id = order.value("orderId").toInt();
       QString order_str = QString::number(order_id);
-      if (imported.contains(order_str))
+      if (imported.contains(order_str)) {
         continue;
+      }
 
       QDateTime datetime = getDateTime(order.value("orderDate").toString(),
                                        order.value("orderTime").toString());
@@ -72,7 +71,7 @@ void BookLooker::prepareContent(const QJsonDocument &doc) {
         QString street = address.value("street").toString();
         QString postalcode = address.value("zip").toString();
         QString location = address.value("city").toString();
-        bcp47 = address.value("country").toString();
+        bcp47 = address.value("country").toString().toUpper();
         QString gender = address.value("title").toString();
         antiqua_customer.insert("c_gender", convertGender(gender));
         antiqua_customer.insert("c_firstname", ucFirst(firstname));
@@ -80,8 +79,8 @@ void BookLooker::prepareContent(const QJsonDocument &doc) {
         antiqua_customer.insert("c_street", street);
         antiqua_customer.insert("c_postalcode", postalcode);
         antiqua_customer.insert("c_location", ucFirst(location));
-        // TODO
-        antiqua_customer.insert("c_country", bcp47);
+        antiqua_customer.insert("c_country_bcp47", bcp47);
+        antiqua_customer.insert("c_country", getCountry(bcp47));
 
         QStringList postalAddress;
         postalAddress << firstname + " " + lastname;
@@ -97,7 +96,9 @@ void BookLooker::prepareContent(const QJsonDocument &doc) {
 
         if (order.contains("tel")) {
           QString phone = order.value("tel").toString();
-          antiqua_customer.insert("c_phone_0", phone.replace("+", "0"));
+          phone.replace("+", "0");
+          phone.replace(QRegExp("^0{2,}"), "0");
+          antiqua_customer.insert("c_phone_0", phone);
         }
 
         if (order.contains("company")) {
@@ -268,7 +269,8 @@ void BookLooker::prepareContent(const QJsonDocument &doc) {
           QJsonObject sub = articles[a].toObject();
           booking.insert("a_payment_id", 0);
           booking.insert("a_count", sub.value("amount"));
-          booking.insert("a_article_id", getArticleId(sub.value("orderNo")));
+          booking.insert("a_article_id",
+                         convertArticleId(sub.value("orderNo")));
           qint64 prItemId = sub.value("orderItemId").toInt();
           booking.insert("a_provider_id", QString::number(prItemId));
           booking.insert("a_price", getPrice(sub.value("singlePrice")));
@@ -285,45 +287,13 @@ void BookLooker::prepareContent(const QJsonDocument &doc) {
       // END::CONVERT
     }
     // END::QUERY_ORDERS
-    if (ordersList.size() > 0)
-      database(ordersList);
-    else
-      emit sendFinished();
-  }
-}
 
-void BookLooker::database(const QList<QJsonObject> &orders) {
-  QStringList inserts;
-  QListIterator<QJsonObject> it(orders);
-  while (it.hasNext()) {
-    QJsonObject order = it.next();
-    QString pr_order = order.value("orderid").toString();
-    QString pr_buyer = order.value("customer")
-                           .toObject()
-                           .value("c_provider_import")
-                           .toString();
-    QJsonDocument doc(order);
-    QString pr_order_data = doc.toJson(QJsonDocument::Compact);
-    QString sql("INSERT INTO provider_order_history (");
-    sql.append("pr_name");
-    sql.append(",pr_order");
-    sql.append(",pr_buyer");
-    sql.append(",pr_datetime");
-    sql.append(",pr_order_data");
-    sql.append(") VALUES (");
-    sql.append("'Booklooker'");
-    sql.append(",'" + pr_order + "'");
-    sql.append(",'" + pr_buyer + "'");
-    sql.append(",CURRENT_TIMESTAMP");
-    sql.append(",'" + pr_order_data + "');");
-    // qDebug() << sql;
-    inserts.append(sql);
+    if (createOrders(ordersList)) {
+      emit sendFinished();
+      return;
+    }
   }
-  m_sql->query(inserts.join("\n"));
-  if (!m_sql->lastError().isEmpty()) {
-    qDebug() << m_sql->lastError();
-  }
-  emit sendFinished();
+  emit sendDisjointed();
 }
 
 void BookLooker::setTokenCookie(const QString &token) {
@@ -364,26 +334,14 @@ void BookLooker::authenticate() {
   m_networker->loginRequest(request, pd.toLocal8Bit());
 }
 
-const QStringList BookLooker::storedOrderIds() {
-  QStringList ids;
-  QString sql("SELECT pr_order FROM provider_order_history");
-  sql.append(" WHERE pr_name='Booklooker';");
-  QSqlQuery q = m_sql->query(sql);
-  if (q.size() > 0) {
-    while (q.next()) {
-      ids << q.value("pr_order").toString();
-    }
-  }
-
-  return ids;
-}
-
 void BookLooker::responsed(const QByteArray &data) {
   QJsonParseError parser;
   QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
   if (parser.error != QJsonParseError::NoError) {
-    qWarning("Booklooker: Responsed json is not well format:(%s)!",
-             qPrintable(parser.errorString()));
+#ifdef ANTIQUA_DEVELOPEMENT
+    qWarning("Booklooker::ParseError:(%s)!", qPrintable(parser.errorString()));
+#endif
+    emit sendDisjointed();
     return;
   }
 
@@ -413,7 +371,7 @@ void BookLooker::queryOrders() {
   actionsCookie.setDomain(url.host());
   actionsCookie.setSecure(true);
 
-  QDate past = QDate::currentDate().addDays(-5);
+  QDate past = QDate::currentDate().addDays(-4);
   QUrlQuery q;
   q.addQueryItem("token", QString(authenticCookie.value()));
   q.addQueryItem("dateFrom", dateString(past));

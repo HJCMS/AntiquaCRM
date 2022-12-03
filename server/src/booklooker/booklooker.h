@@ -5,9 +5,9 @@
 #ifndef ANTIQUACRM_BOOKLOOKER_H
 #define ANTIQUACRM_BOOKLOOKER_H
 
-#include <QObject>
 #include <QDate>
 #include <QJsonValue>
+#include <QObject>
 
 #include "provider.h"
 
@@ -23,15 +23,11 @@ private:
 
   void prepareContent(const QJsonDocument &) override;
 
-  void database(const QList<QJsonObject> &) override;
-
   void setTokenCookie(const QString &token);
 
   bool isCookieExpired();
 
   void authenticate();
-
-  const QStringList storedOrderIds();
 
 private Q_SLOTS:
   void responsed(const QByteArray &) override;

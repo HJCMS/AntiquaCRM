@@ -41,6 +41,10 @@
 #include "conditionedit.h"
 #endif
 
+#ifndef ANTIQUACRM_DELIVERYID_H
+#include "deliveryid.h"
+#endif
+
 #ifndef ANTIQUACRM_ECURRENCY_H
 #include "ecurrency.h"
 #endif

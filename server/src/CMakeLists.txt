@@ -42,6 +42,7 @@ SET (PROJECT_HEADERS
   networker.h
   provider.h
   sqlpsql.h
+  customers.h
 )
 
 SET (PROJECT_SOURCES
@@ -52,6 +53,7 @@ SET (PROJECT_SOURCES
   networker.cpp
   provider.cpp
   sqlpsql.cpp
+  customers.cpp
 )
 
 ADD_EXECUTABLE(antiquacmd

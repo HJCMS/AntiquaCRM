@@ -6,6 +6,7 @@
 #define ANTIQUACRM_BUCHFREUND_H
 
 #include <QObject>
+
 #include "provider.h"
 
 class Buchfreund final : public Provider {
@@ -14,19 +15,21 @@ class Buchfreund final : public Provider {
 private:
   void initConfiguration() override;
 
-  void prepareContent(const QJsonDocument &) override {};
+  const QUrl apiQuery(const QString &);
 
-  void database(const QList<QJsonObject> &) override {};
+  void queryOrdersById(const QStringList &);
+
+  void prepareContent(const QJsonDocument &) override;
 
 private Q_SLOTS:
-  void responsed(const QByteArray &) override {};
+  void responsed(const QByteArray &) override;
 
 public Q_SLOTS:
   void queryOrders() override;
 
 public:
   explicit Buchfreund(QObject *parent = nullptr);
-  bool isAccessible() override { return false; }
+  bool isAccessible() override;
 };
 
 #endif

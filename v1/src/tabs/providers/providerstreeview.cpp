@@ -144,6 +144,16 @@ void ProvidersTreeView::updateOrderStatus(QTreeWidgetItem *item,
     return;
   }
 
+  case (AntiquaCRM::OrderStatus::COMPLETED): {
+    QString mTip = tr("Complete");
+    if (modified != true || !tip.contains(mTip))
+      item->setToolTip(0, tip + " " + mTip);
+
+    item->setIcon(1, QIcon("://icons/action_ok.png"));
+    item->setData(1, Qt::UserRole, true); // setModified
+    return;
+  }
+
   default:
     return;
   };
@@ -211,30 +221,30 @@ void ProvidersTreeView::loadUpdate() {
     }
   }
 
-  QString table("query_provider_order_history");
+  QString table("query_provider_orders");
   AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
   QString sql = AntiquaCRM::ASqlFiles::queryStatement(table);
   QSqlQuery q = m_sql->query(sql);
   int count = 0;
   if (q.size() > 0) {
     while (q.next()) {
-      QString provider = q.value("pr_name").toString();
+      QString provider = q.value("order_provider").toString();
       addProvider(provider);
-      QString id = q.value("pr_order").toString();
+      QString id = q.value("order_number").toString();
       AntiquaCRM::OrderStatus status =
-          static_cast<AntiquaCRM::OrderStatus>(q.value("pr_status").toInt());
+          static_cast<AntiquaCRM::OrderStatus>(q.value("order_status").toInt());
       count++;
 
       if (exists(provider, id)) {
         updateItemStatus(provider, id, status);
         continue;
       }
-
-      QString d_time = q.value("pr_datetime").toString();
+      //  TODO order_comment
+      QString d_time = q.value("order_datetime").toString();
       TreeOrderItem data;
       data.id = id;
       data.datetime = QDateTime::fromString(d_time, Qt::ISODate);
-      data.buyer = q.value("pr_buyer").toString();
+      data.buyer = q.value("order_buyername").toString();
       data.status = status;
       addOrder(provider, data);
     }

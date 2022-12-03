@@ -36,7 +36,6 @@ private:
   bool findPage(const QString &provider, const QString &orderId);
 
 private Q_SLOTS:
-  void setOrderStatusUpdate(const QJsonObject &);
   void openOrderPage(const QString &provider, const QString &orderId);
 
 public Q_SLOTS:

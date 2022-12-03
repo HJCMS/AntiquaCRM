@@ -12,12 +12,7 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+118"/>
-        <source>Plugin %1 found and loading ...</source>
-        <translation>Plugin %1 gefunden und wird geladen ...</translation>
-    </message>
-    <message>
-        <location line="+122"/>
+        <location filename="../antiquaappl.cpp" line="+170"/>
         <source>Search Networkconnection!</source>
         <translation>Suche Netzwerkverbindung!</translation>
     </message>
@@ -71,26 +66,11 @@
         <source>Create Cachefile failed ...</source>
         <translation>Fehler beim erstellen der Temporären Dateien ...</translation>
     </message>
-    <message>
-        <location line="+7"/>
-        <source>Loading plugins!</source>
-        <translation>Plugins werden geladen!</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Start Providers requests ...</source>
-        <translation>Dienstanbieteranfragen starten ...</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Completed...</source>
-        <translation>Abgeschlossen ...</translation>
-    </message>
 </context>
 <context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
-        <location filename="../lib/asqlquerymodel.cpp" line="+110"/>
+        <location filename="../lib/asqlquerymodel.cpp" line="+105"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
@@ -3263,14 +3243,6 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
-    <name>OrderSystem</name>
-    <message>
-        <location filename="../ordersystem/ordersystem.cpp" line="+14"/>
-        <source>New orders from %1 have arrived.</source>
-        <translation>Neue Bestellungen von %1 sind eingetroffen.</translation>
-    </message>
-</context>
-<context>
     <name>OrdersCostSettings</name>
     <message>
         <location filename="../tabs/orders/orderscostsettings.cpp" line="+16"/>
@@ -3434,7 +3406,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+85"/>
         <source>A Article can&apos;t inserted, if no Order-/Customer Id exists.</source>
         <translation>Ein Artikel kann nicht eingefügt werden, wenn keine Bestell-/Kundennummer vorhanden ist.</translation>
     </message>
@@ -3444,22 +3416,22 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bitte speichern Sie zuerst Ihren Auftrag.</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+154"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag erfolgreich gespeichert!</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="-31"/>
         <source>No SQL Articles exist!</source>
         <translation>Es sind keine SQL-Artikel vorhanden!</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+25"/>
         <source>No Modifications found, nothing todo!</source>
         <translation>Keine Änderungen gefunden, es gibt nichts zu tun!</translation>
     </message>
     <message>
-        <location line="+125"/>
+        <location line="+126"/>
         <source>Article: %1 not found or no stock!</source>
         <translation>Artikel: %1 nicht gefunden oder nicht auf Lager!</translation>
     </message>
@@ -3479,12 +3451,12 @@ Bild - Artikel Nr: %2</translation>
         <location line="+41"/>
         <location line="+32"/>
         <location line="+36"/>
-        <location line="+90"/>
+        <location line="+94"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation>Fehlende wichtige IDs, Bestellung zuerst speichern!</translation>
     </message>
     <message>
-        <location line="-214"/>
+        <location line="-218"/>
         <source>Incomplete eMail configuration!</source>
         <translation>Unvollständige E-Mail-Konfiguration!</translation>
     </message>
@@ -3528,7 +3500,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Keine Daten gefunden! - Druckvorgang abgebrochen.</translation>
     </message>
     <message>
-        <location line="+176"/>
+        <location line="+180"/>
         <source>No Provider orders data found!</source>
         <translation>Keine Dienstleister-Auftragsdaten gefunden!</translation>
     </message>
@@ -4808,6 +4780,31 @@ Bild - Artikel Nr: %2</translation>
         <source>Order already exists!</source>
         <translation>Dieser Auftrag besteht bereits!</translation>
     </message>
+    <message>
+        <location line="+26"/>
+        <source>No Customer found!</source>
+        <translation>Kein Kunde gefunden!</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Can not create an Order without customer data!</source>
+        <translation>Ohne Kundendaten kann keine Bestellung erstellt werden!</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>This can be due to an incorrect import or deleted customer data.</source>
+        <translation>Dies kann an einem fehlerhaften Import oder gelöschten Kundendaten liegen.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Alternatively, you must create the customer manually.</source>
+        <translation>Alternativ müssen Sie den Kunden manuell anlegen.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Broken Orderdata!</source>
+        <translation>Defekte Bestelldaten!</translation>
+    </message>
 </context>
 <context>
     <name>ProvidersTreeView</name>
@@ -5540,11 +5537,6 @@ Bild - Artikel Nr: %2</translation>
         <location line="+1"/>
         <source>Button for update, Provider Tree.</source>
         <translation>Knopf für das Aktualisieren der Dienstleisteransicht.</translation>
-    </message>
-    <message>
-        <location line="+46"/>
-        <source>Update (%1)</source>
-        <translation>Aktualisieren (%1)</translation>
     </message>
 </context>
 <context>

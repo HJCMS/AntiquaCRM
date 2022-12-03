@@ -21,7 +21,7 @@ SET (query_tables_FILES
   query_postal_codes.sql
   query_printing_billing_info.sql
   query_provider_order_exists.sql
-  query_provider_order_history.sql
+  query_provider_orders.sql
   query_storage_location.sql
   query_tab_books_main.sql
   query_tab_customers_main.sql

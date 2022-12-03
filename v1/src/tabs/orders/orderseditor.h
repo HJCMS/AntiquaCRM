@@ -58,7 +58,7 @@ private:
 
   void createSqlInsert() override;
 
-  qint64 searchCustomer(const QJsonObject &obj);
+  qint64 searchCustomer(const QJsonObject &obj, qint64 customerId = -1);
 
   bool addArticleToOrderTable(qint64 articleId);
 

@@ -11,7 +11,7 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 
-class SqlPsql : public QObject {
+class SqlPsql final : public QObject {
   Q_OBJECT
 
 private:

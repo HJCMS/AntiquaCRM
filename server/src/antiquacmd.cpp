@@ -6,7 +6,6 @@
 #include "booklooker.h"
 #include "buchfreund.h"
 #include "settings.h"
-#include "sqlpsql.h"
 
 // #include "sysexits.h"
 #include <QDebug>
@@ -26,6 +25,7 @@ int AntiquaCMD::abebooks() {
   AbeBooks *m = new AbeBooks(this);
   connect(&getTimer, SIGNAL(timeout()), &loop, SLOT(quit()));
   connect(m, SIGNAL(sendFinished()), &loop, SLOT(quit()));
+  connect(m, SIGNAL(sendDisjointed()), &loop, SLOT(quit()));
   if (m->isAccessible())
     m->queryOrders();
   else
@@ -41,6 +41,7 @@ int AntiquaCMD::booklooker() {
   BookLooker *m = new BookLooker(this);
   connect(&getTimer, SIGNAL(timeout()), &loop, SLOT(quit()));
   connect(m, SIGNAL(sendFinished()), &loop, SLOT(quit()));
+  connect(m, SIGNAL(sendDisjointed()), &loop, SLOT(quit()));
   if (m->isAccessible())
     m->queryOrders();
   else
@@ -56,6 +57,7 @@ int AntiquaCMD::buchfreund() {
   Buchfreund *m = new Buchfreund(this);
   connect(&getTimer, SIGNAL(timeout()), &loop, SLOT(quit()));
   connect(m, SIGNAL(sendFinished()), &loop, SLOT(quit()));
+  connect(m, SIGNAL(sendDisjointed()), &loop, SLOT(quit()));
   if (m->isAccessible())
     m->queryOrders();
   else
@@ -66,16 +68,15 @@ int AntiquaCMD::buchfreund() {
 }
 
 void AntiquaCMD::queryAll() {
-  qInfo("ANTIQUACRM::queryAll()");
-  qDebug() << "Abebooks:" << abebooks();
-
-  qDebug() << "Booklooker:" << booklooker();
-
-  qDebug() << "Buchfreund:" << buchfreund();
+  qInfo("AntiquaCRM create requeset to Abebooks:");
+  abebooks();
+  qInfo("AntiquaCRM create requeset to Booklooker:");
+  booklooker();
+  qInfo("AntiquaCRM create requeset to Buchfreund:");
+  buchfreund();
 }
 
 int AntiquaCMD::exec() {
-  qDebug() << "AntiquaCMD::exec()";
   queryAll();
   return 0;
 }

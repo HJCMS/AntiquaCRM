@@ -83,21 +83,6 @@ bool TabProviders::findPage(const QString &provider, const QString &orderId) {
   return false;
 }
 
-void TabProviders::setOrderStatusUpdate(const QJsonObject &obj) {
-  QString sql("UPDATE provider_order_history SET pr_status=");
-  sql.append(QString::number(obj.value("status").toInt()));
-  sql.append(" WHERE pr_order='");
-  sql.append(obj.value("orderid").toString());
-  sql.append("';");
-  m_sql->query(sql);
-  if (m_sql->lastError().isEmpty())
-    m_treeWidget->loadUpdate();
-#ifdef ANTIQUA_DEVELOPEMENT
-  else
-    qDebug() << m_sql->lastError();
-#endif
-}
-
 void TabProviders::openOrderPage(const QString &provider,
                                  const QString &orderId) {
   if (provider.isEmpty() || orderId.isEmpty())
@@ -106,12 +91,14 @@ void TabProviders::openOrderPage(const QString &provider,
   if (findPage(provider, orderId))
     return;
 
-  QString sql("SELECT pr_order_data FROM provider_order_history");
+  qint64 customerId = -1;
+  QString sql("SELECT pr_customer_id, pr_order_data FROM provider_orders");
   sql.append(" WHERE pr_name='" + provider + "' AND pr_order='");
   sql.append(orderId + "';");
   QSqlQuery q = m_sql->query(sql);
   if (q.size() == 1) {
     q.next();
+    customerId = q.value("pr_customer_id").toInt();
     QByteArray order = q.value("pr_order_data").toString().toLocal8Bit();
     QJsonDocument doc = QJsonDocument::fromJson(order);
     if (doc.isEmpty() || doc.object().isEmpty()) {
@@ -120,9 +107,8 @@ void TabProviders::openOrderPage(const QString &provider,
       return;
     }
     QJsonObject jObj = doc.object();
+    jObj.insert("c_id", customerId);
     ProvidersOrderPage *page = new ProvidersOrderPage(jObj, m_pages);
-    connect(page, SIGNAL(sendOrderUpdate(const QJsonObject &)),
-            SLOT(setOrderStatusUpdate(const QJsonObject &)));
     if (page->loadOrderDataset()) {
       int index = m_pages->addPage(page, orderId);
       m_pages->setCurrentIndex(index);

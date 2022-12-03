@@ -261,15 +261,21 @@ void ProvidersOrderPage::prepareCreateOrder() {
 
 bool ProvidersOrderPage::loadOrderDataset() {
   bool status = false;
-  qDebug() << Q_FUNC_INFO << p_order.count();
+  // qDebug() << Q_FUNC_INFO << p_order.count();
   if (p_order.count() == 0)
     return status;
 
   // Buyer/Customer Info
   QJsonObject customer = p_order.value("customer").toObject();
   status = findCustomer(customer);
-  if(!status) {
+  if (!status) {
     qWarning("No Customer found!");
+    QStringList txt(tr("No Customer found!"));
+    txt.append(tr("Can not create an Order without customer data!"));
+    txt.append(
+        tr("This can be due to an incorrect import or deleted customer data."));
+    txt.append(tr("Alternatively, you must create the customer manually."));
+    QMessageBox::warning(this, tr("Broken Orderdata!"), txt.join("\n"));
     return false;
   }
 

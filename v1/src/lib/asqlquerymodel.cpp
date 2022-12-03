@@ -26,11 +26,6 @@ const QString ASqlQueryModel::setHeaderTitle(const QString &text) const {
   return b;
 }
 
-const QIcon ASqlQueryModel::setHeaderIcon(int column) const {
-  Q_UNUSED(column);
-  return QIcon(":icons/antiqua.png");
-}
-
 const QString ASqlQueryModel::displayDate(const QVariant &value) const {
   QDateTime dt(value.toDateTime());
   return QLocale::system().toString(dt, ANTIQUACRM_SHORT_DATE_DISPLAY);

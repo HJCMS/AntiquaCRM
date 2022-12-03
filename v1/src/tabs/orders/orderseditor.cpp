@@ -426,7 +426,7 @@ void OrdersEditor::createSqlInsert() {
   }
 }
 
-qint64 OrdersEditor::searchCustomer(const QJsonObject &obj) {
+qint64 OrdersEditor::searchCustomer(const QJsonObject &obj, qint64 customerId) {
   QStringList f("c_firstname");
   f << "c_lastname";
   f << "c_postalcode";
@@ -441,9 +441,13 @@ qint64 OrdersEditor::searchCustomer(const QJsonObject &obj) {
 
   // Search customer
   QString sql("SELECT c_id FROM customers WHERE (");
-  sql.append(clause.join(" AND "));
-  sql.append(") OR (c_provider_import='");
-  sql.append(obj.value("c_provider_import").toString());
+  if (customerId > 1) {
+    sql.append("c_id=" + QString::number(customerId));
+  } else {
+    sql.append(clause.join(" AND "));
+    sql.append(") OR (c_provider_import='");
+    sql.append(obj.value("c_provider_import").toString());
+  }
   sql.append("') ORDER BY c_id;");
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
@@ -902,6 +906,7 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
   q.next();
   QString o_provider_name = q.value("pr_name").toString();
   QString o_provider_order_id = q.value("pr_order").toString();
+  qint64 customerId = q.value("pr_customer_id").toInt();
   QByteArray data = q.value("pr_order_data").toByteArray();
   QJsonObject obj = QJsonDocument::fromJson(data).object();
   if (obj.isEmpty())
@@ -911,15 +916,15 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
 
   AntiquaCRM::AProviderOrder prOrder(o_provider_name, o_provider_order_id);
   // Kunden Daten
-  qint64 customerId = -1;
   if (obj.contains("customer")) {
     QJsonObject customer = obj.value("customer").toObject();
     // NOTE: Wir benötigen bei einem Import eine gültige Kundennummer!
-    customerId = searchCustomer(customer);
-    if (!prOrder.setValue("o_customer_id", customerId)) {
+    customerId = searchCustomer(customer, customerId);
+    if (customerId < 1) {
       openNoticeMessage(tr("Customer not found or set!"));
       return false;
     }
+    prOrder.setValue("o_customer_id", customerId);
     // NOTE: Wir nehmen die korrigierten Kundendaten!
     AntiquaCRM::ASqlFiles customerQuery("query_order_import_customer");
     if (customerQuery.openTemplate()) {

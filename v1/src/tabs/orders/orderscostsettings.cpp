@@ -19,7 +19,7 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
   o_delivery_send_id->setObjectName("o_delivery_send_id");
   o_delivery_send_id->setInfo(tr("Parcel Shipment Number"));
   dsLayout->addWidget(o_delivery_send_id);
-  o_delivery = new SerialID(m_deliveryTab);
+  o_delivery = new DeliveryId(m_deliveryTab);
   o_delivery->setObjectName("o_delivery");
   o_delivery->setInfo(tr("Delivery note number"));
   dsLayout->addWidget(o_delivery);
