@@ -6,6 +6,7 @@
 #include "networkrequest.h"
 #include "settings.h"
 
+#include <QDebug>
 #include <QDateTime>
 #include <QDir>
 #include <QFile>
@@ -277,7 +278,8 @@ void BookLooker::prepareContent(const QJsonDocument &doc) {
           QJsonObject sub = articles[a].toObject();
           booking.insert("a_payment_id", 0);
           booking.insert("a_count", sub.value("amount"));
-          booking.insert("a_article_id", convert("a_article_id", sub));
+          booking.insert("a_article_id",
+                         convert("a_article_id", sub.value("orderNo")));
           qint64 prItemId = sub.value("orderItemId").toInt();
           booking.insert("a_provider_id", QString::number(prItemId));
           booking.insert("a_price",

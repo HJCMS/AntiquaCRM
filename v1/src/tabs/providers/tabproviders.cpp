@@ -181,6 +181,9 @@ void TabProviders::openOrderPage(const QString &provider,
     }
     QJsonObject jObj = doc.object();
     jObj.insert("c_id", customerId);
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << sql << Qt::endl << jObj;
+#endif
     ProvidersOrderPage *page = new ProvidersOrderPage(jObj, m_pages);
     connect(page, SIGNAL(sendOpenProviderDialog()),
             SLOT(createProviderAction()));

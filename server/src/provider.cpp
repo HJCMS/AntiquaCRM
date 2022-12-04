@@ -23,24 +23,29 @@ Provider::Provider(QObject *parent) : QObject{parent} {
 }
 
 const QString Provider::ucFirst(const QString &str) {
-  QStringList array = str.trimmed().split(" ", Qt::SkipEmptyParts);
+  QString convert = str.trimmed().toLower();
+  QStringList array = convert.split(" ", Qt::SkipEmptyParts);
   for (int i = 0; i < array.size(); i++) {
     array[i].replace(0, 1, array[i][0].toUpper());
   }
   return array.join(" ");
 }
 
-AntiquaCRM::Gender Provider::convertGender(const QString &gender) const {
+int Provider::convertGender(const QString &gender) const {
+  QString search = gender.toLower().trimmed();
   QStringList female({"ms.", "mss", "mses", "madam", "frau", "freifrau"});
   QStringList male({"mr", "mister", "sir", "herr", "herrn", "freiherr"});
-  if (female.contains(gender, Qt::CaseInsensitive))
-    return AntiquaCRM::Gender::FEMALE;
-  else if (male.contains(gender, Qt::CaseInsensitive))
-    return AntiquaCRM::Gender::MALE;
-  else if (gender.contains("diverse", Qt::CaseInsensitive))
-    return AntiquaCRM::Gender::VARIOUS;
-  else
-    return AntiquaCRM::Gender::NO_GENDER;
+  AntiquaCRM::Gender crm_gender;
+  if (female.contains(search)) {
+    crm_gender = AntiquaCRM::Gender::FEMALE;
+  } else if (male.contains(search)) {
+    crm_gender = AntiquaCRM::Gender::MALE;
+  } else if (gender.contains("diverse")) {
+    crm_gender = AntiquaCRM::Gender::VARIOUS;
+  } else {
+    crm_gender = AntiquaCRM::Gender::NO_GENDER;
+  }
+  return static_cast<int>(crm_gender);
 }
 
 const QString Provider::findBCP47(const QString &country) const {
@@ -203,10 +208,6 @@ bool Provider::createOrders(const QList<QJsonObject> &orders) {
     inserts.append(sql);
   }
 
-//#ifdef ANTIQUA_DEVELOPEMENT
-//  qDebug() << Q_FUNC_INFO << inserts.size();
-//#endif
-
   m_sql->query(inserts.join("\n"));
   if (!m_sql->lastError().isEmpty()) {
     qWarning("SQL Provider insert answers with errors!");
@@ -219,13 +220,12 @@ bool Provider::createOrders(const QList<QJsonObject> &orders) {
 QPair<qint64, QString> Provider::findInsertCustomer(const QJsonObject &json) {
   Customers *mc = new Customers(m_sql, json);
   qint64 c_id = mc->getId();
-
 //#ifdef ANTIQUA_DEVELOPEMENT
 //  if (c_id < 1)
 //    qDebug() << Q_FUNC_INFO << c_id;
-
-//  Q_ASSERT(c_id > 1);
 //#endif
+
+  Q_ASSERT(c_id > 1);
 
   QPair<qint64, QString> out;
   out.first = c_id;

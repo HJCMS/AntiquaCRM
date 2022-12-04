@@ -319,6 +319,11 @@ public:
   static const QHash<QString, QMetaType::Type> articleKeys() {
     QHash<QString, QMetaType::Type> hash;
     /**
+     * @brief AntiquaCRM a_order_id=(o_id)
+     */
+    hash.insert("a_order_id", QMetaType::Int);
+
+    /**
      * @brief AntiquaCRM Article Id
      */
     hash.insert("a_article_id", QMetaType::Int);

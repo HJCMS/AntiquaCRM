@@ -129,7 +129,7 @@ protected:
    * @brief Der \b VERSUCH - Die verschiedenen Dienstleisterangaben beim
    * Geschlecht, unter eine Hut zu bringen.
    */
-  AntiquaCRM::Gender convertGender(const QString &gender) const;
+  int convertGender(const QString &gender) const;
 
   /**
    * @brief IETF BCP 47 Sprach Attribute

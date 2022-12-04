@@ -36,7 +36,6 @@ void SyslogMessageHandler(QtMsgType type, const QMessageLogContext &context,
 
 int main(int argc, char *argv[]) {
   qInstallMessageHandler(SyslogMessageHandler);
-
   AntiquaCMD *m_appl = new AntiquaCMD(argc, argv);
   return m_appl->exec();
 }

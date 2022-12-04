@@ -216,6 +216,20 @@ QVariant PurchaseTableModel::data(const QModelIndex &index, int role) const {
   }
 
   if (role == Qt::EditRole) {
+    /*
+      m.insert(0, PurchaseTableColumn("a_payment_id", tr("Payment Id")));
+      m.insert(1, PurchaseTableColumn("a_order_id", tr("Order Id")));
+      m.insert(2, PurchaseTableColumn("a_article_id", tr("Article Id")));
+      m.insert(3, PurchaseTableColumn("a_customer_id", tr("Customer Id")));
+      m.insert(4, PurchaseTableColumn("a_type", tr("Type")));
+      m.insert(5, PurchaseTableColumn("a_count", tr("Count")));
+      m.insert(6, PurchaseTableColumn("a_price", tr("Price")));
+      m.insert(7, PurchaseTableColumn("a_sell_price", tr("Sell Price")));
+      m.insert(8, PurchaseTableColumn("a_title", tr("Title")));
+      m.insert(9, PurchaseTableColumn("a_provider_id", tr("Provider Id")));
+      m.insert(10, PurchaseTableColumn("a_modified", tr("Modified")));
+    */
+
     switch (_type) {
     case QMetaType::Bool:
       return buffer.toBool();
@@ -235,8 +249,14 @@ QVariant PurchaseTableModel::data(const QModelIndex &index, int role) const {
     case QMetaType::QDateTime:
       return buffer.toDateTime();
 
-    default:
-      return buffer.toString();
+    default: {
+      // FIXME Max. Zeichenlänge beim Titel ist 80!
+      QString str = buffer.toString();
+      if (str.length() > 79) {
+        return str.left(76) + "...";
+      }
+      return str;
+    }
     };
   }
 
