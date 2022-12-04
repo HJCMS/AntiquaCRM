@@ -11,6 +11,15 @@ Provider::Provider(QObject *parent) : QObject{parent} {
   m_config = new Settings(this);
   m_networker = new Networker(this);
   m_sql = new SqlPsql(this);
+
+  // Verlaufsabfrage
+  if (!m_config->contains("history_query"))
+    m_config->setValue("history_query", -3);
+
+  history_query = m_config->value("history_query", -3).toInt();
+
+  connect(m_networker, SIGNAL(sendResponse(const QByteArray &)),
+          SLOT(responsed(const QByteArray &)));
 }
 
 const QString Provider::ucFirst(const QString &str) {
@@ -21,14 +30,14 @@ const QString Provider::ucFirst(const QString &str) {
   return array.join(" ");
 }
 
-AntiquaCRM::Gender Provider::convertGender(const QString &from) const {
+AntiquaCRM::Gender Provider::convertGender(const QString &gender) const {
   QStringList female({"ms.", "mss", "mses", "madam", "frau", "freifrau"});
   QStringList male({"mr", "mister", "sir", "herr", "herrn", "freiherr"});
-  if (female.contains(from, Qt::CaseInsensitive))
+  if (female.contains(gender, Qt::CaseInsensitive))
     return AntiquaCRM::Gender::FEMALE;
-  else if (male.contains(from, Qt::CaseInsensitive))
+  else if (male.contains(gender, Qt::CaseInsensitive))
     return AntiquaCRM::Gender::MALE;
-  else if (from.contains("diverse", Qt::CaseInsensitive))
+  else if (gender.contains("diverse", Qt::CaseInsensitive))
     return AntiquaCRM::Gender::VARIOUS;
   else
     return AntiquaCRM::Gender::NO_GENDER;
@@ -100,28 +109,41 @@ const QDateTime Provider::timeSpecDate(const QDateTime &dateTime,
   return dt;
 }
 
-double Provider::getPrice(const QJsonValue &value) const {
-  if (value.type() == QJsonValue::Double)
-    return value.toDouble();
-
-  if (value.type() == QJsonValue::String) {
-    QString str = value.toString();
-    if (!str.isEmpty())
-      return str.toDouble();
-  }
-  return 0.00;
-}
-
-qint64 Provider::convertArticleId(const QJsonValue &value) const {
-  if (value.type() == QJsonValue::String) {
-    QString str = value.toString();
-    if (!str.isEmpty())
+const QJsonValue Provider::convert(const QString &key,
+                                   const QJsonValue &value) const {
+  if (key == "a_article_id") {
+    if (value.type() == QJsonValue::String) {
+      QString str = value.toString();
       return str.toInt();
+    } else {
+      return value.toInt();
+    }
   }
-  return value.toInt();
+
+  if (key.contains("_price")) {
+    if (value.type() == QJsonValue::String) {
+      QString str = value.toString();
+      return str.toDouble();
+    } else {
+      return value.toDouble();
+    }
+  }
+
+  switch (value.type()) {
+  case QJsonValue::Bool:
+    return value.toBool();
+
+  case QJsonValue::Double:
+    return value.toInt();
+
+  default:
+    return value.toString();
+  };
+
+  return value;
 }
 
-const QStringList Provider::currentOrderIds(const QString &provider) {
+const QStringList Provider::currProviderIds(const QString &provider) {
   QStringList ids;
   if (provider.isEmpty()) {
     qWarning("Required query field 'pr_name' is empty!");
@@ -148,13 +170,17 @@ bool Provider::createOrders(const QList<QJsonObject> &orders) {
   while (it.hasNext()) {
     QJsonObject order = it.next();
     QString pr_order = order.value("orderid").toString();
+    Q_ASSERT(!(pr_order.isEmpty()));
+
+    QString pr_name = order.value("provider").toString();
+    Q_ASSERT(!(pr_name.isEmpty()));
+
     QJsonObject customer = order.value("customer").toObject();
     QPair<qint64, QString> c_data = findInsertCustomer(customer);
+    Q_ASSERT(!(c_data.first < 1));
+
     QString pr_buyer = c_data.second;
-    if (c_data.first < 1) {
-      qWarning("Canceled for '%s' no customer Id.", qPrintable(pr_order));
-      continue;
-    }
+    Q_ASSERT(!(pr_buyer.isEmpty()));
 
     QJsonDocument doc(order);
     QString pr_order_data = doc.toJson(QJsonDocument::Compact);
@@ -167,7 +193,7 @@ bool Provider::createOrders(const QList<QJsonObject> &orders) {
     sql.append(",pr_created");
     sql.append(",pr_order_data");
     sql.append(") VALUES (");
-    sql.append("'Booklooker'");
+    sql.append("'" + pr_name + "'");
     sql.append(",'" + pr_order + "'");
     sql.append(",'" + pr_buyer + "'");
     sql.append("," + QString::number(c_data.first));
@@ -177,17 +203,13 @@ bool Provider::createOrders(const QList<QJsonObject> &orders) {
     inserts.append(sql);
   }
 
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << inserts.size();
-#endif
+//#ifdef ANTIQUA_DEVELOPEMENT
+//  qDebug() << Q_FUNC_INFO << inserts.size();
+//#endif
 
   m_sql->query(inserts.join("\n"));
   if (!m_sql->lastError().isEmpty()) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << m_sql->lastError() << Qt::endl;
-#else
     qWarning("SQL Provider insert answers with errors!");
-#endif
     return false;
   }
 
@@ -198,12 +220,12 @@ QPair<qint64, QString> Provider::findInsertCustomer(const QJsonObject &json) {
   Customers *mc = new Customers(m_sql, json);
   qint64 c_id = mc->getId();
 
-#ifdef ANTIQUA_DEVELOPEMENT
-  if (c_id < 1)
-    qDebug() << Q_FUNC_INFO << c_id;
+//#ifdef ANTIQUA_DEVELOPEMENT
+//  if (c_id < 1)
+//    qDebug() << Q_FUNC_INFO << c_id;
 
-  Q_ASSERT(c_id > 1);
-#endif
+//  Q_ASSERT(c_id > 1);
+//#endif
 
   QPair<qint64, QString> out;
   out.first = c_id;

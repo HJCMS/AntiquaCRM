@@ -83,6 +83,36 @@ bool TabProviders::findPage(const QString &provider, const QString &orderId) {
   return false;
 }
 
+bool TabProviders::loadPlugins() {
+  AntiquaCRM::APluginLoader *m_loader = new AntiquaCRM::APluginLoader(this);
+  QListIterator<AntiquaCRM::APluginInterface *> it(
+      m_loader->pluginInterfaces(this));
+  while (it.hasNext()) {
+    AntiquaCRM::APluginInterface *mpl = it.next();
+    if (mpl != nullptr) {
+      // OrderUpdateActions
+      connect(this, SIGNAL(sendPluginOperation(const QJsonObject &)), mpl,
+              SLOT(orderUpdateAction(const QJsonObject &)));
+      // Fehler Meldungen
+      connect(mpl,
+              SIGNAL(sendErrorResponse(AntiquaCRM::Message, const QString &)),
+              SLOT(pluginErrorResponse(AntiquaCRM::Message, const QString &)));
+      // QueryFinished
+      connect(mpl, SIGNAL(sendQueryFinished()), SLOT(pluginQueryFinished()));
+      plugins.append(mpl);
+    }
+  }
+  return (plugins.size() > 0);
+}
+
+void TabProviders::pluginErrorResponse(AntiquaCRM::Message, const QString &) {
+  qDebug() << Q_FUNC_INFO << sender()->objectName();
+}
+
+void TabProviders::pluginQueryFinished() {
+  qDebug() << Q_FUNC_INFO << sender()->objectName();
+}
+
 void TabProviders::openOrderPage(const QString &provider,
                                  const QString &orderId) {
   if (provider.isEmpty() || orderId.isEmpty())
@@ -125,6 +155,9 @@ void TabProviders::openStartPage() {
   m_sql = new AntiquaCRM::ASqlCore(this);
   setCurrentIndex(0);
   m_treeWidget->loadUpdate();
+
+  if (plugins.size() < 1)
+    firstStart = loadPlugins();
 }
 
 void TabProviders::createSearchQuery(const QString &query) { Q_UNUSED(query); }
@@ -133,4 +166,9 @@ void TabProviders::createNewEntry(){/* unused */};
 
 void TabProviders::openEntry(qint64 customerId) { Q_UNUSED(customerId); };
 
-void TabProviders::onEnterChanged() { openStartPage(); }
+void TabProviders::onEnterChanged() {
+  if (firstStart)
+    return;
+
+  openStartPage();
+}

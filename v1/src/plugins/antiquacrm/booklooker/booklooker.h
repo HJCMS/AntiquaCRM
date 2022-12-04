@@ -17,40 +17,29 @@ class ANTIQUACRM_LIBRARY Booklooker final
   Q_INTERFACES(AntiquaCRM::APluginInterface)
 
 private:
-  const QHash<QString, QString> p_articleTranslate;
-  bool initConfigurations();
-  const QUrl apiQuery(const QString &section);
-  const QString dateString(const QDate &date = QDate::currentDate()) const;
-
-  const QVariant createValue(QMetaType::Type id, const QJsonValue &value) const;
-
-  void setOrderItem(AntiquaCRM::AProviderOrder *order, const QString &key,
-                    const QJsonValue &value) const;
-
-  const AntiquaCRM::ArticleOrderItem setArticleItem(AntiquaCRM::AProviderOrder *order, const QString &key,
-                      const QJsonValue &value) const;
+  bool initConfigurations() override;
+  const QUrl apiQuery(const QString &section) override;
+  const QString dateString(const QDate &date = QDate::currentDate()) const override;
 
   void setTokenCookie(const QString &token);
+
   bool isCookieExpired();
 
 private Q_SLOTS:
-  void authenticate();
-  void prepareResponse(const QJsonDocument &js);
-  void prepareResponse(const QDomDocument &xml);
-  void queryFinished(QNetworkReply *reply);
+  void authenticate() override;
+  void prepareResponse(const QJsonDocument &js) override;
+  void prepareResponse(const QDomDocument &xml) override;
+  void queryFinished(QNetworkReply *reply) override;
 
 public Q_SLOTS:
-  void queryNewOrders();
-  void queryOrder(const QString &orderId);
-  void orderUpdateAction(const QJsonObject &options);
+  void orderUpdateAction(const QJsonObject &options) override;
 
 public:
   explicit Booklooker(QObject *parent = nullptr);
-  bool authenticationRequired();
-  const QString configProvider() const;
-  const QString displayName() const;
-  const AntiquaCRM::AProviderOrders getOrders() const;
-  bool createInterface(QObject *parent);
+  bool authenticationRequired() override;
+  const QString configProvider() const override;
+  const QString displayName() const override;
+  bool createInterface(QObject *parent) override;
 };
 
 #endif

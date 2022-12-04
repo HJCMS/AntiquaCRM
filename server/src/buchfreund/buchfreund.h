@@ -15,7 +15,9 @@ class Buchfreund final : public Provider {
 private:
   void initConfiguration() override;
 
-  const QUrl apiQuery(const QString &);
+  const QUrl apiQuery(const QString &) override;
+
+  const QString provider() const override { return QString("Buchfreund"); };
 
   void queryOrdersById(const QStringList &);
 
@@ -25,11 +27,11 @@ private Q_SLOTS:
   void responsed(const QByteArray &) override;
 
 public Q_SLOTS:
-  void queryOrders() override;
+  void start() override;
 
 public:
   explicit Buchfreund(QObject *parent = nullptr);
-  bool isAccessible() override;
+  bool init() override;
 };
 
 #endif

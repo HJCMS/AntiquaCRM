@@ -50,10 +50,7 @@ static const QHash<QString, QString> translateIds() {
   return hash;
 }
 
-Buchfreund::Buchfreund(QObject *parent) : Provider{parent} {
-  connect(m_networker, SIGNAL(sendResponse(const QByteArray &)),
-          SLOT(responsed(const QByteArray &)));
-}
+Buchfreund::Buchfreund(QObject *parent) : Provider{parent} {}
 
 void Buchfreund::initConfiguration() {
   m_config->beginGroup("provider/buchfreund");
@@ -146,7 +143,7 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
     return;
   }
 
-  QStringList imported = currentOrderIds("Buchfreund");
+  QStringList imported = currProviderIds(provider());
   if (imported.contains(bf_id)) {
     return;
   }
@@ -154,14 +151,14 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
   // BEGIN::CONVERT
   QList<QJsonObject> ordersList;
   QJsonObject antiqua_order; // Bestellkopfdaten
-  antiqua_order.insert("provider", QJsonValue("Buchfreund"));
+  antiqua_order.insert("provider", QJsonValue(provider()));
   antiqua_order.insert("orderid", QJsonValue(bf_id));
   // BUCHFREUND_DATE_FORMAT
   QDateTime datetime = getDateTime(bf_order.value("datum").toString());
 
   // Bestellinfos
   QJsonObject antiqua_orderinfo;
-  antiqua_orderinfo.insert("o_provider_name", "Buchfreund");
+  antiqua_orderinfo.insert("o_provider_name", provider());
   antiqua_orderinfo.insert("o_provider_order_id", QJsonValue(bf_id));
   antiqua_orderinfo.insert("o_since", datetime.toString(Qt::ISODate));
   antiqua_orderinfo.insert("o_media_type", AntiquaCRM::BOOK);
@@ -269,21 +266,14 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
       foreach (QString k, jso.keys()) {
         if (!keys.value(k).isEmpty()) {
           QString key = keys.value(k);
-          if (key == "a_article_id") {
-            QString id = jso.value(k).toString();
-            antiqua_articles_item.insert(key, id.toInt());
-          } else if (key.contains("_price")) {
-            QString id = jso.value(k).toString();
-            antiqua_articles_item.insert(key, id.toDouble());
-          } else {
-            antiqua_articles_item.insert(key, jso.value(k));
-          }
+          QJsonValue value = convert(key, jso.value(k));
+          antiqua_articles_item.insert(key, value);
         }
       }
       antiqua_articles_item.insert("payment_id", QJsonValue(0));
       antiqua_articles_item.insert("a_provider_id", QJsonValue(bf_id));
-      double price = getPrice(jso.value("preis_pro_einheit"));
-      antiqua_articles_item.insert("a_sell_price", QJsonValue(price));
+      QJsonValue price = convert("a_sell_price", jso.value("preis_pro_einheit"));
+      antiqua_articles_item.insert("a_sell_price", price);
       antiqua_articles_item.insert("a_type", QJsonValue(AntiquaCRM::BOOK));
       antiqua_articles.append(antiqua_articles_item);
     }
@@ -292,11 +282,16 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
   ordersList.append(antiqua_order);
   // END::CONVERT
 
+  //qDebug() << Q_FUNC_INFO << antiqua_articles;
+  //return;
+
   if (createOrders(ordersList)) {
+      qInfo("%s: New orders arrived!", qPrintable(provider()));
     emit sendFinished();
     return;
   }
 
+  qInfo("%s: Nothing todo!", qPrintable(provider()));
   emit sendDisjointed();
 }
 
@@ -313,9 +308,9 @@ void Buchfreund::responsed(const QByteArray &data) {
   prepareContent(doc);
 }
 
-void Buchfreund::queryOrders() {
+void Buchfreund::start() {
   QDateTime curr = QDateTime::currentDateTime();
-  QDateTime past = curr.addDays(-5);
+  QDateTime past = curr.addDays(history_query);
   QJsonObject obj;
   obj.insert("datum_von", past.toString(BUCHFREUND_DATE_FORMAT));
   obj.insert("datum_bis", curr.toString(BUCHFREUND_DATE_FORMAT));
@@ -328,7 +323,7 @@ void Buchfreund::queryOrders() {
   m_networker->postRequest(request, body);
 }
 
-bool Buchfreund::isAccessible() {
+bool Buchfreund::init() {
   initConfiguration();
 
   if (baseUrl.isEmpty())

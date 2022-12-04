@@ -13,10 +13,12 @@ INCLUDE_DIRECTORIES (${PROJECT_INCLUDE_DIRS})
 
 SET (subproject_SOURCES
  abebooks.cpp
+ abebooksdocument.cpp
 )
 
 SET (subproject_HEADERS
  abebooks.h
+ abebooksdocument.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

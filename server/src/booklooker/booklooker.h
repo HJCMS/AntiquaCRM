@@ -15,9 +15,11 @@ class BookLooker final : public Provider {
   Q_OBJECT
 
 private:
-  const QString providerName = QString("booklooker");
-
   void initConfiguration() override;
+
+  const QString provider() const override { return QString("Booklooker"); };
+
+  const QUrl apiQuery(const QString &) override;
 
   const QString dateString(const QDate &date = QDate::currentDate()) const;
 
@@ -33,11 +35,11 @@ private Q_SLOTS:
   void responsed(const QByteArray &) override;
 
 public Q_SLOTS:
-  void queryOrders() override;
+  void start() override;
 
 public:
   explicit BookLooker(QObject *parent = nullptr);
-  bool isAccessible() override;
+  bool init() override;
 };
 
 #endif

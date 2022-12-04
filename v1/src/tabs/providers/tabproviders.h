@@ -6,6 +6,7 @@
 #define ANTIQUACRM_TABPROVIDERS_H
 
 #include <AntiquaCRM>
+#include <AntiquaCRMPlugin>
 #include <AntiquaWidgets>
 #include <QFrame>
 #include <QObject>
@@ -21,6 +22,8 @@ class TabProviders final : public Inventory {
   Q_OBJECT
 
 private:
+  bool firstStart = false;
+
   AntiquaCRM::ASqlCore *m_sql;
 
   QWidget *m_mainPage;
@@ -31,11 +34,23 @@ private:
   ProvidersTreeView *m_treeWidget;
   QPushButton *btn_refreshTree;
 
+  /**
+   * @brief Alle geladenen Plugins
+   */
+  QList<AntiquaCRM::APluginInterface *> plugins;
+
   void popupWarningTabInEditMode() override{};
 
   bool findPage(const QString &provider, const QString &orderId);
 
+  /**
+   * @brief Hier werden alle verfügbaren Dienstleister Plugins geladen.
+   */
+  bool loadPlugins();
+
 private Q_SLOTS:
+  void pluginErrorResponse(AntiquaCRM::Message, const QString &);
+  void pluginQueryFinished();
   void openOrderPage(const QString &provider, const QString &orderId);
 
 public Q_SLOTS:

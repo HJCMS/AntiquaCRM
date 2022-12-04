@@ -77,22 +77,6 @@ protected:
   QNetworkCookie authenticCookie = QNetworkCookie();
 
   /**
-   * @brief Convert Gender from String to AntiquaCRM::Gender
-   */
-  AntiquaCRM::Gender convertGender(const QString &from) const;
-
-  /**
-   * @brief Search for IETF BCP 47 Language tag with Country name
-   * @return "IETF BCP 47 language tag"
-   */
-  const QString bcp47Country(const QString &country) const;
-
-  /**
-   * @brief Search for Country name with IETF BCP 47 language tag
-   */
-  const QString getCountry(const QString &bcp47) const;
-
-  /**
    * @brief Vendors respond - with different date/time and zone formats.
    */
   const QDateTime getDateTime(const QString &dateString,
@@ -128,26 +112,6 @@ protected:
    * @brief create a custom API access
    */
   virtual const QUrl apiQuery(const QString &section) = 0;
-
-  /**
-   * @brief create order item value
-   */
-  virtual const QVariant createValue(QMetaType::Type id,
-                                     const QJsonValue &value) const = 0;
-
-  /**
-   * @brief Set AProviderOrder Item
-   */
-  virtual void setOrderItem(AntiquaCRM::AProviderOrder *order,
-                            const QString &key,
-                            const QJsonValue &value) const = 0;
-
-  /**
-   * @brief Set AProviderOrder Item
-   */
-  virtual const AntiquaCRM::ArticleOrderItem
-  setArticleItem(AntiquaCRM::AProviderOrder *order, const QString &key,
-                 const QJsonValue &value) const = 0;
 
 protected Q_SLOTS:
   /**
@@ -193,11 +157,6 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   /**
-   * @brief This Method is reserved to Query New Orders.
-   */
-  virtual void queryNewOrders() = 0;
-
-  /**
    * @brief Authentication is Required?
    * Returns Information about a required Authentication.
    * This is not the general login behavior.
@@ -205,12 +164,6 @@ public Q_SLOTS:
    * @example expired Tokens
    */
   virtual bool authenticationRequired() = 0;
-
-  /**
-   * @brief Order single query
-   * This Method is reserved to Query with a given Provider Order Id.
-   */
-  virtual void queryOrder(const QString &orderId) = 0;
 
   /**
    * @brief Send Operation to Provider Interface
@@ -241,13 +194,6 @@ public:
    * @brief Returning the Provider Registry and Displayname.
    */
   virtual const QString displayName() const = 0;
-
-  /**
-   * @brief Returns all new Orders from finished network query.
-   * @note Read the restriction in the AntiquaCRM::AProviderOrders Class!
-   * @ref AntiquaCRM::AProviderOrders
-   */
-  virtual const AntiquaCRM::AProviderOrders getOrders() const = 0;
 
   /**
    * @brief Initial this Interface

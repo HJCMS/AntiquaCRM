@@ -26,9 +26,10 @@ int AntiquaCMD::abebooks() {
   connect(&getTimer, SIGNAL(timeout()), &loop, SLOT(quit()));
   connect(m, SIGNAL(sendFinished()), &loop, SLOT(quit()));
   connect(m, SIGNAL(sendDisjointed()), &loop, SLOT(quit()));
-  if (m->isAccessible())
-    m->queryOrders();
-  else
+  if (m->init()) {
+    qInfo("Query orders from AbeBooks");
+    m->start();
+  } else
     return 1;
 
   getTimer.start((timeout * 1000));
@@ -42,9 +43,10 @@ int AntiquaCMD::booklooker() {
   connect(&getTimer, SIGNAL(timeout()), &loop, SLOT(quit()));
   connect(m, SIGNAL(sendFinished()), &loop, SLOT(quit()));
   connect(m, SIGNAL(sendDisjointed()), &loop, SLOT(quit()));
-  if (m->isAccessible())
-    m->queryOrders();
-  else
+  if (m->init()) {
+    qInfo("Query orders from Booklooker");
+    m->start();
+  } else
     return 1;
 
   getTimer.start((timeout * 1000));
@@ -58,9 +60,10 @@ int AntiquaCMD::buchfreund() {
   connect(&getTimer, SIGNAL(timeout()), &loop, SLOT(quit()));
   connect(m, SIGNAL(sendFinished()), &loop, SLOT(quit()));
   connect(m, SIGNAL(sendDisjointed()), &loop, SLOT(quit()));
-  if (m->isAccessible())
-    m->queryOrders();
-  else
+  if (m->init()) {
+    qInfo("Query orders from Buchfreund");
+    m->start();
+  } else
     return 1;
 
   getTimer.start((timeout * 1000));
@@ -68,11 +71,8 @@ int AntiquaCMD::buchfreund() {
 }
 
 void AntiquaCMD::queryAll() {
-  qInfo("AntiquaCRM create requeset to Abebooks:");
   abebooks();
-  qInfo("AntiquaCRM create requeset to Booklooker:");
   booklooker();
-  qInfo("AntiquaCRM create requeset to Buchfreund:");
   buchfreund();
 }
 

@@ -350,9 +350,9 @@ void OrdersEditor::createSqlUpdate() {
     sql.append(",o_modified=CURRENT_TIMESTAMP WHERE o_id=");
     sql.append(QString::number(oid));
     sql.append(";");
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << sql << Qt::endl;
-#endif
+//#ifdef ANTIQUA_DEVELOPEMENT
+//    qDebug() << sql << Qt::endl;
+//#endif
   }
   // Articles
   if (articles_sql.length() > 5) {

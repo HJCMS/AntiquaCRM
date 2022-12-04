@@ -35,6 +35,8 @@ SET (PROJECT_INCLUDE_DIRS
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/customers
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/books
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/books
+	${CMAKE_CURRENT_BINARY_DIR}/plugins
+	${CMAKE_CURRENT_SOURCE_DIR}/plugins
 	${CMAKE_CURRENT_BINARY_DIR}/lib
 	${CMAKE_CURRENT_SOURCE_DIR}/lib
 	${PROJECT_INCLUDE_DIRS}
@@ -61,6 +63,7 @@ SET(PROJECT_LIBRARIES
 	AntiquaOrders
 	AntiquaCustomers
 	AntiquaBooks
+	AntiquaCRMPlugin
 	AntiquaCRM
 )
 

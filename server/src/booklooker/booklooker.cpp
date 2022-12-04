@@ -15,10 +15,7 @@
 #include <QNetworkReply>
 #include <QUrlQuery>
 
-BookLooker::BookLooker(QObject *parent) : Provider{parent} {
-  connect(m_networker, SIGNAL(sendResponse(const QByteArray &)),
-          SLOT(responsed(const QByteArray &)));
-}
+BookLooker::BookLooker(QObject *parent) : Provider{parent} {}
 
 void BookLooker::initConfiguration() {
   m_config->beginGroup("provider/booklooker");
@@ -27,6 +24,17 @@ void BookLooker::initConfiguration() {
   apiKey = m_config->value("api_key", QString()).toString();
   apiPath = QString("/2.0/");
   m_config->endGroup();
+}
+
+const QUrl BookLooker::apiQuery(const QString &action) {
+  QUrl url(baseUrl);
+  url.setPath("/2.0/" + action);
+
+  actionsCookie = QNetworkCookie("action", action.toLocal8Bit());
+  actionsCookie.setDomain(url.host());
+  actionsCookie.setSecure(true);
+
+  return url;
 }
 
 const QString BookLooker::dateString(const QDate &date) const {
@@ -40,7 +48,7 @@ void BookLooker::prepareContent(const QJsonDocument &doc) {
     return;
   }
 
-  QStringList imported = currentOrderIds("Booklooker");
+  QStringList imported = currProviderIds(provider());
   QJsonArray orders = obj.value("returnValue").toArray();
   // Starte durchlauf Bestellungen
   if (orders.size() > 0) {
@@ -58,7 +66,7 @@ void BookLooker::prepareContent(const QJsonDocument &doc) {
                                        order.value("orderTime").toString());
       // BEGIN::CONVERT
       QJsonObject antiqua_order; // Bestellkopfdaten
-      antiqua_order.insert("provider", QJsonValue(providerName));
+      antiqua_order.insert("provider", QJsonValue(provider()));
       antiqua_order.insert("orderid", QJsonValue(order_str));
 
       // Kundendaten
@@ -152,7 +160,7 @@ void BookLooker::prepareContent(const QJsonDocument &doc) {
 
       // Bestellinfos
       QJsonObject antiqua_orderinfo;
-      antiqua_orderinfo.insert("o_provider_name", "Booklooker");
+      antiqua_orderinfo.insert("o_provider_name", provider());
       antiqua_orderinfo.insert("o_provider_order_id", order_str);
       antiqua_orderinfo.insert("o_provider_purchase_id", order_id);
       antiqua_orderinfo.insert("o_since", datetime.toString(Qt::ISODate));
@@ -269,13 +277,14 @@ void BookLooker::prepareContent(const QJsonDocument &doc) {
           QJsonObject sub = articles[a].toObject();
           booking.insert("a_payment_id", 0);
           booking.insert("a_count", sub.value("amount"));
-          booking.insert("a_article_id",
-                         convertArticleId(sub.value("orderNo")));
+          booking.insert("a_article_id", convert("a_article_id", sub));
           qint64 prItemId = sub.value("orderItemId").toInt();
           booking.insert("a_provider_id", QString::number(prItemId));
-          booking.insert("a_price", getPrice(sub.value("singlePrice")));
-          booking.insert("a_sell_price",
-                         getPrice(sub.value("totalPriceRebated")));
+          booking.insert("a_price",
+                         convert("a_price", sub.value("singlePrice")));
+          booking.insert(
+              "a_sell_price",
+              convert("a_sell_price", sub.value("totalPriceRebated")));
           booking.insert("a_title", sub.value("orderTitle"));
           booking.insert("a_type", AntiquaCRM::BOOK);
           antiqua_articles.append(booking);
@@ -289,10 +298,13 @@ void BookLooker::prepareContent(const QJsonDocument &doc) {
     // END::QUERY_ORDERS
 
     if (createOrders(ordersList)) {
+      qInfo("%s: New orders arrived!", qPrintable(provider()));
       emit sendFinished();
       return;
     }
   }
+
+  qInfo("%s: Nothing todo!", qPrintable(provider()));
   emit sendDisjointed();
 }
 
@@ -306,7 +318,7 @@ void BookLooker::setTokenCookie(const QString &token) {
   authenticCookie.setExpirationDate(dt.addSecs(cookie_lifetime));
   if (!authenticCookie.value().isNull()) {
     qInfo("New Token add (%s)", qPrintable(authenticCookie.value()));
-    queryOrders();
+    start();
   }
 }
 
@@ -320,15 +332,10 @@ bool BookLooker::isCookieExpired() {
 }
 
 void BookLooker::authenticate() {
-  QUrl url(baseUrl);
-  url.setPath("/2.0/authenticate");
+  QUrl url = apiQuery("authenticate");
 
   QString pd("apiKey=");
   pd.append(apiKey);
-
-  actionsCookie = QNetworkCookie("action", "authenticate");
-  actionsCookie.setDomain(url.host());
-  actionsCookie.setSecure(true);
 
   NetworkRequest request(url);
   m_networker->loginRequest(request, pd.toLocal8Bit());
@@ -357,21 +364,15 @@ void BookLooker::responsed(const QByteArray &data) {
   prepareContent(doc);
 }
 
-void BookLooker::queryOrders() {
+void BookLooker::start() {
   if (isCookieExpired()) {
     authenticate();
     return;
   }
 
-  QUrl url(baseUrl);
-  url.setPath("/2.0/order");
+  QUrl url = apiQuery("order");
 
-  QString value("booklooker_orders");
-  actionsCookie = QNetworkCookie("action", value.toLocal8Bit());
-  actionsCookie.setDomain(url.host());
-  actionsCookie.setSecure(true);
-
-  QDate past = QDate::currentDate().addDays(-4);
+  QDate past = QDate::currentDate().addDays(history_query);
   QUrlQuery q;
   q.addQueryItem("token", QString(authenticCookie.value()));
   q.addQueryItem("dateFrom", dateString(past));
@@ -384,7 +385,7 @@ void BookLooker::queryOrders() {
   m_networker->getRequest(request);
 }
 
-bool BookLooker::isAccessible() {
+bool BookLooker::init() {
   initConfiguration();
 
   if (baseUrl.isEmpty())

@@ -17,37 +17,27 @@ class ANTIQUACRM_LIBRARY Abebooks final : public AntiquaCRM::APluginInterface {
   Q_INTERFACES(AntiquaCRM::APluginInterface)
 
 private:
-  bool initConfigurations();
+  bool initConfigurations() override;
   AbeBooksDocument initDocument();
-  const QUrl apiQuery(const QString &section);
-  const QString dateString(const QDate &date = QDate::currentDate()) const;
-
-  const QVariant createValue(QMetaType::Type id, const QJsonValue &value) const;
-
-  void setOrderItem(AntiquaCRM::AProviderOrder *order, const QString &key,
-                    const QJsonValue &value) const;
-
-  const AntiquaCRM::ArticleOrderItem setArticleItem(AntiquaCRM::AProviderOrder *order, const QString &key,
-                      const QJsonValue &value) const;
+  const QUrl apiQuery(const QString &section) override;
+  const QString
+  dateString(const QDate &date = QDate::currentDate()) const override;
 
 private Q_SLOTS:
-  void authenticate(){/* unused */};
-  void prepareResponse(const QJsonDocument &js);
-  void prepareResponse(const QDomDocument &xml);
-  void queryFinished(QNetworkReply *reply);
+  void authenticate() override {/* unused */};
+  void prepareResponse(const QJsonDocument &js) override;
+  void prepareResponse(const QDomDocument &xml) override;
+  void queryFinished(QNetworkReply *reply) override;
 
 public Q_SLOTS:
-  void queryNewOrders();
-  void queryOrder(const QString &orderId);
-  void orderUpdateAction(const QJsonObject &options);
+  void orderUpdateAction(const QJsonObject &options) override;
 
 public:
   explicit Abebooks(QObject *parent = nullptr);
-  bool authenticationRequired() { return false; };
-  const QString configProvider() const;
-  const QString displayName() const;
-  const AntiquaCRM::AProviderOrders getOrders() const;
-  bool createInterface(QObject *parent);
+  bool authenticationRequired() override { return false; };
+  const QString configProvider() const override;
+  const QString displayName() const override;
+  bool createInterface(QObject *parent) override;
 };
 
 #endif

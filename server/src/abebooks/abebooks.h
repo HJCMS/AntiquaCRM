@@ -5,30 +5,40 @@
 #ifndef ANTIQUACRM_ABEBOOKS_H
 #define ANTIQUACRM_ABEBOOKS_H
 
-#include <QObject>
 #include "provider.h"
+
+#include <QDomDocument>
+#include <QObject>
+
+class AbeBooksDocument;
 
 class AbeBooks final : public Provider {
   Q_OBJECT
 
 private:
-  QString apiUser;
-  QString apiPass;
-  qint64 apiPort;
-
   void initConfiguration() override;
 
-  void prepareContent(const QJsonDocument &) override {};
+  AbeBooksDocument initDocument();
+
+  const QString provider() const override { return QString("AbeBooks"); };
+
+  const QUrl apiQuery(const QString &) override;
+
+  void prepareContent(const QJsonDocument &) override{
+      /* AbeBooks verwendet XML */
+  };
+
+  void prepareContent(const QDomDocument &);
 
 private Q_SLOTS:
-  void responsed(const QByteArray &) override {};
+  void responsed(const QByteArray &) override;
 
 public Q_SLOTS:
-  void queryOrders() override;
+  void start() override;
 
 public:
   explicit AbeBooks(QObject *parent = nullptr);
-  bool isAccessible() override { return false; }
+  bool init() override;
 };
 
 #endif
