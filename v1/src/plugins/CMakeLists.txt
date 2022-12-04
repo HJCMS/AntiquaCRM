@@ -3,6 +3,13 @@
 ## Plugin Interface
 SET(_projectLibrary "AntiquaCRMPlugin")
 
+INCLUDE_DIRECTORIES (
+  ${PROJECT_INCLUDE_DIRS}
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${ZLIB_INCLUDE_DIRS}
+)
+
 SET (_projectLibrary_SOURCE
  aplugininterface.h
  apluginloader.h

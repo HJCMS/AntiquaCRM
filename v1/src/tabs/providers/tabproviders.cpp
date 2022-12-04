@@ -90,9 +90,6 @@ bool TabProviders::loadPlugins() {
   while (it.hasNext()) {
     AntiquaCRM::APluginInterface *mpl = it.next();
     if (mpl != nullptr) {
-      // OrderUpdateActions
-      connect(this, SIGNAL(sendPluginOperation(const QJsonObject &)), mpl,
-              SLOT(orderUpdateAction(const QJsonObject &)));
       // Fehler Meldungen
       connect(mpl,
               SIGNAL(sendErrorResponse(AntiquaCRM::Message, const QString &)),
@@ -171,4 +168,10 @@ void TabProviders::onEnterChanged() {
     return;
 
   openStartPage();
+}
+
+bool TabProviders::customAction(const QJsonObject &) {
+  // TODO Provider Actions
+  // orderUpdateAction
+  return false;
 }
