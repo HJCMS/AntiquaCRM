@@ -19,4 +19,7 @@
 // AntiquaCRM::AProviderOrders
 #include "aproviderorders.h"
 
+// AntiquaCRM::UpdateDialog
+#include "updatedialog.h"
+
 #endif

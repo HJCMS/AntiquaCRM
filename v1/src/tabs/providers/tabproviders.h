@@ -49,6 +49,7 @@ private:
   bool loadPlugins();
 
 private Q_SLOTS:
+  void createProviderAction();
   void pluginErrorResponse(AntiquaCRM::Message, const QString &);
   void pluginQueryFinished();
   void openOrderPage(const QString &provider, const QString &orderId);

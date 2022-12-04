@@ -66,12 +66,6 @@ private Q_SLOTS:
   void openOrder(qint64 oid);
 
   /**
-   * @brief create Provider Action
-   */
-  void createProviderAction(const QJsonObject &action);
-  void providerActionClicked();
-
-  /**
    * @brief Send Action Craete Order with Provider Order ID
    */
   void createOrder(const QString &providerId);
@@ -92,7 +86,7 @@ private Q_SLOTS:
   void prepareCreateOrder();
 
 Q_SIGNALS:
-  void sendOrderUpdate(const QJsonObject &);
+  void sendOpenProviderDialog();
 
 public:
   /**

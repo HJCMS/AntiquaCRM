@@ -15,6 +15,8 @@ SET (_projectLibrary_SOURCE
  apluginloader.h
  aplugininterface.cpp
  apluginloader.cpp
+ updatedialog.cpp
+ updatedialog.h
  AntiquaCRMPlugin
  AntiquaCRMPlugin.cmake
 )

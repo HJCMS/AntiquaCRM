@@ -102,6 +102,52 @@ bool TabProviders::loadPlugins() {
   return (plugins.size() > 0);
 }
 
+void TabProviders::createProviderAction() {
+  QString orderId = sender()->objectName();
+
+  QString sql("SELECT pr_name, pr_order_data FROM provider_orders");
+  sql.append(" WHERE pr_order='" + orderId + "';");
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() != 1) {
+    qWarning("Missing data for OrderId:(%s).", qPrintable(orderId));
+    return;
+  }
+
+  q.next();
+  QString provider = q.value("pr_name").toString();
+  QByteArray data = q.value("pr_order_data").toByteArray();
+  QJsonDocument doc = QJsonDocument::fromJson(data);
+  QJsonObject obj = doc.object();
+
+  // TODO Plugin Intergration Eingabe
+
+  AntiquaCRM::UpdateDialog *m_d = new AntiquaCRM::UpdateDialog(this);
+//connect(m_d, SIGNAL(sendPluginAction(const QJsonObject &)),
+//        SLOT(createProviderAction(const QJsonObject &)));
+  m_d->exec();
+
+  qDebug() << Q_FUNC_INFO << provider << orderId << data;
+  return;
+
+  QJsonObject orderUpdate;
+  AntiquaCRM::OrderStatus orderStatus;
+  int payStatus = orderUpdate.value("paymentstatus").toInt();
+  switch (static_cast<AntiquaCRM::PaymentStatus>(payStatus)) {
+  case AntiquaCRM::PaymentStatus::SHIPMENT_CREATED:
+    orderStatus = AntiquaCRM::OrderStatus::STARTED;
+    orderUpdate.insert("status", QJsonValue(orderStatus));
+    break;
+
+  case AntiquaCRM::PaymentStatus::SHIPPED_AND_PAID:
+    orderStatus = AntiquaCRM::OrderStatus::DELIVERED;
+    orderUpdate.insert("status", QJsonValue(orderStatus));
+    break;
+
+  default:
+    break;
+  };
+}
+
 void TabProviders::pluginErrorResponse(AntiquaCRM::Message, const QString &) {
   qDebug() << Q_FUNC_INFO << sender()->objectName();
 }
@@ -136,6 +182,8 @@ void TabProviders::openOrderPage(const QString &provider,
     QJsonObject jObj = doc.object();
     jObj.insert("c_id", customerId);
     ProvidersOrderPage *page = new ProvidersOrderPage(jObj, m_pages);
+    connect(page, SIGNAL(sendOpenProviderDialog()),
+            SLOT(createProviderAction()));
     if (page->loadOrderDataset()) {
       int index = m_pages->addPage(page, orderId);
       m_pages->setCurrentIndex(index);
