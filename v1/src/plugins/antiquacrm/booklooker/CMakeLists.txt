@@ -44,9 +44,7 @@ TARGET_LINK_LIBRARIES (Booklooker PUBLIC
   AntiquaCRMPlugin
 )
 
-IF (CMAKE_HOST_UNIX)
-  INSTALL (TARGETS Booklooker
-    LIBRARY DESTINATION lib${LIB_SUFFIX}/antiquacrm/plugins
-    COMPONENT Plugin
-  )
-ENDIF (CMAKE_HOST_UNIX)
+INSTALL (TARGETS Booklooker
+  LIBRARY DESTINATION lib${LIB_SUFFIX}/antiquacrm/plugins
+  COMPONENT Plugin
+)

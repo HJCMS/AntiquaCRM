@@ -366,7 +366,7 @@ void OrdersEditor::createSqlUpdate() {
   }
 
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << sql << Qt::endl;
+  qDebug() << sql << Qt::endl;
 #endif
 
   if (sendSqlQuery(sql))
@@ -424,7 +424,15 @@ void OrdersEditor::createSqlInsert() {
     }
     // Artikel Id Setzen
     if (m_ordersList->setArticleOrderId(oid)) {
-      createSqlUpdate();
+      // Artikel Bestelliste speichern
+      QString articles_sql = getSqlArticleOrders();
+      if (articles_sql.isEmpty()) {
+        sendStatusMessage(tr("No SQL Articles exist!"));
+        return;
+      }
+      if (sendSqlQuery(articles_sql)) {
+        sendStatusMessage(tr("Save Articles success!"));
+      }
     }
   }
 }

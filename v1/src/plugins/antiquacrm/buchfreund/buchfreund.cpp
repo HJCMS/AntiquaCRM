@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "buchfreund.h"
+#include "buchfreunddialog.h"
 
 /**
  * @def DATE_FORMAT
@@ -93,13 +94,12 @@ void Buchfreund::orderUpdateAction(const QJsonObject &options) {
 #endif
 }
 
-AntiquaCRM::UpdateDialog *Buchfreund::actionsDialog(QWidget *parent) {
-  Q_UNUSED(parent);
-  qDebug() << Q_FUNC_INFO << "TODO";
-  return nullptr;
-}
-
 bool Buchfreund::authenticationRequired() { return false; }
+
+AntiquaCRM::UpdateDialog *Buchfreund::updateDialog(QWidget *parent) {
+  BuchfreundDialog *m_d = new BuchfreundDialog(parent);
+  return m_d;
+}
 
 const QString Buchfreund::configProvider() const {
   return QString(BUCHFREUND_CONFIG_PROVIDER).toLower();

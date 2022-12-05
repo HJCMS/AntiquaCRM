@@ -20,17 +20,20 @@ class ANTIQUACRM_LIBRARY UpdateDialog : public QDialog {
   Q_OBJECT
 
 protected:
-  virtual void prepareAction() = 0;
+  virtual bool prepareAction() = 0;
 
 protected Q_SLOTS:
   virtual void networkAction() = 0;
 
+public Q_SLOTS:
+  virtual void statusMessage(const QString &) = 0;
+
 Q_SIGNALS:
-  void sendPluginAction(const QJsonObject &obj);
+  void sendPluginAction(const QJsonObject &);
 
 public:
   explicit UpdateDialog(QWidget *parent = nullptr);
-  int exec() override;
+  int exec() { return QDialog::exec(); };
   virtual int exec(const QString &, const QJsonObject &) = 0;
 };
 

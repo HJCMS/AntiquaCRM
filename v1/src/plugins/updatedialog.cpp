@@ -16,9 +16,4 @@ UpdateDialog::UpdateDialog(QWidget *parent) : QDialog{parent} {
   setContentsMargins(5, 5, 5, 15);
 }
 
-int UpdateDialog::exec() {
-  qWarning("do not use this!");
-  return QDialog::Rejected;
-}
-
 }; // namespace AntiquaCRM

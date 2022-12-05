@@ -13,10 +13,12 @@ SET (plugin_FILES
 
 SET (plugin_SOURCES
  buchfreund.cpp
+ buchfreunddialog.cpp
 )
 
 SET (plugin_HEADERS
  buchfreund.h
+ buchfreunddialog.h
 )
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)

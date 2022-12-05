@@ -16,9 +16,6 @@
 // AntiquaCRM::APluginInterface
 #include "aplugininterface.h"
 
-// AntiquaCRM::AProviderOrders
-#include "aproviderorders.h"
-
 // AntiquaCRM::UpdateDialog
 #include "updatedialog.h"
 

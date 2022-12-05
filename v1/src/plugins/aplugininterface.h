@@ -17,9 +17,9 @@
 #include <QTextCodec>
 #include <QUrl>
 
-#include "updatedialog.h"
-
 namespace AntiquaCRM {
+
+class UpdateDialog;
 
 /**
  * @brief Klasse für die Dienstleisterkonfiuration
@@ -185,16 +185,16 @@ public:
   explicit APluginInterface(QObject *parent = nullptr);
 
   /**
-   * @brief Bestellungen remote verarbeiten.
-   */
-  virtual AntiquaCRM::UpdateDialog *actionsDialog(QWidget *parent) = 0;
-
-  /**
    * @brief Liest die Konfiguration des Dienstleisters ein.
    * @note Wird vom Konfigurations Dialog für die Zugangeinrichtung benötigt!
    * @ref AntiquaCRM::APluginConfig
    */
   const AntiquaCRM::APluginConfig getConfig(const QString &providerName);
+
+  /**
+   * @brief Dienstleister Dialog für Bestellstatus ändern!
+   */
+  virtual AntiquaCRM::UpdateDialog *updateDialog(QWidget *parent) = 0;
 
   /**
    * @brief Speicherschlüssel des Dienstleisters für die Konfiguration!

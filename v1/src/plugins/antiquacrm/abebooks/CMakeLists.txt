@@ -14,11 +14,13 @@ SET (plugin_FILES
 SET (plugin_SOURCES
  abebooks.cpp
  abebooksdocument.cpp
+ abebooksdialog.cpp
 )
 
 SET (plugin_HEADERS
  abebooks.h
  abebooksdocument.h
+ abebooksdialog.h
 )
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)

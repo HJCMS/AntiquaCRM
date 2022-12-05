@@ -123,43 +123,23 @@ void TabProviders::createProviderAction() {
     return;
   }
 
-  // TODO Plugin Intergration Eingabe
-  AntiquaCRM::UpdateDialog *m_d = nullptr;
+  // Plugin Update Dialogeingabe suchen.
   QListIterator<AntiquaCRM::APluginInterface *> it(plugins);
   while (it.hasNext()) {
     AntiquaCRM::APluginInterface *m_pr = it.next();
     if (m_pr != nullptr) {
       if (m_pr->configProvider() == provider.toLower()) {
-        qDebug() << Q_FUNC_INFO << provider << orderId;
-        m_d = m_pr->actionsDialog(this);
+        AntiquaCRM::UpdateDialog *dialog =
+            qobject_cast<AntiquaCRM::UpdateDialog *>(m_pr->updateDialog(this));
+        connect(dialog, SIGNAL(sendPluginAction(const QJsonObject &)),
+                m_pr, SLOT(orderUpdateAction(const QJsonObject &)));
+        if (dialog->exec(orderId, obj) == QDialog::Accepted) {
+          qDebug() << Q_FUNC_INFO << "ok";
+        }
         break;
       }
     }
   }
-
-  if (m_d != nullptr) {
-    m_d->exec(orderId, obj);
-  }
-
-  return;
-
-  //  QJsonObject orderUpdate;
-  //  AntiquaCRM::OrderStatus orderStatus;
-  //  int payStatus = orderUpdate.value("paymentstatus").toInt();
-  //  switch (static_cast<AntiquaCRM::PaymentStatus>(payStatus)) {
-  //  case AntiquaCRM::PaymentStatus::SHIPMENT_CREATED:
-  //    orderStatus = AntiquaCRM::OrderStatus::STARTED;
-  //    orderUpdate.insert("status", QJsonValue(orderStatus));
-  //    break;
-
-  //  case AntiquaCRM::PaymentStatus::SHIPPED_AND_PAID:
-  //    orderStatus = AntiquaCRM::OrderStatus::DELIVERED;
-  //    orderUpdate.insert("status", QJsonValue(orderStatus));
-  //    break;
-
-  //  default:
-  //    break;
-  //  };
 }
 
 void TabProviders::pluginErrorResponse(AntiquaCRM::Message, const QString &) {
@@ -196,7 +176,7 @@ void TabProviders::openOrderPage(const QString &provider,
     QJsonObject jObj = doc.object();
     jObj.insert("c_id", customerId);
     //#ifdef ANTIQUA_DEVELOPEMENT
-    //    qDebug() << Q_FUNC_INFO << sql << Qt::endl << jObj;
+    //  qDebug() << Q_FUNC_INFO << sql << Qt::endl << jObj;
     //#endif
     ProvidersOrderPage *page = new ProvidersOrderPage(jObj, m_pages);
     connect(page, SIGNAL(sendOpenProviderDialog()),
@@ -235,8 +215,16 @@ void TabProviders::onEnterChanged() {
   openStartPage();
 }
 
-bool TabProviders::customAction(const QJsonObject &) {
-  // TODO Provider Actions
-  // orderUpdateAction
-  return false;
+TabProviders::~TabProviders() {
+  if (m_pages->count() > 0)
+    m_pages->clear();
+
+  if (plugins.size() > 0) {
+    for (int i = 0; i < plugins.size(); i++) {
+      AntiquaCRM::APluginInterface *page =
+          qobject_cast<AntiquaCRM::APluginInterface *>(plugins.at(i));
+      page->deleteLater();
+    }
+    plugins.clear();
+  }
 }

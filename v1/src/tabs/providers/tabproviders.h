@@ -63,7 +63,8 @@ public Q_SLOTS:
 
 public:
   explicit TabProviders(QWidget *parent = nullptr);
-  bool customAction(const QJsonObject &) override;
+  bool customAction(const QJsonObject &) override { return false; };
+  virtual ~TabProviders();
 };
 
 #endif // ANTIQUACRM_TABPROVIDERS_H

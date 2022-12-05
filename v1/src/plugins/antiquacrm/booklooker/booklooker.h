@@ -10,6 +10,8 @@
 #include <QJsonValue>
 #include <QObject>
 
+class BooklookerDialog;
+
 class ANTIQUACRM_LIBRARY Booklooker final
     : public AntiquaCRM::APluginInterface {
   Q_OBJECT
@@ -19,7 +21,8 @@ class ANTIQUACRM_LIBRARY Booklooker final
 private:
   bool initConfigurations() override;
   const QUrl apiQuery(const QString &section) override;
-  const QString dateString(const QDate &date = QDate::currentDate()) const override;
+  const QString
+  dateString(const QDate &date = QDate::currentDate()) const override;
 
   void setTokenCookie(const QString &token);
 
@@ -32,12 +35,12 @@ private Q_SLOTS:
   void queryFinished(QNetworkReply *reply) override;
 
 public Q_SLOTS:
-  void orderUpdateAction(const QJsonObject &options) override;
+  void orderUpdateAction(const QJsonObject &operation) override;
 
 public:
   explicit Booklooker(QObject *parent = nullptr);
-  AntiquaCRM::UpdateDialog *actionsDialog(QWidget *parent) override;
   bool authenticationRequired() override;
+  AntiquaCRM::UpdateDialog *updateDialog(QWidget *parent) override;
   const QString configProvider() const override;
   const QString displayName() const override;
   bool createInterface(QObject *parent) override;

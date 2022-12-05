@@ -13,7 +13,7 @@ qint64 Customers::sqlInsert() {
   QStringList fields;
   QStringList inserts;
   foreach (QString k, keys()) {
-    QVariant _value = value(k).toString();
+    QVariant _value = value(k).toVariant();
     QVariant::Type _type = _value.type();
     if (!_value.isNull()) {
       fields.append(k);
@@ -28,7 +28,7 @@ qint64 Customers::sqlInsert() {
         break;
 
       case QVariant::Double:
-        inserts.append(QString::number(_value.toDouble(), 'f', 2));
+        inserts.append(QString::number(_value.toDouble()));
         break;
 
       default:
@@ -48,8 +48,7 @@ qint64 Customers::sqlInsert() {
     cutomer_id = q.value("c_id").toInt();
   } else {
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "TODO" << sql << Qt::endl;
-    // m_sql->lastError();
+    qDebug() << Q_FUNC_INFO << sql << Qt::endl << m_sql->lastError();
 #else
     qWarning("SQL Customer insert answers with errors!");
 #endif

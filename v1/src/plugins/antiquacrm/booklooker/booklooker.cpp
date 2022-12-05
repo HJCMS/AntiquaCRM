@@ -134,81 +134,32 @@ void Booklooker::queryFinished(QNetworkReply *reply) {
   }
 }
 
-void Booklooker::orderUpdateAction(const QJsonObject &options) {
-  if (!options.contains("provider")) {
-    qWarning("Invalid caller for Booklooker::postOperation!");
-    return;
-  }
-  // Prüfen ob es für ihn ist!
-  if (options.value("provider").toString() != configProvider())
-    return;
+void Booklooker::orderUpdateAction(const QJsonObject &data) {
+  QString action = data.value("action").toString();
+  QJsonObject query = data.value("query").toObject();
 
-  if (isCookieExpired())
-    authenticate();
+  QUrlQuery q;
+  q.addQueryItem("token", QString(authenticCookie.value()));
+  q.addQueryItem("orderId", query.value("orderId").toString());
+  q.addQueryItem("status", query.value("status").toString());
 
-  QJsonObject action = options.value("plugin_operation").toObject();
-  QString orderId = action.value("orderid").toString();
-
-  if (action.contains("paymentstatus")) {
-    // BEGIN PaymentStatus
-    QString query_action;
-    QUrlQuery query;
-    query.addQueryItem("token", QString(authenticCookie.value()));
-    query.addQueryItem("orderId", orderId);
-
-    int status = action.value("paymentstatus").toInt();
-    switch (static_cast<AntiquaCRM::PaymentStatus>(status)) {
-    case AntiquaCRM::PaymentStatus::WAIT_FOR_PAYMENT:
-      query_action = "order_status";
-      query.addQueryItem("status", "WAITING_FOR_PAYMENT");
-      break;
-
-    case AntiquaCRM::PaymentStatus::SHIPMENT_CREATED:
-      query_action = "order_status";
-      query.addQueryItem("status", "READY_FOR_SHIPMENT");
-      break;
-
-    case AntiquaCRM::PaymentStatus::SHIPPED_WAIT_FOR_PAYMENT:
-      query_action = "order_status";
-      query.addQueryItem("status", "SHIPPED_WAITING_FOR_PAYMENT");
-      break;
-
-    case AntiquaCRM::PaymentStatus::SHIPPED_AND_PAID:
-      query_action = "order_status";
-      query.addQueryItem("status", "SHIPPED_AND_PAID");
-      break;
-
-    case AntiquaCRM::PaymentStatus::BUYER_NO_REACTION:
-      query_action = "order_status";
-      query.addQueryItem("status", "BUYER_NO_REACTION");
-      break;
-
-    case AntiquaCRM::PaymentStatus::ORDER_CANCELED:
-      query_action = "order_cancel";
-      break;
-
-    default:
-      break;
-    };
-
-    QUrl url = apiQuery(query_action);
-    if (!query.isEmpty())
-      url.setQuery(query);
+  QUrl url = apiQuery(action);
+  if (!q.isEmpty())
+    url.setQuery(q);
 
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << Qt::endl << "Abgeschaltet:" << url.toString();
+  qDebug() << "Demo Modus:" << url.toString();
 #else
-    m_network->putRequest(url, QByteArray());
+  m_network->putRequest(url, QByteArray());
 #endif
-  } // END PaymentStatus
-}
-
-AntiquaCRM::UpdateDialog *Booklooker::actionsDialog(QWidget *parent) {
-  BooklookerDialog *m_d = new BooklookerDialog(parent);
-  return m_d;
 }
 
 bool Booklooker::authenticationRequired() { return isCookieExpired(); }
+
+AntiquaCRM::UpdateDialog *Booklooker::updateDialog(QWidget *parent) {
+  BooklookerDialog *m_d = new BooklookerDialog(parent);
+  return m_d;
+}
 
 const QString Booklooker::configProvider() const {
   return QString(BOOKLOOKER_CONFIG_PROVIDER).toLower();
@@ -219,7 +170,8 @@ const QString Booklooker::displayName() const {
 }
 
 bool Booklooker::createInterface(QObject *parent) {
-  Q_UNUSED(parent);
+  if (parent == nullptr)
+    return false;
 
   m_network = new AntiquaCRM::ANetworker(AntiquaCRM::JSON_QUERY, this);
   connect(m_network, SIGNAL(sendJsonResponse(const QJsonDocument &)),

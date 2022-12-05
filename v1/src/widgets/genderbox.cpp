@@ -33,9 +33,14 @@ void GenderBox::setValue(const QVariant &val) {
   if (val.type() == QVariant::Int) {
     AntiquaCRM::Gender gen = static_cast<AntiquaCRM::Gender>(val.toInt());
     index = m_box->findData(gen, Qt::UserRole);
+  } else if (val.type() == QVariant::Double) {
+    AntiquaCRM::Gender gen = static_cast<AntiquaCRM::Gender>(val.toInt());
+    index = m_box->findData(gen, Qt::UserRole);
   } else {
     index = m_box->findData(val.toString(), Qt::DisplayRole);
   }
+
+  // qDebug() << Q_FUNC_INFO << val << index;
 
   if (index >= 0)
     m_box->setCurrentIndex(index);

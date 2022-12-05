@@ -22,6 +22,7 @@ namespace AntiquaCRM {
 ANetworker::ANetworker(AntiquaCRM::PluginQueryType type, QObject *parent)
     : QNetworkAccessManager{parent}, queryType{type} {
   setObjectName("antiquacrm_networker");
+  m_reply = nullptr;
   m_textCodec = QTextCodec::codecForLocale();
   connect(this, SIGNAL(finished(QNetworkReply *)), this,
           SLOT(slotFinished(QNetworkReply *)));
@@ -341,8 +342,10 @@ QNetworkReply *ANetworker::getRequest(const QUrl &url) {
 }
 
 ANetworker::~ANetworker() {
-  if (m_reply != nullptr)
+  if (m_reply != nullptr) {
+    m_reply->close();
     m_reply->deleteLater();
+  }
 }
 
 }; // namespace AntiquaCRM

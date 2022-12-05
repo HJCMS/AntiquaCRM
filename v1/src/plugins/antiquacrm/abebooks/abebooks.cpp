@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "abebooks.h"
+#include "abebooksdialog.h"
 #include "abebooksdocument.h"
 
 /** @brief Konfigurationsgruppe */
@@ -96,10 +97,9 @@ void Abebooks::orderUpdateAction(const QJsonObject &options) {
   qDebug() << Q_FUNC_INFO << options;
 }
 
-AntiquaCRM::UpdateDialog *Abebooks::actionsDialog(QWidget *parent) {
-  Q_UNUSED(parent);
-  qDebug() << Q_FUNC_INFO << "TODO";
-  return nullptr;
+AntiquaCRM::UpdateDialog *Abebooks::updateDialog(QWidget *parent) {
+  AbeBooksDialog *m_d = new AbeBooksDialog(parent);
+  return m_d;
 }
 
 const QString Abebooks::configProvider() const {

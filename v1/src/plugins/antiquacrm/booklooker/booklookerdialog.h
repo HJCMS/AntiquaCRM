@@ -2,9 +2,10 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_ORDERUPDATE_DIALOG_H
-#define ANTIQUACRM_ORDERUPDATE_DIALOG_H
+#ifndef ANTIQUACRM_BOOKLOOKER_DIALOG_H
+#define ANTIQUACRM_BOOKLOOKER_DIALOG_H
 
+#include <AntiquaCRM>
 #include <AntiquaCRMPlugin>
 #include <QDialog>
 #include <QDialogButtonBox>
@@ -12,13 +13,14 @@
 #include <QObject>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QStatusBar>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY BooklookerDialog final
+class ANTIQUACRM_LIBRARY BooklookerDialog
     : public AntiquaCRM::UpdateDialog {
   Q_OBJECT
 
-protected:
+private:
   QString p_order_id;
   QJsonObject p_system_data;
   QJsonObject p_post_data;
@@ -30,15 +32,19 @@ protected:
   QRadioButton *m_rb6;
   QRadioButton *m_rb7;
   QDialogButtonBox *m_buttonBar;
+  QStatusBar *m_statusBar;
 
-  void prepareAction() override;
+  bool prepareAction();
 
-protected Q_SLOTS:
-  void networkAction() override;
+private Q_SLOTS:
+  void networkAction();
+
+public Q_SLOTS:
+  void statusMessage(const QString &);
 
 public:
   explicit BooklookerDialog(QWidget *parent = nullptr);
-  int exec(const QString &orderId, const QJsonObject &data) override;
+  int exec(const QString &orderId, const QJsonObject &data);
 };
 
-#endif // ANTIQUACRM_ORDERUPDATE_DIALOG_H
+#endif // ANTIQUACRM_BOOKLOOKER_DIALOG_H
