@@ -13,11 +13,13 @@ SET (plugin_FILES
 
 SET (plugin_SOURCES
  booklooker.cpp
+ booklookerdialog.cpp
  booklookerauthenticator.cpp
 )
 
 SET (plugin_HEADERS
  booklooker.h
+ booklookerdialog.h
  booklookerauthenticator.h
 )
 

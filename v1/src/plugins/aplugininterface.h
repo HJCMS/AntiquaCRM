@@ -9,22 +9,22 @@
 #include <QDate>
 #include <QDateTime>
 #include <QDomDocument>
-#include <QFlags>
 #include <QJsonDocument>
 #include <QJsonValue>
-#include <QMetaType>
 #include <QNetworkCookie>
 #include <QObject>
 #include <QString>
 #include <QTextCodec>
 #include <QUrl>
 
+#include "updatedialog.h"
+
 namespace AntiquaCRM {
 
 /**
- * @brief Plugin Configuration params
- * @ingroup OrderSystem
- * @section PluginInterface
+ * @brief Klasse für die Dienstleisterkonfiuration
+ * @ingroup AntiquaCRMPlugin
+ * @section plugin
  */
 struct ANTIQUACRM_LIBRARY APluginConfig {
   QString hostname = QString();
@@ -36,9 +36,9 @@ struct ANTIQUACRM_LIBRARY APluginConfig {
 };
 
 /**
- * @brief Primary Plugin Interface class
- * @ingroup OrderSystem
- * @section PluginInterface
+ * @brief Primäre Interface Klasse für Dienstleister Plugins
+ * @ingroup AntiquaCRMPlugin
+ * @section plugin
  */
 class ANTIQUACRM_LIBRARY APluginInterface : public QObject {
   Q_OBJECT
@@ -48,127 +48,136 @@ class ANTIQUACRM_LIBRARY APluginInterface : public QObject {
   Q_CLASSINFO("Url", ANTIQUACRM_HOMEPAGE)
 
 protected:
+  /**
+   * @brief Netzwerkabfragen
+   */
   AntiquaCRM::ANetworker *m_network;
+
+  /**
+   * @brief Zeichensatz bei abweichungen
+   * @note  AntiquaCRM verwendet UTF8
+   */
   QTextCodec *m_decodeFrom;
 
   /**
-   * @brief API access Remote URL
+   * @brief Url zur API Schnittstelle
    */
   QUrl apiUrl;
 
   /**
-   * @brief API access Loginname
+   * @brief API Benutzernamen
    */
   QString apiUser;
 
   /**
-   * @brief API access Key
+   * @brief API Schlüssel
    */
   QString apiKey;
 
   /**
-   * @brief Actions Session Cookie
+   * @brief Sitzungs Keks
+   * @note Kekse sollten in "Private Secure" initialisiert werden!
    */
   QNetworkCookie actionsCookie;
 
   /**
-   * @brief Authentication Cookie
+   * @brief Authentifizierungs Keks
+   * @note Kekse sollten in "Private Secure" initialisiert werden!
    */
   QNetworkCookie authenticCookie = QNetworkCookie();
 
   /**
-   * @brief Vendors respond - with different date/time and zone formats.
+   * @brief Nehme Datum von ...
+   * Dienstleister verwenden unterschiedliche Formatausgaben.
+   * @note AntiquaCRM verwendet Standard ISO-Date
    */
   const QDateTime getDateTime(const QString &dateString,
                               const QString &timeString,
-                              Qt::TimeSpec spec = Qt::LocalTime) const;
+                              Qt::TimeSpec to = Qt::LocalTime) const;
 
   const QDateTime getDateTime(const QString &dateTimeString,
-                              Qt::TimeSpec spec = Qt::LocalTime) const;
+                              Qt::TimeSpec to = Qt::LocalTime) const;
 
   /**
-   * @brief Convert Datetime to TimeSpec
+   * @brief Wird benötigt für die Zeitzonen konvertierung bei den Keksen.
    */
   const QDateTime timeSpecDate(const QDateTime &dateTime,
-                               Qt::TimeSpec fromSpec = Qt::LocalTime) const;
+                               Qt::TimeSpec to = Qt::LocalTime) const;
 
   /**
-   * @brief Convert Invalid Price formats to double
+   * @brief Dienstleister geben Preise als Strings an.
+   * @note AntiquaCRM verwendet double
    */
   double getPrice(const QJsonValue &value) const;
 
   /**
-   * @brief Vendors using different Date time formats!
+   * @brief Der Datumsimport ist je nach Dienstleister unterschiedlich.
    */
   virtual const QString
   dateString(const QDate &date = QDate::currentDate()) const = 0;
 
   /**
-   * @brief load API access configuration
+   * @brief Konfiguration einlesen
    */
   virtual bool initConfigurations() = 0;
 
   /**
-   * @brief create a custom API access
+   * @brief Erstellen der Abfrage Url.
    */
   virtual const QUrl apiQuery(const QString &section) = 0;
 
 protected Q_SLOTS:
   /**
-   * @brief Authentications if needed
+   * @brief Ist eine Authentifizierung notwendig?
+   * Wenn ja kann diese hier Umgesetzt werden.
    */
   virtual void authenticate() = 0;
 
   /**
-   * @brief Changes the primary Text Codec.
+   * @brief Mancher Dienstanbieter verwendet einen anderen Zeichensatz!
+   * AntiquaCRM verwendet UTF8, abweichungen sind auf Pluginseite zu behandeln!
    * @ref m_decodeFrom
    */
   void setContentDecoder(QTextCodec *);
 
   /**
-   * @brief This functions are called to preparing Response Data from given
-   * Vendors.
+   * @brief Vordefinierte funktionen für die Rückgabeverarbeitung.
    */
   virtual void prepareResponse(const QJsonDocument &js) = 0;
   virtual void prepareResponse(const QDomDocument &xml) = 0;
 
   /**
-   * @brief This function is called when Network request has been finished.
+   * @brief Optional für die Verarbeitung von selbst Definierten abfragen
    */
   virtual void queryFinished(QNetworkReply *reply) = 0;
 
 Q_SIGNALS:
   /**
-   * @brief This Signal is reserved to emitted when a Network or Parser error
-   * has occurred.
+   * @brief Nachrichten & Fehler Meldungen
+   * Diese Signal kann dafür verwendet werden verschiedene Meldungen an das
+   * Dienstleisterfenster zu senden.
    */
   void sendErrorResponse(AntiquaCRM::Message, const QString &);
 
   /**
-   * @brief This Signal is reserved to emitted when all operations has been
-   * finished.
+   * @brief Wird ausgelöst wenn die Verarbeitung der Anfrage abgeschlossen ist!
+   * @note Dieses Signal muss immer nach Anfragebeendigung verwendet werden!
    */
   void sendQueryFinished();
 
   /**
-   * @brief This Signal is reserved to emitted when no data emitted
+   * @brief Wird ausgelöst wenn die Abfrage kein Ergebnis zurück gegeben hat.
    */
   void sendQueryAborted();
 
 public Q_SLOTS:
   /**
-   * @brief Authentication is Required?
-   * Returns Information about a required Authentication.
-   * This is not the general login behavior.
-   * It's needed for Session based Connections.
-   * @example expired Tokens
+   * @brief Info an das System ob ein Authentifizierung erforderlich ist!
    */
   virtual bool authenticationRequired() = 0;
 
   /**
-   * @brief Send Operation to Provider Interface
-   * @param section  - Operation category
-   * @param operation - JsonObject
+   * @brief Eingang für Dienstleister Aktionen
    */
   virtual void orderUpdateAction(const QJsonObject &options) = 0;
 
@@ -176,27 +185,32 @@ public:
   explicit APluginInterface(QObject *parent = nullptr);
 
   /**
-   * @brief This function read the Remote access configuration from the
-   * Application. The Description can be found in APluginConfig Class.
+   * @brief Bestellungen remote verarbeiten.
+   */
+  virtual AntiquaCRM::UpdateDialog *actionsDialog(QWidget *parent) = 0;
+
+  /**
+   * @brief Liest die Konfiguration des Dienstleisters ein.
+   * @note Wird vom Konfigurations Dialog für die Zugangeinrichtung benötigt!
    * @ref AntiquaCRM::APluginConfig
    */
   const AntiquaCRM::APluginConfig getConfig(const QString &providerName);
 
   /**
-   * @brief Returning the Provider Configuration section.
-   * @note It is important, that the Group Key 'provider' is followed by a
-   * Slash, before add the Vendor name.
+   * @brief Speicherschlüssel des Dienstleisters für die Konfiguration!
+   * @note Muss in Kleinschreibung (ASCII), ohne Sonder-/Leerzeichen erfolgen!
    * @example "provider/my_vendor_name"
    */
   virtual const QString configProvider() const = 0;
 
   /**
-   * @brief Returning the Provider Registry and Displayname.
+   * @brief Gibt den Anzeigenamen für das Interface zurück.
+   * @example Für die Anzeige in Menüs, PopUp Fenster und Listen.
    */
   virtual const QString displayName() const = 0;
 
   /**
-   * @brief Initial this Interface
+   * @brief Inititialisieren des Diesntleisterplugins.
    */
   virtual bool createInterface(QObject *parent) = 0;
 };

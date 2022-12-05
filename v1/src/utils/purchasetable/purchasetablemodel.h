@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_PURCHASETABLEMODEL_H
-#define ANTIQUACRM_PURCHASETABLEMODEL_H
+#ifndef ANTIQUACRM_PURCHASE_TABLEMODEL_H
+#define ANTIQUACRM_PURCHASE_TABLEMODEL_H
 
 #include <AntiquaCRM>
 #include <QAbstractTableModel>
@@ -11,8 +11,6 @@
 #include <QMap>
 #include <QObject>
 #include <QWidget>
-
-class PurchaseTableColumn;
 
 /**
  * @brief Model Klasse für Artikel Einkaufstabelle
@@ -31,7 +29,12 @@ private:
   /**
    * @brief Zellenanzahl
    */
-  int p_columns = 11;
+  int table_columns = 11;
+
+  /**
+   * @brief Soll verhindern das die SQL Feldgrenzen überschritten werden.
+   */
+  int max_string_length = 79;
 
   /**
    * @brief Tabelleninhalt
@@ -49,8 +52,10 @@ public:
 
   /**
    * @brief Beinhaltet die SQL-Tabellen Feldnamen und Kopzeilenübersetzungen!
+   * @note Die Feldnamen müssen in der Klasse AProviderOrder definiert sein!
+   * Andernfalls kann es dazu kommen das der falsche Datentyp ausgegeben wird!
    */
-  static const PurchaseTableColumn headerColumn(int column);
+  static const AntiquaCRM::ATableHeaderColumn headerColumn(int column);
 
   /**
    * @brief Gibt die Liste der Editierbaren Zellen zurück!
@@ -76,7 +81,7 @@ public:
    * Es wird z.B. bei einem darauf folgenden \i rowCount() der alter Wert zurück
    * gegeben obwohl sich die Größe von \b articleRows geändert hat.
    * Weil die Anzahl der Bestellungen kaum die 10 Übersteigt ist es einfacher
-   * die Tabelle zu leeren und alle Daten neu ein zu lesen - das Funkioniert.
+   * die Tabelle zu leeren und alle Daten neu ein zu lesen, das Funkioniert.
    */
   bool removeRows(int row, int count,
                   const QModelIndex &parent = QModelIndex()) override;
@@ -138,4 +143,4 @@ public:
   Qt::ItemFlags flags(const QModelIndex &index) const override;
 };
 
-#endif // ANTIQUACRM_PURCHASETABLEMODEL_H
+#endif // ANTIQUACRM_PURCHASE_TABLEMODEL_H

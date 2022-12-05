@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "purchasetablemodel.h"
-#include "purchasetablecolumn.h"
 
 PurchaseTableModel::PurchaseTableModel(QObject *parent)
     : QAbstractTableModel{parent} {
@@ -29,20 +28,58 @@ const QString PurchaseTableModel::articleType(int type) {
   }
 }
 
-const PurchaseTableColumn PurchaseTableModel::headerColumn(int column) {
-  QMap<int, PurchaseTableColumn> m;
-  m.insert(0, PurchaseTableColumn("a_payment_id", tr("Payment Id")));
-  m.insert(1, PurchaseTableColumn("a_order_id", tr("Order Id")));
-  m.insert(2, PurchaseTableColumn("a_article_id", tr("Article Id")));
-  m.insert(3, PurchaseTableColumn("a_customer_id", tr("Customer Id")));
-  m.insert(4, PurchaseTableColumn("a_type", tr("Type")));
-  m.insert(5, PurchaseTableColumn("a_count", tr("Count")));
-  m.insert(6, PurchaseTableColumn("a_price", tr("Price")));
-  m.insert(7, PurchaseTableColumn("a_sell_price", tr("Sell Price")));
-  m.insert(8, PurchaseTableColumn("a_title", tr("Title")));
-  m.insert(9, PurchaseTableColumn("a_provider_id", tr("Provider Id")));
-  m.insert(10, PurchaseTableColumn("a_modified", tr("Modified")));
-  return m.value(column);
+const AntiquaCRM::ATableHeaderColumn
+PurchaseTableModel::headerColumn(int column) {
+  AntiquaCRM::ATableHeaderColumn col;
+  switch (column) {
+  case 0:
+    col = AntiquaCRM::ATableHeaderColumn("a_payment_id", tr("Payment Id"));
+    break;
+
+  case 1:
+    col = AntiquaCRM::ATableHeaderColumn("a_order_id", tr("Order Id"));
+    break;
+
+  case 2:
+    col = AntiquaCRM::ATableHeaderColumn("a_article_id", tr("Article Id"));
+    break;
+
+  case 3:
+    col = AntiquaCRM::ATableHeaderColumn("a_customer_id", tr("Customer Id"));
+    break;
+
+  case 4:
+    col = AntiquaCRM::ATableHeaderColumn("a_type", tr("Type"));
+    break;
+
+  case 5:
+    col = AntiquaCRM::ATableHeaderColumn("a_count", tr("Count"));
+    break;
+
+  case 6:
+    col = AntiquaCRM::ATableHeaderColumn("a_price", tr("Price"));
+    break;
+
+  case 7:
+    col = AntiquaCRM::ATableHeaderColumn("a_sell_price", tr("Sell Price"));
+    break;
+
+  case 8:
+    col = AntiquaCRM::ATableHeaderColumn("a_title", tr("Title"));
+    break;
+
+  case 9:
+    col = AntiquaCRM::ATableHeaderColumn("a_provider_id", tr("Provider Id"));
+    break;
+
+  case 10:
+    col = AntiquaCRM::ATableHeaderColumn("a_modified", tr("Modified"));
+    break;
+
+  default:
+    break;
+  };
+  return col;
 }
 
 const QList<int> PurchaseTableModel::editableColumns() {
@@ -113,7 +150,7 @@ int PurchaseTableModel::rowCount(const QModelIndex &parent) const {
 
 int PurchaseTableModel::columnCount(const QModelIndex &parent) const {
   Q_UNUSED(parent);
-  return p_columns;
+  return table_columns;
 }
 
 QVariant PurchaseTableModel::headerData(int section,
@@ -133,7 +170,7 @@ QVariant PurchaseTableModel::headerData(int section,
     return QVariant();
   }
 
-  PurchaseTableColumn info = headerColumn(section);
+  AntiquaCRM::ATableHeaderColumn info = headerColumn(section);
   if (role == Qt::DisplayRole)
     return info.name() + " ";
 
@@ -153,7 +190,7 @@ bool PurchaseTableModel::setData(const QModelIndex &index,
   if (list.size() < 1)
     return false;
 
-  PurchaseTableColumn info = headerColumn(index.column());
+  AntiquaCRM::ATableHeaderColumn info = headerColumn(index.column());
   AntiquaCRM::OrderArticleItems row;
   for (int c = 0; c < list.size(); ++c) {
     AntiquaCRM::ArticleOrderItem col;
@@ -168,7 +205,7 @@ bool PurchaseTableModel::setData(const QModelIndex &index,
   articleRows[index.row()] = row;
 
   QModelIndex topLeft = createIndex(0, 0);
-  QModelIndex bottomRight = createIndex(articleRows.size(), p_columns);
+  QModelIndex bottomRight = createIndex(articleRows.size(), table_columns);
   emit dataChanged(topLeft, bottomRight);
 
   return true;
@@ -178,13 +215,13 @@ const QString PurchaseTableModel::field(const QModelIndex &index) const {
   if (!index.isValid())
     return QString();
 
-  PurchaseTableColumn info = headerColumn(index.column());
+  AntiquaCRM::ATableHeaderColumn info = headerColumn(index.column());
   return info.field();
 }
 
 int PurchaseTableModel::columnIndex(const QString &fieldName) const {
   for (int c = 0; c < columnCount(); c++) {
-    PurchaseTableColumn info = headerColumn(c);
+    AntiquaCRM::ATableHeaderColumn info = headerColumn(c);
     if (info.field() == fieldName)
       return c;
   }
@@ -196,7 +233,7 @@ QVariant PurchaseTableModel::data(const QModelIndex &index, int role) const {
     return QVariant();
 
   QVariant buffer;
-  PurchaseTableColumn info = headerColumn(index.column());
+  AntiquaCRM::ATableHeaderColumn info = headerColumn(index.column());
   AntiquaCRM::OrderArticleItems list = articleRows.value(index.row());
   for (int c = 0; c < list.size(); c++) {
     if (list.at(c).key == info.field()) {
@@ -216,20 +253,6 @@ QVariant PurchaseTableModel::data(const QModelIndex &index, int role) const {
   }
 
   if (role == Qt::EditRole) {
-    /*
-      m.insert(0, PurchaseTableColumn("a_payment_id", tr("Payment Id")));
-      m.insert(1, PurchaseTableColumn("a_order_id", tr("Order Id")));
-      m.insert(2, PurchaseTableColumn("a_article_id", tr("Article Id")));
-      m.insert(3, PurchaseTableColumn("a_customer_id", tr("Customer Id")));
-      m.insert(4, PurchaseTableColumn("a_type", tr("Type")));
-      m.insert(5, PurchaseTableColumn("a_count", tr("Count")));
-      m.insert(6, PurchaseTableColumn("a_price", tr("Price")));
-      m.insert(7, PurchaseTableColumn("a_sell_price", tr("Sell Price")));
-      m.insert(8, PurchaseTableColumn("a_title", tr("Title")));
-      m.insert(9, PurchaseTableColumn("a_provider_id", tr("Provider Id")));
-      m.insert(10, PurchaseTableColumn("a_modified", tr("Modified")));
-    */
-
     switch (_type) {
     case QMetaType::Bool:
       return buffer.toBool();
@@ -252,8 +275,9 @@ QVariant PurchaseTableModel::data(const QModelIndex &index, int role) const {
     default: {
       // FIXME Max. Zeichenlänge beim Titel ist 80!
       QString str = buffer.toString();
-      if (str.length() > 79) {
-        return str.left(76) + "...";
+      if (str.length() > max_string_length) {
+        int l = (max_string_length - 4);
+        return str.left(l) + "...";
       }
       return str;
     }
@@ -299,7 +323,7 @@ Qt::ItemFlags PurchaseTableModel::flags(const QModelIndex &index) const {
     return Qt::ItemIsEnabled;
 
   Qt::ItemFlags flags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-  PurchaseTableColumn info = headerColumn(index.column());
+  AntiquaCRM::ATableHeaderColumn info = headerColumn(index.column());
   if (editableColumns().contains(index.column())) {
     return flags | Qt::ItemIsEditable;
   }

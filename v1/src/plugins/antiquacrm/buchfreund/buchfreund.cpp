@@ -93,6 +93,12 @@ void Buchfreund::orderUpdateAction(const QJsonObject &options) {
 #endif
 }
 
+AntiquaCRM::UpdateDialog *Buchfreund::actionsDialog(QWidget *parent) {
+  Q_UNUSED(parent);
+  qDebug() << Q_FUNC_INFO << "TODO";
+  return nullptr;
+}
+
 bool Buchfreund::authenticationRequired() { return false; }
 
 const QString Buchfreund::configProvider() const {

@@ -63,6 +63,9 @@
 // AntiquaCRM::AEuropeanCountries
 #include "aeuropeancountries.h"
 
+// AntiquaCRM::ATableHeaderColumn
+#include "atableheadercolumn.h"
+
 // AntiquaCRM::ATaxCalculator
 #include "ataxcalculator.h"
 

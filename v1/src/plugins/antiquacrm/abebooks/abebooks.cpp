@@ -96,6 +96,12 @@ void Abebooks::orderUpdateAction(const QJsonObject &options) {
   qDebug() << Q_FUNC_INFO << options;
 }
 
+AntiquaCRM::UpdateDialog *Abebooks::actionsDialog(QWidget *parent) {
+  Q_UNUSED(parent);
+  qDebug() << Q_FUNC_INFO << "TODO";
+  return nullptr;
+}
+
 const QString Abebooks::configProvider() const {
   return QString(ABEBOOKS_CONFIG_PROVIDER).toLower();
 }

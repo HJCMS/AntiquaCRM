@@ -118,34 +118,48 @@ void TabProviders::createProviderAction() {
   QByteArray data = q.value("pr_order_data").toByteArray();
   QJsonDocument doc = QJsonDocument::fromJson(data);
   QJsonObject obj = doc.object();
+  if (obj.isEmpty()) {
+    qWarning("Missing Json for createProviderAction");
+    return;
+  }
 
   // TODO Plugin Intergration Eingabe
+  AntiquaCRM::UpdateDialog *m_d = nullptr;
+  QListIterator<AntiquaCRM::APluginInterface *> it(plugins);
+  while (it.hasNext()) {
+    AntiquaCRM::APluginInterface *m_pr = it.next();
+    if (m_pr != nullptr) {
+      if (m_pr->configProvider() == provider.toLower()) {
+        qDebug() << Q_FUNC_INFO << provider << orderId;
+        m_d = m_pr->actionsDialog(this);
+        break;
+      }
+    }
+  }
 
-  AntiquaCRM::UpdateDialog *m_d = new AntiquaCRM::UpdateDialog(this);
-//connect(m_d, SIGNAL(sendPluginAction(const QJsonObject &)),
-//        SLOT(createProviderAction(const QJsonObject &)));
-  m_d->exec();
+  if (m_d != nullptr) {
+    m_d->exec(orderId, obj);
+  }
 
-  qDebug() << Q_FUNC_INFO << provider << orderId << data;
   return;
 
-  QJsonObject orderUpdate;
-  AntiquaCRM::OrderStatus orderStatus;
-  int payStatus = orderUpdate.value("paymentstatus").toInt();
-  switch (static_cast<AntiquaCRM::PaymentStatus>(payStatus)) {
-  case AntiquaCRM::PaymentStatus::SHIPMENT_CREATED:
-    orderStatus = AntiquaCRM::OrderStatus::STARTED;
-    orderUpdate.insert("status", QJsonValue(orderStatus));
-    break;
+  //  QJsonObject orderUpdate;
+  //  AntiquaCRM::OrderStatus orderStatus;
+  //  int payStatus = orderUpdate.value("paymentstatus").toInt();
+  //  switch (static_cast<AntiquaCRM::PaymentStatus>(payStatus)) {
+  //  case AntiquaCRM::PaymentStatus::SHIPMENT_CREATED:
+  //    orderStatus = AntiquaCRM::OrderStatus::STARTED;
+  //    orderUpdate.insert("status", QJsonValue(orderStatus));
+  //    break;
 
-  case AntiquaCRM::PaymentStatus::SHIPPED_AND_PAID:
-    orderStatus = AntiquaCRM::OrderStatus::DELIVERED;
-    orderUpdate.insert("status", QJsonValue(orderStatus));
-    break;
+  //  case AntiquaCRM::PaymentStatus::SHIPPED_AND_PAID:
+  //    orderStatus = AntiquaCRM::OrderStatus::DELIVERED;
+  //    orderUpdate.insert("status", QJsonValue(orderStatus));
+  //    break;
 
-  default:
-    break;
-  };
+  //  default:
+  //    break;
+  //  };
 }
 
 void TabProviders::pluginErrorResponse(AntiquaCRM::Message, const QString &) {
@@ -181,9 +195,9 @@ void TabProviders::openOrderPage(const QString &provider,
     }
     QJsonObject jObj = doc.object();
     jObj.insert("c_id", customerId);
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << sql << Qt::endl << jObj;
-#endif
+    //#ifdef ANTIQUA_DEVELOPEMENT
+    //    qDebug() << Q_FUNC_INFO << sql << Qt::endl << jObj;
+    //#endif
     ProvidersOrderPage *page = new ProvidersOrderPage(jObj, m_pages);
     connect(page, SIGNAL(sendOpenProviderDialog()),
             SLOT(createProviderAction()));

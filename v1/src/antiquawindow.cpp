@@ -20,7 +20,7 @@ AntiquaWindow::AntiquaWindow(QWidget *parent)
   setMinimumSize(QSize(750, 550));
   setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
   setWindowIcon(QIcon(":icons/antiqua.png"));
-  // setFixedSize(1280, 720); // Testing
+  // setFixedSize(1280, 720); // Only for Testing
 
   m_cfg = new AntiquaCRM::ASettings(this);
   m_cfg->setObjectName("window_settings");
@@ -112,7 +112,6 @@ void AntiquaWindow::openWindow() {
   if (m_cfg->contains("window/windowState"))
     restoreState(m_cfg->value("window/windowState").toByteArray());
 
-  // TODO Read from config to add Defaults
   QList<QString> tabs = m_centralWidget->availableTabs().keys();
   if (tabs.contains("providers"))
     m_centralWidget->setShowTab("providers");
@@ -120,11 +119,11 @@ void AntiquaWindow::openWindow() {
   if (tabs.contains("orders"))
     m_centralWidget->setShowTab("orders");
 
-  if (tabs.contains("books"))
-    m_centralWidget->setShowTab("books");
-
   if (tabs.contains("customers"))
     m_centralWidget->setShowTab("customers");
+
+  if (tabs.contains("books"))
+    m_centralWidget->setShowTab("books");
 
   m_centralWidget->setEnabled(true);
 }

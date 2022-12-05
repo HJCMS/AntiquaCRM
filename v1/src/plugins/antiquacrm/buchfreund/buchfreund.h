@@ -34,6 +34,7 @@ public Q_SLOTS:
 
 public:
   explicit Buchfreund(QObject *parent = nullptr);
+  AntiquaCRM::UpdateDialog *actionsDialog(QWidget *parent) override;
   bool authenticationRequired() override;
   const QString configProvider() const override;
   const QString displayName() const override;

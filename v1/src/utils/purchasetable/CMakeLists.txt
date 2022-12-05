@@ -9,14 +9,12 @@ SET (subproject_LINKER
 
 SET (subproject_SOURCES
  purchasetable.cpp
- purchasetablecolumn.cpp
  purchasetablemodel.cpp
  purchasetabledelegate.cpp
 )
 
 SET (subproject_HEADERS
  purchasetable.h
- purchasetablecolumn.h
  purchasetablemodel.h
  purchasetabledelegate.h
 )

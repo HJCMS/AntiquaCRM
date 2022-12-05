@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "booklooker.h"
+#include "booklookerdialog.h"
 
 /**
  * @def DATE_FORMAT
@@ -33,8 +34,7 @@
 #include <QTimeZone>
 #include <QUrlQuery>
 
-Booklooker::Booklooker(QObject *parent)
-    : AntiquaCRM::APluginInterface{parent} {
+Booklooker::Booklooker(QObject *parent) : AntiquaCRM::APluginInterface{parent} {
   setObjectName(BOOKLOOKER_CONFIG_PROVIDER);
   m_network = nullptr;
 }
@@ -201,6 +201,11 @@ void Booklooker::orderUpdateAction(const QJsonObject &options) {
     m_network->putRequest(url, QByteArray());
 #endif
   } // END PaymentStatus
+}
+
+AntiquaCRM::UpdateDialog *Booklooker::actionsDialog(QWidget *parent) {
+  BooklookerDialog *m_d = new BooklookerDialog(parent);
+  return m_d;
 }
 
 bool Booklooker::authenticationRequired() { return isCookieExpired(); }

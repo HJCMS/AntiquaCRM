@@ -45,6 +45,7 @@ SET (projectLibrary_SOURCES
  asqlprofile.cpp
  asqlquerymodel.cpp
  asqlsettings.cpp
+ atableheadercolumn.cpp
  ataxcalculator.cpp
  atransmitter.cpp
  autil.cpp
@@ -67,6 +68,7 @@ SET (projectLibrary_HEADERS
  asqlprofile.h
  asqlquerymodel.h
  asqlsettings.h
+ atableheadercolumn.h
  ataxcalculator.h
  atransmitter.h
  autil.h

@@ -212,6 +212,7 @@ namespace AntiquaCRM {
 
  /**
   * @brief Nachrichtentyp
+  * @section inventory
   * Definiert die Dringlichkeit einer Nachricht an das Meldungssystem!
   */
  enum Message {
@@ -288,7 +289,7 @@ namespace AntiquaCRM {
 
  /**
   * @brief Kunden Vertrauensebene festlegen!
-  * @section customers
+  * @section inventory
   */
  enum CustomerTrustLevel {
    NO_TRUST_LEVEL = 0, /**< Keine Vertrauensebene festgelegt */
@@ -302,7 +303,7 @@ namespace AntiquaCRM {
 
  /**
   * @brief Geschlechter Definition
-  * @section customers
+  * @section inventory
   */
  enum Gender {
   NO_GENDER = 0, /**< Ohne Angabe */

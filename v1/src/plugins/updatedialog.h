@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_ORDERUPDATE_DIALOG_H
-#define ANTIQUACRM_ORDERUPDATE_DIALOG_H
+#ifndef ANTIQUACRM_UPDATEDIALOG_H
+#define ANTIQUACRM_UPDATEDIALOG_H
 
 #include <AntiquaCRM>
 #include <QDialog>
@@ -19,17 +19,11 @@ namespace AntiquaCRM {
 class ANTIQUACRM_LIBRARY UpdateDialog : public QDialog {
   Q_OBJECT
 
-private:
-  QRadioButton *m_rb2;
-  QRadioButton *m_rb3;
-  QRadioButton *m_rb4;
-  QRadioButton *m_rb5;
-  QRadioButton *m_rb6;
-  QRadioButton *m_rb7;
-  QDialogButtonBox *m_buttonBar;
+protected:
+  virtual void prepareAction() = 0;
 
-private Q_SLOTS:
-  void prepareAction();
+protected Q_SLOTS:
+  virtual void networkAction() = 0;
 
 Q_SIGNALS:
   void sendPluginAction(const QJsonObject &obj);
@@ -37,8 +31,9 @@ Q_SIGNALS:
 public:
   explicit UpdateDialog(QWidget *parent = nullptr);
   int exec() override;
+  virtual int exec(const QString &, const QJsonObject &) = 0;
 };
 
 }; // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_ORDERUPDATE_DIALOG_H
+#endif // ANTIQUACRM_UPDATEDIALOG_H

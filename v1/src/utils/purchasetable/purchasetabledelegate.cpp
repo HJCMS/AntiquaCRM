@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "purchasetabledelegate.h"
-#include "purchasetablecolumn.h"
 #include "purchasetablemodel.h"
 
 #include <AntiquaCRM>
@@ -28,7 +27,7 @@ QWidget *PurchaseTableDelegate::createEditor(QWidget *parent,
   if (!index.isValid())
     return parent;
 
-  PurchaseTableColumn header = PurchaseTableModel::headerColumn(index.column());
+  AntiquaCRM::ATableHeaderColumn header = PurchaseTableModel::headerColumn(index.column());
 
   QVariant value = index.model()->data(index, Qt::EditRole);
   if (header.field() == "a_count") { // Count
@@ -86,7 +85,7 @@ void PurchaseTableDelegate::setEditorData(QWidget *editor,
   if (value.isNull())
     return;
 
-  PurchaseTableColumn header = PurchaseTableModel::headerColumn(index.column());
+  AntiquaCRM::ATableHeaderColumn header = PurchaseTableModel::headerColumn(index.column());
 
   if (header.field() == "a_count") { // Count
     QSpinBox *m_spinBox = qobject_cast<QSpinBox *>(editor);
@@ -134,7 +133,7 @@ void PurchaseTableDelegate::setModelData(QWidget *editor,
     return;
 
   PurchaseTableModel *m_ptm = qobject_cast<PurchaseTableModel *>(model);
-  PurchaseTableColumn header = m_ptm->headerColumn(index.column());
+  AntiquaCRM::ATableHeaderColumn header = m_ptm->headerColumn(index.column());
 
   if (header.field() == "a_count") { // Count
     QSpinBox *sp = qobject_cast<QSpinBox *>(editor);
