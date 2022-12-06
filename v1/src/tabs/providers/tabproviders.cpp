@@ -142,12 +142,43 @@ void TabProviders::createProviderAction() {
   }
 }
 
-void TabProviders::pluginErrorResponse(AntiquaCRM::Message, const QString &) {
-  qDebug() << Q_FUNC_INFO << sender()->objectName();
+void TabProviders::pluginErrorResponse(AntiquaCRM::Message type,
+                                       const QString &message) {
+  QStringList info;
+  QString provider = sender()->objectName();
+  switch (type) {
+  case AntiquaCRM::Message::NORMAL: // Standard Info
+    info << "NORMAL" << provider << message;
+    break;
+
+  case AntiquaCRM::Message::WARNING: // Warnung wird ausgegeben!
+    info << "WARNING" << provider << message;
+    break;
+
+  case AntiquaCRM::Message::FATAL: // Schwehrwiegender Fehler ist aufgetreten!
+    info << "FATAL" << provider << message;
+    break;
+
+  case AntiquaCRM::Message::LOGGING: // Nur für das Protokollieren vorgesehen!
+    info << "LOGGING" << provider << message;
+    break;
+
+  default:
+    break;
+  }
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << "TODO" << info.join(" ");
+#else
+  Q_UNUSED(info);
+#endif
 }
 
 void TabProviders::pluginQueryFinished() {
-  qDebug() << Q_FUNC_INFO << sender()->objectName();
+  QString info(tr("Request from") + " ");
+  info.append(sender()->objectName());
+  info.append(tr("finished."));
+  sendStatusMessage(info);
 }
 
 void TabProviders::openOrderPage(const QString &provider,

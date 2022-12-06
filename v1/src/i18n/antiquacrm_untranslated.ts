@@ -944,7 +944,7 @@ Image - Article Id: %2</source>
 <context>
     <name>Booklooker</name>
     <message>
-        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+133"/>
+        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+145"/>
         <source>Booklooker response with errors!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -953,12 +953,12 @@ Image - Article Id: %2</source>
     <name>BooklookerDialog</name>
     <message>
         <location filename="../plugins/antiquacrm/booklooker/booklookerdialog.cpp" line="+14"/>
-        <location line="+109"/>
+        <location line="+110"/>
         <source>Booklooker %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-100"/>
+        <location line="-101"/>
         <source>Changes the Provider status of the current order.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -973,7 +973,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
+        <source>This selection inform your Provider, the current order status.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Waiting for Payment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5582,6 +5587,16 @@ Image - Article Id: %2</source>
     <message>
         <location line="+1"/>
         <source>Button for update, Provider Tree.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+135"/>
+        <source>Request from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>finished.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

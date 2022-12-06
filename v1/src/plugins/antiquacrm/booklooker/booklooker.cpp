@@ -97,7 +97,6 @@ bool Booklooker::isCookieExpired() {
 
 void Booklooker::authenticate() {
   QUrl url = apiQuery("authenticate");
-
   QString pd("apiKey=");
   pd.append(apiKey);
 

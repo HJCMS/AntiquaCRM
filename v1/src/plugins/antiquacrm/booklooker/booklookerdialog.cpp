@@ -12,7 +12,7 @@
 BooklookerDialog::BooklookerDialog(QWidget *parent)
     : AntiquaCRM::UpdateDialog{parent} {
   setWindowTitle(tr("Booklooker %1").arg(QString()) + "[*]");
-  setMinimumSize(450, 200);
+  setMinimumWidth(550);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
@@ -35,6 +35,7 @@ BooklookerDialog::BooklookerDialog(QWidget *parent)
   layout->insertWidget(col++, m_info);
 
   QFrame *m_frame = new QFrame(this);
+  m_frame->setWhatsThis(tr("This selection inform your Provider, the current order status."));
   QVBoxLayout *frLayout = new QVBoxLayout(m_frame);
   m_rb2 = new QRadioButton(tr("Waiting for Payment"), m_frame);
   m_rb2->setObjectName("WAITING_FOR_PAYMENT");
@@ -59,7 +60,7 @@ BooklookerDialog::BooklookerDialog(QWidget *parent)
   m_statusBar->setSizeGripEnabled(false);
   layout->insertWidget(col++, m_statusBar);
 
-  m_buttonBar = new QDialogButtonBox(QDialogButtonBox::Cancel, this);
+  m_buttonBar = new QDialogButtonBox(QDialogButtonBox::Close, this);
   QPushButton *apply = m_buttonBar->addButton(QDialogButtonBox::Apply);
   apply->setText(tr("Send update"));
   layout->insertWidget(col++, m_buttonBar);

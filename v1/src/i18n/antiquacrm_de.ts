@@ -946,7 +946,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>Booklooker</name>
     <message>
-        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+133"/>
+        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+145"/>
         <source>Booklooker response with errors!</source>
         <translation>Booklooker-Antwort mit Fehlern!</translation>
     </message>
@@ -955,12 +955,12 @@ Bild - Artikel Nr: %2</translation>
     <name>BooklookerDialog</name>
     <message>
         <location filename="../plugins/antiquacrm/booklooker/booklookerdialog.cpp" line="+14"/>
-        <location line="+109"/>
+        <location line="+110"/>
         <source>Booklooker %1</source>
         <translation></translation>
     </message>
     <message>
-        <location line="-100"/>
+        <location line="-101"/>
         <source>Changes the Provider status of the current order.</source>
         <translation>Ändert den Anbieterstatus der aktuellen Bestellung.</translation>
     </message>
@@ -975,7 +975,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bitte überprüfen Sie es Regelmäßig auf der Dienstanbieterseite.</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
+        <source>This selection inform your Provider, the current order status.</source>
+        <translation>Diese Auswahl informiert Ihren Provider über den aktuellen Bestellstatus.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Waiting for Payment</source>
         <translation>Warte auf Zahlung</translation>
     </message>
@@ -5585,6 +5590,16 @@ Bild - Artikel Nr: %2</translation>
         <location line="+1"/>
         <source>Button for update, Provider Tree.</source>
         <translation>Knopf für das Aktualisieren der Dienstleisteransicht.</translation>
+    </message>
+    <message>
+        <location line="+135"/>
+        <source>Request from</source>
+        <translation>Anfrage von</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>finished.</source>
+        <translation>abgeschlossen.</translation>
     </message>
 </context>
 <context>
