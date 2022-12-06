@@ -4,7 +4,7 @@
 <context>
     <name>Abebooks</name>
     <message>
-        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+143"/>
+        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+84"/>
         <source>AbeBooks response with errors!</source>
         <translation>AbeBooks-Antwort mit Fehlern!</translation>
     </message>
@@ -12,7 +12,7 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+170"/>
+        <location filename="../antiquaappl.cpp" line="+168"/>
         <source>Search Networkconnection!</source>
         <translation>Suche Netzwerkverbindung!</translation>
     </message>
@@ -129,6 +129,29 @@
     </message>
 </context>
 <context>
+    <name>AntiquaDatabaseBar</name>
+    <message>
+        <location filename="../antiquastatusbar.cpp" line="+16"/>
+        <source>Database Status</source>
+        <translation>Datenbankstatus</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Database not connected!</source>
+        <translation>Nicht mit Datenbank verbunden!</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Database connected.</source>
+        <translation>Mit Datenbank verbunden.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Invalid database status!</source>
+        <translation>Ungültiger Datenbankstatus!</translation>
+    </message>
+</context>
+<context>
     <name>AntiquaDateInfo</name>
     <message>
         <location filename="../widgets/antiquadateinfo.cpp" line="+78"/>
@@ -186,7 +209,7 @@
 <context>
     <name>AntiquaTabWidget</name>
     <message>
-        <location filename="../antiquatabwidget.cpp" line="+68"/>
+        <location filename="../antiquatabwidget.cpp" line="+70"/>
         <source>View and edit Books</source>
         <translation>Bücher anzeigen und bearbeiten</translation>
     </message>
@@ -262,7 +285,7 @@
 <context>
     <name>AntiquaWindow</name>
     <message>
-        <location filename="../antiquawindow.cpp" line="+75"/>
+        <location filename="../antiquawindow.cpp" line="+77"/>
         <source>Save request</source>
         <translation>Speichernanfrage</translation>
     </message>
@@ -923,9 +946,73 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>Booklooker</name>
     <message>
-        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+260"/>
+        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+133"/>
         <source>Booklooker response with errors!</source>
         <translation>Booklooker-Antwort mit Fehlern!</translation>
+    </message>
+</context>
+<context>
+    <name>BooklookerDialog</name>
+    <message>
+        <location filename="../plugins/antiquacrm/booklooker/booklookerdialog.cpp" line="+14"/>
+        <location line="+109"/>
+        <source>Booklooker %1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="-100"/>
+        <source>Changes the Provider status of the current order.</source>
+        <translation>Ändert den Anbieterstatus der aktuellen Bestellung.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Not all service providers fully support these features.</source>
+        <translation>Nicht alle Dienstanbieter unterstützen diese Funktionen im vollen Umfang.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Please make sure to check it regularly on the service provider side.</source>
+        <translation>Bitte überprüfen Sie es Regelmäßig auf der Dienstanbieterseite.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Waiting for Payment</source>
+        <translation>Warte auf Zahlung</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Ready for Shipment</source>
+        <translation>Versandfertig</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Shipped, wait for Payment</source>
+        <translation>Versendet, warte auf Zahlung</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Shipped and Paid</source>
+        <translation>Versendet und bezahlt</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Buyer no reaction</source>
+        <translation>Keine reaktion des Käufers</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Send update</source>
+        <translation>Aktualisierung senden</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>We need a Selection for this operations.</source>
+        <translation>Für diese Operationen benötigen wir eine Auswahl.</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Update success.</source>
+        <translation>Aktualisierung erfolgreich!</translation>
     </message>
 </context>
 <context>
@@ -1002,7 +1089,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>Buchfreund</name>
     <message>
-        <location filename="../plugins/antiquacrm/buchfreund/buchfreund.cpp" line="+194"/>
+        <location filename="../plugins/antiquacrm/buchfreund/buchfreund.cpp" line="+86"/>
         <source>Buchfreund response with errors!</source>
         <translation>Buchfreund-Antwort mit Fehlern!</translation>
     </message>
@@ -1940,6 +2027,14 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>DeliveryId</name>
+    <message>
+        <location filename="../widgets/deliveryid.cpp" line="+71"/>
+        <source>is required and can&apos;t empty.</source>
+        <translation>ist erforderlich und darf nicht leer sein.</translation>
+    </message>
+</context>
+<context>
     <name>DeliveryNote</name>
     <message>
         <location filename="../utils/printing/deliverynote.cpp" line="+17"/>
@@ -2117,25 +2212,25 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+48"/>
+        <location line="+53"/>
         <source>Without disclosures</source>
         <translation>Keine Angaben</translation>
     </message>
     <message>
-        <location line="-47"/>
-        <location line="+48"/>
+        <location line="-52"/>
+        <location line="+53"/>
         <source>Male</source>
         <translation>Männlich</translation>
     </message>
     <message>
-        <location line="-47"/>
-        <location line="+48"/>
+        <location line="-52"/>
+        <location line="+53"/>
         <source>Female</source>
         <translation>Weiblich</translation>
     </message>
     <message>
-        <location line="-47"/>
-        <location line="+48"/>
+        <location line="-52"/>
+        <location line="+53"/>
         <source>Various</source>
         <translation>Diverse</translation>
     </message>
@@ -3245,32 +3340,27 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>OrdersCostSettings</name>
     <message>
-        <location filename="../tabs/orders/orderscostsettings.cpp" line="+16"/>
+        <location filename="../tabs/orders/orderscostsettings.cpp" line="+17"/>
         <source>Service</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Parcel Shipment Number</source>
         <translation>Paketsendungsnummer</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Delivery note number</source>
         <translation>Lieferscheinnummer</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Delivery Settings</source>
-        <translation>Liefereinstellungen</translation>
-    </message>
-    <message>
-        <location line="+9"/>
+        <location line="+52"/>
         <source>European Countries</source>
         <translation>Europäische Länder</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-33"/>
         <source>vat included</source>
         <translation>inkl. MwSt</translation>
     </message>
@@ -3280,7 +3370,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Üblicherweise ist bei Buchartikeln die Mehrwertsteuer enthalten. Deaktivieren Sie es, um das Hinzufügen von Mehrwertsteuer beim Drucken von Rechnungen zu aktivieren.</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="-17"/>
         <source>add delivery package price</source>
         <translation>Lieferpaketpreis hinzufügen (Porto)</translation>
     </message>
@@ -3290,22 +3380,22 @@ Bild - Artikel Nr: %2</translation>
         <translation>Lieferpaketpreis zum aktuellen Versand hinzufügen.</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Invoice Settings</source>
-        <translation>Rechnungseinstellungen</translation>
+        <location line="+28"/>
+        <source>Delivery-/Invoice Settings</source>
+        <translation>Liefer-/Rechnungseinstellungen</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Provider</source>
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Provider settlement number</source>
         <translation>Abrechnungsnummer des Anbieters</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+12"/>
         <source>Provider Settings</source>
         <translation>Dienstleistereinstellungen</translation>
     </message>
@@ -3416,27 +3506,33 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bitte speichern Sie zuerst Ihren Auftrag.</translation>
     </message>
     <message>
-        <location line="+154"/>
+        <location line="+156"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag erfolgreich gespeichert!</translation>
     </message>
     <message>
-        <location line="-31"/>
+        <location line="-33"/>
+        <location line="+91"/>
         <source>No SQL Articles exist!</source>
         <translation>Es sind keine SQL-Artikel vorhanden!</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="-69"/>
         <source>No Modifications found, nothing todo!</source>
         <translation>Keine Änderungen gefunden, es gibt nichts zu tun!</translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+73"/>
+        <source>Save Articles success!</source>
+        <translation>Artikel speichern erfolgreich!</translation>
+    </message>
+    <message>
+        <location line="+75"/>
         <source>Article: %1 not found or no stock!</source>
         <translation>Artikel: %1 nicht gefunden oder nicht auf Lager!</translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+95"/>
         <source>Unsaved Changes</source>
         <translation>Nicht gespeicherte Änderungen</translation>
     </message>
@@ -3451,12 +3547,12 @@ Bild - Artikel Nr: %2</translation>
         <location line="+41"/>
         <location line="+32"/>
         <location line="+36"/>
-        <location line="+94"/>
+        <location line="+96"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation>Fehlende wichtige IDs, Bestellung zuerst speichern!</translation>
     </message>
     <message>
-        <location line="-218"/>
+        <location line="-220"/>
         <source>Incomplete eMail configuration!</source>
         <translation>Unvollständige E-Mail-Konfiguration!</translation>
     </message>
@@ -3500,12 +3596,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Keine Daten gefunden! - Druckvorgang abgebrochen.</translation>
     </message>
     <message>
-        <location line="+180"/>
+        <location line="+182"/>
         <source>No Provider orders data found!</source>
         <translation>Keine Dienstleister-Auftragsdaten gefunden!</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>Customer not found or set!</source>
         <translation>Kunde nicht gefunden oder eingestellt!</translation>
     </message>
@@ -4507,59 +4603,6 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
-    <name>ProviderActionDialog</name>
-    <message>
-        <location filename="../tabs/providers/provideractiondialog.cpp" line="+14"/>
-        <source>Provider Operations</source>
-        <translation>Dienstleister Operationen</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Changes the Provider status of the current order.</source>
-        <translation>Ändert den Anbieterstatus der aktuellen Bestellung.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Not all service providers fully support these features.</source>
-        <translation>Nicht alle Dienstanbieter unterstützen diese Funktionen im vollen Umfang.</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Please make sure to check it regularly on the service provider side.</source>
-        <translation>Bitte überprüfen Sie es Regelmäßig auf der Dienstanbieterseite.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Waiting for Payment</source>
-        <translation>Warte auf Zahlung</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Ready for Shipment</source>
-        <translation>Versandfertig</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Shipped, wait for Payment</source>
-        <translation>Versendet, warte auf Zahlung</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Shipped and Paid</source>
-        <translation>Versendet und bezahlt</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Buyer no reaction</source>
-        <translation>Keine reaktion des Käufers</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Cancel action</source>
-        <translation>Stornierung</translation>
-    </message>
-</context>
-<context>
     <name>ProviderBuyerInfo</name>
     <message>
         <location filename="../tabs/providers/providerbuyerinfo.cpp" line="+43"/>
@@ -4740,7 +4783,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ProvidersOrderPage</name>
     <message>
-        <location filename="../tabs/providers/providersorderpage.cpp" line="+39"/>
+        <location filename="../tabs/providers/providersorderpage.cpp" line="+38"/>
         <source>Buyer</source>
         <translation>Käufer*in</translation>
     </message>
@@ -4750,7 +4793,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Zahlungsinformationen</translation>
     </message>
     <message>
-        <location line="+141"/>
+        <location line="+99"/>
         <location line="+2"/>
         <source>No available Articles!</source>
         <translation>Es sind keine Artikel verfügbar!</translation>
@@ -4853,6 +4896,11 @@ Bild - Artikel Nr: %2</translation>
         <source>Remindet</source>
         <translation>Zahlungserinnerung</translation>
     </message>
+    <message>
+        <location line="+10"/>
+        <source>Complete</source>
+        <translation>Abgeschlossen</translation>
+    </message>
 </context>
 <context>
     <name>PurchaseTable</name>
@@ -4870,7 +4918,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PurchaseTableDelegate</name>
     <message>
-        <location filename="../utils/purchasetable/purchasetabledelegate.cpp" line="+63"/>
+        <location filename="../utils/purchasetable/purchasetabledelegate.cpp" line="+62"/>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
@@ -4898,7 +4946,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PurchaseTableModel</name>
     <message>
-        <location filename="../utils/purchasetable/purchasetablemodel.cpp" line="+16"/>
+        <location filename="../utils/purchasetable/purchasetablemodel.cpp" line="+15"/>
         <source>Book</source>
         <translation>Buch</translation>
     </message>
@@ -4923,62 +4971,62 @@ Bild - Artikel Nr: %2</translation>
         <translation>Unbekannt</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+9"/>
         <source>Payment Id</source>
         <translation>Zahlungs Nr</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Order Id</source>
         <translation>Auftrags Nr</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Article Id</source>
         <translation>Artikel Nr</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Customer Id</source>
         <translation>Kunden Nr</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Count</source>
         <translation>Anzahl</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Price</source>
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Sell Price</source>
         <translation>VK Preis</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Provider Id</source>
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Modified</source>
         <translation>Letzte Änderung</translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="+214"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>

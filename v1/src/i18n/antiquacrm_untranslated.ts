@@ -4,7 +4,7 @@
 <context>
     <name>Abebooks</name>
     <message>
-        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+143"/>
+        <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+84"/>
         <source>AbeBooks response with errors!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12,7 +12,7 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+170"/>
+        <location filename="../antiquaappl.cpp" line="+168"/>
         <source>Search Networkconnection!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -129,6 +129,29 @@
     </message>
 </context>
 <context>
+    <name>AntiquaDatabaseBar</name>
+    <message>
+        <location filename="../antiquastatusbar.cpp" line="+16"/>
+        <source>Database Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Database not connected!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Database connected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Invalid database status!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AntiquaDateInfo</name>
     <message>
         <location filename="../widgets/antiquadateinfo.cpp" line="+78"/>
@@ -186,7 +209,7 @@
 <context>
     <name>AntiquaTabWidget</name>
     <message>
-        <location filename="../antiquatabwidget.cpp" line="+68"/>
+        <location filename="../antiquatabwidget.cpp" line="+70"/>
         <source>View and edit Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -262,7 +285,7 @@
 <context>
     <name>AntiquaWindow</name>
     <message>
-        <location filename="../antiquawindow.cpp" line="+75"/>
+        <location filename="../antiquawindow.cpp" line="+77"/>
         <source>Save request</source>
         <translation type="unfinished"></translation>
     </message>
@@ -921,8 +944,72 @@ Image - Article Id: %2</source>
 <context>
     <name>Booklooker</name>
     <message>
-        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+260"/>
+        <location filename="../plugins/antiquacrm/booklooker/booklooker.cpp" line="+133"/>
         <source>Booklooker response with errors!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BooklookerDialog</name>
+    <message>
+        <location filename="../plugins/antiquacrm/booklooker/booklookerdialog.cpp" line="+14"/>
+        <location line="+109"/>
+        <source>Booklooker %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-100"/>
+        <source>Changes the Provider status of the current order.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Not all service providers fully support these features.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Please make sure to check it regularly on the service provider side.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Waiting for Payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Ready for Shipment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Shipped, wait for Payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Shipped and Paid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Buyer no reaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Send update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>We need a Selection for this operations.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Update success.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1000,7 +1087,7 @@ Image - Article Id: %2</source>
 <context>
     <name>Buchfreund</name>
     <message>
-        <location filename="../plugins/antiquacrm/buchfreund/buchfreund.cpp" line="+194"/>
+        <location filename="../plugins/antiquacrm/buchfreund/buchfreund.cpp" line="+86"/>
         <source>Buchfreund response with errors!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1938,6 +2025,14 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>DeliveryId</name>
+    <message>
+        <location filename="../widgets/deliveryid.cpp" line="+71"/>
+        <source>is required and can&apos;t empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DeliveryNote</name>
     <message>
         <location filename="../utils/printing/deliverynote.cpp" line="+17"/>
@@ -2115,25 +2210,25 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+48"/>
+        <location line="+53"/>
         <source>Without disclosures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-47"/>
-        <location line="+48"/>
+        <location line="-52"/>
+        <location line="+53"/>
         <source>Male</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-47"/>
-        <location line="+48"/>
+        <location line="-52"/>
+        <location line="+53"/>
         <source>Female</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-47"/>
-        <location line="+48"/>
+        <location line="-52"/>
+        <location line="+53"/>
         <source>Various</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3243,32 +3338,27 @@ Image - Article Id: %2</source>
 <context>
     <name>OrdersCostSettings</name>
     <message>
-        <location filename="../tabs/orders/orderscostsettings.cpp" line="+16"/>
+        <location filename="../tabs/orders/orderscostsettings.cpp" line="+17"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Parcel Shipment Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Delivery note number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Delivery Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
+        <location line="+52"/>
         <source>European Countries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-33"/>
         <source>vat included</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3278,7 +3368,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="-17"/>
         <source>add delivery package price</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3288,22 +3378,22 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Invoice Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Provider</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Provider settlement number</source>
+        <location line="+28"/>
+        <source>Delivery-/Invoice Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
+        <source>Provider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Provider settlement number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
         <source>Provider Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3414,27 +3504,33 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+154"/>
+        <location line="+156"/>
         <source>Order saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-31"/>
+        <location line="-33"/>
+        <location line="+91"/>
         <source>No SQL Articles exist!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="-69"/>
         <source>No Modifications found, nothing todo!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+126"/>
+        <location line="+73"/>
+        <source>Save Articles success!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+75"/>
         <source>Article: %1 not found or no stock!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+95"/>
         <source>Unsaved Changes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3449,12 +3545,12 @@ Image - Article Id: %2</source>
         <location line="+41"/>
         <location line="+32"/>
         <location line="+36"/>
-        <location line="+94"/>
+        <location line="+96"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-218"/>
+        <location line="-220"/>
         <source>Incomplete eMail configuration!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3498,12 +3594,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+180"/>
+        <location line="+182"/>
         <source>No Provider orders data found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>Customer not found or set!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4505,59 +4601,6 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
-    <name>ProviderActionDialog</name>
-    <message>
-        <location filename="../tabs/providers/provideractiondialog.cpp" line="+14"/>
-        <source>Provider Operations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Changes the Provider status of the current order.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Not all service providers fully support these features.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Please make sure to check it regularly on the service provider side.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Waiting for Payment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Ready for Shipment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Shipped, wait for Payment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Shipped and Paid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Buyer no reaction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Cancel action</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ProviderBuyerInfo</name>
     <message>
         <location filename="../tabs/providers/providerbuyerinfo.cpp" line="+43"/>
@@ -4738,7 +4781,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ProvidersOrderPage</name>
     <message>
-        <location filename="../tabs/providers/providersorderpage.cpp" line="+39"/>
+        <location filename="../tabs/providers/providersorderpage.cpp" line="+38"/>
         <source>Buyer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4748,7 +4791,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+141"/>
+        <location line="+99"/>
         <location line="+2"/>
         <source>No available Articles!</source>
         <translation type="unfinished"></translation>
@@ -4851,6 +4894,11 @@ Image - Article Id: %2</source>
         <source>Remindet</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+10"/>
+        <source>Complete</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PurchaseTable</name>
@@ -4868,7 +4916,7 @@ Image - Article Id: %2</source>
 <context>
     <name>PurchaseTableDelegate</name>
     <message>
-        <location filename="../utils/purchasetable/purchasetabledelegate.cpp" line="+63"/>
+        <location filename="../utils/purchasetable/purchasetabledelegate.cpp" line="+62"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4896,7 +4944,7 @@ Image - Article Id: %2</source>
 <context>
     <name>PurchaseTableModel</name>
     <message>
-        <location filename="../utils/purchasetable/purchasetablemodel.cpp" line="+16"/>
+        <location filename="../utils/purchasetable/purchasetablemodel.cpp" line="+15"/>
         <source>Book</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4921,62 +4969,62 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+9"/>
         <source>Payment Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Order Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Article Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Customer Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Count</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Price</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Sell Price</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Provider Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Modified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="+214"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
