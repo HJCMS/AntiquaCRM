@@ -13,4 +13,4 @@ build-*
 build_*
 CMakeLists.txt.user
 database/
-data/
+share/
