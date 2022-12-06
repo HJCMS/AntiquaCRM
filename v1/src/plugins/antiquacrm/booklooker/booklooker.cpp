@@ -77,7 +77,12 @@ void Booklooker::setTokenCookie(const QString &token) {
   authenticCookie.setExpirationDate(dt.addSecs(cookie_lifetime));
   if (!authenticCookie.value().isNull()) {
     qInfo("New Token add (%s)", qPrintable(authenticCookie.value()));
-    // TODO SIGNAL
+    if (cacheCookie.value().isNull())
+      return;
+
+    actionsCookie.setValue(QByteArray());
+    QJsonDocument js = QJsonDocument::fromJson(cacheCookie.value());
+    orderUpdateAction(js.object());
   }
 }
 
@@ -104,8 +109,8 @@ void Booklooker::authenticate() {
 }
 
 void Booklooker::prepareResponse(const QJsonDocument &js) {
+  QJsonObject obj = js.object();
   if (actionsCookie.value().contains("authenticate")) {
-    QJsonObject obj = js.object();
     if (obj.value("status").toString().toLower() == "ok") {
       QString token = obj.value("returnValue").toString();
       setTokenCookie(token);
@@ -113,14 +118,22 @@ void Booklooker::prepareResponse(const QJsonDocument &js) {
     return;
   }
 
-  QString fileName = configProvider();
-  if (!actionsCookie.name().isNull()) {
-    fileName = QString(actionsCookie.value());
+  if (obj.value("status").toString().toLower() != "ok") {
+    QString info = obj.value("returnValue").toString();
+    emit sendErrorResponse(AntiquaCRM::Message::WARNING, info);
   }
 
-  AntiquaCRM::ASharedCacheFiles cacheFile;
-  QString jsonData = js.toJson(QJsonDocument::Indented);
-  cacheFile.storeTempFile(fileName.toLower(), jsonData);
+  QJsonValue returnValue = obj.value("returnValue");
+  if (returnValue.type() == QJsonValue::String) {
+    emit sendActionFinished(returnValue.toString());
+  }
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << obj;
+#endif
+
+  cacheCookie.setValue(QByteArray());
+  actionsCookie.setValue(QByteArray());
 
   emit sendQueryFinished();
 }
@@ -135,23 +148,39 @@ void Booklooker::queryFinished(QNetworkReply *reply) {
 }
 
 void Booklooker::orderUpdateAction(const QJsonObject &data) {
-  QString action = data.value("action").toString();
+  if (isCookieExpired()) {
+    QJsonDocument js(data);
+    cacheCookie = QNetworkCookie("queue", js.toJson(QJsonDocument::Compact));
+    cacheCookie.setDomain(apiUrl.host());
+    cacheCookie.setSecure(true);
+    authenticate();
+    return;
+  }
+
   QJsonObject query = data.value("query").toObject();
+  if(query.value("orderId").toString().isEmpty()) {
+    emit sendQueryAborted();
+    return;
+  }
+
+  // It's no longer a queued request!
+  cacheCookie.setValue(QByteArray());
 
   QUrlQuery q;
   q.addQueryItem("token", QString(authenticCookie.value()));
   q.addQueryItem("orderId", query.value("orderId").toString());
   q.addQueryItem("status", query.value("status").toString());
 
+  QString action = data.value("action").toString();
   QUrl url = apiQuery(action);
   if (!q.isEmpty())
     url.setQuery(q);
 
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << "Demo Modus:" << url.toString();
-#else
-  m_network->putRequest(url, QByteArray());
+  qDebug() << Q_FUNC_INFO << data << url.toString();
 #endif
+
+  m_network->putRequest(url, QByteArray());
 }
 
 bool Booklooker::authenticationRequired() { return isCookieExpired(); }

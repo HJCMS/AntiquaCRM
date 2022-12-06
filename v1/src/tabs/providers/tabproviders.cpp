@@ -131,11 +131,11 @@ void TabProviders::createProviderAction() {
       if (m_pr->configProvider() == provider.toLower()) {
         AntiquaCRM::UpdateDialog *dialog =
             qobject_cast<AntiquaCRM::UpdateDialog *>(m_pr->updateDialog(this));
-        connect(dialog, SIGNAL(sendPluginAction(const QJsonObject &)),
-                m_pr, SLOT(orderUpdateAction(const QJsonObject &)));
-        if (dialog->exec(orderId, obj) == QDialog::Accepted) {
-          qDebug() << Q_FUNC_INFO << "ok";
-        }
+        connect(dialog, SIGNAL(sendPluginAction(const QJsonObject &)), m_pr,
+                SLOT(orderUpdateAction(const QJsonObject &)));
+        connect(m_pr, SIGNAL(sendActionFinished(const QString &)), dialog,
+                SLOT(statusMessage(const QString &)));
+        dialog->exec(orderId, obj);
         break;
       }
     }

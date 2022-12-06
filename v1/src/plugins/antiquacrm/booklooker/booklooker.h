@@ -19,6 +19,7 @@ class ANTIQUACRM_LIBRARY Booklooker final
   Q_INTERFACES(AntiquaCRM::APluginInterface)
 
 private:
+  QNetworkCookie cacheCookie;
   bool initConfigurations() override;
   const QUrl apiQuery(const QString &section) override;
   const QString

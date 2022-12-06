@@ -359,6 +359,7 @@ void BookLooker::responsed(const QByteArray &data) {
     if (obj.value("status").toString().toLower() == "ok") {
       QString token = obj.value("returnValue").toString();
       setTokenCookie(token);
+      actionsCookie.setValue(QByteArray());
     }
     return;
   }

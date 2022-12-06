@@ -160,6 +160,11 @@ Q_SIGNALS:
   void sendErrorResponse(AntiquaCRM::Message, const QString &);
 
   /**
+   * @brief Vorgesehen für "Feedback" Nachrichten nach Updateaktionen.
+   */
+  void sendActionFinished(const QString &);
+
+  /**
    * @brief Wird ausgelöst wenn die Verarbeitung der Anfrage abgeschlossen ist!
    * @note Dieses Signal muss immer nach Anfragebeendigung verwendet werden!
    */

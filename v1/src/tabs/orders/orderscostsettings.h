@@ -17,7 +17,6 @@ class OrdersCostSettings : public QTabWidget {
 
 private:
   QWidget *m_deliveryTab;
-  QWidget *m_invoiceTab;
   QWidget *m_providerTab;
   QWidget *m_historyTab;
 
