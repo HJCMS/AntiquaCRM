@@ -29,8 +29,8 @@ SET (query_tables_FILES
   query_template_body.sql
   query_template_keys.sql
   query_views.sql
-  union_template_keys.sql
   select_statement_postalcode_tables.sql
+  union_template_keys.sql
 )
 
 IF (CMAKE_HOST_WIN32)
@@ -41,3 +41,4 @@ ELSE (CMAKE_HOST_WIN32)
    COMPONENT data
  )
 ENDIF (CMAKE_HOST_WIN32)
+
