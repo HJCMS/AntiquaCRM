@@ -47,8 +47,10 @@ AntiquaWindow::AntiquaWindow(QWidget *parent)
   // Signals TabWidget
   connect(m_centralWidget, SIGNAL(sendPluginOperation(const QJsonObject &)),
           SIGNAL(sendPluginOperation(const QJsonObject &)));
-  connect(m_centralWidget, SIGNAL(sendStatusMessage(const QString &)),
-          m_statusBar, SLOT(showMessage(const QString &)));
+  connect(m_centralWidget, SIGNAL(sendInfoMessage(const QString &)),
+          m_statusBar, SLOT(statusInfoMessage(const QString &)));
+  connect(m_centralWidget, SIGNAL(sendWarnMessage(const QString &)),
+          m_statusBar, SLOT(statusWarnMessage(const QString &)));
 }
 
 void AntiquaWindow::hideEvent(QHideEvent *event) {
@@ -97,10 +99,6 @@ void AntiquaWindow::setToggleFullScreen() {
   } else {
     setWindowState(windowState() ^ Qt::WindowFullScreen);
   }
-}
-
-void AntiquaWindow::setStatusMessage(const QString &message) {
-  m_statusBar->showMessage(message);
 }
 
 void AntiquaWindow::openWindow() {

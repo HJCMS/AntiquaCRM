@@ -5,7 +5,6 @@
 #include "antiquaappl.h"
 #include "antiquasplashscreen.h"
 #include "antiquasystemtray.h"
-#include "antiquatimer.h"
 #include "antiquawindow.h"
 #include "assistant.h"
 #include "cachebuilder.h"
@@ -41,7 +40,6 @@ void AntiquaAppl::initGui() {
   m_mainWindow->setObjectName("MainWindow");
   m_systemTray = new AntiquaSystemTray(applIcon(), this);
   m_systemTray->setObjectName("SystemTray");
-  m_timer = new AntiquaTimer(this);
 
   // SIGNALS:AntiquaSystemTray
   connect(m_systemTray, SIGNAL(sendShowWindow()), m_mainWindow, SLOT(show()));

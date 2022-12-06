@@ -35,19 +35,20 @@ private Q_SLOTS:
 
 Q_SIGNALS:
   /**
-   * @brief Nachricht an Fensterleiste
+   * @brief Nachrichten an die Fensterleiste senden!
    */
-  void sendStatusMessage(const QString &message);
+  void sendInfoMessage(const QString &);
+  void sendWarnMessage(const QString &);
 
   /**
    * @brief Sende Aktion an Registerkarte ...
    */
-  void sendWindowOperation(const QJsonObject &obj);
+  void sendWindowOperation(const QJsonObject &);
 
   /**
    * @brief Send Aktion Plugins ...
    */
-  void sendPluginOperation(const QJsonObject &obj);
+  void sendPluginOperation(const QJsonObject &);
 
 public:
   explicit AReceiver(QObject *parent = nullptr);

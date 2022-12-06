@@ -30,8 +30,10 @@ bool AntiquaTabWidget::createSocketListener() {
           SLOT(setAction(const QJsonObject &)));
   connect(m_server, SIGNAL(sendPluginOperation(const QJsonObject &)),
           SIGNAL(sendPluginOperation(const QJsonObject &)));
-  connect(m_server, SIGNAL(sendStatusMessage(const QString &)),
-          SIGNAL(sendStatusMessage(const QString &)));
+  connect(m_server, SIGNAL(sendInfoMessage(const QString &)),
+          SIGNAL(sendInfoMessage(const QString &)));
+  connect(m_server, SIGNAL(sendWarnMessage(const QString &)),
+          SIGNAL(sendWarnMessage(const QString &)));
 
   return m_server->listen(AntiquaCRM::AUtil::socketName());
 }
@@ -125,7 +127,7 @@ void AntiquaTabWidget::setAction(const QJsonObject &obj) {
 #ifdef ANTIQUA_DEVELOPEMENT
       qDebug() << Q_FUNC_INFO << "Rejected:" << obj;
 #endif
-      emit sendStatusMessage(tr("Request rejected!"));
+      emit sendWarnMessage(tr("Request rejected!"));
     }
     return;
   }

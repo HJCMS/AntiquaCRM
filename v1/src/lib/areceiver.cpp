@@ -26,7 +26,16 @@ void AReceiver::createAction(const QJsonObject &obj) {
       qWarning("Socket abort by policy rules!");
       return;
     }
-    emit sendStatusMessage(message);
+    emit sendInfoMessage(message);
+    return;
+  } else if (obj.contains("window_warn_message")) {
+    QString message = obj.value("window_warn_message").toString();
+    message = message.trimmed();
+    if (message.isEmpty() || message.length() > 256) {
+      qWarning("Socket abort by policy rules!");
+      return;
+    }
+    emit sendWarnMessage(message);
     return;
   }
 

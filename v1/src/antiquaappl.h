@@ -25,7 +25,6 @@ private:
   AntiquaWindow *m_mainWindow;
   AntiquaSystemTray *m_systemTray;
   AntiquaCRM::ASqlCore *m_sql;
-  AntiquaTimer *m_timer;
 
   QList<AntiquaCRM::APluginInterface *> p_interfaces;
 

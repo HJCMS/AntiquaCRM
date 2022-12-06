@@ -262,11 +262,11 @@ bool OrdersEditor::sendSqlQuery(const QString &query) {
       }
       m_tableData->setValue("o_id", oid);
       setDataField(m_tableData->getProperties("o_id"), oid);
+      setResetModified(inputFields);
       setOrderPaymentNumbers(oid);
     }
   }
 
-  setResetModified(inputFields);
   return true;
 }
 
@@ -369,8 +369,10 @@ void OrdersEditor::createSqlUpdate() {
   qDebug() << sql << Qt::endl;
 #endif
 
-  if (sendSqlQuery(sql))
+  if (sendSqlQuery(sql)) {
+    setResetModified(inputFields);
     openSuccessMessage(tr("Order saved successfully!"));
+  }
 }
 
 void OrdersEditor::createSqlInsert() {
@@ -777,7 +779,8 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
   if (o_id.isEmpty())
     return status;
 
-  createNewEntry();
+  setInputFields();
+  setResetModified(inputFields);
   o_order_status->setValue(AntiquaCRM::OrderStatus::STARTED);
 
   AntiquaCRM::ASqlFiles file("query_order_by_oid");
@@ -799,9 +802,6 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
       QSqlField f = r.field(key);
       setDataField(f, q.value(f.name()));
     }
-
-    if (getDataValue("o_delivery").toString().isEmpty())
-      generateDeliveryNumber(orderId);
 
     // Bestehende Artikel Einkäufe mit orderId einlesen!
     QString sql("SELECT * FROM article_orders WHERE a_order_id=");
@@ -834,6 +834,10 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
   if (status) {
     importSqlResult();
     setResetModified(inputFields);
+    // Fehlende Lieferscheinnummer ergänzen, muss nach setResetModified kommen!
+    if (getDataValue("o_delivery").toString().isEmpty())
+      generateDeliveryNumber(orderId);
+
     setEnabled(true);
   }
 
@@ -921,7 +925,8 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
   if (obj.isEmpty())
     return false;
 
-  createNewEntry();
+  setInputFields();
+  setResetModified(inputFields);
 
   AntiquaCRM::AProviderOrder prOrder(o_provider_name, o_provider_order_id);
   // Kunden Daten

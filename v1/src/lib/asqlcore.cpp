@@ -73,6 +73,10 @@ bool ASqlCore::isConnected() {
   return false;
 }
 
+AntiquaCRM::ASqlCore::Status ASqlCore::status() {
+  return (database->isOpen()) ? OPEN : CLOSED;
+}
+
 bool ASqlCore::open() {
   if (initDatabase()) {
     qInfo("Database connected to Host '%s'.", qPrintable(database->hostName()));

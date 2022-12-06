@@ -71,9 +71,11 @@ private Q_SLOTS:
 
 Q_SIGNALS:
   /**
-   * @brief Nachricht an Hauptfenster
+   * @brief Statusnachrichten an Hauptfenster weiterleiten
+   * @note Siehe AntiquaCRM::AReceiver
    */
-  void sendStatusMessage(const QString &);
+  void sendInfoMessage(const QString &);
+  void sendWarnMessage(const QString &);
 
   /**
    * @brief Sende eine Plugin Aktion
