@@ -24,24 +24,24 @@ CustomersHeaderFrame::CustomersHeaderFrame(QWidget *parent) : QFrame{parent} {
   c_since = new AntiquaDateInfo(this);
   c_since->setObjectName("c_since");
   c_since->setDisplayFormat("ddd d MMMM yyyy");
-  c_since->setInfo("Since");
+  c_since->setInfo(tr("Created"));
   r1Layout->addWidget(c_since);
   c_changed = new AntiquaDateInfo(this);
   c_changed->setObjectName("c_changed");
   c_changed->setDisplayFormat("ddd d MMMM yyyy");
-  c_changed->setInfo("Last changed");
+  c_changed->setInfo(tr("Last changed"));
   r1Layout->addWidget(c_changed);
   // Bestellungen
   c_transactions = new SerialID(this);
   c_transactions->setObjectName("c_transactions");
   c_transactions->setValue(0);
-  c_transactions->setInfo("Orders");
+  c_transactions->setInfo(tr("Orders"));
   r1Layout->addWidget(c_transactions);
   // Einkäufe
   c_purchases = new SerialID(this);
   c_purchases->setObjectName("c_purchases");
   c_purchases->setValue(0);
-  c_purchases->setInfo("Purchases");
+  c_purchases->setInfo(tr("Purchases"));
   r1Layout->addWidget(c_purchases);
   setLayout(r1Layout);
 }

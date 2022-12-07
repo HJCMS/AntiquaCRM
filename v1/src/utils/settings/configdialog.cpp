@@ -29,9 +29,11 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   QHBoxLayout *horizontal_layout = new QHBoxLayout();
   horizontal_layout->setObjectName("hlayout");
 
+#ifdef Q_OS_WIN
   QString note =
       tr("All Settings in this Dialog requires a Application restart!");
   layout->addWidget(new QLabel(note, this));
+#endif
 
   QScrollArea *m_scrollarea = new QScrollArea(this);
   m_scrollarea->setObjectName("config_dialog_scrollarea");

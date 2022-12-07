@@ -99,28 +99,28 @@
     </message>
     <message>
         <location line="+3"/>
-        <source>Sections settings</source>
-        <translation>Abschnitt Einstellungen</translation>
+        <source>Database editors</source>
+        <translation>Datenbank-Editoren</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Keywords Editor</source>
-        <translation>Schlüsselwort Editor</translation>
+        <source>Keywords</source>
+        <translation>Schlüsselwörter</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Storage Editor</source>
-        <translation>Lagerort Editor</translation>
+        <source>Storage</source>
+        <translation>Lagerorte</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Templates Editor</source>
-        <translation>Vorlagen Editor</translation>
+        <source>Templates</source>
+        <translation>Vorlagen</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Delivery services</source>
-        <translation>Lieferservice</translation>
+        <source>Package Delivery</source>
+        <translation>Paketzustellung</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -1576,6 +1576,29 @@ Bild - Artikel Nr: %2</translation>
         <location line="+22"/>
         <source>Send eMail finished!</source>
         <translation>Senden der E-Mail abgeschlossen!</translation>
+    </message>
+</context>
+<context>
+    <name>CustomersHeaderFrame</name>
+    <message>
+        <location filename="../tabs/customers/customersheaderframe.cpp" line="+27"/>
+        <source>Created</source>
+        <translation>Erstellt</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Last changed</source>
+        <translation>Zuletzt geändert</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Orders</source>
+        <translation>Aufträge</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Purchases</source>
+        <translation>Käufe</translation>
     </message>
 </context>
 <context>
@@ -3527,12 +3550,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Keine Änderungen gefunden, es gibt nichts zu tun!</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+75"/>
         <source>Save Articles success!</source>
         <translation>Artikel speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+97"/>
         <source>Article: %1 not found or no stock!</source>
         <translation>Artikel: %1 nicht gefunden oder nicht auf Lager!</translation>
     </message>
@@ -3552,12 +3575,12 @@ Bild - Artikel Nr: %2</translation>
         <location line="+41"/>
         <location line="+32"/>
         <location line="+36"/>
-        <location line="+96"/>
+        <location line="+80"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation>Fehlende wichtige IDs, Bestellung zuerst speichern!</translation>
     </message>
     <message>
-        <location line="-220"/>
+        <location line="-204"/>
         <source>Incomplete eMail configuration!</source>
         <translation>Unvollständige E-Mail-Konfiguration!</translation>
     </message>
@@ -3601,7 +3624,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Keine Daten gefunden! - Druckvorgang abgebrochen.</translation>
     </message>
     <message>
-        <location line="+182"/>
+        <location line="+166"/>
         <source>No Provider orders data found!</source>
         <translation>Keine Dienstleister-Auftragsdaten gefunden!</translation>
     </message>
@@ -3647,7 +3670,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>OrdersItemList</name>
     <message>
-        <location filename="../tabs/orders/ordersitemlist.cpp" line="+19"/>
+        <location filename="../tabs/orders/ordersitemlist.cpp" line="+20"/>
         <source>Current Article orders</source>
         <translation>Aktuelle Artikelbestellungen</translation>
     </message>

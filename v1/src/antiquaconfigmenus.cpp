@@ -13,22 +13,22 @@ AntiquaConfigMenus::AntiquaConfigMenus(QWidget *parent) : QMenu{parent} {
   setTitle(tr("Configuration"));
   QIcon configIcon(":/icons/configure.png");
 
-  m_tables = addMenu(tr("Sections settings"));
+  m_tables = addMenu(tr("Database editors"));
   m_tables->setIcon(configIcon);
 
-  ac_keywords = m_tables->addAction(tr("Keywords Editor"));
+  ac_keywords = m_tables->addAction(tr("Keywords"));
   ac_keywords->setIcon(configIcon);
   connect(ac_keywords, SIGNAL(triggered()), SLOT(openKeywordsDialog()));
 
-  ac_storage = m_tables->addAction(tr("Storage Editor"));
+  ac_storage = m_tables->addAction(tr("Storage"));
   ac_storage->setIcon(configIcon);
   connect(ac_storage, SIGNAL(triggered()), SLOT(openStorageDialog()));
 
-  ac_templates = m_tables->addAction(tr("Templates Editor"));
+  ac_templates = m_tables->addAction(tr("Templates"));
   ac_templates->setIcon(configIcon);
   connect(ac_templates, SIGNAL(triggered()), SLOT(openTemplatesDialog()));
 
-  ac_delivery = m_tables->addAction(tr("Delivery services"));
+  ac_delivery = m_tables->addAction(tr("Package Delivery"));
   ac_delivery->setIcon(configIcon);
   connect(ac_delivery, SIGNAL(triggered()), SLOT(openDeliveryDialog()));
 

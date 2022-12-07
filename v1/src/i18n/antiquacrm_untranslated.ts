@@ -99,27 +99,27 @@
     </message>
     <message>
         <location line="+3"/>
-        <source>Sections settings</source>
+        <source>Database editors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Keywords Editor</source>
+        <source>Keywords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Storage Editor</source>
+        <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Templates Editor</source>
+        <source>Templates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Delivery services</source>
+        <source>Package Delivery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1573,6 +1573,29 @@ Image - Article Id: %2</source>
     <message>
         <location line="+22"/>
         <source>Send eMail finished!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CustomersHeaderFrame</name>
+    <message>
+        <location filename="../tabs/customers/customersheaderframe.cpp" line="+27"/>
+        <source>Created</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Last changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Purchases</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3525,12 +3548,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+75"/>
         <source>Save Articles success!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+97"/>
         <source>Article: %1 not found or no stock!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3550,12 +3573,12 @@ Image - Article Id: %2</source>
         <location line="+41"/>
         <location line="+32"/>
         <location line="+36"/>
-        <location line="+96"/>
+        <location line="+80"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-220"/>
+        <location line="-204"/>
         <source>Incomplete eMail configuration!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3599,7 +3622,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+182"/>
+        <location line="+166"/>
         <source>No Provider orders data found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3645,7 +3668,7 @@ Image - Article Id: %2</source>
 <context>
     <name>OrdersItemList</name>
     <message>
-        <location filename="../tabs/orders/ordersitemlist.cpp" line="+19"/>
+        <location filename="../tabs/orders/ordersitemlist.cpp" line="+20"/>
         <source>Current Article orders</source>
         <translation type="unfinished"></translation>
     </message>
