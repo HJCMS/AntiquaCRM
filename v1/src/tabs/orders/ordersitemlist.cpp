@@ -4,6 +4,7 @@
 #include "ordersitemlist.h"
 #include "purchasetable.h"
 
+#include <AGlobal>
 #include <QDebug>
 #include <QIcon>
 #include <QLayout>
@@ -20,6 +21,7 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   layout->addWidget(new QLabel(tbInfo + ":", this));
 
   m_table = new PurchaseTable(this, false);
+#ifndef ANTIQUA_DEVELOPEMENT
   // Für den Kunden ausblenden.
   // Werden hier nicht benötigt!
   QStringList hideColumn("a_payment_id");
@@ -28,6 +30,7 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   hideColumn << "a_modified";
   hideColumn << "a_provider_id";
   m_table->hideColumns(hideColumn);
+#endif
   layout->addWidget(m_table);
   layout->addStretch(1);
   setLayout(layout);

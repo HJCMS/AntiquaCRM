@@ -16,12 +16,15 @@
 namespace AntiquaCRM {
 
 APluginLoader::APluginLoader(QObject *parent) : QPluginLoader{parent} {
+  // ANTIQUACRM_PLUGIN_TARGET
   p_dir = ASettings::getPluginDir();
+  // Erweiterungen
   p_filter = ASettings::pluginSearchFilter();
 }
 
 const QStringList APluginLoader::findPlugins() {
   QStringList plugins;
+  plugins.append(p_dir.path());
   QDir::Filters sFilter(QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
   foreach (QString p, p_dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot)) {
     if (p_dir.cd(p)) {
@@ -58,14 +61,18 @@ const QString APluginLoader::findPlugin(const QString &name) {
 const QList<AntiquaCRM::APluginInterface *>
 APluginLoader::pluginInterfaces(QObject *parent) {
   QList<APluginInterface *> list;
-  foreach (QString file, findPlugins()) {
-    setFileName(file);
+  foreach (QString path, findPlugins()) {
+    QFileInfo info(path);
+    if(!info.isFile())
+      continue;
+
+    setFileName(path);
     QObject *m_plugin = instance();
     if (m_plugin) {
       QJsonObject info = metaData().value("MetaData").toObject();
       QString objName = info.value("Name").toString();
       if (objName.isEmpty()) {
-        qWarning("PluginLoader missing Metadata: %s", qPrintable(file));
+        qWarning("PluginLoader missing Metadata: %s", qPrintable(path));
         continue;
       }
 
