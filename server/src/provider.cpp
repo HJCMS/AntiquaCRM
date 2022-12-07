@@ -24,6 +24,9 @@ Provider::Provider(QObject *parent) : QObject{parent} {
 
 const QString Provider::ucFirst(const QString &str) {
   QString convert = str.trimmed().toLower();
+  QRegExp strip("\\b\\s\\b");
+  convert.replace(strip, "");
+  // qDebug() << str << convert;
   QStringList array = convert.split(" ", Qt::SkipEmptyParts);
   for (int i = 0; i < array.size(); i++) {
     array[i].replace(0, 1, array[i][0].toUpper());

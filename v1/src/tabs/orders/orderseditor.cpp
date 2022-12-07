@@ -433,6 +433,8 @@ void OrdersEditor::createSqlInsert() {
         return;
       }
       if (sendSqlQuery(articles_sql)) {
+        // Bestehende Artikelliste neu einlesen!
+        m_ordersList->importArticles(queryOrderArticles(oid));
         sendStatusMessage(tr("Save Articles success!"));
       }
     }
@@ -481,6 +483,28 @@ qint64 OrdersEditor::searchCustomer(const QJsonObject &obj, qint64 customerId) {
     return -1;
   }
   return -1;
+}
+
+const QList<AntiquaCRM::OrderArticleItems>
+OrdersEditor::queryOrderArticles(qint64 orderId) {
+  QList<AntiquaCRM::OrderArticleItems> articles;
+  QString sql("SELECT * FROM article_orders WHERE a_order_id=");
+  sql.append(QString::number(orderId) + ";");
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    QSqlRecord r = q.record();
+    while (q.next()) {
+      AntiquaCRM::OrderArticleItems article;
+      for (int c = 0; c < r.count(); c++) {
+        AntiquaCRM::ArticleOrderItem item;
+        item.key = r.field(c).name();
+        item.value = q.value(item.key);
+        article.append(item);
+      }
+      articles.append(article);
+    }
+  }
+  return articles;
 }
 
 bool OrdersEditor::addArticleToOrderTable(qint64 articleId) {
@@ -804,24 +828,8 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
     }
 
     // Bestehende Artikel Einkäufe mit orderId einlesen!
-    QString sql("SELECT * FROM article_orders WHERE a_order_id=");
-    sql.append(QString::number(orderId) + ";");
-    q = m_sql->query(sql);
-    if (q.size() > 0) {
-      QList<AntiquaCRM::OrderArticleItems> articles;
-      QSqlRecord r = q.record();
-      while (q.next()) {
-        AntiquaCRM::OrderArticleItems article;
-        for (int c = 0; c < r.count(); c++) {
-          AntiquaCRM::ArticleOrderItem item;
-          item.key = r.field(c).name();
-          item.value = q.value(item.key);
-          article.append(item);
-        }
-        articles.append(article);
-      }
-      m_ordersList->importArticles(articles);
-    }
+    m_ordersList->importArticles(queryOrderArticles(orderId));
+
     setResetModified(customInput);
     status = true;
   } else {

@@ -19,6 +19,8 @@
 #define BUCHFREUND_DATE_FORMAT "yyyy-MM-dd hh:mm:ss"
 #endif
 
+constexpr bool BUCHFREUND_DEBUG = false;
+
 /**
  * @brief Translate Article Ids
  */
@@ -122,15 +124,17 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
   if (actionsCookie.value() != "bestellung") {
     return;
   }
-  // DEVEL DEBUG
-  QDir dir(QDir::homePath() + "/.cache/antiquacrm/");
-  QFileInfo info(dir, "bestellung.json");
-  QFile fp(info.filePath());
-  if (fp.open(QIODevice::WriteOnly)) {
-    QTextStream data(&fp);
-    data.setCodec(ANTIQUACRM_TEXTCODEC);
-    data << doc.toJson(QJsonDocument::Indented);
-    fp.close();
+
+  if (BUCHFREUND_DEBUG) {
+    QDir dir(QDir::homePath() + "/.cache/antiquacrm/");
+    QFileInfo info(dir, "buchfreund_bestellung.json");
+    QFile fp(info.filePath());
+    if (fp.open(QIODevice::WriteOnly)) {
+      QTextStream data(&fp);
+      data.setCodec(ANTIQUACRM_TEXTCODEC);
+      data << doc.toJson(QJsonDocument::Indented);
+      fp.close();
+    }
   }
 
   // Einzelne Bestellung entgegen nehmen
@@ -162,6 +166,7 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
   antiqua_orderinfo.insert("o_provider_order_id", QJsonValue(bf_id));
   antiqua_orderinfo.insert("o_since", datetime.toString(Qt::ISODate));
   antiqua_orderinfo.insert("o_media_type", AntiquaCRM::BOOK);
+
   // AntiquaCRM::PaymentMethod
   AntiquaCRM::PaymentMethod payment_method;
   payment_method = AntiquaCRM::PAYMENT_NOT_SET;
@@ -199,8 +204,6 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
                          bf_order.value("kundenkommentar").toString());
   }
 
-  antiqua_order.insert("orderinfo", antiqua_orderinfo);
-
   // Kundendaten
   QJsonObject antiqua_customer;
   QString bcp47 = "DE"; // Siehe auch Kundendaten
@@ -210,6 +213,14 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
 
   QJsonObject::iterator it;
   QJsonObject address = bf_order.value("rechnungsadresse").toObject();
+  QString c_provider_import;
+  c_provider_import.append(address.value("vorname").toString().trimmed());
+  c_provider_import.append(" ");
+  c_provider_import.append(address.value("name").toString().trimmed());
+  antiqua_customer.insert("c_provider_import", c_provider_import);
+
+  // Müssen gesondert behandelt werden!
+  QStringList naming({"c_firstname", "c_lastname"});
   for (it = address.begin(); it != address.end(); ++it) {
     QString _k = it.key();
     QJsonValue _v = it.value();
@@ -224,17 +235,19 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
         bcp47 = _v.toString().toUpper();
         antiqua_customer.insert(field, bcp47);
         antiqua_orderinfo.insert("o_vat_country", bcp47);
+      } else if (naming.contains(field)) {
+        antiqua_customer.insert(field, ucFirst(_v.toString()));
       } else {
         antiqua_customer.insert(field, _v.toString());
       }
     }
   }
 
-  QString firstname = antiqua_orderinfo.value("c_firstname").toString();
-  QString lastname = antiqua_orderinfo.value("c_lastname").toString();
-  QString street = antiqua_orderinfo.value("c_street").toString();
-  QString postalcode = antiqua_orderinfo.value("c_postalcode").toString();
-  QString location = antiqua_orderinfo.value("c_location").toString();
+  QString firstname = antiqua_customer.value("c_firstname").toString();
+  QString lastname = antiqua_customer.value("c_lastname").toString();
+  QString street = antiqua_customer.value("c_street").toString();
+  QString postalcode = antiqua_customer.value("c_postalcode").toString();
+  QString location = antiqua_customer.value("c_location").toString();
   QStringList postalAddress;
   postalAddress << firstname + " " + lastname;
   postalAddress << street;
@@ -254,7 +267,6 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
     daddr << da_addr << da_postal + " " + da_location;
     antiqua_customer.insert("c_shipping_address", daddr.join("\n"));
   }
-  antiqua_order.insert("customer", antiqua_customer);
 
   // Artikelliste
   QJsonArray antiqua_articles;
@@ -272,21 +284,28 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
       }
       antiqua_articles_item.insert("payment_id", QJsonValue(0));
       antiqua_articles_item.insert("a_provider_id", QJsonValue(bf_id));
-      QJsonValue price = convert("a_sell_price", jso.value("preis_pro_einheit"));
+      QJsonValue price =
+          convert("a_sell_price", jso.value("preis_pro_einheit"));
       antiqua_articles_item.insert("a_sell_price", price);
       antiqua_articles_item.insert("a_type", QJsonValue(AntiquaCRM::BOOK));
       antiqua_articles.append(antiqua_articles_item);
     }
   }
+
+  antiqua_order.insert("orderinfo", antiqua_orderinfo);
+  antiqua_order.insert("customer", antiqua_customer);
   antiqua_order.insert("articles", antiqua_articles);
   ordersList.append(antiqua_order);
   // END::CONVERT
 
-  //qDebug() << Q_FUNC_INFO << antiqua_articles;
-  //return;
+  if (BUCHFREUND_DEBUG) {
+    qDebug() << Q_FUNC_INFO << antiqua_order;
+    emit sendDisjointed();
+    return;
+  }
 
   if (createOrders(ordersList)) {
-      qInfo("%s: New orders arrived!", qPrintable(provider()));
+    qInfo("%s: New orders arrived!", qPrintable(provider()));
     emit sendFinished();
     return;
   }

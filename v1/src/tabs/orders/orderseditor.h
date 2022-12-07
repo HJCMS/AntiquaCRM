@@ -60,6 +60,8 @@ private:
 
   qint64 searchCustomer(const QJsonObject &obj, qint64 customerId = -1);
 
+  const QList<AntiquaCRM::OrderArticleItems> queryOrderArticles(qint64 orderId);
+
   bool addArticleToOrderTable(qint64 articleId);
 
   const QString getSqlArticleOrders();

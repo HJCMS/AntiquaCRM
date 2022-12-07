@@ -49,9 +49,6 @@ public:
 
   /**
    * @brief Bestellartikel aus SQL Abfrage Importieren
-   * Weil noch keine Order ID vorhanden ist wird die Zeile nur eingefügt aber
-   * noch nicht gespeichert!
-   * @see saveTableData
    */
   bool importArticles(const QList<AntiquaCRM::OrderArticleItems> &list);
 
