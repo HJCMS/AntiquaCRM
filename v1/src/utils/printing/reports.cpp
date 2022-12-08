@@ -35,8 +35,6 @@ Reports::Reports(QWidget *parent) : QDialog{parent} {
   setMinimumWidth(pageWidth + 10);
   setMaximumWidth(pageWidth + 20);
 
-  config = new AntiquaCRM::ASettings(this);
-
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("printing_card_layout");
   layout->setContentsMargins(0, 0, 0, 0);
@@ -64,6 +62,24 @@ Reports::Reports(QWidget *parent) : QDialog{parent} {
           SLOT(showMessage(const QString &)));
 }
 
+void Reports::printerConfiguration() {
+  config = new AntiquaCRM::ASettings(this);
+  config->beginGroup("printer");
+  headerFont = m_edit->font();
+  headerFont.fromString(config->value("normal_font").toString());
+  defaultFont = m_edit->font();
+  defaultFont.fromString(config->value("small_font").toString());
+  p_printerName = config->value("DIN_A4_Printer").toString();
+  config->endGroup();
+
+  QString dstr = QDateTime::currentDateTime().toString("yyyy.MM.dd_HHmm");
+  QString dest = config->value("dirs/reports").toString();
+  dest.append(QDir::separator());
+  dest.append("monthly_report_" + dstr);
+  dest.append(".pdf");
+  p_pdffilepath = dest.trimmed();
+}
+
 const QTextTableFormat Reports::tableFormat() {
   QTextTableFormat f;
   f.setBorder(0);
@@ -88,8 +104,7 @@ const QTextTableCellFormat Reports::cellFormat() {
 }
 
 const QTextCharFormat Reports::headerFormat() {
-  QFont font;
-  font.fromString(config->value("printer/normal_font").toString());
+  QFont font(headerFont);
   font.setBold(true);
 
   QTextCharFormat format;
@@ -98,8 +113,7 @@ const QTextCharFormat Reports::headerFormat() {
 }
 
 const QTextCharFormat Reports::textFormat(qint8 size) {
-  QFont font;
-  font.fromString(config->value("printer/small_font").toString());
+  QFont font(defaultFont);
   if (size != 0)
     font.setPointSize(size);
 
@@ -164,16 +178,39 @@ bool Reports::generateDocument(QPrinter *printer) {
   return true;
 }
 
+bool Reports::createPDF() {
+  QPrinter *printer = new QPrinter(QPrinter::HighResolution);
+  printer->setColorMode(QPrinter::GrayScale);
+  printer->setOutputFormat(QPrinter::PdfFormat);
+  printer->setFullPage(true);
+  printer->setOutputFileName(p_pdffilepath);
+  printer->setCreator("AntiquaCRM");
+  return generateDocument(printer);
+}
+
 void Reports::openPrintDialog() {
-  QString pr_name = config->value("printer/DIN_A4_Printer").toString();
-  QPrinterInfo p_info = QPrinterInfo::printerInfo(pr_name);
+  if (createPDF()) {
+    emit statusMessage(tr("PDF File written."));
+  } else {
+    qWarning("PDF not generated");
+  }
+
+  if (p_printerName.isEmpty()) {
+    qWarning("No printer found!");
+    return;
+  }
+
+  QPrinterInfo p_info = QPrinterInfo::printerInfo(p_printerName);
   QPrinter *printer = new QPrinter(p_info, QPrinter::HighResolution);
   printer->setPageLayout(p_pageLayout);
   printer->setFullPage(true);
   printer->setDocName("monthly-report");
-  printer->setPrinterName(pr_name);
+  printer->setPrinterName(p_printerName);
   printer->setOutputFormat(QPrinter::PdfFormat);
   printer->setCreator("AntiquaCRM");
+#ifdef Q_OS_WIN
+  printer->setPaperSource(p_paperSource);
+#endif
 
   QPrintDialog *dialog = new QPrintDialog(printer, m_edit);
   dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);
@@ -202,6 +239,8 @@ int Reports::exec(const QStringList &rows) {
   }
 
   p_data = rows;
+
+  printerConfiguration();
 
   constructBody();
 

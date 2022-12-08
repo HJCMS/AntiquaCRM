@@ -8,11 +8,12 @@
 #include <ASettings>
 #include <QDate>
 #include <QDialog>
-#include <QList>
+#include <QFont>
 #include <QMetaType>
 #include <QObject>
 #include <QPrinter>
 #include <QStatusBar>
+#include <QStringList>
 #include <QTextTable>
 #include <QWidget>
 
@@ -30,10 +31,20 @@ private:
 
   QStatusBar *m_statusBar;
 
+  QFont headerFont;
+  QFont defaultFont;
+
   /**
    * @brief Tabellenansicht
    */
   QTextTable *m_table;
+
+  /**
+   * @brief Drucker aus Konfiguration lesen.
+   */
+  QString p_pdffilepath;
+  QString p_printerName;
+  void printerConfiguration();
 
   /**
    * @brief Tabellen Format
@@ -79,6 +90,8 @@ private:
    * @brief Anschrifft und Dokument Definition
    */
   void constructBody();
+
+  bool createPDF();
 
 private Q_SLOTS:
   /**
