@@ -11,14 +11,18 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (_projectLibrary_SOURCE
- aplugininterface.h
- apluginloader.h
  aplugininterface.cpp
  apluginloader.cpp
  updatedialog.cpp
  updatedialog.h
- AntiquaCRMPlugin
  AntiquaCRMPlugin.cmake
+)
+
+SET (_projectLibrary_HEADERS
+ aplugininterface.h
+ apluginloader.h
+ updatedialog.h
+ AntiquaCRMPlugin
 )
 
 CONFIGURE_FILE (AntiquaCRMPlugin.cmake
@@ -27,6 +31,7 @@ CONFIGURE_FILE (AntiquaCRMPlugin.cmake
 
 ADD_LIBRARY (${_projectLibrary} SHARED
  ${_projectLibrary_SOURCE}
+ ${_projectLibrary_HEADERS}
 )
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
@@ -50,4 +55,15 @@ TARGET_LINK_LIBRARIES (${_projectLibrary} PRIVATE
 )
 
 ADD_SUBDIRECTORY(antiquacrm)
+
+INSTALL (TARGETS ${_projectLibrary}
+  LIBRARY DESTINATION lib${LIB_SUFFIX}/
+  COMPONENT Libraries
+  NAMELINK_COMPONENT Development
+)
+
+INSTALL (FILES ${_projectLibrary_HEADERS}
+  DESTINATION include/AntiquaCRM
+  COMPONENT Development
+)
 
