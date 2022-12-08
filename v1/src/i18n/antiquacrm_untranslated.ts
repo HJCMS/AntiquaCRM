@@ -786,7 +786,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+70"/>
         <location line="+80"/>
         <source>Keyword</source>
         <translation type="unfinished"></translation>
@@ -1550,7 +1550,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+71"/>
         <source>Customer saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1681,7 +1681,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+34"/>
+        <location line="+40"/>
         <source>Search customer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3044,33 +3044,13 @@ Image - Article Id: %2</source>
 <context>
     <name>MailButton</name>
     <message>
-        <location filename="../widgets/mailbutton.cpp" line="+13"/>
+        <location filename="../widgets/mailbutton.cpp" line="+12"/>
         <source>Mail Messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Selection for different eMail messages.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Simple eMail message to customer.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Send order status to customer.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Create invoice to customer.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Message Item Order Cancelled.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3522,7 +3502,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="+77"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3537,7 +3517,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+87"/>
         <source>A Article can&apos;t inserted, if no Order-/Customer Id exists.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3726,17 +3706,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Default view</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Load the Standard table view.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+36"/>
+        <location line="+41"/>
         <source>Search for %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5657,8 +5627,23 @@ Image - Article Id: %2</source>
 <context>
     <name>TabSearchBar</name>
     <message>
-        <location filename="../widgets/tabsearchbar.cpp" line="+20"/>
+        <location filename="../widgets/tabsearchbar.cpp" line="+18"/>
+        <source>Push to start search.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Start search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Push to load the Standard view.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Default view</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

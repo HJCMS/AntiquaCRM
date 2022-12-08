@@ -7,6 +7,7 @@
 
 #include <QAction>
 #include <QFlags>
+#include <QMenu>
 #include <QMetaObject>
 #include <QObject>
 #include <QPushButton>
@@ -21,16 +22,11 @@ class MailButton final : public QPushButton {
   Q_PROPERTY(Sections sections READ getSections WRITE setSections NOTIFY sendSectionChanged)
 
 private:
-  QAction *ac_message;
-  QAction *ac_status;
-  QAction *ac_invoice;
-  QAction *ac_canceld;
+  QMenu *m_menu;
+  bool createMailButtonActions();
 
 private Q_SLOTS:
-  void setSimpleMail();
-  void setStatusMail();
-  void setInvoceMail();
-  void setCancelMail();
+  void setMailAction();
 
 Q_SIGNALS:
   /**
@@ -40,6 +36,7 @@ Q_SIGNALS:
 
   /**
    * @brief E-Mail Nachricht von Konstante senden ...
+   * @see createMailButtonActions()
    * @list Werte werden aus PgSQL::ui_template_body entnommen:
    *  @li MAIL_ACTION_SIMPLE_MESSAGE
    *  @li MAIL_ACTION_SHIPPING_NOTICE
@@ -59,9 +56,9 @@ public:
    * @brief Knopfanzeige
    */
   enum SectionFlag {
-    NoButton = 0x0000,  /**< Keine */
-    Orders = 0x0001,    /**< Bestell/Auftragsnachrichten */
-    Customers = 0x0002  /**< Kunden Nachricht */
+    NoButton = 0x0000, /**< Keine */
+    Orders = 0x0001,   /**< Bestell/Auftragsnachrichten */
+    Customers = 0x0002 /**< Kunden Nachricht */
   };
   Q_DECLARE_FLAGS(Sections, SectionFlag)
   Q_FLAG(Sections)

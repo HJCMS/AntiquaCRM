@@ -13,8 +13,7 @@
 BookTableView::BookTableView(QWidget *parent) : InventoryTable{parent} {
   setEnableTableViewSorting(true);
   m_model = new BooksTableModel(this);
-  where_clause = QString("DATE(ib_changed)=CURRENT_DATE");
-
+  where_clause = defaultWhereClause();
   connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
           this, SLOT(getSqlModelError(const QString &, const QString &)));
 
@@ -175,4 +174,8 @@ bool BookTableView::setQuery(const QString &clause) {
     query.setLimits(getQueryLimit());
   }
   return sqlQueryTable(query.getQueryContent());
+}
+
+const QString BookTableView::defaultWhereClause() {
+  return QString("DATE(ib_changed)=CURRENT_DATE");
 }

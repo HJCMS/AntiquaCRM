@@ -75,6 +75,11 @@ protected Q_SLOTS:
 
   virtual void popupWarningTabInEditMode() = 0;
 
+  /**
+   * @brief Standard Tabellenabfrage aufrufen
+   */
+  virtual void setDefaultTableView() = 0;
+
 Q_SIGNALS:
   /**
    * @brief Send Tab closeable changed

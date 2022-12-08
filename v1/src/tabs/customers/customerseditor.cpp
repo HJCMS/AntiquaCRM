@@ -86,6 +86,8 @@ void CustomersEditor::setInputFields() {
   // Completers
   m_dataWidget->c_postalcode->loadDataset();
   m_dataWidget->c_phone_0->loadDataset();
+  // Menübar SQL Abfrage starten
+  m_actionBar->setMailMenu(MailButton::Customers);
 }
 
 bool CustomersEditor::setDataField(const QSqlField &field,

@@ -48,6 +48,7 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{"books_tab", parent} {
   connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
           SLOT(setFilterFocus()));
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
+  connect(m_searchBar, SIGNAL(sendRestoreView()), SLOT(setDefaultTableView()));
 
   // Signals::BookTableView
   connect(m_table, SIGNAL(sendQueryReport(const QString &)), m_statusBar,
@@ -86,6 +87,13 @@ void TabBooks::popupWarningTabInEditMode() {
   info.append(tr("You need to save and close that open book first."));
   info.append("</p>");
   QMessageBox::information(this, windowTitle(), info);
+}
+
+void TabBooks::setDefaultTableView() {
+  m_editorPage->setEnabled(false);
+  m_searchBar->setFilter(0);
+  setCurrentIndex(0);
+  m_table->setQuery(m_table->defaultWhereClause());
 }
 
 void TabBooks::openStartPage() {

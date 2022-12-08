@@ -26,7 +26,12 @@ protected:
   /**
    * @brief Predefined Search Button
    */
-  QPushButton *clickSearchButton(const QString &text);
+  QPushButton *startSearchButton(const QString &text = QString());
+
+  /**
+   * @brief Predefined Defaults Button
+   */
+  QPushButton *defaultViewButton(const QString &text = QString());
 
 protected Q_SLOTS:
   virtual void setSearch() = 0;

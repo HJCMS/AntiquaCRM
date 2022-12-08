@@ -39,8 +39,6 @@ private:
    */
   QList<AntiquaCRM::APluginInterface *> plugins;
 
-  void popupWarningTabInEditMode() override{};
-
   bool findPage(const QString &provider, const QString &orderId);
 
   /**
@@ -49,6 +47,8 @@ private:
   bool loadPlugins();
 
 private Q_SLOTS:
+  void popupWarningTabInEditMode() override {};
+  void setDefaultTableView() override {};
   void createProviderAction();
   void pluginErrorResponse(AntiquaCRM::Message, const QString &);
   void pluginQueryFinished();

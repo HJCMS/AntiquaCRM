@@ -59,6 +59,7 @@ public:
   int getQueryLimit();
   virtual int rowCount() = 0;
   virtual bool setQuery(const QString &clause = QString()) = 0;
+  virtual const QString defaultWhereClause() = 0;
 };
 
 #endif // ANTIQUACRM_INVENTORYTABLE_H

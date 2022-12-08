@@ -3,66 +3,48 @@
 
 #include "mailbutton.h"
 
+#include <AntiquaCRM>
 #include <QDebug>
 #include <QIcon>
-#include <QMenu>
 
 MailButton::MailButton(QWidget *parent) : QPushButton{parent} {
-  QIcon mailIcon = QIcon(":icons/user_identity.png");
-  setIcon(mailIcon);
+  setIcon(QIcon(":icons/user_identity.png"));
   setText(tr("Mail Messages"));
   setToolTip(tr("Selection for different eMail messages."));
   setEnabled(false);
   setVisible(false);
-
-  QMenu *m_menu = new QMenu(this);
-  // Einfache E-Mail Nachricht an Kunde.
-  QString message_info = tr("Simple eMail message to customer.");
-  ac_message = m_menu->addAction(mailIcon, message_info);
-  ac_message->setWhatsThis(message_info);
-  connect(ac_message, SIGNAL(triggered()), this, SLOT(setSimpleMail()));
-
-  // Bestellstatus an den Kunden senden.
-  QString status_info = tr("Send order status to customer.");
-  ac_status = m_menu->addAction(mailIcon, status_info);
-  ac_status->setWhatsThis(status_info);
-  ac_status->setEnabled(false);
-  ac_status->setVisible(false);
-  connect(ac_status, SIGNAL(triggered()), this, SLOT(setStatusMail()));
-
-  // Rechnung an den Käufer erstellen.
-  QString invoice_info = tr("Create invoice to customer.");
-  ac_invoice = m_menu->addAction(mailIcon, invoice_info);
-  ac_invoice->setWhatsThis(invoice_info);
-  ac_invoice->setEnabled(false);
-  ac_invoice->setVisible(false);
-  connect(ac_invoice, SIGNAL(triggered()), this, SLOT(setInvoceMail()));
-
-  // Mitteilung Artikel Bestellung Storniert.
-  QString cancel_info = tr("Message Item Order Cancelled.");
-  ac_canceld = m_menu->addAction(mailIcon, cancel_info);
-  ac_canceld->setWhatsThis(cancel_info);
-  ac_canceld->setEnabled(false);
-  ac_canceld->setVisible(false);
-  connect(ac_canceld, SIGNAL(triggered()), this, SLOT(setCancelMail()));
-
+  m_menu = new QMenu(this);
+  m_menu->setObjectName("mailbutton_menue");
   setMenu(m_menu);
 }
 
-void MailButton::setSimpleMail() {
-  emit sendMailAction("MAIL_ACTION_SIMPLE_MESSAGE");
+bool MailButton::createMailButtonActions() {
+  QString sql("SELECT tb_caller,tb_title FROM ui_template_body");
+  if (sections.testFlag(Orders)) {
+    sql.append(" WHERE tb_category='email' AND tb_tab='ORDERS';");
+  } else if (sections.testFlag(Customers)) {
+    sql.append(" WHERE tb_category='email' AND tb_tab='CUSTOMERS';");
+  } else {
+    qWarning("Unknown Mailbutton group!");
+    return false;
+  }
+
+  AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    while (q.next()) {
+      QString title = q.value("tb_title").toString();
+      QAction *ac = m_menu->addAction(icon(), title);
+      ac->setObjectName(q.value("tb_caller").toString());
+      connect(ac, SIGNAL(triggered()), this, SLOT(setMailAction()));
+    }
+    return true;
+  }
+  return false;
 }
 
-void MailButton::setStatusMail() {
-  emit sendMailAction("MAIL_ACTION_SHIPPING_NOTICE");
-}
-
-void MailButton::setInvoceMail() {
-  emit sendMailAction("MAIL_ACTION_INVOICE_BILLING");
-}
-
-void MailButton::setCancelMail() {
-  emit sendMailAction("MAIL_ACTION_ORDER_CANCELED");
+void MailButton::setMailAction() {
+  emit sendMailAction(sender()->objectName());
 }
 
 void MailButton::hasMailAddress(bool b) {
@@ -72,14 +54,7 @@ void MailButton::hasMailAddress(bool b) {
 
 void MailButton::setSections(MailButton::Sections flags) {
   sections = flags;
-  // Alles zurücksetzen
-  QList<QAction *> list = findChildren<QAction *>(QString());
-  for (int c = 0; c < list.count(); c++) {
-    QAction *ac = list.at(c);
-    ac->setEnabled(false);
-    ac->setVisible(false);
-  }
-  list.clear();
+  m_menu->clear();
 
   // Wenn gesetzt, hier Aussteigen.
   if (flags.testFlag(NoButton)) {
@@ -87,21 +62,8 @@ void MailButton::setSections(MailButton::Sections flags) {
     return;
   }
 
-  // Auftrags-Nachrichten
-  if (flags.testFlag(Orders)) {
-    ac_invoice->setEnabled(true);
-    ac_invoice->setVisible(true);
-    ac_status->setEnabled(true);
-    ac_status->setVisible(true);
-    ac_canceld->setEnabled(true);
-    ac_canceld->setVisible(true);
-  }
-
-  // Adressbuch-Nachrichten
-  if (flags.testFlag(Customers)) {
-    ac_message->setEnabled(true);
-    ac_message->setVisible(true);
-  }
+  if (!createMailButtonActions())
+    return;
 
   emit sendSectionChanged();
 }

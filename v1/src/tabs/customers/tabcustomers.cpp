@@ -43,6 +43,7 @@ TabCustomers::TabCustomers(QWidget *parent)
   // Signals
   // searchbar
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
+  connect(m_searchBar, SIGNAL(sendRestoreView()), SLOT(setDefaultTableView()));
   connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar,
           SLOT(setSearchFocus()));
   connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
@@ -90,6 +91,13 @@ void TabCustomers::popupWarningTabInEditMode() {
   info.append(tr("Please save and close the open customer editor first."));
   info.append("</p>");
   QMessageBox::information(this, tr("Customereditor"), info);
+}
+
+void TabCustomers::setDefaultTableView() {
+  m_editorPage->setEnabled(false);
+  m_searchBar->setFilter(0);
+  setCurrentIndex(0);
+  m_table->setQuery(m_table->defaultWhereClause());
 }
 
 void TabCustomers::setDeleteCustomer(qint64 customerId) {

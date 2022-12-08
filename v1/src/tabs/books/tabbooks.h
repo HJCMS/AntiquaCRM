@@ -25,7 +25,9 @@ private:
   QScrollArea *m_editorPage;
   BookEditor *m_editorWidget;
 
+private Q_SLOTS:
   void popupWarningTabInEditMode() override;
+  void setDefaultTableView() override;
 
 public Q_SLOTS:
   void openStartPage() override;

@@ -22,9 +22,9 @@ private:
   QTableView *m_tableView;
   ViewsTableModel *m_model;
 
-  void popupWarningTabInEditMode() override {};
-
 public Q_SLOTS:
+  void popupWarningTabInEditMode() override {};
+  void setDefaultTableView() override {};
   void openStartPage() override;
   void createSearchQuery(const QString &query = QString()) override;
   void createNewEntry() override {/* disabled */};

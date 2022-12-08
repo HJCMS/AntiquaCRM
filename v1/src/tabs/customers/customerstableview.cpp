@@ -14,10 +14,7 @@ CustomersTableView::CustomersTableView(QWidget *parent)
     : InventoryTable{parent} {
   setEnableTableViewSorting(true);
   m_model = new CustomersTableModel(this);
-  QString today("DATE(c_changed)=CURRENT_DATE");
-  QString yesterday("DATE(c_since)=(CURRENT_DATE -1)");
-  where_clause = today + " OR " + yesterday;
-
+  where_clause = defaultWhereClause();
   connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
           this, SLOT(getSqlModelError(const QString &, const QString &)));
 
@@ -176,4 +173,10 @@ bool CustomersTableView::setQuery(const QString &clause) {
     query.setLimits(getQueryLimit());
   }
   return sqlQueryTable(query.getQueryContent());
+}
+
+const QString CustomersTableView::defaultWhereClause() {
+  QString today("DATE(c_changed)=CURRENT_DATE");
+  QString yesterday("DATE(c_since)=(CURRENT_DATE -1)");
+  return today + " OR " + yesterday;
 }

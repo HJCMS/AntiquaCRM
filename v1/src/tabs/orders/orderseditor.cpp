@@ -79,7 +79,6 @@ OrdersEditor::OrdersEditor(QWidget *parent)
 
   m_actionBar->setPrinterMenu(print_buttons);
   m_actionBar->setViewMailButton(true);
-  m_actionBar->setMailMenu(MailButton::Orders);
   m_actionBar->setViewActionAddButton(true);
   // ResetButton off
   m_actionBar->setRestoreable(false);
@@ -134,6 +133,8 @@ void OrdersEditor::setInputFields() {
   }
   // Preloaders
   m_costSettings->o_delivery_service->loadDataset();
+  // Menübar SQL Abfrage starten
+  m_actionBar->setMailMenu(MailButton::Orders);
 }
 
 bool OrdersEditor::setDataField(const QSqlField &field, const QVariant &value) {
