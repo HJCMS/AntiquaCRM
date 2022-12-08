@@ -47,7 +47,7 @@ TARGET_LINK_LIBRARIES (AbeBooks PUBLIC
 
 IF (CMAKE_HOST_UNIX)
   INSTALL (TARGETS AbeBooks
-    LIBRARY DESTINATION lib${LIB_SUFFIX}/antiquacrm/plugins
+    LIBRARY DESTINATION lib${LIB_SUFFIX}/antiquacrm/plugins/provider
     COMPONENT Plugin
   )
 ENDIF (CMAKE_HOST_UNIX)

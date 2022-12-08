@@ -44,7 +44,7 @@ TARGET_LINK_LIBRARIES (Buchfreund PUBLIC
 
 IF (CMAKE_HOST_UNIX)
   INSTALL (TARGETS Buchfreund
-    LIBRARY DESTINATION lib${LIB_SUFFIX}/antiquacrm/plugins
+    LIBRARY DESTINATION lib${LIB_SUFFIX}/antiquacrm/plugins/provider
     COMPONENT Plugin
   )
 ENDIF (CMAKE_HOST_UNIX)

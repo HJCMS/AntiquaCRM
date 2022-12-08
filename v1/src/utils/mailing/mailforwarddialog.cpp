@@ -18,7 +18,7 @@
 MailForwardDialog::MailForwardDialog(QWidget *parent) : QDialog{parent} {
   setObjectName("create_mail_forward_dialog");
   setWindowTitle(tr("Mail Templates"));
-  setMinimumSize(QSize(650, 450));
+  setMinimumSize(QSize(650, 500));
   setSizeGripEnabled(true);
 
   m_cfg = new AntiquaCRM::ASettings(this);

@@ -45,6 +45,6 @@ TARGET_LINK_LIBRARIES (Booklooker PUBLIC
 )
 
 INSTALL (TARGETS Booklooker
-  LIBRARY DESTINATION lib${LIB_SUFFIX}/antiquacrm/plugins
+  LIBRARY DESTINATION lib${LIB_SUFFIX}/antiquacrm/plugins/provider
   COMPONENT Plugin
 )
