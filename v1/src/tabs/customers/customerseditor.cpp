@@ -41,6 +41,10 @@ CustomersEditor::CustomersEditor(QWidget *parent)
   m_actionBar = new EditorActionBar(this);
   m_actionBar->setViewPrintButton(false);
   m_actionBar->setViewMailButton(true);
+  m_actionBar->setViewActionAddButton(true, tr("Create Order"));
+  // ResetButton off
+  m_actionBar->setRestoreable(false);
+  m_actionBar->setViewRestoreButton(false);
   mainLayout->addWidget(m_actionBar);
 
   setLayout(mainLayout);
@@ -55,6 +59,8 @@ CustomersEditor::CustomersEditor(QWidget *parent)
           SLOT(setCheckLeaveEditor()));
   connect(m_actionBar, SIGNAL(sendCreateMailMessage(const QString &)),
           SLOT(setCreateMailMessage(const QString &)));
+  connect(m_actionBar, SIGNAL(sendAddCustomAction()),
+          SLOT(setCreateOrderSignal()));
 }
 
 void CustomersEditor::setInputFields() {
@@ -323,6 +329,12 @@ void CustomersEditor::setSaveData() {
   } else {
     createSqlInsert();
   }
+}
+
+void CustomersEditor::setCreateOrderSignal() {
+  qint64 id = getSerialID("c_id");
+  if (id > 0)
+    emit sendEditorAction(id);
 }
 
 void CustomersEditor::setCheckLeaveEditor() {

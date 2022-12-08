@@ -61,7 +61,7 @@ Q_SIGNALS:
   void sendPrintPaymentReminder();
   void sendPrintBookCard();
   void sendCancelClicked();
-  void sendAddArticle();
+  void sendAddCustomAction();
   void sendSaveClicked();
   void sendFinishClicked();
   void sendCreateMailMessage(const QString &);
@@ -98,8 +98,8 @@ public:
   /**
    * @brief Article Einfügen Anzeigen
    */
-  void setViewAddArticleButton(bool b = false,
-                               const QString &customTitle = QString());
+  void setViewActionAddButton(bool b = false,
+                              const QString &customTitle = QString());
 
   /**
    * @brief Zurücksetzen anzeigen/ausblenden

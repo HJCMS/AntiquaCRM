@@ -70,7 +70,7 @@
 <context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
-        <location filename="../lib/asqlquerymodel.cpp" line="+105"/>
+        <location filename="../lib/asqlquerymodel.cpp" line="+109"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
@@ -1140,7 +1140,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CompanySettings</name>
     <message>
-        <location filename="../utils/settings/companysettings.cpp" line="+12"/>
+        <location filename="../utils/settings/companysettings.cpp" line="+13"/>
         <source>On this page you configure your company&apos;s presentation settings.</source>
         <translation>Auf dieser Seite konfigurieren Sie die Präsentationseinstellungen Ihres Unternehmens.</translation>
     </message>
@@ -1191,12 +1191,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Konfiguration</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>All Settings in this Dialog requires a Application restart!</source>
         <translation>Alle Einstellungen in diesem Dialogfeld erfordern einen Neustart der Anwendung!</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+15"/>
         <source>Application</source>
         <translation>Anwendung</translation>
     </message>
@@ -1532,6 +1532,11 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bestellungen</translation>
     </message>
     <message>
+        <location line="+6"/>
+        <source>Create Order</source>
+        <translation>Erstelle Auftrag</translation>
+    </message>
+    <message>
         <location line="+35"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
@@ -1563,7 +1568,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kundendaten speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+62"/>
         <source>Unsaved Changes</source>
         <translation>Nicht gespeicherte Änderungen</translation>
     </message>
@@ -1730,8 +1735,8 @@ Bild - Artikel Nr: %2</translation>
     <name>CustomersStatusBar</name>
     <message>
         <location filename="../tabs/customers/customersstatusbar.cpp" line="+15"/>
-        <source>Create</source>
-        <translation>Erstellen</translation>
+        <source>Create customer</source>
+        <translation>Erstelle Neukunde</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1739,7 +1744,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Erstellen Sie einen neuen Kundeneintrag.</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>History</source>
         <translation>Verlauf</translation>
     </message>
@@ -1825,7 +1830,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CustomersTableView</name>
     <message>
-        <location filename="../tabs/customers/customerstableview.cpp" line="+62"/>
+        <location filename="../tabs/customers/customerstableview.cpp" line="+59"/>
         <source>Edit selected Customer</source>
         <translation>Ausgewählten Kunden bearbeiten</translation>
     </message>
@@ -1991,9 +1996,14 @@ Bild - Artikel Nr: %2</translation>
         <translation>Änderungsdatum</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>The entry currently being edited can not be saved!</source>
-        <translation>Der aktuell bearbeitete Eintrag kann nicht gespeichert werden!</translation>
+        <location line="+7"/>
+        <source>Hints</source>
+        <translation>Hinweise</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Only the current edited entry can be saved!</source>
+        <translation>Nur der aktuell bearbeitete Eintrag kann gespeichert werden!</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -2206,12 +2216,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Artikel einfügen</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Add Article to Payment list.</source>
-        <translation>Artikel zur Zahlungsliste hinzufügen.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
@@ -3274,12 +3279,22 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>MonthlyReports</name>
     <message>
-        <location filename="../tabs/reports/monthlyreports.cpp" line="+19"/>
+        <location filename="../tabs/reports/monthlyreports.cpp" line="+21"/>
         <source>Monthly Payment reports</source>
         <translation>Monatliche Zahlungsberichte</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+26"/>
+        <source>Report for </source>
+        <translation>Bericht für </translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>total sales</source>
+        <translation>Gesamtumsatz</translation>
+    </message>
+    <message>
+        <location line="+62"/>
         <source>Report saved: %1</source>
         <translation>Bericht gespeichert: %1</translation>
     </message>
@@ -5208,6 +5223,14 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>Reports</name>
+    <message>
+        <location filename="../utils/printing/reports.cpp" line="+22"/>
+        <source>Reports</source>
+        <translation>Berichte</translation>
+    </message>
+</context>
+<context>
     <name>ReportsActionGroup</name>
     <message>
         <location filename="../tabs/reports/reportsactiongroup.cpp" line="+17"/>
@@ -5502,7 +5525,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kunden</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+69"/>
         <source>Cannot open Customers Editor.</source>
         <translation>Der Kundeneditor kann nicht geöffnet werden.</translation>
     </message>
@@ -5542,12 +5565,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Es gibt Bestellbeziehungen, die nicht aufgelöst werden können.</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+83"/>
         <source>Invalid arguments to open Customer!</source>
         <translation>Ungültige Argumente zum Öffnen des Kunden!</translation>
     </message>
     <message>
-        <location line="-102"/>
+        <location line="-113"/>
         <source>Customereditor</source>
         <translation>Kundeneditor</translation>
     </message>

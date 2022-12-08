@@ -65,11 +65,13 @@ TabCustomers::TabCustomers(QWidget *parent)
   connect(m_table, SIGNAL(sendDeleteEntry(qint64)),
           SLOT(setDeleteCustomer(qint64)));
 
-  connect(m_table, SIGNAL(sendSocketOperation(const QJsonObject &)),
-          SLOT(sendSocketOperation(const QJsonObject &)));
+  // Wird für das erstellen eines Neuen Auftrags verwendet!
+  connect(m_table, SIGNAL(sendCurrentId(qint64)), SLOT(createNewOrder(qint64)));
 
   // editor
   connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));
+  connect(m_editorWidget, SIGNAL(sendEditorAction(qint64)),
+          SLOT(createNewOrder(qint64)));
 
   // statusbar
   connect(m_statusBar, SIGNAL(sendCreateEntry()), SLOT(createNewEntry()));
@@ -121,6 +123,17 @@ void TabCustomers::setDeleteCustomer(qint64 customerId) {
   d->setDetailedText(m_sql->lastError());
   d->setDefaultButton(QMessageBox::Ok);
   d->exec();
+}
+
+void TabCustomers::createNewOrder(qint64 customerId) {
+  if (customerId < 1)
+    return;
+
+  QJsonObject obj;
+  obj.insert("window_operation", "new_order");
+  obj.insert("tab", "orders_tab");
+  obj.insert("new_order", QJsonValue(customerId));
+  sendSocketOperation(obj);
 }
 
 void TabCustomers::openStartPage() {

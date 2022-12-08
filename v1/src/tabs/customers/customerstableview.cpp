@@ -34,20 +34,17 @@ qint64 CustomersTableView::getTableID(const QModelIndex &index) {
 }
 
 bool CustomersTableView::sqlQueryTable(const QString &query) {
-  // qDebug() << Q_FUNC_INFO << query;
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);
     emit sendQueryReport(m_model->queryResultInfo());
     emit sendResultExists((m_model->rowCount() > 0));
-
     // Table Record und NICHT QueryRecord abfragen!
     // Siehe: setSortByColumn
     p_tableRecord = m_model->tableRecord();
     return true;
   }
-  emit sendQueryReport(m_model->queryResultInfo());
-  emit sendResultExists((m_model->rowCount() > 0));
+  emit sendResultExists(false);
   return false;
 }
 
@@ -153,13 +150,8 @@ void CustomersTableView::createCopyClipboard() {
 
 void CustomersTableView::createOrderSignal() {
   qint64 cid = getTableID(p_modelIndex);
-  if (cid >= 1) {
-    QJsonObject obj;
-    obj.insert("window_operation", "new_order");
-    obj.insert("tab", "orders_tab");
-    obj.insert("new_order", QJsonValue(cid));
-    emit sendSocketOperation(obj);
-  }
+  if (cid >= 1)
+    emit sendCurrentId(cid);
 }
 
 void CustomersTableView::createDeleteRequest() {

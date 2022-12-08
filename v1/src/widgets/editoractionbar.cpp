@@ -45,10 +45,9 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
   m_addArticle = new QPushButton(tr("Add Article"), this);
   m_addArticle->setObjectName("editor_action_button_article");
   m_addArticle->setIcon(QIcon("://icons/action_add.png"));
-  m_addArticle->setToolTip(tr("Add Article to Payment list."));
   m_addArticle->setEnabled(false);
   m_addArticle->setVisible(false);
-  connect(m_addArticle, SIGNAL(clicked()), SIGNAL(sendAddArticle()));
+  connect(m_addArticle, SIGNAL(clicked()), SIGNAL(sendAddCustomAction()));
   layout->addWidget(m_addArticle);
 
   m_saveBtn = new QPushButton(tr("Save"), this);
@@ -104,8 +103,8 @@ void EditorActionBar::setMailMenu(MailButton::Sections sections) {
   m_mailButton->setSections(sections);
 }
 
-void EditorActionBar::setViewAddArticleButton(bool b,
-                                              const QString &customTitle) {
+void EditorActionBar::setViewActionAddButton(bool b,
+                                             const QString &customTitle) {
   if (!customTitle.isEmpty())
     m_addArticle->setText(customTitle);
 

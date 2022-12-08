@@ -218,17 +218,22 @@ Q_SIGNALS:
   /**
    * @brief Sende Artikel Nummer an den Bilder Editor.
    */
-  void sendEditImage(qint64 articleId);
+  void sendEditImage(qint64);
 
   /**
    * @brief Sende Artikel Nummer für Bilder hochladen.
    */
-  void sendUploadImage(qint64 articleId);
+  void sendUploadImage(qint64);
 
   /**
    * @brief Editor Beenden
    */
   void sendLeaveEditor();
+
+  /**
+   * @brief Je nach Tab die Id an das Elternfenster senden!
+   */
+  void sendEditorAction(qint64);
 
 public Q_SLOTS:
   /**

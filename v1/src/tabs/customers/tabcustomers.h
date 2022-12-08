@@ -29,6 +29,7 @@ private:
 
 private Q_SLOTS:
   void setDeleteCustomer(qint64 customerId);
+  void createNewOrder(qint64 customerId);
 
 public Q_SLOTS:
   void openStartPage() override;

@@ -24,4 +24,7 @@
 // PaymentReminder
 #include "paymentreminder.h"
 
+// Reports
+#include "reports.h"
+
 #endif // ANTIQUACRM_PRINTING_H

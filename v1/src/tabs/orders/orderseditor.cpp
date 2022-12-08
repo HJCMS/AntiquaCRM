@@ -80,7 +80,7 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   m_actionBar->setPrinterMenu(print_buttons);
   m_actionBar->setViewMailButton(true);
   m_actionBar->setMailMenu(MailButton::Orders);
-  m_actionBar->setViewAddArticleButton(true);
+  m_actionBar->setViewActionAddButton(true);
   // ResetButton off
   m_actionBar->setRestoreable(false);
   m_actionBar->setViewRestoreButton(false);
@@ -98,7 +98,7 @@ OrdersEditor::OrdersEditor(QWidget *parent)
           SLOT(createPrintPaymentReminder()));
   connect(m_actionBar, SIGNAL(sendCancelClicked()),
           SLOT(setFinalLeaveEditor()));
-  connect(m_actionBar, SIGNAL(sendAddArticle()), SLOT(openSearchAddArticle()));
+  connect(m_actionBar, SIGNAL(sendAddCustomAction()), SLOT(openSearchAddArticle()));
   connect(m_actionBar, SIGNAL(sendSaveClicked()), SLOT(setSaveData()));
   connect(m_actionBar, SIGNAL(sendFinishClicked()),
           SLOT(setCheckLeaveEditor()));

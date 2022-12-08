@@ -9,7 +9,8 @@ CompanySettings::CompanySettings(QWidget *parent) : SettingsWidget{parent} {
   m_layout = new QGridLayout(this);
   m_layout->setObjectName("company_config_layout");
 
-  QString info_txt = tr("On this page you configure your company's presentation settings.");
+  QString info_txt =
+      tr("On this page you configure your company's presentation settings.");
   QLabel *info_label = new QLabel(info_txt, this);
   m_layout->addWidget(info_label, layoutRow++, 0, 1, 2);
 
@@ -72,8 +73,13 @@ void CompanySettings::loadSectionConfig() {
 }
 
 void CompanySettings::saveSectionConfig() {
-  QStringList queries;
   Qt::FindChildOptions opt = Qt::FindDirectChildrenOnly;
+  QLineEdit *cpn = findChild<QLineEdit *>("COMPANY_FULLNAME", opt);
+  if (cpn != nullptr) {
+    config->setValue("company_fullname", cpn->text());
+  }
+
+  QStringList queries;
   QList<QLineEdit *> le = findChildren<QLineEdit *>(QString(), opt);
   for (int i = 0; i < le.count(); i++) {
     QLineEdit *me = le.at(i);
@@ -92,7 +98,7 @@ void CompanySettings::saveSectionConfig() {
   }
   AntiquaCRM::ASqlCore sql(this);
   sql.query(queries.join("\n"));
-  if(!sql.lastError().isEmpty()) {
+  if (!sql.lastError().isEmpty()) {
     qWarning("SQL-ERROR Company save ...");
     qDebug() << Q_FUNC_INFO << sql.lastError();
   }

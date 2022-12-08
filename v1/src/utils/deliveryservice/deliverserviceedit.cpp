@@ -91,8 +91,8 @@ DeliverServiceEdit::DeliverServiceEdit(QWidget *parent) : QWidget{parent} {
   QVBoxLayout *infoLayout = new QVBoxLayout(infoBox);
   QLabel *infoLabel = new QLabel(this);
   infoLabel->setTextFormat(Qt::RichText);
-  QString info("<b>Hints</b><ul>");
-  QString n1 = tr("The entry currently being edited can not be saved!");
+  QString info("<b>" + tr("Hints") + "</b><ul>");
+  QString n1 = tr("Only the current edited entry can be saved!");
   info.append("<li>" + n1 + "</li>");
   QString n2 = tr("All text entries must be set and can't empty!");
   info.append("<li>" + n2 + "</li>");

@@ -12,10 +12,11 @@ CustomersStatusBar::CustomersStatusBar(QWidget *parent) : TabStatusBar{parent} {
   QHBoxLayout *layout = new QHBoxLayout(m_frame);
   layout->setContentsMargins(0, 0, 0, 0);
   btn_createEntry = new QPushButton(m_frame);
-  btn_createEntry->setText(tr("Create"));
+  btn_createEntry->setText(tr("Create customer"));
   btn_createEntry->setToolTip(tr("Create a new Customer entry."));
   btn_createEntry->setIcon(getIcon("db_add"));
   btn_createEntry->setEnabled(false);
+  btn_createEntry->setVisible(false);
   layout->addWidget(btn_createEntry);
 
   btn_history = new QPushButton(m_frame);
@@ -99,6 +100,7 @@ void CustomersStatusBar::setHistoryAction(int index) {
 
 void CustomersStatusBar::setCreateButtonEnabled(bool b) {
   btn_createEntry->setEnabled(b);
+  btn_createEntry->setVisible(b);
 }
 
 bool CustomersStatusBar::isCreateButtonEnabled() {

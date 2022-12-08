@@ -21,7 +21,7 @@ private:
   MonthSelecter *m_selecter;
   MonthlyReportView *m_table;
   QDate p_date;
-
+  const QString printHeader();
   const QFileInfo getSaveFile();
 
 private Q_SLOTS:

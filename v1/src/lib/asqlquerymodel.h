@@ -32,6 +32,13 @@ private:
   const QString p_table;
 
   /**
+   * @brief Gibt die Ergebnisanzahl der Abfrage zurück!
+   * Wird vor jedem querySelect() auf 0 gesetzt und Primär bei queryResultInfo()
+   * verwendet.
+   */
+  int p_queryResult = 0;
+
+  /**
    * @brief SQLRecord der Abfrage
    * @note Wird erst nach der Abfrage befüllt!
    */

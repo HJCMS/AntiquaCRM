@@ -24,6 +24,7 @@ SET (subproject_SOURCES
   paymentreminder.cpp
   invoice.cpp
   bookcard.cpp
+  reports.cpp
   texteditor.cpp
 )
 
@@ -33,6 +34,7 @@ SET (subproject_HEADERS
   paymentreminder.h
   invoice.h
   bookcard.h
+  reports.h
   texteditor.h
 )
 

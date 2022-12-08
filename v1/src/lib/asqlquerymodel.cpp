@@ -17,6 +17,7 @@ ASqlQueryModel::ASqlQueryModel(const QString &table, QObject *parent)
     : QSqlQueryModel{parent}, p_table(table) {
   m_sql = new AntiquaCRM::ASqlCore(this);
   p_queryRecord = QSqlRecord();
+  p_queryResult = 0;
 }
 
 const QString ASqlQueryModel::setHeaderTitle(const QString &text) const {
@@ -39,11 +40,13 @@ const QString ASqlQueryModel::verticalHeader(int row, int role) const {
 }
 
 bool ASqlQueryModel::querySelect(const QString &sql) {
+  p_queryResult = 0;
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
+    p_queryResult = q.size();
     p_queryRecord = q.record();
     setQuery(q);
-    // No errors!
+    return true;
   } else if (!m_sql->lastError().isEmpty()) {
     QString erroMessage = m_sql->lastError().trimmed();
 #ifdef ANTIQUA_DEVELOPEMENT
@@ -52,6 +55,7 @@ bool ASqlQueryModel::querySelect(const QString &sql) {
     emit sqlErrorMessage(p_table, erroMessage);
     return false;
   }
+  // no errors!
   return true;
 }
 
@@ -113,9 +117,9 @@ QVariant ASqlQueryModel::data(const QModelIndex &item, int role) const {
 const QString ASqlQueryModel::queryResultInfo() {
   QString time = QTime::currentTime().toString("HH:mm:ss");
   QString info;
-  if (rowCount() > 0) {
+  if (p_queryResult > 0) {
     info.append(tr("%1 - Query finished with '%2' Rows.")
-                    .arg(time, QString::number(rowCount())));
+                    .arg(time, QString::number(p_queryResult)));
   } else {
     info.append(tr("%1 - Query without result!").arg(time));
   }

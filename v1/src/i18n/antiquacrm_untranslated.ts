@@ -70,7 +70,7 @@
 <context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
-        <location filename="../lib/asqlquerymodel.cpp" line="+105"/>
+        <location filename="../lib/asqlquerymodel.cpp" line="+109"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1138,7 +1138,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CompanySettings</name>
     <message>
-        <location filename="../utils/settings/companysettings.cpp" line="+12"/>
+        <location filename="../utils/settings/companysettings.cpp" line="+13"/>
         <source>On this page you configure your company&apos;s presentation settings.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1189,12 +1189,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>All Settings in this Dialog requires a Application restart!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+15"/>
         <source>Application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1530,6 +1530,11 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+6"/>
+        <source>Create Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+35"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
@@ -1561,7 +1566,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+62"/>
         <source>Unsaved Changes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1728,7 +1733,7 @@ Image - Article Id: %2</source>
     <name>CustomersStatusBar</name>
     <message>
         <location filename="../tabs/customers/customersstatusbar.cpp" line="+15"/>
-        <source>Create</source>
+        <source>Create customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1737,7 +1742,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>History</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1823,7 +1828,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CustomersTableView</name>
     <message>
-        <location filename="../tabs/customers/customerstableview.cpp" line="+62"/>
+        <location filename="../tabs/customers/customerstableview.cpp" line="+59"/>
         <source>Edit selected Customer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1989,8 +1994,13 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>The entry currently being edited can not be saved!</source>
+        <location line="+7"/>
+        <source>Hints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Only the current edited entry can be saved!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2204,12 +2214,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Add Article to Payment list.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3272,12 +3277,22 @@ Image - Article Id: %2</source>
 <context>
     <name>MonthlyReports</name>
     <message>
-        <location filename="../tabs/reports/monthlyreports.cpp" line="+19"/>
+        <location filename="../tabs/reports/monthlyreports.cpp" line="+21"/>
         <source>Monthly Payment reports</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+26"/>
+        <source>Report for </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>total sales</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+62"/>
         <source>Report saved: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5206,6 +5221,14 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>Reports</name>
+    <message>
+        <location filename="../utils/printing/reports.cpp" line="+22"/>
+        <source>Reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ReportsActionGroup</name>
     <message>
         <location filename="../tabs/reports/reportsactiongroup.cpp" line="+17"/>
@@ -5500,7 +5523,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+69"/>
         <source>Cannot open Customers Editor.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5540,12 +5563,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+83"/>
         <source>Invalid arguments to open Customer!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-102"/>
+        <location line="-113"/>
         <source>Customereditor</source>
         <translation type="unfinished"></translation>
     </message>

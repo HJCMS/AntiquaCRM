@@ -5,6 +5,8 @@
 #include "monthlyreportview.h"
 #include "monthselecter.h"
 
+#include <ASettings>
+#include <AntiquaPrinting>
 #include <QDir>
 #include <QFile>
 #include <QLabel>
@@ -37,6 +39,18 @@ MonthlyReports::MonthlyReports(QWidget *parent) : QWidget{parent} {
   connect(m_selecter, SIGNAL(sendSaveReport()), SLOT(saveReport()));
 }
 
+const QString MonthlyReports::printHeader() {
+  AntiquaCRM::ASettings cfg(this);
+  QString total = m_table->salesVolume();
+  QString info = cfg.value("company_fullname","").toString();
+  info.append("\n");
+  info.append(tr("Report for "));
+  info.append(p_date.toString("MMM MM.yyyy") + " - ");
+  info.append(tr("total sales") + " " + total);
+  info.append(cfg.value("payment/currency", "$").toString());
+  return info;
+}
+
 const QFileInfo MonthlyReports::getSaveFile() {
   AntiquaCRM::ASettings cfg(this);
   QDir p_dir(cfg.value("dirs/reports", QDir::homePath()).toString());
@@ -63,8 +77,13 @@ void MonthlyReports::createReport(const QDate &date) {
 }
 
 void MonthlyReports::printReport() {
-  // TODO
-  qDebug() << Q_FUNC_INFO << "TODO";
+  QStringList list = m_table->dataRows();
+  QString info = printHeader();
+  if (list.size() > 0 && !info.isEmpty()) {
+    Reports *m_print = new Reports(this);
+    m_print->setHeaderInfo(info, m_table->dataHeader());
+    m_print->exec(list);
+  }
 }
 
 void MonthlyReports::saveReport() {

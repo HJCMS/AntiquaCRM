@@ -12,6 +12,7 @@ INCLUDE_DIRECTORIES (
 SET (subproject_LINKER
  AntiquaCRM
  AntiquaWidgets
+ AntiquaPrinting
 )
 
 SET (subproject_SOURCES
