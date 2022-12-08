@@ -89,7 +89,7 @@ const QTextTableCellFormat Reports::cellFormat() {
 
 const QTextCharFormat Reports::headerFormat() {
   QFont font;
-  font.fromString(config->value("printer/nromal_font").toString());
+  font.fromString(config->value("printer/normal_font").toString());
   font.setBold(true);
 
   QTextCharFormat format;

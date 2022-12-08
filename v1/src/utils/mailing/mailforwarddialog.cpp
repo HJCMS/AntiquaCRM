@@ -42,7 +42,6 @@ MailForwardDialog::MailForwardDialog(QWidget *parent) : QDialog{parent} {
 
   btn_email = new QPushButton(tr("Mail"), m_btnBox);
   btn_email->setIcon(QIcon(":icons/user_identity.png"));
-  btn_email->setEnabled(false);
   btn_email->setToolTip(tr("Start eMail command"));
   m_btnBox->addButton(btn_email, QDialogButtonBox::ActionRole);
 
@@ -227,7 +226,6 @@ void MailForwardDialog::setBody(const QString &body) {
 void MailForwardDialog::setAttachment(bool b) {
   int invoice = m_keys->getData("o_invoice_id").toInt();
   if (b && invoice > 0) {
-    btn_email->setEnabled(false);
     m_attachmentBar->clear();
     m_attachmentBar->setActive(true);
 
@@ -235,10 +233,10 @@ void MailForwardDialog::setAttachment(bool b) {
     if (m_attachmentBar->setAttachment(id)) {
       btn_email->setEnabled(true);
     } else {
+      btn_email->setEnabled(false);
       m_statusBar->showMessage(tr("Missing Attachment"), 0);
     }
   } else {
-    btn_email->setEnabled(false);
     m_attachmentBar->clear();
   }
 }
