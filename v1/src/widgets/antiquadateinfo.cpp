@@ -3,7 +3,12 @@
 
 #include "antiquadateinfo.h"
 
+#include <QDate>
 #include <QDateTime>
+
+#ifndef FALLBACK_DATE
+#define FALLBACK_DATE QDate(2000,01,01)
+#endif
 
 AntiquaDateInfo::AntiquaDateInfo(QWidget *parent) : InputEdit{parent} {
   m_edit = new QDateTimeEdit(this);
@@ -30,7 +35,9 @@ void AntiquaDateInfo::reset() {
 }
 
 void AntiquaDateInfo::setValue(const QVariant &val) {
-  if (val.type() == QVariant::Date) {
+  if (val.isNull()) {
+    m_edit->setDate(FALLBACK_DATE);
+  } else if (val.type() == QVariant::Date) {
     m_edit->setDate(val.toDate());
   } else if (val.type() == QVariant::DateTime) {
     m_edit->setDateTime(val.toDateTime());

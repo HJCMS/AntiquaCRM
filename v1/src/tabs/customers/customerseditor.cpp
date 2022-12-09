@@ -398,9 +398,8 @@ bool CustomersEditor::openEditEntry(qint64 cutomerId) {
   }
 
   if (status) {
-    importSqlResult();
+    setRestore();
     findPurchases();
-    setEnabled(true);
   }
 
   m_tabWidget->setCurrentIndex(0);
@@ -408,9 +407,9 @@ bool CustomersEditor::openEditEntry(qint64 cutomerId) {
 }
 
 bool CustomersEditor::createNewEntry() {
+  setEnabled(true);
   setInputFields();
   setResetModified(inputFields);
   m_tabWidget->setCurrentIndex(0);
-  setEnabled(true);
   return true;
 }
