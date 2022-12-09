@@ -46,6 +46,11 @@ DeliverServiceDialog::DeliverServiceDialog(QWidget *parent) : QDialog{parent} {
       m_buttonBox->addButton(tr("Create"), QDialogButtonBox::ActionRole);
   ac_create->setIcon(QIcon(":icons/action_add.png"));
 
+  QPushButton *btn_save = m_buttonBox->button(QDialogButtonBox::Save);
+  btn_save->setIcon(QIcon("://icons/action_save.png"));
+  QPushButton *btn_close = m_buttonBox->button(QDialogButtonBox::Close);
+  btn_close->setIcon(QIcon("://icons/action_quit.png"));
+
   layout->addWidget(m_buttonBox);
   layout->setStretch(row++, 0);
 

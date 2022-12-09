@@ -61,9 +61,6 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{"books_tab", parent} {
 
   connect(m_table, SIGNAL(sendCreateNewEntry()), SLOT(createNewEntry()));
 
-  connect(m_table, SIGNAL(sendResultExists(bool)), m_statusBar,
-          SLOT(setCreateButtonEnabled(bool)));
-
   connect(m_table, SIGNAL(sendSocketOperation(const QJsonObject &)),
           SLOT(sendSocketOperation(const QJsonObject &)));
 
@@ -92,27 +89,35 @@ void TabBooks::popupWarningTabInEditMode() {
 void TabBooks::setDefaultTableView() {
   m_editorPage->setEnabled(false);
   m_searchBar->setFilter(0);
-  setCurrentIndex(0);
   m_table->setQuery(m_table->defaultWhereClause());
+  m_statusBar->setCreateButtonEnabled(false);
+  if (currentIndex() != 0)
+    setCurrentIndex(0);
 }
 
 void TabBooks::openStartPage() {
-  if (m_table->rowCount() > 0 && m_table->rowCount() < 20)
+  if (m_table->rowCount() > 0 && m_table->rowCount() < 20) {
+    m_statusBar->setCreateButtonEnabled(false);
     m_table->setReloadView();
-
-  setCurrentIndex(0);
+  }
+  if (currentIndex() != 0)
+    setCurrentIndex(0);
 }
 
 void TabBooks::createSearchQuery(const QString &query) {
-  if (!query.isEmpty()) {
-    m_table->setQuery(query);
+  if (query.isEmpty()) {
+    // Die Standardabfrage wird aufgerufen!
+    QString w_sql = m_searchBar->getSearchStatement();
+    if (m_searchBar->searchLength() > 1 && w_sql.length() > 1) {
+      m_table->setQuery(w_sql);
+      // Nur Aktivieren wenn eine Suche ausgeführt wurde.
+      m_statusBar->setCreateButtonEnabled(true);
+    }
     return;
   }
-
-  QString w_sql = m_searchBar->getSearchStatement();
-  if (m_searchBar->searchLength() > 1 && w_sql.length() > 1) {
-    m_table->setQuery(w_sql);
-  }
+  // Verlaufs und Suchanfrage
+  m_table->setQuery(query);
+  m_statusBar->setCreateButtonEnabled(false);
 }
 
 void TabBooks::createNewEntry() {

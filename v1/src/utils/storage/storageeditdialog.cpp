@@ -19,14 +19,14 @@ StorageEditDialog::StorageEditDialog(QWidget *parent) : QDialog{parent} {
 
   m_toolBar = new QToolBar(this);
   m_toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-  ac_add = m_toolBar->addAction(QIcon(":icons/db_add.png"), tr("new entry"));
+  ac_add = m_toolBar->addAction(QIcon("://icons/db_add.png"), tr("new entry"));
   ac_add->setStatusTip(tr("insert a new storage location"));
   m_toolBar->addSeparator();
   m_search = new QLineEdit(this);
   m_search->setObjectName("search");
   m_toolBar->addWidget(m_search);
   ac_search =
-      m_toolBar->addAction(QIcon(":icons/action_search.png"), tr("search"));
+      m_toolBar->addAction(QIcon("://icons/action_search.png"), tr("search"));
   ac_search->setStatusTip(tr("search in table"));
   m_toolBar->addSeparator();
   layout->addWidget(m_toolBar);
@@ -41,6 +41,12 @@ StorageEditDialog::StorageEditDialog(QWidget *parent) : QDialog{parent} {
   m_btnBox = new QDialogButtonBox(this);
   m_btnBox->setStandardButtons(QDialogButtonBox::Save |
                                QDialogButtonBox::Close);
+
+  QPushButton *btn_save = m_btnBox->button(QDialogButtonBox::Save);
+  btn_save->setIcon(QIcon("://icons/action_save.png"));
+
+  QPushButton *btn_close = m_btnBox->button(QDialogButtonBox::Close);
+  btn_close->setIcon(QIcon("://icons/action_quit.png"));
 
   layout->addWidget(m_btnBox);
 

@@ -12,7 +12,6 @@ AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
   setMinimumSize(QSize(750, 550));
   setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
   setWindowIcon(QIcon(":icons/antiqua.png"));
-  setWindowFlags(Qt::WindowContextHelpButtonHint);
   // setFixedSize(1280, 720); // Only for Testing
 
   m_cfg = new AntiquaCRM::ASettings(this);

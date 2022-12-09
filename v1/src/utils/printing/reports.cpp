@@ -9,12 +9,14 @@
 #include <QDebug>
 #include <QDialogButtonBox>
 #include <QDir>
+#include <QIcon>
 #include <QLayout>
 #include <QPainter>
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
 #include <QPrinter>
 #include <QPrinterInfo>
+#include <QPushButton>
 #include <QTextCursor>
 
 Reports::Reports(QWidget *parent) : QDialog{parent} {
@@ -48,6 +50,13 @@ Reports::Reports(QWidget *parent) : QDialog{parent} {
 
   QDialogButtonBox *btn_box = new QDialogButtonBox(this);
   btn_box->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Close);
+
+  QPushButton *btn_save = btn_box->button(QDialogButtonBox::Ok);
+  btn_save->setIcon(QIcon("://icons/action_ok.png"));
+
+  QPushButton *btn_close = btn_box->button(QDialogButtonBox::Close);
+  btn_close->setIcon(QIcon("://icons/action_quit.png"));
+
   layout->addWidget(btn_box);
 
   m_statusBar = new QStatusBar(this);

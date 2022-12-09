@@ -36,7 +36,7 @@ TemplatesHeader::TemplatesHeader(QWidget *parent) : QFrame{parent} {
   m_subject->setPlaceholderText(tr("Max allowed %1 characters.").arg(128));
   layout->addWidget(m_subject, 1, 1, 1, 1);
 
-  m_attachment = new QCheckBox(tr("Attachment"), this);
+  m_attachment = new QCheckBox(tr("Attachment required"), this);
   m_attachment->setObjectName("tb_attachment");
   layout->addWidget(m_attachment, 1, 2, 1, 1, Qt::AlignRight);
 

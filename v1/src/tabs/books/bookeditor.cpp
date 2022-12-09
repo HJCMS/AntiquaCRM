@@ -606,7 +606,6 @@ void BookEditor::actionEditImages() {
 
 void BookEditor::setRestore() {
   importSqlResult();
-  setEnabled(true);
   ib_count->setFocus();
 }
 
@@ -619,6 +618,7 @@ bool BookEditor::openEditEntry(qint64 articleId) {
   if (ib_id.isEmpty())
     return status;
 
+  setEnabled(true);
   setInputFields();
   QString table = m_tableData->tableName();
   QString query("SELECT * FROM " + table + " WHERE ib_id=" + ib_id + ";");
@@ -645,9 +645,9 @@ bool BookEditor::openEditEntry(qint64 articleId) {
 }
 
 bool BookEditor::createNewEntry() {
+  setEnabled(true);
   setInputFields();
   setResetModified(inputFields);
   m_imageView->clear();
-  setEnabled(true);
   return isEnabled();
 }

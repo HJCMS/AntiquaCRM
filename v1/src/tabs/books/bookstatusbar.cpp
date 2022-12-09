@@ -74,14 +74,14 @@ void BookStatusBar::setHistoryAction(int index) {
 
   case (History::ThisMonth): {
     q.append("date_part('month',ib_changed)=date_part('month',CURRENT_DATE)");
-    q.append(" AND " + year + " AND ib_count>0");
+    q.append(" AND " + year);
     break;
   }
 
   case (History::LastMonth): {
     q.append(
         "date_part('month',ib_changed)=date_part('month',CURRENT_DATE - 31)");
-    q.append(" AND " + year + " AND ib_count>0");
+    q.append(" AND " + year);
     break;
   }
 
