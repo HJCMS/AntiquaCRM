@@ -154,7 +154,7 @@
 <context>
     <name>AntiquaDateInfo</name>
     <message>
-        <location filename="../widgets/antiquadateinfo.cpp" line="+78"/>
+        <location filename="../widgets/antiquadateinfo.cpp" line="+85"/>
         <source>A Valid Date is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -285,7 +285,7 @@
 <context>
     <name>AntiquaWindow</name>
     <message>
-        <location filename="../antiquawindow.cpp" line="+77"/>
+        <location filename="../antiquawindow.cpp" line="+70"/>
         <source>Save request</source>
         <translation type="unfinished"></translation>
     </message>
@@ -916,7 +916,7 @@ Image - Article Id: %2</source>
 <context>
     <name>BookTableView</name>
     <message>
-        <location filename="../tabs/books/booktableview.cpp" line="+67"/>
+        <location filename="../tabs/books/booktableview.cpp" line="+66"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1828,7 +1828,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CustomersTableView</name>
     <message>
-        <location filename="../tabs/customers/customerstableview.cpp" line="+59"/>
+        <location filename="../tabs/customers/customerstableview.cpp" line="+56"/>
         <source>Edit selected Customer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3080,7 +3080,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>Start eMail command</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3376,12 +3376,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+54"/>
         <source>European Countries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-33"/>
+        <location line="-29"/>
         <source>vat included</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3391,7 +3391,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-17"/>
+        <location line="-23"/>
         <source>add delivery package price</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3401,7 +3401,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+13"/>
+        <source>VAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
         <source>Delivery-/Invoice Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3502,7 +3507,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+78"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3517,7 +3522,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+87"/>
+        <location line="+96"/>
         <source>A Article can&apos;t inserted, if no Order-/Customer Id exists.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3527,23 +3532,23 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+150"/>
         <source>Order saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-33"/>
-        <location line="+91"/>
+        <location line="+82"/>
         <source>No SQL Articles exist!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-69"/>
+        <location line="-60"/>
         <source>No Modifications found, nothing todo!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+66"/>
         <source>Save Articles success!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3565,15 +3570,15 @@ Image - Article Id: %2</source>
     <message>
         <location line="+17"/>
         <location line="+20"/>
-        <location line="+41"/>
-        <location line="+32"/>
-        <location line="+36"/>
+        <location line="+39"/>
+        <location line="+30"/>
+        <location line="+39"/>
         <location line="+80"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-204"/>
+        <location line="-203"/>
         <source>Incomplete eMail configuration!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3583,26 +3588,25 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
-        <location line="+41"/>
+        <location line="-472"/>
         <source>Missing Deliverynote Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-31"/>
+        <location line="+494"/>
         <source>Missing Delivery Address!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+31"/>
+        <location line="+29"/>
         <source>No Data found! - Printing canceled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-22"/>
-        <location line="+33"/>
-        <location line="+36"/>
+        <location line="-20"/>
+        <location line="+31"/>
+        <location line="+39"/>
         <source>Printdialog closed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3617,7 +3621,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+166"/>
+        <location line="+167"/>
         <source>No Provider orders data found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5197,6 +5201,11 @@ Image - Article Id: %2</source>
         <source>Reports</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+171"/>
+        <source>PDF File written.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ReportsActionGroup</name>
@@ -5470,7 +5479,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+67"/>
         <source>Can&apos;t open this Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5493,7 +5502,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+70"/>
         <source>Cannot open Customers Editor.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5508,7 +5517,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+13"/>
         <source>Do you really want to delete this customer?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5538,7 +5547,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-113"/>
+        <location line="-120"/>
         <source>Customereditor</source>
         <translation type="unfinished"></translation>
     </message>

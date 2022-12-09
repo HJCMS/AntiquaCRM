@@ -22,10 +22,10 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
   o_delivery_send_id->setInfo(tr("Parcel Shipment Number"));
   firstLayout->addWidget(o_delivery_send_id, p1_row++, 0, 1, 3);
 
-  o_delivery = new DeliveryId(m_deliveryTab);
-  o_delivery->setObjectName("o_delivery");
-  o_delivery->setInfo(tr("Delivery note number"));
-  firstLayout->addWidget(o_delivery, p1_row, 0, 1, 1);
+  o_delivery_note_id = new DeliveryId(m_deliveryTab);
+  o_delivery_note_id->setObjectName("o_delivery");
+  o_delivery_note_id->setInfo(tr("Delivery note number"));
+  firstLayout->addWidget(o_delivery_note_id, p1_row, 0, 1, 1);
 
   o_delivery_add_price = new BoolBox(m_deliveryTab);
   o_delivery_add_price->setObjectName("o_delivery_add_price");
@@ -42,6 +42,12 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
   o_delivery_package->setVisible(false); // HIDDEN
   firstLayout->addWidget(o_delivery_package, p1_row++, 2, 1, 1);
 
+  o_vat_levels = new TaxLevelBox(m_deliveryTab);
+  o_vat_levels->setObjectName("o_vat_levels");
+  o_vat_levels->setInfo(tr("VAT"));
+  o_vat_levels->setValue(2);
+  firstLayout->addWidget(o_vat_levels, p1_row, 0, 1, 1, Qt::AlignRight);
+
   o_vat_included = new BoolBox(m_deliveryTab);
   o_vat_included->setInfo(tr("vat included"));
   o_vat_included->setObjectName("o_vat_included");
@@ -49,11 +55,7 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
       tr("Normally the vat is included in Book articles. Uncheck it to enable "
          "add VAT in Printing Invoice."));
   o_vat_included->setChecked(true);
-  firstLayout->addWidget(o_vat_included, p1_row, 0, 1, 1, Qt::AlignRight);
-
-  o_vat_levels = new TaxLevelBox(m_deliveryTab);
-  o_vat_levels->setObjectName("o_vat_levels");
-  firstLayout->addWidget(o_vat_levels, p1_row++, 1, 1, 1);
+  firstLayout->addWidget(o_vat_included, p1_row++, 1, 1, 1);
 
   firstLayout->setRowStretch(p1_row++, 1);
 

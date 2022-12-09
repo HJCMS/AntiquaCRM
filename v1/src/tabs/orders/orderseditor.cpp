@@ -97,7 +97,8 @@ OrdersEditor::OrdersEditor(QWidget *parent)
           SLOT(createPrintPaymentReminder()));
   connect(m_actionBar, SIGNAL(sendCancelClicked()),
           SLOT(setFinalLeaveEditor()));
-  connect(m_actionBar, SIGNAL(sendAddCustomAction()), SLOT(openSearchAddArticle()));
+  connect(m_actionBar, SIGNAL(sendAddCustomAction()),
+          SLOT(openSearchAddArticle()));
   connect(m_actionBar, SIGNAL(sendSaveClicked()), SLOT(setSaveData()));
   connect(m_actionBar, SIGNAL(sendFinishClicked()),
           SLOT(setCheckLeaveEditor()));
@@ -175,6 +176,15 @@ void OrdersEditor::generateDeliveryNumber(qint64 orderId) {
   m_tableData->setValue("o_delivery", QString());
   // getInputEdit("o_delivery")->setValue(dn);
   setDataField(m_tableData->getProperties("o_delivery"), dn);
+}
+
+bool OrdersEditor::checkDeliveryNumber() {
+  QString id = getDataValue("o_delivery").toString();
+  if (id.isEmpty() || id.length() < 8) {
+    sendStatusMessage(tr("Missing Deliverynote Number"));
+    return false;
+  }
+  return true;
 }
 
 void OrdersEditor::setOrderPaymentNumbers(qint64 orderId) {
@@ -300,17 +310,11 @@ void OrdersEditor::createSqlUpdate() {
   if (oid < 1)
     return;
 
-  // Auftrags Nummer
-  if (!o_id->isRequired())
-    o_id->setRequired(true);
-
-  // Rechnungs Nummer
-  if (!o_invoice_id->isRequired())
-    o_invoice_id->setRequired(true);
-
-  // Lieferschein Nummer
-  if (!m_costSettings->o_delivery->isRequired())
-    m_costSettings->o_delivery->setRequired(true);
+  // Nach einem INSERT wieder aktivieren!
+  QStringList requiredFields({"o_id", "o_invoice_id", "o_delivery"});
+  foreach (QString objName, requiredFields) {
+    getInputEdit(objName)->setRequired(true);
+  }
 
   QHash<QString, QVariant> data = createSqlDataset();
   if (data.size() < 1)
@@ -379,18 +383,9 @@ void OrdersEditor::createSqlUpdate() {
 void OrdersEditor::createSqlInsert() {
   // Werden vom INSERT erstellt!
   QStringList insertIgnore({"o_id", "o_invoice_id", "o_delivery"});
-
-  // Auftrags Nummer
-  if (o_id->isRequired())
-    o_id->setRequired(false);
-
-  // Rechnungs Nummer
-  if (o_invoice_id->isRequired())
-    o_invoice_id->setRequired(false);
-
-  // Lieferschein Nummer
-  if (m_costSettings->o_delivery->isRequired())
-    m_costSettings->o_delivery->setRequired(false);
+  foreach (QString objName, insertIgnore) {
+    getInputEdit(objName)->setRequired(false);
+  }
 
   QHash<QString, QVariant> data = createSqlDataset();
   if (data.size() < 1)
@@ -670,12 +665,10 @@ void OrdersEditor::createPrintDeliveryNote() {
     return;
   }
 
-  QString did = getDataValue("o_delivery").toString();
-  if (did.isEmpty()) {
-    sendStatusMessage(tr("Missing Deliverynote Number"));
+  if (!checkDeliveryNumber())
     return;
-  }
 
+  QString did = getDataValue("o_delivery").toString();
   QString c_add = getDataValue("c_shipping_address").toString();
   if (c_add.isEmpty()) {
     c_add = getDataValue("c_postal_address").toString();
@@ -711,12 +704,10 @@ void OrdersEditor::createPrintInvoiceNote() {
     return;
   }
 
-  QString did = getDataValue("o_delivery").toString();
-  if (did.isEmpty()) {
-    sendStatusMessage(tr("Missing Deliverynote Number"));
+  if (!checkDeliveryNumber())
     return;
-  }
 
+  QString did = getDataValue("o_delivery").toString();
   QList<BillingInfo> list = queryBillingInfo(ids.or_id, ids.cu_id);
   if (list.size() < 1) {
     sendStatusMessage(tr("No Data found! - Printing canceled."));
@@ -742,6 +733,9 @@ void OrdersEditor::createPrintPaymentReminder() {
     sendStatusMessage(tr("Missing essential Ids, save Order first!"));
     return;
   }
+
+  if (!checkDeliveryNumber())
+    return;
 
   QString did = getDataValue("o_delivery").toString();
   QString c_add = getDataValue("c_postal_address").toString();
@@ -844,8 +838,8 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
     importSqlResult();
     setResetModified(inputFields);
     // Fehlende Lieferscheinnummer ergänzen, muss nach setResetModified kommen!
-    if (getDataValue("o_delivery").toString().isEmpty())
-      generateDeliveryNumber(orderId);
+    // if (getDataValue("o_delivery").toString().isEmpty())
+    //  generateDeliveryNumber(orderId);
 
     setEnabled(true);
   }
@@ -859,6 +853,7 @@ bool OrdersEditor::addArticle(qint64 articleId) {
     return false;
   }
   if (addArticleToOrderTable(articleId)) {
+    // FIXME
     getInputEdit("o_delivery")->setModified(true);
     return true;
   }

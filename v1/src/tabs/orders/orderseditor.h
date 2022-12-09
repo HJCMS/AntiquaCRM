@@ -38,6 +38,8 @@ private:
 
   void generateDeliveryNumber(qint64 orderId);
 
+  inline bool checkDeliveryNumber();
+
   void setOrderPaymentNumbers(qint64 orderId);
 
   struct IdsCheck {

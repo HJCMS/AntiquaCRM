@@ -154,7 +154,7 @@
 <context>
     <name>AntiquaDateInfo</name>
     <message>
-        <location filename="../widgets/antiquadateinfo.cpp" line="+78"/>
+        <location filename="../widgets/antiquadateinfo.cpp" line="+85"/>
         <source>A Valid Date is required!</source>
         <translation>Ein gültigesDatum ist erforderlich!</translation>
     </message>
@@ -285,7 +285,7 @@
 <context>
     <name>AntiquaWindow</name>
     <message>
-        <location filename="../antiquawindow.cpp" line="+77"/>
+        <location filename="../antiquawindow.cpp" line="+70"/>
         <source>Save request</source>
         <translation>Speichernanfrage</translation>
     </message>
@@ -918,7 +918,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>BookTableView</name>
     <message>
-        <location filename="../tabs/books/booktableview.cpp" line="+67"/>
+        <location filename="../tabs/books/booktableview.cpp" line="+66"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
@@ -1830,7 +1830,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CustomersTableView</name>
     <message>
-        <location filename="../tabs/customers/customerstableview.cpp" line="+59"/>
+        <location filename="../tabs/customers/customerstableview.cpp" line="+56"/>
         <source>Edit selected Customer</source>
         <translation>Ausgewählten Kunden bearbeiten</translation>
     </message>
@@ -3082,7 +3082,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>E-Mail</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>Start eMail command</source>
         <translation>E-Mail-Befehl starten</translation>
     </message>
@@ -3378,12 +3378,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Lieferscheinnummer</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+54"/>
         <source>European Countries</source>
         <translation>Europäische Länder</translation>
     </message>
     <message>
-        <location line="-33"/>
+        <location line="-29"/>
         <source>vat included</source>
         <translation>inkl. MwSt</translation>
     </message>
@@ -3393,7 +3393,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Üblicherweise ist bei Buchartikeln die Mehrwertsteuer enthalten. Deaktivieren Sie es, um das Hinzufügen von Mehrwertsteuer beim Drucken von Rechnungen zu aktivieren.</translation>
     </message>
     <message>
-        <location line="-17"/>
+        <location line="-23"/>
         <source>add delivery package price</source>
         <translation>Lieferpaketpreis hinzufügen (Porto)</translation>
     </message>
@@ -3403,7 +3403,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Lieferpaketpreis zum aktuellen Versand hinzufügen.</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+13"/>
+        <source>VAT</source>
+        <translation>Mehrwertsteuer (MwSt)</translation>
+    </message>
+    <message>
+        <location line="+17"/>
         <source>Delivery-/Invoice Settings</source>
         <translation>Liefer-/Rechnungseinstellungen</translation>
     </message>
@@ -3504,7 +3509,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Ändert den aktuellen Auftragsstatus.</translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+78"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -3519,7 +3524,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
-        <location line="+87"/>
+        <location line="+96"/>
         <source>A Article can&apos;t inserted, if no Order-/Customer Id exists.</source>
         <translation>Ein Artikel kann nicht eingefügt werden, wenn keine Bestell-/Kundennummer vorhanden ist.</translation>
     </message>
@@ -3529,23 +3534,23 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bitte speichern Sie zuerst Ihren Auftrag.</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+150"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag erfolgreich gespeichert!</translation>
     </message>
     <message>
         <location line="-33"/>
-        <location line="+91"/>
+        <location line="+82"/>
         <source>No SQL Articles exist!</source>
         <translation>Es sind keine SQL-Artikel vorhanden!</translation>
     </message>
     <message>
-        <location line="-69"/>
+        <location line="-60"/>
         <source>No Modifications found, nothing todo!</source>
         <translation>Keine Änderungen gefunden, es gibt nichts zu tun!</translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+66"/>
         <source>Save Articles success!</source>
         <translation>Artikel speichern erfolgreich!</translation>
     </message>
@@ -3567,15 +3572,15 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+17"/>
         <location line="+20"/>
-        <location line="+41"/>
-        <location line="+32"/>
-        <location line="+36"/>
+        <location line="+39"/>
+        <location line="+30"/>
+        <location line="+39"/>
         <location line="+80"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation>Fehlende wichtige IDs, Bestellung zuerst speichern!</translation>
     </message>
     <message>
-        <location line="-204"/>
+        <location line="-203"/>
         <source>Incomplete eMail configuration!</source>
         <translation>Unvollständige E-Mail-Konfiguration!</translation>
     </message>
@@ -3585,26 +3590,25 @@ Bild - Artikel Nr: %2</translation>
         <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <location line="+41"/>
+        <location line="-472"/>
         <source>Missing Deliverynote Number</source>
         <translation>Fehlende Lieferscheinnummer</translation>
     </message>
     <message>
-        <location line="-31"/>
+        <location line="+494"/>
         <source>Missing Delivery Address!</source>
         <translation>Lieferadresse fehlt!</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+31"/>
+        <location line="+29"/>
         <source>No Data found! - Printing canceled.</source>
         <translation>Keine Daten gefunden! - Druckvorgang abgebrochen.</translation>
     </message>
     <message>
-        <location line="-22"/>
-        <location line="+33"/>
-        <location line="+36"/>
+        <location line="-20"/>
+        <location line="+31"/>
+        <location line="+39"/>
         <source>Printdialog closed.</source>
         <translation>Drucken-Dialog geschlossen.</translation>
     </message>
@@ -3619,7 +3623,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Keine Daten gefunden! - Druckvorgang abgebrochen.</translation>
     </message>
     <message>
-        <location line="+166"/>
+        <location line="+167"/>
         <source>No Provider orders data found!</source>
         <translation>Keine Dienstleister-Auftragsdaten gefunden!</translation>
     </message>
@@ -5199,6 +5203,11 @@ Bild - Artikel Nr: %2</translation>
         <source>Reports</source>
         <translation>Berichte</translation>
     </message>
+    <message>
+        <location line="+171"/>
+        <source>PDF File written.</source>
+        <translation>PDF-Datei erstellt.</translation>
+    </message>
 </context>
 <context>
     <name>ReportsActionGroup</name>
@@ -5472,7 +5481,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bücher</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+67"/>
         <source>Can&apos;t open this Article</source>
         <translation>Dieser Artikel kann nicht geöffnet werden</translation>
     </message>
@@ -5495,7 +5504,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kunden</translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+70"/>
         <source>Cannot open Customers Editor.</source>
         <translation>Der Kundeneditor kann nicht geöffnet werden.</translation>
     </message>
@@ -5510,7 +5519,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bitte speichern und schließen Sie zuerst den geöffneten Kundeneditor.</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+13"/>
         <source>Do you really want to delete this customer?</source>
         <translation>Möchten Sie diesen Kunden wirklich löschen?</translation>
     </message>
@@ -5540,7 +5549,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Ungültige Argumente zum Öffnen des Kunden!</translation>
     </message>
     <message>
-        <location line="-113"/>
+        <location line="-120"/>
         <source>Customereditor</source>
         <translation>Kundeneditor</translation>
     </message>
