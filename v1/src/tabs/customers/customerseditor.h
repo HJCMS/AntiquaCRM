@@ -28,6 +28,8 @@ private:
   CustomersOrders *m_ordersWidget;
   EditorActionBar *m_actionBar;
 
+  const QString generateProviderId();
+
   void setInputFields() override;
   bool setDataField(const QSqlField &field, const QVariant &value) override;
   void importSqlResult() override;

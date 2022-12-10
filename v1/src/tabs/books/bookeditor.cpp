@@ -234,7 +234,6 @@ BookEditor::BookEditor(QWidget *parent)
   mainLayout->addWidget(m_actionBar);
 
   setLayout(mainLayout);
-  setEnabled(false);
 
   // Signals:ImageToolBar
   connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)),
@@ -299,6 +298,8 @@ bool BookEditor::setDataField(const QSqlField &field, const QVariant &value) {
 
   QString key = field.name();
   bool required = (field.requiredStatus() == QSqlField::Required);
+
+  qDebug() << Q_FUNC_INFO << field;
 
   InputEdit *inp = findChild<InputEdit *>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
@@ -562,7 +563,6 @@ void BookEditor::setFinalLeaveEditor() {
   setResetInputFields();
   m_actionBar->setRestoreable(false); /**< ResetButton off */
   m_imageView->clear();               /**< Bildvorschau leeren */
-  setEnabled(false);                  /**< prevent Key Bindings */
   emit sendLeaveEditor();             /**< Back to MainView */
 }
 
@@ -620,7 +620,6 @@ bool BookEditor::openEditEntry(qint64 articleId) {
   if (ib_id.isEmpty())
     return status;
 
-  setEnabled(true);
   setInputFields();
   QString table = m_tableData->tableName();
   QString query("SELECT * FROM " + table + " WHERE ib_id=" + ib_id + ";");
@@ -647,9 +646,15 @@ bool BookEditor::openEditEntry(qint64 articleId) {
 }
 
 bool BookEditor::createNewEntry() {
-  setEnabled(true);
   setInputFields();
-  setResetModified(inputFields);
   m_imageView->clear();
+  foreach (QString column, m_tableData->columnNames()) {
+    QSqlField field = m_tableData->getProperties(column);
+    if (column == "ib_id")
+      field.setRequired(false);
+
+    setDefaultInput(field);
+  }
+  setResetModified(inputFields);
   return isEnabled();
 }

@@ -87,7 +87,6 @@ void TabBooks::popupWarningTabInEditMode() {
 }
 
 void TabBooks::setDefaultTableView() {
-  m_editorPage->setEnabled(false);
   m_searchBar->setClearAndFocus();
   m_table->setQuery(m_table->defaultWhereClause());
   m_statusBar->setCreateButtonEnabled(false);

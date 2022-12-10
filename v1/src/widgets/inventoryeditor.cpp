@@ -67,6 +67,45 @@ bool InventoryEditor::isIgnoredField(const QString &fieldName) {
   return false;
 }
 
+void InventoryEditor::setDefaultInput(const QSqlField &field) {
+  QSqlField sqlField(field);
+  if (!field.defaultValue().isNull()) {
+    /** @bug Invalid Datatypes from QsqlField */
+    QVariant from = field.defaultValue();
+    QVariant value;
+    switch (field.type()) {
+    case QVariant::Bool:
+      value = from.toBool();
+      break;
+
+    case QVariant::Int:
+    case QVariant::LongLong:
+      value = from.toInt();
+      break;
+
+    case QVariant::Double:
+      value = from.toDouble();
+      break;
+
+    default: {
+      QString buffer = from.toString();
+      if (buffer == "CURRENT_TIMESTAMP") {
+        sqlField.setType(QVariant::DateTime);
+        value = QDateTime::currentDateTime();
+      } else if (buffer == "CURRENT_DATE") {
+        sqlField.setType(QVariant::Date);
+        value = QDate::currentDate();
+      } else {
+        value = buffer;
+      }
+    } break;
+    };
+    setDataField(sqlField, value);
+  } else {
+    setProperties(sqlField.name(), sqlField);
+  }
+}
+
 void InventoryEditor::setResetModified(const QStringList &objectList) {
   if (objectList.isEmpty()) {
     qWarning("Empty list");

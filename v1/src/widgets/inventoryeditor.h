@@ -104,6 +104,13 @@ protected:
   AntiquaCRM::ASqlDataQuery *m_tableData;
 
   /**
+   * @brief Setze Standard Eingabefeld Optionen
+   * Wird nur bei \ref createNewEntry() benötigt!
+   * @note Benötigt AntiquaCRM::ASqlDataQuery
+   */
+  void setDefaultInput(const QSqlField &);
+
+  /**
    * @brief Mit Zeiger auf Objekt-/Feldnamen Datenfeld befüllen.
    * @param field - Ist der SQL Datenfeldbezeichner der Identisch mit dem
    * Eingabe::Objektnamen ist.

@@ -48,7 +48,6 @@ CustomersEditor::CustomersEditor(QWidget *parent)
   mainLayout->addWidget(m_actionBar);
 
   setLayout(mainLayout);
-  setEnabled(false);
 
   // Signals:ActionBar
   connect(m_actionBar, SIGNAL(sendCancelClicked()),
@@ -63,12 +62,19 @@ CustomersEditor::CustomersEditor(QWidget *parent)
           SLOT(setCreateOrderSignal()));
 }
 
+const QString CustomersEditor::generateProviderId() {
+  QString str = getDataValue("c_firstname").toString();
+  str.append(" ");
+  str.append(getDataValue("c_lastname").toString());
+  return str;
+}
+
 void CustomersEditor::setInputFields() {
   m_tableData = new AntiquaCRM::ASqlDataQuery("customers");
   inputFields = m_tableData->columnNames();
   // Dienstleister(Uniq Key) Ist hier nicht erfordelich!
-  inputFields.removeOne("c_provider_import");
-  // Wird Manuell gesetzt!
+  // Wird später bei einem INSERT Manuel gesetzt!
+  ignoreFields << "c_provider_import";
   ignoreFields << "c_changed";
   // Diese Felder bei (INSERT|UPDATE) Ignorieren!
   ignoreFields << "c_since";
@@ -272,6 +278,10 @@ void CustomersEditor::createSqlInsert() {
     }
   }
 
+  // Erstelle »c_provider_import«
+  column.append("c_provider_import");
+  values.append("'" + generateProviderId() + "'");
+
   QString sql("INSERT INTO customers (");
   sql.append(column.join(","));
   sql.append(",c_changed) VALUES (");
@@ -367,10 +377,7 @@ void CustomersEditor::setCreateMailMessage(const QString &action) {
   sendStatusMessage(tr("Send eMail finished!"));
 }
 
-void CustomersEditor::setRestore() {
-  importSqlResult();
-  setEnabled(true);
-}
+void CustomersEditor::setRestore() { importSqlResult(); }
 
 bool CustomersEditor::openEditEntry(qint64 cutomerId) {
   bool status = false;
@@ -407,8 +414,14 @@ bool CustomersEditor::openEditEntry(qint64 cutomerId) {
 }
 
 bool CustomersEditor::createNewEntry() {
-  setEnabled(true);
   setInputFields();
+  foreach (QString column, m_tableData->columnNames()) {
+    QSqlField field = m_tableData->getProperties(column);
+    if (column == "c_id")
+      field.setRequired(false);
+
+    setDefaultInput(field);
+  }
   setResetModified(inputFields);
   m_tabWidget->setCurrentIndex(0);
   return true;

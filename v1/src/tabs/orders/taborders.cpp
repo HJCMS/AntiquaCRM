@@ -83,14 +83,12 @@ void TabOrders::popupWarningTabInEditMode() {
 }
 
 void TabOrders::setDefaultTableView() {
-  m_editorPage->setEnabled(false);
   m_searchBar->setClearAndFocus();
   setCurrentIndex(0);
   m_table->setQuery(m_table->defaultWhereClause());
 }
 
 void TabOrders::openStartPage() {
-  m_editorPage->setEnabled(false);
   if (m_table->rowCount() > 0 && m_table->rowCount() < 50)
     m_table->setReloadView();
 
@@ -119,7 +117,6 @@ void TabOrders::openEntry(qint64 o_id) {
   }
 
   if (m_editorWidget->openEditEntry(o_id)) {
-    m_editorPage->setEnabled(true);
     setCurrentWidget(m_editorPage);
   }
 }
@@ -127,7 +124,6 @@ void TabOrders::openEntry(qint64 o_id) {
 void TabOrders::onEnterChanged() {
   if (!initialed) {
     initialed = m_table->setQuery();
-    m_editorPage->setEnabled(false);
     setCurrentIndex(0);
   }
 }
@@ -180,7 +176,6 @@ bool TabOrders::customAction(const QJsonObject &obj) {
       return false;
     }
     if (m_editorWidget->createNewProviderOrder(obj)) {
-      m_editorPage->setEnabled(true);
       setCurrentWidget(m_editorPage);
       return true;
     }
@@ -191,7 +186,6 @@ bool TabOrders::customAction(const QJsonObject &obj) {
       return false;
     }
     if (m_editorWidget->createNewOrder(c_id)) {
-      m_editorPage->setEnabled(true);
       setCurrentWidget(m_editorPage);
       return true;
     }
