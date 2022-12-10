@@ -259,6 +259,8 @@ void BookEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "ib_since";
   ignoreFields << "ib_changed";
+  // OBSOLETE
+  ignoreFields << "ib_category_subject";
 
   m_tableData = new AntiquaCRM::ASqlDataQuery("inventory_books");
   inputFields = m_tableData->columnNames();
