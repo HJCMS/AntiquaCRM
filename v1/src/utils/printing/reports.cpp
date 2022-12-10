@@ -81,6 +81,18 @@ void Reports::printerConfiguration() {
   p_printerName = config->value("DIN_A4_Printer").toString();
   config->endGroup();
 
+  if (p_printerName.isEmpty()) {
+    qWarning("No Printer configuration start search default.");
+    QListIterator<QPrinterInfo> printers(QPrinterInfo::availablePrinters());
+    while (printers.hasNext()) {
+      QPrinterInfo pr = printers.next();
+      if (pr.isDefault()) {
+        p_printerName = pr.printerName();
+        break;
+      }
+    }
+  }
+
   QString dstr = QDateTime::currentDateTime().toString("yyyy.MM.dd_HHmm");
   QString dest = config->value("dirs/reports").toString();
   dest.append(QDir::separator());
@@ -217,9 +229,6 @@ void Reports::openPrintDialog() {
   printer->setPrinterName(p_printerName);
   printer->setOutputFormat(QPrinter::PdfFormat);
   printer->setCreator("AntiquaCRM");
-#ifdef Q_OS_WIN
-  printer->setPaperSource(p_paperSource);
-#endif
 
   QPrintDialog *dialog = new QPrintDialog(printer, m_edit);
   dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);

@@ -26,11 +26,12 @@ SET (query_tables_FILES
   query_tab_books_main.sql
   query_tab_customers_main.sql
   query_tab_orders_main.sql
-  query_template_body.sql
   query_template_keys.sql
   query_views.sql
   select_statement_postalcode_tables.sql
+  select_statement_template_body.sql
   union_template_keys.sql
+  union_template_values.sql
 )
 
 IF (CMAKE_HOST_WIN32)
@@ -41,4 +42,3 @@ ELSE (CMAKE_HOST_WIN32)
    COMPONENT data
  )
 ENDIF (CMAKE_HOST_WIN32)
-

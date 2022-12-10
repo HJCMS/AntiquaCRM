@@ -31,7 +31,8 @@ private:
 
 public:
   explicit AntiquaTemplates(QObject *parent = nullptr);
-  const QString getTemplate(const QString &whereClause);
+  const QString getTemplate(const QString &caller,
+                            const QString &whereClause);
 };
 
 #endif // ANTIQUATEMPLATES_H

@@ -207,9 +207,7 @@ void Assistant::nextPage() {
   unsaved = true;
 }
 
-void Assistant::beforeAccept() {
-  qInfo("Assistant finished!");
-}
+void Assistant::beforeAccept() { qInfo("Assistant finished!"); }
 
 void Assistant::beforeClose() {
   unsaved = true;
@@ -217,19 +215,23 @@ void Assistant::beforeClose() {
 }
 
 void Assistant::runTest() {
-  if(connectionTest()) {
+  if (connectionTest()) {
     save();
     qInfo("Assistant connection success and saved!");
   }
 }
 
 void Assistant::save() {
-  QMapIterator<QString, QString> sql(m_configPgSQL->configuration());
-  QString profile = cfg->value("database_profile", "Default").toString();
+  QMap<QString, QString> pgconf = m_configPgSQL->configuration();
+  QMapIterator<QString, QString> sql(pgconf);
+  QString profile = pgconf.value("database_profile");
+  profile = (profile.isEmpty() ? "Default" : profile);
+  cfg->setValue("database_profile", profile);
+
   cfg->beginGroup("database/" + profile);
   while (sql.hasNext()) {
     sql.next();
-    if (sql.value().isNull())
+    if (sql.value().isNull() || sql.key() == "database_profile")
       continue;
 
     cfg->setValue(sql.key(), sql.value());

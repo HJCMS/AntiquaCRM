@@ -5,10 +5,15 @@
 
 CacheQuery::CacheQuery(AntiquaCRM::ASqlCore *pgsql) : QObject{}, m_sql{pgsql} {}
 
+bool CacheQuery::isCacheUpdateRequired(const QString &name) {
+  AntiquaCRM::ASharedDataFiles p_store;
+  return p_store.needsUpdate(name);
+}
+
 bool CacheQuery::saveDocument(const QString &key,
                               const QJsonDocument &json) const {
   AntiquaCRM::ASharedDataFiles p_store;
-  return (p_store.storeJson(key, json));
+  return p_store.storeJson(key, json);
 }
 
 const QJsonArray CacheQuery::createTable(const QString &query) {
@@ -39,6 +44,9 @@ bool CacheQuery::createCache(const CacheConfig &config) {
 }
 
 bool CacheQuery::postalCodes() {
+  if (!isCacheUpdateRequired("postalcodes"))
+    return false;
+
   QString sql = AntiquaCRM::ASqlFiles::queryStatement("query_postal_codes");
   if (sql.isEmpty())
     return false;

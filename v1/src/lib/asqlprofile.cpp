@@ -3,6 +3,8 @@
 
 #include "asqlprofile.h"
 
+#include <QUrl>
+
 namespace AntiquaCRM {
 
 ASqlProfile::ASqlProfile(const QString &profile) : p_profile(profile) {}
@@ -66,7 +68,10 @@ void ASqlProfile::setSslBundle(const QString &filePath) {
   ssl_bundle = filePath;
 }
 
-const QString ASqlProfile::getSslBundle() { return ssl_bundle; }
+const QString ASqlProfile::getSslBundle() {
+  QUrl url(ssl_bundle);
+  return url.toString(QUrl::EncodeSpaces);
+}
 
 void ASqlProfile::setSslMode(const QString &mode) { ssl_mode = mode; }
 
@@ -76,6 +81,9 @@ void ASqlProfile::setSslRootCert(const QString &filePath) {
   ssl_root_cert = filePath;
 }
 
-const QString ASqlProfile::getSslRootCert() { return ssl_root_cert; }
+const QString ASqlProfile::getSslRootCert() {
+  QUrl url(ssl_root_cert);
+  return url.toString(QUrl::EncodeSpaces);
+}
 
 }; // namespace AntiquaCRM

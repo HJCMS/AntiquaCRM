@@ -2,15 +2,12 @@
 // vim: set fileencoding=utf-8
 
 #include "ashareddatafiles.h"
-#include "aglobal.h"
-#include "asettings.h"
 
-#include <QDataStream>
-#include <QDir>
+#include <QDateTime>
 #include <QFile>
 #include <QFileInfo>
+#include <QJsonObject>
 #include <QJsonParseError>
-#include <QStandardPaths>
 #include <QTextStream>
 
 namespace AntiquaCRM {
@@ -25,6 +22,29 @@ const QStringList ASharedDataFiles::dataFiles() {
 
 const QStringList ASharedDataFiles::defaultFilter() {
   return QStringList({"*.xml", "*.sql", "*.json"});
+}
+
+bool ASharedDataFiles::needsUpdate(const QString &basename,
+                                   const QStringList &ext) {
+  if (ext.count() > 0)
+    setNameFilters(ext);
+
+  bool status = false;
+  QDateTime dt;
+  QFileInfoList li = entryInfoList((QDir::Files | QDir::Writable), QDir::Name);
+  foreach (QFileInfo i, li) {
+    if (i.baseName() == basename) {
+      status = true;
+      dt = i.fileTime(QFileDevice::FileMetadataChangeTime);
+      break;
+    }
+  }
+  setNameFilters(defaultFilter());
+
+  if (status)
+    return (dt.date() == QDate::currentDate()) ? false : true;
+
+  return false;
 }
 
 bool ASharedDataFiles::fileExists(const QString &basename,

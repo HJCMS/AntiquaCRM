@@ -19,6 +19,7 @@ class CacheQuery final : public QObject {
 
 private:
   AntiquaCRM::ASqlCore *m_sql;
+  bool isCacheUpdateRequired(const QString &name);
   bool saveDocument(const QString &key, const QJsonDocument &json) const;
   const QList<QPair<QString, QString>> tableList();
   const QJsonArray createTable(const QString &query);

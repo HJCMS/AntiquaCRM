@@ -168,9 +168,9 @@ void MessageTemplates::saveCurrentTemplate() {
     qDebug() << sql << m_sql->lastError();
 #endif
   }
-  m_tplTree->clearTree();
 
-  createTemplateTree();
+  if (m_tplTree->clearTree())
+    createTemplateTree();
 }
 
 void MessageTemplates::setEditTemplate(const QJsonObject &obj) {

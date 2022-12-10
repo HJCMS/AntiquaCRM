@@ -59,6 +59,7 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   row1->setContentsMargins(5, 2, 5, 2);
   m_customerInfo = new OrdersCustomerInfo(this);
   row1->addWidget(m_customerInfo);
+  // TabWidget
   m_costSettings = new OrdersCostSettings(this);
   row1->addWidget(m_costSettings);
   row1->setStretch(1, 1);
@@ -752,8 +753,7 @@ void OrdersEditor::createPrintPaymentReminder() {
 
   AntiquaTemplates body(this);
   QString sql("o_id=" + QString::number(ids.or_id));
-  sql.append(" AND tb_caller='PDF_PAYMENT_REMINDER'");
-  QString message_body = body.getTemplate(sql);
+  QString message_body = body.getTemplate("PDF_PAYMENT_REMINDER", sql);
 
   PaymentReminder *m_d = new PaymentReminder(this);
   m_d->setCustomerAddress(c_add);

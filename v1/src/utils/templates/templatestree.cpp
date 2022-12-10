@@ -91,16 +91,18 @@ void TemplatesTree::templateClicked(QTreeWidgetItem *item, int column) {
   emit templateSelected(obj);
 }
 
-void TemplatesTree::clearTree() {
+bool TemplatesTree::clearTree() {
   for (int i = 0; i < topLevelItemCount(); i++) {
     QTreeWidgetItem *p = topLevelItem(i);
-    if (p != nullptr) {
-      for (int i = 0; i < p->childCount(); i++) {
-        QTreeWidgetItem *c = p->child(i);
-        p->removeChild(c);
-      }
+    if (p == nullptr)
+      continue;
+
+    QListIterator<QTreeWidgetItem *> it(p->takeChildren());
+    while(it.hasNext()) {
+      p->removeChild(it.next());
     }
   }
+  return true;
 }
 
 void TemplatesTree::addTemplates(const QJsonObject &data) {

@@ -28,11 +28,9 @@ private Q_SLOTS:
 Q_SIGNALS:
   void templateSelected(const QJsonObject &);
 
-public Q_SLOTS:
-  void clearTree();
-
 public:
   explicit TemplatesTree(QWidget *parent = nullptr);
+  bool clearTree();
   void addTemplates(const QJsonObject &);
 };
 
