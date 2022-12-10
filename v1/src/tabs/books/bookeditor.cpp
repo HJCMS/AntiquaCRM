@@ -299,8 +299,7 @@ bool BookEditor::setDataField(const QSqlField &field, const QVariant &value) {
   QString key = field.name();
   bool required = (field.requiredStatus() == QSqlField::Required);
 
-  qDebug() << Q_FUNC_INFO << field;
-
+  // qDebug() << Q_FUNC_INFO << field;
   InputEdit *inp = findChild<InputEdit *>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
     inp->setValue(value);
