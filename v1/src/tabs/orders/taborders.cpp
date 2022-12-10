@@ -84,7 +84,7 @@ void TabOrders::popupWarningTabInEditMode() {
 
 void TabOrders::setDefaultTableView() {
   m_editorPage->setEnabled(false);
-  m_searchBar->setFilter(0);
+  m_searchBar->setClearAndFocus();
   setCurrentIndex(0);
   m_table->setQuery(m_table->defaultWhereClause());
 }

@@ -24,8 +24,12 @@ Provider::Provider(QObject *parent) : QObject{parent} {
 
 const QString Provider::ucFirst(const QString &str) {
   QString convert = str.trimmed().toLower();
-  QRegExp strip("\\b\\s\\b");
-  convert.replace(strip, "");
+  // Wenn mehr als ein Leerzeichen, zusammenschieben!
+  QRegExp pattern("\\b\\s\\b");
+  pattern.indexIn(convert);
+  if(pattern.captureCount() > 1)
+    convert.replace(pattern, "");
+
   // qDebug() << str << convert;
   QStringList array = convert.split(" ", Qt::SkipEmptyParts);
   for (int i = 0; i < array.size(); i++) {

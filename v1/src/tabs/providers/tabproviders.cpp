@@ -227,10 +227,7 @@ void TabProviders::openOrderPage(const QString &provider,
 void TabProviders::openStartPage() {
   m_sql = new AntiquaCRM::ASqlCore(this);
   setCurrentIndex(0);
-  m_treeWidget->loadUpdate();
-
-  if (plugins.size() < 1)
-    firstStart = loadPlugins();
+  firstStart = loadPlugins();
 }
 
 void TabProviders::createSearchQuery(const QString &query) { Q_UNUSED(query); }
@@ -240,10 +237,10 @@ void TabProviders::createNewEntry(){/* unused */};
 void TabProviders::openEntry(qint64 customerId) { Q_UNUSED(customerId); };
 
 void TabProviders::onEnterChanged() {
-  if (firstStart)
-    return;
+  if (!firstStart && (plugins.size() < 1))
+    openStartPage();
 
-  openStartPage();
+  m_treeWidget->loadUpdate();
 }
 
 TabProviders::~TabProviders() {
