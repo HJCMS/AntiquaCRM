@@ -2,5 +2,6 @@
   "Keys": [ "libBooklooker" ],
   "Name": "Booklooker",
   "Title": "Booklooker Plugin",
-  "Description": "Provider Integration for Booklooker"
+  "Description": "Provider Integration for Booklooker",
+  "Category": "provider"
 }

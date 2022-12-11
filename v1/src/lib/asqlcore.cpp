@@ -6,7 +6,6 @@
 #include "asqlsettings.h"
 
 #include <QDebug>
-#include <QMutex>
 
 namespace AntiquaCRM {
 
@@ -94,10 +93,9 @@ const QSqlRecord ASqlCore::record(const QString &table) {
     return QSqlRecord();
 
   QSqlRecord re;
-  QMutex mutex;
-  mutex.lock();
+  p_mutex.lock();
   re = database->record(table);
-  mutex.unlock();
+  p_mutex.unlock();
   return re;
 }
 
@@ -121,10 +119,9 @@ const QSqlQuery ASqlCore::query(const QString &statement) {
     return QSqlQuery();
 
   QSqlQuery qr;
-  QMutex mutex;
-  mutex.lock();
+  p_mutex.lock();
   qr = database->exec(statement);
-  mutex.unlock();
+  p_mutex.unlock();
   return qr;
 }
 

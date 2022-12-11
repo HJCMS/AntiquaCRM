@@ -21,6 +21,9 @@ class AntiquaDatabaseBar final : public QToolBar {
 private:
   QAction *ac_status;
 
+private Q_SLOTS:
+  void databaseInfoDialog();
+
 public Q_SLOTS:
   void setStatus(AntiquaCRM::ASqlCore::Status);
 

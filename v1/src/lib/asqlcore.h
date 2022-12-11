@@ -6,6 +6,7 @@
 #define ANTIQUACRM_SQLCORE_H
 
 #include <AGlobal>
+#include <QMutex>
 #include <QObject>
 #include <QString>
 #include <QtSql>
@@ -27,6 +28,7 @@ class ANTIQUACRM_LIBRARY ASqlCore final : public QObject {
 private:
   ASqlSettings *m_cfg;
   QSqlDatabase *database;
+  QMutex p_mutex;
 
   /**
    * @brief Erstelle Datenbankverbindung

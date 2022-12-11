@@ -2,6 +2,7 @@
   "Keys": [ "libAbeBooks" ],
   "Name": "AbeBooks",
   "Title": "AbeBooks Plugin",
-  "Description": "Provider Integration for AbeBooks"
+  "Description": "Provider Integration for AbeBooks",
+  "Category": "provider"
 }
 

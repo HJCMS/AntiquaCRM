@@ -3,6 +3,7 @@
 
 #include "antiquastatusbar.h"
 #include "antiquatimer.h"
+#include "antiquadbinfo.h"
 
 #include <QDebug>
 #include <QIcon>
@@ -15,7 +16,12 @@ AntiquaDatabaseBar::AntiquaDatabaseBar(QWidget *parent) : QToolBar{parent} {
   setToolButtonStyle(Qt::ToolButtonIconOnly);
   ac_status = addAction(tr("Database Status"));
   ac_status->setIcon(QIcon("://icons/database.png"));
-  // TODO HOVER ->setCursor(Qt::PointingHandCursor);
+  connect(ac_status,SIGNAL(triggered()), SLOT(databaseInfoDialog()));
+}
+
+void AntiquaDatabaseBar::databaseInfoDialog() {
+  AntiquaDbInfo infoPopUp(this);
+  infoPopUp.exec();
 }
 
 void AntiquaDatabaseBar::setStatus(AntiquaCRM::ASqlCore::Status status) {
