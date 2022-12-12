@@ -42,7 +42,7 @@ private:
   /**
    * @brief Drucker aus Konfiguration lesen.
    */
-  QString p_pdffilepath;
+  QString p_filePath;
   QString p_printerName;
   void printerConfiguration();
 

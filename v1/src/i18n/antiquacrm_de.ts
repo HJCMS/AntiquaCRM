@@ -131,12 +131,12 @@
 <context>
     <name>AntiquaDatabaseBar</name>
     <message>
-        <location filename="../antiquastatusbar.cpp" line="+16"/>
+        <location filename="../antiquastatusbar.cpp" line="+17"/>
         <source>Database Status</source>
         <translation>Datenbankstatus</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+14"/>
         <source>Database not connected!</source>
         <translation>Nicht mit Datenbank verbunden!</translation>
     </message>
@@ -157,6 +157,14 @@
         <location filename="../widgets/antiquadateinfo.cpp" line="+85"/>
         <source>A Valid Date is required!</source>
         <translation>Ein gültigesDatum ist erforderlich!</translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaDbInfo</name>
+    <message>
+        <location filename="../antiquadbinfo.cpp" line="+11"/>
+        <source>Databaseinfo</source>
+        <translation>Datenbank Informationen</translation>
     </message>
 </context>
 <context>
@@ -3059,7 +3067,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>MailCommand</name>
     <message>
-        <location filename="../utils/mailing/mailcommand.cpp" line="+34"/>
+        <location filename="../utils/mailing/mailcommand.cpp" line="+30"/>
         <source>Missing mail application</source>
         <translation>Fehlende E-Mail-Anwendung</translation>
     </message>
@@ -3274,7 +3282,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Gesamtumsatz</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+10"/>
+        <source>report</source>
+        <translation>Bericht</translation>
+    </message>
+    <message>
+        <location line="+52"/>
         <source>Report saved: %1</source>
         <translation>Bericht gespeichert: %1</translation>
     </message>
@@ -3414,6 +3427,10 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+6"/>
+        <source>Platform</source>
+        <translation>Plattform</translation>
+    </message>
+    <message>
         <location line="+18"/>
         <source>Provider</source>
         <translation>Dienstleister</translation>
@@ -5200,7 +5217,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Berichte</translation>
     </message>
     <message>
-        <location line="+190"/>
+        <location line="+75"/>
+        <source>monthlyreport</source>
+        <translation>Monatsbericht</translation>
+    </message>
+    <message>
+        <location line="+119"/>
         <source>PDF File written.</source>
         <translation>PDF-Datei erstellt.</translation>
     </message>

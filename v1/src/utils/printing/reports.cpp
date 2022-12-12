@@ -96,9 +96,8 @@ void Reports::printerConfiguration() {
   QString dstr = QDateTime::currentDateTime().toString("yyyy.MM.dd_HHmm");
   QString dest = config->value("dirs/reports").toString();
   dest.append(QDir::separator());
-  dest.append("monthly_report_" + dstr);
-  dest.append(".pdf");
-  p_pdffilepath = dest.trimmed();
+  dest.append(tr("monthlyreport") + "_" + dstr);
+  p_filePath = dest.trimmed();
 }
 
 const QTextTableFormat Reports::tableFormat() {
@@ -204,34 +203,37 @@ bool Reports::createPDF() {
   printer->setColorMode(QPrinter::GrayScale);
   printer->setOutputFormat(QPrinter::PdfFormat);
   printer->setFullPage(true);
-  printer->setOutputFileName(p_pdffilepath);
   printer->setCreator("AntiquaCRM");
+
+  QFileInfo outFile(p_filePath + ".pdf");
+  printer->setDocName(outFile.fileName());
+  printer->setOutputFileName(outFile.filePath());
+
   return generateDocument(printer);
 }
 
 void Reports::openPrintDialog() {
-  if (createPDF()) {
-    emit statusMessage(tr("PDF File written."));
-  } else {
-    qWarning("PDF not generated");
-  }
-
   if (p_printerName.isEmpty()) {
-    qWarning("No printer found!");
+    if (createPDF()) {
+      emit statusMessage(tr("PDF File written."));
+    } else {
+      qWarning("PDF not generated");
+    }
     return;
   }
 
   QPrinterInfo p_info = QPrinterInfo::printerInfo(p_printerName);
-  QPrinter *printer = new QPrinter(p_info, QPrinter::HighResolution);
+  QPrinter *printer = new QPrinter(p_info, QPrinter::ScreenResolution);
   printer->setPageLayout(p_pageLayout);
-  printer->setFullPage(true);
-  printer->setDocName("monthly-report");
+  printer->setColorMode(QPrinter::GrayScale);
   printer->setPrinterName(p_printerName);
-  printer->setOutputFormat(QPrinter::PdfFormat);
   printer->setCreator("AntiquaCRM");
+  printer->setFullPage(true);
+
+  QFileInfo outFile(p_filePath + ".pdf");
+  printer->setDocName(outFile.fileName());
 
   QPrintDialog *dialog = new QPrintDialog(printer, m_edit);
-  dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);
   connect(dialog, SIGNAL(accepted(QPrinter *)),
           SLOT(generateDocument(QPrinter *)));
   if (dialog->exec() == QDialog::Accepted) {

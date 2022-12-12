@@ -131,12 +131,12 @@
 <context>
     <name>AntiquaDatabaseBar</name>
     <message>
-        <location filename="../antiquastatusbar.cpp" line="+16"/>
+        <location filename="../antiquastatusbar.cpp" line="+17"/>
         <source>Database Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+14"/>
         <source>Database not connected!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -156,6 +156,14 @@
     <message>
         <location filename="../widgets/antiquadateinfo.cpp" line="+85"/>
         <source>A Valid Date is required!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaDbInfo</name>
+    <message>
+        <location filename="../antiquadbinfo.cpp" line="+11"/>
+        <source>Databaseinfo</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3057,7 +3065,7 @@ Image - Article Id: %2</source>
 <context>
     <name>MailCommand</name>
     <message>
-        <location filename="../utils/mailing/mailcommand.cpp" line="+34"/>
+        <location filename="../utils/mailing/mailcommand.cpp" line="+30"/>
         <source>Missing mail application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3272,7 +3280,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+10"/>
+        <source>report</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+52"/>
         <source>Report saved: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3412,6 +3425,10 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+6"/>
+        <source>Platform</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+18"/>
         <source>Provider</source>
         <translation type="unfinished"></translation>
@@ -5198,7 +5215,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+190"/>
+        <location line="+75"/>
+        <source>monthlyreport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+119"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
     </message>

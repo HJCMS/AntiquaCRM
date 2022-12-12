@@ -42,7 +42,7 @@ MonthlyReports::MonthlyReports(QWidget *parent) : QWidget{parent} {
 const QString MonthlyReports::printHeader() {
   AntiquaCRM::ASettings cfg(this);
   QString total = m_table->salesVolume();
-  QString info = cfg.value("company_fullname","").toString();
+  QString info = cfg.value("company_fullname", "").toString();
   info.append("\n");
   info.append(tr("Report for "));
   info.append(p_date.toString("MMM MM.yyyy") + " - ");
@@ -54,7 +54,11 @@ const QString MonthlyReports::printHeader() {
 const QFileInfo MonthlyReports::getSaveFile() {
   AntiquaCRM::ASettings cfg(this);
   QDir p_dir(cfg.value("dirs/reports", QDir::homePath()).toString());
-  QString filename = p_date.toString("yyyy-MM-dd");
+  QString filename;
+  filename.append(p_date.toString("MMMM_yyyy"));
+  filename.append("_" + tr("report") + "_");
+  QDateTime timeStamp = QDateTime::currentDateTime();
+  filename.append(timeStamp.toString("ddMMyyhhmm"));
   filename.append("_utf8");
   QFileInfo info(QDir(p_dir), filename);
   return info;
@@ -93,14 +97,10 @@ void MonthlyReports::saveReport() {
     return;
   }
 
-  QString file = dest.fileName();
-  file.append(".csv");
-  dest.setFile(file);
-
   QString header = m_table->dataHeader();
   QStringList rows = m_table->dataRows();
   if (rows.count() > 0) {
-    QString filePath = dest.filePath();
+    QString filePath = dest.filePath().append(".csv");
     QFile fp(filePath);
     if (fp.open(QIODevice::WriteOnly)) {
       QTextStream out(&fp);
