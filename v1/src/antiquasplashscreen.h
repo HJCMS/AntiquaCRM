@@ -5,17 +5,19 @@
 #ifndef ANTIQUACRM_SPLASHSCREEN_H
 #define ANTIQUACRM_SPLASHSCREEN_H
 
-#include <QObject>
 #include <QFont>
-#include <QSplashScreen>
 #include <QMainWindow>
+#include <QObject>
+#include <QPixmap>
+#include <QSplashScreen>
 
 class AntiquaSplashScreen : public QSplashScreen {
   Q_OBJECT
 
 private:
   const QString title;
-  QFont titleFont;
+  const QFont titleFont() const;
+  const QPixmap background() const;
   void drawContents(QPainter *painter) override;
 
 public Q_SLOTS:

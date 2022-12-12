@@ -70,6 +70,5 @@
  <file>icons/window_new.png</file>
  <file>icons/window_nofullscreen.png</file>
  <file>icons/xcalc.png</file>
- <file>data/steve.ttf</file>
 </qresource>
 </RCC>
