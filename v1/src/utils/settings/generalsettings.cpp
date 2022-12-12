@@ -21,7 +21,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   QGridLayout *lt_groupBox1 = new QGridLayout(m_grouBox1);
   // Mail
   m_mailler_path = new LineEdit(m_grouBox1);
-  m_mailler_path->setObjectName("dirs/mailappl");
+  m_mailler_path->setObjectName(ANTIQUACRM_CONFIG_MAILLER_KEY);
   m_mailler_path->setInfo(tr("eMail Application"));
   m_mailler_path->setWhatsThis(
       tr("Setting the Binary path to you favorite Mailler application. "

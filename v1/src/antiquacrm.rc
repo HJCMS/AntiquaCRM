@@ -7,8 +7,8 @@
 #define QUOTE(x) _QUOTE(x)
 #define CONCAT(x,y) x ## y
 
-#define VER_PRODUCTVERSION          1,0,0,0
-#define VER_FILEVERSION             1,0,0,0
+#define VER_PRODUCTVERSION          1,0,1,0
+#define VER_FILEVERSION             1,0,1,0
 #define VER_ORIGINALFILENAME_STR    QUOTE(antiquacrm)
 
 /**
@@ -48,7 +48,7 @@ FILESUBTYPE     VFT2_UNKNOWN
       // File description to be presented to users (Required).
       VALUE "FileDescription",  "Application for Managing antiquarian Books"
       // Version number of the file (Required).
-      VALUE "FileVersion",      "1.0.0\0"
+      VALUE "FileVersion",      "1.0.1\0"
       // Internal name of the file (Required).
       VALUE "InternalName",     "antiquacrm"
       /**
@@ -60,7 +60,7 @@ FILESUBTYPE     VFT2_UNKNOWN
       // Name of the product with which the file is distributed (Required).
       VALUE "ProductName",      "Antiqua CRM"
       // Version of the product with which the file is distributed (Required).
-      VALUE "ProductVersion",   "1.0.0\0"
+      VALUE "ProductVersion",   "1.0.1\0"
       //  Copyright notices that apply to the file (Optional).
       VALUE "LegalCopyright",   "Copyright(C) 2013-2022 HJCMS https://www.hjcms.de"
     }

@@ -10,17 +10,13 @@
 #include <QDebug>
 #endif
 
-#ifndef MAIL_CFG_PROGRAMM
-#define MAIL_CFG_PROGRAMM QString("dirs/mailappl")
-#endif
-
 MailCommand::MailCommand(QObject *parent) : QProcess{parent} {
   p_email = QUrl();
   p_subject = QString();
   p_body = QString();
   p_attachment = QString();
   AntiquaCRM::ASettings cfg(this);
-  p_mailler = cfg.value(MAIL_CFG_PROGRAMM).toString();
+  p_mailler = cfg.value(ANTIQUACRM_CONFIG_MAILLER_KEY).toString();
   setProgram(p_mailler);
 }
 

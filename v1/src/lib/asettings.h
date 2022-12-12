@@ -13,6 +13,10 @@
 #include <QString>
 #include <QVariant>
 
+#ifndef ANTIQUACRM_CONFIG_MAILLER_KEY
+#define ANTIQUACRM_CONFIG_MAILLER_KEY QString("dirs/mailappl")
+#endif
+
 namespace AntiquaCRM {
 
 /**

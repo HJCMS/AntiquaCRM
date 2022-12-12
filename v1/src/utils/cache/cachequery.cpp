@@ -68,11 +68,15 @@ bool CacheQuery::postalCodes() {
     main.insert("tables", countries);
 
     if (!saveDocument("postalcodes", QJsonDocument(main))) {
-      qWarning("Errors in create Postalcode!");
+      qWarning("Syntax errors in Json Postalcode!");
       return false;
     }
   } else {
+#ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
+#else
+    qWarning("SQL-Errors 'create::cache' Postalcode!");
+#endif
   }
   return true;
 }

@@ -18,7 +18,7 @@ const QFont AntiquaSplashScreen::titleFont() const {
   int ret = -1;
   QString fontName("Steve");
   QDir p = QDir::current();
-  p.cd("data/fonts");
+  p.cd("data" + QString(QDir::separator()) + "fonts");
   QFileInfo ttf(p.path(), "steve.ttf");
   if (ttf.isReadable()) {
     QFile fp(ttf.filePath());

@@ -67,7 +67,7 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
   QVBoxLayout *providerLayout = new QVBoxLayout(m_providerTab);
   o_provider_name = new LineEdit(m_providerTab);
   o_provider_name->setObjectName("o_provider_name");
-  o_provider_name->setInfo(tr("Provider"));
+  o_provider_name->setInfo(tr("Platform"));
   o_provider_name->setRequired(true);
   providerLayout->addWidget(o_provider_name);
 

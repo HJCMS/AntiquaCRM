@@ -44,7 +44,7 @@ bool ASharedDataFiles::needsUpdate(const QString &basename,
   if (status)
     return (dt.date() == QDate::currentDate()) ? false : true;
 
-  return false;
+  return true;
 }
 
 bool ASharedDataFiles::fileExists(const QString &basename,
