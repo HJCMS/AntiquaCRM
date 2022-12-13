@@ -3067,7 +3067,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>MailCommand</name>
     <message>
-        <location filename="../utils/mailing/mailcommand.cpp" line="+30"/>
+        <location filename="../utils/mailing/mailcommand.cpp" line="+114"/>
+        <source>Attachments are disabled in this mode!</source>
+        <translation>Anhänge sind in diesem Modus deaktiviert!</translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Missing mail application</source>
         <translation>Fehlende E-Mail-Anwendung</translation>
     </message>
@@ -3427,13 +3432,9 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+6"/>
+        <location line="+18"/>
         <source>Platform</source>
         <translation>Plattform</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Provider</source>
-        <translation>Dienstleister</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -3584,7 +3585,7 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+20"/>
+        <location line="+19"/>
         <location line="+39"/>
         <location line="+30"/>
         <location line="+38"/>
@@ -3593,22 +3594,22 @@ Bild - Artikel Nr: %2</translation>
         <translation>Fehlende wichtige IDs, Bestellung zuerst speichern!</translation>
     </message>
     <message>
-        <location line="-202"/>
+        <location line="-201"/>
         <source>Incomplete eMail configuration!</source>
         <translation>Unvollständige E-Mail-Konfiguration!</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Send eMail Dialog finished!</source>
         <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
     <message>
-        <location line="-472"/>
+        <location line="-471"/>
         <source>Missing Deliverynote Number</source>
         <translation>Fehlende Lieferscheinnummer</translation>
     </message>
     <message>
-        <location line="+494"/>
+        <location line="+493"/>
         <source>Missing Delivery Address!</source>
         <translation>Lieferadresse fehlt!</translation>
     </message>

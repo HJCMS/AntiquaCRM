@@ -3065,7 +3065,12 @@ Image - Article Id: %2</source>
 <context>
     <name>MailCommand</name>
     <message>
-        <location filename="../utils/mailing/mailcommand.cpp" line="+30"/>
+        <location filename="../utils/mailing/mailcommand.cpp" line="+114"/>
+        <source>Attachments are disabled in this mode!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Missing mail application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3425,12 +3430,8 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+6"/>
-        <source>Platform</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location line="+18"/>
-        <source>Provider</source>
+        <source>Platform</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3582,7 +3583,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+17"/>
-        <location line="+20"/>
+        <location line="+19"/>
         <location line="+39"/>
         <location line="+30"/>
         <location line="+38"/>
@@ -3591,22 +3592,22 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-202"/>
+        <location line="-201"/>
         <source>Incomplete eMail configuration!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Send eMail Dialog finished!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-472"/>
+        <location line="-471"/>
         <source>Missing Deliverynote Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+494"/>
+        <location line="+493"/>
         <source>Missing Delivery Address!</source>
         <translation type="unfinished"></translation>
     </message>
