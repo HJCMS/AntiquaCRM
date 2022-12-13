@@ -12,14 +12,30 @@
 AttachmentInfo::AttachmentInfo(QWidget *parent) : QLineEdit{parent} {
   p_tip = tr("Attachment path");
   setToolTip(p_tip);
-  setStyleSheet("QLineEdit {background:transparent;}");
   setPlaceholderText(tr("No Attachment changed!"));
+  setStyleSheet(styleInvalid());
+}
+
+const QString AttachmentInfo::styleInvalid() const {
+  QString style("QLineEdit {background:transparent;");
+  style.append("border:1px solid red;border-radius:2px;}");
+  return style;
+}
+
+const QString AttachmentInfo::styleValid() const {
+  QString style("QLineEdit {background:transparent;");
+  style.append("border:1px solid green;border-radius:2px;}");
+  return style;
 }
 
 void AttachmentInfo::restore() {
   setToolTip(p_tip);
   p_path.clear();
   clear();
+}
+
+void AttachmentInfo::setExistsFrame(bool b) {
+  setStyleSheet(b ? styleValid() : styleInvalid());
 }
 
 void AttachmentInfo::setPath(const QString &path) {
@@ -45,7 +61,8 @@ MailAttachments::MailAttachments(QWidget *parent) : QFrame{parent} {
   m_btn->setText(tr("Attach file"));
   m_btn->setIcon(QIcon(":icons/action_search.png"));
   m_btn->setToolTip(tr("Search file to attach"));
-  m_btn->setWhatsThis(tr("Open the file dialog and change the attachment path."));
+  m_btn->setWhatsThis(
+      tr("Open the file dialog and change the attachment path."));
   layout->addWidget(m_btn);
 
   layout->setStretch(0, 1);
@@ -86,7 +103,9 @@ bool MailAttachments::setAttachment(const QString &name) {
 
 bool MailAttachments::exists() {
   QFileInfo info(m_info->path());
-  return info.exists();
+  bool b = info.exists();
+  m_info->setExistsFrame(b);
+  return b;
 }
 
 const QFileInfo MailAttachments::attachment() {

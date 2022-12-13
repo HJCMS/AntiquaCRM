@@ -20,8 +20,12 @@ private:
   QString p_tip;
   QString p_path;
 
+  const QString styleInvalid() const;
+  const QString styleValid() const;
+
 public Q_SLOTS:
   void restore();
+  void setExistsFrame(bool);
   void setPath(const QString &path);
 
 public:

@@ -21,13 +21,14 @@ MailButton::MailButton(QWidget *parent) : QPushButton{parent} {
 bool MailButton::createMailButtonActions() {
   QString sql("SELECT tb_caller,tb_title FROM ui_template_body");
   if (sections.testFlag(Orders)) {
-    sql.append(" WHERE tb_category='email' AND tb_tab='ORDERS';");
+    sql.append(" WHERE tb_category='email' AND tb_tab='ORDERS'");
   } else if (sections.testFlag(Customers)) {
-    sql.append(" WHERE tb_category='email' AND tb_tab='CUSTOMERS';");
+    sql.append(" WHERE tb_category='email' AND tb_tab='CUSTOMERS'");
   } else {
     qWarning("Unknown Mailbutton group!");
     return false;
   }
+  sql.append(" ORDER BY (tb_title,tb_subject);");
 
   AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
   QSqlQuery q = m_sql->query(sql);
