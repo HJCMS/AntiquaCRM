@@ -6,6 +6,8 @@
 #include "antiquaconfigmenus.h"
 #include "antiquaviewsmenus.h"
 
+#include <QApplication>
+
 AntiquaMenuBar::AntiquaMenuBar(QMainWindow *parent)
     : QMenuBar{parent}, defaultIcon(QString(":icons/antiqua.png")) {
   setNativeMenuBar(true);
@@ -44,6 +46,22 @@ void AntiquaMenuBar::addApplMenu() {
 }
 
 void AntiquaMenuBar::addAboutMenu() {
-  QAction *ac_about = m_aboutMenu->addAction("TODO");
-  ac_about->setIcon(defaultIcon);
+  QAction *ac_about_crm = m_aboutMenu->addAction("Antiqua CRM");
+  ac_about_crm->setIcon(defaultIcon);
+  // https://www.hjcms.de
+  // connect(ac_about_crm, SIGNAL(triggered()), SLOT());
+
+  QAction *ac_about_qt = m_aboutMenu->addAction("Qt Framework");
+  ac_about_qt->setIcon(QIcon("://icons/qtlogo-64.png"));
+  connect(ac_about_qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+
+  QAction *ac_about_qr = m_aboutMenu->addAction("QRencode");
+  ac_about_qr->setIcon(defaultIcon);
+  // https://github.com/fukuchi/libqrencode
+  // connect(ac_about_qr, SIGNAL(triggered()), SLOT());
+
+  QAction *ac_about_sql = m_aboutMenu->addAction("PostgreSQL");
+  ac_about_sql->setIcon(QIcon("://icons/postgresql.png"));
+  // https://www.postgresql.org/
+  // connect(ac_about_qr, SIGNAL(triggered()), SLOT());
 }
