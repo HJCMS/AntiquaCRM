@@ -69,8 +69,8 @@ void ASqlProfile::setSslBundle(const QString &filePath) {
 }
 
 const QString ASqlProfile::getSslBundle() {
-  QUrl url(ssl_bundle);
-  return url.toString(QUrl::EncodeSpaces);
+  QUrl url(ssl_bundle, QUrl::TolerantMode);
+  return url.toString(QUrl::FullyEncoded);
 }
 
 void ASqlProfile::setSslMode(const QString &mode) { ssl_mode = mode; }
@@ -82,8 +82,8 @@ void ASqlProfile::setSslRootCert(const QString &filePath) {
 }
 
 const QString ASqlProfile::getSslRootCert() {
-  QUrl url(ssl_root_cert);
-  return url.toString(QUrl::EncodeSpaces);
+  QUrl url(ssl_root_cert, QUrl::TolerantMode);
+  return url.toString(QUrl::FullyEncoded);
 }
 
 }; // namespace AntiquaCRM
