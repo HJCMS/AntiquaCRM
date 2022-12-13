@@ -170,7 +170,7 @@
 <context>
     <name>AntiquaMenuBar</name>
     <message>
-        <location filename="../antiquamenubar.cpp" line="+23"/>
+        <location filename="../antiquamenubar.cpp" line="+25"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3347,7 +3347,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+3"/>
-        <source>Delivered</source>
+        <source>On the way</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3742,12 +3742,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Delivered</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Reminded</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3807,7 +3802,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+6"/>
+        <source>On the way</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+68"/>
         <source>Order Since</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4917,7 +4917,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+10"/>
-        <source>Delivered</source>
+        <source>On the way</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

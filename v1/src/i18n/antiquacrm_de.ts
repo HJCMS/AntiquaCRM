@@ -170,7 +170,7 @@
 <context>
     <name>AntiquaMenuBar</name>
     <message>
-        <location filename="../antiquamenubar.cpp" line="+23"/>
+        <location filename="../antiquamenubar.cpp" line="+25"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
@@ -3349,8 +3349,8 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Delivered</source>
-        <translation>Geliefert</translation>
+        <source>On the way</source>
+        <translation>Unterwegs</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -3744,12 +3744,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Abholbereit</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Delivered</source>
-        <translation>Geliefert</translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Reminded</source>
         <translation>Erinnerung gesendet</translation>
     </message>
@@ -3809,7 +3804,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Auftragsbegin</translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+6"/>
+        <source>On the way</source>
+        <translation>Unterwegs</translation>
+    </message>
+    <message>
+        <location line="+68"/>
         <source>Order Since</source>
         <translation>Seit</translation>
     </message>
@@ -4919,8 +4919,8 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Delivered</source>
-        <translation>Geliefert</translation>
+        <source>On the way</source>
+        <translation>Unterwegs</translation>
     </message>
     <message>
         <location line="+10"/>

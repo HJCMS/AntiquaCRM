@@ -125,11 +125,11 @@ void ProvidersTreeView::updateOrderStatus(QTreeWidgetItem *item,
   }
 
   case (AntiquaCRM::OrderStatus::DELIVERED): {
-    QString mTip = tr("Delivered");
+    QString mTip = tr("On the way");
     if (modified != true || !tip.contains(mTip))
       item->setToolTip(0, tip + " " + mTip);
 
-    item->setIcon(1, QIcon("://icons/action_delivered.png"));
+    item->setIcon(1, QIcon("://icons/delivery48.png"));
     item->setData(1, Qt::UserRole, true); // setModified
     return;
   }

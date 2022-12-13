@@ -35,8 +35,8 @@ const QString OrdersTableModel::getOrderStatus(int status) const {
   case (AntiquaCRM::FETCHET): /**< Bereit zur Abholung */
     return tr("Ready for pickup");
 
-  case (AntiquaCRM::DELIVERED): /**< Ausgeliefert */
-    return tr("Delivered");
+  case (AntiquaCRM::DELIVERED): /**< Unterwegs */
+    return tr("On the way");
 
   case (AntiquaCRM::REMINDET): /**< Erinnerung */
     return tr("Reminded");
@@ -63,8 +63,8 @@ const QIcon OrdersTableModel::getOrderStatusIcon(int status) const {
   case (AntiquaCRM::FETCHET): /**< Bereit zur Abholung */
     return QIcon("://icons/action_ready_pickup.png");
 
-  case (AntiquaCRM::DELIVERED): /**< Ausgeliefert */
-    return QIcon("://icons/action_delivered.png");
+  case (AntiquaCRM::DELIVERED): /**< Unterwegs */
+    return QIcon("://icons/delivery48.png");
 
   case (AntiquaCRM::REMINDET): /**< Erinnerung */
     return QIcon("://icons/action_redo.png");
@@ -158,11 +158,18 @@ QVariant OrdersTableModel::headerData(int section, Qt::Orientation orientation,
 }
 
 QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
-  if (!index.isValid() &&
-      (role != Qt::DisplayRole || role != Qt::DecorationRole))
+  if (!index.isValid() && (role != (Qt::DisplayRole & Qt::DecorationRole)))
     return AntiquaCRM::ASqlQueryModel::data(index, role);
 
   int column = index.column();
+  if (role == Qt::TextAlignmentRole) {
+    if(column == 7) {
+      return (int) (Qt::AlignRight | Qt::AlignVCenter);
+    } else {
+      return (int) (Qt::AlignLeft | Qt::AlignVCenter);
+    }
+  }
+
   QVariant item = AntiquaCRM::ASqlQueryModel::data(index, role);
   if (role == Qt::DisplayRole && column == 2) {
     return getOrderStatus(item.toInt());
