@@ -648,7 +648,6 @@ void OrdersEditor::createMailMessage(const QString &type) {
 
   if (!m_cfg->check(ANTIQUACRM_CONFIG_MAILLER_KEY)) {
     sendStatusMessage(tr("Incomplete eMail configuration!"));
-    return;
   }
 
   MailForwardDialog *m_d = new MailForwardDialog(this);

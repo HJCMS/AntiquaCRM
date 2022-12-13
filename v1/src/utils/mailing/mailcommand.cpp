@@ -15,9 +15,21 @@ MailCommand::MailCommand(QObject *parent) : QProcess{parent} {
   p_subject = QString();
   p_body = QString();
   p_attachment = QString();
+  setMailProgramm();
+}
+
+void MailCommand::setMailProgramm() {
   AntiquaCRM::ASettings cfg(this);
-  p_mailler = cfg.value(ANTIQUACRM_CONFIG_MAILLER_KEY).toString();
-  setProgram(p_mailler);
+  QString config = cfg.value(ANTIQUACRM_CONFIG_MAILLER_KEY).toString();
+  QFileInfo fileCheck(config);
+  if (fileCheck.isExecutable()) {
+    QUrl url;
+    url.setScheme("file");
+    url.setPath(fileCheck.filePath());
+    setProgram(url.path(QUrl::FullyDecoded));
+  } else {
+    qWarning("Missing Mailler Application!");
+  }
 }
 
 const QString MailCommand::urlEncode(const QString &str) const {
@@ -31,14 +43,17 @@ void MailCommand::sendMail() {
     errStr.append(" - ");
     errStr.append(tr("please check your configuration!"));
     emit sendMessage(errStr);
+#ifdef ANTIQUA_DEVELOPEMENT
     qWarning("Missing mail application");
+    qDebug() << program() << Qt::endl;
+#endif
     return;
   }
 
   QStringList cmd;
-  if (p_mailler.contains("thunderbird", Qt::CaseInsensitive)) {
+  if (program().contains("thunderbird", Qt::CaseInsensitive)) {
     cmd = prepare(THUNDERBIRD);
-  } else if (p_mailler.contains("outlook", Qt::CaseInsensitive)) {
+  } else if (program().contains("outlook", Qt::CaseInsensitive)) {
     cmd = prepare(OUTLOOK);
   }
 
@@ -50,6 +65,7 @@ void MailCommand::sendMail() {
 #ifdef ANTIQUA_DEVELOPEMENT
   QString info("Send eMail Command in Developement ignored!");
   qDebug() << info << Qt::endl;
+  qDebug() << program() << Qt::endl;
   qDebug() << cmd << Qt::endl;
   qDebug() << info << Qt::endl;
   return;

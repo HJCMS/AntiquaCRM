@@ -15,12 +15,13 @@ class MailCommand final : public QProcess {
   Q_OBJECT
 
 private:
-  QString p_mailler;
   QUrl p_email;
   QString p_subject;
   QString p_body;
   QString p_attachment;
   QString p_signature;
+
+  void setMailProgramm();
 
 public Q_SLOTS:
   void sendMail();

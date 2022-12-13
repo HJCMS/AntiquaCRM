@@ -2,7 +2,6 @@
 # vim: set fileencoding=utf-8
 
 SET (font_FILES
- agaramond-regular.otf
  barcodefont.ttf
  steve.ttf
 )

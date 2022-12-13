@@ -85,7 +85,7 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
   providerLayout->addStretch(1);
   m_providerTab->setLayout(providerLayout);
   insertTab(tab_index++, m_providerTab, QIcon("://icons/groups.png"),
-            tr("Provider"));
+            tr("Platform"));
 
   m_historyTab = new QWidget(this);
   QVBoxLayout *historyLayout = new QVBoxLayout(m_historyTab);
