@@ -34,8 +34,8 @@ ImageSelecter::ImageSelecter(QWidget *parent) : QWidget{parent} {
   connect(m_listView, SIGNAL(imageSelected(const SourceInfo &)),
           SIGNAL(sendSelection(const SourceInfo &)));
 
-  connect(m_listView, SIGNAL(sendTargetChanged(const QString &)),
-          m_dirPathEdit, SLOT(setText(const QString &)));
+  connect(m_listView, SIGNAL(sendTargetChanged(const QString &)), m_dirPathEdit,
+          SLOT(setText(const QString &)));
 
   connect(m_fileDialogBtn, SIGNAL(clicked()), SLOT(selectImageTarget()));
 }
@@ -66,7 +66,7 @@ void ImageSelecter::setDirectory(const QString &dirPath) {
 
   QFileInfo info(dirPath);
   if (info.isDir() && info.isReadable()) {
-    p_dir.setPath(info.filePath());
+    p_dir.setPath(dirPath);
     m_listView->setDirectory(p_dir);
     emit sendTargetChanged(p_dir);
   }
@@ -93,5 +93,3 @@ const QList<QUrl> ImageSelecter::sideBarUrls() {
 #endif
 
 const QDir ImageSelecter::directory() { return p_dir; }
-
-const QString ImageSelecter::getSelection() { return p_selection; }

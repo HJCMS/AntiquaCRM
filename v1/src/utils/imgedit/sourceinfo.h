@@ -28,6 +28,7 @@ private:
   QString p_target;
 
 public:
+  SourceInfo();
   SourceInfo(const QFileInfo &other);
   SourceInfo(const SourceInfo &other);
   SourceInfo &operator=(const SourceInfo &other);
@@ -45,7 +46,7 @@ public:
   /**
    * @brief Artikel Nummer abfragen.
    */
-  qint64 getFileId();
+  qint64 getFileId() const;
 
   /**
    * @brief Neuer Bildname

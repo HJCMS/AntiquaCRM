@@ -5,12 +5,17 @@
 
 #include <AntiquaCRM>
 
-SourceInfo::SourceInfo(const QFileInfo &other) : QFileInfo{other} {
+SourceInfo::SourceInfo() : QFileInfo{} {
   fileId = -1;
   p_target = QString();
 }
 
-SourceInfo::SourceInfo(const SourceInfo &other) : QFileInfo{other.path()} {
+SourceInfo::SourceInfo(const QFileInfo &other) : QFileInfo{other} {
+  fileId = -1;
+  p_target = other.path();
+}
+
+SourceInfo::SourceInfo(const SourceInfo &other) : QFileInfo{other.filePath()} {
   fileId = other.fileId;
   p_target = other.p_target;
 }
@@ -21,6 +26,7 @@ SourceInfo &SourceInfo::operator=(const SourceInfo &other) {
 
   fileId = other.fileId;
   p_target = other.p_target;
+  setFile(other.filePath());
   return *this;
 }
 
@@ -33,7 +39,7 @@ bool SourceInfo::isValidSource() const {
 
 void SourceInfo::setFileId(qint64 id) { fileId = id; }
 
-qint64 SourceInfo::getFileId() { return fileId; }
+qint64 SourceInfo::getFileId() const { return fileId; }
 
 const QString SourceInfo::imageBaseName(qint64 id) {
   return AntiquaCRM::AUtil::fileNumber(id, 8);

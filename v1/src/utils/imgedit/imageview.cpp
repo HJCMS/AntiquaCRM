@@ -81,7 +81,7 @@ void ImageView::setImage(const QImage &img) {
   emit sendImageLoadSuccess(true);
 }
 
-void ImageView::setImageFile(const QFileInfo &file) {
+void ImageView::setImageFile(const SourceInfo &file) {
   QImageReader reader(file.filePath());
   QImage img = reader.read();
   if (img.isNull()) {
@@ -89,6 +89,13 @@ void ImageView::setImageFile(const QFileInfo &file) {
     return;
   }
   setImage(img);
+  p_currentPreview = file;
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO
+           << p_currentPreview.getFileId() << p_currentPreview.filePath()
+           << Qt::endl
+           << file.getFileId() << file.filePath();
+#endif
 }
 
 void ImageView::setRawImage(const QByteArray &data) {
@@ -290,6 +297,8 @@ const QImage ImageView::getImage() {
 
   return m_pixmap->pixmap().toImage();
 }
+
+const SourceInfo ImageView::getSource() { return p_currentPreview; }
 
 bool ImageView::isModified() { return modified; }
 

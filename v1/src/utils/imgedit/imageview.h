@@ -18,7 +18,7 @@
 #include <QWheelEvent>
 #include <QWidget>
 
-class SourceInfo;
+#include "sourceinfo.h"
 
 /**
  * @brief Bilder Vorschau
@@ -38,6 +38,7 @@ private:
   QPixmap p_pixmap;
   QGraphicsScene *m_scene;
   QGraphicsPixmapItem *m_pixmap;
+  SourceInfo p_currentPreview;
 
   /**
    * @brief Sucht die aktuelle Bildschirmgröße
@@ -98,7 +99,7 @@ public Q_SLOTS:
    * @brief Bild in die Ansicht einfügen!
    * @ref setImage(const QImage &)
    */
-  void setImageFile(const QFileInfo &file);
+  void setImageFile(const SourceInfo &file);
 
   /**
    * @brief Rohdaten einfügen
@@ -166,6 +167,11 @@ public:
    * @brief Ansicht zurückgeben!
    */
   const QImage getImage();
+
+  /**
+   * @brief Aktuelle Quelle zurück geben
+   */
+  const SourceInfo getSource();
 
   /**
    * @brief Datensatz wurde geändert?

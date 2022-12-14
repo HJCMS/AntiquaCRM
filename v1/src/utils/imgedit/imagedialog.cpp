@@ -10,9 +10,7 @@
 #define DEBUG_IMAGE_DIALOG true
 #endif
 
-#if DEBUG_IMAGE_DIALOG
 #include <QDebug>
-#endif
 #include <QDialogButtonBox>
 #include <QDirIterator>
 #include <QFileInfo>
@@ -139,8 +137,11 @@ bool ImageDialog::askToCopyFile() {
   return false;
 }
 
-bool ImageDialog::imagePreview(const SourceInfo &info) {
-  if (info.isFile() && info.isReadable()) {
+bool ImageDialog::imagePreview(const SourceInfo &image) {
+  SourceInfo info(image);
+  info.setFileId(p_articleId);
+  info.setTarget(imagesArchiv);
+  if (info.isValidSource()) {
     m_view->setImageFile(info);
     return true;
   }
@@ -148,12 +149,8 @@ bool ImageDialog::imagePreview(const SourceInfo &info) {
 }
 
 void ImageDialog::setHistoryDir(const QDir &d) {
-  if (d.isReadable()) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << d.path();
-#endif
+  if (d.isReadable())
     config->setValue("history_image_target", d.path());
-  }
 }
 
 void ImageDialog::save() {
@@ -162,32 +159,33 @@ void ImageDialog::save() {
     return;
   }
 
-  // Bild in das Quellenarchiv kopieren!
-  QString filePath = m_imageSelecter->getSelection();
-  if (!filePath.isEmpty()) {
-    SourceInfo info(filePath);
-    if (!isImageFromArchive(info)) {
-      if (askToCopyFile()) {
-        notifyStatus(tr("copy image in progress ..."));
-        info.setFileId(p_articleId);
-        info.setTarget(imagesArchiv);
-        if (m_view->saveImageTo(info)) {
-          notifyStatus(tr("successfully - image to archive copied"));
-        } else {
-          notifyStatus(tr("warning - image not copied"));
-          qWarning("image copy failed");
-        }
+  SourceInfo info(m_view->getSource());
+  if (info.isValidSource() && !isImageFromArchive(info)) {
+    qInfo("image about to copy");
+    if (askToCopyFile()) {
+      notifyStatus(tr("copy image in progress ..."));
+      if (m_view->saveImageTo(info)) {
+        notifyStatus(tr("successfully - image to archive copied"));
+      } else {
+        notifyStatus(tr("warning - image not copied"));
+        qWarning("image copy failed");
       }
     }
-    filePath.clear();
   }
-
+#ifdef ANTIQUA_DEVELOPEMENT
+  else {
+    qDebug() << Q_FUNC_INFO << "NO COPY" << info.getFileId() << info;
+  }
+#endif
   // In Datenbank Speichern!
   if (m_view->storeInDatabase(p_articleId))
     notifyStatus(tr("Image saved successfully!"));
 }
 
-void ImageDialog::fileChanged(const SourceInfo &image) { imagePreview(image); }
+void ImageDialog::fileChanged(const SourceInfo &image) {
+  if (!imagePreview(image))
+    notifyStatus(tr("Image preview rejected!"));
+}
 
 void ImageDialog::closeEvent(QCloseEvent *e) {
   if (e->type() == QEvent::Close) {
@@ -213,11 +211,13 @@ void ImageDialog::notifyStatus(const QString &str) {
 }
 
 int ImageDialog::exec() {
-  QString fallback = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
-  QString def_path = config->value("dirs/images", fallback).toString();
-  QString path = config->value("history_image_target", def_path).toString();
-  m_imageSelecter->setDirectory(path);
-  imagesArchiv = m_imageSelecter->directory();
+  QString fallback =
+      QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+  QString archivPath = config->value("dirs/images", fallback).toString();
+  imagesArchiv = QDir(archivPath);
+
+  QString history = config->value("history_image_target", archivPath).toString();
+  m_imageSelecter->setDirectory(history);
 
   if (config->contains("imaging/geometry")) {
     config->beginGroup("imaging");

@@ -22,7 +22,6 @@ class ImageSelecter : public QWidget {
 
 private:
   QDir p_dir;
-  QString p_selection;
   ImageListView *m_listView;
   QLineEdit *m_dirPathEdit;
   QPushButton *m_fileDialogBtn;
@@ -47,7 +46,6 @@ public:
   static const QList<QUrl> sideBarUrls();
 #endif
   const QDir directory();
-  const QString getSelection();
 };
 
 #endif // ANTIQUA_IMAGESELECTER_H
