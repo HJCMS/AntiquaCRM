@@ -3,6 +3,7 @@
 // @COPYRIGHT_HOLDER@
 
 #include "antiquamenubar.h"
+#include "aboutdialogs.h"
 #include "antiquaconfigmenus.h"
 #include "antiquaviewsmenus.h"
 
@@ -46,22 +47,36 @@ void AntiquaMenuBar::addApplMenu() {
 }
 
 void AntiquaMenuBar::addAboutMenu() {
+  m_aboutDialogs = new AboutDialogs(this);
+
   QAction *ac_about_crm = m_aboutMenu->addAction("Antiqua CRM");
   ac_about_crm->setIcon(defaultIcon);
-  // https://www.hjcms.de
-  // connect(ac_about_crm, SIGNAL(triggered()), SLOT());
+  connect(ac_about_crm, SIGNAL(triggered()), SLOT(openAboutCRM()));
 
+  // https://www.qt.io
   QAction *ac_about_qt = m_aboutMenu->addAction("Qt Framework");
   ac_about_qt->setIcon(QIcon("://icons/qtlogo-64.png"));
   connect(ac_about_qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
   QAction *ac_about_qr = m_aboutMenu->addAction("QRencode");
-  ac_about_qr->setIcon(defaultIcon);
-  // https://github.com/fukuchi/libqrencode
-  // connect(ac_about_qr, SIGNAL(triggered()), SLOT());
+  ac_about_qr->setIcon(QIcon("://icons/filetypes.png"));
+  connect(ac_about_qr, SIGNAL(triggered()), SLOT(openAboutQRE()));
 
   QAction *ac_about_sql = m_aboutMenu->addAction("PostgreSQL");
   ac_about_sql->setIcon(QIcon("://icons/postgresql.png"));
-  // https://www.postgresql.org/
-  // connect(ac_about_qr, SIGNAL(triggered()), SLOT());
+  connect(ac_about_sql, SIGNAL(triggered()), SLOT(openAboutPgSQL()));
 }
+
+void AntiquaMenuBar::openAboutCRM() {
+  m_aboutDialogs->exec(AboutDialogs::ANTIQUACRM);
+}
+
+void AntiquaMenuBar::openAboutQRE() {
+  m_aboutDialogs->exec(AboutDialogs::QRENCODE);
+}
+
+void AntiquaMenuBar::openAboutPgSQL() {
+  m_aboutDialogs->exec(AboutDialogs::POSTGRESQL);
+}
+
+AntiquaMenuBar::~AntiquaMenuBar() { m_aboutDialogs->deleteLater(); }

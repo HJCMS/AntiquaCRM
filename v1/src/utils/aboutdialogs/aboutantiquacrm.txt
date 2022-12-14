@@ -1,0 +1,9 @@
+Copyright (C) 2019-2023 Juergen Heinemann
+
+Antiqua CRM is a Desktop Application to Manage Antiquarian Books, CD's, Prints and Stitches.
+
+It's Developed with the GPLv3 open source licenses and depends on the Qt Community License.
+
+This application is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 3.0 of the License, or any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.

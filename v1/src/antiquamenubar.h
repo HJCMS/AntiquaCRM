@@ -13,6 +13,7 @@
 
 class AntiquaViewsMenus;
 class AntiquaConfigMenus;
+class AboutDialogs;
 
 class AntiquaMenuBar final : public QMenuBar {
   Q_OBJECT
@@ -26,6 +27,13 @@ private:
   void addApplMenu();
   void addAboutMenu();
 
+  AboutDialogs *m_aboutDialogs;
+
+private Q_SLOTS:
+  void openAboutCRM();
+  void openAboutQRE();
+  void openAboutPgSQL();
+
 Q_SIGNALS:
   void sendToggleFullscreen();
   void sendViewTab(const QString &);
@@ -35,6 +43,7 @@ Q_SIGNALS:
 
 public:
   explicit AntiquaMenuBar(QMainWindow *parent = nullptr);
+  ~AntiquaMenuBar();
 };
 
 #endif // ANTIQUACRM_MENUBAR_H
