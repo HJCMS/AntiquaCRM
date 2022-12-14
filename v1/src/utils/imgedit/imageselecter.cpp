@@ -34,8 +34,8 @@ ImageSelecter::ImageSelecter(QWidget *parent) : QWidget{parent} {
   connect(m_listView, SIGNAL(imageSelected(const SourceInfo &)),
           SIGNAL(sendSelection(const SourceInfo &)));
 
-  connect(m_listView, SIGNAL(sendTargetChanged(const QString &)), m_dirPathEdit,
-          SLOT(setText(const QString &)));
+  connect(m_listView, SIGNAL(sendTargetChanged(const QString &)),
+          m_dirPathEdit, SLOT(setText(const QString &)));
 
   connect(m_fileDialogBtn, SIGNAL(clicked()), SLOT(selectImageTarget()));
 }

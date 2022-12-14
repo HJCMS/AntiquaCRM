@@ -77,6 +77,8 @@ ImageDialog::ImageDialog(int articleId, QWidget *parent)
   connect(ac_close, SIGNAL(triggered()), SLOT(accept()));
   connect(m_imageSelecter, SIGNAL(sendSelection(const SourceInfo &)),
           SLOT(fileChanged(const SourceInfo &)));
+  connect(m_imageSelecter, SIGNAL(sendTargetChanged(const QDir &)),
+          SLOT(setHistoryDir(const QDir &)));
 }
 
 bool ImageDialog::findSourceImage() {
@@ -145,6 +147,15 @@ bool ImageDialog::imagePreview(const SourceInfo &info) {
   return false;
 }
 
+void ImageDialog::setHistoryDir(const QDir &d) {
+  if (d.isReadable()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << d.path();
+#endif
+    config->setValue("history_image_target", d.path());
+  }
+}
+
 void ImageDialog::save() {
   if (m_view->getImage().isNull()) {
     notifyStatus(tr("no valid image found"));
@@ -176,9 +187,7 @@ void ImageDialog::save() {
     notifyStatus(tr("Image saved successfully!"));
 }
 
-void ImageDialog::fileChanged(const SourceInfo &image) {
-  imagePreview(image);
-}
+void ImageDialog::fileChanged(const SourceInfo &image) { imagePreview(image); }
 
 void ImageDialog::closeEvent(QCloseEvent *e) {
   if (e->type() == QEvent::Close) {
@@ -204,10 +213,9 @@ void ImageDialog::notifyStatus(const QString &str) {
 }
 
 int ImageDialog::exec() {
-
-  QString fallback =
-      QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
-  QString path = config->value("dirs/images", fallback).toString();
+  QString fallback = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+  QString def_path = config->value("dirs/images", fallback).toString();
+  QString path = config->value("history_image_target", def_path).toString();
   m_imageSelecter->setDirectory(path);
   imagesArchiv = m_imageSelecter->directory();
 

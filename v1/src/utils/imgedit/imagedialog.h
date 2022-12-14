@@ -98,6 +98,11 @@ private:
 
 private Q_SLOTS:
   /**
+   * @brief Verzeichnisverlauf speichern
+   */
+  void setHistoryDir(const QDir &);
+
+  /**
    * @brief Bild in Datenbank speichern
    */
   void save();
