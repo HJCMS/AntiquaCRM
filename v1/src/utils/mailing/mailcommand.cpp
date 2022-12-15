@@ -25,10 +25,11 @@ void MailCommand::setMailProgramm() {
   QString config = cfg.value(ANTIQUACRM_CONFIG_MAILLER_KEY).toString();
   QFileInfo fileCheck(config);
   if (fileCheck.isExecutable()) {
-    QUrl url(fileCheck.filePath(), QUrl::TolerantMode);
-    setProgram(url.toString(QUrl::FullyEncoded));
+    qInfo("Using %s Mail-Application", qPrintable(fileCheck.filePath()));
+    setProgram(fileCheck.filePath());
   } else {
-    qWarning("Missing Mailler Application!");
+    qWarning("Missing Mail-Application!");
+    emit sendMessage("Missing Mailler Application!");
   }
 }
 
