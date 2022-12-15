@@ -27,7 +27,7 @@ void OrderStatusSelecter::loadDataset() {
   m_box->insertItem(c, tr("Ready for pickup"), AntiquaCRM::FETCHET);
   m_box->setItemData(c++, QIcon("://icons/action_ready_pickup.png"), Qt::DecorationRole);
 
-  m_box->insertItem(c, tr("On the way"), AntiquaCRM::DELIVERED);
+  m_box->insertItem(c, tr("On the way"), AntiquaCRM::DELIVERY);
   m_box->setItemData(c++, QIcon("://icons/delivery48.png"), Qt::DecorationRole);
 
   m_box->insertItem(c, tr("Reminder sent"), AntiquaCRM::REMINDET);

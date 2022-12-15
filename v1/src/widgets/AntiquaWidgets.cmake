@@ -149,6 +149,10 @@
 #include "serialid.h"
 #endif
 
+#ifndef ANTIQUACRM_SHOWPAYMENTMETHOD_H
+#include "showpaymentmethod.h"
+#endif
+
 #ifndef ANTIQUACRM_SIZEEDIT_H
 #include "sizeedit.h"
 #endif

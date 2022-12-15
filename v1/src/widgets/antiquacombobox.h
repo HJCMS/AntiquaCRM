@@ -6,6 +6,7 @@
 #define ANTIQUA_INPUT_COMBOBOX_H
 
 #include <QComboBox>
+#include <QAbstractItemView>
 #include <QObject>
 #include <QWidget>
 
@@ -16,6 +17,7 @@ class AntiquaComboBox final : public QComboBox {
 
 private:
   bool mouseWheel;
+  QAbstractItemView *m_view;
 
 protected:
   void wheelEvent(QWheelEvent *e) override;

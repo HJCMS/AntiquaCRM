@@ -238,7 +238,7 @@ namespace AntiquaCRM {
    OPEN = 0,      /**< Offen */
    STARTED = 1,   /**< Auftrag angenommen */
    FETCHET = 2,   /**< Bereit zur Abholung */
-   DELIVERED = 3, /**< Geliefert/Unterwegs */
+   DELIVERY = 3,  /**< Wird Geliefert/Unterwegs */
    REMINDET = 4,  /**< Erinnerung */
    COMPLETED = 5, /**< Abgeschlossen */
    CANCELED = 6,  /**< Storniert */

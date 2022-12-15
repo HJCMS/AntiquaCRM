@@ -37,7 +37,7 @@ void OrdersStatusBar::setHistoryAction(int index) {
     query = "o_order_status=" + str_index;
     break;
 
-  case AntiquaCRM::OrderStatus::DELIVERED: /**< Ausgeliefert */
+  case AntiquaCRM::OrderStatus::DELIVERY: /**< Unterwegs */
     query = "o_order_status=" + str_index;
     break;
 

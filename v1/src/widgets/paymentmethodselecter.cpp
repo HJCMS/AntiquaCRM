@@ -51,6 +51,10 @@ void PaymentMethodSelecter::setFocus() {
   m_box->showPopup();
 }
 
+void PaymentMethodSelecter::setReadOnly(bool b) {
+  m_box->setEnabled(!b);
+}
+
 void PaymentMethodSelecter::setProperties(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);

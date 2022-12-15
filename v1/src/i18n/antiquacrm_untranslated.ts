@@ -10,6 +10,14 @@
     </message>
 </context>
 <context>
+    <name>AboutDialogs</name>
+    <message>
+        <location filename="../utils/aboutdialogs/aboutdialogs.cpp" line="+33"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AntiquaAppl</name>
     <message>
         <location filename="../antiquaappl.cpp" line="+168"/>
@@ -170,7 +178,7 @@
 <context>
     <name>AntiquaMenuBar</name>
     <message>
-        <location filename="../antiquamenubar.cpp" line="+25"/>
+        <location filename="../antiquamenubar.cpp" line="+26"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
@@ -374,7 +382,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>No Attachment changed!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2434,7 +2442,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ImageDialog</name>
     <message>
-        <location filename="../utils/imgedit/imagedialog.cpp" line="+27"/>
+        <location filename="../utils/imgedit/imagedialog.cpp" line="+25"/>
         <source>Picture Editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2459,7 +2467,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+19"/>
         <source>archiv isn&apos;t readable!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2479,17 +2487,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+26"/>
         <source>no valid image found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <source>copy image in progress ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+2"/>
         <source>successfully - image to archive copied</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2499,17 +2507,22 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+12"/>
         <source>Image saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
+        <source>Image preview rejected!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Please use the Finish button!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+40"/>
         <source>image from database!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3024,7 +3037,7 @@ Image - Article Id: %2</source>
 <context>
     <name>MailAttachments</name>
     <message>
-        <location filename="../utils/mailing/mailattachments.cpp" line="+29"/>
+        <location filename="../utils/mailing/mailattachments.cpp" line="+46"/>
         <source>Attach file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3034,7 +3047,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Open the file dialog and change the attachment path.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3394,12 +3407,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+54"/>
-        <source>European Countries</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-29"/>
+        <location line="+25"/>
         <source>vat included</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3430,17 +3438,27 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+18"/>
+        <location line="+24"/>
         <source>Platform</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-12"/>
+        <location line="-18"/>
         <source>Provider settlement number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+6"/>
+        <source>Desired payment method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>European Country Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>Created at</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3937,7 +3955,7 @@ Image - Article Id: %2</source>
 <context>
     <name>PaymentMethodSelecter</name>
     <message>
-        <location filename="../widgets/paymentmethodselecter.cpp" line="+89"/>
+        <location filename="../widgets/paymentmethodselecter.cpp" line="+93"/>
         <source>No selection available</source>
         <translation type="unfinished"></translation>
     </message>

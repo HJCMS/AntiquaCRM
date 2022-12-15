@@ -68,6 +68,7 @@ SET (projectLibrary_SOURCES
  selecteucountry.cpp
  selectarticletype.cpp
  serialid.cpp
+ showpaymentmethod.cpp
  sizeedit.cpp
  storagelocation.cpp
  tabsearchbar.cpp
@@ -121,6 +122,7 @@ SET (projectLibrary_HEADERS
  selecteucountry.h
  selectarticletype.h
  serialid.h
+ showpaymentmethod.h
  sizeedit.h
  storagelocation.h
  tabsearchbar.h

@@ -10,6 +10,14 @@
     </message>
 </context>
 <context>
+    <name>AboutDialogs</name>
+    <message>
+        <location filename="../utils/aboutdialogs/aboutdialogs.cpp" line="+33"/>
+        <source>Ok</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>AntiquaAppl</name>
     <message>
         <location filename="../antiquaappl.cpp" line="+168"/>
@@ -170,7 +178,7 @@
 <context>
     <name>AntiquaMenuBar</name>
     <message>
-        <location filename="../antiquamenubar.cpp" line="+25"/>
+        <location filename="../antiquamenubar.cpp" line="+26"/>
         <source>About</source>
         <translation>Über</translation>
     </message>
@@ -374,7 +382,7 @@
         <translation>Anhangspfad</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>No Attachment changed!</source>
         <translation>Kein Anhang eingefügt!</translation>
     </message>
@@ -2436,7 +2444,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ImageDialog</name>
     <message>
-        <location filename="../utils/imgedit/imagedialog.cpp" line="+27"/>
+        <location filename="../utils/imgedit/imagedialog.cpp" line="+25"/>
         <source>Picture Editor</source>
         <translation>Bild-Editor</translation>
     </message>
@@ -2461,7 +2469,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Abschließen</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+19"/>
         <source>archiv isn&apos;t readable!</source>
         <translation>Archiv ist nicht lesbar!</translation>
     </message>
@@ -2481,17 +2489,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild kopieren?</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+26"/>
         <source>no valid image found</source>
         <translation>kein gültiges Bild gefunden</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <source>copy image in progress ...</source>
         <translation>Bild kopieren läuft ...</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+2"/>
         <source>successfully - image to archive copied</source>
         <translation>Bild - Erfolgreich in das Archiv kopiert</translation>
     </message>
@@ -2501,17 +2509,22 @@ Bild - Artikel Nr: %2</translation>
         <translation>Warnung - Bild nicht kopiert</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+12"/>
         <source>Image saved successfully!</source>
         <translation>Bild erfolgreich gespeichert!</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
+        <source>Image preview rejected!</source>
+        <translation>Bildvorschau abgelehnt!</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Please use the Finish button!</source>
         <translation>Bitte benutzen Sie den Beenden knopf!</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+40"/>
         <source>image from database!</source>
         <translation>Bild aus Datenbank!</translation>
     </message>
@@ -3026,7 +3039,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>MailAttachments</name>
     <message>
-        <location filename="../utils/mailing/mailattachments.cpp" line="+29"/>
+        <location filename="../utils/mailing/mailattachments.cpp" line="+46"/>
         <source>Attach file</source>
         <translation>Datei anhängen</translation>
     </message>
@@ -3036,7 +3049,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Datei zum Anhängen suchen</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Open the file dialog and change the attachment path.</source>
         <translation>Öffnen Sie den Dateidialog und ändern Sie den Anhangspfad.</translation>
     </message>
@@ -3396,12 +3409,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Lieferscheinnummer</translation>
     </message>
     <message>
-        <location line="+54"/>
-        <source>European Countries</source>
-        <translation>Europäische Länder</translation>
-    </message>
-    <message>
-        <location line="-29"/>
+        <location line="+25"/>
         <source>vat included</source>
         <translation>inkl. MwSt</translation>
     </message>
@@ -3432,17 +3440,27 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+18"/>
+        <location line="+24"/>
         <source>Platform</source>
         <translation>Plattform</translation>
     </message>
     <message>
-        <location line="-12"/>
+        <location line="-18"/>
         <source>Provider settlement number</source>
         <translation>Abrechnungsnummer des Anbieters</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+6"/>
+        <source>Desired payment method</source>
+        <translation>Gewünschte Zahlungsmethode</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>European Country Info</source>
+        <translation>Europäisches Land</translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>Created at</source>
         <translation>Erstellt am</translation>
     </message>
@@ -3939,7 +3957,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PaymentMethodSelecter</name>
     <message>
-        <location filename="../widgets/paymentmethodselecter.cpp" line="+89"/>
+        <location filename="../widgets/paymentmethodselecter.cpp" line="+93"/>
         <source>No selection available</source>
         <translation>Keine Auswahl vorhanden</translation>
     </message>

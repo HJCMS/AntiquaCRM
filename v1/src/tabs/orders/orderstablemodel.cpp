@@ -35,7 +35,7 @@ const QString OrdersTableModel::getOrderStatus(int status) const {
   case (AntiquaCRM::FETCHET): /**< Bereit zur Abholung */
     return tr("Ready for pickup");
 
-  case (AntiquaCRM::DELIVERED): /**< Unterwegs */
+  case (AntiquaCRM::DELIVERY): /**< Unterwegs */
     return tr("On the way");
 
   case (AntiquaCRM::REMINDET): /**< Erinnerung */
@@ -63,7 +63,7 @@ const QIcon OrdersTableModel::getOrderStatusIcon(int status) const {
   case (AntiquaCRM::FETCHET): /**< Bereit zur Abholung */
     return QIcon("://icons/action_ready_pickup.png");
 
-  case (AntiquaCRM::DELIVERED): /**< Unterwegs */
+  case (AntiquaCRM::DELIVERY): /**< Unterwegs */
     return QIcon("://icons/delivery48.png");
 
   case (AntiquaCRM::REMINDET): /**< Erinnerung */

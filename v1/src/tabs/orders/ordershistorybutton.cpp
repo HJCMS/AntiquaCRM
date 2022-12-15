@@ -38,7 +38,7 @@ void OrdersHistoryButton::setQueryNoPayments() {
 }
 
 void OrdersHistoryButton::setQueryDelivered() {
-  emit sendOrderStatusAction(AntiquaCRM::OrderStatus::DELIVERED);
+  emit sendOrderStatusAction(AntiquaCRM::OrderStatus::DELIVERY);
 }
 
 void OrdersHistoryButton::setQueryRemindet() {

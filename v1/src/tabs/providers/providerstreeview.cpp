@@ -124,7 +124,7 @@ void ProvidersTreeView::updateOrderStatus(QTreeWidgetItem *item,
     return;
   }
 
-  case (AntiquaCRM::OrderStatus::DELIVERED): {
+  case (AntiquaCRM::OrderStatus::DELIVERY): {
     QString mTip = tr("On the way");
     if (modified != true || !tip.contains(mTip))
       item->setToolTip(0, tip + " " + mTip);

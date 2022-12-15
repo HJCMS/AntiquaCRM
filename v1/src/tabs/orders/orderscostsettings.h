@@ -16,7 +16,7 @@ class OrdersCostSettings : public QTabWidget {
   Q_OBJECT
 
 private:
-  QWidget *m_deliveryTab;
+  QWidget *m_costdeliveryTab;
   QWidget *m_providerTab;
   QWidget *m_historyTab;
 
@@ -29,6 +29,7 @@ public:
   TaxLevelBox *o_vat_levels;
   BoolBox *o_vat_included;
   BoolBox *o_delivery_add_price;
+  ShowPaymentMethod *o_payment_method;
   LineEdit *o_provider_name;
   LineEdit *o_provider_order_id;
   AntiquaDateInfo *o_since;

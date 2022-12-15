@@ -3,7 +3,6 @@
 
 #include "antiquacombobox.h"
 #include <ASettings>
-#include <QAbstractItemView>
 
 AntiquaComboBox::AntiquaComboBox(QWidget *parent) : QComboBox{parent} {
   setSizeAdjustPolicy(QComboBox::AdjustToContentsOnFirstShow);
@@ -13,9 +12,10 @@ AntiquaComboBox::AntiquaComboBox(QWidget *parent) : QComboBox{parent} {
   AntiquaCRM::ASettings cfg(this);
   mouseWheel = cfg.value("mouse_wheel_actions", false).toBool();
 
-  QAbstractItemView *m_view = view();
+  m_view = view();
   if (m_view != nullptr) {
     m_view->setAlternatingRowColors(true);
+    m_view->setSelectionMode(QAbstractItemView::SingleSelection);
   }
 }
 

@@ -30,6 +30,7 @@ public Q_SLOTS:
   Q_INVOKABLE void reset();
   void setValue(const QVariant &);
   void setFocus();
+  void setReadOnly(bool b = false);
 
 public:
   explicit PaymentMethodSelecter(QWidget *parent = nullptr);
