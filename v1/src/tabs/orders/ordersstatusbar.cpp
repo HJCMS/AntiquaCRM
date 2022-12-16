@@ -16,73 +16,60 @@ OrdersStatusBar::OrdersStatusBar(QWidget *parent) : TabStatusBar{parent} {
   m_frame->setLayout(layout);
 
   connect(btn_history, SIGNAL(sendDefaultView()), SIGNAL(sendDefaultView()));
-  connect(btn_history, SIGNAL(sendOrderStatusAction(int)),
+  connect(btn_history, SIGNAL(sendHistoryAction(int)),
           SLOT(setHistoryAction(int)));
-  connect(btn_history, SIGNAL(sendOrderPaymentAction(int)),
-          SLOT(setPaymentAction(int)));
 }
 
-void OrdersStatusBar::setHistoryAction(int index) {
-  if (index < 0)
-    return;
+void OrdersStatusBar::setHistoryAction(int action) {
+  QString sqlQuery;
+  QString year("date_part('year',o_since)=date_part('year',CURRENT_DATE)");
 
-  QString query;
-  QString str_index = QString::number(index);
-  switch (static_cast<AntiquaCRM::OrderStatus>(index)) {
-  case AntiquaCRM::OrderStatus::STARTED: /**< Auftrag angenommen */
-    query = "o_order_status=" + str_index;
+  QString status;
+  switch (static_cast<OrdersHistoryButton::HistoryQuery>(action)) {
+  case OrdersHistoryButton::HistoryQuery::FILTER_DEFAULT:
+    status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
+    sqlQuery = "o_order_status<" + status;
     break;
 
-  case AntiquaCRM::OrderStatus::FETCHET: /**< Bereit zur Abholung */
-    query = "o_order_status=" + str_index;
+  case OrdersHistoryButton::HistoryQuery::FILTER_NOT_PAID:
+    status = QString::number(AntiquaCRM::OrderPayment::NOTPAID);
+    sqlQuery = "o_payment_status=" + status;
+    status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
+    sqlQuery.append(" AND o_order_status != " + status);
     break;
 
-  case AntiquaCRM::OrderStatus::DELIVERY: /**< Unterwegs */
-    query = "o_order_status=" + str_index;
+  case OrdersHistoryButton::HistoryQuery::FILTER_DELIVERED_NOT_PAID:
+    status = QString::number(AntiquaCRM::OrderPayment::NOTPAID);
+    sqlQuery = "o_payment_status=" + status;
+    status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
+    sqlQuery.append(" AND o_order_status=" + status);
     break;
 
-  case AntiquaCRM::OrderStatus::REMINDET: /**< Erinnerung */
-    query = "o_order_status=" + str_index;
+  case OrdersHistoryButton::HistoryQuery::FILTER_PAYMENT_REMINDED:
+    status = QString::number(AntiquaCRM::OrderPayment::REMIND);
+    sqlQuery = "o_payment_status=" + status;
+    status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
+    sqlQuery.append(" AND o_order_status=" + status);
     break;
 
-  case AntiquaCRM::OrderStatus::COMPLETED: /**< Abgeschlossen */
-    query = "o_order_status=" + str_index;
-    break;
-
-  case AntiquaCRM::OrderStatus::CANCELED: /**< Storniert */
-    query = "o_order_status=" + str_index;
-    break;
-
-  case AntiquaCRM::OrderStatus::RETURNING: /**< Retour */
-    query = "o_order_status=" + str_index;
+  case OrdersHistoryButton::HistoryQuery::FILTER_COMPLETED:
+    status = QString::number(AntiquaCRM::OrderPayment::PAYED);
+    sqlQuery = "o_payment_status=" + status;
+    status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
+    sqlQuery.append(" AND o_order_status=" + status);
     break;
 
   default:
-    query = "o_order_status=0";
+    sqlQuery = "o_order_status=0 AND o_payment_status=0";
     break;
   };
 
-  QString year("date_part('year',o_since)=date_part('year',CURRENT_DATE)");
-  query.append(" AND " + year);
-  emit sendHistoryQuery(query);
-}
+  sqlQuery.append(" AND ");
+  sqlQuery.append(year);
 
-void OrdersStatusBar::setPaymentAction(int index) {
-  if (index < 0)
-    return;
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << sqlQuery;
+#endif
 
-  QString query;
-  switch (static_cast<AntiquaCRM::OrderStatus>(index)) {
-  case AntiquaCRM::OrderStatus::STARTED:
-    query = "o_payment_status=false AND o_order_status>0";
-    query.append(" AND o_order_status<6");
-    break;
-
-  default:
-    query = "o_payment_status=false";
-  };
-
-  QString year("date_part('year',o_since)=date_part('year',CURRENT_DATE)");
-  query.append(" AND " + year);
-  emit sendHistoryQuery(query);
+  emit sendHistoryQuery(sqlQuery);
 }

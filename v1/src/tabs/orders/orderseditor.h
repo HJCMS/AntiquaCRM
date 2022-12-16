@@ -21,7 +21,7 @@ class OrdersEditor final : public InventoryEditor {
 private:
   SerialID *o_id;
   SerialID *o_invoice_id;
-  BoolBox *o_payment_status;
+  OrderPaymentStatusSelecter *o_payment_status;
   OrderStatusSelecter *o_order_status;
 
   QStringList customInput;

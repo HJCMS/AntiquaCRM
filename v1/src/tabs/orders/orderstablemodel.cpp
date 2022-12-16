@@ -23,8 +23,45 @@ const QIcon OrdersTableModel::getHeaderIcon(int column) const {
   return map.value(column);
 }
 
-const QIcon OrdersTableModel::getStatusIcon(bool status) const {
-  return (status) ? QIcon(":icons/action_ok.png") : QIcon(":icons/warning.png");
+const QIcon OrdersTableModel::getPaymentIcon(int status) const {
+  switch (static_cast<AntiquaCRM::OrderPayment>(status)) {
+  case AntiquaCRM::OrderPayment::PAYED: /**< Bezahlt */
+    return QIcon("://icons/action_ok.png");
+
+  case AntiquaCRM::OrderPayment::REMIND: /**< Erinnert */
+    return QIcon("://icons/action_redo.png");
+
+  case AntiquaCRM::OrderPayment::ADMONISH: /**< Mahnen */
+    return QIcon("://icons/user_delete.png");
+
+  case AntiquaCRM::OrderPayment::RETURN: /**< Retour */
+    return QIcon("://icons/action_undo.png");
+
+  default: /**< Nicht bezahlt */
+    return QIcon("://icons/warning.png");
+  }
+}
+
+const QString OrdersTableModel::getPaymentStatus(int status) const {
+  switch (static_cast<AntiquaCRM::OrderPayment>(status)) {
+  case AntiquaCRM::OrderPayment::NOTPAID: /**< Warte auf Zahlung */
+    return tr("Not paid");
+
+  case AntiquaCRM::OrderPayment::PAYED: /**< Bezahlt */
+    return tr("Payed");
+
+  case AntiquaCRM::OrderPayment::REMIND: /**< Erinnert */
+    return tr("Reminded");
+
+  case AntiquaCRM::OrderPayment::ADMONISH: /**< Mahnen */
+    return tr("Admonished");
+
+  case AntiquaCRM::OrderPayment::RETURN: /**< Retour */
+    return tr("Returned");
+
+  default:
+    return tr("Not paid");
+  };
 }
 
 const QString OrdersTableModel::getOrderStatus(int status) const {
@@ -38,17 +75,12 @@ const QString OrdersTableModel::getOrderStatus(int status) const {
   case (AntiquaCRM::DELIVERY): /**< Auslieferung */
     return tr("Delivery");
 
-  case (AntiquaCRM::REMINDET): /**< Erinnerung */
-    return tr("Reminded");
-
-  case (AntiquaCRM::COMPLETED): /**< Geliefert */
+  case (AntiquaCRM::DELIVERED): /**< Geliefert */
+  case (AntiquaCRM::COMPLETED): /**< @deprecated */
     return tr("Delivered");
 
   case (AntiquaCRM::CANCELED): /**< Storniert */
     return tr("Canceled");
-
-  case (AntiquaCRM::RETURNING): /**< Retour */
-    return tr("Back");
 
   default:
     return tr("Open");
@@ -66,17 +98,11 @@ const QIcon OrdersTableModel::getOrderStatusIcon(int status) const {
   case (AntiquaCRM::DELIVERY): /**< Unterwegs */
     return QIcon("://icons/delivery48.png");
 
-  case (AntiquaCRM::REMINDET): /**< Erinnerung */
-    return QIcon("://icons/action_redo.png");
-
-  case (AntiquaCRM::COMPLETED): /**< Abgeschlossen */
+  case (AntiquaCRM::DELIVERED): /**< Geliefert */
     return QIcon("://icons/action_ok.png");
 
   case (AntiquaCRM::CANCELED): /**< Storniert */
     return QIcon("://icons/action_cancel.png");
-
-  case (AntiquaCRM::RETURNING): /**< Retour */
-    return QIcon("://icons/action_undo.png");
 
   default:
     return QIcon("://icons/warning.png");
@@ -163,16 +189,20 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
 
   int column = index.column();
   if (role == Qt::TextAlignmentRole) {
-    if(column == 7) {
-      return (int) (Qt::AlignRight | Qt::AlignVCenter);
+    if (column == 7) {
+      return (int)(Qt::AlignRight | Qt::AlignVCenter);
     } else {
-      return (int) (Qt::AlignLeft | Qt::AlignVCenter);
+      return (int)(Qt::AlignLeft | Qt::AlignVCenter);
     }
   }
 
   QVariant item = AntiquaCRM::ASqlQueryModel::data(index, role);
   if (role == Qt::DisplayRole && column == 2) {
     return getOrderStatus(item.toInt());
+  }
+
+  if (role == Qt::DisplayRole && column == 3) {
+    return getPaymentStatus(item.toInt());
   }
 
   if (role == Qt::DisplayRole && column == 7) {
@@ -186,7 +216,7 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
 
   if (role == Qt::DecorationRole && column == 3) {
     QVariant sub = AntiquaCRM::ASqlQueryModel::data(index, Qt::EditRole);
-    return getStatusIcon(sub.toBool());
+    return getPaymentIcon(sub.toInt());
   }
 
   return item;

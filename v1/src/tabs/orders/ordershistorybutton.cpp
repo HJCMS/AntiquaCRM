@@ -15,32 +15,41 @@ OrdersHistoryButton::OrdersHistoryButton(QWidget *parent)
 
   QIcon ico = QIcon("://icons/user_identity.png");
   QMenu *m_menu = new QMenu(this);
+  /** OrdersHistoryButton::FILTER_DEFAULT */
   ac_default = m_menu->addAction(ico, tr("Default view"));
+  /** OrdersHistoryButton::FILTER_NOT_PAID */
   ac_noPayment = m_menu->addAction(ico, tr("Orders without payment."));
-  ac_delivered = m_menu->addAction(ico, tr("Delivered and not completed."));
+  /** OrdersHistoryButton::FILTER_DELIVERED_NOT_PAID */
+  ac_delivered = m_menu->addAction(ico, tr("Delivered and not payed."));
+  /** OrdersHistoryButton::FILTER_PAYMENT_REMINDED */
   ac_remindet = m_menu->addAction(ico, tr("Reminder orders."));
+  /** OrdersHistoryButton::FILTER_COMPLETED */
   ac_hasClosed = m_menu->addAction(ico, tr("Completed orders."));
   setMenu(m_menu);
 
-  connect(ac_default, SIGNAL(triggered()), SIGNAL(sendDefaultView()));
-  connect(ac_hasClosed, SIGNAL(triggered()), SLOT(setQueryClosedOrders()));
+  connect(ac_default, SIGNAL(triggered()), SLOT(setDefaultView()));
   connect(ac_noPayment, SIGNAL(triggered()), SLOT(setQueryNoPayments()));
   connect(ac_delivered, SIGNAL(triggered()), SLOT(setQueryDelivered()));
   connect(ac_remindet, SIGNAL(triggered()), SLOT(setQueryRemindet()));
+  connect(ac_hasClosed, SIGNAL(triggered()), SLOT(setQueryClosedOrders()));
 }
 
-void OrdersHistoryButton::setQueryClosedOrders() {
-  emit sendOrderStatusAction(AntiquaCRM::OrderStatus::COMPLETED);
+void OrdersHistoryButton::setDefaultView() {
+  emit sendHistoryAction(OrdersHistoryButton::FILTER_DEFAULT);
 }
 
 void OrdersHistoryButton::setQueryNoPayments() {
-  emit sendOrderPaymentAction(AntiquaCRM::OrderStatus::STARTED);
+  emit sendHistoryAction(OrdersHistoryButton::FILTER_NOT_PAID);
 }
 
 void OrdersHistoryButton::setQueryDelivered() {
-  emit sendOrderStatusAction(AntiquaCRM::OrderStatus::DELIVERY);
+  emit sendHistoryAction(OrdersHistoryButton::FILTER_DELIVERED_NOT_PAID);
 }
 
 void OrdersHistoryButton::setQueryRemindet() {
-  emit sendOrderStatusAction(AntiquaCRM::OrderStatus::REMINDET);
+  emit sendHistoryAction(OrdersHistoryButton::FILTER_PAYMENT_REMINDED);
+}
+
+void OrdersHistoryButton::setQueryClosedOrders() {
+  emit sendHistoryAction(OrdersHistoryButton::FILTER_COMPLETED);
 }

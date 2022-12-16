@@ -2444,7 +2444,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>HelperDialog</name>
     <message>
-        <location filename="../utils/helper/helperdialog.cpp" line="+13"/>
+        <location filename="../utils/helper/helperdialog.cpp" line="+15"/>
         <source>Ok</source>
         <translation></translation>
     </message>
@@ -3352,9 +3352,67 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>OrderPaymentStatusSelecter</name>
+    <message>
+        <location filename="../widgets/orderpaymentstatusselecter.cpp" line="+22"/>
+        <source>Not paid</source>
+        <translation>Nicht bezahlt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>This order is currently not paid!</source>
+        <translation>Diese Bestellung wurde noch nicht bezahlt!</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Payed</source>
+        <translation>Bezahlt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Order paid and completed!</source>
+        <translation>Bestellung ist komplett Bezahlt!</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Remindet</source>
+        <translation>Zahlungserinnerung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Buyer was reminded.</source>
+        <translation>Dem Kunde wurde eine Zahlungserinnerung übermittelt.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Admonished</source>
+        <translation>Abgemahnt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The Buyer was admonished!</source>
+        <translation>Dem Kunde wurde eine Mahnung zusgesendet!</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Returning</source>
+        <translation>Rücklauf</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Returning Process</source>
+        <translation>Rückgabeprozess</translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>a Payment status is required.</source>
+        <translation>Ein Zahlungsstatus ist erforderlich.</translation>
+    </message>
+</context>
+<context>
     <name>OrderStatusSelecter</name>
     <message>
-        <location filename="../widgets/orderstatusselecter.cpp" line="+21"/>
+        <location filename="../widgets/orderstatusselecter.cpp" line="+22"/>
         <source>Open</source>
         <translation>Offen</translation>
     </message>
@@ -3424,7 +3482,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Storniert</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+58"/>
         <source>a valid Order status is required.</source>
         <translation>Ein gültiger Bestellstatus ist erforderlich.</translation>
     </message>
@@ -3472,33 +3530,32 @@ Bild - Artikel Nr: %2</translation>
         <translation>Mehrwertsteuer (MwSt)</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+15"/>
+        <source>Provider</source>
+        <translation>Dienstleister</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Settlement number</source>
+        <translation>Abwicklungs Nr.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Provider payment method</source>
+        <translation>Dienstleister Zahlungsmethode</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Delivery-/Invoice Settings</source>
         <translation>Liefer-/Rechnungseinstellungen</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <location line="+23"/>
-        <source>Platform</source>
-        <translation>Plattform</translation>
-    </message>
-    <message>
-        <location line="-17"/>
-        <source>Provider settlement number</source>
-        <translation>Abrechnungsnummer des Anbieters</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Desired payment method</source>
-        <translation>Gewünschte Zahlungsmethode</translation>
-    </message>
-    <message>
-        <location line="+4"/>
+        <location line="+18"/>
         <source>European Country Info</source>
         <translation>Europäisches Land</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="-12"/>
         <source>Created at</source>
         <translation>Erstellt am</translation>
     </message>
@@ -3513,7 +3570,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Geliefert am</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+11"/>
         <source>History info</source>
         <translation>Verlauf</translation>
     </message>
@@ -3554,29 +3611,9 @@ Bild - Artikel Nr: %2</translation>
         <translation>Rechnungs Nr</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+13"/>
         <source>Payment status</source>
         <translation>Zahlungsstatus</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Order paid or not?</source>
-        <translation>Bestellung bezahlt oder nicht?</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Changes the current payment status.</source>
-        <translation>Ändert den aktuellen Zahlungsstatus.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Current order status</source>
-        <translation>Aktueller Auftragsstatus</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Changes the current order status.</source>
-        <translation>Ändert den aktuellen Auftragsstatus.</translation>
     </message>
     <message>
         <location line="+79"/>
@@ -3615,7 +3652,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Es sind keine SQL-Artikel vorhanden!</translation>
     </message>
     <message>
-        <location line="-60"/>
+        <location line="-384"/>
+        <source>Order status</source>
+        <translation>Auftragsstatus</translation>
+    </message>
+    <message>
+        <location line="+324"/>
         <source>No Modifications found, nothing todo!</source>
         <translation>Keine Änderungen gefunden, es gibt nichts zu tun!</translation>
     </message>
@@ -3643,14 +3685,14 @@ Bild - Artikel Nr: %2</translation>
         <location line="+17"/>
         <location line="+19"/>
         <location line="+39"/>
-        <location line="+30"/>
+        <location line="+32"/>
         <location line="+38"/>
         <location line="+80"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation>Fehlende wichtige IDs, Bestellung zuerst speichern!</translation>
     </message>
     <message>
-        <location line="-201"/>
+        <location line="-203"/>
         <source>Incomplete eMail configuration!</source>
         <translation>Unvollständige E-Mail-Konfiguration!</translation>
     </message>
@@ -3677,7 +3719,7 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="-20"/>
-        <location line="+31"/>
+        <location line="+33"/>
         <location line="+38"/>
         <source>Printdialog closed.</source>
         <translation>Drucken-Dialog geschlossen.</translation>
@@ -3711,27 +3753,27 @@ Bild - Artikel Nr: %2</translation>
         <translation>Erweiterte Abfragen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Default view</source>
         <translation>Standardansicht</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Orders without payment.</source>
         <translation>Bestellungen ohne Bezahlung.</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Delivered and not completed.</source>
-        <translation>Geliefert und nicht Abgeschlossen.</translation>
+        <location line="+2"/>
+        <source>Delivered and not payed.</source>
+        <translation>Geliefert nicht Bezahlt.</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Reminder orders.</source>
-        <translation>Aufträge mit Zahlungserinnerung.</translation>
+        <translation>Zahlungserinnerung gesendet.</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Completed orders.</source>
         <translation>Abgeschlossene Aufträge.</translation>
     </message>
@@ -3790,12 +3832,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../tabs/orders/orderstablemodel.cpp" line="+54"/>
+        <location filename="../tabs/orders/orderstablemodel.cpp" line="+88"/>
         <source>Open</source>
         <translation>Offen</translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-15"/>
         <source>Ready for pickup</source>
         <translation>Abholbereit</translation>
     </message>
@@ -3805,22 +3847,18 @@ Bild - Artikel Nr: %2</translation>
         <translation>Auslieferung</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-22"/>
+        <location line="+31"/>
         <source>Reminded</source>
         <translation>Erinnerung gesendet</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-3"/>
         <source>Canceled</source>
         <translation>Storniert</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Back</source>
-        <translation>Retour</translation>
-    </message>
-    <message>
-        <location line="+36"/>
+        <location line="+39"/>
         <source>no time</source>
         <translation>ohne Zeitangabe</translation>
     </message>
@@ -3855,12 +3893,28 @@ Bild - Artikel Nr: %2</translation>
         <translation>Status</translation>
     </message>
     <message>
-        <location line="-75"/>
+        <location line="-94"/>
+        <location line="+15"/>
+        <source>Not paid</source>
+        <translation>Nicht bezahlt</translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <source>Admonished</source>
+        <translation>Abgemahnt</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Returned</source>
+        <translation>Rücklauf</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Order created</source>
         <translation>Auftragsbegin</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+9"/>
         <source>Delivered</source>
         <translation>Geliefert</translation>
     </message>
@@ -3911,7 +3965,8 @@ Bild - Artikel Nr: %2</translation>
         <translation></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-105"/>
+        <location line="+106"/>
         <source>Payed</source>
         <translation>Bezahlt</translation>
     </message>
@@ -4185,49 +4240,6 @@ Bild - Artikel Nr: %2</translation>
         <location line="+6"/>
         <source>delivery note number is empty!</source>
         <translation>Lieferscheinnummer fehlt!</translation>
-    </message>
-</context>
-<context>
-    <name>PaymentStatusSelecter</name>
-    <message>
-        <location filename="../widgets/paymentstatusselecter.cpp" line="+89"/>
-        <source>No status set</source>
-        <translation>Kein Status gesetzt</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Waiting for payment</source>
-        <translation>Warten auf Zahlung</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Ready for shipping</source>
-        <translation>Zum Versenden bereit</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Delivered waiting for payment</source>
-        <translation>Geliefert wartet auf Zahlung</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Paid and shipped</source>
-        <translation>Bezahlt und verschickt</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>No reaction from buyer</source>
-        <translation>Keine Reaktion des Käufers</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>order canceled</source>
-        <translation>Bestellung storniert</translation>
-    </message>
-    <message>
-        <location line="-13"/>
-        <source>a valid Payment status is required.</source>
-        <translation>Ein gültiger Zahlungsstatus ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -4749,6 +4761,49 @@ Bild - Artikel Nr: %2</translation>
         <location line="+5"/>
         <source>Order status</source>
         <translation>Auftragsstatus</translation>
+    </message>
+</context>
+<context>
+    <name>ProviderPaymentsSelecter</name>
+    <message>
+        <location filename="../widgets/providerpaymentsselecter.cpp" line="+83"/>
+        <source>a valid Payment status is required.</source>
+        <translation>Ein gültiger Zahlungsstatus ist erforderlich.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>No status set</source>
+        <translation>Kein Status gesetzt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Waiting for payment</source>
+        <translation>Warten auf Zahlung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Ready for shipping</source>
+        <translation>Zum Versenden bereit</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Delivered waiting for payment</source>
+        <translation>Geliefert wartet auf Zahlung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Paid and shipped</source>
+        <translation>Bezahlt und verschickt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>No reaction from buyer</source>
+        <translation>Keine Reaktion des Käufers</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>order canceled</source>
+        <translation>Bestellung storniert</translation>
     </message>
 </context>
 <context>

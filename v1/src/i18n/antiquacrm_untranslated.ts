@@ -2442,7 +2442,7 @@ Image - Article Id: %2</source>
 <context>
     <name>HelperDialog</name>
     <message>
-        <location filename="../utils/helper/helperdialog.cpp" line="+13"/>
+        <location filename="../utils/helper/helperdialog.cpp" line="+15"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3350,9 +3350,67 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>OrderPaymentStatusSelecter</name>
+    <message>
+        <location filename="../widgets/orderpaymentstatusselecter.cpp" line="+22"/>
+        <source>Not paid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>This order is currently not paid!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Payed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Order paid and completed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Remindet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Buyer was reminded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Admonished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The Buyer was admonished!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Returning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Returning Process</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>a Payment status is required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OrderStatusSelecter</name>
     <message>
-        <location filename="../widgets/orderstatusselecter.cpp" line="+21"/>
+        <location filename="../widgets/orderstatusselecter.cpp" line="+22"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3422,7 +3480,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+58"/>
         <source>a valid Order status is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3470,33 +3528,32 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+15"/>
+        <source>Provider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Settlement number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Provider payment method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Delivery-/Invoice Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
-        <location line="+23"/>
-        <source>Platform</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-17"/>
-        <source>Provider settlement number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Desired payment method</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
+        <location line="+18"/>
         <source>European Country Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="-12"/>
         <source>Created at</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3511,7 +3568,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+11"/>
         <source>History info</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3552,28 +3609,8 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+13"/>
         <source>Payment status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Order paid or not?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Changes the current payment status.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Current order status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Changes the current order status.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3613,7 +3650,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-60"/>
+        <location line="-384"/>
+        <source>Order status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+324"/>
         <source>No Modifications found, nothing todo!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3641,14 +3683,14 @@ Image - Article Id: %2</source>
         <location line="+17"/>
         <location line="+19"/>
         <location line="+39"/>
-        <location line="+30"/>
+        <location line="+32"/>
         <location line="+38"/>
         <location line="+80"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-201"/>
+        <location line="-203"/>
         <source>Incomplete eMail configuration!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3675,7 +3717,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="-20"/>
-        <location line="+31"/>
+        <location line="+33"/>
         <location line="+38"/>
         <source>Printdialog closed.</source>
         <translation type="unfinished"></translation>
@@ -3709,27 +3751,27 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Default view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Orders without payment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Delivered and not completed.</source>
+        <location line="+2"/>
+        <source>Delivered and not payed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Reminder orders.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Completed orders.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3788,12 +3830,12 @@ Image - Article Id: %2</source>
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../tabs/orders/orderstablemodel.cpp" line="+54"/>
+        <location filename="../tabs/orders/orderstablemodel.cpp" line="+88"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-15"/>
         <source>Ready for pickup</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3803,22 +3845,18 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-22"/>
+        <location line="+31"/>
         <source>Reminded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="-3"/>
         <source>Canceled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+36"/>
+        <location line="+39"/>
         <source>no time</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3853,12 +3891,28 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-75"/>
+        <location line="-94"/>
+        <location line="+15"/>
+        <source>Not paid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <source>Admonished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Returned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Order created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+9"/>
         <source>Delivered</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3909,7 +3963,8 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-105"/>
+        <location line="+106"/>
         <source>Payed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4182,49 +4237,6 @@ Image - Article Id: %2</source>
     <message>
         <location line="+6"/>
         <source>delivery note number is empty!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PaymentStatusSelecter</name>
-    <message>
-        <location filename="../widgets/paymentstatusselecter.cpp" line="+89"/>
-        <source>No status set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Waiting for payment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Ready for shipping</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Delivered waiting for payment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Paid and shipped</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>No reaction from buyer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>order canceled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-13"/>
-        <source>a valid Payment status is required.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4746,6 +4758,49 @@ Image - Article Id: %2</source>
     <message>
         <location line="+5"/>
         <source>Order status</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProviderPaymentsSelecter</name>
+    <message>
+        <location filename="../widgets/providerpaymentsselecter.cpp" line="+83"/>
+        <source>a valid Payment status is required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>No status set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Waiting for payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Ready for shipping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Delivered waiting for payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Paid and shipped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>No reaction from buyer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>order canceled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

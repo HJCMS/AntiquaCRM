@@ -15,7 +15,8 @@ class OrdersTableModel final : public AntiquaCRM::ASqlQueryModel {
 private:
   QSqlRecord queryRecord;
   const QIcon getHeaderIcon(int column) const;
-  const QIcon getStatusIcon(bool status = 0) const;
+  const QIcon getPaymentIcon(int status = 0) const;
+  const QString getPaymentStatus(int status) const;
   const QString getOrderStatus(int status) const;
   const QIcon getOrderStatusIcon(int status) const;
   const QString getRunTime(const qint64 &seconds) const;

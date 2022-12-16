@@ -144,6 +144,6 @@ bool OrdersTableView::setQuery(const QString &clause) {
 }
 
 const QString OrdersTableView::defaultWhereClause() {
-  QString status = QString::number(AntiquaCRM::COMPLETED);
+  QString status = QString::number(AntiquaCRM::DELIVERED);
   return QString("o_order_status<" + status);
 }

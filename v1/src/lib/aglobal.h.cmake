@@ -237,11 +237,10 @@ namespace AntiquaCRM {
    OPEN = 0,      /**< Offen */
    STARTED = 1,   /**< Auftrag angenommen */
    FETCHET = 2,   /**< Bereit zur Abholung */
-   DELIVERY = 3,  /**< Wird Geliefert/Unterwegs */
-   REMINDET = 4,  /**< Erinnerung */
-   COMPLETED = 5, /**< Lieferung abgeschlossen */
-   CANCELED = 6,  /**< Storniert */
-   RETURNING = 7  /**< DEPRECATED */
+   DELIVERY = 3,  /**< Lieferung ist Unterwegs */
+   DELIVERED = 4, /**< Paket wurde geliefert */
+   COMPLETED = 5, /**< @deprecated Lieferung abgeschlossen */
+   CANCELED = 6   /**< Storniert */
  };
  Q_ENUM_NS(AntiquaCRM::OrderStatus)
 

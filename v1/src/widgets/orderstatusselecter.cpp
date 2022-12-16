@@ -35,13 +35,9 @@ void OrderStatusSelecter::loadDataset() {
   m_box->setItemData(c, tr("Package delivery in progress!"), Qt::ToolTipRole);
   m_box->setItemData(c++, QIcon("://icons/delivery48.png"), Qt::DecorationRole);
 
-  m_box->insertItem(c, tr("Delivered"), AntiquaCRM::COMPLETED);
+  m_box->insertItem(c, tr("Delivered"), AntiquaCRM::DELIVERED);
   m_box->setItemData(c, tr("The Package has delivered!"), Qt::ToolTipRole);
   m_box->setItemData(c++, QIcon("://icons/action_ok.png"), Qt::DecorationRole);
-
-  m_box->insertItem(c, tr("Reminder sent"), AntiquaCRM::REMINDET);
-  m_box->setItemData(c, tr("a Reminder was sent"), Qt::ToolTipRole);
-  m_box->setItemData(c++, QIcon("://icons/action_redo.png"), Qt::DecorationRole);
 
   m_box->insertItem(c, tr("Canceled"), AntiquaCRM::CANCELED);
   m_box->setItemData(c, tr("This order will be canceled!"), Qt::ToolTipRole);

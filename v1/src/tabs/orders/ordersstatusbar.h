@@ -21,7 +21,6 @@ private:
 
 private Q_SLOTS:
   void setHistoryAction(int) override;
-  void setPaymentAction(int);
 
 Q_SIGNALS:
   void sendDefaultView();

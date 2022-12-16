@@ -20,4 +20,4 @@ SELECT DATE(o_delivered) AS date, lpad(o_id::text, 7, '0') AS invoice,
 FROM inventory_orders
 LEFT JOIN article_orders ON a_order_id=o_id
 LEFT JOIN ref_delivery_cost ON d_cid=o_delivery_package
-WHERE o_payment_status=true AND o_order_status=5 @SQL_WHERE_CLAUSE@ ORDER BY o_delivered;
+WHERE o_payment_status=1 AND o_order_status=4 @SQL_WHERE_CLAUSE@ ORDER BY o_delivered;

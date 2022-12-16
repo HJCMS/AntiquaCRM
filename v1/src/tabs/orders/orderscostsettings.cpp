@@ -57,40 +57,28 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
   o_vat_included->setChecked(true);
   firstLayout->addWidget(o_vat_included, p1_row++, 1, 1, 1);
 
+  o_provider_name = new LineEdit(m_costdeliveryTab);
+  o_provider_name->setObjectName("o_provider_name");
+  o_provider_name->setInfo(tr("Provider"));
+  o_provider_name->setRequired(true);
+  firstLayout->addWidget(o_provider_name, p1_row, 0, 1, 1);
+
+  o_provider_order_id = new LineEdit(m_costdeliveryTab);
+  o_provider_order_id->setObjectName("o_provider_order_id");
+  o_provider_order_id->setInfo(tr("Settlement number"));
+  o_provider_order_id->setRequired("true");
+  firstLayout->addWidget(o_provider_order_id, p1_row++, 1, 1, 1);
+
+  o_payment_method = new ShowPaymentMethod(m_costdeliveryTab);
+  o_payment_method->setObjectName("o_payment_method");
+  o_payment_method->setInfo(tr("Provider payment method"));
+  firstLayout->addWidget(o_payment_method, p1_row++, 0, 1, 1);
+
   firstLayout->setRowStretch(p1_row++, 1);
 
   m_costdeliveryTab->setLayout(firstLayout);
   insertTab(tab_index++, m_costdeliveryTab, QIcon("://icons/user_male.png"),
             tr("Delivery-/Invoice Settings"));
-
-  m_providerTab = new QWidget(this);
-  QVBoxLayout *providerLayout = new QVBoxLayout(m_providerTab);
-  o_provider_name = new LineEdit(m_providerTab);
-  o_provider_name->setObjectName("o_provider_name");
-  o_provider_name->setInfo(tr("Platform"));
-  o_provider_name->setRequired(true);
-  providerLayout->addWidget(o_provider_name);
-
-  o_provider_order_id = new LineEdit(m_providerTab);
-  o_provider_order_id->setObjectName("o_provider_order_id");
-  o_provider_order_id->setInfo(tr("Provider settlement number"));
-  o_provider_order_id->setRequired("true");
-  providerLayout->addWidget(o_provider_order_id);
-
-  o_payment_method = new ShowPaymentMethod(m_providerTab);
-  o_payment_method->setObjectName("o_payment_method");
-  o_payment_method->setInfo(tr("Desired payment method"));
-  providerLayout->addWidget(o_payment_method);
-
-  o_vat_country = new SelectEuCountry(m_providerTab);
-  o_vat_country->setInfo(tr("European Country Info"));
-  o_vat_country->setObjectName("o_vat_country");
-  providerLayout->addWidget(o_vat_country);
-
-  providerLayout->addStretch(1);
-  m_providerTab->setLayout(providerLayout);
-  insertTab(tab_index++, m_providerTab, QIcon("://icons/groups.png"),
-            tr("Platform"));
 
   m_historyTab = new QWidget(this);
   QVBoxLayout *historyLayout = new QVBoxLayout(m_historyTab);
@@ -106,6 +94,12 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
   o_delivered->setObjectName("o_delivered");
   o_delivered->setInfo(tr("Deliverd at"));
   historyLayout->addWidget(o_delivered);
+
+  o_vat_country = new SelectEuCountry(m_historyTab);
+  o_vat_country->setInfo(tr("European Country Info"));
+  o_vat_country->setObjectName("o_vat_country");
+  historyLayout->addWidget(o_vat_country);
+
   historyLayout->addStretch(1);
   m_historyTab->setLayout(historyLayout);
   insertTab(tab_index++, m_historyTab, QIcon("://icons/view_info.png"),

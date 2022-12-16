@@ -36,21 +36,18 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   o_invoice_id->setRequired(true);
   row0->addWidget(o_invoice_id);
   row0->addStretch(1);
-  // Zahlungsstatus
-  o_payment_status = new BoolBox(this);
-  o_payment_status->setObjectName("o_payment_status");
-  o_payment_status->setInfo(tr("Payment status"));
-  o_payment_status->setToolTip(tr("Order paid or not?"));
-  o_payment_status->setWhatsThis(tr("Changes the current payment status."));
-  o_payment_status->setValue(0);
-  row0->addWidget(o_payment_status);
   // Auftragsstatus
   o_order_status = new OrderStatusSelecter(this);
   o_order_status->setObjectName("o_order_status");
-  o_order_status->setInfo(tr("Current order status"));
-  o_order_status->setWhatsThis(tr("Changes the current order status."));
-  o_order_status->setValue(0);
+  o_order_status->setInfo(tr("Order status"));
+  o_order_status->setValue(AntiquaCRM::OrderStatus::OPEN);
   row0->addWidget(o_order_status);
+  // Zahlungsstatus
+  o_payment_status = new OrderPaymentStatusSelecter(this);
+  o_payment_status->setObjectName("o_payment_status");
+  o_payment_status->setInfo(tr("Payment status"));
+  o_payment_status->setValue(AntiquaCRM::OrderPayment::NOTPAID);
+  row0->addWidget(o_payment_status);
   mainLayout->addLayout(row0);
   // END:Row0
 
@@ -719,8 +716,10 @@ void OrdersEditor::createPrintInvoiceNote() {
   QString c_add = getDataValue("c_postal_address").toString();
   m_d->setCustomerAddress(c_add);
 
-  bool paid = getDataValue("o_payment_status").toBool();
-  if (m_d->exec(list, paid) == QDialog::Accepted) {
+  AntiquaCRM::OrderPayment paid = static_cast<AntiquaCRM::OrderPayment>(
+      getDataValue("o_payment_status").toInt());
+  if (m_d->exec(list, (paid == AntiquaCRM::OrderPayment::PAYED)) ==
+      QDialog::Accepted) {
     sendStatusMessage(tr("Printdialog closed."));
   }
   list.clear();
@@ -978,7 +977,8 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
     QJsonObject orderinfo = obj.value("orderinfo").toObject();
     if (orderinfo.contains("o_payment_confirmed")) {
       bool paypal_status = (!orderinfo.value("o_payment_confirmed").isNull());
-      o_payment_status->setValue(paypal_status);
+      if (paypal_status)
+        o_payment_status->setValue(AntiquaCRM::OrderPayment::PAYED);
     }
 
     foreach (QString key, orderinfo.keys()) {

@@ -18,6 +18,16 @@
 class OrdersHistoryButton : public QPushButton {
   Q_OBJECT
 
+public:
+  enum HistoryQuery {
+    FILTER_DEFAULT = 0,
+    FILTER_NOT_PAID = 1,
+    FILTER_DELIVERED_NOT_PAID = 2,
+    FILTER_PAYMENT_REMINDED = 3,
+    FILTER_COMPLETED = 4
+  };
+  explicit OrdersHistoryButton(QWidget *parent = nullptr);
+
 private:
   /**
    * @brief Standard Ansicht
@@ -45,6 +55,7 @@ private:
   QAction *ac_remindet;
 
 private Q_SLOTS:
+  void setDefaultView();
   void setQueryClosedOrders();
   void setQueryNoPayments();
   void setQueryDelivered();
@@ -52,11 +63,9 @@ private Q_SLOTS:
 
 Q_SIGNALS:
   void sendDefaultView();
-  void sendOrderStatusAction(int);
-  void sendOrderPaymentAction(int);
-
-public:
-  explicit OrdersHistoryButton(QWidget *parent = nullptr);
+  void sendHistoryAction(int);
 };
+
+Q_DECLARE_METATYPE(OrdersHistoryButton::HistoryQuery);
 
 #endif // ANTIQUACRM_ORDERSHISTORYBUTTON_H

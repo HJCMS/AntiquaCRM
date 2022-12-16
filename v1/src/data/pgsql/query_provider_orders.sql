@@ -10,5 +10,5 @@ SELECT
  pr_buyer AS order_comment
 FROM provider_orders
 LEFT JOIN inventory_orders ON (o_provider_name=pr_name AND o_provider_order_id=pr_order)
-WHERE pr_order_accepted=false OR (o_order_status<5 OR (o_order_status>4 AND DATE(o_since)=CURRENT_DATE))
+WHERE pr_order_accepted=false OR (o_order_status<4 OR (o_order_status>3 AND DATE(o_since)=CURRENT_DATE))
 ORDER BY (pr_name,pr_order);

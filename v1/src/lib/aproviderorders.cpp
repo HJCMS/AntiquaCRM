@@ -189,7 +189,7 @@ const QHash<QString, QMetaType::Type> AProviderOrder::orderEditKeys() {
   /**
    * @brief If already payed?
    */
-  hash.insert("o_payment_status", QMetaType::Bool);
+  hash.insert("o_payment_status", QMetaType::Int);
 
   /**
    * @brief Provider Order Payment Method
