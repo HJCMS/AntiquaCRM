@@ -4,6 +4,7 @@
 #include "orderstatusselecter.h"
 
 #include <QDebug>
+#include <QMap>
 
 OrderStatusSelecter::OrderStatusSelecter(QWidget *parent) : InputEdit{parent} {
   m_box = new AntiquaComboBox(this);
@@ -45,13 +46,6 @@ void OrderStatusSelecter::loadDataset() {
   m_box->insertItem(c, tr("Canceled"), AntiquaCRM::CANCELED);
   m_box->setItemData(c, tr("This order will be canceled!"), Qt::ToolTipRole);
   m_box->setItemData(c++, QIcon("://icons/action_cancel.png"), Qt::DecorationRole);
-
-/**
- * @todo Aktuell nicht eingebaut!
-  m_box->insertItem(c, tr("Back"), AntiquaCRM::RETURNING);
-  m_box->setItemData(c, tr("Returning Process"), Qt::ToolTipRole);
-  m_box->setItemData(c++, QIcon("://icons/action_undo.png"), Qt::DecorationRole);
-*/
 }
 
 void OrderStatusSelecter::dataChanged(int index) {
@@ -93,9 +87,6 @@ const QVariant OrderStatusSelecter::value() {
 }
 
 bool OrderStatusSelecter::isValid() {
-  if (isRequired() && m_box->currentIndex() > 0)
-    return false;
-
   return true;
 }
 

@@ -60,8 +60,8 @@ const QDateTime ProviderOrderInfo::convertDateTime(const QString &str) {
 }
 
 void ProviderOrderInfo::setPaymentStatus(int i) {
-  AntiquaCRM::PaymentStatus ps = static_cast<AntiquaCRM::PaymentStatus>(i);
-  QString info = PaymentStatusSelecter::getStatus().value(ps);
+  AntiquaCRM::ProviderPaymentStatus ps = static_cast<AntiquaCRM::ProviderPaymentStatus>(i);
+  QString info = ProviderPaymentsSelecter::getStatus().value(ps);
   m_orderStatus->setText(info);
 }
 

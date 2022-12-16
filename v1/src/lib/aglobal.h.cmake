@@ -230,9 +230,8 @@ namespace AntiquaCRM {
  Q_ENUM_NS(AntiquaCRM::PluginQueryType)
 
  /**
-  * @brief Auftrags Status
+  * @brief Auftrag-Bearbeitungsstatus
   * @section orders
-  * Wird im Auftragssystem verwendet!
   */
  enum OrderStatus {
    OPEN = 0,      /**< Offen */
@@ -242,16 +241,29 @@ namespace AntiquaCRM {
    REMINDET = 4,  /**< Erinnerung */
    COMPLETED = 5, /**< Lieferung abgeschlossen */
    CANCELED = 6,  /**< Storniert */
-   RETURNING = 7  /**< Retour */
+   RETURNING = 7  /**< DEPRECATED */
  };
  Q_ENUM_NS(AntiquaCRM::OrderStatus)
+
+ /**
+  * @brief Auftrag-Zahlungsstatus
+  * @section orders
+  */
+ enum OrderPayment {
+   NOTPAID = 0,  /**< Warte auf Zahlung */
+   PAYED = 1,    /**< Bezahlt */
+   REMIND = 2,   /**< Erinnert */
+   ADMONISH = 3, /**< Mahnen */
+   RETURN = 4    /**< Retour */
+ };
+ Q_ENUM_NS(AntiquaCRM::OrderPayment)
 
  /**
   * @brief Bestellstatus des Dienstleisters
   * @section orders
   * Wird im Auftragssystem verwendet!
   */
- enum PaymentStatus {
+ enum ProviderPaymentStatus {
    STATUS_NOT_SET = 0,           /**< Kein Status fesgelegt */
    WAIT_FOR_PAYMENT = 1,         /**< Warte auf Zahlung */
    SHIPMENT_CREATED = 2,         /**< Fertig zum Versand */
@@ -260,7 +272,7 @@ namespace AntiquaCRM {
    BUYER_NO_REACTION = 5,        /**< Keine Reaktion des Käufers */
    ORDER_CANCELED = 6            /**< Käufer hat die Bestellung storniert */
  };
- Q_ENUM_NS(AntiquaCRM::PaymentStatus)
+ Q_ENUM_NS(AntiquaCRM::ProviderPaymentStatus)
 
  /**
   * @brief Zahlungsart der Bestellung

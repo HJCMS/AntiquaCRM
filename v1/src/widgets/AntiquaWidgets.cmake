@@ -101,16 +101,16 @@
 #include "lineedit.h"
 #endif
 
+#ifndef ANTIQUACRM_ORDERPAYMENT_STATUSSELECTER_H
+#include "orderpaymentstatusselecter.h"
+#endif
+
 #ifndef ANTIQUACRM_ORDERSTATUSSELECTER_H
 #include "orderstatusselecter.h"
 #endif
 
 #ifndef ANTIQUACRM_PAYMENTMETHODSELECTER_H
 #include "paymentmethodselecter.h"
-#endif
-
-#ifndef ANTIQUACRM_PAYMENTSTATUSSELECTER_H
-#include "paymentstatusselecter.h"
 #endif
 
 #ifndef ANTIQUACRM_PHONEEDIT_H
@@ -123,6 +123,10 @@
 
 #ifndef ANTIQUACRM_PRICEEDIT_H
 #include "priceedit.h"
+#endif
+
+#ifndef ANTIQUACRM_PROVIDER_PAYMENTS_SELECTER_H
+#include "providerpaymentsselecter.h"
 #endif
 
 #ifndef ANTIQUACRM_SALUTATIONBOX_H

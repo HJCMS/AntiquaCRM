@@ -56,8 +56,9 @@ SET (projectLibrary_SOURCES
  lineedit.cpp
  mailbutton.cpp
  orderstatusselecter.cpp
+ orderpaymentstatusselecter.cpp
  paymentmethodselecter.cpp
- paymentstatusselecter.cpp
+ providerpaymentsselecter.cpp
  phoneedit.cpp
  postalcodeedit.cpp
  priceedit.cpp
@@ -110,8 +111,9 @@ SET (projectLibrary_HEADERS
  lineedit.h
  mailbutton.h
  orderstatusselecter.h
+ orderpaymentstatusselecter.h
  paymentmethodselecter.h
- paymentstatusselecter.h
+ providerpaymentsselecter.h
  phoneedit.h
  postalcodeedit.h
  priceedit.h

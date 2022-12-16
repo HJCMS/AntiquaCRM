@@ -2,15 +2,13 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_ORDERSTATUSSELECTER_H
-#define ANTIQUACRM_ORDERSTATUSSELECTER_H
+#ifndef ANTIQUACRM_ORDERPAYMENT_STATUSSELECTER_H
+#define ANTIQUACRM_ORDERPAYMENT_STATUSSELECTER_H
 
 #include <AGlobal>
 #include <AntiquaInputEdit>
-#include <QObject>
-#include <QWidget>
 
-class OrderStatusSelecter final : public InputEdit {
+class OrderPaymentStatusSelecter final : public InputEdit {
   Q_OBJECT
 
 private:
@@ -20,16 +18,13 @@ private:
 private Q_SLOTS:
   void dataChanged(int);
 
-Q_SIGNALS:
-  void sendOrderStatusChanged(AntiquaCRM::OrderStatus);
-
 public Q_SLOTS:
   Q_INVOKABLE void reset();
   void setValue(const QVariant &);
   void setFocus();
 
 public:
-  explicit OrderStatusSelecter(QWidget *parent = nullptr);
+  explicit OrderPaymentStatusSelecter(QWidget *parent = nullptr);
   void setProperties(const QSqlField &field);
   const QVariant value();
   bool isValid();
@@ -38,4 +33,4 @@ public:
   const QString notes();
 };
 
-#endif // ANTIQUACRM_ORDERSTATUSSELECTER_H
+#endif // ANTIQUACRM_ORDERPAYMENT_STATUSSELECTER_H

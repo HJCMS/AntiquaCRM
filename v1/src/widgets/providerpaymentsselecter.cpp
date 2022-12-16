@@ -1,11 +1,11 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "paymentstatusselecter.h"
+#include "providerpaymentsselecter.h"
 
 #include <QDebug>
 
-PaymentStatusSelecter::PaymentStatusSelecter(QWidget *parent)
+ProviderPaymentsSelecter::ProviderPaymentsSelecter(QWidget *parent)
     : InputEdit{parent} {
   m_box = new AntiquaComboBox(this);
   m_layout->addWidget(m_box);
@@ -15,8 +15,8 @@ PaymentStatusSelecter::PaymentStatusSelecter(QWidget *parent)
   connect(m_box, SIGNAL(currentIndexChanged(int)), SLOT(dataChanged(int)));
 }
 
-void PaymentStatusSelecter::loadDataset() {
-  QMapIterator<AntiquaCRM::PaymentStatus, QString> it(getStatus());
+void ProviderPaymentsSelecter::loadDataset() {
+  QMapIterator<AntiquaCRM::ProviderPaymentStatus, QString> it(getStatus());
   int c = 0;
   while (it.hasNext()) {
     it.next();
@@ -24,52 +24,52 @@ void PaymentStatusSelecter::loadDataset() {
   }
 }
 
-void PaymentStatusSelecter::dataChanged(int index) {
+void ProviderPaymentsSelecter::dataChanged(int index) {
   if (index > 0)
     setModified(true);
 
   int status = m_box->itemData(index, Qt::UserRole).toInt();
-  AntiquaCRM::PaymentStatus st = static_cast<AntiquaCRM::PaymentStatus>(status);
+  AntiquaCRM::ProviderPaymentStatus st = static_cast<AntiquaCRM::ProviderPaymentStatus>(status);
   emit sendPaymentStatusChanged(st);
 }
 
-void PaymentStatusSelecter::reset() {
+void ProviderPaymentsSelecter::reset() {
   m_box->setCurrentIndex(0);
   setModified(false);
 }
 
-void PaymentStatusSelecter::setValue(const QVariant &val) {
-  AntiquaCRM::PaymentStatus status =
-      static_cast<AntiquaCRM::PaymentStatus>(val.toInt());
+void ProviderPaymentsSelecter::setValue(const QVariant &val) {
+  AntiquaCRM::ProviderPaymentStatus status =
+      static_cast<AntiquaCRM::ProviderPaymentStatus>(val.toInt());
   int index = m_box->findData(status, Qt::UserRole);
   if (index >= 0)
     m_box->setCurrentIndex(index);
 }
 
-void PaymentStatusSelecter::setFocus() {
+void ProviderPaymentsSelecter::setFocus() {
   m_box->setFocus();
   m_box->showPopup();
 }
 
-void PaymentStatusSelecter::setProperties(const QSqlField &field) {
+void ProviderPaymentsSelecter::setProperties(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 }
 
-const QVariant PaymentStatusSelecter::value() {
+const QVariant ProviderPaymentsSelecter::value() {
   int index = m_box->currentIndex();
   int status = m_box->itemData(index, Qt::UserRole).toInt();
-  return static_cast<AntiquaCRM::PaymentStatus>(status);
+  return static_cast<AntiquaCRM::ProviderPaymentStatus>(status);
 }
 
-bool PaymentStatusSelecter::isValid() {
+bool ProviderPaymentsSelecter::isValid() {
   if (isRequired() && m_box->currentIndex() > 0)
     return false;
 
   return true;
 }
 
-void PaymentStatusSelecter::setInfo(const QString &info) {
+void ProviderPaymentsSelecter::setInfo(const QString &info) {
   m_box->setToolTip(info);
   if (info.length() > 2) {
     m_label->setVisible(true);
@@ -77,15 +77,15 @@ void PaymentStatusSelecter::setInfo(const QString &info) {
   }
 }
 
-const QString PaymentStatusSelecter::info() { return m_box->toolTip(); }
+const QString ProviderPaymentsSelecter::info() { return m_box->toolTip(); }
 
-const QString PaymentStatusSelecter::notes() {
+const QString ProviderPaymentsSelecter::notes() {
   return tr("a valid Payment status is required.");
 }
 
-const QMap<AntiquaCRM::PaymentStatus, QString>
-PaymentStatusSelecter::getStatus() {
-  QMap<AntiquaCRM::PaymentStatus, QString> map;
+const QMap<AntiquaCRM::ProviderPaymentStatus, QString>
+ProviderPaymentsSelecter::getStatus() {
+  QMap<AntiquaCRM::ProviderPaymentStatus, QString> map;
   map.insert(AntiquaCRM::STATUS_NOT_SET, tr("No status set"));
   map.insert(AntiquaCRM::WAIT_FOR_PAYMENT, tr("Waiting for payment"));
   map.insert(AntiquaCRM::SHIPMENT_CREATED, tr("Ready for shipping"));

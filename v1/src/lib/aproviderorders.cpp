@@ -199,7 +199,7 @@ const QHash<QString, QMetaType::Type> AProviderOrder::orderEditKeys() {
 
   /**
    * @brief Current Provider Order Status
-   * @see AntiquaCRM::PaymentStatus
+   * @see AntiquaCRM::ProviderPaymentStatus
    */
   hash.insert("o_order_status", QMetaType::Int);
 

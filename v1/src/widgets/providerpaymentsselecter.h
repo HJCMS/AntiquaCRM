@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_PAYMENTSTATUSSELECTER_H
-#define ANTIQUACRM_PAYMENTSTATUSSELECTER_H
+#ifndef ANTIQUACRM_PROVIDER_PAYMENTS_SELECTER_H
+#define ANTIQUACRM_PROVIDER_PAYMENTS_SELECTER_H
 
 #include <AGlobal>
 #include <AntiquaInputEdit>
@@ -12,7 +12,7 @@
 #include <QPair>
 #include <QWidget>
 
-class PaymentStatusSelecter final : public InputEdit {
+class ProviderPaymentsSelecter final : public InputEdit {
   Q_OBJECT
 
 private:
@@ -23,7 +23,7 @@ private Q_SLOTS:
   void dataChanged(int);
 
 Q_SIGNALS:
-  void sendPaymentStatusChanged(AntiquaCRM::PaymentStatus);
+  void sendPaymentStatusChanged(AntiquaCRM::ProviderPaymentStatus);
 
 public Q_SLOTS:
   Q_INVOKABLE void reset();
@@ -31,14 +31,14 @@ public Q_SLOTS:
   void setFocus();
 
 public:
-  explicit PaymentStatusSelecter(QWidget *parent = nullptr);
+  explicit ProviderPaymentsSelecter(QWidget *parent = nullptr);
   void setProperties(const QSqlField &field);
   const QVariant value();
   bool isValid();
   void setInfo(const QString &);
   const QString info();
   const QString notes();
-  static const QMap<AntiquaCRM::PaymentStatus, QString> getStatus();
+  static const QMap<AntiquaCRM::ProviderPaymentStatus, QString> getStatus();
 };
 
-#endif // ANTIQUACRM_PAYMENTSTATUSSELECTER_H
+#endif // ANTIQUACRM_PROVIDER_PAYMENTS_SELECTER_H
