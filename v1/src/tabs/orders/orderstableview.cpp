@@ -71,16 +71,17 @@ void OrdersTableView::setSortByColumn(int column, Qt::SortOrder order) {
   QString order_by = m_model->fieldName(column);
   /**
    * @warning Bei Alias basierenden SELECT abfragen!
-   * ORDER BY "Multisort" Abfragen können nicht mit Aliases gemischt werden!
+   * Können ORDER BY "Multisort" Abfragen nicht mit Aliases gemischt werden!
    */
   if (!p_tableRecord.isEmpty()) {
     QStringList fieldList;
     for (int i = 0; i < p_tableRecord.count(); i++) {
       fieldList << p_tableRecord.field(i).name();
     }
+    // Standard ist o_id
     if (fieldList.contains(order_by)) {
       order_by.prepend("(");
-      order_by.append((order_by == "o_since") ? ",o_id" : ",o_since");
+      order_by.append((order_by == "o_id") ? ",o_since" : "");
       order_by.append(")");
     }
   }
@@ -135,7 +136,7 @@ bool OrdersTableView::setQuery(const QString &clause) {
   if (query.openTemplate()) {
     where_clause = (clause.isEmpty() ? where_clause : clause);
     query.setWhereClause(where_clause);
-    query.setOrderBy("o_since");
+    query.setOrderBy("o_id");
     query.setSorting(Qt::DescendingOrder);
     query.setLimits(getQueryLimit());
     return sqlQueryTable(query.getQueryContent());
@@ -144,6 +145,7 @@ bool OrdersTableView::setQuery(const QString &clause) {
 }
 
 const QString OrdersTableView::defaultWhereClause() {
-  QString status = QString::number(AntiquaCRM::DELIVERED);
-  return QString("o_order_status<" + status);
+  QString status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
+  QString sql = QString("o_order_status<" + status);
+  return sql;
 }

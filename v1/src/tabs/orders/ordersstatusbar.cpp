@@ -26,30 +26,36 @@ void OrdersStatusBar::setHistoryAction(int action) {
 
   QString status;
   switch (static_cast<OrdersHistoryButton::HistoryQuery>(action)) {
+  // Zeige alle Nicht bezahlten
   case OrdersHistoryButton::HistoryQuery::FILTER_DEFAULT:
     status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
     sqlQuery = "o_order_status<" + status;
     break;
 
+  // Zeige "nicht Bezahlt" und "nicht Storniert"
   case OrdersHistoryButton::HistoryQuery::FILTER_NOT_PAID:
-    status = QString::number(AntiquaCRM::OrderPayment::NOTPAID);
-    sqlQuery = "o_payment_status=" + status;
-    status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
-    sqlQuery.append(" AND o_order_status != " + status);
+    status = QString::number(AntiquaCRM::OrderPayment::PAYED);
+    sqlQuery = "o_payment_status!=" + status;
+    status = QString::number(AntiquaCRM::OrderStatus::CANCELED);
+    sqlQuery.append(" AND o_order_status !=" + status);
     break;
 
+  // Zeige geliefert und Nicht bezahlt
   case OrdersHistoryButton::HistoryQuery::FILTER_DELIVERED_NOT_PAID:
-    status = QString::number(AntiquaCRM::OrderPayment::NOTPAID);
-    sqlQuery = "o_payment_status=" + status;
+    status = QString::number(AntiquaCRM::OrderPayment::PAYED);
+    sqlQuery = "o_payment_status!=" + status;
     status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
     sqlQuery.append(" AND o_order_status=" + status);
     break;
 
+  // Zeige geliefert mit Zahlungserinnerung oder Mahnung
   case OrdersHistoryButton::HistoryQuery::FILTER_PAYMENT_REMINDED:
     status = QString::number(AntiquaCRM::OrderPayment::REMIND);
-    sqlQuery = "o_payment_status=" + status;
+    sqlQuery = "(o_payment_status=" + status;
+    status = QString::number(AntiquaCRM::OrderPayment::ADMONISH);
+    sqlQuery.append(" OR o_payment_status=" + status);
     status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
-    sqlQuery.append(" AND o_order_status=" + status);
+    sqlQuery.append(") AND o_order_status=" + status);
     break;
 
   case OrdersHistoryButton::HistoryQuery::FILTER_COMPLETED:
