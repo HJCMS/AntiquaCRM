@@ -19,28 +19,39 @@ void OrderStatusSelecter::loadDataset() {
   m_box->clear();
 
   m_box->insertItem(c, tr("Open"), AntiquaCRM::OPEN);
+  m_box->setItemData(c, tr("Orderstatus open and not started!"), Qt::ToolTipRole);
   m_box->setItemData(c++, QIcon("://icons/warning.png"), Qt::DecorationRole);
 
   m_box->insertItem(c, tr("Order accepted"), AntiquaCRM::STARTED);
+  m_box->setItemData(c, tr("Order accepted and started!"), Qt::ToolTipRole);
   m_box->setItemData(c++, QIcon("://icons/edit.png"), Qt::DecorationRole);
 
   m_box->insertItem(c, tr("Ready for pickup"), AntiquaCRM::FETCHET);
+  m_box->setItemData(c, tr("Package is ready for pick up."), Qt::ToolTipRole);
   m_box->setItemData(c++, QIcon("://icons/action_ready_pickup.png"), Qt::DecorationRole);
 
-  m_box->insertItem(c, tr("On the way"), AntiquaCRM::DELIVERY);
+  m_box->insertItem(c, tr("Delivery"), AntiquaCRM::DELIVERY);
+  m_box->setItemData(c, tr("Package delivery in progress!"), Qt::ToolTipRole);
   m_box->setItemData(c++, QIcon("://icons/delivery48.png"), Qt::DecorationRole);
 
-  m_box->insertItem(c, tr("Reminder sent"), AntiquaCRM::REMINDET);
-  m_box->setItemData(c++, QIcon("://icons/action_redo.png"), Qt::DecorationRole);
-
-  m_box->insertItem(c, tr("Completed"), AntiquaCRM::COMPLETED);
+  m_box->insertItem(c, tr("Delivered"), AntiquaCRM::COMPLETED);
+  m_box->setItemData(c, tr("The Package has delivered!"), Qt::ToolTipRole);
   m_box->setItemData(c++, QIcon("://icons/action_ok.png"), Qt::DecorationRole);
 
+  m_box->insertItem(c, tr("Reminder sent"), AntiquaCRM::REMINDET);
+  m_box->setItemData(c, tr("a Reminder was sent"), Qt::ToolTipRole);
+  m_box->setItemData(c++, QIcon("://icons/action_redo.png"), Qt::DecorationRole);
+
   m_box->insertItem(c, tr("Canceled"), AntiquaCRM::CANCELED);
+  m_box->setItemData(c, tr("This order will be canceled!"), Qt::ToolTipRole);
   m_box->setItemData(c++, QIcon("://icons/action_cancel.png"), Qt::DecorationRole);
 
+/**
+ * @todo Aktuell nicht eingebaut!
   m_box->insertItem(c, tr("Back"), AntiquaCRM::RETURNING);
+  m_box->setItemData(c, tr("Returning Process"), Qt::ToolTipRole);
   m_box->setItemData(c++, QIcon("://icons/action_undo.png"), Qt::DecorationRole);
+*/
 }
 
 void OrderStatusSelecter::dataChanged(int index) {

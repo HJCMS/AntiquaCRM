@@ -125,7 +125,7 @@ void ProvidersTreeView::updateOrderStatus(QTreeWidgetItem *item,
   }
 
   case (AntiquaCRM::OrderStatus::DELIVERY): {
-    QString mTip = tr("On the way");
+    QString mTip = tr("Delivery");
     if (modified != true || !tip.contains(mTip))
       item->setToolTip(0, tip + " " + mTip);
 
@@ -145,11 +145,31 @@ void ProvidersTreeView::updateOrderStatus(QTreeWidgetItem *item,
   }
 
   case (AntiquaCRM::OrderStatus::COMPLETED): {
-    QString mTip = tr("Complete");
+    QString mTip = tr("Delivered");
     if (modified != true || !tip.contains(mTip))
       item->setToolTip(0, tip + " " + mTip);
 
     item->setIcon(1, QIcon("://icons/action_ok.png"));
+    item->setData(1, Qt::UserRole, true); // setModified
+    return;
+  }
+
+  case (AntiquaCRM::OrderStatus::CANCELED): {
+    QString mTip = tr("Canceled");
+    if (modified != true || !tip.contains(mTip))
+      item->setToolTip(0, tip + " " + mTip);
+
+    item->setIcon(1, QIcon("://icons/action_cancel.png"));
+    item->setData(1, Qt::UserRole, true); // setModified
+    return;
+  }
+
+  case (AntiquaCRM::OrderStatus::RETURNING): {
+    QString mTip = tr("Returning");
+    if (modified != true || !tip.contains(mTip))
+      item->setToolTip(0, tip + " " + mTip);
+
+    item->setIcon(1, QIcon("://icons/action_undo.png"));
     item->setData(1, Qt::UserRole, true); // setModified
     return;
   }

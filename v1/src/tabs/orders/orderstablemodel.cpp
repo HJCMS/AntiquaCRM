@@ -35,14 +35,14 @@ const QString OrdersTableModel::getOrderStatus(int status) const {
   case (AntiquaCRM::FETCHET): /**< Bereit zur Abholung */
     return tr("Ready for pickup");
 
-  case (AntiquaCRM::DELIVERY): /**< Unterwegs */
-    return tr("On the way");
+  case (AntiquaCRM::DELIVERY): /**< Auslieferung */
+    return tr("Delivery");
 
   case (AntiquaCRM::REMINDET): /**< Erinnerung */
     return tr("Reminded");
 
-  case (AntiquaCRM::COMPLETED): /**< Abgeschlossen */
-    return tr("Closed");
+  case (AntiquaCRM::COMPLETED): /**< Geliefert */
+    return tr("Delivered");
 
   case (AntiquaCRM::CANCELED): /**< Storniert */
     return tr("Canceled");

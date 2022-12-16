@@ -2442,6 +2442,14 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>HelperDialog</name>
+    <message>
+        <location filename="../utils/helper/helperdialog.cpp" line="+13"/>
+        <source>Ok</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>ImageDialog</name>
     <message>
         <location filename="../utils/imgedit/imagedialog.cpp" line="+25"/>
@@ -3080,7 +3088,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>MailCommand</name>
     <message>
-        <location filename="../utils/mailing/mailcommand.cpp" line="+114"/>
+        <location filename="../utils/mailing/mailcommand.cpp" line="+115"/>
         <source>Attachments are disabled in this mode!</source>
         <translation>Anhänge sind in diesem Modus deaktiviert!</translation>
     </message>
@@ -3351,9 +3359,19 @@ Bild - Artikel Nr: %2</translation>
         <translation>Offen</translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>Orderstatus open and not started!</source>
+        <translation>Bestellstatus offen und nicht gestartet!</translation>
+    </message>
+    <message>
         <location line="+3"/>
         <source>Order accepted</source>
         <translation>Auftragsbegin</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Order accepted and started!</source>
+        <translation>Bestellung angenommen und gestartet!</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -3361,9 +3379,24 @@ Bild - Artikel Nr: %2</translation>
         <translation>Abholbereit</translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>Package is ready for pick up.</source>
+        <translation>Paket liegt zur Abholung bereit.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Package delivery in progress!</source>
+        <translation>Die Paketzustellung beim Lieferdienst läuft!</translation>
+    </message>
+    <message>
         <location line="+3"/>
-        <source>On the way</source>
-        <translation>Unterwegs</translation>
+        <source>Delivered</source>
+        <translation>Geliefert</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The Package has delivered!</source>
+        <translation>Das Paket wurde geliefert!</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -3371,9 +3404,19 @@ Bild - Artikel Nr: %2</translation>
         <translation>Erinnerung gesendet</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Completed</source>
-        <translation>Abgeschlossen</translation>
+        <location line="+5"/>
+        <source>This order will be canceled!</source>
+        <translation>Diese Bestellung wird storniert!</translation>
+    </message>
+    <message>
+        <location line="-13"/>
+        <source>Delivery</source>
+        <translation>Auslieferung</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>a Reminder was sent</source>
+        <translation>Eine Erinnerung wurde gesendet</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -3381,12 +3424,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Storniert</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Back</source>
-        <translation>Retour</translation>
-    </message>
-    <message>
-        <location line="+60"/>
+        <location line="+68"/>
         <source>a valid Order status is required.</source>
         <translation>Ein gültiger Bestellstatus ist erforderlich.</translation>
     </message>
@@ -3440,12 +3478,12 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+24"/>
+        <location line="+23"/>
         <source>Platform</source>
         <translation>Plattform</translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-17"/>
         <source>Provider settlement number</source>
         <translation>Abrechnungsnummer des Anbieters</translation>
     </message>
@@ -3455,7 +3493,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Gewünschte Zahlungsmethode</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>European Country Info</source>
         <translation>Europäisches Land</translation>
     </message>
@@ -3762,17 +3800,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Abholbereit</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+3"/>
+        <source>Delivery</source>
+        <translation>Auslieferung</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Reminded</source>
         <translation>Erinnerung gesendet</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Closed</source>
-        <translation>Abgeschlossen</translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Canceled</source>
         <translation>Storniert</translation>
     </message>
@@ -3822,12 +3860,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Auftragsbegin</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>On the way</source>
-        <translation>Unterwegs</translation>
+        <location line="+12"/>
+        <source>Delivered</source>
+        <translation>Geliefert</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+62"/>
         <source>Order Since</source>
         <translation>Seit</translation>
     </message>
@@ -4937,8 +4975,8 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>On the way</source>
-        <translation>Unterwegs</translation>
+        <source>Delivery</source>
+        <translation>Auslieferung</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -4947,8 +4985,18 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Complete</source>
-        <translation>Abgeschlossen</translation>
+        <source>Delivered</source>
+        <translation>Geliefert</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Canceled</source>
+        <translation>Storniert</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Returning</source>
+        <translation>Retour</translation>
     </message>
 </context>
 <context>

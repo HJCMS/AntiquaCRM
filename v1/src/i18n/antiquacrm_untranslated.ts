@@ -2440,6 +2440,14 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>HelperDialog</name>
+    <message>
+        <location filename="../utils/helper/helperdialog.cpp" line="+13"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ImageDialog</name>
     <message>
         <location filename="../utils/imgedit/imagedialog.cpp" line="+25"/>
@@ -3078,7 +3086,7 @@ Image - Article Id: %2</source>
 <context>
     <name>MailCommand</name>
     <message>
-        <location filename="../utils/mailing/mailcommand.cpp" line="+114"/>
+        <location filename="../utils/mailing/mailcommand.cpp" line="+115"/>
         <source>Attachments are disabled in this mode!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3349,8 +3357,18 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>Orderstatus open and not started!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+3"/>
         <source>Order accepted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Order accepted and started!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3359,8 +3377,23 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>Package is ready for pick up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Package delivery in progress!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+3"/>
-        <source>On the way</source>
+        <source>Delivered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The Package has delivered!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3369,8 +3402,18 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Completed</source>
+        <location line="+5"/>
+        <source>This order will be canceled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-13"/>
+        <source>Delivery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>a Reminder was sent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3379,12 +3422,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+60"/>
+        <location line="+68"/>
         <source>a valid Order status is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3438,12 +3476,12 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+24"/>
+        <location line="+23"/>
         <source>Platform</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="-17"/>
         <source>Provider settlement number</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3453,7 +3491,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>European Country Info</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3760,17 +3798,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+3"/>
+        <source>Delivery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Reminded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Closed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Canceled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3820,12 +3858,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>On the way</source>
+        <location line="+12"/>
+        <source>Delivered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+62"/>
         <source>Order Since</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4935,7 +4973,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+10"/>
-        <source>On the way</source>
+        <source>Delivery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4945,7 +4983,17 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+10"/>
-        <source>Complete</source>
+        <source>Delivered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Returning</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

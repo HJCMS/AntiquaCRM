@@ -240,7 +240,7 @@ namespace AntiquaCRM {
    FETCHET = 2,   /**< Bereit zur Abholung */
    DELIVERY = 3,  /**< Wird Geliefert/Unterwegs */
    REMINDET = 4,  /**< Erinnerung */
-   COMPLETED = 5, /**< Abgeschlossen */
+   COMPLETED = 5, /**< Lieferung abgeschlossen */
    CANCELED = 6,  /**< Storniert */
    RETURNING = 7  /**< Retour */
  };

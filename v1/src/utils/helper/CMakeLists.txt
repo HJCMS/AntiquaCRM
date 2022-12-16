@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
 
-SET(_projectLibrary "AntiquaCoupons")
+SET(_projectLibrary "AntiquaHelper")
 
 INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_BINARY_DIR}
@@ -17,11 +17,11 @@ SET (projectLibrary_FILES
 )
 
 SET (projectLibrary_SOURCES
- couponsdialog.cpp
+ helperdialog.cpp
 )
 
 SET (projectLibrary_HEADERS
- couponsdialog.h
+ helperdialog.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC
