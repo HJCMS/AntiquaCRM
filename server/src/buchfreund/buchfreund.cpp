@@ -185,6 +185,7 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
     payment_method = AntiquaCRM::PAYMENT_NOT_SET;
 
   antiqua_orderinfo.insert("o_payment_method", payment_method);
+  antiqua_orderinfo.insert("o_payment_status", 0);
 
   if (bf_order.contains("versandart")) {
     QString versandart = bf_order.value("versandart").toString();

@@ -135,7 +135,7 @@ void AbeBooks::prepareContent(const QDomDocument &doc) {
           payment_method = AntiquaCRM::UNKNOWN_PREPAYMENT;
       }
       antiqua_orderinfo.insert("o_payment_method", payment_method);
-      antiqua_orderinfo.insert("o_payment_status", false);
+      antiqua_orderinfo.insert("o_payment_status", 0);
       antiqua_orderinfo.insert("o_delivery_add_price", false);
 
       // Kundendaten

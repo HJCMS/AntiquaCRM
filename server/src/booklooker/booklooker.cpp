@@ -262,9 +262,9 @@ void BookLooker::prepareContent(const QJsonDocument &doc) {
       if (order.contains("transactionId")) {
         QString paypal_txn = order.value("transactionId").toString();
         antiqua_orderinfo.insert("o_payment_paypal_txn_id", paypal_txn);
-        antiqua_orderinfo.insert("o_payment_status", true);
+        antiqua_orderinfo.insert("o_payment_status", 1);
       } else {
-        antiqua_orderinfo.insert("o_payment_status", false);
+        antiqua_orderinfo.insert("o_payment_status", 0);
       }
 
       antiqua_order.insert("orderinfo", QJsonValue(antiqua_orderinfo));

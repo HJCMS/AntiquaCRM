@@ -18,7 +18,7 @@ InventoryEditor::InventoryEditor(const QString &pattern, QWidget *parent)
   setContentsMargins(0, 0, 0, 0);
   m_sql = new AntiquaCRM::ASqlCore(this);
   m_cfg = new AntiquaCRM::ASettings(this);
-  timeoutPopUp = m_cfg->value("popup_timeout", 2).toInt();
+  timeoutPopUp = m_cfg->value("popup_timeout", 1).toInt();
   m_tableData = nullptr;
 }
 

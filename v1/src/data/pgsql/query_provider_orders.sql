@@ -4,7 +4,7 @@
 SELECT
  pr_name AS order_provider,
  pr_order AS order_number,
- o_order_status AS order_status,
+ COALESCE(o_order_status,0) AS order_status,
  COALESCE(pr_created,CURRENT_TIMESTAMP) AS order_datetime,
  (CASE WHEN length(pr_buyer) > 20 THEN CONCAT(LEFT(pr_buyer, 20),'...') ELSE pr_buyer END) AS order_buyername,
  pr_buyer AS order_comment
