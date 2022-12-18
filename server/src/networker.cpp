@@ -6,7 +6,7 @@
 
 Networker::Networker(QObject *parent) : QNetworkAccessManager{parent} {
   m_textCodec = QTextCodec::codecForLocale();
-  connect(this, SIGNAL(finished(QNetworkReply *)), this,
+  connect(this, SIGNAL(finished(QNetworkReply *)),
           SLOT(slotFinished(QNetworkReply *)));
 }
 
@@ -24,31 +24,31 @@ void Networker::slotError(QNetworkReply::NetworkError error) {
     return;
 
   case QNetworkReply::TimeoutError:
-    qWarning("NTIQUACRM::Network:Timeout Error");
+    qWarning("ANTIQUACRM::Network:Timeout Error");
     return;
 
   case QNetworkReply::HostNotFoundError:
-    qWarning("NTIQUACRM::Network:Host NotFound Error");
+    qWarning("ANTIQUACRM::Network:Host NotFound Error");
     return;
 
   case QNetworkReply::RemoteHostClosedError:
-    qWarning("NTIQUACRM::Network:RemoteHost Closed Error");
+    qWarning("ANTIQUACRM::Network:RemoteHost Closed Error");
     return;
 
   case QNetworkReply::OperationCanceledError:
-    qWarning("NTIQUACRM::Network:Operation Canceled Error");
+    qWarning("ANTIQUACRM::Network:Operation Canceled Error");
     return;
 
   case QNetworkReply::InsecureRedirectError:
-    qWarning("NTIQUACRM::Network:Insecure Redirect Error");
+    qWarning("ANTIQUACRM::Network:Insecure Redirect Error");
     return;
 
   case QNetworkReply::InternalServerError:
-    qWarning("NTIQUACRM::Network:Internal Server Error");
+    qWarning("ANTIQUACRM::Network:Internal Server Error");
     return;
 
   default:
-    qWarning("NTIQUACRM::Network:Unknown Error (%s)",
+    qWarning("ANTIQUACRM::Network:Unknown Error (%s)",
              qPrintable(QString::number(error)));
     return;
   }
@@ -58,7 +58,7 @@ void Networker::slotSslErrors(const QList<QSslError> &list) {
   for (int i = 0; i < list.count(); i++) {
     QSslError ssl_error = list.at(i);
     QString ssl_error_str = ssl_error.errorString();
-    qWarning("NTIQUACRM::Network:SSL-Errors:(%s)!", qPrintable(ssl_error_str));
+    qWarning("ANTIQUACRM::Network:SSL-Errors:(%s)!", qPrintable(ssl_error_str));
   }
 }
 
@@ -71,7 +71,7 @@ void Networker::slotReadResponse() {
   }
 
   if (!m_reply->bytesAvailable()) {
-    qWarning("NTIQUACRM::Network:No Data responsed!");
+    qWarning("ANTIQUACRM::Network:No Data responsed!");
     return;
   }
 
@@ -108,7 +108,7 @@ void Networker::slotReadResponse() {
   QByteArray data;
   data = m_reply->readAll();
   if (data.isNull()) {
-    qWarning("NTIQUACRM::Network:No Data responsed!");
+    qWarning("ANTIQUACRM::Network:No Data responsed!");
     return;
   }
 
@@ -153,6 +153,25 @@ QNetworkReply *Networker::postRequest(const NetworkRequest &request,
           SLOT(slotSslErrors(QList<QSslError>)));
 
   connect(m_reply, SIGNAL(readyRead()), this, SLOT(slotReadResponse()));
+
+  return m_reply;
+}
+
+QNetworkReply *Networker::customRequest(const NetworkRequest &request,
+                                      const QByteArray &data) {
+  NetworkRequest req(request);
+  req.setHeaderContentLength(data.size());
+
+  m_reply = post(req, data);
+
+  connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
+          SLOT(slotError(QNetworkReply::NetworkError)));
+
+  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
+          SLOT(slotError(QNetworkReply::NetworkError)));
+
+  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
+          SLOT(slotSslErrors(QList<QSslError>)));
 
   return m_reply;
 }

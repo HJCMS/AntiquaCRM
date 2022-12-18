@@ -5,7 +5,9 @@
 #include "networker.h"
 #include "networkrequest.h"
 #include "settings.h"
+#include <unistd.h>
 
+#include <QTimer>
 #include <QDateTime>
 #include <QDir>
 #include <QFile>
@@ -80,13 +82,22 @@ const QUrl Buchfreund::apiQuery(const QString &section) {
 }
 
 void Buchfreund::queryOrdersById(const QStringList &ids) {
+  QStringList imported = currProviderIds(provider());
   foreach (QString id, ids) {
+    if (imported.contains(id)) {
+      // qDebug() << "Buchfreund already exists:" << id;
+      continue;
+    }
+    sleep(1);
+
     QJsonObject obj;
     obj.insert("id", QJsonValue(id));
-    NetworkRequest request(apiQuery("bestellung"));
-    request.setHeaderContentTypeJson();
     QJsonDocument doc(obj);
     QByteArray body = doc.toJson(QJsonDocument::Compact);
+
+    NetworkRequest request(apiQuery("bestellung"));
+    request.setHeaderContentTypeJson();
+
     m_networker->postRequest(request, body);
   }
 }
@@ -117,7 +128,9 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
       if (!entry.isEmpty())
         orderIds << entry.value("id").toString();
     }
-    queryOrdersById(orderIds);
+    if (orderIds.size() > 0)
+      queryOrdersById(orderIds);
+
     return;
   }
 
@@ -144,11 +157,6 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
   if (bf_id.isEmpty()) {
     qWarning("Buchfreund: Invalid order detected!");
     emit sendDisjointed();
-    return;
-  }
-
-  QStringList imported = currProviderIds(provider());
-  if (imported.contains(bf_id)) {
     return;
   }
 
@@ -185,7 +193,6 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
     payment_method = AntiquaCRM::PAYMENT_NOT_SET;
 
   antiqua_orderinfo.insert("o_payment_method", payment_method);
-  antiqua_orderinfo.insert("o_payment_status", 0);
 
   if (bf_order.contains("versandart")) {
     QString versandart = bf_order.value("versandart").toString();
@@ -301,8 +308,6 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
 
   if (BUCHFREUND_DEBUG) {
     qDebug() << Q_FUNC_INFO << antiqua_order;
-    emit sendDisjointed();
-    return;
   }
 
   if (createOrders(ordersList)) {
@@ -312,7 +317,7 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
   }
 
   qInfo("%s: Nothing todo!", qPrintable(provider()));
-  emit sendDisjointed();
+  emit sendFinished();
 }
 
 void Buchfreund::responsed(const QByteArray &data) {

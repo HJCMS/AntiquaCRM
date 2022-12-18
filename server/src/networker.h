@@ -26,15 +26,18 @@ private Q_SLOTS:
   void slotFinished(QNetworkReply *);
   void slotError(QNetworkReply::NetworkError);
   void slotSslErrors(const QList<QSslError> &);
-  void slotReadResponse();
 
 Q_SIGNALS:
   void sendResponse(const QByteArray &);
+
+public Q_SLOTS:
+  void slotReadResponse();
 
 public:
   explicit Networker(QObject *parent = nullptr);
   QNetworkReply *loginRequest(const NetworkRequest &, const QByteArray &);
   QNetworkReply *postRequest(const NetworkRequest &, const QByteArray &);
+  QNetworkReply *customRequest(const NetworkRequest &, const QByteArray &);
   QNetworkReply *putRequest(const NetworkRequest &, const QByteArray &);
   QNetworkReply *getRequest(const NetworkRequest &);
 };
