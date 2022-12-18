@@ -5,6 +5,7 @@
 #include "antiquaappl.h"
 
 #include <QApplication>
+#include <QProcess>
 #include <QTextCodec>
 
 int main(int argc, char *argv[]) {
@@ -17,12 +18,12 @@ int main(int argc, char *argv[]) {
   }
 
   if (argc > 0) {
-    for(int i = 0; i <= argc; i++) {
+    for (int i = 0; i <= argc; i++) {
       QString arg = QString(argv[i]).toLower();
       arg.replace("-", "");
       arg.replace(" ", "");
       if (arg.trimmed() == "assistant") {
-        antiqua->startAssistant();
+        QProcess::execute("antiquacrm_assistant", QStringList());
         return 0;
       }
     }

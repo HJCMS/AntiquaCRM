@@ -10,19 +10,20 @@
 #include <AntiquaCRM>
 #include <QDebug>
 #include <QDir>
+#include <QIcon>
 #include <QMessageBox>
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSslConfiguration>
+#include <QStyle>
 #include <QVBoxLayout>
 
 Assistant::Assistant(QWidget *parent) : QDialog(parent) {
   setObjectName("assistant_dialog");
   setWindowTitle("Antiqua CRM");
+  setWindowIcon(QIcon("://icons/antiqua.png"));
   setSizeGripEnabled(true);
   setMinimumSize(600, 400);
-
-  Q_INIT_RESOURCE(documents);
 
   cfg = new AntiquaCRM::ASettings(this);
 
@@ -78,23 +79,27 @@ void Assistant::setButtonBox() {
   btn_restore->setText(tr("Restart"));
   btn_restore->setStatusTip(tr("Restart Assistant"));
   btn_restore->setObjectName("restore_button");
+  btn_restore->setIcon(QIcon("://icons/action_reload.png"));
   connect(btn_restore, SIGNAL(clicked()), this, SLOT(restart()));
 
   QPushButton *btn_prev =
       m_buttonBox->addButton(tr("Back"), QDialogButtonBox::ActionRole);
   btn_prev->setStatusTip(tr("Previous page"));
   btn_prev->setObjectName("previous_page_button");
+  btn_prev->setIcon(style()->standardIcon(QStyle::SP_ArrowLeft));
   connect(btn_prev, SIGNAL(clicked()), this, SLOT(previousPage()));
 
   QPushButton *btn_next =
       m_buttonBox->addButton(tr("Next"), QDialogButtonBox::ActionRole);
   btn_next->setStatusTip(tr("Next page"));
   btn_next->setObjectName("next_page_button");
+  btn_next->setIcon(style()->standardIcon(QStyle::SP_ArrowForward));
   connect(btn_next, SIGNAL(clicked()), this, SLOT(nextPage()));
 
   QPushButton *btn_accept = m_buttonBox->addButton(QDialogButtonBox::Save);
   btn_accept->setStatusTip(tr("Save current changes"));
   btn_accept->setObjectName("accept_button");
+  btn_accept->setIcon(QIcon("://icons/action_save.png"));
   connect(btn_accept, SIGNAL(clicked()), this, SLOT(save()));
 
   btn_close = m_buttonBox->addButton(QDialogButtonBox::Apply);
@@ -102,6 +107,7 @@ void Assistant::setButtonBox() {
   btn_close->setStatusTip(tr("Finishing and close the assistant"));
   btn_close->setObjectName("close_button");
   btn_close->setEnabled(false);
+  btn_close->setIcon(QIcon("://icons/action_quit.png"));
   connect(btn_close, SIGNAL(clicked()), this, SLOT(accept()));
 }
 

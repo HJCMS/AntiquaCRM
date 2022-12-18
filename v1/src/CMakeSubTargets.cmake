@@ -5,8 +5,6 @@ SET (PROJECT_INCLUDE_DIRS
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/helper
 	${CMAKE_CURRENT_BINARY_DIR}/utils/aboutdialogs
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/aboutdialogs
-	${CMAKE_CURRENT_BINARY_DIR}/utils/assistant
-	${CMAKE_CURRENT_SOURCE_DIR}/utils/assistant
 	${CMAKE_CURRENT_BINARY_DIR}/utils/printing
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/printing
 	${CMAKE_CURRENT_BINARY_DIR}/utils/purchasetable
@@ -52,7 +50,6 @@ SET(PROJECT_LIBRARIES
 	AntiquaWidgets
 	AntiquaHelper
 	AntiquaAbout
-	AntiquaAssistant
 	AntiquaPrinting
 	AntiquaPurchaseTable
 	AntiquaTemplates

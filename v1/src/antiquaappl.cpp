@@ -6,7 +6,6 @@
 #include "antiquasplashscreen.h"
 #include "antiquasystemtray.h"
 #include "antiquawindow.h"
-#include "assistant.h"
 #include "cachebuilder.h"
 
 #include <QDebug>
@@ -105,11 +104,6 @@ void AntiquaAppl::applicationQuit() {
     m_systemTray->deleteLater();
   // finaly
   quit();
-}
-
-void AntiquaAppl::startAssistant() {
-  Assistant assistant;
-  assistant.exec();
 }
 
 void AntiquaAppl::initDefaultTheme() {
