@@ -7,6 +7,7 @@
 
 #include <QFrame>
 #include <QIcon>
+#include <QMap>
 #include <QPushButton>
 #include <QSignalMapper>
 #include <QStatusBar>
@@ -48,10 +49,11 @@ public:
     LastMonth = 4,
     ThisWeek = 5,
     ThisMonth = 6,
-    ThisYear = 7
+    ThisYear = 7,
+    NOIMAGE = 8
   };
   explicit TabStatusBar(QWidget *parent = nullptr);
-  static const QHash<TabStatusBar::History, QString> historyItems();
+  static const QMap<TabStatusBar::History, QString> historyItems();
 };
 
 Q_DECLARE_METATYPE(TabStatusBar::History)

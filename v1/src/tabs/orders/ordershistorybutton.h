@@ -6,6 +6,7 @@
 #define ANTIQUACRM_ORDERSHISTORYBUTTON_H
 
 #include <QAction>
+#include <QMenu>
 #include <QObject>
 #include <QPushButton>
 #include <QWidget>
@@ -15,7 +16,7 @@
  * @ingroup InventoryOrders
  * @class OrdersHistoryButton
  */
-class OrdersHistoryButton : public QPushButton {
+class OrdersHistoryButton final : public QPushButton {
   Q_OBJECT
 
 public:
@@ -29,6 +30,11 @@ public:
   explicit OrdersHistoryButton(QWidget *parent = nullptr);
 
 private:
+  /**
+   * @brief Verlaufsmenü
+   */
+  QMenu *m_menu;
+
   /**
    * @brief Standard Ansicht
    */

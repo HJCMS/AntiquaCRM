@@ -20,7 +20,7 @@ public Q_SLOTS:
 
 public:
   explicit CustomersOrders(QWidget *parent = nullptr);
-  QTableWidgetItem *iconItem(const QVariant &data);
+  QTableWidgetItem *paymentItem(const QVariant &data);
   QTableWidgetItem *numidItem(const QVariant &data);
   QTableWidgetItem *createItem(const QVariant &data);
   QTableWidgetItem *createDate(const QVariant &data);

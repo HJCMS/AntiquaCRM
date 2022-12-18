@@ -29,13 +29,53 @@ void CustomersOrders::restore() {
   horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
-QTableWidgetItem *CustomersOrders::iconItem(const QVariant &data) {
-  QString link = data.toBool() ? "ok" : "cancel";
-  QString title = data.toBool() ? tr("Yes") : tr("No");
-  QIcon icon = QIcon("://icons/action_" + link + ".png");
+QTableWidgetItem *CustomersOrders::paymentItem(const QVariant &data) {
+  QString title;
+  QIcon icon;
+  switch (static_cast<AntiquaCRM::OrderPayment>(data.toInt())) {
+  case AntiquaCRM::OrderPayment::NOTPAID:
+    title = tr("Not paid");
+    icon = QIcon("://icons/action_warning.png");
+    break;
+
+  case AntiquaCRM::OrderPayment::PAYED:
+    title = tr("Payed");
+    icon = QIcon("://icons/action_ok.png");
+    break;
+
+  // Erinnert
+  case AntiquaCRM::OrderPayment::REMIND:
+    title = tr("Remindet");
+    icon = QIcon("://icons/flag-yellow.png");
+    break;
+
+  // Mahnung
+  case AntiquaCRM::OrderPayment::ADMONISH:
+    title = tr("Admonished");
+    icon = QIcon("://icons/flag-yellow.png");
+    break;
+
+  // Retour
+  case AntiquaCRM::OrderPayment::RETURN:
+    title = tr("Returning");
+    icon = QIcon("://icons/action_redo.png");
+    break;
+
+  // Collection procedures/Inkassoverfahren
+  case AntiquaCRM::OrderPayment::COLLPROC:
+    title = tr("Collection procedures");
+    icon = QIcon("://icons/flag-red.png");
+    break;
+
+  default:
+    title = tr("Not paid");
+    icon = QIcon("://icons/action_cancel.png");
+    break;
+  };
+
   QTableWidgetItem *i = new QTableWidgetItem(title, Qt::DisplayRole);
-  i->setData(Qt::DecorationRole, icon);
   i->setFlags(default_flags);
+  i->setData(Qt::DecorationRole, icon);
   return i;
 }
 

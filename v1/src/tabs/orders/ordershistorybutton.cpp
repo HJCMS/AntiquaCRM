@@ -5,7 +5,6 @@
 
 #include <AntiquaCRM>
 #include <QIcon>
-#include <QMenu>
 
 OrdersHistoryButton::OrdersHistoryButton(QWidget *parent)
     : QPushButton{parent} {
@@ -14,17 +13,22 @@ OrdersHistoryButton::OrdersHistoryButton(QWidget *parent)
   setText(tr("Advanced Queries"));
 
   QIcon ico = QIcon("://icons/user_identity.png");
-  QMenu *m_menu = new QMenu(this);
+  m_menu = new QMenu(this);
   /** OrdersHistoryButton::FILTER_DEFAULT */
   ac_default = m_menu->addAction(ico, tr("Default view"));
+  ac_default->setStatusTip(tr("Current orders in progress to delivered."));
   /** OrdersHistoryButton::FILTER_NOT_PAID */
   ac_noPayment = m_menu->addAction(ico, tr("Orders without payment."));
+  ac_noPayment->setStatusTip(tr("Current orders without a payment."));
   /** OrdersHistoryButton::FILTER_DELIVERED_NOT_PAID */
   ac_delivered = m_menu->addAction(ico, tr("Delivered and not payed."));
+  ac_delivered->setStatusTip(tr("Delivered and waiting for payment."));
   /** OrdersHistoryButton::FILTER_PAYMENT_REMINDED */
-  ac_remindet = m_menu->addAction(ico, tr("Reminder orders."));
+  ac_remindet = m_menu->addAction(ico, tr("Reminded, admonished - Payment Collection."));
+  ac_remindet->setStatusTip(tr("Without payment with reminder or Payment Collection."));
   /** OrdersHistoryButton::FILTER_COMPLETED */
   ac_hasClosed = m_menu->addAction(ico, tr("Completed orders."));
+  ac_hasClosed->setStatusTip(tr("Completed orders from this Year."));
   setMenu(m_menu);
 
   connect(ac_default, SIGNAL(triggered()), SLOT(setDefaultView()));

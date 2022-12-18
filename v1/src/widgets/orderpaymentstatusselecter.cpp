@@ -30,17 +30,24 @@ void OrderPaymentStatusSelecter::loadDataset() {
 
   m_box->insertItem(c, tr("Remindet"), AntiquaCRM::OrderPayment::REMIND);
   m_box->setItemData(c, tr("Buyer was reminded."), Qt::ToolTipRole);
-  m_box->setItemData(c++, QIcon("://icons/action_redo.png"),
+  m_box->setItemData(c++, QIcon("://icons/flag-yellow.png"),
                      Qt::DecorationRole);
 
   m_box->insertItem(c, tr("Admonished"), AntiquaCRM::OrderPayment::ADMONISH);
   m_box->setItemData(c, tr("The Buyer was admonished!"), Qt::ToolTipRole);
-  m_box->setItemData(c++, QIcon("://icons/user_delete.png"),
+  m_box->setItemData(c++, QIcon("://icons/flag-yellow.png"),
                      Qt::DecorationRole);
 
   m_box->insertItem(c, tr("Returning"), AntiquaCRM::OrderPayment::RETURN);
   m_box->setItemData(c, tr("Returning Process"), Qt::ToolTipRole);
   m_box->setItemData(c++, QIcon("://icons/action_undo.png"),
+                     Qt::DecorationRole);
+
+  m_box->insertItem(c, tr("Collection procedures"),
+                    AntiquaCRM::OrderPayment::COLLPROC);
+  m_box->setItemData(c, tr("A Payment Collection procedure is done"),
+                     Qt::ToolTipRole);
+  m_box->setItemData(c++, QIcon("://icons/flag-red.png"),
                      Qt::DecorationRole);
 }
 

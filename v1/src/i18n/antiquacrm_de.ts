@@ -20,7 +20,7 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+168"/>
+        <location filename="../antiquaappl.cpp" line="+162"/>
         <source>Search Networkconnection!</source>
         <translation>Suche Netzwerkverbindung!</translation>
     </message>
@@ -314,7 +314,7 @@
 <context>
     <name>Assistant</name>
     <message>
-        <location filename="../utils/assistant/assistant.cpp" line="+78"/>
+        <location filename="../assistant/assistant.cpp" line="+79"/>
         <source>Restart</source>
         <translation>Neustart</translation>
     </message>
@@ -324,7 +324,7 @@
         <translation>Assistent neustart</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Back</source>
         <translation>Zurück</translation>
     </message>
@@ -334,7 +334,7 @@
         <translation>Letzte Seite</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Next</source>
         <translation>Weiter</translation>
     </message>
@@ -344,12 +344,12 @@
         <translation>Nächste Seite</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Save current changes</source>
         <translation>Aktuelle Änderungen speichern</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Finalize</source>
         <translation>Abschließen</translation>
     </message>
@@ -359,7 +359,7 @@
         <translation>Abschließen des Assistenten</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+28"/>
         <source>Connection successfully!</source>
         <translation>Verbindung erfolgreich!</translation>
     </message>
@@ -1285,7 +1285,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ConfigPgSQL</name>
     <message>
-        <location filename="../utils/assistant/configpgsql.cpp" line="+15"/>
+        <location filename="../assistant/configpgsql.cpp" line="+15"/>
         <source>Database Configuration</source>
         <translation>Datenbankkonfiguration</translation>
     </message>
@@ -1323,7 +1323,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ConfigSSL</name>
     <message>
-        <location filename="../utils/assistant/configssl.cpp" line="+18"/>
+        <location filename="../assistant/configssl.cpp" line="+18"/>
         <source>SSL/TLS Configuration</source>
         <translation>SSL/TLS-Konfiguration</translation>
     </message>
@@ -1626,11 +1626,12 @@ Bild - Artikel Nr: %2</translation>
     <name>CustomersOrders</name>
     <message>
         <location filename="../tabs/customers/customersorders.cpp" line="+17"/>
+        <location line="+25"/>
         <source>Payed</source>
         <translation>Bezahlt</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-24"/>
         <source>Delivery Note</source>
         <translation>Lieferschein</translation>
     </message>
@@ -1670,14 +1671,30 @@ Bild - Artikel Nr: %2</translation>
         <translation>Geliefert</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Yes</source>
-        <translation>Ja</translation>
+        <location line="+12"/>
+        <location line="+34"/>
+        <source>Not paid</source>
+        <translation>Nicht bezahlt</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>No</source>
-        <translation>Nein</translation>
+        <location line="-23"/>
+        <source>Remindet</source>
+        <translation>Zahlungserinnerung</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Admonished</source>
+        <translation>Abgemahnt</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Returning</source>
+        <translation>Rücklauf</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Collection procedures</source>
+        <translation>Inkassoverfahren</translation>
     </message>
 </context>
 <context>
@@ -3404,7 +3421,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Rückgabeprozess</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+4"/>
+        <source>Collection procedures</source>
+        <translation>Inkassoverfahren</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>A Payment Collection procedure is done</source>
+        <translation>Es wird ein Zahlungseinzugsverfahren durchgeführt</translation>
+    </message>
+    <message>
+        <location line="+50"/>
         <source>a Payment status is required.</source>
         <translation>Ein Zahlungsstatus ist erforderlich.</translation>
     </message>
@@ -3457,27 +3484,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Das Paket wurde geliefert!</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Reminder sent</source>
-        <translation>Erinnerung gesendet</translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>This order will be canceled!</source>
         <translation>Diese Bestellung wird storniert!</translation>
     </message>
     <message>
-        <location line="-13"/>
+        <location line="-9"/>
         <source>Delivery</source>
         <translation>Auslieferung</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>a Reminder was sent</source>
-        <translation>Eine Erinnerung wurde gesendet</translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+8"/>
         <source>Canceled</source>
         <translation>Storniert</translation>
     </message>
@@ -3748,7 +3765,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>OrdersHistoryButton</name>
     <message>
-        <location filename="../tabs/orders/ordershistorybutton.cpp" line="+14"/>
+        <location filename="../tabs/orders/ordershistorybutton.cpp" line="+13"/>
         <source>Advanced Queries</source>
         <translation>Erweiterte Abfragen</translation>
     </message>
@@ -3758,9 +3775,19 @@ Bild - Artikel Nr: %2</translation>
         <translation>Standardansicht</translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>Current orders in progress to delivered.</source>
+        <translation>Aktuelle Bestellungen in Bearbeitung bis geliefert.</translation>
+    </message>
+    <message>
         <location line="+2"/>
         <source>Orders without payment.</source>
         <translation>Bestellungen ohne Bezahlung.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Current orders without a payment.</source>
+        <translation>Laufende Bestellungen ohne Zahlung.</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -3768,14 +3795,29 @@ Bild - Artikel Nr: %2</translation>
         <translation>Geliefert nicht Bezahlt.</translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>Delivered and waiting for payment.</source>
+        <translation>Geliefert und warte auf Zahlung.</translation>
+    </message>
+    <message>
         <location line="+2"/>
-        <source>Reminder orders.</source>
-        <translation>Zahlungserinnerung gesendet.</translation>
+        <source>Reminded, admonished - Payment Collection.</source>
+        <translation>Erinnert, ermahnt - Inkasso.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Without payment with reminder or Payment Collection.</source>
+        <translation>Ohne Zahlung mit Erinnerung/Mahnung oder Inkasso.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Completed orders.</source>
         <translation>Abgeschlossene Aufträge.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Completed orders from this Year.</source>
+        <translation>Abgeschlossene Bestellungen aus diesem Jahr.</translation>
     </message>
 </context>
 <context>
@@ -3824,7 +3866,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Sucheingabe</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+6"/>
+        <source>Current orders in progress to delivered.</source>
+        <translation>Aktuelle Bestellungen in Bearbeitung bis geliefert.</translation>
+    </message>
+    <message>
+        <location line="+36"/>
         <source>Search for %1</source>
         <translation>Suche nach %1</translation>
     </message>
@@ -3832,12 +3879,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../tabs/orders/orderstablemodel.cpp" line="+88"/>
+        <location filename="../tabs/orders/orderstablemodel.cpp" line="+92"/>
         <source>Open</source>
         <translation>Offen</translation>
     </message>
     <message>
-        <location line="-15"/>
+        <location line="-13"/>
         <source>Ready for pickup</source>
         <translation>Abholbereit</translation>
     </message>
@@ -3847,18 +3894,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Auslieferung</translation>
     </message>
     <message>
-        <location line="-22"/>
-        <location line="+31"/>
+        <location line="-25"/>
         <source>Reminded</source>
         <translation>Erinnerung gesendet</translation>
     </message>
     <message>
-        <location line="-3"/>
+        <location line="+32"/>
         <source>Canceled</source>
         <translation>Storniert</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+30"/>
         <source>no time</source>
         <translation>ohne Zeitangabe</translation>
     </message>
@@ -3893,13 +3939,13 @@ Bild - Artikel Nr: %2</translation>
         <translation>Status</translation>
     </message>
     <message>
-        <location line="-94"/>
-        <location line="+15"/>
+        <location line="-89"/>
+        <location line="+18"/>
         <source>Not paid</source>
         <translation>Nicht bezahlt</translation>
     </message>
     <message>
-        <location line="-6"/>
+        <location line="-9"/>
         <source>Admonished</source>
         <translation>Abgemahnt</translation>
     </message>
@@ -3909,17 +3955,22 @@ Bild - Artikel Nr: %2</translation>
         <translation>Rücklauf</translation>
     </message>
     <message>
+        <location line="+3"/>
+        <source>Payment Collection</source>
+        <translation>Zahlungseinzug</translation>
+    </message>
+    <message>
         <location line="+10"/>
         <source>Order created</source>
         <translation>Auftragsbegin</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Delivered</source>
         <translation>Geliefert</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+53"/>
         <source>Order Since</source>
         <translation>Seit</translation>
     </message>
@@ -3965,8 +4016,8 @@ Bild - Artikel Nr: %2</translation>
         <translation></translation>
     </message>
     <message>
-        <location line="-105"/>
-        <location line="+106"/>
+        <location line="-100"/>
+        <location line="+101"/>
         <source>Payed</source>
         <translation>Bezahlt</translation>
     </message>
@@ -5035,11 +5086,6 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Remindet</source>
-        <translation>Zahlungserinnerung</translation>
-    </message>
-    <message>
-        <location line="+10"/>
         <source>Delivered</source>
         <translation>Geliefert</translation>
     </message>
@@ -5047,11 +5093,6 @@ Bild - Artikel Nr: %2</translation>
         <location line="+10"/>
         <source>Canceled</source>
         <translation>Storniert</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Returning</source>
-        <translation>Retour</translation>
     </message>
 </context>
 <context>
@@ -5850,6 +5891,11 @@ Bild - Artikel Nr: %2</translation>
         <source>This Year</source>
         <translation>Dieses Jahr</translation>
     </message>
+    <message>
+        <location line="+1"/>
+        <source>Past Days edited (no Image)</source>
+        <translation>Vergangene Tage bearbeitet (kein Bild)</translation>
+    </message>
 </context>
 <context>
     <name>TabViews</name>
@@ -5938,7 +5984,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TestConfig</name>
     <message>
-        <location filename="../utils/assistant/testconfig.cpp" line="+14"/>
+        <location filename="../assistant/testconfig.cpp" line="+14"/>
         <source>Connection test</source>
         <translation>Verbindungstest</translation>
     </message>

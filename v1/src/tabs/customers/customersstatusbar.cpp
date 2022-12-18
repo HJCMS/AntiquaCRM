@@ -36,12 +36,14 @@ void CustomersStatusBar::setHistoryMenu() {
   QMenu *m_menu = new QMenu(btn_history);
   QIcon icon = getIcon("view_books");
   QStringList entries;
-  QHashIterator<TabStatusBar::History, QString> it(historyItems());
+  QMapIterator<TabStatusBar::History, QString> it(historyItems());
   while (it.hasNext()) {
     it.next();
-    QAction *ac = m_menu->addAction(icon, it.value());
-    connect(ac, SIGNAL(triggered()), m_historyMapper, SLOT(map()));
-    m_historyMapper->setMapping(ac, it.key());
+    if (it.key() != TabStatusBar::History::NOIMAGE) {
+      QAction *ac = m_menu->addAction(icon, it.value());
+      connect(ac, SIGNAL(triggered()), m_historyMapper, SLOT(map()));
+      m_historyMapper->setMapping(ac, it.key());
+    }
   }
   btn_history->setMenu(m_menu);
 }
@@ -80,7 +82,8 @@ void CustomersStatusBar::setHistoryAction(int index) {
   }
 
   case (History::LastMonth): {
-    q.append("date_part('month',c_changed)=date_part('month',CURRENT_DATE - 31)");
+    q.append(
+        "date_part('month',c_changed)=date_part('month',CURRENT_DATE - 31)");
     q.append(" AND " + year);
     break;
   }

@@ -32,6 +32,7 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent) : TabSearchBar{parent} {
   addSeparator();
 
   m_restoreView = defaultViewButton();
+  m_restoreView->setToolTip(tr("Current orders in progress to delivered."));
   addWidget(m_restoreView);
 
   connect(m_selectFilter, SIGNAL(currentIndexChanged(int)),

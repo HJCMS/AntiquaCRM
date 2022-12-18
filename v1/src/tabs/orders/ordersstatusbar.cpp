@@ -51,11 +51,13 @@ void OrdersStatusBar::setHistoryAction(int action) {
   // Zeige geliefert mit Zahlungserinnerung oder Mahnung
   case OrdersHistoryButton::HistoryQuery::FILTER_PAYMENT_REMINDED:
     status = QString::number(AntiquaCRM::OrderPayment::REMIND);
-    sqlQuery = "(o_payment_status=" + status;
+    sqlQuery = "o_payment_status IN (" + status;
     status = QString::number(AntiquaCRM::OrderPayment::ADMONISH);
-    sqlQuery.append(" OR o_payment_status=" + status);
+    sqlQuery.append("," + status);
+    status = QString::number(AntiquaCRM::OrderPayment::COLLPROC);
+    sqlQuery.append("," + status + ")");
     status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
-    sqlQuery.append(") AND o_order_status=" + status);
+    sqlQuery.append(" AND o_order_status=" + status);
     break;
 
   case OrdersHistoryButton::HistoryQuery::FILTER_COMPLETED:

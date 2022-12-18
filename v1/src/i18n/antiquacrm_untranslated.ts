@@ -20,7 +20,7 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+168"/>
+        <location filename="../antiquaappl.cpp" line="+162"/>
         <source>Search Networkconnection!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -314,7 +314,7 @@
 <context>
     <name>Assistant</name>
     <message>
-        <location filename="../utils/assistant/assistant.cpp" line="+78"/>
+        <location filename="../assistant/assistant.cpp" line="+79"/>
         <source>Restart</source>
         <translation type="unfinished"></translation>
     </message>
@@ -324,7 +324,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
@@ -334,7 +334,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
@@ -344,12 +344,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Save current changes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Finalize</source>
         <translation type="unfinished"></translation>
     </message>
@@ -359,7 +359,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+28"/>
         <source>Connection successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1283,7 +1283,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ConfigPgSQL</name>
     <message>
-        <location filename="../utils/assistant/configpgsql.cpp" line="+15"/>
+        <location filename="../assistant/configpgsql.cpp" line="+15"/>
         <source>Database Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1321,7 +1321,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ConfigSSL</name>
     <message>
-        <location filename="../utils/assistant/configssl.cpp" line="+18"/>
+        <location filename="../assistant/configssl.cpp" line="+18"/>
         <source>SSL/TLS Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1624,11 +1624,12 @@ Image - Article Id: %2</source>
     <name>CustomersOrders</name>
     <message>
         <location filename="../tabs/customers/customersorders.cpp" line="+17"/>
+        <location line="+25"/>
         <source>Payed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-24"/>
         <source>Delivery Note</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1668,13 +1669,29 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Yes</source>
+        <location line="+12"/>
+        <location line="+34"/>
+        <source>Not paid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>No</source>
+        <location line="-23"/>
+        <source>Remindet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Admonished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Returning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Collection procedures</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3402,7 +3419,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+4"/>
+        <source>Collection procedures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>A Payment Collection procedure is done</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+50"/>
         <source>a Payment status is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3455,27 +3482,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Reminder sent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>This order will be canceled!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-13"/>
+        <location line="-9"/>
         <source>Delivery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>a Reminder was sent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+8"/>
         <source>Canceled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3746,7 +3763,7 @@ Image - Article Id: %2</source>
 <context>
     <name>OrdersHistoryButton</name>
     <message>
-        <location filename="../tabs/orders/ordershistorybutton.cpp" line="+14"/>
+        <location filename="../tabs/orders/ordershistorybutton.cpp" line="+13"/>
         <source>Advanced Queries</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3756,8 +3773,18 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>Current orders in progress to delivered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+2"/>
         <source>Orders without payment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Current orders without a payment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3766,13 +3793,28 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>Delivered and waiting for payment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+2"/>
-        <source>Reminder orders.</source>
+        <source>Reminded, admonished - Payment Collection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Without payment with reminder or Payment Collection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Completed orders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Completed orders from this Year.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3822,7 +3864,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+6"/>
+        <source>Current orders in progress to delivered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+36"/>
         <source>Search for %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3830,12 +3877,12 @@ Image - Article Id: %2</source>
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../tabs/orders/orderstablemodel.cpp" line="+88"/>
+        <location filename="../tabs/orders/orderstablemodel.cpp" line="+92"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-15"/>
+        <location line="-13"/>
         <source>Ready for pickup</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3845,18 +3892,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-22"/>
-        <location line="+31"/>
+        <location line="-25"/>
         <source>Reminded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-3"/>
+        <location line="+32"/>
         <source>Canceled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+30"/>
         <source>no time</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3891,13 +3937,13 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-94"/>
-        <location line="+15"/>
+        <location line="-89"/>
+        <location line="+18"/>
         <source>Not paid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-6"/>
+        <location line="-9"/>
         <source>Admonished</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3907,17 +3953,22 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+3"/>
+        <source>Payment Collection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+10"/>
         <source>Order created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Delivered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+53"/>
         <source>Order Since</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3963,8 +4014,8 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-105"/>
-        <location line="+106"/>
+        <location line="-100"/>
+        <location line="+101"/>
         <source>Payed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5033,22 +5084,12 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+10"/>
-        <source>Remindet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
         <source>Delivered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Returning</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5848,6 +5889,11 @@ Image - Article Id: %2</source>
         <source>This Year</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+1"/>
+        <source>Past Days edited (no Image)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TabViews</name>
@@ -5936,7 +5982,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TestConfig</name>
     <message>
-        <location filename="../utils/assistant/testconfig.cpp" line="+14"/>
+        <location filename="../assistant/testconfig.cpp" line="+14"/>
         <source>Connection test</source>
         <translation type="unfinished"></translation>
     </message>

@@ -9,24 +9,24 @@ TrustedBox::TrustedBox(QWidget *parent) : InputEdit{parent} {
   m_box->setWhatsThis(tr("Changes the Trustlevel for this customer."));
   m_layout->addWidget(m_box);
   loadDataset();
-  setRequired(true);
+  setRequired(false);
   setModified(false);
   connect(m_box, SIGNAL(currentIndexChanged(int)), SLOT(dataChanged(int)));
 }
 
 void TrustedBox::loadDataset() {
   // Keine Vertrauensebene festgelegt
-  m_box->insertItem(0, tr("No trust level set"), AntiquaCRM::NO_TRUST_LEVEL);
+  m_box->addItem(tr("No trust level set"), AntiquaCRM::NO_TRUST_LEVEL);
   // Zahlt Pünktlich
-  m_box->insertItem(0, tr("Pays on time"), AntiquaCRM::ON_TIME);
+  m_box->addItem(tr("Pays on time"), AntiquaCRM::ON_TIME);
   // Zahlt Zuverlässig
-  m_box->insertItem(0, tr("Pays reliably"), AntiquaCRM::RELIABLE);
+  m_box->addItem(tr("Pays reliably"), AntiquaCRM::RELIABLE);
   // Zahlt mit Verspätung
-  m_box->insertItem(0, tr("Pay late"), AntiquaCRM::WITH_DELAY);
+  m_box->addItem(tr("Pay late"), AntiquaCRM::WITH_DELAY);
   // Nur mit Vorauszahlung
-  m_box->insertItem(0, tr("Only with prepayment"), AntiquaCRM::PREPAYMENT);
+  m_box->addItem(tr("Only with prepayment"), AntiquaCRM::PREPAYMENT);
   // Keine Lieferung
-  m_box->insertItem(0, tr("No delivery"), AntiquaCRM::NO_DELIVERY);
+  m_box->addItem(tr("No delivery"), AntiquaCRM::NO_DELIVERY);
 }
 
 void TrustedBox::dataChanged(int) { setModified(true); }
@@ -56,17 +56,11 @@ void TrustedBox::setProperties(const QSqlField &field) {
 }
 
 const QVariant TrustedBox::value() {
-  int i = m_box->currentIndex();
   return static_cast<AntiquaCRM::CustomerTrustLevel>(
-      m_box->itemData(i, Qt::UserRole).toInt());
+      m_box->itemData(m_box->currentIndex(), Qt::UserRole).toInt());
 }
 
-bool TrustedBox::isValid() {
-  if (isRequired() && m_box->currentIndex() == 0)
-    return false;
-
-  return true;
-}
+bool TrustedBox::isValid() { return true; }
 
 void TrustedBox::setInfo(const QString &info) {
   m_box->setToolTip(info);

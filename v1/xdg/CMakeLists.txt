@@ -3,6 +3,7 @@
 
 SET (RESOURCE_FILES
  application.desktop.cmake
+ assistant.desktop.cmake
  qt.conf.cmake
  antiquacrm.png
  antiquacrm.ico
@@ -18,12 +19,15 @@ CONFIGURE_FILE (application.desktop.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/${DOMAIN_SCOPE}.desktop
 )
 
+CONFIGURE_FILE (assistant.desktop.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/${DOMAIN_SCOPE}_assistant.desktop
+)
+
 IF (CMAKE_HOST_WIN32)
  FILE (COPY antiquacrm.ico DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 ELSE (CMAKE_HOST_WIN32)
 ## Desktop
-INSTALL (FILES
-  ${DOMAIN_SCOPE}.desktop
+INSTALL (FILES ${DOMAIN_SCOPE}.desktop ${DOMAIN_SCOPE}_assistant.desktop
   DESTINATION share/applications
   COMPONENT data
 )

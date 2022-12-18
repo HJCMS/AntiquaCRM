@@ -29,13 +29,16 @@ const QIcon OrdersTableModel::getPaymentIcon(int status) const {
     return QIcon("://icons/action_ok.png");
 
   case AntiquaCRM::OrderPayment::REMIND: /**< Erinnert */
-    return QIcon("://icons/action_redo.png");
+    return QIcon("://icons/flag-yellow.png");
 
   case AntiquaCRM::OrderPayment::ADMONISH: /**< Mahnen */
-    return QIcon("://icons/user_delete.png");
+    return QIcon("://icons/flag-yellow.png");
 
   case AntiquaCRM::OrderPayment::RETURN: /**< Retour */
     return QIcon("://icons/action_undo.png");
+
+  case AntiquaCRM::OrderPayment::COLLPROC: /**< Inkasso */
+    return QIcon("://icons/flag-red.png");
 
   default: /**< Nicht bezahlt */
     return QIcon("://icons/warning.png");
@@ -58,6 +61,9 @@ const QString OrdersTableModel::getPaymentStatus(int status) const {
 
   case AntiquaCRM::OrderPayment::RETURN: /**< Retour */
     return tr("Returned");
+
+  case AntiquaCRM::OrderPayment::COLLPROC: /**< Inkasso */
+    return tr("Payment Collection");
 
   default:
     return tr("Not paid");

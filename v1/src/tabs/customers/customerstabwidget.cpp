@@ -15,11 +15,6 @@ CustomersTabWidget::CustomersTabWidget(QWidget *parent) : QTabWidget{parent} {
   bool mouseWheel = cfg.value("mouse_wheel_actions", false).toBool();
   m_tabBar = new AntiquaTabBar(this, mouseWheel);
   setTabBar(m_tabBar);
-
-  //  connect(m_tabBar, SIGNAL(sendTabChanged(int)), SLOT(setTabChanged(int)));
-  //  connect(m_tabBar, SIGNAL(sendCloseTab(int)), SLOT(setTabToClose(int)));
-  //  connect(m_tabBar, SIGNAL(tabBarClicked(int)), SLOT(setTabToVisit(int)));
-  //  connect(this, SIGNAL(tabCloseRequested(int)), SLOT(setTabToClose(int)));
 }
 
 int CustomersTabWidget::placeTab(QWidget *page, const QString &title) {

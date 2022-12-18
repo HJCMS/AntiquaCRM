@@ -311,7 +311,7 @@ void CustomersEditor::findPurchases() {
       while (q.next()) {
         int col = 0;
         m_ordersWidget->setItem(row, col++,
-                                m_ordersWidget->iconItem(q.value("payed")));
+                                m_ordersWidget->paymentItem(q.value("payed")));
         m_ordersWidget->setItem(row, col++,
                                 m_ordersWidget->numidItem(q.value("orderid")));
         m_ordersWidget->setItem(row, col++,

@@ -253,7 +253,8 @@ namespace AntiquaCRM {
    PAYED = 1,    /**< Bezahlt */
    REMIND = 2,   /**< Erinnert */
    ADMONISH = 3, /**< Mahnen */
-   RETURN = 4    /**< Retour */
+   RETURN = 4,   /**< Retour */
+   COLLPROC = 5  /**< Collection procedures/Inkassoverfahren */
  };
  Q_ENUM_NS(AntiquaCRM::OrderPayment)
 

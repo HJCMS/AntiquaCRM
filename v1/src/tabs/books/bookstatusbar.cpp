@@ -35,7 +35,7 @@ void BookStatusBar::setHistoryMenu() {
   QMenu *m_menu = new QMenu(btn_history);
   QIcon icon = getIcon("view_books");
   QStringList entries;
-  QHashIterator<TabStatusBar::History, QString> it(historyItems());
+  QMapIterator<TabStatusBar::History, QString> it(historyItems());
   while (it.hasNext()) {
     it.next();
     QAction *ac = m_menu->addAction(icon, it.value());
@@ -87,6 +87,11 @@ void BookStatusBar::setHistoryAction(int index) {
 
   case (History::ThisYear): {
     q.append(year + " AND ib_count>0");
+    break;
+  }
+
+  case (History::NOIMAGE): {
+    q.append("DATE(ib_changed)>(CURRENT_DATE - 5) AND im_id IS NULL");
     break;
   }
 

@@ -79,6 +79,7 @@ popd
 %defattr(-, root, root)
 ## binaries
 %{_bindir}/antiquacrm
+%{_bindir}/antiquacrm_assistant
 %{_libdir}/libAntiquaCRM.so.1*
 %{_libdir}/libAntiquaCRMPlugin.so.1*
 %dir %{_libdir}/antiquacrm
@@ -95,7 +96,7 @@ popd
 %{_datadir}/antiquacrm/i18n/antiquacrm*.qm
 %{_datadir}/antiquacrm/data/pgsql/*.sql
 %{_datadir}/antiquacrm/data/json/*.json
-%{_datadir}/applications/de.hjcms.antiquacrm.desktop
+%{_datadir}/applications/de.hjcms.antiquacrm*.desktop
 
 %post devel
 /sbin/ldconfig
