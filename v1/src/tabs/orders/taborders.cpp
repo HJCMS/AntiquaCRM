@@ -3,6 +3,7 @@
 
 #include "taborders.h"
 #include "orderseditor.h"
+#include "ordersreturning.h"
 #include "orderssearchbar.h"
 #include "ordersstatusbar.h"
 #include "orderstableview.h"
@@ -42,6 +43,11 @@ TabOrders::TabOrders(QWidget *parent) : Inventory{"orders_tab", parent} {
   insertWidget(ORDERS_EDITOR_INDEX, m_editorPage);
   // End
 
+  // Begin Retour
+  m_ordersReturning = new OrdersReturning(this);
+  insertWidget(2, m_ordersReturning);
+  // End
+
   // Signals::OrdersSearchBar
   connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar,
           SLOT(setSearchFocus()));
@@ -60,6 +66,9 @@ TabOrders::TabOrders(QWidget *parent) : Inventory{"orders_tab", parent} {
   connect(m_table, SIGNAL(sendOpenEntry(qint64)), SLOT(openEntry(qint64)));
 
   connect(m_table, SIGNAL(sendCreateNewEntry()), SLOT(createNewEntry()));
+
+  connect(m_table, SIGNAL(sendSocketOperation(const QJsonObject &)),
+          SLOT(sendSocketOperation(const QJsonObject &)));
 
   // Signals::OrdersEditor
   connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));

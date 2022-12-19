@@ -219,12 +219,23 @@ bool TabCustomers::customAction(const QJsonObject &obj) {
     return false;
   }
 
-  if (op == "open_customers" && type == QJsonValue::Double) {
-    qint64 c_id = value.toInt();
-    if (c_id > 0) {
-      openEntry(c_id);
-      return true;
-    }
+  qint64 open_customer_id = -1;
+  // Kunde mit Kundennummer öffnen!
+  if (op == "open_customer" && type == QJsonValue::Double) {
+    open_customer_id = value.toInt();
+  }
+
+  // Mit Bestellnummer nach Kunde suchen und öffnen!
+  if (op == "order_customer" && type == QJsonValue::Double) {
+    qint64 o_id = value.toInt();
+    if (o_id > 0)
+      open_customer_id = m_editorWidget->queryCustomerByOrderId(o_id);
+  }
+
+  if ((open_customer_id > 0) &&
+      m_editorWidget->openEditEntry(open_customer_id)) {
+    setCurrentWidget(m_editorPage);
+    return true;
   }
 
   sendStatusMessage(failMessage);

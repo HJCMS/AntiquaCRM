@@ -57,6 +57,7 @@ public:
   explicit CustomersEditor(QWidget *parent = nullptr);
   bool openEditEntry(qint64 customerId) override;
   bool createNewEntry() override;
+  qint64 queryCustomerByOrderId(qint64 orderId);
 };
 
 #endif // ANTIQUACRM_CUSTOMERSEDITOR_H

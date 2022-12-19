@@ -50,6 +50,7 @@ ProvidersOrderPage::ProvidersOrderPage(const QJsonObject &order,
 
   connect(m_table, SIGNAL(sendCheckArticles()), SLOT(findArticleIds()));
   connect(m_table, SIGNAL(sendOpenArticle(qint64)), SLOT(openArticle(qint64)));
+  connect(m_actionBar, SIGNAL(sendViewCustomer()), SLOT(createOpenCustomer()));
   connect(m_actionBar, SIGNAL(sendCheckArticles()), SLOT(findArticleIds()));
   connect(m_actionBar, SIGNAL(sendCreateOrder()), SLOT(prepareCreateOrder()));
   connect(m_actionBar, SIGNAL(sendProviderAction()),
@@ -146,6 +147,18 @@ void ProvidersOrderPage::createOrder(const QString &providerId) {
   obj.insert("tab", "orders_tab");
   obj.insert("create_order", providerId);
   obj.insert("article_numbers", list.join(","));
+  pushCmd(obj);
+}
+
+void ProvidersOrderPage::createOpenCustomer() {
+  qint64 c_id = m_header->CustomerId;
+  if(c_id < 1)
+    return;
+
+  QJsonObject obj;
+  obj.insert("window_operation", "open_customer");
+  obj.insert("tab", "customers_tab");
+  obj.insert("open_customer", c_id);
   pushCmd(obj);
 }
 

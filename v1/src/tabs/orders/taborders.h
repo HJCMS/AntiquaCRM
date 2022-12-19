@@ -14,6 +14,7 @@ class OrdersSearchBar;
 class OrdersTableView;
 class OrdersStatusBar;
 class OrdersEditor;
+class OrdersReturning;
 
 class TabOrders final : public Inventory {
   Q_OBJECT
@@ -23,13 +24,16 @@ private:
   OrdersSearchBar *m_searchBar;
   OrdersTableView *m_table;
   OrdersStatusBar *m_statusBar;
+
   QScrollArea *m_editorPage;
   OrdersEditor *m_editorWidget;
+
+  OrdersReturning *m_ordersReturning;
 
   void popupWarningTabInEditMode() override;
 
 public Q_SLOTS:
-  void setDefaultTableView();
+  void setDefaultTableView() override;
   void openStartPage() override;
   void createSearchQuery(const QString &query = QString()) override;
   void createNewEntry() override  { /* UNUSED */ };

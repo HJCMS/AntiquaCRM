@@ -17,6 +17,7 @@ class ProviderPurchaseBar : public QStatusBar {
   Q_OBJECT
 
 private:
+  QPushButton *btn_customer;
   QPushButton *btn_provider;
   QPushButton *btn_create;
   QPushButton *btn_check;
@@ -25,6 +26,7 @@ private Q_SLOTS:
   void createClicked();
 
 Q_SIGNALS:
+  void sendViewCustomer();
   void sendProviderAction();
   void sendCreateOrder();
   void sendCheckArticles();

@@ -71,6 +71,11 @@ private Q_SLOTS:
   void createOrder(const QString &providerId);
 
   /**
+   * @brief Create Action to open Customer.
+   */
+  void createOpenCustomer();
+
+  /**
    * @brief Send Action Open Article by Article Id
    */
   void openArticle(qint64 aid);

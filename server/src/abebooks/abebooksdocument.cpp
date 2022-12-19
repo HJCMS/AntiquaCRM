@@ -276,14 +276,34 @@ const QString AbeBooksDocument::getStreet(const QDomNode &addressNode) {
   foreach (QString t, tags) {
     QVariant v = addressNode.namedItem(t).firstChild().nodeValue();
     QString s = v.toString().trimmed();
-    out << (s.isEmpty() ? "" : s);
+    if (s.isEmpty())
+      continue;
+
+    /**
+     * @brief Soll verhindern das Hausnummer/Postfach zweimal eingefügt wird!
+     * AbeBooks versteckt bei Kreditkartenzahlungen ein teil der Adresse und
+     * fügt diese dann Später hinzu. Was Eigentlich schwachsinn ist weil sie im
+     * Node::"street2" ohnehin enthalten ist. Außerdem ist hier kein System zu
+     * erkennen, manchmal ist sie Extra dann wieder nicht. Das heist - Es muß
+     * eine Abfrage gemacht werden ob dieser Teil im Node::"street" enhalten
+     * ist. Wenn nicht, dann von Node::"street2" diese wieder hinzufügen.
+     * @note Sollte überwacht werden bis eine bessere Lösung gefunden ist!
+     * @todo Mit einem Regulären Ausdruck das ganze verfeinern!
+     */
+    if (t == "street2" && out.contains(s))
+      continue;
+
+    out << s;
   }
   return out.join(" ").trimmed();
 }
 
 const QString AbeBooksDocument::getPhone(const QDomNode &addressNode) {
   QVariant v = addressNode.namedItem("phone").firstChild().nodeValue();
-  return v.toString().trimmed().replace("+", "0");
+  QString p = v.toString().trimmed();
+  p.replace("+", "0");
+  p.replace(QRegExp("\\D+"), "");
+  return p;
 }
 
 const QString AbeBooksDocument::getEMail(const QDomNode &addressNode) {

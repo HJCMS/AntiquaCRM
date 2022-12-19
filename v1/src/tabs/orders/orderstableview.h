@@ -22,7 +22,7 @@ private:
   QSqlRecord p_tableRecord;
   QModelIndex p_modelIndex;
 
-  qint64 getTableID(const QModelIndex &index) override;
+  qint64 getTableID(const QModelIndex &index, int column = 0) override;
   bool sqlQueryTable(const QString &query) override;
   void contextMenuEvent(QContextMenuEvent *) override;
 
@@ -32,6 +32,7 @@ private Q_SLOTS:
   void createOpenEntry() override;
   void createCopyClipboard() override;
   void createOrderSignal() override;
+  void createOpenCustomer();
 
 public Q_SLOTS:
   void setReloadView() override;

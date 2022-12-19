@@ -19,10 +19,10 @@ OrdersTableView::OrdersTableView(QWidget *parent) : InventoryTable{parent} {
           SLOT(getSelectedItem(const QModelIndex &)));
 }
 
-qint64 OrdersTableView::getTableID(const QModelIndex &index) {
+qint64 OrdersTableView::getTableID(const QModelIndex &index, int column) {
   QModelIndex id(index);
-  if (m_model->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
-    return m_model->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
+  if (m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt() >= 1) {
+    return m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt();
   }
   return -1;
 }
@@ -55,6 +55,10 @@ void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
   ac_copy->setObjectName("ac_context_copy_order");
   ac_copy->setEnabled(enable_action);
   connect(ac_copy, SIGNAL(triggered()), SLOT(createCopyClipboard()));
+
+  QAction *ac_customer = m->addAction(cellIcon("user_group"), tr("View Customer"));
+  ac_customer->setObjectName("ac_context_open_customer");
+  connect(ac_customer, SIGNAL(triggered()), SLOT(createOpenCustomer()));
 
   QAction *ac_refresh = m->addAction(cellIcon("action_reload"), tr("Reload"));
   ac_refresh->setObjectName("ac_context_refresh_orders");
@@ -123,6 +127,15 @@ void OrdersTableView::createOrderSignal() {
   qint64 id = getTableID(p_modelIndex);
   if (id >= 1)
     qDebug() << Q_FUNC_INFO << id;
+}
+
+void OrdersTableView::createOpenCustomer() {
+  qint64 oid = getTableID(p_modelIndex);
+  QJsonObject obj;
+  obj.insert("window_operation", "order_customer");
+  obj.insert("tab", "customers_tab");
+  obj.insert("order_customer", oid);
+  emit sendSocketOperation(obj);
 }
 
 void OrdersTableView::setReloadView() {

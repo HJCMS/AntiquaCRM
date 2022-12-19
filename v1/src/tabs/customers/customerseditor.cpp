@@ -426,3 +426,14 @@ bool CustomersEditor::createNewEntry() {
   m_tabWidget->setCurrentIndex(0);
   return true;
 }
+
+qint64 CustomersEditor::queryCustomerByOrderId(qint64 orderId) {
+  QString sql("SELECT o_customer_id FROM inventory_orders");
+  sql.append(" WHERE o_id=" + QString::number(orderId) + ";");
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    q.next();
+    return q.value("o_customer_id").toInt();
+  }
+  return -1;
+}

@@ -3260,7 +3260,7 @@ Image - Article Id: %2</source>
 <context>
     <name>MonthlyReportModel</name>
     <message>
-        <location filename="../tabs/reports/monthlyreportview.cpp" line="+14"/>
+        <location filename="../tabs/reports/monthlyreportview.cpp" line="+18"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4049,6 +4049,11 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+5"/>
+        <source>View Customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4859,6 +4864,11 @@ Image - Article Id: %2</source>
     <name>ProviderPurchaseBar</name>
     <message>
         <location filename="../tabs/providers/providerpurchasebar.cpp" line="+12"/>
+        <source>View Customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Provider Actions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4984,7 +4994,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+100"/>
         <location line="+2"/>
         <source>No available Articles!</source>
         <translation type="unfinished"></translation>
@@ -4995,7 +5005,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+73"/>
         <source>An order for %1 already exists!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5736,12 +5746,12 @@ Image - Article Id: %2</source>
 <context>
     <name>TabOrders</name>
     <message>
-        <location filename="../tabs/orders/taborders.cpp" line="+20"/>
+        <location filename="../tabs/orders/taborders.cpp" line="+21"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+64"/>
         <source>Cannot open Order Editor!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6048,7 +6058,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+46"/>
         <source>a Trustlevel is required.</source>
         <translation type="unfinished"></translation>
     </message>

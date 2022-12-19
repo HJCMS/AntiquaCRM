@@ -33,9 +33,11 @@ ProviderPurchaseHeader::ProviderPurchaseHeader(QWidget *parent)
 
 void ProviderPurchaseHeader::setHeader(const QString &name, qint64 customerId) {
   if (customerId > 0) {
+    CustomerId = customerId;
     m_cid->setText(QString::number(customerId));
     m_cid->setStyleSheet("");
   } else {
+    CustomerId = -1;
     m_cid->setText("0");
     m_cid->setStyleSheet("QLabel {color:red; font-weight:bold;}");
   }

@@ -170,7 +170,7 @@ void AbeBooks::prepareContent(const QDomDocument &doc) {
         buffer << xml.getPostalCode(addressNode).toString() + " " +
                       xml.getLocation(addressNode);
         antiqua_customer.insert("c_postal_address", buffer.join("\n"));
-        antiqua_customer.insert("c_shipping_address", buffer.join("\n"));
+        antiqua_customer.insert("c_shipping_address", "");
       }
 
       // Artikelliste - QDomNode::purchaseOrderItemList

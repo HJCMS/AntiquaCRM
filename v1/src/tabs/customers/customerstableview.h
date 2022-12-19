@@ -26,7 +26,7 @@ private:
   QSqlRecord p_tableRecord;
   QModelIndex p_modelIndex;
 
-  qint64 getTableID(const QModelIndex &index) override;
+  qint64 getTableID(const QModelIndex &index, int column = 0) override;
   bool sqlQueryTable(const QString &query) override;
   void contextMenuEvent(QContextMenuEvent *) override;
 

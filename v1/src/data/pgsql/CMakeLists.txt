@@ -9,6 +9,7 @@ SET (query_tables_FILES
   query_company_data.sql
   query_customer_exists.sql
   query_customer_new_order.sql
+  query_customer_from_order.sql
   query_customer_orders_status.sql
   query_connection_info.sql
   query_default_delivery_service.sql

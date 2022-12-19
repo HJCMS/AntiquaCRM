@@ -19,6 +19,7 @@ private:
   QLabel *m_buyer;
 
 public:
+  qint64 CustomerId = -1;
   explicit ProviderPurchaseHeader(QWidget *parent = nullptr);
   void setHeader(const QString &name, qint64 customerId = -1);
 };

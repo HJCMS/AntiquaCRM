@@ -3,6 +3,10 @@
 
 #include "monthlyreportview.h"
 
+#ifdef ANTIQUA_DEVELOPEMENT
+#include <QDebug>
+#endif
+
 MonthlyReportModel::MonthlyReportModel(QObject *parent)
     : AntiquaCRM::ASqlQueryModel{"inventory_orders", parent} {
   setObjectName("preview_table_model");
@@ -54,6 +58,9 @@ MonthlyReportView::MonthlyReportView(QWidget *parent) : QTableView{parent} {
 }
 
 void MonthlyReportView::setQuery(const QString &query) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << query;
+#endif
   if (m_model->querySelect(query)) {
     calc_section = m_model->record().indexOf("calc");
     m_tableHeader->hideSection(calc_section);

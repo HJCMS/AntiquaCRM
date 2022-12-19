@@ -21,10 +21,10 @@ BookTableView::BookTableView(QWidget *parent) : InventoryTable{parent} {
           SLOT(getSelectedItem(const QModelIndex &)));
 }
 
-qint64 BookTableView::getTableID(const QModelIndex &index) {
+qint64 BookTableView::getTableID(const QModelIndex &index, int column) {
   QModelIndex id(index);
-  if (m_model->data(id.sibling(id.row(), 0), Qt::EditRole).toInt() >= 1) {
-    return m_model->data(id.sibling(id.row(), 0), Qt::EditRole).toInt();
+  if (m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt() >= 1) {
+    return m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt();
   }
   return -1;
 }

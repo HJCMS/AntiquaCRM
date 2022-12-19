@@ -27,13 +27,12 @@ protected:
 
   void setEnableTableViewSorting(bool);
 
-  virtual qint64 getTableID(const QModelIndex &index) = 0;
+  virtual qint64 getTableID(const QModelIndex &index, int column = 0) = 0;
 
   virtual bool sqlQueryTable(const QString &query) = 0;
 
 protected Q_SLOTS:
   void getSqlModelError(const QString &table, const QString &message);
-
   virtual void setSortByColumn(int column, Qt::SortOrder order) = 0;
   virtual void getSelectedItem(const QModelIndex &index) = 0;
   virtual void createOpenEntry() = 0;

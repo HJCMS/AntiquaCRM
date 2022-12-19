@@ -29,6 +29,7 @@ SET (projectLibrary_SOURCES
  orderscustomerinfo.cpp
  orderscostsettings.cpp
  ordersitemlist.cpp
+ ordersreturning.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -43,6 +44,7 @@ SET (projectLibrary_HEADERS
  orderscustomerinfo.h
  orderscostsettings.h
  ordersitemlist.h
+ ordersreturning.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC
