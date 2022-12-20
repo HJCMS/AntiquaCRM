@@ -35,7 +35,7 @@ private Q_SLOTS:
   void getSelectedItem(const QModelIndex &index) override;
   void createOpenEntry() override;
   void createCopyClipboard() override;
-  void createOrderSignal() override;
+  void createSocketOperation() override;
   void createDeleteRequest();
 
 public Q_SLOTS:

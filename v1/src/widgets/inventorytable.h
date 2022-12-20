@@ -37,7 +37,7 @@ protected Q_SLOTS:
   virtual void getSelectedItem(const QModelIndex &index) = 0;
   virtual void createOpenEntry() = 0;
   virtual void createCopyClipboard() = 0;
-  virtual void createOrderSignal() = 0;
+  virtual void createSocketOperation() = 0;
 
 public Q_SLOTS:
   virtual void setReloadView() = 0;

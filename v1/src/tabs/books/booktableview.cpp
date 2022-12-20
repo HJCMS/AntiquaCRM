@@ -64,30 +64,25 @@ void BookTableView::contextMenuEvent(QContextMenuEvent *event) {
   QMenu *m = new QMenu(this);
   // Eintrag öffnen  Bestellung anlegen
   QAction *ac_open = m->addAction(cellIcon("database"), tr("Open entry"));
-  ac_open->setObjectName("ac_context_open_book");
   ac_open->setEnabled(enable_action);
   connect(ac_open, SIGNAL(triggered()), this, SLOT(createOpenEntry()));
 
   QAction *ac_create = m->addAction(cellIcon("db_add"), tr("Create entry"));
-  ac_create->setObjectName("ac_context_create_book");
   ac_create->setEnabled(enable_create);
   connect(ac_create, SIGNAL(triggered()), this, SIGNAL(sendCreateNewEntry()));
 
   // BEGIN Einträge für Auftrag
   QAction *ac_copy = m->addAction(cellIcon("db_comit"), tr("Copy Article Id"));
-  ac_copy->setObjectName("ac_context_copy_book");
   ac_copy->setEnabled(enable_action);
   connect(ac_copy, SIGNAL(triggered()), this, SLOT(createCopyClipboard()));
 
   QAction *ac_order =
       m->addAction(cellIcon("view_log"), tr("Add Article to opened Order"));
-  ac_order->setObjectName("ac_context_book_to_order");
   ac_order->setEnabled(getArticleCount(p_modelIndex) > 0);
-  connect(ac_order, SIGNAL(triggered()), this, SLOT(createOrderSignal()));
+  connect(ac_order, SIGNAL(triggered()), this, SLOT(createSocketOperation()));
   //  END
 
   QAction *ac_refresh = m->addAction(cellIcon("action_reload"), tr("Update"));
-  ac_refresh->setObjectName("ac_context_refresh_books");
   connect(ac_refresh, SIGNAL(triggered()), this, SLOT(setReloadView()));
 
   m->exec(event->globalPos());
@@ -147,7 +142,7 @@ void BookTableView::createCopyClipboard() {
     emit sendCopyToClibboard(QString::number(aid));
 }
 
-void BookTableView::createOrderSignal() {
+void BookTableView::createSocketOperation() {
   qint64 aid = getTableID(p_modelIndex);
   if (aid >= 1 && getArticleCount(p_modelIndex) > 0) {
     QJsonObject obj;

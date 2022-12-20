@@ -4044,16 +4044,21 @@ Image - Article Id: %2</source>
     <name>OrdersTableView</name>
     <message>
         <location filename="../tabs/orders/orderstableview.cpp" line="+54"/>
-        <source>Copy Order Id</source>
+        <source>Open order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
+        <source>Copy Order Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>View Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>

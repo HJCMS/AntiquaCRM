@@ -4046,16 +4046,21 @@ Bild - Artikel Nr: %2</translation>
     <name>OrdersTableView</name>
     <message>
         <location filename="../tabs/orders/orderstableview.cpp" line="+54"/>
+        <source>Open order</source>
+        <translation>Auftrag öffnen</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Copy Order Id</source>
         <translation>Auftragnummer kopieren</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>View Customer</source>
         <translation>Kunde anzeigen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Reload</source>
         <translation>Aktualisieren</translation>
     </message>

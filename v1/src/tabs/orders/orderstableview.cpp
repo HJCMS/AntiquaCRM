@@ -49,19 +49,21 @@ void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
   bool enable_action = p_modelIndex.isValid();
 
   QMenu *m = new QMenu(this);
-  // Eintrag öffnen  Bestellung anlegen
 
-  QAction *ac_copy = m->addAction(cellIcon("db_comit"), tr("Copy Order Id"));
-  ac_copy->setObjectName("ac_context_copy_order");
+  QAction *ac_edit = m->addAction(cellIcon("spreadsheet"), tr("Open order"));
+  ac_edit->setEnabled(enable_action);
+  connect(ac_edit, SIGNAL(triggered()), SLOT(createOpenEntry()));
+
+  QAction *ac_copy = m->addAction(cellIcon("edit"), tr("Copy Order Id"));
   ac_copy->setEnabled(enable_action);
   connect(ac_copy, SIGNAL(triggered()), SLOT(createCopyClipboard()));
 
-  QAction *ac_customer = m->addAction(cellIcon("user_group"), tr("View Customer"));
-  ac_customer->setObjectName("ac_context_open_customer");
-  connect(ac_customer, SIGNAL(triggered()), SLOT(createOpenCustomer()));
+  QAction *ac_customer = m->addAction(cellIcon("user_group"),
+                                      tr("View Customer"));
+  ac_customer->setEnabled(enable_action);
+  connect(ac_customer, SIGNAL(triggered()), SLOT(createSocketOperation()));
 
   QAction *ac_refresh = m->addAction(cellIcon("action_reload"), tr("Reload"));
-  ac_refresh->setObjectName("ac_context_refresh_orders");
   connect(ac_refresh, SIGNAL(triggered()), SLOT(setReloadView()));
 
   m->exec(event->globalPos());
@@ -106,31 +108,34 @@ void OrdersTableView::setSortByColumn(int column, Qt::SortOrder order) {
 }
 
 void OrdersTableView::getSelectedItem(const QModelIndex &index) {
-  qint64 id = getTableID(index);
-  if (id >= 1)
-    emit sendOpenEntry(id);
+  qint64 oid = getTableID(index);
+  if (oid < 1)
+    return;
+
+  emit sendOpenEntry(oid);
 }
 
 void OrdersTableView::createOpenEntry() {
-  qint64 id = getTableID(p_modelIndex);
-  if (id >= 1)
-    emit sendOpenEntry(id);
+  qint64 oid = getTableID(p_modelIndex);
+  if (oid < 1)
+    return;
+
+  emit sendOpenEntry(oid);
 }
 
 void OrdersTableView::createCopyClipboard() {
-  qint64 id = getTableID(p_modelIndex);
-  if (id >= 1)
-    emit sendCopyToClibboard(QString::number(id));
-}
-
-void OrdersTableView::createOrderSignal() {
-  qint64 id = getTableID(p_modelIndex);
-  if (id >= 1)
-    qDebug() << Q_FUNC_INFO << id;
-}
-
-void OrdersTableView::createOpenCustomer() {
   qint64 oid = getTableID(p_modelIndex);
+  if (oid < 1)
+    return;
+
+  emit sendCopyToClibboard(QString::number(oid));
+}
+
+void OrdersTableView::createSocketOperation() {
+  qint64 oid = getTableID(p_modelIndex);
+  if (oid < 1)
+    return;
+
   QJsonObject obj;
   obj.insert("window_operation", "order_customer");
   obj.insert("tab", "customers_tab");
