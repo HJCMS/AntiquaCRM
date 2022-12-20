@@ -98,6 +98,16 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
     return true;
   }
 
+#ifdef ANTIQUACRM_STATISTICS
+  // Statistics
+  if (iName == "statistics_tab") {
+    TabStatistics *m_tab = new TabStatistics(this);
+    int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
+    m_tabBar->setTabCloseable(i, m_tab->isClosable());
+    return true;
+  }
+#endif
+
 #ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << "Not in set" << iName;
 #endif

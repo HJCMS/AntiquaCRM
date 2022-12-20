@@ -25,6 +25,8 @@ SET (PROJECT_INCLUDE_DIRS
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/settings
 	${CMAKE_CURRENT_BINARY_DIR}/utils/cache
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/cache
+	${CMAKE_CURRENT_BINARY_DIR}/tabs/statistics
+	${CMAKE_CURRENT_SOURCE_DIR}/tabs/statistics
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/reports
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/reports
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/views
@@ -60,6 +62,7 @@ SET(PROJECT_LIBRARIES
 	AntiquaKeywords
 	AntiquaSettings
 	AntiquaCache
+	AntiquaStatistics
 	AntiquaReports
 	AntiquaViews
 	AntiquaProviders

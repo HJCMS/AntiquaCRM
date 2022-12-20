@@ -23,9 +23,17 @@ AntiquaViewsMenus::AntiquaViewsMenus(QWidget *parent) : QMenu{parent} {
 
   m_tableReports = addMenu(icon, tr("Database Reports"));
   m_tabReports = new ReportsActionGroup(m_tableReports);
+
   addMenu(m_tableReports);
 
   addSeparator();
+
+#ifdef ANTIQUACRM_STATISTICS
+  // Statistics
+  ac_statistics = addAction(tr("Statistics"));
+  ac_statistics->setIcon(QIcon("://icons/kchart.png"));
+  addSeparator();
+#endif
 
   m_tableViews = addMenu(icon, tr("Database Views"));
   m_tabViews = new ViewsActionGroup(m_tableViews);
@@ -63,6 +71,11 @@ void AntiquaViewsMenus::setShowTabActions() {
     m_showTabsMapper->setMapping(ac, it.key());
     connect(ac, SIGNAL(triggered()), m_showTabsMapper, SLOT(map()));
   }
+
+#ifdef ANTIQUACRM_STATISTICS
+  m_showTabsMapper->setMapping(ac_statistics, "statistics");
+  connect(ac_statistics, SIGNAL(triggered()), m_showTabsMapper, SLOT(map()));
+#endif
 }
 
 void AntiquaViewsMenus::uniqLoadReports() {

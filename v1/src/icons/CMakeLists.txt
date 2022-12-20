@@ -35,6 +35,7 @@ flag-red.png
 flag-yellow.png
 folder_pictures.png
 folder_txt.png
+kchart.png
 groups.png
 network.png
 printer.png

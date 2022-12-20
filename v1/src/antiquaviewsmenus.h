@@ -22,6 +22,9 @@ private:
   QMenu *m_tableViews;
   ReportsActionGroup *m_tabReports;
   ViewsActionGroup *m_tabViews;
+#ifdef ANTIQUACRM_STATISTICS
+  QAction *ac_statistics;
+#endif
   QAction *ac_fullScreen;
 
   QSignalMapper *m_showTabsMapper;

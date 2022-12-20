@@ -40,9 +40,12 @@ ADD_EXECUTABLE (${_sub_application}
   ${QRC_FILES}
 )
 
+TARGET_COMPILE_FEATURES(${_sub_application} PUBLIC cxx_std_17)
+
 SET_TARGET_PROPERTIES (${_sub_application} PROPERTIES
   OUTPUT_NAME ${_sub_application}
   LINKER_LANGUAGE CXX
+  WIN32_EXECUTABLE TRUE
 )
 
 TARGET_LINK_LIBRARIES (${_sub_application} PRIVATE
