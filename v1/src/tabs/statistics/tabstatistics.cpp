@@ -4,8 +4,8 @@
 #include "tabstatistics.h"
 #include "paymentsinyear.h"
 
-#include <QDebug>
 #include <QDate>
+#include <QDebug>
 
 TabStatistics::TabStatistics(QWidget *parent)
     : Inventory{"tab_statistics", parent} {
@@ -24,8 +24,10 @@ void TabStatistics::setDefaultTableView() {
 }
 
 void TabStatistics::openStartPage() {
-  PaymentsInYear *m_view = new PaymentsInYear(this);
+  QDate d = QDate::currentDate();
+  PaymentsInYear *m_view = new PaymentsInYear(d, this);
   insertWidget(0, m_view);
+  firstview = true;
 }
 
 void TabStatistics::createSearchQuery(const QString &query) {
@@ -40,7 +42,12 @@ void TabStatistics::openEntry(qint64 statsId) {
   qDebug() << Q_FUNC_INFO << "__TODO__" << statsId;
 }
 
-void TabStatistics::onEnterChanged() { openStartPage(); }
+void TabStatistics::onEnterChanged() {
+  if (firstview)
+    return;
+
+  openStartPage();
+}
 
 bool TabStatistics::customAction(const QJsonObject &obj) {
   qDebug() << Q_FUNC_INFO << "__TODO__" << obj;

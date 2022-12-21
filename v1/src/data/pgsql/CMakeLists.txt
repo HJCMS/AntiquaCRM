@@ -32,6 +32,7 @@ SET (query_tables_FILES
   query_views.sql
   select_statement_postalcode_tables.sql
   select_statement_template_body.sql
+  statistics_payments_year.sql
   union_template_keys.sql
   union_template_values.sql
 )

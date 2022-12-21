@@ -13,6 +13,7 @@ class TabStatistics final : public Inventory {
   Q_OBJECT
 
 private:
+  bool firstview = false;
   QScrollArea *m_centralWidget;
 
 private Q_SLOTS:

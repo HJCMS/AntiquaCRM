@@ -245,7 +245,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+43"/>
         <source>Request rejected!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -288,7 +288,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+9"/>
+        <source>Statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Database Views</source>
         <translation type="unfinished"></translation>
     </message>
@@ -937,22 +942,22 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Create entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Copy Article Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Add Article to opened Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1861,32 +1866,32 @@ Image - Article Id: %2</source>
 <context>
     <name>CustomersTableView</name>
     <message>
-        <location filename="../tabs/customers/customerstableview.cpp" line="+56"/>
+        <location filename="../tabs/customers/customerstableview.cpp" line="+55"/>
         <source>Edit selected Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Create new Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Delete selected Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Copy Customer Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>New Order for selected Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4043,22 +4048,22 @@ Image - Article Id: %2</source>
 <context>
     <name>OrdersTableView</name>
     <message>
-        <location filename="../tabs/orders/orderstableview.cpp" line="+54"/>
+        <location filename="../tabs/orders/orderstableview.cpp" line="+53"/>
         <source>Open order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Copy Order Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>View Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4298,6 +4303,14 @@ Image - Article Id: %2</source>
     <message>
         <location line="+6"/>
         <source>delivery note number is empty!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PaymentsInYear</name>
+    <message>
+        <location filename="../tabs/statistics/paymentsinyear.cpp" line="+46"/>
+        <source>Payments in Year %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5849,6 +5862,14 @@ Image - Article Id: %2</source>
     <message>
         <location line="+3"/>
         <source>Default view</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TabStatistics</name>
+    <message>
+        <location filename="../tabs/statistics/tabstatistics.cpp" line="+12"/>
+        <source>Statistics</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

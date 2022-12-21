@@ -12,8 +12,11 @@
 class PaymentsInYear final : public QWidget {
   Q_OBJECT
 
+private:
+  const QDate p_date;
+
 public:
-  explicit PaymentsInYear(QWidget *parent = nullptr);
+  explicit PaymentsInYear(const QDate &date, QWidget *parent = nullptr);
 };
 
 #endif // ANTIQUACRM_PAYMENTSINYEAR_H

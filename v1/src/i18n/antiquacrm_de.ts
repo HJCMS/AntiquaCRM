@@ -245,7 +245,7 @@
         <translation>Anzeigen und Bearbeiten von Systembestellungen</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+43"/>
         <source>Request rejected!</source>
         <translation>Anfrage abgelehnt!</translation>
     </message>
@@ -288,7 +288,12 @@
         <translation>Datenbankberichte</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+9"/>
+        <source>Statistics</source>
+        <translation>Statistiken</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Database Views</source>
         <translation>Datenbank ansichten</translation>
     </message>
@@ -939,22 +944,22 @@ Bild - Artikel Nr: %2</translation>
         <translation>Eintrag öffnen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Create entry</source>
         <translation>Eintrag erstellen</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Copy Article Id</source>
         <translation>Artikelnummer kopieren</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Add Article to opened Order</source>
         <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Update</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -1863,32 +1868,32 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CustomersTableView</name>
     <message>
-        <location filename="../tabs/customers/customerstableview.cpp" line="+56"/>
+        <location filename="../tabs/customers/customerstableview.cpp" line="+55"/>
         <source>Edit selected Customer</source>
         <translation>Ausgewählten Kunden bearbeiten</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Create new Customer</source>
         <translation>Neuen Kunden anlegen</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Delete selected Customer</source>
         <translation>Ausgewählten Kunden löschen</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Copy Customer Id</source>
         <translation>Kundennummer kopieren</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>New Order for selected Customer</source>
         <translation>Bestellung für ausgewählten Kunden erstellen</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Reload</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -4045,22 +4050,22 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>OrdersTableView</name>
     <message>
-        <location filename="../tabs/orders/orderstableview.cpp" line="+54"/>
+        <location filename="../tabs/orders/orderstableview.cpp" line="+53"/>
         <source>Open order</source>
         <translation>Auftrag öffnen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Copy Order Id</source>
         <translation>Auftragnummer kopieren</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>View Customer</source>
         <translation>Kunde anzeigen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Reload</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -4301,6 +4306,14 @@ Bild - Artikel Nr: %2</translation>
         <location line="+6"/>
         <source>delivery note number is empty!</source>
         <translation>Lieferscheinnummer fehlt!</translation>
+    </message>
+</context>
+<context>
+    <name>PaymentsInYear</name>
+    <message>
+        <location filename="../tabs/statistics/paymentsinyear.cpp" line="+46"/>
+        <source>Payments in Year %1.</source>
+        <translation>Einkäufe aus dem Jahr %1.</translation>
     </message>
 </context>
 <context>
@@ -5852,6 +5865,14 @@ Bild - Artikel Nr: %2</translation>
         <location line="+3"/>
         <source>Default view</source>
         <translation>Standardansicht</translation>
+    </message>
+</context>
+<context>
+    <name>TabStatistics</name>
+    <message>
+        <location filename="../tabs/statistics/tabstatistics.cpp" line="+12"/>
+        <source>Statistics</source>
+        <translation>Statistiken</translation>
     </message>
 </context>
 <context>
