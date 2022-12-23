@@ -7,6 +7,7 @@
 
 #include <AGlobal>
 #include <QRegExp>
+#include <QTime>
 #include <QString>
 
 namespace AntiquaCRM {

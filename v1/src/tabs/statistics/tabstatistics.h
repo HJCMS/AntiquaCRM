@@ -7,23 +7,24 @@
 
 #include <AntiquaWidgets>
 #include <QObject>
-#include <QScrollArea>
+#include <QDate>
+#include <QWidget>
 
 class TabStatistics final : public Inventory {
   Q_OBJECT
 
 private:
   bool firstview = false;
-  QScrollArea *m_centralWidget;
 
 private Q_SLOTS:
+  void openPaymentsInYear(const QDate &d);
   void popupWarningTabInEditMode() override;
   void setDefaultTableView() override;
 
 public Q_SLOTS:
   void openStartPage() override;
   void createSearchQuery(const QString &query = QString()) override;
-  void createNewEntry() override;
+  void createNewEntry() override{/* unused */};
   void openEntry(qint64 statsId) override;
   void onEnterChanged() override;
 

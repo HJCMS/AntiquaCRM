@@ -189,3 +189,7 @@
 #include "yearedit.h"
 #endif
 
+#ifndef ANTIQUACRM_YEARSELECT_H
+#include "yearselect.h"
+#endif
+

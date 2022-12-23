@@ -52,7 +52,7 @@
     <message>
         <location line="+5"/>
         <source>Open Database connection.</source>
-        <translation>Öffnen die Datenbankverbindung.</translation>
+        <translation>Öffne die Datenbankverbindung.</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -2564,7 +2564,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location filename="../utils/imgedit/imageselecter.cpp" line="+24"/>
         <source>Image Library</source>
-        <translation>Bildbibliothek</translation>
+        <translation>Bilder Ordner</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2574,7 +2574,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+19"/>
         <source>Open Image Library</source>
-        <translation>Öffnen der Bildbibliothek</translation>
+        <translation>Öffnen der Bildverzeichnis</translation>
     </message>
 </context>
 <context>
@@ -4311,9 +4311,14 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PaymentsInYear</name>
     <message>
-        <location filename="../tabs/statistics/paymentsinyear.cpp" line="+46"/>
-        <source>Payments in Year %1.</source>
-        <translation>Einkäufe aus dem Jahr %1.</translation>
+        <location filename="../tabs/statistics/paymentsinyear.cpp" line="+57"/>
+        <source>Orders in Year %1.</source>
+        <translation>Bestellungen im Jahr %1.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Orders</source>
+        <translation>Bestellungen</translation>
     </message>
 </context>
 <context>
@@ -5870,7 +5875,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TabStatistics</name>
     <message>
-        <location filename="../tabs/statistics/tabstatistics.cpp" line="+12"/>
+        <location filename="../tabs/statistics/tabstatistics.cpp" line="+14"/>
         <source>Statistics</source>
         <translation>Statistiken</translation>
     </message>
@@ -6102,6 +6107,30 @@ Bild - Artikel Nr: %2</translation>
         <location line="+55"/>
         <source>Year must contain a valid entry, it can not lie in the future.</source>
         <translation>Das Jahr muss einen gültigen Eintrag enthalten, es darf nicht in der Zukunft liegen.</translation>
+    </message>
+</context>
+<context>
+    <name>YearSelect</name>
+    <message>
+        <location filename="../widgets/yearselect.cpp" line="+10"/>
+        <source>Select Year</source>
+        <translation>Wähle Jahr</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Open</source>
+        <translation>Öffne</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+26"/>
+        <source>Open Year</source>
+        <translation>Öffne Jahr</translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>Invalid Year selection.</source>
+        <translation>Ungültiges Jahr.</translation>
     </message>
 </context>
 </TS>

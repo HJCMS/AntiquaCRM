@@ -4309,8 +4309,13 @@ Image - Article Id: %2</source>
 <context>
     <name>PaymentsInYear</name>
     <message>
-        <location filename="../tabs/statistics/paymentsinyear.cpp" line="+46"/>
-        <source>Payments in Year %1.</source>
+        <location filename="../tabs/statistics/paymentsinyear.cpp" line="+57"/>
+        <source>Orders in Year %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5868,7 +5873,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TabStatistics</name>
     <message>
-        <location filename="../tabs/statistics/tabstatistics.cpp" line="+12"/>
+        <location filename="../tabs/statistics/tabstatistics.cpp" line="+14"/>
         <source>Statistics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6099,6 +6104,30 @@ Image - Article Id: %2</source>
     <message>
         <location line="+55"/>
         <source>Year must contain a valid entry, it can not lie in the future.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>YearSelect</name>
+    <message>
+        <location filename="../widgets/yearselect.cpp" line="+10"/>
+        <source>Select Year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+26"/>
+        <source>Open Year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>Invalid Year selection.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

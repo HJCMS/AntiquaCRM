@@ -78,6 +78,7 @@ SET (projectLibrary_SOURCES
  textfield.cpp
  trustedbox.cpp
  yearedit.cpp
+ yearselect.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -133,6 +134,7 @@ SET (projectLibrary_HEADERS
  textfield.h
  trustedbox.h
  yearedit.h
+ yearselect.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

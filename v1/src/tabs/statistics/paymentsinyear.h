@@ -5,15 +5,21 @@
 #ifndef ANTIQUACRM_PAYMENTSINYEAR_H
 #define ANTIQUACRM_PAYMENTSINYEAR_H
 
+#include <AGlobal>
 #include <QDate>
 #include <QObject>
 #include <QWidget>
+
+class CountAxis;
+class YearAxis;
 
 class PaymentsInYear final : public QWidget {
   Q_OBJECT
 
 private:
   const QDate p_date;
+  YearAxis *m_axisYear;
+  CountAxis *m_axisCount;
 
 public:
   explicit PaymentsInYear(const QDate &date, QWidget *parent = nullptr);
