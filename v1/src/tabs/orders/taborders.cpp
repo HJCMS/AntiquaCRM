@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "taborders.h"
+#include "orderscustomsearch.h"
 #include "orderseditor.h"
 #include "ordersreturning.h"
 #include "orderssearchbar.h"
@@ -55,6 +56,8 @@ TabOrders::TabOrders(QWidget *parent) : Inventory{"orders_tab", parent} {
           SLOT(setFilterFocus()));
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
   connect(m_searchBar, SIGNAL(sendRestoreView()), SLOT(setDefaultTableView()));
+  connect(m_searchBar, SIGNAL(sendOpenCustomSearch()),
+          SLOT(openCustomSearchDialog()));
 
   // Signals::OrdersTableView
   connect(m_table, SIGNAL(sendQueryReport(const QString &)), m_statusBar,
@@ -89,6 +92,17 @@ void TabOrders::popupWarningTabInEditMode() {
   info.append(tr("Please save and close opened orders first."));
   info.append("</p>");
   QMessageBox::information(this, tr("Ordereditor"), info);
+}
+
+void TabOrders::openCustomSearchDialog() {
+  OrdersCustomSearch *d = new OrdersCustomSearch(this);
+  if (d->exec() == QDialog::Accepted) {
+    QString query = d->customQuery();
+    if (!query.isEmpty()) {
+      createSearchQuery(query);
+    }
+  }
+  d->deleteLater();
 }
 
 void TabOrders::setDefaultTableView() {

@@ -19,7 +19,6 @@ private:
   AntiquaComboBox *m_selectFilter;
   SearchLineEdit *m_lineEdit;
   QPushButton *m_searchBtn;
-  QPushButton *m_restoreView;
   AntiquaCRM::OrderStatus currentStatus;
 
 public Q_SLOTS:

@@ -25,22 +25,23 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent) : TabSearchBar{parent} {
   m_lineEdit->setValidation(SearchLineEdit::Strings);
   addWidget(m_lineEdit);
 
-  m_searchBtn = startSearchButton(tr("Search"));
+  m_searchBtn = startSearchButton();
   m_searchBtn->setToolTip(tr("Input search"));
   addWidget(m_searchBtn);
 
   addSeparator();
 
-  m_restoreView = defaultViewButton();
-  m_restoreView->setToolTip(tr("Current orders in progress to delivered."));
-  addWidget(m_restoreView);
+  addWidget(defaultViewButton());
+
+  addSeparator();
+
+  addWidget(customSearchButton(tr("History")));
 
   connect(m_selectFilter, SIGNAL(currentIndexChanged(int)),
           SLOT(setFilter(int)));
   connect(m_lineEdit, SIGNAL(returnPressed()), SLOT(setSearch()));
   connect(m_lineEdit, SIGNAL(returnPressed()), SLOT(setSearch()));
   connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
-  connect(m_restoreView, SIGNAL(clicked()), SIGNAL(sendRestoreView()));
 
   m_selectFilter->setCurrentIndex(1);
 }

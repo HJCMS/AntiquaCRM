@@ -23,14 +23,12 @@ CustomersSearchBar::CustomersSearchBar(QWidget *parent) : TabSearchBar{parent} {
 
   addSeparator();
 
-  m_restoreView = defaultViewButton();
-  addWidget(m_restoreView);
+  addWidget(defaultViewButton());
 
   connect(m_selectFilter, SIGNAL(currentIndexChanged(int)),
           SLOT(setFilter(int)));
   connect(m_searchEdit, SIGNAL(returnPressed()), SLOT(setSearch()));
   connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
-  connect(m_restoreView, SIGNAL(clicked()), SIGNAL(sendRestoreView()));
 }
 
 void CustomersSearchBar::setSearch() {

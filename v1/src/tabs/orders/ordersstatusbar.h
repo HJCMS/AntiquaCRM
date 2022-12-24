@@ -7,6 +7,7 @@
 
 #include <AntiquaCRM>
 #include <AntiquaWidgets>
+#include <QDate>
 #include <QObject>
 #include <QWidget>
 
@@ -17,7 +18,7 @@ class OrdersStatusBar final : public TabStatusBar {
 
 private:
   OrdersHistoryButton *btn_history;
-  void setHistoryMenu() override {};
+  void setHistoryMenu() override{};
 
 private Q_SLOTS:
   void setHistoryAction(int) override;
@@ -27,6 +28,7 @@ Q_SIGNALS:
 
 public:
   explicit OrdersStatusBar(QWidget *parent = nullptr);
+  static const QString searchYear(int y = QDate::currentDate().year());
 };
 
 #endif // ANTIQUACRM_ORDERSSTATUSBAR_H

@@ -25,9 +25,11 @@ public:
     FILTER_NOT_PAID = 1,
     FILTER_DELIVERED_NOT_PAID = 2,
     FILTER_PAYMENT_REMINDED = 3,
-    FILTER_COMPLETED = 4
+    FILTER_COMPLETED = 4,
+    FILTER_CANCELED = 5
   };
   explicit OrdersHistoryButton(QWidget *parent = nullptr);
+  static const QMap<OrdersHistoryButton::HistoryQuery,QString> entries();
 
 private:
   /**
@@ -60,12 +62,18 @@ private:
    */
   QAction *ac_remindet;
 
+  /**
+   * @brief Aufträge mit Storniert wurden
+   */
+  QAction *ac_canceled;
+
 private Q_SLOTS:
   void setDefaultView();
   void setQueryClosedOrders();
   void setQueryNoPayments();
   void setQueryDelivered();
   void setQueryRemindet();
+  void setQueryCanceled();
 
 Q_SIGNALS:
   void sendDefaultView();

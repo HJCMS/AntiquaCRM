@@ -24,11 +24,16 @@ OrdersHistoryButton::OrdersHistoryButton(QWidget *parent)
   ac_delivered = m_menu->addAction(ico, tr("Delivered and not payed."));
   ac_delivered->setStatusTip(tr("Delivered and waiting for payment."));
   /** OrdersHistoryButton::FILTER_PAYMENT_REMINDED */
-  ac_remindet = m_menu->addAction(ico, tr("Reminded, admonished - Payment Collection."));
-  ac_remindet->setStatusTip(tr("Without payment with reminder or Payment Collection."));
+  ac_remindet =
+      m_menu->addAction(ico, tr("Reminded, admonished - Payment Collection."));
+  ac_remindet->setStatusTip(
+      tr("Without payment with reminder or Payment Collection."));
   /** OrdersHistoryButton::FILTER_COMPLETED */
   ac_hasClosed = m_menu->addAction(ico, tr("Completed orders."));
   ac_hasClosed->setStatusTip(tr("Completed orders from this Year."));
+  /** OrdersHistoryButton::FILTER_CANCELED */
+  ac_canceled = m_menu->addAction(ico, tr("Canceled orders."));
+  ac_canceled->setStatusTip(tr("Canceled orders from this Year."));
   setMenu(m_menu);
 
   connect(ac_default, SIGNAL(triggered()), SLOT(setDefaultView()));
@@ -36,6 +41,7 @@ OrdersHistoryButton::OrdersHistoryButton(QWidget *parent)
   connect(ac_delivered, SIGNAL(triggered()), SLOT(setQueryDelivered()));
   connect(ac_remindet, SIGNAL(triggered()), SLOT(setQueryRemindet()));
   connect(ac_hasClosed, SIGNAL(triggered()), SLOT(setQueryClosedOrders()));
+  connect(ac_canceled, SIGNAL(triggered()), SLOT(setQueryCanceled()));
 }
 
 void OrdersHistoryButton::setDefaultView() {
@@ -56,4 +62,22 @@ void OrdersHistoryButton::setQueryRemindet() {
 
 void OrdersHistoryButton::setQueryClosedOrders() {
   emit sendHistoryAction(OrdersHistoryButton::FILTER_COMPLETED);
+}
+
+void OrdersHistoryButton::setQueryCanceled() {
+  emit sendHistoryAction(OrdersHistoryButton::FILTER_CANCELED);
+}
+
+const QMap<OrdersHistoryButton::HistoryQuery, QString>
+OrdersHistoryButton::entries() {
+  QMap<OrdersHistoryButton::HistoryQuery, QString> m;
+  m.insert(OrdersHistoryButton::FILTER_DEFAULT, tr("Default view"));
+  m.insert(OrdersHistoryButton::FILTER_NOT_PAID, tr("Orders without payment."));
+  m.insert(OrdersHistoryButton::FILTER_DELIVERED_NOT_PAID,
+           tr("Delivered and not payed."));
+  m.insert(OrdersHistoryButton::FILTER_PAYMENT_REMINDED,
+           tr("Reminded, admonished - Payment Collection."));
+  m.insert(OrdersHistoryButton::FILTER_COMPLETED, tr("Completed orders."));
+  m.insert(OrdersHistoryButton::FILTER_CANCELED, tr("Canceled orders."));
+  return m;
 }

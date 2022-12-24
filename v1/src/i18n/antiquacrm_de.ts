@@ -809,7 +809,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Suche Buch</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+68"/>
         <location line="+80"/>
         <source>Keyword</source>
         <translation>Schlüsselwort</translation>
@@ -1721,7 +1721,7 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location line="+40"/>
+        <location line="+38"/>
         <source>Search customer</source>
         <translation>Suche Kunde</translation>
     </message>
@@ -3598,6 +3598,19 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>OrdersCustomSearch</name>
+    <message>
+        <location filename="../tabs/orders/orderscustomsearch.cpp" line="+12"/>
+        <source>History queries</source>
+        <translation>Verlaufsabfragen</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Year %1</source>
+        <translation>Jahr %1</translation>
+    </message>
+</context>
+<context>
     <name>OrdersCustomerInfo</name>
     <message>
         <location filename="../tabs/orders/orderscustomerinfo.cpp" line="+19"/>
@@ -3776,53 +3789,69 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+5"/>
+        <location line="+56"/>
         <source>Default view</source>
         <translation>Standardansicht</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-55"/>
         <source>Current orders in progress to delivered.</source>
         <translation>Aktuelle Bestellungen in Bearbeitung bis geliefert.</translation>
     </message>
     <message>
         <location line="+2"/>
+        <location line="+54"/>
         <source>Orders without payment.</source>
         <translation>Bestellungen ohne Bezahlung.</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-53"/>
         <source>Current orders without a payment.</source>
         <translation>Laufende Bestellungen ohne Zahlung.</translation>
     </message>
     <message>
         <location line="+2"/>
+        <location line="+53"/>
         <source>Delivered and not payed.</source>
         <translation>Geliefert nicht Bezahlt.</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-52"/>
         <source>Delivered and waiting for payment.</source>
         <translation>Geliefert und warte auf Zahlung.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
+        <location line="+51"/>
         <source>Reminded, admonished - Payment Collection.</source>
         <translation>Erinnert, ermahnt - Inkasso.</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-49"/>
         <source>Without payment with reminder or Payment Collection.</source>
         <translation>Ohne Zahlung mit Erinnerung/Mahnung oder Inkasso.</translation>
     </message>
     <message>
         <location line="+2"/>
+        <location line="+48"/>
         <source>Completed orders.</source>
         <translation>Abgeschlossene Aufträge.</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-47"/>
         <source>Completed orders from this Year.</source>
         <translation>Abgeschlossene Bestellungen aus diesem Jahr.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+46"/>
+        <source>Canceled orders.</source>
+        <translation>Stornierte Bestellungen.</translation>
+    </message>
+    <message>
+        <location line="-45"/>
+        <source>Canceled orders from this Year.</source>
+        <translation>Stornierte Bestellungen aus diesem Jahr.</translation>
     </message>
 </context>
 <context>
@@ -3861,22 +3890,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Search</source>
-        <translation>Suche</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+8"/>
         <source>Input search</source>
         <translation>Sucheingabe</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Current orders in progress to delivered.</source>
-        <translation>Aktuelle Bestellungen in Bearbeitung bis geliefert.</translation>
+        <location line="+9"/>
+        <source>History</source>
+        <translation>Verlauf</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+34"/>
         <source>Search for %1</source>
         <translation>Suche nach %1</translation>
     </message>
@@ -5771,12 +5795,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TabOrders</name>
     <message>
-        <location filename="../tabs/orders/taborders.cpp" line="+21"/>
+        <location filename="../tabs/orders/taborders.cpp" line="+22"/>
         <source>Orders</source>
         <translation>Aufträge</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+66"/>
         <source>Cannot open Order Editor!</source>
         <translation>Bestelleditor kann nicht geöffnet werden!</translation>
     </message>
@@ -5791,7 +5815,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bitte speichern und schließen Sie zuerst den geöffneten Auftrag.</translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+76"/>
         <location line="+30"/>
         <location line="+10"/>
         <source>Some arguments missing for a new Order!</source>
@@ -5808,7 +5832,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Artikel kann nicht hinzugefügt werden, wenn kein Auftrag geöffnet ist!</translation>
     </message>
     <message>
-        <location line="-72"/>
+        <location line="-83"/>
         <source>Ordereditor</source>
         <translation>Auftragseditor</translation>
     </message>
@@ -5852,7 +5876,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TabSearchBar</name>
     <message>
-        <location filename="../widgets/tabsearchbar.cpp" line="+18"/>
+        <location filename="../widgets/tabsearchbar.cpp" line="+19"/>
         <source>Push to start search.</source>
         <translation>Drücken, um die Suche zu starten.</translation>
     </message>
@@ -5870,6 +5894,16 @@ Bild - Artikel Nr: %2</translation>
         <location line="+3"/>
         <source>Default view</source>
         <translation>Standardansicht</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Click to open Dialog for custom queries.</source>
+        <translation>Klicken Sie hier, um den Dialog für benutzerdefinierte Abfragen zu öffnen.</translation>
+    </message>
+    <message>
+        <location line="-1"/>
+        <source>Custom queries</source>
+        <translation>Benutzerdefinierte abfragen</translation>
     </message>
 </context>
 <context>

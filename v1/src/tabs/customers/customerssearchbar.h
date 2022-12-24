@@ -19,7 +19,6 @@ private:
   CustomersSelectFilter *m_selectFilter;
   SearchLineEdit *m_searchEdit;
   QPushButton *m_searchBtn;
-  QPushButton *m_restoreView;
 
 protected Q_SLOTS:
   void setSearch() override;

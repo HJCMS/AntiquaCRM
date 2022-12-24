@@ -32,6 +32,9 @@ private:
 
   void popupWarningTabInEditMode() override;
 
+private Q_SLOTS:
+  void openCustomSearchDialog();
+
 public Q_SLOTS:
   void setDefaultTableView() override;
   void openStartPage() override;

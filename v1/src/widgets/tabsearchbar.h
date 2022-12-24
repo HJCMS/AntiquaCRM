@@ -33,6 +33,11 @@ protected:
    */
   QPushButton *defaultViewButton(const QString &text = QString());
 
+  /**
+   * @brief Predefined Search button
+   */
+  QPushButton *customSearchButton(const QString &text = QString());
+
 protected Q_SLOTS:
   virtual void setSearch() = 0;
   virtual void setFilter(int) = 0;
@@ -53,8 +58,15 @@ Q_SIGNALS:
 
   /**
    * @brief Send restore to Default View!
+   * This is emitted by @ref defaultViewButton()
    */
   void sendRestoreView();
+
+  /**
+   * @brief Send to Open a Custom Search Dialog
+   * This is emitted by @ref customSearchButton()
+   */
+  void sendOpenCustomSearch();
 
 public:
   explicit TabSearchBar(QWidget *parent = nullptr);

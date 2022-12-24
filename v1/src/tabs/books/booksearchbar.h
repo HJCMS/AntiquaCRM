@@ -23,7 +23,6 @@ private:
   BookSearchLine *m_searchLeft;
   BookSearchLine *m_searchRight;
   QPushButton *m_searchBtn;
-  QPushButton *m_restoreView;
 
   const QString prepareFieldSet(const QString &fieldname,
                                 const QString &search) const;
