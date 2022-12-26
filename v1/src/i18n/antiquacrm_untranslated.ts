@@ -3372,19 +3372,9 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
-    <name>OrderPaymentStatusSelecter</name>
+    <name>OrderPaymentStatusModel</name>
     <message>
         <location filename="../widgets/orderpaymentstatusselecter.cpp" line="+22"/>
-        <source>Not paid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>This order is currently not paid!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
         <source>Payed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3394,7 +3384,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Remindet</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3404,7 +3394,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Admonished</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3414,27 +3404,40 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Returning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Returning Process</source>
+        <source>Returning Process (Read Only)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Collection procedures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>A Payment Collection procedure is done</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+6"/>
+        <source>Not paid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>This order is currently not paid!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OrderPaymentStatusSelecter</name>
+    <message>
+        <location line="+146"/>
         <source>a Payment status is required.</source>
         <translation type="unfinished"></translation>
     </message>

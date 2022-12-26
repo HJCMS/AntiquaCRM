@@ -7,6 +7,42 @@
 
 #include <AGlobal>
 #include <AntiquaInputEdit>
+#include <QAbstractItemModel>
+#include <QIcon>
+#include <QObject>
+
+class OrderPaymentStatusModel final : public QAbstractItemModel {
+  Q_OBJECT
+
+private:
+  struct StatusItem {
+    AntiquaCRM::OrderPayment status;
+    QString title;
+    QString toolTip;
+    QIcon decoration;
+  };
+  QList<StatusItem> statusList;
+  StatusItem createItem(AntiquaCRM::OrderPayment);
+  QVariant getRoleData(const StatusItem &item,
+                       int role = Qt::DisplayRole) const;
+
+public:
+  explicit OrderPaymentStatusModel(QWidget *parent = nullptr);
+
+  QModelIndex parent(const QModelIndex &index) const override;
+
+  QModelIndex index(int row, int column,
+                    const QModelIndex &parent = QModelIndex()) const override;
+
+  int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+
+  int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+
+  QVariant data(const QModelIndex &index,
+                int role = Qt::DisplayRole) const override;
+
+  Qt::ItemFlags flags(const QModelIndex &index) const override;
+};
 
 class OrderPaymentStatusSelecter final : public InputEdit {
   Q_OBJECT

@@ -3374,19 +3374,9 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
-    <name>OrderPaymentStatusSelecter</name>
+    <name>OrderPaymentStatusModel</name>
     <message>
         <location filename="../widgets/orderpaymentstatusselecter.cpp" line="+22"/>
-        <source>Not paid</source>
-        <translation>Nicht bezahlt</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>This order is currently not paid!</source>
-        <translation>Diese Bestellung wurde noch nicht bezahlt!</translation>
-    </message>
-    <message>
-        <location line="+4"/>
         <source>Payed</source>
         <translation>Bezahlt</translation>
     </message>
@@ -3396,7 +3386,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bestellung ist komplett Bezahlt!</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>Remindet</source>
         <translation>Zahlungserinnerung</translation>
     </message>
@@ -3406,7 +3396,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Dem Kunde wurde eine Zahlungserinnerung übermittelt.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Admonished</source>
         <translation>Abgemahnt</translation>
     </message>
@@ -3416,27 +3406,40 @@ Bild - Artikel Nr: %2</translation>
         <translation>Dem Kunde wurde eine Mahnung zusgesendet!</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Returning</source>
         <translation>Rücklauf</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Returning Process</source>
-        <translation>Rückgabeprozess</translation>
+        <source>Returning Process (Read Only)</source>
+        <translation>Rückgabeprozess (Schreibgeschützt)</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Collection procedures</source>
         <translation>Inkassoverfahren</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>A Payment Collection procedure is done</source>
         <translation>Es wird ein Zahlungseinzugsverfahren durchgeführt</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+6"/>
+        <source>Not paid</source>
+        <translation>Nicht bezahlt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>This order is currently not paid!</source>
+        <translation>Diese Bestellung wurde noch nicht bezahlt!</translation>
+    </message>
+</context>
+<context>
+    <name>OrderPaymentStatusSelecter</name>
+    <message>
+        <location line="+146"/>
         <source>a Payment status is required.</source>
         <translation>Ein Zahlungsstatus ist erforderlich.</translation>
     </message>
