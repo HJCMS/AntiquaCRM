@@ -10,10 +10,16 @@ SET (subproject_LINKER
 
 SET (subproject_SOURCES
  returnorder.cpp
+ returninfowidget.cpp
+ returnedit.cpp
+ returnnavigation.cpp
 )
 
 SET (subproject_HEADERS
  returnorder.h
+ returninfowidget.h
+ returnedit.h
+ returnnavigation.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

@@ -2,28 +2,39 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef STORAGE_RETURNORDER_H
-#define STORAGE_RETURNORDER_H
+#ifndef RETURN_ORDER_H
+#define RETURN_ORDER_H
 
 #include <AntiquaCRM>
 #include <QDialog>
-#include <QDialogButtonBox>
+#include <QStackedWidget>
+#include <QStatusBar>
 #include <QWidget>
+
+class ReturnInfoWidget;
+class ReturnEdit;
+class ReturnNavigation;
 
 class ReturnOrder final : public QDialog {
   Q_OBJECT
 
 private:
   AntiquaCRM::ASqlCore *m_sql;
-  QWidget *m_main;
-  QDialogButtonBox *m_btnBox;
+  QStackedWidget *m_stackedWidget;
+  ReturnInfoWidget *m_info;
+  ReturnEdit *m_medit;
+  ReturnNavigation *m_btnBox;
+  QStatusBar *m_statusBar;
+  bool initData(qint64 orderId);
 
-  void initData(qint64 orderId);
+private Q_SLOTS:
+  void setEditPage();
+  void save();
 
 public:
   explicit ReturnOrder(QWidget *parent = nullptr);
   int exec() override;
-  int exec(qint64 orderId = -1);
+  int exec(qint64 orderId);
 };
 
-#endif // STORAGE_RETURNORDER_H
+#endif // RETURN_ORDER_H

@@ -27,6 +27,7 @@ private:
   void contextMenuEvent(QContextMenuEvent *) override;
 
 private Q_SLOTS:
+  void createOrderReturning();
   void setSortByColumn(int column, Qt::SortOrder order) override;
   void getSelectedItem(const QModelIndex &index) override;
   void createOpenEntry() override;

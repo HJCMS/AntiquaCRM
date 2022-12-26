@@ -3,6 +3,7 @@
 
 #include "orderstableview.h"
 #include "orderstablemodel.h"
+#include "returnorder.h"
 
 #include <QMenu>
 
@@ -58,16 +59,33 @@ void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
   ac_copy->setEnabled(enable_action);
   connect(ac_copy, SIGNAL(triggered()), SLOT(createCopyClipboard()));
 
-  QAction *ac_customer = m->addAction(cellIcon("user_group"),
-                                      tr("View Customer"));
+  QAction *ac_customer =
+      m->addAction(cellIcon("user_group"), tr("View Customer"));
   ac_customer->setEnabled(enable_action);
   connect(ac_customer, SIGNAL(triggered()), SLOT(createSocketOperation()));
+
+  QAction *ac_returning =
+      m->addAction(cellIcon("action_undo"), tr("Returning"));
+  ac_returning->setEnabled(enable_action);
+  connect(ac_returning, SIGNAL(triggered()), SLOT(createOrderReturning()));
 
   QAction *ac_refresh = m->addAction(cellIcon("action_reload"), tr("Reload"));
   connect(ac_refresh, SIGNAL(triggered()), SLOT(setReloadView()));
 
   m->exec(event->globalPos());
   delete m;
+}
+
+void OrdersTableView::createOrderReturning() {
+  qint64 oid = getTableID(p_modelIndex);
+  if (oid < 1)
+    return;
+
+  ReturnOrder *d = new ReturnOrder(this);
+  if (d->exec(oid) == QDialog::Accepted) {
+    qDebug() << Q_FUNC_INFO << "TODO";
+  }
+  d->deleteLater();
 }
 
 void OrdersTableView::setSortByColumn(int column, Qt::SortOrder order) {

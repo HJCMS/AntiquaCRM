@@ -3374,7 +3374,7 @@ Image - Article Id: %2</source>
 <context>
     <name>OrderPaymentStatusModel</name>
     <message>
-        <location filename="../widgets/orderpaymentstatusselecter.cpp" line="+22"/>
+        <location filename="../widgets/orderpaymentstatusselecter.cpp" line="+25"/>
         <source>Payed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3437,7 +3437,7 @@ Image - Article Id: %2</source>
 <context>
     <name>OrderPaymentStatusSelecter</name>
     <message>
-        <location line="+146"/>
+        <location line="+154"/>
         <source>a Payment status is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4075,7 +4075,7 @@ Image - Article Id: %2</source>
 <context>
     <name>OrdersTableView</name>
     <message>
-        <location filename="../tabs/orders/orderstableview.cpp" line="+53"/>
+        <location filename="../tabs/orders/orderstableview.cpp" line="+54"/>
         <source>Open order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4087,6 +4087,11 @@ Image - Article Id: %2</source>
     <message>
         <location line="+5"/>
         <source>View Customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Returning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5453,6 +5458,52 @@ Image - Article Id: %2</source>
     <message>
         <location filename="../tabs/reports/reportsactiongroup.cpp" line="+17"/>
         <source>Monthly report</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ReturnInfoWidget</name>
+    <message>
+        <location filename="../utils/returnorder/returninfowidget.cpp" line="+22"/>
+        <source>Some notices</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>A return is only necessary if the order was already settled in the previous month!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>If the order is not paid or settled, a simple cancellation is sufficient!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>The return will be booked back in the current month, the statement from the previous month will not be changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Before you continue, please make sure that this order has already been booked!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>If you are sure, you can continue now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>further</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ReturnOrder</name>
+    <message>
+        <location filename="../utils/returnorder/returnorder.cpp" line="+17"/>
+        <source>Dialog to create a return!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

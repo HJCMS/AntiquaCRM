@@ -3376,7 +3376,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>OrderPaymentStatusModel</name>
     <message>
-        <location filename="../widgets/orderpaymentstatusselecter.cpp" line="+22"/>
+        <location filename="../widgets/orderpaymentstatusselecter.cpp" line="+25"/>
         <source>Payed</source>
         <translation>Bezahlt</translation>
     </message>
@@ -3439,7 +3439,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>OrderPaymentStatusSelecter</name>
     <message>
-        <location line="+146"/>
+        <location line="+154"/>
         <source>a Payment status is required.</source>
         <translation>Ein Zahlungsstatus ist erforderlich.</translation>
     </message>
@@ -4077,7 +4077,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>OrdersTableView</name>
     <message>
-        <location filename="../tabs/orders/orderstableview.cpp" line="+53"/>
+        <location filename="../tabs/orders/orderstableview.cpp" line="+54"/>
         <source>Open order</source>
         <translation>Auftrag öffnen</translation>
     </message>
@@ -4090,6 +4090,11 @@ Bild - Artikel Nr: %2</translation>
         <location line="+5"/>
         <source>View Customer</source>
         <translation>Kunde anzeigen</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Returning</source>
+        <translation>Rücklauf</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5456,6 +5461,52 @@ Bild - Artikel Nr: %2</translation>
         <location filename="../tabs/reports/reportsactiongroup.cpp" line="+17"/>
         <source>Monthly report</source>
         <translation>Monatsbericht</translation>
+    </message>
+</context>
+<context>
+    <name>ReturnInfoWidget</name>
+    <message>
+        <location filename="../utils/returnorder/returninfowidget.cpp" line="+22"/>
+        <source>Some notices</source>
+        <translation>Einige Hinweise</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>A return is only necessary if the order was already settled in the previous month!</source>
+        <translation>Eine Rücksendung ist nur Notwendig wenn die Bestellung im Vormonat bereits abgerechnet wurde!</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>If the order is not paid or settled, a simple cancellation is sufficient!</source>
+        <translation>Ist die Bestellung noch nicht bezahlt oder Abgerechnet, reicht eine einfache Stornierung völlig aus!</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>The return will be booked back in the current month, the statement from the previous month will not be changed.</source>
+        <translation>Die Rücksendung wird im aktuellen Monat zurückgebucht, die Abrechnung des vergangenen Monats wird nicht verändert.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Before you continue, please make sure that this order has already been booked!</source>
+        <translation>Bevor Sie fortfahren, stellen sie Bitte sicher das diese Bestellung bereist Verbucht wurde!</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>If you are sure, you can continue now.</source>
+        <translation>Wenn sie sich sicher sind können Sie jetzt fortfahren.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>further</source>
+        <translation>Weiter</translation>
+    </message>
+</context>
+<context>
+    <name>ReturnOrder</name>
+    <message>
+        <location filename="../utils/returnorder/returnorder.cpp" line="+17"/>
+        <source>Dialog to create a return!</source>
+        <translation>Dialog zum erstellen einer Rücksendung!</translation>
     </message>
 </context>
 <context>

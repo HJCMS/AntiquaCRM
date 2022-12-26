@@ -15,6 +15,7 @@ SET (projectLibrary_LINKER
  AntiquaPurchaseTable
  AntiquaMailing
  AntiquaPrinting
+ AntiquaReturnOrder
 )
 
 SET (projectLibrary_SOURCES
