@@ -64,8 +64,8 @@ void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
   ac_customer->setEnabled(enable_action);
   connect(ac_customer, SIGNAL(triggered()), SLOT(createSocketOperation()));
 
-  QAction *ac_returning =
-      m->addAction(cellIcon("action_undo"), tr("Returning"));
+  QAction *ac_returning = m->addAction(cellIcon("action_undo"),
+                                       tr("Create a return from this order."));
   ac_returning->setEnabled(enable_action);
   connect(ac_returning, SIGNAL(triggered()), SLOT(createOrderReturning()));
 

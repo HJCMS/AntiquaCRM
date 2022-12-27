@@ -13,7 +13,7 @@
 
 ReturnOrder::ReturnOrder(QWidget *parent) : QDialog{parent} {
   setSizeGripEnabled(true);
-  setMinimumSize(450, 300);
+  setMinimumSize(600, 300);
   setWindowTitle(tr("Dialog to create a return!") + "[*]");
   setWindowIcon(QIcon("://icons/action_undo.png"));
 
@@ -38,9 +38,14 @@ ReturnOrder::ReturnOrder(QWidget *parent) : QDialog{parent} {
   layout->setStretch(0, 1);
   setLayout(layout);
 
-  connect(m_info, SIGNAL(sendConfirm()), SLOT(setEditPage()));
-  connect(m_btnBox, SIGNAL(sendSave()), SLOT(save()));
+  connect(m_info, SIGNAL(sendConfirm()), SLOT(setStep1()));
+  connect(m_medit, SIGNAL(sendPaymentIds(const QStringList &)),
+          SLOT(setStep2(const QStringList &)));
+
+  connect(m_btnBox, SIGNAL(sendSave()), SLOT(setFinal()));
   connect(m_btnBox, SIGNAL(rejected()), SLOT(reject()));
+  connect(m_medit, SIGNAL(sendMessage(const QString &)), m_statusBar,
+          SLOT(showMessage(const QString &)));
 }
 
 bool ReturnOrder::initData(qint64 orderId) {
@@ -61,9 +66,14 @@ bool ReturnOrder::initData(qint64 orderId) {
       InputEdit *e = m_medit->findChild<InputEdit *>(f.name());
       if (e != nullptr)
         e->setValue(q.value(f.name()));
-      else
-        qDebug() << f.name() << q.value(f.name());
     }
+  }
+
+  QString sql("SELECT * FROM article_orders WHERE a_order_id=");
+  sql.append(QString::number(orderId) + ";");
+  q = m_sql->query(sql);
+  if (q.size() > 0) {
+    m_medit->loadArticleData(q);
   }
 
 #ifdef ANTIQUA_DEVELOPEMENT
@@ -72,9 +82,20 @@ bool ReturnOrder::initData(qint64 orderId) {
   return true;
 }
 
-void ReturnOrder::setEditPage() { m_stackedWidget->setCurrentIndex(1); }
+void ReturnOrder::setStep1() {
+  // Article selection
+  m_stackedWidget->setCurrentIndex(1);
+}
 
-void ReturnOrder::save() { qDebug() << Q_FUNC_INFO << "TODO"; }
+void ReturnOrder::setStep2(const QStringList &ids) {
+  qDebug() << Q_FUNC_INFO << ids;
+  // m_stackedWidget->setCurrentIndex(2);
+}
+
+void ReturnOrder::setFinal() {
+  qDebug() << Q_FUNC_INFO << "TODO";
+  accept();
+}
 
 int ReturnOrder::exec() {
   qWarning("Don't use this Dialog without OrderID!");

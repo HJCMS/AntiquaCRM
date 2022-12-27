@@ -18,6 +18,19 @@
     </message>
 </context>
 <context>
+    <name>AddressInfo</name>
+    <message>
+        <location filename="../widgets/addressinfo.cpp" line="+13"/>
+        <source>Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>Address is required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AntiquaAppl</name>
     <message>
         <location filename="../antiquaappl.cpp" line="+162"/>
@@ -1115,6 +1128,14 @@ Image - Article Id: %2</source>
     <message>
         <location filename="../plugins/antiquacrm/buchfreund/buchfreund.cpp" line="+86"/>
         <source>Buchfreund response with errors!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ButtonNext</name>
+    <message>
+        <location filename="../utils/returnorder/buttonnext.cpp" line="+14"/>
+        <source>further</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3059,7 +3080,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+82"/>
         <source>is required and can&apos;t empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4091,7 +4112,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+5"/>
-        <source>Returning</source>
+        <source>Create a return from this order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5462,9 +5483,47 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>ReturnEdit</name>
+    <message>
+        <location filename="../utils/returnorder/returnedit.cpp" line="+21"/>
+        <source>Order Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Invoice Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Customer Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Delivery note</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Double click to Article insert payment IDs that were returned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Payment IDs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>No Payment Id has been add!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ReturnInfoWidget</name>
     <message>
-        <location filename="../utils/returnorder/returninfowidget.cpp" line="+22"/>
+        <location filename="../utils/returnorder/returninfowidget.cpp" line="+23"/>
         <source>Some notices</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5485,17 +5544,17 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+2"/>
+        <source>Important: In the case of a return, the article must be reinserted manually.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Before you continue, please make sure that this order has already been booked!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>If you are sure, you can continue now.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>further</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

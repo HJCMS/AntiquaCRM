@@ -189,3 +189,11 @@ const QStringList PurchaseTable::getSqlQuery() {
 
   return queries;
 }
+
+qint64 PurchaseTable::getArticlePaymentId(int row) {
+  if (row >= 0) {
+    QModelIndex pIndex = m_model->index(row, 0);
+    return m_model->data(pIndex, Qt::EditRole).toInt();
+  }
+  return -1;
+}

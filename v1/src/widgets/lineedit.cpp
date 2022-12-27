@@ -95,6 +95,15 @@ void LineEdit::setInfo(const QString &info) {
   m_edit->setToolTip(info);
 }
 
+void LineEdit::setReadOnly(bool b) {
+  m_edit->setReadOnly(b);
+  if (b) {
+    m_edit->setStyleSheet("QLineEdit {background:transparent;border:none;}");
+  } else {
+    m_edit->setStyleSheet(QString());
+  }
+}
+
 const QString LineEdit::info() {
   if (m_label->isVisible())
     return m_edit->toolTip();

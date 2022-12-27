@@ -28,8 +28,9 @@ private:
   bool initData(qint64 orderId);
 
 private Q_SLOTS:
-  void setEditPage();
-  void save();
+  void setStep1();
+  void setStep2(const QStringList &);
+  void setFinal();
 
 public:
   explicit ReturnOrder(QWidget *parent = nullptr);

@@ -36,6 +36,7 @@ SET (projectLibrary_SOURCES
  antiquaspinbox.cpp
  antiquatabbar.cpp
  bookbinding.cpp
+ addressinfo.cpp
  boolbox.cpp
  conditionedit.cpp
  deliveryid.cpp
@@ -91,6 +92,7 @@ SET (projectLibrary_HEADERS
  antiqualineedit.h
  antiquaspinbox.h
  antiquatabbar.h
+ addressinfo.h
  bookbinding.h
  boolbox.h
  conditionedit.h

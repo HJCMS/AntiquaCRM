@@ -6,9 +6,11 @@ SET(_subproject "AntiquaReturnOrder")
 SET (subproject_LINKER
  AntiquaCRM
  AntiquaWidgets
+ AntiquaPurchaseTable
 )
 
 SET (subproject_SOURCES
+ buttonnext.cpp
  returnorder.cpp
  returninfowidget.cpp
  returnedit.cpp
@@ -16,6 +18,7 @@ SET (subproject_SOURCES
 )
 
 SET (subproject_HEADERS
+ buttonnext.h
  returnorder.h
  returninfowidget.h
  returnedit.h

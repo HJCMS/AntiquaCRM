@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "returninfowidget.h"
+#include "buttonnext.h"
 
 #include <QLayout>
 #include <QSizePolicy>
@@ -30,6 +31,8 @@ ReturnInfoWidget::ReturnInfoWidget(QWidget *parent) : QWidget{parent} {
           "sufficient!");
   l << tr("The return will be booked back in the current month, the "
           "statement from the previous month will not be changed.");
+  l << tr("Important: In the case of a return, the article must be reinserted "
+          "manually.");
   l << tr("Before you continue, please make sure that this order has already "
           "been booked!");
   l << tr("If you are sure, you can continue now.");
@@ -37,16 +40,10 @@ ReturnInfoWidget::ReturnInfoWidget(QWidget *parent) : QWidget{parent} {
     layout->addWidget(new InfoLabel(s, this));
   }
 
-  m_ok = new QPushButton(tr("further"), this);
-  m_ok->setIcon(QIcon("://icons/action_ok.png"));
-
-  QHBoxLayout *btnLayout = new QHBoxLayout;
-  btnLayout->setContentsMargins(5, 5, 5, 5);
-  btnLayout->addStretch(1);
-  btnLayout->addWidget(m_ok);
-  btnLayout->addStretch(1);
-  layout->addLayout(btnLayout);
+  btn_next = new ButtonNext(this);
+  layout->addWidget(btn_next);
   layout->addStretch(1);
   setLayout(layout);
-  connect(m_ok, SIGNAL(clicked()), SIGNAL(sendConfirm()));
+
+  connect(btn_next, SIGNAL(clicked()), SIGNAL(sendConfirm()));
 }

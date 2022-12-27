@@ -10,7 +10,8 @@
 #include <QObject>
 #include <QWidget>
 
-// ReturnInfo
+class ButtonNext;
+
 class InfoLabel final : public QLabel {
   Q_OBJECT
 
@@ -22,7 +23,7 @@ class ReturnInfoWidget : public QWidget {
   Q_OBJECT
 
 private:
-  QPushButton *m_ok;
+  ButtonNext *btn_next;
 
 Q_SIGNALS:
   void sendConfirm();

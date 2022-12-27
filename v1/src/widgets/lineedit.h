@@ -37,6 +37,7 @@ public:
   bool isPasswordInput();
   void setCompleter(const QStringList &);
   void setInfo(const QString &);
+  void setReadOnly(bool b = false);
   const QString info();
   const QVariant value();
   bool isValid();

@@ -21,6 +21,10 @@
 // Boston, MA 02110-1301, USA.
 //
 
+#ifndef ANTIQUACRM_ADDRESSINFO_H
+#include "addressinfo.h"
+#endif
+
 #ifndef ANTIQUACRM_DATEINFO_H
 #include "antiquadateinfo.h"
 #endif

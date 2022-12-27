@@ -92,6 +92,11 @@ public:
    * für INSERT und UPDATE.
    */
   const QStringList getSqlQuery();
+
+  /**
+   * @brief Abfrage der Zahlungs Nummer auf Zeilenummer.
+   */
+  qint64 getArticlePaymentId(int row);
 };
 
 #endif // ANTIQUACRM_PURCHASETABLE_H

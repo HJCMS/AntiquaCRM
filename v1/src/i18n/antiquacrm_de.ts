@@ -18,6 +18,19 @@
     </message>
 </context>
 <context>
+    <name>AddressInfo</name>
+    <message>
+        <location filename="../widgets/addressinfo.cpp" line="+13"/>
+        <source>Address</source>
+        <translation>Anschrift</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>Address is required.</source>
+        <translation>Eine Anschrifft ist Erfordelich.</translation>
+    </message>
+</context>
+<context>
     <name>AntiquaAppl</name>
     <message>
         <location filename="../antiquaappl.cpp" line="+162"/>
@@ -1121,6 +1134,14 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>ButtonNext</name>
+    <message>
+        <location filename="../utils/returnorder/buttonnext.cpp" line="+14"/>
+        <source>further</source>
+        <translation>Weiter</translation>
+    </message>
+</context>
+<context>
     <name>CacheBuilder</name>
     <message>
         <location filename="../utils/cache/cachebuilder.cpp" line="+21"/>
@@ -1694,7 +1715,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+6"/>
         <source>Returning</source>
-        <translation>Rücklauf</translation>
+        <translation>Rücksendung</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -3061,7 +3082,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Maximal zulässige Zeichenlänge</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+82"/>
         <source>is required and can&apos;t empty.</source>
         <translation>ist erforderlich und darf nicht leer sein.</translation>
     </message>
@@ -3408,7 +3429,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+6"/>
         <source>Returning</source>
-        <translation>Rücklauf</translation>
+        <translation>Rücksendung</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3984,7 +4005,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+3"/>
         <source>Returned</source>
-        <translation>Rücklauf</translation>
+        <translation>Rücksendung</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -4093,8 +4114,8 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Returning</source>
-        <translation>Rücklauf</translation>
+        <source>Create a return from this order.</source>
+        <translation>Aus diesem Auftrag eine Rücksendung erstellen.</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -5464,9 +5485,47 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>ReturnEdit</name>
+    <message>
+        <location filename="../utils/returnorder/returnedit.cpp" line="+21"/>
+        <source>Order Id</source>
+        <translation>Auftrags Nr</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Invoice Id</source>
+        <translation>Rechnungs Nr.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Customer Id</source>
+        <translation>Kunden Nr.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Delivery note</source>
+        <translation>Lieferschein Nr.</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Double click to Article insert payment IDs that were returned.</source>
+        <translation>Doppelklicken Sie auf den Artikel, um die zurückgegebenen Zahlungs Nr. einzufügen.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Payment IDs</source>
+        <translation>Zahlungs Nr.</translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>No Payment Id has been add!</source>
+        <translation>Es wurde keine Zahlungs Nr. hinzugefügt!</translation>
+    </message>
+</context>
+<context>
     <name>ReturnInfoWidget</name>
     <message>
-        <location filename="../utils/returnorder/returninfowidget.cpp" line="+22"/>
+        <location filename="../utils/returnorder/returninfowidget.cpp" line="+23"/>
         <source>Some notices</source>
         <translation>Einige Hinweise</translation>
     </message>
@@ -5487,6 +5546,11 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+2"/>
+        <source>Important: In the case of a return, the article must be reinserted manually.</source>
+        <translation>Wichtig: Bei einer Rückführung muss der Artikel Manuell wieder eingefügt werden.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Before you continue, please make sure that this order has already been booked!</source>
         <translation>Bevor Sie fortfahren, stellen sie Bitte sicher das diese Bestellung bereist Verbucht wurde!</translation>
     </message>
@@ -5494,11 +5558,6 @@ Bild - Artikel Nr: %2</translation>
         <location line="+2"/>
         <source>If you are sure, you can continue now.</source>
         <translation>Wenn sie sich sicher sind können Sie jetzt fortfahren.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>further</source>
-        <translation>Weiter</translation>
     </message>
 </context>
 <context>
