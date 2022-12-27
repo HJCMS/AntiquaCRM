@@ -5485,7 +5485,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ReturnEdit</name>
     <message>
-        <location filename="../utils/returnorder/returnedit.cpp" line="+21"/>
+        <location filename="../utils/returnorder/returnedit.cpp" line="+22"/>
         <source>Order Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5510,12 +5510,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Payment IDs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+41"/>
         <source>No Payment Id has been add!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5563,6 +5563,11 @@ Image - Article Id: %2</source>
     <message>
         <location filename="../utils/returnorder/returnorder.cpp" line="+17"/>
         <source>Dialog to create a return!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+125"/>
+        <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

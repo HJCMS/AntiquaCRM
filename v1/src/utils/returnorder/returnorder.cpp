@@ -88,8 +88,62 @@ void ReturnOrder::setStep1() {
 }
 
 void ReturnOrder::setStep2(const QStringList &ids) {
-  qDebug() << Q_FUNC_INFO << ids;
-  // m_stackedWidget->setCurrentIndex(2);
+  if (ids.size() < 1)
+    return;
+
+  qint64 o_id = m_medit->o_id->value().toInt();
+  if (o_id < 1)
+    return;
+
+  AntiquaCRM::ASqlFiles tpl("query_returning_articles");
+  if (!tpl.openTemplate())
+    return;
+
+  QStringList sqlUpdates;
+  QString o_order_status = QString::number(AntiquaCRM::OrderStatus::CANCELED);
+  QString o_payment_status = QString::number(AntiquaCRM::OrderPayment::RETURN);
+  QString upd_order("UPDATE inventory_orders SET ");
+  upd_order.append("o_order_status=" + o_order_status);
+  upd_order.append(", o_payment_status=" + o_payment_status);
+  upd_order.append(", o_modified=CURRENT_TIMESTAMP");
+  upd_order.append(", o_delivered=CURRENT_TIMESTAMP");
+  upd_order.append(" WHERE o_id=" + QString::number(o_id) + ";");
+  sqlUpdates << upd_order;
+
+  QString sql("a_order_id=");
+  sql.append(QString::number(o_id));
+  sql.append(" AND a_payment_id IN (" + ids.join(",") + ")");
+  tpl.setWhereClause(sql);
+
+  QSqlQuery q = m_sql->query(tpl.getQueryContent());
+  if (q.size() > 0) {
+    while (q.next()) {
+      qint64 a_payment_id = q.value("a_payment_id").toInt();
+      if (a_payment_id < 1)
+        continue;
+
+      double price = q.value("a_sell_price").toDouble();
+      QString upd_article("UPDATE article_orders SET a_sell_price=");
+      if (price > 0)
+        upd_article.append("-");
+
+      upd_article.append(QString::number(price, 'f', 2));
+      upd_article.append(",a_modified=CURRENT_TIMESTAMP");
+      upd_article.append(" WHERE a_payment_id=");
+      upd_article.append(QString::number(a_payment_id) + ";");
+      sqlUpdates << upd_article;
+    }
+  }
+
+  m_sql->query(sqlUpdates.join("\n"));
+  if (m_sql->lastError().isEmpty()) {
+    accept();
+  } else {
+    m_statusBar->showMessage(tr("An error has occurred!"));
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << m_sql->lastError();
+#endif
+  }
 }
 
 void ReturnOrder::setFinal() {

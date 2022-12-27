@@ -5487,7 +5487,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ReturnEdit</name>
     <message>
-        <location filename="../utils/returnorder/returnedit.cpp" line="+21"/>
+        <location filename="../utils/returnorder/returnedit.cpp" line="+22"/>
         <source>Order Id</source>
         <translation>Auftrags Nr</translation>
     </message>
@@ -5512,12 +5512,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Doppelklicken Sie auf den Artikel, um die zurückgegebenen Zahlungs Nr. einzufügen.</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Payment IDs</source>
         <translation>Zahlungs Nr.</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+41"/>
         <source>No Payment Id has been add!</source>
         <translation>Es wurde keine Zahlungs Nr. hinzugefügt!</translation>
     </message>
@@ -5566,6 +5566,11 @@ Bild - Artikel Nr: %2</translation>
         <location filename="../utils/returnorder/returnorder.cpp" line="+17"/>
         <source>Dialog to create a return!</source>
         <translation>Dialog zum erstellen einer Rücksendung!</translation>
+    </message>
+    <message>
+        <location line="+125"/>
+        <source>An error has occurred!</source>
+        <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
 </context>
 <context>

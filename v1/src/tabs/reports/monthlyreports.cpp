@@ -66,7 +66,7 @@ const QFileInfo MonthlyReports::getSaveFile() {
 
 void MonthlyReports::createReport(const QDate &date) {
   p_date = date;
-  QString where_clause("AND o_delivered BETWEEN '");
+  QString where_clause("o_delivered BETWEEN '");
   QDate fromDate(date.year(), date.month(), 1);
   where_clause.append(fromDate.toString("dd.MM.yyyyT00:00:00"));
   where_clause.append("' AND '");

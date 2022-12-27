@@ -18,6 +18,11 @@ class ButtonNext;
 class ReturnEdit : public QWidget {
   Q_OBJECT
 
+private:
+  PurchaseTable *m_table;
+  LineEdit *m_payment_ids;
+  ButtonNext *btn_next;
+
 private Q_SLOTS:
   void addPaymentId(const QModelIndex &);
   void checkBeforeNext();
@@ -32,9 +37,6 @@ public:
   SerialID *o_customer_id;
   DeliveryId *o_delivery;
   AddressInfo *c_postal_address;
-  PurchaseTable *m_table;
-  LineEdit *m_payment_ids;
-  ButtonNext *btn_next;
 
   explicit ReturnEdit(QWidget *parent = nullptr);
   void loadArticleData(const QSqlQuery &);

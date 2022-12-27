@@ -59,7 +59,7 @@ MonthlyReportView::MonthlyReportView(QWidget *parent) : QTableView{parent} {
 
 void MonthlyReportView::setQuery(const QString &query) {
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << query;
+  qDebug() << Q_FUNC_INFO << query;
 #endif
   if (m_model->querySelect(query)) {
     calc_section = m_model->record().indexOf("calc");
@@ -114,6 +114,7 @@ const QString MonthlyReportView::salesVolume() {
     QModelIndex index = m_model->index(r, calc_section);
     QString buffer = m_model->data(index, Qt::DisplayRole).toString();
     sum_price += std::stod(buffer.toStdString());
+    // qDebug() << Q_FUNC_INFO << sum_price << buffer;
   }
   char buffer[10];
   int len = std::sprintf(buffer, "%0.2f", sum_price);

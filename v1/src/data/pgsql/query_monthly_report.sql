@@ -1,6 +1,6 @@
 -- @brief Query Monthly Reports
 -- @file query_monthly_report.sql
--- o_delivered '2022-11-01T00:00:00' AND '2022-11-30T23:59:00'
+-- o_delivered BETWEEN '01.12.2022T00:00:00' AND '31.12.2022T23:59:00'
 SELECT DATE(o_delivered) AS date, lpad(o_id::text, 7, '0') AS invoice,
   lpad(a_article_id::text, 7, '0') AS article,
   a_sell_price::MONEY AS price,
@@ -20,4 +20,6 @@ SELECT DATE(o_delivered) AS date, lpad(o_id::text, 7, '0') AS invoice,
 FROM inventory_orders
 LEFT JOIN article_orders ON a_order_id=o_id
 LEFT JOIN ref_delivery_cost ON d_cid=o_delivery_package
-WHERE o_payment_status=1 AND o_order_status=4 @SQL_WHERE_CLAUSE@ ORDER BY o_delivered;
+WHERE ((o_payment_status=1 AND o_order_status=4) OR (o_order_status=6 AND o_payment_status=4))
+ AND @SQL_WHERE_CLAUSE@ AND date_part('month', a_modified)=date_part('month',o_delivered)
+ORDER BY o_delivered;
