@@ -14,7 +14,7 @@
 ReturnEdit::ReturnEdit(QWidget *parent) : QWidget{parent} {
   int row = 0;
 
-  QGridLayout *layout = new QGridLayout();
+  QGridLayout *layout = new QGridLayout(this);
   layout->setContentsMargins(1, 1, 1, 1);
 
   o_id = new SerialID(this);

@@ -2296,6 +2296,24 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>FinalEdit</name>
+    <message>
+        <location filename="../utils/returnorder/finaledit.cpp" line="+13"/>
+        <source>Final Page before saving.</source>
+        <translation>Letzte Seite vor dem Speichern.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>If there additional refunds costs, add this to the Input.</source>
+        <translation>Falls zusätzliche Erstattungskosten anfallen, fügen Sie diese der Eingabe hinzu.</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>After applying without errors, this dialog will closed.</source>
+        <translation>Nach fehlerfreier Ausführung wird dieser Dialog geschlossen.</translation>
+    </message>
+</context>
+<context>
     <name>GenderBox</name>
     <message>
         <location filename="../widgets/genderbox.cpp" line="+10"/>
@@ -5563,22 +5581,22 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ReturnOrder</name>
     <message>
-        <location filename="../utils/returnorder/returnorder.cpp" line="+17"/>
+        <location filename="../utils/returnorder/returnorder.cpp" line="+18"/>
         <source>Dialog to create a return!</source>
         <translation>Dialog zum erstellen einer Rücksendung!</translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+79"/>
         <source>Ready to save this refund.</source>
         <translation>Bereit, diese Rückerstattung zu speichern.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Nothing todo!</source>
         <translation>Nichts zu tun!</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+61"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>

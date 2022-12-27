@@ -83,7 +83,7 @@ void OrdersTableView::createOrderReturning() {
 
   ReturnOrder *d = new ReturnOrder(this);
   if (d->exec(oid) == QDialog::Accepted) {
-    qDebug() << Q_FUNC_INFO << "TODO";
+    setReloadView();
   }
   d->deleteLater();
 }

@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "returnorder.h"
+#include "finaledit.h"
 #include "returnedit.h"
 #include "returninfowidget.h"
 #include "returnnavigation.h"
@@ -26,6 +27,10 @@ ReturnOrder::ReturnOrder(QWidget *parent) : QDialog{parent} {
 
   m_medit = new ReturnEdit(m_stackedWidget);
   m_stackedWidget->insertWidget(1, m_medit);
+
+  m_finalEdit = new FinalEdit(this);
+  m_stackedWidget->insertWidget(2, m_finalEdit);
+
   layout->addWidget(m_stackedWidget);
 
   m_btnBox = new ReturnNavigation(this);
@@ -90,6 +95,7 @@ void ReturnOrder::setStep2() {
   if (m_medit->getRefundIds().size() > 0) {
     m_btnBox->enableSaveButton(true);
     m_statusBar->showMessage(tr("Ready to save this refund."));
+    m_stackedWidget->setCurrentIndex(2);
   } else {
     m_btnBox->enableSaveButton(false);
     m_statusBar->showMessage(tr("Nothing todo!"));
@@ -125,6 +131,8 @@ void ReturnOrder::saveAndQuit() {
   sql.append(" AND a_payment_id IN (" + ids.join(",") + ")");
   tpl.setWhereClause(sql);
 
+  double a_refunds_cost = (m_finalEdit->refundsCost() / ids.size());
+
   QSqlQuery q = m_sql->query(tpl.getQueryContent());
   if (q.size() > 0) {
     while (q.next()) {
@@ -138,6 +146,8 @@ void ReturnOrder::saveAndQuit() {
         upd_article.append("-");
 
       upd_article.append(QString::number(price, 'f', 2));
+      upd_article.append(",a_refunds_cost=");
+      upd_article.append(QString::number(a_refunds_cost, 'f', 2));
       upd_article.append(",a_modified=CURRENT_TIMESTAMP");
       upd_article.append(" WHERE a_payment_id=");
       upd_article.append(QString::number(a_payment_id) + ";");

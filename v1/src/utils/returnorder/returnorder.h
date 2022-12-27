@@ -13,6 +13,7 @@
 
 class ReturnInfoWidget;
 class ReturnEdit;
+class FinalEdit;
 class ReturnNavigation;
 
 class ReturnOrder final : public QDialog {
@@ -23,6 +24,7 @@ private:
   QStackedWidget *m_stackedWidget;
   ReturnInfoWidget *m_info;
   ReturnEdit *m_medit;
+  FinalEdit *m_finalEdit;
   ReturnNavigation *m_btnBox;
   QStatusBar *m_statusBar;
   bool initData(qint64 orderId);

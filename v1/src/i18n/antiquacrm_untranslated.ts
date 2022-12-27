@@ -2294,6 +2294,24 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>FinalEdit</name>
+    <message>
+        <location filename="../utils/returnorder/finaledit.cpp" line="+13"/>
+        <source>Final Page before saving.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>If there additional refunds costs, add this to the Input.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>After applying without errors, this dialog will closed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GenderBox</name>
     <message>
         <location filename="../widgets/genderbox.cpp" line="+10"/>
@@ -5561,22 +5579,22 @@ Image - Article Id: %2</source>
 <context>
     <name>ReturnOrder</name>
     <message>
-        <location filename="../utils/returnorder/returnorder.cpp" line="+17"/>
+        <location filename="../utils/returnorder/returnorder.cpp" line="+18"/>
         <source>Dialog to create a return!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+79"/>
         <source>Ready to save this refund.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Nothing todo!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+61"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>

@@ -11,6 +11,7 @@ SET (subproject_LINKER
 
 SET (subproject_SOURCES
  buttonnext.cpp
+ finaledit.cpp
  returnorder.cpp
  returninfowidget.cpp
  returnedit.cpp
@@ -19,6 +20,7 @@ SET (subproject_SOURCES
 
 SET (subproject_HEADERS
  buttonnext.h
+ finaledit.h
  returnorder.h
  returninfowidget.h
  returnedit.h
