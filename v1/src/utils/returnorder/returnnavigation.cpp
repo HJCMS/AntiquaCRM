@@ -19,3 +19,5 @@ ReturnNavigation::ReturnNavigation(QWidget *parent) : QDialogButtonBox{parent} {
 const QIcon ReturnNavigation::setIcon(const QString &name) {
   return QIcon("://icons/" + name + ".png");
 }
+
+void ReturnNavigation::enableSaveButton(bool b) { m_save->setEnabled(b); }

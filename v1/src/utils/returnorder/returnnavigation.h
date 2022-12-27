@@ -23,6 +23,9 @@ private:
 Q_SIGNALS:
   void sendSave();
 
+public Q_SLOTS:
+  void enableSaveButton(bool b = false);
+
 public:
   explicit ReturnNavigation(QWidget *parent = nullptr);
 };

@@ -39,10 +39,8 @@ ReturnOrder::ReturnOrder(QWidget *parent) : QDialog{parent} {
   setLayout(layout);
 
   connect(m_info, SIGNAL(sendConfirm()), SLOT(setStep1()));
-  connect(m_medit, SIGNAL(sendPaymentIds(const QStringList &)),
-          SLOT(setStep2(const QStringList &)));
-
-  connect(m_btnBox, SIGNAL(sendSave()), SLOT(setFinal()));
+  connect(m_medit, SIGNAL(sendReady()), SLOT(setStep2()));
+  connect(m_btnBox, SIGNAL(sendSave()), SLOT(saveAndQuit()));
   connect(m_btnBox, SIGNAL(rejected()), SLOT(reject()));
   connect(m_medit, SIGNAL(sendMessage(const QString &)), m_statusBar,
           SLOT(showMessage(const QString &)));
@@ -87,7 +85,19 @@ void ReturnOrder::setStep1() {
   m_stackedWidget->setCurrentIndex(1);
 }
 
-void ReturnOrder::setStep2(const QStringList &ids) {
+void ReturnOrder::setStep2() {
+  // enable save button
+  if (m_medit->getRefundIds().size() > 0) {
+    m_btnBox->enableSaveButton(true);
+    m_statusBar->showMessage(tr("Ready to save this refund."));
+  } else {
+    m_btnBox->enableSaveButton(false);
+    m_statusBar->showMessage(tr("Nothing todo!"));
+  }
+}
+
+void ReturnOrder::saveAndQuit() {
+  QStringList ids = m_medit->getRefundIds();
   if (ids.size() < 1)
     return;
 
@@ -144,11 +154,6 @@ void ReturnOrder::setStep2(const QStringList &ids) {
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
 #endif
   }
-}
-
-void ReturnOrder::setFinal() {
-  qDebug() << Q_FUNC_INFO << "TODO";
-  accept();
 }
 
 int ReturnOrder::exec() {

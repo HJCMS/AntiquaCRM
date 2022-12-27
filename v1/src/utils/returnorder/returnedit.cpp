@@ -71,7 +71,7 @@ ReturnEdit::ReturnEdit(QWidget *parent) : QWidget{parent} {
   layout->setRowStretch(row++, 1);
   setLayout(layout);
 
-  connect(btn_next, SIGNAL(clicked()), SLOT(checkBeforeNext()));
+  connect(btn_next, SIGNAL(clicked()), SIGNAL(sendReady()));
   connect(m_table, SIGNAL(doubleClicked(const QModelIndex &)),
           SLOT(addPaymentId(const QModelIndex &)));
 }
@@ -96,15 +96,6 @@ void ReturnEdit::addPaymentId(const QModelIndex &index) {
   m_payment_ids->setValue(ids.join(","));
 }
 
-void ReturnEdit::checkBeforeNext() {
-  QString str_ids = m_payment_ids->value().toString();
-  if (str_ids.isEmpty()) {
-    emit sendMessage(tr("No Payment Id has been add!"));
-    return;
-  }
-  emit sendPaymentIds(str_ids.split(","));
-}
-
 void ReturnEdit::loadArticleData(const QSqlQuery &query) {
   QSqlQuery q(query);
   if (q.size() > 0) {
@@ -123,4 +114,13 @@ void ReturnEdit::loadArticleData(const QSqlQuery &query) {
     if (articles.size() > 0)
       m_table->setOrderArticles(articles);
   }
+}
+
+const QStringList ReturnEdit::getRefundIds() {
+  QString str_ids = m_payment_ids->value().toString();
+  if (str_ids.isEmpty()) {
+    emit sendMessage(tr("No Payment Id has been add!"));
+    return QStringList();
+  }
+  return str_ids.split(",");
 }

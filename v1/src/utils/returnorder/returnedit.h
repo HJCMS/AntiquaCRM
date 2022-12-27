@@ -25,10 +25,9 @@ private:
 
 private Q_SLOTS:
   void addPaymentId(const QModelIndex &);
-  void checkBeforeNext();
 
 Q_SIGNALS:
-  void sendPaymentIds(const QStringList &);
+  void sendReady();
   void sendMessage(const QString &);
 
 public:
@@ -40,6 +39,7 @@ public:
 
   explicit ReturnEdit(QWidget *parent = nullptr);
   void loadArticleData(const QSqlQuery &);
+  const QStringList getRefundIds();
 };
 
 #endif // RETURN_EDIT_H

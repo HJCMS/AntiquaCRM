@@ -29,8 +29,8 @@ private:
 
 private Q_SLOTS:
   void setStep1();
-  void setStep2(const QStringList &);
-  void setFinal();
+  void setStep2();
+  void saveAndQuit();
 
 public:
   explicit ReturnOrder(QWidget *parent = nullptr);

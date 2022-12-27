@@ -5517,7 +5517,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Zahlungs Nr.</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+61"/>
         <source>No Payment Id has been add!</source>
         <translation>Es wurde keine Zahlungs Nr. hinzugefügt!</translation>
     </message>
@@ -5568,7 +5568,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Dialog zum erstellen einer Rücksendung!</translation>
     </message>
     <message>
-        <location line="+125"/>
+        <location line="+75"/>
+        <source>Ready to save this refund.</source>
+        <translation>Bereit, diese Rückerstattung zu speichern.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Nothing todo!</source>
+        <translation>Nichts zu tun!</translation>
+    </message>
+    <message>
+        <location line="+57"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>

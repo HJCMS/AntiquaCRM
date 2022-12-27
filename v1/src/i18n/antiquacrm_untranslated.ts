@@ -5515,7 +5515,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+61"/>
         <source>No Payment Id has been add!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5566,7 +5566,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+125"/>
+        <location line="+75"/>
+        <source>Ready to save this refund.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Nothing todo!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+57"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
