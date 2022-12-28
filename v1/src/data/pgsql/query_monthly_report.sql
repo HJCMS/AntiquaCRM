@@ -12,11 +12,12 @@ SELECT DATE(o_delivered) AS date, lpad(o_id::text, 7, '0') AS invoice,
   (CASE o_delivery_add_price WHEN true
     THEN d_price::MONEY ELSE a_refunds_cost::MONEY END) AS porto,
   (CASE o_delivery_add_price WHEN true
-    THEN (a_sell_price + d_price + a_refunds_cost)::MONEY
-    ELSE (a_sell_price + a_refunds_cost)::MONEY END) AS total,
+    THEN (a_sell_price + d_price)::MONEY
+    ELSE a_sell_price::MONEY END) AS total,
   (CASE o_delivery_add_price WHEN true
     THEN (a_sell_price + d_price)::NUMERIC
-    ELSE (a_sell_price + a_refunds_cost)::NUMERIC END) AS calc
+    ELSE a_sell_price::NUMERIC END) AS calc,
+  a_refunds_cost AS refundscost
 FROM inventory_orders
 LEFT JOIN article_orders ON a_order_id=o_id
 LEFT JOIN ref_delivery_cost ON d_cid=o_delivery_package

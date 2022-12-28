@@ -96,7 +96,6 @@ void MonthlyReports::saveReport() {
     qWarning("Save target not exists or no file name!");
     return;
   }
-
   QString header = m_table->dataHeader();
   QStringList rows = m_table->dataRows();
   if (rows.count() > 0) {

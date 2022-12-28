@@ -26,6 +26,7 @@ class MonthlyReportView : public QTableView {
 
 private:
   int calc_section = -1;
+  int refunds_section = -1;
   MonthlyReportModel *m_model;
   QHeaderView *m_tableHeader;
 
@@ -38,8 +39,8 @@ public Q_SLOTS:
 public:
   explicit MonthlyReportView(QWidget *parent = nullptr);
   const QString headerName(const QString &key);
-  const QString dataHeader(const QString &delimiter = QString(";"));
-  const QStringList dataRows(const QString &delimiter = QString(";"));
+  const QString dataHeader(const QString &delimiter = QString("\t"));
+  const QStringList dataRows(const QString &delimiter = QString("\t"));
   const QString salesVolume();
 };
 

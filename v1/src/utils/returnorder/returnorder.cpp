@@ -155,13 +155,19 @@ void ReturnOrder::saveAndQuit() {
     }
   }
 
-  m_sql->query(sqlUpdates.join("\n"));
+  sql = sqlUpdates.join("\n");
+
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << sql;
+#endif
+
+  m_sql->query(sql);
   if (m_sql->lastError().isEmpty()) {
     accept();
   } else {
     m_statusBar->showMessage(tr("An error has occurred!"));
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << m_sql->lastError();
+    qDebug() << Q_FUNC_INFO  << m_sql->lastError();
 #endif
   }
 }

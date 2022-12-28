@@ -74,6 +74,7 @@ private:
   /**
    * @brief Kopfzellen
    */
+  const QString p_delimiter = QString("\t");
   QStringList p_header;
 
   /**

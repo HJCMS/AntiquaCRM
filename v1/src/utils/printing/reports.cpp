@@ -177,7 +177,7 @@ void Reports::constructBody() {
   int r = 1; // 0 = Headerzeile
   foreach (QString row, p_data) {
     int c = 0;
-    foreach (QString item, row.split(";")) {
+    foreach (QString item, row.split(p_delimiter)) {
       QTextTableCell cell = m_table->cellAt(r, c);
       cell.setFormat(cellFormat());
       cursor = cell.firstCursorPosition();
@@ -242,7 +242,7 @@ void Reports::openPrintDialog() {
 }
 
 void Reports::setHeaderInfo(const QString &title, const QString &header) {
-  p_header = header.split(";");
+  p_header = header.split(p_delimiter);
   p_title = title;
   m_edit->setDocumentTitle(title);
 }

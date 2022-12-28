@@ -25,6 +25,7 @@ const QMap<int, QString> MonthlyReportModel::headerList() const {
   m.insert(i++, tr("Porto"));
   m.insert(i++, tr("Total"));
   m.insert(i++, "calc");
+  m.insert(i++, "refundscost");
   return m;
 }
 
@@ -64,6 +65,8 @@ void MonthlyReportView::setQuery(const QString &query) {
   if (m_model->querySelect(query)) {
     calc_section = m_model->record().indexOf("calc");
     m_tableHeader->hideSection(calc_section);
+    refunds_section = m_model->record().indexOf("refundscost");
+    m_tableHeader->hideSection(refunds_section);
     resizeColumnsToContents();
     emit sendFinished();
   }
@@ -76,10 +79,11 @@ const QString MonthlyReportView::headerName(const QString &key) {
 
 const QString MonthlyReportView::dataHeader(const QString &delimiter) {
   QStringList list;
-  int calc = m_model->record().indexOf("calc");
   for (int i = 0; i < horizontalHeader()->count(); i++) {
-    if (i != calc)
-      list << m_model->headerData(i, Qt::Horizontal).toString();
+    if (calc_section == i || refunds_section == i)
+      continue;
+
+    list << m_model->headerData(i, Qt::Horizontal).toString();
   }
   return list.join(delimiter);
 }
@@ -87,11 +91,10 @@ const QString MonthlyReportView::dataHeader(const QString &delimiter) {
 const QStringList MonthlyReportView::dataRows(const QString &delimiter) {
   int columns = horizontalHeader()->count();
   QStringList list;
-  int calcIndex = m_model->record().indexOf("calc");
   for (int r = 0; r < m_model->rowCount(); r++) {
     QStringList cells;
     for (int c = 0; c < columns; c++) {
-      if (calcIndex == c)
+      if (calc_section == c || refunds_section == c)
         continue;
 
       QModelIndex index = m_model->index(r, c);
@@ -104,17 +107,38 @@ const QStringList MonthlyReportView::dataRows(const QString &delimiter) {
 }
 
 const QString MonthlyReportView::salesVolume() {
-  if (calc_section < 1)
+  if (calc_section < 1 || refunds_section < 1) {
+    qWarning("Invalid Report configuration!");
     return QString();
+  }
 
-  double sum_price = 0;
+  double sum_price = 0.00;
   // int columns = horizontalHeader()->count();
   QStringList list;
   for (int r = 0; r < m_model->rowCount(); r++) {
-    QModelIndex index = m_model->index(r, calc_section);
-    QString buffer = m_model->data(index, Qt::DisplayRole).toString();
-    sum_price += std::stod(buffer.toStdString());
-    // qDebug() << Q_FUNC_INFO << sum_price << buffer;
+    QModelIndex calc_index = m_model->index(r, calc_section);
+    QString dbuf = m_model->data(calc_index, Qt::DisplayRole).toString();
+    bool ok;
+    double p = dbuf.toDouble(&ok);
+    if (!ok) {
+#ifdef ANTIQUA_DEVELOPEMENT
+      qDebug() << "Invalid double conversion:" << sum_price << dbuf;
+#else
+      qWarning("Invalid Conversion in MonthlyReportView::salesVolume!");
+#endif
+    }
+    sum_price += p;
+
+    // qDebug() << "Buffer:" << dbuf << "Total:" << sum_price;
+    dbuf.clear();
+
+    QModelIndex refunds_index = m_model->index(r, refunds_section);
+    dbuf = m_model->data(refunds_index, Qt::DisplayRole).toString();
+    p = dbuf.toDouble(&ok);
+    if (ok && p != 0) {
+      sum_price += p;
+      qDebug() << "Refunds:" << dbuf << "Total:" << sum_price;
+    }
   }
   char buffer[10];
   int len = std::sprintf(buffer, "%0.2f", sum_price);
