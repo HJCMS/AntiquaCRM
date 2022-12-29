@@ -7,10 +7,11 @@
 
 #include <ASettings>
 #include <AntiquaPrinting>
+#include <QCalendar>
 #include <QDir>
 #include <QFile>
 #include <QLabel>
-#include <QLayout>
+#include <QVBoxLayout>
 
 MonthlyReports::MonthlyReports(QWidget *parent) : QWidget{parent} {
   setContentsMargins(0, 0, 0, 0);
@@ -65,12 +66,15 @@ const QFileInfo MonthlyReports::getSaveFile() {
 }
 
 void MonthlyReports::createReport(const QDate &date) {
-  p_date = date;
+  QCalendar cal(QCalendar::System::Gregorian);
+  p_date = QDate(date.year(), date.month(),
+                 cal.daysInMonth(date.month(), date.year()));
+
   QString where_clause("o_delivered BETWEEN '");
-  QDate fromDate(date.year(), date.month(), 1);
-  where_clause.append(fromDate.toString("dd.MM.yyyyT00:00:00"));
+  QDate fromDay(p_date.year(), p_date.month(), 1);
+  where_clause.append(fromDay.toString("dd.MM.yyyy") + "T00:00:00");
   where_clause.append("' AND '");
-  where_clause.append(date.toString("dd.MM.yyyyT23:59:00"));
+  where_clause.append(p_date.toString("dd.MM.yyyy") + "T23:59:00");
   where_clause.append("'");
 
   AntiquaCRM::ASqlFiles file("query_monthly_report");

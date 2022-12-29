@@ -7,7 +7,6 @@
 
 #include <AntiquaCRM>
 #include <QLayout>
-#include <QRegExpValidator>
 #include <QSqlField>
 #include <QSqlRecord>
 
