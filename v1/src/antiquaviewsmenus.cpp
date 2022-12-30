@@ -4,6 +4,7 @@
 #include "antiquaviewsmenus.h"
 #include "antiquatabwidget.h"
 #include "reportsactiongroup.h"
+#include "statisticsactiongroup.h"
 #include "viewsactiongroup.h"
 
 #include <QDebug>
@@ -14,30 +15,24 @@ AntiquaViewsMenus::AntiquaViewsMenus(QWidget *parent) : QMenu{parent} {
   setObjectName("views_menue");
   setTitle(tr("Views"));
   QIcon icon(":icons/view_log.png");
-  m_tabViews = nullptr;
 
   m_tableVisit = addMenu(QIcon(":icons/tab.png"), tr("Show tab"));
   addMenu(m_tableVisit);
-
   addSeparator();
 
   m_tableReports = addMenu(icon, tr("Database Reports"));
   m_tabReports = new ReportsActionGroup(m_tableReports);
-
   addMenu(m_tableReports);
-
   addSeparator();
 
-#ifdef ANTIQUACRM_STATISTICS
   // Statistics
-  ac_statistics = addAction(tr("Statistics"));
-  ac_statistics->setIcon(QIcon("://icons/kchart.png"));
+  m_tableStats = addMenu(QIcon("://icons/kchart.png"), tr("Statistics"));
+  m_tabStatistics = new StatisticsActionGroup(m_tableStats);
   addSeparator();
-#endif
 
+  // Views
   m_tableViews = addMenu(icon, tr("Database Views"));
   m_tabViews = new ViewsActionGroup(m_tableViews);
-
   addSeparator();
 
   ac_fullScreen = addAction(tr("Fullscreen"));
@@ -47,6 +42,10 @@ AntiquaViewsMenus::AntiquaViewsMenus(QWidget *parent) : QMenu{parent} {
   connect(m_tableReports, SIGNAL(aboutToShow()), SLOT(uniqLoadReports()));
   connect(m_tabReports, SIGNAL(sendSelectView(const QString &)),
           SIGNAL(sendOpenReport(const QString &)));
+
+  connect(m_tableStats, SIGNAL(aboutToShow()), SLOT(uniqLoadStatistics()));
+  connect(m_tabStatistics, SIGNAL(sendSelectStats(const QString &)),
+          SIGNAL(sendOpenStats(const QString &)));
 
   connect(m_tableViews, SIGNAL(aboutToShow()), SLOT(uniqLoadViews()));
   connect(m_tabViews, SIGNAL(sendSelectView(const QString &)),
@@ -71,11 +70,6 @@ void AntiquaViewsMenus::setShowTabActions() {
     m_showTabsMapper->setMapping(ac, it.key());
     connect(ac, SIGNAL(triggered()), m_showTabsMapper, SLOT(map()));
   }
-
-#ifdef ANTIQUACRM_STATISTICS
-  m_showTabsMapper->setMapping(ac_statistics, "statistics");
-  connect(ac_statistics, SIGNAL(triggered()), m_showTabsMapper, SLOT(map()));
-#endif
 }
 
 void AntiquaViewsMenus::uniqLoadReports() {
@@ -84,6 +78,14 @@ void AntiquaViewsMenus::uniqLoadReports() {
 
   if (m_tabReports->loadDataset())
     m_tableReports->addActions(m_tabReports->actions());
+}
+
+void AntiquaViewsMenus::uniqLoadStatistics() {
+  if (m_tabStatistics->actions().size() > 0)
+    return;
+
+  if (m_tabStatistics->loadDataset())
+    m_tableStats->addActions(m_tabStatistics->actions());
 }
 
 void AntiquaViewsMenus::uniqLoadViews() {

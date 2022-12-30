@@ -9,7 +9,7 @@
 #include <QSignalMapper>
 #include <QWidget>
 
-class ViewsActionGroup : public QActionGroup {
+class ViewsActionGroup final : public QActionGroup {
   Q_OBJECT
 
 private:

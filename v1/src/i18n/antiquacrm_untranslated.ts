@@ -196,7 +196,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+20"/>
         <source>Application Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -258,12 +258,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+33"/>
         <source>Request rejected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+82"/>
         <source>Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -286,22 +286,22 @@
 <context>
     <name>AntiquaViewsMenus</name>
     <message>
-        <location filename="../antiquaviewsmenus.cpp" line="+15"/>
+        <location filename="../antiquaviewsmenus.cpp" line="+16"/>
         <source>Views</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Show tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Database Reports</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+6"/>
         <source>Statistics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -311,7 +311,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -319,7 +319,7 @@
 <context>
     <name>AntiquaWindow</name>
     <message>
-        <location filename="../antiquawindow.cpp" line="+69"/>
+        <location filename="../antiquawindow.cpp" line="+71"/>
         <source>Save request</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1174,6 +1174,29 @@ Image - Article Id: %2</source>
     <message>
         <location line="+5"/>
         <source>Create Postalcode cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CategoriesInYear</name>
+    <message>
+        <location filename="../tabs/statistics/categoriesinyear.cpp" line="+16"/>
+        <source>Categories sold in year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Categories sold per year %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Category</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3352,7 +3375,7 @@ Image - Article Id: %2</source>
 <context>
     <name>MonthlyReports</name>
     <message>
-        <location filename="../tabs/reports/monthlyreports.cpp" line="+21"/>
+        <location filename="../tabs/reports/monthlyreports.cpp" line="+22"/>
         <source>Monthly Payment reports</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3372,7 +3395,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+54"/>
         <source>Report saved: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4380,7 +4403,12 @@ Image - Article Id: %2</source>
 <context>
     <name>PaymentsInYear</name>
     <message>
-        <location filename="../tabs/statistics/paymentsinyear.cpp" line="+57"/>
+        <location filename="../tabs/statistics/paymentsinyear.cpp" line="+21"/>
+        <source>Orders in Year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+36"/>
         <source>Orders in Year %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5503,7 +5531,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ReturnEdit</name>
     <message>
-        <location filename="../utils/returnorder/returnedit.cpp" line="+22"/>
+        <location filename="../utils/returnorder/returnedit.cpp" line="+21"/>
         <source>Order Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5594,7 +5622,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+67"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5707,6 +5735,19 @@ Image - Article Id: %2</source>
     <message>
         <location line="+2"/>
         <source>is required must selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StatisticsActionGroup</name>
+    <message>
+        <location filename="../tabs/statistics/statisticsactiongroup.cpp" line="+11"/>
+        <source>Payments in year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Categories sold per year</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6053,7 +6094,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TabStatistics</name>
     <message>
-        <location filename="../tabs/statistics/tabstatistics.cpp" line="+14"/>
+        <location filename="../tabs/statistics/tabstatistics.cpp" line="+15"/>
         <source>Statistics</source>
         <translation type="unfinished"></translation>
     </message>

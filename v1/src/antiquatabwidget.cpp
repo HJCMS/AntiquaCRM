@@ -98,16 +98,6 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
     return true;
   }
 
-#ifdef ANTIQUACRM_STATISTICS
-  // Statistics
-  if (iName == "statistics_tab") {
-    TabStatistics *m_tab = new TabStatistics(this);
-    int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
-    m_tabBar->setTabCloseable(i, m_tab->isClosable());
-    return true;
-  }
-#endif
-
 #ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << "Not in set" << iName;
 #endif
@@ -155,6 +145,23 @@ void AntiquaTabWidget::addViewsTab(const QString &query) {
   m_views->createSearchQuery(query);
   int i = addTab(m_views, m_views->windowIcon(), m_views->windowTitle());
   m_tabBar->setTabCloseable(i, m_views->isClosable());
+  setCurrentIndex(i);
+}
+
+void AntiquaTabWidget::addStatisticsTab(const QString &query) {
+  int index = indexByName("tab_statistics");
+  if (index >= 0) {
+    m_statistics->createSearchQuery(query);
+    setCurrentIndex(index);
+    return;
+  }
+
+  // Statistics
+  m_statistics = new TabStatistics(this);
+  m_statistics->createSearchQuery(query);
+  int i = addTab(m_statistics, m_statistics->windowIcon(),
+                 m_statistics->windowTitle());
+  m_tabBar->setTabCloseable(i, m_statistics->isClosable());
   setCurrentIndex(i);
 }
 

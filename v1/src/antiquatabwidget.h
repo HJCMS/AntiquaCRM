@@ -32,6 +32,7 @@ private:
   AntiquaCRM::AReceiver *m_server;
   AntiquaTabBar *m_tabBar;
   TabViews *m_views; /**< Views */
+  TabStatistics *m_statistics; /**< Statistics */
   TabReports *m_reports; /**< Reports */
   QWidget *m_testing;
 
@@ -64,6 +65,7 @@ private:
 private Q_SLOTS:
   void setAction(const QJsonObject &obj);
   void addViewsTab(const QString &query);
+  void addStatisticsTab(const QString &query);
   void addReportsTab(const QString &query);
   void setTabChanged(int index);
   void setTabToClose(int index);

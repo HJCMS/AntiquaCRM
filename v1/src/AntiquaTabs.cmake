@@ -40,10 +40,8 @@
 #endif
 
 // AntiquaStatistics
-#ifdef ANTIQUACRM_STATISTICS
 #ifndef ANTIQUACRM_TABSTATISTICS_H
 #include "tabstatistics.h"
-#endif
 #endif
 
 #endif

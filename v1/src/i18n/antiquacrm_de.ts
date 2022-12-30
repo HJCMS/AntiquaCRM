@@ -196,7 +196,7 @@
         <translation>Über</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+20"/>
         <source>Application Quit</source>
         <translation>Programm beenden</translation>
     </message>
@@ -258,12 +258,12 @@
         <translation>Anzeigen und Bearbeiten von Systembestellungen</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+33"/>
         <source>Request rejected!</source>
         <translation>Anfrage abgelehnt!</translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+82"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
@@ -286,22 +286,22 @@
 <context>
     <name>AntiquaViewsMenus</name>
     <message>
-        <location filename="../antiquaviewsmenus.cpp" line="+15"/>
+        <location filename="../antiquaviewsmenus.cpp" line="+16"/>
         <source>Views</source>
         <translation>Ansichten</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Show tab</source>
         <translation>Zeige Registerkarte</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Database Reports</source>
         <translation>Datenbankberichte</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+6"/>
         <source>Statistics</source>
         <translation>Statistiken</translation>
     </message>
@@ -311,7 +311,7 @@
         <translation>Datenbank ansichten</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Fullscreen</source>
         <translation>Vollbildansicht</translation>
     </message>
@@ -319,7 +319,7 @@
 <context>
     <name>AntiquaWindow</name>
     <message>
-        <location filename="../antiquawindow.cpp" line="+69"/>
+        <location filename="../antiquawindow.cpp" line="+71"/>
         <source>Save request</source>
         <translation>Speichernanfrage</translation>
     </message>
@@ -1177,6 +1177,29 @@ Bild - Artikel Nr: %2</translation>
         <location line="+5"/>
         <source>Create Postalcode cache</source>
         <translation>Erstelle Postleitzahlen Speicher</translation>
+    </message>
+</context>
+<context>
+    <name>CategoriesInYear</name>
+    <message>
+        <location filename="../tabs/statistics/categoriesinyear.cpp" line="+16"/>
+        <source>Categories sold in year</source>
+        <translation>Verkaufte Kategorien im jahr</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Categories sold per year %1.</source>
+        <translation>Im Jahr verkaufte Kategorien %1.</translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Categories</source>
+        <translation>Kategorien</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Category</source>
+        <translation>Kategorie</translation>
     </message>
 </context>
 <context>
@@ -3354,7 +3377,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>MonthlyReports</name>
     <message>
-        <location filename="../tabs/reports/monthlyreports.cpp" line="+21"/>
+        <location filename="../tabs/reports/monthlyreports.cpp" line="+22"/>
         <source>Monthly Payment reports</source>
         <translation>Monatliche Zahlungsberichte</translation>
     </message>
@@ -3374,7 +3397,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bericht</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+54"/>
         <source>Report saved: %1</source>
         <translation>Bericht gespeichert: %1</translation>
     </message>
@@ -4382,7 +4405,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PaymentsInYear</name>
     <message>
-        <location filename="../tabs/statistics/paymentsinyear.cpp" line="+57"/>
+        <location filename="../tabs/statistics/paymentsinyear.cpp" line="+21"/>
+        <source>Orders in Year</source>
+        <translation>Bestellungen im Jahr</translation>
+    </message>
+    <message>
+        <location line="+36"/>
         <source>Orders in Year %1.</source>
         <translation>Bestellungen im Jahr %1.</translation>
     </message>
@@ -5505,7 +5533,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ReturnEdit</name>
     <message>
-        <location filename="../utils/returnorder/returnedit.cpp" line="+22"/>
+        <location filename="../utils/returnorder/returnedit.cpp" line="+21"/>
         <source>Order Id</source>
         <translation>Auftrags Nr</translation>
     </message>
@@ -5596,7 +5624,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Nichts zu tun!</translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+67"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -5710,6 +5738,19 @@ Bild - Artikel Nr: %2</translation>
         <location line="+2"/>
         <source>is required must selected.</source>
         <translation>ist erforderlich muss ausgewählt sein.</translation>
+    </message>
+</context>
+<context>
+    <name>StatisticsActionGroup</name>
+    <message>
+        <location filename="../tabs/statistics/statisticsactiongroup.cpp" line="+11"/>
+        <source>Payments in year</source>
+        <translation>Verkäufe im Jahr</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Categories sold per year</source>
+        <translation>Im Jahr verkauft nach Kategorie</translation>
     </message>
 </context>
 <context>
@@ -6055,7 +6096,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TabStatistics</name>
     <message>
-        <location filename="../tabs/statistics/tabstatistics.cpp" line="+14"/>
+        <location filename="../tabs/statistics/tabstatistics.cpp" line="+15"/>
         <source>Statistics</source>
         <translation>Statistiken</translation>
     </message>

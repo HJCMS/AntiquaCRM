@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "tabstatistics.h"
+#include "categoriesinyear.h"
 #include "paymentsinyear.h"
 
 #include <QComboBox>
@@ -15,6 +16,11 @@ TabStatistics::TabStatistics(QWidget *parent)
   setWindowIcon(getTabIcon("kchart"));
   setObjectName("antiqua_statistics_tab");
   setClosable(true);
+
+  QDate date = QDate::currentDate();
+  AntiquaCRM::ASettings cfg(this);
+  int year = cfg.value("statistics_year", 2022).toInt();
+  p_statsDate = QDate(year, date.month(), date.day());
 }
 
 void TabStatistics::openPaymentsInYear(const QDate &d) {
@@ -23,35 +29,37 @@ void TabStatistics::openPaymentsInYear(const QDate &d) {
   setCurrentIndex(0);
 }
 
-void TabStatistics::popupWarningTabInEditMode() {
-  // Unused
+void TabStatistics::openCategoriesInYear(const QDate &d) {
+  CategoriesInYear *m_view = new CategoriesInYear(d, this);
+  insertWidget(1, m_view);
+  setCurrentIndex(1);
 }
 
-void TabStatistics::setDefaultTableView() {
-  // Unused
-}
+void TabStatistics::popupWarningTabInEditMode() {}
 
-void TabStatistics::openStartPage() {
-  firstview = true;
-  openPaymentsInYear(QDate::currentDate());
-}
+void TabStatistics::setDefaultTableView() {}
+
+void TabStatistics::openStartPage() {}
 
 void TabStatistics::createSearchQuery(const QString &query) {
-  qDebug() << Q_FUNC_INFO << "__TODO__" << query;
+  firstview = true;
+  if (query == "PaymentsInYear") {
+    openPaymentsInYear(p_statsDate);
+  } else if (query == "CategoriesInYear") {
+    openCategoriesInYear(p_statsDate);
+  }
+#ifdef ANTIQUA_DEVELOPEMENT
+   else {
+    qDebug() << Q_FUNC_INFO << "NOT FOUND" << query;
+  }
+#endif
 }
 
-void TabStatistics::openEntry(qint64 statsId) {
-  qDebug() << Q_FUNC_INFO << "__TODO__" << statsId;
-}
+void TabStatistics::openEntry(qint64) {}
 
-void TabStatistics::onEnterChanged() {
-  if (firstview)
-    return;
-
-  openStartPage();
-}
+void TabStatistics::onEnterChanged() {}
 
 bool TabStatistics::customAction(const QJsonObject &obj) {
-  qDebug() << Q_FUNC_INFO << "__TODO__" << obj;
+  Q_UNUSED(obj);
   return false;
 }

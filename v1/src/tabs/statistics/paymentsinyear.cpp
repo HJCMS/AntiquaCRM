@@ -13,13 +13,12 @@
 #include <QVBoxLayout>
 #include <QtCharts>
 
-PaymentsInYear::PaymentsInYear(const QDate &date, QWidget *parent)
-    : QWidget{parent}, p_date(date) {
-  setObjectName("payments_from_year");
-  setContentsMargins(2, 2, 2, 2);
+using namespace QtCharts;
 
-  QVBoxLayout *layout = new QVBoxLayout(this);
-  layout->setContentsMargins(0, 0, 0, 0);
+PaymentsInYear::PaymentsInYear(const QDate &date, QWidget *parent)
+    : QScrollArea{parent}, p_date(date) {
+  setObjectName("payments_from_year");
+  setWidgetResizable(true);
 
   int _year = p_date.year();
   QMap<qint64, int> counts = StatsUtils::daysInYearRange(_year);
@@ -53,14 +52,14 @@ PaymentsInYear::PaymentsInYear(const QDate &date, QWidget *parent)
   m_axisYear->setEndDate(QDate(_year, 12, 31));
   m_axisCount = new CountAxis(max_count, this);
 
-  QtCharts::QChart *m_chart = new QtCharts::QChart;
+  QChart *m_chart = new QChart;
   m_chart->setTitle(tr("Orders in Year %1.").arg(str_year));
   m_chart->legend()->hide();
-  m_chart->setAnimationOptions(QtCharts::QChart::NoAnimation);
+  m_chart->setAnimationOptions(QChart::NoAnimation);
   m_chart->addAxis(m_axisYear, Qt::AlignBottom);
   m_chart->addAxis(m_axisCount, Qt::AlignLeft);
 
-  QtCharts::QLineSeries *ordered_series = new QtCharts::QLineSeries;
+  QLineSeries *ordered_series = new QLineSeries;
   ordered_series->setName(tr("Orders"));
   QMapIterator<qint64, int> it(counts);
   while (it.hasNext()) {
@@ -71,9 +70,8 @@ PaymentsInYear::PaymentsInYear(const QDate &date, QWidget *parent)
   ordered_series->attachAxis(m_axisYear);
   ordered_series->attachAxis(m_axisCount);
 
-  QtCharts::QChartView *m_view = new QtCharts::QChartView(m_chart, this);
+  QChartView *m_view = new QChartView(m_chart, this);
   m_view->setRenderHint(QPainter::Antialiasing);
-  layout->addWidget(m_view);
-
-  setLayout(layout);
+  setWindowTitle(m_chart->title());
+  setWidget(m_view);
 }

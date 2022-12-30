@@ -8,12 +8,13 @@
 #include <AGlobal>
 #include <QDate>
 #include <QObject>
+#include <QScrollArea>
 #include <QWidget>
 
 class CountAxis;
 class YearAxis;
 
-class PaymentsInYear final : public QWidget {
+class PaymentsInYear final : public QScrollArea {
   Q_OBJECT
 
 private:

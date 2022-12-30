@@ -12,6 +12,7 @@
 
 class ReportsActionGroup;
 class ViewsActionGroup;
+class StatisticsActionGroup;
 
 class AntiquaViewsMenus final : public QMenu {
   Q_OBJECT
@@ -20,11 +21,10 @@ private:
   QMenu *m_tableVisit;
   QMenu *m_tableReports;
   QMenu *m_tableViews;
+  QMenu *m_tableStats;
   ReportsActionGroup *m_tabReports;
   ViewsActionGroup *m_tabViews;
-#ifdef ANTIQUACRM_STATISTICS
-  QAction *ac_statistics;
-#endif
+  StatisticsActionGroup *m_tabStatistics;
   QAction *ac_fullScreen;
 
   QSignalMapper *m_showTabsMapper;
@@ -32,12 +32,14 @@ private:
 
 private Q_SLOTS:
   void uniqLoadReports();
+  void uniqLoadStatistics();
   void uniqLoadViews();
 
 Q_SIGNALS:
   void sendToggleFullscreen();
   void sendShowTab(const QString &);
   void sendOpenView(const QString &);
+  void sendOpenStats(const QString &);
   void sendOpenReport(const QString &);
 
 public:

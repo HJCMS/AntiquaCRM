@@ -37,6 +37,7 @@ private Q_SLOTS:
 Q_SIGNALS:
   void sendToggleFullscreen();
   void sendViewTab(const QString &);
+  void sendOpenTabStatistics(const QString &);
   void sendOpenTabViews(const QString &);
   void sendOpenTabReports(const QString &);
   void sendApplQuit();

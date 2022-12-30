@@ -32,6 +32,9 @@ AntiquaMenuBar::AntiquaMenuBar(QMainWindow *parent)
   connect(m_viewsMenu, SIGNAL(sendOpenReport(const QString &)),
           SIGNAL(sendOpenTabReports(const QString &)));
 
+  connect(m_viewsMenu, SIGNAL(sendOpenStats(const QString &)),
+          SIGNAL(sendOpenTabStatistics(const QString &)));
+
   connect(m_viewsMenu, SIGNAL(sendOpenView(const QString &)),
           SIGNAL(sendOpenTabViews(const QString &)));
 

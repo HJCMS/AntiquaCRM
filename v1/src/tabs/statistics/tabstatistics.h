@@ -14,10 +14,12 @@ class TabStatistics final : public Inventory {
   Q_OBJECT
 
 private:
+  QDate p_statsDate;
   bool firstview = false;
 
 private Q_SLOTS:
   void openPaymentsInYear(const QDate &d);
+  void openCategoriesInYear(const QDate &d);
   void popupWarningTabInEditMode() override;
   void setDefaultTableView() override;
 

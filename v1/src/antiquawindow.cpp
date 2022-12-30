@@ -32,6 +32,8 @@ AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
           m_centralWidget, SLOT(addReportsTab(const QString &)));
   connect(m_menuBar, SIGNAL(sendOpenTabViews(const QString &)), m_centralWidget,
           SLOT(addViewsTab(const QString &)));
+  connect(m_menuBar, SIGNAL(sendOpenTabStatistics(const QString &)), m_centralWidget,
+          SLOT(addStatisticsTab(const QString &)));
   connect(m_menuBar, SIGNAL(sendViewTab(const QString &)), m_centralWidget,
           SLOT(setShowTab(const QString &)));
   connect(m_menuBar, SIGNAL(sendToggleFullscreen()),
