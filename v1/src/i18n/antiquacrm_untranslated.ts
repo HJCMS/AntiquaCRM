@@ -1180,22 +1180,22 @@ Image - Article Id: %2</source>
 <context>
     <name>CategoriesInYear</name>
     <message>
-        <location filename="../tabs/statistics/categoriesinyear.cpp" line="+16"/>
-        <source>Categories sold in year</source>
+        <location filename="../tabs/statistics/categoriesinyear.cpp" line="+20"/>
+        <source>Number of items sold by category in the year</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Categories sold per year %1.</source>
+        <location line="+1"/>
+        <source>%1 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+23"/>
         <source>Categories</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+9"/>
         <source>Category</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4403,12 +4403,7 @@ Image - Article Id: %2</source>
 <context>
     <name>PaymentsInYear</name>
     <message>
-        <location filename="../tabs/statistics/paymentsinyear.cpp" line="+21"/>
-        <source>Orders in Year</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+36"/>
+        <location filename="../tabs/statistics/paymentsinyear.cpp" line="+56"/>
         <source>Orders in Year %1.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -33,6 +33,7 @@ query_template_keys.sql
 query_views.sql
 select_statement_postalcode_tables.sql
 select_statement_template_body.sql
+statistics_monthly_categories.sql
 statistics_payments_storage.sql
 statistics_payments_year.sql
 union_template_keys.sql

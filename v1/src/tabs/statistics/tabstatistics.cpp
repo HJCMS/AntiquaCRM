@@ -43,6 +43,7 @@ void TabStatistics::openStartPage() {}
 
 void TabStatistics::createSearchQuery(const QString &query) {
   firstview = true;
+  // Einträge aus StatisticsActionGroup
   if (query == "PaymentsInYear") {
     openPaymentsInYear(p_statsDate);
   } else if (query == "CategoriesInYear") {

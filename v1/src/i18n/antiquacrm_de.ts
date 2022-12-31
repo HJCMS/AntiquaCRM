@@ -1182,22 +1182,22 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CategoriesInYear</name>
     <message>
-        <location filename="../tabs/statistics/categoriesinyear.cpp" line="+16"/>
-        <source>Categories sold in year</source>
-        <translation>Verkaufte Kategorien im jahr</translation>
+        <location filename="../tabs/statistics/categoriesinyear.cpp" line="+20"/>
+        <source>Number of items sold by category in the year</source>
+        <translation>Anzahl der Verkauften Artikel nach Kategorie im Jahr</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Categories sold per year %1.</source>
-        <translation>Im Jahr verkaufte Kategorien %1.</translation>
+        <location line="+1"/>
+        <source>%1 %2.</source>
+        <translation></translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+23"/>
         <source>Categories</source>
         <translation>Kategorien</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+9"/>
         <source>Category</source>
         <translation>Kategorie</translation>
     </message>
@@ -4405,12 +4405,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PaymentsInYear</name>
     <message>
-        <location filename="../tabs/statistics/paymentsinyear.cpp" line="+21"/>
-        <source>Orders in Year</source>
-        <translation>Bestellungen im Jahr</translation>
-    </message>
-    <message>
-        <location line="+36"/>
+        <location filename="../tabs/statistics/paymentsinyear.cpp" line="+56"/>
         <source>Orders in Year %1.</source>
         <translation>Bestellungen im Jahr %1.</translation>
     </message>

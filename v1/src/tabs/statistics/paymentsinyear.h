@@ -10,20 +10,18 @@
 #include <QObject>
 #include <QScrollArea>
 #include <QWidget>
-
-class CountAxis;
-class YearAxis;
+#include <QtCharts/QChartView>
 
 class PaymentsInYear final : public QScrollArea {
   Q_OBJECT
 
 private:
   const QDate p_date;
-  YearAxis *m_axisYear;
-  CountAxis *m_axisCount;
+  QtCharts::QChartView *m_view;
 
 public:
   explicit PaymentsInYear(const QDate &date, QWidget *parent = nullptr);
+  ~PaymentsInYear();
 };
 
 #endif // ANTIQUACRM_PAYMENTSINYEAR_H
