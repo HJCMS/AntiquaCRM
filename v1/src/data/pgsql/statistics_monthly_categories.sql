@@ -1,7 +1,8 @@
 -- @brief Monthly Categories
 -- @file statistics_monthly_categories.sql
 -- WHERE date_part('year', o_since) = 2022 AND date_part('month', o_since) = 6
-SELECT sl_identifier, count(sl_id) AS counts
+SELECT sl_identifier,
+  count(sl_id) AS counts
 FROM inventory_orders
 LEFT JOIN article_orders ON a_order_id=o_id
 LEFT JOIN inventory_books ON ib_id=a_article_id

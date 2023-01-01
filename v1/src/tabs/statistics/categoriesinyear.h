@@ -17,7 +17,11 @@ class CategoriesInYear final : public QScrollArea {
 
 private:
   const QDate p_date;
+  QString currency;
   QtCharts::QChartView *m_view;
+
+private Q_SLOTS:
+  void onHoverTip(bool, int);
 
 public:
   explicit CategoriesInYear(const QDate &date, QWidget *parent = nullptr);
