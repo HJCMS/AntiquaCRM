@@ -62,11 +62,15 @@ void OrdersStatusBar::setHistoryAction(int action) {
     sqlQuery = "o_payment_status=" + status;
     status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
     sqlQuery.append(" AND o_order_status=" + status);
+    sqlQuery.append(" AND ");
+    sqlQuery.append(searchYear());
     break;
 
   case OrdersHistoryButton::HistoryQuery::FILTER_CANCELED:
     status = QString::number(AntiquaCRM::OrderStatus::CANCELED);
     sqlQuery.append("o_order_status=" + status);
+    sqlQuery.append(" AND ");
+    sqlQuery.append(searchYear());
     break;
 
   default:
@@ -74,8 +78,6 @@ void OrdersStatusBar::setHistoryAction(int action) {
     break;
   };
 
-  sqlQuery.append(" AND ");
-  sqlQuery.append(searchYear());
 
 #ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << sqlQuery;
