@@ -70,6 +70,11 @@ void MonthlyReports::createReport(const QDate &date) {
   p_date = QDate(date.year(), date.month(),
                  cal.daysInMonth(date.month(), date.year()));
 
+  if (!p_date.isValid()) {
+    qWarning("Selected Report Date is invalid!");
+    return;
+  }
+
   QString where_clause("o_delivered BETWEEN '");
   QDate fromDay(p_date.year(), p_date.month(), 1);
   where_clause.append(fromDay.toString("dd.MM.yyyy") + "T00:00:00");

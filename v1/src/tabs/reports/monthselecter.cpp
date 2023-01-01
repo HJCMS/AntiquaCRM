@@ -3,13 +3,13 @@
 
 #include "monthselecter.h"
 
-#include <QCalendar>
 #include <QIcon>
 #include <QLabel>
 #include <QLayout>
 #include <QLocale>
 
-MonthSelecter::MonthSelecter(QWidget *parent) : QStatusBar{parent} {
+MonthSelecter::MonthSelecter(QWidget *parent)
+    : QStatusBar{parent}, p_cal{QCalendar::System::Gregorian} {
   setContentsMargins(0, 0, 0, 0);
   setSizeGripEnabled(false);
 
@@ -49,46 +49,47 @@ void MonthSelecter::createSelectionRange() {
   qint8 current_month = date.month();
   // Aktuelles Jahr
   int current_year = date.year();
-  QString str_current_year = QString::number(current_year);
-  // Letztes Jahr
+  // Vergangenes Jahr
   int past_year = (date.year() - 1);
-  QString str_past_year = QString::number(past_year);
-  // Monate in die Vergagenheit gehen!
-  qint8 past_months = (current_month - 6);
+  // Monate aus dem vergangenen Jahr
+  int past_months = p_cal.monthsInYear(past_year);
   // Zähler für vergangenes Jahr
   qint8 minus = 0;
   // Sortierung für die Auswahlbox
   qint8 position = 1;
-  // Initialisiere den Kalender
-  QCalendar cal(QCalendar::System::Gregorian);
   // Starte Schleife in die Vergangeheit.
-  for (qint8 x = current_month; x > past_months; x--) {
-    if (x > 0) {
-      qint8 day = cal.daysInMonth(x, current_year);
-      QString name = cal.monthName(locale, x, current_year);
-      name.append(" " + str_current_year);
-      QDate dt = cal.dateFromParts(current_year, x, day);
-      m_comboBox->insertItem(position, name, dt);
-      if (dt.month() == (current_month - 1))
-        m_comboBox->setCurrentIndex(position);
+  for (qint8 x = current_month; x > (current_month - mttp); x--) {
+    if (x > 0) { // dieses Jahr
+      qint8 day = p_cal.daysInMonth(x, current_year);
+      QString name = p_cal.monthName(locale, x, current_year);
+      name.append(" " + QString::number(current_year));
+      QDate dt = p_cal.dateFromParts(current_year, x, day);
+      if (!dt.isValid())
+        continue;
 
+      m_comboBox->insertItem(position, name, dt);
       position++;
-    } else {
-      qint8 past_month = (12 - minus++);
-      qint8 day = cal.daysInMonth(x, current_year);
-      QString name = cal.monthName(locale, past_month, past_year);
-      name.append(" " + str_past_year);
-      QDate dt = cal.dateFromParts(past_year, past_month, day);
+    } else { // vergangenes Jahr
+      qint8 past_month = (past_months - minus++);
+      qint8 day = p_cal.daysInMonth(past_month, past_year);
+      QString name = p_cal.monthName(locale, past_month, past_year);
+      name.append(" " + QString::number(past_year));
+      QDate dt = p_cal.dateFromParts(past_year, past_month, day);
+      if (!dt.isValid())
+        continue;
+
       m_comboBox->insertItem(position, name, dt);
       position++;
     }
   }
+  m_comboBox->setCurrentIndex(1);
 }
 
 void MonthSelecter::createPressed() {
   int index = m_comboBox->currentIndex();
   if (index > 0) {
     QDate d = m_comboBox->itemData(index, Qt::UserRole).toDate();
+    qDebug() << Q_FUNC_INFO << d;
     btn_saveReport->setEnabled(true);
     btn_printReport->setEnabled(true);
     emit sendMonthDate(d);
