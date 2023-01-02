@@ -11,6 +11,7 @@
 #include <QScrollArea>
 #include <QWidget>
 #include <QtCharts/QChartView>
+#include <QtCharts/QHorizontalBarSeries>
 
 class CategoriesInYear final : public QScrollArea {
   Q_OBJECT
@@ -19,6 +20,8 @@ private:
   const QDate p_date;
   QString currency;
   QtCharts::QChartView *m_view;
+  QtCharts::QHorizontalBarSeries *m_DoubleSeries;
+  QtCharts::QHorizontalBarSeries *m_CountSeries;
 
 private Q_SLOTS:
   void onHoverTip(bool, int);

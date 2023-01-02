@@ -1182,24 +1182,24 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CategoriesInYear</name>
     <message>
-        <location filename="../tabs/statistics/categoriesinyear.cpp" line="+20"/>
+        <location filename="../tabs/statistics/categoriesinyear.cpp" line="+23"/>
         <source>Number of items sold by category in the year</source>
         <translation>Anzahl der Verkauften Artikel nach Kategorie im Jahr</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>%1 %2.</source>
-        <translation></translation>
+        <location line="+33"/>
+        <source>Quantity supplied</source>
+        <translation>Liefermenge</translation>
     </message>
     <message>
-        <location line="+23"/>
-        <source>Categories</source>
-        <translation>Kategorien</translation>
+        <location line="+4"/>
+        <source>Price average</source>
+        <translation>Preisdurchschnitt</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Category</source>
-        <translation>Kategorie</translation>
+        <location line="+5"/>
+        <source>Price volume</source>
+        <translation>Gesamtvolumen</translation>
     </message>
 </context>
 <context>
@@ -3397,7 +3397,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bericht</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+59"/>
         <source>Report saved: %1</source>
         <translation>Bericht gespeichert: %1</translation>
     </message>
@@ -4405,12 +4405,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PaymentsInYear</name>
     <message>
-        <location filename="../tabs/statistics/paymentsinyear.cpp" line="+56"/>
+        <location filename="../tabs/statistics/paymentsinyear.cpp" line="+30"/>
         <source>Orders in Year %1.</source>
         <translation>Bestellungen im Jahr %1.</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+38"/>
         <source>Orders</source>
         <translation>Bestellungen</translation>
     </message>

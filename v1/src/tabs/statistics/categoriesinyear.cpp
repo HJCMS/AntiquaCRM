@@ -6,6 +6,7 @@
 #include <AntiquaCRM>
 #include <QFontMetricsF>
 #include <QMap>
+#include <QMargins>
 #include <QVBoxLayout>
 #include <QtCharts>
 
@@ -30,8 +31,7 @@ CategoriesInYear::CategoriesInYear(const QDate &date, QWidget *parent)
 
   QChart *m_chart = new QChart;
   m_chart->setTitle(windowTitle());
-  m_chart->legend()->hide();
-  m_chart->setContentsMargins(0, 0, 0, 0);
+  m_chart->setMargins(QMargins(0, 0, 0, 0));
   m_chart->setAnimationOptions(QChart::SeriesAnimations);
 
   QBarCategoryAxis *m_axisY = new QBarCategoryAxis(m_chart);
@@ -41,32 +41,39 @@ CategoriesInYear::CategoriesInYear(const QDate &date, QWidget *parent)
   QFont barFont = m_axisY->labelsFont();
   barFont.setPointSize(m_axisY->labelsFont().pointSize() - 4);
 
+  m_DoubleSeries = new QHorizontalBarSeries(m_chart);
+  m_DoubleSeries->setLabelsPosition(QAbstractBarSeries::LabelsOutsideEnd);
+  m_DoubleSeries->setLabelsFormat("@value " + currency);
+  m_DoubleSeries->setLabelsVisible(true);
+  m_DoubleSeries->setBarWidth(1.0);
+
+  m_CountSeries = new QHorizontalBarSeries(m_chart);
+  m_CountSeries->setLabelsPosition(QAbstractBarSeries::LabelsOutsideEnd);
+  m_CountSeries->setLabelsFormat("@value.");
+  m_CountSeries->setLabelsVisible(true);
+  m_CountSeries->setBarWidth(0.5);
+
+  QBarSet *m_quantity = new QBarSet(tr("Quantity supplied"), m_chart);
+  m_quantity->setLabelFont(barFont);
+  m_quantity->setLabelColor(Qt::black);
+
+  QBarSet *m_average = new QBarSet(tr("Price average"), m_chart);
+  m_average->setObjectName("average_bar");
+  m_average->setLabelFont(barFont);
+  m_average->setLabelColor(Qt::black);
+
+  QBarSet *m_volume = new QBarSet(tr("Price volume"), m_chart);
+  m_volume->setObjectName("volume_bar");
+  m_volume->setLabelFont(barFont);
+  m_volume->setLabelColor(Qt::black);
+
+  m_quantity->append(0);
+  m_average->append(0);
+  m_volume->append(0);
+  m_axisY->insert(0, QString("Powered by AntiquaCRM"));
+
   AntiquaCRM::ASqlFiles sqf("statistics_payments_storage");
   if (sqf.openTemplate()) {
-    QHorizontalBarSeries *catbar_series = new QHorizontalBarSeries(m_chart);
-    catbar_series->setName(tr("Categories"));
-    catbar_series->setLabelsFormat("@value");
-    catbar_series->setLabelsPosition(QAbstractBarSeries::LabelsCenter);
-    catbar_series->setLabelsVisible(true);
-
-    QBarSet *m_barCrowd = new QBarSet(tr("Quantity"), catbar_series);
-    m_barCrowd->setObjectName("quantity_bar");
-    m_barCrowd->setLabelFont(barFont);
-    connect(m_barCrowd, SIGNAL(hovered(bool, int)),
-            SLOT(onHoverTip(bool, int)));
-
-    QHorizontalBarSeries *volbar_series = new QHorizontalBarSeries(m_chart);
-    volbar_series->setName(tr("Volumes"));
-    volbar_series->setLabelsFormat("@value " + currency);
-    volbar_series->setLabelsPosition(QAbstractBarSeries::LabelsCenter);
-    volbar_series->setLabelsVisible(true);
-
-    QBarSet *m_barVolume = new QBarSet(tr("Volume"), volbar_series);
-    m_barVolume->setObjectName("volume_bar");
-    m_barVolume->setLabelFont(barFont);
-    connect(m_barVolume, SIGNAL(hovered(bool, int)),
-            SLOT(onHoverTip(bool, int)));
-
     sqf.setWhereClause(str_year);
     AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
     QSqlQuery q = m_sql->query(sqf.getQueryContent());
@@ -78,45 +85,51 @@ CategoriesInYear::CategoriesInYear(const QDate &date, QWidget *parent)
         if (count < 1)
           continue;
 
-        m_barCrowd->insert(index, count);
-        m_barVolume->insert(index, q.value("volume").toDouble());
-        m_axisY->insert(index, q.value("sl_identifier").toString());
-        index++;
+        m_quantity->append(count);
+        double volume = q.value("volume").toDouble();
+        m_average->append(qRound(volume / count));
+        m_volume->append(volume);
+        m_axisY->insert(++index, q.value("sl_identifier").toString());
       }
-      catbar_series->insert(0, m_barCrowd);
-      volbar_series->insert(1, m_barVolume);
-      m_chart->addSeries(catbar_series);
-      m_chart->addSeries(volbar_series);
+      m_CountSeries->append(m_quantity);
+      m_DoubleSeries->insert(0, m_average);
+      m_DoubleSeries->insert(1, m_volume);
+      m_chart->addSeries(m_DoubleSeries);
+      m_chart->addSeries(m_CountSeries);
       // Vertikale Achse
       m_chart->addAxis(m_axisY, Qt::AlignLeft);
-      catbar_series->attachAxis(m_axisY);
+      m_CountSeries->attachAxis(m_axisY);
+      m_DoubleSeries->attachAxis(m_axisY);
     }
     // Update height
     QFontMetricsF fm(m_axisY->labelsFont());
-    m_view->setMinimumHeight(qRound(fm.height() * 1.95) * size);
+    m_view->setMinimumHeight(qRound(fm.height() * 3.75) * size);
   }
   m_view->setChart(m_chart);
+
+  connect(m_quantity, SIGNAL(hovered(bool, int)), SLOT(onHoverTip(bool, int)));
+  connect(m_average, SIGNAL(hovered(bool, int)), SLOT(onHoverTip(bool, int)));
+  connect(m_volume, SIGNAL(hovered(bool, int)), SLOT(onHoverTip(bool, int)));
 }
 
 void CategoriesInYear::onHoverTip(bool status, int index) {
-  if (!status)
+  if (!status) {
+    setToolTip(QString());
     return;
+  }
 
   QBarSet *m_bar = qobject_cast<QBarSet *>(sender());
   if (m_bar == nullptr)
     return;
 
   qreal value = m_bar->at(index);
-  QString tip;
-  if (m_bar->objectName() == "quantity_bar") {
-    tip = QString::number(value);
-    tip.append(" " + tr("Quantity"));
-  } else if (m_bar->objectName() == "volume_bar") {
-    tip = QString::number(value, 'f', 2);
+  QString tip = m_bar->label();
+  QStringList currencyBar({"average_bar", "volume_bar"});
+  if (currencyBar.contains(m_bar->objectName())) {
+    tip.append(" " + QString::number(value, 'f', 2));
     tip.append(" " + currency);
   } else {
-    qWarning("Missing Tip object: %s", qPrintable(tip));
-    return;
+    tip.append(" " + QString::number(value));
   }
   setToolTip(tip);
 }
