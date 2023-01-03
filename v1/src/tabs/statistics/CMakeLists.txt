@@ -16,23 +16,25 @@ SET (subproject_LINKER
 )
 
 SET (subproject_SOURCES
- tabstatistics.cpp
- yearaxis.cpp
+ ahorizontalbarseries.cpp
+ categoriesinyear.cpp
  countaxis.cpp
  paymentsinyear.cpp
- statsutils.cpp
- categoriesinyear.cpp
  statisticsactiongroup.cpp
+ statsutils.cpp
+ tabstatistics.cpp
+ yearaxis.cpp
 )
 
 SET (subproject_HEADERS
- tabstatistics.h
- yearaxis.h
+ ahorizontalbarseries.h
+ categoriesinyear.h
  countaxis.h
  paymentsinyear.h
- statsutils.h
- categoriesinyear.h
  statisticsactiongroup.h
+ statsutils.h
+ tabstatistics.h
+ yearaxis.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC

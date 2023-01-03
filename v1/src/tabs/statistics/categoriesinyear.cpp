@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "categoriesinyear.h"
+#include "ahorizontalbarseries.h"
 
 #include <AntiquaCRM>
 #include <QFontMetricsF>
@@ -9,6 +10,7 @@
 #include <QMargins>
 #include <QVBoxLayout>
 #include <QtCharts>
+#include <cmath>
 
 using namespace QtCharts;
 
@@ -35,23 +37,17 @@ CategoriesInYear::CategoriesInYear(const QDate &date, QWidget *parent)
   m_chart->setAnimationOptions(QChart::SeriesAnimations);
 
   QBarCategoryAxis *m_axisY = new QBarCategoryAxis(m_chart);
-  m_axisY->setLineVisible(false);
-  m_axisY->setGridLineVisible(true);
 
   QFont barFont = m_axisY->labelsFont();
   barFont.setPointSize(m_axisY->labelsFont().pointSize() - 4);
 
-  m_DoubleSeries = new QHorizontalBarSeries(m_chart);
-  m_DoubleSeries->setLabelsPosition(QAbstractBarSeries::LabelsOutsideEnd);
-  m_DoubleSeries->setLabelsFormat("@value " + currency);
-  m_DoubleSeries->setLabelsVisible(true);
-  m_DoubleSeries->setBarWidth(1.0);
+  m_countSeries = new AHorizontalBarSeries(this);
+  m_countSeries->setLabelsFormat("@value.");
+  m_countSeries->setBarWidth(0.5);
 
-  m_CountSeries = new QHorizontalBarSeries(m_chart);
-  m_CountSeries->setLabelsPosition(QAbstractBarSeries::LabelsOutsideEnd);
-  m_CountSeries->setLabelsFormat("@value.");
-  m_CountSeries->setLabelsVisible(true);
-  m_CountSeries->setBarWidth(0.5);
+  m_doubleSeries = new AHorizontalBarSeries(this);
+  m_doubleSeries->setLabelsFormat("@value " + currency);
+  m_doubleSeries->setBarWidth(1.0);
 
   QBarSet *m_quantity = new QBarSet(tr("Quantity supplied"), m_chart);
   m_quantity->setLabelFont(barFont);
@@ -66,11 +62,6 @@ CategoriesInYear::CategoriesInYear(const QDate &date, QWidget *parent)
   m_volume->setObjectName("volume_bar");
   m_volume->setLabelFont(barFont);
   m_volume->setLabelColor(Qt::black);
-
-  m_quantity->append(0);
-  m_average->append(0);
-  m_volume->append(0);
-  m_axisY->insert(0, QString("Powered by AntiquaCRM"));
 
   AntiquaCRM::ASqlFiles sqf("statistics_payments_storage");
   if (sqf.openTemplate()) {
@@ -87,29 +78,33 @@ CategoriesInYear::CategoriesInYear(const QDate &date, QWidget *parent)
 
         m_quantity->append(count);
         double volume = q.value("volume").toDouble();
-        m_average->append(qRound(volume / count));
+        m_average->append(currencyRound(volume / count));
         m_volume->append(volume);
-        m_axisY->insert(++index, q.value("sl_identifier").toString());
+        m_axisY->insert(index++, q.value("sl_identifier").toString());
       }
-      m_CountSeries->append(m_quantity);
-      m_DoubleSeries->insert(0, m_average);
-      m_DoubleSeries->insert(1, m_volume);
-      m_chart->addSeries(m_DoubleSeries);
-      m_chart->addSeries(m_CountSeries);
+      m_doubleSeries->insert(0, m_average);
+      m_doubleSeries->insert(1, m_volume);
+      m_countSeries->append(m_quantity);
+      m_chart->addSeries(m_doubleSeries);
+      m_chart->addSeries(m_countSeries);
       // Vertikale Achse
       m_chart->addAxis(m_axisY, Qt::AlignLeft);
-      m_CountSeries->attachAxis(m_axisY);
-      m_DoubleSeries->attachAxis(m_axisY);
+      m_doubleSeries->attachAxis(m_axisY);
     }
     // Update height
     QFontMetricsF fm(m_axisY->labelsFont());
-    m_view->setMinimumHeight(qRound(fm.height() * 3.75) * size);
+    m_view->setMinimumHeight(qRound(fm.height() * 3.15) * size);
   }
   m_view->setChart(m_chart);
 
   connect(m_quantity, SIGNAL(hovered(bool, int)), SLOT(onHoverTip(bool, int)));
   connect(m_average, SIGNAL(hovered(bool, int)), SLOT(onHoverTip(bool, int)));
   connect(m_volume, SIGNAL(hovered(bool, int)), SLOT(onHoverTip(bool, int)));
+}
+
+double CategoriesInYear::currencyRound(double d) {
+  double precision = 0.01;
+  return std::round(d / precision) * precision;
 }
 
 void CategoriesInYear::onHoverTip(bool status, int index) {

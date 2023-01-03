@@ -1182,12 +1182,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CategoriesInYear</name>
     <message>
-        <location filename="../tabs/statistics/categoriesinyear.cpp" line="+23"/>
+        <location filename="../tabs/statistics/categoriesinyear.cpp" line="+25"/>
         <source>Number of items sold by category in the year</source>
         <translation>Anzahl der Verkauften Artikel nach Kategorie im Jahr</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+27"/>
         <source>Quantity supplied</source>
         <translation>Liefermenge</translation>
     </message>
