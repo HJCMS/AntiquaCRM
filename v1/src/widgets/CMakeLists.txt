@@ -76,6 +76,7 @@ SET (projectLibrary_SOURCES
  tabsearchbar.cpp
  tabstatusbar.cpp
  taxlevelbox.cpp
+ techniqueedit.cpp
  textfield.cpp
  trustedbox.cpp
  yearedit.cpp
@@ -133,6 +134,7 @@ SET (projectLibrary_HEADERS
  tabsearchbar.h
  tabstatusbar.h
  taxlevelbox.h
+ techniqueedit.h
  textfield.h
  trustedbox.h
  yearedit.h

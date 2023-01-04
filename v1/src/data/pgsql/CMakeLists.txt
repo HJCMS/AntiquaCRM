@@ -29,6 +29,7 @@ query_storage_location.sql
 query_tab_books_main.sql
 query_tab_customers_main.sql
 query_tab_orders_main.sql
+query_tab_prints_main.sql
 query_template_keys.sql
 query_views.sql
 select_statement_postalcode_tables.sql

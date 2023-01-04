@@ -9,7 +9,7 @@
 #include <QWidget>
 #include <AntiquaCRM>
 
-class BooksTableModel : public AntiquaCRM::ASqlQueryModel
+class BooksTableModel final : public AntiquaCRM::ASqlQueryModel
 {
   Q_OBJECT
 

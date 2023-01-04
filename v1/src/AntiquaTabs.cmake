@@ -14,6 +14,11 @@
 #include "tabbooks.h"
 #endif
 
+// AntiquaPrintsStitches
+#ifndef ANTIQUACRM_PRINTSSTITCHES_H
+#include "tabprintsstitches.h"
+#endif
+
 // AntiquaCustomers
 #ifndef ANTIQUACRM_TABCUSTOMERS_H
 #include "tabcustomers.h"

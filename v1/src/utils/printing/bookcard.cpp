@@ -72,18 +72,18 @@ void BookCardPaintWidget::paintEvent(QPaintEvent *) {
   painter.drawStaticText(margin, yPos, storage);
 
   yPos += (fontHeight + margin);
+  QStaticText txtAuthor(p_author);
+  txtAuthor.setTextFormat(Qt::PlainText);
+  txtAuthor.setTextWidth((w - (margin * 2)));
+  painter.drawStaticText(margin, yPos, txtAuthor);
+  yPos += (txtAuthor.size().height() + margin);
+
   QStaticText txtKeywords(p_keywords.replace(",", ", "));
   txtKeywords.setTextFormat(Qt::PlainText);
   txtKeywords.setTextOption(textOptions);
   txtKeywords.setTextWidth((w - (margin * 2)));
   painter.drawStaticText(margin, yPos, txtKeywords);
   yPos += (txtKeywords.size().height() + margin);
-
-  QStaticText txtAuthor(p_author);
-  txtAuthor.setTextFormat(Qt::PlainText);
-  txtAuthor.setTextWidth((w - (margin * 2)));
-  painter.drawStaticText(margin, yPos, txtAuthor);
-  yPos += (txtAuthor.size().height() + margin);
 
   QStaticText txtTitle(p_title);
   txtTitle.setTextFormat(Qt::PlainText);

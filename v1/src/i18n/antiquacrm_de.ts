@@ -249,6 +249,11 @@
     </message>
     <message>
         <location line="+9"/>
+        <source>View Print and Stitches</source>
+        <translation>Zeige Drucke und Stiche</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>View and import Provider orders</source>
         <translation>Anzeigen und Importieren von Dienstleisterbestellungen</translation>
     </message>
@@ -281,6 +286,11 @@
         <location line="+1"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Prints and Stitches</source>
+        <translation>Drucke und Stiche</translation>
     </message>
 </context>
 <context>
@@ -4875,6 +4885,323 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>PrintsStitchesEditor</name>
+    <message>
+        <location filename="../tabs/prints/printsstitcheseditor.cpp" line="+15"/>
+        <source>Edit Prints</source>
+        <translation>Editiere Drucke</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Article ID</source>
+        <translation>Artikel Nr</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Count</source>
+        <translation>Anzahl</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Price</source>
+        <translation>Preis</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>incl. vat</source>
+        <translation>inkl. MwSt</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Views</source>
+        <translation>Ansicht</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Kolorit</source>
+        <translation>Kolorit</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Landscape</source>
+        <translation>Querformat</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Year</source>
+        <translation>Jahr</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Local Usage only</source>
+        <translation>Nur lokale Verwendung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>When this Options is marked. Then this Article will not exported to your Providers.</source>
+        <translation>Wenn diese Option markiert ist. Dann wird dieser Artikel nicht an die Dienstleister exportiert.</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Title Extended</source>
+        <translation>Erweitert</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Author</source>
+        <translation>Autor</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Format</source>
+        <translation>Format</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Condition</source>
+        <translation>Zustand</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Designation</source>
+        <translation>Bestimmung</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Technique</source>
+        <translation>Methode (Technik)</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Storage</source>
+        <translation>Lager</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Keywords</source>
+        <translation>Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Public Description</source>
+        <translation>Öffentliche Beschreibung</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Internal Description</source>
+        <translation>Interne Beschreibung</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Created at</source>
+        <translation>Erstellt am</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Last changed</source>
+        <translation>Zuletzt geändert</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Information</source>
+        <translation>Informationen</translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <source>An error has occurred!</source>
+        <translation>Ein Fehler ist aufgetreten!</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Can&apos;t load input datafields!</source>
+        <translation>Eingabedatenfelder können nicht geladen werden!</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>When getting this Message, please check your Network and Database connection!</source>
+        <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
+    </message>
+    <message>
+        <location line="+78"/>
+        <source>Print &amp; Stitches saved successfully!</source>
+        <translation>Druck &amp; Stiche erfolgreich gespeichert!</translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <source>Unsaved Changes</source>
+        <translation>Nicht gespeicherte Änderungen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Don&apos;t leave this page before save your changes!</source>
+        <translation>Verlassen Sie diese Seite nicht, bevor Sie Ihre Änderungen gespeichert haben!</translation>
+    </message>
+</context>
+<context>
+    <name>PrintsStitchesFilterSelect</name>
+    <message>
+        <location filename="../tabs/prints/printsstitchesfilterselect.cpp" line="+9"/>
+        <source>With this button you can optimize your search with some filters.</source>
+        <translation>Mit dieser Schaltfläche können Sie Ihre Suche mit einigen Filtern optimieren.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search in Prints and Stitches by Title</source>
+        <translation>Suche in Drucken und Stichen nach Titel</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Article Id</source>
+        <translation>Artikel Nr</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Multiple searches separated by commas</source>
+        <translation>Mehrere durch Kommas getrennte Suche</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Keywords</source>
+        <translation>Schlüsselwörter</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search in Prints and Stitches by Kewords</source>
+        <translation>Suchen Sie in Drucken und Stichen nach Schlüsselwörtern</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Author</source>
+        <translation>Autor</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search for Prints and Stitches authors</source>
+        <translation>Suchen Sie nach Autoren von Prints and Stitches</translation>
+    </message>
+</context>
+<context>
+    <name>PrintsStitchesModel</name>
+    <message>
+        <location filename="../tabs/prints/printsstitchesmodel.cpp" line="+21"/>
+        <source>Article Id</source>
+        <translation>Artikel Nr</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Duration</source>
+        <translation>Bestand</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Image</source>
+        <translation>Bild</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Price</source>
+        <translation>Preis</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Storage</source>
+        <translation>Lager</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Changed</source>
+        <translation>Geändert</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Author</source>
+        <translation>Autor</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Unknown</source>
+        <translation>Unbekannt</translation>
+    </message>
+</context>
+<context>
+    <name>PrintsStitchesSearchBar</name>
+    <message>
+        <location filename="../tabs/prints/printsstitchessearchbar.cpp" line="+17"/>
+        <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
+        <translation>Drücken Sie STRG+UMSCHALT+F, um dieses Menü schnell zu öffnen.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+30"/>
+        <source>Search</source>
+        <translation>Suche</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+20"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location line="-15"/>
+        <source>Keyword</source>
+        <translation>Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Author</source>
+        <translation>Autor</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Article number</source>
+        <translation>Artikelnummer</translation>
+    </message>
+</context>
+<context>
+    <name>PrintsStitchesTableView</name>
+    <message>
+        <location filename="../tabs/prints/printsstitchestableview.cpp" line="+63"/>
+        <source>Open entry</source>
+        <translation>Eintrag öffnen</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Create entry</source>
+        <translation>Eintrag erstellen</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Copy Article Id</source>
+        <translation>Artikelnummer kopieren</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Add Article to opened Order</source>
+        <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Update</source>
+        <translation>Aktualisieren</translation>
+    </message>
+</context>
+<context>
     <name>ProviderBuyerInfo</name>
     <message>
         <location filename="../tabs/providers/providerbuyerinfo.cpp" line="+43"/>
@@ -6020,6 +6347,29 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>TabPrintsStitches</name>
+    <message>
+        <location filename="../tabs/prints/tabprintsstitches.cpp" line="+17"/>
+        <source>Prints and Stitches</source>
+        <translation>Drucke und Stiche</translation>
+    </message>
+    <message>
+        <location line="+64"/>
+        <source>Can&apos;t open this Article</source>
+        <translation>Dieser Artikel kann nicht geöffnet werden</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Because Prints and Stitches tab is in edit mode.</source>
+        <translation>Weil sich die Registerkarte „Drucke und Stiche“ im Bearbeitungsmodus befindet.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>You need to save and close that opened first.</source>
+        <translation>Sie müssen das geöffnete zuerst speichern und schließen.</translation>
+    </message>
+</context>
+<context>
     <name>TabProviders</name>
     <message>
         <location filename="../tabs/providers/tabproviders.cpp" line="+16"/>
@@ -6189,6 +6539,14 @@ Bild - Artikel Nr: %2</translation>
         <location line="+54"/>
         <source>a Valid tax level is required.</source>
         <translation>Ein gültiger Steuersatz ist erforderlich.</translation>
+    </message>
+</context>
+<context>
+    <name>TechniqueEdit</name>
+    <message>
+        <location filename="../widgets/techniqueedit.cpp" line="+72"/>
+        <source>Technique field is required and must set.</source>
+        <translation>Technikfeld ist erforderlich und muss gesetzt werden.</translation>
     </message>
 </context>
 <context>

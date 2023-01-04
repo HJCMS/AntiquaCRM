@@ -15,11 +15,13 @@ ConditionEdit::ConditionEdit(QWidget *parent) : InputEdit{parent} {
 
 void ConditionEdit::loadDataset() {
   m_box->clear();
-  m_box->addItem(tr("Without disclosures"), AntiquaCRM::NO_CONDITION);
-  m_box->addItem(tr("Very good, almost new!"), AntiquaCRM::FINE);
-  m_box->addItem(tr("Slight signs of wear."), AntiquaCRM::GOOD);
-  m_box->addItem(tr("Significant signs of use."), AntiquaCRM::SATISFYING);
-  m_box->addItem(tr("Heavily worn!"), AntiquaCRM::SUFFICIENT);
+  m_box->addItem(tr("Without disclosures"),
+                 AntiquaCRM::Condition::NO_CONDITION);
+  m_box->addItem(tr("Very good, almost new!"), AntiquaCRM::Condition::FINE);
+  m_box->addItem(tr("Slight signs of wear."), AntiquaCRM::Condition::GOOD);
+  m_box->addItem(tr("Significant signs of use."),
+                 AntiquaCRM::Condition::SATISFYING);
+  m_box->addItem(tr("Heavily worn!"), AntiquaCRM::Condition::SUFFICIENT);
 }
 
 void ConditionEdit::dataChanged(int index) {
@@ -34,10 +36,11 @@ void ConditionEdit::reset() {
 
 void ConditionEdit::setValue(const QVariant &val) {
   int index = -1;
-  if (val.type() == QVariant::Int)
-    index = m_box->findData(val, Qt::UserRole);
-  else if (val.type() == QVariant::String)
+  if (val.type() == QVariant::Int) {
+    index = m_box->findData(val.toInt(), Qt::UserRole);
+  } else if (val.type() == QVariant::String) {
     index = m_box->findData(val, Qt::DisplayRole);
+  }
 
   if (index < 1)
     return;
