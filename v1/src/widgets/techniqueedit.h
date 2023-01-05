@@ -7,15 +7,19 @@
 
 #include <AGlobal>
 #include <AntiquaInputEdit>
+#include <QCompleter>
 
 class TechniqueEdit final : public InputEdit {
   Q_OBJECT
 
 private:
   AntiquaComboBox *m_comboBox;
+  AntiquaLineEdit *m_search;
+  QCompleter *m_completer;
 
 private Q_SLOTS:
-  void dataChanged(int);
+  void setDataChanged(int);
+  void setCompleted();
 
 public Q_SLOTS:
   Q_INVOKABLE void reset();

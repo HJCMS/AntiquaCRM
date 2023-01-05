@@ -15,7 +15,7 @@ TabPrintsStitches::TabPrintsStitches(QWidget *parent)
     : Inventory{"printsstitches_tab", parent} {
   setObjectName("inventory_printsstitches_tab");
   setWindowTitle(tr("Prints and Stitches"));
-  setWindowIcon(getTabIcon("view_log"));
+  setWindowIcon(getTabIcon("view_image"));
   setClosable(true);
 
   // Begin MainPage layout
