@@ -57,9 +57,16 @@ private:
   const QRegularExpression p13 = QRegularExpression("^(97[89])([\\d]{10})$");
   bool isISBN13(const QString &isbn) const;
 
+  /**
+   * @brief Status Icon Label
+   */
+  QLabel *m_status;
+
   void loadDataset();
 
 private Q_SLOTS:
+  void setValidationIcon(bool);
+
   /**
    * @brief Ableitung von QLineEdit::textChanged
    */

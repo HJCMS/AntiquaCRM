@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>documents/Welcome_de.txt</file>
-        <file>documents/Database_de.txt</file>
-    </qresource>
-</RCC>

@@ -4,7 +4,9 @@
 #include "isbnedit.h"
 
 #include <QHBoxLayout>
+#include <QIcon>
 #include <QMetaType>
+#include <QPixmap>
 #include <QRegularExpressionMatch>
 #include <QStringList>
 
@@ -17,6 +19,10 @@ IsbnEdit::IsbnEdit(QWidget *parent) : InputEdit{parent} {
   m_isbn->setPlaceholderText(tr("ISBN/EAN 10/13 (ISO 2108)"));
   m_isbn->setClearButtonEnabled(true);
   m_layout->addWidget(m_isbn);
+
+  m_status = new QLabel(this);
+  m_layout->addWidget(m_status);
+
   m_validator = new QRegExpValidator(simplePattern, m_isbn);
   m_isbn->setValidator(m_validator);
   m_completer = new QCompleter(prefix, m_isbn);
@@ -24,7 +30,7 @@ IsbnEdit::IsbnEdit(QWidget *parent) : InputEdit{parent} {
   m_completer->setFilterMode(Qt::MatchStartsWith);
   m_isbn->setCompleter(m_completer);
   m_layout->addStretch(1);
-  connect(m_isbn, SIGNAL(textChanged(const QString &)), this,
+  connect(m_isbn, SIGNAL(textChanged(const QString &)),
           SLOT(isbnChanged(const QString &)));
 }
 
@@ -40,33 +46,53 @@ bool IsbnEdit::isISBN13(const QString &isbn) const {
 
 void IsbnEdit::loadDataset() {}
 
+void IsbnEdit::setValidationIcon(bool b) {
+  QPixmap pixmap;
+  int h = (m_status->rect().height() - 4);
+  QSize size(h, h);
+  if (b) {
+    QIcon icon("://icons/action_ok.png");
+    pixmap = icon.pixmap(size, QIcon::Disabled);
+  } else {
+    QIcon icon("://icons/warning.png");
+    pixmap = icon.pixmap(size, QIcon::Disabled);
+  }
+  m_status->setPixmap(pixmap);
+}
+
 void IsbnEdit::isbnChanged(const QString &s) {
+  bool valid = false;
   int len = s.trimmed().length();
   if (len == 10 && isISBN10(s)) {
-    emit isbnIsValid(true);
-    setModified(true);
-    return;
+    valid = true;
+  } else if (len == 13 && isISBN13(s)) {
+    valid = true;
   }
-  if (len == 13 && isISBN13(s)) {
-    emit isbnIsValid(true);
-    setModified(true);
-    return;
-  }
-  emit isbnIsValid(false);
+  setValidationIcon(valid);
+  emit isbnIsValid(valid);
+  setModified(true);
 }
 
 void IsbnEdit::setValue(const QVariant &val) {
-  QString isbn = val.toString().trimmed();
-  int len = isbn.length();
+  QString s;
+  switch (val.type()) {
+  case QVariant::ULongLong:
+  case QVariant::LongLong:
+    s = QString::number(val.toLongLong());
+    break;
+
+  default:
+    s = val.toString().trimmed();
+  }
+
+  int len = s.length();
   if (len < 10 || len > 13)
     return; // ignore
 
-  if (len == 10 && isISBN10(isbn)) {
-    m_isbn->setText(isbn);
-    setModified(true);
-  } else if (len == 13 && isISBN13(isbn)) {
-    m_isbn->setText(isbn);
-    setModified(true);
+  if (len == 10 && isISBN10(s)) {
+    m_isbn->setText(s);
+  } else if (len == 13 && isISBN13(s)) {
+    m_isbn->setText(s);
   }
 }
 

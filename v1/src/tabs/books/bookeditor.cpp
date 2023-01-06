@@ -178,7 +178,7 @@ BookEditor::BookEditor(QWidget *parent)
   ib_keyword->setToolTip(lb_keywords->text());
   row2->addWidget(ib_keyword, row2c++, 1, 1, 1);
 
-  AntiquaILabel *lb_isbn = new AntiquaILabel(tr("ISBN"), this);
+  AntiquaILabel *lb_isbn = new AntiquaILabel("ISBN/EAN", this);
   row2->addWidget(lb_isbn, row2c, 0, 1, 1);
   ib_isbn = new IsbnEdit(this);
   ib_isbn->setObjectName("ib_isbn");

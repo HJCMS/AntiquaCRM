@@ -1,5 +1,0 @@
-<h3>Dies ist Ihr erster Start von Antiqua CRM.</h3>
-<p>Es freut mich das Sie sich dafür entschieden haben.</p>
-<p>Bevor es losgehen kann, müssen jedoch einige wichtige Einstellungen vorgenommen werden.</p>
-<p>Der Assistent wird Sie durch die einzelnen Einstellungen führen.</p>
-<p>Bitte beenden Sie den Assitenten erst, wenn alle Schritte Erfolgreich durchgeführt wurden!</p>
