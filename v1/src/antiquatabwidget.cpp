@@ -89,6 +89,15 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
     return true;
   }
 
+  // Cd's Vinyl
+  if (iName == "cdvinyl_tab") {
+    TabCDVinyl *m_tab = new TabCDVinyl(this);
+    int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
+    m_tabBar->setTabCloseable(i, m_tab->isClosable());
+    m_tabBar->setTabWhatsThis(i, tr("View Cd and Vinyl"));
+    return true;
+  }
+
   // Providers
   if (iName == "providers_tab") {
     TabProviders *m_tab = new TabProviders(this);
@@ -223,6 +232,7 @@ const QMap<QString, QString> AntiquaTabWidget::availableTabs() {
   m.insert("orders", tr("Orders"));
   m.insert("providers", tr("Providers"));
   m.insert("printsstitches", tr("Prints and Stitches"));
+  m.insert("cdvinyl", tr("CD and Vinyl"));
   return m;
 }
 

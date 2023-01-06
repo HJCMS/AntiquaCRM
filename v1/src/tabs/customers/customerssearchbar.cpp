@@ -3,6 +3,7 @@
 
 #include "customerssearchbar.h"
 #include "customersselectfilter.h"
+#include "customerssearchlineedit.h"
 
 CustomersSearchBar::CustomersSearchBar(QWidget *parent) : TabSearchBar{parent} {
   setObjectName("customers_search_bar");
@@ -12,10 +13,7 @@ CustomersSearchBar::CustomersSearchBar(QWidget *parent) : TabSearchBar{parent} {
   m_selectFilter->setToolTip(filterTip);
   addWidget(m_selectFilter);
 
-  m_searchEdit = new SearchLineEdit(this);
-  m_searchEdit->setPlaceholderText(tr("Search customers"));
-  QString searchTip = tr("Press CTRL+Shift+S to focus in.");
-  m_searchEdit->setToolTip(searchTip);
+  m_searchEdit = new CustomersSearchLineEdit(this);
   addWidget(m_searchEdit);
 
   m_searchBtn = startSearchButton(tr("Search customer"));
@@ -74,12 +72,14 @@ void CustomersSearchBar::setClearAndFocus() {
 
 void CustomersSearchBar::setSearchFocus() { setClearAndFocus(); }
 
-int CustomersSearchBar::searchLength() { return m_searchEdit->text().length(); }
+int CustomersSearchBar::searchLength() {
+  return m_searchEdit->getSearch().length();
+}
 
 const QString CustomersSearchBar::getSearchStatement() {
   CustomersSelectFilter::Filter filter = m_selectFilter->currentFilter();
   QJsonObject js = m_selectFilter->getFilter(filter);
-  QString searchLine = m_searchEdit->text().trimmed();
+  QString searchLine = m_searchEdit->getSearch();
   QStringList fields = js.value("fields").toString().split(",");
   QStringList buffer;
 

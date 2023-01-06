@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
 
-SET(_projectLibrary "AntiquaCustomers")
+SET(_projectLibrary "AntiquaCDsVinyl")
 
 INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_BINARY_DIR}
@@ -12,40 +12,31 @@ INCLUDE_DIRECTORIES (
 SET (projectLibrary_LINKER
  AntiquaCRM
  AntiquaWidgets
- AntiquaMailing
+ AntiquaKeywords
+ AntiquaImgEdit
  AntiquaPrinting
 )
 
 SET (projectLibrary_SOURCES
- tabcustomers.cpp
- customerstablemodel.cpp
- customerstableview.cpp
- customersstatusbar.cpp
- customersselectfilter.cpp
- customerssearchlineedit.cpp
- customerssearchbar.cpp
- customerseditor.cpp
- customersheaderframe.cpp
- customerstabwidget.cpp
- customersdata.cpp
- customersbillings.cpp
- customersorders.cpp
+ tabcdvinyl.cpp
+ cdvfilterselect.cpp
+ cdvsearchline.cpp
+ cdvsearchbar.cpp
+ cdvtablemodel.cpp
+ cdvtableview.cpp
+ cdvstatusbar.cpp
+ cdveditor.cpp
 )
 
 SET (projectLibrary_HEADERS
- tabcustomers.h
- customerstablemodel.h
- customerstableview.h
- customersstatusbar.h
- customersselectfilter.h
- customerssearchlineedit.h
- customerssearchbar.h
- customerseditor.h
- customersheaderframe.h
- customerstabwidget.h
- customersdata.h
- customersbillings.h
- customersorders.h
+ tabcdvinyl.h
+ cdvfilterselect.h
+ cdvsearchline.h
+ cdvsearchbar.h
+ cdvtablemodel.h
+ cdvtableview.h
+ cdvstatusbar.h
+ cdveditor.h
 )
 
 ADD_LIBRARY (${_projectLibrary} STATIC

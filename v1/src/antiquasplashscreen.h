@@ -8,6 +8,7 @@
 #include <QFont>
 #include <QMainWindow>
 #include <QObject>
+#include <QPainter>
 #include <QPixmap>
 #include <QSplashScreen>
 

@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "orderssearchbar.h"
+#include "ordersearchline.h"
 
 #include <AGlobal>
 #include <QIcon>
@@ -21,8 +22,7 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent) : TabSearchBar{parent} {
   m_selectFilter->addItem(icon, tr("Provider"), "o_provider_name");
   addWidget(m_selectFilter);
 
-  m_lineEdit = new SearchLineEdit(this);
-  m_lineEdit->setValidation(SearchLineEdit::Strings);
+  m_lineEdit = new OrderSearchLine(this);
   addWidget(m_lineEdit);
 
   m_searchBtn = startSearchButton();
@@ -47,7 +47,7 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent) : TabSearchBar{parent} {
 }
 
 void OrdersSearchBar::setSearch() {
-  QString search = m_lineEdit->text().trimmed();
+  QString search = m_lineEdit->getSearch();
   if (search.isEmpty()) {
     return;
   }

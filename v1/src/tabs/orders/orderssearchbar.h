@@ -10,6 +10,8 @@
 #include <QPushButton>
 #include <QWidget>
 
+class OrderSearchLine;
+
 class OrdersSearchBar final : public TabSearchBar {
   Q_OBJECT
 
@@ -17,7 +19,7 @@ private:
   QString searchField;
   QString searchText;
   AntiquaComboBox *m_selectFilter;
-  SearchLineEdit *m_lineEdit;
+  OrderSearchLine *m_lineEdit;
   QPushButton *m_searchBtn;
   AntiquaCRM::OrderStatus currentStatus;
 

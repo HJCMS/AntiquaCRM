@@ -30,6 +30,8 @@ public:
   void setValidation(SearchLineEdit::Validator);
 
   int getLength();
+
+  virtual const QString getSearch() = 0;
 };
 
 Q_DECLARE_METATYPE(SearchLineEdit::Validator)

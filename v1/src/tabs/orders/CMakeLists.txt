@@ -22,6 +22,7 @@ SET (projectLibrary_SOURCES
  taborders.cpp
  orderaddarticle.cpp
  orderssearchbar.cpp
+ ordersearchline.cpp
  ordershistorybutton.cpp
  ordersstatusbar.cpp
  orderstablemodel.cpp
@@ -38,6 +39,7 @@ SET (projectLibrary_HEADERS
  taborders.h
  orderaddarticle.h
  orderssearchbar.h
+ ordersearchline.h
  ordershistorybutton.h
  ordersstatusbar.h
  orderstablemodel.h

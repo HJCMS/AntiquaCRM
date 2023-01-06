@@ -30,11 +30,7 @@ qint64 BookTableView::getTableID(const QModelIndex &index, int column) {
 }
 
 int BookTableView::getArticleCount(const QModelIndex &index) {
-  QModelIndex id(index);
-  if (m_model->data(id.sibling(id.row(), 1), Qt::EditRole).toInt() >= 1) {
-    return m_model->data(id.sibling(id.row(), 1), Qt::EditRole).toInt();
-  }
-  return -1;
+  return getTableID(index, 1);
 }
 
 bool BookTableView::sqlQueryTable(const QString &query) {

@@ -27,6 +27,8 @@ SET (PROJECT_INCLUDE_DIRS
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/settings
 	${CMAKE_CURRENT_BINARY_DIR}/utils/cache
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/cache
+	${CMAKE_CURRENT_BINARY_DIR}/tabs/cdsvinyl
+	${CMAKE_CURRENT_SOURCE_DIR}/tabs/cdsvinyl
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/prints
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/prints
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/statistics
@@ -67,6 +69,7 @@ SET(PROJECT_LIBRARIES
 	AntiquaKeywords
 	AntiquaSettings
 	AntiquaCache
+	AntiquaCDsVinyl
 	AntiquaPrintsStitches
 	AntiquaStatistics
 	AntiquaReports

@@ -1,17 +1,20 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "printsstitchestableview.h"
-#include "printsstitchesmodel.h"
+#include "cdvtableview.h"
+#include "cdvtablemodel.h"
 
 #include <QDebug>
 #include <QMenu>
 
-PrintsStitchesTableView::PrintsStitchesTableView(QWidget *parent)
-    : InventoryTable{parent} {
+#ifndef CDV_QUERY_TEMPLATE
+#define CDV_QUERY_TEMPLATE "query_tab_cdv_main"
+#endif
+
+CDVTableView::CDVTableView(QWidget *parent) : InventoryTable{parent} {
   setEnableTableViewSorting(true);
-  m_model = new PrintsStitchesModel(this);
   where_clause = defaultWhereClause();
+  m_model = new CDVTableModel(this);
   connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
           this, SLOT(getSqlModelError(const QString &, const QString &)));
 
@@ -19,8 +22,7 @@ PrintsStitchesTableView::PrintsStitchesTableView(QWidget *parent)
           SLOT(getSelectedItem(const QModelIndex &)));
 }
 
-qint64 PrintsStitchesTableView::getTableID(const QModelIndex &index,
-                                           int column) {
+qint64 CDVTableView::getTableID(const QModelIndex &index, int column) {
   QModelIndex id(index);
   if (m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt() >= 1) {
     return m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt();
@@ -28,11 +30,11 @@ qint64 PrintsStitchesTableView::getTableID(const QModelIndex &index,
   return -1;
 }
 
-int PrintsStitchesTableView::getArticleCount(const QModelIndex &index) {
+int CDVTableView::getArticleCount(const QModelIndex &index) {
   return getTableID(index, 1);
 }
 
-bool PrintsStitchesTableView::sqlQueryTable(const QString &query) {
+bool CDVTableView::sqlQueryTable(const QString &query) {
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);
@@ -49,7 +51,7 @@ bool PrintsStitchesTableView::sqlQueryTable(const QString &query) {
   return status;
 }
 
-void PrintsStitchesTableView::contextMenuEvent(QContextMenuEvent *event) {
+void CDVTableView::contextMenuEvent(QContextMenuEvent *event) {
   p_modelIndex = indexAt(event->pos());
   bool enable_action = p_modelIndex.isValid();
   bool enable_create = (m_model->rowCount() > 0);
@@ -82,7 +84,7 @@ void PrintsStitchesTableView::contextMenuEvent(QContextMenuEvent *event) {
   delete m;
 }
 
-void PrintsStitchesTableView::setSortByColumn(int column, Qt::SortOrder order) {
+void CDVTableView::setSortByColumn(int column, Qt::SortOrder order) {
   if (column < 0)
     return;
 
@@ -98,7 +100,7 @@ void PrintsStitchesTableView::setSortByColumn(int column, Qt::SortOrder order) {
     }
     if (fieldList.contains(order_by)) {
       order_by.prepend("(");
-      order_by.append(",ip_changed)");
+      order_by.append(",cv_changed)");
     }
   }
 
@@ -107,7 +109,7 @@ void PrintsStitchesTableView::setSortByColumn(int column, Qt::SortOrder order) {
   if (order == Qt::AscendingOrder)
     sort = Qt::DescendingOrder;
 
-  AntiquaCRM::ASqlFiles query("query_tab_prints_main");
+  AntiquaCRM::ASqlFiles query(CDV_QUERY_TEMPLATE);
   if (query.openTemplate()) {
     query.setWhereClause(where_clause);
     query.setOrderBy(order_by);
@@ -117,25 +119,25 @@ void PrintsStitchesTableView::setSortByColumn(int column, Qt::SortOrder order) {
   sqlQueryTable(query.getQueryContent());
 }
 
-void PrintsStitchesTableView::getSelectedItem(const QModelIndex &index) {
+void CDVTableView::getSelectedItem(const QModelIndex &index) {
   qint64 aid = getTableID(index);
   if (aid >= 1)
     emit sendOpenEntry(aid);
 }
 
-void PrintsStitchesTableView::createOpenEntry() {
+void CDVTableView::createOpenEntry() {
   qint64 aid = getTableID(p_modelIndex);
   if (aid >= 1)
     emit sendOpenEntry(aid);
 }
 
-void PrintsStitchesTableView::createCopyClipboard() {
+void CDVTableView::createCopyClipboard() {
   qint64 aid = getTableID(p_modelIndex);
   if (aid >= 1)
     emit sendCopyToClibboard(QString::number(aid));
 }
 
-void PrintsStitchesTableView::createSocketOperation() {
+void CDVTableView::createSocketOperation() {
   qint64 aid = getTableID(p_modelIndex);
   if (aid >= 1 && getArticleCount(p_modelIndex) > 0) {
     QJsonObject obj;
@@ -146,25 +148,25 @@ void PrintsStitchesTableView::createSocketOperation() {
   }
 }
 
-void PrintsStitchesTableView::setReloadView() {
+void CDVTableView::setReloadView() {
   sqlQueryTable(m_model->query().lastQuery());
 }
 
-int PrintsStitchesTableView::rowCount() { return m_model->rowCount(); }
+int CDVTableView::rowCount() { return m_model->rowCount(); }
 
-bool PrintsStitchesTableView::setQuery(const QString &clause) {
-  AntiquaCRM::ASqlFiles query("query_tab_prints_main");
+bool CDVTableView::setQuery(const QString &clause) {
+  AntiquaCRM::ASqlFiles query(CDV_QUERY_TEMPLATE);
   if (query.openTemplate()) {
     where_clause = (clause.isEmpty() ? where_clause : clause);
     query.setWhereClause(where_clause);
-    query.setOrderBy("(ip_count,ip_changed,ip_id)");
+    query.setOrderBy("(cv_count,cv_changed,cv_id)");
     query.setSorting(Qt::DescendingOrder);
     query.setLimits(getQueryLimit());
   }
   return sqlQueryTable(query.getQueryContent());
 }
 
-const QString PrintsStitchesTableView::defaultWhereClause() {
-  QString sql("date_part('year',ip_changed)>0 AND ip_count>0");
+const QString CDVTableView::defaultWhereClause() {
+  QString sql("date_part('year',cv_changed)>0 AND cv_count>0");
   return sql;
 }

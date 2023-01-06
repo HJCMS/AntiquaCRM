@@ -4,8 +4,14 @@
 #include "antiquasplashscreen.h"
 
 #include <AGlobal>
-#include <QtCore>
-#include <QtGui>
+#include <QByteArray>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QFontDatabase>
+#include <QLinearGradient>
+#include <QPoint>
+#include <QRect>
 
 AntiquaSplashScreen::AntiquaSplashScreen(QMainWindow *parent)
     : QSplashScreen{parent->screen(), background()}, // Splash
@@ -15,25 +21,34 @@ AntiquaSplashScreen::AntiquaSplashScreen(QMainWindow *parent)
 }
 
 const QFont AntiquaSplashScreen::titleFont() const {
-  int ret = -1;
   QString fontName("Steve");
-  QDir p = QDir::current();
-  p.cd("data" + QString(QDir::separator()) + "fonts");
-  QFileInfo ttf(p.path(), "steve.ttf");
-  if (ttf.isReadable()) {
-    QFile fp(ttf.filePath());
-    if (fp.open(QFile::ReadOnly)) {
-      QByteArray fontArray = fp.readAll();
-      ret = QFontDatabase::addApplicationFontFromData(fontArray);
-      fp.close();
+  QFontDatabase database;
+  QStringList fontList = database.families(QFontDatabase::Latin);
+  if (!fontList.contains(fontName)) {
+    int ret = -1;
+#ifdef Q_OS_WIN
+    QDir p = QDir::current();
+    p.cd("data" + QString(QDir::separator()) + "fonts");
+    QFileInfo ttf(p.path(), "steve.ttf");
+    if (ttf.isReadable()) {
+      QFile fp(ttf.filePath());
+      if (fp.open(QFile::ReadOnly)) {
+        QByteArray fontArray = fp.readAll();
+        ret = database.addApplicationFontFromData(fontArray);
+        fp.close();
+      }
+    }
+    p.cdUp();
+#endif
+    if (ret == -1) {
+      fontName = QString("Luxi Mono");
+#ifdef ANTIQUA_DEVELOPEMENT
+      qWarning("Splash: font file not found fallback to „%s“.",
+               qPrintable(fontName));
+#endif
     }
   }
-  p.cdUp();
-
-  if (ret == -1) {
-    qWarning("Splash font file not add.");
-    fontName = QString("Luxi Mono");
-  }
+  fontList.clear();
 
   QFont font;
   font.fromString(fontName);

@@ -14,7 +14,7 @@ class PrintsStitchesSearchLine final : public SearchLineEdit {
 
 public:
   explicit PrintsStitchesSearchLine(QWidget *parent = nullptr);
-  const QString getSearch();
+  const QString getSearch() override;
 };
 
 #endif // ANTIQUACRM_PRINTSSTITCHES_SEARCHLINE_H

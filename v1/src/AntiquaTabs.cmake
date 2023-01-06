@@ -9,6 +9,16 @@
 #include "inventory.h"
 #endif
 
+// AntiquaProviders
+#ifndef ANTIQUACRM_TABPROVIDERS_H
+#include "tabproviders.h"
+#endif
+
+// AntiquaOrders
+#ifndef ANTIQUACRM_TABORDERS_H
+#include "taborders.h"
+#endif
+
 // AntiquaBooks
 #ifndef ANTIQUACRM_TABBOOKS_H
 #include "tabbooks.h"
@@ -19,19 +29,14 @@
 #include "tabprintsstitches.h"
 #endif
 
+// AntiquaCDsVinyl
+#ifndef ANTIQUACRM_TABCDVINYL_H
+#include "tabcdvinyl.h"
+#endif
+
 // AntiquaCustomers
 #ifndef ANTIQUACRM_TABCUSTOMERS_H
 #include "tabcustomers.h"
-#endif
-
-// AntiquaProviders
-#ifndef ANTIQUACRM_TABPROVIDERS_H
-#include "tabproviders.h"
-#endif
-
-// AntiquaOrders
-#ifndef ANTIQUACRM_TABORDERS_H
-#include "taborders.h"
 #endif
 
 // AntiquaViews

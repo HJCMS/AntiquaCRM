@@ -13,7 +13,7 @@ class BookSearchLine final : public SearchLineEdit {
 
 public:
   explicit BookSearchLine(QWidget *parent = nullptr);
-  const QString getSearch();
+  const QString getSearch() override;
 };
 
 #endif // ANTIQUACRM_BOOKSEARCHLINE_H
