@@ -487,7 +487,7 @@ bool PrintsStitchesEditor::realyDeactivateEntry() {
   body << tr("Are you sure to finish this operation?");
   body << QString("</p>");
 
-  int ret = QMessageBox::question(this, tr("Book deactivation"), body.join(""));
+  int ret = QMessageBox::question(this, tr("Prints deactivation"), body.join(""));
   if (ret == QMessageBox::No) {
     ip_count->setValue(m_tableData->getValue("ip_count"));
     ip_count->setRequired(true);

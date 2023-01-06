@@ -46,6 +46,12 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   c_lastname->setRequired(true);
   row1->addWidget(c_lastname);
 
+  c_careof = new LineEdit(this);
+  c_careof->setObjectName("c_careof");
+  c_careof->setInfo(tr("care of"));
+  c_careof->setRequired(false);
+  row1->addWidget(c_careof);
+
   row1->addStretch(1);
   layout->addLayout(row1);
   // END #1
@@ -242,6 +248,12 @@ void CustomersData::generateAddressBody() {
   }
   body.append(buffer.join(" "));
   body.append("\n");
+
+  /* Wohnhaft bei (care of)  */
+  if (!c_careof->value().toString().isEmpty()) {
+    body.append("c/o " + c_careof->value().toString());
+    body.append("\n");
+  }
 
   /* Straße */
   if (!c_street->value().toString().isEmpty()) {

@@ -1233,7 +1233,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Keine Angaben</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Very good, almost new!</source>
         <translation>Sehr gut, fast neuwertig!</translation>
     </message>
@@ -1248,12 +1248,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Deutliche Gebrauchsspuren.</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Heavily worn!</source>
         <translation>Stark abgenutzt!</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+59"/>
         <source>a valid Condition is required.</source>
         <translation>Eine gültiger Artikel Zustand ist erforderlich.</translation>
     </message>
@@ -1482,6 +1482,11 @@ Bild - Artikel Nr: %2</translation>
         <location line="+6"/>
         <source>Lastname</source>
         <translation>Nachname</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>care of</source>
+        <translation>Wohnhaft bei</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -5027,12 +5032,42 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="+77"/>
         <source>Print &amp; Stitches saved successfully!</source>
         <translation>Druck &amp; Stiche erfolgreich gespeichert!</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+32"/>
+        <source>Missing Article ID for Update.</source>
+        <translation>Fehlende Artikel-ID für die Speicherung.</translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>No Modifications found, Update aborted!</source>
+        <translation>Keine Änderungen gefunden, speichern Übersprungen!</translation>
+    </message>
+    <message>
+        <location line="+106"/>
+        <source>When setting the Article Count to 0.</source>
+        <translation>Wenn Sie die Artikelanzahl auf 0 setzen.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>This marked the Article in all Shopsystem for deletion!</source>
+        <translation>Damit wird der Artikel in allen Shopsystemen zur Löschung vorgemerkt!</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Are you sure to finish this operation?</source>
+        <translation>Möchten Sie diesen Vorgang wirklich beenden?</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Prints deactivation</source>
+        <translation>Druck deaktivieren</translation>
+    </message>
+    <message>
+        <location line="+25"/>
         <source>Unsaved Changes</source>
         <translation>Nicht gespeicherte Änderungen</translation>
     </message>
@@ -6544,7 +6579,17 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TechniqueEdit</name>
     <message>
-        <location filename="../widgets/techniqueedit.cpp" line="+72"/>
+        <location filename="../widgets/techniqueedit.cpp" line="+17"/>
+        <source>Search</source>
+        <translation>Suche</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search starts with more than 3 chars.</source>
+        <translation>Suche startet ab dem 3. Zeichen.</translation>
+    </message>
+    <message>
+        <location line="+83"/>
         <source>Technique field is required and must set.</source>
         <translation>Technikfeld ist erforderlich und muss gesetzt werden.</translation>
     </message>

@@ -1231,7 +1231,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Very good, almost new!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1246,12 +1246,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Heavily worn!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+59"/>
         <source>a valid Condition is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1479,6 +1479,11 @@ Image - Article Id: %2</source>
     <message>
         <location line="+6"/>
         <source>Lastname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>care of</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5025,12 +5030,42 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="+77"/>
         <source>Print &amp; Stitches saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+32"/>
+        <source>Missing Article ID for Update.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>No Modifications found, Update aborted!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+106"/>
+        <source>When setting the Article Count to 0.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>This marked the Article in all Shopsystem for deletion!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Are you sure to finish this operation?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Prints deactivation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
         <source>Unsaved Changes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6542,7 +6577,17 @@ Image - Article Id: %2</source>
 <context>
     <name>TechniqueEdit</name>
     <message>
-        <location filename="../widgets/techniqueedit.cpp" line="+72"/>
+        <location filename="../widgets/techniqueedit.cpp" line="+17"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search starts with more than 3 chars.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+83"/>
         <source>Technique field is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>

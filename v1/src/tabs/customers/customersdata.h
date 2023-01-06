@@ -18,6 +18,7 @@ public:
   SalutationBox *c_title;           /**< Titelanrede */
   LineEdit *c_firstname;            /**< Vorname */
   LineEdit *c_lastname;             /**< Nachname */
+  LineEdit *c_careof;               /**< wohnhaft bei */
   PostalCodeEdit *c_postalcode;     /**< Postleitzahl */
   LineEdit *c_country;              /**< Land */
   SelectEuCountry *c_country_bcp47; /**< IETF BCP 47 */
