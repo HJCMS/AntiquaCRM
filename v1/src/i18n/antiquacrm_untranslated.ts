@@ -254,6 +254,11 @@
     </message>
     <message>
         <location line="+9"/>
+        <source>View Cd and Vinyl</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>View and import Provider orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -290,6 +295,11 @@
     <message>
         <location line="+1"/>
         <source>Prints and Stitches</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>CD and Vinyl</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -685,12 +695,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>ISBN</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+86"/>
+        <location line="+93"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -715,7 +720,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+82"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -782,7 +787,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-385"/>
+        <location line="-387"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -960,7 +965,7 @@ Image - Article Id: %2</source>
 <context>
     <name>BookTableView</name>
     <message>
-        <location filename="../tabs/books/booktableview.cpp" line="+66"/>
+        <location filename="../tabs/books/booktableview.cpp" line="+62"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1146,6 +1151,183 @@ Image - Article Id: %2</source>
     <message>
         <location filename="../utils/returnorder/buttonnext.cpp" line="+14"/>
         <source>further</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CDVEditor</name>
+    <message>
+        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+11"/>
+        <source>Edit CD or Vinyl</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CDVFilterSelect</name>
+    <message>
+        <location filename="../tabs/cdsvinyl/cdvfilterselect.cpp" line="+10"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search for CD/Vinyl by Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Article Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Multiple searches separated by commas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Keywords</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search for CD/Vinyl with Keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search for Prints and Stitches authors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Search for ISBN/EAN</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CDVSearchBar</name>
+    <message>
+        <location filename="../tabs/cdsvinyl/cdvsearchbar.cpp" line="+14"/>
+        <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Search Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+30"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+25"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-20"/>
+        <source>Keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Article number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>ISBN/EAN number</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CDVTableModel</name>
+    <message>
+        <location filename="../tabs/cdsvinyl/cdvtablemodel.cpp" line="+18"/>
+        <source>Article Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>ISBN/EAN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CDVTableView</name>
+    <message>
+        <location filename="../tabs/cdsvinyl/cdvtableview.cpp" line="+61"/>
+        <source>Open entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Create entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Copy Article Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Add Article to opened Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1762,22 +1944,12 @@ Image - Article Id: %2</source>
 <context>
     <name>CustomersSearchBar</name>
     <message>
-        <location filename="../tabs/customers/customerssearchbar.cpp" line="+11"/>
+        <location filename="../tabs/customers/customerssearchbar.cpp" line="+12"/>
         <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Search customers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Press CTRL+Shift+S to focus in.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
+        <location line="+7"/>
         <location line="+38"/>
         <source>Search customer</source>
         <translation type="unfinished"></translation>
@@ -1790,6 +1962,19 @@ Image - Article Id: %2</source>
     <message>
         <location line="+6"/>
         <source>Search company</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CustomersSearchLineEdit</name>
+    <message>
+        <location filename="../tabs/customers/customerssearchlineedit.cpp" line="+9"/>
+        <source>Search customers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Press CTRL+Shift+S to focus in.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2875,7 +3060,7 @@ Image - Article Id: %2</source>
 <context>
     <name>IsbnEdit</name>
     <message>
-        <location filename="../widgets/isbnedit.cpp" line="+16"/>
+        <location filename="../widgets/isbnedit.cpp" line="+18"/>
         <source>a ISBN number must consist of 10 or 13 digits.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2885,7 +3070,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+131"/>
         <source>Invalid ISBN detected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3943,7 +4128,7 @@ Image - Article Id: %2</source>
 <context>
     <name>OrdersSearchBar</name>
     <message>
-        <location filename="../tabs/orders/orderssearchbar.cpp" line="+16"/>
+        <location filename="../tabs/orders/orderssearchbar.cpp" line="+17"/>
         <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3968,7 +4153,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Input search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5030,7 +5215,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+78"/>
         <source>Print &amp; Stitches saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5060,7 +5245,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Prints deactivation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5209,7 +5394,7 @@ Image - Article Id: %2</source>
 <context>
     <name>PrintsStitchesTableView</name>
     <message>
-        <location filename="../tabs/prints/printsstitchestableview.cpp" line="+63"/>
+        <location filename="../tabs/prints/printsstitchestableview.cpp" line="+59"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6273,6 +6458,29 @@ Image - Article Id: %2</source>
     <message>
         <location line="+2"/>
         <source>You need to save and close that open book first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TabCDVinyl</name>
+    <message>
+        <location filename="../tabs/cdsvinyl/tabcdvinyl.cpp" line="+16"/>
+        <source>CD&apos;s and Vinyl</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+63"/>
+        <source>Can&apos;t open this Article</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Because CD and Vinyl tab is in edit mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>You need to save and close that opened first.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
