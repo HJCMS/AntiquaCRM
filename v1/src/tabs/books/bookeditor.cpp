@@ -306,8 +306,10 @@ bool BookEditor::setDataField(const QSqlField &field, const QVariant &value) {
     inp->setProperties(field);
     return true;
   }
-
-  qDebug() << "Unknown:" << key << "|" << value << "|" << required;
+#ifdef ANTIQUA_DEVELOPEMENT
+  if (!ignoreFields.contains(key))
+    qDebug() << "Unknown:" << key << "|" << value << "|" << required;
+#endif
   return false;
 }
 

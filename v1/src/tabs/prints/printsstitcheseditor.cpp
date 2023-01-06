@@ -259,15 +259,16 @@ bool PrintsStitchesEditor::setDataField(const QSqlField &field,
   QString key = field.name();
   bool required = (field.requiredStatus() == QSqlField::Required);
 
-  // qDebug() << Q_FUNC_INFO << field;
   InputEdit *inp = findChild<InputEdit *>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
     inp->setValue(value);
     inp->setProperties(field);
     return true;
   }
-
-  qDebug() << "Unknown:" << key << "|" << value << "|" << required;
+#ifdef ANTIQUA_DEVELOPEMENT
+  if (!ignoreFields.contains(key))
+    qDebug() << "Unknown:" << key << "|" << value << "|" << required;
+#endif
   return false;
 }
 
@@ -487,7 +488,8 @@ bool PrintsStitchesEditor::realyDeactivateEntry() {
   body << tr("Are you sure to finish this operation?");
   body << QString("</p>");
 
-  int ret = QMessageBox::question(this, tr("Prints deactivation"), body.join(""));
+  int ret =
+      QMessageBox::question(this, tr("Prints deactivation"), body.join(""));
   if (ret == QMessageBox::No) {
     ip_count->setValue(m_tableData->getValue("ip_count"));
     ip_count->setRequired(true);
