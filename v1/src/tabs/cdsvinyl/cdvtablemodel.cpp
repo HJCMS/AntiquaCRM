@@ -4,6 +4,7 @@
 #include "cdvtablemodel.h"
 
 #ifndef CDV_TABLENAME
+// \d inventory_cdvinyl
 #define CDV_TABLENAME "inventory_cdvinyl"
 #endif
 
@@ -22,7 +23,9 @@ const QMap<int, QString> CDVTableModel::headerList() const {
   map.insert(i++, tr("Price"));
   map.insert(i++, tr("Author"));
   map.insert(i++, tr("ISBN/EAN"));
+  map.insert(i++, tr("Year"));
   map.insert(i++, tr("Changed"));
+  map.insert(i++, tr("Created"));
   return map;
 }
 

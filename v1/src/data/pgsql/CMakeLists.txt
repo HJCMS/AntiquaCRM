@@ -28,6 +28,7 @@ query_returning_articles.sql
 query_storage_location.sql
 query_tab_books_main.sql
 query_tab_customers_main.sql
+query_tab_cdv_main.sql
 query_tab_orders_main.sql
 query_tab_prints_main.sql
 query_template_keys.sql
