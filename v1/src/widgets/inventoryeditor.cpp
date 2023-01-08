@@ -267,6 +267,15 @@ void InventoryEditor::openNoticeMessage(const QString &info) {
   d->exec();
 }
 
+void InventoryEditor::unsavedChangesPopup() {
+  QString ti = tr("Warning");
+  QString txt(tr("Unsaved Changes") + "\n");
+  txt.append(tr("Do not leave this page until you have saved your changes!"));
+  QMessageBox *d = new QMessageBox(QMessageBox::Warning, ti, txt,
+                                   QMessageBox::Ok, this, Qt::Popup);
+  d->exec();
+}
+
 void InventoryEditor::sendStatusMessage(const QString &message) {
   AntiquaCRM::ATransmitter *m_sock = new AntiquaCRM::ATransmitter(this);
   connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));

@@ -755,17 +755,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
-        <source>Unsaved Changes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Don&apos;t leave this page before save your changes!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+34"/>
+        <location line="+58"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -787,7 +777,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-387"/>
+        <location line="-385"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -953,7 +943,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Create a new Book entry.</source>
+        <source>Create a new entry.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1157,8 +1147,165 @@ Image - Article Id: %2</source>
 <context>
     <name>CDVEditor</name>
     <message>
-        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+11"/>
+        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+15"/>
         <source>Edit CD or Vinyl</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Article ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>incl. vat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Local Usage only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>When this Options is marked. Then this Article will not exported to your Providers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Extended</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Artists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Mediatype</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Condition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Keywords</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+57"/>
+        <source>An error has occurred!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Can&apos;t load input datafields!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>When getting this Message, please check your Network and Database connection!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+73"/>
+        <source>Saved successfully!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <source>Missing Article ID for Update.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>No Modifications found, Update aborted!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+101"/>
+        <source>When setting the Article Count to 0.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>This marked the Article in all Shopsystem for deletion!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Are you sure to finish this operation?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Deactivation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Missing Mediatype for Year, aborted!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Invalid Vinyl record Year, aborted!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Invalid Compact Disc Year, aborted!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <source>Remove Image from Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do you really want to delete the Image?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>%1
+
+Image - Article Id: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Image delete successfully!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1256,9 +1403,27 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>CDVStatusBar</name>
+    <message>
+        <location filename="../tabs/cdsvinyl/cdvstatusbar.cpp" line="+13"/>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Create a new entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>History</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CDVTableModel</name>
     <message>
-        <location filename="../tabs/cdsvinyl/cdvtablemodel.cpp" line="+18"/>
+        <location filename="../tabs/cdsvinyl/cdvtablemodel.cpp" line="+19"/>
         <source>Article Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1294,7 +1459,17 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
+        <source>Year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Created</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1828,17 +2003,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+62"/>
-        <source>Unsaved Changes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Don&apos;t leave this page before save your changes!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+22"/>
+        <location line="+83"/>
         <source>Send eMail finished!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2020,7 +2185,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Create a new Customer entry.</source>
+        <source>Create a new entry.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2927,6 +3092,21 @@ Image - Article Id: %2</source>
     <message>
         <location line="+11"/>
         <source>Notice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Unsaved Changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do not leave this page until you have saved your changes!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3970,17 +4150,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+95"/>
-        <source>Unsaved Changes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Don&apos;t leave this page before save your changes!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
+        <location line="+111"/>
         <location line="+19"/>
         <location line="+39"/>
         <location line="+32"/>
@@ -4000,12 +4170,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-471"/>
+        <location line="-469"/>
         <source>Missing Deliverynote Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+493"/>
+        <location line="+491"/>
         <source>Missing Delivery Address!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5200,7 +5370,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+38"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5245,18 +5415,30 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Prints deactivation</source>
+        <location line="+3"/>
+        <source>Deactivation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
-        <source>Unsaved Changes</source>
+        <location line="+44"/>
+        <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Don&apos;t leave this page before save your changes!</source>
+        <source>Do you really want to delete the Image?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>%1
+
+Image - Article Id: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Image delete successfully!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5392,6 +5574,24 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>PrintsStitchesStatusBar</name>
+    <message>
+        <location filename="../tabs/prints/printsstitchesstatusbar.cpp" line="+15"/>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Create a new entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>History</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PrintsStitchesTableView</name>
     <message>
         <location filename="../tabs/prints/printsstitchestableview.cpp" line="+59"/>
@@ -5473,11 +5673,6 @@ Image - Article Id: %2</source>
     <message>
         <location line="+5"/>
         <source>Payment Confirmed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Order status</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6252,6 +6447,74 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>SelectMediaType</name>
+    <message>
+        <location filename="../widgets/selectmediatype.cpp" line="+10"/>
+        <source>Mediatype</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+63"/>
+        <source>A valid Mediatype is required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>very rare</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>no Mediatype selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Compact Disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Mini Disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>CD Video</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Single Vinyl</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Longplay vinyl record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Multi groove vinyl record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Colored Longplay vinyl record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Videoplay vinyl record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Vinyl and Compakt Disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SerialID</name>
     <message>
         <location filename="../widgets/serialid.cpp" line="+83"/>
@@ -6690,7 +6953,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TabStatusBar</name>
     <message>
-        <location filename="../widgets/tabstatusbar.cpp" line="+18"/>
+        <location filename="../widgets/tabstatusbar.cpp" line="+19"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6705,7 +6968,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+8"/>
         <source>Today</source>
         <translation type="unfinished"></translation>
     </message>

@@ -755,17 +755,7 @@
         <translation>Buch deaktivierung</translation>
     </message>
     <message>
-        <location line="+25"/>
-        <source>Unsaved Changes</source>
-        <translation>Nicht gespeicherte Änderungen</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Don&apos;t leave this page before save your changes!</source>
-        <translation>Verlassen Sie diese Seite nicht, bevor Sie Ihre Änderungen gespeichert haben!</translation>
-    </message>
-    <message>
-        <location line="+34"/>
+        <location line="+58"/>
         <source>Remove Image from Database</source>
         <translation>Bild aus Datenbank entfernen</translation>
     </message>
@@ -789,7 +779,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="-387"/>
+        <location line="-385"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
@@ -955,8 +945,8 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Create a new Book entry.</source>
-        <translation>Erstelle einen neuen Bucheintrag.</translation>
+        <source>Create a new entry.</source>
+        <translation>Erstelle einen Neuen Eintrag.</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -1159,9 +1149,168 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CDVEditor</name>
     <message>
-        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+11"/>
+        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+15"/>
         <source>Edit CD or Vinyl</source>
         <translation>Bearbeite CD oder Vinyl</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Article ID</source>
+        <translation>Artikel Nr</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Count</source>
+        <translation>Anzahl</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Price</source>
+        <translation>Preis</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Year</source>
+        <translation>Jahr</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>incl. vat</source>
+        <translation>inkl. MwSt</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Local Usage only</source>
+        <translation>Nur lokale Verwendung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>When this Options is marked. Then this Article will not exported to your Providers.</source>
+        <translation>Wenn diese Option markiert ist. Dann wird dieser Artikel nicht an die Dienstleister exportiert.</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Extended</source>
+        <translation>Erweitert</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Artists</source>
+        <translation>Künstler</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Mediatype</source>
+        <translation>Medium</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Condition</source>
+        <translation>Zustand</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Storage</source>
+        <translation>Lager</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Keywords</source>
+        <translation>Schlüsselwörter</translation>
+    </message>
+    <message>
+        <location line="+57"/>
+        <source>An error has occurred!</source>
+        <translation>Ein Fehler ist aufgetreten!</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Can&apos;t load input datafields!</source>
+        <translation>Eingabedatenfelder können nicht geladen werden!</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>When getting this Message, please check your Network and Database connection!</source>
+        <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
+    </message>
+    <message>
+        <location line="+73"/>
+        <source>Saved successfully!</source>
+        <translation>Speichern erfolgreich!</translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <source>Missing Article ID for Update.</source>
+        <translation>Fehlende Artikel-ID für die Speicherung.</translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>No Modifications found, Update aborted!</source>
+        <translation>Keine Änderungen gefunden, speichern Übersprungen!</translation>
+    </message>
+    <message>
+        <location line="+101"/>
+        <source>When setting the Article Count to 0.</source>
+        <translation>Wenn Sie die Artikelanzahl auf 0 setzen.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>This marked the Article in all Shopsystem for deletion!</source>
+        <translation>Damit wird der Artikel in allen Shopsystemen zur Löschung vorgemerkt!</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Are you sure to finish this operation?</source>
+        <translation>Möchten Sie diesen Vorgang wirklich beenden?</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Deactivation</source>
+        <translation>Deaktivierung</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Missing Mediatype for Year, aborted!</source>
+        <translation>Keine Mediumangabe für das Jahr, abbruch!</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Invalid Vinyl record Year, aborted!</source>
+        <translation>Fehlderhafte Schallplatten Jahresangabe, abbruch!</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Invalid Compact Disc Year, aborted!</source>
+        <translation>Fehlderhafte CD Jahresangabe, abbruch!</translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <source>Remove Image from Database</source>
+        <translation>Bild aus Datenbank entfernen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do you really want to delete the Image?</source>
+        <translation>Möchten Sie das Bild wirklich löschen?</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>%1
+
+Image - Article Id: %2</source>
+        <translation>%1
+
+Bild - Artikel Nr: %2</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Image delete successfully!</source>
+        <translation>Bild erfolgreich gelöscht!</translation>
     </message>
 </context>
 <context>
@@ -1258,9 +1407,27 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>CDVStatusBar</name>
+    <message>
+        <location filename="../tabs/cdsvinyl/cdvstatusbar.cpp" line="+13"/>
+        <source>Create</source>
+        <translation>Erstellen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Create a new entry.</source>
+        <translation>Erstelle einen Neuen Eintrag.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>History</source>
+        <translation>Verlauf</translation>
+    </message>
+</context>
+<context>
     <name>CDVTableModel</name>
     <message>
-        <location filename="../tabs/cdsvinyl/cdvtablemodel.cpp" line="+18"/>
+        <location filename="../tabs/cdsvinyl/cdvtablemodel.cpp" line="+19"/>
         <source>Article Id</source>
         <translation>Artikel Nr</translation>
     </message>
@@ -1296,8 +1463,18 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+1"/>
+        <source>Year</source>
+        <translation>Jahr</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Changed</source>
         <translation>Geändert</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Created</source>
+        <translation>Erstellt</translation>
     </message>
     <message>
         <location line="+20"/>
@@ -1830,17 +2007,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kundendaten speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+62"/>
-        <source>Unsaved Changes</source>
-        <translation>Nicht gespeicherte Änderungen</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Don&apos;t leave this page before save your changes!</source>
-        <translation>Verlassen Sie diese Seite nicht, bevor Sie Ihre Änderungen gespeichert haben!</translation>
-    </message>
-    <message>
-        <location line="+22"/>
+        <location line="+83"/>
         <source>Send eMail finished!</source>
         <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
@@ -2022,8 +2189,8 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Create a new Customer entry.</source>
-        <translation>Erstellen Sie einen neuen Kundeneintrag.</translation>
+        <source>Create a new entry.</source>
+        <translation>Erstelle einen Neuen Eintrag.</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -2930,6 +3097,21 @@ Bild - Artikel Nr: %2</translation>
         <location line="+11"/>
         <source>Notice</source>
         <translation>Bemerkung</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Warning</source>
+        <translation>Warnung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Unsaved Changes</source>
+        <translation>Nicht gespeicherte Änderungen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do not leave this page until you have saved your changes!</source>
+        <translation>Verlassen Sie diese Seite nicht, bevor Sie Ihre Änderungen gespeichert haben!</translation>
     </message>
 </context>
 <context>
@@ -3972,17 +4154,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Artikel: %1 nicht gefunden oder nicht auf Lager!</translation>
     </message>
     <message>
-        <location line="+95"/>
-        <source>Unsaved Changes</source>
-        <translation>Nicht gespeicherte Änderungen</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Don&apos;t leave this page before save your changes!</source>
-        <translation>Verlassen Sie diese Seite nicht, bevor Sie Ihre Änderungen gespeichert haben!</translation>
-    </message>
-    <message>
-        <location line="+17"/>
+        <location line="+111"/>
         <location line="+19"/>
         <location line="+39"/>
         <location line="+32"/>
@@ -4002,12 +4174,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
     <message>
-        <location line="-471"/>
+        <location line="-469"/>
         <source>Missing Deliverynote Number</source>
         <translation>Fehlende Lieferscheinnummer</translation>
     </message>
     <message>
-        <location line="+493"/>
+        <location line="+491"/>
         <source>Missing Delivery Address!</source>
         <translation>Lieferadresse fehlt!</translation>
     </message>
@@ -5202,7 +5374,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Informationen</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+38"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -5247,19 +5419,33 @@ Bild - Artikel Nr: %2</translation>
         <translation>Möchten Sie diesen Vorgang wirklich beenden?</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Prints deactivation</source>
-        <translation>Druck deaktivieren</translation>
+        <location line="+3"/>
+        <source>Deactivation</source>
+        <translation>Deaktivierung</translation>
     </message>
     <message>
-        <location line="+25"/>
-        <source>Unsaved Changes</source>
-        <translation>Nicht gespeicherte Änderungen</translation>
+        <location line="+44"/>
+        <source>Remove Image from Database</source>
+        <translation>Bild aus Datenbank entfernen</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Don&apos;t leave this page before save your changes!</source>
-        <translation>Verlassen Sie diese Seite nicht, bevor Sie Ihre Änderungen gespeichert haben!</translation>
+        <source>Do you really want to delete the Image?</source>
+        <translation>Möchten Sie das Bild wirklich löschen?</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>%1
+
+Image - Article Id: %2</source>
+        <translation>%1
+
+Bild - Artikel Nr: %2</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Image delete successfully!</source>
+        <translation>Bild erfolgreich gelöscht!</translation>
     </message>
 </context>
 <context>
@@ -5394,6 +5580,24 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>PrintsStitchesStatusBar</name>
+    <message>
+        <location filename="../tabs/prints/printsstitchesstatusbar.cpp" line="+15"/>
+        <source>Create</source>
+        <translation>Erstellen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Create a new entry.</source>
+        <translation>Erstelle einen Neuen Eintrag.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>History</source>
+        <translation>Verlauf</translation>
+    </message>
+</context>
+<context>
     <name>PrintsStitchesTableView</name>
     <message>
         <location filename="../tabs/prints/printsstitchestableview.cpp" line="+59"/>
@@ -5476,11 +5680,6 @@ Bild - Artikel Nr: %2</translation>
         <location line="+5"/>
         <source>Payment Confirmed</source>
         <translation>Bezahlung bestätigt</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Order status</source>
-        <translation>Auftragsstatus</translation>
     </message>
 </context>
 <context>
@@ -6254,6 +6453,74 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>SelectMediaType</name>
+    <message>
+        <location filename="../widgets/selectmediatype.cpp" line="+10"/>
+        <source>Mediatype</source>
+        <translation>Medientyp</translation>
+    </message>
+    <message>
+        <location line="+63"/>
+        <source>A valid Mediatype is required.</source>
+        <translation>Ein gültiger Medientyp ist erforderlich.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>very rare</source>
+        <translation>Sehr selten</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>no Mediatype selected</source>
+        <translation>kein Medium ausgewählt</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Compact Disc</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Mini Disc</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>CD Video</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Single Vinyl</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Longplay vinyl record</source>
+        <translation>Langspielplatte</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Multi groove vinyl record</source>
+        <translation>Merfachrillen Schallplatte</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Colored Longplay vinyl record</source>
+        <translation>Farbige Langspiel-Schallplatte</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Videoplay vinyl record</source>
+        <translation>Video Schallplatte</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Vinyl and Compakt Disc</source>
+        <translation>Schallplatte und CD</translation>
+    </message>
+</context>
+<context>
     <name>SerialID</name>
     <message>
         <location filename="../widgets/serialid.cpp" line="+83"/>
@@ -6692,7 +6959,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TabStatusBar</name>
     <message>
-        <location filename="../widgets/tabstatusbar.cpp" line="+18"/>
+        <location filename="../widgets/tabstatusbar.cpp" line="+19"/>
         <source>Update</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -6707,7 +6974,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Beim Drücken wird die Tabellenabfrage neu geladen.</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+8"/>
         <source>Today</source>
         <translation>Heute</translation>
     </message>

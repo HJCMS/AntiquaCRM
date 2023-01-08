@@ -11,12 +11,12 @@ BookStatusBar::BookStatusBar(QWidget *parent) : TabStatusBar{parent} {
 
   QHBoxLayout *layout = new QHBoxLayout(m_frame);
   layout->setContentsMargins(0, 0, 0, 0);
-  btn_createEntry = new QPushButton(m_frame);
-  btn_createEntry->setText(tr("Create"));
-  btn_createEntry->setToolTip(tr("Create a new Book entry."));
-  btn_createEntry->setIcon(getIcon("db_add"));
-  btn_createEntry->setEnabled(false);
-  layout->addWidget(btn_createEntry);
+  btn_create = new QPushButton(m_frame);
+  btn_create->setText(tr("Create"));
+  btn_create->setToolTip(tr("Create a new entry."));
+  btn_create->setIcon(getIcon("db_add"));
+  btn_create->setEnabled(false);
+  layout->addWidget(btn_create);
 
   btn_history = new QPushButton(m_frame);
   btn_history->setText(tr("History"));
@@ -24,25 +24,8 @@ BookStatusBar::BookStatusBar(QWidget *parent) : TabStatusBar{parent} {
   layout->addWidget(btn_history);
   m_frame->setLayout(layout);
 
-  m_historyMapper = new QSignalMapper(btn_history);
-  setHistoryMenu();
-
-  connect(btn_createEntry, SIGNAL(clicked()), SIGNAL(sendCreateEntry()));
-  connect(m_historyMapper, SIGNAL(mappedInt(int)), SLOT(setHistoryAction(int)));
-}
-
-void BookStatusBar::setHistoryMenu() {
-  QMenu *m_menu = new QMenu(btn_history);
-  QIcon icon = getIcon("view_books");
-  QStringList entries;
-  QMapIterator<TabStatusBar::History, QString> it(historyItems());
-  while (it.hasNext()) {
-    it.next();
-    QAction *ac = m_menu->addAction(icon, it.value());
-    connect(ac, SIGNAL(triggered()), m_historyMapper, SLOT(map()));
-    m_historyMapper->setMapping(ac, it.key());
-  }
-  btn_history->setMenu(m_menu);
+  setHistoryActionMenu(btn_history);
+  connect(btn_create, SIGNAL(clicked()), SIGNAL(sendCreateEntry()));
 }
 
 void BookStatusBar::setHistoryAction(int index) {
@@ -104,7 +87,7 @@ void BookStatusBar::setHistoryAction(int index) {
 }
 
 void BookStatusBar::setCreateButtonEnabled(bool b) {
-  btn_createEntry->setEnabled(b);
+  btn_create->setEnabled(b);
 }
 
-bool BookStatusBar::isCreateButtonEnabled() { return btn_createEntry->isEnabled(); }
+bool BookStatusBar::isCreateButtonEnabled() { return btn_create->isEnabled(); }

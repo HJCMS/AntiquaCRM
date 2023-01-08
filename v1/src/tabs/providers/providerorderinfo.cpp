@@ -38,10 +38,6 @@ ProviderOrderInfo::ProviderOrderInfo(QWidget *parent) : QWidget{parent} {
   m_paymentConfirmed->setObjectName("o_payment_confirmed");
   layout->addWidget(m_paymentConfirmed, r++, 1, 1, 1);
 
-  layout->addWidget(infoCell(tr("Order status")), r, 0, 1, 1);
-  m_orderStatus = new QLabel(this);
-  layout->addWidget(m_orderStatus, r++, 1, 1, 1);
-
   layout->setRowStretch(r++, 1);
   setLayout(layout);
 }
@@ -57,12 +53,6 @@ const QDateTime ProviderOrderInfo::convertDateTime(const QString &str) {
   QDateTime dt = QDateTime::fromString(str, Qt::ISODate);
   dt.setTimeSpec(Qt::OffsetFromUTC);
   return dt;
-}
-
-void ProviderOrderInfo::setPaymentStatus(int i) {
-  AntiquaCRM::ProviderPaymentStatus ps = static_cast<AntiquaCRM::ProviderPaymentStatus>(i);
-  QString info = ProviderPaymentsSelecter::getStatus().value(ps);
-  m_orderStatus->setText(info);
 }
 
 void ProviderOrderInfo::setPaymentMethod(int i) {
@@ -95,9 +85,5 @@ void ProviderOrderInfo::setOrderInfo(const QJsonObject &info) {
   } else {
     m_paymentConfirmed->setEnabled(false);
     m_paymentConfirmed->setVisible(false);
-  }
-
-  if (info.contains("o_payment_status")) {
-    setPaymentStatus(info.value("o_payment_status").toInt());
   }
 }

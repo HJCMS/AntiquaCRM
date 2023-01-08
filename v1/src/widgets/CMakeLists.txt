@@ -69,6 +69,7 @@ SET (projectLibrary_SOURCES
  searchlineedit.cpp
  selecteucountry.cpp
  selectarticletype.cpp
+ selectmediatype.cpp
  serialid.cpp
  showpaymentmethod.cpp
  sizeedit.cpp
@@ -127,6 +128,7 @@ SET (projectLibrary_HEADERS
  searchlineedit.h
  selecteucountry.h
  selectarticletype.h
+ selectmediatype.h
  serialid.h
  showpaymentmethod.h
  sizeedit.h

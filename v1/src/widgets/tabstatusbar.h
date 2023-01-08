@@ -8,8 +8,8 @@
 #include <QFrame>
 #include <QIcon>
 #include <QMap>
+#include <QMenu>
 #include <QPushButton>
-#include <QSignalMapper>
 #include <QStatusBar>
 
 /**
@@ -21,25 +21,6 @@
  */
 class TabStatusBar : public QStatusBar {
   Q_OBJECT
-
-private:
-  QPushButton *btn_refresh;
-
-protected:
-  QFrame *m_frame;
-  QPushButton *btn_history;
-  QSignalMapper *m_historyMapper;
-  virtual void setHistoryMenu() = 0;
-
-  const QIcon getIcon(const QString &name) const;
-
-protected Q_SLOTS:
-  virtual void setHistoryAction(int) = 0;
-
-Q_SIGNALS:
-  void sendHistoryQuery(const QString &query);
-  void sendCreateEntry();
-  void sendReloadView();
 
 public:
   enum History {
@@ -53,7 +34,65 @@ public:
     NOIMAGE = 8
   };
   explicit TabStatusBar(QWidget *parent = nullptr);
+
+  /**
+   * @brief Erstellen Knopf abfragen
+   */
+  virtual bool isCreateButtonEnabled() = 0;
+
+  /**
+   * @brief Menüeinträge mit den TabStatusBar::History werten!
+   */
   static const QMap<TabStatusBar::History, QString> historyItems();
+
+private:
+  QPushButton *btn_refresh;
+
+protected:
+  /**
+   * @brief Rahmen für eigene Knöpfe und Menüs
+   */
+  QFrame *m_frame;
+
+  /**
+   * @brief Optionaler Erstellen Knopf
+   */
+  QPushButton *btn_create = nullptr;
+
+  /**
+   * @brief Eigener Verlaufsknopf
+   */
+  QPushButton *btn_history = nullptr;
+
+  /**
+   * @brief Erstellt aus @ref historyItems() Menüeinträge
+   * @note  Einträge lösen den SLOT @ref setHistoryAction(int) aus!
+   */
+  void setHistoryActionMenu(QPushButton *parent);
+
+  /**
+   * @brief Helferlein für Icon zuweisung
+   */
+  const QIcon getIcon(const QString &name) const;
+
+protected Q_SLOTS:
+  /**
+   * @brief Auswahl von Menüeinträgen verarbeiten!
+   * @param Es wird "TabStatusBar::History" übergeben.
+   * @note Wegen SignalMapper ist der Parameter ein INT!
+   */
+  virtual void setHistoryAction(int) = 0;
+
+Q_SIGNALS:
+  void sendHistoryQuery(const QString &query);
+  void sendCreateEntry();
+  void sendReloadView();
+
+public Q_SLOTS:
+  /**
+   * @brief Erstellen Knopf aktivieren/deaktivieren
+   */
+  virtual void setCreateButtonEnabled(bool) = 0;
 };
 
 Q_DECLARE_METATYPE(TabStatusBar::History)

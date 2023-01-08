@@ -11,13 +11,13 @@ CustomersStatusBar::CustomersStatusBar(QWidget *parent) : TabStatusBar{parent} {
 
   QHBoxLayout *layout = new QHBoxLayout(m_frame);
   layout->setContentsMargins(0, 0, 0, 0);
-  btn_createEntry = new QPushButton(m_frame);
-  btn_createEntry->setText(tr("Create customer"));
-  btn_createEntry->setToolTip(tr("Create a new Customer entry."));
-  btn_createEntry->setIcon(getIcon("db_add"));
-  btn_createEntry->setEnabled(false);
-  btn_createEntry->setVisible(false);
-  layout->addWidget(btn_createEntry);
+  btn_create = new QPushButton(m_frame);
+  btn_create->setText(tr("Create customer"));
+  btn_create->setToolTip(tr("Create a new entry."));
+  btn_create->setIcon(getIcon("db_add"));
+  btn_create->setEnabled(false);
+  btn_create->setVisible(false);
+  layout->addWidget(btn_create);
 
   btn_history = new QPushButton(m_frame);
   btn_history->setText(tr("History"));
@@ -25,27 +25,8 @@ CustomersStatusBar::CustomersStatusBar(QWidget *parent) : TabStatusBar{parent} {
   layout->addWidget(btn_history);
   m_frame->setLayout(layout);
 
-  m_historyMapper = new QSignalMapper(btn_history);
-  setHistoryMenu();
-
-  connect(btn_createEntry, SIGNAL(clicked()), SIGNAL(sendCreateEntry()));
-  connect(m_historyMapper, SIGNAL(mappedInt(int)), SLOT(setHistoryAction(int)));
-}
-
-void CustomersStatusBar::setHistoryMenu() {
-  QMenu *m_menu = new QMenu(btn_history);
-  QIcon icon = getIcon("view_books");
-  QStringList entries;
-  QMapIterator<TabStatusBar::History, QString> it(historyItems());
-  while (it.hasNext()) {
-    it.next();
-    if (it.key() != TabStatusBar::History::NOIMAGE) {
-      QAction *ac = m_menu->addAction(icon, it.value());
-      connect(ac, SIGNAL(triggered()), m_historyMapper, SLOT(map()));
-      m_historyMapper->setMapping(ac, it.key());
-    }
-  }
-  btn_history->setMenu(m_menu);
+  setHistoryActionMenu(btn_history);
+  connect(btn_create, SIGNAL(clicked()), SIGNAL(sendCreateEntry()));
 }
 
 void CustomersStatusBar::setHistoryAction(int index) {
@@ -102,10 +83,10 @@ void CustomersStatusBar::setHistoryAction(int index) {
 }
 
 void CustomersStatusBar::setCreateButtonEnabled(bool b) {
-  btn_createEntry->setEnabled(b);
-  btn_createEntry->setVisible(b);
+  btn_create->setEnabled(b);
+  btn_create->setVisible(b);
 }
 
 bool CustomersStatusBar::isCreateButtonEnabled() {
-  return btn_createEntry->isEnabled();
+  return btn_create->isEnabled();
 }

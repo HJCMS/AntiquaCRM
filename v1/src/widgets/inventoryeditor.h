@@ -185,6 +185,7 @@ protected Q_SLOTS:
   void openErrnoMessage(const QString &info, const QString &error);
   void openSuccessMessage(const QString &info);
   void openNoticeMessage(const QString &info);
+  void unsavedChangesPopup();
 
   /**
    * @brief Statusnachricht senden.

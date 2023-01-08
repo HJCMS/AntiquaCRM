@@ -20,10 +20,8 @@ private:
   QLabel *m_paymentMethod;
   QLabel *m_orderPayed;
   AntiquaDateInfo *m_paymentConfirmed;
-  QLabel *m_orderStatus;
   QLabel *infoCell(const QString &);
   const QDateTime convertDateTime(const QString &);
-  void setPaymentStatus(int);
   void setPaymentMethod(int);
 
 public:

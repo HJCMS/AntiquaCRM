@@ -9,7 +9,7 @@
 #include <QMessageBox>
 
 AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
-  setMinimumSize(QSize(750, 550));
+  setMinimumSize(QSize(780, 560));
   setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
   setWindowIcon(QIcon(":icons/antiqua.png"));
   // setFixedSize(1280, 720); // Only for Testing

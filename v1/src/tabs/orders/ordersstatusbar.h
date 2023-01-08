@@ -18,7 +18,6 @@ class OrdersStatusBar final : public TabStatusBar {
 
 private:
   OrdersHistoryButton *btn_history;
-  void setHistoryMenu() override{};
 
 private Q_SLOTS:
   void setHistoryAction(int) override;
@@ -26,8 +25,12 @@ private Q_SLOTS:
 Q_SIGNALS:
   void sendDefaultView();
 
+public Q_SLOTS:
+  void setCreateButtonEnabled(bool) override{};
+
 public:
   explicit OrdersStatusBar(QWidget *parent = nullptr);
+  bool isCreateButtonEnabled() override { return false; };
   static const QString searchYear(int y = QDate::currentDate().year());
 };
 

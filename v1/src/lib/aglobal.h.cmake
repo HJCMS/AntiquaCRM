@@ -340,6 +340,25 @@ namespace AntiquaCRM {
  Q_ENUM_NS(AntiquaCRM::ArticleType)
 
  /**
+  * @brief MediaType
+  * Umsetzung Musik Medien
+  * @section inventory
+  */
+ enum MediaType {
+  MEDIA_NO_TYPE = 0,            /**< nicht festgelegt */
+  MEDIA_DISC_COMPACT = 1,       /**< Compact Disc */
+  MEDIA_DISC_MINI = 2,          /**< Mini Compact Disc */
+  MEDIA_DISC_VIDEO = 3,         /**< Video Compact Disc */
+  MEDIA_VINYL_SINGLE = 4,       /**< Vinyl single record */
+  MEDIA_VINYL_LONGPLAY = 5,     /**< Vinyl longplay record */
+  MEDIA_VINYL_MULTI_GROOVE = 6, /**< Vinyl Multi Groove */
+  MEDIA_VINYL_COLORED = 7,      /**< Vinyl colored record */
+  MEDIA_VINYL_VIDEO = 8,        /**< Vinyl video record */
+  MEDIA_VINYL_DISC = 9          /**< Vinyl record and DISC */
+ };
+ Q_ENUM_NS(AntiquaCRM::MediaType)
+
+ /**
   * @brief Zustandsbeschreibung für Artikel
   * @section inventory
   */

@@ -206,11 +206,10 @@ PrintsStitchesEditor::PrintsStitchesEditor(QWidget *parent)
   setLayout(mainLayout);
 
   // Signals:ImageToolBar
-  /*
   connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)),
           SLOT(actionRemoveImage(qint64)));
   connect(m_imageToolBar, SIGNAL(sendOpenImage()), SLOT(actionEditImages()));
-  */
+
   // Signals:ImageViewer
   connect(m_imageView, SIGNAL(sendImageLoadSuccess(bool)), m_imageToolBar,
           SLOT(enableActions(bool)));
@@ -422,7 +421,7 @@ void PrintsStitchesEditor::createSqlInsert() {
   ip_count->setRequired(true);
   ip_id->setRequired(false);
 
-  // Prüfung der Buchdaten Klasse
+  // Prüfung der Daten Klasse
   // Die Initialisierung erfolgt in setInputFields!
   // Bei einem INSERT wir diese hier befüllt!
   if (m_tableData == nullptr || !m_tableData->isValid()) {
@@ -488,8 +487,7 @@ bool PrintsStitchesEditor::realyDeactivateEntry() {
   body << tr("Are you sure to finish this operation?");
   body << QString("</p>");
 
-  int ret =
-      QMessageBox::question(this, tr("Prints deactivation"), body.join(""));
+  int ret = QMessageBox::question(this, tr("Deactivation"), body.join(""));
   if (ret == QMessageBox::No) {
     ip_count->setValue(m_tableData->getValue("ip_count"));
     ip_count->setRequired(true);
@@ -514,9 +512,7 @@ void PrintsStitchesEditor::setSaveData() {
 
 void PrintsStitchesEditor::setCheckLeaveEditor() {
   if (checkIsModified()) {
-    QStringList info(tr("Unsaved Changes"));
-    info << tr("Don't leave this page before save your changes!");
-    openNoticeMessage(info.join("\n"));
+    unsavedChangesPopup();
     return;
   }
   setFinalLeaveEditor();
@@ -527,6 +523,35 @@ void PrintsStitchesEditor::setFinalLeaveEditor() {
   m_actionBar->setRestoreable(false); /**< ResetButton off */
   m_imageView->clear();               /**< Bildvorschau leeren */
   emit sendLeaveEditor();             /**< Back to MainView */
+}
+
+void PrintsStitchesEditor::actionRemoveImage(qint64 articleId) {
+  qint64 id = ip_id->value().toLongLong();
+  if (articleId != id)
+    return;
+
+  QString image_id = QString::number(id);
+  QString t(tr("Remove Image from Database"));
+  QString ask(tr("Do you really want to delete the Image?"));
+  QString m = tr("%1\n\nImage - Article Id: %2").arg(ask, image_id);
+  QMessageBox::StandardButton set = QMessageBox::question(this, t, m);
+  if (set == QMessageBox::Yes) {
+    if (m_imageView->removeFromDatabase(id)) {
+      m_imageView->clear();
+      sendStatusMessage(tr("Image delete successfully!"));
+    }
+  }
+}
+
+void PrintsStitchesEditor::actionEditImages() {
+  qint64 id = ip_id->value().toLongLong();
+  if (id < 1)
+    return;
+
+  ImageDialog *d = new ImageDialog(id, this);
+  if (d->exec()) {
+    m_imageView->readFromDatabase(id);
+  }
 }
 
 bool PrintsStitchesEditor::openEditEntry(qint64 articleId) {

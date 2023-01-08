@@ -14,19 +14,15 @@
 class CustomersStatusBar final : public TabStatusBar {
   Q_OBJECT
 
-private:
-  QPushButton *btn_createEntry;
-  void setHistoryMenu() override;
-
 private Q_SLOTS:
   void setHistoryAction(int) override;
 
 public Q_SLOTS:
-  void setCreateButtonEnabled(bool);
+  void setCreateButtonEnabled(bool) override;
 
 public:
   explicit CustomersStatusBar(QWidget *parent = nullptr);
-  bool isCreateButtonEnabled();
+  bool isCreateButtonEnabled() override;
 };
 
 #endif // ANTIQUACRM_CUSTOMERSSTATUSBAR_H

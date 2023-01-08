@@ -621,9 +621,7 @@ void OrdersEditor::setSaveData() {
 
 void OrdersEditor::setCheckLeaveEditor() {
   if (checkIsModified() || m_ordersList->isWindowModified()) {
-    QStringList info(tr("Unsaved Changes"));
-    info << tr("Don't leave this page before save your changes!");
-    openNoticeMessage(info.join("\n"));
+    unsavedChangesPopup();
     return;
   }
   setFinalLeaveEditor();

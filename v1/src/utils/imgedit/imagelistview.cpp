@@ -24,6 +24,7 @@ ImageListView::ImageListView(QWidget *parent) : QTreeView{parent} {
   m_model->setOption(QFileSystemModel::DontWatchForChanges, true);
   m_model->setOption(QFileSystemModel::DontResolveSymlinks, true);
   m_model->setFilter(p_directory.filter());
+  m_model->setNameFilters(p_directory.nameFilters());
   setModel(m_model);
 
   m_headerView = header();

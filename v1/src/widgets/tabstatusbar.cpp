@@ -4,6 +4,7 @@
 #include "tabstatusbar.h"
 
 #include <QDebug>
+#include <QSignalMapper>
 
 TabStatusBar::TabStatusBar(QWidget *parent) : QStatusBar{parent} {
   setSizeGripEnabled(false);
@@ -23,10 +24,6 @@ TabStatusBar::TabStatusBar(QWidget *parent) : QStatusBar{parent} {
   connect(btn_refresh, SIGNAL(clicked()), this, SIGNAL(sendReloadView()));
 }
 
-const QIcon TabStatusBar::getIcon(const QString &name) const {
-  return QIcon(":icons/" + name + ".png");
-}
-
 const QMap<TabStatusBar::History, QString> TabStatusBar::historyItems() {
   QMap<TabStatusBar::History, QString> items;
   items.insert(History::Today, tr("Today"));
@@ -38,4 +35,25 @@ const QMap<TabStatusBar::History, QString> TabStatusBar::historyItems() {
   items.insert(History::ThisYear, tr("This Year"));
   items.insert(History::NOIMAGE, tr("Past Days edited (no Image)"));
   return items;
+}
+
+void TabStatusBar::setHistoryActionMenu(QPushButton *parent) {
+  // Mapper für Verlaufssignale
+  QSignalMapper *m_mapper = new QSignalMapper(parent);
+  QMenu *m_menu = new QMenu(parent);
+  QIcon icon = getIcon("view_books");
+  QStringList entries;
+  QMapIterator<TabStatusBar::History, QString> it(historyItems());
+  while (it.hasNext()) {
+    it.next();
+    QAction *ac = m_menu->addAction(icon, it.value());
+    connect(ac, SIGNAL(triggered()), m_mapper, SLOT(map()));
+    m_mapper->setMapping(ac, it.key());
+  }
+  parent->setMenu(m_menu);
+  connect(m_mapper, SIGNAL(mappedInt(int)), SLOT(setHistoryAction(int)));
+}
+
+const QIcon TabStatusBar::getIcon(const QString &name) const {
+  return QIcon(":icons/" + name + ".png");
 }

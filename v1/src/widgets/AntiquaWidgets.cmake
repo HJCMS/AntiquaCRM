@@ -153,6 +153,10 @@
 #include "selecteucountry.h"
 #endif
 
+#ifndef ANTIQUACRM_SELECTMEDIATYPE_H
+#include "selectmediatype.h"
+#endif
+
 #ifndef ANTIQUACRM_SERIALID_H
 #include "serialid.h"
 #endif

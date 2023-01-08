@@ -14,15 +14,15 @@ class PrintsStitchesStatusBar final : public TabStatusBar
 {
   Q_OBJECT
 
-private:
-  QPushButton *btn_createEntry;
-  void setHistoryMenu() override;
-
 private Q_SLOTS:
   void setHistoryAction(int) override;
 
+public Q_SLOTS:
+  void setCreateButtonEnabled(bool) override;
+
 public:
   explicit PrintsStitchesStatusBar(QWidget *parent = nullptr);
+  bool isCreateButtonEnabled() override;
 };
 
 #endif // ANTIQUACRM_PRINTSSTITCHES_STATUSBAR_H

@@ -552,9 +552,7 @@ void BookEditor::setSaveData() {
 
 void BookEditor::setCheckLeaveEditor() {
   if (checkIsModified()) {
-    QStringList info(tr("Unsaved Changes"));
-    info << tr("Don't leave this page before save your changes!");
-    openNoticeMessage(info.join("\n"));
+    unsavedChangesPopup();
     return;
   }
   setFinalLeaveEditor();
