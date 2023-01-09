@@ -9,6 +9,11 @@
 #include <QTextEdit>
 #include <QWidget>
 
+/**
+ * @brief Body Template Edit widget
+ * @class MessageEditor
+ * @section widgets
+ */
 class MessageEditor : public QTextEdit {
   Q_OBJECT
 

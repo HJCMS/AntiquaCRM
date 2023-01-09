@@ -13,6 +13,11 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief Custom Template Edit widget
+ * @class TemplatesHeader
+ * @section widgets
+ */
 class TemplatesHeader final : public QFrame {
   Q_OBJECT
 
@@ -21,6 +26,7 @@ private:
   QLineEdit *m_subject;
   QLineEdit *m_caller;
   QCheckBox *m_attachment;
+  QCheckBox *m_activ;
 
 public Q_SLOTS:
   void setSelection(const QJsonObject &);

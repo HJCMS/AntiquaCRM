@@ -41,15 +41,16 @@ bool AntiquaTemplates::queryTemplateBody(const QString &sql) {
   if (q.size() > 0) {
     q.next();
     QSqlRecord r = q.record();
-    tb_attachment = q.value("tb_attachment").toBool();
     tb_message = q.value("tb_message").toString();
     for (int i = 0; i < r.count(); i++) {
       QSqlField f = r.field(i);
       QRegularExpressionMatch isMacro = pattern.match(f.name());
       if (isMacro.hasMatch()) {
+        // qDebug() << f.name().toUpper() << q.value(f.name()).toString();
         p_vars.insert(f.name().toUpper(), q.value(f.name()).toString());
       }
     }
+    // qDebug() << Q_FUNC_INFO << str;
     return true;
   } else if (!m_sql->lastError().isEmpty()) {
 #ifdef ANTIQUA_DEVELOPEMENT
@@ -77,7 +78,6 @@ const QString AntiquaTemplates::getTemplate(const QString &caller,
 
   p_vars.clear();
 
-
   m_sql = new AntiquaCRM::ASqlCore(this);
   if (queryCompanyData() && queryTemplateBody(query)) {
     QString buffer = tb_message;
@@ -86,6 +86,9 @@ const QString AntiquaTemplates::getTemplate(const QString &caller,
       it.next();
       buffer.replace("@" + it.key() + "@", it.value());
     }
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << buffer;
+#endif
     return buffer;
   }
   return QString();

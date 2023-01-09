@@ -159,6 +159,7 @@ void MessageTemplates::saveCurrentTemplate() {
   QString sql("UPDATE ui_template_body SET ");
   sql.append(set.join(","));
   sql.append(" WHERE tb_caller='" + tb_caller + "';");
+  // qDebug() << Q_FUNC_INFO << sql;
   m_sql->query(sql);
   if (m_sql->lastError().isEmpty()) {
     m_statusBar->showMessage(tr("Save data successfully!"), (1000 * 6));

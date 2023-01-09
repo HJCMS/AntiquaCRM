@@ -433,8 +433,8 @@ bool CDVEditor::realyDeactivateEntry() {
 }
 
 bool CDVEditor::checkYear() {
-  int _mv = 1889; /**< min. Vinyl Year */
-  int _mc = 1980; /**< min. Compact Disc Year */
+  int _mv = 1889; // min. Vinyl Year
+  int _mc = 1980; // min. Compact Disc Year
   int _y = cv_year->value().toInt();
   int _t = cv_type->value().toInt();
   if (_t == 0) {

@@ -2,7 +2,7 @@
 -- @file select_statement_template_body.sql
 -- @note Aliases with pattern ('^crm_([a-z_]+)\$') will indicated as template variables!
 SELECT o_id AS crm_order_number,
-  tb_message, tb_attachment,
+  tb_message, tb_attachment, tb_activ,
   TRIM(CONCAT_WS(' ', c_title, c_firstname, c_lastname)) AS crm_customer_name,
   (CASE
     WHEN c_gender=1 THEN 'Sehr geehrter Herr'
