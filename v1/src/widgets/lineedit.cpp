@@ -76,11 +76,9 @@ void LineEdit::setCompleter(const QStringList &list) {
   }
 
   m_completer = new QCompleter(list, m_edit);
-  m_completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
+  m_completer->setCompletionMode(QCompleter::PopupCompletion);
   m_completer->setCaseSensitivity(Qt::CaseInsensitive);
-  if (list.size() < 50)
-    m_completer->setFilterMode(Qt::MatchContains);
-
+  m_completer->setFilterMode(Qt::MatchContains);
   m_edit->setCompleter(m_completer);
 }
 

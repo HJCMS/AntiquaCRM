@@ -3,18 +3,18 @@
 
 SET(_projectLibrary "AntiquaCDsVinyl")
 
-INCLUDE_DIRECTORIES (
-  ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  ${PROJECT_INCLUDE_DIRS}
-)
-
 SET (projectLibrary_LINKER
  AntiquaCRM
  AntiquaWidgets
  AntiquaKeywords
  AntiquaImgEdit
  AntiquaPrinting
+)
+
+INCLUDE_DIRECTORIES (
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${PROJECT_INCLUDE_DIRS}
 )
 
 SET (projectLibrary_SOURCES

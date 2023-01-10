@@ -14,4 +14,3 @@ ADD_SUBDIRECTORY(printing)
 ADD_SUBDIRECTORY(helper)
 ADD_SUBDIRECTORY(aboutdialogs)
 ADD_SUBDIRECTORY(returnorder)
-

@@ -17,7 +17,7 @@ class CDVEditor final : public InventoryEditor {
   Q_OBJECT
 
 private:
-  // Row 0
+  // Row:0
   SerialID *cv_id;           /**< @brief ReadOnly:ArticleID */
   IntSpinBox *cv_count;      /**< @brief Bestandsangabe */
   PriceEdit *cv_price;       /**< @brief Preis */
@@ -25,7 +25,7 @@ private:
   BoolBox *cv_including_vat; /**< @brief inkl. Mehwertsteuer */
   BoolBox *cv_restricted;    /**< @brief Öffentlicher verkauf */
 
-  // Row 1
+  // Row:1
   QSplitter *m_splitter;       /**< @brief Zweite Reihe */
   AntiquaILabel *m_infoLabel;  /**< @brief Labels */
   LineEdit *cv_title;          /**< @brief Titel */
@@ -39,14 +39,14 @@ private:
   ImageView *m_imageView;
   ImageToolBar *m_imageToolBar;
 
-  // Row 2
+  // Row:2
   EditorTab *m_tabWidget;             /**< @brief Zusätze */
   TextField *cv_description;          /**< @brief Beschreibung */
   TextField *cv_internal_description; /**< @brief Interne Beschreibung */
   AntiquaDateInfo *cv_since;          /**< @brief Erstellt */
   AntiquaDateInfo *cv_changed;        /**< @brief Geändert */
 
-  // Row 3
+  // Row:3
   EditorActionBar *m_actionBar; /**< @brief Aktionen */
 
   void setInputFields() override;
@@ -56,9 +56,7 @@ private:
   const QHash<QString, QVariant> createSqlDataset() override;
   void createSqlUpdate() override;
   void createSqlInsert() override;
-
   bool realyDeactivateEntry();
-
   bool checkYear();
 
 private Q_SLOTS:

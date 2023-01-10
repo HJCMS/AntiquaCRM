@@ -125,9 +125,9 @@ CDVEditor::CDVEditor(QWidget *parent)
   cv_keyword->setToolTip(m_infoLabel->text());
   row1->addWidget(cv_keyword, row1c++, 1, 1, 4);
   // cv_isbn
-  AntiquaILabel *lb_isbn = new AntiquaILabel("ISBN/EAN", this);
+  AntiquaILabel *lb_isbn = new AntiquaILabel("UPC/GTIN12", this);
   row1->addWidget(lb_isbn, row1c, 0, 1, 1);
-  cv_isbn = new IsbnEdit(this);
+  cv_isbn = new IsbnEdit(this, IsbnEdit::CodeType::GTIN12);
   cv_isbn->setObjectName("cv_isbn");
   cv_isbn->setToolTip(lb_isbn->text());
   row1->addWidget(cv_isbn, row1c++, 1, 1, 4);
@@ -145,9 +145,37 @@ CDVEditor::CDVEditor(QWidget *parent)
   // END : Row1
 
   // BEGIN : Row2
+  QIcon tabIcons = m_tabWidget->defaultIcon();
   m_tabWidget = new EditorTab(this);
   m_tabWidget->setObjectName("tab_widget");
 
+  // cv_description
+  cv_description = new TextField(this);
+  cv_description->setObjectName("cv_description");
+  m_tabWidget->insertTab(0, cv_description, tabIcons, tr("Description"));
+
+  // cv_internal_description
+  cv_internal_description = new TextField(this);
+  cv_internal_description->setObjectName("cv_internal_description");
+  m_tabWidget->insertTab(1, cv_internal_description, tabIcons,
+                         tr("Internal Description"));
+
+  // Info Tab
+  QWidget *m_infos = new QWidget(this);
+  QVBoxLayout *m_infoLayout = new QVBoxLayout(m_infos);
+  // cv_since
+  cv_since = new AntiquaDateInfo(this);
+  cv_since->setObjectName("cv_since");
+  cv_since->setInfo(tr("Created at"));
+  m_infoLayout->addWidget(cv_since);
+  // cv_changed
+  cv_changed = new AntiquaDateInfo(this);
+  cv_changed->setObjectName("cv_changed");
+  cv_changed->setInfo(tr("Last changed"));
+  m_infoLayout->addWidget(cv_changed);
+  m_infoLayout->addStretch(1);
+  m_infos->setLayout(m_infoLayout);
+  m_tabWidget->insertTab(2, m_infos, tabIcons, tr("Information"));
   mainLayout->addWidget(m_tabWidget);
   // END : Row2
 
@@ -158,6 +186,15 @@ CDVEditor::CDVEditor(QWidget *parent)
 
   mainLayout->addStretch(1);
   setLayout(mainLayout);
+
+  // Signals:ImageToolBar
+  connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)),
+          SLOT(actionRemoveImage(qint64)));
+  connect(m_imageToolBar, SIGNAL(sendOpenImage()), SLOT(actionEditImages()));
+
+  // Signals:ImageViewer
+  connect(m_imageView, SIGNAL(sendImageLoadSuccess(bool)), m_imageToolBar,
+          SLOT(enableActions(bool)));
 
   // Signals:ActionBar
   connect(m_actionBar, SIGNAL(sendCancelClicked()),
@@ -507,9 +544,8 @@ void CDVEditor::actionEditImages() {
     return;
 
   ImageDialog *d = new ImageDialog(id, this);
-  if (d->exec()) {
+  if (d->exec())
     m_imageView->readFromDatabase(id);
-  }
 }
 
 void CDVEditor::setRestore() {

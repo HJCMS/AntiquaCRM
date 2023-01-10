@@ -1222,7 +1222,32 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+34"/>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Internal Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Created at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Last changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+37"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3240,7 +3265,7 @@ Image - Article Id: %2</source>
 <context>
     <name>IsbnEdit</name>
     <message>
-        <location filename="../widgets/isbnedit.cpp" line="+18"/>
+        <location filename="../widgets/isbnedit.cpp" line="+31"/>
         <source>a ISBN number must consist of 10 or 13 digits.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3250,8 +3275,13 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+131"/>
-        <source>Invalid ISBN detected.</source>
+        <location line="+8"/>
+        <source>It must consist of 12 digits.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+150"/>
+        <source>Invalid ISBN/EAN/UPC detected.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3501,7 +3531,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+80"/>
         <source>is required and can&apos;t empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3671,7 +3701,7 @@ Image - Article Id: %2</source>
     <message>
         <location line="+39"/>
         <location line="+30"/>
-        <location line="+57"/>
+        <location line="+58"/>
         <source>an error occurred</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7072,18 +7102,43 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+5"/>
-        <location line="+18"/>
+        <location line="+19"/>
         <source>Max allowed %1 characters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-6"/>
+        <location line="-18"/>
+        <source>Menue title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
         <source>Subject</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+7"/>
+        <source>eMail subject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Attachment required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Attachment is required for this template!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Activ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Enable/Disable this Template.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

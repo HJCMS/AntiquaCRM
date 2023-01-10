@@ -10,37 +10,64 @@
 #include <QRegularExpressionMatch>
 #include <QStringList>
 
-IsbnEdit::IsbnEdit(QWidget *parent) : InputEdit{parent} {
+IsbnEdit::IsbnEdit(QWidget *parent, IsbnEdit::CodeType ctype)
+    : InputEdit{parent}, p_codeType{ctype} {
   setObjectName("IsbnEdit");
-  m_isbn = new QLineEdit(this);
-  m_isbn->setMaxLength(13);
-  m_isbn->setMinimumWidth(200);
-  m_isbn->setWhatsThis(tr("a ISBN number must consist of 10 or 13 digits."));
-  m_isbn->setPlaceholderText(tr("ISBN/EAN 10/13 (ISO 2108)"));
-  m_isbn->setClearButtonEnabled(true);
-  m_layout->addWidget(m_isbn);
+  m_lineEdit = new QLineEdit(this);
+  m_lineEdit->setMaxLength(13);
+  m_lineEdit->setMinimumWidth(200);
+  m_lineEdit->setClearButtonEnabled(true);
+  m_layout->addWidget(m_lineEdit);
 
   m_status = new QLabel(this);
   m_layout->addWidget(m_status);
 
-  m_validator = new QRegExpValidator(simplePattern, m_isbn);
-  m_isbn->setValidator(m_validator);
-  m_completer = new QCompleter(prefix, m_isbn);
-  m_completer->setCompletionMode(QCompleter::PopupCompletion);
-  m_completer->setFilterMode(Qt::MatchStartsWith);
-  m_isbn->setCompleter(m_completer);
+  m_validator = new QRegExpValidator(simplePattern, m_lineEdit);
+  m_lineEdit->setValidator(m_validator);
+
+  // Autovervollständigung nur bei ISBN Buchpräfixe einsetzen!
+  if (p_codeType == IsbnEdit::CodeType::ISBNEAN) {
+    m_lineEdit->setWhatsThis(
+        tr("a ISBN number must consist of 10 or 13 digits."));
+    m_lineEdit->setPlaceholderText(tr("ISBN/EAN 10/13 (ISO 2108)"));
+
+    QStringList list({"978", "979"});
+    QCompleter *m_completer = new QCompleter(list, m_lineEdit);
+    m_completer->setCompletionMode(QCompleter::PopupCompletion);
+    m_completer->setFilterMode(Qt::MatchStartsWith);
+    m_lineEdit->setCompleter(m_completer);
+  } else {
+    m_lineEdit->setWhatsThis(tr("It must consist of 12 digits."));
+    m_lineEdit->setPlaceholderText("UPC-A (GTIN12) Code");
+  }
+
   m_layout->addStretch(1);
-  connect(m_isbn, SIGNAL(textChanged(const QString &)),
+
+  connect(m_lineEdit, SIGNAL(textChanged(const QString &)),
           SLOT(isbnChanged(const QString &)));
 }
 
 bool IsbnEdit::isISBN10(const QString &isbn) const {
+  if (p_codeType == IsbnEdit::CodeType::GTIN12)
+    return isGTIN12(isbn);
+
   QRegularExpressionMatch c = p10.match(isbn);
   return c.hasMatch();
 }
 
 bool IsbnEdit::isISBN13(const QString &isbn) const {
+  if (p_codeType == IsbnEdit::CodeType::GTIN12)
+    return isGTIN12(isbn);
+
   QRegularExpressionMatch c = p13.match(isbn);
+  return c.hasMatch();
+}
+
+bool IsbnEdit::isGTIN12(const QString &upc) const {
+  if (upc.length() != 12)
+    return false;
+
+  QRegularExpressionMatch c = gtin12.match(upc);
   return c.hasMatch();
 }
 
@@ -85,27 +112,40 @@ void IsbnEdit::setValue(const QVariant &val) {
     s = val.toString().trimmed();
   }
 
+  // UPC check
+  if (p_codeType == IsbnEdit::CodeType::GTIN12) {
+    if (isGTIN12(s)) {
+      m_lineEdit->setText(s);
+      return;
+    }
+  }
+
+  // ISBN/EAN check
   int len = s.length();
   if (len < 10 || len > 13)
     return; // ignore
 
   if (len == 10 && isISBN10(s)) {
-    m_isbn->setText(s);
+    m_lineEdit->setText(s);
   } else if (len == 13 && isISBN13(s)) {
-    m_isbn->setText(s);
+    m_lineEdit->setText(s);
   }
 }
 
 void IsbnEdit::reset() {
-  m_isbn->clear();
+  m_lineEdit->clear();
   setModified(false);
 }
 
-void IsbnEdit::setFocus() { m_isbn->setFocus(); }
+void IsbnEdit::setFocus() { m_lineEdit->setFocus(); }
 
 bool IsbnEdit::isValid() {
-  QString isbn = m_isbn->text().trimmed();
+  QString isbn = m_lineEdit->text().trimmed();
   int len = isbn.length();
+  if (p_codeType == IsbnEdit::CodeType::GTIN12) {
+    return isGTIN12(isbn);
+  }
+
   if (len == 10 && isISBN10(isbn))
     return true;
 
@@ -116,12 +156,12 @@ bool IsbnEdit::isValid() {
 }
 
 qint64 IsbnEdit::number() {
-  QString txt = m_isbn->text().trimmed();
+  QString txt = m_lineEdit->text().trimmed();
   bool b = true;
   qint64 isbn = 0;
   isbn = txt.toLongLong(&b);
   if (!b) {
-    qWarning("Current ISBN:'%s' convert failed.", qPrintable(txt));
+    qWarning("Current EAN:'%s' convert failed.", qPrintable(txt));
   }
   return isbn;
 }
@@ -144,11 +184,11 @@ void IsbnEdit::setProperties(const QSqlField &field) {
 
 void IsbnEdit::setInfo(const QString &info) { setToolTip(info); }
 
-const QString IsbnEdit::info() { return m_isbn->toolTip(); }
+const QString IsbnEdit::info() { return m_lineEdit->toolTip(); }
 
 const QString IsbnEdit::notes() {
-  QString info(tr("Invalid ISBN detected."));
+  QString info(tr("Invalid ISBN/EAN/UPC detected."));
   info.append(" ");
-  info.append(m_isbn->toolTip());
+  info.append(m_lineEdit->toolTip());
   return info;
 }
