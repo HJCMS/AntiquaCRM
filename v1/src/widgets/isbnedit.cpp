@@ -60,7 +60,7 @@ bool IsbnEdit::validateEAN13(const QString ean13) const {
   // Test: 4012345123456
   int apd = 0; // A: Produktnummer (product digit)
   int brd = 0; // B: Aufgerundet   (roundet digit)
-  int ccd = 0; // C: Prüfnummer    (check digit)
+  int ccd = 0; // C: Prüfnummer    (checksum digit)
   for (int i = 13; i > 0; --i) {
     int num = ean13.at(i - 1).digitValue();
     // Die 13. Stelle ist die Prüfnummer
@@ -68,8 +68,8 @@ bool IsbnEdit::validateEAN13(const QString ean13) const {
       ccd = num;
       continue;
     }
-    // Von rechts nach links 12 Stelle abwärts!
-    apd += (i % 2 == 0) ? (num * 3) : (num * 1);
+    // Gewichtung von rechts nach links 12 Stelle abwärts!
+    apd += (i % 2 & 1) ? (num * 1) : (num * 3);
   }
   // Ist die Prüfsumme eine 0, dann kurz und schmerzlos ein Modolo 10.
   if (ccd == 0)

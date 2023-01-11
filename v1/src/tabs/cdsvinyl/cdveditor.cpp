@@ -13,11 +13,9 @@ CDVEditor::CDVEditor(QWidget *parent)
     : InventoryEditor{"^cv_[a-z_]+\\b$", parent} {
   setObjectName("cdv_editor");
   setWindowTitle(tr("Edit CD or Vinyl"));
-
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setObjectName("cdv_editor_layout");
   mainLayout->setSizeConstraint(QLayout::SetMaximumSize);
-
   // BEGIN : Row0
   QHBoxLayout *row0 = new QHBoxLayout();
   cv_id = new SerialID(this);
@@ -25,12 +23,12 @@ CDVEditor::CDVEditor(QWidget *parent)
   cv_id->setInfo(tr("Article ID"));
   cv_id->setRequired(true);
   row0->addWidget(cv_id);
-
+  // cv_count
   cv_count = new IntSpinBox(this);
   cv_count->setObjectName("cv_count");
   cv_count->setInfo(tr("Count"));
   row0->addWidget(cv_count);
-
+  // cv_price
   double minPrice = m_cfg->value("payment/min_price", 2.50).toDouble();
   cv_price = new PriceEdit(this);
   cv_price->setObjectName("cv_price");
@@ -38,31 +36,29 @@ CDVEditor::CDVEditor(QWidget *parent)
   cv_price->setInfo(tr("Price"));
   cv_price->setMinimum(minPrice);
   row0->addWidget(cv_price);
-
+  // cv_year
   cv_year = new YearEdit(this);
   cv_year->setObjectName("cv_year");
   cv_year->setRequired(true);
   cv_year->setInfo(tr("Year"));
   cv_year->setValue(1800);
   row0->addWidget(cv_year);
-
+  // cv_including_vat
   cv_including_vat = new BoolBox(this);
   cv_including_vat->setObjectName("cv_including_vat");
   cv_including_vat->setInfo(tr("incl. vat"));
   cv_including_vat->setRequired(false);
   row0->addWidget(cv_including_vat);
-
+  // cv_restricted
   cv_restricted = new BoolBox(this);
   cv_restricted->setObjectName("cv_restricted");
   cv_restricted->setInfo(tr("Local Usage only"));
   cv_restricted->setToolTip(tr("When this Options is marked. Then this Article "
                                "will not exported to your Providers."));
   row0->addWidget(cv_restricted);
-
   row0->addStretch(1);
   mainLayout->addLayout(row0, 0);
   // END : Row0
-
   // BEGIN : Row1
   m_splitter = new QSplitter(Qt::Horizontal, this);
   m_splitter->setChildrenCollapsible(false);
@@ -94,7 +90,7 @@ CDVEditor::CDVEditor(QWidget *parent)
   cv_author->setObjectName("cv_author");
   cv_author->setToolTip(m_infoLabel->text());
   row1->addWidget(cv_author, row1c++, 1, 1, 4);
-  // @GROUP {
+  // @BEGIN_GROUP {
   // cv_type
   m_infoLabel = new AntiquaILabel(tr("Mediatype"), row1Widget);
   row1->addWidget(m_infoLabel, row1c, 0, 1, 1);
@@ -109,9 +105,14 @@ CDVEditor::CDVEditor(QWidget *parent)
   cv_condition->setObjectName("cv_condition");
   cv_condition->setToolTip(m_infoLabel->text());
   row1->addWidget(cv_condition, row1c++, 3, 1, 1);
-  // }
+  // } @END_GROUP
   // cv_designation
-
+  m_infoLabel = new AntiquaILabel(tr("Designation"), row1Widget);
+  row1->addWidget(m_infoLabel, row1c, 0, 1, 1);
+  cv_designation = new LineEdit(this);
+  cv_designation->setObjectName("cv_designation");
+  cv_designation->setToolTip(m_infoLabel->text());
+  row1->addWidget(cv_designation, row1c++, 1, 1, 4);
   // cv_storage
   m_infoLabel = new AntiquaILabel(tr("Storage"), row1Widget);
   row1->addWidget(m_infoLabel, row1c, 0, 1, 1);
@@ -137,7 +138,6 @@ CDVEditor::CDVEditor(QWidget *parent)
   m_imageToolBar = new ImageToolBar(this);
   row1->addWidget(m_imageToolBar, row1c++, 1, 1, 4);
   row1Widget->setLayout(row1);
-
   // Image Viewer
   QSize maxSize = m_cfg->value("image/max_size", QSize(320, 320)).toSize();
   m_imageView = new ImageView(maxSize, m_splitter);
@@ -145,23 +145,19 @@ CDVEditor::CDVEditor(QWidget *parent)
   m_splitter->insertWidget(1, m_imageView);
   mainLayout->addWidget(m_splitter, 1);
   // END : Row1
-
   // BEGIN : Row2
   QIcon tabIcons = m_tabWidget->defaultIcon();
   m_tabWidget = new EditorTab(this);
   m_tabWidget->setObjectName("tab_widget");
-
   // cv_description
   cv_description = new TextField(this);
   cv_description->setObjectName("cv_description");
   m_tabWidget->insertTab(0, cv_description, tabIcons, tr("Description"));
-
   // cv_internal_description
   cv_internal_description = new TextField(this);
   cv_internal_description->setObjectName("cv_internal_description");
   m_tabWidget->insertTab(1, cv_internal_description, tabIcons,
                          tr("Internal Description"));
-
   // Info Tab
   QWidget *m_infos = new QWidget(this);
   QVBoxLayout *m_infoLayout = new QVBoxLayout(m_infos);
@@ -180,7 +176,6 @@ CDVEditor::CDVEditor(QWidget *parent)
   m_tabWidget->insertTab(2, m_infos, tabIcons, tr("Information"));
   mainLayout->addWidget(m_tabWidget);
   // END : Row2
-
   // Begin : Row3
   m_actionBar = new EditorActionBar(this);
   mainLayout->addWidget(m_actionBar);
@@ -223,7 +218,6 @@ void CDVEditor::setInputFields() {
   // Lager
   cv_storage->reset();
   cv_storage->loadDataset();
-
   // Schlüsselwörter
   cv_keyword->loadDataset();
 }
@@ -260,7 +254,6 @@ void CDVEditor::importSqlResult() {
     setDataField(field, it.value());
   }
   blockSignals(false);
-
   // Suche Bilddaten
   qint64 id = cv_id->value().toLongLong();
   if (id > 0) {
@@ -273,22 +266,18 @@ void CDVEditor::importSqlResult() {
 }
 
 bool CDVEditor::sendSqlQuery(const QString &query) {
-  qDebug() << Q_FUNC_INFO << query;
-  return true;
-
+  // qDebug() << Q_FUNC_INFO << query; return true;
   QSqlQuery q = m_sql->query(query);
   if (q.lastError().type() != QSqlError::NoError) {
     qDebug() << Q_FUNC_INFO << query << m_sql->lastError();
     return false;
   }
-
   if (q.next()) {
     if (!q.isNull("cv_id")) {
       QSqlField field = m_tableData->getProperties("cv_id");
       setDataField(field, q.value("cv_id"));
     }
   }
-
   openSuccessMessage(tr("Saved successfully!"));
   setResetModified(inputFields);
   return true;
@@ -314,7 +303,6 @@ const QHash<QString, QVariant> CDVEditor::createSqlDataset() {
     data.insert(objName, cur->value());
   }
   list.clear();
-
   return data;
 }
 
@@ -356,7 +344,6 @@ void CDVEditor::createSqlUpdate() {
     setWindowModified(false);
     return;
   }
-
   // Artikel auf Deaktivierung prüfen!
   // Wenn sich die Anzahl geändert hat, ein Update senden!
   // NOTE Die Nutzerabfrage erfolgt vorher in setSaveData()!
@@ -377,7 +364,6 @@ void CDVEditor::createSqlUpdate() {
     obj.insert("plugin_operation", QJsonValue(action));
     pushPluginOperation(obj);
   }
-
   QString sql("UPDATE inventory_cdvinyl SET ");
   sql.append(set.join(","));
   sql.append(",cv_changed=CURRENT_TIMESTAMP WHERE cv_id=");
@@ -436,7 +422,7 @@ void CDVEditor::createSqlInsert() {
   sql.append(values.join(","));
   sql.append(",CURRENT_TIMESTAMP) RETURNING cv_id;");
   if (sendSqlQuery(sql) && cv_id->value().toInt() >= 1) {
-    qInfo("SQL INSERT Inventory Prints success!");
+    qInfo("Insert Inventory success!");
     // Zurücksetzen Knopf Aktivieren?
     m_actionBar->setRestoreable(m_tableData->isValid());
     // Bildaktionen erst bei vorhandener Artikel Nummer freischalten!
@@ -451,8 +437,7 @@ bool CDVEditor::realyDeactivateEntry() {
   if (_curCount == _oldcount)
     return true; // alles ok
 
-  QStringList body;
-  body << QString("<b>");
+  QStringList body("<b>");
   body << tr("When setting the Article Count to 0.");
   body << QString("</b><p>");
   body << tr("This marked the Article in all Shopsystem for deletion!");
@@ -466,7 +451,6 @@ bool CDVEditor::realyDeactivateEntry() {
     cv_count->setRequired(true);
     return false;
   }
-
   cv_count->setRequired(false);
   return true;
 }

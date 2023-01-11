@@ -33,6 +33,7 @@ private:
   LineEdit *cv_author;         /**< @brief Gruppe oder Band */
   SelectMediaType *cv_type;    /**< @brief Mediatype */
   ConditionEdit *cv_condition; /**< @brief Umschreibung */
+  LineEdit *cv_designation;    /**< @brief Zustandsbeschreibung */
   StorageLocation *cv_storage; /**< @brief Lagerposition */
   KeywordLineEdit *cv_keyword; /**< @brief Schlüsselwörter */
   IsbnEdit *cv_isbn;           /**< @brief ISBN/EAN */
