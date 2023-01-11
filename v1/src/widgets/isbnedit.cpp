@@ -27,18 +27,16 @@ IsbnEdit::IsbnEdit(QWidget *parent, IsbnEdit::CodeType ctype)
 
   // Autovervollständigung nur bei ISBN Buchpräfixe einsetzen!
   if (p_codeType == IsbnEdit::CodeType::ISBNEAN) {
-    m_lineEdit->setWhatsThis(
-        tr("a ISBN number must consist of 10 or 13 digits."));
-    m_lineEdit->setPlaceholderText(tr("ISBN/EAN 10/13 (ISO 2108)"));
-
+    m_lineEdit->setWhatsThis(tr("It must consist of 10 or 13 digits."));
+    m_lineEdit->setPlaceholderText("ISBN/EAN 10/13 (ISO 2108)");
     QStringList list({"978", "979"});
     QCompleter *m_completer = new QCompleter(list, m_lineEdit);
     m_completer->setCompletionMode(QCompleter::PopupCompletion);
     m_completer->setFilterMode(Qt::MatchStartsWith);
     m_lineEdit->setCompleter(m_completer);
   } else {
-    m_lineEdit->setWhatsThis(tr("It must consist of 12 digits."));
-    m_lineEdit->setPlaceholderText("UPC-A (GTIN12) Code");
+    m_lineEdit->setWhatsThis(tr("It must consist of 13 digits."));
+    m_lineEdit->setPlaceholderText("EAN13/GTIN13 Code");
   }
 
   m_layout->addStretch(1);
@@ -48,27 +46,62 @@ IsbnEdit::IsbnEdit(QWidget *parent, IsbnEdit::CodeType ctype)
 }
 
 bool IsbnEdit::isISBN10(const QString &isbn) const {
-  if (p_codeType == IsbnEdit::CodeType::GTIN12)
-    return isGTIN12(isbn);
+  if (p_codeType == IsbnEdit::CodeType::GTIN13)
+    return false;
 
   QRegularExpressionMatch c = p10.match(isbn);
   return c.hasMatch();
 }
 
+bool IsbnEdit::validateEAN13(const QString ean13) const {
+  if (ean13.size() != 13)
+    return false;
+
+  // Test: 4012345123456
+  int apd = 0; // A: Produktnummer (product digit)
+  int brd = 0; // B: Aufgerundet   (roundet digit)
+  int ccd = 0; // C: Prüfnummer    (check digit)
+  for (int i = 13; i > 0; --i) {
+    int num = ean13.at(i - 1).digitValue();
+    // Die 13. Stelle ist die Prüfnummer
+    if (i == 13) {
+      ccd = num;
+      continue;
+    }
+    // Von rechts nach links 12 Stelle abwärts!
+    apd += (i % 2 == 0) ? (num * 3) : (num * 1);
+  }
+  // Ist die Prüfsumme eine 0, dann kurz und schmerzlos ein Modolo 10.
+  if (ccd == 0)
+    return (apd % 10 == 0);
+
+  brd = apd;
+  // Produktnummer zu Zehnerpotenz aufrunden.
+  for (int r = 0; r <= 9; ++r) {
+    if (++brd % 10 == 0)
+      break;
+  }
+  // Jetzt die Prüfsumme vergleichen
+  return ((brd - apd) == ccd);
+}
+
 bool IsbnEdit::isISBN13(const QString &isbn) const {
-  if (p_codeType == IsbnEdit::CodeType::GTIN12)
-    return isGTIN12(isbn);
+  if (p_codeType == IsbnEdit::CodeType::GTIN13)
+    return isGTIN13(isbn);
 
   QRegularExpressionMatch c = p13.match(isbn);
   return c.hasMatch();
 }
 
-bool IsbnEdit::isGTIN12(const QString &upc) const {
-  if (upc.length() != 12)
+bool IsbnEdit::isGTIN13(const QString &ean) const {
+  if (ean.length() != 13)
     return false;
 
-  QRegularExpressionMatch c = gtin12.match(upc);
-  return c.hasMatch();
+  QRegularExpressionMatch c = gtin13.match(ean);
+  if (c.hasMatch())
+    return validateEAN13(ean);
+
+  return false;
 }
 
 void IsbnEdit::loadDataset() {}
@@ -113,8 +146,8 @@ void IsbnEdit::setValue(const QVariant &val) {
   }
 
   // UPC check
-  if (p_codeType == IsbnEdit::CodeType::GTIN12) {
-    if (isGTIN12(s)) {
+  if (p_codeType == IsbnEdit::CodeType::GTIN13) {
+    if (isGTIN13(s)) {
       m_lineEdit->setText(s);
       return;
     }
@@ -142,8 +175,8 @@ void IsbnEdit::setFocus() { m_lineEdit->setFocus(); }
 bool IsbnEdit::isValid() {
   QString isbn = m_lineEdit->text().trimmed();
   int len = isbn.length();
-  if (p_codeType == IsbnEdit::CodeType::GTIN12) {
-    return isGTIN12(isbn);
+  if (p_codeType == IsbnEdit::CodeType::GTIN13) {
+    return isGTIN13(isbn);
   }
 
   if (len == 10 && isISBN10(isbn))

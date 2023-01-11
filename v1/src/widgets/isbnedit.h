@@ -25,8 +25,8 @@ class IsbnEdit final : public InputEdit {
 
 public:
   enum CodeType {
-    ISBNEAN = 0x01, /**< ISBN/EAN BookNumber */
-    GTIN12 = 0x02   /**< Universal Product Code (UPC) */
+    ISBNEAN = 0x01, /**< ISBN/EAN Booknumber */
+    GTIN13 = 0x02   /**< ENA13/GTIN13 Medianumber */
   };
   explicit IsbnEdit(QWidget *parent = nullptr,
                     IsbnEdit::CodeType ctype = IsbnEdit::CodeType::ISBNEAN);
@@ -53,38 +53,39 @@ private:
   bool isISBN10(const QString &isbn) const;
 
   /**
+   * @brief EAN13 Prüfsumme berechnen!
+   * Der Prüfziffern-Algorithmus des GS1-Systems basiert auf einer Gewichtung
+   * der einzelnen Ziffern der zu prüfenden Nummer mit den Faktoren "3" und
+   * "1"... von rechts nach links und dem Modulo 10. Mit anderen Worten
+   * ausgedrückt: Die einzelnen Ziffern der GTIN-, GLN- oder SSCC-Nummer werden
+   * von rechts nach links - also von hinten nach vorne - abwechselnd mit den
+   * Faktoren "3" und "1" multipliziert, wobei stets mit Faktor "3" begonnen
+   * wird. Die Summe dieser einzelnen Produkte (Produktsumme) ist zu ermitteln.
+   * Die Differenz zwischen der Produktsumme und dem nächsten vollen "Zehner"
+   * (Aufrundung) ergibt die Prüfziffer. Ergibt sich eine durch 10 teilbare
+   * Produktsumme, so ist die Prüfziffer gleich Null.
+   */
+  bool validateEAN13(const QString ean13) const;
+
+  /**
    * @brief Regulärer Ausdruck für ISBN/EAN 13 (ISO 2108)
    */
   const QRegularExpression p13 = QRegularExpression("^(97[89])([\\d]{10})$");
   bool isISBN13(const QString &isbn) const;
 
   /**
-   * @brief Regulärer Ausdruck für UPC 12, GTIN-12
-   * @list Bedeutung der Ersten Zahl:
-   * @li 0 - Normaler regulärer UPC Code
-   * @li 1 - Reserviert (evtl. für spätere Nutzung)
-   * @li 2 - Produkte, die nach Gewicht berechnet werden.
-   *     Barcode wird im Geschäft erstellt um Produkt auszuzeichnen
-   * @li 3 - National Drug Code (NDC), National Health Related Items Code (HRI).
-   * @li 4 - UPC Code, kann ohne Format-Einschränkungen verwendet werden.
-   * @li 5 - Coupon
-   * @li 6 - Normaler regulärer UPC Code
-   * @li 7 - Normaler regulärer UPC Codex
-   * @li 8 - Reserviert für spätere Nutzung
-   * @li 9 - Reserviert für spätere Nutzung
+   * @brief Regulärer Ausdruck für EAN13, GTIN13
    * @code
    *  Aufbau nach Zahlenposition {
-   *    (0)    Code Prefix
-   *    (2-6)  Hersteller des Produkts
-   *    (7-11) Artikelnummer
-   *    (12)   Prüfziffer
+   *    (0-9)   Länder und Unternehmenskennung
+   *    (10-12) Artikelnummer
+   *    (13)    Prüfziffer
    *  }
    * @endcode
-   * @note Die Prüfsumme wird wie bei EAN-13 in Modulo 10 durchgeführt!
-   * https://www.activebarcode.de/codes/checkdigit/modulo10
+   * https://www.gs1-germany.de/serviceverzeichnis/pruefziffernrechner/
    */
-  const QRegularExpression gtin12 = QRegularExpression("^(0[\\d]{11})$");
-  bool isGTIN12(const QString &upc) const;
+  const QRegularExpression gtin13 = QRegularExpression("^([\\d]{13})$");
+  bool isGTIN13(const QString &ean) const;
 
   /**
    * @brief Status Icon Label

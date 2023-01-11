@@ -110,6 +110,8 @@ CDVEditor::CDVEditor(QWidget *parent)
   cv_condition->setToolTip(m_infoLabel->text());
   row1->addWidget(cv_condition, row1c++, 3, 1, 1);
   // }
+  // cv_designation
+
   // cv_storage
   m_infoLabel = new AntiquaILabel(tr("Storage"), row1Widget);
   row1->addWidget(m_infoLabel, row1c, 0, 1, 1);
@@ -125,9 +127,9 @@ CDVEditor::CDVEditor(QWidget *parent)
   cv_keyword->setToolTip(m_infoLabel->text());
   row1->addWidget(cv_keyword, row1c++, 1, 1, 4);
   // cv_isbn
-  AntiquaILabel *lb_isbn = new AntiquaILabel("UPC/GTIN12", this);
+  AntiquaILabel *lb_isbn = new AntiquaILabel("EAN/GTIN 13", this);
   row1->addWidget(lb_isbn, row1c, 0, 1, 1);
-  cv_isbn = new IsbnEdit(this, IsbnEdit::CodeType::GTIN12);
+  cv_isbn = new IsbnEdit(this, IsbnEdit::CodeType::GTIN13);
   cv_isbn->setObjectName("cv_isbn");
   cv_isbn->setToolTip(lb_isbn->text());
   row1->addWidget(cv_isbn, row1c++, 1, 1, 4);
