@@ -11,8 +11,8 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QObject>
-#include <QTextCodec>
 #include <QSslError>
+#include <QTextCodec>
 #include <QUrl>
 
 namespace AntiquaCRM {
@@ -29,9 +29,24 @@ class ANTIQUACRM_LIBRARY ANetworker final : public QNetworkAccessManager {
   Q_OBJECT
 
 private:
-  int tranfer_timeout = 5;
+  /**
+   * @brief Network Timeout in seconds
+   */
+  int transfer_timeout = 5;
+
+  /**
+   * @brief Querytype (JSON|XML)
+   */
   const AntiquaCRM::PluginQueryType queryType;
+
+  /**
+   * @brief Internal Network reply
+   */
   QNetworkReply *m_reply;
+
+  /**
+   * @brief System Textcodec
+   */
   QTextCodec *m_textCodec;
 
 private Q_SLOTS:

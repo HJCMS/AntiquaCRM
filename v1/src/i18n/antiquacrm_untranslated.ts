@@ -114,7 +114,7 @@
 <context>
     <name>AntiquaConfigMenus</name>
     <message>
-        <location filename="../antiquaconfigmenus.cpp" line="+13"/>
+        <location filename="../antiquaconfigmenus.cpp" line="+14"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -125,6 +125,11 @@
     </message>
     <message>
         <location line="+3"/>
+        <source>Company</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Keywords</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1152,7 +1157,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Article ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1187,7 +1192,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+17"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1212,7 +1217,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>Booklet or Cover condition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+8"/>
+        <source>Designation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1222,17 +1237,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+31"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Internal Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Created at</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1247,7 +1262,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+36"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1262,12 +1277,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+67"/>
         <source>Saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+31"/>
         <source>Missing Article ID for Update.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1277,7 +1292,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="+98"/>
         <source>When setting the Article Count to 0.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1297,7 +1312,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+16"/>
         <source>Missing Mediatype for Year, aborted!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1593,9 +1608,32 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
-    <name>CompanySettings</name>
+    <name>CompanyData</name>
     <message>
-        <location filename="../utils/settings/companysettings.cpp" line="+13"/>
+        <location filename="../utils/companydata/companydata.cpp" line="+15"/>
+        <source>Company Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Complete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Company data saving success!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>An error has occurred!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CompanyWidget</name>
+    <message>
+        <location filename="../utils/companydata/companywidget.cpp" line="+46"/>
         <source>On this page you configure your company&apos;s presentation settings.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1641,7 +1679,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ConfigDialog</name>
     <message>
-        <location filename="../utils/settings/configdialog.cpp" line="+20"/>
+        <location filename="../utils/settings/configdialog.cpp" line="+19"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1658,11 +1696,6 @@ Image - Article Id: %2</source>
     <message>
         <location line="+6"/>
         <source>Directories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Company</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2845,6 +2878,11 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+7"/>
+        <source>Timeout for Messenger PopUp Windows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>enable/disable Mousewheel action for Input edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2854,12 +2892,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-21"/>
+        <location line="-28"/>
         <source>From how many chars does the search start when you type in.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+33"/>
         <source>Limit Database results in tab main views!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3265,22 +3303,17 @@ Image - Article Id: %2</source>
 <context>
     <name>IsbnEdit</name>
     <message>
-        <location filename="../widgets/isbnedit.cpp" line="+31"/>
-        <source>a ISBN number must consist of 10 or 13 digits.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>ISBN/EAN 10/13 (ISO 2108)</source>
+        <location filename="../widgets/isbnedit.cpp" line="+30"/>
+        <source>It must consist of 10 or 13 digits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>It must consist of 12 digits.</source>
+        <source>It must consist of 13 digits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+150"/>
+        <location line="+185"/>
         <source>Invalid ISBN/EAN/UPC detected.</source>
         <translation type="unfinished"></translation>
     </message>

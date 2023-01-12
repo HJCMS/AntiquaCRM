@@ -102,13 +102,20 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
          "program!"));
   m_searchStart->setInfo(buffer);
   lt_groupBox2->addWidget(m_searchStart);
-  // [General] popup_timeout
+  // [General] transfer_timeout
   buffer = tr("Timeout settings for network connections");
-  m_timeOut = new IntSpinBox(1, 5, this);
-  m_timeOut->setObjectName("popup_timeout");
-  m_timeOut->setValue(2);
-  m_timeOut->setInfo(buffer);
-  lt_groupBox2->addWidget(m_timeOut);
+  m_transfer_timeout = new IntSpinBox(5, 30, this);
+  m_transfer_timeout->setObjectName("transfer_timeout");
+  m_transfer_timeout->setValue(5);
+  m_transfer_timeout->setInfo(buffer);
+  lt_groupBox2->addWidget(m_transfer_timeout);
+  // [General] popup_timeout
+  buffer = tr("Timeout for Messenger PopUp Windows");
+  m_popup_timeout = new IntSpinBox(1, 5, this);
+  m_popup_timeout->setObjectName("popup_timeout");
+  m_popup_timeout->setValue(2);
+  m_popup_timeout->setInfo(buffer);
+  lt_groupBox2->addWidget(m_popup_timeout);
   // [General] mouse_wheel_actions
   buffer = tr("enable/disable Mousewheel action for Input edit");
   m_mouseWheel = new BoolBox(this);

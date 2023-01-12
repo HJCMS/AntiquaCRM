@@ -1,6 +1,7 @@
 -- @brief Update Provider Treeview
 -- @file query_provider_orders.sql
 -- @see AntiquaCRM::OrderStatus
+-- @note Offene oder stornierte Bestellungen 20 Tage lang anzeigen
 SELECT
  pr_name AS order_provider,
  pr_order AS order_number,
@@ -11,6 +12,6 @@ SELECT
  pr_order_accepted
 FROM provider_orders
 LEFT JOIN inventory_orders ON (o_provider_name=pr_name AND o_provider_order_id=pr_order)
-WHERE pr_order_accepted=false OR (pr_order_accepted=true AND o_order_status<4)
- AND (o_since BETWEEN (CURRENT_TIMESTAMP - justify_interval(interval '1 month')) AND CURRENT_TIMESTAMP)
-ORDER BY (pr_name,pr_order,o_since);
+WHERE (pr_order_accepted=true AND o_order_status<4) OR
+ (pr_created BETWEEN (CURRENT_TIMESTAMP - justify_interval(interval '20 days')) AND CURRENT_TIMESTAMP AND pr_order_accepted=false)
+ORDER BY (pr_name,pr_order,pr_created);

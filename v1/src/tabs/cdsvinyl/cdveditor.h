@@ -27,7 +27,6 @@ private:
 
   // Row:1
   QSplitter *m_splitter;       /**< @brief Zweite Reihe */
-  AntiquaILabel *m_infoLabel;  /**< @brief Labels */
   LineEdit *cv_title;          /**< @brief Titel */
   LineEdit *cv_title_extended; /**< @brief Title erweitert */
   LineEdit *cv_author;         /**< @brief Gruppe oder Band */

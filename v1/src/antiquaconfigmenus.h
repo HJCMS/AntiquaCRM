@@ -15,6 +15,7 @@ class AntiquaConfigMenus final : public QMenu {
 
 private:
   QMenu *m_tables;
+  QAction *ac_company;
   QAction *ac_keywords;
   QAction *ac_storage;
   QAction *ac_delivery;
@@ -23,6 +24,7 @@ private:
 
 private Q_SLOTS:
   void openConfigDialog();
+  void openCompanyDialog();
   void openKeywordsDialog();
   void openStorageDialog();
   void openDeliveryDialog();

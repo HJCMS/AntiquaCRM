@@ -1,6 +1,8 @@
 SET (PROJECT_INCLUDE_DIRS
 	${CMAKE_CURRENT_BINARY_DIR}/widgets
 	${CMAKE_CURRENT_SOURCE_DIR}/widgets
+	${CMAKE_CURRENT_BINARY_DIR}/utils/companydata
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/companydata
 	${CMAKE_CURRENT_BINARY_DIR}/utils/returnorder
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/returnorder
 	${CMAKE_CURRENT_BINARY_DIR}/utils/helper
@@ -56,6 +58,7 @@ INCLUDE_DIRECTORIES (${PROJECT_INCLUDE_DIRS})
 
 SET(PROJECT_LIBRARIES
 	AntiquaWidgets
+	AntiquaCompanyData
 	AntiquaReturnOrder
 	AntiquaHelper
 	AntiquaAbout

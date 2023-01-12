@@ -114,7 +114,7 @@
 <context>
     <name>AntiquaConfigMenus</name>
     <message>
-        <location filename="../antiquaconfigmenus.cpp" line="+13"/>
+        <location filename="../antiquaconfigmenus.cpp" line="+14"/>
         <source>Configuration</source>
         <translation>Konfiguration</translation>
     </message>
@@ -125,6 +125,11 @@
     </message>
     <message>
         <location line="+3"/>
+        <source>Company</source>
+        <translation>Unternehmen</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Keywords</source>
         <translation>Schlüsselwörter</translation>
     </message>
@@ -1154,7 +1159,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bearbeite CD oder Vinyl</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Article ID</source>
         <translation>Artikel Nr</translation>
     </message>
@@ -1189,7 +1194,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn diese Option markiert ist. Dann wird dieser Artikel nicht an die Dienstleister exportiert.</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+17"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -1214,7 +1219,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Zustand</translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>Booklet or Cover condition</source>
+        <translation>Hüllen oder Cover Zustand</translation>
+    </message>
+    <message>
         <location line="+8"/>
+        <source>Designation</source>
+        <translation>Umschreibung</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Storage</source>
         <translation>Lager</translation>
     </message>
@@ -1224,17 +1239,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+31"/>
         <source>Description</source>
         <translation>Beschreibung</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Internal Description</source>
         <translation>Interne Beschreibung</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Created at</source>
         <translation>Erstellt am</translation>
     </message>
@@ -1249,7 +1264,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Informationen</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+36"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -1264,12 +1279,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+67"/>
         <source>Saved successfully!</source>
         <translation>Speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+31"/>
         <source>Missing Article ID for Update.</source>
         <translation>Fehlende Artikel-ID für die Speicherung.</translation>
     </message>
@@ -1279,7 +1294,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Keine Änderungen gefunden, speichern Übersprungen!</translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="+98"/>
         <source>When setting the Article Count to 0.</source>
         <translation>Wenn Sie die Artikelanzahl auf 0 setzen.</translation>
     </message>
@@ -1299,7 +1314,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Deaktivierung</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+16"/>
         <source>Missing Mediatype for Year, aborted!</source>
         <translation>Keine Mediumangabe für das Jahr, abbruch!</translation>
     </message>
@@ -1597,9 +1612,32 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
-    <name>CompanySettings</name>
+    <name>CompanyData</name>
     <message>
-        <location filename="../utils/settings/companysettings.cpp" line="+13"/>
+        <location filename="../utils/companydata/companydata.cpp" line="+15"/>
+        <source>Company Settings</source>
+        <translation>Firmeneinstellungen</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Complete</source>
+        <translation>Abschließen</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Company data saving success!</source>
+        <translation>Unternehmerdaten Erfolgreich gespeichert!</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>An error has occurred!</source>
+        <translation>Ein Fehler ist aufgetreten!</translation>
+    </message>
+</context>
+<context>
+    <name>CompanyWidget</name>
+    <message>
+        <location filename="../utils/companydata/companywidget.cpp" line="+46"/>
         <source>On this page you configure your company&apos;s presentation settings.</source>
         <translation>Auf dieser Seite konfigurieren Sie die Präsentationseinstellungen Ihres Unternehmens.</translation>
     </message>
@@ -1645,7 +1683,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ConfigDialog</name>
     <message>
-        <location filename="../utils/settings/configdialog.cpp" line="+20"/>
+        <location filename="../utils/settings/configdialog.cpp" line="+19"/>
         <source>Configuration</source>
         <translation>Konfiguration</translation>
     </message>
@@ -1663,11 +1701,6 @@ Bild - Artikel Nr: %2</translation>
         <location line="+6"/>
         <source>Directories</source>
         <translation>Verzeichnisse</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Company</source>
-        <translation>Unternehmen</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -2849,6 +2882,11 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+7"/>
+        <source>Timeout for Messenger PopUp Windows</source>
+        <translation>Zeitüberschreitung für Nachrichten-Fenster</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>enable/disable Mousewheel action for Input edit</source>
         <translation>Aktiviere / Deaktiviere Mausradunterstützung bei den Eingabefeldern</translation>
     </message>
@@ -2858,12 +2896,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn ausgeschaltet, wird ein unbeabsichtigtes Ändern von Einträgen beim Scrollen verhindert.</translation>
     </message>
     <message>
-        <location line="-21"/>
+        <location line="-28"/>
         <source>From how many chars does the search start when you type in.</source>
         <translation>Ab wie vielen Zeichen beginnt die Suche während der Eingabe.</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+33"/>
         <source>Limit Database results in tab main views!</source>
         <translation>Beschränken der Datenbankergebnisse in den Hauptansichten der Registerkarten!</translation>
     </message>
@@ -3269,22 +3307,17 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>IsbnEdit</name>
     <message>
-        <location filename="../widgets/isbnedit.cpp" line="+31"/>
-        <source>a ISBN number must consist of 10 or 13 digits.</source>
-        <translation>Eine ISBN-Nummer muss aus 10 oder 13 Ziffern bestehen.</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>ISBN/EAN 10/13 (ISO 2108)</source>
-        <translation></translation>
+        <location filename="../widgets/isbnedit.cpp" line="+30"/>
+        <source>It must consist of 10 or 13 digits.</source>
+        <translation>Sie muss aus 10 oder 13 Ziffern bestehen.</translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>It must consist of 12 digits.</source>
-        <translation>Sie muss aus 12 Ziffern bestehen.</translation>
+        <source>It must consist of 13 digits.</source>
+        <translation>Sie muss aus 13 Ziffern bestehen.</translation>
     </message>
     <message>
-        <location line="+150"/>
+        <location line="+185"/>
         <source>Invalid ISBN/EAN/UPC detected.</source>
         <translation>Ungültige ISBN/EAN/UPC erkannt.</translation>
     </message>

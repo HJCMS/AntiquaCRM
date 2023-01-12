@@ -16,6 +16,9 @@ CDVEditor::CDVEditor(QWidget *parent)
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setObjectName("cdv_editor_layout");
   mainLayout->setSizeConstraint(QLayout::SetMaximumSize);
+  // Zellenbeschreibung
+  AntiquaILabel *infolabel;
+
   // BEGIN : Row0
   QHBoxLayout *row0 = new QHBoxLayout();
   cv_id = new SerialID(this);
@@ -70,69 +73,70 @@ CDVEditor::CDVEditor(QWidget *parent)
   QGridLayout *row1 = new QGridLayout(row1Widget);
   row1->setColumnStretch(1, 1);
   // cv_title
-  m_infoLabel = new AntiquaILabel(tr("Title"), row1Widget);
-  row1->addWidget(m_infoLabel, row1c, 0, 1, 1);
+  infolabel = new AntiquaILabel(tr("Title"), row1Widget);
+  row1->addWidget(infolabel, row1c, 0, 1, 1);
   cv_title = new LineEdit(this);
   cv_title->setObjectName("cv_title");
-  cv_title->setToolTip(m_infoLabel->text());
+  cv_title->setToolTip(infolabel->text());
   row1->addWidget(cv_title, row1c++, 1, 1, 4);
   // cv_title_extended
-  m_infoLabel = new AntiquaILabel(tr("Extended"), row1Widget);
-  row1->addWidget(m_infoLabel, row1c, 0, 1, 1);
+  infolabel = new AntiquaILabel(tr("Extended"), row1Widget);
+  row1->addWidget(infolabel, row1c, 0, 1, 1);
   cv_title_extended = new LineEdit(this);
   cv_title_extended->setObjectName("cv_title_extended");
-  cv_title_extended->setToolTip(m_infoLabel->text());
+  cv_title_extended->setToolTip(infolabel->text());
   row1->addWidget(cv_title_extended, row1c++, 1, 1, 4);
   // cv_author
-  m_infoLabel = new AntiquaILabel(tr("Artists"), row1Widget);
-  row1->addWidget(m_infoLabel, row1c, 0, 1, 1);
+  infolabel = new AntiquaILabel(tr("Artists"), row1Widget);
+  row1->addWidget(infolabel, row1c, 0, 1, 1);
   cv_author = new LineEdit(this);
   cv_author->setObjectName("cv_author");
-  cv_author->setToolTip(m_infoLabel->text());
+  cv_author->setToolTip(infolabel->text());
   row1->addWidget(cv_author, row1c++, 1, 1, 4);
   // @BEGIN_GROUP {
   // cv_type
-  m_infoLabel = new AntiquaILabel(tr("Mediatype"), row1Widget);
-  row1->addWidget(m_infoLabel, row1c, 0, 1, 1);
+  infolabel = new AntiquaILabel(tr("Mediatype"), row1Widget);
+  row1->addWidget(infolabel, row1c, 0, 1, 1);
   cv_type = new SelectMediaType(this);
   cv_type->setObjectName("cv_type");
-  cv_type->setToolTip(m_infoLabel->text());
+  cv_type->setToolTip(infolabel->text());
   row1->addWidget(cv_type, row1c, 1, 1, 1);
   // cv_condition
-  m_infoLabel = new AntiquaILabel(tr("Condition"), row1Widget);
-  row1->addWidget(m_infoLabel, row1c, 2, 1, 1);
+  infolabel = new AntiquaILabel(tr("Condition"), row1Widget);
+  infolabel->setToolTip(tr("Booklet or Cover condition"));
+  row1->addWidget(infolabel, row1c, 2, 1, 1);
   cv_condition = new ConditionEdit(this);
   cv_condition->setObjectName("cv_condition");
-  cv_condition->setToolTip(m_infoLabel->text());
+  cv_condition->setToolTip(infolabel->toolTip());
   row1->addWidget(cv_condition, row1c++, 3, 1, 1);
   // } @END_GROUP
   // cv_designation
-  m_infoLabel = new AntiquaILabel(tr("Designation"), row1Widget);
-  row1->addWidget(m_infoLabel, row1c, 0, 1, 1);
+  infolabel = new AntiquaILabel(tr("Designation"), row1Widget);
+  row1->addWidget(infolabel, row1c, 0, 1, 1);
   cv_designation = new LineEdit(this);
   cv_designation->setObjectName("cv_designation");
-  cv_designation->setToolTip(m_infoLabel->text());
+  cv_designation->setToolTip(infolabel->text());
   row1->addWidget(cv_designation, row1c++, 1, 1, 4);
   // cv_storage
-  m_infoLabel = new AntiquaILabel(tr("Storage"), row1Widget);
-  row1->addWidget(m_infoLabel, row1c, 0, 1, 1);
+  infolabel = new AntiquaILabel(tr("Storage"), row1Widget);
+  row1->addWidget(infolabel, row1c, 0, 1, 1);
   cv_storage = new StorageLocation(this);
   cv_storage->setObjectName("cv_storage");
-  cv_storage->setToolTip(m_infoLabel->text());
+  cv_storage->setToolTip(infolabel->text());
   row1->addWidget(cv_storage, row1c++, 1, 1, 4);
   // cv_keywords
-  m_infoLabel = new AntiquaILabel(tr("Keywords"), row1Widget);
-  row1->addWidget(m_infoLabel, row1c, 0, 1, 1);
+  infolabel = new AntiquaILabel(tr("Keywords"), row1Widget);
+  row1->addWidget(infolabel, row1c, 0, 1, 1);
   cv_keyword = new KeywordLineEdit(this);
   cv_keyword->setObjectName("cv_keyword");
-  cv_keyword->setToolTip(m_infoLabel->text());
+  cv_keyword->setToolTip(infolabel->text());
   row1->addWidget(cv_keyword, row1c++, 1, 1, 4);
   // cv_isbn
-  AntiquaILabel *lb_isbn = new AntiquaILabel("EAN/GTIN 13", this);
-  row1->addWidget(lb_isbn, row1c, 0, 1, 1);
+  infolabel = new AntiquaILabel("EAN/GTIN 13", this);
+  row1->addWidget(infolabel, row1c, 0, 1, 1);
   cv_isbn = new IsbnEdit(this, IsbnEdit::CodeType::GTIN13);
   cv_isbn->setObjectName("cv_isbn");
-  cv_isbn->setToolTip(lb_isbn->text());
+  cv_isbn->setToolTip(infolabel->text());
   row1->addWidget(cv_isbn, row1c++, 1, 1, 4);
   // image toolbar
   m_imageToolBar = new ImageToolBar(this);

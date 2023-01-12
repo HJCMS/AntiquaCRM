@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#include <ASettings>
 #include <QBuffer>
 #include <QHttpMultiPart>
 #include <QHttpPart>
@@ -24,6 +25,10 @@ ANetworker::ANetworker(AntiquaCRM::PluginQueryType type, QObject *parent)
   setObjectName("antiquacrm_networker");
   m_reply = nullptr;
   m_textCodec = QTextCodec::codecForLocale();
+
+  AntiquaCRM::ASettings cfg(this);
+  transfer_timeout = cfg.value("transfer_timeout", 5).toInt();
+
   connect(this, SIGNAL(finished(QNetworkReply *)), this,
           SLOT(slotFinished(QNetworkReply *)));
 }
@@ -179,7 +184,7 @@ QNetworkReply *ANetworker::loginRequest(const QUrl &url,
   request.setHeaderCacheControl();
   request.setRawHeader("Accept", "text/*");
   request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
-  request.setTransferTimeout((tranfer_timeout * 1000));
+  request.setTransferTimeout((transfer_timeout * 1000));
   m_reply = post(request, data);
 
   connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
@@ -204,7 +209,7 @@ QNetworkReply *ANetworker::jsonPostRequest(const QUrl &url,
   request.setHeaderAcceptText();
   request.setHeaderCacheControl();
   request.setHeaderContentTypeJson();
-  request.setTransferTimeout((tranfer_timeout * 1000));
+  request.setTransferTimeout((transfer_timeout * 1000));
 
   QByteArray data = body.toJson(QJsonDocument::Compact);
   request.setHeaderContentLength(data.size());
@@ -233,7 +238,7 @@ QNetworkReply *ANetworker::xmlPostRequest(const QUrl &url,
   request.setHeaderAcceptText();
   request.setHeaderCacheControl();
   request.setHeaderContentTypeXml();
-  request.setTransferTimeout((tranfer_timeout * 1000));
+  request.setTransferTimeout((transfer_timeout * 1000));
 
   QByteArray data = body.toByteArray(-1);
   request.setHeaderContentLength(data.size());
@@ -262,7 +267,7 @@ QNetworkReply *ANetworker::jsonMultiPartRequest(const QUrl &url,
   request.setHeaderAcceptLanguage();
   request.setHeaderAcceptText();
   request.setHeaderCacheControl();
-  request.setTransferTimeout((tranfer_timeout * 1000));
+  request.setTransferTimeout((transfer_timeout * 1000));
 
   QByteArray data = body.toJson(QJsonDocument::Compact);
   QHttpPart json_part;
@@ -300,7 +305,7 @@ QNetworkReply *ANetworker::putRequest(const QUrl &url, const QByteArray &data) {
   request.setHeaderAcceptLanguage();
   request.setHeaderCacheControl();
   request.setRawHeader("Content-Type", "text/plain");
-  request.setTransferTimeout((tranfer_timeout * 1000));
+  request.setTransferTimeout((transfer_timeout * 1000));
 
   m_reply = put(request, data);
 
@@ -323,7 +328,7 @@ QNetworkReply *ANetworker::getRequest(const QUrl &url) {
   request.setHeaderUserAgent();
   request.setHeaderAcceptLanguage();
   request.setHeaderAcceptText();
-  request.setTransferTimeout((tranfer_timeout * 1000));
+  request.setTransferTimeout((transfer_timeout * 1000));
   request.setHeaderCacheControl();
 
   m_reply = get(request);

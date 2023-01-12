@@ -19,7 +19,6 @@
 
 class GeneralSettings;
 class PgSQLSettings;
-class CompanySettings;
 class PrintSettings;
 class ProviderSettings;
 class PathSettings;
@@ -31,7 +30,6 @@ private:
   GeneralSettings *m_pageGeneral;
   PathSettings *m_pagePaths;
   PgSQLSettings *m_pageDatabase;
-  CompanySettings *m_pageCompany;
   PrintSettings *m_pagePrinting;
   ProviderSettings *m_pageProviders;
 

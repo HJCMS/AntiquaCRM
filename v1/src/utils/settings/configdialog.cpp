@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "configdialog.h"
-#include "companysettings.h"
 #include "generalsettings.h"
 #include "pathsettings.h"
 #include "pgsqlsettings.h"
@@ -55,12 +54,6 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   m_pagePaths->setPageTitle(tr("Directories"));
   m_pagePaths->setPageIcon(getIcon("view_list"));
   pages->addWidget(m_pagePaths);
-
-  m_pageCompany = new CompanySettings(pages);
-  m_pageCompany->setObjectName("company_settings");
-  m_pageCompany->setPageTitle(tr("Company"));
-  m_pageCompany->setPageIcon(getIcon("user_male"));
-  pages->addWidget(m_pageCompany);
 
   m_pagePrinting = new PrintSettings(pages);
   m_pagePrinting->setObjectName("printing_settings");

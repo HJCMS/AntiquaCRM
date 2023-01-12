@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "antiquaconfigmenus.h"
+#include "companydata.h"
 #include "configdialog.h"
 #include "deliverservicedialog.h"
 #include "keywordedit.h"
@@ -15,6 +16,10 @@ AntiquaConfigMenus::AntiquaConfigMenus(QWidget *parent) : QMenu{parent} {
 
   m_tables = addMenu(tr("Database editors"));
   m_tables->setIcon(configIcon);
+
+  ac_company = m_tables->addAction(tr("Company"));
+  ac_company->setIcon(configIcon);
+  connect(ac_company, SIGNAL(triggered()), SLOT(openCompanyDialog()));
 
   ac_keywords = m_tables->addAction(tr("Keywords"));
   ac_keywords->setIcon(configIcon);
@@ -39,6 +44,12 @@ AntiquaConfigMenus::AntiquaConfigMenus(QWidget *parent) : QMenu{parent} {
 
 void AntiquaConfigMenus::openConfigDialog() {
   ConfigDialog *d = new ConfigDialog(this);
+  d->exec();
+  d->deleteLater();
+}
+
+void AntiquaConfigMenus::openCompanyDialog() {
+  CompanyData *d = new CompanyData(this);
   d->exec();
   d->deleteLater();
 }

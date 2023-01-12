@@ -1,46 +1,27 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
 
-SET(_subproject "AntiquaSettings")
+SET(_subproject "AntiquaCompanyData")
 
 SET (subproject_LINKER
  AntiquaCRM
  AntiquaWidgets
 )
 
-SET (subproject_FILES
-  README
-  TODO
-)
-
 SET (subproject_SOURCES
- configdialog.cpp
- generalsettings.cpp
- pathsettings.cpp
- pgsqlsettings.cpp
- settingswidget.cpp
- printsettings.cpp
- providersettings.cpp
+ companydata.cpp
+ companywidget.cpp
 )
 
 SET (subproject_HEADERS
- configdialog.h
- generalsettings.h
- pathsettings.h
- pgsqlsettings.h
- settingswidget.h
- printsettings.h
- providersettings.h
- SettingsDialog
+ companydata.h
+ companywidget.h
 )
 
 INCLUDE_DIRECTORIES (
   ${PROJECT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${INCLUDE_CONFIG_HEADER}
-  ${CMAKE_CURRENT_BINARY_DIR}/src
-  ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 ADD_LIBRARY (${_subproject} STATIC
@@ -57,7 +38,6 @@ SET_TARGET_PROPERTIES (${_subproject} PROPERTIES
 TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
-  Qt${QT_VERSION_MAJOR}::Network
-  Qt${QT_VERSION_MAJOR}::PrintSupport
+  Qt${QT_VERSION_MAJOR}::Sql
   ${subproject_LINKER}
 )
