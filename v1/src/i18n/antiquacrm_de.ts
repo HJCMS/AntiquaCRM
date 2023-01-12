@@ -274,8 +274,8 @@
     </message>
     <message>
         <location line="+33"/>
-        <source>Request rejected!</source>
-        <translation>Anfrage abgelehnt!</translation>
+        <source>Can not open &apos;%1&apos;!</source>
+        <translation>Kann &apos;%1&apos; nicht öffnen!</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -1683,7 +1683,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ConfigDialog</name>
     <message>
-        <location filename="../utils/settings/configdialog.cpp" line="+19"/>
+        <location filename="../utils/settings/configdialog.cpp" line="+20"/>
         <source>Configuration</source>
         <translation>Konfiguration</translation>
     </message>
@@ -2836,7 +2836,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Hier können Sie einen Mindestpreis festlegen, der nicht unterschritten werden darf.</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+4"/>
+        <source>The lowest permissible multimedia selling price</source>
+        <translation>Der niedrigste zulässige Multimedia-Verkaufspreis</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>Currency for Displaying prices</source>
         <translation>Währung für die Preisanzeige</translation>
     </message>
@@ -5853,6 +5858,11 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+1"/>
+        <source>Type</source>
+        <translation>Typ</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Summary</source>
         <translation>Zusammenfassung</translation>
     </message>
@@ -5922,7 +5932,27 @@ Bild - Artikel Nr: %2</translation>
         <translation>Zahlungsinformationen</translation>
     </message>
     <message>
-        <location line="+100"/>
+        <location line="+91"/>
+        <source>CD/Vinyl</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Prints or Stitches</source>
+        <translation>Drucke und Stiche</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Diverse</source>
+        <translation>Sonstiges</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Book</source>
+        <translation>Buch</translation>
+    </message>
+    <message>
+        <location line="+29"/>
         <location line="+2"/>
         <source>No available Articles!</source>
         <translation>Es sind keine Artikel verfügbar!</translation>
@@ -5933,7 +5963,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Ein Auftrag kann ohne einen Artkel nicht importiert werden!</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+91"/>
         <source>An order for %1 already exists!</source>
         <translation>Ein Auftrag für %1 existiert bereits!</translation>
     </message>

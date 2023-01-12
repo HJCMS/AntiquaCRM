@@ -24,6 +24,7 @@ private:
   BoolBox *m_mouseWheel;          /**< Mausrad Unterstützung */
   IntSpinBox *m_queryLimit;       /**< Max. Anzeige in Tabellen */
   IntSpinBox *m_minPrice;         /**< Kleinster Verkaufspreis */
+  IntSpinBox *m_minPriceMedia;    /**< Kleinster Verkaufspreis Medien */
   IntSpinBox *m_payWaitDays;      /**< Zahlungsfrist */
   SizeEdit *m_minSize;            /**< Minimale Bildgröße */
   SizeEdit *m_maxSize;            /**< Maximale Bildgröße */

@@ -12,12 +12,13 @@
 
 ProviderPurchaseTable::ProviderPurchaseTable(QWidget *parent)
     : QTableWidget{parent} {
-  setColumnCount(5);
+  setColumnCount(6);
   addHeaderItem(0, tr("Provider"));
   addHeaderItem(1, tr("Article"));
   addHeaderItem(2, tr("Amount"));
   addHeaderItem(3, tr("Price"));
-  addHeaderItem(4, tr("Summary"));
+  addHeaderItem(4, tr("Type"));
+  addHeaderItem(5, tr("Summary"));
   horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
   horizontalHeader()->setStretchLastSection(true);
 }

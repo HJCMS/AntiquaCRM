@@ -42,14 +42,21 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   m_paymentGroup->setObjectName("groupbox_payment");
   m_paymentGroup->setTitle(tr("Payment Settings") + "  ");
   QVBoxLayout *lt_payment = new QVBoxLayout(m_paymentGroup);
-  // Preis
+  // payment/min_price
   buffer = tr("The lowest permissible selling price");
-  m_minPrice = new IntSpinBox(5, 100, m_paymentGroup);
+  m_minPrice = new IntSpinBox(5, 20, m_paymentGroup);
   m_minPrice->setObjectName("payment/min_price");
   m_minPrice->setInfo(buffer);
   m_minPrice->setWhatsThis(
       tr("Here you can set a minimum price that must not be undercut."));
   lt_payment->addWidget(m_minPrice);
+  buffer.clear();
+  // payment/min_price_media
+  buffer = tr("The lowest permissible multimedia selling price");
+  m_minPriceMedia = new IntSpinBox(1, 20, m_paymentGroup);
+  m_minPriceMedia->setObjectName("payment/min_price_media");
+  m_minPriceMedia->setInfo(buffer);
+  lt_payment->addWidget(m_minPriceMedia);
   buffer.clear();
   // Währung
   m_currency = new Ecurrency(m_paymentGroup);

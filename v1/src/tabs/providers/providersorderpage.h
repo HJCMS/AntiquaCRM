@@ -8,6 +8,7 @@
 #include <AntiquaCRM>
 #include <AntiquaWidgets>
 #include <QJsonObject>
+#include <QJsonValue>
 #include <QObject>
 #include <QTextEdit>
 #include <QWidget>
@@ -56,6 +57,10 @@ private:
    * @brief find Customer with given arguments
    */
   bool findCustomer(const QJsonObject &customer);
+
+  AntiquaCRM::ArticleType getArticleType(qint64);
+
+  const QString mediaType(const QJsonValue &);
 
   const QString convertPrice(double) const;
 

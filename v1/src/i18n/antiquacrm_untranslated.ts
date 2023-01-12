@@ -274,7 +274,7 @@
     </message>
     <message>
         <location line="+33"/>
-        <source>Request rejected!</source>
+        <source>Can not open &apos;%1&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1679,7 +1679,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ConfigDialog</name>
     <message>
-        <location filename="../utils/settings/configdialog.cpp" line="+19"/>
+        <location filename="../utils/settings/configdialog.cpp" line="+20"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2832,7 +2832,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+4"/>
+        <source>The lowest permissible multimedia selling price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>Currency for Displaying prices</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5847,6 +5852,11 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Summary</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5916,7 +5926,27 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+100"/>
+        <location line="+91"/>
+        <source>CD/Vinyl</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Prints or Stitches</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Diverse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Book</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
         <location line="+2"/>
         <source>No available Articles!</source>
         <translation type="unfinished"></translation>
@@ -5927,7 +5957,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+91"/>
         <source>An order for %1 already exists!</source>
         <translation type="unfinished"></translation>
     </message>

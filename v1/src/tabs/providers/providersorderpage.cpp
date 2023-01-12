@@ -114,6 +114,38 @@ bool ProvidersOrderPage::findCustomer(const QJsonObject &customer) {
   return false;
 }
 
+AntiquaCRM::ArticleType ProvidersOrderPage::getArticleType(qint64 aid) {
+  QString strid = QString::number(aid);
+  QSqlQuery q = m_sql->query("SELECT func_get_article_type(" + strid + ");");
+  if (q.size() > 0) {
+    q.next();
+    return static_cast<AntiquaCRM::ArticleType>(q.value(0).toInt());
+  }
+  return AntiquaCRM::ArticleType::BOOK;
+}
+
+const QString ProvidersOrderPage::mediaType(const QJsonValue &val) {
+  QString name;
+  switch (static_cast<AntiquaCRM::ArticleType>(val.toInt())) {
+  case AntiquaCRM::ArticleType::MEDIA: /**< Film & Tonträger */
+    name = tr("CD/Vinyl");
+    break;
+
+  case AntiquaCRM::ArticleType::PRINTS: /**< Drucke & Stiche */
+    name = tr("Prints or Stitches");
+    break;
+
+  case AntiquaCRM::ArticleType::OTHER: /**< Diverse */
+    name = tr("Diverse");
+    break;
+
+  default:
+    name = tr("Book");
+    break;
+  };
+  return name;
+}
+
 const QString ProvidersOrderPage::convertPrice(double price) const {
   AntiquaCRM::ASettings cfg;
   QString currency = cfg.value("payment/currency", "$").toString();
@@ -152,7 +184,7 @@ void ProvidersOrderPage::createOrder(const QString &providerId) {
 
 void ProvidersOrderPage::createOpenCustomer() {
   qint64 c_id = m_header->CustomerId;
-  if(c_id < 1)
+  if (c_id < 1)
     return;
 
   QJsonObject obj;
@@ -165,7 +197,25 @@ void ProvidersOrderPage::createOpenCustomer() {
 void ProvidersOrderPage::openArticle(qint64 aid) {
   QJsonObject obj;
   obj.insert("window_operation", "open_article");
-  obj.insert("tab", "books_tab");
+  // mediaType
+  switch (getArticleType(aid)) {
+  case AntiquaCRM::ArticleType::MEDIA: /**< Film & Tonträger */
+    obj.insert("tab", "cdvinyl_tab");
+    break;
+
+  case AntiquaCRM::ArticleType::PRINTS: /**< Drucke & Stiche */
+    obj.insert("tab", "printsstitches_tab");
+    break;
+
+    // TODO
+    // case AntiquaCRM::ArticleType::OTHER: /**< Diverse */
+    //   obj.insert("tab", "???_tab");
+    //   break;
+
+  default:
+    obj.insert("tab", "books_tab");
+    break;
+  };
   obj.insert("open_article", aid);
   pushCmd(obj);
 }
@@ -266,12 +316,14 @@ bool ProvidersOrderPage::loadOrderDataset() {
     // int rows = m_table->rowCount();
     for (int r = 0; r < array.count(); r++) {
       QJsonObject o = array[r].toObject();
+      // qDebug() << Q_FUNC_INFO << o;
       m_table->setItem(r, 0, m_table->createItem(o.value("a_provider_id")));
       m_table->setItem(r, 1, m_table->createItem(o.value("a_article_id")));
       m_table->setItem(r, 2, m_table->createItem(o.value("a_count")));
       double price = o.value("a_price").toDouble();
       m_table->setItem(r, 3, m_table->createItem(convertPrice(price)));
-      m_table->setItem(r, 4, m_table->createItem(o.value("a_title")));
+      m_table->setItem(r, 4, m_table->createItem(mediaType(o.value("a_type"))));
+      m_table->setItem(r, 5, m_table->createItem(o.value("a_title")));
     }
   }
 

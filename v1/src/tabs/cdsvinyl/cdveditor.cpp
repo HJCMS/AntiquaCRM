@@ -32,7 +32,7 @@ CDVEditor::CDVEditor(QWidget *parent)
   cv_count->setInfo(tr("Count"));
   row0->addWidget(cv_count);
   // cv_price
-  double minPrice = m_cfg->value("payment/min_price", 2.50).toDouble();
+  double minPrice = m_cfg->value("payment/min_price_media", 1.00).toDouble();
   cv_price = new PriceEdit(this);
   cv_price->setObjectName("cv_price");
   cv_price->setRequired(true);
