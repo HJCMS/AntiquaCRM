@@ -8,6 +8,7 @@
 #include "printsettings.h"
 #include "providersettings.h"
 
+#include <ASettings>
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QMessageBox>
@@ -18,7 +19,7 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
   setObjectName("antiqua_config_dialog");
   setWindowTitle(tr("Configuration") + " [*]");
   setSizeGripEnabled(true);
-  setMinimumSize(800, 550);
+  setMinimumSize(780, 550);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setContentsMargins(5, 0, 5, 0);
@@ -160,6 +161,10 @@ void ConfigDialog::closeDialog() {
     m_statusbar->showMessage(tr("Unsafed changes!"));
     return;
   }
+
+  AntiquaCRM::ASettings cfg(this);
+  cfg.setValue("configdialog/geometry", saveGeometry());
+
   accept();
 }
 
@@ -179,6 +184,11 @@ int ConfigDialog::exec() {
       }
     }
   }
+
+  AntiquaCRM::ASettings cfg(this);
+  if (cfg.contains("configdialog/geometry"))
+    restoreGeometry(cfg.value("configdialog/geometry").toByteArray());
+
   setWindowModified(false);
 
   connect(m_listWidget, SIGNAL(itemClicked(QListWidgetItem *)), this,
