@@ -93,14 +93,21 @@ CDVEditor::CDVEditor(QWidget *parent)
   cv_author->setObjectName("cv_author");
   cv_author->setToolTip(infolabel->text());
   row1->addWidget(cv_author, row1c++, 1, 1, 4);
+  // cv_publisher
+  infolabel = new AntiquaILabel(tr("Publisher"), row1Widget);
+  row1->addWidget(infolabel, row1c, 0, 1, 1);
+  cv_publisher = new LineEdit(this);
+  cv_publisher->setObjectName("cv_publisher");
+  cv_publisher->setToolTip(infolabel->text());
+  row1->addWidget(cv_publisher, row1c++, 1, 1, 4);
   // @BEGIN_GROUP {
-  // cv_type
+  // cv_mtype
   infolabel = new AntiquaILabel(tr("Mediatype"), row1Widget);
   row1->addWidget(infolabel, row1c, 0, 1, 1);
-  cv_type = new SelectMediaType(this);
-  cv_type->setObjectName("cv_type");
-  cv_type->setToolTip(infolabel->text());
-  row1->addWidget(cv_type, row1c, 1, 1, 1);
+  cv_mtype = new SelectMediaType(this);
+  cv_mtype->setObjectName("cv_mtype");
+  cv_mtype->setToolTip(infolabel->text());
+  row1->addWidget(cv_mtype, row1c, 1, 1, 1);
   // cv_condition
   infolabel = new AntiquaILabel(tr("Condition"), row1Widget);
   infolabel->setToolTip(tr("Booklet or Cover condition"));
@@ -131,13 +138,13 @@ CDVEditor::CDVEditor(QWidget *parent)
   cv_keyword->setObjectName("cv_keyword");
   cv_keyword->setToolTip(infolabel->text());
   row1->addWidget(cv_keyword, row1c++, 1, 1, 4);
-  // cv_isbn
+  // cv_eangtin
   infolabel = new AntiquaILabel("EAN/GTIN 13", this);
   row1->addWidget(infolabel, row1c, 0, 1, 1);
-  cv_isbn = new IsbnEdit(this, IsbnEdit::CodeType::GTIN13);
-  cv_isbn->setObjectName("cv_isbn");
-  cv_isbn->setToolTip(infolabel->text());
-  row1->addWidget(cv_isbn, row1c++, 1, 1, 4);
+  cv_eangtin = new IsbnEdit(this, IsbnEdit::CodeType::GTIN13);
+  cv_eangtin->setObjectName("cv_eangtin");
+  cv_eangtin->setToolTip(infolabel->text());
+  row1->addWidget(cv_eangtin, row1c++, 1, 1, 4);
   // image toolbar
   m_imageToolBar = new ImageToolBar(this);
   row1->addWidget(m_imageToolBar, row1c++, 1, 1, 4);
@@ -222,6 +229,7 @@ void CDVEditor::setInputFields() {
   // Lager
   cv_storage->reset();
   cv_storage->loadDataset();
+  cv_storage->setValue("CD");
   // Schlüsselwörter
   cv_keyword->loadDataset();
 }
@@ -463,7 +471,7 @@ bool CDVEditor::checkYear() {
   int _mv = 1889; // min. Vinyl Year
   int _mc = 1980; // min. Compact Disc Year
   int _y = cv_year->value().toInt();
-  int _t = cv_type->value().toInt();
+  int _t = cv_mtype->value().toInt();
   if (_t == 0) {
     QString txt = tr("Missing Mediatype for Year, aborted!");
     openNoticeMessage(txt);

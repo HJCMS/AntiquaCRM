@@ -26,7 +26,8 @@ static const QSqlRecord asql_table_record(const QString &name) {
 ASqlDataQuery::ASqlDataQuery(const QString &tableName)
     : p_record{asql_table_record(tableName)} {}
 
-ASqlDataQuery::ASqlDataQuery(const QSqlRecord &record) : p_record{record}, p_data{} {
+ASqlDataQuery::ASqlDataQuery(const QSqlRecord &record)
+    : p_record{record}, p_data{} {
   if (p_record.isEmpty()) {
     qWarning("AntiquaCRM::ASqlDataQuery Invalid class Initialisation!");
   }
@@ -101,9 +102,15 @@ void ASqlDataQuery::setValue(const QString &column, const QVariant &value) {
     int metaCheck;
     QVariant from(field.defaultValue());
     if (!QMetaType::compare(&from, &value, getType(column).id(), &metaCheck)) {
-      qWarning("Warning MetaType for '%s' require '%s' but get '%s'!",
-               qPrintable(column), QVariant(field.type()).typeName(),
-               QVariant(value.type()).typeName());
+      const char *rtype = QVariant(field.type()).typeName();
+      if ((QString(value.typeName()) == "qulonglong") &&
+          (QString(rtype) == "qlonglong")) {
+        // You can safely ignore this message on 64bit systems.
+        // Normally this Message will triggered with ISBN/EAN Input fields.
+      } else {
+        qWarning("Warning MetaType for '%s' require '%s' but get '%s'!",
+                 qPrintable(column), rtype, value.typeName());
+      }
     }
   }
 

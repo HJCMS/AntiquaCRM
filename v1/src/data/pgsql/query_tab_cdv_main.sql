@@ -6,7 +6,7 @@ SELECT cv_id,
   cv_title,
   cv_price::MONEY AS cv_price,
   cv_author,
-  cv_isbn,
+  cv_eangtin,
   cv_year,
   cv_changed,
   cv_since

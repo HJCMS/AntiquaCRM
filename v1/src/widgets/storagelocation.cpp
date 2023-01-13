@@ -4,6 +4,7 @@
 #include "storagelocation.h"
 
 #include <AntiquaCRM>
+#include <QRegularExpression>
 
 StorageLocation::StorageLocation(QWidget *parent) : InputEdit{parent} {
   m_box = new AntiquaComboBox(this);
@@ -89,8 +90,13 @@ void StorageLocation::setValue(const QVariant &val) {
   int index = -1;
   if (val.type() == QVariant::Int)
     index = m_box->findData(val, Qt::UserRole);
-  else if (val.type() == QVariant::String)
-    index = m_box->findData(val, Qt::DisplayRole);
+  else if (val.type() == QVariant::String) {
+    QString find = val.toString().trimmed();
+    QRegularExpression pattern("\\b" + find.toLower() + "\\b",
+                               QRegularExpression::CaseInsensitiveOption);
+    index = m_box->findData(pattern, Qt::DisplayRole, // Display
+                            Qt::MatchRegularExpression);
+  }
 
   if (index < 1)
     return;
