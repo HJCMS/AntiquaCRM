@@ -34,6 +34,11 @@
 #include "tabcdvinyl.h"
 #endif
 
+// AntiquaVarious
+#ifndef ANTIQUACRM_TABVARIOUS_H
+#include "tabvarious.h"
+#endif
+
 // AntiquaCustomers
 #ifndef ANTIQUACRM_TABCUSTOMERS_H
 #include "tabcustomers.h"

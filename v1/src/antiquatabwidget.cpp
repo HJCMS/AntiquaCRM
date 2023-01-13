@@ -98,6 +98,15 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
     return true;
   }
 
+  // Various
+  if (iName == "various_tab") {
+    TabVarious *m_tab = new TabVarious(this);
+    int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
+    m_tabBar->setTabCloseable(i, m_tab->isClosable());
+    m_tabBar->setTabWhatsThis(i, tr("Various"));
+    return true;
+  }
+
   // Providers
   if (iName == "providers_tab") {
     TabProviders *m_tab = new TabProviders(this);
@@ -230,6 +239,7 @@ const QMap<QString, QString> AntiquaTabWidget::availableTabs() {
   m.insert("providers", tr("Providers"));
   m.insert("printsstitches", tr("Prints and Stitches"));
   m.insert("cdvinyl", tr("CD and Vinyl"));
+  m.insert("various", tr("Various"));
   return m;
 }
 

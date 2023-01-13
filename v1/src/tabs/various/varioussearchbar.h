@@ -2,25 +2,24 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_CDVSEARCHBAR_H
-#define ANTIQUACRM_CDVSEARCHBAR_H
+#ifndef ANTIQUACRM_VARIOUSSEARCHBAR_H
+#define ANTIQUACRM_VARIOUSSEARCHBAR_H
 
 #include <AntiquaWidgets>
+#include <AntiquaInputEdit>
 #include <QObject>
 #include <QPushButton>
 #include <QWidget>
 
-class CDVFilterSelect;
-class CDVSearchLine;
+class VariousSearchEdit;
 
-class CDVSearchBar final : public TabSearchBar {
+class VariousSearchBar final : public TabSearchBar {
   Q_OBJECT
 
 private:
   int minLength = 2;
   QString p_search;
-  CDVFilterSelect *m_selectFilter;
-  CDVSearchLine *m_searchEdit;
+  VariousSearchEdit *m_searchEdit;
   QPushButton *m_searchBtn;
 
 protected Q_SLOTS:
@@ -33,9 +32,9 @@ public Q_SLOTS:
   void setSearchFocus() override;
 
 public:
-  explicit CDVSearchBar(QWidget *parent = nullptr);
+  explicit VariousSearchBar(QWidget *parent = nullptr);
   int searchLength() override;
   const QString getSearchStatement() override;
 };
 
-#endif // ANTIQUACRM_CDVSEARCHBAR_H
+#endif // ANTIQUACRM_VARIOUSSEARCHBAR_H

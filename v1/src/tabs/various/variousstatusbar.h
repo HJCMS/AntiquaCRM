@@ -2,14 +2,14 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_CDVSTATUSBAR_H
-#define ANTIQUACRM_CDVSTATUSBAR_H
+#ifndef ANTIQUACRM_VARIOUSSTATUSBAR_H
+#define ANTIQUACRM_VARIOUSSTATUSBAR_H
 
 #include <AntiquaWidgets>
 #include <QObject>
 #include <QWidget>
 
-class CDVStatusBar final : public TabStatusBar {
+class VariousStatusBar final : public TabStatusBar {
   Q_OBJECT
 
 private Q_SLOTS:
@@ -19,8 +19,8 @@ public Q_SLOTS:
   void setCreateButtonEnabled(bool) override;
 
 public:
-  explicit CDVStatusBar(QWidget *parent = nullptr);
+  explicit VariousStatusBar(QWidget *parent = nullptr);
   bool isCreateButtonEnabled() override;
 };
 
-#endif // ANTIQUACRM_CDVSTATUSBAR_H
+#endif // ANTIQUACRM_VARIOUSSTATUSBAR_H

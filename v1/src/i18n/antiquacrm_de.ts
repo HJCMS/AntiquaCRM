@@ -264,6 +264,12 @@
     </message>
     <message>
         <location line="+9"/>
+        <location line="+136"/>
+        <source>Various</source>
+        <translation>Verschiedenes</translation>
+    </message>
+    <message>
+        <location line="-127"/>
         <source>View and import Provider orders</source>
         <translation>Anzeigen und Importieren von Dienstleisterbestellungen</translation>
     </message>
@@ -273,7 +279,7 @@
         <translation>Anzeigen und Bearbeiten von Systembestellungen</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+30"/>
         <source>Can not open &apos;%1&apos;!</source>
         <translation>Kann &apos;%1&apos; nicht öffnen!</translation>
     </message>
@@ -1209,6 +1215,11 @@ Bild - Artikel Nr: %2</translation>
         <translation>Künstler</translation>
     </message>
     <message>
+        <location line="+7"/>
+        <source>Publisher</source>
+        <translation>Herausgeber</translation>
+    </message>
+    <message>
         <location line="+8"/>
         <source>Mediatype</source>
         <translation>Medium</translation>
@@ -1279,7 +1290,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+68"/>
         <source>Saved successfully!</source>
         <translation>Speichern erfolgreich!</translation>
     </message>
@@ -6732,7 +6743,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>StorageLocation</name>
     <message>
-        <location filename="../widgets/storagelocation.cpp" line="+10"/>
+        <location filename="../widgets/storagelocation.cpp" line="+11"/>
         <location line="+6"/>
         <source>Storage Location</source>
         <translation>Lagerort</translation>
@@ -6748,7 +6759,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Ändert den Speicherort dieses Artikels.</translation>
     </message>
     <message>
-        <location line="+117"/>
+        <location line="+122"/>
         <source>Storage location is required and must set.</source>
         <translation>Der Lagerort ist Erforderlich und muss gesetzt sein.</translation>
     </message>
@@ -7108,6 +7119,29 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>TabVarious</name>
+    <message>
+        <location filename="../tabs/various/tabvarious.cpp" line="+16"/>
+        <source>Various</source>
+        <translation>Verschiedenes</translation>
+    </message>
+    <message>
+        <location line="+63"/>
+        <source>Can&apos;t open this Article</source>
+        <translation>Dieser Artikel kann nicht geöffnet werden</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Because Various tab is in edit mode.</source>
+        <translation>Weil sich die Registerkarte Verschiedenes im Bearbeitungsmodus befindet.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>You need to save and close that opened first.</source>
+        <translation>Sie müssen das geöffnete zuerst speichern und schließen.</translation>
+    </message>
+</context>
+<context>
     <name>TabViews</name>
     <message>
         <location filename="../tabs/views/tabviews.cpp" line="+13"/>
@@ -7306,6 +7340,280 @@ Bild - Artikel Nr: %2</translation>
         <location line="+46"/>
         <source>a Trustlevel is required.</source>
         <translation>Eine Vertrauensstufe ist erforderlich.</translation>
+    </message>
+</context>
+<context>
+    <name>VariousEditor</name>
+    <message>
+        <location filename="../tabs/various/variouseditor.cpp" line="+11"/>
+        <source>Edit Various</source>
+        <translation>Bearbeite Verschiedenes</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Article ID</source>
+        <translation>Artikel Nr</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Count</source>
+        <translation>Anzahl</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Price</source>
+        <translation>Preis</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Year</source>
+        <translation>Jahr</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>incl. vat</source>
+        <translation>inkl. MwSt</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Local Usage only</source>
+        <translation>Nur lokale Verwendung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>When this Options is marked. Then this Article will not exported to your Providers.</source>
+        <translation>Wenn diese Option markiert ist. Dann wird dieser Artikel nicht an die Dienstleister exportiert.</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Extended</source>
+        <translation>Erweitert</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Designation</source>
+        <translation>Umschreibung</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Condition</source>
+        <translation>Zustand</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Booklet or Cover condition</source>
+        <translation type="unfinished">Hüllen oder Cover Zustand</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Storage</source>
+        <translation>Lager</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Description</source>
+        <translation>Beschreibung</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Internal Description</source>
+        <translation>Interne Beschreibung</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Created at</source>
+        <translation>Erstellt am</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Last changed</source>
+        <translation>Zuletzt geändert</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Information</source>
+        <translation>Informationen</translation>
+    </message>
+    <message>
+        <location line="+36"/>
+        <source>An error has occurred!</source>
+        <translation>Ein Fehler ist aufgetreten!</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Can&apos;t load input datafields!</source>
+        <translation>Eingabedatenfelder können nicht geladen werden!</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>When getting this Message, please check your Network and Database connection!</source>
+        <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
+    </message>
+    <message>
+        <location line="+66"/>
+        <source>Saved successfully!</source>
+        <translation>Speichern erfolgreich!</translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Missing Article ID for Update.</source>
+        <translation>Fehlende Artikel-ID für die Speicherung.</translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>No Modifications found, Update aborted!</source>
+        <translation>Keine Änderungen gefunden, speichern Übersprungen!</translation>
+    </message>
+    <message>
+        <location line="+98"/>
+        <source>When setting the Article Count to 0.</source>
+        <translation>Wenn Sie die Artikelanzahl auf 0 setzen.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>This marked the Article in all Shopsystem for deletion!</source>
+        <translation>Damit wird der Artikel in allen Shopsystemen zur Löschung vorgemerkt!</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Are you sure to finish this operation?</source>
+        <translation>Möchten Sie diesen Vorgang wirklich beenden?</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Deactivation</source>
+        <translation>Deaktivierung</translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <source>Remove Image from Database</source>
+        <translation>Bild aus Datenbank entfernen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Do you really want to delete the Image?</source>
+        <translation>Möchten Sie das Bild wirklich löschen?</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>%1
+
+Image - Article Id: %2</source>
+        <translation>%1
+
+Bild - Artikel Nr: %2</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Image delete successfully!</source>
+        <translation>Bild erfolgreich gelöscht!</translation>
+    </message>
+</context>
+<context>
+    <name>VariousSearchBar</name>
+    <message>
+        <location filename="../tabs/various/varioussearchbar.cpp" line="+15"/>
+        <source>Search Title</source>
+        <translation>Suche Titel</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Search</source>
+        <translation>Suche</translation>
+    </message>
+</context>
+<context>
+    <name>VariousStatusBar</name>
+    <message>
+        <location filename="../tabs/various/variousstatusbar.cpp" line="+11"/>
+        <source>Create</source>
+        <translation>Erstellen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Create a new entry.</source>
+        <translation>Erstelle einen Neuen Eintrag.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>History</source>
+        <translation>Verlauf</translation>
+    </message>
+</context>
+<context>
+    <name>VariousTableModel</name>
+    <message>
+        <location filename="../tabs/various/varioustablemodel.cpp" line="+19"/>
+        <source>Article Id</source>
+        <translation>Artikel Nr</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Duration</source>
+        <translation>Bestand</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Image</source>
+        <translation>Bild</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Storage</source>
+        <translation>Lager</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Changed</source>
+        <translation>Geändert</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Created</source>
+        <translation>Erstellt</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Unknown</source>
+        <translation>Unbekannt</translation>
+    </message>
+</context>
+<context>
+    <name>VariousTableView</name>
+    <message>
+        <location filename="../tabs/various/varioustableview.cpp" line="+61"/>
+        <source>Open entry</source>
+        <translation>Eintrag öffnen</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Create entry</source>
+        <translation>Eintrag erstellen</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Copy Article Id</source>
+        <translation>Artikelnummer kopieren</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Add Article to opened Order</source>
+        <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Update</source>
+        <translation>Aktualisieren</translation>
     </message>
 </context>
 <context>
