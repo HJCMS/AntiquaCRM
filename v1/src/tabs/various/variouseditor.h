@@ -8,7 +8,6 @@
 #include <AntiquaImgEdit>
 #include <AntiquaWidgets>
 #include <QObject>
-#include <QSplitter>
 #include <QWidget>
 
 class VariousEditor final : public InventoryEditor {
@@ -24,7 +23,7 @@ private:
   BoolBox *va_restricted;    /**< @brief Öffentlicher verkauf */
 
   // Row:1
-  QSplitter *m_splitter;       /**< @brief Zweite Reihe */
+  AntiquaSplitter *m_splitter; /**< @brief Zweite Reihe */
   LineEdit *va_title;          /**< @brief Title */
   LineEdit *va_title_extended; /**< @brief Title erweitert */
   ConditionEdit *va_condition; /**< @brief Umschreibung */

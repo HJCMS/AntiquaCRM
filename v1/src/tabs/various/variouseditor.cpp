@@ -59,14 +59,13 @@ VariousEditor::VariousEditor(QWidget *parent)
   mainLayout->addLayout(row0, 0);
   // END : Row0
   // BEGIN : Row1
-  m_splitter = new QSplitter(Qt::Horizontal, this);
-  m_splitter->setChildrenCollapsible(false);
-  m_splitter->setContentsMargins(2, 2, 2, 2);
+  m_splitter = new AntiquaSplitter(this);
   // Eingabemasken
   QWidget *row1Widget = new QWidget(m_splitter);
   row1Widget->setContentsMargins(0, 0, 0, 0);
   int row1c = 0;
   QGridLayout *row1 = new QGridLayout(row1Widget);
+  row1->setContentsMargins(0, 0, 0, 0);
   row1->setColumnStretch(1, 1);
   // va_title
   infolabel = new AntiquaILabel(tr("Title"), row1Widget);
@@ -108,9 +107,10 @@ VariousEditor::VariousEditor(QWidget *parent)
   m_imageToolBar = new ImageToolBar(this);
   row1->addWidget(m_imageToolBar, row1c++, 1, 1, 1);
   row1Widget->setLayout(row1);
+  m_splitter->addLeft(row1Widget);
   // Image Viewer
   m_imageView = new ImageView(QSize(400, 400), m_splitter);
-  m_splitter->insertWidget(1, m_imageView);
+  m_splitter->addRight(m_imageView);
   mainLayout->addWidget(m_splitter, 1);
   // END : Row1
   // BEGIN : Row2
