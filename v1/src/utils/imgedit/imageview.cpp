@@ -91,9 +91,8 @@ void ImageView::setImageFile(const SourceInfo &file) {
   setImage(img);
   p_currentPreview = file;
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO
-           << p_currentPreview.getFileId() << p_currentPreview.filePath()
-           << Qt::endl
+  qDebug() << Q_FUNC_INFO << p_currentPreview.getFileId()
+           << p_currentPreview.filePath() << Qt::endl
            << file.getFileId() << file.filePath();
 #endif
 }

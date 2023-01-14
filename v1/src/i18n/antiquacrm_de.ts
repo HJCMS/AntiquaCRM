@@ -1250,7 +1250,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+17"/>
+        <source>Read CD</source>
+        <translation>CD Auslesen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Opens a Metadata readout Dialog for Music CD.</source>
+        <translation>Öffnet einen Metadaten-Auslesedialog für Musik-CD&apos;s.</translation>
+    </message>
+    <message>
+        <location line="+24"/>
         <source>Description</source>
         <translation>Beschreibung</translation>
     </message>
@@ -1275,7 +1285,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Informationen</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+37"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -1340,7 +1350,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Fehlderhafte CD Jahresangabe, abbruch!</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+45"/>
         <source>Remove Image from Database</source>
         <translation>Bild aus Datenbank entfernen</translation>
     </message>
@@ -7403,11 +7413,6 @@ Bild - Artikel Nr: %2</translation>
         <location line="+7"/>
         <source>Condition</source>
         <translation>Zustand</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Booklet or Cover condition</source>
-        <translation type="unfinished">Hüllen oder Cover Zustand</translation>
     </message>
     <message>
         <location line="+7"/>

@@ -102,55 +102,60 @@ BookEditor::BookEditor(QWidget *parent)
   mainLayout->addLayout(row1);
 
   // Row 2
-  QWidget *row2Widget = new QWidget(this);
-  row2Widget->setMinimumHeight(380);
+  m_splitter = new AntiquaSplitter(this);
+  QWidget *row2Widget = new QWidget(m_splitter);
+  row2Widget->setContentsMargins(0, 0, 0, 0);
   int row2c = 0;
   QGridLayout *row2 = new QGridLayout(row2Widget);
+  row2->setContentsMargins(0, 0, 0, 0);
 
-  AntiquaILabel *lb_title = new AntiquaILabel(tr("Booktitle"), row2Widget);
-  row2->addWidget(lb_title, row2c, 0, 1, 1);
+  AntiquaILabel *infoText;
+
+  infoText = new AntiquaILabel(tr("Booktitle"), row2Widget);
+  row2->addWidget(infoText, row2c, 0, 1, 1);
   ib_title = new LineEdit(this);
   ib_title->setObjectName("ib_title");
-  ib_title->setToolTip(lb_title->text());
+  ib_title->setToolTip(infoText->text());
   row2->addWidget(ib_title, row2c++, 1, 1, 1);
 
-  AntiquaILabel *lb_ext_title = new AntiquaILabel(tr("Book Subtitle"), this);
-  row2->addWidget(lb_ext_title, row2c, 0, 1, 1);
+  infoText = new AntiquaILabel(tr("Book Subtitle"), this);
+  row2->addWidget(infoText, row2c, 0, 1, 1);
   ib_title_extended = new LineEdit(this);
   ib_title_extended->setObjectName("ib_title_extended");
-  ib_title_extended->setToolTip(lb_ext_title->text());
+  ib_title_extended->setToolTip(infoText->text());
   row2->addWidget(ib_title_extended, row2c++, 1, 1, 1);
 
-  AntiquaILabel *lb_author = new AntiquaILabel(tr("Author"), this);
-  row2->addWidget(lb_author, row2c, 0, 1, 1);
+  infoText = new AntiquaILabel(tr("Author"), this);
+  row2->addWidget(infoText, row2c, 0, 1, 1);
   ib_author = new LineEdit(this);
   ib_author->setObjectName("ib_author");
-  ib_author->setToolTip(lb_author->text());
+  ib_author->setToolTip(infoText->text());
   row2->addWidget(ib_author, row2c++, 1, 1, 1);
 
-  AntiquaILabel *lb_publisher = new AntiquaILabel(tr("Publisher"), this);
-  row2->addWidget(lb_publisher, row2c, 0, 1, 1);
+  infoText = new AntiquaILabel(tr("Publisher"), this);
+  row2->addWidget(infoText, row2c, 0, 1, 1);
   ib_publisher = new LineEdit(this);
   ib_publisher->setObjectName("ib_publisher");
-  ib_publisher->setToolTip(lb_publisher->text());
+  ib_publisher->setToolTip(infoText->text());
   row2->addWidget(ib_publisher, row2c++, 1, 1, 1);
 
-  AntiquaILabel *lb_condition = new AntiquaILabel(tr("Condition"), this);
-  row2->addWidget(lb_condition, row2c, 0, 1, 1);
+  infoText = new AntiquaILabel(tr("Condition"), this);
+  row2->addWidget(infoText, row2c, 0, 1, 1);
   QHBoxLayout *conditionlayout = new QHBoxLayout();
   ib_condition = new ConditionEdit(this);
   ib_condition->setObjectName("ib_condition");
   ib_condition->setToolTip(tr("Condition of this Book."));
   conditionlayout->addWidget(ib_condition, Qt::AlignLeft);
-  AntiquaILabel *lb_language = new AntiquaILabel(tr("Language"), this);
-  conditionlayout->addWidget(lb_language, Qt::AlignRight);
+
+  infoText = new AntiquaILabel(tr("Language"), this);
+  conditionlayout->addWidget(infoText, Qt::AlignRight);
   ib_language = new Language(this);
   ib_language->setObjectName("ib_language");
   conditionlayout->addWidget(ib_language);
   row2->addLayout(conditionlayout, row2c++, 1, 1, 1);
 
-  AntiquaILabel *lb_designation = new AntiquaILabel(tr("Designation"), this);
-  row2->addWidget(lb_designation, row2c, 0, 1, 1);
+  infoText = new AntiquaILabel(tr("Designation"), this);
+  row2->addWidget(infoText, row2c, 0, 1, 1);
   // Bucheinband und Bindungsart
   QHBoxLayout *binding_layout = new QHBoxLayout();
   binding_layout->setContentsMargins(0, 0, 0, 0);
@@ -160,47 +165,51 @@ BookEditor::BookEditor(QWidget *parent)
   binding_layout->addWidget(ib_binding);
   ib_designation = new LineEdit(this);
   ib_designation->setObjectName("ib_designation");
-  ib_designation->setToolTip(lb_designation->text());
+  ib_designation->setToolTip(infoText->text());
   binding_layout->addWidget(ib_designation);
   row2->addLayout(binding_layout, row2c++, 1, 1, 1);
 
-  AntiquaILabel *lb_storage = new AntiquaILabel(tr("Storage"), this);
-  row2->addWidget(lb_storage, row2c, 0, 1, 1);
+  infoText = new AntiquaILabel(tr("Storage"), this);
+  row2->addWidget(infoText, row2c, 0, 1, 1);
   ib_storage = new StorageLocation(this);
   ib_storage->setObjectName("ib_storage");
-  ib_storage->setToolTip(lb_storage->text());
+  ib_storage->setToolTip(infoText->text());
   row2->addWidget(ib_storage, row2c++, 1, 1, 1);
 
-  AntiquaILabel *lb_keywords = new AntiquaILabel(tr("Keywords"), this);
-  row2->addWidget(lb_keywords, row2c, 0, 1, 1);
+  infoText = new AntiquaILabel(tr("Keywords"), this);
+  row2->addWidget(infoText, row2c, 0, 1, 1);
   ib_keyword = new KeywordLineEdit(this);
   ib_keyword->setObjectName("ib_keyword");
-  ib_keyword->setToolTip(lb_keywords->text());
+  ib_keyword->setToolTip(infoText->text());
   row2->addWidget(ib_keyword, row2c++, 1, 1, 1);
 
-  AntiquaILabel *lb_isbn = new AntiquaILabel("ISBN/EAN", this);
-  row2->addWidget(lb_isbn, row2c, 0, 1, 1);
+  // @BEGIN_GROUP
+  infoText = new AntiquaILabel("ISBN/EAN", this);
+  row2->addWidget(infoText, row2c, 0, 1, 1);
+  QHBoxLayout *tbLayout = new QHBoxLayout;
   ib_isbn = new IsbnEdit(this);
   ib_isbn->setObjectName("ib_isbn");
-  ib_isbn->setToolTip(lb_isbn->text());
-  row2->addWidget(ib_isbn, row2c++, 1, 1, 1);
-
-  // Image Toolbar
+  ib_isbn->setToolTip("ISBN/EAN");
+  tbLayout->addWidget(ib_isbn);
+  tbLayout->addStretch(1);
   m_imageToolBar = new ImageToolBar(this);
-  row2->addWidget(m_imageToolBar, row2c++, 0, 1, 2);
-
-  // add Stretch
-  row2->setRowStretch(row2c++, 1);
+  tbLayout->addWidget(m_imageToolBar);
+  // @END_GROUP
+  row2->addLayout(tbLayout, row2c++, 1, 1, 1);
+  row2Widget->setLayout(row2);
+  // aufräumen
+  infoText->clear();
 
   // Image Viewer
   QSize maxSize = m_cfg->value("image/max_size", QSize(320, 320)).toSize();
   m_imageView = new ImageView(maxSize, this);
   m_imageView->setMaximumWidth(maxSize.width());
-  row2->addWidget(m_imageView, 0, 2, (row2c + 1), 1);
 
-  row2Widget->setLayout(row2);
-  mainLayout->addWidget(row2Widget);
+  m_splitter->addLeft(row2Widget);
+  m_splitter->addRight(m_imageView);
+  mainLayout->addWidget(m_splitter);
 
+  // Row3
   m_tabWidget = new EditorTab(this);
   m_tabWidget->setObjectName("tab_widget");
   QIcon tabIcons = m_tabWidget->defaultIcon();
@@ -228,6 +237,7 @@ BookEditor::BookEditor(QWidget *parent)
   m_infos->setLayout(m_infoLayout);
   m_tabWidget->insertTab(2, m_infos, tabIcons, tr("Information"));
   mainLayout->addWidget(m_tabWidget);
+  mainLayout->addStretch(1);
 
   m_actionBar = new EditorActionBar(this);
   m_actionBar->setPrinterMenu(PrinterButton::Bookcard);

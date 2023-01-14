@@ -29,6 +29,10 @@
 #include "antiquadateinfo.h"
 #endif
 
+#ifndef ANTIQUACRM_SPLITTER_H
+#include "antiquasplitter.h"
+#endif
+
 #ifndef ANTIQUACRM_TABBAR_H
 #include "antiquatabbar.h"
 #endif

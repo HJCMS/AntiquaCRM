@@ -83,14 +83,13 @@ PrintsStitchesEditor::PrintsStitchesEditor(QWidget *parent)
   // END : Row0
 
   // Begin : Row1
-  m_splitter = new QSplitter(Qt::Horizontal, this);
-  m_splitter->setChildrenCollapsible(false);
-  m_splitter->setContentsMargins(2, 2, 2, 2);
+  m_splitter = new AntiquaSplitter(this);
   // Eingabemasken
   QWidget *row1Widget = new QWidget(m_splitter);
   row1Widget->setContentsMargins(0, 0, 0, 0);
   int row1c = 0;
   QGridLayout *row1 = new QGridLayout(row1Widget);
+  row1->setContentsMargins(0, 0, 0, 0);
   // ip_title
   m_infoLabel = new AntiquaILabel(tr("Title"), row1Widget);
   row1->addWidget(m_infoLabel, row1c, 0, 1, 1);
@@ -158,12 +157,12 @@ PrintsStitchesEditor::PrintsStitchesEditor(QWidget *parent)
   m_imageToolBar = new ImageToolBar(this);
   row1->addWidget(m_imageToolBar, row1c++, 0, 1, 2);
   row1Widget->setLayout(row1);
-  m_splitter->insertWidget(0, row1Widget);
+  m_splitter->addLeft(row1Widget);
   // Image Viewer
   QSize maxSize = m_cfg->value("image/max_size", QSize(320, 320)).toSize();
   m_imageView = new ImageView(maxSize, m_splitter);
   m_imageView->setMaximumWidth(maxSize.width());
-  m_splitter->insertWidget(1, m_imageView);
+  m_splitter->addRight(m_imageView);
   mainLayout->addWidget(m_splitter, 1);
   // END : Row1
 

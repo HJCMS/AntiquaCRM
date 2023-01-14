@@ -30,6 +30,7 @@ private:
   YearEdit *ib_year;        /**< @brief Jahr */
   IntSpinBox *ib_volume;    /**< @brief Band ? */
   // Row 2
+  AntiquaSplitter *m_splitter; /**< @brief Splitter */
   LineEdit *ib_title;          /**< @brief Buch Titel */
   LineEdit *ib_title_extended; /**< @brief Ereiterte Titel  */
   LineEdit *ib_author;         /**< @brief Buchautor */

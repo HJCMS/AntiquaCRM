@@ -8,7 +8,6 @@
 #include <AntiquaImgEdit>
 #include <AntiquaWidgets>
 #include <QObject>
-#include <QSplitter>
 #include <QWidget>
 
 class KeywordLineEdit;
@@ -28,7 +27,7 @@ private:
   YearEdit *ip_year;         /**< @brief Jahresangabe */
   BoolBox *ip_restricted;    /**< @brief Zensiert? */
   // Row1
-  QSplitter *m_splitter;
+  AntiquaSplitter *m_splitter;
   AntiquaILabel *m_infoLabel;  /**< @brief Labels */
   LineEdit *ip_title;          /**< @brief Titel */
   LineEdit *ip_title_extended; /**< @brief Title erweitert */

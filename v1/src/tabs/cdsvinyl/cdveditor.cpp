@@ -8,6 +8,7 @@
 #include <AntiquaPrinting>
 #include <QDebug>
 #include <QMessageBox>
+#include <QSplitterHandle>
 
 CDVEditor::CDVEditor(QWidget *parent)
     : InventoryEditor{"^cv_[a-z_]+\\b$", parent} {
@@ -63,14 +64,14 @@ CDVEditor::CDVEditor(QWidget *parent)
   mainLayout->addLayout(row0, 0);
   // END : Row0
   // BEGIN : Row1
-  m_splitter = new QSplitter(Qt::Horizontal, this);
-  m_splitter->setChildrenCollapsible(false);
-  m_splitter->setContentsMargins(2, 2, 2, 2);
+  // AntiquaSplitter
+  m_splitter = new AntiquaSplitter(this);
   // Eingabemasken
   QWidget *row1Widget = new QWidget(m_splitter);
   row1Widget->setContentsMargins(0, 0, 0, 0);
   int row1c = 0;
   QGridLayout *row1 = new QGridLayout(row1Widget);
+  row1->setContentsMargins(0, 0, 0, 0);
   row1->setColumnStretch(1, 1);
   // cv_title
   infolabel = new AntiquaILabel(tr("Title"), row1Widget);
@@ -145,15 +146,30 @@ CDVEditor::CDVEditor(QWidget *parent)
   cv_eangtin->setObjectName("cv_eangtin");
   cv_eangtin->setToolTip(infolabel->text());
   row1->addWidget(cv_eangtin, row1c++, 1, 1, 4);
-  // image toolbar
-  m_imageToolBar = new ImageToolBar(this);
-  row1->addWidget(m_imageToolBar, row1c++, 1, 1, 4);
+  // @BEGIN_GROUP toolBarFrame
+  QFrame *toolBarFrame = new QFrame(this);
+  toolBarFrame->setContentsMargins(0, 2, 0, 2);
+  QHBoxLayout *tbfLayout = new QHBoxLayout(toolBarFrame);
+  tbfLayout->setContentsMargins(0, 2, 0, 2);
+  // Erfordert: http://musicbrainz.org/doc/libdiscid
+  btn_cdread = new QPushButton(tr("Read CD"), toolBarFrame);
+  btn_cdread->setIcon(QIcon("://icons/view_search.png"));
+  btn_cdread->setToolTip(tr("Opens a Metadata readout Dialog for Music CD."));
+  btn_cdread->setEnabled(false);
+  tbfLayout->addWidget(btn_cdread);
+  tbfLayout->addStretch(1);
+  m_imageToolBar = new ImageToolBar(toolBarFrame);
+  tbfLayout->addWidget(m_imageToolBar);
+  toolBarFrame->setLayout(tbfLayout);
+  row1->addWidget(toolBarFrame, row1c++, 0, 1, 4);
+  // @END_GROUP
   row1Widget->setLayout(row1);
+  m_splitter->addLeft(row1Widget);
   // Image Viewer
   QSize maxSize = m_cfg->value("image/max_size", QSize(320, 320)).toSize();
   m_imageView = new ImageView(maxSize, m_splitter);
   m_imageView->setMaximumWidth(maxSize.width());
-  m_splitter->insertWidget(1, m_imageView);
+  m_splitter->addRight(m_imageView);
   mainLayout->addWidget(m_splitter, 1);
   // END : Row1
   // BEGIN : Row2
@@ -195,7 +211,8 @@ CDVEditor::CDVEditor(QWidget *parent)
   mainLayout->addStretch(1);
   setLayout(mainLayout);
 
-  // Signals:ImageToolBar
+  // Signals:ToolBar
+  connect(btn_cdread, SIGNAL(clicked()), SLOT(openReadCDDialog()));
   connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)),
           SLOT(actionRemoveImage(qint64)));
   connect(m_imageToolBar, SIGNAL(sendOpenImage()), SLOT(actionEditImages()));
@@ -517,6 +534,8 @@ void CDVEditor::setFinalLeaveEditor() {
   m_imageView->clear();               /**< Bildvorschau leeren */
   emit sendLeaveEditor();             /**< Back to MainView */
 }
+
+void CDVEditor::openReadCDDialog() { qDebug() << Q_FUNC_INFO << "TODO"; }
 
 void CDVEditor::actionRemoveImage(qint64 articleId) {
   qint64 id = cv_id->value().toLongLong();

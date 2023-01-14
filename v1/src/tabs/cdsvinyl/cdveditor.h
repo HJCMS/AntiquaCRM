@@ -26,19 +26,20 @@ private:
   BoolBox *cv_restricted;    /**< @brief Öffentlicher verkauf */
 
   // Row:1
-  QSplitter *m_splitter;       /**< @brief Zweite Reihe */
-  LineEdit *cv_title;          /**< @brief Title */
-  LineEdit *cv_title_extended; /**< @brief Title erweitert */
-  LineEdit *cv_author;         /**< @brief Artist */
-  LineEdit *cv_publisher;      /**< @brief Herausgeber */
-  SelectMediaType *cv_mtype;   /**< @brief Mediatype */
-  ConditionEdit *cv_condition; /**< @brief Umschreibung */
-  LineEdit *cv_designation;    /**< @brief Zustandsbeschreibung */
-  StorageLocation *cv_storage; /**< @brief Lagerposition */
-  KeywordLineEdit *cv_keyword; /**< @brief Schlüsselwörter */
-  IsbnEdit *cv_eangtin;        /**< @brief EAN13/GTIN13 */
-  ImageView *m_imageView;
-  ImageToolBar *m_imageToolBar;
+  AntiquaSplitter *m_splitter;  /**< @brief Zweite Reihe */
+  LineEdit *cv_title;           /**< @brief Title */
+  LineEdit *cv_title_extended;  /**< @brief Title erweitert */
+  LineEdit *cv_author;          /**< @brief Artist */
+  LineEdit *cv_publisher;       /**< @brief Herausgeber */
+  SelectMediaType *cv_mtype;    /**< @brief Mediatype */
+  ConditionEdit *cv_condition;  /**< @brief Umschreibung */
+  LineEdit *cv_designation;     /**< @brief Zustandsbeschreibung */
+  StorageLocation *cv_storage;  /**< @brief Lagerposition */
+  KeywordLineEdit *cv_keyword;  /**< @brief Schlüsselwörter */
+  IsbnEdit *cv_eangtin;         /**< @brief EAN13/GTIN13 */
+  QPushButton *btn_cdread;      /**< @brief Dialog ReadCD ID's */
+  ImageToolBar *m_imageToolBar; /**< @brief Bilder Editieren */
+  ImageView *m_imageView;       /**< @brief Bildvorschau */
 
   // Row:2
   EditorTab *m_tabWidget;             /**< @brief Zusätze */
@@ -64,6 +65,7 @@ private Q_SLOTS:
   void setSaveData() override;
   void setCheckLeaveEditor() override;
   void setFinalLeaveEditor() override;
+  void openReadCDDialog();
   void actionRemoveImage(qint64 articleId);
   void actionEditImages();
 
