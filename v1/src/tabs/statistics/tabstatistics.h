@@ -6,33 +6,35 @@
 #define ANTIQUACRM_TABSTATISTICS_H
 
 #include <AntiquaWidgets>
-#include <QObject>
 #include <QDate>
+#include <QObject>
 #include <QWidget>
+
+class StatsMainPage;
 
 class TabStatistics final : public Inventory {
   Q_OBJECT
 
 private:
-  QDate p_statsDate;
-  bool firstview = false;
+  StatsMainPage *m_mainPage;
+  bool initialed = false;
 
 private Q_SLOTS:
-  void openPaymentsInYear(const QDate &d);
-  void openCategoriesInYear(const QDate &d);
-  void popupWarningTabInEditMode() override;
-  void setDefaultTableView() override;
+  void openChartView(const QString &name, const QDate &date);
+  void popupWarningTabInEditMode() override{/* unused */};
+  void setDefaultTableView() override{/* unused */};
 
 public Q_SLOTS:
   void openStartPage() override;
   void createSearchQuery(const QString &query = QString()) override;
   void createNewEntry() override{/* unused */};
-  void openEntry(qint64 statsId) override;
+  void openEntry(qint64) override{/* unused */};
   void onEnterChanged() override;
 
 public:
   explicit TabStatistics(QWidget *parent = nullptr);
   bool customAction(const QJsonObject &obj) override;
+  ~TabStatistics();
 };
 
 #endif // ANTIQUACRM_TABSTATISTICS_H

@@ -4,6 +4,8 @@
 #include "tabstatistics.h"
 #include "categoriesinyear.h"
 #include "paymentsinyear.h"
+#include "providerstatistics.h"
+#include "statsmainpage.h"
 
 #include <QComboBox>
 #include <QDebug>
@@ -17,50 +19,87 @@ TabStatistics::TabStatistics(QWidget *parent)
   setObjectName("antiqua_statistics_tab");
   setClosable(true);
 
-  QDate date = QDate::currentDate();
-  AntiquaCRM::ASettings cfg(this);
-  int year = cfg.value("statistics_year", 2022).toInt();
-  p_statsDate = QDate(year, date.month(), date.day());
+  m_mainPage = new StatsMainPage(this);
+  m_mainPage->setWindowTitle(windowTitle());
+  insertWidget(0, m_mainPage);
+
+  connect(m_mainPage, SIGNAL(sendOpenChart(const QString &, const QDate &)),
+          SLOT(openChartView(const QString &, const QDate &)));
 }
 
-void TabStatistics::openPaymentsInYear(const QDate &d) {
-  PaymentsInYear *m_view = new PaymentsInYear(d, this);
-  insertWidget(0, m_view);
-  setCurrentIndex(0);
+void TabStatistics::openChartView(const QString &name, const QDate &date) {
+  if (name.contains("default_page")) {
+    setCurrentIndex(0);
+    return;
+  }
+
+  if (count() > 1) {
+    // qDebug() << "Clear Chart:" << name << date;
+    for (int i = 0; i < count(); ++i) {
+      if (i == 0)
+        continue;
+
+      QWidget *w = widget(i);
+      if (w != nullptr) {
+        removeWidget(w);
+      }
+    }
+  }
+  // Anzahl der Bestellungen pro Tag im Jahr
+  QStringList countChart({"PaymentsLastYear", "DailyOrdersInYear"});
+  // Anzahl der Bestellten Kategorien im Jahr
+  QStringList barChart({"CategoriesLastYear", "SelledCategoriesInYear"});
+  // Dienstleister Bestellungen im Jahr
+  QStringList providerChart({"ProviderOrdersInYear", "PrOrdersLastYear"});
+  int index = count();
+  if (countChart.contains(name)) {
+    insertWidget(index, new PaymentsInYear(date, this));
+  } else if (barChart.contains(name)) {
+    insertWidget(index, new CategoriesInYear(date, this));
+  } else if (providerChart.contains(name)) {
+    insertWidget(index, new ProviderStatistics(date, this));
+  } else {
+    qDebug() << "No Chart found:" << name << date;
+  }
+
+  if (!initialed)
+    initialed = true;
+
+  setCurrentIndex(index);
 }
 
-void TabStatistics::openCategoriesInYear(const QDate &d) {
-  CategoriesInYear *m_view = new CategoriesInYear(d, this);
-  insertWidget(1, m_view);
-  setCurrentIndex(1);
+void TabStatistics::openStartPage() {
+  if (currentIndex() != 0)
+    setCurrentIndex(0);
+
+  initialed = true;
 }
-
-void TabStatistics::popupWarningTabInEditMode() {}
-
-void TabStatistics::setDefaultTableView() {}
-
-void TabStatistics::openStartPage() {}
 
 void TabStatistics::createSearchQuery(const QString &query) {
-  firstview = true;
   // Einträge aus StatisticsActionGroup
-  if (query == "PaymentsInYear") {
-    openPaymentsInYear(p_statsDate);
-  } else if (query == "CategoriesInYear") {
-    openCategoriesInYear(p_statsDate);
+  if (query.contains("LastYear")) {
+    QDate d = QDate::currentDate();
+    openChartView(query, d.addYears(-1));
+  } else {
+    openChartView(query, m_mainPage->selectedDate());
   }
-#ifdef ANTIQUA_DEVELOPEMENT
-   else {
-    qDebug() << Q_FUNC_INFO << "NOT FOUND" << query;
-  }
-#endif
 }
 
-void TabStatistics::openEntry(qint64) {}
-
-void TabStatistics::onEnterChanged() {}
+void TabStatistics::onEnterChanged() {
+  if (!initialed)
+    openStartPage();
+}
 
 bool TabStatistics::customAction(const QJsonObject &obj) {
   Q_UNUSED(obj);
   return false;
+}
+
+TabStatistics::~TabStatistics() {
+  for (int i = 0; i < count(); ++i) {
+    QWidget *w = widget(i);
+    if (w != nullptr) {
+      removeWidget(w);
+    }
+  }
 }

@@ -20,8 +20,10 @@ SET (subproject_SOURCES
  categoriesinyear.cpp
  countaxis.cpp
  paymentsinyear.cpp
+ providerstatistics.cpp
  statisticsactiongroup.cpp
  statsutils.cpp
+ statsmainpage.cpp
  tabstatistics.cpp
  yearaxis.cpp
 )
@@ -31,8 +33,10 @@ SET (subproject_HEADERS
  categoriesinyear.h
  countaxis.h
  paymentsinyear.h
+ providerstatistics.h
  statisticsactiongroup.h
  statsutils.h
+ statsmainpage.h
  tabstatistics.h
  yearaxis.h
 )

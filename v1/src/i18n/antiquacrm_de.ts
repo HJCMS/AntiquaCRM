@@ -651,7 +651,7 @@
         <translation>Band</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+16"/>
         <source>Booktitle</source>
         <translation>Buchtitel</translation>
     </message>
@@ -681,7 +681,7 @@
         <translation>Zustand dieses Buches.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
@@ -706,7 +706,7 @@
         <translation>Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+96"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -790,12 +790,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="-385"/>
+        <location line="-384"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
     <message>
-        <location line="-154"/>
+        <location line="-163"/>
         <source>Local Usage only</source>
         <translation>Nur lokale Verwendung</translation>
     </message>
@@ -805,7 +805,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn diese Option markiert ist. Dann wird dieser Artikel nicht an die Dienstleister exportiert.</translation>
     </message>
     <message>
-        <location line="+158"/>
+        <location line="+167"/>
         <source>Internal Description</source>
         <translation>Interne Beschreibung</translation>
     </message>
@@ -1160,7 +1160,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CDVEditor</name>
     <message>
-        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+15"/>
+        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+16"/>
         <source>Edit CD or Vinyl</source>
         <translation>Bearbeite CD oder Vinyl</translation>
     </message>
@@ -1250,7 +1250,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+19"/>
         <source>Read CD</source>
         <translation>CD Auslesen</translation>
     </message>
@@ -1260,7 +1260,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Öffnet einen Metadaten-Auslesedialog für Musik-CD&apos;s.</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+25"/>
         <source>Description</source>
         <translation>Beschreibung</translation>
     </message>
@@ -5393,7 +5393,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn diese Option markiert ist. Dann wird dieser Artikel nicht an die Dienstleister exportiert.</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+17"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -5938,6 +5938,24 @@ Bild - Artikel Nr: %2</translation>
         <location line="+9"/>
         <source>API Port</source>
         <translation>API Port</translation>
+    </message>
+</context>
+<context>
+    <name>ProviderStatistics</name>
+    <message>
+        <location filename="../tabs/statistics/providerstatistics.cpp" line="+21"/>
+        <source>Provider Orders in Year %1.</source>
+        <translation>Dienstleisterbestellungen im Jahr %1.</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>Orders in Year %1.</source>
+        <translation>Bestellungen im Jahr %1.</translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <source>Completed in Year %1.</source>
+        <translation>Abgeschlossen im Jahr %1.</translation>
     </message>
 </context>
 <context>
@@ -6667,13 +6685,56 @@ Bild - Artikel Nr: %2</translation>
     <name>StatisticsActionGroup</name>
     <message>
         <location filename="../tabs/statistics/statisticsactiongroup.cpp" line="+11"/>
-        <source>Payments in year</source>
-        <translation>Verkäufe im Jahr</translation>
+        <source>Customized Statistics</source>
+        <translation>Angepasste Statistiken</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Categories sold per year</source>
-        <translation>Im Jahr verkauft nach Kategorie</translation>
+        <source>Payments last year</source>
+        <translation>Einkäufe letztes Jahr</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Categories sales last year</source>
+        <translation>Kategorien Verkäufe letztes Jahr</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Provider sales last year</source>
+        <translation>Dienstleisterverkäufe im letzten Jahr</translation>
+    </message>
+</context>
+<context>
+    <name>StatsMainPage</name>
+    <message>
+        <location filename="../tabs/statistics/statsmainpage.cpp" line="+15"/>
+        <source>On this Page you can select some Chart for Diagnostics and Statistics.</source>
+        <translation>Auf dieser Seite können Sie Diagramme für Diagnose und Statistik auswählen.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Without disclosures</source>
+        <translation>Keine Angaben</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Orders per Day in Year</source>
+        <translation>Bestellungen pro Tag im Jahr</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Selled Categories In Year</source>
+        <translation>Verkaufte Kategorien im Jahr</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Provider Orders in Year</source>
+        <translation>Anbieterbestellungen im Jahr</translation>
+    </message>
+    <message>
+        <location line="+36"/>
+        <source>No Chart selected!</source>
+        <translation>Kein Diagramm ausgewählt!</translation>
     </message>
 </context>
 <context>
@@ -7065,7 +7126,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TabStatistics</name>
     <message>
-        <location filename="../tabs/statistics/tabstatistics.cpp" line="+15"/>
+        <location filename="../tabs/statistics/tabstatistics.cpp" line="+17"/>
         <source>Statistics</source>
         <translation>Statistiken</translation>
     </message>
@@ -7395,7 +7456,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn diese Option markiert ist. Dann wird dieser Artikel nicht an die Dienstleister exportiert.</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+16"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -7420,7 +7481,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Lager</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+24"/>
         <source>Description</source>
         <translation>Beschreibung</translation>
     </message>

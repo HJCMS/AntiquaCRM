@@ -8,8 +8,10 @@
 StatisticsActionGroup::StatisticsActionGroup(QObject *parent)
     : QActionGroup{parent} {
   setObjectName("tab_statistics_entries");
-  p_groups.insert("PaymentsInYear", tr("Payments in year"));
-  p_groups.insert("CategoriesInYear", tr("Categories sold per year"));
+  p_groups.insert("default_page", tr("Customized Statistics"));
+  p_groups.insert("PaymentsLastYear", tr("Payments last year"));
+  p_groups.insert("CategoriesLastYear", tr("Categories sales last year"));
+  p_groups.insert("PrOrdersLastYear", tr("Provider sales last year"));
 
   m_mapper = new QSignalMapper(this);
   m_mapper->setObjectName("tab_stats_actions");

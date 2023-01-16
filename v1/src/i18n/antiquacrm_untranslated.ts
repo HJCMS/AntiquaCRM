@@ -651,7 +651,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+16"/>
         <source>Booktitle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -681,7 +681,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
@@ -706,7 +706,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+96"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -788,12 +788,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-385"/>
+        <location line="-384"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-154"/>
+        <location line="-163"/>
         <source>Local Usage only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -803,7 +803,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+158"/>
+        <location line="+167"/>
         <source>Internal Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1158,7 +1158,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CDVEditor</name>
     <message>
-        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+15"/>
+        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+16"/>
         <source>Edit CD or Vinyl</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1248,7 +1248,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+19"/>
         <source>Read CD</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1258,7 +1258,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+25"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5389,7 +5389,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+17"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5931,6 +5931,24 @@ Image - Article Id: %2</source>
     <message>
         <location line="+9"/>
         <source>API Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProviderStatistics</name>
+    <message>
+        <location filename="../tabs/statistics/providerstatistics.cpp" line="+21"/>
+        <source>Provider Orders in Year %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>Orders in Year %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <source>Completed in Year %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6661,12 +6679,55 @@ Image - Article Id: %2</source>
     <name>StatisticsActionGroup</name>
     <message>
         <location filename="../tabs/statistics/statisticsactiongroup.cpp" line="+11"/>
-        <source>Payments in year</source>
+        <source>Customized Statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Categories sold per year</source>
+        <source>Payments last year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Categories sales last year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Provider sales last year</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StatsMainPage</name>
+    <message>
+        <location filename="../tabs/statistics/statsmainpage.cpp" line="+15"/>
+        <source>On this Page you can select some Chart for Diagnostics and Statistics.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Without disclosures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Orders per Day in Year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Selled Categories In Year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Provider Orders in Year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+36"/>
+        <source>No Chart selected!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7059,7 +7120,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TabStatistics</name>
     <message>
-        <location filename="../tabs/statistics/tabstatistics.cpp" line="+15"/>
+        <location filename="../tabs/statistics/tabstatistics.cpp" line="+17"/>
         <source>Statistics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7389,7 +7450,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+16"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7414,7 +7475,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+24"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
