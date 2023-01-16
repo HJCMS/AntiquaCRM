@@ -5948,14 +5948,9 @@ Bild - Artikel Nr: %2</translation>
         <translation>Dienstleisterbestellungen im Jahr %1.</translation>
     </message>
     <message>
-        <location line="+27"/>
-        <source>Orders in Year %1.</source>
-        <translation>Bestellungen im Jahr %1.</translation>
-    </message>
-    <message>
-        <location line="+42"/>
-        <source>Completed in Year %1.</source>
-        <translation>Abgeschlossen im Jahr %1.</translation>
+        <location line="+26"/>
+        <source>Completed Orders in Year %1.</source>
+        <translation>Abeschlossene Aufträge im Jahr %1.</translation>
     </message>
 </context>
 <context>

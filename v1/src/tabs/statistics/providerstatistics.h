@@ -8,7 +8,6 @@
 #include <AntiquaCRM>
 #include <QDate>
 #include <QObject>
-#include <QResizeEvent>
 #include <QScrollArea>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -22,14 +21,10 @@ private:
   AntiquaCRM::ASqlCore *m_sql;
   QWidget *m_widget;
   QVBoxLayout *m_layout;
-  void setOrders();
-  void setCompleted();
+  void setOrdersChart();
 
 private Q_SLOTS:
   void highlight(bool);
-
-protected:
-  void resizeEvent(QResizeEvent *) override;
 
 public:
   explicit ProviderStatistics(const QDate &date, QWidget *parent = nullptr);

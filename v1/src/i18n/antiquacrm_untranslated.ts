@@ -5942,13 +5942,8 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+27"/>
-        <source>Orders in Year %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+42"/>
-        <source>Completed in Year %1.</source>
+        <location line="+26"/>
+        <source>Completed Orders in Year %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
