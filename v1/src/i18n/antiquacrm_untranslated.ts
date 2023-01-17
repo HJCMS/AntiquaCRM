@@ -4862,7 +4862,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+55"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5804,6 +5804,14 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>ProviderPriceVolume</name>
+    <message>
+        <location filename="../tabs/statistics/providerpricevolume.cpp" line="+19"/>
+        <source>Provider Payment volume %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProviderPurchaseBar</name>
     <message>
         <location filename="../tabs/providers/providerpurchasebar.cpp" line="+12"/>
@@ -5932,12 +5940,12 @@ Image - Article Id: %2</source>
 <context>
     <name>ProviderStatistics</name>
     <message>
-        <location filename="../tabs/statistics/providerstatistics.cpp" line="+21"/>
+        <location filename="../tabs/statistics/providerstatistics.cpp" line="+18"/>
         <source>Provider Orders in Year %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+14"/>
         <source>Completed Orders in Year %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6689,20 +6697,30 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+15"/>
-        <location line="+17"/>
+        <location line="+18"/>
         <source>Daily average</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-16"/>
-        <location line="+17"/>
+        <location line="-17"/>
+        <location line="+18"/>
         <source>Categories sales</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-16"/>
-        <location line="+17"/>
+        <location line="-17"/>
+        <location line="+18"/>
         <source>Provider sales</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-17"/>
+        <source>Provider payments volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Provider sales volume</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7128,7 +7146,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TabStatistics</name>
     <message>
-        <location filename="../tabs/statistics/tabstatistics.cpp" line="+17"/>
+        <location filename="../tabs/statistics/tabstatistics.cpp" line="+18"/>
         <source>Statistics</source>
         <translation type="unfinished"></translation>
     </message>

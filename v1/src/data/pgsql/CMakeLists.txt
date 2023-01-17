@@ -39,7 +39,8 @@ SET (query_tables_FILES
  statistics_monthly_categories.sql
  statistics_payments_storage.sql
  statistics_payments_year.sql
- statistics_provider_orders_in_year.sql
+ statistics_provider_orders_year.sql
+ statistics_provider_volume_year.sql
  union_template_keys.sql
  union_template_values.sql
 )

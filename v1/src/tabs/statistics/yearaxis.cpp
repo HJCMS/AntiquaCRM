@@ -6,7 +6,6 @@
 YearAxis::YearAxis(QObject *parent)
     : QtCharts::QDateTimeAxis{parent} {
   setFormat("dd.MM.yy");
-  setTickCount(12);
 }
 
 void YearAxis::setStartDate(const QDate &d) {

@@ -1624,7 +1624,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+5"/>
         <source>Price volume</source>
-        <translation>Gesamtvolumen</translation>
+        <translation>Preisvolumen</translation>
     </message>
 </context>
 <context>
@@ -4866,7 +4866,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bestellungen im Jahr %1.</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+55"/>
         <source>Orders</source>
         <translation>Bestellungen</translation>
     </message>
@@ -5810,6 +5810,14 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>ProviderPriceVolume</name>
+    <message>
+        <location filename="../tabs/statistics/providerpricevolume.cpp" line="+19"/>
+        <source>Provider Payment volume %1.</source>
+        <translation>Dienstleister Verkaufsvolumen %1.</translation>
+    </message>
+</context>
+<context>
     <name>ProviderPurchaseBar</name>
     <message>
         <location filename="../tabs/providers/providerpurchasebar.cpp" line="+12"/>
@@ -5938,12 +5946,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ProviderStatistics</name>
     <message>
-        <location filename="../tabs/statistics/providerstatistics.cpp" line="+21"/>
+        <location filename="../tabs/statistics/providerstatistics.cpp" line="+18"/>
         <source>Provider Orders in Year %1.</source>
         <translation>Dienstleisterbestellungen im Jahr %1.</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+14"/>
         <source>Completed Orders in Year %1.</source>
         <translation>Abgeschlossene Aufträge im Jahr %1.</translation>
     </message>
@@ -6695,21 +6703,31 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+15"/>
-        <location line="+17"/>
+        <location line="+18"/>
         <source>Daily average</source>
         <translation>Tagesdurchschnitt</translation>
     </message>
     <message>
-        <location line="-16"/>
-        <location line="+17"/>
+        <location line="-17"/>
+        <location line="+18"/>
         <source>Categories sales</source>
         <translation>Verkäufe nach Kategorie</translation>
     </message>
     <message>
-        <location line="-16"/>
-        <location line="+17"/>
+        <location line="-17"/>
+        <location line="+18"/>
         <source>Provider sales</source>
-        <translation>Verkäufe von Dienstleistern</translation>
+        <translation>Dienstleister Verkäufe</translation>
+    </message>
+    <message>
+        <location line="-17"/>
+        <source>Provider payments volume</source>
+        <translation>Verkaufssvolumen der Anbieter</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Provider sales volume</source>
+        <translation>Umsatzvolumen der Anbieter</translation>
     </message>
 </context>
 <context>
@@ -7134,7 +7152,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TabStatistics</name>
     <message>
-        <location filename="../tabs/statistics/tabstatistics.cpp" line="+17"/>
+        <location filename="../tabs/statistics/tabstatistics.cpp" line="+18"/>
         <source>Statistics</source>
         <translation>Statistiken</translation>
     </message>

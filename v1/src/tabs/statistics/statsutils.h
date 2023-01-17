@@ -11,20 +11,45 @@
 #include <QPair>
 #include <QTime>
 
-class StatsUtils {
+class StatsUtils final {
 public:
+  /**
+   * @brief Start end DayTime: QPair<00:00:00,23:59:59>
+   */
   static const QPair<QTime, QTime> startEndDayTime();
 
   /**
-   * Create a Days in Year Range an returning a Milliseconds Epoch as key
+   * Create a Days in Year Range and returning a Milliseconds Epoch as key
    * @param year - Year
-   * @param sdoy - Start Day of Year
    */
-  static const QMap<qint64, int> daysInYearRange(int year, int sdoy = -1);
+  static const QMap<qint64, int> dayRangeFromYear(int);
 
+  /**
+   * Create a Days in Range and returning a Milliseconds Epoch as key
+   * @param from Date
+   * @param to Date
+   */
+  static const QMap<qint64, int> dayRangeFromDate(const QDate &, const QDate &);
+
+  /**
+   * @brief DateTime from Date with Time 00:00:00
+   */
   static const QDateTime startDateTime(const QDate &);
 
+  /**
+   * @brief SQL TIMESTAMP from Date with Time 00:00:00
+   */
+  static const QString startTimeStamp(const QDate &);
+
+  /**
+   * @brief DateTime from Date with Time 23:59:59
+   */
   static const QDateTime endDateTime(const QDate &);
+
+  /**
+   * @brief SQL TIMESTAMP from Date with Time 23:59:59
+   */
+  static const QString endTimeStamp(const QDate &);
 };
 
 #endif // ANTIQUACRM_STATS_UTILS_H

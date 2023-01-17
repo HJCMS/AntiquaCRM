@@ -5,8 +5,6 @@
 
 #include <AntiquaCRM>
 #include <QMap>
-#include <QSplitter>
-#include <QtCharts/QChartView>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
 
@@ -15,33 +13,20 @@ using namespace QtCharts;
 ProviderStatistics::ProviderStatistics(const QDate &date, QWidget *parent)
     : QScrollArea{parent}, p_date{date} {
   setWidgetResizable(true);
-
   int _year = p_date.year();
   str_year = QString::number(_year);
   setWindowTitle(tr("Provider Orders in Year %1.").arg(str_year));
-
-  m_widget = new QWidget(this);
-  m_widget->setContentsMargins(0, 0, 0, 0);
-  m_widget->setMinimumHeight(600);
-
-  m_layout = new QVBoxLayout(m_widget);
-  m_layout->setContentsMargins(0, 0, 0, 0);
-
-  m_sql = new AntiquaCRM::ASqlCore(this);
-
+  m_chartView = new QChartView(this);
+  m_chartView->setContentsMargins(0, 0, 0, 0);
+  m_chartView->setRenderHint(QPainter::Antialiasing);
+  setWidget(m_chartView);
   setOrdersChart();
-
-  m_widget->setLayout(m_layout);
-  setWidget(m_widget);
 }
 
 void ProviderStatistics::setOrdersChart() {
-  AntiquaCRM::ASqlFiles sqf("statistics_provider_orders_in_year");
+  AntiquaCRM::ASqlFiles sqf("statistics_provider_orders_year");
   if (sqf.openTemplate()) {
-    // Alle Aufträge
-    QChartView *m_chartView = new QChartView(m_widget);
-    m_chartView->setRenderHint(QPainter::Antialiasing);
-    m_layout->addWidget(m_chartView);
+    AntiquaCRM::ASqlCore p_sql(this);
 
     QChart *m_chart = new QChart;
     m_chart->setTitle(tr("Completed Orders in Year %1.").arg(str_year));
@@ -50,7 +35,7 @@ void ProviderStatistics::setOrdersChart() {
     query.append("o_payment_status=1");
     query.append("date_part('year', o_since)=" + str_year);
     sqf.setWhereClause(query.join(" AND "));
-    QSqlQuery q = m_sql->query(sqf.getQueryContent());
+    QSqlQuery q = p_sql.query(sqf.getQueryContent());
     if (q.size() > 0) {
       QPieSeries *m_series = new QPieSeries(m_chart);
       int summary = 0;

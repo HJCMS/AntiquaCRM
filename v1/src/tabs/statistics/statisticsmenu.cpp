@@ -36,6 +36,7 @@ void StatisticsMenu::setThisYearGroup() {
   m.insert("PaymentsThisYear", tr("Daily average"));
   m.insert("CategoriesThisYear", tr("Categories sales"));
   m.insert("ProviderOrderThisYear", tr("Provider sales"));
+  m.insert("ProviderVolumeThisYear", tr("Provider payments volume"));
 
   QMapIterator<QString, QString> it(m);
   while (it.hasNext()) {
@@ -53,6 +54,7 @@ void StatisticsMenu::setLastYearGroup() {
   m.insert("PaymentsLastYear", tr("Daily average"));
   m.insert("CategoriesLastYear", tr("Categories sales"));
   m.insert("ProviderOrderLastYear", tr("Provider sales"));
+  m.insert("ProviderVolumeLastYear", tr("Provider sales volume"));
 
   QMapIterator<QString, QString> it(m);
   while (it.hasNext()) {

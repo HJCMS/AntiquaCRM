@@ -21,6 +21,7 @@ SET (subproject_SOURCES
  countaxis.cpp
  paymentsinyear.cpp
  providerstatistics.cpp
+ providerpricevolume.cpp
  statisticsmenu.cpp
  statsutils.cpp
  statsmainpage.cpp
@@ -34,6 +35,7 @@ SET (subproject_HEADERS
  countaxis.h
  paymentsinyear.h
  providerstatistics.h
+ providerpricevolume.h
  statisticsmenu.h
  statsutils.h
  statsmainpage.h

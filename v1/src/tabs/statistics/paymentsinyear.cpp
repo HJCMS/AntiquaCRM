@@ -33,13 +33,32 @@ PaymentsInYear::PaymentsInYear(const QDate &date, QWidget *parent)
   setWindowTitle(m_chart->title());
   m_view->setChart(m_chart);
 
-  QMap<qint64, int> counts = StatsUtils::daysInYearRange(_year);
+  StatsUtils p_util;
+  QDate startDate(_year, 1, 1);
+  QDate endDate(_year, 12, 31);
+  QMap<qint64, int> axispoints;
+  QString sql_query;
+  if (_year == QDate::currentDate().year()) {
+    // Nur bis Monat
+    sql_query.append("o_since BETWEEN '");
+    sql_query.append(p_util.startTimeStamp(startDate));
+    sql_query.append("' AND '");
+    endDate = QDate(p_date.year(), p_date.month() + 1, 1);
+    sql_query.append(p_util.endTimeStamp(endDate));
+    sql_query.append("'");
+    axispoints = p_util.dayRangeFromDate(startDate, endDate);
+  } else {
+    // Vergangenes Jahr
+    sql_query.append("date_part('year', o_since) = ");
+    sql_query.append(str_year);
+    axispoints = p_util.dayRangeFromYear(_year);
+  }
+
   AntiquaCRM::ASqlFiles sqf("statistics_payments_year");
   if (sqf.openTemplate()) {
-    sqf.setWhereClause(str_year);
+    sqf.setWhereClause(sql_query);
     AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
     QSqlQuery q = m_sql->query(sqf.getQueryContent());
-    QDate startDate;
     int max_count = 8;
     if (q.size() > 0) {
       while (q.next()) {
@@ -49,16 +68,14 @@ PaymentsInYear::PaymentsInYear(const QDate &date, QWidget *parent)
 
         QDateTime dt = QDateTime::fromSecsSinceEpoch(q.value("sepoch").toInt(),
                                                      Qt::LocalTime);
-        if (!startDate.isValid())
-          startDate = dt.date().addDays(-1);
 
-        counts.insert(dt.toMSecsSinceEpoch(), count);
+        axispoints.insert(dt.toMSecsSinceEpoch(), count);
       }
     }
 
     YearAxis *m_axisYear = new YearAxis(m_view);
     m_axisYear->setStartDate(startDate);
-    m_axisYear->setEndDate(QDate(_year, 12, 31));
+    m_axisYear->setEndDate(endDate);
     m_chart->addAxis(m_axisYear, Qt::AlignBottom);
 
     CountAxis *m_axisCount = new CountAxis(max_count, m_view);
@@ -66,7 +83,7 @@ PaymentsInYear::PaymentsInYear(const QDate &date, QWidget *parent)
 
     QLineSeries *ordered_series = new QLineSeries(m_view);
     ordered_series->setName(tr("Orders"));
-    QMapIterator<qint64, int> it(counts);
+    QMapIterator<qint64, int> it(axispoints);
     while (it.hasNext()) {
       it.next();
       ordered_series->append(it.key(), it.value());

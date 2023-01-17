@@ -5,6 +5,7 @@
 #include "categoriesinyear.h"
 #include "paymentsinyear.h"
 #include "providerstatistics.h"
+#include "providerpricevolume.h"
 #include "statsmainpage.h"
 
 #include <QComboBox>
@@ -55,6 +56,9 @@ void TabStatistics::openChartView(const QString &name, const QDate &date) {
   // Dienstleister Bestellungen im Jahr
   QRegExp providerChart("^ProviderOrder[\\w]+Year$");
 
+  // Dienstleister Bestellungen im Jahr
+  QRegExp volumeChart("^ProviderVolume[\\w]+Year$");
+
   int index = count();
   if (name.contains(countCharts)) {
     insertWidget(index, new PaymentsInYear(date, this));
@@ -62,6 +66,8 @@ void TabStatistics::openChartView(const QString &name, const QDate &date) {
     insertWidget(index, new CategoriesInYear(date, this));
   } else if (name.contains(providerChart)) {
     insertWidget(index, new ProviderStatistics(date, this));
+  } else if (name.contains(volumeChart)) {
+    insertWidget(index, new ProviderPriceVolume(date, this));
   } else {
     qDebug() << "No Chart found:" << name << date;
   }
