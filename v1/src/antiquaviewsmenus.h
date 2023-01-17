@@ -12,7 +12,7 @@
 
 class ReportsActionGroup;
 class ViewsActionGroup;
-class StatisticsActionGroup;
+class StatisticsMenu;
 
 class AntiquaViewsMenus final : public QMenu {
   Q_OBJECT
@@ -21,10 +21,9 @@ private:
   QMenu *m_tableVisit;
   QMenu *m_tableReports;
   QMenu *m_tableViews;
-  QMenu *m_tableStats;
+  StatisticsMenu *m_tabStatsMenu;
   ReportsActionGroup *m_tabReports;
   ViewsActionGroup *m_tabViews;
-  StatisticsActionGroup *m_tabStatistics;
   QAction *ac_fullScreen;
 
   QSignalMapper *m_showTabsMapper;
@@ -32,7 +31,6 @@ private:
 
 private Q_SLOTS:
   void uniqLoadReports();
-  void uniqLoadStatistics();
   void uniqLoadViews();
 
 Q_SIGNALS:

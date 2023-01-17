@@ -45,18 +45,22 @@ void TabStatistics::openChartView(const QString &name, const QDate &date) {
       }
     }
   }
+
   // Anzahl der Bestellungen pro Tag im Jahr
-  QStringList countChart({"PaymentsLastYear", "DailyOrdersInYear"});
+  QRegExp countCharts("^Payments[\\w]+Year$");
+
   // Anzahl der Bestellten Kategorien im Jahr
-  QStringList barChart({"CategoriesLastYear", "SelledCategoriesInYear"});
+  QRegExp barChart("^Categories[\\w]+Year$");
+
   // Dienstleister Bestellungen im Jahr
-  QStringList providerChart({"ProviderOrdersInYear", "PrOrdersLastYear"});
+  QRegExp providerChart("^ProviderOrder[\\w]+Year$");
+
   int index = count();
-  if (countChart.contains(name)) {
+  if (name.contains(countCharts)) {
     insertWidget(index, new PaymentsInYear(date, this));
-  } else if (barChart.contains(name)) {
+  } else if (name.contains(barChart)) {
     insertWidget(index, new CategoriesInYear(date, this));
-  } else if (providerChart.contains(name)) {
+  } else if (name.contains(providerChart)) {
     insertWidget(index, new ProviderStatistics(date, this));
   } else {
     qDebug() << "No Chart found:" << name << date;

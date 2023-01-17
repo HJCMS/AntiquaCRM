@@ -332,12 +332,7 @@
         <translation>Datenbankberichte</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Statistics</source>
-        <translation>Statistiken</translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+11"/>
         <source>Database Views</source>
         <translation>Datenbank ansichten</translation>
     </message>
@@ -5950,7 +5945,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+26"/>
         <source>Completed Orders in Year %1.</source>
-        <translation>Abeschlossene Aufträge im Jahr %1.</translation>
+        <translation>Abgeschlossene Aufträge im Jahr %1.</translation>
     </message>
 </context>
 <context>
@@ -6677,26 +6672,44 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
-    <name>StatisticsActionGroup</name>
+    <name>StatisticsMenu</name>
     <message>
-        <location filename="../tabs/statistics/statisticsactiongroup.cpp" line="+11"/>
-        <source>Customized Statistics</source>
-        <translation>Angepasste Statistiken</translation>
+        <location filename="../tabs/statistics/statisticsmenu.cpp" line="+9"/>
+        <source>Statistics</source>
+        <translation>Statistiken</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>This Year</source>
+        <translation>Dieses Jahr</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Payments last year</source>
-        <translation>Einkäufe letztes Jahr</translation>
+        <source>Last Year</source>
+        <translation>Letztes Jahr</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Categories sales last year</source>
-        <translation>Kategorien Verkäufe letztes Jahr</translation>
+        <location line="+4"/>
+        <source>Extended query</source>
+        <translation>Erweiterte abfrage</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Provider sales last year</source>
-        <translation>Dienstleisterverkäufe im letzten Jahr</translation>
+        <location line="+15"/>
+        <location line="+17"/>
+        <source>Daily average</source>
+        <translation>Tagesdurchschnitt</translation>
+    </message>
+    <message>
+        <location line="-16"/>
+        <location line="+17"/>
+        <source>Categories sales</source>
+        <translation>Verkäufe nach Kategorie</translation>
+    </message>
+    <message>
+        <location line="-16"/>
+        <location line="+17"/>
+        <source>Provider sales</source>
+        <translation>Verkäufe von Dienstleistern</translation>
     </message>
 </context>
 <context>

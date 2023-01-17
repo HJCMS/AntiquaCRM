@@ -4,7 +4,7 @@
 #include "antiquaviewsmenus.h"
 #include "antiquatabwidget.h"
 #include "reportsactiongroup.h"
-#include "statisticsactiongroup.h"
+#include "statisticsmenu.h"
 #include "viewsactiongroup.h"
 
 #include <QDebug>
@@ -26,8 +26,8 @@ AntiquaViewsMenus::AntiquaViewsMenus(QWidget *parent) : QMenu{parent} {
   addSeparator();
 
   // Statistics
-  m_tableStats = addMenu(QIcon("://icons/kchart.png"), tr("Statistics"));
-  m_tabStatistics = new StatisticsActionGroup(m_tableStats);
+  m_tabStatsMenu = new StatisticsMenu(this);
+  addMenu(m_tabStatsMenu);
   addSeparator();
 
   // Views
@@ -43,8 +43,7 @@ AntiquaViewsMenus::AntiquaViewsMenus(QWidget *parent) : QMenu{parent} {
   connect(m_tabReports, SIGNAL(sendSelectView(const QString &)),
           SIGNAL(sendOpenReport(const QString &)));
 
-  connect(m_tableStats, SIGNAL(aboutToShow()), SLOT(uniqLoadStatistics()));
-  connect(m_tabStatistics, SIGNAL(sendSelectStats(const QString &)),
+  connect(m_tabStatsMenu, SIGNAL(sendSelectStats(const QString &)),
           SIGNAL(sendOpenStats(const QString &)));
 
   connect(m_tableViews, SIGNAL(aboutToShow()), SLOT(uniqLoadViews()));
@@ -78,14 +77,6 @@ void AntiquaViewsMenus::uniqLoadReports() {
 
   if (m_tabReports->loadDataset())
     m_tableReports->addActions(m_tabReports->actions());
-}
-
-void AntiquaViewsMenus::uniqLoadStatistics() {
-  if (m_tabStatistics->actions().size() > 0)
-    return;
-
-  if (m_tabStatistics->loadDataset())
-    m_tableStats->addActions(m_tabStatistics->actions());
 }
 
 void AntiquaViewsMenus::uniqLoadViews() {

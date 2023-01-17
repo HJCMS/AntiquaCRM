@@ -332,12 +332,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Statistics</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+11"/>
         <source>Database Views</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6671,25 +6666,43 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
-    <name>StatisticsActionGroup</name>
+    <name>StatisticsMenu</name>
     <message>
-        <location filename="../tabs/statistics/statisticsactiongroup.cpp" line="+11"/>
-        <source>Customized Statistics</source>
+        <location filename="../tabs/statistics/statisticsmenu.cpp" line="+9"/>
+        <source>Statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>This Year</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Payments last year</source>
+        <source>Last Year</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Categories sales last year</source>
+        <location line="+4"/>
+        <source>Extended query</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Provider sales last year</source>
+        <location line="+15"/>
+        <location line="+17"/>
+        <source>Daily average</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-16"/>
+        <location line="+17"/>
+        <source>Categories sales</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-16"/>
+        <location line="+17"/>
+        <source>Provider sales</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
