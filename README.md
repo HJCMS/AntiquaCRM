@@ -19,5 +19,7 @@ Zur Zeit sind folgende Funktionen enthalten:
   1. Dienstleister abfrage der Bestellungen und einfügen in das Auftragssystem.
   2. Cron Jobs - Zum täglichen Hochladen der Bilder und Daten.
 
+---
+
 ![Demo](preview.png)
 
