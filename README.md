@@ -14,9 +14,7 @@ Das Programm wird mit der Qt-C++ Version 5.12.* Community Lizens geschrieben und
   - Bilder Verwaltung *(Über CIFS/SMB Schnittstelle >= 2.\* im lokalen Netzwerk)*,
   - Statistiken.
 
-> Die Klientanwendung stellt keine Remoteanfragen zu den Dienstleistern!
-Dies macht die Serveranwendung mittels eines CronJob-Intervals.
-Die Serveranwendung fügt die Bestellungen in die Datenbanlk ein.
+> Die Klientanwendung stellt keine Remoteanfragen zu den Dienstleistern!<br>Dies macht die Serveranwendung mittels eines Intervals und fügt die Bestellungen in die Datenbank ein.
 
 - Server Anwendung:
   - Dienstleisterabfrage der Bestellungen und einfügen in das Auftragssystem.
