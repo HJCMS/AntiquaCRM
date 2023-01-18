@@ -9,9 +9,9 @@ Das Programm wird mit der Qt-C++ Version 5.12.* Community Lizens geschrieben und
 - Klient Anwendung:
   - Kunden Adressbuch,
   - Buch, Drucke+Stiche und CD+Vinyl Verwaltung,
-  - Auftrags/Bestellverwaltung, *„Ist abhängig von der Serveranwendung!”*
+  - Auftrags/Bestellverwaltung *(Ist abhängig von der Serveranwendung!)*,
   - Remote Office über SSL/TLS,
-  - Bilder Verwaltung (Nur im lokalen Netzwerk),
+  - Bilder Verwaltung *(Nur im lokalen Netzwerk)*,
   - Statistiken.
 
 > Die Klientanwendung stellt keine Remoteanfragen zu den Dienstleistern!
