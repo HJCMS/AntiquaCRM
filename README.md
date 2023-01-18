@@ -27,7 +27,15 @@ Das Programm wird mit dem Qt-C++ Framework ab Version 5.12.\* *Community Lizens*
 ---
 
 ### Diese Projekte werden eingebunden:
-1. [Qt Framework] https://www.qt.io/product/framework "Qt Framework"
-2. [PostgreSQL] https://www.postgresql.org "PostgreSQL"
-3. [libqrencode] https://github.com/fukuchi/libqrencode "QR Code encoding library"
-
+- [Qt Framework]
+https://www.qt.io/product/framework
+'Qt Framework'
+[Qt Framework]
+- [PostgreSQL]
+https://www.postgresql.org
+'PostgreSQL'
+[PostgreSQL]
+- [libqrencode]
+https://github.com/fukuchi/libqrencode
+'QR Code encoding library'
+[libqrencode]
