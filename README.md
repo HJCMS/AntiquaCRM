@@ -20,7 +20,7 @@ Die Serveranwendung fügt die Bestellungen in die Datenbanlk ein.
 
 - Server Anwendung:
   - Dienstleisterabfrage der Bestellungen und einfügen in das Auftragssystem.
-  - Cron Jobs - Zum täglichen Hochladen der Bilder und Daten.
+  - CronJob-Scripte: Zum täglichen Hochladen der Bilder und Update der Datenbestände.
 
 ---
 
