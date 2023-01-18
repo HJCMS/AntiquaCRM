@@ -11,7 +11,7 @@ Das Programm wird mit der Qt-C++ Version 5.12.* Community Lizens geschrieben und
   - Buch, Drucke+Stiche und CD+Vinyl Verwaltung,
   - Auftrags/Bestellverwaltung *(Ist abhängig von der Serveranwendung!)*,
   - Remote Office über SSL/TLS,
-  - Bilder Verwaltung *(Über CIFS/SMB Schnittstelle >= 2.* im lokalen Netzwerk)*,
+  - Bilder Verwaltung *(Über CIFS/SMB Schnittstelle >= 2.\* im lokalen Netzwerk)*,
   - Statistiken.
 
 > Die Klientanwendung stellt keine Remoteanfragen zu den Dienstleistern!
