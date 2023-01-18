@@ -7,7 +7,7 @@ Es bietet eine Verwaltung der Artikelbestände und einige Online Schnittstellen 
 Das Programm wird mit der Qt-C++ Version 5.12.* Community Lizens geschrieben und verwendet eine PostgreSQL Datenbank ab Version 14.* für die Datenverwaltung.
 
 Zur Zeit sind folgende Funktionen enthalten:
-[1] Klient Anwendung:
++ Klient Anwendung:
   1. Kunden Adressbuch
   2. Buch, Drucke & Stiche und CD+Vinyl Verwaltung
   3. Auftragsverwaltung
@@ -15,7 +15,7 @@ Zur Zeit sind folgende Funktionen enthalten:
   5. Bilder Verwaltung (Nur im lokalen Netzwerk)
   6. Statistiken
 
-[2] Server Anwendung:
++ Server Anwendung:
   1. Dienstleister abfrage der Bestellungen und einfügen in das Auftragssystem.
   2. Cron Jobs - Zum täglichen Hochladen der Bilder und Daten.
 
