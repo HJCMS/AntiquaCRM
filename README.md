@@ -1,10 +1,10 @@
 # Antiqua CRM
 Ist ein Programm zur Verwaltung von Antiquarischen Büchern.
-+
+
 Es bietet eine Verwaltung der Artikelbestände und einige Online Schnittstellen für eine vereinfachte Datenverwaltung zu einzelnen Dienstanbietern.
-+
+
 Das Programm wird mit der Qt-C++ Version 5.12.* Community Lizens geschrieben und verwendet eine PostgreSQL Datenbank ab Version 14.* für die Datenverwaltung.
-+
+
 Zur Zeit sind folgende Funktionen enthalten:
 - Klient Anwendung:
   - Kunden Adressbuch
