@@ -2,7 +2,7 @@
 ; vim: set fileencoding=utf-8
 ;
 ; TODO - Required Package
-; Visual C++ Redistributable für Visual Studio 2015
+; Visual C++ Redistributable fÃ¼r Visual Studio 2015
 ; https://www.microsoft.com/de-de/download/details.aspx?id=48145
 ; https://docs.microsoft.com/de-DE/cpp/windows/latest-supported-vc-redist?view=msvc-170
 ; PermaLink: https://aka.ms/vs/17/release/vc_redist.x64.exe
@@ -26,6 +26,7 @@
 #define DateTimeStr GetDateTimeString('yyyy-mm-dd-hhMM', '', '')
 
 [Setup]
+; AppId=@ANTIQUACRM_APPID@
 AppId=9E3A7398-4493-45AE-AF59-5D5FA84DB2F7
 AppName={#MyAppDisplayName}
 AppVersion={#MyAppVersion}

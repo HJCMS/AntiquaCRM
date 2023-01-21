@@ -27,11 +27,8 @@ PRODUCTVERSION  VER_PRODUCTVERSION
  * PrivateBuild-Zeichenfolge enthalten.
  */
 FILEFLAGS       (VS_FF_PRIVATEBUILD)
-// Das Betriebssystem, für das die Datei entwickelt wurde, ist unbekannt.
 FILEOS          VOS_UNKNOWN
-// Die Datei enthält eine Anwendung.
 FILETYPE        VFT_APP
-// Keine Treiber enthalten
 FILESUBTYPE     VFT2_UNKNOWN
 /**
 * @}
@@ -43,26 +40,15 @@ FILESUBTYPE     VFT2_UNKNOWN
     /* 0x0409 U.S. English AND 04B0 Unicode */
     BLOCK "040904B0"
     {
-      // Company that produced the file (Required).
-      VALUE "CompanyName",      "HJCMS https://www.hjcms.de"
-      // File description to be presented to users (Required).
+      VALUE "CompanyName",      "HJCMS @HOMEPAGEURL@"
       VALUE "FileDescription",  "@DESCRIPTION@"
-      // Version number of the file (Required).
       VALUE "FileVersion",      "@ANTIQUACRM_VERSION_STRING@\0"
-      // Internal name of the file (Required).
       VALUE "InternalName",     "@PROJECTNAME@"
-      /**
-        * Original name of the file, not including a path.
-        * This information enables an application to determine
-        * whether a file has been renamed by a user (Required).
-        */
       VALUE "OriginalFilename",  VER_ORIGINALFILENAME_STR
-      // Name of the product with which the file is distributed (Required).
+      // VALUE "AppId",            "@ANTIQUACRM_APPID@"
       VALUE "ProductName",      "@DISPLAYNAME@"
-      // Version of the product with which the file is distributed (Required).
       VALUE "ProductVersion",   "@ANTIQUACRM_VERSION_STRING@\0"
-      //  Copyright notices that apply to the file (Optional).
-      VALUE "LegalCopyright",   "Copyright(C) 2013-2022 HJCMS https://www.hjcms.de"
+      VALUE "LegalCopyright",   "Copyright(C) 2013-2023 HJCMS https://www.hjcms.de"
     }
   }
 

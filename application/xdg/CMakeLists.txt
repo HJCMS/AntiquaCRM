@@ -23,10 +23,19 @@ CONFIGURE_FILE (assistant.desktop.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/${DOMAIN_SCOPE}_assistant.desktop
 )
 
+## Package building release
+STRING (TIMESTAMP ANTIQUACRM_PACKAGE_RELEASE "%j")
+CONFIGURE_FILE (antiquacrm.iss.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/antiquacrm.iss
+)
+CONFIGURE_FILE (antiquacrm.spec.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/antiquacrm.spec
+)
+
+## Desktop specification
 IF (CMAKE_HOST_WIN32)
  FILE (COPY antiquacrm.ico DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 ELSE (CMAKE_HOST_WIN32)
-## Desktop
 INSTALL (FILES ${DOMAIN_SCOPE}.desktop ${DOMAIN_SCOPE}_assistant.desktop
   DESTINATION share/applications
   COMPONENT data
@@ -36,7 +45,7 @@ INSTALL (FILES antiquacrm.png
   DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps
   COMPONENT data
 )
-## copright
+## COPRIGHT
 INSTALL (FILES LICENSE.md
   DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECTNAME}
   RENAME LICENSE
