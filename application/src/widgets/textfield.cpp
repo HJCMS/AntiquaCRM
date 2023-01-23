@@ -44,7 +44,7 @@ void TextField::setProperties(const QSqlField &field) {
 
 const QVariant TextField::value() {
   QString txt = m_edit->toPlainText();
-  return txt.trimmed();
+  return stripString(txt);
 }
 
 bool TextField::isValid() {

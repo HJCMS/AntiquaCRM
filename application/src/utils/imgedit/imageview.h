@@ -41,6 +41,13 @@ private:
   SourceInfo p_currentPreview;
 
   /**
+   * @brief Prefix bei abweichenden Formaten wie z.B.: Media Dateien
+   * @note Bücher benötigen keinen Prefix!
+   * @example "media_" für CD's oder Vinyl Schallplatten
+   */
+  const QString p_prefix;
+
+  /**
    * @brief Sucht die aktuelle Bildschirmgröße
    * Hiermit wird die Performance erhöht, in dem das Bild beim laden aus den
    * Quellen auf die Maximale Bildschirmauflösung reduziert wird.
@@ -132,12 +139,18 @@ public Q_SLOTS:
   void clear();
 
 public:
-  ImageView(QSize maxsize, QWidget *parent = nullptr);
+  explicit ImageView(QSize maxsize, QWidget *parent = nullptr,
+                     const QString &prefix = QString());
 
   /**
    * @brief Standard Bild Qualität beim Speichern.
    */
   static inline int quality() { return 90; }
+
+  /**
+   * @brief Wird für den Bilder Bearbeiten/Importieren Dialog benötigt!
+   */
+  inline const QString prefix() { return p_prefix; };
 
   /**
    * @brief Das gedrehte Bild in das Archiv speichern

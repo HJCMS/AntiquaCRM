@@ -1,8 +1,8 @@
-# Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
-# file Copyright.txt or https://cmake.org/licensing for details.
+# Distributed under the OSI-approved BSD 3-Clause License.
+# See accompanying file Copyright.txt or https://cmake.org/licensing for details.
 
 #[=======================================================================[.rst:
-FindQREncode
+FindQRENCODE
 --------
 
 Find the native libqrencode headers and libraries.
@@ -11,7 +11,7 @@ IMPORTED Targets
 ^^^^^^^^^^^^^^^^
 
 This module defines :prop_tgt:`IMPORTED` target ``QRENCODE::libqrencode``, if
-curl has been found.
+qrencode has been found.
 
 Result Variables
 ^^^^^^^^^^^^^^^^

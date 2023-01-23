@@ -153,6 +153,7 @@ PrintsStitchesEditor::PrintsStitchesEditor(QWidget *parent)
   ip_keyword->setObjectName("ip_keyword");
   ip_keyword->setToolTip(m_infoLabel->text());
   row1->addWidget(ip_keyword, row1c++, 1, 1, 1);
+  row1->setRowStretch(row1c++, 1);
 
   m_imageToolBar = new ImageToolBar(this);
   row1->addWidget(m_imageToolBar, row1c++, 0, 1, 2);
@@ -161,9 +162,9 @@ PrintsStitchesEditor::PrintsStitchesEditor(QWidget *parent)
   // Image Viewer
   QSize maxSize = m_cfg->value("image/max_size", QSize(320, 320)).toSize();
   m_imageView = new ImageView(maxSize, m_splitter);
-  m_imageView->setMaximumWidth(maxSize.width());
   m_splitter->addRight(m_imageView);
   mainLayout->addWidget(m_splitter, 1);
+  mainLayout->setStretch(1, 1);
   // END : Row1
 
   // Begin : Row2
@@ -201,7 +202,6 @@ PrintsStitchesEditor::PrintsStitchesEditor(QWidget *parent)
   mainLayout->addWidget(m_actionBar);
   // END : Row3
 
-  mainLayout->addStretch(1);
   setLayout(mainLayout);
 
   // Signals:ImageToolBar

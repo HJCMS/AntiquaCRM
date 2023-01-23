@@ -182,6 +182,7 @@ BookEditor::BookEditor(QWidget *parent)
   ib_keyword->setObjectName("ib_keyword");
   ib_keyword->setToolTip(infoText->text());
   row2->addWidget(ib_keyword, row2c++, 1, 1, 1);
+  row2->setRowStretch(row2c++, 1);
 
   // @BEGIN_GROUP
   infoText = new AntiquaILabel("ISBN/EAN", this);
@@ -197,17 +198,15 @@ BookEditor::BookEditor(QWidget *parent)
   // @END_GROUP
   row2->addLayout(tbLayout, row2c++, 1, 1, 1);
   row2Widget->setLayout(row2);
-  // aufräumen
-  infoText->clear();
 
   // Image Viewer
   QSize maxSize = m_cfg->value("image/max_size", QSize(320, 320)).toSize();
   m_imageView = new ImageView(maxSize, this);
-  m_imageView->setMaximumWidth(maxSize.width());
 
   m_splitter->addLeft(row2Widget);
   m_splitter->addRight(m_imageView);
   mainLayout->addWidget(m_splitter);
+  mainLayout->setStretch(2, 1);
 
   // Row3
   m_tabWidget = new EditorTab(this);
@@ -237,7 +236,6 @@ BookEditor::BookEditor(QWidget *parent)
   m_infos->setLayout(m_infoLayout);
   m_tabWidget->insertTab(2, m_infos, tabIcons, tr("Information"));
   mainLayout->addWidget(m_tabWidget);
-  mainLayout->addStretch(1);
 
   m_actionBar = new EditorActionBar(this);
   m_actionBar->setPrinterMenu(PrinterButton::Bookcard);

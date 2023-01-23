@@ -113,7 +113,7 @@ const QVariant LineEdit::value() {
   if (p_passwordInput)
     return m_edit->text().trimmed().toLocal8Bit();
 
-  return m_edit->text().trimmed();
+  return stripString(m_edit->text());
 }
 
 bool LineEdit::isValid() {

@@ -3,6 +3,9 @@
 
 #include "cdveditor.h"
 #include "keywordlineedit.h"
+#ifdef ANTIQUA_HAVE_CDTRACKING
+#include "utils/cdtracking/cdreaddialog.h"
+#endif
 
 #include <AntiquaCRM>
 #include <AntiquaPrinting>
@@ -140,12 +143,14 @@ CDVEditor::CDVEditor(QWidget *parent)
   cv_keyword->setToolTip(infolabel->text());
   row1->addWidget(cv_keyword, row1c++, 1, 1, 4);
   // cv_eangtin
-  infolabel = new AntiquaILabel("EAN/GTIN 13", this);
+  infolabel = new AntiquaILabel(tr("Barcode"), this);
   row1->addWidget(infolabel, row1c, 0, 1, 1);
-  cv_eangtin = new IsbnEdit(this, IsbnEdit::CodeType::GTIN13);
+  cv_eangtin = new IsbnEdit(this, IsbnEdit::CodeType::GTIN);
   cv_eangtin->setObjectName("cv_eangtin");
   cv_eangtin->setToolTip(infolabel->text());
   row1->addWidget(cv_eangtin, row1c++, 1, 1, 4);
+  // Gridlayout Stretch
+  row1->setRowStretch(row1c++, 1);
   // @BEGIN_GROUP toolBarFrame
   QFrame *toolBarFrame = new QFrame(this);
   toolBarFrame->setContentsMargins(0, 2, 0, 2);
@@ -155,7 +160,9 @@ CDVEditor::CDVEditor(QWidget *parent)
   btn_cdread = new QPushButton(tr("Read CD"), toolBarFrame);
   btn_cdread->setIcon(QIcon("://icons/view_search.png"));
   btn_cdread->setToolTip(tr("Opens a Metadata readout Dialog for Music CD."));
+#ifndef ANTIQUA_HAVE_CDTRACKING
   btn_cdread->setEnabled(false);
+#endif
   tbfLayout->addWidget(btn_cdread);
   tbfLayout->addStretch(1);
   m_imageToolBar = new ImageToolBar(toolBarFrame);
@@ -166,9 +173,8 @@ CDVEditor::CDVEditor(QWidget *parent)
   row1Widget->setLayout(row1);
   m_splitter->addLeft(row1Widget);
   // Image Viewer
-  QSize maxSize = m_cfg->value("image/max_size", QSize(320, 320)).toSize();
-  m_imageView = new ImageView(maxSize, m_splitter);
-  m_imageView->setMaximumWidth(maxSize.width());
+  QSize maxSize(450, 450);
+  m_imageView = new ImageView(maxSize, m_splitter, "media_");
   m_splitter->addRight(m_imageView);
   mainLayout->addWidget(m_splitter, 1);
   // END : Row1
@@ -208,7 +214,8 @@ CDVEditor::CDVEditor(QWidget *parent)
   mainLayout->addWidget(m_actionBar);
   // END : Row3
 
-  mainLayout->addStretch(1);
+  // stretch splitter Widget
+  mainLayout->setStretch(1, 1);
   setLayout(mainLayout);
 
   // Signals:ToolBar
@@ -535,7 +542,17 @@ void CDVEditor::setFinalLeaveEditor() {
   emit sendLeaveEditor();             /**< Back to MainView */
 }
 
-void CDVEditor::openReadCDDialog() { qDebug() << Q_FUNC_INFO << "TODO"; }
+void CDVEditor::openReadCDDialog() {
+#ifdef ANTIQUA_HAVE_CDTRACKING
+  CDReadDialog *d = new CDReadDialog(this);
+  if(d->exec() == QDialog::Accepted) {
+    qDebug() << Q_FUNC_INFO << "TODO";
+  }
+  d->deleteLater();
+#else
+  qDebug() << Q_FUNC_INFO << "NOT ENABLED";
+#endif
+}
 
 void CDVEditor::actionRemoveImage(qint64 articleId) {
   qint64 id = cv_id->value().toLongLong();
@@ -560,7 +577,7 @@ void CDVEditor::actionEditImages() {
   if (id < 1)
     return;
 
-  ImageDialog *d = new ImageDialog(id, this);
+  ImageDialog *d = new ImageDialog(id, this, m_imageView->prefix());
   if (d->exec())
     m_imageView->readFromDatabase(id);
 }

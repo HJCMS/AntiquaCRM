@@ -37,6 +37,13 @@ private:
   const qint64 p_articleId;
 
   /**
+   * @brief Prefix bei abweichenden Formaten wie z.B.: Media Dateien
+   * @note Bücher benötigen keinen Prefix!
+   * @example "media_" für CD's oder Vinyl Schallplatten
+   */
+  const QString p_prefix;
+
+  /**
    * @brief Konfigurationen
    */
   AntiquaCRM::ASettings *config;
@@ -126,7 +133,8 @@ public:
   /**
    * @param articleId - !!! Muss gesetzt sein. !!!
    */
-  explicit ImageDialog(int articleId, QWidget *parent = nullptr);
+  explicit ImageDialog(int articleId, QWidget *parent = nullptr,
+                       const QString &prefix = QString());
 
   /**
    * @brief Dialog aufrufen

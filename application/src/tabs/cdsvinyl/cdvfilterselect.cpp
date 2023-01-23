@@ -21,8 +21,8 @@ CDVFilterSelect::CDVFilterSelect(QWidget *parent) : QComboBox{parent} {
   setItemData(col++, tr("Search for Prints and Stitches authors"),
               Qt::ToolTipRole);
 
-  insertItem(col, icon, "ISBN/EAN", CDVFilter::CDV_ISBNEAN);
-  setItemData(col++, tr("Search for ISBN/EAN"), Qt::ToolTipRole);
+  insertItem(col, icon, tr("Barcode"), CDVFilter::CDV_ISBNEAN);
+  setItemData(col++, tr("Search for Barcode"), Qt::ToolTipRole);
 }
 
 const QJsonObject CDVFilterSelect::getFilter(int index) {

@@ -34,6 +34,7 @@ private:
 protected:
   AntiquaILabel *m_label;
   QHBoxLayout *m_layout;
+  const QString stripString(const QString &) const;
   virtual void loadDataset() = 0;
 
 protected Q_SLOTS:

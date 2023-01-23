@@ -26,7 +26,7 @@ class IsbnEdit final : public InputEdit {
 public:
   enum CodeType {
     ISBNEAN = 0x01, /**< ISBN/EAN Booknumber */
-    GTIN13 = 0x02   /**< ENA13/GTIN13 Medianumber */
+    GTIN = 0x02,  /**< UPC-A,GTIN-12,GTIN13,UPC-E Medianumber */
   };
   explicit IsbnEdit(QWidget *parent = nullptr,
                     IsbnEdit::CodeType ctype = IsbnEdit::CodeType::ISBNEAN);
@@ -53,7 +53,7 @@ private:
   bool isISBN10(const QString &isbn) const;
 
   /**
-   * @brief EAN13 Prüfsumme berechnen!
+   * @brief UPC/GTIN Prüfsumme berechnen!
    * Der Prüfziffern-Algorithmus des GS1-Systems basiert auf einer Gewichtung
    * der einzelnen Ziffern der zu prüfenden Nummer mit den Faktoren "3" und
    * "1"... von rechts nach links und dem Modulo 10. Mit anderen Worten
@@ -65,7 +65,7 @@ private:
    * (Aufrundung) ergibt die Prüfziffer. Ergibt sich eine durch 10 teilbare
    * Produktsumme, so ist die Prüfziffer gleich Null.
    */
-  bool validateEAN13(const QString ean13) const;
+  bool validateGTIN(const QString &ean, int type = 13) const;
 
   /**
    * @brief Regulärer Ausdruck für ISBN/EAN 13 (ISO 2108)
@@ -74,18 +74,11 @@ private:
   bool isISBN13(const QString &isbn) const;
 
   /**
-   * @brief Regulärer Ausdruck für EAN13, GTIN13
-   * @code
-   *  Aufbau nach Zahlenposition {
-   *    (0-9)   Länder und Unternehmenskennung
-   *    (10-12) Artikelnummer
-   *    (13)    Prüfziffer
-   *  }
-   * @endcode
+   * @brief Regulärer Ausdruck UPC-A, GTIN-12, GTIN13 und UPC-E
    * https://www.gs1-germany.de/serviceverzeichnis/pruefziffernrechner/
    */
-  const QRegularExpression gtin13 = QRegularExpression("^([\\d]{13})$");
-  bool isGTIN13(const QString &ean) const;
+  const QRegularExpression gtin = QRegularExpression("^([\\d]{12,13})$");
+  bool isGTIN(const QString &ean) const;
 
   /**
    * @brief Status Icon Label
@@ -100,7 +93,7 @@ private Q_SLOTS:
   /**
    * @brief Ableitung von QLineEdit::textChanged
    */
-  void isbnChanged(const QString &);
+  void inputChanged(const QString &);
 
 Q_SIGNALS:
   /**

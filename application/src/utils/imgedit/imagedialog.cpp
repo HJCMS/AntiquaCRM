@@ -19,8 +19,8 @@
 #include <QStandardPaths>
 #include <QVBoxLayout>
 
-ImageDialog::ImageDialog(int articleId, QWidget *parent)
-    : QDialog{parent}, p_articleId{articleId} {
+ImageDialog::ImageDialog(int articleId, QWidget *parent, const QString &prefix)
+    : QDialog{parent}, p_articleId{articleId}, p_prefix{prefix} {
   setObjectName("image_open_edit_dialog");
   setWindowTitle(tr("Picture Editor"));
   setMinimumSize(QSize(800, 400));
@@ -86,7 +86,7 @@ bool ImageDialog::findSourceImage() {
   }
 
   QString imageId = QString::number(p_articleId);
-  QString fullImageId = SourceInfo::imageBaseName(p_articleId);
+  QString fullImageId = SourceInfo::imageBaseName(p_articleId, p_prefix);
 
   QString basePath = m_imageSelecter->directory().path();
   QStringList search;
@@ -105,6 +105,10 @@ bool ImageDialog::findSourceImage() {
     found << file.replace(basePath, "");
   }
 
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << search << found;
+#endif
+
   if (found.size() < 1)
     return false;
 
@@ -113,6 +117,7 @@ bool ImageDialog::findSourceImage() {
   if (info.exists()) {
     SourceInfo src(info);
     src.setFileId(p_articleId);
+    src.setPrefix(p_prefix);
     m_imageSelecter->setSelection(src);
     m_view->setImageFile(info);
     return true;
@@ -140,6 +145,7 @@ bool ImageDialog::askToCopyFile() {
 bool ImageDialog::imagePreview(const SourceInfo &image) {
   SourceInfo info(image);
   info.setFileId(p_articleId);
+  info.setPrefix(p_prefix);
   info.setTarget(imagesArchiv);
   if (info.isValidSource()) {
     m_view->setImageFile(info);
@@ -174,7 +180,7 @@ void ImageDialog::save() {
   }
 #ifdef ANTIQUA_DEVELOPEMENT
   else {
-    qDebug() << Q_FUNC_INFO << "NO COPY" << info.getFileId() << info;
+    qDebug() << Q_FUNC_INFO << "NO COPY" << info.getFileId() << info.getPrefix();
   }
 #endif
   // In Datenbank Speichern!
@@ -216,7 +222,8 @@ int ImageDialog::exec() {
   QString archivPath = config->value("dirs/images", fallback).toString();
   imagesArchiv = QDir(archivPath);
 
-  QString history = config->value("history_image_target", archivPath).toString();
+  QString history =
+      config->value("history_image_target", archivPath).toString();
   m_imageSelecter->setDirectory(history);
 
   if (config->contains("imaging/geometry")) {

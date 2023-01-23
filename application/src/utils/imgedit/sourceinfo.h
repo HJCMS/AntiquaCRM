@@ -27,14 +27,19 @@ private:
    */
   QString p_target;
 
+  /**
+   * @brief Optionaler prefix z.B.: media_
+   */
+  QString p_prefix = QString();
+
 public:
-  SourceInfo();
+  SourceInfo(const QString &prefix = QString());
   SourceInfo(const QFileInfo &other);
   SourceInfo(const SourceInfo &other);
   SourceInfo &operator=(const SourceInfo &other);
 
   /**
-   * @brief Stimme alle Parameter
+   * @brief Stimmen alle Parameter
    */
   bool isValidSource() const;
 
@@ -49,10 +54,24 @@ public:
   qint64 getFileId() const;
 
   /**
+   * @brief Artikel Nummern prefix setzen!
+   */
+  void setPrefix(const QString &prefix);
+
+  /**
+   * @brief Artikel Nummern prefix abfragen!
+   */
+  const QString getPrefix() const;
+
+  /**
    * @brief Neuer Bildname
    * @param id Artikel Nummer
+   * @param prefix - Wird bei nicht Buchnummern benötigt!
+   * @note Weil die Methode statisch ist muss bei einem Vorhandenen Prefix
+   * dieser expliziet gesetzt werden.
    */
-  static const QString imageBaseName(qint64 id);
+  static const QString imageBaseName(qint64 id,
+                                     const QString &prefix = QString());
 
   /**
    * @brief Neues Bild Ziel definieren!

@@ -701,7 +701,7 @@
         <translation>Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+94"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -785,12 +785,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="-384"/>
+        <location line="-383"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
     <message>
-        <location line="-163"/>
+        <location line="-162"/>
         <source>Local Usage only</source>
         <translation>Nur lokale Verwendung</translation>
     </message>
@@ -800,7 +800,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn diese Option markiert ist. Dann wird dieser Artikel nicht an die Dienstleister exportiert.</translation>
     </message>
     <message>
-        <location line="+167"/>
+        <location line="+166"/>
         <source>Internal Description</source>
         <translation>Interne Beschreibung</translation>
     </message>
@@ -1153,9 +1153,50 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>CDInfo</name>
+    <message>
+        <location filename="../utils/cdtracking/cdinfo.cpp" line="+76"/>
+        <source>DVDs not supported!</source>
+        <translation>DVD wird nicht unterstützt!</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>No Media found!</source>
+        <translation>Kein Medium gefunden!</translation>
+    </message>
+</context>
+<context>
+    <name>CDReadDialog</name>
+    <message>
+        <location filename="../utils/cdtracking/cdreaddialog.cpp" line="+11"/>
+        <source>CD title reader</source>
+        <translation>CD Titel lesen</translation>
+    </message>
+    <message>
+        <location line="+54"/>
+        <source>Hardware</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Vendor: %1</source>
+        <translation>Hersteller: %1</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Model: %1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Revision: %1</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>CDVEditor</name>
     <message>
-        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+16"/>
+        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+19"/>
         <source>Edit CD or Vinyl</source>
         <translation>Bearbeite CD oder Vinyl</translation>
     </message>
@@ -1245,7 +1286,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+7"/>
+        <source>Barcode</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Read CD</source>
         <translation>CD Auslesen</translation>
     </message>
@@ -1255,7 +1301,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Öffnet einen Metadaten-Auslesedialog für Musik-CD&apos;s.</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>Description</source>
         <translation>Beschreibung</translation>
     </message>
@@ -1280,7 +1326,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Informationen</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+38"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -1345,7 +1391,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Fehlderhafte CD Jahresangabe, abbruch!</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+55"/>
         <source>Remove Image from Database</source>
         <translation>Bild aus Datenbank entfernen</translation>
     </message>
@@ -1412,9 +1458,14 @@ Bild - Artikel Nr: %2</translation>
         <translation></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Search for ISBN/EAN</source>
-        <translation>Suche mit ISBN/EAN</translation>
+        <location line="+3"/>
+        <source>Barcode</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search for Barcode</source>
+        <translation>Suche nach Barcode</translation>
     </message>
 </context>
 <context>
@@ -1514,7 +1565,7 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>ISBN/EAN</source>
+        <source>Barcode</source>
         <translation></translation>
     </message>
     <message>
@@ -3017,7 +3068,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Archiv ist nicht lesbar!</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+41"/>
         <source>no source image exists!</source>
         <translation>Kein Quellbild vorhanden!</translation>
     </message>
@@ -3032,7 +3083,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild kopieren?</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+27"/>
         <source>no valid image found</source>
         <translation>kein gültiges Bild gefunden</translation>
     </message>
@@ -3067,7 +3118,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bitte benutzen Sie den Beenden knopf!</translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+41"/>
         <source>image from database!</source>
         <translation>Bild aus Datenbank!</translation>
     </message>
@@ -3126,7 +3177,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ImageView</name>
     <message>
-        <location filename="../utils/imgedit/imageview.cpp" line="+28"/>
+        <location filename="../utils/imgedit/imageview.cpp" line="+29"/>
         <source>Right mouse button with mouse wheel to zoom the image!</source>
         <translation>Rechte Maustaste mit Mausrad zum Zoomen des Bildes verwenden!</translation>
     </message>
@@ -3328,7 +3379,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>IsbnEdit</name>
     <message>
-        <location filename="../widgets/isbnedit.cpp" line="+30"/>
+        <location filename="../widgets/isbnedit.cpp" line="+31"/>
         <source>It must consist of 10 or 13 digits.</source>
         <translation>Sie muss aus 10 oder 13 Ziffern bestehen.</translation>
     </message>
@@ -3338,7 +3389,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Sie muss aus 13 Ziffern bestehen.</translation>
     </message>
     <message>
-        <location line="+185"/>
+        <location line="+191"/>
         <source>Invalid ISBN/EAN/UPC detected.</source>
         <translation>Ungültige ISBN/EAN/UPC erkannt.</translation>
     </message>
@@ -5433,7 +5484,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Schlüsselwort</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+27"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
@@ -5458,7 +5509,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Informationen</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+37"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -7507,7 +7558,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Lager</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+25"/>
         <source>Description</source>
         <translation>Beschreibung</translation>
     </message>
@@ -7532,7 +7583,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Informationen</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+35"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>

@@ -109,9 +109,10 @@ VariousEditor::VariousEditor(QWidget *parent)
   row1Widget->setLayout(row1);
   m_splitter->addLeft(row1Widget);
   // Image Viewer
-  m_imageView = new ImageView(QSize(400, 400), m_splitter);
+  m_imageView = new ImageView(QSize(400, 400), m_splitter, "various_");
   m_splitter->addRight(m_imageView);
   mainLayout->addWidget(m_splitter, 1);
+  mainLayout->setStretch(1, 1);
   // END : Row1
   // BEGIN : Row2
   QIcon tabIcons = m_tabWidget->defaultIcon();
@@ -149,7 +150,6 @@ VariousEditor::VariousEditor(QWidget *parent)
   mainLayout->addWidget(m_actionBar);
   // END : Row3
 
-  mainLayout->setStretch(1, 1);
   setLayout(mainLayout);
 
   // Signals:ImageToolBar
@@ -472,7 +472,7 @@ void VariousEditor::actionEditImages() {
   if (id < 1)
     return;
 
-  ImageDialog *d = new ImageDialog(id, this);
+  ImageDialog *d = new ImageDialog(id, this, m_imageView->prefix());
   if (d->exec())
     m_imageView->readFromDatabase(id);
 }

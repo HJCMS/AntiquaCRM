@@ -701,7 +701,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+94"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -783,12 +783,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-384"/>
+        <location line="-383"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-163"/>
+        <location line="-162"/>
         <source>Local Usage only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -798,7 +798,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+167"/>
+        <location line="+166"/>
         <source>Internal Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1151,9 +1151,50 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>CDInfo</name>
+    <message>
+        <location filename="../utils/cdtracking/cdinfo.cpp" line="+76"/>
+        <source>DVDs not supported!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>No Media found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CDReadDialog</name>
+    <message>
+        <location filename="../utils/cdtracking/cdreaddialog.cpp" line="+11"/>
+        <source>CD title reader</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+54"/>
+        <source>Hardware</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Vendor: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Model: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Revision: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CDVEditor</name>
     <message>
-        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+16"/>
+        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+19"/>
         <source>Edit CD or Vinyl</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1243,7 +1284,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+7"/>
+        <source>Barcode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
         <source>Read CD</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1253,7 +1299,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+26"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1278,7 +1324,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+38"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1343,7 +1389,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+55"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1408,8 +1454,13 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Search for ISBN/EAN</source>
+        <location line="+3"/>
+        <source>Barcode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search for Barcode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1510,7 +1561,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>ISBN/EAN</source>
+        <source>Barcode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3013,7 +3064,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+41"/>
         <source>no source image exists!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3028,7 +3079,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+27"/>
         <source>no valid image found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3063,7 +3114,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+41"/>
         <source>image from database!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3122,7 +3173,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ImageView</name>
     <message>
-        <location filename="../utils/imgedit/imageview.cpp" line="+28"/>
+        <location filename="../utils/imgedit/imageview.cpp" line="+29"/>
         <source>Right mouse button with mouse wheel to zoom the image!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3324,7 +3375,7 @@ Image - Article Id: %2</source>
 <context>
     <name>IsbnEdit</name>
     <message>
-        <location filename="../widgets/isbnedit.cpp" line="+30"/>
+        <location filename="../widgets/isbnedit.cpp" line="+31"/>
         <source>It must consist of 10 or 13 digits.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3334,7 +3385,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+185"/>
+        <location line="+191"/>
         <source>Invalid ISBN/EAN/UPC detected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5429,7 +5480,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+27"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5454,7 +5505,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+37"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7501,7 +7552,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+25"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7526,7 +7577,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+35"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>

@@ -5,6 +5,7 @@
 #include "antiquailabel.h"
 
 #include <QDebug>
+#include <QRegExp>
 
 InputEdit::InputEdit(QWidget *parent) : QFrame{parent} {
   setContentsMargins(0, 0, 0, 0);
@@ -15,6 +16,14 @@ InputEdit::InputEdit(QWidget *parent) : QFrame{parent} {
   setLayout(m_layout);
   setRequired(false);
   setModified(false);
+}
+
+const QString InputEdit::stripString(const QString &str) const {
+  QString buf = str.trimmed();
+  buf.replace("'", "´");
+  QRegExp pattern("^\\s+");
+  buf.replace(pattern, "´");
+  return buf.trimmed();
 }
 
 void InputEdit::skipReturnPressed() { setModified(true); }

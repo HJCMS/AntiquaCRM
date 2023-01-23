@@ -22,7 +22,7 @@ const QMap<int, QString> CDVTableModel::headerList() const {
   map.insert(i++, tr("Title"));
   map.insert(i++, tr("Price"));
   map.insert(i++, tr("Author"));
-  map.insert(i++, tr("ISBN/EAN"));
+  map.insert(i++, tr("Barcode"));
   map.insert(i++, tr("Year"));
   map.insert(i++, tr("Changed"));
   map.insert(i++, tr("Created"));
@@ -57,6 +57,11 @@ QVariant CDVTableModel::data(const QModelIndex &item, int role) const {
   if (role == Qt::DecorationRole &&
       fieldName(item.column()).contains("image")) {
     return QIcon(":icons/view_image.png");
+  } else if (fieldName(item.column()).contains("eangtin")) {
+    if (role == Qt::DisplayRole) {
+      QString gtin = AntiquaCRM::ASqlQueryModel::data(item, role).toString();
+      return (gtin.length() < 12) ? QString() : gtin;
+    }
   }
   return AntiquaCRM::ASqlQueryModel::data(item, role);
 }

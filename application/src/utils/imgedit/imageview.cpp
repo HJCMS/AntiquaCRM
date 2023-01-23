@@ -18,8 +18,9 @@
 #include <QScreen>
 #include <QtMath>
 
-ImageView::ImageView(QSize maxsize, QWidget *parent)
-    : QGraphicsView(parent), p_max(maxsize), p_format("jpeg") {
+ImageView::ImageView(QSize maxsize, QWidget *parent, const QString &prefix)
+    : QGraphicsView(parent), p_max(maxsize),
+      p_format("jpeg"), p_prefix{prefix} {
   setObjectName("ImagePreview");
   setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
   setBackgroundRole(QPalette::Base);
@@ -161,6 +162,11 @@ bool ImageView::saveImageTo(const SourceInfo &info) {
   SourceInfo dest(info);
   if (!dest.isValidSource())
     return false;
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << "SAVE_IMAGE" << dest.getFileId() << dest.getPrefix()
+           << dest.getFileTarget();
+#endif
 
   QFile fp(dest.getFileTarget());
   if (fp.open(QIODevice::WriteOnly)) {
