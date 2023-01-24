@@ -12,6 +12,9 @@
 #include <QList>
 
 class DiscInfo final : public QJsonObject {
+private:
+  const QString trackTitle(const QJsonValue &) const;
+
 public:
   struct Track {
     int index;

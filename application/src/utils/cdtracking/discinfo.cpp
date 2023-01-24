@@ -5,6 +5,12 @@
 
 DiscInfo::DiscInfo(const QJsonObject &parent) : QJsonObject{parent} {}
 
+const QString DiscInfo::trackTitle(const QJsonValue &value) const {
+  QString str = value.toString();
+  str.replace("'", "’");
+  return str.trimmed();
+}
+
 const QString DiscInfo::getTitle() { return value("title").toString(); }
 
 const QString DiscInfo::getArtists() {
@@ -31,15 +37,17 @@ const QList<DiscInfo::Track> DiscInfo::getTracks() {
       break;
     }
   }
+  // Tracks
   if (tracks.size() > 0) {
     for (int i = 0; i < tracks.size(); i++) {
       QJsonObject obj = tracks[i].toObject();
       if (!obj.isEmpty()) {
         Track track_t;
-        track_t.index = obj.value("index").toDouble();
-        track_t.title = obj.value("title").toString();
-        track_t.length = obj.value("length").toDouble();
+        track_t.index = obj.value("position").toInt();
+        track_t.title = trackTitle(obj.value("title"));
+        track_t.length = obj.value("length").toInt();
         list.append(track_t);
+        qDebug() << track_t.index << track_t.title;
       }
     }
   }

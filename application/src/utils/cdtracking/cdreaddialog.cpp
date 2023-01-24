@@ -26,14 +26,12 @@ CDReadDialog::CDReadDialog(QWidget *parent) : QDialog{parent} {
 
   m_hwInfo = new QTextEdit(this);
   m_hwInfo->setReadOnly(true);
-  // m_hwInfo->setStyleSheet("QTextEdit {border:none;
-  // background:transparent;}");
+  m_hwInfo->setStyleSheet("QTextEdit {border:none; background:transparent;}");
   layout->addWidget(m_hwInfo);
+  layout->setStretch(1, 1);
 
   m_centralWidget = new QWidget(this);
   layout->addWidget(m_centralWidget);
-
-  layout->addStretch(1);
 
   m_btnBox = new QDialogButtonBox(this);
   m_btnBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
@@ -108,12 +106,16 @@ void CDReadDialog::queryResponses() {
 
   if (!release.isEmpty()) {
     DiscInfo p_disc(release);
-    qDebug() << Q_FUNC_INFO
-             << p_disc.getTitle()
-             << p_disc.getArtists()
-             << p_disc.getBarcode()
-             << p_disc.getTracks().size()
-             << p_disc.getReleaseYear();
+    QStringList data;
+    data << p_disc.getTitle();
+    data << p_disc.getArtists();
+    data << p_disc.getBarcode();
+    foreach (DiscInfo::Track track, p_disc.getTracks()) {
+      data << track.title;
+    }
+    data << QString::number(p_disc.getReleaseYear());
+    m_hwInfo->clear();
+    m_hwInfo->setPlainText(data.join("\n"));
   }
 }
 
