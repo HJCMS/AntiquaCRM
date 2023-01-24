@@ -2,8 +2,12 @@
 // vim: set fileencoding=utf-8
 
 #include "cdreaddialog.h"
+#include "cddiscid.h"
+#include "discinfo.h"
 
 #include <QDebug>
+#include <QJsonParseError>
+#include <QJsonValue>
 #include <QLayout>
 #include <QUrl>
 
@@ -22,7 +26,8 @@ CDReadDialog::CDReadDialog(QWidget *parent) : QDialog{parent} {
 
   m_hwInfo = new QTextEdit(this);
   m_hwInfo->setReadOnly(true);
-  m_hwInfo->setStyleSheet("QTextEdit {border:none; background:transparent;}");
+  // m_hwInfo->setStyleSheet("QTextEdit {border:none;
+  // background:transparent;}");
   layout->addWidget(m_hwInfo);
 
   m_centralWidget = new QWidget(this);
@@ -44,29 +49,80 @@ CDReadDialog::CDReadDialog(QWidget *parent) : QDialog{parent} {
   connect(m_btnBox, SIGNAL(rejected()), SLOT(reject()));
 }
 
-void CDReadDialog::getCDInfo() {
-  QString fallback;
-#ifdef Q_OS_LINUX
-  fallback = QString("/dev/cdrom");
-#endif
-  QUrl cd_path = m_cfg->value("cdrom_device", fallback).toUrl();
-  CDInfo *m_info = new CDInfo(cd_path, this);
-  connect(m_info, SIGNAL(finished()), m_info, SLOT(deleteLater()));
-  connect(m_info, SIGNAL(sendStatusMessage(const QString &)), m_statusBar,
-          SLOT(showMessage(const QString &)));
-  connect(m_info, SIGNAL(sendMediaInfo(const HardwareInfo &)),
-          SLOT(getMediaInfo(const HardwareInfo &)));
-
-  m_hwInfo->clear();
-  m_info->start();
+const QJsonObject CDReadDialog::getRelease(const QJsonArray &array) {
+  QStringList iso_lang({"DE", "EN", "US"});
+  foreach (QString lng, iso_lang) {
+    for (int i = 0; i < array.size(); i++) {
+      QJsonObject obj = array[i].toObject();
+      if (obj.value("country").toString().toUpper() == lng) {
+        return obj;
+        break;
+      }
+    }
+  }
+  return QJsonObject();
 }
 
-void CDReadDialog::getMediaInfo(const HardwareInfo &info) {
-  QStringList content(tr("Hardware") + ":");
-  content << tr("Vendor: %1").arg(info.vendor.data());
-  content << tr("Model: %1").arg(info.model.data());
-  content << tr("Revision: %1").arg(info.revision.data());
-  m_hwInfo->setPlainText(content.join("\n").trimmed());
+void CDReadDialog::getCDInfo() {
+  CDDiscId *m_discid = new CDDiscId(this);
+  connect(m_discid, SIGNAL(finished()), m_discid, SLOT(deleteLater()));
+  connect(m_discid, SIGNAL(sendStatusMessage(const QString &)), m_statusBar,
+          SLOT(showMessage(const QString &)));
+  connect(m_discid, SIGNAL(sendQueryDiscChanged(const QUrl &)),
+          SLOT(setQueryDiscId(const QUrl &)));
+
+  m_hwInfo->clear();
+  m_discid->start();
+}
+
+void CDReadDialog::queryResponses() {
+  QJsonDocument doc;
+  QJsonParseError parseHandle;
+  QFile fp("/home/heinemann/.cache/w.FOgXeU6WxoNyhaFBBbNjLZBB4-.json");
+  if (fp.open(QIODevice::ReadOnly)) {
+    QTextStream data(&fp);
+    data.setCodec(ANTIQUACRM_TEXTCODEC);
+    QByteArray buffer = data.readAll().toLocal8Bit();
+    doc = QJsonDocument::fromJson(buffer, &parseHandle);
+    if (parseHandle.error != QJsonParseError::NoError) {
+      qWarning("Json Document Error: '%s'.",
+               qPrintable(parseHandle.errorString()));
+      doc = QJsonDocument();
+    }
+    fp.close();
+    buffer.clear();
+  }
+
+  QJsonObject js = doc.object();
+  if (js.size() < 2)
+    return;
+
+  QJsonObject release;
+  foreach (QString k, js.keys()) {
+    if (k == "releases" && js.value(k).type() == QJsonValue::Array) {
+      QJsonArray array = js.value(k).toArray();
+      release = getRelease(array);
+      break;
+    }
+  }
+
+  if (!release.isEmpty()) {
+    DiscInfo p_disc(release);
+    qDebug() << Q_FUNC_INFO
+             << p_disc.getTitle()
+             << p_disc.getArtists()
+             << p_disc.getBarcode()
+             << p_disc.getTracks().size()
+             << p_disc.getReleaseYear();
+  }
+}
+
+void CDReadDialog::setQueryDiscId(const QUrl &url) {
+  Q_UNUSED(url);
+  //#ifndef ANTIQUA_DEVELOPEMENT
+  //  qDebug() << Q_FUNC_INFO << url.toString();
+  //#endif
+  queryResponses();
 }
 
 int CDReadDialog::exec() {

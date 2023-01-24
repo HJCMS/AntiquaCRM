@@ -726,7 +726,7 @@
         <translation>Autorenteam</translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+87"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten erfolgreich gespeichert!</translation>
     </message>
@@ -785,7 +785,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="-383"/>
+        <location line="-388"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
@@ -1301,7 +1301,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Öffnet einen Metadaten-Auslesedialog für Musik-CD&apos;s.</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+3"/>
+        <source>Only supported by Linux systems!</source>
+        <translation>Wird nur von Linux-Systemen unterstützt!</translation>
+    </message>
+    <message>
+        <location line="+24"/>
         <source>Description</source>
         <translation>Beschreibung</translation>
     </message>
@@ -1341,7 +1346,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+74"/>
         <source>Saved successfully!</source>
         <translation>Speichern erfolgreich!</translation>
     </message>
@@ -2116,7 +2121,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+74"/>
         <source>Customer saved successfully!</source>
         <translation>Kunde erfolgreich gespeichert!</translation>
     </message>
@@ -4248,7 +4253,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+102"/>
         <source>A Article can&apos;t inserted, if no Order-/Customer Id exists.</source>
         <translation>Ein Artikel kann nicht eingefügt werden, wenn keine Bestell-/Kundennummer vorhanden ist.</translation>
     </message>
@@ -4269,12 +4274,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Es sind keine SQL-Artikel vorhanden!</translation>
     </message>
     <message>
-        <location line="-384"/>
+        <location line="-390"/>
         <source>Order status</source>
         <translation>Auftragsstatus</translation>
     </message>
     <message>
-        <location line="+324"/>
+        <location line="+330"/>
         <source>No Modifications found, nothing todo!</source>
         <translation>Keine Änderungen gefunden, es gibt nichts zu tun!</translation>
     </message>
@@ -5524,7 +5529,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="+84"/>
         <source>Print &amp; Stitches saved successfully!</source>
         <translation>Druck &amp; Stiche erfolgreich gespeichert!</translation>
     </message>
@@ -7598,7 +7603,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+72"/>
         <source>Saved successfully!</source>
         <translation>Speichern erfolgreich!</translation>
     </message>

@@ -13,12 +13,14 @@ INCLUDE_DIRECTORIES (
 
 SET (cdtrack_SOURCES
  cdreaddialog.cpp
- cdinfo.cpp
+ cddiscid.cpp
+ discinfo.cpp
 )
 
 SET (cdtrack_HEADERS
  cdreaddialog.h
- cdinfo.h
+ cddiscid.h
+ discinfo.h
 )
 
 ADD_LIBRARY (${_cdtracking} STATIC

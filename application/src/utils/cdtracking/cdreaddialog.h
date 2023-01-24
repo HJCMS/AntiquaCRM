@@ -7,13 +7,15 @@
 
 #include <AntiquaCRM>
 #include <QDialog>
-#include <QTextEdit>
 #include <QDialogButtonBox>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QStatusBar>
+#include <QTextEdit>
 #include <QToolBar>
+#include <QUrl>
 #include <QWidget>
-
-#include "cdinfo.h"
 
 class CDReadDialog final : public QDialog {
   Q_OBJECT
@@ -26,13 +28,13 @@ private:
   QDialogButtonBox *m_btnBox;
   QStatusBar *m_statusBar;
 
-//void keyPressEvent(QKeyEvent *) override;
-//bool event(QEvent *) override;
-
+  const QJsonObject getRelease(const QJsonArray &);
   void getCDInfo();
 
 private Q_SLOTS:
-  void getMediaInfo(const HardwareInfo &);
+  void queryResponses();
+  // void queryResponses(const QJsonDocument &);
+  void setQueryDiscId(const QUrl &);
 
 public:
   explicit CDReadDialog(QWidget *parent = nullptr);

@@ -160,8 +160,9 @@ CDVEditor::CDVEditor(QWidget *parent)
   btn_cdread = new QPushButton(tr("Read CD"), toolBarFrame);
   btn_cdread->setIcon(QIcon("://icons/view_search.png"));
   btn_cdread->setToolTip(tr("Opens a Metadata readout Dialog for Music CD."));
-#ifndef ANTIQUA_HAVE_CDTRACKING
+#ifdef Q_OS_WIN
   btn_cdread->setEnabled(false);
+  btn_cdread->setToolTip(tr("Only supported by Linux systems!"));
 #endif
   tbfLayout->addWidget(btn_cdread);
   tbfLayout->addStretch(1);
@@ -173,7 +174,7 @@ CDVEditor::CDVEditor(QWidget *parent)
   row1Widget->setLayout(row1);
   m_splitter->addLeft(row1Widget);
   // Image Viewer
-  QSize maxSize(450, 450);
+  QSize maxSize = m_cfg->value("image/max_size", QSize(450, 450)).toSize();
   m_imageView = new ImageView(maxSize, m_splitter, "media_");
   m_splitter->addRight(m_imageView);
   mainLayout->addWidget(m_splitter, 1);
@@ -551,7 +552,7 @@ void CDVEditor::setFinalLeaveEditor() {
 void CDVEditor::openReadCDDialog() {
 #ifdef ANTIQUA_HAVE_CDTRACKING
   CDReadDialog *d = new CDReadDialog(this);
-  if(d->exec() == QDialog::Accepted) {
+  if (d->exec() == QDialog::Accepted) {
     qDebug() << Q_FUNC_INFO << "TODO";
   }
   d->deleteLater();
