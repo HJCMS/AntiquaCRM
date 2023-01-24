@@ -304,18 +304,23 @@ bool BookEditor::setDataField(const QSqlField &field, const QVariant &value) {
 
   QString key = field.name();
   bool required = (field.requiredStatus() == QSqlField::Required);
-
-  // qDebug() << Q_FUNC_INFO << field;
   InputEdit *inp = findChild<InputEdit *>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
     inp->setValue(value);
     inp->setProperties(field);
     return true;
   }
+
+  if (ignoreFields.contains(key))
+    return true;
+
+  if (required) {
 #ifdef ANTIQUA_DEVELOPEMENT
-  if (!ignoreFields.contains(key))
-    qDebug() << "Unknown:" << key << "|" << value << "|" << required;
+    qDebug() << Q_FUNC_INFO << "Unknown:" << key << "|" << value;
+#else
+    qWarning("Unknown Key (%s) found.", qPrintable(key));
 #endif
+  }
   return false;
 }
 

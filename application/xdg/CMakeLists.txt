@@ -7,48 +7,63 @@ SET (RESOURCE_FILES
  qt.conf.cmake
  antiquacrm.png
  antiquacrm.ico
+ LICENSE.md
 )
 
-SET (DOMAIN_SCOPE "de.hjcms.${PROJECTNAME}")
+###
+## \Section Configure Windows files
+## BEGIN WIN_OS
+###
+IF (CMAKE_HOST_WIN32)
+ CONFIGURE_FILE (antiquacrm.iss.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/antiquacrm.iss
+ )
+ FILE (COPY antiquacrm.ico
+  DESTINATION ${CMAKE_CURRENT_BINARY_DIR}
+ )
+ CONFIGURE_FILE (qt.conf.cmake
+   ${CMAKE_CURRENT_SOURCE_DIR}/qt.conf
+ )
+ FILE (COPY LICENSE.md
+  DESTINATION ${CMAKE_CURRENT_BINARY_DIR}
+ )
+ENDIF (CMAKE_HOST_WIN32)
+###
+## END WIN_OS
+###
 
-CONFIGURE_FILE (qt.conf.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/qt.conf
-)
-
+###
+## \Section Configure Linux files
+## BEGIN LINUX_OS
+###
+STRING (TIMESTAMP ANTIQUACRM_PACKAGE_RELEASE "%j")
+IF (CMAKE_HOST_UNIX)
 CONFIGURE_FILE (application.desktop.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/${DOMAIN_SCOPE}.desktop
+  ${CMAKE_CURRENT_BINARY_DIR}/${ANTIQUACRM_DOMAIN_SCOPE}.desktop
 )
 
 CONFIGURE_FILE (assistant.desktop.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/${DOMAIN_SCOPE}_assistant.desktop
+  ${CMAKE_CURRENT_BINARY_DIR}/${ANTIQUACRM_DOMAIN_SCOPE}_assistant.desktop
 )
 
-## Package building release
-STRING (TIMESTAMP ANTIQUACRM_PACKAGE_RELEASE "%j")
-CONFIGURE_FILE (antiquacrm.iss.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/antiquacrm.iss
-)
-CONFIGURE_FILE (antiquacrm.spec.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/antiquacrm.spec
-)
-
-## Desktop specification
-IF (CMAKE_HOST_WIN32)
- FILE (COPY antiquacrm.ico DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-ELSE (CMAKE_HOST_WIN32)
-INSTALL (FILES ${DOMAIN_SCOPE}.desktop ${DOMAIN_SCOPE}_assistant.desktop
+INSTALL (FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/${ANTIQUACRM_DOMAIN_SCOPE}.desktop
+  ${CMAKE_CURRENT_BINARY_DIR}/${ANTIQUACRM_DOMAIN_SCOPE}_assistant.desktop
   DESTINATION share/applications
   COMPONENT data
 )
-## pixmap
+
 INSTALL (FILES antiquacrm.png
   DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps
   COMPONENT data
 )
-## COPRIGHT
-INSTALL (FILES LICENSE.md
-  DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECTNAME}
-  RENAME LICENSE
-  COMPONENT data
+
+## RPM
+CONFIGURE_FILE (antiquacrm.spec.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/antiquacrm.spec
 )
-ENDIF (CMAKE_HOST_WIN32)
+
+ENDIF (CMAKE_HOST_UNIX)
+###
+## END LINUX_OS
+###

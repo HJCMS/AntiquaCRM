@@ -102,6 +102,7 @@ bool CustomersEditor::setDataField(const QSqlField &field,
     return false;
 
   QString key = field.name();
+  bool required = (field.requiredStatus() == QSqlField::Required);
   InputEdit *inp = findChild<InputEdit *>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
     inp->setValue(value);
@@ -115,11 +116,13 @@ bool CustomersEditor::setDataField(const QSqlField &field,
   if (ignoreFields.contains(key))
     return true;
 
+  if (required) {
 #ifdef ANTIQUA_DEVELOPEMENT
-  bool required = (field.requiredStatus() == QSqlField::Required);
-  qDebug() << "Missing:" << key << "=(" << value << ") Required:" << required;
+    qDebug() << Q_FUNC_INFO << "Unknown:" << key << "|" << value;
+#else
+    qWarning("Unknown Key (%s) found.", qPrintable(key));
 #endif
-
+  }
   return false;
 }
 

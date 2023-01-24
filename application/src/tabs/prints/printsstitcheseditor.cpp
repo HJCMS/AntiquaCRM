@@ -256,17 +256,23 @@ bool PrintsStitchesEditor::setDataField(const QSqlField &field,
 
   QString key = field.name();
   bool required = (field.requiredStatus() == QSqlField::Required);
-
   InputEdit *inp = findChild<InputEdit *>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
     inp->setValue(value);
     inp->setProperties(field);
     return true;
   }
+
+  if (ignoreFields.contains(key))
+    return true;
+
+  if (required) {
 #ifdef ANTIQUA_DEVELOPEMENT
-  if (!ignoreFields.contains(key))
-    qDebug() << "Unknown:" << key << "|" << value << "|" << required;
+    qDebug() << Q_FUNC_INFO << "Unknown:" << key << "|" << value;
+#else
+    qWarning("Unknown Key (%s) found.", qPrintable(key));
 #endif
+  }
   return false;
 }
 
