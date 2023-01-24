@@ -5,15 +5,40 @@
 #ifndef ANTIQUACRM_NETWORKER_H
 #define ANTIQUACRM_NETWORKER_H
 
+#include <QAbstractNetworkCache>
 #include <QList>
+#include <QMutex>
 #include <QNetworkAccessManager>
+#include <QNetworkDiskCache>
 #include <QNetworkReply>
 #include <QObject>
 #include <QSslError>
 #include <QTextCodec>
 #include <QUrl>
 
+// subclass usage
+#include "aglobal.h"
+
 class NetworkRequest;
+
+class NetworkCache final : public QAbstractNetworkCache {
+  Q_OBJECT
+
+private:
+  static QMutex s_mutex;
+  static QNetworkDiskCache *s_cache;
+
+public:
+  explicit NetworkCache(QObject *parent = nullptr);
+  qint64 cacheSize() const;
+  QIODevice *data(const QUrl &url);
+  void insert(QIODevice *device);
+  QNetworkCacheMetaData metaData(const QUrl &url);
+  QIODevice *prepare(const QNetworkCacheMetaData &metaData);
+  bool remove(const QUrl &url);
+  void updateMetaData(const QNetworkCacheMetaData &metaData);
+  void clear();
+};
 
 class Networker final : public QNetworkAccessManager {
   Q_OBJECT

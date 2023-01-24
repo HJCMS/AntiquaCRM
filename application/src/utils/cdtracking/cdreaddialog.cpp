@@ -5,6 +5,7 @@
 #include "cddiscid.h"
 #include "discinfo.h"
 
+#include <AntiquaCRM>
 #include <QDebug>
 #include <QJsonParseError>
 #include <QJsonValue>
@@ -73,24 +74,7 @@ void CDReadDialog::getCDInfo() {
   m_discid->start();
 }
 
-void CDReadDialog::queryResponses() {
-  QJsonDocument doc;
-  QJsonParseError parseHandle;
-  QFile fp("/home/heinemann/.cache/w.FOgXeU6WxoNyhaFBBbNjLZBB4-.json");
-  if (fp.open(QIODevice::ReadOnly)) {
-    QTextStream data(&fp);
-    data.setCodec(ANTIQUACRM_TEXTCODEC);
-    QByteArray buffer = data.readAll().toLocal8Bit();
-    doc = QJsonDocument::fromJson(buffer, &parseHandle);
-    if (parseHandle.error != QJsonParseError::NoError) {
-      qWarning("Json Document Error: '%s'.",
-               qPrintable(parseHandle.errorString()));
-      doc = QJsonDocument();
-    }
-    fp.close();
-    buffer.clear();
-  }
-
+void CDReadDialog::queryResponses(const QJsonDocument &doc) {
   QJsonObject js = doc.object();
   if (js.size() < 2)
     return;
@@ -120,11 +104,12 @@ void CDReadDialog::queryResponses() {
 }
 
 void CDReadDialog::setQueryDiscId(const QUrl &url) {
-  Q_UNUSED(url);
-  //#ifndef ANTIQUA_DEVELOPEMENT
-  //  qDebug() << Q_FUNC_INFO << url.toString();
-  //#endif
-  queryResponses();
+  AntiquaCRM::ANetworker *m_net =
+      new AntiquaCRM::ANetworker(AntiquaCRM::PluginQueryType::JSON_QUERY, this);
+  connect(m_net, SIGNAL(sendJsonResponse(const QJsonDocument &)),
+          SLOT(queryResponses(const QJsonDocument &)));
+
+  m_net->getRequest(url);
 }
 
 int CDReadDialog::exec() {

@@ -47,7 +47,7 @@ const QList<DiscInfo::Track> DiscInfo::getTracks() {
         track_t.title = trackTitle(obj.value("title"));
         track_t.length = obj.value("length").toInt();
         list.append(track_t);
-        qDebug() << track_t.index << track_t.title;
+        // qDebug() << track_t.index << track_t.title;
       }
     }
   }

@@ -32,8 +32,7 @@ private:
   void getCDInfo();
 
 private Q_SLOTS:
-  void queryResponses();
-  // void queryResponses(const QJsonDocument &);
+  void queryResponses(const QJsonDocument &);
   void setQueryDiscId(const QUrl &);
 
 public:

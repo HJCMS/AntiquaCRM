@@ -5,7 +5,6 @@
 #ifndef ANTIQUACRM_PROVIDER_H
 #define ANTIQUACRM_PROVIDER_H
 
-#include <AGlobal>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>

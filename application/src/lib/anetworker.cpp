@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "anetworker.h"
+#include "anetworkcache.h"
 #include "anetworkrequest.h"
 
 #ifdef ANTIQUA_DEVELOPEMENT
@@ -28,6 +29,8 @@ ANetworker::ANetworker(AntiquaCRM::PluginQueryType type, QObject *parent)
 
   AntiquaCRM::ASettings cfg(this);
   transfer_timeout = cfg.value("transfer_timeout", 5).toInt();
+
+  setCache(new AntiquaCRM::ANetworkCache(this));
 
   connect(this, SIGNAL(finished(QNetworkReply *)), this,
           SLOT(slotFinished(QNetworkReply *)));

@@ -4,8 +4,65 @@
 #include "networker.h"
 #include "networkrequest.h"
 
+#include <QDir>
+#include <QMutexLocker>
+
+QMutex NetworkCache::s_mutex;
+QNetworkDiskCache *NetworkCache::s_cache = nullptr;
+
+NetworkCache::NetworkCache(QObject *parent) : QAbstractNetworkCache{parent} {
+  QMutexLocker l(&s_mutex);
+  if (!s_cache) {
+    s_cache = new QNetworkDiskCache;
+    QString cachedir = QDir::tempPath() + "/antiquacrm";
+    s_cache->setCacheDirectory(cachedir);
+  }
+}
+
+qint64 NetworkCache::cacheSize() const {
+  QMutexLocker l(&s_mutex);
+  return s_cache->cacheSize();
+}
+
+QIODevice *NetworkCache::data(const QUrl &url) {
+  QMutexLocker l(&s_mutex);
+  return s_cache->data(url);
+}
+
+void NetworkCache::insert(QIODevice *device) {
+  QMutexLocker l(&s_mutex);
+  s_cache->insert(device);
+}
+
+QNetworkCacheMetaData NetworkCache::metaData(const QUrl &url) {
+  QMutexLocker l(&s_mutex);
+  return s_cache->metaData(url);
+}
+
+QIODevice *NetworkCache::prepare(const QNetworkCacheMetaData &data) {
+  QMutexLocker l(&s_mutex);
+  return s_cache->prepare(data);
+}
+
+bool NetworkCache::remove(const QUrl &url) {
+  QMutexLocker l(&s_mutex);
+  return s_cache->remove(url);
+}
+
+void NetworkCache::updateMetaData(const QNetworkCacheMetaData &data) {
+  QMutexLocker l(&s_mutex);
+  s_cache->updateMetaData(data);
+}
+
+void NetworkCache::clear() {
+  QMutexLocker l(&s_mutex);
+  s_cache->clear();
+}
+
+// Networker
 Networker::Networker(QObject *parent) : QNetworkAccessManager{parent} {
   m_textCodec = QTextCodec::codecForLocale();
+  setCache(new NetworkCache(this));
   connect(this, SIGNAL(finished(QNetworkReply *)),
           SLOT(slotFinished(QNetworkReply *)));
 }
@@ -158,7 +215,7 @@ QNetworkReply *Networker::postRequest(const NetworkRequest &request,
 }
 
 QNetworkReply *Networker::customRequest(const NetworkRequest &request,
-                                      const QByteArray &data) {
+                                        const QByteArray &data) {
   NetworkRequest req(request);
   req.setHeaderContentLength(data.size());
 
