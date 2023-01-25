@@ -56,7 +56,7 @@ For Compiling dependency please read the [link](PACKETBUILDERS.md "PACKETBUILDER
   - Install git and the Qt5.12* Developer Framework for Windows and the required dependency libraries.
   - If you get errors, make sure that all depends libraries in your PATH Variable.
   - Change to your working directory and chekout the project
-  - git clone git`@`github.com:HJCMS/AntiquaCRM.git
+  - `git clone git@github.com:HJCMS/AntiquaCRM.git`
   - Open QtCreator and import AntiquaCRM Projectfile
   - Configure cmake with MinSizeRelease.
   - Compile it ...
