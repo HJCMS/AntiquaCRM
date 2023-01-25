@@ -13,7 +13,7 @@ The Database connection from outside to the local Network PgSQL-Server only work
 
 ## Install instructions
 
-For Compiling dependency please read the [link](PAKETBUILDER.md) file.
+For Compiling dependency please read the [link](PACKETBUILDERS.md "PACKETBUILDERS.md") file.
 
 - Checkout this repository:
   - git clone git@github.com:HJCMS/AntiquaCRM.git
