@@ -12,9 +12,10 @@ SET(source_LRELEASE
 
 ## NOTE This file isn't a part of the default Qt5 Installation.
 ## https://doc.qt.io/qt-5/internationalization.html
+## git submodule add https://code.qt.io/cgit/qt/qttranslations.git/tree/?h=v5.15.7-lts-lgpl qt5-tr
 ## wget -O qtbase_de.ts https://code.qt.io/cgit/qt/qttranslations.git/plain/translations/qtbase_de.ts
 SET(qtr_FILES
- qtbase_de.ts
+ qt5-tr/translations/qtbase_de.ts
 )
 
 EXECUTE_PROCESS (COMMAND ${QT_QMAKE_EXECUTABLE} -query QT_INSTALL_BINS OUTPUT_VARIABLE QT_BINARY_TARGET)
