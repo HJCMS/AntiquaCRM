@@ -22,12 +22,13 @@ Qt5 Framework and Translations
   - Xml
   - LinguistTools
   - PrintSupport
+  - Charts
 
 - Optional Qt5 Libraries:
-  - Charts
   - DBus (Linux only)
 
 - Other required Libraries:
+  - PostgreSQL Libraries version 14.*
   - libqrencode
   - zlib
 
