@@ -13,7 +13,8 @@ The Database connection from outside to the local Network PgSQL-Server only work
 
 ## Install instructions
 
-For Compiling dependency please read the [link](PACKETBUILDERS.md "PACKETBUILDERS.md") file.
+For Compiling dependency please read the [link](PACKETBUILDERS.md) file.
+Current Version [link](application/version.txt) text file.
 
 - Checkout this repository:
 ```
@@ -32,31 +33,34 @@ For Compiling dependency please read the [link](PACKETBUILDERS.md "PACKETBUILDER
 - RPM Packetbuilding:
 ```
  cd ~/rpmbuild/SOURCES
- git clone --recurse-submodules git@github.com:HJCMS/AntiquaCRM.git antiquacrm-${version}
- tar -cJf antiquacrm-${version}.tar.xz antiquacrm-${version}
+ wget -O antiquacrm.version https://raw.githubusercontent.com/HJCMS/AntiquaCRM/developement/application/version.txt
+ export antiqua_version="`cat antiquacrm.version`"
+ git clone --recurse-submodules git@github.com:HJCMS/AntiquaCRM.git antiquacrm-${antiqua_version}
+ tar -cJf antiquacrm-${antiqua_version}.tar.xz antiquacrm-${antiqua_version}
 ```
 
   - Generate the RPM-Specfile:
 ```
- mkdir antiquacrm-${version}/build
- cd antiquacrm-${version}/build
+ cd ~/rpmbuild/SOURCES/antiquacrm-${antiqua_version}
+ mkdir build
+ cd build
  cmake -DLIB_SUFFIX:STRING=64 ../application
- cd ~/rpmbuild
- cp SOURCES/antiquacrm-${version}/build/xdg/antiquacrm.spec SPECS/
+ cp xdg/antiquacrm.spec ~/rpmbuild/SPECS/
 ```
 
   - Customize/Create the Package:
 ```
+ cd ~/rpmbuild
  vim SPECS/antiquacrm.spec
  rpmbuild -ba SPECS/antiquacrm.spec
- rpm --test -Uhv ~/rpmbuild/RPMS/x86_64/antiquacrm-${version}.rpm
+ rpm --test -Uhv ~/rpmbuild/RPMS/x86_64/antiquacrm-${antiqua_version}.rpm
 ```
 
 - Windows Paketbuilding:
   - Install git and the Qt5.12* Developer Framework for Windows and the required dependency libraries.
   - If you get errors, make sure that all depends libraries in your PATH Variable.
   - Change to your working directory and chekout the project
-  - `git clone git@github.com:HJCMS/AntiquaCRM.git`
+  - `git clone --recurse-submodules git@github.com:HJCMS/AntiquaCRM.git`
   - Open QtCreator and import AntiquaCRM Projectfile
   - Configure cmake with MinSizeRelease.
   - Compile it ...
