@@ -33,6 +33,10 @@ PROJECT(${PROJECTNAME}
   LANGUAGES CXX
 )
 
+CONFIGURE_FILE (version.txt.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/version.txt
+)
+
 ###
 ## \Section Build System
 ###
