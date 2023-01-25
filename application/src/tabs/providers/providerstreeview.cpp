@@ -14,15 +14,13 @@ ProvidersTreeView::ProvidersTreeView(QWidget *parent) : QTreeWidget{parent} {
   setWordWrap(false);
   setAlternatingRowColors(true);
 
-  QTreeWidgetItem *aItem = headerItem();
-  aItem->setText(0, tr("Orders"));
-  aItem->setIcon(0, QIcon("://icons/user_group.png"));
-  QTreeWidgetItem *bItem = headerItem();
-  bItem->setText(1, tr("Date"));
-  bItem->setIcon(1, QIcon("://icons/user_group.png"));
-  QTreeWidgetItem *cItem = headerItem();
-  cItem->setText(2, tr("Buyer"));
-  cItem->setIcon(2, QIcon("://icons/user_group.png"));
+  QTreeWidgetItem *m_header = headerItem();
+  m_header->setText(0, tr("Orders"));
+  m_header->setIcon(0, QIcon("://icons/user_group.png"));
+  m_header->setText(1, tr("Date"));
+  m_header->setIcon(1, QIcon("://icons/user_group.png"));
+  m_header->setText(2, tr("Buyer"));
+  m_header->setIcon(2, QIcon("://icons/user_group.png"));
 
   connect(this, SIGNAL(itemClicked(QTreeWidgetItem *, int)), this,
           SLOT(itemSelected(QTreeWidgetItem *, int)));

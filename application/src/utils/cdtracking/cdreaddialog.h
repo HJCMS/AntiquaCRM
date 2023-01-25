@@ -6,25 +6,31 @@
 #define CDTRACKING_CDREADDIALOG_H
 
 #include <AntiquaCRM>
+#include <AntiquaWidgets>
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QFrame>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QStatusBar>
 #include <QTextEdit>
-#include <QToolBar>
 #include <QUrl>
-#include <QWidget>
+
+class TracksListWidget;
 
 class CDReadDialog final : public QDialog {
   Q_OBJECT
 
 private:
   AntiquaCRM::ASettings *m_cfg;
-  QToolBar *m_toolBar;
-  QTextEdit *m_hwInfo;
-  QWidget *m_centralWidget;
+  QFrame *m_mainFrame;
+  AntiquaILabel *infolabel;
+  LineEdit *m_title;
+  LineEdit *m_artists;
+  YearEdit *m_year;
+  LineEdit *m_barcode;
+  TracksListWidget *m_tracksList;
   QDialogButtonBox *m_btnBox;
   QStatusBar *m_statusBar;
 
@@ -38,6 +44,7 @@ private Q_SLOTS:
 public:
   explicit CDReadDialog(QWidget *parent = nullptr);
   int exec() override;
+  const QJsonObject data();
   ~CDReadDialog();
 };
 

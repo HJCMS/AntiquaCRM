@@ -553,7 +553,32 @@ void CDVEditor::openReadCDDialog() {
 #ifdef ANTIQUA_HAVE_CDTRACKING
   CDReadDialog *d = new CDReadDialog(this);
   if (d->exec() == QDialog::Accepted) {
-    qDebug() << Q_FUNC_INFO << "TODO";
+    QJsonObject obj = d->data();
+    foreach (QString key, obj.keys()) {
+      if (key == "tracks" || obj.value(key).isNull())
+        continue;
+
+      LineEdit *e = findChild<LineEdit *>(key);
+      if (e != nullptr) {
+        e->setValue(obj.value(key));
+      }
+    }
+    qint64 year = obj.value("cv_year").toDouble();
+    if (year > 0)
+      cv_year->setValue(year);
+
+    QString barcode = obj.value("cv_eangtin").toString();
+    if (!barcode.isEmpty())
+      cv_eangtin->setValue(barcode);
+
+    QStringList desc;
+    desc << cv_description->value().toString();
+    QJsonObject tracks = obj.value("tracks").toObject();
+    QJsonObject::Iterator it;
+    for (it = tracks.begin(); it != tracks.end(); ++it) {
+      desc << it.key() + ") " + it.value().toString();
+    }
+    cv_description->setValue(desc.join("\n"));
   }
   d->deleteLater();
 #else

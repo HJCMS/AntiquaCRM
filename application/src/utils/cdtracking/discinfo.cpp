@@ -45,9 +45,7 @@ const QList<DiscInfo::Track> DiscInfo::getTracks() {
         Track track_t;
         track_t.index = obj.value("position").toInt();
         track_t.title = trackTitle(obj.value("title"));
-        track_t.length = obj.value("length").toInt();
         list.append(track_t);
-        // qDebug() << track_t.index << track_t.title;
       }
     }
   }
@@ -55,10 +53,17 @@ const QList<DiscInfo::Track> DiscInfo::getTracks() {
 }
 
 int DiscInfo::getReleaseYear() {
-  QJsonValue val = value("date");
-  if (val.isNull())
+  QRegExp yPattern("^\\d{4}$");
+  QString val = value("date").toString().trimmed();
+  if (val.contains(yPattern))
+    return val.toInt();
+  else if (!val.contains("-"))
     return 0;
 
-  QDate d = QDate::fromString(val.toString(), "yyyy-MM-dd");
-  return (d.isValid() ? d.year() : 0);
+  foreach (QString s, val.split("-")) {
+    if (s.length() == 4) {
+      return s.toInt();
+    }
+  }
+  return 0;
 }

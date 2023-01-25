@@ -24,13 +24,13 @@ namespace AntiquaCRM {
 ANetworker::ANetworker(AntiquaCRM::PluginQueryType type, QObject *parent)
     : QNetworkAccessManager{parent}, queryType{type} {
   setObjectName("antiquacrm_networker");
+  setCache(new AntiquaCRM::ANetworkCache(this));
+
   m_reply = nullptr;
   m_textCodec = QTextCodec::codecForLocale();
 
   AntiquaCRM::ASettings cfg(this);
   transfer_timeout = cfg.value("transfer_timeout", 5).toInt();
-
-  setCache(new AntiquaCRM::ANetworkCache(this));
 
   connect(this, SIGNAL(finished(QNetworkReply *)), this,
           SLOT(slotFinished(QNetworkReply *)));
@@ -81,14 +81,15 @@ void ANetworker::slotFinished(QNetworkReply *reply) {
 }
 
 void ANetworker::slotReadResponse() {
-  if (m_reply == nullptr)
+  QNetworkReply* reply = reinterpret_cast<QNetworkReply*>(sender());
+  if (reply == nullptr)
     return;
 
-  if (m_reply->error() != QNetworkReply::NoError) {
-    slotError(m_reply->error());
+  if (reply->error() != QNetworkReply::NoError) {
+    slotError(reply->error());
   }
 
-  if (!m_reply->bytesAvailable()) {
+  if (!reply->bytesAvailable()) {
     qWarning("Network: No Data responsed!");
     return;
   }
@@ -125,16 +126,16 @@ void ANetworker::slotReadResponse() {
   }
 
   QByteArray data;
-  data = m_reply->readAll();
+  data = reply->readAll();
   if (data.isNull()) {
     qWarning("Network: No Data responsed!");
     return;
   }
 
 #if (ANTIQUACRM_NETWORK_DEBUG == true)
-  qInfo("Host: %s", qPrintable(m_reply->url().host()));
-  foreach (QByteArray a, m_reply->rawHeaderList()) {
-    qInfo("-- %s: %s", a.constData(), m_reply->rawHeader(a).constData());
+  qInfo("Host: %s", qPrintable(reply->url().host()));
+  foreach (QByteArray a, reply->rawHeaderList()) {
+    qInfo("-- %s: %s", a.constData(), reply->rawHeader(a).constData());
   }
 #endif
 

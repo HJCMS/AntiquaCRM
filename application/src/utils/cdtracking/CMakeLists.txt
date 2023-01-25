@@ -15,12 +15,14 @@ SET (cdtrack_SOURCES
  cdreaddialog.cpp
  cddiscid.cpp
  discinfo.cpp
+ trackslistwidget.cpp
 )
 
 SET (cdtrack_HEADERS
  cdreaddialog.h
  cddiscid.h
  discinfo.h
+ trackslistwidget.h
 )
 
 ADD_LIBRARY (${_cdtracking} STATIC
@@ -38,6 +40,7 @@ TARGET_LINK_LIBRARIES (${_cdtracking} PRIVATE
   Qt${QT_VERSION_MAJOR}::Widgets
   ${CDTRACKING_LIBRARIES}
   AntiquaCRM
+  AntiquaWidgets
 )
 
 ENDIF (CDTRACKING_SUPPORT)

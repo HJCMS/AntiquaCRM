@@ -4,6 +4,7 @@
 #include "cdreaddialog.h"
 #include "cddiscid.h"
 #include "discinfo.h"
+#include "trackslistwidget.h"
 
 #include <AntiquaCRM>
 #include <QDebug>
@@ -22,51 +23,45 @@ CDReadDialog::CDReadDialog(QWidget *parent) : QDialog{parent} {
 
   QVBoxLayout *layout = new QVBoxLayout(this);
 
-  m_toolBar = new QToolBar(this);
-  layout->addWidget(m_toolBar);
+  m_mainFrame = new QFrame(this);
+  QGridLayout *gLayout = new QGridLayout(m_mainFrame);
+  int grow = 0;
+  // cv_title
+  infolabel = new AntiquaILabel(tr("Title"), m_mainFrame);
+  gLayout->addWidget(infolabel, grow, 0, 1, 1);
+  m_title = new LineEdit(this);
+  m_title->setObjectName("cv_title");
+  m_title->setToolTip(infolabel->text());
+  gLayout->addWidget(m_title, grow++, 1, 1, 1);
+  // cv_author
+  infolabel = new AntiquaILabel(tr("Artists"), m_mainFrame);
+  gLayout->addWidget(infolabel, grow, 0, 1, 1);
+  m_artists = new LineEdit(this);
+  m_artists->setObjectName("cv_author");
+  m_artists->setToolTip(infolabel->text());
+  gLayout->addWidget(m_artists, grow++, 1, 1, 1);
+  // cv_year
+  infolabel = new AntiquaILabel(tr("Release"), m_mainFrame);
+  gLayout->addWidget(infolabel, grow, 0, 1, 1);
+  m_year = new YearEdit(m_mainFrame);
+  m_year->setObjectName("cv_year");
+  m_year->setRequired(true);
+  m_year->setInfo(tr("Year"));
+  m_year->setValue(1970);
+  gLayout->addWidget(m_year, grow++, 1, 1, 1, Qt::AlignLeft);
+  // cv_eangtin
+  infolabel = new AntiquaILabel(tr("Barcode"), m_mainFrame);
+  gLayout->addWidget(infolabel, grow, 0, 1, 1);
+  m_barcode = new LineEdit(this);
+  m_barcode->setObjectName("cv_eangtin");
+  m_barcode->setToolTip(infolabel->text());
+  gLayout->addWidget(m_barcode, grow++, 1, 1, 1);
 
-  m_hwInfo = new QTextEdit(this);
-  m_hwInfo->setReadOnly(true);
-  m_hwInfo->setStyleSheet("QTextEdit {border:none; background:transparent;}");
-  layout->addWidget(m_hwInfo);
-  layout->setStretch(1, 1);
+  m_mainFrame->setLayout(gLayout);
+  layout->addWidget(m_mainFrame);
 
-  m_centralWidget = new QWidget(this);
-/*
-// cv_year
-cv_year = new YearEdit(this);
-cv_year->setObjectName("cv_year");
-cv_year->setRequired(true);
-cv_year->setInfo(tr("Year"));
-cv_year->setValue(1800);
-row0->addWidget(cv_year);
-
-// cv_title
-infolabel = new AntiquaILabel(tr("Title"), row1Widget);
-row1->addWidget(infolabel, row1c, 0, 1, 1);
-cv_title = new LineEdit(this);
-cv_title->setObjectName("cv_title");
-cv_title->setToolTip(infolabel->text());
-row1->addWidget(cv_title, row1c++, 1, 1, 4);
-
-// cv_author
-infolabel = new AntiquaILabel(tr("Artists"), row1Widget);
-row1->addWidget(infolabel, row1c, 0, 1, 1);
-cv_author = new LineEdit(this);
-cv_author->setObjectName("cv_author");
-cv_author->setToolTip(infolabel->text());
-row1->addWidget(cv_author, row1c++, 1, 1, 4);
-
-// cv_keywords
-infolabel = new AntiquaILabel(tr("Keywords"), row1Widget);
-row1->addWidget(infolabel, row1c, 0, 1, 1);
-cv_keyword = new LineEdit(this);
-cv_keyword->setObjectName("cv_keyword");
-cv_keyword->setToolTip(infolabel->text());
-row1->addWidget(cv_keyword, row1c++, 1, 1, 4);
-*/
-
-  layout->addWidget(m_centralWidget);
+  m_tracksList = new TracksListWidget(this);
+  layout->addWidget(m_tracksList);
 
   m_btnBox = new QDialogButtonBox(this);
   m_btnBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
@@ -76,6 +71,7 @@ row1->addWidget(cv_keyword, row1c++, 1, 1, 4);
   m_statusBar->setSizeGripEnabled(false);
   layout->addWidget(m_statusBar);
 
+  layout->setStretch(1, 1);
   setLayout(layout);
 
   connect(m_btnBox, SIGNAL(accepted()), SLOT(accept()));
@@ -83,8 +79,8 @@ row1->addWidget(cv_keyword, row1c++, 1, 1, 4);
 }
 
 const QJsonObject CDReadDialog::getRelease(const QJsonArray &array) {
-  QStringList iso_lang({"DE", "EN", "US"});
-  foreach (QString lng, iso_lang) {
+  QStringList country({"DE", "GB", "US"});
+  foreach (QString lng, country) {
     for (int i = 0; i < array.size(); i++) {
       QJsonObject obj = array[i].toObject();
       if (obj.value("country").toString().toUpper() == lng) {
@@ -104,7 +100,6 @@ void CDReadDialog::getCDInfo() {
   connect(m_discid, SIGNAL(sendQueryDiscChanged(const QUrl &)),
           SLOT(setQueryDiscId(const QUrl &)));
 
-  m_hwInfo->clear();
   m_discid->start();
 }
 
@@ -112,6 +107,16 @@ void CDReadDialog::queryResponses(const QJsonDocument &doc) {
   QJsonObject js = doc.object();
   if (js.size() < 2)
     return;
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  QFile fp(QDir::homePath() + "/.cache/discid_info.json");
+  if (fp.open(QIODevice::WriteOnly)) {
+    QTextStream data(&fp);
+    data.setCodec(ANTIQUACRM_TEXTCODEC);
+    data << doc.toJson(QJsonDocument::Indented);
+    fp.close();
+  }
+#endif
 
   QJsonObject release;
   foreach (QString k, js.keys()) {
@@ -124,22 +129,17 @@ void CDReadDialog::queryResponses(const QJsonDocument &doc) {
 
   if (!release.isEmpty()) {
     DiscInfo p_disc(release);
-    QStringList data;
-    data << p_disc.getTitle();
-    data << p_disc.getArtists();
-    data << p_disc.getBarcode();
-    foreach (DiscInfo::Track track, p_disc.getTracks()) {
-      data << track.title;
-    }
-    data << QString::number(p_disc.getReleaseYear());
-    m_hwInfo->clear();
-    m_hwInfo->setPlainText(data.join("\n"));
+    m_title->setValue(p_disc.getTitle());
+    m_artists->setValue(p_disc.getArtists());
+    m_year->setValue(p_disc.getReleaseYear());
+    m_barcode->setValue(p_disc.getBarcode());
+    m_tracksList->setTracks(p_disc.getTracks());
   }
 }
 
 void CDReadDialog::setQueryDiscId(const QUrl &url) {
-  AntiquaCRM::ANetworker *m_net =
-      new AntiquaCRM::ANetworker(AntiquaCRM::PluginQueryType::JSON_QUERY, this);
+  AntiquaCRM::PluginQueryType _t = AntiquaCRM::PluginQueryType::JSON_QUERY;
+  AntiquaCRM::ANetworker *m_net = new AntiquaCRM::ANetworker(_t, this);
   connect(m_net, SIGNAL(sendJsonResponse(const QJsonDocument &)),
           SLOT(queryResponses(const QJsonDocument &)));
 
@@ -148,7 +148,18 @@ void CDReadDialog::setQueryDiscId(const QUrl &url) {
 
 int CDReadDialog::exec() {
   getCDInfo();
+  m_tracksList->setFocus();
   return QDialog::exec();
+}
+
+const QJsonObject CDReadDialog::data() {
+  QJsonObject obj;
+  foreach (LineEdit *e, findChildren<LineEdit *>(QString())) {
+    obj.insert(e->objectName(), e->value().toString());
+  }
+  obj.insert(m_year->objectName(), m_year->value().toInt());
+  obj.insert("tracks", m_tracksList->getTracks());
+  return obj;
 }
 
 CDReadDialog::~CDReadDialog() {}

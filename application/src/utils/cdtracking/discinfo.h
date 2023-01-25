@@ -19,7 +19,6 @@ public:
   struct Track {
     int index;
     QString title;
-    int length;
   };
   explicit DiscInfo(const QJsonObject &parent);
   const QString getTitle();
