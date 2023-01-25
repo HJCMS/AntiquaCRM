@@ -17,7 +17,7 @@ For Compiling dependency please read the [link](PACKETBUILDERS.md "PACKETBUILDER
 
 - Checkout this repository:
 ```
-  git clone git\@github.com:HJCMS/AntiquaCRM.git
+  git clone git@github.com:HJCMS/AntiquaCRM.git
   git submodule init
   git submodule update
 ```
@@ -30,21 +30,27 @@ For Compiling dependency please read the [link](PACKETBUILDERS.md "PACKETBUILDER
   - make
 
 - RPM Packetbuilding:
-  - cd ~/rpmbuild/SOURCES
-  - git clone --recurse-submodules git@github.com:HJCMS/AntiquaCRM.git antiquacrm-${version}
-  - tar -cJf antiquacrm-${version}.tar.xz antiquacrm-${version}
+```
+ cd ~/rpmbuild/SOURCES
+ git clone --recurse-submodules git@github.com:HJCMS/AntiquaCRM.git antiquacrm-${version}
+ tar -cJf antiquacrm-${version}.tar.xz antiquacrm-${version}
+```
 
   - Generate the RPM-Specfile:
-    - mkdir antiquacrm-${version}/build
-    - cd antiquacrm-${version}/build
-    - cmake -DLIB_SUFFIX:STRING=64 ../application
-    - cd ~/rpmbuild
-    - cp SOURCES/antiquacrm-${version}/build/xdg/antiquacrm.spec SPECS/
+```
+ mkdir antiquacrm-${version}/build
+ cd antiquacrm-${version}/build
+ cmake -DLIB_SUFFIX:STRING=64 ../application
+ cd ~/rpmbuild
+ cp SOURCES/antiquacrm-${version}/build/xdg/antiquacrm.spec SPECS/
+```
 
   - Customize/Create the Package:
-    - vim SPECS/antiquacrm.spec
-    - rpmbuild -ba SPECS/antiquacrm.spec
-    - rpm --test -Uhv ~/rpmbuild/RPMS/x86_64/antiquacrm-${version}.rpm
+```
+ vim SPECS/antiquacrm.spec
+ rpmbuild -ba SPECS/antiquacrm.spec
+ rpm --test -Uhv ~/rpmbuild/RPMS/x86_64/antiquacrm-${version}.rpm
+```
 
 - Windows Paketbuilding:
   - Install git and the Qt5.12* Developer Framework for Windows and the required dependency libraries.
