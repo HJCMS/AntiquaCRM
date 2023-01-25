@@ -11,10 +11,13 @@ The Database connection from outside to the local Network PgSQL-Server only work
   - So it requires a Router with Dyn-DNS and Port forwarding support!
   - This depends on your network service provider!
 
-## Install instructions
+##### Install instructions
 
 For Compiling dependency please read the [link](PACKETBUILDERS.md) file.
+
 Current Version [link](application/version.txt) text file.
+
+##### Linux Paketbuilding:
 
 - Checkout this repository:
 ```
@@ -42,7 +45,7 @@ Current Version [link](application/version.txt) text file.
  tar -cJf antiquacrm-${antiqua_version}.tar.xz antiquacrm-${antiqua_version}
 ```
 
-  - Generate the RPM-Specfile:
+- Generate the RPM-Specfile:
 ```
  cd ~/rpmbuild/SOURCES/antiquacrm-${antiqua_version}
  mkdir build
@@ -51,7 +54,7 @@ Current Version [link](application/version.txt) text file.
  cp xdg/antiquacrm.spec ~/rpmbuild/SPECS/
 ```
 
-  - Customize/Create the Package:
+- Customize/Create the Package:
 ```
  cd ~/rpmbuild
  vim SPECS/antiquacrm.spec
@@ -59,7 +62,7 @@ Current Version [link](application/version.txt) text file.
  rpm --test -Uhv ~/rpmbuild/RPMS/x86_64/antiquacrm-${antiqua_version}.rpm
 ```
 
-- Windows Paketbuilding:
+##### Windows Paketbuilding:
   - Install git and the Qt5.12* Developer Framework for Windows and the required dependency libraries.
   - If you get errors, make sure that all depends libraries in your PATH Variable.
   - Change to your working directory and chekout the project
@@ -72,6 +75,16 @@ Current Version [link](application/version.txt) text file.
   - start compile package
   - if no errors you can test the installation
   - ...
+
+##### Troubleshooting
+
+If you get cmake errors like missing TS files, make sure you initialize the Qt-Comunity Translations submodule in your repository.
+
+- Inititial Qt-Comunity Translations:
+```
+  git submodule init
+  git submodule update
+```
 
 ---
 

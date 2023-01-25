@@ -2,14 +2,6 @@
 
 Notes for packet builders
 
-####  Troubleshooting
-
-If you get cmake errors like missing TS files, make sure you initialize the Qt-Comunity Translations submodule in your repository.
-
-- Inititial Qt-Comunity Translations:
-  - git submodule init
-  - git submodule update
-
 ####  Dependencies
 
 Qt5 Framework and Translations
