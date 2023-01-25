@@ -10,10 +10,8 @@ SET(source_LRELEASE
  antiquacrm_de.ts
 )
 
-## NOTE This file isn't a part of the default Qt5 Installation.
+## WARNING This file isn't a part of the default Qt5 Installation.
 ## https://doc.qt.io/qt-5/internationalization.html
-## git submodule add https://code.qt.io/cgit/qt/qttranslations.git/tree/?h=v5.15.7-lts-lgpl qt5-tr
-## wget -O qtbase_de.ts https://code.qt.io/cgit/qt/qttranslations.git/plain/translations/qtbase_de.ts
 SET(qtr_FILES
  qt5-tr/translations/qtbase_de.ts
 )
