@@ -23,12 +23,15 @@ Current Version [link](application/version.txt) text file.
   git submodule update
 ```
 
-- Compile the project:
-  - cd AntiquaCRM
-  - mkdir build
-  - cd build
-  - cmake ../application
-  - make
+- Compile AntiquaCRM project:
+```
+  cd AntiquaCRM
+  mkdir build
+  cd build
+  cmake ../application
+  make
+  ls -l ./src/antiquacrm
+```
 
 - RPM Packetbuilding:
 ```
