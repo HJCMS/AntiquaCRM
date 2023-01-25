@@ -384,6 +384,8 @@ void BookLooker::start() {
 
   NetworkRequest request(url);
   request.setHeaderContentTypeJson();
+  request.setAttribute(QNetworkRequest::CacheLoadControlAttribute,
+                       QNetworkRequest::PreferCache);
 
   m_networker->getRequest(request);
 }

@@ -32,6 +32,40 @@ CDReadDialog::CDReadDialog(QWidget *parent) : QDialog{parent} {
   layout->setStretch(1, 1);
 
   m_centralWidget = new QWidget(this);
+/*
+// cv_year
+cv_year = new YearEdit(this);
+cv_year->setObjectName("cv_year");
+cv_year->setRequired(true);
+cv_year->setInfo(tr("Year"));
+cv_year->setValue(1800);
+row0->addWidget(cv_year);
+
+// cv_title
+infolabel = new AntiquaILabel(tr("Title"), row1Widget);
+row1->addWidget(infolabel, row1c, 0, 1, 1);
+cv_title = new LineEdit(this);
+cv_title->setObjectName("cv_title");
+cv_title->setToolTip(infolabel->text());
+row1->addWidget(cv_title, row1c++, 1, 1, 4);
+
+// cv_author
+infolabel = new AntiquaILabel(tr("Artists"), row1Widget);
+row1->addWidget(infolabel, row1c, 0, 1, 1);
+cv_author = new LineEdit(this);
+cv_author->setObjectName("cv_author");
+cv_author->setToolTip(infolabel->text());
+row1->addWidget(cv_author, row1c++, 1, 1, 4);
+
+// cv_keywords
+infolabel = new AntiquaILabel(tr("Keywords"), row1Widget);
+row1->addWidget(infolabel, row1c, 0, 1, 1);
+cv_keyword = new LineEdit(this);
+cv_keyword->setObjectName("cv_keyword");
+cv_keyword->setToolTip(infolabel->text());
+row1->addWidget(cv_keyword, row1c++, 1, 1, 4);
+*/
+
   layout->addWidget(m_centralWidget);
 
   m_btnBox = new QDialogButtonBox(this);
