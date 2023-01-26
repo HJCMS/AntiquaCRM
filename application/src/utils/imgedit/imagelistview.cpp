@@ -11,7 +11,6 @@ ImageListView::ImageListView(QWidget *parent) : QTreeView{parent} {
   setAnimated(false);
   setSortingEnabled(true);
   setItemsExpandable(true);
-  setRootIsDecorated(false);
   setExpandsOnDoubleClick(true);
 
   p_directory = QDir::home();
@@ -23,7 +22,7 @@ ImageListView::ImageListView(QWidget *parent) : QTreeView{parent} {
   m_model->setReadOnly(true);
   m_model->setOption(QFileSystemModel::DontWatchForChanges, true);
   m_model->setOption(QFileSystemModel::DontResolveSymlinks, true);
-  m_model->setFilter(p_directory.filter());
+  m_model->setFilter(QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot);
   m_model->setNameFilters(p_directory.nameFilters());
   setModel(m_model);
 
@@ -97,6 +96,7 @@ bool ImageListView::setDirectory(const QDir &dir) {
 }
 
 const QStringList ImageListView::viewFilter() {
+  // inode/directory image/jpeg
   QStringList f("*.jpg");
   f << "*.JPG";
   f << "*.jpeg";

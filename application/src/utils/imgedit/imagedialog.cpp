@@ -19,8 +19,8 @@
 #include <QStandardPaths>
 #include <QVBoxLayout>
 
-ImageDialog::ImageDialog(int articleId, QWidget *parent, const QString &prefix)
-    : QDialog{parent}, p_articleId{articleId}, p_prefix{prefix} {
+ImageDialog::ImageDialog(int articleId, QWidget *parent)
+    : QDialog{parent}, p_articleId{articleId} {
   setObjectName("image_open_edit_dialog");
   setWindowTitle(tr("Picture Editor"));
   setMinimumSize(QSize(800, 400));
@@ -75,59 +75,59 @@ ImageDialog::ImageDialog(int articleId, QWidget *parent, const QString &prefix)
   connect(ac_close, SIGNAL(triggered()), SLOT(accept()));
   connect(m_imageSelecter, SIGNAL(sendSelection(const SourceInfo &)),
           SLOT(fileChanged(const SourceInfo &)));
-  connect(m_imageSelecter, SIGNAL(sendTargetChanged(const QDir &)),
-          SLOT(setHistoryDir(const QDir &)));
+  connect(m_imageSelecter, SIGNAL(sendImportImage(const QString &)),
+          SLOT(setImageImport(const QString &)));
 }
 
 bool ImageDialog::findSourceImage() {
-  if (!imagesArchiv.exists()) {
+  if (!p_archiv.exists()) {
     notifyStatus(tr("archiv isn't readable!"));
     return false;
   }
 
-  QString imageId = QString::number(p_articleId);
-  QString fullImageId = SourceInfo::imageBaseName(p_articleId, p_prefix);
-
+  QString id_simple = QString::number(p_articleId);
+  QString id_long = SourceInfo::imageBaseName(p_articleId);
   QString basePath = m_imageSelecter->directory().path();
+
   QStringList search;
-  search << imageId + ".JPG";
-  search << imageId + ".jpg";
-  search << fullImageId + ".JPG";
-  search << fullImageId + ".jpg";
+  search << id_simple + ".JPG";
+  search << id_long + ".JPG";
+  search << id_simple + ".jpg";
+  search << id_long + ".jpg";
 
   QStringList found;
   QDirIterator it(basePath, search, QDir::NoFilter,
                   QDirIterator::Subdirectories);
   while (it.hasNext()) {
     QFileInfo f(it.next());
-    QString file(f.absoluteFilePath());
-    basePath.append(QDir::separator());
-    found << file.replace(basePath, "");
+    found << f.filePath();
   }
 
+  if (found.size() < 1) {
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << search << found;
+    qDebug() << Q_FUNC_INFO << basePath << search << found;
 #endif
-
-  if (found.size() < 1)
     return false;
-
-  QString imageFile = found.first();
-  QFileInfo info(basePath, imageFile);
-  if (info.exists()) {
-    SourceInfo src(info);
-    src.setFileId(p_articleId);
-    src.setPrefix(p_prefix);
-    m_imageSelecter->setSelection(src);
-    m_view->setImageFile(info);
-    return true;
   }
-  notifyStatus(tr("no source image exists!"));
+
+  SourceInfo src(basePath);
+  src.setFile(found.first());
+  src.setFileId(p_articleId);
+  if (src.isValidSource()) {
+    m_imageSelecter->setSelection(src);
+    m_view->setImageFile(src);
+    return true;
+  } else {
+    notifyStatus(tr("no source image exists!"));
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << "findSourceImage SourceInfo" << src;
+#endif
+  }
   return false;
 }
 
 bool ImageDialog::isImageFromArchive(const SourceInfo &info) {
-  return info.path().startsWith(imagesArchiv.path());
+  return info.path().startsWith(p_archiv.path());
 }
 
 bool ImageDialog::askToCopyFile() {
@@ -145,18 +145,12 @@ bool ImageDialog::askToCopyFile() {
 bool ImageDialog::imagePreview(const SourceInfo &image) {
   SourceInfo info(image);
   info.setFileId(p_articleId);
-  info.setPrefix(p_prefix);
-  info.setTarget(imagesArchiv);
+  info.setTarget(p_archiv);
   if (info.isValidSource()) {
     m_view->setImageFile(info);
     return true;
   }
   return false;
-}
-
-void ImageDialog::setHistoryDir(const QDir &d) {
-  if (d.isReadable())
-    config->setValue("history_image_target", d.path());
 }
 
 void ImageDialog::save() {
@@ -166,6 +160,11 @@ void ImageDialog::save() {
   }
 
   SourceInfo info(m_view->getSource());
+  if (info.getFileId() < 1)
+    info.setFileId(p_articleId);
+
+  info.setTarget(p_savePath);
+
   if (info.isValidSource() && !isImageFromArchive(info)) {
     qInfo("image about to copy");
     if (askToCopyFile()) {
@@ -180,7 +179,7 @@ void ImageDialog::save() {
   }
 #ifdef ANTIQUA_DEVELOPEMENT
   else {
-    qDebug() << Q_FUNC_INFO << "NO COPY" << info.getFileId() << info.getPrefix();
+    qDebug() << "Image Copy Failed" << info;
   }
 #endif
   // In Datenbank Speichern!
@@ -191,6 +190,15 @@ void ImageDialog::save() {
 void ImageDialog::fileChanged(const SourceInfo &image) {
   if (!imagePreview(image))
     notifyStatus(tr("Image preview rejected!"));
+}
+
+void ImageDialog::setImageImport(const QString &image) {
+  SourceInfo src(p_savePath.path());
+  src.setFileId(p_articleId);
+  src.setFile(image);
+  if (!imagePreview(src)) {
+    notifyStatus(tr("Image preview rejected!"));
+  }
 }
 
 void ImageDialog::closeEvent(QCloseEvent *e) {
@@ -216,15 +224,29 @@ void ImageDialog::notifyStatus(const QString &str) {
   m_statusBar->showMessage(str, (10 * 1000));
 }
 
-int ImageDialog::exec() {
+const QDir ImageDialog::getDefaultImagePath() {
   QString fallback =
       QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
   QString archivPath = config->value("dirs/images", fallback).toString();
-  imagesArchiv = QDir(archivPath);
+  return QDir(archivPath);
+}
 
-  QString history =
-      config->value("history_image_target", archivPath).toString();
-  m_imageSelecter->setDirectory(history);
+void ImageDialog::setSubCategory(const QString &category) {
+  p_category = AntiquaCRM::AUtil::ucFirst(category.toLower());
+  QDir d = getDefaultImagePath();
+  QString _sub = d.path();
+  _sub.append(QDir::separator());
+  _sub.append(p_category);
+  p_savePath = QDir(_sub);
+}
+
+int ImageDialog::exec() {
+  p_archiv = getDefaultImagePath();
+  // Siehe setSubCategory
+  if (p_savePath.isEmpty())
+    p_savePath = p_archiv;
+
+  m_imageSelecter->setDirectory(p_archiv.path());
 
   if (config->contains("imaging/geometry")) {
     config->beginGroup("imaging");

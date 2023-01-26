@@ -109,7 +109,7 @@ VariousEditor::VariousEditor(QWidget *parent)
   row1Widget->setLayout(row1);
   m_splitter->addLeft(row1Widget);
   // Image Viewer
-  m_imageView = new ImageView(QSize(400, 400), m_splitter, "various_");
+  m_imageView = new ImageView(QSize(400, 400), m_splitter);
   m_splitter->addRight(m_imageView);
   mainLayout->addWidget(m_splitter, 1);
   mainLayout->setStretch(1, 1);
@@ -478,7 +478,8 @@ void VariousEditor::actionEditImages() {
   if (id < 1)
     return;
 
-  ImageDialog *d = new ImageDialog(id, this, m_imageView->prefix());
+  ImageDialog *d = new ImageDialog(id, this);
+  d->setSubCategory("Various");
   if (d->exec())
     m_imageView->readFromDatabase(id);
 }

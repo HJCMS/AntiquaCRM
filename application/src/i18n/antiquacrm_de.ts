@@ -1153,43 +1153,48 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
-    <name>CDInfo</name>
+    <name>CDDiscId</name>
     <message>
-        <location filename="../utils/cdtracking/cdinfo.cpp" line="+76"/>
-        <source>DVDs not supported!</source>
-        <translation>DVD wird nicht unterstützt!</translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location filename="../utils/cdtracking/cddiscid.cpp" line="+22"/>
         <source>No Media found!</source>
         <translation>Kein Medium gefunden!</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>No Disc Information found!</source>
+        <translation>Keine CD Informationen gefunden!</translation>
     </message>
 </context>
 <context>
     <name>CDReadDialog</name>
     <message>
-        <location filename="../utils/cdtracking/cdreaddialog.cpp" line="+11"/>
+        <location filename="../utils/cdtracking/cdreaddialog.cpp" line="+17"/>
         <source>CD title reader</source>
         <translation>CD Titel lesen</translation>
     </message>
     <message>
-        <location line="+54"/>
-        <source>Hardware</source>
-        <translation></translation>
+        <location line="+13"/>
+        <source>Title</source>
+        <translation>Titel</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Vendor: %1</source>
-        <translation>Hersteller: %1</translation>
+        <location line="+7"/>
+        <source>Artists</source>
+        <translation>Künstler</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Model: %1</source>
-        <translation></translation>
+        <location line="+7"/>
+        <source>Release</source>
+        <translation>Erschienen</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Revision: %1</source>
+        <location line="+5"/>
+        <source>Year</source>
+        <translation>Jahr</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Barcode</source>
         <translation></translation>
     </message>
 </context>
@@ -1301,12 +1306,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Öffnet einen Metadaten-Auslesedialog für Musik-CD&apos;s.</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Only supported by Linux systems!</source>
-        <translation>Wird nur von Linux-Systemen unterstützt!</translation>
-    </message>
-    <message>
-        <location line="+24"/>
+        <location line="+27"/>
         <source>Description</source>
         <translation>Beschreibung</translation>
     </message>
@@ -1382,21 +1382,16 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+16"/>
-        <source>Missing Mediatype for Year, aborted!</source>
-        <translation>Keine Mediumangabe für das Jahr, abbruch!</translation>
+        <source>Missing Mediatype, aborted!</source>
+        <translation>Kein Medium angegeben, abbruch!</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Invalid Vinyl record Year, aborted!</source>
-        <translation>Fehlderhafte Schallplatten Jahresangabe, abbruch!</translation>
+        <source>Invalid Vinyl or Compact Disc recording Year, aborted!</source>
+        <translation>Ungültige Jahresangabe für Vinyl oder CD angegeben, abbruch!</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Invalid Compact Disc Year, aborted!</source>
-        <translation>Fehlderhafte CD Jahresangabe, abbruch!</translation>
-    </message>
-    <message>
-        <location line="+55"/>
+        <location line="+80"/>
         <source>Remove Image from Database</source>
         <translation>Bild aus Datenbank entfernen</translation>
     </message>
@@ -3068,17 +3063,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Abschließen</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+17"/>
         <source>archiv isn&apos;t readable!</source>
         <translation>Archiv ist nicht lesbar!</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+37"/>
         <source>no source image exists!</source>
         <translation>Kein Quellbild vorhanden!</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+13"/>
         <source>&lt;p&gt;Do you want to copy this Image into the Picture Archiv?&lt;/p&gt;&lt;b&gt;Note:&lt;/b&gt; This will replace Images with identical Article Filename!</source>
         <translation>&lt;p&gt;Möchten Sie dieses Bild in das Bildarchiv kopieren?&lt;/p&gt;&lt;b&gt;Hinweis:&lt;/b&gt; Dadurch werden Bilder mit identischem Artikel-Dateinamen ersetzt!</translation>
     </message>
@@ -3088,12 +3083,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild kopieren?</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+21"/>
         <source>no valid image found</source>
         <translation>kein gültiges Bild gefunden</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+13"/>
         <source>copy image in progress ...</source>
         <translation>Bild kopieren läuft ...</translation>
     </message>
@@ -3123,7 +3118,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bitte benutzen Sie den Beenden knopf!</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+55"/>
         <source>image from database!</source>
         <translation>Bild aus Datenbank!</translation>
     </message>
@@ -3131,7 +3126,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ImageSelecter</name>
     <message>
-        <location filename="../utils/imgedit/imageselecter.cpp" line="+24"/>
+        <location filename="../utils/imgedit/imageselecter.cpp" line="+25"/>
         <source>Image Library</source>
         <translation>Bilder Ordner</translation>
     </message>
@@ -3141,7 +3136,23 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bildbibliothek einstellen</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+12"/>
+        <source>Set Archive path</source>
+        <translation>Archivpfad öffnen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Set Camera path</source>
+        <translation>Kamerapfad öffnen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Import Image</source>
+        <translation>Bild importieren</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location line="+20"/>
         <source>Open Image Library</source>
         <translation>Öffnen der Bildverzeichnis</translation>
     </message>
@@ -3813,7 +3824,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Makros</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+8"/>
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Close</source>
+        <translation>Schließen</translation>
+    </message>
+    <message>
+        <location line="+30"/>
         <location line="+30"/>
         <location line="+58"/>
         <source>an error occurred</source>
@@ -4714,7 +4735,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Buchkarten</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+7"/>
+        <source>Import</source>
+        <translation>Importieren</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Default Camera Import path</source>
+        <translation>Standardpfad Kamera importieren</translation>
+    </message>
+    <message>
+        <location line="+20"/>
         <source>Open Directory</source>
         <translation>Öffne Verzeichnis</translation>
     </message>
@@ -6109,12 +6140,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bestellungen</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>Buyer</source>
         <translation>Käufer</translation>
     </message>
@@ -7445,6 +7476,29 @@ Bild - Artikel Nr: %2</translation>
         <location filename="../widgets/textfield.cpp" line="+63"/>
         <source>requires a valid input.</source>
         <translation>erfordert eine gültige Eingabe.</translation>
+    </message>
+</context>
+<context>
+    <name>TracksListWidget</name>
+    <message>
+        <location filename="../utils/cdtracking/trackslistwidget.cpp" line="+16"/>
+        <source>Nr.</source>
+        <translation>Nr.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Number</source>
+        <translation>Nummer</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Track title</source>
+        <translation>Musiktitel</translation>
     </message>
 </context>
 <context>

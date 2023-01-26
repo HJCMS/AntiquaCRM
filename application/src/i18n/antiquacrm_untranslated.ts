@@ -1151,43 +1151,48 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
-    <name>CDInfo</name>
+    <name>CDDiscId</name>
     <message>
-        <location filename="../utils/cdtracking/cdinfo.cpp" line="+76"/>
-        <source>DVDs not supported!</source>
+        <location filename="../utils/cdtracking/cddiscid.cpp" line="+22"/>
+        <source>No Media found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>No Media found!</source>
+        <location line="+14"/>
+        <source>No Disc Information found!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CDReadDialog</name>
     <message>
-        <location filename="../utils/cdtracking/cdreaddialog.cpp" line="+11"/>
+        <location filename="../utils/cdtracking/cdreaddialog.cpp" line="+17"/>
         <source>CD title reader</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+54"/>
-        <source>Hardware</source>
+        <location line="+13"/>
+        <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Vendor: %1</source>
+        <location line="+7"/>
+        <source>Artists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Model: %1</source>
+        <location line="+7"/>
+        <source>Release</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Revision: %1</source>
+        <location line="+5"/>
+        <source>Year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Barcode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1299,12 +1304,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Only supported by Linux systems!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+24"/>
+        <location line="+27"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1380,21 +1380,16 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+16"/>
-        <source>Missing Mediatype for Year, aborted!</source>
+        <source>Missing Mediatype, aborted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Invalid Vinyl record Year, aborted!</source>
+        <source>Invalid Vinyl or Compact Disc recording Year, aborted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Invalid Compact Disc Year, aborted!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+55"/>
+        <location line="+80"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3064,17 +3059,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+17"/>
         <source>archiv isn&apos;t readable!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+37"/>
         <source>no source image exists!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+13"/>
         <source>&lt;p&gt;Do you want to copy this Image into the Picture Archiv?&lt;/p&gt;&lt;b&gt;Note:&lt;/b&gt; This will replace Images with identical Article Filename!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3084,12 +3079,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+21"/>
         <source>no valid image found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+13"/>
         <source>copy image in progress ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3119,7 +3114,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+55"/>
         <source>image from database!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3127,7 +3122,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ImageSelecter</name>
     <message>
-        <location filename="../utils/imgedit/imageselecter.cpp" line="+24"/>
+        <location filename="../utils/imgedit/imageselecter.cpp" line="+25"/>
         <source>Image Library</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3137,7 +3132,23 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+12"/>
+        <source>Set Archive path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Set Camera path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Import Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location line="+20"/>
         <source>Open Image Library</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3809,7 +3820,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+8"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+30"/>
         <location line="+30"/>
         <location line="+58"/>
         <source>an error occurred</source>
@@ -4710,7 +4731,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+7"/>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Default Camera Import path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
         <source>Open Directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6103,12 +6134,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>Buyer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7438,6 +7469,29 @@ Image - Article Id: %2</source>
     <message>
         <location filename="../widgets/textfield.cpp" line="+63"/>
         <source>requires a valid input.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TracksListWidget</name>
+    <message>
+        <location filename="../utils/cdtracking/trackslistwidget.cpp" line="+16"/>
+        <source>Nr.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Track title</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

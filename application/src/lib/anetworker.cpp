@@ -81,7 +81,7 @@ void ANetworker::slotFinished(QNetworkReply *reply) {
 }
 
 void ANetworker::slotReadResponse() {
-  QNetworkReply* reply = reinterpret_cast<QNetworkReply*>(sender());
+  QNetworkReply *reply = reinterpret_cast<QNetworkReply *>(sender());
   if (reply == nullptr)
     return;
 
@@ -331,7 +331,11 @@ QNetworkReply *ANetworker::getRequest(const QUrl &url) {
   ANetworkRequest request(url);
   request.setHeaderUserAgent();
   request.setHeaderAcceptLanguage();
-  request.setHeaderAcceptText();
+  if (queryType == AntiquaCRM::PluginQueryType::JSON_QUERY) {
+    request.setHeaderAcceptJson();
+  } else {
+    request.setHeaderAcceptText();
+  }
   request.setTransferTimeout((transfer_timeout * 1000));
   request.setHeaderCacheControl();
 

@@ -5,10 +5,9 @@
 set +x
 
 _func="${1:-"help"}"
-_build_dir="build-v1-Desktop_Qt_5_15_2_GCC_64bit-Debug"
+_build_dir="build-antiquacrm-Desktop_Qt_5_15_2_GCC_64bit-Debug"
 _lang="de"
-
-_dirs="`find . -maxdepth 1 -type d -not -name plugins -exec basename "{}" \;`"
+_dirs="`find . -maxdepth 1 -type d -not -name plugins -not -name qt5-tr -exec basename "{}" \;`"
 
 case "${_func}" in
   *update)
@@ -25,7 +24,7 @@ case "${_func}" in
       -verbose \
       -nounfinished \
       -removeidentical \
-      $(find ./i18n -name "*.ts" -not -name antiquacrm_untranslated.ts) \
+      $(find ./i18n -mindepth 1 -maxdepth 1 -name "*.ts" -not -name antiquacrm_untranslated.ts) \
       -qm ../../${_build_dir}/src/i18n/antiquacrm_${_lang}.qm
   ;;
 

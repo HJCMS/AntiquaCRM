@@ -25,6 +25,7 @@ private:
   QLineEdit *m_reports_path;  /**< Berichte */
   QLineEdit *m_reminder_path; /**< Erinnerungen */
   QLineEdit *m_bookcard_path; /**< Buchkarten */
+  QLineEdit *m_import_path;   /**< Standard Importieren pfad */
   QLabel *infoCell(const QString &title);
   QToolButton *setPathBtn(const QString &txName);
 

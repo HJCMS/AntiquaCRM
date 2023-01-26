@@ -37,13 +37,6 @@ private:
   const qint64 p_articleId;
 
   /**
-   * @brief Prefix bei abweichenden Formaten wie z.B.: Media Dateien
-   * @note Bücher benötigen keinen Prefix!
-   * @example "media_" für CD's oder Vinyl Schallplatten
-   */
-  const QString p_prefix;
-
-  /**
    * @brief Konfigurationen
    */
   AntiquaCRM::ASettings *config;
@@ -64,9 +57,19 @@ private:
   ImageSelecter *m_imageSelecter;
 
   /**
+   * @brief Spezielle Medien wie CD's Vinyl und Diverse
+   */
+  QString p_category = QString();
+
+  /**
    * @brief Bilder Archiv
    */
-  QDir imagesArchiv;
+  QDir p_archiv;
+
+  /**
+   * @brief Speicherpfad
+   */
+  QDir p_savePath;
 
   /**
    * @brief Aktionen
@@ -105,11 +108,6 @@ private:
 
 private Q_SLOTS:
   /**
-   * @brief Verzeichnisverlauf speichern
-   */
-  void setHistoryDir(const QDir &);
-
-  /**
    * @brief Bild in Datenbank speichern
    */
   void save();
@@ -118,6 +116,12 @@ private Q_SLOTS:
    * @brief Ein bild wurde ausgewählt
    */
   void fileChanged(const SourceInfo &image);
+
+  /**
+   * @brief Einzel Bild Importieren
+   * @param image (Pfad)
+   */
+  void setImageImport(const QString &image);
 
 protected:
   void closeEvent(QCloseEvent *) override;
@@ -133,8 +137,24 @@ public:
   /**
    * @param articleId - !!! Muss gesetzt sein. !!!
    */
-  explicit ImageDialog(int articleId, QWidget *parent = nullptr,
-                       const QString &prefix = QString());
+  explicit ImageDialog(int articleId, QWidget *parent = nullptr);
+
+  /**
+   * @brief Standard Archivpfad zurück geben!
+   */
+  const QDir getDefaultImagePath();
+
+  /**
+   * @brief Temporäres Unterverzeichnis setzen
+   * @param category (Relative ausgehend vom Standard Archiv Pfad!)
+   * @note Wird nicht bei Büchern benötigt!
+   * Nur Medien wie CD's oder Vinyl Schallplatten benötigen ein Temporäres
+   * Unterverzeichnis. Der Grund hierfür ist, das die meisten Dienstleister nur
+   * Bücher anbieten. Deshalb werden für die Server Verarbeitung andere Medien
+   * gesondert behandelt! CronJobs können an der Dateinummer nicht erkennen um
+   * welchen Artikel-Typ es sich handelt!
+   */
+  void setSubCategory(const QString &category);
 
   /**
    * @brief Dialog aufrufen

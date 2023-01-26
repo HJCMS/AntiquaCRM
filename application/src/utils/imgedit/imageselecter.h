@@ -5,12 +5,14 @@
 #ifndef ANTIQUA_IMAGESELECTER_H
 #define ANTIQUA_IMAGESELECTER_H
 
+#include <QAction>
 #include <QDir>
 #include <QFileInfo>
 #include <QLineEdit>
 #include <QList>
 #include <QObject>
 #include <QPushButton>
+#include <QToolBar>
 #include <QUrl>
 #include <QWidget>
 
@@ -22,16 +24,24 @@ class ImageSelecter : public QWidget {
 
 private:
   QDir p_dir;
-  ImageListView *m_listView;
   QLineEdit *m_dirPathEdit;
   QPushButton *m_fileDialogBtn;
+  ImageListView *m_listView;
+  QToolBar *m_toolbar;
+  QAction *ac_set_archive;
+  QAction *ac_set_camera;
+  QAction *ac_set_image;
 
 private Q_SLOTS:
+  void setDefaultTarget();
+  void setImportTarget();
   void selectImageTarget();
+  void selectSingleImage();
 
 Q_SIGNALS:
   void sendTargetChanged(const QDir &dir);
   void sendSelection(const SourceInfo &image);
+  void sendImportImage(const QString &import);
 
 public Q_SLOTS:
   void setDirectory(const QString &dirPath);

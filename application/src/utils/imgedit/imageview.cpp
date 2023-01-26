@@ -7,6 +7,7 @@
 #ifdef ANTIQUA_DEVELOPEMENT
 #include <QDebug>
 #endif
+#include <ASettings>
 #include <QApplication>
 #include <QBuffer>
 #include <QDataStream>
@@ -15,12 +16,10 @@
 #include <QGraphicsPixmapItem>
 #include <QImageReader>
 #include <QPixmap>
-#include <QScreen>
 #include <QtMath>
 
-ImageView::ImageView(QSize maxsize, QWidget *parent, const QString &prefix)
-    : QGraphicsView(parent), p_max(maxsize),
-      p_format("jpeg"), p_prefix{prefix} {
+ImageView::ImageView(QSize maxsize, QWidget *parent)
+    : QGraphicsView(parent), p_max(maxsize), p_format("jpeg") {
   setObjectName("ImagePreview");
   setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
   setBackgroundRole(QPalette::Base);
@@ -34,9 +33,9 @@ ImageView::ImageView(QSize maxsize, QWidget *parent, const QString &prefix)
   clear();
 }
 
-const QSize ImageView::screenSize() const {
-  QScreen *m_screen = qApp->primaryScreen();
-  return m_screen->virtualSize();
+const QSize ImageView::maxSourceSize() const {
+  QSize maxSize(1366, 768);
+  return maxSize;
 }
 
 void ImageView::zoomWith(qreal f) {
@@ -72,8 +71,8 @@ void ImageView::setImage(const QImage &img) {
     return;
   }
 
-  int w = qMax(screenSize().width(), p_max.width());
-  int h = qMax(screenSize().height(), p_max.height());
+  int w = qMax(maxSourceSize().width(), p_max.width());
+  int h = qMax(maxSourceSize().height(), p_max.height());
   p_pixmap = p.scaled(w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation);
   m_scene->clear();
   m_pixmap = m_scene->addPixmap(p_pixmap);
@@ -86,16 +85,14 @@ void ImageView::setImageFile(const SourceInfo &file) {
   QImageReader reader(file.filePath());
   QImage img = reader.read();
   if (img.isNull()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << file.getFileId() << file.filePath();
+#endif
     emit sendImageLoadSuccess(false);
     return;
   }
   setImage(img);
   p_currentPreview = file;
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << p_currentPreview.getFileId()
-           << p_currentPreview.filePath() << Qt::endl
-           << file.getFileId() << file.filePath();
-#endif
 }
 
 void ImageView::setRawImage(const QByteArray &data) {
@@ -153,31 +150,32 @@ bool ImageView::saveImageTo(const SourceInfo &info) {
   if (p_pixmap.isNull())
     return false;
 
-  QPixmap p = p_pixmap.scaled(screenSize(), /* auf Desktopgröße reduzieren */
-                              Qt::KeepAspectRatio, Qt::SmoothTransformation);
+  QPixmap p;
+  QSize maxs = maxSourceSize();
+  QSize size = p_pixmap.size();
+  if (size.width() > maxs.width() || size.height() > maxs.height()) {
+    p = p_pixmap.scaled(maxs, // Speicherbelegung reduzieren
+                        Qt::KeepAspectRatio, Qt::SmoothTransformation);
+  } else {
+    p = p_pixmap;
+  }
+
   QImage img = p.toImage();
   if (img.isNull())
     return false;
 
-  SourceInfo dest(info);
-  if (!dest.isValidSource())
+  if (!info.isValidSource())
     return false;
 
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << "SAVE_IMAGE" << dest.getFileId() << dest.getPrefix()
-           << dest.getFileTarget();
-#endif
-
-  QFile fp(dest.getFileTarget());
+  QString filename(info.imageBaseName(info.getFileId()));
+  filename.append(".jpg");
+  QFileInfo ouput(info.getTarget(), filename);
+  QFile fp(ouput.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
     img.save(&fp, p_format.data(), quality());
     fp.close();
     return true;
   }
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << "Failed" << info.filePath()
-           << dest.getFileTarget();
-#endif
   return false;
 }
 

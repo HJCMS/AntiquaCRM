@@ -58,9 +58,18 @@ PathSettings::PathSettings(QWidget *parent) : SettingsWidget{parent} {
   m_layout->addWidget(m_bookcard_path, lrow, 1, 1, 1);
   m_layout->addWidget(setPathBtn("cards"), lrow++, 2, 1, 1);
 
+  // Bilder Importieren Pfad
+  m_layout->addWidget(infoCell(tr("Import")), lrow, 0, 1, 1, t_align);
+  m_import_path = new QLineEdit(this);
+  m_import_path->setObjectName("import");
+  m_import_path->setPlaceholderText(tr("Default Camera Import path"));
+  m_layout->addWidget(m_import_path, lrow, 1, 1, 1);
+  m_layout->addWidget(setPathBtn("import"), lrow++, 2, 1, 1);
+
   // END
 
   m_layout->setRowStretch(lrow, 1);
+
   setLayout(m_layout);
 }
 

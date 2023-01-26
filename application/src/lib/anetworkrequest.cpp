@@ -5,22 +5,18 @@
 #include "aglobal.h"
 #include "asettings.h"
 
+#include <QApplication>
+#include <QDir>
+#include <QFileInfo>
 #include <QLocale>
 
 namespace AntiquaCRM {
 
-#ifdef Q_OS_WIN
-static const QString applCaBundlePath() {
-  QFileInfo info(QDir::current(), "curl-ca-bundle.crt");
-  if (info.isReadable()) {
-    return info.filePath();
-  }
-  return QString();
-}
-#endif
-
 ANetworkRequest::ANetworkRequest(const QUrl &remoteUrl)
     : QNetworkRequest{remoteUrl} {
+  setPriority(QNetworkRequest::HighPriority);
+  setAttribute(QNetworkRequest::RedirectPolicyAttribute,
+               QNetworkRequest::NoLessSafeRedirectPolicy);
 
   QUrl checkUrl = url();
   if (checkUrl.host().isEmpty() || checkUrl.scheme().isEmpty()) {
@@ -37,19 +33,38 @@ const QByteArray ANetworkRequest::antiquaCharset() {
   return QByteArray(ANTIQUACRM_TEXTCODEC).toLower();
 }
 
-const QSslConfiguration ANetworkRequest::sslConfigguration() {
-  ASettings config;
-  QSslConfiguration cfg;
+const QString ANetworkRequest::findCaBundleFile() const {
   QString ca_bundle;
-#ifdef Q_OS_WIN
-  ca_bundle = config.value("ca_bundle", applCaBundlePath()).toString();
-#else
-  ca_bundle =
-      config.value("ca_bundle", "/var/lib/ca-certificates/ca-bundle.pem")
-          .toString();
+  QRegExp pattern("^(curl\\-)?ca[\\-_](bundle|certificate)$");
+  QStringList filter({"*.crt", "*.pem"});
+  QStringList dirs(qApp->applicationDirPath());
+#ifdef Q_OS_UNIX
+  dirs << "/etc/pki/tls/certs";
+  dirs << "/var/lib/ca-certificates";
+  dirs << "/etc/ssl/certs";
 #endif
+  foreach (QString p, dirs) {
+    foreach (QFileInfo i, QDir(p).entryInfoList(filter, QDir::Files)) {
+      if (i.baseName().contains(pattern) && i.isReadable()) {
+        ca_bundle = i.filePath();
+        break;
+      }
+    }
+  }
+  return ca_bundle;
+}
+
+const QSslConfiguration ANetworkRequest::sslConfigguration() {
+  QString ca_bundle = findCaBundleFile();
+  if (ca_bundle.isEmpty()) {
+    AntiquaCRM::ASettings cfg;
+    ca_bundle = cfg.value("Default/ssl_bundle").toString();
+  }
+
+  QSslConfiguration cfg;
   if (!cfg.addCaCertificates(ca_bundle, QSsl::Pem)) {
     qWarning("ANetworkRequest: Missing ssl/ca_bundle PEM to import!");
+    qDebug() << Q_FUNC_INFO << ca_bundle;
   }
   return cfg;
 }
@@ -86,6 +101,14 @@ void ANetworkRequest::setHeaderAcceptText() {
   setRawHeader(QByteArray("Accept"), accept);
 }
 
+void ANetworkRequest::setHeaderAcceptJson() {
+  QStringList list;
+  list << "text/plain; q=0.1";
+  list << "application/json; q=0.2";
+  QByteArray accept = list.join(", ").toLocal8Bit();
+  setRawHeader(QByteArray("Accept"), accept);
+}
+
 void ANetworkRequest::setHeaderContentTypeJson() {
   QByteArray contentType("application/json charset=");
   contentType.append(antiquaCharset());
@@ -99,6 +122,11 @@ void ANetworkRequest::setHeaderContentTypeXml(const QByteArray &charset) {
 }
 
 void ANetworkRequest::setHeaderCacheControl(const QByteArray &cache) {
+  QByteArray data = cache.isNull() ? ("no-cache,private") : cache;
+  if (QString(data).contains("no-cache", Qt::CaseInsensitive)) {
+    setAttribute(QNetworkRequest::CacheLoadControlAttribute,
+                 QNetworkRequest::PreferNetwork);
+  }
   setRawHeader(QByteArray("Cache-Control"), cache);
 }
 

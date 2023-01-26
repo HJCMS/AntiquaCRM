@@ -156,13 +156,13 @@ CDVEditor::CDVEditor(QWidget *parent)
   toolBarFrame->setContentsMargins(0, 2, 0, 2);
   QHBoxLayout *tbfLayout = new QHBoxLayout(toolBarFrame);
   tbfLayout->setContentsMargins(0, 2, 0, 2);
-  // Erfordert: http://musicbrainz.org/doc/libdiscid
+  // Erfordert: http://musicbrainz.org/doc/libdiscid 64Bit
   btn_cdread = new QPushButton(tr("Read CD"), toolBarFrame);
   btn_cdread->setIcon(QIcon("://icons/view_search.png"));
   btn_cdread->setToolTip(tr("Opens a Metadata readout Dialog for Music CD."));
 #ifdef Q_OS_WIN
   btn_cdread->setEnabled(false);
-  btn_cdread->setToolTip(tr("Only supported by Linux systems!"));
+  btn_cdread->setToolTip("Currently only supported by Linux systems!");
 #endif
   tbfLayout->addWidget(btn_cdread);
   tbfLayout->addStretch(1);
@@ -175,7 +175,7 @@ CDVEditor::CDVEditor(QWidget *parent)
   m_splitter->addLeft(row1Widget);
   // Image Viewer
   QSize maxSize = m_cfg->value("image/max_size", QSize(450, 450)).toSize();
-  m_imageView = new ImageView(maxSize, m_splitter, "media_");
+  m_imageView = new ImageView(maxSize, m_splitter);
   m_splitter->addRight(m_imageView);
   mainLayout->addWidget(m_splitter, 1);
   // END : Row1
@@ -499,20 +499,16 @@ bool CDVEditor::realyDeactivateEntry() {
 }
 
 bool CDVEditor::checkYear() {
-  int _mv = 1889; // min. Vinyl Year
-  int _mc = 1980; // min. Compact Disc Year
+  // Vorher gab es noch keine Vinylschallplatten
+  int _mv = 1889;
   int _y = cv_year->value().toInt();
   int _t = cv_mtype->value().toInt();
   if (_t == 0) {
-    QString txt = tr("Missing Mediatype for Year, aborted!");
+    QString txt = tr("Missing Mediatype, aborted!");
     openNoticeMessage(txt);
     return false;
   } else if ((_y < _mv) && (_t > 3)) {
-    QString txt = tr("Invalid Vinyl record Year, aborted!");
-    openNoticeMessage(txt);
-    return false;
-  } else if ((_y < _mc) && (_t < 4)) {
-    QString txt = tr("Invalid Compact Disc Year, aborted!");
+    QString txt = tr("Invalid Vinyl or Compact Disc recording Year, aborted!");
     openNoticeMessage(txt);
     return false;
   }
@@ -609,7 +605,8 @@ void CDVEditor::actionEditImages() {
   if (id < 1)
     return;
 
-  ImageDialog *d = new ImageDialog(id, this, m_imageView->prefix());
+  ImageDialog *d = new ImageDialog(id, this);
+  d->setSubCategory("Media");
   if (d->exec())
     m_imageView->readFromDatabase(id);
 }

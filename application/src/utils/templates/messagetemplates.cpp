@@ -45,8 +45,10 @@ MessageTemplates::MessageTemplates(QWidget *parent) : QDialog{parent} {
       (QDialogButtonBox::Close | QDialogButtonBox::Save), this);
   btn_save = m_btnBox->button(QDialogButtonBox::Save);
   btn_save->setIcon(QIcon("://icons/action_save.png"));
+  btn_save->setText(tr("Save"));
   QPushButton *btn_close = m_btnBox->button(QDialogButtonBox::Close);
   btn_close->setIcon(QIcon("://icons/action_quit.png"));
+  btn_close->setText(tr("Close"));
   layout->addWidget(m_btnBox); // #2
 
   m_statusBar = new QStatusBar(this);

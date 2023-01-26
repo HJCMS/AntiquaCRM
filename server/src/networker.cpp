@@ -61,8 +61,8 @@ void NetworkCache::clear() {
 
 // Networker
 Networker::Networker(QObject *parent) : QNetworkAccessManager{parent} {
-  m_textCodec = QTextCodec::codecForLocale();
   setCache(new NetworkCache(this));
+  m_textCodec = QTextCodec::codecForLocale();
   connect(this, SIGNAL(finished(QNetworkReply *)),
           SLOT(slotFinished(QNetworkReply *)));
 }
@@ -120,14 +120,15 @@ void Networker::slotSslErrors(const QList<QSslError> &list) {
 }
 
 void Networker::slotReadResponse() {
-  if (m_reply == nullptr)
+  QNetworkReply* reply = reinterpret_cast<QNetworkReply*>(sender());
+  if (reply == nullptr)
     return;
 
-  if (m_reply->error() != QNetworkReply::NoError) {
-    slotError(m_reply->error());
+  if (reply->error() != QNetworkReply::NoError) {
+    slotError(reply->error());
   }
 
-  if (!m_reply->bytesAvailable()) {
+  if (!reply->bytesAvailable()) {
     qWarning("ANTIQUACRM::Network:No Data responsed!");
     return;
   }
@@ -141,8 +142,8 @@ void Networker::slotReadResponse() {
 
   QByteArray decodeWith(m_textCodec->name());
   // Content-Type
-  if (m_reply->hasRawHeader("Content-Type")) {
-    QString cth(m_reply->rawHeader("Content-Type"));
+  if (reply->hasRawHeader("Content-Type")) {
+    QString cth(reply->rawHeader("Content-Type"));
     QRegExp stripParam("^Content\\-Type\\b\\:\\s+", Qt::CaseInsensitive);
     cth.replace(stripParam, "");
     if (cth.contains("charset")) {
@@ -163,7 +164,7 @@ void Networker::slotReadResponse() {
   }
 
   QByteArray data;
-  data = m_reply->readAll();
+  data = reply->readAll();
   if (data.isNull()) {
     qWarning("ANTIQUACRM::Network:No Data responsed!");
     return;
