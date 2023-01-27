@@ -1420,7 +1420,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Search for CD/Vinyl by Title</source>
+        <source>Search with Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1435,32 +1435,32 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+3"/>
-        <source>Keywords</source>
+        <source>Genres/Keywords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Search for CD/Vinyl with Keyword</source>
+        <source>Search with Keyword and Genre</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Author</source>
+        <source>Artists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Search for Prints and Stitches authors</source>
+        <source>Search with Artistnames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
+        <source>Search with Barcode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1"/>
         <source>Barcode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Search for Barcode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1490,22 +1490,22 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="-20"/>
-        <source>Keyword</source>
+        <source>Genres/Keywords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Author</source>
+        <source>Artist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+10"/>
+        <source>Barcode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-5"/>
         <source>Article number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>ISBN/EAN number</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1556,7 +1556,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Author</source>
+        <source>Artists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3059,7 +3059,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+19"/>
         <source>archiv isn&apos;t readable!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3105,11 +3105,12 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+5"/>
+        <location line="+8"/>
         <source>Image preview rejected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Please use the Finish button!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3189,7 +3190,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ImageView</name>
     <message>
-        <location filename="../utils/imgedit/imageview.cpp" line="+29"/>
+        <location filename="../utils/imgedit/imageview.cpp" line="+28"/>
         <source>Right mouse button with mouse wheel to zoom the image!</source>
         <translation type="unfinished"></translation>
     </message>

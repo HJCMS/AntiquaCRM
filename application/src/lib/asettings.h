@@ -46,6 +46,11 @@ public:
   bool check(const QString &configPath);
 
   /**
+   * @brief Returns Directory from Section[dirs]
+   */
+  const QDir getArchivPath(const QString &section);
+
+  /**
    * @brief Read all Keys from Group
    */
   const QHash<QString, QVariant> &readGroupConfig(const QString &group);

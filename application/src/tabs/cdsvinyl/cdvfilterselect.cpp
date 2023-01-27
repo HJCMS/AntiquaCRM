@@ -8,21 +8,21 @@ CDVFilterSelect::CDVFilterSelect(QWidget *parent) : QComboBox{parent} {
   QIcon icon(":icons/view_search.png");
   int col = 0;
   insertItem(col, icon, tr("Title"), CDVFilter::CDV_TITLE);
-  setItemData(col++, tr("Search for CD/Vinyl by Title"), Qt::ToolTipRole);
+  setItemData(col++, tr("Search with Title"), Qt::ToolTipRole);
 
   insertItem(col, icon, tr("Article Id"), CDVFilter::CDV_ARTICLE);
   setItemData(col++, tr("Multiple searches separated by commas"),
               Qt::ToolTipRole);
 
-  insertItem(col, icon, tr("Keywords"), CDVFilter::CDV_KEYWORDS);
-  setItemData(col++, tr("Search for CD/Vinyl with Keyword"), Qt::ToolTipRole);
+  insertItem(col, icon, tr("Genres/Keywords"), CDVFilter::CDV_KEYWORDS);
+  setItemData(col++, tr("Search with Keyword and Genre"), Qt::ToolTipRole);
 
-  insertItem(col, icon, tr("Author"), CDVFilter::CDV_AUTHOR);
-  setItemData(col++, tr("Search for Prints and Stitches authors"),
+  insertItem(col, icon, tr("Artists"), CDVFilter::CDV_AUTHOR);
+  setItemData(col++, tr("Search with Artistnames"),
               Qt::ToolTipRole);
 
   insertItem(col, icon, tr("Barcode"), CDVFilter::CDV_ISBNEAN);
-  setItemData(col++, tr("Search for Barcode"), Qt::ToolTipRole);
+  setItemData(col++, tr("Search with Barcode"), Qt::ToolTipRole);
 }
 
 const QJsonObject CDVFilterSelect::getFilter(int index) {
@@ -34,12 +34,12 @@ const QJsonObject CDVFilterSelect::getFilter(int index) {
     break;
 
   case CDV_KEYWORDS: /**< @brief Schlüsselwortsuche */
-    obj.insert("search", QJsonValue("keywords"));
+    obj.insert("search", QJsonValue("genres_keywords"));
     obj.insert("fields", QJsonValue("cv_title,cv_keyword"));
     break;
 
   case CDV_AUTHOR: /**< @brief Autorensuche */
-    obj.insert("search", QJsonValue("author"));
+    obj.insert("search", QJsonValue("artists"));
     obj.insert("fields", QJsonValue("cv_author"));
     break;
 
@@ -48,9 +48,9 @@ const QJsonObject CDVFilterSelect::getFilter(int index) {
     obj.insert("fields", QJsonValue("cv_id"));
     break;
 
-  case CDV_ISBNEAN: /**< @brief ISBN/EAN */
-    obj.insert("search", QJsonValue("isbn"));
-    obj.insert("fields", QJsonValue("cv_isbn"));
+  case CDV_ISBNEAN: /**< @brief Barcode */
+    obj.insert("search", QJsonValue("barcode"));
+    obj.insert("fields", QJsonValue("cv_eangtin"));
     break;
 
   default:

@@ -71,8 +71,8 @@ void ImageView::setImage(const QImage &img) {
     return;
   }
 
-  int w = qMax(maxSourceSize().width(), p_max.width());
-  int h = qMax(maxSourceSize().height(), p_max.height());
+  qreal w = qMax(maxSourceSize().width(), p_max.width());
+  qreal h = qMax(maxSourceSize().height(), p_max.height());
   p_pixmap = p.scaled(w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation);
   m_scene->clear();
   m_pixmap = m_scene->addPixmap(p_pixmap);
@@ -144,27 +144,17 @@ void ImageView::clear() {
 }
 
 bool ImageView::saveImageTo(const SourceInfo &info) {
-  if (!info.dir().exists())
+  QDir destDir(info.getTarget());
+  if (!destDir.exists() || !info.isValidSource() || p_pixmap.isNull())
     return false;
 
-  if (p_pixmap.isNull())
-    return false;
-
-  QPixmap p;
-  QSize maxs = maxSourceSize();
-  QSize size = p_pixmap.size();
-  if (size.width() > maxs.width() || size.height() > maxs.height()) {
-    p = p_pixmap.scaled(maxs, // Speicherbelegung reduzieren
-                        Qt::KeepAspectRatio, Qt::SmoothTransformation);
-  } else {
-    p = p_pixmap;
-  }
+  qreal w = qMax(maxSourceSize().width(), p_pixmap.size().width());
+  qreal h = qMax(maxSourceSize().height(), p_pixmap.size().height());
+  QPixmap p = p_pixmap.scaled(w, h, // Speicherplatz reduzieren
+                              Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
   QImage img = p.toImage();
   if (img.isNull())
-    return false;
-
-  if (!info.isValidSource())
     return false;
 
   QString filename(info.imageBaseName(info.getFileId()));

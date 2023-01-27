@@ -69,7 +69,7 @@ private:
   /**
    * @brief Speicherpfad
    */
-  QDir p_savePath;
+  QDir p_savePath = QDir::temp();
 
   /**
    * @brief Aktionen
@@ -140,7 +140,8 @@ public:
   explicit ImageDialog(int articleId, QWidget *parent = nullptr);
 
   /**
-   * @brief Standard Archivpfad zurück geben!
+   * @brief Standard Bildarchivpfad zurück geben!
+   * @note Liest den Pfad aus den Programmeinstellungen!
    */
   const QDir getDefaultImagePath();
 
@@ -151,10 +152,18 @@ public:
    * Nur Medien wie CD's oder Vinyl Schallplatten benötigen ein Temporäres
    * Unterverzeichnis. Der Grund hierfür ist, das die meisten Dienstleister nur
    * Bücher anbieten. Deshalb werden für die Server Verarbeitung andere Medien
-   * gesondert behandelt! CronJobs können an der Dateinummer nicht erkennen um
-   * welchen Artikel-Typ es sich handelt!
+   * gesondert behandelt! Die Server CronJobs können an der Dateinummer nicht
+   * erkennen um welchen Artikel-Typ es sich handelt!
    */
   void setSubCategory(const QString &category);
+
+  /**
+   * @brief Speicherpfad neu einlesen
+   * Wenn der Speicherpfad nicht innerhalb des Archivpfades liegt!
+   * Dann den Speicherpfad durch den Standard Archivbilderpfad ersetzen!
+   * @note Ein Speichern außerhalb des Bildarchives wird nicht unterstützt!
+   */
+  const QDir getSavePath();
 
   /**
    * @brief Dialog aufrufen

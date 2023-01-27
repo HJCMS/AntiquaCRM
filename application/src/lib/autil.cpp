@@ -45,7 +45,7 @@ const QString AUtil::ucFirst(const QString &str) {
 const QRegExp AUtil::mailPattern() {
   QRegExp reg;
   reg.setCaseSensitivity(Qt::CaseInsensitive);
-  reg.setPattern("^([\\d\\w\\-\\.]{3,})@([\\d\\w\\-\\.]{3,})\\.([a-z]{2,6})$");
+  reg.setPattern("^([\\d\\w\\-\\.]{3,})@([\\d\\w\\-\\.]{2,})\\.([a-z]{2,6})$");
   return reg;
 }
 

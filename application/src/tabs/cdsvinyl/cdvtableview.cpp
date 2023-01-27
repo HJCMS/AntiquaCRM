@@ -35,6 +35,7 @@ int CDVTableView::getArticleCount(const QModelIndex &index) {
 }
 
 bool CDVTableView::sqlQueryTable(const QString &query) {
+  qDebug() << query;
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);
@@ -167,6 +168,5 @@ bool CDVTableView::setQuery(const QString &clause) {
 }
 
 const QString CDVTableView::defaultWhereClause() {
-  QString sql("date_part('year',cv_changed)>0 AND cv_count>0");
-  return sql;
+  return QString("DATE(cv_changed) BETWEEN (CURRENT_DATE - 1) AND CURRENT_DATE");
 }

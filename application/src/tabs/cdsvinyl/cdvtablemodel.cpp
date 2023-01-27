@@ -21,7 +21,7 @@ const QMap<int, QString> CDVTableModel::headerList() const {
   map.insert(i++, tr("Image"));
   map.insert(i++, tr("Title"));
   map.insert(i++, tr("Price"));
-  map.insert(i++, tr("Author"));
+  map.insert(i++, tr("Artists"));
   map.insert(i++, tr("Barcode"));
   map.insert(i++, tr("Year"));
   map.insert(i++, tr("Changed"));

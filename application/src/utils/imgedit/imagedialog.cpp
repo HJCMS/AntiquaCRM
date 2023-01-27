@@ -113,6 +113,7 @@ bool ImageDialog::findSourceImage() {
   SourceInfo src(basePath);
   src.setFile(found.first());
   src.setFileId(p_articleId);
+  src.setTarget(p_savePath);
   if (src.isValidSource()) {
     m_imageSelecter->setSelection(src);
     m_view->setImageFile(src);
@@ -127,7 +128,7 @@ bool ImageDialog::findSourceImage() {
 }
 
 bool ImageDialog::isImageFromArchive(const SourceInfo &info) {
-  return info.path().startsWith(p_archiv.path());
+  return (info.path() == p_archiv.path());
 }
 
 bool ImageDialog::askToCopyFile() {
@@ -145,7 +146,7 @@ bool ImageDialog::askToCopyFile() {
 bool ImageDialog::imagePreview(const SourceInfo &image) {
   SourceInfo info(image);
   info.setFileId(p_articleId);
-  info.setTarget(p_archiv);
+  info.setTarget(p_savePath);
   if (info.isValidSource()) {
     m_view->setImageFile(info);
     return true;
@@ -159,11 +160,13 @@ void ImageDialog::save() {
     return;
   }
 
-  SourceInfo info(m_view->getSource());
-  if (info.getFileId() < 1)
-    info.setFileId(p_articleId);
-
-  info.setTarget(p_savePath);
+  SourceInfo info = m_view->getSource();
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << "Image Save Info" << info // Info
+           << info.isValidSource()      // Valid
+           << isImageFromArchive(info)  // Archiv
+           << m_view->getSource().getTarget();
+#endif
 
   if (info.isValidSource() && !isImageFromArchive(info)) {
     qInfo("image about to copy");
@@ -225,10 +228,15 @@ void ImageDialog::notifyStatus(const QString &str) {
 }
 
 const QDir ImageDialog::getDefaultImagePath() {
-  QString fallback =
-      QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
-  QString archivPath = config->value("dirs/images", fallback).toString();
-  return QDir(archivPath);
+  return config->getArchivPath("images");
+}
+
+const QDir ImageDialog::getSavePath() {
+  // NOTE Muss innerhalb des Archivepfades liegen!
+  if (!p_savePath.path().contains(p_archiv.path()))
+    p_savePath = p_archiv;
+
+  return p_savePath;
 }
 
 void ImageDialog::setSubCategory(const QString &category) {
@@ -241,13 +249,13 @@ void ImageDialog::setSubCategory(const QString &category) {
 }
 
 int ImageDialog::exec() {
+  if (p_articleId < 1) {
+    qWarning("No Article number set, image edit aborted!");
+    return QDialog::Rejected;
+  }
   p_archiv = getDefaultImagePath();
-  // Siehe setSubCategory
-  if (p_savePath.isEmpty())
-    p_savePath = p_archiv;
-
+  p_savePath = getSavePath();
   m_imageSelecter->setDirectory(p_archiv.path());
-
   if (config->contains("imaging/geometry")) {
     config->beginGroup("imaging");
     restoreGeometry(config->value("geometry").toByteArray());

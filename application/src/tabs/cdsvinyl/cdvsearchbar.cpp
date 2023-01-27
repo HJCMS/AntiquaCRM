@@ -59,12 +59,12 @@ void CDVSearchBar::setFilter(int index) {
 
   case CDVFilterSelect::CDVFilter::CDV_KEYWORDS:
     m_searchEdit->setValidation(SearchLineEdit::Strings);
-    m_searchEdit->setPlaceholderText(se + tr("Keyword"));
+    m_searchEdit->setPlaceholderText(se + tr("Genres/Keywords"));
     break;
 
   case CDVFilterSelect::CDVFilter::CDV_AUTHOR:
     m_searchEdit->setValidation(SearchLineEdit::Strings);
-    m_searchEdit->setPlaceholderText(se + tr("Author"));
+    m_searchEdit->setPlaceholderText(se + tr("Artist"));
     break;
 
   case CDVFilterSelect::CDVFilter::CDV_ARTICLE:
@@ -74,7 +74,7 @@ void CDVSearchBar::setFilter(int index) {
 
   case CDVFilterSelect::CDVFilter::CDV_ISBNEAN:
     m_searchEdit->setValidation(SearchLineEdit::Article);
-    m_searchEdit->setPlaceholderText(se + tr("ISBN/EAN number"));
+    m_searchEdit->setPlaceholderText(se + tr("Barcode"));
     break;
 
   default:
@@ -104,7 +104,8 @@ const QString CDVSearchBar::getSearchStatement() {
   QJsonObject js = m_selectFilter->getFilter(m_selectFilter->currentIndex());
   QStringList fields = js.value("fields").toString().split(",");
   QString search = m_searchEdit->getSearch();
-  // Artikel Nummernsuche (107368,115110)
+
+  // Artikel Nummernsuche
   if (js.value("search").toString() == "articleId") {
     search.replace(QRegExp("\\,\\s?$"), "");
     return "cv_id IN (" + search + ")";
@@ -117,21 +118,21 @@ const QString CDVSearchBar::getSearchStatement() {
     return sql;
   }
 
-  // Autorensuche
-  if (js.value("search").toString() == "author") {
+  // Künstlersuche
+  if (js.value("search").toString() == "artists") {
     QString sql("cv_author ILIKE '%" + search + "%' OR ");
     sql.append("cv_description ILIKE '%" + search + "%'");
     return sql;
   }
 
-  // ISBN/EAN
-  if (js.value("search").toString() == "isbn") {
-    QString sql("cv_isbn ILIKE '" + search + "'");
+  // Barcode
+  if (js.value("search").toString() == "barcode") {
+    QString sql("cv_eangtin ILIKE '" + search + "%'");
     return sql;
   }
 
-  // Schlüsselwort suche
-  if (js.value("search").toString() == "keywords") {
+  // Schlüsselwort & Genre suche
+  if (js.value("search").toString() == "genres_keywords") {
     QStringList buffer;
     QString sql;
     foreach (QString f, fields) {

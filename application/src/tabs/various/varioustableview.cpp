@@ -167,6 +167,5 @@ bool VariousTableView::setQuery(const QString &clause) {
 }
 
 const QString VariousTableView::defaultWhereClause() {
-  QString sql("date_part('year',va_changed)>0 AND va_count>0");
-  return sql;
+  return QString("DATE(va_changed) BETWEEN (CURRENT_DATE - 1) AND CURRENT_DATE");
 }

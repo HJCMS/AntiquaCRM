@@ -32,6 +32,27 @@ bool ASettings::check(const QString &configPath) {
   return false;
 }
 
+const QDir ASettings::getArchivPath(const QString &section) {
+  QDir d;
+  QStandardPaths::StandardLocation location;
+  if (section.contains("import"))
+    location = QStandardPaths::DownloadLocation;
+  else if (section.contains("images"))
+    location = QStandardPaths::PicturesLocation;
+  else if (section.contains("media"))
+    location = QStandardPaths::MusicLocation;
+  else if (section.contains("temp"))
+    location = QStandardPaths::TempLocation;
+  else
+    location = QStandardPaths::DocumentsLocation;
+
+  QString fallback = QStandardPaths::writableLocation(location);
+  beginGroup("dirs");
+  d.setPath(value(section, fallback).toString());
+  endGroup();
+  return d;
+}
+
 const QHash<QString, QVariant> &
 ASettings::readGroupConfig(const QString &group) {
   p_hash.clear();

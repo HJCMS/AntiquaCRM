@@ -1424,8 +1424,8 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Search for CD/Vinyl by Title</source>
-        <translation>Suche im Titel nach CD/Vinyl</translation>
+        <source>Search with Title</source>
+        <translation>Suche nach Titel</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -1439,33 +1439,33 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Keywords</source>
-        <translation>Schlüsselwörter</translation>
+        <source>Genres/Keywords</source>
+        <translation>Genre/Schlüsselwort</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Search for CD/Vinyl with Keyword</source>
-        <translation>Suche mit Schlüsselwort nach CD/Vinyl</translation>
+        <source>Search with Keyword and Genre</source>
+        <translation>Scuhe nach Schlüsselwort und Musikrichtung</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Author</source>
-        <translation>Autor</translation>
+        <source>Artists</source>
+        <translation>Künstler</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Search for Prints and Stitches authors</source>
-        <translation></translation>
+        <source>Search with Artistnames</source>
+        <translation>Suche mit Künstlernamen</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
+        <source>Search with Barcode</source>
+        <translation>Suche mit Barcode</translation>
+    </message>
+    <message>
+        <location line="-1"/>
         <source>Barcode</source>
         <translation></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Search for Barcode</source>
-        <translation>Suche nach Barcode</translation>
     </message>
 </context>
 <context>
@@ -1494,23 +1494,23 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="-20"/>
-        <source>Keyword</source>
-        <translation>Schlüsselwort</translation>
+        <source>Genres/Keywords</source>
+        <translation>Genre/Schlüsselwort</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Author</source>
-        <translation>Autor</translation>
+        <source>Artist</source>
+        <translation>Künstler</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+10"/>
+        <source>Barcode</source>
+        <translation>Barcode</translation>
+    </message>
+    <message>
+        <location line="-5"/>
         <source>Article number</source>
         <translation>Artikelnummer</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>ISBN/EAN number</source>
-        <translation>ISBN/EAN Nr</translation>
     </message>
 </context>
 <context>
@@ -1560,8 +1560,8 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Author</source>
-        <translation>Autor</translation>
+        <source>Artists</source>
+        <translation>Künstler</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3063,7 +3063,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Abschließen</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+19"/>
         <source>archiv isn&apos;t readable!</source>
         <translation>Archiv ist nicht lesbar!</translation>
     </message>
@@ -3109,11 +3109,12 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+5"/>
+        <location line="+8"/>
         <source>Image preview rejected!</source>
         <translation>Bildvorschau abgelehnt!</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Please use the Finish button!</source>
         <translation>Bitte benutzen Sie den Beenden knopf!</translation>
     </message>
@@ -3193,7 +3194,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ImageView</name>
     <message>
-        <location filename="../utils/imgedit/imageview.cpp" line="+29"/>
+        <location filename="../utils/imgedit/imageview.cpp" line="+28"/>
         <source>Right mouse button with mouse wheel to zoom the image!</source>
         <translation>Rechte Maustaste mit Mausrad zum Zoomen des Bildes verwenden!</translation>
     </message>
