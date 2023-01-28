@@ -114,7 +114,7 @@
 <context>
     <name>AntiquaConfigMenus</name>
     <message>
-        <location filename="../antiquaconfigmenus.cpp" line="+14"/>
+        <location filename="../antiquaconfigmenus.cpp" line="+15"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -131,6 +131,11 @@
     <message>
         <location line="+4"/>
         <source>Keywords</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Book cover description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1588,7 +1593,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CDVTableView</name>
     <message>
-        <location filename="../tabs/cdsvinyl/cdvtableview.cpp" line="+61"/>
+        <location filename="../tabs/cdsvinyl/cdvtableview.cpp" line="+62"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2723,6 +2728,37 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>DesignationEdit</name>
+    <message>
+        <location filename="../utils/designations/designationedit.cpp" line="+15"/>
+        <source>Keywords</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DesignationsDialog</name>
+    <message>
+        <location filename="../utils/designations/designationsdialog.cpp" line="+16"/>
+        <source>Edit Designation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Edit predefined book cover description.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EMailEdit</name>
     <message>
         <location filename="../widgets/emailedit.cpp" line="+14"/>
@@ -3064,7 +3100,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+38"/>
         <source>no source image exists!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3084,7 +3120,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>copy image in progress ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3115,7 +3151,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+62"/>
         <source>image from database!</source>
         <translation type="unfinished"></translation>
     </message>

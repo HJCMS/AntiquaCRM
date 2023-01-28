@@ -16,3 +16,5 @@ ADD_SUBDIRECTORY(settings)
 ADD_SUBDIRECTORY(storage)
 ADD_SUBDIRECTORY(templates)
 ADD_SUBDIRECTORY(cdtracking)
+ADD_SUBDIRECTORY(designations)
+

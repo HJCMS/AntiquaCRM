@@ -114,7 +114,7 @@
 <context>
     <name>AntiquaConfigMenus</name>
     <message>
-        <location filename="../antiquaconfigmenus.cpp" line="+14"/>
+        <location filename="../antiquaconfigmenus.cpp" line="+15"/>
         <source>Configuration</source>
         <translation>Konfiguration</translation>
     </message>
@@ -132,6 +132,11 @@
         <location line="+4"/>
         <source>Keywords</source>
         <translation>Schlüsselwörter</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Book cover description</source>
+        <translation>Buchumschlag Beschreibung</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -1592,7 +1597,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CDVTableView</name>
     <message>
-        <location filename="../tabs/cdsvinyl/cdvtableview.cpp" line="+61"/>
+        <location filename="../tabs/cdsvinyl/cdvtableview.cpp" line="+62"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
@@ -2727,6 +2732,37 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>DesignationEdit</name>
+    <message>
+        <location filename="../utils/designations/designationedit.cpp" line="+15"/>
+        <source>Keywords</source>
+        <translation>Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Description</source>
+        <translation>Beschreibung</translation>
+    </message>
+</context>
+<context>
+    <name>DesignationsDialog</name>
+    <message>
+        <location filename="../utils/designations/designationsdialog.cpp" line="+16"/>
+        <source>Edit Designation</source>
+        <translation>Bearbeite Umschreibung</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Edit predefined book cover description.</source>
+        <translation>Bearbeite vordefinierte Buchumschlag Beschreibungen.</translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Close</source>
+        <translation>Schließen</translation>
+    </message>
+</context>
+<context>
     <name>EMailEdit</name>
     <message>
         <location filename="../widgets/emailedit.cpp" line="+14"/>
@@ -3068,7 +3104,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Archiv ist nicht lesbar!</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+38"/>
         <source>no source image exists!</source>
         <translation>Kein Quellbild vorhanden!</translation>
     </message>
@@ -3088,7 +3124,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>kein gültiges Bild gefunden</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>copy image in progress ...</source>
         <translation>Bild kopieren läuft ...</translation>
     </message>
@@ -3119,7 +3155,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bitte benutzen Sie den Beenden knopf!</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+62"/>
         <source>image from database!</source>
         <translation>Bild aus Datenbank!</translation>
     </message>

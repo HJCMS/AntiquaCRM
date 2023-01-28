@@ -215,7 +215,7 @@ void ImageDialog::closeEvent(QCloseEvent *e) {
 
 void ImageDialog::resizeEvent(QResizeEvent *e) {
   if (e->type() == QEvent::Resize) {
-    config->beginGroup("imaging");
+    config->beginGroup("dialog/imaging");
     config->setValue("geometry", saveGeometry());
     config->setValue("windowState", m_splitter->saveState());
     config->endGroup();
@@ -256,8 +256,10 @@ int ImageDialog::exec() {
   p_archiv = getDefaultImagePath();
   p_savePath = getSavePath();
   m_imageSelecter->setDirectory(p_archiv.path());
-  if (config->contains("imaging/geometry")) {
-    config->beginGroup("imaging");
+  // old stuff
+  config->remove("imaging");
+  if (config->contains("dialog/imaging/geometry")) {
+    config->beginGroup("dialog/imaging");
     restoreGeometry(config->value("geometry").toByteArray());
     if (config->contains("windowState"))
       m_splitter->restoreState(config->value("windowState").toByteArray());

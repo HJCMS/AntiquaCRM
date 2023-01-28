@@ -17,6 +17,7 @@ private:
   QMenu *m_tables;
   QAction *ac_company;
   QAction *ac_keywords;
+  QAction *ac_designations;
   QAction *ac_storage;
   QAction *ac_delivery;
   QAction *ac_templates;
@@ -26,6 +27,7 @@ private Q_SLOTS:
   void openConfigDialog();
   void openCompanyDialog();
   void openKeywordsDialog();
+  void openDesignationsDialog();
   void openStorageDialog();
   void openDeliveryDialog();
   void openTemplatesDialog();

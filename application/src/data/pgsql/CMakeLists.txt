@@ -14,6 +14,7 @@ SET (query_tables_FILES
  query_customer_orders_status.sql
  query_default_delivery_service.sql
  query_designation.sql
+ query_designation_edit.sql
  query_keywords.sql
  query_monthly_report.sql
  query_order_articles.sql

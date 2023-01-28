@@ -7,6 +7,7 @@
 #include "deliverservicedialog.h"
 #include "keywordedit.h"
 #include "messagetemplates.h"
+#include "designationsdialog.h"
 #include "storageeditdialog.h"
 
 AntiquaConfigMenus::AntiquaConfigMenus(QWidget *parent) : QMenu{parent} {
@@ -24,6 +25,10 @@ AntiquaConfigMenus::AntiquaConfigMenus(QWidget *parent) : QMenu{parent} {
   ac_keywords = m_tables->addAction(tr("Keywords"));
   ac_keywords->setIcon(configIcon);
   connect(ac_keywords, SIGNAL(triggered()), SLOT(openKeywordsDialog()));
+
+  ac_designations = m_tables->addAction(tr("Book cover description"));
+  ac_designations->setIcon(configIcon);
+  connect(ac_designations, SIGNAL(triggered()), SLOT(openDesignationsDialog()));
 
   ac_storage = m_tables->addAction(tr("Storage"));
   ac_storage->setIcon(configIcon);
@@ -56,6 +61,12 @@ void AntiquaConfigMenus::openCompanyDialog() {
 
 void AntiquaConfigMenus::openKeywordsDialog() {
   KeywordEdit *d = new KeywordEdit(this);
+  d->exec();
+  d->deleteLater();
+}
+
+void AntiquaConfigMenus::openDesignationsDialog() {
+  DesignationsDialog *d = new DesignationsDialog(this);
   d->exec();
   d->deleteLater();
 }
