@@ -1206,7 +1206,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CDVEditor</name>
     <message>
-        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+19"/>
+        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+20"/>
         <source>Edit CD or Vinyl</source>
         <translation>Bearbeite CD oder Vinyl</translation>
     </message>
@@ -1301,7 +1301,7 @@ Bild - Artikel Nr: %2</translation>
         <translation></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+13"/>
         <source>Read CD</source>
         <translation>CD Auslesen</translation>
     </message>
@@ -1336,7 +1336,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Informationen</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+40"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -2174,7 +2174,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CustomersOrders</name>
     <message>
-        <location filename="../tabs/customers/customersorders.cpp" line="+17"/>
+        <location filename="../tabs/customers/customersorders.cpp" line="+22"/>
+        <source>Open it in Orders System.</source>
+        <translation>Bestellung im Auftragsystem öffnen.</translation>
+    </message>
+    <message>
+        <location line="+25"/>
         <location line="+25"/>
         <source>Payed</source>
         <translation>Bezahlt</translation>
@@ -2437,7 +2442,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+5"/>
         <source>New Order for selected Customer</source>
-        <translation>Bestellung für ausgewählten Kunden erstellen</translation>
+        <translation>Neuen Autftrag für den ausgewählten Kunden erstellen</translation>
     </message>
     <message>
         <location line="+5"/>

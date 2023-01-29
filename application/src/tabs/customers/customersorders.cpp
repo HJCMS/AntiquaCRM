@@ -7,9 +7,39 @@
 #include <AntiquaCRM>
 #include <QDateTime>
 #include <QHeaderView>
+#include <QIcon>
+#include <QMenu>
 
 CustomersOrders::CustomersOrders(QWidget *parent) : QTableWidget{parent} {
   restore();
+  setSelectionBehavior(QAbstractItemView::SelectRows);
+}
+
+void CustomersOrders::contextMenuEvent(QContextMenuEvent *event) {
+  p_model = indexAt(event->pos());
+  QMenu *m = new QMenu(this);
+  QAction *ac_open = m->addAction(QIcon("://icons/spreadsheet.png"),
+                                  tr("Open it in Orders System."));
+  ac_open->setEnabled(p_model.isValid());
+  connect(ac_open, SIGNAL(triggered()), SLOT(openOrder()));
+  m->exec(event->globalPos());
+  delete m;
+}
+
+void CustomersOrders::openOrder() {
+  if (!p_model.isValid())
+    return;
+
+  qint64 o_id = item(p_model.row(), 1)->text().toInt();
+  QJsonObject obj;
+  obj.insert("window_operation", "open_order");
+  obj.insert("tab", "orders_tab");
+  obj.insert("open_order", o_id);
+
+  AntiquaCRM::ATransmitter *m_sock = new AntiquaCRM::ATransmitter(this);
+  connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
+  if (m_sock->pushOperation(obj))
+    m_sock->close();
 }
 
 void CustomersOrders::restore() {

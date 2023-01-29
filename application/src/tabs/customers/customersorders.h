@@ -5,6 +5,8 @@
 #ifndef ANTIQUACRM_CUSTOMERSORDERS_H
 #define ANTIQUACRM_CUSTOMERSORDERS_H
 
+#include <QContextMenuEvent>
+#include <QModelIndex>
 #include <QObject>
 #include <QTableWidget>
 #include <QTableWidgetItem>
@@ -13,7 +15,12 @@ class CustomersOrders : public QTableWidget {
   Q_OBJECT
 
 private:
+  QModelIndex p_model;
   Qt::ItemFlags default_flags = (Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+  void contextMenuEvent(QContextMenuEvent *) override;
+
+private Q_SLOTS:
+  void openOrder();
 
 public Q_SLOTS:
   void restore();

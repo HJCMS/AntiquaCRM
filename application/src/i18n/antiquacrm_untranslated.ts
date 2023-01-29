@@ -1204,7 +1204,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CDVEditor</name>
     <message>
-        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+19"/>
+        <location filename="../tabs/cdsvinyl/cdveditor.cpp" line="+20"/>
         <source>Edit CD or Vinyl</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1299,7 +1299,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+13"/>
         <source>Read CD</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1334,7 +1334,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+40"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2170,7 +2170,12 @@ Image - Article Id: %2</source>
 <context>
     <name>CustomersOrders</name>
     <message>
-        <location filename="../tabs/customers/customersorders.cpp" line="+17"/>
+        <location filename="../tabs/customers/customersorders.cpp" line="+22"/>
+        <source>Open it in Orders System.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
         <location line="+25"/>
         <source>Payed</source>
         <translation type="unfinished"></translation>
