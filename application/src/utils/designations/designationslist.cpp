@@ -43,9 +43,6 @@ void DesignationsList::insertQuery(const QSqlQuery &query) {
     data_t.id = q.value("bd_id").toInt();
     data_t.keyword = q.value("bd_keyword").toString();
     data_t.description = q.value("bd_description").toString();
-
-    QString search("bd_id=" + QString::number(data_t.id));
-    data_t.whereclause = search;
     addItem(new DesignationsListItem(data_t, this));
   }
 }

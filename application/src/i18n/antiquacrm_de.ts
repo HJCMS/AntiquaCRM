@@ -2734,32 +2734,112 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>DesignationEdit</name>
     <message>
-        <location filename="../utils/designations/designationedit.cpp" line="+15"/>
-        <source>Keywords</source>
+        <location filename="../utils/designations/designationedit.cpp" line="+16"/>
+        <source>Keyword</source>
         <translation>Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Book cover description</source>
+        <translation>Buchumschlag Beschreibung</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Description</source>
         <translation>Beschreibung</translation>
     </message>
+    <message>
+        <location line="+5"/>
+        <source>Database Id</source>
+        <translation>Datenbank Id</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Description for this entry.</source>
+        <translation>Beschreibung für diesen Eintrag.</translation>
+    </message>
+    <message>
+        <location line="+96"/>
+        <source>No Entry selected, delete canceled!</source>
+        <translation>Kein Eintrag ausgewählt, löschen abgebrochen!</translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Empty Book designation will not accepted!</source>
+        <translation>Leere Buchbezeichnung wird nicht akzeptiert!</translation>
+    </message>
+    <message>
+        <location line="-43"/>
+        <source>Nothing to save</source>
+        <translation>Es gibt nichts zu speichern</translation>
+    </message>
+    <message>
+        <location line="+50"/>
+        <source>Database Indexes mismatch, update canceled!</source>
+        <translation>Datenbankindizes stimmen nicht überein, Update abgebrochen!</translation>
+    </message>
 </context>
 <context>
     <name>DesignationsDialog</name>
     <message>
-        <location filename="../utils/designations/designationsdialog.cpp" line="+16"/>
+        <location filename="../utils/designations/designationsdialog.cpp" line="+17"/>
         <source>Edit Designation</source>
         <translation>Bearbeite Umschreibung</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+9"/>
         <source>Edit predefined book cover description.</source>
         <translation>Bearbeite vordefinierte Buchumschlag Beschreibungen.</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+10"/>
+        <source>Delete</source>
+        <translation>Löschen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Delete current Entry</source>
+        <translation>Lösche den Aktuellen Eintrag</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Clear</source>
+        <translation>Leeren</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Clear input to create a new Entry</source>
+        <translation>Eingabe löschen, um einen neuen Eintrag zu erstellen</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Save current Dataset.</source>
+        <translation>Aktuellen Datensatz speichern.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Close</source>
         <translation>Schließen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Exiting this Dialog.</source>
+        <translation>Beendet diesen Dialog.</translation>
+    </message>
+    <message>
+        <location line="+70"/>
+        <source>Saving success!</source>
+        <translation>Speichern erfolgreich!</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>An error has occurred!</source>
+        <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
 </context>
 <context>

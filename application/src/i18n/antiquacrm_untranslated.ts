@@ -2730,8 +2730,13 @@ Image - Article Id: %2</source>
 <context>
     <name>DesignationEdit</name>
     <message>
-        <location filename="../utils/designations/designationedit.cpp" line="+15"/>
-        <source>Keywords</source>
+        <location filename="../utils/designations/designationedit.cpp" line="+16"/>
+        <source>Keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Book cover description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2739,22 +2744,97 @@ Image - Article Id: %2</source>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>DesignationsDialog</name>
     <message>
-        <location filename="../utils/designations/designationsdialog.cpp" line="+16"/>
-        <source>Edit Designation</source>
+        <location line="+5"/>
+        <source>Database Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Edit predefined book cover description.</source>
+        <source>Description for this entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+96"/>
+        <source>No Entry selected, delete canceled!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+15"/>
+        <source>Empty Book designation will not accepted!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-43"/>
+        <source>Nothing to save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+50"/>
+        <source>Database Indexes mismatch, update canceled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DesignationsDialog</name>
+    <message>
+        <location filename="../utils/designations/designationsdialog.cpp" line="+17"/>
+        <source>Edit Designation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Edit predefined book cover description.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Delete current Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Clear input to create a new Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Save current Dataset.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Exiting this Dialog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+70"/>
+        <source>Saving success!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

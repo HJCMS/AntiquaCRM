@@ -5,12 +5,12 @@
 #ifndef DESIGNATIONS_EDIT_H
 #define DESIGNATIONS_EDIT_H
 
-#include <QComboBox>
+#include <QLabel>
+#include <QRegExp>
 #include <QLineEdit>
 #include <QObject>
+#include <QSpinBox>
 #include <QTextEdit>
-#include <QStatusBar>
-#include <QPushButton>
 #include <QWidget>
 
 #include "designationdata.h"
@@ -19,25 +19,29 @@ class DesignationEdit : public QWidget {
   Q_OBJECT
 
 private:
-  QComboBox *m_type;
+  QSpinBox *m_id;
   QLineEdit *m_keyword;
   QTextEdit *m_description;
-  QStatusBar *m_statusBar;
-  QPushButton *btn_save;
   DesignationData origin_t;
-
-private Q_SLOTS:
-  void setSave();
+  inline QLabel *label(const QString &);
+  const QRegExp spaces() const;
+  const QString getKeyword();
+  const QString getDesciption();
+  void createSqlInsert();
+  void createSqlUpdate();
 
 public Q_SLOTS:
   void setClear();
-  void setMessage(const QString &);
+  void setCreateNew();
+  void setDelete();
+  void setSave();
   void setEditItem(const DesignationData &);
 
 public:
   explicit DesignationEdit(QWidget *parent = nullptr);
 
 Q_SIGNALS:
+  void sendStatusMessage(const QString &);
   void sendSaveQuery(const QString &);
 };
 

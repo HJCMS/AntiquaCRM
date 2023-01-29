@@ -12,7 +12,6 @@ struct DesignationData {
   int id = -1;
   QString keyword;
   QString description;
-  QString whereclause;
 };
 
 Q_DECLARE_METATYPE(DesignationData);

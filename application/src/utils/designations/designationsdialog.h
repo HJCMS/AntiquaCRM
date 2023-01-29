@@ -7,12 +7,11 @@
 
 #include <AntiquaCRM>
 #include <QDialog>
-#include <QDialogButtonBox>
 #include <QObject>
+#include <QPushButton>
+#include <QKeyEvent>
 #include <QResizeEvent>
-#include <QSplitter>
 #include <QStatusBar>
-#include <QLabel>
 #include <QWidget>
 
 class DesignationsList;
@@ -24,17 +23,22 @@ class DesignationsDialog final : public QDialog {
 private:
   AntiquaCRM::ASettings *m_cfg;
   AntiquaCRM::ASqlCore *m_sql;
-  QLabel *m_label;
-  QSplitter *m_splitter;
   DesignationsList *m_listView;
   DesignationEdit *m_edit;
-  QDialogButtonBox *m_btnBox;
   QStatusBar *m_statusBar;
+  QPushButton *btn_clear;
+  QPushButton *btn_delete;
+  QPushButton *btn_save;
+  QPushButton *btn_close;
+
+  void keyPressEvent(QKeyEvent *) override;
+  void resizeEvent(QResizeEvent *) override;
+  bool event(QEvent *) override;
+
   bool loadBookDesignations();
 
 private Q_SLOTS:
   void setSaveQuery(const QString &);
-  void resizeEvent(QResizeEvent *) override;
 
 public:
   explicit DesignationsDialog(QWidget *parent = nullptr);
