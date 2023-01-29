@@ -1415,6 +1415,12 @@ Image - Article Id: %2</source>
         <source>Image delete successfully!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+54"/>
+        <location line="+17"/>
+        <source>The Dust Cover Condition, is not included at the Description.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CDVFilterSelect</name>
@@ -2828,7 +2834,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+71"/>
         <source>Saving success!</source>
         <translation type="unfinished"></translation>
     </message>

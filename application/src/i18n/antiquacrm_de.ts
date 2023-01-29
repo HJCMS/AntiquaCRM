@@ -1419,6 +1419,12 @@ Bild - Artikel Nr: %2</translation>
         <source>Image delete successfully!</source>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
+    <message>
+        <location line="+54"/>
+        <location line="+17"/>
+        <source>The Dust Cover Condition, is not included at the Description.</source>
+        <translation>Der Staubschutzzustand ist in der Beschreibung nicht enthalten.</translation>
+    </message>
 </context>
 <context>
     <name>CDVFilterSelect</name>
@@ -2832,7 +2838,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Beendet diesen Dialog.</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+71"/>
         <source>Saving success!</source>
         <translation>Speichern erfolgreich!</translation>
     </message>

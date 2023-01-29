@@ -11,6 +11,7 @@
 #include <AntiquaPrinting>
 #include <QDebug>
 #include <QMessageBox>
+#include <QSizePolicy>
 #include <QSplitterHandle>
 
 CDVEditor::CDVEditor(QWidget *parent)
@@ -149,7 +150,6 @@ CDVEditor::CDVEditor(QWidget *parent)
   cv_eangtin->setObjectName("cv_eangtin");
   cv_eangtin->setToolTip(infolabel->text());
   row1->addWidget(cv_eangtin, row1c++, 1, 1, 4);
-  // Gridlayout Stretch
   row1->setRowStretch(row1c++, 1);
   // @BEGIN_GROUP toolBarFrame
   QFrame *toolBarFrame = new QFrame(this);
@@ -210,13 +210,15 @@ CDVEditor::CDVEditor(QWidget *parent)
   m_tabWidget->insertTab(2, m_infos, tabIcons, tr("Information"));
   mainLayout->addWidget(m_tabWidget);
   // END : Row2
+
   // Begin : Row3
   m_actionBar = new EditorActionBar(this);
   mainLayout->addWidget(m_actionBar);
   // END : Row3
 
-  // stretch splitter Widget
-  mainLayout->setStretch(1, 1);
+  // Layout behavior (TabWidget)
+  mainLayout->setStretch(2, 1);
+
   setLayout(mainLayout);
 
   // Signals:ToolBar
@@ -647,6 +649,11 @@ bool CDVEditor::openEditEntry(qint64 articleId) {
     setRestore();
   }
 
+  if (cv_designation->value().toString().isEmpty()) {
+    cv_designation->setValue(
+        tr("The Dust Cover Condition, is not included at the Description."));
+  }
+
   return status;
 }
 
@@ -660,6 +667,8 @@ bool CDVEditor::createNewEntry() {
 
     setDefaultInput(field);
   }
+  cv_designation->setValue(
+      tr("The Dust Cover Condition, is not included at the Description."));
   setResetModified(inputFields);
   return isEnabled();
 }

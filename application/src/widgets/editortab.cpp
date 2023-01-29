@@ -4,7 +4,7 @@
 #include "editortab.h"
 
 EditorTab::EditorTab(QWidget *parent) : QTabWidget{parent} {
-  setFixedHeight(180);
+  // OBSOLETE setFixedHeight(180);
   setContentsMargins(1, 1, 1, 1);
   m_tabBar = new EditorTabBar(this);
   setTabBar(m_tabBar);
