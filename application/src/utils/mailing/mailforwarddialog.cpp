@@ -229,7 +229,7 @@ void MailForwardDialog::setAttachment(bool b) {
     m_attachmentBar->clear();
     m_attachmentBar->setActive(true);
 
-    QString id = AntiquaCRM::AUtil::fileNumber(invoice);
+    QString id = AntiquaCRM::AUtil::zerofill(invoice);
     if (m_attachmentBar->setAttachment(id)) {
       btn_email->setEnabled(true);
     } else {

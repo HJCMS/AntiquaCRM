@@ -112,7 +112,7 @@ QTableWidgetItem *CustomersOrders::paymentItem(const QVariant &data) {
 QTableWidgetItem *CustomersOrders::numidItem(const QVariant &data) {
   QString num;
   if (data.type() == QVariant::Int) {
-    num = AntiquaCRM::AUtil::fileNumber(data.toInt());
+    num = AntiquaCRM::AUtil::zerofill(data.toInt());
   } else {
     num = data.toString().rightJustified(7, '0');
   }

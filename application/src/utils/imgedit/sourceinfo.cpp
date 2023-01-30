@@ -44,7 +44,7 @@ void SourceInfo::setFileId(qint64 id) { p_fileId = id; }
 qint64 SourceInfo::getFileId() const { return p_fileId; }
 
 const QString SourceInfo::imageBaseName(qint64 id) {
-  return AntiquaCRM::AUtil::fileNumber(id, 8);
+  return AntiquaCRM::AUtil::zerofill(id, 8);
 }
 
 void SourceInfo::setTarget(const QDir &dest) {

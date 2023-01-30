@@ -224,13 +224,13 @@ void DeliveryNote::setDelivery(qint64 orderId, qint64 customerId,
     warningMessageBox(tr("There is no Order-Id to generate this delivery!"));
     return;
   }
-  p_orderId = AntiquaCRM::AUtil::fileNumber(orderId);
+  p_orderId = AntiquaCRM::AUtil::zerofill(orderId);
 
   if (customerId < 1) {
     warningMessageBox(tr("There is no Customer Id to generate this delivery!"));
     return;
   }
-  p_customerId = AntiquaCRM::AUtil::fileNumber(customerId);
+  p_customerId = AntiquaCRM::AUtil::zerofill(customerId);
 
   if (deliverNoteId.isEmpty()) {
     warningMessageBox(tr("delivery note number is empty!"));

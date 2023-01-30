@@ -449,19 +449,19 @@ void Invoice::setInvoice(qint64 orderId,    /* Bestellnummer */
     warningMessageBox(tr("There is no Order-Id to generate this invoice!"));
     return;
   }
-  p_orderId = AntiquaCRM::AUtil::fileNumber(orderId);
+  p_orderId = AntiquaCRM::AUtil::zerofill(orderId);
 
   if (customerId < 1) {
     warningMessageBox(tr("There is no Customer Id to generate this invoice!"));
     return;
   }
-  p_customerId = AntiquaCRM::AUtil::fileNumber(customerId);
+  p_customerId = AntiquaCRM::AUtil::zerofill(customerId);
 
   if (invoiceId < 1) {
     warningMessageBox(tr("There is no Invoice Id to generate this invoice!"));
     return;
   }
-  p_invoiceId = AntiquaCRM::AUtil::fileNumber(invoiceId);
+  p_invoiceId = AntiquaCRM::AUtil::zerofill(invoiceId);
 
   if (deliverNoteId.isEmpty()) {
     warningMessageBox(tr("delivery note number is empty!"));

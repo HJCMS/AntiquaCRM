@@ -6,25 +6,23 @@
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 #include <QStringList>
-#include <QSysInfo>
 #include <QTextCodec>
 #include <QTextEncoder>
 
 namespace AntiquaCRM {
 
 const QString AUtil::socketName() {
-  QString name(ANTIQUACRM_CONNECTION_DOMAIN);
-  name.append(".");
-  name.append(QString::fromLocal8Bit(QSysInfo::machineUniqueId()));
-  QString userName;
+  QString sname(ANTIQUACRM_CONNECTION_DOMAIN);
+  sname.append("-");
+  sname.append(QString::fromLocal8Bit(HJCMS_CONFIG_APPID));
 #ifdef Q_OS_LINUX
-  userName = qEnvironmentVariable("USER").trimmed().replace(" ", "");
+  QString userName = qEnvironmentVariable("USER").trimmed().replace(" ", "");
   if (!userName.isEmpty()) {
-    name.append(".");
-    name.append(userName);
+    sname.append("-");
+    sname.append(userName);
   }
 #endif
-  return name;
+  return sname;
 }
 
 const QString AUtil::trim(const QString &str) {
@@ -42,7 +40,7 @@ const QString AUtil::ucFirst(const QString &str) {
   return array.join(" ");
 }
 
-const QRegExp AUtil::mailPattern() {
+const QRegExp AUtil::emailRegExp() {
   QRegExp reg;
   reg.setCaseSensitivity(Qt::CaseInsensitive);
   reg.setPattern("^([\\d\\w\\-\\.]{3,})@([\\d\\w\\-\\.]{2,})\\.([a-z]{2,6})$");
@@ -50,13 +48,13 @@ const QRegExp AUtil::mailPattern() {
 }
 
 bool AUtil::checkMail(const QString &mail) {
-  QRegularExpression expr(mailPattern().pattern());
+  QRegularExpression expr(emailRegExp().pattern());
   QString str = mail.trimmed().toLower();
   QRegularExpressionMatch match = expr.match(str);
   return match.hasMatch();
 }
 
-const QRegExp AUtil::phonePattern() {
+const QRegExp AUtil::phoneRegExp() {
   QRegExp reg;
   reg.setCaseSensitivity(Qt::CaseSensitive);
   reg.setPattern("^([\\d]{2,3}\\s?[\\d]{2,4}[\\s?\\d]+)$");
@@ -64,7 +62,7 @@ const QRegExp AUtil::phonePattern() {
 }
 
 bool AUtil::checkPhone(const QString &phone) {
-  QRegularExpression expr(phonePattern().pattern());
+  QRegularExpression expr(phoneRegExp().pattern());
   QString str = phone.trimmed().toLower();
   QRegularExpressionMatch match = expr.match(str);
   return match.hasMatch();
@@ -76,7 +74,7 @@ const QString AUtil::toISO88591(const QString &str) {
   return QString(encoder.fromUnicode(str));
 }
 
-const QString AUtil::fileNumber(qint64 number, int length) {
+const QString AUtil::zerofill(qint64 number, int length) {
   return QString::number(number).rightJustified(length, '0');
 }
 

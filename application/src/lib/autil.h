@@ -32,7 +32,7 @@ public:
   /**
    * @brief Regular Expression for eMail
    */
-  static const QRegExp mailPattern();
+  static const QRegExp emailRegExp();
 
   /**
    * @brief Check eMail Address
@@ -46,7 +46,7 @@ public:
    *  (Country Code) (NPA Area Code) (Prefix) (Subscriber)
    * @endcode
    */
-  static const QRegExp phonePattern();
+  static const QRegExp phoneRegExp();
 
   /**
    * @brief Check Mobile/Phone Addresses
@@ -59,9 +59,9 @@ public:
   static const QString toISO88591(const QString &);
 
   /**
-   * @brief Convert Number to AntiquaCRM file name with leading zeros
+   * @brief Convert Number to AntiquaCRM with leading zeros to String
    */
-  static const QString fileNumber(qint64 number, int length = 7);
+  static const QString zerofill(qint64 number, int length = 7);
 };
 
 }; // namespace AntiquaCRM

@@ -72,7 +72,7 @@ void PhoneCountryCodeModel::initModel() {
       QJsonObject obj = arr[i].toObject();
       qint64 npa = obj.value("phone").toInt();
       CountryCode code;
-      code.npa = AntiquaCRM::AUtil::fileNumber(npa, 3);
+      code.npa = AntiquaCRM::AUtil::zerofill(npa, 3);
       code.info = obj.value("country").toString();
       p_codes.append(code);
     }

@@ -87,16 +87,16 @@ const QString MailTemplateKeys::convert(const QString &key) {
     return customerMail();
 
   if (search == "CRM_CUSTOMER_ID")
-    return AntiquaCRM::AUtil::fileNumber(p_data.value("c_id").toInt());
+    return AntiquaCRM::AUtil::zerofill(p_data.value("c_id").toInt());
 
   if (search == "CRM_ORDER_ID" || search == "CRM_PROVIDER_ORDER_ID")
-    return AntiquaCRM::AUtil::fileNumber(p_data.value("o_id").toInt());
+    return AntiquaCRM::AUtil::zerofill(p_data.value("o_id").toInt());
 
   if (search == "CRM_INVOICE_ID")
-    return AntiquaCRM::AUtil::fileNumber(p_data.value("o_invoice_id").toInt());
+    return AntiquaCRM::AUtil::zerofill(p_data.value("o_invoice_id").toInt());
 
   if (search == "CRM_ARTICLE_ID")
-    return AntiquaCRM::AUtil::fileNumber(p_data.value("a_article_id").toInt());
+    return AntiquaCRM::AUtil::zerofill(p_data.value("a_article_id").toInt());
 
   if (search == "CRM_SALUTATION")
     return salutation();

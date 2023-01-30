@@ -14,7 +14,7 @@ EMailEdit::EMailEdit(QWidget *parent) : InputEdit{parent} {
   m_edit->setToolTip(tr("eMail edit"));
   m_edit->setPlaceholderText(tr("usage.example@example.com"));
   m_layout->addWidget(m_edit);
-  QRegExp pattern = AntiquaCRM::AUtil::mailPattern();
+  QRegExp pattern = AntiquaCRM::AUtil::emailRegExp();
   m_validator = new QRegExpValidator(pattern, m_edit);
   m_edit->setValidator(m_validator);
   setRequired(false);
