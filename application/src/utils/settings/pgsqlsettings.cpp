@@ -403,4 +403,14 @@ void PgSQLSettings::saveSectionConfig() {
     }
   }
   config->endGroup();
+
+  /**
+   * @brief Fixed Database Listener settings
+   * @param interval Timer trigger every second
+   * @param counter  Count down from 60 seconds
+   */
+  config->beginGroup("timer/dblistener");
+  config->setValue("interval", 1);
+  config->setValue("counter", 60);
+  config->endGroup();
 }

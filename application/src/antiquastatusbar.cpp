@@ -2,46 +2,10 @@
 // vim: set fileencoding=utf-8
 
 #include "antiquastatusbar.h"
+#include "antiquadatabasebar.h"
 #include "antiquatimer.h"
-#include "antiquadbinfo.h"
 
-#include <QDebug>
-#include <QIcon>
-#include <QLayout>
-
-AntiquaDatabaseBar::AntiquaDatabaseBar(QWidget *parent) : QToolBar{parent} {
-  setFloatable(false);
-  setMovable(false);
-  setOrientation(Qt::Horizontal);
-  setToolButtonStyle(Qt::ToolButtonIconOnly);
-  ac_status = addAction(tr("Database Status"));
-  ac_status->setIcon(QIcon("://icons/database.png"));
-  connect(ac_status,SIGNAL(triggered()), SLOT(databaseInfoDialog()));
-}
-
-void AntiquaDatabaseBar::databaseInfoDialog() {
-  AntiquaDbInfo infoPopUp(this);
-  infoPopUp.exec();
-}
-
-void AntiquaDatabaseBar::setStatus(AntiquaCRM::ASqlCore::Status status) {
-  switch (status) {
-  case AntiquaCRM::ASqlCore::Status::CLOSED:
-    ac_status->setIcon(QIcon("://icons/db_status.png"));
-    ac_status->setToolTip(tr("Database not connected!"));
-    break;
-
-  case AntiquaCRM::ASqlCore::Status::OPEN:
-    ac_status->setIcon(QIcon("://icons/db_comit.png"));
-    ac_status->setToolTip(tr("Database connected."));
-    break;
-
-  default:
-    ac_status->setIcon(QIcon("://icons/db_status.png"));
-    ac_status->setToolTip(tr("Invalid database status!"));
-    break;
-  }
-}
+#include <AntiquaCRM>
 
 AntiquaStatusBar::AntiquaStatusBar(QMainWindow *parent) : QStatusBar{parent} {
   setObjectName("antiqua_status_bar");
@@ -49,8 +13,6 @@ AntiquaStatusBar::AntiquaStatusBar(QMainWindow *parent) : QStatusBar{parent} {
   setStyleSheet("* {margin:0;}");
   m_toolBar = new AntiquaDatabaseBar(this);
   addPermanentWidget(m_toolBar);
-  // Im Konstruktor keine Datenbankverbindung aufmachen!
-  m_sql = nullptr;
 
   m_timer = new AntiquaTimer(this);
   connect(m_timer, SIGNAL(sendTrigger()), SLOT(timerTriggered()));
@@ -58,10 +20,14 @@ AntiquaStatusBar::AntiquaStatusBar(QMainWindow *parent) : QStatusBar{parent} {
 }
 
 void AntiquaStatusBar::timerTriggered() {
-  if (m_sql == nullptr)
-    m_sql = new AntiquaCRM::ASqlCore(this);
-
-  m_toolBar->setStatus(m_sql->status());
+  AntiquaCRM::ASqlSettings cfg(this);
+  QSqlDatabase db = QSqlDatabase::database(cfg.connectionName());
+  if (db.isOpen() && !db.isOpenError()) {
+    m_toolBar->setStatus(true);
+  } else {
+    m_toolBar->setStatus(false);
+    statusWarnMessage(tr("Missing database connection!"));
+  }
 }
 
 void AntiquaStatusBar::statusInfoMessage(const QString &text) {
@@ -74,7 +40,7 @@ void AntiquaStatusBar::statusWarnMessage(const QString &text) {
 
 AntiquaStatusBar::~AntiquaStatusBar() {
   if (m_timer != nullptr) {
-    qInfo("Shutdown Timer ...");
+    qInfo("Shutdown Database Listener ...");
     m_timer->deleteLater();
   }
 }

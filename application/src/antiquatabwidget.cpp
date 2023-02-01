@@ -213,11 +213,15 @@ void AntiquaTabWidget::setTabChanged(int index) {
 void AntiquaTabWidget::setTabToClose(int index) {
   Inventory *m_tab = tabWidget(index);
   if (m_tab != nullptr && m_tab->isClosable()) {
+    QString title = m_tab->windowTitle();
     if (!m_tab->isWindowModified()) {
       removeTab(index);
       return;
     }
-    qDebug() << "Can't close this tab, unsaved changes!";
+    emit sendWarnMessage(tr("Unsaved changes for tab '%1'!").arg(title));
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << "Can't close this tab, unsaved changes!" << title;
+#endif
   }
 }
 

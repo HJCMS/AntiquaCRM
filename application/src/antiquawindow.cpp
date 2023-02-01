@@ -12,7 +12,6 @@ AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
   setMinimumSize(QSize(780, 560));
   setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
   setWindowIcon(QIcon(":icons/antiqua.png"));
-  // setFixedSize(1280, 720); // Only for Testing
 
   m_cfg = new AntiquaCRM::ASettings(this);
   m_cfg->setObjectName("window_settings");
@@ -32,8 +31,8 @@ AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
           m_centralWidget, SLOT(addReportsTab(const QString &)));
   connect(m_menuBar, SIGNAL(sendOpenTabViews(const QString &)), m_centralWidget,
           SLOT(addViewsTab(const QString &)));
-  connect(m_menuBar, SIGNAL(sendOpenTabStatistics(const QString &)), m_centralWidget,
-          SLOT(addStatisticsTab(const QString &)));
+  connect(m_menuBar, SIGNAL(sendOpenTabStatistics(const QString &)),
+          m_centralWidget, SLOT(addStatisticsTab(const QString &)));
   connect(m_menuBar, SIGNAL(sendViewTab(const QString &)), m_centralWidget,
           SLOT(setShowTab(const QString &)));
   connect(m_menuBar, SIGNAL(sendToggleFullscreen()),

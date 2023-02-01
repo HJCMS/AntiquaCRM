@@ -5,39 +5,20 @@
 #ifndef ANTIQUACRM_STATUSBAR_H
 #define ANTIQUACRM_STATUSBAR_H
 
-#include <AntiquaCRM>
 #include <QMainWindow>
 #include <QObject>
 #include <QStatusBar>
-#include <QToolBar>
-#include <QToolButton>
+#include <QString>
 #include <QWidget>
 
 class AntiquaTimer;
-
-class AntiquaDatabaseBar final : public QToolBar {
-  Q_OBJECT
-
-private:
-  QAction *ac_status;
-
-private Q_SLOTS:
-  void databaseInfoDialog();
-
-public Q_SLOTS:
-  void setStatus(AntiquaCRM::ASqlCore::Status);
-
-public:
-  explicit AntiquaDatabaseBar(QWidget *parent = nullptr);
-
-};
+class AntiquaDatabaseBar;
 
 class AntiquaStatusBar final : public QStatusBar {
   Q_OBJECT
 
 private:
   int timeout_seconds = 10;
-  AntiquaCRM::ASqlCore *m_sql;
   AntiquaDatabaseBar *m_toolBar;
   AntiquaTimer *m_timer;
 

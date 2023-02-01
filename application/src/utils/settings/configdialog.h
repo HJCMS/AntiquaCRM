@@ -39,6 +39,7 @@ private:
   QStatusBar *m_statusbar;
 
   static const QIcon getIcon(const QString &name);
+  static const QString getConfigPath(const QString &section);
 
   void closeEvent(QCloseEvent *) override;
 

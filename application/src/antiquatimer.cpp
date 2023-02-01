@@ -9,8 +9,10 @@
 AntiquaTimer::AntiquaTimer(QObject *parent) : QObject{parent} {
   setObjectName("antiquacrm_timer");
   AntiquaCRM::ASettings cfg(this);
-  interval = (cfg.value("timeout", 1).toInt() * 1000);
-  countBase = cfg.value("counter", (6 * 60)).toInt();
+  cfg.beginGroup("timer/dblistener");
+  interval = (cfg.value("interval", 1).toInt() * 1000);
+  countBase = cfg.value("counter", 60).toInt();
+  cfg.endGroup();
   countDown = countBase;
 }
 
@@ -20,12 +22,11 @@ void AntiquaTimer::timerEvent(QTimerEvent *event) {
     return;
 
   --countDown;
-  if (countDown <= 0) {
-    // qDebug() << Q_FUNC_INFO << countDown;
-    countDown = countBase;
-    emit sendTrigger();
+  if (countDown > 0)
     return;
-  }
+
+  countDown = countBase;
+  emit sendTrigger();
 }
 
 void AntiquaTimer::restart() {

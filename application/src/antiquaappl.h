@@ -7,6 +7,7 @@
 
 #include <AntiquaCRM>
 #include <QApplication>
+#include <QIcon>
 #include <QJsonObject>
 #include <QList>
 #include <QObject>
@@ -17,7 +18,7 @@ class AntiquaWindow;
 class AntiquaSystemTray;
 class AntiquaTimer;
 
-class AntiquaAppl : public QApplication {
+class AntiquaAppl final : public QApplication {
   Q_OBJECT
 
 private:
@@ -27,6 +28,8 @@ private:
   AntiquaCRM::ASqlCore *m_sql;
 
   QList<AntiquaCRM::APluginInterface *> p_interfaces;
+
+  static const QIcon applIcon();
 
   void initGui();
 

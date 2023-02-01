@@ -33,7 +33,7 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+162"/>
+        <location filename="../antiquaappl.cpp" line="+163"/>
         <source>Search Networkconnection!</source>
         <translation>Suche Netzwerkverbindung!</translation>
     </message>
@@ -162,24 +162,19 @@
 <context>
     <name>AntiquaDatabaseBar</name>
     <message>
-        <location filename="../antiquastatusbar.cpp" line="+17"/>
+        <location filename="../antiquadatabasebar.cpp" line="+14"/>
         <source>Database Status</source>
         <translation>Datenbankstatus</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+16"/>
         <source>Database not connected!</source>
         <translation>Nicht mit Datenbank verbunden!</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-3"/>
         <source>Database connected.</source>
         <translation>Mit Datenbank verbunden.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Invalid database status!</source>
-        <translation>Ungültiger Datenbankstatus!</translation>
     </message>
 </context>
 <context>
@@ -209,6 +204,14 @@
         <location line="+20"/>
         <source>Application Quit</source>
         <translation>Programm beenden</translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaStatusBar</name>
+    <message>
+        <location filename="../antiquastatusbar.cpp" line="+29"/>
+        <source>Missing database connection!</source>
+        <translation>Vermisse Datenbankverbindung!</translation>
     </message>
 </context>
 <context>
@@ -269,12 +272,12 @@
     </message>
     <message>
         <location line="+9"/>
-        <location line="+136"/>
+        <location line="+140"/>
         <source>Various</source>
         <translation>Verschiedenes</translation>
     </message>
     <message>
-        <location line="-127"/>
+        <location line="-131"/>
         <source>View and import Provider orders</source>
         <translation>Anzeigen und Importieren von Dienstleisterbestellungen</translation>
     </message>
@@ -289,7 +292,12 @@
         <translation>Kann &apos;%1&apos; nicht öffnen!</translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+67"/>
+        <source>Unsaved changes for tab &apos;%1&apos;!</source>
+        <translation>Nicht gespeicherte Änderungen für Registerkarte &apos;%1&apos;!</translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
@@ -350,7 +358,7 @@
 <context>
     <name>AntiquaWindow</name>
     <message>
-        <location filename="../antiquawindow.cpp" line="+71"/>
+        <location filename="../antiquawindow.cpp" line="+70"/>
         <source>Save request</source>
         <translation>Speichernanfrage</translation>
     </message>
@@ -1806,7 +1814,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Abschließen</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+33"/>
         <source>You have unsafed changes!</source>
         <translation>Nicht gespeicherte Änderungen!</translation>
     </message>
@@ -2843,7 +2851,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Beendet diesen Dialog.</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+73"/>
         <source>Saving success!</source>
         <translation>Speichern erfolgreich!</translation>
     </message>
@@ -6215,7 +6223,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Ein Auftrag kann ohne einen Artkel nicht importiert werden!</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+90"/>
         <source>An order for %1 already exists!</source>
         <translation>Ein Auftrag für %1 existiert bereits!</translation>
     </message>

@@ -13,25 +13,26 @@
 #include <QColor>
 #include <QPalette>
 #endif
-#include <QIcon>
 #include <QLocalSocket>
 #include <QMetaObject>
 #include <QMutex>
 #include <QStyleFactory>
 #include <QTranslator>
 
-static const QIcon applIcon() {
-  QIcon icon(QString(":icons/antiqua.png"));
-  return icon;
-}
-
 AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
   setApplicationName(ANTIQUACRM_NAME);
   setApplicationVersion(ANTIQUACRM_VERSION);
   setOrganizationDomain(ANTIQUACRM_CONNECTION_DOMAIN);
-
+  /**
+   * @warning Do not init Database Connections in constructors!
+   */
   m_cfg = new AntiquaCRM::ASettings(this);
   m_cfg->setObjectName("application_settings");
+}
+
+const QIcon AntiquaAppl::applIcon() {
+  QIcon icon(QString("://icons/antiqua.png"));
+  return icon;
 }
 
 void AntiquaAppl::initGui() {

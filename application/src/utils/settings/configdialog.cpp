@@ -115,7 +115,11 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog(parent) {
 }
 
 const QIcon ConfigDialog::getIcon(const QString &name) {
-  return QIcon(":icons/" + name + ".png");
+  return QIcon("://icons/" + name + ".png");
+}
+
+const QString ConfigDialog::getConfigPath(const QString &section) {
+  return QString("dialog/settings/" + section);
 }
 
 void ConfigDialog::closeEvent(QCloseEvent *e) {
@@ -163,7 +167,7 @@ void ConfigDialog::closeDialog() {
   }
 
   AntiquaCRM::ASettings cfg(this);
-  cfg.setValue("configdialog/geometry", saveGeometry());
+  cfg.setValue(getConfigPath("geometry"), saveGeometry());
 
   accept();
 }
@@ -186,8 +190,10 @@ int ConfigDialog::exec() {
   }
 
   AntiquaCRM::ASettings cfg(this);
-  if (cfg.contains("configdialog/geometry"))
-    restoreGeometry(cfg.value("configdialog/geometry").toByteArray());
+  /** @deprecated Group::configdialog */
+  cfg.remove("configdialog");
+  if (cfg.contains(getConfigPath("geometry")))
+    restoreGeometry(cfg.value(getConfigPath("geometry")).toByteArray());
 
   setWindowModified(false);
 

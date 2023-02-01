@@ -55,6 +55,8 @@ DesignationsDialog::DesignationsDialog(QWidget *parent) : QDialog{parent} {
   m_statusBar->addPermanentWidget(btn_close);
 
   layout->addWidget(m_statusBar);
+  layout->setStretch(0, 2);
+  layout->setStretch(2, 1);
 
   setLayout(layout);
 

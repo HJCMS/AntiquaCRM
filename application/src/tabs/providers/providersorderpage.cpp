@@ -207,12 +207,11 @@ void ProvidersOrderPage::openArticle(qint64 aid) {
     obj.insert("tab", "printsstitches_tab");
     break;
 
-    // TODO
-    // case AntiquaCRM::ArticleType::OTHER: /**< Diverse */
-    //   obj.insert("tab", "???_tab");
-    //   break;
+  case AntiquaCRM::ArticleType::OTHER: /**< Various */
+    obj.insert("tab", "various_tab");
+    break;
 
-  default:
+  default: /**< Default: Books */
     obj.insert("tab", "books_tab");
     break;
   };

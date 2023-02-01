@@ -40,6 +40,7 @@ SET (PROJECT_HEADERS
   antiquaconfigmenus.h
   antiquaviewsmenus.h
   antiquatabwidget.h
+  antiquadatabasebar.h
   antiquastatusbar.h
   antiquasystemtray.h
   AntiquaTabs
@@ -56,6 +57,7 @@ SET (PROJECT_SOURCES
   antiquaconfigmenus.cpp
   antiquaviewsmenus.cpp
   antiquatabwidget.cpp
+  antiquadatabasebar.cpp
   antiquastatusbar.cpp
   antiquasystemtray.cpp
   ${QRC_FILES}
