@@ -18,6 +18,7 @@
 #include <QUrl>
 
 class TracksListWidget;
+class SelectGenre;
 
 class CDReadDialog final : public QDialog {
   Q_OBJECT
@@ -28,6 +29,7 @@ private:
   AntiquaILabel *infolabel;
   LineEdit *m_title;
   LineEdit *m_artists;
+  SelectGenre *m_genre;
   YearEdit *m_year;
   LineEdit *m_barcode;
   TracksListWidget *m_tracksList;

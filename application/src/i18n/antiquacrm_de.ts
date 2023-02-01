@@ -1181,7 +1181,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CDReadDialog</name>
     <message>
-        <location filename="../utils/cdtracking/cdreaddialog.cpp" line="+17"/>
+        <location filename="../utils/cdtracking/cdreaddialog.cpp" line="+18"/>
         <source>CD title reader</source>
         <translation>CD Titel lesen</translation>
     </message>
@@ -1207,6 +1207,11 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+4"/>
+        <source>Genre</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Barcode</source>
         <translation></translation>
     </message>
@@ -1404,7 +1409,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Ungültige Jahresangabe für Vinyl oder CD angegeben, abbruch!</translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+84"/>
         <source>Remove Image from Database</source>
         <translation>Bild aus Datenbank entfernen</translation>
     </message>
@@ -6803,6 +6808,979 @@ Bild - Artikel Nr: %2</translation>
         <location line="+71"/>
         <source>A valid European Country selection is required.</source>
         <translation>Eine gültige europäische Länderauswahl ist erforderlich.</translation>
+    </message>
+</context>
+<context>
+    <name>SelectGenre</name>
+    <message>
+        <location filename="../utils/cdtracking/selectgenre.cpp" line="+12"/>
+        <source>Without disclosures</source>
+        <translation>Keine Angaben</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>Abstract</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Acapella</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Acid</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Acid Jazz</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Acid Punk</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Acoustic</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Alternative</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>AlternRock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Ambient</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Anime</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Art Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Audiobook</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Audio Theatre</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Avantgarde</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Ballad</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Baroque</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Bass</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Beat</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Bebob</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Bhangra</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Big Band</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Big Beat</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Black Metal</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Bluegrass</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Blues</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Booty Bass</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Breakbeat</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>BritPop</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Cabaret</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Celtic</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Chamber Music</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Chanson</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Chillout</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Chorus</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Christian Gangsta Rap</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Christian Rap</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Christian Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Classical</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Classic Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Club</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Club House</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Comedy</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Contemporary Christian</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Country</source>
+        <translation>Land</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Crossover</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Cult</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Dance</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Dance Hall</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Darkwave</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Death Metal</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Disco</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Downtempo</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Dream</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Drum and Bass</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Drum Solo</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Dub</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Dubstep</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Duet</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Easy Listening</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>EBM</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Eclectic</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Electro</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Electroclash</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Electronic</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Emo</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Ethnic</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Eurodance</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Euro house</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Euro Techno</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Experimental</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Fast Fusion</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Folk</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Folklore</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Folk Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Freestyle</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Funk</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Fusion</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Game</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Gangsta</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Garage</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Garage Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>G Funk</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Global</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Goa</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Gospel</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Gothic</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Gothic Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Grunge</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hardcore</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hard Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Heavy Metal</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hip Hop</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>House</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Humour</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>IDM</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Illbient</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Indie</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Indie Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Industrial</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Industro Goth</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Instrumental</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Instrumental Pop</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Instrumental Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Jam Band</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Jazz</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Jazz+Funk</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>JPop</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Jungle</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Krautrock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Latin</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Leftfield</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Lo Fi</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Lounge</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Math Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Meditative</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Merengue</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Metal</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Musical</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>National Folk</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Native American</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Negerpunk</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Neoclassical</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Neue Deutsche Welle</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>New Age</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>New Romantic</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>New Wave</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Noise</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Nu Breakz</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Oldies</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Opera</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Other</source>
+        <translation>Weitere</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Podcast</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Polka</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Polsk Punk</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Pop</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Pop Folk</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Pop Funk</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Porn Groove</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Post Punk</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Post Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Power Ballad</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Pranks</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Primus</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Progressive Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Psybient</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Psychedelic</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Psychedelic Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Psytrance</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Punk</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Punk Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Rap</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Rave</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Rhythm and Blues</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Reggae</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Reggaestep</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Retro</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Revival</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Rhythmic Soul</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Rock and Roll</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Salsa</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Samba</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Satire</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Shoegaze</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Showtunes</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Ska</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Slow Jam</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Slow Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Sonata</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Soul</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Sound Clip</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Soundtrack</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Southern Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Space</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Space Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Speech</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Swing</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Symphonic Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Symphony</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>SynthPop</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Tango</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Techno</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Techno Industrial</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Terror</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Thrash Metal</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Top 40</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Trailer</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Trance</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Tribal</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Trip Hop</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Trop Rock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Vocal</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>World Music</source>
+        <translation></translation>
     </message>
 </context>
 <context>

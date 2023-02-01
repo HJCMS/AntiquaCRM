@@ -12,6 +12,7 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (cdtrack_SOURCES
+ selectgenre.cpp
  cdreaddialog.cpp
  cddiscid.cpp
  discinfo.cpp
@@ -19,6 +20,7 @@ SET (cdtrack_SOURCES
 )
 
 SET (cdtrack_HEADERS
+ selectgenre.h
  cdreaddialog.h
  cddiscid.h
  discinfo.h

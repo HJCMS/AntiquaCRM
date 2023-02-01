@@ -5,6 +5,7 @@
 #include "cddiscid.h"
 #include "discinfo.h"
 #include "trackslistwidget.h"
+#include "selectgenre.h"
 
 #include <AntiquaCRM>
 #include <QDebug>
@@ -49,6 +50,12 @@ CDReadDialog::CDReadDialog(QWidget *parent) : QDialog{parent} {
   m_year->setInfo(tr("Year"));
   m_year->setValue(1970);
   gLayout->addWidget(m_year, grow++, 1, 1, 1, Qt::AlignLeft);
+  // cv_keyword
+  infolabel = new AntiquaILabel(tr("Genre"), m_mainFrame);
+  gLayout->addWidget(infolabel, grow, 0, 1, 1);
+  m_genre = new SelectGenre(m_mainFrame);
+  m_genre->setObjectName("cv_keyword");
+  gLayout->addWidget(m_genre, grow++, 1, 1, 1, Qt::AlignLeft);
   // cv_eangtin
   infolabel = new AntiquaILabel(tr("Barcode"), m_mainFrame);
   gLayout->addWidget(infolabel, grow, 0, 1, 1);
@@ -157,6 +164,7 @@ const QJsonObject CDReadDialog::data() {
   foreach (LineEdit *e, findChildren<LineEdit *>(QString())) {
     obj.insert(e->objectName(), e->value().toString());
   }
+  obj.insert(m_genre->objectName(), m_genre->genres());
   obj.insert(m_year->objectName(), m_year->value().toInt());
   obj.insert("tracks", m_tracksList->getTracks());
   return obj;

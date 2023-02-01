@@ -565,6 +565,10 @@ void CDVEditor::openReadCDDialog() {
     if (year > 0)
       cv_year->setValue(year);
 
+    QString genres = obj.value("cv_keyword").toString();
+    if (!genres.isEmpty())
+      cv_keyword->setValue(genres);
+
     QString barcode = obj.value("cv_eangtin").toString();
     if (!barcode.isEmpty())
       cv_eangtin->setValue(barcode);
