@@ -7,6 +7,7 @@
 #include "customersstatusbar.h"
 #include "customerstableview.h"
 
+#include <AntiquaCRM>
 #include <QIcon>
 #include <QLayout>
 #include <QMessageBox>
@@ -135,6 +136,30 @@ void TabCustomers::setDeleteCustomer(qint64 customerId) {
 void TabCustomers::createNewOrder(qint64 customerId) {
   if (customerId < 1)
     return;
+
+  // Prevent duplicate creation
+  QString s("SELECT o_id, o_since FROM inventory_orders ");
+  s.append(" WHERE o_customer_id=" + QString::number(customerId));
+  s.append(" AND DATE(o_since)=CURRENT_DATE;");
+  s.append(" ORDER BY o_id DESC LIMIT 1;");
+  AntiquaCRM::ASqlCore sql(this);
+  QSqlQuery q = sql.query(s);
+  if (q.size() > 0) {
+    q.next();
+    QString str_o_id = QString::number(q.value("o_id").toInt());
+    QString str_time = q.value("o_since").toDateTime().toString("HH:mm");
+    QString info("<p>");
+    info.append(tr("Today at %2, you created a new order for this customer "
+                   "with the Order ID %1.")
+                    .arg(str_o_id, str_time));
+    info.append("</p><p>");
+    info.append(tr("Do you really want to create a second new Order entry?"));
+    info.append("</p>");
+    QString title = tr("Create order, request!");
+    int ret = QMessageBox::question(this, title, info);
+    if (ret == QMessageBox::No)
+      return;
+  }
 
   QJsonObject obj;
   obj.insert("window_operation", "new_order");

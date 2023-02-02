@@ -2169,16 +2169,6 @@ Image - Article Id: %2</source>
         <source>Last changed</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location line="+6"/>
-        <source>Orders</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Purchases</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>CustomersOrders</name>
@@ -2449,8 +2439,8 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>New Order for selected Customer</source>
+        <location line="+4"/>
+        <source>Create Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8152,7 +8142,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TabCustomers</name>
     <message>
-        <location filename="../tabs/customers/tabcustomers.cpp" line="+17"/>
+        <location filename="../tabs/customers/tabcustomers.cpp" line="+18"/>
         <source>Customers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8197,12 +8187,27 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+23"/>
+        <source>Today at %2, you created a new order for this customer with the Order ID %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Do you really want to create a second new Order entry?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Create order, request!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+90"/>
         <source>Invalid arguments to open Customer!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-119"/>
+        <location line="-155"/>
         <source>Customereditor</source>
         <translation type="unfinished"></translation>
     </message>

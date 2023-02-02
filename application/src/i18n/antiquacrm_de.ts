@@ -2173,16 +2173,6 @@ Bild - Artikel Nr: %2</translation>
         <source>Last changed</source>
         <translation>Zuletzt geändert</translation>
     </message>
-    <message>
-        <location line="+6"/>
-        <source>Orders</source>
-        <translation>Aufträge</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Purchases</source>
-        <translation>Käufe</translation>
-    </message>
 </context>
 <context>
     <name>CustomersOrders</name>
@@ -2453,9 +2443,9 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kundennummer kopieren</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>New Order for selected Customer</source>
-        <translation>Neuen Autftrag für den ausgewählten Kunden erstellen</translation>
+        <location line="+4"/>
+        <source>Create Order</source>
+        <translation>Erstelle Auftrag</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -8158,7 +8148,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TabCustomers</name>
     <message>
-        <location filename="../tabs/customers/tabcustomers.cpp" line="+17"/>
+        <location filename="../tabs/customers/tabcustomers.cpp" line="+18"/>
         <source>Customers</source>
         <translation>Kunden</translation>
     </message>
@@ -8203,12 +8193,27 @@ Bild - Artikel Nr: %2</translation>
         <translation>Es gibt Bestellbeziehungen, die nicht aufgelöst werden können.</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+23"/>
+        <source>Today at %2, you created a new order for this customer with the Order ID %1.</source>
+        <translation>Sie haben Heute bereits um %2 einen neuen Auftrag für diesen Kunden mit der Auftrags-Nr. %1 erstellt.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Do you really want to create a second new Order entry?</source>
+        <translation>Möchten Sie wirklich einen zweiten neuen Auftragseintrag erstellen?</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Create order, request!</source>
+        <translation>Bestellung erstellen, Anfrage!</translation>
+    </message>
+    <message>
+        <location line="+90"/>
         <source>Invalid arguments to open Customer!</source>
         <translation>Ungültige Argumente zum Öffnen des Kunden!</translation>
     </message>
     <message>
-        <location line="-119"/>
+        <location line="-155"/>
         <source>Customereditor</source>
         <translation>Kundeneditor</translation>
     </message>

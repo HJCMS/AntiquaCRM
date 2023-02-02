@@ -71,8 +71,7 @@ void CustomersTableView::contextMenuEvent(QContextMenuEvent *event) {
   ac_copy->setEnabled(enable_action);
   connect(ac_copy, SIGNAL(triggered()), SLOT(createCopyClipboard()));
 
-  QAction *ac_order = m->addAction(cellIcon("view_log"),
-                                   tr("New Order for selected Customer"));
+  QAction *ac_order = m->addAction(cellIcon("view_log"), tr("Create Order"));
   ac_order->setEnabled(enable_action);
   connect(ac_order, SIGNAL(triggered()), SLOT(createSocketOperation()));
   //  END

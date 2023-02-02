@@ -20,8 +20,6 @@ public:
   SerialID *c_id;
   AntiquaDateInfo *c_since;
   AntiquaDateInfo *c_changed;
-  SerialID *c_transactions;
-  SerialID *c_purchases;
 
   /**
    * @brief CustomersHeaderFrame

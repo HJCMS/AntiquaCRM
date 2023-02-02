@@ -31,18 +31,6 @@ CustomersHeaderFrame::CustomersHeaderFrame(QWidget *parent) : QFrame{parent} {
   c_changed->setDisplayFormat("ddd d MMMM yyyy");
   c_changed->setInfo(tr("Last changed"));
   r1Layout->addWidget(c_changed);
-  // Bestellungen
-  c_transactions = new SerialID(this);
-  c_transactions->setObjectName("c_transactions");
-  c_transactions->setValue(0);
-  c_transactions->setInfo(tr("Orders"));
-  r1Layout->addWidget(c_transactions);
-  // Einkäufe
-  c_purchases = new SerialID(this);
-  c_purchases->setObjectName("c_purchases");
-  c_purchases->setValue(0);
-  c_purchases->setInfo(tr("Purchases"));
-  r1Layout->addWidget(c_purchases);
   setLayout(r1Layout);
 }
 
