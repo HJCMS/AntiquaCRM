@@ -37,7 +37,7 @@ private:
   /**
    * @brief Querytype (JSON|XML)
    */
-  const AntiquaCRM::PluginQueryType queryType;
+  const AntiquaCRM::NetworkQueryType queryType;
 
   /**
    * @brief Internal Network reply
@@ -61,7 +61,7 @@ Q_SIGNALS:
   void sendContentCodec(QTextCodec *);
 
 public:
-  explicit ANetworker(AntiquaCRM::PluginQueryType type,
+  explicit ANetworker(AntiquaCRM::NetworkQueryType type,
                       QObject *parent = nullptr);
 
   QNetworkReply *loginRequest(const QUrl &url, const QByteArray &data);

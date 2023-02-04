@@ -21,8 +21,6 @@ CDReadDialog::CDReadDialog(QWidget *parent) : QDialog{parent} {
   setContentsMargins(2, 2, 2, 2);
   setSizeGripEnabled(true);
 
-  m_cfg = new AntiquaCRM::ASettings(this);
-
   QVBoxLayout *layout = new QVBoxLayout(this);
 
   m_mainFrame = new QFrame(this);
@@ -156,14 +154,14 @@ void CDReadDialog::queryResponses(const QJsonDocument &doc) {
 }
 
 void CDReadDialog::createMetaQuery(const QUrl &url) {
-  if (!url.isValid())
-    return;
-
+  if (!url.isValid()) {
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << url.host() << url;
+    qDebug() << url.host() << url;
 #endif
+    return;
+  }
 
-  AntiquaCRM::PluginQueryType _t = AntiquaCRM::PluginQueryType::JSON_QUERY;
+  AntiquaCRM::NetworkQueryType _t = AntiquaCRM::NetworkQueryType::JSON_QUERY;
   AntiquaCRM::ANetworker *m_net = new AntiquaCRM::ANetworker(_t, this);
   connect(m_net, SIGNAL(sendJsonResponse(const QJsonDocument &)),
           SLOT(queryResponses(const QJsonDocument &)));

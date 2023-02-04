@@ -21,7 +21,7 @@
 
 namespace AntiquaCRM {
 
-ANetworker::ANetworker(AntiquaCRM::PluginQueryType type, QObject *parent)
+ANetworker::ANetworker(AntiquaCRM::NetworkQueryType type, QObject *parent)
     : QNetworkAccessManager{parent}, queryType{type} {
   setObjectName("antiquacrm_networker");
   setCache(new AntiquaCRM::ANetworkCache(this));
@@ -345,7 +345,7 @@ QNetworkReply *ANetworker::getRequest(const QUrl &url) {
   ANetworkRequest request(url);
   request.setHeaderUserAgent();
   request.setHeaderAcceptLanguage();
-  if (queryType == AntiquaCRM::PluginQueryType::JSON_QUERY) {
+  if (queryType == AntiquaCRM::NetworkQueryType::JSON_QUERY) {
     request.setHeaderAcceptJson();
   } else {
     request.setHeaderAcceptText();

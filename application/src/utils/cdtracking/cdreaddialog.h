@@ -25,7 +25,6 @@ class CDReadDialog final : public QDialog {
   Q_OBJECT
 
 private:
-  AntiquaCRM::ASettings *m_cfg;
   QFrame *m_mainFrame;
   AntiquaILabel *infolabel;
   LineEdit *m_title;

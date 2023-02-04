@@ -1186,7 +1186,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>CD Titel lesen</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+11"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
