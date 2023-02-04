@@ -18,7 +18,19 @@ class InventoryTable : public QTableView {
   Q_OBJECT
 
 private:
+  /**
+   * @brief Limiting sql query in Main view
+   * @default 1000
+   * @see Configurations Dialog "Feel and View"
+   */
   int QueryLimit;
+
+  /**
+   * @brief Only Autoupdate the MainView if smaller then this.
+   * @default 50
+   * @see Configurations Dialog "Feel and View"
+   */
+  int QueryAutoUpdate;
 
 protected:
   AntiquaCRM::ASettings *m_cfg;
@@ -56,6 +68,7 @@ public:
   explicit InventoryTable(QWidget *parent = nullptr);
   static const QIcon cellIcon(const QString &name);
   int getQueryLimit();
+  bool isAutoRefreshEnabled();
   virtual int rowCount() = 0;
   virtual bool setQuery(const QString &clause = QString()) = 0;
   virtual const QString defaultWhereClause() = 0;

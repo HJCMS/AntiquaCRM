@@ -40,6 +40,7 @@ SET_TARGET_PROPERTIES (${_cdtracking} PROPERTIES
 TARGET_LINK_LIBRARIES (${_cdtracking} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
+  Qt${QT_VERSION_MAJOR}::Xml
   ${CDTRACKING_LIBRARIES}
   AntiquaCRM
   AntiquaWidgets

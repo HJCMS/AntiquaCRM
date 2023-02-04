@@ -23,6 +23,7 @@ private:
   IntSpinBox *m_popup_timeout;    /**< Popup Fenster timeout */
   BoolBox *m_mouseWheel;          /**< Mausrad Unterstützung */
   IntSpinBox *m_queryLimit;       /**< Max. Anzeige in Tabellen */
+  IntSpinBox *m_queryAutoUpdate;  /**< Auto Aktualisieren erst ab ... */
   IntSpinBox *m_minPrice;         /**< Kleinster Verkaufspreis */
   IntSpinBox *m_minPriceMedia;    /**< Kleinster Verkaufspreis Medien */
   IntSpinBox *m_payWaitDays;      /**< Zahlungsfrist */

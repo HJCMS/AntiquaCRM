@@ -127,7 +127,7 @@ void ANetworkRequest::setHeaderCacheControl(const QByteArray &cache) {
     setAttribute(QNetworkRequest::CacheLoadControlAttribute,
                  QNetworkRequest::PreferNetwork);
   }
-  setRawHeader(QByteArray("Cache-Control"), cache);
+  setRawHeader(QByteArray("Cache-Control"), data);
 }
 
 void ANetworkRequest::setHeaderContentLength(qint64 size) {

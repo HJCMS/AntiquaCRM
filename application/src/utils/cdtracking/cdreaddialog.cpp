@@ -4,14 +4,15 @@
 #include "cdreaddialog.h"
 #include "cddiscid.h"
 #include "discinfo.h"
-#include "trackslistwidget.h"
 #include "selectgenre.h"
+#include "trackslistwidget.h"
 
 #include <AntiquaCRM>
 #include <QDebug>
 #include <QJsonParseError>
 #include <QJsonValue>
 #include <QLayout>
+#include <QLocale>
 #include <QUrl>
 
 CDReadDialog::CDReadDialog(QWidget *parent) : QDialog{parent} {
@@ -86,7 +87,10 @@ CDReadDialog::CDReadDialog(QWidget *parent) : QDialog{parent} {
 }
 
 const QJsonObject CDReadDialog::getRelease(const QJsonArray &array) {
-  QStringList country({"DE", "GB", "US"});
+  // https://musicbrainz.org/doc/Release_Country
+  // XW = Worldwide, XE = European
+  QString lc = QLocale::system().bcp47Name().toUpper();
+  QStringList country({lc, "GB", "XE", "US", "XW"});
   foreach (QString lng, country) {
     for (int i = 0; i < array.size(); i++) {
       QJsonObject obj = array[i].toObject();
@@ -100,15 +104,19 @@ const QJsonObject CDReadDialog::getRelease(const QJsonArray &array) {
 }
 
 void CDReadDialog::getCDInfo() {
-  CDDiscId *m_discid = new CDDiscId(this);
-  connect(m_discid, SIGNAL(finished()), m_discid, SLOT(deleteLater()));
-  connect(m_discid, SIGNAL(sendStatusMessage(const QString &)), m_statusBar,
+  CDDiscId *m_thread = new CDDiscId(this);
+  connect(m_thread, SIGNAL(finished()), m_thread, SLOT(deleteLater()));
+  connect(m_thread, SIGNAL(sendStatusMessage(const QString &)), m_statusBar,
           SLOT(showMessage(const QString &)));
-  connect(m_discid, SIGNAL(sendQueryDiscChanged(const QUrl &)),
-          SLOT(setQueryDiscId(const QUrl &)));
+  connect(m_thread, SIGNAL(sendBarcode(const QString &)),
+          SLOT(setBarcode(const QString &)));
+  connect(m_thread, SIGNAL(sendQuery(const QUrl &)),
+          SLOT(createMetaQuery(const QUrl &)));
 
-  m_discid->start();
+  m_thread->start();
 }
+
+void CDReadDialog::setBarcode(const QString &upc) { m_barcode->setValue(upc); }
 
 void CDReadDialog::queryResponses(const QJsonDocument &doc) {
   QJsonObject js = doc.object();
@@ -134,17 +142,27 @@ void CDReadDialog::queryResponses(const QJsonDocument &doc) {
     }
   }
 
-  if (!release.isEmpty()) {
-    DiscInfo p_disc(release);
-    m_title->setValue(p_disc.getTitle());
-    m_artists->setValue(p_disc.getArtists());
-    m_year->setValue(p_disc.getReleaseYear());
-    m_barcode->setValue(p_disc.getBarcode());
-    m_tracksList->setTracks(p_disc.getTracks());
+  if (release.isEmpty()) {
+    qWarning("Can't fetch release info from Json!");
+    return;
   }
+
+  DiscInfo p_disc(release);
+  m_title->setValue(p_disc.getTitle());
+  m_artists->setValue(p_disc.getArtists());
+  m_year->setValue(p_disc.getReleaseYear());
+  m_barcode->setValue(p_disc.getBarcode());
+  m_tracksList->setTracks(p_disc.getTracks());
 }
 
-void CDReadDialog::setQueryDiscId(const QUrl &url) {
+void CDReadDialog::createMetaQuery(const QUrl &url) {
+  if (!url.isValid())
+    return;
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << url.host() << url;
+#endif
+
   AntiquaCRM::PluginQueryType _t = AntiquaCRM::PluginQueryType::JSON_QUERY;
   AntiquaCRM::ANetworker *m_net = new AntiquaCRM::ANetworker(_t, this);
   connect(m_net, SIGNAL(sendJsonResponse(const QJsonDocument &)),

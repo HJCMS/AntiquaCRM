@@ -1168,12 +1168,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CDDiscId</name>
     <message>
-        <location filename="../utils/cdtracking/cddiscid.cpp" line="+22"/>
+        <location filename="../utils/cdtracking/cddiscid.cpp" line="+58"/>
         <source>No Media found!</source>
         <translation>Kein Medium gefunden!</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+27"/>
         <source>No Disc Information found!</source>
         <translation>Keine CD Informationen gefunden!</translation>
     </message>
@@ -1181,7 +1181,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CDReadDialog</name>
     <message>
-        <location filename="../utils/cdtracking/cdreaddialog.cpp" line="+18"/>
+        <location filename="../utils/cdtracking/cdreaddialog.cpp" line="+19"/>
         <source>CD title reader</source>
         <translation>CD Titel lesen</translation>
     </message>
@@ -3113,7 +3113,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Begrenzt die Ausgabe in den Hauptansichtstabellen. Verhindert je nach Netzwerk- und Computerleistung das Einfrieren der Anwendung.</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
+        <source>Only Auto updates the main view if Table count is smaller than this!</source>
+        <translation>Die Tabellenhauptansicht nur Automatisch aktualisieren, wenn die Anzahl kleiner ist als!</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>Set size range for Imagepreviews.</source>
         <translation>Größenbereich für Bildvorschauen festlegen.</translation>
     </message>
@@ -8193,7 +8198,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Es gibt Bestellbeziehungen, die nicht aufgelöst werden können.</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+22"/>
         <source>Today at %2, you created a new order for this customer with the Order ID %1.</source>
         <translation>Sie haben Heute bereits um %2 einen neuen Auftrag für diesen Kunden mit der Auftrags-Nr. %1 erstellt.</translation>
     </message>
@@ -8208,12 +8213,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bestellung erstellen, Anfrage!</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+79"/>
         <source>Invalid arguments to open Customer!</source>
         <translation>Ungültige Argumente zum Öffnen des Kunden!</translation>
     </message>
     <message>
-        <location line="-155"/>
+        <location line="-143"/>
         <source>Customereditor</source>
         <translation>Kundeneditor</translation>
     </message>

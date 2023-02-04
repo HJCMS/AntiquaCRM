@@ -96,7 +96,7 @@ void TabPrintsStitches::setDefaultTableView() {
 }
 
 void TabPrintsStitches::openStartPage() {
-  if (m_table->rowCount() > 0 && m_table->rowCount() < 20) {
+  if (m_table->isAutoRefreshEnabled()) {
     // m_statusBar->setCreateButtonEnabled(false);
     m_table->setReloadView();
   }

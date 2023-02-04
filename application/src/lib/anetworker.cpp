@@ -30,10 +30,7 @@ ANetworker::ANetworker(AntiquaCRM::PluginQueryType type, QObject *parent)
   m_textCodec = QTextCodec::codecForLocale();
 
   AntiquaCRM::ASettings cfg(this);
-  transfer_timeout = cfg.value("transfer_timeout", 5).toInt();
-
-  connect(this, SIGNAL(finished(QNetworkReply *)), this,
-          SLOT(slotFinished(QNetworkReply *)));
+  transfer_timeout = cfg.value("transfer_timeout", 15).toInt();
 }
 
 void ANetworker::slotError(QNetworkReply::NetworkError error) {
@@ -72,24 +69,22 @@ void ANetworker::slotError(QNetworkReply::NetworkError error) {
   }
 }
 
-void ANetworker::slotFinished(QNetworkReply *reply) {
-  if (reply->error() != QNetworkReply::NoError) {
-    qWarning("Network: %s", qPrintable(reply->url().host()));
-    slotError(reply->error());
-    emit sendFinishedWithErrors();
-  }
-}
-
 void ANetworker::slotReadResponse() {
-  QNetworkReply *reply = reinterpret_cast<QNetworkReply *>(sender());
-  if (reply == nullptr)
+  if (m_reply == nullptr)
     return;
 
-  if (reply->error() != QNetworkReply::NoError) {
-    slotError(reply->error());
+  // Don't re-emit this signal for redirect replies.
+  if (m_reply->attribute(QNetworkRequest::RedirectionTargetAttribute)
+          .isValid()) {
+    qWarning("Redirected not supported in this section!");
+    return;
   }
 
-  if (!reply->bytesAvailable()) {
+  if (m_reply->error() != QNetworkReply::NoError) {
+    slotError(m_reply->error());
+  }
+
+  if (!m_reply->bytesAvailable()) {
     qWarning("Network: No Data responsed!");
     return;
   }
@@ -125,18 +120,37 @@ void ANetworker::slotReadResponse() {
     }
   }
 
+//  QByteArray data;
+//  data = m_reply->readAll();
+//  if (data.isNull()) {
+//    qWarning("Network: No Data responsed!");
+//    return;
+//  }
+
+  QVector<char> buf;
   QByteArray data;
-  data = reply->readAll();
-  if (data.isNull()) {
-    qWarning("Network: No Data responsed!");
-    return;
+  qint64 chunk;
+  while (m_reply->bytesAvailable() > 0) {
+    chunk = m_reply->bytesAvailable();
+    if (chunk > 4096) {
+      chunk = 4096;
+    }
+    buf.resize(chunk + 1);
+    memset(&buf[0], 0, chunk + 1);
+    if (chunk != m_reply->read(&buf[0], chunk)) {
+      qWarning("ANetworker: buffer read error");
+    }
+    data += &buf[0];
   }
+  buf.clear();
 
 #if (ANTIQUACRM_NETWORK_DEBUG == true)
-  qInfo("Host: %s", qPrintable(reply->url().host()));
-  foreach (QByteArray a, reply->rawHeaderList()) {
+  qInfo("Host: %s", qPrintable(m_reply->url().host()));
+  foreach (QByteArray a, m_reply->rawHeaderList()) {
     qInfo("-- %s: %s", a.constData(), reply->rawHeader(a).constData());
   }
+#else
+  qInfo("Bytes responses (%d).", data.size());
 #endif
 
   // JSON Request

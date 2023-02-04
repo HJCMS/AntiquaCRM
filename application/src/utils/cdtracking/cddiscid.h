@@ -17,15 +17,21 @@ class CDDiscId final : public QThread {
 private:
   QString p_brainz_id;
   QString p_brainz_toc;
-  QUrl p_submissionUrl;
+  QString p_cddb_id;
+  QString p_cddb_toc;
+  QString p_gtin;
+  bool isBarcocde(const QString &);
   bool open();
 
 Q_SIGNALS:
   void sendStatusMessage(const QString &);
-  void sendQueryDiscChanged(const QUrl &);
+  void sendBarcode(const QString &);
+  void sendQuery(const QUrl &);
 
 public:
   explicit CDDiscId(QObject *parent = nullptr);
+  const QUrl queryMusicBrainz();
+  const QUrl queryCDDB();
   void run() override;
 };
 

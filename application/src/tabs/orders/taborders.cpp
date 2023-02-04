@@ -112,7 +112,7 @@ void TabOrders::setDefaultTableView() {
 }
 
 void TabOrders::openStartPage() {
-  if (m_table->rowCount() > 0 && m_table->rowCount() < 50)
+  if (m_table->isAutoRefreshEnabled())
     m_table->setReloadView();
 
   setCurrentIndex(0);

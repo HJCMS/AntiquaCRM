@@ -35,7 +35,7 @@ int CDVTableView::getArticleCount(const QModelIndex &index) {
 }
 
 bool CDVTableView::sqlQueryTable(const QString &query) {
-  qDebug() << query;
+  // qDebug() << query;
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);

@@ -8,6 +8,7 @@
 #include <AntiquaCRM>
 #include <AntiquaWidgets>
 #include <QDialog>
+#include <QDomDocument>
 #include <QDialogButtonBox>
 #include <QFrame>
 #include <QJsonArray>
@@ -40,8 +41,9 @@ private:
   void getCDInfo();
 
 private Q_SLOTS:
+  void setBarcode(const QString &);
   void queryResponses(const QJsonDocument &);
-  void setQueryDiscId(const QUrl &);
+  void createMetaQuery(const QUrl &);
 
 public:
   explicit CDReadDialog(QWidget *parent = nullptr);

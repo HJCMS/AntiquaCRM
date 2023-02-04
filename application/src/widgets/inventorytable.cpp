@@ -17,7 +17,8 @@ InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
   setSelectionMode(QAbstractItemView::SingleSelection);
 
   m_cfg = new AntiquaCRM::ASettings(this);
-  QueryLimit = m_cfg->value("SqlQueryLimit", 500).toInt();
+  QueryLimit = m_cfg->value("SqlQueryLimit", 1000).toInt();
+  QueryAutoUpdate = m_cfg->value("SqlAutoUpdateCount", 50).toInt();
 
   /* Kopfzeilen anpassen */
   m_header = horizontalHeader();
@@ -60,3 +61,7 @@ const QIcon InventoryTable::cellIcon(const QString &name) {
 }
 
 int InventoryTable::getQueryLimit() { return QueryLimit; }
+
+bool InventoryTable::isAutoRefreshEnabled() {
+  return (rowCount() > 0 && rowCount() < QueryAutoUpdate);
+}
