@@ -20,26 +20,23 @@ bool CDDiscId::isBarcocde(const QString &ean) {
   if (ean.contains(QRegExp("^0{5,}")))
     return false; // invalid checksum
 
-  QString gtin = QString();
-  int gtt = 13; // Supported GTIN Types 10/13
-  int len = ean.size();
+  QString gtin = ean.trimmed();
+  int len = gtin.size();
   if ((len < 13 && len != 10) || (len != 13)) {
     if (len == 9) {
-      gtt = 10; // add leading zero
       gtin = ean.rightJustified(10, '0');
     } else if (len == 12) {
-      gtt = 13; // add leading zero
       gtin = ean.rightJustified(13, '0');
     } else {
       return false;
     }
-    gtin = ean;
   }
 
-  int apd = 0; // A: Product digit
-  int brd = 0; // B: Roundet digit
-  int ccd = 0; // C: Checksum digit
-  int pos = 0; // Start position
+  int gtt = gtin.length(); // GTIN Types 10/13
+  int apd = 0;             // A: Product digit
+  int brd = 0;             // B: Roundet digit
+  int ccd = 0;             // C: Checksum digit
+  int pos = 0;             // Start position
   for (int i = gtt; i > 0; --i) {
     int num = gtin.at(i - 1).digitValue();
     if (i == gtt) {

@@ -146,6 +146,7 @@ void CDReadDialog::queryResponses(const QJsonDocument &doc) {
 
   if (release.isEmpty()) {
     qWarning("Can't fetch release info from Json!");
+    m_statusBar->showMessage(tr("No Disc Information found.") + " :-/");
     return;
   }
 
