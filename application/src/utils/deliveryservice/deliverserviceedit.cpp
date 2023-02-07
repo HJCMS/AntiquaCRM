@@ -123,14 +123,14 @@ void DeliverServiceEdit::clearFields() {
   }
   d_changed->setValue(QDateTime::currentDateTime());
   d_srv->setCurrentIndex(1);
-  d_cid->setValue(0);
+  d_cid->setValue(QVariant(0));
 }
 
 void DeliverServiceEdit::createSubEntry(int id) {
   clearFields();
   d_srv->setCurrentIndex(id);
   d_srv->setFocus();
-  d_cid->setValue(0);
+  d_cid->setValue(QVariant(0));
 }
 
 void DeliverServiceEdit::createNewEntry() {

@@ -14,24 +14,24 @@ class DeliveryId final : public InputEdit {
 
 private:
   AntiquaLineEdit *m_edit;
-  void loadDataset();
+  void loadDataset() override;
 
 private Q_SLOTS:
   void inputChanged(const QString &);
 
 public Q_SLOTS:
-  void setValue(const QVariant &);
-  Q_INVOKABLE void reset();
-  void setFocus();
+  void setValue(const QVariant &) override;
+  Q_INVOKABLE void reset() override;
+  void setFocus() override;
 
 public:
   explicit DeliveryId(QWidget *parent = nullptr);
-  void setProperties(const QSqlField &field);
-  void setInfo(const QString &);
-  const QString info();
-  const QVariant value();
-  bool isValid();
-  const QString notes();
+  void setProperties(const QSqlField &field) override;
+  void setInfo(const QString &) override;
+  const QString info() override;
+  const QVariant value() override;
+  bool isValid() override;
+  const QString notes() override;
 };
 
 #endif // ANTIQUACRM_DELIVERYID_H

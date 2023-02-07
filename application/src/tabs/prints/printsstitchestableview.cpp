@@ -33,6 +33,7 @@ int PrintsStitchesTableView::getArticleCount(const QModelIndex &index) {
 }
 
 bool PrintsStitchesTableView::sqlQueryTable(const QString &query) {
+  // qDebug() << Q_FUNC_INFO << query;
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);
@@ -165,6 +166,7 @@ bool PrintsStitchesTableView::setQuery(const QString &clause) {
 }
 
 const QString PrintsStitchesTableView::defaultWhereClause() {
-  QString sql("date_part('year',ip_changed)>0 AND ip_count>0");
+  QString sql("DATE(ip_changed) BETWEEN (CURRENT_DATE - 1) AND CURRENT_DATE");
+  sql.append(" OR DATE(ip_since)=CURRENT_DATE");
   return sql;
 }

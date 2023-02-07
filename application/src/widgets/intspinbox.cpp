@@ -3,61 +3,34 @@
 
 #include "intspinbox.h"
 
-IntSpinBox::IntSpinBox(QWidget *parent) : InputEdit{parent} { loadDataset(); }
-
 IntSpinBox::IntSpinBox(int minimum, int maximum, QWidget *parent)
     : InputEdit{parent} {
-  min = minimum;
-  max = maximum;
-  loadDataset();
-}
-
-void IntSpinBox::loadDataset() {
-  m_spinBox = new AntiquaSpinBox(this);
-  m_spinBox->setMinimum(min);
-  m_spinBox->setMaximum(max);
-  m_spinBox->setMaximumWidth(300);
-  m_layout->addWidget(m_spinBox);
+  m_box = new AntiquaSpinBox(this);
+  m_box->setMinimum(minimum);
+  m_box->setMaximum(maximum);
+  m_layout->addWidget(m_box);
   m_layout->addStretch(1);
   setModified(false);
   setRequired(false);
-  connect(m_spinBox, SIGNAL(valueChanged(int)), this, SLOT(itemChanged(int)));
+  connect(m_box, SIGNAL(valueChanged(int)), SLOT(itemChanged(int)));
 }
+
+IntSpinBox::IntSpinBox(QWidget *parent) : IntSpinBox{0, 9999, parent} {}
 
 void IntSpinBox::itemChanged(int) { setModified(true); }
 
-void IntSpinBox::setRange(int minimum, int maximum) {
-  min = minimum;
-  m_spinBox->setMinimum(minimum);
-  max = maximum;
-  m_spinBox->setMaximum(maximum);
+void IntSpinBox::reset() {
+  m_box->setValue(0);
+  setModified(false);
 }
 
-void IntSpinBox::setSingleStep(int i) { m_spinBox->setSingleStep(i); }
-
-void IntSpinBox::setSuffix(const QString &s) { m_spinBox->setSuffix(s); }
-
-void IntSpinBox::setPrefix(const QString &s) { m_spinBox->setPrefix(s); }
-
-void IntSpinBox::setShowButtons(bool b) {
-  if (!b)
-    m_spinBox->setButtonSymbols(QAbstractSpinBox::NoButtons);
-}
+void IntSpinBox::setFocus() { m_box->setFocus(); }
 
 void IntSpinBox::setValue(const QVariant &val) {
   int value = val.toInt();
-  m_spinBox->setValue(value);
+  m_box->setValue(value);
   setModified(false);
 }
-
-void IntSpinBox::reset() {
-  m_spinBox->setValue(0);
-  setModified(false);
-}
-
-void IntSpinBox::setFocus() { m_spinBox->setFocus(); }
-
-void IntSpinBox::setValue(int i) { m_spinBox->setValue(i); }
 
 void IntSpinBox::setProperties(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
@@ -85,10 +58,26 @@ void IntSpinBox::setProperties(const QSqlField &field) {
   }
 }
 
-const QVariant IntSpinBox::value() { return m_spinBox->value(); }
+void IntSpinBox::setRange(int minimum, int maximum) {
+  m_box->setMinimum(minimum);
+  m_box->setMaximum(maximum);
+}
+
+void IntSpinBox::setSingleStep(int i) { m_box->setSingleStep(i); }
+
+void IntSpinBox::setSuffix(const QString &s) { m_box->setSuffix(s); }
+
+void IntSpinBox::setPrefix(const QString &s) { m_box->setPrefix(s); }
+
+void IntSpinBox::setShowButtons(bool b) {
+  if (!b)
+    m_box->setButtonSymbols(QAbstractSpinBox::NoButtons);
+}
+
+const QVariant IntSpinBox::value() { return m_box->value(); }
 
 bool IntSpinBox::isValid() {
-  if (isRequired() && (m_spinBox->value() <= m_spinBox->minimum()))
+  if (isRequired() && (m_box->value() <= m_box->minimum()))
     return false;
 
   return true;
@@ -99,13 +88,13 @@ void IntSpinBox::setInfo(const QString &info) {
   txt.append(":");
   m_label->setVisible(true);
   m_label->setText(txt);
-  m_spinBox->setToolTip(info);
+  m_box->setToolTip(info);
 }
 
-const QString IntSpinBox::info() { return m_spinBox->toolTip(); }
+const QString IntSpinBox::info() { return m_box->toolTip(); }
 
 const QString IntSpinBox::notes() {
-  QString msg(m_spinBox->toolTip() + " ");
+  QString msg(m_box->toolTip() + " ");
   msg.append(tr("is required and can not empty."));
   return msg;
 }

@@ -39,7 +39,7 @@ protected:
 
 protected Q_SLOTS:
   virtual void skipReturnPressed();
-  virtual void focusOutEvent(QFocusEvent *);
+  virtual void focusOutEvent(QFocusEvent *) override;
 
 Q_SIGNALS:
   void sendHasModified(bool);

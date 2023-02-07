@@ -3,20 +3,38 @@
 
 #include "priceedit.h"
 
-PriceEdit::PriceEdit(QWidget *parent) : InputEdit{parent} {
+#include <ASettings>
+
+PriceEdit::PriceEdit(double minimum, double maximum, QWidget *parent)
+    : InputEdit{parent} {
   m_box = new AntiquaDoubleBox(this);
-  m_box->setSuffix(tr("\342\202\254")); /**< Setze € Suffix */
-  m_box->setMinimum(0.00);
-  m_box->setMaximum(99999.99);
+  m_box->setMinimum(minimum);
+  m_box->setMaximum(maximum);
+
+  AntiquaCRM::ASettings cfg(this);
+  QString currency = cfg.value("payment/currency", "\342\202\254").toString();
+  m_box->setSuffix(currency);
+
   m_layout->addWidget(m_box);
-  connect(m_box, SIGNAL(valueChanged(double)), this, SLOT(itemChanged(double)));
+  m_layout->addStretch(1);
+
+  connect(m_box, SIGNAL(valueChanged(double)), SLOT(itemChanged(double)));
 }
+
+PriceEdit::PriceEdit(QWidget *parent) : PriceEdit{0.00, 99999.99, parent} {}
 
 void PriceEdit::loadDataset() {}
 
 void PriceEdit::itemChanged(double) { setModified(true); }
 
 void PriceEdit::setMinimum(double min) { m_box->setMinimum(min); }
+
+void PriceEdit::setMaximum(double max) { m_box->setMaximum(max); }
+
+void PriceEdit::setRange(double min, double max) {
+  m_box->setMinimum(min);
+  m_box->setMaximum(max);
+}
 
 void PriceEdit::setValue(const QVariant &val) {
   m_box->setValue(val.toDouble());
@@ -33,6 +51,10 @@ void PriceEdit::setFocus() { m_box->setFocus(); }
 void PriceEdit::setProperties(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
+
+  if (!field.defaultValue().isNull() && m_box->value() == 0.00) {
+    setValue(field.defaultValue());
+  }
 }
 
 const QVariant PriceEdit::value() { return QVariant(m_box->value()); }

@@ -98,6 +98,10 @@ const QJsonObject CDReadDialog::getRelease(const QJsonArray &array) {
       }
     }
   }
+  // Unknown Release Country get the first :-/
+  if (array.size() == 1)
+    return array[0].toObject();
+
   return QJsonObject();
 }
 
@@ -180,7 +184,7 @@ const QJsonObject CDReadDialog::data() {
   foreach (LineEdit *e, findChildren<LineEdit *>(QString())) {
     obj.insert(e->objectName(), e->value().toString());
   }
-  obj.insert(m_genre->objectName(), m_genre->genres());
+  obj.insert(m_genre->objectName(), m_genre->getName());
   obj.insert(m_year->objectName(), m_year->value().toInt());
   obj.insert("tracks", m_tracksList->getTracks());
   return obj;

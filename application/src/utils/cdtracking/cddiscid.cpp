@@ -20,19 +20,29 @@ bool CDDiscId::isBarcocde(const QString &ean) {
   if (ean.contains(QRegExp("^0{5,}")))
     return false; // invalid checksum
 
-  int type = ean.size();
-  if (type != 10)
-    return false;
-  else if (type != 13)
-    return false;
+  QString gtin = QString();
+  int gtt = 13; // Supported GTIN Types 10/13
+  int len = ean.size();
+  if ((len < 13 && len != 10) || (len != 13)) {
+    if (len == 9) {
+      gtt = 10; // add leading zero
+      gtin = ean.rightJustified(10, '0');
+    } else if (len == 12) {
+      gtt = 13; // add leading zero
+      gtin = ean.rightJustified(13, '0');
+    } else {
+      return false;
+    }
+    gtin = ean;
+  }
 
-  int apd = 0; // A: Produktnummer (product digit)
-  int brd = 0; // B: Aufgerundet   (roundet digit)
-  int ccd = 0; // C: Prüfnummer    (checksum digit)
+  int apd = 0; // A: Product digit
+  int brd = 0; // B: Roundet digit
+  int ccd = 0; // C: Checksum digit
   int pos = 0; // Start position
-  for (int i = type; i > 0; --i) {
-    int num = ean.at(i - 1).digitValue();
-    if (i == type) {
+  for (int i = gtt; i > 0; --i) {
+    int num = gtin.at(i - 1).digitValue();
+    if (i == gtt) {
       ccd = num;
       continue;
     }
@@ -89,7 +99,6 @@ bool CDDiscId::open() {
   QUrl url = queryMusicBrainz();
   if (url.isValid()) {
     emit sendQuery(url);
-
     return true;
   }
   return false;

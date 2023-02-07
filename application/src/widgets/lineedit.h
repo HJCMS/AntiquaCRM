@@ -6,9 +6,7 @@
 #define ANTIQUACRM_LINEEDIT_H
 
 #include <AntiquaInputEdit>
-#include <QByteArray>
-#include <QObject>
-#include <QWidget>
+#include <QCompleter>
 
 class LineEdit final : public InputEdit {
   Q_OBJECT
@@ -17,31 +15,31 @@ private:
   AntiquaLineEdit *m_edit;
   QCompleter *m_completer;
   bool p_passwordInput = false;
-  void loadDataset();
+  void loadDataset() override;
 
 private Q_SLOTS:
   void inputChanged(const QString &);
 
 public Q_SLOTS:
-  void setValue(const QVariant &);
-  Q_INVOKABLE void reset();
-  void setFocus();
+  Q_INVOKABLE void reset() override;
+  void setFocus() override;
+  void setValue(const QVariant &) override;
 
 Q_SIGNALS:
   void textChanged(const QString &);
 
 public:
   explicit LineEdit(QWidget *parent = nullptr, bool enableStretch = false);
-  void setProperties(const QSqlField &field);
+  void setProperties(const QSqlField &field) override;
   void setPasswordInput(bool);
   bool isPasswordInput();
   void setCompleter(const QStringList &);
-  void setInfo(const QString &);
+  void setInfo(const QString &) override;
   void setReadOnly(bool b = false);
-  const QString info();
-  const QVariant value();
-  bool isValid();
-  const QString notes();
+  const QString info() override;
+  const QVariant value() override;
+  bool isValid() override;
+  const QString notes() override;
 };
 
 #endif // ANTIQUACRM_LINEEDIT_H

@@ -11,6 +11,7 @@
 #include <QCompleter>
 #include <QObject>
 #include <QWidget>
+#include <QJsonObject>
 
 class SelectGenre : public QComboBox {
   Q_OBJECT
@@ -27,8 +28,9 @@ public Q_SLOTS:
 
 public:
   explicit SelectGenre(QWidget *parent = nullptr);
-  static const QStringList id3Tags();
-  const QString genres();
+  static const QJsonObject id3Tags();
+  const QString getName();
+  int getId();
 };
 
 #endif // CDTRACKING_SELECTGENRE_H

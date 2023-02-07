@@ -19,6 +19,10 @@ SalutationBox::SalutationBox(QWidget *parent) : InputEdit{parent} {
           SLOT(dataChanged(int)));
 }
 
+const QString SalutationBox::withoutDisclosures() {
+  return tr("Without disclosures");
+}
+
 void SalutationBox::loadDataset() {
   m_box->clear();
   m_box->addItem(QString(), QString());
@@ -74,9 +78,9 @@ void SalutationBox::setInfo(const QString &info) {
   }
 }
 
-const QString SalutationBox::withoutDisclosures() {
-  return tr("Without disclosures");
-}
+const QString SalutationBox::info() { return m_box->toolTip(); }
+
+const QString SalutationBox::notes() { return tr("a Title is required."); }
 
 const QStringList SalutationBox::salutations() {
   QStringList l;
@@ -97,7 +101,3 @@ const QStringList SalutationBox::salutations() {
   l << "Dipl.-HLFL-Ing.";
   return l;
 }
-
-const QString SalutationBox::info() { return m_box->toolTip(); }
-
-const QString SalutationBox::notes() { return tr("a Title is required."); }

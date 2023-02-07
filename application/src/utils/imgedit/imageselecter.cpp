@@ -56,15 +56,21 @@ ImageSelecter::ImageSelecter(QWidget *parent) : QWidget{parent} {
 void ImageSelecter::setDefaultTarget() {
   AntiquaCRM::ASettings cfg(this);
   QDir d(cfg.value("dirs/images").toString());
-  if (d.isReadable())
+  if (d.isReadable()) {
     setDirectory(d.path());
+  } else {
+    emit sendStatusMessage(tr("Archive path not found!"));
+  }
 }
 
 void ImageSelecter::setImportTarget() {
   AntiquaCRM::ASettings cfg(this);
   QDir d(cfg.value("dirs/import").toString());
-  if (d.isReadable())
+  if (d.isReadable()) {
     setDirectory(d.path());
+  } else {
+    emit sendStatusMessage(tr("Import path not found!"));
+  }
 }
 
 void ImageSelecter::selectImageTarget() {

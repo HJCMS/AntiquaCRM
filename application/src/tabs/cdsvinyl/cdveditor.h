@@ -51,6 +51,7 @@ private:
   // Row:3
   EditorActionBar *m_actionBar; /**< @brief Aktionen */
 
+  void setCDsDefault();
   void setInputFields() override;
   bool setDataField(const QSqlField &field, const QVariant &value) override;
   void importSqlResult() override;

@@ -44,7 +44,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   QVBoxLayout *lt_payment = new QVBoxLayout(m_paymentGroup);
   // payment/min_price
   buffer = tr("The lowest permissible selling price");
-  m_minPrice = new IntSpinBox(5, 20, m_paymentGroup);
+  m_minPrice = new PriceEdit(5, 20, m_paymentGroup);
   m_minPrice->setObjectName("payment/min_price");
   m_minPrice->setInfo(buffer);
   m_minPrice->setWhatsThis(
@@ -53,16 +53,25 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   buffer.clear();
   // payment/min_price_media
   buffer = tr("The lowest permissible multimedia selling price");
-  m_minPriceMedia = new IntSpinBox(1, 20, m_paymentGroup);
+  m_minPriceMedia = new PriceEdit(1, 20, m_paymentGroup);
   m_minPriceMedia->setObjectName("payment/min_price_media");
   m_minPriceMedia->setInfo(buffer);
   lt_payment->addWidget(m_minPriceMedia);
   buffer.clear();
-  // Währung
+  // payment/default_price_cds
+  buffer = tr("Default retail price for CDs.");
+  m_defaultCDPrice = new PriceEdit(1, 50, m_paymentGroup);
+  m_defaultCDPrice->setObjectName("payment/default_cd_price");
+  m_defaultCDPrice->setInfo(buffer);
+  lt_payment->addWidget(m_defaultCDPrice);
+  buffer.clear();
+  // payment/currency
+  buffer = tr("Currency for Displaying prices");
   m_currency = new Ecurrency(m_paymentGroup);
   m_currency->setObjectName("payment/currency");
-  m_currency->setInfo(tr("Currency for Displaying prices"));
+  m_currency->setInfo(buffer);
   lt_payment->addWidget(m_currency);
+  buffer.clear();
   // Mehwertsteuer
   QHBoxLayout *vat_layout = new QHBoxLayout();
   m_vat1 = new IntSpinBox(m_paymentGroup);
@@ -113,14 +122,14 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   buffer = tr("Timeout settings for network connections");
   m_transfer_timeout = new IntSpinBox(5, 30, this);
   m_transfer_timeout->setObjectName("transfer_timeout");
-  m_transfer_timeout->setValue(5);
+  m_transfer_timeout->setValue(QVariant(5));
   m_transfer_timeout->setInfo(buffer);
   lt_groupBox2->addWidget(m_transfer_timeout);
   // [General] popup_timeout
   buffer = tr("Timeout for Messenger PopUp Windows");
   m_popup_timeout = new IntSpinBox(1, 5, this);
   m_popup_timeout->setObjectName("popup_timeout");
-  m_popup_timeout->setValue(2);
+  m_popup_timeout->setValue(QVariant(2));
   m_popup_timeout->setInfo(buffer);
   lt_groupBox2->addWidget(m_popup_timeout);
   // [General] mouse_wheel_actions
@@ -136,7 +145,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   buffer = tr("Limit Database results in tab main views!");
   m_queryLimit = new IntSpinBox(10, 15000, this);
   m_queryLimit->setObjectName("SqlQueryLimit");
-  m_queryLimit->setValue(1500);
+  m_queryLimit->setValue(QVariant(1500));
   m_queryLimit->setWhatsThis(
       tr("Limits the output in the main views tables. Depending on the network "
          "and computer performance, prevents the application from freezing."));
@@ -145,7 +154,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   buffer = tr("Only Auto updates the main view if Table count is smaller than this!");
   m_queryAutoUpdate = new IntSpinBox(30, 100, this);
   m_queryAutoUpdate->setObjectName("SqlAutoUpdateCount");
-  m_queryAutoUpdate->setValue(50);
+  m_queryAutoUpdate->setValue(QVariant(50));
   m_queryAutoUpdate->setInfo(buffer);
   lt_groupBox2->addWidget(m_queryAutoUpdate);
   // Minimum Image Size

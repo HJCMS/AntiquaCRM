@@ -15,26 +15,26 @@ class SizeEdit final : public InputEdit {
 private:
   QSpinBox *m_width;
   QSpinBox *m_height;
-  void loadDataset();
+  void loadDataset() override;
 
 private Q_SLOTS:
   void sizeChanged(int);
 
 public Q_SLOTS:
-  Q_INVOKABLE void reset();
-  void setFocus();
-  void setValue(const QVariant &);
+  Q_INVOKABLE void reset() override;
+  void setFocus() override;
+  void setValue(const QVariant &) override;
 
 public:
   SizeEdit(QWidget *parent = nullptr);
-  void setProperties(const QSqlField &field);
-  const QVariant value();
+  void setProperties(const QSqlField &field) override;
+  const QVariant value() override;
   void setMinimum(int width, int height);
   void setMaximum(int width, int height);
-  bool isValid();
-  void setInfo(const QString &);
-  const QString info();
-  const QString notes();
+  bool isValid() override;
+  void setInfo(const QString &) override;
+  const QString info() override;
+  const QString notes() override;
 };
 
 #endif // ANTIQUACRM_SIZEEDIT_H

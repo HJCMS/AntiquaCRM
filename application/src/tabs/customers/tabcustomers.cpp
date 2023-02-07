@@ -140,7 +140,7 @@ void TabCustomers::createNewOrder(qint64 customerId) {
   // Prevent duplicate creation
   QString s("SELECT o_id, o_since FROM inventory_orders ");
   s.append(" WHERE o_customer_id=" + QString::number(customerId));
-  s.append(" AND DATE(o_since)=CURRENT_DATE;");
+  s.append(" AND DATE(o_since)=CURRENT_DATE");
   s.append(" ORDER BY o_id DESC LIMIT 1;");
   AntiquaCRM::ASqlCore sql(this);
   QSqlQuery q = sql.query(s);
@@ -160,6 +160,11 @@ void TabCustomers::createNewOrder(qint64 customerId) {
     if (ret == QMessageBox::No)
       return;
   }
+#ifdef ANTIQUA_DEVELOPEMENT
+  else {
+    qDebug() << Q_FUNC_INFO << s << sql.lastError();
+  }
+#endif
 
   QJsonObject obj;
   obj.insert("window_operation", "new_order");

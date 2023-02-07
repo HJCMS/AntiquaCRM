@@ -15,7 +15,7 @@ class BoolBox final : public InputEdit {
 
 private:
   QCheckBox *m_checkBox;
-  void loadDataset();
+  void loadDataset() override;
 
 private Q_SLOTS:
   void itemChanged(int);
@@ -24,20 +24,20 @@ Q_SIGNALS:
   void checked(bool);
 
 public Q_SLOTS:
-  Q_INVOKABLE void reset();
-  void setFocus();
+  Q_INVOKABLE void reset() override;
+  void setFocus() override;
   void setChecked(bool);
-  void setValue(const QVariant &);
+  void setValue(const QVariant &) override;
 
 public:
   explicit BoolBox(QWidget *parent = nullptr);
-  void setProperties(const QSqlField &field);
+  void setProperties(const QSqlField &field) override;
   bool isChecked();
-  const QVariant value();
-  bool isValid();
-  void setInfo(const QString &);
-  const QString info();
-  const QString notes();
+  const QVariant value() override;
+  bool isValid() override;
+  void setInfo(const QString &) override;
+  const QString info() override;
+  const QString notes() override;
 };
 
 #endif // ANTIQUACRM_BOOLBOX_H

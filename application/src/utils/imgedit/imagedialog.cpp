@@ -77,6 +77,8 @@ ImageDialog::ImageDialog(int articleId, QWidget *parent)
           SLOT(fileChanged(const SourceInfo &)));
   connect(m_imageSelecter, SIGNAL(sendImportImage(const QString &)),
           SLOT(setImageImport(const QString &)));
+  connect(m_imageSelecter, SIGNAL(sendStatusMessage(const QString &)),
+          SLOT(notifyStatus(const QString &)));
 }
 
 bool ImageDialog::findSourceImage() {

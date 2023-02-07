@@ -5,7 +5,6 @@
 #ifndef ANTIQUACRM_PHONEEDIT_H
 #define ANTIQUACRM_PHONEEDIT_H
 
-#include <AGlobal>
 #include <AntiquaInputEdit>
 #include <QAbstractListModel>
 #include <QCompleter>
@@ -52,19 +51,19 @@ private Q_SLOTS:
   void dataChanged(const QString &);
 
 public Q_SLOTS:
-  Q_INVOKABLE void reset();
-  void setValue(const QVariant &);
-  void setFocus();
+  Q_INVOKABLE void reset() override;
+  void setValue(const QVariant &) override;
+  void setFocus() override;
 
 public:
   explicit PhoneEdit(QWidget *parent = nullptr);
-  void setProperties(const QSqlField &field);
-  void loadDataset();
-  const QVariant value();
-  bool isValid();
-  void setInfo(const QString &);
-  const QString info();
-  const QString notes();
+  void setProperties(const QSqlField &field) override;
+  void loadDataset() override;
+  const QVariant value() override;
+  bool isValid() override;
+  void setInfo(const QString &) override;
+  const QString info() override;
+  const QString notes() override;
 };
 
 #endif // ANTIQUACRM_PHONEEDIT_H

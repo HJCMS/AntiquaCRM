@@ -24,8 +24,9 @@ private:
   BoolBox *m_mouseWheel;          /**< Mausrad Unterstützung */
   IntSpinBox *m_queryLimit;       /**< Max. Anzeige in Tabellen */
   IntSpinBox *m_queryAutoUpdate;  /**< Auto Aktualisieren erst ab ... */
-  IntSpinBox *m_minPrice;         /**< Kleinster Verkaufspreis */
-  IntSpinBox *m_minPriceMedia;    /**< Kleinster Verkaufspreis Medien */
+  PriceEdit *m_minPrice;         /**< Kleinster Verkaufspreis */
+  PriceEdit *m_minPriceMedia;    /**< Kleinster Verkaufspreis Medien */
+  PriceEdit *m_defaultCDPrice;   /**< Standard CD Verkaufspreis */
   IntSpinBox *m_payWaitDays;      /**< Zahlungsfrist */
   SizeEdit *m_minSize;            /**< Minimale Bildgröße */
   SizeEdit *m_maxSize;            /**< Maximale Bildgröße */

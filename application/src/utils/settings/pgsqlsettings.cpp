@@ -127,7 +127,7 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
 
   pg_port = new IntSpinBox(1110, 45000, this);
   pg_port->setObjectName("pg_port");
-  pg_port->setValue(5432);
+  pg_port->setValue(QVariant(5432));
   pg_port->setToolTip(tr("The default port address is 5432"));
   pg_port->setInfo(tr("Port"));
   pg_port->setRequired(true);
@@ -136,7 +136,7 @@ PgSQLSettings::PgSQLSettings(QWidget *parent) : SettingsWidget{parent} {
 
   pg_timeout = new IntSpinBox(5, 30, this);
   pg_timeout->setObjectName("pg_timeout");
-  pg_timeout->setValue(5);
+  pg_timeout->setValue(QVariant(5));
   pg_timeout->setInfo(tr("Timeout"));
   pg_timeout->setToolTip(tr("Timeout in seconds"));
   gh_sql_alyout->addWidget(pg_timeout);

@@ -42,6 +42,7 @@ Q_SIGNALS:
   void sendTargetChanged(const QDir &dir);
   void sendSelection(const SourceInfo &image);
   void sendImportImage(const QString &import);
+  void sendStatusMessage(const QString &);
 
 public Q_SLOTS:
   void setDirectory(const QString &dirPath);

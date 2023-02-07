@@ -5,11 +5,11 @@
 #ifndef ANTIQUACRM_POSTALCODE_EDIT_H
 #define ANTIQUACRM_POSTALCODE_EDIT_H
 
-#include <AGlobal>
 #include <AntiquaInputEdit>
 #include <QAbstractListModel>
 #include <QCompleter>
 #include <QLineEdit>
+#include <QList>
 
 /**
  * @brief Postalcode Completer Model
@@ -90,22 +90,22 @@ Q_SIGNALS:
   void sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &);
 
 public Q_SLOTS:
-  Q_INVOKABLE void reset();
-  void setValue(const QVariant &val);
-  void setFocus();
+  Q_INVOKABLE void reset() override;
+  void setValue(const QVariant &val) override;
+  void setFocus() override;
   void findCountry(const QString &name);
 
 public:
   explicit PostalCodeEdit(QWidget *parent = nullptr);
-  void loadDataset();
+  void loadDataset() override;
   const QStringList locations(const QString &fromCode);
-  void setProperties(const QSqlField &field);
-  const QVariant value();
-  bool isValid();
-  void setInfo(const QString &);
+  void setProperties(const QSqlField &field) override;
+  const QVariant value() override;
+  bool isValid() override;
+  void setInfo(const QString &) override;
   const QString country();
-  const QString info();
-  const QString notes();
+  const QString info() override;
+  const QString notes() override;
 };
 
 #endif // ANTIQUACRM_POSTALCODE_EDIT_H

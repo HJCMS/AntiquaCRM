@@ -261,6 +261,19 @@ void CDVEditor::setInputFields() {
   cv_keyword->loadDataset();
 }
 
+void CDVEditor::setCDsDefault() {
+  // Standards für CD Import einstellen.
+  cv_mtype->setValue(AntiquaCRM::MediaType::MEDIA_DISC_COMPACT);
+  // Artikelanzahl
+  if (cv_count->value().toInt() == 0)
+    cv_count->setValue(QVariant(1));
+
+  // Standard CD Preis
+  double cdPrice = m_cfg->value("payment/default_price_cds", 2.00).toDouble();
+  if (cv_price->value().toDouble() != cdPrice)
+    cv_price->setValue(cdPrice);
+}
+
 bool CDVEditor::setDataField(const QSqlField &field, const QVariant &value) {
   if (!field.isValid())
     return false;
@@ -581,6 +594,7 @@ void CDVEditor::openReadCDDialog() {
       desc << it.key() + ") " + it.value().toString();
     }
     cv_description->setValue(desc.join("\n"));
+    setCDsDefault();
   }
   d->deleteLater();
 #else

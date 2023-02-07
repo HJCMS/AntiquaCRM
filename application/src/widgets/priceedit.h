@@ -15,25 +15,28 @@ class PriceEdit final : public InputEdit {
 
 private:
   AntiquaDoubleBox *m_box;
-  void loadDataset();
+  void loadDataset() override;
 
 private Q_SLOTS:
   void itemChanged(double);
 
 public Q_SLOTS:
-  Q_INVOKABLE void reset();
-  void setFocus();
+  Q_INVOKABLE void reset() override;
+  void setFocus() override;
 
 public:
+  explicit PriceEdit(double minimum, double maximum, QWidget *parent = nullptr);
   explicit PriceEdit(QWidget *parent = nullptr);
-  void setProperties(const QSqlField &field);
+  void setProperties(const QSqlField &field) override;
   void setMinimum(double);
-  void setValue(const QVariant &);
-  const QVariant value();
-  bool isValid();
-  void setInfo(const QString &);
-  const QString info();
-  const QString notes();
+  void setMaximum(double);
+  void setRange(double min, double max);
+  void setValue(const QVariant &) override;
+  const QVariant value() override;
+  bool isValid() override;
+  void setInfo(const QString &) override;
+  const QString info() override;
+  const QString notes() override;
 };
 
 #endif // ANTIQUACRM_PRICEEDIT_H

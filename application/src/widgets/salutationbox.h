@@ -17,26 +17,26 @@ class SalutationBox final : public InputEdit {
 private:
   AntiquaComboBox *m_box;
   QLineEdit *m_edit;
-  void loadDataset();
+  void loadDataset() override;
+  inline const QString withoutDisclosures();
 
 private Q_SLOTS:
   void dataChanged(int);
 
 public Q_SLOTS:
-  Q_INVOKABLE void reset();
-  void setValue(const QVariant &);
-  void setFocus();
+  Q_INVOKABLE void reset() override;
+  void setValue(const QVariant &) override;
+  void setFocus() override;
 
 public:
   explicit SalutationBox(QWidget *parent = nullptr);
-  static const QString withoutDisclosures();
+  void setProperties(const QSqlField &field) override;
+  const QVariant value() override;
+  bool isValid() override;
+  void setInfo(const QString &) override;
+  const QString info() override;
+  const QString notes() override;
   static const QStringList salutations();
-  void setProperties(const QSqlField &field);
-  const QVariant value();
-  bool isValid();
-  void setInfo(const QString &);
-  const QString info();
-  const QString notes();
 };
 
 #endif // ANTIQUACRM_SALUTATIONBOX_H

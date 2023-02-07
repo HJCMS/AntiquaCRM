@@ -14,25 +14,25 @@ class TextField final : public InputEdit {
 
 private:
   QTextEdit *m_edit;
-  void loadDataset();
+  void loadDataset() override;
 
 private Q_SLOTS:
   void dataChanged();
 
 public Q_SLOTS:
-  Q_INVOKABLE void reset();
-  void setValue(const QVariant &);
-  void setFocus();
+  Q_INVOKABLE void reset() override;
+  void setValue(const QVariant &) override;
+  void setFocus() override;
   void setEditable(bool b = true);
 
 public:
   explicit TextField(QWidget *parent = nullptr);
-  void setProperties(const QSqlField &field);
-  const QVariant value();
-  bool isValid();
-  void setInfo(const QString &);
-  const QString info();
-  const QString notes();
+  void setProperties(const QSqlField &field) override;
+  const QVariant value() override;
+  bool isValid() override;
+  void setInfo(const QString &) override;
+  const QString info() override;
+  const QString notes() override;
 };
 
 #endif // ANTIQUACRM_TEXTFIELD_H

@@ -12,8 +12,6 @@
 #include <QLineEdit>
 #include <QRegExpValidator>
 #include <QRegularExpression>
-#include <QString>
-#include <QWidget>
 
 /**
  * @brief Eingabe Editor für EAN nach ISO 2108
@@ -26,7 +24,7 @@ class IsbnEdit final : public InputEdit {
 public:
   enum CodeType {
     ISBNEAN = 0x01, /**< ISBN/EAN Booknumber */
-    GTIN = 0x02,  /**< UPC-A,GTIN-12,GTIN13,UPC-E Medianumber */
+    GTIN = 0x02,    /**< UPC-A,GTIN-12,GTIN13,UPC-E Medianumber */
   };
   explicit IsbnEdit(QWidget *parent = nullptr,
                     IsbnEdit::CodeType ctype = IsbnEdit::CodeType::ISBNEAN);
@@ -85,7 +83,7 @@ private:
    */
   QLabel *m_status;
 
-  void loadDataset();
+  void loadDataset() override;
 
 private Q_SLOTS:
   void setValidationIcon(bool);
@@ -107,18 +105,18 @@ Q_SIGNALS:
   void clicked();
 
 public Q_SLOTS:
-  void setValue(const QVariant &);
-  Q_INVOKABLE void reset();
-  void setFocus();
+  void setValue(const QVariant &) override;
+  Q_INVOKABLE void reset() override;
+  void setFocus() override;
 
 public:
-  void setProperties(const QSqlField &field);
-  bool isValid();
+  void setProperties(const QSqlField &field) override;
+  bool isValid() override;
   qint64 number();
-  const QVariant value();
-  void setInfo(const QString &);
-  const QString info();
-  const QString notes();
+  const QVariant value() override;
+  void setInfo(const QString &) override;
+  const QString info() override;
+  const QString notes() override;
 };
 
 #endif // ANTIQUACRM_ISBNEDIT_H

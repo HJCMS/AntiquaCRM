@@ -16,24 +16,24 @@ class YearEdit final : public InputEdit {
 private:
   QDateEdit *m_year;
   const QDate startDate;
-  void loadDataset();
+  void loadDataset() override;
 
 private Q_SLOTS:
   void dataChanged(const QDate &);
 
 public Q_SLOTS:
-  void setValue(const QVariant &);
-  Q_INVOKABLE void reset();
-  void setFocus();
+  void setValue(const QVariant &) override;
+  Q_INVOKABLE void reset() override;
+  void setFocus() override;
 
 public:
   explicit YearEdit(QWidget *parent = nullptr);
-  void setProperties(const QSqlField &field);
-  const QVariant value();
-  bool isValid();
-  void setInfo(const QString &);
-  const QString info();
-  const QString notes();
+  void setProperties(const QSqlField &field) override;
+  const QVariant value() override;
+  bool isValid() override;
+  void setInfo(const QString &) override;
+  const QString info() override;
+  const QString notes() override;
 };
 
 #endif // ANTIQUACRM_YEAREDIT_H
