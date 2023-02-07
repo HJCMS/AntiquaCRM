@@ -1166,7 +1166,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CDDiscId</name>
     <message>
-        <location filename="../utils/cdtracking/cddiscid.cpp" line="+68"/>
+        <location filename="../utils/cdtracking/cddiscid.cpp" line="+65"/>
         <source>No Media found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1211,6 +1211,11 @@ Image - Article Id: %2</source>
     <message>
         <location line="+6"/>
         <source>Barcode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+90"/>
+        <source>No Disc Information found.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
