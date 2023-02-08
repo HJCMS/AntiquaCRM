@@ -149,7 +149,9 @@ void AntiquaTabWidget::setAction(const QJsonObject &obj) {
       setCurrentIndex(index);
     } else {
 #ifdef ANTIQUA_DEVELOPEMENT
-      qDebug() << Q_FUNC_INFO << "Rejected:" << obj;
+      qDebug() << Q_FUNC_INFO << Qt::endl
+               << "Rejected:" << index << (m_tab != nullptr) << Qt::endl
+               << obj;
 #endif
       emit sendWarnMessage(tr("Can not open '%1'!").arg(tab));
     }

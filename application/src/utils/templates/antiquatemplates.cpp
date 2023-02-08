@@ -86,10 +86,10 @@ const QString AntiquaTemplates::getTemplate(const QString &caller,
       it.next();
       buffer.replace("@" + it.key() + "@", it.value());
     }
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << buffer;
-#endif
     return buffer;
   }
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << query;
+#endif
   return QString();
 }

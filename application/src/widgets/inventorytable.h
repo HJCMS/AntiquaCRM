@@ -14,6 +14,8 @@
 #include <QTableView>
 #include <QWidget>
 
+#include "tablecontextmenu.h"
+
 class InventoryTable : public QTableView {
   Q_OBJECT
 
@@ -45,11 +47,11 @@ protected:
 
 protected Q_SLOTS:
   void getSqlModelError(const QString &table, const QString &message);
+  virtual void contextMenuAction(TableContextMenu::Actions,
+                                 const QModelIndex &) = 0;
   virtual void setSortByColumn(int column, Qt::SortOrder order) = 0;
-  virtual void getSelectedItem(const QModelIndex &index) = 0;
-  virtual void createOpenEntry() = 0;
-  virtual void createCopyClipboard() = 0;
-  virtual void createSocketOperation() = 0;
+  virtual void getSelectedItem(const QModelIndex &) = 0;
+  virtual void createSocketOperation(const QModelIndex &) = 0;
 
 public Q_SLOTS:
   virtual void setReloadView() = 0;

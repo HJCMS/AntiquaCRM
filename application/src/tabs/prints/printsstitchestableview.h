@@ -24,7 +24,6 @@ private:
   PrintsStitchesModel *m_model;
   QString where_clause;
   QSqlRecord p_tableRecord;
-  QModelIndex p_modelIndex;
 
   qint64 getTableID(const QModelIndex &index, int column = 0) override;
   int getArticleCount(const QModelIndex &index);
@@ -32,11 +31,11 @@ private:
   void contextMenuEvent(QContextMenuEvent *) override;
 
 private Q_SLOTS:
+  void contextMenuAction(TableContextMenu::Actions,
+                         const QModelIndex &) override;
   void setSortByColumn(int column, Qt::SortOrder order) override;
-  void getSelectedItem(const QModelIndex &index) override;
-  void createOpenEntry() override;
-  void createCopyClipboard() override;
-  void createSocketOperation() override;
+  void getSelectedItem(const QModelIndex &) override;
+  void createSocketOperation(const QModelIndex &) override;
 
 public Q_SLOTS:
   void setReloadView() override;

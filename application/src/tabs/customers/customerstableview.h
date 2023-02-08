@@ -24,19 +24,17 @@ private:
   CustomersTableModel *m_model;
   QString where_clause;
   QSqlRecord p_tableRecord;
-  QModelIndex p_modelIndex;
 
   qint64 getTableID(const QModelIndex &index, int column = 0) override;
   bool sqlQueryTable(const QString &query) override;
   void contextMenuEvent(QContextMenuEvent *) override;
 
 private Q_SLOTS:
+  void contextMenuAction(TableContextMenu::Actions,
+                         const QModelIndex &) override;
   void setSortByColumn(int column, Qt::SortOrder order) override;
-  void getSelectedItem(const QModelIndex &index) override;
-  void createOpenEntry() override;
-  void createCopyClipboard() override;
-  void createSocketOperation() override;
-  void createDeleteRequest();
+  void getSelectedItem(const QModelIndex &) override;
+  void createSocketOperation(const QModelIndex &) override{/* unused */};
 
 public Q_SLOTS:
   void setReloadView() override;

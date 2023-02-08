@@ -46,46 +46,63 @@ bool OrdersTableView::sqlQueryTable(const QString &query) {
 }
 
 void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
-  p_modelIndex = indexAt(event->pos());
-  bool enable_action = p_modelIndex.isValid();
+  QModelIndex index = indexAt(event->pos());
+  qint64 rows = m_model->rowCount();
+  TableContextMenu *m_menu = new TableContextMenu(index, rows, this);
+  m_menu->addOpenAction(tr("Open order"));
+  m_menu->addCopyAction(tr("Copy Order Id"));
+  QAction *ac_customer = m_menu->addOrderAction(tr("View Customer"));
+  ac_customer->setIcon(cellIcon("user_group"));
+  m_menu->addUndoAction(tr("Create a return from this order."));
+  m_menu->addReloadAction(tr("Reload"));
 
-  QMenu *m = new QMenu(this);
+  connect(
+      m_menu,
+      SIGNAL(sendAction(TableContextMenu::Actions, const QModelIndex &)),
+      SLOT(contextMenuAction(TableContextMenu::Actions, const QModelIndex &)));
 
-  QAction *ac_edit = m->addAction(cellIcon("spreadsheet"), tr("Open order"));
-  ac_edit->setEnabled(enable_action);
-  connect(ac_edit, SIGNAL(triggered()), SLOT(createOpenEntry()));
+  connect(m_menu, SIGNAL(sendRefresh()), SLOT(setReloadView()));
 
-  QAction *ac_copy = m->addAction(cellIcon("edit"), tr("Copy Order Id"));
-  ac_copy->setEnabled(enable_action);
-  connect(ac_copy, SIGNAL(triggered()), SLOT(createCopyClipboard()));
-
-  QAction *ac_customer =
-      m->addAction(cellIcon("user_group"), tr("View Customer"));
-  ac_customer->setEnabled(enable_action);
-  connect(ac_customer, SIGNAL(triggered()), SLOT(createSocketOperation()));
-
-  QAction *ac_returning = m->addAction(cellIcon("action_undo"),
-                                       tr("Create a return from this order."));
-  ac_returning->setEnabled(enable_action);
-  connect(ac_returning, SIGNAL(triggered()), SLOT(createOrderReturning()));
-
-  QAction *ac_refresh = m->addAction(cellIcon("action_reload"), tr("Reload"));
-  connect(ac_refresh, SIGNAL(triggered()), SLOT(setReloadView()));
-
-  m->exec(event->globalPos());
-  delete m;
+  m_menu->exec(event->globalPos());
+  delete m_menu;
 }
 
-void OrdersTableView::createOrderReturning() {
-  qint64 oid = getTableID(p_modelIndex);
-  if (oid < 1)
-    return;
-
+void OrdersTableView::createOrderReturning(qint64 oid) {
   ReturnOrder *d = new ReturnOrder(this);
   if (d->exec(oid) == QDialog::Accepted) {
     setReloadView();
   }
   d->deleteLater();
+}
+
+void OrdersTableView::contextMenuAction(TableContextMenu::Actions ac,
+                                        const QModelIndex &index) {
+
+  qint64 oid = getTableID(index);
+  if (oid < 1)
+    return;
+
+  switch (ac) {
+  case (TableContextMenu::Actions::Open):
+    emit sendOpenEntry(oid);
+    break;
+
+  case (TableContextMenu::Actions::Order):
+    createSocketOperation(index);
+    break;
+
+  case (TableContextMenu::Actions::Copy):
+    emit sendCopyToClibboard(QString::number(oid));
+    break;
+
+  case (TableContextMenu::Actions::Undo):
+    createOrderReturning(oid);
+    break;
+
+  default:
+    qWarning("Unknown %s", Q_FUNC_INFO);
+    return;
+  };
 }
 
 void OrdersTableView::setSortByColumn(int column, Qt::SortOrder order) {
@@ -133,24 +150,8 @@ void OrdersTableView::getSelectedItem(const QModelIndex &index) {
   emit sendOpenEntry(oid);
 }
 
-void OrdersTableView::createOpenEntry() {
-  qint64 oid = getTableID(p_modelIndex);
-  if (oid < 1)
-    return;
-
-  emit sendOpenEntry(oid);
-}
-
-void OrdersTableView::createCopyClipboard() {
-  qint64 oid = getTableID(p_modelIndex);
-  if (oid < 1)
-    return;
-
-  emit sendCopyToClibboard(QString::number(oid));
-}
-
-void OrdersTableView::createSocketOperation() {
-  qint64 oid = getTableID(p_modelIndex);
+void OrdersTableView::createSocketOperation(const QModelIndex &index) {
+  qint64 oid = getTableID(index);
   if (oid < 1)
     return;
 

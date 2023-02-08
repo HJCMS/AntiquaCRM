@@ -525,12 +525,20 @@ bool OrdersEditor::addArticleToOrderTable(qint64 articleId) {
       for (int i = 0; i < r.count(); i++) {
         QSqlField f = r.field(i);
         items.append(addArticleItem(f.name(), f.value()));
+        // NOTE: a_sell_price i not in SQL Query
+        if (f.name() == "a_price")
+          items.append(addArticleItem("a_sell_price", f.value()));
       }
       if (items.size() > 0) {
         m_ordersList->insertArticle(items);
         return true;
       }
     }
+#ifdef ANTIQUA_DEVELOPEMENT
+    else {
+      qDebug() << Q_FUNC_INFO << m_sql->lastError();
+    }
+#endif
   }
   sendStatusMessage(tr("Article: %1 not found or no stock!").arg(articleId));
   return false;
@@ -575,6 +583,11 @@ const QList<BillingInfo> OrdersEditor::queryBillingInfo(qint64 oid,
         list.append(d);
       }
     }
+#ifdef ANTIQUA_DEVELOPEMENT
+    else {
+      qDebug() << Q_FUNC_INFO << wcl << m_sql->lastError();
+    }
+#endif
   }
   return list;
 }

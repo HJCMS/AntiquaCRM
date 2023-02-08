@@ -272,12 +272,12 @@
     </message>
     <message>
         <location line="+9"/>
-        <location line="+140"/>
+        <location line="+142"/>
         <source>Various</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-131"/>
+        <location line="-133"/>
         <source>View and import Provider orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -287,7 +287,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+32"/>
         <source>Can not open &apos;%1&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -974,27 +974,27 @@ Image - Article Id: %2</source>
 <context>
     <name>BookTableView</name>
     <message>
-        <location filename="../tabs/books/booktableview.cpp" line="+62"/>
+        <location filename="../tabs/books/booktableview.cpp" line="+59"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+1"/>
         <source>Create entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Copy Article Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Add Article to opened Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1617,27 +1617,27 @@ Image - Article Id: %2</source>
 <context>
     <name>CDVTableView</name>
     <message>
-        <location filename="../tabs/cdsvinyl/cdvtableview.cpp" line="+62"/>
+        <location filename="../tabs/cdsvinyl/cdvtableview.cpp" line="+59"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+1"/>
         <source>Create entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Copy Article Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Add Article to opened Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2424,32 +2424,32 @@ Image - Article Id: %2</source>
 <context>
     <name>CustomersTableView</name>
     <message>
-        <location filename="../tabs/customers/customerstableview.cpp" line="+55"/>
+        <location filename="../tabs/customers/customerstableview.cpp" line="+52"/>
         <source>Edit selected Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Create new Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Delete selected Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Copy Customer Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+1"/>
         <source>Create Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4462,12 +4462,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+97"/>
+        <location line="+105"/>
         <source>Article: %1 not found or no stock!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+116"/>
         <location line="+19"/>
         <location line="+39"/>
         <location line="+32"/>
@@ -4487,12 +4487,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-469"/>
+        <location line="-482"/>
         <source>Missing Deliverynote Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+491"/>
+        <location line="+504"/>
         <source>Missing Delivery Address!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4824,27 +4824,27 @@ Image - Article Id: %2</source>
 <context>
     <name>OrdersTableView</name>
     <message>
-        <location filename="../tabs/orders/orderstableview.cpp" line="+54"/>
+        <location filename="../tabs/orders/orderstableview.cpp" line="+52"/>
         <source>Open order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+1"/>
         <source>Copy Order Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>View Customer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+2"/>
         <source>Create a return from this order.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+1"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5916,27 +5916,27 @@ Image - Article Id: %2</source>
 <context>
     <name>PrintsStitchesTableView</name>
     <message>
-        <location filename="../tabs/prints/printsstitchestableview.cpp" line="+60"/>
+        <location filename="../tabs/prints/printsstitchestableview.cpp" line="+57"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+1"/>
         <source>Create entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Copy Article Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Add Article to opened Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7959,27 +7959,27 @@ Image - Article Id: %2</source>
 <context>
     <name>VariousTableView</name>
     <message>
-        <location filename="../tabs/various/varioustableview.cpp" line="+61"/>
+        <location filename="../tabs/various/varioustableview.cpp" line="+58"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+1"/>
         <source>Create entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Copy Article Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Add Article to opened Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>

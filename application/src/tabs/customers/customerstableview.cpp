@@ -46,41 +46,56 @@ bool CustomersTableView::sqlQueryTable(const QString &query) {
 }
 
 void CustomersTableView::contextMenuEvent(QContextMenuEvent *event) {
-  p_modelIndex = indexAt(event->pos());
-  bool enable_action = p_modelIndex.isValid();
-  bool enable_create = (m_model->rowCount() > 0);
+  QModelIndex index = indexAt(event->pos());
+  qint64 rows = m_model->rowCount();
+  TableContextMenu *m_menu = new TableContextMenu(index, rows, this);
+  m_menu->addOpenAction(tr("Edit selected Customer"));
+  m_menu->addCreateAction(tr("Create new Customer"));
+  m_menu->addDeleteAction(tr("Delete selected Customer"));
+  m_menu->addCopyAction(tr("Copy Customer Id"));
+  m_menu->addOrderAction(tr("Create Order"));
+  m_menu->addReloadAction(tr("Reload"));
 
-  QMenu *m = new QMenu(this);
-  QAction *ac_open = m->addAction(cellIcon("database"),
-                                  tr("Edit selected Customer"));
-  ac_open->setEnabled(enable_action);
-  connect(ac_open, SIGNAL(triggered()), SLOT(createOpenEntry()));
+  connect(
+      m_menu,
+      SIGNAL(sendAction(TableContextMenu::Actions, const QModelIndex &)),
+      SLOT(contextMenuAction(TableContextMenu::Actions, const QModelIndex &)));
 
-  QAction *ac_create =
-      m->addAction(cellIcon("db_add"), tr("Create new Customer"));
-  ac_create->setEnabled(enable_create);
-  connect(ac_create, SIGNAL(triggered()), SIGNAL(sendCreateNewEntry()));
+  connect(m_menu, SIGNAL(sendCreate()), SIGNAL(sendCreateNewEntry()));
+  connect(m_menu, SIGNAL(sendRefresh()), SLOT(setReloadView()));
 
-  QAction *ac_delete = m->addAction(cellIcon("db_remove"),
-                                    tr("Delete selected Customer"));
-  ac_delete->setEnabled(enable_action);
-  connect(ac_delete, SIGNAL(triggered()), SLOT(createDeleteRequest()));
+  m_menu->exec(event->globalPos());
+  delete m_menu;
+}
 
-  // BEGIN Einträge für Auftrag
-  QAction *ac_copy = m->addAction(cellIcon("db_comit"), tr("Copy Customer Id"));
-  ac_copy->setEnabled(enable_action);
-  connect(ac_copy, SIGNAL(triggered()), SLOT(createCopyClipboard()));
+void CustomersTableView::contextMenuAction(TableContextMenu::Actions ac,
+                                           const QModelIndex &index) {
 
-  QAction *ac_order = m->addAction(cellIcon("view_log"), tr("Create Order"));
-  ac_order->setEnabled(enable_action);
-  connect(ac_order, SIGNAL(triggered()), SLOT(createSocketOperation()));
-  //  END
+  qint64 c_id = getTableID(index);
+  if (c_id < 1)
+    return;
 
-  QAction *ac_refresh = m->addAction(cellIcon("action_reload"), tr("Reload"));
-  connect(ac_refresh, SIGNAL(triggered()), SLOT(setReloadView()));
+  switch (ac) {
+  case (TableContextMenu::Actions::Open):
+    emit sendOpenEntry(c_id);
+    break;
 
-  m->exec(event->globalPos());
-  delete m;
+  case (TableContextMenu::Actions::Order):
+    emit sendCurrentId(c_id);
+    break;
+
+  case (TableContextMenu::Actions::Delete):
+    emit sendDeleteEntry(c_id);
+    break;
+
+  case (TableContextMenu::Actions::Copy):
+    emit sendCopyToClibboard(QString::number(c_id));
+    break;
+
+  default:
+    qWarning("Unknown %s", Q_FUNC_INFO);
+    return;
+  };
 }
 
 void CustomersTableView::setSortByColumn(int column, Qt::SortOrder order) {
@@ -123,30 +138,6 @@ void CustomersTableView::getSelectedItem(const QModelIndex &index) {
   qint64 id = getTableID(index);
   if (id >= 1)
     emit sendOpenEntry(id);
-}
-
-void CustomersTableView::createOpenEntry() {
-  qint64 id = getTableID(p_modelIndex);
-  if (id >= 1)
-    emit sendOpenEntry(id);
-}
-
-void CustomersTableView::createCopyClipboard() {
-  qint64 id = getTableID(p_modelIndex);
-  if (id >= 1)
-    emit sendCopyToClibboard(QString::number(id));
-}
-
-void CustomersTableView::createSocketOperation() {
-  qint64 cid = getTableID(p_modelIndex);
-  if (cid >= 1)
-    emit sendCurrentId(cid);
-}
-
-void CustomersTableView::createDeleteRequest() {
-  qint64 id = getTableID(p_modelIndex);
-  if (id >= 1)
-    emit sendDeleteEntry(id);
 }
 
 void CustomersTableView::setReloadView() {

@@ -177,6 +177,10 @@
 #include "storagelocation.h"
 #endif
 
+#ifndef ANTIQUACRM_TABLECONTEXTMENU_H
+#include "tablecontextmenu.h"
+#endif
+
 #ifndef ANTIQUACRM_TABSEARCHBAR_H
 #include "tabsearchbar.h"
 #endif

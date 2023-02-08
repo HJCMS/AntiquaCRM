@@ -53,36 +53,51 @@ bool BookTableView::sqlQueryTable(const QString &query) {
 }
 
 void BookTableView::contextMenuEvent(QContextMenuEvent *event) {
-  p_modelIndex = indexAt(event->pos());
-  bool enable_action = p_modelIndex.isValid();
-  bool enable_create = (m_model->rowCount() > 0);
+  QModelIndex index = indexAt(event->pos());
+  qint64 rows = m_model->rowCount();
+  TableContextMenu *m_menu = new TableContextMenu(index, rows, this);
+  m_menu->addOpenAction(tr("Open entry"));
+  m_menu->addCreateAction(tr("Create entry"));
+  m_menu->addCopyAction(tr("Copy Article Id"));
+  m_menu->addOrderAction(tr("Add Article to opened Order"));
+  m_menu->addReloadAction(tr("Update"));
 
-  QMenu *m = new QMenu(this);
-  // Eintrag öffnen  Bestellung anlegen
-  QAction *ac_open = m->addAction(cellIcon("database"), tr("Open entry"));
-  ac_open->setEnabled(enable_action);
-  connect(ac_open, SIGNAL(triggered()), this, SLOT(createOpenEntry()));
+  connect(
+      m_menu,
+      SIGNAL(sendAction(TableContextMenu::Actions, const QModelIndex &)),
+      SLOT(contextMenuAction(TableContextMenu::Actions, const QModelIndex &)));
 
-  QAction *ac_create = m->addAction(cellIcon("db_add"), tr("Create entry"));
-  ac_create->setEnabled(enable_create);
-  connect(ac_create, SIGNAL(triggered()), this, SIGNAL(sendCreateNewEntry()));
+  connect(m_menu, SIGNAL(sendCreate()), SIGNAL(sendCreateNewEntry()));
+  connect(m_menu, SIGNAL(sendRefresh()), SLOT(setReloadView()));
 
-  // BEGIN Einträge für Auftrag
-  QAction *ac_copy = m->addAction(cellIcon("db_comit"), tr("Copy Article Id"));
-  ac_copy->setEnabled(enable_action);
-  connect(ac_copy, SIGNAL(triggered()), this, SLOT(createCopyClipboard()));
+  m_menu->exec(event->globalPos());
+  delete m_menu;
+}
 
-  QAction *ac_order =
-      m->addAction(cellIcon("view_log"), tr("Add Article to opened Order"));
-  ac_order->setEnabled(getArticleCount(p_modelIndex) > 0);
-  connect(ac_order, SIGNAL(triggered()), this, SLOT(createSocketOperation()));
-  //  END
+void BookTableView::contextMenuAction(TableContextMenu::Actions ac,
+                                      const QModelIndex &index) {
 
-  QAction *ac_refresh = m->addAction(cellIcon("action_reload"), tr("Update"));
-  connect(ac_refresh, SIGNAL(triggered()), this, SLOT(setReloadView()));
+  qint64 aid = getTableID(index);
+  if (aid < 1)
+    return;
 
-  m->exec(event->globalPos());
-  delete m;
+  switch (ac) {
+  case (TableContextMenu::Actions::Open):
+    emit sendOpenEntry(aid);
+    break;
+
+  case (TableContextMenu::Actions::Order):
+    createSocketOperation(index);
+    break;
+
+  case (TableContextMenu::Actions::Copy):
+    emit sendCopyToClibboard(QString::number(aid));
+    break;
+
+  default:
+    qWarning("Unknown %s", Q_FUNC_INFO);
+    return;
+  };
 }
 
 void BookTableView::setSortByColumn(int column, Qt::SortOrder order) {
@@ -126,26 +141,16 @@ void BookTableView::getSelectedItem(const QModelIndex &index) {
     emit sendOpenEntry(aid);
 }
 
-void BookTableView::createOpenEntry() {
-  qint64 aid = getTableID(p_modelIndex);
-  if (aid >= 1)
-    emit sendOpenEntry(aid);
-}
-
-void BookTableView::createCopyClipboard() {
-  qint64 aid = getTableID(p_modelIndex);
-  if (aid >= 1)
-    emit sendCopyToClibboard(QString::number(aid));
-}
-
-void BookTableView::createSocketOperation() {
-  qint64 aid = getTableID(p_modelIndex);
-  if (aid >= 1 && getArticleCount(p_modelIndex) > 0) {
+void BookTableView::createSocketOperation(const QModelIndex &index) {
+  qint64 aid = getTableID(index);
+  if (aid >= 1 && getArticleCount(index) > 0) {
     QJsonObject obj;
     obj.insert("window_operation", "add_article");
     obj.insert("tab", "orders_tab");
     obj.insert("add_article", QJsonValue(aid));
     emit sendSocketOperation(obj);
+  } else {
+    qInfo("Socket operation ignored!");
   }
 }
 

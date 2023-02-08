@@ -272,12 +272,12 @@
     </message>
     <message>
         <location line="+9"/>
-        <location line="+140"/>
+        <location line="+142"/>
         <source>Various</source>
         <translation>Verschiedenes</translation>
     </message>
     <message>
-        <location line="-131"/>
+        <location line="-133"/>
         <source>View and import Provider orders</source>
         <translation>Anzeigen und Importieren von Dienstleisterbestellungen</translation>
     </message>
@@ -287,7 +287,7 @@
         <translation>Anzeigen und Bearbeiten von Systembestellungen</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+32"/>
         <source>Can not open &apos;%1&apos;!</source>
         <translation>Kann &apos;%1&apos; nicht öffnen!</translation>
     </message>
@@ -976,27 +976,27 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>BookTableView</name>
     <message>
-        <location filename="../tabs/books/booktableview.cpp" line="+62"/>
+        <location filename="../tabs/books/booktableview.cpp" line="+59"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+1"/>
         <source>Create entry</source>
         <translation>Eintrag erstellen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Copy Article Id</source>
         <translation>Artikelnummer kopieren</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Add Article to opened Order</source>
         <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Update</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -1621,27 +1621,27 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CDVTableView</name>
     <message>
-        <location filename="../tabs/cdsvinyl/cdvtableview.cpp" line="+62"/>
+        <location filename="../tabs/cdsvinyl/cdvtableview.cpp" line="+59"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+1"/>
         <source>Create entry</source>
         <translation>Eintrag erstellen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Copy Article Id</source>
         <translation>Artikelnummer kopieren</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Add Article to opened Order</source>
         <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Update</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -2428,32 +2428,32 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CustomersTableView</name>
     <message>
-        <location filename="../tabs/customers/customerstableview.cpp" line="+55"/>
+        <location filename="../tabs/customers/customerstableview.cpp" line="+52"/>
         <source>Edit selected Customer</source>
         <translation>Ausgewählten Kunden bearbeiten</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Create new Customer</source>
         <translation>Neuen Kunden anlegen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Delete selected Customer</source>
         <translation>Ausgewählten Kunden löschen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Copy Customer Id</source>
         <translation>Kundennummer kopieren</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+1"/>
         <source>Create Order</source>
         <translation>Erstelle Auftrag</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Reload</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -4466,12 +4466,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Artikel speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+97"/>
+        <location line="+105"/>
         <source>Article: %1 not found or no stock!</source>
         <translation>Artikel: %1 nicht gefunden oder nicht auf Lager!</translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+116"/>
         <location line="+19"/>
         <location line="+39"/>
         <location line="+32"/>
@@ -4491,12 +4491,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
     <message>
-        <location line="-469"/>
+        <location line="-482"/>
         <source>Missing Deliverynote Number</source>
         <translation>Fehlende Lieferscheinnummer</translation>
     </message>
     <message>
-        <location line="+491"/>
+        <location line="+504"/>
         <source>Missing Delivery Address!</source>
         <translation>Lieferadresse fehlt!</translation>
     </message>
@@ -4828,27 +4828,27 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>OrdersTableView</name>
     <message>
-        <location filename="../tabs/orders/orderstableview.cpp" line="+54"/>
+        <location filename="../tabs/orders/orderstableview.cpp" line="+52"/>
         <source>Open order</source>
         <translation>Auftrag öffnen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+1"/>
         <source>Copy Order Id</source>
         <translation>Auftragnummer kopieren</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>View Customer</source>
         <translation>Kunde anzeigen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+2"/>
         <source>Create a return from this order.</source>
         <translation>Aus diesem Auftrag eine Rücksendung erstellen.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+1"/>
         <source>Reload</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -5922,27 +5922,27 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PrintsStitchesTableView</name>
     <message>
-        <location filename="../tabs/prints/printsstitchestableview.cpp" line="+60"/>
+        <location filename="../tabs/prints/printsstitchestableview.cpp" line="+57"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+1"/>
         <source>Create entry</source>
         <translation>Eintrag erstellen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Copy Article Id</source>
         <translation>Artikelnummer kopieren</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Add Article to opened Order</source>
         <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Update</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -7967,27 +7967,27 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>VariousTableView</name>
     <message>
-        <location filename="../tabs/various/varioustableview.cpp" line="+61"/>
+        <location filename="../tabs/various/varioustableview.cpp" line="+58"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+1"/>
         <source>Create entry</source>
         <translation>Eintrag erstellen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Copy Article Id</source>
         <translation>Artikelnummer kopieren</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Add Article to opened Order</source>
         <translation>Artikel zu geöffneter Bestellung hinzufügen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+1"/>
         <source>Update</source>
         <translation>Aktualisieren</translation>
     </message>

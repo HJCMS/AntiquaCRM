@@ -75,6 +75,7 @@ SET (projectLibrary_SOURCES
  showpaymentmethod.cpp
  sizeedit.cpp
  storagelocation.cpp
+ tablecontextmenu.cpp
  tabsearchbar.cpp
  tabstatusbar.cpp
  taxlevelbox.cpp
@@ -135,6 +136,7 @@ SET (projectLibrary_HEADERS
  showpaymentmethod.h
  sizeedit.h
  storagelocation.h
+ tablecontextmenu.h
  tabsearchbar.h
  tabstatusbar.h
  taxlevelbox.h
