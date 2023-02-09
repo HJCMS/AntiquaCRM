@@ -3,8 +3,12 @@
 
 #include "inventorytable.h"
 
+#include <QDateTime>
 #include <QDebug>
+#include <QFont>
 #include <QIcon>
+#include <QPainter>
+#include <QPalette>
 
 InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
   setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -32,6 +36,20 @@ InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
 
   // Warning not before HeaderView initialed
   setEnableTableViewSorting(false);
+}
+
+void InventoryTable::paintEvent(QPaintEvent *ev) {
+  if (rowCount() == 0) {
+    QString time = QTime::currentTime().toString("hh:mm");
+    QStringList l(tr("The query at %1 returned no result.").arg(time));
+    l.append(tr("Change the search query or choose a different history query."));
+    QPainter painter(viewport());
+    painter.setBrush(palette().text());
+    painter.setFont(font());
+    painter.setOpacity(0.8);
+    painter.drawText(rect(), Qt::AlignCenter, l.join("\n"));
+  }
+  QTableView::paintEvent(ev);
 }
 
 void InventoryTable::setEnableTableViewSorting(bool b) {

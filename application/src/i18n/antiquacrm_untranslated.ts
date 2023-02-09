@@ -91,7 +91,7 @@
 <context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
-        <location filename="../lib/asqlquerymodel.cpp" line="+109"/>
+        <location filename="../lib/asqlquerymodel.cpp" line="+114"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3414,6 +3414,19 @@ Image - Article Id: %2</source>
     <message>
         <location line="+1"/>
         <source>Do not leave this page until you have saved your changes!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InventoryTable</name>
+    <message>
+        <location filename="../widgets/inventorytable.cpp" line="+44"/>
+        <source>The query at %1 returned no result.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change the search query or choose a different history query.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

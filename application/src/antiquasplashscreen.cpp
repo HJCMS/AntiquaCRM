@@ -53,7 +53,7 @@ const QFont AntiquaSplashScreen::titleFont() const {
   QFont font;
   font.fromString(fontName);
   font.setItalic(true);
-  font.setPointSize(30);
+  font.setPointSize(28);
   return font;
 }
 

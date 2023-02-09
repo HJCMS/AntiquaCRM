@@ -75,7 +75,6 @@ void VariousTableView::contextMenuEvent(QContextMenuEvent *event) {
 
 void VariousTableView::contextMenuAction(TableContextMenu::Actions ac,
                                          const QModelIndex &index) {
-
   qint64 aid = getTableID(index);
   if (aid < 1)
     return;

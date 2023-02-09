@@ -42,6 +42,11 @@ const QString ASqlQueryModel::verticalHeader(int row, int role) const {
 bool ASqlQueryModel::querySelect(const QString &sql) {
   p_queryResult = 0;
   QSqlQuery q = m_sql->query(sql);
+
+  // if no errors clear old table content
+  if (m_sql->lastError().isEmpty())
+    clear();
+
   if (q.size() > 0) {
     p_queryResult = q.size();
     p_queryRecord = q.record();

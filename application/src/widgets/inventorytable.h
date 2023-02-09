@@ -11,6 +11,7 @@
 #include <QMetaObject>
 #include <QModelIndex>
 #include <QObject>
+#include <QPaintEvent>
 #include <QTableView>
 #include <QWidget>
 
@@ -33,6 +34,11 @@ private:
    * @see Configurations Dialog "Feel and View"
    */
   int QueryAutoUpdate;
+
+  /**
+   * @brief If Sql Query without result, paint visual information text!
+   */
+  void paintEvent(QPaintEvent *) override;
 
 protected:
   AntiquaCRM::ASettings *m_cfg;
