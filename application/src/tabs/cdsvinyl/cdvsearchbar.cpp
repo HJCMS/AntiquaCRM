@@ -49,40 +49,47 @@ void CDVSearchBar::setFilter(int index) {
   CDVFilterSelect::CDVFilter filter =
       static_cast<CDVFilterSelect::CDVFilter>(val.toInt());
 
-  QString se(tr("Search") + " ");
+  QString tip;
+  QStringList keys({tr("Genres"), tr("Keywords"), tr("Description")});
 
   switch (filter) {
   case CDVFilterSelect::CDVFilter::CDV_TITLE:
+    tip = tr("Search Album title.");
     m_searchEdit->setValidation(SearchLineEdit::Strings);
-    m_searchEdit->setPlaceholderText(se + tr("Title"));
+    m_searchEdit->setPlaceholderText(tip);
+    m_searchEdit->setToolTip(tip);
     break;
 
   case CDVFilterSelect::CDVFilter::CDV_KEYWORDS:
+    tip = tr("Search in") + " " + keys.join(", ");
     m_searchEdit->setValidation(SearchLineEdit::Strings);
-    m_searchEdit->setPlaceholderText(se + tr("Genres/Keywords"));
-    break;
-
-  case CDVFilterSelect::CDVFilter::CDV_AUTHOR:
-    m_searchEdit->setValidation(SearchLineEdit::Strings);
-    m_searchEdit->setPlaceholderText(se + tr("Artist"));
+    m_searchEdit->setPlaceholderText(tip);
+    m_searchEdit->setToolTip(tip);
     break;
 
   case CDVFilterSelect::CDVFilter::CDV_ARTICLE:
+    tip = tr("Search with Article number.");
     m_searchEdit->setValidation(SearchLineEdit::Article);
-    m_searchEdit->setPlaceholderText(se + tr("Article number"));
+    m_searchEdit->setPlaceholderText(tip);
+    m_searchEdit->setToolTip(tip);
     break;
 
   case CDVFilterSelect::CDVFilter::CDV_ISBNEAN:
+    tip = tr("Search with Barcode a multimedia article.");
     m_searchEdit->setValidation(SearchLineEdit::Article);
-    m_searchEdit->setPlaceholderText(se + tr("Barcode"));
+    m_searchEdit->setPlaceholderText(tip);
+    m_searchEdit->setToolTip(tip);
     break;
 
   default:
+    tip = tr("Search for Artists, Group or Songwriters.");
     m_searchEdit->setValidation(SearchLineEdit::Strings);
-    m_searchEdit->setPlaceholderText(se + tr("Title"));
+    m_searchEdit->setPlaceholderText(tip);
+    m_searchEdit->setToolTip(tip);
     break;
   };
 
+  setClearAndFocus();
   emit sendFilterChanged(index);
 }
 
@@ -121,7 +128,7 @@ const QString CDVSearchBar::getSearchStatement() {
   // Künstlersuche
   if (js.value("search").toString() == "artists") {
     QString sql("cv_author ILIKE '%" + search + "%' OR ");
-    sql.append("cv_description ILIKE '%" + search + "%'");
+    sql.append("cv_publisher ILIKE '%" + search + "%'");
     return sql;
   }
 

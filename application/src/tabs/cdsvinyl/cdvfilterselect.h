@@ -15,9 +15,9 @@ class CDVFilterSelect final : public QComboBox {
 
 public:
   enum CDVFilter {
-    CDV_TITLE = 0x1,    /**< @brief Titelsuche */
+    CDV_AUTHOR = 0x1,   /**< @brief Künstlersuche */
     CDV_KEYWORDS = 0x2, /**< @brief Schlüsselwortsuche */
-    CDV_AUTHOR = 0x4,   /**< @brief Autorensuche */
+    CDV_TITLE = 0x4,    /**< @brief Titelsuche */
     CDV_ARTICLE = 0x6,  /**< @brief Artikel Nummernsuche */
     CDV_ISBNEAN = 0x8,  /**< @brief ISBN/EAN Suche */
   };

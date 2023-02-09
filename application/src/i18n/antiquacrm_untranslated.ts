@@ -1443,7 +1443,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CDVFilterSelect</name>
     <message>
-        <location filename="../tabs/cdsvinyl/cdvfilterselect.cpp" line="+10"/>
+        <location filename="../tabs/cdsvinyl/cdvfilterselect.cpp" line="+13"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1453,7 +1453,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Article Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1463,7 +1463,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-4"/>
         <source>Genres/Keywords</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1473,7 +1473,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="-7"/>
         <source>Artists</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1483,7 +1483,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+13"/>
         <source>Search with Barcode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1507,34 +1507,47 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+3"/>
-        <location line="+30"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <location line="+25"/>
-        <source>Title</source>
+        <location line="+31"/>
+        <source>Genres</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-20"/>
-        <source>Genres/Keywords</source>
+        <location line="+0"/>
+        <source>Keywords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Artist</source>
+        <location line="+0"/>
+        <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Barcode</source>
+        <location line="+4"/>
+        <source>Search Album title.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-5"/>
-        <source>Article number</source>
+        <location line="+7"/>
+        <source>Search in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Search with Article number.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Search with Barcode a multimedia article.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Search for Artists, Group or Songwriters.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
