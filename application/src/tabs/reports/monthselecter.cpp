@@ -89,7 +89,7 @@ void MonthSelecter::createPressed() {
   int index = m_comboBox->currentIndex();
   if (index > 0) {
     QDate d = m_comboBox->itemData(index, Qt::UserRole).toDate();
-    qDebug() << Q_FUNC_INFO << d;
+    // qDebug() << Q_FUNC_INFO << d;
     btn_saveReport->setEnabled(true);
     btn_printReport->setEnabled(true);
     emit sendMonthDate(d);

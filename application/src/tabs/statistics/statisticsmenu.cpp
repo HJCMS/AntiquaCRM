@@ -33,8 +33,8 @@ StatisticsMenu::StatisticsMenu(QWidget *parent)
 void StatisticsMenu::setThisYearGroup() {
   QActionGroup *m_acg = new QActionGroup(m_thisYear);
   QMap<QString, QString> m;
-  m.insert("PaymentsThisYear", tr("Daily average"));
-  m.insert("CategoriesThisYear", tr("Categories sales"));
+  m.insert("DailyOrdersThisYear", tr("Daily average"));
+  m.insert("SelledCategoriesThisYear", tr("Categories sales"));
   m.insert("ProviderOrderThisYear", tr("Provider sales"));
   m.insert("ProviderVolumeThisYear", tr("Provider payments volume"));
 
@@ -51,8 +51,8 @@ void StatisticsMenu::setThisYearGroup() {
 void StatisticsMenu::setLastYearGroup() {
   QActionGroup *m_acg = new QActionGroup(m_lastYear);
   QMap<QString, QString> m;
-  m.insert("PaymentsLastYear", tr("Daily average"));
-  m.insert("CategoriesLastYear", tr("Categories sales"));
+  m.insert("DailyOrdersLastYear", tr("Daily average"));
+  m.insert("SelledCategoriesLastYear", tr("Categories sales"));
   m.insert("ProviderOrderLastYear", tr("Provider sales"));
   m.insert("ProviderVolumeLastYear", tr("Provider sales volume"));
 
