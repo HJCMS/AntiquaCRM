@@ -29,12 +29,15 @@ BookSearchBar::BookSearchBar(QWidget *parent) : TabSearchBar{parent} {
 
   m_searchBtn = startSearchButton(tr("Search book"));
   addWidget(m_searchBtn);
+  addSeparator();
 
+  addWidget(stockCheckBox());
   addSeparator();
 
   addWidget(defaultViewButton());
 
-  connect(m_selectFilter, SIGNAL(currentIndexChanged(int)), SLOT(setFilter(int)));
+  connect(m_selectFilter, SIGNAL(currentIndexChanged(int)),
+          SLOT(setFilter(int)));
   connect(m_searchLeft, SIGNAL(returnPressed()), SLOT(setSearch()));
   connect(m_searchRight, SIGNAL(returnPressed()), SLOT(setSearch()));
   connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
@@ -221,26 +224,28 @@ int BookSearchBar::searchLength() {
 const QString BookSearchBar::getSearchStatement() {
   QJsonObject js = m_selectFilter->getFilter(m_selectFilter->currentIndex());
   QStringList fields = js.value("fields").toString().split(",");
+  QString stock = (SearchWithStock ? " AND ib_count>0" : "");
+
   // Title und Autorensuche
   if (js.value("search").toString() == "title_and_author") {
-    return getTitleSearch(fields);
+    return getTitleSearch(fields) + stock;
   }
 
   // Buch Titlesuche
   if (js.value("search").toString() == "title") {
-    return getTitleSearch(fields);
+    return getTitleSearch(fields) + stock;
   }
 
   // Buch Autorensuche
   if (js.value("search").toString() == "author") {
-    return getTitleSearch(fields);
+    return getTitleSearch(fields) + stock;
   }
 
   // Artikel Nummersuche (107368,115110)
   if (js.value("search").toString() == "articleId") {
     QString s = m_searchLeft->getSearch();
     s.replace(QRegExp("\\,\\s?$"), "");
-    return "ib_id IN (" + s + ")";
+    return "ib_id IN (" + s + ")" + stock;
   }
 
   // ISBN Suche
@@ -248,14 +253,14 @@ const QString BookSearchBar::getSearchStatement() {
     QString s = m_searchLeft->getSearch();
     s.replace(QRegExp("\\D+"), "");
     if (s.length() == 10 || s.length() == 13)
-      return "ib_isbn=" + s;
+      return "ib_isbn=" + s + stock;
   }
 
   // Publisher
   if (js.value("search").toString() == "publisher") {
     QString s = m_searchLeft->getSearch();
     s.replace(jokerPattern, "%");
-    return "ib_publisher ILIKE '" + s + "%'";
+    return "ib_publisher ILIKE '" + s + "%'" + stock;
   }
 
   // Lager & Stichwortsuche
@@ -266,7 +271,7 @@ const QString BookSearchBar::getSearchStatement() {
     sql = ("ib_count>0 AND (sl_storage ILIKE '");
     sql.append(s + "' OR sl_identifier ILIKE '" + s + "%')");
     sql.append(" OR (ib_keyword ILIKE '" + s + "%')");
-    return sql;
+    return sql + stock;
   }
 
   qWarning("Not Defined Search (%s)",
@@ -274,3 +279,5 @@ const QString BookSearchBar::getSearchStatement() {
 
   return QString();
 }
+
+bool BookSearchBar::withStock() { return SearchWithStock; }

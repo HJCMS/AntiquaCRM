@@ -10,6 +10,7 @@
 #include <QHeaderView>
 #include <QModelIndex>
 #include <QObject>
+#include <QPaintEvent>
 #include <QTableView>
 
 class PurchaseTableModel;
@@ -32,6 +33,11 @@ private:
   QHeaderView *m_headerView;
   QModelIndex p_modelIndex;
   QString sqlToRemoveCache;
+
+  /**
+   * @brief Infos zum Tabellinhalt
+   */
+  void paintEvent(QPaintEvent *) override;
 
   /**
    * @brief Menü für Zeilen entfernen!
@@ -67,6 +73,11 @@ public:
    * @param readOnly - Wenn aktiviert wird PurchaseTableDelegate deaktiviert!
    */
   explicit PurchaseTable(QWidget *parent = nullptr, bool readOnly = true);
+
+  /**
+   * @brief Tabellenzeilen zurück geben!
+   */
+  int rowCount();
 
   /**
    * @brief Tabellenspalten ausblenden!

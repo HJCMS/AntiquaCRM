@@ -5,6 +5,7 @@
 #ifndef ANTIQUACRM_TABSEARCHBAR_H
 #define ANTIQUACRM_TABSEARCHBAR_H
 
+#include <QCheckBox>
 #include <QObject>
 #include <QPushButton>
 #include <QRegExp>
@@ -16,12 +17,25 @@
 class TabSearchBar : public QToolBar {
   Q_OBJECT
 
+private Q_SLOTS:
+  void setSearchStockEnabled(bool);
+
 protected:
   const QRegExp jokerPattern = QRegExp("[%*]+");
   const QRegExp quotePattern = QRegExp("[\\'\\\"]+");
   const QRegExp trimPattern = QRegExp("[\\s\\t\\n\\r]+");
   const QRegExp isbnPattern = QRegExp("[^0-9]+");
   const QRegExp articlePattern = QRegExp("^([0-9]+[\\,]?)+$");
+
+  /**
+   * @brief is Stocksearch Enabled?
+   */
+  bool SearchWithStock = false;
+
+  /**
+   * @brief Predefined with Stock CheckBox
+   */
+  QCheckBox *stockCheckBox(const QString &text = QString());
 
   /**
    * @brief Predefined Search Button
@@ -47,9 +61,14 @@ protected Q_SLOTS:
 
 Q_SIGNALS:
   /**
+   * @brief With „Stock“ search enabled or not!
+   */
+  void sendStockEnabled(bool);
+
+  /**
    * @brief Searchfilter has changed
    */
-  void sendFilterChanged(int index);
+  void sendFilterChanged(int);
 
   /**
    * @brief will normally triggered inside of @ref setSearch()

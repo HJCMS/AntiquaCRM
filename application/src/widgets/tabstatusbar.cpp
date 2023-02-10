@@ -57,3 +57,5 @@ void TabStatusBar::setHistoryActionMenu(QPushButton *parent) {
 const QIcon TabStatusBar::getIcon(const QString &name) const {
   return QIcon(":icons/" + name + ".png");
 }
+
+void TabStatusBar::setStockEnabled(bool b) { SearchWithStock = b; }

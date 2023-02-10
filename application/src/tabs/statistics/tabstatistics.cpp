@@ -48,10 +48,10 @@ void TabStatistics::openChartView(const QString &name, const QDate &date) {
   }
 
   // Anzahl der Bestellungen pro Tag im Jahr
-  QRegExp countCharts("^Payments[\\w]+Year$");
+  QRegExp countCharts("^DailyOrders[\\w]+Year$");
 
   // Anzahl der Bestellten Kategorien im Jahr
-  QRegExp barChart("^Categories[\\w]+Year$");
+  QRegExp barChart("^SelledCategories[\\w]+Year$");
 
   // Dienstleister Bestellungen im Jahr
   QRegExp providerChart("^ProviderOrder[\\w]+Year$");

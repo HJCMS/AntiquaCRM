@@ -42,6 +42,7 @@ public:
   explicit BookSearchBar(QWidget *parent = nullptr);
   int searchLength() override;
   const QString getSearchStatement() override;
+  bool withStock();
 };
 
 #endif // ANTIQUACRM_BOOKSEARCHBAR_H

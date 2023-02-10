@@ -3,14 +3,19 @@
 
 #include "tabsearchbar.h"
 
-#include <QIcon>
 #include <QDebug>
+#include <QIcon>
 
 TabSearchBar::TabSearchBar(QWidget *parent) : QToolBar{parent} {
   setOrientation(Qt::Horizontal);
   setFloatable(false);
   setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
   setContentsMargins(0, 0, 0, 0);
+}
+
+void TabSearchBar::setSearchStockEnabled(bool b) {
+  SearchWithStock = b;
+  emit sendStockEnabled(b);
 }
 
 QPushButton *TabSearchBar::startSearchButton(const QString &text) {
@@ -24,6 +29,15 @@ QPushButton *TabSearchBar::startSearchButton(const QString &text) {
     btn->setText(text);
 
   return btn;
+}
+
+QCheckBox *TabSearchBar::stockCheckBox(const QString &text) {
+  QCheckBox *m_box = new QCheckBox(this);
+  QString title = (text.isEmpty()) ? tr("Stock") : text;
+  m_box->setText(title);
+  m_box->setToolTip(tr("Only search with %1").arg(title));
+  connect(m_box, SIGNAL(toggled(bool)), SLOT(setSearchStockEnabled(bool)));
+  return m_box;
 }
 
 QPushButton *TabSearchBar::defaultViewButton(const QString &text) {

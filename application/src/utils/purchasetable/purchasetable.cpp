@@ -6,9 +6,12 @@
 #include "purchasetablemodel.h"
 
 #include <QAction>
+#include <QFont>
 #include <QIcon>
 #include <QMenu>
 #include <QMessageBox>
+#include <QPainter>
+#include <QPalette>
 
 PurchaseTable::PurchaseTable(QWidget *parent, bool readOnly)
     : QTableView{parent} {
@@ -53,6 +56,19 @@ PurchaseTable::PurchaseTable(QWidget *parent, bool readOnly)
           SLOT(articleChanged(const QModelIndex &, const QModelIndex &)));
 }
 
+void PurchaseTable::paintEvent(QPaintEvent *ev) {
+  if (rowCount() == 0) {
+    QPainter painter(viewport());
+    painter.setBrush(palette().text());
+    painter.setFont(font());
+    painter.setOpacity(0.8);
+    painter.drawText(rect(), Qt::AlignCenter,
+                     tr("No article can be added without an order number, "
+                        "please save first!"));
+  }
+  QTableView::paintEvent(ev);
+}
+
 void PurchaseTable::contextMenuEvent(QContextMenuEvent *event) {
   p_modelIndex = indexAt(event->pos());
   if (!p_modelIndex.isValid())
@@ -92,7 +108,7 @@ void PurchaseTable::removeArticle() {
 }
 
 void PurchaseTable::clearTable() {
-  if (m_model->rowCount() > 0) {
+  if (rowCount() > 0) {
     m_model->clear();
     setWindowModified(true);
   }
@@ -103,6 +119,8 @@ void PurchaseTable::addOrderArticle(const AntiquaCRM::OrderArticleItems &item) {
     setWindowModified(true);
   }
 }
+
+int PurchaseTable::rowCount() { return m_model->rowCount(); }
 
 void PurchaseTable::hideColumns(const QStringList &list) {
   foreach (QString fieldName, list) {

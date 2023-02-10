@@ -339,6 +339,12 @@ void CustomersEditor::findPurchases() {
 }
 
 void CustomersEditor::setSaveData() {
+  QString cp_name = getDataValue("c_company_name").toString();
+  if (getDataValue("c_company").toBool() && cp_name.length() < 4) {
+    openNoticeMessage(tr("Company is activated, but no company name is set!"));
+    return;
+  }
+
   if (getSerialID("c_id") > 0) {
     createSqlUpdate();
   } else {

@@ -846,7 +846,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Suche Buch</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+71"/>
         <location line="+80"/>
         <source>Keyword</source>
         <translation>Schlüsselwort</translation>
@@ -2174,7 +2174,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kundendaten speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+50"/>
+        <source>Company is activated, but no company name is set!</source>
+        <translation>Firma ist aktiviert, aber kein Firmenname gesetzt!</translation>
+    </message>
+    <message>
+        <location line="+38"/>
         <source>Send eMail finished!</source>
         <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
@@ -6365,12 +6370,17 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PurchaseTable</name>
     <message>
-        <location filename="../utils/purchasetable/purchasetable.cpp" line="+18"/>
+        <location filename="../utils/purchasetable/purchasetable.cpp" line="+21"/>
         <source>Current article purchases</source>
         <translation>Aktuelle Artikelkäufe</translation>
     </message>
     <message>
         <location line="+45"/>
+        <source>No article can be added without an order number, please save first!</source>
+        <translation>Ohne Auftrags Nr. kann kein Artikel hinzugefügt werden, bitte erst speichern!</translation>
+    </message>
+    <message>
+        <location line="+13"/>
         <source>delete selected article</source>
         <translation>Ausgewählten Artikel löschen</translation>
     </message>
@@ -7188,7 +7198,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bücher</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+66"/>
         <source>Can&apos;t open this Article</source>
         <translation>Dieser Artikel kann nicht geöffnet werden</translation>
     </message>
@@ -7406,7 +7416,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TabSearchBar</name>
     <message>
-        <location filename="../widgets/tabsearchbar.cpp" line="+19"/>
+        <location filename="../widgets/tabsearchbar.cpp" line="+24"/>
         <source>Push to start search.</source>
         <translation>Drücken, um die Suche zu starten.</translation>
     </message>
@@ -7416,7 +7426,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Suche starten</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+9"/>
+        <source>Stock</source>
+        <translation>Bestand</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Only search with %1</source>
+        <translation>Nur mit %1 suchen</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Push to load the Standard view.</source>
         <translation>Drücken Sie , um die Standardansicht zu laden.</translation>
     </message>

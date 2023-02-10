@@ -50,6 +50,11 @@ private:
 
 protected:
   /**
+   * @brief Search only With Stock
+   */
+  bool SearchWithStock = false;
+
+  /**
    * @brief Rahmen für eigene Knöpfe und Menüs
    */
   QFrame *m_frame;
@@ -89,6 +94,11 @@ Q_SIGNALS:
   void sendReloadView();
 
 public Q_SLOTS:
+  /**
+   * @brief With „Stock“ search enabled or not!
+   */
+  void setStockEnabled(bool);
+
   /**
    * @brief Erstellen Knopf aktivieren/deaktivieren
    */

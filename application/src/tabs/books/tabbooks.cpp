@@ -49,6 +49,8 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{"books_tab", parent} {
           SLOT(setFilterFocus()));
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
   connect(m_searchBar, SIGNAL(sendRestoreView()), SLOT(setDefaultTableView()));
+  connect(m_searchBar, SIGNAL(sendStockEnabled(bool)), m_statusBar,
+          SLOT(setStockEnabled(bool)));
 
   // Signals::BookTableView
   connect(m_table, SIGNAL(sendQueryReport(const QString &)), m_statusBar,

@@ -32,6 +32,8 @@ void BookStatusBar::setHistoryAction(int index) {
   TabStatusBar::History hist = static_cast<TabStatusBar::History>(index);
   QString q;
   QString year("date_part('year',ib_changed)=date_part('year',CURRENT_DATE)");
+  QString stock = (SearchWithStock ? " AND ib_count>0" : "");
+
   switch (hist) {
   case (History::Today): {
     q.append("DATE(ib_changed)=CURRENT_DATE");
@@ -39,32 +41,32 @@ void BookStatusBar::setHistoryAction(int index) {
   }
 
   case (History::Yesterday): {
-    q.append("DATE(ib_changed)=(CURRENT_DATE -1)");
+    q.append("DATE(ib_changed)=(CURRENT_DATE -1)" + stock);
     break;
   }
 
   case (History::ThisWeek): {
     q.append("date_part('week',ib_changed)=date_part('week',CURRENT_DATE)");
-    q.append(" AND " + year);
+    q.append(" AND " + year + stock);
     break;
   }
 
   case (History::LastWeek): {
     q.append("date_part('week',ib_changed)=date_part('week',CURRENT_DATE -7)");
-    q.append(" AND " + year);
+    q.append(" AND " + year + stock);
     break;
   }
 
   case (History::ThisMonth): {
     q.append("date_part('month',ib_changed)=date_part('month',CURRENT_DATE)");
-    q.append(" AND " + year);
+    q.append(" AND " + year + stock);
     break;
   }
 
   case (History::LastMonth): {
     q.append(
         "date_part('month',ib_changed)=date_part('month',CURRENT_DATE - 31)");
-    q.append(" AND " + year);
+    q.append(" AND " + year + stock);
     break;
   }
 
@@ -75,6 +77,7 @@ void BookStatusBar::setHistoryAction(int index) {
 
   case (History::NOIMAGE): {
     q.append("DATE(ib_changed)>(CURRENT_DATE - 5) AND im_id IS NULL");
+    q.append(" AND ib_count>0");
     break;
   }
 
