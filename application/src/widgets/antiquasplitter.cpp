@@ -3,7 +3,6 @@
 
 #include "antiquasplitter.h"
 
-#include <ASettings>
 #include <QDebug>
 
 AntiquaSplitterHandle::AntiquaSplitterHandle(QSplitter *parent)
@@ -22,17 +21,14 @@ AntiquaSplitter::AntiquaSplitter(QWidget *parent)
   QStringList css("::handle {margin:4px;padding:0px;}");
   css.append("::handle:pressed {background-color:palette(highlight);}");
   setStyleSheet(css.join(" "));
+  m_cfg = new AntiquaCRM::ASettings(this);
+
   if (parent->objectName().isEmpty()) {
     qWarning("AntiquaSplitter need a objectName from parent!");
     name = objectName();
   } else {
     name = parent->objectName().toLower().replace(" ", "").trimmed();
   }
-
-  AntiquaCRM::ASettings cfg(this);
-  QByteArray state = cfg.value(configPath()).toByteArray();
-  if (!state.isNull())
-    restoreState(state);
 }
 
 const QString AntiquaSplitter::configPath() {
@@ -42,11 +38,6 @@ const QString AntiquaSplitter::configPath() {
   return p;
 }
 
-void AntiquaSplitter::setSaveState() {
-  AntiquaCRM::ASettings cfg(this);
-  cfg.setValue(configPath(), saveState());
-}
-
 AntiquaSplitterHandle *AntiquaSplitter::createHandle() {
   AntiquaSplitterHandle *sph = new AntiquaSplitterHandle(this);
   sph->setObjectName(name);
@@ -54,6 +45,24 @@ AntiquaSplitterHandle *AntiquaSplitter::createHandle() {
   return sph;
 }
 
+void AntiquaSplitter::showEvent(QShowEvent *event) {
+  if (event->type() == QEvent::Show) {
+    QByteArray state = m_cfg->value(configPath()).toByteArray();
+    if (!state.isNull())
+      restoreState(state);
+  }
+  QSplitter::showEvent(event);
+}
+
+void AntiquaSplitter::setSaveState() {
+  m_cfg->setValue(configPath(), saveState());
+}
+
 void AntiquaSplitter::addLeft(QWidget *widget) { insertWidget(0, widget); }
 
 void AntiquaSplitter::addRight(QWidget *widget) { insertWidget(1, widget); }
+
+AntiquaSplitter::~AntiquaSplitter() {
+  if (m_cfg != nullptr)
+    m_cfg->deleteLater();
+}

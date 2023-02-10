@@ -51,7 +51,7 @@ protected:
   void setClosable(bool b = false);
 
 protected Q_SLOTS:
-  void changeEvent(QEvent *event) override;
+  void changeEvent(QEvent *) override;
 
   /**
    * @brief Copy String to System Clipboard
