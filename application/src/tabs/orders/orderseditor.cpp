@@ -108,6 +108,7 @@ void OrdersEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "o_since";
   ignoreFields << "o_modified";
+  // @note Darf nur Manuell gesetzt werden!
   ignoreFields << "o_delivered";
   // @deprecated o_provider_order
   ignoreFields << "o_provider_order";
@@ -214,7 +215,7 @@ void OrdersEditor::setOrderPaymentNumbers(qint64 orderId) {
   }
 }
 
-const OrdersEditor::IdsCheck OrdersEditor::checkEssentialsIds() {
+const OrdersEditor::IdsCheck OrdersEditor::getCheckEssentialsIds() {
   IdsCheck id_conf;
   qint64 oid = getSerialID("o_id");
   qint64 cid = getSerialID("o_customer_id");
@@ -236,6 +237,10 @@ const OrdersEditor::IdsCheck OrdersEditor::checkEssentialsIds() {
 
   id_conf.isNotValid = true;
   return id_conf;
+}
+
+const QPair<int, int> OrdersEditor::deliveryService() {
+  return m_costSettings->o_delivery_service->defaultDeliveryService();
 }
 
 void OrdersEditor::importSqlResult() {
@@ -344,6 +349,16 @@ void OrdersEditor::createSqlUpdate() {
     changes++;
   }
 
+  /*
+   * Wenn der Status der Datenbank nicht auf abschließen steht
+   * und der Anwender den Auftrag abschließt.
+   * Muss das Datum für geliefert hier gesetzt werden!
+   */
+  if (!databaseOrderStatus() && currentOrderStatus()) {
+    set.append("o_delivered=CURRENT_TIMESTAMP");
+    changes++;
+  }
+
   // Artikel Bestelliste aktualisieren
   QString articles_sql = getSqlArticleOrders();
   if (articles_sql.isEmpty()) {
@@ -352,7 +367,7 @@ void OrdersEditor::createSqlUpdate() {
   }
 
   QString sql;
-  // Orderdata
+  // Update SQL-Update erstellen
   if (changes > 0) {
     sql.append("UPDATE inventory_orders SET ");
     sql.append(set.join(","));
@@ -360,7 +375,8 @@ void OrdersEditor::createSqlUpdate() {
     sql.append(QString::number(oid));
     sql.append(";");
   }
-  // Articles
+
+  // Füge Artikel zum SQL-Update hinzu
   if (articles_sql.size() > 1) {
     if (!sql.isEmpty())
       sql.append("\n");
@@ -545,7 +561,7 @@ bool OrdersEditor::addArticleToOrderTable(qint64 articleId) {
 }
 
 const QString OrdersEditor::getSqlArticleOrders() {
-  IdsCheck test = checkEssentialsIds();
+  IdsCheck test = getCheckEssentialsIds();
   if (test.isNotValid)
     return QString();
 
@@ -613,21 +629,41 @@ void OrdersEditor::setDefaultValues() {
   setDataField(m_tableData->getProperties("o_delivery_add_price"),
                m_tableData->getValue("o_delivery_add_price"));
   // Standard Lieferdienst
-  QPair<int, int> ds =
-      m_costSettings->o_delivery_service->defaultDeliveryService();
-  m_tableData->setValue("o_delivery_service", ds.first);
+  QPair<int, int> ds_t = deliveryService();
+  m_tableData->setValue("o_delivery_service", ds_t.first);
   setDataField(m_tableData->getProperties("o_delivery_service"),
                m_tableData->getValue("o_delivery_service"));
-  m_tableData->setValue("o_delivery_package", ds.second);
+  m_tableData->setValue("o_delivery_package", ds_t.second);
   setDataField(m_tableData->getProperties("o_delivery"),
                m_tableData->getValue("o_delivery"));
 }
 
-bool OrdersEditor::createNewEntry() {
+bool OrdersEditor::beforeCreate() {
   setInputFields();
   setResetModified(inputFields);
   setEnabled(true);
   return true;
+}
+
+bool OrdersEditor::databaseOrderStatus() {
+  // AntiquaCRM::OrderStatus
+  int i_os = m_tableData->getValue("o_order_status").toInt();
+  AntiquaCRM::OrderStatus os_t = static_cast<AntiquaCRM::OrderStatus>(i_os);
+  // AntiquaCRM::OrderPayment
+  int i_ps = m_tableData->getValue("o_payment_status").toInt();
+  AntiquaCRM::OrderPayment ps_t = static_cast<AntiquaCRM::OrderPayment>(i_ps);
+  return (os_t == AntiquaCRM::OrderStatus::DELIVERED &&
+          ps_t == AntiquaCRM::OrderPayment::PAYED);
+}
+
+bool OrdersEditor::currentOrderStatus() {
+  return (paymentStatus() == AntiquaCRM::OrderPayment::PAYED &&
+          orderStatus() == AntiquaCRM::OrderStatus::DELIVERED);
+}
+
+void OrdersEditor::setProtected(bool b) {
+  o_payment_status->setEnabled(!b);
+  o_order_status->setEnabled(!b);
 }
 
 void OrdersEditor::setSaveData() {
@@ -654,7 +690,7 @@ void OrdersEditor::setFinalLeaveEditor() {
 }
 
 void OrdersEditor::createMailMessage(const QString &type) {
-  IdsCheck ids = checkEssentialsIds();
+  IdsCheck ids = getCheckEssentialsIds();
   if (ids.isNotValid) {
     sendStatusMessage(tr("Missing essential Ids, save Order first!"));
     return;
@@ -673,7 +709,7 @@ void OrdersEditor::createMailMessage(const QString &type) {
 }
 
 void OrdersEditor::createPrintDeliveryNote() {
-  IdsCheck ids = checkEssentialsIds();
+  IdsCheck ids = getCheckEssentialsIds();
   if (ids.isNotValid) {
     sendStatusMessage(tr("Missing essential Ids, save Order first!"));
     return;
@@ -712,7 +748,7 @@ void OrdersEditor::createPrintDeliveryNote() {
 }
 
 void OrdersEditor::createPrintInvoiceNote() {
-  IdsCheck ids = checkEssentialsIds();
+  IdsCheck ids = getCheckEssentialsIds();
   if (ids.isNotValid) {
     sendStatusMessage(tr("Missing essential Ids, save Order first!"));
     return;
@@ -744,7 +780,7 @@ void OrdersEditor::createPrintInvoiceNote() {
 }
 
 void OrdersEditor::createPrintPaymentReminder() {
-  IdsCheck ids = checkEssentialsIds();
+  IdsCheck ids = getCheckEssentialsIds();
   if (ids.isNotValid) {
     sendStatusMessage(tr("Missing essential Ids, save Order first!"));
     return;
@@ -782,7 +818,7 @@ void OrdersEditor::createPrintPaymentReminder() {
 }
 
 void OrdersEditor::openSearchAddArticle() {
-  IdsCheck test = checkEssentialsIds();
+  IdsCheck test = getCheckEssentialsIds();
   if (test.isNotValid) {
     sendStatusMessage(tr("Missing essential Ids, save Order first!"));
     return;
@@ -852,18 +888,15 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
   if (status) {
     importSqlResult();
     setResetModified(inputFields);
-    // Fehlende Lieferscheinnummer ergänzen, muss nach setResetModified kommen!
-    // if (getDataValue("o_delivery").toString().isEmpty())
-    //  generateDeliveryNumber(orderId);
-
     setEnabled(true);
   }
 
+  setProtected(databaseOrderStatus());
   return status;
 }
 
 bool OrdersEditor::addArticle(qint64 articleId) {
-  if (checkEssentialsIds().isNotValid) {
+  if (getCheckEssentialsIds().isNotValid) {
     sendStatusMessage(tr("Missing essential Ids, save Order first!"));
     return false;
   }
@@ -879,7 +912,7 @@ bool OrdersEditor::createNewOrder(qint64 customerId) {
   if (customerId < 1)
     return false;
 
-  createNewEntry();
+  beforeCreate();
   setDefaultValues();
 
   // Nehme relevante Kundendaten
@@ -1063,11 +1096,12 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
   prOrder.setValue("o_delivery_service", deliveryService.first);
   prOrder.setValue("o_delivery_package", deliveryService.second);
 
-  // Diese felder bei neuen Einträgen ignorieren!
+  // Diese Felder bei neuen Einträgen ignorieren!
   QStringList ignored({"o_id", "o_invoice_id"});
 
   // 1) Standard Felder einfügen
   foreach (QString key, inputFields) {
+    // @note Datenfelder ausschließen
     if (ignoreFields.contains(key))
       continue;
 
@@ -1088,6 +1122,18 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
   // 3) Artikel Importieren
   m_ordersList->importArticles(prOrder.orders());
 
+  // 4) Datensätze Importieren
   importSqlResult();
+
   return true;
+}
+
+AntiquaCRM::OrderPayment OrdersEditor::paymentStatus() {
+  int id = o_payment_status->value().toInt();
+  return static_cast<AntiquaCRM::OrderPayment>(id);
+}
+
+AntiquaCRM::OrderStatus OrdersEditor::orderStatus() {
+  int id = o_order_status->value().toInt();
+  return static_cast<AntiquaCRM::OrderStatus>(id);
 }
