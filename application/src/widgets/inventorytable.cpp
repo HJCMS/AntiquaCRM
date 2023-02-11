@@ -6,6 +6,7 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QFont>
+#include <QFontMetrics>
 #include <QIcon>
 #include <QPainter>
 #include <QPalette>
@@ -43,6 +44,7 @@ void InventoryTable::paintEvent(QPaintEvent *ev) {
     QString time = QTime::currentTime().toString("hh:mm");
     QStringList l(tr("The query at %1 returned no result.").arg(time));
     l.append(tr("Change the search query or choose a different history query."));
+
     QPainter painter(viewport());
     painter.setBrush(palette().text());
     painter.setFont(font());
