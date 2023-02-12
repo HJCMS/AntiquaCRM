@@ -36,6 +36,7 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{"books_tab", parent} {
   m_editorPage->setObjectName("book_editor_scrollarea");
   m_editorPage->setWidgetResizable(true);
   m_editorWidget = new BookEditor(this);
+  m_editorWidget->installEventFilter(this);
   m_editorPage->setWidget(m_editorWidget);
   insertWidget(1, m_editorPage);
   // End

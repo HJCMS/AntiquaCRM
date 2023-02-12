@@ -251,7 +251,7 @@
 <context>
     <name>AntiquaTabWidget</name>
     <message>
-        <location filename="../antiquatabwidget.cpp" line="+70"/>
+        <location filename="../antiquatabwidget.cpp" line="+56"/>
         <source>View and edit Books</source>
         <translation>Bücher anzeigen und bearbeiten</translation>
     </message>
@@ -272,12 +272,12 @@
     </message>
     <message>
         <location line="+9"/>
-        <location line="+142"/>
+        <location line="+158"/>
         <source>Various</source>
         <translation>Verschiedenes</translation>
     </message>
     <message>
-        <location line="-133"/>
+        <location line="-149"/>
         <source>View and import Provider orders</source>
         <translation>Anzeigen und Importieren von Dienstleisterbestellungen</translation>
     </message>
@@ -287,7 +287,7 @@
         <translation>Anzeigen und Bearbeiten von Systembestellungen</translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+48"/>
         <source>Can not open &apos;%1&apos;!</source>
         <translation>Kann &apos;%1&apos; nicht öffnen!</translation>
     </message>
@@ -358,12 +358,17 @@
 <context>
     <name>AntiquaWindow</name>
     <message>
-        <location filename="../antiquawindow.cpp" line="+70"/>
+        <location filename="../antiquawindow.cpp" line="+73"/>
         <source>Save request</source>
         <translation>Speichernanfrage</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
+        <source>&lt;b&gt;You have unsaved changes.&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Sie haben nicht gespeicherte Änderungen!&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>&lt;p&gt;Do you really want to close the application?&lt;/p&gt;</source>
         <translation>&lt;p&gt;Wollen Sie die Anwendung wirklich schließen?&lt;/p&gt;</translation>
     </message>
@@ -3383,7 +3388,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>Inventory</name>
     <message>
-        <location filename="../widgets/inventory.cpp" line="+21"/>
+        <location filename="../widgets/inventory.cpp" line="+22"/>
         <source>Ctrl+Shift+S</source>
         <comment>Search</comment>
         <translation>Strg+Shift+S</translation>
@@ -3401,7 +3406,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Strg+Shift+N</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+54"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -3409,7 +3414,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>InventoryEditor</name>
     <message>
-        <location filename="../widgets/inventoryeditor.cpp" line="+240"/>
+        <location filename="../widgets/inventoryeditor.cpp" line="+237"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
@@ -7203,7 +7208,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bücher</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+67"/>
         <source>Can&apos;t open this Article</source>
         <translation>Dieser Artikel kann nicht geöffnet werden</translation>
     </message>
@@ -7226,7 +7231,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>CD&apos;s und Vinyl</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+64"/>
         <source>Can&apos;t open this Article</source>
         <translation>Dieser Artikel kann nicht geöffnet werden</translation>
     </message>
@@ -7249,7 +7254,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kunden</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+71"/>
         <source>Cannot open Customers Editor.</source>
         <translation>Der Kundeneditor kann nicht geöffnet werden.</translation>
     </message>
@@ -7322,7 +7327,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Aufträge</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+67"/>
         <source>Cannot open Order Editor!</source>
         <translation>Bestelleditor kann nicht geöffnet werden!</translation>
     </message>
@@ -7367,7 +7372,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Drucke und Stiche</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+65"/>
         <source>Can&apos;t open this Article</source>
         <translation>Dieser Artikel kann nicht geöffnet werden</translation>
     </message>
@@ -7535,7 +7540,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Verschiedenes</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+64"/>
         <source>Can&apos;t open this Article</source>
         <translation>Dieser Artikel kann nicht geöffnet werden</translation>
     </message>

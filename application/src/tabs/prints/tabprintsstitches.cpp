@@ -37,6 +37,7 @@ TabPrintsStitches::TabPrintsStitches(QWidget *parent)
   m_editorPage->setObjectName("prints_editor_scrollarea");
   m_editorPage->setWidgetResizable(true);
   m_editorWidget = new PrintsStitchesEditor(this);
+  m_editorWidget->installEventFilter(this);
   m_editorPage->setWidget(m_editorWidget);
   insertWidget(1, m_editorPage);
   // End

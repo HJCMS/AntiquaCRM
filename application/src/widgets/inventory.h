@@ -6,6 +6,7 @@
 #define ANTIQUACRM_INVENTORY_H
 
 #include <AGlobal>
+#include <QEvent>
 #include <QHeaderView>
 #include <QIcon>
 #include <QJsonObject>
@@ -44,6 +45,12 @@ protected:
   bool closable = false;
 
   /**
+   * @brief Wenn Editor nicht gespeicherte Datensätze meldet!
+   * @note Muss mit obj->installEventFilter(this) Installiert sein!
+   */
+  bool eventFilter(QObject *, QEvent *) override;
+
+  /**
    * @brief Set it Closable.
    * @default false
    * @ref closable
@@ -51,6 +58,9 @@ protected:
   void setClosable(bool b = false);
 
 protected Q_SLOTS:
+  /**
+   * @brief Activ Widget or not ?
+   */
   void changeEvent(QEvent *) override;
 
   /**
@@ -81,6 +91,11 @@ protected Q_SLOTS:
   virtual void setDefaultTableView() = 0;
 
 Q_SIGNALS:
+  /**
+   * @brief Speichernstände mitteilen
+   */
+  void sendUnsafedChanges(bool);
+
   /**
    * @brief Send Tab closeable changed
    */

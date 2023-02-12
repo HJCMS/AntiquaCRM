@@ -22,19 +22,6 @@ InventoryEditor::InventoryEditor(const QString &pattern, QWidget *parent)
   m_tableData = nullptr;
 }
 
-void InventoryEditor::socketWindowModified(bool b) {
-#ifndef ANTIQUA_DEVELOPEMENT
-  Q_UNUSED(b);
-#else
-  QJsonObject obj;
-  obj.insert("window_modified", QJsonValue(b));
-  AntiquaCRM::ATransmitter *m_sock = new AntiquaCRM::ATransmitter(this);
-  connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
-  if (m_sock->pushOperation(obj))
-    m_sock->close();
-#endif
-}
-
 bool InventoryEditor::isInputField(const QString &fieldName) {
   if (inputFields.size() < 1 || fieldName.isEmpty())
     return false;
@@ -163,13 +150,11 @@ bool InventoryEditor::checkIsModified() {
 
         if (b) {
           setWindowModified(true);
-          socketWindowModified(true);
           return true;
         }
       }
     }
   }
-  socketWindowModified(false);
   setWindowModified(false);
   return false;
 }
@@ -321,10 +306,6 @@ void InventoryEditor::setResetInputFields() {
 }
 
 InventoryEditor::~InventoryEditor() {
-  if (checkIsModified()) {
-    qWarning("Shutdown Warning: Close Editor with unsafed Changes!");
-  }
-
   if (inputFields.size() > 0)
     inputFields.clear();
 

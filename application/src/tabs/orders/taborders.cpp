@@ -40,6 +40,7 @@ TabOrders::TabOrders(QWidget *parent) : Inventory{"orders_tab", parent} {
   m_editorPage->setObjectName("orders_editor_scrollarea");
   m_editorPage->setWidgetResizable(true);
   m_editorWidget = new OrdersEditor(m_editorPage);
+  m_editorWidget->installEventFilter(this);
   m_editorPage->setWidget(m_editorWidget);
   insertWidget(ORDERS_EDITOR_INDEX, m_editorPage);
   // End

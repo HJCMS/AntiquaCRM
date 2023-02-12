@@ -71,9 +71,9 @@ void AntiquaWindow::closeEvent(QCloseEvent *) {
 void AntiquaWindow::closeWindow() {
   if (isWindowModified()) {
     QString t = tr("Save request");
-    QStringList b("<b>You have unsaved changes.</b>");
-    b << tr("<p>Do you really want to close the application?</p>");
-    int ret = QMessageBox::question(this, t, b.join("<br/>"));
+    QStringList warn(tr("<b>You have unsaved changes.</b>"));
+    warn << tr("<p>Do you really want to close the application?</p>");
+    int ret = QMessageBox::question(this, t, warn.join("\n"));
     if (ret == QMessageBox::No) {
       return;
     }

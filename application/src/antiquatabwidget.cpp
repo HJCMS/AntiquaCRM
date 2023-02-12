@@ -26,8 +26,6 @@ AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
 
 bool AntiquaTabWidget::createSocketListener() {
   m_server = new AntiquaCRM::AReceiver(this);
-  connect(m_server, SIGNAL(sendUnsafedChanges(bool)),
-          SIGNAL(sendModified(bool)));
   connect(m_server, SIGNAL(sendWindowOperation(const QJsonObject &)),
           SLOT(setAction(const QJsonObject &)));
   connect(m_server, SIGNAL(sendPluginOperation(const QJsonObject &)),
@@ -110,6 +108,8 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
     int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
     m_tabBar->setTabCloseable(i, m_tab->isClosable());
     m_tabBar->setTabWhatsThis(i, tr("View and edit System orders"));
+    connect(m_tab, SIGNAL(sendUnsafedChanges(bool)),
+            SIGNAL(sendModified(bool)));
     return true;
   }
 

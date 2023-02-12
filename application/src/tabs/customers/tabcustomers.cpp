@@ -37,6 +37,7 @@ TabCustomers::TabCustomers(QWidget *parent)
   m_editorPage->setObjectName("customers_editor_scrollarea");
   m_editorPage->setWidgetResizable(true);
   m_editorWidget = new CustomersEditor(m_editorPage);
+  m_editorWidget->installEventFilter(this);
   m_editorPage->setWidget(m_editorWidget);
   insertWidget(1, m_editorPage);
   // End

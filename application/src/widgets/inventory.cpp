@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "inventory.h"
+#include "inventoryeditor.h"
 
 #include <AntiquaCRM>
 #include <QApplication>
@@ -31,6 +32,19 @@ void Inventory::addShortCutsAndSignals() {
   m_createEntry = new QShortcut(tr("Ctrl+Shift+N", "New"), this);
   m_createEntry->setKey(km + Qt::Key_N);
   connect(m_createEntry, SIGNAL(activated()), this, SLOT(createNewEntry()));
+}
+
+bool Inventory::eventFilter(QObject *obj, QEvent *event) {
+  if (event->type() == QEvent::ModifiedChange) {
+    InventoryEditor *edit = qobject_cast<InventoryEditor *>(obj);
+    if (edit != nullptr) {
+      bool status = edit->isWindowModified();
+      setWindowModified(status);
+      emit sendUnsafedChanges(status);
+      return true;
+    }
+  }
+  return QStackedWidget::eventFilter(obj, event);
 }
 
 void Inventory::setClosable(bool b) {

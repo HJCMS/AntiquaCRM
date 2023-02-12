@@ -35,6 +35,7 @@ TabCDVinyl::TabCDVinyl(QWidget *parent) : Inventory{"cdvinyl_tab", parent} {
   m_editorPage = new QScrollArea(this);
   m_editorPage->setWidgetResizable(true);
   m_editorWidget = new CDVEditor(this);
+  m_editorWidget->installEventFilter(this);
   m_editorPage->setWidget(m_editorWidget);
   insertWidget(1, m_editorPage);
   // End

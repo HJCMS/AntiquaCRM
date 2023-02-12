@@ -28,8 +28,6 @@ class InventoryEditor : public QWidget {
 private:
   int timeoutPopUp = 2;
 
-  void socketWindowModified(bool);
-
 protected:
   /**
    * @brief PostgreSQL Datenbank Verbindung.

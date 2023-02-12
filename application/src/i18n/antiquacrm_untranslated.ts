@@ -251,7 +251,7 @@
 <context>
     <name>AntiquaTabWidget</name>
     <message>
-        <location filename="../antiquatabwidget.cpp" line="+70"/>
+        <location filename="../antiquatabwidget.cpp" line="+56"/>
         <source>View and edit Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -272,12 +272,12 @@
     </message>
     <message>
         <location line="+9"/>
-        <location line="+142"/>
+        <location line="+158"/>
         <source>Various</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-133"/>
+        <location line="-149"/>
         <source>View and import Provider orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -287,7 +287,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+48"/>
         <source>Can not open &apos;%1&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -358,12 +358,17 @@
 <context>
     <name>AntiquaWindow</name>
     <message>
-        <location filename="../antiquawindow.cpp" line="+70"/>
+        <location filename="../antiquawindow.cpp" line="+73"/>
         <source>Save request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
+        <source>&lt;b&gt;You have unsaved changes.&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>&lt;p&gt;Do you really want to close the application?&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3379,7 +3384,7 @@ Image - Article Id: %2</source>
 <context>
     <name>Inventory</name>
     <message>
-        <location filename="../widgets/inventory.cpp" line="+21"/>
+        <location filename="../widgets/inventory.cpp" line="+22"/>
         <source>Ctrl+Shift+S</source>
         <comment>Search</comment>
         <translation type="unfinished"></translation>
@@ -3397,7 +3402,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+54"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3405,7 +3410,7 @@ Image - Article Id: %2</source>
 <context>
     <name>InventoryEditor</name>
     <message>
-        <location filename="../widgets/inventoryeditor.cpp" line="+240"/>
+        <location filename="../widgets/inventoryeditor.cpp" line="+237"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7197,7 +7202,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+67"/>
         <source>Can&apos;t open this Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7220,7 +7225,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+64"/>
         <source>Can&apos;t open this Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7243,7 +7248,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+71"/>
         <source>Cannot open Customers Editor.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7316,7 +7321,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+67"/>
         <source>Cannot open Order Editor!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7361,7 +7366,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+65"/>
         <source>Can&apos;t open this Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7529,7 +7534,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+64"/>
         <source>Can&apos;t open this Article</source>
         <translation type="unfinished"></translation>
     </message>

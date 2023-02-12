@@ -37,10 +37,6 @@ void AReceiver::createAction(const QJsonObject &obj) {
     }
     emit sendWarnMessage(message);
     return;
-  } else if (obj.contains("window_modified")) {
-    bool b = obj.value("window_modified").toBool();
-    emit sendUnsafedChanges(b);
-    return;
   }
 
   if (obj.contains("window_operation") && obj.contains("tab")) {
