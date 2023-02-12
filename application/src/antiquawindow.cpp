@@ -44,6 +44,9 @@ AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
           m_statusBar, SLOT(statusInfoMessage(const QString &)));
   connect(m_centralWidget, SIGNAL(sendWarnMessage(const QString &)),
           m_statusBar, SLOT(statusWarnMessage(const QString &)));
+  // Änderungen
+  connect(m_centralWidget, SIGNAL(sendModified(bool)),
+          SLOT(setWindowModified(bool)));
 }
 
 void AntiquaWindow::hideEvent(QHideEvent *event) {

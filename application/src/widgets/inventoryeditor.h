@@ -7,6 +7,7 @@
 
 #include <AntiquaCRM>
 #include <AntiquaInputEdit>
+#include <QEvent>
 #include <QHash>
 #include <QJsonObject>
 #include <QObject>
@@ -26,6 +27,8 @@ class InventoryEditor : public QWidget {
 
 private:
   int timeoutPopUp = 2;
+
+  void socketWindowModified(bool);
 
 protected:
   /**

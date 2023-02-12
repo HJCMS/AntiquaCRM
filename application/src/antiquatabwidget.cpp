@@ -26,6 +26,8 @@ AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
 
 bool AntiquaTabWidget::createSocketListener() {
   m_server = new AntiquaCRM::AReceiver(this);
+  connect(m_server, SIGNAL(sendUnsafedChanges(bool)),
+          SIGNAL(sendModified(bool)));
   connect(m_server, SIGNAL(sendWindowOperation(const QJsonObject &)),
           SLOT(setAction(const QJsonObject &)));
   connect(m_server, SIGNAL(sendPluginOperation(const QJsonObject &)),
@@ -36,20 +38,6 @@ bool AntiquaTabWidget::createSocketListener() {
           SIGNAL(sendWarnMessage(const QString &)));
 
   return m_server->listen(AntiquaCRM::AUtil::socketName());
-}
-
-Inventory *AntiquaTabWidget::tabWidget(int index) const {
-  return qobject_cast<Inventory *>(widget(index));
-}
-
-int AntiquaTabWidget::indexByName(const QString &name) const {
-  for (int i = 0; i < count(); i++) {
-    Inventory *m_tab = tabWidget(i);
-    if (m_tab != nullptr && m_tab->tabIndexId() == name) {
-      return i;
-    }
-  }
-  return -1;
 }
 
 bool AntiquaTabWidget::addInventoryTab(const QString &name) {
@@ -131,6 +119,20 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
 
   // Not in set
   return false;
+}
+
+Inventory *AntiquaTabWidget::tabWidget(int index) const {
+  return qobject_cast<Inventory *>(widget(index));
+}
+
+int AntiquaTabWidget::indexByName(const QString &name) const {
+  for (int i = 0; i < count(); i++) {
+    Inventory *m_tab = tabWidget(i);
+    if (m_tab != nullptr && m_tab->tabIndexId() == name) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 void AntiquaTabWidget::setAction(const QJsonObject &obj) {

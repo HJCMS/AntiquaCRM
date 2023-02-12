@@ -31,9 +31,9 @@ class AntiquaTabWidget final : public QTabWidget {
 private:
   AntiquaCRM::AReceiver *m_server;
   AntiquaTabBar *m_tabBar;
-  TabViews *m_views; /**< Views */
+  TabViews *m_views;           /**< Views */
   TabStatistics *m_statistics; /**< Statistics */
-  TabReports *m_reports; /**< Reports */
+  TabReports *m_reports;       /**< Reports */
   QWidget *m_testing;
 
   /**
@@ -78,6 +78,11 @@ Q_SIGNALS:
    */
   void sendInfoMessage(const QString &);
   void sendWarnMessage(const QString &);
+
+  /**
+   * @brief Änderungen an Hauptfenster senden.
+   */
+  void sendModified(bool);
 
   /**
    * @brief Sende eine Plugin Aktion

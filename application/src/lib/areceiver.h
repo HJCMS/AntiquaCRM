@@ -35,6 +35,11 @@ private Q_SLOTS:
 
 Q_SIGNALS:
   /**
+   * @brief Unterfenster besitzt Änderungen
+   */
+  void sendUnsafedChanges(bool);
+
+  /**
    * @brief Nachrichten an die Fensterleiste senden!
    */
   void sendInfoMessage(const QString &);
