@@ -72,6 +72,19 @@ public Q_SLOTS:
    */
   void setRestoreable(bool);
 
+  /**
+   * @brief Set focus to a QPushButton!
+   * @param suffix
+   * @list Available Suffixes:
+   *  @li cancel
+   *  @li restore
+   *  @li article
+   *  @li save
+   *  @li back
+   * @example setFocusButton("article");
+   */
+  void setFocusButton(const QString &suffix);
+
 public:
   explicit EditorActionBar(QWidget *parent = nullptr);
 

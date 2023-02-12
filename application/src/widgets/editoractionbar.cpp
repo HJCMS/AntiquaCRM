@@ -13,7 +13,7 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
   QHBoxLayout *layout = new QHBoxLayout(this);
 
   m_cancelBtn = new QPushButton(tr("Cancel"), this);
-  m_cancelBtn->setObjectName("editor_action_button_cancle");
+  m_cancelBtn->setObjectName("editor_action_button_cancel");
   m_cancelBtn->setIcon(QIcon(":icons/action_cancel.png"));
   m_cancelBtn->setShortcut(QKeySequence::Cancel);
   QString sc_cancel = m_cancelBtn->shortcut().toString();
@@ -85,6 +85,15 @@ EditorActionBar::EditorActionBar(QWidget *parent) : QWidget{parent} {
 }
 
 void EditorActionBar::setRestoreable(bool b) { m_restoreBtn->setEnabled(b); }
+
+void EditorActionBar::setFocusButton(const QString &suffix) {
+  QString search("editor_action_button_" + suffix.toLower());
+  QPushButton *btn = findChild<QPushButton *>(search);
+  if (btn != nullptr && btn->isVisible()) {
+    qDebug() << Q_FUNC_INFO << btn->objectName();
+    btn->setFocus();
+  }
+}
 
 void EditorActionBar::setViewPrintButton(bool b) {
   m_printerButton->setEnabled(b);

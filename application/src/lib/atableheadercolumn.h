@@ -19,8 +19,8 @@ namespace AntiquaCRM {
  */
 class ANTIQUACRM_LIBRARY ATableHeaderColumn final {
 private:
-  QString p_f;
-  QString p_n;
+  QString p_f; /** @brief SQL-Fieldname */
+  QString p_n; /** @brief Displayname */
 
 public:
   enum HeaderSection { ARTICLE = 0, ORDER = 1, CUSTOMER = 2 };
@@ -28,13 +28,13 @@ public:
   /**
    * @brief ATableHeaderColumn;
    */
-  ATableHeaderColumn();
+  explicit ATableHeaderColumn();
 
   /**
    * @param field - SQL Feldname
    * @param displayname - Anzeigename
    */
-  ATableHeaderColumn(const QSqlField &field, const QString &displayname);
+  explicit ATableHeaderColumn(const QSqlField &field, const QString &displayname);
 
   /**
    * @param field - SQL Feldname

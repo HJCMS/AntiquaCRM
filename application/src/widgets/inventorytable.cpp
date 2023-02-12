@@ -31,12 +31,11 @@ InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
   m_header->setDefaultAlignment(Qt::AlignCenter);
   m_header->setSectionResizeMode(QHeaderView::ResizeToContents);
   setHorizontalHeader(m_header);
+  // Warning not before HeaderView initialed
+  setEnableTableViewSorting(false);
 
   connect(m_header, SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), this,
           SLOT(setSortByColumn(int, Qt::SortOrder)));
-
-  // Warning not before HeaderView initialed
-  setEnableTableViewSorting(false);
 }
 
 void InventoryTable::paintEvent(QPaintEvent *ev) {

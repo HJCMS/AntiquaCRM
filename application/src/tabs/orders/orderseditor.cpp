@@ -14,7 +14,7 @@
 OrdersEditor::OrdersEditor(QWidget *parent)
     : InventoryEditor{"^[ocd]_[a-z_]+\\b$", parent} {
   setObjectName("orders_editor");
-  setWindowTitle(tr("Edit Orders"));
+  setWindowTitle(tr("Edit Orders") + " [*]");
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -319,6 +319,15 @@ void OrdersEditor::createSqlUpdate() {
   if (oid < 1)
     return;
 
+  /*
+   * Ein UPDATE ohne Artikel wird feige verweigert!
+   */
+  if(m_ordersList->isEmpty()) {
+    openNoticeMessage(tr("No Article has been added to this order!"));
+    m_actionBar->setFocusButton("article");
+    return;
+  }
+
   // Nach einem INSERT wieder aktivieren!
   QStringList requiredFields({"o_id", "o_invoice_id", "o_delivery"});
   foreach (QString objName, requiredFields) {
@@ -387,6 +396,7 @@ void OrdersEditor::createSqlUpdate() {
   if (changes == 0 && sql.isEmpty()) {
     sendStatusMessage(tr("No Modifications found, nothing todo!"));
     setWindowModified(false);
+    m_ordersList->setArticleChanged(false);
     return;
   }
 
@@ -396,6 +406,7 @@ void OrdersEditor::createSqlUpdate() {
 
   if (sendSqlQuery(sql)) {
     setResetModified(inputFields);
+    m_ordersList->setArticleChanged(false);
     openSuccessMessage(tr("Order saved successfully!"));
   }
 }
@@ -675,7 +686,7 @@ void OrdersEditor::setSaveData() {
 }
 
 void OrdersEditor::setCheckLeaveEditor() {
-  if (checkIsModified() || m_ordersList->isWindowModified()) {
+  if (checkIsModified() || m_ordersList->getArticleChanged()) {
     unsavedChangesPopup();
     return;
   }
@@ -685,7 +696,7 @@ void OrdersEditor::setCheckLeaveEditor() {
 void OrdersEditor::setFinalLeaveEditor() {
   setResetInputFields();
   m_ordersList->clearTable(); /**< Artikel Tabelle leeren! */
-  m_ordersList->setWindowModified(false);
+  m_ordersList->setArticleChanged(false);
   emit sendLeaveEditor(); /**< Zurück zur Hauptsansicht */
 }
 
@@ -978,7 +989,6 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
     return false;
 
   setInputFields();
-  setResetModified(inputFields);
 
   AntiquaCRM::AProviderOrder prOrder(o_provider_name, o_provider_order_id);
   // Kunden Daten
@@ -1117,13 +1127,17 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
     QSqlField f = r.field(key);
     setDataField(f, prOrder.getValue(key));
   }
-  setResetModified(customInput);
 
   // 3) Artikel Importieren
   m_ordersList->importArticles(prOrder.orders());
 
   // 4) Datensätze Importieren
   importSqlResult();
+
+  // 5) Erst nach einfügen reset
+  setResetModified(inputFields);
+  setResetModified(customInput);
+  m_ordersList->setArticleChanged(false);
 
   return true;
 }

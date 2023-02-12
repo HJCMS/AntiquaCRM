@@ -35,6 +35,11 @@ private:
   QString sqlToRemoveCache;
 
   /**
+   * @brief Auf Änderungen prüfen
+   */
+  void changeEvent(QEvent *) override;
+
+  /**
    * @brief Infos zum Tabellinhalt
    */
   void paintEvent(QPaintEvent *) override;
@@ -42,19 +47,21 @@ private:
   /**
    * @brief Menü für Zeilen entfernen!
    */
-  void contextMenuEvent(QContextMenuEvent *event) override;
+  void contextMenuEvent(QContextMenuEvent *) override;
 
 private Q_SLOTS:
   /**
    * @brief articleChanged
    */
-  void articleChanged(const QModelIndex &topLeft,
-                      const QModelIndex &bottomRight);
+  void articleChanged(const QModelIndex &, const QModelIndex &);
 
   /**
    * @brief Ausgewählte Zeile entfernen!
    */
   void removeArticle();
+
+Q_SIGNALS:
+  void sendTableModified(bool);
 
 public Q_SLOTS:
   /**
@@ -65,7 +72,7 @@ public Q_SLOTS:
   /**
    * @brief Einen neuen Artikel in die Tabelle aufnehmen!
    */
-  void addOrderArticle(const AntiquaCRM::OrderArticleItems &item);
+  void addOrderArticle(const AntiquaCRM::OrderArticleItems &);
 
 public:
   /**
@@ -85,17 +92,17 @@ public:
    * verschwindet der komplette Tabellen Header!
    * @see PurchaseTableModel::editableColumns
    */
-  void hideColumns(const QStringList &list);
+  void hideColumns(const QStringList &);
 
   /**
    * @brief Leert die Tabelle und importiert alle Artikel aus der Liste.
    */
-  bool setOrderArticles(const QList<AntiquaCRM::OrderArticleItems> &items);
+  bool setOrderArticles(const QList<AntiquaCRM::OrderArticleItems> &);
 
   /**
    * @brief Fehlende Article Order ID einfügen!
    */
-  bool setArticleOrderId(qint64 oid);
+  bool setArticleOrderId(qint64);
 
   /**
    * @brief Create SQL UPDATE | INSERT Statements.
@@ -107,7 +114,7 @@ public:
   /**
    * @brief Abfrage der Zahlungs Nummer auf Zeilenummer.
    */
-  qint64 getArticlePaymentId(int row);
+  qint64 getArticlePaymentId(int);
 };
 
 #endif // ANTIQUACRM_PURCHASETABLE_H

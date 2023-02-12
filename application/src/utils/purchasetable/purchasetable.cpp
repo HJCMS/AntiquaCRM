@@ -16,7 +16,7 @@
 PurchaseTable::PurchaseTable(QWidget *parent, bool readOnly)
     : QTableView{parent} {
   setObjectName("purchase_table_view");
-  // required for modification calls
+  // @note Required for modification calls
   setWindowTitle("Purchases [*]");
   setToolTip(tr("Current article purchases"));
   setSortingEnabled(false);
@@ -56,6 +56,13 @@ PurchaseTable::PurchaseTable(QWidget *parent, bool readOnly)
           SLOT(articleChanged(const QModelIndex &, const QModelIndex &)));
 }
 
+void PurchaseTable::changeEvent(QEvent *ev) {
+  if (ev->type() == QEvent::ModifiedChange && isWindowModified())
+    emit sendTableModified(isWindowModified());
+
+  QTableView::changeEvent(ev);
+}
+
 void PurchaseTable::paintEvent(QPaintEvent *ev) {
   if (rowCount() == 0) {
     QPainter painter(viewport());
@@ -63,8 +70,7 @@ void PurchaseTable::paintEvent(QPaintEvent *ev) {
     painter.setFont(font());
     painter.setOpacity(0.8);
     painter.drawText(rect(), Qt::AlignCenter,
-                     tr("No article can be added without an order number, "
-                        "please save first!"));
+                     tr("Please insert here the Ordered article..."));
   }
   QTableView::paintEvent(ev);
 }
@@ -84,11 +90,12 @@ void PurchaseTable::contextMenuEvent(QContextMenuEvent *event) {
   delete m;
 }
 
-void PurchaseTable::articleChanged(const QModelIndex &topLeft,
-                                   const QModelIndex &bottomRight) {
-  Q_UNUSED(topLeft);
-  Q_UNUSED(bottomRight);
+void PurchaseTable::articleChanged(const QModelIndex &current,
+                                   const QModelIndex &previous) {
+  Q_UNUSED(current);
+  resizeColumnToContents(previous.column());
   m_headerView->setStretchLastSection(true);
+  setWindowModified(true);
 }
 
 void PurchaseTable::removeArticle() {
@@ -116,6 +123,9 @@ void PurchaseTable::clearTable() {
 
 void PurchaseTable::addOrderArticle(const AntiquaCRM::OrderArticleItems &item) {
   if (m_model->addArticle(item)) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qInfo("-- PurchaseTable WindowModified");
+#endif
     setWindowModified(true);
   }
 }

@@ -34,15 +34,29 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   layout->addWidget(m_table);
   layout->addStretch(1);
   setLayout(layout);
+
+  connect(m_table, SIGNAL(sendTableModified(bool)),
+          SLOT(setArticleChanged(bool)));
 }
 
-void OrdersItemList::clearTable() {
-  m_table->clearTable();
-}
+void OrdersItemList::clearTable() { m_table->clearTable(); }
 
 void OrdersItemList::insertArticle(const AntiquaCRM::OrderArticleItems &item) {
   m_table->addOrderArticle(item);
 }
+
+void OrdersItemList::setArticleChanged(bool b) {
+  setWindowModified(b);
+  if (b == ArticleChanged)
+    return;
+
+  ArticleChanged = b;
+  emit articleChanged(ArticleChanged);
+}
+
+bool OrdersItemList::isEmpty() { return (m_table->rowCount() < 1); }
+
+bool OrdersItemList::getArticleChanged() { return ArticleChanged; }
 
 bool OrdersItemList::setArticleOrderId(qint64 oid) {
   if (oid < 1)
