@@ -2174,12 +2174,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kundendaten speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+49"/>
         <source>Company is activated, but no company name is set!</source>
         <translation>Firma ist aktiviert, aber kein Firmenname gesetzt!</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+40"/>
         <source>Send eMail finished!</source>
         <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
@@ -4446,7 +4446,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Zahlungsstatus</translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+80"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -4471,28 +4471,33 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bitte speichern Sie zuerst Ihren Auftrag.</translation>
     </message>
     <message>
-        <location line="+150"/>
+        <location line="+92"/>
+        <source>No Article has been added to this order!</source>
+        <translation>Dieser Bestellung wurde kein Artikel hinzugefügt!</translation>
+    </message>
+    <message>
+        <location line="+84"/>
         <source>Order saved successfully!</source>
         <translation>Auftrag erfolgreich gespeichert!</translation>
     </message>
     <message>
-        <location line="-33"/>
-        <location line="+82"/>
+        <location line="-36"/>
+        <location line="+85"/>
         <source>No SQL Articles exist!</source>
         <translation>Es sind keine SQL-Artikel vorhanden!</translation>
     </message>
     <message>
-        <location line="-390"/>
+        <location line="-417"/>
         <source>Order status</source>
         <translation>Auftragsstatus</translation>
     </message>
     <message>
-        <location line="+330"/>
+        <location line="+355"/>
         <source>No Modifications found, nothing todo!</source>
         <translation>Keine Änderungen gefunden, es gibt nichts zu tun!</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+68"/>
         <source>Save Articles success!</source>
         <translation>Artikel speichern erfolgreich!</translation>
     </message>
@@ -4502,17 +4507,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Artikel: %1 nicht gefunden oder nicht auf Lager!</translation>
     </message>
     <message>
-        <location line="+116"/>
+        <location line="+136"/>
         <location line="+19"/>
         <location line="+39"/>
         <location line="+32"/>
         <location line="+38"/>
-        <location line="+80"/>
+        <location line="+77"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation>Fehlende wichtige IDs, Bestellung zuerst speichern!</translation>
     </message>
     <message>
-        <location line="-203"/>
+        <location line="-200"/>
         <source>Incomplete eMail configuration!</source>
         <translation>Unvollständige E-Mail-Konfiguration!</translation>
     </message>
@@ -4522,12 +4527,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
     <message>
-        <location line="-482"/>
+        <location line="-528"/>
         <source>Missing Deliverynote Number</source>
         <translation>Fehlende Lieferscheinnummer</translation>
     </message>
     <message>
-        <location line="+504"/>
+        <location line="+550"/>
         <source>Missing Delivery Address!</source>
         <translation>Lieferadresse fehlt!</translation>
     </message>
@@ -4555,12 +4560,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Keine Daten gefunden! - Druckvorgang abgebrochen.</translation>
     </message>
     <message>
-        <location line="+166"/>
+        <location line="+163"/>
         <source>No Provider orders data found!</source>
         <translation>Keine Dienstleister-Auftragsdaten gefunden!</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+25"/>
         <source>Customer not found or set!</source>
         <translation>Kunde nicht gefunden oder eingestellt!</translation>
     </message>
@@ -6375,12 +6380,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Aktuelle Artikelkäufe</translation>
     </message>
     <message>
-        <location line="+45"/>
-        <source>No article can be added without an order number, please save first!</source>
-        <translation>Ohne Auftrags Nr. kann kein Artikel hinzugefügt werden, bitte erst speichern!</translation>
+        <location line="+52"/>
+        <source>Please insert here the Ordered article...</source>
+        <translation>Bitte fügen Sie hier den bestellten Artikel ein...</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+12"/>
         <source>delete selected article</source>
         <translation>Ausgewählten Artikel löschen</translation>
     </message>
