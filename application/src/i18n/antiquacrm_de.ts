@@ -33,7 +33,12 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+163"/>
+        <location filename="../antiquaappl.cpp" line="+98"/>
+        <source>Please close all editors before exiting!</source>
+        <translation>Bitte schließen Sie vor dem Beenden bitte alle Editoren!</translation>
+    </message>
+    <message>
+        <location line="+72"/>
         <source>Search Networkconnection!</source>
         <translation>Suche Netzwerkverbindung!</translation>
     </message>
@@ -256,28 +261,28 @@
         <translation>Bücher anzeigen und bearbeiten</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+11"/>
         <source>View and edit Customers</source>
         <translation>Kunden anzeigen und bearbeiten</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+22"/>
         <source>View Print and Stitches</source>
         <translation>Zeige Drucke und Stiche</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="-11"/>
         <source>View Cd and Vinyl</source>
         <translation>Zeige CD und Vinyl</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <location line="+158"/>
+        <location line="+42"/>
+        <location line="+140"/>
         <source>Various</source>
         <translation>Verschiedenes</translation>
     </message>
     <message>
-        <location line="-149"/>
+        <location line="-160"/>
         <source>View and import Provider orders</source>
         <translation>Anzeigen und Importieren von Dienstleisterbestellungen</translation>
     </message>
@@ -287,7 +292,7 @@
         <translation>Anzeigen und Bearbeiten von Systembestellungen</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+59"/>
         <source>Can not open &apos;%1&apos;!</source>
         <translation>Kann &apos;%1&apos; nicht öffnen!</translation>
     </message>
@@ -326,6 +331,11 @@
         <source>CD and Vinyl</source>
         <translation>CD und Vinyl</translation>
     </message>
+    <message>
+        <location line="+11"/>
+        <source>&apos;%1&apos; Editor is open!</source>
+        <translation>Der &apos;%1&apos; Editor ist geöffnet!</translation>
+    </message>
 </context>
 <context>
     <name>AntiquaViewsMenus</name>
@@ -358,7 +368,7 @@
 <context>
     <name>AntiquaWindow</name>
     <message>
-        <location filename="../antiquawindow.cpp" line="+73"/>
+        <location filename="../antiquawindow.cpp" line="+111"/>
         <source>Save request</source>
         <translation>Speichernanfrage</translation>
     </message>
@@ -779,7 +789,7 @@
         <translation>Buch deaktivierung</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+61"/>
         <source>Remove Image from Database</source>
         <translation>Bild aus Datenbank entfernen</translation>
     </message>
@@ -803,7 +813,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="-388"/>
+        <location line="-391"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
@@ -1419,7 +1429,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Ungültige Jahresangabe für Vinyl oder CD angegeben, abbruch!</translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+88"/>
         <source>Remove Image from Database</source>
         <translation>Bild aus Datenbank entfernen</translation>
     </message>
@@ -2184,7 +2194,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Firma ist aktiviert, aber kein Firmenname gesetzt!</translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+43"/>
         <source>Send eMail finished!</source>
         <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
@@ -3414,7 +3424,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>InventoryEditor</name>
     <message>
-        <location filename="../widgets/inventoryeditor.cpp" line="+237"/>
+        <location filename="../widgets/inventoryeditor.cpp" line="+229"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
@@ -4512,7 +4522,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Artikel: %1 nicht gefunden oder nicht auf Lager!</translation>
     </message>
     <message>
-        <location line="+136"/>
+        <location line="+139"/>
         <location line="+19"/>
         <location line="+39"/>
         <location line="+32"/>
@@ -4532,12 +4542,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
     <message>
-        <location line="-528"/>
+        <location line="-531"/>
         <source>Missing Deliverynote Number</source>
         <translation>Fehlende Lieferscheinnummer</translation>
     </message>
     <message>
-        <location line="+550"/>
+        <location line="+553"/>
         <source>Missing Delivery Address!</source>
         <translation>Lieferadresse fehlt!</translation>
     </message>
@@ -5787,7 +5797,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Deaktivierung</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+47"/>
         <source>Remove Image from Database</source>
         <translation>Bild aus Datenbank entfernen</translation>
     </message>
@@ -7309,12 +7319,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bestellung erstellen, Anfrage!</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+94"/>
         <source>Invalid arguments to open Customer!</source>
         <translation>Ungültige Argumente zum Öffnen des Kunden!</translation>
     </message>
     <message>
-        <location line="-148"/>
+        <location line="-158"/>
         <source>Customereditor</source>
         <translation>Kundeneditor</translation>
     </message>
@@ -7342,7 +7352,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bitte speichern und schließen Sie zuerst den geöffneten Auftrag.</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+86"/>
         <location line="+30"/>
         <location line="+10"/>
         <source>Some arguments missing for a new Order!</source>
@@ -7359,7 +7369,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Artikel kann nicht hinzugefügt werden, wenn kein Auftrag geöffnet ist!</translation>
     </message>
     <message>
-        <location line="-83"/>
+        <location line="-93"/>
         <source>Ordereditor</source>
         <translation>Auftragseditor</translation>
     </message>
@@ -7922,7 +7932,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Deaktivierung</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+46"/>
         <source>Remove Image from Database</source>
         <translation>Bild aus Datenbank entfernen</translation>
     </message>

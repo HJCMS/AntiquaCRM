@@ -10,8 +10,12 @@
 #include <QSqlTableModel>
 #include <QWidget>
 
-class ViewsTableModel : public QSqlTableModel {
+class ViewsTableModel final : public QSqlTableModel {
   Q_OBJECT
+
+protected:
+  const QVariant verticalDisplayHeader(int section,
+                                       int role = Qt::DisplayRole) const;
 
 public:
   explicit ViewsTableModel(const QSqlDatabase &db, QObject *parent = nullptr);

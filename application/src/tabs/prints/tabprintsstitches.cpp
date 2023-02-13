@@ -148,6 +148,16 @@ void TabPrintsStitches::onEnterChanged() {
   }
 }
 
+Inventory::ViewIndex TabPrintsStitches::currentView() {
+  switch (currentIndex()) {
+  case 1:
+    return Inventory::ViewIndex::EditorView;
+
+  default:
+    return Inventory::ViewIndex::MainView;
+  }
+}
+
 bool TabPrintsStitches::customAction(const QJsonObject &obj) {
   if (obj.isEmpty() || !obj.contains("window_operation"))
     return false;

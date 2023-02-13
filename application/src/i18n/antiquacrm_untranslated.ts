@@ -33,7 +33,12 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+163"/>
+        <location filename="../antiquaappl.cpp" line="+98"/>
+        <source>Please close all editors before exiting!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+72"/>
         <source>Search Networkconnection!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -256,28 +261,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+11"/>
         <source>View and edit Customers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+22"/>
         <source>View Print and Stitches</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="-11"/>
         <source>View Cd and Vinyl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <location line="+158"/>
+        <location line="+42"/>
+        <location line="+140"/>
         <source>Various</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-149"/>
+        <location line="-160"/>
         <source>View and import Provider orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -287,7 +292,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+59"/>
         <source>Can not open &apos;%1&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -326,6 +331,11 @@
         <source>CD and Vinyl</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+11"/>
+        <source>&apos;%1&apos; Editor is open!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AntiquaViewsMenus</name>
@@ -358,7 +368,7 @@
 <context>
     <name>AntiquaWindow</name>
     <message>
-        <location filename="../antiquawindow.cpp" line="+73"/>
+        <location filename="../antiquawindow.cpp" line="+111"/>
         <source>Save request</source>
         <translation type="unfinished"></translation>
     </message>
@@ -779,7 +789,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+61"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -801,7 +811,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-388"/>
+        <location line="-391"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1417,7 +1427,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+85"/>
+        <location line="+88"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2180,7 +2190,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+43"/>
         <source>Send eMail finished!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3410,7 +3420,7 @@ Image - Article Id: %2</source>
 <context>
     <name>InventoryEditor</name>
     <message>
-        <location filename="../widgets/inventoryeditor.cpp" line="+237"/>
+        <location filename="../widgets/inventoryeditor.cpp" line="+229"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4508,7 +4518,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+136"/>
+        <location line="+139"/>
         <location line="+19"/>
         <location line="+39"/>
         <location line="+32"/>
@@ -4528,12 +4538,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-528"/>
+        <location line="-531"/>
         <source>Missing Deliverynote Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+550"/>
+        <location line="+553"/>
         <source>Missing Delivery Address!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5783,7 +5793,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+47"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7303,12 +7313,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+94"/>
         <source>Invalid arguments to open Customer!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-148"/>
+        <location line="-158"/>
         <source>Customereditor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7336,7 +7346,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+86"/>
         <location line="+30"/>
         <location line="+10"/>
         <source>Some arguments missing for a new Order!</source>
@@ -7353,7 +7363,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-83"/>
+        <location line="-93"/>
         <source>Ordereditor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7916,7 +7926,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+46"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>

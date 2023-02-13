@@ -45,6 +45,7 @@ public Q_SLOTS:
 
 public:
   explicit TabOrders(QWidget *parent = nullptr);
+  Inventory::ViewIndex currentView() override;
   bool customAction(const QJsonObject &obj) override;
 };
 

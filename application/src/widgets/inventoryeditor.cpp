@@ -142,17 +142,9 @@ bool InventoryEditor::checkIsModified() {
   QList<InputEdit *> list =
       findChildren<InputEdit *>(fieldPattern, INPUT_FIND_OPTS);
   for (int i = 0; i < list.size(); ++i) {
-    if (list.at(i) != nullptr) {
-      bool b = false;
-      if (QMetaObject::invokeMethod(list.at(i), "isModified",
-                                    Qt::DirectConnection,
-                                    Q_RETURN_ARG(bool, b))) {
-
-        if (b) {
-          setWindowModified(true);
-          return true;
-        }
-      }
+    if (list.at(i) != nullptr && list.at(i)->isModified()) {
+      setWindowModified(true);
+      return true;
     }
   }
   setWindowModified(false);

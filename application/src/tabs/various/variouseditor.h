@@ -54,7 +54,7 @@ private:
 private Q_SLOTS:
   void setSaveData() override;
   void setCheckLeaveEditor() override;
-  void setFinalLeaveEditor() override;
+  void setFinalLeaveEditor(bool force = true) override;
   void actionRemoveImage(qint64 articleId);
   void actionEditImages();
 

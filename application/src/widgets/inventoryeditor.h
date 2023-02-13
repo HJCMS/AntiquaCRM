@@ -221,7 +221,7 @@ protected Q_SLOTS:
    * Vor dem verlassen Aufräumen!
    * Hier kann Abschließend das Signal::sendLeaveEditor gesendet werden.
    */
-  virtual void setFinalLeaveEditor() = 0;
+  virtual void setFinalLeaveEditor(bool force = true) = 0;
 
 Q_SIGNALS:
   /**

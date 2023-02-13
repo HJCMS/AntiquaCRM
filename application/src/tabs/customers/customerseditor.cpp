@@ -363,10 +363,13 @@ void CustomersEditor::setCheckLeaveEditor() {
     unsavedChangesPopup();
     return;
   }
-  setFinalLeaveEditor();
+  setFinalLeaveEditor(false);
 }
 
-void CustomersEditor::setFinalLeaveEditor() {
+void CustomersEditor::setFinalLeaveEditor(bool force) {
+  if(force) // Wenn auf Abbrechen geklickt wurde!
+    setWindowModified(false);
+
   setResetInputFields();
   m_ordersWidget->clearContents();    /**< Einkäufe entfernen */
   m_ordersWidget->setRowCount(0);     /**< Einkäufe entfernen */

@@ -47,7 +47,7 @@ private Q_SLOTS:
   void setSaveData() override;
   void setCreateOrderSignal();
   void setCheckLeaveEditor() override;
-  void setFinalLeaveEditor() override;
+  void setFinalLeaveEditor(bool force = true) override;
   void setCreateMailMessage(const QString &action);
 
 public Q_SLOTS:

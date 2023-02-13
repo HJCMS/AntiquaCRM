@@ -566,10 +566,13 @@ void BookEditor::setCheckLeaveEditor() {
     unsavedChangesPopup();
     return;
   }
-  setFinalLeaveEditor();
+  setFinalLeaveEditor(false);
 }
 
-void BookEditor::setFinalLeaveEditor() {
+void BookEditor::setFinalLeaveEditor(bool force) {
+  if(force) // Wenn auf Abbrechen geklickt wurde!
+    setWindowModified(false);
+
   setResetInputFields();
   m_actionBar->setRestoreable(false); /**< ResetButton off */
   m_imageView->clear();               /**< Bildvorschau leeren */

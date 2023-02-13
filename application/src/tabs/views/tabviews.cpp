@@ -9,7 +9,7 @@
 #include <QHeaderView>
 #include <QLayout>
 
-TabViews::TabViews(QWidget *parent) : Inventory{"views_tab",parent} {
+TabViews::TabViews(QWidget *parent) : Inventory{"views_tab", parent} {
   setWindowTitle(tr("Views"));
   setWindowIcon(getTabIcon("view_log"));
   setObjectName("antiqua_views_tab");
@@ -34,10 +34,16 @@ TabViews::TabViews(QWidget *parent) : Inventory{"views_tab",parent} {
   m_tableView->setSelectionMode(QAbstractItemView::SingleSelection);
   m_tableView->setSortingEnabled(true);
 
-  QHeaderView *header = m_tableView->horizontalHeader();
-  header->setDefaultAlignment(Qt::AlignCenter);
-  header->setSectionResizeMode(QHeaderView::ResizeToContents);
-  header->setStretchLastSection(true);
+  QHeaderView *h_Header = m_tableView->horizontalHeader();
+  h_Header->setDefaultAlignment(Qt::AlignCenter);
+  h_Header->setSectionResizeMode(QHeaderView::ResizeToContents);
+  h_Header->setStretchLastSection(true);
+  m_tableView->setHorizontalHeader(h_Header);
+
+  QHeaderView *v_Header = m_tableView->verticalHeader();
+  v_Header->setDefaultAlignment(Qt::AlignRight | Qt::AlignVCenter);
+  v_Header->setSectionResizeMode(QHeaderView::ResizeToContents);
+  m_tableView->setVerticalHeader(v_Header);
 
   m_layout->addWidget(m_tableView);
   centralWidget->setLayout(m_layout);

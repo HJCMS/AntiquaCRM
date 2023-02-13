@@ -54,6 +54,8 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
     int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
     m_tabBar->setTabCloseable(i, m_tab->isClosable());
     m_tabBar->setTabWhatsThis(i, tr("View and edit Books"));
+    connect(m_tab, SIGNAL(sendUnsafedChanges(bool)),
+            SIGNAL(sendModified(bool)));
     return true;
   }
 
@@ -63,15 +65,8 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
     int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
     m_tabBar->setTabCloseable(i, m_tab->isClosable());
     m_tabBar->setTabWhatsThis(i, tr("View and edit Customers"));
-    return true;
-  }
-
-  // Prints and Stitches
-  if (iName == "printsstitches_tab") {
-    TabPrintsStitches *m_tab = new TabPrintsStitches(this);
-    int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
-    m_tabBar->setTabCloseable(i, m_tab->isClosable());
-    m_tabBar->setTabWhatsThis(i, tr("View Print and Stitches"));
+    connect(m_tab, SIGNAL(sendUnsafedChanges(bool)),
+            SIGNAL(sendModified(bool)));
     return true;
   }
 
@@ -81,15 +76,19 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
     int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
     m_tabBar->setTabCloseable(i, m_tab->isClosable());
     m_tabBar->setTabWhatsThis(i, tr("View Cd and Vinyl"));
+    connect(m_tab, SIGNAL(sendUnsafedChanges(bool)),
+            SIGNAL(sendModified(bool)));
     return true;
   }
 
-  // Various
-  if (iName == "various_tab") {
-    TabVarious *m_tab = new TabVarious(this);
+  // Prints and Stitches
+  if (iName == "printsstitches_tab") {
+    TabPrintsStitches *m_tab = new TabPrintsStitches(this);
     int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
     m_tabBar->setTabCloseable(i, m_tab->isClosable());
-    m_tabBar->setTabWhatsThis(i, tr("Various"));
+    m_tabBar->setTabWhatsThis(i, tr("View Print and Stitches"));
+    connect(m_tab, SIGNAL(sendUnsafedChanges(bool)),
+            SIGNAL(sendModified(bool)));
     return true;
   }
 
@@ -108,6 +107,17 @@ bool AntiquaTabWidget::addInventoryTab(const QString &name) {
     int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
     m_tabBar->setTabCloseable(i, m_tab->isClosable());
     m_tabBar->setTabWhatsThis(i, tr("View and edit System orders"));
+    connect(m_tab, SIGNAL(sendUnsafedChanges(bool)),
+            SIGNAL(sendModified(bool)));
+    return true;
+  }
+
+  // Various
+  if (iName == "various_tab") {
+    TabVarious *m_tab = new TabVarious(this);
+    int i = addTab(m_tab, m_tab->windowIcon(), m_tab->windowTitle());
+    m_tabBar->setTabCloseable(i, m_tab->isClosable());
+    m_tabBar->setTabWhatsThis(i, tr("Various"));
     connect(m_tab, SIGNAL(sendUnsafedChanges(bool)),
             SIGNAL(sendModified(bool)));
     return true;
@@ -251,16 +261,31 @@ const QMap<QString, QString> AntiquaTabWidget::availableTabs() {
   return m;
 }
 
+bool AntiquaTabWidget::beforeCloseAllTabs() {
+  for (int t = 0; t < count(); t++) {
+    Inventory *m_tab = tabWidget(t);
+    QString title = m_tab->windowTitle();
+    if (m_tab->currentView() == Inventory::ViewIndex::EditorView) {
+      setCurrentIndex(t);
+      emit sendWarnMessage(tr("'%1' Editor is open!").arg(title));
+      return false;
+    }
+  }
+  return true;
+}
+
 AntiquaTabWidget::~AntiquaTabWidget() {
   // disable socket
   if (m_server != nullptr) {
     m_server->close();
     m_server->deleteLater();
   }
-  // unload tabs
-  for (int t = 0; t < count(); t++) {
-    Inventory *m_tab = tabWidget(t);
-    removeTab(t);
-    m_tab->deleteLater();
+  // destroy all tabs
+  for (int t = count(); t > 0; t--) {
+    Inventory *m_tab = tabWidget((t - 1));
+    if (m_tab != nullptr) {
+      removeTab(t);
+      m_tab->deleteLater();
+    }
   }
 }

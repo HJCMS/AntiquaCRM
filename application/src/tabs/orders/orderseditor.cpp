@@ -690,10 +690,13 @@ void OrdersEditor::setCheckLeaveEditor() {
     unsavedChangesPopup();
     return;
   }
-  setFinalLeaveEditor();
+  setFinalLeaveEditor(false);
 }
 
-void OrdersEditor::setFinalLeaveEditor() {
+void OrdersEditor::setFinalLeaveEditor(bool force) {
+  if(force) // Wenn auf Abbrechen geklickt wurde!
+    setWindowModified(false);
+
   setResetInputFields();
   m_ordersList->clearTable(); /**< Artikel Tabelle leeren! */
   m_ordersList->setArticleChanged(false);

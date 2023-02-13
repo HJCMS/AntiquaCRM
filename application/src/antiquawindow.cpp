@@ -26,7 +26,7 @@ AntiquaWindow::AntiquaWindow(QWidget *parent) : QMainWindow{parent} {
   m_statusBar = new AntiquaStatusBar(this);
   setStatusBar(m_statusBar);
 
-  connect(m_menuBar, SIGNAL(sendApplQuit()), SLOT(closeWindow()));
+  connect(m_menuBar, SIGNAL(sendApplQuit()), SIGNAL(sendApplQuit()));
   connect(m_menuBar, SIGNAL(sendOpenTabReports(const QString &)),
           m_centralWidget, SLOT(addReportsTab(const QString &)));
   connect(m_menuBar, SIGNAL(sendOpenTabViews(const QString &)), m_centralWidget,
@@ -68,25 +68,6 @@ void AntiquaWindow::closeEvent(QCloseEvent *) {
   hideEvent(&hide);
 }
 
-void AntiquaWindow::closeWindow() {
-  if (isWindowModified()) {
-    QString t = tr("Save request");
-    QStringList warn(tr("<b>You have unsaved changes.</b>"));
-    warn << tr("<p>Do you really want to close the application?</p>");
-    int ret = QMessageBox::question(this, t, warn.join("\n"));
-    if (ret == QMessageBox::No) {
-      return;
-    }
-  }
-
-  QByteArray ba = saveGeometry();
-  if (!ba.isNull())
-    m_cfg->setValue("window/geometry", ba);
-
-  ba.clear();
-  emit sendApplQuit();
-}
-
 void AntiquaWindow::setToggleWindow() { (isVisible()) ? hide() : show(); }
 
 void AntiquaWindow::setToggleFullScreen() {
@@ -120,4 +101,26 @@ void AntiquaWindow::openWindow() {
     m_centralWidget->setShowTab("books");
 
   m_centralWidget->setEnabled(true);
+}
+
+bool AntiquaWindow::checkBeforeClose() {
+  if (!m_centralWidget->beforeCloseAllTabs())
+    return false;
+
+  if (isWindowModified()) {
+    QString t = tr("Save request");
+    QStringList warn(tr("<b>You have unsaved changes.</b>"));
+    warn << tr("<p>Do you really want to close the application?</p>");
+    int ret = QMessageBox::question(this, t, warn.join("\n"));
+    if (ret == QMessageBox::No) {
+      return false;
+    }
+  }
+
+  QByteArray ba = saveGeometry();
+  if (!ba.isNull())
+    m_cfg->setValue("window/geometry", ba);
+
+  ba.clear();
+  return true;
 }

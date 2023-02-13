@@ -180,7 +180,7 @@ private Q_SLOTS:
   void setSaveData() override;
 
   void setCheckLeaveEditor() override;
-  void setFinalLeaveEditor() override;
+  void setFinalLeaveEditor(bool force = true) override;
   void createMailMessage(const QString &type);
   void createPrintDeliveryNote();
   void createPrintInvoiceNote();

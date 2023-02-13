@@ -520,10 +520,13 @@ void PrintsStitchesEditor::setCheckLeaveEditor() {
     unsavedChangesPopup();
     return;
   }
-  setFinalLeaveEditor();
+  setFinalLeaveEditor(false);
 }
 
-void PrintsStitchesEditor::setFinalLeaveEditor() {
+void PrintsStitchesEditor::setFinalLeaveEditor(bool force) {
+  if(force) // Wenn auf Abbrechen geklickt wurde!
+    setWindowModified(false);
+
   setResetInputFields();
   m_actionBar->setRestoreable(false); /**< ResetButton off */
   m_imageView->clear();               /**< Bildvorschau leeren */

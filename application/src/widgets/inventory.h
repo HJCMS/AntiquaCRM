@@ -151,11 +151,19 @@ public Q_SLOTS:
   virtual void onEnterChanged() = 0;
 
 public:
+  enum ViewIndex { MainView = 0, EditorView = 1, CustomView = 2 };
+
   /**
    * @brief Tabs Inventory
    * @param index Uniq tab Index Name
    */
   explicit Inventory(const char *index, QWidget *parent = nullptr);
+
+  /**
+   * @brief Which Stacked index is currently in use?
+   * This allows widgets to be set variably
+   */
+  virtual Inventory::ViewIndex currentView() = 0;
 
   /**
    * @brief Create Custom Entries

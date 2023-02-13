@@ -146,6 +146,16 @@ void TabVarious::onEnterChanged() {
   }
 }
 
+Inventory::ViewIndex TabVarious::currentView() {
+  switch (currentIndex()) {
+  case 1:
+    return Inventory::ViewIndex::EditorView;
+
+  default:
+    return Inventory::ViewIndex::MainView;
+  }
+}
+
 bool TabVarious::customAction(const QJsonObject &obj) {
   if (obj.isEmpty() || !obj.contains("window_operation"))
     return false;

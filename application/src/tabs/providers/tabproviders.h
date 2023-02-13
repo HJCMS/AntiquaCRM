@@ -63,6 +63,7 @@ public Q_SLOTS:
 
 public:
   explicit TabProviders(QWidget *parent = nullptr);
+  Inventory::ViewIndex currentView() override { return MainView; };
   bool customAction(const QJsonObject &) override { return false; };
   virtual ~TabProviders();
 };

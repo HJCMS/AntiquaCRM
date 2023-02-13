@@ -27,9 +27,6 @@ private:
   AntiquaStatusBar *m_statusBar;
   AntiquaTabWidget *m_centralWidget;
 
-private Q_SLOTS:
-  void closeWindow();
-
 protected:
   void hideEvent(QHideEvent *) override;
   void closeEvent(QCloseEvent *) override;
@@ -45,6 +42,7 @@ public Q_SLOTS:
 public:
   explicit AntiquaWindow(QWidget *parent = nullptr);
   void openWindow();
+  bool checkBeforeClose();
 };
 
 #endif // ANTIQUACRM_MAINWINDOW_H

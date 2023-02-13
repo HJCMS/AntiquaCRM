@@ -105,6 +105,14 @@ public:
   static const QMap<QString, QString> availableTabs();
 
   /**
+   * @brief Alle Registerkarten schließen!
+   * Wenn eine Karte im Editormodus ist, wird das schließen verweigert! Und die
+   * Methode bricht ab! Wahr wird nur bei Erfolgreichem schließen aller
+   * Registerkarten zurück gegeben!
+   */
+  bool beforeCloseAllTabs();
+
+  /**
    * @brief TimerEvents und Sockets sauber runterfahren!
    */
   virtual ~AntiquaTabWidget();

@@ -91,6 +91,13 @@ bool AntiquaAppl::initTranslations() {
 }
 
 void AntiquaAppl::applicationQuit() {
+  // Sind Editoren geöffnet?
+  if (!m_mainWindow->checkBeforeClose()) {
+    m_mainWindow->show();
+    m_systemTray->setOrdersMessage(
+        tr("Please close all editors before exiting!"));
+    return;
+  }
   // Systemtray
   m_systemTray->setVisible(false);
   // Window

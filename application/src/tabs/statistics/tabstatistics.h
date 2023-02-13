@@ -33,6 +33,7 @@ public Q_SLOTS:
 
 public:
   explicit TabStatistics(QWidget *parent = nullptr);
+  Inventory::ViewIndex currentView() override { return MainView; };
   bool customAction(const QJsonObject &obj) override;
   ~TabStatistics();
 };
