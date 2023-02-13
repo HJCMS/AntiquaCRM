@@ -3,6 +3,7 @@
 
 #include "antiquasystemtray.h"
 
+#include <AGlobal>
 #include <QMenu>
 
 AntiquaSystemTray::AntiquaSystemTray(const QIcon &icon, QObject *parent)
@@ -47,8 +48,7 @@ void AntiquaSystemTray::setConnectionStatus(bool b) {
   }
 }
 
-void AntiquaSystemTray::setOrdersMessage(const QString &body) {
-  QString title = tr("Incoming Orders");
-  QIcon icon("://icons/filetypes.png");
-  showMessage(title, body, icon, (5 * 1000));
+void AntiquaSystemTray::setMessage(const QString &body) {
+  QString title(ANTIQUACRM_WINDOW_TITLE);
+  showMessage(title, body + "\n", icon(), (5 * 1000));
 }
