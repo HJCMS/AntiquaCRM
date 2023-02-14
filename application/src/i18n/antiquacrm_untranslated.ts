@@ -33,7 +33,7 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+98"/>
+        <location filename="../antiquaappl.cpp" line="+97"/>
         <source>Please close all editors before exiting!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -222,7 +222,7 @@
 <context>
     <name>AntiquaSystemTray</name>
     <message>
-        <location filename="../antiquasystemtray.cpp" line="+11"/>
+        <location filename="../antiquasystemtray.cpp" line="+12"/>
         <location line="+31"/>
         <source>Database connected.</source>
         <translation type="unfinished"></translation>
@@ -247,16 +247,11 @@
         <source>No Database conenction!</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location line="+6"/>
-        <source>Incoming Orders</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>AntiquaTabWidget</name>
     <message>
-        <location filename="../antiquatabwidget.cpp" line="+56"/>
+        <location filename="../antiquatabwidget.cpp" line="+60"/>
         <source>View and edit Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -332,7 +327,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>&apos;%1&apos; Editor is open!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2022,7 +2017,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+6"/>
-        <source>care of</source>
+        <source>c/o</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3218,6 +3213,11 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+31"/>
+        <source>Cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Scale</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3237,7 +3237,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+23"/>
         <source>archiv isn&apos;t readable!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3378,7 +3378,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ImageView</name>
     <message>
-        <location filename="../utils/imgedit/imageview.cpp" line="+28"/>
+        <location filename="../utils/imgedit/imageview.cpp" line="+30"/>
         <source>Right mouse button with mouse wheel to zoom the image!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6791,17 +6791,17 @@ Image - Article Id: %2</source>
 <context>
     <name>SalutationBox</name>
     <message>
-        <location filename="../widgets/salutationbox.cpp" line="+8"/>
+        <location filename="../widgets/salutationbox.cpp" line="+11"/>
         <source>Salutation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+14"/>
         <source>Without disclosures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+68"/>
         <source>a Title is required.</source>
         <translation type="unfinished"></translation>
     </message>

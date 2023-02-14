@@ -33,7 +33,7 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+98"/>
+        <location filename="../antiquaappl.cpp" line="+97"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie vor dem Beenden bitte alle Editoren!</translation>
     </message>
@@ -222,7 +222,7 @@
 <context>
     <name>AntiquaSystemTray</name>
     <message>
-        <location filename="../antiquasystemtray.cpp" line="+11"/>
+        <location filename="../antiquasystemtray.cpp" line="+12"/>
         <location line="+31"/>
         <source>Database connected.</source>
         <translation>Verbunden mit Datenbank.</translation>
@@ -247,16 +247,11 @@
         <source>No Database conenction!</source>
         <translation>Nicht mit Datenbank verbunden!</translation>
     </message>
-    <message>
-        <location line="+6"/>
-        <source>Incoming Orders</source>
-        <translation>Eingehende Bestellungen</translation>
-    </message>
 </context>
 <context>
     <name>AntiquaTabWidget</name>
     <message>
-        <location filename="../antiquatabwidget.cpp" line="+56"/>
+        <location filename="../antiquatabwidget.cpp" line="+60"/>
         <source>View and edit Books</source>
         <translation>Bücher anzeigen und bearbeiten</translation>
     </message>
@@ -332,7 +327,7 @@
         <translation>CD und Vinyl</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>&apos;%1&apos; Editor is open!</source>
         <translation>Der &apos;%1&apos; Editor ist geöffnet!</translation>
     </message>
@@ -2026,8 +2021,8 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>care of</source>
-        <translation>Wohnhaft bei</translation>
+        <source>c/o</source>
+        <translation></translation>
     </message>
     <message>
         <location line="+16"/>
@@ -3222,6 +3217,11 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+31"/>
+        <source>Cut</source>
+        <translation>Schneiden</translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Scale</source>
         <translation>Skalieren</translation>
     </message>
@@ -3241,7 +3241,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Abschließen</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+23"/>
         <source>archiv isn&apos;t readable!</source>
         <translation>Archiv ist nicht lesbar!</translation>
     </message>
@@ -3382,7 +3382,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ImageView</name>
     <message>
-        <location filename="../utils/imgedit/imageview.cpp" line="+28"/>
+        <location filename="../utils/imgedit/imageview.cpp" line="+30"/>
         <source>Right mouse button with mouse wheel to zoom the image!</source>
         <translation>Rechte Maustaste mit Mausrad zum Zoomen des Bildes verwenden!</translation>
     </message>
@@ -6797,17 +6797,17 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>SalutationBox</name>
     <message>
-        <location filename="../widgets/salutationbox.cpp" line="+8"/>
+        <location filename="../widgets/salutationbox.cpp" line="+11"/>
         <source>Salutation</source>
         <translation>Anrede</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+14"/>
         <source>Without disclosures</source>
         <translation>Keine Angaben</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+68"/>
         <source>a Title is required.</source>
         <translation>Eine Titelangabe ist erforderlich.</translation>
     </message>
