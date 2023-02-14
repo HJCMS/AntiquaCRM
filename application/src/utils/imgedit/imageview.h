@@ -11,14 +11,18 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QImage>
+#include <QMouseEvent>
 #include <QObject>
 #include <QPixmap>
+#include <QPointF>
 #include <QResizeEvent>
 #include <QSize>
 #include <QWheelEvent>
 #include <QWidget>
 
 #include "sourceinfo.h"
+
+class RubberBand;
 
 /**
  * @brief Bilder Vorschau
@@ -39,6 +43,8 @@ private:
   QGraphicsScene *m_scene;
   QGraphicsPixmapItem *m_pixmap;
   SourceInfo p_currentPreview;
+  QPoint p_startPoint;
+  RubberBand *m_rubberband;
 
   /**
    * @brief Maximale Bild Quellengröße
@@ -61,13 +67,19 @@ protected:
   /**
    * @brief Mit Mausrad Zoomen
    */
-  void wheelEvent(QWheelEvent *event) override;
+  void wheelEvent(QWheelEvent *) override;
 
   /**
    * @brief Bild auf Rahmen Skalieren
    * @warning Es muss immer ein Pixmap vorhanden sein sonst crasht es hier!
    */
-  void resizeEvent(QResizeEvent *event) override;
+  void resizeEvent(QResizeEvent *) override;
+
+  /**
+   * @brief Gummiband aktionen
+   */
+  void mousePressEvent(QMouseEvent *) override;
+  void mouseMoveEvent(QMouseEvent *) override;
 
 Q_SIGNALS:
   /**
@@ -113,6 +125,11 @@ public Q_SLOTS:
    * @brief Im Uhrzeigersinn um 90° drehen.
    */
   void rotate();
+
+  /**
+   * @brief Bild aus Rubberband zuscheinden!
+   */
+  void cutImage();
 
   /**
    * @brief Setz oder entfernt Modifizierung

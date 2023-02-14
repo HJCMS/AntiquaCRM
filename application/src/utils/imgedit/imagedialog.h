@@ -77,6 +77,7 @@ private:
    */
   QStatusBar *m_statusBar;
   QToolBar *m_toolBar;
+  QAction *ac_cut;
   QAction *ac_rotate;
   QAction *ac_scale;
   QAction *ac_save;

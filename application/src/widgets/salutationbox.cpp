@@ -3,6 +3,9 @@
 
 #include "salutationbox.h"
 
+#include <QJsonArray>
+#include <QJsonObject>
+
 SalutationBox::SalutationBox(QWidget *parent) : InputEdit{parent} {
   m_box = new AntiquaComboBox(this);
   m_box->setToolTip(tr("Salutation"));
@@ -10,7 +13,6 @@ SalutationBox::SalutationBox(QWidget *parent) : InputEdit{parent} {
   loadDataset();
 
   m_edit = new QLineEdit(this);
-  m_edit->setMaxLength(25);
   m_edit->setPlaceholderText(withoutDisclosures());
   m_box->setLineEdit(m_edit);
 
@@ -26,8 +28,13 @@ const QString SalutationBox::withoutDisclosures() {
 void SalutationBox::loadDataset() {
   m_box->clear();
   m_box->addItem(QString(), QString());
-  foreach (QString s, salutations()) {
-    m_box->addItem(s, s);
+  QMapIterator<QString, QString> it(salutations());
+  int i = 1;
+  while (it.hasNext()) {
+    it.next();
+    m_box->insertItem(i, it.key(), it.key());
+    m_box->setItemData(i, it.value(), Qt::ToolTipRole);
+    i++;
   }
 }
 
@@ -55,6 +62,9 @@ void SalutationBox::setFocus() {
 void SalutationBox::setProperties(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
+
+  if (field.length() > withoutDisclosures().length())
+    m_edit->setMaxLength(field.length());
 }
 
 const QVariant SalutationBox::value() {
@@ -82,22 +92,18 @@ const QString SalutationBox::info() { return m_box->toolTip(); }
 
 const QString SalutationBox::notes() { return tr("a Title is required."); }
 
-const QStringList SalutationBox::salutations() {
-  QStringList l;
-  l << "Dr.";
-  l << "Dr. Dr.";
-  l << "Dr. med.";
-  l << "Dr. phil.";
-  l << "Dr. rer. nat.";
-  l << "Dr. iur.";
-  l << "Dr. oec. publ.";
-  l << "Hofrat";
-  l << "Prof.";
-  l << "Prof. Dr.";
-  l << "Prof. Dr. Dr.";
-  l << "Univ. Prof.";
-  l << "Dipl. Ing.";
-  l << "Dipl.-HTL-Ing.";
-  l << "Dipl.-HLFL-Ing.";
-  return l;
+const QMap<QString, QString> SalutationBox::salutations() {
+  QMap<QString, QString> map;
+  AntiquaCRM::ASharedDataFiles files(AntiquaCRM::ASettings::getDataDir("json"));
+  QJsonObject obj = files.getJson("salutations").object();
+  QStringList lng = obj.keys();
+  if (lng.size() > 0) {
+    QJsonArray arr = obj.value(lng.first()).toArray();
+    for (int i = 0; i < arr.size(); i++) {
+      QJsonObject item = arr[i].toObject();
+      map.insert(item.value("title").toString(),
+                 item.value("describe").toString());
+    }
+  }
+  return map;
 }

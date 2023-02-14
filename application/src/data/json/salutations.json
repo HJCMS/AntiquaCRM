@@ -1,0 +1,22 @@
+{
+  "de":[
+    {"title":"Dr.","describe":"Person mit Doktorgrad"},
+    {"title":"Dr. Dr.","describe":"Person mit 2 Doktorgraden"},
+    {"title":"Dr. mult.","describe":"Abkürzend bei einer Person mit mindestens drei Doktorgraden."},
+    {"title":"Dr. h. c.","describe":"Ehrendoktorgrad (Doctor honoris causa)"},
+    {"title":"Dr. h. c. mult.","describe":"Abkürzend bei einer Person mit mindestens drei Doktorgraden."},
+    {"title":"Dr. e. h.","describe":"Ehrendoktorgrad (Doktor ehrenhalber)"},
+    {"title":"Ph. D.","describe":"Doktorgrad der Philosophie"},
+    {"title":"Dr. B. A.","describe":"Doktorgrad der Betriebswirtschaftslehre"},
+    {"title":"Prof.","describe":"Professur"},
+    {"title":"Prof. h. c.","describe":"Ehrenprofessur (Professur honoris causa)"},
+    {"title":"Prof. i. K.","describe":"Professur im Kirchendienst"},
+    {"title":"Prof. i. R.","describe":"Professur im Ruhestand"},
+    {"title":"Prof. Dr.","describe":"Professur mit Doktorgrad"},
+    {"title":"Prof. Dr. Dr.","describe":"Professur mit 2 Doktorgraden"},
+    {"title":"Prof. Dr. mult.","describe":"Professur mit mindestens drei Doktorgraden."},
+    {"title":"Univ.-Prof.","describe":"Universitätsprofessur"},
+    {"title":"Dipl.","describe":"Diplomiert"},
+    {"title":"Dipl. Ing.","describe":"Diplomiert im Ingenieurwesen"}
+  ]
+}

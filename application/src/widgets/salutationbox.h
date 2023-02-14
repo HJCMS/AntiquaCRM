@@ -8,6 +8,7 @@
 #include <AGlobal>
 #include <AntiquaInputEdit>
 #include <QLineEdit>
+#include <QMap>
 #include <QObject>
 #include <QWidget>
 
@@ -36,7 +37,7 @@ public:
   void setInfo(const QString &) override;
   const QString info() override;
   const QString notes() override;
-  static const QStringList salutations();
+  static const QMap<QString,QString> salutations();
 };
 
 #endif // ANTIQUACRM_SALUTATIONBOX_H

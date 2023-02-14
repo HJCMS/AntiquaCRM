@@ -6,6 +6,10 @@
 
 #include <AntiquaCRM>
 
+#ifndef ANTIQUA_TABCLOSE_CHECK
+#define ANTIQUA_TABCLOSE_CHECK true
+#endif
+
 AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
   setObjectName("window_tabwidget");
 
@@ -262,6 +266,7 @@ const QMap<QString, QString> AntiquaTabWidget::availableTabs() {
 }
 
 bool AntiquaTabWidget::beforeCloseAllTabs() {
+#if (ANTIQUA_TABCLOSE_CHECK == true)
   for (int t = 0; t < count(); t++) {
     Inventory *m_tab = tabWidget(t);
     QString title = m_tab->windowTitle();
@@ -271,6 +276,7 @@ bool AntiquaTabWidget::beforeCloseAllTabs() {
       return false;
     }
   }
+#endif
   return true;
 }
 

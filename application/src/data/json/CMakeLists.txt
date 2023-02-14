@@ -5,6 +5,7 @@ SET (json_data_FILES
  european_countries.json
  iso_countrycodes.json
  id3taglist.json
+ salutations.json
 )
 
 IF (CMAKE_HOST_WIN32)

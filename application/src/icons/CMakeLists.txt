@@ -4,6 +4,7 @@ SET (icons_FILES
 action_add.png
 action_cancel.png
 action_clear.png
+action_cut.png
 action_delivered.png
 action_ok.png
 action_quit.png

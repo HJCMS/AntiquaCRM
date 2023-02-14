@@ -53,6 +53,8 @@ ImageDialog::ImageDialog(int articleId, QWidget *parent)
   m_statusBar = new QStatusBar(this);
   m_statusBar->setObjectName("image_open_edit_statusbar");
   m_toolBar = new QToolBar(m_statusBar);
+  ac_cut = m_toolBar->addAction(QIcon(":icons/action_cut.png"), tr("Cut"));
+  m_toolBar->addSeparator();
   ac_scale = m_toolBar->addAction(QIcon(":icons/view_scale.png"), tr("Scale"));
   m_toolBar->addSeparator();
   ac_rotate = m_toolBar->addAction(tr("Rotate"));
@@ -69,10 +71,12 @@ ImageDialog::ImageDialog(int articleId, QWidget *parent)
   layout->setStretch(0, 1);
   setLayout(layout);
 
+  connect(ac_cut, SIGNAL(triggered()), m_view, SLOT(cutImage()));
   connect(ac_rotate, SIGNAL(triggered()), m_view, SLOT(rotate()));
   connect(ac_scale, SIGNAL(triggered()), m_view, SLOT(zoomReset()));
   connect(ac_save, SIGNAL(triggered()), SLOT(save()));
   connect(ac_close, SIGNAL(triggered()), SLOT(accept()));
+
   connect(m_imageSelecter, SIGNAL(sendSelection(const SourceInfo &)),
           SLOT(fileChanged(const SourceInfo &)));
   connect(m_imageSelecter, SIGNAL(sendImportImage(const QString &)),

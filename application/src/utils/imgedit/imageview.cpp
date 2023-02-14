@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "imageview.h"
+#include "rubberband.h"
 #include "sourceinfo.h"
 
 #ifdef ANTIQUA_DEVELOPEMENT
@@ -23,14 +24,19 @@ ImageView::ImageView(QSize maxsize, QWidget *parent)
   setObjectName("ImagePreview");
   setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
   setBackgroundRole(QPalette::Base);
+  // setRubberBandSelectionMode(Qt::ContainsItemBoundingRect);
   setCacheMode(QGraphicsView::CacheNone);
   setMinimumWidth((p_max.width() / 2));
   setToolTip(tr("Right mouse button with mouse wheel to zoom the image!"));
   m_sql = new AntiquaCRM::ASqlCore(this);
+  m_rubberband = nullptr;
 
   m_scene = new QGraphicsScene(this);
   /** @warning Lese die ImageView::clear() Dokumentation */
   clear();
+
+  //  connect(this, SIGNAL(rubberBandChanged(QRect, QPointF, QPointF)),
+  //          SLOT(rubberChanged(QRect, QPointF, QPointF)));
 }
 
 const QSize ImageView::maxSourceSize() const {
@@ -62,6 +68,25 @@ void ImageView::resizeEvent(QResizeEvent *event) {
     fitInView(m_pixmap, Qt::KeepAspectRatio);
   }
   QGraphicsView::resizeEvent(event);
+}
+
+void ImageView::mousePressEvent(QMouseEvent *event) {
+  if (event->button() == Qt::LeftButton) {
+    if (m_rubberband == nullptr) {
+      m_rubberband = new RubberBand(this);
+    }
+    p_startPoint = event->pos();
+    m_rubberband->setGeometry(QRect(p_startPoint, QSize(1, 1)));
+    m_rubberband->show();
+  }
+  QGraphicsView::mousePressEvent(event);
+}
+
+void ImageView::mouseMoveEvent(QMouseEvent *event) {
+  if (m_rubberband != nullptr)
+    m_rubberband->setGeometry(QRect(p_startPoint, event->pos()));
+
+  QGraphicsView::mouseMoveEvent(event);
 }
 
 void ImageView::setImage(const QImage &img) {
@@ -127,6 +152,25 @@ void ImageView::rotate() {
 
   setImage(out);
   update();
+}
+
+void ImageView::cutImage() {
+  if (m_rubberband != nullptr) {
+    m_rubberband->hide();
+    QRect fromRect(p_startPoint, m_rubberband->size());
+    QRectF toRect = mapToScene(fromRect).boundingRect().normalized();
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << Qt::endl // Debug
+             << " Rubber-Rect:" << fromRect << Qt::endl
+             << " Source-Rect:" << m_pixmap->pixmap().rect() << Qt::endl
+             << " Target-Rect:" << toRect.toRect() << Qt::endl;
+#endif
+    QPixmap p_pixmap = m_pixmap->pixmap().copy(toRect.toRect());
+    m_scene->clear();
+    m_pixmap = m_scene->addPixmap(p_pixmap);
+    setSceneRect(p_pixmap.rect());
+    setScene(m_scene);
+  }
 }
 
 void ImageView::setModified(bool b) {

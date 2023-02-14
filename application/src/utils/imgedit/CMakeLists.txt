@@ -18,6 +18,7 @@ SET (subproject_SOURCES
   imageview.cpp
   imageselecter.cpp
   imagelistview.cpp
+  rubberband.cpp
   sourceinfo.cpp
   imagetoolbar.cpp
 )
@@ -27,6 +28,7 @@ SET (subproject_HEADERS
   imageview.h
   imageselecter.h
   imagelistview.h
+  rubberband.h
   sourceinfo.h
   imagetoolbar.h
   AntiquaImgEdit
