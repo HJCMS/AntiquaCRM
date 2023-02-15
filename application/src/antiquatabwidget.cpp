@@ -6,8 +6,10 @@
 
 #include <AntiquaCRM>
 
-#ifndef ANTIQUA_TABCLOSE_CHECK
-#define ANTIQUA_TABCLOSE_CHECK true
+#ifdef ANTIQUA_DEVELOPEMENT
+static bool __tabs_close_check = false;
+#else
+static bool __tabs_close_check = true;
 #endif
 
 AntiquaTabWidget::AntiquaTabWidget(QMainWindow *parent) : QTabWidget{parent} {
@@ -266,17 +268,17 @@ const QMap<QString, QString> AntiquaTabWidget::availableTabs() {
 }
 
 bool AntiquaTabWidget::beforeCloseAllTabs() {
-#if (ANTIQUA_TABCLOSE_CHECK == true)
-  for (int t = 0; t < count(); t++) {
-    Inventory *m_tab = tabWidget(t);
-    QString title = m_tab->windowTitle();
-    if (m_tab->currentView() == Inventory::ViewIndex::EditorView) {
-      setCurrentIndex(t);
-      emit sendWarnMessage(tr("'%1' Editor is open!").arg(title));
-      return false;
+  if (__tabs_close_check) {
+    for (int t = 0; t < count(); t++) {
+      Inventory *m_tab = tabWidget(t);
+      QString title = m_tab->windowTitle();
+      if (m_tab->currentView() == Inventory::ViewIndex::EditorView) {
+        setCurrentIndex(t);
+        emit sendWarnMessage(tr("'%1' Editor is open!").arg(title));
+        return false;
+      }
     }
   }
-#endif
   return true;
 }
 

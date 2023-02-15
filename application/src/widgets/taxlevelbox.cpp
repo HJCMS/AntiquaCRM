@@ -15,7 +15,7 @@ TaxLevelBox::TaxLevelBox(QWidget *parent) : InputEdit{parent} {
   m_box->setToolTip(tr("Tax"));
   m_box->insertItem(0, QString::number(vat2) + "% " + tr("Reduced"), vat2);
   m_box->insertItem(1, QString::number(vat1) + "% " + tr("Normal"), vat1);
-  m_box->insertItem(2, tr("No VAT"), 0);
+  m_box->insertItem(2, tr("without VAT"), 0);
   m_layout->addWidget(m_box);
   setModified(false);
   setRequired(true);

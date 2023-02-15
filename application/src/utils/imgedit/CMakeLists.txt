@@ -16,6 +16,7 @@ SET (subproject_LINKER
 SET (subproject_SOURCES
   imagedialog.cpp
   imageview.cpp
+  imageactionsbar.cpp
   imageselecter.cpp
   imagelistview.cpp
   rubberband.cpp
@@ -26,6 +27,7 @@ SET (subproject_SOURCES
 SET (subproject_HEADERS
   imagedialog.h
   imageview.h
+  imageactionsbar.h
   imageselecter.h
   imagelistview.h
   rubberband.h

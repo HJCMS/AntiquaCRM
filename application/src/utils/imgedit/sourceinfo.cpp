@@ -4,21 +4,25 @@
 #include "sourceinfo.h"
 
 #include <AntiquaCRM>
+#include <QSize>
 
 SourceInfo::SourceInfo(const QString &target) : QFileInfo{} {
   p_fileId = -1;
   p_target = target;
+  p_pixmap = QPixmap();
 }
 
 SourceInfo::SourceInfo(const QFileInfo &other) : QFileInfo{other} {
   p_fileId = -1;
   p_target = other.path();
+  p_pixmap = QPixmap();
   setFile(other.filePath());
 }
 
 SourceInfo::SourceInfo(const SourceInfo &other) : QFileInfo{other.filePath()} {
   p_fileId = other.p_fileId;
   p_target = other.p_target;
+  p_pixmap = other.p_pixmap;
   setFile(other.filePath());
 }
 
@@ -28,6 +32,7 @@ SourceInfo &SourceInfo::operator=(const SourceInfo &other) {
 
   p_fileId = other.p_fileId;
   p_target = other.p_target;
+  p_pixmap = other.p_pixmap;
   setFile(other.filePath());
   return *this;
 }
@@ -38,6 +43,8 @@ bool SourceInfo::isValidSource() const {
   }
   return false;
 }
+
+bool SourceInfo::isOriginal() { return p_pixmap.isNull(); };
 
 void SourceInfo::setFileId(qint64 id) { p_fileId = id; }
 
@@ -54,6 +61,15 @@ void SourceInfo::setTarget(const QDir &dest) {
   p_target = dest.path();
 }
 
-const QString SourceInfo::getTarget() const {
-  return p_target;
+const QString SourceInfo::getTarget() const { return p_target; }
+
+void SourceInfo::setPixmap(const QPixmap &pix) {
+  if (pix.isNull() || pix.height() < 10 || pix.width() < 10)
+    return;
+
+  p_pixmap = pix;
 }
+
+const QPixmap SourceInfo::getPixmap() { return p_pixmap; }
+
+void SourceInfo::removePixmap() { p_pixmap = QPixmap(); }

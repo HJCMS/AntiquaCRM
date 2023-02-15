@@ -16,27 +16,27 @@
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
 #include <QImageReader>
-#include <QPixmap>
-#include <QtMath>
 
 ImageView::ImageView(QSize maxsize, QWidget *parent)
     : QGraphicsView(parent), p_max(maxsize), p_format("jpeg") {
   setObjectName("ImagePreview");
   setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
   setBackgroundRole(QPalette::Base);
-  // setRubberBandSelectionMode(Qt::ContainsItemBoundingRect);
   setCacheMode(QGraphicsView::CacheNone);
   setMinimumWidth((p_max.width() / 2));
   setToolTip(tr("Right mouse button with mouse wheel to zoom the image!"));
   m_sql = new AntiquaCRM::ASqlCore(this);
   m_rubberband = nullptr;
+  m_scene = new QGraphicsScene(rect(), this);
+  setPixmapItem();
+  setModified(false);
+}
 
-  m_scene = new QGraphicsScene(this);
-  /** @warning Lese die ImageView::clear() Dokumentation */
-  clear();
-
-  //  connect(this, SIGNAL(rubberBandChanged(QRect, QPointF, QPointF)),
-  //          SLOT(rubberChanged(QRect, QPointF, QPointF)));
+void ImageView::setPixmapItem(const QPixmap &pixmap) {
+  m_scene->clear();
+  m_pixmapItem = m_scene->addPixmap(pixmap);
+  setSceneRect(pixmap.rect());
+  setScene(m_scene);
 }
 
 const QSize ImageView::maxSourceSize() const {
@@ -58,14 +58,24 @@ const QImage ImageView::toDatabaseSize(const QImage &img) {
   return image.scaled(p_max, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 }
 
+const QRect ImageView::sourceRect() const {
+  if (m_pixmapItem == nullptr)
+    return QRect();
+
+  if (m_pixmapItem->pixmap().isNull())
+    return QRect();
+
+  return m_pixmapItem->pixmap().rect();
+}
+
 void ImageView::wheelEvent(QWheelEvent *event) {
   if (event->buttons() & Qt::RightButton)
     zoomWith(qPow(1.2, event->angleDelta().y() / 240.0));
 }
 
 void ImageView::resizeEvent(QResizeEvent *event) {
-  if (m_pixmap != nullptr && !m_pixmap->pixmap().isNull()) {
-    fitInView(m_pixmap, Qt::KeepAspectRatio);
+  if (m_pixmapItem != nullptr && !m_pixmapItem->pixmap().isNull()) {
+    fitInView(m_pixmapItem, Qt::KeepAspectRatio);
   }
   QGraphicsView::resizeEvent(event);
 }
@@ -89,21 +99,28 @@ void ImageView::mouseMoveEvent(QMouseEvent *event) {
   QGraphicsView::mouseMoveEvent(event);
 }
 
+void ImageView::setPixmap(const QPixmap &pixmap) {
+  setPixmapItem(pixmap);
+  p_pixmapCache.insert("source", pixmap);
+  emit sendImageLoadSuccess(true);
+}
+
 void ImageView::setImage(const QImage &img) {
-  QPixmap p = QPixmap::fromImage(img);
-  if (p.isNull()) {
+  QPixmap sp = QPixmap::fromImage(img);
+  if (sp.isNull()) {
     emit sendImageLoadSuccess(false);
     return;
   }
 
   qreal w = qMax(maxSourceSize().width(), p_max.width());
   qreal h = qMax(maxSourceSize().height(), p_max.height());
-  p_pixmap = p.scaled(w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-  m_scene->clear();
-  m_pixmap = m_scene->addPixmap(p_pixmap);
-  setSceneRect(p_pixmap.rect());
-  setScene(m_scene);
-  emit sendImageLoadSuccess(true);
+  QPixmap op = sp.scaled(w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+  if (op.isNull()) {
+    op.detach();
+    return;
+  }
+  sp.detach();
+  setPixmap(op);
 }
 
 void ImageView::setImageFile(const SourceInfo &file) {
@@ -133,7 +150,7 @@ void ImageView::zoomIn() { zoomWith(2); }
 
 void ImageView::zoomOut() { zoomWith(0.5); }
 
-void ImageView::zoomReset() {
+void ImageView::adjust() {
   if (!qFuzzyCompare(transform().m11(), qreal(1))) {
     resetTransform();
   }
@@ -154,52 +171,78 @@ void ImageView::rotate() {
   update();
 }
 
-void ImageView::cutImage() {
-  if (m_rubberband != nullptr) {
-    m_rubberband->hide();
+void ImageView::cutting() {
+  if (m_rubberband != nullptr && m_rubberband->isValid()) {
     QRect fromRect(p_startPoint, m_rubberband->size());
     QRectF toRect = mapToScene(fromRect).boundingRect().normalized();
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << Qt::endl // Debug
-             << " Rubber-Rect:" << fromRect << Qt::endl
-             << " Source-Rect:" << m_pixmap->pixmap().rect() << Qt::endl
-             << " Target-Rect:" << toRect.toRect() << Qt::endl;
-#endif
-    QPixmap p_pixmap = m_pixmap->pixmap().copy(toRect.toRect());
-    m_scene->clear();
-    m_pixmap = m_scene->addPixmap(p_pixmap);
-    setSceneRect(p_pixmap.rect());
-    setScene(m_scene);
+    QPixmap _pixmap = m_pixmapItem->pixmap().copy(toRect.toRect());
+    if (_pixmap.isNull())
+      return;
+
+    p_pixmapCache.insert("scaled", _pixmap);
+    setPixmapItem(_pixmap);
+    _pixmap.detach();
+
+    m_rubberband->reset();
   }
+}
+
+void ImageView::reset() {
+  QPixmap _pixmap;
+  if (p_pixmapCache.find("source", &_pixmap)) {
+    setPixmap(_pixmap);
+  } else if (p_currentPreview.isValidSource()) {
+    setImageFile(p_currentPreview);
+  }
+  if (m_rubberband != nullptr && m_rubberband->isValid())
+    m_rubberband->reset();
 }
 
 void ImageView::setModified(bool b) {
-  if (modified != b) {
-    modified = b;
-    emit hasModified(true);
-  } else {
-    emit hasModified(false);
-  }
+  modified = b;
+  emit hasModified(b);
 }
 
-void ImageView::clear() {
-  m_scene->clear();
-  m_pixmap = m_scene->addPixmap(QPixmap(0, 0));
-}
+void ImageView::clear() { setPixmapItem(); }
 
 bool ImageView::saveImageTo(const SourceInfo &info) {
   QDir destDir(info.getTarget());
-  if (!destDir.exists() || !info.isValidSource() || p_pixmap.isNull())
-    return false;
+  if (!destDir.exists() || !info.isValidSource())
+    return false; // Bei Standardfehlern hier aussteigen!
 
-  qreal w = qMax(maxSourceSize().width(), p_pixmap.size().width());
-  qreal h = qMax(maxSourceSize().height(), p_pixmap.size().height());
-  QPixmap p = p_pixmap.scaled(w, h, // Speicherplatz reduzieren
-                              Qt::KeepAspectRatio, Qt::SmoothTransformation);
+  /**
+   * @brief Bildspeicher einlesen
+   * @list Temporäres befüllen in dieser Reihenfolge!
+   *  @li 1) Existiert eine Bearbeitete Version?
+   *  @li 2) Auf das Quellbild zurückgreifen!
+   *  @li 3) Fehler und aussteigen!
+   */
+  QPixmap _pixmap, _temp;
+  if (p_pixmapCache.find("scaled", &_temp)) {
+    _pixmap = _temp;
+  } else if (p_pixmapCache.find("source", &_temp)) {
+    _pixmap = _temp;
+  } else {
+    qWarning("Pixmap - not found!");
+    return false;
+  }
+  _temp.detach();
+
+  if (_pixmap.isNull()) {
+    qFatal("ImageView::saveImageTo - empty pixmap detected!");
+    return false;
+  }
+
+  qreal w = qMax(maxSourceSize().width(), _pixmap.size().width());
+  qreal h = qMax(maxSourceSize().height(), _pixmap.size().height());
+  QPixmap p = _pixmap.scaled(w, h, // Speicherplatz reduzieren
+                             Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
   QImage img = p.toImage();
   if (img.isNull())
     return false;
+
+  _pixmap.detach();
 
   QString filename(info.imageBaseName(info.getFileId()));
   filename.append(".jpg");
@@ -267,7 +310,6 @@ bool ImageView::storeInDatabase(qint64 articleId) {
   QString sql("SELECT im_id FROM inventory_images WHERE im_id=");
   sql.append(strArticleId);
   sql.append(" LIMIT 1;");
-  // Aufräumen
   rawimg.clear();
 
   QSqlQuery q = m_sql->query(sql);
@@ -326,13 +368,13 @@ bool ImageView::removeFromDatabase(qint64 articleId) {
 }
 
 const QImage ImageView::getImage() {
-  if (m_pixmap == nullptr)
+  if (m_pixmapItem == nullptr)
     return QImage();
 
-  if (m_pixmap->pixmap().isNull())
+  if (m_pixmapItem->pixmap().isNull())
     return QImage();
 
-  return m_pixmap->pixmap().toImage();
+  return m_pixmapItem->pixmap().toImage();
 }
 
 const SourceInfo ImageView::getSource() { return p_currentPreview; }
@@ -340,7 +382,7 @@ const SourceInfo ImageView::getSource() { return p_currentPreview; }
 bool ImageView::isModified() { return modified; }
 
 ImageView::~ImageView() {
-  m_pixmap = m_scene->addPixmap(QPixmap(0, 0));
-  p_pixmap.detach();
+  setPixmapItem(QPixmap(0, 0));
+  p_pixmapCache.clear();
   m_scene->deleteLater();
 }

@@ -251,7 +251,7 @@
 <context>
     <name>AntiquaTabWidget</name>
     <message>
-        <location filename="../antiquatabwidget.cpp" line="+60"/>
+        <location filename="../antiquatabwidget.cpp" line="+62"/>
         <source>View and edit Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3205,49 +3205,52 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
-    <name>ImageDialog</name>
+    <name>ImageActionsBar</name>
     <message>
-        <location filename="../utils/imgedit/imagedialog.cpp" line="+25"/>
-        <source>Picture Editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Cut</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Scale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Rotate</source>
+        <location filename="../utils/imgedit/imageactionsbar.cpp" line="+10"/>
+        <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
+        <source>Cutting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Scale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+5"/>
         <source>Finish</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>ImageDialog</name>
     <message>
-        <location line="+23"/>
+        <location filename="../utils/imgedit/imagedialog.cpp" line="+26"/>
+        <source>Picture Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+60"/>
         <source>archiv isn&apos;t readable!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+38"/>
-        <source>no source image exists!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
+        <location line="+42"/>
         <source>&lt;p&gt;Do you want to copy this Image into the Picture Archiv?&lt;/p&gt;&lt;b&gt;Note:&lt;/b&gt; This will replace Images with identical Article Filename!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3262,22 +3265,37 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+19"/>
         <source>copy image in progress ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>successfully - image to archive copied</source>
+        <source>Successfully moved Image to archive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>warning - image not copied</source>
+        <location line="+7"/>
+        <source>Successfully copied Image to archive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+90"/>
+        <source>No source image, falling back to database preview!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-95"/>
+        <source>Image not moved!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Image not copied!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Image saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3290,11 +3308,6 @@ Image - Article Id: %2</source>
     <message>
         <location line="+7"/>
         <source>Please use the Finish button!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+62"/>
-        <source>image from database!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3378,7 +3391,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ImageView</name>
     <message>
-        <location filename="../utils/imgedit/imageview.cpp" line="+30"/>
+        <location filename="../utils/imgedit/imageview.cpp" line="+27"/>
         <source>Right mouse button with mouse wheel to zoom the image!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3473,22 +3486,22 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+10"/>
-        <source>Invoice-ID</source>
+        <source>Invoice No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Order-ID</source>
+        <source>Order No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Customer-ID</source>
+        <source>Costumer No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Date</source>
+        <source>Due Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7587,7 +7600,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>No VAT</source>
+        <source>without VAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

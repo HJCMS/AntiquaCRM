@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "imagedialog.h"
+#include "imageactionsbar.h"
 #include "imageselecter.h"
 #include "imageview.h"
 #include "sourceinfo.h"
@@ -50,39 +51,34 @@ ImageDialog::ImageDialog(int articleId, QWidget *parent)
   // add splitter
   layout->insertWidget(0, m_splitter);
 
+  // add tool/statusbar
   m_statusBar = new QStatusBar(this);
   m_statusBar->setObjectName("image_open_edit_statusbar");
-  m_toolBar = new QToolBar(m_statusBar);
-  ac_cut = m_toolBar->addAction(QIcon(":icons/action_cut.png"), tr("Cut"));
-  m_toolBar->addSeparator();
-  ac_scale = m_toolBar->addAction(QIcon(":icons/view_scale.png"), tr("Scale"));
-  m_toolBar->addSeparator();
-  ac_rotate = m_toolBar->addAction(tr("Rotate"));
-  ac_rotate->setIcon(QIcon(":icons/view_rotate_right.png"));
-  m_toolBar->addSeparator();
-  m_toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-  ac_save = m_toolBar->addAction(QIcon(":icons/action_save.png"), tr("Save"));
-  m_toolBar->addSeparator();
-  ac_close =
-      m_toolBar->addAction(QIcon(":icons/action_quit.png"), tr("Finish"));
-  m_statusBar->addPermanentWidget(m_toolBar);
-
+  m_actionsBar = new ImageActionsBar(m_statusBar);
+  m_statusBar->addPermanentWidget(m_actionsBar);
   layout->insertWidget(1, m_statusBar);
   layout->setStretch(0, 1);
   setLayout(layout);
 
-  connect(ac_cut, SIGNAL(triggered()), m_view, SLOT(cutImage()));
-  connect(ac_rotate, SIGNAL(triggered()), m_view, SLOT(rotate()));
-  connect(ac_scale, SIGNAL(triggered()), m_view, SLOT(zoomReset()));
-  connect(ac_save, SIGNAL(triggered()), SLOT(save()));
-  connect(ac_close, SIGNAL(triggered()), SLOT(accept()));
-
+  // Signals::ImageSelecter
   connect(m_imageSelecter, SIGNAL(sendSelection(const SourceInfo &)),
           SLOT(fileChanged(const SourceInfo &)));
   connect(m_imageSelecter, SIGNAL(sendImportImage(const QString &)),
           SLOT(setImageImport(const QString &)));
   connect(m_imageSelecter, SIGNAL(sendStatusMessage(const QString &)),
           SLOT(notifyStatus(const QString &)));
+
+  // Signals::ImageView
+  connect(m_view, SIGNAL(sendImageLoadSuccess(bool)), m_actionsBar,
+          SLOT(enableCustomActions(bool)));
+
+  // Signals::ActionsBars
+  connect(m_actionsBar, SIGNAL(sendReset()), m_view, SLOT(reset()));
+  connect(m_actionsBar, SIGNAL(sendCutting()), m_view, SLOT(cutting()));
+  connect(m_actionsBar, SIGNAL(sendRotate()), m_view, SLOT(rotate()));
+  connect(m_actionsBar, SIGNAL(sendAdjust()), m_view, SLOT(adjust()));
+  connect(m_actionsBar, SIGNAL(sendSave()), SLOT(save()));
+  connect(m_actionsBar, SIGNAL(sendAccept()), SLOT(accept()));
 }
 
 bool ImageDialog::findSourceImage() {
@@ -109,12 +105,8 @@ bool ImageDialog::findSourceImage() {
     found << f.filePath();
   }
 
-  if (found.size() < 1) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << basePath << search << found;
-#endif
+  if (found.size() < 1)
     return false;
-  }
 
   SourceInfo src(basePath);
   src.setFile(found.first());
@@ -124,11 +116,6 @@ bool ImageDialog::findSourceImage() {
     m_imageSelecter->setSelection(src);
     m_view->setImageFile(src);
     return true;
-  } else {
-    notifyStatus(tr("no source image exists!"));
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << "findSourceImage SourceInfo" << src;
-#endif
   }
   return false;
 }
@@ -168,29 +155,35 @@ void ImageDialog::save() {
 
   SourceInfo info = m_view->getSource();
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << "Image Save Info" << info // Info
-           << info.isValidSource()      // Valid
-           << isImageFromArchive(info)  // Archiv
-           << m_view->getSource().getTarget();
+  qDebug() << "SourceFileId" << info.getFileId() << Qt::endl
+           << "isValid Source:" << info.isValidSource() << Qt::endl
+           << "get from Archiv:" << isImageFromArchive(info) << Qt::endl
+           << "Destination:" << m_view->getSource().getTarget();
 #endif
 
-  if (info.isValidSource() && !isImageFromArchive(info)) {
-    qInfo("image about to copy");
-    if (askToCopyFile()) {
-      notifyStatus(tr("copy image in progress ..."));
-      if (m_view->saveImageTo(info)) {
-        notifyStatus(tr("successfully - image to archive copied"));
-      } else {
-        notifyStatus(tr("warning - image not copied"));
-        qWarning("image copy failed");
-      }
+  if (!info.isValidSource()) {
+    qWarning("ImageView::Invalid sourceinfo object");
+    return;
+  }
+
+  if (isImageFromArchive(info) && askToCopyFile()) {
+    // Überschreiben
+    notifyStatus(tr("copy image in progress ..."));
+    if (m_view->saveImageTo(info)) {
+      notifyStatus(tr("Successfully moved Image to archive."));
+    } else {
+      notifyStatus(tr("Image not moved!"));
+      qWarning("image override failed");
+    }
+  } else {
+    if (m_view->saveImageTo(info)) {
+      notifyStatus(tr("Successfully copied Image to archive."));
+    } else {
+      notifyStatus(tr("Image not copied!"));
+      qWarning("image copy failed");
     }
   }
-#ifdef ANTIQUA_DEVELOPEMENT
-  else {
-    qDebug() << "Image Copy Failed" << info;
-  }
-#endif
+
   // In Datenbank Speichern!
   if (m_view->storeInDatabase(p_articleId))
     notifyStatus(tr("Image saved successfully!"));
@@ -259,11 +252,11 @@ int ImageDialog::exec() {
     qWarning("No Article number set, image edit aborted!");
     return QDialog::Rejected;
   }
+
   p_archiv = getDefaultImagePath();
   p_savePath = getSavePath();
   m_imageSelecter->setDirectory(p_archiv.path());
-  // old stuff
-  config->remove("imaging");
+
   if (config->contains("dialog/imaging/geometry")) {
     config->beginGroup("dialog/imaging");
     restoreGeometry(config->value("geometry").toByteArray());
@@ -273,9 +266,9 @@ int ImageDialog::exec() {
     config->endGroup();
   }
 
-  if (!findSourceImage()) {
-    if (m_view->readFromDatabase(p_articleId))
-      notifyStatus(tr("image from database!"));
+  if (!findSourceImage() && m_view->readFromDatabase(p_articleId)) {
+    notifyStatus(tr("No source image, falling back to database preview!"));
+    m_actionsBar->enableCustomActions(false);
   }
 
   return QDialog::exec();

@@ -14,6 +14,7 @@
 #include <QMouseEvent>
 #include <QObject>
 #include <QPixmap>
+#include <QPixmapCache>
 #include <QPointF>
 #include <QResizeEvent>
 #include <QSize>
@@ -39,12 +40,22 @@ private:
   AntiquaCRM::ASqlCore *m_sql;
   const QSize p_max;
   const QByteArray p_format;
-  QPixmap p_pixmap;
+  QPixmapCache p_pixmapCache;
   QGraphicsScene *m_scene;
-  QGraphicsPixmapItem *m_pixmap;
+  QGraphicsPixmapItem *m_pixmapItem;
   SourceInfo p_currentPreview;
   QPoint p_startPoint;
   RubberBand *m_rubberband;
+
+  /**
+   * @brief Pixmap in Scene einfügen!
+   * @warning resizeEvent();
+   * Es gibt keine Möglichkeit einen QGraphicsPixmapItem auf Inhalt zu prüfen
+   * ohne das es crashen würde. Deshalb gehe ich hin und füge ein leeres
+   * QPixmap(0,0) im Konstuktor und bei clear() ein. Im resizeEvent() kann ich
+   * damit auf m_pixmap->pixmap().isNull() prüfen.
+   */
+  void setPixmapItem(const QPixmap &pixmap = QPixmap(0, 0));
 
   /**
    * @brief Maximale Bild Quellengröße
@@ -62,6 +73,11 @@ private:
    * Größer als @b p_max ist.
    */
   const QImage toDatabaseSize(const QImage &img);
+
+  /**
+   * @brief Dimensionen des aktuellen Bildinhalts!
+   */
+  const QRect sourceRect() const;
 
 protected:
   /**
@@ -103,7 +119,8 @@ public Q_SLOTS:
   /**
    * @brief Bild in die Ansicht einfügen!
    */
-  void setImage(const QImage &img);
+  void setPixmap(const QPixmap &);
+  void setImage(const QImage &);
 
   /**
    * @brief Bild in die Ansicht einfügen!
@@ -119,7 +136,7 @@ public Q_SLOTS:
 
   void zoomIn();
   void zoomOut();
-  void zoomReset();
+  void adjust();
 
   /**
    * @brief Im Uhrzeigersinn um 90° drehen.
@@ -129,7 +146,12 @@ public Q_SLOTS:
   /**
    * @brief Bild aus Rubberband zuscheinden!
    */
-  void cutImage();
+  void cutting();
+
+  /**
+   * @brief Original neu laden!
+   */
+  void reset();
 
   /**
    * @brief Setz oder entfernt Modifizierung
@@ -137,12 +159,7 @@ public Q_SLOTS:
   Q_INVOKABLE void setModified(bool b);
 
   /**
-   * @brief Szene leeren und ein Leeres Pixmap einfügen!
-   * @warning resizeEvent();
-   * @note Es gibt keine Möglichkeit einen QGraphicsPixmapItem auf Inhalt zu
-   * prüfen ohne das es crashen würde. Deshalb gehe ich hin und füge ein leeres
-   * QPixmap(0,0) beim start und nach jedem clear() ein.
-   * Im resizeEvent() kann ich damit auf m_pixmap->pixmap().isNull() prüfen.
+   * @brief Scene reseten.
    */
   void clear();
 

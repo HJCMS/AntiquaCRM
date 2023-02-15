@@ -43,12 +43,9 @@ void RubberBand::paintEvent(QPaintEvent *event) {
   sp.drawControl(QStyle::CE_RubberBand, styleOption());
 }
 
-bool RubberBand::scalability() {
-  if (size().width() & 1)
-    return false;
-
-  if (size().height() & 1)
-    return false;
-
-  return true;
+void RubberBand::reset() {
+  setGeometry(QRect(-1, -1, 0, 0));
+  hide();
 }
+
+bool RubberBand::isValid() { return !rect().isEmpty(); }

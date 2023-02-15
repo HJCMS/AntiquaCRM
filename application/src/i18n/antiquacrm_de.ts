@@ -251,7 +251,7 @@
 <context>
     <name>AntiquaTabWidget</name>
     <message>
-        <location filename="../antiquatabwidget.cpp" line="+60"/>
+        <location filename="../antiquatabwidget.cpp" line="+62"/>
         <source>View and edit Books</source>
         <translation>Bücher anzeigen und bearbeiten</translation>
     </message>
@@ -626,7 +626,7 @@
     <message>
         <location line="+6"/>
         <source>incl. vat</source>
-        <translation>inkl. MwSt</translation>
+        <translation>inkl. USt</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -1261,7 +1261,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+6"/>
         <source>incl. vat</source>
-        <translation>inkl. MwSt</translation>
+        <translation>inkl. USt</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -3083,12 +3083,12 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+10"/>
         <source>VAT (normal)</source>
-        <translation>MwSt (Standard)</translation>
+        <translation>USt (Standard)</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>VAT (reduced)</source>
-        <translation>MwSt (Reduziert)</translation>
+        <translation>USt (Reduziert)</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -3209,49 +3209,52 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
-    <name>ImageDialog</name>
+    <name>ImageActionsBar</name>
     <message>
-        <location filename="../utils/imgedit/imagedialog.cpp" line="+25"/>
-        <source>Picture Editor</source>
-        <translation>Bild-Editor</translation>
+        <location filename="../utils/imgedit/imageactionsbar.cpp" line="+10"/>
+        <source>Reset</source>
+        <translation>Zurücksetzen</translation>
     </message>
     <message>
-        <location line="+31"/>
-        <source>Cut</source>
-        <translation>Schneiden</translation>
+        <location line="+4"/>
+        <source>Cutting</source>
+        <translation>Zuschneiden</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Scale</source>
         <translation>Skalieren</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Rotate</source>
         <translation>Drehen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+5"/>
         <source>Finish</source>
         <translation>Abschließen</translation>
     </message>
+</context>
+<context>
+    <name>ImageDialog</name>
     <message>
-        <location line="+23"/>
+        <location filename="../utils/imgedit/imagedialog.cpp" line="+26"/>
+        <source>Picture Editor</source>
+        <translation>Bild-Editor</translation>
+    </message>
+    <message>
+        <location line="+60"/>
         <source>archiv isn&apos;t readable!</source>
         <translation>Archiv ist nicht lesbar!</translation>
     </message>
     <message>
-        <location line="+38"/>
-        <source>no source image exists!</source>
-        <translation>Kein Quellbild vorhanden!</translation>
-    </message>
-    <message>
-        <location line="+13"/>
+        <location line="+42"/>
         <source>&lt;p&gt;Do you want to copy this Image into the Picture Archiv?&lt;/p&gt;&lt;b&gt;Note:&lt;/b&gt; This will replace Images with identical Article Filename!</source>
         <translation>&lt;p&gt;Möchten Sie dieses Bild in das Bildarchiv kopieren?&lt;/p&gt;&lt;b&gt;Hinweis:&lt;/b&gt; Dadurch werden Bilder mit identischem Artikel-Dateinamen ersetzt!</translation>
     </message>
@@ -3266,22 +3269,37 @@ Bild - Artikel Nr: %2</translation>
         <translation>kein gültiges Bild gefunden</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+19"/>
         <source>copy image in progress ...</source>
         <translation>Bild kopieren läuft ...</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>successfully - image to archive copied</source>
-        <translation>Bild - Erfolgreich in das Archiv kopiert</translation>
+        <source>Successfully moved Image to archive.</source>
+        <translation>Bild erfolgreich ins Archiv verschoben.</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>warning - image not copied</source>
-        <translation>Warnung - Bild nicht kopiert</translation>
+        <location line="+7"/>
+        <source>Successfully copied Image to archive.</source>
+        <translation>Bild erfolgreich ins Archiv kopiert.</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+90"/>
+        <source>No source image, falling back to database preview!</source>
+        <translation>Kein Quellbild, Rückgriff auf Datenbank Vorschau!</translation>
+    </message>
+    <message>
+        <location line="-95"/>
+        <source>Image not moved!</source>
+        <translation>Bild nicht verschoben!</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Image not copied!</source>
+        <translation>Bild nicht kopiert!</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Image saved successfully!</source>
         <translation>Bild erfolgreich gespeichert!</translation>
     </message>
@@ -3295,11 +3313,6 @@ Bild - Artikel Nr: %2</translation>
         <location line="+7"/>
         <source>Please use the Finish button!</source>
         <translation>Bitte benutzen Sie den Beenden knopf!</translation>
-    </message>
-    <message>
-        <location line="+62"/>
-        <source>image from database!</source>
-        <translation>Bild aus Datenbank!</translation>
     </message>
 </context>
 <context>
@@ -3382,7 +3395,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ImageView</name>
     <message>
-        <location filename="../utils/imgedit/imageview.cpp" line="+30"/>
+        <location filename="../utils/imgedit/imageview.cpp" line="+27"/>
         <source>Right mouse button with mouse wheel to zoom the image!</source>
         <translation>Rechte Maustaste mit Mausrad zum Zoomen des Bildes verwenden!</translation>
     </message>
@@ -3477,22 +3490,22 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Invoice-ID</source>
-        <translation>Rechnungs-Nr</translation>
+        <source>Invoice No.</source>
+        <translation>Rechnungs Nr.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Order-ID</source>
-        <translation>Bestell-Nr</translation>
+        <source>Order No.</source>
+        <translation>Auftrags Nr.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Customer-ID</source>
-        <translation>Kunden-Nr</translation>
+        <source>Costumer No.</source>
+        <translation>Kunden Nr.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Date</source>
+        <source>Due Date</source>
         <translation>Datum</translation>
     </message>
     <message>
@@ -3519,7 +3532,7 @@ Bild - Artikel Nr: %2</translation>
         <location line="+74"/>
         <location line="+6"/>
         <source>VAT</source>
-        <translation>MwSt</translation>
+        <translation>USt</translation>
     </message>
     <message>
         <location line="-3"/>
@@ -4101,7 +4114,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+1"/>
         <source>VAT</source>
-        <translation>MwSt</translation>
+        <translation>USt</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4339,12 +4352,12 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+25"/>
         <source>vat included</source>
-        <translation>inkl. MwSt</translation>
+        <translation>inkl. USt</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Normally the vat is included in Book articles. Uncheck it to enable add VAT in Printing Invoice.</source>
-        <translation>Üblicherweise ist bei Buchartikeln die Mehrwertsteuer enthalten. Deaktivieren Sie es, um das Hinzufügen von Mehrwertsteuer beim Drucken von Rechnungen zu aktivieren.</translation>
+        <translation>Üblicherweise ist bei Buchartikeln die Umsatzsteuer enthalten. Deaktivieren Sie es, um das Hinzufügen von Umsatzsteuer beim Drucken von Rechnungen zu aktivieren.</translation>
     </message>
     <message>
         <location line="-23"/>
@@ -4359,7 +4372,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+13"/>
         <source>VAT</source>
-        <translation>Mehrwertsteuer (MwSt)</translation>
+        <translation>Umsatzsteuer (USt)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -5087,7 +5100,7 @@ Bild - Artikel Nr: %2</translation>
         <location line="+71"/>
         <location line="+6"/>
         <source>VAT</source>
-        <translation>MwSt</translation>
+        <translation>USt</translation>
     </message>
     <message>
         <location line="-3"/>
@@ -5601,7 +5614,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+2"/>
         <source>VAT Number</source>
-        <translation>Steuernummer</translation>
+        <translation>Umsatzsteuernummer</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -5644,7 +5657,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+6"/>
         <source>incl. vat</source>
-        <translation>inkl. MwSt</translation>
+        <translation>inkl. USt</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -7593,8 +7606,8 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>No VAT</source>
-        <translation>keine Mehrwertsteuer</translation>
+        <source>without VAT</source>
+        <translation>ohne Umsatzsteuer</translation>
     </message>
     <message>
         <location line="+54"/>
@@ -7819,7 +7832,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+6"/>
         <source>incl. vat</source>
-        <translation>inkl. MwSt</translation>
+        <translation>inkl. USt</translation>
     </message>
     <message>
         <location line="+6"/>

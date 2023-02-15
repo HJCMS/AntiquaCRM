@@ -7,6 +7,7 @@
 
 #include <QDir>
 #include <QFileInfo>
+#include <QPixmap>
 #include <QString>
 
 /**
@@ -27,6 +28,12 @@ private:
    */
   QString p_target;
 
+  /**
+   * @brief Bildspeicher
+   * Wenn das Bild von der Quelle abweicht, wird hier eine Kopie eingefügt.
+   */
+  QPixmap p_pixmap;
+
 public:
   SourceInfo(const QString &target = QString());
   SourceInfo(const QFileInfo &other);
@@ -37,6 +44,11 @@ public:
    * @brief Stimmen alle Parameter
    */
   bool isValidSource() const;
+
+  /**
+   * @brief Ist keine andere Version als das Original verfügbar?
+   */
+  bool isOriginal();
 
   /**
    * @brief Artikel Nummer mit Setzen.
@@ -63,6 +75,21 @@ public:
    * @brief Zielinfo
    */
   const QString getTarget() const;
+
+  /**
+   * @brief geändertes Bild einfügen
+   */
+  void setPixmap(const QPixmap &);
+
+  /**
+   * @brief Bild nehmen.
+   */
+  const QPixmap getPixmap();
+
+  /**
+   * @brief Bild entfernen!
+   */
+  void removePixmap();
 };
 
 #endif // ANTIQUA_SOURCEINFO_H

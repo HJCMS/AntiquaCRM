@@ -21,6 +21,7 @@
 class ImageView;
 class ImageSelecter;
 class SourceInfo;
+class ImageActionsBar;
 
 /**
  * @brief Primärer Bilddialog
@@ -73,15 +74,10 @@ private:
 
   /**
    * @brief Aktionen
-   * Im Statusbar ist ein ToolBar eingebettet!
+   * @note ImageActionsBar ist in ToolBar eingebettet!
    */
   QStatusBar *m_statusBar;
-  QToolBar *m_toolBar;
-  QAction *ac_cut;
-  QAction *ac_rotate;
-  QAction *ac_scale;
-  QAction *ac_save;
-  QAction *ac_close;
+  ImageActionsBar *m_actionsBar;
 
   /**
    * @brief Suche Bildnummer im Archiv

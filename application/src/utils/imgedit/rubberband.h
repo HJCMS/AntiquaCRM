@@ -22,9 +22,12 @@ private:
 protected:
   void paintEvent(QPaintEvent *) override;
 
+public Q_SLOTS:
+  void reset();
+
 public:
   explicit RubberBand(QGraphicsView *parent = nullptr);
-  bool scalability();
+  bool isValid();
 };
 
 #endif // ANTIQUA_RUBBERBAND_H
