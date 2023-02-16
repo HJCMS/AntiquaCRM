@@ -10,7 +10,7 @@ SelectEuCountry::SelectEuCountry(QWidget *parent) : InputEdit{parent} {
   m_box->addItem(tr("Without disclosures"), QString());
   m_layout->addWidget(m_box);
   loadDataset();
-  setRequired(false);
+  setRequired(true);
 
   connect(m_box, SIGNAL(currentIndexChanged(int)), this,
           SLOT(dataChanged(int)));
@@ -37,19 +37,12 @@ void SelectEuCountry::setValue(const QVariant &val) {
   if (val.type() != QVariant::String)
     return;
 
-  index = m_box->findData(val.toString().toUpper(), Qt::UserRole);
-  if (index < 1)
-    index = m_box->findData(val.toString(), Qt::DisplayRole);
-
-  if (index < 1)
-    return;
-
+  QString co = val.toString().toUpper();
+  index = m_box->findData(co, Qt::UserRole);
   m_box->setCurrentIndex(index);
 }
 
-void SelectEuCountry::setFocus() {
-  m_box->setFocus();
-}
+void SelectEuCountry::setFocus() { m_box->setFocus(); }
 
 void SelectEuCountry::setProperties(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
@@ -57,7 +50,9 @@ void SelectEuCountry::setProperties(const QSqlField &field) {
 }
 
 const QVariant SelectEuCountry::value() {
-  return m_box->itemData(m_box->currentIndex(), Qt::UserRole);
+  int index = m_box->currentIndex();
+  QString co = m_box->itemData(index, Qt::UserRole).toString();
+  return co.trimmed();
 }
 
 bool SelectEuCountry::isValid() {
