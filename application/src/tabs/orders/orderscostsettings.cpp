@@ -44,8 +44,8 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
 
   o_vat_levels = new TaxLevelBox(m_costdeliveryTab);
   o_vat_levels->setObjectName("o_vat_levels");
-  o_vat_levels->setInfo(tr("VAT"));
-  o_vat_levels->setValue(2);
+  o_vat_levels->setInfo(tr("Sales tax in invoice"));
+  o_vat_levels->setValue(1);
   firstLayout->addWidget(o_vat_levels, p1_row, 0, 1, 1, Qt::AlignRight);
 
   o_vat_included = new BoolBox(m_costdeliveryTab);

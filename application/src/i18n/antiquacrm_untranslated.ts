@@ -2491,7 +2491,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+102"/>
         <source>Delivery Service is needed!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4346,7 +4346,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+20"/>
+        <source>Sales tax in invoice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>vat included</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4366,12 +4371,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
-        <source>VAT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
+        <location line="+28"/>
         <source>Provider</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4495,7 +4495,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+107"/>
         <source>No Article has been added to this order!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4511,12 +4511,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-417"/>
+        <location line="-432"/>
         <source>Order status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+355"/>
+        <location line="+370"/>
         <source>No Modifications found, nothing todo!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4531,17 +4531,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+139"/>
+        <location line="+141"/>
         <location line="+19"/>
         <location line="+39"/>
         <location line="+32"/>
         <location line="+38"/>
-        <location line="+77"/>
+        <location line="+83"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-200"/>
+        <location line="-206"/>
         <source>Incomplete eMail configuration!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4551,12 +4551,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-531"/>
+        <location line="-548"/>
         <source>Missing Deliverynote Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+553"/>
+        <location line="+570"/>
         <source>Missing Delivery Address!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4584,7 +4584,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+163"/>
+        <location line="+169"/>
         <source>No Provider orders data found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7584,23 +7584,18 @@ Image - Article Id: %2</source>
 <context>
     <name>TaxLevelBox</name>
     <message>
-        <location filename="../widgets/taxlevelbox.cpp" line="+15"/>
+        <location filename="../widgets/taxlevelbox.cpp" line="+11"/>
         <source>Tax</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Reduced</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Normal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
         <source>without VAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>with VAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

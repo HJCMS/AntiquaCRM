@@ -71,6 +71,11 @@ private:
   const IdsCheck getCheckEssentialsIds();
 
   /**
+   * @brief Umsatzsteuersatz durch Artikeltyp bestimmen.
+   */
+  int getVatValue(int);
+
+  /**
    * @brief Abfrage Lieferservice.
    */
   inline const QPair<int, int> deliveryService();

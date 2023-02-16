@@ -2495,7 +2495,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Intern</translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+102"/>
         <source>Delivery Service is needed!</source>
         <translation>Lieferservice wird benötigt!</translation>
     </message>
@@ -4350,7 +4350,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Lieferscheinnummer</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+20"/>
+        <source>Sales tax in invoice</source>
+        <translation>Umsatzsteuer in der Rechnung</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>vat included</source>
         <translation>inkl. USt</translation>
     </message>
@@ -4370,12 +4375,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Lieferpaketpreis zum aktuellen Versand hinzufügen.</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <source>VAT</source>
-        <translation>Umsatzsteuer (USt)</translation>
-    </message>
-    <message>
-        <location line="+15"/>
+        <location line="+28"/>
         <source>Provider</source>
         <translation>Dienstleister</translation>
     </message>
@@ -4499,7 +4499,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bitte speichern Sie zuerst Ihren Auftrag.</translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+107"/>
         <source>No Article has been added to this order!</source>
         <translation>Dieser Bestellung wurde kein Artikel hinzugefügt!</translation>
     </message>
@@ -4515,12 +4515,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Es sind keine SQL-Artikel vorhanden!</translation>
     </message>
     <message>
-        <location line="-417"/>
+        <location line="-432"/>
         <source>Order status</source>
         <translation>Auftragsstatus</translation>
     </message>
     <message>
-        <location line="+355"/>
+        <location line="+370"/>
         <source>No Modifications found, nothing todo!</source>
         <translation>Keine Änderungen gefunden, es gibt nichts zu tun!</translation>
     </message>
@@ -4535,17 +4535,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Artikel: %1 nicht gefunden oder nicht auf Lager!</translation>
     </message>
     <message>
-        <location line="+139"/>
+        <location line="+141"/>
         <location line="+19"/>
         <location line="+39"/>
         <location line="+32"/>
         <location line="+38"/>
-        <location line="+77"/>
+        <location line="+83"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation>Fehlende wichtige IDs, Bestellung zuerst speichern!</translation>
     </message>
     <message>
-        <location line="-200"/>
+        <location line="-206"/>
         <source>Incomplete eMail configuration!</source>
         <translation>Unvollständige E-Mail-Konfiguration!</translation>
     </message>
@@ -4555,12 +4555,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
     <message>
-        <location line="-531"/>
+        <location line="-548"/>
         <source>Missing Deliverynote Number</source>
         <translation>Fehlende Lieferscheinnummer</translation>
     </message>
     <message>
-        <location line="+553"/>
+        <location line="+570"/>
         <source>Missing Delivery Address!</source>
         <translation>Lieferadresse fehlt!</translation>
     </message>
@@ -4588,7 +4588,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Keine Daten gefunden! - Druckvorgang abgebrochen.</translation>
     </message>
     <message>
-        <location line="+163"/>
+        <location line="+169"/>
         <source>No Provider orders data found!</source>
         <translation>Keine Dienstleister-Auftragsdaten gefunden!</translation>
     </message>
@@ -7590,24 +7590,19 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TaxLevelBox</name>
     <message>
-        <location filename="../widgets/taxlevelbox.cpp" line="+15"/>
+        <location filename="../widgets/taxlevelbox.cpp" line="+11"/>
         <source>Tax</source>
         <translation>MwSt</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Reduced</source>
-        <translation>Reduziert</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Normal</source>
-        <translation>Standard</translation>
-    </message>
-    <message>
-        <location line="+1"/>
         <source>without VAT</source>
         <translation>ohne Umsatzsteuer</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>with VAT</source>
+        <translation>mit Umsatzsteuer</translation>
     </message>
     <message>
         <location line="+54"/>

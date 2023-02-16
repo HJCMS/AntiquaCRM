@@ -239,6 +239,21 @@ const OrdersEditor::IdsCheck OrdersEditor::getCheckEssentialsIds() {
   return id_conf;
 }
 
+int OrdersEditor::getVatValue(int index) {
+  switch (static_cast<AntiquaCRM::ArticleType>(index)) {
+  case (AntiquaCRM::ArticleType::BOOK):
+    return m_cfg->value("payment/vat2").toInt();
+
+  case (AntiquaCRM::ArticleType::MEDIA):
+  case (AntiquaCRM::ArticleType::PRINTS):
+  case (AntiquaCRM::ArticleType::OTHER):
+    return m_cfg->value("payment/vat1").toInt();
+
+  default:
+    return 0;
+  };
+}
+
 const QPair<int, int> OrdersEditor::deliveryService() {
   return m_costSettings->o_delivery_service->defaultDeliveryService();
 }
@@ -596,6 +611,8 @@ const QList<BillingInfo> OrdersEditor::queryBillingInfo(qint64 oid,
     sqlFile.setWhereClause(wcl);
     QSqlQuery q = m_sql->query(sqlFile.getQueryContent());
     if (q.size() > 0) {
+      int _vat_level = getInputEdit("o_vat_levels")->value().toInt();
+      qDebug() << Q_FUNC_INFO << _vat_level;
       QRegExp strip("\\-\\s+\\-");
       while (q.next()) {
         BillingInfo d;
@@ -604,8 +621,8 @@ const QList<BillingInfo> OrdersEditor::queryBillingInfo(qint64 oid,
         d.quantity = q.value("quant").toInt();
         d.sellPrice = q.value("sellprice").toDouble();
         d.includeVat = q.value("o_vat_included").toBool();
-        d.taxValue = q.value("o_vat_levels").toInt();
-        d.disableVat = (d.taxValue == 0);
+        d.taxValue = getVatValue(q.value("a_type").toInt());
+        d.disableVat = (_vat_level == 0);
         d.packagePrice = q.value("packageprice").toDouble();
         list.append(d);
       }
@@ -889,6 +906,12 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
 
     // Bestehende Artikel Einkäufe mit orderId einlesen!
     m_ordersList->importArticles(queryOrderArticles(orderId));
+
+    // Muss nachträglich gesetzt werden!
+    QPair<int, int> data;
+    data.first = m_tableData->getValue("o_delivery_service").toInt();
+    data.second = m_tableData->getValue("o_delivery_package").toInt();
+    m_costSettings->o_delivery_service->setDeliveryService(data);
 
     setResetModified(customInput);
     status = true;

@@ -1,6 +1,8 @@
 -- @brief Search Order Payment Information
 -- @file query_printing_billing_info.sql
-SELECT a_article_id AS aid, a_count AS quant, a_sell_price AS sellprice, o_vat_included, o_delivery, o_vat_levels,
+-- @note vat_level 2=Reduziert, 1=Standard
+SELECT a_article_id AS aid, a_count AS quant, a_sell_price AS sellprice, o_vat_included, o_delivery,
+  (CASE WHEN i_id=ib_id THEN 2 ELSE 1 END ) AS vat_level, a_type,
   GREATEST(ib_title,ip_title,cv_title,va_title,NULL) AS title,
   (CASE WHEN o_delivery_add_price=true THEN d_price ELSE 0.00 END) AS packageprice
 FROM inventory

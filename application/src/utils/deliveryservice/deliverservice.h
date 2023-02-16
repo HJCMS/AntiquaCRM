@@ -54,6 +54,14 @@ public:
   const QString info();
   const QString notes();
 
+  /**
+   * @brief Paketdienst aus Auftrag setzen!
+   */
+  void setDeliveryService(const QPair<int, int> &);
+
+  /**
+   * @brief Standard Paketdienst
+   */
   const QPair<int, int> defaultDeliveryService();
 };
 

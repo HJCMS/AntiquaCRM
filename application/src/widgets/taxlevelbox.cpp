@@ -7,15 +7,10 @@
 #include <QDebug>
 
 TaxLevelBox::TaxLevelBox(QWidget *parent) : InputEdit{parent} {
-  AntiquaCRM::ASettings cfg(this);
-  int vat1 = cfg.value("payment/vat1").toInt();
-  int vat2 = cfg.value("payment/vat2").toInt();
-
   m_box = new AntiquaComboBox(this);
   m_box->setToolTip(tr("Tax"));
-  m_box->insertItem(0, QString::number(vat2) + "% " + tr("Reduced"), vat2);
-  m_box->insertItem(1, QString::number(vat1) + "% " + tr("Normal"), vat1);
-  m_box->insertItem(2, tr("without VAT"), 0);
+  m_box->addItem(tr("without VAT"), 0);
+  m_box->addItem(tr("with VAT"), 1);
   m_layout->addWidget(m_box);
   setModified(false);
   setRequired(true);
@@ -33,7 +28,7 @@ void TaxLevelBox::reset() {
 
 void TaxLevelBox::setValue(const QVariant &val) {
   int index = m_box->findData(val.toInt(), Qt::UserRole);
-  m_box->setCurrentIndex(index);
+  m_box->setCurrentIndex((index > 0) ? 1 : 0);
 }
 
 void TaxLevelBox::setFocus() {

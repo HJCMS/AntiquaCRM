@@ -64,7 +64,6 @@ void DeliverService::setValue(const QVariant &val) {
     index = m_serviceBox->findData(val.toString(), Qt::DisplayRole);
   }
   if (index > 0) {
-    m_priceInfo->clear();
     m_serviceBox->setCurrentIndex(index);
     setModified(true);
   }
@@ -118,6 +117,17 @@ const QString DeliverService::info() { return toolTip(); }
 
 const QString DeliverService::notes() {
   return tr("Delivery Service is needed!");
+}
+
+void DeliverService::setDeliveryService(const QPair<int, int> &pair) {
+  reset();
+  blockSignals(true);
+  setDeliveryService(pair.first);
+  setDeliveryPackage(pair.second);
+  blockSignals(false);
+
+  qreal price = m_packageBox->getPackagePrice(pair.second);
+  m_priceInfo->setText(QString::number(price, 'f', 2) + " " + p_currency);
 }
 
 const QPair<int, int> DeliverService::defaultDeliveryService() {
