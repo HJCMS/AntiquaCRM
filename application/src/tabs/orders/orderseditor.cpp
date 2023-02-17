@@ -255,6 +255,16 @@ int OrdersEditor::getVatValue(int index) {
   };
 }
 
+int OrdersEditor::getVatType(int index) {
+  switch (static_cast<AntiquaCRM::ArticleType>(index)) {
+  case (AntiquaCRM::ArticleType::BOOK):
+    return 1; // VAT reduced
+
+  default:
+    return 0; // VAT normal
+  };
+}
+
 const QPair<int, int> OrdersEditor::deliveryService() {
   return m_costSettings->o_delivery_service->defaultDeliveryService();
 }
@@ -338,7 +348,7 @@ void OrdersEditor::createSqlUpdate() {
   /*
    * Ein UPDATE ohne Artikel wird feige verweigert!
    */
-  if(m_ordersList->isEmpty()) {
+  if (m_ordersList->isEmpty()) {
     openNoticeMessage(tr("No Article has been added to this order!"));
     m_actionBar->setFocusButton("article");
     return;
@@ -713,7 +723,7 @@ void OrdersEditor::setCheckLeaveEditor() {
 }
 
 void OrdersEditor::setFinalLeaveEditor(bool force) {
-  if(force) // Wenn auf Abbrechen geklickt wurde!
+  if (force) // Wenn auf Abbrechen geklickt wurde!
     setWindowModified(false);
 
   setResetInputFields();
@@ -1076,7 +1086,6 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
 
       if (!prOrder.setValue(key, val)) {
         qWarning("Order value '%s' not set!", qPrintable(key));
-        // qDebug() << key << val;
       }
     }
   }
@@ -1087,6 +1096,11 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
     for (int i = 0; i < orders.size(); i++) {
       QList<AntiquaCRM::ArticleOrderItem> items;
       QJsonObject article = orders[i].toObject();
+      // NOTE: Das Feld 'vat_tax' ist noch nicht in „antiquacmd“ eingebunden!
+      if (!article.contains("a_tax") && article.contains("a_type")) {
+        article.insert("a_tax", getVatType(article.value("a_type").toInt()));
+      }
+
       qint64 aId = article.value("a_article_id").toInt();
       // Siehe QJsonValue::article_numbers
       if (!articleNumberList.contains(QString::number(aId)))
@@ -1116,7 +1130,6 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
     }
   }
 
-  // Setze Standard Felder
   // Setze auf Auftragsbegin
   prOrder.setValue("o_order_status", AntiquaCRM::OrderStatus::STARTED);
   // Die Paket Verfolgungsnummer muss Manuell gesetzt werden!
@@ -1142,10 +1155,11 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
     if (ignoreFields.contains(key))
       continue;
 
-    if (ignored.contains(key))
+    if (ignored.contains(key)) {
       m_tableData->setValue(key, 0);
-    else
+    } else {
       m_tableData->setValue(key, prOrder.getValue(key));
+    }
   }
 
   // 2) Kunden Daten

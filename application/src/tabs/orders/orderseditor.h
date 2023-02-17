@@ -72,8 +72,15 @@ private:
 
   /**
    * @brief Umsatzsteuersatz durch Artikeltyp bestimmen.
+   * @param int - AntiquaCRM::ArticleType
    */
   int getVatValue(int);
+
+  /**
+   * @brief Umsatzsteuertype durch Artikeltyp bestimmen.
+   * @param int - AntiquaCRM::ArticleType
+   */
+  int getVatType(int);
 
   /**
    * @brief Abfrage Lieferservice.
