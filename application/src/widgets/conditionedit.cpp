@@ -15,8 +15,7 @@ ConditionEdit::ConditionEdit(QWidget *parent) : InputEdit{parent} {
 
 void ConditionEdit::loadDataset() {
   m_box->clear();
-  m_box->addItem(tr("Without disclosures"),
-                 AntiquaCRM::Condition::NO_CONDITION);
+  m_box->setWithoutDisclosures(AntiquaCRM::Condition::NO_CONDITION);
   m_box->addItem(tr("Very good, almost new!"), AntiquaCRM::Condition::FINE);
   m_box->addItem(tr("Slight signs of wear."), AntiquaCRM::Condition::GOOD);
   m_box->addItem(tr("Significant signs of use."),

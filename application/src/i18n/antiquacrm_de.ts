@@ -117,6 +117,14 @@
     </message>
 </context>
 <context>
+    <name>AntiquaComboBox</name>
+    <message>
+        <location filename="../widgets/antiquacombobox.cpp" line="+30"/>
+        <source>Without disclosures</source>
+        <translation>Keine Angaben</translation>
+    </message>
+</context>
+<context>
     <name>AntiquaConfigMenus</name>
     <message>
         <location filename="../antiquaconfigmenus.cpp" line="+15"/>
@@ -462,12 +470,7 @@
         <translation>Buchbindung</translation>
     </message>
     <message>
-        <location line="+36"/>
-        <source>Without disclosures</source>
-        <translation>Keine Angaben</translation>
-    </message>
-    <message>
-        <location line="+37"/>
+        <location line="+73"/>
         <source>Missing required Book binding!</source>
         <translation>Die erfoderliche Buchbindung ist nicht vorhanden!</translation>
     </message>
@@ -1769,12 +1772,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Zustand</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Without disclosures</source>
-        <translation>Keine Angaben</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+11"/>
         <source>Very good, almost new!</source>
         <translation>Sehr gut, fast neuwertig!</translation>
     </message>
@@ -1972,7 +1970,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Gesperrt</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
+        <source>Reliability</source>
+        <translation>Zuverlässigkeit</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Tax Id.</source>
         <translation>MwSt Id.</translation>
     </message>
@@ -2999,14 +3002,13 @@ Bild - Artikel Nr: %2</translation>
         <translation>Geschlecht</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <location line="+53"/>
+        <location line="+55"/>
         <source>Without disclosures</source>
         <translation>Keine Angaben</translation>
     </message>
     <message>
-        <location line="-52"/>
-        <location line="+53"/>
+        <location line="-53"/>
+        <location line="+54"/>
         <source>Male</source>
         <translation>Männlich</translation>
     </message>
@@ -3017,8 +3019,8 @@ Bild - Artikel Nr: %2</translation>
         <translation>Weiblich</translation>
     </message>
     <message>
-        <location line="-52"/>
-        <location line="+53"/>
+        <location line="-51"/>
+        <location line="+52"/>
         <source>Various</source>
         <translation>Diverse</translation>
     </message>
@@ -3778,19 +3780,19 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>Language</name>
     <message>
-        <location filename="../widgets/language.cpp" line="+30"/>
+        <location filename="../widgets/language.cpp" line="+31"/>
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>German</source>
         <translation>Deutsch</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Europe</source>
-        <translation>Europäisch</translation>
+        <source>European</source>
+        <translation>Europöisch</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -6815,12 +6817,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Anrede</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Without disclosures</source>
-        <translation>Keine Angaben</translation>
-    </message>
-    <message>
-        <location line="+68"/>
+        <location line="+78"/>
         <source>a Title is required.</source>
         <translation>Eine Titelangabe ist erforderlich.</translation>
     </message>
@@ -6841,12 +6838,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Artikeltyp</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Not set</source>
-        <translation>Nicht gesetzt</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+12"/>
         <source>Book</source>
         <translation>Buch</translation>
     </message>
@@ -6874,17 +6866,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>SelectEuCountry</name>
     <message>
-        <location filename="../widgets/selecteucountry.cpp" line="+9"/>
+        <location filename="../widgets/selecteucountry.cpp" line="+11"/>
         <source>European Countries</source>
         <translation>Europäische Länder</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Without disclosures</source>
-        <translation>Keine Angaben</translation>
-    </message>
-    <message>
-        <location line="+71"/>
+        <location line="+96"/>
         <source>A valid European Country selection is required.</source>
         <translation>Eine gültige europäische Länderauswahl ist erforderlich.</translation>
     </message>
@@ -7161,12 +7148,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Lagerort</translation>
     </message>
     <message>
-        <location line="-5"/>
-        <source>Without disclosures</source>
-        <translation>Keine Angaben</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="-3"/>
         <source>Changes the Storage location of this Article.</source>
         <translation>Ändert den Speicherort dieses Artikels.</translation>
     </message>
@@ -7613,7 +7595,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TechniqueEdit</name>
     <message>
-        <location filename="../widgets/techniqueedit.cpp" line="+17"/>
+        <location filename="../widgets/techniqueedit.cpp" line="+16"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
@@ -7752,7 +7734,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TrustedBox</name>
     <message>
-        <location filename="../widgets/trustedbox.cpp" line="+8"/>
+        <location filename="../widgets/trustedbox.cpp" line="+10"/>
         <source>Trust</source>
         <translation>Vertrauen</translation>
     </message>
@@ -7762,12 +7744,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Ändert das Vertrauensstatus des Kunden.</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>No trust level set</source>
-        <translation>Keine Vertrauensstufe festgelegt</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+15"/>
         <source>Pays on time</source>
         <translation>Zahlt pünktlich</translation>
     </message>

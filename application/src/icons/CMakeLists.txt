@@ -30,6 +30,7 @@ delete_table_col.png
 delete_table_row.png
 editclear.png
 edit.png
+eu-flag.png
 filetypes.png
 flag-green.png
 flag-red.png

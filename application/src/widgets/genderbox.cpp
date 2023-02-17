@@ -3,15 +3,18 @@
 
 #include "genderbox.h"
 
-#include <QDebug>
+#include <QIcon>
 
 GenderBox::GenderBox(QWidget *parent) : InputEdit{parent} {
   m_box = new AntiquaComboBox(this);
   m_box->setToolTip(tr("Gender"));
-  m_box->insertItem(0, tr("Without disclosures"), AntiquaCRM::NO_GENDER);
+  m_box->setWithoutDisclosures(AntiquaCRM::NO_GENDER);
   m_box->insertItem(1, tr("Male"), AntiquaCRM::MALE);
+  m_box->setItemIcon(1, QIcon("://icons/user_male.png"));
   m_box->insertItem(2, tr("Female"), AntiquaCRM::FEMALE);
+  m_box->setItemIcon(2, QIcon("://icons/user_female.png"));
   m_box->insertItem(3, tr("Various"), AntiquaCRM::VARIOUS);
+  m_box->setItemIcon(3, QIcon("://icons/user_group.png"));
   m_box->setCurrentIndex(0);
   m_layout->addWidget(m_box);
   setModified(false);
@@ -39,8 +42,6 @@ void GenderBox::setValue(const QVariant &val) {
   } else {
     index = m_box->findData(val.toString(), Qt::DisplayRole);
   }
-
-  // qDebug() << Q_FUNC_INFO << val << index;
 
   if (index >= 0)
     m_box->setCurrentIndex(index);

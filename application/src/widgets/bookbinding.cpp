@@ -44,7 +44,7 @@ void BookBinding::loadDataset() {
   }
 
   m_box->clear();
-  m_box->addItem(tr("Without disclosures"), QString());
+  m_box->setWithoutDisclosures();
   QJsonArray arr = doc.object().value("bookbindings").toArray();
   for (int i = 0; i < arr.count(); i++) {
     QJsonObject obj = arr[i].toObject();

@@ -117,6 +117,14 @@
     </message>
 </context>
 <context>
+    <name>AntiquaComboBox</name>
+    <message>
+        <location filename="../widgets/antiquacombobox.cpp" line="+30"/>
+        <source>Without disclosures</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AntiquaConfigMenus</name>
     <message>
         <location filename="../antiquaconfigmenus.cpp" line="+15"/>
@@ -462,12 +470,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+36"/>
-        <source>Without disclosures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+37"/>
+        <location line="+73"/>
         <source>Missing required Book binding!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1765,12 +1768,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Without disclosures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+11"/>
         <source>Very good, almost new!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1968,7 +1966,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
+        <source>Reliability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Tax Id.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2995,14 +2998,13 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <location line="+53"/>
+        <location line="+55"/>
         <source>Without disclosures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-52"/>
-        <location line="+53"/>
+        <location line="-53"/>
+        <location line="+54"/>
         <source>Male</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3013,8 +3015,8 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-52"/>
-        <location line="+53"/>
+        <location line="-51"/>
+        <location line="+52"/>
         <source>Various</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3774,18 +3776,18 @@ Image - Article Id: %2</source>
 <context>
     <name>Language</name>
     <message>
-        <location filename="../widgets/language.cpp" line="+30"/>
+        <location filename="../widgets/language.cpp" line="+31"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>German</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Europe</source>
+        <source>European</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6809,12 +6811,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Without disclosures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+68"/>
+        <location line="+78"/>
         <source>a Title is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6835,12 +6832,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Not set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+12"/>
         <source>Book</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6868,17 +6860,12 @@ Image - Article Id: %2</source>
 <context>
     <name>SelectEuCountry</name>
     <message>
-        <location filename="../widgets/selecteucountry.cpp" line="+9"/>
+        <location filename="../widgets/selecteucountry.cpp" line="+11"/>
         <source>European Countries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Without disclosures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+71"/>
+        <location line="+96"/>
         <source>A valid European Country selection is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7155,12 +7142,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-5"/>
-        <source>Without disclosures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="-3"/>
         <source>Changes the Storage location of this Article.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7607,7 +7589,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TechniqueEdit</name>
     <message>
-        <location filename="../widgets/techniqueedit.cpp" line="+17"/>
+        <location filename="../widgets/techniqueedit.cpp" line="+16"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7746,7 +7728,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TrustedBox</name>
     <message>
-        <location filename="../widgets/trustedbox.cpp" line="+8"/>
+        <location filename="../widgets/trustedbox.cpp" line="+10"/>
         <source>Trust</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7756,12 +7738,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>No trust level set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+15"/>
         <source>Pays on time</source>
         <translation type="unfinished"></translation>
     </message>

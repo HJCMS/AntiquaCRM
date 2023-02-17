@@ -3,6 +3,7 @@
 
 #include "antiquacombobox.h"
 #include <ASettings>
+#include <QIcon>
 
 AntiquaComboBox::AntiquaComboBox(QWidget *parent) : QComboBox{parent} {
   setSizeAdjustPolicy(QComboBox::AdjustToContentsOnFirstShow);
@@ -23,6 +24,15 @@ void AntiquaComboBox::wheelEvent(QWheelEvent *e) {
   if (mouseWheel) {
     QComboBox::wheelEvent(e);
   }
+}
+
+const QString AntiquaComboBox::withoutDisclosures() {
+  return tr("Without disclosures");
+}
+
+void AntiquaComboBox::setWithoutDisclosures(const QVariant &data) {
+  addItem(withoutDisclosures(), data);
+  setItemIcon(0, QIcon("://icons/warning.png"));
 }
 
 void AntiquaComboBox::setMouseWheelEnabled(bool b) {

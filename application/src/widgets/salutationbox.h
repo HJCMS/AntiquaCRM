@@ -19,7 +19,6 @@ private:
   AntiquaComboBox *m_box;
   QLineEdit *m_edit;
   void loadDataset() override;
-  inline const QString withoutDisclosures();
 
 private Q_SLOTS:
   void dataChanged(int);

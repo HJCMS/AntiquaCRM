@@ -13,16 +13,12 @@ SalutationBox::SalutationBox(QWidget *parent) : InputEdit{parent} {
   loadDataset();
 
   m_edit = new QLineEdit(this);
-  m_edit->setPlaceholderText(withoutDisclosures());
+  m_edit->setPlaceholderText(m_box->withoutDisclosures());
   m_box->setLineEdit(m_edit);
 
   setRequired(true);
   connect(m_box, SIGNAL(currentIndexChanged(int)), this,
           SLOT(dataChanged(int)));
-}
-
-const QString SalutationBox::withoutDisclosures() {
-  return tr("Without disclosures");
 }
 
 void SalutationBox::loadDataset() {
@@ -63,7 +59,7 @@ void SalutationBox::setProperties(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 
-  if (field.length() > withoutDisclosures().length())
+  if (field.length() > m_box->withoutDisclosures().length())
     m_edit->setMaxLength(field.length());
 }
 
@@ -72,7 +68,7 @@ const QVariant SalutationBox::value() {
     return m_box->currentText();
 
   QString edit = m_edit->text().trimmed();
-  if (edit != withoutDisclosures())
+  if (edit != m_box->withoutDisclosures())
     return edit;
 
   return QString();

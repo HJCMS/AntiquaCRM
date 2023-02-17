@@ -5,6 +5,7 @@
 
 #include <QDebug>
 #include <QHBoxLayout>
+#include <QIcon>
 
 Language::Language(QWidget *parent) : InputEdit{parent} {
   setObjectName("language_edit");
@@ -28,8 +29,9 @@ void Language::setValue(const QVariant &v) {
 
 void Language::loadDataset() {
   m_comboBox->setToolTip(tr("Language"));
+  m_comboBox->setWithoutDisclosures(QString());
   m_comboBox->addItem(tr("German"), "de_DE");
-  m_comboBox->addItem(tr("Europe"), "eu_EU");
+  m_comboBox->addItem(tr("European"), "eu_EU");
   m_comboBox->addItem(tr("Czech"), "cs_CS");
   m_comboBox->addItem(tr("Danish"), "da_DA");
   m_comboBox->addItem(tr("English"), "en_EN");

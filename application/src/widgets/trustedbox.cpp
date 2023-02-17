@@ -3,6 +3,8 @@
 
 #include "trustedbox.h"
 
+#include <QIcon>
+
 TrustedBox::TrustedBox(QWidget *parent) : InputEdit{parent} {
   m_box = new AntiquaComboBox(this);
   m_box->setToolTip(tr("Trust"));
@@ -15,18 +17,21 @@ TrustedBox::TrustedBox(QWidget *parent) : InputEdit{parent} {
 }
 
 void TrustedBox::loadDataset() {
+  QIcon green("://icons/flag-green.png");
+  QIcon yellow("://icons/flag-yellow.png");
+  QIcon red("://icons/flag-red.png");
   // Keine Vertrauensebene festgelegt
-  m_box->addItem(tr("No trust level set"), AntiquaCRM::NO_TRUST_LEVEL);
+  m_box->setWithoutDisclosures(AntiquaCRM::NO_TRUST_LEVEL);
   // Zahlt Pünktlich
-  m_box->addItem(tr("Pays on time"), AntiquaCRM::ON_TIME);
+  m_box->addItem(green, tr("Pays on time"), AntiquaCRM::ON_TIME);
   // Zahlt Zuverlässig
-  m_box->addItem(tr("Pays reliably"), AntiquaCRM::RELIABLE);
+  m_box->addItem(green, tr("Pays reliably"), AntiquaCRM::RELIABLE);
   // Zahlt mit Verspätung
-  m_box->addItem(tr("Pay late"), AntiquaCRM::WITH_DELAY);
+  m_box->addItem(yellow, tr("Pay late"), AntiquaCRM::WITH_DELAY);
   // Nur mit Vorauszahlung
-  m_box->addItem(tr("Only with prepayment"), AntiquaCRM::PREPAYMENT);
+  m_box->addItem(yellow, tr("Only with prepayment"), AntiquaCRM::PREPAYMENT);
   // Keine Lieferung
-  m_box->addItem(tr("No delivery"), AntiquaCRM::NO_DELIVERY);
+  m_box->addItem(red, tr("No delivery"), AntiquaCRM::NO_DELIVERY);
 }
 
 void TrustedBox::dataChanged(int) { setModified(true); }

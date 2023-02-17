@@ -7,8 +7,7 @@
 
 TechniqueEdit::TechniqueEdit(QWidget *parent) : InputEdit{parent} {
   m_comboBox = new AntiquaComboBox(this);
-  m_comboBox->setInsertPolicy(QComboBox::NoInsert);
-  m_comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContentsOnFirstShow);
+  m_comboBox->setWithoutDisclosures(QString());
   m_comboBox->setMaxVisibleItems(20);
   m_comboBox->setEditable(false);
   m_layout->addWidget(m_comboBox);
@@ -60,10 +59,10 @@ void TechniqueEdit::loadDataset() {
     while (q.next()) {
       int index = q.value("rpt_id").toInt();
       QString txt = q.value("rpt_type").toString();
-      if (index > 0)
+      if (index > 0) {
         list.append(txt);
-
-      m_comboBox->insertItem(index, txt);
+        m_comboBox->insertItem(index, txt);
+      }
     }
     m_comboBox->setMaxCount(m_comboBox->count());
     m_comboBox->setCurrentIndex(0);

@@ -9,7 +9,7 @@
 StorageLocation::StorageLocation(QWidget *parent) : InputEdit{parent} {
   m_box = new AntiquaComboBox(this);
   m_box->setToolTip(tr("Storage Location"));
-  m_box->insertItem(0, tr("Without disclosures"), QString());
+  m_box->setWithoutDisclosures(QString());
   m_box->setMaxVisibleItems(20);
   m_box->setWhatsThis(tr("Changes the Storage location of this Article."));
   m_layout->addWidget(m_box);

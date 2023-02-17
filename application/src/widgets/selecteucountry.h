@@ -20,7 +20,15 @@ private Q_SLOTS:
 
 public Q_SLOTS:
   Q_INVOKABLE void reset() override;
+
+  /**
+   * @note The default input is in BCP 47 uppercase.
+   * Complete countrynames or translated name from Class
+   * AntiquaCRM::AEuropeanCountries also supported!
+   * https://www.rfc-editor.org/info/bcp47
+   */
   void setValue(const QVariant &) override;
+
   void setFocus() override;
 
 public:

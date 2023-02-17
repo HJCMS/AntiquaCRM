@@ -5,8 +5,8 @@
 #ifndef ANTIQUA_INPUT_COMBOBOX_H
 #define ANTIQUA_INPUT_COMBOBOX_H
 
-#include <QComboBox>
 #include <QAbstractItemView>
+#include <QComboBox>
 #include <QObject>
 #include <QWidget>
 
@@ -28,6 +28,17 @@ Q_SIGNALS:
 
 public:
   explicit AntiquaComboBox(QWidget *parent = nullptr);
+
+  /**
+   * @brief Standard text für „keine Auswahl“ getroffen!
+   */
+  const QString withoutDisclosures();
+
+  /**
+   * @brief Erstellt einen Eintrage mit Text von withoutDisclosures()
+   */
+  void setWithoutDisclosures(const QVariant &data = QVariant());
+
   bool isMouseWheelEnabled();
 };
 

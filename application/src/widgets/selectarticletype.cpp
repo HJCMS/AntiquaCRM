@@ -17,7 +17,7 @@ SelectArticleType::SelectArticleType(QWidget *parent) : InputEdit{parent} {
 void SelectArticleType::loadDataset() {
   m_box->clear();
   /**< nicht festgelegt */
-  m_box->insertItem(0, tr("Not set"), AntiquaCRM::ArticleType::UNKNOWN);
+  m_box->setWithoutDisclosures(AntiquaCRM::ArticleType::UNKNOWN);
   /**< Bücher */
   m_box->insertItem(1, tr("Book"), AntiquaCRM::ArticleType::BOOK);
   /**< Film & Tonträger */
