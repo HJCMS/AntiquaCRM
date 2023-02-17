@@ -25,11 +25,13 @@ private:
    * Wird aus der Konfiguration beim Initialisieren eingelesen.
    */
   QString currency;
+  int vatNormal;
+  int vatReduced;
 
   /**
    * @brief Zellenanzahl
    */
-  int table_columns = 11;
+  int table_columns = 13;
 
   /**
    * @brief Soll verhindern das die SQL Feldgrenzen überschritten werden.
@@ -41,7 +43,13 @@ private:
    */
   QMap<int, AntiquaCRM::OrderArticleItems> articleRows;
 
+  /**
+   * @brief Preis mit Währung anzeigen!
+   */
+  const QString displayPrice(double) const;
+
 public:
+  enum TaxType { NORMAL = 0x00, REDUCED = 0x01 };
   explicit PurchaseTableModel(QObject *parent = nullptr);
 
   /**
@@ -49,6 +57,11 @@ public:
    * @see AntiquaCRM::ArticleType
    */
   static const QString articleType(int type);
+
+  /**
+   * @brief Gibt den Steuersatz Typ des aktuellen Artikels zurück.
+   */
+  qreal articleTaxValue(PurchaseTableModel::TaxType type) const;
 
   /**
    * @brief Beinhaltet die SQL-Tabellen Feldnamen und Kopzeilenübersetzungen!

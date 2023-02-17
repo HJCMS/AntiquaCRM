@@ -3,10 +3,33 @@
 
 #include "purchasetablemodel.h"
 
+#include <ASettings>
+
+#ifdef ANTIQUA_DEVELOPEMENT
+void __debug_article_items(AntiquaCRM::OrderArticleItems items) {
+  qDebug() << "ArticleOrderItem" << items.size();
+  QListIterator<AntiquaCRM::ArticleOrderItem> it(items);
+  while (it.hasNext()) {
+    AntiquaCRM::ArticleOrderItem sub = it.next();
+    qDebug() << "- column:" << sub.key << sub.value;
+  }
+}
+#endif
+
 PurchaseTableModel::PurchaseTableModel(QObject *parent)
     : QAbstractTableModel{parent} {
   AntiquaCRM::ASettings cfg(this);
-  currency = cfg.value("payment/currency", "€").toString();
+  cfg.beginGroup("payment");
+  currency = cfg.value("currency", "€").toString();
+  vatNormal = cfg.value("vat1", 19).toInt();
+  vatReduced = cfg.value("vat2", 7).toInt();
+  cfg.endGroup();
+}
+
+const QString PurchaseTableModel::displayPrice(double price) const {
+  QString str = QString::number(price, 'f', 2);
+  str.append(" " + currency);
+  return str.trimmed();
 }
 
 const QString PurchaseTableModel::articleType(int type) {
@@ -26,6 +49,14 @@ const QString PurchaseTableModel::articleType(int type) {
   default:
     return tr("Unknown");
   }
+}
+
+qreal PurchaseTableModel::articleTaxValue(
+    PurchaseTableModel::TaxType type) const {
+  if (type == PurchaseTableModel::TaxType::REDUCED)
+    return vatReduced;
+  else
+    return vatNormal;
 }
 
 const AntiquaCRM::ATableHeaderColumn
@@ -65,18 +96,27 @@ PurchaseTableModel::headerColumn(int column) {
     break;
 
   case 8:
-    col = AntiquaCRM::ATableHeaderColumn("a_title", tr("Title"));
+    col = AntiquaCRM::ATableHeaderColumn("a_tax", tr("VAT"));
     break;
 
   case 9:
-    col = AntiquaCRM::ATableHeaderColumn("a_provider_id", tr("Provider Id"));
+    col = AntiquaCRM::ATableHeaderColumn("a_title", tr("Title"));
     break;
 
   case 10:
     col = AntiquaCRM::ATableHeaderColumn("a_modified", tr("Modified"));
     break;
 
+  case 11:
+    col = AntiquaCRM::ATableHeaderColumn("a_provider_id", tr("Provider Id"));
+    break;
+
+  case 12:
+    col = AntiquaCRM::ATableHeaderColumn("a_refunds_cost", tr("Refunding"));
+    break;
+
   default:
+    col = AntiquaCRM::ATableHeaderColumn("unknown", tr("Unknown"));
     break;
   };
   return col;
@@ -136,7 +176,19 @@ bool PurchaseTableModel::addArticles(
   QListIterator<AntiquaCRM::OrderArticleItems> articles(items);
   beginInsertRows(createIndex(row, 0), 0, items.size());
   while (articles.hasNext()) {
-    articleRows.insert(row, articles.next());
+    AntiquaCRM::OrderArticleItems items = articles.next();
+    if (table_columns < items.size()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+      qDebug() << Q_FUNC_INFO << "INVALID Column Count!" << Qt::endl
+               << "Current" << table_columns << "Size" << items.size();
+
+      __debug_article_items(items);
+#else
+      qWarning("Invalid Order Article column Count!");
+#endif
+      table_columns = items.size();
+    }
+    articleRows.insert(row, items);
     row++;
   }
   endInsertRows();
@@ -156,7 +208,7 @@ int PurchaseTableModel::columnCount(const QModelIndex &parent) const {
 QVariant PurchaseTableModel::headerData(int section,
                                         Qt::Orientation orientation,
                                         int role) const {
-  if (orientation != Qt::Horizontal) {
+  if (orientation == Qt::Vertical) {
     if (role == Qt::DisplayRole)
       return section + 1;
 
@@ -207,7 +259,6 @@ bool PurchaseTableModel::setData(const QModelIndex &index,
   QModelIndex topLeft = createIndex(0, 0);
   QModelIndex bottomRight = createIndex(articleRows.size(), table_columns);
   emit dataChanged(topLeft, bottomRight);
-
   return true;
 }
 
@@ -242,6 +293,7 @@ QVariant PurchaseTableModel::data(const QModelIndex &index, int role) const {
     }
   }
 
+  QString fieldName = info.field();
   QMetaType::Type _type = info.type();
   if (_type == QMetaType::UnknownType) {
     if (buffer.type() == QVariant::DateTime)
@@ -284,38 +336,41 @@ QVariant PurchaseTableModel::data(const QModelIndex &index, int role) const {
     };
   }
 
-  if (role == Qt::DisplayRole) {
-    switch (_type) {
-    case QMetaType::Bool:
-      return buffer.toBool() ? tr("Yes") : tr("No");
+  if (role != Qt::DisplayRole)
+    return buffer;
 
-    case QMetaType::Int:
-      if (info.field() == "a_type") {
-        return articleType(buffer.toInt());
-      } else {
-        return buffer;
-      }
+  switch (_type) {
+  case QMetaType::Bool:
+    return buffer.toBool() ? tr("Yes") : tr("No");
 
-    case QMetaType::Double: {
-      if (info.field().contains("_price")) {
-        double p = buffer.toDouble();
-        QString str = QString::number(p, 'f', 2);
-        str.append(" " + currency);
-        return str;
-      }
+  case QMetaType::Int:
+  case QMetaType::Long:
+  case QMetaType::ULong: {
+    if (fieldName == "a_type") {
+      return articleType(buffer.toInt());
     }
-
-    case QMetaType::QDateTime: {
-      QDateTime dt = buffer.toDateTime();
-      return dt.toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
+    if (fieldName == "a_tax") {
+      TaxType _t = static_cast<TaxType>(buffer.toInt());
+      return QString::number(articleTaxValue(_t)) + "%";
     }
-
-    default:
-      return buffer.toString();
-    };
+    return buffer.toInt();
   }
 
-  return buffer;
+  case QMetaType::Double: {
+    if (fieldName.contains("_price") || fieldName.contains("_cost")) {
+      return displayPrice(buffer.toDouble());
+    }
+    return buffer.toDouble();
+  }
+
+  case QMetaType::QDateTime: {
+    QDateTime dt = buffer.toDateTime();
+    return dt.toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
+  }
+
+  default:
+    return buffer.toString();
+  };
 }
 
 Qt::ItemFlags PurchaseTableModel::flags(const QModelIndex &index) const {

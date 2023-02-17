@@ -15,6 +15,7 @@ OrdersEditor::OrdersEditor(QWidget *parent)
     : InventoryEditor{"^[ocd]_[a-z_]+\\b$", parent} {
   setObjectName("orders_editor");
   setWindowTitle(tr("Edit Orders") + " [*]");
+  // setStyleSheet("InputEdit {border:1px solid red;}");
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -611,8 +612,9 @@ const QList<BillingInfo> OrdersEditor::queryBillingInfo(qint64 oid,
     sqlFile.setWhereClause(wcl);
     QSqlQuery q = m_sql->query(sqlFile.getQueryContent());
     if (q.size() > 0) {
+      // Umsatzsteuer ermitteln.
       int _vat_level = getInputEdit("o_vat_levels")->value().toInt();
-      qDebug() << Q_FUNC_INFO << _vat_level;
+      // qDebug() << Q_FUNC_INFO << _vat_level;
       QRegExp strip("\\-\\s+\\-");
       while (q.next()) {
         BillingInfo d;
@@ -1120,12 +1122,11 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
   // Die Paket Verfolgungsnummer muss Manuell gesetzt werden!
   prOrder.setValue("o_delivery_send_id", "");
   // Der Standard bei Büchern ist "reduziert"!
-  int vat = m_cfg->value("payment/vat2", 0).toInt();
-  prOrder.setValue("o_vat_levels", vat);
-  // Standard bei Büchern: Aktiv
-  prOrder.setValue("o_vat_included", (vat != 0));
-  // Wenn Ausland keine Steuern aber dann mit Lieferkosten!
-  prOrder.setValue("o_delivery_add_price", (vat == 0));
+  prOrder.setValue("o_vat_levels", 1);
+  // Standard Steuer eingebunden
+  prOrder.setValue("o_vat_included", true);
+  // Lieferkosten!
+  prOrder.setValue("o_delivery_add_price", false);
   // Standard Lieferdienst
   QPair<int, int> deliveryService =
       m_costSettings->o_delivery_service->defaultDeliveryService();

@@ -5,6 +5,7 @@ SELECT c_id AS o_customer_id,
   c_shipping_address,
   d_srv AS o_delivery_service,
   d_cid AS o_delivery_package,
+  c_country_bcp47 AS o_vat_country,
   'Office' AS o_provider_name,
   to_char(current_timestamp, 'YYYY-MM-DD') AS o_provider_order_id
 FROM customers

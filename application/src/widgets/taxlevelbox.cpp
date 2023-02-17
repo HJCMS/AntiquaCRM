@@ -28,7 +28,7 @@ void TaxLevelBox::reset() {
 
 void TaxLevelBox::setValue(const QVariant &val) {
   int index = m_box->findData(val.toInt(), Qt::UserRole);
-  m_box->setCurrentIndex((index > 0) ? 1 : 0);
+  m_box->setCurrentIndex((index == 0) ? 0 : 1);
 }
 
 void TaxLevelBox::setFocus() {

@@ -21,19 +21,24 @@ OrdersItemList::OrdersItemList(QWidget *parent) : QWidget{parent} {
   layout->addWidget(new QLabel(tbInfo + ":", this));
 
   m_table = new PurchaseTable(this, false);
+  layout->addWidget(m_table);
+  layout->addStretch(1);
+  setLayout(layout);
+
+/**
+ * Für den Kunden ausblenden. Werden hier nicht benötigt!
+ * @warning Die Spaltenzahl ist zu diesem Zeitpunkt noch nicht bekannt!
+ *          Deshalb wird die Konstante „table_columns“ heran gezogen.
+ */
 #ifndef ANTIQUA_DEVELOPEMENT
-  // Für den Kunden ausblenden.
-  // Werden hier nicht benötigt!
   QStringList hideColumn("a_payment_id");
   hideColumn << "a_order_id";
   hideColumn << "a_customer_id";
   hideColumn << "a_modified";
   hideColumn << "a_provider_id";
+  hideColumn << "a_refunds_cost";
   m_table->hideColumns(hideColumn);
 #endif
-  layout->addWidget(m_table);
-  layout->addStretch(1);
-  setLayout(layout);
 
   connect(m_table, SIGNAL(sendTableModified(bool)),
           SLOT(setArticleChanged(bool)));

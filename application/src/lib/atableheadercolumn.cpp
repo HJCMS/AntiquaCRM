@@ -4,6 +4,8 @@
 #include "atableheadercolumn.h"
 #include "aproviderorders.h"
 
+#include <QDebug>
+
 namespace AntiquaCRM {
 
 ATableHeaderColumn::ATableHeaderColumn() : p_f(QString()), p_n(QString()) {}

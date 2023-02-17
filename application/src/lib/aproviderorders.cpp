@@ -322,9 +322,20 @@ const QHash<QString, QMetaType::Type> AProviderOrder::articleKeys() {
   hash.insert("a_count", QMetaType::Int);
 
   /**
+   * @brief Article Tax Type
+   * @see PurchaseTableModel::TaxType
+   */
+  hash.insert("a_tax", QMetaType::Int);
+
+  /**
    * @brief Article "inventory price"
    */
   hash.insert("a_price", QMetaType::Double);
+
+  /**
+   * @brief Article "inventory refunding"
+   */
+  hash.insert("a_refunds_cost", QMetaType::Double);
 
   /**
    * @brief Article "selling price"

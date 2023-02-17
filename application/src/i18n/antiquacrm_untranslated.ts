@@ -4333,7 +4333,7 @@ Image - Article Id: %2</source>
 <context>
     <name>OrdersCostSettings</name>
     <message>
-        <location filename="../tabs/orders/orderscostsettings.cpp" line="+17"/>
+        <location filename="../tabs/orders/orderscostsettings.cpp" line="+19"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4348,7 +4348,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+15"/>
         <source>Sales tax in invoice</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4363,7 +4363,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-23"/>
+        <location line="-18"/>
         <source>add delivery package price</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4373,7 +4373,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+22"/>
+        <source>Country</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Provider</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4388,17 +4393,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+14"/>
         <source>Delivery-/Invoice Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
-        <source>European Country Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-12"/>
+        <location line="+6"/>
         <source>Created at</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4413,7 +4413,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+6"/>
         <source>History info</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4457,7 +4457,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>Order ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4533,7 +4533,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+141"/>
+        <location line="+142"/>
         <location line="+19"/>
         <location line="+39"/>
         <location line="+32"/>
@@ -4553,12 +4553,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-548"/>
+        <location line="-549"/>
         <source>Missing Deliverynote Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+570"/>
+        <location line="+571"/>
         <source>Missing Delivery Address!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6445,7 +6445,7 @@ Image - Article Id: %2</source>
 <context>
     <name>PurchaseTableModel</name>
     <message>
-        <location filename="../utils/purchasetable/purchasetablemodel.cpp" line="+15"/>
+        <location filename="../utils/purchasetable/purchasetablemodel.cpp" line="+38"/>
         <source>Book</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6466,11 +6466,12 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+3"/>
+        <location line="+69"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="-52"/>
         <source>Payment Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6511,21 +6512,31 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+4"/>
+        <source>VAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+8"/>
         <source>Provider Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-4"/>
         <source>Modified</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+214"/>
+        <location line="+8"/>
+        <source>Refunding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+229"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
