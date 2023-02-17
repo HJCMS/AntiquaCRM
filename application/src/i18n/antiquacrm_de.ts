@@ -6519,7 +6519,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+4"/>
         <source>VAT</source>
-        <translation type="unfinished">USt</translation>
+        <translation>USt.</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6539,7 +6539,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+8"/>
         <source>Refunding</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+229"/>
