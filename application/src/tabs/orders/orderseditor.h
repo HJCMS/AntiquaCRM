@@ -71,6 +71,12 @@ private:
   const IdsCheck getCheckEssentialsIds();
 
   /**
+   * @brief Umsatzsteuersatz einbinden oder nicht
+   * Ist abhängig von EU-Land oder nicht?
+   */
+  AntiquaCRM::TaxSet getPrintVatset();
+
+  /**
    * @brief Umsatzsteuersatz durch Artikeltyp bestimmen.
    * @param int - AntiquaCRM::ArticleType
    */

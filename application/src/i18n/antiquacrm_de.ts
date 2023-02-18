@@ -3511,53 +3511,37 @@ Bild - Artikel Nr: %2</translation>
         <translation>Datum</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+23"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+6"/>
         <source>Designation</source>
         <translation>Beschreibung</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+7"/>
         <source>Quantity</source>
         <translation>Menge</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+7"/>
         <source>Price</source>
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+74"/>
-        <location line="+6"/>
-        <source>VAT</source>
-        <translation>USt</translation>
-    </message>
-    <message>
-        <location line="-3"/>
-        <source>incl.</source>
-        <translation>inkl.</translation>
-    </message>
-    <message>
-        <location line="+34"/>
-        <source>Subtotal</source>
-        <translation>Zwischensumme</translation>
-    </message>
-    <message>
-        <location line="+20"/>
+        <location line="+23"/>
         <source>delivery cost</source>
         <translation>Lieferkosten</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+29"/>
         <source>invoice amount</source>
         <translation>Rechnungsbetrag</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+24"/>
         <source>The order has already been paid for.</source>
         <translation>Die Bestellung wurde bereits bezahlt.</translation>
     </message>
@@ -4501,7 +4485,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bitte speichern Sie zuerst Ihren Auftrag.</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+125"/>
         <source>No Article has been added to this order!</source>
         <translation>Dieser Bestellung wurde kein Artikel hinzugefügt!</translation>
     </message>
@@ -4517,12 +4501,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Es sind keine SQL-Artikel vorhanden!</translation>
     </message>
     <message>
-        <location line="-432"/>
+        <location line="-450"/>
         <source>Order status</source>
         <translation>Auftragsstatus</translation>
     </message>
     <message>
-        <location line="+370"/>
+        <location line="+388"/>
         <source>No Modifications found, nothing todo!</source>
         <translation>Keine Änderungen gefunden, es gibt nichts zu tun!</translation>
     </message>
@@ -4537,7 +4521,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Artikel: %1 nicht gefunden oder nicht auf Lager!</translation>
     </message>
     <message>
-        <location line="+142"/>
+        <location line="+145"/>
         <location line="+19"/>
         <location line="+39"/>
         <location line="+32"/>
@@ -4557,12 +4541,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
     <message>
-        <location line="-549"/>
+        <location line="-570"/>
         <source>Missing Deliverynote Number</source>
         <translation>Fehlende Lieferscheinnummer</translation>
     </message>
     <message>
-        <location line="+571"/>
+        <location line="+592"/>
         <source>Missing Delivery Address!</source>
         <translation>Lieferadresse fehlt!</translation>
     </message>
@@ -5099,7 +5083,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+25"/>
         <location line="+6"/>
         <source>VAT</source>
         <translation>USt</translation>
@@ -5594,7 +5578,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+202"/>
         <source>eMail</source>
         <translation>E-Mail</translation>
     </message>
@@ -5624,7 +5608,27 @@ Bild - Artikel Nr: %2</translation>
         <translation>Rechtmäßigkeit</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+76"/>
+        <source>VAT</source>
+        <translation>USt.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>no VAT</source>
+        <translation>ohne Ust.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>incl.</source>
+        <translation>inkl.</translation>
+    </message>
+    <message>
+        <location line="+82"/>
+        <source>Subtotal</source>
+        <translation>Zwischensumme</translation>
+    </message>
+    <message>
+        <location line="+15"/>
         <source>Printers</source>
         <translation>Drucker</translation>
     </message>

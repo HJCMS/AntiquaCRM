@@ -82,58 +82,38 @@ void Invoice::constructBody() {
 
   QTextCursor cursor = body->textCursor();
   QTextTableFormat format = tableFormat();
-  format.setBorderBrush(borderBrush());
-  format.setBorderStyle(QTextFrameFormat::BorderStyle_None);
-  // format.setBorderStyle(QTextFrameFormat::BorderStyle_Solid);
-  format.setTopMargin(20);
+  format.setTopMargin(15);
+
   m_billingTable = cursor.insertTable(1, 4, format);
   m_billingTable->setObjectName("billings_table");
-
-  // QFontMetricsF fm(normalFormat().font());
-
-  QTextTableCellFormat cellFormat;
-  cellFormat.setBorderBrush(borderBrush());
-  cellFormat.setTopBorder(0);
-  cellFormat.setBottomBorder(1);
-  cellFormat.setBottomBorderStyle(QTextFrameFormat::BorderStyle_Solid);
 
   QVector<QTextLength> constraints;
   QTextLength::Type type(QTextLength::PercentageLength);
 
-  QString txt;
   QTextTableCell ce00 = m_billingTable->cellAt(0, 0);
   cursor = ce00.firstCursorPosition();
-  ce00.setFormat(cellFormat);
-  cursor.setCharFormat(normalFormat());
-  cursor.setBlockFormat(alignCenter());
-  txt = tr("Article");
-  cursor.insertText(txt);
+  cursor.setCharFormat(boldFormat());
+  cursor.insertText(tr("Article"));
   constraints.append(QTextLength(type, 15)); // 15%
 
   QTextTableCell ce01 = m_billingTable->cellAt(0, 1);
-  ce01.setFormat(cellFormat);
   cursor = ce01.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  txt = tr("Designation");
-  cursor.insertText(txt);
+  cursor.setCharFormat(boldFormat());
+  cursor.insertText(tr("Designation"));
   constraints.append(QTextLength(type, 60)); // 60%
 
   QTextTableCell ce02 = m_billingTable->cellAt(0, 2);
-  ce02.setFormat(cellFormat);
   cursor = ce02.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(boldFormat());
   cursor.setBlockFormat(alignCenter());
-  txt = tr("Quantity");
-  cursor.insertText(txt);
+  cursor.insertText(tr("Quantity"));
   constraints.append(QTextLength(type, 10)); // 10%
 
   QTextTableCell ce03 = m_billingTable->cellAt(0, 3);
-  ce03.setFormat(cellFormat);
   cursor = ce03.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(boldFormat());
   cursor.setBlockFormat(alignCenter());
-  txt = tr("Price");
-  cursor.insertText(txt);
+  cursor.insertText(tr("Price"));
   constraints.append(QTextLength(type, 15)); // 15%
 
   format.clearColumnWidthConstraints();
@@ -143,123 +123,16 @@ void Invoice::constructBody() {
   body->document()->setModified(true);
 }
 
-void Invoice::insertBilling(BillingInfo billing) {
-  int row = m_billingTable->rows();
-  m_billingTable->insertRows(row, 1);
-  p_including_VAT = billing.includeVat;
-  p_packagePrice = (billing.packagePrice != 0) ? billing.packagePrice : 0.00;
-  if (billing.taxValue != p_tax_value)
-    p_tax_value = billing.taxValue;
-
-  p_disable_VAT = billing.disableVat;
-
-  QTextCursor cursor = body->textCursor();
-  QTextTableCell ce00 = m_billingTable->cellAt(row, 0);
-  cursor = ce00.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  cursor.insertText(billing.articleid);
-
-  QTextTableCell ce01 = m_billingTable->cellAt(row, 1);
-  cursor = ce01.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  cursor.insertText(billing.designation);
-
-  QTextTableCell ce02 = m_billingTable->cellAt(row, 2);
-  cursor = ce02.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  cursor.setBlockFormat(alignCenter());
-  p_quantity_sum += billing.quantity;
-  cursor.insertText(QString::number(billing.quantity));
-
-  QTextTableCell ce03 = m_billingTable->cellAt(row, 3);
-  cursor = ce03.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  cursor.setBlockFormat(alignRight());
-  double price = billing.sellPrice;
-  if (billing.quantity > 1) {
-    price = (billing.quantity * billing.sellPrice);
-  }
-  p_fullPrice += price;
-  QString str = QString::number(price, 'f', 2);
-  cursor.insertText(str + " " + p_currency);
-
-  body->document()->setModified(true);
-}
-
-bool Invoice::insertSummaryTable() {
+bool Invoice::insertDeliveryCost() {
   QString text;
   QTextCursor cursor = body->textCursor();
   int row = m_billingTable->rows();
-  m_billingTable->insertRows(row, 3);
-
-  QTextTableCellFormat cellFormat;
-  cellFormat.setBorderBrush(borderBrush());
-  cellFormat.setTopBorder(1);
-  cellFormat.setTopBorderStyle(QTextFrameFormat::BorderStyle_Solid);
-
-  // BEGIN Mehwertsteuer
-  m_billingTable->mergeCells(row, 0, 1, 3);
-  QTextTableCell tc0 = m_billingTable->cellAt(row, 0);
-  tc0.setFormat(cellFormat);
-  cursor = tc0.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  cursor.setBlockFormat(alignRight());
-  text = QString();
-  if (p_disable_VAT) {
-    cursor.insertText(tr("VAT"));
-  } else {
-    if (p_including_VAT) {
-      text.append(tr("incl.") + " ");
-    }
-    text.append(QString::number(p_tax_value));
-    text.append("% " + tr("VAT"));
-    cursor.insertText(text);
-  }
-
-  QTextTableCell tc1 = m_billingTable->cellAt(row, 3);
-  tc1.setFormat(cellFormat);
-  cursor = tc1.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  if (p_disable_VAT) {
-    cursor.setBlockFormat(alignCenter());
-    cursor.insertText("-");
-  } else {
-    cursor.setBlockFormat(alignRight());
-    qreal tax;
-    if (p_including_VAT) {
-      tax = inclVat(p_fullPrice, p_tax_value);
-    } else {
-      tax = addVat(p_fullPrice, p_tax_value);
-    }
-    text = QString::number(tax, 'f', 2);
-    cursor.insertText(text + " " + p_currency);
-  }
-  // END
-
-  // BEGIN Zwischensumme
-  row++;
-  m_billingTable->mergeCells(row, 0, 1, 3);
-  QTextTableCell zc0 = m_billingTable->cellAt(row, 0);
-  cursor = zc0.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  cursor.setBlockFormat(alignRight());
-  text = tr("Subtotal");
-  cursor.insertText(text);
-
-  QTextTableCell zc1 = m_billingTable->cellAt(row, 3);
-  zc1.setFormat(cellFormat);
-  cursor = zc1.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  cursor.setBlockFormat(alignRight());
-  text = QString::number(p_fullPrice, 'f', 2);
-  text.append(" " + p_currency);
-  cursor.insertText(text);
-  // END
+  m_billingTable->insertRows(row, 1);
 
   // BEGIN Versandkosten
-  row++;
   m_billingTable->mergeCells(row, 0, 1, 3);
   QTextTableCell vc0 = m_billingTable->cellAt(row, 0);
+  vc0.setFormat(cellFormat(Printing::Border::Top));
   cursor = vc0.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
@@ -267,15 +140,15 @@ bool Invoice::insertSummaryTable() {
   cursor.insertText(text);
 
   QTextTableCell vc1 = m_billingTable->cellAt(row, 3);
-  vc1.setFormat(cellFormat);
+  vc1.setFormat(cellFormat(Printing::Border::Top));
   cursor = vc1.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
-  text = QString::number(p_packagePrice, 'f', 2);
+  text = QString::number(p_deliveryCost, 'f', 2);
   text.append(" " + p_currency);
   cursor.insertText(text);
-  if (p_packagePrice > 0.01) {
-    p_fullPrice += p_packagePrice;
+  if (p_deliveryCost > 0.1) {
+    p_totalPrice += p_deliveryCost;
   }
   // END
   return true;
@@ -286,28 +159,21 @@ void Invoice::finalizeBillings() {
   m_billingTable->insertRows(row, 1);
   m_billingTable->mergeCells(row, 0, 1, 3);
 
-  QTextTableCellFormat cellFormat;
-  cellFormat.setBorderBrush(borderBrush());
-  cellFormat.setTopBorder(1);
-  cellFormat.setTopBorderStyle(QTextFrameFormat::BorderStyle_Solid);
-
   QTextCursor cursor = body->textCursor();
   QTextTableCell infoCell = m_billingTable->cellAt(row, 0);
+  infoCell.setFormat(cellFormat(Printing::Border::NoBorder));
   cursor = infoCell.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(boldFormat());
   cursor.setBlockFormat(alignRight());
   QString summary(tr("invoice amount"));
   cursor.insertText(summary);
 
   QTextTableCell costCell = m_billingTable->cellAt(row, 3);
-  costCell.setFormat(cellFormat);
+  costCell.setFormat(cellFormat(Printing::Border::Top));
   cursor = costCell.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(boldFormat());
   cursor.setBlockFormat(alignRight());
-  if (!p_including_VAT) {
-    p_fullPrice += addVat(p_fullPrice, p_tax_value);
-  }
-  QString str = QString::number(p_fullPrice, 'f', 2);
+  QString str = QString::number(p_totalPrice, 'f', 2);
   str.append(" " + p_currency);
   cursor.insertText(str);
 }
@@ -322,7 +188,6 @@ void Invoice::setPaymentTerms() {
   QTextTableCell ptCell = m_billingTable->cellAt(row, 0);
   cursor = ptCell.firstCursorPosition();
   cursor.setCharFormat(footerFormat());
-  cursor.setBlockFormat(alignRight());
   if (already_paid)
     text = tr("The order has already been paid for.");
   else
@@ -497,10 +362,12 @@ int Invoice::exec(const QList<BillingInfo> &list, bool paid) {
 
   QListIterator<BillingInfo> it(list);
   while (it.hasNext()) {
-    BillingInfo d = it.next();
-    insertBilling(d);
+    BillingInfo a = it.next();
+    addArticleRow(m_billingTable, a);
   }
-  if (insertSummaryTable())
+  body->document()->setModified(true);
+
+  if (insertDeliveryCost())
     finalizeBillings();
 
   setPaymentTerms();

@@ -57,15 +57,6 @@ protected:
   void constructBody() override;
 
   /**
-   * @brief Artikel in @ref m_articleTable einfügen.
-   * @param articleid   - Artikel Nummer
-   * @param designation - Bezeichnung
-   * @param quantity    - Menge
-   * @param sellPrice   - Preis
-   */
-  void insertBilling(BillingInfo billing);
-
-  /**
    * @brief Versandkosten und Mehwertsteuer Anzeige
    */
   bool insertSummaryTable();

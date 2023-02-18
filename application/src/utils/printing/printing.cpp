@@ -147,6 +147,12 @@ void Printing::readConfiguration() {
   config->endGroup();
 }
 
+const QString Printing::displayPrice(double price) {
+  QString str = QString::number(price, 'f', 2);
+  str.append(" " + QString(p_currency));
+  return str;
+}
+
 const QTextCharFormat Printing::headerFormat() {
   QTextCharFormat f;
   f.setFont(headerFont);
@@ -165,6 +171,14 @@ const QTextCharFormat Printing::normalFormat() {
   return f;
 }
 
+const QTextCharFormat Printing::boldFormat() {
+  QTextCharFormat f;
+  QFont font(normalFont);
+  font.setBold(true);
+  f.setFont(font);
+  return f;
+}
+
 const QTextCharFormat Printing::footerFormat() {
   QTextCharFormat f;
   f.setFont(footerFont);
@@ -179,24 +193,52 @@ const QTextCharFormat Printing::smallFormat() {
 
 const QTextBlockFormat Printing::alignRight() {
   QTextBlockFormat tbf;
-  tbf.setAlignment(Qt::AlignRight);
+  tbf.setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   return tbf;
 }
 
 const QTextBlockFormat Printing::alignCenter() {
   QTextBlockFormat tbf;
-  tbf.setAlignment(Qt::AlignCenter);
+  tbf.setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
   return tbf;
 }
 
 const QTextTableFormat Printing::tableFormat() {
   QTextTableFormat f;
-  f.setWidth(QTextLength(QTextLength().PercentageLength, 90));
-  f.setCellPadding(2);
+  f.setWidth(QTextLength(QTextLength().PercentageLength, 95));
+  f.setPadding(0);
+  f.setCellPadding(0);
   f.setCellSpacing(0);
   f.setTopMargin(0);
-  f.setBorderStyle(QTextFrameFormat::BorderStyle_Solid);
-  f.setAlignment(Qt::AlignCenter);
+  f.setBottomMargin(0);
+  f.setRightMargin(15.0); // 15 Pixel
+  f.setBorder(0.0);
+  f.setBorderBrush(QBrush(Qt::NoBrush));
+  f.setBorderStyle(QTextFrameFormat::BorderStyle_None);
+  f.setAlignment(Qt::AlignRight | Qt::AlignTop);
+  return f;
+}
+
+const QTextTableCellFormat Printing::cellFormat(Printing::Border border) {
+  QTextTableCellFormat f;
+  f.setBorderBrush(borderBrush());
+  f.setPadding(0);
+  if (border == Printing::Border::Top) {
+    f.setTopBorder(1);
+    f.setBottomBorder(0);
+    f.setBorderBrush(borderBrush());
+    f.setTopBorderStyle(QTextFrameFormat::BorderStyle_Solid);
+  } else if (border == Printing::Border::Bottom) {
+    f.setTopBorder(0);
+    f.setBottomBorder(1);
+    f.setBorderBrush(borderBrush());
+    f.setTopBorderStyle(QTextFrameFormat::BorderStyle_Solid);
+  } else {
+    f.setTopBorder(0);
+    f.setBottomBorder(0);
+    f.setBorderBrush(QBrush(Qt::NoBrush));
+    f.setTopBorderStyle(QTextFrameFormat::BorderStyle_None);
+  }
   return f;
 }
 
@@ -327,6 +369,130 @@ const QImage Printing::getWatermark() {
     return QImage::fromData(buffer, type.toLocal8Bit());
   }
   return QImage();
+}
+
+bool Printing::addArticleRow(QTextTable *table, BillingInfo article) {
+  int row = table->rows();
+  table->insertRows(row, 3);
+  bool vat_included = article.vatIncluded;
+  p_articleCalc.insert(article.articleid, article.vatValue);
+  if (article.vatValue != p_tax_value)
+    p_tax_value = article.vatValue;
+
+  // Begin:PrepareData
+  QString _currency(" " + p_currency);
+  // Preisausgabe
+  double _total = 0.00;
+  double _price = article.sellPrice;
+  if (article.quantity > 1) {
+    _price = (article.quantity * article.sellPrice);
+  }
+  // Umsatzsteuerwert
+  QString _vat_display;
+  QString _vat_info(QString::number(article.vatValue));
+  _vat_info.append("% " + tr("VAT"));
+  if (article.vatDisabled) {
+    // Es wird keine Steuer angegeben!
+    _vat_info = tr("no VAT");
+    _total = _price;
+  } else {
+    // Steuerumsatz wird eingebunden!
+    if (vat_included) {
+      // Steuersatz ist im Artikel enthalten!
+      double _v = inclVat(_price, article.vatValue);
+      _vat_display = displayPrice(_v);
+      _vat_info.prepend(tr("incl.") + " ");
+      _total = _price;
+    } else {
+      // Steuersatz wird hinzugefügt!
+      double _v = addVat(_price, article.vatValue);
+      _total = (_price + _v);
+      _vat_display = displayPrice(_v);
+    }
+  }
+  // Preisausgabe im textformat
+  QString _price_txt(QString::number(_price, 'f', 2));
+  _price_txt.append(_currency);
+  // aufrunden
+  p_totalPrice += _total;
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << Qt::endl // INFO
+           << "current price:" << _price << Qt::endl
+           << "vat:" << _vat_info << _vat_display << Qt::endl
+           << "article price:" << _price_txt << Qt::endl
+           << "subtotal price:" << p_totalPrice << Qt::endl;
+#endif
+  // End:PrepareData
+
+  QTextCursor cursor = body->textCursor();
+
+  // Begin:Article
+  QTextTableCell ce00 = table->cellAt(row, 0);
+  ce00.setFormat(cellFormat(Printing::Border::Top));
+  cursor = ce00.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.insertText(article.articleid);
+
+  QTextTableCell ce01 = table->cellAt(row, 1);
+  ce01.setFormat(cellFormat(Printing::Border::Top));
+  cursor = ce01.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.insertText(article.designation);
+
+  QTextTableCell ce02 = table->cellAt(row, 2);
+  ce02.setFormat(cellFormat(Printing::Border::Top));
+  cursor = ce02.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.setBlockFormat(alignCenter());
+  cursor.insertText(QString::number(article.quantity));
+
+  QTextTableCell ce03 = table->cellAt(row, 3);
+  ce03.setFormat(cellFormat(Printing::Border::Top));
+  cursor = ce03.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.setBlockFormat(alignRight());
+  cursor.insertText(_price_txt);
+  // End:Article
+
+  // BEGIN Mehwertsteuer
+  row++;
+  table->mergeCells(row, 0, 1, 3);
+  QTextTableCell tc0 = table->cellAt(row, 0);
+  tc0.setFormat(cellFormat(Printing::Border::NoBorder));
+  cursor = tc0.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.setBlockFormat(alignRight());
+  cursor.insertText(_vat_info);
+  QTextTableCell tc1 = table->cellAt(row, 3);
+  tc1.setFormat(cellFormat(Printing::Border::NoBorder));
+  cursor = tc1.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.setBlockFormat(alignRight());
+  if (article.vatDisabled) {
+    cursor.insertText(displayPrice(0.00));
+  } else {
+    cursor.insertText(_vat_display);
+  }
+  // END
+
+  // BEGIN Zwischensumme
+  row++;
+  table->mergeCells(row, 0, 1, 3);
+  QTextTableCell zs0 = table->cellAt(row, 0);
+  cursor = zs0.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.setBlockFormat(alignRight());
+  cursor.insertText(tr("Subtotal"));
+
+  QTextTableCell zs1 = table->cellAt(row, 3);
+  cursor = zs1.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.setBlockFormat(alignRight());
+  cursor.insertText(displayPrice(p_totalPrice));
+  // END
+
+  return true;
 }
 
 void Printing::addPrinters() {

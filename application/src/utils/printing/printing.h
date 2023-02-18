@@ -58,18 +58,26 @@ struct BillingInfo {
    * @li true  = "inkl. MwSt"
    * @li false = "+ MwSt"
    */
-  bool includeVat;
+  bool vatIncluded;
 
   /**
    * @brief Es fällt keine Mehwertsteuer an!
    */
-  bool disableVat;
+  bool vatDisabled;
 
   /**
    * @brief Mehwertsteuersatz
    * @note Wird Gesamt behandelt!
    */
-  int taxValue;
+  int vatValue;
+
+  /**
+   * @brief Abrechnungs type
+   * @see global.h
+   * 0 = TAX_NOT  ohne Ust.
+   * 1 = TAX_INCL mit USt.
+   */
+  AntiquaCRM::TaxSet vatSet;
 
   /**
    * @brief Versankosten hinzufügen
@@ -112,7 +120,7 @@ private:
 protected:
   /**
    * @brief Ausgewählter Drucker
-   * @note Wenn keiner Ausgwählt wird dann PDF export!
+   * @note Wenn keiner Ausgwählt, dann PDF export!
    */
   QString p_printerName = QString();
 
@@ -160,6 +168,22 @@ protected:
    * @brief Standard Mehrwertsteuersatz
    */
   int p_tax_value;
+
+  /**
+   * @brief Gesamtpreis
+   */
+  qreal p_totalPrice = 0.00;
+
+  /**
+   * @brief Versankosten
+   */
+  qreal p_deliveryCost = 0.00;
+
+  /**
+   * @brief Artikel Mehrwertsteuersatz speicher
+   * QMap<ArticleID,VAT>
+   */
+  QMap<QString, int> p_articleCalc;
 
   /**
    * @brief Wird von @ref readConfiguration() befüllt.
@@ -210,9 +234,19 @@ protected:
   QStatusBar *m_statusBar;
 
   /**
+   * @brief Rahmenrand einstellungen
+   */
+  enum Border { NoBorder = 0, Top = 1, Bottom = 2 };
+
+  /**
    * @brief Firmen Einstellungen lesen
    */
   void readConfiguration();
+
+  /**
+   * @brief Preis in text format
+   */
+  const QString displayPrice(double);
 
   /**
    * @brief Textformat für den Briefkopf
@@ -228,6 +262,11 @@ protected:
    * @brief Standard Textformat
    */
   const QTextCharFormat normalFormat();
+
+  /**
+   * @brief Standard Textformat (Text fett)
+   */
+  const QTextCharFormat boldFormat();
 
   /**
    * @brief Textformat für die Fußnote
@@ -253,6 +292,11 @@ protected:
    * @brief Tabellen Format
    */
   const QTextTableFormat tableFormat();
+
+  /**
+   * @brief Tabellenzellen Format
+   */
+  const QTextTableCellFormat cellFormat(Printing::Border);
 
   /**
    * @brief Tabellenrand Farbe
@@ -305,6 +349,11 @@ protected:
    * Wasserzeichen oben Links einfügen.
    */
   const QImage getWatermark();
+
+  /**
+   * @brief Einen Artikel zur Tabelle hinzufügen.
+   */
+  bool addArticleRow(QTextTable *, BillingInfo);
 
   /**
    * @brief Drucker in @ref selectPrinter einfügen!

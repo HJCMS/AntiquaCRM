@@ -45,16 +45,6 @@ private:
   bool already_paid = false;
 
   /**
-   * @brief Gesamtpreis
-   */
-  qreal p_fullPrice = 0.00;
-
-  /**
-   * @brief Versankosten
-   */
-  qreal p_packagePrice = 0.00;
-
-  /**
    * @brief Standard Druckkopfbreich
    */
   void constructSubject() override;
@@ -65,18 +55,9 @@ private:
   void constructBody() override;
 
   /**
-   * @brief Artikel in @ref m_articleTable einfügen.
-   * @param articleid   - Artikel Nummer
-   * @param designation - Bezeichnung
-   * @param quantity    - Menge
-   * @param sellPrice   - Preis
+   * @brief Versandkosten anzeige
    */
-  void insertBilling(BillingInfo billing);
-
-  /**
-   * @brief Versandkosten und Mehwertsteuer Anzeige
-   */
-  bool insertSummaryTable();
+  bool insertDeliveryCost();
 
   /**
    * @brief Gesamtkosten

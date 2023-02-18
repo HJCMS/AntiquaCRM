@@ -154,52 +154,6 @@ void PaymentReminder::constructBody() {
   body->document()->setModified(true);
 }
 
-void PaymentReminder::insertBilling(BillingInfo billing) {
-  int row = m_billingTable->rows();
-  m_billingTable->insertRows(row, 1);
-  p_including_VAT = billing.includeVat;
-  if (billing.packagePrice > 0)
-    p_packagePrice = billing.packagePrice;
-
-  if (billing.taxValue != p_tax_value)
-    p_tax_value = billing.taxValue;
-
-  p_disable_VAT = billing.disableVat;
-
-  QTextCursor cursor = body->textCursor();
-  QTextTableCell ce00 = m_billingTable->cellAt(row, 0);
-  cursor = ce00.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  cursor.insertText(billing.articleid);
-
-  QTextTableCell ce01 = m_billingTable->cellAt(row, 1);
-  cursor = ce01.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  QString title = billing.designation.left(42);
-  cursor.insertText(title + "...");
-
-  QTextTableCell ce02 = m_billingTable->cellAt(row, 2);
-  cursor = ce02.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  cursor.setBlockFormat(alignCenter());
-  p_quantity_sum += billing.quantity;
-  cursor.insertText(QString::number(billing.quantity));
-
-  QTextTableCell ce03 = m_billingTable->cellAt(row, 3);
-  cursor = ce03.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  cursor.setBlockFormat(alignRight());
-  double price = billing.sellPrice;
-  if (billing.quantity > 1) {
-    price = (billing.quantity * billing.sellPrice);
-  }
-  p_fullPrice += price;
-  QString str = QString::number(price, 'f', 2);
-  cursor.insertText(str + " " + p_currency);
-
-  body->document()->setModified(true);
-}
-
 bool PaymentReminder::insertSummaryTable() {
   QString text;
   QTextCursor cursor = body->textCursor();
@@ -241,9 +195,9 @@ bool PaymentReminder::insertSummaryTable() {
     cursor.setBlockFormat(alignRight());
     qreal tax;
     if (p_including_VAT) {
-      tax = inclVat(p_fullPrice, p_tax_value);
+      tax = inclVat(p_totalPrice, p_tax_value);
     } else {
-      tax = addVat(p_fullPrice, p_tax_value);
+      tax = addVat(p_totalPrice, p_tax_value);
     }
     text = QString::number(tax, 'f', 2);
     cursor.insertText(text + " " + p_currency);
@@ -265,7 +219,7 @@ bool PaymentReminder::insertSummaryTable() {
   cursor = zc1.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
-  text = QString::number(p_fullPrice, 'f', 2);
+  text = QString::number(p_totalPrice, 'f', 2);
   text.append(" " + p_currency);
   cursor.insertText(text);
   // END
@@ -285,11 +239,11 @@ bool PaymentReminder::insertSummaryTable() {
   cursor = vc1.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
-  text = QString::number(p_packagePrice, 'f', 2);
+  text = QString::number(p_deliveryCost, 'f', 2);
   text.append(" " + p_currency);
   cursor.insertText(text);
-  if (p_packagePrice > 0.01) {
-    p_fullPrice += p_packagePrice;
+  if (p_deliveryCost > 0.01) {
+    p_totalPrice += p_deliveryCost;
   }
   // END
   return true;
@@ -319,9 +273,9 @@ void PaymentReminder::finalizeBillings() {
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
   if (!p_including_VAT) {
-    p_fullPrice += addVat(p_fullPrice, p_tax_value);
+    p_totalPrice += addVat(p_totalPrice, p_tax_value);
   }
-  QString str = QString::number(p_fullPrice, 'f', 2);
+  QString str = QString::number(p_totalPrice, 'f', 2);
   str.append(" " + p_currency);
   cursor.insertText(str);
 }
@@ -501,9 +455,11 @@ int PaymentReminder::exec(const QList<BillingInfo> &billing) {
 
   QListIterator<BillingInfo> it(billing);
   while (it.hasNext()) {
-    BillingInfo d = it.next();
-    insertBilling(d);
+    BillingInfo a = it.next();
+    addArticleRow(m_billingTable, a);
   }
+  body->document()->setModified(true);
+
   if (insertSummaryTable())
     finalizeBillings();
 

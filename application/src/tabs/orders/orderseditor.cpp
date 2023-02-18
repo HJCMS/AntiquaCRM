@@ -240,6 +240,14 @@ const OrdersEditor::IdsCheck OrdersEditor::getCheckEssentialsIds() {
   return id_conf;
 }
 
+AntiquaCRM::TaxSet OrdersEditor::getPrintVatset() {
+  QString country = getDataValue("o_vat_country").toString();
+  if (country.isEmpty() || country == "XX")
+    return AntiquaCRM::TaxSet::TAX_NOT;
+
+  return AntiquaCRM::TaxSet::TAX_INCL;
+}
+
 int OrdersEditor::getVatValue(int index) {
   switch (static_cast<AntiquaCRM::ArticleType>(index)) {
   case (AntiquaCRM::ArticleType::BOOK):
@@ -623,8 +631,10 @@ const QList<BillingInfo> OrdersEditor::queryBillingInfo(qint64 oid,
     QSqlQuery q = m_sql->query(sqlFile.getQueryContent());
     if (q.size() > 0) {
       // Umsatzsteuer ermitteln.
-      int _vat_level = getInputEdit("o_vat_levels")->value().toInt();
-      // qDebug() << Q_FUNC_INFO << _vat_level;
+      bool _vat_disabled =
+          (getDataValue("o_vat_levels").toInt() == 0) ? true : false;
+      bool _vat_included = getDataValue("o_vat_included").toBool();
+      AntiquaCRM::TaxSet _vat_set = getPrintVatset();
       QRegExp strip("\\-\\s+\\-");
       while (q.next()) {
         BillingInfo d;
@@ -632,9 +642,10 @@ const QList<BillingInfo> OrdersEditor::queryBillingInfo(qint64 oid,
         d.designation = q.value("title").toString().replace(strip, "-");
         d.quantity = q.value("quant").toInt();
         d.sellPrice = q.value("sellprice").toDouble();
-        d.includeVat = q.value("o_vat_included").toBool();
-        d.taxValue = getVatValue(q.value("a_type").toInt());
-        d.disableVat = (_vat_level == 0);
+        d.vatSet = _vat_set;
+        d.vatIncluded = _vat_included;
+        d.vatValue = getVatValue(q.value("a_type").toInt());
+        d.vatDisabled = _vat_disabled;
         d.packagePrice = q.value("packageprice").toDouble();
         list.append(d);
       }
