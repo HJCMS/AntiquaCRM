@@ -63,14 +63,13 @@ void CustomersStatusBar::setHistoryAction(int index) {
   }
 
   case (History::LastMonth): {
-    q.append(
-        "date_part('month',c_changed)=date_part('month',CURRENT_DATE - 31)");
-    q.append(" AND " + year);
+    q.append("date_part('month',c_changed)=date_part('month',CURRENT_DATE - 31)");
+    q.append(" AND date_part('year',c_since)=date_part('year',CURRENT_DATE)");
     break;
   }
 
   case (History::ThisYear): {
-    q.append(year);
+    q.append("date_part('year',c_since)=date_part('year',CURRENT_DATE)");
     break;
   }
 
