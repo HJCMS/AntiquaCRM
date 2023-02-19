@@ -34,6 +34,7 @@ SET (query_tables_FILES
  query_tab_prints_main.sql
  query_tab_various_main.sql
  query_template_keys.sql
+ query_tpl_mail_article.sql
  query_views.sql
  select_statement_postalcode_tables.sql
  select_statement_template_body.sql

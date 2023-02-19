@@ -309,6 +309,7 @@ void Invoice::openPrintDialog() {
 void Invoice::setInvoice(qint64 orderId,    /* Bestellnummer */
                          qint64 customerId, /* Kundennummer */
                          qint64 invoiceId,  /* Rechnungsnummer */
+                         qreal deliverprice, /* Paketpreis */
                          const QString &deliverNoteId) {
   if (orderId < 1) {
     warningMessageBox(tr("There is no Order-Id to generate this invoice!"));
@@ -333,6 +334,7 @@ void Invoice::setInvoice(qint64 orderId,    /* Bestellnummer */
     return;
   }
   p_deliveryId = deliverNoteId;
+  p_deliveryCost = deliverprice;
 }
 
 int Invoice::exec() {

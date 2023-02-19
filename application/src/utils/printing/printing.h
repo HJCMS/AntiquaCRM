@@ -54,13 +54,6 @@ struct BillingInfo {
   double sellPrice;
 
   /**
-   * @brief Mehwertsteuerangabe
-   * @li true  = "inkl. MwSt"
-   * @li false = "+ MwSt"
-   */
-  bool vatIncluded;
-
-  /**
    * @brief Es fällt keine Mehwertsteuer an!
    */
   bool vatDisabled;
@@ -74,10 +67,8 @@ struct BillingInfo {
   /**
    * @brief Abrechnungs type
    * @see global.h
-   * 0 = TAX_NOT  ohne Ust.
-   * 1 = TAX_INCL mit USt.
    */
-  AntiquaCRM::TaxSet vatSet;
+  AntiquaCRM::SalesTax vatSet;
 
   /**
    * @brief Versankosten hinzufügen

@@ -3949,7 +3949,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Schließt das Fenster</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+24"/>
         <source>Please use the Finish button!</source>
         <translation>Bitte benutzen Sie den Beenden knopf!</translation>
     </message>
@@ -3959,7 +3959,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Ein Fehler ist aufgetreten</translation>
     </message>
     <message>
-        <location line="+142"/>
+        <location line="+154"/>
         <source>Missing Attachment</source>
         <translation>Fehlender Anhang</translation>
     </message>
@@ -3967,7 +3967,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>MailTemplateKeys</name>
     <message>
-        <location filename="../utils/mailing/mailtemplatekeys.cpp" line="+20"/>
+        <location filename="../utils/mailing/mailtemplatekeys.cpp" line="+42"/>
         <source>Dear Mr.</source>
         <translation>Sehr geehrter Herr</translation>
     </message>
@@ -3980,6 +3980,16 @@ Bild - Artikel Nr: %2</translation>
         <location line="+3"/>
         <source>Dear Ladies and Gentlemen</source>
         <translation>Sehr geehrte(r)*</translation>
+    </message>
+    <message>
+        <location line="+59"/>
+        <source>Article</source>
+        <translation>Artikel</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Quantity</source>
+        <translation>Menge</translation>
     </message>
 </context>
 <context>
@@ -7593,13 +7603,18 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>without VAT</source>
+        <source>without sales tax</source>
         <translation>ohne Umsatzsteuer</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>with VAT</source>
+        <source>with sales tax</source>
         <translation>mit Umsatzsteuer</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>including sales tax</source>
+        <translation>inklusive Umsatzsteuer</translation>
     </message>
     <message>
         <location line="+54"/>

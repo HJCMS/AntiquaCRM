@@ -26,7 +26,6 @@ public:
   IntSpinBox *o_delivery_package;
   SelectEuCountry *o_vat_country;
   TaxLevelBox *o_vat_levels;
-  BoolBox *o_vat_included;
   BoolBox *o_delivery_add_price;
   ShowPaymentMethod *o_payment_method;
   LineEdit *o_provider_name;

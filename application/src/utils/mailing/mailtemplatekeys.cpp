@@ -4,12 +4,34 @@
 #include "mailtemplatekeys.h"
 
 #include <QDebug>
-#include <QJsonDocument>
 #include <QJsonValue>
+#include <QJsonArray>
 #include <QMetaObject>
 
 MailTemplateKeys::MailTemplateKeys(QObject *parent) : QThread{parent} {
   setObjectName("mail_templates");
+}
+
+const QString MailTemplateKeys::stringValue(const QString &key) {
+  if (p_data.size() < 1)
+    return QString();
+
+  if (p_data.contains(key) && p_data.value(key).type() == QVariant::String)
+    return p_data.value(key).toString().trimmed();
+
+  return QString();
+}
+
+const QString MailTemplateKeys::zerofilled(const QString &key) {
+  if (p_data.size() < 1 || !p_data.contains(key))
+    return QString();
+
+  QString str = AntiquaCRM::AUtil::zerofill(p_data.value(key).toInt());
+  return str.trimmed();
+}
+
+bool MailTemplateKeys::checkRequirements() {
+  return (p_data.contains("c_firstname") && p_data.contains("c_lastname"));
 }
 
 const QString MailTemplateKeys::salutation() {
@@ -63,7 +85,36 @@ bool MailTemplateKeys::setData(QMap<QString, QVariant> &data) {
     it.next();
     p_data.insert(it.key(), it.value());
   }
-  return (p_data.size() > 0);
+  if (p_data.size() > 0 && checkRequirements()) {
+    p_data.insert("CRM_SALUTATION", salutation());
+    p_data.insert("CRM_CUSTOMER_NAME", completeName());
+    return true;
+  }
+  return false;
+}
+
+const QString MailTemplateKeys::articleList() {
+  QStringList list;
+  QJsonArray array = p_data.value("a_article_list").toJsonArray();
+  if (array.size() > 0) {
+    int l = 1;
+    for (int i = 0; i < array.size(); i++) {
+      QJsonObject obj = array[i].toObject();
+      QString line(AntiquaCRM::AUtil::zerofill(l, 2) + ")");
+      // Article
+      int aid = obj.value("article").toInt();
+      QString aid_str = AntiquaCRM::AUtil::zerofill(aid);
+      line.append(" " + tr("Article") + ": " + aid_str);
+      // Quantity
+      line.append(" " + tr("Quantity") + ": ");
+      line.append(QString::number(obj.value("count").toInt()));
+      // Title
+      line.append(" - " + obj.value("title").toString());
+      list.append(line);
+      l++;
+    }
+  }
+  return list.join("\n");
 }
 
 const QVariant MailTemplateKeys::getData(const QString &key) {
@@ -86,24 +137,38 @@ const QString MailTemplateKeys::convert(const QString &key) {
   if (search == "CRM_CUSTOMER_EMAIL")
     return customerMail();
 
-  if (search == "CRM_CUSTOMER_ID")
-    return AntiquaCRM::AUtil::zerofill(p_data.value("c_id").toInt());
-
-  if (search == "CRM_ORDER_ID" || search == "CRM_PROVIDER_ORDER_ID")
-    return AntiquaCRM::AUtil::zerofill(p_data.value("o_id").toInt());
-
-  if (search == "CRM_INVOICE_ID")
-    return AntiquaCRM::AUtil::zerofill(p_data.value("o_invoice_id").toInt());
-
-  if (search == "CRM_ARTICLE_ID")
-    return AntiquaCRM::AUtil::zerofill(p_data.value("a_article_id").toInt());
-
   if (search == "CRM_SALUTATION")
     return salutation();
 
+  if (search == "CRM_CUSTOMER_ID")
+    return zerofilled("c_id");
+
+  if (search == "CRM_ORDER_ID")
+    return zerofilled("o_id");
+
+  if (search == "CRM_PROVIDER_NAME")
+    return stringValue("o_provider_name");
+
+  if (search == "CRM_PROVIDER_ORDER_ID")
+    return stringValue("o_provider_order_id");
+
+  if (search == "CRM_INVOICE_ID")
+    return zerofilled("o_invoice_id");
+
+  if (search == "CRM_ARTICLE_ID")
+    return stringValue("a_article_id");
+
+  if (search == "CRM_ARTICLE_LIST")
+    return articleList();
+
   if (search.contains("COMPANY_")) {
-    return p_data.value(search).toString();
+    return stringValue(search);
   }
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << "MailTemplateKeys:"
+           << "Key „" << search << "“ not exists in „p_data“ Map!";
+#endif
 
   return QString();
 }

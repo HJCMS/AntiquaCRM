@@ -105,6 +105,7 @@ public:
   void setInvoice(qint64 orderId,    /* Bestellnummer */
                   qint64 customerId, /* Kundennummer */
                   qint64 invoiceId,  /* Rechnungsnummer */
+                  qreal deliverprice, /* Paketsender Preis */
                   const QString &deliverNoteId);
 
   int exec() override;

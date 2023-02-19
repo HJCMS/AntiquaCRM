@@ -74,7 +74,7 @@ private:
    * @brief Umsatzsteuersatz einbinden oder nicht
    * Ist abhängig von EU-Land oder nicht?
    */
-  AntiquaCRM::TaxSet getPrintVatset();
+  AntiquaCRM::SalesTax getSalesTax();
 
   /**
    * @brief Umsatzsteuersatz durch Artikeltyp bestimmen.

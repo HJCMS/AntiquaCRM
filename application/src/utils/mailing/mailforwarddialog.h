@@ -15,6 +15,8 @@
 #include <QRegularExpression>
 #include <QStatusBar>
 #include <QWidget>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 class MailBody;
 class MailTemplateKeys;
@@ -45,6 +47,8 @@ private:
 
   QStatusBar *m_statusBar;
   QRegularExpression p_expression = QRegularExpression("(@[A-Z_]+@)+");
+
+  const QJsonObject articleObject(const QVariant &);
 
   void closeEvent(QCloseEvent *) override;
 

@@ -113,6 +113,7 @@ void OrdersEditor::setInputFields() {
   ignoreFields << "o_delivered";
   // @deprecated o_provider_order
   ignoreFields << "o_provider_order";
+  ignoreFields << "o_vat_included";
   // PayPal TaxId
   ignoreFields << "o_payment_confirmed";
 
@@ -240,12 +241,15 @@ const OrdersEditor::IdsCheck OrdersEditor::getCheckEssentialsIds() {
   return id_conf;
 }
 
-AntiquaCRM::TaxSet OrdersEditor::getPrintVatset() {
+AntiquaCRM::SalesTax OrdersEditor::getSalesTax() {
   QString country = getDataValue("o_vat_country").toString();
-  if (country.isEmpty() || country == "XX")
-    return AntiquaCRM::TaxSet::TAX_NOT;
-
-  return AntiquaCRM::TaxSet::TAX_INCL;
+  if (country.isEmpty() || country == "XX") {
+    qInfo("No Eurpean country - set invoice tax to no!");
+    getInputEdit("o_vat_levels")->setValue(AntiquaCRM::SalesTax::TAX_NOT);
+    return AntiquaCRM::SalesTax::TAX_NOT;
+  }
+  int i = getDataValue("o_vat_levels").toInt();
+  return static_cast<AntiquaCRM::SalesTax>(i);
 }
 
 int OrdersEditor::getVatValue(int index) {
@@ -633,8 +637,7 @@ const QList<BillingInfo> OrdersEditor::queryBillingInfo(qint64 oid,
       // Umsatzsteuer ermitteln.
       bool _vat_disabled =
           (getDataValue("o_vat_levels").toInt() == 0) ? true : false;
-      bool _vat_included = getDataValue("o_vat_included").toBool();
-      AntiquaCRM::TaxSet _vat_set = getPrintVatset();
+      AntiquaCRM::SalesTax _vat_set = getSalesTax();
       QRegExp strip("\\-\\s+\\-");
       while (q.next()) {
         BillingInfo d;
@@ -643,7 +646,6 @@ const QList<BillingInfo> OrdersEditor::queryBillingInfo(qint64 oid,
         d.quantity = q.value("quant").toInt();
         d.sellPrice = q.value("sellprice").toDouble();
         d.vatSet = _vat_set;
-        d.vatIncluded = _vat_included;
         d.vatValue = getVatValue(q.value("a_type").toInt());
         d.vatDisabled = _vat_disabled;
         d.packagePrice = q.value("packageprice").toDouble();
@@ -673,9 +675,6 @@ void OrdersEditor::setDefaultValues() {
   m_tableData->setValue("o_vat_levels", vat);
   setDataField(m_tableData->getProperties("o_vat_levels"),
                m_tableData->getValue("o_vat_levels"));
-  m_tableData->setValue("o_vat_included", (vat != 0));
-  setDataField(m_tableData->getProperties("o_vat_included"),
-               m_tableData->getValue("o_vat_included"));
   m_tableData->setValue("o_delivery_add_price", (vat == 0));
   setDataField(m_tableData->getProperties("o_delivery_add_price"),
                m_tableData->getValue("o_delivery_add_price"));
@@ -818,8 +817,13 @@ void OrdersEditor::createPrintInvoiceNote() {
     return;
   }
 
+  qreal pkgPrice = 0.00;
+  if (getDataValue("o_delivery_add_price").toBool()) {
+    pkgPrice = m_costSettings->o_delivery_service->getPackagePrice();
+  }
+
   Invoice *m_d = new Invoice(this);
-  m_d->setInvoice(ids.or_id, ids.cu_id, ids.in_id, did);
+  m_d->setInvoice(ids.or_id, ids.cu_id, ids.in_id, pkgPrice, did);
   QString c_add = getDataValue("c_postal_address").toString();
   m_d->setCustomerAddress(c_add);
 
@@ -1146,9 +1150,7 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
   // Die Paket Verfolgungsnummer muss Manuell gesetzt werden!
   prOrder.setValue("o_delivery_send_id", "");
   // Der Standard bei Büchern ist "reduziert"!
-  prOrder.setValue("o_vat_levels", 1);
-  // Standard Steuer eingebunden
-  prOrder.setValue("o_vat_included", true);
+  prOrder.setValue("o_vat_levels", AntiquaCRM::SalesTax::TAX_INCL);
   // Lieferkosten!
   prOrder.setValue("o_delivery_add_price", false);
   // Standard Lieferdienst

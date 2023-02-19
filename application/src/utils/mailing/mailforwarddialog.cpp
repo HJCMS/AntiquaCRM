@@ -63,6 +63,11 @@ MailForwardDialog::MailForwardDialog(QWidget *parent) : QDialog{parent} {
   connect(btn_email, SIGNAL(clicked()), this, SLOT(setMailCommand()));
 }
 
+const QJsonObject MailForwardDialog::articleObject(const QVariant &v) {
+  QJsonDocument doc = QJsonDocument::fromJson(v.toByteArray());
+  return doc.object();
+}
+
 void MailForwardDialog::closeEvent(QCloseEvent *e) {
   if (e->type() == QEvent::Close) {
     e->setAccepted(false);
@@ -152,27 +157,39 @@ bool MailForwardDialog::queryDataFields(int customerId) {
       }
     }
 
-    sql = ("SELECT * FROM article_orders");
-    sql.append(" WHERE a_order_id=" + QString::number(p_orderId));
-    sql.append(" ORDER BY a_order_id;");
-    q = m_sql->query(sql);
-    if (q.size()) {
-      QSqlRecord rec = m_sql->record("article_orders");
-      while (q.next()) {
-        for (int r = 0; r < rec.count(); r++) {
-          QSqlField sf = rec.field(r);
-          QString fName = sf.name();
-          QVariant v = q.value(sf.name());
-          if (v.isValid() && v.type() == QVariant::String &&
-              v.toString().isEmpty())
-            continue;
-
-          buffer.insert(fName, v);
+    // Article Content
+    AntiquaCRM::ASqlFiles tplArticle("query_tpl_mail_article");
+    if (tplArticle.openTemplate()) {
+      tplArticle.setWhereClause("a_order_id=" + QString::number(p_orderId));
+      sql = tplArticle.getQueryContent();
+      q = m_sql->query(sql);
+      if (q.size()) {
+        QStringList list;
+        QJsonArray articles;
+        while (q.next()) {
+          list << AntiquaCRM::AUtil::zerofill(q.value("a_article_id").toInt());
+          articles.append(articleObject(q.value("a_article_display")));
         }
+        buffer.insert("a_article_id", list.join(","));
+        buffer.insert("a_article_list", articles);
+      } else {
+#ifdef ANTIQUA_DEVELOPEMENT
+        qDebug() << Q_FUNC_INFO << m_sql->lastError();
+#else
+        qWarning("SQL error occurred in mail article templates");
+#endif
       }
     }
   }
   // END
+
+  //#ifdef ANTIQUA_DEVELOPEMENT
+  //  QMapIterator<QString, QVariant> it(buffer);
+  //  while (it.hasNext()) {
+  //    it.next();
+  //    qDebug() << "Mail-tpl-Keys:" << it.key() << it.value();
+  //  }
+  //#endif
 
   m_keys->setData(buffer);
   return true;

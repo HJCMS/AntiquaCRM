@@ -352,15 +352,16 @@ namespace AntiquaCRM {
  Q_ENUM_NS(AntiquaCRM::ArticleType)
 
  /**
-  * @brief TaxSet
+  * @brief SalesTax
   * Rechnungsmöglichkeiten bei der Umsatzsteuerangabe (UStG §14)
   * @section inventory
   */
- enum TaxSet {
-  TAX_NOT = 0,  /**< ohne Ust. */
-  TAX_INCL = 1, /**< mit USt.  */
+ enum SalesTax {
+  TAX_NOT = 0,  /**< without sales tax */
+  TAX_INCL = 1, /**< including sales tax */
+  TAX_WITH = 2  /**< with sales tax  */
  };
- Q_ENUM_NS(AntiquaCRM::TaxSet)
+ Q_ENUM_NS(AntiquaCRM::SalesTax)
 
  /**
   * @brief MediaType

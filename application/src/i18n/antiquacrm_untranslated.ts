@@ -3945,7 +3945,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+24"/>
         <source>Please use the Finish button!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3955,7 +3955,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+142"/>
+        <location line="+154"/>
         <source>Missing Attachment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3963,7 +3963,7 @@ Image - Article Id: %2</source>
 <context>
     <name>MailTemplateKeys</name>
     <message>
-        <location filename="../utils/mailing/mailtemplatekeys.cpp" line="+20"/>
+        <location filename="../utils/mailing/mailtemplatekeys.cpp" line="+42"/>
         <source>Dear Mr.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3975,6 +3975,16 @@ Image - Article Id: %2</source>
     <message>
         <location line="+3"/>
         <source>Dear Ladies and Gentlemen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+59"/>
+        <source>Article</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Quantity</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7587,12 +7597,17 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>without VAT</source>
+        <source>without sales tax</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>with VAT</source>
+        <source>with sales tax</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>including sales tax</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

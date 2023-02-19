@@ -9,8 +9,9 @@
 TaxLevelBox::TaxLevelBox(QWidget *parent) : InputEdit{parent} {
   m_box = new AntiquaComboBox(this);
   m_box->setToolTip(tr("Tax"));
-  m_box->addItem(tr("without VAT"), 0);
-  m_box->addItem(tr("with VAT"), 1);
+  m_box->addItem(tr("without sales tax"), AntiquaCRM::SalesTax::TAX_NOT);
+  m_box->addItem(tr("with sales tax"), AntiquaCRM::SalesTax::TAX_WITH);
+  m_box->addItem(tr("including sales tax"), AntiquaCRM::SalesTax::TAX_INCL);
   m_layout->addWidget(m_box);
   setModified(false);
   setRequired(true);

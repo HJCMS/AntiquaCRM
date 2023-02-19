@@ -36,29 +36,18 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
       tr("add delivery package price to current shipping."));
   o_delivery_add_price->setChecked(false);
   o_delivery_add_price->setRequired(false);
-  firstLayout->addWidget(o_delivery_add_price, p1_row++, 1, 1, 1);
+  firstLayout->addWidget(o_delivery_add_price, p1_row++, 1, 1, 2);
 
-  QHBoxLayout *vatLayout = new QHBoxLayout;
   o_vat_levels = new TaxLevelBox(m_costdeliveryTab);
   o_vat_levels->setObjectName("o_vat_levels");
   o_vat_levels->setInfo(tr("Sales tax in invoice"));
-  o_vat_levels->setValue(1);
-  vatLayout->addWidget(o_vat_levels);
-
-  o_vat_included = new BoolBox(m_costdeliveryTab);
-  o_vat_included->setInfo(tr("vat included"));
-  o_vat_included->setObjectName("o_vat_included");
-  o_vat_included->setToolTip(
-      tr("Normally the vat is included in Book articles. Uncheck it to enable "
-         "add VAT in Printing Invoice."));
-  o_vat_included->setChecked(true);
-  vatLayout->addWidget(o_vat_included);
+  o_vat_levels->setValue(AntiquaCRM::SalesTax::TAX_INCL);
+  firstLayout->addWidget(o_vat_levels, p1_row, 0, 1, 1);
 
   o_vat_country = new SelectEuCountry(m_costdeliveryTab);
   o_vat_country->setInfo(tr("Country"));
   o_vat_country->setObjectName("o_vat_country");
-  vatLayout->addWidget(o_vat_country);
-  firstLayout->addLayout(vatLayout, p1_row++, 0, 1, 3);
+  firstLayout->addWidget(o_vat_country, p1_row++, 1, 1, 2);
 
   o_provider_name = new LineEdit(m_costdeliveryTab);
   o_provider_name->setObjectName("o_provider_name");
@@ -70,7 +59,7 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
   o_provider_order_id->setObjectName("o_provider_order_id");
   o_provider_order_id->setInfo(tr("Settlement number"));
   o_provider_order_id->setRequired("true");
-  firstLayout->addWidget(o_provider_order_id, p1_row++, 1, 1, 1);
+  firstLayout->addWidget(o_provider_order_id, p1_row++, 1, 1, 2);
 
   o_payment_method = new ShowPaymentMethod(m_costdeliveryTab);
   o_payment_method->setObjectName("o_payment_method");

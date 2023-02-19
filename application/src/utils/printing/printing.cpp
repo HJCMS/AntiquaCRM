@@ -374,7 +374,6 @@ const QImage Printing::getWatermark() {
 bool Printing::addArticleRow(QTextTable *table, BillingInfo article) {
   int row = table->rows();
   table->insertRows(row, 3);
-  bool vat_included = article.vatIncluded;
   p_articleCalc.insert(article.articleid, article.vatValue);
   if (article.vatValue != p_tax_value)
     p_tax_value = article.vatValue;
@@ -391,25 +390,24 @@ bool Printing::addArticleRow(QTextTable *table, BillingInfo article) {
   QString _vat_display;
   QString _vat_info(QString::number(article.vatValue));
   _vat_info.append("% " + tr("VAT"));
-  if (article.vatDisabled) {
-    // Es wird keine Steuer angegeben!
-    _vat_info = tr("no VAT");
+  if (article.vatSet == AntiquaCRM::SalesTax::TAX_INCL) {
+    // Steuersatz ist im Artikel enthalten!
+    double _v = inclVat(_price, article.vatValue);
+    _vat_display = displayPrice(_v);
+    _vat_info.prepend(tr("incl.") + " ");
     _total = _price;
+  } else if (article.vatSet == AntiquaCRM::SalesTax::TAX_WITH) {
+    // Steuersatz wird hinzugefügt!
+    double _v = addVat(_price, article.vatValue);
+    _total = (_price + _v);
+    _vat_display = displayPrice(_v);
   } else {
-    // Steuerumsatz wird eingebunden!
-    if (vat_included) {
-      // Steuersatz ist im Artikel enthalten!
-      double _v = inclVat(_price, article.vatValue);
-      _vat_display = displayPrice(_v);
-      _vat_info.prepend(tr("incl.") + " ");
-      _total = _price;
-    } else {
-      // Steuersatz wird hinzugefügt!
-      double _v = addVat(_price, article.vatValue);
-      _total = (_price + _v);
-      _vat_display = displayPrice(_v);
-    }
+    // Es wird keine Steuer angegeben!
+    _vat_display = "-";
+    _vat_info = tr("without sales tax");
+    _total = _price;
   }
+
   // Preisausgabe im textformat
   QString _price_txt(QString::number(_price, 'f', 2));
   _price_txt.append(_currency);
