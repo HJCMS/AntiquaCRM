@@ -4,14 +4,21 @@
 #include "taxlevelbox.h"
 
 #include <ASettings>
-#include <QDebug>
+#include <QIcon>
 
 TaxLevelBox::TaxLevelBox(QWidget *parent) : InputEdit{parent} {
   m_box = new AntiquaComboBox(this);
   m_box->setToolTip(tr("Tax"));
-  m_box->addItem(tr("without sales tax"), AntiquaCRM::SalesTax::TAX_NOT);
-  m_box->addItem(tr("with sales tax"), AntiquaCRM::SalesTax::TAX_WITH);
-  m_box->addItem(tr("including sales tax"), AntiquaCRM::SalesTax::TAX_INCL);
+
+  m_box->addItem(QIcon("://icons/db_remove.png"), tr("without sales tax"),
+                 AntiquaCRM::SalesTax::TAX_NOT);
+
+  m_box->addItem(QIcon("://icons/db_add.png"), tr("with sales tax"),
+                 AntiquaCRM::SalesTax::TAX_WITH);
+
+  m_box->addItem(QIcon("://icons/db_comit.png"), tr("including sales tax"),
+                 AntiquaCRM::SalesTax::TAX_INCL);
+
   m_layout->addWidget(m_box);
   setModified(false);
   setRequired(true);
@@ -28,8 +35,17 @@ void TaxLevelBox::reset() {
 }
 
 void TaxLevelBox::setValue(const QVariant &val) {
-  int index = m_box->findData(val.toInt(), Qt::UserRole);
-  m_box->setCurrentIndex((index == 0) ? 0 : 1);
+  if (val.type() != QVariant::Int) {
+    qWarning("Invalid sales tax value!");
+    return;
+  }
+
+  for (int i = 0; i < m_box->count(); i++) {
+    if (m_box->itemData(i, Qt::UserRole).toInt() == val.toInt()) {
+      m_box->setCurrentIndex(i);
+      break;
+    }
+  }
 }
 
 void TaxLevelBox::setFocus() {

@@ -7,12 +7,14 @@
 
 #include <AGlobal>
 #include <AntiquaInputEdit>
+#include <QIcon>
 
 class SelectEuCountry final : public InputEdit {
   Q_OBJECT
 
 private:
   AntiquaComboBox *m_box;
+  const QIcon entryIcon(const QString &) const;
   void loadDataset() override;
 
 private Q_SLOTS:

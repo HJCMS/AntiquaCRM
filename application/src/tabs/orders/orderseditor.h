@@ -72,26 +72,41 @@ private:
 
   /**
    * @brief Umsatzsteuersatz einbinden oder nicht
-   * Ist abhängig von EU-Land oder nicht?
+   * Sehe nach ob „o_vat_country“ gesetzt und nicht „XX“="Kein EU Land" ist.
+   * Abhängig von diesem Wert den Paramter AntiquaCRM::SalesTax setzen.
    */
-  AntiquaCRM::SalesTax getSalesTax();
+  AntiquaCRM::SalesTax initSalesTax();
 
   /**
-   * @brief Umsatzsteuersatz durch Artikeltyp bestimmen.
+   * @brief Umsatzsteuersatz durch ArtikelTyp bestimmen.
    * @param int - AntiquaCRM::ArticleType
+   * Die Rückgabewerte „Standard“ oder „Reduziert“ werden bei den Einstellungen
+   * in der Gruppe „payment“ gesetzt!
    */
-  int getVatValue(int);
+  int getSalesTaxValue(int);
 
   /**
-   * @brief Umsatzsteuertype durch Artikeltyp bestimmen.
+   * @brief Umsatzsteuerart durch ArtikelTyp bestimmen.
    * @param int - AntiquaCRM::ArticleType
+   * @return 0|1 = (0:Standard oder 1:Reduziert)
+   * Ermittelt an Hand des ArtikelTyps welcher Umsatzsteuersatz verwendet wird!
    */
-  int getVatType(int);
+  int getSalesTaxType(int);
 
   /**
-   * @brief Abfrage Lieferservice.
+   * @brief Abfrage Paketlieferservice.
+   * @param current - Abfrageart
+   *  @li true  - „currentDeliveryService()“ verwenden.
+   *  @li false - „defaultDeliveryService()“ verwenden.
    */
-  inline const QPair<int, int> deliveryService();
+  const QPair<int, int> getDeliveryService(bool current = false);
+
+  /**
+   * @brief Lieferservice setzen
+   * Holse aus Daten von AntiquaCRM::ASqlDataQuery den Paketdienstleister
+   * @note Kann erst nach einer Abfrage verwendet werden.
+   */
+  void setDeliveryService();
 
   /**
    * @brief Sql-Abfrage-Ergebnis Importieren

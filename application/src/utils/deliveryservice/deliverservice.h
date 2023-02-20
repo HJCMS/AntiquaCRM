@@ -60,6 +60,11 @@ public:
   void setDeliveryService(const QPair<int, int> &);
 
   /**
+   * @brief Aktuelle Auswahl zurück geben!
+   */
+  const QPair<int, int> currentDeliveryService();
+
+  /**
    * @brief Standard Paketdienst
    */
   const QPair<int, int> defaultDeliveryService();

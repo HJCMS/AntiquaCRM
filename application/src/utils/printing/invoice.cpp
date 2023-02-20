@@ -4,7 +4,6 @@
 #include "invoice.h"
 #include "texteditor.h"
 
-#include <QBrush>
 #include <QDate>
 #include <QDebug>
 #include <QDir>
@@ -25,55 +24,83 @@ Invoice::Invoice(QWidget *parent) : Printing{parent} {
 
 void Invoice::constructSubject() {
   QTextCursor cursor = body->textCursor();
-  QTextTableFormat format = tableFormat();
-  format.setBorderBrush(borderBrush());
-  format.setBorderStyle(QTextFrameFormat::BorderStyle_None);
-  format.setBottomMargin(20);
-  QTextTable *table = cursor.insertTable(2, 2, format);
-  table->setObjectName("address_table");
-  // Company Address
-  QTextCharFormat cellFormat;
-  QFont font(getSmallFont());
-  font.setUnderline(true);
-  font.setPointSize(8);
-  cellFormat.setFont(font);
-  cellFormat.setVerticalAlignment(QTextCharFormat::AlignBottom);
-  QTextTableCell tc00 = table->cellAt(0, 0);
-  tc00.setFormat(cellFormat);
-  cursor = tc00.firstCursorPosition();
-  QString addr(companyData.value("COMPANY_SHORTNAME"));
-  addr.append(" - ");
-  addr.append(companyData.value("COMPANY_STREET"));
-  addr.append(" - ");
-  addr.append(companyData.value("COMPANY_LOCATION"));
-  cursor.insertText(addr);
-  // Invoice
-  QTextTableCell tc01 = table->cellAt(0, 1);
-  tc01.setFormat(cellFormat);
-  cursor = tc01.firstCursorPosition();
-  cursor.insertText(tr("Invoice"));
-  // Customer Address
-  QTextTableCell tc10 = table->cellAt(1, 0);
-  tc10.setFormat(addressFormat());
-  cursor = tc10.firstCursorPosition();
+  QString subject = tr("Invoice");
+
+  // Table
+  QTextTable *table = constructInvoiceTable(subject);
+  int row = (table->rows() - 1);
+
+  // Anschrift
+  QTextTableCell addrCell = table->cellAt(row, 0);
+  addrCell.setFormat(addressFormat());
+  cursor = addrCell.firstCursorPosition();
   cursor.insertText(p_customerAddress);
-  // Delivery Infos
-  QTextTableCell tc11 = table->cellAt(1, 1);
-  tc11.setFormat(normalFormat());
-  cursor = tc11.firstCursorPosition();
-  cursor.insertText(tr("Invoice No.") + ": ");
-  cursor.insertText(p_invoiceId);
-  cursor.insertText("\n");
-  cursor.insertText(tr("Order No.") + ": ");
-  cursor.insertText(p_orderId);
-  cursor.insertText("\n");
-  cursor.insertText(tr("Costumer No.") + ": ");
-  cursor.insertText(p_customerId);
-  cursor.insertText("\n");
-  cursor.insertText(tr("Due Date") + ": ");
-  QDate d = QDate::currentDate();
-  cursor.insertText(d.toString("dd.MM.yyyy"));
-  cursor.insertText("\n");
+
+  // Betreff Informationen
+  QMap<qint8, QString> title;
+  title.insert(0,tr("Invoice No."));
+  title.insert(1,tr("Order No."));
+  title.insert(2,tr("Costumer No."));
+  QMap<qint8, QString> data;
+  data.insert(0, p_invoiceId);
+  data.insert(1, p_orderId);
+  data.insert(2, p_customerId);
+
+  QTextTableCell infoCell = table->cellAt(row, 1);
+  infoCell.setFormat(normalFormat());
+  cursor = infoCell.firstCursorPosition();
+  QTextTable *child_table = cursor.insertTable(data.size(), 3, tableFormat());
+
+  QMapIterator<qint8, QString> it(data);
+  while (it.hasNext()) {
+    it.next();
+    // left
+    QTextTableCell cl = child_table->cellAt(it.key(), 0);
+    cl.setFormat(normalFormat());
+    cursor = cl.firstCursorPosition();
+    cursor.setBlockFormat(alignRight());
+    cursor.insertText(title[it.key()]);
+    // middle
+    QTextTableCell cm = child_table->cellAt(it.key(), 1);
+    cm.setFormat(normalFormat());
+    cursor = cm.firstCursorPosition();
+    cursor.setBlockFormat(alignCenter());
+    cursor.insertText(":");
+    // right
+    QTextTableCell cr = child_table->cellAt(it.key(), 2);
+    cr.setFormat(normalFormat());
+    cursor = cr.firstCursorPosition();
+    cursor.setBlockFormat(alignRight());
+    cursor.insertText(it.value());
+  }
+
+  // Begin:BodyHeaderSubject
+  QTextTableFormat headerFormat = tableFormat();
+  headerFormat.setTopMargin(15); // Abstand zum Adressenkopf
+
+  cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
+  QTextTable *m_headerTable = cursor.insertTable(1, 2, headerFormat);
+
+  QVector<QTextLength> headerConstraint;
+  QTextLength::Type type(QTextLength::PercentageLength);
+
+  QTextTableCell cr00 = m_headerTable->cellAt(0, 0);
+  cursor = cr00.firstCursorPosition();
+  cursor.setCharFormat(boldFormat());
+  cursor.insertText(subject);
+  headerConstraint.append(QTextLength(type, 70));
+
+  QTextTableCell cr01 = m_headerTable->cellAt(0, 1);
+  cursor = cr01.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.setBlockFormat(alignRight());
+  QString dueDate(companyData.value("COMPANY_LOCATION_NAME"));
+  dueDate.append(" " + tr("on") + " ");
+  dueDate.append(QDate::currentDate().toString("dd.MM.yyyy"));
+  cursor.insertText(dueDate);
+  headerConstraint.append(QTextLength(type, 30));
+  // End:BodyHeaderSubject
+
   body->document()->setModified(true);
 }
 
@@ -82,44 +109,43 @@ void Invoice::constructBody() {
 
   QTextCursor cursor = body->textCursor();
   QTextTableFormat format = tableFormat();
-  format.setTopMargin(15);
+  format.setTopMargin(15); // Abstand Betreff
 
+  // Rechnungsaufstellung
   m_billingTable = cursor.insertTable(1, 4, format);
-  m_billingTable->setObjectName("billings_table");
 
-  QVector<QTextLength> constraints;
+  QVector<QTextLength> billingConstraint;
   QTextLength::Type type(QTextLength::PercentageLength);
 
   QTextTableCell ce00 = m_billingTable->cellAt(0, 0);
   cursor = ce00.firstCursorPosition();
   cursor.setCharFormat(boldFormat());
   cursor.insertText(tr("Article"));
-  constraints.append(QTextLength(type, 15)); // 15%
+  billingConstraint.append(QTextLength(type, 15)); // 15%
 
   QTextTableCell ce01 = m_billingTable->cellAt(0, 1);
   cursor = ce01.firstCursorPosition();
   cursor.setCharFormat(boldFormat());
   cursor.insertText(tr("Designation"));
-  constraints.append(QTextLength(type, 60)); // 60%
+  billingConstraint.append(QTextLength(type, 60)); // 60%
 
   QTextTableCell ce02 = m_billingTable->cellAt(0, 2);
   cursor = ce02.firstCursorPosition();
   cursor.setCharFormat(boldFormat());
   cursor.setBlockFormat(alignCenter());
   cursor.insertText(tr("Quantity"));
-  constraints.append(QTextLength(type, 10)); // 10%
+  billingConstraint.append(QTextLength(type, 10)); // 10%
 
   QTextTableCell ce03 = m_billingTable->cellAt(0, 3);
   cursor = ce03.firstCursorPosition();
   cursor.setCharFormat(boldFormat());
   cursor.setBlockFormat(alignCenter());
   cursor.insertText(tr("Price"));
-  constraints.append(QTextLength(type, 15)); // 15%
+  billingConstraint.append(QTextLength(type, 15)); // 15%
 
   format.clearColumnWidthConstraints();
-  format.setColumnWidthConstraints(constraints);
+  format.setColumnWidthConstraints(billingConstraint);
   m_billingTable->setFormat(format);
-
   body->document()->setModified(true);
 }
 
@@ -221,7 +247,7 @@ void Invoice::setRegards() {
   cursor.insertText("\n");
   cursor.insertText(tr("Kind regards"));
   cursor.insertText("\n  ");
-  cursor.insertText(companyData.value("COMPANY_SHORTNAME"));
+  cursor.insertText(companyData.value("COMPANY_EMPLOYER"));
 }
 
 bool Invoice::generateDocument(QPrinter *printer) {
@@ -306,9 +332,9 @@ void Invoice::openPrintDialog() {
   }
 }
 
-void Invoice::setInvoice(qint64 orderId,    /* Bestellnummer */
-                         qint64 customerId, /* Kundennummer */
-                         qint64 invoiceId,  /* Rechnungsnummer */
+void Invoice::setInvoice(qint64 orderId,     /* Bestellnummer */
+                         qint64 customerId,  /* Kundennummer */
+                         qint64 invoiceId,   /* Rechnungsnummer */
                          qreal deliverprice, /* Paketpreis */
                          const QString &deliverNoteId) {
   if (orderId < 1) {
@@ -358,14 +384,18 @@ int Invoice::exec(const QList<BillingInfo> &list, bool paid) {
     return QDialog::Rejected;
   }
 
+  if (list.size() < 1) {
+    qWarning("Missing billing infos!");
+    return QDialog::Rejected;
+  }
+
   constructHeader();
   constructFooter();
   constructBody();
 
   QListIterator<BillingInfo> it(list);
   while (it.hasNext()) {
-    BillingInfo a = it.next();
-    addArticleRow(m_billingTable, a);
+    addArticleRow(m_billingTable, it.next());
   }
   body->document()->setModified(true);
 

@@ -24,50 +24,84 @@ PaymentReminder::PaymentReminder(QWidget *parent) : Printing{parent} {
 
 void PaymentReminder::constructSubject() {
   QTextCursor cursor = body->textCursor();
-  QTextTableFormat format = tableFormat();
-  format.setBorderBrush(borderBrush());
-  format.setBorderStyle(QTextFrameFormat::BorderStyle_None);
-  format.setBottomMargin(20);
-  QTextTable *table = cursor.insertTable(2, 2, format);
-  table->setObjectName("address_table");
-  // Company Address
-  QTextCharFormat cellFormat;
-  QFont font(getSmallFont());
-  font.setUnderline(true);
-  font.setPointSize(8);
-  cellFormat.setFont(font);
-  cellFormat.setVerticalAlignment(QTextCharFormat::AlignBottom);
-  QTextTableCell tc00 = table->cellAt(0, 0);
-  tc00.setFormat(cellFormat);
-  cursor = tc00.firstCursorPosition();
-  QString addr(companyData.value("COMPANY_SHORTNAME"));
-  addr.append(" - ");
-  addr.append(companyData.value("COMPANY_STREET"));
-  addr.append(" - ");
-  addr.append(companyData.value("COMPANY_LOCATION"));
-  cursor.insertText(addr);
-  // Invoice
-  QTextTableCell tc01 = table->cellAt(0, 1);
-  tc01.setFormat(cellFormat);
-  cursor = tc01.firstCursorPosition();
-  cursor.insertText(tr("Payment Reminder"));
-  // Customer Address
-  QTextTableCell tc10 = table->cellAt(1, 0);
-  tc10.setFormat(addressFormat());
-  cursor = tc10.firstCursorPosition();
+  QString subject = tr("Payment Reminder");
+
+  // Table
+  QTextTable *table = constructInvoiceTable(subject);
+  int row = (table->rows() - 1);
+
+  // Anschrift
+  QTextTableCell addrCell = table->cellAt(row, 0);
+  addrCell.setFormat(addressFormat());
+  cursor = addrCell.firstCursorPosition();
   cursor.insertText(p_customerAddress);
-  // Delivery Infos
-  QTextTableCell tc11 = table->cellAt(1, 1);
-  tc11.setFormat(normalFormat());
-  cursor = tc11.firstCursorPosition();
-  cursor.insertText(tr("Invoice-ID") + ": ");
-  cursor.insertText(p_invoiceId);
-  cursor.insertText("\n");
-  cursor.insertText(tr("Order-ID") + ": ");
-  cursor.insertText(p_orderId);
-  cursor.insertText("\n");
-  cursor.insertText(tr("Customer-ID") + ": ");
-  cursor.insertText(p_customerId);
+
+  // Betreff Informationen
+  QMap<qint8, QString> title;
+  title.insert(0, tr("Invoice No."));
+  title.insert(1, tr("Order No."));
+  title.insert(2, tr("Costumer No."));
+  QMap<qint8, QString> data;
+  data.insert(0, p_invoiceId);
+  data.insert(1, p_orderId);
+  data.insert(2, p_customerId);
+
+  QTextTableCell infoCell = table->cellAt(row, 1);
+  infoCell.setFormat(normalFormat());
+  cursor = infoCell.firstCursorPosition();
+  QTextTable *child_table = cursor.insertTable(data.size(), 3, tableFormat());
+
+  QMapIterator<qint8, QString> it(data);
+  while (it.hasNext()) {
+    it.next();
+    // left
+    QTextTableCell cl = child_table->cellAt(it.key(), 0);
+    cl.setFormat(normalFormat());
+    cursor = cl.firstCursorPosition();
+    cursor.setBlockFormat(alignRight());
+    cursor.insertText(title[it.key()]);
+    // middle
+    QTextTableCell cm = child_table->cellAt(it.key(), 1);
+    cm.setFormat(normalFormat());
+    cursor = cm.firstCursorPosition();
+    cursor.setBlockFormat(alignCenter());
+    cursor.insertText(":");
+    // right
+    QTextTableCell cr = child_table->cellAt(it.key(), 2);
+    cr.setFormat(normalFormat());
+    cursor = cr.firstCursorPosition();
+    cursor.setBlockFormat(alignRight());
+    cursor.insertText(it.value());
+  }
+
+  // Begin:BodyHeaderSubject
+  QTextTableFormat headerFormat = tableFormat();
+  headerFormat.setTopMargin(15); // Abstand zum Adressenkopf
+
+  cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
+  QTextTable *m_headerTable = cursor.insertTable(1, 2, headerFormat);
+
+  QVector<QTextLength> headerConstraint;
+  QTextLength::Type type(QTextLength::PercentageLength);
+
+  QTextTableCell cr00 = m_headerTable->cellAt(0, 0);
+  cursor = cr00.firstCursorPosition();
+  cursor.setCharFormat(boldFormat());
+  cursor.insertText(subject);
+  headerConstraint.append(QTextLength(type, 70));
+
+  QTextTableCell cr01 = m_headerTable->cellAt(0, 1);
+  cursor = cr01.firstCursorPosition();
+  cursor.setCharFormat(normalFormat());
+  cursor.setBlockFormat(alignRight());
+  QString dueDate(companyData.value("COMPANY_LOCATION_NAME"));
+  dueDate.append(" " + tr("on") + " ");
+  dueDate.append(QDate::currentDate().toString("dd.MM.yyyy"));
+  cursor.insertText(dueDate);
+  headerConstraint.append(QTextLength(type, 30));
+  // End:BodyHeaderSubject
+
+  body->document()->setModified(true);
 }
 
 void PaymentReminder::constructBody() {
@@ -75,159 +109,64 @@ void PaymentReminder::constructBody() {
 
   QTextCursor cursor = body->textCursor();
   QTextTableFormat format = tableFormat();
-  format.setBorderBrush(borderBrush());
-  format.setBorderStyle(QTextFrameFormat::BorderStyle_None);
-  format.setTopMargin(5);
-  QTextTable *m_headerTable = cursor.insertTable(1, 2, format);
-  m_headerTable->setObjectName("billings_table");
-
-  QVector<QTextLength> constraints;
-  QTextLength::Type type(QTextLength::PercentageLength);
-
-  QTextCharFormat titleText = normalFormat();
-  QFont titleFont = titleText.font();
-  titleFont.setBold(true);
-  titleText.setFont(titleFont);
-
-  QTextTableCell ce00 = m_headerTable->cellAt(0, 0);
-  cursor = ce00.firstCursorPosition();
-  cursor.setCharFormat(titleText);
-  cursor.insertText(companyData.value("COMPANY_PAYMENT_REMINDER_TITLE"));
-  constraints.append(QTextLength(type, 80)); // 80%
-
-  QTextTableCell ce01 = m_headerTable->cellAt(0, 1);
-  cursor = ce01.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  cursor.setBlockFormat(alignRight());
-  QDate d = QDate::currentDate();
-  cursor.insertText(d.toString("dd.MM.yyyy"));
-  constraints.append(QTextLength(type, 20)); // 20%
+  format.setTopMargin(5); // Abstand oben
 
   cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
-
-  QTextTable *m_noteTable = cursor.insertTable(1, 1, format);
-  QTextTableCell noteCell = m_noteTable->cellAt(0, 0);
-  cursor = noteCell.firstCursorPosition();
+  QTextTable *m_notify = cursor.insertTable(1, 1, format);
+  cursor = m_notify->cellAt(0, 0).firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   QRegExp pattern("\\b\\s{2,}\\b");
   cursor.insertText(p_mainText.replace(pattern, " "));
-  constraints.append(QTextLength(type, 100));
 
+  // Rechnungsaufstellung
   cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
-
   m_billingTable = cursor.insertTable(1, 4, format);
-  m_billingTable->setObjectName("billings_table");
 
-  QTextTableCellFormat cellFormat;
-  cellFormat.setBorderBrush(borderBrush());
-  cellFormat.setTopBorder(0);
-  cellFormat.setBottomBorder(1);
-  cellFormat.setBottomBorderStyle(QTextFrameFormat::BorderStyle_Solid);
+  QVector<QTextLength> billingConstraint;
+  QTextLength::Type type(QTextLength::PercentageLength);
 
-  QTextTableCell bce00 = m_billingTable->cellAt(0, 0);
-  cursor = bce00.firstCursorPosition();
-  bce00.setFormat(cellFormat);
-  cursor.setCharFormat(normalFormat());
-  cursor.setBlockFormat(alignCenter());
+  QTextTableCell ce00 = m_billingTable->cellAt(0, 0);
+  cursor = ce00.firstCursorPosition();
+  cursor.setCharFormat(boldFormat());
   cursor.insertText(tr("Article"));
+  billingConstraint.append(QTextLength(type, 15)); // 15%
 
-  QTextTableCell bce01 = m_billingTable->cellAt(0, 1);
-  bce01.setFormat(cellFormat);
-  cursor = bce01.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  QTextTableCell ce01 = m_billingTable->cellAt(0, 1);
+  cursor = ce01.firstCursorPosition();
+  cursor.setCharFormat(boldFormat());
   cursor.insertText(tr("Designation"));
+  billingConstraint.append(QTextLength(type, 60)); // 60%
 
-  QTextTableCell bce02 = m_billingTable->cellAt(0, 2);
-  bce02.setFormat(cellFormat);
-  cursor = bce02.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  QTextTableCell ce02 = m_billingTable->cellAt(0, 2);
+  cursor = ce02.firstCursorPosition();
+  cursor.setCharFormat(boldFormat());
   cursor.setBlockFormat(alignCenter());
   cursor.insertText(tr("Quantity"));
+  billingConstraint.append(QTextLength(type, 10)); // 10%
 
-  QTextTableCell bce03 = m_billingTable->cellAt(0, 3);
-  bce03.setFormat(cellFormat);
-  cursor = bce03.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  QTextTableCell ce03 = m_billingTable->cellAt(0, 3);
+  cursor = ce03.firstCursorPosition();
+  cursor.setCharFormat(boldFormat());
   cursor.setBlockFormat(alignCenter());
   cursor.insertText(tr("Price"));
+  billingConstraint.append(QTextLength(type, 15)); // 15%
 
+  format.clearColumnWidthConstraints();
+  format.setColumnWidthConstraints(billingConstraint);
+  m_billingTable->setFormat(format);
   body->document()->setModified(true);
 }
 
-bool PaymentReminder::insertSummaryTable() {
+bool PaymentReminder::insertDeliveryCost() {
   QString text;
   QTextCursor cursor = body->textCursor();
   int row = m_billingTable->rows();
-  m_billingTable->insertRows(row, 3);
-
-  QTextTableCellFormat cellFormat;
-  cellFormat.setBorderBrush(borderBrush());
-  cellFormat.setTopBorder(1);
-  cellFormat.setTopBorderStyle(QTextFrameFormat::BorderStyle_Solid);
-
-  // BEGIN Mehrwertsteuer
-  m_billingTable->mergeCells(row, 0, 1, 3);
-  QTextTableCell tc0 = m_billingTable->cellAt(row, 0);
-  tc0.setFormat(cellFormat);
-  cursor = tc0.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  cursor.setBlockFormat(alignRight());
-  text = QString();
-  if (p_disable_VAT) {
-    cursor.insertText(tr("VAT"));
-  } else {
-    if (p_including_VAT) {
-      text.append(tr("incl.") + " ");
-    }
-    text.append(QString::number(p_tax_value));
-    text.append("% " + tr("VAT"));
-    cursor.insertText(text);
-  }
-
-  QTextTableCell tc1 = m_billingTable->cellAt(row, 3);
-  tc1.setFormat(cellFormat);
-  cursor = tc1.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  if (p_disable_VAT) {
-    cursor.setBlockFormat(alignCenter());
-    cursor.insertText("-");
-  } else {
-    cursor.setBlockFormat(alignRight());
-    qreal tax;
-    if (p_including_VAT) {
-      tax = inclVat(p_totalPrice, p_tax_value);
-    } else {
-      tax = addVat(p_totalPrice, p_tax_value);
-    }
-    text = QString::number(tax, 'f', 2);
-    cursor.insertText(text + " " + p_currency);
-  }
-  // END
-
-  // BEGIN Zwischensumme
-  row++;
-  m_billingTable->mergeCells(row, 0, 1, 3);
-  QTextTableCell zc0 = m_billingTable->cellAt(row, 0);
-  cursor = zc0.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  cursor.setBlockFormat(alignRight());
-  text = tr("Subtotal");
-  cursor.insertText(text);
-
-  QTextTableCell zc1 = m_billingTable->cellAt(row, 3);
-  zc1.setFormat(cellFormat);
-  cursor = zc1.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
-  cursor.setBlockFormat(alignRight());
-  text = QString::number(p_totalPrice, 'f', 2);
-  text.append(" " + p_currency);
-  cursor.insertText(text);
-  // END
+  m_billingTable->insertRows(row, 1);
 
   // BEGIN Versandkosten
-  row++;
   m_billingTable->mergeCells(row, 0, 1, 3);
   QTextTableCell vc0 = m_billingTable->cellAt(row, 0);
+  vc0.setFormat(cellFormat(Printing::Border::Top));
   cursor = vc0.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
@@ -235,14 +174,14 @@ bool PaymentReminder::insertSummaryTable() {
   cursor.insertText(text);
 
   QTextTableCell vc1 = m_billingTable->cellAt(row, 3);
-  vc1.setFormat(cellFormat);
+  vc1.setFormat(cellFormat(Printing::Border::Top));
   cursor = vc1.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
   text = QString::number(p_deliveryCost, 'f', 2);
   text.append(" " + p_currency);
   cursor.insertText(text);
-  if (p_deliveryCost > 0.01) {
+  if (p_deliveryCost > 0.1) {
     p_totalPrice += p_deliveryCost;
   }
   // END
@@ -254,27 +193,20 @@ void PaymentReminder::finalizeBillings() {
   m_billingTable->insertRows(row, 1);
   m_billingTable->mergeCells(row, 0, 1, 3);
 
-  QTextTableCellFormat cellFormat;
-  cellFormat.setBorderBrush(borderBrush());
-  cellFormat.setTopBorder(1);
-  cellFormat.setTopBorderStyle(QTextFrameFormat::BorderStyle_Solid);
-
   QTextCursor cursor = body->textCursor();
   QTextTableCell infoCell = m_billingTable->cellAt(row, 0);
+  infoCell.setFormat(cellFormat(Printing::Border::NoBorder));
   cursor = infoCell.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(boldFormat());
   cursor.setBlockFormat(alignRight());
   QString summary(tr("invoice amount"));
   cursor.insertText(summary);
 
   QTextTableCell costCell = m_billingTable->cellAt(row, 3);
-  costCell.setFormat(cellFormat);
+  costCell.setFormat(cellFormat(Printing::Border::Top));
   cursor = costCell.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(boldFormat());
   cursor.setBlockFormat(alignRight());
-  if (!p_including_VAT) {
-    p_totalPrice += addVat(p_totalPrice, p_tax_value);
-  }
   QString str = QString::number(p_totalPrice, 'f', 2);
   str.append(" " + p_currency);
   cursor.insertText(str);
@@ -311,7 +243,7 @@ void PaymentReminder::setRegards() {
   cursor.setCharFormat(footerFormat());
   cursor.setBlockFormat(bf);
   cursor.insertText("\n\n" + tr("Sincerely") + "\n ");
-  cursor.insertText(companyData.value("COMPANY_SHORTNAME"));
+  cursor.insertText(companyData.value("COMPANY_EMPLOYER"));
 }
 
 bool PaymentReminder::generateDocument(QPrinter *printer) {
@@ -396,9 +328,10 @@ void PaymentReminder::openPrintDialog() {
   }
 }
 
-void PaymentReminder::setPaymentInfo(qint64 orderId,    /* Bestellnummer */
-                                     qint64 customerId, /* Kundennummer */
-                                     qint64 invoiceId,  /* Rechnungsnummer */
+void PaymentReminder::setPaymentInfo(qint64 orderId,     /* Bestellnummer */
+                                     qint64 customerId,  /* Kundennummer */
+                                     qint64 invoiceId,   /* Rechnungsnummer */
+                                     qreal deliverprice, /* Paketsender Preis */
                                      const QString &deliverNoteId) {
   if (orderId < 1) {
     warningMessageBox(tr("There is no Order-Id to generate this invoice!"));
@@ -423,6 +356,7 @@ void PaymentReminder::setPaymentInfo(qint64 orderId,    /* Bestellnummer */
     return;
   }
   p_deliveryId = deliverNoteId;
+  p_deliveryCost = deliverprice;
 }
 
 void PaymentReminder::setMainText(const QString &txt) { p_mainText = txt; }
@@ -434,7 +368,7 @@ int PaymentReminder::exec() {
   return QDialog::Rejected;
 }
 
-int PaymentReminder::exec(const QList<BillingInfo> &billing) {
+int PaymentReminder::exec(const QList<BillingInfo> &list) {
   if (p_orderId.isEmpty()) {
     qFatal("you must call setPaymentInfo() before exec!");
     return QDialog::Rejected;
@@ -449,18 +383,22 @@ int PaymentReminder::exec(const QList<BillingInfo> &billing) {
     return QDialog::Rejected;
   }
 
+  if (list.size() < 1) {
+    qWarning("Missing billing infos!");
+    return QDialog::Rejected;
+  }
+
   constructHeader();
   constructFooter();
   constructBody();
 
-  QListIterator<BillingInfo> it(billing);
+  QListIterator<BillingInfo> it(list);
   while (it.hasNext()) {
-    BillingInfo a = it.next();
-    addArticleRow(m_billingTable, a);
+    addArticleRow(m_billingTable, it.next());
   }
   body->document()->setModified(true);
 
-  if (insertSummaryTable())
+  if (insertDeliveryCost())
     finalizeBillings();
 
   setAdditionalInfo();

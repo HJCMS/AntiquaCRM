@@ -3481,33 +3481,33 @@ Image - Article Id: %2</source>
 <context>
     <name>Invoice</name>
     <message>
-        <location filename="../utils/printing/invoice.cpp" line="+18"/>
-        <location line="+36"/>
+        <location filename="../utils/printing/invoice.cpp" line="+17"/>
+        <location line="+10"/>
         <source>Invoice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+14"/>
         <source>Invoice No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
         <source>Order No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
         <source>Costumer No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Due Date</source>
+        <location line="+55"/>
+        <source>on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+25"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3527,7 +3527,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+22"/>
         <source>delivery cost</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3569,7 +3569,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+27"/>
         <source>There is no Order-Id to generate this invoice!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4342,22 +4342,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+14"/>
         <source>Sales tax in invoice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>vat included</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Normally the vat is included in Book articles. Uncheck it to enable add VAT in Printing Invoice.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-18"/>
+        <location line="-9"/>
         <source>add delivery package price</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4367,12 +4357,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+12"/>
         <source>Country</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Provider</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4466,7 +4456,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+81"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4481,7 +4471,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+101"/>
         <source>A Article can&apos;t inserted, if no Order-/Customer Id exists.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4491,7 +4481,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+125"/>
+        <location line="+134"/>
         <source>No Article has been added to this order!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4507,12 +4497,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-450"/>
+        <location line="-459"/>
         <source>Order status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+388"/>
+        <location line="+397"/>
         <source>No Modifications found, nothing todo!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4527,17 +4517,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+145"/>
+        <location line="+142"/>
         <location line="+19"/>
         <location line="+39"/>
-        <location line="+32"/>
-        <location line="+38"/>
-        <location line="+83"/>
+        <location line="+37"/>
+        <location line="+43"/>
+        <location line="+80"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-206"/>
+        <location line="-213"/>
         <source>Incomplete eMail configuration!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4547,12 +4537,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-570"/>
+        <location line="-576"/>
         <source>Missing Deliverynote Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+592"/>
+        <location line="+598"/>
         <source>Missing Delivery Address!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4564,13 +4554,17 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="-20"/>
-        <location line="+33"/>
-        <location line="+38"/>
         <source>Printdialog closed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-19"/>
+        <location line="+38"/>
+        <location line="+43"/>
+        <source>Print document refused.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-24"/>
         <source>Missing Deliverynote data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4580,7 +4574,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+169"/>
+        <location line="+171"/>
         <source>No Provider orders data found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5049,27 +5043,12 @@ Image - Article Id: %2</source>
     <name>PaymentReminder</name>
     <message>
         <location filename="../utils/printing/paymentreminder.cpp" line="+17"/>
-        <location line="+36"/>
+        <location line="+10"/>
         <source>Payment Reminder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Invoice-ID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Order-ID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Customer-ID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+63"/>
+        <location line="+104"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5089,33 +5068,37 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
-        <location line="+6"/>
-        <source>VAT</source>
+        <location line="-110"/>
+        <source>Invoice No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-3"/>
-        <source>incl.</source>
+        <location line="+1"/>
+        <source>Order No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+34"/>
-        <source>Subtotal</source>
+        <location line="+1"/>
+        <source>Costumer No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+55"/>
+        <source>on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+75"/>
         <source>delivery cost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+29"/>
         <source>invoice amount</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+43"/>
         <source>Sincerely</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5137,7 +5120,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+27"/>
         <source>There is no Order-Id to generate this invoice!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5584,7 +5567,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="+233"/>
         <source>eMail</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5614,22 +5597,22 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+75"/>
         <source>VAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>no VAT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="+5"/>
         <source>incl.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+10"/>
+        <source>without sales tax</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+77"/>
         <source>Subtotal</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6885,12 +6868,12 @@ Image - Article Id: %2</source>
 <context>
     <name>SelectEuCountry</name>
     <message>
-        <location filename="../widgets/selecteucountry.cpp" line="+11"/>
+        <location filename="../widgets/selecteucountry.cpp" line="+9"/>
         <source>European Countries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+99"/>
         <source>A valid European Country selection is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7596,22 +7579,22 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>without sales tax</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>with sales tax</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>including sales tax</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+65"/>
         <source>a Valid tax level is required.</source>
         <translation type="unfinished"></translation>
     </message>

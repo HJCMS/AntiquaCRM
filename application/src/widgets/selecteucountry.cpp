@@ -4,8 +4,6 @@
 #include "selecteucountry.h"
 #include "aeuropeancountries.h"
 
-#include <QIcon>
-
 SelectEuCountry::SelectEuCountry(QWidget *parent) : InputEdit{parent} {
   m_box = new AntiquaComboBox(this);
   m_box->setToolTip(tr("European Countries"));
@@ -18,16 +16,19 @@ SelectEuCountry::SelectEuCountry(QWidget *parent) : InputEdit{parent} {
           SLOT(dataChanged(int)));
 }
 
+const QIcon SelectEuCountry::entryIcon(const QString &k) const {
+  QIcon yIcon("://icons/eu-flag.png");
+  QIcon nIcon("://icons/warning.png");
+  return (k == QString("XX")) ? nIcon : yIcon;
+}
+
 void SelectEuCountry::loadDataset() {
-  QIcon euIcon("://icons/eu-flag.png");
   int index = m_box->count();
   AntiquaCRM::AEuropeanCountries hash;
   QHash<QString, QString>::const_iterator i = hash.constBegin();
   while (i != hash.constEnd()) {
     m_box->insertItem(index, i.value(), i.key());
-    if(i.key() != QString("XX"))
-      m_box->setItemIcon(index, euIcon);
-
+    m_box->setItemIcon(index, entryIcon(i.key()));
     index++;
     ++i;
   }

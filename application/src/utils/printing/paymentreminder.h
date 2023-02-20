@@ -57,9 +57,9 @@ protected:
   void constructBody() override;
 
   /**
-   * @brief Versandkosten und Mehwertsteuer Anzeige
+   * @brief Versandkosten
    */
-  bool insertSummaryTable();
+  bool insertDeliveryCost();
 
   /**
    * @brief Gesamtkosten
@@ -88,9 +88,10 @@ public:
    * @brief Wichtige Nummern angeben
    * @note Muss vor @ref exec() gesetzt sein!
    */
-  void setPaymentInfo(qint64 orderId,    /* Bestellnummer */
-                      qint64 customerId, /* Kundennummer */
-                      qint64 invoiceId,  /* Rechnungsnummer */
+  void setPaymentInfo(qint64 orderId,     /* Bestellnummer */
+                      qint64 customerId,  /* Kundennummer */
+                      qint64 invoiceId,   /* Rechnungsnummer */
+                      qreal deliverprice, /* Paketsender Preis */
                       const QString &deliverNoteId);
 
   /**
@@ -104,7 +105,7 @@ public:
   void setFinalText(const QString &);
 
   int exec() override;
-  int exec(const QList<BillingInfo> &billing);
+  int exec(const QList<BillingInfo> &);
 };
 
 #endif // PAYMENTREMINDER_PRINTING_H

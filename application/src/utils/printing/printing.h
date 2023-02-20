@@ -305,7 +305,13 @@ protected:
   virtual void constructHeader();
 
   /**
-   * @brief Reihe mit Anschrift und Kategorie
+   * @brief Tabelle Adressenkopf für Rechnung, Erinnerung und Mahnung!
+   */
+  QTextTable* constructInvoiceTable(const QString &subject);
+
+  /**
+   * @brief In Tabellenkopf die Felder einfügen
+   * @see constructSubjectTable(subject)
    */
   virtual void constructSubject() = 0;
 

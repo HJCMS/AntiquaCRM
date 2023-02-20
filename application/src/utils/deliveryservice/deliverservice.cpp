@@ -130,6 +130,13 @@ void DeliverService::setDeliveryService(const QPair<int, int> &pair) {
   m_priceInfo->setText(QString::number(price, 'f', 2) + " " + p_currency);
 }
 
+const QPair<int, int> DeliverService::currentDeliveryService() {
+  QPair<int, int> service(0, 0);
+  service.first = value().toInt();
+  service.first = getDeliveryPackage();
+  return service;
+}
+
 const QPair<int, int> DeliverService::defaultDeliveryService() {
   // QPair<Service,Paket>
   QPair<int, int> service(0, 0);

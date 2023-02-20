@@ -243,7 +243,7 @@ const QTextTableCellFormat Printing::cellFormat(Printing::Border border) {
 }
 
 const QBrush Printing::borderBrush() {
-  return QBrush(Qt::darkGray, Qt::SolidPattern);
+  return QBrush(Qt::lightGray, Qt::SolidPattern);
 }
 
 QTextFrame *Printing::bodyFrame() {
@@ -270,6 +270,37 @@ void Printing::constructHeader() {
   header->setMaximumHeight(h);
   header->setReadOnly(true);
   header->document()->setModified(true);
+}
+
+QTextTable *Printing::constructInvoiceTable(const QString &subject) {
+  QTextCursor cursor = body->textCursor();
+
+  QTextTable *table = cursor.insertTable(2, 2, tableFormat());
+
+  QTextCharFormat cellFormat;
+  QFont font(getSmallFont());
+  font.setUnderline(true);
+  font.setPointSize(8);
+  cellFormat.setFont(font);
+  cellFormat.setVerticalAlignment(QTextCharFormat::AlignBottom);
+
+  QTextTableCell tc00 = table->cellAt(0, 0);
+  tc00.setFormat(cellFormat);
+  cursor = tc00.firstCursorPosition();
+  QString addr(companyData.value("COMPANY_SHORTNAME"));
+  addr.append(" - ");
+  addr.append(companyData.value("COMPANY_STREET"));
+  addr.append(" - ");
+  addr.append(companyData.value("COMPANY_LOCATION"));
+  cursor.insertText(addr);
+
+  // Subject
+  QTextTableCell tc01 = table->cellAt(0, 1);
+  tc01.setFormat(cellFormat);
+  cursor = tc01.firstCursorPosition();
+  cursor.insertText(subject);
+
+  return table;
 }
 
 void Printing::constructFooter() {

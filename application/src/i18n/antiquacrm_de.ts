@@ -3485,33 +3485,33 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>Invoice</name>
     <message>
-        <location filename="../utils/printing/invoice.cpp" line="+18"/>
-        <location line="+36"/>
+        <location filename="../utils/printing/invoice.cpp" line="+17"/>
+        <location line="+10"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+14"/>
         <source>Invoice No.</source>
         <translation>Rechnungs Nr.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
         <source>Order No.</source>
         <translation>Auftrags Nr.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+1"/>
         <source>Costumer No.</source>
         <translation>Kunden Nr.</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Due Date</source>
-        <translation>Datum</translation>
+        <location line="+55"/>
+        <source>on</source>
+        <translation>der</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+25"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
@@ -3531,7 +3531,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+22"/>
         <source>delivery cost</source>
         <translation>Lieferkosten</translation>
     </message>
@@ -3573,7 +3573,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kein Drucker gefunden</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+27"/>
         <source>There is no Order-Id to generate this invoice!</source>
         <translation>Es gibt keine Bestellnummer, um diese Rechnung zu erstellen!</translation>
     </message>
@@ -4346,22 +4346,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Lieferscheinnummer</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+14"/>
         <source>Sales tax in invoice</source>
         <translation>Umsatzsteuer in der Rechnung</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>vat included</source>
-        <translation>inkl. USt</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Normally the vat is included in Book articles. Uncheck it to enable add VAT in Printing Invoice.</source>
-        <translation>Üblicherweise ist bei Buchartikeln die Umsatzsteuer enthalten. Deaktivieren Sie es, um das Hinzufügen von Umsatzsteuer beim Drucken von Rechnungen zu aktivieren.</translation>
-    </message>
-    <message>
-        <location line="-18"/>
+        <location line="-9"/>
         <source>add delivery package price</source>
         <translation>Lieferpaketpreis hinzufügen (Porto)</translation>
     </message>
@@ -4371,12 +4361,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Lieferpaketpreis zum aktuellen Versand hinzufügen.</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+12"/>
         <source>Country</source>
         <translation>Land</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Provider</source>
         <translation>Dienstleister</translation>
     </message>
@@ -4470,7 +4460,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Zahlungsstatus</translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+81"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -4485,7 +4475,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+101"/>
         <source>A Article can&apos;t inserted, if no Order-/Customer Id exists.</source>
         <translation>Ein Artikel kann nicht eingefügt werden, wenn keine Bestell-/Kundennummer vorhanden ist.</translation>
     </message>
@@ -4495,7 +4485,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bitte speichern Sie zuerst Ihren Auftrag.</translation>
     </message>
     <message>
-        <location line="+125"/>
+        <location line="+134"/>
         <source>No Article has been added to this order!</source>
         <translation>Dieser Bestellung wurde kein Artikel hinzugefügt!</translation>
     </message>
@@ -4511,12 +4501,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Es sind keine SQL-Artikel vorhanden!</translation>
     </message>
     <message>
-        <location line="-450"/>
+        <location line="-459"/>
         <source>Order status</source>
         <translation>Auftragsstatus</translation>
     </message>
     <message>
-        <location line="+388"/>
+        <location line="+397"/>
         <source>No Modifications found, nothing todo!</source>
         <translation>Keine Änderungen gefunden, es gibt nichts zu tun!</translation>
     </message>
@@ -4531,17 +4521,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Artikel: %1 nicht gefunden oder nicht auf Lager!</translation>
     </message>
     <message>
-        <location line="+145"/>
+        <location line="+142"/>
         <location line="+19"/>
         <location line="+39"/>
-        <location line="+32"/>
-        <location line="+38"/>
-        <location line="+83"/>
+        <location line="+37"/>
+        <location line="+43"/>
+        <location line="+80"/>
         <source>Missing essential Ids, save Order first!</source>
         <translation>Fehlende wichtige IDs, Bestellung zuerst speichern!</translation>
     </message>
     <message>
-        <location line="-206"/>
+        <location line="-213"/>
         <source>Incomplete eMail configuration!</source>
         <translation>Unvollständige E-Mail-Konfiguration!</translation>
     </message>
@@ -4551,12 +4541,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
     <message>
-        <location line="-570"/>
+        <location line="-576"/>
         <source>Missing Deliverynote Number</source>
         <translation>Fehlende Lieferscheinnummer</translation>
     </message>
     <message>
-        <location line="+592"/>
+        <location line="+598"/>
         <source>Missing Delivery Address!</source>
         <translation>Lieferadresse fehlt!</translation>
     </message>
@@ -4568,13 +4558,17 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="-20"/>
-        <location line="+33"/>
-        <location line="+38"/>
         <source>Printdialog closed.</source>
         <translation>Drucken-Dialog geschlossen.</translation>
     </message>
     <message>
-        <location line="-19"/>
+        <location line="+38"/>
+        <location line="+43"/>
+        <source>Print document refused.</source>
+        <translation>Dokument drucken verweigert.</translation>
+    </message>
+    <message>
+        <location line="-24"/>
         <source>Missing Deliverynote data</source>
         <translation>Fehlende Lieferscheindaten</translation>
     </message>
@@ -4584,7 +4578,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Keine Daten gefunden! - Druckvorgang abgebrochen.</translation>
     </message>
     <message>
-        <location line="+169"/>
+        <location line="+171"/>
         <source>No Provider orders data found!</source>
         <translation>Keine Dienstleister-Auftragsdaten gefunden!</translation>
     </message>
@@ -5053,27 +5047,12 @@ Bild - Artikel Nr: %2</translation>
     <name>PaymentReminder</name>
     <message>
         <location filename="../utils/printing/paymentreminder.cpp" line="+17"/>
-        <location line="+36"/>
+        <location line="+10"/>
         <source>Payment Reminder</source>
         <translation>Zahlungserinnerung</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Invoice-ID</source>
-        <translation>Rechnungs-Nr</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Order-ID</source>
-        <translation>Auftrags-Nr</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Customer-ID</source>
-        <translation>Kunden-Nr</translation>
-    </message>
-    <message>
-        <location line="+63"/>
+        <location line="+104"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
@@ -5093,33 +5072,37 @@ Bild - Artikel Nr: %2</translation>
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+25"/>
-        <location line="+6"/>
-        <source>VAT</source>
-        <translation>USt</translation>
+        <location line="-110"/>
+        <source>Invoice No.</source>
+        <translation>Rechnungs Nr.</translation>
     </message>
     <message>
-        <location line="-3"/>
-        <source>incl.</source>
-        <translation>inkl.</translation>
+        <location line="+1"/>
+        <source>Order No.</source>
+        <translation>Auftrags Nr.</translation>
     </message>
     <message>
-        <location line="+34"/>
-        <source>Subtotal</source>
-        <translation>Zwischensumme</translation>
+        <location line="+1"/>
+        <source>Costumer No.</source>
+        <translation>Kunden Nr.</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+55"/>
+        <source>on</source>
+        <translation>der</translation>
+    </message>
+    <message>
+        <location line="+75"/>
         <source>delivery cost</source>
         <translation>Lieferkosten</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+29"/>
         <source>invoice amount</source>
         <translation>Rechnungsbetrag</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+43"/>
         <source>Sincerely</source>
         <translation>Hochachtungsvoll</translation>
     </message>
@@ -5141,7 +5124,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kein Drucker gefunden</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+27"/>
         <source>There is no Order-Id to generate this invoice!</source>
         <translation>Es gibt keine Auftragsnummer, um diese Rechnung zu erstellen!</translation>
     </message>
@@ -5588,7 +5571,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="+233"/>
         <source>eMail</source>
         <translation>E-Mail</translation>
     </message>
@@ -5618,22 +5601,22 @@ Bild - Artikel Nr: %2</translation>
         <translation>Rechtmäßigkeit</translation>
     </message>
     <message>
-        <location line="+76"/>
+        <location line="+75"/>
         <source>VAT</source>
         <translation>USt.</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>no VAT</source>
-        <translation>ohne Ust.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
+        <location line="+5"/>
         <source>incl.</source>
         <translation>inkl.</translation>
     </message>
     <message>
-        <location line="+82"/>
+        <location line="+10"/>
+        <source>without sales tax</source>
+        <translation>ohne USt.</translation>
+    </message>
+    <message>
+        <location line="+77"/>
         <source>Subtotal</source>
         <translation>Zwischensumme</translation>
     </message>
@@ -6891,12 +6874,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>SelectEuCountry</name>
     <message>
-        <location filename="../widgets/selecteucountry.cpp" line="+11"/>
+        <location filename="../widgets/selecteucountry.cpp" line="+9"/>
         <source>European Countries</source>
         <translation>Europäische Länder</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+99"/>
         <source>A valid European Country selection is required.</source>
         <translation>Eine gültige europäische Länderauswahl ist erforderlich.</translation>
     </message>
@@ -7602,22 +7585,22 @@ Bild - Artikel Nr: %2</translation>
         <translation>MwSt</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>without sales tax</source>
         <translation>ohne Umsatzsteuer</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>with sales tax</source>
         <translation>mit Umsatzsteuer</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>including sales tax</source>
         <translation>inklusive Umsatzsteuer</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+65"/>
         <source>a Valid tax level is required.</source>
         <translation>Ein gültiger Steuersatz ist erforderlich.</translation>
     </message>

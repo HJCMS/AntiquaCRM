@@ -181,7 +181,6 @@ void OrdersEditor::generateDeliveryNumber(qint64 orderId) {
   dn.append(QString::number(since.dayOfYear()));
   dn.append(QString::number(orderId));
   m_tableData->setValue("o_delivery", QString());
-  // getInputEdit("o_delivery")->setValue(dn);
   setDataField(m_tableData->getProperties("o_delivery"), dn);
 }
 
@@ -241,7 +240,7 @@ const OrdersEditor::IdsCheck OrdersEditor::getCheckEssentialsIds() {
   return id_conf;
 }
 
-AntiquaCRM::SalesTax OrdersEditor::getSalesTax() {
+AntiquaCRM::SalesTax OrdersEditor::initSalesTax() {
   QString country = getDataValue("o_vat_country").toString();
   if (country.isEmpty() || country == "XX") {
     qInfo("No Eurpean country - set invoice tax to no!");
@@ -252,22 +251,17 @@ AntiquaCRM::SalesTax OrdersEditor::getSalesTax() {
   return static_cast<AntiquaCRM::SalesTax>(i);
 }
 
-int OrdersEditor::getVatValue(int index) {
+int OrdersEditor::getSalesTaxValue(int index) {
   switch (static_cast<AntiquaCRM::ArticleType>(index)) {
   case (AntiquaCRM::ArticleType::BOOK):
     return m_cfg->value("payment/vat2").toInt();
 
-  case (AntiquaCRM::ArticleType::MEDIA):
-  case (AntiquaCRM::ArticleType::PRINTS):
-  case (AntiquaCRM::ArticleType::OTHER):
-    return m_cfg->value("payment/vat1").toInt();
-
   default:
-    return 0;
+    return m_cfg->value("payment/vat1").toInt();
   };
 }
 
-int OrdersEditor::getVatType(int index) {
+int OrdersEditor::getSalesTaxType(int index) {
   switch (static_cast<AntiquaCRM::ArticleType>(index)) {
   case (AntiquaCRM::ArticleType::BOOK):
     return 1; // VAT reduced
@@ -277,8 +271,19 @@ int OrdersEditor::getVatType(int index) {
   };
 }
 
-const QPair<int, int> OrdersEditor::deliveryService() {
-  return m_costSettings->o_delivery_service->defaultDeliveryService();
+const QPair<int, int> OrdersEditor::getDeliveryService(bool current) {
+  DeliverService *m_ds = m_costSettings->o_delivery_service;
+  if (current)
+    m_ds->currentDeliveryService();
+
+  return m_ds->defaultDeliveryService();
+}
+
+void OrdersEditor::setDeliveryService() {
+  QPair<int, int> service(0, 0);
+  service.first = m_tableData->getValue("o_delivery_service").toInt();
+  service.second = m_tableData->getValue("o_delivery_package").toInt();
+  m_costSettings->o_delivery_service->setDeliveryService(service);
 }
 
 void OrdersEditor::importSqlResult() {
@@ -637,7 +642,7 @@ const QList<BillingInfo> OrdersEditor::queryBillingInfo(qint64 oid,
       // Umsatzsteuer ermitteln.
       bool _vat_disabled =
           (getDataValue("o_vat_levels").toInt() == 0) ? true : false;
-      AntiquaCRM::SalesTax _vat_set = getSalesTax();
+      AntiquaCRM::SalesTax _taxset = initSalesTax();
       QRegExp strip("\\-\\s+\\-");
       while (q.next()) {
         BillingInfo d;
@@ -645,8 +650,8 @@ const QList<BillingInfo> OrdersEditor::queryBillingInfo(qint64 oid,
         d.designation = q.value("title").toString().replace(strip, "-");
         d.quantity = q.value("quant").toInt();
         d.sellPrice = q.value("sellprice").toDouble();
-        d.vatSet = _vat_set;
-        d.vatValue = getVatValue(q.value("a_type").toInt());
+        d.vatSet = _taxset;
+        d.vatValue = getSalesTaxValue(q.value("a_type").toInt());
         d.vatDisabled = _vat_disabled;
         d.packagePrice = q.value("packageprice").toDouble();
         list.append(d);
@@ -667,25 +672,27 @@ OrdersEditor::addArticleItem(const QString &key, const QVariant &value) const {
 }
 
 void OrdersEditor::setDefaultValues() {
-  m_tableData->setValue("o_delivery_send_id", "");
+  // Status
   m_tableData->setValue("o_order_status", AntiquaCRM::OrderStatus::STARTED);
   setDataField(m_tableData->getProperties("o_order_status"),
                m_tableData->getValue("o_order_status"));
-  int vat = m_cfg->value("payment/vat2", 0).toInt();
-  m_tableData->setValue("o_vat_levels", vat);
+
+  // Einstelleunegn für Umsatzsteuer
+  m_tableData->setValue("o_vat_levels", AntiquaCRM::SalesTax::TAX_INCL);
   setDataField(m_tableData->getProperties("o_vat_levels"),
                m_tableData->getValue("o_vat_levels"));
-  m_tableData->setValue("o_delivery_add_price", (vat == 0));
+  m_tableData->setValue("o_vat_country", QString("XX"));
+  setDataField(m_tableData->getProperties("o_vat_country"),
+               m_tableData->getValue("o_vat_country"));
+
+  // Lieferdienst
+  QPair<int, int> ds_t = getDeliveryService(true);
+  m_tableData->setValue("o_delivery_service", ds_t.first);
+  m_tableData->setValue("o_delivery_package", ds_t.second);
+  m_tableData->setValue("o_delivery_send_id", "");
+  m_tableData->setValue("o_delivery_add_price", false);
   setDataField(m_tableData->getProperties("o_delivery_add_price"),
                m_tableData->getValue("o_delivery_add_price"));
-  // Standard Lieferdienst
-  QPair<int, int> ds_t = deliveryService();
-  m_tableData->setValue("o_delivery_service", ds_t.first);
-  setDataField(m_tableData->getProperties("o_delivery_service"),
-               m_tableData->getValue("o_delivery_service"));
-  m_tableData->setValue("o_delivery_package", ds_t.second);
-  setDataField(m_tableData->getProperties("o_delivery"),
-               m_tableData->getValue("o_delivery"));
 }
 
 bool OrdersEditor::beforeCreate() {
@@ -830,8 +837,8 @@ void OrdersEditor::createPrintInvoiceNote() {
   AntiquaCRM::OrderPayment paid = static_cast<AntiquaCRM::OrderPayment>(
       getDataValue("o_payment_status").toInt());
   if (m_d->exec(list, (paid == AntiquaCRM::OrderPayment::PAYED)) ==
-      QDialog::Accepted) {
-    sendStatusMessage(tr("Printdialog closed."));
+      QDialog::Rejected) {
+    sendStatusMessage(tr("Print document refused."));
   }
   list.clear();
   m_d->deleteLater();
@@ -864,12 +871,17 @@ void OrdersEditor::createPrintPaymentReminder() {
   QString sql("o_id=" + QString::number(ids.or_id));
   QString message_body = body.getTemplate("PDF_PAYMENT_REMINDER", sql);
 
+  qreal pkgPrice = 0.00;
+  if (getDataValue("o_delivery_add_price").toBool()) {
+    pkgPrice = m_costSettings->o_delivery_service->getPackagePrice();
+  }
+
   PaymentReminder *m_d = new PaymentReminder(this);
   m_d->setCustomerAddress(c_add);
-  m_d->setPaymentInfo(ids.or_id, ids.cu_id, ids.in_id, did);
+  m_d->setPaymentInfo(ids.or_id, ids.cu_id, ids.in_id, pkgPrice, did);
   m_d->setMainText(message_body);
-  if (m_d->exec(list) == QDialog::Accepted) {
-    sendStatusMessage(tr("Printdialog closed."));
+  if (m_d->exec(list) != QDialog::Accepted) {
+    sendStatusMessage(tr("Print document refused."));
   }
   list.clear();
   m_d->deleteLater();
@@ -935,10 +947,7 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
     m_ordersList->importArticles(queryOrderArticles(orderId));
 
     // Muss nachträglich gesetzt werden!
-    QPair<int, int> data;
-    data.first = m_tableData->getValue("o_delivery_service").toInt();
-    data.second = m_tableData->getValue("o_delivery_package").toInt();
-    m_costSettings->o_delivery_service->setDeliveryService(data);
+    setDeliveryService();
 
     setResetModified(customInput);
     status = true;
@@ -1111,9 +1120,10 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
     for (int i = 0; i < orders.size(); i++) {
       QList<AntiquaCRM::ArticleOrderItem> items;
       QJsonObject article = orders[i].toObject();
-      // NOTE: Das Feld 'vat_tax' ist noch nicht in „antiquacmd“ eingebunden!
+      // NOTE: Das Feld 'a_tax' ist noch nicht in „antiquacmd“ eingebunden!
       if (!article.contains("a_tax") && article.contains("a_type")) {
-        article.insert("a_tax", getVatType(article.value("a_type").toInt()));
+        article.insert("a_tax",
+                       getSalesTaxType(article.value("a_type").toInt()));
       }
 
       qint64 aId = article.value("a_article_id").toInt();
@@ -1145,19 +1155,23 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
     }
   }
 
+  // Fehlende felder in JsonObject setzen!
   // Setze auf Auftragsbegin
   prOrder.setValue("o_order_status", AntiquaCRM::OrderStatus::STARTED);
-  // Die Paket Verfolgungsnummer muss Manuell gesetzt werden!
-  prOrder.setValue("o_delivery_send_id", "");
-  // Der Standard bei Büchern ist "reduziert"!
+
+  // Begin:Umsatzsteuer
   prOrder.setValue("o_vat_levels", AntiquaCRM::SalesTax::TAX_INCL);
-  // Lieferkosten!
+  // End:Umsatzsteuer
+
+  // Begin:Lieferdienst
+  QPair<int, int> pkgService = getDeliveryService(false);
+  prOrder.setValue("o_delivery_service", pkgService.first);
+  prOrder.setValue("o_delivery_package", pkgService.second);
+  prOrder.setValue("o_delivery_send_id", "");
   prOrder.setValue("o_delivery_add_price", false);
-  // Standard Lieferdienst
-  QPair<int, int> deliveryService =
-      m_costSettings->o_delivery_service->defaultDeliveryService();
-  prOrder.setValue("o_delivery_service", deliveryService.first);
-  prOrder.setValue("o_delivery_package", deliveryService.second);
+  // Lieferschein Nr. ist hier noch leer!
+  prOrder.setValue("o_delivery", QString());
+  // End:Lieferdienst
 
   // Diese Felder bei neuen Einträgen ignorieren!
   QStringList ignored({"o_id", "o_invoice_id"});
