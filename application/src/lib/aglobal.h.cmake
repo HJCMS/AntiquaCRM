@@ -13,6 +13,11 @@
 #include <QObject>
 #include <QString>
 #include <QIODevice>
+#ifdef ANTIQUACRM_DBUS_ENABLED
+#include <QDBusAbstractAdaptor>
+#else
+#define Q_NOREPLY
+#endif
 
 /**
  * @def ANTIQUACRM_NAME

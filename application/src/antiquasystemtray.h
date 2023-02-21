@@ -5,12 +5,10 @@
 #ifndef ANTIQUACRM_SYSTEMTRAY_H
 #define ANTIQUACRM_SYSTEMTRAY_H
 
+#include <AGlobal>
 #include <QAction>
 #include <QObject>
 #include <QSystemTrayIcon>
-#ifdef ANTIQUACRM_DBUS_ENABLED
-#include <QDBusAbstractAdaptor>
-#endif
 
 class AntiquaSystemTray : public QSystemTrayIcon {
   Q_OBJECT
