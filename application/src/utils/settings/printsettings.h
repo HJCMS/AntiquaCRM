@@ -82,6 +82,15 @@ private:
   QComboBox *m_dinA6Printer;
 
   /**
+   * @brief Tabellenrand Abstände
+   */
+  QGroupBox *m_marginsGroup;
+  IntSpinBox *m_marginLeft;
+  IntSpinBox *m_marginTop;
+  IntSpinBox *m_marginRight;
+  IntSpinBox *m_marginBottom;
+
+  /**
    * @brief QRCode Einstellungen
    */
   QGroupBox *qrcodeGroup;

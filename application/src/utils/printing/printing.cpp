@@ -126,7 +126,15 @@ void Printing::readConfiguration() {
     }
   }
 
+  config->beginGroup("printer/table_margins");
+  p_tableMargins.setLeft(config->value("left", 0).toDouble());
+  p_tableMargins.setTop(config->value("top", 0).toDouble());
+  p_tableMargins.setRight(config->value("right", 30.0).toDouble());
+  p_tableMargins.setBottom(config->value("bottom", 0).toDouble());
+  config->endGroup();
+
   config->beginGroup("printer");
+
   QFont font;
   if (font.fromString(config->value("header_font").toString())) {
     headerFont.swap(font);
@@ -198,13 +206,13 @@ const QTextBlockFormat Printing::alignCenter() {
 
 const QTextTableFormat Printing::tableFormat() {
   QTextTableFormat f;
-  f.setWidth(QTextLength(QTextLength().PercentageLength, 95));
+  f.setWidth(QTextLength(QTextLength().PercentageLength, 94));
   f.setPadding(0);
   f.setCellPadding(0);
   f.setCellSpacing(0);
   f.setTopMargin(0);
   f.setBottomMargin(0);
-  f.setRightMargin(15.0); // 15 Pixel
+  f.setRightMargin(p_tableMargins.right());
   f.setBorder(0.0);
   f.setBorderBrush(QBrush(Qt::NoBrush));
   f.setBorderStyle(QTextFrameFormat::BorderStyle_None);

@@ -129,27 +129,27 @@ void PaymentReminder::constructBody() {
   cursor = ce00.firstCursorPosition();
   cursor.setCharFormat(boldFormat());
   cursor.insertText(tr("Article"));
-  billingConstraint.append(QTextLength(type, 15)); // 15%
+  billingConstraint.append(QTextLength(type, 10)); // 10%
 
   QTextTableCell ce01 = m_billingTable->cellAt(0, 1);
   cursor = ce01.firstCursorPosition();
   cursor.setCharFormat(boldFormat());
   cursor.insertText(tr("Designation"));
-  billingConstraint.append(QTextLength(type, 60)); // 60%
+  billingConstraint.append(QTextLength(type, 60)); // 70%
 
   QTextTableCell ce02 = m_billingTable->cellAt(0, 2);
   cursor = ce02.firstCursorPosition();
   cursor.setCharFormat(boldFormat());
   cursor.setBlockFormat(alignCenter());
   cursor.insertText(tr("Quantity"));
-  billingConstraint.append(QTextLength(type, 10)); // 10%
+  billingConstraint.append(QTextLength(type, 10)); // 80%
 
   QTextTableCell ce03 = m_billingTable->cellAt(0, 3);
   cursor = ce03.firstCursorPosition();
   cursor.setCharFormat(boldFormat());
   cursor.setBlockFormat(alignCenter());
   cursor.insertText(tr("Price"));
-  billingConstraint.append(QTextLength(type, 15)); // 15%
+  billingConstraint.append(QTextLength(type, 10)); // 90%
 
   format.clearColumnWidthConstraints();
   format.setColumnWidthConstraints(billingConstraint);

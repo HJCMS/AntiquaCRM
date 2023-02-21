@@ -113,6 +113,28 @@ PrintSettings::PrintSettings(QWidget *parent) : SettingsWidget{parent} {
   m_printerGroup->setLayout(prLayout);
   layout->addWidget(m_printerGroup, row++, 0, 1, 2);
 
+  m_marginsGroup = new QGroupBox(this);
+  m_marginsGroup->setTitle(tr("Setting article table margins in Pixel."));
+  QHBoxLayout *tbGLayout = new QHBoxLayout(m_marginsGroup);
+  m_marginLeft = new IntSpinBox(m_marginsGroup);
+  m_marginLeft->setObjectName("table_margin_left");
+  m_marginLeft->setInfo(tr("Left"));
+  tbGLayout->addWidget(m_marginLeft);
+  m_marginTop = new IntSpinBox(m_marginsGroup);
+  m_marginTop->setObjectName("table_margin_top");
+  m_marginTop->setInfo(tr("Top"));
+  tbGLayout->addWidget(m_marginTop);
+  m_marginRight = new IntSpinBox(m_marginsGroup);
+  m_marginRight->setObjectName("table_margin_right");
+  m_marginRight->setInfo(tr("Right"));
+  tbGLayout->addWidget(m_marginRight);
+  m_marginBottom = new IntSpinBox(m_marginsGroup);
+  m_marginBottom->setObjectName("table_margin_bottom");
+  m_marginBottom->setInfo(tr("Bottom"));
+  tbGLayout->addWidget(m_marginBottom);
+  m_marginsGroup->setLayout(tbGLayout);
+  layout->addWidget(m_marginsGroup, row++, 0, 1, 2);
+
   qrcodeGroup = new QGroupBox(this);
   qrcodeGroup->setTitle(tr("QR Code Settings"));
   QGridLayout *qrLayout = new QGridLayout(qrcodeGroup);
@@ -248,6 +270,14 @@ const QIcon PrintSettings::getPageIcon() { return pageIcon; }
 
 void PrintSettings::loadSectionConfig() {
   initPrinterInfos();
+
+  config->beginGroup("printer/table_margins");
+  m_marginLeft->setValue(config->value("left", 0));
+  m_marginTop->setValue(config->value("top", 0));
+  m_marginRight->setValue(config->value("right", 30));
+  m_marginBottom->setValue(config->value("bttom", 0));
+  config->endGroup();
+
   config->beginGroup("printer");
   QList<QLabel *> labels =
       findChildren<QLabel *>(p_fontPattern, Qt::FindDirectChildrenOnly);
@@ -280,6 +310,14 @@ void PrintSettings::loadSectionConfig() {
 }
 
 void PrintSettings::saveSectionConfig() {
+  // Tabellenabstände
+  config->beginGroup("printer/table_margins");
+  config->setValue("left", m_marginLeft->value().toInt());
+  config->setValue("top", m_marginTop->value().toInt());
+  config->setValue("right", m_marginRight->value().toInt());
+  config->setValue("bottom", m_marginBottom->value().toInt());
+  config->endGroup();
+
   config->beginGroup("printer");
   QList<QLabel *> labels =
       findChildren<QLabel *>(p_fontPattern, Qt::FindDirectChildrenOnly);

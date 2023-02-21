@@ -156,6 +156,11 @@ protected:
   int p_tax_value;
 
   /**
+   * @brief Rechter Rand vom Dokument in Pixel!
+   */
+  QMargins p_tableMargins;
+
+  /**
    * @brief Gesamtpreis
    */
   qreal p_totalPrice = 0.00;
@@ -297,7 +302,7 @@ protected:
   /**
    * @brief Tabelle Adressenkopf für Rechnung, Erinnerung und Mahnung!
    */
-  QTextTable* constructInvoiceTable(const QString &subject);
+  QTextTable *constructInvoiceTable(const QString &subject);
 
   /**
    * @brief In Tabellenkopf die Felder einfügen
