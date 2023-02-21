@@ -2918,12 +2918,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>Ecurrency</name>
     <message>
-        <location filename="../widgets/ecurrency.cpp" line="+34"/>
-        <source>Without disclosures</source>
-        <translation>Keine Angaben</translation>
-    </message>
-    <message>
-        <location line="+76"/>
+        <location filename="../widgets/ecurrency.cpp" line="+115"/>
         <source>A valid Currency is Required!</source>
         <translation>Eine gültige Währung ist erforderlich!</translation>
     </message>
@@ -3158,7 +3153,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Die Tabellenhauptansicht nur Automatisch aktualisieren, wenn die Anzahl kleiner ist als!</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Set size range for Imagepreviews.</source>
         <translation>Größenbereich für Bildvorschauen festlegen.</translation>
     </message>
@@ -3531,17 +3526,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+21"/>
         <source>delivery cost</source>
         <translation>Lieferkosten</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+27"/>
         <source>invoice amount</source>
         <translation>Rechnungsbetrag</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+22"/>
         <source>The order has already been paid for.</source>
         <translation>Die Bestellung wurde bereits bezahlt.</translation>
     </message>
@@ -5092,17 +5087,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>der</translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+74"/>
         <source>delivery cost</source>
         <translation>Lieferkosten</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+26"/>
         <source>invoice amount</source>
         <translation>Rechnungsbetrag</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+40"/>
         <source>Sincerely</source>
         <translation>Hochachtungsvoll</translation>
     </message>
@@ -5571,7 +5566,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+233"/>
+        <location line="+226"/>
         <source>eMail</source>
         <translation>E-Mail</translation>
     </message>
@@ -5587,13 +5582,13 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+12"/>
-        <source>Tax Number</source>
-        <translation>MwSt Nummer</translation>
+        <source>Tax No.</source>
+        <translation>USt. Nr.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>VAT Number</source>
-        <translation>Umsatzsteuernummer</translation>
+        <source>EPR No.</source>
+        <translation>EPR Nr.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -5601,7 +5596,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Rechtmäßigkeit</translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+74"/>
         <source>VAT</source>
         <translation>USt.</translation>
     </message>
@@ -5626,7 +5621,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Drucker</translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+121"/>
         <source>Delivery note</source>
         <translation>Lieferschein</translation>
     </message>

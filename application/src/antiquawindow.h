@@ -13,6 +13,9 @@
 #include <QMenuBar>
 #include <QObject>
 #include <QWidget>
+#ifdef ANTIQUACRM_DBUS_ENABLED
+#include <QDBusAbstractAdaptor>
+#endif
 
 class AntiquaMenuBar;
 class AntiquaTabWidget;

@@ -111,7 +111,6 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
 
 void Printing::readConfiguration() {
   config->beginGroup("payment");
-  p_currency = config->value("currency").toByteArray();
   p_tax_value = config->value("vat1").toInt();
   p_grace_period = config->value("grace_period").toString();
   config->endGroup();
@@ -145,12 +144,6 @@ void Printing::readConfiguration() {
     smallFont.swap(font);
   }
   config->endGroup();
-}
-
-const QString Printing::displayPrice(double price) {
-  QString str = QString::number(price, 'f', 2);
-  str.append(" " + QString(p_currency));
-  return str;
 }
 
 const QTextCharFormat Printing::headerFormat() {
@@ -340,10 +333,10 @@ void Printing::constructFooter() {
   cursor.insertText(companyData.value("COMPANY_BANK_BICSWIFT") + "\n");
   cursor.insertText("IBAN: ");
   cursor.insertText(companyData.value("COMPANY_BANK_IBAN") + "\n");
-  cursor.insertText(tr("Tax Number") + ": ");
-  cursor.insertText(companyData.value("COMPANY_TAX_NUMBER") + "\n");
-  cursor.insertText(tr("VAT Number") + ": ");
+  cursor.insertText(tr("Tax No.") + ": ");
   cursor.insertText(companyData.value("COMPANY_VAT_NUMBER") + "\n");
+  cursor.insertText(tr("EPR No.") + ": ");
+  cursor.insertText(companyData.value("COMPANY_EPR_NUMBER") + "\n");
   if (!companyData.value("COMPANY_LEGALITY").isEmpty()) {
     cursor.insertText(tr("Legality") + ": ");
     cursor.insertText(companyData.value("COMPANY_LEGALITY") + "\n");
@@ -410,7 +403,6 @@ bool Printing::addArticleRow(QTextTable *table, BillingInfo article) {
     p_tax_value = article.vatValue;
 
   // Begin:PrepareData
-  QString _currency(" " + p_currency);
   // Preisausgabe
   double _total = 0.00;
   double _price = article.sellPrice;
@@ -424,14 +416,14 @@ bool Printing::addArticleRow(QTextTable *table, BillingInfo article) {
   if (article.vatSet == AntiquaCRM::SalesTax::TAX_INCL) {
     // Steuersatz ist im Artikel enthalten!
     double _v = inclVat(_price, article.vatValue);
-    _vat_display = displayPrice(_v);
+    _vat_display = money(_v);
     _vat_info.prepend(tr("incl.") + " ");
     _total = _price;
   } else if (article.vatSet == AntiquaCRM::SalesTax::TAX_WITH) {
     // Steuersatz wird hinzugefügt!
     double _v = addVat(_price, article.vatValue);
     _total = (_price + _v);
-    _vat_display = displayPrice(_v);
+    _vat_display = money(_v);
   } else {
     // Es wird keine Steuer angegeben!
     _vat_display = "-";
@@ -440,8 +432,7 @@ bool Printing::addArticleRow(QTextTable *table, BillingInfo article) {
   }
 
   // Preisausgabe im textformat
-  QString _price_txt(QString::number(_price, 'f', 2));
-  _price_txt.append(_currency);
+  QString _price_txt = money(_price);
   // aufrunden
   p_totalPrice += _total;
 
@@ -497,10 +488,11 @@ bool Printing::addArticleRow(QTextTable *table, BillingInfo article) {
   tc1.setFormat(cellFormat(Printing::Border::NoBorder));
   cursor = tc1.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
-  cursor.setBlockFormat(alignRight());
   if (article.vatDisabled) {
-    cursor.insertText(displayPrice(0.00));
+    cursor.setBlockFormat(alignCenter());
+    cursor.insertText("-");
   } else {
+    cursor.setBlockFormat(alignRight());
     cursor.insertText(_vat_display);
   }
   // END
@@ -518,7 +510,7 @@ bool Printing::addArticleRow(QTextTable *table, BillingInfo article) {
   cursor = zs1.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
-  cursor.insertText(displayPrice(p_totalPrice));
+  cursor.insertText(money(p_totalPrice));
   // END
 
   return true;
@@ -550,6 +542,12 @@ void Printing::printerSelected(int index) {
     return;
   }
   p_printerName = QString();
+}
+
+const QString Printing::money(double v) const {
+  QLocale lc = QLocale::system();
+  QString cs = lc.currencySymbol(QLocale::CurrencySymbol);
+  return lc.toCurrencyString(v, cs, 2);
 }
 
 const QPageSize Printing::pageSize() const {

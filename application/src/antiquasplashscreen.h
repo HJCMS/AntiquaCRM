@@ -5,6 +5,7 @@
 #ifndef ANTIQUACRM_SPLASHSCREEN_H
 #define ANTIQUACRM_SPLASHSCREEN_H
 
+#include <AGlobal>
 #include <QFont>
 #include <QMainWindow>
 #include <QObject>

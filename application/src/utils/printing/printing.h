@@ -146,11 +146,6 @@ protected:
   AntiquaCRM::ASettings *config;
 
   /**
-   * @brief Währung
-   */
-  QByteArray p_currency;
-
-  /**
    * @brief Zahlungsfrist
    */
   QString p_grace_period;
@@ -233,11 +228,6 @@ protected:
    * @brief Firmen Einstellungen lesen
    */
   void readConfiguration();
-
-  /**
-   * @brief Preis in text format
-   */
-  const QString displayPrice(double);
 
   /**
    * @brief Textformat für den Briefkopf
@@ -416,6 +406,11 @@ public Q_SLOTS:
 
 public:
   explicit Printing(QWidget *parent = nullptr);
+
+  /**
+   * @brief Preis in text format
+   */
+  const QString money(double) const;
 
   /**
    * @brief Vordefinierte Seitengröße

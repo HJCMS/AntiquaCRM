@@ -38,9 +38,9 @@ void Invoice::constructSubject() {
 
   // Betreff Informationen
   QMap<qint8, QString> title;
-  title.insert(0,tr("Invoice No."));
-  title.insert(1,tr("Order No."));
-  title.insert(2,tr("Costumer No."));
+  title.insert(0, tr("Invoice No."));
+  title.insert(1, tr("Order No."));
+  title.insert(2, tr("Costumer No."));
   QMap<qint8, QString> data;
   data.insert(0, p_invoiceId);
   data.insert(1, p_orderId);
@@ -150,7 +150,6 @@ void Invoice::constructBody() {
 }
 
 bool Invoice::insertDeliveryCost() {
-  QString text;
   QTextCursor cursor = body->textCursor();
   int row = m_billingTable->rows();
   m_billingTable->insertRows(row, 1);
@@ -162,17 +161,15 @@ bool Invoice::insertDeliveryCost() {
   cursor = vc0.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
-  text = tr("delivery cost");
-  cursor.insertText(text);
+  QString txt = tr("delivery cost");
+  cursor.insertText(txt);
 
   QTextTableCell vc1 = m_billingTable->cellAt(row, 3);
   vc1.setFormat(cellFormat(Printing::Border::Top));
   cursor = vc1.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
-  text = QString::number(p_deliveryCost, 'f', 2);
-  text.append(" " + p_currency);
-  cursor.insertText(text);
+  cursor.insertText(money(p_deliveryCost));
   if (p_deliveryCost > 0.1) {
     p_totalPrice += p_deliveryCost;
   }
@@ -199,9 +196,7 @@ void Invoice::finalizeBillings() {
   cursor = costCell.firstCursorPosition();
   cursor.setCharFormat(boldFormat());
   cursor.setBlockFormat(alignRight());
-  QString str = QString::number(p_totalPrice, 'f', 2);
-  str.append(" " + p_currency);
-  cursor.insertText(str);
+  cursor.insertText(money(p_totalPrice));
 }
 
 void Invoice::setPaymentTerms() {

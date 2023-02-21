@@ -13,6 +13,9 @@
 #include <QObject>
 #include <QScreen>
 #include <QStyle>
+#ifdef ANTIQUACRM_DBUS_ENABLED
+#include <QtDBus/QDBusConnection>
+#endif
 
 class AntiquaWindow;
 class AntiquaSystemTray;
@@ -20,12 +23,18 @@ class AntiquaTimer;
 
 class AntiquaAppl final : public QApplication {
   Q_OBJECT
+#ifdef ANTIQUACRM_DBUS_ENABLED
+  Q_CLASSINFO("D-Bus Interface", ANTIQUACRM_CONNECTION_DOMAIN)
+#endif
 
 private:
   AntiquaCRM::ASettings *m_cfg;
   AntiquaWindow *m_mainWindow;
   AntiquaSystemTray *m_systemTray;
   AntiquaCRM::ASqlCore *m_sql;
+#ifdef ANTIQUACRM_DBUS_ENABLED
+  QDBusConnection *m_dbus;
+#endif
 
   QList<AntiquaCRM::APluginInterface *> p_interfaces;
 

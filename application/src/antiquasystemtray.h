@@ -8,6 +8,9 @@
 #include <QAction>
 #include <QObject>
 #include <QSystemTrayIcon>
+#ifdef ANTIQUACRM_DBUS_ENABLED
+#include <QDBusAbstractAdaptor>
+#endif
 
 class AntiquaSystemTray : public QSystemTrayIcon {
   Q_OBJECT
@@ -30,7 +33,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   void setConnectionStatus(bool);
-  void setMessage(const QString &body);
+  Q_NOREPLY void setMessage(const QString &body);
 
 public:
   explicit AntiquaSystemTray(const QIcon &icon, QObject *parent = nullptr);

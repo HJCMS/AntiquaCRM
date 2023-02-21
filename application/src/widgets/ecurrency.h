@@ -6,7 +6,6 @@
 #define ANTIQUACRM_ECURRENCY_H
 
 #include <AntiquaInputEdit>
-#include <QComboBox>
 #include <QLabel>
 #include <QLineEdit>
 #include <QObject>
@@ -16,7 +15,7 @@ class Ecurrency final : public InputEdit {
 
 private:
   QLineEdit *m_lineEdit;
-  QComboBox *m_comboBox;
+  AntiquaComboBox *m_box;
   void loadDataset() override;
 
 private Q_SLOTS:

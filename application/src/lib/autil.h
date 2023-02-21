@@ -6,9 +6,11 @@
 #define ANTIQUACRM_AUTIL_H
 
 #include <AGlobal>
+#include <QChar>
+#include <QLocale>
 #include <QRegExp>
-#include <QTime>
 #include <QString>
+#include <QTime>
 
 namespace AntiquaCRM {
 
@@ -62,6 +64,13 @@ public:
    * @brief Convert Number to AntiquaCRM with leading zeros to String
    */
   static const QString zerofill(qint64 number, int length = 7);
+
+  /**
+   * @brief Convert double to money value
+   * @param value
+   */
+  static const QString toMoney(double value,
+    QLocale::CurrencySymbolFormat format = QLocale::CurrencySymbol);
 };
 
 }; // namespace AntiquaCRM

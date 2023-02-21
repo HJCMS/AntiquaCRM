@@ -3,6 +3,7 @@
 
 #include "autil.h"
 
+#include <QLocale>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 #include <QStringList>
@@ -76,6 +77,12 @@ const QString AUtil::toISO88591(const QString &str) {
 
 const QString AUtil::zerofill(qint64 number, int length) {
   return QString::number(number).rightJustified(length, '0');
+}
+
+const QString AUtil::toMoney(double value, QLocale::CurrencySymbolFormat format) {
+  QLocale lc = QLocale::system();
+  QString cs = lc.currencySymbol(format);
+  return lc.toCurrencyString(value, cs, 2);
 }
 
 }; // namespace AntiquaCRM

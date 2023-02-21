@@ -158,7 +158,6 @@ void PaymentReminder::constructBody() {
 }
 
 bool PaymentReminder::insertDeliveryCost() {
-  QString text;
   QTextCursor cursor = body->textCursor();
   int row = m_billingTable->rows();
   m_billingTable->insertRows(row, 1);
@@ -170,17 +169,14 @@ bool PaymentReminder::insertDeliveryCost() {
   cursor = vc0.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
-  text = tr("delivery cost");
-  cursor.insertText(text);
+  cursor.insertText(tr("delivery cost"));
 
   QTextTableCell vc1 = m_billingTable->cellAt(row, 3);
   vc1.setFormat(cellFormat(Printing::Border::Top));
   cursor = vc1.firstCursorPosition();
   cursor.setCharFormat(normalFormat());
   cursor.setBlockFormat(alignRight());
-  text = QString::number(p_deliveryCost, 'f', 2);
-  text.append(" " + p_currency);
-  cursor.insertText(text);
+  cursor.insertText(money(p_deliveryCost));
   if (p_deliveryCost > 0.1) {
     p_totalPrice += p_deliveryCost;
   }
@@ -199,17 +195,14 @@ void PaymentReminder::finalizeBillings() {
   cursor = infoCell.firstCursorPosition();
   cursor.setCharFormat(boldFormat());
   cursor.setBlockFormat(alignRight());
-  QString summary(tr("invoice amount"));
-  cursor.insertText(summary);
+  cursor.insertText(tr("invoice amount"));
 
   QTextTableCell costCell = m_billingTable->cellAt(row, 3);
   costCell.setFormat(cellFormat(Printing::Border::Top));
   cursor = costCell.firstCursorPosition();
   cursor.setCharFormat(boldFormat());
   cursor.setBlockFormat(alignRight());
-  QString str = QString::number(p_totalPrice, 'f', 2);
-  str.append(" " + p_currency);
-  cursor.insertText(str);
+  cursor.insertText(money(p_totalPrice));
 }
 
 void PaymentReminder::setAdditionalInfo() {

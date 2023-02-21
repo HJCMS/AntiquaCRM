@@ -151,7 +151,8 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
          "and computer performance, prevents the application from freezing."));
   m_queryLimit->setInfo(buffer);
   lt_groupBox2->addWidget(m_queryLimit);
-  buffer = tr("Only Auto updates the main view if Table count is smaller than this!");
+  buffer = tr(
+      "Only Auto updates the main view if Table count is smaller than this!");
   m_queryAutoUpdate = new IntSpinBox(30, 100, this);
   m_queryAutoUpdate->setObjectName("SqlAutoUpdateCount");
   m_queryAutoUpdate->setValue(QVariant(50));

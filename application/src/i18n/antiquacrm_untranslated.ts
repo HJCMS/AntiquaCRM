@@ -2914,12 +2914,7 @@ Image - Article Id: %2</source>
 <context>
     <name>Ecurrency</name>
     <message>
-        <location filename="../widgets/ecurrency.cpp" line="+34"/>
-        <source>Without disclosures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+76"/>
+        <location filename="../widgets/ecurrency.cpp" line="+115"/>
         <source>A valid Currency is Required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3154,7 +3149,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Set size range for Imagepreviews.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3527,17 +3522,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+21"/>
         <source>delivery cost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+27"/>
         <source>invoice amount</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+22"/>
         <source>The order has already been paid for.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5088,17 +5083,17 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+74"/>
         <source>delivery cost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+26"/>
         <source>invoice amount</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+40"/>
         <source>Sincerely</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5567,7 +5562,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+233"/>
+        <location line="+226"/>
         <source>eMail</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5583,12 +5578,12 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+12"/>
-        <source>Tax Number</source>
+        <source>Tax No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>VAT Number</source>
+        <source>EPR No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5597,7 +5592,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+74"/>
         <source>VAT</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5622,7 +5617,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+121"/>
         <source>Delivery note</source>
         <translation type="unfinished"></translation>
     </message>

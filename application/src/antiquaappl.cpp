@@ -41,6 +41,17 @@ void AntiquaAppl::initGui() {
   m_systemTray = new AntiquaSystemTray(applIcon(), this);
   m_systemTray->setObjectName("SystemTray");
 
+#ifdef ANTIQUACRM_DBUS_ENABLED
+  m_dbus = new QDBusConnection(QDBusConnection::sessionBus());
+  if (m_dbus->registerService(ANTIQUACRM_CONNECTION_DOMAIN)) {
+    qInfo("D-Bus connection established.");
+    m_dbus->registerObject(QString("/MainWindow"), m_mainWindow,
+                           QDBusConnection::ExportScriptableContents);
+    m_dbus->registerObject(QString("/SystemTray"), m_systemTray,
+                           QDBusConnection::ExportScriptableContents);
+  }
+#endif
+
   // SIGNALS:AntiquaSystemTray
   connect(m_systemTray, SIGNAL(sendShowWindow()), m_mainWindow, SLOT(show()));
   connect(m_systemTray, SIGNAL(sendHideWindow()), m_mainWindow, SLOT(hide()));
@@ -109,6 +120,11 @@ void AntiquaAppl::applicationQuit() {
 
   if (m_systemTray != nullptr)
     m_systemTray->deleteLater();
+
+#ifdef ANTIQUACRM_DBUS_ENABLED
+  m_dbus->unregisterObject(QString("/"), QDBusConnection::UnregisterTree);
+  m_dbus->unregisterService(ANTIQUACRM_CONNECTION_DOMAIN);
+#endif
   // finaly
   quit();
 }
