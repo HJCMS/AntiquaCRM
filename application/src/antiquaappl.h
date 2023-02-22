@@ -23,9 +23,6 @@ class AntiquaTimer;
 
 class AntiquaAppl final : public QApplication {
   Q_OBJECT
-#ifdef ANTIQUACRM_DBUS_ENABLED
-  Q_CLASSINFO("D-Bus Interface", ANTIQUACRM_CONNECTION_DOMAIN)
-#endif
 
 private:
   AntiquaCRM::ASettings *m_cfg;

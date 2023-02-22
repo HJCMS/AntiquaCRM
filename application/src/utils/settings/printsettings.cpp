@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "printsettings.h"
+#include "borderprintinput.h"
 
 #include <QFileDialog>
 #include <QFileInfo>
@@ -114,21 +115,21 @@ PrintSettings::PrintSettings(QWidget *parent) : SettingsWidget{parent} {
   layout->addWidget(m_printerGroup, row++, 0, 1, 2);
 
   m_marginsGroup = new QGroupBox(this);
-  m_marginsGroup->setTitle(tr("Setting article table margins in Pixel."));
-  QHBoxLayout *tbGLayout = new QHBoxLayout(m_marginsGroup);
-  m_marginLeft = new IntSpinBox(m_marginsGroup);
+  m_marginsGroup->setTitle(tr("Printer page layout margins."));
+  QVBoxLayout *tbGLayout = new QVBoxLayout(m_marginsGroup);
+  m_marginLeft = new BorderPrintInput(m_marginsGroup);
   m_marginLeft->setObjectName("table_margin_left");
   m_marginLeft->setInfo(tr("Left"));
   tbGLayout->addWidget(m_marginLeft);
-  m_marginTop = new IntSpinBox(m_marginsGroup);
+  m_marginTop = new BorderPrintInput(m_marginsGroup);
   m_marginTop->setObjectName("table_margin_top");
   m_marginTop->setInfo(tr("Top"));
   tbGLayout->addWidget(m_marginTop);
-  m_marginRight = new IntSpinBox(m_marginsGroup);
+  m_marginRight = new BorderPrintInput(m_marginsGroup);
   m_marginRight->setObjectName("table_margin_right");
   m_marginRight->setInfo(tr("Right"));
   tbGLayout->addWidget(m_marginRight);
-  m_marginBottom = new IntSpinBox(m_marginsGroup);
+  m_marginBottom = new BorderPrintInput(m_marginsGroup);
   m_marginBottom->setObjectName("table_margin_bottom");
   m_marginBottom->setInfo(tr("Bottom"));
   tbGLayout->addWidget(m_marginBottom);

@@ -33,12 +33,12 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+97"/>
+        <location filename="../antiquaappl.cpp" line="+118"/>
         <source>Please close all editors before exiting!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+73"/>
         <source>Search Networkconnection!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1157,6 +1157,14 @@ Image - Article Id: %2</source>
     <message>
         <location filename="../widgets/boolbox.cpp" line="+76"/>
         <source>is required must selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BorderPrintInput</name>
+    <message>
+        <location filename="../utils/printing/borderprintinput.cpp" line="+71"/>
+        <source>A valid border set is required!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5389,7 +5397,7 @@ Image - Article Id: %2</source>
 <context>
     <name>PrintSettings</name>
     <message>
-        <location filename="../utils/settings/printsettings.cpp" line="+28"/>
+        <location filename="../utils/settings/printsettings.cpp" line="+29"/>
         <source>Printer settings for delivery note and invoicing.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5440,12 +5448,12 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+129"/>
+        <location line="+151"/>
         <source>Watermark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-125"/>
+        <location line="-147"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5456,6 +5464,31 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+16"/>
+        <source>Printer page layout margins.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>QR Code Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5562,7 +5595,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+226"/>
+        <location line="+234"/>
         <source>eMail</source>
         <translation type="unfinished"></translation>
     </message>

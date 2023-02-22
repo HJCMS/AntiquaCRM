@@ -158,7 +158,7 @@ protected:
   /**
    * @brief Rechter Rand vom Dokument in Pixel!
    */
-  QMargins p_tableMargins;
+  QMarginsF p_pageMargins;
 
   /**
    * @brief Gesamtpreis

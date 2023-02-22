@@ -7,6 +7,9 @@
 #include "antiquasystemtray.h"
 #include "antiquawindow.h"
 #include "cachebuilder.h"
+#ifdef ANTIQUACRM_DBUS_ENABLED
+#include "abusadaptor.h"
+#endif
 
 #include <QDebug>
 #ifdef Q_OS_WIN
@@ -28,6 +31,9 @@ AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
    */
   m_cfg = new AntiquaCRM::ASettings(this);
   m_cfg->setObjectName("application_settings");
+#ifdef ANTIQUACRM_DBUS_ENABLED
+  m_dbus = nullptr;
+#endif
 }
 
 const QIcon AntiquaAppl::applIcon() {
@@ -42,13 +48,17 @@ void AntiquaAppl::initGui() {
   m_systemTray->setObjectName("SystemTray");
 
 #ifdef ANTIQUACRM_DBUS_ENABLED
+  ABusAdaptor *m_adaptor = new ABusAdaptor(this);
+  m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
+  connect(m_adaptor, SIGNAL(sendMessage(const QString &)), m_systemTray,
+          SLOT(setMessage(const QString &)));
+  connect(m_adaptor, SIGNAL(sendToggleView()), m_mainWindow,
+          SLOT(setToggleWindow()));
+  connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
+
   m_dbus = new QDBusConnection(QDBusConnection::sessionBus());
   if (m_dbus->registerService(ANTIQUACRM_CONNECTION_DOMAIN)) {
-    qInfo("D-Bus connection established.");
-    m_dbus->registerObject(QString("/MainWindow"), m_mainWindow,
-                           QDBusConnection::ExportScriptableContents);
-    m_dbus->registerObject(QString("/SystemTray"), m_systemTray,
-                           QDBusConnection::ExportScriptableContents);
+    m_dbus->registerObject(QString("/"), this);
   }
 #endif
 
@@ -114,6 +124,12 @@ void AntiquaAppl::applicationQuit() {
   m_mainWindow->close();
   // SQL
   m_sql->close();
+
+#ifdef ANTIQUACRM_DBUS_ENABLED
+  m_dbus->unregisterObject(QString("/"), QDBusConnection::UnregisterTree);
+  m_dbus->unregisterService(ANTIQUACRM_CONNECTION_DOMAIN);
+#endif
+
   // Force destructers
   if (m_mainWindow != nullptr)
     m_mainWindow->deleteLater();
@@ -121,10 +137,6 @@ void AntiquaAppl::applicationQuit() {
   if (m_systemTray != nullptr)
     m_systemTray->deleteLater();
 
-#ifdef ANTIQUACRM_DBUS_ENABLED
-  m_dbus->unregisterObject(QString("/"), QDBusConnection::UnregisterTree);
-  m_dbus->unregisterService(ANTIQUACRM_CONNECTION_DOMAIN);
-#endif
   // finaly
   quit();
 }
@@ -139,13 +151,7 @@ void AntiquaAppl::initDefaultTheme() {
   if (!fontdef.isEmpty() && font.fromString(fontdef)) {
     qApp->setFont(font);
   }
-  /**
-   * @short QStyle::Windows::Fusion
-   * Hervorgehobener Inaktiver Hintergrund wird bei der Suche in Tabellen und
-   * Listen nicht richtig dargestellt! Um ihn für den Klienten besser hervor zu
-   * heben und es besser Sichtbar wird. Hier ein Workaround mit Gelber Farbe!
-   * Die Standard Textfarbe in QStyle::Windows::Fusion ist "Schwarz".
-   */
+  // @short QStyle::Windows::Fusion
   QPalette p = qApp->palette();
   QColor lightYellow(255, 255, 127);
   p.setColor(QPalette::Inactive, QPalette::Highlight, lightYellow);

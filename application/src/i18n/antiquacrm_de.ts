@@ -33,12 +33,12 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+97"/>
+        <location filename="../antiquaappl.cpp" line="+118"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie vor dem Beenden bitte alle Editoren!</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+73"/>
         <source>Search Networkconnection!</source>
         <translation>Suche Netzwerkverbindung!</translation>
     </message>
@@ -1160,6 +1160,14 @@ Bild - Artikel Nr: %2</translation>
         <location filename="../widgets/boolbox.cpp" line="+76"/>
         <source>is required must selected.</source>
         <translation>ist erforderlich muss ausgewählt werden.</translation>
+    </message>
+</context>
+<context>
+    <name>BorderPrintInput</name>
+    <message>
+        <location filename="../utils/printing/borderprintinput.cpp" line="+71"/>
+        <source>A valid border set is required!</source>
+        <translation>Ein gültiger Rahmenwert ist erforderlich!</translation>
     </message>
 </context>
 <context>
@@ -5393,7 +5401,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PrintSettings</name>
     <message>
-        <location filename="../utils/settings/printsettings.cpp" line="+28"/>
+        <location filename="../utils/settings/printsettings.cpp" line="+29"/>
         <source>Printer settings for delivery note and invoicing.</source>
         <translation>Druckereinstellungen für Lieferschein und Rechnungsstellung.</translation>
     </message>
@@ -5444,12 +5452,12 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+129"/>
+        <location line="+151"/>
         <source>Watermark</source>
         <translation>Wasserzeichen</translation>
     </message>
     <message>
-        <location line="-125"/>
+        <location line="-147"/>
         <source>Open File</source>
         <translation>Öffne Datei</translation>
     </message>
@@ -5460,6 +5468,31 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+16"/>
+        <source>Printer page layout margins.</source>
+        <translation>Randabstand für das Drucker Seitenlayout.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Left</source>
+        <translation>Links</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Top</source>
+        <translation>Oben</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Right</source>
+        <translation>Rechts</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Bottom</source>
+        <translation>Unten</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>QR Code Settings</source>
         <translation>QR-Code-Einstellungen</translation>
     </message>
@@ -5566,7 +5599,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+226"/>
+        <location line="+234"/>
         <source>eMail</source>
         <translation>E-Mail</translation>
     </message>

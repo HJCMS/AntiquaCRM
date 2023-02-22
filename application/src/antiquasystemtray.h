@@ -31,7 +31,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   void setConnectionStatus(bool);
-  Q_NOREPLY void setMessage(const QString &body);
+  Q_INVOKABLE void setMessage(const QString &body);
 
 public:
   explicit AntiquaSystemTray(const QIcon &icon, QObject *parent = nullptr);

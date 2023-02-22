@@ -16,6 +16,7 @@
 #include <QWidget>
 #include <SettingsDialog>
 
+class BorderPrintInput;
 class PrintSettings : public SettingsWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -85,10 +86,10 @@ private:
    * @brief Tabellenrand Abstände
    */
   QGroupBox *m_marginsGroup;
-  IntSpinBox *m_marginLeft;
-  IntSpinBox *m_marginTop;
-  IntSpinBox *m_marginRight;
-  IntSpinBox *m_marginBottom;
+  BorderPrintInput *m_marginLeft;
+  BorderPrintInput *m_marginTop;
+  BorderPrintInput *m_marginRight;
+  BorderPrintInput *m_marginBottom;
 
   /**
    * @brief QRCode Einstellungen

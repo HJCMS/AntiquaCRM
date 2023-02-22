@@ -127,10 +127,10 @@ void Printing::readConfiguration() {
   }
 
   config->beginGroup("printer/table_margins");
-  p_tableMargins.setLeft(config->value("left", 0).toDouble());
-  p_tableMargins.setTop(config->value("top", 0).toDouble());
-  p_tableMargins.setRight(config->value("right", 30.0).toDouble());
-  p_tableMargins.setBottom(config->value("bottom", 0).toDouble());
+  p_pageMargins.setLeft(config->value("left", 30.0).toDouble());
+  p_pageMargins.setTop(config->value("top", 0).toDouble());
+  p_pageMargins.setRight(config->value("right", 10.0).toDouble());
+  p_pageMargins.setBottom(config->value("bottom", 0).toDouble());
   config->endGroup();
 
   config->beginGroup("printer");
@@ -206,13 +206,13 @@ const QTextBlockFormat Printing::alignCenter() {
 
 const QTextTableFormat Printing::tableFormat() {
   QTextTableFormat f;
-  f.setWidth(QTextLength(QTextLength().PercentageLength, 94));
+  f.setWidth(QTextLength(QTextLength().PercentageLength, 100));
   f.setPadding(0);
   f.setCellPadding(0);
   f.setCellSpacing(0);
   f.setTopMargin(0);
   f.setBottomMargin(0);
-  f.setRightMargin(p_tableMargins.right());
+  f.setRightMargin(0);
   f.setBorder(0.0);
   f.setBorderBrush(QBrush(Qt::NoBrush));
   f.setBorderStyle(QTextFrameFormat::BorderStyle_None);
@@ -567,7 +567,7 @@ const QPageSize Printing::pageSize() const {
 const QPageLayout Printing::pageLayout() const {
   QPageLayout pageLayout;
   pageLayout.setOrientation(QPageLayout::Portrait);
-  pageLayout.setPageSize(QPageSize(QPageSize::A4), QMarginsF(0, 0, 0, 0));
+  pageLayout.setPageSize(QPageSize(QPageSize::A4), p_pageMargins);
   pageLayout.setMode(QPageLayout::StandardMode);
   pageLayout.setUnits(QPageLayout::Millimeter);
   return pageLayout;
@@ -576,7 +576,7 @@ const QPageLayout Printing::pageLayout() const {
 const QPageLayout Printing::pdfLayout() const {
   QPageLayout pageLayout;
   pageLayout.setOrientation(QPageLayout::Portrait);
-  pageLayout.setPageSize(QPageSize(QPageSize::A4), QMarginsF(0, 0, 0, 0));
+  pageLayout.setPageSize(QPageSize(QPageSize::A4), p_pageMargins);
   pageLayout.setMode(QPageLayout::StandardMode);
   pageLayout.setUnits(QPageLayout::Millimeter);
   return pageLayout;

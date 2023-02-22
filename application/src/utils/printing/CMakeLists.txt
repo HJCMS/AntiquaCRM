@@ -19,6 +19,7 @@ CONFIGURE_FILE (AntiquaPrinting.cmake
 )
 
 SET (subproject_SOURCES
+  borderprintinput.cpp
   printing.cpp
   deliverynote.cpp
   paymentreminder.cpp
@@ -29,6 +30,7 @@ SET (subproject_SOURCES
 )
 
 SET (subproject_HEADERS
+  borderprintinput.h
   printing.h
   deliverynote.h
   paymentreminder.h
