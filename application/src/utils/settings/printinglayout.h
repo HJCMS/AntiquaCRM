@@ -2,14 +2,16 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef PRINTING_BORDER_INPUT_H
-#define PRINTING_BORDER_INPUT_H
+#ifndef PRINTING_LAYOUT_H
+#define PRINTING_LAYOUT_H
 
-#include <QObject>
-#include <QWidget>
 #include <AntiquaInputEdit>
 #include <QDoubleSpinBox>
+#include <QGroupBox>
+#include <QMarginsF>
+#include <QObject>
 #include <QSlider>
+#include <QWidget>
 
 class BorderPrintInput final : public InputEdit {
   Q_OBJECT
@@ -17,7 +19,7 @@ class BorderPrintInput final : public InputEdit {
 private:
   QDoubleSpinBox *m_box;
   QSlider *m_slider;
-  void loadDataset() override;
+  void loadDataset() override{/* unused */};
 
 private Q_SLOTS:
   void borderChanged(int);
@@ -37,4 +39,23 @@ public:
   const QString notes() override;
 };
 
-#endif // PRINTING_BORDER_INPUT_H
+class PrintingLayout final : public QGroupBox {
+  Q_OBJECT
+
+private:
+  BorderPrintInput *m_left;
+  BorderPrintInput *m_right;
+  qreal p_top, p_bottom;
+
+  QLabel *label(const QString &);
+
+public Q_SLOTS:
+  void setValue(const QMarginsF &);
+  void setValue(qreal, qreal, qreal, qreal);
+
+public:
+  explicit PrintingLayout(QWidget *parent = nullptr);
+  const QMarginsF value();
+};
+
+#endif // PRINTING_LAYOUT_H

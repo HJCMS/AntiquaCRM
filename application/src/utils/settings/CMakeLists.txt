@@ -14,24 +14,27 @@ SET (subproject_FILES
 )
 
 SET (subproject_SOURCES
- configdialog.cpp
- generalsettings.cpp
- pathsettings.cpp
- pgsqlsettings.cpp
- settingswidget.cpp
- printsettings.cpp
- providersettings.cpp
-)
-
-SET (subproject_HEADERS
  configdialog.h
  generalsettings.h
  pathsettings.h
  pgsqlsettings.h
- settingswidget.h
+ printersetup.h
+ printinglayout.h
  printsettings.h
  providersettings.h
- SettingsDialog
+ settingswidget.h
+)
+
+SET (subproject_HEADERS
+ configdialog.cpp
+ generalsettings.cpp
+ pathsettings.cpp
+ pgsqlsettings.cpp
+ printersetup.cpp
+ printinglayout.cpp
+ printsettings.cpp
+ providersettings.cpp
+ settingswidget.cpp
 )
 
 INCLUDE_DIRECTORIES (

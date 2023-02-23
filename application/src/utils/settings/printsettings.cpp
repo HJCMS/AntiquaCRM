@@ -2,7 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "printsettings.h"
-#include "borderprintinput.h"
+#include "printinglayout.h"
+#include "printersetup.h"
 
 #include <QFileDialog>
 #include <QFileInfo>
@@ -98,43 +99,13 @@ PrintSettings::PrintSettings(QWidget *parent) : SettingsWidget{parent} {
   btn_watermark->setIcon(style()->standardIcon(QStyle::SP_DirIcon));
   layout->addWidget(btn_watermark, row++, 1, 1, 1);
 
-  m_printerGroup = new QGroupBox(this);
-  m_printerGroup->setTitle(tr("Settings Default Printers"));
-  QGridLayout *prLayout = new QGridLayout(m_printerGroup);
+  // PrinterSetup
+  m_printerSetup = new PrinterSetup(this);
+  layout->addWidget(m_printerSetup, row++, 0, 1, 2);
 
-  prLayout->addWidget(new QLabel("DIN A4:", m_printerGroup), 0, 0, 1, 1);
-  m_dinA4Printer = new QComboBox(m_printerGroup);
-  prLayout->addWidget(m_dinA4Printer, 0, 1, 1, 1);
-
-  prLayout->addWidget(new QLabel("DIN A6:", m_printerGroup), 1, 0, 1, 1);
-  m_dinA6Printer = new QComboBox(m_printerGroup);
-  prLayout->addWidget(m_dinA6Printer, 1, 1, 1, 1);
-
-  prLayout->setColumnStretch(1, 1);
-  m_printerGroup->setLayout(prLayout);
-  layout->addWidget(m_printerGroup, row++, 0, 1, 2);
-
-  m_marginsGroup = new QGroupBox(this);
-  m_marginsGroup->setTitle(tr("Printer page layout margins."));
-  QVBoxLayout *tbGLayout = new QVBoxLayout(m_marginsGroup);
-  m_marginLeft = new BorderPrintInput(m_marginsGroup);
-  m_marginLeft->setObjectName("table_margin_left");
-  m_marginLeft->setInfo(tr("Left"));
-  tbGLayout->addWidget(m_marginLeft);
-  m_marginTop = new BorderPrintInput(m_marginsGroup);
-  m_marginTop->setObjectName("table_margin_top");
-  m_marginTop->setInfo(tr("Top"));
-  tbGLayout->addWidget(m_marginTop);
-  m_marginRight = new BorderPrintInput(m_marginsGroup);
-  m_marginRight->setObjectName("table_margin_right");
-  m_marginRight->setInfo(tr("Right"));
-  tbGLayout->addWidget(m_marginRight);
-  m_marginBottom = new BorderPrintInput(m_marginsGroup);
-  m_marginBottom->setObjectName("table_margin_bottom");
-  m_marginBottom->setInfo(tr("Bottom"));
-  tbGLayout->addWidget(m_marginBottom);
-  m_marginsGroup->setLayout(tbGLayout);
-  layout->addWidget(m_marginsGroup, row++, 0, 1, 2);
+  // PrintMargins
+  m_printLayout = new PrintingLayout(this);
+  layout->addWidget(m_printLayout, row++, 0, 1, 2);
 
   qrcodeGroup = new QGroupBox(this);
   qrcodeGroup->setTitle(tr("QR Code Settings"));
@@ -188,27 +159,6 @@ void PrintSettings::setLabelFont(QLabel *lb) {
     lb->setFont(font);
     chieldModified(true);
   }
-}
-
-void PrintSettings::initPrinterInfos() {
-  QListIterator<QPrinterInfo> it(QPrinterInfo::availablePrinters());
-  while (it.hasNext()) {
-    QPrinterInfo info = it.next();
-    if (!info.isNull()) {
-      m_dinA4Printer->addItem(info.printerName());
-      m_dinA6Printer->addItem(info.printerName());
-    }
-  }
-  int i = 0;
-  QString a4p = config->value("printer/DIN_A4_Printer").toString();
-  i = m_dinA4Printer->findText(a4p);
-  if (i > 0)
-    m_dinA4Printer->setCurrentIndex(i);
-
-  QString a6p = config->value("printer/DIN_A6_Printer").toString();
-  i = m_dinA6Printer->findText(a6p);
-  if (i > 0)
-    m_dinA6Printer->setCurrentIndex(i);
 }
 
 QPushButton *PrintSettings::setFontButton(const QString &objName) {
@@ -270,14 +220,16 @@ void PrintSettings::setPageIcon(const QIcon &icon) {
 const QIcon PrintSettings::getPageIcon() { return pageIcon; }
 
 void PrintSettings::loadSectionConfig() {
-  initPrinterInfos();
+  m_printerSetup->init(config);
 
+  QMarginsF ma;
   config->beginGroup("printer/table_margins");
-  m_marginLeft->setValue(config->value("left", 0));
-  m_marginTop->setValue(config->value("top", 0));
-  m_marginRight->setValue(config->value("right", 30));
-  m_marginBottom->setValue(config->value("bttom", 0));
+  ma.setLeft(config->value("left", 0).toDouble());
+  ma.setTop(config->value("top", 0).toDouble());
+  ma.setRight(config->value("right", 0).toDouble());
+  ma.setBottom(config->value("bottom", 0).toDouble());
   config->endGroup();
+  m_printLayout->setValue(ma);
 
   config->beginGroup("printer");
   QList<QLabel *> labels =
@@ -312,11 +264,12 @@ void PrintSettings::loadSectionConfig() {
 
 void PrintSettings::saveSectionConfig() {
   // Tabellenabstände
+  QMarginsF ma = m_printLayout->value();
   config->beginGroup("printer/table_margins");
-  config->setValue("left", m_marginLeft->value().toInt());
-  config->setValue("top", m_marginTop->value().toInt());
-  config->setValue("right", m_marginRight->value().toInt());
-  config->setValue("bottom", m_marginBottom->value().toInt());
+  config->setValue("left", ma.left());
+  config->setValue("top", ma.top());
+  config->setValue("right", ma.right());
+  config->setValue("bottom", ma.bottom());
   config->endGroup();
 
   config->beginGroup("printer");
@@ -335,8 +288,8 @@ void PrintSettings::saveSectionConfig() {
   }
   config->setValue("watermark", m_watermark->value());
   config->setValue("attachments", m_attachments->value());
-  config->setValue("DIN_A4_Printer", m_dinA4Printer->currentText());
-  config->setValue("DIN_A6_Printer", m_dinA6Printer->currentText());
+  config->setValue("DIN_A4_Printer", m_printerSetup->mainPrinter());
+  config->setValue("DIN_A6_Printer", m_printerSetup->slavePrinter());
   config->endGroup();
 
   config->beginGroup("qrcode");

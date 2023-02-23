@@ -38,7 +38,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+78"/>
         <source>Search Networkconnection!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1163,7 +1163,7 @@ Image - Article Id: %2</source>
 <context>
     <name>BorderPrintInput</name>
     <message>
-        <location filename="../utils/printing/borderprintinput.cpp" line="+71"/>
+        <location filename="../utils/settings/printinglayout.cpp" line="+78"/>
         <source>A valid border set is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5397,7 +5397,7 @@ Image - Article Id: %2</source>
 <context>
     <name>PrintSettings</name>
     <message>
-        <location filename="../utils/settings/printsettings.cpp" line="+29"/>
+        <location filename="../utils/settings/printsettings.cpp" line="+30"/>
         <source>Printer settings for delivery note and invoicing.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5448,47 +5448,17 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+151"/>
+        <location line="+100"/>
         <source>Watermark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-147"/>
+        <location line="-96"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Settings Default Printers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Printer page layout margins.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="+14"/>
         <source>QR Code Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5518,7 +5488,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+30"/>
         <source>set Font</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5574,6 +5544,39 @@ Image - Article Id: %2</source>
     <message>
         <location line="+1"/>
         <source>Printing a Book card</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PrinterSetup</name>
+    <message>
+        <location filename="../utils/settings/printersetup.cpp" line="+13"/>
+        <source>Settings Default Printers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Without disclosures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Primary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Main printer for Invoices and Delivery notes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Secondary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Secondary printer for Bookcards.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5652,6 +5655,29 @@ Image - Article Id: %2</source>
     <message>
         <location line="+121"/>
         <source>Delivery note</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PrintingLayout</name>
+    <message>
+        <location filename="../utils/settings/printinglayout.cpp" line="+5"/>
+        <source>Printer page layout margins in Pixels.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>In this area you can change the margins of the print area in invoices and delivery notes. This does not affect the aspect ratio of the documents.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-7"/>
+        <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

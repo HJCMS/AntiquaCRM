@@ -9,14 +9,15 @@
 #include <QGroupBox>
 #include <QLabel>
 #include <QObject>
-#include <QPrinterInfo>
 #include <QPushButton>
 #include <QRegularExpression>
 #include <QSignalMapper>
 #include <QWidget>
 #include <SettingsDialog>
 
-class BorderPrintInput;
+class PrinterSetup;
+class PrintingLayout;
+
 class PrintSettings : public SettingsWidget {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -78,18 +79,12 @@ private:
   /**
    * @brief Standard Drucker Setzen
    */
-  QGroupBox *m_printerGroup;
-  QComboBox *m_dinA4Printer;
-  QComboBox *m_dinA6Printer;
+  PrinterSetup *m_printerSetup;
 
   /**
    * @brief Tabellenrand Abstände
    */
-  QGroupBox *m_marginsGroup;
-  BorderPrintInput *m_marginLeft;
-  BorderPrintInput *m_marginTop;
-  BorderPrintInput *m_marginRight;
-  BorderPrintInput *m_marginBottom;
+  PrintingLayout *m_printLayout;
 
   /**
    * @brief QRCode Einstellungen
@@ -104,11 +99,6 @@ private:
    * @brief Setze font für Kategorie und Label
    */
   void setLabelFont(QLabel *);
-
-  /**
-   * @brief Drucker für Auswahlboxen finden
-   */
-  void initPrinterInfos();
 
   /**
    * @brief Setze QPushButton und ...
