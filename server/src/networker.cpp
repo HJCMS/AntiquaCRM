@@ -63,15 +63,6 @@ void NetworkCache::clear() {
 Networker::Networker(QObject *parent) : QNetworkAccessManager{parent} {
   setCache(new NetworkCache(this));
   m_textCodec = QTextCodec::codecForLocale();
-  connect(this, SIGNAL(finished(QNetworkReply *)),
-          SLOT(slotFinished(QNetworkReply *)));
-}
-
-void Networker::slotFinished(QNetworkReply *reply) {
-  if (reply->error() != QNetworkReply::NoError) {
-    qWarning("ANTIQUACRM::Network:%s", qPrintable(reply->url().host()));
-    slotError(reply->error());
-  }
 }
 
 void Networker::slotError(QNetworkReply::NetworkError error) {
@@ -120,7 +111,7 @@ void Networker::slotSslErrors(const QList<QSslError> &list) {
 }
 
 void Networker::slotReadResponse() {
-  QNetworkReply* reply = reinterpret_cast<QNetworkReply*>(sender());
+  QNetworkReply *reply = reinterpret_cast<QNetworkReply *>(sender());
   if (reply == nullptr)
     return;
 

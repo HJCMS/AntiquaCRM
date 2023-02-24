@@ -1121,6 +1121,7 @@ bool OrdersEditor::createNewProviderOrder(const QJsonObject &prObject) {
       QList<AntiquaCRM::ArticleOrderItem> items;
       QJsonObject article = orders[i].toObject();
       // NOTE: Das Feld 'a_tax' ist noch nicht in „antiquacmd“ eingebunden!
+      // o_media_type | a_type
       if (!article.contains("a_tax") && article.contains("a_type")) {
         article.insert("a_tax",
                        getSalesTaxType(article.value("a_type").toInt()));

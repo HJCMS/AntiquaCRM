@@ -173,7 +173,7 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
   antiqua_orderinfo.insert("o_provider_name", provider());
   antiqua_orderinfo.insert("o_provider_order_id", QJsonValue(bf_id));
   antiqua_orderinfo.insert("o_since", datetime.toString(Qt::ISODate));
-  antiqua_orderinfo.insert("o_media_type", AntiquaCRM::BOOK);
+  antiqua_orderinfo.insert("o_media_type", AntiquaCRM::ArticleType::BOOK);
 
   // AntiquaCRM::PaymentMethod
   AntiquaCRM::PaymentMethod payment_method;
@@ -295,7 +295,8 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
       QJsonValue price =
           convert("a_sell_price", jso.value("preis_pro_einheit"));
       antiqua_articles_item.insert("a_sell_price", price);
-      antiqua_articles_item.insert("a_type", QJsonValue(AntiquaCRM::BOOK));
+      antiqua_articles_item.insert("a_type", QJsonValue(AntiquaCRM::ArticleType::BOOK));
+      antiqua_articles_item.insert("a_tax", QJsonValue(AntiquaCRM::SalesTax::TAX_INCL));
       antiqua_articles.append(antiqua_articles_item);
     }
   }

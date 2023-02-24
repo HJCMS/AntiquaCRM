@@ -50,6 +50,7 @@ SET (projectLibrary_SOURCES
  ataxcalculator.cpp
  atransmitter.cpp
  autil.cpp
+ aorderimport.cpp
 )
 
 SET (projectLibrary_HEADERS
@@ -74,6 +75,7 @@ SET (projectLibrary_HEADERS
  ataxcalculator.h
  atransmitter.h
  autil.h
+ aorderimport.h
  ${projectinc_FILES}
 )
 

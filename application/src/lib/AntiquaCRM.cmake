@@ -44,6 +44,13 @@
 // AntiquaCRM::ASqlFiles
 #include "asqlfiles.h"
 
+// AntiquaCRM::AOrderArticle
+// AntiquaCRM::AOrderCustomer
+// AntiquaCRM::AOrderArticles
+// AntiquaCRM::AOrderInfo
+// AntiquaCRM::AOrderImport
+#include "aorderimport.h"
+
 // AntiquaCRM::ASqlDataQuery
 #include "asqldataquery.h"
 

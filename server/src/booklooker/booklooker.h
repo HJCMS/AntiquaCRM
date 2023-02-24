@@ -8,6 +8,7 @@
 #include <QDate>
 #include <QJsonValue>
 #include <QObject>
+#include <QMutex>
 
 #include "provider.h"
 
@@ -30,6 +31,8 @@ private:
   bool isCookieExpired();
 
   void authenticate();
+
+  void query();
 
 private Q_SLOTS:
   void responsed(const QByteArray &) override;

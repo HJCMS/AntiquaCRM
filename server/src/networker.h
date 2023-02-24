@@ -48,7 +48,6 @@ private:
   QTextCodec *m_textCodec;
 
 private Q_SLOTS:
-  void slotFinished(QNetworkReply *);
   void slotError(QNetworkReply::NetworkError);
   void slotSslErrors(const QList<QSslError> &);
 

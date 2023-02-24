@@ -87,7 +87,7 @@ void AbeBooks::prepareContent(const QDomDocument &doc) {
       antiqua_orderinfo.insert("o_provider_order_id", order_str_id);
       antiqua_orderinfo.insert("o_provider_purchase_id", orderId);
       antiqua_orderinfo.insert("o_since", dateTime.toString(Qt::ISODate));
-      antiqua_orderinfo.insert("o_media_type", AntiquaCRM::BOOK);
+      antiqua_orderinfo.insert("o_media_type", AntiquaCRM::ArticleType::BOOK);
 
       /*
        * @brief Konvertiere Provider PaymentStatus => OrderStatus!
@@ -187,8 +187,8 @@ void AbeBooks::prepareContent(const QDomDocument &doc) {
             QJsonValue temp;
             QDomElement bookElement = book.toElement();
             // Article Type
-            order_article.insert("o_media_type", AntiquaCRM::BOOK);
-            order_article.insert("a_type", QJsonValue(AntiquaCRM::BOOK));
+            order_article.insert("a_type", QJsonValue(AntiquaCRM::ArticleType::BOOK));
+            order_article.insert("a_tax", QJsonValue(AntiquaCRM::SalesTax::TAX_INCL));
             // Article title
             temp = QJsonValue(xml.getTagText(bookElement, "title"));
             order_article.insert("a_title", temp);

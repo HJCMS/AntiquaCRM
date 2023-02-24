@@ -7,9 +7,9 @@
 #include "buchfreund.h"
 #include "settings.h"
 
-// #include "sysexits.h"
 #include <QDebug>
 #include <QEventLoop>
+#include <QMutex>
 #include <QTimer>
 
 AntiquaCMD::AntiquaCMD(int &argc, char **argv) : QCoreApplication{argc, argv} {
@@ -19,61 +19,34 @@ AntiquaCMD::AntiquaCMD(int &argc, char **argv) : QCoreApplication{argc, argv} {
   m_cfg = new Settings(this);
 }
 
-int AntiquaCMD::abebooks() {
+int AntiquaCMD::update(Provider *obj) {
+  QMutex m(QMutex::NonRecursive);
+  m.lock();
+
+  QTimer timer;
   QEventLoop loop;
-  QTimer getTimer;
-  AbeBooks *m = new AbeBooks(this);
-  connect(&getTimer, SIGNAL(timeout()), &loop, SLOT(quit()));
-  connect(m, SIGNAL(sendFinished()), &loop, SLOT(quit()));
-  connect(m, SIGNAL(sendDisjointed()), &loop, SLOT(quit()));
-  if (m->init()) {
-    qInfo("Query orders from AbeBooks");
-    m->start();
-  } else
+  connect(&timer, SIGNAL(timeout()), &loop, SLOT(quit()));
+  connect(obj, SIGNAL(sendFinished()), &loop, SLOT(quit()));
+  connect(obj, SIGNAL(sendDisjointed()), &loop, SLOT(quit()));
+  if (!obj->init())
     return 1;
 
-  getTimer.start((timeout * 1000));
-  return loop.exec();
-}
+  obj->start();
 
-int AntiquaCMD::booklooker() {
-  QEventLoop loop;
-  QTimer getTimer;
-  BookLooker *m = new BookLooker(this);
-  connect(&getTimer, SIGNAL(timeout()), &loop, SLOT(quit()));
-  connect(m, SIGNAL(sendFinished()), &loop, SLOT(quit()));
-  connect(m, SIGNAL(sendDisjointed()), &loop, SLOT(quit()));
-  if (m->init()) {
-    qInfo("Query orders from Booklooker");
-    m->start();
-  } else
-    return 1;
+  timer.start((timeout * 1000));
+  if (loop.exec() == 0) {
+    m.unlock();
+    return 0;
+  }
 
-  getTimer.start((timeout * 1000));
-  return loop.exec();
-}
-
-int AntiquaCMD::buchfreund() {
-  QEventLoop loop;
-  QTimer getTimer;
-  Buchfreund *m = new Buchfreund(this);
-  connect(&getTimer, SIGNAL(timeout()), &loop, SLOT(quit()));
-  connect(m, SIGNAL(sendFinished()), &loop, SLOT(quit()));
-  connect(m, SIGNAL(sendDisjointed()), &loop, SLOT(quit()));
-  if (m->init()) {
-    qInfo("Query orders from Buchfreund");
-    m->start();
-  } else
-    return 1;
-
-  getTimer.start((timeout * 1000));
-  return loop.exec();
+  m.unlock();
+  return 1;
 }
 
 void AntiquaCMD::queryAll() {
-  abebooks();
-  booklooker();
-  buchfreund();
+  update(new AbeBooks(this));
+  update(new BookLooker(this));
+  update(new Buchfreund(this));
 }
 
 int AntiquaCMD::exec() {

@@ -9,19 +9,15 @@
 #include <QCoreApplication>
 
 class Settings;
+class Provider;
 
 class AntiquaCMD final : public QCoreApplication {
   Q_OBJECT
 
 private:
-  qint8 timeout = 5;
+  qint8 timeout = 15;
   Settings *m_cfg;
-
-  int abebooks();
-
-  int booklooker();
-
-  int buchfreund();
+  int update(Provider *);
 
 private Q_SLOTS:
   void queryAll();
