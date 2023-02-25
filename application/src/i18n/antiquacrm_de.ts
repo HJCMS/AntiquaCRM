@@ -4086,7 +4086,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>MonthlyReportModel</name>
     <message>
-        <location filename="../tabs/reports/monthlyreportview.cpp" line="+18"/>
+        <location filename="../tabs/reports/monthlyreportmodel.cpp" line="+18"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -4113,12 +4113,12 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+1"/>
         <source>VAT</source>
-        <translation>USt</translation>
+        <translation>USt’s</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>UST</source>
-        <translation>Ust</translation>
+        <source>TAX</source>
+        <translation>USt</translation>
     </message>
     <message>
         <location line="+1"/>

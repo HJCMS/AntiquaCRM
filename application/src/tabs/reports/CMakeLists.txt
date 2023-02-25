@@ -20,6 +20,7 @@ SET (subproject_SOURCES
  reportsactiongroup.cpp
  monthselecter.cpp
  monthlyreports.cpp
+ monthlyreportmodel.cpp
  monthlyreportview.cpp
 )
 
@@ -28,6 +29,7 @@ SET (subproject_HEADERS
  reportsactiongroup.h
  monthselecter.h
  monthlyreports.h
+ monthlyreportmodel.h
  monthlyreportview.h
 )
 

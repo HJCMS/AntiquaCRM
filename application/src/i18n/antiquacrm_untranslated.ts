@@ -4082,7 +4082,7 @@ Image - Article Id: %2</source>
 <context>
     <name>MonthlyReportModel</name>
     <message>
-        <location filename="../tabs/reports/monthlyreportview.cpp" line="+18"/>
+        <location filename="../tabs/reports/monthlyreportmodel.cpp" line="+18"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4113,7 +4113,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>UST</source>
+        <source>TAX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

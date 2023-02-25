@@ -11,15 +11,7 @@
 #include <QTableView>
 #include <QWidget>
 
-class MonthlyReportModel final : public AntiquaCRM::ASqlQueryModel {
-  Q_OBJECT
-
-public:
-  explicit MonthlyReportModel(QObject *parent = nullptr);
-  const QMap<int, QString> headerList() const override;
-  QVariant headerData(int section, Qt::Orientation orientation,
-                      int role = Qt::DisplayRole) const override;
-};
+class MonthlyReportModel;
 
 class MonthlyReportView : public QTableView {
   Q_OBJECT

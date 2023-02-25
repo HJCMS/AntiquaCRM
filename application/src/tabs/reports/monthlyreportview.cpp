@@ -2,41 +2,16 @@
 // vim: set fileencoding=utf-8
 
 #include "monthlyreportview.h"
+#include "monthlyreportmodel.h"
 
 #ifdef ANTIQUA_DEVELOPEMENT
 #include <QDebug>
+
+static void debugCalculate(QString &id, double calc, double summary) {
+  QByteArray arr = id.toLocal8Bit();
+  qDebug("Article: %s, Calc: %0.2f, Summary: %0.2f", arr.data(), calc, summary);
+}
 #endif
-
-MonthlyReportModel::MonthlyReportModel(QObject *parent)
-    : AntiquaCRM::ASqlQueryModel{"inventory_orders", parent} {
-  setObjectName("preview_table_model");
-}
-
-const QMap<int, QString> MonthlyReportModel::headerList() const {
-  QMap<int, QString> m;
-  int i = 0;
-  m.insert(i++, tr("Date"));
-  m.insert(i++, tr("Invoice"));
-  m.insert(i++, tr("Article"));
-  m.insert(i++, tr("Price"));
-  m.insert(i++, tr("incl."));
-  m.insert(i++, tr("VAT"));
-  m.insert(i++, tr("UST"));
-  m.insert(i++, tr("Porto"));
-  m.insert(i++, tr("Total"));
-  m.insert(i++, "calc");
-  m.insert(i++, "refundscost");
-  return m;
-}
-
-QVariant MonthlyReportModel::headerData(int section,
-                                        Qt::Orientation orientation,
-                                        int role) const {
-  if (orientation != Qt::Horizontal || role != Qt::DisplayRole)
-    return QVariant();
-
-  return headerList().value(section);
-}
 
 MonthlyReportView::MonthlyReportView(QWidget *parent) : QTableView{parent} {
   setObjectName("reporting_table");
@@ -59,12 +34,16 @@ MonthlyReportView::MonthlyReportView(QWidget *parent) : QTableView{parent} {
 }
 
 void MonthlyReportView::setQuery(const QString &query) {
+  calc_section = -1;
+  refunds_section = -1;
   // qDebug() << Q_FUNC_INFO << query;
   if (m_model->querySelect(query)) {
     calc_section = m_model->record().indexOf("calc");
-    m_tableHeader->hideSection(calc_section);
     refunds_section = m_model->record().indexOf("refundscost");
+#ifndef ANTIQUA_DEVELOPEMENT
+    m_tableHeader->hideSection(calc_section);
     m_tableHeader->hideSection(refunds_section);
+#endif
     resizeColumnsToContents();
     emit sendFinished();
   }
@@ -115,28 +94,18 @@ const QString MonthlyReportView::salesVolume() {
   QStringList list;
   for (int r = 0; r < m_model->rowCount(); r++) {
     QModelIndex calc_index = m_model->index(r, calc_section);
-    QString dbuf = m_model->data(calc_index, Qt::DisplayRole).toString();
-    bool ok;
-    double p = dbuf.toDouble(&ok);
-    if (!ok) {
-#ifdef ANTIQUA_DEVELOPEMENT
-      qDebug() << "Invalid double conversion:" << sum_price << dbuf;
-#else
-      qWarning("Invalid Conversion in MonthlyReportView::salesVolume!");
-#endif
-    }
-    sum_price += p;
-
-    // qDebug() << "Buffer:" << dbuf << "Total:" << sum_price;
-    dbuf.clear();
+    double calc = m_model->data(calc_index, Qt::EditRole).toDouble();
+    sum_price += calc;
 
     QModelIndex refunds_index = m_model->index(r, refunds_section);
-    dbuf = m_model->data(refunds_index, Qt::DisplayRole).toString();
-    p = dbuf.toDouble(&ok);
-    if (ok && p != 0) {
-      sum_price += p;
-      qDebug() << "Refunds:" << dbuf << "Total:" << sum_price;
+    double refunds = m_model->data(refunds_index, Qt::EditRole).toDouble();
+    if (refunds != 0) {
+      sum_price += refunds;
     }
+#ifdef ANTIQUA_DEVELOPEMENT
+    QString article = m_model->data(m_model->index(r, 2)).toString();
+    debugCalculate(article, calc, sum_price);
+#endif
   }
   char buffer[10];
   int len = std::sprintf(buffer, "%0.2f", sum_price);
