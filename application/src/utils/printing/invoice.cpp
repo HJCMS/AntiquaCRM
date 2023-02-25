@@ -314,7 +314,6 @@ void Invoice::openPrintDialog() {
   QPrinter *printer = new QPrinter(p_info, QPrinter::PrinterResolution);
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPageLayout(pageLayout());
-  printer->setFullPage(true);
   printer->setDocName("Invoice");
   printer->setPrinterName(p_printerName);
 

@@ -205,7 +205,6 @@ void DeliveryNote::openPrintDialog() {
   printer->setResolution(72);
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPageLayout(pageLayout());
-  printer->setFullPage(true);
   printer->setDocName("DeliveryNote");
   printer->setPrinterName(p_printerName);
 
