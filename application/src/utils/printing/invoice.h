@@ -74,11 +74,6 @@ private:
    */
   void setAdditionalInfo();
 
-  /**
-   * @brief mfg
-   */
-  void setRegards();
-
 private Q_SLOTS:
   /**
    * @brief Drucker ausgabe generieren

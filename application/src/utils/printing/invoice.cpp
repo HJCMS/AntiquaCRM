@@ -19,7 +19,6 @@ Invoice::Invoice(QWidget *parent) : Printing{parent} {
   pdfButton->setEnabled(true);
   connect(pdfButton, SIGNAL(clicked()), SLOT(generatePdf()));
   connect(printButton, SIGNAL(clicked()), SLOT(openPrintDialog()));
-  readConfiguration();
 }
 
 void Invoice::constructSubject() {
@@ -146,6 +145,7 @@ void Invoice::constructBody() {
   format.clearColumnWidthConstraints();
   format.setColumnWidthConstraints(billingConstraint);
   m_billingTable->setFormat(format);
+
   body->document()->setModified(true);
 }
 
@@ -220,46 +220,55 @@ void Invoice::setPaymentTerms() {
 
 void Invoice::setAdditionalInfo() {
   QTextCursor cursor = body->textCursor();
-  qreal blockMargin = 30.0;
   QTextBlockFormat bf;
-  bf.setLeftMargin(blockMargin);
-  bf.setAlignment(Qt::AlignLeft);
+  bf.setLeftMargin(p_margins.left());
   cursor.setCharFormat(smallFormat());
   cursor.setBlockFormat(bf);
-  cursor.insertText("\n\n");
+  cursor.insertText("\n");
   cursor.insertText(companyData.value("COMPANY_INVOICE_THANKS"));
   cursor.insertText("\n");
-}
-
-void Invoice::setRegards() {
-  QTextCursor cursor = body->textCursor();
-  qreal blockMargin = 30.0;
-  QTextBlockFormat bf;
-  bf.setLeftMargin(blockMargin);
-  bf.setAlignment(Qt::AlignLeft);
-  cursor.setCharFormat(footerFormat());
-  cursor.setBlockFormat(bf);
-  cursor.insertText("\n");
-  cursor.insertText(tr("Kind regards"));
-  cursor.insertText("\n  ");
-  cursor.insertText(companyData.value("COMPANY_EMPLOYER"));
 }
 
 bool Invoice::generateDocument(QPrinter *printer) {
   QRectF pageRect(printArea->geometry());
   int documentWidth = pageRect.width();
 
+  QImage image = getWatermark();
+  QPainter painter;
+  painter.begin(printer);
+  painter.setWindow(printArea->rect());
+  painter.setPen(QPen(Qt::darkGray, Qt::SolidLine));
+
+  if (!image.isNull()) {
+    painter.translate(0, 0);
+    painter.setOpacity(0.65);
+    painter.drawImage(QPoint((p_margins.left() / 2), 0), image);
+    painter.setOpacity(1.0);
+  }
+
+  // helper lines
+  int _yh = (pageRect.height() / 3);
+  int _ym = (pageRect.height() / 2);
+  int _len = (p_margins.left() - 5);
+  painter.translate(0, 0);
+  painter.drawLine(QPoint(5, _yh), QPoint(_len, _yh));
+  painter.drawLine(QPoint(5, _ym), QPoint(_len, _ym));
+
+  painter.translate(0, 0);
   QTextDocument *htmlHead = header->document();
   htmlHead->setHtml(getHeaderHTML());
   htmlHead->setPageSize(QSizeF(documentWidth, header->size().height()));
   htmlHead->setModified(true);
   QRectF headerRect = QRectF(QPointF(0, 0), htmlHead->pageSize());
+  htmlHead->drawContents(&painter, headerRect);
 
+  painter.translate(0, headerRect.height());
   QTextDocument *htmlBody = body->document();
   htmlBody->setHtml(getBodyHTML());
   htmlBody->setPageSize(QSizeF(documentWidth, body->size().height()));
   htmlBody->setModified(true);
   QRectF bodyRect = QRectF(QPointF(0, 0), htmlBody->pageSize());
+  htmlBody->drawContents(&painter, bodyRect);
 
   QTextDocument *htmlFooter = footer->document();
   htmlFooter->setHtml(getFooterHTML());
@@ -267,25 +276,9 @@ bool Invoice::generateDocument(QPrinter *printer) {
   htmlFooter->setModified(true);
   QRectF footerRect = QRectF(QPointF(0, 0), htmlFooter->pageSize());
   int yPosFooter = (pageRect.height() - (footerRect.height() * 2));
-
-  QImage image = getWatermark();
-  QPainter painter;
-  painter.begin(printer);
-  painter.setWindow(printArea->rect());
-
-  if (!image.isNull()) {
-    painter.translate(0, 0);
-    painter.setOpacity(0.5);
-    painter.drawImage(QPoint(0, 0), image);
-    painter.setOpacity(1.0);
-  }
-
-  painter.translate(0, 0);
-  htmlHead->drawContents(&painter, headerRect);
-  painter.translate(0, headerRect.height());
-  htmlBody->drawContents(&painter, bodyRect);
   painter.translate(0, yPosFooter);
   htmlFooter->drawContents(&painter, footerRect);
+
   painter.end();
   return true;
 }
@@ -363,6 +356,8 @@ int Invoice::exec() {
 }
 
 int Invoice::exec(const QList<BillingInfo> &list, bool paid) {
+  readConfiguration();
+
   already_paid = paid;
   if (p_orderId.isEmpty()) {
     qFatal("you must call setInvoice() before exec!");
@@ -398,8 +393,10 @@ int Invoice::exec(const QList<BillingInfo> &list, bool paid) {
 
   setPaymentTerms();
   setAdditionalInfo();
-  setRegards();
 
+  QStringList regards(tr("Kind regards"));
+  regards.append(companyData.value("COMPANY_EMPLOYER"));
+  setRegards(regards);
   body->document()->setModified(true);
 
   addPrinters();

@@ -6,13 +6,16 @@
 #include <QDebug>
 #include <QPalette>
 
-TextEditor::TextEditor(QWidget *parent) : QTextEdit{parent}
-{
+TextEditor::TextEditor(QWidget *parent) : QTextEdit{parent} {
   setContentsMargins(0, 0, 0, 0);
   QPalette p = palette();
-  p.setColor(QPalette::Base,Qt::white);
-  p.setColor(QPalette::Text,Qt::black);
+  p.setColor(QPalette::Base, Qt::white);
+  p.setColor(QPalette::Text, Qt::black);
   setPalette(p);
+
+  setTextColor(Qt::black);
+  setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
   setWindowModified(true);
 
   QString css("* { color: black; }");

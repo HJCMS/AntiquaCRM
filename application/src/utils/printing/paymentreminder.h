@@ -71,11 +71,6 @@ protected:
    */
   void setAdditionalInfo();
 
-  /**
-   * @brief mfg
-   */
-  void setRegards();
-
 protected Q_SLOTS:
   bool generateDocument(QPrinter *printer) override;
   void generatePdf() override;

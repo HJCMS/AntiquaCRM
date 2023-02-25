@@ -224,10 +224,10 @@ void PrintSettings::loadSectionConfig() {
 
   QMarginsF ma;
   config->beginGroup("printer/table_margins");
-  ma.setLeft(config->value("left", 0).toDouble());
-  ma.setTop(config->value("top", 0).toDouble());
-  ma.setRight(config->value("right", 0).toDouble());
-  ma.setBottom(config->value("bottom", 0).toDouble());
+  ma.setLeft(config->value("left", 20.0).toReal());
+  ma.setTop(1.0);
+  ma.setRight(config->value("right", 20.0).toReal());
+  ma.setBottom(1.0);
   config->endGroup();
   m_printLayout->setValue(ma);
 

@@ -19,7 +19,6 @@ DeliveryNote::DeliveryNote(QWidget *parent) : Printing{parent} {
   pdfButton->setEnabled(true);
   connect(pdfButton, SIGNAL(clicked()), SLOT(generatePdf()));
   connect(printButton, SIGNAL(clicked()), SLOT(openPrintDialog()));
-  readConfiguration();
 }
 
 void DeliveryNote::constructSubject() {
@@ -138,25 +137,6 @@ bool DeliveryNote::generateDocument(QPrinter *printer) {
   QRectF pageRect(printArea->geometry());
   int documentWidth = pageRect.width();
 
-  QTextDocument *htmlHead = header->document();
-  htmlHead->setHtml(getHeaderHTML());
-  htmlHead->setPageSize(QSizeF(documentWidth, header->size().height()));
-  htmlHead->setModified(true);
-  QRectF headerRect = QRectF(QPointF(0, 0), htmlHead->pageSize());
-
-  QTextDocument *htmlBody = body->document();
-  htmlBody->setHtml(getBodyHTML());
-  htmlBody->setPageSize(QSizeF(documentWidth, body->size().height()));
-  htmlBody->setModified(true);
-  QRectF bodyRect = QRectF(QPointF(0, 0), htmlBody->pageSize());
-
-  QTextDocument *htmlFooter = footer->document();
-  htmlFooter->setHtml(getFooterHTML());
-  htmlFooter->setPageSize(QSizeF(documentWidth, footer->size().height()));
-  htmlFooter->setModified(true);
-  QRectF footerRect = QRectF(QPointF(0, 0), htmlFooter->pageSize());
-  int yPosFooter = (pageRect.height() - (footerRect.height() * 2));
-
   QImage image = getWatermark();
   QPainter painter;
   painter.begin(printer);
@@ -169,14 +149,40 @@ bool DeliveryNote::generateDocument(QPrinter *printer) {
     painter.setOpacity(1.0);
   }
 
+  // helper lines
+  int _yh = (pageRect.height() / 3);
+  int _ym = (pageRect.height() / 2);
+  int _len = (p_margins.left() - 5);
+  painter.translate(0, 0);
+  painter.drawLine(QPoint(5, _yh), QPoint(_len, _yh));
+  painter.drawLine(QPoint(5, _ym), QPoint(_len, _ym));
+
+  QTextDocument *htmlHead = header->document();
+  htmlHead->setHtml(getHeaderHTML());
+  htmlHead->setPageSize(QSizeF(documentWidth, header->size().height()));
+  htmlHead->setModified(true);
+  QRectF headerRect = QRectF(QPointF(0, 0), htmlHead->pageSize());
   painter.translate(0, 0);
   htmlHead->drawContents(&painter, headerRect);
+
+  QTextDocument *htmlBody = body->document();
+  htmlBody->setHtml(getBodyHTML());
+  htmlBody->setPageSize(QSizeF(documentWidth, body->size().height()));
+  htmlBody->setModified(true);
+  QRectF bodyRect = QRectF(QPointF(0, 0), htmlBody->pageSize());
   painter.translate(0, headerRect.height());
   htmlBody->drawContents(&painter, bodyRect);
+
+  QTextDocument *htmlFooter = footer->document();
+  htmlFooter->setHtml(getFooterHTML());
+  htmlFooter->setPageSize(QSizeF(documentWidth, footer->size().height()));
+  htmlFooter->setModified(true);
+  QRectF footerRect = QRectF(QPointF(0, 0), htmlFooter->pageSize());
+  int yPosFooter = (pageRect.height() - (footerRect.height() * 2));
   painter.translate(0, yPosFooter);
   htmlFooter->drawContents(&painter, footerRect);
-  painter.end();
 
+  painter.end();
   return true;
 }
 
@@ -244,6 +250,8 @@ int DeliveryNote::exec() {
 }
 
 int DeliveryNote::exec(const QList<BillingInfo> &list) {
+  readConfiguration();
+
   if (p_orderId < 1) {
     qFatal("you must call setDelivery() before exec!");
     return QDialog::Rejected;

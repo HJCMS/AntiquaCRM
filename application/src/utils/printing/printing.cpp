@@ -31,52 +31,40 @@ Printing::Printing(QWidget *parent) : QDialog{parent} {
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("printing_layout");
 
-  QRectF pageRect = QPageSize(QPageSize::A4).rect(QPageSize::Point);
-  int pageWidth = pageRect.width();
-
   QScrollArea *scrollAera = new QScrollArea(this);
   scrollAera->setObjectName("scroll_area");
+  scrollAera->setWidgetResizable(true);
   layout->addWidget(scrollAera);
 
   printArea = new QWidget(scrollAera);
   printArea->setObjectName("printing_area");
   printArea->setContentsMargins(0, 0, 0, 0);
   printArea->setStyleSheet("border:none;");
+
+  QRectF pageRect = QPageSize(QPageSize::A4).rect(QPageSize::Point);
   printArea->setFixedSize(pageRect.toRect().size());
+
   QVBoxLayout *frame_layout = new QVBoxLayout(printArea);
   frame_layout->setContentsMargins(0, 0, 0, 0);
-  frame_layout->setSizeConstraint(QLayout::SetMinimumSize);
   frame_layout->setSpacing(0);
 
   header = new TextEditor(printArea);
   header->setObjectName("printing_header");
-  header->setContentsMargins(0, 0, 0, 0);
-  header->setMinimumHeight(25);
-  header->setMinimumWidth(pageWidth);
-  header->setMaximumWidth(pageWidth);
-  header->setTextColor(Qt::black);
   header->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   frame_layout->addWidget(header);
+
   body = new TextEditor(printArea);
   body->setObjectName("printing_body");
-  body->setContentsMargins(0, 0, 0, 0);
-  body->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
-  body->setMinimumWidth(pageWidth);
-  body->setMaximumWidth(pageWidth);
-  body->setTextColor(Qt::black);
   frame_layout->addWidget(body);
+
   footer = new TextEditor(printArea);
   footer->setObjectName("printing_footer");
-  footer->setContentsMargins(0, 0, 0, 0);
-  footer->setMinimumHeight(20);
-  footer->setMinimumWidth(pageWidth);
-  footer->setMaximumWidth(pageWidth);
-  footer->setTextColor(Qt::black);
   footer->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   frame_layout->addWidget(footer);
-  frame_layout->setStretchFactor(header, 30);
-  frame_layout->setStretchFactor(body, 40);
-  frame_layout->setStretchFactor(footer, 20);
+
+  frame_layout->setStretchFactor(header, 25);
+  frame_layout->setStretchFactor(body, 50);
+  frame_layout->setStretchFactor(footer, 15);
   scrollAera->setWidget(printArea);
 
   QWidget *buttonWidget = new QWidget(this);
@@ -127,10 +115,11 @@ void Printing::readConfiguration() {
   }
 
   config->beginGroup("printer/table_margins");
-  p_pageMargins.setLeft(config->value("left", 30.0).toDouble());
-  p_pageMargins.setTop(config->value("top", 0).toDouble());
-  p_pageMargins.setRight(config->value("right", 10.0).toDouble());
-  p_pageMargins.setBottom(config->value("bottom", 0).toDouble());
+  QMarginsF fm(20.0, 1.0, 20.0, 1.0);
+  p_margins.setLeft(config->value("left", fm.left()).toReal());
+  p_margins.setTop(config->value("top", fm.top()).toReal());
+  p_margins.setRight(config->value("right", fm.right()).toReal());
+  p_margins.setBottom(config->value("bottom", fm.bottom()).toReal());
   config->endGroup();
 
   config->beginGroup("printer");
@@ -212,7 +201,8 @@ const QTextTableFormat Printing::tableFormat() {
   f.setCellSpacing(0);
   f.setTopMargin(0);
   f.setBottomMargin(0);
-  f.setRightMargin(0);
+  f.setLeftMargin(p_margins.left());
+  f.setRightMargin(p_margins.right());
   f.setBorder(0.0);
   f.setBorderBrush(QBrush(Qt::NoBrush));
   f.setBorderStyle(QTextFrameFormat::BorderStyle_None);
@@ -244,7 +234,7 @@ const QTextTableCellFormat Printing::cellFormat(Printing::Border border) {
 }
 
 const QBrush Printing::borderBrush() {
-  return QBrush(Qt::lightGray, Qt::SolidPattern);
+  return QBrush(Qt::gray, Qt::SolidPattern);
 }
 
 QTextFrame *Printing::bodyFrame() {
@@ -308,7 +298,7 @@ void Printing::constructFooter() {
   QTextCursor cursor = footer->textCursor();
   QTextTableCellFormat cellFormat;
   cellFormat.setTopBorder(1);
-  cellFormat.setBorderBrush(Qt::black);
+  cellFormat.setBorderBrush(borderBrush());
   cellFormat.setTopBorderStyle(QTextFrameFormat::BorderStyle_Solid);
 
   // FOOTER
@@ -359,6 +349,18 @@ void Printing::constructFooter() {
   footer->setMaximumHeight(h);
   footer->setReadOnly(true);
   footer->document()->setModified(true);
+}
+
+void Printing::setRegards(const QStringList &list) {
+  QTextCursor cursor = body->textCursor();
+  QTextBlockFormat bf;
+  bf.setLeftMargin(p_margins.left());
+  cursor.setBlockFormat(bf);
+  cursor.setCharFormat(footerFormat());
+  cursor.insertText("\n");
+  foreach(QString l, list) {
+    cursor.insertText(l + "\n");
+  }
 }
 
 const QString Printing::outputDirectory(const QString &target) {
@@ -443,14 +445,6 @@ bool Printing::addArticleRow(QTextTable *table, BillingInfo article) {
   QString _price_txt = money(_price);
   // aufrunden
   p_totalPrice += _total;
-
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << Qt::endl // INFO
-           << "current price:" << _price << Qt::endl
-           << "vat:" << _vat_info << _vat_display << Qt::endl
-           << "article price:" << _price_txt << Qt::endl
-           << "subtotal price:" << p_totalPrice << Qt::endl;
-#endif
   // End:PrepareData
 
   QTextCursor cursor = body->textCursor();
@@ -567,25 +561,16 @@ const QPageSize Printing::pageSize() const {
 const QPageLayout Printing::pageLayout() const {
   QPageLayout pageLayout;
   pageLayout.setOrientation(QPageLayout::Portrait);
-  pageLayout.setPageSize(QPageSize(QPageSize::A4), p_pageMargins);
-  pageLayout.setMode(QPageLayout::StandardMode);
-  pageLayout.setUnits(QPageLayout::Millimeter);
-  return pageLayout;
-}
-
-const QPageLayout Printing::pdfLayout() const {
-  QPageLayout pageLayout;
-  pageLayout.setOrientation(QPageLayout::Portrait);
-  pageLayout.setPageSize(QPageSize(QPageSize::A4), p_pageMargins);
-  pageLayout.setMode(QPageLayout::StandardMode);
-  pageLayout.setUnits(QPageLayout::Millimeter);
+  pageLayout.setPageSize(QPageSize(QPageSize::A4));
+  pageLayout.setMinimumMargins(QMargins(0, 0, 0, 0));
+  pageLayout.setMargins(p_margins);
+  pageLayout.setMode(QPageLayout::FullPageMode);
   return pageLayout;
 }
 
 bool Printing::createPDF(const QString &section) {
   QPrinter *printer = new QPrinter(QPrinter::HighResolution);
-  // printer->setResolution(72);
-  printer->setPageLayout(pdfLayout());
+  printer->setPageLayout(pageLayout());
   printer->setOutputFormat(QPrinter::PdfFormat);
   printer->setCreator("AntiquaCRM");
   QString dest = outputDirectory(section);

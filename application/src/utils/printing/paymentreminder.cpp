@@ -19,7 +19,6 @@ PaymentReminder::PaymentReminder(QWidget *parent) : Printing{parent} {
   pdfButton->setEnabled(true);
   connect(pdfButton, SIGNAL(clicked()), SLOT(generatePdf()));
   connect(printButton, SIGNAL(clicked()), SLOT(openPrintDialog()));
-  readConfiguration();
 }
 
 void PaymentReminder::constructSubject() {
@@ -213,9 +212,8 @@ void PaymentReminder::setAdditionalInfo() {
   cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
 
   QTextTableFormat format = tableFormat();
-  format.setBorderBrush(borderBrush());
-  format.setBorderStyle(QTextFrameFormat::BorderStyle_None);
   format.setTopMargin(10);
+  format.setLeftMargin(p_margins.left());
 
   QTextTable *m_noteTable = cursor.insertTable(1, 1, format);
   QTextTableCell noteCell = m_noteTable->cellAt(0, 0);
@@ -228,20 +226,30 @@ void PaymentReminder::setAdditionalInfo() {
   constraints.append(QTextLength(type, 100));
 }
 
-void PaymentReminder::setRegards() {
-  QTextCursor cursor = body->textCursor();
-  QTextBlockFormat bf;
-  bf.setLeftMargin(40);
-  bf.setAlignment(Qt::AlignLeft);
-  cursor.setCharFormat(footerFormat());
-  cursor.setBlockFormat(bf);
-  cursor.insertText("\n\n" + tr("Sincerely") + "\n ");
-  cursor.insertText(companyData.value("COMPANY_EMPLOYER"));
-}
-
 bool PaymentReminder::generateDocument(QPrinter *printer) {
   QRectF pageRect(printArea->geometry());
   int documentWidth = pageRect.width();
+
+  QImage image = getWatermark();
+  QPainter painter;
+  painter.begin(printer);
+  painter.setWindow(printArea->rect());
+  painter.setPen(QPen(Qt::darkGray, Qt::SolidLine));
+
+  if (!image.isNull()) {
+    painter.translate(0, 0);
+    painter.setOpacity(0.5);
+    painter.drawImage(QPoint((p_margins.left() / 2), 0), image);
+    painter.setOpacity(1.0);
+  }
+
+  // helper lines
+  int _yh = (pageRect.height() / 3);
+  int _ym = (pageRect.height() / 2);
+  int _len = (p_margins.left() - 5);
+  painter.translate(0, 0);
+  painter.drawLine(QPoint(5, _yh), QPoint(_len, _yh));
+  painter.drawLine(QPoint(5, _ym), QPoint(_len, _ym));
 
   QTextDocument *htmlHead = header->document();
   htmlHead->setHtml(getHeaderHTML());
@@ -249,11 +257,17 @@ bool PaymentReminder::generateDocument(QPrinter *printer) {
   htmlHead->setModified(true);
   QRectF headerRect = QRectF(QPointF(0, 0), htmlHead->pageSize());
 
+  painter.translate(0, 0);
+  htmlHead->drawContents(&painter, headerRect);
+
   QTextDocument *htmlBody = body->document();
   htmlBody->setHtml(getBodyHTML());
   htmlBody->setPageSize(QSizeF(documentWidth, body->size().height()));
   htmlBody->setModified(true);
   QRectF bodyRect = QRectF(QPointF(0, 0), htmlBody->pageSize());
+
+  painter.translate(0, headerRect.height());
+  htmlBody->drawContents(&painter, bodyRect);
 
   QTextDocument *htmlFooter = footer->document();
   htmlFooter->setHtml(getFooterHTML());
@@ -262,24 +276,9 @@ bool PaymentReminder::generateDocument(QPrinter *printer) {
   QRectF footerRect = QRectF(QPointF(0, 0), htmlFooter->pageSize());
   int yPosFooter = (pageRect.height() - (footerRect.height() * 2));
 
-  QImage image = getWatermark();
-  QPainter painter;
-  painter.begin(printer);
-  painter.setWindow(printArea->rect());
-
-  if (!image.isNull()) {
-    painter.translate(0, 0);
-    painter.setOpacity(0.5);
-    painter.drawImage(QPoint(0, 0), image);
-    painter.setOpacity(1.0);
-  }
-
-  painter.translate(0, 0);
-  htmlHead->drawContents(&painter, headerRect);
-  painter.translate(0, headerRect.height());
-  htmlBody->drawContents(&painter, bodyRect);
   painter.translate(0, yPosFooter);
   htmlFooter->drawContents(&painter, footerRect);
+
   painter.end();
   return true;
 }
@@ -361,6 +360,8 @@ int PaymentReminder::exec() {
 }
 
 int PaymentReminder::exec(const QList<BillingInfo> &list) {
+  readConfiguration();
+
   if (p_orderId.isEmpty()) {
     qFatal("you must call setPaymentInfo() before exec!");
     return QDialog::Rejected;
@@ -394,7 +395,11 @@ int PaymentReminder::exec(const QList<BillingInfo> &list) {
     finalizeBillings();
 
   setAdditionalInfo();
-  setRegards();
+
+  QStringList regards(tr("Sincerely"));
+  regards.append(companyData.value("COMPANY_EMPLOYER"));
+  setRegards(regards);
+  body->document()->setModified(true);
 
   addPrinters();
 

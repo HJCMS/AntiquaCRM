@@ -6,12 +6,12 @@
 #include <QLayout>
 
 BorderPrintInput::BorderPrintInput(QWidget *parent) : InputEdit{parent} {
-  qreal max = 80;
+  qreal max = 100;
 
   m_box = new QDoubleSpinBox(this);
   m_box->setButtonSymbols(QAbstractSpinBox::NoButtons);
   m_box->setRange(0, max);
-  m_box->setSuffix(" px");
+  m_box->setSuffix(" pt");
   m_box->setGroupSeparatorShown(true);
   m_layout->addWidget(m_box);
 
@@ -27,10 +27,8 @@ BorderPrintInput::BorderPrintInput(QWidget *parent) : InputEdit{parent} {
 }
 
 void BorderPrintInput::borderChanged(int i) {
-  if (i % 2 & 1)
-    return;
-
-  m_box->setValue(static_cast<double>(i));
+  qreal step = static_cast<qreal>(i);
+  m_box->setValue((step * 0.75));
 }
 
 void BorderPrintInput::reset() {
@@ -39,8 +37,8 @@ void BorderPrintInput::reset() {
 }
 
 void BorderPrintInput::setValue(const QVariant &val) {
-  m_box->setValue(val.toDouble());
   m_slider->setValue(val.toInt());
+  m_box->setValue(val.toDouble());
 }
 
 void BorderPrintInput::setFocus() { m_slider->setFocus(); }
@@ -80,7 +78,7 @@ const QString BorderPrintInput::notes() {
 
 PrintingLayout::PrintingLayout(QWidget *parent)
     : QGroupBox{parent}, p_top{0.0}, p_bottom{0.0} {
-  setTitle(tr("Printer page layout margins in Pixels."));
+  setTitle(tr("Printer page layout margins in Points."));
 
   QBoxLayout *boxLayout = new QBoxLayout(QBoxLayout::LeftToRight, this);
 
@@ -135,7 +133,7 @@ void PrintingLayout::setValue(qreal l, qreal t, qreal r, qreal b) {
 }
 
 const QMarginsF PrintingLayout::value() {
-  QMarginsF m(m_left->value().toDouble(), p_top, m_right->value().toDouble(),
-              p_bottom);
-  return m;
+  qreal left = m_left->value().toReal();
+  qreal right = m_right->value().toReal();
+  return QMarginsF(left, p_top, right, p_bottom);
 }

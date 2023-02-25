@@ -158,7 +158,7 @@ protected:
   /**
    * @brief Rechter Rand vom Dokument in Pixel!
    */
-  QMarginsF p_pageMargins;
+  QMarginsF p_margins;
 
   /**
    * @brief Gesamtpreis
@@ -321,6 +321,11 @@ protected:
   virtual void constructFooter();
 
   /**
+   * @brief mfg
+   */
+  void setRegards(const QStringList &);
+
+  /**
    * @brief Standard PDF Ausgabe Verzeichnis
    */
   const QString outputDirectory(const QString &target);
@@ -426,11 +431,6 @@ public:
    * @brief Drucker Layout
    */
   const QPageLayout pageLayout() const;
-
-  /**
-   * @brief PDF File Layout
-   */
-  const QPageLayout pdfLayout() const;
 
   /**
    * @brief Suche Schrift in der Datenbank
