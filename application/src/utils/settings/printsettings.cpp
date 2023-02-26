@@ -30,31 +30,38 @@ PrintSettings::PrintSettings(QWidget *parent) : SettingsWidget{parent} {
   layout->addWidget(m_printerFonts, row++, 0, 1, 2);
 
   // Attachments
-  QString iatxt = tr("Directory specification for the file attachments");
-  QLabel *infoAttachments = new QLabel(iatxt, this);
-  layout->addWidget(infoAttachments, row++, 0, 1, 2);
+  QGroupBox *m_attachGroup = new QGroupBox(this);
+  m_attachGroup->setTitle(tr("Specification for Attachments."));
 
-  m_attachments = new LineEdit(this);
+  QGridLayout *attachLayout = new QGridLayout(m_attachGroup);
+  m_attachments = new LineEdit(m_attachGroup);
   m_attachments->setObjectName("attachments");
   m_attachments->setInfo(tr("Attachments"));
   m_attachments->setValue(documentLocation());
-  layout->addWidget(m_attachments, row, 0, 1, 1);
+  attachLayout->addWidget(m_attachments, 0, 0, 1, 1);
 
-  QPushButton *btn_attach = new QPushButton(tr("Open Directory"), this);
+  QPushButton *btn_attach = new QPushButton(tr("Open Directory"), m_attachGroup);
   btn_attach->setObjectName("btn_attachments");
   btn_attach->setIcon(style()->standardIcon(QStyle::SP_DirIcon));
-  layout->addWidget(btn_attach, row++, 1, 1, 1);
+  attachLayout->addWidget(btn_attach, 0, 1, 1, 1);
 
-  m_watermark = new LineEdit(this);
+  m_watermark = new LineEdit(m_attachGroup);
   m_watermark->setObjectName("watermark");
   m_watermark->setInfo(tr("Watermark"));
   m_watermark->setValue(documentLocation());
-  layout->addWidget(m_watermark, row, 0, 1, 1);
+  attachLayout->addWidget(m_watermark, 1, 0, 1, 1);
 
-  QPushButton *btn_watermark = new QPushButton(tr("Open File"), this);
+  QPushButton *btn_watermark = new QPushButton(tr("Open File"), m_attachGroup);
   btn_watermark->setObjectName("btn_watermark");
   btn_watermark->setIcon(style()->standardIcon(QStyle::SP_DirIcon));
-  layout->addWidget(btn_watermark, row++, 1, 1, 1);
+  attachLayout->addWidget(btn_watermark, 1, 1, 1, 1);
+
+  m_opacity = new OpacitySlider(m_attachGroup);
+  m_opacity->setObjectName("watermark_opacity");
+  m_opacity->setInfo(tr("Watermark opacity"));
+  attachLayout->addWidget(m_opacity, 2, 0, 1, 2);
+
+  layout->addWidget(m_attachGroup, row++, 0, 1, 2);
 
   // PrinterSetup
   m_printerSetup = new PrinterSetup(this);
@@ -170,6 +177,7 @@ void PrintSettings::loadSectionConfig() {
 
   m_attachments->setValue(config->value("attachments", documentLocation()));
   m_watermark->setValue(config->value("watermark"));
+  m_opacity->setValue(config->value("watermark_opacity", 0.6));
   config->endGroup();
   config->beginGroup("qrcode");
   foreach (QString key, config->allKeys()) {
@@ -201,6 +209,7 @@ void PrintSettings::saveSectionConfig() {
   config->setValue("subject_position", sp);
 
   config->setValue("watermark", m_watermark->value());
+  config->setValue("watermark_opacity", m_opacity->value().toReal());
   config->setValue("attachments", m_attachments->value());
   config->setValue("DIN_A4_Printer", m_printerSetup->mainPrinter());
   config->setValue("DIN_A6_Printer", m_printerSetup->slavePrinter());

@@ -160,6 +160,11 @@ protected:
   qreal p_totalPrice = 0.00;
 
   /**
+   * @brief Deckkraft Wasserzeichen
+   */
+  qreal p_watermark_opacity = 1.0;
+
+  /**
    * @brief Versankosten
    */
   qreal p_deliveryCost = 0.00;

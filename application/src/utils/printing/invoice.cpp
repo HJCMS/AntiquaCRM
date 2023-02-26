@@ -241,7 +241,7 @@ bool Invoice::generateDocument(QPrinter *printer) {
 
   if (!image.isNull()) {
     painter.translate(0, 0);
-    painter.setOpacity(0.65);
+    painter.setOpacity(p_watermark_opacity);
     painter.drawImage(QPoint((p_margins.left() / 2), 0), image);
     painter.setOpacity(1.0);
   }

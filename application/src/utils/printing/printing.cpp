@@ -126,6 +126,8 @@ void Printing::readConfiguration() {
 
   // Position wann adressenkopf begint!
   p_subjectPosition = config->value("subject_position", 120).toInt();
+  // Wasserzeichen
+  p_watermark_opacity = config->value("watermark_opacity", 1.0).toReal();
 
   QFont font;
   if (font.fromString(config->value("header_font").toString())) {

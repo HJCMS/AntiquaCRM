@@ -4161,6 +4161,14 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>OpacitySlider</name>
+    <message>
+        <location filename="../widgets/opacityslider.cpp" line="+82"/>
+        <source>This Slider input is required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OrderAddArticle</name>
     <message>
         <location filename="../tabs/orders/orderaddarticle.cpp" line="+11"/>
@@ -5397,12 +5405,12 @@ Image - Article Id: %2</source>
 <context>
     <name>PrintSettings</name>
     <message>
-        <location filename="../utils/settings/printsettings.cpp" line="+33"/>
-        <source>Directory specification for the file attachments</source>
+        <location filename="../utils/settings/printsettings.cpp" line="+34"/>
+        <source>Specification for Attachments.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Attachments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5413,13 +5421,18 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+72"/>
+        <location line="+79"/>
         <source>Watermark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-68"/>
+        <location line="-75"/>
         <source>Open File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Watermark opacity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5646,7 +5659,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+212"/>
+        <location line="+220"/>
         <source>eMail</source>
         <translation type="unfinished"></translation>
     </message>

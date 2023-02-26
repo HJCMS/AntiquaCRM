@@ -144,7 +144,7 @@ bool DeliveryNote::generateDocument(QPrinter *printer) {
 
   if (!image.isNull()) {
     painter.translate(0, 0);
-    painter.setOpacity(0.5);
+    painter.setOpacity(p_watermark_opacity);
     painter.drawImage(QPoint(0, 0), image);
     painter.setOpacity(1.0);
   }

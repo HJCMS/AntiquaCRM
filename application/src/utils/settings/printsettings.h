@@ -12,6 +12,7 @@
 #include <QPushButton>
 #include <QRegularExpression>
 #include <QSignalMapper>
+#include <QSlider>
 #include <QWidget>
 #include <SettingsDialog>
 
@@ -29,22 +30,20 @@ private:
   PrinterFonts *m_printerFonts;
 
   /**
-   * @brief Pfad für Dateianhänge!
+   * @brief Dateianhänge
    */
+  QGroupBox *m_attachGroup;
   LineEdit *m_attachments;
-
-  /**
-   * @brief Wasserzeichen Bild
-   */
   LineEdit *m_watermark;
+  OpacitySlider *m_opacity;
 
   /**
-   * @brief Standard Drucker Setzen
+   * @brief Standard Drucker
    */
   PrinterSetup *m_printerSetup;
 
   /**
-   * @brief Tabellenrand Abstände
+   * @brief Tabellenränder
    */
   PrintingLayout *m_printLayout;
 

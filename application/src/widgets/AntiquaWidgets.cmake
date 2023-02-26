@@ -109,6 +109,10 @@
 #include "lineedit.h"
 #endif
 
+#ifndef ANTIQUACRM_OPACITY_SLIDER_H
+#include "opacityslider.h"
+#endif
+
 #ifndef ANTIQUACRM_ORDERPAYMENT_STATUSSELECTER_H
 #include "orderpaymentstatusselecter.h"
 #endif
