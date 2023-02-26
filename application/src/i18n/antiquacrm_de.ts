@@ -1165,7 +1165,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>BorderPrintInput</name>
     <message>
-        <location filename="../utils/settings/printinglayout.cpp" line="+78"/>
+        <location filename="../utils/settings/printinglayout.cpp" line="+76"/>
         <source>A valid border set is required!</source>
         <translation>Ein gültiger Rahmenwert ist erforderlich!</translation>
     </message>
@@ -2717,7 +2717,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Lieferschein</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+34"/>
         <source>Delivey note</source>
         <translation>Lieferschein</translation>
     </message>
@@ -2752,7 +2752,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Menge</translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+84"/>
         <location line="+8"/>
         <source>PDF File written.</source>
         <translation>PDF-Datei erstellt.</translation>
@@ -2769,7 +2769,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kein Drucker gefunden</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+24"/>
         <source>There is no Order-Id to generate this delivery!</source>
         <translation>Es gibt keine Bestellnummer, um diesen Lieferschein zu generieren!</translation>
     </message>
@@ -2784,7 +2784,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Lieferscheinnummer fehlt!</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+21"/>
         <source>&lt;p&gt;Customer Address is empty!&lt;/p&gt;</source>
         <translation>&lt;p&gt;Kundenadresse ist leer!&lt;/p&gt;</translation>
     </message>
@@ -3489,7 +3489,7 @@ Bild - Artikel Nr: %2</translation>
     <name>Invoice</name>
     <message>
         <location filename="../utils/printing/invoice.cpp" line="+17"/>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
@@ -3534,7 +3534,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+22"/>
         <source>delivery cost</source>
         <translation>Lieferkosten</translation>
     </message>
@@ -3554,12 +3554,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Zahlbar innerhalb von %1 Tagen nach Erbringung der Dienstleistung.</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+185"/>
         <source>Kind regards</source>
         <translation>Mit freundlichen Grüßen</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="-109"/>
         <location line="+8"/>
         <source>PDF File written.</source>
         <translation>PDF-Datei erstellt.</translation>
@@ -3576,7 +3576,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kein Drucker gefunden</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+26"/>
         <source>There is no Order-Id to generate this invoice!</source>
         <translation>Es gibt keine Bestellnummer, um diese Rechnung zu erstellen!</translation>
     </message>
@@ -4086,47 +4086,47 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>MonthlyReportModel</name>
     <message>
-        <location filename="../tabs/reports/monthlyreportmodel.cpp" line="+18"/>
+        <location filename="../tabs/reports/monthlyreportmodel.cpp" line="+21"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>Price</source>
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>incl.</source>
         <translation>inkl.</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+6"/>
         <source>VAT</source>
         <translation>USt’s</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+6"/>
         <source>TAX</source>
         <translation>USt</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>Porto</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>Total</source>
         <translation>Gesamt</translation>
     </message>
@@ -5050,7 +5050,7 @@ Bild - Artikel Nr: %2</translation>
     <name>PaymentReminder</name>
     <message>
         <location filename="../utils/printing/paymentreminder.cpp" line="+17"/>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>Payment Reminder</source>
         <translation>Zahlungserinnerung</translation>
     </message>
@@ -5105,12 +5105,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Rechnungsbetrag</translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+202"/>
         <source>Sincerely</source>
         <translation>Hochachtungsvoll</translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="-111"/>
         <location line="+8"/>
         <source>PDF File written.</source>
         <translation>PDF-Datei erstellt.</translation>
@@ -5127,7 +5127,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kein Drucker gefunden</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+26"/>
         <source>There is no Order-Id to generate this invoice!</source>
         <translation>Es gibt keine Auftragsnummer, um diese Rechnung zu erstellen!</translation>
     </message>
@@ -5401,42 +5401,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PrintSettings</name>
     <message>
-        <location filename="../utils/settings/printsettings.cpp" line="+30"/>
-        <source>Printer settings for delivery note and invoicing.</source>
-        <translation>Druckereinstellungen für Lieferschein und Rechnungsstellung.</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Document Header</source>
-        <translation>Dokumenten Kopf</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Document Body</source>
-        <translation>Dokumentkörper</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Document Footer</source>
-        <translation>Dokument Fußzeile</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Normal Text</source>
-        <translation>Standard Text</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Address Text</source>
-        <translation>Adressen Text</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Small Text</source>
-        <translation>Kleiner Text</translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location filename="../utils/settings/printsettings.cpp" line="+33"/>
         <source>Directory specification for the file attachments</source>
         <translation>Verzeichnisangabe für die Dateianhänge</translation>
     </message>
@@ -5452,12 +5417,12 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+100"/>
+        <location line="+72"/>
         <source>Watermark</source>
         <translation>Wasserzeichen</translation>
     </message>
     <message>
-        <location line="-96"/>
+        <location line="-68"/>
         <source>Open File</source>
         <translation>Öffne Datei</translation>
     </message>
@@ -5492,12 +5457,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Abfrage Parameter</translation>
     </message>
     <message>
-        <location line="+30"/>
-        <source>set Font</source>
-        <translation>Schrift setzen</translation>
-    </message>
-    <message>
-        <location line="+29"/>
+        <location line="+31"/>
         <source>Image</source>
         <translation>Bild</translation>
     </message>
@@ -5552,6 +5512,94 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>PrinterFonts</name>
+    <message>
+        <location filename="../utils/settings/printerfonts.cpp" line="+14"/>
+        <source>Primary font settings for all documents to be printed.</source>
+        <translation>Primäre Schriftarteinstellungen für alle zu druckenden Dokumente.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Document Header</source>
+        <translation>Dokumenten Kopf</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Letterhead on invoices and delivery notes.</source>
+        <translation>Briefkopf auf Rechnungen und Lieferscheinen.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Document Body</source>
+        <translation>Dokumentkörper</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Standard font for table content and text blocks.</source>
+        <translation>Standardschrift für Tabelleninhalte und Textblöcke.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Document Footer</source>
+        <translation>Dokument Fußzeile</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Font format in document footer.</source>
+        <translation>Schriftformat in der Fußzeile des Dokuments.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Normal Text</source>
+        <translation>Standard Text</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Standard font for content and text blocks</source>
+        <translation>Standardschrift für Inhalte und Textblöcke</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Address Text</source>
+        <translation>Adressen Text</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Font for letterhead recipient address.</source>
+        <translation>Schriftart für Briefkopf-Empfängeradresse.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Subject Text</source>
+        <translation>Betrefftext</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Font for letterhead subject table.</source>
+        <translation>Schriftart für Briefkopf-Betrefftabelle.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Small Text</source>
+        <translation>Kleiner Text</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Very small font for notes and additions.</source>
+        <translation>Sehr kleine Schrift für Notizen und Ergänzungen.</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Select font</source>
+        <translation>Schrift auswählen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Select and change font</source>
+        <translation>Schriftart auswählen und ändern</translation>
+    </message>
+</context>
+<context>
     <name>PrinterSetup</name>
     <message>
         <location filename="../utils/settings/printersetup.cpp" line="+13"/>
@@ -5587,7 +5635,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>Printing</name>
     <message>
-        <location filename="../utils/printing/printing.cpp" line="+87"/>
+        <location filename="../utils/printing/printing.cpp" line="+75"/>
         <source>Create PDF</source>
         <translation>Erstelle PDF</translation>
     </message>
@@ -5602,7 +5650,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+234"/>
+        <location line="+212"/>
         <source>eMail</source>
         <translation>E-Mail</translation>
     </message>
@@ -5632,7 +5680,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Rechtmäßigkeit</translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+86"/>
         <source>VAT</source>
         <translation>USt.</translation>
     </message>
@@ -5647,7 +5695,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>ohne USt.</translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+69"/>
         <source>Subtotal</source>
         <translation>Zwischensumme</translation>
     </message>
@@ -5657,7 +5705,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Drucker</translation>
     </message>
     <message>
-        <location line="+121"/>
+        <location line="+86"/>
         <source>Delivery note</source>
         <translation>Lieferschein</translation>
     </message>
@@ -5666,8 +5714,8 @@ Bild - Artikel Nr: %2</translation>
     <name>PrintingLayout</name>
     <message>
         <location filename="../utils/settings/printinglayout.cpp" line="+5"/>
-        <source>Printer page layout margins in Pixels.</source>
-        <translation>Seitenlayoutränder des Druckers in Pixel.</translation>
+        <source>Printer page layout margins.</source>
+        <translation>Seitenlayoutränder des Druckers.</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -5676,11 +5724,16 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+12"/>
+        <source>Subject Position</source>
+        <translation>Betreffzeilen position</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>In this area you can change the margins of the print area in invoices and delivery notes. This does not affect the aspect ratio of the documents.</source>
         <translation>In diesem Bereich können Sie die Ränder des Druckbereichs in Rechnungen und Lieferscheinen ändern. Das Seitenverhältnis der Dokumente wird dadurch nicht beeinflusst.</translation>
     </message>
     <message>
-        <location line="-7"/>
+        <location line="-12"/>
         <source>Right</source>
         <translation>Rechts</translation>
     </message>

@@ -25,7 +25,7 @@ void DeliveryNote::constructSubject() {
   QTextCursor cursor = body->textCursor();
   QTextTableFormat format = tableFormat();
   format.setBorderStyle(QTextFrameFormat::BorderStyle_None);
-  format.setBottomMargin(20);
+  format.setBottomMargin(20); // TODO
   QTextTable *table = cursor.insertTable(2, 2, format);
   table->setObjectName("address_table");
   // Company Address
@@ -51,12 +51,12 @@ void DeliveryNote::constructSubject() {
   cursor.insertText(tr("Delivey note"));
   // Customer Address
   QTextTableCell tc10 = table->cellAt(1, 0);
-  tc10.setFormat(addressFormat());
+  tc10.setFormat(charFormat(getAddressFont()));
   cursor = tc10.firstCursorPosition();
   cursor.insertText(p_customerAddress);
   // Delivery Infos
   QTextTableCell tc11 = table->cellAt(1, 1);
-  tc11.setFormat(normalFormat());
+  tc11.setFormat(charFormat(getNormalFont()));
   cursor = tc11.firstCursorPosition();
   cursor.insertText(tr("Order-ID:") + " ");
   cursor.insertText(p_orderId);
@@ -91,19 +91,19 @@ void DeliveryNote::constructBody() {
   QTextTableCell ce00 = m_articleTable->cellAt(0, 0);
   cursor = ce00.firstCursorPosition();
   ce00.setFormat(cellFormat);
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.insertText(tr("Article-ID"));
 
   QTextTableCell ce01 = m_articleTable->cellAt(0, 1);
   ce01.setFormat(cellFormat);
   cursor = ce01.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.insertText(tr("Designation"));
 
   QTextTableCell ce02 = m_articleTable->cellAt(0, 2);
   ce02.setFormat(cellFormat);
   cursor = ce02.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.insertText(tr("Quantity"));
   body->document()->setModified(true);
 }
@@ -117,17 +117,17 @@ void DeliveryNote::insertArticle(const QString &articleid,
   QTextCursor cursor = body->textCursor();
   QTextTableCell ce00 = m_articleTable->cellAt(row, 0);
   cursor = ce00.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.insertText(articleid);
 
   QTextTableCell ce01 = m_articleTable->cellAt(row, 1);
   cursor = ce01.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.insertText(designation);
 
   QTextTableCell ce02 = m_articleTable->cellAt(row, 2);
   cursor = ce02.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.insertText(quantity);
 
   body->document()->setModified(true);

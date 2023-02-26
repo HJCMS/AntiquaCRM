@@ -31,7 +31,7 @@ void Invoice::constructSubject() {
 
   // Anschrift
   QTextTableCell addrCell = table->cellAt(row, 0);
-  addrCell.setFormat(addressFormat());
+  addrCell.setFormat(charFormat(getAddressFont()));
   cursor = addrCell.firstCursorPosition();
   cursor.insertText(p_customerAddress);
 
@@ -46,7 +46,7 @@ void Invoice::constructSubject() {
   data.insert(2, p_customerId);
 
   QTextTableCell infoCell = table->cellAt(row, 1);
-  infoCell.setFormat(normalFormat());
+  infoCell.setFormat(charFormat(getNormalFont()));
   cursor = infoCell.firstCursorPosition();
   QTextTable *child_table = cursor.insertTable(data.size(), 3, tableFormat());
 
@@ -55,19 +55,19 @@ void Invoice::constructSubject() {
     it.next();
     // left
     QTextTableCell cl = child_table->cellAt(it.key(), 0);
-    cl.setFormat(normalFormat());
+    cl.setFormat(charFormat(getNormalFont()));
     cursor = cl.firstCursorPosition();
     cursor.setBlockFormat(alignRight());
     cursor.insertText(title[it.key()]);
     // middle
     QTextTableCell cm = child_table->cellAt(it.key(), 1);
-    cm.setFormat(normalFormat());
+    cm.setFormat(charFormat(getNormalFont()));
     cursor = cm.firstCursorPosition();
     cursor.setBlockFormat(alignCenter());
     cursor.insertText(":");
     // right
     QTextTableCell cr = child_table->cellAt(it.key(), 2);
-    cr.setFormat(normalFormat());
+    cr.setFormat(charFormat(getNormalFont()));
     cursor = cr.firstCursorPosition();
     cursor.setBlockFormat(alignRight());
     cursor.insertText(it.value());
@@ -85,13 +85,13 @@ void Invoice::constructSubject() {
 
   QTextTableCell cr00 = m_headerTable->cellAt(0, 0);
   cursor = cr00.firstCursorPosition();
-  cursor.setCharFormat(boldFormat());
+  cursor.setCharFormat(charFormat(getNormalFont(), true));
   cursor.insertText(subject);
   headerConstraint.append(QTextLength(type, 70));
 
   QTextTableCell cr01 = m_headerTable->cellAt(0, 1);
   cursor = cr01.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.setBlockFormat(alignRight());
   QString dueDate(companyData.value("COMPANY_LOCATION_NAME"));
   dueDate.append(" " + tr("on") + " ");
@@ -118,26 +118,26 @@ void Invoice::constructBody() {
 
   QTextTableCell ce00 = m_billingTable->cellAt(0, 0);
   cursor = ce00.firstCursorPosition();
-  cursor.setCharFormat(boldFormat());
+  cursor.setCharFormat(charFormat(getNormalFont(), true));
   cursor.insertText(tr("Article"));
   billingConstraint.append(QTextLength(type, 15)); // 15%
 
   QTextTableCell ce01 = m_billingTable->cellAt(0, 1);
   cursor = ce01.firstCursorPosition();
-  cursor.setCharFormat(boldFormat());
+  cursor.setCharFormat(charFormat(getNormalFont(), true));
   cursor.insertText(tr("Designation"));
   billingConstraint.append(QTextLength(type, 60)); // 75%
 
   QTextTableCell ce02 = m_billingTable->cellAt(0, 2);
   cursor = ce02.firstCursorPosition();
-  cursor.setCharFormat(boldFormat());
+  cursor.setCharFormat(charFormat(getNormalFont(), true));
   cursor.setBlockFormat(alignCenter());
   cursor.insertText(tr("Quantity"));
   billingConstraint.append(QTextLength(type, 10)); // 85%
 
   QTextTableCell ce03 = m_billingTable->cellAt(0, 3);
   cursor = ce03.firstCursorPosition();
-  cursor.setCharFormat(boldFormat());
+  cursor.setCharFormat(charFormat(getNormalFont(), true));
   cursor.setBlockFormat(alignCenter());
   cursor.insertText(tr("Price"));
   billingConstraint.append(QTextLength(type, 15)); // 100%
@@ -159,7 +159,7 @@ bool Invoice::insertDeliveryCost() {
   QTextTableCell vc0 = m_billingTable->cellAt(row, 0);
   vc0.setFormat(cellFormat(Printing::Border::Top));
   cursor = vc0.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.setBlockFormat(alignRight());
   QString txt = tr("delivery cost");
   cursor.insertText(txt);
@@ -167,7 +167,7 @@ bool Invoice::insertDeliveryCost() {
   QTextTableCell vc1 = m_billingTable->cellAt(row, 3);
   vc1.setFormat(cellFormat(Printing::Border::Top));
   cursor = vc1.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.setBlockFormat(alignRight());
   cursor.insertText(money(p_deliveryCost));
   if (p_deliveryCost > 0.1) {
@@ -186,7 +186,7 @@ void Invoice::finalizeBillings() {
   QTextTableCell infoCell = m_billingTable->cellAt(row, 0);
   infoCell.setFormat(cellFormat(Printing::Border::NoBorder));
   cursor = infoCell.firstCursorPosition();
-  cursor.setCharFormat(boldFormat());
+  cursor.setCharFormat(charFormat(getNormalFont(), true));
   cursor.setBlockFormat(alignRight());
   QString summary(tr("invoice amount"));
   cursor.insertText(summary);
@@ -194,7 +194,7 @@ void Invoice::finalizeBillings() {
   QTextTableCell costCell = m_billingTable->cellAt(row, 3);
   costCell.setFormat(cellFormat(Printing::Border::Top));
   cursor = costCell.firstCursorPosition();
-  cursor.setCharFormat(boldFormat());
+  cursor.setCharFormat(charFormat(getNormalFont(), true));
   cursor.setBlockFormat(alignRight());
   cursor.insertText(money(p_totalPrice));
 }
@@ -208,7 +208,7 @@ void Invoice::setPaymentTerms() {
   QTextCursor cursor = body->textCursor();
   QTextTableCell ptCell = m_billingTable->cellAt(row, 0);
   cursor = ptCell.firstCursorPosition();
-  cursor.setCharFormat(footerFormat());
+  cursor.setCharFormat(charFormat(getFooterFont()));
   if (already_paid)
     text = tr("The order has already been paid for.");
   else
@@ -222,7 +222,7 @@ void Invoice::setAdditionalInfo() {
   QTextCursor cursor = body->textCursor();
   QTextBlockFormat bf;
   bf.setLeftMargin(p_margins.left());
-  cursor.setCharFormat(smallFormat());
+  cursor.setCharFormat(charFormat(getSmallFont()));
   cursor.setBlockFormat(bf);
   cursor.insertText("\n");
   cursor.insertText(companyData.value("COMPANY_INVOICE_THANKS"));
@@ -237,7 +237,7 @@ bool Invoice::generateDocument(QPrinter *printer) {
   QPainter painter;
   painter.begin(printer);
   painter.setWindow(printArea->rect());
-  painter.setPen(QPen(Qt::darkGray, Qt::SolidLine));
+  painter.setPen(penStyle());
 
   if (!image.isNull()) {
     painter.translate(0, 0);
@@ -249,25 +249,27 @@ bool Invoice::generateDocument(QPrinter *printer) {
   // helper lines
   int _yh = (pageRect.height() / 3);
   int _ym = (pageRect.height() / 2);
-  int _len = (p_margins.left() - 5);
+  int _len = (p_margins.left() / 3);
   painter.translate(0, 0);
-  painter.drawLine(QPoint(5, _yh), QPoint(_len, _yh));
-  painter.drawLine(QPoint(5, _ym), QPoint(_len, _ym));
+  painter.drawLine(QPoint(1, _yh), QPoint(_len, _yh));
+  painter.drawLine(QPoint(1, _ym), QPoint(_len, _ym));
 
-  painter.translate(0, 0);
   QTextDocument *htmlHead = header->document();
   htmlHead->setHtml(getHeaderHTML());
   htmlHead->setPageSize(QSizeF(documentWidth, header->size().height()));
   htmlHead->setModified(true);
   QRectF headerRect = QRectF(QPointF(0, 0), htmlHead->pageSize());
+
+  painter.translate(0, 0);
   htmlHead->drawContents(&painter, headerRect);
 
-  painter.translate(0, headerRect.height());
   QTextDocument *htmlBody = body->document();
   htmlBody->setHtml(getBodyHTML());
   htmlBody->setPageSize(QSizeF(documentWidth, body->size().height()));
   htmlBody->setModified(true);
   QRectF bodyRect = QRectF(QPointF(0, 0), htmlBody->pageSize());
+
+  painter.translate(0, p_subjectPosition);
   htmlBody->drawContents(&painter, bodyRect);
 
   QTextDocument *htmlFooter = footer->document();
@@ -276,6 +278,7 @@ bool Invoice::generateDocument(QPrinter *printer) {
   htmlFooter->setModified(true);
   QRectF footerRect = QRectF(QPointF(0, 0), htmlFooter->pageSize());
   int yPosFooter = (pageRect.height() - (footerRect.height() * 2));
+
   painter.translate(0, yPosFooter);
   htmlFooter->drawContents(&painter, footerRect);
 

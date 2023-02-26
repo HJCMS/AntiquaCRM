@@ -9,6 +9,7 @@
 #include <QComboBox>
 #include <QDialog>
 #include <QFont>
+#include <QPen>
 #include <QMarginsF>
 #include <QObject>
 #include <QPageLayout>
@@ -89,14 +90,6 @@ class Printing : public QDialog {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
   Q_CLASSINFO("URL", "https://www.hjcms.de")
-  Q_PROPERTY(QFont headerFont READ getHeaderFont WRITE setHeaderFont NOTIFY
-                 headerFontChanged)
-  Q_PROPERTY(QFont normalFont READ getNormalFont WRITE setNormalFont NOTIFY
-                 normalFontChanged)
-  Q_PROPERTY(QFont footerFont READ getFooterFont WRITE setFooterFont NOTIFY
-                 footerFontChanged)
-  Q_PROPERTY(QFont smallFont READ getSmallFont WRITE setSmallFont NOTIFY
-                 smallFontChanged)
 
 private:
   /**
@@ -104,6 +97,7 @@ private:
    */
   QFont headerFont;
   QFont addressFont;
+  QFont subjectFont;
   QFont normalFont;
   QFont footerFont;
   QFont smallFont;
@@ -202,6 +196,11 @@ protected:
   TextEditor *header;
 
   /**
+   * @brief Position vom Adressenkopf
+   */
+  int p_subjectPosition = 120;
+
+  /**
    * @brief Inhalts Editor
    */
   TextEditor *body;
@@ -235,34 +234,14 @@ protected:
   void readConfiguration();
 
   /**
+   * @brief Linien für falten und lochen!
+   */
+  const QPen penStyle() const;
+
+  /**
    * @brief Textformat für den Briefkopf
    */
-  const QTextCharFormat headerFormat();
-
-  /**
-   * @brief Standard Textformat
-   */
-  const QTextCharFormat addressFormat();
-
-  /**
-   * @brief Standard Textformat
-   */
-  const QTextCharFormat normalFormat();
-
-  /**
-   * @brief Standard Textformat (Text fett)
-   */
-  const QTextCharFormat boldFormat();
-
-  /**
-   * @brief Textformat für die Fußnote
-   */
-  const QTextCharFormat footerFormat();
-
-  /**
-   * @brief Textformat für die Kleine Schrift
-   */
-  const QTextCharFormat smallFormat();
+  const QTextCharFormat charFormat(const QFont &f, bool bolded = false);
 
   /**
    * @brief Text Block align right
@@ -400,10 +379,6 @@ protected Q_SLOTS:
   virtual void openPrintDialog() = 0;
 
 Q_SIGNALS:
-  void headerFontChanged();
-  void normalFontChanged();
-  void footerFontChanged();
-  void smallFontChanged();
   void printerChanged(bool);
   void statusMessage(const QString &);
 
@@ -438,27 +413,28 @@ public:
   static bool fontFamilyExists(const QString &family);
 
   /**
-   * @brief Briefkopf schrift ändern
+   * @brief Briefkopfschrift
    */
-  void setHeaderFont(const QFont &font);
   const QFont getHeaderFont();
+
+  /**
+   * @brief Briefkopf-Anschrift
+   */
+  const QFont getAddressFont();
 
   /**
    * @brief Standard schrift ändern
    */
-  void setNormalFont(const QFont &font);
   const QFont getNormalFont();
 
   /**
    * @brief Fußzeilen schrift ändern
    */
-  void setFooterFont(const QFont &font);
   const QFont getFooterFont();
 
   /**
    * @brief Fußnoten schrift ändern
    */
-  void setSmallFont(const QFont &font);
   const QFont getSmallFont();
 
   /**

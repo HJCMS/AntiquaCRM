@@ -11,18 +11,7 @@ SET (subproject_LINKER
 SET (subproject_FILES
   README
   TODO
-)
-
-SET (subproject_SOURCES
- configdialog.h
- generalsettings.h
- pathsettings.h
- pgsqlsettings.h
- printersetup.h
- printinglayout.h
- printsettings.h
- providersettings.h
- settingswidget.h
+  SettingsDialog
 )
 
 SET (subproject_HEADERS
@@ -31,10 +20,24 @@ SET (subproject_HEADERS
  pathsettings.cpp
  pgsqlsettings.cpp
  printersetup.cpp
+ printerfonts.cpp
  printinglayout.cpp
  printsettings.cpp
  providersettings.cpp
  settingswidget.cpp
+)
+
+SET (subproject_SOURCES
+ configdialog.h
+ generalsettings.h
+ pathsettings.h
+ pgsqlsettings.h
+ printersetup.h
+ printerfonts.h
+ printinglayout.h
+ printsettings.h
+ providersettings.h
+ settingswidget.h
 )
 
 INCLUDE_DIRECTORIES (

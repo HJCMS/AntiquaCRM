@@ -2,8 +2,9 @@
 // vim: set fileencoding=utf-8
 
 #include "printsettings.h"
-#include "printinglayout.h"
+#include "printerfonts.h"
 #include "printersetup.h"
+#include "printinglayout.h"
 
 #include <QFileDialog>
 #include <QFileInfo>
@@ -20,62 +21,18 @@ static const QString documentLocation() {
 PrintSettings::PrintSettings(QWidget *parent) : SettingsWidget{parent} {
   setObjectName("printing_settings");
 
-  m_signalMapper = new QSignalMapper(this);
-  m_signalMapper->setObjectName("printing_signals");
-
   int row = 0;
   QGridLayout *layout = new QGridLayout(this);
   layout->setObjectName("printing_config_layout");
 
-  QString minfo = tr("Printer settings for delivery note and invoicing.");
-  QLabel *mainInfo = new QLabel(minfo, this);
-  layout->addWidget(mainInfo, row++, 0, 1, 2, Qt::AlignLeft);
+  // PrinterFonts
+  m_printerFonts = new PrinterFonts(this);
+  layout->addWidget(m_printerFonts, row++, 0, 1, 2);
 
-  header_font = new QLabel(tr("Document Header"), this);
-  header_font->setObjectName("header_font");
-  layout->addWidget(header_font, row, 0, 1, 1, grid_label_align);
-
-  QPushButton *btn_header = setFontButton("header_font");
-  layout->addWidget(btn_header, row++, 1, 1, 1);
-
-  body_font = new QLabel(tr("Document Body"), this);
-  body_font->setObjectName("body_font");
-  layout->addWidget(body_font, row, 0, 1, 1, grid_label_align);
-
-  QPushButton *btn_body = setFontButton("body_font");
-  layout->addWidget(btn_body, row++, 1, 1, 1);
-
-  footer_font = new QLabel(tr("Document Footer"), this);
-  footer_font->setObjectName("footer_font");
-  layout->addWidget(footer_font, row, 0, 1, 1, grid_label_align);
-
-  QPushButton *btn_footer = setFontButton("footer_font");
-  layout->addWidget(btn_footer, row++, 1, 1, 1);
-
-  normal_font = new QLabel(tr("Normal Text"), this);
-  normal_font->setObjectName("normal_font");
-  layout->addWidget(normal_font, row, 0, 1, 1, grid_label_align);
-
-  QPushButton *btn_normal = setFontButton("normal_font");
-  layout->addWidget(btn_normal, row++, 1, 1, 1);
-
-  address_font = new QLabel(tr("Address Text"), this);
-  address_font->setObjectName("address_font");
-  layout->addWidget(address_font, row, 0, 1, 1, grid_label_align);
-
-  QPushButton *btn_address = setFontButton("address_font");
-  layout->addWidget(btn_address, row++, 1, 1, 1);
-
-  small_font = new QLabel(tr("Small Text"), this);
-  small_font->setObjectName("small_font");
-  layout->addWidget(small_font, row, 0, 1, 1, grid_label_align);
-
-  QPushButton *btn_small = setFontButton("small_font");
-  layout->addWidget(btn_small, row++, 1, 1, 1);
-
+  // Attachments
   QString iatxt = tr("Directory specification for the file attachments");
   QLabel *infoAttachments = new QLabel(iatxt, this);
-  layout->addWidget(infoAttachments, row++, 0, 1, 2, Qt::AlignLeft);
+  layout->addWidget(infoAttachments, row++, 0, 1, 2);
 
   m_attachments = new LineEdit(this);
   m_attachments->setObjectName("attachments");
@@ -148,34 +105,6 @@ PrintSettings::PrintSettings(QWidget *parent) : SettingsWidget{parent} {
 
   connect(btn_attach, SIGNAL(clicked()), this, SLOT(openDirectoryDialog()));
   connect(btn_watermark, SIGNAL(clicked()), this, SLOT(openWatermarkDialog()));
-  connect(m_signalMapper, SIGNAL(mappedString(const QString &)), this,
-          SLOT(openFontDialog(const QString &)));
-}
-
-void PrintSettings::setLabelFont(QLabel *lb) {
-  bool b = true;
-  QFont font = QFontDialog::getFont(&b, lb->font(), this);
-  if (b) {
-    lb->setFont(font);
-    chieldModified(true);
-  }
-}
-
-QPushButton *PrintSettings::setFontButton(const QString &objName) {
-  QIcon icon = style()->standardIcon(QStyle::SP_DirIcon);
-  QPushButton *btn = new QPushButton(tr("set Font"), this);
-  btn->setObjectName("btn_" + objName);
-  btn->setIcon(icon);
-  connect(btn, SIGNAL(clicked()), m_signalMapper, SLOT(map()));
-  m_signalMapper->setMapping(btn, objName);
-  return btn;
-}
-
-void PrintSettings::openFontDialog(const QString &objName) {
-  QLabel *l = findChild<QLabel *>(objName, Qt::FindDirectChildrenOnly);
-  if (l != nullptr) {
-    setLabelFont(l);
-  }
 }
 
 void PrintSettings::openDirectoryDialog() {
@@ -220,6 +149,9 @@ void PrintSettings::setPageIcon(const QIcon &icon) {
 const QIcon PrintSettings::getPageIcon() { return pageIcon; }
 
 void PrintSettings::loadSectionConfig() {
+  // Schriften
+  m_printerFonts->loadFonts(config);
+
   m_printerSetup->init(config);
 
   QMarginsF ma;
@@ -232,22 +164,10 @@ void PrintSettings::loadSectionConfig() {
   m_printLayout->setValue(ma);
 
   config->beginGroup("printer");
-  QList<QLabel *> labels =
-      findChildren<QLabel *>(p_fontPattern, Qt::FindDirectChildrenOnly);
-  if (labels.count() > 1) {
-    for (int i = 0; i < labels.count(); i++) {
-      QLabel *w = labels.at(i);
-      if (w != nullptr) {
-        QString name(w->objectName());
-        if (name.isEmpty() || !name.contains("font"))
-          continue;
 
-        QFont font;
-        font.fromString(config->value(name, qApp->font()).toString());
-        w->setFont(font);
-      }
-    }
-  }
+  int sp = config->value("subject_position", 120).toInt();
+  m_printLayout->setSubjectPosition(sp);
+
   m_attachments->setValue(config->value("attachments", documentLocation()));
   m_watermark->setValue(config->value("watermark"));
   config->endGroup();
@@ -263,6 +183,9 @@ void PrintSettings::loadSectionConfig() {
 }
 
 void PrintSettings::saveSectionConfig() {
+  // Schriften
+  m_printerFonts->saveFonts(config);
+
   // Tabellenabstände
   QMarginsF ma = m_printLayout->value();
   config->beginGroup("printer/table_margins");
@@ -273,19 +196,10 @@ void PrintSettings::saveSectionConfig() {
   config->endGroup();
 
   config->beginGroup("printer");
-  QList<QLabel *> labels =
-      findChildren<QLabel *>(p_fontPattern, Qt::FindDirectChildrenOnly);
-  if (labels.count() > 1) {
-    for (int i = 0; i < labels.count(); i++) {
-      QLabel *w = labels.at(i);
-      if (w != nullptr) {
-        if (w->objectName().isEmpty())
-          continue;
 
-        config->setValue(w->objectName(), w->font().toString());
-      }
-    }
-  }
+  int sp = m_printLayout->getSubjectPosition();
+  config->setValue("subject_position", sp);
+
   config->setValue("watermark", m_watermark->value());
   config->setValue("attachments", m_attachments->value());
   config->setValue("DIN_A4_Printer", m_printerSetup->mainPrinter());

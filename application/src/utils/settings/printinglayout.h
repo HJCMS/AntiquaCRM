@@ -30,7 +30,7 @@ public Q_SLOTS:
   void setValue(const QVariant &) override;
 
 public:
-  explicit BorderPrintInput(QWidget *parent = nullptr);
+  explicit BorderPrintInput(QWidget *parent = nullptr, qreal max = 100);
   void setProperties(const QSqlField &) override;
   const QVariant value() override;
   bool isValid() override;
@@ -47,6 +47,8 @@ private:
   BorderPrintInput *m_right;
   qreal p_top, p_bottom;
 
+  BorderPrintInput *m_subject;
+
   QLabel *label(const QString &);
 
 public Q_SLOTS:
@@ -56,6 +58,8 @@ public Q_SLOTS:
 public:
   explicit PrintingLayout(QWidget *parent = nullptr);
   const QMarginsF value();
+  void setSubjectPosition(int);
+  int getSubjectPosition();
 };
 
 #endif // PRINTING_LAYOUT_H

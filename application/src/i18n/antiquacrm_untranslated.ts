@@ -1163,7 +1163,7 @@ Image - Article Id: %2</source>
 <context>
     <name>BorderPrintInput</name>
     <message>
-        <location filename="../utils/settings/printinglayout.cpp" line="+78"/>
+        <location filename="../utils/settings/printinglayout.cpp" line="+76"/>
         <source>A valid border set is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2713,7 +2713,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+34"/>
         <source>Delivey note</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2748,7 +2748,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+84"/>
         <location line="+8"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
@@ -2765,7 +2765,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+24"/>
         <source>There is no Order-Id to generate this delivery!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2780,7 +2780,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+21"/>
         <source>&lt;p&gt;Customer Address is empty!&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3485,7 +3485,7 @@ Image - Article Id: %2</source>
     <name>Invoice</name>
     <message>
         <location filename="../utils/printing/invoice.cpp" line="+17"/>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>Invoice</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3530,7 +3530,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+22"/>
         <source>delivery cost</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3550,12 +3550,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+185"/>
         <source>Kind regards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="-109"/>
         <location line="+8"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
@@ -3572,7 +3572,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+26"/>
         <source>There is no Order-Id to generate this invoice!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4082,47 +4082,47 @@ Image - Article Id: %2</source>
 <context>
     <name>MonthlyReportModel</name>
     <message>
-        <location filename="../tabs/reports/monthlyreportmodel.cpp" line="+18"/>
+        <location filename="../tabs/reports/monthlyreportmodel.cpp" line="+21"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>Invoice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>Price</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>incl.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+6"/>
         <source>VAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+6"/>
         <source>TAX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>Porto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>Total</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5046,7 +5046,7 @@ Image - Article Id: %2</source>
     <name>PaymentReminder</name>
     <message>
         <location filename="../utils/printing/paymentreminder.cpp" line="+17"/>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>Payment Reminder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5101,12 +5101,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+202"/>
         <source>Sincerely</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="-111"/>
         <location line="+8"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
@@ -5123,7 +5123,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+26"/>
         <source>There is no Order-Id to generate this invoice!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5397,42 +5397,7 @@ Image - Article Id: %2</source>
 <context>
     <name>PrintSettings</name>
     <message>
-        <location filename="../utils/settings/printsettings.cpp" line="+30"/>
-        <source>Printer settings for delivery note and invoicing.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Document Header</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Document Body</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Document Footer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Normal Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Address Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Small Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
+        <location filename="../utils/settings/printsettings.cpp" line="+33"/>
         <source>Directory specification for the file attachments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5448,12 +5413,12 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+100"/>
+        <location line="+72"/>
         <source>Watermark</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-96"/>
+        <location line="-68"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5488,12 +5453,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+30"/>
-        <source>set Font</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+29"/>
+        <location line="+31"/>
         <source>Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5548,6 +5508,94 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>PrinterFonts</name>
+    <message>
+        <location filename="../utils/settings/printerfonts.cpp" line="+14"/>
+        <source>Primary font settings for all documents to be printed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Document Header</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Letterhead on invoices and delivery notes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Document Body</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Standard font for table content and text blocks.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Document Footer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Font format in document footer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Normal Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Standard font for content and text blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Address Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Font for letterhead recipient address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Subject Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Font for letterhead subject table.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Small Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Very small font for notes and additions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Select font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Select and change font</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PrinterSetup</name>
     <message>
         <location filename="../utils/settings/printersetup.cpp" line="+13"/>
@@ -5583,7 +5631,7 @@ Image - Article Id: %2</source>
 <context>
     <name>Printing</name>
     <message>
-        <location filename="../utils/printing/printing.cpp" line="+87"/>
+        <location filename="../utils/printing/printing.cpp" line="+75"/>
         <source>Create PDF</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5598,7 +5646,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+234"/>
+        <location line="+212"/>
         <source>eMail</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5628,7 +5676,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+86"/>
         <source>VAT</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5643,7 +5691,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+69"/>
         <source>Subtotal</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5653,7 +5701,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+121"/>
+        <location line="+86"/>
         <source>Delivery note</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5662,7 +5710,7 @@ Image - Article Id: %2</source>
     <name>PrintingLayout</name>
     <message>
         <location filename="../utils/settings/printinglayout.cpp" line="+5"/>
-        <source>Printer page layout margins in Pixels.</source>
+        <source>Printer page layout margins.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5672,11 +5720,16 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+12"/>
+        <source>Subject Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>In this area you can change the margins of the print area in invoices and delivery notes. This does not affect the aspect ratio of the documents.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-7"/>
+        <location line="-12"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>

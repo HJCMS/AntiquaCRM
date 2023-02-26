@@ -124,12 +124,18 @@ void Printing::readConfiguration() {
 
   config->beginGroup("printer");
 
+  // Position wann adressenkopf begint!
+  p_subjectPosition = config->value("subject_position", 120).toInt();
+
   QFont font;
   if (font.fromString(config->value("header_font").toString())) {
     headerFont.swap(font);
   }
   if (font.fromString(config->value("address_font").toString())) {
     addressFont.swap(font);
+  }
+  if (font.fromString(config->value("subject_font").toString())) {
+    subjectFont.swap(font);
   }
   if (font.fromString(config->value("normal_font").toString())) {
     normalFont.swap(font);
@@ -143,42 +149,22 @@ void Printing::readConfiguration() {
   config->endGroup();
 }
 
-const QTextCharFormat Printing::headerFormat() {
-  QTextCharFormat f;
-  f.setFont(headerFont);
-  return f;
+const QPen Printing::penStyle() const {
+  QPen pen(Qt::gray, Qt::SolidLine);
+  pen.setCapStyle(Qt::FlatCap);
+  pen.setWidthF(0.6);
+  pen.setCosmetic(true);
+  return pen;
 }
 
-const QTextCharFormat Printing::addressFormat() {
-  QTextCharFormat f;
-  f.setFont(addressFont);
-  return f;
-}
+const QTextCharFormat Printing::charFormat(const QFont &f, bool bolded) {
+  QTextCharFormat format;
 
-const QTextCharFormat Printing::normalFormat() {
-  QTextCharFormat f;
-  f.setFont(normalFont);
-  return f;
-}
+  QFont font(f);
+  font.setBold(bolded);
 
-const QTextCharFormat Printing::boldFormat() {
-  QTextCharFormat f;
-  QFont font(normalFont);
-  font.setBold(true);
-  f.setFont(font);
-  return f;
-}
-
-const QTextCharFormat Printing::footerFormat() {
-  QTextCharFormat f;
-  f.setFont(footerFont);
-  return f;
-}
-
-const QTextCharFormat Printing::smallFormat() {
-  QTextCharFormat f;
-  f.setFont(smallFont);
-  return f;
+  format.setFont(font);
+  return format;
 }
 
 const QTextBlockFormat Printing::alignRight() {
@@ -246,14 +232,14 @@ void Printing::constructHeader() {
   QTextBlockFormat block;
   block.setAlignment(Qt::AlignCenter);
   QTextCursor cursor = header->textCursor();
-  cursor.setCharFormat(headerFormat());
+  cursor.setCharFormat(charFormat(getHeaderFont()));
   QString title = companyData.value("COMPANY_PRINTING_HEADER");
   foreach (QString line, title.split("\n")) {
     cursor.insertBlock(block);
     cursor.insertText(line);
     cursor.atEnd();
   }
-  QFontMetricsF fm(headerFont);
+  QFontMetricsF fm(getHeaderFont());
   int w = header->size().width();
   int h = qRound(fm.height() * (header->document()->lineCount() + 1));
   header->resize(QSize(w, h));
@@ -265,7 +251,6 @@ void Printing::constructHeader() {
 
 QTextTable *Printing::constructInvoiceTable(const QString &subject) {
   QTextCursor cursor = body->textCursor();
-
   QTextTable *table = cursor.insertTable(2, 2, tableFormat());
 
   QTextCharFormat cellFormat;
@@ -305,12 +290,11 @@ void Printing::constructFooter() {
   QTextTableFormat format = tableFormat();
   format.setBorderStyle(QTextFrameFormat::BorderStyle_None);
   QTextTable *table = cursor.insertTable(1, 2, format);
-  table->setObjectName("footer_table");
 
   QTextTableCell ce00 = table->cellAt(0, 0);
   ce00.setFormat(cellFormat);
   cursor = ce00.firstCursorPosition();
-  cursor.setCharFormat(footerFormat());
+  cursor.setCharFormat(charFormat(getFooterFont()));
   QString name = companyData.value("COMPANY_FULLNAME");
   cursor.insertText(name.replace("#", " ") + "\n");
   cursor.insertText(companyData.value("COMPANY_STREET") + " ");
@@ -325,7 +309,7 @@ void Printing::constructFooter() {
   QTextTableCell ce01 = table->cellAt(0, 1);
   ce01.setFormat(cellFormat);
   cursor = ce01.firstCursorPosition();
-  cursor.setCharFormat(footerFormat());
+  cursor.setCharFormat(charFormat(getFooterFont()));
   cursor.insertText(companyData.value("COMPANY_BANK_NAME") + "\n");
   cursor.insertText("Swift-BIC: ");
   cursor.insertText(companyData.value("COMPANY_BANK_BICSWIFT") + "\n");
@@ -356,9 +340,9 @@ void Printing::setRegards(const QStringList &list) {
   QTextBlockFormat bf;
   bf.setLeftMargin(p_margins.left());
   cursor.setBlockFormat(bf);
-  cursor.setCharFormat(footerFormat());
+  cursor.setCharFormat(charFormat(getFooterFont()));
   cursor.insertText("\n");
-  foreach(QString l, list) {
+  foreach (QString l, list) {
     cursor.insertText(l + "\n");
   }
 }
@@ -453,26 +437,26 @@ bool Printing::addArticleRow(QTextTable *table, BillingInfo article) {
   QTextTableCell ce00 = table->cellAt(row, 0);
   ce00.setFormat(cellFormat(Printing::Border::Top));
   cursor = ce00.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.insertText(article.articleid);
 
   QTextTableCell ce01 = table->cellAt(row, 1);
   ce01.setFormat(cellFormat(Printing::Border::Top));
   cursor = ce01.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.insertText(article.designation);
 
   QTextTableCell ce02 = table->cellAt(row, 2);
   ce02.setFormat(cellFormat(Printing::Border::Top));
   cursor = ce02.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.setBlockFormat(alignCenter());
   cursor.insertText(QString::number(article.quantity));
 
   QTextTableCell ce03 = table->cellAt(row, 3);
   ce03.setFormat(cellFormat(Printing::Border::Top));
   cursor = ce03.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.setBlockFormat(alignRight());
   cursor.insertText(_price_txt);
   // End:Article
@@ -483,13 +467,13 @@ bool Printing::addArticleRow(QTextTable *table, BillingInfo article) {
   QTextTableCell tc0 = table->cellAt(row, 0);
   tc0.setFormat(cellFormat(Printing::Border::NoBorder));
   cursor = tc0.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.setBlockFormat(alignRight());
   cursor.insertText(_vat_info);
   QTextTableCell tc1 = table->cellAt(row, 3);
   tc1.setFormat(cellFormat(Printing::Border::NoBorder));
   cursor = tc1.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   if (article.vatDisabled) {
     cursor.setBlockFormat(alignCenter());
     cursor.insertText("-");
@@ -504,13 +488,13 @@ bool Printing::addArticleRow(QTextTable *table, BillingInfo article) {
   table->mergeCells(row, 0, 1, 3);
   QTextTableCell zs0 = table->cellAt(row, 0);
   cursor = zs0.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.setBlockFormat(alignRight());
   cursor.insertText(tr("Subtotal"));
 
   QTextTableCell zs1 = table->cellAt(row, 3);
   cursor = zs1.firstCursorPosition();
-  cursor.setCharFormat(normalFormat());
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.setBlockFormat(alignRight());
   cursor.insertText(money(p_totalPrice));
   // END
@@ -596,39 +580,13 @@ bool Printing::fontFamilyExists(const QString &family) {
   return false;
 }
 
-void Printing::setHeaderFont(const QFont &font) {
-  if (fontFamilyExists(font.family())) {
-    headerFont = font;
-    emit headerFontChanged();
-  }
-}
-
 const QFont Printing::getHeaderFont() { return headerFont; }
 
-void Printing::setNormalFont(const QFont &font) {
-  if (fontFamilyExists(font.family())) {
-    normalFont = font;
-    emit normalFontChanged();
-  }
-}
+const QFont Printing::getAddressFont() { return addressFont; }
 
 const QFont Printing::getNormalFont() { return normalFont; }
 
-void Printing::setFooterFont(const QFont &font) {
-  if (fontFamilyExists(font.family())) {
-    footerFont = font;
-    emit footerFontChanged();
-  }
-}
-
 const QFont Printing::getFooterFont() { return footerFont; }
-
-void Printing::setSmallFont(const QFont &font) {
-  if (fontFamilyExists(font.family())) {
-    smallFont = font;
-    emit smallFontChanged();
-  }
-}
 
 const QFont Printing::getSmallFont() { return smallFont; }
 
