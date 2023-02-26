@@ -26,7 +26,7 @@ void PaymentReminder::constructSubject() {
   QString subject = tr("Payment Reminder");
 
   // Table
-  QTextTable *table = constructInvoiceTable(subject);
+  QTextTable *table = constructSubjectTable(subject);
   int row = (table->rows() - 1);
 
   // Anschrift
@@ -48,7 +48,11 @@ void PaymentReminder::constructSubject() {
   QTextTableCell infoCell = table->cellAt(row, 1);
   infoCell.setFormat(charFormat(getNormalFont()));
   cursor = infoCell.firstCursorPosition();
-  QTextTable *child_table = cursor.insertTable(data.size(), 3, tableFormat());
+
+  QTextTableFormat childFormat = tableFormat();
+  childFormat.setLeftMargin(0);
+  childFormat.setRightMargin(0);
+  QTextTable *child_table = cursor.insertTable(data.size(), 3, childFormat);
 
   QMapIterator<qint8, QString> it(data);
   while (it.hasNext()) {
@@ -75,7 +79,7 @@ void PaymentReminder::constructSubject() {
 
   // Begin:BodyHeaderSubject
   QTextTableFormat headerFormat = tableFormat();
-  headerFormat.setTopMargin(15); // Abstand zum Adressenkopf
+  headerFormat.setTopMargin(20); // Abstand zum Adressenkopf
 
   cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
   QTextTable *m_headerTable = cursor.insertTable(1, 2, headerFormat);
@@ -220,10 +224,6 @@ void PaymentReminder::setAdditionalInfo() {
   cursor = noteCell.firstCursorPosition();
   cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.insertText(p_subText);
-
-  QVector<QTextLength> constraints;
-  QTextLength::Type type(QTextLength::PercentageLength);
-  constraints.append(QTextLength(type, 100));
 }
 
 bool PaymentReminder::generateDocument(QPrinter *printer) {
@@ -397,7 +397,7 @@ int PaymentReminder::exec(const QList<BillingInfo> &list) {
   setAdditionalInfo();
 
   QStringList regards(tr("Sincerely"));
-  regards.append(companyData.value("COMPANY_EMPLOYER"));
+  regards.append(" " + companyData.value("COMPANY_EMPLOYER"));
   setRegards(regards);
   body->document()->setModified(true);
 

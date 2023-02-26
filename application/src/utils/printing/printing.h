@@ -286,7 +286,7 @@ protected:
   /**
    * @brief Tabelle Adressenkopf für Rechnung, Erinnerung und Mahnung!
    */
-  QTextTable *constructInvoiceTable(const QString &subject);
+  QTextTable *constructSubjectTable(const QString &subject);
 
   /**
    * @brief In Tabellenkopf die Felder einfügen

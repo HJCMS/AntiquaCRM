@@ -26,7 +26,7 @@ void Invoice::constructSubject() {
   QString subject = tr("Invoice");
 
   // Table
-  QTextTable *table = constructInvoiceTable(subject);
+  QTextTable *table = constructSubjectTable(subject);
   int row = (table->rows() - 1);
 
   // Anschrift
@@ -48,7 +48,11 @@ void Invoice::constructSubject() {
   QTextTableCell infoCell = table->cellAt(row, 1);
   infoCell.setFormat(charFormat(getNormalFont()));
   cursor = infoCell.firstCursorPosition();
-  QTextTable *child_table = cursor.insertTable(data.size(), 3, tableFormat());
+
+  QTextTableFormat childFormat = tableFormat();
+  childFormat.setLeftMargin(0);
+  childFormat.setRightMargin(0);
+  QTextTable *child_table = cursor.insertTable(data.size(), 3, childFormat);
 
   QMapIterator<qint8, QString> it(data);
   while (it.hasNext()) {
@@ -75,7 +79,7 @@ void Invoice::constructSubject() {
 
   // Begin:BodyHeaderSubject
   QTextTableFormat headerFormat = tableFormat();
-  headerFormat.setTopMargin(15); // Abstand zum Adressenkopf
+  headerFormat.setTopMargin(20); // Abstand zum Adressenkopf
 
   cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
   QTextTable *m_headerTable = cursor.insertTable(1, 2, headerFormat);
@@ -398,7 +402,7 @@ int Invoice::exec(const QList<BillingInfo> &list, bool paid) {
   setAdditionalInfo();
 
   QStringList regards(tr("Kind regards"));
-  regards.append(companyData.value("COMPANY_EMPLOYER"));
+  regards.append(" " + companyData.value("COMPANY_EMPLOYER"));
   setRegards(regards);
   body->document()->setModified(true);
 

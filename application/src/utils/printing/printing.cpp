@@ -251,7 +251,7 @@ void Printing::constructHeader() {
   header->document()->setModified(true);
 }
 
-QTextTable *Printing::constructInvoiceTable(const QString &subject) {
+QTextTable *Printing::constructSubjectTable(const QString &subject) {
   QTextCursor cursor = body->textCursor();
   QTextTable *table = cursor.insertTable(2, 2, tableFormat());
 
@@ -343,7 +343,7 @@ void Printing::setRegards(const QStringList &list) {
   bf.setLeftMargin(p_margins.left());
   cursor.setBlockFormat(bf);
   cursor.setCharFormat(charFormat(getFooterFont()));
-  cursor.insertText("\n");
+  cursor.insertText("\n\n");
   foreach (QString l, list) {
     cursor.insertText(l + "\n");
   }
