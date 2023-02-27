@@ -11,6 +11,18 @@
 #include <QPainter>
 #include <QPalette>
 
+InventoryTableHeader::InventoryTableHeader(QWidget *parent)
+    : QHeaderView{Qt::Horizontal, parent} {
+  setSectionsMovable(false);
+  setDefaultAlignment(Qt::AlignCenter);
+  setSectionResizeMode(QHeaderView::Interactive);
+}
+
+void InventoryTableHeader::resizeToContents(bool b) {
+  if (b)
+    resizeSections(QHeaderView::ResizeToContents);
+}
+
 InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
   setEditTriggers(QAbstractItemView::NoEditTriggers);
   setCornerButtonEnabled(false);
@@ -26,23 +38,24 @@ InventoryTable::InventoryTable(QWidget *parent) : QTableView{parent} {
   QueryAutoUpdate = m_cfg->value("SqlAutoUpdateCount", 50).toInt();
 
   /* Kopfzeilen anpassen */
-  m_header = horizontalHeader();
-  m_header->setSectionsMovable(false);
-  m_header->setDefaultAlignment(Qt::AlignCenter);
-  m_header->setSectionResizeMode(QHeaderView::ResizeToContents);
+  m_header = new InventoryTableHeader(this);
   setHorizontalHeader(m_header);
   // Warning not before HeaderView initialed
   setEnableTableViewSorting(false);
 
   connect(m_header, SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), this,
           SLOT(setSortByColumn(int, Qt::SortOrder)));
+
+  connect(this, SIGNAL(sendResultExists(bool)), m_header,
+          SLOT(resizeToContents(bool)));
 }
 
 void InventoryTable::paintEvent(QPaintEvent *ev) {
   if (rowCount() == 0) {
     QString time = QTime::currentTime().toString("hh:mm");
     QStringList l(tr("The query at %1 returned no result.").arg(time));
-    l.append(tr("Change the search query or choose a different history query."));
+    l.append(
+        tr("Change the search query or choose a different history query."));
 
     QPainter painter(viewport());
     painter.setBrush(palette().text());

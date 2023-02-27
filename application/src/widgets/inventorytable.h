@@ -17,6 +17,16 @@
 
 #include "tablecontextmenu.h"
 
+class InventoryTableHeader final : public QHeaderView {
+  Q_OBJECT
+
+public Q_SLOTS:
+  void resizeToContents(bool);
+
+public:
+  explicit InventoryTableHeader(QWidget *parent = nullptr);
+};
+
 class InventoryTable : public QTableView {
   Q_OBJECT
 
@@ -42,7 +52,7 @@ private:
 
 protected:
   AntiquaCRM::ASettings *m_cfg;
-  QHeaderView *m_header;
+  InventoryTableHeader *m_header;
   QString QueryHistory = QString();
 
   void setEnableTableViewSorting(bool);
