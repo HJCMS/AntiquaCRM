@@ -6,6 +6,7 @@
 #define ANTIQUACRM_MONTHLY_REPORTVIEW_H
 
 #include <AntiquaCRM>
+#include <QChar>
 #include <QHeaderView>
 #include <QObject>
 #include <QTableView>
@@ -31,8 +32,8 @@ public Q_SLOTS:
 public:
   explicit MonthlyReportView(QWidget *parent = nullptr);
   const QString headerName(const QString &key);
-  const QString dataHeader(const QString &delimiter = QString("\t"));
-  const QStringList dataRows(const QString &delimiter = QString("\t"));
+  const QString dataHeader(const QChar &delimiter = QChar::Tabulation);
+  const QStringList dataRows(const QChar &delimiter = QChar::Tabulation);
   const QString salesVolume();
 };
 

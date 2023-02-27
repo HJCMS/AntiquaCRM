@@ -30,7 +30,7 @@ MonthlyReportView::MonthlyReportView(QWidget *parent) : QTableView{parent} {
 
   m_tableHeader = horizontalHeader();
   m_tableHeader->setDefaultAlignment(Qt::AlignCenter);
-  m_tableHeader->setStretchLastSection(true);
+  m_tableHeader->setStretchLastSection(false);
 }
 
 void MonthlyReportView::setQuery(const QString &query) {
@@ -54,7 +54,7 @@ const QString MonthlyReportView::headerName(const QString &key) {
   return m_model->headerList().value(index);
 }
 
-const QString MonthlyReportView::dataHeader(const QString &delimiter) {
+const QString MonthlyReportView::dataHeader(const QChar &delimiter) {
   QStringList list;
   for (int i = 0; i < horizontalHeader()->count(); i++) {
     if (calc_section == i || refunds_section == i)
@@ -65,7 +65,7 @@ const QString MonthlyReportView::dataHeader(const QString &delimiter) {
   return list.join(delimiter);
 }
 
-const QStringList MonthlyReportView::dataRows(const QString &delimiter) {
+const QStringList MonthlyReportView::dataRows(const QChar &delimiter) {
   int columns = horizontalHeader()->count();
   QStringList list;
   for (int r = 0; r < m_model->rowCount(); r++) {

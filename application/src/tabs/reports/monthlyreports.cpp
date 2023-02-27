@@ -11,8 +11,10 @@
 #include <QDir>
 #include <QFile>
 #include <QLabel>
+#include <QLocale>
 #include <QVBoxLayout>
 
+// TODO EDI: https://www.gs1-germany.de/gs1-standards/datenaustausch/eancom/
 MonthlyReports::MonthlyReports(QWidget *parent) : QWidget{parent} {
   setContentsMargins(0, 0, 0, 0);
   QVBoxLayout *layout = new QVBoxLayout(this);
@@ -56,10 +58,10 @@ const QFileInfo MonthlyReports::getSaveFile() {
   AntiquaCRM::ASettings cfg(this);
   QDir p_dir(cfg.value("dirs/reports", QDir::homePath()).toString());
   QString filename;
-  filename.append(p_date.toString("MMMM_yyyy"));
+  filename.append(p_date.toString("yyyy-MM"));
   filename.append("_" + tr("report") + "_");
   QDateTime timeStamp = QDateTime::currentDateTime();
-  filename.append(timeStamp.toString("ddMMyyhhmm"));
+  filename.append(timeStamp.toString("ddMMyyhh"));
   filename.append("_utf8");
   QFileInfo info(QDir(p_dir), filename);
   return info;
@@ -112,10 +114,14 @@ void MonthlyReports::saveReport() {
     QFile fp(filePath);
     if (fp.open(QIODevice::WriteOnly)) {
       QTextStream out(&fp);
-      out.setCodec("UTF8");
-      out << header + "\n";
-      out << rows.join("\n");
+      out.setLocale(QLocale::system());
+      out.setCodec(QTextCodec::codecForLocale()->name());
+      out << header + QChar::LineFeed;
+      out << rows.join(QChar::LineFeed) + QChar::LineFeed;
       fp.close();
+#ifdef ANTIQUA_DEVELOPEMENT
+      qDebug() << "Export:" << dest.filePath();
+#endif
       emit sendSaveNotification(tr("Report saved: %1").arg(dest.fileName()));
     }
   }
