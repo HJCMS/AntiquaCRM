@@ -2748,7 +2748,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+87"/>
         <location line="+8"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
@@ -3505,7 +3505,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+57"/>
         <source>on</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4163,7 +4163,7 @@ Image - Article Id: %2</source>
 <context>
     <name>OpacitySlider</name>
     <message>
-        <location filename="../widgets/opacityslider.cpp" line="+82"/>
+        <location filename="../widgets/opacityslider.cpp" line="+81"/>
         <source>This Slider input is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5059,7 +5059,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+108"/>
+        <location line="+106"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5079,7 +5079,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-114"/>
+        <location line="-112"/>
         <source>Invoice No.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5094,7 +5094,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+57"/>
         <source>on</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5415,7 +5415,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Open Directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5659,7 +5659,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+224"/>
+        <location line="+249"/>
         <source>eMail</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5763,11 +5763,21 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+5"/>
+        <source>Recipient Address distance top.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Recipient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>In this area you can change the margins of the print area in invoices and delivery notes. This does not affect the aspect ratio of the documents.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-19"/>
+        <location line="-26"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>

@@ -205,6 +205,7 @@ protected:
    */
   int p_subjectPosition = 120;
   int p_bodyPosition = 15;
+  qreal p_recipientTopPadding = 5.0;
 
   /**
    * @brief Inhalts Editor
@@ -266,12 +267,13 @@ protected:
   const QTextTableFormat inlineTableFormat();
 
   /**
-   * @brief Tabellenzellen Format
+   * @brief Tabellenzellen Formate
    */
+  const QTextTableCellFormat recipientCellFormat();
   const QTextTableCellFormat cellFormat(Printing::Border);
 
   /**
-   * @brief Tabellenrand Farbe
+   * @brief Tabellenrandfarbe
    */
   const QBrush borderBrush();
 

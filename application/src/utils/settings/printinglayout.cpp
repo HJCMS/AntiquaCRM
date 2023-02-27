@@ -110,6 +110,13 @@ PrintingLayout::PrintingLayout(QWidget *parent)
   inpLayout->addWidget(label(tr("Body")), 4, 0, 1, 1);
   inpLayout->addWidget(m_body, 4, 1, 1, 1);
 
+  m_recipient = new QSlider(Qt::Horizontal, this);
+  m_recipient->setObjectName("recipient_padding_top");
+  m_recipient->setToolTip(tr("Recipient Address distance top."));
+  m_recipient->setRange(1, 10);
+  inpLayout->addWidget(label(tr("Recipient")), 5, 0, 1, 1);
+  inpLayout->addWidget(m_recipient, 5, 1, 1, 1);
+
   boxLayout->addLayout(inpLayout);
 
   QString info = tr("In this area you can change the margins of the print area "
@@ -160,3 +167,9 @@ int PrintingLayout::getSubjectPosition() { return m_subject->value().toInt(); }
 void PrintingLayout::setBodyPosition(int i) { m_body->setValue(i); }
 
 int PrintingLayout::getBodyPosition() { return m_body->value().toInt(); }
+
+void PrintingLayout::setRecipientPosition(qreal r) { m_recipient->setValue(r); }
+
+qreal PrintingLayout::getRecipientPosition() {
+  return static_cast<qreal>(m_recipient->value());
+}

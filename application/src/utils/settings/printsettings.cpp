@@ -40,7 +40,8 @@ PrintSettings::PrintSettings(QWidget *parent) : SettingsWidget{parent} {
   m_attachments->setValue(documentLocation());
   attachLayout->addWidget(m_attachments, 0, 0, 1, 1);
 
-  QPushButton *btn_attach = new QPushButton(tr("Open Directory"), m_attachGroup);
+  QPushButton *btn_attach =
+      new QPushButton(tr("Open Directory"), m_attachGroup);
   btn_attach->setObjectName("btn_attachments");
   btn_attach->setIcon(style()->standardIcon(QStyle::SP_DirIcon));
   attachLayout->addWidget(btn_attach, 0, 1, 1, 1);
@@ -178,6 +179,9 @@ void PrintSettings::loadSectionConfig() {
   int bp = config->value("body_position", 20).toInt();
   m_printLayout->setBodyPosition(bp);
 
+  qreal rp = config->value("recipient_padding_top", 4.9).toReal();
+  m_printLayout->setRecipientPosition(rp);
+
   m_attachments->setValue(config->value("attachments", documentLocation()));
   m_watermark->setValue(config->value("watermark"));
   m_opacity->setValue(config->value("watermark_opacity", 0.6));
@@ -213,6 +217,9 @@ void PrintSettings::saveSectionConfig() {
 
   int bp = m_printLayout->getBodyPosition();
   config->setValue("body_position", bp);
+
+  qreal rp = m_printLayout->getRecipientPosition();
+  config->setValue("recipient_padding_top", rp);
 
   config->setValue("watermark", m_watermark->value());
   config->setValue("watermark_opacity", m_opacity->value().toReal());

@@ -51,7 +51,7 @@ void DeliveryNote::constructSubject() {
   cursor.insertText(tr("Delivey note"));
   // Customer Address
   QTextTableCell tc10 = table->cellAt(1, 0);
-  tc10.setFormat(charFormat(getAddressFont()));
+  tc10.setFormat(recipientCellFormat());
   cursor = tc10.firstCursorPosition();
   cursor.insertText(p_customerAddress);
   // Delivery Infos

@@ -31,7 +31,7 @@ void PaymentReminder::constructSubject() {
 
   // Anschrift
   QTextTableCell addrCell = table->cellAt(row, 0);
-  addrCell.setFormat(charFormat(getAddressFont()));
+  addrCell.setFormat(recipientCellFormat());
   cursor = addrCell.firstCursorPosition();
   cursor.insertText(p_customerAddress);
 

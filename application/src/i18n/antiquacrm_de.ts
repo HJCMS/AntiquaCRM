@@ -2752,7 +2752,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Menge</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+87"/>
         <location line="+8"/>
         <source>PDF File written.</source>
         <translation>PDF-Datei erstellt.</translation>
@@ -3509,7 +3509,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kunden Nr.</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+57"/>
         <source>on</source>
         <translation>der</translation>
     </message>
@@ -4167,7 +4167,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>OpacitySlider</name>
     <message>
-        <location filename="../widgets/opacityslider.cpp" line="+82"/>
+        <location filename="../widgets/opacityslider.cpp" line="+81"/>
         <source>This Slider input is required.</source>
         <translation>Eine Schiebereingabe ist gefragt.</translation>
     </message>
@@ -5063,7 +5063,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Zahlungserinnerung</translation>
     </message>
     <message>
-        <location line="+108"/>
+        <location line="+106"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
@@ -5083,7 +5083,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="-114"/>
+        <location line="-112"/>
         <source>Invoice No.</source>
         <translation>Rechnungs Nr.</translation>
     </message>
@@ -5098,7 +5098,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kunden Nr.</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+57"/>
         <source>on</source>
         <translation>der</translation>
     </message>
@@ -5419,7 +5419,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Anhänge</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Open Directory</source>
         <translation>Öffne Verzeichnis</translation>
     </message>
@@ -5663,7 +5663,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+224"/>
+        <location line="+249"/>
         <source>eMail</source>
         <translation>E-Mail</translation>
     </message>
@@ -5767,11 +5767,21 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+5"/>
+        <source>Recipient Address distance top.</source>
+        <translation>Abstand Empfängeradresse oben.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Recipient</source>
+        <translation>Empfänger</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>In this area you can change the margins of the print area in invoices and delivery notes. This does not affect the aspect ratio of the documents.</source>
         <translation>In diesem Bereich können Sie die Ränder des Druckbereichs in Rechnungen und Lieferscheinen ändern. Das Seitenverhältnis der Dokumente wird dadurch nicht beeinflusst.</translation>
     </message>
     <message>
-        <location line="-19"/>
+        <location line="-26"/>
         <source>Right</source>
         <translation>Rechts</translation>
     </message>

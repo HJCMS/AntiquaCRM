@@ -127,6 +127,7 @@ void Printing::readConfiguration() {
   // Position wann adressenkopf begint!
   p_subjectPosition = config->value("subject_position", 120).toInt();
   p_bodyPosition = config->value("body_position", 15).toInt();
+  p_recipientTopPadding = config->value("recipient_padding_top", 5.0).toReal();
 
   // Wasserzeichen
   p_watermark_opacity = config->value("watermark_opacity", 1.0).toReal();
@@ -211,6 +212,16 @@ const QTextTableFormat Printing::inlineTableFormat() {
   f.setBorderBrush(QBrush(Qt::NoBrush));
   f.setBorderStyle(QTextFrameFormat::BorderStyle_None);
   f.setAlignment(Qt::AlignRight | Qt::AlignTop);
+  return f;
+}
+
+const QTextTableCellFormat Printing::recipientCellFormat() {
+  QTextTableCellFormat f;
+  f.setBorderBrush(QBrush(Qt::NoBrush));
+  f.setBorder(0);
+  f.setPadding(0);
+  f.setTopPadding(p_recipientTopPadding);
+  f.setFont(getAddressFont());
   return f;
 }
 

@@ -68,6 +68,11 @@ private:
    */
   BorderPrintInput *m_body;
 
+  /**
+   * @brief Empfänger Adresse
+   */
+  QSlider *m_recipient;
+
   QLabel *label(const QString &);
 
 public Q_SLOTS:
@@ -81,6 +86,8 @@ public:
   int getSubjectPosition();
   void setBodyPosition(int);
   int getBodyPosition();
+  void setRecipientPosition(qreal);
+  qreal getRecipientPosition();
 };
 
 #endif // PRINTING_LAYOUT_H

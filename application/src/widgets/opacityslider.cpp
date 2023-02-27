@@ -16,13 +16,12 @@ OpacitySlider::OpacitySlider(QWidget *parent) : InputEdit{parent} {
 }
 
 void OpacitySlider::dataChanged(int i) {
-  if (i == 1) {
-    lb_info->setText("1.0");
-  } else if (i == 10) {
+  if (i == m_slider->minimum()) {
     lb_info->setText("0.1");
+  } else if (i == m_slider->maximum()) {
+    lb_info->setText("1.0");
   } else {
-    QString str;
-    lb_info->setText(str.asprintf("0.%d", i));
+    lb_info->setText(QString::asprintf("0.%d", i));
   }
 }
 
@@ -31,7 +30,7 @@ void OpacitySlider::reset() { setModified(false); }
 void OpacitySlider::setValue(const QVariant &val) {
   QString r = val.toString();
   for(int i = 1; i < 10; ++i) {
-    if(QString::asprintf("0.%1d", i) == r) {
+    if(QString::asprintf("0.%d", i) == r) {
       m_slider->setValue(i);
       lb_info->setText(r);
       break;
@@ -57,7 +56,7 @@ const QVariant OpacitySlider::value() {
     QString str = QString::asprintf("0.%d", i);
     out = str.toDouble();
   }
-  qDebug() << Q_FUNC_INFO << out;
+  // qDebug() << Q_FUNC_INFO << out;
   return QVariant(out);
 }
 
