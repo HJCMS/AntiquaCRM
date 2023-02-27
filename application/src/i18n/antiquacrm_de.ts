@@ -1165,7 +1165,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>BorderPrintInput</name>
     <message>
-        <location filename="../utils/settings/printinglayout.cpp" line="+76"/>
+        <location filename="../utils/settings/printinglayout.cpp" line="+77"/>
         <source>A valid border set is required!</source>
         <translation>Ein gültiger Rahmenwert ist erforderlich!</translation>
     </message>
@@ -3509,7 +3509,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kunden Nr.</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+59"/>
         <source>on</source>
         <translation>der</translation>
     </message>
@@ -4134,7 +4134,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>MonthlyReports</name>
     <message>
-        <location filename="../tabs/reports/monthlyreports.cpp" line="+22"/>
+        <location filename="../tabs/reports/monthlyreports.cpp" line="+24"/>
         <source>Monthly Payment reports</source>
         <translation>Monatliche Zahlungsberichte</translation>
     </message>
@@ -4154,7 +4154,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bericht</translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+63"/>
         <source>Report saved: %1</source>
         <translation>Bericht gespeichert: %1</translation>
     </message>
@@ -5063,7 +5063,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Zahlungserinnerung</translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+108"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
@@ -5083,7 +5083,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Preis</translation>
     </message>
     <message>
-        <location line="-110"/>
+        <location line="-114"/>
         <source>Invoice No.</source>
         <translation>Rechnungs Nr.</translation>
     </message>
@@ -5098,7 +5098,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kunden Nr.</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+59"/>
         <source>on</source>
         <translation>der</translation>
     </message>
@@ -5113,7 +5113,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Rechnungsbetrag</translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="+198"/>
         <source>Sincerely</source>
         <translation>Hochachtungsvoll</translation>
     </message>
@@ -5663,7 +5663,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location line="+220"/>
+        <location line="+224"/>
         <source>eMail</source>
         <translation>E-Mail</translation>
     </message>
@@ -5732,13 +5732,38 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+7"/>
+        <source>Document distance left.</source>
+        <translation>Dokumenten Abstand links.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Left</source>
         <translation>Links</translation>
     </message>
     <message>
-        <location line="+12"/>
-        <source>Subject Position</source>
-        <translation>Betreffzeilen position</translation>
+        <location line="+5"/>
+        <source>Document distance right.</source>
+        <translation>Dokumenten Abstand rechts.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Distance from header to the recipient address.</source>
+        <translation>Abstand vom Kopf zur Empfängeradresse.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Subject</source>
+        <translation>Betreff</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Distance from Document subject to content.</source>
+        <translation>Abstand vom Dokumenten Betreff/Adresse zum Inhalt.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Body</source>
+        <translation>Inhalt</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -5746,7 +5771,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>In diesem Bereich können Sie die Ränder des Druckbereichs in Rechnungen und Lieferscheinen ändern. Das Seitenverhältnis der Dokumente wird dadurch nicht beeinflusst.</translation>
     </message>
     <message>
-        <location line="-12"/>
+        <location line="-19"/>
         <source>Right</source>
         <translation>Rechts</translation>
     </message>
@@ -6825,7 +6850,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Monatsbericht</translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="+121"/>
         <source>PDF File written.</source>
         <translation>PDF-Datei erstellt.</translation>
     </message>

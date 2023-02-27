@@ -103,10 +103,12 @@ void Reports::printerConfiguration() {
 const QTextTableFormat Reports::tableFormat() {
   QTextTableFormat f;
   f.setBorder(0);
-  f.setWidth(QTextLength(QTextLength().PercentageLength, 90));
+  f.setWidth(QTextLength(QTextLength().PercentageLength, 100));
   f.setCellPadding(0);
   f.setCellSpacing(0);
   f.setTopMargin(0);
+  f.setLeftMargin(0);
+  f.setRightMargin(0);
   f.setBorderStyle(QTextFrameFormat::BorderStyle_None);
   f.setAlignment(Qt::AlignCenter);
   return f;
@@ -223,7 +225,7 @@ void Reports::openPrintDialog() {
   }
 
   QPrinterInfo p_info = QPrinterInfo::printerInfo(p_printerName);
-  QPrinter *printer = new QPrinter(p_info, QPrinter::ScreenResolution);
+  QPrinter *printer = new QPrinter(p_info, QPrinter::PrinterResolution);
   printer->setPageLayout(p_pageLayout);
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPrinterName(p_printerName);

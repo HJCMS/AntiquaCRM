@@ -43,11 +43,30 @@ class PrintingLayout final : public QGroupBox {
   Q_OBJECT
 
 private:
+  /**
+   * @brief Tableborder left
+   */
   BorderPrintInput *m_left;
+
+  /**
+   * @brief Tableborder right
+   */
   BorderPrintInput *m_right;
+
+  /**
+   * @brief Document Border top, bottom
+   */
   qreal p_top, p_bottom;
 
+  /**
+   * @brief Document Subject distance to Header
+   */
   BorderPrintInput *m_subject;
+
+  /**
+   * @brief Body distance to Subject
+   */
+  BorderPrintInput *m_body;
 
   QLabel *label(const QString &);
 
@@ -60,6 +79,8 @@ public:
   const QMarginsF value();
   void setSubjectPosition(int);
   int getSubjectPosition();
+  void setBodyPosition(int);
+  int getBodyPosition();
 };
 
 #endif // PRINTING_LAYOUT_H

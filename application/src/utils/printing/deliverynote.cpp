@@ -152,7 +152,7 @@ bool DeliveryNote::generateDocument(QPrinter *printer) {
   // helper lines
   int _yh = (pageRect.height() / 3);
   int _ym = (pageRect.height() / 2);
-  int _len = (p_margins.left() - 5);
+  int _len = ((p_margins.left() / 3) * 2);
   painter.translate(0, 0);
   painter.drawLine(QPoint(5, _yh), QPoint(_len, _yh));
   painter.drawLine(QPoint(5, _ym), QPoint(_len, _ym));
@@ -162,6 +162,7 @@ bool DeliveryNote::generateDocument(QPrinter *printer) {
   htmlHead->setPageSize(QSizeF(documentWidth, header->size().height()));
   htmlHead->setModified(true);
   QRectF headerRect = QRectF(QPointF(0, 0), htmlHead->pageSize());
+
   painter.translate(0, 0);
   htmlHead->drawContents(&painter, headerRect);
 
@@ -170,7 +171,8 @@ bool DeliveryNote::generateDocument(QPrinter *printer) {
   htmlBody->setPageSize(QSizeF(documentWidth, body->size().height()));
   htmlBody->setModified(true);
   QRectF bodyRect = QRectF(QPointF(0, 0), htmlBody->pageSize());
-  painter.translate(0, headerRect.height());
+
+  painter.translate(0, p_subjectPosition);
   htmlBody->drawContents(&painter, bodyRect);
 
   QTextDocument *htmlFooter = footer->document();
@@ -179,6 +181,7 @@ bool DeliveryNote::generateDocument(QPrinter *printer) {
   htmlFooter->setModified(true);
   QRectF footerRect = QRectF(QPointF(0, 0), htmlFooter->pageSize());
   int yPosFooter = (pageRect.height() - (footerRect.height() * 2));
+
   painter.translate(0, yPosFooter);
   htmlFooter->drawContents(&painter, footerRect);
 

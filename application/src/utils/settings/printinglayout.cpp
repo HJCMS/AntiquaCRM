@@ -5,7 +5,8 @@
 
 #include <QLayout>
 
-BorderPrintInput::BorderPrintInput(QWidget *parent, qreal max) : InputEdit{parent} {
+BorderPrintInput::BorderPrintInput(QWidget *parent, qreal max)
+    : InputEdit{parent} {
   m_box = new QDoubleSpinBox(this);
   m_box->setButtonSymbols(QAbstractSpinBox::NoButtons);
   m_box->setRange(0, max);
@@ -85,11 +86,13 @@ PrintingLayout::PrintingLayout(QWidget *parent)
   QGridLayout *inpLayout = new QGridLayout;
   m_left = new BorderPrintInput(this);
   m_left->setObjectName("table_margin_left");
+  m_left->setToolTip(tr("Document distance left."));
   inpLayout->addWidget(label(tr("Left")), 0, 0, 1, 1);
   inpLayout->addWidget(m_left, 0, 1, 1, 1);
 
   m_right = new BorderPrintInput(this);
   m_right->setObjectName("table_margin_right");
+  m_right->setToolTip(tr("Document distance right."));
   inpLayout->addWidget(label(tr("Right")), 1, 0, 1, 1);
   inpLayout->addWidget(m_right, 1, 1, 1, 1);
 
@@ -97,8 +100,15 @@ PrintingLayout::PrintingLayout(QWidget *parent)
 
   m_subject = new BorderPrintInput(this, 200);
   m_subject->setObjectName("subject_position");
-  inpLayout->addWidget(label(tr("Subject Position")), 3, 0, 1, 1);
+  m_subject->setToolTip(tr("Distance from header to the recipient address."));
+  inpLayout->addWidget(label(tr("Subject")), 3, 0, 1, 1);
   inpLayout->addWidget(m_subject, 3, 1, 1, 1);
+
+  m_body = new BorderPrintInput(this, 200);
+  m_body->setObjectName("body_position");
+  m_body->setToolTip(tr("Distance from Document subject to content."));
+  inpLayout->addWidget(label(tr("Body")), 4, 0, 1, 1);
+  inpLayout->addWidget(m_body, 4, 1, 1, 1);
 
   boxLayout->addLayout(inpLayout);
 
@@ -143,8 +153,10 @@ const QMarginsF PrintingLayout::value() {
   return QMarginsF(left, p_top, right, p_bottom);
 }
 
-void PrintingLayout::setSubjectPosition(int i) {
-  m_subject->setValue(i);
-}
+void PrintingLayout::setSubjectPosition(int i) { m_subject->setValue(i); }
 
 int PrintingLayout::getSubjectPosition() { return m_subject->value().toInt(); }
+
+void PrintingLayout::setBodyPosition(int i) { m_body->setValue(i); }
+
+int PrintingLayout::getBodyPosition() { return m_body->value().toInt(); }

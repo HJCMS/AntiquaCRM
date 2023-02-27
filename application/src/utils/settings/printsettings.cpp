@@ -175,6 +175,9 @@ void PrintSettings::loadSectionConfig() {
   int sp = config->value("subject_position", 120).toInt();
   m_printLayout->setSubjectPosition(sp);
 
+  int bp = config->value("body_position", 20).toInt();
+  m_printLayout->setBodyPosition(bp);
+
   m_attachments->setValue(config->value("attachments", documentLocation()));
   m_watermark->setValue(config->value("watermark"));
   m_opacity->setValue(config->value("watermark_opacity", 0.6));
@@ -207,6 +210,9 @@ void PrintSettings::saveSectionConfig() {
 
   int sp = m_printLayout->getSubjectPosition();
   config->setValue("subject_position", sp);
+
+  int bp = m_printLayout->getBodyPosition();
+  config->setValue("body_position", bp);
 
   config->setValue("watermark", m_watermark->value());
   config->setValue("watermark_opacity", m_opacity->value().toReal());

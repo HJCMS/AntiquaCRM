@@ -1163,7 +1163,7 @@ Image - Article Id: %2</source>
 <context>
     <name>BorderPrintInput</name>
     <message>
-        <location filename="../utils/settings/printinglayout.cpp" line="+76"/>
+        <location filename="../utils/settings/printinglayout.cpp" line="+77"/>
         <source>A valid border set is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3505,7 +3505,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+59"/>
         <source>on</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4130,7 +4130,7 @@ Image - Article Id: %2</source>
 <context>
     <name>MonthlyReports</name>
     <message>
-        <location filename="../tabs/reports/monthlyreports.cpp" line="+22"/>
+        <location filename="../tabs/reports/monthlyreports.cpp" line="+24"/>
         <source>Monthly Payment reports</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4150,7 +4150,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+59"/>
+        <location line="+63"/>
         <source>Report saved: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5059,7 +5059,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+108"/>
         <source>Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5079,7 +5079,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-110"/>
+        <location line="-114"/>
         <source>Invoice No.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5094,7 +5094,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+59"/>
         <source>on</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5109,7 +5109,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="+198"/>
         <source>Sincerely</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5659,7 +5659,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+220"/>
+        <location line="+224"/>
         <source>eMail</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5728,12 +5728,37 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+7"/>
+        <source>Document distance left.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
-        <source>Subject Position</source>
+        <location line="+5"/>
+        <source>Document distance right.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Distance from header to the recipient address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Subject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Distance from Document subject to content.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Body</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5742,7 +5767,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-12"/>
+        <location line="-19"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6819,7 +6844,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="+121"/>
         <source>PDF File written.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -49,10 +49,8 @@ void PaymentReminder::constructSubject() {
   infoCell.setFormat(charFormat(getNormalFont()));
   cursor = infoCell.firstCursorPosition();
 
-  QTextTableFormat childFormat = tableFormat();
-  childFormat.setLeftMargin(0);
-  childFormat.setRightMargin(0);
-  QTextTable *child_table = cursor.insertTable(data.size(), 3, childFormat);
+  QTextTable *child_table = cursor.insertTable(data.size(), // Size
+                                               3, inlineTableFormat());
 
   QMapIterator<qint8, QString> it(data);
   while (it.hasNext()) {
@@ -79,7 +77,7 @@ void PaymentReminder::constructSubject() {
 
   // Begin:BodyHeaderSubject
   QTextTableFormat headerFormat = tableFormat();
-  headerFormat.setTopMargin(20); // Abstand zum Adressenkopf
+  headerFormat.setTopMargin(p_bodyPosition); // Abstand zum Adressenkopf
 
   cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
   QTextTable *m_headerTable = cursor.insertTable(1, 2, headerFormat);
@@ -246,7 +244,7 @@ bool PaymentReminder::generateDocument(QPrinter *printer) {
   // helper lines
   int _yh = (pageRect.height() / 3);
   int _ym = (pageRect.height() / 2);
-  int _len = (p_margins.left() - 5);
+  int _len = ((p_margins.left() / 3) * 2);
   painter.translate(0, 0);
   painter.drawLine(QPoint(5, _yh), QPoint(_len, _yh));
   painter.drawLine(QPoint(5, _ym), QPoint(_len, _ym));

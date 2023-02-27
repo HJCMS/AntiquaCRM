@@ -204,6 +204,7 @@ protected:
    * @brief Position vom Adressenkopf
    */
   int p_subjectPosition = 120;
+  int p_bodyPosition = 15;
 
   /**
    * @brief Inhalts Editor
@@ -262,6 +263,7 @@ protected:
    * @brief Tabellen Format
    */
   const QTextTableFormat tableFormat();
+  const QTextTableFormat inlineTableFormat();
 
   /**
    * @brief Tabellenzellen Format

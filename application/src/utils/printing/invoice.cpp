@@ -49,10 +49,8 @@ void Invoice::constructSubject() {
   infoCell.setFormat(charFormat(getNormalFont()));
   cursor = infoCell.firstCursorPosition();
 
-  QTextTableFormat childFormat = tableFormat();
-  childFormat.setLeftMargin(0);
-  childFormat.setRightMargin(0);
-  QTextTable *child_table = cursor.insertTable(data.size(), 3, childFormat);
+  QTextTable *child_table = cursor.insertTable(data.size(), // Size
+                                               3, inlineTableFormat());
 
   QMapIterator<qint8, QString> it(data);
   while (it.hasNext()) {
@@ -79,7 +77,7 @@ void Invoice::constructSubject() {
 
   // Begin:BodyHeaderSubject
   QTextTableFormat headerFormat = tableFormat();
-  headerFormat.setTopMargin(20); // Abstand zum Adressenkopf
+  headerFormat.setTopMargin(p_bodyPosition); // Abstand zum Adressenkopf
 
   cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
   QTextTable *m_headerTable = cursor.insertTable(1, 2, headerFormat);
@@ -112,7 +110,7 @@ void Invoice::constructBody() {
 
   QTextCursor cursor = body->textCursor();
   QTextTableFormat format = tableFormat();
-  format.setTopMargin(15); // Abstand Betreff
+  format.setTopMargin(5); // Abstand oben
 
   // Rechnungsaufstellung
   m_billingTable = cursor.insertTable(1, 4, format);
@@ -226,7 +224,7 @@ void Invoice::setAdditionalInfo() {
   QTextCursor cursor = body->textCursor();
   QTextBlockFormat bf;
   bf.setLeftMargin(p_margins.left());
-  cursor.setCharFormat(charFormat(getSmallFont()));
+  cursor.setCharFormat(charFormat(getNormalFont()));
   cursor.setBlockFormat(bf);
   cursor.insertText("\n");
   cursor.insertText(companyData.value("COMPANY_INVOICE_THANKS"));
@@ -253,7 +251,7 @@ bool Invoice::generateDocument(QPrinter *printer) {
   // helper lines
   int _yh = (pageRect.height() / 3);
   int _ym = (pageRect.height() / 2);
-  int _len = (p_margins.left() / 3);
+  int _len = ((p_margins.left() / 3) * 2);
   painter.translate(0, 0);
   painter.drawLine(QPoint(1, _yh), QPoint(_len, _yh));
   painter.drawLine(QPoint(1, _ym), QPoint(_len, _ym));
