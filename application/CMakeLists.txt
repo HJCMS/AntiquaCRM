@@ -141,12 +141,15 @@ SET (LUPDATE_SCANDIRS
   ${CMAKE_CURRENT_BINARY_DIR}/src
 )
 
-## Required with some subproject bindings
+###
+## \Section Target bindings
+## Required with some subproject bindings and also needed by package building.
+###
 SET (ANTIQUACRM_CURRENT_BINARY_DIR
-  ${CMAKE_CURRENT_BINARY_DIR}/src
+  ${CMAKE_CURRENT_BINARY_DIR}
 )
 SET (ANTIQUACRM_CURRENT_SOURCE_DIR
-  ${CMAKE_CURRENT_SOURCE_DIR}/src
+  ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 ###
