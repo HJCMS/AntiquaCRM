@@ -9,7 +9,7 @@ SELECT DATE(o_delivered) AS date,
   CONCAT(st_tax_value::text, '%') AS sales_tax_type,
   (CASE o_vat_included WHEN true
     THEN ROUND((a_sell_price * st_tax_value) / (100 + st_tax_value), 2)::MONEY
-    ELSE ROUND((a_sell_price / (100 + st_tax_value) * st_tax_value), 2)::MONEY
+    ELSE ROUND(((a_sell_price / 100) * st_tax_value), 2)::MONEY
     END) AS sales_tax_calc,
   (CASE o_delivery_add_price WHEN true
     THEN d_price::MONEY

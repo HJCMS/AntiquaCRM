@@ -78,7 +78,11 @@ AntiquaCRM::ASqlCore::Status ASqlCore::status() {
 
 bool ASqlCore::open() {
   if (initDatabase()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << database->hostName();
+#else
     qInfo("Database connected to Host '%s'.", qPrintable(database->hostName()));
+#endif
     return true;
   }
   return false;
@@ -136,7 +140,11 @@ const QString ASqlCore::lastError() {
 void ASqlCore::close() {
   if (database != nullptr) {
     if (database->isOpen()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+      qDebug() << Q_FUNC_INFO << database->connectionName();
+#else
       qInfo("Database '%s' closed.", qPrintable(database->connectionName()));
+#endif
       database->close();
     }
   }

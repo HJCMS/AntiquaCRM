@@ -354,16 +354,16 @@ protected:
   /**
    * @brief Mehrwertsteuer berechnen
    * @param price - Basis Preis
-   * @param vat   - Mehrwertsteuer
+   * @param vat   - Umsatzssteuer
    */
   inline qreal addVat(qreal price, qreal vat) const {
     AntiquaCRM::ATaxCalculator calc(price);
-    return calc.plus_vat(vat);
+    return calc.toAdd(vat);
   };
 
   inline qreal inclVat(qreal price, qreal vat) const {
     AntiquaCRM::ATaxCalculator calc(price);
-    return calc.incl_vat(vat);
+    return calc.getIncl(vat);
   };
 
 protected Q_SLOTS:
