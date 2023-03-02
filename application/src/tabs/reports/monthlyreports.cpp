@@ -87,6 +87,9 @@ void MonthlyReports::createReport(const QDate &date) {
   AntiquaCRM::ASqlFiles file("query_monthly_report");
   if (file.openTemplate()) {
     file.setWhereClause(where_clause);
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << file.getQueryContent();
+#endif
     m_table->setQuery(file.getQueryContent());
   }
 }
