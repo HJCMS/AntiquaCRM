@@ -6,14 +6,9 @@
 
 OrdersStatusBar::OrdersStatusBar(QWidget *parent) : TabStatusBar{parent} {
   setObjectName("orders_status_bar");
-
-  QHBoxLayout *layout = new QHBoxLayout(m_frame);
-  layout->setContentsMargins(0, 0, 0, 0);
-
+  defaultViewButton();
   btn_history = new OrdersHistoryButton(this);
-  layout->addWidget(btn_history);
-  m_frame->setLayout(layout);
-
+  addButton(btn_history);
   connect(btn_history, SIGNAL(sendDefaultView()), SIGNAL(sendDefaultView()));
   connect(btn_history, SIGNAL(sendHistoryAction(int)),
           SLOT(setHistoryAction(int)));
@@ -77,12 +72,7 @@ void OrdersStatusBar::setHistoryAction(int action) {
     sqlQuery = "o_order_status=0 AND o_payment_status=0";
     break;
   };
-
-
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << sqlQuery;
-#endif
-
+  // qDebug() << Q_FUNC_INFO << sqlQuery;
   emit sendHistoryQuery(sqlQuery);
 }
 

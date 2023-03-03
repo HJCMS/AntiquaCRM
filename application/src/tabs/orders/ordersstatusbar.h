@@ -22,9 +22,6 @@ private:
 private Q_SLOTS:
   void setHistoryAction(int) override;
 
-Q_SIGNALS:
-  void sendDefaultView();
-
 public Q_SLOTS:
   void setCreateButtonEnabled(bool) override{};
 

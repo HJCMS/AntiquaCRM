@@ -56,7 +56,6 @@ TabOrders::TabOrders(QWidget *parent) : Inventory{"orders_tab", parent} {
   connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
           SLOT(setFilterFocus()));
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
-  connect(m_searchBar, SIGNAL(sendRestoreView()), SLOT(setDefaultTableView()));
   connect(m_searchBar, SIGNAL(sendOpenCustomSearch()),
           SLOT(openCustomSearchDialog()));
 

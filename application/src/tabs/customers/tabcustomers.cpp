@@ -45,7 +45,6 @@ TabCustomers::TabCustomers(QWidget *parent)
   // Signals
   // searchbar
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
-  connect(m_searchBar, SIGNAL(sendRestoreView()), SLOT(setDefaultTableView()));
   connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar,
           SLOT(setSearchFocus()));
   connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
@@ -81,6 +80,7 @@ TabCustomers::TabCustomers(QWidget *parent)
   connect(m_statusBar, SIGNAL(sendHistoryQuery(const QString &)),
           SLOT(createSearchQuery(const QString &)));
 
+  connect(m_statusBar, SIGNAL(sendDefaultView()), SLOT(setDefaultTableView()));
   connect(m_statusBar, SIGNAL(sendReloadView()), m_table,
           SLOT(setReloadView()));
 }

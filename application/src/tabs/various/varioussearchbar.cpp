@@ -18,10 +18,6 @@ VariousSearchBar::VariousSearchBar(QWidget *parent) : TabSearchBar{parent} {
   m_searchBtn = startSearchButton(tr("Search"));
   addWidget(m_searchBtn);
 
-  addSeparator();
-
-  addWidget(defaultViewButton());
-
   connect(m_searchEdit, SIGNAL(returnPressed()), SLOT(setSearch()));
   connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
 }

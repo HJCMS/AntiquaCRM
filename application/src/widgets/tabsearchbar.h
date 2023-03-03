@@ -43,11 +43,6 @@ protected:
   QPushButton *startSearchButton(const QString &text = QString());
 
   /**
-   * @brief Predefined Defaults Button
-   */
-  QPushButton *defaultViewButton(const QString &text = QString());
-
-  /**
    * @brief Predefined Search button
    */
   QPushButton *customSearchButton(const QString &text = QString());
@@ -74,12 +69,6 @@ Q_SIGNALS:
    * @brief will normally triggered inside of @ref setSearch()
    */
   void sendSearchClicked();
-
-  /**
-   * @brief Send restore to Default View!
-   * This is emitted by @ref defaultViewButton()
-   */
-  void sendRestoreView();
 
   /**
    * @brief Send to Open a Custom Search Dialog

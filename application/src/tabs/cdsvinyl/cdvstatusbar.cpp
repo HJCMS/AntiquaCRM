@@ -7,23 +7,13 @@
 
 CDVStatusBar::CDVStatusBar(QWidget *parent) : TabStatusBar{parent} {
   setObjectName("cdv_status_bar");
-  QHBoxLayout *layout = new QHBoxLayout(m_frame);
-  layout->setContentsMargins(0, 0, 0, 0);
-  btn_create = new QPushButton(m_frame);
-  btn_create->setText(tr("Create"));
-  btn_create->setToolTip(tr("Create a new entry."));
-  btn_create->setIcon(getIcon("db_add"));
-  btn_create->setEnabled(false);
-  layout->addWidget(btn_create);
+  btn_create = createButton();
+  setCreateButtonEnabled(false);
 
-  btn_history = new QPushButton(m_frame);
-  btn_history->setText(tr("History"));
-  btn_history->setIcon(getIcon("view_list"));
-  layout->addWidget(btn_history);
-  m_frame->setLayout(layout);
+  defaultViewButton();
 
+  btn_history = historyButton();
   setHistoryActionMenu(btn_history);
-  connect(btn_create, SIGNAL(clicked()), SIGNAL(sendCreateEntry()));
 }
 
 void CDVStatusBar::setCreateButtonEnabled(bool b) { btn_create->setEnabled(b); }

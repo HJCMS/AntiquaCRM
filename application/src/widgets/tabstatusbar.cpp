@@ -4,6 +4,7 @@
 #include "tabstatusbar.h"
 
 #include <QDebug>
+#include <QHash>
 #include <QSignalMapper>
 
 TabStatusBar::TabStatusBar(QWidget *parent) : QStatusBar{parent} {
@@ -12,6 +13,9 @@ TabStatusBar::TabStatusBar(QWidget *parent) : QStatusBar{parent} {
 
   m_frame = new QFrame(this);
   m_frame->setContentsMargins(0, 0, 0, 0);
+  layout = new QHBoxLayout(m_frame);
+  layout->setContentsMargins(0, 0, 0, 0);
+  m_frame->setLayout(layout);
   insertPermanentWidget(0, m_frame, 0);
 
   btn_refresh = new QPushButton(this);
@@ -35,6 +39,55 @@ const QMap<TabStatusBar::History, QString> TabStatusBar::historyItems() {
   items.insert(History::ThisYear, tr("This Year"));
   items.insert(History::NOIMAGE, tr("Past Days edited (no Image)"));
   return items;
+}
+
+void TabStatusBar::addButton(QPushButton *btn) {
+  layout->addWidget(btn);
+}
+
+QPushButton *TabStatusBar::createButton(const QString &title) {
+  QPushButton *btn = new QPushButton(m_frame);
+  btn->setIcon(QIcon("://icons/db_add.png"));
+  btn->setToolTip(tr("Create a new entry."));
+  btn->setStatusTip(btn->toolTip());
+  if (title.isEmpty())
+    btn->setText(tr("Create"));
+  else
+    btn->setText(title);
+
+  connect(btn, SIGNAL(clicked()), SIGNAL(sendCreateEntry()));
+  addButton(btn);
+  return btn;
+}
+
+QPushButton *TabStatusBar::historyButton(const QString &title) {
+  QPushButton *btn = new QPushButton(m_frame);
+  btn->setIcon(QIcon("://icons/view_list.png"));
+  btn->setToolTip(tr("History menue"));
+  btn->setStatusTip(btn->toolTip());
+  if (title.isEmpty())
+    btn->setText(tr("History"));
+  else
+    btn->setText(title);
+
+  connect(btn, SIGNAL(clicked()), SIGNAL(sendDefaultView()));
+  addButton(btn);
+  return btn;
+}
+
+QPushButton *TabStatusBar::defaultViewButton(const QString &title) {
+  QPushButton *btn = new QPushButton(m_frame);
+  btn->setIcon(QIcon("://icons/spreadsheet.png"));
+  btn->setToolTip(tr("Push to load the Standard view."));
+  btn->setStatusTip(btn->toolTip());
+  if (title.isEmpty())
+    btn->setText(tr("Default view"));
+  else
+    btn->setText(title);
+
+  connect(btn, SIGNAL(clicked()), SIGNAL(sendDefaultView()));
+  addButton(btn);
+  return btn;
 }
 
 void TabStatusBar::setHistoryActionMenu(QPushButton *parent) {

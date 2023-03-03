@@ -32,9 +32,6 @@ BookSearchBar::BookSearchBar(QWidget *parent) : TabSearchBar{parent} {
   addSeparator();
 
   addWidget(stockCheckBox());
-  addSeparator();
-
-  addWidget(defaultViewButton());
 
   connect(m_selectFilter, SIGNAL(currentIndexChanged(int)),
           SLOT(setFilter(int)));

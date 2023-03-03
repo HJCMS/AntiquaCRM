@@ -40,20 +40,6 @@ QCheckBox *TabSearchBar::stockCheckBox(const QString &text) {
   return m_box;
 }
 
-QPushButton *TabSearchBar::defaultViewButton(const QString &text) {
-  QPushButton *btn = new QPushButton(this);
-  btn->setIcon(QIcon("://icons/spreadsheet.png"));
-  btn->setToolTip(tr("Push to load the Standard view."));
-  btn->setStatusTip(btn->toolTip());
-  if (text.isEmpty())
-    btn->setText(tr("Default view"));
-  else
-    btn->setText(text);
-
-  connect(btn, SIGNAL(clicked()), SIGNAL(sendRestoreView()));
-  return btn;
-}
-
 QPushButton *TabSearchBar::customSearchButton(const QString &text) {
   QPushButton *btn = new QPushButton(text, this);
   btn->setIcon(QIcon("://icons/action_search.png"));

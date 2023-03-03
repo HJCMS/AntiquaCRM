@@ -31,10 +31,6 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent) : TabSearchBar{parent} {
 
   addSeparator();
 
-  addWidget(defaultViewButton());
-
-  addSeparator();
-
   addWidget(customSearchButton(tr("History")));
 
   connect(m_selectFilter, SIGNAL(currentIndexChanged(int)),

@@ -48,7 +48,6 @@ TabCDVinyl::TabCDVinyl(QWidget *parent) : Inventory{"cdvinyl_tab", parent} {
   connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
           SLOT(setFilterFocus()));
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
-  connect(m_searchBar, SIGNAL(sendRestoreView()), SLOT(setDefaultTableView()));
 
   // Signals::CDVTableView
   connect(m_table, SIGNAL(sendQueryReport(const QString &)), m_statusBar,
@@ -72,6 +71,7 @@ TabCDVinyl::TabCDVinyl(QWidget *parent) : Inventory{"cdvinyl_tab", parent} {
   connect(m_statusBar, SIGNAL(sendHistoryQuery(const QString &)),
           SLOT(createSearchQuery(const QString &)));
 
+  connect(m_statusBar, SIGNAL(sendDefaultView()), SLOT(setDefaultTableView()));
   connect(m_statusBar, SIGNAL(sendReloadView()), m_table,
           SLOT(setReloadView()));
 }

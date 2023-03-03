@@ -7,6 +7,7 @@
 
 #include <QFrame>
 #include <QIcon>
+#include <QLayout>
 #include <QMap>
 #include <QMenu>
 #include <QPushButton>
@@ -46,6 +47,19 @@ public:
   static const QMap<TabStatusBar::History, QString> historyItems();
 
 private:
+  /**
+   * @brief Buttonsets frame
+   */
+  QFrame *m_frame;
+
+  /**
+   * @brief Buttons layout
+   */
+  QHBoxLayout *layout;
+
+  /**
+   * @brief Refresh Button
+   */
   QPushButton *btn_refresh;
 
 protected:
@@ -55,19 +69,24 @@ protected:
   bool SearchWithStock = false;
 
   /**
-   * @brief Rahmen für eigene Knöpfe und Menüs
+   * @brief add push button to permanent frame layout
    */
-  QFrame *m_frame;
+  void addButton(QPushButton *);
 
   /**
-   * @brief Optionaler Erstellen Knopf
+   * @brief optinal - create button
    */
-  QPushButton *btn_create = nullptr;
+  QPushButton *createButton(const QString &title = QString());
 
   /**
-   * @brief Eigener Verlaufsknopf
+   * @brief optinal - history button
    */
-  QPushButton *btn_history = nullptr;
+  QPushButton *historyButton(const QString &title = QString());
+
+  /**
+   * @brief optinal - default view button
+   */
+  QPushButton *defaultViewButton(const QString &title = QString());
 
   /**
    * @brief Erstellt aus @ref historyItems() Menüeinträge
@@ -89,9 +108,25 @@ protected Q_SLOTS:
   virtual void setHistoryAction(int) = 0;
 
 Q_SIGNALS:
+  /**
+   * @brief Reserved signal for History queries
+   */
   void sendHistoryQuery(const QString &query);
+
+  /**
+   * @brief Triggered by „Create Button“
+   */
   void sendCreateEntry();
+
+  /**
+   * @brief Triggered by „Refresh Button“
+   */
   void sendReloadView();
+
+  /**
+   * @brief Triggered by „Default View Button“
+   */
+  void sendDefaultView();
 
 public Q_SLOTS:
   /**

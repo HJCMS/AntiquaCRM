@@ -14,6 +14,10 @@ class PrintsStitchesStatusBar final : public TabStatusBar
 {
   Q_OBJECT
 
+private:
+  QPushButton *btn_create;
+  QPushButton *btn_history;
+
 private Q_SLOTS:
   void setHistoryAction(int) override;
 

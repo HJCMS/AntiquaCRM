@@ -22,10 +22,6 @@ CDVSearchBar::CDVSearchBar(QWidget *parent) : TabSearchBar{parent} {
   m_searchBtn = startSearchButton(tr("Search"));
   addWidget(m_searchBtn);
 
-  addSeparator();
-
-  addWidget(defaultViewButton());
-
   connect(m_selectFilter, SIGNAL(currentIndexChanged(int)),
           SLOT(setFilter(int)));
   connect(m_searchEdit, SIGNAL(returnPressed()), SLOT(setSearch()));
