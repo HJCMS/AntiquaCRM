@@ -857,7 +857,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+68"/>
         <location line="+80"/>
         <source>Keyword</source>
         <translation type="unfinished"></translation>
@@ -963,24 +963,6 @@ Image - Article Id: %2</source>
     <message>
         <location line="+1"/>
         <source>Search by keyword and storage location</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>BookStatusBar</name>
-    <message>
-        <location filename="../tabs/books/bookstatusbar.cpp" line="+15"/>
-        <source>Create</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Create a new entry.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>History</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1569,24 +1551,6 @@ Image - Article Id: %2</source>
     <message>
         <location line="+7"/>
         <source>Search for Artists, Group or Songwriters.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>CDVStatusBar</name>
-    <message>
-        <location filename="../tabs/cdsvinyl/cdvstatusbar.cpp" line="+13"/>
-        <source>Create</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Create a new entry.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>History</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2361,24 +2325,6 @@ Image - Article Id: %2</source>
     <message>
         <location line="+1"/>
         <source>Search only companies</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>CustomersStatusBar</name>
-    <message>
-        <location filename="../tabs/customers/customersstatusbar.cpp" line="+15"/>
-        <source>Create customer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Create a new entry.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>History</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3471,12 +3417,12 @@ Image - Article Id: %2</source>
 <context>
     <name>InventoryTable</name>
     <message>
-        <location filename="../widgets/inventorytable.cpp" line="+44"/>
+        <location filename="../widgets/inventorytable.cpp" line="+56"/>
         <source>The query at %1 returned no result.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Change the search query or choose a different history query.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4150,7 +4096,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+66"/>
         <source>Report saved: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6114,24 +6060,6 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
-    <name>PrintsStitchesStatusBar</name>
-    <message>
-        <location filename="../tabs/prints/printsstitchesstatusbar.cpp" line="+15"/>
-        <source>Create</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Create a new entry.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>History</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>PrintsStitchesTableView</name>
     <message>
         <location filename="../tabs/prints/printsstitchestableview.cpp" line="+57"/>
@@ -7639,7 +7567,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TabStatusBar</name>
     <message>
-        <location filename="../widgets/tabstatusbar.cpp" line="+19"/>
+        <location filename="../widgets/tabstatusbar.cpp" line="+22"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7691,6 +7619,36 @@ Image - Article Id: %2</source>
     <message>
         <location line="+1"/>
         <source>Past Days edited (no Image)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Create a new entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>History menue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>History</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Push to load the Standard view.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Default view</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8111,24 +8069,6 @@ Image - Article Id: %2</source>
     <message>
         <location line="+3"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>VariousStatusBar</name>
-    <message>
-        <location filename="../tabs/various/variousstatusbar.cpp" line="+11"/>
-        <source>Create</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Create a new entry.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>History</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

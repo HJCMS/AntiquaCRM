@@ -859,7 +859,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Suche Buch</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+68"/>
         <location line="+80"/>
         <source>Keyword</source>
         <translation>Schlüsselwort</translation>
@@ -966,24 +966,6 @@ Bild - Artikel Nr: %2</translation>
         <location line="+1"/>
         <source>Search by keyword and storage location</source>
         <translation>Suche mit Schlüsselwort und Lagerzuordnung</translation>
-    </message>
-</context>
-<context>
-    <name>BookStatusBar</name>
-    <message>
-        <location filename="../tabs/books/bookstatusbar.cpp" line="+15"/>
-        <source>Create</source>
-        <translation>Erstellen</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Create a new entry.</source>
-        <translation>Erstelle einen Neuen Eintrag.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>History</source>
-        <translation>Verlauf</translation>
     </message>
 </context>
 <context>
@@ -1574,24 +1556,6 @@ Bild - Artikel Nr: %2</translation>
         <location line="+7"/>
         <source>Search for Artists, Group or Songwriters.</source>
         <translation>Suche nach Künstler, Gruppe oder Komponist.</translation>
-    </message>
-</context>
-<context>
-    <name>CDVStatusBar</name>
-    <message>
-        <location filename="../tabs/cdsvinyl/cdvstatusbar.cpp" line="+13"/>
-        <source>Create</source>
-        <translation>Erstellen</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Create a new entry.</source>
-        <translation>Erstelle einen Neuen Eintrag.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>History</source>
-        <translation>Verlauf</translation>
     </message>
 </context>
 <context>
@@ -2366,24 +2330,6 @@ Bild - Artikel Nr: %2</translation>
         <location line="+1"/>
         <source>Search only companies</source>
         <translation>Suche nach Unternehmen</translation>
-    </message>
-</context>
-<context>
-    <name>CustomersStatusBar</name>
-    <message>
-        <location filename="../tabs/customers/customersstatusbar.cpp" line="+15"/>
-        <source>Create customer</source>
-        <translation>Erstelle Neukunde</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Create a new entry.</source>
-        <translation>Erstelle einen Neuen Eintrag.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>History</source>
-        <translation>Verlauf</translation>
     </message>
 </context>
 <context>
@@ -3475,12 +3421,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>InventoryTable</name>
     <message>
-        <location filename="../widgets/inventorytable.cpp" line="+44"/>
+        <location filename="../widgets/inventorytable.cpp" line="+56"/>
         <source>The query at %1 returned no result.</source>
         <translation>Die Abfrage um %1 lieferte kein Ergebnis.</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Change the search query or choose a different history query.</source>
         <translation>Ändern Sie die Suchanfrage oder wählen Sie eine andere Verlaufsabfrage.</translation>
     </message>
@@ -4154,7 +4100,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bericht</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+66"/>
         <source>Report saved: %1</source>
         <translation>Bericht gespeichert: %1</translation>
     </message>
@@ -6120,24 +6066,6 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
-    <name>PrintsStitchesStatusBar</name>
-    <message>
-        <location filename="../tabs/prints/printsstitchesstatusbar.cpp" line="+15"/>
-        <source>Create</source>
-        <translation>Erstellen</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Create a new entry.</source>
-        <translation>Erstelle einen Neuen Eintrag.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>History</source>
-        <translation>Verlauf</translation>
-    </message>
-</context>
-<context>
     <name>PrintsStitchesTableView</name>
     <message>
         <location filename="../tabs/prints/printsstitchestableview.cpp" line="+57"/>
@@ -7645,7 +7573,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TabStatusBar</name>
     <message>
-        <location filename="../widgets/tabstatusbar.cpp" line="+19"/>
+        <location filename="../widgets/tabstatusbar.cpp" line="+22"/>
         <source>Update</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -7698,6 +7626,36 @@ Bild - Artikel Nr: %2</translation>
         <location line="+1"/>
         <source>Past Days edited (no Image)</source>
         <translation>Vergangene Tage bearbeitet (kein Bild)</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Create a new entry.</source>
+        <translation>Erstelle einen Neuen Eintrag.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Create</source>
+        <translation>Erstellen</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>History menue</source>
+        <translation>Verlaufsmenü</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>History</source>
+        <translation>Verlauf</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Push to load the Standard view.</source>
+        <translation>Drücken Sie , um die Standardansicht zu laden.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Default view</source>
+        <translation>Standardansicht</translation>
     </message>
 </context>
 <context>
@@ -8120,24 +8078,6 @@ Bild - Artikel Nr: %2</translation>
         <location line="+3"/>
         <source>Search</source>
         <translation>Suche</translation>
-    </message>
-</context>
-<context>
-    <name>VariousStatusBar</name>
-    <message>
-        <location filename="../tabs/various/variousstatusbar.cpp" line="+11"/>
-        <source>Create</source>
-        <translation>Erstellen</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Create a new entry.</source>
-        <translation>Erstelle einen Neuen Eintrag.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>History</source>
-        <translation>Verlauf</translation>
     </message>
 </context>
 <context>
