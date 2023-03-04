@@ -27,11 +27,12 @@ BookSearchBar::BookSearchBar(QWidget *parent) : TabSearchBar{parent} {
   m_searchRight = new BookSearchLine(this);
   addWidget(m_searchRight);
 
-  m_searchBtn = startSearchButton(tr("Search book"));
-  addWidget(m_searchBtn);
+  addWidget(searchConfines());
   addSeparator();
-
   addWidget(stockCheckBox());
+
+  m_searchBtn = startSearchButton();
+  addWidget(m_searchBtn);
 
   connect(m_selectFilter, SIGNAL(currentIndexChanged(int)),
           SLOT(setFilter(int)));
@@ -40,41 +41,10 @@ BookSearchBar::BookSearchBar(QWidget *parent) : TabSearchBar{parent} {
   connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
 }
 
-const QString BookSearchBar::prepareFieldSet(const QString &fieldname,
-                                             const QString &search) const {
-  QString sf(search.trimmed());
-  sf = sf.replace(jokerPattern, "%");
-
-  if (sf.length() < minLength)
-    return QString();
-
-  QStringList words = search.trimmed().split(" ");
-  QString sql(fieldname + " ILIKE '");
-  if (words.count() == 2) {
-    sql.append("%");
-    sql.append(words.first());
-    sql.append("%");
-    sql.append(words.last());
-    sql.append("%' OR ");
-    sql.append(fieldname);
-    sql.append(" ILIKE '");
-    sql.append(words.last());
-    sql.append("%");
-    sql.append(words.first());
-  } else {
-    if (sf.length() > minLength)
-      sql.append("%");
-
-    sql.append(sf);
-  }
-  sql.append("%'");
-  return sql;
-}
-
 const QString BookSearchBar::getTitleSearch(const QStringList &fields) {
   QString query;
   // Standard Suchfeld
-  if (m_searchLeft->getLength() >= minLength) {
+  if (m_searchLeft->getLength() >= getMinLength()) {
     QStringList bufferLeft;
     foreach (QString f, fields) {
       if (f != "ib_author") {
@@ -93,7 +63,8 @@ const QString BookSearchBar::getTitleSearch(const QStringList &fields) {
     bufferLeft.clear();
   }
   // Autoren Suchfeld
-  if (m_searchRight->isEnabled() && m_searchRight->getLength() >= minLength) {
+  if (m_searchRight->isEnabled() &&
+      m_searchRight->getLength() >= getMinLength()) {
     QStringList bufferRight;
     if (m_searchRight->placeholderText().contains(tr("Keyword")))
       bufferRight << prepareFieldSet("ib_keyword", p_currentRight);
@@ -113,16 +84,18 @@ const QString BookSearchBar::getTitleSearch(const QStringList &fields) {
 }
 
 void BookSearchBar::setSearch() {
-  if (m_searchLeft->isEnabled() && m_searchLeft->getLength() > minLength) {
+  if (m_searchLeft->isEnabled() && m_searchLeft->getLength() > getMinLength()) {
     QString left = m_searchLeft->getSearch();
     left = left.replace(quotePattern, "");
     left = left.replace(trimPattern, " ");
     p_currentLeft = left.trimmed();
   } else {
     p_currentLeft = QString();
+    emit sendNotify(tr("Your input is too short, increase your search!"));
   }
 
-  if (m_searchRight->isEnabled() && m_searchRight->getLength() > minLength) {
+  if (m_searchRight->isEnabled() &&
+      m_searchRight->getLength() > getMinLength()) {
     QString right = m_searchRight->getSearch();
     right = right.replace(quotePattern, "");
     right = right.replace(trimPattern, " ");

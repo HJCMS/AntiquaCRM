@@ -16,16 +16,12 @@ class BookSearchBar final : public TabSearchBar {
   Q_OBJECT
 
 private:
-  int minLength = 2;
   QString p_currentLeft;
   QString p_currentRight;
   BookSelectFilter *m_selectFilter;
   BookSearchLine *m_searchLeft;
   BookSearchLine *m_searchRight;
   QPushButton *m_searchBtn;
-
-  const QString prepareFieldSet(const QString &fieldname,
-                                const QString &search) const;
 
   const QString getTitleSearch(const QStringList &fields);
 

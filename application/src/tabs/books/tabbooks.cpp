@@ -15,12 +15,13 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{"books_tab", parent} {
   setObjectName("inventory_books");
   setWindowTitle(tr("Books"));
   setWindowIcon(getTabIcon("view_log"));
-
+  // AntiquaCRM::ASettings cfg(this);
   // Begin MainPage layout
   m_mainPage = new QWidget(this);
   QVBoxLayout *m_p1Layout = new QVBoxLayout(m_mainPage);
   m_p1Layout->setContentsMargins(0, 0, 0, 0);
   m_searchBar = new BookSearchBar(m_mainPage);
+  m_searchBar->setMinLength(3);
   m_p1Layout->addWidget(m_searchBar);
   m_table = new BookTableView(m_mainPage);
   m_table->setObjectName("books_table");
@@ -51,6 +52,8 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{"books_tab", parent} {
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
   connect(m_searchBar, SIGNAL(sendStockEnabled(bool)), m_statusBar,
           SLOT(setStockEnabled(bool)));
+  connect(m_searchBar, SIGNAL(sendNotify(const QString &)), m_statusBar,
+          SLOT(showMessage(const QString &)));
 
   // Signals::BookTableView
   connect(m_table, SIGNAL(sendQueryReport(const QString &)), m_statusBar,

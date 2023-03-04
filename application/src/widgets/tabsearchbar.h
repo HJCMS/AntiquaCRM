@@ -6,6 +6,7 @@
 #define ANTIQUACRM_TABSEARCHBAR_H
 
 #include <QCheckBox>
+#include <QComboBox>
 #include <QObject>
 #include <QPushButton>
 #include <QRegExp>
@@ -16,9 +17,31 @@
 
 class TabSearchBar : public QToolBar {
   Q_OBJECT
+  Q_PROPERTY(int minLength READ getMinLength WRITE setMinLength NOTIFY
+                 sendMinLengthChanged)
+
+public:
+  /**
+   * @brief settings confiness for search syntax
+   * @list Enumeration to restrict search to:
+   *  @li ANYWHERE   (field ILIKE '%word%')
+   *  @li BOUNDARIES (field ILIKE 'word')
+   *  @li BEGINNING  (field ILIKE 'word%')
+   *  @li ENDING     (field ILIKE '%word')
+   */
+  enum SearchPattern {
+    ANYWHERE = 0,   /**< @brief Anywhere, no word boundaries */
+    BOUNDARIES = 1, /**< @brief Restrict to word boundaries */
+    BEGINNING = 2,  /**< @brief Restrict to word beginning */
+    ENDING = 3      /**< @brief Restrict to word ending */
+  };
+
+private:
+  int minLength = 2;
 
 private Q_SLOTS:
   void setSearchStockEnabled(bool);
+  void setSearchPatternChanged(int);
 
 protected:
   const QRegExp jokerPattern = QRegExp("[%*]+");
@@ -47,6 +70,14 @@ protected:
    */
   QPushButton *customSearchButton(const QString &text = QString());
 
+  /**
+   * @brief Search confiness settings
+   */
+  QComboBox *searchConfines();
+
+  const QString prepareFieldSet(const QString &fieldname,
+                                const QString &search);
+
 protected Q_SLOTS:
   virtual void setSearch() = 0;
   virtual void setFilter(int) = 0;
@@ -55,6 +86,8 @@ protected Q_SLOTS:
   virtual void setSearchFocus() = 0;
 
 Q_SIGNALS:
+  void sendMinLengthChanged(int);
+
   /**
    * @brief With „Stock“ search enabled or not!
    */
@@ -76,8 +109,28 @@ Q_SIGNALS:
    */
   void sendOpenCustomSearch();
 
+  void sendMatchChanged(TabSearchBar::SearchPattern);
+
+  void sendNotify(const QString &);
+
+public Q_SLOTS:
+  /**
+   * @brief start search from minimal length
+   */
+  void setMinLength(int);
+
 public:
   explicit TabSearchBar(QWidget *parent = nullptr);
+
+  /**
+   * @brief present the selected Search syntax
+   */
+  TabSearchBar::SearchPattern currentSearchSyntax() const;
+
+  /**
+   * @brief get start search from minimal length
+   */
+  int getMinLength();
 
   /**
    * @brief String length from current search input
