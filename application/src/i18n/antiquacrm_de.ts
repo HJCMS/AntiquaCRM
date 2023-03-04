@@ -854,18 +854,18 @@ Bild - Artikel Nr: %2</translation>
         <translation>Drücken Sie STRG+UMSCHALT+F, um dieses Menü schnell zu öffnen.</translation>
     </message>
     <message>
-        <location line="+15"/>
-        <source>Search book</source>
-        <translation>Suche Buch</translation>
-    </message>
-    <message>
-        <location line="+68"/>
-        <location line="+80"/>
+        <location line="+54"/>
+        <location line="+82"/>
         <source>Keyword</source>
         <translation>Schlüsselwort</translation>
     </message>
     <message>
-        <location line="-35"/>
+        <location line="-57"/>
+        <source>Your input is too short, increase your search!</source>
+        <translation>Ihre Eingabe ist zu kurz, erweitern Sie Ihre Suche!</translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>Search Booktitle</source>
         <translation>Suche Buchtitel</translation>
     </message>
@@ -1518,7 +1518,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Suche</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+27"/>
         <source>Genres</source>
         <translation>Genre</translation>
     </message>
@@ -2271,7 +2271,7 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+38"/>
+        <location line="+34"/>
         <source>Search customer</source>
         <translation>Suche Kunde</translation>
     </message>
@@ -4660,7 +4660,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Sucheingabe</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+5"/>
         <source>History</source>
         <translation>Verlauf</translation>
     </message>
@@ -6039,7 +6039,7 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+30"/>
+        <location line="+26"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
@@ -7304,7 +7304,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bücher</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+70"/>
         <source>Can&apos;t open this Article</source>
         <translation>Dieser Artikel kann nicht geöffnet werden</translation>
     </message>
@@ -7423,7 +7423,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Aufträge</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+66"/>
         <source>Cannot open Order Editor!</source>
         <translation>Bestelleditor kann nicht geöffnet werden!</translation>
     </message>
@@ -7468,7 +7468,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Drucke und Stiche</translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+64"/>
         <source>Can&apos;t open this Article</source>
         <translation>Dieser Artikel kann nicht geöffnet werden</translation>
     </message>
@@ -7522,17 +7522,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TabSearchBar</name>
     <message>
-        <location filename="../widgets/tabsearchbar.cpp" line="+24"/>
+        <location filename="../widgets/tabsearchbar.cpp" line="+35"/>
         <source>Push to start search.</source>
         <translation>Drücken, um die Suche zu starten.</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Start search</source>
-        <translation>Suche starten</translation>
-    </message>
-    <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>Stock</source>
         <translation>Bestand</translation>
     </message>
@@ -7542,22 +7537,42 @@ Bild - Artikel Nr: %2</translation>
         <translation>Nur mit %1 suchen</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Push to load the Standard view.</source>
-        <translation>Drücken Sie , um die Standardansicht zu laden.</translation>
+        <location line="+17"/>
+        <source>Limit search to</source>
+        <translation>Suche Einchränken auf</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Default view</source>
-        <translation>Standardansicht</translation>
+        <location line="+2"/>
+        <source>search anywhere</source>
+        <translation>überall suchen</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+1"/>
+        <source>search exact</source>
+        <translation>genau suchen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>search at the beginning</source>
+        <translation>am Anfang suchen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>search at the end</source>
+        <translation>am Ende suchen</translation>
+    </message>
+    <message>
+        <location line="-14"/>
         <source>Click to open Dialog for custom queries.</source>
         <translation>Klicken Sie hier, um den Dialog für benutzerdefinierte Abfragen zu öffnen.</translation>
     </message>
     <message>
-        <location line="-1"/>
+        <location line="-20"/>
+        <source>start search</source>
+        <translation>Suche starten</translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Custom queries</source>
         <translation>Benutzerdefinierte abfragen</translation>
     </message>
@@ -7573,7 +7588,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TabStatusBar</name>
     <message>
-        <location filename="../widgets/tabstatusbar.cpp" line="+22"/>
+        <location filename="../widgets/tabstatusbar.cpp" line="+23"/>
         <source>Update</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -7666,7 +7681,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Verschiedenes</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+63"/>
         <source>Can&apos;t open this Article</source>
         <translation>Dieser Artikel kann nicht geöffnet werden</translation>
     </message>

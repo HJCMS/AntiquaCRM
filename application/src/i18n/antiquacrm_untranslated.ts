@@ -852,18 +852,18 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
-        <source>Search book</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+68"/>
-        <location line="+80"/>
+        <location line="+54"/>
+        <location line="+82"/>
         <source>Keyword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-35"/>
+        <location line="-57"/>
+        <source>Your input is too short, increase your search!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>Search Booktitle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1514,7 +1514,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+27"/>
         <source>Genres</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2267,7 +2267,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+38"/>
+        <location line="+34"/>
         <source>Search customer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4656,7 +4656,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+5"/>
         <source>History</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6033,7 +6033,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+30"/>
+        <location line="+26"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7298,7 +7298,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+70"/>
         <source>Can&apos;t open this Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7417,7 +7417,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+66"/>
         <source>Cannot open Order Editor!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7462,7 +7462,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+64"/>
         <source>Can&apos;t open this Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7516,17 +7516,12 @@ Image - Article Id: %2</source>
 <context>
     <name>TabSearchBar</name>
     <message>
-        <location filename="../widgets/tabsearchbar.cpp" line="+24"/>
+        <location filename="../widgets/tabsearchbar.cpp" line="+35"/>
         <source>Push to start search.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Start search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>Stock</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7536,22 +7531,42 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Push to load the Standard view.</source>
+        <location line="+17"/>
+        <source>Limit search to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Default view</source>
+        <location line="+2"/>
+        <source>search anywhere</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+1"/>
+        <source>search exact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>search at the beginning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>search at the end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-14"/>
         <source>Click to open Dialog for custom queries.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1"/>
+        <location line="-20"/>
+        <source>start search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
         <source>Custom queries</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7567,7 +7582,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TabStatusBar</name>
     <message>
-        <location filename="../widgets/tabstatusbar.cpp" line="+22"/>
+        <location filename="../widgets/tabstatusbar.cpp" line="+23"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7660,7 +7675,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+63"/>
         <source>Can&apos;t open this Article</source>
         <translation type="unfinished"></translation>
     </message>
