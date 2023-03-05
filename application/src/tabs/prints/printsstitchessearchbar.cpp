@@ -5,7 +5,6 @@
 #include "printsstitchesfilterselect.h"
 #include "printsstitchessearchline.h"
 
-#include <QDebug>
 #include <QIcon>
 #include <QToolButton>
 
@@ -21,7 +20,11 @@ PrintsStitchesSearchBar::PrintsStitchesSearchBar(QWidget *parent)
   m_searchEdit = new PrintsStitchesSearchLine(this);
   addWidget(m_searchEdit);
 
-  m_searchBtn = startSearchButton(tr("Search"));
+  addWidget(searchConfines());
+  addSeparator();
+  addWidget(stockCheckBox());
+
+  m_searchBtn = startSearchButton();
   addWidget(m_searchBtn);
 
   connect(m_selectFilter, SIGNAL(currentIndexChanged(int)),
@@ -31,8 +34,10 @@ PrintsStitchesSearchBar::PrintsStitchesSearchBar(QWidget *parent)
 }
 
 void PrintsStitchesSearchBar::setSearch() {
-  if (m_searchEdit->getLength() <= minLength)
+  if (m_searchEdit->getLength() < getMinLength()) {
+    emit sendNotify(tr("Your input is too short, increase your search!"));
     return;
+  }
 
   p_search = QString();
   QString left = m_searchEdit->getSearch();
@@ -76,6 +81,7 @@ void PrintsStitchesSearchBar::setFilter(int index) {
     break;
   };
 
+  setClearAndFocus();
   emit sendFilterChanged(index);
 }
 
@@ -92,51 +98,59 @@ void PrintsStitchesSearchBar::setClearAndFocus() {
 void PrintsStitchesSearchBar::setSearchFocus() { setClearAndFocus(); }
 
 int PrintsStitchesSearchBar::searchLength() {
-  return m_searchEdit->text().trimmed().length();
+  return m_searchEdit->getLength();
 }
 
 const QString PrintsStitchesSearchBar::getSearchStatement() {
+  if (!m_searchEdit->isValid(getMinLength()))
+    return QString();
+
   QJsonObject js = m_selectFilter->getFilter(m_selectFilter->currentIndex());
-  QStringList fields = js.value("fields").toString().split(",");
   QString search = m_searchEdit->getSearch();
+  QString operation = js.value("search").toString();
+  QString sql(withStock() ? "ip_count>0 AND " : "");
+
   // Artikel Nummernsuche (107368,115110)
-  if (js.value("search").toString() == "articleId") {
+  if (operation == "articleId") {
     search.replace(QRegExp("\\,\\s?$"), "");
     return "ip_id IN (" + search + ")";
   }
 
   // Lager
-  if (js.value("search").toString() == "storage") {
+  if (operation == "storage") {
     search.replace(jokerPattern, "%");
-    QString sql;
-    sql = ("ip_count>0 AND (sl_storage ILIKE '");
+    sql.append("(sl_storage ILIKE '");
     sql.append(search + "' OR sl_identifier ILIKE '" + search + "%')");
     sql.append(" OR (ip_keyword ILIKE '" + search + "%')");
     return sql;
   }
 
   // Titlesuche
-  if (js.value("search").toString() == "title") {
-    QString sql("ip_title ILIKE '%" + search + "%' OR ");
-    sql.append("ip_title_extended ILIKE '%" + search + "%'");
+  if (operation == "title") {
+    QStringList s_pattern;
+    s_pattern << prepareFieldSearch("ip_title", search);
+    s_pattern << prepareFieldSearch("ip_title_extended", search);
+    sql.append("(" + s_pattern.join(" OR ") + ")");
     return sql;
   }
 
   // Autorensuche
-  if (js.value("search").toString() == "author") {
-    QString sql("ip_author ILIKE '%" + search + "%' OR ");
-    sql.append("ip_description ILIKE '%" + search + "%'");
+  if (operation == "author") {
+    QStringList s_pattern;
+    s_pattern << prepareFieldSearch("ip_author", search);
+    s_pattern << prepareFieldSearch("ip_description", search);
+    sql.append("(" + s_pattern.join(" OR ") + ")");
     return sql;
   }
 
   // Schlüsselwort suche
-  if (js.value("search").toString() == "keywords") {
+  if (operation == "keywords") {
     QStringList buffer;
-    QString sql;
+    QStringList fields = js.value("fields").toString().split(",");
     foreach (QString f, fields) {
-      buffer.append(f + " ILIKE '%" + search + "%'");
+      buffer.append(prepareFieldSearch(f, search));
     }
-    sql.append(buffer.join(" OR "));
+    sql.append("(" + buffer.join(" OR ") + ")");
     return sql;
   }
 

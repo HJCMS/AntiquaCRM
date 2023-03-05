@@ -62,7 +62,7 @@ Current Version [link](application/version.txt) text file.
  rpm --test -Uhv ~/rpmbuild/RPMS/x86_64/antiquacrm-${antiqua_version}.rpm
 ```
 
-##### Windows Paketbuilding:
+##### Windows Package building:
   - Install git and the Qt5.12* Developer Framework for Windows and the required dependency libraries.
   - If you get errors, make sure that all depends libraries in your PATH Variable.
   - Change to your working directory and chekout the project

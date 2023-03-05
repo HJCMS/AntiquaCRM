@@ -7,14 +7,19 @@
 
 #include <AntiquaWidgets>
 #include <QObject>
+#include <QRegExp>
 #include <QWidget>
 
 class CDVSearchLine final : public SearchLineEdit {
   Q_OBJECT
 
+private:
+  const QRegExp stripPattern;
+
 public:
   explicit CDVSearchLine(QWidget *parent = nullptr);
   const QString getSearch() override;
+  bool isValid(int min = 3);
 };
 
 #endif // ANTIQUACRM_CDVSEARCHLINE_H

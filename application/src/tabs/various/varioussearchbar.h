@@ -17,7 +17,6 @@ class VariousSearchBar final : public TabSearchBar {
   Q_OBJECT
 
 private:
-  int minLength = 2;
   QString p_search;
   VariousSearchEdit *m_searchEdit;
   QPushButton *m_searchBtn;

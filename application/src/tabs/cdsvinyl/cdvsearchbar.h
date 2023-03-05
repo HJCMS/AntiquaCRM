@@ -17,7 +17,6 @@ class CDVSearchBar final : public TabSearchBar {
   Q_OBJECT
 
 private:
-  int minLength = 2;
   QString p_search;
   CDVFilterSelect *m_selectFilter;
   CDVSearchLine *m_searchEdit;

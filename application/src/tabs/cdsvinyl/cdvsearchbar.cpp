@@ -19,7 +19,11 @@ CDVSearchBar::CDVSearchBar(QWidget *parent) : TabSearchBar{parent} {
   m_searchEdit->setPlaceholderText(tr("Search Title"));
   addWidget(m_searchEdit);
 
-  m_searchBtn = startSearchButton(tr("Search"));
+  addWidget(searchConfines());
+  addSeparator();
+  addWidget(stockCheckBox());
+
+  m_searchBtn = startSearchButton();
   addWidget(m_searchBtn);
 
   connect(m_selectFilter, SIGNAL(currentIndexChanged(int)),
@@ -29,8 +33,10 @@ CDVSearchBar::CDVSearchBar(QWidget *parent) : TabSearchBar{parent} {
 }
 
 void CDVSearchBar::setSearch() {
-  if (m_searchEdit->getLength() <= minLength)
+  if (m_searchEdit->getLength() < getMinLength()) {
+    emit sendNotify(tr("Your input is too short, increase your search!"));
     return;
+  }
 
   p_search = QString();
   QString left = m_searchEdit->getSearch();
@@ -104,42 +110,53 @@ void CDVSearchBar::setSearchFocus() { setClearAndFocus(); }
 int CDVSearchBar::searchLength() { return m_searchEdit->getSearch().length(); }
 
 const QString CDVSearchBar::getSearchStatement() {
+  if (!m_searchEdit->isValid(getMinLength()))
+    return QString();
+
   QJsonObject js = m_selectFilter->getFilter(m_selectFilter->currentIndex());
-  QStringList fields = js.value("fields").toString().split(",");
   QString search = m_searchEdit->getSearch();
+  QString sql(withStock() ? "cv_count>0 AND " : "");
 
   // Artikel Nummernsuche
   if (js.value("search").toString() == "articleId") {
     search.replace(QRegExp("\\,\\s?$"), "");
-    return "cv_id IN (" + search + ")";
+    sql = QString("cv_id IN (" + search + ")");
+    return sql;
   }
 
   // Titlesuche
   if (js.value("search").toString() == "title") {
-    QString sql("cv_title ILIKE '%" + search + "%' OR ");
-    sql.append("cv_title_extended ILIKE '%" + search + "%'");
+    QStringList s_pattern;
+    s_pattern << prepareFieldSearch("cv_title", search);
+    s_pattern << prepareFieldSearch("cv_title_extended", search);
+    sql.append(s_pattern.join(" OR "));
     return sql;
   }
 
   // Künstlersuche
   if (js.value("search").toString() == "artists") {
-    QString sql("cv_author ILIKE '%" + search + "%' OR ");
-    sql.append("cv_publisher ILIKE '%" + search + "%'");
+    QStringList s_pattern;
+    s_pattern << prepareFieldSearch("cv_author", search);
+    s_pattern << prepareFieldSearch("cv_publisher", search);
+    sql.append(s_pattern.join(" OR "));
     return sql;
   }
 
   // Barcode
   if (js.value("search").toString() == "barcode") {
-    QString sql("cv_eangtin ILIKE '" + search + "%'");
+    sql.append("cv_eangtin='" + search + "'");
     return sql;
   }
 
   // Schlüsselwort & Genre suche
   if (js.value("search").toString() == "genres_keywords") {
     QStringList buffer;
-    QString sql;
+    QStringList fields = js.value("fields").toString().split(",");
     foreach (QString f, fields) {
-      buffer.append(f + " ILIKE '%" + search + "%'");
+      if (f == "cv_keyword")
+        buffer.append(prepareFieldSearch(f, search));
+      else
+        buffer.append(f + " ILIKE '%" + search + "%'");
     }
     sql.append(buffer.join(" OR "));
     return sql;

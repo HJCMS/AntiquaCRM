@@ -3,7 +3,8 @@
 
 #include "booksearchline.h"
 
-BookSearchLine::BookSearchLine(QWidget *parent) : SearchLineEdit{parent} {
+BookSearchLine::BookSearchLine(QWidget *parent)
+  : SearchLineEdit{parent}, stripPattern{"[\\t\\*\\<\\>]+"} {
   setObjectName("book_search_line");
   // Default on load
   setValidation(SearchLineEdit::Strings);
@@ -11,6 +12,15 @@ BookSearchLine::BookSearchLine(QWidget *parent) : SearchLineEdit{parent} {
 
 const QString BookSearchLine::getSearch() {
   QString txt = text().trimmed();
-  txt.replace("'","");
-  return txt;
+  txt.replace("'", "’");
+  txt.replace(stripPattern, " ");
+  return txt.trimmed();
+}
+
+bool BookSearchLine::isValid(int min) {
+  QString str = getSearch();
+  if (str.isEmpty())
+    return false;
+
+  return (str.length() < min) ? false : true;
 }

@@ -854,18 +854,18 @@ Bild - Artikel Nr: %2</translation>
         <translation>Drücken Sie STRG+UMSCHALT+F, um dieses Menü schnell zu öffnen.</translation>
     </message>
     <message>
-        <location line="+54"/>
-        <location line="+82"/>
+        <location line="+55"/>
+        <location line="+79"/>
         <source>Keyword</source>
         <translation>Schlüsselwort</translation>
     </message>
     <message>
-        <location line="-57"/>
+        <location line="-45"/>
         <source>Your input is too short, increase your search!</source>
         <translation>Ihre Eingabe ist zu kurz, erweitern Sie Ihre Suche!</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+10"/>
         <source>Search Booktitle</source>
         <translation>Suche Buchtitel</translation>
     </message>
@@ -1513,12 +1513,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Suche Titel</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Search</source>
-        <translation>Suche</translation>
+        <location line="+18"/>
+        <source>Your input is too short, increase your search!</source>
+        <translation>Ihre Eingabe ist zu kurz, erweitern Sie Ihre Suche!</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+18"/>
         <source>Genres</source>
         <translation>Genre</translation>
     </message>
@@ -2270,8 +2270,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Drücken Sie STRG+UMSCHALT+F, um dieses Menü schnell zu öffnen.</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location line="+34"/>
+        <location line="+18"/>
+        <source>Your input is too short, increase your search!</source>
+        <translation>Ihre Eingabe ist zu kurz, erweitern Sie Ihre Suche!</translation>
+    </message>
+    <message>
+        <location line="+24"/>
         <source>Search customer</source>
         <translation>Suche Kunde</translation>
     </message>
@@ -6033,13 +6037,17 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PrintsStitchesSearchBar</name>
     <message>
-        <location filename="../tabs/prints/printsstitchessearchbar.cpp" line="+17"/>
+        <location filename="../tabs/prints/printsstitchessearchbar.cpp" line="+16"/>
         <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
         <translation>Drücken Sie STRG+UMSCHALT+F, um dieses Menü schnell zu öffnen.</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location line="+26"/>
+        <location line="+22"/>
+        <source>Your input is too short, increase your search!</source>
+        <translation>Ihre Eingabe ist zu kurz, erweitern Sie Ihre Suche!</translation>
+    </message>
+    <message>
+        <location line="+17"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
@@ -7327,7 +7335,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>CD&apos;s und Vinyl</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+66"/>
         <source>Can&apos;t open this Article</source>
         <translation>Dieser Artikel kann nicht geöffnet werden</translation>
     </message>
@@ -7468,7 +7476,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Drucke und Stiche</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+66"/>
         <source>Can&apos;t open this Article</source>
         <translation>Dieser Artikel kann nicht geöffnet werden</translation>
     </message>
@@ -7522,12 +7530,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TabSearchBar</name>
     <message>
-        <location filename="../widgets/tabsearchbar.cpp" line="+35"/>
+        <location filename="../widgets/tabsearchbar.cpp" line="+30"/>
         <source>Push to start search.</source>
         <translation>Drücken, um die Suche zu starten.</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>Stock</source>
         <translation>Bestand</translation>
     </message>
@@ -7537,9 +7545,19 @@ Bild - Artikel Nr: %2</translation>
         <translation>Nur mit %1 suchen</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+15"/>
         <source>Limit search to</source>
         <translation>Suche Einchränken auf</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Select a search confiness</source>
+        <translation>Wählen Sie eine Suchbeschränkung aus</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>default filter</source>
+        <translation>Standard Filter</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7547,32 +7565,47 @@ Bild - Artikel Nr: %2</translation>
         <translation>überall suchen</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
+        <source>exact</source>
+        <translation>Genau</translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>search exact</source>
         <translation>genau suchen</translation>
     </message>
     <message>
+        <location line="+4"/>
+        <source>beginning</source>
+        <translation>Anfang</translation>
+    </message>
+    <message>
         <location line="+2"/>
-        <source>search at the beginning</source>
-        <translation>am Anfang suchen</translation>
+        <source>beginning of sentence</source>
+        <translation>Satzanfang</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>search at the end</source>
-        <translation>am Ende suchen</translation>
+        <location line="+5"/>
+        <source>end</source>
+        <translation>Ende</translation>
     </message>
     <message>
-        <location line="-14"/>
+        <location line="+2"/>
+        <source>end of sentence</source>
+        <translation>Satzende</translation>
+    </message>
+    <message>
+        <location line="-34"/>
         <source>Click to open Dialog for custom queries.</source>
         <translation>Klicken Sie hier, um den Dialog für benutzerdefinierte Abfragen zu öffnen.</translation>
     </message>
     <message>
-        <location line="-20"/>
+        <location line="-21"/>
         <source>start search</source>
         <translation>Suche starten</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>Custom queries</source>
         <translation>Benutzerdefinierte abfragen</translation>
     </message>
@@ -7681,7 +7714,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Verschiedenes</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+65"/>
         <source>Can&apos;t open this Article</source>
         <translation>Dieser Artikel kann nicht geöffnet werden</translation>
     </message>
@@ -8090,9 +8123,9 @@ Bild - Artikel Nr: %2</translation>
         <translation>Suche Titel</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Search</source>
-        <translation>Suche</translation>
+        <location line="+16"/>
+        <source>Your input is too short, increase your search!</source>
+        <translation>Ihre Eingabe ist zu kurz, erweitern Sie Ihre Suche!</translation>
     </message>
 </context>
 <context>

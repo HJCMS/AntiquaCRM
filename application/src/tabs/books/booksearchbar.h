@@ -16,8 +16,6 @@ class BookSearchBar final : public TabSearchBar {
   Q_OBJECT
 
 private:
-  QString p_currentLeft;
-  QString p_currentRight;
   BookSelectFilter *m_selectFilter;
   BookSearchLine *m_searchLeft;
   BookSearchLine *m_searchRight;
@@ -38,7 +36,6 @@ public:
   explicit BookSearchBar(QWidget *parent = nullptr);
   int searchLength() override;
   const QString getSearchStatement() override;
-  bool withStock();
 };
 
 #endif // ANTIQUACRM_BOOKSEARCHBAR_H

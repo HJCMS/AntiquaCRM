@@ -7,14 +7,19 @@
 
 #include <AntiquaWidgets>
 #include <QObject>
+#include <QRegExp>
 #include <QWidget>
 
 class VariousSearchEdit final : public SearchLineEdit {
   Q_OBJECT
 
+private:
+  const QRegExp stripPattern;
+
 public:
   explicit VariousSearchEdit(QWidget *parent = nullptr);
   const QString getSearch();
+  bool isValid(int min = 3);
 };
 
 #endif // ANTIQUACRM_VARIOUSSEARCHEDIT_H

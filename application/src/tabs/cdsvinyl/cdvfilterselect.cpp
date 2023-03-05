@@ -39,7 +39,7 @@ const QJsonObject CDVFilterSelect::getFilter(int index) {
 
   case CDV_KEYWORDS: /**< @brief Schlüsselwortsuche */
     obj.insert("search", QJsonValue("genres_keywords"));
-    obj.insert("fields", QJsonValue("cv_title,cv_keyword,cv_description"));
+    obj.insert("fields", QJsonValue("cv_keyword,cv_description"));
     break;
 
   case CDV_ARTICLE: /**< @brief Artikel Nummernsuche */

@@ -43,12 +43,14 @@ BookSearchBar::BookSearchBar(QWidget *parent) : TabSearchBar{parent} {
 
 const QString BookSearchBar::getTitleSearch(const QStringList &fields) {
   QString query;
+  QString inputLeft = m_searchLeft->getSearch();
+  QString inputRight = m_searchRight->getSearch();
   // Standard Suchfeld
-  if (m_searchLeft->getLength() >= getMinLength()) {
+  if (m_searchLeft->isValid(getMinLength())) {
     QStringList bufferLeft;
     foreach (QString f, fields) {
       if (f != "ib_author") {
-        QString fset = prepareFieldSet(f, p_currentLeft);
+        QString fset = prepareFieldSearch(f, inputLeft);
         if (fset.isEmpty())
           continue;
 
@@ -63,13 +65,12 @@ const QString BookSearchBar::getTitleSearch(const QStringList &fields) {
     bufferLeft.clear();
   }
   // Autoren Suchfeld
-  if (m_searchRight->isEnabled() &&
-      m_searchRight->getLength() >= getMinLength()) {
+  if (m_searchRight->isEnabled() && m_searchRight->isValid(getMinLength())) {
     QStringList bufferRight;
     if (m_searchRight->placeholderText().contains(tr("Keyword")))
-      bufferRight << prepareFieldSet("ib_keyword", p_currentRight);
+      bufferRight << prepareFieldSearch("ib_keyword", inputRight);
     else
-      bufferRight << prepareFieldSet("ib_author", p_currentRight);
+      bufferRight << prepareFieldSearch("ib_author", inputRight);
 
     if (query.isEmpty())
       query.append("(");
@@ -80,30 +81,27 @@ const QString BookSearchBar::getTitleSearch(const QStringList &fields) {
     query.append(")");
     bufferRight.clear();
   }
+  if (query.length() < 1) {
+    // NOTE prevent empty where clauses
+    qWarning("INVALID_TITLE_SEARCH");
+    if (!inputLeft.isEmpty())
+      return QString("ib_title='" + inputLeft + "'");
+    else if (!inputRight.isEmpty())
+      return QString("ib_title='" + inputRight + "'");
+    else
+      return QString("ib_title='INVALID_TITLE_SEARCH'");
+  }
   return query;
 }
 
 void BookSearchBar::setSearch() {
-  if (m_searchLeft->isEnabled() && m_searchLeft->getLength() > getMinLength()) {
-    QString left = m_searchLeft->getSearch();
-    left = left.replace(quotePattern, "");
-    left = left.replace(trimPattern, " ");
-    p_currentLeft = left.trimmed();
-  } else {
-    p_currentLeft = QString();
+  if (m_searchLeft->isEnabled() && m_searchLeft->isValid(getMinLength())) {
+    emit sendSearchClicked();
+  } else if (m_searchRight->isEnabled() &&
+             m_searchRight->isValid(getMinLength())) {
+    emit sendSearchClicked();
+  } else
     emit sendNotify(tr("Your input is too short, increase your search!"));
-  }
-
-  if (m_searchRight->isEnabled() &&
-      m_searchRight->getLength() > getMinLength()) {
-    QString right = m_searchRight->getSearch();
-    right = right.replace(quotePattern, "");
-    right = right.replace(trimPattern, " ");
-    p_currentRight = right.trimmed();
-  } else {
-    p_currentRight = QString();
-  }
-  emit sendSearchClicked();
 }
 
 void BookSearchBar::setFilter(int index) {
@@ -194,54 +192,63 @@ int BookSearchBar::searchLength() {
 const QString BookSearchBar::getSearchStatement() {
   QJsonObject js = m_selectFilter->getFilter(m_selectFilter->currentIndex());
   QStringList fields = js.value("fields").toString().split(",");
-  QString stock = (SearchWithStock ? " AND ib_count>0" : "");
+  QString sql(withStock() ? "ib_count>0 AND " : "");
+  QString operation = js.value("search").toString();
+  if (operation.isEmpty())
+    return QString();
 
   // Title und Autorensuche
-  if (js.value("search").toString() == "title_and_author") {
-    return getTitleSearch(fields) + stock;
+  if (operation == "title_and_author") {
+    sql.append("(" + getTitleSearch(fields) + ")");
+    return sql;
   }
 
   // Buch Titlesuche
-  if (js.value("search").toString() == "title") {
-    return getTitleSearch(fields) + stock;
+  if (operation == "title") {
+    sql.append("(" + getTitleSearch(fields) + ")");
+    return sql;
   }
 
   // Buch Autorensuche
-  if (js.value("search").toString() == "author") {
-    return getTitleSearch(fields) + stock;
+  if (operation == "author") {
+    sql.append("(" + getTitleSearch(fields) + ")");
+    return sql;
   }
 
   // Artikel Nummersuche (107368,115110)
-  if (js.value("search").toString() == "articleId") {
+  if (operation == "articleId") {
     QString s = m_searchLeft->getSearch();
     s.replace(QRegExp("\\,\\s?$"), "");
-    return "ib_id IN (" + s + ")" + stock;
+    return "ib_id IN (" + s + ")";
   }
 
   // ISBN Suche
-  if (js.value("search").toString() == "isbn") {
+  if (operation == "isbn") {
     QString s = m_searchLeft->getSearch();
     s.replace(QRegExp("\\D+"), "");
-    if (s.length() == 10 || s.length() == 13)
-      return "ib_isbn=" + s + stock;
+    if (s.length() == 10 || s.length() == 13) {
+      sql.append("ib_isbn=" + s);
+      return sql;
+    }
   }
 
   // Publisher
-  if (js.value("search").toString() == "publisher") {
+  if (operation == "publisher") {
     QString s = m_searchLeft->getSearch();
-    s.replace(jokerPattern, "%");
-    return "ib_publisher ILIKE '" + s + "%'" + stock;
+    sql.append("(" + prepareFieldSearch("ib_publisher", s) + ")");
+    return sql;
   }
 
   // Lager & Stichwortsuche
-  if (js.value("search").toString() == "storage") {
+  if (operation == "storage") {
     QString s = m_searchLeft->getSearch();
     s.replace(jokerPattern, "%");
-    QString sql;
-    sql = ("ib_count>0 AND (sl_storage ILIKE '");
-    sql.append(s + "' OR sl_identifier ILIKE '" + s + "%')");
-    sql.append(" OR (ib_keyword ILIKE '" + s + "%')");
-    return sql + stock;
+    QStringList buffer;
+    buffer << prepareFieldSearch("sl_storage", s);
+    buffer << prepareFieldSearch("sl_identifier", s);
+    buffer << prepareFieldSearch("ib_keyword", s);
+    sql.append("(" + buffer.join(" OR ") + ")");
+    return sql;
   }
 
   qWarning("Not Defined Search (%s)",
@@ -249,5 +256,3 @@ const QString BookSearchBar::getSearchStatement() {
 
   return QString();
 }
-
-bool BookSearchBar::withStock() { return SearchWithStock; }

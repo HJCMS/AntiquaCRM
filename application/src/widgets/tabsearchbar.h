@@ -37,23 +37,17 @@ public:
   };
 
 private:
-  int minLength = 2;
+  int p_minLength = 2;
 
 private Q_SLOTS:
-  void setSearchStockEnabled(bool);
-  void setSearchPatternChanged(int);
+  void searchPatternChanged(int);
 
 protected:
-  const QRegExp jokerPattern = QRegExp("[%*]+");
+  const QRegExp jokerPattern = QRegExp("[\\%\\*]+");
   const QRegExp quotePattern = QRegExp("[\\'\\\"]+");
   const QRegExp trimPattern = QRegExp("[\\s\\t\\n\\r]+");
   const QRegExp isbnPattern = QRegExp("[^0-9]+");
   const QRegExp articlePattern = QRegExp("^([0-9]+[\\,]?)+$");
-
-  /**
-   * @brief is Stocksearch Enabled?
-   */
-  bool SearchWithStock = false;
 
   /**
    * @brief Predefined with Stock CheckBox
@@ -75,8 +69,22 @@ protected:
    */
   QComboBox *searchConfines();
 
-  const QString prepareFieldSet(const QString &fieldname,
-                                const QString &search);
+  /**
+   * @brief set pattern matches and turn around the search string.
+   * @param field  - SQL Fieldname
+   * @param search - Search string
+   * @example In this Example code we search Authors with Forename and Surname.
+   * @code
+   *  call:
+   *    prepareFieldSearch("fieldname","forename surname")
+   *
+   *  returning:
+   *    fieldname ILIKE "forename%surname" OR fieldname "surname%forename"
+   *
+   * @endcode
+   * @return SQL Search Statement
+   */
+  const QString prepareFieldSearch(const QString &field, const QString &search);
 
 protected Q_SLOTS:
   virtual void setSearch() = 0;
@@ -86,6 +94,9 @@ protected Q_SLOTS:
   virtual void setSearchFocus() = 0;
 
 Q_SIGNALS:
+  /**
+   * @brief Minimum Search length has changed
+   */
   void sendMinLengthChanged(int);
 
   /**
@@ -109,8 +120,14 @@ Q_SIGNALS:
    */
   void sendOpenCustomSearch();
 
-  void sendMatchChanged(TabSearchBar::SearchPattern);
+  /**
+   * @brief Search pattern chenged
+   */
+  void sendSearchPattern(TabSearchBar::SearchPattern);
 
+  /**
+   * @brief send notification
+   */
   void sendNotify(const QString &);
 
 public Q_SLOTS:
@@ -125,12 +142,17 @@ public:
   /**
    * @brief present the selected Search syntax
    */
-  TabSearchBar::SearchPattern currentSearchSyntax() const;
+  TabSearchBar::SearchPattern searchPattern() const;
 
   /**
    * @brief get start search from minimal length
    */
   int getMinLength();
+
+  /**
+   * @brief search only with stock
+   */
+  bool withStock();
 
   /**
    * @brief String length from current search input

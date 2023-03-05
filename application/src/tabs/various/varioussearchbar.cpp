@@ -15,7 +15,11 @@ VariousSearchBar::VariousSearchBar(QWidget *parent) : TabSearchBar{parent} {
   m_searchEdit->setPlaceholderText(tr("Search Title"));
   addWidget(m_searchEdit);
 
-  m_searchBtn = startSearchButton(tr("Search"));
+  addWidget(searchConfines());
+  addSeparator();
+  addWidget(stockCheckBox());
+
+  m_searchBtn = startSearchButton();
   addWidget(m_searchBtn);
 
   connect(m_searchEdit, SIGNAL(returnPressed()), SLOT(setSearch()));
@@ -23,8 +27,10 @@ VariousSearchBar::VariousSearchBar(QWidget *parent) : TabSearchBar{parent} {
 }
 
 void VariousSearchBar::setSearch() {
-  if (m_searchEdit->getLength() <= minLength)
+  if (m_searchEdit->getLength() < getMinLength()) {
+    emit sendNotify(tr("Your input is too short, increase your search!"));
     return;
+  }
 
   p_search = QString();
   QString left = m_searchEdit->getSearch();
@@ -36,16 +42,12 @@ void VariousSearchBar::setSearch() {
 
 void VariousSearchBar::setFilter(int index) {
   Q_UNUSED(index);
-  // unused in this area
+  setSearchFocus();
 }
 
-void VariousSearchBar::setFilterFocus() {
-  // unused in this area
-}
+void VariousSearchBar::setFilterFocus() { setSearchFocus(); }
 
-void VariousSearchBar::setClearAndFocus() {
-  // unused in this area
-}
+void VariousSearchBar::setClearAndFocus() { setSearchFocus(); }
 
 void VariousSearchBar::setSearchFocus() {
   m_searchEdit->clear();
@@ -57,12 +59,19 @@ int VariousSearchBar::searchLength() {
 }
 
 const QString VariousSearchBar::getSearchStatement() {
+  if (!m_searchEdit->isValid(getMinLength()))
+    return QString();
+
   QString search = m_searchEdit->getSearch();
   search.replace(QRegExp("\'"), "");
-  QStringList cmd;
-  cmd.append("va_id LIKE '" + search + "%'");
-  cmd.append("va_title ILIKE '%" + search + "%'");
-  cmd.append("va_title_extended ILIKE '%" + search + "%'");
-  cmd.append("va_description ILIKE '%" + search + "%'");
-  return cmd.join(" OR ");
+  QString sql(withStock() ? "va_count>0 AND " : "");
+  QStringList buffer;
+  if (search.contains(articlePattern)) {
+    return QString("va_id=" + search);
+  }
+  buffer.append("(" + prepareFieldSearch("va_title", search) + ")");
+  buffer.append("(" + prepareFieldSearch("va_title_extended", search) + ")");
+  buffer.append("(" + prepareFieldSearch("va_description", search) + ")");
+  sql.append("(" + buffer.join(" OR ") + ")");
+  return sql;
 }

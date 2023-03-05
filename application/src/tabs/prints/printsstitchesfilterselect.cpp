@@ -37,7 +37,7 @@ const QJsonObject PrintsStitchesFilterSelect::getFilter(int index) {
 
   case PSF_KEYWORDS: /**< @brief Schlüsselwortsuche */
     obj.insert("search", QJsonValue("keywords"));
-    obj.insert("fields", QJsonValue("ip_title,ip_keyword"));
+    obj.insert("fields", QJsonValue("ip_designation,ip_keyword"));
     break;
 
   case PSF_AUTHOR: /**< @brief Autorensuche */

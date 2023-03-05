@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "customerssearchbar.h"
-#include "customersselectfilter.h"
 #include "customerssearchlineedit.h"
+#include "customersselectfilter.h"
 
 CustomersSearchBar::CustomersSearchBar(QWidget *parent) : TabSearchBar{parent} {
   setObjectName("customers_search_bar");
@@ -16,7 +16,7 @@ CustomersSearchBar::CustomersSearchBar(QWidget *parent) : TabSearchBar{parent} {
   m_searchEdit = new CustomersSearchLineEdit(this);
   addWidget(m_searchEdit);
 
-  m_searchBtn = startSearchButton(tr("Search customer"));
+  m_searchBtn = startSearchButton();
   addWidget(m_searchBtn);
 
   connect(m_selectFilter, SIGNAL(currentIndexChanged(int)),
@@ -26,9 +26,10 @@ CustomersSearchBar::CustomersSearchBar(QWidget *parent) : TabSearchBar{parent} {
 }
 
 void CustomersSearchBar::setSearch() {
-  if (m_searchEdit->getLength() < minLength)
+  if (m_searchEdit->getLength() < getMinLength()) {
+    emit sendNotify(tr("Your input is too short, increase your search!"));
     return;
-
+  }
   emit sendSearchClicked();
 }
 
@@ -94,7 +95,7 @@ const QString CustomersSearchBar::getSearchStatement() {
   // Unternehmen oder Organisation
   if (js.value("search").toString() == "customer_company_name") {
     foreach (QString f, fields) {
-      if(words.size()>1) {
+      if (words.size() > 1) {
         foreach (QString s, words) {
           buffer << f + " ILIKE '" + s + "%'";
         }
@@ -111,5 +112,6 @@ const QString CustomersSearchBar::getSearchStatement() {
       buffer << f + " ILIKE '" + s + "%'";
     }
   }
+
   return buffer.join(" OR ");
 }

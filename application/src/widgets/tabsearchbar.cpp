@@ -3,10 +3,7 @@
 
 #include "tabsearchbar.h"
 
-#ifndef SEARCH_PATTERN_BOX
-#define SEARCH_PATTERN_BOX QString("tab_search_bar_search_confiness")
-#endif
-
+#include <ASettings>
 #include <QIcon>
 
 TabSearchBar::TabSearchBar(QWidget *parent) : QToolBar{parent} {
@@ -14,19 +11,17 @@ TabSearchBar::TabSearchBar(QWidget *parent) : QToolBar{parent} {
   setFloatable(false);
   setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
   setContentsMargins(0, 0, 0, 0);
+
+  AntiquaCRM::ASettings cfg(this);
+  p_minLength = cfg.value("search/startlength", 5).toInt();
 }
 
-void TabSearchBar::setSearchStockEnabled(bool b) {
-  SearchWithStock = b;
-  emit sendStockEnabled(b);
-}
-
-void TabSearchBar::setSearchPatternChanged(int i) {
+void TabSearchBar::searchPatternChanged(int i) {
   if (i > 4 || i < 0)
     return;
 
   TabSearchBar::SearchPattern sp = static_cast<TabSearchBar::SearchPattern>(i);
-  emit sendMatchChanged(sp);
+  emit sendSearchPattern(sp);
 }
 
 QPushButton *TabSearchBar::startSearchButton(const QString &text) {
@@ -44,10 +39,11 @@ QPushButton *TabSearchBar::startSearchButton(const QString &text) {
 
 QCheckBox *TabSearchBar::stockCheckBox(const QString &text) {
   QCheckBox *m_box = new QCheckBox(this);
+  m_box->setObjectName("search_with_stock");
   QString title = (text.isEmpty()) ? tr("Stock") : text;
   m_box->setText(title);
   m_box->setToolTip(tr("Only search with %1").arg(title));
-  connect(m_box, SIGNAL(toggled(bool)), SLOT(setSearchStockEnabled(bool)));
+  connect(m_box, SIGNAL(toggled(bool)), SIGNAL(sendStockEnabled(bool)));
   return m_box;
 }
 
@@ -61,47 +57,78 @@ QPushButton *TabSearchBar::customSearchButton(const QString &text) {
 }
 
 QComboBox *TabSearchBar::searchConfines() {
+  QString info = tr("Limit search to");
+  QIcon icon("://icons/view_search.png");
   QComboBox *box = new QComboBox(this);
-  box->setObjectName(SEARCH_PATTERN_BOX);
-  box->setToolTip(tr("Limit search to"));
-  box->setStatusTip(box->toolTip());
-  box->insertItem(TabSearchBar::SearchPattern::ANYWHERE, tr("search anywhere"));
-  box->insertItem(TabSearchBar::SearchPattern::BOUNDARIES, tr("search exact"));
-  box->insertItem(TabSearchBar::SearchPattern::BEGINNING,
-                  tr("search at the beginning"));
-  box->insertItem(TabSearchBar::SearchPattern::ENDING, tr("search at the end"));
+  box->setObjectName("select_search_confiness");
+  box->setToolTip(tr("Select a search confiness"));
+  box->setStatusTip(info + "...");
+  // Irgendwo im Satz "%suche%wort%" (Standard)
+  box->insertItem(TabSearchBar::SearchPattern::ANYWHERE, tr("default filter"));
+  box->setItemData(TabSearchBar::SearchPattern::ANYWHERE,
+                   info + " " + tr("search anywhere") + ".", Qt::ToolTipRole);
+  box->setItemData(TabSearchBar::SearchPattern::ANYWHERE, icon,
+                   Qt::DecorationRole);
+  // Genauer Wortlaut "suche%wort"
+  box->insertItem(TabSearchBar::SearchPattern::BOUNDARIES, tr("exact"));
+  box->setItemData(TabSearchBar::SearchPattern::BOUNDARIES,
+                   info + " " + tr("search exact") + ".", Qt::ToolTipRole);
+  box->setItemData(TabSearchBar::SearchPattern::BOUNDARIES, icon,
+                   Qt::DecorationRole);
+  // Am Satzanfang "wort%"
+  box->insertItem(TabSearchBar::SearchPattern::BEGINNING, tr("beginning"));
+  box->setItemData(TabSearchBar::SearchPattern::BEGINNING,
+                   info + " " + tr("beginning of sentence") + ".",
+                   Qt::ToolTipRole);
+  box->setItemData(TabSearchBar::SearchPattern::BEGINNING, icon,
+                   Qt::DecorationRole);
+  // Am Satzende "%wort"
+  box->insertItem(TabSearchBar::SearchPattern::ENDING, tr("end"));
+  box->setItemData(TabSearchBar::SearchPattern::ENDING,
+                   info + " " + tr("end of sentence") + ".", Qt::ToolTipRole);
+  box->setItemData(TabSearchBar::SearchPattern::ENDING, icon,
+                   Qt::DecorationRole);
+
   connect(box, SIGNAL(currentIndexChanged(int)),
-          SLOT(setSearchPatternChanged(int)));
+          SLOT(searchPatternChanged(int)));
   return box;
 }
 
-const QString TabSearchBar::prepareFieldSet(const QString &fieldname,
-                                            const QString &search) {
+const QString TabSearchBar::prepareFieldSearch(const QString &field,
+                                               const QString &search) {
   QString sf(search.trimmed());
-  sf = sf.replace(jokerPattern, "%");
-
-  if (sf.length() < getMinLength())
-    return QString();
+  if (sf.length() < getMinLength()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qWarning("INVALID_QUERY_STATEMENT:(%s='%s')", qPrintable(field),
+             qPrintable(search));
+#endif
+    if (sf.isEmpty())
+      return QString(field + "='INVALID_QUERY_STATEMENT'");
+    else
+      return QString(field + "='" + sf + "'");
+  }
 
   QString _prefix, _suffix;
-  switch (currentSearchSyntax()) {
+  QStringList forward, backward, query;
+
+  switch (searchPattern()) {
   case (TabSearchBar::SearchPattern::ANYWHERE):
-    _prefix = (fieldname + " ILIKE '%");
+    _prefix = (field + " ILIKE '%");
     _suffix = "%'";
     break;
 
   case (TabSearchBar::SearchPattern::BOUNDARIES):
-    _prefix = (fieldname + " ILIKE '");
+    _prefix = (field + " ILIKE '");
     _suffix = "'";
     break;
 
   case (TabSearchBar::SearchPattern::BEGINNING):
-    _prefix = (fieldname + " ILIKE '");
+    _prefix = (field + " ILIKE '");
     _suffix = "%'";
     break;
 
   case (TabSearchBar::SearchPattern::ENDING):
-    _prefix = (fieldname + " ILIKE '%");
+    _prefix = (field + " ILIKE '%");
     _suffix = "'";
     break;
 
@@ -109,19 +136,21 @@ const QString TabSearchBar::prepareFieldSet(const QString &fieldname,
     break;
   };
 
-  QStringList words = search.trimmed().split(" ");
   QString sql;
-  if (words.count() == 2) {
-    // start
+  query = search.trimmed().split(" ");
+
+  if (query.count() >= 2) {
+    foreach (QString w, query) {
+      forward.append(w.trimmed());
+      backward.prepend(w.trimmed());
+    }
+    // prepare
     sql.append(_prefix);
-    sql.append(words.first());
-    sql.append("%");
-    sql.append(words.last());
+    sql.append(forward.join("%"));
     sql.append(_suffix);
-    sql.append(" OR " + _prefix);
-    sql.append(words.last());
-    sql.append("%");
-    sql.append(words.first());
+    sql.append(" OR ");
+    sql.append(_prefix);
+    sql.append(backward.join("%"));
     sql.append(_suffix);
   } else {
     sql.append(_prefix);
@@ -129,21 +158,27 @@ const QString TabSearchBar::prepareFieldSet(const QString &fieldname,
     sql.append(_suffix);
   }
 
+  // clear buffer
+  query.clear();
+  forward.clear();
+  backward.clear();
+
 #ifdef ANTIQUA_DEVELOPEMENT
-  qInfo("SEARCH: (%s)", qPrintable(sql));
+  qInfo("SEARCH:(%s)", qPrintable(sql.replace(jokerPattern, "%")));
 #endif
-  return sql;
+
+  return sql.replace(jokerPattern, "%");
 }
 
 void TabSearchBar::setMinLength(int l) {
-  if (l != minLength)
+  if (l != p_minLength)
     emit sendMinLengthChanged(l);
 
-  minLength = l;
+  p_minLength = l;
 }
 
-TabSearchBar::SearchPattern TabSearchBar::currentSearchSyntax() const {
-  QComboBox *box = findChild<QComboBox *>(SEARCH_PATTERN_BOX);
+TabSearchBar::SearchPattern TabSearchBar::searchPattern() const {
+  QComboBox *box = findChild<QComboBox *>("select_search_confiness");
   if (box == nullptr)
     return TabSearchBar::SearchPattern::ANYWHERE;
 
@@ -153,4 +188,9 @@ TabSearchBar::SearchPattern TabSearchBar::currentSearchSyntax() const {
   return TabSearchBar::SearchPattern::ANYWHERE;
 }
 
-int TabSearchBar::getMinLength() { return minLength; }
+int TabSearchBar::getMinLength() { return p_minLength; }
+
+bool TabSearchBar::withStock() {
+  QCheckBox *box = findChild<QCheckBox *>("search_with_stock");
+  return (box == nullptr) ? false : box->isChecked();
+}

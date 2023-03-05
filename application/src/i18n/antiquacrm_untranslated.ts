@@ -852,18 +852,18 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+54"/>
-        <location line="+82"/>
+        <location line="+55"/>
+        <location line="+79"/>
         <source>Keyword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-57"/>
+        <location line="-45"/>
         <source>Your input is too short, increase your search!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+10"/>
         <source>Search Booktitle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1509,12 +1509,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Search</source>
+        <location line="+18"/>
+        <source>Your input is too short, increase your search!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+18"/>
         <source>Genres</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2266,8 +2266,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location line="+34"/>
+        <location line="+18"/>
+        <source>Your input is too short, increase your search!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+24"/>
         <source>Search customer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6027,13 +6031,17 @@ Image - Article Id: %2</source>
 <context>
     <name>PrintsStitchesSearchBar</name>
     <message>
-        <location filename="../tabs/prints/printsstitchessearchbar.cpp" line="+17"/>
+        <location filename="../tabs/prints/printsstitchessearchbar.cpp" line="+16"/>
         <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location line="+26"/>
+        <location line="+22"/>
+        <source>Your input is too short, increase your search!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7321,7 +7329,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+66"/>
         <source>Can&apos;t open this Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7462,7 +7470,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+66"/>
         <source>Can&apos;t open this Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7516,12 +7524,12 @@ Image - Article Id: %2</source>
 <context>
     <name>TabSearchBar</name>
     <message>
-        <location filename="../widgets/tabsearchbar.cpp" line="+35"/>
+        <location filename="../widgets/tabsearchbar.cpp" line="+30"/>
         <source>Push to start search.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+13"/>
         <source>Stock</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7531,8 +7539,18 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+15"/>
         <source>Limit search to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Select a search confiness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>default filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7541,32 +7559,47 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>search exact</source>
+        <location line="+4"/>
+        <source>exact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>search at the beginning</source>
+        <source>search exact</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>search at the end</source>
+        <location line="+4"/>
+        <source>beginning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-14"/>
+        <location line="+2"/>
+        <source>beginning of sentence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>end of sentence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-34"/>
         <source>Click to open Dialog for custom queries.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-20"/>
+        <location line="-21"/>
         <source>start search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>Custom queries</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7675,7 +7708,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+65"/>
         <source>Can&apos;t open this Article</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8082,8 +8115,8 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Search</source>
+        <location line="+16"/>
+        <source>Your input is too short, increase your search!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

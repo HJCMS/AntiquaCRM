@@ -110,7 +110,7 @@ GeneralSettings::GeneralSettings(QWidget *parent) : SettingsWidget{parent} {
   QVBoxLayout *lt_groupBox2 = new QVBoxLayout(m_grouBox2);
   // [search] startlength
   buffer = tr("From how many chars does the search start when you type in.");
-  m_searchStart = new IntSpinBox(5, 50, this);
+  m_searchStart = new IntSpinBox(3, 50, this);
   m_searchStart->setObjectName("search/startlength");
   m_searchStart->setWhatsThis(
       tr("From how many characters in the search input should the automatic "

@@ -16,7 +16,6 @@ class CustomersSearchBar final : public TabSearchBar {
   Q_OBJECT
 
 private:
-  int minLength = 2;
   CustomersSelectFilter *m_selectFilter;
   CustomersSearchLineEdit *m_searchEdit;
   QPushButton *m_searchBtn;
