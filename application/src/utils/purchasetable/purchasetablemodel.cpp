@@ -125,6 +125,7 @@ PurchaseTableModel::headerColumn(int column) {
 const QList<int> PurchaseTableModel::editableColumns() {
   QList<int> l;
   l.append(4); /**< a_type */
+  l.append(5); /**< a_count */
   l.append(7); /**< a_sell_price */
   return l;
 }

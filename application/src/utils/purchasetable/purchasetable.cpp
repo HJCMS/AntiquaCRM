@@ -6,6 +6,7 @@
 #include "purchasetablemodel.h"
 
 #include <QAction>
+#include <QDebug>
 #include <QFont>
 #include <QIcon>
 #include <QMenu>
@@ -130,7 +131,13 @@ void PurchaseTable::addOrderArticle(const AntiquaCRM::OrderArticleItems &item) {
   }
 }
 
-int PurchaseTable::rowCount() { return m_model->rowCount(); }
+int PurchaseTable::rowCount() {
+  int count = m_model->rowCount();
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug("-- PurchaseTable rowCount=%d", count);
+#endif
+  return count;
+}
 
 void PurchaseTable::hideColumns(const QStringList &list) {
   foreach (QString fieldName, list) {
