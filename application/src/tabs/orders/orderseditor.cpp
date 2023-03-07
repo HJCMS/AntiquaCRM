@@ -590,13 +590,11 @@ bool OrdersEditor::addArticleToOrderTable(qint64 articleId) {
       QSqlRecord r = q.record();
       AntiquaCRM::OrderArticleItems items;
       items.append(addArticleItem("a_order_id", getSerialID("o_id")));
-      items.append(
-          addArticleItem("a_customer_id", getSerialID("o_customer_id")));
+      items.append(addArticleItem("a_customer_id", getSerialID("o_customer_id")));
       for (int i = 0; i < r.count(); i++) {
         QSqlField f = r.field(i);
         items.append(addArticleItem(f.name(), f.value()));
-
-        // NOTE: a_sell_price i not in SQL Query
+        // NOTE: a_sell_price is not in SQL Query
         if (f.name() == "a_price")
           items.append(addArticleItem("a_sell_price", f.value()));
       }
