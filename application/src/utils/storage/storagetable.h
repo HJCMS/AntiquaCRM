@@ -5,15 +5,19 @@
 #ifndef STORAGE_TABLE_H
 #define STORAGE_TABLE_H
 
+#include <AntiquaCRM>
 #include <QHeaderView>
 #include <QModelIndex>
 #include <QObject>
 #include <QTableView>
 #include <QWidget>
-#include <AntiquaCRM>
 
 class StorageModel;
 
+/**
+ * @brief The StorageHeader class
+ * @ingroup AntiquaStorage
+ */
 class StorageHeader final : public QHeaderView {
   Q_OBJECT
 
@@ -21,6 +25,10 @@ public:
   StorageHeader(QWidget *parent = nullptr);
 };
 
+/**
+ * @brief The StorageTable class
+ * @ingroup AntiquaStorage
+ */
 class StorageTable final : public QTableView {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")
@@ -43,6 +51,10 @@ public Q_SLOTS:
   void findColumn(const QString &);
 
 public:
+  /**
+   * @brief The RowValues class
+   * @ingroup AntiquaStorage
+   */
   struct RowValues {
     int sl_id;
     QString sl_storage;

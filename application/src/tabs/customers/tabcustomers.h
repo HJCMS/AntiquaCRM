@@ -14,6 +14,10 @@ class CustomersTableView;
 class CustomersStatusBar;
 class CustomersEditor;
 
+/**
+ * @brief Inventory Customers
+ * @section AntiquaCustomers
+ */
 class TabCustomers final : public Inventory {
   Q_OBJECT
 

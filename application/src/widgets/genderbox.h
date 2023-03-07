@@ -8,6 +8,10 @@
 #include <AGlobal>
 #include <AntiquaInputEdit>
 
+/**
+ * @brief The GenderBox class
+ * @ingroup widgets
+ */
 class GenderBox final : public InputEdit {
   Q_OBJECT
 

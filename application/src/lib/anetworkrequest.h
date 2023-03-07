@@ -14,6 +14,10 @@
 
 namespace AntiquaCRM {
 
+/**
+ * @brief The ANetworkRequest class
+ * @ingroup core
+ */
 class ANTIQUACRM_LIBRARY ANetworkRequest final : public QNetworkRequest {
 private:
   const QString findCaBundleFile() const;
@@ -34,7 +38,7 @@ public:
   /**
    * @brief Header Cache Control Settings
    * @param cache (Cache-Control "Request,Response")
-   * @default If param cache.isNull() then "no-cache,private" will set.
+   * @note default: If param cache.isNull() then "no-cache,private" will set.
    * @code
    * - Request "no-cache"
    * The no-cache response directive indicates that the response can be stored

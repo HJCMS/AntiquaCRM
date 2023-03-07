@@ -13,6 +13,10 @@
 #include <QSlider>
 #include <QWidget>
 
+/**
+ * @brief The BorderPrintInput class
+ * @ingroup AntiquaSettings
+ */
 class BorderPrintInput final : public InputEdit {
   Q_OBJECT
 
@@ -39,6 +43,10 @@ public:
   const QString notes() override;
 };
 
+/**
+ * @brief The PrintingLayout class
+ * @ingroup AntiquaSettings
+ */
 class PrintingLayout final : public QGroupBox {
   Q_OBJECT
 

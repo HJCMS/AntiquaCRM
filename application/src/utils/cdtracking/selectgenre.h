@@ -13,6 +13,10 @@
 #include <QWidget>
 #include <QJsonObject>
 
+/**
+ * @brief The SelectGenre class
+ * @ingroup AntiquaCDTracking
+ */
 class SelectGenre : public QComboBox {
   Q_OBJECT
 

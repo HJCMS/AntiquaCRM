@@ -11,6 +11,10 @@
 #include <QObject>
 #include <QVariant>
 
+/**
+ * @brief The MailTemplateKeys class
+ * @ingroup AntiquaMailing
+ */
 class MailTemplateKeys final : public QThread {
   Q_OBJECT
 

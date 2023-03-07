@@ -9,6 +9,10 @@
 #include <AntiquaInputEdit>
 #include <QIcon>
 
+/**
+ * @brief The SelectEuCountry class
+ * @ingroup widgets
+ */
 class SelectEuCountry final : public InputEdit {
   Q_OBJECT
 

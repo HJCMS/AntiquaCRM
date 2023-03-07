@@ -11,6 +11,10 @@
 #include <QPair>
 #include <QTime>
 
+/**
+ * @brief The StatsUtils class
+ * @ingroup AntiquaStatistics
+ */
 class StatsUtils final {
 public:
   /**

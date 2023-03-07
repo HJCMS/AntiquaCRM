@@ -13,6 +13,10 @@
 #include <QTextEdit>
 #include <QWidget>
 
+/**
+ * @brief The StatsMainPage class
+ * @ingroup AntiquaStatistics
+ */
 class StatsMainPage : public QWidget {
   Q_OBJECT
 

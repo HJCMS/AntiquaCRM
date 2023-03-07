@@ -13,6 +13,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief Orders Customer Search Dialog
+ * @ingroup AntiquaOrders
+ */
 class OrdersCustomSearch final : public QDialog {
   Q_OBJECT
 

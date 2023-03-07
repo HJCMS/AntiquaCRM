@@ -9,6 +9,10 @@
 #include <AntiquaCRMPlugin>
 #include <QObject>
 
+/**
+ * @brief The BooklookerAuthenticator class
+ * @ingroup BooklookerPlugin
+ */
 class ANTIQUACRM_LIBRARY BooklookerAuthenticator : public QObject {
   Q_OBJECT
 

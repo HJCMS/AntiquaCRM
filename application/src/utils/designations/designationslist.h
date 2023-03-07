@@ -15,7 +15,12 @@
 
 class DesignationsList;
 
+/**
+ * @brief The DesignationsListItem class
+ * @ingroup AntiquaDesignations
+ */
 class DesignationsListItem : public QListWidgetItem {
+
 private:
   DesignationData data_t;
 
@@ -25,6 +30,10 @@ public:
   const DesignationData getData();
 };
 
+/**
+ * @brief The DesignationsList class
+ * @ingroup AntiquaDesignations
+ */
 class DesignationsList : public QListWidget {
   Q_OBJECT
 

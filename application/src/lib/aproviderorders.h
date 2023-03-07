@@ -27,7 +27,6 @@ typedef QList<ArticleOrderItem> OrderArticleItems;
 /**
  * @brief Primary Provider Orders Class
  * @ingroup OrderSystem
- * @section Containers
  *
  * It Contains a Overview from current Buyer Ordering.
  *

@@ -11,11 +11,19 @@
 #include <QJsonValue>
 #include <QList>
 
+/**
+ * @brief The DiscInfo class
+ * @ingroup AntiquaCDTracking
+ */
 class DiscInfo final : public QJsonObject {
 private:
   const QString trackTitle(const QJsonValue &) const;
 
 public:
+  /**
+   * @brief Track index
+   * @ingroup AntiquaCDTracking
+   */
   struct Track {
     int index;
     QString title;

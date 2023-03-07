@@ -15,8 +15,7 @@
 
 /**
  * @brief Eingabe Editor für EAN nach ISO 2108
- * @class IsbnEdit
- * @ingroup Utils
+ * @ingroup widgets
  */
 class IsbnEdit final : public InputEdit {
   Q_OBJECT

@@ -9,6 +9,10 @@
 #include <QObject>
 #include <QTabWidget>
 
+/**
+ * @brief Inventory Tab widget
+ * @ingroup AntiquaCustomers
+ */
 class CustomersTabWidget : public QTabWidget {
   Q_OBJECT
 

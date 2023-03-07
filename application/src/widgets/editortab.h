@@ -11,6 +11,10 @@
 #include <QWheelEvent>
 #include <QIcon>
 
+/**
+ * @brief The EditorTabBar class
+ * @ingroup widgets
+ */
 class EditorTabBar final : public QTabBar {
   Q_OBJECT
 
@@ -21,6 +25,10 @@ public:
   explicit EditorTabBar(QWidget *parent = nullptr) : QTabBar{parent} {};
 };
 
+/**
+ * @brief The EditorTab Widget
+ * @ingroup widgets
+ */
 class EditorTab : public QTabWidget {
   Q_OBJECT
 

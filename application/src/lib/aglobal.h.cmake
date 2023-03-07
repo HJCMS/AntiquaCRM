@@ -16,11 +16,13 @@
 #ifdef ANTIQUACRM_DBUS_ENABLED
 #include <QDBusAbstractAdaptor>
 #else
+/**
+ * @brief QDBusAbstractAdaptor Macro
+ */
 #define Q_NOREPLY
 #endif
 
 /**
- * @def ANTIQUACRM_NAME
  * @brief executable name
  * @note required by QCoreApplication and QSettings
  */
@@ -29,36 +31,51 @@
 #endif
 
 /**
- * @def HJCMS_CONFIG_DOMAIN
  * @brief Required by ASettings
- * @example ~/.config/{HJCMS_CONFIG_DOMAIN}/{HJCMS_CONFIG_NAME}/{HJCMS_CONFIG_VERSION}
+ * @code
+ *  ~/.config/{HJCMS_CONFIG_DOMAIN}/{HJCMS_CONFIG_NAME}/{HJCMS_CONFIG_VERSION}
+ * @endcode
  */
 #ifndef HJCMS_CONFIG_DOMAIN
 #define HJCMS_CONFIG_DOMAIN "de.hjcms"
 #endif
 
+/**
+ * @brief Configuration Namespace
+ */
 #ifndef HJCMS_CONFIG_NAME
 #define HJCMS_CONFIG_NAME "@PROJECTNAME@"
 #endif
 
+/**
+ * @brief Configuration Application ID
+ */
 #ifndef HJCMS_CONFIG_APPID
 #define HJCMS_CONFIG_APPID "@ANTIQUACRM_APPID@"
 #endif
 
+/**
+ * @brief Configuration DNS ID
+ */
 #ifndef HJCMS_CONFIG_DNSID
 #define HJCMS_CONFIG_DNSID "@ANTIQUACRM_DNSID@"
 #endif
 
+/**
+ * @brief Configuration URL ID
+ */
 #ifndef HJCMS_CONFIG_URLID
 #define HJCMS_CONFIG_URLID "@ANTIQUACRM_URLID@"
 #endif
 
+/**
+ * @brief Config version
+ */
 #ifndef HJCMS_CONFIG_VERSION
 #define HJCMS_CONFIG_VERSION "@ANTIQUACRM_VERSION_MAJOR@.0"
 #endif
 
 /**
- * @def ANTIQUACRM_CONNECTION_DOMAIN
  * @brief required by PostgreSQL, D-Bus and TCP-Socket
  */
 #ifndef ANTIQUACRM_CONNECTION_DOMAIN
@@ -66,7 +83,6 @@
 #endif
 
 /**
- * @def ANTIQUACRM_USERAGENT
  * @brief required by NetworkAccessManager
  * @warning This fixed string is needet for OAuth
  */
@@ -75,7 +91,6 @@
 #endif
 
 /**
- * @def ANTIQUACRM_VERSION
  * @brief versioning
  */
 #ifndef ANTIQUACRM_VERSION
@@ -83,19 +98,20 @@
 #endif
 
 /**
- * @def ANTIQUACRM_DISPLAYNAME
  * @brief Window title
  */
 #ifndef ANTIQUACRM_DISPLAYNAME
 #define ANTIQUACRM_DISPLAYNAME "@DISPLAYNAME@"
 #endif
 
+/**
+ * @brief Complete AntiquaCRM Window title with version
+ */
 #ifndef ANTIQUACRM_WINDOW_TITLE
 #define ANTIQUACRM_WINDOW_TITLE "@DISPLAYNAME@ (v@ANTIQUACRM_VERSION_STRING@)"
 #endif
 
 /**
- * @def ANTIQUACRM_HOMEPAGE
  * @brief Support link
  */
 #ifndef ANTIQUACRM_HOMEPAGE
@@ -103,7 +119,6 @@
 #endif
 
 /**
- * @def ANTIQUACRM_INTERFACE
  * @brief Plugin Interface Description
  */
 #ifndef ANTIQUACRM_INTERFACE
@@ -111,7 +126,6 @@
 #endif
 
 /**
- * @def ANTIQUACRM_DATA_TARGET
  * @brief Shared Data location
  */
 #ifndef ANTIQUACRM_DATA_TARGET
@@ -119,7 +133,6 @@
 #endif
 
 /**
- * @def ANTIQUACRM_PLUGIN_TARGET
  * @brief Plugins target
  */
 #ifndef ANTIQUACRM_PLUGIN_TARGET
@@ -127,7 +140,6 @@
 #endif
 
 /**
- * @def ANTIQUACRM_TRANSLATION_TARGET
  * @brief Translations target
  */
 #ifndef ANTIQUACRM_TRANSLATION_TARGET
@@ -135,7 +147,6 @@
 #endif
 
 /**
- * @def ANTIQUACRM_SOCKET_TIMEOUT
  * @brief Ablaufzeit für die Socketverbindungen
  */
 #ifndef ANTIQUACRM_SOCKET_TIMEOUT
@@ -147,7 +158,6 @@
 #endif
 
 /**
- * @def ANTIQUACRM_TRANSMITTER_MODE
  * @brief Standard Modus für Verbindungen
  */
 #ifndef ANTIQUACRM_TRANSMITTER_MODE
@@ -155,7 +165,6 @@
 #endif
 
 /**
- * @def ANTIQUACRM_EXPORT
  * @brief library export definition
  */
 #ifdef ANTIQUACRM_SHARED_LIBRARY
@@ -173,7 +182,6 @@
 #endif
 
 /**
- * @def ANTIQUACRM_DATETIME_FORMAT
  * @ingroup Antiqua Plugin Interface
  * @brief Das vom System vorgegebene Datumsformat ist ISO 8601!
  * Soll verhindern das bei der Umwandlung von einem String, die Konvertierung nicht fehlschlägt!
@@ -195,20 +203,28 @@
 #define ANTIQUACRM_DATETIME_TOOLTIP "dd.MM.yyyy hh:mm:ss"
 #endif
 
+/**
+ * @brief Long Date time Display format
+ */
 #ifndef ANTIQUACRM_DATETIME_DISPLAY
 #define ANTIQUACRM_DATETIME_DISPLAY "dddd dd. MMMM yyyy hh:mm"
 #endif
 
+/**
+ * @brief Normal Date time Display format
+ */
 #ifndef ANTIQUACRM_DATE_DISPLAY
 #define ANTIQUACRM_DATE_DISPLAY "dddd dd. MMMM yyyy"
 #endif
 
+/**
+ * @brief Short Date time Display format
+ */
 #ifndef ANTIQUACRM_SHORT_DATE_DISPLAY
 #define ANTIQUACRM_SHORT_DATE_DISPLAY "dd MMM yyyy"
 #endif
 
 /**
- * @def ANTIQUACRM_QUERY_PASTDAYS
  * @ingroup Antiqua Plugin Interface
  * @brief Dienstleisteranfragen der letzten ... Tage anzeigen.
  */
@@ -217,7 +233,6 @@
 #endif
 
 /**
- * @def ANTIQUACRM_TEXTCODEC
  * @brief Default Charset for Database Connections, Application files, is utf8!
  */
 #ifndef ANTIQUACRM_TEXTCODEC
@@ -229,7 +244,6 @@ namespace AntiquaCRM {
 
  /**
   * @brief Nachrichtentyp
-  * @section inventory
   * Definiert die Dringlichkeit einer Nachricht an das Meldungssystem!
   */
  enum Message {
@@ -248,7 +262,6 @@ namespace AntiquaCRM {
 
  /**
   * @brief Auftrag-Bearbeitungsstatus
-  * @section orders
   */
  enum OrderStatus {
    OPEN = 0,      /**< Offen */
@@ -263,7 +276,6 @@ namespace AntiquaCRM {
 
  /**
   * @brief Auftrag-Zahlungsstatus
-  * @section orders
   */
  enum OrderPayment {
    NOTPAID = 0,  /**< Warte auf Zahlung */
@@ -277,7 +289,6 @@ namespace AntiquaCRM {
 
  /**
   * @brief Bestellstatus des Dienstleisters
-  * @section orders
   * Wird im Auftragssystem verwendet!
   */
  enum ProviderPaymentStatus {
@@ -293,7 +304,6 @@ namespace AntiquaCRM {
 
  /**
   * @brief Zahlungsart der Bestellung
-  * @section orders
   * Wird im Auftragssystem verwendet um die Zahlungsart zu Zeigen.
   * Die Umsetzung dieser Vorgabe liegt bei der Plugin Integration!
   */
@@ -318,7 +328,6 @@ namespace AntiquaCRM {
 
  /**
   * @brief Kunden Vertrauensebene festlegen!
-  * @section inventory
   */
  enum CustomerTrustLevel {
    NO_TRUST_LEVEL = 0, /**< Keine Vertrauensebene festgelegt */
@@ -332,7 +341,6 @@ namespace AntiquaCRM {
 
  /**
   * @brief Geschlechter Definition
-  * @section inventory
   */
  enum Gender {
   NO_GENDER = 0, /**< Ohne Angabe */
@@ -345,7 +353,6 @@ namespace AntiquaCRM {
  /**
   * @brief Inventory Gruppen
   * Umsetzung für Dienstleister kategorien.
-  * @section inventory
   */
  enum ArticleType {
   UNKNOWN = 0,   /**< nicht festgelegt */
@@ -359,7 +366,6 @@ namespace AntiquaCRM {
  /**
   * @brief SalesTax
   * Rechnungsmöglichkeiten bei der Umsatzsteuerangabe (UStG §14)
-  * @section inventory
   */
  enum SalesTax {
   TAX_NOT = 0,  /**< without sales tax */
@@ -371,7 +377,6 @@ namespace AntiquaCRM {
  /**
   * @brief MediaType
   * Umsetzung Musik Medien
-  * @section inventory
   */
  enum MediaType {
   MEDIA_NO_TYPE = 0,            /**< nicht festgelegt */
@@ -389,7 +394,6 @@ namespace AntiquaCRM {
 
  /**
   * @brief Zustandsbeschreibung für Artikel
-  * @section inventory
   */
  enum Condition {
   NO_CONDITION = 0, /**< Ohne Angabe */
@@ -402,7 +406,6 @@ namespace AntiquaCRM {
 
  /**
   * @brief Postleitzahlen Eintrag
-  * @section widgets
   */
  struct ANTIQUACRM_LIBRARY PostalCode {
    QString plz;

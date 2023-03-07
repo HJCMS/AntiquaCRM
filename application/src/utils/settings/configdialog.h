@@ -23,6 +23,10 @@ class PrintSettings;
 class ProviderSettings;
 class PathSettings;
 
+/**
+ * @brief The ConfigDialog class
+ * @ingroup AntiquaSettings
+ */
 class ConfigDialog final : public QDialog {
   Q_OBJECT
 

@@ -15,6 +15,10 @@
 #include <QToolBar>
 #include <QWidget>
 
+/**
+ * @brief The TabSearchBar class
+ * @ingroup widgets
+ */
 class TabSearchBar : public QToolBar {
   Q_OBJECT
   Q_PROPERTY(int minLength READ getMinLength WRITE setMinLength NOTIFY
@@ -23,7 +27,7 @@ class TabSearchBar : public QToolBar {
 public:
   /**
    * @brief settings confiness for search syntax
-   * @list Enumeration to restrict search to:
+   * Enumeration to restrict search to:
    *  @li ANYWHERE   (field ILIKE '%word%')
    *  @li BOUNDARIES (field ILIKE 'word')
    *  @li BEGINNING  (field ILIKE 'word%')
@@ -73,8 +77,8 @@ protected:
    * @brief set pattern matches and turn around the search string.
    * @param field  - SQL Fieldname
    * @param search - Search string
-   * @example In this Example code we search Authors with Forename and Surname.
    * @code
+   *  In this Example code we search Authors with Forename and Surname.
    *  call:
    *    prepareFieldSearch("fieldname","forename surname")
    *
@@ -110,7 +114,7 @@ Q_SIGNALS:
   void sendFilterChanged(int);
 
   /**
-   * @brief will normally triggered inside of @ref setSearch()
+   * @brief will normally triggered inside of setSearch()
    */
   void sendSearchClicked();
 

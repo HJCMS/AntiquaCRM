@@ -10,6 +10,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief The YearEdit class
+ * @ingroup widgets
+ */
 class YearEdit final : public InputEdit {
   Q_OBJECT
 

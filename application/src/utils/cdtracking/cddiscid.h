@@ -11,6 +11,10 @@
 #include <QThread>
 #include <QUrl>
 
+/**
+ * @brief The CDDiscId class
+ * @ingroup AntiquaCDTracking
+ */
 class CDDiscId final : public QThread {
   Q_OBJECT
 

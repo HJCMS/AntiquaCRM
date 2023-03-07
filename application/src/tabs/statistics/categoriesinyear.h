@@ -14,6 +14,10 @@
 
 class AHorizontalBarSeries;
 
+/**
+ * @brief The CategoriesInYear class
+ * @ingroup AntiquaStatistics
+ */
 class CategoriesInYear final : public QScrollArea {
   Q_OBJECT
 

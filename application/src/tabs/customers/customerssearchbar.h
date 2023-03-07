@@ -12,6 +12,10 @@
 class CustomersSelectFilter;
 class CustomersSearchLineEdit;
 
+/**
+ * @brief Customers Search bar
+ * @ingroup AntiquaCustomers
+ */
 class CustomersSearchBar final : public TabSearchBar {
   Q_OBJECT
 

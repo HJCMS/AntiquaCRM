@@ -14,6 +14,10 @@
 #include <QSignalMapper>
 #include <QWidget>
 
+/**
+ * @brief The Printer Fonts group
+ * @ingroup AntiquaSettings
+ */
 class PrinterFonts final : public QGroupBox {
   Q_OBJECT
 

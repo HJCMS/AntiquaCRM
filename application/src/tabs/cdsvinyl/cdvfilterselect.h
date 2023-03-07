@@ -10,6 +10,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief CD+Vinyl Filter selecter
+ * @ingroup AntiquaCDsVinyl
+ */
 class CDVFilterSelect final : public QComboBox {
   Q_OBJECT
 

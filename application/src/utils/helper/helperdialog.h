@@ -12,6 +12,10 @@
 #include <QPushButton>
 #include <QWidget>
 
+/**
+ * @brief The HelperDialog class
+ * @section AntiquaHelper
+ */
 class HelperDialog final : public QDialog {
   Q_OBJECT
 

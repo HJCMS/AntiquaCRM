@@ -8,6 +8,10 @@
 #include <QComboBox>
 #include <QJsonObject>
 
+/**
+ * @brief Customers Filter selecter
+ * @ingroup AntiquaCustomers
+ */
 class CustomersSelectFilter final : public QComboBox {
   Q_OBJECT
 

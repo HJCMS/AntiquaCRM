@@ -8,6 +8,10 @@
 #include <AGlobal>
 #include <AntiquaInputEdit>
 
+/**
+ * @brief The TaxLevelBox class
+ * @ingroup widgets
+ */
 class TaxLevelBox final : public InputEdit {
   Q_OBJECT
 

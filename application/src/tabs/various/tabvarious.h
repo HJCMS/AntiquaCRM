@@ -14,6 +14,10 @@ class VariousTableView;
 class VariousEditor;
 class VariousStatusBar;
 
+/**
+ * @brief Inventory Various
+ * @section InventoryVarious
+ */
 class TabVarious final : public Inventory {
   Q_OBJECT
 

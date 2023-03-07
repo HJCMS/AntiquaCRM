@@ -10,6 +10,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief Inventory Prints Search line edit
+ * @ingroup widgets
+ */
 class PrintsStitchesSearchLine final : public SearchLineEdit {
   Q_OBJECT
 

@@ -12,7 +12,7 @@
 
 /**
  * @brief Auswahl der Paketzusteller Angebote
- * @ingroup DeliverService
+ * @ingroup DeliveryService
  * Die Daten werden aus Tabelle "ref_delivery_cost" gelesen.
  */
 class DeliverPackageBox final : public QComboBox {

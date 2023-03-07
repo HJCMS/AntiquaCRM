@@ -12,6 +12,10 @@
 #include <QWidget>
 #include <QJsonObject>
 
+/**
+ * @brief The ProviderOrderInfo class
+ * @ingroup AntiquaProviders
+ */
 class ProviderOrderInfo : public QWidget {
   Q_OBJECT
 

@@ -8,6 +8,10 @@
 #include <AGlobal>
 #include <AntiquaInputEdit>
 
+/**
+ * @brief The TrustedBox class
+ * @ingroup widgets
+ */
 class TrustedBox final : public InputEdit {
   Q_OBJECT
 

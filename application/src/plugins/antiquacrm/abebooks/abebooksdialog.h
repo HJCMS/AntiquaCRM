@@ -13,6 +13,10 @@
 #include <QPushButton>
 #include <QWidget>
 
+/**
+ * @brief The AbeBooksDialog class
+ * @ingroup AbeBooksPlugin
+ */
 class ANTIQUACRM_LIBRARY AbeBooksDialog : public AntiquaCRM::UpdateDialog {
   Q_OBJECT
 

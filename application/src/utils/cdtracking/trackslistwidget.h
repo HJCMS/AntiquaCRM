@@ -13,6 +13,10 @@
 
 #include "discinfo.h"
 
+/**
+ * @brief The TracksListWidget class
+ * @ingroup AntiquaCDTracking
+ */
 class TracksListWidget final : public QTreeWidget {
   Q_OBJECT
 

@@ -10,6 +10,10 @@
 #include <QSignalMapper>
 #include <QWidget>
 
+/**
+ * @brief The StatisticsMenu class
+ * @ingroup AntiquaStatistics
+ */
 class StatisticsMenu final : public QMenu {
   Q_OBJECT
 

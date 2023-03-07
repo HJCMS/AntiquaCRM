@@ -9,6 +9,10 @@
 #include <QSignalMapper>
 #include <QWidget>
 
+/**
+ * @brief Inventory Reports Action group
+ * @ingroup InventorReports
+ */
 class ReportsActionGroup : public QActionGroup {
   Q_OBJECT
 

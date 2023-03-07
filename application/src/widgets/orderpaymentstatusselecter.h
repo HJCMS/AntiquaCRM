@@ -11,6 +11,10 @@
 #include <QIcon>
 #include <QObject>
 
+/**
+ * @brief The OrderPaymentStatusModel class
+ * @ingroup widgets
+ */
 class OrderPaymentStatusModel final : public QAbstractItemModel {
   Q_OBJECT
 
@@ -44,6 +48,10 @@ public:
   Qt::ItemFlags flags(const QModelIndex &index) const override;
 };
 
+/**
+ * @brief The OrderPaymentStatusSelecter class
+ * @ingroup widgets
+ */
 class OrderPaymentStatusSelecter final : public InputEdit {
   Q_OBJECT
 

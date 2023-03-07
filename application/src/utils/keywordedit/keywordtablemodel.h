@@ -12,6 +12,10 @@
 #include <QVariant>
 #include <QWidget>
 
+/**
+ * @brief The KeywordTableModel class
+ * @ingroup KeywordsEdit
+ */
 class KeywordTableModel : public QSqlTableModel {
   Q_OBJECT
 

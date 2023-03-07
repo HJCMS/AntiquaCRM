@@ -11,6 +11,10 @@
 #include <QPushButton>
 #include <QWidget>
 
+/**
+ * @brief Keywords Edit Actions frame
+ * @ingroup KeywordsEdit
+ */
 class KeywordActions : public QFrame {
   Q_OBJECT
 

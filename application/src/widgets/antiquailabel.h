@@ -10,6 +10,10 @@
 #include <QVariant>
 #include <QWidget>
 
+/**
+ * @brief The AntiquaILabel class
+ * @ingroup widgets
+ */
 class AntiquaILabel final : public QLabel {
   Q_OBJECT
 

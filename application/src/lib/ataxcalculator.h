@@ -35,37 +35,37 @@ public:
 
   /**
    * @brief Convert price to currency string
-   * @param value
+   * @param price
    */
-  const QString money(double);
+  const QString money(double price);
 
   /**
    * @brief calculate sales tax for current price
-   * @param sales tax rate
+   * @param vat - sales tax rate
    * @return Sales tax value to be add ...
    */
-  qreal toAdd(qreal) const;
+  qreal toAdd(qreal vat) const;
 
   /**
    * @brief get included sales tax from current price
-   * @param sales tax rate
+   * @param vat - sales tax rate
    * @return Included sales tax value ...
    */
-  qreal getIncl(qreal) const;
+  qreal getIncl(qreal vat) const;
 
   /**
    * @brief add sales tax to current price
-   * @param sales tax rate
+   * @param vat - sales tax rate
    * @return Price plus sales tax
    */
-  double plus(qreal) const;
+  double plus(qreal vat) const;
 
   /**
    * @brief Calculate out sales tax from current price
-   * @param sales tax rate
+   * @param vat - sales tax rate
    * @return Price minus sales tax
    */
-  double minus(qreal) const;
+  double minus(qreal vat) const;
 };
 
 };     // namespace AntiquaCRM

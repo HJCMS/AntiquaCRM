@@ -11,8 +11,7 @@
 
 /**
  * @brief Textköper
- * @ingroup Printing
- * @class TextEditor
+ * @ingroup AntiquaPrinting
  */
 class TextEditor : public QTextEdit
 {

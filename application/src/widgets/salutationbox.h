@@ -12,6 +12,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief The SalutationBox class
+ * @ingroup widgets
+ */
 class SalutationBox final : public InputEdit {
   Q_OBJECT
 

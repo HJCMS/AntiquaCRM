@@ -8,6 +8,10 @@
 #include <AntiquaInputEdit>
 #include <QGroupBox>
 
+/**
+ * @brief The GroupBox class
+ * @ingroup widgets
+ */
 class GroupBox final : public InputEdit {
   Q_OBJECT
 

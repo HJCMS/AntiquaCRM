@@ -12,6 +12,10 @@
 
 class StatsMainPage;
 
+/**
+ * @brief The TabStatistics class
+ * @section AntiquaStatistics
+ */
 class TabStatistics final : public Inventory {
   Q_OBJECT
 

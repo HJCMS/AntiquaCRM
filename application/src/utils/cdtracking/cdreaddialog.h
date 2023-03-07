@@ -21,6 +21,10 @@
 class TracksListWidget;
 class SelectGenre;
 
+/**
+ * @brief The CDReadDialog class
+ * @section AntiquaCDTracking
+ */
 class CDReadDialog final : public QDialog {
   Q_OBJECT
 

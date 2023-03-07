@@ -8,6 +8,10 @@
 #include <AntiquaCRM>
 #include <QObject>
 
+/**
+ * @brief The MonthlyReportModel class
+ * @ingroup InventorReports
+ */
 class MonthlyReportModel final : public AntiquaCRM::ASqlQueryModel {
   Q_OBJECT
 

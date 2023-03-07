@@ -9,6 +9,10 @@
 #include <QDoubleSpinBox>
 #include <QWidget>
 
+/**
+ * @brief The AntiquaDoubleBox class
+ * @ingroup widgets
+ */
 class AntiquaDoubleBox final : public QDoubleSpinBox {
   Q_OBJECT
   Q_PROPERTY(bool mouseWheel READ isMouseWheelEnabled WRITE setMouseWheelEnabled

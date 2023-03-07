@@ -13,6 +13,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief The TableContextMenu class
+ * @ingroup widgets
+ */
 class TableContextMenu final : public QMenu {
   Q_OBJECT
 

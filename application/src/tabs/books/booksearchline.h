@@ -9,6 +9,10 @@
 #include <QRegExp>
 #include <QObject>
 
+/**
+ * @brief Books Search line edit
+ * @ingroup widgets
+ */
 class BookSearchLine final : public SearchLineEdit {
   Q_OBJECT
 

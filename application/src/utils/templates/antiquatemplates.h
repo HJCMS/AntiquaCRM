@@ -13,8 +13,7 @@
 
 /**
  * @brief PDF Template locader class
- * @class AntiquaTemplates
- * @section utils
+ * @ingroup AntiquaTemplates
  */
 class AntiquaTemplates final : public QObject {
   Q_OBJECT

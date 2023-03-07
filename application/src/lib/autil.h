@@ -14,6 +14,10 @@
 
 namespace AntiquaCRM {
 
+/**
+ * @brief Antiqua Utilities
+ * @ingroup core
+ */
 class ANTIQUACRM_LIBRARY AUtil final {
 public:
   /**
@@ -68,6 +72,7 @@ public:
   /**
    * @brief Convert double to money value
    * @param value
+   * @param format
    */
   static const QString toMoney(double value,
     QLocale::CurrencySymbolFormat format = QLocale::CurrencySymbol);

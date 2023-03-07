@@ -12,6 +12,10 @@
 
 class DeliverService;
 
+/**
+ * @brief Orders Cost Settings Widget
+ * @ingroup AntiquaOrders
+ */
 class OrdersCostSettings : public QTabWidget {
   Q_OBJECT
 

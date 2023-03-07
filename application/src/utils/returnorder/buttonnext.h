@@ -10,6 +10,10 @@
 #include <QPushButton>
 #include <QWidget>
 
+/**
+ * @brief The ButtonNext class
+ * @ingroup AntiquaReturnOrder
+ */
 class ButtonNext : public QFrame {
   Q_OBJECT
 

@@ -9,6 +9,10 @@
 #include <AntiquaInputEdit>
 #include <QCompleter>
 
+/**
+ * @brief The TechniqueEdit class
+ * @ingroup widgets
+ */
 class TechniqueEdit final : public InputEdit {
   Q_OBJECT
 

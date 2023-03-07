@@ -15,6 +15,10 @@
 
 class DeliverItem;
 
+/**
+ * @brief The DeliverServiceList class
+ * @ingroup DeliveryService
+ */
 class DeliverServiceList : public QTreeWidget {
   Q_OBJECT
 

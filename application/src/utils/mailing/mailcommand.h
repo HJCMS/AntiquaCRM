@@ -11,6 +11,10 @@
 #include <QUrl>
 #include <QVariant>
 
+/**
+ * @brief The MailCommand class
+ * @ingroup AntiquaMailing
+ */
 class MailCommand final : public QProcess {
   Q_OBJECT
 

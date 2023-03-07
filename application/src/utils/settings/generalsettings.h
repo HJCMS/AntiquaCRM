@@ -10,6 +10,10 @@
 #include <QToolButton>
 #include <SettingsDialog>
 
+/**
+ * @brief The General Settings widget
+ * @ingroup AntiquaSettings
+ */
 class GeneralSettings final : public SettingsWidget {
   Q_OBJECT
 

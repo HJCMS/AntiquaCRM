@@ -16,7 +16,7 @@ namespace AntiquaCRM {
 
 /**
  * @brief SQL Data Query Container Class
- * @section sql
+ * @ingroup core
  * This class is used to import and export Single Query to different class
  * structures, it is mostly used by the Plugin Interface.
  * This is a final class, because it depends on the PgSQL Database.

@@ -7,6 +7,10 @@
 
 #include <AntiquaInputEdit>
 
+/**
+ * @brief The EditInfoLabel class
+ * @ingroup widgets
+ */
 class EditInfoLabel final : public InputEdit {
   Q_OBJECT
 

@@ -8,6 +8,10 @@
 #include <QMetaType>
 #include <QString>
 
+/**
+ * @brief The DesignationData class
+ * @ingroup AntiquaDesignations
+ */
 struct DesignationData {
   int id = -1;
   QString keyword;

@@ -11,8 +11,7 @@
 
 /**
  * @brief Body Template Edit widget
- * @class MessageEditor
- * @section widgets
+ * @ingroup AntiquaTemplates
  */
 class MessageEditor : public QTextEdit {
   Q_OBJECT

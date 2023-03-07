@@ -20,7 +20,7 @@ class ASqlCore;
 
 /**
  * @brief Standard SqlQueryModel für Tabellenansichten
- * @section sql
+ * @ingroup core
  */
 class ANTIQUACRM_LIBRARY ASqlQueryModel : public QSqlQueryModel {
   Q_OBJECT
@@ -83,7 +83,7 @@ public:
   bool querySelect(const QString &sql);
 
   /**
-   * @brief Tabellenname - Siehe Konstruktor und @ref p_table
+   * @brief Tabellenname - Siehe Konstruktor und p_table
    */
   const QString tableName() const;
 

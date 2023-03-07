@@ -24,7 +24,7 @@ class ProviderOrderInfo;
  * @brief Provider Order/Payment Overview page.
  * This Widget display the complete Information about the Order. It also
  * contains some subrequest before a new order can be imported into the system.
- * @section providers
+ * @ingroup AntiquaProviders
  */
 class ProvidersOrderPage final : public QWidget {
   Q_OBJECT
@@ -102,12 +102,13 @@ public:
   /**
    * @brief ProvidersOrderPage
    * @param order - Json Object with complete Order data.
+   * @param parent
    */
   explicit ProvidersOrderPage(const QJsonObject &order,
                               QWidget *parent = nullptr);
 
   /**
-   * @brief Load Interface data from Json Object @ref order.
+   * @brief Load Interface data from Json Object order.
    * @note This function must called behind class initialisation!
    */
   bool loadOrderDataset();

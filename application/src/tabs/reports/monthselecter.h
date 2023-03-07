@@ -16,7 +16,7 @@
 /**
  * @brief Auswahlleiste für den Monatsbericht
  * @class MonthSelecter
- * @section widgets
+ * @ingroup InventorReports
  * @code
  *  {Messanger | SelectBox | Submit Button | Print Button | Export Button}
  * @endcode

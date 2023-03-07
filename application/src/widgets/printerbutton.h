@@ -16,6 +16,7 @@
 
 /**
  * @brief Knopf+Menü für das öffnen der Druckerdialoge.
+ * @ingroup widgets
  */
 class PrinterButton : public QPushButton {
   Q_OBJECT

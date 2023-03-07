@@ -13,6 +13,10 @@
 #include <QStatusBar>
 #include <QWidget>
 
+/**
+ * @brief The ProviderPurchaseBar class
+ * @ingroup AntiquaProviders
+ */
 class ProviderPurchaseBar : public QStatusBar {
   Q_OBJECT
 

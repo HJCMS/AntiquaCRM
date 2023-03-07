@@ -9,6 +9,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief Inventory Various Status bar
+ * @ingroup InventoryVarious
+ */
 class VariousStatusBar final : public TabStatusBar {
   Q_OBJECT
 

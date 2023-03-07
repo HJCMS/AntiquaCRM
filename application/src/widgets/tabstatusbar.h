@@ -15,6 +15,7 @@
 
 /**
  * @brief The TabStatusBar class
+ * @ingroup widgets
  * @code
  *  Layout:
  *    MessageLabel | QFrame | Reload Button
@@ -102,7 +103,7 @@ protected:
 protected Q_SLOTS:
   /**
    * @brief Auswahl von Menüeinträgen verarbeiten!
-   * @param Es wird "TabStatusBar::History" übergeben.
+   * Es wird "TabStatusBar::History" übergeben.
    * @note Wegen SignalMapper ist der Parameter ein INT!
    */
   virtual void setHistoryAction(int) = 0;

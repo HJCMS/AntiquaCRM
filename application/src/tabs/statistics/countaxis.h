@@ -8,6 +8,10 @@
 #include <QObject>
 #include <QtCharts/QValueAxis>
 
+/**
+ * @brief The CountAxis class
+ * @ingroup AntiquaStatistics
+ */
 class CountAxis final : public QtCharts::QValueAxis {
   Q_OBJECT
 

@@ -11,6 +11,10 @@
 #include <QToolButton>
 #include <QWidget>
 
+/**
+ * @brief Keywords Edit Label
+ * @ingroup KeywordsEdit
+ */
 class KeywordLabel final : public QFrame {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")

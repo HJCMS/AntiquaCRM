@@ -18,6 +18,10 @@ class KeywordTable;
 class KeywordActions;
 class KeywordEditor;
 
+/**
+ * @brief Keywords Edit Dialog
+ * @section KeywordsEdit
+ */
 class KeywordEdit : public QDialog {
   Q_OBJECT
 

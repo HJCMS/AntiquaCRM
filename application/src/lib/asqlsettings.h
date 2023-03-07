@@ -18,7 +18,7 @@ class ASqlProfile;
 
 /**
  * @brief This class provides sql settings functions
- * @section sql
+ * @ingroup core
  */
 class ANTIQUACRM_LIBRARY ASqlSettings final : public ASettings {
   Q_OBJECT

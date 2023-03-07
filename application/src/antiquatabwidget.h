@@ -23,7 +23,7 @@ class AntiquaTabBar;
 /**
  * @brief Verwaltungs Klasse Registerkarten
  * @class AntiquaTabWidget
- * @section window
+ * @ingroup window
  */
 class AntiquaTabWidget final : public QTabWidget {
   Q_OBJECT

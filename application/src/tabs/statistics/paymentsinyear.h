@@ -12,6 +12,10 @@
 #include <QWidget>
 #include <QtCharts/QChartView>
 
+/**
+ * @brief The PaymentsInYear class
+ * @ingroup AntiquaStatistics
+ */
 class PaymentsInYear final : public QScrollArea {
   Q_OBJECT
 

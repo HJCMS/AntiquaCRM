@@ -18,6 +18,10 @@
 #include <QSpinBox>
 #include <QWidget>
 
+/**
+ * @brief Keywords Edit group box
+ * @ingroup KeywordsEdit
+ */
 class KeywordEditor : public QGroupBox {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")

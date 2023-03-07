@@ -30,8 +30,7 @@ class TextEditor;
 
 /**
  * @brief Container für das befüllen der Tabellenzellen.
- * @class BillingInfo
- * @ingroup Printing
+ * @ingroup AntiquaPrinting
  */
 struct BillingInfo {
   /**
@@ -80,8 +79,7 @@ Q_DECLARE_METATYPE(BillingInfo);
 
 /**
  * @brief Drucker Dialog Klasse
- * @class Printing
- * @defgroup Printing Printing
+ * @section AntiquaPrinting
  * Das Dokument wird aus drei Textkörpern erstellt.
  * Mit einem Kopfbereich, Inhaltsbereich und Fußzeilenbereich.
  * Anders ist es nicht möglich die Fußzeile sauber zu setzen.
@@ -448,7 +446,7 @@ public:
 
   /**
    * @brief Add Customer Address
-   * @note Muss vor @ref exec() gesetzt sein!
+   * @note Muss vor exec() gesetzt sein!
    */
   void setCustomerAddress(const QString &);
 

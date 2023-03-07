@@ -19,6 +19,7 @@ class KeywordLabelList;
 
 /**
  * @brief Texteingabefeld für Kategorie- Schlüsselwörter
+ * @ingroup KeywordsEdit
  */
 class KeywordLineEdit final : public InputEdit {
   Q_OBJECT

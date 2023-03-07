@@ -9,6 +9,10 @@
 #include <QPushButton>
 #include <QWidget>
 
+/**
+ * @brief The ImageToolBar class
+ * @ingroup AntiquaImgEdit
+ */
 class ImageToolBar final : public QWidget {
   Q_OBJECT
   Q_PROPERTY(qint64 articleId READ getArticleId WRITE setArticleId NOTIFY sendArticleIdChanged)

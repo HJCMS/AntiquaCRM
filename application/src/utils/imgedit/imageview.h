@@ -27,8 +27,7 @@ class RubberBand;
 
 /**
  * @brief Bilder Vorschau
- * @class ImageView
- * @ingroup Imaging
+ * @ingroup AntiquaImgEdit
  */
 class ImageView final : public QGraphicsView {
   Q_OBJECT
@@ -109,9 +108,9 @@ Q_SIGNALS:
   /**
    * @brief Wird von den Bildlade Methoden ausgelöst.
    * Folgenden Methoden können bei Erfolg/Fehlschlag auslösen:
-   *  @li @ref setImage
-   *  @li @ref setImageFile
-   *  @li @ref setRawImage
+   *  @li setImage
+   *  @li setImageFile
+   *  @li setRawImage
    */
   void sendImageLoadSuccess(bool);
 
@@ -124,13 +123,17 @@ public Q_SLOTS:
 
   /**
    * @brief Bild in die Ansicht einfügen!
-   * @ref setImage(const QImage &)
+   * @code
+   *  setImage(const QImage &);
+   * @endcode
    */
   void setImageFile(const SourceInfo &file);
 
   /**
    * @brief Rohdaten einfügen
-   * @ref setImage(const QImage &)
+   * @code
+   *  setImage(const QImage &);
+   * @endcode
    */
   void setRawImage(const QByteArray &data);
 
@@ -165,8 +168,9 @@ public Q_SLOTS:
 
 public:
   /**
+   * @brief ImageView
    * @param maxsize
-   * @param target
+   * @param parent
    */
   explicit ImageView(QSize maxsize, QWidget *parent = nullptr);
 

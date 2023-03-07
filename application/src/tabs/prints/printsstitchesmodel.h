@@ -9,6 +9,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief Inventory Prints Table model
+ * @ingroup AntiquaPrintsStitches
+ */
 class PrintsStitchesModel final : public AntiquaCRM::ASqlQueryModel {
   Q_OBJECT
 

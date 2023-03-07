@@ -24,6 +24,7 @@ class MailAttachments;
 
 /**
  * @brief E-Mail Nachrichten für CLI erstellen.
+ * @section AntiquaMailing
  * https://docs.microsoft.com/de-de/appcenter/cli/
  */
 class MailForwardDialog final : public QDialog {

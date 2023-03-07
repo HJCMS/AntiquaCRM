@@ -13,6 +13,10 @@
 #include <QPushButton>
 #include <QWidget>
 
+/**
+ * @brief The BuchfreundDialog class
+ * @ingroup BuchfreundPlugin
+ */
 class ANTIQUACRM_LIBRARY BuchfreundDialog final
     : public AntiquaCRM::UpdateDialog {
   Q_OBJECT

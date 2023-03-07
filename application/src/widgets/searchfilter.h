@@ -12,6 +12,10 @@
 #include <QRegularExpression>
 #include <QString>
 
+/**
+ * @brief The SearchFilter class
+ * @ingroup widgets
+ */
 class SearchFilter {
 private:
   QRegExp p_cleanInput;

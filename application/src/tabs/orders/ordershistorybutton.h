@@ -13,8 +13,7 @@
 
 /**
  * @brief Verschiedene abfragen Auswählen
- * @ingroup InventoryOrders
- * @class OrdersHistoryButton
+ * @ingroup AntiquaOrders
  */
 class OrdersHistoryButton final : public QPushButton {
   Q_OBJECT

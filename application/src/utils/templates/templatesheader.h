@@ -15,8 +15,7 @@
 
 /**
  * @brief Custom Template Edit widget
- * @class TemplatesHeader
- * @section widgets
+ * @ingroup AntiquaTemplates
  */
 class TemplatesHeader final : public QFrame {
   Q_OBJECT

@@ -12,6 +12,10 @@
 class BookSelectFilter;
 class BookSearchLine;
 
+/**
+ * @brief Books search bar
+ * @ingroup AntiquaBooks
+ */
 class BookSearchBar final : public TabSearchBar {
   Q_OBJECT
 

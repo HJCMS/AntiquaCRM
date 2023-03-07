@@ -16,6 +16,10 @@
 #include <QStatusBar>
 #include <QWidget>
 
+/**
+ * @brief The BooklookerDialog class
+ * @ingroup BooklookerPlugin
+ */
 class ANTIQUACRM_LIBRARY BooklookerDialog
     : public AntiquaCRM::UpdateDialog {
   Q_OBJECT

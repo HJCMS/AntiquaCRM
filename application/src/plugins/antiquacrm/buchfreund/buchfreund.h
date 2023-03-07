@@ -11,6 +11,10 @@
 #include <QMetaType>
 #include <QObject>
 
+/**
+ * @brief The Buchfreund class
+ * @section BuchfreundPlugin
+ */
 class ANTIQUACRM_LIBRARY Buchfreund final
     : public AntiquaCRM::APluginInterface {
   Q_OBJECT

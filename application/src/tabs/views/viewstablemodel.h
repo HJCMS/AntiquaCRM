@@ -10,6 +10,10 @@
 #include <QSqlTableModel>
 #include <QWidget>
 
+/**
+ * @brief Inventory Views table model
+ * @ingroup InventoryViews
+ */
 class ViewsTableModel final : public QSqlTableModel {
   Q_OBJECT
 

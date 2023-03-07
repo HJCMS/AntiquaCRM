@@ -9,6 +9,10 @@
 #include <QWidget>
 #include <QtCharts/QHorizontalBarSeries>
 
+/**
+ * @brief The AHorizontalBarSeries class
+ * @ingroup AntiquaStatistics
+ */
 class AHorizontalBarSeries : public QtCharts::QHorizontalBarSeries {
   Q_OBJECT
 

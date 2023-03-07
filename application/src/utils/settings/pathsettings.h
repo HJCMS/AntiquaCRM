@@ -13,6 +13,10 @@
 #include <QWidget>
 #include <SettingsDialog>
 
+/**
+ * @brief The Path Settings widget
+ * @ingroup AntiquaSettings
+ */
 class PathSettings final : public SettingsWidget {
   Q_OBJECT
 

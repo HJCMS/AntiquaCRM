@@ -18,8 +18,7 @@
 
 /**
  * @brief Hauptklasse für Registerkarte
- * @abstract Inventory
- * @section widgets
+ * @ingroup widgets
  */
 class Inventory : public QStackedWidget {
   Q_OBJECT
@@ -52,7 +51,6 @@ protected:
 
   /**
    * @brief Set it Closable.
-   * @default false
    * @ref closable
    */
   void setClosable(bool b = false);
@@ -102,12 +100,12 @@ Q_SIGNALS:
   void sendClosableChanged();
 
   /**
-   * @brief signal from Shortcut @ref m_focusSearch
+   * @brief signal from Shortcut m_focusSearch
    */
   void sendSetSearchFocus();
 
   /**
-   * @brief signal from Shortcut @ref m_focusFilter
+   * @brief signal from Shortcut m_focusFilter
    */
   void sendSetSearchFilter();
 
@@ -155,7 +153,8 @@ public:
 
   /**
    * @brief Tabs Inventory
-   * @param index Uniq tab Index Name
+   * @param index - Uniq tab Index Name
+   * @param parent
    */
   explicit Inventory(const char *index, QWidget *parent = nullptr);
 

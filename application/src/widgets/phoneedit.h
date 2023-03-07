@@ -12,7 +12,7 @@
 
 /**
  * @brief Phone Country Code Completer Model
- * @section widgets
+ * @ingroup widgets
  */
 class PhoneCountryCodeModel final : public QAbstractListModel {
   Q_OBJECT
@@ -34,6 +34,10 @@ public:
   void initModel();
 };
 
+/**
+ * @brief The PhoneEdit class
+ * @ingroup widgets
+ */
 class PhoneEdit final : public InputEdit {
   Q_OBJECT
 

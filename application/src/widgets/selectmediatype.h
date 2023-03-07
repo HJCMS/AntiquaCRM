@@ -9,6 +9,10 @@
 #include <AntiquaInputEdit>
 #include <QMap>
 
+/**
+ * @brief The SelectMediaType class
+ * @ingroup widgets
+ */
 class SelectMediaType final : public InputEdit {
   Q_OBJECT
 

@@ -11,6 +11,10 @@
 #include <QMetaType>
 #include <QWidget>
 
+/**
+ * @brief Books Filter selecter
+ * @ingroup AntiquaBooks
+ */
 class BookSelectFilter final : public QComboBox {
   Q_OBJECT
 

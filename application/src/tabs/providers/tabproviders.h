@@ -18,6 +18,10 @@ class ProvidersPageView;
 class ProvidersOrderPage;
 class ProvidersTreeView;
 
+/**
+ * @brief Inventory Providers Index
+ * @section AntiquaProviders
+ */
 class TabProviders final : public Inventory {
   Q_OBJECT
 

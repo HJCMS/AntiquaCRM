@@ -16,7 +16,7 @@
 
 /**
  * @brief The PurchaseTableDelegate class
- * @section widgets
+ * @ingroup AntiquaPurchaseTable
  */
 class PurchaseTableDelegate final : public QItemDelegate {
   Q_OBJECT

@@ -14,6 +14,10 @@ class PrintsStitchesTableView;
 class PrintsStitchesStatusBar;
 class PrintsStitchesEditor;
 
+/**
+ * @brief Inventory Prints and Stitches
+ * @section AntiquaPrintsStitches
+ */
 class TabPrintsStitches final : public Inventory {
   Q_OBJECT
 

@@ -14,6 +14,7 @@
 
 /**
  * @brief ISO639-1 Language Code
+ * @ingroup widgets
  */
 class Language final : public InputEdit {
   Q_OBJECT

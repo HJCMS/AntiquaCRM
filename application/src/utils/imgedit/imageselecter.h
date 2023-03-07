@@ -19,6 +19,10 @@
 #include "imagelistview.h"
 #include "sourceinfo.h"
 
+/**
+ * @brief The ImageSelecter class
+ * @ingroup AntiquaImgEdit
+ */
 class ImageSelecter : public QWidget {
   Q_OBJECT
 

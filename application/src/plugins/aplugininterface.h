@@ -24,7 +24,6 @@ class UpdateDialog;
 /**
  * @brief Klasse für die Dienstleisterkonfiuration
  * @ingroup AntiquaCRMPlugin
- * @section plugin
  */
 struct ANTIQUACRM_LIBRARY APluginConfig {
   QString hostname = QString();
@@ -37,8 +36,7 @@ struct ANTIQUACRM_LIBRARY APluginConfig {
 
 /**
  * @brief Primäre Interface Klasse für Dienstleister Plugins
- * @ingroup AntiquaCRMPlugin
- * @section plugin
+ * @section AntiquaCRMPlugin
  */
 class ANTIQUACRM_LIBRARY APluginInterface : public QObject {
   Q_OBJECT
@@ -204,13 +202,12 @@ public:
   /**
    * @brief Speicherschlüssel des Dienstleisters für die Konfiguration!
    * @note Muss in Kleinschreibung (ASCII), ohne Sonder-/Leerzeichen erfolgen!
-   * @example "provider/my_vendor_name"
    */
   virtual const QString configProvider() const = 0;
 
   /**
    * @brief Gibt den Anzeigenamen für das Interface zurück.
-   * @example Für die Anzeige in Menüs, PopUp Fenster und Listen.
+   * @note Für die Anzeige in Menüs, PopUp Fenster und Listen.
    */
   virtual const QString displayName() const = 0;
 

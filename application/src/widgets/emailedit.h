@@ -8,6 +8,10 @@
 #include <AntiquaInputEdit>
 #include <QRegExpValidator>
 
+/**
+ * @brief The EMailEdit class
+ * @ingroup widgets
+ */
 class EMailEdit final : public InputEdit {
   Q_OBJECT
 

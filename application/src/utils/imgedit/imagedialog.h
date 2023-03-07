@@ -25,8 +25,7 @@ class ImageActionsBar;
 
 /**
  * @brief Primärer Bilddialog
- * @class ImageDialog
- * @defgroup Imaging
+ * @section AntiquaImgEdit
  */
 class ImageDialog final : public QDialog {
   Q_OBJECT
@@ -132,7 +131,9 @@ public Q_SLOTS:
 
 public:
   /**
+   * @brief ImageDialog
    * @param articleId - !!! Muss gesetzt sein. !!!
+   * @param parent
    */
   explicit ImageDialog(int articleId, QWidget *parent = nullptr);
 

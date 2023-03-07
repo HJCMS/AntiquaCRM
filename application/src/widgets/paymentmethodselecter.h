@@ -10,6 +10,10 @@
 #include <QMap>
 #include <QPair>
 
+/**
+ * @brief The PaymentMethodSelecter class
+ * @ingroup widgets
+ */
 class PaymentMethodSelecter final : public InputEdit {
   Q_OBJECT
 

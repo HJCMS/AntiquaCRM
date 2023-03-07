@@ -10,6 +10,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief Inventory Prints Filter selecter
+ * @ingroup AntiquaPrintsStitches
+ */
 class PrintsStitchesFilterSelect final : public QComboBox {
   Q_OBJECT
 

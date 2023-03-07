@@ -11,6 +11,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief The AntiquaLineEdit class
+ * @ingroup widgets
+ */
 class AntiquaLineEdit final : public QLineEdit {
   Q_OBJECT
   Q_PROPERTY(bool keyReturn READ keyEnterEventEnabled WRITE setEnableKeyEnterEvent

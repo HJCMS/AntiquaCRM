@@ -10,6 +10,10 @@
 #include <QObject>
 #include <QtCharts/QDateTimeAxis>
 
+/**
+ * @brief The YearAxis class
+ * @ingroup AntiquaStatistics
+ */
 class YearAxis final : public QtCharts::QDateTimeAxis {
   Q_OBJECT
 

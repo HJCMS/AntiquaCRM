@@ -10,6 +10,10 @@
 #include <QDate>
 #include <QPushButton>
 
+/**
+ * @brief The YearSelect class
+ * @ingroup widgets
+ */
 class YearSelect final : public InputEdit {
   Q_OBJECT
 

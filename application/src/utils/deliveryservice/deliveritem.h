@@ -9,6 +9,10 @@
 #include <QDateTime>
 #include <QString>
 
+/**
+ * @brief The DeliverItem class
+ * @ingroup DeliveryService
+ */
 class DeliverItem final {
 private:
   const int d_srv;

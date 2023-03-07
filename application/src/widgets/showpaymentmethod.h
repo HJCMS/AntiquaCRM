@@ -10,6 +10,10 @@
 #include <QLabel>
 #include <QMap>
 
+/**
+ * @brief The ShowPaymentMethod class
+ * @ingroup widgets
+ */
 class ShowPaymentMethod final : public InputEdit {
   Q_OBJECT
 

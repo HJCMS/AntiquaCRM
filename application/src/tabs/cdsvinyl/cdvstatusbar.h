@@ -9,6 +9,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief CD+Vinyl status bar
+ * @ingroup AntiquaCDsVinyl
+ */
 class CDVStatusBar final : public TabStatusBar {
   Q_OBJECT
 

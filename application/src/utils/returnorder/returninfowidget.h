@@ -12,6 +12,10 @@
 
 class ButtonNext;
 
+/**
+ * @brief The InfoLabel class
+ * @ingroup AntiquaReturnOrder
+ */
 class InfoLabel final : public QLabel {
   Q_OBJECT
 
@@ -19,6 +23,10 @@ public:
   explicit InfoLabel(const QString &text, QWidget *parent = nullptr);
 };
 
+/**
+ * @brief The ReturnInfoWidget class
+ * @ingroup AntiquaReturnOrder
+ */
 class ReturnInfoWidget : public QWidget {
   Q_OBJECT
 

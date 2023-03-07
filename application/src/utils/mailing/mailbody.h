@@ -9,6 +9,10 @@
 #include <QTextEdit>
 #include <QWidget>
 
+/**
+ * @brief The MailBody class
+ * @ingroup AntiquaMailing
+ */
 class MailBody final : public QTextEdit {
   Q_OBJECT
 

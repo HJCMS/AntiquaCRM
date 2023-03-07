@@ -8,6 +8,10 @@
 #include <QString>
 #include <QtGlobal>
 
+/**
+ * @brief The CacheConfig class
+ * @ingroup AntiquaCache
+ */
 class CacheConfig final {
 public:
   QString file;

@@ -14,6 +14,10 @@
 
 class KeywordLabel;
 
+/**
+ * @brief Keywords Edit Labels list
+ * @ingroup KeywordsEdit
+ */
 class KeywordLabelList : public QFrame {
   Q_OBJECT
   Q_CLASSINFO("Author", "Jürgen Heinemann")

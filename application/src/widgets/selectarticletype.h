@@ -8,6 +8,10 @@
 #include <AGlobal>
 #include <AntiquaInputEdit>
 
+/**
+ * @brief The SelectArticleType class
+ * @ingroup widgets
+ */
 class SelectArticleType final : public InputEdit {
   Q_OBJECT
 

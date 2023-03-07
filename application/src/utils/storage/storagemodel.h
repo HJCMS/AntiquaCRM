@@ -9,6 +9,10 @@
 #include <QSqlDatabase>
 #include <QSqlTableModel>
 
+/**
+ * @brief The StorageModel class
+ * @ingroup AntiquaStorage
+ */
 class StorageModel : public QSqlTableModel {
   Q_OBJECT
 

@@ -8,6 +8,10 @@
 #include "infowidget.h"
 #include <QWidget>
 
+/**
+ * @brief The AboutQREncode class
+ * @ingroup AntiquaAbout
+ */
 class AboutQREncode final : public InfoWidget {
   Q_OBJECT
 

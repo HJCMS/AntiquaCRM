@@ -11,6 +11,10 @@
 
 class CDVTableModel;
 
+/**
+ * @brief CD+Vinyl Table view
+ * @ingroup AntiquaCDsVinyl
+ */
 class CDVTableView final : public InventoryTable {
   Q_OBJECT
 

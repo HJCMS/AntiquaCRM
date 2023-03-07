@@ -12,6 +12,10 @@
 
 #include "cacheconfig.h"
 
+/**
+ * @brief The CacheBuilder class
+ * @section AntiquaCache
+ */
 class CacheBuilder : public QObject {
   Q_OBJECT
 

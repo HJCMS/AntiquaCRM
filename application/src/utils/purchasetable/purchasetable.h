@@ -18,7 +18,7 @@ class PurchaseTableDelegate;
 
 /**
  * @brief Tabelle Artikeleinkäufe
- * @section widgets
+ * @section AntiquaPurchaseTable
  * Es werden hier aus Performance gründen keine SQL Abfragen gemacht!
  * Der Grund hierfür ist, das AntiquaCRM primär für Remote Desktop erstellt
  * wird. Zu viele Hintergrundabfragen können je nach Netzwerkleistung zu
@@ -77,6 +77,7 @@ public Q_SLOTS:
 public:
   /**
    * @brief Einkaufs Tabelle
+   * @param parent
    * @param readOnly - Wenn aktiviert wird PurchaseTableDelegate deaktiviert!
    */
   explicit PurchaseTable(QWidget *parent = nullptr, bool readOnly = true);

@@ -15,6 +15,7 @@
 
 /**
  * @brief AntiquaCRM Splitter handle
+ * @ingroup widgets
  */
 class AntiquaSplitterHandle final : public QSplitterHandle {
   Q_OBJECT

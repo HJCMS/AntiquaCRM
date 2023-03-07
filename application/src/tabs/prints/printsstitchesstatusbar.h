@@ -10,6 +10,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief Inventory Prints Status bar
+ * @ingroup AntiquaPrintsStitches
+ */
 class PrintsStitchesStatusBar final : public TabStatusBar
 {
   Q_OBJECT

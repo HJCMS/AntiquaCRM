@@ -9,6 +9,10 @@
 #include <AntiquaInputEdit>
 #include <QSlider>
 
+/**
+ * @brief The OpacitySlider class
+ * @ingroup widgets
+ */
 class OpacitySlider final : public InputEdit {
   Q_OBJECT
 

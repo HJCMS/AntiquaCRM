@@ -17,7 +17,7 @@ namespace AntiquaCRM {
 
 /**
  * @brief Datenbehandlung im Benutzerverzeichnis
- * @section core
+ * @ingroup core
  */
 class ANTIQUACRM_LIBRARY ASharedDataFiles : public QDir {
 public:
@@ -30,7 +30,7 @@ public:
 
   /**
    * @brief Standard für Suche, Anhand der Dateierweiterrung.
-   * @list Üblicherweise:
+   * Üblicherweise:
    * @li *.xml
    * @li *.sql
    * @li *.json
@@ -75,7 +75,7 @@ public:
 
 /**
  * @brief Datenbehandlung im Benutzer Cache-/ Tempverzeichnis
- * @section core
+ * @ingroup core
  */
 class ANTIQUACRM_LIBRARY ASharedCacheFiles : public QDir {
 public:

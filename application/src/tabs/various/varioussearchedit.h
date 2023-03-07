@@ -10,6 +10,10 @@
 #include <QRegExp>
 #include <QWidget>
 
+/**
+ * @brief Inventory Various Search line edit
+ * @ingroup widgets
+ */
 class VariousSearchEdit final : public SearchLineEdit {
   Q_OBJECT
 

@@ -19,6 +19,10 @@
 
 class TextEditor;
 
+/**
+ * @brief The Reports class
+ * @ingroup AntiquaPrinting
+ */
 class Reports final : public QDialog {
   Q_OBJECT
 

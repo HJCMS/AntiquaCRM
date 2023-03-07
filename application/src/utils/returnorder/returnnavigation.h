@@ -11,6 +11,10 @@
 #include <QPushButton>
 #include <QWidget>
 
+/**
+ * @brief The ReturnNavigation class
+ * @ingroup AntiquaReturnOrder
+ */
 class ReturnNavigation final : public QDialogButtonBox {
   Q_OBJECT
 

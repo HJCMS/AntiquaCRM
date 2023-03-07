@@ -15,6 +15,10 @@
 
 #include "designationdata.h"
 
+/**
+ * @brief The DesignationEdit class
+ * @ingroup AntiquaDesignations
+ */
 class DesignationEdit : public QWidget {
   Q_OBJECT
 

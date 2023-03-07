@@ -13,6 +13,10 @@
 class CDVFilterSelect;
 class CDVSearchLine;
 
+/**
+ * @brief CD+Vinyl Search bar
+ * @ingroup AntiquaCDsVinyl
+ */
 class CDVSearchBar final : public TabSearchBar {
   Q_OBJECT
 

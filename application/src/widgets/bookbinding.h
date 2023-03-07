@@ -8,6 +8,10 @@
 #include <QWidget>
 #include <AntiquaInputEdit>
 
+/**
+ * @brief The BookBinding class
+ * @ingroup widgets
+ */
 class BookBinding : public InputEdit {
   Q_OBJECT
 

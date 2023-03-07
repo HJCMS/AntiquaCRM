@@ -9,6 +9,10 @@
 #include <AntiquaInputEdit>
 #include <QLineEdit>
 
+/**
+ * @brief The StorageLocation class
+ * @ingroup widgets
+ */
 class StorageLocation final : public InputEdit {
   Q_OBJECT
 

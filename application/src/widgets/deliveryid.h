@@ -9,6 +9,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief The DeliveryId class
+ * @ingroup widgets
+ */
 class DeliveryId final : public InputEdit {
   Q_OBJECT
 

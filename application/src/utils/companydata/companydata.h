@@ -16,7 +16,7 @@ class CompanyWidget;
 /**
  * @brief The Company Settings Dialog
  * @class CompanyData
- * @section AntiquaCompanyData
+ * @ingroup AntiquaCompanyData
  */
 class CompanyData : public QDialog {
   Q_OBJECT

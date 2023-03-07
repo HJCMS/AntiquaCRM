@@ -11,6 +11,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief The ProviderPurchaseHeader class
+ * @ingroup AntiquaProviders
+ */
 class ProviderPurchaseHeader final : public QFrame {
   Q_OBJECT
 

@@ -12,6 +12,10 @@
 #include <QUrl>
 #include <QWidget>
 
+/**
+ * @brief The InfoWidget class
+ * @ingroup AntiquaAbout
+ */
 class InfoWidget : public QWidget {
   Q_OBJECT
 
@@ -30,6 +34,10 @@ protected:
 
 public:
   explicit InfoWidget(QWidget *parent = nullptr);
+
+  /**
+   * @brief Set current Info Widget
+   */
   virtual void setInfoWidget() = 0;
 };
 

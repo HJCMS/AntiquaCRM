@@ -20,6 +20,10 @@ class PrinterFonts;
 class PrinterSetup;
 class PrintingLayout;
 
+/**
+ * @brief The PrintSettings class
+ * @ingroup AntiquaSettings
+ */
 class PrintSettings : public SettingsWidget {
   Q_OBJECT
 

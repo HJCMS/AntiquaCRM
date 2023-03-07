@@ -10,6 +10,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief The BoolBox class
+ * @ingroup widgets
+ */
 class BoolBox final : public InputEdit {
   Q_OBJECT
 

@@ -16,8 +16,7 @@
 
 /**
  * @brief Definitionsklasse für den Konfigurations Dialog
- * @defgroup Configuration Widgets
- * @class SettingsWidget
+ * @section AntiquaSettings
  */
 class SettingsWidget : public QWidget {
   Q_OBJECT

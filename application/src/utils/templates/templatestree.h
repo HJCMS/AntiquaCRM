@@ -14,6 +14,10 @@
 #include <QTreeWidgetItem>
 #include <QWidget>
 
+/**
+ * @brief The TemplatesTree class
+ * @ingroup AntiquaTemplates
+ */
 class TemplatesTree final : public QTreeWidget {
   Q_OBJECT
 

@@ -16,6 +16,10 @@
 
 namespace AntiquaCRM {
 
+/**
+ * @brief The UpdateDialog class
+ * @ingroup AntiquaCRMPlugin
+ */
 class ANTIQUACRM_LIBRARY UpdateDialog : public QDialog {
   Q_OBJECT
 

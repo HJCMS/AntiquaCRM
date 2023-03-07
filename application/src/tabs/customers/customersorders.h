@@ -11,6 +11,10 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 
+/**
+ * @brief Customers table widget
+ * @ingroup AntiquaCustomers
+ */
 class CustomersOrders : public QTableWidget {
   Q_OBJECT
 

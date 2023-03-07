@@ -17,8 +17,7 @@
 
 /**
  * @brief Lieferschein Erstellung
- * @ingroup Printing
- * @class DeliveryNote
+ * @ingroup AntiquaPrinting
  */
 class DeliveryNote final : public Printing {
   Q_OBJECT
@@ -70,7 +69,7 @@ public:
 
   /**
    * @brief Wichtige Nummern angeben
-   * @note Muss vor @ref exec() gesetzt sein!
+   * @note Muss vor exec() gesetzt sein!
    */
   void setDelivery(qint64 orderId, qint64 customerId,
                    const QString &deliverNoteId);

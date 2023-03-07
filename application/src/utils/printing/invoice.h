@@ -16,8 +16,7 @@
 
 /**
  * @brief Rechnungs Erstellung
- * @ingroup Printing
- * @class Invoice
+ * @ingroup AntiquaPrinting
  */
 class Invoice final : public Printing {
   Q_OBJECT
@@ -95,7 +94,7 @@ public:
 
   /**
    * @brief Wichtige Nummern angeben
-   * @note Muss vor @ref exec() gesetzt sein!
+   * @note Muss vor exec() gesetzt sein!
    */
   void setInvoice(qint64 orderId,    /* Bestellnummer */
                   qint64 customerId, /* Kundennummer */

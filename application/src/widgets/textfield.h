@@ -9,6 +9,10 @@
 #include <AntiquaInputEdit>
 #include <QTextEdit>
 
+/**
+ * @brief The TextField class
+ * @ingroup widgets
+ */
 class TextField final : public InputEdit {
   Q_OBJECT
 

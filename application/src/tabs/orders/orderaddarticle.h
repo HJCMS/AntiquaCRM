@@ -15,6 +15,10 @@
 #include <QStatusBar>
 #include <QWidget>
 
+/**
+ * @brief Open Order Add Article Dialog
+ * @ingroup AntiquaOrders
+ */
 class OrderAddArticle final : public QDialog {
   Q_OBJECT
 

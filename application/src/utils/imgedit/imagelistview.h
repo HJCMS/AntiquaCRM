@@ -15,6 +15,10 @@
 
 #include "sourceinfo.h"
 
+/**
+ * @brief The ImageListView class
+ * @ingroup AntiquaImgEdit
+ */
 class ImageListView final : public QTreeView {
   Q_OBJECT
 

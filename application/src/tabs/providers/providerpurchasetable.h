@@ -16,7 +16,7 @@
 
 /**
  * @class ProviderPurchaseTable
- * @ingroup providers
+ * @ingroup AntiquaProviders
  * @brief Tabelle für die Bestellartikel anzeigen
  * Die Standardformatierung der Zellen ist Text und alle Zellen sind
  * auf nur lesen gestellt. Die Tabelle dient Primär zur Bestellungsanzeige.

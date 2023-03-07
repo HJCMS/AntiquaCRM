@@ -7,6 +7,10 @@
 
 #include <AntiquaInputEdit>
 
+/**
+ * @brief The IntSpinBox class
+ * @ingroup widgets
+ */
 class IntSpinBox final : public InputEdit {
   Q_OBJECT
 

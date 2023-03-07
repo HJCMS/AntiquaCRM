@@ -10,6 +10,10 @@
 #include <QToolBar>
 #include <QWidget>
 
+/**
+ * @brief The ImageActionsBar class
+ * @ingroup AntiquaImgEdit
+ */
 class ImageActionsBar final : public QToolBar {
   Q_OBJECT
 

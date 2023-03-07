@@ -14,6 +14,10 @@ class AboutAntiquaCRM;
 class AboutQREncode;
 class AboutPostgreSQL;
 
+/**
+ * @brief The AboutDialogs class
+ * @section AntiquaAbout
+ */
 class AboutDialogs final : public QDialog {
   Q_OBJECT
 

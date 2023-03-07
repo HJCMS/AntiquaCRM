@@ -9,6 +9,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief Customers data billings widget
+ * @ingroup AntiquaCustomers
+ */
 class CustomersBillings final : public QWidget {
   Q_OBJECT
 

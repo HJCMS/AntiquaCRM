@@ -14,6 +14,10 @@ class BookTableView;
 class BookStatusBar;
 class BookEditor;
 
+/**
+ * @brief Inventory Books Class
+ * @section AntiquaBooks
+ */
 class TabBooks final : public Inventory {
   Q_OBJECT
 

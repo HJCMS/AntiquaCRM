@@ -5,9 +5,15 @@
 #ifndef ANTIQUACRM_ABOUT_ANTIQUACRM_H
 #define ANTIQUACRM_ABOUT_ANTIQUACRM_H
 
-#include "infowidget.h"
 #include <QWidget>
 
+// info
+#include "infowidget.h"
+
+/**
+ * @brief The AboutAntiquaCRM class
+ * @ingroup AntiquaAbout
+ */
 class AboutAntiquaCRM : public InfoWidget {
   Q_OBJECT
 

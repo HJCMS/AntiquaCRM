@@ -9,6 +9,10 @@
 #include <AntiquaInputEdit>
 #include <QDateTimeEdit>
 
+/**
+ * @brief The AntiquaDateInfo class
+ * @ingroup widgets
+ */
 class AntiquaDateInfo final : public InputEdit {
   Q_OBJECT
 

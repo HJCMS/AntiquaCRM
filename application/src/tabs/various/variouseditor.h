@@ -10,6 +10,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief Inventory Various Editor
+ * @ingroup InventoryVarious
+ */
 class VariousEditor final : public InventoryEditor {
   Q_OBJECT
 

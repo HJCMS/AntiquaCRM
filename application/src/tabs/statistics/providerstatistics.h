@@ -11,6 +11,10 @@
 #include <QWidget>
 #include <QtCharts/QChartView>
 
+/**
+ * @brief The ProviderStatistics class
+ * @ingroup AntiquaStatistics
+ */
 class ProviderStatistics : public QScrollArea {
   Q_OBJECT
 

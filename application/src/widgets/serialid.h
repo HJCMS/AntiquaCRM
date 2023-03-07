@@ -11,6 +11,10 @@
 #include <QObject>
 #include <QVariant>
 
+/**
+ * @brief The SerialID class
+ * @ingroup widgets
+ */
 class SerialID final : public InputEdit {
   Q_OBJECT
 

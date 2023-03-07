@@ -8,6 +8,10 @@
 #include <AntiquaInputEdit>
 #include <QCompleter>
 
+/**
+ * @brief The LineEdit class
+ * @ingroup widgets
+ */
 class LineEdit final : public InputEdit {
   Q_OBJECT
 

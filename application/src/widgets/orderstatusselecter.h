@@ -10,6 +10,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief The OrderStatusSelecter class
+ * @ingroup widgets
+ */
 class OrderStatusSelecter final : public InputEdit {
   Q_OBJECT
 

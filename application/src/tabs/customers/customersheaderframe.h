@@ -10,6 +10,10 @@
 #include <QLabel>
 #include <QWidget>
 
+/**
+ * @brief Customers header frame
+ * @ingroup AntiquaCustomers
+ */
 class CustomersHeaderFrame : public QFrame {
   Q_OBJECT
 

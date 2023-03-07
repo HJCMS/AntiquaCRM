@@ -12,6 +12,10 @@
 
 class BooklookerDialog;
 
+/**
+ * @brief The Booklooker class
+ * @section BooklookerPlugin
+ */
 class ANTIQUACRM_LIBRARY Booklooker final
     : public AntiquaCRM::APluginInterface {
   Q_OBJECT

@@ -19,6 +19,10 @@
 class DeliverServiceEdit;
 class DeliverServiceList;
 
+/**
+ * @brief The DeliverServiceDialog class
+ * @section DeliveryService
+ */
 class DeliverServiceDialog : public QDialog {
   Q_OBJECT
 

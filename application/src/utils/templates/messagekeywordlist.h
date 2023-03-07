@@ -13,6 +13,10 @@
 #include <QTreeWidgetItem>
 #include <QWidget>
 
+/**
+ * @brief The MessageKeywordList class
+ * @ingroup AntiquaTemplates
+ */
 class MessageKeywordList final : public QTreeWidget {
   Q_OBJECT
 

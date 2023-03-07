@@ -14,7 +14,7 @@
 
 /**
  * @brief Model Klasse für Artikel Einkaufstabelle
- * @section widgets
+ * @ingroup AntiquaPurchaseTable
  */
 class PurchaseTableModel final : public QAbstractTableModel {
   Q_OBJECT
@@ -86,7 +86,7 @@ public:
   void clear();
 
   /**
-   * @brief Einen Eintrag aus @ref articleRows entfernen!
+   * @brief Einen Eintrag aus articleRows entfernen!
    * @warning !!! KEIN STANDARD WIE IN DER DOKUMENTATION VORGEGEBEN !!!
    * @bug Wenn ich hier, wie in der Dokumentation beschrieben mit \i
    * beginRemoveRows und \i endRemoveRows arbeite! Werden Tabelleninhalte bei
@@ -105,7 +105,7 @@ public:
   bool addArticles(const QList<AntiquaCRM::OrderArticleItems> &items);
 
   /**
-   * @brief Gibt die Größe von @ref articleRows zurück.
+   * @brief Gibt die Größe von articleRows zurück.
    */
   int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
@@ -147,8 +147,8 @@ public:
 
   /**
    * @brief Bearbeitungs Kennzeichen
-   * @default (Qt::ItemIsSelectable | Qt::ItemIsEnabled)
-   * @list Editierbare Zellen @ref editableColumns() besitzen:
+   * @note default (Qt::ItemIsSelectable | Qt::ItemIsEnabled)
+   * Editierbare Zellen editableColumns() besitzen:
    *  @li Qt::ItemIsSelectable
    *  @li Qt::ItemIsEnabled
    *  @li Qt::ItemIsEditable

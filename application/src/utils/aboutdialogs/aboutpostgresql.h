@@ -8,6 +8,10 @@
 #include "infowidget.h"
 #include <QWidget>
 
+/**
+ * @brief The AboutPostgreSQL class
+ * @ingroup AntiquaAbout
+ */
 class AboutPostgreSQL : public InfoWidget {
   Q_OBJECT
 

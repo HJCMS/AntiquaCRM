@@ -10,6 +10,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief The PriceEdit class
+ * @ingroup widgets
+ */
 class PriceEdit final : public InputEdit {
   Q_OBJECT
 

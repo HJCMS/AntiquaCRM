@@ -13,6 +13,10 @@
 #include <QPair>
 #include <QWidget>
 
+/**
+ * @brief The Printer Setup class
+ * @ingroup AntiquaSettings
+ */
 class PrinterSetup : public QGroupBox {
   Q_OBJECT
 

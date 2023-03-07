@@ -10,6 +10,10 @@
 #include <QRegExp>
 #include <QWidget>
 
+/**
+ * @brief CD+Vinyl Search line widget
+ * @ingroup widgets
+ */
 class CDVSearchLine final : public SearchLineEdit {
   Q_OBJECT
 

@@ -10,6 +10,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief Books Status bar
+ * @ingroup AntiquaBooks
+ */
 class BookStatusBar final : public TabStatusBar {
   Q_OBJECT
 

@@ -17,6 +17,10 @@
 
 class PrintsStitchesModel;
 
+/**
+ * @brief Inventory Prints Table view
+ * @ingroup AntiquaPrintsStitches
+ */
 class PrintsStitchesTableView final : public InventoryTable {
   Q_OBJECT
 

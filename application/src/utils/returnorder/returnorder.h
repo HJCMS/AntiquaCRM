@@ -16,6 +16,10 @@ class ReturnEdit;
 class FinalEdit;
 class ReturnNavigation;
 
+/**
+ * @brief The Return Order Section
+ * @section AntiquaReturnOrder
+ */
 class ReturnOrder final : public QDialog {
   Q_OBJECT
 

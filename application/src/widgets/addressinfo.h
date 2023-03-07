@@ -9,6 +9,10 @@
 #include <AntiquaInputEdit>
 #include <QTextEdit>
 
+/**
+ * @brief The AddressInfo class
+ * @ingroup widgets
+ */
 class AddressInfo final : public InputEdit {
   Q_OBJECT
 

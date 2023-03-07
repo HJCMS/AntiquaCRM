@@ -18,7 +18,7 @@ class AntiquaILabel;
 
 /**
  * @brief Abstract Input Edit class
- * @section widgets
+ * @ingroup widgets
  */
 class InputEdit : public QFrame {
   Q_OBJECT

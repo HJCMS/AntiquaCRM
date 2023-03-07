@@ -14,7 +14,7 @@ namespace AntiquaCRM {
 
 /**
  * @brief it provides a temporary data profile to connect the database
- * @section sql
+ * @ingroup core
  */
 class ANTIQUACRM_LIBRARY ASqlProfile final {
 

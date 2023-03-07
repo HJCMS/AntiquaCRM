@@ -17,6 +17,10 @@
 
 class CustomersTableModel;
 
+/**
+ * @brief Customers Table view
+ * @ingroup AntiquaCustomers
+ */
 class CustomersTableView final : public InventoryTable {
   Q_OBJECT
 

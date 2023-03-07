@@ -14,6 +14,10 @@ class CDVTableView;
 class CDVStatusBar;
 class CDVEditor;
 
+/**
+ * @brief Inventory CD+Vinyl Class
+ * @section AntiquaCDsVinyl
+ */
 class TabCDVinyl final : public Inventory {
   Q_OBJECT
 

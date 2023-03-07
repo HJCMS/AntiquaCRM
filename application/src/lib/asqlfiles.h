@@ -16,13 +16,13 @@ namespace AntiquaCRM {
 
 /**
  * @brief Template Class for SQL Queries
- * @section sql
+ * @ingroup core
  *
  * Following MACROS are replaced!
- * @li @SQL_WHERE_CLAUSE@
- * @li @SQL_ORDER_BY@
- * @li @SQL_SORTING@
- * @li @SQL_LIMIT@
+ *  @li \@SQL_WHERE_CLAUSE\@
+ *  @li \@SQL_ORDER_BY\@
+ *  @li \@SQL_SORTING\@
+ *  @li \@SQL_LIMIT\@
  */
 class ANTIQUACRM_LIBRARY ASqlFiles final : public QFileInfo {
 

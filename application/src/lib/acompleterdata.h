@@ -11,6 +11,10 @@
 
 namespace AntiquaCRM {
 
+/**
+ * @brief The ACompleterData class
+ * @ingroup core
+ */
 class ANTIQUACRM_LIBRARY ACompleterData final {
 private:
   const QString p_basename;

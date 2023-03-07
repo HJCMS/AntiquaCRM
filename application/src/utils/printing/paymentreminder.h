@@ -17,8 +17,7 @@
 
 /**
  * @brief Zahlungs Erinnerung Erstellung
- * @ingroup Printing
- * @class PaymentReminder
+ * @ingroup AntiquaPrinting
  */
 class PaymentReminder final : public Printing {
   Q_OBJECT
@@ -81,7 +80,7 @@ public:
 
   /**
    * @brief Wichtige Nummern angeben
-   * @note Muss vor @ref exec() gesetzt sein!
+   * @note Muss vor exec() gesetzt sein!
    */
   void setPaymentInfo(qint64 orderId,     /* Bestellnummer */
                       qint64 customerId,  /* Kundennummer */

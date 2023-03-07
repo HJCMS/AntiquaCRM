@@ -16,6 +16,10 @@ class OrdersStatusBar;
 class OrdersEditor;
 class OrdersReturning;
 
+/**
+ * @brief Inventory Orders System
+ * @section AntiquaOrders
+ */
 class TabOrders final : public Inventory {
   Q_OBJECT
 

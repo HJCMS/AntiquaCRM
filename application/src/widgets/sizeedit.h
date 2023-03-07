@@ -9,6 +9,10 @@
 #include <QObject>
 #include <QSpinBox>
 
+/**
+ * @brief Size edit input widget
+ * @ingroup widgets
+ */
 class SizeEdit final : public InputEdit {
   Q_OBJECT
 

@@ -11,6 +11,10 @@
 #include <QRegExpValidator>
 #include <QWidget>
 
+/**
+ * @brief The SearchLineEdit class
+ * @ingroup widgets
+ */
 class SearchLineEdit : public QLineEdit {
   Q_OBJECT
 

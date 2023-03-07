@@ -14,7 +14,7 @@ namespace AntiquaCRM {
 
 /**
  * @brief Tabellenkopfspalten
- * @section utils TableHeaderColumn
+ * @ingroup core
  * Helferklasse für die Darstellung der Tabellenkopfspalten.
  */
 class ANTIQUACRM_LIBRARY ATableHeaderColumn final {

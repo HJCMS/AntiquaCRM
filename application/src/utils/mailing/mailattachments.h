@@ -13,6 +13,10 @@
 #include <QWidget>
 #include <ASettings>
 
+/**
+ * @brief The AttachmentInfo class
+ * @ingroup AntiquaMailing
+ */
 class AttachmentInfo final : public QLineEdit {
   Q_OBJECT
 
@@ -33,6 +37,10 @@ public:
   const QString path();
 };
 
+/**
+ * @brief The MailAttachments class
+ * @ingroup AntiquaMailing
+ */
 class MailAttachments final : public QFrame {
   Q_OBJECT
 

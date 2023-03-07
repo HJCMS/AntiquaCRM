@@ -9,6 +9,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief Customers Status bar
+ * @ingroup AntiquaCustomers
+ */
 class CustomersStatusBar final : public TabStatusBar {
   Q_OBJECT
 

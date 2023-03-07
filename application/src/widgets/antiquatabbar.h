@@ -11,6 +11,10 @@
 #include <QWheelEvent>
 #include <QWidget>
 
+/**
+ * @brief The AntiquaTabBar class
+ * @ingroup widgets
+ */
 class AntiquaTabBar final : public QTabBar {
   Q_OBJECT
 

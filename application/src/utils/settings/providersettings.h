@@ -11,6 +11,10 @@
 #include <QSpinBox>
 #include <SettingsDialog>
 
+/**
+ * @brief The ProviderSettings class
+ * @ingroup AntiquaSettings
+ */
 class ProviderSettings : public SettingsWidget {
   Q_OBJECT
 

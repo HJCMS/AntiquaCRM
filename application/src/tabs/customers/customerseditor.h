@@ -17,6 +17,10 @@ class CustomersData;
 class CustomersBillings;
 class CustomersOrders;
 
+/**
+ * @brief Customers Editor
+ * @ingroup AntiquaCustomers
+ */
 class CustomersEditor final : public InventoryEditor {
   Q_OBJECT
 

@@ -12,6 +12,10 @@
 
 class KeywordLineEdit;
 
+/**
+ * @brief Inventory Books Editor
+ * @ingroup AntiquaBooks
+ */
 class BookEditor final : public InventoryEditor {
   Q_OBJECT
 

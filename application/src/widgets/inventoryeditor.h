@@ -19,7 +19,6 @@
 
 /**
  * @brief Hauptklasse für das Editieren
- * @abstract InventoryEditor
  * @ingroup widgets
  */
 class InventoryEditor : public QWidget {
@@ -59,7 +58,7 @@ protected:
 
   /**
    * @brief Alle Eingabefelder in @ref inputFields einfügen.
-   * Hier wird aus den Tabellenfeldern die Eingabeliste für @ref inputList
+   * Hier wird aus den Tabellenfeldern die Eingabeliste für @ref inputFields
    * erstellt. Dient als Helfer für das erstellen der SQL Statements und der
    * Datenprüfung verwendet wird.
    */
@@ -133,7 +132,7 @@ protected:
   /**
    * @brief Prüft und erstellt die Datensatzfelder.
    *
-   * In dieser Methode werden alle Datenfelder von @class InputEdit abgefragt
+   * In dieser Methode werden alle Datenfelder von InputEdit abgefragt
    * und bei Erfolg in den Hash geschrieben. Die Erstellung ist von mehreren
    * Faktoren abhängig und beinhaltet folgende Vorgangsweise, welche sich für
    * jedes Datenfeld wiederholt.
@@ -252,7 +251,9 @@ public Q_SLOTS:
 
 public:
   /**
+   * @brief InventoryEditor
    * @param pattern - Der Reguläre Ausdruck für @ref fieldPattern
+   * @param parent
    */
   explicit InventoryEditor(const QString &pattern, QWidget *parent = nullptr);
 

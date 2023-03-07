@@ -19,6 +19,10 @@
 class OrdersPaymentTable;
 class PurchaseTable;
 
+/**
+ * @brief Inventory Orders Items list
+ * @ingroup AntiquaOrders
+ */
 class OrdersItemList final : public QWidget {
   Q_OBJECT
   Q_PROPERTY(bool ArticleChanged READ getArticleChanged WRITE setArticleChanged NOTIFY articleChanged)

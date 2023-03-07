@@ -15,7 +15,7 @@
 
 /**
  * @brief Vordefinierte E-Mail Aktionen aufrufen
- * @class MailButton
+ * @ingroup widgets
  */
 class MailButton final : public QPushButton {
   Q_OBJECT
@@ -37,7 +37,7 @@ Q_SIGNALS:
   /**
    * @brief E-Mail Nachricht von Konstante senden ...
    * @see createMailButtonActions()
-   * @list Werte werden aus PgSQL::ui_template_body entnommen:
+   * Werte werden aus PgSQL::ui_template_body entnommen:
    *  @li MAIL_ACTION_SIMPLE_MESSAGE
    *  @li MAIL_ACTION_SHIPPING_NOTICE
    *  @li MAIL_ACTION_INVOICE_BILLING

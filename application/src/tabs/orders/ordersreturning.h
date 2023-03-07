@@ -8,6 +8,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief Inventory Orders returning widget
+ * @ingroup AntiquaOrders
+ */
 class OrdersReturning : public QWidget {
   Q_OBJECT
 

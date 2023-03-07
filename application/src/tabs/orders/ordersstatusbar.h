@@ -13,6 +13,10 @@
 
 class OrdersHistoryButton;
 
+/**
+ * @brief Inventory Orders Status bar
+ * @ingroup AntiquaOrders
+ */
 class OrdersStatusBar final : public TabStatusBar {
   Q_OBJECT
 

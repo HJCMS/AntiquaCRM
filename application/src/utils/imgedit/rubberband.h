@@ -12,6 +12,10 @@
 #include <QStyleOptionRubberBand>
 #include <QGraphicsView>
 
+/**
+ * @brief The RubberBand class
+ * @ingroup AntiquaImgEdit
+ */
 class RubberBand final : public QRubberBand {
   Q_OBJECT
 

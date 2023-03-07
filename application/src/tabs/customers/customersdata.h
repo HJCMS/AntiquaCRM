@@ -10,6 +10,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief Customers Editor data widget
+ * @ingroup AntiquaCustomers
+ */
 class CustomersData final : public QWidget {
   Q_OBJECT
 

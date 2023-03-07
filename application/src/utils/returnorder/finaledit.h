@@ -9,6 +9,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief The FinalEdit class
+ * @ingroup AntiquaReturnOrder
+ */
 class FinalEdit : public QWidget {
   Q_OBJECT
 

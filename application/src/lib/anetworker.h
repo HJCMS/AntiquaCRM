@@ -19,8 +19,7 @@ namespace AntiquaCRM {
 
 /**
  * @brief Standard Klasse für Netzwerkabfragen.
- * @class ANetworker
- * @ingroup Network
+ * @ingroup core
  *
  * Hier werden Sprache, Zeichensatz und Fehlermeldungen verabeitet.
  * Die Netzwerk antworten müssen in den Abfrage-Klassen verarbeitet werden!
@@ -72,7 +71,6 @@ public:
    *    Host mit QUrl:setHost() in der URL gesetzt ist.
    *    Wird SSL Verschlüsselung verwendet (sonst nicht)!
    * @param url   Anfrage URL
-   * @param name  HTTP_FORM_DATA_NAME "form-data; name={key}"
    * @param body  HTTP_FORM_DATA_BODY
    * @return NetworkReply
    */

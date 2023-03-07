@@ -9,6 +9,10 @@
 #include <QWidget>
 #include <AntiquaCRM>
 
+/**
+ * @brief Books Table model
+ * @ingroup AntiquaBooks
+ */
 class BooksTableModel final : public AntiquaCRM::ASqlQueryModel
 {
   Q_OBJECT

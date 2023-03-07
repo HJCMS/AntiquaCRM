@@ -17,7 +17,7 @@ class ASqlSettings;
 
 /**
  * @brief Primärklasse für die Datenbank
- * @section sql
+ * @ingroup core
  * Die ASqlCore prüft Standardmäßig die Treiber und greift auf die
  * Datenbankverbindung zu!
  * @note AntiquaCRM macht beim Start eine Session-Verbindung auf!

@@ -11,6 +11,10 @@
 
 class AbeBooksDocument;
 
+/**
+ * @brief The Abebooks class
+ * @section AbeBooksPlugin
+ */
 class ANTIQUACRM_LIBRARY Abebooks final : public AntiquaCRM::APluginInterface {
   Q_OBJECT
   Q_PLUGIN_METADATA(IID ANTIQUACRM_INTERFACE FILE "abebooks.json")

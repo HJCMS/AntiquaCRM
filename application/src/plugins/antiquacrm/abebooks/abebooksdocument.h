@@ -13,12 +13,20 @@
 #include <QPair>
 #include <QString>
 
+/**
+ * @brief The AbeBooksAccess class
+ * @ingroup AbeBooksPlugin
+ */
 struct ANTIQUACRM_LIBRARY AbeBooksAccess {
   QString user;
   QString key;
 };
 Q_DECLARE_METATYPE(AbeBooksAccess);
 
+/**
+ * @brief The AbeBooksDocument class
+ * @ingroup AbeBooksPlugin
+ */
 class ANTIQUACRM_LIBRARY AbeBooksDocument final : public QDomDocument {
 private:
   QString apiLogin;
@@ -113,8 +121,6 @@ public:
   /**
    * @brief getOrderDate
    * The order date of the purchase order item.
-   * @param parent
-   * @return DateTime
    */
   const QTimeZone fetchTimeZone(const QDomElement &orderNode);
   const QDateTime getOrderDate(const QDomElement &orderNode);
@@ -122,7 +128,7 @@ public:
   /**
    * @brief purchaseOrderItem list
    * @param node = purchaseOrderNode
-   * @return <purchaseOrderItem/> List
+   * @return &lt;purchaseOrderItem/&gt; List
    */
   const QDomNodeList getOrderItemList(const QDomNode &node);
 

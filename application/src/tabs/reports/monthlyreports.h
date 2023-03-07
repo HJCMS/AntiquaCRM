@@ -14,6 +14,10 @@
 class MonthSelecter;
 class MonthlyReportView;
 
+/**
+ * @brief The MonthlyReports class
+ * @ingroup InventorReports
+ */
 class MonthlyReports final : public QWidget {
   Q_OBJECT
 

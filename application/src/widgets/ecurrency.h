@@ -10,6 +10,10 @@
 #include <QLineEdit>
 #include <QObject>
 
+/**
+ * @brief The Ecurrency class
+ * @ingroup widgets
+ */
 class Ecurrency final : public InputEdit {
   Q_OBJECT
 

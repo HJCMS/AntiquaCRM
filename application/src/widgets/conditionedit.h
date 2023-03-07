@@ -8,6 +8,10 @@
 #include <AGlobal>
 #include <AntiquaInputEdit>
 
+/**
+ * @brief The ConditionEdit class
+ * @ingroup widgets
+ */
 class ConditionEdit final : public InputEdit {
   Q_OBJECT
 

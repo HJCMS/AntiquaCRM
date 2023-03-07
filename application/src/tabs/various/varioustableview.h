@@ -11,6 +11,10 @@
 
 class VariousTableModel;
 
+/**
+ * @brief Inventory Various table view
+ * @ingroup InventoryVarious
+ */
 class VariousTableView final : public InventoryTable {
   Q_OBJECT
 

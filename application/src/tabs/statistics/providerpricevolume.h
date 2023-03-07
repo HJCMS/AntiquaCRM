@@ -11,6 +11,10 @@
 #include <QWidget>
 #include <QtCharts/QChartView>
 
+/**
+ * @brief The ProviderPriceVolume class
+ * @ingroup AntiquaStatistics
+ */
 class ProviderPriceVolume final : public QScrollArea {
   Q_OBJECT
 

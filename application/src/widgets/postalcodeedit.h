@@ -13,7 +13,7 @@
 
 /**
  * @brief Postalcode Completer Model
- * @section widgets
+ * @ingroup widgets
  */
 class PostalCodeModel final : public QAbstractListModel {
   Q_OBJECT
@@ -33,7 +33,7 @@ public:
 
 /**
  * @brief Postleitzahlen Eingabe-Editor
- * @section widgets
+ * @ingroup widgets
  */
 class PostalCodeEdit final : public InputEdit {
   Q_OBJECT
@@ -85,7 +85,7 @@ private Q_SLOTS:
 Q_SIGNALS:
   /**
    * @brief Sende die Aktuell ermittelten Postleitzahlen treffer!
-   * @note Wird nur ausgelöst wenn @ref postalReadyToLeave() positiv ausfällt!
+   * @note Wird nur ausgelöst wenn postalReadyToLeave() positiv ausfällt!
    */
   void sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &);
 

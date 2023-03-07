@@ -14,6 +14,10 @@
 #include <QVariant>
 #include <QWidget>
 
+/**
+ * @brief The StorageCategory class
+ * @ingroup AntiquaStorage
+ */
 class StorageCategory final : public QFrame {
   Q_OBJECT
 

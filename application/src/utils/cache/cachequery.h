@@ -14,6 +14,10 @@
 
 #include "cacheconfig.h"
 
+/**
+ * @brief The CacheQuery class
+ * @ingroup AntiquaCache
+ */
 class CacheQuery final : public QObject {
   Q_OBJECT
 

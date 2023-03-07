@@ -15,6 +15,10 @@
 class PurchaseTable;
 class ButtonNext;
 
+/**
+ * @brief The ReturnEdit class
+ * @ingroup AntiquaReturnOrder
+ */
 class ReturnEdit : public QWidget {
   Q_OBJECT
 

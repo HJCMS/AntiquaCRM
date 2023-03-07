@@ -20,8 +20,7 @@
 
 /**
  * @brief Horizontal Table Header for InventoryTable
- * @class InventoryTableHeader
- * @section widgets
+ * @ingroup widgets
  */
 class InventoryTableHeader final : public QHeaderView {
   Q_OBJECT
@@ -35,8 +34,7 @@ public:
 
 /**
  * @brief Inventory Table View
- * @abstract InventoryTable
- * @section widgets
+ * @ingroup widgets
  */
 class InventoryTable : public QTableView {
   Q_OBJECT
@@ -46,14 +44,14 @@ class InventoryTable : public QTableView {
 private:
   /**
    * @brief Limiting sql query in Main view
-   * @default 1000
+   * @note default:1000
    * @see Configurations Dialog "Feel and View"
    */
   int QueryLimit;
 
   /**
    * @brief Only Autoupdate the MainView if smaller then this.
-   * @default 50
+   * @note default:50
    * @see Configurations Dialog "Feel and View"
    */
   int QueryAutoUpdate;

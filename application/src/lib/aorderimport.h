@@ -12,7 +12,6 @@
 #include <QJsonValue>
 
 /**
- * @section Order-Import
  * @brief Import and convert Provider data for PgSql INSERT.
  * This Classes are used to prepare Provider data for insert into
  * PgSql::provider_orders table.
@@ -21,9 +20,7 @@ namespace AntiquaCRM {
 
 /**
  * @brief Order Article object class
- * @namespace AntiquaCRM
- * @class AOrderArticle
- * @section Order-Import
+ * @ingroup core
  */
 class ANTIQUACRM_LIBRARY AOrderArticle final : public QJsonObject {
 private:
@@ -51,9 +48,7 @@ public:
 
 /**
  * @brief Customer data object class
- * @namespace AntiquaCRM
- * @class ACustomer
- * @section Order-Import
+ * @ingroup core
  */
 class ANTIQUACRM_LIBRARY AOrderCustomer final : public QJsonObject {
 private:
@@ -75,9 +70,7 @@ public:
 
 /**
  * @brief Order Articles container class
- * @namespace AntiquaCRM
- * @class Articles
- * @section Order-Import
+ * @ingroup core
  */
 class ANTIQUACRM_LIBRARY AOrderArticles final : public QJsonArray {
 public:
@@ -87,9 +80,7 @@ public:
 
 /**
  * @brief Order Info class
- * @namespace AntiquaCRM
- * @class AOrderInfo
- * @section Order-Import
+ * @ingroup core
  */
 class ANTIQUACRM_LIBRARY AOrderInfo final : public QJsonObject {
 private:
@@ -116,9 +107,7 @@ public:
 
 /**
  * @brief Provider Order Document class
- * @namespace AntiquaCRM
- * @class AOrderImport
- * @section Order-Import
+ * @ingroup core
  */
 class ANTIQUACRM_LIBRARY AOrderImport final : public QJsonObject {
 private:
@@ -151,7 +140,7 @@ public:
   /**
    * @brief Create JsonDocument with some checks
    * @note If an error has occurred, it responses with „error“ Attribute.
-   * @list The error Attribute answers with:
+   * The error Attribute answers with:
    *  @li NO_INFO_OBJECT
    *  @li NO_CUSTOMER_OBJECT
    *  @li NO_ORDER_ARTICLES

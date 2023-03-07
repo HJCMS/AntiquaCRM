@@ -10,6 +10,10 @@
 #include <QIcon>
 #include <QWidget>
 
+/**
+ * @brief Customers Table model
+ * @ingroup AntiquaCustomers
+ */
 class CustomersTableModel final : public AntiquaCRM::ASqlQueryModel {
   Q_OBJECT
 

@@ -9,6 +9,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief CD+Vinyl Table model
+ * @ingroup AntiquaCDsVinyl
+ */
 class CDVTableModel final : public AntiquaCRM::ASqlQueryModel {
   Q_OBJECT
 

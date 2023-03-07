@@ -9,6 +9,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @brief Orders Customer Search Line Edit
+ * @ingroup widgets
+ */
 class OrderSearchLine final : public SearchLineEdit {
   Q_OBJECT
 

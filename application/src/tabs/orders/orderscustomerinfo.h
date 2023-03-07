@@ -10,6 +10,10 @@
 #include <QStackedWidget>
 #include <QWidget>
 
+/**
+ * @brief Orders Customer Info Widget
+ * @ingroup AntiquaOrders
+ */
 class OrdersCustomerInfo : public QWidget {
   Q_OBJECT
 

@@ -12,6 +12,10 @@
 #include <QTextEdit>
 #include <QWidget>
 
+/**
+ * @brief The ProviderTextBlock class
+ * @ingroup AntiquaProviders
+ */
 class ProviderTextBlock final : public QFrame {
   Q_OBJECT
 
@@ -26,6 +30,10 @@ public:
   explicit ProviderTextBlock(const QString &title, QWidget *parent = nullptr);
 };
 
+/**
+ * @brief The ProviderBuyerInfo class
+ * @ingroup AntiquaProviders
+ */
 class ProviderBuyerInfo final : public QSplitter {
   Q_OBJECT
 

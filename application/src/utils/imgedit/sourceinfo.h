@@ -12,8 +12,7 @@
 
 /**
  * @brief Erweiterte Datei Info erstellen
- * @class SourceInfo
- * @ingroup Imaging
+ * @ingroup AntiquaImgEdit
  */
 class SourceInfo final : public QFileInfo {
 private:

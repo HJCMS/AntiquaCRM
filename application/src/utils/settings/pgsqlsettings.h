@@ -18,6 +18,7 @@
  * @brief PostgreSQL Configuration
  * Parameter Key Words:
  * @see https://www.postgresql.org/docs/current/libpq-connect.html
+ * @ingroup AntiquaSettings
  */
 class PgSQLSettings final : public SettingsWidget {
   Q_OBJECT

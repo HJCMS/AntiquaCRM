@@ -14,6 +14,7 @@
 /**
  * @brief Standard Editor Aktionsleiste
  * @class EditorActionBar
+ * @ingroup widgets
  */
 class EditorActionBar final : public QWidget {
   Q_OBJECT
@@ -75,13 +76,15 @@ public Q_SLOTS:
   /**
    * @brief Set focus to a QPushButton!
    * @param suffix
-   * @list Available Suffixes:
+   * Available Suffixes:
    *  @li cancel
    *  @li restore
    *  @li article
    *  @li save
    *  @li back
-   * @example setFocusButton("article");
+   * @code
+   *  setFocusButton("article");
+   * @endcode
    */
   void setFocusButton(const QString &suffix);
 
