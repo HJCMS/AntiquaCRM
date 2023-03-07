@@ -594,10 +594,15 @@ bool OrdersEditor::addArticleToOrderTable(qint64 articleId) {
           addArticleItem("a_customer_id", getSerialID("o_customer_id")));
       for (int i = 0; i < r.count(); i++) {
         QSqlField f = r.field(i);
-        items.append(addArticleItem(f.name(), f.value()));
-        // NOTE: a_sell_price i not in SQL Query
-        if (f.name() == "a_price")
+        if (f.name() == "a_count") {
+          items.append(addArticleItem("a_count", 1));
+        } else if (f.name() == "a_price") {
+          // NOTE: a_sell_price i not in SQL Query
+          items.append(addArticleItem(f.name(), f.value()));
           items.append(addArticleItem("a_sell_price", f.value()));
+        } else {
+          items.append(addArticleItem(f.name(), f.value()));
+        }
       }
       if (items.size() > 0) {
         m_ordersList->insertArticle(items);
