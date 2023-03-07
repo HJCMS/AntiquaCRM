@@ -71,14 +71,11 @@ void InventoryTable::setEnableTableViewSorting(bool b) {
   m_header->setSectionsClickable(b);
 }
 
-void InventoryTable::getSqlModelError(const QString &table,
-                                      const QString &message) {
-#ifndef ANTIQUA_DEVELOPEMENT
-  Q_UNUSED(table);
-  Q_UNUSED(message);
-#else
-  qDebug() << "SqlModelError:" << table << message;
-#endif
+void InventoryTable::sqlModelError(const QString &table,
+                                   const QString &message) {
+  qWarning("SQL-Model-Error in Table:%s\n%s\n", // verbose
+           qPrintable(table),                   // table
+           qPrintable(message));
 }
 
 void InventoryTable::setQueryLimit(int limit) {
@@ -86,6 +83,7 @@ void InventoryTable::setQueryLimit(int limit) {
     return;
 
   QueryLimit = limit;
+  emit sendQueryLimitChanged(QueryLimit);
 }
 
 const QIcon InventoryTable::cellIcon(const QString &name) {

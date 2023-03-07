@@ -16,7 +16,7 @@ CDVTableView::CDVTableView(QWidget *parent) : InventoryTable{parent} {
   where_clause = defaultWhereClause();
   m_model = new CDVTableModel(this);
   connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
-          this, SLOT(getSqlModelError(const QString &, const QString &)));
+          this, SLOT(sqlModelError(const QString &, const QString &)));
 
   connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
           SLOT(getSelectedItem(const QModelIndex &)));
@@ -34,7 +34,7 @@ int CDVTableView::getArticleCount(const QModelIndex &index) {
   return getTableID(index, 1);
 }
 
-bool CDVTableView::sqlQueryTable(const QString &query) {
+bool CDVTableView::sqlModelQuery(const QString &query) {
   // qDebug() << query;
   if (m_model->querySelect(query)) {
     QueryHistory = query;
@@ -132,7 +132,7 @@ void CDVTableView::setSortByColumn(int column, Qt::SortOrder order) {
     query.setSorting(sort);
     query.setLimits(getQueryLimit());
   }
-  sqlQueryTable(query.getQueryContent());
+  sqlModelQuery(query.getQueryContent());
 }
 
 void CDVTableView::getSelectedItem(const QModelIndex &index) {
@@ -155,7 +155,7 @@ void CDVTableView::createSocketOperation(const QModelIndex &index) {
 }
 
 void CDVTableView::setReloadView() {
-  sqlQueryTable(m_model->query().lastQuery());
+  sqlModelQuery(m_model->query().lastQuery());
 }
 
 int CDVTableView::rowCount() { return m_model->rowCount(); }
@@ -169,7 +169,7 @@ bool CDVTableView::setQuery(const QString &clause) {
     query.setSorting(Qt::DescendingOrder);
     query.setLimits(getQueryLimit());
   }
-  return sqlQueryTable(query.getQueryContent());
+  return sqlModelQuery(query.getQueryContent());
 }
 
 const QString CDVTableView::defaultWhereClause() {

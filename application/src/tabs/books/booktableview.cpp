@@ -15,7 +15,7 @@ BookTableView::BookTableView(QWidget *parent) : InventoryTable{parent} {
   m_model = new BooksTableModel(this);
   where_clause = defaultWhereClause();
   connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
-          this, SLOT(getSqlModelError(const QString &, const QString &)));
+          this, SLOT(sqlModelError(const QString &, const QString &)));
 
   connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
           SLOT(getSelectedItem(const QModelIndex &)));
@@ -33,7 +33,7 @@ int BookTableView::getArticleCount(const QModelIndex &index) {
   return getTableID(index, 1);
 }
 
-bool BookTableView::sqlQueryTable(const QString &query) {
+bool BookTableView::sqlModelQuery(const QString &query) {
   // qDebug() << Q_FUNC_INFO << query;
   if (m_model->querySelect(query)) {
     QueryHistory = query;
@@ -132,7 +132,7 @@ void BookTableView::setSortByColumn(int column, Qt::SortOrder order) {
     query.setSorting(sort);
     query.setLimits(getQueryLimit());
   }
-  sqlQueryTable(query.getQueryContent());
+  sqlModelQuery(query.getQueryContent());
 }
 
 void BookTableView::getSelectedItem(const QModelIndex &index) {
@@ -155,7 +155,7 @@ void BookTableView::createSocketOperation(const QModelIndex &index) {
 }
 
 void BookTableView::setReloadView() {
-  sqlQueryTable(m_model->query().lastQuery());
+  sqlModelQuery(m_model->query().lastQuery());
 }
 
 int BookTableView::rowCount() { return m_model->rowCount(); }
@@ -169,7 +169,7 @@ bool BookTableView::setQuery(const QString &clause) {
     query.setSorting(Qt::DescendingOrder);
     query.setLimits(getQueryLimit());
   }
-  return sqlQueryTable(query.getQueryContent());
+  return sqlModelQuery(query.getQueryContent());
 }
 
 const QString BookTableView::defaultWhereClause() {

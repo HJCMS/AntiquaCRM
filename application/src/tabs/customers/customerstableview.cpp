@@ -16,7 +16,7 @@ CustomersTableView::CustomersTableView(QWidget *parent)
   m_model = new CustomersTableModel(this);
   where_clause = defaultWhereClause();
   connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
-          this, SLOT(getSqlModelError(const QString &, const QString &)));
+          this, SLOT(sqlModelError(const QString &, const QString &)));
 
   connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
           SLOT(getSelectedItem(const QModelIndex &)));
@@ -30,7 +30,7 @@ qint64 CustomersTableView::getTableID(const QModelIndex &index, int column) {
   return -1;
 }
 
-bool CustomersTableView::sqlQueryTable(const QString &query) {
+bool CustomersTableView::sqlModelQuery(const QString &query) {
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);
@@ -131,7 +131,7 @@ void CustomersTableView::setSortByColumn(int column, Qt::SortOrder order) {
     query.setSorting(sort);
     query.setLimits(getQueryLimit());
   }
-  sqlQueryTable(query.getQueryContent());
+  sqlModelQuery(query.getQueryContent());
 }
 
 void CustomersTableView::getSelectedItem(const QModelIndex &index) {
@@ -141,7 +141,7 @@ void CustomersTableView::getSelectedItem(const QModelIndex &index) {
 }
 
 void CustomersTableView::setReloadView() {
-  sqlQueryTable(m_model->query().lastQuery());
+  sqlModelQuery(m_model->query().lastQuery());
 }
 
 int CustomersTableView::rowCount() { return m_model->rowCount(); }
@@ -155,7 +155,7 @@ bool CustomersTableView::setQuery(const QString &clause) {
     query.setSorting(Qt::DescendingOrder);
     query.setLimits(getQueryLimit());
   }
-  return sqlQueryTable(query.getQueryContent());
+  return sqlModelQuery(query.getQueryContent());
 }
 
 const QString CustomersTableView::defaultWhereClause() {

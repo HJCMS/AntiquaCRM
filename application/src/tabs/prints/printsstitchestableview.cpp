@@ -13,7 +13,7 @@ PrintsStitchesTableView::PrintsStitchesTableView(QWidget *parent)
   m_model = new PrintsStitchesModel(this);
   where_clause = defaultWhereClause();
   connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
-          this, SLOT(getSqlModelError(const QString &, const QString &)));
+          this, SLOT(sqlModelError(const QString &, const QString &)));
 
   connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
           SLOT(getSelectedItem(const QModelIndex &)));
@@ -32,7 +32,7 @@ int PrintsStitchesTableView::getArticleCount(const QModelIndex &index) {
   return getTableID(index, 1);
 }
 
-bool PrintsStitchesTableView::sqlQueryTable(const QString &query) {
+bool PrintsStitchesTableView::sqlModelQuery(const QString &query) {
   // qDebug() << Q_FUNC_INFO << query;
   if (m_model->querySelect(query)) {
     QueryHistory = query;
@@ -130,7 +130,7 @@ void PrintsStitchesTableView::setSortByColumn(int column, Qt::SortOrder order) {
     query.setSorting(sort);
     query.setLimits(getQueryLimit());
   }
-  sqlQueryTable(query.getQueryContent());
+  sqlModelQuery(query.getQueryContent());
 }
 
 void PrintsStitchesTableView::getSelectedItem(const QModelIndex &index) {
@@ -151,7 +151,7 @@ void PrintsStitchesTableView::createSocketOperation(const QModelIndex &index) {
 }
 
 void PrintsStitchesTableView::setReloadView() {
-  sqlQueryTable(m_model->query().lastQuery());
+  sqlModelQuery(m_model->query().lastQuery());
 }
 
 int PrintsStitchesTableView::rowCount() { return m_model->rowCount(); }
@@ -165,7 +165,7 @@ bool PrintsStitchesTableView::setQuery(const QString &clause) {
     query.setSorting(Qt::DescendingOrder);
     query.setLimits(getQueryLimit());
   }
-  return sqlQueryTable(query.getQueryContent());
+  return sqlModelQuery(query.getQueryContent());
 }
 
 const QString PrintsStitchesTableView::defaultWhereClause() {

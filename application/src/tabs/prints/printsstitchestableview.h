@@ -27,7 +27,7 @@ private:
 
   qint64 getTableID(const QModelIndex &index, int column = 0) override;
   int getArticleCount(const QModelIndex &index);
-  bool sqlQueryTable(const QString &query) override;
+  bool sqlModelQuery(const QString &query) override;
   void contextMenuEvent(QContextMenuEvent *) override;
 
 private Q_SLOTS:

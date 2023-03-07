@@ -14,7 +14,7 @@ OrdersTableView::OrdersTableView(QWidget *parent) : InventoryTable{parent} {
   where_clause = defaultWhereClause();
 
   connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
-          this, SLOT(getSqlModelError(const QString &, const QString &)));
+          this, SLOT(sqlModelError(const QString &, const QString &)));
 
   connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
           SLOT(getSelectedItem(const QModelIndex &)));
@@ -28,7 +28,7 @@ qint64 OrdersTableView::getTableID(const QModelIndex &index, int column) {
   return -1;
 }
 
-bool OrdersTableView::sqlQueryTable(const QString &query) {
+bool OrdersTableView::sqlModelQuery(const QString &query) {
   // qDebug() << Q_FUNC_INFO << query << Qt::endl;
   if (m_model->querySelect(query)) {
     QueryHistory = query;
@@ -139,7 +139,7 @@ void OrdersTableView::setSortByColumn(int column, Qt::SortOrder order) {
     query.setSorting(sort);
     query.setLimits(getQueryLimit());
   }
-  sqlQueryTable(query.getQueryContent());
+  sqlModelQuery(query.getQueryContent());
 }
 
 void OrdersTableView::getSelectedItem(const QModelIndex &index) {
@@ -163,7 +163,7 @@ void OrdersTableView::createSocketOperation(const QModelIndex &index) {
 }
 
 void OrdersTableView::setReloadView() {
-  sqlQueryTable(m_model->query().lastQuery());
+  sqlModelQuery(m_model->query().lastQuery());
 }
 
 int OrdersTableView::rowCount() { return m_model->rowCount(); }
@@ -176,7 +176,7 @@ bool OrdersTableView::setQuery(const QString &clause) {
     query.setOrderBy("o_id");
     query.setSorting(Qt::DescendingOrder);
     query.setLimits(getQueryLimit());
-    return sqlQueryTable(query.getQueryContent());
+    return sqlModelQuery(query.getQueryContent());
   }
   return false;
 }

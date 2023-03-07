@@ -16,7 +16,7 @@ VariousTableView::VariousTableView(QWidget *parent) : InventoryTable{parent} {
   where_clause = defaultWhereClause();
   m_model = new VariousTableModel(this);
   connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
-          this, SLOT(getSqlModelError(const QString &, const QString &)));
+          this, SLOT(sqlModelError(const QString &, const QString &)));
 
   connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
           SLOT(getSelectedItem(const QModelIndex &)));
@@ -34,7 +34,7 @@ int VariousTableView::getArticleCount(const QModelIndex &index) {
   return getTableID(index, 1);
 }
 
-bool VariousTableView::sqlQueryTable(const QString &query) {
+bool VariousTableView::sqlModelQuery(const QString &query) {
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);
@@ -130,7 +130,7 @@ void VariousTableView::setSortByColumn(int column, Qt::SortOrder order) {
     query.setSorting(sort);
     query.setLimits(getQueryLimit());
   }
-  sqlQueryTable(query.getQueryContent());
+  sqlModelQuery(query.getQueryContent());
 }
 
 void VariousTableView::getSelectedItem(const QModelIndex &index) {
@@ -151,7 +151,7 @@ void VariousTableView::createSocketOperation(const QModelIndex &index) {
 }
 
 void VariousTableView::setReloadView() {
-  sqlQueryTable(m_model->query().lastQuery());
+  sqlModelQuery(m_model->query().lastQuery());
 }
 
 int VariousTableView::rowCount() { return m_model->rowCount(); }
@@ -165,7 +165,7 @@ bool VariousTableView::setQuery(const QString &clause) {
     query.setSorting(Qt::DescendingOrder);
     query.setLimits(getQueryLimit());
   }
-  return sqlQueryTable(query.getQueryContent());
+  return sqlModelQuery(query.getQueryContent());
 }
 
 const QString VariousTableView::defaultWhereClause() {
