@@ -13,8 +13,8 @@
 #include <QWidget>
 
 /**
- * @brief The KeywordTableModel class
  * @ingroup KeywordsEdit
+ * @brief The KeywordTableModel class
  */
 class KeywordTableModel : public QSqlTableModel {
   Q_OBJECT

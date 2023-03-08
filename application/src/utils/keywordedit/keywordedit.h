@@ -19,8 +19,8 @@ class KeywordActions;
 class KeywordEditor;
 
 /**
- * @brief Keywords Edit Dialog
- * @section KeywordsEdit
+ * @defgroup KeywordsEdit Article Keywords
+ * @brief Article Keywords edit and selection
  */
 class KeywordEdit : public QDialog {
   Q_OBJECT

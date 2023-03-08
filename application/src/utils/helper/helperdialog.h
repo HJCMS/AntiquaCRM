@@ -13,8 +13,8 @@
 #include <QWidget>
 
 /**
- * @brief The HelperDialog class
- * @section AntiquaHelper
+ * @defgroup AntiquaHelper Helper dialogs
+ * @brief Helper ToolBox Dialog
  */
 class HelperDialog final : public QDialog {
   Q_OBJECT

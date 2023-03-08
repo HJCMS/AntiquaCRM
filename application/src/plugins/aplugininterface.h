@@ -22,8 +22,8 @@ namespace AntiquaCRM {
 class UpdateDialog;
 
 /**
- * @brief Klasse für die Dienstleisterkonfiuration
  * @ingroup AntiquaCRMPlugin
+ * @brief Klasse für die Dienstleisterkonfiuration
  */
 struct ANTIQUACRM_LIBRARY APluginConfig {
   QString hostname = QString();
@@ -36,7 +36,7 @@ struct ANTIQUACRM_LIBRARY APluginConfig {
 
 /**
  * @brief Primäre Interface Klasse für Dienstleister Plugins
- * @section AntiquaCRMPlugin
+ * @defgroup AntiquaCRMPlugin Plugin Interface
  */
 class ANTIQUACRM_LIBRARY APluginInterface : public QObject {
   Q_OBJECT

@@ -2,7 +2,8 @@
 // vim: set fileencoding=utf-8
 
 /**
- * @defgroup AntiquaCRM (Global definitions)
+ * @defgroup core AntiquaCRM Core Library
+ * @brief AntiquaCRM core components
  * @{
  */
 
@@ -17,7 +18,7 @@
 #include <QDBusAbstractAdaptor>
 #else
 /**
- * @brief QDBusAbstractAdaptor Macro
+ * @brief QDBus Macro - fake for windows
  */
 #define Q_NOREPLY
 #endif
@@ -182,7 +183,6 @@
 #endif
 
 /**
- * @ingroup Antiqua Plugin Interface
  * @brief Das vom System vorgegebene Datumsformat ist ISO 8601!
  * Soll verhindern das bei der Umwandlung von einem String, die Konvertierung nicht fehlschlägt!
  * @code
@@ -225,7 +225,6 @@
 #endif
 
 /**
- * @ingroup Antiqua Plugin Interface
  * @brief Dienstleisteranfragen der letzten ... Tage anzeigen.
  */
 #ifndef ANTIQUACRM_QUERY_PASTDAYS
@@ -239,10 +238,20 @@
 #define ANTIQUACRM_TEXTCODEC "UTF8"
 #endif
 
+/**
+ * @namespace AntiquaCRM
+ * @brief Antiqua CRM Namespace
+ */
 namespace AntiquaCRM {
  Q_NAMESPACE
 
  /**
+  * @defgroup Enumerations AntiquaCRM Enumerations
+  * @brief Enumerations in AntiquaCRM Namespace
+  */
+
+ /**
+  * @ingroup Enumerations
   * @brief Nachrichtentyp
   * Definiert die Dringlichkeit einer Nachricht an das Meldungssystem!
   */
@@ -255,12 +264,14 @@ namespace AntiquaCRM {
  Q_ENUM_NS(AntiquaCRM::Message)
 
  /**
+  * @ingroup Enumerations
   * @brief Typenangabe für die Netzwerkanfragen Schnittstelle!
   */
  enum NetworkQueryType { JSON_QUERY = 0, XML_QUERY = 1 };
  Q_ENUM_NS(AntiquaCRM::NetworkQueryType)
 
  /**
+  * @ingroup Enumerations
   * @brief Auftrag-Bearbeitungsstatus
   */
  enum OrderStatus {
@@ -275,6 +286,7 @@ namespace AntiquaCRM {
  Q_ENUM_NS(AntiquaCRM::OrderStatus)
 
  /**
+  * @ingroup Enumerations
   * @brief Auftrag-Zahlungsstatus
   */
  enum OrderPayment {
@@ -288,6 +300,7 @@ namespace AntiquaCRM {
  Q_ENUM_NS(AntiquaCRM::OrderPayment)
 
  /**
+  * @ingroup Enumerations
   * @brief Bestellstatus des Dienstleisters
   * Wird im Auftragssystem verwendet!
   */
@@ -303,6 +316,7 @@ namespace AntiquaCRM {
  Q_ENUM_NS(AntiquaCRM::ProviderPaymentStatus)
 
  /**
+  * @ingroup Enumerations
   * @brief Zahlungsart der Bestellung
   * Wird im Auftragssystem verwendet um die Zahlungsart zu Zeigen.
   * Die Umsetzung dieser Vorgabe liegt bei der Plugin Integration!
@@ -327,6 +341,7 @@ namespace AntiquaCRM {
  Q_ENUM_NS(AntiquaCRM::PaymentMethod)
 
  /**
+  * @ingroup Enumerations
   * @brief Kunden Vertrauensebene festlegen!
   */
  enum CustomerTrustLevel {
@@ -340,6 +355,7 @@ namespace AntiquaCRM {
  Q_ENUM_NS(AntiquaCRM::CustomerTrustLevel)
 
  /**
+  * @ingroup Enumerations
   * @brief Geschlechter Definition
   */
  enum Gender {
@@ -351,6 +367,7 @@ namespace AntiquaCRM {
  Q_ENUM_NS(AntiquaCRM::Gender)
 
  /**
+  * @ingroup Enumerations
   * @brief Inventory Gruppen
   * Umsetzung für Dienstleister kategorien.
   */
@@ -364,6 +381,7 @@ namespace AntiquaCRM {
  Q_ENUM_NS(AntiquaCRM::ArticleType)
 
  /**
+  * @ingroup Enumerations
   * @brief SalesTax
   * Rechnungsmöglichkeiten bei der Umsatzsteuerangabe (UStG §14)
   */
@@ -375,6 +393,7 @@ namespace AntiquaCRM {
  Q_ENUM_NS(AntiquaCRM::SalesTax)
 
  /**
+  * @ingroup Enumerations
   * @brief MediaType
   * Umsetzung Musik Medien
   */
@@ -393,6 +412,7 @@ namespace AntiquaCRM {
  Q_ENUM_NS(AntiquaCRM::MediaType)
 
  /**
+  * @ingroup Enumerations
   * @brief Zustandsbeschreibung für Artikel
   */
  enum Condition {
@@ -405,7 +425,9 @@ namespace AntiquaCRM {
  Q_ENUM_NS(AntiquaCRM::Condition)
 
  /**
-  * @brief Postleitzahlen Eintrag
+  * @ingroup core
+  * @class PostalCode
+  * @brief PostalCode entries
   */
  struct ANTIQUACRM_LIBRARY PostalCode {
    QString plz;
@@ -419,4 +441,6 @@ Q_DECLARE_METATYPE(AntiquaCRM::PostalCode)
 
 #endif // ANTIQUACRM_GLOBAL_H
 
-/** @} */
+/**
+ * @}
+ */

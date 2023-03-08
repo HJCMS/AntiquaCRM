@@ -17,8 +17,8 @@ class DeliverItem;
 class DeliverServiceBox;
 
 /**
- * @brief The DeliverServiceEdit class
  * @ingroup DeliveryService
+ * @brief Deliver Service Editor Widget
  */
 class DeliverServiceEdit : public QWidget {
   Q_OBJECT

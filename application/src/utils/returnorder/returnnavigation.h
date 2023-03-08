@@ -12,8 +12,8 @@
 #include <QWidget>
 
 /**
- * @brief The ReturnNavigation class
  * @ingroup AntiquaReturnOrder
+ * @brief The ReturnNavigation class
  */
 class ReturnNavigation final : public QDialogButtonBox {
   Q_OBJECT

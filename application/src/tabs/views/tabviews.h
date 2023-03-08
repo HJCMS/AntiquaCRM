@@ -16,7 +16,7 @@ class ViewsTableModel;
 
 /**
  * @brief Inventory PgSQL Views
- * @section InventoryViews
+ * @defgroup InventoryViews Tab Views
  */
 class TabViews final : public Inventory {
   Q_OBJECT

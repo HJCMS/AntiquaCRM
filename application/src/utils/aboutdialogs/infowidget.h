@@ -13,8 +13,8 @@
 #include <QWidget>
 
 /**
- * @brief The InfoWidget class
  * @ingroup AntiquaAbout
+ * @brief Abstract Info Widget for About pages
  */
 class InfoWidget : public QWidget {
   Q_OBJECT

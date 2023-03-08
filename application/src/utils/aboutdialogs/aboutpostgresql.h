@@ -9,8 +9,8 @@
 #include <QWidget>
 
 /**
- * @brief The AboutPostgreSQL class
  * @ingroup AntiquaAbout
+ * @brief About PostgreSQL InfoWidget
  */
 class AboutPostgreSQL : public InfoWidget {
   Q_OBJECT

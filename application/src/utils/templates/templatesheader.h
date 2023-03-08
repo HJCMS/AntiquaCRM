@@ -14,8 +14,8 @@
 #include <QWidget>
 
 /**
- * @brief Custom Template Edit widget
  * @ingroup AntiquaTemplates
+ * @brief Custom Template Edit widget
  */
 class TemplatesHeader final : public QFrame {
   Q_OBJECT

@@ -100,8 +100,8 @@ public:
 };
 
 /**
- * @brief Buchkarten Erstellung
  * @ingroup AntiquaPrinting
+ * @brief Printing Article Bookcards
  */
 class BookCard final : public QDialog {
   Q_OBJECT

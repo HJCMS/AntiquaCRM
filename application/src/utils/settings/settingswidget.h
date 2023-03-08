@@ -15,8 +15,8 @@
 #include <QWidget>
 
 /**
+ * @ingroup AntiquaSettings
  * @brief Definitionsklasse für den Konfigurations Dialog
- * @section AntiquaSettings
  */
 class SettingsWidget : public QWidget {
   Q_OBJECT

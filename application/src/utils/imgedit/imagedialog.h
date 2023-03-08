@@ -24,8 +24,8 @@ class SourceInfo;
 class ImageActionsBar;
 
 /**
- * @brief Primärer Bilddialog
- * @section AntiquaImgEdit
+ * @defgroup AntiquaImgEdit Image Import/Edit and Viewer
+ * @brief Primary Import Imagesdialog
  */
 class ImageDialog final : public QDialog {
   Q_OBJECT

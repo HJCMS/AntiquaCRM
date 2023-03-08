@@ -18,8 +18,8 @@ class DesignationsList;
 class DesignationEdit;
 
 /**
- * @brief The DesignationsDialog class
- * @section AntiquaDesignations
+ * @defgroup AntiquaDesignations Designation
+ * @brief Edit and fetch Designations
  */
 class DesignationsDialog final : public QDialog {
   Q_OBJECT

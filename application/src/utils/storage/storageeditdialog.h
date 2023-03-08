@@ -18,8 +18,11 @@ class StorageTable;
 class StorageEditor;
 
 /**
- * @brief The StorageEditDialog class
- * @section AntiquaStorage
+ * @defgroup AntiquaStorage Storage
+ * @brief Storage Section
+ *
+ * @class StorageEditDialog
+ * @brief Storage Edit Dialog
  */
 class StorageEditDialog final : public QDialog {
   Q_OBJECT

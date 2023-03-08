@@ -15,8 +15,8 @@
 #endif
 
 /**
- * @brief Rechnungs Erstellung
  * @ingroup AntiquaPrinting
+ * @brief Printing invoices
  */
 class Invoice final : public Printing {
   Q_OBJECT

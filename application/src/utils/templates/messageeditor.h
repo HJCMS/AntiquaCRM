@@ -10,8 +10,8 @@
 #include <QWidget>
 
 /**
- * @brief Body Template Edit widget
  * @ingroup AntiquaTemplates
+ * @brief Body Template Edit widget
  */
 class MessageEditor : public QTextEdit {
   Q_OBJECT

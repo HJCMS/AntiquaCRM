@@ -15,7 +15,7 @@
 
 /**
  * @brief The BuchfreundDialog class
- * @ingroup BuchfreundPlugin
+ * @ingroup AntiquaCRMPlugin
  */
 class ANTIQUACRM_LIBRARY BuchfreundDialog final
     : public AntiquaCRM::UpdateDialog {

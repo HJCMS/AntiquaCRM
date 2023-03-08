@@ -16,7 +16,7 @@ class PrintsStitchesEditor;
 
 /**
  * @brief Inventory Prints and Stitches
- * @section AntiquaPrintsStitches
+ * @defgroup AntiquaPrintsStitches Tab Prints and Stitches
  */
 class TabPrintsStitches final : public Inventory {
   Q_OBJECT

@@ -12,8 +12,8 @@
 #include <QWidget>
 
 /**
- * @brief Keywords Edit Actions frame
  * @ingroup KeywordsEdit
+ * @brief Keywords Edit Actions frame
  */
 class KeywordActions : public QFrame {
   Q_OBJECT

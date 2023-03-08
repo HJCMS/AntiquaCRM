@@ -11,8 +11,8 @@
 #include <QString>
 
 /**
- * @brief Erweiterte Datei Info erstellen
  * @ingroup AntiquaImgEdit
+ * @brief Image File information
  */
 class SourceInfo final : public QFileInfo {
 private:

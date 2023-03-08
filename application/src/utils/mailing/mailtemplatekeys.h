@@ -12,8 +12,8 @@
 #include <QVariant>
 
 /**
- * @brief The MailTemplateKeys class
  * @ingroup AntiquaMailing
+ * @brief eMail Template Keys class
  */
 class MailTemplateKeys final : public QThread {
   Q_OBJECT

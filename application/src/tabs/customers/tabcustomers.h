@@ -16,7 +16,7 @@ class CustomersEditor;
 
 /**
  * @brief Inventory Customers
- * @section AntiquaCustomers
+ * @defgroup AntiquaCustomers Tab Customers
  */
 class TabCustomers final : public Inventory {
   Q_OBJECT

@@ -10,8 +10,8 @@
 #include <QWidget>
 
 /**
- * @brief The ImageToolBar class
  * @ingroup AntiquaImgEdit
+ * @brief Imageedit ToolBar
  */
 class ImageToolBar final : public QWidget {
   Q_OBJECT

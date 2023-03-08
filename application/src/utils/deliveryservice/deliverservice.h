@@ -16,8 +16,8 @@ class DeliverPackageBox;
 class DeliverServiceBox;
 
 /**
- * @brief The DeliverService class
  * @ingroup DeliveryService
+ * @brief Deliver Service Input edit
  */
 class DeliverService final : public InputEdit {
   Q_OBJECT

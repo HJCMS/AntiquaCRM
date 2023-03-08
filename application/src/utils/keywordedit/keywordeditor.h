@@ -19,8 +19,8 @@
 #include <QWidget>
 
 /**
- * @brief Keywords Edit group box
  * @ingroup KeywordsEdit
+ * @brief Keywords Edit group box
  */
 class KeywordEditor : public QGroupBox {
   Q_OBJECT

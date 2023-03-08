@@ -12,8 +12,8 @@
 #include <QVariant>
 
 /**
- * @brief PDF Template locader class
  * @ingroup AntiquaTemplates
+ * @brief PDF Template locader class
  */
 class AntiquaTemplates final : public QObject {
   Q_OBJECT

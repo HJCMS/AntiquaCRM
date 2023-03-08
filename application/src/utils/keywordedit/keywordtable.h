@@ -14,8 +14,8 @@
 class KeywordTableModel;
 
 /**
- * @brief The KeywordTable class
  * @ingroup KeywordsEdit
+ * @brief The KeywordTable class
  */
 class KeywordTable : public QTableView {
   Q_OBJECT

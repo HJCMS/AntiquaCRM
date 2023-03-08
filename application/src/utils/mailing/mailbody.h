@@ -10,8 +10,8 @@
 #include <QWidget>
 
 /**
- * @brief The MailBody class
  * @ingroup AntiquaMailing
+ * @brief eMail Body class
  */
 class MailBody final : public QTextEdit {
   Q_OBJECT

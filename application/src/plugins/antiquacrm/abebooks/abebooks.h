@@ -13,7 +13,7 @@ class AbeBooksDocument;
 
 /**
  * @brief The Abebooks class
- * @section AbeBooksPlugin
+ * @ingroup AntiquaCRMPlugin
  */
 class ANTIQUACRM_LIBRARY Abebooks final : public AntiquaCRM::APluginInterface {
   Q_OBJECT

@@ -20,8 +20,8 @@
 #include "sourceinfo.h"
 
 /**
- * @brief The ImageSelecter class
  * @ingroup AntiquaImgEdit
+ * @brief Image Selecter
  */
 class ImageSelecter : public QWidget {
   Q_OBJECT

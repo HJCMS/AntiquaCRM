@@ -13,7 +13,7 @@
 
 /**
  * @brief The Buchfreund class
- * @section BuchfreundPlugin
+ * @ingroup AntiquaCRMPlugin
  */
 class ANTIQUACRM_LIBRARY Buchfreund final
     : public AntiquaCRM::APluginInterface {

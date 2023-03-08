@@ -15,7 +15,7 @@
 
 /**
  * @brief The AbeBooksAccess class
- * @ingroup AbeBooksPlugin
+ * @ingroup AntiquaCRMPlugin
  */
 struct ANTIQUACRM_LIBRARY AbeBooksAccess {
   QString user;

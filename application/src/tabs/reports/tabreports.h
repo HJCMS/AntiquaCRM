@@ -13,7 +13,7 @@ class MonthlyReports;
 
 /**
  * @brief Inventory Reports
- * @section AntiquaReports
+ * @defgroup AntiquaReports Tab Reports
  */
 class TabReports final : public Inventory {
   Q_OBJECT

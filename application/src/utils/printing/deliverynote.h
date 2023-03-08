@@ -16,8 +16,8 @@
 #endif
 
 /**
- * @brief Lieferschein Erstellung
  * @ingroup AntiquaPrinting
+ * @brief Printing delivery notes
  */
 class DeliveryNote final : public Printing {
   Q_OBJECT

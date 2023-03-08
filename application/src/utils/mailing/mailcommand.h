@@ -12,8 +12,8 @@
 #include <QVariant>
 
 /**
- * @brief The MailCommand class
  * @ingroup AntiquaMailing
+ * @brief eMail command class
  */
 class MailCommand final : public QProcess {
   Q_OBJECT

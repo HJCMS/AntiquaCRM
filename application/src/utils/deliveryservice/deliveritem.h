@@ -10,8 +10,8 @@
 #include <QString>
 
 /**
- * @brief The DeliverItem class
  * @ingroup DeliveryService
+ * @brief Deliver Item class
  */
 class DeliverItem final {
 private:

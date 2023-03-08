@@ -13,8 +13,8 @@
 class ButtonNext;
 
 /**
- * @brief The InfoLabel class
  * @ingroup AntiquaReturnOrder
+ * @brief The InfoLabel class
  */
 class InfoLabel final : public QLabel {
   Q_OBJECT

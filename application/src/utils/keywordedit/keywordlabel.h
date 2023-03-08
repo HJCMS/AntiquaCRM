@@ -12,8 +12,8 @@
 #include <QWidget>
 
 /**
- * @brief Keywords Edit Label
  * @ingroup KeywordsEdit
+ * @brief Keywords Edit Label
  */
 class KeywordLabel final : public QFrame {
   Q_OBJECT

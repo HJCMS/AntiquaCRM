@@ -14,9 +14,9 @@
 class CompanyWidget;
 
 /**
+ * @defgroup AntiquaCompanyData Company Data Editor
  * @brief The Company Settings Dialog
  * @class CompanyData
- * @ingroup AntiquaCompanyData
  */
 class CompanyData : public QDialog {
   Q_OBJECT

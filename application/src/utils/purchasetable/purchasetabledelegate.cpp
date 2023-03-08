@@ -27,7 +27,8 @@ QWidget *PurchaseTableDelegate::createEditor(QWidget *parent,
   if (!index.isValid())
     return parent;
 
-  AntiquaCRM::ATableHeaderColumn header = PurchaseTableModel::headerColumn(index.column());
+  AntiquaCRM::ATableHeaderColumn header =
+      PurchaseTableModel::headerColumn(index.column());
 
   QVariant value = index.model()->data(index, Qt::EditRole);
   if (header.field() == "a_count") { // Count
@@ -88,10 +89,14 @@ void PurchaseTableDelegate::setEditorData(QWidget *editor,
   AntiquaCRM::ATableHeaderColumn header = PurchaseTableModel::headerColumn(index.column());
 
   if (header.field() == "a_count") { // Count
+    int count = 1;
+    if (value.toInt() > config.minCount && value.toInt() < config.maxCount) {
+      count = value.toInt();
+    }
     QSpinBox *m_spinBox = qobject_cast<QSpinBox *>(editor);
-    m_spinBox->setMinimum(1);
-    m_spinBox->setValue(config.minCount);
+    m_spinBox->setMinimum(config.minCount);
     m_spinBox->setMaximum(config.maxCount);
+    m_spinBox->setValue(count);
     return;
   }
 

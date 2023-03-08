@@ -16,8 +16,8 @@
 #endif
 
 /**
- * @brief Zahlungs Erinnerung Erstellung
  * @ingroup AntiquaPrinting
+ * @brief Printing Payment reminders
  */
 class PaymentReminder final : public Printing {
   Q_OBJECT

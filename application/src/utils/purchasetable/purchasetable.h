@@ -17,8 +17,9 @@ class PurchaseTableModel;
 class PurchaseTableDelegate;
 
 /**
+ * @defgroup AntiquaPurchaseTable PurchaseTable
  * @brief Tabelle Artikeleinkäufe
- * @section AntiquaPurchaseTable
+ * @class PurchaseTable
  * Es werden hier aus Performance gründen keine SQL Abfragen gemacht!
  * Der Grund hierfür ist, das AntiquaCRM primär für Remote Desktop erstellt
  * wird. Zu viele Hintergrundabfragen können je nach Netzwerkleistung zu

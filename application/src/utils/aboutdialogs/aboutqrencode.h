@@ -9,8 +9,8 @@
 #include <QWidget>
 
 /**
- * @brief The AboutQREncode class
  * @ingroup AntiquaAbout
+ * @brief About QREncode InfoWidget
  */
 class AboutQREncode final : public InfoWidget {
   Q_OBJECT

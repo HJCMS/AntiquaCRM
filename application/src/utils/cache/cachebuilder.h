@@ -13,8 +13,8 @@
 #include "cacheconfig.h"
 
 /**
+ * @defgroup AntiquaCache Caching
  * @brief The CacheBuilder class
- * @section AntiquaCache
  */
 class CacheBuilder : public QObject {
   Q_OBJECT

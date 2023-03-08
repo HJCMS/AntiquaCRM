@@ -10,8 +10,8 @@
 #include <QWidget>
 
 /**
- * @brief Textköper
  * @ingroup AntiquaPrinting
+ * @brief Textbodies
  */
 class TextEditor : public QTextEdit
 {

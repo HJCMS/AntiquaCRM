@@ -29,8 +29,8 @@
 class TextEditor;
 
 /**
- * @brief Container für das befüllen der Tabellenzellen.
  * @ingroup AntiquaPrinting
+ * @brief Container für das befüllen der Tabellenzellen.
  */
 struct BillingInfo {
   /**
@@ -78,8 +78,9 @@ struct BillingInfo {
 Q_DECLARE_METATYPE(BillingInfo);
 
 /**
- * @brief Drucker Dialog Klasse
- * @section AntiquaPrinting
+ * @defgroup AntiquaPrinting Printinig
+ * @brief Printing Dialogs
+ * @class Printing
  * Das Dokument wird aus drei Textkörpern erstellt.
  * Mit einem Kopfbereich, Inhaltsbereich und Fußzeilenbereich.
  * Anders ist es nicht möglich die Fußzeile sauber zu setzen.

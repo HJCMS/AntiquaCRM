@@ -11,8 +11,8 @@
 #include "infowidget.h"
 
 /**
- * @brief The AboutAntiquaCRM class
  * @ingroup AntiquaAbout
+ * @brief About AntiquaCRM InfoWidget
  */
 class AboutAntiquaCRM : public InfoWidget {
   Q_OBJECT

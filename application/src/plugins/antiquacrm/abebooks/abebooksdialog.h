@@ -15,7 +15,7 @@
 
 /**
  * @brief The AbeBooksDialog class
- * @ingroup AbeBooksPlugin
+ * @ingroup AntiquaCRMPlugin
  */
 class ANTIQUACRM_LIBRARY AbeBooksDialog : public AntiquaCRM::UpdateDialog {
   Q_OBJECT

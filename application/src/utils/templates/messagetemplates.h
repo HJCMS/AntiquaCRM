@@ -22,8 +22,11 @@ class MessageEditor;
 class MessageKeywordList;
 
 /**
- * @brief The MessageTemplates class
- * @ingroup AntiquaTemplates
+ * @defgroup AntiquaTemplates Templates
+ * @brief Text Templates for eMail and Printing
+ *
+ * @class MessageTemplates
+ * @brief Edit Message Templates dialog
  */
 class MessageTemplates final : public QDialog {
   Q_OBJECT

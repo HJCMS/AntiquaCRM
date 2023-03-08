@@ -24,8 +24,10 @@ class ProviderSettings;
 class PathSettings;
 
 /**
+ * @defgroup AntiquaSettings Settings
+ * @brief AntqiuaCRM Settings
+ * @class ConfigDialog
  * @brief The ConfigDialog class
- * @ingroup AntiquaSettings
  */
 class ConfigDialog final : public QDialog {
   Q_OBJECT

@@ -11,8 +11,8 @@
 #include <QWidget>
 
 /**
- * @brief The ButtonNext class
  * @ingroup AntiquaReturnOrder
+ * @brief The ButtonNext class
  */
 class ButtonNext : public QFrame {
   Q_OBJECT
