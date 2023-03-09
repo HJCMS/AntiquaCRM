@@ -10,7 +10,7 @@
 #include "designationsdialog.h"
 #include "storageeditdialog.h"
 
-AntiquaConfigMenus::AntiquaConfigMenus(QWidget *parent) : QMenu{parent} {
+AntiquaConfigMenus::AntiquaConfigMenus(QMenuBar *parent) : QMenu{parent} {
   setObjectName("configurations_menue");
   setTitle(tr("Configuration"));
   QIcon configIcon(":/icons/configure.png");

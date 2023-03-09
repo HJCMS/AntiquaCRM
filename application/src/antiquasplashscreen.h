@@ -13,6 +13,10 @@
 #include <QPixmap>
 #include <QSplashScreen>
 
+/**
+ * @ingroup ui
+ * @brief Application splash screen
+ */
 class AntiquaSplashScreen : public QSplashScreen {
   Q_OBJECT
 

@@ -21,10 +21,12 @@ class ProviderBuyerInfo;
 class ProviderOrderInfo;
 
 /**
+ * @ingroup AntiquaProviders
  * @brief Provider Order/Payment Overview page.
+ *
+ * @class ProvidersOrderPage
  * This Widget display the complete Information about the Order. It also
  * contains some subrequest before a new order can be imported into the system.
- * @ingroup AntiquaProviders
  */
 class ProvidersOrderPage final : public QWidget {
   Q_OBJECT

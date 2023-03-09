@@ -36,9 +36,14 @@ AntiquaAppl::AntiquaAppl(int &argc, char **argv) : QApplication{argc, argv} {
 #endif
 }
 
-const QIcon AntiquaAppl::applIcon() {
-  QIcon icon(QString("://icons/antiqua.png"));
-  return icon;
+bool AntiquaAppl::initTranslations() {
+  QString path = m_cfg->getTranslationDir().path();
+  QTranslator *transl = new QTranslator(this);
+  if (transl->load(QLocale::system(), "antiquacrm", "_", path, ".qm")) {
+    installTranslator(transl);
+    return true;
+  }
+  return false;
 }
 
 void AntiquaAppl::initGui() {
@@ -101,16 +106,6 @@ bool AntiquaAppl::checkDatabase() {
   return false;
 }
 
-bool AntiquaAppl::initTranslations() {
-  QString path = m_cfg->getTranslationDir().path();
-  QTranslator *transl = new QTranslator(this);
-  if (transl->load(QLocale::system(), "antiquacrm", "_", path, ".qm")) {
-    installTranslator(transl);
-    return true;
-  }
-  return false;
-}
-
 void AntiquaAppl::applicationQuit() {
   // Sind Editoren geöffnet?
   if (!m_mainWindow->checkBeforeClose()) {
@@ -139,6 +134,11 @@ void AntiquaAppl::applicationQuit() {
 
   // finaly
   quit();
+}
+
+const QIcon AntiquaAppl::applIcon() {
+  QIcon icon(QString("://icons/antiqua.png"));
+  return icon;
 }
 
 void AntiquaAppl::initDefaultTheme() {

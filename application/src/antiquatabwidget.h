@@ -21,6 +21,7 @@ class AReceiver;
 class AntiquaTabBar;
 
 /**
+ * @ingroup ui
  * @brief Verwaltungs Klasse Registerkarten
  * @class AntiquaTabWidget
  * @ingroup window

@@ -15,6 +15,10 @@ class AntiquaViewsMenus;
 class AntiquaConfigMenus;
 class AboutDialogs;
 
+/**
+ * @ingroup ui
+ * @brief Main Window menu bar
+ */
 class AntiquaMenuBar final : public QMenuBar {
   Q_OBJECT
 
@@ -44,7 +48,7 @@ Q_SIGNALS:
 
 public:
   explicit AntiquaMenuBar(QMainWindow *parent = nullptr);
-  ~AntiquaMenuBar();
+  virtual ~AntiquaMenuBar();
 };
 
 #endif // ANTIQUACRM_MENUBAR_H

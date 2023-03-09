@@ -10,6 +10,10 @@
 #include <QObject>
 #include <QSystemTrayIcon>
 
+/**
+ * @ingroup ui
+ * @brief Application system tray
+ */
 class AntiquaSystemTray : public QSystemTrayIcon {
   Q_OBJECT
 

@@ -11,7 +11,7 @@
 #include <QIcon>
 #include <QKeySequence>
 
-AntiquaViewsMenus::AntiquaViewsMenus(QWidget *parent) : QMenu{parent} {
+AntiquaViewsMenus::AntiquaViewsMenus(QMenuBar *parent) : QMenu{parent} {
   setObjectName("views_menue");
   setTitle(tr("Views"));
   QIcon icon(":icons/view_log.png");

@@ -10,7 +10,8 @@
 #include <QTimerEvent>
 
 /**
- * @brief Main Timer class for operations
+ * @ingroup ui
+ * @brief Application Timer for triggering some methods
  */
 class AntiquaTimer final : public QObject {
   Q_OBJECT

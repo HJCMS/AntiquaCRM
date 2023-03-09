@@ -15,9 +15,10 @@
 #include <QWidget>
 
 /**
- * @class ProviderPurchaseTable
  * @ingroup AntiquaProviders
  * @brief Tabelle für die Bestellartikel anzeigen
+ *
+ * @class ProviderPurchaseTable
  * Die Standardformatierung der Zellen ist Text und alle Zellen sind
  * auf nur lesen gestellt. Die Tabelle dient Primär zur Bestellungsanzeige.
  * Sie besteht aus 5 Spalten welche wie folgt vergeben sind:

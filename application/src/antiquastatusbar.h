@@ -14,6 +14,10 @@
 class AntiquaTimer;
 class AntiquaDatabaseBar;
 
+/**
+ * @ingroup ui
+ * @brief Main Window status bar
+ */
 class AntiquaStatusBar final : public QStatusBar {
   Q_OBJECT
 
@@ -31,7 +35,7 @@ public Q_SLOTS:
 
 public:
   explicit AntiquaStatusBar(QMainWindow *parent = nullptr);
-  ~AntiquaStatusBar();
+  virtual ~AntiquaStatusBar();
 };
 
 #endif // ANTIQUACRM_STATUSBAR_H

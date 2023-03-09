@@ -57,6 +57,7 @@ SET (projectLibrary_HEADERS
  acompleterdata.h
  aeuropeancountries.h
  aglobal.h
+ aenumerations.h
  anetworkcache.h
  anetworker.h
  anetworkiface.h

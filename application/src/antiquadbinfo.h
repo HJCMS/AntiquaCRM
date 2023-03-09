@@ -10,6 +10,10 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @ingroup ui
+ * @brief Dialog to view Database connection info
+ */
 class AntiquaDbInfo final : public QDialog {
   Q_OBJECT
 

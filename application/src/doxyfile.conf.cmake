@@ -129,11 +129,13 @@ WARN_LOGFILE           = @CMAKE_CURRENT_BINARY_DIR@/doc/doxygen_warnings.log
 # Configuration options related to the input files
 #---------------------------------------------------------------------------
 
-INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/lib \
-  @CMAKE_CURRENT_SOURCE_DIR@/tabs \
-  @CMAKE_CURRENT_SOURCE_DIR@/utils \
-  @CMAKE_CURRENT_SOURCE_DIR@/widgets \
-  @CMAKE_CURRENT_SOURCE_DIR@/plugins
+INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@ \
+ @CMAKE_CURRENT_SOURCE_DIR@/lib \
+ @CMAKE_CURRENT_BINARY_DIR@ \
+ @CMAKE_CURRENT_SOURCE_DIR@/widgets \
+ @CMAKE_CURRENT_SOURCE_DIR@/plugins \
+ @CMAKE_CURRENT_SOURCE_DIR@/tabs \
+ @CMAKE_CURRENT_SOURCE_DIR@/utils
 
 INPUT_ENCODING         = UTF-8
 
@@ -141,15 +143,21 @@ FILE_PATTERNS          = *.cpp \
                          *.h \
                          *.dox
 
+EXCLUDE_PATTERNS       = moc_*.cpp \
+ ui_*.cpp \
+ qrc_*.cpp
+
 RECURSIVE              = YES
-EXCLUDE                =
+EXCLUDE                = @CMAKE_CURRENT_SOURCE_DIR@/plugins/antiquacrm \
+ @CMAKE_CURRENT_SOURCE_DIR@/widgets/templates \
+ @CMAKE_CURRENT_SOURCE_DIR@/assistant
+
 EXCLUDE_SYMLINKS       = YES
-EXCLUDE_PATTERNS       =
 EXCLUDE_SYMBOLS        =
 EXAMPLE_PATH           =
 EXAMPLE_PATTERNS       = *
 EXAMPLE_RECURSIVE      = NO
-IMAGE_PATH             =
+IMAGE_PATH             = @CMAKE_CURRENT_SOURCE_DIR@/icons
 INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO

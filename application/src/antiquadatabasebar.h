@@ -5,10 +5,15 @@
 #ifndef ANTIQUACRM_DATABASEBAR_H
 #define ANTIQUACRM_DATABASEBAR_H
 
+#include <QAction>
 #include <QObject>
 #include <QToolBar>
 #include <QWidget>
 
+/**
+ * @ingroup ui
+ * @brief Database connection status bar
+ */
 class AntiquaDatabaseBar final : public QToolBar {
   Q_OBJECT
 
@@ -19,6 +24,9 @@ private Q_SLOTS:
   void databaseInfoDialog();
 
 public Q_SLOTS:
+  /**
+   * @brief set icon status
+   */
   void setStatus(bool);
 
 public:

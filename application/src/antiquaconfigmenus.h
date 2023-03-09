@@ -8,8 +8,12 @@
 #include <QAction>
 #include <QMenu>
 #include <QObject>
-#include <QWidget>
+#include <QMenuBar>
 
+/**
+ * @ingroup ui
+ * @brief AntiquaCRM configuration menus
+ */
 class AntiquaConfigMenus final : public QMenu {
   Q_OBJECT
 
@@ -33,7 +37,7 @@ private Q_SLOTS:
   void openTemplatesDialog();
 
 public:
-  explicit AntiquaConfigMenus(QWidget *parent);
+  explicit AntiquaConfigMenus(QMenuBar *parent);
 };
 
 #endif // ANTIQUACRM_CONFIGMENUS_H

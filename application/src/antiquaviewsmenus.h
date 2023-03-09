@@ -6,6 +6,7 @@
 #define ANTIQUACRM_VIEWSMENUS_H
 
 #include <QMenu>
+#include <QMenuBar>
 #include <QObject>
 #include <QSignalMapper>
 #include <QWidget>
@@ -14,6 +15,10 @@ class ReportsActionGroup;
 class ViewsActionGroup;
 class StatisticsMenu;
 
+/**
+ * @ingroup ui
+ * @brief Menu for all SQL Views @class ViewsActionGroup
+ */
 class AntiquaViewsMenus final : public QMenu {
   Q_OBJECT
 
@@ -41,7 +46,7 @@ Q_SIGNALS:
   void sendOpenReport(const QString &);
 
 public:
-  explicit AntiquaViewsMenus(QWidget *parent);
+  explicit AntiquaViewsMenus(QMenuBar *parent);
 };
 
 #endif // ANTIQUACRM_VIEWSMENUS_H
