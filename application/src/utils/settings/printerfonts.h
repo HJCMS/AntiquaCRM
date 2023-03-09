@@ -16,7 +16,7 @@
 
 /**
  * @brief The Printer Fonts group
- * @ingroup utils
+ * @ingroup _settings
  */
 class PrinterFonts final : public QGroupBox {
   Q_OBJECT

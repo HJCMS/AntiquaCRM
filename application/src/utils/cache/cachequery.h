@@ -16,7 +16,7 @@
 
 /**
  * @brief The CacheQuery class
- * @ingroup utils
+ * @ingroup _cache
  */
 class CacheQuery final : public QObject {
   Q_OBJECT

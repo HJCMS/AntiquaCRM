@@ -11,7 +11,7 @@
 #include <QWidget>
 
 /**
- * @ingroup utils
+ * @ingroup _returnorder
  * @brief The ButtonNext class
  */
 class ButtonNext : public QFrame {

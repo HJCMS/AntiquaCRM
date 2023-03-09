@@ -10,7 +10,7 @@
 #include <QWidget>
 
 /**
- * @ingroup utils
+ * @ingroup _deliveryservice
  * @brief Auswahl der Paketzusteller
  * Die Daten werden aus Tabelle "ref_delivery_service" gelesen.
  */

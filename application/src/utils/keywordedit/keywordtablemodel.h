@@ -13,7 +13,7 @@
 #include <QWidget>
 
 /**
- * @ingroup utils
+ * @ingroup _keywordedit
  * @brief The KeywordTableModel class
  */
 class KeywordTableModel : public QSqlTableModel {

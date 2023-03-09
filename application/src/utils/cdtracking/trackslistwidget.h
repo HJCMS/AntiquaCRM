@@ -15,7 +15,7 @@
 
 /**
  * @brief The TracksListWidget class
- * @ingroup utils
+ * @ingroup _cdtracking
  */
 class TracksListWidget final : public QTreeWidget {
   Q_OBJECT

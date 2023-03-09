@@ -7,9 +7,6 @@
  *
  * @mainpage @DISPLAYNAME@
  * API Documentation for „AntiquaCRM“ core library.
- *
- * @subpage tabpage the current tab integration
- *
  */
 
 #ifndef ANTIQUACRM_GLOBAL_H

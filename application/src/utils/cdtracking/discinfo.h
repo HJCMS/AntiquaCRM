@@ -13,7 +13,7 @@
 
 /**
  * @brief The DiscInfo class
- * @ingroup utils
+ * @ingroup _cdtracking
  */
 class DiscInfo final : public QJsonObject {
 private:
@@ -22,7 +22,7 @@ private:
 public:
   /**
    * @brief Track index
-   * @ingroup utils
+   * @ingroup _cdtracking
    */
   struct Track {
     int index;

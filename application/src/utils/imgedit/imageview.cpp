@@ -212,7 +212,7 @@ bool ImageView::saveImageTo(const SourceInfo &info) {
 
   /**
    * @brief Bildspeicher einlesen
-   * @list Temporäres befüllen in dieser Reihenfolge!
+   * Temporäres befüllen in dieser Reihenfolge!
    *  @li 1) Existiert eine Bearbeitete Version?
    *  @li 2) Auf das Quellbild zurückgreifen!
    *  @li 3) Fehler und aussteigen!

@@ -17,7 +17,7 @@ class FinalEdit;
 class ReturnNavigation;
 
 /**
- * @ingroup utils
+ * @ingroup _returnorder
  * @brief The Return Order Section
  * @class ReturnOrder
  * Dialog to create return orders

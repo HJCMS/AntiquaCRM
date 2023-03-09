@@ -16,7 +16,7 @@ class PurchaseTable;
 class ButtonNext;
 
 /**
- * @ingroup utils
+ * @ingroup _returnorder
  * @brief The ReturnEdit class
  */
 class ReturnEdit : public QWidget {

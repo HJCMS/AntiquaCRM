@@ -13,7 +13,7 @@
 class ButtonNext;
 
 /**
- * @ingroup utils
+ * @ingroup _returnorder
  * @brief The InfoLabel class
  */
 class InfoLabel final : public QLabel {
@@ -25,7 +25,7 @@ public:
 
 /**
  * @brief The ReturnInfoWidget class
- * @ingroup utils
+ * @ingroup _returnorder
  */
 class ReturnInfoWidget : public QWidget {
   Q_OBJECT

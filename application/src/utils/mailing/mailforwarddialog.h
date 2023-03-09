@@ -23,7 +23,7 @@ class MailTemplateKeys;
 class MailAttachments;
 
 /**
- * @ingroup utils
+ * @ingroup _mailing
  * @brief eMail Messanger
  * Edit eMail’s for Mail Application commandlines.
  *

@@ -13,7 +13,7 @@
 #include "cacheconfig.h"
 
 /**
- * @ingroup utils
+ * @ingroup _cache
  * @brief The CacheBuilder class
  */
 class CacheBuilder : public QObject {

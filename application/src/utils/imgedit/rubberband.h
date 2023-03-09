@@ -13,7 +13,7 @@
 #include <QGraphicsView>
 
 /**
- * @ingroup utils
+ * @ingroup _imgedit
  * @brief RubberBand for cutting
  */
 class RubberBand final : public QRubberBand {

@@ -22,7 +22,7 @@ class PrintingLayout;
 
 /**
  * @brief The PrintSettings class
- * @ingroup utils
+ * @ingroup _settings
  */
 class PrintSettings : public SettingsWidget {
   Q_OBJECT

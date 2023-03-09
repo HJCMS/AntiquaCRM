@@ -13,7 +13,7 @@
 #include <QWidget>
 
 /**
- * @ingroup utils
+ * @ingroup _aboutdialogs
  * @brief Abstract Info Widget for About pages
  */
 class InfoWidget : public QWidget {

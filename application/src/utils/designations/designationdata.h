@@ -10,7 +10,7 @@
 
 /**
  * @brief The DesignationData class
- * @ingroup utils
+ * @ingroup _designations
  */
 struct DesignationData {
   int id = -1;

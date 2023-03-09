@@ -16,7 +16,7 @@
 
 /**
  * @brief The StorageCategory class
- * @ingroup utils
+ * @ingroup _storage
  */
 class StorageCategory final : public QFrame {
   Q_OBJECT

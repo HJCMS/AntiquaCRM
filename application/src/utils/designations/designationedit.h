@@ -17,7 +17,7 @@
 
 /**
  * @brief The DesignationEdit class
- * @ingroup utils
+ * @ingroup _designations
  */
 class DesignationEdit : public QWidget {
   Q_OBJECT

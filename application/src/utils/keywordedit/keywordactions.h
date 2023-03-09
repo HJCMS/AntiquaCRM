@@ -12,7 +12,7 @@
 #include <QWidget>
 
 /**
- * @ingroup utils
+ * @ingroup _keywordedit
  * @brief Keywords Edit Actions frame
  */
 class KeywordActions : public QFrame {

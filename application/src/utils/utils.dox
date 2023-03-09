@@ -1,4 +1,28 @@
 /**
+ * @section util Utility
+ * @short AntiquaCRM Utility modules
+ *
  * @defgroup utils AntiquaCRM Utils
  * @brief AntiquaCRM Utility modules
+ * @addtogroup utils
+ * @{
+ *  @defgroup _settings Settings Dialog
+ *  @defgroup _printing Printing Dialogs
+ *  @defgroup _designations Article Designations
+ *  @defgroup _cdtracking Article CD’s info tracking
+ *  @defgroup _cache  Application cache
+ *  @defgroup _keywordedit Keywords editor
+ *  @defgroup _storage Article Storage locations
+ *  @defgroup _deliveryservice Delivery services
+ *  @defgroup _imgedit Imaging
+ *  @defgroup _mailing Mailling
+ *  @defgroup _templates Templates
+ *  @defgroup _purchasetable Purchase Table
+ *  @defgroup _aboutdialogs About Dialog
+ *  @defgroup _helper Helpers
+ *  @defgroup _returnorder Payment returning
+ *  @defgroup _companydata Company data
+ *  @defgroup _designations Article Designations
+ * @}
+ *
  */

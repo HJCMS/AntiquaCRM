@@ -12,7 +12,7 @@
 #include <QVariant>
 
 /**
- * @ingroup utils
+ * @ingroup _templates
  * @brief PDF Template locader class
  */
 class AntiquaTemplates final : public QObject {

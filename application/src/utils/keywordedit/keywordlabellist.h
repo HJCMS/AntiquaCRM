@@ -15,7 +15,7 @@
 class KeywordLabel;
 
 /**
- * @ingroup utils
+ * @ingroup _keywordedit
  * @brief Keywords Edit Labels list
  */
 class KeywordLabelList : public QFrame {

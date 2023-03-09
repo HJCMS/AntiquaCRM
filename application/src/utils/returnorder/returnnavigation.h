@@ -12,7 +12,7 @@
 #include <QWidget>
 
 /**
- * @ingroup utils
+ * @ingroup _returnorder
  * @brief The ReturnNavigation class
  */
 class ReturnNavigation final : public QDialogButtonBox {

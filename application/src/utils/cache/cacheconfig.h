@@ -10,7 +10,7 @@
 
 /**
  * @brief The CacheConfig class
- * @ingroup utils
+ * @ingroup _cache
  */
 class CacheConfig final {
 public:

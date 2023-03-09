@@ -16,7 +16,7 @@
 #include "sourceinfo.h"
 
 /**
- * @ingroup utils
+ * @ingroup _imgedit
  * @brief Image Tree list view
  */
 class ImageListView final : public QTreeView {

@@ -16,7 +16,7 @@
 #endif
 
 /**
- * @ingroup utils
+ * @ingroup _printing
  * @brief Printing Payment reminders
  */
 class PaymentReminder final : public Printing {

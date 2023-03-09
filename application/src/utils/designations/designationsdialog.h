@@ -18,7 +18,7 @@ class DesignationsList;
 class DesignationEdit;
 
 /**
- * @ingroup utils
+ * @ingroup _designations
  * @brief Edit and fetch Designations
  */
 class DesignationsDialog final : public QDialog {

@@ -42,13 +42,13 @@ const QMap<int, QString> MonthlyReportModel::headerList() const {
 
   /**
    * @brief Sales Tax type „sales_tax_type“
-   * @example 19%
+   * @short e.g.:19%
    */
   m.insert(i++, tr("VAT"));
 
   /**
    * @brief Sales Tax value „sales_tax_calc“
-   * @example 0,19€
+   * @short e.g.:0,19€
    */
   m.insert(i++, tr("TAX"));
 

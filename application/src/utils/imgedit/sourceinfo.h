@@ -11,7 +11,7 @@
 #include <QString>
 
 /**
- * @ingroup utils
+ * @ingroup _imgedit
  * @brief Image File information
  */
 class SourceInfo final : public QFileInfo {

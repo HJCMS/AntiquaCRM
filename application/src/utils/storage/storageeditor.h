@@ -20,7 +20,7 @@ class StorageCategory;
 
 /**
  * @brief The StorageEditor class
- * @ingroup utils
+ * @ingroup _storage
  */
 class StorageEditor final : public QWidget {
   Q_OBJECT

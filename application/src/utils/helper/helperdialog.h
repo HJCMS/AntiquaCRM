@@ -13,7 +13,7 @@
 #include <QWidget>
 
 /**
- * @ingroup utils
+ * @ingroup _helper
  * @brief Helper ToolBox Dialog
  */
 class HelperDialog final : public QDialog {

@@ -29,7 +29,7 @@
 class TextEditor;
 
 /**
- * @ingroup utils
+ * @ingroup _printing
  * @brief Container für das befüllen der Tabellenzellen.
  */
 struct BillingInfo {
@@ -78,7 +78,7 @@ struct BillingInfo {
 Q_DECLARE_METATYPE(BillingInfo);
 
 /**
- * @ingroup utils
+ * @ingroup _printing
  * @brief Printing Dialogs
  * @class Printing
  * Das Dokument wird aus drei Textkörpern erstellt.

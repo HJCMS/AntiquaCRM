@@ -20,7 +20,7 @@ class DeliverServiceEdit;
 class DeliverServiceList;
 
 /**
- * @ingroup utils
+ * @ingroup _deliveryservice
  * @brief Edit and fetch Delivery Services
  */
 class DeliverServiceDialog : public QDialog {

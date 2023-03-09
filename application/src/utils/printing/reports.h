@@ -20,7 +20,7 @@
 class TextEditor;
 
 /**
- * @ingroup utils
+ * @ingroup _printing
  * @brief Priont reports
  */
 class Reports final : public QDialog {

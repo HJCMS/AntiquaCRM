@@ -16,7 +16,7 @@
 #endif
 
 /**
- * @ingroup utils
+ * @ingroup _printing
  * @brief Printing delivery notes
  */
 class DeliveryNote final : public Printing {

@@ -13,7 +13,7 @@
 
 /**
  * @brief The ProviderSettings class
- * @ingroup utils
+ * @ingroup _settings
  */
 class ProviderSettings : public SettingsWidget {
   Q_OBJECT

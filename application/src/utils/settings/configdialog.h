@@ -24,7 +24,7 @@ class ProviderSettings;
 class PathSettings;
 
 /**
- * @ingroup utils
+ * @ingroup _settings
  * @brief AntqiuaCRM Settings
  * @class ConfigDialog
  * @brief The ConfigDialog class

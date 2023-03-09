@@ -12,7 +12,7 @@
 #include <QVariant>
 
 /**
- * @ingroup utils
+ * @ingroup _mailing
  * @brief eMail command class
  */
 class MailCommand final : public QProcess {

@@ -19,7 +19,7 @@
 #include <QWidget>
 
 /**
- * @ingroup utils
+ * @ingroup _keywordedit
  * @brief Keywords Edit group box
  */
 class KeywordEditor : public QGroupBox {

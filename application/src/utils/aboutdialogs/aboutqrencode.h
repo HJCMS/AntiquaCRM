@@ -9,7 +9,7 @@
 #include <QWidget>
 
 /**
- * @ingroup utils
+ * @ingroup _aboutdialogs
  * @brief About QREncode InfoWidget
  */
 class AboutQREncode final : public InfoWidget {

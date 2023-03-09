@@ -10,7 +10,7 @@
 #include <QWidget>
 
 /**
- * @ingroup utils
+ * @ingroup _mailing
  * @brief eMail Body class
  */
 class MailBody final : public QTextEdit {

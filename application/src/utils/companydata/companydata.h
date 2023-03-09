@@ -14,7 +14,7 @@
 class CompanyWidget;
 
 /**
- * @ingroup utils
+ * @ingroup _companydata
  * @brief The Company Settings Dialog
  * @class CompanyData
  */

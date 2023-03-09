@@ -15,7 +15,7 @@
 
 /**
  * @brief The BorderPrintInput class
- * @ingroup utils
+ * @ingroup _settings
  */
 class BorderPrintInput final : public InputEdit {
   Q_OBJECT
@@ -45,7 +45,7 @@ public:
 
 /**
  * @brief The PrintingLayout class
- * @ingroup utils
+ * @ingroup _settings
  */
 class PrintingLayout final : public QGroupBox {
   Q_OBJECT
