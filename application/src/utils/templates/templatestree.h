@@ -15,7 +15,7 @@
 #include <QWidget>
 
 /**
- * @ingroup AntiquaTemplates
+ * @ingroup utils
  * @brief The TemplatesTree class
  */
 class TemplatesTree final : public QTreeWidget {

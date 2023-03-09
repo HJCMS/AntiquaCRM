@@ -12,7 +12,7 @@
 
 /**
  * @brief Customers Table model
- * @ingroup AntiquaCustomers
+ * @ingroup _customers
  */
 class CustomersTableModel final : public AntiquaCRM::ASqlQueryModel {
   Q_OBJECT

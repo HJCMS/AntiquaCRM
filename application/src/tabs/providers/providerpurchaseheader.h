@@ -13,7 +13,7 @@
 
 /**
  * @brief The ProviderPurchaseHeader class
- * @ingroup AntiquaProviders
+ * @ingroup _providers
  */
 class ProviderPurchaseHeader final : public QFrame {
   Q_OBJECT

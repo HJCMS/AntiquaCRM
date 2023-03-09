@@ -35,8 +35,11 @@ struct ANTIQUACRM_LIBRARY APluginConfig {
 };
 
 /**
- * @brief Primäre Interface Klasse für Dienstleister Plugins
- * @defgroup AntiquaCRMPlugin Plugin Interface
+ * @brief Primary Interface Class for Provider integration
+ * @defgroup AntiquaCRMPlugin AntiquaCRM Plugin Interface
+ *
+ * @class APluginInterface
+ * @brief AntiquaCRM Provider Plugin-Interface
  */
 class ANTIQUACRM_LIBRARY APluginInterface : public QObject {
   Q_OBJECT

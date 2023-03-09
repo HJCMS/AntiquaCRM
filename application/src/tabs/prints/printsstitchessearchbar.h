@@ -15,7 +15,7 @@ class PrintsStitchesSearchLine;
 
 /**
  * @brief Inventory Prints Search bar
- * @ingroup AntiquaPrintsStitches
+ * @ingroup _prints
  */
 class PrintsStitchesSearchBar final : public TabSearchBar {
   Q_OBJECT

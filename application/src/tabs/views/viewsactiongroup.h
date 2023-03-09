@@ -11,7 +11,7 @@
 
 /**
  * @brief Inventory Views Action group
- * @ingroup InventoryViews
+ * @ingroup tabs
  */
 class ViewsActionGroup final : public QActionGroup {
   Q_OBJECT

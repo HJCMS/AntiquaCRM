@@ -16,7 +16,7 @@ class StorageModel;
 
 /**
  * @brief The StorageHeader class
- * @ingroup AntiquaStorage
+ * @ingroup utils
  */
 class StorageHeader final : public QHeaderView {
   Q_OBJECT
@@ -27,7 +27,7 @@ public:
 
 /**
  * @brief The StorageTable class
- * @ingroup AntiquaStorage
+ * @ingroup utils
  */
 class StorageTable final : public QTableView {
   Q_OBJECT
@@ -53,7 +53,7 @@ public Q_SLOTS:
 public:
   /**
    * @brief The RowValues class
-   * @ingroup AntiquaStorage
+   * @ingroup utils
    */
   struct RowValues {
     int sl_id;

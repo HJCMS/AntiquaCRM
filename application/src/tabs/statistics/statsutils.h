@@ -13,7 +13,7 @@
 
 /**
  * @brief The StatsUtils class
- * @ingroup AntiquaStatistics
+ * @ingroup _chartstat
  */
 class StatsUtils final {
 public:

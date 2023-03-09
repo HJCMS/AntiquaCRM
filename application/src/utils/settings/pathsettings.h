@@ -15,7 +15,7 @@
 
 /**
  * @brief The Path Settings widget
- * @ingroup AntiquaSettings
+ * @ingroup utils
  */
 class PathSettings final : public SettingsWidget {
   Q_OBJECT

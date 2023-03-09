@@ -13,7 +13,7 @@
 
 /**
  * @brief Books Filter selecter
- * @ingroup AntiquaBooks
+ * @ingroup _books
  */
 class BookSelectFilter final : public QComboBox {
   Q_OBJECT

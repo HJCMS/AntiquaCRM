@@ -17,7 +17,7 @@ class OrdersItemList;
 
 /**
  * @brief Inventory Orders Editor
- * @ingroup AntiquaOrders
+ * @ingroup _orders
  */
 class OrdersEditor final : public InventoryEditor {
   Q_OBJECT

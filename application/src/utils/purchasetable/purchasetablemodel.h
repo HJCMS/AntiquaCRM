@@ -14,7 +14,7 @@
 
 /**
  * @brief Model Klasse für Artikel Einkaufstabelle
- * @ingroup AntiquaPurchaseTable
+ * @ingroup utils
  */
 class PurchaseTableModel final : public QAbstractTableModel {
   Q_OBJECT

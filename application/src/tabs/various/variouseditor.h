@@ -12,7 +12,7 @@
 
 /**
  * @brief Inventory Various Editor
- * @ingroup InventoryVarious
+ * @ingroup _various
  */
 class VariousEditor final : public InventoryEditor {
   Q_OBJECT

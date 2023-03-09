@@ -11,7 +11,7 @@
 
 /**
  * @brief Inventory Reports Action group
- * @ingroup InventorReports
+ * @ingroup _reports
  */
 class ReportsActionGroup : public QActionGroup {
   Q_OBJECT

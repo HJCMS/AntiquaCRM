@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
 
+SET (DOXYGEN_FILES
+ tabs.dox
+)
+
 ADD_SUBDIRECTORY(books)
 ADD_SUBDIRECTORY(customers)
 ADD_SUBDIRECTORY(cdsvinyl)

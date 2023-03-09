@@ -10,7 +10,7 @@
 
 /**
  * @brief Customers Filter selecter
- * @ingroup AntiquaCustomers
+ * @ingroup _customers
  */
 class CustomersSelectFilter final : public QComboBox {
   Q_OBJECT

@@ -11,7 +11,7 @@
 
 /**
  * @brief Inventory Tab widget
- * @ingroup AntiquaCustomers
+ * @ingroup _customers
  */
 class CustomersTabWidget : public QTabWidget {
   Q_OBJECT

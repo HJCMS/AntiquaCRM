@@ -17,7 +17,7 @@ class PurchaseTableModel;
 class PurchaseTableDelegate;
 
 /**
- * @defgroup AntiquaPurchaseTable Purchase table
+ * @ingroup utils
  * @brief Tabelle Artikeleinkäufe
  *
  * @class PurchaseTable

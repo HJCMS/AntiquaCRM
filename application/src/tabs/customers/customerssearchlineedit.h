@@ -11,7 +11,7 @@
 
 /**
  * @brief Customers Search line edit
- * @ingroup widgets
+ * @ingroup _customers
  */
 class CustomersSearchLineEdit : public SearchLineEdit {
   Q_OBJECT

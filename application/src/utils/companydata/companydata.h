@@ -14,7 +14,7 @@
 class CompanyWidget;
 
 /**
- * @defgroup AntiquaCompanyData Company Data Editor
+ * @ingroup utils
  * @brief The Company Settings Dialog
  * @class CompanyData
  */

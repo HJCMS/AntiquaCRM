@@ -12,7 +12,7 @@
 
 /**
  * @brief The StatisticsMenu class
- * @ingroup AntiquaStatistics
+ * @ingroup _chartstat
  */
 class StatisticsMenu final : public QMenu {
   Q_OBJECT

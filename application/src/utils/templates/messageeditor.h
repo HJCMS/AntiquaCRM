@@ -10,7 +10,7 @@
 #include <QWidget>
 
 /**
- * @ingroup AntiquaTemplates
+ * @ingroup utils
  * @brief Body Template Edit widget
  */
 class MessageEditor : public QTextEdit {

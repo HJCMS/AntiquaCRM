@@ -14,7 +14,7 @@ class KeywordLineEdit;
 
 /**
  * @brief Inventory Prints Editor
- * @ingroup AntiquaPrintsStitches
+ * @ingroup _prints
  */
 class PrintsStitchesEditor final : public InventoryEditor {
   Q_OBJECT

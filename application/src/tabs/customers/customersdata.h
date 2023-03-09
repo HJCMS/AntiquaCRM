@@ -12,7 +12,7 @@
 
 /**
  * @brief Customers Editor data widget
- * @ingroup AntiquaCustomers
+ * @ingroup _customers
  */
 class CustomersData final : public QWidget {
   Q_OBJECT

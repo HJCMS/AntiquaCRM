@@ -16,7 +16,7 @@ class MonthlyReportModel;
 
 /**
  * @brief The MonthlyReportView class
- * @ingroup InventorReports
+ * @ingroup _reports
  */
 class MonthlyReportView : public QTableView {
   Q_OBJECT

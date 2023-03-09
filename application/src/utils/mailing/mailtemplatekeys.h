@@ -12,7 +12,7 @@
 #include <QVariant>
 
 /**
- * @ingroup AntiquaMailing
+ * @ingroup utils
  * @brief eMail Template Keys class
  */
 class MailTemplateKeys final : public QThread {

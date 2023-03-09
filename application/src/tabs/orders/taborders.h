@@ -18,7 +18,7 @@ class OrdersReturning;
 
 /**
  * @brief Inventory Orders System
- * @defgroup AntiquaOrders Tab Orders
+ * @ingroup _orders
  */
 class TabOrders final : public Inventory {
   Q_OBJECT

@@ -18,7 +18,7 @@ class BooksTableModel;
 
 /**
  * @brief Books Table view
- * @ingroup AntiquaBooks
+ * @ingroup _books
  */
 class BookTableView final : public InventoryTable {
   Q_OBJECT

@@ -15,7 +15,7 @@ class OrdersTableModel;
 
 /**
  * @brief Inventory Orders Table view
- * @ingroup AntiquaOrders
+ * @ingroup _orders
  */
 class OrdersTableView final : public InventoryTable {
   Q_OBJECT

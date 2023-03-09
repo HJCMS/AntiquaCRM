@@ -16,7 +16,7 @@ class CDVEditor;
 
 /**
  * @brief Inventory CD+Vinyl Class
- * @defgroup AntiquaCDsVinyl Tab CD’s + Vinyl
+ * @ingroup _cdvinyl
  */
 class TabCDVinyl final : public Inventory {
   Q_OBJECT

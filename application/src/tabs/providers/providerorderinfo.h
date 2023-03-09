@@ -14,7 +14,7 @@
 
 /**
  * @brief The ProviderOrderInfo class
- * @ingroup AntiquaProviders
+ * @ingroup _providers
  */
 class ProviderOrderInfo : public QWidget {
   Q_OBJECT

@@ -16,7 +16,7 @@
 class DeliverItem;
 
 /**
- * @ingroup DeliveryService
+ * @ingroup utils
  * @brief Deliver Services TreeWidget
  */
 class DeliverServiceList : public QTreeWidget {

@@ -12,7 +12,7 @@
 
 /**
  * @brief Customers header frame
- * @ingroup AntiquaCustomers
+ * @ingroup _customers
  */
 class CustomersHeaderFrame : public QFrame {
   Q_OBJECT

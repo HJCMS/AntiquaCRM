@@ -12,7 +12,7 @@
 
 /**
  * @brief Inventory Various Search line edit
- * @ingroup widgets
+ * @ingroup _various
  */
 class VariousSearchEdit final : public SearchLineEdit {
   Q_OBJECT

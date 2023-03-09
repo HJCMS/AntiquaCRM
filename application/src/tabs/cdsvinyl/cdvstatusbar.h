@@ -11,7 +11,7 @@
 
 /**
  * @brief CD+Vinyl status bar
- * @ingroup AntiquaCDsVinyl
+ * @ingroup _cdvinyl
  */
 class CDVStatusBar final : public TabStatusBar {
   Q_OBJECT

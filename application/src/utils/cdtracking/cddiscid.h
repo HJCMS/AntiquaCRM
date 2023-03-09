@@ -13,7 +13,7 @@
 
 /**
  * @brief The CDDiscId class
- * @ingroup AntiquaCDTracking
+ * @ingroup utils
  */
 class CDDiscId final : public QThread {
   Q_OBJECT

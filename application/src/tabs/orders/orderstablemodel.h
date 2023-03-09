@@ -11,7 +11,7 @@
 
 /**
  * @brief Inventory Orders Table model
- * @ingroup AntiquaOrders
+ * @ingroup _orders
  */
 class OrdersTableModel final : public AntiquaCRM::ASqlQueryModel {
   Q_OBJECT

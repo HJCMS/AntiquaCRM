@@ -20,7 +20,7 @@ class ProvidersTreeView;
 
 /**
  * @brief Inventory Providers Index
- * @defgroup AntiquaProviders Tab Providers
+ * @ingroup _providers
  */
 class TabProviders final : public Inventory {
   Q_OBJECT

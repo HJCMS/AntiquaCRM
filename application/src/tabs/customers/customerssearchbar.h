@@ -14,7 +14,7 @@ class CustomersSearchLineEdit;
 
 /**
  * @brief Customers Search bar
- * @ingroup AntiquaCustomers
+ * @ingroup _customers
  */
 class CustomersSearchBar final : public TabSearchBar {
   Q_OBJECT

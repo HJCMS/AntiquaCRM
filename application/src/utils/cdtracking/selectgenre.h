@@ -15,7 +15,7 @@
 
 /**
  * @brief The SelectGenre class
- * @ingroup AntiquaCDTracking
+ * @ingroup utils
  */
 class SelectGenre : public QComboBox {
   Q_OBJECT

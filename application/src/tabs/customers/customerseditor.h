@@ -19,7 +19,7 @@ class CustomersOrders;
 
 /**
  * @brief Customers Editor
- * @ingroup AntiquaCustomers
+ * @ingroup _customers
  */
 class CustomersEditor final : public InventoryEditor {
   Q_OBJECT

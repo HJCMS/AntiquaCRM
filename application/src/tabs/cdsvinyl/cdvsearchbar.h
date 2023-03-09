@@ -15,7 +15,7 @@ class CDVSearchLine;
 
 /**
  * @brief CD+Vinyl Search bar
- * @ingroup AntiquaCDsVinyl
+ * @ingroup _cdvinyl
  */
 class CDVSearchBar final : public TabSearchBar {
   Q_OBJECT

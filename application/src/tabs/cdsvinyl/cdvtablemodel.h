@@ -11,7 +11,7 @@
 
 /**
  * @brief CD+Vinyl Table model
- * @ingroup AntiquaCDsVinyl
+ * @ingroup _cdvinyl
  */
 class CDVTableModel final : public AntiquaCRM::ASqlQueryModel {
   Q_OBJECT

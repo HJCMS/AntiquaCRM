@@ -15,7 +15,7 @@
 #endif
 
 /**
- * @ingroup AntiquaPrinting
+ * @ingroup utils
  * @brief Printing invoices
  */
 class Invoice final : public Printing {

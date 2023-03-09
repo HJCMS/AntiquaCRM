@@ -12,7 +12,7 @@
 
 /**
  * @brief Books Status bar
- * @ingroup AntiquaBooks
+ * @ingroup _books
  */
 class BookStatusBar final : public TabStatusBar {
   Q_OBJECT

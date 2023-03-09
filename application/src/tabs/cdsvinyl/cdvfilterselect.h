@@ -12,7 +12,7 @@
 
 /**
  * @brief CD+Vinyl Filter selecter
- * @ingroup AntiquaCDsVinyl
+ * @ingroup _cdvinyl
  */
 class CDVFilterSelect final : public QComboBox {
   Q_OBJECT

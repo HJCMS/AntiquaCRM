@@ -16,7 +16,7 @@ class BookEditor;
 
 /**
  * @brief Inventory Books Class
- * @defgroup AntiquaBooks Tab Books
+ * @ingroup _books
  */
 class TabBooks final : public Inventory {
   Q_OBJECT

@@ -10,7 +10,7 @@
 #include <QString>
 
 /**
- * @ingroup DeliveryService
+ * @ingroup utils
  * @brief Deliver Item class
  */
 class DeliverItem final {

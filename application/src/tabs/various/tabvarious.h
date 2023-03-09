@@ -16,7 +16,7 @@ class VariousStatusBar;
 
 /**
  * @brief Inventory Various
- * @defgroup InventoryVarious Tab Various
+ * @ingroup _various
  */
 class TabVarious final : public Inventory {
   Q_OBJECT

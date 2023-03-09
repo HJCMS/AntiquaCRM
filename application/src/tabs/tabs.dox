@@ -1,0 +1,60 @@
+/**
+ * @page tabpage Inventory tabs
+ * @short Currently implemented tabs
+ *
+ * @section tables Inventory Tabs
+ *
+ * @subsection AntiquaBooks Books
+ * @brief - Integration for SQL Table „inventory_books“ @ref TabBooks.
+ *
+ * @subsection AntiquaCustomers Customers
+ * @brief - Integration for SQL Table „inventory_customers“ @ref TabCustomers.
+ *
+ * @subsection AntiquaOrders Orders
+ * @brief - Integration for SQL Table „inventory_orders“ @ref TabOrders.
+ *
+ * @subsection AntiquaProviders Providers
+ * @brief - Integration for SQL Table „provider_orders“ @ref TabProviders.
+ *
+ * @subsection AntiquaPrintsStitches Prints and Stitches
+ * @brief - Integration for SQL Table „inventory_prints“ @ref TabPrintsStitches.
+ *
+ * @subsection AntiquaCDsVinyl CD’s Vinyl
+ * @brief - Integration for SQL Table „inventory_cdvinyl“ @ref TabCDVinyl.
+ *
+ * @subsection AntiquaVarious Various
+ * @brief - Integration for SQL Table „inventory_various“ @ref TabVarious.
+ *
+ * @defgroup tabs AntiquaCRM Inventory tabs
+ * @brief AntiquaCRM Application tabs
+ * @addtogroup tabs
+ * @{
+ *  @defgroup _books     Inventory Books
+ *  @short „inventory_books“ 
+ *
+ *  @defgroup _customers Inventory Customers
+ *  @short „inventory_customers“
+ *
+ *  @defgroup _orders    Inventory Orders
+ *  @short „provider_orders“
+ *
+ *  @defgroup _prints    Inventory Prints
+ *  @short „inventory_prints“
+ *
+ *  @defgroup _providers Inventory Providers
+ *  @short „provider_orders“
+ *
+ *  @defgroup _cdvinyl   Inventory CD’s Vinyl
+ *  @short „inventory_cdvinyl“
+ *
+ *  @defgroup _various   Inventory Various
+ *  @short „inventory_various“
+ *
+ *  @defgroup _chartstat Statistics
+ *  @short QChart based statistics
+ *
+ *  @defgroup _reports Monthly reports
+ *  @short Generate payment reports
+ *
+ * @}
+ */

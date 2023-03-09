@@ -11,7 +11,7 @@
 
 /**
  * @brief The AHorizontalBarSeries class
- * @ingroup AntiquaStatistics
+ * @ingroup _chartstat
  */
 class AHorizontalBarSeries : public QtCharts::QHorizontalBarSeries {
   Q_OBJECT

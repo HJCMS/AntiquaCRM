@@ -13,7 +13,7 @@
 
 /**
  * @brief The ProviderStatistics class
- * @ingroup AntiquaStatistics
+ * @ingroup _chartstat
  */
 class ProviderStatistics : public QScrollArea {
   Q_OBJECT

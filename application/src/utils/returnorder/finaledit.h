@@ -10,7 +10,7 @@
 #include <QWidget>
 
 /**
- * @ingroup AntiquaReturnOrder
+ * @ingroup utils
  * @brief The FinalEdit class
  */
 class FinalEdit : public QWidget {

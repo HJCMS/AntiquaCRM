@@ -13,7 +13,7 @@ class VariousTableModel;
 
 /**
  * @brief Inventory Various table view
- * @ingroup InventoryVarious
+ * @ingroup _various
  */
 class VariousTableView final : public InventoryTable {
   Q_OBJECT

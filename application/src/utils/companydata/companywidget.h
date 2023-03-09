@@ -15,7 +15,7 @@
 /**
  * @brief Textfield input widget
  * @class TextInput
- * @ingroup AntiquaCompanyData
+ * @ingroup utils
  */
 class TextInput final : public QTextEdit {
   Q_OBJECT
@@ -31,7 +31,7 @@ public:
 /**
  * @brief Textline input widget
  * @class LineInput
- * @ingroup AntiquaCompanyData
+ * @ingroup utils
  */
 class LineInput final : public QLineEdit {
   Q_OBJECT
@@ -47,7 +47,7 @@ public:
 /**
  * @brief Grouped Input Settings Widget
  * @class CompanyWidget
- * @ingroup AntiquaCompanyData
+ * @ingroup utils
  */
 class CompanyWidget : public QWidget {
   Q_OBJECT

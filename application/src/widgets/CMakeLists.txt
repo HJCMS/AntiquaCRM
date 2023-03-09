@@ -25,6 +25,7 @@ SET (projectLibrary_LINKER
 
 SET (projectLibrary_FILES
   synopsis_h.sh
+  widgets.dox
 )
 
 SET (projectLibrary_SOURCES

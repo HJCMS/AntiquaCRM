@@ -15,7 +15,7 @@
 
 /**
  * @brief The AttachmentInfo class
- * @ingroup AntiquaMailing
+ * @ingroup utils
  */
 class AttachmentInfo final : public QLineEdit {
   Q_OBJECT
@@ -39,7 +39,7 @@ public:
 
 /**
  * @brief The MailAttachments class
- * @ingroup AntiquaMailing
+ * @ingroup utils
  */
 class MailAttachments final : public QFrame {
   Q_OBJECT

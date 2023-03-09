@@ -15,7 +15,7 @@ class OrdersHistoryButton;
 
 /**
  * @brief Inventory Orders Status bar
- * @ingroup AntiquaOrders
+ * @ingroup _orders
  */
 class OrdersStatusBar final : public TabStatusBar {
   Q_OBJECT

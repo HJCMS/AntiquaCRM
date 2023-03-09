@@ -10,7 +10,7 @@
 
 /**
  * @brief The MonthlyReportModel class
- * @ingroup InventorReports
+ * @ingroup _reports
  */
 class MonthlyReportModel final : public AntiquaCRM::ASqlQueryModel {
   Q_OBJECT

@@ -16,7 +16,7 @@ class DeliverPackageBox;
 class DeliverServiceBox;
 
 /**
- * @ingroup DeliveryService
+ * @ingroup utils
  * @brief Deliver Service Input edit
  */
 class DeliverService final : public InputEdit {

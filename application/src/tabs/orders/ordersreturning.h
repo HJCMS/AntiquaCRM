@@ -10,7 +10,7 @@
 
 /**
  * @brief Inventory Orders returning widget
- * @ingroup AntiquaOrders
+ * @ingroup _orders
  */
 class OrdersReturning : public QWidget {
   Q_OBJECT

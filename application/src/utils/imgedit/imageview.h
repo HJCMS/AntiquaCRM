@@ -26,7 +26,7 @@
 class RubberBand;
 
 /**
- * @ingroup AntiquaImgEdit
+ * @ingroup utils
  * @brief Image previewer
  */
 class ImageView final : public QGraphicsView {

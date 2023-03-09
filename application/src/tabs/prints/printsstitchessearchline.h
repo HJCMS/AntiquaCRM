@@ -12,7 +12,7 @@
 
 /**
  * @brief Inventory Prints Search line edit
- * @ingroup widgets
+ * @ingroup _prints
  */
 class PrintsStitchesSearchLine final : public SearchLineEdit {
   Q_OBJECT

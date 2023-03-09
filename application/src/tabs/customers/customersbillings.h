@@ -11,7 +11,7 @@
 
 /**
  * @brief Customers data billings widget
- * @ingroup AntiquaCustomers
+ * @ingroup _customers
  */
 class CustomersBillings final : public QWidget {
   Q_OBJECT

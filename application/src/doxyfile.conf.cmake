@@ -33,15 +33,17 @@ ABBREVIATE_BRIEF       = "The $name class" \
   an \
   the
 
-ALWAYS_DETAILED_SEC    = YES
+ALWAYS_DETAILED_SEC    = NO
 INLINE_INHERITED_MEMB  = NO
 FULL_PATH_NAMES        = NO
-STRIP_FROM_PATH        =
-STRIP_FROM_INC_PATH    =
+STRIP_FROM_PATH        = @CMAKE_CURRENT_SOURCE_DIR@ \
+ @CMAKE_CURRENT_BINARY_DIR@
+
+STRIP_FROM_INC_PATH    = @CMAKE_CURRENT_SOURCE_DIR@
 SHORT_NAMES            = NO
 JAVADOC_AUTOBRIEF      = NO
 MULTILINE_CPP_IS_BRIEF = NO
-INHERIT_DOCS           = YES
+INHERIT_DOCS           = NO
 SEPARATE_MEMBER_PAGES  = NO
 TAB_SIZE               = 2
 
@@ -81,12 +83,12 @@ LOOKUP_CACHE_SIZE      = 0
 EXTRACT_ALL            = NO
 EXTRACT_PRIVATE        = NO
 EXTRACT_PACKAGE        = NO
-EXTRACT_STATIC         = NO
+EXTRACT_STATIC         = YES
 EXTRACT_LOCAL_CLASSES  = YES
 EXTRACT_LOCAL_METHODS  = YES
 EXTRACT_ANON_NSPACES   = NO
 HIDE_UNDOC_MEMBERS     = YES
-HIDE_UNDOC_CLASSES     = NO
+HIDE_UNDOC_CLASSES     = YES
 HIDE_FRIEND_COMPOUNDS  = NO
 HIDE_IN_BODY_DOCS      = YES
 INTERNAL_DOCS          = NO
@@ -153,16 +155,9 @@ EXCLUDE                = @CMAKE_CURRENT_SOURCE_DIR@/plugins/antiquacrm \
  @CMAKE_CURRENT_SOURCE_DIR@/assistant
 
 EXCLUDE_SYMLINKS       = YES
-EXCLUDE_SYMBOLS        =
-EXAMPLE_PATH           =
-EXAMPLE_PATTERNS       = *
 EXAMPLE_RECURSIVE      = NO
 IMAGE_PATH             = @CMAKE_CURRENT_SOURCE_DIR@/icons
-INPUT_FILTER           =
-FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
-FILTER_SOURCE_PATTERNS =
-USE_MDFILE_AS_MAINPAGE =
 
 #---------------------------------------------------------------------------
 # Configuration options related to source browsing
@@ -182,7 +177,7 @@ VERBATIM_HEADERS       = YES
 # Configuration options related to the alphabetical class index
 #---------------------------------------------------------------------------
 
-ALPHABETICAL_INDEX     = YES
+ALPHABETICAL_INDEX     = NO
 COLS_IN_ALPHA_INDEX    = 5
 IGNORE_PREFIX          =
 
@@ -234,7 +229,7 @@ ENABLE_PREPROCESSING   = YES
 # The default value is: NO.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-MACRO_EXPANSION        = NO
+MACRO_EXPANSION        = YES
 
 # If the EXPAND_ONLY_PREDEF and MACRO_EXPANSION tags are both set to YES then
 # the macro expansion is limited to the macros specified with the PREDEFINED and
@@ -242,7 +237,7 @@ MACRO_EXPANSION        = NO
 # The default value is: NO.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-EXPAND_ONLY_PREDEF     = NO
+EXPAND_ONLY_PREDEF     = Yes
 
 # If the SEARCH_INCLUDES tag is set to YES, the include files in the
 # INCLUDE_PATH will be searched if a #include is found.
@@ -256,7 +251,7 @@ SEARCH_INCLUDES        = YES
 # preprocessor.
 # This tag requires that the tag SEARCH_INCLUDES is set to YES.
 
-INCLUDE_PATH           = .
+INCLUDE_PATH           = @CMAKE_CURRENT_SOURCE_DIR@ .
 
 # You can use the INCLUDE_FILE_PATTERNS tag to specify one or more wildcard
 # patterns (like *.h and *.hpp) to filter out the header-files in the
@@ -264,7 +259,7 @@ INCLUDE_PATH           = .
 # used.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-INCLUDE_FILE_PATTERNS  =
+INCLUDE_FILE_PATTERNS  = *.h
 
 # The PREDEFINED tag can be used to specify one or more macro names that are
 # defined before the preprocessor is started (similar to the -D option of e.g.
@@ -351,8 +346,12 @@ PERL_PATH              = /usr/bin/perl
 # Configuration options related to the dot tool
 #---------------------------------------------------------------------------
 
-HAVE_DOT               = NO
-CLASS_DIAGRAMS         = NO
+HAVE_DOT               = @HAVE_DOT@
+DOT_PATH               = @DOT_EXECUTABLE@
+MAX_DOT_GRAPH_DEPTH    = 10
+DOT_CLEANUP            = YES
 HIDE_UNDOC_RELATIONS   = YES
+GENERATE_LEGEND        = NO
+CLASS_DIAGRAMS         = NO
 
 ##EOF

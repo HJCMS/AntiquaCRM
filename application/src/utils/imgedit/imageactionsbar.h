@@ -11,7 +11,7 @@
 #include <QWidget>
 
 /**
- * @ingroup AntiquaImgEdit
+ * @ingroup utils
  * @brief Image Actions ToolBar
  */
 class ImageActionsBar final : public QToolBar {

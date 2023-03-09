@@ -19,7 +19,7 @@ class KeywordActions;
 class KeywordEditor;
 
 /**
- * @defgroup KeywordsEdit Article Keywords
+ * @ingroup utils
  * @brief Article Keywords edit and selection
  */
 class KeywordEdit : public QDialog {

@@ -3,7 +3,13 @@
 
 /**
  * @defgroup amacros AntiquaCRM Macros
- * @brief AntiquaCRM core macros
+ * @brief Macro definitions in AntiquaCRM Namespace
+ *
+ * @mainpage @DISPLAYNAME@
+ * API Documentation for „AntiquaCRM“ core library.
+ *
+ * @subpage tabpage the current tab integration
+ *
  */
 
 #ifndef ANTIQUACRM_GLOBAL_H

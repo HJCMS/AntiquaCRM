@@ -18,7 +18,7 @@ class StorageTable;
 class StorageEditor;
 
 /**
- * @defgroup AntiquaStorage Storage
+ * @ingroup utils
  * @brief Storage Section
  *
  * @class StorageEditDialog

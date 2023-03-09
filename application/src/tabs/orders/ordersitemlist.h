@@ -21,7 +21,7 @@ class PurchaseTable;
 
 /**
  * @brief Inventory Orders Items list
- * @ingroup AntiquaOrders
+ * @ingroup _orders
  */
 class OrdersItemList final : public QWidget {
   Q_OBJECT

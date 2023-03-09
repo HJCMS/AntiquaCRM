@@ -12,7 +12,7 @@
 
 /**
  * @brief Inventory Prints Filter selecter
- * @ingroup AntiquaPrintsStitches
+ * @ingroup _prints
  */
 class PrintsStitchesFilterSelect final : public QComboBox {
   Q_OBJECT

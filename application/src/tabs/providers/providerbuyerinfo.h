@@ -14,7 +14,7 @@
 
 /**
  * @brief The ProviderTextBlock class
- * @ingroup AntiquaProviders
+ * @ingroup _providers
  */
 class ProviderTextBlock final : public QFrame {
   Q_OBJECT
@@ -32,7 +32,7 @@ public:
 
 /**
  * @brief The ProviderBuyerInfo class
- * @ingroup AntiquaProviders
+ * @ingroup _providers
  */
 class ProviderBuyerInfo final : public QSplitter {
   Q_OBJECT

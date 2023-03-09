@@ -15,7 +15,7 @@
 #include <QWidget>
 
 /**
- * @ingroup AntiquaProviders
+ * @ingroup _providers
  * @brief Tabelle für die Bestellartikel anzeigen
  *
  * @class ProviderPurchaseTable

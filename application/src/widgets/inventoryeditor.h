@@ -18,8 +18,8 @@
 #include <QWidget>
 
 /**
- * @brief Hauptklasse für das Editieren
  * @ingroup widgets
+ * @brief Hauptklasse für das Editieren
  */
 class InventoryEditor : public QWidget {
   Q_OBJECT

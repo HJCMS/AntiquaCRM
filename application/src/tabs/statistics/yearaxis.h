@@ -12,7 +12,7 @@
 
 /**
  * @brief The YearAxis class
- * @ingroup AntiquaStatistics Tab Statistics
+ * @ingroup _chartstat
  */
 class YearAxis final : public QtCharts::QDateTimeAxis {
   Q_OBJECT

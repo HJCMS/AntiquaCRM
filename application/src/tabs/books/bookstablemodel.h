@@ -11,7 +11,7 @@
 
 /**
  * @brief Books Table model
- * @ingroup AntiquaBooks
+ * @ingroup _books
  */
 class BooksTableModel final : public AntiquaCRM::ASqlQueryModel
 {

@@ -12,7 +12,7 @@
 
 /**
  * @brief Inventory Prints Status bar
- * @ingroup AntiquaPrintsStitches
+ * @ingroup _prints
  */
 class PrintsStitchesStatusBar final : public TabStatusBar
 {

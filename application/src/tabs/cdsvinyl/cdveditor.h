@@ -15,7 +15,7 @@ class KeywordLineEdit;
 
 /**
  * @brief CD+Vinyl Editor
- * @ingroup AntiquaCDsVinyl
+ * @ingroup _cdvinyl
  */
 class CDVEditor final : public InventoryEditor {
   Q_OBJECT

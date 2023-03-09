@@ -15,7 +15,7 @@
 
 /**
  * @brief The ProviderPurchaseBar class
- * @ingroup AntiquaProviders
+ * @ingroup _providers
  */
 class ProviderPurchaseBar : public QStatusBar {
   Q_OBJECT

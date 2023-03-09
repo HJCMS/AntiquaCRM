@@ -12,7 +12,7 @@
 #include <QWidget>
 
 /**
- * @ingroup KeywordsEdit
+ * @ingroup utils
  * @brief Keywords Edit Label
  */
 class KeywordLabel final : public QFrame {

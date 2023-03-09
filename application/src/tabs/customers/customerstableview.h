@@ -19,7 +19,7 @@ class CustomersTableModel;
 
 /**
  * @brief Customers Table view
- * @ingroup AntiquaCustomers
+ * @ingroup _customers
  */
 class CustomersTableView final : public InventoryTable {
   Q_OBJECT

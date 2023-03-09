@@ -22,8 +22,8 @@ class AntiquaSystemTray;
 class AntiquaTimer;
 
 /**
- * @defgroup ui User Application
- * @brief AntiquaCRM Interface
+ * @defgroup ui AntiquaCRM Application
+ * @brief AntiquaCRM Application frontend
  *
  * @class AntiquaAppl
  * @brief Main Application Class

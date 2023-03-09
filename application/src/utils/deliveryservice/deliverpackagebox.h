@@ -11,7 +11,7 @@
 #include <AntiquaCRM>
 
 /**
- * @ingroup DeliveryService
+ * @ingroup utils
  * @brief Auswahl der Paketzusteller Angebote
  * Die Daten werden aus Tabelle "ref_delivery_cost" gelesen.
  */

@@ -14,7 +14,7 @@ class BookSearchLine;
 
 /**
  * @brief Books search bar
- * @ingroup AntiquaBooks
+ * @ingroup _books
  */
 class BookSearchBar final : public TabSearchBar {
   Q_OBJECT

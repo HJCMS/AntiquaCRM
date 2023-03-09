@@ -15,7 +15,7 @@
 
 /**
  * @brief Ansicht: Dienstleister Bestellungen
- * @ingroup AntiquaProviders
+ * @ingroup _providers
  */
 class ProvidersTreeView final : public QTreeWidget {
   Q_OBJECT

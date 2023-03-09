@@ -22,7 +22,7 @@ class MessageEditor;
 class MessageKeywordList;
 
 /**
- * @defgroup AntiquaTemplates Templates
+ * @ingroup utils
  * @brief Text Templates for eMail and Printing
  *
  * @class MessageTemplates

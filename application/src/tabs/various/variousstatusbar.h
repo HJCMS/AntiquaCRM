@@ -11,7 +11,7 @@
 
 /**
  * @brief Inventory Various Status bar
- * @ingroup InventoryVarious
+ * @ingroup _various
  */
 class VariousStatusBar final : public TabStatusBar {
   Q_OBJECT

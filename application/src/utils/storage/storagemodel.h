@@ -11,7 +11,7 @@
 
 /**
  * @brief The StorageModel class
- * @ingroup AntiquaStorage
+ * @ingroup utils
  */
 class StorageModel : public QSqlTableModel {
   Q_OBJECT

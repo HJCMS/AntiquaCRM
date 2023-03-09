@@ -11,7 +11,7 @@
 
 /**
  * @brief Inventory Various Table model
- * @ingroup InventoryVarious
+ * @ingroup _various
  */
 class VariousTableModel final : public AntiquaCRM::ASqlQueryModel {
   Q_OBJECT

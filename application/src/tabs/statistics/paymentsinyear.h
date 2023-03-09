@@ -14,7 +14,7 @@
 
 /**
  * @brief The PaymentsInYear class
- * @ingroup AntiquaStatistics
+ * @ingroup _chartstat
  */
 class PaymentsInYear final : public QScrollArea {
   Q_OBJECT

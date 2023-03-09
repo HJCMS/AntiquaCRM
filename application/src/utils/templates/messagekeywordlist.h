@@ -14,7 +14,7 @@
 #include <QWidget>
 
 /**
- * @ingroup AntiquaTemplates
+ * @ingroup utils
  * @brief The MessageKeywordList class
  */
 class MessageKeywordList final : public QTreeWidget {

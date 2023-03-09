@@ -15,7 +15,7 @@
 
 /**
  * @brief The Printer Setup class
- * @ingroup AntiquaSettings
+ * @ingroup utils
  */
 class PrinterSetup : public QGroupBox {
   Q_OBJECT

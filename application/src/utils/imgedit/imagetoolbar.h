@@ -10,7 +10,7 @@
 #include <QWidget>
 
 /**
- * @ingroup AntiquaImgEdit
+ * @ingroup utils
  * @brief Imageedit ToolBar
  */
 class ImageToolBar final : public QWidget {

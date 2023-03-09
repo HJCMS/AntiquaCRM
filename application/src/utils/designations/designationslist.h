@@ -17,7 +17,7 @@ class DesignationsList;
 
 /**
  * @brief The DesignationsListItem class
- * @ingroup AntiquaDesignations
+ * @ingroup utils
  */
 class DesignationsListItem : public QListWidgetItem {
 
@@ -32,7 +32,7 @@ public:
 
 /**
  * @brief The DesignationsList class
- * @ingroup AntiquaDesignations
+ * @ingroup utils
  */
 class DesignationsList : public QListWidget {
   Q_OBJECT

@@ -9,7 +9,7 @@
 #include <QWidget>
 
 /**
- * @ingroup AntiquaAbout
+ * @ingroup utils
  * @brief About PostgreSQL InfoWidget
  */
 class AboutPostgreSQL : public InfoWidget {

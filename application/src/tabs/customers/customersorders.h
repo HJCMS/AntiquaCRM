@@ -13,7 +13,7 @@
 
 /**
  * @brief Customers table widget
- * @ingroup AntiquaCustomers
+ * @ingroup _customers
  */
 class CustomersOrders : public QTableWidget {
   Q_OBJECT

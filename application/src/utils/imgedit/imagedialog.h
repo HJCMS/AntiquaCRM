@@ -24,7 +24,7 @@ class SourceInfo;
 class ImageActionsBar;
 
 /**
- * @defgroup AntiquaImgEdit Image Import/Edit and Viewer
+ * @ingroup utils
  * @brief Primary Import Imagesdialog
  */
 class ImageDialog final : public QDialog {

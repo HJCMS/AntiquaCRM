@@ -15,7 +15,7 @@ class VariousSearchEdit;
 
 /**
  * @brief Inventory Various Search bar
- * @ingroup InventoryVarious
+ * @ingroup _various
  */
 class VariousSearchBar final : public TabSearchBar {
   Q_OBJECT

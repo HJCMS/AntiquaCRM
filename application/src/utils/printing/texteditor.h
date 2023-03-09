@@ -10,7 +10,7 @@
 #include <QWidget>
 
 /**
- * @ingroup AntiquaPrinting
+ * @ingroup utils
  * @brief Textbodies
  */
 class TextEditor : public QTextEdit

@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
 
+SET (DOXYGEN_FILES
+ utils.dox
+)
+
 ADD_SUBDIRECTORY(aboutdialogs)
 ADD_SUBDIRECTORY(cache)
 ADD_SUBDIRECTORY(companydata)

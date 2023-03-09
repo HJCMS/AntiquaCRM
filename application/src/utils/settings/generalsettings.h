@@ -12,7 +12,7 @@
 
 /**
  * @brief The General Settings widget
- * @ingroup AntiquaSettings
+ * @ingroup utils
  */
 class GeneralSettings final : public SettingsWidget {
   Q_OBJECT

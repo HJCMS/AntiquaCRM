@@ -21,7 +21,7 @@ class ProviderBuyerInfo;
 class ProviderOrderInfo;
 
 /**
- * @ingroup AntiquaProviders
+ * @ingroup _providers
  * @brief Provider Order/Payment Overview page.
  *
  * @class ProvidersOrderPage

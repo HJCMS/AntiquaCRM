@@ -12,7 +12,7 @@
 
 /**
  * @brief Orders Customer Info Widget
- * @ingroup AntiquaOrders
+ * @ingroup _orders
  */
 class OrdersCustomerInfo : public QWidget {
   Q_OBJECT

@@ -16,7 +16,7 @@
 
 /**
  * @brief The PurchaseTableDelegate class
- * @ingroup AntiquaPurchaseTable
+ * @ingroup utils
  */
 class PurchaseTableDelegate final : public QItemDelegate {
   Q_OBJECT

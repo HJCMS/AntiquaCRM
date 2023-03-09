@@ -15,7 +15,7 @@
 
 /**
  * @brief The StatsMainPage class
- * @ingroup AntiquaStatistics
+ * @ingroup _chartstat
  */
 class StatsMainPage : public QWidget {
   Q_OBJECT

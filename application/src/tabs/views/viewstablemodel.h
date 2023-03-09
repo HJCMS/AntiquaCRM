@@ -12,7 +12,7 @@
 
 /**
  * @brief Inventory Views table model
- * @ingroup InventoryViews
+ * @ingroup tabs
  */
 class ViewsTableModel final : public QSqlTableModel {
   Q_OBJECT

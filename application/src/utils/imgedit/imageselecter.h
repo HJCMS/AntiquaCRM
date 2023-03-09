@@ -20,7 +20,7 @@
 #include "sourceinfo.h"
 
 /**
- * @ingroup AntiquaImgEdit
+ * @ingroup utils
  * @brief Image Selecter
  */
 class ImageSelecter : public QWidget {

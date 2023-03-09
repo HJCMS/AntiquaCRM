@@ -17,7 +17,7 @@
 
 /**
  * @brief Open Order Add Article Dialog
- * @ingroup AntiquaOrders
+ * @ingroup _orders
  */
 class OrderAddArticle final : public QDialog {
   Q_OBJECT

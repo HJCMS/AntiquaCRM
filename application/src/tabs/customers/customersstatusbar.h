@@ -11,7 +11,7 @@
 
 /**
  * @brief Customers Status bar
- * @ingroup AntiquaCustomers
+ * @ingroup _customers
  */
 class CustomersStatusBar final : public TabStatusBar {
   Q_OBJECT

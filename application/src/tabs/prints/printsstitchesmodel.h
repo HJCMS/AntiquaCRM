@@ -11,7 +11,7 @@
 
 /**
  * @brief Inventory Prints Table model
- * @ingroup AntiquaPrintsStitches
+ * @ingroup _prints
  */
 class PrintsStitchesModel final : public AntiquaCRM::ASqlQueryModel {
   Q_OBJECT

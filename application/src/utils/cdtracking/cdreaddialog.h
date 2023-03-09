@@ -22,7 +22,7 @@ class TracksListWidget;
 class SelectGenre;
 
 /**
- * @defgroup AntiquaCDTracking CD Tracking
+ * @ingroup utils
  * @brief Read CD’s Metadata Dialog with discid
  */
 class CDReadDialog final : public QDialog {

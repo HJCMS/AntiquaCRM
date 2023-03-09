@@ -11,7 +11,7 @@
 
 /**
  * @brief Books Search line edit
- * @ingroup widgets
+ * @ingroup _books
  */
 class BookSearchLine final : public SearchLineEdit {
   Q_OBJECT

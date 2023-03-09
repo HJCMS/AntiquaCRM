@@ -12,7 +12,7 @@
 
 /**
  * @brief CD+Vinyl Search line widget
- * @ingroup widgets
+ * @ingroup _cdvinyl
  */
 class CDVSearchLine final : public SearchLineEdit {
   Q_OBJECT

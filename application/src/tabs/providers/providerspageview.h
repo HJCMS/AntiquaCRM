@@ -16,7 +16,7 @@ class ProvidersOrderPage;
 
 /**
  * @brief Inventory Providers Tab widget
- * @ingroup AntiquaProviders
+ * @ingroup _providers
  */
 class ProvidersPageView final : public QTabWidget {
   Q_OBJECT

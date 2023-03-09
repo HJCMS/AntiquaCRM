@@ -28,7 +28,7 @@ class TextEditor;
 
 /**
  * @brief QRCode erstellen
- * @ingroup AntiquaPrinting
+ * @ingroup utils
  */
 class BookCardQrCode final {
 
@@ -43,7 +43,7 @@ public:
 
 /**
  * @brief Datenfelder erstellen
- * @ingroup AntiquaPrinting
+ * @ingroup utils
  */
 class BookCardPaintWidget final : public QWidget {
   Q_OBJECT
@@ -71,7 +71,7 @@ public:
 
 /**
  * @brief Buchkarten Konfiguration
- * @ingroup AntiquaPrinting
+ * @ingroup utils
  */
 class BookCardConfig final : public QWidget {
   Q_OBJECT
@@ -100,7 +100,7 @@ public:
 };
 
 /**
- * @ingroup AntiquaPrinting
+ * @ingroup utils
  * @brief Printing Article Bookcards
  */
 class BookCard final : public QDialog {

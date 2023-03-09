@@ -17,8 +17,8 @@
 #include <QTableView>
 
 /**
- * @brief Hauptklasse für Registerkarte
  * @ingroup widgets
+ * @brief Primary base class for all Inventory tabs
  */
 class Inventory : public QStackedWidget {
   Q_OBJECT

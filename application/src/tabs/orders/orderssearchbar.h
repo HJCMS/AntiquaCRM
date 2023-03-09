@@ -14,7 +14,7 @@ class OrderSearchLine;
 
 /**
  * @brief Inventory Orders Search bar
- * @ingroup AntiquaOrders
+ * @ingroup _orders
  */
 class OrdersSearchBar final : public TabSearchBar {
   Q_OBJECT

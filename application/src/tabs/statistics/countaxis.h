@@ -10,7 +10,7 @@
 
 /**
  * @brief The CountAxis class
- * @ingroup AntiquaStatistics
+ * @ingroup _chartstat
  */
 class CountAxis final : public QtCharts::QValueAxis {
   Q_OBJECT

@@ -15,7 +15,7 @@
 
 /**
  * @brief Orders Customer Search Dialog
- * @ingroup AntiquaOrders
+ * @ingroup _orders
  */
 class OrdersCustomSearch final : public QDialog {
   Q_OBJECT
