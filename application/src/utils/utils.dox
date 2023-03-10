@@ -15,6 +15,7 @@
  *  @defgroup _storage Article Storage locations
  *  @defgroup _deliveryservice Delivery services
  *  @defgroup _imgedit Imaging
+ *  @defgroup _webcams WebCam
  *  @defgroup _mailing Mailling
  *  @defgroup _templates Templates
  *  @defgroup _purchasetable Purchase Table
@@ -24,5 +25,4 @@
  *  @defgroup _companydata Company data
  *  @defgroup _designations Article Designations
  * @}
- *
  */

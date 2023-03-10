@@ -13,6 +13,13 @@ SET (subproject_LINKER
  AntiquaCRM
 )
 
+IF(WEBCAM_BUILD_SUPPORTED)
+SET (subproject_LINKER
+ ${subproject_LINKER}
+ AntiquaWebCam
+)
+ENDIF()
+
 SET (subproject_SOURCES
   imagedialog.cpp
   imageview.cpp

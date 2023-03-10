@@ -56,6 +56,7 @@ ENDIF ()
 ## https://ccache.dev/
 FIND_PROGRAM (CCACHE_EXECUTABLE NAMES ccache)
 IF (CCACHE_EXECUTABLE)
+  MESSAGE (STATUS "Compiler cache „ccache“ enabled.")
   SET_PROPERTY (GLOBAL PROPERTY RULE_LAUNCH_COMPILE ${CCACHE_EXECUTABLE})
   SET_PROPERTY (GLOBAL PROPERTY RULE_LAUNCH_LINK ${CCACHE_EXECUTABLE})
 ENDIF ()
@@ -85,16 +86,16 @@ ENDIF (ANTIQUA_DEVELOPEMENT)
 ## Zlib
 FIND_PACKAGE(ZLIB REQUIRED)
 IF (NOT ZLIB_FOUND)
- MESSAGE (FATAL_ERROR "AntiquaCRM: Requires gzip compression for Network connections!")
+ MESSAGE (FATAL_ERROR "Requires gzip compression for Network connections!")
 ENDIF (NOT ZLIB_FOUND)
 
 ## libqrencode
 ## https://github.com/fukuchi/libqrencode
 FIND_PACKAGE(QRENCODE REQUIRED)
 IF (QRENCODE_FOUND)
- MESSAGE (STATUS "AntiquaCRM: Bookcard printing enabled!")
+ MESSAGE (STATUS "Bookcard printing with „qrencode“ enabled.")
 ELSE (QRENCODE_FOUND)
- MESSAGE (FATAL_ERROR "AntiquaCRM: Requires libqrencode for Bookcard printing!")
+ MESSAGE (FATAL_ERROR "Requires libqrencode for Bookcard printing!")
 ENDIF (QRENCODE_FOUND)
 
 ## MusicBrainz DiscID
@@ -118,7 +119,7 @@ SET(PROJECT_BINDINGS
 IF (CMAKE_HOST_UNIX)
  FIND_PACKAGE(X11)
   IF(X11_FOUND)
-   MESSAGE (STATUS "AntiquaCRM: X11-DBus Support enabled!")
+   MESSAGE (STATUS "IPC/DBus Support enabled.")
    SET(PROJECT_BINDINGS
     ${PROJECT_BINDINGS}
     DBus
@@ -133,28 +134,13 @@ IF (CMAKE_HOST_WIN32)
   )
 ENDIF (CMAKE_HOST_WIN32)
 
-FIND_PACKAGE(QT NAMES Qt5 REQUIRED COMPONENTS ${PROJECT_BINDINGS})
+FIND_PACKAGE(QT NAMES Qt5 REQUIRED COMPONENTS Core Widgets Sql Network)
 FIND_PACKAGE(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS ${PROJECT_BINDINGS})
 
 ## Required by src/i18n and QT5_CREATE_TRANSLATION
 SET (LUPDATE_SCANDIRS
   ${CMAKE_CURRENT_BINARY_DIR}/src
 )
-
-###
-## \Section Doxygen
-###
-FIND_PROGRAM (DOT_EXECUTABLE NAMES dot)
-IF (DOT_EXECUTABLE)
- SET (HAVE_DOT "YES")
- ## Optinal for Doxygen - qhelpgenerator
- FIND_PROGRAM (QHG_EXECUTABLE NAMES qhelpgenerator)
- IF (QHG_EXECUTABLE)
-   SET (ANTIQUA_QHG_LOCATION ${QHG_EXECUTABLE})
- ENDIF ()
-ELSE (DOT_EXECUTABLE)
- SET (HAVE_DOT "NO")
-ENDIF (DOT_EXECUTABLE)
 
 ###
 ## \Section Target bindings
@@ -178,6 +164,49 @@ SET (PROJECT_INCLUDE_DIRS
   ${Qt${QT_VERSION_MAJOR}Xml_INCLUDE_DIRS}
   ${Qt${QT_VERSION_MAJOR}PrintSupport_INCLUDE_DIRS}
 )
+
+###
+## \Section Multimedia Support for Webcam
+###
+OPTION (WITH_MULTIMEDIA "Build with Multimedia support." OFF)
+IF(WITH_MULTIMEDIA)
+ FIND_PACKAGE(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS
+  Multimedia
+  MultimediaWidgets
+ )
+ IF(Qt${QT_VERSION_MAJOR}Multimedia_FOUND)
+  IF(Qt${QT_VERSION_MAJOR}MultimediaWidgets_FOUND)
+   MESSAGE (STATUS "Webcam Support enabled.")
+   SET(WEBCAM_BUILD_SUPPORTED TRUE)
+   ADD_DEFINITIONS (-DANTIQUA_WEBCAM_ENABLED)
+   SET (PROJECT_INCLUDE_DIRS
+     ${PROJECT_INCLUDE_DIRS}
+     ${Qt${QT_VERSION_MAJOR}Multimedia_INCLUDE_DIRS}
+     ${Qt${QT_VERSION_MAJOR}MultimediaWidgets_INCLUDE_DIRS}
+   )
+  ELSE()
+   MESSAGE (FATAL_ERROR "Option: WITH_MULTIMEDIA is set, but no components found.")
+  ENDIF()
+ ENDIF()
+ELSE(WITH_MULTIMEDIA)
+ MESSAGE (STATUS "Multimedia support not enabled.")
+ENDIF(WITH_MULTIMEDIA)
+
+###
+## \Section Doxygen
+###
+FIND_PROGRAM (DOT_EXECUTABLE NAMES dot)
+IF (DOT_EXECUTABLE)
+ MESSAGE (STATUS "Doxygen with „dot“ enabled.")
+ SET (HAVE_DOT "YES")
+ FIND_PROGRAM (QHG_EXECUTABLE NAMES qhelpgenerator)
+ IF (QHG_EXECUTABLE)
+   MESSAGE (STATUS "Doxygen with „qhelpgenerator“ enabled.")
+   SET (ANTIQUA_QHG_LOCATION ${QHG_EXECUTABLE})
+ ENDIF ()
+ELSE (DOT_EXECUTABLE)
+ SET (HAVE_DOT "NO")
+ENDIF (DOT_EXECUTABLE)
 
 ###
 ## \Section SubTargets

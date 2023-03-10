@@ -98,6 +98,7 @@ private Q_SLOTS:
   void setPrintBookCard();
   void actionRemoveImage(qint64 articleId);
   void actionEditImages();
+  void actionEditWebcam();
 
 public Q_SLOTS:
   void setRestore() override;
