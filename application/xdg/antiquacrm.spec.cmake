@@ -119,6 +119,7 @@ popd
 %dir %{_datadir}/antiquacrm/data/pgsql
 %dir %{_datadir}/antiquacrm/data/json
 %dir %{_datadir}/antiquacrm/data/fonts
+%doc %{_mandir}/man1/antiquacrm.1*
 %{_datadir}/antiquacrm/LICENSE
 %{_datadir}/antiquacrm/i18n/antiquacrm*.qm
 %{_datadir}/antiquacrm/data/pgsql/*.sql

@@ -17,8 +17,6 @@
  */
 class KeywordLabel final : public QFrame {
   Q_OBJECT
-  Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
   const int padding = 2;
@@ -30,7 +28,7 @@ private Q_SLOTS:
   void removeClicked();
 
 Q_SIGNALS:
-  void sendPleaseRemove(QWidget *);
+  void sendPleaseRemove(QFrame *);
 
 public:
   explicit KeywordLabel(const QString &txt, QWidget *parent = nullptr);

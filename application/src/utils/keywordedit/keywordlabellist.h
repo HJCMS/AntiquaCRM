@@ -20,15 +20,13 @@ class KeywordLabel;
  */
 class KeywordLabelList : public QFrame {
   Q_OBJECT
-  Q_CLASSINFO("Author", "Jürgen Heinemann")
-  Q_CLASSINFO("URL", "https://www.hjcms.de")
 
 private:
   QHBoxLayout *m_layout;
   QStringList p_uniqList;
 
 private Q_SLOTS:
-  void removeKeyword(QWidget *);
+  void removeKeyword(QFrame *);
 
 Q_SIGNALS:
   void sendModified(bool);
