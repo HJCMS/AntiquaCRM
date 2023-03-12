@@ -9,10 +9,13 @@
 #include <QtWidgets>
 
 KeywordLineEdit::KeywordLineEdit(QWidget *parent) : InputEdit{parent} {
+  // ColumnList
   m_keywordList = new KeywordLabelList(this);
+  m_keywordList->setContentsMargins(0, 0, 0, 0);
   m_keywordList->setToolTip(tr("add 3 Keywords for a better search!"));
   m_layout->addWidget(m_keywordList);
-  m_layout->addStretch(1);
+  m_layout->setStretch(1, 1);
+  // Buttons
   QToolButton *ac_clear = new QToolButton(this);
   ac_clear->setIcon(QIcon(":icons/action_remove.png"));
   ac_clear->setToolTip(tr("This button reset the Keyword field."));
@@ -21,10 +24,10 @@ KeywordLineEdit::KeywordLineEdit(QWidget *parent) : InputEdit{parent} {
   ac_add->setIcon(QIcon(":icons/action_add.png"));
   ac_add->setToolTip(tr("Keyword add"));
   m_layout->addWidget(ac_add);
+  // LineEdit
   m_lineEdit = new QLineEdit(this);
   m_lineEdit->setPlaceholderText(tr("Search, add to"));
-  m_lineEdit->setToolTip(
-      tr("To add keywords, paste them here and press Enter."));
+  m_lineEdit->setToolTip(tr("To add keywords, paste them here and press Enter."));
   m_lineEdit->setDragEnabled(false);
   m_lineEdit->setClearButtonEnabled(true);
   m_lineEdit->setMinimumWidth(200);

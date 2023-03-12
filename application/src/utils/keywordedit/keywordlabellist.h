@@ -26,7 +26,7 @@ private:
   QStringList p_uniqList;
 
 private Q_SLOTS:
-  void removeKeyword(QFrame *);
+  void removeKeyword();
 
 Q_SIGNALS:
   void sendModified(bool);

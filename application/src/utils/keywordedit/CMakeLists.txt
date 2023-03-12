@@ -20,6 +20,7 @@ SET (subproject_SOURCES
  keywordeditor.cpp
  keywordlabel.cpp
  keywordlabellist.cpp
+ keywordlistmodel.cpp
  keywordlineedit.cpp
  keywordtable.cpp
  keywordtablemodel.cpp
@@ -31,6 +32,7 @@ SET (subproject_HEADERS
  keywordeditor.h
  keywordlabel.h
  keywordlabellist.h
+ keywordlistmodel.h
  keywordlineedit.h
  keywordtable.h
  keywordtablemodel.h

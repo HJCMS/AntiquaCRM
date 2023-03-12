@@ -17,21 +17,23 @@
  */
 class KeywordLabel final : public QFrame {
   Q_OBJECT
+  Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged)
 
 private:
-  const int padding = 2;
-  QLabel *m_text;
+  QLabel *m_lable;
   QToolButton *m_close;
-  const QString lableStyleSheet() const;
-
-private Q_SLOTS:
-  void removeClicked();
+  const QString styleSheet() const;
 
 Q_SIGNALS:
-  void sendPleaseRemove(QFrame *);
+  void textChanged();
+  void aboutToRemove();
+
+public Q_SLOTS:
+  void setText(const QString &);
 
 public:
-  explicit KeywordLabel(const QString &txt, QWidget *parent = nullptr);
+  explicit KeywordLabel(QWidget *parent = nullptr);
+  explicit KeywordLabel(const QString &text, QWidget *parent = nullptr);
   const QString text();
 };
 

@@ -17,8 +17,8 @@ KeywordLabelList::KeywordLabelList(QWidget *parent) : QFrame{parent} {
   setLayout(m_layout);
 }
 
-void KeywordLabelList::removeKeyword(QFrame *w) {
-  KeywordLabel *lb = reinterpret_cast<KeywordLabel *>(w);
+void KeywordLabelList::removeKeyword() {
+  KeywordLabel *lb = qobject_cast<KeywordLabel *>(sender());
   if (lb != nullptr) {
     QString key = lb->text();
     m_layout->removeWidget(lb);
@@ -47,10 +47,10 @@ void KeywordLabelList::addKeyword(const QString &keyword) {
   if (p_uniqList.contains(key))
     return;
 
-  KeywordLabel *lb = new KeywordLabel(key, this);
+  KeywordLabel *lb = new KeywordLabel(this);
   if (lb != nullptr) {
-    connect(lb, SIGNAL(sendPleaseRemove(QFrame *)), this,
-            SLOT(removeKeyword(QFrame *)));
+    lb->setText(key);
+    connect(lb, SIGNAL(aboutToRemove()), SLOT(removeKeyword()));
     m_layout->addWidget(lb, Qt::AlignLeft);
     p_uniqList << key;
   }
@@ -59,7 +59,7 @@ void KeywordLabelList::addKeyword(const QString &keyword) {
 void KeywordLabelList::addKeywords(const QStringList &keywords) {
   clear();
   foreach (QString k, keywords) {
-    addKeyword(k);
+    addKeyword(k.trimmed());
   }
 }
 

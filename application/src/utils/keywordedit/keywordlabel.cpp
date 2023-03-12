@@ -10,21 +10,18 @@
 #include <QPixmap>
 #include <QSizePolicy>
 
-KeywordLabel::KeywordLabel(const QString &txt, QWidget *parent)
-    : QFrame{parent} {
-  setObjectName(txt);
+KeywordLabel::KeywordLabel(QWidget *parent) : QFrame{parent} {
   setContentsMargins(0, 0, 0, 0);
   setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
   setFrameShape(QFrame::StyledPanel);
   setFrameShadow(QFrame::Plain);
-  setStyleSheet(lableStyleSheet());
-  setToolTip(txt);
+  setStyleSheet(styleSheet());
+  setAcceptDrops(false);
 
   QHBoxLayout *layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
-  m_text = new QLabel(this);
-  m_text->setText(txt);
-  layout->addWidget(m_text);
+  m_lable = new QLabel(this);
+  layout->addWidget(m_lable);
 
   m_close = new QToolButton(this);
   m_close->setContentsMargins(0, 0, 0, 0);
@@ -34,10 +31,15 @@ KeywordLabel::KeywordLabel(const QString &txt, QWidget *parent)
   layout->addWidget(m_close);
 
   setLayout(layout);
-  connect(m_close, SIGNAL(clicked()), this, SLOT(removeClicked()));
+  connect(m_close, SIGNAL(clicked()), this, SIGNAL(aboutToRemove()));
 }
 
-const QString KeywordLabel::lableStyleSheet() const {
+KeywordLabel::KeywordLabel(const QString &text, QWidget *parent)
+    : KeywordLabel{parent} {
+  setText(text);
+}
+
+const QString KeywordLabel::styleSheet() const {
   QString color = palette().color(QPalette::Text).name();
   QStringList css;
   css << "padding-left:2px;padding-right:2px;";
@@ -46,6 +48,10 @@ const QString KeywordLabel::lableStyleSheet() const {
   return "KeywordLabel {" + css.join("") + "}";
 }
 
-void KeywordLabel::removeClicked() { emit sendPleaseRemove(this); }
+void KeywordLabel::setText(const QString &txt) {
+  setToolTip(txt);
+  m_lable->setText(txt);
+  emit textChanged();
+}
 
-const QString KeywordLabel::text() { return m_text->text(); }
+const QString KeywordLabel::text() { return m_lable->text(); }
