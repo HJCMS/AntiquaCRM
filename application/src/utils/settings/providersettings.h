@@ -1,6 +1,6 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
-// @COPYRIGHT_HOLDER@
+// SPDX-License-Identifier: LGPL-3.0-or-later
 
 #ifndef PROVIDER_SETTINGS_H
 #define PROVIDER_SETTINGS_H

@@ -1,6 +1,6 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
-// @COPYRIGHT_HOLDER@
+// SPDX-License-Identifier: LGPL-3.0-or-later
 
 #ifndef ANTIQUACRM_INVENTORY_EDITOR_H
 #define ANTIQUACRM_INVENTORY_EDITOR_H

@@ -1,6 +1,6 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
-// @COPYRIGHT_HOLDER@
+// SPDX-License-Identifier: LGPL-3.0-or-later
 
 #ifndef ANTIQUACRM_HORIZONTAL_BARSERIES_H
 #define ANTIQUACRM_HORIZONTAL_BARSERIES_H
