@@ -8,8 +8,9 @@
 #include <QFrame>
 #include <QLabel>
 #include <QObject>
-#include <QToolButton>
 #include <QWidget>
+
+class KeywordLabelList;
 
 /**
  * @ingroup _keywordedit
@@ -20,8 +21,8 @@ class KeywordLabel final : public QFrame {
   Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged)
 
 private:
-  QLabel *m_lable;
-  QToolButton *m_close;
+  QPoint p_dragBegin;
+  QLabel *lable;
   const QString styleSheet() const;
 
 Q_SIGNALS:
@@ -32,8 +33,9 @@ public Q_SLOTS:
   void setText(const QString &);
 
 public:
-  explicit KeywordLabel(QWidget *parent = nullptr);
-  explicit KeywordLabel(const QString &text, QWidget *parent = nullptr);
+  explicit KeywordLabel(KeywordLabelList *parent = nullptr);
+  explicit KeywordLabel(const QString &text,
+                        KeywordLabelList *parent = nullptr);
   const QString text();
 };
 

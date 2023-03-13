@@ -5,16 +5,16 @@
 #include "keywordlabellist.h"
 
 #include <AntiquaCRM>
-#include <QtCore>
-#include <QtWidgets>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QToolButton>
 
 KeywordLineEdit::KeywordLineEdit(QWidget *parent) : InputEdit{parent} {
   // ColumnList
   m_keywordList = new KeywordLabelList(this);
   m_keywordList->setContentsMargins(0, 0, 0, 0);
-  m_keywordList->setToolTip(tr("add 3 Keywords for a better search!"));
   m_layout->addWidget(m_keywordList);
-  m_layout->setStretch(1, 1);
+  m_layout->addStretch(1);
   // Buttons
   QToolButton *ac_clear = new QToolButton(this);
   ac_clear->setIcon(QIcon(":icons/action_remove.png"));
@@ -27,7 +27,8 @@ KeywordLineEdit::KeywordLineEdit(QWidget *parent) : InputEdit{parent} {
   // LineEdit
   m_lineEdit = new QLineEdit(this);
   m_lineEdit->setPlaceholderText(tr("Search, add to"));
-  m_lineEdit->setToolTip(tr("To add keywords, paste them here and press Enter."));
+  m_lineEdit->setToolTip(
+      tr("To add keywords, paste them here and press Enter."));
   m_lineEdit->setDragEnabled(false);
   m_lineEdit->setClearButtonEnabled(true);
   m_lineEdit->setMinimumWidth(200);
@@ -36,11 +37,10 @@ KeywordLineEdit::KeywordLineEdit(QWidget *parent) : InputEdit{parent} {
   m_lineEdit->setValidator(m_validator);
   setRequired(true);
   setModified(false);
-  connect(m_keywordList, SIGNAL(sendModified(bool)), this,
-          SLOT(setModified(bool)));
-  connect(m_lineEdit, SIGNAL(returnPressed()), this, SLOT(finalize()));
-  connect(ac_clear, SIGNAL(clicked()), this, SLOT(clearKeywords()));
-  connect(ac_add, SIGNAL(clicked()), this, SLOT(finalize()));
+  connect(m_keywordList, SIGNAL(sendModified(bool)), SLOT(setModified(bool)));
+  connect(m_lineEdit, SIGNAL(returnPressed()), SLOT(finalize()));
+  connect(ac_clear, SIGNAL(clicked()), SLOT(clearKeywords()));
+  connect(ac_add, SIGNAL(clicked()), SLOT(finalize()));
 }
 
 void KeywordLineEdit::loadDataset() {
@@ -71,6 +71,12 @@ void KeywordLineEdit::loadDataset() {
 }
 
 void KeywordLineEdit::clearKeywords() {
+  QMessageBox::StandardButton ret = QMessageBox::warning(
+      this, tr("Warning"), tr("You really want to delete all Keywords!"),
+      (QMessageBox::Ok | QMessageBox::Cancel));
+  if (ret == QMessageBox::Cancel)
+    return;
+
   m_keywordList->clear();
   setModified(true);
 }
@@ -92,7 +98,6 @@ void KeywordLineEdit::setValue(const QVariant &str) {
   if (keywords.isEmpty())
     return;
 
-  setModified(true);
   m_keywordList->addKeywords(keywords.split(p_delimiter));
 }
 
@@ -100,7 +105,7 @@ void KeywordLineEdit::setProperties(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 
-  maxLength = field.length();
+  m_keywordList->setMaxLength(field.length());
 }
 
 const QVariant KeywordLineEdit::value() {
@@ -118,7 +123,7 @@ bool KeywordLineEdit::isValid() {
     return false;
 
   int l = m_keywordList->keywords().join(p_delimiter).length();
-  return (l > maxLength) ? false : true;
+  return (l > m_keywordList->maxLength()) ? false : true;
 }
 
 void KeywordLineEdit::reset() {
@@ -129,12 +134,15 @@ void KeywordLineEdit::reset() {
 
 void KeywordLineEdit::setFocus() { m_lineEdit->setFocus(); }
 
-void KeywordLineEdit::setInfo(const QString &info) { setToolTip(info); }
+void KeywordLineEdit::setInfo(const QString &info) {
+  m_keywordList->setToolTip(info);
+}
 
 const QString KeywordLineEdit::info() { return toolTip(); }
 
 const QString KeywordLineEdit::notes() {
   QStringList txt(tr("Keywords: Requires minimum one Keyword!"));
-  txt << tr("And Restricted to a maximum %1 Characters length.").arg(maxLength);
+  txt << tr("And Restricted to a maximum %1 Characters length.")
+             .arg(m_keywordList->maxLength());
   return txt.join("\n");
 }

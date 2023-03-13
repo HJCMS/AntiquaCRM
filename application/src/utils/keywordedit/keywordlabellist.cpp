@@ -4,42 +4,54 @@
 #include "keywordlabellist.h"
 #include "keywordlabel.h"
 
-#include <QDebug>
-#include <QPainter>
-#include <QPalette>
-#include <QPen>
-#include <QSizePolicy>
+#include <QList>
 
-KeywordLabelList::KeywordLabelList(QWidget *parent) : QFrame{parent} {
+KeywordLabelList::KeywordLabelList(QWidget *parent) : QWidget{parent} {
   setContentsMargins(0, 0, 0, 0);
+  setAcceptDrops(false);
   m_layout = new QHBoxLayout(this);
-  m_layout->setContentsMargins(2, 2, 2, 2);
+  m_layout->setContentsMargins(1, 1, 1, 1);
   setLayout(m_layout);
 }
 
 void KeywordLabelList::removeKeyword() {
-  KeywordLabel *lb = qobject_cast<KeywordLabel *>(sender());
-  if (lb != nullptr) {
-    QString key = lb->text();
-    m_layout->removeWidget(lb);
-    lb->deleteLater();
+  KeywordLabel *klb = qobject_cast<KeywordLabel *>(sender());
+  if (klb != nullptr) {
+    QString key = klb->text();
     for (int i = 0; i < p_uniqList.count(); i++) {
       if (p_uniqList.at(i) == key)
         p_uniqList.removeAt(i);
     }
+    m_layout->removeWidget(klb);
+    klb->deleteLater();
+    updateToolTip();
     emit sendModified(true);
   }
+}
+
+void KeywordLabelList::updateToolTip() {
+  QStringList list = keywords();
+  QString tip = tr("Current Keywords length %1 from allowed %2 used.")
+                    .arg(list.join(",").size())
+                    .arg(p_maxLength);
+  setToolTip(tip);
 }
 
 void KeywordLabelList::clear() {
   QList<KeywordLabel *> l = findChildren<KeywordLabel *>(QString());
   for (int i = 0; i < l.count(); i++) {
-    KeywordLabel *lb = l.at(i);
-    m_layout->removeWidget(lb);
-    lb->deleteLater();
+    KeywordLabel *klb = l.at(i);
+    m_layout->removeWidget(klb);
+    klb->deleteLater();
   }
   update();
   p_uniqList.clear();
+  updateToolTip();
+}
+
+void KeywordLabelList::setMaxLength(int i) {
+  if (i > 1)
+    p_maxLength = i;
 }
 
 void KeywordLabelList::addKeyword(const QString &keyword) {
@@ -47,13 +59,12 @@ void KeywordLabelList::addKeyword(const QString &keyword) {
   if (p_uniqList.contains(key))
     return;
 
-  KeywordLabel *lb = new KeywordLabel(this);
-  if (lb != nullptr) {
-    lb->setText(key);
-    connect(lb, SIGNAL(aboutToRemove()), SLOT(removeKeyword()));
-    m_layout->addWidget(lb, Qt::AlignLeft);
-    p_uniqList << key;
-  }
+  KeywordLabel *klb = new KeywordLabel(key, this);
+  m_layout->addWidget(klb, Qt::AlignLeft);
+  connect(klb, SIGNAL(aboutToRemove()), SLOT(removeKeyword()));
+  p_uniqList << key;
+  updateToolTip();
+  emit sendModified(true);
 }
 
 void KeywordLabelList::addKeywords(const QStringList &keywords) {
@@ -62,5 +73,7 @@ void KeywordLabelList::addKeywords(const QStringList &keywords) {
     addKeyword(k.trimmed());
   }
 }
+
+int KeywordLabelList::maxLength() { return p_maxLength; }
 
 const QStringList KeywordLabelList::keywords() { return p_uniqList; }

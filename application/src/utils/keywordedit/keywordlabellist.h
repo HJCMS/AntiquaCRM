@@ -5,39 +5,47 @@
 #ifndef KEYWORD_LABEL_LIST_H
 #define KEYWORD_LABEL_LIST_H
 
-#include <QFrame>
 #include <QHBoxLayout>
-#include <QLabel>
-#include <QList>
 #include <QObject>
+#include <QStringList>
 #include <QWidget>
-
-class KeywordLabel;
 
 /**
  * @ingroup _keywordedit
  * @brief Keywords Edit Labels list
  */
-class KeywordLabelList : public QFrame {
+class KeywordLabelList final : public QWidget {
   Q_OBJECT
 
 private:
+  int p_maxLength = 60;
   QHBoxLayout *m_layout;
   QStringList p_uniqList;
 
 private Q_SLOTS:
+  /**
+   * @brief Schlüsselwort entfernen
+   */
   void removeKeyword();
+
+  /**
+   * @brief Den toolTip neu generieren!
+   * Wird ausgelöst wenn sich die Schlüsselwortlänge ändert!
+   */
+  void updateToolTip();
 
 Q_SIGNALS:
   void sendModified(bool);
 
 public Q_SLOTS:
   void clear();
+  void setMaxLength(int);
   void addKeyword(const QString &keyword);
 
 public:
   explicit KeywordLabelList(QWidget *parent = nullptr);
   void addKeywords(const QStringList &keywords);
+  int maxLength();
   const QStringList keywords();
 };
 

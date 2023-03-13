@@ -183,7 +183,7 @@ BookEditor::BookEditor(QWidget *parent)
   row2->addWidget(infoText, row2c, 0, 1, 1);
   ib_keyword = new KeywordLineEdit(this);
   ib_keyword->setObjectName("ib_keyword");
-  ib_keyword->setToolTip(infoText->text());
+  ib_keyword->setInfo(infoText->text());
   row2->addWidget(ib_keyword, row2c++, 1, 1, 1);
   row2->setRowStretch(row2c++, 1);
 

@@ -2,15 +2,16 @@
 // vim: set fileencoding=utf-8
 
 #include "keywordlabel.h"
+#include "keywordlabellist.h"
 
 #include <QDebug>
-#include <QFontMetricsF>
+#include <QMimeData>
 #include <QHBoxLayout>
 #include <QPalette>
-#include <QPixmap>
 #include <QSizePolicy>
+#include <QToolButton>
 
-KeywordLabel::KeywordLabel(QWidget *parent) : QFrame{parent} {
+KeywordLabel::KeywordLabel(KeywordLabelList *parent) : QFrame{parent} {
   setContentsMargins(0, 0, 0, 0);
   setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
   setFrameShape(QFrame::StyledPanel);
@@ -19,13 +20,17 @@ KeywordLabel::KeywordLabel(QWidget *parent) : QFrame{parent} {
   setAcceptDrops(false);
 
   QHBoxLayout *layout = new QHBoxLayout(this);
+  layout->setObjectName("keyword::layout");
   layout->setContentsMargins(0, 0, 0, 0);
-  m_lable = new QLabel(this);
-  layout->addWidget(m_lable);
 
-  m_close = new QToolButton(this);
-  m_close->setContentsMargins(0, 0, 0, 0);
-  m_close->setIcon(QIcon(":icons/action_cancel.png"));
+  lable = new QLabel(this);
+  lable->setObjectName("keyword::lable");
+  lable->setTextInteractionFlags(Qt::NoTextInteraction);
+  layout->addWidget(lable);
+
+  QToolButton *m_close = new QToolButton(this);
+  m_close->setObjectName("keyword::button");
+  m_close->setIcon(QIcon(":/icons/action_cancel.png"));
   m_close->setToolButtonStyle(Qt::ToolButtonIconOnly);
   m_close->setToolTip(tr("Remove this keyword"));
   layout->addWidget(m_close);
@@ -34,7 +39,7 @@ KeywordLabel::KeywordLabel(QWidget *parent) : QFrame{parent} {
   connect(m_close, SIGNAL(clicked()), this, SIGNAL(aboutToRemove()));
 }
 
-KeywordLabel::KeywordLabel(const QString &text, QWidget *parent)
+KeywordLabel::KeywordLabel(const QString &text, KeywordLabelList *parent)
     : KeywordLabel{parent} {
   setText(text);
 }
@@ -49,9 +54,8 @@ const QString KeywordLabel::styleSheet() const {
 }
 
 void KeywordLabel::setText(const QString &txt) {
-  setToolTip(txt);
-  m_lable->setText(txt);
+  lable->setText(txt);
   emit textChanged();
 }
 
-const QString KeywordLabel::text() { return m_lable->text(); }
+const QString KeywordLabel::text() { return lable->text(); }

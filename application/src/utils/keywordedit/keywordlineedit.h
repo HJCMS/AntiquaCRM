@@ -25,7 +25,6 @@ class KeywordLineEdit final : public InputEdit {
   Q_OBJECT
 
 private:
-  int maxLength = 60;
   /**
    * @brief Trennzeichen
    */
@@ -68,6 +67,10 @@ private:
   const QRegExp stripPattern = QRegExp("([^\\w\\d]+)");
 
 private Q_SLOTS:
+  /**
+   * @brief Liste leeren
+   * Beinhaltet ein Warn PopUp
+   */
   void clearKeywords();
 
   /**
