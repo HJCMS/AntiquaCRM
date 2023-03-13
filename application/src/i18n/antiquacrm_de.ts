@@ -33,12 +33,12 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+118"/>
+        <location filename="../antiquaappl.cpp" line="+112"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie vor dem Beenden bitte alle Editoren!</translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="+83"/>
         <source>Search Networkconnection!</source>
         <translation>Suche Netzwerkverbindung!</translation>
     </message>
@@ -607,7 +607,7 @@
 <context>
     <name>BookEditor</name>
     <message>
-        <location filename="../tabs/books/bookeditor.cpp" line="+16"/>
+        <location filename="../tabs/books/bookeditor.cpp" line="+19"/>
         <source>Edit Book</source>
         <translation>Buch bearbeiten</translation>
     </message>
@@ -727,7 +727,7 @@
         <translation>Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+95"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -811,7 +811,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="-391"/>
+        <location line="-392"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
@@ -3317,7 +3317,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ImageToolBar</name>
     <message>
-        <location filename="../utils/imgedit/imagetoolbar.cpp" line="+21"/>
+        <location filename="../utils/imgedit/imagetoolbar.cpp" line="+24"/>
         <source>Image Dialog</source>
         <translation>Bilder Dialog</translation>
     </message>
@@ -3327,7 +3327,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Dialog zum Importieren/Bearbeiten von Bildern.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+5"/>
         <source>Webcam Dialog</source>
         <translation></translation>
     </message>
@@ -3337,7 +3337,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild von einer Webcam importieren.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Remove Image</source>
         <translation>Bild entfernen</translation>
     </message>
@@ -3643,20 +3643,23 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>KeywordLabel</name>
     <message>
-        <location filename="../utils/keywordedit/keywordlabel.cpp" line="+33"/>
+        <location filename="../utils/keywordedit/keywordlabel.cpp" line="+35"/>
         <source>Remove this keyword</source>
         <translation>Dieses Schlüsselwort entfernen</translation>
     </message>
 </context>
 <context>
+    <name>KeywordLabelList</name>
+    <message>
+        <location filename="../utils/keywordedit/keywordlabellist.cpp" line="+34"/>
+        <source>Current Keywords length %1 from allowed %2 used.</source>
+        <translation>Aktuelle Schlüsselwortlänge %1 von zulässigen %2 verwendet.</translation>
+    </message>
+</context>
+<context>
     <name>KeywordLineEdit</name>
     <message>
-        <location filename="../utils/keywordedit/keywordlineedit.cpp" line="+13"/>
-        <source>add 3 Keywords for a better search!</source>
-        <translation>Fügen Sie ca. 3 Schlüsselwörter für eine bessere Suche hinzu!</translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location filename="../utils/keywordedit/keywordlineedit.cpp" line="+21"/>
         <source>This button reset the Keyword field.</source>
         <translation>Diese Schaltfläche setzt das Schlüsselwortfeld zurück.</translation>
     </message>
@@ -3666,7 +3669,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Schlüsselwort hinzufügen</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Search, add to</source>
         <translation>Suchen, ergänzen</translation>
     </message>
@@ -3676,7 +3679,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Um Schlüsselwörter hinzuzufügen, fügen Sie sie hier ein und drücken Sie die Eingabetaste.</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+44"/>
+        <source>Warning</source>
+        <translation>Warnung</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>You really want to delete all Keywords!</source>
+        <translation>Möchten Sie wirklich alle Schlüsselwörter löschen?</translation>
+    </message>
+    <message>
+        <location line="+69"/>
         <source>Keywords: Requires minimum one Keyword!</source>
         <translation>Schlüsselwortfeld: Benötigt mindestens ein Schlüsselwort!</translation>
     </message>
@@ -4477,7 +4490,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Artikel speichern erfolgreich!</translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+104"/>
         <source>Article: %1 not found or no stock!</source>
         <translation>Artikel: %1 nicht gefunden oder nicht auf Lager!</translation>
     </message>
@@ -4502,12 +4515,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
     <message>
-        <location line="-576"/>
+        <location line="-575"/>
         <source>Missing Deliverynote Number</source>
         <translation>Fehlende Lieferscheinnummer</translation>
     </message>
     <message>
-        <location line="+598"/>
+        <location line="+597"/>
         <source>Missing Delivery Address!</source>
         <translation>Lieferadresse fehlt!</translation>
     </message>
@@ -6493,7 +6506,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PurchaseTable</name>
     <message>
-        <location filename="../utils/purchasetable/purchasetable.cpp" line="+21"/>
+        <location filename="../utils/purchasetable/purchasetable.cpp" line="+22"/>
         <source>Current article purchases</source>
         <translation>Aktuelle Artikelkäufe</translation>
     </message>
@@ -6511,7 +6524,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PurchaseTableDelegate</name>
     <message>
-        <location filename="../utils/purchasetable/purchasetabledelegate.cpp" line="+62"/>
+        <location filename="../utils/purchasetable/purchasetabledelegate.cpp" line="+63"/>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
@@ -6630,7 +6643,7 @@ Bild - Artikel Nr: %2</translation>
         <translation></translation>
     </message>
     <message>
-        <location line="+229"/>
+        <location line="+230"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
@@ -8197,6 +8210,14 @@ Bild - Artikel Nr: %2</translation>
         <location line="+1"/>
         <source>Update</source>
         <translation>Aktualisieren</translation>
+    </message>
+</context>
+<context>
+    <name>WebCam</name>
+    <message>
+        <location filename="../utils/webcam/webcam.cpp" line="+12"/>
+        <source>Webcam</source>
+        <translation>Webcam</translation>
     </message>
 </context>
 <context>
