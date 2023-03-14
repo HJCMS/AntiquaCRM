@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_ANTIQUACMD_H
-#define ANTIQUACRM_ANTIQUACMD_H
+#ifndef ANTIQUACMD_ANTIQUACMD_H
+#define ANTIQUACMD_ANTIQUACMD_H
 
 #include <AGlobal>
 #include <QCoreApplication>
@@ -27,4 +27,4 @@ public:
   int exec();
 };
 
-#endif // ANTIQUACRM_ANTIQUACMD_H
+#endif // ANTIQUACMD_ANTIQUACMD_H

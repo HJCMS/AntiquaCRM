@@ -2,13 +2,15 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_ABEBOOKS_H
-#define ANTIQUACRM_ABEBOOKS_H
-
-#include "provider.h"
+#ifndef ANTIQUACMD_ABEBOOKS_H
+#define ANTIQUACMD_ABEBOOKS_H
 
 #include <QDomDocument>
 #include <QObject>
+
+#ifndef ANTIQUACMD_PROVIDER_H
+#include "provider.h"
+#endif
 
 class AbeBooksDocument;
 

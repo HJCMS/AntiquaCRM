@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_SQLPSQL_H
-#define ANTIQUACRM_SQLPSQL_H
+#ifndef ANTIQUACMD_SQLPSQL_H
+#define ANTIQUACMD_SQLPSQL_H
 
 #include <QObject>
 #include <QSqlDatabase>

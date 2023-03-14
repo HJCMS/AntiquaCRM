@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_PROVIDER_H
-#define ANTIQUACRM_PROVIDER_H
+#ifndef ANTIQUACMD_PROVIDER_H
+#define ANTIQUACMD_PROVIDER_H
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -224,4 +224,4 @@ public:
   virtual bool init() = 0;
 };
 
-#endif // ANTIQUACRM_PROVIDER_H
+#endif // ANTIQUACMD_PROVIDER_H

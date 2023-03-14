@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_NETWORKER_H
-#define ANTIQUACRM_NETWORKER_H
+#ifndef ANTIQUACMD_NETWORKER_H
+#define ANTIQUACMD_NETWORKER_H
 
 #include <QAbstractNetworkCache>
 #include <QList>
@@ -66,4 +66,4 @@ public:
   QNetworkReply *getRequest(const NetworkRequest &);
 };
 
-#endif // ANTIQUACRM_NETWORKER_H
+#endif // ANTIQUACMD_NETWORKER_H

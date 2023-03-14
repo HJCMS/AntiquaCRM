@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_ANTIQUACMD_ADAPTOR_H
-#define ANTIQUACRM_ANTIQUACMD_ADAPTOR_H
+#ifndef ANTIQUACMD_ANTIQUACMD_ADAPTOR_H
+#define ANTIQUACMD_ANTIQUACMD_ADAPTOR_H
 
 #include <AGlobal>
 #include <QDBusAbstractAdaptor>
@@ -13,7 +13,7 @@
 
 class AntiquaCMDAdaptor final : public QDBusAbstractAdaptor {
   Q_OBJECT
-  Q_CLASSINFO("D-Bus Interface", ANTIQUACRM_CONNECTION_DOMAIN)
+  Q_CLASSINFO("D-Bus Interface", ANTIQUACMD_CONNECTION_DOMAIN)
   Q_PROPERTY(QString help READ help CONSTANT)
   Q_PROPERTY(QString status READ status CONSTANT)
   Q_PROPERTY(QStringList providers READ providers CONSTANT)
@@ -50,4 +50,4 @@ public Q_SLOTS:
   Q_NOREPLY void queryOrders();
 };
 
-#endif // ANTIQUACRM_ANTIQUACMD_ADAPTOR_H
+#endif // ANTIQUACMD_ANTIQUACMD_ADAPTOR_H

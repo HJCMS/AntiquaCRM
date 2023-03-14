@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_NETWORK_REQUEST_H
-#define ANTIQUACRM_NETWORK_REQUEST_H
+#ifndef ANTIQUACMD_NETWORK_REQUEST_H
+#define ANTIQUACMD_NETWORK_REQUEST_H
 
 #include <QByteArray>
 #include <QNetworkRequest>
@@ -22,4 +22,4 @@ public:
   void setHeaderContentLength(qint64 size);
 };
 
-#endif // ANTIQUACRM_NETWORK_REQUEST_H
+#endif // ANTIQUACMD_NETWORK_REQUEST_H

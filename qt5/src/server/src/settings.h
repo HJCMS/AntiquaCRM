@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_SETTINGS_H
-#define ANTIQUACRM_SETTINGS_H
+#ifndef ANTIQUACMD_SETTINGS_H
+#define ANTIQUACMD_SETTINGS_H
 
 #include <QObject>
 #include <QString>
@@ -23,4 +23,4 @@ public:
 
 };
 
-#endif // ANTIQUACRM_SETTINGS_H
+#endif // ANTIQUACMD_SETTINGS_H

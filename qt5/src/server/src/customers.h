@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_CUSTOMERS_H
-#define ANTIQUACRM_CUSTOMERS_H
+#ifndef ANTIQUACMD_CUSTOMERS_H
+#define ANTIQUACMD_CUSTOMERS_H
 
 #include <QJsonObject>
 #include <QJsonValue>

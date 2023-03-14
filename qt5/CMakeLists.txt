@@ -125,6 +125,7 @@ IF (CMAKE_HOST_UNIX)
     DBus
    )
  ENDIF(X11_FOUND)
+ OPTION (WITH_ANTIQUACMD "With antiquacmd cron application." OFF)
 ENDIF (CMAKE_HOST_UNIX)
 
 IF (CMAKE_HOST_WIN32)

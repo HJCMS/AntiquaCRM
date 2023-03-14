@@ -2,15 +2,17 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_BOOKLOOKER_H
-#define ANTIQUACRM_BOOKLOOKER_H
+#ifndef ANTIQUACMD_BOOKLOOKER_H
+#define ANTIQUACMD_BOOKLOOKER_H
 
 #include <QDate>
 #include <QJsonValue>
 #include <QObject>
 #include <QMutex>
 
+#ifndef ANTIQUACMD_PROVIDER_H
 #include "provider.h"
+#endif
 
 class BookLooker final : public Provider {
   Q_OBJECT

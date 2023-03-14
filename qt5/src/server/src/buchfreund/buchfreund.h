@@ -2,12 +2,14 @@
 // vim: set fileencoding=utf-8
 // @COPYRIGHT_HOLDER@
 
-#ifndef ANTIQUACRM_BUCHFREUND_H
-#define ANTIQUACRM_BUCHFREUND_H
+#ifndef ANTIQUACMD_BUCHFREUND_H
+#define ANTIQUACMD_BUCHFREUND_H
 
 #include <QObject>
 
+#ifndef ANTIQUACMD_PROVIDER_H
 #include "provider.h"
+#endif
 
 class Buchfreund final : public Provider {
   Q_OBJECT
