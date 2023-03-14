@@ -69,6 +69,7 @@ cmake -Wno-dev -Wno-deprecated \
   -DCMAKE_BUILD_TYPE:STRING=MinSizeRel \
   -DCMAKE_CXX_FLAGS_MINSIZEREL:STRING="$RPM_OPT_FLAGS" \
   -DCMAKE_INSTALL_PREFIX:PATH=%{_prefix} \
+  -DLIB_SUFFIX:STRING=64 \
   -DWITH_ANTIQUACMD:BOOL=ON \
   -DCMAKE_SKIP_RPATH:BOOL=ON \
   ../qt5/
@@ -116,6 +117,9 @@ popd
 %files cron
 %defattr(-, root, root)
 %{_bindir}/antiquacmd
+%dir %{_datadir}/antiquacrm
+%dir %{_datadir}/antiquacrm/scripts
+%{_datadir}/antiquacrm/scripts/antiqua-*
 
 %post devel
 /sbin/ldconfig
