@@ -15,7 +15,7 @@ The Database connection from outside to the local Network PgSQL-Server only work
 
 For Compiling dependency please read the [link](PACKETBUILDERS.md) file.
 
-Current Version [link](application/version.txt) text file.
+Current Version [link](qt5/version.txt) text file.
 
 ##### Linux Paketbuilding:
 
@@ -31,7 +31,7 @@ Current Version [link](application/version.txt) text file.
   cd AntiquaCRM
   mkdir build
   cd build
-  cmake ../application
+  cmake ../qt5
   make
   ls -l ./src/antiquacrm
 ```
@@ -39,7 +39,7 @@ Current Version [link](application/version.txt) text file.
 - RPM Packetbuilding:
 ```
  cd ~/rpmbuild/SOURCES
- wget -O antiquacrm.version https://raw.githubusercontent.com/HJCMS/AntiquaCRM/developement/application/version.txt
+ wget -O antiquacrm.version https://raw.githubusercontent.com/HJCMS/AntiquaCRM/developement/qt5/version.txt
  export antiqua_version="`cat antiquacrm.version`"
  git clone --recurse-submodules git@github.com:HJCMS/AntiquaCRM.git antiquacrm-${antiqua_version}
  tar -cJf antiquacrm-${antiqua_version}.tar.xz antiquacrm-${antiqua_version}
@@ -50,7 +50,7 @@ Current Version [link](application/version.txt) text file.
  cd ~/rpmbuild/SOURCES/antiquacrm-${antiqua_version}
  mkdir build
  cd build
- cmake -DLIB_SUFFIX:STRING=64 ../application
+ cmake -DLIB_SUFFIX:STRING=64 ../qt5
  cp xdg/antiquacrm.spec ~/rpmbuild/SPECS/
 ```
 
