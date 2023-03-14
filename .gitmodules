@@ -1,4 +1,4 @@
 [submodule "qttranslations"]
- path = application/src/i18n/qt5-tr
+ path = qt5/src/i18n/qt5-tr
  url = https://code.qt.io/cgit/qt/qttranslations.git
 
