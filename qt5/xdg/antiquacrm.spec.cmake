@@ -58,41 +58,26 @@ if test -d .git ; then
   git pull
 fi
 
-%__mkdir_p build build_cron
+%__mkdir_p build
 
 %build
 
-cp %{_sourcedir}/qtbase_de.ts application/src/i18n/
+cp %{_sourcedir}/qtbase_de.ts qt5/src/i18n/
 
 cd build
 cmake -Wno-dev -Wno-deprecated \
   -DCMAKE_BUILD_TYPE:STRING=MinSizeRel \
   -DCMAKE_CXX_FLAGS_MINSIZEREL:STRING="$RPM_OPT_FLAGS" \
   -DCMAKE_INSTALL_PREFIX:PATH=%{_prefix} \
-  -DLIB_SUFFIX:STRING=64 \
+  -DWITH_ANTIQUACMD:BOOL=ON \
   -DCMAKE_SKIP_RPATH:BOOL=ON \
-  ../application/
-
-%__make
-
-cd ../build_cron
-cmake -Wno-dev -Wno-deprecated \
-  -DCMAKE_BUILD_TYPE:STRING=MinSizeRel \
-  -DCMAKE_CXX_FLAGS_MINSIZEREL:STRING="$RPM_OPT_FLAGS" \
-  -DCMAKE_INSTALL_PREFIX:PATH=%{_prefix} \
-  -DLIB_SUFFIX:STRING=64 \
-  -DCMAKE_SKIP_RPATH:BOOL=ON \
-  ../server/
+  ../qt5/
 
 %__make
 
 %install
 pushd build
   %makeinstall
-popd
-
-pushd build_cron
-  install -m 0755 src/antiquacmd %{?buildroot:%{buildroot}}/%{_bindir}/antiquacmd
 popd
 
 %post
