@@ -17,13 +17,6 @@ SET (projectLibrary_LINKER
  AntiquaPrinting
 )
 
-IF(WEBCAM_BUILD_SUPPORTED)
-SET (projectLibrary_LINKER
- ${projectLibrary_LINKER}
- AntiquaWebCam
-)
-ENDIF()
-
 SET (projectLibrary_SOURCES
  tabbooks.cpp
  booktableview.cpp

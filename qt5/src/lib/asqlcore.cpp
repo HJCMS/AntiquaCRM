@@ -9,9 +9,8 @@
 
 namespace AntiquaCRM {
 
-ASqlCore::ASqlCore(QObject *parent) : QObject{parent} {
-  setObjectName("antiquacrm_sqlcore");
-  m_cfg = new ASqlSettings(this);
+ASqlCore::ASqlCore(const QString &name, QObject *parent) : QObject{parent} {
+  m_cfg = new ASqlSettings(name, this);
   database = nullptr;
 
   QSqlDatabase db = QSqlDatabase::database(m_cfg->connectionName());
@@ -21,6 +20,8 @@ ASqlCore::ASqlCore(QObject *parent) : QObject{parent} {
     initDatabase();
   }
 }
+
+ASqlCore::ASqlCore(QObject *parent) : ASqlCore{ANTIQUACRM_NAME, parent} {}
 
 bool ASqlCore::initDatabase() {
   if (database != nullptr)

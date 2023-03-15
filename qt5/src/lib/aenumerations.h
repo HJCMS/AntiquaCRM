@@ -17,19 +17,6 @@ namespace AntiquaCRM {
 
  /**
   * @ingroup Enumerations
-  * @brief Nachrichtentyp
-  * Definiert die Dringlichkeit einer Nachricht an das Meldungssystem!
-  */
- enum Message {
-  NORMAL = 0,  /**< Standard Info */
-  WARNING = 1, /**< Warnung wird ausgegeben! */
-  FATAL = 2,   /**< Schwehrwiegender Fehler ist aufgetreten! */
-  LOGGING = 3  /**< Nur für das Protokollieren vorgesehen! */
- };
- Q_ENUM_NS(AntiquaCRM::Message)
-
- /**
-  * @ingroup Enumerations
   * @brief Typenangabe für die Netzwerkanfragen Schnittstelle!
   */
  enum NetworkQueryType { JSON_QUERY = 0, XML_QUERY = 1 };

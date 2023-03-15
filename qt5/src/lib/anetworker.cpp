@@ -120,13 +120,6 @@ void ANetworker::slotReadResponse() {
     }
   }
 
-//  QByteArray data;
-//  data = m_reply->readAll();
-//  if (data.isNull()) {
-//    qWarning("Network: No Data responsed!");
-//    return;
-//  }
-
   QVector<char> buf;
   QByteArray data;
   qint64 chunk;
@@ -144,13 +137,15 @@ void ANetworker::slotReadResponse() {
   }
   buf.clear();
 
+  QString replyHost = m_reply->url().host();
 #if (ANTIQUACRM_NETWORK_DEBUG == true)
-  qInfo("Host: %s", qPrintable(m_reply->url().host()));
+  qInfo("Host: %s", qPrintable(replyHost));
   foreach (QByteArray a, m_reply->rawHeaderList()) {
     qInfo("-- %s: %s", a.constData(), reply->rawHeader(a).constData());
   }
 #else
-  qInfo("Bytes responses (%d).", data.size());
+  qInfo("Host: %s, response with %d bytes.", qPrintable(replyHost),
+        data.size());
 #endif
 
   // JSON Request
@@ -158,8 +153,8 @@ void ANetworker::slotReadResponse() {
     QJsonParseError parser;
     QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
     if (parser.error != QJsonParseError::NoError) {
-      qWarning("Network: Responsed json is not well format:(%s)!",
-               qPrintable(parser.errorString()));
+      qWarning("%s: Responsed json is not well format:(%s)!",
+               qPrintable(replyHost), qPrintable(parser.errorString()));
       emit sendFinishedWithErrors();
       return;
     }
@@ -184,7 +179,7 @@ void ANetworker::slotReadResponse() {
     return;
   }
 
-  qWarning("Network: Unknown response type!");
+  qWarning("Network: Unknown response from %s!", qPrintable(replyHost));
 }
 
 void ANetworker::slotSslErrors(const QList<QSslError> &list) {

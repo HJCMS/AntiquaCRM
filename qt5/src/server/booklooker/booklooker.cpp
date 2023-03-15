@@ -2,9 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "booklooker.h"
-#include "networker.h"
-#include "networkrequest.h"
-#include "settings.h"
 
 #include <QDateTime>
 #include <QDebug>
@@ -16,7 +13,8 @@
 #include <QNetworkReply>
 #include <QUrlQuery>
 
-BookLooker::BookLooker(QObject *parent) : Provider{parent} {}
+BookLooker::BookLooker(QObject *parent)
+    : Provider{AntiquaCRM::JSON_QUERY, parent} {}
 
 void BookLooker::initConfiguration() {
   m_config->beginGroup("provider/booklooker");
@@ -350,8 +348,7 @@ void BookLooker::authenticate() {
   QString pd("apiKey=");
   pd.append(apiKey);
 
-  NetworkRequest request(url);
-  m_networker->loginRequest(request, pd.toLocal8Bit());
+  m_networker->loginRequest(url, pd.toLocal8Bit());
 }
 
 void BookLooker::query() {
@@ -364,10 +361,7 @@ void BookLooker::query() {
   q.addQueryItem("dateTo", dateString());
   url.setQuery(q);
 
-  NetworkRequest request(url);
-  request.setHeaderContentTypeJson();
-
-  m_networker->getRequest(request);
+  m_networker->getRequest(url);
 }
 
 void BookLooker::responsed(const QByteArray &data) {

@@ -6,9 +6,9 @@
 #define ANTIQUACMD_ANTIQUACMD_H
 
 #include <AGlobal>
+#include <ASettings>
 #include <QCoreApplication>
 
-class Settings;
 class Provider;
 
 class AntiquaCMD final : public QCoreApplication {
@@ -16,7 +16,7 @@ class AntiquaCMD final : public QCoreApplication {
 
 private:
   qint8 timeout = 15;
-  Settings *m_cfg;
+  AntiquaCRM::ASettings *m_cfg;
   int update(Provider *);
 
 private Q_SLOTS:

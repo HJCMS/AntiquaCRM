@@ -2,12 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "buchfreund.h"
-#include "networker.h"
-#include "networkrequest.h"
-#include "settings.h"
 #include <unistd.h>
 
-#include <QTimer>
 #include <QDateTime>
 #include <QDir>
 #include <QFile>
@@ -15,6 +11,7 @@
 #include <QJsonArray>
 #include <QJsonValue>
 #include <QNetworkReply>
+#include <QTimer>
 #include <QUrlQuery>
 
 #ifndef BUCHFREUND_DATE_FORMAT
@@ -54,7 +51,8 @@ static const QHash<QString, QString> translateIds() {
   return hash;
 }
 
-Buchfreund::Buchfreund(QObject *parent) : Provider{parent} {}
+Buchfreund::Buchfreund(QObject *parent)
+    : Provider{AntiquaCRM::JSON_QUERY, parent} {}
 
 void Buchfreund::initConfiguration() {
   m_config->beginGroup("provider/buchfreund");
@@ -88,17 +86,15 @@ void Buchfreund::queryOrdersById(const QStringList &ids) {
       // qDebug() << "Buchfreund already exists:" << id;
       continue;
     }
-    sleep(1);
 
     QJsonObject obj;
     obj.insert("id", QJsonValue(id));
     QJsonDocument doc(obj);
-    QByteArray body = doc.toJson(QJsonDocument::Compact);
+    if (doc.isNull())
+      continue;
 
-    NetworkRequest request(apiQuery("bestellung"));
-    request.setHeaderContentTypeJson();
-
-    m_networker->postRequest(request, body);
+    m_networker->jsonPostRequest(apiQuery("bestellung"), doc);
+    sleep(2);
   }
 }
 
@@ -295,8 +291,10 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
       QJsonValue price =
           convert("a_sell_price", jso.value("preis_pro_einheit"));
       antiqua_articles_item.insert("a_sell_price", price);
-      antiqua_articles_item.insert("a_type", QJsonValue(AntiquaCRM::ArticleType::BOOK));
-      antiqua_articles_item.insert("a_tax", QJsonValue(AntiquaCRM::SalesTax::TAX_INCL));
+      antiqua_articles_item.insert("a_type",
+                                   QJsonValue(AntiquaCRM::ArticleType::BOOK));
+      antiqua_articles_item.insert("a_tax",
+                                   QJsonValue(AntiquaCRM::SalesTax::TAX_INCL));
       antiqua_articles.append(antiqua_articles_item);
     }
   }
@@ -341,12 +339,11 @@ void Buchfreund::start() {
   obj.insert("datum_von", past.toString(BUCHFREUND_DATE_FORMAT));
   obj.insert("datum_bis", curr.toString(BUCHFREUND_DATE_FORMAT));
 
-  NetworkRequest request(apiQuery("bestellungen"));
-  request.setHeaderContentTypeJson();
-
   QJsonDocument doc(obj);
-  QByteArray body = doc.toJson(QJsonDocument::Compact);
-  m_networker->postRequest(request, body);
+  if (doc.isNull())
+    return;
+
+  m_networker->jsonPostRequest(apiQuery("bestellungen"), doc);
 }
 
 bool Buchfreund::init() {

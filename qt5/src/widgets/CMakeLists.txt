@@ -19,10 +19,6 @@ CONFIGURE_FILE (AntiquaInputEdit.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaInputEdit
 )
 
-SET (projectLibrary_LINKER
- AntiquaCRM
-)
-
 SET (projectLibrary_FILES
   synopsis_h.sh
   widgets.dox
@@ -163,7 +159,6 @@ SET_TARGET_PROPERTIES (${_projectLibrary} PROPERTIES
 
 TARGET_LINK_LIBRARIES (${_projectLibrary} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
-  Qt${QT_VERSION_MAJOR}::Sql
   Qt${QT_VERSION_MAJOR}::Widgets
-  ${projectLibrary_LINKER}
+  AntiquaCRM
 )

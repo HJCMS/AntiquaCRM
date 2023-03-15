@@ -10,10 +10,13 @@
 
 namespace AntiquaCRM {
 
-ASqlSettings::ASqlSettings(QObject *parent) : ASettings(parent) {
-  setObjectName("antiquacrm_sqlsettings");
+ASqlSettings::ASqlSettings(const QString &name, QObject *parent)
+    : ASettings(name, parent) {
   profile = getProfile();
 }
+
+ASqlSettings::ASqlSettings(QObject *parent)
+    : ASettings(ANTIQUACRM_NAME, parent) {}
 
 const QString ASqlSettings::groupPath() {
   QString group("database");

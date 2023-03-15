@@ -9,11 +9,6 @@ INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-SET (subproject_LINKER
- AntiquaCRM
- AntiquaWidgets
-)
-
 SET (subproject_SOURCES
  designationsdialog.cpp
  designationslist.cpp
@@ -28,18 +23,17 @@ SET (subproject_HEADERS
 )
 
 ADD_LIBRARY (${_subproject} STATIC
-  ${subproject_HEADERS}
-  ${subproject_SOURCES}
+ ${subproject_HEADERS}
+ ${subproject_SOURCES}
 )
 
 SET_TARGET_PROPERTIES (${_subproject} PROPERTIES
-  LINKER_LANGUAGE CXX
-  OUTPUT_NAME ${_subproject}
+ LINKER_LANGUAGE CXX
+ OUTPUT_NAME ${_subproject}
 )
 
 TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
  Qt${QT_VERSION_MAJOR}::Core
- Qt${QT_VERSION_MAJOR}::Widgets
- Qt${QT_VERSION_MAJOR}::Sql
- ${subproject_LINKER}
+ AntiquaCRM
+ AntiquaWidgets
 )

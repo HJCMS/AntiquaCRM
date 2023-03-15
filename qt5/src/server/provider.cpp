@@ -3,14 +3,12 @@
 
 #include "provider.h"
 #include "customers.h"
-#include "networker.h"
-#include "settings.h"
-#include "sqlpsql.h"
 
-Provider::Provider(QObject *parent) : QObject{parent} {
-  m_config = new Settings(this);
-  m_networker = new Networker(this);
-  m_sql = new SqlPsql(this);
+Provider::Provider(AntiquaCRM::NetworkQueryType type, QObject *parent)
+    : QObject{parent} {
+  m_config = new AntiquaCRM::ASettings("antiquacmd", this);
+  m_sql = new AntiquaCRM::ASqlCore("antiquacmd", this);
+  m_networker = new AntiquaCRM::ANetworker(type, this);
 
   // Verlaufsabfrage
   if (!m_config->contains("history_query"))
@@ -18,8 +16,28 @@ Provider::Provider(QObject *parent) : QObject{parent} {
 
   history_query = m_config->value("history_query", -3).toInt();
 
-  connect(m_networker, SIGNAL(sendResponse(const QByteArray &)),
-          SLOT(responsed(const QByteArray &)));
+  connect(m_networker, SIGNAL(sendJsonResponse(const QJsonDocument &)),
+          SLOT(getNetworkResponse(const QJsonDocument &)));
+  connect(m_networker, SIGNAL(sendXmlResponse(const QDomDocument &)),
+          SLOT(getNetworkResponse(const QDomDocument &)));
+}
+
+void Provider::getNetworkResponse(const QJsonDocument &doc) {
+  if (doc.isEmpty())
+    return;
+
+  QByteArray data = doc.toJson(QJsonDocument::Compact);
+  if (data.size() > 32)
+    responsed(data);
+}
+
+void Provider::getNetworkResponse(const QDomDocument &doc) {
+  if (doc.isNull())
+    return;
+
+  QByteArray data = doc.toByteArray(-1);
+  if (data.size() > 32)
+    responsed(data);
 }
 
 const QString Provider::ucFirst(const QString &str) {
@@ -27,7 +45,7 @@ const QString Provider::ucFirst(const QString &str) {
   // Wenn mehr als ein Leerzeichen, zusammenschieben!
   QRegExp pattern("\\b\\s\\b");
   pattern.indexIn(convert);
-  if(pattern.captureCount() > 1)
+  if (pattern.captureCount() > 1)
     convert.replace(pattern, "");
 
   // qDebug() << str << convert;
@@ -227,10 +245,10 @@ bool Provider::createOrders(const QList<QJsonObject> &orders) {
 QPair<qint64, QString> Provider::findInsertCustomer(const QJsonObject &json) {
   Customers *mc = new Customers(m_sql, json);
   qint64 c_id = mc->getId();
-//#ifdef ANTIQUA_DEVELOPEMENT
-//  if (c_id < 1)
-//    qDebug() << Q_FUNC_INFO << c_id;
-//#endif
+  //#ifdef ANTIQUA_DEVELOPEMENT
+  //  if (c_id < 1)
+  //    qDebug() << Q_FUNC_INFO << c_id;
+  //#endif
 
   Q_ASSERT(c_id > 1);
 

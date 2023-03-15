@@ -9,12 +9,14 @@
 
 namespace AntiquaCRM {
 
-ASettings::ASettings(QObject *parent)
+ASettings::ASettings(const QString &name, QObject *parent)
     : QSettings(QSettings::NativeFormat, QSettings::UserScope, configDomain(),
-                ANTIQUACRM_NAME, parent) {
-  setValue("name", ANTIQUACRM_NAME);
+                name, parent) {
+  setValue("name", name);
   setValue("version", ANTIQUACRM_VERSION);
 }
+
+ASettings::ASettings(QObject *parent) : ASettings(ANTIQUACRM_NAME, parent) {}
 
 const QString ASettings::configDomain() {
   QString str = QString::fromUtf8(HJCMS_CONFIG_DOMAIN);

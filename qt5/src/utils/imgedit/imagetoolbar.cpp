@@ -2,9 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "imagetoolbar.h"
-#ifdef ANTIQUA_WEBCAM_ENABLED
-#include "webcam.h"
-#endif
 
 #include <QIcon>
 #include <QLayout>
@@ -26,14 +23,6 @@ ImageToolBar::ImageToolBar(QWidget *parent) : QWidget{parent} {
   connect(m_openbtn, SIGNAL(clicked()), SLOT(checkOpen()));
   layout->addWidget(m_openbtn);
 
-#ifdef ANTIQUA_WEBCAM_ENABLED
-  m_webcambtn = new QPushButton(img_icon, tr("Webcam Dialog"), this);
-  m_webcambtn->setToolTip(tr("Import Image from a Webcam."));
-  connect(m_webcambtn, SIGNAL(clicked()), SLOT(checkWebcam()));
-  m_webcambtn->setEnabled(false);
-  layout->addWidget(m_webcambtn);
-#endif
-
   m_delbtn = new QPushButton(del_icon, tr("Remove Image"), this);
   m_delbtn->setToolTip(tr("Remove image from Database."));
   m_delbtn->setEnabled(false);
@@ -44,13 +33,6 @@ ImageToolBar::ImageToolBar(QWidget *parent) : QWidget{parent} {
 }
 
 void ImageToolBar::checkOpen() { emit sendOpenImage(); }
-
-#ifdef ANTIQUA_WEBCAM_ENABLED
-void ImageToolBar::checkWebcam() {
-  if (WebCam::checkWebcam())
-    emit sendOpenWebcam();
-}
-#endif
 
 void ImageToolBar::checkRemove() {
   if (articleId > 0)
@@ -63,16 +45,10 @@ void ImageToolBar::setActive(bool b) { m_openbtn->setEnabled(b); }
 
 void ImageToolBar::enableActions(bool b) {
   m_delbtn->setEnabled(b);
-#ifdef ANTIQUA_WEBCAM_ENABLED
-  m_webcambtn->setEnabled(b);
-#endif
 }
 
 void ImageToolBar::restoreState() {
   articleId = 0;
   m_openbtn->setEnabled(false);
   m_delbtn->setEnabled(false);
-#ifdef ANTIQUA_WEBCAM_ENABLED
-  m_webcambtn->setEnabled(false);
-#endif
 }

@@ -30,6 +30,7 @@ private:
   QHash<QString, QVariant> p_hash;
 
 public:
+  explicit ASettings(const QString &name, QObject *parent = nullptr);
   explicit ASettings(QObject *parent = nullptr);
 
   /**

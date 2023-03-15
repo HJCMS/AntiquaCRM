@@ -5,23 +5,22 @@
 #ifndef ANTIQUACMD_CUSTOMERS_H
 #define ANTIQUACMD_CUSTOMERS_H
 
+#include <AntiquaCRM>
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QString>
 
-#include "sqlpsql.h"
-
 class Customers final : public QJsonObject {
 
 private:
-  SqlPsql *m_sql;
+  AntiquaCRM::ASqlCore *m_sql;
 
   qint64 sqlInsert();
 
   qint64 sqlQuery();
 
 public:
-  explicit Customers(SqlPsql *db, const QJsonObject &obj);
+  explicit Customers(AntiquaCRM::ASqlCore *db, const QJsonObject &obj);
   const QString buyerName();
   qint64 getId();
 };

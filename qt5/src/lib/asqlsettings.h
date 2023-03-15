@@ -35,6 +35,7 @@ Q_SIGNALS:
   void sendProfileChanged();
 
 public:
+  explicit ASqlSettings(const QString &name, QObject *parent = nullptr);
   explicit ASqlSettings(QObject *parent = nullptr);
 
   /**

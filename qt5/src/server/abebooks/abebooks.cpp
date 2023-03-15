@@ -3,9 +3,6 @@
 
 #include "abebooks.h"
 #include "abebooksdocument.h"
-#include "networker.h"
-#include "networkrequest.h"
-#include "settings.h"
 
 #include <QDateTime>
 #include <QDebug>
@@ -19,7 +16,7 @@
 #include <QTextEncoder>
 #include <QUrlQuery>
 
-AbeBooks::AbeBooks(QObject *parent) : Provider{parent} {}
+AbeBooks::AbeBooks(QObject *parent) : Provider{AntiquaCRM::XML_QUERY, parent} {}
 
 void AbeBooks::initConfiguration() {
   QString host("orderupdate.abebooks.com");
@@ -187,8 +184,10 @@ void AbeBooks::prepareContent(const QDomDocument &doc) {
             QJsonValue temp;
             QDomElement bookElement = book.toElement();
             // Article Type
-            order_article.insert("a_type", QJsonValue(AntiquaCRM::ArticleType::BOOK));
-            order_article.insert("a_tax", QJsonValue(AntiquaCRM::SalesTax::TAX_INCL));
+            order_article.insert("a_type",
+                                 QJsonValue(AntiquaCRM::ArticleType::BOOK));
+            order_article.insert("a_tax",
+                                 QJsonValue(AntiquaCRM::SalesTax::TAX_INCL));
             // Article title
             temp = QJsonValue(xml.getTagText(bookElement, "title"));
             order_article.insert("a_title", temp);
@@ -274,14 +273,7 @@ void AbeBooks::start() {
   //#endif
 
   QUrl url(apiQuery(operation));
-
-  NetworkRequest request(url);
-  request.setHeaderContentTypeXml();
-
-  QByteArray data = doc.toByteArray(-1);
-  request.setHeaderContentLength(data.size());
-
-  m_networker->postRequest(request, data);
+  m_networker->xmlPostRequest(url, doc);
 }
 
 bool AbeBooks::init() {

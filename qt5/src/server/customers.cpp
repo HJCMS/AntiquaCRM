@@ -5,7 +5,7 @@
 
 #include <QJsonArray>
 
-Customers::Customers(SqlPsql *db, const QJsonObject &obj)
+Customers::Customers(AntiquaCRM::ASqlCore *db, const QJsonObject &obj)
     : QJsonObject{obj}, m_sql{db} {}
 
 qint64 Customers::sqlInsert() {

@@ -3,11 +3,6 @@
 
 SET(_subproject "DeliveryService")
 
-SET (subproject_LINKER
- AntiquaCRM
- AntiquaWidgets
-)
-
 SET (subproject_SOURCES
  deliveritem.cpp
  deliverpackagebox.cpp
@@ -29,17 +24,17 @@ SET (subproject_HEADERS
 )
 
 ADD_LIBRARY (${_subproject} STATIC
-  ${subproject_HEADERS}
-  ${subproject_SOURCES}
+ ${subproject_HEADERS}
+ ${subproject_SOURCES}
 )
 
 SET_TARGET_PROPERTIES (${_subproject} PROPERTIES
-  LINKER_LANGUAGE CXX
-  OUTPUT_NAME ${_subproject}
+ LINKER_LANGUAGE CXX
+ OUTPUT_NAME ${_subproject}
 )
 
 TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
-  Qt${QT_VERSION_MAJOR}::Core
-  Qt${QT_VERSION_MAJOR}::Widgets
-  ${subproject_LINKER}
+ Qt${QT_VERSION_MAJOR}::Core
+ AntiquaCRM
+ AntiquaWidgets
 )

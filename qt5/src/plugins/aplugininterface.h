@@ -11,6 +11,7 @@
 #include <QDomDocument>
 #include <QJsonDocument>
 #include <QJsonValue>
+#include <QMessageBox>
 #include <QNetworkCookie>
 #include <QObject>
 #include <QString>
@@ -158,7 +159,7 @@ Q_SIGNALS:
    * Diese Signal kann dafür verwendet werden verschiedene Meldungen an das
    * Dienstleisterfenster zu senden.
    */
-  void sendErrorResponse(AntiquaCRM::Message, const QString &);
+  void sendErrorResponse(QMessageBox::Icon, const QString &);
 
   /**
    * @brief Vorgesehen für "Feedback" Nachrichten nach Updateaktionen.

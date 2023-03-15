@@ -5,6 +5,8 @@
 #ifndef ANTIQUACMD_PROVIDER_H
 #define ANTIQUACMD_PROVIDER_H
 
+#include <AntiquaCRM>
+#include <QDomDocument>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
@@ -12,10 +14,6 @@
 #include <QNetworkCookie>
 #include <QObject>
 #include <QUrl>
-
-class SqlPsql;
-class Settings;
-class Networker;
 
 /**
  * @brief Abstrakte Dienstleister Klasse
@@ -26,18 +24,22 @@ class Provider : public QObject {
   Q_OBJECT
 
 private:
-  SqlPsql *m_sql;
+  AntiquaCRM::ASqlCore *m_sql;
+
+private Q_SLOTS:
+  void getNetworkResponse(const QJsonDocument &);
+  void getNetworkResponse(const QDomDocument &);
 
 protected:
   /**
    * @brief Ableitung von QSettings
    */
-  Settings *m_config;
+  AntiquaCRM::ASettings *m_config;
 
   /**
    * @brief Ableitung von QNetworkAccessManager
    */
-  Networker *m_networker;
+  AntiquaCRM::ANetworker *m_networker = nullptr;
 
   /**
    * @brief Vordefinierte - Kekse für das Temporäre Zwischenspeichern
@@ -215,7 +217,8 @@ public Q_SLOTS:
   virtual void start() = 0;
 
 public:
-  explicit Provider(QObject *parent = nullptr);
+  explicit Provider(AntiquaCRM::NetworkQueryType type,
+                    QObject *parent = nullptr);
 
   /**
    * @brief Konfiguration laden und Parameter prüfen!

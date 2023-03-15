@@ -5,7 +5,6 @@
 #include "abebooks.h"
 #include "booklooker.h"
 #include "buchfreund.h"
-#include "settings.h"
 
 #include <QDebug>
 #include <QEventLoop>
@@ -16,7 +15,7 @@ AntiquaCMD::AntiquaCMD(int &argc, char **argv) : QCoreApplication{argc, argv} {
   setApplicationName("antiquacmd");
   setApplicationVersion(ANTIQUACRM_VERSION);
   setOrganizationDomain(ANTIQUACRM_CONNECTION_DOMAIN);
-  m_cfg = new Settings(this);
+  m_cfg = new AntiquaCRM::ASettings(applicationName(), this);
 }
 
 int AntiquaCMD::update(Provider *obj) {

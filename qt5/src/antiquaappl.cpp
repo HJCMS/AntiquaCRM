@@ -86,7 +86,7 @@ bool AntiquaAppl::checkInterfaces() {
 }
 
 bool AntiquaAppl::checkRemotePort() {
-  AntiquaCRM::ASqlSettings sqlConfig(this);
+  AntiquaCRM::ASqlSettings sqlConfig(applicationName(), this);
   QString host = sqlConfig.getParam("pg_hostname").toString();
   int port = sqlConfig.getParam("pg_port").toInt();
   AntiquaCRM::ANetworkIface iface;
@@ -98,10 +98,13 @@ bool AntiquaAppl::checkRemotePort() {
 }
 
 bool AntiquaAppl::checkDatabase() {
-  m_sql = new AntiquaCRM::ASqlCore(this);
+  m_sql = new AntiquaCRM::ASqlCore(applicationName(), this);
   if (m_sql->open()) {
     return true;
   }
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << m_sql->lastError();
+#endif
   return false;
 }
 

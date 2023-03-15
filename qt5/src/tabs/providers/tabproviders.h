@@ -54,7 +54,7 @@ private Q_SLOTS:
   void popupWarningTabInEditMode() override {};
   void setDefaultTableView() override {};
   void createProviderAction();
-  void pluginErrorResponse(AntiquaCRM::Message, const QString &);
+  void pluginErrorResponse(QMessageBox::Icon, const QString &);
   void pluginQueryFinished();
   void openOrderPage(const QString &provider, const QString &orderId);
 

@@ -9,10 +9,6 @@ INCLUDE_DIRECTORIES (
   ${PROJECT_INCLUDE_DIRS}
 )
 
-SET (projectLibrary_LINKER
- AntiquaCRM
-)
-
 SET (projectLibrary_FILES
 )
 
@@ -42,5 +38,5 @@ SET_TARGET_PROPERTIES (${_projectLibrary} PROPERTIES
 TARGET_LINK_LIBRARIES (${_projectLibrary} PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Widgets
-  ${projectLibrary_LINKER}
+  AntiquaCRM
 )

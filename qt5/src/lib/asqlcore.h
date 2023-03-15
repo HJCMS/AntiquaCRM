@@ -47,6 +47,7 @@ public:
   enum Status { CLOSED = 0x0, OPEN = 0x1 };
   Q_ENUM(ASqlCore::Status);
 
+  explicit ASqlCore(const QString &name, QObject *parent = nullptr);
   explicit ASqlCore(QObject *parent = nullptr);
 
   /**

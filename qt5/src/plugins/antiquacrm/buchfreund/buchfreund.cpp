@@ -82,7 +82,7 @@ void Buchfreund::prepareResponse(const QJsonDocument &js) {
 
 void Buchfreund::queryFinished(QNetworkReply *reply) {
   if (reply->error() != QNetworkReply::NoError) {
-    emit sendErrorResponse(AntiquaCRM::WARNING,
+    emit sendErrorResponse(QMessageBox::Warning,
                            tr("Buchfreund response with errors!"));
   }
 }

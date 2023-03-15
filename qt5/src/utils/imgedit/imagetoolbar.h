@@ -21,15 +21,9 @@ private:
   qint64 articleId = 0;
   QPushButton *m_openbtn;
   QPushButton *m_delbtn;
-#ifdef ANTIQUA_WEBCAM_ENABLED
-  QPushButton *m_webcambtn;
-#endif
 
 private Q_SLOTS:
   void checkOpen();
-#ifdef ANTIQUA_WEBCAM_ENABLED
-  void checkWebcam();
-#endif
   void checkRemove();
 
 Q_SIGNALS:

@@ -9,17 +9,6 @@ INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-SET (subproject_LINKER
- AntiquaCRM
-)
-
-IF(WEBCAM_BUILD_SUPPORTED)
-SET (subproject_LINKER
- ${subproject_LINKER}
- AntiquaWebCam
-)
-ENDIF()
-
 SET (subproject_SOURCES
   imagedialog.cpp
   imageview.cpp
@@ -54,8 +43,8 @@ SET_TARGET_PROPERTIES (${_subproject} PROPERTIES
 )
 
 TARGET_LINK_LIBRARIES (${_subproject} PRIVATE
-  Qt${QT_VERSION_MAJOR}::Core
-  Qt${QT_VERSION_MAJOR}::Gui
-  Qt${QT_VERSION_MAJOR}::Widgets
-  ${subproject_LINKER}
+ Qt${QT_VERSION_MAJOR}::Core
+ Qt${QT_VERSION_MAJOR}::Gui
+ AntiquaCRM
+ AntiquaWidgets
 )

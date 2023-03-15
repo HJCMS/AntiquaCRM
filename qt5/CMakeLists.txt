@@ -166,33 +166,6 @@ SET (PROJECT_INCLUDE_DIRS
 )
 
 ###
-## \Section Multimedia Support for Webcam
-###
-OPTION (WITH_MULTIMEDIA "Build with Multimedia support." OFF)
-IF(WITH_MULTIMEDIA)
- FIND_PACKAGE(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS
-  Multimedia
-  MultimediaWidgets
- )
- IF(Qt${QT_VERSION_MAJOR}Multimedia_FOUND)
-  IF(Qt${QT_VERSION_MAJOR}MultimediaWidgets_FOUND)
-   MESSAGE (STATUS "Webcam Support enabled.")
-   SET(WEBCAM_BUILD_SUPPORTED TRUE)
-   ADD_DEFINITIONS (-DANTIQUA_WEBCAM_ENABLED)
-   SET (PROJECT_INCLUDE_DIRS
-     ${PROJECT_INCLUDE_DIRS}
-     ${Qt${QT_VERSION_MAJOR}Multimedia_INCLUDE_DIRS}
-     ${Qt${QT_VERSION_MAJOR}MultimediaWidgets_INCLUDE_DIRS}
-   )
-  ELSE()
-   MESSAGE (FATAL_ERROR "Option: WITH_MULTIMEDIA is set, but no components found.")
-  ENDIF()
- ENDIF()
-ELSE(WITH_MULTIMEDIA)
- MESSAGE (STATUS "Multimedia support not enabled.")
-ENDIF(WITH_MULTIMEDIA)
-
-###
 ## \Section Doxygen
 ###
 FIND_PROGRAM (DOT_EXECUTABLE NAMES dot)

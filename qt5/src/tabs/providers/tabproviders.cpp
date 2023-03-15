@@ -92,8 +92,8 @@ bool TabProviders::loadPlugins() {
     if (mpl != nullptr) {
       // Fehler Meldungen
       connect(mpl,
-              SIGNAL(sendErrorResponse(AntiquaCRM::Message, const QString &)),
-              SLOT(pluginErrorResponse(AntiquaCRM::Message, const QString &)));
+              SIGNAL(sendErrorResponse(QMessageBox::Icon, const QString &)),
+              SLOT(pluginErrorResponse(QMessageBox::Icon, const QString &)));
       // QueryFinished
       connect(mpl, SIGNAL(sendQueryFinished()), SLOT(pluginQueryFinished()));
       plugins.append(mpl);
@@ -142,28 +142,25 @@ void TabProviders::createProviderAction() {
   }
 }
 
-void TabProviders::pluginErrorResponse(AntiquaCRM::Message type,
+void TabProviders::pluginErrorResponse(QMessageBox::Icon type,
                                        const QString &message) {
   QStringList info;
   QString provider = sender()->objectName();
   switch (type) {
-  case AntiquaCRM::Message::NORMAL: // Standard Info
-    info << "NORMAL" << provider << message;
-    break;
-
-  case AntiquaCRM::Message::WARNING: // Warnung wird ausgegeben!
+  case QMessageBox::Warning: // Warnung wird ausgegeben!
     info << "WARNING" << provider << message;
     break;
 
-  case AntiquaCRM::Message::FATAL: // Schwehrwiegender Fehler ist aufgetreten!
+  case QMessageBox::Critical: // Schwehrwiegender Fehler ist aufgetreten!
     info << "FATAL" << provider << message;
     break;
 
-  case AntiquaCRM::Message::LOGGING: // Nur für das Protokollieren vorgesehen!
+  case QMessageBox::Information: // Nur für das Protokollieren vorgesehen!
     info << "LOGGING" << provider << message;
     break;
 
-  default:
+  default: // Standard Info
+    info << "NORMAL" << provider << message;
     break;
   }
 

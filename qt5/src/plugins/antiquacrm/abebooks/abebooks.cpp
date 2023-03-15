@@ -80,7 +80,7 @@ void Abebooks::prepareResponse(const QDomDocument &xml) {
 
 void Abebooks::queryFinished(QNetworkReply *reply) {
   if (reply->error() != QNetworkReply::NoError) {
-    emit sendErrorResponse(AntiquaCRM::WARNING,
+    emit sendErrorResponse(QMessageBox::Warning,
                            tr("AbeBooks response with errors!"));
   }
 }

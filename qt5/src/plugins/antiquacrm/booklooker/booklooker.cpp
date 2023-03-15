@@ -119,7 +119,7 @@ void Booklooker::prepareResponse(const QJsonDocument &js) {
 
   if (obj.value("status").toString().toLower() != "ok") {
     QString info = obj.value("returnValue").toString();
-    emit sendErrorResponse(AntiquaCRM::Message::WARNING, info);
+    emit sendErrorResponse(QMessageBox::Warning, info);
   }
 
   QJsonValue returnValue = obj.value("returnValue");
@@ -141,7 +141,7 @@ void Booklooker::prepareResponse(const QDomDocument &xml) { Q_UNUSED(xml); }
 
 void Booklooker::queryFinished(QNetworkReply *reply) {
   if (reply->error() != QNetworkReply::NoError) {
-    emit sendErrorResponse(AntiquaCRM::WARNING,
+    emit sendErrorResponse(QMessageBox::Warning,
                            tr("Booklooker response with errors!"));
   }
 }

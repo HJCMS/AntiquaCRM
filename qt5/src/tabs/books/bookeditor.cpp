@@ -4,9 +4,6 @@
 #include "bookeditor.h"
 #include "editoractionbar.h"
 #include "keywordlineedit.h"
-#ifdef ANTIQUA_WEBCAM_ENABLED
-#include "webcam.h"
-#endif
 
 #include <AntiquaCRM>
 #include <AntiquaPrinting>
@@ -250,7 +247,6 @@ BookEditor::BookEditor(QWidget *parent)
   connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)),
           SLOT(actionRemoveImage(qint64)));
   connect(m_imageToolBar, SIGNAL(sendOpenImage()), SLOT(actionEditImages()));
-  connect(m_imageToolBar, SIGNAL(sendOpenWebcam()), SLOT(actionEditWebcam()));
 
   // Signals:ImageViewer
   connect(m_imageView, SIGNAL(sendImageLoadSuccess(bool)), m_imageToolBar,
@@ -621,17 +617,6 @@ void BookEditor::actionEditImages() {
   if (d->exec()) {
     m_imageView->readFromDatabase(id);
   }
-}
-
-void BookEditor::actionEditWebcam() {
-#ifdef ANTIQUA_WEBCAM_ENABLED
-  WebCam *d = new WebCam(this);
-  if (d->exec() == QDialog::Accepted) {
-    qDebug() << Q_FUNC_INFO << "TODO";
-  }
-#else
-  qInfo("Webcam support disabled");
-#endif
 }
 
 void BookEditor::setRestore() {
