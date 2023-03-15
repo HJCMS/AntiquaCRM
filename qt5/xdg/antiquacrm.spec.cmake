@@ -17,6 +17,8 @@ Source1:        %{_sourcedir}/qtbase_de.ts
 Group:          Productivity/Databases
 Url:            @HOMEPAGEURL@
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Requires:       libAntiquaCRM1 = %{version}-%{release}
+Recommends:     %{name}-assistant
 BuildRequires:  cmake >= 3.17.0 git
 ## BuildRequires:  libcurl-devel
 BuildRequires:  qrencode-devel
@@ -35,10 +37,27 @@ BuildRequires:  libQt5Charts5-devel >= %{qtversion}
 %description
 It offers item inventory management and a number of online interfaces for simplified data management for individual service providers.
 
+%package -n libAntiquaCRM1
+Summary:        Core Library package
+Group:          Development/Libraries
+
+%description -n libAntiquaCRM1
+Core Library for AntiquaCRM applications
+
+%package assistant
+Summary:        Application assistant for first usage.
+Group:          Productivity/Databases
+Requires:       cron
+Requires:       libAntiquaCRM1 = %{version}-%{release}
+
+%description assistant
+Application assistant for first usage.
+
 %package cron
 Summary:        Server CronJob Application
 Group:          Productivity/Databases
 Requires:       cron
+Requires:       libAntiquaCRM1 = %{version}-%{release}
 
 %description cron
 Application that call Providers Orsders and add Customers and Orders into the Database.
@@ -46,7 +65,7 @@ Application that call Providers Orsders and add Customers and Orders into the Da
 %package devel
 Summary:        @DESCRIPTION@
 Group:          Development/Languages/C and C++
-Requires:       antiquacrm >= %{version}
+Requires:       libAntiquaCRM1 = %{version}-%{release}
 
 %description devel
 It offers item inventory management and a number of online interfaces for simplified data management for individual service providers.
@@ -81,6 +100,17 @@ pushd build
   %makeinstall
 popd
 
+%post -n libAntiquaCRM1
+/sbin/ldconfig
+
+%postun -n libAntiquaCRM1
+/sbin/ldconfig
+
+%files -n libAntiquaCRM1
+%defattr(-, root, root)
+%{_libdir}/libAntiquaCRM.so.1*
+%{_libdir}/libAntiquaCRMPlugin.so.1*
+
 %post
 /sbin/ldconfig
 
@@ -91,9 +121,6 @@ popd
 %defattr(-, root, root)
 ## binaries
 %{_bindir}/antiquacrm
-%{_bindir}/antiquacrm_assistant
-%{_libdir}/libAntiquaCRM.so.1*
-%{_libdir}/libAntiquaCRMPlugin.so.1*
 %dir %{_libdir}/antiquacrm
 %dir %{_libdir}/antiquacrm/plugins
 %dir %{_libdir}/antiquacrm/plugins/provider
@@ -112,6 +139,10 @@ popd
 %{_datadir}/antiquacrm/data/json/*.json
 %{_datadir}/antiquacrm/data/fonts/*.ttf
 %{_datadir}/applications/de.hjcms.antiquacrm.desktop
+
+%files assistant
+%defattr(-, root, root)
+%{_bindir}/antiquacrm_assistant
 %{_datadir}/applications/de.hjcms.antiquacrm_assistant.desktop
 
 %files cron
