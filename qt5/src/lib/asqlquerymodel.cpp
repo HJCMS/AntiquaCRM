@@ -61,8 +61,11 @@ const QSqlRecord ASqlQueryModel::queryRecord() const {
 }
 
 const QString ASqlQueryModel::fieldName(int column) const {
-  if (query().record().isEmpty())
+  if (query().record().isEmpty() && p_table.isEmpty())
     return QString();
+
+  if (query().record().isEmpty())
+    return tableRecord().fieldName(column);
 
   return query().record().fieldName(column);
 }
