@@ -33,7 +33,7 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+112"/>
+        <location filename="../antiquaappl.cpp" line="+115"/>
         <source>Please close all editors before exiting!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -96,7 +96,7 @@
 <context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
-        <location filename="../lib/asqlquerymodel.cpp" line="+114"/>
+        <location filename="../lib/asqlquerymodel.cpp" line="+99"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -106,7 +106,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+14"/>
         <source>%1 - Query finished with &apos;%2&apos; Rows.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -607,7 +607,7 @@
 <context>
     <name>BookEditor</name>
     <message>
-        <location filename="../tabs/books/bookeditor.cpp" line="+19"/>
+        <location filename="../tabs/books/bookeditor.cpp" line="+16"/>
         <source>Edit Book</source>
         <translation type="unfinished"></translation>
     </message>
@@ -727,7 +727,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+94"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -809,7 +809,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-392"/>
+        <location line="-391"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3313,7 +3313,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ImageToolBar</name>
     <message>
-        <location filename="../utils/imgedit/imagetoolbar.cpp" line="+24"/>
+        <location filename="../utils/imgedit/imagetoolbar.cpp" line="+21"/>
         <source>Image Dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3323,17 +3323,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Webcam Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Import Image from a Webcam.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="+4"/>
         <source>Remove Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7516,7 +7506,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+135"/>
+        <location line="+132"/>
         <source>Request from</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8201,14 +8191,6 @@ Image - Article Id: %2</source>
     <message>
         <location line="+1"/>
         <source>Update</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>WebCam</name>
-    <message>
-        <location filename="../utils/webcam/webcam.cpp" line="+12"/>
-        <source>Webcam</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

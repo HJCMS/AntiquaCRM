@@ -7,10 +7,9 @@
 SET(_projectLibrary "AntiquaInterface")
 
 INCLUDE_DIRECTORIES (
-  ${PROJECT_INCLUDE_DIRS}
+  ${INTERNAL_INTERFACE_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${ZLIB_INCLUDE_DIRS}
 )
 
 CONFIGURE_FILE (AntiquaInterface.cmake
@@ -48,8 +47,7 @@ SET_TARGET_PROPERTIES (${_projectLibrary} PROPERTIES
 )
 
 TARGET_LINK_LIBRARIES (${_projectLibrary} PRIVATE
-  Qt6Gui
-  Qt6Widgets
+  Qt6::Core
   AntiquaCRM
   AntiquaWidgets
 )

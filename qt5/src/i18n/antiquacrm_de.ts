@@ -33,7 +33,7 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+112"/>
+        <location filename="../antiquaappl.cpp" line="+115"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie vor dem Beenden bitte alle Editoren!</translation>
     </message>
@@ -96,7 +96,7 @@
 <context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
-        <location filename="../lib/asqlquerymodel.cpp" line="+114"/>
+        <location filename="../lib/asqlquerymodel.cpp" line="+99"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
@@ -106,7 +106,7 @@
         <translation>Nein</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+14"/>
         <source>%1 - Query finished with &apos;%2&apos; Rows.</source>
         <translation>%1 - Abfrage mit &apos;%2&apos; Zeilen beendet.</translation>
     </message>
@@ -607,7 +607,7 @@
 <context>
     <name>BookEditor</name>
     <message>
-        <location filename="../tabs/books/bookeditor.cpp" line="+19"/>
+        <location filename="../tabs/books/bookeditor.cpp" line="+16"/>
         <source>Edit Book</source>
         <translation>Buch bearbeiten</translation>
     </message>
@@ -727,7 +727,7 @@
         <translation>Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+94"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -811,7 +811,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="-392"/>
+        <location line="-391"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
@@ -3317,7 +3317,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ImageToolBar</name>
     <message>
-        <location filename="../utils/imgedit/imagetoolbar.cpp" line="+24"/>
+        <location filename="../utils/imgedit/imagetoolbar.cpp" line="+21"/>
         <source>Image Dialog</source>
         <translation>Bilder Dialog</translation>
     </message>
@@ -3327,17 +3327,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Dialog zum Importieren/Bearbeiten von Bildern.</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Webcam Dialog</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Import Image from a Webcam.</source>
-        <translation>Bild von einer Webcam importieren.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="+4"/>
         <source>Remove Image</source>
         <translation>Bild entfernen</translation>
     </message>
@@ -7522,7 +7512,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Knopf für das Aktualisieren der Dienstleisteransicht.</translation>
     </message>
     <message>
-        <location line="+135"/>
+        <location line="+132"/>
         <source>Request from</source>
         <translation>Anfrage von</translation>
     </message>
@@ -8210,14 +8200,6 @@ Bild - Artikel Nr: %2</translation>
         <location line="+1"/>
         <source>Update</source>
         <translation>Aktualisieren</translation>
-    </message>
-</context>
-<context>
-    <name>WebCam</name>
-    <message>
-        <location filename="../utils/webcam/webcam.cpp" line="+12"/>
-        <source>Webcam</source>
-        <translation>Webcam</translation>
     </message>
 </context>
 <context>

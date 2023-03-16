@@ -7,10 +7,9 @@
 SET(_projectLibrary "AntiquaWidgets")
 
 INCLUDE_DIRECTORIES (
-  ${PROJECT_INCLUDE_DIRS}
-  ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  ${ZLIB_INCLUDE_DIRS}
+ ${INTERNAL_WIDGET_INCLUDE_DIRS}
+ ${CMAKE_CURRENT_SOURCE_DIR}
+ ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 CONFIGURE_FILE (AntiquaWidgets.cmake
@@ -19,17 +18,24 @@ CONFIGURE_FILE (AntiquaWidgets.cmake
 
 SET (projectLibrary_FILES
  AntiquaWidgets.cmake
-)
-
-SET (projectinc_FILES
  AntiquaWidgets
+ AInputEdit
 )
 
 SET (projectLibrary_SOURCES
+ alabel.cpp
+ acombobox.cpp
+ adateinfo.cpp
+ ainputedit.cpp
+ alineedit.cpp
 )
 
 SET (projectLibrary_HEADERS
- ${projectinc_FILES}
+ alabel.h
+ acombobox.h
+ adateinfo.h
+ ainputedit.h
+ alineedit.h
 )
 
 ADD_LIBRARY (${_projectLibrary} SHARED
@@ -48,8 +54,9 @@ SET_TARGET_PROPERTIES (${_projectLibrary} PROPERTIES
 )
 
 TARGET_LINK_LIBRARIES (${_projectLibrary} PRIVATE
-  Qt6Gui
-  Qt6Widgets
+  Qt6::Core
+  Qt6::Gui
+  Qt6::Widgets
   AntiquaCRM
 )
 

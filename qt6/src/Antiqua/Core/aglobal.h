@@ -153,7 +153,7 @@
  * @brief Plugins target
  */
 #ifndef ANTIQUACRM_PLUGIN_TARGET
-#define ANTIQUACRM_PLUGIN_TARGET "/home/heinemann/Developement/antiqua/qt6/test/src/plugins/antiquacrm"
+#define ANTIQUACRM_PLUGIN_TARGET "/home/heinemann/Developement/antiqua/build-qt6-Desktop_Qt_6_2_4_GCC_64bit-Debug/src/plugins/antiquacrm"
 #endif
 
 /**
@@ -161,7 +161,7 @@
  * @brief Translations target
  */
 #ifndef ANTIQUACRM_TRANSLATION_TARGET
-#define ANTIQUACRM_TRANSLATION_TARGET "/home/heinemann/Developement/antiqua/qt6/test/src/i18n"
+#define ANTIQUACRM_TRANSLATION_TARGET "/home/heinemann/Developement/antiqua/build-qt6-Desktop_Qt_6_2_4_GCC_64bit-Debug/src/i18n"
 #endif
 
 /**
