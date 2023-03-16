@@ -4,8 +4,12 @@
 #include "asettings.h"
 #include "aglobal.h"
 
-#include <QApplication>
+#include <QCoreApplication>
 #include <QStandardPaths>
+
+#ifndef ANTIQUACRM_CONFIG_MAILLER_KEY
+#define ANTIQUACRM_CONFIG_MAILLER_KEY QString("dirs/mailappl")
+#endif
 
 namespace AntiquaCRM {
 
@@ -136,7 +140,7 @@ const QDir ASettings::getPluginDir(const QString &subTarget) {
 }
 
 const QDir ASettings::getUserDataDir() {
-  QString data = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+  QString data = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
   QDir d(data);
   if (!d.mkpath(d.path())) {
     qWarning("DataLocation: Permission denied!");

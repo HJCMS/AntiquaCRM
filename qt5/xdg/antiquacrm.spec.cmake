@@ -18,7 +18,7 @@ Group:          Productivity/Databases
 Url:            @HOMEPAGEURL@
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       libAntiquaCRM1 = %{version}-%{release}
-Recommends:     %{name}-assistant
+Supplements:    %{name}-assistant
 BuildRequires:  cmake >= 3.17.0 git
 ## BuildRequires:  libcurl-devel
 BuildRequires:  qrencode-devel

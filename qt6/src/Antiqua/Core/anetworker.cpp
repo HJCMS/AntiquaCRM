@@ -16,7 +16,6 @@
 #include <QHttpMultiPart>
 #include <QHttpPart>
 #include <QJsonParseError>
-#include <QTextCodec>
 #include <QTextStream>
 
 namespace AntiquaCRM {
@@ -27,7 +26,6 @@ ANetworker::ANetworker(AntiquaCRM::NetworkQueryType type, QObject *parent)
   setCache(new AntiquaCRM::ANetworkCache(this));
 
   m_reply = nullptr;
-  m_textCodec = QTextCodec::codecForLocale();
 
   AntiquaCRM::ASettings cfg(this);
   transfer_timeout = cfg.value("transfer_timeout", 15).toInt();
@@ -89,36 +87,11 @@ void ANetworker::slotReadResponse() {
     return;
   }
 
-  bool textContent = false;
   QStringList findText("application/json");
   findText << "text/plain";
   findText << "text/html";
   findText << "text/*";
   findText << "text/";
-
-  QByteArray decodeWith(m_textCodec->name());
-  // Content-Type
-  if (m_reply->hasRawHeader("Content-Type")) {
-    QString cth(m_reply->rawHeader("Content-Type"));
-    QRegExp stripParam("^Content\\-Type\\b\\:\\s+", Qt::CaseInsensitive);
-    cth.replace(stripParam, "");
-    if (cth.contains("charset")) {
-      // Leerzeichen entfernen
-      cth.replace(QRegExp(";\\s*"), " ");
-      cth.replace(QRegExp("\\s*=\\s*"), "=");
-      foreach (QString section, cth.trimmed().split(" ")) {
-        if (section.contains("charset=")) {
-          section.replace("charset=", "");
-          QString charset = section.trimmed().toUpper();
-          QTextCodec *c = QTextCodec::codecForName(charset.toLocal8Bit());
-          decodeWith = c->name();
-          emit sendContentCodec(c);
-        } else if (findText.contains(section) && !textContent) {
-          textContent = true;
-        }
-      }
-    }
-  }
 
 //  QByteArray data;
 //  data = m_reply->readAll();
@@ -150,7 +123,9 @@ void ANetworker::slotReadResponse() {
     qInfo("-- %s: %s", a.constData(), reply->rawHeader(a).constData());
   }
 #else
-  qInfo("Bytes responses (%d).", data.size());
+  QByteArray byte_info;
+  QTextStream(&byte_info) << "bytes=" << data.size();
+  qDebug("Bytes responses (%s).", byte_info.data());
 #endif
 
   // JSON Request

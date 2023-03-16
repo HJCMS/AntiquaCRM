@@ -4,11 +4,9 @@
 #include "autil.h"
 
 #include <QLocale>
-#include <QRegularExpression>
 #include <QRegularExpressionMatch>
 #include <QStringList>
-#include <QTextCodec>
-#include <QTextEncoder>
+#include <QTextStream>
 
 namespace AntiquaCRM {
 
@@ -28,8 +26,8 @@ const QString AUtil::socketName() {
 
 const QString AUtil::trim(const QString &str) {
   QString out = str;
-  out.replace(QRegExp("[\\n\\r]+"), " ");
-  out.replace(QRegExp("[\\s\\t]+"), " ");
+  out.replace(QRegularExpression("[\\n\\r]+"), " ");
+  out.replace(QRegularExpression("[\\s\\t]+"), " ");
   return out.trimmed();
 }
 
@@ -41,9 +39,9 @@ const QString AUtil::ucFirst(const QString &str) {
   return array.join(" ");
 }
 
-const QRegExp AUtil::emailRegExp() {
-  QRegExp reg;
-  reg.setCaseSensitivity(Qt::CaseInsensitive);
+const QRegularExpression AUtil::emailRegExp() {
+  QRegularExpression reg;
+  reg.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
   reg.setPattern("^([\\d\\w\\-\\.]{3,})@([\\d\\w\\-\\.]{2,})\\.([a-z]{2,6})$");
   return reg;
 }
@@ -55,9 +53,9 @@ bool AUtil::checkMail(const QString &mail) {
   return match.hasMatch();
 }
 
-const QRegExp AUtil::phoneRegExp() {
-  QRegExp reg;
-  reg.setCaseSensitivity(Qt::CaseSensitive);
+const QRegularExpression AUtil::phoneRegExp() {
+  QRegularExpression reg;
+  reg.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
   reg.setPattern("^([\\d]{2,3}\\s?[\\d]{2,4}[\\s?\\d]+)$");
   return reg;
 }
@@ -67,12 +65,6 @@ bool AUtil::checkPhone(const QString &phone) {
   QString str = phone.trimmed().toLower();
   QRegularExpressionMatch match = expr.match(str);
   return match.hasMatch();
-}
-
-const QString AUtil::toISO88591(const QString &str) {
-  QTextCodec *codec = QTextCodec::codecForLocale();
-  QTextEncoder encoder(codec);
-  return QString(encoder.fromUnicode(str));
 }
 
 const QString AUtil::zerofill(qint64 number, int length) {

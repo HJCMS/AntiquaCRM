@@ -41,16 +41,15 @@ const QString ASqlQueryModel::verticalHeader(int row, int role) const {
 
 bool ASqlQueryModel::querySelect(const QString &sql) {
   p_queryResult = 0;
-  QSqlQuery q = m_sql->query(sql);
-
+  QSqlQuery _query = m_sql->query(sql);
   // if no errors clear old table content
   if (m_sql->lastError().isEmpty())
     clear();
 
-  if (q.size() > 0) {
-    p_queryResult = q.size();
-    p_queryRecord = q.record();
-    setQuery(q);
+  if (_query.size() > 0) {
+    p_queryResult = _query.size();
+    p_queryRecord = _query.record();
+    setQuery(sql);
     return true;
   } else if (!m_sql->lastError().isEmpty()) {
     QString erroMessage = m_sql->lastError().trimmed();
@@ -104,16 +103,18 @@ QVariant ASqlQueryModel::data(const QModelIndex &item, int role) const {
   if (role != Qt::DisplayRole)
     return value;
 
-  QVariant::Type _type = p_queryRecord.field(item.column()).type();
+  QMetaType _type = p_queryRecord.field(item.column()).metaType();
   // QString _name = p_record.field(item.column()).name();
   // qDebug() << _name << _type << value;
-  if (_type == QVariant::DateTime) {
+  if (_type.id() == QMetaType::QDateTime) {
     return displayDate(value);
   }
-  if (_type == QVariant::Bool) {
+
+  if (_type.id() == QMetaType::Bool) {
     return (value.toBool()) ? tr("Yes") : tr("No");
   }
-  if (_type == QVariant::LongLong || _type == QVariant::ULongLong) {
+
+  if (_type.id() == QMetaType::LongLong || _type.id() == QMetaType::ULongLong) {
     return (value.toString().length() > 5) ? value : QVariant();
   }
   return value;

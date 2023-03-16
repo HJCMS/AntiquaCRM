@@ -9,7 +9,7 @@
 #include <QByteArray>
 #include <QDir>
 #include <QFileInfo>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QString>
 
 namespace AntiquaCRM {
@@ -29,7 +29,7 @@ class ANTIQUACRM_LIBRARY ASqlFiles final : public QFileInfo {
 private:
   QDir p_dataDir;
   QString p_content;
-  const QRegExp comments;
+  const QRegularExpression comments;
 
 public:
   explicit ASqlFiles(const QString &file);

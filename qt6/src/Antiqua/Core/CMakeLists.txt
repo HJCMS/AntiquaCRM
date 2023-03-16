@@ -6,12 +6,13 @@
 
 SET(_projectLibrary "AntiquaCRM")
 
-INCLUDE_DIRECTORIES (
-  ${PROJECT_INCLUDE_DIRS}
-  ${CMAKE_CURRENT_BINARY_DIR}
+SET (ANTIQUACRM_INCLUDE_DIRS
+  ${ANTIQUACRM_INCLUDE_DIRS}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${ZLIB_INCLUDE_DIRS}
+  ${CMAKE_CURRENT_BINARY_DIR}
 )
+
+INCLUDE_DIRECTORIES (${ANTIQUACRM_INCLUDE_DIRS})
 
 CONFIGURE_FILE (aglobal.h.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/aglobal.h
@@ -24,9 +25,6 @@ CONFIGURE_FILE (AntiquaCRM.cmake
 SET (projectLibrary_FILES
  aglobal.h.cmake
  AntiquaCRM.cmake
-)
-
-SET (projectinc_FILES
  AntiquaCRM
  AGlobal
  ASettings
@@ -80,7 +78,6 @@ SET (projectLibrary_HEADERS
  atransmitter.h
  autil.h
  aorderimport.h
- ${projectinc_FILES}
 )
 
 ADD_LIBRARY (${_projectLibrary} SHARED

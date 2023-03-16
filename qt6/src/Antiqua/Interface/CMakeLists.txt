@@ -48,8 +48,8 @@ SET_TARGET_PROPERTIES (${_projectLibrary} PROPERTIES
 )
 
 TARGET_LINK_LIBRARIES (${_projectLibrary} PRIVATE
-  Qt6::Gui
-  Qt6::Widgets
+  Qt6Gui
+  Qt6Widgets
   AntiquaCRM
   AntiquaWidgets
 )

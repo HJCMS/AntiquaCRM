@@ -145,7 +145,7 @@
  * @brief Shared Data location
  */
 #ifndef ANTIQUACRM_DATA_TARGET
-#define ANTIQUACRM_DATA_TARGET "/usr/local/share/antiquacrm/data"
+#define ANTIQUACRM_DATA_TARGET "/home/heinemann/Developement/antiqua/qt6/src/data"
 #endif
 
 /**
@@ -153,7 +153,7 @@
  * @brief Plugins target
  */
 #ifndef ANTIQUACRM_PLUGIN_TARGET
-#define ANTIQUACRM_PLUGIN_TARGET "/usr/local/lib/antiquacrm/plugins"
+#define ANTIQUACRM_PLUGIN_TARGET "/home/heinemann/Developement/antiqua/qt6/test/src/plugins/antiquacrm"
 #endif
 
 /**
@@ -161,7 +161,7 @@
  * @brief Translations target
  */
 #ifndef ANTIQUACRM_TRANSLATION_TARGET
-#define ANTIQUACRM_TRANSLATION_TARGET "/usr/local/share/antiquacrm/i18n"
+#define ANTIQUACRM_TRANSLATION_TARGET "/home/heinemann/Developement/antiqua/qt6/test/src/i18n"
 #endif
 
 /**

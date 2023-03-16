@@ -12,7 +12,6 @@
 #include <QNetworkReply>
 #include <QObject>
 #include <QSslError>
-#include <QTextCodec>
 #include <QUrl>
 
 namespace AntiquaCRM {
@@ -43,11 +42,6 @@ private:
    */
   QNetworkReply *m_reply;
 
-  /**
-   * @brief System Textcodec
-   */
-  QTextCodec *m_textCodec;
-
 private Q_SLOTS:
   void slotReadResponse();
   void slotError(QNetworkReply::NetworkError error);
@@ -57,7 +51,6 @@ Q_SIGNALS:
   void sendFinishedWithErrors();
   void sendJsonResponse(const QJsonDocument &);
   void sendXmlResponse(const QDomDocument &);
-  void sendContentCodec(QTextCodec *);
 
 public:
   explicit ANetworker(AntiquaCRM::NetworkQueryType type,

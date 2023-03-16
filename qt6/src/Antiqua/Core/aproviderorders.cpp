@@ -40,8 +40,8 @@ const QString AProviderOrder::md5sum() const {
   return QCryptographicHash::hash(buf, QCryptographicHash::Md5).toHex();
 }
 
-const QRegExp AProviderOrder::keysPattern() {
-  return QRegExp("^c_[a-z0-9_]+$");
+const QRegularExpression AProviderOrder::keysPattern() {
+  return QRegularExpression("^c_[a-z0-9_]+$");
 }
 
 const QHash<QString, QMetaType::Type> AProviderOrder::orderEditKeys() {
@@ -366,7 +366,8 @@ bool AProviderOrder::setValue(const QString &key, const QVariant &value) {
   while (it.hasNext()) {
     it.next();
     QMetaType type(it.value());
-    if ((it.key() == key) && (type.name().contains(value.typeName()))) {
+    QString typeName(type.name());
+    if ((it.key() == key) && (typeName.contains(value.typeName()))) {
       if (type.id() == QMetaType::QString)
         p_data.insert(key, value.toString().trimmed());
       else if (type.id() == QMetaType::Int)
@@ -381,13 +382,13 @@ bool AProviderOrder::setValue(const QString &key, const QVariant &value) {
         p_data.insert(key, value);
 
       return true;
-    } else if ((it.key() == key) && (value.type() == QVariant::LongLong)) {
+    } else if ((it.key() == key) && (value.metaType().id() == QMetaType::LongLong)) {
       p_data.insert(key, value.toInt());
       return true;
-    } else if ((it.key() == key) && (value.type() == QVariant::Double)) {
+    } else if ((it.key() == key) && (value.metaType().id() == QMetaType::Double)) {
       p_data.insert(key, value.toDouble());
       return true;
-    } else if ((it.key() == key) && (value.type() == QVariant::DateTime)) {
+    } else if ((it.key() == key) && (value.metaType().id() == QMetaType::QDateTime)) {
       p_data.insert(key, value.toDateTime());
       return true;
     }

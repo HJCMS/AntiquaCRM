@@ -70,7 +70,6 @@ bool ASharedDataFiles::storeJson(const QString &basename,
   QFile fp(info.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream data(&fp);
-    data.setCodec(ANTIQUACRM_TEXTCODEC);
 #ifdef ANTIQUA_DEVELOPEMENT
     data << doc.toJson(QJsonDocument::Indented);
 #else
@@ -98,7 +97,6 @@ const QJsonDocument ASharedDataFiles::getJson(const QString &basename) {
   QFile fp(info.filePath());
   if (fp.open(QIODevice::ReadOnly)) {
     QTextStream data(&fp);
-    data.setCodec(ANTIQUACRM_TEXTCODEC);
     QByteArray buffer = data.readAll().toLocal8Bit();
     doc = QJsonDocument::fromJson(buffer, &parseHandle);
     if (parseHandle.error != QJsonParseError::NoError) {
@@ -118,7 +116,6 @@ bool ASharedDataFiles::storeXml(const QString &basename,
   QFile fp(info.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream data(&fp);
-    data.setCodec(ANTIQUACRM_TEXTCODEC);
 #ifdef ANTIQUA_DEVELOPEMENT
     // Indented: 1
     data << xml.toString(1);
@@ -167,7 +164,6 @@ bool ASharedCacheFiles::storeTempFile(const QString &filename,
   QFile fp(info.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream stream(&fp);
-    stream.setCodec(ANTIQUACRM_TEXTCODEC);
     stream << QString::fromLocal8Bit(data);
     fp.close();
     return true;
@@ -186,7 +182,6 @@ bool ASharedCacheFiles::storeTempFile(const QString &filename,
   QFile fp(info.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream stream(&fp);
-    stream.setCodec(ANTIQUACRM_TEXTCODEC);
     stream << data;
     fp.close();
     return true;
@@ -213,7 +208,6 @@ const QString ASharedCacheFiles::getTempFile(const QString &filename) {
   QFile fp(info.filePath());
   if (fp.open(QIODevice::ReadOnly)) {
     QTextStream data(&fp);
-    data.setCodec(ANTIQUACRM_TEXTCODEC);
     buffer = data.readAll();
     fp.close();
   }
@@ -236,7 +230,6 @@ const QJsonObject ASharedCacheFiles::getTempJson(const QString &md5sum) {
   QFile fp(info.filePath());
   if (fp.open(QIODevice::ReadOnly)) {
     QTextStream data(&fp);
-    data.setCodec(ANTIQUACRM_TEXTCODEC);
     QByteArray buffer = data.readAll().toLocal8Bit();
     doc = QJsonDocument::fromJson(buffer, &parseHandle);
     if (parseHandle.error != QJsonParseError::NoError) {

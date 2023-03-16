@@ -65,9 +65,6 @@
 // AntiquaCRM::ASqlQueryModel
 #include "asqlquerymodel.h"
 
-// AntiquaCRM::APluginLoader
-#include "apluginloader.h"
-
 // AntiquaCRM::AProviderOrders
 // AntiquaCRM::ArticleOrderItem
 #include "aproviderorders.h"

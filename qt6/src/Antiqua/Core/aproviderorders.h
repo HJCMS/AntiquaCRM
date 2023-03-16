@@ -9,7 +9,7 @@
 #include <QHash>
 #include <QList>
 #include <QMetaType>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QVariant>
 
 namespace AntiquaCRM {
@@ -46,7 +46,7 @@ private:
   /**
    * @brief Regular Expression pattern for Key finding.
    */
-  static const QRegExp keysPattern();
+  static const QRegularExpression keysPattern();
 
 public:
   /**

@@ -83,10 +83,9 @@ const QSqlField ASqlDataQuery::getProperties(const QString &column) const {
 
 const QMetaType ASqlDataQuery::getType(const QString &column) const {
   QSqlField field = getProperties(column);
-  if (field.isValid()) {
-    QVariant::Type _t = field.type();
-    return QMetaType(QMetaType::type(QVariant::typeToName(_t)));
-  }
+  if (field.isValid())
+    return field.metaType();
+
   return QMetaType();
 }
 
@@ -98,20 +97,10 @@ void ASqlDataQuery::setValue(const QString &column, const QVariant &value) {
   if (!field.isValid())
     return;
 
-  if (field.type() != value.type()) {
-    int metaCheck;
-    QVariant from(field.defaultValue());
-    if (!QMetaType::compare(&from, &value, getType(column).id(), &metaCheck)) {
-      const char *rtype = QVariant(field.type()).typeName();
-      if ((QString(value.typeName()) == "qulonglong") &&
-          (QString(rtype) == "qlonglong")) {
-        // You can safely ignore this message on 64bit systems.
-        // Normally this Message will triggered with ISBN/EAN Input fields.
-      } else {
-        qWarning("Warning MetaType for '%s' require '%s' but get '%s'!",
-                 qPrintable(column), rtype, value.typeName());
-      }
-    }
+  QMetaType fieldType = field.metaType();
+  if (fieldType != value.metaType()) {
+    qWarning("Warning MetaType for '%s' require '%s' but get '%s'!",
+              qPrintable(column), fieldType.name(), value.metaType().name());
   }
 
   if (field.requiredStatus() == QSqlField::Required && value.isNull()) {
@@ -124,7 +113,7 @@ void ASqlDataQuery::setValue(const QString &column, const QVariant &value) {
     return;
   }
 
-  if (field.type() == QVariant::String && field.length() > 0) {
+  if (fieldType.id() == QMetaType::QString && field.length() > 0) {
     if (value.toString().length() > field.length()) {
       qFatal("Invalid datasize! '%s' max length is '%d'", qPrintable(column),
              field.length());

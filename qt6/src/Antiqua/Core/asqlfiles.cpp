@@ -10,13 +10,14 @@
 #endif
 
 #include <QFile>
-#include <QRegExp>
 #include <QStandardPaths>
 #include <QTextStream>
 
 namespace AntiquaCRM {
 
-static const QRegExp comment_pattern() { return QRegExp("(^|\\s)--.+$"); }
+static const QRegularExpression comment_pattern() {
+  return QRegularExpression("(^|\\s)--.+$");
+}
 
 ASqlFiles::ASqlFiles(const QString &file)
     : QFileInfo{ASettings::getDataDir("pgsql"), file + ".sql"},
@@ -37,7 +38,6 @@ bool ASqlFiles::openTemplate() {
   if (fp.open(QIODevice::ReadOnly)) {
     p_content = QString();
     QTextStream stream(&fp);
-    stream.setCodec(ANTIQUACRM_TEXTCODEC);
     while (!stream.atEnd()) {
       QString buf = stream.readLine();
       if (!buf.contains(comments))
@@ -98,7 +98,7 @@ void ASqlFiles::setLimits(int limit) {
 }
 
 const QString ASqlFiles::getQueryContent() {
-  QRegExp check("@([A-Z_]+)@");
+  QRegularExpression check("@([A-Z_]+)@");
   if (p_content.contains(check)) {
     qWarning("Unused template replacements!");
   }
@@ -119,7 +119,6 @@ const QString ASqlFiles::selectStatement(const QString &name) {
   QFile fp(info.filePath());
   if (fp.open(QIODevice::ReadOnly)) {
     QTextStream stream(&fp);
-    stream.setCodec(ANTIQUACRM_TEXTCODEC);
     while (!stream.atEnd()) {
       QString buf = stream.readLine();
       if (!buf.contains(comment_pattern()))
@@ -144,7 +143,6 @@ const QString ASqlFiles::queryStatement(const QString &name) {
   QFile fp(info.filePath());
   if (fp.open(QIODevice::ReadOnly)) {
     QTextStream stream(&fp);
-    stream.setCodec(ANTIQUACRM_TEXTCODEC);
     while (!stream.atEnd()) {
       QString buf = stream.readLine();
       if (!buf.contains(comment_pattern()))

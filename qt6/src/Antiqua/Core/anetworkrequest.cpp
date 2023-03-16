@@ -5,7 +5,8 @@
 #include "aglobal.h"
 #include "asettings.h"
 
-#include <QApplication>
+#include <QCoreApplication>
+#include <QRegularExpression>
 #include <QDir>
 #include <QFileInfo>
 #include <QLocale>
@@ -35,7 +36,7 @@ const QByteArray ANetworkRequest::antiquaCharset() {
 
 const QString ANetworkRequest::findCaBundleFile() const {
   QString ca_bundle;
-  QRegExp pattern("^(curl\\-)?ca[\\-_](bundle|certificate)$");
+  QRegularExpression pattern("^(curl\\-)?ca[\\-_](bundle|certificate)$");
   QStringList filter({"*.crt", "*.pem"});
   QStringList dirs(qApp->applicationDirPath());
 #ifdef Q_OS_UNIX

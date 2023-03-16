@@ -1,6 +1,8 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
-// @COPYRIGHT_HOLDER@
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+//
 
 #include "antiquaappl.h"
 
@@ -14,9 +16,8 @@
 #include <syslog.h>
 
 const char *functionInfo(const QMessageLogContext &context) {
-  QString str = QString::asprintf("’%s’", context.function);
-  QByteArray buf = str.toLocal8Bit();
-  return buf.isNull() ? "unknown" : buf.constData();
+  QString b = QString::asprintf("’%s’", context.function);
+  return b.toLocal8Bit().constData();
 }
 
 void SyslogMessageHandler(QtMsgType type, // Message Type
@@ -38,7 +39,7 @@ void SyslogMessageHandler(QtMsgType type, // Message Type
     abort();
 
   default:
-    syslog(LOG_DEBUG, "%s %s", localMsg.constData(), functionInfo(context));
+    syslog(LOG_DEBUG, "%s", localMsg.constData());
     break;
   }
 }
@@ -59,11 +60,6 @@ int main(int argc, char *argv[]) {
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
   }
 
-  if (antiqua->isRunning()) {
-    qWarning("AntiquaCRM is already up!");
-    return 0;
-  }
-
   if (argc > 0) {
     for (int i = 0; i <= argc; i++) {
       QString arg = QString(argv[i]).toLower();
@@ -74,6 +70,11 @@ int main(int argc, char *argv[]) {
         return 0;
       }
     }
+  }
+
+  if (antiqua->isRunning()) {
+    qWarning("AntiquaCRM is already up!");
+    return 0;
   }
 
   Q_INIT_RESOURCE(resources);

@@ -8,7 +8,7 @@
 #include <AGlobal>
 #include <QChar>
 #include <QLocale>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QString>
 #include <QTime>
 
@@ -38,7 +38,7 @@ public:
   /**
    * @brief Regular Expression for eMail
    */
-  static const QRegExp emailRegExp();
+  static const QRegularExpression emailRegExp();
 
   /**
    * @brief Check eMail Address
@@ -52,17 +52,12 @@ public:
    *  (Country Code) (NPA Area Code) (Prefix) (Subscriber)
    * @endcode
    */
-  static const QRegExp phoneRegExp();
+  static const QRegularExpression phoneRegExp();
 
   /**
    * @brief Check Mobile/Phone Addresses
    */
   static bool checkPhone(const QString &);
-
-  /**
-   * @brief Convert from System Codec to ISO-8859-1
-   */
-  static const QString toISO88591(const QString &);
 
   /**
    * @brief Convert Number to AntiquaCRM with leading zeros to String

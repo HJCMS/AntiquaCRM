@@ -16,8 +16,6 @@ namespace AntiquaCRM {
 ASqlQueryModel::ASqlQueryModel(const QString &table, QObject *parent)
     : QSqlQueryModel{parent}, p_table(table) {
   m_sql = new AntiquaCRM::ASqlCore(this);
-  p_queryRecord = QSqlRecord();
-  p_queryResult = 0;
 }
 
 const QString ASqlQueryModel::setHeaderTitle(const QString &text) const {
@@ -40,27 +38,15 @@ const QString ASqlQueryModel::verticalHeader(int row, int role) const {
 }
 
 bool ASqlQueryModel::querySelect(const QString &sql) {
-  p_queryResult = 0;
-  QSqlQuery q = m_sql->query(sql);
-
-  // if no errors clear old table content
-  if (m_sql->lastError().isEmpty())
-    clear();
-
-  if (q.size() > 0) {
-    p_queryResult = q.size();
-    p_queryRecord = q.record();
-    setQuery(q);
-    return true;
-  } else if (!m_sql->lastError().isEmpty()) {
-    QString erroMessage = m_sql->lastError().trimmed();
+  setQuery(sql, m_sql->db());
+  if (lastError().isValid()) {
+    QSqlError err = lastError();
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << erroMessage;
+    qDebug() << Q_FUNC_INFO << err.text();
 #endif
-    emit sqlErrorMessage(p_table, erroMessage);
+    emit sqlErrorMessage(p_table, err.text());
     return false;
   }
-  // no errors!
   return true;
 }
 
@@ -71,28 +57,25 @@ const QSqlRecord ASqlQueryModel::tableRecord() const {
 }
 
 const QSqlRecord ASqlQueryModel::queryRecord() const {
-  if (p_queryRecord.isEmpty())
-    return QSqlRecord();
-
-  return p_queryRecord;
+  return query().record();
 }
 
 const QString ASqlQueryModel::fieldName(int column) const {
-  if (p_queryRecord.isEmpty())
+  if (query().record().isEmpty())
     return QString();
 
-  return p_queryRecord.fieldName(column);
+  return query().record().fieldName(column);
 }
 
 int ASqlQueryModel::column(const QString &fieldName) const {
-  if (p_queryRecord.isEmpty())
+  QSqlRecord _record = query().record();
+  if (_record.isEmpty())
     return -1;
 
-  for (int i = 0; i < p_queryRecord.count(); i++) {
-    if (p_queryRecord.field(i).name() == fieldName)
+  for (int i = 0; i < _record.count(); i++) {
+    if (_record.field(i).name() == fieldName)
       return i;
   }
-
   return -1;
 }
 
@@ -104,15 +87,15 @@ QVariant ASqlQueryModel::data(const QModelIndex &item, int role) const {
   if (role != Qt::DisplayRole)
     return value;
 
-  QVariant::Type _type = p_queryRecord.field(item.column()).type();
-  // QString _name = p_record.field(item.column()).name();
-  // qDebug() << _name << _type << value;
+  QVariant::Type _type = query().record().field(item.column()).type();
   if (_type == QVariant::DateTime) {
     return displayDate(value);
   }
+
   if (_type == QVariant::Bool) {
     return (value.toBool()) ? tr("Yes") : tr("No");
   }
+
   if (_type == QVariant::LongLong || _type == QVariant::ULongLong) {
     return (value.toString().length() > 5) ? value : QVariant();
   }
@@ -122,9 +105,10 @@ QVariant ASqlQueryModel::data(const QModelIndex &item, int role) const {
 const QString ASqlQueryModel::queryResultInfo() {
   QString time = QTime::currentTime().toString("HH:mm:ss");
   QString info;
-  if (p_queryResult > 0) {
+  qint64 _rows = query().size();
+  if (_rows > 0) {
     info.append(tr("%1 - Query finished with '%2' Rows.")
-                    .arg(time, QString::number(p_queryResult)));
+                    .arg(time, QString::number(_rows)));
   } else {
     info.append(tr("%1 - Query without result!").arg(time));
   }
