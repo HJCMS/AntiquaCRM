@@ -19,39 +19,52 @@
 namespace AntiquaCRM {
 
 /**
- * @brief AntiquaCRM Combobox widget
  * @ingroup AntiquaWidgets
+ * @class AComboBox
+ * @brief AntiquaCRM Combobox widget
  */
 class ANTIQUACRM_LIBRARY AComboBox final : public QComboBox, public AInputEdit {
   Q_OBJECT
 
 private:
+  /**
+   * @brief mouse wheel support enabled or not
+   */
   bool mouse_wheel_support = false;
 
 protected:
+  /**
+   * @brief disable wheel events ...
+   * to prevent unwanted changes on large input masks with scroll widget
+   */
   void wheelEvent(QWheelEvent *e) override;
 
 public Q_SLOTS:
   /**
-   * @brief set Qt::UserRole value
+   * @brief find and set item with Qt::UserRole value
    */
   void setValue(const QVariant &) override;
+
+  /**
+   * @brief get restriction from QSqlField
+   */
+  void setRestrictions(const QSqlField &) override;
 
 public:
   explicit AComboBox(QWidget *parent = nullptr);
 
   /**
-   * @brief Standard text für „keine Auswahl“ getroffen!
+   * @brief set default text, no item selected.
    */
   const QString withoutDisclosures();
 
   /**
-   * @brief Erstellt einen Eintrage mit Text von withoutDisclosures()
+   * @brief create a Qt:UserRole value with withoutDisclosures() text.
    */
   void setWithoutDisclosures(const QVariant &data = QVariant());
 
   /**
-   * @brief get Qt::UserRole value
+   * @brief get current selected Qt::UserRole value
    */
   const QVariant getValue() override;
 };

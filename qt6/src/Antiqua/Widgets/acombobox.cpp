@@ -32,6 +32,11 @@ void AComboBox::setValue(const QVariant &value) {
     setCurrentIndex(index);
 }
 
+void AComboBox::setRestrictions(const QSqlField &field) {
+  if (field.requiredStatus() == QSqlField::Required)
+    setRequired(true);
+}
+
 const QString AComboBox::withoutDisclosures() {
   return tr("Without disclosures");
 }

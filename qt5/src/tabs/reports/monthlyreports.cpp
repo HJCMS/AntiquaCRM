@@ -135,6 +135,7 @@ void MonthlyReports::updateVolumeInfo() {
   QString info = tr("Volume");
   info.append(" " + m_selecter->selectedText() + " = ");
   info.append(m_table->salesVolume() + " ");
-  info.append(cfg.value("payment/currency", "$").toString());
+  QString symbol = QLocale::system().currencySymbol(QLocale::CurrencySymbol);
+  info.append(cfg.value("payment/currency", symbol).toString());
   m_selecter->showMessage(info);
 }

@@ -3,13 +3,8 @@
 
 #include "adateinfo.h"
 
-#include <QDate>
 #include <QDateTime>
 #include <QMetaType>
-
-#ifndef FALLBACK_DATE
-#define FALLBACK_DATE QDate(2000, 01, 01)
-#endif
 
 namespace AntiquaCRM {
 
@@ -25,7 +20,7 @@ ADateInfo::ADateInfo(QWidget *parent)
 void ADateInfo::setValue(const QVariant &value) {
   QMetaType _type = value.metaType();
   if (value.isNull()) {
-    setDate(FALLBACK_DATE);
+    setDate(ANTIQUA_WIDGET_FALLBACK_DATE);
   } else if (_type.id() == QMetaType::QDate) {
     setDate(value.toDate());
   } else if (_type.id() == QMetaType::QDateTime) {
@@ -37,6 +32,11 @@ void ADateInfo::setValue(const QVariant &value) {
       setDateTime(dt);
     }
   }
+}
+
+void ADateInfo::setRestrictions(const QSqlField &field) {
+  if (field.requiredStatus() == QSqlField::Required)
+    setRequired(true);
 }
 
 const QVariant ADateInfo::getValue() { return dateTime(); }

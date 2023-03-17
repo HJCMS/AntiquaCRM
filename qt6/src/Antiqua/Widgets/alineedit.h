@@ -18,8 +18,9 @@
 namespace AntiquaCRM {
 
 /**
- * @brief AntiquaCRM Line edit widget
  * @ingroup AntiquaWidgets
+ * @class ALineEdit
+ * @brief AntiquaCRM Line edit widget
  */
 class ANTIQUACRM_LIBRARY ALineEdit final : public QLineEdit, public AInputEdit {
   Q_OBJECT
@@ -29,6 +30,7 @@ private Q_SLOTS:
 
 public Q_SLOTS:
   void setValue(const QVariant &) override;
+  void setRestrictions(const QSqlField &) override;
 
 public:
   explicit ALineEdit(QWidget *parent = nullptr);

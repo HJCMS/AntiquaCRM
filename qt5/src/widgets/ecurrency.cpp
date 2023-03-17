@@ -3,7 +3,9 @@
 
 #include "ecurrency.h"
 
+#ifdef ANTIQUA_DEVELOPEMENT
 #include <QDebug>
+#endif
 #include <QFontMetrics>
 #include <QHBoxLayout>
 #include <QLocale>
@@ -11,9 +13,11 @@
 
 Ecurrency::Ecurrency(QWidget *parent) : InputEdit{parent} {
   QLocale lc = QLocale::system();
+  p_defaultSymbol = QLocale::system().currencySymbol();
+  p_defaultISO4217 = lc.currencySymbol(QLocale::CurrencyIsoCode);
+
   m_box = new AntiquaComboBox(this);
   m_box->setEditable(false);
-  loadDataset();
   m_layout->addWidget(m_box);
   QFrame *editFrame = new QFrame(this);
   QHBoxLayout *frameLayout = new QHBoxLayout(editFrame);
@@ -21,14 +25,16 @@ Ecurrency::Ecurrency(QWidget *parent) : InputEdit{parent} {
   m_lineEdit->setMaxLength(3);
   frameLayout->addWidget(m_lineEdit);
   QFontMetrics metric(m_lineEdit->font());
-  QString iso4217 = lc.currencySymbol(QLocale::CurrencyIsoCode);
-  QSize maxSize = metric.size(Qt::TextSingleLine, iso4217);
+  QSize maxSize = metric.size(Qt::TextSingleLine, p_defaultISO4217);
   m_lineEdit->setMaximumWidth(maxSize.width());
   editFrame->setLayout(frameLayout);
   m_layout->addWidget(editFrame);
   m_layout->addStretch(1);
+
+  loadDataset();
   setModified(false);
   setRequired(false);
+
   connect(m_box, SIGNAL(currentIndexChanged(int)), SLOT(itemChanged(int)));
 }
 
@@ -40,6 +46,7 @@ void Ecurrency::loadDataset() {
   m_box->insertItem(i++, QString("£ GBP"), QString("£"));
   m_box->insertItem(i++, QString("¥ JPY"), QString("¥"));
   m_box->insertItem(i++, QString("₽ SUR"), QString("₽"));
+  m_lineEdit->setText(p_defaultSymbol);
 }
 
 void Ecurrency::itemChanged(int index) {
@@ -62,6 +69,9 @@ void Ecurrency::setValue(const QVariant &val) {
   }
 
   QString data = val.toString();
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << data;
+#endif
   if (data.length() > 0 && data.length() < 4) {
     int c = m_box->count();
     m_box->insertItem(++c, data, data);
@@ -90,7 +100,7 @@ const QVariant Ecurrency::value() {
   if (buffer.isNull())
     return QLocale::system().currencySymbol(QLocale::CurrencySymbol);
 
-  return buffer;
+  return buffer.toString();
 }
 
 bool Ecurrency::isValid() {

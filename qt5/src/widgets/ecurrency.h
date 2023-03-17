@@ -18,6 +18,8 @@ class Ecurrency final : public InputEdit {
   Q_OBJECT
 
 private:
+  QString p_defaultSymbol;
+  QString p_defaultISO4217;
   QLineEdit *m_lineEdit;
   AntiquaComboBox *m_box;
   void loadDataset() override;

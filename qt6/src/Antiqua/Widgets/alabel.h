@@ -18,14 +18,16 @@
 namespace AntiquaCRM {
 
 /**
- * @brief AntiquaCRM Default Label widget
  * @ingroup AntiquaWidgets
+ * @class ALabel
+ * @brief AntiquaCRM Default Label widget
  */
 class ANTIQUACRM_LIBRARY ALabel final : public QLabel, public AInputEdit {
   Q_OBJECT
 
 public Q_SLOTS:
   void setValue(const QVariant &) override;
+  void setRestrictions(const QSqlField &) override;
 
 public:
   explicit ALabel(QWidget *parent = nullptr);

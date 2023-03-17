@@ -57,6 +57,7 @@ TARGET_LINK_LIBRARIES (${_projectLibrary} PRIVATE
   Qt6::Core
   Qt6::Gui
   Qt6::Widgets
+  Qt6::Sql
   AntiquaCRM
 )
 
