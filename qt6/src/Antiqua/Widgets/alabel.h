@@ -6,11 +6,10 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUA_WIDGETS_LABLE_H
-#define ANTIQUA_WIDGETS_LABLE_H
+#ifndef ANTIQUACRM_INPUT_LABLE_H
+#define ANTIQUACRM_INPUT_LABLE_H
 
 #include <AGlobal>
-#include <AInputEdit>
 #include <QLabel>
 #include <QObject>
 #include <QWidget>
@@ -18,23 +17,18 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaWidgets
+ * @ingroup AntiquaInput
  * @class ALabel
  * @brief AntiquaCRM Default Label widget
  */
-class ANTIQUACRM_LIBRARY ALabel final : public QLabel, public AInputEdit {
+class ANTIQUACRM_LIBRARY ALabel final : public QLabel {
   Q_OBJECT
-
-public Q_SLOTS:
-  void setValue(const QVariant &) override;
-  void setRestrictions(const QSqlField &) override;
 
 public:
   explicit ALabel(QWidget *parent = nullptr);
   explicit ALabel(const QString &text, QWidget *parent = nullptr);
-  const QVariant getValue() override;
 };
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUA_WIDGETS_LABLE_H
+#endif // ANTIQUACRM_INPUT_LABLE_H

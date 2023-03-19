@@ -6,11 +6,12 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_INPUT_COMBOBOX_H
-#define ANTIQUACRM_INPUT_COMBOBOX_H
+#ifndef ANTIQUACRM_INPUT_DATETIMEEDIT_H
+#define ANTIQUACRM_INPUT_DATETIMEEDIT_H
 
 #include <AGlobal>
-#include <QComboBox>
+#include <QDate>
+#include <QDateTimeEdit>
 #include <QObject>
 #include <QWheelEvent>
 #include <QWidget>
@@ -19,10 +20,10 @@ namespace AntiquaCRM {
 
 /**
  * @ingroup AntiquaInput
- * @class AComboBox
- * @brief AntiquaCRM Combobox widget
+ * @class ADateTimeEdit
+ * @brief AntiquaCRM Date Time Edit widget
  */
-class ANTIQUACRM_LIBRARY AComboBox final : public QComboBox {
+class ANTIQUACRM_LIBRARY ADateTimeEdit final : public QDateTimeEdit {
   Q_OBJECT
 
 private:
@@ -40,23 +41,19 @@ protected:
 
 public:
   /**
-   * @brief Primary Combo Box
+   * @brief Primary DateTime edit class
    * @param parent      - parent Widget
    * @param mouseEvents - enable/disable Mouse Wheel events
    */
-  explicit AComboBox(QWidget *parent = nullptr, bool mouseEvents = false);
+  explicit ADateTimeEdit(QWidget *parent = nullptr, bool mouseEvents = false);
 
   /**
-   * @brief set default text, no item selected.
+   * @brief Switch to setReadOnly(true) and ...
+   * remove all InputMethods, disable borderstyle and make bg transparent.
    */
-  const QString withoutDisclosures();
-
-  /**
-   * @brief create a Qt:UserRole value with withoutDisclosures() text.
-   */
-  void setWithoutDisclosures(const QVariant &data = QVariant());
+  void setReadOnlyMode();
 };
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_INPUT_COMBOBOX_H
+#endif // ANTIQUACRM_INPUT_DATETIMEEDIT_H

@@ -56,7 +56,7 @@
  *  of the current user configuration file.
  */
 #ifndef HJCMS_CONFIG_VERSION
-#define HJCMS_CONFIG_VERSION "@ANTIQUACRM_VERSION_MAJOR@.0"
+#define HJCMS_CONFIG_VERSION "@ANTIQUACRM_VERSION_MAJOR@.1"
 #endif
 
 /**

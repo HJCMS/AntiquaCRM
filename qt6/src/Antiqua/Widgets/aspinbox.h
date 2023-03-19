@@ -6,12 +6,12 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_INPUT_COMBOBOX_H
-#define ANTIQUACRM_INPUT_COMBOBOX_H
+#ifndef ANTIQUACRM_INPUT_SPINBOX_H
+#define ANTIQUACRM_INPUT_SPINBOX_H
 
 #include <AGlobal>
-#include <QComboBox>
 #include <QObject>
+#include <QSpinBox>
 #include <QWheelEvent>
 #include <QWidget>
 
@@ -19,10 +19,10 @@ namespace AntiquaCRM {
 
 /**
  * @ingroup AntiquaInput
- * @class AComboBox
- * @brief AntiquaCRM Combobox widget
+ * @class ASpinBox
+ * @brief AntiquaCRM SpinBox widget
  */
-class ANTIQUACRM_LIBRARY AComboBox final : public QComboBox {
+class ANTIQUACRM_LIBRARY ASpinBox final : public QSpinBox {
   Q_OBJECT
 
 private:
@@ -40,23 +40,13 @@ protected:
 
 public:
   /**
-   * @brief Primary Combo Box
+   * @brief Primary Integer input edit class
    * @param parent      - parent Widget
    * @param mouseEvents - enable/disable Mouse Wheel events
    */
-  explicit AComboBox(QWidget *parent = nullptr, bool mouseEvents = false);
-
-  /**
-   * @brief set default text, no item selected.
-   */
-  const QString withoutDisclosures();
-
-  /**
-   * @brief create a Qt:UserRole value with withoutDisclosures() text.
-   */
-  void setWithoutDisclosures(const QVariant &data = QVariant());
+  explicit ASpinBox(QWidget *parent = nullptr, bool mouseEvents = false);
 };
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_INPUT_COMBOBOX_H
+#endif // ANTIQUACRM_INPUT_SPINBOX_H
