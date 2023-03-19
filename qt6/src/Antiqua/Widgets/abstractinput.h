@@ -15,7 +15,7 @@
 #include <QObject>
 #include <QSqlField>
 #include <QVariant>
-#include <QtGlobal>
+#include <QWidget>
 
 namespace AntiquaCRM {
 
@@ -24,8 +24,8 @@ class AbstractInputPrivate;
 /**
  * @ingroup AntiquaInput
  * @brief In this group all Antiqua CRM Widgets with Input masks defined.
- * You can include it with „#include &gt;AntiquaInput&lt;“ and only used for
- * Subclassing Input Widgets.
+ * This classes only used for Subclassing and not direct in the Interface.
+ * You can include it with: #include &gt;AntiquaInput&lt;
  *
  * @class AbstractInput
  */
@@ -147,6 +147,14 @@ public:
   bool isRequired();
 
   /**
+   * @brief Caller for validate current Input.
+   * Reserved to check current Input with given restrictions.
+   * This helper function will called when user clicked save data.
+   * If data not valid „setFocus„ and „popUpHints“ will called from Interface.
+   */
+  virtual bool isValid() = 0;
+
+  /**
    * @brief value from input widget ...
    * Get current Value as QVariant. The Conversion will done in this Section.
    * You can use the „setRestrictions“ to set class environments.
@@ -157,6 +165,7 @@ public:
    * @brief Visual hints for popup messages.
    * this hints function is used to inform clients when data invalid or empty if
    * required is set. It is normally used to make better info popup messages.
+   * See also „isValid“ and „isRequired“ about the interface procedure.
    */
   virtual const QString popUpHints() = 0;
 

@@ -31,13 +31,6 @@ int main(int argc, char *argv[]) {
   QVBoxLayout *layout = new QVBoxLayout(w);
   layout->setContentsMargins(2, 0, 2, 0);
 
-  AntiquaCRM::AComboBox *_box = new AntiquaCRM::AComboBox(w);
-  _box->setWithoutDisclosures(0);
-  for(int i = 1; i < 10; i++) {
-    _box->insertItem(i, AntiquaCRM::AUtil::zerofill(i, 3), i);
-  }
-  layout->addWidget(_box);
-
   QSqlField _f; // sql test field
   _f.setMetaType(QMetaType(QMetaType::QString));
   _f.setRequiredStatus(QSqlField::Required);
@@ -45,24 +38,23 @@ int main(int argc, char *argv[]) {
   _f.setName("a_last_changed");
   _f.setDefaultValue(QDateTime::currentDateTime().toString());
 
-  AntiquaCRM::ADateInfo *_date = new AntiquaCRM::ADateInfo(w);
-  _date->setValue(QDateTime::currentDateTime());
-  _date->setRestrictions(_f);
-  layout->addWidget(_date);
-
-  AntiquaCRM::ALabel *_label = new AntiquaCRM::ALabel(w);
-  _label->setRestrictions(_f);
-  _label->setValue(QDateTime::currentDateTime());
-  layout->addWidget(_label);
-
-  AntiquaCRM::ALineEdit *_line = new AntiquaCRM::ALineEdit(w);
-  _line->setRestrictions(_f);
-  layout->addWidget(_line);
+//  AntiquaCRM::ADateInfo *_date = new AntiquaCRM::ADateInfo(w);
+//  _date->setObjectName("inp_date_info");
+//  layout->addWidget(_date);
 
   layout->addStretch(1);
   w->setLayout(layout);
   win->setCentralWidget(w);
   win->show();
 
+//QRegularExpression pattern("^inp_[a-z_]{2,}");
+//QList<AntiquaCRM::AbstractInput *> list =
+//    w->findChildren<AntiquaCRM::AbstractInput *>(pattern);
+//for (int i = 0; i < list.size(); i++) {
+//  AntiquaCRM::AbstractInput *obj = list.at(i);
+//  if (obj != nullptr) {
+//    obj->setValue(QDateTime::currentDateTime());
+//  }
+//}
   return appl.exec();
 }
