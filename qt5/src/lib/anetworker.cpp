@@ -5,11 +5,9 @@
 #include "anetworkcache.h"
 #include "anetworkrequest.h"
 
-#ifdef ANTIQUA_DEVELOPEMENT
-#ifndef ANTIQUACRM_NETWORK_DEBUG
-#define ANTIQUACRM_NETWORK_DEBUG false
-#endif
-#endif
+//#ifndef ANTIQUACRM_NETWORK_DEBUG
+//#define ANTIQUACRM_NETWORK_DEBUG true
+//#endif
 
 #include <ASettings>
 #include <QBuffer>
@@ -138,10 +136,10 @@ void ANetworker::slotReadResponse() {
   buf.clear();
 
   QString replyHost = m_reply->url().host();
-#if (ANTIQUACRM_NETWORK_DEBUG == true)
+#ifdef ANTIQUACRM_NETWORK_DEBUG
   qInfo("Host: %s", qPrintable(replyHost));
   foreach (QByteArray a, m_reply->rawHeaderList()) {
-    qInfo("-- %s: %s", a.constData(), reply->rawHeader(a).constData());
+    qInfo("-- %s: %s", a.constData(), m_reply->rawHeader(a).constData());
   }
 #else
   qInfo("Host: %s, response with %d bytes.", qPrintable(replyHost),

@@ -3,6 +3,7 @@
 
 #include "abstractinput.h"
 #include "private/abstractinput_p.h"
+#include "whatsthisbutton.h"
 
 namespace AntiquaCRM {
 
@@ -55,5 +56,15 @@ bool AbstractInput::isRequired() {
   Q_D(AbstractInput);
   return d->required_status;
 }
+
+void AbstractInput::setWhatsThisButton(const QString &text) {
+  if (text.isEmpty())
+    return;
+
+  WhatsThisButton *m_tbn = new WhatsThisButton(text, this);
+  layout->addWidget(m_tbn);
+}
+
+void AbstractInput::setStretch() { layout->addStretch(1); }
 
 } // namespace AntiquaCRM

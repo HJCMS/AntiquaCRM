@@ -9,6 +9,7 @@
 #include <QtGlobal>
 #include <cstdio>
 #include <syslog.h>
+#include <QTextCodec>
 
 void SyslogMessageHandler(QtMsgType type, const QMessageLogContext &context,
                           const QString &msg) {
@@ -39,5 +40,10 @@ int main(int argc, char *argv[]) {
   qInstallMessageHandler(SyslogMessageHandler);
 #endif
   AntiquaCMD *m_appl = new AntiquaCMD(argc, argv);
+
+  if (QTextCodec::codecForLocale()->name() != "UTF-8") {
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+  }
+
   return m_appl->exec();
 }

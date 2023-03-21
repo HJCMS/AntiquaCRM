@@ -31,6 +31,9 @@ SET (_library_SOURCES
  alineedit.cpp
  aspinbox.cpp
  adoublebox.cpp
+## Widgets
+ whatsthisbutton.cpp
+ priceedit.cpp
 )
 
 SET (_library_HEADERS
@@ -43,6 +46,9 @@ SET (_library_HEADERS
  adoublebox.h
  AntiquaWidgets
  AntiquaInput
+## Widgets
+ whatsthisbutton.h
+ priceedit.h
 )
 
 ADD_LIBRARY (${_subProjectLibrary} SHARED

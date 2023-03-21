@@ -50,6 +50,18 @@ const QUrl AbeBooks::apiQuery(const QString &section) {
 }
 
 void AbeBooks::prepareContent(const QDomDocument &doc) {
+#ifdef ANTIQUA_DEVELOPEMENT
+  QDir dir = AntiquaCRM::ASettings::getUserTempDir();
+  QFileInfo info(dir, "abebooks_orders_log.xml");
+  QFile fp(info.filePath());
+  if (fp.open(QIODevice::WriteOnly)) {
+    QTextStream data(&fp);
+    data.setCodec(ABEBOOKS_XML_CHARSET);
+    data << doc.toString(1); // Indented: 1
+    fp.close();
+  }
+#endif
+
   AbeBooksDocument xml(doc);
   if (doc.documentElement().tagName() == "requestError") {
     QPair<int, QString> err = xml.errorResponseCode();
@@ -240,6 +252,11 @@ void AbeBooks::prepareContent(const QDomDocument &doc) {
 
 void AbeBooks::responsed(const QByteArray &data) {
   QDomDocument xml("response");
+  // WARNING: We need a Header with codec
+  QDomProcessingInstruction pir = xml.createProcessingInstruction(
+      "xml", "version=\"1.0\" encoding=\"ISO-8859-1\"");
+  xml.appendChild(pir);
+
   QString errorMsg;
   int errorLine = 0;
   int errorColumn = 0;
@@ -255,22 +272,6 @@ void AbeBooks::start() {
   QString operation("getAllNewOrders");
   AbeBooksDocument doc = initDocument();
   doc.createAction(operation);
-
-  //#ifdef ANTIQUA_DEVELOPEMENT
-  //  QDomDocument xml("response");
-  //  QDir dir(QDir::homePath() + "/.cache/");
-  //  QFileInfo info(dir, "orderUpdateResponse.xml");
-  //  QFile fp(info.filePath());
-  //  if (fp.open(QIODevice::ReadOnly)) {
-  //    QString errMsg;
-  //    if (!xml.setContent(&fp, false, &errMsg)) {
-  //      qWarning("XML Errors: '%s'.", qPrintable(errMsg));
-  //    }
-  //    fp.close();
-  //  }
-  //  prepareContent(xml);
-  //  return;
-  //#endif
 
   QUrl url(apiQuery(operation));
   m_networker->xmlPostRequest(url, doc);

@@ -12,6 +12,10 @@
 #include <QPair>
 #include <QString>
 
+#ifndef ABEBOOKS_XML_CHARSET
+#define ABEBOOKS_XML_CHARSET "ISO-8859-1"
+#endif
+
 struct AbeBooksAccess {
   QString user;
   QString key;

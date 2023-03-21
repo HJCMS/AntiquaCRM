@@ -12,6 +12,7 @@
 #include <AntiquaCRM>
 #include <QBoxLayout>
 #include <QFocusEvent>
+#include <QMetaType>
 #include <QObject>
 #include <QSqlField>
 #include <QVariant>
@@ -62,6 +63,20 @@ protected:
   QBoxLayout *layout;
 
   /**
+   * @brief Information Text for Tool Box PopUp.
+   */
+  QString toolInfoTxt = QString();
+
+  /**
+   * @brief Data type for current input edit.
+   * This Metatype will set by QSqlField in „setRestrictions“ and can used by
+   * „setValue“,„isValid“ and „getValue“ to convert QVariant in the right
+   * Format. By default, the current Metatype is a QString.
+   * @note It is a good choice, to set this in the Subclass constructor.
+   */
+  QMetaType dataType = QMetaType(QMetaType::QString);
+
+  /**
    * @brief Widget behavior settings
    * @param key - call with key in „window_behavior“ settings group.
    * @param standard - deault value for caller
@@ -99,9 +114,17 @@ protected Q_SLOTS:
 
 Q_SIGNALS:
   /**
-   * @brief This Signal will emitted, if focus get out from input.
+   * @brief This Signal will emitted, if focus get out from this widget.
    */
   void sendLeaveInput();
+
+  /**
+   * @brief This Signal will emitted, if data has been modified!
+   * It is a helper signal to query QWidget::isWindowModified()
+   * This is a part to find unsaved changes from inputs.
+   * @note This procedure must manually implemented in subclasses.
+   */
+  void inputChanged();
 
 public Q_SLOTS:
   /**
@@ -113,18 +136,16 @@ public Q_SLOTS:
   virtual void setValue(const QVariant &) = 0;
 
   /**
-   * @brief find data restriction with QSqlField
-   * Qt's QSqlField class gives us all Information to prepare input Data in the
-   * right format. This method is reserved to do this.
-   */
-  virtual void setRestrictions(const QSqlField &) = 0;
-
-  /**
    * @brief focus input
    * The Input widget is inside of a Widget::layout, we need this slot to make
    * the right focus to the input widget.
    */
   virtual void setFocus() = 0;
+
+  /**
+   * @brief reset input
+   */
+  virtual void reset() = 0;
 
 public:
   /**
@@ -135,9 +156,33 @@ public:
   ~AbstractInput();
 
   /**
+   * @brief find data restriction with QSqlField
+   * Qt's QSqlField class gives us all Information to prepare input Data in the
+   * right format. This method is reserved to do this.
+   */
+  virtual void setRestrictions(const QSqlField &) = 0;
+
+  /**
    * @brief Helper function to set Tooltips inside input layout.
    */
   virtual void setInputToolTip(const QString &) = 0;
+
+  /**
+   * @brief Insert a buddy label before the Input widget
+   */
+  virtual void setBuddyLabel(const QString &) = 0;
+
+  /**
+   * @brief Append a WhatsThis Tool Button to the input widget.
+   */
+  virtual void setWhatsThisButton(const QString &);
+
+  /**
+   * @brief Add layout stretch to tthis Widget::layout
+   * @warning Before call this function you need to sure that your Layout
+   * already been done.
+   */
+  virtual void setStretch();
 
   /**
    * @brief get about status, if this input is required or not.

@@ -24,36 +24,50 @@ int main(int argc, char *argv[]) {
   appl.setStyleSheet(customCSS.join("\n"));
 
   QMainWindow *win = new QMainWindow;
-  win->setWindowTitle("Tests");
+  win->setWindowTitle("Tests [*]");
   win->setMinimumSize(600, 400);
 
   QWidget *w = new QWidget(win);
   QVBoxLayout *layout = new QVBoxLayout(w);
   layout->setContentsMargins(2, 0, 2, 0);
 
-  QSqlField _f; // sql test field
-  _f.setMetaType(QMetaType(QMetaType::QString));
-  _f.setRequiredStatus(QSqlField::Required);
-  _f.setLength(80);
-  _f.setName("a_last_changed");
-  _f.setDefaultValue(QDateTime::currentDateTime().toString());
+  // QSqlField _fp; // sql test field
+  //_fp.setMetaType(QMetaType(QMetaType::Double));
+  //_fp.setRequiredStatus(QSqlField::Required);
+  //_fp.setLength(80);
+  //_fp.setName("a_sell_price");
+  //_fp.setDefaultValue(7.00);
 
-//  AntiquaCRM::ADateInfo *_date = new AntiquaCRM::ADateInfo(w);
-//  _date->setObjectName("inp_date_info");
-//  layout->addWidget(_date);
-
+  // Begin::price
+  AntiquaCRM::PriceEdit *_price = new AntiquaCRM::PriceEdit(w);
+  _price->setObjectName("a_sell_price");
+  _price->setBuddyLabel("Preiseingabe");
+  _price->setWhatsThisButton("Hier bitte den richtigen Preis einfügen.");
+  _price->setStretch();
+  layout->addWidget(_price);
+  // End::price
   layout->addStretch(1);
+  QStatusBar *m_statusbar = new QStatusBar(w);
+  layout->addWidget(m_statusbar);
+
   w->setLayout(layout);
   win->setCentralWidget(w);
   win->show();
 
-//QRegularExpression pattern("^inp_[a-z_]{2,}");
+  m_statusbar->showMessage("initialed");
+
+  _price->setValue(14.56);
+  qDebug() << _price->getValue() << _price->getMoney();
+  _price->setValue("12,50€");
+  qDebug() << _price->getValue() << _price->getMoney();
+
+//QRegularExpression pattern("^[a-z]{1}_[a-z_]{2,}");
 //QList<AntiquaCRM::AbstractInput *> list =
 //    w->findChildren<AntiquaCRM::AbstractInput *>(pattern);
 //for (int i = 0; i < list.size(); i++) {
 //  AntiquaCRM::AbstractInput *obj = list.at(i);
 //  if (obj != nullptr) {
-//    obj->setValue(QDateTime::currentDateTime());
+//    qDebug() << Q_FUNC_INFO << obj->getValue();
 //  }
 //}
   return appl.exec();
