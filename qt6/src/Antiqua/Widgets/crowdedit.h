@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_PRICEEDIT_H
-#define ANTIQUACRM_WIDGETS_PRICEEDIT_H
+#ifndef ANTIQUACRM_WIDGETS_CROWDEDIT_H
+#define ANTIQUACRM_WIDGETS_CROWDEDIT_H
 
 #include <AntiquaInput>
 #include <QObject>
@@ -17,24 +17,19 @@ namespace AntiquaCRM {
 
 /**
  * @ingroup AntiquaWidgets
- * @class PriceEdit
+ * @class CrowdEdit
  */
-class ANTIQUACRM_LIBRARY PriceEdit final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY CrowdEdit final : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
 private:
-  AntiquaCRM::ADoubleBox *m_edit;
-
-  /**
-   * @brief Try - to convert a given money string into double value.
-   */
-  bool fromMoneyString(const QString &) const;
+  AntiquaCRM::ASpinBox *m_edit;
 
 private Q_SLOTS:
   /**
-   * @brief price has been changed
+   * @brief crowd has been changed
    */
-  void valueChanged(double);
+  void valueChanged(int);
 
 protected:
   /**
@@ -45,7 +40,7 @@ protected:
 
 public Q_SLOTS:
   /**
-   * @brief set price
+   * @brief set current article count
    */
   virtual void setValue(const QVariant &) override;
 
@@ -61,43 +56,15 @@ public Q_SLOTS:
 
 public:
   /**
-   * @brief Price Input edit widget
-   * @param min    - minimum price
-   * @param max    - maximum price
+   * @brief Article count editor
    * @param parent - parent widget
    */
-  explicit PriceEdit(double min, double max, QWidget *parent = nullptr);
-
-  /**
-   * @brief Price Input edit widget
-   * @param parent - parent widget
-   */
-  explicit PriceEdit(QWidget *parent = nullptr);
+  explicit CrowdEdit(QWidget *parent = nullptr);
 
   /**
    * @brief Configure data restriction from QSqlQuery fieldset.
    */
   virtual void setRestrictions(const QSqlField &) override;
-
-  /**
-   * @brief Configure minimum price
-   */
-  void setMinimum(double min);
-
-  /**
-   * @brief Configure maximum price
-   */
-  void setMaximum(double max);
-
-  /**
-   * @brief Configure range from minimum to maximum price
-   */
-  void setRange(double min, double max);
-
-  /**
-   * @brief Configure single steps
-   */
-  void setSingleStep(double steps);
 
   /**
    * @brief Configure tooltip for this input edit widget
@@ -110,25 +77,14 @@ public:
   virtual void setBuddyLabel(const QString &) override;
 
   /**
-   * @brief is it a valid price input
+   * @brief is it a valid article count?
    */
   virtual bool isValid() override;
 
   /**
-   * @brief what is the currency symbol for this input
-   * used by AntiquaCRM::ADoubleBox::setSuffix
-   */
-  const QString currencySymbol() const;
-
-  /**
-   * @brief get current price
+   * @brief get current article count
    */
   virtual const QVariant getValue() override;
-
-  /**
-   * @brief returning a money string with currency symbol
-   */
-  const QString getMoney() const;
 
   /**
    * @brief Detailed warn message for QMessageBox
@@ -143,4 +99,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_PRICEEDIT_H
+#endif // ANTIQUACRM_WIDGETS_CROWDEDIT_H

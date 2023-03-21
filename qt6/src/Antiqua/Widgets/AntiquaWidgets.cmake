@@ -10,4 +10,8 @@
 #include "priceedit.h"
 #endif
 
+#ifndef ANTIQUACRM_WIDGETS_CROWDEDIT_H
+#include "crowdedit.h"
+#endif
+
 // EOF

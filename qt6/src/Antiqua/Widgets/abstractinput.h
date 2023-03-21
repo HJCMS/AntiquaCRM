@@ -63,11 +63,6 @@ protected:
   QBoxLayout *layout;
 
   /**
-   * @brief Information Text for Tool Box PopUp.
-   */
-  QString toolInfoTxt = QString();
-
-  /**
    * @brief Data type for current input edit.
    * This Metatype will set by QSqlField in „setRestrictions“ and can used by
    * „setValue“,„isValid“ and „getValue“ to convert QVariant in the right
@@ -99,10 +94,8 @@ protected:
    * @warning Do not use it Constructors with SQL-Queries! It is a bad idea to
    * init SQL queries inside of constructors. This can freeze the Application
    * when you get Network problems or no access to the database exists.
-   *
-   * @param param - parameter reservation
    */
-  virtual void initData(const QVariant &param = QVariant()) = 0;
+  virtual void initData() = 0;
 
 protected Q_SLOTS:
   /**
@@ -216,7 +209,7 @@ public:
 
   /**
    * @brief Visual hints for status bar messages
-   * This is a short form for visual hints for status bar messages.
+   * This is a short form for visual hints with status bar messages.
    */
   virtual const QString statusHints() = 0;
 };

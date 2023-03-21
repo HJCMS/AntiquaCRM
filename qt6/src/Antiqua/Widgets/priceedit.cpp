@@ -16,7 +16,7 @@ PriceEdit::PriceEdit(double min, double max, QWidget *parent)
   m_edit = new AntiquaCRM::ADoubleBox(this);
   m_edit->setMinimum(min);
   m_edit->setMaximum(max);
-  m_edit->setSuffix(currencySymbol());
+  m_edit->setSuffix(" " + currencySymbol());
   layout->addWidget(m_edit);
   initData();
   connect(m_edit, SIGNAL(valueChanged(double)), SLOT(valueChanged(double)));
@@ -24,13 +24,14 @@ PriceEdit::PriceEdit(double min, double max, QWidget *parent)
 
 PriceEdit::PriceEdit(QWidget *parent) : PriceEdit{0, price_maximum, parent} {}
 
-bool PriceEdit::setFromString(const QString &money) const {
+bool PriceEdit::fromMoneyString(const QString &money) const {
   QString _buf = money.trimmed();
   if (_buf.count(",") != 1)
     return false; // not a fixable money string
 
   _buf.replace(currencySymbol(), "");
   _buf.replace(",", ".");
+  _buf.replace(" ", "");
 
   bool _b;
   double _d = _buf.toDouble(&_b);
@@ -46,17 +47,16 @@ void PriceEdit::valueChanged(double) {
     setWindowModified(true);
 }
 
-void PriceEdit::initData(const QVariant &param) {
-  if (param.isNull()) {
-    QSqlField _f;
-    _f.setMetaType(QMetaType(QMetaType::Double));
-    _f.setRequiredStatus(QSqlField::Required);
-    _f.setDefaultValue(0.00);
-    if (!objectName().isEmpty())
-      _f.setName(objectName());
+void PriceEdit::initData() {
+  QSqlField _f;
+  _f.setMetaType(QMetaType(QMetaType::Double));
+  _f.setRequiredStatus(QSqlField::Required);
+  _f.setDefaultValue(0.00);
+  if (!objectName().isEmpty())
+    _f.setName(objectName());
 
-    setRestrictions(_f);
-  }
+  setRestrictions(_f);
+  setWindowModified(false);
 }
 
 void PriceEdit::setValue(const QVariant &value) {
@@ -70,7 +70,7 @@ void PriceEdit::setValue(const QVariant &value) {
     break;
 
   case (QMetaType::QString): {
-    if (!setFromString(value.toString()))
+    if (!fromMoneyString(value.toString()))
       qWarning("Invalid given Data Type in PriceEdit.");
   } break;
 
@@ -85,7 +85,10 @@ void PriceEdit::setValue(const QVariant &value) {
 
 void PriceEdit::setFocus() { m_edit->setFocus(); }
 
-void PriceEdit::reset() { m_edit->setValue(m_edit->minimum()); }
+void PriceEdit::reset() {
+  setWindowModified(false);
+  m_edit->setValue(m_edit->minimum());
+}
 
 void PriceEdit::setRestrictions(const QSqlField &field) {
   dataType = field.metaType();
@@ -154,13 +157,15 @@ const QString PriceEdit::getMoney() const {
 }
 
 const QString PriceEdit::popUpHints() {
-  QString info = tr("A valid Price is required and must set.");
-  return info;
+  QStringList info;
+  info << tr("This entry requires a valid price!");
+  info << tr("The minimum value specified in the configuration has been fallen "
+             "below or the entry is not a valid price!");
+  return info.join("\n");
 }
 
 const QString PriceEdit::statusHints() {
-  QString info = tr("Missing price");
-  return info;
+  return tr("Price is invalid or empty!");
 }
 
 } // namespace AntiquaCRM

@@ -24,6 +24,7 @@ SET (_library_FILES
 )
 
 SET (_library_SOURCES
+## Inputs
  abstractinput.cpp
  alabel.cpp
  acombobox.cpp
@@ -33,10 +34,12 @@ SET (_library_SOURCES
  adoublebox.cpp
 ## Widgets
  whatsthisbutton.cpp
+ crowdedit.cpp
  priceedit.cpp
 )
 
 SET (_library_HEADERS
+## Inputs
  abstractinput.h
  alabel.h
  acombobox.h
@@ -44,10 +47,11 @@ SET (_library_HEADERS
  alineedit.h
  aspinbox.h
  adoublebox.h
- AntiquaWidgets
  AntiquaInput
 ## Widgets
+ AntiquaWidgets
  whatsthisbutton.h
+ crowdedit.h
  priceedit.h
 )
 
