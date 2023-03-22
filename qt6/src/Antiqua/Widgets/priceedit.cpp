@@ -123,12 +123,8 @@ void PriceEdit::setBuddyLabel(const QString &text) {
   if (text.isEmpty())
     return;
 
-  QLabel *m_lb = new QLabel(this);
-  m_lb->setText(text + ":");
-  m_lb->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-  m_lb->setTextInteractionFlags(Qt::NoTextInteraction);
+  ALabel *m_lb = setTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
-  layout->insertWidget(0, m_lb);
 }
 
 bool PriceEdit::isValid() {

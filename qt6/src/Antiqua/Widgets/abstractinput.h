@@ -21,6 +21,7 @@
 
 namespace AntiquaCRM {
 
+class ALabel;
 class AbstractInputPrivate;
 
 /**
@@ -62,6 +63,11 @@ protected:
    * By default it is a „LeftToRight“ layout.
    */
   QBoxLayout *layout;
+
+  /**
+   * @brief Prepend Title Label to teh layout
+   */
+  AntiquaCRM::ALabel *setTitleLabel(const QString &);
 
   /**
    * @brief Icon from Theme or Resource files ...

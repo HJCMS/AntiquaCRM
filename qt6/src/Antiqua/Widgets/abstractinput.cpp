@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "abstractinput.h"
+#include "alabel.h"
 #include "private/abstractinput_p.h"
 #include "whatsthisbutton.h"
 
@@ -28,6 +29,14 @@ AbstractInput::AbstractInput(QWidget *parent) : QWidget{parent} {
 }
 
 AbstractInput::~AbstractInput() {}
+
+AntiquaCRM::ALabel *AbstractInput::setTitleLabel(const QString &title) {
+  ALabel *m_lb = new ALabel(title, this);
+  m_lb->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+  m_lb->setTextInteractionFlags(Qt::NoTextInteraction);
+  layout->insertWidget(0, m_lb);
+  return m_lb;
+}
 
 const QIcon AbstractInput::getIcon(const QString &name) {
   QIcon icon("://icons/" + name + ".png");
