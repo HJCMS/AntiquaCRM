@@ -6,12 +6,16 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_PRICEEDIT_H
-#include "priceedit.h"
-#endif
-
 #ifndef ANTIQUACRM_WIDGETS_CROWDEDIT_H
 #include "crowdedit.h"
+#endif
+
+#ifndef ANTIQUACRM_WIDGETS_GENDEREDIT_H
+#include "genderedit.h"
+#endif
+
+#ifndef ANTIQUACRM_WIDGETS_PRICEEDIT_H
+#include "priceedit.h"
 #endif
 
 // EOF

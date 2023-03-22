@@ -49,7 +49,7 @@ public:
   /**
    * @brief set default text, no item selected.
    */
-  const QString withoutDisclosures();
+  static const QString withoutDisclosures();
 
   /**
    * @brief create a Qt:UserRole value with withoutDisclosures() text.

@@ -35,6 +35,8 @@ SET (_library_SOURCES
 ## Widgets
  whatsthisbutton.cpp
  crowdedit.cpp
+ emailedit.cpp
+ genderedit.cpp
  priceedit.cpp
 )
 
@@ -52,6 +54,8 @@ SET (_library_HEADERS
  AntiquaWidgets
  whatsthisbutton.h
  crowdedit.h
+ emailedit.h
+ genderedit.h
  priceedit.h
 )
 

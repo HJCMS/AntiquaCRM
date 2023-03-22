@@ -91,7 +91,6 @@ void PriceEdit::reset() {
 }
 
 void PriceEdit::setRestrictions(const QSqlField &field) {
-  dataType = field.metaType();
   if (field.requiredStatus() != QSqlField::Required) {
     setRequired(false);
     return;

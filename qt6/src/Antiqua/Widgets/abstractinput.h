@@ -15,6 +15,7 @@
 #include <QMetaType>
 #include <QObject>
 #include <QSqlField>
+#include <QIcon>
 #include <QVariant>
 #include <QWidget>
 
@@ -63,13 +64,9 @@ protected:
   QBoxLayout *layout;
 
   /**
-   * @brief Data type for current input edit.
-   * This Metatype will set by QSqlField in „setRestrictions“ and can used by
-   * „setValue“,„isValid“ and „getValue“ to convert QVariant in the right
-   * Format. By default, the current Metatype is a QString.
-   * @note It is a good choice, to set this in the Subclass constructor.
+   * @brief Icon from Theme or Resource files ...
    */
-  QMetaType dataType = QMetaType(QMetaType::QString);
+  const QIcon getIcon(const QString &);
 
   /**
    * @brief Widget behavior settings
@@ -175,7 +172,7 @@ public:
    * @warning Before call this function you need to sure that your Layout
    * already been done.
    */
-  virtual void setStretch();
+  virtual void setStretch(int expanding = 0);
 
   /**
    * @brief get about status, if this input is required or not.

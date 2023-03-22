@@ -56,7 +56,10 @@ void CrowdEdit::reset() {
   m_edit->setValue(m_edit->minimum());
 }
 
-void CrowdEdit::setRestrictions(const QSqlField &) {}
+void CrowdEdit::setRestrictions(const QSqlField &field) {
+  if (field.requiredStatus() == QSqlField::Required)
+    setRequired(true);
+}
 
 void CrowdEdit::setInputToolTip(const QString &str) { m_edit->setToolTip(str); }
 

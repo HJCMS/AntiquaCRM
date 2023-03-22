@@ -25,7 +25,16 @@ class ANTIQUACRM_LIBRARY ALineEdit final : public QLineEdit {
   Q_OBJECT
 
 protected Q_SLOTS:
+  /**
+   * @brief prevent dialog acception when return pressed
+   */
   void skipReturnPressed();
+
+public Q_SLOTS:
+  /**
+   * @brief Set border highlight when unvalid content
+   */
+  void isValidContent(bool);
 
 public:
   explicit ALineEdit(QWidget *parent = nullptr);

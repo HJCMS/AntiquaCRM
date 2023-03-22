@@ -29,6 +29,11 @@ AbstractInput::AbstractInput(QWidget *parent) : QWidget{parent} {
 
 AbstractInput::~AbstractInput() {}
 
+const QIcon AbstractInput::getIcon(const QString &name) {
+  QIcon icon("://icons/" + name + ".png");
+  return QIcon::fromTheme(name, icon);
+}
+
 bool AbstractInput::windowBehavior(const QString &key, bool standard) {
   if (key.isEmpty())
     return false;
@@ -65,6 +70,6 @@ void AbstractInput::setWhatsThisButton(const QString &text) {
   layout->addWidget(m_tbn);
 }
 
-void AbstractInput::setStretch() { layout->addStretch(1); }
+void AbstractInput::setStretch(int expanding) { layout->addStretch(expanding); }
 
 } // namespace AntiquaCRM

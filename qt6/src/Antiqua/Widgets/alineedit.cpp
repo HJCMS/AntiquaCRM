@@ -15,4 +15,11 @@ void ALineEdit::skipReturnPressed() {
   setModified(true);
 }
 
+void ALineEdit::isValidContent(bool b) {
+  if(b)
+    setStyleSheet(QString());
+  else
+    setStyleSheet("QLineEdit {selection-background-color: red;}");
+}
+
 } // namespace AntiquaCRM

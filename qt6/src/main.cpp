@@ -38,6 +38,13 @@ int main(int argc, char *argv[]) {
   //_fp.setName("a_sell_price");
   //_fp.setDefaultValue(7.00);
 
+  // Gender
+  AntiquaCRM::GenderEdit *_gender = new AntiquaCRM::GenderEdit(w);
+  _gender->setBuddyLabel("Gender");
+  _gender->setWhatsThisButton("Bitte ein geschlecht auswählen.");
+  _gender->setStretch();
+  layout->addWidget(_gender);
+
   // Price
   AntiquaCRM::PriceEdit *_price = new AntiquaCRM::PriceEdit(w);
   _price->setObjectName("a_sell_price");
@@ -55,6 +62,21 @@ int main(int argc, char *argv[]) {
   _crowd->setStretch();
   _crowd->setValue(1);
   layout->addWidget(_crowd);
+
+  // EMail
+  AntiquaCRM::EMailEdit *_email0 = new AntiquaCRM::EMailEdit("a_mail_0", w);
+  _email0->setBuddyLabel("Primary eMail");
+  _email0->setWhatsThisButton("Standard E-Mail Adresse.");
+  _email0->setValue("hans.mustermann@t-online.de");
+  _email0->setStretch();
+  layout->addWidget(_email0);
+
+  AntiquaCRM::EMailEdit *_email1 = new AntiquaCRM::EMailEdit("a_mail_1", w);
+  _email1->setBuddyLabel("Secundary eMail");
+  _email1->setWhatsThisButton("Sekundäre E-Mail Adresse.");
+  _email1->setValue("hans@t-online.de");
+  _email1->setStretch();
+  layout->addWidget(_email1);
 
   layout->addStretch(1);
   QStatusBar *m_statusbar = new QStatusBar(w);

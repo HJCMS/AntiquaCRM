@@ -13,10 +13,8 @@ AComboBox::AComboBox(QWidget *parent, bool mouseEvents)
   setSizeAdjustPolicy(QComboBox::AdjustToContentsOnFirstShow);
   setInsertPolicy(QComboBox::NoInsert);
   setEditable(false);
-  if (view() != nullptr) {
-    view()->setAlternatingRowColors(true);
-    view()->setSelectionMode(QAbstractItemView::SingleSelection);
-  }
+  view()->setAlternatingRowColors(true);
+  view()->setSelectionMode(QAbstractItemView::SingleSelection);
 }
 
 void AComboBox::wheelEvent(QWheelEvent *e) {
