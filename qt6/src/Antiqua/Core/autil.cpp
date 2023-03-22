@@ -56,7 +56,7 @@ bool AUtil::checkMail(const QString &mail) {
 const QRegularExpression AUtil::phoneRegExp() {
   QRegularExpression reg;
   reg.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
-  reg.setPattern("^([\\d]{2,3}\\s?[\\d]{2,4}[\\s?\\d]+)$");
+  reg.setPattern("^(0[\\d]{2,3}\\s?[\\d]{2,4}[\\s?\\d]+)$");
   return reg;
 }
 

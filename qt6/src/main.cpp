@@ -78,6 +78,21 @@ int main(int argc, char *argv[]) {
   _email1->setStretch();
   layout->addWidget(_email1);
 
+  // Phone
+  AntiquaCRM::PhoneEdit *_phone0 = new AntiquaCRM::PhoneEdit("a_phone_0", w);
+  _phone0->setBuddyLabel("Primary Tel.");
+  _phone0->setWhatsThisButton("Standard Telefonnummer.");
+  _phone0->setValue("+49 01234 12345678");
+  _phone0->setStretch();
+  layout->addWidget(_phone0);
+
+  AntiquaCRM::PhoneEdit *_mobil1 = new AntiquaCRM::PhoneEdit("a_mobile_0", w);
+  _mobil1->setBuddyLabel("Mobile Tel.");
+  _mobil1->setWhatsThisButton("Mobile number");
+  _mobil1->setValue("+49 0190 12345678");
+  _mobil1->setStretch();
+  layout->addWidget(_mobil1);
+
   layout->addStretch(1);
   QStatusBar *m_statusbar = new QStatusBar(w);
   layout->addWidget(m_statusbar);

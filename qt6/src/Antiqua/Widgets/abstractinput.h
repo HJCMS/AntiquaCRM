@@ -12,10 +12,10 @@
 #include <AntiquaCRM>
 #include <QBoxLayout>
 #include <QFocusEvent>
+#include <QIcon>
 #include <QMetaType>
 #include <QObject>
 #include <QSqlField>
-#include <QIcon>
 #include <QVariant>
 #include <QWidget>
 
@@ -83,14 +83,14 @@ protected:
   void setRequired(bool);
 
   /**
-   * @brief e.g. init database or model data
+   * @brief e.g. initial database, container or model data
    * This virtual function is reserved for loading custom data after construct
    * the subclass.
    * By default it is protected but when needed, you can move it to public.
    *
-   * @warning Do not use it Constructors with SQL-Queries! It is a bad idea to
-   * init SQL queries inside of constructors. This can freeze the Application
-   * when you get Network problems or no access to the database exists.
+   * @warning It is a bad idea to initial SQL/Network-Queries inside of a
+   * constructor. This can freeze the Application when you get Network problems
+   * or no access to the database exists.
    */
   virtual void initData() = 0;
 

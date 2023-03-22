@@ -22,4 +22,8 @@
 #include "priceedit.h"
 #endif
 
+#ifndef ANTIQUACRM_WIDGETS_PHONEEDIT_H
+#include "phoneedit.h"
+#endif
+
 // EOF

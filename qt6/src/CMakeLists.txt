@@ -4,6 +4,8 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 #
 
+ADD_SUBDIRECTORY (icons)
+ADD_SUBDIRECTORY (data)
 ADD_SUBDIRECTORY (Antiqua)
 
 SET (ANTIQUACRM_INCLUDE_DIRS
