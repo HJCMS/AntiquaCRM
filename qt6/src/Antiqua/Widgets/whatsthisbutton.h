@@ -12,12 +12,12 @@
 #include <AGlobal>
 #include <QEvent>
 #include <QObject>
-#include <QToolButton>
+#include <QPushButton>
 #include <QWidget>
 
 namespace AntiquaCRM {
 
-class ANTIQUACRM_LIBRARY WhatsThisButton final : public QToolButton {
+class ANTIQUACRM_LIBRARY WhatsThisButton final : public QPushButton {
   Q_OBJECT
 
 private:

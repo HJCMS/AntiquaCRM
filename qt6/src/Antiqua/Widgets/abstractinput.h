@@ -65,11 +65,6 @@ protected:
   QBoxLayout *layout;
 
   /**
-   * @brief Prepend Title Label to teh layout
-   */
-  AntiquaCRM::ALabel *setTitleLabel(const QString &);
-
-  /**
    * @brief Icon from Theme or Resource files ...
    */
   const QIcon getIcon(const QString &);
@@ -169,16 +164,21 @@ public:
   virtual void setBuddyLabel(const QString &) = 0;
 
   /**
-   * @brief Append a WhatsThis Tool Button to the input widget.
+   * @brief Prepend a title label to the layout
    */
-  virtual void setWhatsThisButton(const QString &);
+  AntiquaCRM::ALabel *addTitleLabel(const QString &);
 
   /**
-   * @brief Add layout stretch to tthis Widget::layout
+   * @brief Append a WhatsThis Tool Button to the input widget.
+   */
+  virtual void addWhatsThisText(const QString &);
+
+  /**
+   * @brief Appending a stretch to the Widget::layout
    * @warning Before call this function you need to sure that your Layout
    * already been done.
    */
-  virtual void setStretch(int expanding = 0);
+  virtual void appendStretch(int expanding = 0);
 
   /**
    * @brief get about status, if this input is required or not.

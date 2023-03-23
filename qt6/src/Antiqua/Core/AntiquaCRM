@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_LIB_H
-#define ANTIQUACRM_LIB_H
+#ifndef ANTIQUACRM_CORE_LIB_H
+#define ANTIQUACRM_CORE_LIB_H
 
 #ifndef ANTIQUACRM_GLOBAL_H
 #include "aglobal.h"

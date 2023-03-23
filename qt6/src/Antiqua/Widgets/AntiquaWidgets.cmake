@@ -6,24 +6,26 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_CROWDEDIT_H
+#ifndef ANTIQUACRM_WIDGETS_LIB_H
+#define ANTIQUACRM_WIDGETS_LIB_H
+
+// AntiquaCRM::CrowdEdit
 #include "crowdedit.h"
-#endif
 
-#ifndef ANTIQUACRM_WIDGETS_EMAILEDIT_H
+// AntiquaCRM::EMailEdit
 #include "emailedit.h"
-#endif
 
-#ifndef ANTIQUACRM_WIDGETS_GENDEREDIT_H
+// AntiquaCRM::GenderEdit
 #include "genderedit.h"
-#endif
 
-#ifndef ANTIQUACRM_WIDGETS_PRICEEDIT_H
-#include "priceedit.h"
-#endif
-
-#ifndef ANTIQUACRM_WIDGETS_PHONEEDIT_H
+// AntiquaCRM::PhoneEdit
 #include "phoneedit.h"
-#endif
 
+// AntiquaCRM::PriceEdit
+#include "priceedit.h"
+
+// AntiquaCRM::SalutationEdit
+#include "salutationedit.h"
+
+#endif
 // EOF

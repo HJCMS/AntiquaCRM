@@ -5,28 +5,25 @@
 
 #include <QIcon>
 #include <QWhatsThis>
-#include <QDebug>
-#include <QApplication>
 
 namespace AntiquaCRM {
 
 WhatsThisButton::WhatsThisButton(const QString &help, QWidget *parent)
-    : QToolButton{parent}, p_text{help} {
-  QIcon fallback("://icons/filetype.png");
-  QIcon icon = QIcon::fromTheme("help-contents", fallback);
-
+    : QPushButton{parent}, p_text{help} {
   setContentsMargins(0, 0, 0, 0);
-  setIcon(icon);
+  QIcon fallback("://icons/help-contents.png");
+  setIcon(QIcon::fromTheme("help-contents", fallback));
   setToolTip(tr("Open tooltip for this input edit."));
   setStatusTip(toolTip());
-  setToolButtonStyle(Qt::ToolButtonIconOnly);
-
+  setStyleSheet("QPushButton {border:none;margin:0px;}");
   connect(this, SIGNAL(clicked()), SLOT(showWhatsThis()));
 }
 
 void WhatsThisButton::showWhatsThis() {
-  if (!p_text.isEmpty())
-    QWhatsThis::showText(pos(), p_text, this);
+  if (p_text.isEmpty())
+    return;
+
+  QWhatsThis::showText(pos(), p_text, this);
 }
 
 bool WhatsThisButton::event(QEvent *e) {
@@ -35,7 +32,7 @@ bool WhatsThisButton::event(QEvent *e) {
   } else if (e->type() == QEvent::HoverLeave) {
     setCursor(Qt::ArrowCursor);
   }
-  return QToolButton::event(e);
+  return QPushButton::event(e);
 }
 
 } // namespace AntiquaCRM

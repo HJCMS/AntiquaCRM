@@ -39,6 +39,7 @@ SET (_library_SOURCES
  genderedit.cpp
  priceedit.cpp
  phoneedit.cpp
+ salutationedit.cpp
 )
 
 SET (_library_HEADERS
@@ -59,6 +60,7 @@ SET (_library_HEADERS
  genderedit.h
  priceedit.h
  phoneedit.h
+ salutationedit.h
 )
 
 ADD_LIBRARY (${_subProjectLibrary} SHARED

@@ -30,17 +30,9 @@ AbstractInput::AbstractInput(QWidget *parent) : QWidget{parent} {
 
 AbstractInput::~AbstractInput() {}
 
-AntiquaCRM::ALabel *AbstractInput::setTitleLabel(const QString &title) {
-  ALabel *m_lb = new ALabel(title, this);
-  m_lb->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-  m_lb->setTextInteractionFlags(Qt::NoTextInteraction);
-  layout->insertWidget(0, m_lb);
-  return m_lb;
-}
-
 const QIcon AbstractInput::getIcon(const QString &name) {
-  QIcon icon("://icons/" + name + ".png");
-  return QIcon::fromTheme(name, icon);
+  QIcon fallback("://icons/" + name + ".png");
+  return QIcon::fromTheme(name, fallback);
 }
 
 bool AbstractInput::windowBehavior(const QString &key, bool standard) {
@@ -71,7 +63,15 @@ bool AbstractInput::isRequired() {
   return d->required_status;
 }
 
-void AbstractInput::setWhatsThisButton(const QString &text) {
+AntiquaCRM::ALabel *AbstractInput::addTitleLabel(const QString &title) {
+  ALabel *m_lb = new ALabel(title, this);
+  m_lb->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+  m_lb->setTextInteractionFlags(Qt::NoTextInteraction);
+  layout->insertWidget(0, m_lb);
+  return m_lb;
+}
+
+void AbstractInput::addWhatsThisText(const QString &text) {
   if (text.isEmpty())
     return;
 
@@ -79,6 +79,6 @@ void AbstractInput::setWhatsThisButton(const QString &text) {
   layout->addWidget(m_tbn);
 }
 
-void AbstractInput::setStretch(int expanding) { layout->addStretch(expanding); }
+void AbstractInput::appendStretch(int expanding) { layout->addStretch(expanding); }
 
 } // namespace AntiquaCRM

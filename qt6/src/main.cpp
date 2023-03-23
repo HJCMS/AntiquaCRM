@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
 
   QMainWindow *win = new QMainWindow;
   win->setWindowTitle("Tests [*]");
+  win->setWindowIcon(QIcon("://icons/antiquacrm.png"));
   win->setMinimumSize(600, 400);
 
   QWidget *w = new QWidget(win);
@@ -41,16 +42,16 @@ int main(int argc, char *argv[]) {
   // Gender
   AntiquaCRM::GenderEdit *_gender = new AntiquaCRM::GenderEdit(w);
   _gender->setBuddyLabel("Gender");
-  _gender->setWhatsThisButton("Bitte ein geschlecht auswählen.");
-  _gender->setStretch();
+  _gender->addWhatsThisText("Bitte ein geschlecht auswählen.");
+  _gender->appendStretch();
   layout->addWidget(_gender);
 
   // Price
   AntiquaCRM::PriceEdit *_price = new AntiquaCRM::PriceEdit(w);
   _price->setObjectName("a_sell_price");
   _price->setBuddyLabel("Verkaufspreis");
-  _price->setWhatsThisButton("Hier den aktuellen Verkaufspreis einfügen.");
-  _price->setStretch();
+  _price->addWhatsThisText("Hier den aktuellen Verkaufspreis einfügen.");
+  _price->appendStretch();
   _price->setValue(14.56);
   layout->addWidget(_price);
 
@@ -58,40 +59,47 @@ int main(int argc, char *argv[]) {
   AntiquaCRM::CrowdEdit *_crowd = new AntiquaCRM::CrowdEdit(w);
   _crowd->setObjectName("a_count");
   _crowd->setBuddyLabel("Anzahl");
-  _crowd->setWhatsThisButton("Hier bitte die Artikel bestands menge angeben.");
-  _crowd->setStretch();
+  _crowd->addWhatsThisText("Hier bitte die Artikel bestands menge angeben.");
+  _crowd->appendStretch();
   _crowd->setValue(1);
   layout->addWidget(_crowd);
 
   // EMail
   AntiquaCRM::EMailEdit *_email0 = new AntiquaCRM::EMailEdit("a_mail_0", w);
   _email0->setBuddyLabel("Primary eMail");
-  _email0->setWhatsThisButton("Standard E-Mail Adresse.");
+  _email0->addWhatsThisText("Standard E-Mail Adresse.");
   _email0->setValue("hans.mustermann@t-online.de");
-  _email0->setStretch();
+  _email0->appendStretch();
   layout->addWidget(_email0);
 
   AntiquaCRM::EMailEdit *_email1 = new AntiquaCRM::EMailEdit("a_mail_1", w);
   _email1->setBuddyLabel("Secundary eMail");
-  _email1->setWhatsThisButton("Sekundäre E-Mail Adresse.");
+  _email1->addWhatsThisText("Sekundäre E-Mail Adresse.");
   _email1->setValue("hans@t-online.de");
-  _email1->setStretch();
+  _email1->appendStretch();
   layout->addWidget(_email1);
 
   // Phone
   AntiquaCRM::PhoneEdit *_phone0 = new AntiquaCRM::PhoneEdit("a_phone_0", w);
   _phone0->setBuddyLabel("Primary Tel.");
-  _phone0->setWhatsThisButton("Standard Telefonnummer.");
+  _phone0->addWhatsThisText("Standard Telefonnummer.");
   _phone0->setValue("+49 01234 12345678");
-  _phone0->setStretch();
+  _phone0->appendStretch();
   layout->addWidget(_phone0);
 
   AntiquaCRM::PhoneEdit *_mobil1 = new AntiquaCRM::PhoneEdit("a_mobile_0", w);
   _mobil1->setBuddyLabel("Mobile Tel.");
-  _mobil1->setWhatsThisButton("Mobile number");
+  _mobil1->addWhatsThisText("Mobile number");
   _mobil1->setValue("+49 0190 12345678");
-  _mobil1->setStretch();
+  _mobil1->appendStretch();
   layout->addWidget(_mobil1);
+
+  // SalutationEdit
+  AntiquaCRM::SalutationEdit *_salutation = new AntiquaCRM::SalutationEdit(w);
+  _salutation->setBuddyLabel("Salutation");
+  _salutation->addWhatsThisText("Have this customer a title?");
+  _salutation->appendStretch();
+  layout->addWidget(_salutation);
 
   layout->addStretch(1);
   QStatusBar *m_statusbar = new QStatusBar(w);

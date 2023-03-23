@@ -212,7 +212,7 @@ void PhoneEdit::setBuddyLabel(const QString &text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = setTitleLabel(text + ":");
+  ALabel *m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
