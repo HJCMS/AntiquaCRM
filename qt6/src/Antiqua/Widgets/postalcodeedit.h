@@ -51,45 +51,45 @@ class ANTIQUACRM_LIBRARY PostalCodeEdit final
   Q_OBJECT
 
 private:
-  AComboBox *m_countries;
-  ALineEdit *m_postalcode;
-  QCompleter *m_completer;
+  AComboBox *m_countries;  /**< @brief Country Selecter */
+  ALineEdit *m_postalcode; /**< @brief Current Postalcode */
+  QCompleter *m_completer; /**< @brief zip code Completer */
 
   /**
-   * @brief Eingabe Postleitzahl mit der Autovervollständigung vergleichen!
-   * Die PLZ Datenbank enhält bei den Zahlen keine führende "0"!
-   * @li Manche Einkäufer geben diese jedoch an.
-   * @li Deshalb muss hier ein Vergleich gemacht werden.
-   * @warning Wenn die 0 in der Eingabezeile, nach dem Provider Import,
-   * nachträglich entfernt wird. Kann dies dazu führen das beim Provider Import
-   * die SQL Abfrage missglückt und ein doppelter Eintrag erzeugt wird!
+   * @brief Compare postal code with the auto-completion!
+   * The zip code database entries are integer values and not contain leading
+   * zeros! However, if some buyers indicate zip code with leading zero.
+   * We must comparison therefore be made here.
+   * See also UNIQUE CONSTRAINT’s in Table „customers“.
    */
   bool comparePostalcode(const QString &source, const QString &input) const;
 
 private Q_SLOTS:
   /**
-   * @brief Wenn Länderauswahl ausgelöst wurde.
-   * Suche und setze die Autovervollständigung für das Land!
+   * @brief If country selection was triggered.
+   * Search and set the autocomplete for country zip codes!
    */
   void valueChanged(int);
 
   /**
-   * @brief Wenn die Postleitzahleneingabe verlassen wird!
-   * Suche in der Autovervollständigung nach Übereinstimmungen und erstelle das
-   * Signal @ref sendOnLeavePostalEdit für die Daten übermittlung.
-   * Diese funktion ermittelt nur mit der Aktuelle Landauswahl!
-   * Sie durchläuft NICHT alle Postleitzahlenländer!
-   * @note Wenn kein Land ausgewählt ist, wird sie nicht ausgeführt!
+   * @brief If the zip code entry is left!
+   * Match the autocomplete and create the sendOnLeavePostalEdit signal for data
+   * submission. This function only determines with the current country
+   * selection! It does NOT go through all postcode countries!
+   * @note Make sure valid a country is selected first, otherwise it will not run!
    */
   void setPostalCodeLeave();
 
 Q_SIGNALS:
   /**
-   * @brief Sende die Aktuell ermittelten Postleitzahlen treffer!
-   * @note Wird nur ausgelöst wenn postalReadyToLeave() positiv ausfällt!
+   * @brief Send the currently determined postcode hits!
+   * @note Is only triggered if postalReadyToLeave() is positive!
    */
   void sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &);
 
+  /**
+   * @brief Send reset dependencies when state has changed
+   */
   void sendResetDependencies();
 
 public Q_SLOTS:
@@ -138,7 +138,7 @@ class ANTIQUACRM_LIBRARY PostalCodeState final
 private:
   ALineEdit *m_edit;
 
-  virtual void initData() override {};
+  virtual void initData() override{};
 
 public Q_SLOTS:
   virtual void setValue(const QVariant &) override;
@@ -151,7 +151,7 @@ public Q_SLOTS:
 
 public:
   /**
-   * @brief Display Postalcode state
+   * @brief Display Postalcode country/state
    * @param parent - parent Object
    */
   explicit PostalCodeState(QWidget *parent = nullptr);
@@ -173,16 +173,16 @@ public:
 
 /**
  * @ingroup AntiquaWidgets
- * @class PostalCodeCountry
+ * @class PostalCodeLocation
  */
-class ANTIQUACRM_LIBRARY PostalCodeCountry final
+class ANTIQUACRM_LIBRARY PostalCodeLocation final
     : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
 private:
   ALineEdit *m_edit;
 
-  virtual void initData() override {};
+  virtual void initData() override{};
 
 public Q_SLOTS:
   virtual void setValue(const QVariant &) override;
@@ -198,7 +198,7 @@ public:
    * @brief Display Postalcode countries
    * @param parent - parent Object
    */
-  explicit PostalCodeCountry(QWidget *parent = nullptr);
+  explicit PostalCodeLocation(QWidget *parent = nullptr);
 
   virtual void setRestrictions(const QSqlField &) override;
 

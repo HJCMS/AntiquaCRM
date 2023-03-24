@@ -210,13 +210,24 @@ void PostalCodeEdit::setPostalCodeLeave() {
 }
 
 void PostalCodeEdit::setValue(const QVariant &value) {
-  QMetaType _type = value.metaType();
-  if (_type.id() == QMetaType::QString) {
+  switch (value.metaType().id()) {
+  case (QMetaType::QString): {
     m_postalcode->setText(value.toString());
+  } break;
+
+  case (QMetaType::Int):
+  case (QMetaType::Long):
+  case (QMetaType::LongLong): {
+    QString str = QString::number(value.toInt());
+    m_postalcode->setText(str);
+  } break;
+
+  default:
     return;
-  }
-  QString str = QString::number(value.toInt());
-  m_postalcode->setText(str);
+  };
+  // @note Nur dann, wenn auch das Land gesetzt ist!
+  if (m_countries->currentIndex() > 0)
+    setPostalCodeLeave();
 }
 
 void PostalCodeEdit::setFocus() { m_postalcode->setFocus(); }
@@ -238,8 +249,9 @@ void PostalCodeEdit::setCountry(const QString &country) {
   }
 
   int index = m_countries->findData(search, Qt::DisplayRole);
-  if (index > 0)
+  if (index > 0) {
     m_countries->setCurrentIndex(index);
+  }
 }
 
 void PostalCodeEdit::initData() {
@@ -383,14 +395,14 @@ const QString PostalCodeState::statusHints() {
 }
 // END::PostalCodeState
 
-// BEGIN::PostalCodeCountry
-PostalCodeCountry::PostalCodeCountry(QWidget *parent)
+// BEGIN::PostalCodeLocation
+PostalCodeLocation::PostalCodeLocation(QWidget *parent)
     : AntiquaCRM::AbstractInput{parent} {
   m_edit = new ALineEdit(this);
   layout->addWidget(m_edit);
 }
 
-void PostalCodeCountry::setValue(const QVariant &value) {
+void PostalCodeLocation::setValue(const QVariant &value) {
   QMetaType _type = value.metaType();
   if (_type.id() == QMetaType::QString) {
     m_edit->setText(value.toString());
@@ -400,39 +412,39 @@ void PostalCodeCountry::setValue(const QVariant &value) {
   m_edit->setText(str);
 }
 
-void PostalCodeCountry::setFocus() { m_edit->setFocus(); }
+void PostalCodeLocation::setFocus() { m_edit->setFocus(); }
 
-void PostalCodeCountry::reset() {
+void PostalCodeLocation::reset() {
   m_edit->clear();
   setWindowModified(false);
 }
 
-void PostalCodeCountry::setPostalCodes(const AntiquaCRM::PostalCode &code) {
+void PostalCodeLocation::setPostalCodes(const AntiquaCRM::PostalCode &code) {
   if (code.location.isEmpty())
     return;
 
   m_edit->setText(code.location);
 }
 
-void PostalCodeCountry::setRestrictions(const QSqlField &field) {
+void PostalCodeLocation::setRestrictions(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 
   m_edit->setMaxLength(field.length());
 }
 
-bool PostalCodeCountry::isValid() {
+bool PostalCodeLocation::isValid() {
   if (isRequired() && m_edit->text().isEmpty())
     return false;
 
   return true;
 }
 
-void PostalCodeCountry::setInputToolTip(const QString &tip) {
+void PostalCodeLocation::setInputToolTip(const QString &tip) {
   m_edit->setToolTip(tip);
 }
 
-void PostalCodeCountry::setBuddyLabel(const QString &text) {
+void PostalCodeLocation::setBuddyLabel(const QString &text) {
   if (text.isEmpty())
     return;
 
@@ -440,17 +452,17 @@ void PostalCodeCountry::setBuddyLabel(const QString &text) {
   m_lb->setBuddy(m_edit);
 }
 
-const QVariant PostalCodeCountry::getValue() {
+const QVariant PostalCodeLocation::getValue() {
   return m_edit->text().trimmed();
 }
 
-const QString PostalCodeCountry::popUpHints() {
+const QString PostalCodeLocation::popUpHints() {
   return tr("Missing Country for Postalcode!");
 }
 
-const QString PostalCodeCountry::statusHints() {
+const QString PostalCodeLocation::statusHints() {
   return tr("Missing Country for Postalcode!");
 }
 
-// END::PostalCodeCountry
+// END::PostalCodeLocation
 } // namespace AntiquaCRM

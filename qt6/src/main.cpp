@@ -94,6 +94,7 @@ int main(int argc, char *argv[]) {
   _plz->addWhatsThisText("Add  postalcode here.");
   _plz->appendStretch();
   layout->addWidget(_plz);
+  _plz->initData();
 
   AntiquaCRM::PostalCodeState *_plz_state = new AntiquaCRM::PostalCodeState(w);
   _plz_state->setObjectName("a_state");
@@ -104,8 +105,8 @@ int main(int argc, char *argv[]) {
              _plz_state, SLOT(setPostalCodes(const AntiquaCRM::PostalCode &)));
   w->connect(_plz, SIGNAL(sendResetDependencies()), _plz_state, SLOT(reset()));
 
-  AntiquaCRM::PostalCodeCountry *_plz_country =
-      new AntiquaCRM::PostalCodeCountry(w);
+  AntiquaCRM::PostalCodeLocation *_plz_country =
+      new AntiquaCRM::PostalCodeLocation(w);
   _plz_country->setObjectName("a_location");
   _plz_country->setBuddyLabel("Country");
   layout->addWidget(_plz_country);
@@ -113,11 +114,6 @@ int main(int argc, char *argv[]) {
       _plz, SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
       _plz_country, SLOT(setPostalCodes(const AntiquaCRM::PostalCode &)));
   w->connect(_plz, SIGNAL(sendResetDependencies()), _plz_country, SLOT(reset()));
-
-  // start plz
-  _plz->initData();
-  _plz->setCountry("Deutschland");
-  _plz->setValue("06343");
 
   layout->addStretch(1);
   QStatusBar *m_statusbar = new QStatusBar(w);
@@ -127,7 +123,10 @@ int main(int argc, char *argv[]) {
   win->setCentralWidget(w);
   win->show();
 
-  m_statusbar->showMessage("initialed");
+  // start plz
+  m_statusbar->showMessage("add postal data");
+  _plz->setCountry("Deutschland");
+  _plz->setValue("06343");
 
   QRegularExpression pattern("^[a-z]{1}_[a-z_]{2,}");
   QList<AntiquaCRM::AbstractInput *> list =
