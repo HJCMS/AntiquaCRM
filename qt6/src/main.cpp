@@ -39,14 +39,14 @@ int main(int argc, char *argv[]) {
   //_fp.setName("a_sell_price");
   //_fp.setDefaultValue(7.00);
 
-  // Gender
+  // AntiquaCRM::GenderEdit
   AntiquaCRM::GenderEdit *_gender = new AntiquaCRM::GenderEdit(w);
   _gender->setBuddyLabel("Gender");
   _gender->addWhatsThisText("Bitte ein geschlecht auswählen.");
   _gender->appendStretch();
   layout->addWidget(_gender);
 
-  // Price
+  // AntiquaCRM::PriceEdit
   AntiquaCRM::PriceEdit *_price = new AntiquaCRM::PriceEdit(w);
   _price->setObjectName("a_sell_price");
   _price->setBuddyLabel("Verkaufspreis");
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
   _price->setValue(14.56);
   layout->addWidget(_price);
 
-  //  Anzahl
+  // AntiquaCRM::CrowdEdit
   AntiquaCRM::CrowdEdit *_crowd = new AntiquaCRM::CrowdEdit(w);
   _crowd->setObjectName("a_count");
   _crowd->setBuddyLabel("Anzahl");
@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
   _crowd->setValue(1);
   layout->addWidget(_crowd);
 
-  // EMail
+  // AntiquaCRM::EMailEdit
   AntiquaCRM::EMailEdit *_email0 = new AntiquaCRM::EMailEdit("a_mail_0", w);
   _email0->setBuddyLabel("Primary eMail");
   _email0->addWhatsThisText("Standard E-Mail Adresse.");
@@ -72,14 +72,7 @@ int main(int argc, char *argv[]) {
   _email0->appendStretch();
   layout->addWidget(_email0);
 
-  AntiquaCRM::EMailEdit *_email1 = new AntiquaCRM::EMailEdit("a_mail_1", w);
-  _email1->setBuddyLabel("Secundary eMail");
-  _email1->addWhatsThisText("Sekundäre E-Mail Adresse.");
-  _email1->setValue("hans@t-online.de");
-  _email1->appendStretch();
-  layout->addWidget(_email1);
-
-  // Phone
+  // AntiquaCRM::PhoneEdit
   AntiquaCRM::PhoneEdit *_phone0 = new AntiquaCRM::PhoneEdit("a_phone_0", w);
   _phone0->setBuddyLabel("Primary Tel.");
   _phone0->addWhatsThisText("Standard Telefonnummer.");
@@ -87,19 +80,44 @@ int main(int argc, char *argv[]) {
   _phone0->appendStretch();
   layout->addWidget(_phone0);
 
-  AntiquaCRM::PhoneEdit *_mobil1 = new AntiquaCRM::PhoneEdit("a_mobile_0", w);
-  _mobil1->setBuddyLabel("Mobile Tel.");
-  _mobil1->addWhatsThisText("Mobile number");
-  _mobil1->setValue("+49 0190 12345678");
-  _mobil1->appendStretch();
-  layout->addWidget(_mobil1);
-
-  // SalutationEdit
+  // AntiquaCRM::SalutationEdit
   AntiquaCRM::SalutationEdit *_salutation = new AntiquaCRM::SalutationEdit(w);
   _salutation->setBuddyLabel("Salutation");
   _salutation->addWhatsThisText("Have this customer a title?");
   _salutation->appendStretch();
   layout->addWidget(_salutation);
+
+  // AntiquaCRM::PostalCodeEdit
+  AntiquaCRM::PostalCodeEdit *_plz = new AntiquaCRM::PostalCodeEdit(w);
+  _plz->setObjectName("a_postal_code");
+  _plz->setBuddyLabel("PLZ");
+  _plz->addWhatsThisText("Add  postalcode here.");
+  _plz->appendStretch();
+  layout->addWidget(_plz);
+
+  AntiquaCRM::PostalCodeState *_plz_state = new AntiquaCRM::PostalCodeState(w);
+  _plz_state->setObjectName("a_state");
+  _plz_state->setBuddyLabel("State");
+  layout->addWidget(_plz_state);
+  w->connect(_plz,
+             SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
+             _plz_state, SLOT(setPostalCodes(const AntiquaCRM::PostalCode &)));
+  w->connect(_plz, SIGNAL(sendResetDependencies()), _plz_state, SLOT(reset()));
+
+  AntiquaCRM::PostalCodeCountry *_plz_country =
+      new AntiquaCRM::PostalCodeCountry(w);
+  _plz_country->setObjectName("a_location");
+  _plz_country->setBuddyLabel("Country");
+  layout->addWidget(_plz_country);
+  w->connect(
+      _plz, SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
+      _plz_country, SLOT(setPostalCodes(const AntiquaCRM::PostalCode &)));
+  w->connect(_plz, SIGNAL(sendResetDependencies()), _plz_country, SLOT(reset()));
+
+  // start plz
+  _plz->initData();
+  _plz->setCountry("Deutschland");
+  _plz->setValue("06343");
 
   layout->addStretch(1);
   QStatusBar *m_statusbar = new QStatusBar(w);

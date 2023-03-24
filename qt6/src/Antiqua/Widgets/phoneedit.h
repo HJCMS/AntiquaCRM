@@ -37,6 +37,7 @@ private:
 public:
   /**
    * @brief Phone Country Code Completer Model
+   * @param parent - parent object
    */
   explicit PhoneCountryCodeModel(QObject *parent = nullptr);
   int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -59,37 +60,28 @@ private:
   QRegularExpressionValidator *m_validator;
   QCompleter *m_completer;
 
+  /**
+   * @brief „DIN 5008/E.123“ phone number validation
+   */
   bool validate(const QString &) const;
 
   virtual void initData() override;
 
 private Q_SLOTS:
-  /**
-   * @brief price has been changed
-   */
   void valueChanged(const QString &);
 
 public Q_SLOTS:
-  /**
-   * @brief set eMail
-   */
   virtual void setValue(const QVariant &) override;
 
-  /**
-   * @brief set input focus
-   */
   virtual void setFocus() override;
 
-  /**
-   * @brief clear input and reset window modified
-   */
   virtual void reset() override;
 
 public:
   /**
-   * @brief PhoneEdit
+   * @brief Phone/Mobil number input edit
    * @param name   - Object name
-   * @param parent -
+   * @param parent - parent object
    */
   explicit PhoneEdit(const QString &name, QWidget *parent = nullptr);
   explicit PhoneEdit(QWidget *parent = nullptr);

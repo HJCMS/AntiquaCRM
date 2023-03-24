@@ -24,6 +24,9 @@
 // AntiquaCRM::PriceEdit
 #include "priceedit.h"
 
+// AntiquaCRM::PostalCodeEdit
+#include "postalcodeedit.h"
+
 // AntiquaCRM::SalutationEdit
 #include "salutationedit.h"
 

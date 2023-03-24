@@ -25,37 +25,28 @@ class ANTIQUACRM_LIBRARY EMailEdit final : public AntiquaCRM::AbstractInput {
 private:
   AntiquaCRM::ALineEdit *m_edit;
 
+  /**
+   * @brief eMail validation
+   */
   bool validate(const QString &) const;
 
   virtual void initData() override;
 
 private Q_SLOTS:
-  /**
-   * @brief price has been changed
-   */
   void valueChanged(const QString &);
 
 public Q_SLOTS:
-  /**
-   * @brief set eMail
-   */
   virtual void setValue(const QVariant &) override;
 
-  /**
-   * @brief set input focus
-   */
   virtual void setFocus() override;
 
-  /**
-   * @brief clear input and reset window modified
-   */
   virtual void reset() override;
 
 public:
   /**
-   * @brief EMailEdit
+   * @brief eMail input Editor
    * @param name   - Object name
-   * @param parent -
+   * @param parent - parent Object
    */
   explicit EMailEdit(const QString &name, QWidget *parent = nullptr);
   explicit EMailEdit(QWidget *parent = nullptr);

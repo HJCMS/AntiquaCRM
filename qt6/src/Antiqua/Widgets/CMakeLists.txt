@@ -39,6 +39,7 @@ SET (_library_SOURCES
  genderedit.cpp
  priceedit.cpp
  phoneedit.cpp
+ postalcodeedit.cpp
  salutationedit.cpp
 )
 
@@ -60,6 +61,7 @@ SET (_library_HEADERS
  genderedit.h
  priceedit.h
  phoneedit.h
+ postalcodeedit.h
  salutationedit.h
 )
 

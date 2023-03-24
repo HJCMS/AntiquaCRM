@@ -28,32 +28,16 @@ private:
   AntiquaCRM::AComboBox *m_edit;
 
 private Q_SLOTS:
-  /**
-   * @brief salutation has been changed
-   */
   void valueChanged(int);
 
 protected:
-  /**
-   * @brief create basic dataset construction
-   * @note Field name or Object name is not set in this function.
-   */
   virtual void initData() override;
 
 public Q_SLOTS:
-  /**
-   * @brief set salutation
-   */
   virtual void setValue(const QVariant &) override;
 
-  /**
-   * @brief set input focus
-   */
   virtual void setFocus() override;
 
-  /**
-   * @brief restore to minium value
-   */
   virtual void reset() override;
 
 public:
@@ -63,39 +47,18 @@ public:
    */
   explicit SalutationEdit(QWidget *parent = nullptr);
 
-  /**
-   * @brief Configure data restriction from QSqlQuery fieldset.
-   */
   virtual void setRestrictions(const QSqlField &) override;
 
-  /**
-   * @brief Configure tooltip for this input edit widget
-   */
   virtual void setInputToolTip(const QString &) override;
 
-  /**
-   * @brief Add a buddy label to this input widget.
-   */
   virtual void setBuddyLabel(const QString &) override;
 
-  /**
-   * @brief is a valid salutation set
-   */
   virtual bool isValid() override;
 
-  /**
-   * @brief get current value
-   */
   virtual const QVariant getValue() override;
 
-  /**
-   * @brief Detailed warn message for QMessageBox
-   */
   virtual const QString popUpHints() override;
 
-  /**
-   * @brief Simple warn message for QStatusBar
-   */
   virtual const QString statusHints() override;
 
   /**
