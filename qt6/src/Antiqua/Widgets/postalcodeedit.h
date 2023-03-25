@@ -103,7 +103,7 @@ public Q_SLOTS:
 
 public:
   /**
-   * @brief Postalcode editor
+   * @brief Postalcode selecter and editor
    * @param parent - parent Object
    */
   explicit PostalCodeEdit(QWidget *parent = nullptr);
@@ -195,7 +195,7 @@ public Q_SLOTS:
 
 public:
   /**
-   * @brief Display Postalcode countries
+   * @brief Display Postalcode locations
    * @param parent - parent Object
    */
   explicit PostalCodeLocation(QWidget *parent = nullptr);

@@ -12,6 +12,12 @@
 // AntiquaCRM::CrowdEdit
 #include "crowdedit.h"
 
+// AntiquaCRM::BookBindingEdit
+#include "bookbindingedit.h"
+
+// AntiquaCRM::ConditionEdit
+#include "conditionedit.h"
+
 // AntiquaCRM::EMailEdit
 #include "emailedit.h"
 

@@ -46,15 +46,27 @@ protected:
 
   /**
    * @brief By default all mouse wheel Events disabled.
-   * This Parameter is reserved for Subclassing Input Widgets. The value will
-   * read at Application start from Configuration section „window_behavior“. It
-   * is intended to prevent the client from unintentionally changing entries.
+   * This Parameter is reserved for Subclassing Input Widgets.
+   * It is intended to prevent the client from unintentionally changing entries.
    * Experience has shown that older people in particular have problems with
-   * large input masks. You can query this parameter from the method
-   * windowBehavior(). e.g. call windowBehavior("mouse_wheel_support") to
-   * get the changed boolean value.
+   * large input masks.
+   *
+   * - It is loaded when Class will initialised.
+   * - Parameter: „window_behavior/mouse_wheel_support.
+   * - After change it, a application restart is required.
    */
   bool mouseWheelEvents = false;
+
+  /**
+   * @brief Show Tooltip icon buttons to open WhatsThis PopUp’s.
+   * By default this Variable is true, you can change it in the Interface
+   * Configuration.
+   *
+   * - It is loaded when Class will initialised.
+   * - Parameter: „window_behavior/display_tooltip_buttons“.
+   * - After change it, a application restart is required.
+   */
+  bool displayToolTips = true;
 
   /**
    * @brief central Input Widgetlayout

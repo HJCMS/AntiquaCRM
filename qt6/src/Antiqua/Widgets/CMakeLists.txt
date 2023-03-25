@@ -7,6 +7,7 @@
 SET(_subProjectLibrary "AntiquaWidgets")
 
 ADD_SUBDIRECTORY(private)
+ADD_SUBDIRECTORY(templates)
 
 INCLUDE_DIRECTORIES (
  ${INTERNAL_WIDGET_INCLUDE_DIRS}
@@ -34,7 +35,9 @@ SET (_library_SOURCES
  adoublebox.cpp
 ## Widgets
  whatsthisbutton.cpp
+ bookbindingedit.cpp
  crowdedit.cpp
+ conditionedit.cpp
  emailedit.cpp
  genderedit.cpp
  priceedit.cpp
@@ -56,7 +59,9 @@ SET (_library_HEADERS
 ## Widgets
  AntiquaWidgets
  whatsthisbutton.h
+ bookbindingedit.h
  crowdedit.h
+ conditionedit.h
  emailedit.h
  genderedit.h
  priceedit.h

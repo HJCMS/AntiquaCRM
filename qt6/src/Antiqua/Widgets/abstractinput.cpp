@@ -19,8 +19,11 @@ void AbstractInputPrivate::init(QWidget *parent) {
 
 AbstractInput::AbstractInput(QWidget *parent) : QWidget{parent} {
   Q_D(AbstractInput);
+  config = new AntiquaCRM::ASettings(this);
+  displayToolTips = windowBehavior("display_tooltip_buttons", true);
+  mouseWheelEvents = windowBehavior("mouse_wheel_support", false);
+
   setContentsMargins(0, 0, 0, 0);
-  config = new AntiquaCRM::ASettings(parent);
   layout = new QBoxLayout(QBoxLayout::LeftToRight, this);
   layout->setObjectName("antiqua_input_layout");
   layout->setContentsMargins(0, 0, 0, 0);
@@ -75,10 +78,14 @@ void AbstractInput::addWhatsThisText(const QString &text) {
   if (text.isEmpty())
     return;
 
-  WhatsThisButton *m_tbn = new WhatsThisButton(text, this);
-  layout->addWidget(m_tbn);
+  if (displayToolTips) {
+    WhatsThisButton *m_tbn = new WhatsThisButton(text, this);
+    layout->addWidget(m_tbn);
+  }
 }
 
-void AbstractInput::appendStretch(int expanding) { layout->addStretch(expanding); }
+void AbstractInput::appendStretch(int expanding) {
+  layout->addStretch(expanding);
+}
 
 } // namespace AntiquaCRM

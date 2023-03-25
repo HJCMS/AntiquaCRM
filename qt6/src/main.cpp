@@ -115,6 +115,22 @@ int main(int argc, char *argv[]) {
       _plz_country, SLOT(setPostalCodes(const AntiquaCRM::PostalCode &)));
   w->connect(_plz, SIGNAL(sendResetDependencies()), _plz_country, SLOT(reset()));
 
+  // AntiquaCRM::ConditionEdit
+  AntiquaCRM::ConditionEdit *_condition = new AntiquaCRM::ConditionEdit(w);
+  _condition->setObjectName("a_condition");
+  _condition->setBuddyLabel("Condition");
+  _condition->addWhatsThisText("Condition of the book.");
+  _condition->appendStretch();
+  layout->addWidget(_condition);
+
+  // AntiquaCRM::BookBindingEdit
+  AntiquaCRM::BookBindingEdit *_binding = new AntiquaCRM::BookBindingEdit(w);
+  _binding->setObjectName("a_book_binding");
+  _binding->setBuddyLabel("Book binding");
+  _binding->addWhatsThisText("Bookcover and Binding description.");
+  _binding->appendStretch();
+  layout->addWidget(_binding);
+
   layout->addStretch(1);
   QStatusBar *m_statusbar = new QStatusBar(w);
   layout->addWidget(m_statusbar);

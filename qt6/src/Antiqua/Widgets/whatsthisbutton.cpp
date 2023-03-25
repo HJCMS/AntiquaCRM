@@ -13,7 +13,7 @@ WhatsThisButton::WhatsThisButton(const QString &help, QWidget *parent)
   setContentsMargins(0, 0, 0, 0);
   QIcon fallback("://icons/help-contents.png");
   setIcon(QIcon::fromTheme("help-contents", fallback));
-  setToolTip(tr("Open tooltip for this input edit."));
+  setToolTip(tr("Click to open Tooltip."));
   setStatusTip(toolTip());
   setStyleSheet("QPushButton {border:none;margin:0px;}");
   connect(this, SIGNAL(clicked()), SLOT(showWhatsThis()));
