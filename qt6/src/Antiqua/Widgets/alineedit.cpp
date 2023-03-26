@@ -3,13 +3,30 @@
 
 #include "alineedit.h"
 
+#include <QCompleter>
 #include <QDebug>
+#include <QIcon>
 
 namespace AntiquaCRM {
 
 ALineEdit::ALineEdit(QWidget *parent) : QLineEdit{parent} {
   setClearButtonEnabled(true);
+
+  QIcon back("://icons/view-list.png");
+  QIcon icon = QIcon::fromTheme("view-list-details", back);
+  ac_completer = addAction(icon, QLineEdit::TrailingPosition);
+  ac_completer->setToolTip(tr("Show Completer Popup."));
+  ac_completer->setEnabled(false);
+  ac_completer->setVisible(false);
+
+  connect(ac_completer, SIGNAL(triggered()), SLOT(showCompleter()));
   connect(this, SIGNAL(returnPressed()), SLOT(skipReturnPressed()));
+}
+
+void ALineEdit::showCompleter() {
+  QCompleter *m_cpl = completer();
+  if (m_cpl != nullptr)
+    m_cpl->complete(rect());
 }
 
 void ALineEdit::skipReturnPressed() {
@@ -25,6 +42,11 @@ void ALineEdit::isValidContent(bool b) {
     setStyleSheet(QString());
   else
     setStyleSheet("QLineEdit {selection-background-color: red;}");
+}
+
+void ALineEdit::setCompleterAction(bool enabled) {
+  ac_completer->setEnabled(enabled);
+  ac_completer->setVisible(enabled);
 }
 
 void ALineEdit::setLineEditProperties(const QSqlField &prop) {

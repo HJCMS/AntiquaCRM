@@ -10,6 +10,7 @@
 #define ANTIQUACRM_INPUT_LINEEDIT_H
 
 #include <AGlobal>
+#include <QAction>
 #include <QFocusEvent>
 #include <QLineEdit>
 #include <QObject>
@@ -25,6 +26,12 @@ namespace AntiquaCRM {
  */
 class ANTIQUACRM_LIBRARY ALineEdit final : public QLineEdit {
   Q_OBJECT
+
+private:
+  QAction *ac_completer;
+
+private Q_SLOTS:
+  void showCompleter();
 
 protected Q_SLOTS:
   /**
@@ -44,6 +51,11 @@ public:
    * @param parent      - parent Widget
    */
   explicit ALineEdit(QWidget *parent = nullptr);
+
+  /**
+   * @brief Set Enable/Visible, Action Completer-Popup.
+   */
+  void setCompleterAction(bool enabled = false);
 
   /**
    * @brief Set max Length and PlaceHolder Text by given SQL Field Properties.

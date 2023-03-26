@@ -476,6 +476,7 @@ void PostalCodeLocation::setPostalCodes(const AntiquaCRM::PostalCode &code) {
 
   m_edit->setClearButtonEnabled(true);
   m_edit->setCompleter(m_cpl);
+  m_edit->setCompleterAction(true);
 }
 
 void PostalCodeLocation::setRestrictions(const QSqlField &field) {
