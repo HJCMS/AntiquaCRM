@@ -51,7 +51,7 @@ protected:
    * Experience has shown that older people in particular have problems with
    * large input masks.
    *
-   * - It is loaded when Class will initialised.
+   * - It is loaded when this Class will initialised.
    * - Parameter: „window_behavior/mouse_wheel_support.
    * - After change it, a application restart is required.
    */
@@ -60,9 +60,9 @@ protected:
   /**
    * @brief Show Tooltip icon buttons to open WhatsThis PopUp’s.
    * By default this Variable is true, you can change it in the Interface
-   * Configuration.
+   * Configuration to hide it on all Editor masks.
    *
-   * - It is loaded when Class will initialised.
+   * - It is loaded when this Class will initialised.
    * - Parameter: „window_behavior/display_tooltip_buttons“.
    * - After change it, a application restart is required.
    */
@@ -156,7 +156,7 @@ public:
    * @param parent - Important, we need a valid handle for AntiquaCRM::ASettings
    */
   explicit AbstractInput(QWidget *parent = nullptr);
-  ~AbstractInput();
+  virtual ~AbstractInput();
 
   /**
    * @brief find data restriction with QSqlField
@@ -171,22 +171,26 @@ public:
   virtual void setInputToolTip(const QString &) = 0;
 
   /**
-   * @brief Insert a buddy label before the Input widget
-   */
-  virtual void setBuddyLabel(const QString &) = 0;
-
-  /**
    * @brief Prepend a title label to the layout
    */
   AntiquaCRM::ALabel *addTitleLabel(const QString &);
 
   /**
-   * @brief Append a WhatsThis Tool Button to the input widget.
+   * @brief Insert a buddy label before the Input widget
+   * When set, prepend a Textlabel to the Input edit field.
+   * @note Use addTitleLabel() to set and get the Buddy label.
    */
-  virtual void addWhatsThisText(const QString &);
+  virtual void setBuddyLabel(const QString &) = 0;
 
   /**
-   * @brief Appending a stretch to the Widget::layout
+   * @brief Append a WhatsThis Tool Button to the input widget.
+   * On not X11 Platforms the What’s this Button is missing on the taskbar.
+   * We need it for additional User Information.
+   */
+  virtual void setWhatsThisText(const QString &);
+
+  /**
+   * @brief Finally appending a stretch to the Widget::layout
    * @warning Before call this function you need to sure that your Layout
    * already been done.
    */

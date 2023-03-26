@@ -10,8 +10,10 @@
 #define ANTIQUACRM_INPUT_LINEEDIT_H
 
 #include <AGlobal>
+#include <QFocusEvent>
 #include <QLineEdit>
 #include <QObject>
+#include <QSqlField>
 #include <QWidget>
 
 namespace AntiquaCRM {
@@ -37,7 +39,17 @@ public Q_SLOTS:
   void isValidContent(bool);
 
 public:
+  /**
+   * @brief AntiquaCRM LineEdit widget
+   * @param parent      - parent Widget
+   */
   explicit ALineEdit(QWidget *parent = nullptr);
+
+  /**
+   * @brief Set max Length and PlaceHolder Text by given SQL Field Properties.
+   * @param prop - QSqlField properties
+   */
+  void setLineEditProperties(const QSqlField &prop);
 };
 
 } // namespace AntiquaCRM

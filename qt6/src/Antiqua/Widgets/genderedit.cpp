@@ -3,6 +3,8 @@
 
 #include "genderedit.h"
 
+#include <AntiquaCRM>
+
 namespace AntiquaCRM {
 
 GenderEdit::GenderEdit(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {

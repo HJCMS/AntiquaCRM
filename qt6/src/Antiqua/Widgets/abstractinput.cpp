@@ -74,7 +74,7 @@ AntiquaCRM::ALabel *AbstractInput::addTitleLabel(const QString &title) {
   return m_lb;
 }
 
-void AbstractInput::addWhatsThisText(const QString &text) {
+void AbstractInput::setWhatsThisText(const QString &text) {
   if (text.isEmpty())
     return;
 

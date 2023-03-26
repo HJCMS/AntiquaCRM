@@ -3,6 +3,7 @@
 
 #include "phoneedit.h"
 
+#include <AntiquaCRM>
 #include <QAbstractItemView>
 #include <QFontMetrics>
 #include <QRegularExpression>

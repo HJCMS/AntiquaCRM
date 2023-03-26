@@ -8,9 +8,9 @@
 namespace AntiquaCRM {
 
 @CLASSNAME@::@CLASSNAME@(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
-  // m_edit = new AntiquaCRM::(this);
-  // layout->addWidget(m_edit);
-  // initData();
+  m_edit = new AntiquaCRM::ALineEdit(this);
+  layout->addWidget(m_edit);
+  initData();
   // connect(m_edit, SIGNAL(), SLOT(valueChanged()));
 }
 
@@ -53,6 +53,7 @@ void @CLASSNAME@::setFocus() { m_edit->setFocus(); }
 
 void @CLASSNAME@::reset() {
   setWindowModified(false);
+  // m_edit->clear();
   // m_edit->setValue(m_edit->minimum());
 }
 
@@ -74,13 +75,15 @@ void @CLASSNAME@::setBuddyLabel(const QString &text) {
 }
 
 bool @CLASSNAME@::isValid() {
-//if (isRequired() && m_edit->value() < 0)
-//  return false;
+  if (isRequired() && getValue().isNull())
+    return false;
 
   return true;
 }
 
-const QVariant @CLASSNAME@::getValue() { return 0; //m_edit->value(); }
+const QVariant @CLASSNAME@::getValue() {
+  return QVariant(); //m_edit->value();
+}
 
 const QString @CLASSNAME@::popUpHints() {
   return tr("__TODO__");

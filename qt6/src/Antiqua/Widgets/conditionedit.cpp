@@ -3,7 +3,7 @@
 
 #include "conditionedit.h"
 
-#include <QDebug>
+#include <AntiquaCRM>
 
 namespace AntiquaCRM {
 

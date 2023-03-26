@@ -32,17 +32,15 @@ int main(int argc, char *argv[]) {
   QVBoxLayout *layout = new QVBoxLayout(w);
   layout->setContentsMargins(2, 0, 2, 0);
 
-  // QSqlField _fp; // sql test field
-  //_fp.setMetaType(QMetaType(QMetaType::Double));
-  //_fp.setRequiredStatus(QSqlField::Required);
-  //_fp.setLength(80);
-  //_fp.setName("a_sell_price");
-  //_fp.setDefaultValue(7.00);
+   QSqlField _str_field; // default string text field
+  _str_field.setMetaType(QMetaType(QMetaType::QString));
+  _str_field.setRequiredStatus(QSqlField::Required);
+  _str_field.setLength(80);
 
   // AntiquaCRM::GenderEdit
   AntiquaCRM::GenderEdit *_gender = new AntiquaCRM::GenderEdit(w);
   _gender->setBuddyLabel("Gender");
-  _gender->addWhatsThisText("Bitte ein geschlecht auswählen.");
+  _gender->setWhatsThisText("Bitte ein geschlecht auswählen.");
   _gender->appendStretch();
   layout->addWidget(_gender);
 
@@ -50,7 +48,7 @@ int main(int argc, char *argv[]) {
   AntiquaCRM::PriceEdit *_price = new AntiquaCRM::PriceEdit(w);
   _price->setObjectName("a_sell_price");
   _price->setBuddyLabel("Verkaufspreis");
-  _price->addWhatsThisText("Hier den aktuellen Verkaufspreis einfügen.");
+  _price->setWhatsThisText("Hier den aktuellen Verkaufspreis einfügen.");
   _price->appendStretch();
   _price->setValue(14.56);
   layout->addWidget(_price);
@@ -59,7 +57,7 @@ int main(int argc, char *argv[]) {
   AntiquaCRM::CrowdEdit *_crowd = new AntiquaCRM::CrowdEdit(w);
   _crowd->setObjectName("a_count");
   _crowd->setBuddyLabel("Anzahl");
-  _crowd->addWhatsThisText("Hier bitte die Artikel bestands menge angeben.");
+  _crowd->setWhatsThisText("Hier bitte die Artikel bestands menge angeben.");
   _crowd->appendStretch();
   _crowd->setValue(1);
   layout->addWidget(_crowd);
@@ -67,7 +65,7 @@ int main(int argc, char *argv[]) {
   // AntiquaCRM::EMailEdit
   AntiquaCRM::EMailEdit *_email0 = new AntiquaCRM::EMailEdit("a_mail_0", w);
   _email0->setBuddyLabel("Primary eMail");
-  _email0->addWhatsThisText("Standard E-Mail Adresse.");
+  _email0->setWhatsThisText("Standard E-Mail Adresse.");
   _email0->setValue("hans.mustermann@t-online.de");
   _email0->appendStretch();
   layout->addWidget(_email0);
@@ -75,7 +73,7 @@ int main(int argc, char *argv[]) {
   // AntiquaCRM::PhoneEdit
   AntiquaCRM::PhoneEdit *_phone0 = new AntiquaCRM::PhoneEdit("a_phone_0", w);
   _phone0->setBuddyLabel("Primary Tel.");
-  _phone0->addWhatsThisText("Standard Telefonnummer.");
+  _phone0->setWhatsThisText("Standard Telefonnummer.");
   _phone0->setValue("+49 01234 12345678");
   _phone0->appendStretch();
   layout->addWidget(_phone0);
@@ -83,7 +81,7 @@ int main(int argc, char *argv[]) {
   // AntiquaCRM::SalutationEdit
   AntiquaCRM::SalutationEdit *_salutation = new AntiquaCRM::SalutationEdit(w);
   _salutation->setBuddyLabel("Salutation");
-  _salutation->addWhatsThisText("Have this customer a title?");
+  _salutation->setWhatsThisText("Have this customer a title?");
   _salutation->appendStretch();
   layout->addWidget(_salutation);
 
@@ -91,14 +89,18 @@ int main(int argc, char *argv[]) {
   AntiquaCRM::PostalCodeEdit *_plz = new AntiquaCRM::PostalCodeEdit(w);
   _plz->setObjectName("a_postal_code");
   _plz->setBuddyLabel("PLZ");
-  _plz->addWhatsThisText("Add  postalcode here.");
+  _plz->setWhatsThisText("Add  postalcode here.");
   _plz->appendStretch();
   layout->addWidget(_plz);
   _plz->initData();
 
   AntiquaCRM::PostalCodeState *_plz_state = new AntiquaCRM::PostalCodeState(w);
   _plz_state->setObjectName("a_state");
+  _str_field.setLength(100);
+  _plz_state->setRestrictions(_str_field);
   _plz_state->setBuddyLabel("State");
+  _plz_state->setWhatsThisText("Country/State");
+  _plz_state->appendStretch();
   layout->addWidget(_plz_state);
   w->connect(_plz,
              SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
@@ -108,7 +110,11 @@ int main(int argc, char *argv[]) {
   AntiquaCRM::PostalCodeLocation *_plz_country =
       new AntiquaCRM::PostalCodeLocation(w);
   _plz_country->setObjectName("a_location");
-  _plz_country->setBuddyLabel("Country");
+  _str_field.setLength(80);
+  _plz_country->setRestrictions(_str_field);
+  _plz_country->setBuddyLabel("Location");
+  _plz_country->setWhatsThisText("Location");
+  _plz_country->appendStretch();
   layout->addWidget(_plz_country);
   w->connect(
       _plz, SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
@@ -119,7 +125,7 @@ int main(int argc, char *argv[]) {
   AntiquaCRM::ConditionEdit *_condition = new AntiquaCRM::ConditionEdit(w);
   _condition->setObjectName("a_condition");
   _condition->setBuddyLabel("Condition");
-  _condition->addWhatsThisText("Condition of the book.");
+  _condition->setWhatsThisText("Condition of the book.");
   _condition->appendStretch();
   layout->addWidget(_condition);
 
@@ -127,7 +133,7 @@ int main(int argc, char *argv[]) {
   AntiquaCRM::BookBindingEdit *_binding = new AntiquaCRM::BookBindingEdit(w);
   _binding->setObjectName("a_book_binding");
   _binding->setBuddyLabel("Book binding");
-  _binding->addWhatsThisText("Bookcover and Binding description.");
+  _binding->setWhatsThisText("Bookcover and Binding description.");
   _binding->appendStretch();
   layout->addWidget(_binding);
 

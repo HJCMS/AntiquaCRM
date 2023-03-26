@@ -3,6 +3,7 @@
 
 #include "emailedit.h"
 
+#include <AntiquaCRM>
 #include <QFontMetrics>
 #include <QSize>
 

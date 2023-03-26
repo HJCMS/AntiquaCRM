@@ -3,6 +3,7 @@
 
 #include "salutationedit.h"
 
+#include <AntiquaCRM>
 #include <QFontMetrics>
 #include <QLineEdit>
 

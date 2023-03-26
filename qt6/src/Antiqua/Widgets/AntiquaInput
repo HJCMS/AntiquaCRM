@@ -44,4 +44,9 @@
 #include "aspinbox.h"
 #endif
 
+// AntiquaCRM::ASlider
+#ifndef ANTIQUACRM_INPUT_SLIDER_H
+#include "aslider.h"
+#endif
+
 // EOF

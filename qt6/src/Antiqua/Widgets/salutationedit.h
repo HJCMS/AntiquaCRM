@@ -31,14 +31,14 @@ private Q_SLOTS:
   void valueChanged(int);
 
 protected:
-  virtual void initData() override;
+  void initData() override;
 
 public Q_SLOTS:
-  virtual void setValue(const QVariant &) override;
+  void setValue(const QVariant &) override;
 
-  virtual void setFocus() override;
+  void setFocus() override;
 
-  virtual void reset() override;
+  void reset() override;
 
 public:
   /**
@@ -47,19 +47,19 @@ public:
    */
   explicit SalutationEdit(QWidget *parent = nullptr);
 
-  virtual void setRestrictions(const QSqlField &) override;
+  void setRestrictions(const QSqlField &) override;
 
-  virtual void setInputToolTip(const QString &) override;
+  void setInputToolTip(const QString &) override;
 
-  virtual void setBuddyLabel(const QString &) override;
+  void setBuddyLabel(const QString &) override;
 
-  virtual bool isValid() override;
+  bool isValid() override;
 
-  virtual const QVariant getValue() override;
+  const QVariant getValue() override;
 
-  virtual const QString popUpHints() override;
+  const QString popUpHints() override;
 
-  virtual const QString statusHints() override;
+  const QString statusHints() override;
 
   /**
    * @brief get all salutations from json document

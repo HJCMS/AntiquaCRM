@@ -30,9 +30,10 @@ SET (_library_SOURCES
  alabel.cpp
  acombobox.cpp
  adatetimeedit.cpp
+ adoublebox.cpp
  alineedit.cpp
  aspinbox.cpp
- adoublebox.cpp
+ aslider.cpp
 ## Widgets
  whatsthisbutton.cpp
  bookbindingedit.cpp
@@ -52,9 +53,10 @@ SET (_library_HEADERS
  alabel.h
  acombobox.h
  adatetimeedit.h
+ adoublebox.h
  alineedit.h
  aspinbox.h
- adoublebox.h
+ aslider.h
  AntiquaInput
 ## Widgets
  AntiquaWidgets

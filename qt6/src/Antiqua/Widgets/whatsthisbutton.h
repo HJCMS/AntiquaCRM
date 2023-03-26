@@ -27,7 +27,7 @@ private Q_SLOTS:
   void showWhatsThis();
 
 protected:
-  virtual bool event(QEvent *e) override;
+  bool event(QEvent *e) override;
 
 public:
   explicit WhatsThisButton(const QString &help, QWidget *parent = nullptr);

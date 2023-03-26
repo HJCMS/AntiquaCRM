@@ -3,10 +3,7 @@
 
 #include "bookbindingedit.h"
 
-#include <QDebug>
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonObject>
+#include <AntiquaCRM>
 
 namespace AntiquaCRM {
 
