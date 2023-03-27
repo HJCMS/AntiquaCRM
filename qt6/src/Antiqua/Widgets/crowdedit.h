@@ -16,8 +16,9 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaWidgets
  * @class CrowdEdit
+ * @brief Article count editor
+ * @ingroup EditWidgets
  */
 class ANTIQUACRM_LIBRARY CrowdEdit final : public AntiquaCRM::AbstractInput {
   Q_OBJECT
@@ -40,7 +41,6 @@ public Q_SLOTS:
 
 public:
   /**
-   * @brief Article count editor
    * @param parent - parent widget
    */
   explicit CrowdEdit(QWidget *parent = nullptr);

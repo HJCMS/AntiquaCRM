@@ -18,9 +18,9 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaInput
  * @class ADoubleBox
- * @brief AntiquaCRM DoubleBox widget
+ * @brief Primary Double input edit class
+ * @ingroup EditInputs
  */
 class ANTIQUACRM_LIBRARY ADoubleBox final : public QDoubleSpinBox {
   Q_OBJECT
@@ -40,7 +40,6 @@ protected:
 
 public:
   /**
-   * @brief Primary Double input edit class
    * @param parent      - parent Widget
    * @param mouseEvents - enable/disable Mouse Wheel events
    */

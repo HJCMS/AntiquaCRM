@@ -16,8 +16,9 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaWidgets
  * @class ConditionEdit
+ * @brief Edit primary Article condition
+ * @ingroup EditWidgets
  */
 class ANTIQUACRM_LIBRARY ConditionEdit final : public AntiquaCRM::AbstractInput {
   Q_OBJECT
@@ -40,7 +41,6 @@ public Q_SLOTS:
 
 public:
   /**
-   * @brief Edit primary Article condition
    * @param parent - parent widget
    */
   explicit ConditionEdit(QWidget *parent = nullptr);

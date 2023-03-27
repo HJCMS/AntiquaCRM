@@ -17,7 +17,7 @@ namespace AntiquaCRM {
 
 /**
  * @brief Datenbehandlung im Benutzerverzeichnis
- * @ingroup core
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY ASharedDataFiles : public QDir {
 public:
@@ -75,7 +75,7 @@ public:
 
 /**
  * @brief Datenbehandlung im Benutzer Cache-/ Tempverzeichnis
- * @ingroup core
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY ASharedCacheFiles : public QDir {
 public:

@@ -1,0 +1,10 @@
+/**
+ * @section AntiquaInterface Interface Library
+ * @short AntiquaCRM Interface Library
+ *
+ * @addtogroup AntiquaInterface
+ * @{
+ *  @defgroup Provider  Provider Interface
+ *  @defgroup Settings  Settings Interface
+ * @}
+ */

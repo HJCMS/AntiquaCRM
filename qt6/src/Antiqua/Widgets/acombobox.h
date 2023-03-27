@@ -18,8 +18,9 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaInput
  * @class AComboBox
+ * @brief AntiquaCRM Combobox widget
+ * @ingroup EditInputs
  */
 class ANTIQUACRM_LIBRARY AComboBox final : public QComboBox {
   Q_OBJECT
@@ -39,7 +40,6 @@ protected:
 
 public:
   /**
-   * @brief AntiquaCRM Combobox widget
    * @param parent      - parent Widget
    * @param mouseEvents - enable/disable Mouse Wheel events
    */

@@ -20,7 +20,7 @@ namespace AntiquaCRM {
 
 /**
  * @brief Order Article object class
- * @ingroup core
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY AOrderArticle final : public QJsonObject {
 private:
@@ -48,7 +48,7 @@ public:
 
 /**
  * @brief Customer data object class
- * @ingroup core
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY AOrderCustomer final : public QJsonObject {
 private:
@@ -70,7 +70,7 @@ public:
 
 /**
  * @brief Order Articles container class
- * @ingroup core
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY AOrderArticles final : public QJsonArray {
 public:
@@ -80,7 +80,7 @@ public:
 
 /**
  * @brief Order Info class
- * @ingroup core
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY AOrderInfo final : public QJsonObject {
 private:
@@ -107,7 +107,7 @@ public:
 
 /**
  * @brief Provider Order Document class
- * @ingroup core
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY AOrderImport final : public QJsonObject {
 private:

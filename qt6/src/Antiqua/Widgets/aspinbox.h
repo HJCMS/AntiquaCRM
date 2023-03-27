@@ -18,9 +18,9 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaInput
  * @class ASpinBox
- * @brief AntiquaCRM SpinBox widget
+ * @brief Primary Integer input edit class
+ * @ingroup EditInputs
  */
 class ANTIQUACRM_LIBRARY ASpinBox final : public QSpinBox {
   Q_OBJECT
@@ -40,7 +40,6 @@ protected:
 
 public:
   /**
-   * @brief Primary Integer input edit class
    * @param parent      - parent Widget
    * @param mouseEvents - enable/disable Mouse Wheel events
    */

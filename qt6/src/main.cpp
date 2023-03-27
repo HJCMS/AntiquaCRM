@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
   QVBoxLayout *layout = new QVBoxLayout(w);
   layout->setContentsMargins(2, 0, 2, 0);
 
-   QSqlField _str_field; // default string text field
+  QSqlField _str_field; // default string text field
   _str_field.setMetaType(QMetaType(QMetaType::QString));
   _str_field.setRequiredStatus(QSqlField::Required);
   _str_field.setLength(80);
@@ -104,22 +104,24 @@ int main(int argc, char *argv[]) {
   layout->addWidget(_plz_state);
   w->connect(_plz,
              SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
-             _plz_state, SLOT(setPostalCodes(const AntiquaCRM::PostalCode &)));
+             _plz_state, SLOT(setCountry(const AntiquaCRM::PostalCode &)));
   w->connect(_plz, SIGNAL(sendResetDependencies()), _plz_state, SLOT(reset()));
 
-  AntiquaCRM::PostalCodeLocation *_plz_country =
+  AntiquaCRM::PostalCodeLocation *_plz_location =
       new AntiquaCRM::PostalCodeLocation(w);
-  _plz_country->setObjectName("a_location");
+  _plz_location->setObjectName("a_location");
   _str_field.setLength(80);
-  _plz_country->setRestrictions(_str_field);
-  _plz_country->setBuddyLabel("Location");
-  _plz_country->setWhatsThisText("Location");
-  _plz_country->appendStretch();
-  layout->addWidget(_plz_country);
-  w->connect(
-      _plz, SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
-      _plz_country, SLOT(setPostalCodes(const AntiquaCRM::PostalCode &)));
-  w->connect(_plz, SIGNAL(sendResetDependencies()), _plz_country, SLOT(reset()));
+  _plz_location->setRestrictions(_str_field);
+  _plz_location->setBuddyLabel("Location");
+  _plz_location->setWhatsThisText("Location");
+  _plz_location->appendStretch();
+  layout->addWidget(_plz_location);
+
+  w->connect(_plz,
+             SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
+             _plz_location, SLOT(setLocation(const AntiquaCRM::PostalCode &)));
+  w->connect(_plz, SIGNAL(sendResetDependencies()), // reset
+             _plz_location, SLOT(reset()));
 
   // AntiquaCRM::ConditionEdit
   AntiquaCRM::ConditionEdit *_condition = new AntiquaCRM::ConditionEdit(w);

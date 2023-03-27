@@ -16,8 +16,9 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaWidgets
  * @class EMailEdit
+ * @brief eMail input Editor
+ * @ingroup EditWidgets
  */
 class ANTIQUACRM_LIBRARY EMailEdit final : public AntiquaCRM::AbstractInput {
   Q_OBJECT
@@ -44,7 +45,6 @@ public Q_SLOTS:
 
 public:
   /**
-   * @brief eMail input Editor
    * @param name   - Object name
    * @param parent - parent Object
    */

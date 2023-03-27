@@ -7,9 +7,6 @@
 //
 
 /**
- * @defgroup amacros AntiquaCRM Macros
- * @brief Macro definitions in AntiquaCRM Namespace
- *
  * @mainpage Antiqua CRM
  * API Documentation for „AntiquaCRM“ core library.
  */
@@ -22,7 +19,7 @@
 #include <QIODevice>
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief default executable name
  * @short Required by qApp-&gt;setApplicationName() and QSettings class.
  */
@@ -31,7 +28,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Application Domain in user configuration path
  * @code
  *  ~/.config/{HJCMS_CONFIG_DOMAIN}/{HJCMS_CONFIG_NAME}/{HJCMS_CONFIG_VERSION}
@@ -42,7 +39,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Application name in user configuration path
  */
 #ifndef HJCMS_CONFIG_NAME
@@ -50,7 +47,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Application Version in user configuration path
  * @short config version for targeting the location 
  *  of the current user configuration file.
@@ -60,7 +57,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Configuration Application ID
  */
 #ifndef HJCMS_CONFIG_APPID
@@ -68,7 +65,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Configuration DNS ID
  */
 #ifndef HJCMS_CONFIG_DNSID
@@ -76,7 +73,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Configuration URL ID
  */
 #ifndef HJCMS_CONFIG_URLID
@@ -84,7 +81,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief required by PostgreSQL, D-Bus and TCP-Socket
  */
 #ifndef ANTIQUACRM_CONNECTION_DOMAIN
@@ -92,7 +89,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief required by NetworkAccessManager
  * @warning This fixed string is needet for OAuth
  */
@@ -101,7 +98,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Application Version String
  */
 #ifndef ANTIQUACRM_VERSION
@@ -109,7 +106,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Application Display title
  */
 #ifndef ANTIQUACRM_DISPLAYNAME
@@ -117,7 +114,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Application Window title inkl. Version string
  */
 #ifndef ANTIQUACRM_WINDOW_TITLE
@@ -125,7 +122,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Project Homepage url
  */
 #ifndef ANTIQUACRM_HOMEPAGE
@@ -133,7 +130,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief AntiquaCRM Provider Plugin-Interface „namespace“
  */
 #ifndef ANTIQUACRM_INTERFACE
@@ -141,7 +138,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Shared Data location
  */
 #ifndef ANTIQUACRM_DATA_TARGET
@@ -149,7 +146,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Plugins target
  */
 #ifndef ANTIQUACRM_PLUGIN_TARGET
@@ -157,7 +154,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Translations target
  */
 #ifndef ANTIQUACRM_TRANSLATION_TARGET
@@ -165,7 +162,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Expiry time for the socket connections
  */
 #ifndef ANTIQUACRM_SOCKET_TIMEOUT
@@ -177,7 +174,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Standard mode for socket connections
  */
 #ifndef ANTIQUACRM_TRANSMITTER_MODE
@@ -185,7 +182,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief library export definition
  */
 #ifdef ANTIQUACRM_SHARED_LIBRARY
@@ -195,7 +192,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Import Format for PGSQL::CURRENT_TIMESTAMP
  * @note AntiquaCRM not using Time Zones in SQL Tables!
  */
@@ -204,7 +201,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief The date format specified by the system is ISO-8601!
  * @code
  *  QJsonObject import;
@@ -218,7 +215,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Date and time information for the UI display.
  */
 #ifndef ANTIQUACRM_DATETIME_TOOLTIP
@@ -226,7 +223,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Long date time display format
  */
 #ifndef ANTIQUACRM_DATETIME_DISPLAY
@@ -234,7 +231,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Normal date time display format
  */
 #ifndef ANTIQUACRM_DATE_DISPLAY
@@ -242,7 +239,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Short date time display format
  */
 #ifndef ANTIQUACRM_SHORT_DATE_DISPLAY
@@ -250,7 +247,7 @@
 #endif
 
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Default Charset for Database Connections, Application files, is utf8!
  */
 #ifndef ANTIQUACRM_TEXTCODEC
@@ -261,7 +258,7 @@
 #include <QDBusAbstractAdaptor>
 #else
 /**
- * @ingroup amacros
+ * @ingroup AMacros
  * @brief Macro-fake for Windows
  * @short Redefined macro to prevent errors when compile on windows
  */
@@ -274,7 +271,7 @@
  */
 namespace AntiquaCRM {
  /**
-  * @ingroup core
+  * @ingroup CoreLibrary
   * @class PostalCode
   * @brief PostalCode entries
   */

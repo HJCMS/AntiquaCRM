@@ -16,8 +16,9 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaWidgets
  * @class PriceEdit
+ * @brief Price Input edit widget
+ * @ingroup EditWidgets
  */
 class ANTIQUACRM_LIBRARY PriceEdit final : public AntiquaCRM::AbstractInput {
   Q_OBJECT
@@ -45,7 +46,6 @@ public Q_SLOTS:
 
 public:
   /**
-   * @brief Price Input edit widget
    * @param min    - minimum price
    * @param max    - maximum price
    * @param parent - parent widget

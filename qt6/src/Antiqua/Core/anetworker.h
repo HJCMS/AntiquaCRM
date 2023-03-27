@@ -18,7 +18,7 @@ namespace AntiquaCRM {
 
 /**
  * @brief Standard Klasse für Netzwerkabfragen.
- * @ingroup core
+ * @ingroup CoreLibrary
  *
  * Hier werden Sprache, Zeichensatz und Fehlermeldungen verabeitet.
  * Die Netzwerk antworten müssen in den Abfrage-Klassen verarbeitet werden!

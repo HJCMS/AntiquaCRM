@@ -16,7 +16,7 @@ namespace AntiquaCRM {
 
 /**
  * @brief The ANetworkRequest class
- * @ingroup core
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY ANetworkRequest final : public QNetworkRequest {
 private:

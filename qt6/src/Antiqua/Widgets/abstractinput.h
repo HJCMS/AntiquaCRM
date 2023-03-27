@@ -25,12 +25,11 @@ class ALabel;
 class AbstractInputPrivate;
 
 /**
- * @ingroup AntiquaInput
+ * @class AbstractInput
  * @brief In this group all Antiqua CRM Widgets with Input masks defined.
  * This classes only used for Subclassing and not direct in the Interface.
- * You can include it with: #include &gt;AntiquaInput&lt;
  *
- * @class AbstractInput
+ * @ingroup EditInputs
  */
 class ANTIQUACRM_LIBRARY AbstractInput : public QWidget {
   Q_OBJECT

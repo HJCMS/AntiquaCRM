@@ -38,10 +38,11 @@ void ALineEdit::skipReturnPressed() {
 }
 
 void ALineEdit::isValidContent(bool b) {
-  if (b)
-    setStyleSheet(QString());
-  else
-    setStyleSheet("QLineEdit {selection-background-color: red;}");
+  QString _css;
+  if (!b)
+    _css = "QLineEdit {selection-background-color: red;}";
+
+  setStyleSheet(_css);
 }
 
 void ALineEdit::setCompleterAction(bool enabled) {
@@ -53,14 +54,14 @@ void ALineEdit::setLineEditProperties(const QSqlField &prop) {
   if (prop.metaType().id() != QMetaType::QString)
     return;
 
-  int max_chars = prop.length();
-  if (max_chars > 0) {
+  int _length = prop.length();
+  if (_length > 0) {
     QString _txt(tr("Max allowed length") + " ");
-    _txt.append(QString::number(max_chars));
+    _txt.append(QString::number(_length));
     _txt.append(".");
 
     setPlaceholderText(_txt);
-    setMaxLength(max_chars);
+    setMaxLength(_length);
   }
 
   if (prop.requiredStatus() == QSqlField::Required) {

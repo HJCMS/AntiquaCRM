@@ -11,11 +11,6 @@ namespace AntiquaCRM {
  Q_NAMESPACE
 
  /**
-  * @defgroup Enumerations AntiquaCRM Enumerations
-  * @brief Enumerations in AntiquaCRM Namespace
-  */
-
- /**
   * @ingroup Enumerations
   * @brief Nachrichtentyp
   * Definiert die Dringlichkeit einer Nachricht an das Meldungssystem!

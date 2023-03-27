@@ -20,9 +20,9 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaInput
  * @class ALineEdit
- * @brief AntiquaCRM Line edit widget
+ * @brief AntiquaCRM Line input edit widget
+ * @ingroup EditInputs
  */
 class ANTIQUACRM_LIBRARY ALineEdit final : public QLineEdit {
   Q_OBJECT
@@ -47,13 +47,13 @@ public Q_SLOTS:
 
 public:
   /**
-   * @brief AntiquaCRM LineEdit widget
-   * @param parent      - parent Widget
+   * @brief AntiquaCRM Line input edit widget
+   * @param parent - parent Widget
    */
   explicit ALineEdit(QWidget *parent = nullptr);
 
   /**
-   * @brief Set Enable/Visible, Action Completer-Popup.
+   * @brief Enable+Visible, completer-popup action.
    */
   void setCompleterAction(bool enabled = false);
 

@@ -15,7 +15,7 @@ namespace AntiquaCRM {
 
 /**
  * @brief Application Socket Transmitter
- * @ingroup core
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY ATransmitter final : public QLocalSocket {
   Q_OBJECT

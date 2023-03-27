@@ -17,9 +17,9 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaInput
  * @class ALabel
  * @brief AntiquaCRM Default Label widget
+ * @ingroup EditInputs
  */
 class ANTIQUACRM_LIBRARY ALabel final : public QLabel {
   Q_OBJECT

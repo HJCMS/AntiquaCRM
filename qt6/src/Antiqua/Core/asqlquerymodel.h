@@ -20,7 +20,7 @@ class ASqlCore;
 
 /**
  * @brief Standard SqlQueryModel für Tabellenansichten
- * @ingroup core
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY ASqlQueryModel : public QSqlQueryModel {
   Q_OBJECT

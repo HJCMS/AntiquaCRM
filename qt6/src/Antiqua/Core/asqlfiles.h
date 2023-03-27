@@ -16,7 +16,7 @@ namespace AntiquaCRM {
 
 /**
  * @brief Template Class for SQL Queries
- * @ingroup core
+ * @ingroup CoreLibrary
  *
  * Following MACROS are replaced!
  *  @li \@SQL_WHERE_CLAUSE\@

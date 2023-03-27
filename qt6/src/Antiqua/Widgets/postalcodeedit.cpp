@@ -252,8 +252,8 @@ void PostalCodeEdit::setFocus() {
 }
 
 void PostalCodeEdit::reset() {
-  m_postalcode->clear();
   m_countries->setCurrentIndex(0);
+  m_postalcode->clear();
   setWindowModified(false);
 }
 
@@ -370,6 +370,13 @@ PostalCodeState::PostalCodeState(QWidget *parent)
   layout->addWidget(m_edit);
 }
 
+void PostalCodeState::setCountry(const AntiquaCRM::PostalCode &code) {
+  if (code.state.isEmpty())
+    return;
+
+  m_edit->setText(code.state);
+}
+
 void PostalCodeState::setValue(const QVariant &value) {
   QMetaType _type = value.metaType();
   if (_type.id() == QMetaType::QString) {
@@ -385,13 +392,6 @@ void PostalCodeState::setFocus() { m_edit->setFocus(); }
 void PostalCodeState::reset() {
   m_edit->clear();
   setWindowModified(false);
-}
-
-void PostalCodeState::setPostalCodes(const AntiquaCRM::PostalCode &code) {
-  if (code.state.isEmpty())
-    return;
-
-  m_edit->setText(code.state);
 }
 
 void PostalCodeState::setRestrictions(const QSqlField &field) {
@@ -443,24 +443,7 @@ PostalCodeLocation::PostalCodeLocation(QWidget *parent)
 
 void PostalCodeLocation::initData() {}
 
-void PostalCodeLocation::setValue(const QVariant &value) {
-  QMetaType _type = value.metaType();
-  if (_type.id() == QMetaType::QString) {
-    m_edit->setText(value.toString());
-    return;
-  }
-  QString str = QString::number(value.toInt());
-  m_edit->setText(str);
-}
-
-void PostalCodeLocation::setFocus() { m_edit->setFocus(); }
-
-void PostalCodeLocation::reset() {
-  m_edit->clear();
-  setWindowModified(false);
-}
-
-void PostalCodeLocation::setPostalCodes(const AntiquaCRM::PostalCode &code) {
+void PostalCodeLocation::setLocation(const AntiquaCRM::PostalCode &code) {
   if (code.location.isEmpty())
     return;
 
@@ -477,6 +460,23 @@ void PostalCodeLocation::setPostalCodes(const AntiquaCRM::PostalCode &code) {
   m_edit->setClearButtonEnabled(true);
   m_edit->setCompleter(m_cpl);
   m_edit->setCompleterAction(true);
+}
+
+void PostalCodeLocation::setValue(const QVariant &value) {
+  QMetaType _type = value.metaType();
+  if (_type.id() == QMetaType::QString) {
+    m_edit->setText(value.toString());
+    return;
+  }
+  QString str = QString::number(value.toInt());
+  m_edit->setText(str);
+}
+
+void PostalCodeLocation::setFocus() { m_edit->setFocus(); }
+
+void PostalCodeLocation::reset() {
+  m_edit->clear();
+  setWindowModified(false);
 }
 
 void PostalCodeLocation::setRestrictions(const QSqlField &field) {

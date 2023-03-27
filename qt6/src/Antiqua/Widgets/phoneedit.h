@@ -21,8 +21,9 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaWidgets
  * @class PhoneCountryCodeModel
+ * @brief Phone Country Code Completer Model
+ * @ingroup EditWidgets
  */
 class PhoneCountryCodeModel final : public QAbstractListModel {
   Q_OBJECT
@@ -36,7 +37,6 @@ private:
 
 public:
   /**
-   * @brief Phone Country Code Completer Model
    * @param parent - parent object
    */
   explicit PhoneCountryCodeModel(QObject *parent = nullptr);
@@ -49,8 +49,9 @@ public:
 };
 
 /**
- * @ingroup AntiquaWidgets
  * @class PhoneEdit
+ * @brief Phone/Mobil number input edit
+ * @ingroup EditWidgets
  */
 class ANTIQUACRM_LIBRARY PhoneEdit final : public AntiquaCRM::AbstractInput {
   Q_OBJECT
@@ -79,7 +80,6 @@ public Q_SLOTS:
 
 public:
   /**
-   * @brief Phone/Mobil number input edit
    * @param name   - Object name
    * @param parent - parent object
    */

@@ -19,9 +19,9 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaInput
  * @class ADateTimeEdit
  * @brief AntiquaCRM Date Time Edit widget
+ * @ingroup EditInputs
  */
 class ANTIQUACRM_LIBRARY ADateTimeEdit final : public QDateTimeEdit {
   Q_OBJECT
@@ -41,7 +41,6 @@ protected:
 
 public:
   /**
-   * @brief Primary DateTime edit class
    * @param parent      - parent Widget
    * @param mouseEvents - enable/disable Mouse Wheel events
    */

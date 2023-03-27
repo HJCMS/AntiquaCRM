@@ -14,8 +14,9 @@
 namespace AntiquaCRM {
 
 /**
+ * @class ANetworkCache
  * @brief The ANetworkCache class
- * @ingroup core
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY ANetworkCache final : public QAbstractNetworkCache {
   Q_OBJECT

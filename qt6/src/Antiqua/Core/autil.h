@@ -16,7 +16,7 @@ namespace AntiquaCRM {
 
 /**
  * @brief Antiqua Utilities
- * @ingroup core
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY AUtil final {
 public:

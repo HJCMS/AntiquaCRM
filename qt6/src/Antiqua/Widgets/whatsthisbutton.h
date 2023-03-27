@@ -17,6 +17,11 @@
 
 namespace AntiquaCRM {
 
+/**
+ * @class WhatsThisButton
+ * @brief WhatsThis Helper button class
+ * @ingroup EditInputs
+ */
 class ANTIQUACRM_LIBRARY WhatsThisButton final : public QPushButton {
   Q_OBJECT
 

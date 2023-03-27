@@ -13,7 +13,7 @@ namespace AntiquaCRM {
 
 /**
  * @brief The ACompleterData class
- * @ingroup core
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY ACompleterData final {
 private:

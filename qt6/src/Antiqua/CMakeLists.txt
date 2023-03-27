@@ -4,6 +4,17 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 #
 
+SET(doxygen_FILES
+ Core/Core.dox
+ Interface/Interface.dox
+ Widgets/Widgets.dox
+ Doxyfile.cmake
+)
+
+CONFIGURE_FILE (Doxyfile.cmake
+ ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
+)
+
 ADD_SUBDIRECTORY (Core)
 
 SET (INTERNAL_WIDGET_INCLUDE_DIRS

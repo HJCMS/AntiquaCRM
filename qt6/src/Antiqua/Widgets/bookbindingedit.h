@@ -16,8 +16,9 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaWidgets
  * @class BookBindingEdit
+ * @brief Edit Cover and Bookbinding description
+ * @ingroup EditWidgets
  */
 class ANTIQUACRM_LIBRARY BookBindingEdit final
     : public AntiquaCRM::AbstractInput {
@@ -41,7 +42,6 @@ public Q_SLOTS:
 
 public:
   /**
-   * @brief Edit Cover and Bookbinding description
    * @param parent - parent widget
    */
   explicit BookBindingEdit(QWidget *parent = nullptr);

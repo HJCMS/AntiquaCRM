@@ -17,8 +17,9 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaInput
  * @class ASlider
+ * @brief AntiquaCRM Slider widget
+ * @ingroup EditInputs
  */
 class ANTIQUACRM_LIBRARY ASlider final : public QSlider {
   Q_OBJECT
@@ -38,7 +39,6 @@ protected:
 
 public:
   /**
-   * @brief AntiquaCRM Slider widget
    * @param parent      - parent Widget
    * @param mouseEvents - enable/disable Mouse Wheel events
    */

@@ -1,0 +1,10 @@
+/**
+ * @section AntiquaWidgets Widgets library
+ * @short AntiquaCRM Widgets library
+ *
+ * @addtogroup AntiquaWidgets
+ * @{
+ *  @defgroup EditInputs  Main Inputs
+ *  @defgroup EditWidgets Editor Widgets
+ * @}
+ */

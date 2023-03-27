@@ -17,7 +17,7 @@ namespace AntiquaCRM {
 
 /**
  * @brief AntiquaCRM Configuration Class
- * @ingroup core
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY ASettings : public QSettings {
   Q_OBJECT

@@ -17,8 +17,9 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaWidgets
  * @class SalutationEdit
+ * @brief Salutation selecter class
+ * @ingroup EditWidgets
  */
 class ANTIQUACRM_LIBRARY SalutationEdit final
     : public AntiquaCRM::AbstractInput {
@@ -42,7 +43,6 @@ public Q_SLOTS:
 
 public:
   /**
-   * @brief Salutation selecter class
    * @param parent - parent widget
    */
   explicit SalutationEdit(QWidget *parent = nullptr);

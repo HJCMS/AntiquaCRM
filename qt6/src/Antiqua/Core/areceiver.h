@@ -16,7 +16,7 @@ namespace AntiquaCRM {
 
 /**
  * @brief Application Socket Receiver
- * @ingroup core
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY AReceiver final : public QLocalServer {
   Q_OBJECT

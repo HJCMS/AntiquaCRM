@@ -1,0 +1,13 @@
+/**
+ * @section AntiquaCRM Core library
+ * @short AntiquaCRM Core library
+ *
+ * @addtogroup AntiquaCRM
+ * @{
+ *  @defgroup CoreLibrary   Classes
+ *  @defgroup AMacros       Macros
+ *  @defgroup Enumerations  Enumerations
+ * @}
+ *
+ * @brief AntiquaCRM Core Library
+ */

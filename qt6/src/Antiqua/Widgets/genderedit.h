@@ -17,8 +17,9 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaWidgets
  * @class GenderEdit
+ * @brief Gender Selecter
+ * @ingroup EditWidgets
  */
 class ANTIQUACRM_LIBRARY GenderEdit final : public AntiquaCRM::AbstractInput {
   Q_OBJECT
@@ -41,7 +42,6 @@ public Q_SLOTS:
 
 public:
   /**
-   * @brief Gender Selecter
    * @param parent - parent widget
    */
   explicit GenderEdit(QWidget *parent = nullptr);
