@@ -8,6 +8,7 @@
 #include <QPalette>
 #include <QRegExp>
 #include <QRegularExpressionMatch>
+#include <QUrl>
 
 EMailEdit::EMailEdit(QWidget *parent) : InputEdit{parent} {
   m_edit = new AntiquaLineEdit(this);
@@ -24,12 +25,22 @@ EMailEdit::EMailEdit(QWidget *parent) : InputEdit{parent} {
 }
 
 bool EMailEdit::validate(const QString &mail) const {
-  if (AntiquaCRM::AUtil::checkMail(mail)) {
-    m_edit->setStyleSheet(QString());
-    return true;
+  bool _check = AntiquaCRM::AUtil::checkMail(mail);
+  if (_check) {
+    QStringList _l = mail.split("@");
+    QUrl _url;
+    _url.setScheme("mailto");
+    _url.setUserInfo(_l.first());
+    _url.setHost(_l.last());
+    _check = _url.isValid();
   }
-  m_edit->setStyleSheet("QLineEdit {selection-background-color: red;}");
-  return false;
+  // display errors
+  if (_check) {
+    m_edit->setStyleSheet(QString());
+  } else {
+    m_edit->setStyleSheet("QLineEdit {selection-background-color: red;}");
+  }
+  return _check;
 }
 
 void EMailEdit::dataChanged(const QString &email) {

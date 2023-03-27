@@ -7,28 +7,37 @@
 #include <QRegularExpressionMatch>
 #include <QStringList>
 #include <QTextStream>
+#include <QUrl>
 
 namespace AntiquaCRM {
 
+const QRegularExpression AUtil::strip_lineends() {
+  return QRegularExpression("[\\n\\r]+");
+}
+
+const QRegularExpression AUtil::strip_spaces() {
+  return QRegularExpression("[\\s\\t]+");
+}
+
 const QString AUtil::socketName() {
-  QString sname(ANTIQUACRM_CONNECTION_DOMAIN);
-  sname.append("-");
-  sname.append(QString::fromLocal8Bit(HJCMS_CONFIG_APPID));
+  QString _name(ANTIQUACRM_CONNECTION_DOMAIN);
+  _name.append("-");
+  _name.append(QString::fromLocal8Bit(HJCMS_CONFIG_APPID));
 #ifdef Q_OS_LINUX
-  QString userName = qEnvironmentVariable("USER").trimmed().replace(" ", "");
-  if (!userName.isEmpty()) {
-    sname.append("-");
-    sname.append(userName);
+  QString _user = qEnvironmentVariable("USER").trimmed().replace(" ", "");
+  if (!_user.isEmpty()) {
+    _name.append("-");
+    _name.append(_user);
   }
 #endif
-  return sname;
+  return _name;
 }
 
 const QString AUtil::trim(const QString &str) {
-  QString out = str;
-  out.replace(QRegularExpression("[\\n\\r]+"), " ");
-  out.replace(QRegularExpression("[\\s\\t]+"), " ");
-  return out.trimmed();
+  QString _str(str.trimmed());
+  _str.replace(strip_lineends(), " ");
+  _str.replace(strip_spaces(), " ");
+  return _str.trimmed();
 }
 
 const QString AUtil::ucFirst(const QString &str) {
@@ -47,10 +56,17 @@ const QRegularExpression AUtil::emailRegExp() {
 }
 
 bool AUtil::checkMail(const QString &mail) {
-  QRegularExpression expr(emailRegExp().pattern());
   QString str = mail.trimmed().toLower();
-  QRegularExpressionMatch match = expr.match(str);
-  return match.hasMatch();
+  QRegularExpressionMatch match = emailRegExp().match(str);
+  if (match.hasMatch()) {
+    QStringList _l = mail.split("@");
+    QUrl _url;
+    _url.setScheme("mailto");
+    _url.setUserInfo(_l.first(), QUrl::StrictMode);
+    _url.setHost(_l.last(), QUrl::StrictMode);
+    return _url.isValid();
+  }
+  return false;
 }
 
 const QRegularExpression AUtil::phoneRegExp() {
@@ -61,9 +77,8 @@ const QRegularExpression AUtil::phoneRegExp() {
 }
 
 bool AUtil::checkPhone(const QString &phone) {
-  QRegularExpression expr(phoneRegExp().pattern());
   QString str = phone.trimmed().toLower();
-  QRegularExpressionMatch match = expr.match(str);
+  QRegularExpressionMatch match = phoneRegExp().match(str);
   return match.hasMatch();
 }
 
@@ -71,7 +86,8 @@ const QString AUtil::zerofill(qint64 number, int length) {
   return QString::number(number).rightJustified(length, '0');
 }
 
-const QString AUtil::toMoney(double value, QLocale::CurrencySymbolFormat format) {
+const QString AUtil::toMoney(double value,
+                             QLocale::CurrencySymbolFormat format) {
   QLocale lc = QLocale::system();
   QString cs = lc.currencySymbol(format);
   return lc.toCurrencyString(value, cs, 2);

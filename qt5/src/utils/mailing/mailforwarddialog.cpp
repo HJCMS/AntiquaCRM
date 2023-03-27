@@ -203,14 +203,15 @@ void MailForwardDialog::setMailCommand() {
 
   bool attach = tplData.value("tb_attachment").toBool();
   QString eMail = m_keys->getData("c_email_0").toString();
-  cli->setMail(eMail);
   cli->setSubject(m_mailSubject->text());
   cli->setBody(m_mailBody->toPlainText());
   if (attach && m_attachmentBar->exists()) {
     cli->setAttachment(m_attachmentBar->attachment().filePath());
   }
-  cli->sendMail();
+  if (!cli->setMail(eMail))
+    return; // invalid eMail
 
+  cli->sendMail();
   QTimer::singleShot(2000, this, SLOT(accept()));
 }
 

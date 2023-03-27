@@ -22,9 +22,9 @@ EMailEdit::EMailEdit(const QString &name, QWidget *parent)
 EMailEdit::EMailEdit(QWidget *parent) : EMailEdit{"email_edit", parent} {}
 
 bool EMailEdit::validate(const QString &mail) const {
-  bool check = AntiquaCRM::AUtil::checkMail(mail);
-  m_edit->isValidContent(check);
-  return check;
+  bool _check = AntiquaCRM::AUtil::checkMail(mail);
+  m_edit->isValidContent(_check);
+  return _check;
 }
 
 void EMailEdit::initData() {

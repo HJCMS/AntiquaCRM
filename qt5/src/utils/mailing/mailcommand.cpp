@@ -71,17 +71,21 @@ void MailCommand::sendMail() {
   startDetached(&retval);
 }
 
-void MailCommand::setMail(const QString &data) {
+bool MailCommand::setMail(const QString &data) {
   if (!data.contains("@"))
-    return;
+    return false;
 
   QStringList l = data.split("@");
   QUrl url;
   url.setScheme("mailto");
   url.setUserInfo(l.first());
   url.setHost(l.last());
-  if (url.isValid())
+  if (url.isValid()) {
     p_email = url;
+    return true;
+  }
+  emit sendMessage(tr("Invalid eMail Address"));
+  return false;
 }
 
 const QString MailCommand::getMail() {

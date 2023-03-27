@@ -7,6 +7,7 @@ SELECT 'Office' AS a_provider_id,
   CASE i_id WHEN ib_id THEN ib_price WHEN cv_id THEN cv_price WHEN ip_id THEN ip_price WHEN va_id THEN va_price ELSE 0.00 END AS a_price,
   1 AS a_count,
   CASE i_id WHEN ib_id THEN 1 WHEN cv_id THEN 2 WHEN ip_id THEN 3 WHEN va_id THEN 4 ELSE 0 END AS a_type,
+  CASE i_id WHEN ib_id THEN 1 ELSE 0 END AS a_tax,
   GREATEST(ib_title, ip_title, cv_title, va_title, NULL) AS a_title
 FROM inventory
 LEFT JOIN inventory_books ON ib_id=i_id

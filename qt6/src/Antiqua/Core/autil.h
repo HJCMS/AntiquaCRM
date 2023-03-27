@@ -19,6 +19,10 @@ namespace AntiquaCRM {
  * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY AUtil final {
+private:
+  static const QRegularExpression strip_lineends();
+  static const QRegularExpression strip_spaces();
+
 public:
   /**
    * @brief AntiquaCRM Socket Identifier
@@ -36,7 +40,10 @@ public:
   static const QString ucFirst(const QString &);
 
   /**
-   * @brief Regular Expression for eMail
+   * @brief Simple Regular Expression for eMail
+   * @code
+   *  ^([\\d\\w\\-\\.]{3,})@([\\d\\w\\-\\.]{2,})\\.([a-z]{2,6})$
+   * @endcode
    */
   static const QRegularExpression emailRegExp();
 
@@ -69,8 +76,9 @@ public:
    * @param value
    * @param format
    */
-  static const QString toMoney(double value,
-    QLocale::CurrencySymbolFormat format = QLocale::CurrencySymbol);
+  static const QString
+  toMoney(double value,
+          QLocale::CurrencySymbolFormat format = QLocale::CurrencySymbol);
 };
 
 }; // namespace AntiquaCRM
