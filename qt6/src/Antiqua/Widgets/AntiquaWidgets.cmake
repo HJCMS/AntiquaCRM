@@ -9,6 +9,9 @@
 #ifndef ANTIQUACRM_WIDGETS_LIB_H
 #define ANTIQUACRM_WIDGETS_LIB_H
 
+// AntiquaCRM::ColorLuminance
+#include "colorluminance.h"
+
 // AntiquaCRM::CrowdEdit
 #include "crowdedit.h"
 

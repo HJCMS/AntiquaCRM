@@ -16,6 +16,16 @@ int main(int argc, char *argv[]) {
   appl.setApplicationVersion(ANTIQUACRM_VERSION);
   appl.setOrganizationDomain(ANTIQUACRM_CONNECTION_DOMAIN);
   appl.setStyle(QStyleFactory::create("Fusion"));
+
+  // Begin::PlaceholderText (Bugfix Qt6 Linux)
+  QPalette _p = appl.palette();
+  QColor _phtc = _p.color(QPalette::PlaceholderText).toRgb();
+  if (!AntiquaCRM::ColorLuminance(&appl).checkForeground(_phtc)) {
+    _p.setColor(QPalette::PlaceholderText, Qt::darkGray);
+    appl.setPalette(_p);
+  }
+  // End::PlaceholderText
+
   QStringList customCSS;
   customCSS << "QTabBar::tab:selected {color: palette(highlight);}";
   customCSS << "QPushButton:hover {color:palette(highlight);}";
@@ -29,6 +39,7 @@ int main(int argc, char *argv[]) {
   win->setMinimumSize(600, 400);
 
   QWidget *w = new QWidget(win);
+  QStatusBar *m_statusbar = new QStatusBar(w);
   QVBoxLayout *layout = new QVBoxLayout(w);
   layout->setContentsMargins(2, 0, 2, 0);
 
@@ -139,15 +150,17 @@ int main(int argc, char *argv[]) {
   _binding->appendStretch();
   layout->addWidget(_binding);
 
+
+
+  // finalize layout
   layout->addStretch(1);
-  QStatusBar *m_statusbar = new QStatusBar(w);
   layout->addWidget(m_statusbar);
 
   w->setLayout(layout);
   win->setCentralWidget(w);
   win->show();
 
-  // start plz
+  // start plz inputs
   m_statusbar->showMessage("add postal data");
   _plz->setCountry("Deutschland");
   _plz->setValue("06343");
@@ -161,5 +174,6 @@ int main(int argc, char *argv[]) {
       qDebug() << obj->objectName() << obj->getValue();
     }
   }
+
   return appl.exec();
 }

@@ -35,9 +35,17 @@ private Q_SLOTS:
 
 protected Q_SLOTS:
   /**
+   * @brief emit sendFocusOut if (text().length()>2)
+   */
+  void focusOutEvent(QFocusEvent *) override;
+
+  /**
    * @brief prevent dialog acception when return pressed
    */
   void skipReturnPressed();
+
+Q_SIGNALS:
+  void sendFocusOut();
 
 public Q_SLOTS:
   /**

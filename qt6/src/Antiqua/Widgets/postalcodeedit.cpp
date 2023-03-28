@@ -145,7 +145,9 @@ PostalCodeEdit::PostalCodeEdit(QWidget *parent)
 
   connect(m_countries, SIGNAL(currentIndexChanged(int)),
           SLOT(valueChanged(int)));
+
   connect(m_postalcode, SIGNAL(editingFinished()), SLOT(setPostalCodeLeave()));
+  connect(m_postalcode, SIGNAL(sendFocusOut()), SLOT(setPostalCodeLeave()));
 }
 
 bool PostalCodeEdit::comparePostalcode(const QString &source,
@@ -158,6 +160,12 @@ bool PostalCodeEdit::comparePostalcode(const QString &source,
 }
 
 void PostalCodeEdit::valueChanged(int index) {
+  if (index == 0) {
+    m_postalcode->clear();
+    emit sendResetDependencies();
+    return;
+  }
+
   QString table = m_countries->itemData(index, Qt::UserRole).toString();
   if (table.isEmpty())
     return;
@@ -172,6 +180,9 @@ void PostalCodeEdit::valueChanged(int index) {
 }
 
 void PostalCodeEdit::setPostalCodeLeave() {
+  if (m_countries->currentIndex() == 0)
+    return;
+
   QString t_plz = m_postalcode->text().trimmed();
   if (t_plz.isEmpty() || t_plz.length() < 4)
     return;

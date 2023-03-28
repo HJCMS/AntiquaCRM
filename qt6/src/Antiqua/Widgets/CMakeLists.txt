@@ -34,6 +34,7 @@ SET (_library_SOURCES
  alineedit.cpp
  aspinbox.cpp
  aslider.cpp
+ colorluminance.cpp
 ## Widgets
  whatsthisbutton.cpp
  bookbindingedit.cpp
@@ -57,6 +58,7 @@ SET (_library_HEADERS
  alineedit.h
  aspinbox.h
  aslider.h
+ colorluminance.h
  AntiquaInput
 ## Widgets
  AntiquaWidgets

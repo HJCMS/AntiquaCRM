@@ -11,7 +11,6 @@ namespace AntiquaCRM {
 
 ALineEdit::ALineEdit(QWidget *parent) : QLineEdit{parent} {
   setClearButtonEnabled(true);
-
   QIcon back("://icons/view-list.png");
   QIcon icon = QIcon::fromTheme("view-list-details", back);
   ac_completer = addAction(icon, QLineEdit::TrailingPosition);
@@ -29,6 +28,13 @@ void ALineEdit::showCompleter() {
     m_cpl->complete(rect());
 }
 
+void ALineEdit::focusOutEvent(QFocusEvent *event) {
+  if (event->lostFocus() && (text().length() > 2)) {
+    emit sendFocusOut();
+  }
+  QLineEdit::focusOutEvent(event);
+}
+
 void ALineEdit::skipReturnPressed() {
 #ifdef ANTIQUA_DEVELOPEMENT
   qDebug("AntiquaCRM::ALineEdit::skipReturnPressed()");
@@ -40,7 +46,7 @@ void ALineEdit::skipReturnPressed() {
 void ALineEdit::isValidContent(bool b) {
   QString _css;
   if (!b)
-    _css = "QLineEdit {selection-background-color: red;}";
+    _css = "QLineEdit {selection-background-color:red;}";
 
   setStyleSheet(_css);
 }
