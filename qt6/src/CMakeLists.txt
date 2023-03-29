@@ -22,11 +22,21 @@ INCLUDE_DIRECTORIES (${ANTIQUACRM_INCLUDE_DIRS})
 QT6_ADD_RESOURCES (QRC_FILES resources.qrc)
 
 SET (PROJECT_HEADERS
+ test_widget.h
+ application.h
+ mainwindow.h
+ menubar.h
+ statusbar.h
 )
 
 SET (PROJECT_SOURCES
-  main.cpp
-  ${QRC_FILES}
+ test_widget.cpp
+ main.cpp
+ application.cpp
+ mainwindow.cpp
+ menubar.cpp
+ statusbar.cpp
+ ${QRC_FILES}
 )
 
 SET (PROJECT_LIBRARIES

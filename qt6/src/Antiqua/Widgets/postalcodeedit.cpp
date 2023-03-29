@@ -124,7 +124,8 @@ PostalCodeEdit::PostalCodeEdit(QWidget *parent)
   layout->addWidget(m_countries);
 
   m_postalcode = new ALineEdit(this);
-  m_postalcode->setPlaceholderText(tr("Postalcode"));
+  m_postalcode->setToolTip(tr("Postal Code"));
+  m_postalcode->setPlaceholderText(m_postalcode->toolTip());
   m_postalcode->setClearButtonEnabled(false);
   m_postalcode->setMaximumWidth(100);
   layout->addWidget(m_postalcode);
@@ -180,12 +181,15 @@ void PostalCodeEdit::valueChanged(int index) {
 }
 
 void PostalCodeEdit::setPostalCodeLeave() {
-  if (m_countries->currentIndex() == 0)
-    return;
-
   QString t_plz = m_postalcode->text().trimmed();
   if (t_plz.isEmpty() || t_plz.length() < 4)
     return;
+
+  if (m_countries->currentIndex() == 0)
+    return;
+
+  // Selected country
+  const QString _country = m_countries->currentText();
 
   PostalCodeModel *m = qobject_cast<PostalCodeModel *>(m_completer->model());
   if (m != nullptr) {
@@ -202,14 +206,12 @@ void PostalCodeEdit::setPostalCodeLeave() {
         QVariant v_lo = m->data(m->sibling(r, 1, mIndex), qrole);
         code.location = v_lo.toString();
         QVariant v_st = m->data(m->sibling(r, 2, mIndex), qrole);
-        if (m_countries->currentIndex() > 0) {
-          QString _state = m_countries->currentText();
-          code.state = v_st.toString();
-          if (!code.state.isEmpty())
-            code.state.prepend(_state + "/");
-        } else {
-          code.state = v_st.toString();
-        }
+        code.state = v_st.toString();
+        if (code.state.length() > 1)
+          code.state.prepend(_country + "/");
+        else
+          code.state = _country;
+
 #ifdef ANTIQUA_DEVELOPEMENT
         __postalcode_debug(code);
 #endif
