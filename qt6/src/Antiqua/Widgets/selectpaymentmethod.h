@@ -6,22 +6,21 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_PAYMENTMETHODSELECTER_H
-#define ANTIQUACRM_WIDGETS_PAYMENTMETHODSELECTER_H
+#ifndef ANTIQUACRM_WIDGETS_SELECTPAYMENTMETHOD_H
+#define ANTIQUACRM_WIDGETS_SELECTPAYMENTMETHOD_H
 
 #include <AntiquaInput>
-#include <QMap>
 #include <QObject>
 #include <QWidget>
 
 namespace AntiquaCRM {
 
 /**
- * @class PaymentMethodSelecter
+ * @class SelectPaymentMethod
  * @brief Select Method for Provider payments.
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY PaymentMethodSelecter final
+class ANTIQUACRM_LIBRARY SelectPaymentMethod final
     : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
@@ -35,6 +34,9 @@ private Q_SLOTS:
 protected:
   void initData() override;
 
+Q_SIGNALS:
+  void sendPaymentMethodChanged(AntiquaCRM::PaymentMethod);
+
 public Q_SLOTS:
   void setValue(const QVariant &) override;
 
@@ -42,14 +44,13 @@ public Q_SLOTS:
 
   void reset() override;
 
-Q_SIGNALS:
-  void sendPaymentMethodChanged(AntiquaCRM::PaymentMethod);
+  void setReadOnly(bool b = false);
 
 public:
   /**
    * @param parent - parent widget
    */
-  explicit PaymentMethodSelecter(QWidget *parent = nullptr);
+  explicit SelectPaymentMethod(QWidget *parent = nullptr);
 
   void setRestrictions(const QSqlField &) override;
 
@@ -64,10 +65,8 @@ public:
   const QString popUpHints() override;
 
   const QString statusHints() override;
-
-  static const QMap<AntiquaCRM::PaymentMethod,QString> getMethodes();
 };
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_PAYMENTMETHODSELECTER_H
+#endif // ANTIQUACRM_WIDGETS_SELECTPAYMENTMETHOD_H

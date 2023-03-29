@@ -30,10 +30,24 @@ class ANTIQUACRM_LIBRARY ALineEdit final : public QLineEdit {
 private:
   QAction *ac_completer;
 
+  /**
+   * @short Simple text validator
+   */
+  void setTextValidator();
+
+  /**
+   * @short Simple numeric validator
+   */
+  void setNumericValidator();
+
+  /**
+   * @short AntiquaCRM Articlenumber validator
+   */
+  void setArticleValidator();
+
 private Q_SLOTS:
   void showCompleter();
 
-protected Q_SLOTS:
   /**
    * @brief emit sendFocusOut if (text().length()>2)
    */
@@ -54,11 +68,23 @@ public Q_SLOTS:
   void isValidContent(bool);
 
 public:
+  enum InputValidator {
+    NOTHING = 0, /**< @brief Not Input Validation (default) */
+    STRINGS = 1, /**< @brief Match strings */
+    NUMERIC = 2, /**< @brief Match numeric */
+    ARTICLE = 3  /**< @brief Match ArticleID */
+  };
+
   /**
    * @brief AntiquaCRM Line input edit widget
    * @param parent - parent Widget
    */
   explicit ALineEdit(QWidget *parent = nullptr);
+
+  /**
+   * @brief set Input Validator
+   */
+  void setValidation(ALineEdit::InputValidator);
 
   /**
    * @brief Enable+Visible, completer-popup action.
@@ -70,8 +96,15 @@ public:
    * @param prop - QSqlField properties
    */
   void setLineEditProperties(const QSqlField &prop);
+
+  /**
+   * @brief current input text length
+   */
+  int length();
 };
 
 } // namespace AntiquaCRM
+
+Q_DECLARE_METATYPE(AntiquaCRM::ALineEdit::InputValidator)
 
 #endif // ANTIQUACRM_INPUT_LINEEDIT_H

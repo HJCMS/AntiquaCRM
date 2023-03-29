@@ -42,12 +42,13 @@ SET (_library_SOURCES
  conditionedit.cpp
  emailedit.cpp
  genderedit.cpp
- paymentmethodselecter.cpp
  priceedit.cpp
  phoneedit.cpp
  postalcodeedit.cpp
  salutationedit.cpp
  selectlanguage.cpp
+ selectpaymentmethod.cpp
+ selectpaymentstatus.cpp
  tablecontextmenu.cpp
 )
 
@@ -71,12 +72,13 @@ SET (_library_HEADERS
  conditionedit.h
  emailedit.h
  genderedit.h
- paymentmethodselecter.h
  priceedit.h
  phoneedit.h
  postalcodeedit.h
  salutationedit.h
  selectlanguage.h
+ selectpaymentmethod.h
+ selectpaymentstatus.h
  tablecontextmenu.h
 )
 

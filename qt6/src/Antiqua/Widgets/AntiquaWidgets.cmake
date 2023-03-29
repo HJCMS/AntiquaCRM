@@ -27,9 +27,6 @@
 // AntiquaCRM::GenderEdit
 #include "genderedit.h"
 
-// AntiquaCRM::PaymentMethodSelecter
-#include "paymentmethodselecter.h"
-
 // AntiquaCRM::PhoneEdit
 #include "phoneedit.h"
 
@@ -41,6 +38,12 @@
 
 // AntiquaCRM::SelectLanguage
 #include "selectlanguage.h"
+
+// AntiquaCRM::SelectPaymentMethod
+#include "selectpaymentmethod.h"
+
+// AntiquaCRM::SelectPaymentStatus
+#include "selectpaymentstatus.h"
 
 // AntiquaCRM::SalutationEdit
 #include "salutationedit.h"

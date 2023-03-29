@@ -6,6 +6,8 @@
 #include <QCompleter>
 #include <QDebug>
 #include <QIcon>
+#include <QRegularExpressionValidator>
+#include <QValidator>
 
 namespace AntiquaCRM {
 
@@ -20,6 +22,21 @@ ALineEdit::ALineEdit(QWidget *parent) : QLineEdit{parent} {
 
   connect(ac_completer, SIGNAL(triggered()), SLOT(showCompleter()));
   connect(this, SIGNAL(returnPressed()), SLOT(skipReturnPressed()));
+}
+
+void ALineEdit::setTextValidator() {
+  const QRegularExpression pattern("^\\S{2}.+");
+  setValidator(new QRegularExpressionValidator(pattern, this));
+}
+
+void ALineEdit::setNumericValidator() {
+  const QRegularExpression pattern("^[0-9]+$");
+  setValidator(new QRegularExpressionValidator(pattern, this));
+}
+
+void ALineEdit::setArticleValidator() {
+  const QRegularExpression pattern("^([0-9]{1,9}[\\,]?)+$");
+  setValidator(new QRegularExpressionValidator(pattern, this));
 }
 
 void ALineEdit::showCompleter() {
@@ -51,6 +68,27 @@ void ALineEdit::isValidContent(bool b) {
   setStyleSheet(_css);
 }
 
+void ALineEdit::setValidation(ALineEdit::InputValidator type) {
+  switch (type) {
+  case (ALineEdit::InputValidator::STRINGS):
+    setNumericValidator();
+    break;
+
+  case (ALineEdit::InputValidator::ARTICLE):
+    setArticleValidator();
+    break;
+
+  case (ALineEdit::InputValidator::NUMERIC):
+    setNumericValidator();
+    break;
+
+  default: {
+    if (validator() != nullptr)
+      setValidator(nullptr); // remove it
+  } break;
+  };
+}
+
 void ALineEdit::setCompleterAction(bool enabled) {
   ac_completer->setEnabled(enabled);
   ac_completer->setVisible(enabled);
@@ -79,5 +117,7 @@ void ALineEdit::setLineEditProperties(const QSqlField &prop) {
     }
   }
 }
+
+int ALineEdit::length() { return text().trimmed().length(); }
 
 } // namespace AntiquaCRM
