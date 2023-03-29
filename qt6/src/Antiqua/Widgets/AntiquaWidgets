@@ -27,6 +27,9 @@
 // AntiquaCRM::GenderEdit
 #include "genderedit.h"
 
+// AntiquaCRM::PaymentMethodSelecter
+#include "paymentmethodselecter.h"
+
 // AntiquaCRM::PhoneEdit
 #include "phoneedit.h"
 
@@ -36,8 +39,14 @@
 // AntiquaCRM::PostalCodeEdit
 #include "postalcodeedit.h"
 
+// AntiquaCRM::SelectLanguage
+#include "selectlanguage.h"
+
 // AntiquaCRM::SalutationEdit
 #include "salutationedit.h"
+
+// AntiquaCRM::TableContextMenu
+#include "tablecontextmenu.h"
 
 #endif
 // EOF
