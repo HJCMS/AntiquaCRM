@@ -6,6 +6,7 @@
 #include "asqlsettings.h"
 
 #include <QDebug>
+#include <QSysInfo>
 
 namespace AntiquaCRM {
 
@@ -38,7 +39,7 @@ bool ASqlCore::initDatabase() {
 
   QStringList options;
   options << QString("connect_timeout=%1").arg(profile.getTimeout());
-  options << QString("application_name=AntiquaCRM");
+  options << QString("application_name=%1").arg(identifier());
   if (profile.getEnableSSL()) {
     options << QString("sslmode=%1").arg(profile.getSslMode());
     options << QString("sslrootcert=%1").arg(profile.getSslRootCert());
@@ -73,8 +74,22 @@ bool ASqlCore::isConnected() {
   return false;
 }
 
-AntiquaCRM::ASqlCore::Status ASqlCore::status() {
-  return (database->isOpen()) ? OPEN : CLOSED;
+bool ASqlCore::status() {
+  if (!db().isOpen())
+    return false;
+
+  QString _select("SELECT state FROM pg_stat_activity WHERE");
+  _select.append(" application_name='" + identifier() + "'");
+  _select.append(" AND state IS NOT NULL;");
+  return (query(_select).size() > 0);
+}
+
+const QString ASqlCore::identifier() {
+  QString _name("AntiquaCRM_v");
+  _name.append(ANTIQUACRM_VERSION);
+  _name.append("_");
+  _name.append(QSysInfo::machineHostName());
+  return _name.trimmed();
 }
 
 bool ASqlCore::open() {

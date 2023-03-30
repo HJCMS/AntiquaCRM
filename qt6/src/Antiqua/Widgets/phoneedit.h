@@ -25,7 +25,7 @@ namespace AntiquaCRM {
  * @brief Phone Country Code Completer Model
  * @ingroup EditWidgets
  */
-class PhoneCountryCodeModel final : public QAbstractListModel {
+class ANTIQUACRM_LIBRARY PhoneCountryCodeModel final : public QAbstractListModel {
   Q_OBJECT
 
 private:

@@ -48,6 +48,9 @@
 // AntiquaCRM::SalutationEdit
 #include "salutationedit.h"
 
+// AntiquaCRM::SqlInfoPopUp
+#include "sqlinfopopup.h"
+
 // AntiquaCRM::TableContextMenu
 #include "tablecontextmenu.h"
 

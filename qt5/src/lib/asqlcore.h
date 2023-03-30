@@ -41,14 +41,14 @@ private:
   bool isConnected();
 
 public:
-  /**
-   * @brief Enumwert für Datenbank Status
-   */
-  enum Status { CLOSED = 0x0, OPEN = 0x1 };
-  Q_ENUM(ASqlCore::Status);
-
   explicit ASqlCore(const QString &name, QObject *parent = nullptr);
   explicit ASqlCore(QObject *parent = nullptr);
+
+  /**
+   * @brief Connection ApplicationName
+   * This Idientifier must uniq!
+   */
+  static const QString identifier();
 
   /**
    * @brief Datenbank öffnen
@@ -60,7 +60,7 @@ public:
   /**
    * @brief Gibt den Status der Datenbank-Verbindung zurück!
    */
-  AntiquaCRM::ASqlCore::Status status();
+  bool status();
 
   /**
    * @brief Optional Datenbank Verbindung beziehen!

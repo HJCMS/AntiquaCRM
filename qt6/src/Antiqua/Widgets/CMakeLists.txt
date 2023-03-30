@@ -49,6 +49,7 @@ SET (_library_SOURCES
  selectlanguage.cpp
  selectpaymentmethod.cpp
  selectpaymentstatus.cpp
+ sqlinfopopup.cpp
  tablecontextmenu.cpp
 )
 
@@ -79,6 +80,7 @@ SET (_library_HEADERS
  selectlanguage.h
  selectpaymentmethod.h
  selectpaymentstatus.h
+ sqlinfopopup.h
  tablecontextmenu.h
 )
 

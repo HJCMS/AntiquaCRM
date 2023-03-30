@@ -16,6 +16,12 @@
 class MenuBar final : public QMenuBar {
   Q_OBJECT
 
+private:
+  QMenu *m_applMenu;
+  QMenu *m_viewsMenu;
+  QMenu *m_configMenu;
+  QMenu *m_aboutMenu;
+
 public:
   explicit MenuBar(QWidget *parent = nullptr);
 };
