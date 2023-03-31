@@ -11,11 +11,14 @@
 
 #include <AGlobal>
 #include <QComboBox>
+#include <QLineEdit>
 #include <QObject>
 #include <QWheelEvent>
 #include <QWidget>
 
 namespace AntiquaCRM {
+
+class ALineEdit;
 
 /**
  * @class AComboBox
@@ -31,7 +34,6 @@ private:
    */
   bool wheel_support = false;
 
-protected:
   /**
    * @brief disable wheel events ...
    * to prevent unwanted changes on large input masks with scroll widget

@@ -5,8 +5,8 @@
 
 #include <AntiquaCRM>
 #include <AntiquaWidgets>
-#include <QIcon>
 #include <QDebug>
+#include <QIcon>
 #include <QSqlDatabase>
 
 // BEGIN:StatusTimer
@@ -49,7 +49,7 @@ StatusToolBar::StatusToolBar(QWidget *parent) : QToolBar{parent} {
   setOrientation(Qt::Horizontal);
   setToolButtonStyle(Qt::ToolButtonIconOnly);
   ac_status = addAction(tr("Database Status"));
-  ac_status->setIcon(QIcon("://icons/server-database.png"));
+  ac_status->setIcon(QIcon(":/icons/antiquacrm.png"));
   connect(ac_status, SIGNAL(triggered()), SLOT(databaseInfoDialog()));
 }
 
@@ -60,10 +60,10 @@ void StatusToolBar::databaseInfoDialog() {
 
 void StatusToolBar::setStatus(bool b) {
   if (b) {
-    ac_status->setIcon(QIcon("://icons/database-comit.png"));
+    ac_status->setIcon(QIcon(":/icons/database-comit.png"));
     ac_status->setToolTip(tr("Database connected."));
   } else {
-    ac_status->setIcon(QIcon("://icons/database-status.png"));
+    ac_status->setIcon(QIcon(":/icons/database-status.png"));
     ac_status->setToolTip(tr("Database not connected!"));
   }
 }

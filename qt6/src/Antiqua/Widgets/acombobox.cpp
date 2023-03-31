@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "acombobox.h"
+#include "aguiutils.h"
 
 #include <QAbstractItemView>
 #include <QIcon>
@@ -28,9 +29,8 @@ const QString AComboBox::withoutDisclosures() {
 }
 
 void AComboBox::setWithoutDisclosures(const QVariant &data) {
-  QIcon fallback("://icons/dialog-warning.png");
   addItem(withoutDisclosures(), data);
-  setItemIcon(0, QIcon::fromTheme("dialog-warning", fallback));
+  setItemIcon(0, AGuiUtils::getIcon("dialog-warning"));
 }
 
 } // namespace AntiquaCRM

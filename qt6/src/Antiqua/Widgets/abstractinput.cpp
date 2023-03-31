@@ -2,18 +2,16 @@
 // vim: set fileencoding=utf-8
 
 #include "abstractinput.h"
+#include "aguiutils.h"
 #include "alabel.h"
 #include "private/abstractinput_p.h"
 #include "whatsthisbutton.h"
 
 namespace AntiquaCRM {
 
-AbstractInputPrivate::AbstractInputPrivate() {
-  // TODO
-}
+AbstractInputPrivate::AbstractInputPrivate() {}
 
 void AbstractInputPrivate::init(QWidget *parent) {
-  // TODO
   Q_CHECK_PTR(parent);
 }
 
@@ -29,13 +27,14 @@ AbstractInput::AbstractInput(QWidget *parent) : QWidget{parent} {
   layout->setContentsMargins(0, 0, 0, 0);
   setLayout(layout);
   d->init(this);
+  // AGuiUtils
+  initAntiquaIconsResource();
 }
 
 AbstractInput::~AbstractInput() {}
 
 const QIcon AbstractInput::getIcon(const QString &name) {
-  QIcon fallback("://icons/" + name + ".png");
-  return QIcon::fromTheme(name, fallback);
+  return AGuiUtils::getIcon(name);
 }
 
 bool AbstractInput::windowBehavior(const QString &key, bool standard) {

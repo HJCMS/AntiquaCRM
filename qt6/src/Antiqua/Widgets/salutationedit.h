@@ -27,6 +27,7 @@ class ANTIQUACRM_LIBRARY SalutationEdit final
 
 private:
   AntiquaCRM::AComboBox *m_edit;
+  AntiquaCRM::ALineEdit *m_lineEdit;
 
 private Q_SLOTS:
   void valueChanged(int);

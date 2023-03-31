@@ -13,6 +13,7 @@
 #include <QObject>
 
 class MenuBar;
+class TabWidget;
 class StatusBar;
 
 class MainWindow final : public QMainWindow {
@@ -20,6 +21,7 @@ class MainWindow final : public QMainWindow {
 
 private:
   MenuBar *m_menubar;
+  TabWidget *m_tabwidget;
   StatusBar *m_statusbar;
 
   void debugContent();

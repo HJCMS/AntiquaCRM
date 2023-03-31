@@ -13,14 +13,16 @@ SalutationEdit::SalutationEdit(QWidget *parent)
     : AntiquaCRM::AbstractInput{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
   m_edit->setToolTip(tr("Salutation"));
+
+  m_lineEdit = new ALineEdit(this);
+  m_lineEdit->setClearButtonEnabled(false);
+  m_lineEdit->setPlaceholderText(m_edit->withoutDisclosures());
+  m_edit->setLineEdit(m_lineEdit);
+
   layout->addWidget(m_edit);
   initData();
 
-  QString _info = m_edit->withoutDisclosures();
-  QLineEdit *m_lineEdit = new QLineEdit(this);
-  m_lineEdit->setPlaceholderText(_info);
-  m_edit->setLineEdit(m_lineEdit);
-
+  QString _info = m_lineEdit->placeholderText();
   QFontMetrics _m(m_edit->font());
   qsizetype _w = _m.size(Qt::TextSingleLine, _info).width();
   m_edit->setMinimumWidth(_w + m_edit->font().pointSize());
@@ -28,9 +30,7 @@ SalutationEdit::SalutationEdit(QWidget *parent)
   connect(m_edit, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));
 }
 
-void SalutationEdit::valueChanged(int) {
-  setWindowModified(true);
-}
+void SalutationEdit::valueChanged(int) { setWindowModified(true); }
 
 void SalutationEdit::initData() {
   m_edit->clear();

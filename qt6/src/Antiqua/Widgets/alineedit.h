@@ -60,6 +60,7 @@ private Q_SLOTS:
 
 Q_SIGNALS:
   void sendFocusOut();
+  void sendPoupEvent();
 
 public Q_SLOTS:
   /**

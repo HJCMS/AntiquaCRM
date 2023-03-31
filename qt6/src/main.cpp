@@ -5,6 +5,7 @@
 //
 
 #include <AntiquaCRM>
+#include <QResource>
 #include <QtGlobal>
 
 #include "application.h"
@@ -69,7 +70,7 @@ int main(int argc, char *argv[]) {
     return 0;
   }
 
-  Q_INIT_RESOURCE(resources);
+  Q_INIT_RESOURCE(applicons);
 
   return _app->exec();
 }

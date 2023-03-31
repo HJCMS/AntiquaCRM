@@ -6,8 +6,9 @@
 
 SET(_subProjectLibrary "AntiquaWidgets")
 
-ADD_SUBDIRECTORY(private)
-ADD_SUBDIRECTORY(templates)
+ADD_SUBDIRECTORY (icons)
+ADD_SUBDIRECTORY (private)
+ADD_SUBDIRECTORY (templates)
 
 INCLUDE_DIRECTORIES (
  ${INTERNAL_WIDGET_INCLUDE_DIRS}
@@ -19,14 +20,28 @@ CONFIGURE_FILE (AntiquaWidgets.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaWidgets
 )
 
+# Section: QRessource
+# BEGIN:QRC
+SET (ICON_RESOURCE_PATH
+ ${CMAKE_CURRENT_BINARY_DIR}/AntiquaWidgets.rcc
+)
+QT_ADD_BINARY_RESOURCES(_library_Resources
+ ${CMAKE_CURRENT_SOURCE_DIR}/iconset.qrc
+ DESTINATION ${ICON_RESOURCE_PATH}
+)
+ADD_DEFINITIONS (-DANTIQUACRM_RESOURCE_PATH="${ICON_RESOURCE_PATH}")
+# END:QRC
+
 SET (_library_FILES
  private/abstractinput_p.h
+ AntiquaInput.cmake
  AntiquaWidgets.cmake
 )
 
 SET (_library_SOURCES
 ## Inputs
  abstractinput.cpp
+ aguiutils.cpp
  alabel.cpp
  acombobox.cpp
  adatetimeedit.cpp
@@ -56,6 +71,7 @@ SET (_library_SOURCES
 SET (_library_HEADERS
 ## Inputs
  abstractinput.h
+ aguiutils.h
  alabel.h
  acombobox.h
  adatetimeedit.h
@@ -88,6 +104,7 @@ ADD_LIBRARY (${_subProjectLibrary} SHARED
  ${_library_SOURCES}
  ${_library_HEADERS}
  ${_library_FILES}
+ ${_library_Resources}
 )
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)

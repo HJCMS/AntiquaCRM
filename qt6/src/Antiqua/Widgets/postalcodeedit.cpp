@@ -272,7 +272,7 @@ void PostalCodeEdit::reset() {
 
 void PostalCodeEdit::initData() {
   m_countries->clear();
-  m_countries->insertItem(0, m_countries->withoutDisclosures(), QString());
+  m_countries->setWithoutDisclosures(QString());
 
   AntiquaCRM::ASharedDataFiles dataFile;
   if (dataFile.fileExists(QString("postalcodes"))) {
@@ -381,6 +381,10 @@ PostalCodeState::PostalCodeState(QWidget *parent)
     : AntiquaCRM::AbstractInput{parent} {
   m_edit = new ALineEdit(this);
   layout->addWidget(m_edit);
+}
+
+void PostalCodeState::initData() {
+  // unused in this
 }
 
 void PostalCodeState::setCountry(const AntiquaCRM::PostalCode &code) {

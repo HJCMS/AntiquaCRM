@@ -4,6 +4,7 @@
 #include "mainwindow.h"
 #include "menubar.h"
 #include "statusbar.h"
+#include "tabwidget.h"
 
 #include "test_widget.h"
 
@@ -18,8 +19,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow{parent} {
   m_menubar = new MenuBar(this);
   setMenuBar(m_menubar);
 
-  TestWidget *w = new TestWidget(this);
-  setCentralWidget(w);
+  m_tabwidget = new TabWidget(this);
+  setCentralWidget(m_tabwidget);
+
+  TestWidget *_test = new TestWidget(m_tabwidget);
+  m_tabwidget->addTab(_test, QString("TEST"));
 
   m_statusbar = new StatusBar(this);
   setStatusBar(m_statusbar);

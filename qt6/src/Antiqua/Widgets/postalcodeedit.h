@@ -221,8 +221,7 @@ class ANTIQUACRM_LIBRARY PostalCodeState final : public AntiquaCRM::AbstractInpu
 
 private:
   ALineEdit *m_edit;
-
-  void initData() override{};
+  void initData() override;
 
 public Q_SLOTS:
   /**

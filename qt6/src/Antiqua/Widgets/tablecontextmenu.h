@@ -70,11 +70,6 @@ Q_SIGNALS:
 
 public:
   /**
-   * @brief get Icon from private Icontheme
-   */
-  const QIcon getIcon(const QString &) const;
-
-  /**
    * @brief add Open by ModelIndex Action
    * @note sendAction(TableContextMenu::Actions::Open,index);
    */

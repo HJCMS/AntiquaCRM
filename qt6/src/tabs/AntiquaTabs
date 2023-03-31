@@ -9,6 +9,9 @@
 #ifndef ANTIQUA_TABS_LIB_H
 #define ANTIQUA_TABS_LIB_H
 
+// TabsBar
+#include "tabsbar.h"
+
 // TabsIndex
 #include "tabsindex.h"
 

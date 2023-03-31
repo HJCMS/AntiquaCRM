@@ -7,15 +7,15 @@
 SET(_staticLibrary "AntiquaTabs")
 
 INCLUDE_DIRECTORIES (ANTIQUACRM_TABS_INCLUDE_DIRS
+  ${ANTIQUACRM_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/../Antiqua/Core
-  ${CMAKE_CURRENT_SOURCE_DIR}/../Antiqua/Widgets
 )
 
 INCLUDE_DIRECTORIES (${ANTIQUACRM_TABS_INCLUDE_DIRS})
 
 SET (_staticLibrary_SOURCE
+ tabsbar.cpp
  tabsindex.cpp
  tabstable.cpp
  tabssearchbar.cpp
@@ -24,6 +24,7 @@ SET (_staticLibrary_SOURCE
 )
 
 SET (_staticLibrary_HEADERS
+ tabsbar.h
  tabsindex.h
  tabstable.h
  tabssearchbar.h
