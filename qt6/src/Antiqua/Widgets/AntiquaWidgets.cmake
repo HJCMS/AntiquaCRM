@@ -36,6 +36,9 @@
 // AntiquaCRM::PostalCodeEdit
 #include "postalcodeedit.h"
 
+// AntiquaCRM::SelectEUCountry
+#include "selecteucountry.h"
+
 // AntiquaCRM::SelectLanguage
 #include "selectlanguage.h"
 

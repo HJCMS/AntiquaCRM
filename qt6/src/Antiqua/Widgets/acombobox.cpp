@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "acombobox.h"
-#include "aguiutils.h"
+#include "abstractinput.h"
 
 #include <QAbstractItemView>
 #include <QIcon>
@@ -30,7 +30,7 @@ const QString AComboBox::withoutDisclosures() {
 
 void AComboBox::setWithoutDisclosures(const QVariant &data) {
   addItem(withoutDisclosures(), data);
-  setItemIcon(0, AGuiUtils::getIcon("dialog-warning"));
+  setItemIcon(0, AntiquaApplIcon("dialog-warning"));
 }
 
 } // namespace AntiquaCRM

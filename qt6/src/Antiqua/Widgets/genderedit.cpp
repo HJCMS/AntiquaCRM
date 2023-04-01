@@ -20,11 +20,11 @@ void GenderEdit::valueChanged(int) { setWindowModified(true); }
 void GenderEdit::initData() {
   m_edit->setWithoutDisclosures(AntiquaCRM::NO_GENDER);
   m_edit->insertItem(1, tr("Male"), AntiquaCRM::MALE);
-  m_edit->setItemIcon(1, AGuiUtils::getIcon("gender-male"));
+  m_edit->setItemIcon(1, AntiquaApplIcon("gender-male"));
   m_edit->insertItem(2, tr("Female"), AntiquaCRM::FEMALE);
-  m_edit->setItemIcon(2, AGuiUtils::getIcon("gender-female"));
+  m_edit->setItemIcon(2, AntiquaApplIcon("gender-female"));
   m_edit->insertItem(3, tr("Various"), AntiquaCRM::VARIOUS);
-  m_edit->setItemIcon(3, AGuiUtils::getIcon("gender-various"));
+  m_edit->setItemIcon(3, AntiquaApplIcon("gender-various"));
   m_edit->setCurrentIndex(0);
 }
 

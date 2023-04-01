@@ -15,11 +15,26 @@
 #include <QIcon>
 #include <QMetaType>
 #include <QObject>
+#include <QResource>
 #include <QSqlField>
 #include <QVariant>
 #include <QWidget>
 
 namespace AntiquaCRM {
+
+/**
+ * @ingroup IconTheme
+ *
+ * @brief Icon from Theme or Application Resource file ...
+ * Load qrc://icons/Images from icon resource.
+ * @note The QResource must initialed in application first!
+ * @param name  - Iconname
+ * @return QIcon
+ */
+ANTIQUACRM_LIBRARY inline const QIcon AntiquaApplIcon(const QString &name) {
+  QIcon _back(":/icons/" + name + ".png");
+  return QIcon::fromTheme(name, _back);
+}
 
 class ALabel;
 class AbstractInputPrivate;
@@ -74,18 +89,6 @@ protected:
    * By default it is a „LeftToRight“ layout.
    */
   QBoxLayout *layout;
-
-  /**
-   * @brief Icon from Theme or Resource files ...
-   */
-  const QIcon getIcon(const QString &);
-
-  /**
-   * @brief Widget behavior settings
-   * @param key - call with key in „window_behavior“ settings group.
-   * @param standard - deault value for caller
-   */
-  bool windowBehavior(const QString &key, bool standard = false);
 
   /**
    * @brief Is this input Widget required by sql database?

@@ -44,7 +44,7 @@ void TableContextMenu::triggerAction(QAction *action) {
 }
 
 QAction *TableContextMenu::addOpenAction(const QString &title) {
-  QAction *ac = addAction(AGuiUtils::getIcon("server-database"), title);
+  QAction *ac = addAction(AntiquaApplIcon("server-database"), title);
   ac->setObjectName("ac_open");
   ac->setEnabled(p_index.isValid());
   p_modelList.append(ac);
@@ -52,7 +52,7 @@ QAction *TableContextMenu::addOpenAction(const QString &title) {
 }
 
 QAction *TableContextMenu::addCreateAction(const QString &title) {
-  QAction *ac = addAction(AGuiUtils::getIcon("database-add"), title);
+  QAction *ac = addAction(AntiquaApplIcon("database-add"), title);
   ac->setObjectName("ac_create");
   ac->setEnabled(p_rows > 0);
   connect(ac, SIGNAL(triggered()), SIGNAL(sendCreate()));
@@ -60,7 +60,7 @@ QAction *TableContextMenu::addCreateAction(const QString &title) {
 }
 
 QAction *TableContextMenu::addOrderAction(const QString &title) {
-  QAction *ac = addAction(AGuiUtils::getIcon("database-status"), title);
+  QAction *ac = addAction(AntiquaApplIcon("database-status"), title);
   ac->setObjectName("ac_add_order");
   ac->setEnabled(p_index.isValid());
   p_modelList.append(ac);
@@ -68,7 +68,7 @@ QAction *TableContextMenu::addOrderAction(const QString &title) {
 }
 
 QAction *TableContextMenu::addDeleteAction(const QString &title) {
-  QAction *ac = addAction(AGuiUtils::getIcon("database-remove"), title);
+  QAction *ac = addAction(AntiquaApplIcon("database-remove"), title);
   ac->setObjectName("ac_delete");
   ac->setEnabled(p_index.isValid());
   p_modelList.append(ac);
@@ -76,7 +76,7 @@ QAction *TableContextMenu::addDeleteAction(const QString &title) {
 }
 
 QAction *TableContextMenu::addCopyAction(const QString &title) {
-  QAction *ac = addAction(AGuiUtils::getIcon("database-comit"), title);
+  QAction *ac = addAction(AntiquaApplIcon("database-comit"), title);
   ac->setObjectName("ac_copy");
   ac->setEnabled(p_index.isValid());
   p_modelList.append(ac);
@@ -84,14 +84,14 @@ QAction *TableContextMenu::addCopyAction(const QString &title) {
 }
 
 QAction *TableContextMenu::addReloadAction(const QString &title) {
-  QAction *ac = addAction(AGuiUtils::getIcon("action-reload"), title);
+  QAction *ac = addAction(AntiquaApplIcon("action-reload"), title);
   ac->setObjectName("ac_reload");
   connect(ac, SIGNAL(triggered()), SIGNAL(sendRefresh()));
   return ac;
 }
 
 QAction *TableContextMenu::addUndoAction(const QString &title) {
-  QAction *ac = addAction(AGuiUtils::getIcon("action-undo"), title);
+  QAction *ac = addAction(AntiquaApplIcon("action-undo"), title);
   ac->setObjectName("ac_undo");
   p_modelList.append(ac);
   return ac;

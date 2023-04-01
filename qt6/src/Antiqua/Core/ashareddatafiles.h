@@ -40,6 +40,8 @@ public:
   /**
    * @brief Vergleicht ob die an diesem tag schon erneuert wurde!
    * Wenn dies der fall ist dann gibt die Methode false zurück!
+   * @param basename - File baseName
+   * @param ext      - File extensions
    */
   bool needsUpdate(const QString &basename,
                    const QStringList &ext = defaultFilter());
@@ -48,29 +50,45 @@ public:
    * @brief Such mit dem Basisnamen und optionaler Erweiterung nach
    * Verfügbarkeit!
    * @note Nur Beschreibbare Dateien werden berücksichtigt!
+   * @param basename - File baseName
+   * @param ext      - File extensions
    */
   bool fileExists(const QString &basename,
                   const QStringList &ext = defaultFilter());
 
   /**
    * @brief Json Dokument speichern.
+   * @param basename - File baseName
+   * @param doc      - Json Document
    */
   bool storeJson(const QString &basename, const QJsonDocument &doc);
 
   /**
    * @brief Nehme Json Dokument aus Datei.
+   * @param basename - File baseName
    */
   const QJsonDocument getJson(const QString &basename);
 
   /**
    * @brief XML Dokument speichern.
+   * @param basename - File baseName
+   * @param xml      - XML Document
    */
   bool storeXml(const QString &basename, const QDomDocument &xml);
 
   /**
    * @brief Nehme XML Dokument aus Datei.
+   * @param basename - File baseName
    */
   const QDomDocument getXML(const QString &basename);
+
+  /**
+   * @brief get Completer data from Json Database
+   * @param basename - File baseName
+   * @param key - Key from Json::Object
+   */
+  const QStringList getCompleterList(const QString &basename,
+                                     const QString &key);
 };
 
 /**

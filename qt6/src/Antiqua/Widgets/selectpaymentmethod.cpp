@@ -60,7 +60,7 @@ void SelectPaymentMethod::initData() {
   m_edit->insertItem(c++, tr("Check - payment in advance"),
                      AntiquaCRM::CHECK_PREPAYMENT);
 
-  const QIcon _icon = AGuiUtils::getIcon("view-loan-asset");
+  const QIcon _icon = AntiquaApplIcon("view-loan-asset");
   for (int i = 1; i < m_edit->count(); i++) {
     m_edit->setItemIcon(i, _icon);
   }

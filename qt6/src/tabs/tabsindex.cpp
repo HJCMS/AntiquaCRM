@@ -86,12 +86,10 @@ void TabsIndex::openWarningPopUp(const QString &title, const QString &message) {
   QMessageBox::warning(this, tr("Warning"), info);
 }
 
-bool TabsIndex::isClosable() { return closable; }
-
-bool TabsIndex::isModified() { return isWindowModified(); }
-
 const QString TabsIndex::tabIndexId() const { return tabIndex; }
 
 const QIcon TabsIndex::getTabIcon(const QString &name) {
-  return QIcon(QString("://icons/" + name + ".png"));
+  return QIcon("://icons/" + name + ".png");
 }
+
+bool TabsIndex::isClosable() { return closable; }

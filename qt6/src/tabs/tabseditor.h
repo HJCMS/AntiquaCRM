@@ -28,7 +28,7 @@ class TabsEditor : public QWidget {
   Q_OBJECT
 
 private:
-  int timeoutPopUp = 2;
+  int messages_timeout = 2; /**< @brief seconds */
 
 protected:
   AntiquaCRM::ASqlCore *m_sql;
@@ -260,6 +260,8 @@ public:
    */
   explicit TabsEditor(const QString &pattern, QWidget *parent = nullptr);
 
+  virtual ~TabsEditor();
+
   /**
    * @brief Einen Artikel zum bearbeiten öffnen.
    * @note Hier wird AntiquaCRM::ASqlDataQuery befüllt!
@@ -270,7 +272,5 @@ public:
    * @brief Einen Neuen Artikel erstellen.
    */
   virtual bool createNewEntry() = 0;
-
-  virtual ~TabsEditor();
 };
 #endif // ANTIQUA_TABS_EDITOR_H

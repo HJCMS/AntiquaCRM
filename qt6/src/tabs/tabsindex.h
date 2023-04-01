@@ -175,8 +175,7 @@ public:
    */
   static const QIcon getTabIcon(const QString &name = QString("antiquacrm"));
 
-  Q_INVOKABLE bool isClosable();
-  Q_INVOKABLE bool isModified();
+  bool isClosable();
 };
 
 #endif // ANTIQUA_TABS_INDEX_H

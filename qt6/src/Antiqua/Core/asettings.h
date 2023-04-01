@@ -47,6 +47,15 @@ public:
   const QDir getArchivPath(const QString &section);
 
   /**
+   * @brief get value from group
+   * @param group - section group
+   * @param key   - key from group
+   * @param fallback - what it says
+   */
+  const QVariant groupValue(const QString &group, const QString &key,
+                            const QVariant &fallback = QVariant());
+
+  /**
    * @brief Read all Keys from Group
    */
   const QHash<QString, QVariant> &readGroupConfig(const QString &group);

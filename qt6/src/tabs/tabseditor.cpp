@@ -9,13 +9,29 @@
 #include <QStringList>
 #include <QTimer>
 
+#ifndef TABS_FIND_INPUT
+#define TABS_FIND_INPUT Qt::FindChildrenRecursively
+#endif
+
 TabsEditor::TabsEditor(const QString &pattern, QWidget *parent)
     : QWidget{parent}, fieldPattern{pattern} {
   setContentsMargins(0, 0, 0, 0);
   m_sql = new AntiquaCRM::ASqlCore(this);
   m_cfg = new AntiquaCRM::ASettings(this);
-  timeoutPopUp = m_cfg->value("popup_timeout", 1).toInt();
+  messages_timeout =
+      m_cfg->groupValue("window_behavior", "popup_timeout", 1).toInt();
   m_tableData = nullptr;
+}
+
+TabsEditor::~TabsEditor() {
+  if (inputFields.size() > 0)
+    inputFields.clear();
+
+  if (ignoreFields.size() > 0)
+    ignoreFields.clear();
+
+  if (m_tableData != nullptr)
+    delete m_tableData;
 }
 
 bool TabsEditor::isInputField(const QString &name) {
@@ -39,14 +55,12 @@ qint64 TabsEditor::getSerialID(const QString &name) {
 }
 
 AntiquaCRM::AbstractInput *TabsEditor::getInputEdit(const QString &name) {
-  return findChild<AntiquaCRM::AbstractInput *>(name,
-                                                Qt::FindChildrenRecursively);
+  return findChild<AntiquaCRM::AbstractInput *>(name, TABS_FIND_INPUT);
 }
 
 QList<AntiquaCRM::AbstractInput *>
 TabsEditor::getInputEditList(const QRegularExpression &pcre) {
-  return findChildren<AntiquaCRM::AbstractInput *>(pcre,
-                                                   Qt::FindChildrenRecursively);
+  return findChildren<AntiquaCRM::AbstractInput *>(pcre, TABS_FIND_INPUT);
 }
 
 const QVariant TabsEditor::getDataValue(const QString &name) {
@@ -116,9 +130,7 @@ void TabsEditor::setResetModified(const QStringList &objectList) {
   foreach (QString name, objectList) {
     AntiquaCRM::AbstractInput *child = getInputEdit(name);
     if (child != nullptr) {
-      QMetaObject::invokeMethod(child, "setModified", Qt::DirectConnection,
-                                Q_ARG(bool, false));
-      // qDebug() << "setModified" << child->objectName() << false;
+      child->setWindowModified(false);
     }
   }
   setWindowModified(false);
@@ -144,7 +156,7 @@ bool TabsEditor::checkIsModified() {
   for (int i = 0; i < list.size(); ++i) {
     if (list.at(i) != nullptr && list.at(i)->isWindowModified()) {
       setWindowModified(true);
-      return true;
+      return true; // aussteigen
     }
   }
   setWindowModified(false);
@@ -153,23 +165,27 @@ bool TabsEditor::checkIsModified() {
 
 bool TabsEditor::isModifiedCompare(const QString &name,
                                    const QVariant &origin) {
-  AntiquaCRM::AbstractInput *obj = getInputEdit(name);
-  if (obj == nullptr)
+  AntiquaCRM::AbstractInput *_input = getInputEdit(name);
+  if (_input == nullptr)
     return false;
 
   // Der Datensatzwert der vieleicht Neu ist?
-  QVariant n_value = obj->getValue();
-  // Wenn der Datentype nicht stimmt austeigen!
-  if (origin.metaType().id() != n_value.metaType().id())
+  QVariant _value = _input->getValue();
+  // Wenn der Datentyp nicht stimmt austeigen!
+  if (origin.metaType().id() != _value.metaType().id()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "Type::Missmatch" << _value << origin;
+#endif
     return true;
+  }
 
   // Jetzt vergleiche anstellen.
-  bool status = false;
+  bool _status = false;
   switch (origin.metaType().id()) {
   case QMetaType::QString: {
-    QString buffer = origin.toString();
-    int index = buffer.compare(n_value.toString());
-    status = (index != 0);
+    QString _buffer = origin.toString();
+    int _index = _buffer.compare(_value.toString());
+    _status = (_index != 0);
     break;
   }
 
@@ -179,40 +195,40 @@ bool TabsEditor::isModifiedCompare(const QString &name,
   case QMetaType::ULong:
   case QMetaType::LongLong:
   case QMetaType::ULongLong:
-    status = (origin.toInt() != n_value.toInt());
+    _status = (origin.toInt() != _value.toInt());
     break;
 
   case QMetaType::Float:
-    status = (origin.toFloat() != n_value.toFloat());
+    _status = (origin.toFloat() != _value.toFloat());
     break;
 
   case QMetaType::Double:
-    status = (origin.toDouble() != n_value.toDouble());
+    _status = (origin.toDouble() != _value.toDouble());
     break;
 
   case QMetaType::Bool:
-    status = (origin.toBool() != n_value.toBool());
+    _status = (origin.toBool() != _value.toBool());
     break;
 
   case QMetaType::QDate:
-    return (origin.toDate() != n_value.toDate());
+    return (origin.toDate() != _value.toDate());
     break;
 
   case QMetaType::QTime:
-    status = (origin.toTime() != n_value.toTime());
+    _status = (origin.toTime() != _value.toTime());
     break;
 
   case QMetaType::QDateTime:
-    status = (origin.toDateTime() != n_value.toDateTime());
+    _status = (origin.toDateTime() != _value.toDateTime());
     break;
 
   default:
-    status = false;
+    _status = false;
     break;
   };
 
-  obj->setWindowModified(status);
-  return status;
+  _input->setWindowModified(_status);
+  return _status;
 }
 
 void TabsEditor::openErrnoMessage(const QString &info, const QString &error) {
@@ -239,7 +255,7 @@ void TabsEditor::openSuccessMessage(const QString &info) {
   d->setText(info);
 
   QTimer *m_t = new QTimer(d);
-  m_t->setInterval((timeoutPopUp * 1000));
+  m_t->setInterval((messages_timeout * 1000));
   connect(m_t, SIGNAL(timeout()), d, SLOT(close()));
   m_t->start();
   d->exec();
@@ -290,15 +306,4 @@ void TabsEditor::setResetInputFields() {
     if (obj != nullptr)
       obj->reset();
   }
-}
-
-TabsEditor::~TabsEditor() {
-  if (inputFields.size() > 0)
-    inputFields.clear();
-
-  if (ignoreFields.size() > 0)
-    ignoreFields.clear();
-
-  if (m_tableData != nullptr)
-    delete m_tableData;
 }

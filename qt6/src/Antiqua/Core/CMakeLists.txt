@@ -25,8 +25,6 @@ SET (projectLibrary_FILES
 )
 
 SET (projectLibrary_SOURCES
- acompleterdata.cpp
- aeuropeancountries.cpp
  anetworkcache.cpp
  anetworker.cpp
  anetworkiface.cpp
@@ -49,8 +47,6 @@ SET (projectLibrary_SOURCES
 )
 
 SET (projectLibrary_HEADERS
- acompleterdata.h
- aeuropeancountries.h
  aglobal.h
  aenumerations.h
  anetworkcache.h

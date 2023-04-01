@@ -57,6 +57,18 @@ const QDir ASettings::getArchivPath(const QString &section) {
   return d;
 }
 
+const QVariant ASettings::groupValue(const QString &group, const QString &key,
+                                     const QVariant &fallback) {
+  if (group.isEmpty() || key.isEmpty())
+    return fallback;
+
+  QVariant _retval;
+  beginGroup(group);
+  _retval = value(key, fallback);
+  endGroup();
+  return _retval;
+}
+
 const QHash<QString, QVariant> &
 ASettings::readGroupConfig(const QString &group) {
   p_hash.clear();
@@ -140,7 +152,8 @@ const QDir ASettings::getPluginDir(const QString &subTarget) {
 }
 
 const QDir ASettings::getUserDataDir() {
-  QString data = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+  QString data =
+      QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
   QDir d(data);
   if (!d.mkpath(d.path())) {
     qWarning("DataLocation: Permission denied!");

@@ -59,18 +59,12 @@
 // AntiquaCRM::ASqlDataQuery
 #include "asqldataquery.h"
 
-// AntiquaCRM::ACompleterData
-#include "acompleterdata.h"
-
 // AntiquaCRM::ASqlQueryModel
 #include "asqlquerymodel.h"
 
 // AntiquaCRM::AProviderOrders
 // AntiquaCRM::ArticleOrderItem
 #include "aproviderorders.h"
-
-// AntiquaCRM::AEuropeanCountries
-#include "aeuropeancountries.h"
 
 // AntiquaCRM::ATableHeaderColumn
 #include "atableheadercolumn.h"

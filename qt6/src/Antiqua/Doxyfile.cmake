@@ -50,11 +50,7 @@ MULTILINE_CPP_IS_BRIEF = NO
 INHERIT_DOCS           = NO
 SEPARATE_MEMBER_PAGES  = NO
 TAB_SIZE               = 2
-ALIASES                = \
-  "obsolete=@deprecated" \
-  "FIXME=\xrefitem fixme \"Fixme\" \"Fixme\"" \
-  "qpl=<a href=\"http://www.trolltech.com/products/qt/licenses\">QPL</a>" \
-  "homepage=<a href=\"https://www.hjcms.de\">HJCMS</a>"
+ALIASES                = "obsolete=@deprecated"
 
 OPTIMIZE_OUTPUT_FOR_C  = NO
 OPTIMIZE_OUTPUT_JAVA   = NO
@@ -224,7 +220,7 @@ MACRO_EXPANSION        = YES
 # The default value is: NO.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-EXPAND_ONLY_PREDEF     = Yes
+EXPAND_ONLY_PREDEF     = NO
 
 # If the SEARCH_INCLUDES tag is set to YES, the include files in the
 # INCLUDE_PATH will be searched if a #include is found.

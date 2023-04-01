@@ -19,9 +19,10 @@
 namespace AntiquaCRM {
 
 /**
- * @class ColorLuminanceStyle
+ * @class ColorLuminance
  * @brief Get Relative Luminance for Application Stylesheets.
  * This is a helper class for correcting some color stylesheet rendering.
+ *
  * It will intalialed at application start from QApplication to fix some styles.
  * See also the Color Success Criterias from WCAG21:
  * https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html#dfn-contrast-ratio
@@ -45,6 +46,7 @@ public:
 
   /**
    * @brief calculate luminance from color
+   * @param color - diff color
    */
   static double luminance(const QColor &color);
 
@@ -60,11 +62,13 @@ public:
 
   /**
    * @brief Check Foreground to Background luminance.
+   * @param fgColor - foreground Color
    */
   bool checkForeground(const QColor &fgColor);
 
   /**
    * @brief Check Text color to Background luminance.
+   * @param bgColor - foreground Color
    */
   bool checkBackground(const QColor &bgColor);
 };

@@ -6,6 +6,7 @@
 #include <QDateTime>
 #include <QFile>
 #include <QFileInfo>
+#include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonParseError>
 #include <QTextStream>
@@ -154,6 +155,23 @@ const QDomDocument ASharedDataFiles::getXML(const QString &basename) {
     fp.close();
   }
   return doc;
+}
+
+const QStringList ASharedDataFiles::getCompleterList(const QString &basename,
+                                                     const QString &key) {
+  QStringList list;
+  QJsonDocument doc = getJson(basename);
+  if (doc.isEmpty()) {
+    qWarning("ACompleterData::getCompleterList missing '%s'",
+             qPrintable(basename));
+    return list;
+  }
+  QJsonArray arr = doc.object().value(basename).toArray();
+  for (int i = 0; i < arr.count(); i++) {
+    QJsonObject obj = arr[i].toObject();
+    list << obj.value(key).toString();
+  }
+  return list;
 }
 
 ASharedCacheFiles::ASharedCacheFiles(const QDir &d) : QDir{d} {}

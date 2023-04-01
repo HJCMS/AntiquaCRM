@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "abstractinput.h"
-#include "aguiutils.h"
 #include "alabel.h"
 #include "private/abstractinput_p.h"
 #include "whatsthisbutton.h"
@@ -11,15 +10,17 @@ namespace AntiquaCRM {
 
 AbstractInputPrivate::AbstractInputPrivate() {}
 
-void AbstractInputPrivate::init(QWidget *parent) {
-  Q_CHECK_PTR(parent);
-}
+void AbstractInputPrivate::init(QWidget *parent) { Q_CHECK_PTR(parent); }
 
 AbstractInput::AbstractInput(QWidget *parent) : QWidget{parent} {
   Q_D(AbstractInput);
   config = new AntiquaCRM::ASettings(this);
-  displayToolTips = windowBehavior("display_tooltip_buttons", true);
-  mouseWheelEvents = windowBehavior("mouse_wheel_support", false);
+  displayToolTips =
+      config->groupValue("window_behavior", "display_tooltip_buttons", true)
+          .toBool();
+  mouseWheelEvents =
+      config->groupValue("window_behavior", "mouse_wheel_support", false)
+          .toBool();
 
   setContentsMargins(0, 0, 0, 0);
   layout = new QBoxLayout(QBoxLayout::LeftToRight, this);
@@ -27,26 +28,9 @@ AbstractInput::AbstractInput(QWidget *parent) : QWidget{parent} {
   layout->setContentsMargins(0, 0, 0, 0);
   setLayout(layout);
   d->init(this);
-  // AGuiUtils
-  initAntiquaIconsResource();
 }
 
 AbstractInput::~AbstractInput() {}
-
-const QIcon AbstractInput::getIcon(const QString &name) {
-  return AGuiUtils::getIcon(name);
-}
-
-bool AbstractInput::windowBehavior(const QString &key, bool standard) {
-  if (key.isEmpty())
-    return false;
-
-  bool b = false;
-  config->beginGroup("window_behavior");
-  b = config->value(key, standard).toBool();
-  config->endGroup();
-  return b;
-}
 
 void AbstractInput::setRequired(bool b) {
   Q_D(AbstractInput);
