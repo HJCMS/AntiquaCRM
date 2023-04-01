@@ -32,6 +32,9 @@
  <file>icons/flag-red.png</file>
  <file>icons/flag-yellow.png</file>
  <file>icons/folder-txt.png</file>
+ <file>icons/gender-female.png</file>
+ <file>icons/gender-male.png</file>
+ <file>icons/gender-various.png</file>
  <file>icons/groups.png</file>
  <file>icons/help-contents.png</file>
  <file>icons/kchart.png</file>
