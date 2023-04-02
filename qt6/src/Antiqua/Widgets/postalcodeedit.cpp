@@ -5,6 +5,7 @@
 
 #include <AntiquaCRM>
 #include <QAbstractItemView>
+#include <QApplication>
 #include <QDebug>
 #include <QJsonObject>
 
@@ -19,8 +20,9 @@ void __postalcode_debug(const AntiquaCRM::PostalCode &code) {
 #endif
 
 // BEGIN::PostalCodeModel
-PostalCodeModel::PostalCodeModel(QObject *parent)
-    : QAbstractListModel{parent} {}
+PostalCodeModel::PostalCodeModel(QObject *parent) : QAbstractListModel{parent} {
+  p_palette = qApp->palette();
+}
 
 int PostalCodeModel::rowCount(const QModelIndex &parent) const {
   Q_UNUSED(parent);
@@ -33,47 +35,53 @@ int PostalCodeModel::columnCount(const QModelIndex &parent) const {
 }
 
 QVariant PostalCodeModel::data(const QModelIndex &index, int role) const {
-  if ((role & ~(Qt::DisplayRole | Qt::EditRole | Qt::ToolTipRole)) ||
-      !index.isValid())
-    return QVariant();
+  const QVariant _empty;
+  if (!index.isValid())
+    return _empty;
 
-  if (role == Qt::EditRole) {
+  int _row = index.row();
+  const AntiquaCRM::PostalCode _code = p_codes[_row];
+  if (_code.plz.isEmpty())
+    return _empty;
+
+  switch (role) {
+  case (Qt::UserRole):
+  case (Qt::EditRole): {
     if (index.column() == 1)
-      return p_codes[index.row()].location;
+      return _code.location;
     else if (index.column() == 2)
-      return p_codes[index.row()].state;
+      return _code.state;
     else
-      return p_codes[index.row()].plz;
-  }
+      return _code.plz;
+  } break;
 
-  if (role == Qt::DisplayRole) {
-    QString ret(p_codes[index.row()].plz);
-    ret.append(" ");
-    ret.append(p_codes[index.row()].location);
-    return ret;
-  }
+  case (Qt::DisplayRole): {
+    QString _v(_code.plz);
+    _v.append(" ");
+    _v.append(_code.location);
+    return _v;
+  } break;
 
-  if (role == Qt::ToolTipRole) {
-    QString ret(p_codes[index.row()].plz);
-    ret.append(" (");
-    ret.append(p_codes[index.row()].location);
-    QString st = p_codes[index.row()].state;
+  case (Qt::ToolTipRole): {
+    QString _v(_code.plz);
+    _v.append(" (");
+    _v.append(_code.location);
+    QString st = _code.state;
     if (!st.isEmpty()) {
-      ret.append("," + st);
+      _v.append("," + st);
     }
-    ret.append(")");
-    return ret;
-  }
+    _v.append(")");
+    return _v;
+  } break;
 
-  return QVariant();
-}
+  case (Qt::BackgroundRole):
+    return ((_row % 2) & 1) ? p_palette.alternateBase() : p_palette.base();
 
-QVariant PostalCodeModel::headerData(int section, Qt::Orientation orientation,
-                                     int role) const {
-  Q_UNUSED(section);
-  Q_UNUSED(orientation);
-  Q_UNUSED(role);
-  return QVariant();
+  default:
+    return _empty;
+  };
+
+  return _empty;
 }
 
 void PostalCodeModel::initModel(const QString &country) {

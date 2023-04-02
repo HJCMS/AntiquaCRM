@@ -3,17 +3,13 @@
 
 #include "abstractinput.h"
 #include "alabel.h"
-#include "private/abstractinput_p.h"
-#include "whatsthisbutton.h"
+#include "awhatsthisbutton.h"
 
 namespace AntiquaCRM {
 
-AbstractInputPrivate::AbstractInputPrivate() {}
-
-void AbstractInputPrivate::init(QWidget *parent) { Q_CHECK_PTR(parent); }
-
-AbstractInput::AbstractInput(QWidget *parent) : QWidget{parent} {
-  Q_D(AbstractInput);
+// BEGIN::AbstractInput
+AbstractInput::AbstractInput(QWidget *parent)
+  : QWidget{parent}, required{false} {
   config = new AntiquaCRM::ASettings(this);
   displayToolTips =
       config->groupValue("window_behavior", "display_tooltip_buttons", true)
@@ -27,14 +23,12 @@ AbstractInput::AbstractInput(QWidget *parent) : QWidget{parent} {
   layout->setObjectName("antiqua_input_layout");
   layout->setContentsMargins(0, 0, 0, 0);
   setLayout(layout);
-  d->init(this);
 }
 
 AbstractInput::~AbstractInput() {}
 
 void AbstractInput::setRequired(bool b) {
-  Q_D(AbstractInput);
-  d->required_status = b;
+  required = b;
 }
 
 void AbstractInput::focusOutEvent(QFocusEvent *e) {
@@ -45,8 +39,7 @@ void AbstractInput::focusOutEvent(QFocusEvent *e) {
 }
 
 bool AbstractInput::isRequired() {
-  Q_D(AbstractInput);
-  return d->required_status;
+  return required;
 }
 
 AntiquaCRM::ALabel *AbstractInput::addTitleLabel(const QString &title) {
@@ -62,7 +55,7 @@ void AbstractInput::setWhatsThisText(const QString &text) {
     return;
 
   if (displayToolTips) {
-    WhatsThisButton *m_tbn = new WhatsThisButton(text, this);
+    AWhatsThisButton *m_tbn = new AWhatsThisButton(text, this);
     layout->addWidget(m_tbn);
   }
 }
@@ -70,5 +63,6 @@ void AbstractInput::setWhatsThisText(const QString &text) {
 void AbstractInput::appendStretch(int expanding) {
   layout->addStretch(expanding);
 }
+// END::AbstractInput
 
 } // namespace AntiquaCRM

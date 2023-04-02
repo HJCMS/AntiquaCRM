@@ -14,14 +14,21 @@ AComboBox::AComboBox(QWidget *parent, bool mouseEvents)
   setSizeAdjustPolicy(QComboBox::AdjustToContentsOnFirstShow);
   setInsertPolicy(QComboBox::NoInsert);
   setEditable(false);
-  view()->setAlternatingRowColors(true);
-  view()->setSelectionMode(QAbstractItemView::SingleSelection);
+#ifndef Q_OS_LINUX
+  QAbstractItemView *_view = view();
+  if (_view != nullptr) {
+    _view->setAlternatingRowColors(true);
+    _view->setSelectionBehavior(QAbstractItemView::SelectRows);
+    _view->setSelectionMode(QAbstractItemView::SingleSelection);
+  }
+#endif
 }
 
 void AComboBox::wheelEvent(QWheelEvent *e) {
-  if (wheel_support) {
-    QComboBox::wheelEvent(e);
-  }
+  if (!wheel_support)
+    return;
+
+  QComboBox::wheelEvent(e);
 }
 
 const QString AComboBox::withoutDisclosures() {

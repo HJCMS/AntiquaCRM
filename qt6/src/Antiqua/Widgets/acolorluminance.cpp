@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "colorluminance.h"
+#include "acolorluminance.h"
 
 //#include <QDebug>
 #include <QRegularExpression>
@@ -9,12 +9,12 @@
 
 namespace AntiquaCRM {
 
-ColorLuminance::ColorLuminance(QApplication *parent)
+AColorLuminance::AColorLuminance(QApplication *parent)
     : QObject{parent}, p_palette{parent->palette()} {
   Q_CHECK_PTR(parent);
 }
 
-double ColorLuminance::luminance(const QColor &color) {
+double AColorLuminance::luminance(const QColor &color) {
   double _r, _g, _b;
   double _rsrgb = (color.red() / 255.0);
   if (_rsrgb <= 0.03928) {
@@ -40,20 +40,20 @@ double ColorLuminance::luminance(const QColor &color) {
   return ((0.2126 * _r) + (0.7152 * _g) + (0.0722 * _b));
 }
 
-bool ColorLuminance::check(const QColor &fg, const QColor &bg) const {
+bool AColorLuminance::check(const QColor &fg, const QColor &bg) const {
   double _crf = (luminance(fg) + 0.05);
   double _crb = (luminance(bg) + 0.05);
   double _lum = (_crf > _crb) ? qRound(_crf / _crb) : qRound(_crb / _crf);
   return (_lum > 11);
 }
 
-bool ColorLuminance::checkForeground(const QColor &fgColor) {
+bool AColorLuminance::checkForeground(const QColor &fgColor) {
   QColor _fc = fgColor.toRgb();
   QColor _bc = p_palette.window().color().toRgb();
   return check(_fc, _bc);
 }
 
-bool ColorLuminance::checkBackground(const QColor &bgColor) {
+bool AColorLuminance::checkBackground(const QColor &bgColor) {
   QColor _fc = p_palette.text().color().toRgb();
   QColor _bc = bgColor.toRgb();
   return check(_fc, _bc);

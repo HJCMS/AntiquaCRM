@@ -32,6 +32,7 @@ SET (projectLibrary_SOURCES
  aproviderorders.cpp
  areceiver.cpp
  asettings.cpp
+ aeucountries.cpp
  ashareddatafiles.cpp
  asqlcore.cpp
  asqldataquery.cpp
@@ -56,6 +57,7 @@ SET (projectLibrary_HEADERS
  aproviderorders.h
  areceiver.h
  asettings.h
+ aeucountries.h
  ashareddatafiles.h
  asqlcore.h
  asqldataquery.h

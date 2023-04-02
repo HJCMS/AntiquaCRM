@@ -19,6 +19,9 @@
 // AntiquaCRM::ASettings
 #include "asettings.h"
 
+// AntiquaCRM::AEUCountries
+#include "aeucountries.h"
+
 // AntiquaCRM::AReceiver
 #include "areceiver.h"
 

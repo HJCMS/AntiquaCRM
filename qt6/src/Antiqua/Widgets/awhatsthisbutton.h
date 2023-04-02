@@ -18,11 +18,11 @@
 namespace AntiquaCRM {
 
 /**
- * @class WhatsThisButton
+ * @class AWhatsThisButton
  * @brief WhatsThis Helper button class
  * @ingroup EditInputs
  */
-class ANTIQUACRM_LIBRARY WhatsThisButton final : public QPushButton {
+class ANTIQUACRM_LIBRARY AWhatsThisButton final : public QPushButton {
   Q_OBJECT
 
 private:
@@ -35,7 +35,7 @@ protected:
   bool event(QEvent *e) override;
 
 public:
-  explicit WhatsThisButton(const QString &help, QWidget *parent = nullptr);
+  explicit AWhatsThisButton(const QString &help, QWidget *parent = nullptr);
 };
 
 } // namespace AntiquaCRM

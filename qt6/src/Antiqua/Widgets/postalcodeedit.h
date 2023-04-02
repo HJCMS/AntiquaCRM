@@ -13,6 +13,7 @@
 #include <QAbstractListModel>
 #include <QCompleter>
 #include <QList>
+#include <QPalette>
 #include <QObject>
 #include <QWidget>
 
@@ -30,6 +31,7 @@ class ANTIQUACRM_LIBRARY PostalCodeModel final : public QAbstractListModel {
 
 private:
   QList<AntiquaCRM::PostalCode> p_codes;
+  QPalette p_palette;
 
 public:
   /**
@@ -51,12 +53,6 @@ public:
    * @brief returning sections from AntiquaCRM::PostalCode
    */
   QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-
-  /**
-   * @brief The header data returns always Null in this model!
-   */
-  QVariant headerData(int section, Qt::Orientation orientation,
-                      int role = Qt::DisplayRole) const;
 
   /**
    * @brief Init Model data

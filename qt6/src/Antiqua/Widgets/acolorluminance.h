@@ -19,7 +19,7 @@
 namespace AntiquaCRM {
 
 /**
- * @class ColorLuminance
+ * @class AColorLuminance
  * @brief Get Relative Luminance for Application Stylesheets.
  * This is a helper class for correcting some color stylesheet rendering.
  *
@@ -29,7 +29,7 @@ namespace AntiquaCRM {
  *
  * @ingroup EditWidgets
  */
-class ANTIQUACRM_LIBRARY ColorLuminance final : public QObject {
+class ANTIQUACRM_LIBRARY AColorLuminance final : public QObject {
   Q_OBJECT
 
 private:
@@ -42,7 +42,7 @@ public:
   /**
    * @param parent - This parent Widget is required for QPalette
    */
-  explicit ColorLuminance(QApplication *parent = nullptr);
+  explicit AColorLuminance(QApplication *parent = nullptr);
 
   /**
    * @brief calculate luminance from color

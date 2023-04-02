@@ -1,32 +1,32 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "whatsthisbutton.h"
+#include "awhatsthisbutton.h"
+#include "abstractinput.h"
 
 #include <QIcon>
 #include <QWhatsThis>
 
 namespace AntiquaCRM {
 
-WhatsThisButton::WhatsThisButton(const QString &help, QWidget *parent)
+AWhatsThisButton::AWhatsThisButton(const QString &help, QWidget *parent)
     : QPushButton{parent}, p_text{help} {
   setContentsMargins(0, 0, 0, 0);
-  QIcon fallback("://icons/help-contents.png");
-  setIcon(QIcon::fromTheme("help-contents", fallback));
+  setIcon(AntiquaApplIcon("help-contents"));
   setToolTip(tr("Click to open Tooltip."));
   setStatusTip(toolTip());
   setStyleSheet("QPushButton {border:none;margin:0px;}");
   connect(this, SIGNAL(clicked()), SLOT(showWhatsThis()));
 }
 
-void WhatsThisButton::showWhatsThis() {
+void AWhatsThisButton::showWhatsThis() {
   if (p_text.isEmpty())
     return;
 
   QWhatsThis::showText(pos(), p_text, this);
 }
 
-bool WhatsThisButton::event(QEvent *e) {
+bool AWhatsThisButton::event(QEvent *e) {
   if (e->type() == QEvent::HoverEnter) {
     setCursor(Qt::WhatsThisCursor);
   } else if (e->type() == QEvent::HoverLeave) {

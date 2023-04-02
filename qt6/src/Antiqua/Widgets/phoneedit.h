@@ -25,7 +25,8 @@ namespace AntiquaCRM {
  * @brief Phone Country Code Completer Model
  * @ingroup EditWidgets
  */
-class ANTIQUACRM_LIBRARY PhoneCountryCodeModel final : public QAbstractListModel {
+class ANTIQUACRM_LIBRARY PhoneCountryCodeModel final
+    : public QAbstractListModel {
   Q_OBJECT
 
 private:
@@ -40,11 +41,21 @@ public:
    * @param parent - parent object
    */
   explicit PhoneCountryCodeModel(QObject *parent = nullptr);
-  int rowCount(const QModelIndex &parent = QModelIndex()) const;
-  int columnCount(const QModelIndex &parent) const;
-  QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+
+  int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+
+  /**
+   * @brief columnCount - always=2
+   * @param parent - ModelIndex
+   */
+  int columnCount(const QModelIndex &parent) const override;
+
+  QVariant data(const QModelIndex &index,
+                int role = Qt::DisplayRole) const override;
+
   QVariant headerData(int section, Qt::Orientation orientation,
-                      int role = Qt::DisplayRole) const;
+                      int role = Qt::DisplayRole) const override;
+
   void initModel();
 };
 

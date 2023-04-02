@@ -24,20 +24,24 @@ namespace AntiquaCRM {
 
 /**
  * @ingroup IconTheme
- *
  * @brief Icon from Theme or Application Resource file ...
- * Load qrc://icons/Images from icon resource.
+ * Load qrc://icons/<image> from icon QResource.
  * @note The QResource must initialed in application first!
  * @param name  - Iconname
  * @return QIcon
  */
 ANTIQUACRM_LIBRARY inline const QIcon AntiquaApplIcon(const QString &name) {
   QIcon _back(":/icons/" + name + ".png");
-  return QIcon::fromTheme(name, _back);
+  QIcon _icon = QIcon::fromTheme(name, _back);
+#ifdef ANTIQUA_DEVELOPEMENT
+  if (_icon.isNull()) {
+    qWarning("Missing required ThemeIcon(%s)!", qPrintable(name));
+  }
+#endif
+  return _icon;
 }
 
 class ALabel;
-class AbstractInputPrivate;
 
 /**
  * @class AbstractInput
@@ -48,8 +52,11 @@ class AbstractInputPrivate;
  */
 class ANTIQUACRM_LIBRARY AbstractInput : public QWidget {
   Q_OBJECT
-  Q_DECLARE_PRIVATE(AbstractInput);
-  Q_DISABLE_COPY(AbstractInput)
+  Q_PROPERTY(bool required READ isRequired WRITE setRequired NOTIFY
+                 sendRequiredChanged)
+
+private:
+  bool required;
 
 protected:
   /**
@@ -118,6 +125,11 @@ protected Q_SLOTS:
   virtual void focusOutEvent(QFocusEvent *) override;
 
 Q_SIGNALS:
+  /**
+   * @brief emitted when Object Required changed.
+   */
+  void sendRequiredChanged();
+
   /**
    * @brief This Signal will emitted, if focus get out from this widget.
    */

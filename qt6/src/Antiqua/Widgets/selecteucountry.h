@@ -10,38 +10,93 @@
 #define ANTIQUACRM_WIDGETS_SELECTEUCOUNTRY_H
 
 #include <AntiquaInput>
-#include <QHash>
+#include <QAbstractListModel>
 #include <QObject>
 #include <QWidget>
 
 namespace AntiquaCRM {
 
 /**
- * @class AEuropeanCountries
- * @brief European Countries Container
+ * @class SelectEUCountryModel
+ * @brief European Country Model Class
  * EU Countries initialed with ISO 3166-1 Alpha-2 Code.
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY AEUCountries final : public QObject,
-                                              public QMap<QString, QString> {
+class ANTIQUACRM_LIBRARY SelectEUCountryModel final
+    : public QAbstractListModel {
   Q_OBJECT
 
+private:
+  /**
+   * @brief Color::palette from Parent Widget
+   */
+  const QPalette p_palette;
+
+  /**
+   * @brief European flag icon
+   */
+  const QIcon euIcon;
+
+  /**
+   * @brief Default warn icon
+   */
+  const QIcon nonIcon;
+
+  /**
+   * @class CountryRow
+   * @brief Country Model rowItem
+   */
+  class CountryRow final {
+  public:
+    int index;     /**< @brief Sort order index */
+    QString bcp47; /**< @brief ISO 3166-1 Alpha-2 Code */
+    QString name;  /**< @brief Translated Country name */
+
+    /**
+     * @brief Country
+     * @param k - bcp47 key
+     * @param n - Country name
+     */
+    explicit CountryRow(int r, QString k, QString n) {
+      index = r;
+      bcp47 = k;
+      name = n;
+    }
+  };
+
+  /**
+   * @brief Country Model list
+   */
+  QList<CountryRow> p_list;
+
 public:
-  explicit AEUCountries(QObject *parent = nullptr);
+  /**
+   * @param parent - a Widget is required to fetch the right Color palette.
+   */
+  explicit SelectEUCountryModel(QWidget *parent = nullptr);
 
   /**
-   * @brief get bcp47Name with translated Country!
-   * @param country
-   * @return bcp47Name
+   * @brief response current row count of countries
    */
-  const QString bcp47Name(const QString &country);
+  int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
   /**
-   * @brief get Country with bcp47Name!
-   * @param bcp47
-   * @return Translated Country name
+   * @brief get country from model index
    */
-  const QString country(const QString &bcp47);
+  QVariant data(const QModelIndex &index,
+                int role = Qt::DisplayRole) const override;
+
+  /**
+   * @brief Initial Countries model
+   * @note This must for performance manually done.
+   * @code
+   *  QComboBox *box = new QComboBox(parent);
+   *  SelectEUCountryModel *model = new SelectEUCountryModel(box);
+   *  if(model->initModel())
+   *    box->setModel(model);
+   * @endcode
+   */
+  bool initModel();
 };
 
 /**
@@ -55,6 +110,7 @@ class ANTIQUACRM_LIBRARY SelectEUCountry final
 
 private:
   AComboBox *m_edit;
+  SelectEUCountryModel *m_model;
 
 private Q_SLOTS:
   void valueChanged(int);
@@ -74,6 +130,7 @@ public:
    * @param parent - parent widget
    */
   explicit SelectEUCountry(QWidget *parent = nullptr);
+  ~SelectEUCountry();
 
   void setRestrictions(const QSqlField &) override;
 

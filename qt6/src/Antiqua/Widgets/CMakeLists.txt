@@ -6,7 +6,6 @@
 
 SET(_subProjectLibrary "AntiquaWidgets")
 
-ADD_SUBDIRECTORY (private)
 ADD_SUBDIRECTORY (templates)
 
 INCLUDE_DIRECTORIES (
@@ -20,32 +19,31 @@ CONFIGURE_FILE (AntiquaWidgets.cmake
 )
 
 SET (_library_FILES
- private/abstractinput_p.h
+ AntiquaInput
  AntiquaInput.cmake
+ AntiquaWidgets
  AntiquaWidgets.cmake
 )
 
 SET (_library_SOURCES
-## Inputs
  abstractinput.cpp
- alabel.cpp
+ acolorluminance.cpp
  acombobox.cpp
  adatetimeedit.cpp
  adoublebox.cpp
+ alabel.cpp
  alineedit.cpp
- aspinbox.cpp
  aslider.cpp
- colorluminance.cpp
-## Widgets
- whatsthisbutton.cpp
+ aspinbox.cpp
+ awhatsthisbutton.cpp
  bookbindingedit.cpp
- crowdedit.cpp
  conditionedit.cpp
+ crowdedit.cpp
  emailedit.cpp
  genderedit.cpp
- priceedit.cpp
  phoneedit.cpp
  postalcodeedit.cpp
+ priceedit.cpp
  salutationedit.cpp
  selecteucountry.cpp
  selectlanguage.cpp
@@ -56,28 +54,24 @@ SET (_library_SOURCES
 )
 
 SET (_library_HEADERS
-## Inputs
  abstractinput.h
- alabel.h
+ acolorluminance.h
  acombobox.h
  adatetimeedit.h
  adoublebox.h
+ alabel.h
  alineedit.h
- aspinbox.h
  aslider.h
- colorluminance.h
- AntiquaInput
-## Widgets
- AntiquaWidgets
- whatsthisbutton.h
+ aspinbox.h
+ awhatsthisbutton.h
  bookbindingedit.h
- crowdedit.h
  conditionedit.h
+ crowdedit.h
  emailedit.h
  genderedit.h
- priceedit.h
  phoneedit.h
  postalcodeedit.h
+ priceedit.h
  salutationedit.h
  selecteucountry.h
  selectlanguage.h
@@ -96,31 +90,31 @@ ADD_LIBRARY (${_subProjectLibrary} SHARED
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
 
 SET_TARGET_PROPERTIES (${_subProjectLibrary} PROPERTIES
-  VERSION ${ANTIQUACRM_VERSION_STRING}
-  SOVERSION ${ANTIQUACRM_VERSION_MAJOR}
-  OUTPUT_NAME ${_subProjectLibrary}
-  LINKER_LANGUAGE CXX
+ VERSION ${ANTIQUACRM_VERSION_STRING}
+ SOVERSION ${ANTIQUACRM_VERSION_MAJOR}
+ OUTPUT_NAME ${_subProjectLibrary}
+ LINKER_LANGUAGE CXX
 )
 
 TARGET_LINK_LIBRARIES (${_subProjectLibrary} PRIVATE
-  Qt6::Core
-  Qt6::Gui
-  Qt6::Widgets
-  Qt6::Network
-  Qt6::Sql
-  Qt6::Xml
-  AntiquaCRM
+ Qt6::Core
+ Qt6::Gui
+ Qt6::Widgets
+ Qt6::Network
+ Qt6::Sql
+ Qt6::Xml
+ AntiquaCRM
 )
 
 INSTALL (TARGETS ${_subProjectLibrary}
-  LIBRARY DESTINATION lib${LIB_SUFFIX}/
-  COMPONENT Libraries
-  NAMELINK_COMPONENT Development
+ LIBRARY DESTINATION lib${LIB_SUFFIX}/
+ COMPONENT Libraries
+ NAMELINK_COMPONENT Development
 )
 
-INSTALL (FILES ${library_HEADERS}
-  DESTINATION include/AntiquaCRM
-  COMPONENT Development
+INSTALL (FILES ${library_HEADERS} AntiquaInput AntiquaWidgets
+ DESTINATION include/AntiquaCRM
+ COMPONENT Development
 )
 
 #EOF

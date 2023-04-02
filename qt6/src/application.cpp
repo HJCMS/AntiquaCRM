@@ -80,7 +80,7 @@ void Application::initTheme() {
 #ifdef Q_OS_LINUX
   QPalette _p = palette();
   QColor _phtc = _p.color(QPalette::PlaceholderText).toRgb();
-  if (!AntiquaCRM::ColorLuminance(this).checkForeground(_phtc))
+  if (!AntiquaCRM::AColorLuminance(this).checkForeground(_phtc))
     _p.setColor(QPalette::PlaceholderText, Qt::darkGray);
 #endif
 

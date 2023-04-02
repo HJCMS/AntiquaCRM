@@ -3,6 +3,7 @@
 
 #include "alineedit.h"
 
+#include <QAbstractItemView>
 #include <QCompleter>
 #include <QDebug>
 #include <QIcon>
@@ -41,8 +42,14 @@ void ALineEdit::setArticleValidator() {
 
 void ALineEdit::showCompleter() {
   QCompleter *m_cpl = completer();
-  if (m_cpl != nullptr)
+  if (m_cpl != nullptr) {
+    QAbstractItemView *m_view = m_cpl->popup();
+    m_view->setAlternatingRowColors(true);
+    m_view->setSelectionBehavior(QAbstractItemView::SelectRows);
+    m_view->setSelectionMode(QAbstractItemView::SingleSelection);
+
     m_cpl->complete(rect());
+  }
 }
 
 void ALineEdit::focusOutEvent(QFocusEvent *event) {
