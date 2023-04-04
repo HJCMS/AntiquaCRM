@@ -279,6 +279,12 @@ void PostalCodeEdit::reset() {
 }
 
 void PostalCodeEdit::initData() {
+  QSqlField _f;
+  _f.setMetaType(QMetaType(QMetaType::QString));
+  _f.setRequiredStatus(QSqlField::Required);
+  _f.setLength(10);
+  setRestrictions(_f);
+
   m_countries->clear();
   m_countries->setWithoutDisclosures(QString());
 

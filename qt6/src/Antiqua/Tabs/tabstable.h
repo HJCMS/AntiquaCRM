@@ -6,10 +6,11 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUA_TABS_TABLE_H
-#define ANTIQUA_TABS_TABLE_H
+#ifndef ANTIQUACRM_TABS_TABLE_H
+#define ANTIQUACRM_TABS_TABLE_H
 
-#include <AntiquaCRM>
+#include <AGlobal>
+#include <ASettings>
 #include <AntiquaWidgets>
 #include <QHeaderView>
 #include <QObject>
@@ -17,11 +18,13 @@
 #include <QTableView>
 #include <QWidget>
 
+namespace AntiquaCRM {
+
 /**
  * @brief Horizontal Table Header for InventoryTable
  * @ingroup widgets
  */
-class TabsTableHeader final : public QHeaderView {
+class ANTIQUACRM_LIBRARY TabsTableHeader final : public QHeaderView {
   Q_OBJECT
 
 public Q_SLOTS:
@@ -31,7 +34,7 @@ public:
   explicit TabsTableHeader(QWidget *parent = nullptr);
 };
 
-class TabsTable : public QTableView {
+class ANTIQUACRM_LIBRARY TabsTable : public QTableView {
   Q_OBJECT
   Q_PROPERTY(int QueryLimit READ getQueryLimit WRITE setQueryLimit NOTIFY
                  sendQueryLimitChanged)
@@ -227,4 +230,6 @@ public:
   virtual const QString getDefaultWhereClause() = 0;
 };
 
-#endif // ANTIQUA_TABS_TABLE_H
+} // namespace AntiquaCRM
+
+#endif // ANTIQUACRM_TABS_TABLE_H

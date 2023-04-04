@@ -23,8 +23,11 @@ ConditionEdit::ConditionEdit(QWidget *parent)
 }
 
 void ConditionEdit::valueChanged(int index) {
-  Q_UNUSED(index);
+  if (index == 0)
+    return;
+
   setWindowModified(true);
+  emit inputChanged();
 }
 
 void ConditionEdit::initData() {
@@ -32,9 +35,6 @@ void ConditionEdit::initData() {
   _f.setMetaType(QMetaType(QMetaType::Int));
   _f.setRequiredStatus(QSqlField::Required);
   _f.setDefaultValue(AntiquaCRM::Condition::NO_CONDITION);
-  if (!objectName().isEmpty())
-    _f.setName(objectName());
-
   setRestrictions(_f);
   setWindowModified(false);
 }

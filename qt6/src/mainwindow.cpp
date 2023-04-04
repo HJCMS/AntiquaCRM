@@ -29,6 +29,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow{parent} {
   setStatusBar(m_statusbar);
 }
 
+bool MainWindow::loadTabInterfaces() {
+  AntiquaCRM::TabsLoader _loader(this);
+
+  QList<AntiquaCRM::TabsInterface *> _list = _loader.interfaces(this);
+  if (_list.size() > 0) {
+    QListIterator<AntiquaCRM::TabsInterface *> it(_list);
+    while (it.hasNext()) {
+      AntiquaCRM::TabsInterface *_iface = it.next();
+      if (_iface != nullptr) {
+        m_tabwidget->addTab(_iface->indexWidget(m_tabwidget),
+                            _iface->displayName());
+      }
+    }
+    return true;
+  }
+  return false;
+}
+
 void MainWindow::debugContent() {
   QRegularExpression pattern("^[a-z]{1}_[a-z_]{2,}");
   QList<AntiquaCRM::AbstractInput *> list =
@@ -47,6 +65,9 @@ void MainWindow::openWindow() {
 
   // start plz inputs
   m_statusbar->showMessage(tr("Window opened"));
+
+  if (!loadTabInterfaces())
+    m_statusbar->showMessage(tr("No tabs available"));
 
 #ifdef ANTIQUA_DEVELOPEMENT
   debugContent();

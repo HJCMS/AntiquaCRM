@@ -14,9 +14,12 @@ CrowdEdit::CrowdEdit(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
   connect(m_edit, SIGNAL(valueChanged(int)), SLOT(valueChanged(int)));
 }
 
-void CrowdEdit::valueChanged(int) {
-  if (isValid())
-    setWindowModified(true);
+void CrowdEdit::valueChanged(int count) {
+  if (count < 0)
+    return;
+
+  setWindowModified(true);
+  emit inputChanged();
 }
 
 void CrowdEdit::initData() {
@@ -24,9 +27,6 @@ void CrowdEdit::initData() {
   _f.setMetaType(QMetaType(QMetaType::Int));
   _f.setRequiredStatus(QSqlField::Required);
   _f.setDefaultValue(0);
-  if (!objectName().isEmpty())
-    _f.setName(objectName());
-
   setRestrictions(_f);
   setWindowModified(false);
 }

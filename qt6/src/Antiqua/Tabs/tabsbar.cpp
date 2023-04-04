@@ -9,6 +9,8 @@
 #include <QLabel>
 #include <QMenu>
 
+namespace AntiquaCRM {
+
 TabsBar::TabsBar(QWidget *parent, bool wheelEvents)
     : QTabBar{parent}, enableWheel{wheelEvents} {
   setMovable(true);
@@ -43,3 +45,5 @@ void TabsBar::setTabCloseable(int index, bool closeable) {
 }
 
 TabsBar::~TabsBar() {}
+
+} // namespace AntiquaCRM

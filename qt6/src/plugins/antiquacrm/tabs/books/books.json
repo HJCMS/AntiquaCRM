@@ -1,0 +1,7 @@
+{
+  "Keys": [ "libBooks" ],
+  "Name": "Books",
+  "Title": "Books Tab",
+  "Description": "Inventory Integration for Edit Books.",
+  "Category": "tabs"
+}

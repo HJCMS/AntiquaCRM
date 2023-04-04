@@ -32,9 +32,6 @@ void EMailEdit::initData() {
   _f.setMetaType(QMetaType(QMetaType::QString));
   _f.setRequiredStatus(QSqlField::Required);
   _f.setLength(80);
-  if (!objectName().isEmpty())
-    _f.setName(objectName());
-
   setRestrictions(_f);
   setWindowModified(false);
 }

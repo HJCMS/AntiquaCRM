@@ -6,14 +6,17 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUA_TABS_SEARCHBAR_H
-#define ANTIQUA_TABS_SEARCHBAR_H
+#ifndef ANTIQUACRM_TABS_SEARCHBAR_H
+#define ANTIQUACRM_TABS_SEARCHBAR_H
 
+#include <AGlobal>
 #include <QObject>
 #include <QRegularExpression>
 #include <QtWidgets>
 
-class TabsSearchBar : public QToolBar {
+namespace AntiquaCRM {
+
+class ANTIQUACRM_LIBRARY TabsSearchBar : public QToolBar {
   Q_OBJECT
   Q_PROPERTY(int minLength READ getMinLength WRITE setMinLength NOTIFY
                  sendMinLengthChanged)
@@ -50,7 +53,8 @@ protected:
   const QRegularExpression quotePattern = QRegularExpression("[\\'\\\"]+");
   const QRegularExpression trimPattern = QRegularExpression("[\\s\\t\\n\\r]+");
   const QRegularExpression isbnPattern = QRegularExpression("[^0-9]+");
-  const QRegularExpression articlePattern = QRegularExpression("^([0-9]+[\\,]?)+$");
+  const QRegularExpression articlePattern =
+      QRegularExpression("^([0-9]+[\\,]?)+$");
 
   /**
    * @brief Predefined with Stock CheckBox
@@ -168,4 +172,6 @@ public:
   virtual const QString getSearchStatement() = 0;
 };
 
-#endif // ANTIQUA_TABS_SEARCHBAR_H
+} // namespace AntiquaCRM
+
+#endif // ANTIQUACRM_TABS_SEARCHBAR_H

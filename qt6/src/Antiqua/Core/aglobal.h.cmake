@@ -82,7 +82,7 @@
 
 /**
  * @ingroup AMacros
- * @brief required by PostgreSQL, D-Bus and TCP-Socket
+ * @brief required by PostgreSQL, D-Bus, TCP-Socket and Interfaces
  */
 #ifndef ANTIQUACRM_CONNECTION_DOMAIN
 #define ANTIQUACRM_CONNECTION_DOMAIN "de.hjcms.@PROJECTNAME@"
@@ -127,14 +127,6 @@
  */
 #ifndef ANTIQUACRM_HOMEPAGE
 #define ANTIQUACRM_HOMEPAGE "@HOMEPAGEURL@"
-#endif
-
-/**
- * @ingroup AMacros
- * @brief AntiquaCRM Provider Plugin-Interface „namespace“
- */
-#ifndef ANTIQUACRM_INTERFACE
-#define ANTIQUACRM_INTERFACE "de.hjcms.antiquacrm.ProviderInterface"
 #endif
 
 /**

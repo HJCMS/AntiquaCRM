@@ -8,6 +8,14 @@
 
 namespace AntiquaCRM {
 
+// BEGIN::CountryItem
+EUCountry::EUCountry(int ro, QString ke, QString na) {
+  index = ro;
+  bcp47 = ke;
+  name = na;
+}
+// END::CountryItem
+
 // BEGIN::SelectEUCountryModel
 SelectEUCountryModel::SelectEUCountryModel(QWidget *parent)
     : QAbstractListModel{parent}, p_palette{parent->palette()},
@@ -29,7 +37,7 @@ QVariant SelectEUCountryModel::data(const QModelIndex &index, int role) const {
   if (row > rowCount())
     return QVariant();
 
-  const CountryRow _country = p_list[index.row()];
+  const EUCountry _country = p_list[index.row()];
   switch (role) {
   case (Qt::DisplayRole):
     return _country.name;
@@ -65,19 +73,21 @@ bool SelectEUCountryModel::initModel() {
   int row = 0;
   beginInsertRows(createIndex(row, 0), 0, countries.size());
   // No Selection (Fix sort order)
-  CountryRow _item(row++, "XX", countries.country("XX"));
+  EUCountry _item(row++, "XX", countries.country("XX"));
   p_list.append(_item);
 
   QMapIterator<QString, QString> it(countries);
   while (it.hasNext()) {
     it.next();
     if (it.key() != "XX")
-      p_list.append(CountryRow(row++, it.key(), it.value()));
+      p_list.append(EUCountry(row++, it.key(), it.value()));
   }
   endInsertRows();
 
   return (p_list.size() > 0);
 }
+
+int SelectEUCountryModel::size() { return p_list.size(); }
 
 // END::SelectEUCountryModel
 
@@ -99,15 +109,24 @@ SelectEUCountry::~SelectEUCountry() {
     m_model->deleteLater();
 }
 
-void SelectEUCountry::valueChanged(int) {
-  if (isValid())
+void SelectEUCountry::valueChanged(int index) {
+  if (index == 0)
+    return;
+
+  if (m_model->size() < 1)
+    return;
+
+  if (isValid()) {
     setWindowModified(true);
+    emit inputChanged();
+  }
 }
 
 void SelectEUCountry::initData() {
   QSqlField _f;
   _f.setMetaType(QMetaType(QMetaType::QString));
   _f.setRequiredStatus(QSqlField::Optional);
+  _f.setLength(2);
   setRestrictions(_f);
 
   if (m_model->initModel())
@@ -148,11 +167,11 @@ void SelectEUCountry::setRestrictions(const QSqlField &field) {
   }
   setRequired(false);
 
-  QString _default = field.defaultValue().toString();
-  if (_default.isEmpty())
-    return;
-
   if (m_edit->currentIndex() == 0) {
+    QString _default = field.defaultValue().toString();
+    if (_default.isEmpty())
+      return;
+
     setValue(_default);
   }
 }
@@ -178,7 +197,8 @@ bool SelectEUCountry::isValid() {
 
 const QVariant SelectEUCountry::getValue() {
   int _index = m_edit->currentIndex();
-  return m_edit->itemData(_index, Qt::UserRole).toString();
+  QString _v = m_edit->itemData(_index, Qt::UserRole).toString();
+  return (_v.length() == 2) ? _v.toUpper() : QString();
 }
 
 const QString SelectEUCountry::popUpHints() {

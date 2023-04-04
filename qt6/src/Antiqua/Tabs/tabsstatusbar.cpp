@@ -7,6 +7,8 @@
 #include <QHash>
 #include <QSignalMapper>
 
+namespace AntiquaCRM {
+
 TabsStatusBar::TabsStatusBar(QWidget *parent) : QStatusBar{parent} {
   setSizeGripEnabled(false);
   setContentsMargins(0, 0, 4, 5);
@@ -111,3 +113,5 @@ const QIcon TabsStatusBar::getIcon(const QString &name) {
 }
 
 void TabsStatusBar::setStockEnabled(bool b) { SearchWithStock = b; }
+
+} // namespace AntiquaCRM

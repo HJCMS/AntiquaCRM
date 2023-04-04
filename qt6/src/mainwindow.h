@@ -24,6 +24,8 @@ private:
   TabWidget *m_tabwidget;
   StatusBar *m_statusbar;
 
+  bool loadTabInterfaces();
+
   void debugContent();
 
 public:

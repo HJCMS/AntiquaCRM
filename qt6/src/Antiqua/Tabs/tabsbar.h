@@ -6,15 +6,18 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUA_TABS_BAR_H
-#define ANTIQUA_TABS_BAR_H
+#ifndef ANTIQUACRM_TABS_BAR_H
+#define ANTIQUACRM_TABS_BAR_H
 
+#include <AGlobal>
 #include <QObject>
 #include <QTabBar>
 #include <QWheelEvent>
 #include <QWidget>
 
-class TabsBar final : public QTabBar {
+namespace AntiquaCRM {
+
+class ANTIQUACRM_LIBRARY TabsBar final : public QTabBar {
   Q_OBJECT
 
 private:
@@ -39,4 +42,6 @@ public:
   virtual ~TabsBar();
 };
 
-#endif // ANTIQUA_TABS_BAR_H
+} // namespace AntiquaCRM
+
+#endif // ANTIQUACRM_TABS_BAR_H

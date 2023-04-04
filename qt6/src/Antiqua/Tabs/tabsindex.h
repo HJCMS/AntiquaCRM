@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUA_TABS_INDEX_H
-#define ANTIQUA_TABS_INDEX_H
+#ifndef ANTIQUACRM_TABS_INDEX_H
+#define ANTIQUACRM_TABS_INDEX_H
 
 #include <AGlobal>
 #include <QEvent>
@@ -15,7 +15,9 @@
 #include <QShortcut>
 #include <QStackedWidget>
 
-class TabsIndex : public QStackedWidget {
+namespace AntiquaCRM {
+
+class ANTIQUACRM_LIBRARY TabsIndex : public QStackedWidget {
   Q_OBJECT
   Q_PROPERTY(bool closable READ isClosable WRITE setClosable NOTIFY
                  sendClosableChanged)
@@ -144,7 +146,11 @@ public Q_SLOTS:
   virtual void onEnterChanged() = 0;
 
 public:
-  enum ViewIndex { MainView = 0, EditorView = 1, CustomView = 2 };
+  enum ViewPage {
+    MainView = 0,   /**< @brief index page Index:0 */
+    EditorView = 1, /**< @brief editor page Index:1 */
+    CustomView = 2  /**< @brief additional page index:2+ */
+  };
 
   /**
    * @brief Tabs Inventory
@@ -157,7 +163,7 @@ public:
    * @brief Which Stacked index is currently in use?
    * This allows widgets to be set variably
    */
-  virtual TabsIndex::ViewIndex currentView() = 0;
+  virtual TabsIndex::ViewPage currentView() = 0;
 
   /**
    * @brief Create Custom Entries
@@ -170,12 +176,9 @@ public:
    */
   const QString tabIndexId() const;
 
-  /**
-   * @brief get Icon fpr this Tab
-   */
-  static const QIcon getTabIcon(const QString &name = QString("antiquacrm"));
-
   bool isClosable();
 };
 
-#endif // ANTIQUA_TABS_INDEX_H
+} // namespace AntiquaCRM
+
+#endif // ANTIQUACRM_TABS_INDEX_H

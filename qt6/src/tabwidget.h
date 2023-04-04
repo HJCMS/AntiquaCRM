@@ -21,21 +21,11 @@ class TabWidget final : public QTabWidget {
 private:
   AntiquaCRM::ASettings *m_cfg;
   AntiquaCRM::AReceiver *m_server;
-  TabsBar *m_tabBar;
+  AntiquaCRM::TabsBar *m_tabBar;
 
 public:
   explicit TabWidget(QMainWindow *parent = nullptr);
-
-  /**
-   * @brief TimerEvents und Sockets sauber runterfahren!
-   */
   virtual ~TabWidget();
-
-  /**
-   * @brief Liste der Tabs
-   * @note Wird von Menüklassen verwendet!
-   */
-  static const QMap<QString, QString> availableTabs();
 
   /**
    * @brief Alle Registerkarten schließen!

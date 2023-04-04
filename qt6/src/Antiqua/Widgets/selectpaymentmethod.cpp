@@ -26,7 +26,7 @@ void SelectPaymentMethod::valueChanged(int index) {
 void SelectPaymentMethod::initData() {
   QSqlField _f;
   _f.setMetaType(QMetaType(QMetaType::Int));
-  _f.setDefaultValue(0);
+  _f.setDefaultValue(AntiquaCRM::PAYMENT_NOT_SET);
   setRestrictions(_f);
 
   int c = 1;

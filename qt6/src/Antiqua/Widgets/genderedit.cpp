@@ -18,6 +18,12 @@ GenderEdit::GenderEdit(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
 void GenderEdit::valueChanged(int) { setWindowModified(true); }
 
 void GenderEdit::initData() {
+  QSqlField _f;
+  _f.setMetaType(QMetaType(QMetaType::Int));
+  _f.setRequiredStatus(QSqlField::Required);
+  _f.setDefaultValue(AntiquaCRM::NO_GENDER);
+  setRestrictions(_f);
+
   m_edit->setWithoutDisclosures(AntiquaCRM::NO_GENDER);
   m_edit->insertItem(1, tr("Male"), AntiquaCRM::MALE);
   m_edit->setItemIcon(1, AntiquaApplIcon("gender-male"));

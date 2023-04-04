@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 #
 
-SET(_projectLibrary "AntiquaInterface")
+SET(_sharedLibrary "AntiquaInterface")
 
 INCLUDE_DIRECTORIES (
   ${INTERNAL_INTERFACE_INCLUDE_DIRS}
@@ -31,7 +31,7 @@ SET (projectLibrary_HEADERS
  ${projectinc_FILES}
 )
 
-ADD_LIBRARY (${_projectLibrary} SHARED
+ADD_LIBRARY (${_sharedLibrary} SHARED
  ${projectLibrary_SOURCES}
  ${projectLibrary_HEADERS}
  ${projectLibrary_FILES}
@@ -39,20 +39,20 @@ ADD_LIBRARY (${_projectLibrary} SHARED
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
 
-SET_TARGET_PROPERTIES (${_projectLibrary} PROPERTIES
+SET_TARGET_PROPERTIES (${_sharedLibrary} PROPERTIES
   VERSION ${ANTIQUACRM_VERSION_STRING}
   SOVERSION ${ANTIQUACRM_VERSION_MAJOR}
-  OUTPUT_NAME ${_projectLibrary}
+  OUTPUT_NAME ${_sharedLibrary}
   LINKER_LANGUAGE CXX
 )
 
-TARGET_LINK_LIBRARIES (${_projectLibrary} PRIVATE
+TARGET_LINK_LIBRARIES (${_sharedLibrary} PRIVATE
   Qt6::Core
   AntiquaCRM
   AntiquaWidgets
 )
 
-INSTALL (TARGETS ${_projectLibrary}
+INSTALL (TARGETS ${_sharedLibrary}
   LIBRARY DESTINATION lib${LIB_SUFFIX}/
   COMPONENT Libraries
   NAMELINK_COMPONENT Development

@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUA_TABS_EDITOR_H
-#define ANTIQUA_TABS_EDITOR_H
+#ifndef ANTIQUACRM_TABS_EDITOR_H
+#define ANTIQUACRM_TABS_EDITOR_H
 
 #include <AntiquaCRM>
 #include <AntiquaWidgets>
@@ -21,10 +21,12 @@
 #include <QVariant>
 #include <QWidget>
 
+namespace AntiquaCRM {
+
 /**
  * @brief Main Editor Interfaces class
  */
-class TabsEditor : public QWidget {
+class ANTIQUACRM_LIBRARY TabsEditor : public QWidget {
   Q_OBJECT
 
 private:
@@ -273,4 +275,7 @@ public:
    */
   virtual bool createNewEntry() = 0;
 };
-#endif // ANTIQUA_TABS_EDITOR_H
+
+} // namespace AntiquaCRM
+
+#endif // ANTIQUACRM_TABS_EDITOR_H

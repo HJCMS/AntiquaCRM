@@ -34,7 +34,7 @@ bool PriceEdit::fromMoneyString(const QString &money) const {
   _buf.replace(" ", "");
 
   bool _b;
-  double _d = _buf.toDouble(&_b);
+  double _d = _buf.trimmed().toDouble(&_b);
   if (_b && (_d > m_edit->minimum())) {
     m_edit->setValue(_d);
     return true;
@@ -42,8 +42,8 @@ bool PriceEdit::fromMoneyString(const QString &money) const {
   return false;
 }
 
-void PriceEdit::valueChanged(double) {
-  if (isValid())
+void PriceEdit::valueChanged(double _price) {
+  if (_price > 0)
     setWindowModified(true);
 }
 
@@ -52,9 +52,6 @@ void PriceEdit::initData() {
   _f.setMetaType(QMetaType(QMetaType::Double));
   _f.setRequiredStatus(QSqlField::Required);
   _f.setDefaultValue(0.00);
-  if (!objectName().isEmpty())
-    _f.setName(objectName());
-
   setRestrictions(_f);
   setWindowModified(false);
 }

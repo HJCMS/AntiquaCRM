@@ -112,9 +112,6 @@ void PhoneEdit::initData() {
   _f.setMetaType(QMetaType(QMetaType::QString));
   _f.setRequiredStatus(QSqlField::Required);
   _f.setLength(80);
-  if (!objectName().isEmpty())
-    _f.setName(objectName());
-
   setRestrictions(_f);
   setWindowModified(false);
 
@@ -187,23 +184,24 @@ void PhoneEdit::setRestrictions(const QSqlField &field) {
     m_edit->setClearButtonEnabled(true);
   }
 
+  int _length = field.length();
   QMetaType _type = field.metaType();
-  if (_type.id() == QMetaType::QString && field.length() > 0) {
-    m_edit->setMaxLength(field.length());
+  if (_type.id() == QMetaType::QString && _length > 0) {
+    m_edit->setMaxLength(_length);
     QString _txt(tr("Max allowed length") + " ");
-    _txt.append(QString::number(field.length()));
+    _txt.append(QString::number(_length));
     _txt.append(".");
     m_edit->setPlaceholderText(_txt);
   }
 
-  if (field.length() < 1)
+  if (_length < 1)
     return;
 
-  QString _phone;
-  _phone.append(_phone.leftJustified(field.length(), QChar('@')));
+  QString _telstr;
+  _telstr.append(_telstr.leftJustified(_length, QChar('0')));
 
   QFontMetrics _m(m_edit->font());
-  qsizetype _w = _m.size(Qt::TextSingleLine, _phone).width();
+  qsizetype _w = _m.size(Qt::TextSingleLine, _telstr).width();
   m_edit->setMaximumWidth(((_w < 80) ? _w : (_w / 2)));
 }
 

@@ -3,7 +3,9 @@
 
 #include "tabssearchbar.h"
 
-#include <AntiquaCRM>
+#include <ASettings>
+
+namespace AntiquaCRM {
 
 TabsSearchBar::TabsSearchBar(QWidget *parent) : QToolBar{parent} {
   setOrientation(Qt::Horizontal);
@@ -199,3 +201,5 @@ bool TabsSearchBar::withStock() {
   QCheckBox *box = findChild<QCheckBox *>("search_with_stock");
   return (box == nullptr) ? false : box->isChecked();
 }
+
+} // namespace AntiquaCRM

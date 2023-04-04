@@ -33,6 +33,12 @@ SalutationEdit::SalutationEdit(QWidget *parent)
 void SalutationEdit::valueChanged(int) { setWindowModified(true); }
 
 void SalutationEdit::initData() {
+  QSqlField _f;
+  _f.setMetaType(QMetaType(QMetaType::QString));
+  _f.setRequiredStatus(QSqlField::Optional);
+  _f.setLength(25);
+  setRestrictions(_f);
+
   m_edit->clear();
   m_edit->addItem(QString(), QString());
   QMapIterator<QString, QString> it(salutations());
@@ -58,14 +64,12 @@ void SalutationEdit::reset() {
 }
 
 void SalutationEdit::setRestrictions(const QSqlField &field) {
+  if (field.length() > 0)
+    m_lineEdit->setMaxLength(field.length());
+
   if (field.requiredStatus() != QSqlField::Required) {
     setRequired(false);
     return;
-  }
-
-  int _default = field.defaultValue().toInt();
-  if (_default != getValue().toInt()) {
-    setValue(_default);
   }
   setRequired(true);
 }

@@ -28,11 +28,11 @@ void SelectPaymentStatus::valueChanged(int index) {
 void SelectPaymentStatus::initData() {
   QSqlField _f;
   _f.setMetaType(QMetaType(QMetaType::Int));
+  _f.setDefaultValue(AntiquaCRM::STATUS_NOT_SET);
   setRestrictions(_f);
 
   int c = 1;
-  m_edit->setWithoutDisclosures(AntiquaCRM::PAYMENT_NOT_SET);
-  m_edit->insertItem(c++, tr("No status set"), AntiquaCRM::STATUS_NOT_SET);
+  m_edit->setWithoutDisclosures(AntiquaCRM::STATUS_NOT_SET);
   m_edit->insertItem(c++, tr("Waiting for payment"),
                      AntiquaCRM::WAIT_FOR_PAYMENT);
   m_edit->insertItem(c++, tr("Ready for shipping"),

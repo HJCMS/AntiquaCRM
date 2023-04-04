@@ -9,6 +9,8 @@
 #include <QStringList>
 #include <QTimer>
 
+namespace AntiquaCRM {
+
 #ifndef TABS_FIND_INPUT
 #define TABS_FIND_INPUT Qt::FindChildrenRecursively
 #endif
@@ -307,3 +309,5 @@ void TabsEditor::setResetInputFields() {
       obj->reset();
   }
 }
+
+} // namespace AntiquaCRM

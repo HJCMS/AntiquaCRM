@@ -6,9 +6,10 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUA_TABS_STATUSBAR_H
-#define ANTIQUA_TABS_STATUSBAR_H
+#ifndef ANTIQUACRM_TABS_STATUSBAR_H
+#define ANTIQUACRM_TABS_STATUSBAR_H
 
+#include <AGlobal>
 #include <QFrame>
 #include <QIcon>
 #include <QLayout>
@@ -17,7 +18,9 @@
 #include <QPushButton>
 #include <QStatusBar>
 
-class TabsStatusBar : public QStatusBar {
+namespace AntiquaCRM {
+
+class ANTIQUACRM_LIBRARY TabsStatusBar : public QStatusBar {
   Q_OBJECT
 
 public:
@@ -137,6 +140,8 @@ public Q_SLOTS:
   virtual void setCreateButtonEnabled(bool) = 0;
 };
 
-Q_DECLARE_METATYPE(TabsStatusBar::History)
+} // namespace AntiquaCRM
 
-#endif // ANTIQUA_TABS_STATUSBAR_H
+Q_DECLARE_METATYPE(AntiquaCRM::TabsStatusBar::History)
+
+#endif // ANTIQUACRM_TABS_STATUSBAR_H

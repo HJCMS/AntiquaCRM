@@ -17,6 +17,24 @@
 namespace AntiquaCRM {
 
 /**
+ * @class EUCountryItem
+ * @brief Country Model rowItem
+ */
+class ANTIQUACRM_LIBRARY EUCountry final {
+public:
+  int index;     /**< @brief Sort order index */
+  QString bcp47; /**< @brief ISO 3166-1 Alpha-2 Code */
+  QString name;  /**< @brief Translated Country name */
+
+  /**
+   * @param ro - Row index
+   * @param ke - BCP47 Key
+   * @param na - Country name
+   */
+  explicit EUCountry(int ro, QString ke, QString na);
+};
+
+/**
  * @class SelectEUCountryModel
  * @brief European Country Model Class
  * EU Countries initialed with ISO 3166-1 Alpha-2 Code.
@@ -43,31 +61,9 @@ private:
   const QIcon nonIcon;
 
   /**
-   * @class CountryRow
-   * @brief Country Model rowItem
-   */
-  class CountryRow final {
-  public:
-    int index;     /**< @brief Sort order index */
-    QString bcp47; /**< @brief ISO 3166-1 Alpha-2 Code */
-    QString name;  /**< @brief Translated Country name */
-
-    /**
-     * @brief Country
-     * @param k - bcp47 key
-     * @param n - Country name
-     */
-    explicit CountryRow(int r, QString k, QString n) {
-      index = r;
-      bcp47 = k;
-      name = n;
-    }
-  };
-
-  /**
    * @brief Country Model list
    */
-  QList<CountryRow> p_list;
+  QList<EUCountry> p_list;
 
 public:
   /**
@@ -97,6 +93,11 @@ public:
    * @endcode
    */
   bool initModel();
+
+  /**
+   * @brief current model size
+   */
+  int size();
 };
 
 /**

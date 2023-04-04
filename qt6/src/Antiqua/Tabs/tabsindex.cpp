@@ -2,17 +2,20 @@
 // vim: set fileencoding=utf-8
 
 #include "tabsindex.h"
+#include "tabseditor.h"
 
-#include <AntiquaCRM>
+#include <AntiquaInput>
 #include <QApplication>
 #include <QClipboard>
 #include <QIcon>
 #include <QMessageBox>
 
+namespace AntiquaCRM {
+
 TabsIndex::TabsIndex(const char *index, QWidget *parent)
     : QStackedWidget{parent}, tabIndex{index} {
   setContentsMargins(0, 0, 0, 0);
-  setWindowIcon(getTabIcon());
+  setWindowIcon(AntiquaApplIcon("antiquacrm"));
   addShortCutsAndSignals();
 }
 
@@ -36,20 +39,23 @@ void TabsIndex::addShortCutsAndSignals() {
 
 bool TabsIndex::eventFilter(QObject *obj, QEvent *event) {
   if (event->type() == QEvent::ModifiedChange) {
-    // InventoryEditor *edit = qobject_cast<InventoryEditor *>(obj);
-    // if (edit != nullptr) {
-    //  bool status = edit->isWindowModified();
-    //  setWindowModified(status);
-    //  emit sendUnsafedChanges(status);
-    //  return true;
-    // }
+    AntiquaCRM::TabsEditor *m_te = qobject_cast<AntiquaCRM::TabsEditor *>(obj);
+    if (m_te != nullptr) {
+      bool _status = m_te->isWindowModified();
+      setWindowModified(_status);
+      if (_status)
+        emit sendUnsafedChanges(_status);
+
+      return true;
+    }
   }
   return QStackedWidget::eventFilter(obj, event);
 }
 
 void TabsIndex::setClosable(bool b) {
   closable = b;
-  emit sendClosableChanged();
+  if (b)
+    emit sendClosableChanged();
 }
 
 void TabsIndex::changeEvent(QEvent *event) {
@@ -60,36 +66,34 @@ void TabsIndex::changeEvent(QEvent *event) {
 }
 
 void TabsIndex::copyToClipboard(const QString &data) {
-  QString buf = data.trimmed();
-  if (buf.isEmpty())
+  QString _buf = data.trimmed();
+  if (_buf.isEmpty())
     return;
 
-  QApplication::clipboard()->setText(buf, QClipboard::Clipboard);
+  QApplication::clipboard()->setText(_buf, QClipboard::Clipboard);
 }
 
 void TabsIndex::sendStatusMessage(const QString &message) {
-  AntiquaCRM::ATransmitter *m_sock = new AntiquaCRM::ATransmitter(this);
-  connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
-  if (m_sock->pushStatusBarMessage(message))
-    m_sock->close();
+  AntiquaCRM::ATransmitter *_sock = new AntiquaCRM::ATransmitter(this);
+  connect(_sock, SIGNAL(disconnected()), _sock, SLOT(deleteLater()));
+  if (_sock->pushStatusBarMessage(message))
+    _sock->close();
 }
 
 void TabsIndex::sendSocketOperation(const QJsonObject &obj) {
-  AntiquaCRM::ATransmitter *m_sock = new AntiquaCRM::ATransmitter(this);
-  connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
-  if (m_sock->pushOperation(obj))
-    m_sock->close();
+  AntiquaCRM::ATransmitter *_sock = new AntiquaCRM::ATransmitter(this);
+  connect(_sock, SIGNAL(disconnected()), _sock, SLOT(deleteLater()));
+  if (_sock->pushOperation(obj))
+    _sock->close();
 }
 
 void TabsIndex::openWarningPopUp(const QString &title, const QString &message) {
-  QString info("<p>" + title + "</p><p>" + message + "</p>");
-  QMessageBox::warning(this, tr("Warning"), info);
+  QString _info("<p>" + title + "</p><p>" + message + "</p>");
+  QMessageBox::warning(this, tr("Warning"), _info);
 }
 
 const QString TabsIndex::tabIndexId() const { return tabIndex; }
 
-const QIcon TabsIndex::getTabIcon(const QString &name) {
-  return QIcon("://icons/" + name + ".png");
-}
-
 bool TabsIndex::isClosable() { return closable; }
+
+} // namespace AntiquaCRM

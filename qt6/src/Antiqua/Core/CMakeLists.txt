@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 #
 
-SET(_projectLibrary "AntiquaCRM")
+SET(_sharedLibrary "AntiquaCRM")
 
 INCLUDE_DIRECTORIES (
  ${CMAKE_CURRENT_SOURCE_DIR}
@@ -75,7 +75,7 @@ SET (projectLibrary_HEADERS
  ASettings
 )
 
-ADD_LIBRARY (${_projectLibrary} SHARED
+ADD_LIBRARY (${_sharedLibrary} SHARED
  ${projectLibrary_SOURCES}
  ${projectLibrary_HEADERS}
  ${projectLibrary_FILES}
@@ -83,21 +83,21 @@ ADD_LIBRARY (${_projectLibrary} SHARED
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
 
-SET_TARGET_PROPERTIES (${_projectLibrary} PROPERTIES
+SET_TARGET_PROPERTIES (${_sharedLibrary} PROPERTIES
   VERSION ${ANTIQUACRM_VERSION_STRING}
   SOVERSION ${ANTIQUACRM_VERSION_MAJOR}
-  OUTPUT_NAME ${_projectLibrary}
+  OUTPUT_NAME ${_sharedLibrary}
   LINKER_LANGUAGE CXX
 )
 
-TARGET_LINK_LIBRARIES (${_projectLibrary} PRIVATE
+TARGET_LINK_LIBRARIES (${_sharedLibrary} PRIVATE
   Qt6::Core
   Qt6::Network
   Qt6::Sql
   Qt6::Xml
 )
 
-INSTALL (TARGETS ${_projectLibrary}
+INSTALL (TARGETS ${_sharedLibrary}
   LIBRARY DESTINATION lib${LIB_SUFFIX}/
   COMPONENT Libraries
   NAMELINK_COMPONENT Development

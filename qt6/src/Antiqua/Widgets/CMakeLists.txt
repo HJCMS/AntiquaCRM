@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 #
 
-SET(_subProjectLibrary "AntiquaWidgets")
+SET(_sharedLibrary "AntiquaWidgets")
 
 ADD_SUBDIRECTORY (templates)
 
@@ -81,7 +81,7 @@ SET (_library_HEADERS
  tablecontextmenu.h
 )
 
-ADD_LIBRARY (${_subProjectLibrary} SHARED
+ADD_LIBRARY (${_sharedLibrary} SHARED
  ${_library_SOURCES}
  ${_library_HEADERS}
  ${_library_FILES}
@@ -89,14 +89,14 @@ ADD_LIBRARY (${_subProjectLibrary} SHARED
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
 
-SET_TARGET_PROPERTIES (${_subProjectLibrary} PROPERTIES
+SET_TARGET_PROPERTIES (${_sharedLibrary} PROPERTIES
  VERSION ${ANTIQUACRM_VERSION_STRING}
  SOVERSION ${ANTIQUACRM_VERSION_MAJOR}
- OUTPUT_NAME ${_subProjectLibrary}
+ OUTPUT_NAME ${_sharedLibrary}
  LINKER_LANGUAGE CXX
 )
 
-TARGET_LINK_LIBRARIES (${_subProjectLibrary} PRIVATE
+TARGET_LINK_LIBRARIES (${_sharedLibrary} PRIVATE
  Qt6::Core
  Qt6::Gui
  Qt6::Widgets
@@ -106,7 +106,7 @@ TARGET_LINK_LIBRARIES (${_subProjectLibrary} PRIVATE
  AntiquaCRM
 )
 
-INSTALL (TARGETS ${_subProjectLibrary}
+INSTALL (TARGETS ${_sharedLibrary}
  LIBRARY DESTINATION lib${LIB_SUFFIX}/
  COMPONENT Libraries
  NAMELINK_COMPONENT Development
@@ -117,4 +117,4 @@ INSTALL (FILES ${library_HEADERS} AntiquaInput AntiquaWidgets
  COMPONENT Development
 )
 
-#EOF
+##EOF

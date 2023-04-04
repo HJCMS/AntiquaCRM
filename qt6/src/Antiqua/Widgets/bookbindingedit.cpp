@@ -17,24 +17,24 @@ BookBindingEdit::BookBindingEdit(QWidget *parent)
 }
 
 void BookBindingEdit::valueChanged(int index) {
-  Q_UNUSED(index);
+  if (index == 0)
+    return;
+
   setWindowModified(true);
+  emit inputChanged();
 }
 
 void BookBindingEdit::initData() {
   QSqlField _f;
   _f.setMetaType(QMetaType(QMetaType::Int));
   _f.setRequiredStatus(QSqlField::Required);
-  _f.setDefaultValue(QString());
-  if (!objectName().isEmpty())
-    _f.setName(objectName());
-
+  _f.setDefaultValue(0);
   setRestrictions(_f);
 
   AntiquaCRM::ASharedDataFiles dataFiles;
   QJsonDocument doc = dataFiles.getJson("bookbindings");
   if (doc.isEmpty()) {
-    qWarning("Bookbinding: bookbindings.json not found!");
+    qWarning("BookBindingEdit::bookbindings.json not found!");
     return;
   }
 

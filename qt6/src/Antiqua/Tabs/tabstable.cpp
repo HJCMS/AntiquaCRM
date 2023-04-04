@@ -6,6 +6,8 @@
 #include <QPainter>
 #include <QTime>
 
+namespace AntiquaCRM {
+
 TabsTableHeader::TabsTableHeader(QWidget *parent)
     : QHeaderView{Qt::Horizontal, parent} {
   setSectionsMovable(false);
@@ -89,3 +91,5 @@ int TabsTable::getQueryLimit() { return QueryLimit; }
 bool TabsTable::isAutoRefreshEnabled() {
   return (getRowCount() > 0 && getRowCount() < QueryAutoUpdate);
 }
+
+} // namespace AntiquaCRM

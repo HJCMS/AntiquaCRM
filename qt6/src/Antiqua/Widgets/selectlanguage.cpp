@@ -21,6 +21,12 @@ void SelectLanguage::valueChanged(int) {
 }
 
 void SelectLanguage::initData() {
+  QSqlField _f;
+  _f.setMetaType(QMetaType(QMetaType::QString));
+  _f.setRequiredStatus(QSqlField::Optional);
+  _f.setLength(3);
+  setRestrictions(_f);
+
   m_edit->setToolTip(tr("Language"));
   m_edit->setWithoutDisclosures();
   m_edit->addItem(tr("German"), "de_DE");
@@ -38,10 +44,6 @@ void SelectLanguage::initData() {
   m_edit->addItem(tr("Portuguese"), "pt_PT");
   m_edit->addItem(tr("Slovenian"), "sl_SL");
   m_edit->addItem(tr("Swedish"), "sv_SV");
-
-  QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::QString));
-  setRestrictions(_f);
 
   setWindowModified(false);
 }
