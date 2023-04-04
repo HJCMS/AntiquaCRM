@@ -14,10 +14,6 @@ TabsLoader::TabsLoader(QObject *parent) : QPluginLoader{parent} {
   p_dir = config.getPluginDir("tabs");
   // Erweiterungen
   p_filter = config.pluginSearchFilter();
-
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << p_dir << p_filter;
-#endif
 }
 
 const QStringList TabsLoader::getInterfaceList() {

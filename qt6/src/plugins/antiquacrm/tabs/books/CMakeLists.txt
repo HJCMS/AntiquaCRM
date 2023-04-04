@@ -19,12 +19,24 @@ SET (plugin_FILES
 SET (plugin_SOURCES
  tabbooks.cpp
  bookswidget.cpp
+ bookssearchbar.cpp
+ booksselectfilter.cpp
+ bookstableview.cpp
+ bookstablemodel.cpp
+ booksstatusbar.cpp
+ bookseditor.cpp
 )
 
 SET (plugin_HEADERS
  booksconfig.h
  tabbooks.h
  bookswidget.h
+ bookssearchbar.h
+ booksselectfilter.h
+ bookstableview.h
+ bookstablemodel.h
+ booksstatusbar.h
+ bookseditor.h
 )
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)

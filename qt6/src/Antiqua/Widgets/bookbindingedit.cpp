@@ -11,7 +11,6 @@ BookBindingEdit::BookBindingEdit(QWidget *parent)
     : AntiquaCRM::AbstractInput{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
   layout->addWidget(m_edit);
-  initData();
   connect(m_edit, SIGNAL(currentIndexChanged(int)), this,
           SLOT(valueChanged(int)));
 }

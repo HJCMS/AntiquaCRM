@@ -6,7 +6,6 @@
 #include "bookswidget.h"
 
 TabBooks::TabBooks(QObject *parent) : AntiquaCRM::TabsInterface{parent} {
-  setObjectName("plugin_tab_books");
 }
 
 const QString TabBooks::displayName() const { return tr("Books"); }

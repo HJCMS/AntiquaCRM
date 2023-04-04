@@ -18,6 +18,10 @@ TabWidget::TabWidget(QMainWindow *parent) : QTabWidget{parent} {
 
 TabWidget::~TabWidget() {}
 
+void TabWidget::viewTab() {
+  qDebug() << Q_FUNC_INFO << "TODO::open" << sender()->objectName();
+}
+
 bool TabWidget::beforeCloseAllTabs() {
   // TODO
   return true;

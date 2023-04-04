@@ -21,19 +21,19 @@ class ANTIQUACRM_LIBRARY TabBooks final : public AntiquaCRM::TabsInterface {
 public:
   explicit TabBooks(QObject *parent = nullptr);
 
-  virtual const QString displayName() const override;
+  const QString displayName() const override;
 
-  virtual const QString interfaceName() const override;
+  const QString interfaceName() const override;
 
-  virtual const QString sqlTableName() const override;
+  const QString sqlTableName() const override;
 
-  virtual const QString sqlFieldPrefix() const override;
+  const QString sqlFieldPrefix() const override;
 
-  virtual QWidget *configWidget(QWidget *parent) const override;
+  QWidget *configWidget(QWidget *parent) const override;
 
-  virtual AntiquaCRM::TabsIndex *indexWidget(QWidget *parent) const override;
+  AntiquaCRM::TabsIndex *indexWidget(QWidget *parent) const override;
 
-  virtual bool createInterface(QObject *parent) override;
+  bool createInterface(QObject *parent) override;
 };
 
 #endif // ANTIQUACRM_PLUGIN_BOOKS_H

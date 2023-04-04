@@ -39,4 +39,13 @@
 // AntiquaCRM::TabsStatusBar
 #include "tabsstatusbar.h"
 
+// AntiquaCRM::TabsEditor
+#include "tabseditor.h"
+
+// AntiquaCRM::TabWidget
+#include "tabwidget.h"
+
+// AntiquaCRM::TabsEditActionBar
+#include "tabseditactionbar.h"
+
 #endif // ANTIQUACRM_TABS_LIB_H

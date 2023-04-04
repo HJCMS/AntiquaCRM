@@ -21,4 +21,8 @@
 #define BOOKS_SQL_FIELD_PREFIX "ib"
 #endif
 
+#ifndef BOOKS_SQL_EDITOR_PATTERN
+#define BOOKS_SQL_EDITOR_PATTERN "^ib_[a-z_]+\\b$"
+#endif
+
 #endif

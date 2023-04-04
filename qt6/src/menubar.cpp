@@ -3,6 +3,8 @@
 
 #include "menubar.h"
 
+#include <AntiquaWidgets>
+
 MenuBar::MenuBar(QWidget *parent) : QMenuBar{parent} {
   setObjectName("antiqua_ui_menubar");
   setNativeMenuBar(true);
@@ -19,4 +21,16 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar{parent} {
 
   m_aboutMenu = new QMenu(tr("About"), this);
   addMenu(m_aboutMenu);
+}
+
+void MenuBar::setViewsMenu(QMenu *menu) {
+  if (menu == nullptr)
+    return;
+
+  m_viewsMenu->addMenu(menu);
+}
+
+const QIcon MenuBar::tabIcon(const QString &name) {
+  QString _name = name.isEmpty() ? "action-tab" : name;
+  return AntiquaCRM::AntiquaApplIcon(_name);
 }

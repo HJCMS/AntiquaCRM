@@ -10,6 +10,8 @@
 #define ANTIQUA_UI_MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QList>
+#include <QPair>
 #include <QObject>
 
 class MenuBar;

@@ -6,29 +6,32 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_BOOKBINDINGEDIT_H
-#define ANTIQUACRM_WIDGETS_BOOKBINDINGEDIT_H
+#ifndef ANTIQUACRM_WIDGETS_BOOLBOX_H
+#define ANTIQUACRM_WIDGETS_BOOLBOX_H
 
 #include <AntiquaInput>
+#include <QCheckBox>
 #include <QObject>
 #include <QWidget>
 
 namespace AntiquaCRM {
 
 /**
- * @class BookBindingEdit
- * @brief Edit Cover and Bookbinding description
- * @ingroup EditWidgets
+ * @class BoolBox
+ * @brief Antiqua Checkbox
+ * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY BookBindingEdit final
-    : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY BoolBox final : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
 private:
-  AComboBox *m_edit;
+  QCheckBox *m_edit;
 
 private Q_SLOTS:
-  void valueChanged(int);
+  void valueChanged();
+
+protected:
+  void initData() override;
 
 public Q_SLOTS:
   void setValue(const QVariant &) override;
@@ -41,9 +44,7 @@ public:
   /**
    * @param parent - parent widget
    */
-  explicit BookBindingEdit(QWidget *parent = nullptr);
-
-  void initData() override;
+  explicit BoolBox(QWidget *parent = nullptr);
 
   void setRestrictions(const QSqlField &) override;
 
@@ -62,4 +63,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_BookBindingEdit_H
+#endif // ANTIQUACRM_WIDGETS_BOOLBOX_H

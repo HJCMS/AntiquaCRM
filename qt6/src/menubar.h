@@ -10,6 +10,7 @@
 #define ANTIQUA_UI_MENUBAR_H
 
 #include <QMenuBar>
+#include <QIcon>
 #include <QObject>
 #include <QWidget>
 
@@ -24,6 +25,9 @@ private:
 
 public:
   explicit MenuBar(QWidget *parent = nullptr);
+  void setViewsMenu(QMenu *);
+
+  static const QIcon tabIcon(const QString &name = QString());
 };
 
 #endif // ANTIQUA_UI_MENUBAR_H

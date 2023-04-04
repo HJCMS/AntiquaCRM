@@ -23,6 +23,9 @@ private:
   AntiquaCRM::AReceiver *m_server;
   AntiquaCRM::TabsBar *m_tabBar;
 
+public Q_SLOTS:
+  void viewTab();
+
 public:
   explicit TabWidget(QMainWindow *parent = nullptr);
   virtual ~TabWidget();

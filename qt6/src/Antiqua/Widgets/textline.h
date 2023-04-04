@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_BOOKBINDINGEDIT_H
-#define ANTIQUACRM_WIDGETS_BOOKBINDINGEDIT_H
+#ifndef ANTIQUACRM_WIDGETS_TEXTLINE_H
+#define ANTIQUACRM_WIDGETS_TEXTLINE_H
 
 #include <AntiquaInput>
 #include <QObject>
@@ -16,19 +16,21 @@
 namespace AntiquaCRM {
 
 /**
- * @class BookBindingEdit
- * @brief Edit Cover and Bookbinding description
- * @ingroup EditWidgets
+ * @class TextLine
+ * @brief __TODO__
+ * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY BookBindingEdit final
-    : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY TextLine final : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
 private:
-  AComboBox *m_edit;
+  ALineEdit *m_edit;
 
 private Q_SLOTS:
-  void valueChanged(int);
+  void valueChanged();
+
+protected:
+  void initData() override;
 
 public Q_SLOTS:
   void setValue(const QVariant &) override;
@@ -41,9 +43,12 @@ public:
   /**
    * @param parent - parent widget
    */
-  explicit BookBindingEdit(QWidget *parent = nullptr);
+  explicit TextLine(QWidget *parent = nullptr);
 
-  void initData() override;
+  /**
+   * @brief Add QStringList and create a QCompleter from it
+   */
+  void setCompleterList(const QStringList &);
 
   void setRestrictions(const QSqlField &) override;
 
@@ -62,4 +67,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_BookBindingEdit_H
+#endif // ANTIQUACRM_WIDGETS_TEXTLINE_H

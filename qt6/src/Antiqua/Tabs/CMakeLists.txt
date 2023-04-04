@@ -32,6 +32,8 @@ SET (_library_SOURCE
  tabssearchbar.cpp
  tabsstatusbar.cpp
  tabseditor.cpp
+ tabwidget.cpp
+ tabseditactionbar.cpp
 )
 
 SET (_library_HEADERS
@@ -43,6 +45,8 @@ SET (_library_HEADERS
  tabssearchbar.h
  tabsstatusbar.h
  tabseditor.h
+ tabwidget.h
+ tabseditactionbar.h
 )
 
 ADD_LIBRARY (${_sharedLibrary} SHARED

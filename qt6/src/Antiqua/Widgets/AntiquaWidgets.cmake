@@ -18,6 +18,9 @@
 // AntiquaCRM::BookBindingEdit
 #include "bookbindingedit.h"
 
+// AntiquaCRM::BoolBox
+#include "boolbox.h"
+
 // AntiquaCRM::ConditionEdit
 #include "conditionedit.h"
 
@@ -27,6 +30,9 @@
 // AntiquaCRM::GenderEdit
 #include "genderedit.h"
 
+// AntiquaCRM::NumEdit
+#include "numedit.h"
+
 // AntiquaCRM::PhoneEdit
 #include "phoneedit.h"
 
@@ -35,6 +41,9 @@
 
 // AntiquaCRM::PostalCodeEdit
 #include "postalcodeedit.h"
+
+// AntiquaCRM::SalutationEdit
+#include "salutationedit.h"
 
 // AntiquaCRM::SelectEUCountry
 #include "selecteucountry.h"
@@ -48,14 +57,29 @@
 // AntiquaCRM::SelectPaymentStatus
 #include "selectpaymentstatus.h"
 
-// AntiquaCRM::SalutationEdit
-#include "salutationedit.h"
+// AntiquaCRM::SerialId
+#include "serialid.h"
+
+// AntiquaCRM::Splitter
+#include "splitter.h"
 
 // AntiquaCRM::SqlInfoPopUp
 #include "sqlinfopopup.h"
 
+// AntiquaCRM::TableHeader
+#include "tableheader.h"
+
 // AntiquaCRM::TableContextMenu
 #include "tablecontextmenu.h"
+
+// AntiquaCRM::TableView
+#include "tableview.h"
+
+// AntiquaCRM::TextField
+#include "textfield.h"
+
+// AntiquaCRM::TextLine
+#include "textline.h"
 
 #endif
 // EOF

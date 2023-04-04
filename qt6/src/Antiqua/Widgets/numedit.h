@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_BOOKBINDINGEDIT_H
-#define ANTIQUACRM_WIDGETS_BOOKBINDINGEDIT_H
+#ifndef ANTIQUACRM_WIDGETS_NUMEDIT_H
+#define ANTIQUACRM_WIDGETS_NUMEDIT_H
 
 #include <AntiquaInput>
 #include <QObject>
@@ -16,19 +16,21 @@
 namespace AntiquaCRM {
 
 /**
- * @class BookBindingEdit
- * @brief Edit Cover and Bookbinding description
- * @ingroup EditWidgets
+ * @class NumEdit
+ * @brief Numeric Input Editor
+ * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY BookBindingEdit final
-    : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY NumEdit final : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
 private:
-  AComboBox *m_edit;
+  ASpinBox *m_edit;
 
 private Q_SLOTS:
-  void valueChanged(int);
+  void valueChanged();
+
+protected:
+  void initData() override;
 
 public Q_SLOTS:
   void setValue(const QVariant &) override;
@@ -41,11 +43,17 @@ public:
   /**
    * @param parent - parent widget
    */
-  explicit BookBindingEdit(QWidget *parent = nullptr);
-
-  void initData() override;
+  explicit NumEdit(QWidget *parent = nullptr);
 
   void setRestrictions(const QSqlField &) override;
+
+  void setRange(int min, int max = 99999);
+
+  void setSingleStep(int step = 0);
+
+  void setPrefix(const QString &);
+
+  void setSuffix(const QString &);
 
   void setInputToolTip(const QString &) override;
 
@@ -62,4 +70,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_BookBindingEdit_H
+#endif // ANTIQUACRM_WIDGETS_NUMEDIT_H

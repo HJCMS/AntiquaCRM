@@ -20,6 +20,11 @@
 
 namespace AntiquaCRM {
 
+/**
+ * @class TableContextMenu
+ * @brief The TableContextMenu class
+ * @ingroup EditWidgets
+ */
 class ANTIQUACRM_LIBRARY TableContextMenu final : public QMenu {
   Q_OBJECT
 
@@ -64,7 +69,7 @@ private Q_SLOTS:
   void triggerAction(QAction *);
 
 Q_SIGNALS:
-  void sendAction(TableContextMenu::Actions, const QModelIndex &);
+  void sendAction(AntiquaCRM::TableContextMenu::Actions, const QModelIndex &);
   void sendCreate();  /**< @brief Create new Entry */
   void sendRefresh(); /**< @brief Reafresh View */
 

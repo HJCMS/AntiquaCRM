@@ -37,20 +37,28 @@ SET (_library_SOURCES
  aspinbox.cpp
  awhatsthisbutton.cpp
  bookbindingedit.cpp
+ boolbox.cpp
  conditionedit.cpp
  crowdedit.cpp
  emailedit.cpp
  genderedit.cpp
+ numedit.cpp
  phoneedit.cpp
  postalcodeedit.cpp
  priceedit.cpp
  salutationedit.cpp
+ serialid.cpp
  selecteucountry.cpp
  selectlanguage.cpp
  selectpaymentmethod.cpp
  selectpaymentstatus.cpp
+ splitter.cpp
  sqlinfopopup.cpp
+ tableheader.cpp
+ tableview.cpp
  tablecontextmenu.cpp
+ textfield.cpp
+ textline.cpp
 )
 
 SET (_library_HEADERS
@@ -65,20 +73,28 @@ SET (_library_HEADERS
  aspinbox.h
  awhatsthisbutton.h
  bookbindingedit.h
+ boolbox.h
  conditionedit.h
  crowdedit.h
  emailedit.h
  genderedit.h
+ numedit.h
  phoneedit.h
  postalcodeedit.h
  priceedit.h
  salutationedit.h
+ serialid.h
  selecteucountry.h
  selectlanguage.h
  selectpaymentmethod.h
  selectpaymentstatus.h
+ splitter.h
  sqlinfopopup.h
+ tableheader.h
+ tableview.h
  tablecontextmenu.h
+ textfield.h
+ textline.h
 )
 
 ADD_LIBRARY (${_sharedLibrary} SHARED

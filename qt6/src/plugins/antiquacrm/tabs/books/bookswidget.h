@@ -10,13 +10,27 @@
 #define ANTIQUACRM_PLUGIN_BOOKSWIDGET_H
 
 #include <AntiquaTabs>
+#include <QScrollArea>
 #include <QObject>
 #include <QWidget>
+
+class BooksSearchBar;
+class BooksTableView;
+class BooksStatusBar;
+class BooksEditor;
 
 class ANTIQUACRM_LIBRARY BooksWidget final : public AntiquaCRM::TabsIndex {
   Q_OBJECT
 
 private:
+  QWidget *m_mainPage;
+  BooksSearchBar *m_searchBar;
+  BooksTableView *m_table;
+  BooksStatusBar *m_statusBar;
+
+  QScrollArea *m_editorPage;
+  BooksEditor *m_editorWidget;
+
   void popupWarningTabInEditMode() override;
 
   void setDefaultTableView() override;
