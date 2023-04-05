@@ -20,7 +20,7 @@ namespace AntiquaCRM {
 /**
  * @class SqlInfoPopUp
  * @brief Database Information Popup dialog
- * @ingroup Utils
+ * @ingroup AntiquaWidgets
  */
 class ANTIQUACRM_LIBRARY SqlInfoPopUp final : public QDialog {
   Q_OBJECT

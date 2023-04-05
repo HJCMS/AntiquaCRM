@@ -20,13 +20,13 @@ namespace AntiquaCRM {
 /**
  * @class SplitterHandle
  * @brief AntiquaCRM Splitter handle
- * @ingroup widgets
+ * @ingroup AntiquaWidgets
  */
 class SplitterHandle final : public QSplitterHandle {
   Q_OBJECT
 
 protected:
-  void mouseReleaseEvent(QMouseEvent *e) override;
+  void mouseReleaseEvent(QMouseEvent *) override;
 
 Q_SIGNALS:
   void sendSaveState();
@@ -37,7 +37,8 @@ public:
 
 /**
  * @class Splitter
- * @brief The Default Horizontal AntiquaCRM Splitter
+ * @brief Horizontal Splitter for EditorWidgets
+ * @ingroup AntiquaWidgets
  */
 class Splitter final : public QSplitter {
   Q_OBJECT
@@ -57,7 +58,7 @@ private:
   SplitterHandle *createHandle() override;
 
   /**
-   * @brief Load saveState() on Show
+   * @brief Load saved state on show/visible
    */
   void showEvent(QShowEvent *) override;
 

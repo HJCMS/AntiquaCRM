@@ -9,7 +9,6 @@
 namespace AntiquaCRM {
 
 TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
-
   QHBoxLayout *layout = new QHBoxLayout(this);
 
   m_cancelBtn = new QPushButton(tr("Cancel"), this);
@@ -32,11 +31,11 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
   connect(m_restoreBtn, SIGNAL(clicked()), SIGNAL(sendRestoreClicked()));
   layout->addWidget(m_restoreBtn);
 
-  m_mailButton = new QPushButton(this);
+  m_mailButton = new QPushButton(tr("eMail"), this);
   m_mailButton->setObjectName("editor_action_mailer_button");
   layout->addWidget(m_mailButton);
 
-  m_printerButton = new QPushButton(this);
+  m_printerButton = new QPushButton(tr("Print"), this);
   m_printerButton->setObjectName("editor_action_print_button");
   layout->addWidget(m_printerButton);
 
@@ -101,17 +100,17 @@ void TabsEditActionBar::setViewPrintButton(bool b) {
   m_printerButton->setVisible(b);
 }
 
-//void TabsEditActionBar::setPrinterMenu(PrinterButton::Buttons buttons) {
-//  m_printerButton->setButtons(buttons);
-//}
+// void TabsEditActionBar::setPrinterMenu(PrinterButton::Buttons buttons) {
+//   m_printerButton->setButtons(buttons);
+// }
 
 void TabsEditActionBar::setViewMailButton(bool) {
-  //m_mailButton->hasMailAddress(b);
+  // m_mailButton->hasMailAddress(b);
 }
 
-//void TabsEditActionBar::setMailMenu(MailButton::Sections sections) {
-//  m_mailButton->setSections(sections);
-//}
+// void TabsEditActionBar::setMailMenu(MailButton::Sections sections) {
+//   m_mailButton->setSections(sections);
+// }
 
 void TabsEditActionBar::setViewActionAddButton(bool b,
                                                const QString &customTitle) {

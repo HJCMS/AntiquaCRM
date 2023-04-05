@@ -53,6 +53,9 @@ void TextLine::reset() {
 
 void TextLine::setCompleterList(const QStringList &list) {
   QCompleter *_completer = new QCompleter(list, this);
+  _completer->setCompletionMode(QCompleter::PopupCompletion);
+  _completer->setFilterMode(Qt::MatchStartsWith);
+  _completer->setMaxVisibleItems(15);
   m_edit->setCompleter(_completer);
 }
 

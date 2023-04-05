@@ -17,7 +17,7 @@ namespace AntiquaCRM {
 /**
  * @class TableHeader
  * @brief Horizontal Table Header for TableViews
- * @ingroup EditWidgets
+ * @ingroup AntiquaWidgets
  */
 class ANTIQUACRM_LIBRARY TableHeader final : public QHeaderView {
   Q_OBJECT

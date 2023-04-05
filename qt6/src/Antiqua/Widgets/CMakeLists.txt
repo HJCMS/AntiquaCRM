@@ -42,6 +42,8 @@ SET (_library_SOURCES
  crowdedit.cpp
  emailedit.cpp
  genderedit.cpp
+ isbnedit.cpp
+ keywordsedit.cpp
  numedit.cpp
  phoneedit.cpp
  postalcodeedit.cpp
@@ -52,6 +54,7 @@ SET (_library_SOURCES
  selectlanguage.cpp
  selectpaymentmethod.cpp
  selectpaymentstatus.cpp
+ selectstorage.cpp
  splitter.cpp
  sqlinfopopup.cpp
  tableheader.cpp
@@ -78,6 +81,8 @@ SET (_library_HEADERS
  crowdedit.h
  emailedit.h
  genderedit.h
+ isbnedit.h
+ keywordsedit.h
  numedit.h
  phoneedit.h
  postalcodeedit.h
@@ -88,6 +93,7 @@ SET (_library_HEADERS
  selectlanguage.h
  selectpaymentmethod.h
  selectpaymentstatus.h
+ selectstorage.h
  splitter.h
  sqlinfopopup.h
  tableheader.h

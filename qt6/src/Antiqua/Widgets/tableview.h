@@ -20,6 +20,11 @@ namespace AntiquaCRM {
 
 class TableHeader;
 
+/**
+ * @class TableView
+ * @brief Primary TableView class for Tabs
+ * @ingroup AntiquaWidgets
+ */
 class ANTIQUACRM_LIBRARY TableView : public QTableView {
   Q_OBJECT
   Q_PROPERTY(int QueryLimit READ getQueryLimit WRITE setQueryLimit NOTIFY
@@ -167,6 +172,9 @@ Q_SIGNALS:
   void sendCreateNewEntry();
 
 public:
+  /**
+   * @param parent - parent widget
+   */
   explicit TableView(QWidget *parent = nullptr);
 
   /**

@@ -30,6 +30,12 @@
 // AntiquaCRM::GenderEdit
 #include "genderedit.h"
 
+// AntiquaCRM::IsbnEdit
+#include "isbnedit.h"
+
+// AntiquaCRM::KeywordsEdit
+#include "keywordsedit.h"
+
 // AntiquaCRM::NumEdit
 #include "numedit.h"
 
@@ -56,6 +62,9 @@
 
 // AntiquaCRM::SelectPaymentStatus
 #include "selectpaymentstatus.h"
+
+// AntiquaCRM::SelectStorage
+#include "selectstorage.h"
 
 // AntiquaCRM::SerialId
 #include "serialid.h"

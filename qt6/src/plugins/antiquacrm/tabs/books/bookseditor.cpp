@@ -173,17 +173,15 @@ BooksEditor::BooksEditor(QWidget *parent)
 
   infoText = new AntiquaCRM::ALabel(tr("Storage"), _lbAlign, this);
   row2->addWidget(infoText, row2c, 0, 1, 1);
-  QLineEdit *ib_storage = new QLineEdit(this);
+  ib_storage = new AntiquaCRM::SelectStorage(this);
   ib_storage->setObjectName("ib_storage");
   ib_storage->setToolTip(infoText->text());
-  ib_storage->setText("__TODO__");
   row2->addWidget(ib_storage, row2c++, 1, 1, 1);
 
   infoText = new AntiquaCRM::ALabel(tr("Keywords"), _lbAlign, this);
   row2->addWidget(infoText, row2c, 0, 1, 1);
-  QLineEdit *ib_keyword = new QLineEdit(this);
+  ib_keyword = new AntiquaCRM::KeywordsEdit(this);
   ib_keyword->setObjectName("ib_keyword");
-  ib_keyword->setText("__TODO__");
   row2->addWidget(ib_keyword, row2c++, 1, 1, 1);
   row2->setRowStretch(row2c++, 1);
 
@@ -191,10 +189,8 @@ BooksEditor::BooksEditor(QWidget *parent)
   infoText = new AntiquaCRM::ALabel("ISBN/EAN", _lbAlign, this);
   row2->addWidget(infoText, row2c, 0, 1, 1);
   QHBoxLayout *tbLayout = new QHBoxLayout;
-  QLineEdit *ib_isbn = new QLineEdit(this);
+  ib_isbn = new AntiquaCRM::IsbnEdit(this);
   ib_isbn->setObjectName("ib_isbn");
-  ib_isbn->setToolTip("ISBN/EAN");
-  ib_isbn->setText("__TODO__");
   tbLayout->addWidget(ib_isbn);
   tbLayout->addStretch(1);
   QToolBar *m_imageToolBar = new QToolBar(this);
@@ -276,7 +272,9 @@ void BooksEditor::setInputFields() {
   }
 
   // Autoren
-  QStringList authors({tr("Authors group"), tr("Authors team")});
+  QStringList authors(tr("Authors group"));
+  authors << tr("Authors team");
+  authors << tr("Various authors");
   ib_author->setCompleterList(authors);
 
   AntiquaCRM::ASharedDataFiles _dataFiles;
@@ -286,17 +284,16 @@ void BooksEditor::setInputFields() {
   _completer_data = _dataFiles.getCompleterList("publishers", "name");
   ib_publisher->setCompleterList(_completer_data);
 
-  // Lager
-  // ib_storage->reset();
-  // ib_storage->initData();
-
   // Buch Zustand
   ib_binding->initData();
   _completer_data = _dataFiles.getCompleterList("designations", "name");
   ib_designation->setCompleterList(_completer_data);
 
+  // Lager
+  ib_storage->initData();
+
   // Schlüsselwörter
-  // ib_keyword->initData();
+  ib_keyword->initData();
 }
 
 bool BooksEditor::setDataField(const QSqlField &field, const QVariant &value) {
@@ -305,13 +302,13 @@ bool BooksEditor::setDataField(const QSqlField &field, const QVariant &value) {
 
   QString key = field.name();
 
-  qDebug() << __LINE__ << "Search:" << field.name() << value;
+  // qDebug() << __LINE__ << "Search:" << field.name() << value;
 
   bool required = (field.requiredStatus() == QSqlField::Required);
   AntiquaCRM::AbstractInput *inp =
       findChild<AntiquaCRM::AbstractInput *>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
-    qDebug() << __LINE__ << inp->objectName() << key << value;
+    // qDebug() << __LINE__ << inp->objectName() << key << value;
     inp->setValue(value);
     inp->setRestrictions(field);
     return true;

@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_TEXTLINE_H
-#define ANTIQUACRM_WIDGETS_TEXTLINE_H
+#ifndef ANTIQUACRM_WIDGETS_SELECTSTORAGE_H
+#define ANTIQUACRM_WIDGETS_SELECTSTORAGE_H
 
 #include <AntiquaInput>
 #include <QObject>
@@ -16,21 +16,20 @@
 namespace AntiquaCRM {
 
 /**
- * @class TextLine
- * @brief Single Text input with LineEdit
+ * @class SelectStorage
+ * @brief Storage location selecter
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY TextLine final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY SelectStorage final : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
 private:
+  AComboBox *m_select;
   ALineEdit *m_edit;
 
 private Q_SLOTS:
-  void valueChanged();
-
-protected:
-  void initData() override;
+  void valueChanged(int);
+  void filterChanged(const QString &);
 
 public Q_SLOTS:
   void setValue(const QVariant &) override;
@@ -43,12 +42,9 @@ public:
   /**
    * @param parent - parent widget
    */
-  explicit TextLine(QWidget *parent = nullptr);
+  explicit SelectStorage(QWidget *parent = nullptr);
 
-  /**
-   * @brief Add QStringList and create a QCompleter from it
-   */
-  void setCompleterList(const QStringList &);
+  void initData() override;
 
   void setRestrictions(const QSqlField &) override;
 
@@ -67,4 +63,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_TEXTLINE_H
+#endif // ANTIQUACRM_WIDGETS_SELECTSTORAGE_H

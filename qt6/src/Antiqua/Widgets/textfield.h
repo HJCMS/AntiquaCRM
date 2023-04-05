@@ -17,8 +17,9 @@
 namespace AntiquaCRM {
 
 /**
- * @ingroup AntiquaWidgets
  * @class TextField
+ * @brief Large Text inputs with QTextEdit
+ * @ingroup AntiquaWidgets
  */
 class ANTIQUACRM_LIBRARY TextField final : public AntiquaCRM::AbstractInput {
   Q_OBJECT
@@ -42,7 +43,6 @@ public Q_SLOTS:
 
 public:
   /**
-   * @brief __TODO__
    * @param parent - parent widget
    */
   explicit TextField(QWidget *parent = nullptr);

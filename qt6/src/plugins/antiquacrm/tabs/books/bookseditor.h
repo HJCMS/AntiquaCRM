@@ -31,18 +31,18 @@ private:
   AntiquaCRM::NumEdit *ib_year;      /**< @brief Jahr */
   AntiquaCRM::NumEdit *ib_volume;    /**< @brief Band ? */
   // Row 2
-  AntiquaCRM::Splitter *m_splitter;         /**< @brief Splitter */
+  AntiquaCRM::Splitter *m_splitter;        /**< @brief Splitter */
   AntiquaCRM::TextLine *ib_title;          /**< @brief Buch Titel */
   AntiquaCRM::TextLine *ib_title_extended; /**< @brief Ereiterte Titel  */
   AntiquaCRM::TextLine *ib_author;         /**< @brief Buchautor */
   AntiquaCRM::TextLine *ib_publisher;      /**< @brief Herausgeber/Verlag */
-  AntiquaCRM::ConditionEdit *ib_condition;  /**< @brief Zustands beschreibung */
-  AntiquaCRM::SelectLanguage *ib_language;  /**< @brief Sprache */
-  AntiquaCRM::BookBindingEdit *ib_binding;  /**< @brief BuchEinband Kategorie */
+  AntiquaCRM::ConditionEdit *ib_condition; /**< @brief Zustands beschreibung */
+  AntiquaCRM::SelectLanguage *ib_language; /**< @brief Sprache */
+  AntiquaCRM::BookBindingEdit *ib_binding; /**< @brief BuchEinband Kategorie */
   AntiquaCRM::TextLine *ib_designation;    /**< @brief Umschreibung */
-  // StorageLocation *ib_storage; /**< @brief Lager bestimmung */
-  // KeywordLineEdit *ib_keyword; /**< @brief Schlüsselwort */
-  // IsbnEdit *ib_isbn;           /**< @brief ISBN */
+  AntiquaCRM::SelectStorage *ib_storage;   /**< @brief Lager bestimmung */
+  AntiquaCRM::KeywordsEdit *ib_keyword;    /**< @brief Schlüsselwort */
+  AntiquaCRM::IsbnEdit *ib_isbn;           /**< @brief ISBN */
 
   // Row 3
   AntiquaCRM::TabWidget *m_tabWidget;
