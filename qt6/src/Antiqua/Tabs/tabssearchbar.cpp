@@ -4,6 +4,7 @@
 #include "tabssearchbar.h"
 
 #include <ASettings>
+#include <AntiquaInput>
 
 namespace AntiquaCRM {
 
@@ -15,11 +16,6 @@ TabsSearchBar::TabsSearchBar(QWidget *parent) : QToolBar{parent} {
 
   AntiquaCRM::ASettings cfg(this);
   p_minLength = cfg.value("search/startlength", 5).toInt();
-}
-
-const QIcon TabsSearchBar::getIcon(const QString &name) {
-  QIcon _back("://icons/" + name + ".png");
-  return QIcon::fromTheme(name, _back);
 }
 
 void TabsSearchBar::searchPatternChanged(int i) {
@@ -182,6 +178,10 @@ void TabsSearchBar::setMinLength(int l) {
     emit sendMinLengthChanged(l);
 
   p_minLength = l;
+}
+
+const QIcon TabsSearchBar::getIcon(const QString &name) {
+  return AntiquaCRM::AntiquaApplIcon(name);
 }
 
 TabsSearchBar::SearchPattern TabsSearchBar::searchPattern() const {

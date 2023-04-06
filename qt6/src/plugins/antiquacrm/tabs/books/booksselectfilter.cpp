@@ -10,33 +10,33 @@ BooksSelectFilter::BooksSelectFilter(QWidget *parent) : QComboBox{parent} {
       tr("With this button you can optimize your search with some filters."));
   setSizeAdjustPolicy(QComboBox::AdjustToContents);
 
+  QString _prefix = tr("Search Book with") + " ";
   QIcon _icon = AntiquaCRM::AntiquaApplIcon("view-search");
-  insertItem(0, _icon, tr("Book Title and Author"), BOOK_TITLE_AUTHOR);
-  setItemData(0, tr("Search in Book titles and authors"), Qt::ToolTipRole);
+  insertItem(0, _icon, tr("Title and Author"), BOOK_TITLE_AUTHOR);
+  setItemData(0, _prefix + tr("Title and Author"), Qt::ToolTipRole);
 
-  insertItem(1, _icon, tr("Book Title and Keyword"), BOOK_TITLE_KEYWORD);
-  setItemData(1, tr("Search in Book titles"), Qt::ToolTipRole);
+  insertItem(1, _icon, tr("Title and Keyword"), BOOK_TITLE_KEYWORD);
+  setItemData(1, _prefix + tr("Title and Keyword"), Qt::ToolTipRole);
 
   insertItem(2, _icon, tr("Article Id"), BOOK_ARTICLE_ID);
-  setItemData(2, tr("Multiple searches separated by commas"), Qt::ToolTipRole);
+  setItemData(2, tr("Multiple searches separated by commas!"), Qt::ToolTipRole);
 
   insertItem(3, _icon, tr("ISBN"), BOOK_ISBN);
-  setItemData(3, tr("Only Numbers are allowed for input"), Qt::ToolTipRole);
+  setItemData(3, tr("Only Numbers are allowed for input!"), Qt::ToolTipRole);
 
   insertItem(4, _icon, tr("Author"), BOOK_AUTHORS);
-  setItemData(4, tr("Search for Book authors"), Qt::ToolTipRole);
+  setItemData(4, _prefix + tr("Author"), Qt::ToolTipRole);
 
-  insertItem(5, _icon, tr("Book Publisher"), BOOK_PUBLISHER);
-  setItemData(5, tr("Search Book Publishers"), Qt::ToolTipRole);
+  insertItem(5, _icon, tr("Publisher"), BOOK_PUBLISHER);
+  setItemData(5, _prefix + tr("Publisher"), Qt::ToolTipRole);
 
-  insertItem(6, _icon, tr("Duration by Keyword"), BOOK_STORAGE);
-  setItemData(6, tr("Search by keyword and storage location"), Qt::ToolTipRole);
+  insertItem(6, _icon, tr("Storage"), BOOK_STORAGE);
+  setItemData(6, tr("In Storage location by Keyword"), Qt::ToolTipRole);
 }
 
 BooksSelectFilter::Filter BooksSelectFilter::currentFilter(int index) {
   qint8 _i = (index >= 0) ? index : currentIndex();
-  qint8 _f = itemData(_i, Qt::UserRole).toInt();
-  return static_cast<BooksSelectFilter::Filter>(_f);
+  return qvariant_cast<BooksSelectFilter::Filter>(itemData(_i, Qt::UserRole));
 }
 
 const QJsonObject BooksSelectFilter::getFilter(int index) {

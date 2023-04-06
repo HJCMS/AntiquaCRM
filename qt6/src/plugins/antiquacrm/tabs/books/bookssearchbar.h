@@ -29,7 +29,9 @@ private:
   QPushButton *m_searchBtn;
 
   const QString getTitleSearch(const QStringList &);
+
   void enableCustomSearch(const QString &);
+
   void disableCustomSearch();
 
 private Q_SLOTS:

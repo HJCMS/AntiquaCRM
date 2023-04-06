@@ -14,6 +14,8 @@ INCLUDE_DIRECTORIES (
  ${CMAKE_CURRENT_BINARY_DIR}
 )
 
+ADD_SUBDIRECTORY (keywordeditor)
+
 CONFIGURE_FILE (AntiquaWidgets.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaWidgets
 )
@@ -49,17 +51,17 @@ SET (_library_SOURCES
  postalcodeedit.cpp
  priceedit.cpp
  salutationedit.cpp
- serialid.cpp
  selecteucountry.cpp
  selectlanguage.cpp
  selectpaymentmethod.cpp
  selectpaymentstatus.cpp
  selectstorage.cpp
+ serialid.cpp
  splitter.cpp
  sqlinfopopup.cpp
+ tablecontextmenu.cpp
  tableheader.cpp
  tableview.cpp
- tablecontextmenu.cpp
  textfield.cpp
  textline.cpp
 )
@@ -88,17 +90,17 @@ SET (_library_HEADERS
  postalcodeedit.h
  priceedit.h
  salutationedit.h
- serialid.h
  selecteucountry.h
  selectlanguage.h
  selectpaymentmethod.h
  selectpaymentstatus.h
  selectstorage.h
+ serialid.h
  splitter.h
  sqlinfopopup.h
+ tablecontextmenu.h
  tableheader.h
  tableview.h
- tablecontextmenu.h
  textfield.h
  textline.h
 )
@@ -126,6 +128,7 @@ TARGET_LINK_LIBRARIES (${_sharedLibrary} PRIVATE
  Qt6::Sql
  Qt6::Xml
  AntiquaCRM
+ KeywordEditor
 )
 
 INSTALL (TARGETS ${_sharedLibrary}

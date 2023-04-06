@@ -15,6 +15,8 @@
 
 namespace AntiquaCRM {
 
+class KeywordListView;
+
 /**
  * @class KeywordsEdit
  * @brief Text Input for Keywords
@@ -25,40 +27,35 @@ class ANTIQUACRM_LIBRARY KeywordsEdit final : public AntiquaCRM::AbstractInput {
 
 private:
   /**
-   * @brief Trennzeichen
-   */
-  const QChar p_delimiter = QChar(',');
-
-  /**
-   * @brief Autovervolständigung erst ab Mindestlänge starten
+   * @brief Start auto-completion only from minimum length
    */
   const int minLength = 3;
 
   /**
-   * @todo Update needet
+   * @todo Displays the current keywords.
    */
-  QWidget *m_keysList;
+  KeywordListView *m_keywords;
 
   /**
-   * @brief Eingabefeld
+   * @brief input box
    */
-  ALineEdit *m_lineEdit;
+  ALineEdit *m_edit;
 
 private Q_SLOTS:
   /**
-   * @brief Liste leeren
-   * Beinhaltet ein Warn PopUp
+   * @brief Default input monitoring
+   */
+  void valueChanged();
+
+  /**
+   * @brief Remove all keywords with Popup Warning!
    */
   void clearKeywords();
 
   /**
-   * @brief Text vom Completer Signal aufarbeiten
-   * An dieser Stelle mit dem Puffer von @ref p_keywords das ganze wieder
-   * zusammenfügen.
+   * @brief Insert keyword from ALineEdit.
    */
-  void finalize();
-
-  void valueChanged();
+  void insertKeyword();
 
 public Q_SLOTS:
   void setValue(const QVariant &) override;

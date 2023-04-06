@@ -40,11 +40,6 @@ public:
 private:
   int p_minLength = 2;
 
-  /**
-   * @brief get Icon from Theme
-   */
-  const QIcon getIcon(const QString &);
-
 private Q_SLOTS:
   void searchPatternChanged(int);
 
@@ -145,6 +140,11 @@ public Q_SLOTS:
 
 public:
   explicit TabsSearchBar(QWidget *parent = nullptr);
+
+  /**
+   * @brief get Icon from Theme
+   */
+  const QIcon getIcon(const QString &);
 
   /**
    * @brief present the selected Search syntax

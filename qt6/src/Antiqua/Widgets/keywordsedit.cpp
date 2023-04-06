@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "keywordsedit.h"
+#include "keywordeditor/keywordlistview.h"
 
 #include <AntiquaCRM>
 #include <QDebug>
@@ -14,9 +15,8 @@ namespace AntiquaCRM {
 KeywordsEdit::KeywordsEdit(QWidget *parent)
     : AntiquaCRM::AbstractInput{parent} {
   // ColumnList
-  m_keysList = new QWidget(this);
-  m_keysList->setContentsMargins(0, 0, 0, 0);
-  layout->addWidget(m_keysList);
+  m_keywords = new KeywordListView(this);
+  layout->addWidget(m_keywords);
   layout->addStretch();
 
   // Buttons
@@ -30,22 +30,29 @@ KeywordsEdit::KeywordsEdit(QWidget *parent)
   layout->addWidget(ac_add);
 
   // LineEdit
-  m_lineEdit = new AntiquaCRM::ALineEdit(this);
-  m_lineEdit->setPlaceholderText(tr("Search, add to"));
-  m_lineEdit->setToolTip(
-      tr("To add keywords, paste them here and press Enter."));
-  m_lineEdit->setDragEnabled(false);
-  m_lineEdit->setClearButtonEnabled(true);
-  m_lineEdit->setMaximumWidth(200);
-  layout->addWidget(m_lineEdit);
+  m_edit = new AntiquaCRM::ALineEdit(this);
+  m_edit->setPlaceholderText(tr("Search, add to"));
+  m_edit->setToolTip(tr("To add keywords, paste them here and press Enter."));
+  m_edit->setDragEnabled(false);
+  m_edit->setClearButtonEnabled(true);
+  m_edit->setMinimumWidth(150);
+  m_edit->setMaximumWidth(200);
+  m_edit->setValidation(AntiquaCRM::ALineEdit::STRINGS);
+  layout->addWidget(m_edit);
 
   initData();
-  // connect(m_edit, SIGNAL(), SLOT(valueChanged()));
+  connect(ac_clear, SIGNAL(clicked()), SLOT(clearKeywords()));
+  connect(ac_add, SIGNAL(clicked()), SLOT(insertKeyword()));
+  connect(m_edit, SIGNAL(editingFinished()), SLOT(insertKeyword()));
+  connect(m_keywords, SIGNAL(valueChanged()), SLOT(valueChanged()));
 }
 
 void KeywordsEdit::valueChanged() {
-  if (isValid())
-    setWindowModified(true);
+  QString _keyword = m_edit->text().trimmed();
+  if (_keyword.length() < minLength)
+    return;
+
+  setWindowModified(true);
 }
 
 void KeywordsEdit::clearKeywords() {
@@ -55,39 +62,35 @@ void KeywordsEdit::clearKeywords() {
   if (ret == QMessageBox::Cancel)
     return;
 
-  // m_keysList->clear();
+  m_keywords->clearKeywords();
   setWindowModified(true);
 }
 
-void KeywordsEdit::finalize() {
-  if (m_lineEdit->text().length() < minLength)
+void KeywordsEdit::insertKeyword() {
+  QString _keyword = m_edit->text().trimmed();
+  if (_keyword.length() < minLength)
     return;
 
   static const QRegularExpression strip("([^\\w\\d\\-]+)");
-  QString buffer = m_lineEdit->text().trimmed();
-  buffer.replace(strip, "");
-  qDebug() << Q_FUNC_INFO << "TODO::addKeyword" << buffer;
-  // m_keysList->addKeyword(buffer);
-
-  setWindowModified(true);
+  _keyword.replace(strip, "");
+  m_keywords->insertKeyword(_keyword);
 }
 
 void KeywordsEdit::setValue(const QVariant &value) {
   QMetaType _type = value.metaType();
-  if (_type.id() != QMetaType::QString) {
+  if (_type.id() == QMetaType::QString) {
+    m_keywords->setKeywordList(value.toString().split(","));
+  } else if (_type.id() == QMetaType::QStringList) {
+    m_keywords->setKeywordList(value.toStringList());
+  } else {
     qWarning("Invalid given Data Type in KeywordsEdit.");
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << "KeywordsEdit Requires type int but get:" << value;
-#endif
-    return;
   }
-  qDebug() << Q_FUNC_INFO << "TODO" << value;
 }
 
-void KeywordsEdit::setFocus() { m_lineEdit->setFocus(); }
+void KeywordsEdit::setFocus() { m_edit->setFocus(); }
 
 void KeywordsEdit::reset() {
-  m_lineEdit->clear();
+  m_edit->clear();
   setWindowModified(false);
 }
 
@@ -106,7 +109,7 @@ void KeywordsEdit::setRestrictions(const QSqlField &field) {
 }
 
 void KeywordsEdit::setInputToolTip(const QString &tip) {
-  m_lineEdit->setToolTip(tip);
+  m_edit->setToolTip(tip);
 }
 
 void KeywordsEdit::setBuddyLabel(const QString &text) {
@@ -114,20 +117,17 @@ void KeywordsEdit::setBuddyLabel(const QString &text) {
     return;
 
   ALabel *m_lb = addTitleLabel(text + ":");
-  m_lb->setBuddy(m_lineEdit);
+  m_lb->setBuddy(m_edit);
 }
 
 bool KeywordsEdit::isValid() {
-  if (isRequired() && getValue().isNull())
+  if (isRequired() && m_keywords->length() < 1)
     return false;
 
   return true;
 }
 
-const QVariant KeywordsEdit::getValue() {
-  qDebug() << Q_FUNC_INFO << "TODO";
-  return QVariant(); // m_edit->value();
-}
+const QVariant KeywordsEdit::getValue() { return m_keywords->getKeywords(); }
 
 const QString KeywordsEdit::popUpHints() {
   QStringList txt(statusHints());

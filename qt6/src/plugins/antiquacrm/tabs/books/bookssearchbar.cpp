@@ -11,10 +11,9 @@
 
 BooksSearchBar::BooksSearchBar(QWidget *parent)
     : AntiquaCRM::TabsSearchBar{parent} {
-
   m_selectFilter = new BooksSelectFilter(this);
-  QString filterTip = tr("Press CTRL+Shift+F, to quickly open this Menu.");
-  m_selectFilter->setToolTip(filterTip);
+  m_selectFilter->setToolTip(
+      tr("Press CTRL+Shift+F, to quickly open this Menu."));
   addWidget(m_selectFilter);
 
   m_searchInput = new AntiquaCRM::ALineEdit(this);
@@ -23,7 +22,7 @@ BooksSearchBar::BooksSearchBar(QWidget *parent)
 
   QToolButton *m_icontb = new QToolButton(this);
   m_icontb->setEnabled(false);
-  m_icontb->setIcon(AntiquaCRM::AntiquaApplIcon("user-group"));
+  m_icontb->setIcon(getIcon("user-group"));
   addWidget(m_icontb);
 
   m_customSearch = new AntiquaCRM::ALineEdit(this);
@@ -126,14 +125,16 @@ void BooksSearchBar::setSearch() {
 void BooksSearchBar::setFilter(int index) {
   m_searchInput->clear();
   m_searchInput->setEnabled(true);
+  m_searchInput->setToolTip(QString());
+  m_customSearch->setToolTip(QString());
 
   switch (m_selectFilter->currentFilter(index)) {
   case (BooksSelectFilter::BOOK_ARTICLE_ID): {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
-    m_searchInput->setPlaceholderText(tr("Search with Article number"));
+    m_searchInput->setPlaceholderText(tr("Article number"));
     m_searchInput->setToolTip(
-        tr("Single Article number or multiple separated by comma."));
+        tr("Multiple Articlenumbers separated by comma."));
     disableCustomSearch();
     break;
   }
@@ -141,7 +142,8 @@ void BooksSearchBar::setFilter(int index) {
   case (BooksSelectFilter::BOOK_ISBN): {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::NUMERIC);
-    m_searchInput->setPlaceholderText(tr("Search with ISBN number"));
+    m_searchInput->setPlaceholderText(tr("ISBN search"));
+    m_searchInput->setToolTip(tr("Search ISBN number"));
     disableCustomSearch();
     break;
   }
@@ -149,27 +151,33 @@ void BooksSearchBar::setFilter(int index) {
   case (BooksSelectFilter::BOOK_TITLE_KEYWORD): {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchInput->setPlaceholderText(tr("Search with Booktitle"));
+    m_searchInput->setPlaceholderText(tr("Booktitle"));
+    m_searchInput->setToolTip(tr("Search Book in title, text fields"));
     enableCustomSearch(tr("and Keyword."));
     m_customSearch->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+    m_customSearch->setToolTip(tr("and Keyword field."));
     break;
   }
 
   case (BooksSelectFilter::BOOK_TITLE_AUTHOR): {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchInput->setPlaceholderText(tr("Search with Booktitle"));
+    m_searchInput->setPlaceholderText(tr("Booktitle and Author"));
+    m_searchInput->setToolTip(tr("Search Book in title"));
     enableCustomSearch(tr("and Author."));
     m_customSearch->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+    m_customSearch->setToolTip(" " + tr("and Authors."));
     break;
   }
 
   case (BooksSelectFilter::BOOK_STORAGE): {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchInput->setPlaceholderText(tr("Storage by Keyword."));
+    m_searchInput->setPlaceholderText(tr("In Storages search"));
+    m_searchInput->setToolTip(
+        tr("Search with Keyword for Books in Storage locations."));
     disableCustomSearch();
     break;
   }
@@ -177,13 +185,20 @@ void BooksSearchBar::setFilter(int index) {
   case (BooksSelectFilter::BOOK_AUTHORS): {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchInput->setPlaceholderText(tr("Search only Book authors"));
+    m_searchInput->setPlaceholderText(tr("Authors search"));
+    disableCustomSearch();
+    break;
+  }
+
+  case (BooksSelectFilter::BOOK_PUBLISHER): {
+    m_searchInput->setValidation(
+        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+    m_searchInput->setPlaceholderText(tr("Publishers search"));
     disableCustomSearch();
     break;
   }
 
   default: {
-    // TODO
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
     m_searchInput->setPlaceholderText(tr("Unknown"));
