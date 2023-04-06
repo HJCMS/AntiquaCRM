@@ -11,70 +11,74 @@ BooksSelectFilter::BooksSelectFilter(QWidget *parent) : QComboBox{parent} {
   setSizeAdjustPolicy(QComboBox::AdjustToContents);
 
   QIcon _icon = AntiquaCRM::AntiquaApplIcon("view-search");
-  insertItem(0, _icon, tr("Book Title and Author"), Filter::BooksAuthor);
+  insertItem(0, _icon, tr("Book Title and Author"), BOOK_TITLE_AUTHOR);
   setItemData(0, tr("Search in Book titles and authors"), Qt::ToolTipRole);
 
-  insertItem(1, _icon, tr("Book Title and Keyword"), Filter::BooksKeyword);
+  insertItem(1, _icon, tr("Book Title and Keyword"), BOOK_TITLE_KEYWORD);
   setItemData(1, tr("Search in Book titles"), Qt::ToolTipRole);
 
-  insertItem(2, _icon, tr("Article Id"), Filter::ArticleId);
+  insertItem(2, _icon, tr("Article Id"), BOOK_ARTICLE_ID);
   setItemData(2, tr("Multiple searches separated by commas"), Qt::ToolTipRole);
 
-  insertItem(3, _icon, tr("ISBN"), Filter::ISBN);
+  insertItem(3, _icon, tr("ISBN"), BOOK_ISBN);
   setItemData(3, tr("Only Numbers are allowed for input"), Qt::ToolTipRole);
 
-  insertItem(4, _icon, tr("Author"), Filter::Authors);
+  insertItem(4, _icon, tr("Author"), BOOK_AUTHORS);
   setItemData(4, tr("Search for Book authors"), Qt::ToolTipRole);
 
-  insertItem(5, _icon, tr("Book Publisher"), Filter::Publisher);
+  insertItem(5, _icon, tr("Book Publisher"), BOOK_PUBLISHER);
   setItemData(5, tr("Search Book Publishers"), Qt::ToolTipRole);
 
-  insertItem(6, _icon, tr("Duration by Keyword"), Filter::Storage);
+  insertItem(6, _icon, tr("Duration by Keyword"), BOOK_STORAGE);
   setItemData(6, tr("Search by keyword and storage location"), Qt::ToolTipRole);
 }
 
+BooksSelectFilter::Filter BooksSelectFilter::currentFilter(int index) {
+  qint8 _i = (index >= 0) ? index : currentIndex();
+  qint8 _f = itemData(_i, Qt::UserRole).toInt();
+  return static_cast<BooksSelectFilter::Filter>(_f);
+}
+
 const QJsonObject BooksSelectFilter::getFilter(int index) {
-  QVariant val = itemData(index, Qt::UserRole);
-  BooksSelectFilter::Filter f = qvariant_cast<BooksSelectFilter::Filter>(val);
   QJsonObject obj;
-  switch (f) {
-  case (Filter::BooksAuthor): {
+  switch (currentFilter(index)) {
+  case (BOOK_TITLE_AUTHOR): {
     obj.insert("search", QJsonValue("title_and_author"));
     obj.insert("fields", QJsonValue("ib_title,ib_title_extended,ib_author"));
     break;
   }
 
-  case (Filter::BooksKeyword): {
+  case (BOOK_TITLE_KEYWORD): {
     obj.insert("search", QJsonValue("title"));
     obj.insert("fields", QJsonValue("ib_title,ib_title_extended,ib_keyword"));
     break;
   }
 
-  case (Filter::ArticleId): {
+  case (BOOK_ARTICLE_ID): {
     obj.insert("search", QJsonValue("articleId"));
     obj.insert("fields", QJsonValue("ib_id"));
     break;
   }
 
-  case (Filter::ISBN): {
+  case (BOOK_ISBN): {
     obj.insert("search", QJsonValue("isbn"));
     obj.insert("fields", QJsonValue("ib_isbn"));
     break;
   }
 
-  case (Filter::Authors): {
+  case (BOOK_AUTHORS): {
     obj.insert("search", QJsonValue("author"));
     obj.insert("fields", QJsonValue("ib_author"));
     break;
   }
 
-  case (Filter::Publisher): {
+  case (BOOK_PUBLISHER): {
     obj.insert("search", QJsonValue("publisher"));
     obj.insert("fields", QJsonValue("ib_publisher"));
     break;
   }
 
-  case (Filter::Storage): {
+  case (BOOK_STORAGE): {
     obj.insert("search", QJsonValue("storage"));
     obj.insert("fields", QJsonValue("ib_storage"));
     break;
@@ -85,6 +89,10 @@ const QJsonObject BooksSelectFilter::getFilter(int index) {
     obj.insert("fields", QJsonValue("ib_title,ib_title_extended"));
     break;
   };
+
+  //#ifdef ANTIQUA_DEVELOPEMENT
+  //  qDebug() << Q_FUNC_INFO << obj;
+  //#endif
 
   return obj;
 }

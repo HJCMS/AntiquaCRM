@@ -24,11 +24,13 @@ class ANTIQUACRM_LIBRARY BooksSearchBar final
 
 private:
   BooksSelectFilter *m_selectFilter;
-  AntiquaCRM::ALineEdit *m_searchLeft;
-  AntiquaCRM::ALineEdit *m_searchRight;
+  AntiquaCRM::ALineEdit *m_searchInput;
+  AntiquaCRM::ALineEdit *m_customSearch;
   QPushButton *m_searchBtn;
 
   const QString getTitleSearch(const QStringList &);
+  void enableCustomSearch(const QString &);
+  void disableCustomSearch();
 
 private Q_SLOTS:
   void setSearch() override;

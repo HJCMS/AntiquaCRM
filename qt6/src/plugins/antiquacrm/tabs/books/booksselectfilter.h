@@ -12,7 +12,6 @@
 #include <AGlobal>
 #include <QComboBox>
 #include <QJsonObject>
-#include <QMetaType>
 #include <QObject>
 #include <QWidget>
 
@@ -21,17 +20,18 @@ class ANTIQUACRM_LIBRARY BooksSelectFilter : public QComboBox {
 
 public:
   enum Filter {
-    BooksAuthor = 0x1,  /**< @brief Büchersuche */
-    BooksKeyword = 0x2, /**< @brief Bucher + Schlüsselwortsuche */
-    Authors = 0x4,      /**< @brief Autorensuche */
-    ISBN = 0x8,         /**< @brief ISBN Suche */
-    ArticleId = 0x10,   /**< @brief Artikel Nummernsuche */
-    Storage = 0x20,     /**< @brief Lager Suche */
-    Publisher = 0x40    /**< @brief Verlag/Hersteller Suche */
+    BOOK_TITLE_AUTHOR = 0,  /**< @brief Büchersuche */
+    BOOK_TITLE_KEYWORD = 1, /**< @brief Bucher + Schlüsselwortsuche */
+    BOOK_AUTHORS = 2,       /**< @brief Autorensuche */
+    BOOK_ISBN = 3,          /**< @brief ISBN Suche */
+    BOOK_ARTICLE_ID = 4,    /**< @brief Artikel Nummernsuche */
+    BOOK_STORAGE = 5,       /**< @brief Lager Suche */
+    BOOK_PUBLISHER = 6      /**< @brief Verlag/Hersteller Suche */
   };
-  Q_DECLARE_FLAGS(Filters, Filter)
 
   explicit BooksSelectFilter(QWidget *parent = nullptr);
+
+  BooksSelectFilter::Filter currentFilter(int index = -1);
 
   /**
    * @brief Nehme aktuellen Suchfilter
@@ -45,7 +45,5 @@ public:
    */
   const QJsonObject getFilter(int index = -1);
 };
-
-Q_DECLARE_METATYPE(BooksSelectFilter::Filter)
 
 #endif // ANTIQUACRM_PLUGIN_BOOKSSELECTFILTER_H

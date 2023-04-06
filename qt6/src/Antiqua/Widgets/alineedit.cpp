@@ -75,17 +75,17 @@ void ALineEdit::isValidContent(bool b) {
   setStyleSheet(_css);
 }
 
-void ALineEdit::setValidation(ALineEdit::InputValidator type) {
+void ALineEdit::setValidation(AntiquaCRM::ALineEdit::InputValidator type) {
   switch (type) {
-  case (ALineEdit::InputValidator::STRINGS):
-    setNumericValidator();
+  case (InputValidator::STRINGS):
+    setTextValidator();
     break;
 
-  case (ALineEdit::InputValidator::ARTICLE):
+  case (InputValidator::ARTICLE):
     setArticleValidator();
     break;
 
-  case (ALineEdit::InputValidator::NUMERIC):
+  case (InputValidator::NUMERIC):
     setNumericValidator();
     break;
 
@@ -123,6 +123,8 @@ void ALineEdit::setLineEditProperties(const QSqlField &prop) {
         setText(_txt);
     }
   }
+
+  setValidation(InputValidator::NOTHING);
 }
 
 int ALineEdit::length() { return text().trimmed().length(); }

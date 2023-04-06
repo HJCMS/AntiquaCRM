@@ -11,21 +11,23 @@
 
 BooksSearchBar::BooksSearchBar(QWidget *parent)
     : AntiquaCRM::TabsSearchBar{parent} {
+
   m_selectFilter = new BooksSelectFilter(this);
   QString filterTip = tr("Press CTRL+Shift+F, to quickly open this Menu.");
   m_selectFilter->setToolTip(filterTip);
   addWidget(m_selectFilter);
 
-  m_searchLeft = new AntiquaCRM::ALineEdit(this);
-  addWidget(m_searchLeft);
+  m_searchInput = new AntiquaCRM::ALineEdit(this);
+  m_searchInput->setPlaceholderText(tr("Default search"));
+  addWidget(m_searchInput);
 
   QToolButton *m_icontb = new QToolButton(this);
   m_icontb->setEnabled(false);
   m_icontb->setIcon(AntiquaCRM::AntiquaApplIcon("user-group"));
   addWidget(m_icontb);
 
-  m_searchRight = new AntiquaCRM::ALineEdit(this);
-  addWidget(m_searchRight);
+  m_customSearch = new AntiquaCRM::ALineEdit(this);
+  addWidget(m_customSearch);
 
   addWidget(searchConfines());
   addSeparator();
@@ -36,17 +38,21 @@ BooksSearchBar::BooksSearchBar(QWidget *parent)
 
   connect(m_selectFilter, SIGNAL(currentIndexChanged(int)),
           SLOT(setFilter(int)));
-  connect(m_searchLeft, SIGNAL(returnPressed()), SLOT(setSearch()));
-  connect(m_searchRight, SIGNAL(returnPressed()), SLOT(setSearch()));
+
+  connect(m_searchInput, SIGNAL(returnPressed()), SLOT(setSearch()));
+  connect(m_customSearch, SIGNAL(returnPressed()), SLOT(setSearch()));
+
   connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
+
+  setFilter(0);
 }
 
 const QString BooksSearchBar::getTitleSearch(const QStringList &fields) {
   QString query;
-  QString inputLeft = m_searchLeft->text();
-  QString inputRight = m_searchRight->text();
+  QString inputLeft = m_searchInput->text();
+  QString inputRight = m_customSearch->text();
   // Standard Suchfeld
-  if (m_searchLeft->length() >= getMinLength()) {
+  if (m_searchInput->length() >= getMinLength()) {
     QStringList bufferLeft;
     foreach (QString f, fields) {
       if (f != "ib_author") {
@@ -65,9 +71,10 @@ const QString BooksSearchBar::getTitleSearch(const QStringList &fields) {
     bufferLeft.clear();
   }
   // Autoren Suchfeld
-  if (m_searchRight->isEnabled() && m_searchRight->length() >= getMinLength()) {
+  if (m_customSearch->isEnabled() &&
+      m_customSearch->length() >= getMinLength()) {
     QStringList bufferRight;
-    if (m_searchRight->placeholderText().contains(tr("Keyword")))
+    if (m_customSearch->placeholderText().contains(tr("Keyword")))
       bufferRight << prepareFieldSearch("ib_keyword", inputRight);
     else
       bufferRight << prepareFieldSearch("ib_author", inputRight);
@@ -94,86 +101,93 @@ const QString BooksSearchBar::getTitleSearch(const QStringList &fields) {
   return query;
 }
 
+void BooksSearchBar::enableCustomSearch(const QString &info) {
+  m_customSearch->clear();
+  m_customSearch->setEnabled(true);
+  m_customSearch->setPlaceholderText(info);
+}
+
+void BooksSearchBar::disableCustomSearch() {
+  m_customSearch->clear();
+  m_customSearch->setValidation(AntiquaCRM::ALineEdit::InputValidator::NOTHING);
+  m_customSearch->setEnabled(false);
+  m_customSearch->setPlaceholderText(QString());
+}
+
 void BooksSearchBar::setSearch() {
-  if (m_searchLeft->isEnabled() && searchLength() >= getMinLength()) {
+  if (m_searchInput->isEnabled() && searchLength() >= getMinLength()) {
     emit sendSearchClicked();
-  } else if (m_searchRight->isEnabled() && searchLength() >= getMinLength()) {
+  } else if (m_customSearch->isEnabled() && searchLength() >= getMinLength()) {
     emit sendSearchClicked();
   } else
     emit sendNotify(tr("Your input is too short, increase your search!"));
 }
 
 void BooksSearchBar::setFilter(int index) {
-  QVariant val = m_selectFilter->itemData(index, Qt::UserRole);
-  BooksSelectFilter::Filter f = qvariant_cast<BooksSelectFilter::Filter>(val);
-  m_searchLeft->setEnabled(true);
-  m_searchLeft->clear();
-  m_searchRight->clear();
+  m_searchInput->clear();
+  m_searchInput->setEnabled(true);
 
-  QString leftTr = tr("Search Booktitle");
-  QString rightTr = tr("Authors search");
-
-  switch (f) {
-  case (BooksSelectFilter::ArticleId): {
-    m_searchLeft->setValidation(AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
-    m_searchLeft->setPlaceholderText(
+  switch (m_selectFilter->currentFilter(index)) {
+  case (BooksSelectFilter::BOOK_ARTICLE_ID): {
+    m_searchInput->setValidation(
+        AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
+    m_searchInput->setPlaceholderText(tr("Search with Article number"));
+    m_searchInput->setToolTip(
         tr("Single Article number or multiple separated by comma."));
-    m_searchRight->setEnabled(false);
-    m_searchRight->setPlaceholderText(rightTr);
+    disableCustomSearch();
     break;
   }
 
-  case (BooksSelectFilter::ISBN): {
-    m_searchLeft->setValidation(AntiquaCRM::ALineEdit::InputValidator::NUMERIC);
-    m_searchLeft->setPlaceholderText(tr("Search by ISBN number"));
-    m_searchRight->setEnabled(false);
-    m_searchRight->setPlaceholderText(rightTr);
+  case (BooksSelectFilter::BOOK_ISBN): {
+    m_searchInput->setValidation(
+        AntiquaCRM::ALineEdit::InputValidator::NUMERIC);
+    m_searchInput->setPlaceholderText(tr("Search with ISBN number"));
+    disableCustomSearch();
     break;
   }
 
-  case (BooksSelectFilter::BooksAuthor): {
-    m_searchLeft->setValidation(AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchLeft->setPlaceholderText(leftTr);
-    m_searchRight->setValidation(
+  case (BooksSelectFilter::BOOK_TITLE_KEYWORD): {
+    m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchRight->setEnabled(true);
-    m_searchRight->setPlaceholderText(tr("and Authors"));
-    break;
-  }
-
-  case (BooksSelectFilter::BooksKeyword): {
-    m_searchLeft->setValidation(AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchLeft->setPlaceholderText(leftTr);
-    m_searchRight->setValidation(
+    m_searchInput->setPlaceholderText(tr("Search with Booktitle"));
+    enableCustomSearch(tr("and Keyword."));
+    m_customSearch->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchRight->setEnabled(true);
-    m_searchRight->setPlaceholderText(tr("Keyword"));
     break;
   }
 
-  case (BooksSelectFilter::Storage): {
-    m_searchLeft->setValidation(AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchLeft->setPlaceholderText(tr("Storage"));
-    m_searchRight->setEnabled(false);
-    break;
-  }
-
-  case (BooksSelectFilter::Authors): {
-    m_searchLeft->setValidation(AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchLeft->setEnabled(false);
-    m_searchLeft->setPlaceholderText(leftTr);
-    m_searchRight->setValidation(
+  case (BooksSelectFilter::BOOK_TITLE_AUTHOR): {
+    m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchRight->setEnabled(true);
-    m_searchRight->setPlaceholderText(rightTr);
+    m_searchInput->setPlaceholderText(tr("Search with Booktitle"));
+    enableCustomSearch(tr("and Author."));
+    m_customSearch->setValidation(
+        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+    break;
+  }
+
+  case (BooksSelectFilter::BOOK_STORAGE): {
+    m_searchInput->setValidation(
+        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+    m_searchInput->setPlaceholderText(tr("Storage by Keyword."));
+    disableCustomSearch();
+    break;
+  }
+
+  case (BooksSelectFilter::BOOK_AUTHORS): {
+    m_searchInput->setValidation(
+        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+    m_searchInput->setPlaceholderText(tr("Search only Book authors"));
+    disableCustomSearch();
     break;
   }
 
   default: {
-    m_searchLeft->setValidation(AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchRight->setEnabled(false);
-    m_searchLeft->setPlaceholderText(leftTr);
-    m_searchRight->setPlaceholderText(rightTr);
+    // TODO
+    m_searchInput->setValidation(
+        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+    m_searchInput->setPlaceholderText(tr("Unknown"));
+    disableCustomSearch();
     break;
   }
   };
@@ -187,15 +201,15 @@ void BooksSearchBar::setFilterFocus() {
 }
 
 void BooksSearchBar::setClearAndFocus() {
-  m_searchLeft->clear();
-  m_searchRight->clear();
-  m_searchLeft->setFocus();
+  m_searchInput->clear();
+  m_customSearch->clear();
+  m_searchInput->setFocus();
 }
 
 void BooksSearchBar::setSearchFocus() { setClearAndFocus(); }
 
 int BooksSearchBar::searchLength() {
-  return (m_searchLeft->length() + m_searchRight->length());
+  return (m_searchInput->length() + m_customSearch->length());
 }
 
 const QString BooksSearchBar::getSearchStatement() {
@@ -203,6 +217,10 @@ const QString BooksSearchBar::getSearchStatement() {
   QStringList fields = js.value("fields").toString().split(",");
   QString sql(withStock() ? "ib_count>0 AND " : "");
   QString operation = js.value("search").toString();
+
+  static const QRegularExpression stringListPattern("\\,\\s?$");
+  static const QRegularExpression numericPattern("\\D+");
+
   if (operation.isEmpty())
     return QString();
 
@@ -226,15 +244,15 @@ const QString BooksSearchBar::getSearchStatement() {
 
   // Artikel Nummersuche (107368,115110)
   if (operation == "articleId") {
-    QString s = m_searchLeft->text();
-    s.replace(QRegularExpression("\\,\\s?$"), "");
+    QString s = m_searchInput->text();
+    s.replace(stringListPattern, "");
     return "ib_id IN (" + s + ")";
   }
 
   // ISBN Suche
   if (operation == "isbn") {
-    QString s = m_searchLeft->text();
-    s.replace(QRegularExpression("\\D+"), "");
+    QString s = m_searchInput->text();
+    s.replace(numericPattern, "");
     if (s.length() == 10 || s.length() == 13) {
       sql.append("ib_isbn=" + s);
       return sql;
@@ -243,14 +261,14 @@ const QString BooksSearchBar::getSearchStatement() {
 
   // Publisher
   if (operation == "publisher") {
-    QString s = m_searchLeft->text();
+    QString s = m_searchInput->text();
     sql.append("(" + prepareFieldSearch("ib_publisher", s) + ")");
     return sql;
   }
 
   // Lager & Stichwortsuche
   if (operation == "storage") {
-    QString s = m_searchLeft->text();
+    QString s = m_searchInput->text();
     s.replace(jokerPattern, "%");
     QStringList buffer;
     buffer << prepareFieldSearch("sl_storage", s);

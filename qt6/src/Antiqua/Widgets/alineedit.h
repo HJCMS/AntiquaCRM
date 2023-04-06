@@ -85,7 +85,7 @@ public:
   /**
    * @brief set Input Validator
    */
-  void setValidation(ALineEdit::InputValidator);
+  void setValidation(AntiquaCRM::ALineEdit::InputValidator);
 
   /**
    * @brief Enable+Visible, completer-popup action.
@@ -105,7 +105,5 @@ public:
 };
 
 } // namespace AntiquaCRM
-
-Q_DECLARE_METATYPE(AntiquaCRM::ALineEdit::InputValidator)
 
 #endif // ANTIQUACRM_INPUT_LINEEDIT_H
